@@ -204,7 +204,6 @@ _RNvMNtCs1SQIzZDXHNl_7tracing4spanNtB2_4Span8do_enter.exit: ; preds = %.noexc186
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bl, i64 8 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %.sroa.4117.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
@@ -278,6 +277,7 @@ _RNvMNtCs1SQIzZDXHNl_7tracing4spanNtB2_4Span8do_enter.exit: ; preds = %.noexc186
   %i.eg = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.ei = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   br label %.backedge
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -432,24 +432,19 @@ bb.v:                                             ; preds = %bb.u
           to label %bb.w unwind label %.loopexit
 
 bb.w:                                             ; preds = %bb.v
-  %i.fm = load i64, ptr %i.bl, align 8, !range !45, !noundef !10 ; 3 uses
-  %4 = icmp eq i64 %i.fm, -1
-  br i1 %4, label %bb.x, label %5
+  %i.fm = load i64, ptr %i.bl, align 8, !range !45, !noundef !10 ; 2 uses
+  switch i64 %i.fm, label %bb.aa [
+    i64 -1, label %bb.x
+    i64 4, label %bb.y
+    i64 0, label %bb.ab
+  ]
 
 bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bl)
   %i.fn = invoke { i64, ptr } @_RNvXs5_NtNtCsl9hx9jpF0W9_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtCs6b9j1MKPRPC_12libp2p_swarm10connection13StreamUpgradezzzEENtNtCsgtKVDLJNbYN_12futures_core6stream6Stream9poll_nextCscVe0kjRb1xs_4perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.by, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.an unwind label %.loopexit
 
-5:                                                ; preds = %bb.w
-  %6 = icmp ne i64 %i.fm, 3
-  call void @llvm.assume(i1 %6)
-  switch i64 %i.fm, label %bb.aa [
-    i64 4, label %bb.y
-    i64 0, label %bb.ab
-  ]
-
-bb.y:                                             ; preds = %5
+bb.y:                                             ; preds = %bb.w
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.cd, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bl)
   br label %bb.am
@@ -461,14 +456,16 @@ bb.z:                                             ; preds = %bb.al, %bb.ah
 .backedge.backedge:                               ; preds = %bb.z, %bb.bn, %bb.ga, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsczYENlYh6wI_8smallvec8IntoIterANtNtCs6b9j1MKPRPC_12libp2p_swarm7handler15ProtocolsChangej2_EECscVe0kjRb1xs_4perf.exit, %bb.u
   br label %.backedge
 
-bb.aa:                                            ; preds = %5
+bb.aa:                                            ; preds = %bb.w
+  %4 = icmp ne i64 %i.fm, 3
+  call void @llvm.assume(i1 %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bg, ptr noundef nonnull align 8 dereferenceable(48) %i.cd, i64 48, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bf)
   invoke void @_RNvMs0_NtCs6b9j1MKPRPC_12libp2p_swarm7handlerNtB5_15ProtocolsChange6remove(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.cb, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.bg, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.cc)
           to label %bb.ai unwind label %.loopexit
 
-bb.ab:                                            ; preds = %5
+bb.ab:                                            ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bk, ptr noundef nonnull align 8 dereferenceable(48) %i.cd, i64 48, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bj)

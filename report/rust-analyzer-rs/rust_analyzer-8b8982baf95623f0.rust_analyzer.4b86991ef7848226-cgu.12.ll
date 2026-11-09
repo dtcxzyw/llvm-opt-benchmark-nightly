@@ -204,28 +204,24 @@ _RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5all
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val8.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @445, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !11860
   tail call fastcc void @_RINvNtCs8yjYO7b73r2_10serde_json3ser27format_escaped_str_contentsQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB2_15PrettyFormatterECs6u1mgJOKDyY_13rust_analyzer(ptr nonnull %.val8.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2)
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val8.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @445, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !11861
-  %.val3 = load i8, ptr %3, align 1               ; 2 uses
+  %.val3 = load i8, ptr %3, align 1
   %.val.i4 = load ptr, ptr %i.a, align 8, !nonnull !14, !align !20, !noundef !14
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @443, i64 noundef range(i64 0, -9223372036854775808) 2)
-  %.val9.i = load ptr, ptr %i.a, align 8          ; 5 uses
-  %.not.i.i5 = icmp eq i8 %.val3, 2
-  br i1 %.not.i.i5, label %bb.c, label %4
+  %.val9.i = load ptr, ptr %i.a, align 8, !nonnull !14, !noundef !14 ; 3 uses
+  switch i8 %.val3, label %.split.i.i.i.i.i.i [
+    i8 2, label %bb.c
+    i8 0, label %.split2.i.i.i.i.i.i
+  ]
 
-4:                                                ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
-  %5 = trunc nuw i8 %.val3 to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
-  br i1 %5, label %.split.i.i.i.i.i.i, label %.split2.i.i.i.i.i.i
-
-.split2.i.i.i.i.i.i:                              ; preds = %4
+.split2.i.i.i.i.i.i:                              ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val9.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @446, i64 noundef range(i64 0, -9223372036854775808) 5)
   br label %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap15serialize_valueINtNtCshzWfHUSfYae_4core6option6OptionbEECs6u1mgJOKDyY_13rust_analyzer.exit
 
-.split.i.i.i.i.i.i:                               ; preds = %4
+.split.i.i.i.i.i.i:                               ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val9.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @447, i64 noundef range(i64 0, -9223372036854775808) 4)
   br label %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap15serialize_valueINtNtCshzWfHUSfYae_4core6option6OptionbEECs6u1mgJOKDyY_13rust_analyzer.exit
 
 bb.c:                                             ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val9.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @448, i64 noundef range(i64 0, -9223372036854775808) 4)
   br label %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_15PrettyFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap15serialize_valueINtNtCshzWfHUSfYae_4core6option6OptionbEECs6u1mgJOKDyY_13rust_analyzer.exit
 
@@ -628,28 +624,24 @@ bb.b:                                             ; preds = %bb.a
 _RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit: ; preds = %bb.a, %bb.b
   store i8 2, ptr %i.b, align 8, !alias.scope !12912
   %i.e = tail call noundef ptr @_RINvNtCs8yjYO7b73r2_10serde_json3ser18format_escaped_strQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB2_16CompactFormatterECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %i.a, ptr noalias nofree nonnull readonly poison, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !noalias !12912 ; 0 uses
-  %.val3 = load i8, ptr %3, align 1               ; 2 uses
+  %.val3 = load i8, ptr %3, align 1
   %.val.i4 = load ptr, ptr %i.a, align 8, !nonnull !14, !align !20, !noundef !14
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @450, i64 noundef range(i64 0, -9223372036854775808) 1)
-  %.val9.i = load ptr, ptr %i.a, align 8          ; 5 uses
-  %.not.i.i = icmp eq i8 %.val3, 2
-  br i1 %.not.i.i, label %bb.c, label %4
+  %.val9.i = load ptr, ptr %i.a, align 8, !nonnull !14, !noundef !14 ; 3 uses
+  switch i8 %.val3, label %.split.i.i.i.i.i.i [
+    i8 2, label %bb.c
+    i8 0, label %.split2.i.i.i.i.i.i
+  ]
 
-4:                                                ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
-  %5 = trunc nuw i8 %.val3 to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
-  br i1 %5, label %.split.i.i.i.i.i.i, label %.split2.i.i.i.i.i.i
-
-.split2.i.i.i.i.i.i:                              ; preds = %4
+.split2.i.i.i.i.i.i:                              ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val9.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @446, i64 noundef range(i64 0, -9223372036854775808) 5)
   br label %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap15serialize_valueINtNtCshzWfHUSfYae_4core6option6OptionbEECs6u1mgJOKDyY_13rust_analyzer.exit
 
-.split.i.i.i.i.i.i:                               ; preds = %4
+.split.i.i.i.i.i.i:                               ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val9.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @447, i64 noundef range(i64 0, -9223372036854775808) 4)
   br label %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap15serialize_valueINtNtCshzWfHUSfYae_4core6option6OptionbEECs6u1mgJOKDyY_13rust_analyzer.exit
 
 bb.c:                                             ; preds = %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap13serialize_keyeECs6u1mgJOKDyY_13rust_analyzer.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
   tail call void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE17extend_from_sliceCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val9.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @448, i64 noundef range(i64 0, -9223372036854775808) 4)
   br label %_RINvXs6_NtCs8yjYO7b73r2_10serde_json3serINtB6_8CompoundQINtNtCsbSS6DM8SDEO_5alloc3vec3VechENtB6_16CompactFormatterENtNtCsjQbM3MYDIrM_10serde_core3ser12SerializeMap15serialize_valueINtNtCshzWfHUSfYae_4core6option6OptionbEECs6u1mgJOKDyY_13rust_analyzer.exit
 

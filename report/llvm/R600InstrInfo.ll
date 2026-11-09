@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZL15getTransSwizzl
 bb.n:                                             ; preds = %.lr.ph.split.split.split.i
   br i1 %switch125.i, label %.loopexit.preheader, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i
 
-.loopexit.preheader:                              ; preds = %bb.p, %bb.m, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us28.preheader.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us39.peel.next.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i, %.lr.ph.i, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split, %bb.o, %bb.n
+.loopexit.preheader:                              ; preds = %bb.p, %bb.m, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us28.preheader.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us39.peel.next.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split, %.lr.ph.i, %bb.o, %bb.n
   br label %.loopexit
 
 _ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i: ; preds = %bb.n

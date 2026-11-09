@@ -205,17 +205,13 @@ _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ar, i64 776
   store ptr %i.bg, ptr %i.ay, align 8, !alias.scope !83714, !noalias !83709
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(776) %i.d, ptr noundef nonnull align 8 dereferenceable(776) %i.ar, i64 776, i1 false), !noalias !83716
-  %.pr.i = load i64, ptr %i.d, align 8, !noalias !83709 ; 3 uses
-  %.not.i = icmp eq i64 %.pr.i, -2
-  br i1 %.not.i, label %.thread.i, label %4
+  %.pr.i = load i64, ptr %i.d, align 8, !noalias !83709 ; 2 uses
+  switch i64 %.pr.i, label %bb.cu [
+    i64 -2, label %.thread.i
+    i64 2, label %bb.q
+  ]
 
-4:                                                ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i
-  %5 = icmp ne i64 %.pr.i, 5
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %.pr.i, 2
-  br i1 %6, label %bb.q, label %bb.cu
-
-bb.q:                                             ; preds = %4
+bb.q:                                             ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %.sroa.083.0.copyload = load i64, ptr %i.bh, align 8
   %.sroa.884.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
@@ -618,7 +614,9 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs40MM8ukkVQd_
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query4WithEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef nonnull align 8 dereferenceable(120) %i.he) #73
           to label %bb.fi unwind label %bb.cq, !noalias !83710
 
-bb.cu:                                            ; preds = %4
+bb.cu:                                            ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i
+  %4 = icmp ne i64 %.pr.i, 5
+  call void @llvm.assume(i1 %4)
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef align 8 dereferenceable(776) %i.d)
           to label %.thread.i unwind label %bb.p, !noalias !83710
 

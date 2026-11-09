@@ -205,35 +205,33 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.a, ptr noundef nonnull align 8 dereferenceable(72) %2, i64 72, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11395)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11396)
-  %i.b = load i64, ptr %i.a, align 8, !range !58, !alias.scope !11396, !noundef !26 ; 3 uses
-  %.not.i = icmp eq i64 %i.b, -9223372036854775790
-  br i1 %.not.i, label %5, label %bb.b
+  %i.b = load i64, ptr %i.a, align 8, !range !58, !alias.scope !11396, !noundef !26 ; 2 uses
+  switch i64 %i.b, label %bb.c [
+    i64 -9223372036854775790, label %bb.b
+    i64 -9223372036854775801, label %bb.d
+  ]
 
 bb.b:                                             ; preds = %bb.a
-  %3 = icmp ne i64 %i.b, -9223372036854775800
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.b, -9223372036854775801
-  br i1 %4, label %bb.d, label %bb.c
+  store i64 -9223372036854775790, ptr %0, align 8, !alias.scope !11395
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB16_5ErrorEECs7p2uQeJxui2_9deltalake.exit.i unwind label %bb.e, !noalias !11395
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.a
+  %4 = icmp ne i64 %i.b, -9223372036854775800
+  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %2, i64 72, i1 false)
   br label %_RNCNCNvNtCs7p2uQeJxui2_9deltalake5utils10delete_dir0s_0B7_.exit
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.a
   store i64 -9223372036854775790, ptr %0, align 8, !alias.scope !11395
   call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.a), !noalias !11395
   br label %_RNCNCNvNtCs7p2uQeJxui2_9deltalake5utils10delete_dir0s_0B7_.exit
 
-5:                                                ; preds = %bb.a
-  store i64 -9223372036854775790, ptr %0, align 8, !alias.scope !11395
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
-  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %6)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB16_5ErrorEECs7p2uQeJxui2_9deltalake.exit.i unwind label %bb.e, !noalias !11395
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %6)
+  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVechEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i unwind label %bb.f, !noalias !11395
 
 bb.f:                                             ; preds = %bb.e
@@ -245,8 +243,8 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVechEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i: ; preds = %bb.e
   resume { ptr, i32 } %i.c
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB16_5ErrorEECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %5
-  call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %6), !noalias !11395
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB16_5ErrorEECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.b
+  call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %3), !noalias !11395
   br label %_RNCNCNvNtCs7p2uQeJxui2_9deltalake5utils10delete_dir0s_0B7_.exit
 
 _RNCNCNvNtCs7p2uQeJxui2_9deltalake5utils10delete_dir0s_0B7_.exit: ; preds = %bb.c, %bb.d, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB16_5ErrorEECs7p2uQeJxui2_9deltalake.exit.i

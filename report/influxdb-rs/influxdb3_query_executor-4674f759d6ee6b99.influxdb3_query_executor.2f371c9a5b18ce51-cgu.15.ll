@@ -204,13 +204,6 @@ bb.hp:                                            ; preds = %bb.hl
 .noexc28.i.i.i.i.i.i.i.i.i.i:                     ; preds = %bb.hp
   unreachable
 
-3:                                                ; preds = %bb.hn
-  store i8 1, ptr %i.afy, align 8, !noalias !7749
-  store i8 1, ptr %i.aev, align 16, !noalias !7747
-  store i8 1, ptr %i.aeu, align 8, !noalias !7747
-  %4 = ptrtoint ptr %i.afz to i64
-  br label %bb.my
-
 .critedge.i.i.i.i.i.i.i.i:                        ; preds = %bb.gn
   store i8 1, ptr %i.adi, align 8, !noalias !7747
   %.phi.trans.insert126.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1256
@@ -319,6 +312,13 @@ bb.hw:                                            ; preds = %bb.hq, %bb.gs, %bb.
   %i.ahy = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i.i.i.i.i.i.i
+
+3:                                                ; preds = %bb.hn
+  store i8 1, ptr %i.afy, align 8, !noalias !7749
+  store i8 1, ptr %i.aev, align 16, !noalias !7747
+  store i8 1, ptr %i.aeu, align 8, !noalias !7747
+  %4 = ptrtoint ptr %i.afz to i64
+  br label %bb.my
 
 bb.hx:                                            ; preds = %.body67.i.i.i.i.i.i.i.i, %bb.hz, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCNvMsd_NtNtCs8dy3IO6wsj9_8wasmtime7runtime5storeNtBJ_11StoreOpaque17allocate_instance0ECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i.i.i.i.i.i.i
   %i.ahz = landingpad { ptr, i32 }
@@ -722,7 +722,7 @@ bb.mx:                                            ; preds = %bb.ib
   store i8 4, ptr %i.air, align 8, !noalias !7747
   br label %bb.rd
 
-bb.my:                                            ; preds = %bb.mw, %bb.mv, %bb.ih, %bb.hr, %3, %bb.gi, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i.i.i.i.i.i
+bb.my:                                            ; preds = %bb.mw, %bb.mv, %bb.ih, %3, %bb.hr, %bb.gi, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i.i.i.i.i.i
   %i.brb = phi ptr [ %i.aga, %bb.hr ], [ %i.aar, %bb.gi ], [ %i.bqk, %bb.mw ], [ %i.boi, %bb.mv ], [ %i.aie, %bb.ih ], [ %i.aar, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i.i.i.i.i.i ], [ %i.aef, %3 ] ; 6 uses
   %i.brc = phi ptr [ %i.agb, %bb.hr ], [ %i.aas, %bb.gi ], [ %i.bql, %bb.mw ], [ %i.boj, %bb.mv ], [ %i.aif, %bb.ih ], [ %i.aas, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i.i.i.i.i.i ], [ %i.aeg, %3 ] ; 6 uses
   %i.brd = phi ptr [ %i.agc, %bb.hr ], [ %i.aat, %bb.gi ], [ %i.bqm, %bb.mw ], [ %i.bok, %bb.mv ], [ %i.aig, %bb.ih ], [ %i.aat, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i.i.i.i.i.i ], [ %i.aeh, %3 ] ; 6 uses

@@ -202,15 +202,11 @@ bb.ta:                                            ; preds = %bb.uo, %bb.sz
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16TransactionErrorEECsj34PGqTgg0L_16deltalake_lakefs.exit
 
 bb.tb:                                            ; preds = %bb.sz
-  %i.apv = load i64, ptr %i.fi, align 8, !range !46, !noundef !15 ; 3 uses
-  %.not63 = icmp eq i64 %i.apv, -9223372036854775781
-  br i1 %.not63, label %bb.tc, label %3
-
-3:                                                ; preds = %bb.tb
-  %4 = icmp ne i64 %i.apv, -9223372036854775788
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.apv, -9223372036854775790
-  br i1 %5, label %bb.uc, label %.thread535
+  %i.apv = load i64, ptr %i.fi, align 8, !range !46, !noundef !15 ; 2 uses
+  switch i64 %i.apv, label %.thread535 [
+    i64 -9223372036854775781, label %bb.tc
+    i64 -9223372036854775790, label %bb.uc
+  ]
 
 bb.tc:                                            ; preds = %bb.tb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fi)
@@ -482,7 +478,7 @@ bb.ub:                                            ; preds = %.body281, %bb.ua, %
   %i.ari = trunc nuw i8 %i.arh to i1
   br i1 %i.ari, label %bb.wf, label %bb.we
 
-bb.uc:                                            ; preds = %3
+bb.uc:                                            ; preds = %bb.tb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ez)
   call void @llvm.experimental.noalias.scope.decl(metadata !1514)
   call void @llvm.experimental.noalias.scope.decl(metadata !1515)
@@ -506,7 +502,9 @@ bb.ud:                                            ; preds = %.noexc287
 .noexc288:                                        ; preds = %bb.ud
   unreachable
 
-.thread535:                                       ; preds = %3
+.thread535:                                       ; preds = %bb.tb
+  %3 = icmp ne i64 %i.apv, -9223372036854775788
+  call void @llvm.assume(i1 %3)
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(72) %i.fi, i64 72, i1 false)
   store i64 -9223372036854775728, ptr %i.ei, align 16

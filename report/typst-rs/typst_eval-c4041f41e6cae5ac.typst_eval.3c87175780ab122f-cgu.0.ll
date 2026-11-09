@@ -205,17 +205,13 @@ bb.am:                                            ; preds = %.noexc128
           to label %.noexc135 unwind label %.thread170.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !18403
 
 .noexc135:                                        ; preds = %.noexc134
-  %i.dz = load i64, ptr %i.b, align 8, !range !39, !noalias !18424, !noundef !35 ; 3 uses
-  %3 = icmp eq i64 %i.dz, -1
-  br i1 %3, label %bb.ao, label %4
+  %i.dz = load i64, ptr %i.b, align 8, !range !39, !noalias !18424, !noundef !35
+  switch i64 %i.dz, label %bb.an [
+    i64 -1, label %bb.ao
+    i64 26, label %bb.ap
+  ]
 
-4:                                                ; preds = %.noexc135
-  %5 = icmp ne i64 %i.dz, 30
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %i.dz, 26
-  br i1 %6, label %bb.ap, label %bb.an
-
-bb.an:                                            ; preds = %4
+bb.an:                                            ; preds = %.noexc135
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueECs5cbCQMMIObr_10typst_eval(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB13_4diag16SourceDiagnosticEEECs5cbCQMMIObr_10typst_eval.exit.i unwind label %.thread170.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !18403
 
@@ -231,7 +227,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4Dqm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !18424
   br label %.loopexit
 
-bb.ap:                                            ; preds = %4
+bb.ap:                                            ; preds = %.noexc135
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueECs5cbCQMMIObr_10typst_eval(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b)
           to label %.noexc129 unwind label %.thread170.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !18403
 

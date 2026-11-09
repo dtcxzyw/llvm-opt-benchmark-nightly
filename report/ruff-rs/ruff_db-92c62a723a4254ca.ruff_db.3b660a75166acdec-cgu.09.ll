@@ -204,23 +204,22 @@ bb.d:                                             ; preds = %bb.b
   %i.t = phi ptr [ %i.u, %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.us.i ], [ %1, %.lr.ph.i ] ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24 ; 2 uses
   %i.v = getelementptr i8, ptr %i.t, i64 8
-  %.val4.us.i = load ptr, ptr %i.v, align 8, !noalias !723, !nonnull !5, !noundef !5 ; 2 uses
+  %.val4.us.i = load ptr, ptr %i.v, align 8, !noalias !723, !nonnull !5, !noundef !5 ; 3 uses
   %i.w = getelementptr i8, ptr %i.t, i64 16
-  %.val5.us.i = load i64, ptr %i.w, align 8, !noalias !723, !noundef !5 ; 4 uses
-  %3 = icmp eq i64 %.val5.us.i, 0
-  br i1 %3, label %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.us.i, label %4
+  %.val5.us.i = load i64, ptr %i.w, align 8, !noalias !723, !noundef !5 ; 3 uses
+  switch i64 %.val5.us.i, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.us.i [
+    i64 0, label %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.us.i
+    i64 1, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.us.i
+  ]
 
-4:                                                ; preds = %.lr.ph.split.us.i
-  %5 = icmp eq i64 %.val5.us.i, 1
-  %6 = getelementptr inbounds nuw i8, ptr %.val4.us.i, i64 1 ; 3 uses
-  br i1 %5, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.us.i, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.us.i
-
-_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.us.i: ; preds = %4
-  %i.x = load i8, ptr %6, align 1, !alias.scope !724, !noalias !723, !noundef !5
+_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.us.i: ; preds = %.lr.ph.split.us.i
+  %3 = getelementptr inbounds nuw i8, ptr %.val4.us.i, i64 1
+  %i.x = load i8, ptr %3, align 1, !alias.scope !724, !noalias !723, !noundef !5
   %i.y = icmp sgt i8 %i.x, -65
   br i1 %i.y, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.us.i, label %.split.us.i
 
-_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.us.i: ; preds = %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.us.i, %4
+_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.us.i: ; preds = %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.us.i, %.lr.ph.split.us.i
+  %.ph.i.us.i = getelementptr inbounds nuw i8, ptr %.val4.us.i, i64 1 ; 2 uses
   %i.z = add i64 %.val5.us.i, -1
   %.not5.i.us.i = icmp eq i64 %i.l, %i.z
   br i1 %.not5.i.us.i, label %.lr.ph.i.preheader.i.us.i, label %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.us.i
@@ -233,7 +232,7 @@ _RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtN
 .lr.ph.i.i.us.i:                                  ; preds = %bb.e, %.lr.ph.i.preheader.i.us.i
   %.sroa.02.039.i.i.us.i = phi i64 [ %i.ap, %bb.e ], [ 0, %.lr.ph.i.preheader.i.us.i ] ; 3 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %.sroa.02.039.i.i.us.i
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %.sroa.02.039.i.i.us.i
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %.ph.i.us.i, i64 %.sroa.02.039.i.i.us.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !727)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !728)
   %i.ac = load <16 x i8>, ptr %i.aa, align 1, !alias.scope !729 ; 2 uses
@@ -260,7 +259,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.us.i
   br i1 %i.q, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufBQ_Es_0ECs56aZGHL6Dc6_7ruff_db.exit, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs56aZGHL6Dc6_7ruff_db.exit24.i.i.us.i
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs56aZGHL6Dc6_7ruff_db.exit24.i.i.us.i: ; preds = %._crit_edge.i.i.us.i
-  %i.aq = getelementptr i8, ptr %6, i64 %i.l
+  %i.aq = getelementptr i8, ptr %.ph.i.us.i, i64 %i.l
   %i.ar = getelementptr i8, ptr %i.aq, i64 -16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !731)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !732)
@@ -287,23 +286,21 @@ _RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP
   %i.bf = phi ptr [ %i.bg, %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.i ], [ %1, %.lr.ph.split.i.preheader ] ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 24 ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bf, i64 8
-  %.val4.i = load ptr, ptr %i.bh, align 8, !noalias !723, !nonnull !5, !noundef !5 ; 2 uses
+  %.val4.i = load ptr, ptr %i.bh, align 8, !noalias !723, !nonnull !5, !noundef !5 ; 3 uses
   %i.bi = getelementptr i8, ptr %i.bf, i64 16
-  %.val5.i = load i64, ptr %i.bi, align 8, !noalias !723, !noundef !5 ; 4 uses
-  %7 = icmp eq i64 %.val5.i, 0
-  br i1 %7, label %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.i, label %8
+  %.val5.i = load i64, ptr %i.bi, align 8, !noalias !723, !noundef !5 ; 3 uses
+  switch i64 %.val5.i, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i [
+    i64 0, label %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.i
+    i64 1, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.i
+  ]
 
-8:                                                ; preds = %.lr.ph.split.i
-  %9 = icmp eq i64 %.val5.i, 1
-  %10 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 1 ; 2 uses
-  br i1 %9, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.i, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i
-
-_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i: ; preds = %8
-  %i.bj = load i8, ptr %10, align 1, !alias.scope !724, !noalias !723, !noundef !5
+_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i: ; preds = %.lr.ph.split.i
+  %4 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 1
+  %i.bj = load i8, ptr %4, align 1, !alias.scope !724, !noalias !723, !noundef !5
   %i.bk = icmp sgt i8 %i.bj, -65
   br i1 %i.bk, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.i, label %.split.us.i
 
-_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.i: ; preds = %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i, %8
+_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.i: ; preds = %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i, %.lr.ph.split.i
   %i.bl = add i64 %.val5.i, -1
   %.not5.i.i = icmp eq i64 %i.l, %i.bl
   br i1 %.not5.i.i, label %bb.f, label %_RNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCscdodAO9FK5_5alloc6string6StringEs_0Cs56aZGHL6Dc6_7ruff_db.exit.i
@@ -320,22 +317,22 @@ bb.f:                                             ; preds = %_RNvXs9_NtNtCs4NRVx
   br i1 %.not.i.i.i50, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufBQ_Es_0ECs56aZGHL6Dc6_7ruff_db.exit, label %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i9.i.i53, i64 1
-  %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.i52, i64 1
+  %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i9.i.i53, i64 1
   %i.bn = add nsw i64 %.sroa.58.0.i.i.i51, -1     ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCINvNtCs8p1poYNiitJ_5which6helper24has_executable_extensionRNtNtCs2AWtUsOyxgP_3std4path7PathBufBQ_Es_0ECs56aZGHL6Dc6_7ruff_db.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f, %bb.g
-  %.sroa.0.0.i9.i.i53 = phi ptr [ %11, %bb.g ], [ %i.j, %bb.f ] ; 2 uses
-  %.sroa.05.0.i.i.i52 = phi ptr [ %i.bm, %bb.g ], [ %10, %bb.f ] ; 2 uses
+  %.sroa.0.0.i9.i.i53 = phi ptr [ %i.bm, %bb.g ], [ %i.j, %bb.f ] ; 2 uses
+  %.sroa.05.0.i.i.i52 = phi ptr [ %.sroa.05.0.i.i.i, %bb.g ], [ %.val4.i, %bb.f ]
   %.sroa.58.0.i.i.i51 = phi i64 [ %i.bn, %bb.g ], [ %i.l, %bb.f ]
+  %.sroa.05.0.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.i52, i64 1 ; 2 uses
   %i.bo = load i8, ptr %.sroa.0.0.i9.i.i53, align 1, !alias.scope !737, !noundef !5 ; 2 uses
   %i.bp = add i8 %i.bo, -65
   %i.bq = icmp ult i8 %i.bp, 26
   %i.br = select i1 %i.bq, i8 32, i8 0
   %.sroa.012.0.i.i.i = or i8 %i.br, %i.bo
-  %i.bs = load i8, ptr %.sroa.05.0.i.i.i52, align 1, !alias.scope !736, !noalias !723, !noundef !5 ; 2 uses
+  %i.bs = load i8, ptr %.sroa.05.0.i.i.i, align 1, !alias.scope !736, !noalias !723, !noundef !5 ; 2 uses
   %i.bt = add i8 %i.bs, -65
   %i.bu = icmp ult i8 %i.bt, 26
   %i.bv = select i1 %i.bu, i8 32, i8 0

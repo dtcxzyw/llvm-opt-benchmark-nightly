@@ -202,9 +202,11 @@ bb.ms:                                            ; preds = %bb.lg
   br label %.thread228.i
 
 bb.mt:                                            ; preds = %bb.lg
-  %i.aeu = load i8, ptr %i.cs, align 8, !range !23, !noalias !1683, !noundef !12 ; 5 uses
-  %3 = icmp eq i8 %i.aeu, -1
-  br i1 %3, label %bb.mu, label %4
+  %i.aeu = load i8, ptr %i.cs, align 8, !range !23, !noalias !1683, !noundef !12 ; 4 uses
+  switch i8 %i.aeu, label %bb.nc [
+    i8 -1, label %bb.mu
+    i8 6, label %bb.my
+  ]
 
 bb.mu:                                            ; preds = %bb.mt
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552.i)
@@ -229,13 +231,7 @@ bb.mx:                                            ; preds = %bb.mu
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsiLZOIpitoQl_15metrics_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx.i)
           to label %bb.ni unwind label %bb.mr, !noalias !1687
 
-4:                                                ; preds = %bb.mt
-  %5 = icmp ne i8 %i.aeu, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.aeu, 6
-  br i1 %6, label %bb.my, label %bb.nc
-
-bb.my:                                            ; preds = %4
+bb.my:                                            ; preds = %bb.mt
   %i.aex = load i64, ptr %1, align 8, !range !33, !alias.scope !1757, !noundef !12
   %i.aey = call i64 @llvm.usub.sat.i64(i64 %i.aex, i64 5)
   switch i64 %i.aey, label %bb.nj [
@@ -256,7 +252,9 @@ bb.nb:                                            ; preds = %bb.my
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsiLZOIpitoQl_15metrics_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx.i)
           to label %bb.nj unwind label %bb.ng, !noalias !1687
 
-bb.nc:                                            ; preds = %4
+bb.nc:                                            ; preds = %bb.mt
+  %3 = icmp ne i8 %i.aeu, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5170.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
   %.sroa.5172.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %.sroa.5172.0.copyload.i = load ptr, ptr %.sroa.5172.0..sroa_idx.i, align 8, !noalias !1683 ; 2 uses
@@ -312,14 +310,14 @@ bb.nj:                                            ; preds = %bb.nb, %bb.na, %bb.
   br label %bb.nl
 
 bb.nk:                                            ; preds = %bb.nl, %bb.ni
-  %.sroa.1170.1 = phi i8 [ -3, %bb.ni ], [ %.sroa.1170.0, %bb.nl ]
-  %.sroa.9.1 = phi ptr [ undef, %bb.ni ], [ %.sroa.9.0, %bb.nl ]
+  %.sroa.1170.1 = phi i8 [ %.sroa.1170.0, %bb.nl ], [ -3, %bb.ni ]
+  %.sroa.9.1 = phi ptr [ %.sroa.9.0, %bb.nl ], [ undef, %bb.ni ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ct), !noalias !1683
   br label %_RNvMs1_NtCsjouRnuJWSBB_5yamux10connectionINtB5_10ConnectionINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtNtCshuexzQAPOo_12libp2p_noise2io6OutputIBW_NtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEE17poll_next_inboundCsiLZOIpitoQl_15metrics_example.exit
 
 bb.nl:                                            ; preds = %bb.nj, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjouRnuJWSBB_5yamux10connection15ConnectionStateINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtNtCshuexzQAPOo_12libp2p_noise2io6OutputIB1u_NtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEEECsiLZOIpitoQl_15metrics_example.exit138.i
-  %.sroa.1170.0 = phi i8 [ -2, %bb.nj ], [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjouRnuJWSBB_5yamux10connection15ConnectionStateINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtNtCshuexzQAPOo_12libp2p_noise2io6OutputIB1u_NtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEEECsiLZOIpitoQl_15metrics_example.exit138.i ]
-  %.sroa.9.0 = phi ptr [ undef, %bb.nj ], [ %.sroa.5172.0.copyload.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjouRnuJWSBB_5yamux10connection15ConnectionStateINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtNtCshuexzQAPOo_12libp2p_noise2io6OutputIB1u_NtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEEECsiLZOIpitoQl_15metrics_example.exit138.i ]
+  %.sroa.1170.0 = phi i8 [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjouRnuJWSBB_5yamux10connection15ConnectionStateINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtNtCshuexzQAPOo_12libp2p_noise2io6OutputIB1u_NtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEEECsiLZOIpitoQl_15metrics_example.exit138.i ], [ -2, %bb.nj ]
+  %.sroa.9.0 = phi ptr [ %.sroa.5172.0.copyload.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjouRnuJWSBB_5yamux10connection15ConnectionStateINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtNtCshuexzQAPOo_12libp2p_noise2io6OutputIB1u_NtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEEECsiLZOIpitoQl_15metrics_example.exit138.i ], [ undef, %bb.nj ]
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsiLZOIpitoQl_15metrics_example(ptr noalias nofree noundef align 8 dereferenceable(48) %i.ct), !noalias !1687
   br label %bb.nk
 

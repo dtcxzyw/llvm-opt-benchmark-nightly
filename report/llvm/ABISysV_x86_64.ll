@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g
   %spec.select341 = select i1 %.not.i.i80, i64 4294967306, i64 0
   br label %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit82
 
-_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit82: ; preds = %.thread220, %bb.b, %bb.c, %bb.a, %bb.h, %bb.f, %bb.d, %bb.e, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit34.thread, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit50, %.thread205, %bb.g
-  %.sroa.26.10 = phi i64 [ 4294967300, %bb.e ], [ 4294967298, %bb.d ], [ %spec.select341, %bb.h ], [ %spec.select346, %.thread220 ], [ 4294967305, %bb.g ], [ 4294967301, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit34.thread ], [ 0, %bb.a ], [ %spec.select, %bb.f ], [ 4294967303, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit50 ], [ 4294967302, %.thread205 ], [ 4294967297, %bb.c ], [ 4294967296, %bb.b ] ; 2 uses
+_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit82: ; preds = %.thread220, %bb.c, %bb.b, %bb.a, %bb.h, %bb.f, %bb.d, %bb.e, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit34.thread, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit50, %.thread205, %bb.g
+  %.sroa.26.10 = phi i64 [ 4294967300, %bb.e ], [ 4294967298, %bb.d ], [ %spec.select341, %bb.h ], [ %spec.select346, %.thread220 ], [ 4294967305, %bb.g ], [ 4294967301, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit34.thread ], [ 0, %bb.a ], [ %spec.select, %bb.f ], [ 4294967303, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit50 ], [ 4294967302, %.thread205 ], [ 4294967296, %bb.b ], [ 4294967297, %bb.c ] ; 2 uses
   %.not = icmp samesign ult i64 %.sroa.26.10, 4294967296
   %.sroa.26.16.extract.trunc = trunc i64 %.sroa.26.10 to i32
   %spec.select.i = select i1 %.not, i32 -1, i32 %.sroa.26.16.extract.trunc

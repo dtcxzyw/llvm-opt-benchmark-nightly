@@ -202,27 +202,27 @@ bb.d:                                             ; preds = %bb.c
   store ptr %2, ptr %i.g, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 0, ptr %i.ab, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 240 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 248
-  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 80 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 160
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 256
-  %i.ad = load i64, ptr %3, align 8, !range !40
-  %9 = trunc nuw i64 %i.ad to i1
-  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load i64, ptr %3, align 8, !range !40
+  %6 = trunc nuw i64 %5 to i1
+  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ad = load i64, ptr %i.ac, align 8
+  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.af = load i64, ptr %i.ae, align 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %10 = load i64, ptr %i.ag, align 8
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 240 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 248
   %.sroa.475.0..sroa_idx78 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.sroa.580.0..sroa_idx83 = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %.sroa.685.0..sroa_idx88 = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %.sroa.790.0..sroa_idx93 = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   %.sroa.9100.0..sroa_idx102 = getelementptr inbounds nuw i8, ptr %i.f, i64 64
+  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 80 ; 2 uses
   %.sroa.445.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %i.f, i64 96
   %.sroa.550.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %i.f, i64 112
   %.sroa.655.0..sroa_idx58 = getelementptr inbounds nuw i8, ptr %i.f, i64 120
   %.sroa.760.0..sroa_idx63 = getelementptr inbounds nuw i8, ptr %i.f, i64 128
   %.sroa.9.0..sroa_idx71 = getelementptr inbounds nuw i8, ptr %i.f, i64 144
+  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 160
+  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 256
   %.sroa.4186.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 96
   br label %bb.e
 
@@ -247,15 +247,11 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs7q2UDKzmthI_9iox_query14pruning_or
   br label %.body
 
 bb.f:                                             ; preds = %bb.e
-  %i.ai = extractvalue { i8, ptr } %i.ah, 0       ; 3 uses
-  %.not = icmp eq i8 %i.ai, -1
-  br i1 %.not, label %bb.g, label %11
-
-11:                                               ; preds = %bb.f
-  %12 = icmp ne i8 %i.ai, 6
-  call void @llvm.assume(i1 %12)
-  %13 = icmp eq i8 %i.ai, 7
-  br i1 %13, label %bb.u, label %bb.ab
+  %i.ai = extractvalue { i8, ptr } %i.ah, 0       ; 2 uses
+  switch i8 %i.ai, label %bb.ab [
+    i8 -1, label %bb.g
+    i8 7, label %bb.u
+  ]
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -377,25 +373,25 @@ bb.t:                                             ; preds = %bb.s, %.body, %bb.a
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #30
   unreachable
 
-bb.u:                                             ; preds = %11
-  br i1 %9, label %bb.w, label %bb.v
+bb.u:                                             ; preds = %bb.f
+  br i1 %6, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.u, %bb.v
-  %.sroa.655.1 = phi i64 [ 0, %bb.v ], [ %i.af, %bb.u ]
+  %.sroa.655.1 = phi i64 [ 0, %bb.v ], [ %i.ad, %bb.u ]
   %.sroa.072.1 = phi i128 [ 2, %bb.v ], [ 0, %bb.u ] ; 2 uses
   %.sroa.580.1 = phi i64 [ 0, %bb.v ], [ 1, %bb.u ] ; 2 uses
-  %.sroa.685.1 = phi i64 [ 0, %bb.v ], [ %10, %bb.u ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  %.sroa.685.1 = phi i64 [ 0, %bb.v ], [ %i.af, %bb.u ]
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ag, i8 0, i64 16, i1 false)
   store i128 %.sroa.072.1, ptr %i.f, align 16
   store i128 40, ptr %.sroa.475.0..sroa_idx78, align 16
   store i64 %.sroa.580.1, ptr %.sroa.580.0..sroa_idx83, align 16
   store i64 %.sroa.685.1, ptr %.sroa.685.0..sroa_idx88, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.790.0..sroa_idx93, i8 0, i64 16, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.9100.0..sroa_idx102, ptr noundef nonnull align 16 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @11, i64 144), i64 16, i1 false)
-  store i128 %.sroa.072.1, ptr %7, align 16
+  store i128 %.sroa.072.1, ptr %8, align 16
   store i128 40, ptr %.sroa.445.0..sroa_idx48, align 16
   store i64 %.sroa.580.1, ptr %.sroa.550.0..sroa_idx53, align 16
   store i64 %.sroa.655.1, ptr %.sroa.655.0..sroa_idx58, align 8
@@ -406,8 +402,8 @@ bb.w:                                             ; preds = %bb.u, %bb.v
 bb.x:                                             ; preds = %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread174, %bb.w
   %.sroa.4.2 = phi i64 [ %.sroa.4.1, %bb.w ], [ %.sroa.4.3, %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread174 ]
   %.sroa.03.2 = phi i64 [ %.sroa.03.1, %bb.w ], [ %.sroa.03.3, %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread174 ]
-  store i128 2, ptr %8, align 16
-  store i64 2, ptr %i.ac, align 16
+  store i128 2, ptr %9, align 16
+  store i64 2, ptr %10, align 16
   %i.bf = load i64, ptr %i.v, align 8, !alias.scope !2170, !noundef !10 ; 3 uses
   %i.bg = load i64, ptr %i.i, align 8, !range !12, !alias.scope !2170, !noundef !10
   %i.bh = icmp eq i64 %i.bf, %i.bg
@@ -437,7 +433,9 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCslWccy9wMl4f_17datafusion_common
   store i64 %i.bm, ptr %i.v, align 8, !alias.scope !2170
   br label %bb.e
 
-bb.ab:                                            ; preds = %11
+bb.ab:                                            ; preds = %bb.f
+  %11 = icmp ne i8 %i.ai, 6
+  call void @llvm.assume(i1 %11)
   %i.bn = load i64, ptr @_RNvNtNtCs7q2UDKzmthI_9iox_query10statistics19aggregate_per_chunk21NULL_COLUMN_INDICATOR, align 8, !range !15, !noundef !10
   %i.bo = icmp eq i64 %i.bn, 2
   br i1 %i.bo, label %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread, label %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread174
@@ -454,10 +452,10 @@ _RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsY
   %i.bp = phi i64 [ %1, %bb.ac ], [ undef, %bb.ab ], [ undef, %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread ]
   %i.bq = phi i64 [ 0, %bb.ac ], [ 2, %bb.ab ], [ 2, %_RNvXsa_NtCslWccy9wMl4f_17datafusion_common5statsINtB5_9PrecisionjENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCs92BnbMq7p8c_15influxdb3_write.exit.thread ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %.sroa.4186.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @11, i64 16), i64 64, i1 false)
-  store i64 %i.bq, ptr %5, align 16
-  store i64 %i.bp, ptr %6, align 8
+  store i64 %i.bq, ptr %i.ag, align 16
+  store i64 %i.bp, ptr %7, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.f, ptr noundef nonnull align 16 dereferenceable(80) getelementptr inbounds nuw (i8, ptr @11, i64 80), i64 80, i1 false)
-  store i128 2, ptr %7, align 16
+  store i128 2, ptr %8, align 16
   br label %bb.x
 
 bb.ad:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs7q2UDKzmthI_9iox_query14pruning_oracle35BucketPartitionPruningOracleBuilderECs92BnbMq7p8c_15influxdb3_write.exit, %bb.ae

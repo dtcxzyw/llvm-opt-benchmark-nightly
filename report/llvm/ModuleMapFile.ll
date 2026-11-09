@@ -205,7 +205,7 @@ _ZN4llvm12StringSwitchIN12_GLOBAL__N_17MMToken9TokenKindES3_E4CaseENS_13StringLi
   %.not.i.i70 = icmp eq i32 %i.bn, 0
   br i1 %.not.i.i70, label %_ZN4llvm12StringSwitchIN12_GLOBAL__N_17MMToken9TokenKindES3_E4CaseENS_13StringLiteralES3_.exit153, label %_ZN4llvm12StringSwitchIN12_GLOBAL__N_17MMToken9TokenKindES3_E4CaseENS_13StringLiteralES3_.exit81
 
-_ZN4llvm12StringSwitchIN12_GLOBAL__N_17MMToken9TokenKindES3_E4CaseENS_13StringLiteralES3_.exit72: ; preds = %bb.c, %bb.d, %bb.e, %bb.i
+_ZN4llvm12StringSwitchIN12_GLOBAL__N_17MMToken9TokenKindES3_E4CaseENS_13StringLiteralES3_.exit72: ; preds = %bb.d, %bb.e, %bb.c, %bb.i
   %.not = phi i1 [ true, %bb.i ], [ true, %bb.c ], [ false, %bb.e ], [ false, %bb.d ] ; 3 uses
   %.sroa.36.6 = phi i64 [ 0, %bb.i ], [ 0, %bb.c ], [ 4294967298, %bb.e ], [ 4294967297, %bb.d ] ; 4 uses
   %.not.i.i.i.i77 = icmp eq i32 %i.q, 9

@@ -205,7 +205,7 @@ _ZN4llvm12StringSwitchIN12lldb_private10ObjectFile4TypeES3_E4CaseENS_13StringLit
   store i32 %.sroa.22.8, ptr %1, align 4, !tbaa !183
   br label %_ZNK4llvm4json5Value11getAsStringEv.exit.thread196
 
-_ZN4llvm12StringSwitchIN12lldb_private10ObjectFile4TypeES3_E4CaseENS_13StringLiteralES3_.exit68.thread: ; preds = %bb.e, %bb.c, %bb.g, %bb.k, %bb.b, %bb.i, %bb.j, %bb.h
+_ZN4llvm12StringSwitchIN12lldb_private10ObjectFile4TypeES3_E4CaseENS_13StringLiteralES3_.exit68.thread: ; preds = %bb.e, %bb.c, %bb.g, %bb.k, %bb.i, %bb.j, %bb.b, %bb.h
   store i32 0, ptr %1, align 4, !tbaa !183
   call void @_ZN4llvm4json4Path6reportENS_13StringLiteralE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr nonnull @.str.70, i64 19) #23
   br label %_ZNK4llvm4json5Value11getAsStringEv.exit.thread196

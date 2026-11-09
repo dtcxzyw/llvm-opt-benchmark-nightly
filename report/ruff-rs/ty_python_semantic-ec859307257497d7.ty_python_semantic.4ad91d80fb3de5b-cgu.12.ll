@@ -205,25 +205,17 @@ bb.b:                                             ; preds = %_RNCINvNtNtNtCs4NRV
   %.val4.i = load i32, ptr %i.w, align 4, !noalias !5436, !noundef !27 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !5437
   call void @_RNvMs4_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8genericsNtB5_19ApplySpecialization3get(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(address) dereferenceable(16) %i.f, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.0.0.copyload, ptr noundef nonnull %.sroa.4.0.copyload, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.sroa.5.0.copyload, i32 noundef range(i32 1, 0) %.val.i, i32 noundef %.val4.i), !noalias !5437
-  %i.x = load i32, ptr %i.f, align 4, !range !37, !noalias !5437, !noundef !27 ; 3 uses
-  %.not.i.i.i.i = icmp eq i32 %i.x, -1
-  br i1 %.not.i.i.i.i, label %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread.i.i.i, label %3
+  %i.x = load i32, ptr %i.f, align 4, !range !37, !noalias !5437, !noundef !27 ; 2 uses
+  switch i32 %i.x, label %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i [
+    i32 -1, label %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i.a
+    i32 29, label %bb.c
+  ]
 
-_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread.i.i.i: ; preds = %bb.b
+_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i.a: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !5437
   br label %bb.l
 
-3:                                                ; preds = %bb.b
-  %4 = icmp ne i32 %i.x, 17
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i32 %i.x, 29
-  br i1 %5, label %bb.c, label %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i.a
-
-_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i.a: ; preds = %3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !5437
-  br label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied9copy_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuNCINvNtB6_6filter11filter_foldBY_uNCNvMst_B12_NtB12_11TypeMapping32update_signature_generic_contexts_0NCINvNtB6_3map8map_foldBY_TNtB10_20BoundTypeVarIdentityBY_EuNCINvMs_NtB12_8genericsNtB4W_14GenericContext33from_typevar_instances_in_programINtB2h_6FilterINtB4_6CopiedINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesB4h_BY_EEB2K_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB4g_NCINvXsb_B6C_INtB6C_8IndexMapB4h_BY_INtNtBa_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB7I_7collect6ExtendB4g_E6extendINtB3V_3MapB66_B4O_EE0E0E0E0E0B14_.exit.i
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %bb.b
   %i.y = load i32, ptr %i.h, align 4, !range !30, !noalias !5437, !noundef !27
   %i.z = load i32, ptr %i.i, align 4, !noalias !5437, !noundef !27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !5437
@@ -290,6 +282,12 @@ bb.k:                                             ; preds = %bb.i
   %i.av = icmp eq i8 %i.au, 2
   br i1 %i.av, label %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.i.i.i, label %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread7.i.i.i
 
+_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i: ; preds = %bb.b
+  %3 = icmp ne i32 %i.x, 17
+  call void @llvm.assume(i1 %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !5437
+  br label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied9copy_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuNCINvNtB6_6filter11filter_foldBY_uNCNvMst_B12_NtB12_11TypeMapping32update_signature_generic_contexts_0NCINvNtB6_3map8map_foldBY_TNtB10_20BoundTypeVarIdentityBY_EuNCINvMs_NtB12_8genericsNtB4W_14GenericContext33from_typevar_instances_in_programINtB2h_6FilterINtB4_6CopiedINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesB4h_BY_EEB2K_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB4g_NCINvXsb_B6C_INtB6C_8IndexMapB4h_BY_INtNtBa_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB7I_7collect6ExtendB4g_E6extendINtB3V_3MapB66_B4O_EE0E0E0E0E0B14_.exit.i
+
 _RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread7.i.i.i: ; preds = %bb.k, %bb.j, %_RNvXs1g_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevarNtB6_14BindingContextNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i.i.i, %.split.i.i.i.i.i, %bb.h, %bb.g, %bb.e, %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !5437
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !5437
@@ -305,7 +303,7 @@ _RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_si
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !5437
   br i1 %i.ay, label %bb.l, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied9copy_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuNCINvNtB6_6filter11filter_foldBY_uNCNvMst_B12_NtB12_11TypeMapping32update_signature_generic_contexts_0NCINvNtB6_3map8map_foldBY_TNtB10_20BoundTypeVarIdentityBY_EuNCINvMs_NtB12_8genericsNtB4W_14GenericContext33from_typevar_instances_in_programINtB2h_6FilterINtB4_6CopiedINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesB4h_BY_EEB2K_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB4g_NCINvXsb_B6C_INtB6C_8IndexMapB4h_BY_INtNtBa_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB7I_7collect6ExtendB4g_E6extendINtB3V_3MapB66_B4O_EE0E0E0E0E0B14_.exit.i
 
-bb.l:                                             ; preds = %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.i.i.i, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread.i.i.i
+bb.l:                                             ; preds = %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.i.i.i, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5444
   call void @_RNvMs5_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevarNtB5_20BoundTypeVarInstance8identity(ptr noalias noundef nonnull sret([28 x i8]) align 4 captures(address) dereferenceable(36) %i.c, i32 noundef range(i32 1, 0) %.val.i, i32 noundef %.val4.i, ptr noundef nonnull %.sroa.7.0.copyload, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.sroa.8.0.copyload), !noalias !5445
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !5446
@@ -317,7 +315,7 @@ bb.l:                                             ; preds = %_RNCNvMst_NtCsoTR8n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5444
   br label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied9copy_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuNCINvNtB6_6filter11filter_foldBY_uNCNvMst_B12_NtB12_11TypeMapping32update_signature_generic_contexts_0NCINvNtB6_3map8map_foldBY_TNtB10_20BoundTypeVarIdentityBY_EuNCINvMs_NtB12_8genericsNtB4W_14GenericContext33from_typevar_instances_in_programINtB2h_6FilterINtB4_6CopiedINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesB4h_BY_EEB2K_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB4g_NCINvXsb_B6C_INtB6C_8IndexMapB4h_BY_INtNtBa_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB7I_7collect6ExtendB4g_E6extendINtB3V_3MapB66_B4O_EE0E0E0E0E0B14_.exit.i
 
-_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied9copy_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuNCINvNtB6_6filter11filter_foldBY_uNCNvMst_B12_NtB12_11TypeMapping32update_signature_generic_contexts_0NCINvNtB6_3map8map_foldBY_TNtB10_20BoundTypeVarIdentityBY_EuNCINvMs_NtB12_8genericsNtB4W_14GenericContext33from_typevar_instances_in_programINtB2h_6FilterINtB4_6CopiedINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesB4h_BY_EEB2K_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB4g_NCINvXsb_B6C_INtB6C_8IndexMapB4h_BY_INtNtBa_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB7I_7collect6ExtendB4g_E6extendINtB3V_3MapB66_B4O_EE0E0E0E0E0B14_.exit.i: ; preds = %bb.l, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.i.i.i, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread7.i.i.i, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i.a
+_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied9copy_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarInstanceuNCINvNtB6_6filter11filter_foldBY_uNCNvMst_B12_NtB12_11TypeMapping32update_signature_generic_contexts_0NCINvNtB6_3map8map_foldBY_TNtB10_20BoundTypeVarIdentityBY_EuNCINvMs_NtB12_8genericsNtB4W_14GenericContext33from_typevar_instances_in_programINtB2h_6FilterINtB4_6CopiedINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesB4h_BY_EEB2K_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB4g_NCINvXsb_B6C_INtB6C_8IndexMapB4h_BY_INtNtBa_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB7I_7collect6ExtendB4g_E6extendINtB3V_3MapB66_B4O_EE0E0E0E0E0B14_.exit.i: ; preds = %bb.l, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.i.i.i, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread7.i.i.i, %_RNCNvMst_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_11TypeMapping32update_signature_generic_contexts_0B9_.exit.thread5.i.i.i
   %i.az = icmp eq ptr %i.v, %1
   br i1 %i.az, label %_RINvYINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarIdentityNtBP_20BoundTypeVarInstanceENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB2y_8adapters6copied9copy_foldB20_uNCINvNtB3A_6filter11filter_foldB20_uNCNvMst_BR_NtBR_11TypeMapping32update_signature_generic_contexts_0NCINvNtB3A_3map8map_foldB20_TBN_B20_EuNCINvMs_NtBR_8genericsNtB6z_14GenericContext33from_typevar_instances_in_programINtB4g_6FilterINtB3y_6CopiedB3_EB4L_EE0NCINvNvB2s_8for_each4callB6h_NCINvXsb_B8_INtB8_8IndexMapBN_B20_INtNtB2A_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEINtNtB2w_7collect6ExtendB6h_E6extendINtB5U_3MapB7I_B6r_EE0E0E0E0E0EBT_.exit, label %bb.b
 
@@ -720,21 +718,24 @@ bb.a:
   %.sroa.9 = alloca [28 x i8], align 4            ; 12 uses
   %i.w = alloca [16 x i8], align 4                ; 4 uses
   %i.x = alloca [16 x i8], align 4                ; 4 uses
-  %.val = load i32, ptr %3, align 4               ; 3 uses
-  %.not.i = icmp eq i32 %.val, -1
-  br i1 %.not.i, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit
+  %.val = load i32, ptr %3, align 4               ; 2 uses
+  switch i32 %.val, label %4 [
+    i32 -1, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
+    i32 20, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit
+  ]
+
+4:                                                ; preds = %bb.a
+  %5 = icmp ne i32 %.val, 17
+  tail call void @llvm.assume(i1 %5)
+  br label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
 
 _RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit: ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 4
   %.val1 = load i8, ptr %i.y, align 4
-  %4 = icmp ne i32 %.val, 17
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp eq i32 %.val, 20
   %i.z = icmp eq i8 %.val1, 30
-  %.sroa.0.1.i = select i1 %5, i1 %i.z, i1 false
-  br i1 %.sroa.0.1.i, label %bb.ac, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
+  br i1 %i.z, label %bb.ac, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
 
-_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread: ; preds = %bb.a, %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit
+_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread: ; preds = %4, %bb.a, %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   %i.ab = load ptr, ptr %2, align 8, !nonnull !27, !noundef !27 ; 7 uses
@@ -1137,19 +1138,24 @@ _RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %.sroa.7.0..sroa_idx79, ptr noundef nonnull align 1 dereferenceable(11) %.sroa.7.0..sroa_idx, i64 11, i1 false)
   call fastcc void @_RINvMs_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builderNtB5_20TypeInferenceBuilder25store_maybe_expected_typeNtNtCskLngH8kgpZI_15ruff_python_ast9generated7ExprRefEBb_(ptr noalias noundef nonnull align 8 dereferenceable(608) %1, ptr noundef nonnull align 8 %i.dy, ptr noalias noundef align 4 captures(address) dereferenceable(16) %i.bo)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bo), !noalias !17877
-  %4 = icmp ne i32 %.sroa.075.0.copyload, 17
-  tail call void @llvm.assume(i1 %4)
   %i.dz = icmp eq i32 %.sroa.075.0.copyload, 20
-  %5 = icmp eq i8 %.sroa.6.0.copyload, 30
-  %.sroa.0.1.i = select i1 %i.dz, i1 %5, i1 false
-  br i1 %.sroa.0.1.i, label %bb.x, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
+  br i1 %i.dz, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit, label %4
 
-_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread: ; preds = %bb.w, %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.a
+4:                                                ; preds = %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.a
+  %5 = icmp ne i32 %.sroa.075.0.copyload, 17
+  tail call void @llvm.assume(i1 %5)
+  br label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
+
+_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit: ; preds = %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.a
+  %6 = icmp eq i8 %.sroa.6.0.copyload, 30
+  br i1 %6, label %bb.x, label %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread
+
+_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.thread: ; preds = %bb.w, %4, %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit
   %i.ea = tail call noundef i64 @_RNvMsP_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB5_18StringLiteralValue3len(ptr noundef nonnull align 8 %i.dy), !noalias !17879, !inline_history !17746
   %i.eb = icmp ult i64 %i.ea, 4097
   br i1 %i.eb, label %bb.z, label %bb.y
 
-bb.x:                                             ; preds = %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit.a
+bb.x:                                             ; preds = %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5inferNtB5_11TypeContext12is_typealias.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bn), !noalias !17877
   call fastcc void @_RNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder15type_expressionNtB4_20TypeInferenceBuilder28infer_string_type_expression(ptr noalias noundef align 4 captures(address) dereferenceable(16) %i.bn, ptr noalias noundef nonnull align 8 dereferenceable(608) %1, ptr noundef nonnull align 8 %i.dy), !noalias !17879, !inline_history !17746
   %.val2.i10 = load ptr, ptr %i.ch, align 8, !alias.scope !17876, !nonnull !27, !noundef !27

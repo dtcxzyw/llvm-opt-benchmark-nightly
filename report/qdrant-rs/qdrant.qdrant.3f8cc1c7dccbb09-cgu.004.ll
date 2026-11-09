@@ -204,25 +204,22 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs6E
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.val = load i64, ptr %i.b, align 8, !range !48, !noundef !24 ; 2 uses
+  %.val = load i64, ptr %i.b, align 8, !range !48, !noundef !24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val2 = load ptr, ptr %i.c, align 8            ; 54 uses
-  %1 = icmp eq i64 %.val, -1
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit, label %2
-
-2:                                                ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
+  %.val2 = load ptr, ptr %i.c, align 8            ; 57 uses
   switch i64 %.val, label %default.unreachable [
+    i64 -1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
     i64 0, label %bb.k
     i64 1, label %bb.w
     i64 2, label %bb.at
     i64 3, label %bb.b
   ]
 
-default.unreachable:                              ; preds = %bb.bb, %2
+default.unreachable:                              ; preds = %bb.bb, %bb.a
   unreachable
 
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.d = load i64, ptr %.val2, align 8, !range !28, !alias.scope !1311, !noundef !24
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsef1ZxLeSXfJ_4zstd6stream3raw7DecoderECsl8OoimOLbh_6qdrant.exit.i.i.i.i.i
@@ -296,7 +293,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNt
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef 88, i64 noundef 8) #24
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
 
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke void @_RNvXs4_NtCsl0S4h5MD44r_6flate23zioINtB5_6WriterNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterNtNtB7_3mem10DecompressENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %.val2)
           to label %bb.n unwind label %bb.l
 
@@ -378,7 +376,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNt
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef 80, i64 noundef 8) #24
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
 
-bb.w:                                             ; preds = %2
+bb.w:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke void @_RNvXs4_NtCsl0S4h5MD44r_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterENtNtB7_3mem10DecompressENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val2)
           to label %bb.z unwind label %bb.x
 
@@ -554,7 +553,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNt
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef 232, i64 noundef 8) #24
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
 
-bb.at:                                            ; preds = %2
+bb.at:                                            ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1320)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1321)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1322)

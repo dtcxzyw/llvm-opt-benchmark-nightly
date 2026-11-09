@@ -206,8 +206,8 @@ bb.fa:                                            ; preds = %bb.ek
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !27927
   br label %_ZN18gix_worktree_state8checkout5entry8checkout17h3b652f0b5edf6770E.exit.thread
 
-common.resume:                                    ; preds = %.body, %10, %11, %bb.gd, %bb.fu, %bb.fr, %bb.fo, %.body.i, %.body.i.i.i, %bb.cr, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i", %bb.dk, %bb.dn, %bb.ea, %bb.eb, %bb.ec, %bb.ed, %bb.ef, %bb.eu, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i.thread"
-  %common.resume.op = phi { ptr, i32 } [ %i.gu, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i.thread" ], [ %.pn.i, %bb.dn ], [ %i.ic, %bb.ef ], [ %.pn335.i, %bb.ea ], [ %.pn335.i, %bb.ed ], [ %.pn335.i, %bb.eb ], [ %.pn335.i, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i" ], [ %i.fw, %bb.cr ], [ %i.jg, %bb.eu ], [ %.pn85.i.i.i, %.body.i.i.i ], [ %.pn335.i, %bb.ec ], [ %i.he, %bb.dk ], [ %i.ky, %.body ], [ %i.ky, %bb.gd ], [ %i.ky, %11 ], [ %i.ky, %10 ], [ %i.kh, %.body.i ], [ %i.kh, %bb.fo ], [ %i.kx, %bb.fu ], [ %i.kp, %bb.fr ]
+common.resume:                                    ; preds = %.body, %9, %bb.gc, %bb.gd, %bb.fu, %bb.fr, %bb.fo, %.body.i, %.body.i.i.i, %bb.cr, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i", %bb.dk, %bb.dn, %bb.ea, %bb.eb, %bb.ec, %bb.ed, %bb.ef, %bb.eu, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i.thread"
+  %common.resume.op = phi { ptr, i32 } [ %i.gu, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i.thread" ], [ %.pn.i, %bb.dn ], [ %i.ic, %bb.ef ], [ %.pn335.i, %bb.ea ], [ %.pn335.i, %bb.ed ], [ %.pn335.i, %bb.eb ], [ %.pn335.i, %"_ZN4core3ptr44drop_in_place$LT$gix_filter..driver..Key$GT$17h2145d2d04727a3c2E.exit.i" ], [ %i.fw, %bb.cr ], [ %i.jg, %bb.eu ], [ %.pn85.i.i.i, %.body.i.i.i ], [ %.pn335.i, %bb.ec ], [ %i.he, %bb.dk ], [ %i.ky, %.body ], [ %i.ky, %bb.gd ], [ %i.ky, %bb.gc ], [ %i.ky, %9 ], [ %i.kh, %.body.i ], [ %i.kh, %bb.fo ], [ %i.kx, %bb.fu ], [ %i.kp, %bb.fr ]
   resume { ptr, i32 } %common.resume.op
 
 _ZN18gix_worktree_state8checkout5entry8checkout17h3b652f0b5edf6770E.exit.thread: ; preds = %.thread.i, %bb.db, %bb.dw, %bb.fa
@@ -419,9 +419,11 @@ bb.fu:                                            ; preds = %bb.fj
   %.sroa.016.0 = phi i1 [ false, %bb.fw ], [ true, %bb.ff ]
   %i.ky = landingpad { ptr, i32 }
           cleanup                                 ; 4 uses
-  %i.kz = load i64, ptr %i.bb, align 8, !range !115, !noundef !43 ; 3 uses
-  %.not49 = icmp eq i64 %i.kz, -9223372036854775789
-  br i1 %.not49, label %common.resume, label %bb.gc
+  %i.kz = load i64, ptr %i.bb, align 8, !range !115, !noundef !43 ; 2 uses
+  switch i64 %i.kz, label %bb.gc [
+    i64 -9223372036854775789, label %common.resume
+    i64 -9223372036854775796, label %9
+  ]
 
 bb.fv:                                            ; preds = %bb.ff
   br i1 %i.jx, label %bb.fw, label %bb.fg
@@ -472,24 +474,20 @@ bb.gb:                                            ; preds = %_ZN18gix_worktree_s
   store i64 -9223372036854775789, ptr %0, align 8
   br label %bb.fx
 
+9:                                                ; preds = %.body
+  br i1 %.sroa.016.0, label %bb.gd, label %common.resume
+
 bb.gc:                                            ; preds = %.body
   %i.lg = icmp ne i64 %i.kz, -9223372036854775794
   call void @llvm.assume(i1 %i.lg)
-  %9 = icmp eq i64 %i.kz, -9223372036854775796
-  br i1 %9, label %10, label %11
-
-10:                                               ; preds = %bb.gc
-  br i1 %.sroa.016.0, label %bb.gd, label %common.resume
-
-11:                                               ; preds = %bb.gc
   invoke void @"_ZN4core3ptr56drop_in_place$LT$gix_worktree_state..checkout..Error$GT$17h3b71c8796c2600a9E"(ptr noalias noundef nonnull align 8 dereferenceable(248) %i.bb) #75
           to label %common.resume unwind label %bb.ge
 
-bb.gd:                                            ; preds = %10
+bb.gd:                                            ; preds = %9
   invoke void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17hc4d6b9640ccaa233E"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.jw) #75
           to label %common.resume unwind label %bb.ge
 
-bb.ge:                                            ; preds = %bb.gd, %11
+bb.ge:                                            ; preds = %bb.gd, %bb.gc
   %i.lh = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_ZN4core9panicking16panic_in_cleanup17h5eff40bcc4481d72E() #74
@@ -892,20 +890,16 @@ bb.bp:                                            ; preds = %"_ZN86_$LT$core..ma
 .noexc82.i.i:                                     ; preds = %bb.bp
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !89196
   call void @_ZN16nickel_lang_core4eval5value11NickelValue7content17h5471752e14fb6256E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.w, ptr noundef nonnull %.sroa.010.0333.i.i), !noalias !89149
-  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.w, align 8, !noalias !89196 ; 5 uses
+  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.w, align 8, !noalias !89196 ; 4 uses
   %.sroa.12.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %.sroa.12.0.copyload.i.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !noalias !89196 ; 4 uses
   %.sroa.15.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %.sroa.15.0.copyload.i.i.i.i = load ptr, ptr %.sroa.15.0..sroa_idx.i.i.i.i, align 8, !noalias !89196 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !89196
-  %.not18.i.i.i.i = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i, 30
-  br i1 %.not18.i.i.i.i, label %.thread.i.i.i.i, label %2
-
-2:                                                ; preds = %.noexc82.i.i
-  %3 = icmp ne i64 %.sroa.0.0.copyload.i.i.i.i, 23
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i, 20
-  br i1 %4, label %.noexc83.i.i, label %bb.bq
+  switch i64 %.sroa.0.0.copyload.i.i.i.i, label %bb.bq [
+    i64 30, label %.thread.i.i.i.i
+    i64 20, label %.noexc83.i.i
+  ]
 
 .thread.i.i.i.i:                                  ; preds = %.noexc82.i.i, %bb.bp
   %i.gs = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -913,7 +907,7 @@ bb.bp:                                            ; preds = %"_ZN86_$LT$core..ma
   store i64 -9223372036854775808, ptr %0, align 8, !alias.scope !89197
   br label %"_ZN19nickel_lang_package8manifest1_96_$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$nickel_lang_package..manifest..IndexId$GT$11deserialize17ha3b1d7ff99afdadcE.exit"
 
-.noexc83.i.i:                                     ; preds = %2
+.noexc83.i.i:                                     ; preds = %.noexc82.i.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0.copyload.i.i.i.i), "nonnull"(ptr %.sroa.15.0.copyload.i.i.i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !89196
   call void %.sroa.15.0.copyload.i.i.i.i(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.z, ptr noundef nonnull %.sroa.12.0.copyload.i.i.i.i), !noalias !89149, !inline_history !88973
@@ -925,7 +919,9 @@ bb.bp:                                            ; preds = %"_ZN86_$LT$core..ma
   %.not.i.i13.i.i.i = icmp eq i64 %i.gt, -9223372036854775808
   br i1 %.not.i.i13.i.i.i, label %bb.bt, label %bb.bs
 
-bb.bq:                                            ; preds = %2
+bb.bq:                                            ; preds = %.noexc82.i.i
+  %2 = icmp ne i64 %.sroa.0.0.copyload.i.i.i.i, 23
+  call void @llvm.assume(i1 %2)
   call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #67, !noalias !89201
   %i.gu = call noundef dereferenceable_or_null(13) ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef 13, i64 noundef range(i64 1, 9) 1) #67, !noalias !89201 ; 5 uses
   %i.gv = icmp eq ptr %i.gu, null

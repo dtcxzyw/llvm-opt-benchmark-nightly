@@ -205,23 +205,19 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.f, ptr noundef nonnull align 8 dereferenceable(128) %i.b, i64 128, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %.pr = load i64, ptr %i.f, align 8              ; 3 uses
+  %.pr = load i64, ptr %i.f, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %.not15 = icmp eq i64 %.pr, -1
-  br i1 %.not15, label %.thread40, label %8
+  switch i64 %.pr, label %bb.x [
+    i64 -1, label %.thread40
+    i64 -9223372036854775807, label %bb.w
+  ]
 
-8:                                                ; preds = %bb.v
-  %9 = icmp ne i64 %.pr, -9223372036854775804
-  call void @llvm.assume(i1 %9)
-  %10 = icmp eq i64 %.pr, -9223372036854775807
-  br i1 %10, label %bb.w, label %bb.x
-
-bb.w:                                             ; preds = %8
+bb.w:                                             ; preds = %bb.v
   %i.eb = load i32, ptr %i.db, align 4, !noundef !28
   %i.ec = invoke fastcc noundef zeroext i1 @_RNvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB5_7HashMapNtNtCskXtk6F4WjxZ_4just6number6NumberuNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE6insertBR_(ptr noalias nofree noundef align 8 dereferenceable(48) %i.aa, i32 noundef %i.eb)
           to label %bb.af unwind label %bb.ai     ; 0 uses
 
-bb.x:                                             ; preds = %8
+bb.x:                                             ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.d, ptr noundef nonnull align 8 dereferenceable(128) %i.f, i64 128, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !59762)
@@ -285,7 +281,7 @@ bb.af:                                            ; preds = %bb.w
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just16const_eval_error14ConstEvalErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(128) %i.f)
   br label %.thread40
 
-.thread40:                                        ; preds = %bb.af, %bb.v, %.thread
+.thread40:                                        ; preds = %bb.v, %bb.af, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapNtNtCskXtk6F4WjxZ_4just6number6NumberuNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE12contains_keyBO_EBS_.exit.thread
 

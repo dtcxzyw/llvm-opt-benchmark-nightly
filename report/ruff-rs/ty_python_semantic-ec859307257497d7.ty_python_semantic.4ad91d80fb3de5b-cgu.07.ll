@@ -205,8 +205,7 @@ bb.d:                                             ; preds = %bb.c
           to label %common.resume.i.i unwind label %bb.e, !noalias !18771
 
 _RNCNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types00B9_.exit.i.i: ; preds = %bb.c
-  %i.v = load i32, ptr %i.b, align 4, !range !57, !noalias !18773, !noundef !51 ; 3 uses
-  %6 = icmp eq i32 %i.v, -1
+  %i.v = load i32, ptr %i.b, align 4, !range !57, !noalias !18773, !noundef !51
   %.sroa.6.sroa.0.0.copyload.i.i = load i8, ptr %.sroa.6.0..sroa_idx5.i.i, align 4, !noalias !18770
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !18773
   call void @llvm.experimental.noalias.scope.decl(metadata !18775)
@@ -275,19 +274,16 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoT
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CowINtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple5TupleNtB1f_4TypeNtB1d_15VariableSegmentEEEB1h_.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEEB1b_.exit.i.i.i.i.i.i.i, %bb.h, %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i, %bb.g, %_RNCNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types00B9_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !18770
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !18770
-  br i1 %6, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i, label %7
+  switch i32 %i.v, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBS_6narrow46all_matching_tuple_elements_have_literal_types0EBU_.exit [
+    i32 -1, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i
+    i32 28, label %bb.m
+  ]
 
 bb.l:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !18770
   br label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i
 
-7:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CowINtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple5TupleNtB1f_4TypeNtB1d_15VariableSegmentEEEB1h_.exit.i.i
-  %8 = icmp ne i32 %i.v, 17
-  call void @llvm.assume(i1 %8)
-  %9 = icmp eq i32 %i.v, 28
-  br i1 %9, label %bb.m, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBS_6narrow46all_matching_tuple_elements_have_literal_types0EBU_.exit
-
-bb.m:                                             ; preds = %7
+bb.m:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CowINtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple5TupleNtB1f_4TypeNtB1d_15VariableSegmentEEEB1h_.exit.i.i
   switch i8 %.sroa.6.sroa.0.0.copyload.i.i, label %bb.n [
     i8 0, label %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i
     i8 1, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBS_6narrow46all_matching_tuple_elements_have_literal_types0EBU_.exit
@@ -304,8 +300,8 @@ _RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_ele
   %i.af = icmp eq ptr %i.q, %i.h
   br i1 %i.af, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBS_6narrow46all_matching_tuple_elements_have_literal_types0EBU_.exit, label %bb.b
 
-_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBS_6narrow46all_matching_tuple_elements_have_literal_types0EBU_.exit: ; preds = %7, %bb.m, %bb.m, %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i, %bb.a
-  %.lcssa.i = phi i1 [ true, %bb.a ], [ true, %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i ], [ false, %7 ], [ false, %bb.m ], [ false, %bb.m ]
+_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBS_6narrow46all_matching_tuple_elements_have_literal_types0EBU_.exit: ; preds = %bb.m, %bb.m, %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CowINtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple5TupleNtB1f_4TypeNtB1d_15VariableSegmentEEEB1h_.exit.i.i, %bb.a
+  %.lcssa.i = phi i1 [ true, %bb.a ], [ true, %_RNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow46all_matching_tuple_elements_have_literal_types0B7_.exit.i ], [ false, %bb.m ], [ false, %bb.m ], [ false, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CowINtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple5TupleNtB1f_4TypeNtB1d_15VariableSegmentEEEB1h_.exit.i.i ]
   ret i1 %.lcssa.i
 }
 

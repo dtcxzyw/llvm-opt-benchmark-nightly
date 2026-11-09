@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %_ZNK4llvm9StringRef
     i64 22, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i357
     i64 10, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i393
     i64 25, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i411
-    i64 9, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i735
-    i64 15, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i456
     i64 20, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i834
+    i64 15, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i456
+    i64 9, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i735
     i64 26, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i1050
     i64 38, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i1356
     i64 37, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i1932
@@ -610,15 +610,15 @@ bb.b:                                             ; preds = %_ZNK4llvm9StringRef
     i64 25, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i69
     i64 22, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i96
     i64 29, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i132
-    i64 20, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i186
+    i64 14, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i231
     i64 27, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i159
+    i64 15, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i240
+    i64 20, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i186
     i64 19, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i204
     i64 9, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i213
     i64 13, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i222
-    i64 14, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i231
-    i64 15, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i240
-    i64 23, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i267
     i64 21, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i258
+    i64 23, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i267
     i64 28, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i357
     i64 32, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i366
     i64 31, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i375

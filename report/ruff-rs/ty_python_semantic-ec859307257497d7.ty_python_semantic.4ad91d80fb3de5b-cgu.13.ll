@@ -205,21 +205,19 @@ bb.f:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
   %.sroa.01.0.copyload = load i32, ptr %i.ab, align 8 ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
-  %.sroa.6.sroa.0.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 4
-  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.6.sroa.5.0.copyload = load i32, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, align 8
-  %.not13 = icmp eq i32 %.sroa.01.0.copyload, -1
-  br i1 %.not13, label %_RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain_queue.exit24, label %bb.k
+  switch i32 %.sroa.01.0.copyload, label %bb.k [
+    i32 -1, label %_RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain_queue.exit24
+    i32 7, label %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit
+  ]
 
 bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %.sroa.04.0.copyload = load i32, ptr %i.ac, align 8 ; 4 uses
   %.sroa.66.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
-  %.sroa.66.sroa.0.0.copyload = load i32, ptr %.sroa.66.0..sroa_idx, align 4
-  %.sroa.66.sroa.5.0..sroa.66.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.66.sroa.5.0.copyload = load i32, ptr %.sroa.66.sroa.5.0..sroa.66.0..sroa_idx.sroa_idx, align 8
-  %.not = icmp eq i32 %.sroa.04.0.copyload, -1
-  br i1 %.not, label %_RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain_queue.exit18, label %bb.i
+  switch i32 %.sroa.04.0.copyload, label %bb.i [
+    i32 -1, label %_RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain_queue.exit18
+    i32 7, label %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit
+  ]
 
 bb.h:                                             ; preds = %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit, %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -229,14 +227,15 @@ bb.h:                                             ; preds = %_RNCNvMsb_NtCsoTR8n
 bb.i:                                             ; preds = %bb.g
   %i.ae = icmp ne i32 %.sroa.04.0.copyload, 17
   tail call void @llvm.assume(i1 %i.ae)
-  %3 = icmp eq i32 %.sroa.04.0.copyload, 7
-  br i1 %3, label %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit, label %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread.thread47
-
-_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread.thread47: ; preds = %bb.i
   store i32 -1, ptr %i.ac, align 8, !alias.scope !15541
   br label %bb.j
 
-_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit: ; preds = %bb.i
+_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit: ; preds = %bb.g
+  %.sroa.66.sroa.5.0..sroa.66.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.sroa.66.sroa.5.0.copyload = load i32, ptr %.sroa.66.sroa.5.0..sroa.66.0..sroa_idx.sroa_idx, align 8
+  %.sroa.66.sroa.0.0.copyload = load i32, ptr %.sroa.66.0..sroa_idx, align 4
+  %3 = icmp ne i32 %.sroa.04.0.copyload, 17
+  tail call void @llvm.assume(i1 %3)
   %i.af = tail call { i32, i32 } @_RNvMs1m_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8functionNtB6_12FunctionType15last_definition(i32 noundef %.sroa.66.sroa.0.0.copyload, i32 noundef %.sroa.66.sroa.5.0.copyload, ptr noundef nonnull %i.e, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.g), !noalias !15542 ; 2 uses
   %i.ag = extractvalue { i32, i32 } %i.af, 0
   %i.ah = extractvalue { i32, i32 } %i.af, 1
@@ -250,8 +249,8 @@ _RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds
   %.not.i15 = icmp eq i32 %.sroa.0.0.copyload.i14.pre, -1
   br i1 %.not.i15, label %_RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain_queue.exit18, label %bb.j
 
-bb.j:                                             ; preds = %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread.thread47, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread
-  %.sroa.0.0.copyload.i1450 = phi i32 [ %.sroa.04.0.copyload, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread.thread47 ], [ %.sroa.0.0.copyload.i14.pre, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread ]
+bb.j:                                             ; preds = %bb.i, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread
+  %.sroa.0.0.copyload.i1450 = phi i32 [ %.sroa.04.0.copyload, %bb.i ], [ %.sroa.0.0.copyload.i14.pre, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3adds_0B9_.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !15543
   store i32 %.sroa.0.0.copyload.i1450, ptr %i.b, align 4, !noalias !15543
   %.sroa.6.0..sroa_idx2.i17 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -267,14 +266,15 @@ _RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain
 bb.k:                                             ; preds = %bb.f
   %i.aj = icmp ne i32 %.sroa.01.0.copyload, 17
   tail call void @llvm.assume(i1 %i.aj)
-  %4 = icmp eq i32 %.sroa.01.0.copyload, 7
-  br i1 %4, label %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit, label %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread.thread53
-
-_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread.thread53: ; preds = %bb.k
   store i32 -1, ptr %i.ab, align 8, !alias.scope !15544
   br label %bb.l
 
-_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit: ; preds = %bb.k
+_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit: ; preds = %bb.f
+  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.sroa.6.sroa.5.0.copyload = load i32, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, align 8
+  %.sroa.6.sroa.0.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 4
+  %4 = icmp ne i32 %.sroa.01.0.copyload, 17
+  tail call void @llvm.assume(i1 %4)
   %i.ak = tail call { i32, i32 } @_RNvMs1m_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8functionNtB6_12FunctionType15last_definition(i32 noundef range(i32 1, 0) %i.l, i32 noundef %i.n, ptr noundef nonnull %i.e, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.g), !noalias !15545 ; 2 uses
   %i.al = extractvalue { i32, i32 } %i.ak, 0
   %i.am = extractvalue { i32, i32 } %i.ak, 1
@@ -299,8 +299,8 @@ _RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0
   %.not.i21 = icmp eq i32 %.sroa.0.0.copyload.i20.pre, -1
   br i1 %.not.i21, label %_RNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_17PublicTypeBuilder11drain_queue.exit24, label %bb.l
 
-bb.l:                                             ; preds = %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread.thread53, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread
-  %.sroa.0.0.copyload.i2056 = phi i32 [ %.sroa.01.0.copyload, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread.thread53 ], [ %.sroa.0.0.copyload.i20.pre, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread ]
+bb.l:                                             ; preds = %bb.k, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread
+  %.sroa.0.0.copyload.i2056 = phi i32 [ %.sroa.01.0.copyload, %bb.k ], [ %.sroa.0.0.copyload.i20.pre, %_RNCNvMsb_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB7_17PublicTypeBuilder3add0B9_.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15546
   store i32 %.sroa.0.0.copyload.i2056, ptr %i.a, align 4, !noalias !15546
   %.sroa.6.0..sroa_idx2.i23 = getelementptr inbounds nuw i8, ptr %i.a, i64 4

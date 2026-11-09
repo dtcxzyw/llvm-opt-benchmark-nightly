@@ -1,0 +1,263 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 89295cec23498..b5a5198674779 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -288,8 +288,9 @@ class SimplifyCFGOpt {
+   bool performValueComparisonIntoPredecessorFolding(Instruction *TI, Value *&CV,
+                                                     Instruction *PTI,
+                                                     IRBuilder<> &Builder);
+-  bool foldValueComparisonIntoPredecessors(Instruction *TI,
+-                                           IRBuilder<> &Builder);
++  bool
++  foldValueComparisonIntoPredecessors(Instruction *TI, IRBuilder<> &Builder,
++                                      ArrayRef<Instruction *> EphInsts = {});
+ 
+   bool simplifyResume(ResumeInst *RI, IRBuilder<> &Builder);
+   bool simplifySingleResume(ResumeInst *RI);
+@@ -1475,16 +1476,53 @@ bool SimplifyCFGOpt::performValueComparisonIntoPredecessorFolding(
+   return true;
+ }
+ 
++/// Clone the instructions \p Insts of \p BB into the successors of \p BB, which
++/// must only be reachable through \p BB.
++static void cloneInstsIntoSuccessors(BasicBlock *BB,
++                                     ArrayRef<Instruction *> Insts,
++                                     AssumptionCache *AC) {
++  SmallPtrSet<BasicBlock *, 8> Visited;
++  for (BasicBlock *Succ : successors(BB)) {
++    if (!Visited.insert(Succ).second)
++      continue;
++    assert(Succ->getUniquePredecessor() == BB &&
++           "Successor is reachable without going through BB");
++    ValueToValueMapTy VMap;
++    BasicBlock::iterator InsertPt = Succ->getFirstInsertionPt();
++    for (Instruction *I : Insts) {
++      Instruction *NewI = I->clone();
++      NewI->insertInto(Succ, InsertPt);
++      NewI->setName(I->getName());
++      if (const DebugLoc &DL = I->getDebugLoc())
++        mapAtomInstance(DL, VMap);
++      RemapInstruction(NewI, VMap,
++                       RF_NoModuleLevelChanges | RF_IgnoreMissingLocals);
++      VMap[I] = NewI;
++      if (auto *Assume = dyn_cast<AssumeInst>(NewI))
++        if (AC)
++          AC->registerAssumption(Assume);
++    }
++  }
++}
++
+ /// The specified terminator is a value equality comparison instruction
+ /// (either a switch or a branch on "X == c").
+ /// See if any of the predecessors of the terminator block are value comparisons
+ /// on the same value.  If so, and if safe to do so, fold them together.
+-bool SimplifyCFGOpt::foldValueComparisonIntoPredecessors(Instruction *TI,
+-                                                         IRBuilder<> &Builder) {
++bool SimplifyCFGOpt::foldValueComparisonIntoPredecessors(
++    Instruction *TI, IRBuilder<> &Builder, ArrayRef<Instruction *> EphInsts) {
+   BasicBlock *BB = TI->getParent();
+   Value *CV = isValueEqualityComparison(TI); // CondVal
+   assert(CV && "Not a comparison?");
+ 
++  // To make sure assumes have the right scope and that we don't speculate
++  // other ephemeral instructions, check that the successors of the comparison
++  // block can only be reached through the current block.
++  if (!EphInsts.empty() && any_of(successors(BB), [BB](BasicBlock *Succ) {
++        return Succ->getUniquePredecessor() != BB;
++      }))
++    return false;
++
+   bool Changed = false;
+ 
+   SmallSetVector<BasicBlock *, 16> Preds(pred_begin(BB), pred_end(BB));
+@@ -1509,6 +1547,11 @@ bool SimplifyCFGOpt::foldValueComparisonIntoPredecessors(Instruction *TI,
+       }
+     }
+ 
++    if (!EphInsts.empty()) {
++      cloneInstsIntoSuccessors(BB, EphInsts, Options.AC);
++      EphInsts = {};
++    }
++
+     performValueComparisonIntoPredecessorFolding(TI, CV, PTI, Builder);
+     Changed = true;
+   }
+@@ -3065,6 +3108,24 @@ class EphemeralValueTracker {
+ };
+ } // namespace
+ 
++/// Return whether all instructions in \p BB other than the terminator,
++/// \p Cond, and pseudo probes are ephemeral. Collects ephemeral instructions
++/// in \b EphInsts.
++static bool
++onlyEphemeralInstsBeforeTerminator(BasicBlock *BB, const Value *Cond,
++                                   SmallVectorImpl<Instruction *> &EphInsts) {
++  EphemeralValueTracker EphTracker;
++  for (Instruction &I : reverse(drop_end(*BB))) {
++    if (isa<PseudoProbeInst>(I) || &I == Cond)
++      continue;
++    if (isa<PHINode>(I) || !EphTracker.track(&I))
++      return false;
++    EphInsts.push_back(&I);
++  }
++  std::reverse(EphInsts.begin(), EphInsts.end());
++  return true;
++}
++
+ /// Determine if we can hoist sink a sole store instruction out of a
+ /// conditional block.
+ ///
+@@ -8684,11 +8745,12 @@ bool SimplifyCFGOpt::simplifySwitch(SwitchInst *SI, IRBuilder<> &Builder) {
+       if (simplifySwitchOnSelect(SI, Select))
+         return requestResimplify();
+ 
+-    // If the block only contains the switch, see if we can fold the block
+-    // away into any preds.
+-    if (SI == &*BB->begin())
+-      if (foldValueComparisonIntoPredecessors(SI, Builder))
+-        return requestResimplify();
++    // If the block only contains the switch (ignoring pseudo probes and
++    // ephemeral values), see if we can fold the block away into any preds.
++    SmallVector<Instruction *, 4> EphInsts;
++    if (onlyEphemeralInstsBeforeTerminator(BB, /*Cond=*/nullptr, EphInsts) &&
++        foldValueComparisonIntoPredecessors(SI, Builder, EphInsts))
++      return requestResimplify();
+   }
+ 
+   // Try to transform the switch into an icmp and a branch.
+@@ -9062,17 +9124,14 @@ bool SimplifyCFGOpt::simplifyCondBranch(CondBrInst *BI, IRBuilder<> &Builder) {
+       if (simplifyEqualityComparisonWithOnlyPredecessor(BI, OnlyPred, Builder))
+         return requestResimplify();
+ 
+-    // This block must be empty, except for the setcond inst, if it exists.
+-    // Ignore pseudo intrinsics.
+-    for (auto &I : *BB) {
+-      if (isa<PseudoProbeInst>(I) ||
+-          &I == cast<Instruction>(BI->getCondition()))
+-        continue;
+-      if (&I == BI)
+-        if (foldValueComparisonIntoPredecessors(BI, Builder))
+-          return requestResimplify();
+-      break;
+-    }
++    // Other than the condition and terminator, the block should only contain
++    // pseudo intrinsics and ephemerals.
++    // Pseudo instrinsics are dropped when folding the block into the
++    // predecessors, and ephemerals are copied to the successors.
++    SmallVector<Instruction *, 4> EphInsts;
++    if (onlyEphemeralInstsBeforeTerminator(BB, BI->getCondition(), EphInsts) &&
++        foldValueComparisonIntoPredecessors(BI, Builder, EphInsts))
++      return requestResimplify();
+   }
+ 
+   // Try to turn "br (X == 0 | X == 1), T, F" into a switch instruction.
+diff --git a/llvm/test/Transforms/SimplifyCFG/FoldValueComparisonIntoPredecessors-ephemeral.ll b/llvm/test/Transforms/SimplifyCFG/FoldValueComparisonIntoPredecessors-ephemeral.ll
+new file mode 100644
+index 0000000000000..b96cdffa35a23
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/FoldValueComparisonIntoPredecessors-ephemeral.ll
+@@ -0,0 +1,104 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -S -passes=simplifycfg -simplifycfg-require-and-preserve-domtree=1 < %s | FileCheck %s
++
++; Test copying ephemeral instructions (assumes and their dependencies) into the
++; successor blocks to allow folding the block into the predecessors.
++
++declare void @fun0(i32)
++declare void @fun1(i32)
++declare i1 @dynamic_cond()
++
++define void @goal(i32 %idx) {
++; CHECK-LABEL: define void @goal(
++; CHECK-SAME: i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    call void @fun0(i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    [[INRANGE2:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE2]])
++; CHECK-NEXT:    call void @fun1(i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; If a destination of the block with an assume has other edges that don't go
++; through the block with the assume, don't copy the assume and don't fold the
++; block into the predecessor.
++define void @goal_extra_pred(i32 %idx) {
++; CHECK-LABEL: define void @goal_extra_pred(
++; CHECK-SAME: i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[COND:%.*]] = call i1 @dynamic_cond()
++; CHECK-NEXT:    br i1 [[COND]], label %[[CALL1:.*]], label %[[CALL0:.*]]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[VALUELESS:%.*]] = icmp eq i32 [[IDX]], -1
++; CHECK-NEXT:    br i1 [[VALUELESS]], label %[[DONE:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[IS0:%.*]] = icmp eq i32 [[IDX]], 0
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    br i1 [[IS0]], label %[[CALL2:.*]], label %[[CALL1]]
++; CHECK:       [[CALL2]]:
++; CHECK-NEXT:    call void @fun0(i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %cond = call i1 @dynamic_cond()
++  br i1 %cond, label %call1, label %original_entry
++
++original_entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
