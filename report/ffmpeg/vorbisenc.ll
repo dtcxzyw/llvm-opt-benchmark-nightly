@@ -205,11 +205,10 @@ put_vector.exit.us.i:                             ; preds = %bb.ee, %bb.ea
   br i1 %min.iters.check572, label %.lr.ph344.us.i.preheader, label %vector.memcheck573
 
 vector.memcheck573:                               ; preds = %.lr.ph344.us.preheader.i
-  %4 = shl nuw nsw i64 %wide.trip.count396.i, 2
-  %i.aqn = add nsw i64 %i.amv, %i.agl
+  %4 = add nsw i64 %i.amv, %wide.trip.count396.i
+  %i.aqn = add nsw i64 %4, %i.agl
   %i.aqo = shl nsw i64 %i.aqn, 2
-  %gep = getelementptr i8, ptr %invariant.gep693, i64 %i.aqo
-  %i.aqp = getelementptr i8, ptr %gep, i64 %4
+  %i.aqp = getelementptr i8, ptr %invariant.gep693, i64 %i.aqo
   %i.aqq = add nsw i64 %i.aqk, %wide.trip.count396.i
   %i.aqr = shl nsw i64 %i.aqq, 2
   %i.aqs = getelementptr i8, ptr %i.aqh, i64 %i.aqr

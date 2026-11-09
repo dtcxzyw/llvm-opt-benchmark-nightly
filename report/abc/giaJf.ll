@@ -205,14 +205,17 @@ Jf_CutGetSign.exit248:                            ; preds = %Jf_CutGetSign.exit2
   %indvars.iv642 = phi i64 [ %indvars.iv.next643, %._crit_edge537 ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.0541 = phi i32 [ %.1.lcssa, %._crit_edge537 ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.1186539 = phi ptr [ %i.ahk, %._crit_edge537 ], [ %i.be, %.preheader.lr.ph ] ; 13 uses
-  %.1186539904 = ptrtoaddr ptr %.1186539 to i64   ; 2 uses
   %i.gh = icmp sgt i32 %i.gg, 0
   br i1 %i.gh, label %.lr.ph536, label %._crit_edge537
 
 .lr.ph536:                                        ; preds = %.preheader
+  %.1186539904 = ptrtoaddr ptr %.1186539 to i64
   %i.gi = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv642
   %i.gj = load i64, ptr %i.gi, align 8, !tbaa !17
   %i.gk = getelementptr inbounds nuw i8, ptr %.1186539, i64 4 ; 18 uses
+  %4 = sub i64 24, %.1186539904                   ; 2 uses
+  %invariant.op = add i64 %4, -1
+  %invariant.op1148 = add i64 %4, -1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph536, %Jf_ObjAddCutToStore.exit
@@ -373,10 +376,9 @@ bb.m:                                             ; preds = %._crit_edge156.i, %
 vector.memcheck907:                               ; preds = %.lr.ph116.preheader.i
   %i.io = shl nuw nsw i64 %i.il, 2
   %i.ip = shl nsw i64 %i.im, 2
-  %4 = add i64 %i.io, %i.gz
-  %i.iq = add i64 %i.ip, %.1186539904
-  %i.ir = sub i64 %4, %i.iq
-  %i.is = add i64 %i.ir, 23
+  %i.iq = add i64 %i.io, %i.gz
+  %i.ir = sub i64 %i.iq, %i.ip
+  %i.is = add i64 %i.ir, %invariant.op1148
   %diff.check908 = icmp ult i64 %i.is, 31
   br i1 %diff.check908, label %.lr.ph116.i.preheader, label %vector.ph909
 
@@ -779,10 +781,9 @@ bb.aj:                                            ; preds = %._crit_edge156.i319
 vector.memcheck941:                               ; preds = %.lr.ph116.preheader.i310
   %i.rj = shl nuw nsw i64 %i.rg, 2
   %i.rk = shl nsw i64 %i.rh, 2
-  %5 = add i64 %i.rj, %i.lv
-  %i.rl = add i64 %i.rk, %.1186539904
-  %i.rm = sub i64 %5, %i.rl
-  %i.rn = add i64 %i.rm, 23
+  %i.rl = add i64 %i.rj, %i.lv
+  %i.rm = sub i64 %i.rl, %i.rk
+  %i.rn = add i64 %i.rm, %invariant.op
   %diff.check942 = icmp ult i64 %i.rn, 31
   br i1 %diff.check942, label %.lr.ph116.i312.preheader, label %vector.ph943
 

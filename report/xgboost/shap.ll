@@ -205,7 +205,8 @@ bb.g:                                             ; preds = %.lr.ph84, %bb.t
 .lr.ph81.preheader:                               ; preds = %bb.g
   %i.ed = shl i64 %i.dn, 2
   %i.ee = mul i64 %i.ed, %i.ds
-  %i.ef = getelementptr i8, ptr %i.du, i64 %i.ee
+  %10 = getelementptr i8, ptr %i.du, i64 %i.ee
+  %i.ef = getelementptr i8, ptr %10, i64 -4
   br label %.lr.ph81
 
 ._crit_edge82.loopexit:                           ; preds = %._crit_edge
@@ -343,8 +344,7 @@ bb.k:                                             ; preds = %bb.j
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.gg = shl i64 %i.gc, 2                        ; 2 uses
-  %10 = getelementptr i8, ptr %i.ef, i64 %i.gg
-  %i.gh = getelementptr i8, ptr %10, i64 -4
+  %i.gh = getelementptr i8, ptr %i.ef, i64 %i.gg
   %i.gi = getelementptr i8, ptr %i.ge, i64 %i.gg
   %i.gj = getelementptr i8, ptr %i.gi, i64 -4
   %bound0 = icmp ult ptr %i.dv, %i.gj
@@ -747,7 +747,8 @@ bb.e:                                             ; preds = %.lr.ph84, %bb.r
 .lr.ph80.preheader:                               ; preds = %bb.e
   %i.db = shl i64 %i.cl, 2
   %i.dc = mul i64 %i.db, %i.cq
-  %i.dd = getelementptr i8, ptr %i.cs, i64 %i.dc
+  %10 = getelementptr i8, ptr %i.cs, i64 %i.dc
+  %i.dd = getelementptr i8, ptr %10, i64 -4
   br label %.lr.ph80
 
 ._crit_edge81.loopexit:                           ; preds = %._crit_edge
@@ -885,8 +886,7 @@ bb.i:                                             ; preds = %bb.h
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.fe = shl i64 %i.fa, 2                        ; 2 uses
-  %10 = getelementptr i8, ptr %i.dd, i64 %i.fe
-  %i.ff = getelementptr i8, ptr %10, i64 -4
+  %i.ff = getelementptr i8, ptr %i.dd, i64 %i.fe
   %i.fg = getelementptr i8, ptr %i.fc, i64 %i.fe
   %i.fh = getelementptr i8, ptr %i.fg, i64 -4
   %bound0 = icmp ult ptr %i.ct, %i.fh
@@ -1289,7 +1289,8 @@ bb.f:                                             ; preds = %.lr.ph83, %bb.s
 .lr.ph80.preheader:                               ; preds = %bb.f
   %i.et = shl i64 %i.ed, 2
   %i.eu = mul i64 %i.et, %i.ei
-  %i.ev = getelementptr i8, ptr %i.ek, i64 %i.eu
+  %10 = getelementptr i8, ptr %i.ek, i64 %i.eu
+  %i.ev = getelementptr i8, ptr %10, i64 -4
   br label %.lr.ph80
 
 ._crit_edge81.loopexit:                           ; preds = %._crit_edge
@@ -1427,8 +1428,7 @@ bb.j:                                             ; preds = %bb.i
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.gw = shl i64 %i.gs, 2                        ; 2 uses
-  %10 = getelementptr i8, ptr %i.ev, i64 %i.gw
-  %i.gx = getelementptr i8, ptr %10, i64 -4
+  %i.gx = getelementptr i8, ptr %i.ev, i64 %i.gw
   %i.gy = getelementptr i8, ptr %i.gu, i64 %i.gw
   %i.gz = getelementptr i8, ptr %i.gy, i64 -4
   %bound0 = icmp ult ptr %i.el, %i.gz
@@ -1831,7 +1831,8 @@ bb.e:                                             ; preds = %.lr.ph84, %bb.r
 .lr.ph80.preheader:                               ; preds = %bb.e
   %i.db = shl i64 %i.cl, 2
   %i.dc = mul i64 %i.db, %i.cq
-  %i.dd = getelementptr i8, ptr %i.cs, i64 %i.dc
+  %10 = getelementptr i8, ptr %i.cs, i64 %i.dc
+  %i.dd = getelementptr i8, ptr %10, i64 -4
   br label %.lr.ph80
 
 ._crit_edge81.loopexit:                           ; preds = %._crit_edge
@@ -1969,8 +1970,7 @@ bb.i:                                             ; preds = %bb.h
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.fe = shl i64 %i.fa, 2                        ; 2 uses
-  %10 = getelementptr i8, ptr %i.dd, i64 %i.fe
-  %i.ff = getelementptr i8, ptr %10, i64 -4
+  %i.ff = getelementptr i8, ptr %i.dd, i64 %i.fe
   %i.fg = getelementptr i8, ptr %i.fc, i64 %i.fe
   %i.fh = getelementptr i8, ptr %i.fg, i64 -4
   %bound0 = icmp ult ptr %i.ct, %i.fh

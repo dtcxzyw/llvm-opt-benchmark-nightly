@@ -205,15 +205,15 @@ bb.a:
   %i.ae = zext nneg i32 %i.f to i64               ; 5 uses
   %i.af = sub i32 %i.c, %i.a
   %wide.trip.count92 = zext i32 %i.y to i64       ; 5 uses
-  %2 = shl nsw i64 %i.z, 1
-  %3 = add i32 %i.k, %i.a
-  %4 = add i32 %3, 1
-  %i.ag = shl nsw i64 %i.z, 1
-  %i.ah = mul nsw i64 %i.ac, %i.z
-  %5 = mul i64 %i.ah, %i.ae
-  %i.ai = shl i64 %5, 1
-  %6 = mul nsw i64 %i.z, %i.ae
-  %i.aj = shl i64 %6, 1
+  %2 = mul nsw i64 %i.ac, %i.z
+  %3 = mul i64 %2, %i.ae
+  %i.ag = shl i64 %3, 1
+  %i.ah = mul nsw i64 %i.z, %i.ae
+  %4 = shl i64 %i.ah, 1
+  %i.ai = shl nsw i64 %i.z, 1
+  %5 = add i32 %i.k, %i.a
+  %6 = add i32 %5, 1
+  %i.aj = shl nsw i64 %i.z, 1
   %i.ak = shl nuw nsw i64 %i.ae, 1
   %i.al = add nsw i64 %i.ak, -2
   %i.am = mul i64 %i.al, %i.aa
@@ -245,16 +245,18 @@ bb.a:
   ret void
 
 .lr.ph60:                                         ; preds = %.lr.ph60.preheader, %._crit_edge
-  %indvar120 = phi i64 [ 0, %.lr.ph60.preheader ], [ %indvar.next121, %._crit_edge ] ; 2 uses
+  %indvar120 = phi i64 [ 0, %.lr.ph60.preheader ], [ %indvar.next121, %._crit_edge ] ; 3 uses
   %indvars.iv94 = phi i64 [ %i.ac, %.lr.ph60.preheader ], [ %indvars.iv.next95, %._crit_edge ] ; 6 uses
-  %indvar = phi i32 [ 0, %.lr.ph60.preheader ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %i.as = add i32 %4, %indvar
+  %indvar = phi i32 [ 0, %.lr.ph60.preheader ], [ %indvar.next, %._crit_edge ] ; 2 uses
+  %7 = mul i64 %4, %indvar120
+  %8 = add i64 %i.ag, %7                          ; 2 uses
+  %9 = trunc i64 %indvar120 to i32
+  %i.as = add i32 %6, %9
   %i.at = mul i32 %i.f, %i.as
   %i.au = sext i32 %i.at to i64
   %i.av = add nsw i64 %i.aa, %i.au
-  %7 = mul i64 %2, %i.av
-  %i.aw = mul i64 %i.aj, %indvar120
-  %8 = add i64 %i.ai, %i.aw                       ; 2 uses
+  %i.aw = mul i64 %i.ai, %i.av
+  %10 = sub i64 %8, %i.aw
   %i.ax = mul i32 %i.v, %indvar
   %i.ay = add i32 %i.u, %i.ax                     ; 11 uses
   %i.az = mul nsw i64 %indvars.iv94, %i.ae
@@ -273,6 +275,7 @@ bb.a:
 
 .lr.ph60.split.us.split.preheader:                ; preds = %.lr.ph60.split.us
   %i.be = sext i32 %i.bb to i64
+  %invariant.op154 = add i64 %10, -1
   br label %.lr.ph60.split.us.split
 
 .lr.ph60.split.us.split.us:                       ; preds = %.lr.ph60.split.us
@@ -414,7 +417,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.do = add i64 %i.an, %i.dm
   %i.dp = sub i64 %i.dn, %i.do
   %diff.check = icmp ugt i64 %i.dp, -32
-  %i.dq = mul i64 %indvars.iv89, %i.ag
+  %i.dq = mul i64 %indvars.iv89, %i.aj
   %i.dr = add i64 %8, %i.dq
   %i.ds = shl nsw i64 %i.dl, 1
   %i.dt = add i64 %i.dr, %i.dm
@@ -426,10 +429,9 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.dx = sub i64 %i.dw, %i.du
   %diff.check123 = icmp ugt i64 %i.dx, -32
   %conflict.rdx124 = or i1 %conflict.rdx, %diff.check123
-  %9 = add i64 %8, %i.dm
-  %i.dy = add i64 %7, %i.dn
-  %10 = sub i64 %i.dy, %9
-  %diff.check125 = icmp ugt i64 %10, -32
+  %11 = sub i64 %i.dm, %i.dn
+  %i.dy = add i64 %11, %invariant.op154
+  %diff.check125 = icmp ult i64 %i.dy, 31
   %conflict.rdx126 = or i1 %conflict.rdx124, %diff.check125
   br i1 %conflict.rdx126, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

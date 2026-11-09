@@ -205,6 +205,7 @@ bb.i:                                             ; preds = %bb.a
 
 .lr.ph31.i:                                       ; preds = %bb.i
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
+  %invariant.op480 = add i64 39, %i.a
   br label %bb.j
 
 .loopexit.loopexit.i:                             ; preds = %.lr.ph.i, %vec.epilog.middle.block446, %middle.block432
@@ -253,9 +254,8 @@ iter.check434:                                    ; preds = %.preheader.i
   br i1 %min.iters.check419, label %.lr.ph.i.preheader, label %vector.memcheck420
 
 vector.memcheck420:                               ; preds = %iter.check434
-  %6 = add i64 %i.a, %i.bg
-  %i.bm = sub i64 %6, %.030.i417
-  %i.bn = add i64 %i.bm, 39
+  %i.bm = sub i64 %i.bg, %.030.i417
+  %i.bn = add i64 %i.bm, %invariant.op480
   %diff.check421 = icmp ult i64 %i.bn, 31
   br i1 %diff.check421, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check422
 
@@ -658,6 +658,7 @@ bb.bc:                                            ; preds = %bb.bb
 
 .lr.ph395:                                        ; preds = %.lr.ph
   %i.jf = add i64 %i.b, 39
+  %invariant.op = add i64 39, %i.a
   br label %bb.be
 
 bb.bd:                                            ; preds = %bb.bf
@@ -717,9 +718,8 @@ iter.check:                                       ; preds = %.preheader.i272
   br i1 %min.iters.check, label %.lr.ph.i276.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %7 = add i64 %i.a, %i.jw
-  %i.kb = sub i64 %7, %.038.i403
-  %i.kc = add i64 %i.kb, 39
+  %i.kb = sub i64 %i.jw, %.038.i403
+  %i.kc = add i64 %i.kb, %invariant.op
   %diff.check = icmp ult i64 %i.kc, 31
   br i1 %diff.check, label %.lr.ph.i276.preheader, label %vector.main.loop.iter.check
 
@@ -1122,8 +1122,9 @@ bb.k:                                             ; preds = %bb.j
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !64
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
-  %i.bd = add i64 %i.a, %i.ay
-  %i.be = add i64 %i.bd, 39
+  %3 = add i64 %i.a, %i.ay
+  %i.bd = add i64 %3, 39
+  %i.be = add i64 39, %i.b
   br label %bb.l
 
 .loopexit.loopexit.i:                             ; preds = %.lr.ph.i, %vec.epilog.middle.block, %middle.block
@@ -1156,7 +1157,7 @@ bb.l:                                             ; preds = %.loopexit.i, %.lr.p
 
 iter.check:                                       ; preds = %.preheader.i
   %i.bo = sext i32 %.03037.i to i64               ; 7 uses
-  %i.bp = sub i64 %i.be, %.038.i128
+  %i.bp = sub i64 %i.bd, %.038.i128
   %i.bq = add nsw i32 %i.bi, -1
   %i.br = zext i32 %i.bq to i64
   %umin = tail call i64 @llvm.umin.i64(i64 %i.bp, i64 %i.br) ; 3 uses
@@ -1165,9 +1166,8 @@ iter.check:                                       ; preds = %.preheader.i
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %3 = add i64 %i.b, %i.bo
-  %i.bt = sub i64 %3, %.038.i128
-  %i.bu = add i64 %i.bt, 39
+  %i.bt = sub i64 %i.bo, %.038.i128
+  %i.bu = add i64 %i.bt, %i.be
   %diff.check = icmp ult i64 %i.bu, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -1279,8 +1279,9 @@ bb.n:                                             ; preds = %bb.k
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 84 ; 2 uses
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !64
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
-  %i.cx = add i64 %i.a, %i.cs
-  %i.cy = add i64 %i.cx, 39
+  %4 = add i64 %i.a, %i.cs
+  %i.cx = add i64 %4, 39
+  %i.cy = add i64 87, %i.b
   br label %bb.o
 
 .loopexit.loopexit.i87:                           ; preds = %.lr.ph.i82, %vec.epilog.middle.block171, %middle.block157
@@ -1313,7 +1314,7 @@ bb.o:                                             ; preds = %.loopexit.i78, %.lr
 
 iter.check159:                                    ; preds = %.preheader.i77
   %i.di = sext i32 %.03037.i76 to i64             ; 7 uses
-  %i.dj = sub i64 %i.cy, %.038.i75142
+  %i.dj = sub i64 %i.cx, %.038.i75142
   %i.dk = add nsw i32 %i.dc, -1
   %i.dl = zext i32 %i.dk to i64
   %umin143 = tail call i64 @llvm.umin.i64(i64 %i.dj, i64 %i.dl) ; 3 uses
@@ -1322,9 +1323,8 @@ iter.check159:                                    ; preds = %.preheader.i77
   br i1 %min.iters.check144, label %.lr.ph.i82.preheader, label %vector.memcheck145
 
 vector.memcheck145:                               ; preds = %iter.check159
-  %4 = add i64 %i.b, %i.di
-  %i.dn = sub i64 %4, %.038.i75142
-  %i.do = add i64 %i.dn, 87
+  %i.dn = sub i64 %i.di, %.038.i75142
+  %i.do = add i64 %i.dn, %i.cy
   %diff.check146 = icmp ult i64 %i.do, 31
   br i1 %diff.check146, label %.lr.ph.i82.preheader, label %vector.main.loop.iter.check147
 

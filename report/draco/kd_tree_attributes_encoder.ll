@@ -205,11 +205,11 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPjmjET_
   %.sroa.11254.0278 = phi ptr [ %i.dp, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.dp, %.noexc190 ], [ null, %bb.j ] ; 3 uses
   %.sroa.11246.0 = phi ptr [ %i.du, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.du, %.noexc190 ], [ null, %bb.j ] ; 2 uses
   %.sroa.0241.0 = phi ptr [ %i.dt, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.dt, %.noexc190 ], [ null, %bb.j ] ; 14 uses
-  %.sroa.0241.0369 = ptrtoaddr ptr %.sroa.0241.0 to i64 ; 2 uses
   br i1 %.not307, label %._crit_edge289, label %.lr.ph288
 
 .lr.ph288:                                        ; preds = %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit
   %.sroa.0249.0280370 = ptrtoaddr ptr %.sroa.0249.0280 to i64
+  %.sroa.0241.0369 = ptrtoaddr ptr %.sroa.0241.0 to i64 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %.097274, i64 100
   %i.dx = getelementptr inbounds nuw i8, ptr %.097274, i64 72
   %i.dy = zext nneg i32 %.0138296 to i64

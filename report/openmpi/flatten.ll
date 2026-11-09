@@ -204,9 +204,13 @@ bb.k:                                             ; preds = %bb.g
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.el = shl i64 %i.co, 3                        ; 2 uses
   %i.em = shl i64 %.pre1222, 3                    ; 2 uses
+  %4 = sub i64 %i.el, %i.em
+  %5 = sub i64 %i.em, %i.el
   %i.en = xor i64 %i.co, -1
   %i.eo = add i64 %.pre1222, %i.en
   %min.iters.check1484 = icmp ult i64 %i.ed, 8
+  %invariant.op = add i64 %5, -1
+  %invariant.op1541 = add i64 %4, -1
   %n.vec1492 = and i64 %i.ed, 9223372036854775804 ; 4 uses
   %broadcast.splatinsert1493 = insertelement <2 x i64> poison, i64 %i.ej, i64 0
   %broadcast.splat1494 = shufflevector <2 x i64> %broadcast.splatinsert1493, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -227,19 +231,16 @@ bb.k:                                             ; preds = %bb.g
   br i1 %min.iters.check1484, label %scalar.ph1483.preheader, label %vector.memcheck1485
 
 vector.memcheck1485:                              ; preds = %.lr.ph1105
-  %i.es = ptrtoaddr ptr %i.er to i64              ; 3 uses
-  %i.et = ptrtoaddr ptr %i.eq to i64              ; 3 uses
-  %4 = add i64 %i.em, %i.es
-  %5 = add i64 %i.el, %i.et
-  %i.eu = sub i64 %5, %4
-  %diff.check1486 = icmp ugt i64 %i.eu, -32
-  %i.ev = add i64 %i.el, %i.es
-  %6 = add i64 %i.em, %i.et
-  %7 = sub i64 %6, %i.ev
-  %diff.check1487 = icmp ugt i64 %7, -32
+  %i.es = ptrtoaddr ptr %i.er to i64
+  %i.et = ptrtoaddr ptr %i.eq to i64
+  %i.eu = sub i64 %i.es, %i.et                    ; 3 uses
+  %i.ev = add i64 %i.eu, %invariant.op
+  %diff.check1486 = icmp ult i64 %i.ev, 31
+  %.reass1542 = add i64 %i.eu, %invariant.op1541
+  %diff.check1487 = icmp ult i64 %.reass1542, 31
   %conflict.rdx1488 = or i1 %diff.check1486, %diff.check1487
-  %8 = sub i64 %i.et, %i.es
-  %diff.check1489 = icmp ugt i64 %8, -32
+  %6 = add i64 %i.eu, -1
+  %diff.check1489 = icmp ult i64 %6, 31
   %conflict.rdx1490 = or i1 %conflict.rdx1488, %diff.check1489
   br i1 %conflict.rdx1490, label %scalar.ph1483.preheader, label %vector.ph1491
 

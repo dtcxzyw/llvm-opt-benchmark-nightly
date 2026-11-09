@@ -205,6 +205,7 @@ bb.e:                                             ; preds = %._crit_edge133.spli
   %scevgep188 = getelementptr i8, ptr %.sroa.0.0, i64 1
   %i.aq = add nsw i32 %1, -1
   %i.ar = zext i32 %i.aq to i64                   ; 2 uses
+  %6 = shl nuw nsw i64 %i.ar, 1
   %i.as = mul nuw nsw i64 %i.ar, 24
   %i.at = zext nneg i32 %1 to i64                 ; 2 uses
   %min.iters.check = icmp ult i32 %1, 16
@@ -212,7 +213,10 @@ bb.e:                                             ; preds = %._crit_edge133.spli
   %mul = mul nuw nsw i64 %i.au, 24                ; 5 uses
   %i.av = zext i32 %i.ap to i64
   %mul190 = shl nuw nsw i64 %i.av, 1
-  %i.aw = getelementptr i8, ptr %.sroa.030.0119, i64 %i.as
+  %7 = getelementptr i8, ptr %.sroa.030.0119, i64 %i.as
+  %8 = getelementptr i8, ptr %7, i64 24
+  %9 = getelementptr i8, ptr %.sroa.0.0, i64 %6
+  %i.aw = getelementptr i8, ptr %9, i64 2
   %n.vec = and i64 %i.at, 2147483644              ; 5 uses
   %i.ax = mul nuw nsw i64 %n.vec, 6
   %i.ay = trunc nuw nsw i64 %n.vec to i32
@@ -227,7 +231,7 @@ bb.e:                                             ; preds = %._crit_edge133.spli
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge138.split.us.us
   %.0103144.us = phi i32 [ %i.dk, %._crit_edge138.split.us.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
-  %.0104143.us = phi i64 [ %indvars.iv.next161.lcssa, %._crit_edge138.split.us.us ], [ 0, %.preheader.us.preheader ] ; 9 uses
+  %.0104143.us = phi i64 [ %indvars.iv.next161.lcssa, %._crit_edge138.split.us.us ], [ 0, %.preheader.us.preheader ] ; 8 uses
   %.2142.us = phi i64 [ %indvars.iv.next163.lcssa, %._crit_edge138.split.us.us ], [ 0, %.preheader.us.preheader ] ; 7 uses
   %i.ba = mul nuw nsw i32 %.0103144.us, %i.b      ; 2 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
@@ -262,17 +266,13 @@ vector.scevcheck:                                 ; preds = %.preheader.us
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.bu = shl i64 %.2142.us, 2                    ; 2 uses
-  %6 = getelementptr i8, ptr %.sroa.030.0119, i64 %i.bu
-  %i.bv = getelementptr i8, ptr %i.aw, i64 %i.bu
-  %i.bw = getelementptr i8, ptr %i.bv, i64 24
-  %i.bx = shl i64 %.0104143.us, 1
-  %7 = getelementptr i8, ptr %.sroa.0.0, i64 %i.bx
-  %8 = add i64 %.0104143.us, %i.ar
-  %9 = shl i64 %8, 1
-  %i.by = getelementptr i8, ptr %.sroa.0.0, i64 %9
-  %i.bz = getelementptr i8, ptr %i.by, i64 2
-  %bound0 = icmp ult ptr %6, %i.bz
-  %bound1 = icmp ult ptr %7, %i.bw
+  %i.bv = getelementptr i8, ptr %.sroa.030.0119, i64 %i.bu
+  %i.bw = getelementptr i8, ptr %8, i64 %i.bu
+  %i.bx = shl i64 %.0104143.us, 1                 ; 2 uses
+  %i.by = getelementptr i8, ptr %.sroa.0.0, i64 %i.bx
+  %i.bz = getelementptr i8, ptr %i.aw, i64 %i.bx
+  %bound0 = icmp ult ptr %i.bv, %i.bz
+  %bound1 = icmp ult ptr %i.by, %i.bw
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

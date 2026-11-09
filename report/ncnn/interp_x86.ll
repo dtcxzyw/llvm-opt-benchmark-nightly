@@ -205,7 +205,9 @@ _ZN4ncnn3MatC2EimiPNS_9AllocatorE.exit.i:         ; preds = %.noexc29
   %wide.trip.count.i = zext nneg i32 %i.an to i64 ; 2 uses
   %i.bj = mul i64 %i.aj, %i.am                    ; 3 uses
   %i.bk = mul i64 %i.at, %i.aw                    ; 3 uses
-  %invariant.op.a = add i64 %i.aq, %i.au
+  %14 = add i64 %i.au, %i.aq                      ; 2 uses
+  %invariant.op = add i64 %14, -1
+  %invariant.op.a = add i64 %14, -1
   %i.bl = add nsw i64 %i.bi, -1
   br label %bb.q
 
@@ -432,7 +434,7 @@ bb.t:                                             ; preds = %bb.r
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.loopexit.i.thread, %.preheader.loopexit.i.i, %.loopexit.i
-  %i.fl = phi i64 [ %i.fb, %.loopexit.i ], [ %i.fh, %.preheader.loopexit.i.i ], [ %i.ev, %.loopexit.i.thread ] ; 2 uses
+  %i.fl = phi i64 [ %i.fb, %.loopexit.i ], [ %i.fh, %.preheader.loopexit.i.i ], [ %i.ev, %.loopexit.i.thread ] ; 3 uses
   %.1.i89 = phi ptr [ %.082134.i, %.loopexit.i ], [ %.1.i140, %.preheader.loopexit.i.i ], [ %.1.i.ph, %.loopexit.i.thread ] ; 6 uses
   %.184.i88 = phi ptr [ %.083133.i, %.loopexit.i ], [ %.184.i139, %.preheader.loopexit.i.i ], [ %.184.i.ph, %.loopexit.i.thread ] ; 6 uses
   %.0.lcssa.i.i = phi i32 [ 0, %.loopexit.i ], [ %i.fk, %.preheader.loopexit.i.i ], [ 0, %.loopexit.i.thread ] ; 2 uses
@@ -450,11 +452,12 @@ bb.t:                                             ; preds = %bb.r
   br i1 %min.iters.check167, label %.lr.ph27.i.i.preheader, label %vector.memcheck168
 
 vector.memcheck168:                               ; preds = %.lr.ph27.preheader.i.i
-  %.reass = add i64 %i.fl, %invariant.op.a        ; 2 uses
-  %14 = sub i64 %.1.i89164, %.reass
-  %diff.check169 = icmp ugt i64 %14, -32
-  %15 = sub i64 %.184.i88165, %.reass
-  %diff.check170 = icmp ugt i64 %15, -32
+  %15 = sub i64 %i.fl, %.1.i89164
+  %.reass = add i64 %15, %invariant.op
+  %diff.check169 = icmp ult i64 %.reass, 31
+  %16 = sub i64 %i.fl, %.184.i88165
+  %.reass197 = add i64 %16, %invariant.op.a
+  %diff.check170 = icmp ult i64 %.reass197, 31
   %conflict.rdx171 = or i1 %diff.check169, %diff.check170
   br i1 %conflict.rdx171, label %.lr.ph27.i.i.preheader, label %vector.ph172
 

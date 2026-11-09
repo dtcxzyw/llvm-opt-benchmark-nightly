@@ -30,7 +30,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #4
   %i.i = load i32, ptr %4, align 4, !tbaa !34     ; 4 uses
   %narrow = xor i32 %i.i, -1
-  %i.j = sext i32 %narrow to i64                  ; 3 uses
+  %i.j = sext i32 %narrow to i64                  ; 2 uses
   %i.k = getelementptr inbounds [8 x i8], ptr %3, i64 %i.j ; 15 uses
   %i.l = load i32, ptr %6, align 4, !tbaa !34     ; 11 uses
   %narrow257 = xor i32 %i.l, -1
@@ -96,8 +96,14 @@ bb.g:                                             ; preds = %bb.f
   %i.ak = zext nneg i32 %i.r to i64
   %i.al = add i32 %i.i, 2                         ; 4 uses
   %i.am = add i32 %i.i, 1                         ; 4 uses
+  %10 = shl nsw i64 %i.j, 3                       ; 3 uses
+  %11 = add i64 %10, %i.c
   %ident.check383 = icmp ne i32 %i.o, 1
+  %invariant.op = add i64 -9, %i.b
   %ident.check = icmp ne i32 %i.o, 1
+  %invariant.gep528 = getelementptr i8, ptr %3, i64 %10
+  %12 = getelementptr i8, ptr %3, i64 %10
+  %13 = getelementptr i8, ptr %12, i64 -8
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph278, %bb.j
@@ -160,12 +166,10 @@ vector.memcheck386:                               ; preds = %vector.scevcheck382
   %i.bs = mul i32 %indvar, %i.am
   %i.bt = add i32 %i.al, %i.bs
   %i.bu = sext i32 %i.bt to i64
-  %10 = add nsw i64 %i.bu, %i.j
-  %i.bv = shl nsw i64 %10, 3
-  %11 = add i64 %i.bv, %i.c
-  %i.bw = add i64 %i.br, %i.b
-  %i.bx = sub i64 %i.bw, %11
-  %i.by = add i64 %i.bx, -9
+  %i.bv = shl nsw i64 %i.bu, 3
+  %i.bw = add i64 %11, %i.bv
+  %i.bx = sub i64 %i.br, %i.bw
+  %i.by = add i64 %i.bx, %invariant.op
   %diff.check = icmp ult i64 %i.by, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph402.preheader, label %vector.main.loop.iter.check387
 
@@ -355,14 +359,12 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ff = mul i32 %indvar, %i.am
   %i.fg = add i32 %i.al, %i.ff
   %i.fh = sext i32 %i.fg to i64
-  %12 = add nsw i64 %i.fh, %i.j
-  %i.fi = shl nsw i64 %12, 3                      ; 2 uses
-  %13 = getelementptr i8, ptr %3, i64 %i.fi
-  %i.fj = getelementptr i8, ptr %3, i64 %i.fi
-  %i.fk = getelementptr i8, ptr %i.fj, i64 %i.fb
-  %i.fl = getelementptr i8, ptr %i.fk, i64 -8
+  %i.fi = shl nsw i64 %i.fh, 3                    ; 2 uses
+  %i.fj = getelementptr i8, ptr %invariant.gep528, i64 %i.fi
+  %i.fk = getelementptr i8, ptr %13, i64 %i.fi
+  %i.fl = getelementptr i8, ptr %i.fk, i64 %i.fb
   %bound0 = icmp ult ptr %i.fa, %i.fl
-  %bound1 = icmp ult ptr %13, %i.fe
+  %bound1 = icmp ult ptr %i.fj, %i.fe
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

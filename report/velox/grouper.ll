@@ -205,6 +205,10 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph23.i:                                       ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %4 = shl i64 %i.e, 2                            ; 2 uses
+  %invariant.gep = getelementptr i8, ptr %i.h, i64 %4
+  %5 = getelementptr i8, ptr %i.h, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 4
   br label %bb.c
 
 bb.c:                                             ; preds = %.loopexit.i, %.lr.ph23.i
@@ -236,14 +240,12 @@ vector.memcheck:                                  ; preds = %.lr.ph18.i
   %i.w = shl nuw nsw i64 %i.p, 2                  ; 2 uses
   %i.x = getelementptr i8, ptr %i.s, i64 %i.u
   %i.y = getelementptr i8, ptr %i.x, i64 %i.w
-  %4 = add i64 %.02422.i, %i.e
-  %i.z = shl i64 %4, 2                            ; 2 uses
-  %5 = getelementptr i8, ptr %i.h, i64 %i.z
-  %i.aa = getelementptr i8, ptr %i.h, i64 %i.z
-  %i.ab = getelementptr i8, ptr %i.aa, i64 %i.w
-  %i.ac = getelementptr i8, ptr %i.ab, i64 4
+  %i.z = shl i64 %.02422.i, 2                     ; 2 uses
+  %i.aa = getelementptr i8, ptr %invariant.gep, i64 %i.z
+  %i.ab = getelementptr i8, ptr %6, i64 %i.z
+  %i.ac = getelementptr i8, ptr %i.ab, i64 %i.w
   %bound0 = icmp ult ptr %i.v, %i.ac
-  %bound1 = icmp ult ptr %5, %i.y
+  %bound1 = icmp ult ptr %i.aa, %i.y
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -646,10 +648,14 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph21.i:                                       ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %4 = shl i64 %i.e, 3                            ; 2 uses
+  %invariant.gep = getelementptr i8, ptr %i.h, i64 %4
+  %5 = getelementptr i8, ptr %i.h, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %.loopexit.i, %.lr.ph21.i
-  %.02420.i = phi i64 [ 0, %.lr.ph21.i ], [ %.4.i, %.loopexit.i ] ; 11 uses
+  %.02420.i = phi i64 [ 0, %.lr.ph21.i ], [ %.4.i, %.loopexit.i ] ; 12 uses
   %i.n = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 4 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.n to i16 ; 6 uses
   %.sroa.7.0.extract.shift.i = lshr i32 %i.n, 16  ; 2 uses
@@ -673,13 +679,11 @@ bb.c:                                             ; preds = %.loopexit.i, %.lr.p
 
 vector.memcheck:                                  ; preds = %.lr.ph17.i
   %i.u = getelementptr i8, ptr %i.t, i64 8
-  %4 = add i64 %.02420.i, %i.e                    ; 2 uses
-  %i.v = shl i64 %4, 3
-  %i.w = getelementptr i8, ptr %i.h, i64 %i.v
-  %i.x = add i64 %4, %i.p
+  %i.v = shl i64 %.02420.i, 3
+  %i.w = getelementptr i8, ptr %invariant.gep, i64 %i.v
+  %i.x = add i64 %.02420.i, %i.p
   %i.y = shl i64 %i.x, 3
-  %5 = getelementptr i8, ptr %i.h, i64 %i.y
-  %i.z = getelementptr i8, ptr %5, i64 8
+  %i.z = getelementptr i8, ptr %6, i64 %i.y
   %bound0 = icmp ult ptr %i.t, %i.z
   %bound1 = icmp ult ptr %i.w, %i.u
   %found.conflict = and i1 %bound0, %bound1

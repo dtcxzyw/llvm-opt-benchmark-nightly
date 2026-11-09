@@ -204,7 +204,8 @@ bb.x:                                             ; preds = %bb.v, %bb.w, %._cri
   %i.ig = getelementptr inbounds nuw i8, ptr %i.fg, i64 24
   %i.ih = zext nneg i32 %.2267 to i64
   %i.ii = shl nuw nsw i64 %i.ih, 2
-  %invariant.op = add nsw i64 %i.ii, -4
+  %9 = getelementptr i8, ptr %.0251, i64 %i.ii
+  %10 = getelementptr i8, ptr %9, i64 -4
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph375, %.loopexit339
@@ -263,9 +264,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.jr = getelementptr i8, ptr %i.jq, i64 -4     ; 2 uses
   %i.js = zext nneg i32 %.0263372 to i64
   %i.jt = shl nuw nsw i64 %i.js, 2
-  %.reass = add nsw i64 %i.jo, %invariant.op
-  %i.ju = sub nsw i64 %.reass, %i.jt
-  %i.jv = getelementptr i8, ptr %.0251, i64 %i.ju ; 2 uses
+  %i.ju = sub nsw i64 %i.jo, %i.jt
+  %i.jv = getelementptr i8, ptr %10, i64 %i.ju    ; 2 uses
   %bound0 = icmp ult ptr %i.jf, %i.jk
   %bound1 = icmp ult ptr %i.jj, %i.ji
   %found.conflict = and i1 %bound0, %bound1
@@ -431,7 +431,8 @@ bb.ac:                                            ; preds = %bb.z, %bb.aa, %bb.a
   %i.mg = getelementptr inbounds nuw i8, ptr %i.fg, i64 40
   %i.mh = zext nneg i32 %.3268 to i64
   %i.mi = shl nuw nsw i64 %i.mh, 2
-  %invariant.op596 = add nsw i64 %i.mi, -4
+  %11 = getelementptr i8, ptr %.1252, i64 %i.mi
+  %12 = getelementptr i8, ptr %11, i64 -4
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph384, %.loopexit
@@ -490,9 +491,8 @@ vector.memcheck552:                               ; preds = %vector.scevcheck518
   %i.nr = getelementptr i8, ptr %i.nq, i64 -4     ; 2 uses
   %i.ns = zext nneg i32 %.1264381 to i64
   %i.nt = shl nuw nsw i64 %i.ns, 2
-  %.reass597 = add nsw i64 %i.no, %invariant.op596
-  %i.nu = sub nsw i64 %.reass597, %i.nt
-  %i.nv = getelementptr i8, ptr %.1252, i64 %i.nu ; 2 uses
+  %i.nu = sub nsw i64 %i.no, %i.nt
+  %i.nv = getelementptr i8, ptr %12, i64 %i.nu    ; 2 uses
   %bound0553 = icmp ult ptr %i.nf, %i.nk
   %bound1554 = icmp ult ptr %i.nj, %i.ni
   %found.conflict555 = and i1 %bound0553, %bound1554

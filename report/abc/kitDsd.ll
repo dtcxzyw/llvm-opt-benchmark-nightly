@@ -205,8 +205,14 @@ tailrecurse.outer:                                ; preds = %tailrecurse.outer.b
   %.tr643.ph = phi ptr [ %1, %bb.a ], [ %.tr643.ph.be, %tailrecurse.outer.backedge ] ; 58 uses
   %.tr644.ph = phi i32 [ %2, %bb.a ], [ %.tr644.ph.be, %tailrecurse.outer.backedge ]
   %.tr645.ph = phi ptr [ %3, %bb.a ], [ %.tr645.ph.be, %tailrecurse.outer.backedge ]
-  %.tr643.ph1201 = ptrtoaddr ptr %.tr643.ph to i64 ; 5 uses
+  %.tr643.ph1201 = ptrtoaddr ptr %.tr643.ph to i64
   %i.e = getelementptr inbounds nuw i8, ptr %.tr643.ph, i64 4 ; 24 uses
+  %5 = sub i64 -4, %.tr643.ph1201                 ; 5 uses
+  %invariant.op = add i64 %5, -1
+  %invariant.op1477 = add i64 %5, -1
+  %invariant.op1479 = add i64 %5, -1
+  %invariant.op1481 = add i64 %5, -1
+  %invariant.op1483 = add i64 %5, -1
   br label %tailrecurse.outer654
 
 tailrecurse.outer654:                             ; preds = %tailrecurse.outer654.backedge, %tailrecurse.outer
@@ -609,10 +615,9 @@ vector.memcheck1268:                              ; preds = %select.unfold.prehe
   %i.ku = lshr i32 %i.f, 8
   %i.kv = and i32 %i.ku, 1020
   %i.kw = zext nneg i32 %i.kv to i64
-  %5 = add i64 %i.kt, %i.it
-  %i.kx = add i64 %.tr643.ph1201, %i.kw
-  %i.ky = sub i64 %5, %i.kx
-  %i.kz = add i64 %i.ky, -5
+  %i.kx = add i64 %i.kt, %i.it
+  %i.ky = sub i64 %i.kx, %i.kw
+  %i.kz = add i64 %i.ky, %invariant.op
   %diff.check1269 = icmp ult i64 %i.kz, 31
   br i1 %diff.check1269, label %select.unfold.i535.preheader, label %vector.ph1270
 
@@ -675,9 +680,8 @@ vector.memcheck1252:                              ; preds = %select.unfold.prehe
   %i.lv = lshr i32 %i.f, 8
   %i.lw = and i32 %i.lv, 1020
   %i.lx = zext nneg i32 %i.lw to i64
-  %6 = add i64 %.tr643.ph1201, %i.lx
-  %i.ly = sub i64 %i.it, %6
-  %i.lz = add i64 %i.ly, -5
+  %i.ly = sub i64 %i.it, %i.lx
+  %i.lz = add i64 %i.ly, %invariant.op1477
   %diff.check1253 = icmp ult i64 %i.lz, 31
   br i1 %diff.check1253, label %select.unfold.i541.preheader, label %vector.ph1254
 
@@ -744,10 +748,9 @@ vector.memcheck1236:                              ; preds = %select.unfold.prehe
   %i.my = lshr i32 %i.f, 8
   %i.mz = and i32 %i.my, 1020
   %i.na = zext nneg i32 %i.mz to i64
-  %7 = add i64 %i.mx, %i.it
-  %i.nb = add i64 %.tr643.ph1201, %i.na
-  %i.nc = sub i64 %7, %i.nb
-  %i.nd = add i64 %i.nc, -5
+  %i.nb = add i64 %i.mx, %i.it
+  %i.nc = sub i64 %i.nb, %i.na
+  %i.nd = add i64 %i.nc, %invariant.op1479
   %diff.check1237 = icmp ult i64 %i.nd, 31
   br i1 %diff.check1237, label %select.unfold.i547.preheader, label %vector.ph1238
 
@@ -814,9 +817,8 @@ vector.memcheck1220:                              ; preds = %select.unfold.prehe
   %i.ob = lshr i32 %i.f, 8
   %i.oc = and i32 %i.ob, 1020
   %i.od = zext nneg i32 %i.oc to i64
-  %8 = add i64 %.tr643.ph1201, %i.od
-  %i.oe = sub i64 %i.it, %8
-  %i.of = add i64 %i.oe, -5
+  %i.oe = sub i64 %i.it, %i.od
+  %i.of = add i64 %i.oe, %invariant.op1481
   %diff.check1221 = icmp ult i64 %i.of, 31
   br i1 %diff.check1221, label %select.unfold.i553.preheader, label %vector.ph1222
 
@@ -883,9 +885,8 @@ vector.memcheck1204:                              ; preds = %select.unfold.prehe
   %i.pc = lshr i32 %i.f, 8
   %i.pd = and i32 %i.pc, 1020
   %i.pe = zext nneg i32 %i.pd to i64
-  %9 = add i64 %.tr643.ph1201, %i.pe
-  %i.pf = sub i64 %i.it, %9
-  %i.pg = add i64 %i.pf, -5
+  %i.pf = sub i64 %i.it, %i.pe
+  %i.pg = add i64 %i.pf, %invariant.op1483
   %diff.check1205 = icmp ult i64 %i.pg, 31
   br i1 %diff.check1205, label %select.unfold.i559.preheader, label %vector.ph1206
 

@@ -205,11 +205,11 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.0206.0.lcssa = phi ptr [ null, %bb.ad ], [ %.sroa.0206.1, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 6 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !228 ; 2 uses
-  %28 = ptrtoaddr ptr %i.dh to i64
   %i.di = icmp sgt i32 %i.db, 0
   br i1 %i.di, label %.lr.ph272, label %._crit_edge273
 
 .lr.ph272:                                        ; preds = %._crit_edge
+  %28 = ptrtoaddr ptr %i.dh to i64
   %i.dj = load ptr, ptr %i.t, align 8, !tbaa !152 ; 2 uses
   %i.dk = load ptr, ptr %1, align 8, !tbaa !150   ; 5 uses
   %i.dl = ptrtoint ptr %i.dj to i64
@@ -222,6 +222,7 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.not = icmp eq ptr %i.dj, %i.dk
   %i.dr = zext i32 %.075258 to i64                ; 5 uses
   %umax = call i64 @llvm.umax.i64(i64 %i.do, i64 1) ; 5 uses
+  %29 = sub i64 %28, %.sroa.0214.0377
   %i.ds = and i64 %i.dr, 1
   %lcmp.mod.not.not = icmp eq i64 %i.ds, 0
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.dk, i64 %i.dr
@@ -232,6 +233,7 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %n.vec382 = and i64 %umax, -8                   ; 3 uses
   %cmp.n392 = icmp eq i64 %i.do, %n.vec382
   %min.iters.check = icmp ult i64 %i.do, 8
+  %invariant.op = add i64 %29, -1
   %n.vec = and i64 %umax, -8                      ; 3 uses
   %cmp.n = icmp eq i64 %i.do, %n.vec
   %xtraiter408 = and i64 %umax, 3                 ; 2 uses
@@ -475,9 +477,8 @@ middle.block391:                                  ; preds = %vector.body383
 
 vector.memcheck:                                  ; preds = %.lr.ph268.preheader
   %i.ga = shl nsw i64 %i.fz, 2
-  %i.gb = add i64 %i.ga, %28
-  %29 = sub i64 %.sroa.0214.0377, %i.gb
-  %diff.check = icmp ugt i64 %29, -32
+  %i.gb = add i64 %i.ga, %invariant.op
+  %diff.check = icmp ult i64 %i.gb, 31
   br i1 %diff.check, label %.lr.ph268.preheader395, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body

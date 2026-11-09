@@ -61,7 +61,7 @@ bb.a:
 
 .lr.ph407:                                        ; preds = %bb.a, %.thread307
   %i.d = phi i64 [ %i.nx, %.thread307 ], [ %i.c, %bb.a ]
-  %.0164.ph611 = phi i64 [ %.pre-phi, %.thread307 ], [ 0, %bb.a ] ; 23 uses
+  %.0164.ph611 = phi i64 [ %.pre-phi, %.thread307 ], [ 0, %bb.a ] ; 22 uses
   %i.e = add i64 %.0164.ph611, 3                  ; 3 uses
   %i.f = add nuw i64 %.0164.ph611, 1              ; 9 uses
   %i.g = add i64 %.0164.ph611, 2                  ; 5 uses
@@ -287,7 +287,7 @@ bb.ac:                                            ; preds = %.lr.ph, %bb.z, %bb.
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %bb.ab, %bb.y
-  %.0157.lcssa = phi i64 [ %i.h, %bb.y ], [ %.0157392, %bb.ab ] ; 6 uses
+  %.0157.lcssa = phi i64 [ %i.h, %bb.y ], [ %.0157392, %bb.ab ] ; 7 uses
   %i.cn = icmp eq i64 %.0157.lcssa, %i.by
   br i1 %i.cn, label %.critedge, label %bb.ad
 
@@ -308,7 +308,7 @@ bb.ae:                                            ; preds = %bb.ad
   ]
 
 bb.af:                                            ; preds = %bb.ae
-  %i.cq = sub nuw i64 %.0157.lcssa, %i.h          ; 6 uses
+  %i.cq = sub nuw i64 %.0157.lcssa, %i.h          ; 5 uses
   %i.cr = and i64 %i.cq, 3
   %.not181 = icmp eq i64 %i.cr, 0
   br i1 %.not181, label %.lr.ph403.preheader, label %.critedge
@@ -324,12 +324,10 @@ bb.af:                                            ; preds = %bb.ae
 
 vector.memcheck:                                  ; preds = %.lr.ph403.preheader
   %i.cx = lshr exact i64 %i.cq, 1
-  %1 = getelementptr i8, ptr %i.cu, i64 %i.cx
-  %2 = getelementptr i8, ptr %i.cv, i64 %.0164.ph611
-  %i.cy = getelementptr i8, ptr %2, i64 %i.cq
-  %i.cz = getelementptr i8, ptr %i.cy, i64 4
+  %i.cy = getelementptr i8, ptr %i.cu, i64 %i.cx
+  %i.cz = getelementptr i8, ptr %i.cv, i64 %.0157.lcssa
   %bound0 = icmp ult ptr %i.cu, %i.cz
-  %bound1 = icmp ult ptr %i.cw, %1
+  %bound1 = icmp ult ptr %i.cw, %i.cy
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph403.preheader631, label %vector.ph
 

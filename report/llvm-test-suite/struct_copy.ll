@@ -152,8 +152,11 @@ bb.f:                                             ; preds = %._crit_edge256, %bb
   %i.df = mul nsw i32 %i.co, %i.de
   %i.dg = select i1 %i.cn, i32 %i.df, i32 0
   %i.dh = add nsw i32 %i.br, %i.dg
+  %2 = shl nsw i64 %i.ak, 3
+  %3 = add i64 %2, %i.ag
   %i.di = zext nneg i32 %i.ch to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %i.ch, 6
+  %invariant.op = add i64 %3, -1
   %n.vec = and i64 %i.di, 2147483644              ; 5 uses
   %i.dj = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.di
@@ -174,14 +177,13 @@ bb.f:                                             ; preds = %._crit_edge256, %bb
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.us.us
-  %2 = add nsw i64 %i.dl, %i.ad
-  %i.dm = shl nsw i64 %2, 3
-  %3 = add i64 %i.dm, %i.z
-  %i.dn = add nsw i64 %i.dk, %i.ak
+  %i.dm = shl nsw i64 %i.dk, 3
+  %i.dn = add nsw i64 %i.ad, %i.dl
   %i.do = shl nsw i64 %i.dn, 3
-  %i.dp = add i64 %i.do, %i.ag
-  %i.dq = sub i64 %3, %i.dp
-  %diff.check = icmp ugt i64 %i.dq, -32
+  %i.dp = add i64 %i.do, %i.z
+  %i.dq = sub i64 %i.dm, %i.dp
+  %.reass = add i64 %i.dq, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

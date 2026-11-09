@@ -197,15 +197,23 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 .preheader241.us.preheader:                       ; preds = %.preheader241.lr.ph
   %i.el = sext i32 %i.df to i64                   ; 6 uses
+  %5 = shl nsw i64 %i.aw, 3                       ; 2 uses
   %i.em = add nsw i32 %i.dv, -1
   %i.en = zext i32 %i.em to i64
-  %i.eo = shl nuw nsw i64 %i.en, 3                ; 2 uses
+  %6 = shl nuw nsw i64 %i.en, 3                   ; 2 uses
+  %i.eo = shl nsw i64 %i.bc, 3                    ; 2 uses
   %i.ep = zext nneg i32 %i.dv to i64              ; 2 uses
   %min.iters.check = icmp ugt i32 %i.dv, 3
   %ident.check.not = icmp eq i32 %i.df, 1
   %or.cond = select i1 %min.iters.check, i1 %ident.check.not, i1 false
-  %invariant.gep308.a = getelementptr i8, ptr %i.ay, i64 %i.eo
-  %invariant.gep310.a = getelementptr i8, ptr %i.as, i64 %i.eo
+  %invariant.gep308 = getelementptr i8, ptr %i.ay, i64 %i.eo
+  %7 = getelementptr i8, ptr %i.ay, i64 %i.eo
+  %8 = getelementptr i8, ptr %7, i64 8
+  %9 = getelementptr i8, ptr %8, i64 %6
+  %invariant.gep310 = getelementptr i8, ptr %i.as, i64 %5
+  %10 = getelementptr i8, ptr %i.as, i64 %5
+  %invariant.gep308.a = getelementptr i8, ptr %10, i64 8
+  %invariant.gep310.a = getelementptr i8, ptr %invariant.gep308.a, i64 %6
   %n.vec = and i64 %i.ep, 2147483644              ; 5 uses
   %i.eq = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.ep
@@ -226,18 +234,14 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.preheader.us.us
-  %5 = add nsw i64 %i.er, %i.bc
-  %i.et = shl nsw i64 %5, 3                       ; 2 uses
-  %6 = getelementptr i8, ptr %i.ay, i64 %i.et
-  %gep309 = getelementptr i8, ptr %invariant.gep308.a, i64 %i.et
-  %i.eu = getelementptr i8, ptr %gep309, i64 8
-  %7 = add nsw i64 %i.es, %i.aw
-  %i.ev = shl nsw i64 %7, 3                       ; 2 uses
-  %8 = getelementptr i8, ptr %i.as, i64 %i.ev
-  %gep311 = getelementptr i8, ptr %invariant.gep310.a, i64 %i.ev
-  %i.ew = getelementptr i8, ptr %gep311, i64 8
-  %bound0 = icmp ult ptr %6, %i.ew
-  %bound1 = icmp ult ptr %8, %i.eu
+  %i.et = shl nsw i64 %i.er, 3                    ; 2 uses
+  %gep309 = getelementptr i8, ptr %invariant.gep308, i64 %i.et
+  %i.eu = getelementptr i8, ptr %9, i64 %i.et
+  %i.ev = shl nsw i64 %i.es, 3                    ; 2 uses
+  %gep311 = getelementptr i8, ptr %invariant.gep310, i64 %i.ev
+  %i.ew = getelementptr i8, ptr %invariant.gep310.a, i64 %i.ev
+  %bound0 = icmp ult ptr %gep309, %i.ew
+  %bound1 = icmp ult ptr %gep311, %i.eu
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

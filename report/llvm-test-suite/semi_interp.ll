@@ -202,10 +202,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 .preheader538.us.preheader:                       ; preds = %.preheader538.lr.ph
   %i.fw = sext i32 %i.ew to i64                   ; 5 uses
+  %4 = shl nsw i64 %i.ck, 3
+  %5 = add i64 %4, %i.cg
   %i.fx = zext nneg i32 %i.fd to i64              ; 2 uses
   %min.iters.check = icmp ugt i32 %i.fd, 7
   %ident.check.not = icmp eq i32 %i.ew, 1
   %or.cond = select i1 %min.iters.check, i1 %ident.check.not, i1 false
+  %invariant.op = add i64 %5, -1
   %n.vec = and i64 %i.fx, 2147483644              ; 5 uses
   %i.fy = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.fx
@@ -226,14 +229,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.preheader537.us.us
-  %4 = add nsw i64 %i.ga, %i.cr
-  %i.gb = shl nsw i64 %4, 3
-  %5 = add i64 %i.gb, %i.cn
-  %i.gc = add nsw i64 %i.fz, %i.ck
+  %i.gb = shl nsw i64 %i.fz, 3
+  %i.gc = add nsw i64 %i.cr, %i.ga
   %i.gd = shl nsw i64 %i.gc, 3
-  %i.ge = add i64 %i.gd, %i.cg
-  %i.gf = sub i64 %5, %i.ge
-  %diff.check = icmp ugt i64 %i.gf, -32
+  %i.ge = add i64 %i.gd, %i.cn
+  %i.gf = sub i64 %i.gb, %i.ge
+  %.reass = add i64 %i.gf, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -512,7 +514,12 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   %i.lr = getelementptr inbounds nuw i8, ptr %i.ih, i64 8
   %i.ls = getelementptr inbounds nuw i8, ptr %i.ik, i64 8
   %i.lt = shl nsw i64 %.pn, 3
-  %invariant.op.a = add i64 %i.im, %i.lt
+  %6 = add i64 %i.lt, %i.im
+  %7 = shl nsw i64 %i.kb, 3
+  %8 = add i64 %7, %i.jx                          ; 2 uses
+  %9 = sub i64 %8, %.0469678
+  %invariant.op723 = add i64 %9, -1
+  %invariant.op.a = add i64 %8, -1
   %i.lu = shl nsw i64 %i.kx, 3
   %diff.check684 = icmp ugt i64 %i.lu, -32
   %i.lv = shl nsw i64 %i.lj, 3
@@ -657,16 +664,15 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab
   br i1 %or.cond706, label %vector.memcheck681, label %scalar.ph679.preheader
 
 vector.memcheck681:                               ; preds = %.preheader.us.us
-  %i.pe = shl nsw i64 %i.pd, 3                    ; 2 uses
-  %6 = add nsw i64 %i.pc, %i.kb
-  %i.pf = shl nsw i64 %6, 3
-  %7 = add i64 %i.pf, %i.jx                       ; 2 uses
-  %i.pg = add i64 %i.pe, %.0469678
-  %8 = sub i64 %i.pg, %7
-  %diff.check682 = icmp ugt i64 %8, -32
-  %.reass = add i64 %i.pe, %invariant.op.a
-  %9 = sub i64 %.reass, %7
-  %diff.check683 = icmp ugt i64 %9, -32
+  %i.pe = shl nsw i64 %i.pc, 3                    ; 2 uses
+  %i.pf = shl nsw i64 %i.pd, 3                    ; 2 uses
+  %10 = sub nsw i64 %i.pe, %i.pf
+  %i.pg = add i64 %10, %invariant.op723
+  %diff.check682 = icmp ult i64 %i.pg, 31
+  %11 = add i64 %6, %i.pf
+  %12 = sub i64 %i.pe, %11
+  %.reass726 = add i64 %12, %invariant.op.a
+  %diff.check683 = icmp ult i64 %.reass726, 31
   %conflict.rdx = or i1 %diff.check682, %diff.check683
   %conflict.rdx687.reass = or i1 %conflict.rdx, %invariant.op723.a
   br i1 %conflict.rdx687.reass, label %scalar.ph679.preheader, label %vector.ph688

@@ -205,7 +205,8 @@ iter.check455:                                    ; preds = %_ZNSt6vectorIiSaIiE
   %i.cb = add nsw i32 %i.ca, 1                    ; 4 uses
   %i.cc = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.cd = add nsw i32 %i.by, -1
-  %i.ce = udiv i32 %i.cd, %i.cb
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.cb, i32 1)
+  %i.ce = udiv i32 %i.cd, %3
   %i.cf = add i32 %i.ce, 1                        ; 7 uses
   %min.iters.check436 = icmp ult i32 %i.cf, 4
   br i1 %min.iters.check436, label %.critedge.us.us.preheader, label %vector.main.loop.iter.check437
@@ -304,7 +305,8 @@ iter.check418:                                    ; preds = %._crit_edge.split.u
   %i.di = add nsw i32 %i.dh, 1                    ; 4 uses
   %i.dj = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.dk = add nsw i32 %i.df, -1
-  %i.dl = udiv i32 %i.dk, %i.di
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.di, i32 1)
+  %i.dl = udiv i32 %i.dk, %4
   %i.dm = add i32 %i.dl, 1                        ; 7 uses
   %min.iters.check399 = icmp ult i32 %i.dm, 4
   br i1 %min.iters.check399, label %.critedge.us.us.1.preheader, label %vector.main.loop.iter.check400
@@ -403,7 +405,8 @@ iter.check381:                                    ; preds = %._crit_edge.split.u
   %i.ep = add nsw i32 %i.eo, 1                    ; 4 uses
   %i.eq = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.er = add nsw i32 %i.em, -1
-  %i.es = udiv i32 %i.er, %i.ep
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.ep, i32 1)
+  %i.es = udiv i32 %i.er, %5
   %i.et = add i32 %i.es, 1                        ; 7 uses
   %min.iters.check362 = icmp ult i32 %i.et, 4
   br i1 %min.iters.check362, label %.critedge.us.us.2.preheader, label %vector.main.loop.iter.check363
@@ -502,7 +505,8 @@ iter.check344:                                    ; preds = %._crit_edge.split.u
   %i.fw = add nsw i32 %i.fv, 1                    ; 4 uses
   %i.fx = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.fy = add nsw i32 %i.ft, -1
-  %i.fz = udiv i32 %i.fy, %i.fw
+  %6 = tail call i32 @llvm.umax.i32(i32 %i.fw, i32 1)
+  %i.fz = udiv i32 %i.fy, %6
   %i.ga = add i32 %i.fz, 1                        ; 7 uses
   %min.iters.check325 = icmp ult i32 %i.ga, 4
   br i1 %min.iters.check325, label %.critedge.us.us.3.preheader, label %vector.main.loop.iter.check326
@@ -601,7 +605,8 @@ iter.check307:                                    ; preds = %._crit_edge.split.u
   %i.hd = add nsw i32 %i.hc, 1                    ; 4 uses
   %i.he = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.hf = add nsw i32 %i.ha, -1
-  %i.hg = udiv i32 %i.hf, %i.hd
+  %7 = tail call i32 @llvm.umax.i32(i32 %i.hd, i32 1)
+  %i.hg = udiv i32 %i.hf, %7
   %i.hh = add i32 %i.hg, 1                        ; 7 uses
   %min.iters.check288 = icmp ult i32 %i.hh, 4
   br i1 %min.iters.check288, label %.critedge.us.us.4.preheader, label %vector.main.loop.iter.check289
@@ -700,7 +705,8 @@ iter.check270:                                    ; preds = %._crit_edge.split.u
   %i.ik = add nsw i32 %i.ij, 1                    ; 4 uses
   %i.il = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.im = add nsw i32 %i.ih, -1
-  %i.in = udiv i32 %i.im, %i.ik
+  %8 = tail call i32 @llvm.umax.i32(i32 %i.ik, i32 1)
+  %i.in = udiv i32 %i.im, %8
   %i.io = add i32 %i.in, 1                        ; 7 uses
   %min.iters.check251 = icmp ult i32 %i.io, 4
   br i1 %min.iters.check251, label %.critedge.us.us.5.preheader, label %vector.main.loop.iter.check252
@@ -799,7 +805,8 @@ iter.check233:                                    ; preds = %._crit_edge.split.u
   %i.jr = add nsw i32 %i.jq, 1                    ; 4 uses
   %i.js = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.jt = add nsw i32 %i.jo, -1
-  %i.ju = udiv i32 %i.jt, %i.jr
+  %9 = tail call i32 @llvm.umax.i32(i32 %i.jr, i32 1)
+  %i.ju = udiv i32 %i.jt, %9
   %i.jv = add i32 %i.ju, 1                        ; 7 uses
   %min.iters.check214 = icmp ult i32 %i.jv, 4
   br i1 %min.iters.check214, label %.critedge.us.us.6.preheader, label %vector.main.loop.iter.check215
@@ -898,7 +905,8 @@ iter.check196:                                    ; preds = %._crit_edge.split.u
   %i.ky = add nsw i32 %i.kx, 1                    ; 4 uses
   %i.kz = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.la = add nsw i32 %i.kv, -1
-  %i.lb = udiv i32 %i.la, %i.ky
+  %10 = tail call i32 @llvm.umax.i32(i32 %i.ky, i32 1)
+  %i.lb = udiv i32 %i.la, %10
   %i.lc = add i32 %i.lb, 1                        ; 7 uses
   %min.iters.check177 = icmp ult i32 %i.lc, 4
   br i1 %min.iters.check177, label %.critedge.us.us.7.preheader, label %vector.main.loop.iter.check178
@@ -997,7 +1005,8 @@ iter.check159:                                    ; preds = %._crit_edge.split.u
   %i.mf = add nsw i32 %i.me, 1                    ; 4 uses
   %i.mg = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.mh = add nsw i32 %i.mc, -1
-  %i.mi = udiv i32 %i.mh, %i.mf
+  %11 = tail call i32 @llvm.umax.i32(i32 %i.mf, i32 1)
+  %i.mi = udiv i32 %i.mh, %11
   %i.mj = add i32 %i.mi, 1                        ; 7 uses
   %min.iters.check140 = icmp ult i32 %i.mj, 4
   br i1 %min.iters.check140, label %.critedge.us.us.8.preheader, label %vector.main.loop.iter.check141
@@ -1096,7 +1105,8 @@ iter.check:                                       ; preds = %._crit_edge.split.u
   %i.nm = add nsw i32 %i.nl, 1                    ; 4 uses
   %i.nn = load i32, ptr %i.bp, align 4, !tbaa !116 ; 3 uses
   %i.no = add nsw i32 %i.nj, -1
-  %i.np = udiv i32 %i.no, %i.nm
+  %12 = tail call i32 @llvm.umax.i32(i32 %i.nm, i32 1)
+  %i.np = udiv i32 %i.no, %12
   %i.nq = add i32 %i.np, 1                        ; 7 uses
   %min.iters.check = icmp ult i32 %i.nq, 4
   br i1 %min.iters.check, label %.critedge.us.us.9.preheader, label %vector.main.loop.iter.check
@@ -1497,6 +1507,9 @@ declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #13

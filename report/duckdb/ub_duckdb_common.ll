@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr i64 @duckdb_fsst_decompress(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #19 comdat !guid !6761 {
 bb.a:
-  %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %4 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 9 ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 11 uses
   %i.e = icmp ugt i64 %3, 31                      ; 2 uses
@@ -444,11 +444,17 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %._cri
   %.7173 = phi i64 [ %i.ef, %bb.p ], [ %.6172, %bb.o ], [ %.0166.lcssa, %._crit_edge ] ; 2 uses
   %.7 = phi i64 [ %i.dv, %bb.p ], [ %.6, %bb.o ], [ %.0165.lcssa, %._crit_edge ] ; 2 uses
   %i.eg = icmp ult i64 %.7, %1
-  br i1 %i.eg, label %.lr.ph200, label %._crit_edge201
+  br i1 %i.eg, label %.lr.ph200.preheader, label %._crit_edge201
 
-.lr.ph200:                                        ; preds = %bb.q, %.loopexit
-  %.8198 = phi i64 [ %.9, %.loopexit ], [ %.7, %bb.q ] ; 3 uses
-  %.8174197 = phi i64 [ %.9175, %.loopexit ], [ %.7173, %bb.q ] ; 14 uses
+.lr.ph200.preheader:                              ; preds = %bb.q
+  %5 = add i64 %i.b, -264
+  %6 = sub i64 %5, %i.a
+  %invariant.op = add i64 %6, -1
+  br label %.lr.ph200
+
+.lr.ph200:                                        ; preds = %.lr.ph200.preheader, %.loopexit
+  %.8198 = phi i64 [ %.9, %.loopexit ], [ %.7, %.lr.ph200.preheader ] ; 3 uses
+  %.8174197 = phi i64 [ %.9175, %.loopexit ], [ %.7173, %.lr.ph200.preheader ] ; 14 uses
   %i.eh = add nuw i64 %.8198, 1                   ; 6 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %2, i64 %.8198
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !3012 ; 2 uses
@@ -475,10 +481,8 @@ iter.check:                                       ; preds = %bb.r
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.eu = shl nuw nsw i64 %i.ek, 3
-  %5 = add i64 %.8174197, %i.a
-  %6 = add i64 %i.eu, %i.b
-  %i.ev = sub i64 %5, %6
-  %i.ew = add i64 %i.ev, -265
+  %i.ev = sub i64 %.8174197, %i.eu
+  %i.ew = add i64 %i.ev, %invariant.op
   %diff.check = icmp ult i64 %i.ew, 31
   br i1 %diff.check, label %.lr.ph196.preheader, label %vector.main.loop.iter.check
 

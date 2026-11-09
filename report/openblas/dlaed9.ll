@@ -12,8 +12,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dlaed9_(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5, ptr nofree noundef readonly captures(none) %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr nofree noundef readonly captures(none) %11, ptr noundef initializes((0, 4)) %12) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %10 to i64
-  %i.b = ptrtoaddr ptr %5 to i64
+  %i.a = ptrtoaddr ptr %5 to i64
+  %i.b = ptrtoaddr ptr %10 to i64
   %i.c = alloca i32, align 4                      ; 10 uses
   %i.d = alloca i32, align 4                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
@@ -21,7 +21,7 @@ bb.a:
   %i.e = getelementptr inbounds i8, ptr %4, i64 -8
   %i.f = load i32, ptr %6, align 4, !tbaa !43     ; 6 uses
   %narrow163 = xor i32 %i.f, -1
-  %i.g = sext i32 %narrow163 to i64               ; 5 uses
+  %i.g = sext i32 %narrow163 to i64               ; 4 uses
   %i.h = getelementptr inbounds [8 x i8], ptr %5, i64 %i.g ; 8 uses
   %i.i = getelementptr inbounds i8, ptr %8, i64 -8 ; 7 uses
   %i.j = getelementptr inbounds i8, ptr %9, i64 -8 ; 16 uses
@@ -424,11 +424,23 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i32 %.pre274, ptr %i.c, align 4, !tbaa !43
   store i32 1, ptr %i.d, align 4, !tbaa !43
   %.not168218 = icmp slt i32 %.pre274, 1
-  br i1 %.not168218, label %.loopexit, label %.lr.ph221
+  br i1 %.not168218, label %.loopexit, label %.lr.ph221.preheader
 
-.lr.ph221:                                        ; preds = %._crit_edge207, %._crit_edge217
-  %i.lq = phi i32 [ %i.oo, %._crit_edge217 ], [ %.pre274, %._crit_edge207 ] ; 6 uses
-  %storemerge167219 = phi i32 [ %i.qp, %._crit_edge217 ], [ 1, %._crit_edge207 ]
+.lr.ph221.preheader:                              ; preds = %._crit_edge207
+  %13 = shl nsw i64 %i.l, 3
+  %14 = add i64 %13, %i.b
+  %15 = shl nsw i64 %i.g, 3                       ; 3 uses
+  %16 = add i64 %15, %i.a
+  %17 = sub i64 %14, %16
+  %18 = getelementptr i8, ptr %5, i64 %15
+  %19 = getelementptr i8, ptr %18, i64 8
+  %invariant.gep528 = getelementptr i8, ptr %5, i64 %15
+  %invariant.op = add i64 %17, -1
+  br label %.lr.ph221
+
+.lr.ph221:                                        ; preds = %.lr.ph221.preheader, %._crit_edge217
+  %i.lq = phi i32 [ %i.oo, %._crit_edge217 ], [ %.pre274, %.lr.ph221.preheader ] ; 6 uses
+  %storemerge167219 = phi i32 [ %i.qp, %._crit_edge217 ], [ 1, %.lr.ph221.preheader ]
   %.not169208 = icmp slt i32 %i.lq, 1
   %.pre276 = mul i32 %storemerge167219, %i.f
   %.pre277 = sext i32 %.pre276 to i64             ; 3 uses
@@ -443,12 +455,10 @@ iter.check487:                                    ; preds = %.lr.ph221
   br i1 %min.iters.check465, label %vec.epilog.scalar.ph489.preheader, label %vector.memcheck466
 
 vector.memcheck466:                               ; preds = %iter.check487
-  %13 = add nsw i64 %.pre277, %i.g
-  %i.lt = shl nsw i64 %13, 3                      ; 2 uses
-  %14 = getelementptr i8, ptr %5, i64 %i.lt
-  %i.lu = getelementptr i8, ptr %14, i64 8
+  %i.lt = shl nsw i64 %.pre277, 3                 ; 2 uses
+  %i.lu = getelementptr i8, ptr %19, i64 %i.lt
   %i.lv = shl nuw nsw i64 %wide.trip.count255, 3  ; 2 uses
-  %i.lw = getelementptr i8, ptr %5, i64 %i.lt
+  %i.lw = getelementptr i8, ptr %invariant.gep528, i64 %i.lt
   %i.lx = getelementptr i8, ptr %i.lw, i64 %i.lv
   %i.ly = getelementptr i8, ptr %9, i64 %i.lv
   %i.lz = getelementptr i8, ptr %i.ly, i64 -8
@@ -641,14 +651,10 @@ iter.check439:                                    ; preds = %._crit_edge212
   br i1 %min.iters.check422, label %vec.epilog.scalar.ph441.preheader, label %vector.memcheck423
 
 vector.memcheck423:                               ; preds = %iter.check439
-  %15 = add nsw i64 %i.os, %i.l
-  %16 = shl nsw i64 %15, 3
-  %17 = add i64 %16, %i.a
-  %18 = add nsw i64 %i.or, %i.g
-  %i.ov = shl nsw i64 %18, 3
-  %i.ow = add i64 %i.ov, %i.b
-  %19 = sub i64 %i.ow, %17
-  %diff.check = icmp ugt i64 %19, -128
+  %20 = sub nsw i64 %i.os, %i.or
+  %i.ov = shl nsw i64 %20, 3
+  %i.ow = add i64 %i.ov, %invariant.op
+  %diff.check = icmp ult i64 %i.ow, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph441.preheader, label %vector.main.loop.iter.check424
 
 vector.main.loop.iter.check424:                   ; preds = %vector.memcheck423

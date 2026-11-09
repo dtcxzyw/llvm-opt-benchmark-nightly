@@ -204,9 +204,9 @@ bb.a:
   br label %.lr.ph64
 
 .lr.ph64:                                         ; preds = %.lr.ph64.preheader, %bb.f
-  %indvar = phi i64 [ %indvar.next, %bb.f ], [ 0, %.lr.ph64.preheader ] ; 2 uses
-  %.04662 = phi ptr [ %i.ed, %bb.f ], [ %2, %.lr.ph64.preheader ] ; 12 uses
-  %.04861 = phi ptr [ %.149.lcssa, %bb.f ], [ %5, %.lr.ph64.preheader ] ; 18 uses
+  %indvar = phi i64 [ 0, %.lr.ph64.preheader ], [ %indvar.next, %bb.f ] ; 2 uses
+  %.04662 = phi ptr [ %2, %.lr.ph64.preheader ], [ %i.ed, %bb.f ] ; 12 uses
+  %.04861 = phi ptr [ %5, %.lr.ph64.preheader ], [ %.149.lcssa, %bb.f ] ; 18 uses
   %.0486197 = ptrtoaddr ptr %.04861 to i64        ; 2 uses
   %i.g = load i32, ptr %.04662, align 4, !tbaa !21 ; 6 uses
   %i.h = icmp slt i32 %i.g, 128

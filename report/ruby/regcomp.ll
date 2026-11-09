@@ -205,6 +205,8 @@ bb.b:                                             ; preds = %tailrecurse
   %i.be = add i64 %i.b, 59
   %i.bf = add i64 %i.b, 59
   %i.bg = add i64 %i.b, 59
+  %invariant.op1052 = add i64 59, %i.a
+  %invariant.op1053 = add i64 123, %i.a
   br label %bb.c
 
 bb.c:                                             ; preds = %concat_left_node_opt_info.exit, %bb.b
@@ -393,9 +395,8 @@ vector.scevcheck953:                              ; preds = %iter.check974
 
 vector.memcheck960:                               ; preds = %vector.scevcheck953
   %i.eb = sext i32 %.03949.i.i to i64
-  %8 = add i64 %i.a, %i.eb
-  %i.ec = sub i64 %8, %.050.i.i954
-  %i.ed = add i64 %i.ec, 59
+  %i.ec = sub i64 %i.eb, %.050.i.i954
+  %i.ed = add i64 %i.ec, %invariant.op1052
   %diff.check961 = icmp ult i64 %i.ed, 31
   br i1 %diff.check961, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check962
 
@@ -590,9 +591,8 @@ vector.scevcheck915:                              ; preds = %iter.check936
 
 vector.memcheck922:                               ; preds = %vector.scevcheck915
   %i.gu = sext i32 %.03949.i83.i to i64
-  %9 = add i64 %i.a, %i.gu
-  %i.gv = sub i64 %9, %.050.i82.i916
-  %i.gw = add i64 %i.gv, 123
+  %i.gv = sub i64 %i.gu, %.050.i82.i916
+  %i.gw = add i64 %i.gv, %invariant.op1053
   %diff.check923 = icmp ult i64 %i.gw, 31
   br i1 %diff.check923, label %.lr.ph.i88.i.preheader, label %vector.main.loop.iter.check924
 
@@ -995,6 +995,7 @@ bb.bo:                                            ; preds = %bb.bn
 .lr.ph35.i:                                       ; preds = %bb.bo
   %i.nc = getelementptr i8, ptr %i.na, i64 16
   %i.nd = getelementptr i8, ptr %i.na, i64 20
+  %invariant.op1051 = add i64 59, %i.a
   br label %bb.bp
 
 .loopexit.i:                                      ; preds = %.lr.ph.i, %middle.block896, %vec.epilog.middle.block910, %.preheader.i
@@ -1053,9 +1054,8 @@ vector.scevcheck877:                              ; preds = %iter.check898
 
 vector.memcheck884:                               ; preds = %vector.scevcheck877
   %i.od = sext i32 %.02533.i to i64
-  %10 = add i64 %i.a, %i.od
-  %i.oe = sub i64 %10, %.034.i878
-  %i.of = add i64 %i.oe, 59
+  %i.oe = sub i64 %i.od, %.034.i878
+  %i.of = add i64 %i.oe, %invariant.op1051
   %diff.check885 = icmp ult i64 %i.of, 31
   br i1 %diff.check885, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check886
 
@@ -1220,6 +1220,7 @@ bb.bz:                                            ; preds = %bb.bx
 .lr.ph35.i331:                                    ; preds = %bb.bz
   %i.qn = getelementptr i8, ptr %i.qe, i64 16
   %i.qo = getelementptr i8, ptr %i.qe, i64 20
+  %invariant.op1050 = add i64 59, %i.a
   br label %bb.ca
 
 .loopexit.i335:                                   ; preds = %.lr.ph.i338, %middle.block858, %vec.epilog.middle.block872, %.preheader.i334
@@ -1278,9 +1279,8 @@ vector.scevcheck839:                              ; preds = %iter.check860
 
 vector.memcheck846:                               ; preds = %vector.scevcheck839
   %i.ro = sext i32 %.02533.i333 to i64
-  %11 = add i64 %i.a, %i.ro
-  %i.rp = sub i64 %11, %.034.i332840
-  %i.rq = add i64 %i.rp, 59
+  %i.rp = sub i64 %i.ro, %.034.i332840
+  %i.rq = add i64 %i.rp, %invariant.op1050
   %diff.check847 = icmp ult i64 %i.rq, 31
   br i1 %diff.check847, label %.lr.ph.i338.preheader, label %vector.main.loop.iter.check848
 
@@ -1683,6 +1683,7 @@ bb.ec:                                            ; preds = %bb.eb
   %.val322.pre = load i32, ptr %i.i, align 8, !tbaa !91
   %i.acq = add i64 %i.g, 59
   %i.acr = add i64 %i.g, 59
+  %invariant.op = add i64 59, %i.a
   br label %bb.ed
 
 bb.ed:                                            ; preds = %.lr.ph, %concat_opt_exact_info.exit
@@ -1774,9 +1775,8 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.aec = sext i32 %.03949.i to i64
-  %12 = add i64 %i.a, %i.aec
-  %i.aed = sub i64 %12, %.050.i827
-  %i.aee = add i64 %i.aed, 59
+  %i.aed = sub i64 %i.aec, %.050.i827
+  %i.aee = add i64 %i.aed, %invariant.op
   %diff.check = icmp ult i64 %i.aee, 31
   br i1 %diff.check, label %.lr.ph.i363.preheader, label %vector.main.loop.iter.check
 

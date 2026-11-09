@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.cj = sext i32 %11 to i64
   %i.ck = sext i32 %21 to i64
   %i.cl = sext i32 %i.ak to i64
+  %41 = mul i32 %31, %25
   %i.cm = shl nsw i64 %i.cg, 2                    ; 2 uses
   %i.cn = mul nsw i64 %i.cg, %i.ch
   %i.co = shl i64 %i.cn, 2
@@ -238,6 +239,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %ident.check = icmp ne i32 %30, 1
   %ident.check13 = icmp ne i32 %18, 1
   %i.cw = or i1 %ident.check, %ident.check13
+  %invariant.op175 = add i64 %i.a, -1
   %xtraiter135 = and i64 %wide.trip.count.i687, 1
   %i.cx = icmp eq i64 %i.cp, 0
   %unroll_iter139 = and i64 %wide.trip.count.i687, 2147483646
@@ -251,11 +253,14 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   br label %.lr.ph1079.split.split.us.split
 
 .lr.ph1079.split.split.us.split:                  ; preds = %.lr.ph1079.split.split.us.split.preheader, %.loopexit981.us
-  %indvars.iv1164 = phi i64 [ 0, %.lr.ph1079.split.split.us.split.preheader ], [ %indvars.iv.next1165, %.loopexit981.us ] ; 2 uses
+  %indvars.iv1164 = phi i64 [ 0, %.lr.ph1079.split.split.us.split.preheader ], [ %indvars.iv.next1165, %.loopexit981.us ] ; 3 uses
   %.05371077.us1081 = phi i32 [ %4, %.lr.ph1079.split.split.us.split.preheader ], [ %i.aba, %.loopexit981.us ] ; 4 uses
+  %42 = trunc i64 %indvars.iv1164 to i32
+  %43 = mul i32 %41, %42
+  %44 = sext i32 %43 to i64
   %i.cz = trunc i64 %indvars.iv1164 to i32
   %i.da = mul i32 %i.c, %i.cz
-  %i.db = sext i32 %i.da to i64                   ; 4 uses
+  %i.db = sext i32 %i.da to i64                   ; 3 uses
   %i.dc = getelementptr inbounds i8, ptr %0, i64 %i.db ; 10 uses
   %i.dd = sub nsw i32 %5, %.05371077.us1081
   %.sroa.speculated870.us = tail call i32 @llvm.smin.i32(i32 %30, i32 %i.dd) ; 9 uses
@@ -637,7 +642,7 @@ _ZN2cv3dnnL9packData2ERPcRPfRiS5_S5_PKiiii.exit708.us: ; preds = %.lr.ph.i703.us
 vector.memcheck55:                                ; preds = %.preheader.us
   %i.kq = mul i64 %indvar48, %i.cm
   %i.kr = add i64 %i.ki, %i.kq
-  %i.ks = add nsw i64 %i.kp, %i.jz
+  %i.ks = add nsw i64 %i.jz, %i.kp
   %i.kt = shl nsw i64 %i.ks, 2
   %i.ku = add i64 %i.kt, %.09471026.us50
   %i.kv = sub i64 %i.ku, %i.kr
@@ -1040,7 +1045,7 @@ _ZN2cv3dnnL9packData2ERPcRPfRiS5_S5_PKiiii.exit674.us: ; preds = %.lr.ph.i669.us
 vector.memcheck26:                                ; preds = %.preheader954.us
   %i.sp = mul i64 %indvar, %i.cm
   %i.sq = add i64 %i.si, %i.sp
-  %i.sr = add nsw i64 %i.so, %i.se
+  %i.sr = add nsw i64 %i.se, %i.so
   %i.ss = shl nsw i64 %i.sr, 2
   %i.st = add i64 %i.ss, %.09411045.us23
   %i.su = sub i64 %i.st, %i.sq
@@ -1142,7 +1147,7 @@ scalar.ph24:                                      ; preds = %scalar.ph24.prol.lo
   br i1 %i.ty, label %.lr.ph1067.us.preheader, label %.loopexit981.us
 
 .lr.ph1067.us.preheader:                          ; preds = %.preheader976.us
-  %invariant.op = add i64 %i.a, %i.db
+  %invariant.op = add i64 %44, %invariant.op175
   br label %.lr.ph1067.us
 
 .lr.ph1067.us:                                    ; preds = %.lr.ph1067.us.preheader, %._crit_edge1064.us
@@ -1418,9 +1423,9 @@ bb.u:                                             ; preds = %bb.s
 
 vector.memcheck:                                  ; preds = %.lr.ph1057.us.preheader
   %i.zj = shl nsw i64 %i.ze, 2
-  %.reass = add i64 %i.zj, %invariant.op
-  %41 = sub i64 %.09351059.us15, %.reass
-  %diff.check = icmp ugt i64 %41, -32
+  %45 = sub i64 %i.zj, %.09351059.us15
+  %.reass = add i64 %45, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %.lr.ph1057.us.preheader69, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

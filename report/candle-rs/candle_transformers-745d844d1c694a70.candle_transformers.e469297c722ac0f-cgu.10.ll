@@ -205,7 +205,8 @@ bb.a:
   %scevgep109 = getelementptr i8, ptr %i.q, i64 %i.ab
   %i.ac = tail call i64 @llvm.usub.sat.i64(i64 %i.s, i64 %i.i)
   %i.ad = freeze i64 %i.ac                        ; 2 uses
-  %i.ae = getelementptr i8, ptr %i.u, i64 %i.w
+  %2 = getelementptr i8, ptr %i.u, i64 %i.w
+  %i.ae = getelementptr i8, ptr %2, i64 4
   %invariant.gep158 = getelementptr [4 x i8], ptr %i.u, i64 %i.i
   br label %.lr.ph71.split.i
 
@@ -259,14 +260,13 @@ vector.memcheck:                                  ; preds = %.lr.ph.split.us.i.p
   %i.bg = getelementptr i8, ptr %i.bf, i64 %i.be
   %i.bh = getelementptr i8, ptr %i.bg, i64 4      ; 3 uses
   %i.bi = shl i64 %i.ai, 2                        ; 2 uses
-  %2 = getelementptr i8, ptr %i.p, i64 %i.bi
-  %i.bj = getelementptr i8, ptr %i.p, i64 %i.be
-  %i.bk = getelementptr i8, ptr %i.bj, i64 %i.bi
-  %i.bl = getelementptr i8, ptr %i.bk, i64 4
-  %i.bm = getelementptr i8, ptr %i.ae, i64 %i.be
-  %i.bn = getelementptr i8, ptr %i.bm, i64 4
-  %bound0 = icmp ult ptr %i.ax, %i.bl
-  %bound1 = icmp ult ptr %2, %i.bh
+  %i.bj = getelementptr i8, ptr %i.p, i64 %i.bi
+  %i.bk = getelementptr i8, ptr %i.p, i64 %i.be
+  %i.bl = getelementptr i8, ptr %i.bk, i64 %i.bi
+  %i.bm = getelementptr i8, ptr %i.bl, i64 4
+  %i.bn = getelementptr i8, ptr %i.ae, i64 %i.be
+  %bound0 = icmp ult ptr %i.ax, %i.bm
+  %bound1 = icmp ult ptr %i.bj, %i.bh
   %found.conflict = and i1 %bound0, %bound1
   %bound0110 = icmp ult ptr %i.ax, %scevgep108
   %bound1111 = icmp ult ptr %scevgep109, %i.bh

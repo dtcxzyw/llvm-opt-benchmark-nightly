@@ -204,7 +204,7 @@ ZL_Lz_decode_lastLiterals.exit:                   ; preds = %.thread64, %bb.h, %
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal range(i32 0, 5) i32 @ZL_Lz_decode_u16Loop(ptr nofree noundef captures(address) %0, i64 noundef %1, ptr nofree noundef captures(none) %2) #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.c = load i64, ptr %i.b, align 8, !tbaa !28
   %i.d = load ptr, ptr %2, align 8, !tbaa !30
@@ -223,6 +223,7 @@ bb.a:
   %i.q = load i64, ptr %i.p, align 8, !tbaa !27   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !32
+  %3 = add i64 %i.a, 24
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
@@ -231,14 +232,14 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   %.093.i = phi i64 [ %i.s, %bb.a ], [ %i.gf, %.loopexit ] ; 7 uses
   %i.t = getelementptr inbounds [2 x i8], ptr %i.h, i64 %.093.i
   %i.u = load i16, ptr %i.t, align 2, !tbaa !37   ; 2 uses
-  %i.v = zext i16 %i.u to i64                     ; 11 uses
+  %i.v = zext i16 %i.u to i64                     ; 10 uses
   %i.w = getelementptr inbounds [2 x i8], ptr %i.j, i64 %.093.i
   %i.x = load i16, ptr %i.w, align 2, !tbaa !37   ; 4 uses
   %i.y = zext i16 %i.x to i64                     ; 5 uses
   %i.z = getelementptr inbounds [2 x i8], ptr %i.f, i64 %.093.i
   %i.aa = load i16, ptr %i.z, align 2, !tbaa !37  ; 4 uses
   %i.ab = zext i16 %i.aa to i64                   ; 3 uses
-  %i.ac = add i64 %.0101.i, %i.v                  ; 4 uses
+  %i.ac = add i64 %.0101.i, %i.v                  ; 5 uses
   %i.ad = add nsw i64 %i.ac, %i.y                 ; 6 uses
   %i.ae = add nsw i64 %.096.i, %i.v               ; 4 uses
   %i.af = getelementptr inbounds i8, ptr %0, i64 %.0101.i ; 10 uses
@@ -406,17 +407,16 @@ ZS_overlapCopy8.exit:                             ; preds = %bb.h, %bb.i
   br i1 %min.iters.check, label %.preheader.preheader124, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
-  %i.dg = add i64 %.0101.i, %i.a                  ; 2 uses
-  %3 = add i64 %i.dg, %i.y
-  %i.dh = add i64 %3, %i.v
-  %i.di = add i64 %i.dg, %i.v
-  %i.dj = add i64 %i.di, 24
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.dh, i64 %i.dj)
-  %i.dl = add i64 %i.dk, -9
-  %i.dm = add i64 %.0101.i, %i.a
-  %4 = add i64 %i.dm, %i.v
-  %5 = sub i64 %i.dl, %4
-  %i.dn = and i64 %5, -16                         ; 3 uses
+  %i.dg = add i64 %.0101.i, %i.a
+  %i.dh = add i64 %i.dg, %i.y
+  %i.di = add i64 %i.dh, %i.v
+  %i.dj = add i64 %3, %i.ac
+  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.di, i64 %i.dj)
+  %i.dl = add i64 %.0101.i, %i.v
+  %i.dm = add i64 %i.dl, %i.a
+  %reass.sub = sub i64 %i.dk, %i.dm
+  %4 = add i64 %reass.sub, -9
+  %i.dn = and i64 %4, -16                         ; 3 uses
   %i.do = add i64 %.0101.i, %i.dn
   %i.dp = add i64 %i.do, %i.v                     ; 2 uses
   %i.dq = getelementptr i8, ptr %0, i64 %i.dp
@@ -627,7 +627,7 @@ ZL_Lz_decode_fastLoop.exit:                       ; preds = %.loopexit52, %.crit
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal range(i32 0, 5) i32 @ZL_Lz_decode_u32Loop(ptr nofree noundef captures(address) %0, i64 noundef %1, ptr nofree noundef captures(none) %2) #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.c = load i64, ptr %i.b, align 8, !tbaa !28
   %i.d = load ptr, ptr %2, align 8, !tbaa !30
@@ -646,6 +646,7 @@ bb.a:
   %i.q = load i64, ptr %i.p, align 8, !tbaa !27   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !32
+  %3 = add i64 %i.a, 24
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
@@ -654,14 +655,14 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   %.093.i = phi i64 [ %i.s, %bb.a ], [ %i.gf, %.loopexit ] ; 7 uses
   %i.t = getelementptr inbounds [2 x i8], ptr %i.h, i64 %.093.i
   %i.u = load i16, ptr %i.t, align 2, !tbaa !37   ; 2 uses
-  %i.v = zext i16 %i.u to i64                     ; 11 uses
+  %i.v = zext i16 %i.u to i64                     ; 10 uses
   %i.w = getelementptr inbounds [2 x i8], ptr %i.j, i64 %.093.i
   %i.x = load i16, ptr %i.w, align 2, !tbaa !37   ; 3 uses
   %i.y = zext i16 %i.x to i64                     ; 6 uses
   %i.z = getelementptr inbounds [4 x i8], ptr %i.f, i64 %.093.i
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !40  ; 3 uses
   %i.ab = zext i32 %i.aa to i64                   ; 4 uses
-  %i.ac = add i64 %.0101.i, %i.v                  ; 4 uses
+  %i.ac = add i64 %.0101.i, %i.v                  ; 5 uses
   %i.ad = add nsw i64 %i.ac, %i.y                 ; 6 uses
   %i.ae = add nsw i64 %.096.i, %i.v               ; 4 uses
   %i.af = getelementptr inbounds i8, ptr %0, i64 %.0101.i ; 10 uses
@@ -829,17 +830,16 @@ ZS_overlapCopy8.exit:                             ; preds = %bb.h, %bb.i
   br i1 %min.iters.check, label %.preheader.preheader125, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
-  %i.dg = add i64 %.0101.i, %i.a                  ; 2 uses
-  %3 = add i64 %i.dg, %i.y
-  %i.dh = add i64 %3, %i.v
-  %i.di = add i64 %i.dg, %i.v
-  %i.dj = add i64 %i.di, 24
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.dh, i64 %i.dj)
-  %i.dl = add i64 %i.dk, -9
-  %i.dm = add i64 %.0101.i, %i.a
-  %4 = add i64 %i.dm, %i.v
-  %5 = sub i64 %i.dl, %4
-  %i.dn = and i64 %5, -16                         ; 3 uses
+  %i.dg = add i64 %.0101.i, %i.a
+  %i.dh = add i64 %i.dg, %i.y
+  %i.di = add i64 %i.dh, %i.v
+  %i.dj = add i64 %3, %i.ac
+  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.di, i64 %i.dj)
+  %i.dl = add i64 %.0101.i, %i.v
+  %i.dm = add i64 %i.dl, %i.a
+  %reass.sub = sub i64 %i.dk, %i.dm
+  %4 = add i64 %reass.sub, -9
+  %i.dn = and i64 %4, -16                         ; 3 uses
   %i.do = add i64 %.0101.i, %i.dn
   %i.dp = add i64 %i.do, %i.v                     ; 2 uses
   %i.dq = getelementptr i8, ptr %0, i64 %i.dp

@@ -205,7 +205,8 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i.new
   %scevgep39 = getelementptr i8, ptr %scevgep, i64 %i.du
   %scevgep40 = getelementptr i8, ptr %i.ds, i64 24
   %min.iters.check42 = icmp ult i32 %i.ad, 8
-  %invariant.gep = getelementptr i8, ptr %i.dt, i64 %i.du
+  %2 = getelementptr i8, ptr %i.dt, i64 %i.du
+  %invariant.gep = getelementptr i8, ptr %2, i64 -8
   %n.vec44 = and i64 %wide.trip.count.i, 2147483640 ; 4 uses
   %cmp.n62 = icmp eq i64 %n.vec44, %wide.trip.count.i
   %xtraiter68 = and i64 %wide.trip.count.i, 3     ; 2 uses
@@ -270,11 +271,10 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 vector.memcheck:                                  ; preds = %.preheader136.i
   %i.et = mul i64 %.2148.i, 36                    ; 2 uses
-  %2 = getelementptr i8, ptr %i.dt, i64 %i.et
-  %i.eu = getelementptr i8, ptr %2, i64 24
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.et
-  %i.ev = getelementptr i8, ptr %gep, i64 -8
-  %bound0 = icmp ult ptr %i.eu, %scevgep39
+  %i.eu = getelementptr i8, ptr %i.dt, i64 %i.et
+  %gep = getelementptr i8, ptr %i.eu, i64 24
+  %i.ev = getelementptr i8, ptr %invariant.gep, i64 %i.et
+  %bound0 = icmp ult ptr %gep, %scevgep39
   %bound1 = icmp ult ptr %scevgep40, %i.ev
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph41.preheader, label %vector.ph43
@@ -677,8 +677,8 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i:         ; preds = %_ZSt8_DestroyIPiiEv
   %i.df = phi ptr [ %i.cr, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i.i ], [ %i.bk, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit.i.i.i ], [ %i.bk, %bb.f ], [ %i.bk, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i.i.i ], [ %i.bk, %bb.n ], [ %i.bk, %bb.m ] ; 34 uses
   %i.dg = phi ptr [ %i.da, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i.i ], [ %.0.i.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit.i.i.i ], [ %i.bl, %bb.f ], [ %i.dd, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i.i.i ], [ %i.bl, %bb.n ], [ %i.bl, %bb.m ] ; 7 uses
   %i.dh = phi ptr [ %.pre270.i.i, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i.i ], [ %i.bu, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit.i.i.i ], [ %i.bu, %bb.f ], [ %i.bu, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i.i.i ], [ %i.bu, %bb.n ], [ %i.bu, %bb.m ] ; 24 uses
-  %i.di = ptrtoaddr ptr %i.dh to i64              ; 2 uses
-  %i.dj = ptrtoaddr ptr %i.df to i64              ; 2 uses
+  %i.di = ptrtoaddr ptr %i.df to i64              ; 2 uses
+  %i.dj = ptrtoaddr ptr %i.dh to i64              ; 2 uses
   %i.dk = load ptr, ptr %i.au, align 8, !tbaa !97
   %i.dl = ptrtoint ptr %i.dk to i64
   %i.dm = sub i64 %i.dl, %.pre-phi277.i.i         ; 2 uses
@@ -697,8 +697,8 @@ iter.check302:                                    ; preds = %.preheader.lr.ph.sp
   br i1 %min.iters.check286, label %.loopexit.i.i.i.preheader, label %vector.memcheck287
 
 vector.memcheck287:                               ; preds = %iter.check302
-  %i.dr = add i64 %i.br, %i.dj
-  %i.ds = sub i64 %i.di, %i.dr
+  %i.dr = add i64 %i.br, %i.di
+  %i.ds = sub i64 %i.dj, %i.dr
   %diff.check288 = icmp ugt i64 %i.ds, -128
   br i1 %diff.check288, label %.loopexit.i.i.i.preheader, label %vector.main.loop.iter.check289
 
@@ -795,8 +795,11 @@ vec.epilog.middle.block313:                       ; preds = %vec.epilog.vector.b
 
 .preheader.us.preheader.i.i.i:                    ; preds = %.preheader.lr.ph.split.i.i.i
   %i.eq = add nuw i32 %i.bo, 1
+  %12 = add i64 %i.di, 4
+  %13 = sub i64 %12, %i.dj
   %i.er = zext nneg i32 %i.bo to i64              ; 5 uses
   %min.iters.check249 = icmp ult i32 %i.bo, 8
+  %invariant.op = add i64 %13, -1
   %min.iters.check253 = icmp ult i32 %i.bo, 32
   %i.es = and i64 %i.er, 24
   %n.vec255 = and i64 %i.er, 2147483616           ; 5 uses
@@ -826,12 +829,9 @@ iter.check267:                                    ; preds = %..loopexit_crit_edg
   br i1 %min.iters.check249, label %vec.epilog.scalar.ph269.preheader, label %vector.memcheck250
 
 vector.memcheck250:                               ; preds = %iter.check267
-  %12 = shl nuw nsw i64 %.12735.us.us.i.i.i, 2
-  %i.fa = shl nsw i64 %i.ey, 2
-  %13 = add i64 %12, %i.dj
-  %14 = add i64 %i.fa, %i.di
-  %15 = sub i64 %13, %14
-  %i.fb = add i64 %15, 3
+  %14 = sub i64 %.12735.us.us.i.i.i, %i.ey
+  %i.fa = shl i64 %14, 2
+  %i.fb = add i64 %i.fa, %invariant.op
   %diff.check251 = icmp ult i64 %i.fb, 127
   br i1 %diff.check251, label %vec.epilog.scalar.ph269.preheader, label %vector.main.loop.iter.check252
 
@@ -1234,8 +1234,11 @@ vec.epilog.middle.block243:                       ; preds = %vec.epilog.vector.b
 
 .preheader.us.preheader.i92.i.i:                  ; preds = %.preheader.lr.ph.split.i78.i.i
   %i.mo = add nuw i32 %i.jm, 1
+  %15 = add i64 %i.lf, 4
+  %16 = sub i64 %15, %i.lj
   %i.mp = zext nneg i32 %i.jm to i64              ; 5 uses
   %min.iters.check179 = icmp ult i32 %i.jm, 8
+  %invariant.op551 = add i64 %16, -1
   %min.iters.check183 = icmp ult i32 %i.jm, 32
   %i.mq = and i64 %i.mp, 24
   %n.vec185 = and i64 %i.mp, 2147483616           ; 5 uses
@@ -1265,12 +1268,9 @@ iter.check197:                                    ; preds = %..loopexit_crit_edg
   br i1 %min.iters.check179, label %vec.epilog.scalar.ph199.preheader, label %vector.memcheck180
 
 vector.memcheck180:                               ; preds = %iter.check197
-  %16 = shl nuw nsw i64 %.12735.us.us.i99.i.i, 2
-  %i.my = shl nsw i64 %i.mw, 2
-  %17 = add i64 %16, %i.lf
-  %18 = add i64 %i.my, %i.lj
-  %19 = sub i64 %17, %18
-  %i.mz = add i64 %19, 3
+  %17 = sub i64 %.12735.us.us.i99.i.i, %i.mw
+  %i.my = shl i64 %17, 2
+  %i.mz = add i64 %i.my, %invariant.op551
   %diff.check181 = icmp ult i64 %i.mz, 127
   br i1 %diff.check181, label %vec.epilog.scalar.ph199.preheader, label %vector.main.loop.iter.check182
 
@@ -1652,7 +1652,9 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit.i114.i.i:      ; preds = %_ZSt8_DestroyIPiiEv
 
 .preheader.preheader.i116.i.i:                    ; preds = %.preheader.lr.ph.split.i115.i.i
   %wide.trip.count.i117.i.i = and i64 %i.ty, 2147483647 ; 6 uses
+  %18 = sub i64 %i.tr, %i.tw
   %min.iters.check146 = icmp samesign ult i64 %wide.trip.count.i117.i.i, 4
+  %invariant.op553 = add i64 %18, -1
   %min.iters.check150 = icmp samesign ult i64 %wide.trip.count.i117.i.i, 32
   %n.vec152 = and i64 %i.ty, 2147483616           ; 5 uses
   %cmp.n161 = icmp eq i64 %wide.trip.count.i117.i.i, %n.vec152
@@ -1664,8 +1666,11 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit.i114.i.i:      ; preds = %_ZSt8_DestroyIPiiEv
 
 .preheader.us.preheader.i129.i.i:                 ; preds = %.preheader.lr.ph.split.i115.i.i
   %i.ud = add nuw i32 %i.rt, 1
+  %19 = add i64 %i.tr, 4
+  %20 = sub i64 %19, %i.tw
   %i.ue = zext nneg i32 %i.rt to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.rt, 8
+  %invariant.op559 = add i64 %20, -1
   %min.iters.check132 = icmp ult i32 %i.rt, 32
   %i.uf = and i64 %i.ue, 24
   %n.vec = and i64 %i.ue, 2147483616              ; 5 uses
@@ -1701,12 +1706,9 @@ iter.check:                                       ; preds = %..loopexit_crit_edg
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %20 = shl nuw nsw i64 %.12735.us.us.i136.i.i, 2
-  %i.un = shl nsw i64 %i.ul, 2
-  %21 = add i64 %20, %i.tr
-  %22 = add i64 %i.un, %i.tw
-  %23 = sub i64 %21, %22
-  %i.uo = add i64 %23, 3
+  %21 = sub i64 %.12735.us.us.i136.i.i, %i.ul
+  %i.un = shl i64 %21, 2
+  %i.uo = add i64 %i.un, %invariant.op559
   %diff.check = icmp ult i64 %i.uo, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1887,9 +1889,8 @@ iter.check162:                                    ; preds = %._crit_edge.split.i
 
 vector.memcheck147:                               ; preds = %iter.check162
   %i.xp = shl i64 %.02641.i120.i.i, 2
-  %i.xq = add i64 %i.xp, %i.tr
-  %24 = sub i64 %i.tw, %i.xq
-  %diff.check148 = icmp ugt i64 %24, -128
+  %i.xq = add i64 %i.xp, %invariant.op553
+  %diff.check148 = icmp ult i64 %i.xq, 127
   br i1 %diff.check148, label %.loopexit.i121.i.i.preheader, label %vector.main.loop.iter.check149
 
 vector.main.loop.iter.check149:                   ; preds = %vector.memcheck147
@@ -2292,8 +2293,11 @@ vec.epilog.middle.block379:                       ; preds = %vec.epilog.vector.b
 
 .preheader.us.preheader.i185.i.i:                 ; preds = %.preheader.lr.ph.split.i171.i.i
   %i.ahx = add nuw i32 %i.aft, 1
+  %22 = add i64 %i.agx, 4
+  %23 = sub i64 %22, %i.ago
   %i.ahy = zext nneg i32 %i.aft to i64            ; 5 uses
   %min.iters.check319 = icmp ult i32 %i.aft, 8
+  %invariant.op565 = add i64 %23, -1
   %min.iters.check323 = icmp ult i32 %i.aft, 32
   %i.ahz = and i64 %i.ahy, 24
   %n.vec325 = and i64 %i.ahy, 2147483616          ; 5 uses
@@ -2319,12 +2323,9 @@ iter.check335:                                    ; preds = %..loopexit_crit_edg
   br i1 %min.iters.check319, label %vec.epilog.scalar.ph337.preheader, label %vector.memcheck320
 
 vector.memcheck320:                               ; preds = %iter.check335
-  %25 = shl nuw nsw i64 %.12735.us.us.i192.i.i, 2
-  %i.aih = shl nsw i64 %i.aif, 2
-  %26 = add i64 %25, %i.agx
-  %27 = add i64 %i.aih, %i.ago
-  %28 = sub i64 %26, %27
-  %i.aii = add i64 %28, 3
+  %24 = sub i64 %.12735.us.us.i192.i.i, %i.aif
+  %i.aih = shl i64 %24, 2
+  %i.aii = add i64 %i.aih, %invariant.op565
   %diff.check321 = icmp ult i64 %i.aii, 127
   br i1 %diff.check321, label %vec.epilog.scalar.ph337.preheader, label %vector.main.loop.iter.check322
 
@@ -2727,7 +2728,9 @@ bb.o:                                             ; preds = %_ZL8ilistcat19Inter
 .preheader.preheader.i.i.i:                       ; preds = %.preheader.lr.ph.split.i.i.i
   %wide.trip.count.i.i.i = and i64 %i.dc, 2147483647 ; 6 uses
   %i.dg = sext i32 %i.cf to i64
+  %9 = sub i64 %i.cv, %i.da
   %min.iters.check125 = icmp samesign ult i64 %wide.trip.count.i.i.i, 4
+  %invariant.op = add i64 %9, -1
   %min.iters.check129 = icmp samesign ult i64 %wide.trip.count.i.i.i, 32
   %n.vec131 = and i64 %i.dc, 2147483616           ; 5 uses
   %cmp.n140 = icmp eq i64 %wide.trip.count.i.i.i, %n.vec131
@@ -2739,8 +2742,10 @@ bb.o:                                             ; preds = %_ZL8ilistcat19Inter
 
 .preheader.us.preheader.i.i.i:                    ; preds = %.preheader.lr.ph.split.i.i.i
   %i.di = add nuw i32 %i.ce, 1
+  %10 = sub i64 %i.cv, %i.da
   %i.dj = zext nneg i32 %i.ce to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.ce, 8
+  %invariant.op318 = add i64 %10, -1
   %min.iters.check111 = icmp ult i32 %i.ce, 32
   %i.dk = and i64 %i.dj, 24
   %n.vec = and i64 %i.dj, 2147483616              ; 5 uses
@@ -2778,12 +2783,10 @@ iter.check:                                       ; preds = %..loopexit_crit_edg
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %9 = shl nsw i64 %i.du, 2
-  %i.dv = shl nsw i64 %i.ds, 2
-  %10 = add i64 %9, %i.cv
-  %i.dw = add i64 %i.dv, %i.da
-  %11 = sub i64 %i.dw, %10
-  %diff.check = icmp ugt i64 %11, -128
+  %11 = sub nsw i64 %i.du, %i.ds
+  %i.dv = shl nsw i64 %11, 2
+  %i.dw = add i64 %i.dv, %invariant.op318
+  %diff.check = icmp ult i64 %i.dw, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -2964,9 +2967,8 @@ iter.check141:                                    ; preds = %._crit_edge.split.i
 
 vector.memcheck126:                               ; preds = %iter.check141
   %i.gu = shl i64 %.lcssa68, 2
-  %i.gv = add i64 %i.gu, %i.cv
-  %12 = sub i64 %i.da, %i.gv
-  %diff.check127 = icmp ugt i64 %12, -128
+  %i.gv = add i64 %i.gu, %invariant.op
+  %diff.check127 = icmp ult i64 %i.gv, 127
   br i1 %diff.check127, label %.loopexit.i.i.i.preheader, label %vector.main.loop.iter.check128
 
 vector.main.loop.iter.check128:                   ; preds = %vector.memcheck126
@@ -3369,8 +3371,10 @@ vec.epilog.middle.block218:                       ; preds = %vec.epilog.vector.b
 
 .preheader.us.preheader.i103.i.i:                 ; preds = %.preheader.lr.ph.split.i92.i.i
   %i.pm = add nuw i32 %i.np, 1
+  %12 = sub i64 %i.of, %i.oj
   %i.pn = zext nneg i32 %i.np to i64              ; 5 uses
   %min.iters.check158 = icmp ult i32 %i.np, 8
+  %invariant.op332 = add i64 %12, -1
   %min.iters.check162 = icmp ult i32 %i.np, 32
   %i.po = and i64 %i.pn, 24
   %n.vec164 = and i64 %i.pn, 2147483616           ; 5 uses
@@ -3398,12 +3402,10 @@ iter.check174:                                    ; preds = %..loopexit_crit_edg
   br i1 %min.iters.check158, label %vec.epilog.scalar.ph176.preheader, label %vector.memcheck159
 
 vector.memcheck159:                               ; preds = %iter.check174
-  %13 = shl nsw i64 %i.py, 2
-  %i.pz = shl nsw i64 %i.pw, 2
-  %14 = add i64 %13, %i.of
-  %i.qa = add i64 %i.pz, %i.oj
-  %15 = sub i64 %i.qa, %14
-  %diff.check160 = icmp ugt i64 %15, -128
+  %13 = sub nsw i64 %i.py, %i.pw
+  %i.pz = shl nsw i64 %13, 2
+  %i.qa = add i64 %i.pz, %invariant.op332
+  %diff.check160 = icmp ult i64 %i.qa, 127
   br i1 %diff.check160, label %vec.epilog.scalar.ph176.preheader, label %vector.main.loop.iter.check161
 
 vector.main.loop.iter.check161:                   ; preds = %vector.memcheck159

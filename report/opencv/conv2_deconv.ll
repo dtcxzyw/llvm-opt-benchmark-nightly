@@ -205,12 +205,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ca, label %.lr.ph55.i.split.us.i.i.preheader, label %.lr.ph55.i.split.i.i
 
 .lr.ph55.i.split.us.i.i.preheader:                ; preds = %.lr.ph55.i.i.i
-  %i.co = shl nsw i64 %i.cc, 2
   %2 = mul i64 %i.ao, %i.be
   %3 = mul i64 %2, %i.bg
-  %min.iters.check41 = icmp ult i32 %.sroa.speculated.i.i.i, 8
   %4 = add i64 %3, %i.ba
-  %i.cp = add i64 %i.co, %i.bv
+  %i.co = shl nsw i64 %i.cc, 2
+  %5 = add i64 %i.co, %i.bv
+  %6 = sub i64 %4, %5
+  %min.iters.check41 = icmp ult i32 %.sroa.speculated.i.i.i, 8
+  %i.cp = add i64 %6, -1
   %n.vec43 = and i64 %i.cd, 2147483640            ; 3 uses
   %cmp.n50 = icmp eq i64 %n.vec43, %i.cd
   %xtraiter109 = and i64 %i.cd, 3                 ; 2 uses
@@ -241,9 +243,8 @@ bb.c:                                             ; preds = %bb.b
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.us.i.i.preheader
   %i.cx = shl nsw i64 %i.cu, 2
-  %i.cy = add i64 %4, %i.cx
-  %5 = sub i64 %i.cp, %i.cy
-  %diff.check = icmp ugt i64 %5, -32
+  %i.cy = add i64 %i.cx, %i.cp
+  %diff.check = icmp ult i64 %i.cy, 31
   br i1 %diff.check, label %.lr.ph.i.us.i.i.preheader87, label %vector.body44
 
 vector.body44:                                    ; preds = %vector.memcheck, %vector.body44
@@ -616,12 +617,14 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 
 .lr.ph55.i.split.split.us.i.i:                    ; preds = %.lr.ph55.i.split.i.i
   %i.il = load ptr, ptr %i.ab, align 8, !tbaa !114, !nonnull !106, !align !107 ; 3 uses
+  %7 = mul i64 %i.ap, %i.be
+  %8 = mul i64 %7, %i.bg
+  %9 = add i64 %8, %i.ba
   %i.im = shl nsw i64 %i.cc, 2
-  %6 = mul i64 %i.ap, %i.be
-  %7 = mul i64 %6, %i.bg
+  %10 = add i64 %i.im, %i.bv
+  %11 = sub i64 %9, %10
   %min.iters.check55 = icmp ult i32 %.sroa.speculated.i.i.i, 8
-  %8 = add i64 %7, %i.ba
-  %i.in = add i64 %i.im, %i.bv
+  %i.in = add i64 %11, -1
   %n.vec59 = and i64 %i.cd, 2147483640            ; 3 uses
   %cmp.n66 = icmp eq i64 %n.vec59, %i.cd
   %xtraiter103 = and i64 %i.cd, 3                 ; 2 uses
@@ -649,9 +652,8 @@ bb.i:                                             ; preds = %.preheader13.i.loop
 
 vector.memcheck56:                                ; preds = %.lr.ph.i.us12.i.i.preheader
   %i.iw = shl nsw i64 %i.it, 2
-  %i.ix = add i64 %8, %i.iw
-  %9 = sub i64 %i.in, %i.ix
-  %diff.check57 = icmp ugt i64 %9, -32
+  %i.ix = add i64 %i.iw, %i.in
+  %diff.check57 = icmp ult i64 %i.ix, 31
   br i1 %diff.check57, label %.lr.ph.i.us12.i.i.preheader88, label %vector.body60
 
 vector.body60:                                    ; preds = %vector.memcheck56, %vector.body60
@@ -776,12 +778,14 @@ middle.block65:                                   ; preds = %vector.body60
   br i1 %.not.i.i.i, label %.lr.ph55.i.split.split.split.us.i.i, label %.lr.ph.i.preheader.i.i.preheader
 
 .lr.ph.i.preheader.i.i.preheader:                 ; preds = %.lr.ph55.i.split.split.i.i
+  %12 = mul i64 %i.aq, %i.be
+  %13 = mul i64 %12, %i.bg
+  %14 = add i64 %13, %i.ba
   %i.kd = shl nsw i64 %i.cc, 2
-  %10 = mul i64 %i.aq, %i.be
-  %11 = mul i64 %10, %i.bg
+  %15 = add i64 %i.kd, %i.bv
+  %16 = sub i64 %14, %15
   %min.iters.check71 = icmp ult i32 %.sroa.speculated.i.i.i, 8
-  %12 = add i64 %11, %i.ba
-  %i.ke = add i64 %i.kd, %i.bv
+  %i.ke = add i64 %16, -1
   %n.vec75 = and i64 %i.cd, 2147483640            ; 3 uses
   %cmp.n82 = icmp eq i64 %n.vec75, %i.cd
   %xtraiter = and i64 %i.cd, 3                    ; 2 uses
@@ -893,9 +897,8 @@ middle.block65:                                   ; preds = %vector.body60
 
 vector.memcheck72:                                ; preds = %.lr.ph.i.preheader.i.i
   %i.mb = shl nsw i64 %i.lz, 2
-  %i.mc = add i64 %12, %i.mb
-  %13 = sub i64 %i.ke, %i.mc
-  %diff.check73 = icmp ugt i64 %13, -32
+  %i.mc = add i64 %i.mb, %i.ke
+  %diff.check73 = icmp ult i64 %i.mc, 31
   br i1 %diff.check73, label %.lr.ph.i.i.i.preheader, label %vector.body76
 
 vector.body76:                                    ; preds = %vector.memcheck72, %vector.body76

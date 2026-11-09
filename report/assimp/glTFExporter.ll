@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN5o3dgc13SC3DMCEncoderItE16EncodeFloatArrayEPKfmmmS3_S3_mRKNS_14IndexedFaceSetItEENS_25O3DGCSC3DMCPredictionModeERNS_12BinaryStreamE(ptr noundef nonnull align 8 dereferenceable(11524) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef %5, ptr noundef %6, i64 noundef %7, ptr noundef nonnull align 8 dereferenceable(80000) %8, i32 noundef %9, ptr noundef nonnull align 8 dereferenceable(28) %10) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 !guid !1768 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.b = alloca [32 x float], align 16            ; 7 uses
   %i.c = alloca [32 x float], align 16            ; 7 uses
   %11 = alloca %"class.o3dgc::Arithmetic_Codec", align 8 ; 33 uses
@@ -608,25 +608,31 @@ bb.ap:                                            ; preds = %_ZN5o3dgc13SC3DMCEn
   %i.if = getelementptr inbounds nuw i8, ptr %0, i64 3232 ; 3 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 3248 ; 4 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 3240 ; 2 uses
+  %17 = add nuw i64 %i.a, 624                     ; 4 uses
+  %18 = add i64 %i.a, 624
   %i.ii = shl i64 %4, 3
+  %19 = add i64 %i.a, 624
   %i.ij = shl i64 %4, 3
   %min.iters.check1118 = icmp ult i64 %3, 12
-  %invariant.op = add i64 %i.a, 624
+  %invariant.op = add i64 %17, -1
   %n.vec1125 = and i64 %3, -4                     ; 3 uses
   %cmp.n1136 = icmp eq i64 %3, %n.vec1125
   %xtraiter1268 = and i64 %3, 1
   %lcmp.mod1269.not = icmp eq i64 %xtraiter1268, 0
   %min.iters.check1099 = icmp ult i64 %3, 10
+  %invariant.op1316 = add i64 %17, -1
   %n.vec1103 = and i64 %3, -4                     ; 3 uses
   %cmp.n1110 = icmp eq i64 %3, %n.vec1103
   %xtraiter1270 = and i64 %3, 3                   ; 2 uses
   %lcmp.mod1271.not = icmp eq i64 %xtraiter1270, 0
   %min.iters.check1083 = icmp ult i64 %3, 10
+  %invariant.op1318 = add i64 %17, -1
   %n.vec1087 = and i64 %3, -4                     ; 3 uses
   %cmp.n1094 = icmp eq i64 %3, %n.vec1087
   %xtraiter1274 = and i64 %3, 3                   ; 2 uses
   %lcmp.mod1275.not = icmp eq i64 %xtraiter1274, 0
   %min.iters.check1069 = icmp ult i64 %3, 10
+  %invariant.op1320 = add i64 %17, -1
   %n.vec1071 = and i64 %3, -4                     ; 3 uses
   %cmp.n1078 = icmp eq i64 %3, %n.vec1071
   %xtraiter1277 = and i64 %3, 3                   ; 2 uses
@@ -754,7 +760,11 @@ _ZNK5o3dgc13AdjacencyInfo5BeginEl.exit372:        ; preds = %bb.aw, %bb.ax
   %i.kj = mul i64 %.0277, %4
   %i.kk = mul i64 %.0276, %4
   %i.kl = mul i64 %i.ii, %.0277
+  %20 = sub i64 %18, %i.kl
   %i.km = mul i64 %i.ij, %.0276
+  %21 = sub i64 %19, %i.km
+  %invariant.op1312 = add i64 %21, -1
+  %invariant.op1314 = add i64 %20, -1
   br label %bb.ay
 
 bb.ay:                                            ; preds = %.lr.ph642, %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit.thread
@@ -900,21 +910,20 @@ _ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit: ; preds = %bb
   br i1 %min.iters.check1118, label %scalar.ph1117.preheader, label %vector.memcheck1119
 
 vector.memcheck1119:                              ; preds = %.lr.ph639
-  %i.mv = ptrtoaddr ptr %i.mo to i64              ; 3 uses
-  %i.mw = mul i64 %.1.ph.i, 280
+  %i.mv = ptrtoaddr ptr %i.mo to i64              ; 2 uses
+  %i.mw = mul i64 %.1.ph.i, 280                   ; 2 uses
   %i.mx = mul i64 %.1274.2, %4
   %i.my = shl i64 %i.mx, 3
-  %.reass = add i64 %i.mw, %invariant.op          ; 3 uses
   %i.mz = add i64 %i.my, %i.mv
-  %i.na = sub i64 %i.mz, %.reass
-  %diff.check1120 = icmp ugt i64 %i.na, -32
-  %17 = add i64 %i.km, %i.mv
-  %i.nb = sub i64 %17, %.reass
-  %diff.check1121 = icmp ugt i64 %i.nb, -32
+  %i.na = sub i64 %i.mw, %i.mz
+  %.reass = add i64 %i.na, %invariant.op
+  %diff.check1120 = icmp ult i64 %.reass, 31
+  %i.nb = sub i64 %i.mw, %i.mv                    ; 2 uses
+  %.reass1313 = add i64 %i.nb, %invariant.op1312
+  %diff.check1121 = icmp ult i64 %.reass1313, 31
   %conflict.rdx = or i1 %diff.check1120, %diff.check1121
-  %18 = add i64 %i.kl, %i.mv
-  %19 = sub i64 %18, %.reass
-  %diff.check1122 = icmp ugt i64 %19, -32
+  %.reass1315 = add i64 %i.nb, %invariant.op1314
+  %diff.check1122 = icmp ult i64 %.reass1315, 31
   %conflict.rdx1123 = or i1 %conflict.rdx, %diff.check1122
   br i1 %conflict.rdx1123, label %scalar.ph1117.preheader, label %vector.body1126
 
@@ -1105,10 +1114,9 @@ vector.memcheck1100:                              ; preds = %.lr.ph645
   %i.qe = mul i64 %.1.ph.i387, 280
   %i.qf = mul i64 %4, %i.ox
   %i.qg = shl i64 %i.qf, 3
-  %20 = add i64 %i.qe, %i.a
   %i.qh = add i64 %i.qg, %i.qd
-  %i.qi = sub i64 %20, %i.qh
-  %i.qj = add i64 %i.qi, 623
+  %i.qi = sub i64 %i.qe, %i.qh
+  %i.qj = add i64 %i.qi, %invariant.op1316
   %diff.check1101 = icmp ult i64 %i.qj, 31
   br i1 %diff.check1101, label %scalar.ph1098.preheader, label %vector.body1104
 
@@ -1276,10 +1284,9 @@ vector.memcheck1084:                              ; preds = %.lr.ph645.1
   %i.su = mul i64 %.1.ph.i387.1, 280
   %i.sv = mul i64 %4, %i.rn
   %i.sw = shl i64 %i.sv, 3
-  %21 = add i64 %i.su, %i.a
   %i.sx = add i64 %i.sw, %i.st
-  %i.sy = sub i64 %21, %i.sx
-  %i.sz = add i64 %i.sy, 623
+  %i.sy = sub i64 %i.su, %i.sx
+  %i.sz = add i64 %i.sy, %invariant.op1318
   %diff.check1085 = icmp ult i64 %i.sz, 31
   br i1 %diff.check1085, label %scalar.ph1082.preheader, label %vector.body1088
 
@@ -1447,10 +1454,9 @@ vector.memcheck:                                  ; preds = %.lr.ph645.2
   %i.vk = mul i64 %.1.ph.i387.2, 280
   %i.vl = mul i64 %4, %i.ud
   %i.vm = shl i64 %i.vl, 3
-  %22 = add i64 %i.vk, %i.a
   %i.vn = add i64 %i.vm, %i.vj
-  %i.vo = sub i64 %22, %i.vn
-  %i.vp = add i64 %i.vo, 623
+  %i.vo = sub i64 %i.vk, %i.vn
+  %i.vp = add i64 %i.vo, %invariant.op1320
   %diff.check = icmp ult i64 %i.vp, 31
   br i1 %diff.check, label %scalar.ph1068.preheader, label %vector.body1072
 
@@ -1853,8 +1859,8 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN5o3dgc13SC3DMCEncoderItE14EncodeIntArrayEPKlmmmRKNS_14IndexedFaceSetItEENS_25O3DGCSC3DMCPredictionModeERNS_12BinaryStreamE(ptr noundef nonnull align 8 dereferenceable(11524) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(80000) %5, i32 noundef %6, ptr noundef nonnull align 8 dereferenceable(28) %7) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 !guid !1790 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   %8 = alloca %"class.o3dgc::Arithmetic_Codec", align 8 ; 32 uses
   %9 = alloca %"class.o3dgc::Static_Bit_Model", align 4 ; 8 uses
   %10 = alloca %"class.o3dgc::Adaptive_Bit_Model", align 4 ; 16 uses
@@ -2072,17 +2078,22 @@ _ZN5o3dgc12BinaryStream11WriteUInt32EmNS_15O3DGCStreamTypeE.exit: ; preds = %bb.
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 3232 ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 3248 ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 3240 ; 2 uses
+  %13 = add i64 %i.b, 624
+  %14 = sub i64 %13, %i.a                         ; 3 uses
   %min.iters.check770 = icmp ult i64 %3, 10
+  %invariant.op = add i64 %14, -1
   %n.vec774 = and i64 %3, -4                      ; 3 uses
   %cmp.n781 = icmp eq i64 %3, %n.vec774
   %xtraiter = and i64 %3, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %min.iters.check754 = icmp ult i64 %3, 10
+  %invariant.op931 = add i64 %14, -1
   %n.vec758 = and i64 %3, -4                      ; 3 uses
   %cmp.n765 = icmp eq i64 %3, %n.vec758
   %xtraiter900 = and i64 %3, 3                    ; 2 uses
   %lcmp.mod901.not = icmp eq i64 %xtraiter900, 0
   %min.iters.check = icmp ult i64 %3, 10
+  %invariant.op933 = add i64 %14, -1
   %n.vec = and i64 %3, -4                         ; 3 uses
   %cmp.n = icmp eq i64 %3, %n.vec
   %xtraiter903 = and i64 %3, 3                    ; 2 uses
@@ -2239,10 +2250,8 @@ vector.memcheck771:                               ; preds = %.lr.ph
   %i.dx = mul i64 %.1.ph.i, 280
   %i.dy = mul i64 %4, %i.cs
   %i.dz = shl i64 %i.dy, 3
-  %13 = add i64 %i.dx, %i.a
-  %14 = add i64 %i.dz, %i.b
-  %i.ea = sub i64 %13, %14
-  %i.eb = add i64 %i.ea, 623
+  %i.ea = sub i64 %i.dx, %i.dz
+  %i.eb = add i64 %i.ea, %invariant.op
   %diff.check772 = icmp ult i64 %i.eb, 31
   br i1 %diff.check772, label %scalar.ph769.preheader, label %vector.body775
 
@@ -2408,10 +2417,8 @@ vector.memcheck755:                               ; preds = %.lr.ph.1
   %i.gk = mul i64 %.1.ph.i.1, 280
   %i.gl = mul i64 %4, %i.ff
   %i.gm = shl i64 %i.gl, 3
-  %15 = add i64 %i.gk, %i.a
-  %16 = add i64 %i.gm, %i.b
-  %i.gn = sub i64 %15, %16
-  %i.go = add i64 %i.gn, 623
+  %i.gn = sub i64 %i.gk, %i.gm
+  %i.go = add i64 %i.gn, %invariant.op931
   %diff.check756 = icmp ult i64 %i.go, 31
   br i1 %diff.check756, label %scalar.ph753.preheader, label %vector.body759
 
@@ -2577,10 +2584,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.2
   %i.ix = mul i64 %.1.ph.i.2, 280
   %i.iy = mul i64 %4, %i.hs
   %i.iz = shl i64 %i.iy, 3
-  %17 = add i64 %i.ix, %i.a
-  %18 = add i64 %i.iz, %i.b
-  %i.ja = sub i64 %17, %18
-  %i.jb = add i64 %i.ja, 623
+  %i.ja = sub i64 %i.ix, %i.iz
+  %i.jb = add i64 %i.ja, %invariant.op933
   %diff.check = icmp ult i64 %i.jb, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 

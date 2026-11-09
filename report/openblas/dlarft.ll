@@ -27,8 +27,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define noundef i32 @dlarft_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %7 to i64
-  %i.b = ptrtoaddr ptr %4 to i64
+  %i.a = ptrtoaddr ptr %4 to i64
+  %i.b = ptrtoaddr ptr %7 to i64
   %i.c = alloca i32, align 4                      ; 44 uses
   %i.d = alloca i32, align 4                      ; 18 uses
   %i.e = alloca [2 x i8], align 1                 ; 5 uses
@@ -431,6 +431,10 @@ bb.k:                                             ; preds = %bb.j
   %i.jv = sub i32 %i.ju, %i.jn                    ; 2 uses
   %i.jw = add i32 %.pre427, 2
   %i.jx = sub i32 %i.jw, %i.jn                    ; 2 uses
+  %9 = shl nsw i64 %i.l, 3
+  %10 = add i64 %9, %i.b
+  %11 = add i64 %10, 16
+  %12 = sub i64 %11, %i.a
   %i.jy = zext nneg i32 %i.jn to i64              ; 5 uses
   %i.jz = zext nneg i32 %i.jn to i64
   %min.iters.check = icmp ult i32 %i.jn, 4
@@ -438,6 +442,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ka = trunc i64 %i.js to i32                  ; 2 uses
   %i.kb = icmp ugt i64 %i.js, 4294967295
   %invariant.op497 = or i1 %i.kb, %ident.check
+  %invariant.op499 = add i64 %12, -1
   %min.iters.check441 = icmp ult i32 %i.jn, 16
   %i.kc = and i64 %i.jy, 12
   %n.vec = and i64 %i.jy, 2147483632              ; 4 uses
@@ -477,13 +482,9 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.kq = sext i32 %i.kp to i64
   %i.kr = add i32 %i.jx, %indvar
   %i.ks = sext i32 %i.kr to i64
-  %9 = shl nsw i64 %i.ks, 3
-  %10 = add nsw i64 %i.kq, %i.l
-  %i.kt = shl nsw i64 %10, 3
-  %11 = add i64 %i.kt, %i.a
-  %12 = add i64 %9, %i.b
-  %13 = sub i64 %11, %12
-  %i.ku = add i64 %13, 15
+  %13 = sub nsw i64 %i.kq, %i.ks
+  %i.kt = shl nsw i64 %13, 3
+  %i.ku = add i64 %i.kt, %invariant.op499
   %diff.check = icmp ult i64 %i.ku, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

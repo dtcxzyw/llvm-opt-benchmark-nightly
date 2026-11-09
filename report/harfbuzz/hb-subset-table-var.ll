@@ -205,6 +205,7 @@ bb.o:                                             ; preds = %bb.i
   %.sroa.0183.3.ph501 = phi i32 [ %.sroa.0183.0, %bb.o ], [ %i.cr, %bb.n ], [ %i.cr, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i ], [ %i.cr, %bb.m ] ; 6 uses
   %.sroa.12189.3.ph503646 = ptrtoaddr ptr %.sroa.12189.3.ph503 to i64
   %.pre458 = load ptr, ptr %i.a, align 8, !tbaa !796
+  %invariant.op = add i64 -2, %.sroa.12189.3.ph503646
   br label %.lr.ph348
 
 .lr.ph348:                                        ; preds = %.lr.ph348.preheader, %.loopexit298
@@ -383,9 +384,8 @@ bb.u:                                             ; preds = %bb.q
 
 vector.memcheck649:                               ; preds = %.lr.ph333
   %i.gn = shl nuw nsw i64 %i.gi, 2
-  %13 = add i64 %i.gn, %.sroa.12189.3.ph503646
-  %i.go = sub i64 %13, %i.dg
-  %i.gp = add i64 %i.go, -2
+  %i.go = sub i64 %i.gn, %i.dg
+  %i.gp = add i64 %i.go, %invariant.op
   %diff.check650 = icmp ult i64 %i.gp, 31
   br i1 %diff.check650, label %scalar.ph647.preheader, label %vector.ph651
 
@@ -646,11 +646,12 @@ _ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_triviall
 bb.af:                                            ; preds = %bb.z, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i109, %bb.ae, %bb.ad
   %.sroa.0.4.ph = phi i32 [ %.sroa.0.0, %bb.z ], [ %i.jl, %bb.ad ], [ %i.jl, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i109 ], [ %i.jl, %bb.ae ] ; 7 uses
   %.sroa.12.4.ph = phi ptr [ %.sroa.12.0, %bb.z ], [ %i.jr, %bb.ad ], [ %i.jx, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i109 ], [ %i.jr, %bb.ae ] ; 23 uses
-  %.sroa.12.4.ph600 = ptrtoaddr ptr %.sroa.12.4.ph to i64
   br i1 %.not383507, label %_ZN2OT11TupleValues9decompileIiEEbRPKNS_7NumTypeILb1EhLj1EEER11hb_vector_tIT_Lb0EES5_bj.exit64, label %.lr.ph375.preheader
 
 .lr.ph375.preheader:                              ; preds = %bb.af
+  %.sroa.12.4.ph600 = ptrtoaddr ptr %.sroa.12.4.ph to i64
   %.pre461 = load ptr, ptr %i.a, align 8, !tbaa !796
+  %invariant.op770 = add i64 -2, %.sroa.12.4.ph600
   br label %.lr.ph375
 
 .lr.ph375:                                        ; preds = %.lr.ph375.preheader, %.loopexit
@@ -829,9 +830,8 @@ bb.al:                                            ; preds = %bb.ah
 
 vector.memcheck:                                  ; preds = %.lr.ph360
   %i.nh = shl nuw nsw i64 %i.nc, 2
-  %14 = add i64 %i.nh, %.sroa.12.4.ph600
-  %i.ni = sub i64 %14, %i.ka
-  %i.nj = add i64 %i.ni, -2
+  %i.ni = sub i64 %i.nh, %i.ka
+  %i.nj = add i64 %i.ni, %invariant.op770
   %diff.check = icmp ult i64 %i.nj, 31
   br i1 %diff.check, label %scalar.ph601.preheader, label %vector.ph603
 

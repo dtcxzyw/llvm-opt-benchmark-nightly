@@ -205,6 +205,7 @@ bb.av:                                            ; preds = %bb.ap
   %.sroa.0.3.ph439 = phi i32 [ %.sroa.0.0, %bb.av ], [ %i.gg, %bb.au ], [ %i.gg, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i ], [ %i.gg, %bb.at ] ; 6 uses
   %.sroa.13.3.ph441517 = ptrtoaddr ptr %.sroa.13.3.ph441 to i64
   %.pre394 = load ptr, ptr %i.b, align 8, !tbaa !548
+  %invariant.op = add i64 -2, %.sroa.13.3.ph441517
   br label %.lr.ph333
 
 .lr.ph335:                                        ; preds = %.loopexit
@@ -388,9 +389,8 @@ bb.bb:                                            ; preds = %bb.ax
 
 vector.memcheck:                                  ; preds = %.lr.ph318
   %i.kd = shl nuw nsw i64 %i.jy, 2
-  %10 = add i64 %i.kd, %.sroa.13.3.ph441517
-  %i.ke = sub i64 %10, %i.gw
-  %i.kf = add i64 %i.ke, -2
+  %i.ke = sub i64 %i.kd, %i.gw
+  %i.kf = add i64 %i.ke, %invariant.op
   %diff.check = icmp ult i64 %i.kf, 31
   br i1 %diff.check, label %scalar.ph518.preheader, label %vector.ph520
 
