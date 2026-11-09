@@ -1,0 +1,876 @@
+diff --git a/llvm/lib/Analysis/LoopAccessAnalysis.cpp b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+index d180101cc196e6..d0b4c882b62105 100644
+--- a/llvm/lib/Analysis/LoopAccessAnalysis.cpp
++++ b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+@@ -717,7 +717,9 @@ void RuntimePointerChecking::groupChecks(
+   // dependence between accesses to the same underlying object, and could retry
+   // with runtime checks without dependency information being available. In this
+   // case we will use the fallback path and create separate checking groups for
+-  // accesses not present in DepCands.
++  // accesses not present in DepCands. With dependency information, the class
++  // is split into runs of pointers instead, and grouping the pointers of a run
++  // doesn't cover memory between them (see splitClass).
+ 
+   unsigned TotalComparisons = 0;
+ 
+@@ -1676,8 +1678,8 @@ class AccessAnalysis {
+   /// (i.e. the pointers have computable bounds). A return value of false means
+   /// we couldn't analyze and generate runtime checks for all pointers in the
+   /// loop, but if \p AllowPartial is set then we will have checks for those
+-  /// pointers we could analyze. \p DepChecker is used to remove unknown
+-  /// dependences from DepCands.
++  /// pointers we could analyze. \p DepChecker is used to split the classes of
++  /// DepCands with unknown dependences.
+   bool canCheckPtrAtRT(RuntimePointerChecking &RtCheck, Loop *TheLoop,
+                        const SymbolicStrideMap &Strides,
+                        Value *&UncomputablePtr, bool AllowPartial,
+@@ -2197,6 +2199,127 @@ bool AccessAnalysis::createCheckForAccess(RuntimePointerChecking &RtCheck,
+   return true;
+ }
+ 
++/// Split the class of \p Leader in \p DepCands into sub-classes, so that
++/// accesses of the same sub-class need no runtime checks against each other.
++///
++/// \p UnknownDeps tell us which accesses must be in separate classes.
++///
++/// We assume that the dependency checker has already looked at
++/// every pair of accesses within a class. Every pair of elements should
++/// either NoDep, a recorded safe dependence or Unknown.
++///
++/// Only the pairs with unknown dependences need runtime checks.
++/// Thus, splitting the class along the unknown dependencies is sound.
++///
++/// For example, two rows of an RGB image, r0 = img and r1 = img + S:
++///
++///   r0[3*x] = ..;  r0[3*x+1] = ..;  r0[3*x+2] = ..;
++///   r1[3*x] = ..;  r1[3*x+1] = ..;  r1[3*x+2] = ..;
++///
++/// Distances within a row are constant and not a multiple of the step, so
++/// those pairs are NoDep. Distances across rows depend on S, so those pairs
++/// are unknown:
++///
++///                r0[3x]  r0[3x+1]  r0[3x+2]
++///     r1[3x]       ?        ?         ?
++///     r1[3x+1]     ?        ?         ?
++///     r1[3x+2]     ?        ?         ?
++///
++/// Instead of six classes checked pairwise, we get one class per row, and
++/// grouping turns them into a single check between the rows.
++static void
++splitClass(MemoryDepChecker::DepCandidates &DepCands,
++           MemoryDepChecker::MemAccessInfo Leader,
++           const DenseMap<Value *, SmallPtrSet<Value *, 2>> &UnknownDeps,
++           PredicatedScalarEvolution &PSE, const Loop *L) {
++  // The main idea is to split the class into runs of interleaved pointers
++  // without unknown dependences between them.
++  //
++  // We could've just split the class using the given unknown dependencies
++  // between its elements, but that can potentially introduce overly
++  // conservative checks that always fail. For example, in
++  //
++  //   a[i + off] = a[i] + a[i + 9000]
++  //
++  // the reads have no unknown dependence between them, but merged into one
++  // range, they cover a[i + off] for any off in [0, 9000]. Meaning that in
++  // this case keeping a[i] and a[i + 9000] in separate classes allows us
++  // to generate more precise runtime checks.
++  //
++  // Grouping pointer runs into separate classes allows us to keep the
++  // number of runtime checks under control for the most widespread cases
++  // and avoid generating checks against too wide of a range.
++  SmallVector<MemoryDepChecker::MemAccessInfo> Members(
++      DepCands.members(Leader));
++  DepCands.eraseClass(Leader);
++
++  // Only pointers with the same constant step, whose starts differ by a
++  // constant, are at constant distances from each other, so only they can form
++  // a run. It also means that unknown dependences, which come from distances
++  // that are not constant, are mostly between different buckets.
++  struct Bucket {
++    const SCEV *Start;
++    const SCEVConstant *Step;
++    SmallVector<std::pair<APInt, MemoryDepChecker::MemAccessInfo>, 4> Members;
++  };
++  SmallVector<Bucket, 4> Buckets;
++  ScalarEvolution &SE = *PSE.getSE();
++  for (MemoryDepChecker::MemAccessInfo Access : Members) {
++    const SCEV *Start;
++    const SCEVConstant *Step;
++    if (!match(PSE.getSCEV(Access.getPointer()),
++               m_scev_AffineAddRec(m_SCEV(Start), m_SCEVConstant(Step),
++                                   m_SpecificLoop(L)))) {
++      // We can't tell where the range of such a pointer lies, so it gets a
++      // sub-class of its own, as if we removed the whole class.
++      DepCands.insert(Access);
++      continue;
++    }
++    auto *It = find_if(Buckets, [&](const Bucket &B) {
++      return B.Step == Step && SE.computeConstantDifference(Start, B.Start);
++    });
++    if (It == Buckets.end())
++      It = &Buckets.emplace_back(Bucket{Start, Step, {}});
++    It->Members.emplace_back(*SE.computeConstantDifference(Start, It->Start),
++                             Access);
++  }
++
++  for (Bucket &B : Buckets) {
++    const APInt Step = B.Step->getAPInt().abs();
++    stable_sort(B.Members, [](const auto &X, const auto &Y) {
++      return X.first.slt(Y.first);
++    });
++    SmallPtrSet<Value *, 4> RunPtrs;
++    MemoryDepChecker::MemAccessInfo RunLeader;
++    const APInt *PrevOffset = nullptr;
++    for (const auto &[Offset, Access] : B.Members) {
++      Value *Ptr = Access.getPointer();
++      const auto DepsIt = UnknownDeps.find(Ptr);
++      const bool HasUnknownDepInRun = DepsIt != UnknownDeps.end() &&
++                                      any_of(DepsIt->second, [&](Value *Other) {
++                                        return RunPtrs.contains(Other);
++                                      });
++      // Assuming more than one iteration, if a pointer starts at most a step
++      // after the previous one, it starts within the range of the previous
++      // one. So the ranges of a run cover one region without gaps, and an
++      // access of another sub-class can't fit between them without overlapping
++      // one of them. E.g. a[3i] and a[3i + 2] over i32 (8 <= 12 bytes) stay in
++      // one run, while a[i] and a[i + 9000] (36000 > 4 bytes) don't.
++      //
++      // We also start a new run before a pointer with an unknown dependence on
++      // a pointer of the run, as those need a runtime check against each other.
++      if (!PrevOffset || (Offset - *PrevOffset).ugt(Step) ||
++          HasUnknownDepInRun) {
++        RunLeader = Access;
++        RunPtrs.clear();
++      }
++      RunPtrs.insert(Ptr);
++      DepCands.unionSets(RunLeader, Access);
++      PrevOffset = &Offset;
++    }
++  }
++}
++
+ bool AccessAnalysis::canCheckPtrAtRT(RuntimePointerChecking &RtCheck,
+                                      Loop *TheLoop,
+                                      const SymbolicStrideMap &StridesMap,
+@@ -2212,9 +2335,13 @@ bool AccessAnalysis::canCheckPtrAtRT(RuntimePointerChecking &RtCheck,
+   if (auto *Deps = DepChecker.getDependences()) {
+     // If there are unknown dependences, this means runtime checks are needed to
+     // ensure there's no overlap between accesses to the same underlying object.
+-    // Remove the equivalence classes containing both source and destination
+-    // accesses from DepCands. This ensures runtime checks will be generated
+-    // between those accesses and prevents them from being grouped together.
++    //
++    // Removing the class entirely can produce a large number of additional
++    // checks between the elements that don't have unknown dependencies, so
++    // we collect such classes and the dependencies that force the checks
++    // to split the classes isntead.
++    SmallSetVector<MemAccessInfo, 4> UnknownDepClasses;
++    DenseMap<Value *, SmallPtrSet<Value *, 2>> UnknownDeps;
+     for (const auto &Dep : *Deps) {
+       if (Dep.Type != MemoryDepChecker::Dependence::Unknown) {
+         assert(MemoryDepChecker::Dependence::isSafeForVectorization(Dep.Type) ==
+@@ -2222,15 +2349,20 @@ bool AccessAnalysis::canCheckPtrAtRT(RuntimePointerChecking &RtCheck,
+                "Should only skip safe dependences");
+         continue;
+       }
+-      // Both accesses are in the same class, which may already have been
+-      // erased for an earlier dependence.
+       MemAccessInfo Src = DepChecker.getAccess(Dep.Source);
+-      [[maybe_unused]] MemAccessInfo Dst =
+-          DepChecker.getAccess(Dep.Destination);
+-      assert((!DepCands.contains(Src) || DepCands.isEquivalent(Src, Dst)) &&
++      MemAccessInfo Dst = DepChecker.getAccess(Dep.Destination);
++      assert(DepCands.isEquivalent(Src, Dst) &&
+              "Dependences must be between accesses in the same class");
+-      DepCands.eraseClass(Src);
++      assert(Src.getPointer() != Dst.getPointer() &&
++             "Unknown dependence between accesses through the same pointer");
++      UnknownDepClasses.insert(DepCands.getLeaderValue(Src));
++      UnknownDeps[Src.getPointer()].insert(Dst.getPointer());
++      UnknownDeps[Dst.getPointer()].insert(Src.getPointer());
+     }
++
++    // Split the classes where we detected unknown dependencies.
++    for (MemAccessInfo Leader : UnknownDepClasses)
++      splitClass(DepCands, Leader, UnknownDeps, PSE, TheLoop);
+   } else {
+     CheckDeps.clear();
+     DepCands = {};
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-after-dependence-analysis.ll b/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-after-dependence-analysis.ll
+index 5759128135587f..ec7174d725b9dc 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-after-dependence-analysis.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-after-dependence-analysis.ll
+@@ -536,26 +536,15 @@ define void @independent_interleaved_stores(ptr %a, i64 %offset, i64 %n) {
+ ; CHECK-NEXT:      Check 0:
+ ; CHECK-NEXT:        Comparing group GRP0:
+ ; CHECK-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; CHECK-NEXT:        Against group GRP1:
+-; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; CHECK-NEXT:      Check 1:
+-; CHECK-NEXT:        Comparing group GRP0:
+-; CHECK-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; CHECK-NEXT:        Against group GRP2:
+-; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; CHECK-NEXT:      Check 2:
+-; CHECK-NEXT:        Comparing group GRP1:
+ ; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; CHECK-NEXT:        Against group GRP2:
++; CHECK-NEXT:        Against group GRP1:
+ ; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %a High: (-4 + (8 * %n) + %a))
++; CHECK-NEXT:          (Low: %a High: ((8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {%a,+,8}<nuw><%loop>
+-; CHECK-NEXT:        Group GRP1:
+-; CHECK-NEXT:          (Low: (4 + %a)<nuw> High: ((8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+-; CHECK-NEXT:        Group GRP2:
++; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: ((4 * %offset) + %a) High: (-4 + (4 * %offset) + (8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {((4 * %offset) + %a),+,8}<%loop>
+ ; CHECK-EMPTY:
+@@ -666,44 +655,29 @@ define void @unknown_dep_with_one_of_stores_within_step(ptr %a, i64 %offset, i64
+ ; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i64, ptr %a.off, i64 %iv
+ ; CHECK-NEXT:        Against group GRP1:
+ ; CHECK-NEXT:          %gep.a = getelementptr inbounds i64, ptr %a, i64 %iv
++; CHECK-NEXT:          %gep.a.4 = getelementptr inbounds i8, ptr %gep.a, i64 4
+ ; CHECK-NEXT:      Check 1:
+ ; CHECK-NEXT:        Comparing group GRP0:
+ ; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i64, ptr %a.off, i64 %iv
+ ; CHECK-NEXT:        Against group GRP2:
+ ; CHECK-NEXT:          %gep.a.10 = getelementptr inbounds i8, ptr %gep.a, i64 10
+ ; CHECK-NEXT:      Check 2:
+-; CHECK-NEXT:        Comparing group GRP0:
+-; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i64, ptr %a.off, i64 %iv
+-; CHECK-NEXT:        Against group GRP3:
+-; CHECK-NEXT:          %gep.a.4 = getelementptr inbounds i8, ptr %gep.a, i64 4
+-; CHECK-NEXT:      Check 3:
+ ; CHECK-NEXT:        Comparing group GRP1:
+ ; CHECK-NEXT:          %gep.a = getelementptr inbounds i64, ptr %a, i64 %iv
+-; CHECK-NEXT:        Against group GRP2:
+-; CHECK-NEXT:          %gep.a.10 = getelementptr inbounds i8, ptr %gep.a, i64 10
+-; CHECK-NEXT:      Check 4:
+-; CHECK-NEXT:        Comparing group GRP1:
+-; CHECK-NEXT:          %gep.a = getelementptr inbounds i64, ptr %a, i64 %iv
+-; CHECK-NEXT:        Against group GRP3:
+ ; CHECK-NEXT:          %gep.a.4 = getelementptr inbounds i8, ptr %gep.a, i64 4
+-; CHECK-NEXT:      Check 5:
+-; CHECK-NEXT:        Comparing group GRP2:
++; CHECK-NEXT:        Against group GRP2:
+ ; CHECK-NEXT:          %gep.a.10 = getelementptr inbounds i8, ptr %gep.a, i64 10
+-; CHECK-NEXT:        Against group GRP3:
+-; CHECK-NEXT:          %gep.a.4 = getelementptr inbounds i8, ptr %gep.a, i64 4
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+ ; CHECK-NEXT:          (Low: (%offset + %a) High: (-4 + (8 * %n) + %offset + %a))
+ ; CHECK-NEXT:            Member: {(%offset + %a),+,8}<nw><%loop>
+ ; CHECK-NEXT:        Group GRP1:
+-; CHECK-NEXT:          (Low: %a High: (-4 + (8 * %n) + %a))
++; CHECK-NEXT:          (Low: %a High: ((8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {%a,+,8}<nuw><%loop>
++; CHECK-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+ ; CHECK-NEXT:        Group GRP2:
+ ; CHECK-NEXT:          (Low: (10 + %a)<nuw> High: (4 + (8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {(10 + %a)<nuw>,+,8}<nuw><%loop>
+-; CHECK-NEXT:        Group GRP3:
+-; CHECK-NEXT:          (Low: (4 + %a)<nuw> High: ((8 * %n) + %a))
+-; CHECK-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+@@ -812,67 +786,48 @@ define void @interleaved_stores_with_unknown_deps_to_two_objects(ptr %a, ptr %b,
+ ; CHECK-NEXT:      Check 0:
+ ; CHECK-NEXT:        Comparing group GRP0:
+ ; CHECK-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; CHECK-NEXT:        Against group GRP1:
+ ; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
++; CHECK-NEXT:        Against group GRP1:
++; CHECK-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv.2
+ ; CHECK-NEXT:      Check 1:
+ ; CHECK-NEXT:        Comparing group GRP0:
+ ; CHECK-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
++; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+ ; CHECK-NEXT:        Against group GRP2:
+-; CHECK-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv.2
++; CHECK-NEXT:          %gep.b.off = getelementptr inbounds i32, ptr %b, i64 %iv.2.off.b
+ ; CHECK-NEXT:      Check 2:
+ ; CHECK-NEXT:        Comparing group GRP0:
+ ; CHECK-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
++; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+ ; CHECK-NEXT:        Against group GRP3:
+-; CHECK-NEXT:          %gep.b.off = getelementptr inbounds i32, ptr %b, i64 %iv.2.off.b
+-; CHECK-NEXT:      Check 3:
+-; CHECK-NEXT:        Comparing group GRP0:
+-; CHECK-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; CHECK-NEXT:        Against group GRP4:
+ ; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off.a
+-; CHECK-NEXT:      Check 4:
++; CHECK-NEXT:      Check 3:
+ ; CHECK-NEXT:        Comparing group GRP1:
+-; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; CHECK-NEXT:        Against group GRP2:
+ ; CHECK-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv.2
+-; CHECK-NEXT:      Check 5:
+-; CHECK-NEXT:        Comparing group GRP1:
+-; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; CHECK-NEXT:        Against group GRP3:
++; CHECK-NEXT:        Against group GRP2:
+ ; CHECK-NEXT:          %gep.b.off = getelementptr inbounds i32, ptr %b, i64 %iv.2.off.b
+-; CHECK-NEXT:      Check 6:
++; CHECK-NEXT:      Check 4:
+ ; CHECK-NEXT:        Comparing group GRP1:
+-; CHECK-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; CHECK-NEXT:        Against group GRP4:
+-; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off.a
+-; CHECK-NEXT:      Check 7:
+-; CHECK-NEXT:        Comparing group GRP2:
+ ; CHECK-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv.2
+ ; CHECK-NEXT:        Against group GRP3:
+-; CHECK-NEXT:          %gep.b.off = getelementptr inbounds i32, ptr %b, i64 %iv.2.off.b
+-; CHECK-NEXT:      Check 8:
+-; CHECK-NEXT:        Comparing group GRP2:
+-; CHECK-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv.2
+-; CHECK-NEXT:        Against group GRP4:
+ ; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off.a
+-; CHECK-NEXT:      Check 9:
+-; CHECK-NEXT:        Comparing group GRP3:
++; CHECK-NEXT:      Check 5:
++; CHECK-NEXT:        Comparing group GRP2:
+ ; CHECK-NEXT:          %gep.b.off = getelementptr inbounds i32, ptr %b, i64 %iv.2.off.b
+-; CHECK-NEXT:        Against group GRP4:
++; CHECK-NEXT:        Against group GRP3:
+ ; CHECK-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off.a
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %a High: (-4 + (8 * %n) + %a))
++; CHECK-NEXT:          (Low: %a High: ((8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {%a,+,8}<nuw><%loop>
+-; CHECK-NEXT:        Group GRP1:
+-; CHECK-NEXT:          (Low: (4 + %a)<nuw> High: ((8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+-; CHECK-NEXT:        Group GRP2:
++; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: %b High: (-4 + (8 * %n) + %b))
+ ; CHECK-NEXT:            Member: {%b,+,8}<nuw><%loop>
+-; CHECK-NEXT:        Group GRP3:
++; CHECK-NEXT:        Group GRP2:
+ ; CHECK-NEXT:          (Low: ((4 * %offset.b) + %b) High: (-4 + (4 * %offset.b) + (8 * %n) + %b))
+ ; CHECK-NEXT:            Member: {((4 * %offset.b) + %b),+,8}<%loop>
+-; CHECK-NEXT:        Group GRP4:
++; CHECK-NEXT:        Group GRP3:
+ ; CHECK-NEXT:          (Low: ((4 * %offset.a) + %a) High: (-4 + (4 * %offset.a) + (8 * %n) + %a))
+ ; CHECK-NEXT:            Member: {((4 * %offset.a) + %a),+,8}<%loop>
+ ; CHECK-EMPTY:
+@@ -907,3 +862,82 @@ loop:
+ exit:
+   ret void
+ }
++
++define void @interleaved_stores_to_two_rows(ptr %img, i64 %stride, ptr %src, i64 %n) {
++; CHECK-LABEL: 'interleaved_stores_to_two_rows'
++; CHECK-NEXT:    loop:
++; CHECK-NEXT:      Memory dependences are safe with run-time checks
++; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:      Run-time memory checks:
++; CHECK-NEXT:      Check 0:
++; CHECK-NEXT:        Comparing group GRP0:
++; CHECK-NEXT:          %a0 = getelementptr inbounds i8, ptr %img, i64 %off
++; CHECK-NEXT:          %a1 = getelementptr inbounds i8, ptr %a0, i64 1
++; CHECK-NEXT:          %a2 = getelementptr inbounds i8, ptr %a0, i64 2
++; CHECK-NEXT:        Against group GRP1:
++; CHECK-NEXT:          %b0 = getelementptr inbounds i8, ptr %row1, i64 %off
++; CHECK-NEXT:          %b1 = getelementptr inbounds i8, ptr %b0, i64 1
++; CHECK-NEXT:          %b2 = getelementptr inbounds i8, ptr %b0, i64 2
++; CHECK-NEXT:      Check 1:
++; CHECK-NEXT:        Comparing group GRP0:
++; CHECK-NEXT:          %a0 = getelementptr inbounds i8, ptr %img, i64 %off
++; CHECK-NEXT:          %a1 = getelementptr inbounds i8, ptr %a0, i64 1
++; CHECK-NEXT:          %a2 = getelementptr inbounds i8, ptr %a0, i64 2
++; CHECK-NEXT:        Against group GRP2:
++; CHECK-NEXT:          %s.p = getelementptr inbounds float, ptr %src, i64 %x
++; CHECK-NEXT:      Check 2:
++; CHECK-NEXT:        Comparing group GRP1:
++; CHECK-NEXT:          %b0 = getelementptr inbounds i8, ptr %row1, i64 %off
++; CHECK-NEXT:          %b1 = getelementptr inbounds i8, ptr %b0, i64 1
++; CHECK-NEXT:          %b2 = getelementptr inbounds i8, ptr %b0, i64 2
++; CHECK-NEXT:        Against group GRP2:
++; CHECK-NEXT:          %s.p = getelementptr inbounds float, ptr %src, i64 %x
++; CHECK-NEXT:      Grouped accesses:
++; CHECK-NEXT:        Group GRP0:
++; CHECK-NEXT:          (Low: %img High: ((3 * %n) + %img))
++; CHECK-NEXT:            Member: {%img,+,3}<nuw><%loop>
++; CHECK-NEXT:            Member: {(1 + %img)<nuw>,+,3}<nuw><%loop>
++; CHECK-NEXT:            Member: {(2 + %img)<nuw>,+,3}<nuw><%loop>
++; CHECK-NEXT:        Group GRP1:
++; CHECK-NEXT:          (Low: (%stride + %img) High: ((3 * %n) + %stride + %img))
++; CHECK-NEXT:            Member: {(%stride + %img),+,3}<nw><%loop>
++; CHECK-NEXT:            Member: {(1 + %stride + %img),+,3}<nw><%loop>
++; CHECK-NEXT:            Member: {(2 + %stride + %img),+,3}<nw><%loop>
++; CHECK-NEXT:        Group GRP2:
++; CHECK-NEXT:          (Low: %src High: ((4 * %n) + %src))
++; CHECK-NEXT:            Member: {%src,+,4}<nuw><%loop>
++; CHECK-EMPTY:
++; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
++; CHECK-NEXT:      SCEV assumptions:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Expressions re-written:
++;
++entry:
++  %row1 = getelementptr inbounds i8, ptr %img, i64 %stride
++  br label %loop
++
++loop:
++  %x = phi i64 [ 0, %entry ], [ %x.next, %loop ]
++  %s.p = getelementptr inbounds float, ptr %src, i64 %x
++  %s = load float, ptr %s.p
++  %v = fptoui float %s to i8
++  %off = mul nuw nsw i64 %x, 3
++  %a0 = getelementptr inbounds i8, ptr %img, i64 %off
++  %a1 = getelementptr inbounds i8, ptr %a0, i64 1
++  %a2 = getelementptr inbounds i8, ptr %a0, i64 2
++  %b0 = getelementptr inbounds i8, ptr %row1, i64 %off
++  %b1 = getelementptr inbounds i8, ptr %b0, i64 1
++  %b2 = getelementptr inbounds i8, ptr %b0, i64 2
++  store i8 %v, ptr %a0
++  store i8 %v, ptr %a1
++  store i8 %v, ptr %a2
++  store i8 %v, ptr %b0
++  store i8 %v, ptr %b1
++  store i8 %v, ptr %b2
++  %x.next = add nuw nsw i64 %x, 1
++  %done = icmp eq i64 %x.next, %n
++  br i1 %done, label %exit, label %loop
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-incomplete-dependences.ll b/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-incomplete-dependences.ll
+index 286a01ac1d7dc1..7208da85174995 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-incomplete-dependences.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/retry-runtime-checks-incomplete-dependences.ll
+@@ -13,26 +13,15 @@ define void @independent_pair_with_unknown_deps(ptr %a, i64 %offset, i64 %n) {
+ ; DEFAULT-NEXT:      Check 0:
+ ; DEFAULT-NEXT:        Comparing group GRP0:
+ ; DEFAULT-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; DEFAULT-NEXT:        Against group GRP1:
+-; DEFAULT-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; DEFAULT-NEXT:      Check 1:
+-; DEFAULT-NEXT:        Comparing group GRP0:
+-; DEFAULT-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; DEFAULT-NEXT:        Against group GRP2:
+-; DEFAULT-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; DEFAULT-NEXT:      Check 2:
+-; DEFAULT-NEXT:        Comparing group GRP1:
+ ; DEFAULT-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; DEFAULT-NEXT:        Against group GRP2:
++; DEFAULT-NEXT:        Against group GRP1:
+ ; DEFAULT-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+ ; DEFAULT-NEXT:      Grouped accesses:
+ ; DEFAULT-NEXT:        Group GRP0:
+-; DEFAULT-NEXT:          (Low: %a High: (-4 + (8 * %n) + %a))
++; DEFAULT-NEXT:          (Low: %a High: ((8 * %n) + %a))
+ ; DEFAULT-NEXT:            Member: {%a,+,8}<nuw><%loop>
+-; DEFAULT-NEXT:        Group GRP1:
+-; DEFAULT-NEXT:          (Low: (4 + %a)<nuw> High: ((8 * %n) + %a))
+ ; DEFAULT-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+-; DEFAULT-NEXT:        Group GRP2:
++; DEFAULT-NEXT:        Group GRP1:
+ ; DEFAULT-NEXT:          (Low: ((4 * %offset) + %a) High: (-4 + (4 * %offset) + (8 * %n) + %a))
+ ; DEFAULT-NEXT:            Member: {((4 * %offset) + %a),+,8}<%loop>
+ ; DEFAULT-EMPTY:
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/stencil-group-merging-unknown-deps.ll b/llvm/test/Analysis/LoopAccessAnalysis/stencil-group-merging-unknown-deps.ll
+index cd420e5321f8af..99795f7fc8deab 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/stencil-group-merging-unknown-deps.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/stencil-group-merging-unknown-deps.ll
+@@ -1,6 +1,6 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
+ ; RUN: opt -passes='print<access-info>' -stencil-runtime-check-merge=force -disable-output %s 2>&1 | FileCheck --check-prefixes=CHECK,FORCE %s
+-; RUN: opt -passes='print<access-info>' -stencil-runtime-check-merge=auto -vectorize-memory-check-threshold=14 -disable-output %s 2>&1 | FileCheck --check-prefixes=CHECK,AUTO %s
++; RUN: opt -passes='print<access-info>' -stencil-runtime-check-merge=auto -vectorize-memory-check-threshold=8 -disable-output %s 2>&1 | FileCheck --check-prefixes=CHECK,AUTO %s
+ 
+ ; The stores to %a[2 * i] and %a[2 * i + 1] are independent and do not need
+ ; to be checked against each other. The stencil loads of %b are merged.
+@@ -13,68 +13,47 @@ define void @stencil_loads_and_independent_stores_with_unknown_deps(ptr %a, ptr
+ ; FORCE-NEXT:      Check 0:
+ ; FORCE-NEXT:        Comparing group GRP0:
+ ; FORCE-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; FORCE-NEXT:        Against group GRP1:
+ ; FORCE-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
++; FORCE-NEXT:        Against group GRP1:
++; FORCE-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+ ; FORCE-NEXT:      Check 1:
+ ; FORCE-NEXT:        Comparing group GRP0:
+ ; FORCE-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
++; FORCE-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+ ; FORCE-NEXT:        Against group GRP2:
+-; FORCE-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
++; FORCE-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+ ; FORCE-NEXT:      Check 2:
+ ; FORCE-NEXT:        Comparing group GRP0:
+ ; FORCE-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
++; FORCE-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+ ; FORCE-NEXT:        Against group GRP3:
+-; FORCE-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; FORCE-NEXT:      Check 3:
+-; FORCE-NEXT:        Comparing group GRP0:
+-; FORCE-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; FORCE-NEXT:        Against group GRP4:
+ ; FORCE-NEXT:          %gep.b.2 = getelementptr inbounds i32, ptr %b, i64 %iv.m.2
+ ; FORCE-NEXT:          %gep.b.1 = getelementptr inbounds i32, ptr %b, i64 %iv.m
+ ; FORCE-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv
+-; FORCE-NEXT:      Check 4:
++; FORCE-NEXT:      Check 3:
+ ; FORCE-NEXT:        Comparing group GRP1:
+-; FORCE-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; FORCE-NEXT:        Against group GRP2:
+ ; FORCE-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+-; FORCE-NEXT:      Check 5:
+-; FORCE-NEXT:        Comparing group GRP1:
+-; FORCE-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; FORCE-NEXT:        Against group GRP3:
++; FORCE-NEXT:        Against group GRP2:
+ ; FORCE-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; FORCE-NEXT:      Check 6:
++; FORCE-NEXT:      Check 4:
+ ; FORCE-NEXT:        Comparing group GRP1:
+-; FORCE-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; FORCE-NEXT:        Against group GRP4:
+-; FORCE-NEXT:          %gep.b.2 = getelementptr inbounds i32, ptr %b, i64 %iv.m.2
+-; FORCE-NEXT:          %gep.b.1 = getelementptr inbounds i32, ptr %b, i64 %iv.m
+-; FORCE-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv
+-; FORCE-NEXT:      Check 7:
+-; FORCE-NEXT:        Comparing group GRP2:
+ ; FORCE-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+ ; FORCE-NEXT:        Against group GRP3:
+-; FORCE-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; FORCE-NEXT:      Check 8:
+-; FORCE-NEXT:        Comparing group GRP2:
+-; FORCE-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+-; FORCE-NEXT:        Against group GRP4:
+ ; FORCE-NEXT:          %gep.b.2 = getelementptr inbounds i32, ptr %b, i64 %iv.m.2
+ ; FORCE-NEXT:          %gep.b.1 = getelementptr inbounds i32, ptr %b, i64 %iv.m
+ ; FORCE-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv
+ ; FORCE-NEXT:      Grouped accesses:
+ ; FORCE-NEXT:        Group GRP0:
+-; FORCE-NEXT:          (Low: %a High: (-4 + (8 * %n) + %a))
++; FORCE-NEXT:          (Low: %a High: ((8 * %n) + %a))
+ ; FORCE-NEXT:            Member: {%a,+,8}<nuw><%loop>
+-; FORCE-NEXT:        Group GRP1:
+-; FORCE-NEXT:          (Low: (4 + %a)<nuw> High: ((8 * %n) + %a))
+ ; FORCE-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+-; FORCE-NEXT:        Group GRP2:
++; FORCE-NEXT:        Group GRP1:
+ ; FORCE-NEXT:          (Low: %c High: ((4 * %n) + %c))
+ ; FORCE-NEXT:            Member: {%c,+,4}<nuw><%loop>
+-; FORCE-NEXT:        Group GRP3:
++; FORCE-NEXT:        Group GRP2:
+ ; FORCE-NEXT:          (Low: ((4 * %off) + %a) High: (-4 + (4 * %off) + (8 * %n) + %a))
+ ; FORCE-NEXT:            Member: {((4 * %off) + %a),+,8}<%loop>
+-; FORCE-NEXT:        Group GRP4:
++; FORCE-NEXT:        Group GRP3:
+ ; FORCE-NEXT:          (Low: %b High: ((4 * %n) + (8 * %m) + %b))
+ ; FORCE-NEXT:            Member: {((8 * %m) + %b),+,4}<%loop>
+ ; FORCE-NEXT:            Member: {((4 * %m) + %b),+,4}<%loop>
+@@ -95,68 +74,47 @@ define void @stencil_loads_and_independent_stores_with_unknown_deps(ptr %a, ptr
+ ; AUTO-NEXT:      Check 0:
+ ; AUTO-NEXT:        Comparing group GRP0:
+ ; AUTO-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; AUTO-NEXT:        Against group GRP1:
+ ; AUTO-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
++; AUTO-NEXT:        Against group GRP1:
++; AUTO-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+ ; AUTO-NEXT:      Check 1:
+ ; AUTO-NEXT:        Comparing group GRP0:
+ ; AUTO-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
++; AUTO-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+ ; AUTO-NEXT:        Against group GRP2:
+-; AUTO-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
++; AUTO-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+ ; AUTO-NEXT:      Check 2:
+ ; AUTO-NEXT:        Comparing group GRP0:
+ ; AUTO-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
++; AUTO-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+ ; AUTO-NEXT:        Against group GRP3:
+-; AUTO-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; AUTO-NEXT:      Check 3:
+-; AUTO-NEXT:        Comparing group GRP0:
+-; AUTO-NEXT:          %gep.a.0 = getelementptr inbounds i32, ptr %a, i64 %iv.2
+-; AUTO-NEXT:        Against group GRP4:
+ ; AUTO-NEXT:          %gep.b.2 = getelementptr inbounds i32, ptr %b, i64 %iv.m.2
+ ; AUTO-NEXT:          %gep.b.1 = getelementptr inbounds i32, ptr %b, i64 %iv.m
+ ; AUTO-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv
+-; AUTO-NEXT:      Check 4:
++; AUTO-NEXT:      Check 3:
+ ; AUTO-NEXT:        Comparing group GRP1:
+-; AUTO-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; AUTO-NEXT:        Against group GRP2:
+ ; AUTO-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+-; AUTO-NEXT:      Check 5:
+-; AUTO-NEXT:        Comparing group GRP1:
+-; AUTO-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; AUTO-NEXT:        Against group GRP3:
++; AUTO-NEXT:        Against group GRP2:
+ ; AUTO-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; AUTO-NEXT:      Check 6:
++; AUTO-NEXT:      Check 4:
+ ; AUTO-NEXT:        Comparing group GRP1:
+-; AUTO-NEXT:          %gep.a.1 = getelementptr inbounds i32, ptr %gep.a.0, i64 1
+-; AUTO-NEXT:        Against group GRP4:
+-; AUTO-NEXT:          %gep.b.2 = getelementptr inbounds i32, ptr %b, i64 %iv.m.2
+-; AUTO-NEXT:          %gep.b.1 = getelementptr inbounds i32, ptr %b, i64 %iv.m
+-; AUTO-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv
+-; AUTO-NEXT:      Check 7:
+-; AUTO-NEXT:        Comparing group GRP2:
+ ; AUTO-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+ ; AUTO-NEXT:        Against group GRP3:
+-; AUTO-NEXT:          %gep.a.off = getelementptr inbounds i32, ptr %a, i64 %iv.2.off
+-; AUTO-NEXT:      Check 8:
+-; AUTO-NEXT:        Comparing group GRP2:
+-; AUTO-NEXT:          %gep.c = getelementptr inbounds i32, ptr %c, i64 %iv
+-; AUTO-NEXT:        Against group GRP4:
+ ; AUTO-NEXT:          %gep.b.2 = getelementptr inbounds i32, ptr %b, i64 %iv.m.2
+ ; AUTO-NEXT:          %gep.b.1 = getelementptr inbounds i32, ptr %b, i64 %iv.m
+ ; AUTO-NEXT:          %gep.b.0 = getelementptr inbounds i32, ptr %b, i64 %iv
+ ; AUTO-NEXT:      Grouped accesses:
+ ; AUTO-NEXT:        Group GRP0:
+-; AUTO-NEXT:          (Low: %a High: (-4 + (8 * %n) + %a))
++; AUTO-NEXT:          (Low: %a High: ((8 * %n) + %a))
+ ; AUTO-NEXT:            Member: {%a,+,8}<nuw><%loop>
+-; AUTO-NEXT:        Group GRP1:
+-; AUTO-NEXT:          (Low: (4 + %a)<nuw> High: ((8 * %n) + %a))
+ ; AUTO-NEXT:            Member: {(4 + %a)<nuw>,+,8}<nuw><%loop>
+-; AUTO-NEXT:        Group GRP2:
++; AUTO-NEXT:        Group GRP1:
+ ; AUTO-NEXT:          (Low: %c High: ((4 * %n) + %c))
+ ; AUTO-NEXT:            Member: {%c,+,4}<nuw><%loop>
+-; AUTO-NEXT:        Group GRP3:
++; AUTO-NEXT:        Group GRP2:
+ ; AUTO-NEXT:          (Low: ((4 * %off) + %a) High: (-4 + (4 * %off) + (8 * %n) + %a))
+ ; AUTO-NEXT:            Member: {((4 * %off) + %a),+,8}<%loop>
+-; AUTO-NEXT:        Group GRP4:
++; AUTO-NEXT:        Group GRP3:
+ ; AUTO-NEXT:          (Low: %b High: ((4 * %n) + (8 * %m) + %b))
+ ; AUTO-NEXT:            Member: {((8 * %m) + %b),+,4}<%loop>
+ ; AUTO-NEXT:            Member: {((4 * %m) + %b),+,4}<%loop>
+diff --git a/llvm/test/Transforms/LoopVectorize/AArch64/interleave-with-runtime-checks.ll b/llvm/test/Transforms/LoopVectorize/AArch64/interleave-with-runtime-checks.ll
+index 9f21ec18067034..ce6894ec28c205 100644
+--- a/llvm/test/Transforms/LoopVectorize/AArch64/interleave-with-runtime-checks.ll
++++ b/llvm/test/Transforms/LoopVectorize/AArch64/interleave-with-runtime-checks.ll
+@@ -10,22 +10,12 @@ define void @interleave_groups_separated_by_offset(ptr %A, i64 %offset) {
+ ; CHECK-NEXT:    [[A_OFFSET:%.*]] = getelementptr i8, ptr [[A]], i64 [[OFFSET]]
+ ; CHECK-NEXT:    br i1 false, label %[[VEC_EPILOG_SCALAR_PH:.*]], label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 1999
+-; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[A]], i64 1
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 2000
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[OFFSET]], 1999
+ ; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP0]]
+-; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[A]], [[SCEVGEP2]]
+-; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP1]], [[SCEVGEP]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+ ; CHECK-NEXT:    [[BOUND04:%.*]] = icmp ult ptr [[A]], [[SCEVGEP3]]
+-; CHECK-NEXT:    [[BOUND15:%.*]] = icmp ult ptr [[A_OFFSET]], [[SCEVGEP]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT6:%.*]] = and i1 [[BOUND04]], [[BOUND15]]
+-; CHECK-NEXT:    [[CONFLICT_RDX:%.*]] = or i1 [[FOUND_CONFLICT]], [[FOUND_CONFLICT6]]
+-; CHECK-NEXT:    [[BOUND07:%.*]] = icmp ult ptr [[SCEVGEP1]], [[SCEVGEP3]]
+ ; CHECK-NEXT:    [[BOUND18:%.*]] = icmp ult ptr [[A_OFFSET]], [[SCEVGEP2]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT9:%.*]] = and i1 [[BOUND07]], [[BOUND18]]
+-; CHECK-NEXT:    [[CONFLICT_RDX10:%.*]] = or i1 [[CONFLICT_RDX]], [[FOUND_CONFLICT9]]
++; CHECK-NEXT:    [[CONFLICT_RDX10:%.*]] = and i1 [[BOUND04]], [[BOUND18]]
+ ; CHECK-NEXT:    br i1 [[CONFLICT_RDX10]], label %[[VEC_EPILOG_SCALAR_PH]], label %[[VECTOR_MAIN_LOOP_ITER_CHECK:.*]]
+ ; CHECK:       [[VECTOR_MAIN_LOOP_ITER_CHECK]]:
+ ; CHECK-NEXT:    br i1 false, label %[[VEC_EPILOG_PH:.*]], label %[[VECTOR_PH:.*]]
+@@ -39,15 +29,15 @@ define void @interleave_groups_separated_by_offset(ptr %A, i64 %offset) {
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 32
+ ; CHECK-NEXT:    [[NEXT_GEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP1]]
+ ; CHECK-NEXT:    [[NEXT_GEP11:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
+-; CHECK-NEXT:    store <32 x i8> zeroinitializer, ptr [[NEXT_GEP]], align 1
+-; CHECK-NEXT:    store <32 x i8> zeroinitializer, ptr [[NEXT_GEP11]], align 1
++; CHECK-NEXT:    store <32 x i8> zeroinitializer, ptr [[NEXT_GEP]], align 1, !alias.scope [[META0:![0-9]+]], !noalias [[META3:![0-9]+]]
++; CHECK-NEXT:    store <32 x i8> zeroinitializer, ptr [[NEXT_GEP11]], align 1, !alias.scope [[META0]], !noalias [[META3]]
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 32
+ ; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i64 [[INDEX_NEXT]], 992
+-; CHECK-NEXT:    br i1 [[TMP3]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP3]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP5:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[VEC_EPILOG_ITER_CHECK:.*]]
+ ; CHECK:       [[VEC_EPILOG_ITER_CHECK]]:
+-; CHECK-NEXT:    br i1 true, label %[[VEC_EPILOG_SCALAR_PH]], label %[[VEC_EPILOG_PH]], !prof [[PROF3:![0-9]+]]
++; CHECK-NEXT:    br i1 true, label %[[VEC_EPILOG_SCALAR_PH]], label %[[VEC_EPILOG_PH]], !prof [[PROF8:![0-9]+]]
+ ; CHECK:       [[VEC_EPILOG_PH]]:
+ ; CHECK-NEXT:    [[VEC_EPILOG_RESUME_VAL:%.*]] = phi i64 [ 992, %[[VEC_EPILOG_ITER_CHECK]] ], [ 0, %[[VECTOR_MAIN_LOOP_ITER_CHECK]] ]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr i8, ptr [[A]], i64 1984
+@@ -57,10 +47,10 @@ define void @interleave_groups_separated_by_offset(ptr %A, i64 %offset) {
+ ; CHECK-NEXT:    [[INDEX12:%.*]] = phi i64 [ [[VEC_EPILOG_RESUME_VAL]], %[[VEC_EPILOG_PH]] ], [ [[INDEX_NEXT14:%.*]], %[[VEC_EPILOG_VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[OFFSET_IDX:%.*]] = shl i64 [[INDEX12]], 1
+ ; CHECK-NEXT:    [[NEXT_GEP13:%.*]] = getelementptr i8, ptr [[A]], i64 [[OFFSET_IDX]]
+-; CHECK-NEXT:    store <16 x i8> zeroinitializer, ptr [[NEXT_GEP13]], align 1
++; CHECK-NEXT:    store <16 x i8> zeroinitializer, ptr [[NEXT_GEP13]], align 1, !alias.scope [[META0]], !noalias [[META3]]
+ ; CHECK-NEXT:    [[INDEX_NEXT14]] = add nuw i64 [[INDEX12]], 8
+ ; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq i64 [[INDEX_NEXT14]], 992
+-; CHECK-NEXT:    br i1 [[TMP6]], label %[[VEC_EPILOG_MIDDLE_BLOCK:.*]], label %[[VEC_EPILOG_VECTOR_BODY]], !llvm.loop [[LOOP4:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP6]], label %[[VEC_EPILOG_MIDDLE_BLOCK:.*]], label %[[VEC_EPILOG_VECTOR_BODY]], !llvm.loop [[LOOP9:![0-9]+]]
+ ; CHECK:       [[VEC_EPILOG_MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[VEC_EPILOG_SCALAR_PH]]
+ ; CHECK:       [[VEC_EPILOG_SCALAR_PH]]:
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll b/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll
+index c2157b3f6f6f65..6d78094776af6c 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll
+@@ -26,22 +26,16 @@ define void @skip_free_iv_truncate(i16 %x, ptr %A) #0 {
+ ; CHECK-NEXT:    [[TMP39:%.*]] = add i64 [[TMP38]], 2
+ ; CHECK-NEXT:    [[SCEVGEP12:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP39]]
+ ; CHECK-NEXT:    [[TMP40:%.*]] = shl nsw i64 [[X_I64]], 3
+-; CHECK-NEXT:    [[SCEVGEP13:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP40]]
++; CHECK-NEXT:    [[TMP12:%.*]] = add nsw i64 [[TMP40]], -8
++; CHECK-NEXT:    [[SCEVGEP15:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP12]]
+ ; CHECK-NEXT:    [[TMP41:%.*]] = mul i64 [[TMP3]], 24
+ ; CHECK-NEXT:    [[TMP42:%.*]] = add i64 [[TMP41]], [[TMP40]]
+ ; CHECK-NEXT:    [[TMP43:%.*]] = add i64 [[TMP42]], 8
+-; CHECK-NEXT:    [[SCEVGEP14:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP43]]
+-; CHECK-NEXT:    [[TMP44:%.*]] = add nsw i64 [[TMP40]], -8
+-; CHECK-NEXT:    [[SCEVGEP15:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP44]]
+-; CHECK-NEXT:    [[SCEVGEP16:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP42]]
+-; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP9]], [[SCEVGEP14]]
+-; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP13]], [[SCEVGEP12]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
++; CHECK-NEXT:    [[SCEVGEP16:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP43]]
+ ; CHECK-NEXT:    [[BOUND017:%.*]] = icmp ult ptr [[SCEVGEP9]], [[SCEVGEP16]]
+ ; CHECK-NEXT:    [[BOUND118:%.*]] = icmp ult ptr [[SCEVGEP15]], [[SCEVGEP12]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT19:%.*]] = and i1 [[BOUND017]], [[BOUND118]]
+-; CHECK-NEXT:    [[CONFLICT_RDX:%.*]] = or i1 [[FOUND_CONFLICT]], [[FOUND_CONFLICT19]]
+-; CHECK-NEXT:    br i1 [[CONFLICT_RDX]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
++; CHECK-NEXT:    br i1 [[FOUND_CONFLICT19]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+@@ -55,7 +49,7 @@ define void @skip_free_iv_truncate(i16 %x, ptr %A) #0 {
+ ; CHECK-NEXT:    [[CURRENT_ITERATION_NEXT]] = add nuw i64 [[TMP28]], [[INDEX]]
+ ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP28]]
+ ; CHECK-NEXT:    [[TMP29:%.*]] = icmp eq i64 [[AVL_NEXT]], 0
+-; CHECK-NEXT:    br i1 [[TMP29]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP6:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP29]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP5:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[EXIT:.*]]
+ ; CHECK:       [[SCALAR_PH]]:
+@@ -73,7 +67,7 @@ define void @skip_free_iv_truncate(i16 %x, ptr %A) #0 {
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 3
+ ; CHECK-NEXT:    [[TMP64]] = trunc i64 [[IV_NEXT]] to i32
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[IV]], 99
+-; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT]], !llvm.loop [[LOOP9:![0-9]+]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT]], !llvm.loop [[LOOP8:![0-9]+]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -132,7 +126,7 @@ define void @test_3_inductions(ptr noalias %dst, ptr noalias %src, i64 %n) #1 {
+ ; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <vscale x 2 x i32> [[VEC_IND]], [[BROADCAST_SPLAT3]]
+ ; CHECK-NEXT:    [[VEC_IND_NEXT4]] = add <vscale x 2 x i32> [[VEC_IND1]], [[BROADCAST_SPLAT3]]
+ ; CHECK-NEXT:    [[TMP9:%.*]] = icmp eq i64 [[AVL_NEXT]], 0
+-; CHECK-NEXT:    br i1 [[TMP9]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP10:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP9]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP9:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[EXIT:.*]]
+ ; CHECK:       [[EXIT]]:
+@@ -190,7 +184,7 @@ define void @redundant_iv_trunc_for_cse(ptr noalias %src, ptr noalias %dst, i64
+ ; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <vscale x 4 x i32> [[VEC_IND]], [[BROADCAST_SPLAT]]
+ ; CHECK-NEXT:    [[VEC_IND_NEXT2]] = add <vscale x 4 x i32> [[VEC_IND1]], [[BROADCAST_SPLAT]]
+ ; CHECK-NEXT:    [[TMP10:%.*]] = icmp eq i64 [[AVL_NEXT]], 0
+-; CHECK-NEXT:    br i1 [[TMP10]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP11:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP10]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP10:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[EXIT:.*]]
+ ; CHECK:       [[EXIT]]:
+@@ -233,13 +227,12 @@ attributes #1 = { "target-cpu"="sifive-p670" vscale_range(2, 1024) }
+ ; CHECK: [[META0]] = !{[[META1:![0-9]+]]}
+ ; CHECK: [[META1]] = distinct !{[[META1]], [[META2:![0-9]+]]}
+ ; CHECK: [[META2]] = distinct !{[[META2]], i1 false, !"LVerDomain"}
+-; CHECK: [[META3]] = !{[[META4:![0-9]+]], [[META5:![0-9]+]]}
++; CHECK: [[META3]] = !{[[META4:![0-9]+]]}
+ ; CHECK: [[META4]] = distinct !{[[META4]], [[META2]]}
+-; CHECK: [[META5]] = distinct !{[[META5]], [[META2]]}
+-; CHECK: [[LOOP6]] = distinct !{[[LOOP6]], [[META7:![0-9]+]], [[META8:![0-9]+]]}
+-; CHECK: [[META7]] = !{!"llvm.loop.isvectorized", i32 1}
+-; CHECK: [[META8]] = !{!"llvm.loop.unroll.runtime.disable"}
+-; CHECK: [[LOOP9]] = distinct !{[[LOOP9]], [[META7]]}
+-; CHECK: [[LOOP10]] = distinct !{[[LOOP10]], [[META7]], [[META8]]}
+-; CHECK: [[LOOP11]] = distinct !{[[LOOP11]], [[META7]], [[META8]]}
++; CHECK: [[LOOP5]] = distinct !{[[LOOP5]], [[META6:![0-9]+]], [[META7:![0-9]+]]}
++; CHECK: [[META6]] = !{!"llvm.loop.isvectorized", i32 1}
++; CHECK: [[META7]] = !{!"llvm.loop.unroll.runtime.disable"}
++; CHECK: [[LOOP8]] = distinct !{[[LOOP8]], [[META6]]}
++; CHECK: [[LOOP9]] = distinct !{[[LOOP9]], [[META6]], [[META7]]}
++; CHECK: [[LOOP10]] = distinct !{[[LOOP10]], [[META6]], [[META7]]}
+ ;.
+diff --git a/llvm/test/Transforms/LoopVectorize/interleaved-accesses-retry-runtime-checks.ll b/llvm/test/Transforms/LoopVectorize/interleaved-accesses-retry-runtime-checks.ll
+index 5068d515a3a66e..b7dfe5cf953091 100644
+--- a/llvm/test/Transforms/LoopVectorize/interleaved-accesses-retry-runtime-checks.ll
++++ b/llvm/test/Transforms/LoopVectorize/interleaved-accesses-retry-runtime-checks.ll
+@@ -90,22 +90,12 @@ define void @dep_between_interleaved_store_and_load_with_unknown_dep_same_object
+ ; CHECK-NEXT:    [[A_OFF:%.*]] = getelementptr i8, ptr [[A]], i64 [[OFF]]
+ ; CHECK-NEXT:    br label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:
+-; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr [[A]], i64 796
+-; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr nuw i8, ptr [[A]], i64 4
+ ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[A]], i64 800
+ ; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[OFF]], 796
+ ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP3]]
+-; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[A]], [[TMP2]]
+-; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[TMP1]], [[TMP0]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+ ; CHECK-NEXT:    [[BOUND011:%.*]] = icmp ult ptr [[A]], [[TMP4]]
+-; CHECK-NEXT:    [[BOUND112:%.*]] = icmp ult ptr [[A_OFF]], [[TMP0]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT13:%.*]] = and i1 [[BOUND011]], [[BOUND112]]
+-; CHECK-NEXT:    [[CONFLICT_RDX:%.*]] = or i1 [[FOUND_CONFLICT]], [[FOUND_CONFLICT13]]
+-; CHECK-NEXT:    [[BOUND014:%.*]] = icmp ult ptr [[TMP1]], [[TMP4]]
+ ; CHECK-NEXT:    [[BOUND115:%.*]] = icmp ult ptr [[A_OFF]], [[TMP2]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT16:%.*]] = and i1 [[BOUND014]], [[BOUND115]]
+-; CHECK-NEXT:    [[CONFLICT_RDX17:%.*]] = or i1 [[CONFLICT_RDX]], [[FOUND_CONFLICT16]]
++; CHECK-NEXT:    [[CONFLICT_RDX17:%.*]] = and i1 [[BOUND011]], [[BOUND115]]
+ ; CHECK-NEXT:    br i1 [[CONFLICT_RDX17]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+@@ -128,25 +118,25 @@ define void @dep_between_interleaved_store_and_load_with_unknown_dep_same_object
+ ; CHECK-NEXT:    [[TMP13:%.*]] = getelementptr inbounds [2 x i32], ptr [[A]], i64 [[TMP5]], i64 1
+ ; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr inbounds [2 x i32], ptr [[A]], i64 [[TMP6]], i64 1
+ ; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr inbounds [2 x i32], ptr [[A]], i64 [[TMP7]], i64 1
+-; CHECK-NEXT:    store i32 3, ptr [[TMP12]], align 4, !alias.scope [[META18:![0-9]+]], !noalias [[META19:![0-9]+]]
+-; CHECK-NEXT:    store i32 3, ptr [[TMP13]], align 4, !alias.scope [[META18]], !noalias [[META19]]
+-; CHECK-NEXT:    store i32 3, ptr [[TMP14]], align 4, !alias.scope [[META18]], !noalias [[META19]]
+-; CHECK-NEXT:    store i32 3, ptr [[TMP15]], align 4, !alias.scope [[META18]], !noalias [[META19]]
++; CHECK-NEXT:    store i32 3, ptr [[TMP12]], align 4, !alias.scope [[META12]], !noalias [[META15]]
++; CHECK-NEXT:    store i32 3, ptr [[TMP13]], align 4, !alias.scope [[META12]], !noalias [[META15]]
++; CHECK-NEXT:    store i32 3, ptr [[TMP14]], align 4, !alias.scope [[META12]], !noalias [[META15]]
++; CHECK-NEXT:    store i32 3, ptr [[TMP15]], align 4, !alias.scope [[META12]], !noalias [[META15]]
+ ; CHECK-NEXT:    [[TMP16:%.*]] = getelementptr inbounds [2 x i32], ptr [[A_OFF]], i64 [[INDEX]]
+ ; CHECK-NEXT:    [[TMP17:%.*]] = getelementptr inbounds [2 x i32], ptr [[A_OFF]], i64 [[TMP5]]
+ ; CHECK-NEXT:    [[TMP18:%.*]] = getelementptr inbounds [2 x i32], ptr [[A_OFF]], i64 [[TMP6]]
+ ; CHECK-NEXT:    [[TMP19:%.*]] = getelementptr inbounds [2 x i32], ptr [[A_OFF]], i64 [[TMP7]]
+ ; CHECK-NEXT:    [[TMP20:%.*]] = extractelement <4 x i32> [[STRIDED_VEC]], i64 0
+-; CHECK-NEXT:    store i32 [[TMP20]], ptr [[TMP16]], align 4, !alias.scope [[META19]]
++; CHECK-NEXT:    store i32 [[TMP20]], ptr [[TMP16]], align 4, !alias.scope [[META15]]
+ ; CHECK-NEXT:    [[TMP21:%.*]] = extractelement <4 x i32> [[STRIDED_VEC]], i64 1
+-; CHECK-NEXT:    store i32 [[TMP21]], ptr [[TMP17]], align 4, !alias.scope [[META19]]
++; CHECK-NEXT:    store i32 [[TMP21]], ptr [[TMP17]], align 4, !alias.scope [[META15]]
+ ; CHECK-NEXT:    [[TMP22:%.*]] = extractelement <4 x i32> [[STRIDED_VEC]], i64 2
+-; CHECK-NEXT:    store i32 [[TMP22]], ptr [[TMP18]], align 4, !alias.scope [[META19]]
++; CHECK-NEXT:    store i32 [[TMP22]], ptr [[TMP18]], align 4, !alias.scope [[META15]]
+ ; CHECK-NEXT:    [[TMP23:%.*]] = extractelement <4 x i32> [[STRIDED_VEC]], i64 3
+-; CHECK-NEXT:    store i32 [[TMP23]], ptr [[TMP19]], align 4, !alias.scope [[META19]]
++; CHECK-NEXT:    store i32 [[TMP23]], ptr [[TMP19]], align 4, !alias.scope [[META15]]
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+ ; CHECK-NEXT:    [[TMP24:%.*]] = icmp eq i64 [[INDEX_NEXT]], 96
+-; CHECK-NEXT:    br i1 [[TMP24]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP20:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP24]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP17:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[SCALAR_PH]]
+ ; CHECK:       [[SCALAR_PH]]:
+@@ -234,7 +224,7 @@ define void @interleave_group_with_forward_dep_after_retry(ptr noalias %A, ptr n
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+ ; CHECK-NEXT:    [[VEC_IND_NEXT]] = add nuw nsw <4 x i64> [[VEC_IND]], splat (i64 4)
+ ; CHECK-NEXT:    [[TMP23:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[TMP23]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP22:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP23]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP19:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    br label %[[SCALAR_PH]]
+ ; CHECK:       [[SCALAR_PH]]:
