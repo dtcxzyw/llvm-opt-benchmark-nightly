@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.sink.split.i.i, %bb.h
   %i.i = phi i1 [ false, %.sink.split.i.i ], [ true, %bb.h ]
-  %i.j = tail call i64 @wcslen(ptr noundef readonly %0) #18 ; 4 uses
+  %i.j = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #18 ; 4 uses
   %.not.i = icmp eq i32 %4, 0                     ; 2 uses
   %i.k = add i64 %i.j, 1                          ; 2 uses
   br i1 %.not.i, label %bb.k, label %bb.j
@@ -607,8 +607,8 @@ bb.o:                                             ; preds = %bb.m
   call void @PyMem_RawFree(ptr noundef nonnull %i.z) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
-  %i.ad = call i64 @wcslen(ptr noundef nonnull %i.h) #18 ; 3 uses
-  %i.ae = call i64 @wcslen(ptr noundef nonnull %0) #18 ; 3 uses
+  %i.ad = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.h) #18 ; 3 uses
+  %i.ae = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #18 ; 3 uses
   %i.af = add i64 %i.ad, 2
   %i.ag = add i64 %i.af, %i.ae                    ; 2 uses
   %i.ah = icmp ult i64 %i.ag, 2305843009213693952
@@ -737,9 +737,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_Py_join_relfile(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 !guid !252 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #18
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #18
   %i.b = add i64 %i.a, 1
-  %i.c = tail call i64 @wcslen(ptr noundef %1) #18
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #18
   %i.d = add i64 %i.b, %i.c                       ; 4 uses
   %i.e = shl i64 %i.d, 2
   %i.f = add i64 %i.e, 4
@@ -748,8 +748,8 @@ bb.a:
   br i1 %i.h, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = tail call i64 @wcslen(ptr noundef %0) #18 ; 8 uses
-  %i.j = tail call i64 @wcslen(ptr noundef %1) #18
+  %i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #18 ; 8 uses
+  %i.j = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #18
   %i.k = icmp ult i64 %i.d, 4097
   %.not.i = icmp ult i64 %i.i, %i.d
   %or.cond.i = select i1 %i.k, i1 %.not.i, i1 false
@@ -767,7 +767,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not32.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = tail call ptr @wcscpy(ptr noundef nonnull %i.g, ptr noundef %0) #17 ; 0 uses
+  %i.n = tail call ptr @wcscpy(ptr noundef nonnull %i.g, ptr noundef nonnull %0) #17 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -794,7 +794,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
 
 join_relfile.exit:                                ; preds = %bb.c, %bb.i
   %.sink.i = phi ptr [ %i.t, %bb.i ], [ %i.g, %bb.c ]
-  %i.u = tail call ptr @wcscpy(ptr noundef %.sink.i, ptr noundef %1) #17 ; 0 uses
+  %i.u = tail call ptr @wcscpy(ptr noundef %.sink.i, ptr noundef nonnull %1) #17 ; 0 uses
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.b
@@ -809,8 +809,8 @@ bb.k:                                             ; preds = %join_relfile.exit, 
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 -1, 1) i32 @_Py_add_relfile(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !253 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #18 ; 7 uses
-  %i.b = tail call i64 @wcslen(ptr noundef %1) #18
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #18 ; 7 uses
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #18
   %i.c = add i64 %2, -1                           ; 3 uses
   %i.d = icmp ult i64 %i.c, 4097
   %.not.i = icmp ult i64 %i.a, %i.c
@@ -845,7 +845,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c
 
 .sink.split.i:                                    ; preds = %bb.b, %bb.e
   %.sink.i = phi ptr [ %i.j, %bb.e ], [ %0, %bb.b ]
-  %i.k = tail call ptr @wcscpy(ptr noundef %.sink.i, ptr noundef %1) #17 ; 0 uses
+  %i.k = tail call ptr @wcscpy(ptr noundef %.sink.i, ptr noundef nonnull %1) #17 ; 0 uses
   br label %join_relfile.exit
 
 join_relfile.exit:                                ; preds = %bb.a, %.sink.split.i
@@ -856,7 +856,7 @@ join_relfile.exit:                                ; preds = %bb.a, %.sink.split.
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define hidden range(i64 2, 1) i64 @_Py_find_basename(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #14 !guid !255 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #18 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #18 ; 2 uses
   %.not12 = icmp eq i64 %i.a, 0
   br i1 %.not12, label %.loopexit, label %.lr.ph
 
@@ -1259,7 +1259,7 @@ declare i64 @mbrtowc(ptr noundef, ptr noundef, i64 noundef, ptr noundef) local_u
 define internal fastcc range(i32 -3, 1) i32 @encode_current_locale(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef range(i32 0, 2) %4, i32 noundef %5) unnamed_addr #0 !guid !275 {
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 10 uses
-  %i.b = tail call i64 @wcslen(ptr noundef %0) #18 ; 4 uses
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #18 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   switch i32 %5, label %get_surrogateescape.exit [
     i32 1, label %.sink.split.i

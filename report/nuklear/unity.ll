@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge, %bb.c
   br i1 %.not.i, label %._crit_edge, label %nk_range_count.exit
 
 nk_range_count.exit:                              ; preds = %bb.d
-  %wcslen.i = tail call i64 @wcslen(ptr nonnull readonly %i.h)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.h)
   %i.i = shl i64 %wcslen.i, 2
   %i.j = add i64 %i.i, 4
   %i.k = ashr exact i64 %i.j, 2
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %bb.h
 
 nk_range_count.exit.i:                            ; preds = %bb.i, %bb.h
   %i.x = phi ptr [ %.pr.i, %bb.i ], [ %i.w, %bb.h ] ; 4 uses
-  %wcslen.i.i = tail call i64 @wcslen(ptr nonnull readonly %i.x)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.x)
   %i.y = shl i64 %wcslen.i.i, 2
   %i.z = add i64 %i.y, 4
   %i.aa = ashr exact i64 %i.z, 2
@@ -1011,7 +1011,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i, %b
   br i1 %.not.i.i.i, label %._crit_edge.i.i, label %nk_range_count.exit.i.i
 
 nk_range_count.exit.i.i:                          ; preds = %bb.u
-  %wcslen.i.i.i = tail call i64 @wcslen(ptr nonnull readonly %i.jv)
+  %wcslen.i.i.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.jv)
   %i.jw = shl i64 %wcslen.i.i.i, 2
   %i.jx = add i64 %i.jw, 4
   %i.jy = ashr exact i64 %i.jx, 2
@@ -1143,7 +1143,7 @@ bb.b:                                             ; preds = %.preheader196, %nk_
   br i1 %.not.i, label %nk_range_glyph_count.exit, label %nk_range_count.exit
 
 nk_range_count.exit:                              ; preds = %bb.b
-  %wcslen.i = tail call i64 @wcslen(ptr nonnull readonly %i.e)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.e)
   %i.f = shl i64 %wcslen.i, 2
   %i.g = add i64 %i.f, 4
   %i.h = ashr exact i64 %i.g, 2
@@ -1546,7 +1546,7 @@ bb.m:                                             ; preds = %._crit_edge.i39, %b
   br i1 %.not.i.i38, label %._crit_edge.i39, label %nk_range_count.exit.i
 
 nk_range_count.exit.i:                            ; preds = %bb.m
-  %wcslen.i.i = tail call i64 @wcslen(ptr nonnull readonly %i.bi)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.bi)
   %i.bj = shl i64 %wcslen.i.i, 2
   %i.bk = add i64 %i.bj, 4
   %i.bl = ashr exact i64 %i.bk, 2
@@ -1751,7 +1751,7 @@ bb.c:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %.not.i.i, label %._crit_edge.i, label %nk_range_count.exit.i
 
 nk_range_count.exit.i:                            ; preds = %bb.c
-  %wcslen.i.i = tail call i64 @wcslen(ptr nonnull readonly %i.m)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.m)
   %i.n = shl i64 %wcslen.i.i, 2
   %i.o = add i64 %i.n, 4
   %i.p = ashr exact i64 %i.o, 2

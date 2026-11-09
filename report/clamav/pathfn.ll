@@ -74,7 +74,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef ptr @_Z11PointToNamePKw(ptr nofree noundef readonly captures(ret: address, provenance) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #17 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #17 ; 2 uses
   %i.b = trunc i64 %i.a to i32
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph, label %.loopexit
@@ -130,7 +130,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef ptr @_Z15PointToLastCharPKw(ptr nofree noundef readonly captures(ret: address, provenance) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #17 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #17 ; 2 uses
   %.not = icmp eq i64 %i.a, 0
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.a
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 -4
@@ -282,7 +282,7 @@ declare void @_Z8wcsncpyzPwPKwm(ptr noundef, ptr noundef, i64 noundef) local_unn
 ; Function Attrs: mustprogress uwtable
 define void @_Z7SetNamePwPKwm(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef readonly %0) #17 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.b = trunc i64 %i.a to i32
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph, label %_Z11PointToNamePKw.exit
@@ -331,7 +331,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.d = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.e = trunc i64 %i.d to i32
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %_Z6GetExtPKw.exit
@@ -387,7 +387,7 @@ bb.a:
   br i1 %i.a, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.c = trunc i64 %i.b to i32
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph, label %_Z11PointToNamePKw.exit
@@ -437,7 +437,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.d = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.e = trunc i64 %i.d to i32
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %_Z6GetExtPKw.exit.i
@@ -492,7 +492,7 @@ bb.a:
   br i1 %i.a, label %_Z6GetExtPKw.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.c = trunc i64 %i.b to i32
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph, label %_Z6GetExtPKw.exit
@@ -577,7 +577,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_Z11AddEndSlashPwm(ptr nofree noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #17 ; 3 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #17 ; 3 uses
   %.not = icmp eq i64 %i.a, 0
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -611,7 +611,7 @@ bb.a:
   call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.a, ptr noundef %0, i64 noundef 2048)
   %i.b = load i32, ptr %0, align 4, !tbaa !11
   %i.c = call noundef signext i32 @_Z9etoupperww(i32 noundef signext %i.b) ; 0 uses
-  %i.d = call i64 @wcslen(ptr noundef nonnull %i.a) #17 ; 3 uses
+  %i.d = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #17 ; 3 uses
   %.not.i = icmp eq i64 %i.d, 0
   br i1 %.not.i, label %_Z11AddEndSlashPwm.exit, label %bb.b
 
@@ -648,7 +648,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = add i64 %2, -1                           ; 2 uses
-  %i.c = tail call i64 @wcslen(ptr noundef readonly %0) #17 ; 3 uses
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 3 uses
   %i.d = and i64 %i.c, 4294967295                 ; 2 uses
   %i.e = trunc i64 %i.c to i32
   %i.f = icmp sgt i32 %i.e, 0
@@ -711,7 +711,7 @@ _Z11PointToNamePKw.exit14:                        ; preds = %.preheader, %.prehe
 
 bb.f:                                             ; preds = %_Z11PointToNamePKw.exit, %_Z11PointToNamePKw.exit14
   %i.ad = phi i64 [ %i.ac, %_Z11PointToNamePKw.exit14 ], [ %i.b, %_Z11PointToNamePKw.exit ] ; 2 uses
-  %i.ae = tail call ptr @wcsncpy(ptr noundef %1, ptr noundef %0, i64 noundef %i.ad) #18 ; 0 uses
+  %i.ae = tail call ptr @wcsncpy(ptr noundef %1, ptr noundef nonnull %0, i64 noundef %i.ad) #18 ; 0 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ad
   store i32 0, ptr %i.af, align 4, !tbaa !11
   br label %bb.g
@@ -726,7 +726,7 @@ declare ptr @wcsncpy(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_Z18RemoveNameFromPathPw(ptr nofree noundef captures(none) %0) local_unnamed_addr #11 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef readonly %0) #17 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.b = trunc i64 %i.a to i32
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph, label %_Z11PointToNamePKw.exit.thread
@@ -823,7 +823,7 @@ bb.c:                                             ; preds = %.split.us.peel
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.c = tail call i64 @wcslen(ptr noundef nonnull %1) #17 ; 3 uses
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #17 ; 3 uses
   %.not.i12.us.peel = icmp eq i64 %i.c, 0
   br i1 %.not.i12.us.peel, label %_Z11AddEndSlashPwm.exit.us.peel, label %bb.e
 
@@ -861,7 +861,7 @@ bb.h:                                             ; preds = %.split.us
   %i.n = getelementptr i8, ptr %i.m, i64 -8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !14
   tail call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %1, ptr noundef %i.o, i64 noundef %2)
-  %i.p = tail call i64 @wcslen(ptr noundef nonnull %1) #17 ; 3 uses
+  %i.p = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #17 ; 3 uses
   %.not.i12.us = icmp eq i64 %i.p, 0
   br i1 %.not.i12.us, label %_Z11AddEndSlashPwm.exit.us, label %bb.i
 
@@ -903,7 +903,7 @@ bb.m:                                             ; preds = %.split
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  %i.aa = tail call i64 @wcslen(ptr noundef nonnull %1) #17 ; 3 uses
+  %i.aa = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #17 ; 3 uses
   %.not.i12 = icmp eq i64 %i.aa, 0
   br i1 %.not.i12, label %_Z11AddEndSlashPwm.exit, label %bb.o
 
@@ -938,7 +938,7 @@ declare noundef zeroext i1 @_Z13WildFileExistPKw(ptr noundef) local_unnamed_addr
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_Z13GetVolNumPartPKw(ptr nofree noundef readonly %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef readonly %0) #17 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.b = trunc i64 %i.a to i32
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph48, label %_Z11PointToNamePKw.exit
@@ -971,7 +971,7 @@ _Z11PointToNamePKw.exit:                          ; preds = %bb.b, %bb.a, %bb.d
   br i1 %i.m, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_Z11PointToNamePKw.exit
-  %i.n = tail call i64 @wcslen(ptr noundef nonnull %.1.i) #17
+  %i.n = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.1.i) #17
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %.1.i, i64 %i.n
   br label %bb.f
 
@@ -1042,7 +1042,7 @@ _Z6GetExtPKw.exit54.thread57:                     ; preds = %bb.a
   br label %bb.o
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.d = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.e = trunc i64 %i.d to i32
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %_Z6GetExtPKw.exit
@@ -1077,7 +1077,7 @@ _Z6GetExtPKw.exit:                                ; preds = %bb.c, %bb.b, %bb.e
 bb.f:                                             ; preds = %_Z6GetExtPKw.exit
   %i.q = zext i32 %1 to i64
   tail call void @_Z8wcsncatzPwPKwm(ptr noundef nonnull %0, ptr noundef nonnull @.str.9, i64 noundef %i.q)
-  %i.r = tail call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.r = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.s = trunc i64 %i.r to i32
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.lr.ph98, label %_Z6GetExtPKw.exit54
@@ -1181,7 +1181,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bd, label %bb.r, label %bb.u, !llvm.loop !27
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.be = tail call i64 @wcslen(ptr noundef nonnull %0) #17 ; 2 uses
+  %i.be = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #17 ; 2 uses
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.be
   %.not4964 = icmp eq ptr %i.bf, %i.ba
   br i1 %.not4964, label %._crit_edge, label %.lr.ph.preheader
@@ -1232,7 +1232,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %.loopexit
 
 bb.y:                                             ; preds = %bb.w
-  %i.cd = tail call i64 @wcslen(ptr noundef nonnull %.04556) #17
+  %i.cd = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.04556) #17
   %i.ce = getelementptr [4 x i8], ptr %.04556, i64 %i.cd
   %i.cf = getelementptr i8, ptr %i.ce, i64 -4     ; 3 uses
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !11
@@ -1550,7 +1550,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.f = call noundef zeroext i1 @_Z10CharToWidePKcPwm(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef %2) ; 0 uses
-  %i.g = call i64 @wcslen(ptr noundef %1) #17     ; 3 uses
+  %i.g = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #17 ; 3 uses
   %.not.i = icmp eq i64 %i.g, 0
   br i1 %.not.i, label %_Z11AddEndSlashPwm.exit, label %bb.i
 
@@ -1577,7 +1577,7 @@ _Z11AddEndSlashPwm.exit:                          ; preds = %bb.h, %bb.i, %bb.j,
   br label %bb.l
 
 bb.l:                                             ; preds = %_Z11AddEndSlashPwm.exit, %bb.e
-  call void @_Z8wcsncatzPwPKwm(ptr noundef %1, ptr noundef nonnull %0, i64 noundef %2)
+  call void @_Z8wcsncatzPwPKwm(ptr noundef nonnull %1, ptr noundef nonnull %0, i64 noundef %2)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.c, %bb.d, %bb.l
@@ -1640,7 +1640,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.q = tail call i64 @wcslen(ptr noundef nonnull %0) #17
+  %i.q = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #17
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -1736,7 +1736,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.l, label %bb.q, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.m = tail call i64 @wcslen(ptr noundef nonnull readonly %1) #17 ; 2 uses
+  %i.m = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %1) #17 ; 2 uses
   %i.n = trunc i64 %i.m to i32
   %i.o = icmp sgt i32 %i.n, 0
   br i1 %i.o, label %.lr.ph75, label %_Z6GetExtPKw.exit.i
@@ -1778,7 +1778,7 @@ bb.p:                                             ; preds = %bb.o, %_Z6GetExtPKw
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.j, %bb.p
-  %i.y = tail call i64 @wcslen(ptr noundef nonnull readonly %1) #17 ; 2 uses
+  %i.y = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %1) #17 ; 2 uses
   %i.z = trunc i64 %i.y to i32
   %i.aa = icmp sgt i32 %i.z, 0
   br i1 %i.aa, label %.lr.ph77, label %_Z11PointToNamePKw.exit.i
@@ -1822,7 +1822,7 @@ bb.u:                                             ; preds = %_Z6GetExtPKw.exit
   br i1 %i.am, label %_Z6SetExtPwPKwm.exit47, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.an = call i64 @wcslen(ptr noundef nonnull readonly %i.a) #17 ; 2 uses
+  %i.an = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.a) #17 ; 2 uses
   %i.ao = trunc i64 %i.an to i32
   %i.ap = icmp sgt i32 %i.ao, 0
   br i1 %i.ap, label %.lr.ph79, label %_Z6GetExtPKw.exit.i44
@@ -2081,7 +2081,7 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   call void @_ZN7RarTime8GetLocalEP12RarLocalTime(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %i.n = call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 3 uses
+  %i.n = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 3 uses
   %i.o = and i64 %i.n, 4294967295                 ; 2 uses
   %i.p = trunc i64 %i.n to i32
   %i.q = icmp sgt i32 %i.p, 0
@@ -2165,7 +2165,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.at, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %i.au = call i64 @wcslen(ptr noundef nonnull %i.a) #17
+  %i.au = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #17
   %i.av = zext i32 %i.al to i64                   ; 3 uses
   %i.aw = zext i32 %.0119 to i64                  ; 2 uses
   %i.ax = sub nsw i64 %i.av, %i.aw
@@ -2176,7 +2176,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.av
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.aw ; 2 uses
-  %i.bc = call i64 @wcslen(ptr noundef nonnull %i.bb) #17
+  %i.bc = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.bb) #17
   %i.bd = add i64 %i.bc, 1
   %i.be = call ptr @wmemmove(ptr noundef nonnull %i.ba, ptr noundef nonnull %i.bb, i64 noundef %i.bd) #18 ; 0 uses
   %i.bf = call ptr @wmemset(ptr noundef nonnull %i.l, i32 noundef signext 78, i64 noundef %i.av) #18 ; 0 uses
@@ -2423,7 +2423,7 @@ bb.am:                                            ; preds = %bb.ai
   %i.fp = call noundef ptr @_Z12GetMonthNamei(i32 noundef %i.fo)
   %i.fq = sub nuw nsw i64 128, %.0169
   call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.fm, ptr noundef %i.fp, i64 noundef %i.fq)
-  %i.fr = call i64 @wcslen(ptr noundef nonnull %i.e) #17
+  %i.fr = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.e) #17
   br label %bb.an
 
 .thread158:                                       ; preds = %bb.ak, %bb.al, %bb.af
@@ -2449,7 +2449,7 @@ bb.an:                                            ; preds = %bb.am, %.thread158,
 
 bb.ao:                                            ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #18
-  %i.gb = call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 3 uses
+  %i.gb = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 3 uses
   %i.gc = and i64 %i.gb, 4294967295               ; 2 uses
   %i.gd = trunc i64 %i.gb to i32
   %i.ge = icmp sgt i32 %i.gd, 0
@@ -2514,7 +2514,7 @@ _Z11GetFilePathPKwPwm.exit:                       ; preds = %_Z11PointToNamePKw.
   %i.hc = call ptr @wcsncpy(ptr noundef nonnull %i.f, ptr noundef nonnull %0, i64 noundef %i.hb) #18 ; 0 uses
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.hb
   store i32 0, ptr %i.hd, align 4, !tbaa !11
-  %i.he = call i64 @wcslen(ptr noundef nonnull %i.f) #17 ; 3 uses
+  %i.he = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.f) #17 ; 3 uses
   %.not.i = icmp eq i64 %i.he, 0
   br i1 %.not.i, label %_Z11AddEndSlashPwm.exit, label %bb.as
 
@@ -2538,7 +2538,7 @@ bb.au:                                            ; preds = %bb.at
 
 _Z11AddEndSlashPwm.exit:                          ; preds = %_Z11GetFilePathPKwPwm.exit, %bb.as, %bb.at, %bb.au
   call void @_Z8wcsncatzPwPKwm(ptr noundef nonnull %i.f, ptr noundef nonnull %i.e, i64 noundef 2048)
-  %i.hl = call i64 @wcslen(ptr noundef nonnull readonly %0) #17 ; 2 uses
+  %i.hl = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #17 ; 2 uses
   %i.hm = trunc i64 %i.hl to i32
   %i.hn = icmp sgt i32 %i.hm, 0
   br i1 %i.hn, label %.lr.ph17, label %_Z11PointToNamePKw.exit156

@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 424
   %i.k = load i64, ptr %i.j, align 8, !tbaa !52
-  %i.l = tail call noundef i64 @wcslen(ptr noundef %i.h) #24
-  %i.m = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 noundef 0, i64 noundef %i.k, ptr noundef %i.h, i64 noundef %i.l) ; 0 uses
+  %i.l = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.h) #24
+  %i.m = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 noundef 0, i64 noundef %i.k, ptr noundef nonnull %i.h, i64 noundef %i.l) ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -224,8 +224,8 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.x = load i64, ptr %i.w, align 8, !tbaa !52
-  %i.y = tail call noundef i64 @wcslen(ptr noundef %i.u) #24
-  %i.z = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 noundef 0, i64 noundef %i.x, ptr noundef %i.u, i64 noundef %i.y) ; 0 uses
+  %i.y = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.u) #24
+  %i.z = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 noundef 0, i64 noundef %i.x, ptr noundef nonnull %i.u, i64 noundef %i.y) ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -244,8 +244,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 480
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !52
-  %i.al = tail call noundef i64 @wcslen(ptr noundef %i.ah) #24
-  %i.am = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %i.ai, i64 noundef 0, i64 noundef %i.ak, ptr noundef %i.ah, i64 noundef %i.al) ; 0 uses
+  %i.al = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ah) #24
+  %i.am = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %i.ai, i64 noundef 0, i64 noundef %i.ak, ptr noundef nonnull %i.ah, i64 noundef %i.al) ; 0 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -648,7 +648,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i64 @wcslen(ptr noundef nonnull %1) #24 ; 5 uses
+  %i.k = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #24 ; 5 uses
   %i.l = and i64 %i.k, 4294967295                 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !52

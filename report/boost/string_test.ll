@@ -205,7 +205,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEaSEPKw.exit: ; preds = %
 
 _ZN15string_literalsIwE14sprintf_numberEPwy.exit: ; preds = %.critedge.i
   store i32 0, ptr %i.ao, align 4, !tbaa !94
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ap
   %i.ar = load i8, ptr %8, align 16, !tbaa !51    ; 2 uses
   %i.as = trunc i8 %i.ar to i1
@@ -221,7 +221,7 @@ _ZN15string_literalsIwE14sprintf_numberEPwy.exit: ; preds = %.critedge.i
           to label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit unwind label %.loopexit.split-lp636.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit: ; preds = %_ZN15string_literalsIwE14sprintf_numberEPwy.exit
-  %i.bc = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28 ; 2 uses
+  %i.bc = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28 ; 2 uses
   %i.bd = load i64, ptr %i.i, align 8, !tbaa !124
   %i.be = sub i64 1152921504606846975, %i.bd
   %i.bf = icmp ult i64 %i.be, %i.bc
@@ -508,7 +508,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEaSEPKw.exit251: ; preds 
 
 _ZN15string_literalsIwE14sprintf_numberEPwy.exit258: ; preds = %.critedge.i254
   store i32 0, ptr %i.fs, align 4, !tbaa !94
-  %i.ft = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28
+  %i.ft = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28
   %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ft
   %i.fv = load i8, ptr %8, align 16, !tbaa !51    ; 2 uses
   %i.fw = trunc i8 %i.fv to i1
@@ -524,7 +524,7 @@ _ZN15string_literalsIwE14sprintf_numberEPwy.exit258: ; preds = %.critedge.i254
           to label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit260 unwind label %.loopexit.split-lp636.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit260: ; preds = %_ZN15string_literalsIwE14sprintf_numberEPwy.exit258
-  %i.gg = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28 ; 2 uses
+  %i.gg = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28 ; 2 uses
   %i.gh = load i64, ptr %i.i, align 8, !tbaa !124
   %i.gi = sub i64 1152921504606846975, %i.gh
   %i.gj = icmp ult i64 %i.gi, %i.gg
@@ -786,7 +786,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEaSEPKw.exit292: ; preds 
 
 _ZN15string_literalsIwE14sprintf_numberEPwy.exit299: ; preds = %.critedge.i295
   store i32 0, ptr %i.kd, align 4, !tbaa !94
-  %i.ke = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28
+  %i.ke = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28
   %i.kf = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ke
   %i.kg = load i8, ptr %8, align 16, !tbaa !51    ; 2 uses
   %i.kh = trunc i8 %i.kg to i1
@@ -802,7 +802,7 @@ _ZN15string_literalsIwE14sprintf_numberEPwy.exit299: ; preds = %.critedge.i295
           to label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit301 unwind label %.loopexit.split-lp636.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit301: ; preds = %_ZN15string_literalsIwE14sprintf_numberEPwy.exit299
-  %i.kr = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28 ; 2 uses
+  %i.kr = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28 ; 2 uses
   %i.ks = load i64, ptr %i.i, align 8, !tbaa !124
   %i.kt = sub i64 1152921504606846975, %i.ks
   %i.ku = icmp ult i64 %i.kt, %i.kr
@@ -978,7 +978,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEaSEPKw.exit326: ; preds 
 
 _ZN15string_literalsIwE14sprintf_numberEPwy.exit333: ; preds = %.critedge.i329
   store i32 0, ptr %i.ni, align 4, !tbaa !94
-  %i.nj = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28
+  %i.nj = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28
   %i.nk = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.nj
   %i.nl = load i8, ptr %8, align 16, !tbaa !51    ; 2 uses
   %i.nm = trunc i8 %i.nl to i1
@@ -994,7 +994,7 @@ _ZN15string_literalsIwE14sprintf_numberEPwy.exit333: ; preds = %.critedge.i329
           to label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit335 unwind label %.loopexit.split-lp636.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEpLEPKw.exit335: ; preds = %_ZN15string_literalsIwE14sprintf_numberEPwy.exit333
-  %i.nw = call noundef i64 @wcslen(ptr noundef nonnull %i.c) #28 ; 2 uses
+  %i.nw = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c) #28 ; 2 uses
   %i.nx = load i64, ptr %i.i, align 8, !tbaa !124
   %i.ny = sub i64 1152921504606846975, %i.nx
   %i.nz = icmp ult i64 %i.ny, %i.nw
@@ -1397,7 +1397,7 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEaSEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #28 ; 6 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28 ; 6 uses
   %.idx.i = shl nuw nsw i64 %i.a, 2
   %i.b = tail call noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.a)
   br i1 %i.b, label %bb.b, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i
@@ -1429,7 +1429,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i: ; p
   br i1 %i.u, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i
-  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef %1, i64 noundef %i.a) #27 ; 0 uses
+  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef nonnull %1, i64 noundef %i.a) #27 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i:       ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i
@@ -1832,7 +1832,7 @@ _ZSt6__sortIN5boost9container12vec_iteratorIPNSt7__cxx1112basic_stringIwSt11char
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6appendEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #28
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.a
   %i.c = load i8, ptr %0, align 8, !tbaa !51      ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -1846,7 +1846,7 @@ bb.a:
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.l
   %i.n = select i1 %i.d, ptr %i.h, ptr %i.m
-  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef %1, ptr noundef %i.b, ptr noundef null) ; 0 uses
+  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
@@ -2249,7 +2249,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %3 to i64
   %i.b = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %i.c = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.d = tail call noundef i64 @wcslen(ptr noundef %3) #28 ; 2 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #28 ; 2 uses
   %.idx = shl i64 %i.d, 2                         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 %.idx ; 3 uses
   %i.f = icmp ne ptr %1, %2
@@ -2383,7 +2383,7 @@ bb.f:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7replaceIPKwEERS4_S7_S7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE.exit
 
 bb.g:                                             ; preds = %._crit_edge.i
-  %i.bo = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %2, ptr noundef %.016.lcssa.i, ptr noundef %i.e, ptr noundef null) ; 0 uses
+  %i.bo = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %2, ptr noundef nonnull %.016.lcssa.i, ptr noundef nonnull %i.e, ptr noundef null) ; 0 uses
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7replaceIPKwEERS4_S7_S7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE.exit
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7replaceIPKwEERS4_S7_S7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE.exit: ; preds = %bb.b, %bb.e, %bb.f, %bb.g
@@ -2786,7 +2786,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 4, !tbaa !94
-  %i.c = tail call noundef i64 @wcslen(ptr noundef %1) #28 ; 6 uses
+  %i.c = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28 ; 6 uses
   %.idx = shl nuw nsw i64 %i.c, 2
   %i.d = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.c)
           to label %.noexc unwind label %bb.f
@@ -2817,7 +2817,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i: ; pre
   br i1 %i.s, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i
-  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef %1, i64 noundef %i.c) #27 ; 0 uses
+  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef nonnull %1, i64 noundef %i.c) #27 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i
@@ -2866,7 +2866,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull %1) #28 ; 5 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   store i64 %i.d, ptr %i.a, align 8, !tbaa !56
   %i.e = icmp ugt i64 %i.d, 3
@@ -3269,9 +3269,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = select i1 %i.b, ptr %i.c, ptr %i.e
-  %i.g = tail call noundef i64 @wcslen(ptr noundef %1) #28
+  %i.g = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.g
-  %i.i = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %i.f, ptr noundef %1, ptr noundef %i.h, ptr noundef null) ; 0 uses
+  %i.i = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %i.f, ptr noundef nonnull %1, ptr noundef nonnull %i.h, ptr noundef null) ; 0 uses
   store i8 1, ptr %0, align 8
   %i.j = load i8, ptr %2, align 8, !tbaa !51
   %i.k = trunc i8 %i.j to i1
@@ -3305,8 +3305,8 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEC2EOS4_.exit: ; preds = 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local void @_ZStplIwSt11char_traitsIwESaIwEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string.38") align 8 %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #28
-  %i.b = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef %1, i64 noundef %i.a) ; 5 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28
+  %i.b = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.a) ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.c, ptr %0, align 8, !tbaa !122
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !137  ; 2 uses
@@ -3345,7 +3345,7 @@ define linkonce_odr hidden void @_ZN5boost9containerplIwSt11char_traitsIwEvvEENS
 bb.a:
   %.sroa.0.i.i = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 8 ; 4 uses
   %3 = alloca %"struct.boost::container::dtl::basic_string_base<boost::container::new_allocator<wchar_t>, void>::short_t", align 4 ; 4 uses
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %2) #28
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #28
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.a
   %i.c = load i8, ptr %1, align 8, !tbaa !51      ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -3359,7 +3359,7 @@ bb.a:
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.l
   %i.n = select i1 %i.d, ptr %i.h, ptr %i.m
-  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %i.n, ptr noundef %2, ptr noundef %i.b, ptr noundef null) ; 0 uses
+  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE6insertIPKwEEPwS7_T_S9_PNS_11move_detail13disable_if_orIvNSA_14is_convertibleIS9_mEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEESI_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %i.n, ptr noundef nonnull %2, ptr noundef nonnull %i.b, ptr noundef null) ; 0 uses
   store i8 1, ptr %0, align 8
   %i.p = load i8, ptr %1, align 8, !tbaa !51
   %i.q = trunc i8 %i.p to i1
@@ -3393,7 +3393,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvEC2EOS4_.exit: ; preds = 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local void @_ZStplIwSt11char_traitsIwESaIwEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string.38") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %2) #28 ; 2 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #28 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !124
   %i.d = sub i64 1152921504606846975, %i.c
@@ -3405,7 +3405,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE6appendEPKw.exit: ; preds = %bb.a
-  %i.f = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_appendEPKwm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, i64 noundef %i.a) ; 5 uses
+  %i.f = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_appendEPKwm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %2, i64 noundef %i.a) ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.g, ptr %0, align 8, !tbaa !122
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !137  ; 2 uses
@@ -3530,7 +3530,7 @@ bb.f:                                             ; preds = %bb.a
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local void @_ZStplIwSt11char_traitsIwESaIwEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string.38") align 8 %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #28 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #28 ; 3 uses
   %i.b = load ptr, ptr %2, align 8, !tbaa !137
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !124  ; 3 uses
@@ -3550,7 +3550,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.invoke.i, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc.exit.i.i: ; preds = %bb.b
-  %i.k = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_appendEPKwm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1, i64 noundef %i.a)
+  %i.k = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_appendEPKwm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %1, i64 noundef %i.a)
           to label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE6appendEPKwm.exit.i unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE6appendEPKwm.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc.exit.i.i
@@ -3597,7 +3597,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !137
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !124  ; 3 uses
-  %i.d = tail call noundef i64 @wcslen(ptr noundef %2) #28 ; 3 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #28 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !122, !alias.scope !1123
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -3631,7 +3631,7 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE6appendEPKwm.exit.i: ; pred
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc.exit.i10.i: ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE6appendEPKwm.exit.i
-  %i.o = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_appendEPKwm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %2, i64 noundef %i.d)
+  %i.o = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_appendEPKwm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %2, i64 noundef %i.d)
           to label %_ZSt12__str_concatINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE.exit unwind label %bb.c ; 0 uses
 
 bb.c:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc.exit.i10.i, %.invoke.i, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE15_M_check_lengthEmmPKc.exit.i.i, %bb.a

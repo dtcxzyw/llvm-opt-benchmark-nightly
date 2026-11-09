@@ -205,7 +205,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i: ; preds = %.pr
 
 .lr.ph.i.preheader:                               ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i
   %i.ab = add nuw nsw i64 %i.w, 1                 ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.w, 15
+  %min.iters.check = icmp samesign ult i64 %i.w, 31
   br i1 %min.iters.check, label %.lr.ph.i.preheader52, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -427,7 +427,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i: ; preds = %.pr
   %i.ar = xor i64 %i.aj, 63
   %i.as = tail call i64 @llvm.umin.i64(i64 %i.aq, i64 %i.ar) ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.as, 15
+  %min.iters.check = icmp samesign ult i64 %i.as, 31
   br i1 %min.iters.check, label %.lr.ph.i.preheader73, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -585,7 +585,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i: ; preds = %.pr
 
 .lr.ph.i.preheader:                               ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i
   %i.ac = add nuw nsw i64 %i.x, 1                 ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.x, 15
+  %min.iters.check = icmp samesign ult i64 %i.x, 31
   br i1 %min.iters.check, label %.lr.ph.i.preheader57, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -777,7 +777,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i: ; preds = %.pr
   %i.af = xor i64 %i.x, 63
   %i.ag = tail call i64 @llvm.umin.i64(i64 %i.ae, i64 %i.af) ; 2 uses
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.ag, 15
+  %min.iters.check = icmp samesign ult i64 %i.ag, 31
   br i1 %min.iters.check, label %.lr.ph.i.preheader52, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -989,7 +989,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i: ; preds = %.pr
   %i.bn = xor i64 %i.bg, 63
   %i.bo = call i64 @llvm.umin.i64(i64 %i.bm, i64 %i.bn) ; 2 uses
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.bo, 15
+  %min.iters.check = icmp samesign ult i64 %i.bo, 31
   br i1 %min.iters.check, label %.lr.ph.i.preheader49, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -1215,7 +1215,7 @@ bb.i:                                             ; preds = %_ZNK6duckdb21Templa
   %i.br = add i64 %.02547.i, %i.be
   %i.bs = call i64 @llvm.umin.i64(i64 %i.br, i64 %i.bk) ; 2 uses
   %i.bt = add nuw nsw i64 %i.bs, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.bs, 15
+  %min.iters.check = icmp samesign ult i64 %i.bs, 31
   br i1 %min.iters.check, label %.lr.ph.i.preheader45, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -1618,7 +1618,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i.i.i: ; preds = 
   %i.dm = xor i64 %i.df, 63
   %i.dn = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dm) ; 2 uses
   %i.do = add nuw nsw i64 %i.dn, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.dn, 15
+  %min.iters.check = icmp samesign ult i64 %i.dn, 31
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader73, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -2001,7 +2001,7 @@ bb.w:                                             ; preds = %_ZNK6duckdb21Templa
   %i.dk = add i64 %.02547.i.i.i, %i.da
   %i.dl = tail call i64 @llvm.umin.i64(i64 %i.dk, i64 %i.dd) ; 2 uses
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.dl, 15
+  %min.iters.check = icmp samesign ult i64 %i.dl, 31
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader42, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader

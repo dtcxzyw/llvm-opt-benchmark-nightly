@@ -102,9 +102,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge208
   %.0186211 = phi i64 [ %i.at, %bb.g ], [ %i.cd, %._crit_edge208 ] ; 6 uses
-  %i.bb = sub nsw i64 %.0190, %.0186211           ; 2 uses
+  %i.bb = sub nuw nsw i64 %.0190, %.0186211       ; 2 uses
   %spec.store.select = call i64 @llvm.smin.i64(i64 %i.bb, i64 8256) ; 2 uses
-  %i.bc = add nsw i64 %spec.store.select, %.0186211 ; 2 uses
+  %i.bc = add nuw nsw i64 %spec.store.select, %.0186211 ; 2 uses
   %i.bd = icmp sgt i64 %i.bb, 0
   br i1 %i.bd, label %.lr.ph.preheader, label %.preheader200
 
@@ -118,7 +118,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge2
 
 .lr.ph.preheader:                                 ; preds = %bb.h, %._crit_edge
   %.0183203 = phi i64 [ %i.bv, %._crit_edge ], [ %.0186211, %bb.h ] ; 4 uses
-  %i.bf = sub nsw i64 %i.bc, %.0183203
+  %i.bf = sub nuw nsw i64 %i.bc, %.0183203
   %spec.store.select4 = call i64 @llvm.smin.i64(i64 %i.bf, i64 2) ; 3 uses
   %i.bg = mul nsw i64 %.0183203, %i.h             ; 2 uses
   %i.bh = sub nsw i64 %i.bg, %.0189
@@ -150,7 +150,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge2
 
 bb.i:                                             ; preds = %.lr.ph207, %bb.i
   %.0185206 = phi i64 [ %i.at, %.lr.ph207 ], [ %i.cb, %bb.i ] ; 4 uses
-  %i.bx = sub nsw i64 %.0191, %.0185206
+  %i.bx = sub nuw nsw i64 %.0191, %.0185206
   %spec.store.select6 = call i64 @llvm.smin.i64(i64 %i.bx, i64 192) ; 2 uses
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.0185206
   %i.bz = call i32 @dgemm_itcopy(i64 noundef %spec.select, i64 noundef %spec.store.select6, ptr noundef %i.by, i64 noundef %i.h, ptr noundef %3) #4 ; 0 uses

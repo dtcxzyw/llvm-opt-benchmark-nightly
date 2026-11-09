@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 _ZN5boost6detail5lcast20optimized_src_streamIwSt11char_traitsIwELm21EE9stream_inIfEEDTcl13shl_real_typefp_dtdefpT6bufferEENS1_5exactIT_EE.exit.thread.i.i: ; preds = %bb.d, %bb.b
   %.0.i.i.ph.i.i.i = phi ptr [ %.9.i.i.i.i.i, %bb.d ], [ %..i.i.i.i.i, %bb.b ] ; 4 uses
   store ptr %.0.i.i.ph.i.i.i, ptr %i.c, align 8, !tbaa !92
-  %i.n = call noundef i64 @wcslen(ptr noundef nonnull %.0.i.i.ph.i.i.i) #32
+  %i.n = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0.i.i.ph.i.i.i) #32
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.ph.i.i.i, i64 %i.n ; 2 uses
   store ptr %i.o, ptr %i.d, align 8, !tbaa !93
   br label %bb.e
@@ -607,7 +607,7 @@ _ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit: ; preds = %_ZNKSt21__ctype_abs
   store i32 %i.aw, ptr %i.as, align 4, !tbaa !95
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 0, ptr %i.ax, align 4, !tbaa !95
-  %i.ay = call noundef i64 @wcslen(ptr noundef nonnull %i.a) #32
+  %i.ay = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #32
   %i.az = call noundef i64 @_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE4findEPKwmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.a, i64 noundef 0, i64 noundef %i.ay) #27
   %.not = icmp eq i64 %i.az, 0
   br i1 %.not, label %bb.j, label %bb.g
@@ -655,7 +655,7 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx118nump
   store i32 0, ptr %i.as, align 4, !tbaa !95
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !102
-  %i.bq = call noundef i64 @wcslen(ptr noundef nonnull %i.a) #32
+  %i.bq = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #32
   %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.bp, i64 2)
   %i.br = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef 0, i64 noundef %spec.select.i.i.i, ptr noundef nonnull %i.a, i64 noundef %i.bq)
           to label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE7replaceEmmPKw.exit unwind label %bb.i ; 0 uses
@@ -1058,7 +1058,7 @@ bb.d:                                             ; preds = %bb.c
 _ZN5boost6detail5lcast20optimized_src_streamIwSt11char_traitsIwELm29EE9stream_inIdEEDTcl13shl_real_typefp_dtdefpT6bufferEENS1_5exactIT_EE.exit.thread.i.i: ; preds = %bb.d, %bb.b
   %.0.i.i.ph.i.i.i = phi ptr [ %.9.i.i.i.i.i, %bb.d ], [ %..i.i.i.i.i, %bb.b ] ; 4 uses
   store ptr %.0.i.i.ph.i.i.i, ptr %i.c, align 8, !tbaa !154
-  %i.n = call noundef i64 @wcslen(ptr noundef nonnull %.0.i.i.ph.i.i.i) #32
+  %i.n = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0.i.i.ph.i.i.i) #32
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.ph.i.i.i, i64 %i.n ; 2 uses
   store ptr %i.o, ptr %i.d, align 8, !tbaa !155
   br label %bb.e
@@ -1461,7 +1461,7 @@ bb.ae:                                            ; preds = %bb.ad
 _ZN5boost6detail5lcast20optimized_src_streamIwSt11char_traitsIwELm33EE9stream_inIeEEDTcl13shl_real_typefp_dtdefpT6bufferEENS1_5exactIT_EE.exit.thread.i.i.i: ; preds = %bb.ae, %bb.ac
   %.0.i.i.ph.i.i.i.i96 = phi ptr [ %.9.i.i.i.i.i.i95, %bb.ae ], [ %..i.i.i.i.i.i97, %bb.ac ] ; 4 uses
   store ptr %.0.i.i.ph.i.i.i.i96, ptr %i.z, align 8, !tbaa !160, !noalias !429
-  %i.fv = call noundef i64 @wcslen(ptr noundef nonnull %.0.i.i.ph.i.i.i.i96) #32, !noalias !429
+  %i.fv = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0.i.i.ph.i.i.i.i96) #32, !noalias !429
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.ph.i.i.i.i96, i64 %i.fv ; 2 uses
   store ptr %i.fw, ptr %i.aa, align 8, !tbaa !161, !noalias !429
   br label %bb.af
@@ -1864,7 +1864,7 @@ bb.bi:                                            ; preds = %bb.bh
 _ZN5boost6detail5lcast20optimized_src_streamIwSt11char_traitsIwELm33EE9stream_inIeEEDTcl13shl_real_typefp_dtdefpT6bufferEENS1_5exactIT_EE.exit.thread.i.i.i146: ; preds = %bb.bi, %bb.bg
   %.0.i.i.ph.i.i.i.i147 = phi ptr [ %.9.i.i.i.i.i.i145, %bb.bi ], [ %..i.i.i.i.i.i148, %bb.bg ] ; 4 uses
   store ptr %.0.i.i.ph.i.i.i.i147, ptr %i.de, align 8, !tbaa !160, !noalias !431
-  %i.ld = call noundef i64 @wcslen(ptr noundef nonnull %.0.i.i.ph.i.i.i.i147) #32, !noalias !431
+  %i.ld = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0.i.i.ph.i.i.i.i147) #32, !noalias !431
   %i.le = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.ph.i.i.i.i147, i64 %i.ld ; 2 uses
   store ptr %i.le, ptr %i.df, align 8, !tbaa !161, !noalias !431
   br label %bb.bj
@@ -2267,7 +2267,7 @@ bb.d:                                             ; preds = %bb.c
 _ZN5boost6detail5lcast20optimized_src_streamIwSt11char_traitsIwELm33EE9stream_inIeEEDTcl13shl_real_typefp_dtdefpT6bufferEENS1_5exactIT_EE.exit.thread.i.i: ; preds = %bb.d, %bb.b
   %.0.i.i.ph.i.i.i = phi ptr [ %.9.i.i.i.i.i, %bb.d ], [ %..i.i.i.i.i, %bb.b ] ; 4 uses
   store ptr %.0.i.i.ph.i.i.i, ptr %i.c, align 8, !tbaa !160
-  %i.n = call noundef i64 @wcslen(ptr noundef nonnull %.0.i.i.ph.i.i.i) #32
+  %i.n = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0.i.i.ph.i.i.i) #32
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.ph.i.i.i, i64 %i.n ; 2 uses
   store ptr %i.o, ptr %i.d, align 8, !tbaa !161
   br label %bb.e

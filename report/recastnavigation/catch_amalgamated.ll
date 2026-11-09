@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #49
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   store ptr %i.a, ptr %2, align 8, !tbaa !21376
-  %i.b = call noundef i64 @wcslen(ptr noundef nonnull %1) #62 ; 8 uses
+  %i.b = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #62 ; 8 uses
   %.idx.i = shl nuw nsw i64 %i.b, 2               ; 2 uses
   %i.c = icmp ugt i64 %i.b, 3
   br i1 %i.c, label %bb.c, label %._crit_edge.i.i
@@ -297,7 +297,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #49
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   store ptr %i.a, ptr %2, align 8, !tbaa !21376
-  %i.b = call noundef i64 @wcslen(ptr noundef nonnull %1) #62 ; 8 uses
+  %i.b = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #62 ; 8 uses
   %.idx.i = shl nuw nsw i64 %i.b, 2               ; 2 uses
   %i.c = icmp ugt i64 %i.b, 3
   br i1 %i.c, label %bb.c, label %._crit_edge.i.i

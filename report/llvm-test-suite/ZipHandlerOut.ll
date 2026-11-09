@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.x
   store i32 0, ptr %i.q, align 8, !tbaa !71
   %i.fe = load ptr, ptr %7, align 8, !tbaa !72    ; 2 uses
   store i32 0, ptr %i.fe, align 4, !tbaa !74
-  %wcslen.i.i = call i64 @wcslen(ptr %i.fd)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.fd)
   %i.ff = trunc i64 %wcslen.i.i to i32            ; 3 uses
   %i.fg = add nsw i32 %i.ff, 1                    ; 3 uses
   %i.fh = load i32, ptr %i.r, align 4, !tbaa !70
@@ -607,7 +607,7 @@ bb.du:                                            ; preds = %bb.ds, %bb.dt
   %i.nh = getelementptr inbounds nuw i8, ptr %17, i64 105
   store i8 %i.ng, ptr %i.nh, align 1, !tbaa !107
   %i.ni = load ptr, ptr %18, align 8, !tbaa !171  ; 2 uses
-  %wcslen.i.i328 = call i64 @wcslen(ptr %i.ni)    ; 2 uses
+  %wcslen.i.i328 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ni) ; 2 uses
   %i.nj = trunc i64 %wcslen.i.i328 to i32         ; 3 uses
   %i.nk = add nsw i32 %i.nj, 1                    ; 2 uses
   %i.nl = icmp eq i32 %i.nk, 0
@@ -694,7 +694,7 @@ bb.dz:                                            ; preds = %_ZN11CStringBaseIwE
   %i.og = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %20, i64 12 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %20, i8 0, i64 16, i1 false)
-  %wcslen.i.i347 = call i64 @wcslen(ptr %i.of)
+  %wcslen.i.i347 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.of)
   %i.oi = trunc i64 %wcslen.i.i347 to i32         ; 3 uses
   %i.oj = add nsw i32 %i.oi, 1                    ; 3 uses
   %i.ok = icmp ne i32 %i.oj, 0
@@ -1097,7 +1097,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN11CStri
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !276 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  %wcslen.i.i = call i64 @wcslen(ptr %i.au)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.au)
   %i.av = trunc i64 %wcslen.i.i to i32            ; 3 uses
   %i.aw = add nsw i32 %i.av, 1                    ; 3 uses
   %i.ax = icmp eq i32 %i.aw, 0
@@ -1452,7 +1452,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.eo = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !59 ; 2 uses
-  %wcslen.i.i257 = call i64 @wcslen(ptr %i.ep)
+  %wcslen.i.i257 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ep)
   %i.eq = trunc i64 %wcslen.i.i257 to i32         ; 2 uses
   %i.er = add nsw i32 %i.eq, 1                    ; 2 uses
   %i.es = icmp eq i32 %i.er, 0
@@ -1613,7 +1613,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ga = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !59 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
-  %wcslen.i.i294 = call i64 @wcslen(ptr %i.gb)
+  %wcslen.i.i294 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.gb)
   %i.gc = trunc i64 %wcslen.i.i294 to i32         ; 3 uses
   %i.gd = add nsw i32 %i.gc, 1                    ; 3 uses
   %i.ge = icmp eq i32 %i.gd, 0

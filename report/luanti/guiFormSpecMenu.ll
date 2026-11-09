@@ -205,7 +205,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.of = load ptr, ptr %i.ly, align 8, !tbaa !380
   %i.og = getelementptr inbounds nuw i8, ptr %15, i64 32
   %i.oh = load ptr, ptr %i.og, align 8, !tbaa !326 ; 2 uses
-  %i.oi = call noundef i64 @wcslen(ptr noundef nonnull %i.oh) #37
+  %i.oi = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.oh) #37
   %i.oj = load ptr, ptr %i.ma, align 8, !tbaa !455
   %i.ok = invoke noundef ptr @_ZN3gui10StaticText3addEPNS_15IGUIEnvironmentESt17basic_string_viewIwSt11char_traitsIwEERKN4core4rectIiEEbbPNS_11IGUIElementEib(ptr noundef %i.of, i64 %i.oi, ptr nonnull %i.oh, ptr noundef nonnull align 4 dereferenceable(16) %11, i1 noundef zeroext false, i1 noundef zeroext true, ptr noundef %i.oj, i32 noundef 0, i1 noundef zeroext false)
           to label %bb.bl unwind label %bb.bk     ; 0 uses
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !380
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !326  ; 2 uses
-  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull %i.h) #37
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.h) #37
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !455
   %i.l = tail call noundef ptr @_ZN3gui10StaticText3addEPNS_15IGUIEnvironmentESt17basic_string_viewIwSt11char_traitsIwEERKN4core4rectIiEEbbPNS_11IGUIElementEib(ptr noundef %i.f, i64 %i.i, ptr nonnull %i.h, ptr noundef nonnull align 4 dereferenceable(16) %3, i1 noundef zeroext false, i1 noundef zeroext true, ptr noundef %i.k, i32 noundef 0, i1 noundef zeroext false) ; 0 uses
@@ -1011,7 +1011,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !380
   %i.gd = load ptr, ptr %i.fj, align 8, !tbaa !326 ; 2 uses
-  %i.ge = call noundef i64 @wcslen(ptr noundef nonnull %i.gd) #37
+  %i.ge = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.gd) #37
   %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !455
   %i.gh = invoke noundef ptr @_ZN3gui10StaticText3addEPNS_15IGUIEnvironmentESt17basic_string_viewIwSt11char_traitsIwEERKN4core4rectIiEEbbPNS_11IGUIElementEib(ptr noundef %i.gc, i64 %i.ge, ptr nonnull %i.gd, ptr noundef nonnull align 4 dereferenceable(16) %3, i1 noundef zeroext false, i1 noundef zeroext true, ptr noundef %i.gg, i32 noundef 0, i1 noundef zeroext false)
@@ -1414,7 +1414,7 @@ bb.fs:                                            ; preds = %bb.fr
           to label %bb.ft unwind label %bb.gb     ; 2 uses
 
 bb.ft:                                            ; preds = %bb.fs
-  %i.aey = call noundef i64 @wcslen(ptr noundef nonnull %i.aex) #37
+  %i.aey = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.aex) #37
   invoke void @_Z12wide_to_utf8B5cxx11St17basic_string_viewIwSt11char_traitsIwEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string.6") align 8 %20, i64 %i.aey, ptr nonnull %i.aex)
           to label %bb.fu unwind label %bb.gb
 
@@ -1817,7 +1817,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i64 @wcslen(ptr noundef nonnull %1) #37 ; 5 uses
+  %i.k = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #37 ; 5 uses
   %i.l = and i64 %i.k, 4294967295                 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !457

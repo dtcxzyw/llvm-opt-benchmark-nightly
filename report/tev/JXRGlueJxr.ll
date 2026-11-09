@@ -73,7 +73,7 @@ bb.a:
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @wcslen(ptr noundef %1) #12
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #12
   %.tr = trunc i64 %i.a to i32
   %i.b = shl i32 %.tr, 1
   %i.c = add i32 %i.b, 2                          ; 3 uses
@@ -363,7 +363,7 @@ CalcMetadataSizeUI2.exit56:                       ; preds = %CalcMetadataSizeUI2
 bb.y:                                             ; preds = %CalcMetadataSizeUI2.exit56
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.cr = load ptr, ptr %i.cq, align 8
-  %i.cs = tail call i64 @wcslen(ptr noundef readonly %i.cr) #12
+  %i.cs = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.cr) #12
   %.tr.i = trunc i64 %i.cs to i32
   %i.ct = shl i32 %.tr.i, 1
   %i.cu = add i32 %i.ct, 2                        ; 2 uses
@@ -507,7 +507,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   store i32 31, ptr %0, align 8, !tbaa !14
-  %i.g = tail call i64 @wcslen(ptr noundef %2) #12
+  %i.g = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #12
   %i.h = shl i64 %i.g, 1
   %i.i = add i64 %i.h, 2                          ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -517,7 +517,7 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.m = load ptr, ptr %i.j, align 8, !tbaa !15
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.m, ptr align 2 %2, i64 %i.i, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.m, ptr nonnull align 2 %2, i64 %i.i, i1 false)
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.a
@@ -613,7 +613,7 @@ CalcMetadataSizeLPSTR.exit:                       ; preds = %bb.c
   br i1 %i.r, label %bb.g, label %bb.f
 
 CalcMetadataSizeLPWSTR.exit:                      ; preds = %bb.c
-  %i.s = tail call i64 @wcslen(ptr noundef readonly %2) #12
+  %i.s = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %2) #12
   %.tr.i = trunc i64 %i.s to i32
   %i.t = shl i32 %.tr.i, 1
   %i.u = add i32 %i.t, 2
@@ -623,7 +623,7 @@ CalcMetadataSizeLPWSTR.exit:                      ; preds = %bb.c
   %i.x = add i32 %i.w, %i.e
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.x, ptr %i.y, align 4, !tbaa !33
-  %i.z = call i64 @WriteWmpDE(ptr noundef %i.c, ptr noundef %5, ptr noundef %3, ptr noundef %2, ptr noundef nonnull %i.a) #13 ; 3 uses
+  %i.z = call i64 @WriteWmpDE(ptr noundef %i.c, ptr noundef %5, ptr noundef %3, ptr noundef nonnull %2, ptr noundef nonnull %i.a) #13 ; 3 uses
   %i.aa = icmp slt i64 %i.z, 0
   br i1 %i.aa, label %bb.g, label %bb.f
 

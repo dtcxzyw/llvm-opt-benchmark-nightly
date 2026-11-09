@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.aj
 
 bb.n:                                             ; preds = %bb.l
-  %i.x = tail call i64 @wcslen(ptr noundef nonnull %1) #19 ; 2 uses
+  %i.x = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #19 ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   br i1 %i.y, label %bb.p, label %bb.o
 
@@ -607,7 +607,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not204, label %bb.az, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.cr = tail call i64 @wcslen(ptr noundef nonnull %i.cp) #19
+  %i.cr = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.cp) #19
   %i.cs = icmp ugt i64 %i.cr, 511
   br i1 %i.cs, label %bb.ax, label %bb.ay
 
@@ -621,7 +621,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 100848
   call void @_ZN11SecPassword3SetEPKw(ptr noundef nonnull align 8 dereferenceable(25) %i.ct, ptr noundef nonnull %i.cp)
-  %i.cu = call i64 @wcslen(ptr noundef nonnull %1) #19
+  %i.cu = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #19
   %i.cv = shl i64 %i.cu, 2
   call void @_Z9cleandataPvm(ptr noundef nonnull %1, i64 noundef %i.cv)
   br label %.loopexit
@@ -1024,7 +1024,7 @@ bb.dy:                                            ; preds = %bb.dx
   br label %.loopexit
 
 bb.dz:                                            ; preds = %bb.dx
-  %i.jq = tail call i64 @wcslen(ptr noundef nonnull %i.jl) #19
+  %i.jq = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.jl) #19
   %i.jr = icmp ugt i64 %i.jq, 511
   br i1 %i.jr, label %bb.ea, label %bb.eb
 
@@ -1038,7 +1038,7 @@ bb.ea:                                            ; preds = %bb.dz
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 100848
   call void @_ZN11SecPassword3SetEPKw(ptr noundef nonnull align 8 dereferenceable(25) %i.js, ptr noundef nonnull %i.jl)
-  %i.jt = call i64 @wcslen(ptr noundef nonnull %1) #19
+  %i.jt = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #19
   %i.ju = shl i64 %i.jt, 2
   call void @_Z9cleandataPvm(ptr noundef nonnull %1, i64 noundef %i.ju)
   br label %.loopexit
@@ -1441,7 +1441,7 @@ bb.r:                                             ; preds = %bb.o, %bb.q
 bb.s:                                             ; preds = %bb.n, %bb.q, %bb.r, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   %i.v = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.b, i64 noundef 32, ptr noundef nonnull @.str.10, ptr noundef nonnull %i.a) #18 ; 0 uses
-  %i.w = call i64 @wcslen(ptr noundef nonnull %i.b) #19 ; 2 uses
+  %i.w = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #19 ; 2 uses
   %i.x = invoke noundef i32 @_Z9wcsnicompPKwS0_m(ptr noundef nonnull %.0, ptr noundef nonnull %i.b, i64 noundef %i.w)
           to label %bb.t unwind label %bb.v
 

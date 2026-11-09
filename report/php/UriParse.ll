@@ -204,7 +204,7 @@ bb.a:
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @wcslen(ptr noundef nonnull %1) #7
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #7
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.c
   %i.e = tail call fastcc i32 @uriParseUriExMmW(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.d, ptr noundef null)
   br label %bb.c
@@ -229,7 +229,7 @@ bb.a:
   br label %uriParseSingleUriExW.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @wcslen(ptr noundef nonnull %1) #7
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %uriParseSingleUriExW.exit, label %bb.c
@@ -271,7 +271,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @wcslen(ptr noundef nonnull %1) #7
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #7
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.c
   br label %bb.c
 
@@ -594,7 +594,7 @@ bb.a:
   %2 = alloca %struct.UriParserStateStructW, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #7
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #7
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.a ; 2 uses
   call void @uriResetUriW(ptr noundef nonnull %1) #6
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -604,7 +604,7 @@ bb.a:
   %i.e = call ptr %i.d(ptr noundef nonnull @defaultMemoryManager, i64 noundef 16) #6
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 56
   store ptr %i.e, ptr %i.f, align 8, !tbaa !81
-  %i.g = call fastcc ptr @uriParseIPv6address2W(ptr noundef %2, ptr noundef %0, ptr noundef %i.b, ptr noundef nonnull @defaultMemoryManager)
+  %i.g = call fastcc ptr @uriParseIPv6address2W(ptr noundef %2, ptr noundef nonnull %0, ptr noundef nonnull %i.b, ptr noundef nonnull @defaultMemoryManager)
   %i.h = call i32 @uriFreeUriMembersMmW(ptr noundef nonnull %1, ptr noundef nonnull @defaultMemoryManager) ; 0 uses
   %i.i = icmp eq ptr %i.g, %i.b
   %i.j = zext i1 %i.i to i32
@@ -1007,9 +1007,9 @@ define hidden range(i32 0, 2) i32 @uri_TESTING_ONLY_ParseIpFourW(ptr noundef %0)
 bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %i.b = tail call i64 @wcslen(ptr noundef %0) #7
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #7
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.b
-  %i.d = call i32 @uriParseIpFourAddressW(ptr noundef nonnull %i.a, ptr noundef %0, ptr noundef %i.c) #6
+  %i.d = call i32 @uriParseIpFourAddressW(ptr noundef nonnull %i.a, ptr noundef nonnull %0, ptr noundef nonnull %i.c) #6
   %i.e = icmp eq i32 %i.d, 0
   %i.f = zext i1 %i.e to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6

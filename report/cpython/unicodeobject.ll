@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = tail call i64 @wcslen(ptr noundef %0) #34
+  %i.e = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #34
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -576,7 +576,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @wcslen(ptr noundef %1) #34
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #34
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -979,7 +979,7 @@ bb.q:                                             ; preds = %unicode_copy_as_wid
   br label %bb.t
 
 bb.r:                                             ; preds = %unicode_copy_as_widechar.exit
-  %i.cq = tail call i64 @wcslen(ptr noundef nonnull %i.j) #34
+  %i.cq = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.j) #34
   %.not21 = icmp eq i64 %i.cq, %.val23
   br i1 %.not21, label %bb.t, label %bb.s
 
@@ -1382,7 +1382,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %i.a, align 8, !tbaa !647
-  %i.h = call i64 @wcslen(ptr noundef nonnull %i.e) #34
+  %i.h = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.e) #34
   %.not = icmp eq i64 %i.g, %i.h
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -1785,7 +1785,7 @@ bb.i:                                             ; preds = %bb.f, %bb.g, %bb.h
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 -3, 1) i32 @_Py_EncodeUTF8Ex(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #1 !guid !1090 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #34 ; 5 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #34 ; 5 uses
   switch i32 %5, label %.critedge [
     i32 1, label %bb.d
     i32 2, label %bb.b
@@ -2188,7 +2188,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @wcslen(ptr noundef %1) #34
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #34
   br label %.critedge
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c

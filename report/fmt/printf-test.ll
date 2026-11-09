@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
   %scevgep.i = getelementptr i8, ptr %1, i64 4
-  %wcslen.i = tail call i64 @wcslen(ptr %scevgep.i)
+  %wcslen.i = tail call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep.i)
   %i.k = add i64 %wcslen.i, 1
   br label %_ZN3fmt3v1217basic_string_viewIwEC2EPKw.exit
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   store ptr %i.d, ptr %2, align 8, !tbaa !132
-  %i.e = call noundef i64 @wcslen(ptr noundef nonnull %0) #32 ; 5 uses
+  %i.e = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #32 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store i64 %i.e, ptr %i.a, align 8, !tbaa !107
   %i.f = icmp ugt i64 %i.e, 3

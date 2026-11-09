@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.z
   %scevgep.i.i.i48 = getelementptr i8, ptr %.sroa.0125.0..sroa.0125.0..sroa.0125.0..sroa.0.0.copyload.i, i64 4
-  %wcslen.i.i.i = call i64 @wcslen(ptr %scevgep.i.i.i48)
+  %wcslen.i.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i.i.i48)
   %i.bq = add i64 %wcslen.i.i.i, 1
   br label %_ZN3fmt3v126detail21default_arg_formatterIwEclIPKwTnNSt9enable_ifIXsr10is_builtinIT_EE5valueEiE4typeELi0EEEvS8_.exit
 
@@ -475,7 +475,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 .lr.ph.preheader.i.i.i82:                         ; preds = %bb.bd
   %scevgep.i.i.i83 = getelementptr i8, ptr %.sroa.0106.0..sroa.0106.0..sroa.0106.0..sroa.0.0.copyload.i31, i64 4
-  %wcslen.i.i.i84 = call i64 @wcslen(ptr %scevgep.i.i.i83)
+  %wcslen.i.i.i84 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i.i.i83)
   %i.dy = add i64 %wcslen.i.i.i84, 1
   br label %_ZN3fmt3v126detail21default_arg_formatterIwEclIPKwTnNSt9enable_ifIXsr10is_builtinIT_EE5valueEiE4typeELi0EEEvS8_.exit86
 
@@ -878,7 +878,7 @@ bb.p:                                             ; preds = %_ZN3fmt3v12eqENS0_1
 
 _ZN3fmt3v1217basic_string_viewIwEC2EPKw.exit.i.i.i.i: ; preds = %bb.p
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.bc, i64 4
-  %wcslen.i.i.i.i.i = tail call i64 @wcslen(ptr %scevgep.i.i.i.i.i)
+  %wcslen.i.i.i.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i.i.i.i.i)
   %i.be = add i64 %wcslen.i.i.i.i.i, 1            ; 3 uses
   %.not13.i.i.i.i.i.i.i = icmp eq i64 %i.be, 0
   br i1 %.not13.i.i.i.i.i.i.i, label %_ZN3fmt3v12eqENS0_17basic_string_viewIwEES2_.exit.thread.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -1281,7 +1281,7 @@ bb.j:                                             ; preds = %_ZN3fmt3v12eqENS0_1
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.j
   %scevgep.i.i.i = getelementptr i8, ptr %i.ad, i64 4
-  %wcslen.i.i.i = tail call i64 @wcslen(ptr %scevgep.i.i.i), !noalias !686
+  %wcslen.i.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i.i.i), !noalias !686
   %i.af = add i64 %wcslen.i.i.i, 1
   br label %_ZN3fmt3v1217basic_string_viewIwEC2EPKw.exit.i.i
 
@@ -1684,7 +1684,7 @@ bb.f:                                             ; preds = %bb.d
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
   %scevgep.i = getelementptr i8, ptr %1, i64 4
-  %wcslen.i = tail call i64 @wcslen(ptr %scevgep.i)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i)
   %i.k = add i64 %wcslen.i, 1
   br label %_ZN3fmt3v1217basic_string_viewIwEC2EPKw.exit
 

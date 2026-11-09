@@ -202,7 +202,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(136) %i.b, ptr noundef nonnull align 4 dereferenceable(136) @__const._ZN12_GLOBAL__N_140WideStringLogFormatTest_NonLiterals_TestIA_wE8TestBodyEv.value, i64 136, i1 false), !tbaa.struct !295
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -605,7 +605,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(136) %i.b, ptr noundef nonnull align 4 dereferenceable(136) @__const._ZN12_GLOBAL__N_140WideStringLogFormatTest_NonLiterals_TestIA_wE8TestBodyEv.value, i64 136, i1 false), !tbaa.struct !295
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -1008,7 +1008,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.b, ptr noundef nonnull align 4 dereferenceable(40) @__const._ZN12_GLOBAL__N_161WideStringLogFormatTest_IsolatedLowSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 40, i1 false), !tbaa.struct !299
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -1411,7 +1411,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.b, ptr noundef nonnull align 4 dereferenceable(40) @__const._ZN12_GLOBAL__N_161WideStringLogFormatTest_IsolatedLowSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 40, i1 false), !tbaa.struct !299
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -1814,7 +1814,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.b, ptr noundef nonnull align 4 dereferenceable(40) @__const._ZN12_GLOBAL__N_171WideStringLogFormatTest_DISABLED_IsolatedHighSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 40, i1 false), !tbaa.struct !299
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -2217,7 +2217,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.b, ptr noundef nonnull align 4 dereferenceable(40) @__const._ZN12_GLOBAL__N_171WideStringLogFormatTest_DISABLED_IsolatedHighSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 40, i1 false), !tbaa.struct !299
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -2620,7 +2620,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.b, ptr noundef nonnull align 4 dereferenceable(44) @__const._ZN12_GLOBAL__N_174WideStringLogFormatTest_DISABLED_ConsecutiveHighSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 44, i1 false), !tbaa.struct !300
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -3023,7 +3023,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.b, ptr noundef nonnull align 4 dereferenceable(44) @__const._ZN12_GLOBAL__N_174WideStringLogFormatTest_DISABLED_ConsecutiveHighSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 44, i1 false), !tbaa.struct !300
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -3426,7 +3426,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.b, ptr noundef nonnull align 4 dereferenceable(48) @__const._ZN12_GLOBAL__N_178WideStringLogFormatTest_DISABLED_HighHighLowSurrogateSequencesAreReplaced_TestIA_wE8TestBodyEv.value, i64 48, i1 false), !tbaa.struct !301
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -3829,7 +3829,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.b, ptr noundef nonnull align 4 dereferenceable(48) @__const._ZN12_GLOBAL__N_178WideStringLogFormatTest_DISABLED_HighHighLowSurrogateSequencesAreReplaced_TestIA_wE8TestBodyEv.value, i64 48, i1 false), !tbaa.struct !301
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -4232,7 +4232,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.b, ptr noundef nonnull align 4 dereferenceable(24) @__const._ZN12_GLOBAL__N_171WideStringLogFormatTest_DISABLED_TrailingHighSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 24, i1 false), !tbaa.struct !302
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -4635,7 +4635,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.b, ptr noundef nonnull align 4 dereferenceable(24) @__const._ZN12_GLOBAL__N_171WideStringLogFormatTest_DISABLED_TrailingHighSurrogatesAreReplaced_TestIA_wE8TestBodyEv.value, i64 24, i1 false), !tbaa.struct !302
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -5038,7 +5038,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   store i32 0, ptr %i.b, align 4, !tbaa !55
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3
@@ -5441,7 +5441,7 @@ _ZN7testing8internal8MockSpecIFvRKN4absl12lts_202605268LogEntryEEED2Ev.exit: ; p
   store i32 0, ptr %i.b, align 4, !tbaa !55
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ao, ptr %5, align 8, !tbaa !286
-  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #33 ; 5 uses
+  %i.ap = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #33 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !59
   %i.aq = icmp ugt i64 %i.ap, 3

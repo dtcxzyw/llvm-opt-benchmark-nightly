@@ -103,7 +103,7 @@ bb.a:
   %spec.store.select = select i1 %i.a, ptr @.str, ptr %1 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !17   ; 2 uses
-  %i.d = tail call i64 @wcslen(ptr noundef nonnull %spec.store.select) #16
+  %i.d = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %spec.store.select) #16
   %i.e = add i64 %i.c, 1
   %i.f = add i64 %i.e, %i.d                       ; 4 uses
   store i64 %i.f, ptr %i.b, align 8, !tbaa !17
@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZN5ArrayIwEC2Em.ex
   %i.l = phi ptr [ %i.g, %_ZN5ArrayIwEC2Em.exit.thread28 ], [ %i.c, %_ZN5ArrayIwEC2Em.exit ]
   %i.m = load ptr, ptr %0, align 8, !tbaa !15
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.k ; 2 uses
-  %i.o = tail call i64 @wcslen(ptr noundef nonnull %i.n) #16
+  %i.o = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.n) #16
   %i.p = add nuw i64 %i.k, 1
   %i.q = add i64 %i.p, %i.o
   store i64 %i.q, ptr %i.l, align 8, !tbaa !14
@@ -245,7 +245,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %0, align 8, !tbaa !15
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.b ; 2 uses
-  %i.g = tail call i64 @wcslen(ptr noundef nonnull %i.f) #16
+  %i.g = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.f) #16
   %i.h = add nuw i64 %i.b, 1
   %i.i = add i64 %i.h, %i.g
   store i64 %i.i, ptr %i.a, align 8, !tbaa !14
@@ -275,7 +275,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %0, align 8, !tbaa !15
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.b ; 2 uses
-  %i.g = tail call i64 @wcslen(ptr noundef nonnull %i.f) #16
+  %i.g = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.f) #16
   %i.h = add nuw i64 %i.b, 1
   %i.i = add i64 %i.h, %i.g
   store i64 %i.i, ptr %i.a, align 8, !tbaa !14
@@ -334,7 +334,7 @@ _ZN10StringList9GetStringEPwm.exit:               ; preds = %bb.c
   %i.p = add nsw i32 %.045, -1
   %i.q = load ptr, ptr %0, align 8, !tbaa !15
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.n ; 2 uses
-  %i.s = tail call i64 @wcslen(ptr noundef nonnull %i.r) #16
+  %i.s = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.r) #16
   %i.t = add nuw i64 %i.n, 1
   %i.u = add i64 %i.t, %i.s
   store i64 %i.u, ptr %i.k, align 8, !tbaa !14
@@ -423,7 +423,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %0, align 8, !tbaa !15
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.b ; 2 uses
-  %i.g = tail call i64 @wcslen(ptr noundef nonnull %i.f) #16
+  %i.g = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.f) #16
   %i.h = add nuw i64 %i.b, 1
   %i.i = add i64 %i.h, %i.g
   store i64 %i.i, ptr %i.a, align 8, !tbaa !14
@@ -468,7 +468,7 @@ _ZN10StringList12SavePositionEv.exit.split.us:    ; preds = %_ZN10StringList12Sa
 
 bb.c:                                             ; preds = %_ZN10StringList12SavePositionEv.exit.split.us
   %i.n = load ptr, ptr %0, align 8, !tbaa !15
-  %i.o = tail call i64 @wcslen(ptr noundef nonnull %i.n) #16
+  %i.o = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.n) #16
   %i.p = add i64 %i.o, 1
   store i64 %i.p, ptr %i.k, align 8, !tbaa !14
   br label %_ZN10StringList9GetStringEPPw.exit
@@ -488,7 +488,7 @@ bb.d:                                             ; preds = %bb.e, %_ZN10StringL
 
 bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.s ; 2 uses
-  %i.u = tail call i64 @wcslen(ptr noundef nonnull %i.t) #16
+  %i.u = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.t) #16
   %i.v = add nuw i64 %i.s, 1
   %i.w = add i64 %i.v, %i.u                       ; 2 uses
   store i64 %i.w, ptr %i.k, align 8, !tbaa !14
@@ -505,7 +505,7 @@ _ZN10StringList12SavePositionEv.exit.split.split: ; preds = %_ZN10StringList12Sa
 bb.f:                                             ; preds = %_ZN10StringList12SavePositionEv.exit.split.split
   %i.aa = load ptr, ptr %0, align 8, !tbaa !15
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.y ; 2 uses
-  %i.ac = tail call i64 @wcslen(ptr noundef nonnull %i.ab) #16
+  %i.ac = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ab) #16
   %i.ad = add nuw i64 %i.y, 1
   %i.ae = add i64 %i.ad, %i.ac
   store i64 %i.ae, ptr %i.k, align 8, !tbaa !14

@@ -205,7 +205,7 @@ bb.a:
   call void @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIwE9transformB5cxx11EPKwS4_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string.7") align 8 %2, ptr noundef nonnull align 8 dereferenceable(232) %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !385  ; 3 uses
-  %i.g = call noundef i64 @wcslen(ptr noundef nonnull %i.a) #32
+  %i.g = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #32
   %i.h = icmp eq i64 %i.f, %i.g
   br i1 %i.h, label %bb.b, label %_ZSteqIwSt11char_traitsIwESaIwEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread71
 
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %.split.us
 
 _ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135._crit_edge.thread: ; preds = %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135, %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135._crit_edge
   %.1104.lcssa293 = phi ptr [ %.1104.lcssa, %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135._crit_edge ], [ %.1104192, %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135 ] ; 2 uses
-  %wcslen.i = tail call i64 @wcslen(ptr nonnull %.1104.lcssa293)
+  %wcslen.i = tail call i64 @wcslen(ptr nonnull dereferenceable(4) %.1104.lcssa293)
   %i.bb = shl i64 %wcslen.i, 2
   %scevgep.i = getelementptr i8, ptr %.1104.lcssa293, i64 %i.bb
   br label %bb.h
@@ -818,7 +818,7 @@ bb.w:                                             ; preds = %bb.v
 
 ._crit_edge.i:                                    ; preds = %bb.w, %bb.v, %bb.u
   %i.dl = phi i64 [ 1, %bb.w ], [ %i.df, %bb.v ], [ %i.df, %bb.u ] ; 2 uses
-  %i.dm = call noundef i64 @wcslen(ptr noundef nonnull %.3216) #32 ; 2 uses
+  %i.dm = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.3216) #32 ; 2 uses
   %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.dm, i64 %i.dl) ; 2 uses
   %i.dn = icmp eq i64 %.sroa.speculated.i.i, 0
   br i1 %i.dn, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i
@@ -842,7 +842,7 @@ _ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1
 
 .preheader184.preheader:                          ; preds = %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit
   %scevgep = getelementptr i8, ptr %.3216, i64 4
-  %wcslen = call i64 @wcslen(ptr %scevgep)
+  %wcslen = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep)
   %i.dr = shl i64 %wcslen, 2
   %scevgep239 = getelementptr i8, ptr %.3216, i64 %i.dr
   %i.ds = getelementptr inbounds nuw i8, ptr %scevgep239, i64 8
@@ -850,7 +850,7 @@ _ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1
 
 .preheader.preheader:                             ; preds = %bb.w, %bb.v, %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit
   %scevgep240 = getelementptr i8, ptr %.3216, i64 4
-  %wcslen241 = call i64 @wcslen(ptr %scevgep240)
+  %wcslen241 = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep240)
   %i.dt = shl i64 %wcslen241, 2
   %scevgep242 = getelementptr i8, ptr %.3216, i64 %i.dt
   %i.du = getelementptr inbounds nuw i8, ptr %scevgep242, i64 8 ; 4 uses
@@ -871,7 +871,7 @@ bb.y:                                             ; preds = %bb.x
 
 ._crit_edge.i137:                                 ; preds = %bb.y, %bb.x, %.preheader.preheader
   %i.dz = phi i64 [ 1, %bb.y ], [ %i.df, %bb.x ], [ %i.df, %.preheader.preheader ] ; 2 uses
-  %i.ea = call noundef i64 @wcslen(ptr noundef nonnull %i.du) #32 ; 2 uses
+  %i.ea = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.du) #32 ; 2 uses
   %.sroa.speculated.i.i138 = call i64 @llvm.umin.i64(i64 %i.ea, i64 %i.dz) ; 2 uses
   %i.eb = icmp eq i64 %.sroa.speculated.i.i138, 0
   br i1 %i.eb, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i142, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i139
@@ -904,7 +904,7 @@ _ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1
 bb.z:                                             ; preds = %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit146, %.preheader184.preheader
   %.6 = phi ptr [ %i.du, %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit146 ], [ %i.ds, %.preheader184.preheader ] ; 2 uses
   %scevgep243 = getelementptr nuw i8, ptr %.6, i64 4
-  %wcslen244 = call i64 @wcslen(ptr nonnull %scevgep243)
+  %wcslen244 = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep243)
   %i.ej = shl i64 %wcslen244, 2
   %scevgep245 = getelementptr i8, ptr %.6, i64 %i.ej
   %i.ek = getelementptr inbounds nuw i8, ptr %scevgep245, i64 8 ; 2 uses
@@ -1052,7 +1052,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 ._crit_edge.i161:                                 ; preds = %bb.ai, %bb.ah, %bb.ag
   %i.ga = phi i64 [ 1, %bb.ai ], [ %i.fu, %bb.ah ], [ %i.fu, %bb.ag ] ; 3 uses
-  %i.gb = call noundef i64 @wcslen(ptr noundef nonnull %.9221) #32 ; 3 uses
+  %i.gb = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.9221) #32 ; 3 uses
   %.sroa.speculated.i.i162 = call i64 @llvm.umin.i64(i64 %i.gb, i64 %i.ga) ; 2 uses
   %i.gc = icmp eq i64 %.sroa.speculated.i.i162, 0
   br i1 %i.gc, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i166, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i163
@@ -1066,7 +1066,7 @@ _ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i163: ; preds = %._crit_edge.i161
 
 .critedge.preheader:                              ; preds = %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i166, %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i163
   %scevgep246 = getelementptr i8, ptr %.9221, i64 4
-  %wcslen247 = call i64 @wcslen(ptr %scevgep246)
+  %wcslen247 = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep246)
   %i.gf = shl i64 %wcslen247, 2
   %scevgep248 = getelementptr i8, ptr %.9221, i64 %i.gf
   %i.gg = getelementptr inbounds nuw i8, ptr %scevgep248, i64 8
@@ -1469,7 +1469,7 @@ bb.g:                                             ; preds = %.split.us
 
 _ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135._crit_edge.thread: ; preds = %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135, %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135._crit_edge
   %.1104.lcssa293 = phi ptr [ %.1104.lcssa, %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135._crit_edge ], [ %.1104192, %_ZNK5boost16cpp_regex_traitsIwE9translateEwb.exit135 ] ; 2 uses
-  %wcslen.i = tail call i64 @wcslen(ptr nonnull %.1104.lcssa293)
+  %wcslen.i = tail call i64 @wcslen(ptr nonnull dereferenceable(4) %.1104.lcssa293)
   %i.bb = shl i64 %wcslen.i, 2
   %scevgep.i = getelementptr i8, ptr %.1104.lcssa293, i64 %i.bb
   br label %bb.h
@@ -1679,7 +1679,7 @@ bb.w:                                             ; preds = %bb.v
 
 ._crit_edge.i:                                    ; preds = %bb.w, %bb.v, %bb.u
   %i.dl = phi i64 [ 1, %bb.w ], [ %i.df, %bb.v ], [ %i.df, %bb.u ] ; 2 uses
-  %i.dm = call noundef i64 @wcslen(ptr noundef nonnull %.3216) #32 ; 2 uses
+  %i.dm = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.3216) #32 ; 2 uses
   %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.dm, i64 %i.dl) ; 2 uses
   %i.dn = icmp eq i64 %.sroa.speculated.i.i, 0
   br i1 %i.dn, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i
@@ -1703,7 +1703,7 @@ _ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1
 
 .preheader184.preheader:                          ; preds = %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit
   %scevgep = getelementptr i8, ptr %.3216, i64 4
-  %wcslen = call i64 @wcslen(ptr %scevgep)
+  %wcslen = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep)
   %i.dr = shl i64 %wcslen, 2
   %scevgep239 = getelementptr i8, ptr %.3216, i64 %i.dr
   %i.ds = getelementptr inbounds nuw i8, ptr %scevgep239, i64 8
@@ -1711,7 +1711,7 @@ _ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1
 
 .preheader.preheader:                             ; preds = %bb.w, %bb.v, %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit
   %scevgep240 = getelementptr i8, ptr %.3216, i64 4
-  %wcslen241 = call i64 @wcslen(ptr %scevgep240)
+  %wcslen241 = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep240)
   %i.dt = shl i64 %wcslen241, 2
   %scevgep242 = getelementptr i8, ptr %.3216, i64 %i.dt
   %i.du = getelementptr inbounds nuw i8, ptr %scevgep242, i64 8 ; 4 uses
@@ -1732,7 +1732,7 @@ bb.y:                                             ; preds = %bb.x
 
 ._crit_edge.i137:                                 ; preds = %bb.y, %bb.x, %.preheader.preheader
   %i.dz = phi i64 [ 1, %bb.y ], [ %i.df, %bb.x ], [ %i.df, %.preheader.preheader ] ; 2 uses
-  %i.ea = call noundef i64 @wcslen(ptr noundef nonnull %i.du) #32 ; 2 uses
+  %i.ea = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.du) #32 ; 2 uses
   %.sroa.speculated.i.i138 = call i64 @llvm.umin.i64(i64 %i.ea, i64 %i.dz) ; 2 uses
   %i.eb = icmp eq i64 %.sroa.speculated.i.i138, 0
   br i1 %i.eb, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i142, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i139
@@ -1765,7 +1765,7 @@ _ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1
 bb.z:                                             ; preds = %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit146, %.preheader184.preheader
   %.6 = phi ptr [ %i.du, %_ZN5boost13re_detail_60014string_compareIwSt11char_traitsIwESaIwEEEiRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit146 ], [ %i.ds, %.preheader184.preheader ] ; 2 uses
   %scevgep243 = getelementptr nuw i8, ptr %.6, i64 4
-  %wcslen244 = call i64 @wcslen(ptr nonnull %scevgep243)
+  %wcslen244 = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep243)
   %i.ej = shl i64 %wcslen244, 2
   %scevgep245 = getelementptr i8, ptr %.6, i64 %i.ej
   %i.ek = getelementptr inbounds nuw i8, ptr %scevgep245, i64 8 ; 2 uses
@@ -1913,7 +1913,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 ._crit_edge.i161:                                 ; preds = %bb.ai, %bb.ah, %bb.ag
   %i.ga = phi i64 [ 1, %bb.ai ], [ %i.fu, %bb.ah ], [ %i.fu, %bb.ag ] ; 3 uses
-  %i.gb = call noundef i64 @wcslen(ptr noundef nonnull %.9221) #32 ; 3 uses
+  %i.gb = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.9221) #32 ; 3 uses
   %.sroa.speculated.i.i162 = call i64 @llvm.umin.i64(i64 %i.gb, i64 %i.ga) ; 2 uses
   %i.gc = icmp eq i64 %.sroa.speculated.i.i162, 0
   br i1 %i.gc, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i166, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i163
@@ -1927,7 +1927,7 @@ _ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i163: ; preds = %._crit_edge.i161
 
 .critedge.preheader:                              ; preds = %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i166, %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i163
   %scevgep246 = getelementptr i8, ptr %.9221, i64 4
-  %wcslen247 = call i64 @wcslen(ptr %scevgep246)
+  %wcslen247 = call i64 @wcslen(ptr nonnull dereferenceable(4) %scevgep246)
   %i.gf = shl i64 %wcslen247, 2
   %scevgep248 = getelementptr i8, ptr %.9221, i64 %i.gf
   %i.gg = getelementptr inbounds nuw i8, ptr %scevgep248, i64 8

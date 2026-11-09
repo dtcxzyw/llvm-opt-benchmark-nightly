@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #36
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   store ptr %i.d, ptr %2, align 8, !tbaa !147
-  %i.e = call noundef i64 @wcslen(ptr noundef nonnull %0) #38 ; 5 uses
+  %i.e = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #38 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   store i64 %i.e, ptr %i.a, align 8, !tbaa !148
   %i.f = icmp ugt i64 %i.e, 3

@@ -205,7 +205,7 @@ _ZN10CFieldInfoC2Ev.exit:                         ; preds = %bb.b, %._crit_edge.
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !161 ; 2 uses
   store i32 0, ptr %i.c, align 8, !tbaa !108
   store i32 0, ptr %i.f, align 4, !tbaa !111
-  %wcslen.i.i = call i64 @wcslen(ptr %i.ao)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ao)
   %i.ap = trunc i64 %wcslen.i.i to i32            ; 3 uses
   %i.aq = add nsw i32 %i.ap, 1                    ; 3 uses
   %i.ar = icmp eq i32 %i.aq, 4
@@ -608,7 +608,7 @@ bb.a:                                             ; preds = %.critedge
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !175  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %i.c)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c)
   %i.e = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.f = add nsw i32 %i.e, 1                      ; 3 uses
   %i.g = icmp ne i32 %i.f, 0
@@ -641,7 +641,7 @@ bb.b:                                             ; preds = %_ZN11CStringBaseIwE
 ._crit_edge.i.i22:                                ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  %wcslen.i.i14 = tail call i64 @wcslen(ptr nonnull %2)
+  %wcslen.i.i14 = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2)
   %i.r = trunc i64 %wcslen.i.i14 to i32           ; 3 uses
   %i.s = add nsw i32 %i.r, 1                      ; 3 uses
   %i.t = icmp ne i32 %i.s, 0
@@ -676,7 +676,7 @@ _ZN11CStringBaseIwEC2EPKw.exit30:                 ; preds = %_ZN11CStringBaseIwE
   call void @_Z21ConvertUInt32ToStringjPw(i32 noundef %1, ptr noundef nonnull %i.a)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  %wcslen.i.i31 = call i64 @wcslen(ptr nonnull %i.a)
+  %wcslen.i.i31 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a)
   %i.ae = trunc i64 %wcslen.i.i31 to i32          ; 3 uses
   %i.af = add nsw i32 %i.ae, 1                    ; 3 uses
   %i.ag = icmp ne i32 %i.af, 0
@@ -1079,7 +1079,7 @@ bb.an:                                            ; preds = %bb.al
   %i.dt = getelementptr inbounds nuw i8, ptr %i.u, i64 28
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !145
   %i.dv = load ptr, ptr %i.k, align 8, !tbaa !119 ; 2 uses
-  %wcslen.i.i = call i64 @wcslen(ptr %i.dv)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.dv)
   %i.dw = trunc i64 %wcslen.i.i to i32            ; 3 uses
   %i.dx = add nsw i32 %i.dw, 1                    ; 2 uses
   %i.dy = icmp eq i32 %i.dx, 0
@@ -1482,7 +1482,7 @@ bb.d:                                             ; preds = %_ZL11PrintSpacesi.e
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
-  %wcslen.i.i = call i64 @wcslen(ptr nonnull %i.a)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a)
   %i.w = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.x = add nsw i32 %i.w, 1                      ; 3 uses
   %i.y = icmp ne i32 %i.x, 0
@@ -1858,7 +1858,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %wcslen.i.i = call i64 @wcslen(ptr nonnull %i.a)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a)
   %i.c = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.d = add nsw i32 %i.c, 1                      ; 2 uses
   %i.e = icmp eq i32 %i.d, 0
@@ -1965,7 +1965,7 @@ declare void @_Z21ConvertUInt64ToStringyPw(i64 noundef, ptr noundef) local_unnam
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(16) ptr @_ZN11CStringBaseIwEpLEPKw(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 !guid !196 {
 bb.a:
-  %wcslen.i = tail call i64 @wcslen(ptr %1)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1)
   %i.a = trunc i64 %wcslen.i to i32               ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !107  ; 6 uses

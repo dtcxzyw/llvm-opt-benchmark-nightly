@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %_RINvNtNtNtNtCscI6d
   store i64 %i.kl, ptr %.sroa.0.093154, align 8, !alias.scope !2292
   store i64 %.sroa.0.0.copyload.i.i8.i61, ptr %i.kk, align 8, !alias.scope !2292
   %i.km = add nuw nsw i64 %i.kj, 1                ; 2 uses
-  %i.kn = sub nuw i64 %.sroa.15.092155, %i.km
+  %i.kn = sub nuw nsw i64 %.sroa.15.092155, %i.km
   %i.ko = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.093154, i64 %i.km
   br label %.backedge
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph131.split.us.i.i.i.preheader:               ; preds = %.lr.ph131.i.i.i
   %i.an = sub i64 %i.l, %i.j                      ; 3 uses
-  %min.iters.check107 = icmp ult i64 %i.an, 48
+  %min.iters.check107 = icmp ult i64 %i.an, 96
   br i1 %min.iters.check107, label %.lr.ph131.split.us.i.i.i.preheader119, label %vector.ph108
 
 vector.ph108:                                     ; preds = %.lr.ph131.split.us.i.i.i.preheader

@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @wcslen(ptr noundef %1) #60
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #60
   %i.c = trunc i64 %i.b to i32
   br label %bb.c
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIPKvEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %0)
   %i.d = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull @.str.363, i64 noundef 13) ; 0 uses
-  %i.e = tail call i64 @wcslen(ptr noundef nonnull %0) #60
+  %i.e = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #60
   tail call fastcc void @_ZN7testing8internalL20PrintCharsAsStringToIwEENS0_10CharFormatEPKT_mPSo(ptr noundef nonnull %0, i64 noundef %i.e, ptr noundef nonnull %1)
   br label %bb.d
 
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #54
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   store ptr %i.d, ptr %2, align 8, !tbaa !2065
-  %i.e = call noundef i64 @wcslen(ptr noundef nonnull %0) #60 ; 5 uses
+  %i.e = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #60 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #54
   store i64 %i.e, ptr %i.a, align 8, !tbaa !75
   %i.f = icmp ugt i64 %i.e, 3

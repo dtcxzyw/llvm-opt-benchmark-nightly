@@ -205,7 +205,7 @@ bb.hm:                                            ; preds = %bytestream2_get_byt
   %i.awf = add i32 %.03412.i, 1
   %i.awg = tail call i32 @llvm.smax.i32(i32 %i.auy, i32 %i.awf)
   %i.awh = sub i32 %i.awg, %.03412.i              ; 3 uses
-  %min.iters.check555 = icmp ult i32 %i.awh, 16
+  %min.iters.check555 = icmp ult i32 %i.awh, 32
   br i1 %min.iters.check555, label %scalar.ph554.preheader, label %vector.ph556
 
 vector.ph556:                                     ; preds = %bb.hm
@@ -395,7 +395,7 @@ bb.hw:                                            ; preds = %bytestream2_get_byt
   %i.ayy = add i32 %.03412.i133, 1
   %i.ayz = tail call i32 @llvm.smax.i32(i32 %i.axr, i32 %i.ayy)
   %i.aza = sub i32 %i.ayz, %.03412.i133           ; 3 uses
-  %min.iters.check = icmp ult i32 %i.aza, 16
+  %min.iters.check = icmp ult i32 %i.aza, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.hw

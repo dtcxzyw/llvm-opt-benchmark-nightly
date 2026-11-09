@@ -204,7 +204,7 @@ _ZNKSt6vectorIwSaIwEE12_M_check_lenEmPKc.exit.i.i.i88: ; preds = %_ZNKSt6vectorI
   call void @_ZdlPvm(ptr noundef nonnull %i.cm, i64 noundef 4) #35
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #33
-  %i.cq = call noundef i64 @wcslen(ptr noundef nonnull %i.cn) #37 ; 2 uses
+  %i.cq = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.cn) #37 ; 2 uses
   %.idx.i.i.i = shl nuw nsw i64 %i.cq, 2
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.idx.i.i.i
   %i.cs = icmp eq i64 %i.cq, 0
@@ -607,7 +607,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i64 0, ptr %i.h, align 8, !tbaa !146, !alias.scope !398
   store i32 0, ptr %i.g, align 8, !tbaa !91, !alias.scope !398
-  %i.i = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #37
+  %i.i = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #37
   %i.j = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %i.b, i64 noundef %i.i)
           to label %_ZN5boost12lexical_castINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEPwEET_RKT0_.exit unwind label %.body.i ; 0 uses
 
@@ -631,7 +631,7 @@ common.resume:                                    ; preds = %.body.i85, %.body.i
 
 _ZN5boost12lexical_castINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEPwEET_RKT0_.exit: ; preds = %bb.a
   %i.q = load i64, ptr %i.h, align 8, !tbaa !146  ; 3 uses
-  %i.r = call noundef i64 @wcslen(ptr noundef nonnull %i.b) #37
+  %i.r = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #37
   %i.s = icmp eq i64 %i.q, %i.r
   br i1 %i.s, label %bb.b, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit
 
@@ -1034,7 +1034,7 @@ bb.d:                                             ; preds = %bb.c
 _ZN5boost6detail5lcast20optimized_src_streamIwSt11char_traitsIwELm29EE9stream_inIdEEDTcl13shl_real_typefp_dtdefpT6bufferEENS1_5exactIT_EE.exit.thread.i.i: ; preds = %bb.d, %bb.b
   %.0.i.i.ph.i.i.i = phi ptr [ %.9.i.i.i.i.i, %bb.d ], [ %..i.i.i.i.i, %bb.b ] ; 4 uses
   store ptr %.0.i.i.ph.i.i.i, ptr %i.c, align 8, !tbaa !141
-  %i.n = call noundef i64 @wcslen(ptr noundef nonnull %.0.i.i.ph.i.i.i) #37
+  %i.n = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0.i.i.ph.i.i.i) #37
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.ph.i.i.i, i64 %i.n ; 2 uses
   store ptr %i.o, ptr %i.d, align 8, !tbaa !142
   br label %bb.e
@@ -1437,7 +1437,7 @@ _ZN5boost12lexical_castINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEA20_
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #33
   %i.fb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 7 uses
   store ptr %i.fb, ptr %8, align 8, !tbaa !144
-  %i.fc = call noundef i64 @wcslen(ptr noundef nonnull %i.i) #37 ; 5 uses
+  %i.fc = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.i) #37 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
   store i64 %i.fc, ptr %i.b, align 8, !tbaa !114
   %i.fd = icmp ugt i64 %i.fc, 3

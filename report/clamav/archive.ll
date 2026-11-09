@@ -204,7 +204,7 @@ _ZN5ArrayIwE5AllocEm.exit:                        ; preds = %._ZN5ArrayIwE5Alloc
 
 bb.ao:                                            ; preds = %_ZN5ArrayIwE5AllocEm.exit
   %i.dy = load ptr, ptr %1, align 8, !tbaa !76    ; 2 uses
-  %i.dz = call i64 @wcslen(ptr noundef %i.dy) #20 ; 4 uses
+  %i.dz = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.dy) #20 ; 4 uses
   %i.ea = load i64, ptr %i.db, align 8, !tbaa !74 ; 2 uses
   %i.eb = icmp ugt i64 %i.dz, %i.ea
   store i64 %i.dz, ptr %i.de, align 8, !tbaa !75
@@ -461,7 +461,7 @@ bb.bm:                                            ; preds = %_ZN5ArrayIwE5AllocE
 
 bb.bn:                                            ; preds = %bb.bm
   %i.gr = load ptr, ptr %1, align 8, !tbaa !76    ; 2 uses
-  %i.gs = tail call i64 @wcslen(ptr noundef %i.gr) #20 ; 4 uses
+  %i.gs = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.gr) #20 ; 4 uses
   %i.gt = load i64, ptr %i.fr, align 8, !tbaa !74 ; 2 uses
   %i.gu = icmp ugt i64 %i.gs, %i.gt
   store i64 %i.gs, ptr %i.fu, align 8, !tbaa !75
@@ -731,7 +731,7 @@ bb.s:                                             ; preds = %bb.p
 
 bb.t:                                             ; preds = %bb.r, %bb.s, %bb.m
   %i.bg = load ptr, ptr %1, align 8, !tbaa !76    ; 2 uses
-  %i.bh = call i64 @wcslen(ptr noundef %i.bg) #20 ; 4 uses
+  %i.bh = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.bg) #20 ; 4 uses
   %i.bi = load i64, ptr %i.w, align 8, !tbaa !74  ; 2 uses
   %i.bj = icmp ugt i64 %i.bh, %i.bi
   store i64 %i.bh, ptr %i.z, align 8, !tbaa !75

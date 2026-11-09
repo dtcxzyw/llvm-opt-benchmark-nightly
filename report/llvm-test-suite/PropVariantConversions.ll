@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !15   ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %i.m)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.m)
   %i.o = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.p = add nsw i32 %i.o, 1                      ; 3 uses
   %i.q = icmp ne i32 %i.p, 0
@@ -240,7 +240,7 @@ _ZN11CStringBaseIwEC2EPKw.exit:                   ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #13, !noalias !65
   call void @_Z21ConvertUInt64ToStringyPw(i64 noundef %i.ac, ptr noundef nonnull %i.g), !noalias !65
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !65
-  %wcslen.i.i.i = call i64 @wcslen(ptr nonnull %i.g), !noalias !65
+  %wcslen.i.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.g), !noalias !65
   %i.ad = trunc i64 %wcslen.i.i.i to i32          ; 3 uses
   %i.ae = add nsw i32 %i.ad, 1                    ; 3 uses
   %i.af = icmp ne i32 %i.ae, 0
@@ -280,7 +280,7 @@ _ZL21ConvertUInt64ToStringy.exit:                 ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #13, !noalias !66
   call void @_Z21ConvertUInt64ToStringyPw(i64 noundef %i.as, ptr noundef nonnull %i.f), !noalias !66
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !66
-  %wcslen.i.i.i21 = call i64 @wcslen(ptr nonnull %i.f), !noalias !66
+  %wcslen.i.i.i21 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.f), !noalias !66
   %i.at = trunc i64 %wcslen.i.i.i21 to i32        ; 3 uses
   %i.au = add nsw i32 %i.at, 1                    ; 3 uses
   %i.av = icmp ne i32 %i.au, 0
@@ -320,7 +320,7 @@ _ZL21ConvertUInt64ToStringy.exit27:               ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #13, !noalias !67
   call void @_Z21ConvertUInt64ToStringyPw(i64 noundef %i.bi, ptr noundef nonnull %i.e), !noalias !67
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !67
-  %wcslen.i.i.i28 = call i64 @wcslen(ptr nonnull %i.e), !noalias !67
+  %wcslen.i.i.i28 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.e), !noalias !67
   %i.bj = trunc i64 %wcslen.i.i.i28 to i32        ; 3 uses
   %i.bk = add nsw i32 %i.bj, 1                    ; 3 uses
   %i.bl = icmp ne i32 %i.bk, 0
@@ -359,7 +359,7 @@ _ZL21ConvertUInt64ToStringy.exit34:               ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #13, !noalias !68
   call void @_Z21ConvertUInt64ToStringyPw(i64 noundef %i.bx, ptr noundef nonnull %i.d), !noalias !68
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !68
-  %wcslen.i.i.i35 = call i64 @wcslen(ptr nonnull %i.d), !noalias !68
+  %wcslen.i.i.i35 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.d), !noalias !68
   %i.by = trunc i64 %wcslen.i.i.i35 to i32        ; 3 uses
   %i.bz = add nsw i32 %i.by, 1                    ; 3 uses
   %i.ca = icmp ne i32 %i.bz, 0
@@ -404,7 +404,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13, !noalias !69
   call void @_Z20ConvertInt64ToStringxPw(i64 noundef %i.co, ptr noundef nonnull %i.c), !noalias !69
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !69
-  %wcslen.i.i.i42 = call i64 @wcslen(ptr nonnull %i.c), !noalias !69
+  %wcslen.i.i.i42 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c), !noalias !69
   %i.cp = trunc i64 %wcslen.i.i.i42 to i32        ; 3 uses
   %i.cq = add nsw i32 %i.cp, 1                    ; 3 uses
   %i.cr = icmp ne i32 %i.cq, 0
@@ -444,7 +444,7 @@ _ZL20ConvertInt64ToStringx.exit:                  ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13, !noalias !70
   call void @_Z20ConvertInt64ToStringxPw(i64 noundef %i.de, ptr noundef nonnull %i.b), !noalias !70
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !70
-  %wcslen.i.i.i48 = call i64 @wcslen(ptr nonnull %i.b), !noalias !70
+  %wcslen.i.i.i48 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b), !noalias !70
   %i.df = trunc i64 %wcslen.i.i.i48 to i32        ; 3 uses
   %i.dg = add nsw i32 %i.df, 1                    ; 3 uses
   %i.dh = icmp ne i32 %i.dg, 0
@@ -483,7 +483,7 @@ _ZL20ConvertInt64ToStringx.exit54:                ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13, !noalias !71
   call void @_Z20ConvertInt64ToStringxPw(i64 noundef %i.dt, ptr noundef nonnull %i.a), !noalias !71
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !71
-  %wcslen.i.i.i55 = call i64 @wcslen(ptr nonnull %i.a), !noalias !71
+  %wcslen.i.i.i55 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a), !noalias !71
   %i.du = trunc i64 %wcslen.i.i.i55 to i32        ; 3 uses
   %i.dv = add nsw i32 %i.du, 1                    ; 3 uses
   %i.dw = icmp ne i32 %i.dv, 0

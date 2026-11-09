@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 4, !tbaa !134
-  %i.c = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.c = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx = shl nuw nsw i64 %i.c, 2
   %i.d = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.c)
           to label %.noexc unwind label %bb.f
@@ -235,7 +235,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocator
   br i1 %i.s, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
-  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef %1, i64 noundef %i.c) #26 ; 0 uses
+  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef nonnull %1, i64 noundef %i.c) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
@@ -277,7 +277,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 4, !tbaa !134
-  %i.c = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.c = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx = shl nuw nsw i64 %i.c, 2
   %i.d = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.c)
           to label %.noexc unwind label %bb.f
@@ -308,7 +308,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocator
   br i1 %i.s, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
-  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef %1, i64 noundef %i.c) #26 ; 0 uses
+  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef nonnull %1, i64 noundef %i.c) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
@@ -711,7 +711,7 @@ _ZN5boost9container3dtl17basic_string_baseINS0_4test16simple_allocatorIwEEvE9swa
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvEaSEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx.i = shl nuw nsw i64 %i.a, 2
   %i.b = tail call noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.a)
   br i1 %i.b, label %bb.b, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i.i
@@ -743,7 +743,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocator
   br i1 %i.u, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i.i
-  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef %1, i64 noundef %i.a) #26 ; 0 uses
+  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef nonnull %1, i64 noundef %i.a) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i:       ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i.i
@@ -775,7 +775,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocator
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6assignEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx = shl nuw nsw i64 %i.a, 2
   %i.b = tail call noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.a)
   br i1 %i.b, label %bb.b, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
@@ -807,7 +807,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocator
   br i1 %i.u, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
-  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef %1, i64 noundef %i.a) #26 ; 0 uses
+  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef nonnull %1, i64 noundef %i.a) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7reserveEm.exit.i
@@ -1210,7 +1210,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvEpLEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.a
   %i.c = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -1224,14 +1224,14 @@ bb.a:
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.l
   %i.n = select i1 %i.d, ptr %i.h, ptr %i.m
-  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef %1, ptr noundef %i.b, ptr noundef null) ; 0 uses
+  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6appendEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.a
   %i.c = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -1245,7 +1245,7 @@ bb.a:
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.l
   %i.n = select i1 %i.d, ptr %i.h, ptr %i.m
-  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef %1, ptr noundef %i.b, ptr noundef null) ; 0 uses
+  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
@@ -1648,7 +1648,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = tail call noundef i64 @wcslen(ptr noundef %2) #29 ; 2 uses
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #29 ; 2 uses
   %i.j = trunc i64 %i.e to i1                     ; 2 uses
   %i.k = lshr i64 %i.e, 1
   %i.l = and i64 %i.k, 127
@@ -1668,7 +1668,7 @@ bb.e:                                             ; preds = %bb.c
   %i.s = select i1 %i.j, ptr %i.p, ptr %i.r
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %1
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.i
-  %i.v = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.t, ptr noundef %2, ptr noundef %i.u, ptr noundef null) ; 0 uses
+  %i.v = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.t, ptr noundef nonnull %2, ptr noundef nonnull %i.u, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
@@ -2071,8 +2071,8 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7replaceEmmPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %3) #29
-  %i.b = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %i.a)
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #29
+  %i.b = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef nonnull %3, i64 noundef %i.a)
   ret ptr %i.b
 }
 
@@ -2475,7 +2475,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %3 to i64
   %i.b = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %i.c = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.d = tail call noundef i64 @wcslen(ptr noundef %3) #29 ; 2 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #29 ; 2 uses
   %.idx = shl i64 %i.d, 2                         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 %.idx ; 3 uses
   %i.f = icmp ne ptr %1, %2
@@ -2609,7 +2609,7 @@ bb.f:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7replaceIPKwEERS7_SA_SA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE.exit
 
 bb.g:                                             ; preds = %._crit_edge.i
-  %i.bo = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %2, ptr noundef %.016.lcssa.i, ptr noundef %i.e, ptr noundef null) ; 0 uses
+  %i.bo = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE6insertIPKwEEPwSA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %2, ptr noundef nonnull %.016.lcssa.i, ptr noundef nonnull %i.e, ptr noundef null) ; 0 uses
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7replaceIPKwEERS7_SA_SA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE.exit
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7replaceIPKwEERS7_SA_SA_T_SC_PNS_11move_detail13disable_if_orIvNSD_14is_convertibleISC_mEENS0_3dtl17is_input_iteratorISC_Xsr21has_iterator_categoryISC_EE5valueEEENSD_5bool_ILb0EEESL_E4typeE.exit: ; preds = %bb.b, %bb.e, %bb.f, %bb.g
@@ -3012,7 +3012,7 @@ _ZN5boost9container6searchIPwPKwNS0_12basic_stringIwSt11char_traitsIwENS0_4test1
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i64 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE4findEPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 3 uses
   %i.b = add i64 %i.a, %2
   %i.c = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -3312,7 +3312,7 @@ _ZN5boost9container8find_endIPKwS3_NS0_12basic_stringIwSt11char_traitsIwENS0_4te
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i64 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE5rfindEPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 5 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 5 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -3603,7 +3603,7 @@ bb.a:
   br i1 %.not.i, label %bb.b, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE13find_first_ofEPKwmm.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.h = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.i = trunc i64 %i.e to i1
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -3873,7 +3873,7 @@ bb.a:
   br i1 %i.h, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE12find_last_ofEPKwmm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.j = trunc i64 %i.e to i1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -4143,7 +4143,7 @@ bb.e:                                             ; preds = %bb.a, %_ZN5boost9co
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i64 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17find_first_not_ofEPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -4439,7 +4439,7 @@ bb.a:
   br i1 %i.h, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE16find_last_not_ofEPKwmm.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %i.i = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.j = trunc i64 %i.e to i1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -4779,7 +4779,7 @@ bb.a:
   %i.e = load i64, ptr %0, align 8
   %i.f = lshr i64 %i.e, 1
   %i.g = select i1 %i.b, i64 %i.d, i64 %i.f       ; 2 uses
-  %i.h = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.h = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.g, i64 %i.h) ; 2 uses
   %i.i = icmp eq i64 %.sroa.speculated.i, 0
   br i1 %i.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i
@@ -4789,7 +4789,7 @@ _ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i:     ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = select i1 %i.b, ptr %i.j, ptr %i.l
-  %i.n = tail call i32 @wmemcmp(ptr noundef %i.m, ptr noundef %1, i64 noundef %.sroa.speculated.i) #29 ; 2 uses
+  %i.n = tail call i32 @wmemcmp(ptr noundef %i.m, ptr noundef nonnull %1, i64 noundef %.sroa.speculated.i) #29 ; 2 uses
   %.not.i = icmp eq i32 %i.n, 0
   br i1 %.not.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE9s_compareIPKwSA_EEiT_SB_T0_SC_.exit
 
@@ -4854,7 +4854,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocator
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i32 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7compareEmmPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %3) #29 ; 2 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #29 ; 2 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -4887,7 +4887,7 @@ _ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i:   ; preds = %bb.c
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = select i1 %i.j, ptr %i.p, ptr %i.r
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %1
-  %i.u = tail call i32 @wmemcmp(ptr noundef %i.t, ptr noundef %3, i64 noundef %.sroa.speculated.i.i) #29 ; 2 uses
+  %i.u = tail call i32 @wmemcmp(ptr noundef %i.t, ptr noundef nonnull %3, i64 noundef %.sroa.speculated.i.i) #29 ; 2 uses
   %.not.i.i = icmp eq i32 %i.u, 0
   br i1 %.not.i.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE7compareEmmPKwm.exit
 
@@ -4952,7 +4952,7 @@ _ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocato
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE8containsEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 3 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -5051,7 +5051,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE11starts_withEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 3 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -5072,7 +5072,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = select i1 %i.j, ptr %i.k, ptr %i.m
-  %i.o = tail call i32 @wmemcmp(ptr noundef %i.n, ptr noundef %1, i64 noundef %i.a) #29
+  %i.o = tail call i32 @wmemcmp(ptr noundef %i.n, ptr noundef nonnull %1, i64 noundef %i.a) #29
   %i.p = icmp eq i32 %i.o, 0
   br label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit
 
@@ -5117,7 +5117,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE9ends_withEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 4 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 4 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -5140,7 +5140,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = select i1 %i.j, ptr %i.k, ptr %i.m
   %i.o = sub nuw nsw i64 %i.h, %i.a
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.o
-  %i.q = tail call i32 @wmemcmp(ptr noundef %i.p, ptr noundef %1, i64 noundef %i.a) #29
+  %i.q = tail call i32 @wmemcmp(ptr noundef %i.p, ptr noundef nonnull %1, i64 noundef %i.a) #29
   %i.r = icmp eq i32 %i.q, 0
   br label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit
 
@@ -5543,7 +5543,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 4, !tbaa !134
-  %i.c = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.c = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx = shl nuw nsw i64 %i.c, 2
   %i.d = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.c)
           to label %.noexc unwind label %bb.f
@@ -5574,7 +5574,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i: ;
   br i1 %i.s, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
-  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef %1, i64 noundef %i.c) #26 ; 0 uses
+  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef nonnull %1, i64 noundef %i.c) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
@@ -5616,7 +5616,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 4, !tbaa !134
-  %i.c = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.c = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx = shl nuw nsw i64 %i.c, 2
   %i.d = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.c)
           to label %.noexc unwind label %bb.f
@@ -5647,7 +5647,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i: ;
   br i1 %i.s, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
-  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef %1, i64 noundef %i.c) #26 ; 0 uses
+  %i.t = tail call ptr @wmemcpy(ptr noundef %i.r, ptr noundef nonnull %1, i64 noundef %i.c) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
@@ -6050,7 +6050,7 @@ _ZN5boost9container3dtl17basic_string_baseISaIwEvE9swap_dataERS4_.exit: ; preds 
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvEaSEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx.i = shl nuw nsw i64 %i.a, 2
   %i.b = tail call noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.a)
   br i1 %i.b, label %bb.b, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i.i
@@ -6082,7 +6082,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i.i:
   br i1 %i.u, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i.i
-  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef %1, i64 noundef %i.a) #26 ; 0 uses
+  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef nonnull %1, i64 noundef %i.a) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i.i:       ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i.i
@@ -6114,7 +6114,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6assignEPKw.exit: ; 
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6assignEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 6 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 6 uses
   %.idx = shl nuw nsw i64 %i.a, 2
   %i.b = tail call noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.a)
   br i1 %i.b, label %bb.b, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
@@ -6146,7 +6146,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i: ;
   br i1 %i.u, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
-  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef %1, i64 noundef %i.a) #26 ; 0 uses
+  %i.v = tail call ptr @wmemcpy(ptr noundef %i.t, ptr noundef nonnull %1, i64 noundef %i.a) #26 ; 0 uses
   br label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i
 
 _ZNSt11char_traitsIwE4copyEPwPKwm.exit.i:         ; preds = %bb.c, %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7reserveEm.exit.i
@@ -6549,7 +6549,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvEpLEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.a
   %i.c = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -6563,14 +6563,14 @@ bb.a:
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.l
   %i.n = select i1 %i.d, ptr %i.h, ptr %i.m
-  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef %1, ptr noundef %i.b, ptr noundef null) ; 0 uses
+  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6appendEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.a
   %i.c = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -6584,7 +6584,7 @@ bb.a:
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.l
   %i.n = select i1 %i.d, ptr %i.h, ptr %i.m
-  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef %1, ptr noundef %i.b, ptr noundef null) ; 0 uses
+  %i.o = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
@@ -6987,7 +6987,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = tail call noundef i64 @wcslen(ptr noundef %2) #29 ; 2 uses
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #29 ; 2 uses
   %i.j = trunc i64 %i.e to i1                     ; 2 uses
   %i.k = lshr i64 %i.e, 1
   %i.l = and i64 %i.k, 127
@@ -7007,7 +7007,7 @@ bb.e:                                             ; preds = %bb.c
   %i.s = select i1 %i.j, ptr %i.p, ptr %i.r
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %1
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.i
-  %i.v = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.t, ptr noundef %2, ptr noundef %i.u, ptr noundef null) ; 0 uses
+  %i.v = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.t, ptr noundef nonnull %2, ptr noundef nonnull %i.u, ptr noundef null) ; 0 uses
   ret ptr %0
 }
 
@@ -7410,8 +7410,8 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7replaceEmmPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %3) #29
-  %i.b = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %i.a)
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #29
+  %i.b = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef nonnull %3, i64 noundef %i.a)
   ret ptr %i.b
 }
 
@@ -7814,7 +7814,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %3 to i64
   %i.b = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %i.c = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.d = tail call noundef i64 @wcslen(ptr noundef %3) #29 ; 2 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #29 ; 2 uses
   %.idx = shl i64 %i.d, 2                         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 %.idx ; 3 uses
   %i.f = icmp ne ptr %1, %2
@@ -7948,7 +7948,7 @@ bb.f:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7replaceIPKwEERS5_S8_S8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE.exit
 
 bb.g:                                             ; preds = %._crit_edge.i
-  %i.bo = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %2, ptr noundef %.016.lcssa.i, ptr noundef %i.e, ptr noundef null) ; 0 uses
+  %i.bo = tail call noundef ptr @_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE6insertIPKwEEPwS8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %2, ptr noundef nonnull %.016.lcssa.i, ptr noundef nonnull %i.e, ptr noundef null) ; 0 uses
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7replaceIPKwEERS5_S8_S8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE.exit
 
 _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7replaceIPKwEERS5_S8_S8_T_SA_PNS_11move_detail13disable_if_orIvNSB_14is_convertibleISA_mEENS0_3dtl17is_input_iteratorISA_Xsr21has_iterator_categoryISA_EE5valueEEENSB_5bool_ILb0EEESJ_E4typeE.exit: ; preds = %bb.b, %bb.e, %bb.f, %bb.g
@@ -8351,7 +8351,7 @@ _ZN5boost9container6searchIPwPKwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE9Eq
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i64 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE4findEPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 3 uses
   %i.b = add i64 %i.a, %2
   %i.c = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.d = trunc i8 %i.c to i1
@@ -8651,7 +8651,7 @@ _ZN5boost9container8find_endIPKwS3_NS0_12basic_stringIwSt11char_traitsIwESaIwEvE
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i64 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE5rfindEPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 5 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 5 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -8942,7 +8942,7 @@ bb.a:
   br i1 %.not.i, label %bb.b, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE13find_first_ofEPKwmm.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.h = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.i = trunc i64 %i.e to i1
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -9212,7 +9212,7 @@ bb.a:
   br i1 %i.h, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE12find_last_ofEPKwmm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.j = trunc i64 %i.e to i1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -9482,7 +9482,7 @@ bb.e:                                             ; preds = %bb.a, %_ZN5boost9co
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i64 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17find_first_not_ofEPKwm(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -9778,7 +9778,7 @@ bb.a:
   br i1 %i.h, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE16find_last_not_ofEPKwmm.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %i.i = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.i = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %i.j = trunc i64 %i.e to i1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -10118,7 +10118,7 @@ bb.a:
   %i.e = load i64, ptr %0, align 8
   %i.f = lshr i64 %i.e, 1
   %i.g = select i1 %i.b, i64 %i.d, i64 %i.f       ; 2 uses
-  %i.h = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 2 uses
+  %i.h = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.g, i64 %i.h) ; 2 uses
   %i.i = icmp eq i64 %.sroa.speculated.i, 0
   br i1 %i.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i
@@ -10128,7 +10128,7 @@ _ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i:     ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = select i1 %i.b, ptr %i.j, ptr %i.l
-  %i.n = tail call i32 @wmemcmp(ptr noundef %i.m, ptr noundef %1, i64 noundef %.sroa.speculated.i) #29 ; 2 uses
+  %i.n = tail call i32 @wmemcmp(ptr noundef %i.m, ptr noundef nonnull %1, i64 noundef %.sroa.speculated.i) #29 ; 2 uses
   %.not.i = icmp eq i32 %i.n, 0
   br i1 %.not.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE9s_compareIPKwS8_EEiT_S9_T0_SA_.exit
 
@@ -10193,7 +10193,7 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE9s_compareIPwPKwEEiT
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden noundef i32 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7compareEmmPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %3) #29 ; 2 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %3) #29 ; 2 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -10226,7 +10226,7 @@ _ZNSt11char_traitsIwE7compareEPKwS2_m.exit.i.i:   ; preds = %bb.c
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = select i1 %i.j, ptr %i.p, ptr %i.r
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %1
-  %i.u = tail call i32 @wmemcmp(ptr noundef %i.t, ptr noundef %3, i64 noundef %.sroa.speculated.i.i) #29 ; 2 uses
+  %i.u = tail call i32 @wmemcmp(ptr noundef %i.t, ptr noundef nonnull %3, i64 noundef %.sroa.speculated.i.i) #29 ; 2 uses
   %.not.i.i = icmp eq i32 %i.u, 0
   br i1 %.not.i.i, label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit.thread.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE7compareEmmPKwm.exit
 
@@ -10291,7 +10291,7 @@ _ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE4findEwm.exit: ; pr
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE8containsEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 3 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -10390,7 +10390,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE11starts_withEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 3 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 3 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -10411,7 +10411,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = select i1 %i.j, ptr %i.k, ptr %i.m
-  %i.o = tail call i32 @wmemcmp(ptr noundef %i.n, ptr noundef %1, i64 noundef %i.a) #29
+  %i.o = tail call i32 @wmemcmp(ptr noundef %i.n, ptr noundef nonnull %1, i64 noundef %i.a) #29
   %i.p = icmp eq i32 %i.o, 0
   br label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit
 
@@ -10456,7 +10456,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE9ends_withEPKw(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef i64 @wcslen(ptr noundef %1) #29 ; 4 uses
+  %i.a = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 4 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !109     ; 2 uses
   %i.c = trunc i8 %i.b to i1
   %i.d = lshr i8 %i.b, 1
@@ -10479,7 +10479,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = select i1 %i.j, ptr %i.k, ptr %i.m
   %i.o = sub nuw nsw i64 %i.h, %i.a
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.o
-  %i.q = tail call i32 @wmemcmp(ptr noundef %i.p, ptr noundef %1, i64 noundef %i.a) #29
+  %i.q = tail call i32 @wmemcmp(ptr noundef %i.p, ptr noundef nonnull %1, i64 noundef %i.a) #29
   %i.r = icmp eq i32 %i.q, 0
   br label %_ZNSt11char_traitsIwE7compareEPKwS2_m.exit
 

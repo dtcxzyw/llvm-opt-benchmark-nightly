@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.t
-  %i.as = call i64 @wcslen(ptr noundef %i.am) #14
+  %i.as = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.am) #14
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
@@ -270,7 +270,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.bk = call i64 @wcslen(ptr noundef %i.be) #14
+  %i.bk = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.be) #14
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
@@ -346,7 +346,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.l = tail call i64 @wcslen(ptr noundef %i.f) #14
+  %i.l = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.f) #14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -749,7 +749,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.af
-  %i.dc = call i64 @wcslen(ptr noundef %i.cw) #14, !noalias !134
+  %i.dc = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.cw) #14, !noalias !134
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag

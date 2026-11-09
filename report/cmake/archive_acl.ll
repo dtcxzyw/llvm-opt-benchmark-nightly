@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %bb.h
   %i.r = load i32, ptr %0, align 8, !tbaa !29     ; 2 uses
   %i.s = tail call ptr @wcscpy(ptr noundef nonnull %i.l, ptr noundef nonnull @.str.9) #20 ; 0 uses
-  %i.t = tail call i64 @wcslen(ptr noundef nonnull %i.l) #25
+  %i.t = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.l) #25
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.t ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   store i32 58, ptr %i.u, align 4, !tbaa !36
@@ -228,7 +228,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %., ptr %i.ag, align 4, !tbaa !36
   %i.ai = load i32, ptr %0, align 8, !tbaa !29    ; 2 uses
   %i.aj = tail call ptr @wcscpy(ptr noundef nonnull %i.ah, ptr noundef nonnull @.str.10) #20 ; 0 uses
-  %i.ak = tail call i64 @wcslen(ptr noundef nonnull %i.ah) #25
+  %i.ak = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ah) #25
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.ak ; 6 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   store i32 58, ptr %i.al, align 4, !tbaa !36
@@ -250,7 +250,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %., ptr %i.aw, align 4, !tbaa !36
   %i.ay = load i32, ptr %0, align 8, !tbaa !29    ; 2 uses
   %i.az = tail call ptr @wcscpy(ptr noundef nonnull %i.ax, ptr noundef nonnull @.str.33) #20 ; 0 uses
-  %i.ba = tail call i64 @wcslen(ptr noundef nonnull %i.ax) #25
+  %i.ba = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ax) #25
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %i.ba ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 4 ; 2 uses
   store i32 58, ptr %i.bb, align 4, !tbaa !36
@@ -360,7 +360,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.ct = load ptr, ptr %i.b, align 8, !tbaa !38  ; 3 uses
   %i.cu = call ptr @wcscpy(ptr noundef %i.ct, ptr noundef nonnull @.str.1) #20 ; 0 uses
-  %i.cv = call i64 @wcslen(ptr noundef %i.ct) #25
+  %i.cv = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ct) #25
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %i.cv
   store ptr %i.cw, ptr %i.b, align 8, !tbaa !38
   br label %bb.v
@@ -442,7 +442,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   %i.dm = phi ptr [ %i.dl, %bb.af ], [ %.pre135.i86, %bb.x ], [ %i.cz, %bb.y ], [ %.pre132.i85, %bb.aa ], [ %i.dd, %bb.ab ], [ %i.df, %bb.ac ], [ %i.dh, %bb.ad ], [ %i.dj, %bb.ae ] ; 2 uses
   %.283.i = phi ptr [ %i.cq, %bb.af ], [ null, %bb.x ], [ %.081.i, %bb.y ], [ null, %bb.aa ], [ %.182.i, %bb.ab ], [ null, %bb.ac ], [ null, %bb.ad ], [ null, %bb.ae ] ; 2 uses
   %.2.i = phi i32 [ %.0, %bb.af ], [ -1, %bb.x ], [ %.079.i, %bb.y ], [ -1, %bb.aa ], [ %.180.i, %bb.ab ], [ -1, %bb.ac ], [ -1, %bb.ad ], [ -1, %bb.ae ] ; 5 uses
-  %i.dn = call i64 @wcslen(ptr noundef %i.dm) #25
+  %i.dn = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.dm) #25
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %i.dn ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 4 ; 4 uses
   store ptr %i.dp, ptr %i.b, align 8, !tbaa !38
@@ -464,7 +464,7 @@ bb.ah:                                            ; preds = %switch.early.test.i
 bb.ai:                                            ; preds = %bb.ah
   %i.dr = call ptr @wcscpy(ptr noundef nonnull %i.dp, ptr noundef nonnull %.283.i) #20 ; 0 uses
   %i.ds = load ptr, ptr %i.b, align 8, !tbaa !38  ; 2 uses
-  %i.dt = call i64 @wcslen(ptr noundef %i.ds) #25
+  %i.dt = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ds) #25
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.ds, i64 %i.dt
   br label %bb.ak
 
@@ -846,7 +846,7 @@ bb.bn:                                            ; preds = %.split.i, %.split10
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj
   %i.ii = load ptr, ptr %i.b, align 8, !tbaa !38  ; 2 uses
-  %i.ij = call i64 @wcslen(ptr noundef %i.ii) #25
+  %i.ij = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ii) #25
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.ii, i64 %i.ij ; 2 uses
   store ptr %i.ik, ptr %i.b, align 8, !tbaa !38
   br label %bb.bp
@@ -895,7 +895,7 @@ bb.bu:                                            ; preds = %bb.n, %bb.n, %bb.n,
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.k
   %i.is = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.bp, %bb.k ]
   store i32 0, ptr %i.is, align 4, !tbaa !36
-  %i.it = call i64 @wcslen(ptr noundef nonnull %i.l) #25 ; 2 uses
+  %i.it = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.l) #25 ; 2 uses
   %i.iu = add i64 %phi.call, -1
   %i.iv = icmp ugt i64 %i.it, %i.iu
   br i1 %i.iv, label %bb.bv, label %bb.bw
@@ -1029,7 +1029,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.ae = call i64 @wcslen(ptr noundef nonnull %i.ac) #25
+  %i.ae = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ac) #25
   %i.af = add i64 %i.ae, %i.y
   br label %bb.t
 
