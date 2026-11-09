@@ -205,13 +205,22 @@ bb.y:                                             ; preds = %_ZNK5clang14ObjCObj
   %i.fy = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !831 ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 16 ; 33 uses
-  %i.gb = load i64, ptr %i.fz, align 8, !tbaa !833 ; 4 uses
+  %i.gb = load i64, ptr %i.fz, align 8, !tbaa !833 ; 3 uses
+  %trunc418.i = trunc i64 %i.gb to i32            ; 2 uses
   br i1 %.not.i, label %bb.am, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %17 = and i64 %i.gb, 4294967295
-  %.not.i.i.i.i.i = icmp eq i64 %17, 6
-  br i1 %.not.i.i.i.i.i, label %bb.aa, label %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+  switch i32 %trunc418.i, label %17 [
+    i32 6, label %bb.aa
+    i32 11, label %bb.ac
+    i32 4, label %bb.ad
+    i32 12, label %bb.ae
+    i32 19, label %bb.ag
+    i32 14, label %bb.ah
+    i32 26, label %bb.ai
+    i32 5, label %bb.aj
+    i32 13, label %bb.ak
+  ]
 
 bb.aa:                                            ; preds = %bb.z
   %i.gc = load i32, ptr %i.ga, align 1
@@ -239,21 +248,7 @@ bb.ab:                                            ; preds = %bb.aa
   %.not.i.i64.i = icmp eq i32 %i.gt, 0
   br i1 %.not.i.i64.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i: ; preds = %bb.z
-  %trunc393.i = trunc i64 %i.gb to i32
-  switch i32 %trunc393.i, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345 [
-    i32 11, label %bb.ac
-    i32 4, label %bb.ad
-    i32 12, label %bb.ae
-    i32 19, label %bb.ag
-    i32 14, label %bb.ah
-    i32 26, label %bb.ai
-    i32 5, label %bb.aj
-    i32 13, label %bb.ak
-    i32 10, label %bb.al
-  ]
-
-bb.ac:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ac:                                            ; preds = %bb.z
   %i.gu = load i64, ptr %i.ga, align 1
   %i.gv = xor i64 %i.gu, 7308327837486052705
   %i.gw = getelementptr i8, ptr %i.ga, i64 3
@@ -265,14 +260,14 @@ bb.ac:                                            ; preds = %_ZN4llvm12StringSwi
   %.not.i.i72.i = icmp eq i32 %i.hb, 0
   br i1 %.not.i.i72.i, label %.sink.split, label %bb.af
 
-bb.ad:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ad:                                            ; preds = %bb.z
   %i.hc = load i32, ptr %i.ga, align 1
   %i.hd = icmp ne i32 %i.hc, 2037411683
   %i.he = zext i1 %i.hd to i32
   %.not.i.i80.i = icmp eq i32 %i.he, 0
   br i1 %.not.i.i80.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.ae:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ae:                                            ; preds = %bb.z
   %i.hf = load i64, ptr %i.ga, align 1
   %i.hg = xor i64 %i.hf, 7526756701663424355
   %i.hh = getelementptr i8, ptr %i.ga, i64 8
@@ -297,7 +292,7 @@ bb.af:                                            ; preds = %bb.ac
   %.not.i.i96.i = icmp eq i32 %i.hv, 0
   br i1 %.not.i.i96.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.ag:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ag:                                            ; preds = %bb.z
   %i.hw = load i128, ptr %i.ga, align 1
   %i.hx = xor i128 %i.hw, 120172879599473145062355903880939992429
   %i.hy = getelementptr i8, ptr %i.ga, i64 3
@@ -309,7 +304,7 @@ bb.ag:                                            ; preds = %_ZN4llvm12StringSwi
   %.not.i.i104.i = icmp eq i32 %i.id, 0
   br i1 %.not.i.i104.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.ah:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ah:                                            ; preds = %bb.z
   %i.ie = load i64, ptr %i.ga, align 1
   %i.if = xor i64 %i.ie, 8030558486962206561
   %i.ig = getelementptr i8, ptr %i.ga, i64 6
@@ -321,7 +316,7 @@ bb.ah:                                            ; preds = %_ZN4llvm12StringSwi
   %.not.i.i112.i = icmp eq i32 %i.il, 0
   br i1 %.not.i.i112.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.ai:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ai:                                            ; preds = %bb.z
   %i.im = load i128, ptr %i.ga, align 1
   %i.in = xor i128 %i.im, 132120151289786674985207142184974837106
   %i.io = getelementptr i8, ptr %i.ga, i64 10
@@ -333,7 +328,7 @@ bb.ai:                                            ; preds = %_ZN4llvm12StringSwi
   %.not.i.i120.i = icmp eq i32 %i.it, 0
   br i1 %.not.i.i120.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.aj:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.aj:                                            ; preds = %bb.z
   %i.iu = load i32, ptr %i.ga, align 1
   %i.iv = xor i32 %i.iu, 1935764579
   %i.iw = getelementptr i8, ptr %i.ga, i64 4
@@ -346,7 +341,7 @@ bb.aj:                                            ; preds = %_ZN4llvm12StringSwi
   %.not.i.i128.i = icmp eq i32 %i.jc, 0
   br i1 %.not.i.i128.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.ak:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+bb.ak:                                            ; preds = %bb.z
   %i.jd = load i64, ptr %i.ga, align 1
   %i.je = xor i64 %i.jd, 8245886904409615459
   %i.jf = getelementptr i8, ptr %i.ga, i64 5
@@ -358,7 +353,12 @@ bb.ak:                                            ; preds = %_ZN4llvm12StringSwi
   %.not.i.i136.i = icmp eq i32 %i.jk, 0
   br i1 %.not.i.i136.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-bb.al:                                            ; preds = %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i
+17:                                               ; preds = %bb.z
+  %18 = and i64 %i.gb, 4294967295
+  %.not.i.i.i.i142.i = icmp eq i64 %18, 10
+  br i1 %.not.i.i.i.i142.i, label %bb.al, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
+
+bb.al:                                            ; preds = %17
   %i.jl = load i64, ptr %i.ga, align 1
   %i.jm = xor i64 %i.jl, 7020095262143051123
   %i.jn = getelementptr i8, ptr %i.ga, i64 8
@@ -372,8 +372,7 @@ bb.al:                                            ; preds = %_ZN4llvm12StringSwi
   br i1 %.not.i.i144.i, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
 bb.am:                                            ; preds = %bb.y
-  %trunc392.i = trunc i64 %i.gb to i32
-  switch i32 %trunc392.i, label %bb.aq [
+  switch i32 %trunc418.i, label %bb.aq [
     i32 3, label %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit189.i
     i32 5, label %bb.an
     i32 13, label %bb.ao
@@ -450,7 +449,7 @@ _ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralE
   %.not.i.i155.i = icmp eq i32 %bcmp.i.i.i.i154.fr.i, 0
   br i1 %.not.i.i155.i, label %.sink.split, label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345
 
-_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345: ; preds = %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit.i.i.i, %bb.x, %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit.i.i, %bb.u, %_ZN4llvm16dyn_cast_or_nullIN5clang15ObjCMessageExprENS1_4ExprEEEDaPT0_.exit.i, %bb.q, %bb.r, %_ZNK5clang14ObjCObjectType12getInterfaceEv.exit.i, %bb.v, %bb.ap, %bb.s, %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit.i, %_ZNK5clang4Type5getAsINS_21ObjCObjectPointerTypeEEEPKT_v.exit.i157, %.split.i, %bb.t, %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit66.i, %bb.al, %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit189.i, %bb.aq, %bb.ao, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ab
+_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread345: ; preds = %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit.i.i.i, %bb.x, %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit.i.i, %bb.u, %_ZN4llvm16dyn_cast_or_nullIN5clang15ObjCMessageExprENS1_4ExprEEEDaPT0_.exit.i, %bb.q, %bb.r, %_ZNK5clang14ObjCObjectType12getInterfaceEv.exit.i, %bb.v, %bb.ap, %bb.s, %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit.i, %_ZNK5clang4Type5getAsINS_21ObjCObjectPointerTypeEEEPKT_v.exit.i157, %.split.i, %bb.t, %17, %bb.al, %_ZN4llvm12StringSwitchIPN5clang17ObjCInterfaceDeclES3_E4CaseENS_13StringLiteralES3_.exit189.i, %bb.aq, %bb.ao, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #28
   br label %_ZL29GetAssumedMessageSendExprTypePN5clang4ExprE.exit.thread
 

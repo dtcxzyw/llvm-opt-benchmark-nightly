@@ -204,15 +204,11 @@ bb.h:                                             ; preds = %.lr.ph, %_RINvNtCsj
   br label %.thread80.loopexit.split-lp
 
 bb.i:                                             ; preds = %bb.h
-  %i.ay = load i64, ptr %i.c, align 8, !range !29, !noundef !5 ; 3 uses
-  %.not56 = icmp eq i64 %i.ay, -1
-  br i1 %.not56, label %bb.j, label %6
-
-6:                                                ; preds = %bb.i
-  %7 = icmp ne i64 %i.ay, -9223372036854775804
-  call void @llvm.assume(i1 %7)
-  %8 = icmp eq i64 %i.ay, -9223372036854775759
-  br i1 %8, label %bb.m, label %bb.o
+  %i.ay = load i64, ptr %i.c, align 8, !range !29, !noundef !5
+  switch i64 %i.ay, label %bb.o [
+    i64 -1, label %bb.j
+    i64 -9223372036854775759, label %bb.m
+  ]
 
 bb.j:                                             ; preds = %bb.i
   store i8 -1, ptr %0, align 8
@@ -227,7 +223,7 @@ bb.l:                                             ; preds = %bb.k
   invoke void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorECs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.g)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error5ErrorEECs7ZUl82OSlxp_6rustls.exit unwind label %bb.q
 
-bb.m:                                             ; preds = %6
+bb.m:                                             ; preds = %bb.i
   %i.bb = load i64, ptr %i.g, align 8, !range !29, !alias.scope !1190, !noundef !5
   %i.bc = icmp eq i64 %i.bb, -1
   br i1 %i.bc, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error5ErrorEECs7ZUl82OSlxp_6rustls.exit62, label %bb.n
@@ -236,7 +232,7 @@ bb.n:                                             ; preds = %bb.m
   invoke void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorECs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.g)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error5ErrorEECs7ZUl82OSlxp_6rustls.exit62 unwind label %.thread
 
-bb.o:                                             ; preds = %6
+bb.o:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   invoke void @_RNvNtCs7ZUl82OSlxp_6rustls6webpki9pki_error(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %i.c)
           to label %bb.p unwind label %.thread80.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

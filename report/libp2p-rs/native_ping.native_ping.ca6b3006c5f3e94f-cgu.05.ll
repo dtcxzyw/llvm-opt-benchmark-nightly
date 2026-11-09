@@ -205,9 +205,11 @@ bb.mq:                                            ; preds = %bb.lf
   br label %.thread228
 
 bb.mr:                                            ; preds = %bb.lf
-  %i.aeq = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 5 uses
-  %3 = icmp eq i8 %i.aeq, -1
-  br i1 %3, label %bb.ms, label %4
+  %i.aeq = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 4 uses
+  switch i8 %i.aeq, label %bb.na [
+    i8 -1, label %bb.ms
+    i8 6, label %bb.mw
+  ]
 
 bb.ms:                                            ; preds = %bb.mr
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -232,13 +234,7 @@ bb.mv:                                            ; preds = %bb.ms
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ng unwind label %bb.mp
 
-4:                                                ; preds = %bb.mr
-  %5 = icmp ne i8 %i.aeq, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.aeq, 6
-  br i1 %6, label %bb.mw, label %bb.na
-
-bb.mw:                                            ; preds = %4
+bb.mw:                                            ; preds = %bb.mr
   %i.aet = load i64, ptr %1, align 8, !range !24, !alias.scope !2151, !noundef !9
   %i.aeu = call i64 @llvm.usub.sat.i64(i64 %i.aet, i64 4)
   switch i64 %i.aeu, label %bb.nh [
@@ -259,7 +255,9 @@ bb.mz:                                            ; preds = %bb.mw
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nh unwind label %bb.ne
 
-bb.na:                                            ; preds = %4
+bb.na:                                            ; preds = %bb.mr
+  %3 = icmp ne i8 %i.aeq, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5170.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
   %.sroa.5172.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %.sroa.5172.0.copyload = load ptr, ptr %.sroa.5172.0..sroa_idx, align 8 ; 2 uses
@@ -662,9 +660,11 @@ bb.mq:                                            ; preds = %bb.lf
   br label %.thread228
 
 bb.mr:                                            ; preds = %bb.lf
-  %i.aeq = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 5 uses
-  %3 = icmp eq i8 %i.aeq, -1
-  br i1 %3, label %bb.ms, label %4
+  %i.aeq = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 4 uses
+  switch i8 %i.aeq, label %bb.na [
+    i8 -1, label %bb.ms
+    i8 6, label %bb.mw
+  ]
 
 bb.ms:                                            ; preds = %bb.mr
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -689,13 +689,7 @@ bb.mv:                                            ; preds = %bb.ms
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ng unwind label %bb.mp
 
-4:                                                ; preds = %bb.mr
-  %5 = icmp ne i8 %i.aeq, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.aeq, 6
-  br i1 %6, label %bb.mw, label %bb.na
-
-bb.mw:                                            ; preds = %4
+bb.mw:                                            ; preds = %bb.mr
   %i.aet = load i64, ptr %1, align 8, !range !24, !alias.scope !2485, !noundef !9
   %i.aeu = call i64 @llvm.usub.sat.i64(i64 %i.aet, i64 4)
   switch i64 %i.aeu, label %bb.nh [
@@ -716,7 +710,9 @@ bb.mz:                                            ; preds = %bb.mw
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nh unwind label %bb.ne
 
-bb.na:                                            ; preds = %4
+bb.na:                                            ; preds = %bb.mr
+  %3 = icmp ne i8 %i.aeq, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5170.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
   %.sroa.5172.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %.sroa.5172.0.copyload = load ptr, ptr %.sroa.5172.0..sroa_idx, align 8 ; 2 uses
@@ -1119,9 +1115,11 @@ bb.mq:                                            ; preds = %bb.lf
   br label %.thread228
 
 bb.mr:                                            ; preds = %bb.lf
-  %i.aex = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 5 uses
-  %3 = icmp eq i8 %i.aex, -1
-  br i1 %3, label %bb.ms, label %4
+  %i.aex = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 4 uses
+  switch i8 %i.aex, label %bb.na [
+    i8 -1, label %bb.ms
+    i8 6, label %bb.mw
+  ]
 
 bb.ms:                                            ; preds = %bb.mr
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -1148,13 +1146,7 @@ bb.mv:                                            ; preds = %bb.ms
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ng unwind label %bb.mp
 
-4:                                                ; preds = %bb.mr
-  %5 = icmp ne i8 %i.aex, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.aex, 6
-  br i1 %6, label %bb.mw, label %bb.na
-
-bb.mw:                                            ; preds = %4
+bb.mw:                                            ; preds = %bb.mr
   %i.afc = load i64, ptr %1, align 8, !range !25, !alias.scope !2819, !noundef !9 ; 2 uses
   %i.afd = icmp slt i64 %i.afc, -9223372036854775804
   %i.afe = add i64 %i.afc, -9223372036854775807
@@ -1177,7 +1169,9 @@ bb.mz:                                            ; preds = %bb.mw
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nh unwind label %bb.ne
 
-bb.na:                                            ; preds = %4
+bb.na:                                            ; preds = %bb.mr
+  %3 = icmp ne i8 %i.aex, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5170.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
   %.sroa.5172.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %.sroa.5172.0.copyload = load ptr, ptr %.sroa.5172.0..sroa_idx, align 8 ; 2 uses
@@ -1580,9 +1574,11 @@ bb.mq:                                            ; preds = %bb.lf
   br label %.thread228
 
 bb.mr:                                            ; preds = %bb.lf
-  %i.aeq = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 5 uses
-  %3 = icmp eq i8 %i.aeq, -1
-  br i1 %3, label %bb.ms, label %4
+  %i.aeq = load i8, ptr %i.cs, align 8, !range !30, !noundef !9 ; 4 uses
+  switch i8 %i.aeq, label %bb.na [
+    i8 -1, label %bb.ms
+    i8 6, label %bb.mw
+  ]
 
 bb.ms:                                            ; preds = %bb.mr
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -1607,13 +1603,7 @@ bb.mv:                                            ; preds = %bb.ms
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ng unwind label %bb.mp
 
-4:                                                ; preds = %bb.mr
-  %5 = icmp ne i8 %i.aeq, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.aeq, 6
-  br i1 %6, label %bb.mw, label %bb.na
-
-bb.mw:                                            ; preds = %4
+bb.mw:                                            ; preds = %bb.mr
   %i.aet = load i64, ptr %1, align 8, !range !26, !alias.scope !3153, !noundef !9
   %i.aeu = call i64 @llvm.usub.sat.i64(i64 %i.aet, i64 5)
   switch i64 %i.aeu, label %bb.nh [
@@ -1634,7 +1624,9 @@ bb.mz:                                            ; preds = %bb.mw
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nh unwind label %bb.ne
 
-bb.na:                                            ; preds = %4
+bb.na:                                            ; preds = %bb.mr
+  %3 = icmp ne i8 %i.aeq, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5170.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
   %.sroa.5172.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %.sroa.5172.0.copyload = load ptr, ptr %.sroa.5172.0..sroa_idx, align 8 ; 2 uses

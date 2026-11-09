@@ -205,15 +205,11 @@ bb.fc:                                            ; preds = %bb.fb
   br label %.body343.i.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16TransactionErrorENtNtB4_6marker4SendEL_EEEB2B_.exit.i.i: ; preds = %bb.fa, %bb.ez
-  %i.um = load i64, ptr %i.tw, align 8, !range !139, !noalias !25948, !noundef !97 ; 3 uses
-  %.not91.i.i = icmp eq i64 %i.um, -9223372036854775781
-  br i1 %.not91.i.i, label %bb.fd, label %3
-
-3:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16TransactionErrorENtNtB4_6marker4SendEL_EEEB2B_.exit.i.i
-  %4 = icmp ne i64 %i.um, -9223372036854775788
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.um, -9223372036854775790
-  br i1 %5, label %bb.gf, label %bb.rb
+  %i.um = load i64, ptr %i.tw, align 8, !range !139, !noalias !25948, !noundef !97 ; 2 uses
+  switch i64 %i.um, label %bb.rb [
+    i64 -9223372036854775781, label %bb.fd
+    i64 -9223372036854775790, label %bb.gf
+  ]
 
 bb.fd:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16TransactionErrorENtNtB4_6marker4SendEL_EEEB2B_.exit.i.i
   %i.un = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !25948
@@ -517,7 +513,7 @@ bb.ge:                                            ; preds = %bb.sn, %bb.ra, %bb.
   %.not131.i.i = icmp eq i64 %i.xp, -9223372036854775781
   br i1 %.not131.i.i, label %.body288.i.i, label %bb.tp
 
-bb.gf:                                            ; preds = %3
+bb.gf:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16TransactionErrorENtNtB4_6marker4SendEL_EEEB2B_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk), !noalias !25948
   %i.xq = getelementptr inbounds nuw i8, ptr %1, i64 1448
   %i.xr = load i64, ptr %i.xq, align 8, !noalias !25948, !noundef !97
@@ -920,7 +916,9 @@ bb.ra:                                            ; preds = %bb.ha, %bb.gs, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bk), !noalias !25948
   br label %bb.ge
 
-bb.rb:                                            ; preds = %3
+bb.rb:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16TransactionErrorENtNtB4_6marker4SendEL_EEEB2B_.exit.i.i
+  %3 = icmp ne i64 %i.um, -9223372036854775788
+  call void @llvm.assume(i1 %3)
   store i8 0, ptr %i.tx, align 1, !noalias !25948
   %i.awj = getelementptr inbounds nuw i8, ptr %1, i64 1519
   store i8 1, ptr %i.awj, align 1, !noalias !25948

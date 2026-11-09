@@ -204,14 +204,10 @@ bb.mj:                                            ; preds = %bb.ng, %.thread.i.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i: ; preds = %bb.mg, %bb.mf
   %i.aml = load i64, ptr %i.z, align 8, !range !57, !noalias !16313, !noundef !22 ; 3 uses
-  %.not.i47.i = icmp eq i64 %i.aml, -1
-  br i1 %.not.i47.i, label %.thread.i.i177, label %3
-
-3:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i
-  %4 = icmp ne i64 %i.aml, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.aml, -9223372036854775797
-  br i1 %5, label %bb.ng, label %.noexc.i.i173
+  switch i64 %i.aml, label %.noexc.i.i173 [
+    i64 -1, label %.thread.i.i177
+    i64 -9223372036854775797, label %bb.ng
+  ]
 
 .thread96.i.i:                                    ; preds = %_RNCNCNvMNtNtNtCs844E4pPEVZX_17influxdb3_catalog12object_store8versions2v3NtB6_18ObjectStoreCatalog17put_if_not_exists00CsgsNUVCRJO2f_13influxdb3_lib.exit.i, %bb.mw, %bb.mr, %bb.mq
   %.sroa.080.0.copyload.i.i = load i64, ptr %i.t, align 8, !noalias !16313 ; 2 uses
@@ -224,7 +220,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc
   %.not26101.i.i = icmp eq i64 %.pr100.i.i, -1
   br i1 %.not26101.i.i, label %.thread.i.i177, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i
 
-.noexc.i.i173:                                    ; preds = %3
+.noexc.i.i173:                                    ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i
+  %3 = icmp ne i64 %i.aml, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !16313
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.t, ptr noundef nonnull align 8 dereferenceable(72) %i.z, i64 72, i1 false), !noalias !16313
   %i.amm = load atomic i64, ptr @_RNvNtCs4BfJs7E7SEE_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !16313
@@ -464,20 +462,20 @@ _RNCNCNvMNtNtNtCs844E4pPEVZX_17influxdb3_catalog12object_store8versions2v3NtB6_1
   br label %.thread96.i.i
 
 .thread.i.i177:                                   ; preds = %.thread96.i.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i
-  %.sroa.03.090.i.i = phi i64 [ %.sroa.080.0.copyload.i.i, %.thread96.i.i ], [ -1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i ]
+  %.sroa.03.090.i.i = phi i64 [ %.sroa.080.0.copyload.i.i, %.thread96.i.i ], [ %i.aml, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i ]
   %.sroa.4.088.i.i = phi i8 [ %.sroa.581.0.copyload.i.i, %.thread96.i.i ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i ]
   %i.aou = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store9PutResultECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef align 8 dereferenceable(48) %i.aou)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i unwind label %bb.mj, !noalias !16314
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i: ; preds = %bb.ng, %.thread.i.i177, %.thread96.i.i
-  %.sroa.03.089.i.i = phi i64 [ %.sroa.03.090.i.i, %.thread.i.i177 ], [ -1, %bb.ng ], [ %.sroa.080.0.copyload.i.i, %.thread96.i.i ] ; 4 uses
-  %.sroa.4.087.i.i = phi i8 [ %.sroa.4.088.i.i, %.thread.i.i177 ], [ 1, %bb.ng ], [ %.sroa.581.0.copyload.i.i, %.thread96.i.i ] ; 4 uses
+  %.sroa.03.089.i.i = phi i64 [ %.sroa.080.0.copyload.i.i, %.thread96.i.i ], [ -1, %bb.ng ], [ %.sroa.03.090.i.i, %.thread.i.i177 ] ; 4 uses
+  %.sroa.4.087.i.i = phi i8 [ %.sroa.581.0.copyload.i.i, %.thread96.i.i ], [ 1, %bb.ng ], [ %.sroa.4.088.i.i, %.thread.i.i177 ] ; 4 uses
   %i.aov = getelementptr inbounds nuw i8, ptr %1, i64 2008
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store7PutModeECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef align 8 dereferenceable(48) %i.aov)
           to label %bb.nm unwind label %bb.nh, !noalias !16314
 
-bb.ng:                                            ; preds = %3
+bb.ng:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store5ErrorECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef align 8 dereferenceable(72) %i.z)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i unwind label %bb.mj, !noalias !16314
 

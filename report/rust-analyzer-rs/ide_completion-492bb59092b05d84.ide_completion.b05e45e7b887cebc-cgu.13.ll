@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %.noexc8.i
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprEECsf8NQSppxkmK_14ide_completion.exit.i
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprEECsf8NQSppxkmK_14ide_completion.exit.i: ; preds = %.noexc.i, %bb.k
-  %.7.i = phi ptr [ %i.az, %bb.k ], [ undef, %.noexc.i ] ; 10 uses
-  %i.ba = phi i64 [ %i.as, %bb.k ], [ -1, %.noexc.i ] ; 2 uses
+  %.7.i = phi ptr [ %i.az, %bb.k ], [ undef, %.noexc.i ] ; 11 uses
+  %i.ba = phi i64 [ %i.as, %bb.k ], [ -1, %.noexc.i ]
   %.val4.i = load ptr, ptr %i.a, align 8, !noalias !1447, !noundef !16 ; 3 uses
   %i.bb = icmp eq ptr %.val4.i, null
   br i1 %i.bb, label %_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit, label %bb.l
@@ -234,8 +234,10 @@ common.resume:                                    ; preds = %bb.bf, %_RINvNtCshz
 
 _RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprEECsf8NQSppxkmK_14ide_completion.exit.i, %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1447
-  %.not12.i.i.i = icmp eq i64 %i.ba, -1
-  br i1 %.not12.i.i.i, label %.backedge.i, label %4
+  switch i64 %i.ba, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8PathExprECsf8NQSppxkmK_14ide_completion.exit39.i.i.i [
+    i64 -1, label %.backedge.i
+    i64 25, label %bb.p
+  ]
 
 bb.o:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1447
@@ -244,12 +246,8 @@ bb.o:                                             ; preds = %bb.c
   %.not.i.i.i = icmp eq ptr %i.bh, null
   br i1 %.not.i.i.i, label %bb.ad, label %bb.ac
 
-4:                                                ; preds = %_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit
-  %5 = icmp eq i64 %i.ba, 25
+bb.p:                                             ; preds = %_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.7.i) ]
-  br i1 %5, label %bb.p, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8PathExprECsf8NQSppxkmK_14ide_completion.exit39.i.i.i
-
-bb.p:                                             ; preds = %4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1447
   %i.bi = invoke fastcc noundef ptr @_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4PathECsf8NQSppxkmK_14ide_completion(ptr nonnull %.7.i)
           to label %bb.s unwind label %bb.r, !noalias !1447 ; 6 uses
@@ -339,7 +337,8 @@ bb.ab:                                            ; preds = %bb.af, %bb.x, %bb.q
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #29, !noalias !1447
   unreachable
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8PathExprECsf8NQSppxkmK_14ide_completion.exit39.i.i.i: ; preds = %4
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8PathExprECsf8NQSppxkmK_14ide_completion.exit39.i.i.i: ; preds = %_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.7.i) ]
   %i.ch = getelementptr inbounds nuw i8, ptr %.7.i, i64 48 ; 2 uses
   %i.ci = load i32, ptr %i.ch, align 4, !noalias !1447, !noundef !16
   %i.cj = add i32 %i.ci, -1                       ; 2 uses
@@ -524,7 +523,7 @@ _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkNtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1448
   br i1 %.sroa.0.0.i.i.i.i, label %.backedge, label %.backedge.i
 
-.backedge.i:                                      ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefNCNvNtNtNtCsf8NQSppxkmK_14ide_completion11completions9attribute4repr13complete_reprs_0E0B2g_.exit.i.i, %_RNCNvNtNtNtCsf8NQSppxkmK_14ide_completion11completions9attribute4repr13complete_repr0B9_.exit.i.i, %bb.ad, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECsf8NQSppxkmK_14ide_completion.exit.sink.split.i43.i.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8PathExprECsf8NQSppxkmK_14ide_completion.exit39.i.i.i, %bb.v, %bb.u, %_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit, %bb.c
+.backedge.i:                                      ; preds = %_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsf8NQSppxkmK_14ide_completion.exit, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefNCNvNtNtNtCsf8NQSppxkmK_14ide_completion11completions9attribute4repr13complete_reprs_0E0B2g_.exit.i.i, %_RNCNvNtNtNtCsf8NQSppxkmK_14ide_completion11completions9attribute4repr13complete_repr0B9_.exit.i.i, %bb.ad, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECsf8NQSppxkmK_14ide_completion.exit.sink.split.i43.i.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8PathExprECsf8NQSppxkmK_14ide_completion.exit39.i.i.i, %bb.v, %bb.u, %bb.c
   %.not24.i = icmp eq ptr %i.aj, %i.k
   br i1 %.not24.i, label %.loopexit32, label %bb.c
 

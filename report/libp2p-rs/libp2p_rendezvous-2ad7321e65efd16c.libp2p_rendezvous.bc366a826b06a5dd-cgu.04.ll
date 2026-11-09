@@ -202,14 +202,14 @@ bb.a:
   %i.bc = trunc nuw i8 %.sroa.028.0 to i1
   br i1 %i.bc, label %bb.eo, label %.thread
 
-.loopexit:                                        ; preds = %.backedge, %bb.w, %bb.z, %14, %bb.dh, %bb.di, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i
+.loopexit:                                        ; preds = %.backedge, %bb.w, %bb.z, %bb.df, %bb.dh, %bb.di, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i
   %lpad.loopexit135 = landingpad { ptr, i32 }
           cleanup
   br label %.body67
 
-.loopexit.split-lp:                               ; preds = %bb.r, %bb.e, %bb.f, %bb.i, %9, %bb.db, %bb.dc, %bb.p, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i74
-  %.sroa.030.1.ph = phi i8 [ 0, %bb.f ], [ 0, %bb.i ], [ 1, %bb.r ], [ %.sroa.028.2, %9 ], [ %.sroa.028.2, %bb.db ], [ %.sroa.028.2, %bb.dc ], [ 1, %bb.p ], [ 0, %bb.e ], [ %.sroa.028.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i74 ]
-  %.sroa.028.1.ph = phi i8 [ 0, %bb.f ], [ 0, %bb.i ], [ 0, %bb.r ], [ %.sroa.028.2, %9 ], [ %.sroa.028.2, %bb.db ], [ %.sroa.028.2, %bb.dc ], [ 0, %bb.p ], [ 0, %bb.e ], [ %.sroa.028.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i74 ]
+.loopexit.split-lp:                               ; preds = %bb.r, %bb.e, %bb.f, %bb.i, %bb.cz, %bb.db, %bb.dc, %bb.p, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i74
+  %.sroa.030.1.ph = phi i8 [ 0, %bb.f ], [ 0, %bb.i ], [ 1, %bb.r ], [ %.sroa.028.2, %bb.cz ], [ %.sroa.028.2, %bb.db ], [ %.sroa.028.2, %bb.dc ], [ 1, %bb.p ], [ 0, %bb.e ], [ %.sroa.028.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i74 ]
+  %.sroa.028.1.ph = phi i8 [ 0, %bb.f ], [ 0, %bb.i ], [ 0, %bb.r ], [ %.sroa.028.2, %bb.cz ], [ %.sroa.028.2, %bb.db ], [ %.sroa.028.2, %bb.dc ], [ 0, %bb.p ], [ 0, %bb.e ], [ %.sroa.028.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsg9QLscIEtAL_17libp2p_rendezvous.exit.i74 ]
   %lpad.loopexit.split-lp136 = landingpad { ptr, i32 }
           cleanup
   br label %.body67
@@ -612,14 +612,18 @@ bb.cs:                                            ; preds = %.thread114, %bb.cq
   br label %bb.cu
 
 bb.ct:                                            ; preds = %bb.cv, %bb.cr
-  %i.ia = load i64, ptr %i.at, align 8, !range !443, !noundef !4 ; 3 uses
-  %3 = icmp eq i64 %i.ia, -1
-  br i1 %3, label %bb.cx, label %bb.cy
+  %i.ia = load i64, ptr %i.at, align 8, !range !443, !noundef !4 ; 2 uses
+  switch i64 %i.ia, label %bb.cz [
+    i64 -1, label %bb.cx
+    i64 2, label %bb.cy
+  ]
 
 bb.cu:                                            ; preds = %bb.cw, %bb.cs
-  %i.ib = load i64, ptr %i.at, align 8, !range !443, !noundef !4 ; 3 uses
-  %4 = icmp eq i64 %i.ib, -1
-  br i1 %4, label %bb.dd, label %bb.de
+  %i.ib = load i64, ptr %i.at, align 8, !range !443, !noundef !4 ; 2 uses
+  switch i64 %i.ib, label %bb.df [
+    i64 -1, label %bb.dd
+    i64 2, label %bb.de
+  ]
 
 bb.cv:                                            ; preds = %bb.ah, %bb.af
   %.sroa.097.0.ph = phi i64 [ -9223372036854775806, %bb.af ], [ -9223372036854775808, %bb.ah ]
@@ -640,30 +644,26 @@ bb.cw:                                            ; preds = %.noexc58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   br label %bb.cu
 
-bb.cx:                                            ; preds = %bb.dk, %bb.dc, %bb.db, %bb.da, %9, %bb.ct
+bb.cx:                                            ; preds = %bb.ct, %bb.dk, %bb.dc, %bb.db, %bb.da, %bb.cz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   br label %bb.x
 
 bb.cy:                                            ; preds = %bb.ct
+  %3 = load i64, ptr %i.bf, align 8, !range !5, !noundef !4 ; 2 uses
+  %4 = icmp slt i64 %3, 6
+  br i1 %4, label %bb.da, label %bb.db
+
+bb.cz:                                            ; preds = %bb.ct
   %5 = icmp ne i64 %i.ia, 6
   call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %i.ia, 2
-  br i1 %6, label %bb.cz, label %9
-
-bb.cz:                                            ; preds = %bb.cy
-  %7 = load i64, ptr %i.bf, align 8, !range !5, !noundef !4 ; 2 uses
-  %8 = icmp slt i64 %7, 6
-  br i1 %8, label %bb.da, label %bb.db
-
-9:                                                ; preds = %bb.cy
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs6b9j1MKPRPC_12libp2p_swarm9behaviour7ToSwarmINtCsfoiTdJnOWBy_23libp2p_request_response5EventNtNtCsg9QLscIEtAL_17libp2p_rendezvous5codec7MessageB2c_EINtNtB1t_7handler15OutboundMessageNtB2e_5CodecEEEB2g_(ptr noalias nofree noundef align 8 dereferenceable(592) %i.at)
           to label %bb.cx unwind label %.loopexit.split-lp
 
-bb.da:                                            ; preds = %bb.cz
-  %i.ic = icmp eq i64 %7, -1
+bb.da:                                            ; preds = %bb.cy
+  %i.ic = icmp eq i64 %3, -1
   br i1 %i.ic, label %bb.cx, label %bb.dc
 
-bb.db:                                            ; preds = %bb.cz
+bb.db:                                            ; preds = %bb.cy
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsfoiTdJnOWBy_23libp2p_request_response5EventNtNtCsg9QLscIEtAL_17libp2p_rendezvous5codec7MessageB1n_EEB1r_(ptr noalias nofree noundef align 8 dereferenceable(528) %i.bf)
           to label %bb.cx unwind label %.loopexit.split-lp
 
@@ -671,7 +671,7 @@ bb.dc:                                            ; preds = %bb.da
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsfoiTdJnOWBy_23libp2p_request_response7MessageNtNtCsg9QLscIEtAL_17libp2p_rendezvous5codec7MessageB1p_EEB1t_(ptr noalias nofree noundef align 8 dereferenceable(440) %i.bf)
           to label %bb.cx unwind label %.loopexit.split-lp
 
-bb.dd:                                            ; preds = %bb.di, %bb.dh, %bb.dg, %14, %bb.cu
+bb.dd:                                            ; preds = %bb.cu, %bb.di, %bb.dh, %bb.dg, %bb.df
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   br label %.backedge.backedge
 
@@ -679,25 +679,21 @@ bb.dd:                                            ; preds = %bb.di, %bb.dh, %bb.
   br label %.backedge
 
 bb.de:                                            ; preds = %bb.cu
-  %10 = icmp ne i64 %i.ib, 6
-  call void @llvm.assume(i1 %10)
-  %11 = icmp eq i64 %i.ib, 2
-  br i1 %11, label %bb.df, label %14
+  %6 = load i64, ptr %i.bf, align 8, !range !5, !noundef !4 ; 2 uses
+  %7 = icmp slt i64 %6, 6
+  br i1 %7, label %bb.dg, label %bb.dh
 
-bb.df:                                            ; preds = %bb.de
-  %12 = load i64, ptr %i.bf, align 8, !range !5, !noundef !4 ; 2 uses
-  %13 = icmp slt i64 %12, 6
-  br i1 %13, label %bb.dg, label %bb.dh
-
-14:                                               ; preds = %bb.de
+bb.df:                                            ; preds = %bb.cu
+  %8 = icmp ne i64 %i.ib, 6
+  call void @llvm.assume(i1 %8)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs6b9j1MKPRPC_12libp2p_swarm9behaviour7ToSwarmINtCsfoiTdJnOWBy_23libp2p_request_response5EventNtNtCsg9QLscIEtAL_17libp2p_rendezvous5codec7MessageB2c_EINtNtB1t_7handler15OutboundMessageNtB2e_5CodecEEEB2g_(ptr noalias nofree noundef align 8 dereferenceable(592) %i.at)
           to label %bb.dd unwind label %.loopexit
 
-bb.dg:                                            ; preds = %bb.df
-  %i.id = icmp eq i64 %12, -1
+bb.dg:                                            ; preds = %bb.de
+  %i.id = icmp eq i64 %6, -1
   br i1 %i.id, label %bb.dd, label %bb.di
 
-bb.dh:                                            ; preds = %bb.df
+bb.dh:                                            ; preds = %bb.de
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsfoiTdJnOWBy_23libp2p_request_response5EventNtNtCsg9QLscIEtAL_17libp2p_rendezvous5codec7MessageB1n_EEB1r_(ptr noalias nofree noundef align 8 dereferenceable(528) %i.bf)
           to label %bb.dd unwind label %.loopexit
 

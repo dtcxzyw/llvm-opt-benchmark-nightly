@@ -205,21 +205,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !247
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.b, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !248
-  %i.f = load i32, ptr %i.b, align 4, !range !110, !noalias !247, !noundef !108 ; 3 uses
-  %.not.i.i.i = icmp eq i32 %i.f, -1
-  br i1 %.not.i.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, label %bb.b
+  %i.f = load i32, ptr %i.b, align 4, !range !110, !noalias !247, !noundef !108 ; 2 uses
+  switch i32 %i.f, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp ne i32 %i.f, 38
   tail call void @llvm.assume(i1 %i.g)
-  %7 = icmp eq i32 %i.f, 39
-  br i1 %7, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !247
   br label %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej1_EB9_.exit.thread
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.i = load i32, ptr %i.h, align 4, !range !111, !noalias !247, !noundef !108
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -289,7 +287,7 @@ _RNCINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB5_10KnownCla
   %.not1 = icmp eq i32 %i.x, -1
   br i1 %.not1, label %bb.f, label %bb.g
 
-_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej1_EB9_.exit.thread: ; preds = %bb.c, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej1_EB9_.exit
+_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej1_EB9_.exit.thread: ; preds = %bb.c, %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej1_EB9_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.f
 
@@ -320,21 +318,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !282
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.b, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !283
-  %i.f = load i32, ptr %i.b, align 4, !range !110, !noalias !282, !noundef !108 ; 3 uses
-  %.not.i.i.i = icmp eq i32 %i.f, -1
-  br i1 %.not.i.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, label %bb.b
+  %i.f = load i32, ptr %i.b, align 4, !range !110, !noalias !282, !noundef !108 ; 2 uses
+  switch i32 %i.f, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp ne i32 %i.f, 38
   tail call void @llvm.assume(i1 %i.g)
-  %7 = icmp eq i32 %i.f, 39
-  br i1 %7, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !282
   br label %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej2_EB9_.exit.thread
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.i = load i32, ptr %i.h, align 4, !range !111, !noalias !282, !noundef !108
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -404,7 +400,7 @@ _RNCINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB5_10KnownCla
   %.not1 = icmp eq i32 %i.x, -1
   br i1 %.not1, label %bb.f, label %bb.g
 
-_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej2_EB9_.exit.thread: ; preds = %bb.c, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej2_EB9_.exit
+_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej2_EB9_.exit.thread: ; preds = %bb.c, %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej2_EB9_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.f
 
@@ -435,21 +431,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !317
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.b, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !318
-  %i.f = load i32, ptr %i.b, align 4, !range !110, !noalias !317, !noundef !108 ; 3 uses
-  %.not.i.i.i = icmp eq i32 %i.f, -1
-  br i1 %.not.i.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, label %bb.b
+  %i.f = load i32, ptr %i.b, align 4, !range !110, !noalias !317, !noundef !108 ; 2 uses
+  switch i32 %i.f, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp ne i32 %i.f, 38
   tail call void @llvm.assume(i1 %i.g)
-  %7 = icmp eq i32 %i.f, 39
-  br i1 %7, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !317
   br label %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej3_EB9_.exit.thread
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.i = load i32, ptr %i.h, align 4, !range !111, !noalias !317, !noundef !108
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -519,7 +513,7 @@ _RNCINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB5_10KnownCla
   %.not1 = icmp eq i32 %i.x, -1
   br i1 %.not1, label %bb.f, label %bb.g
 
-_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej3_EB9_.exit.thread: ; preds = %bb.c, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej3_EB9_.exit
+_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej3_EB9_.exit.thread: ; preds = %bb.c, %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRANtB7_4Typej3_EB9_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.f
 
@@ -548,21 +542,19 @@ bb.a:
           to label %.noexc unwind label %bb.j
 
 .noexc:                                           ; preds = %bb.a
-  %i.c = load i32, ptr %i.a, align 4, !range !110, !noalias !335, !noundef !108 ; 3 uses
-  %.not.i.i = icmp eq i32 %i.c, -1
-  br i1 %.not.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, label %bb.b
+  %i.c = load i32, ptr %i.a, align 4, !range !110, !noalias !335, !noundef !108 ; 2 uses
+  switch i32 %i.c, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i
+  ]
 
 bb.b:                                             ; preds = %.noexc
   %i.d = icmp ne i32 %i.c, 38
   tail call void @llvm.assume(i1 %i.d)
-  %6 = icmp eq i32 %i.c, 39
-  br i1 %6, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !335
   br label %bb.d
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %.noexc
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.f = load i32, ptr %i.e, align 4, !range !111, !noalias !335, !noundef !108
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -585,7 +577,7 @@ bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   %i.m = invoke { i32, i32 } @_RNvMsp_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class14static_literalNtB5_18StaticClassLiteral15generic_context(i32 noundef %.sroa.0.0.i15.i, i32 noundef %.sroa.4.0.i14.i, ptr noundef nonnull %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %3)
           to label %bb.g unwind label %bb.j       ; 2 uses
 
-bb.d:                                             ; preds = %bb.g, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
+bb.d:                                             ; preds = %bb.g, %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
   store i32 -2, ptr %0, align 4
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBI_(ptr noalias noundef nonnull align 8 dereferenceable(24) %5)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEEB1b_.exit unwind label %bb.e
@@ -646,21 +638,19 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !346
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !347
-  %i.c = load i32, ptr %i.a, align 4, !range !110, !noalias !346, !noundef !108 ; 3 uses
-  %.not.i.i = icmp eq i32 %i.c, -1
-  br i1 %.not.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, label %bb.b
+  %i.c = load i32, ptr %i.a, align 4, !range !110, !noalias !346, !noundef !108 ; 2 uses
+  switch i32 %i.c, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.d = icmp ne i32 %i.c, 38
   tail call void @llvm.assume(i1 %i.d)
-  %6 = icmp eq i32 %i.c, 39
-  br i1 %6, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !346
   br label %bb.c
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.f = load i32, ptr %i.e, align 4, !range !111, !noalias !346, !noundef !108
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -677,7 +667,7 @@ _RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass2
   %.not.i = icmp eq i32 %i.j, 0
   br i1 %.not.i, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
+bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %bb.b
   store i32 -2, ptr %0, align 4
   br label %bb.g
 
@@ -716,21 +706,19 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !359
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !360
-  %i.c = load i32, ptr %i.a, align 4, !range !110, !noalias !359, !noundef !108 ; 3 uses
-  %.not.i.i = icmp eq i32 %i.c, -1
-  br i1 %.not.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, label %bb.b
+  %i.c = load i32, ptr %i.a, align 4, !range !110, !noalias !359, !noundef !108 ; 2 uses
+  switch i32 %i.c, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.d = icmp ne i32 %i.c, 38
   tail call void @llvm.assume(i1 %i.d)
-  %6 = icmp eq i32 %i.c, 39
-  br i1 %6, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !359
   br label %bb.c
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.f = load i32, ptr %i.e, align 4, !range !111, !noalias !359, !noundef !108
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -747,7 +735,7 @@ _RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass2
   %.not.i = icmp eq i32 %i.j, 0
   br i1 %.not.i, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
+bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %bb.b
   store i32 -2, ptr %0, align 4
   br label %bb.g
 
@@ -1150,21 +1138,19 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13227)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13228
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !13227
-  %i.f = load i32, ptr %i.a, align 4, !range !110, !noalias !13228, !noundef !108 ; 3 uses
-  %.not.i.i = icmp eq i32 %i.f, -1
-  br i1 %.not.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, label %bb.b
+  %i.f = load i32, ptr %i.a, align 4, !range !110, !noalias !13228, !noundef !108 ; 2 uses
+  switch i32 %i.f, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp ne i32 %i.f, 38
   tail call void @llvm.assume(i1 %i.g)
-  %5 = icmp eq i32 %i.f, 39
-  br i1 %5, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13228
   br label %bb.d
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.i = load <2 x i32>, ptr %i.h, align 4, !noalias !13228
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13228
@@ -1187,7 +1173,7 @@ bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   store <2 x i32> %i.m, ptr %.sroa.55.0..sroa_idx.i, align 4, !alias.scope !13227
   br label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass16to_class_literal.exit
 
-bb.d:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
+bb.d:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 1, ptr %i.n, align 4, !alias.scope !13229
   store i32 4, ptr %i.c, align 4, !alias.scope !13229
@@ -1433,21 +1419,19 @@ bb.a:
   %i.a = alloca [20 x i8], align 4                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13237
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4)
-  %i.b = load i32, ptr %i.a, align 4, !range !110, !noalias !13237, !noundef !108 ; 3 uses
-  %.not.i = icmp eq i32 %i.b, -1
-  br i1 %.not.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit, label %bb.b
+  %i.b = load i32, ptr %i.a, align 4, !range !110, !noalias !13237, !noundef !108 ; 2 uses
+  switch i32 %i.b, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp ne i32 %i.b, 38
   tail call void @llvm.assume(i1 %i.c)
-  %5 = icmp eq i32 %i.b, 39
-  br i1 %5, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13237
   br label %bb.d
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.e = load <2 x i32>, ptr %i.d, align 4, !noalias !13237
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13237
@@ -1470,7 +1454,7 @@ bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   store <2 x i32> %i.i, ptr %.sroa.55.0..sroa_idx, align 4
   br label %bb.e
 
-bb.d:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit
+bb.d:                                             ; preds = %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 1, ptr %i.j, align 4, !alias.scope !13238
   store i32 4, ptr %0, align 4, !alias.scope !13238
@@ -1528,21 +1512,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13265
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.b, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4)
-  %i.d = load i32, ptr %i.b, align 4, !range !110, !noalias !13265, !noundef !108 ; 3 uses
-  %.not.i = icmp eq i32 %i.d, -1
-  br i1 %.not.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit, label %bb.b
+  %i.d = load i32, ptr %i.b, align 4, !range !110, !noalias !13265, !noundef !108 ; 2 uses
+  switch i32 %i.d, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread6
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp ne i32 %i.d, 38
   tail call void @llvm.assume(i1 %i.e)
-  %6 = icmp eq i32 %i.d, 39
-  br i1 %6, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread6, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !13265
   br label %bb.d
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread6: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread6: ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.g = load i32, ptr %i.f, align 4, !range !111, !noalias !13265, !noundef !108
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -1569,7 +1551,7 @@ bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %i.c, i64 16, i1 false)
   br label %bb.e
 
-bb.d:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit
+bb.d:                                             ; preds = %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 1, ptr %i.n, align 4, !alias.scope !13267
   store i32 4, ptr %0, align 4, !alias.scope !13267
@@ -1972,21 +1954,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13364
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) %1, ptr noundef nonnull %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %3, ptr noundef nonnull align 4 %4), !noalias !13365
-  %i.f = load i32, ptr %i.a, align 4, !range !110, !noalias !13364, !noundef !108 ; 3 uses
-  %.not.i.i.i = icmp eq i32 %i.f, -1
-  br i1 %.not.i.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, label %bb.b
+  %i.f = load i32, ptr %i.a, align 4, !range !110, !noalias !13364, !noundef !108 ; 2 uses
+  switch i32 %i.f, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp ne i32 %i.f, 38
   tail call void @llvm.assume(i1 %i.g)
-  %7 = icmp eq i32 %i.f, 39
-  br i1 %7, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13364
   br label %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRSNtB7_4TypeEB9_.exit.thread
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.i = load i32, ptr %i.h, align 4, !range !111, !noalias !13364, !noundef !108
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -2034,7 +2014,7 @@ bb.d:                                             ; preds = %_RINvMNtNtNtCsoTR8n
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %i.e, i64 16, i1 false)
   br label %bb.e
 
-_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRSNtB7_4TypeEB9_.exit.thread: ; preds = %bb.c, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRSNtB7_4TypeEB9_.exit
+_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRSNtB7_4TypeEB9_.exit.thread: ; preds = %bb.c, %bb.b, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RINvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB3_10KnownClass25to_specialized_class_typeRSNtB7_4TypeEB9_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   store i32 1, ptr %0, align 4, !alias.scope !13369
   %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -2437,21 +2417,19 @@ bb.e:                                             ; preds = %bb.b
   call void @llvm.experimental.noalias.scope.decl(metadata !15030)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !15031
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.b, i8 noundef range(i8 0, 108) %i.af, ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %1, ptr noundef nonnull align 4 %2)
-  %i.ai = load i32, ptr %i.b, align 4, !range !110, !noalias !15031, !noundef !108 ; 3 uses
-  %.not.i.i = icmp eq i32 %i.ai, -1
-  br i1 %.not.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, label %bb.f
+  %i.ai = load i32, ptr %i.b, align 4, !range !110, !noalias !15031, !noundef !108 ; 2 uses
+  switch i32 %i.ai, label %bb.f [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i
+  ]
 
 bb.f:                                             ; preds = %.noexc
   %i.aj = icmp ne i32 %i.ai, 38
   call void @llvm.assume(i1 %i.aj)
-  %5 = icmp eq i32 %i.ai, 39
-  br i1 %5, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i: ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !15031
   br label %bb.h
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %bb.f
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i: ; preds = %.noexc
   %i.ak = load <2 x i32>, ptr %i.o, align 4, !noalias !15031
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !15031
   br label %bb.g
@@ -2470,7 +2448,7 @@ bb.g:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   store <2 x i32> %i.an, ptr %.sroa.55.0..sroa_idx.i, align 4, !alias.scope !15030
   br label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass16to_class_literal.exit
 
-bb.h:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i
+bb.h:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i, %bb.f
   store i32 1, ptr %.sroa.44.0..sroa_idx.i, align 4, !alias.scope !15032
   store i32 4, ptr %i.d, align 4, !alias.scope !15032
   br label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass16to_class_literal.exit
@@ -2538,21 +2516,19 @@ bb.n:                                             ; preds = %bb.e
   call void @llvm.experimental.noalias.scope.decl(metadata !15035)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15036
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) 11, ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %1, ptr noundef nonnull align 4 %2), !noalias !15035
-  %i.bc = load i32, ptr %i.a, align 4, !range !110, !noalias !15036, !noundef !108 ; 3 uses
-  %.not.i.i75 = icmp eq i32 %i.bc, -1
-  br i1 %.not.i.i75, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i83, label %bb.o
+  %i.bc = load i32, ptr %i.a, align 4, !range !110, !noalias !15036, !noundef !108 ; 2 uses
+  switch i32 %i.bc, label %bb.o [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i83
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i77
+  ]
 
 bb.o:                                             ; preds = %bb.n
   %i.bd = icmp ne i32 %i.bc, 38
   call void @llvm.assume(i1 %i.bd)
-  %6 = icmp eq i32 %i.bc, 39
-  br i1 %6, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i77, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i76
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i76: ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15036
   br label %bb.q
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i77: ; preds = %bb.o
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i77: ; preds = %bb.n
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.bf = load <2 x i32>, ptr %i.be, align 4, !noalias !15036
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15036
@@ -2575,7 +2551,7 @@ bb.p:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   store <2 x i32> %i.bj, ptr %.sroa.55.0..sroa_idx.i81, align 4, !alias.scope !15035
   br label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass16to_class_literal.exit85
 
-bb.q:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i83, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i76
+bb.q:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i83, %bb.o
   %i.bk = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   store i32 1, ptr %i.bk, align 4, !alias.scope !15037
   store i32 4, ptr %i.g, align 4, !alias.scope !15037
@@ -2978,21 +2954,19 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19837)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !19838
   call fastcc void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20lookup_class_literal(ptr noalias noundef align 4 captures(address) dereferenceable(20) %i.a, i8 noundef range(i8 0, 108) %i.p, ptr noundef nonnull %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %2, ptr noundef nonnull align 4 %i.f), !noalias !19839
-  %i.q = load i32, ptr %i.a, align 4, !range !110, !noalias !19838, !noundef !108 ; 3 uses
-  %.not.i.i.i = icmp eq i32 %i.q, -1
-  br i1 %.not.i.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, label %bb.b
+  %i.q = load i32, ptr %i.a, align 4, !range !110, !noalias !19838, !noundef !108 ; 2 uses
+  switch i32 %i.q, label %bb.b [
+    i32 -1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i
+    i32 39, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.r = icmp ne i32 %i.q, 38
   tail call void @llvm.assume(i1 %i.r)
-  %5 = icmp eq i32 %i.q, 39
-  br i1 %5, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i
-
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !19838
   br label %bb.d
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.b
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread10.i.i: ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.t = load <2 x i32>, ptr %i.s, align 4, !noalias !19838
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !19838
@@ -3015,7 +2989,7 @@ bb.c:                                             ; preds = %_RNvMNtNtNtCsoTR8nl
   store <2 x i32> %i.x, ptr %.sroa.55.0..sroa_idx.i.i, align 4, !alias.scope !19837, !noalias !19835
   br label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass16to_class_literal.exit.i
 
-bb.d:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.thread.i.i
+bb.d:                                             ; preds = %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass20try_to_class_literal.exit.i.i, %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 1, ptr %i.y, align 4, !alias.scope !19840, !noalias !19835
   store i32 4, ptr %i.c, align 4, !alias.scope !19840, !noalias !19835

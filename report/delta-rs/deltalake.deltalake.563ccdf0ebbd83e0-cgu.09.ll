@@ -204,15 +204,11 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !11492
-  %i.cv = load i64, ptr %i.r, align 8, !range !109, !noalias !11492, !noundef !22 ; 4 uses
-  %.not.i = icmp eq i64 %i.cv, -9223372036854775790
-  br i1 %.not.i, label %bb.al, label %5
-
-5:                                                ; preds = %bb.ak
-  %6 = icmp ne i64 %i.cv, -9223372036854775800
-  call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.cv, -9223372036854775801
-  br i1 %7, label %bb.an, label %bb.ao
+  %i.cv = load i64, ptr %i.r, align 8, !range !109, !noalias !11492, !noundef !22 ; 3 uses
+  switch i64 %i.cv, label %bb.ao [
+    i64 -9223372036854775790, label %bb.al
+    i64 -9223372036854775801, label %bb.an
+  ]
 
 bb.al:                                            ; preds = %bb.ak
   %i.cw = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -248,7 +244,7 @@ bb.am:                                            ; preds = %.thread.i, %bb.al
   %i.da = extractelement <2 x i64> %i.cz, i64 0   ; 2 uses
   br i1 %.not244.i, label %bb.az, label %bb.ba
 
-bb.an:                                            ; preds = %5
+bb.an:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !11492
   %i.db = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr noundef nonnull align 8 dereferenceable(24) %i.db, i64 24, i1 false), !noalias !11492
@@ -258,7 +254,9 @@ bb.an:                                            ; preds = %5
   %i.df = load ptr, ptr %i.de, align 8, !noalias !11492, !nonnull !22, !align !32, !noundef !22 ; 6 uses
   br i1 %i.bd, label %bb.ap, label %bb.av
 
-bb.ao:                                            ; preds = %5
+bb.ao:                                            ; preds = %bb.ak
+  %5 = icmp ne i64 %i.cv, -9223372036854775800
+  call void @llvm.assume(i1 %5)
   %.sroa.282.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %.sroa.282.0.copyload.i = load i64, ptr %.sroa.282.0..sroa_idx.i, align 8, !noalias !11492
   %.sroa.383.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 16
@@ -616,9 +614,9 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecIN
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECs7p2uQeJxui2_9deltalake.exit.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.cf, %bb.bz, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i
-  %.sroa.19.0 = phi i64 [ %.sroa.6221.0.copyload.i, %bb.bz ], [ %.sroa.6236.0.copyload.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i ], [ %.sroa.19.8.copyload52, %bb.cf ]
-  %.sroa.15.0 = phi ptr [ %.sroa.5220.0.copyload.i, %bb.bz ], [ %.sroa.5235.0.copyload.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i ], [ %.sroa.15.8.copyload45, %bb.cf ]
-  %.sroa.740.0 = phi i64 [ %.sroa.0219.0.copyload.i, %bb.bz ], [ %.sroa.0234.0.copyload.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i ], [ %.sroa.740.8.copyload41, %bb.cf ]
+  %.sroa.19.0 = phi i64 [ %.sroa.19.8.copyload52, %bb.cf ], [ %.sroa.6221.0.copyload.i, %bb.bz ], [ %.sroa.6236.0.copyload.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i ]
+  %.sroa.15.0 = phi ptr [ %.sroa.15.8.copyload45, %bb.cf ], [ %.sroa.5220.0.copyload.i, %bb.bz ], [ %.sroa.5235.0.copyload.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i ]
+  %.sroa.740.0 = phi i64 [ %.sroa.740.8.copyload41, %bb.cf ], [ %.sroa.0219.0.copyload.i, %bb.bz ], [ %.sroa.0234.0.copyload.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtCsgbCypRs12E4_4pyo38instance5BoundNtNtNtB1i_5types3any5PyAnyEEECs7p2uQeJxui2_9deltalake.exit284.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !11492
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.t)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs7p2uQeJxui2_9deltalake.exit.i292.i unwind label %bb.bw, !noalias !11492

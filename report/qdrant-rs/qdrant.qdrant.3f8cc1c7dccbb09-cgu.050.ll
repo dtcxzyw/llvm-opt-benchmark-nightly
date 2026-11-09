@@ -204,8 +204,8 @@ bb.a:
   invoke void @_RNvXs_NtNtCslmvYCXbQjWR_6common12universal_io8io_uringNtB4_9IoUringFsNtNtNtB6_6traits8file_ops20UniversalReadFileOps6exists(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j)
           to label %bb.c unwind label %.thread.i, !noalias !3545
 
-bb.b:                                             ; preds = %bb.u, %4, %3, %bb.l, %.thread.i
-  %.pn.i = phi { ptr, i32 } [ %i.al, %bb.u ], [ %i.al, %3 ], [ %i.al, %4 ], [ %i.al, %bb.l ], [ %i.t, %.thread.i ]
+bb.b:                                             ; preds = %bb.u, %bb.t, %2, %bb.l, %.thread.i
+  %.pn.i = phi { ptr, i32 } [ %i.al, %bb.u ], [ %i.al, %2 ], [ %i.al, %bb.t ], [ %i.al, %bb.l ], [ %i.t, %.thread.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtBI_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead11file_exists00EBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #25
           to label %bb.x unwind label %bb.v, !noalias !3543
 
@@ -306,9 +306,11 @@ bb.l:                                             ; preds = %bb.o, %.noexc.i, %b
   %.sroa.02.0.i = phi i1 [ true, %bb.h ], [ false, %bb.o ], [ true, %.noexc.i ]
   %i.al = landingpad { ptr, i32 }
           cleanup                                 ; 4 uses
-  %i.am = load i64, ptr %i.c, align 8, !range !47, !noalias !3545, !noundef !6 ; 3 uses
-  %.not13.i = icmp eq i64 %i.am, -1
-  br i1 %.not13.i, label %bb.b, label %bb.t
+  %i.am = load i64, ptr %i.c, align 8, !range !47, !noalias !3545, !noundef !6 ; 2 uses
+  switch i64 %i.am, label %bb.t [
+    i64 -1, label %bb.b
+    i64 -9223372036854775808, label %2
+  ]
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit.i: ; preds = %bb.k, %bb.j, %bb.i, %.noexc.i
   %.sroa.0.0.i.i = phi i8 [ %i.aj, %bb.k ], [ %switch.idx.cast.i.i.i.i, %bb.i ], [ %i.ah, %bb.j ], [ %i.ac, %.noexc.i ]
@@ -370,24 +372,20 @@ bb.s:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3545
   br label %bb.q
 
+2:                                                ; preds = %bb.l
+  br i1 %.sroa.02.0.i, label %bb.u, label %bb.b
+
 bb.t:                                             ; preds = %bb.l
   %i.bb = icmp ne i64 %i.am, -9223372036854775797
   call void @llvm.assume(i1 %i.bb)
-  %2 = icmp eq i64 %i.am, -9223372036854775808
-  br i1 %2, label %3, label %4
-
-3:                                                ; preds = %bb.t
-  br i1 %.sroa.02.0.i, label %bb.u, label %bb.b
-
-4:                                                ; preds = %bb.t
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCslmvYCXbQjWR_6common12universal_io5error16UniversalIoErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.c) #25
           to label %bb.b unwind label %bb.v, !noalias !3545
 
-bb.u:                                             ; preds = %3
+bb.u:                                             ; preds = %2
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.u) #25
           to label %bb.b unwind label %bb.v, !noalias !3545
 
-bb.v:                                             ; preds = %bb.u, %4, %bb.b
+bb.v:                                             ; preds = %bb.u, %bb.t, %bb.b
   %i.bc = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #26, !noalias !3543

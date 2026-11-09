@@ -206,17 +206,15 @@ bb.et:                                            ; preds = %_RINvNtCscI6d9CVNmL
   br label %.body40.i
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i: ; preds = %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, %bb.er, %bb.en
-  %i.oj = load i64, ptr %i.nm, align 8, !range !559, !noalias !175628, !noundef !411 ; 3 uses
-  %.not19.i = icmp eq i64 %i.oj, -1
-  br i1 %.not19.i, label %.thread60.i, label %3
+  %i.oj = load i64, ptr %i.nm, align 8, !range !559, !noalias !175628, !noundef !411 ; 2 uses
+  switch i64 %i.oj, label %bb.eu [
+    i64 -1, label %.thread60.i
+    i64 -9223372036854775801, label %bb.ew
+  ]
 
-3:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
-  %4 = icmp ne i64 %i.oj, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.oj, -9223372036854775801
-  br i1 %5, label %bb.ew, label %bb.eu
-
-bb.eu:                                            ; preds = %3
+bb.eu:                                            ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
+  %3 = icmp ne i64 %i.oj, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.f, ptr noundef nonnull align 8 dereferenceable(72) %i.nm, i64 72, i1 false), !noalias !175628
   %i.ok = getelementptr inbounds nuw i8, ptr %1, i64 480 ; 4 uses
@@ -228,7 +226,7 @@ bb.ev:                                            ; preds = %bb.eu
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs3PfUT229lOd_12object_store5ErrorECsfR8GmIBoxTX_21lance_namespace_impls(ptr noalias noundef nonnull readonly align 8 dereferenceable(72) %i.ok)
           to label %bb.fb unwind label %bb.fa
 
-bb.ew:                                            ; preds = %3
+bb.ew:                                            ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs3PfUT229lOd_12object_store5ErrorECsfR8GmIBoxTX_21lance_namespace_impls(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.nm)
           to label %.thread60.i unwind label %bb.et
 
@@ -631,15 +629,11 @@ bb.ax:                                            ; preds = %bb.ay
   br label %.body.i
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i: ; preds = %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, %bb.av, %bb.ar
-  %i.gp = load i64, ptr %i.r, align 8, !range !559, !noalias !204377, !noundef !411 ; 3 uses
-  %.not26.i = icmp eq i64 %i.gp, -1
-  br i1 %.not26.i, label %.thread.i, label %3
-
-3:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
-  %4 = icmp ne i64 %i.gp, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.gp, -9223372036854775801
-  br i1 %5, label %bb.ay, label %bb.ev
+  %i.gp = load i64, ptr %i.r, align 8, !range !559, !noalias !204377, !noundef !411 ; 2 uses
+  switch i64 %i.gp, label %bb.ev [
+    i64 -1, label %.thread.i
+    i64 -9223372036854775801, label %bb.ay
+  ]
 
 .thread.i:                                        ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
   %i.gq = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 2 uses
@@ -648,7 +642,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs
   store i64 %i.gs, ptr %i.gq, align 8, !noalias !204377
   br label %bb.az
 
-bb.ay:                                            ; preds = %3
+bb.ay:                                            ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs3PfUT229lOd_12object_store5ErrorECsfR8GmIBoxTX_21lance_namespace_impls(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.r)
           to label %bb.az unwind label %bb.ax, !noalias !204378
 
@@ -1051,7 +1045,9 @@ bb.eu:                                            ; preds = %.lr.ph
   store i8 0, ptr %.sroa.10234.0..sroa_idx.i, align 16, !noalias !204377
   br label %bb.ao
 
-bb.ev:                                            ; preds = %3
+bb.ev:                                            ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvXCs3PfUT229lOd_12object_storeINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtBG_11ObjectStoreEL_ENtBG_14ObjectStoreExt6delete0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i
+  %3 = icmp ne i64 %i.gp, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !204377
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.p, ptr noundef nonnull align 8 dereferenceable(72) %i.r, i64 72, i1 false), !noalias !204377
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !204377

@@ -204,20 +204,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val = load i64, ptr %i.h, align 8, !range !17, !noundef !11 ; 2 uses
+  %.val = load i64, ptr %i.h, align 8, !range !17, !noundef !11
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val1 = load ptr, ptr %i.i, align 8            ; 9 uses
-  %.not.i = icmp eq i64 %.val, -1
+  %.val1 = load ptr, ptr %i.i, align 8, !nonnull !11, !noundef !11 ; 7 uses
   %i.j = ptrtoint ptr %.val1 to i64               ; 4 uses
   %i.k = and i64 %i.j, 3                          ; 3 uses
-  br i1 %.not.i, label %bb.i, label %1
+  switch i64 %.val, label %bb.f [
+    i64 -1, label %bb.i
+    i64 2, label %bb.c
+  ]
 
-1:                                                ; preds = %bb.b
-  %2 = icmp eq i64 %.val, 2
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  br i1 %2, label %bb.c, label %bb.f
-
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !113
   switch i64 %i.k, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i
@@ -250,7 +247,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !113
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit
 
-bb.f:                                             ; preds = %1
+bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !115
   switch i64 %i.k, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i
@@ -281,7 +278,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorE
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit
 
 bb.i:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !117
   switch i64 %i.k, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i
@@ -684,20 +680,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val = load i64, ptr %i.l, align 8, !range !17, !noundef !11 ; 2 uses
+  %.val = load i64, ptr %i.l, align 8, !range !17, !noundef !11
   %i.m = getelementptr i8, ptr %0, i64 16
-  %.val2 = load ptr, ptr %i.m, align 8            ; 9 uses
-  %.not.i = icmp eq i64 %.val, -1
+  %.val2 = load ptr, ptr %i.m, align 8, !nonnull !11, !noundef !11 ; 7 uses
   %i.n = ptrtoint ptr %.val2 to i64               ; 4 uses
   %i.o = and i64 %i.n, 3                          ; 3 uses
-  br i1 %.not.i, label %bb.i, label %1
+  switch i64 %.val, label %bb.f [
+    i64 -1, label %bb.i
+    i64 2, label %bb.c
+  ]
 
-1:                                                ; preds = %bb.b
-  %2 = icmp eq i64 %.val, 2
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
-  br i1 %2, label %bb.c, label %bb.f
-
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !948
   switch i64 %i.o, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i
@@ -730,7 +723,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !948
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit
 
-bb.f:                                             ; preds = %1
+bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !950
   switch i64 %i.o, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i
@@ -761,7 +754,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorE
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit
 
 bb.i:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !952
   switch i64 %i.o, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i
@@ -831,24 +823,22 @@ bb.n:                                             ; preds = %bb.a
 
 bb.o:                                             ; preds = %bb.a
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val3 = load i64, ptr %i.ay, align 8, !range !33, !noundef !11 ; 3 uses
+  %.val3 = load i64, ptr %i.ay, align 8, !range !33, !noundef !11 ; 2 uses
   %i.az = getelementptr i8, ptr %0, i64 16
-  %.val4 = load ptr, ptr %i.az, align 8           ; 9 uses
+  %.val4 = load ptr, ptr %i.az, align 8           ; 8 uses
   %i.ba = icmp eq i64 %.val3, -2
   br i1 %i.ba, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %.not.i.i = icmp eq i64 %.val3, -1
   %i.bb = ptrtoint ptr %.val4 to i64              ; 4 uses
   %i.bc = and i64 %i.bb, 3                        ; 3 uses
-  br i1 %.not.i.i, label %bb.w, label %3
-
-3:                                                ; preds = %bb.p
-  %4 = icmp eq i64 %.val3, 2
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
-  br i1 %4, label %bb.q, label %bb.t
+  switch i64 %.val3, label %bb.t [
+    i64 -1, label %bb.w
+    i64 2, label %bb.q
+  ]
 
-bb.q:                                             ; preds = %3
+bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !962
   switch i64 %i.bc, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i.i
@@ -878,7 +868,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !962
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit
 
-bb.t:                                             ; preds = %3
+bb.t:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !964
   switch i64 %i.bc, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i.i
@@ -909,7 +899,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorE
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherIBC_NtNtNtB4_2io5error5ErrorNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB1a_EECshke30g4Hb4g_20ipfs_private_example.exit
 
 bb.w:                                             ; preds = %bb.p
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !966
   switch i64 %i.bc, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i6

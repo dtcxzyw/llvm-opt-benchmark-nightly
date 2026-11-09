@@ -205,28 +205,27 @@ default.unreachable599:                           ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val.i = load ptr, ptr %2, align 8, !alias.scope !46446 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.val33.i = load i64, ptr %i.m, align 8, !alias.scope !46446, !noundef !18 ; 2 uses
-  %.not.i.i = icmp eq i64 %.val33.i, 0
-  br i1 %.not.i.i, label %.invoke478, label %bb.c
+  %.val33.i = load i64, ptr %i.m, align 8, !alias.scope !46446, !noundef !18 ; 3 uses
+  switch i64 %.val33.i, label %_ZN7geojson10conversion12to_geo_types16create_geo_point17h99610685359cca4bE.exit.i [
+    i64 0, label %.invoke478
+    i64 1, label %bb.c
+  ]
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
-  %.not1.i.i = icmp eq i64 %.val33.i, 1
-  br i1 %.not1.i.i, label %.invoke478, label %_ZN7geojson10conversion12to_geo_types16create_geo_point17h99610685359cca4bE.exit.i
+  br label %.invoke478
 
-.invoke478:                                       ; preds = %bb.c, %bb.b
-  %3 = phi i64 [ 0, %bb.b ], [ 1, %bb.c ]         ; 2 uses
-  %i.n = phi ptr [ @1831, %bb.b ], [ @1832, %bb.c ]
-  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %3, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.n) #64
+.invoke478:                                       ; preds = %bb.b, %bb.c
+  %i.n = phi ptr [ @1832, %bb.c ], [ @1831, %bb.b ]
+  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.val33.i, i64 noundef %.val33.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.n) #64
           to label %.cont479 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !46252
 
 .cont479:                                         ; preds = %.invoke478
   unreachable
 
-_ZN7geojson10conversion12to_geo_types16create_geo_point17h99610685359cca4bE.exit.i: ; preds = %bb.c
+_ZN7geojson10conversion12to_geo_types16create_geo_point17h99610685359cca4bE.exit.i: ; preds = %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.val.i = load ptr, ptr %2, align 8, !alias.scope !46446, !nonnull !18, !noundef !18
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.o, align 8, !alias.scope !46445
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -253,28 +252,27 @@ bb.d:                                             ; preds = %_ZN4core5alloc6layo
 .preheader.i.i.i.i.i.i.i:                         ; preds = %bb.d, %bb.e
   %.val20.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ad, %bb.e ], [ 0, %bb.d ] ; 3 uses
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %.val20.i.i.i.i.i.i.i.i.i.i ; 2 uses
-  %4 = getelementptr i8, ptr %i.y, i64 8
-  %.val21.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %4, align 8, !noalias !46449 ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 16
-  %.val22.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.z, align 8, !noalias !46449, !noundef !18 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i.i, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i, label %5
+  %.val22.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.z, align 8, !noalias !46449, !noundef !18 ; 3 uses
+  switch i64 %.val22.i.i.i.i.i.i.i.i.i.i, label %bb.e [
+    i64 0, label %.invoke.i.i.i.i.i
+    i64 1, label %3
+  ]
 
-5:                                                ; preds = %.preheader.i.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val21.i.i.i.i.i.i.i.i.i.i) ]
-  %.not1.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i.i, 1
-  br i1 %.not1.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i, label %bb.e
-
-.invoke.i.i.i.i.i:                                ; preds = %5, %.preheader.i.i.i.i.i.i.i
-  %6 = phi i64 [ 0, %.preheader.i.i.i.i.i.i.i ], [ 1, %5 ] ; 2 uses
-  %i.aa = phi ptr [ @1831, %.preheader.i.i.i.i.i.i.i ], [ @1832, %5 ]
-  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %6, i64 noundef %6, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aa) #64
+.invoke.i.i.i.i.i:                                ; preds = %.preheader.i.i.i.i.i.i.i, %3
+  %i.aa = phi ptr [ @1832, %3 ], [ @1831, %.preheader.i.i.i.i.i.i.i ]
+  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.val22.i.i.i.i.i.i.i.i.i.i, i64 noundef %.val22.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aa) #64
           to label %.cont.i.i.i.i.i unwind label %.body.i.i.i.i.i, !noalias !46449, !inline_history !46252
 
 .cont.i.i.i.i.i:                                  ; preds = %.invoke.i.i.i.i.i
   unreachable
 
-bb.e:                                             ; preds = %5
+3:                                                ; preds = %.preheader.i.i.i.i.i.i.i
+  br label %.invoke.i.i.i.i.i
+
+bb.e:                                             ; preds = %.preheader.i.i.i.i.i.i.i
+  %4 = getelementptr i8, ptr %i.y, i64 8
+  %.val21.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %4, align 8, !noalias !46449, !nonnull !18, !noundef !18
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %.val20.i.i.i.i.i.i.i.i.i.i
   %i.ac = load <2 x double>, ptr %.val21.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !46450
   store <2 x double> %i.ac, ptr %i.ab, align 8, !noalias !46451
@@ -319,30 +317,29 @@ bb.f:                                             ; preds = %_ZN4core5alloc6layo
 .preheader.i.i.i.i.i.i37.i:                       ; preds = %bb.f, %bb.g
   %.val20.i.i.i.i.i.i.i.i.i38.i = phi i64 [ %i.au, %bb.g ], [ 0, %bb.f ] ; 3 uses
   %i.ap = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %.val20.i.i.i.i.i.i.i.i.i38.i ; 2 uses
-  %7 = getelementptr i8, ptr %i.ap, i64 8
-  %.val21.i.i.i.i.i.i.i.i.i39.i = load ptr, ptr %7, align 8, !noalias !46454 ; 2 uses
   %i.aq = getelementptr i8, ptr %i.ap, i64 16
-  %.val22.i.i.i.i.i.i.i.i.i40.i = load i64, ptr %i.aq, align 8, !noalias !46454, !noundef !18 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i.i41.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i40.i, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i41.i, label %.invoke.i.i.i.i47.i, label %8
+  %.val22.i.i.i.i.i.i.i.i.i40.i = load i64, ptr %i.aq, align 8, !noalias !46454, !noundef !18 ; 3 uses
+  switch i64 %.val22.i.i.i.i.i.i.i.i.i40.i, label %bb.g [
+    i64 0, label %.invoke.i.i.i.i47.i
+    i64 1, label %5
+  ]
 
-8:                                                ; preds = %.preheader.i.i.i.i.i.i37.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val21.i.i.i.i.i.i.i.i.i39.i) ]
-  %.not1.i.i.i.i.i.i.i.i.i.i.i.i42.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i40.i, 1
-  br i1 %.not1.i.i.i.i.i.i.i.i.i.i.i.i42.i, label %.invoke.i.i.i.i47.i, label %bb.g
-
-.invoke.i.i.i.i47.i:                              ; preds = %8, %.preheader.i.i.i.i.i.i37.i
-  %9 = phi i64 [ 0, %.preheader.i.i.i.i.i.i37.i ], [ 1, %8 ] ; 2 uses
-  %i.ar = phi ptr [ @1833, %.preheader.i.i.i.i.i.i37.i ], [ @1834, %8 ]
-  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %9, i64 noundef %9, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ar) #64
+.invoke.i.i.i.i47.i:                              ; preds = %.preheader.i.i.i.i.i.i37.i, %5
+  %i.ar = phi ptr [ @1834, %5 ], [ @1833, %.preheader.i.i.i.i.i.i37.i ]
+  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.val22.i.i.i.i.i.i.i.i.i40.i, i64 noundef %.val22.i.i.i.i.i.i.i.i.i40.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ar) #64
           to label %.cont.i.i.i.i49.i unwind label %.body.i.i.i.i48.i, !noalias !46454, !inline_history !46252
 
 .cont.i.i.i.i49.i:                                ; preds = %.invoke.i.i.i.i47.i
   unreachable
 
-bb.g:                                             ; preds = %8
+5:                                                ; preds = %.preheader.i.i.i.i.i.i37.i
+  br label %.invoke.i.i.i.i47.i
+
+bb.g:                                             ; preds = %.preheader.i.i.i.i.i.i37.i
+  %6 = getelementptr i8, ptr %i.ap, i64 8
+  %.val21.i.i.i.i.i.i.i.i.i43.i = load ptr, ptr %6, align 8, !noalias !46454, !nonnull !18, !noundef !18
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.an, i64 %.val20.i.i.i.i.i.i.i.i.i38.i
-  %i.at = load <2 x double>, ptr %.val21.i.i.i.i.i.i.i.i.i39.i, align 8, !noalias !46455
+  %i.at = load <2 x double>, ptr %.val21.i.i.i.i.i.i.i.i.i43.i, align 8, !noalias !46455
   store <2 x double> %i.at, ptr %i.as, align 8, !noalias !46456
   %i.au = add nuw i64 %.val20.i.i.i.i.i.i.i.i.i38.i, 1 ; 2 uses
   %i.av = icmp eq i64 %i.au, %i.ak
@@ -431,28 +428,27 @@ bb.k:                                             ; preds = %bb.j
 .preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:   ; preds = %bb.j, %bb.l
   %.val20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.bw, %bb.l ], [ 0, %bb.j ] ; 3 uses
   %i.br = getelementptr inbounds nuw [24 x i8], ptr %.val21.i.i.i.i.i.i.i.i.i55.i, i64 %.val20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
-  %10 = getelementptr i8, ptr %i.br, i64 8
-  %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %10, align 8, !noalias !46464 ; 2 uses
   %i.bs = getelementptr i8, ptr %i.br, i64 16
-  %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.bs, align 8, !noalias !46464, !noundef !18 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %11
+  %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.bs, align 8, !noalias !46464, !noundef !18 ; 3 uses
+  switch i64 %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.l [
+    i64 0, label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+    i64 1, label %7
+  ]
 
-11:                                               ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
-  %.not1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  br i1 %.not1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.l
-
-.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %11, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %12 = phi i64 [ 0, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 1, %11 ] ; 2 uses
-  %i.bt = phi ptr [ @1833, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ @1834, %11 ]
-  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %12, i64 noundef %12, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bt) #64
+.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %7
+  %i.bt = phi ptr [ @1834, %7 ], [ @1833, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
+  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bt) #64
           to label %.cont.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !noalias !46464, !inline_history !46252
 
 .cont.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:            ; preds = %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   unreachable
 
-bb.l:                                             ; preds = %11
+7:                                                ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  br label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+
+bb.l:                                             ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %8 = getelementptr i8, ptr %i.br, i64 8
+  %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %8, align 8, !noalias !46464, !nonnull !18, !noundef !18
   %i.bu = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.val20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.bv = load <2 x double>, ptr %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !46465
   store <2 x double> %i.bv, ptr %i.bu, align 8, !noalias !46466
@@ -855,28 +851,27 @@ bb.c:                                             ; preds = %bb.b
 .preheader.i.i.i.i.i.i:                           ; preds = %bb.b, %bb.d
   %.val20.i.i.i.i.i.i.i.i.i = phi i64 [ %i.q, %bb.d ], [ 0, %bb.b ] ; 3 uses
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %.val20.i.i.i.i.i.i.i.i.i ; 2 uses
-  %1 = getelementptr i8, ptr %i.l, i64 8
-  %.val21.i.i.i.i.i.i.i.i.i = load ptr, ptr %1, align 8, !noalias !46604 ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 16
-  %.val22.i.i.i.i.i.i.i.i.i = load i64, ptr %i.m, align 8, !noalias !46604, !noundef !18 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i, label %2
+  %.val22.i.i.i.i.i.i.i.i.i = load i64, ptr %i.m, align 8, !noalias !46604, !noundef !18 ; 3 uses
+  switch i64 %.val22.i.i.i.i.i.i.i.i.i, label %bb.d [
+    i64 0, label %.invoke.i.i.i.i
+    i64 1, label %1
+  ]
 
-2:                                                ; preds = %.preheader.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val21.i.i.i.i.i.i.i.i.i) ]
-  %.not1.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i, 1
-  br i1 %.not1.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i, label %bb.d
-
-.invoke.i.i.i.i:                                  ; preds = %2, %.preheader.i.i.i.i.i.i
-  %3 = phi i64 [ 0, %.preheader.i.i.i.i.i.i ], [ 1, %2 ] ; 2 uses
-  %i.n = phi ptr [ @1833, %.preheader.i.i.i.i.i.i ], [ @1834, %2 ]
-  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %3, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.n) #64
+.invoke.i.i.i.i:                                  ; preds = %.preheader.i.i.i.i.i.i, %1
+  %i.n = phi ptr [ @1834, %1 ], [ @1833, %.preheader.i.i.i.i.i.i ]
+  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.val22.i.i.i.i.i.i.i.i.i, i64 noundef %.val22.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.n) #64
           to label %.cont.i.i.i.i unwind label %.body.i.i.i.i, !noalias !46604
 
 .cont.i.i.i.i:                                    ; preds = %.invoke.i.i.i.i
   unreachable
 
-bb.d:                                             ; preds = %2
+1:                                                ; preds = %.preheader.i.i.i.i.i.i
+  br label %.invoke.i.i.i.i
+
+bb.d:                                             ; preds = %.preheader.i.i.i.i.i.i
+  %2 = getelementptr i8, ptr %i.l, i64 8
+  %.val21.i.i.i.i.i.i.i.i.i = load ptr, ptr %2, align 8, !noalias !46604, !nonnull !18, !noundef !18
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %.val20.i.i.i.i.i.i.i.i.i
   %i.p = load <2 x double>, ptr %.val21.i.i.i.i.i.i.i.i.i, align 8, !noalias !46605
   store <2 x double> %i.p, ptr %i.o, align 8, !noalias !46606
@@ -960,28 +955,27 @@ bb.h:                                             ; preds = %bb.g
 .preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:     ; preds = %bb.g, %bb.i
   %.val20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ao, %bb.i ], [ 0, %bb.g ] ; 3 uses
   %i.aj = getelementptr inbounds nuw [24 x i8], ptr %.val21.i.i.i.i.i.i.i.i.i7, i64 %.val20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
-  %4 = getelementptr i8, ptr %i.aj, i64 8
-  %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %4, align 8, !noalias !46613 ; 2 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 16
-  %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.ak, align 8, !noalias !46613, !noundef !18 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %5
+  %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.ak, align 8, !noalias !46613, !noundef !18 ; 3 uses
+  switch i64 %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.i [
+    i64 0, label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+    i64 1, label %3
+  ]
 
-5:                                                ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
-  %.not1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  br i1 %.not1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.i
-
-.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:            ; preds = %5, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %6 = phi i64 [ 0, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 1, %5 ] ; 2 uses
-  %i.al = phi ptr [ @1833, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ @1834, %5 ]
-  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %6, i64 noundef %6, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.al) #64
+.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:            ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %3
+  %i.al = phi ptr [ @1834, %3 ], [ @1833, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
+  invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %.val22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.al) #64
           to label %.cont.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !noalias !46613
 
 .cont.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:              ; preds = %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   unreachable
 
-bb.i:                                             ; preds = %5
+3:                                                ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  br label %.invoke.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+
+bb.i:                                             ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %4 = getelementptr i8, ptr %i.aj, i64 8
+  %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %4, align 8, !noalias !46613, !nonnull !18, !noundef !18
   %i.am = getelementptr inbounds nuw [16 x i8], ptr %i.ah, i64 %.val20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.an = load <2 x double>, ptr %.val21.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !46614
   store <2 x double> %i.an, ptr %i.am, align 8, !noalias !46615
