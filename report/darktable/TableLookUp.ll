@@ -144,9 +144,9 @@ bb.a:
   %.fr213 = freeze ptr %i.b
   %i.e = ptrtoint ptr %.fr213 to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 7 uses
-  %i.h = lshr exact i64 %i.g, 1                   ; 3 uses
-  %i.i = trunc i64 %i.h to i32                    ; 11 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 5 uses
+  %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
+  %i.i = trunc i64 %i.h to i32                    ; 4 uses
   %i.j = icmp sgt i32 %i.i, 65536
   br i1 %i.j, label %bb.b, label %bb.c
 
@@ -549,133 +549,119 @@ iter.check189:                                    ; preds = %.preheader83, %.pre
   %sext82 = add i64 %i.ht, -4294967296
   %i.hu = ashr i64 %sext82, 32                    ; 2 uses
   %i.hv = getelementptr inbounds nuw [2 x i8], ptr %i.d, i64 %i.hu ; 12 uses
-  %3 = sub i32 65536, %i.i                        ; 7 uses
-  %min.iters.check161 = icmp ult i32 %3, 8
+  %3 = and i64 %i.h, 4294967295                   ; 8 uses
+  %4 = sub nsw i64 65536, %3                      ; 7 uses
+  %min.iters.check161 = icmp ult i64 %4, 8
   br i1 %min.iters.check161, label %vec.epilog.scalar.ph191.preheader, label %vector.memcheck162
 
 vector.memcheck162:                               ; preds = %iter.check189
-  %i.hw = shl i64 %i.g, 1
-  %4 = and i64 %i.hw, 8589934588                  ; 2 uses
+  %i.hw = shl nuw nsw i64 %3, 2
   %i.hx = shl nuw nsw i64 %i.r, 1                 ; 2 uses
-  %5 = getelementptr i8, ptr %i.n, i64 %4
-  %6 = getelementptr i8, ptr %5, i64 %i.hx
-  %7 = shl i64 %i.g, 1
-  %8 = sub i64 262140, %7
-  %9 = and i64 %8, 17179869180
-  %i.hy = getelementptr i8, ptr %i.n, i64 %9
-  %i.hz = getelementptr i8, ptr %i.hy, i64 %4
-  %i.ia = getelementptr i8, ptr %i.hz, i64 %i.hx
-  %i.ib = getelementptr i8, ptr %i.ia, i64 4
+  %i.hy = getelementptr i8, ptr %i.n, i64 %i.hw
+  %i.hz = getelementptr i8, ptr %i.hy, i64 %i.hx
+  %i.ia = getelementptr i8, ptr %i.n, i64 %i.hx
+  %i.ib = getelementptr i8, ptr %i.ia, i64 262144
   %i.ic = shl nuw nsw i64 %i.hu, 1
   %i.id = getelementptr i8, ptr %i.d, i64 %i.ic
   %i.ie = getelementptr i8, ptr %i.id, i64 2
-  %bound0163 = icmp ult ptr %6, %i.ie
+  %bound0163 = icmp ult ptr %i.hz, %i.ie
   %bound1164 = icmp ult ptr %i.hv, %i.ib
   %found.conflict165 = and i1 %bound0163, %bound1164
   br i1 %found.conflict165, label %vec.epilog.scalar.ph191.preheader, label %vector.main.loop.iter.check166
 
 vector.main.loop.iter.check166:                   ; preds = %vector.memcheck162
-  %min.iters.check167 = icmp ult i32 %3, 64
+  %min.iters.check167 = icmp ult i64 %4, 64
   br i1 %min.iters.check167, label %vec.epilog.ph193, label %vector.ph168
 
 vector.ph168:                                     ; preds = %vector.main.loop.iter.check166
-  %10 = and i32 %3, 56
-  %n.vec169 = and i32 %3, -64                     ; 4 uses
-  %11 = add i32 %n.vec169, %i.i                   ; 2 uses
+  %5 = and i64 %4, 56
+  %n.vec173 = and i64 %4, -64                     ; 4 uses
+  %6 = add nsw i64 %3, %n.vec173
   %i.if = load i16, ptr %i.hv, align 2, !tbaa !22, !alias.scope !60
   %broadcast.splatinsert179 = insertelement <16 x i16> poison, i16 %i.if, i64 0
   %interleaved.vec181 = shufflevector <16 x i16> %broadcast.splatinsert179, <16 x i16> zeroinitializer, <32 x i32> <i32 0, i32 16, i32 0, i32 17, i32 0, i32 18, i32 0, i32 19, i32 0, i32 20, i32 0, i32 21, i32 0, i32 22, i32 0, i32 23, i32 0, i32 24, i32 0, i32 25, i32 0, i32 26, i32 0, i32 27, i32 0, i32 28, i32 0, i32 29, i32 0, i32 30, i32 0, i32 31> ; 4 uses
   br label %vector.body173
 
 vector.body173:                                   ; preds = %vector.ph168, %vector.body173
-  %index174 = phi i32 [ 0, %vector.ph168 ], [ %index.next185, %vector.body173 ]
-  %12 = phi i32 [ %i.i, %vector.ph168 ], [ %28, %vector.body173 ] ; 5 uses
-  %13 = shl nsw i32 %12, 1
-  %14 = shl i32 %12, 1
-  %15 = add i32 %14, 32
-  %16 = shl i32 %12, 1
-  %17 = add i32 %16, 64
-  %18 = shl i32 %12, 1
-  %19 = add i32 %18, 96
-  %20 = zext nneg i32 %13 to i64
-  %21 = zext nneg i32 %15 to i64
-  %22 = zext nneg i32 %17 to i64
-  %23 = zext nneg i32 %19 to i64
-  %24 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %20
-  %25 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %21
-  %26 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %22
-  %27 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %23
-  store <32 x i16> %interleaved.vec181, ptr %24, align 2, !tbaa !22, !alias.scope !61, !noalias !60
-  store <32 x i16> %interleaved.vec181, ptr %25, align 2, !tbaa !22, !alias.scope !61, !noalias !60
-  store <32 x i16> %interleaved.vec181, ptr %26, align 2, !tbaa !22, !alias.scope !61, !noalias !60
-  store <32 x i16> %interleaved.vec181, ptr %27, align 2, !tbaa !22, !alias.scope !61, !noalias !60
-  %index.next185 = add nuw i32 %index174, 64      ; 2 uses
-  %28 = add i32 %12, 64
-  %i.ig = icmp eq i32 %index.next185, %n.vec169
+  %index178 = phi i64 [ 0, %vector.ph168 ], [ %index.next189, %vector.body173 ] ; 2 uses
+  %7 = add nuw i64 %3, %index178                  ; 4 uses
+  %8 = shl nuw nsw i64 %7, 2
+  %9 = shl i64 %7, 2
+  %10 = shl i64 %7, 2
+  %11 = shl i64 %7, 2
+  %12 = getelementptr inbounds nuw i8, ptr %i.s, i64 %8
+  %13 = getelementptr i8, ptr %i.s, i64 %9
+  %14 = getelementptr i8, ptr %13, i64 64
+  %15 = getelementptr i8, ptr %i.s, i64 %10
+  %16 = getelementptr i8, ptr %15, i64 128
+  %17 = getelementptr i8, ptr %i.s, i64 %11
+  %18 = getelementptr i8, ptr %17, i64 192
+  store <32 x i16> %interleaved.vec181, ptr %12, align 2, !tbaa !22, !alias.scope !61, !noalias !60
+  store <32 x i16> %interleaved.vec181, ptr %14, align 2, !tbaa !22, !alias.scope !61, !noalias !60
+  store <32 x i16> %interleaved.vec181, ptr %16, align 2, !tbaa !22, !alias.scope !61, !noalias !60
+  store <32 x i16> %interleaved.vec181, ptr %18, align 2, !tbaa !22, !alias.scope !61, !noalias !60
+  %index.next189 = add nuw i64 %index178, 64      ; 2 uses
+  %i.ig = icmp eq i64 %index.next189, %n.vec173
   br i1 %i.ig, label %middle.block187, label %vector.body173, !llvm.loop !46
 
 middle.block187:                                  ; preds = %vector.body173
-  %cmp.n188 = icmp eq i32 %3, %n.vec169
+  %cmp.n188 = icmp eq i64 %4, %n.vec173
   br i1 %cmp.n188, label %.loopexit, label %vec.epilog.iter.check190
 
 vec.epilog.iter.check190:                         ; preds = %middle.block187
-  %min.epilog.iters.check192 = icmp eq i32 %10, 0
+  %min.epilog.iters.check192 = icmp eq i64 %5, 0
   br i1 %min.epilog.iters.check192, label %vec.epilog.scalar.ph191.preheader, label %vec.epilog.ph193, !prof !29
 
 vec.epilog.ph193:                                 ; preds = %vector.main.loop.iter.check166, %vec.epilog.iter.check190
-  %vec.epilog.resume.val194 = phi i32 [ %n.vec169, %vec.epilog.iter.check190 ], [ 0, %vector.main.loop.iter.check166 ]
-  %bc.resume.val195 = phi i32 [ %11, %vec.epilog.iter.check190 ], [ %i.i, %vector.main.loop.iter.check166 ]
-  %n.vec196 = and i32 %3, -8                      ; 3 uses
-  %29 = add i32 %n.vec196, %i.i
+  %vec.epilog.resume.val198 = phi i64 [ %n.vec173, %vec.epilog.iter.check190 ], [ 0, %vector.main.loop.iter.check166 ]
+  %n.vec200 = and i64 %4, -8                      ; 3 uses
+  %19 = add nsw i64 %3, %n.vec200
   %i.ih = load i16, ptr %i.hv, align 2, !tbaa !22, !alias.scope !60
   %broadcast.splatinsert203 = insertelement <8 x i16> poison, i16 %i.ih, i64 0
   %interleaved.vec205 = shufflevector <8 x i16> %broadcast.splatinsert203, <8 x i16> zeroinitializer, <16 x i32> <i32 0, i32 8, i32 0, i32 9, i32 0, i32 10, i32 0, i32 11, i32 0, i32 12, i32 0, i32 13, i32 0, i32 14, i32 0, i32 15>
   br label %vec.epilog.vector.body200
 
 vec.epilog.vector.body200:                        ; preds = %vec.epilog.vector.body200, %vec.epilog.ph193
-  %index201 = phi i32 [ %vec.epilog.resume.val194, %vec.epilog.ph193 ], [ %index.next206, %vec.epilog.vector.body200 ]
-  %30 = phi i32 [ %bc.resume.val195, %vec.epilog.ph193 ], [ %34, %vec.epilog.vector.body200 ] ; 2 uses
-  %31 = shl nsw i32 %30, 1
-  %32 = zext nneg i32 %31 to i64
-  %33 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %32
-  store <16 x i16> %interleaved.vec205, ptr %33, align 2, !tbaa !22, !alias.scope !61, !noalias !60
-  %index.next206 = add nuw i32 %index201, 8       ; 2 uses
-  %34 = add i32 %30, 8
-  %i.ii = icmp eq i32 %index.next206, %n.vec196
+  %index205 = phi i64 [ %vec.epilog.resume.val198, %vec.epilog.ph193 ], [ %index.next210, %vec.epilog.vector.body200 ] ; 2 uses
+  %20 = add nuw i64 %3, %index205
+  %21 = shl nuw nsw i64 %20, 2
+  %22 = getelementptr inbounds nuw i8, ptr %i.s, i64 %21
+  store <16 x i16> %interleaved.vec205, ptr %22, align 2, !tbaa !22, !alias.scope !61, !noalias !60
+  %index.next210 = add nuw i64 %index205, 8       ; 2 uses
+  %i.ii = icmp eq i64 %index.next210, %n.vec200
   br i1 %i.ii, label %vec.epilog.middle.block208, label %vec.epilog.vector.body200, !llvm.loop !47
 
 vec.epilog.middle.block208:                       ; preds = %vec.epilog.vector.body200
-  %cmp.n209 = icmp eq i32 %3, %n.vec196
+  %cmp.n209 = icmp eq i64 %4, %n.vec200
   br i1 %cmp.n209, label %.loopexit, label %vec.epilog.scalar.ph191.preheader
 
 vec.epilog.scalar.ph191.preheader:                ; preds = %iter.check189, %vector.memcheck162, %vec.epilog.iter.check190, %vec.epilog.middle.block208
-  %.088.ph = phi i32 [ %i.i, %iter.check189 ], [ %i.i, %vector.memcheck162 ], [ %11, %vec.epilog.iter.check190 ], [ %29, %vec.epilog.middle.block208 ] ; 4 uses
-  %35 = sub i32 0, %.088.ph
-  %xtraiter217 = and i32 %35, 7                   ; 2 uses
-  %lcmp.mod218.not = icmp eq i32 %xtraiter217, 0
+  %indvars.iv99.ph = phi i64 [ %3, %iter.check189 ], [ %3, %vector.memcheck162 ], [ %6, %vec.epilog.iter.check190 ], [ %19, %vec.epilog.middle.block208 ] ; 4 uses
+  %23 = sub nsw i64 0, %indvars.iv99.ph
+  %xtraiter221 = and i64 %23, 7                   ; 2 uses
+  %lcmp.mod218.not = icmp eq i64 %xtraiter221, 0
   br i1 %lcmp.mod218.not, label %vec.epilog.scalar.ph191.prol.loopexit, label %vec.epilog.scalar.ph191.prol
 
 vec.epilog.scalar.ph191.prol:                     ; preds = %vec.epilog.scalar.ph191.preheader, %vec.epilog.scalar.ph191.prol
-  %.088.prol = phi i32 [ %39, %vec.epilog.scalar.ph191.prol ], [ %.088.ph, %vec.epilog.scalar.ph191.preheader ] ; 2 uses
-  %prol.iter = phi i32 [ %prol.iter.next, %vec.epilog.scalar.ph191.prol ], [ 0, %vec.epilog.scalar.ph191.preheader ]
+  %indvars.iv99.prol = phi i64 [ %indvars.iv.next100.prol, %vec.epilog.scalar.ph191.prol ], [ %indvars.iv99.ph, %vec.epilog.scalar.ph191.preheader ] ; 3 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph191.prol ], [ 0, %vec.epilog.scalar.ph191.preheader ]
   %i.ij = load i16, ptr %i.hv, align 2, !tbaa !22
-  %36 = shl nsw i32 %.088.prol, 1                 ; 2 uses
-  %i.ik = icmp samesign ult i32 %36, 131072
+  %i.ik = icmp samesign ult i64 %indvars.iv99.prol, 65536
   tail call void @llvm.assume(i1 %i.ik)
-  %37 = zext nneg i32 %36 to i64
-  %38 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %37 ; 2 uses
-  store i16 %i.ij, ptr %38, align 2, !tbaa !22
-  %i.il = getelementptr inbounds nuw i8, ptr %38, i64 2
+  %.idx105.prol = shl nuw nsw i64 %indvars.iv99.prol, 2
+  %24 = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx105.prol ; 2 uses
+  store i16 %i.ij, ptr %24, align 2, !tbaa !22
+  %i.il = getelementptr inbounds nuw i8, ptr %24, i64 2
   store i16 0, ptr %i.il, align 2, !tbaa !22
-  %39 = add i32 %.088.prol, 1                     ; 2 uses
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter217
+  %indvars.iv.next100.prol = add nuw nsw i64 %indvars.iv99.prol, 1 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter221
   br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph191.prol.loopexit, label %vec.epilog.scalar.ph191.prol, !llvm.loop !48
 
 vec.epilog.scalar.ph191.prol.loopexit:            ; preds = %vec.epilog.scalar.ph191.prol, %vec.epilog.scalar.ph191.preheader
-  %.088.unr = phi i32 [ %.088.ph, %vec.epilog.scalar.ph191.preheader ], [ %39, %vec.epilog.scalar.ph191.prol ]
-  %40 = add i32 %.088.ph, -65529
-  %i.im = icmp ult i32 %40, 7
+  %indvars.iv99.unr = phi i64 [ %indvars.iv99.ph, %vec.epilog.scalar.ph191.preheader ], [ %indvars.iv.next100.prol, %vec.epilog.scalar.ph191.prol ]
+  %25 = add nsw i64 %indvars.iv99.ph, -65529
+  %i.im = icmp ult i64 %25, 7
   br i1 %i.im, label %.loopexit, label %vec.epilog.scalar.ph191
 
 .peel.next:                                       ; preds = %.peel.next.prol.loopexit, %bb.l
@@ -756,88 +742,66 @@ bb.l:                                             ; preds = %bb.k, %.peel.next.1
   br i1 %exitcond96.not.1, label %.preheader, label %.peel.next, !llvm.loop !49
 
 vec.epilog.scalar.ph191:                          ; preds = %vec.epilog.scalar.ph191.prol.loopexit, %vec.epilog.scalar.ph191
-  %.088 = phi i32 [ %80, %vec.epilog.scalar.ph191 ], [ %.088.unr, %vec.epilog.scalar.ph191.prol.loopexit ] ; 9 uses
+  %indvars.iv99 = phi i64 [ %indvars.iv.next100.7, %vec.epilog.scalar.ph191 ], [ %indvars.iv99.unr, %vec.epilog.scalar.ph191.prol.loopexit ] ; 10 uses
   %i.kf = load i16, ptr %i.hv, align 2, !tbaa !22
-  %41 = shl nsw i32 %.088, 1                      ; 2 uses
-  %42 = icmp samesign ult i32 %41, 131072
-  tail call void @llvm.assume(i1 %42)
-  %43 = zext nneg i32 %41 to i64
-  %44 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %43 ; 2 uses
-  store i16 %i.kf, ptr %44, align 2, !tbaa !22
-  %i.kg = getelementptr inbounds nuw i8, ptr %44, i64 2
+  %.idx105 = shl nuw nsw i64 %indvars.iv99, 2
+  %26 = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx105 ; 2 uses
+  store i16 %i.kf, ptr %26, align 2, !tbaa !22
+  %i.kg = getelementptr inbounds nuw i8, ptr %26, i64 2
   store i16 0, ptr %i.kg, align 2, !tbaa !22
   %i.kh = load i16, ptr %i.hv, align 2, !tbaa !22
-  %45 = shl i32 %.088, 1
-  %46 = add i32 %45, 2                            ; 2 uses
-  %47 = icmp samesign ult i32 %46, 131072
-  tail call void @llvm.assume(i1 %47)
-  %48 = zext nneg i32 %46 to i64
-  %49 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %48 ; 2 uses
-  store i16 %i.kh, ptr %49, align 2, !tbaa !22
-  %i.ki = getelementptr inbounds nuw i8, ptr %49, i64 2
+  %indvars.iv.next100 = shl i64 %indvars.iv99, 2
+  %27 = getelementptr i8, ptr %i.s, i64 %indvars.iv.next100 ; 2 uses
+  %28 = getelementptr i8, ptr %27, i64 4
+  store i16 %i.kh, ptr %28, align 2, !tbaa !22
+  %i.ki = getelementptr i8, ptr %27, i64 6
   store i16 0, ptr %i.ki, align 2, !tbaa !22
   %i.kj = load i16, ptr %i.hv, align 2, !tbaa !22
-  %50 = shl i32 %.088, 1
-  %51 = add i32 %50, 4                            ; 2 uses
-  %52 = icmp samesign ult i32 %51, 131072
-  tail call void @llvm.assume(i1 %52)
-  %53 = zext nneg i32 %51 to i64
-  %54 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %53 ; 2 uses
-  store i16 %i.kj, ptr %54, align 2, !tbaa !22
-  %i.kk = getelementptr inbounds nuw i8, ptr %54, i64 2
+  %indvars.iv.next100.1 = shl i64 %indvars.iv99, 2
+  %29 = getelementptr i8, ptr %i.s, i64 %indvars.iv.next100.1 ; 2 uses
+  %30 = getelementptr i8, ptr %29, i64 8
+  store i16 %i.kj, ptr %30, align 2, !tbaa !22
+  %i.kk = getelementptr i8, ptr %29, i64 10
   store i16 0, ptr %i.kk, align 2, !tbaa !22
   %i.kl = load i16, ptr %i.hv, align 2, !tbaa !22
-  %55 = shl i32 %.088, 1
-  %56 = add i32 %55, 6                            ; 2 uses
-  %57 = icmp samesign ult i32 %56, 131072
-  tail call void @llvm.assume(i1 %57)
-  %58 = zext nneg i32 %56 to i64
-  %59 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %58 ; 2 uses
-  store i16 %i.kl, ptr %59, align 2, !tbaa !22
-  %i.km = getelementptr inbounds nuw i8, ptr %59, i64 2
+  %indvars.iv.next100.2 = shl i64 %indvars.iv99, 2
+  %31 = getelementptr i8, ptr %i.s, i64 %indvars.iv.next100.2 ; 2 uses
+  %32 = getelementptr i8, ptr %31, i64 12
+  store i16 %i.kl, ptr %32, align 2, !tbaa !22
+  %i.km = getelementptr i8, ptr %31, i64 14
   store i16 0, ptr %i.km, align 2, !tbaa !22
   %i.kn = load i16, ptr %i.hv, align 2, !tbaa !22
-  %60 = shl i32 %.088, 1
-  %61 = add i32 %60, 8                            ; 2 uses
-  %62 = icmp samesign ult i32 %61, 131072
-  tail call void @llvm.assume(i1 %62)
-  %63 = zext nneg i32 %61 to i64
-  %64 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %63 ; 2 uses
-  store i16 %i.kn, ptr %64, align 2, !tbaa !22
-  %i.ko = getelementptr inbounds nuw i8, ptr %64, i64 2
+  %indvars.iv.next100.3 = shl i64 %indvars.iv99, 2
+  %33 = getelementptr i8, ptr %i.s, i64 %indvars.iv.next100.3 ; 2 uses
+  %34 = getelementptr i8, ptr %33, i64 16
+  store i16 %i.kn, ptr %34, align 2, !tbaa !22
+  %i.ko = getelementptr i8, ptr %33, i64 18
   store i16 0, ptr %i.ko, align 2, !tbaa !22
   %i.kp = load i16, ptr %i.hv, align 2, !tbaa !22
-  %65 = shl i32 %.088, 1
-  %66 = add i32 %65, 10                           ; 2 uses
-  %67 = icmp samesign ult i32 %66, 131072
-  tail call void @llvm.assume(i1 %67)
-  %68 = zext nneg i32 %66 to i64
-  %69 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %68 ; 2 uses
-  store i16 %i.kp, ptr %69, align 2, !tbaa !22
-  %i.kq = getelementptr inbounds nuw i8, ptr %69, i64 2
+  %indvars.iv.next100.4 = shl i64 %indvars.iv99, 2
+  %35 = getelementptr i8, ptr %i.s, i64 %indvars.iv.next100.4 ; 2 uses
+  %36 = getelementptr i8, ptr %35, i64 20
+  store i16 %i.kp, ptr %36, align 2, !tbaa !22
+  %i.kq = getelementptr i8, ptr %35, i64 22
   store i16 0, ptr %i.kq, align 2, !tbaa !22
   %i.kr = load i16, ptr %i.hv, align 2, !tbaa !22
-  %70 = shl i32 %.088, 1
-  %71 = add i32 %70, 12                           ; 2 uses
-  %72 = icmp samesign ult i32 %71, 131072
-  tail call void @llvm.assume(i1 %72)
-  %73 = zext nneg i32 %71 to i64
-  %74 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %73 ; 2 uses
-  store i16 %i.kr, ptr %74, align 2, !tbaa !22
-  %i.ks = getelementptr inbounds nuw i8, ptr %74, i64 2
+  %indvars.iv.next100.5 = shl i64 %indvars.iv99, 2
+  %37 = getelementptr i8, ptr %i.s, i64 %indvars.iv.next100.5 ; 2 uses
+  %38 = getelementptr i8, ptr %37, i64 24
+  store i16 %i.kr, ptr %38, align 2, !tbaa !22
+  %i.ks = getelementptr i8, ptr %37, i64 26
   store i16 0, ptr %i.ks, align 2, !tbaa !22
-  %75 = load i16, ptr %i.hv, align 2, !tbaa !22
-  %76 = shl i32 %.088, 1
-  %77 = add i32 %76, 14                           ; 2 uses
-  %i.kt = icmp samesign ult i32 %77, 131072
+  %indvars.iv.next100.6 = add nuw nsw i64 %indvars.iv99, 7 ; 2 uses
+  %39 = load i16, ptr %i.hv, align 2, !tbaa !22
+  %i.kt = icmp ult i64 %indvars.iv99, 65529
   tail call void @llvm.assume(i1 %i.kt)
-  %78 = zext nneg i32 %77 to i64
-  %79 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %78 ; 2 uses
-  store i16 %75, ptr %79, align 2, !tbaa !22
-  %i.ku = getelementptr inbounds nuw i8, ptr %79, i64 2
+  %.idx105.7 = shl nuw nsw i64 %indvars.iv.next100.6, 2
+  %40 = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx105.7 ; 2 uses
+  store i16 %39, ptr %40, align 2, !tbaa !22
+  %i.ku = getelementptr inbounds nuw i8, ptr %40, i64 2
   store i16 0, ptr %i.ku, align 2, !tbaa !22
-  %80 = add i32 %.088, 8                          ; 2 uses
-  %exitcond98.not.7 = icmp eq i32 %80, 65536
+  %indvars.iv.next100.7 = add nuw nsw i64 %indvars.iv99, 8
+  %exitcond98.not.7 = icmp eq i64 %indvars.iv.next100.6, 65535
   br i1 %exitcond98.not.7, label %.loopexit, label %vec.epilog.scalar.ph191, !llvm.loop !50
 
 .loopexit:                                        ; preds = %vector.body, %scalar.ph, %vec.epilog.scalar.ph191.prol.loopexit, %vec.epilog.scalar.ph191, %middle.block187, %vec.epilog.middle.block208, %.preheader
