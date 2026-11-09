@@ -204,13 +204,6 @@ bb.df:                                            ; preds = %bb.db
 .noexc28.i.i.i.i.i:                               ; preds = %bb.df
   unreachable
 
-3:                                                ; preds = %bb.dd
-  store i8 1, ptr %i.nk, align 8, !noalias !8730
-  store i8 1, ptr %i.mh, align 8, !noalias !8728
-  store i8 1, ptr %i.mg, align 8, !noalias !8728
-  %4 = ptrtoint ptr %i.nl to i64
-  br label %bb.me
-
 .critedge.i.i.i:                                  ; preds = %bb.cd
   store i8 1, ptr %i.lm, align 8, !noalias !8728
   %.phi.trans.insert171.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 480
@@ -313,6 +306,13 @@ bb.dl:                                            ; preds = %bb.dg, %bb.ci, %bb.
   %i.pe = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i.i
+
+3:                                                ; preds = %bb.dd
+  store i8 1, ptr %i.nk, align 8, !noalias !8730
+  store i8 1, ptr %i.mh, align 8, !noalias !8728
+  store i8 1, ptr %i.mg, align 8, !noalias !8728
+  %4 = ptrtoint ptr %i.nl to i64
+  br label %bb.me
 
 bb.dm:                                            ; preds = %.body93.i.i.i, %bb.dn, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCNvMsd_NtNtCs8dy3IO6wsj9_8wasmtime7runtime5storeNtBJ_11StoreOpaque17allocate_instance0ECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i.i
   %i.pf = landingpad { ptr, i32 }
@@ -716,7 +716,7 @@ bb.md:                                            ; preds = %_RNCNvMs4_NtNtNtNtC
   store i8 4, ptr %i.agi, align 8, !noalias !8728
   br label %bb.pr
 
-bb.me:                                            ; preds = %bb.mc, %bb.mb, %bb.hh, %bb.dh, %3, %bb.by, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i
+bb.me:                                            ; preds = %bb.mc, %bb.mb, %bb.hh, %3, %bb.dh, %bb.by, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i
   %i.bgw = phi ptr [ %i.nm, %bb.dh ], [ %i.jw, %bb.by ], [ %i.bgo, %bb.mc ], [ %i.bfe, %bb.mb ], [ %i.age, %bb.hh ], [ %i.jw, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i ], [ %i.ma, %3 ] ; 7 uses
   %i.bgx = phi ptr [ %i.nn, %bb.dh ], [ %i.jx, %bb.by ], [ %i.bgp, %bb.mc ], [ %i.bff, %bb.mb ], [ %i.agf, %bb.hh ], [ %i.jx, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i ], [ %i.mb, %3 ] ; 7 uses
   %i.bgy = phi ptr [ %i.no, %bb.dh ], [ %i.jy, %bb.by ], [ %i.bgq, %bb.mc ], [ %i.bfg, %bb.mb ], [ %i.agg, %bb.hh ], [ %i.jy, %_RNvNtCsaIKnL9StOw_6anyhow9___private10format_err.exit.i.i ], [ %i.mc, %3 ] ; 7 uses

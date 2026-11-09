@@ -178,9 +178,9 @@ bb.f:                                             ; preds = %bb.a
     i64 12, label %bb.l
     i64 8, label %bb.m
     i64 6, label %bb.n
+    i64 5, label %bb.ab
     i64 11, label %bb.o
     i64 7, label %bb.p
-    i64 5, label %bb.ab
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -583,7 +583,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit311
 
 _ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit311: ; preds = %bb.o, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit95.thread852.thread865, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit111.thread887, %bb.l, %bb.j, %bb.i, %bb.c, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit38.thread, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit38, %.split, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit303.thread, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit159.thread812, %bb.ac, %bb.q, %bb.af, %bb.f
-  %.0 = phi ptr [ %.str.8..str.9, %bb.f ], [ %.sroa.72.32.ph, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit303.thread ], [ %.str.8..str.9, %bb.q ], [ %i.ka, %bb.af ], [ %.str.8..str.9, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit159.thread812 ], [ %.013, %bb.c ], [ %.str.8..str.9, %bb.ac ], [ %.sroa.12.3944, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit38.thread ], [ %.013, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit38 ], [ %.013, %.split ], [ %.str.8..str.9, %bb.i ], [ %.str.8..str.9, %bb.j ], [ %.str.8..str.9, %bb.l ], [ %.str.8..str.9, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit111.thread887 ], [ %.str.8..str.9, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit95.thread852.thread865 ], [ %.str.8..str.9, %bb.o ]
+  %.0 = phi ptr [ %.013, %bb.c ], [ %.sroa.72.32.ph, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit303.thread ], [ %.str.8..str.9, %bb.q ], [ %i.ka, %bb.af ], [ %.str.8..str.9, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit159.thread812 ], [ %.str.8..str.9, %bb.f ], [ %.str.8..str.9, %bb.ac ], [ %.sroa.12.3944, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit38.thread ], [ %.013, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit38 ], [ %.013, %.split ], [ %.str.8..str.9, %bb.i ], [ %.str.8..str.9, %bb.j ], [ %.str.8..str.9, %bb.l ], [ %.str.8..str.9, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit111.thread887 ], [ %.str.8..str.9, %_ZN4llvm12StringSwitchIPKcS2_E4CaseENS_13StringLiteralES2_.exit95.thread852.thread865 ], [ %.str.8..str.9, %bb.o ]
   ret ptr %.0
 }
 

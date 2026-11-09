@@ -205,8 +205,8 @@ _ZN4llvmeqENS_9StringRefES0_.exit62.i:            ; preds = %bb.bd
   %i.ph = zext nneg i32 %spec.select.i159 to i64
   br label %_ZL22getARClassRegisterMaskN4llvm9StringRefES0_.exit
 
-_ZL22getARClassRegisterMaskN4llvm9StringRefES0_.exit: ; preds = %bb.bb, %bb.bc, %bb.ba, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i, %_ZN4llvmeqENS_9StringRefES0_.exit62.i, %_ZN4llvmeqENS_9StringRefES0_.exit58.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread80.i
-  %.3.i = phi i64 [ %i.ph, %_ZN4llvmeqENS_9StringRefES0_.exit62.i ], [ 9, %_ZN4llvmneENS_9StringRefES0_.exit.thread80.i ], [ 9, %_ZN4llvmeqENS_9StringRefES0_.exit58.i ], [ 12, %bb.bc ], [ 8, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ 4, %bb.ba ], [ 8, %bb.bb ]
+_ZL22getARClassRegisterMaskN4llvm9StringRefES0_.exit: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i, %bb.ba, %bb.bb, %bb.bc, %_ZN4llvmeqENS_9StringRefES0_.exit62.i, %_ZN4llvmeqENS_9StringRefES0_.exit58.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread80.i
+  %.3.i = phi i64 [ %i.ph, %_ZN4llvmeqENS_9StringRefES0_.exit62.i ], [ 9, %_ZN4llvmneENS_9StringRefES0_.exit.thread80.i ], [ 9, %_ZN4llvmeqENS_9StringRefES0_.exit58.i ], [ 8, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ 4, %bb.ba ], [ 8, %bb.bb ], [ 12, %bb.bc ]
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #24
   %i.pi = load ptr, ptr %i.aj, align 8, !tbaa !314
   %i.pj = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.pi, i64 noundef %.3.i, ptr noundef nonnull align 8 dereferenceable(12) %5, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24 ; 2 uses
@@ -336,8 +336,8 @@ _ZNSt6vectorIN4llvm7SDValueESaIS1_EE13_M_assign_auxIPKS1_EEvT_S7_St20forward_ite
   call void @_ZN4llvm12SelectionDAG14RemoveDeadNodeEPNS_6SDNodeE(ptr noundef nonnull align 8 dereferenceable(920) %i.rf, ptr noundef nonnull %1) #24
   br label %_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit.thread
 
-_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit.thread: ; preds = %switch.lookup, %.lr.ph.i, %switch.hole_check, %bb.bc, %bb.bb, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i, %bb.ba, %_ZN4llvmneENS_9StringRefES0_.exit54.i, %bb.az, %bb.ax, %bb.ay, %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE13_M_assign_auxIPKS1_EEvT_S7_St20forward_iterator_tag.exit199, %_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit
-  %.2 = phi i1 [ true, %_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit ], [ false, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ false, %bb.ax ], [ true, %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE13_M_assign_auxIPKS1_EEvT_S7_St20forward_iterator_tag.exit199 ], [ false, %bb.ay ], [ false, %bb.az ], [ false, %_ZN4llvmneENS_9StringRefES0_.exit54.i ], [ false, %bb.bc ], [ false, %bb.ba ], [ false, %bb.bb ], [ false, %switch.hole_check ], [ false, %.lr.ph.i ], [ false, %switch.lookup ]
+_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit.thread: ; preds = %switch.lookup, %.lr.ph.i, %switch.hole_check, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i, %bb.bc, %bb.ba, %bb.bb, %_ZN4llvmneENS_9StringRefES0_.exit54.i, %bb.az, %bb.ax, %bb.ay, %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE13_M_assign_auxIPKS1_EEvT_S7_St20forward_iterator_tag.exit199, %_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit
+  %.2 = phi i1 [ true, %_ZL21getMClassRegisterMaskN4llvm9StringRefEPKNS_12ARMSubtargetE.exit ], [ false, %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i ], [ false, %bb.ax ], [ true, %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE13_M_assign_auxIPKS1_EEvT_S7_St20forward_iterator_tag.exit199 ], [ false, %bb.ay ], [ false, %bb.az ], [ false, %_ZN4llvmneENS_9StringRefES0_.exit54.i ], [ false, %bb.bb ], [ false, %bb.ba ], [ false, %bb.bc ], [ false, %switch.hole_check ], [ false, %.lr.ph.i ], [ false, %switch.lookup ]
   %i.rg = load ptr, ptr %16, align 8, !tbaa !536  ; 2 uses
   %i.rh = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
   %i.ri = icmp eq ptr %i.rg, %i.rh

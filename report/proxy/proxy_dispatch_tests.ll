@@ -205,8 +205,8 @@ _ZNSt26basic_format_parse_contextIcE12check_arg_idEm.exit: ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZNSt26basic_format_parse_contextIcE12check_arg_idEm.exit, %_ZNSt26basic_format_parse_contextIcE11next_arg_idEv.exit
-  %storemerge = phi i16 [ %.sroa.0.1.i33, %_ZNSt26basic_format_parse_contextIcE12check_arg_idEm.exit ], [ %i.ae, %_ZNSt26basic_format_parse_contextIcE11next_arg_idEv.exit ]
-  %.0 = phi ptr [ %.sroa.5.1.i, %_ZNSt26basic_format_parse_contextIcE12check_arg_idEm.exit ], [ %i.v, %_ZNSt26basic_format_parse_contextIcE11next_arg_idEv.exit ]
+  %storemerge = phi i16 [ %i.ae, %_ZNSt26basic_format_parse_contextIcE11next_arg_idEv.exit ], [ %.sroa.0.1.i33, %_ZNSt26basic_format_parse_contextIcE12check_arg_idEm.exit ]
+  %.0 = phi ptr [ %i.v, %_ZNSt26basic_format_parse_contextIcE11next_arg_idEv.exit ], [ %.sroa.5.1.i, %_ZNSt26basic_format_parse_contextIcE12check_arg_idEm.exit ]
   store i16 %storemerge, ptr %2, align 2, !tbaa !125
   %i.bj = getelementptr inbounds nuw i8, ptr %.0, i64 1
   br label %bb.y

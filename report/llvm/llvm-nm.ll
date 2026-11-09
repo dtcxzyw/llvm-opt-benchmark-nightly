@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %_ZN4llvm9StringRefC
   %i.gv = select i1 %.not.i.i155, i32 3, i32 0
   br label %_ZN4llvm12StringSwitchIN12_GLOBAL__N_19BitModeTyES2_E4CaseENS_13StringLiteralES2_.exit157
 
-_ZN4llvm12StringSwitchIN12_GLOBAL__N_19BitModeTyES2_E4CaseENS_13StringLiteralES2_.exit157: ; preds = %.thread565, %bb.x, %bb.y, %_ZN4llvm9StringRefC2EPKc.exit130, %bb.v, %bb.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit127
+_ZN4llvm12StringSwitchIN12_GLOBAL__N_19BitModeTyES2_E4CaseENS_13StringLiteralES2_.exit157: ; preds = %.thread565, %bb.x, %bb.y, %bb.v, %bb.w, %_ZN4llvm9StringRefC2EPKc.exit130, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit127
   %storemerge = phi i32 [ 3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit127 ], [ 0, %.thread565 ], [ 2, %bb.x ], [ %i.gv, %bb.y ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit130 ], [ 1, %bb.w ], [ 0, %bb.v ]
   store i32 %storemerge, ptr @_ZL7BitMode, align 4, !tbaa !42
   %i.gw = call fastcc noundef ptr @_ZNK4llvm3opt7ArgList10getLastArgIJN12_GLOBAL__N_12IDEEEEPNS0_3ArgEDpT_(ptr noundef nonnull align 8 dereferenceable(176) %20, i32 noundef 66) ; 2 uses
