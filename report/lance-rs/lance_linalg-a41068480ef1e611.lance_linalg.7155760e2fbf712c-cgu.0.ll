@@ -205,15 +205,15 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgW
   %i.bx = phi float [ %i.db, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecfE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %i.bi, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ]
   %.val.i.i47.i.i.i.i.i.i.i = phi i64 [ %.val.i.i44.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecfE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %i.ak, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 4 uses
   %.val4.i.i.i38.i.i.i.i.i.i.i = phi ptr [ %.val4.i.i.i40.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecfE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %scevgep.i.i.i, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 2 uses
-  %i.by = phi ptr [ %i.dc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecfE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %scevgep.i.i.i, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 10 uses
+  %i.by = phi ptr [ %i.dc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecfE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %scevgep.i.i.i, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 9 uses
   %i.bz = phi ptr [ %i.dd, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecfE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %i.bj, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 2 uses
   %i.ca = icmp eq ptr %i.bz, %.val4.i.i.i38.i.i.i.i.i.i.i
   br i1 %i.ca, label %.lr.ph.preheader.i.i.i.i.i.i, label %bb.g
 
 .lr.ph.preheader.i.i.i.i.i.i:                     ; preds = %.split.i.i.i.preheader.i.i.i.i.i.i
-  %umin.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ad, i64 %.val.i.i47.i.i.i.i.i.i.i) ; 6 uses
+  %umin.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ad, i64 %.val.i.i47.i.i.i.i.i.i.i) ; 5 uses
   %i.cb = shl i64 %umin.i.i.i.i.i.i, 2
-  %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.by, i64 %i.cb
+  %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.by, i64 %i.cb ; 2 uses
   %i.cc = sub i64 %.val.i.i47.i.i.i.i.i.i.i, %umin.i.i.i.i.i.i
   %.not.i1.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.by, null
   %i.cd = icmp eq i64 %.val.i.i47.i.i.i.i.i.i.i, 0
@@ -284,14 +284,13 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
 
 _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.epil, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.unr-lcssa
   %.lcssa = phi float [ %i.cu, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.unr-lcssa ], [ %i.cy, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.epil ]
-  %2 = getelementptr [4 x i8], ptr %i.by, i64 %umin.i.i.i.i.i.i
   %i.da = call float @llvm.sqrt.f32(float %.lcssa)
   br label %bb.g
 
 bb.g:                                             ; preds = %.split.i.i.i.preheader.i.i.i.i.i.i, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.db = phi float [ %i.bx, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %i.da, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.val.i.i44.i.i.i.i.i.i.i = phi i64 [ %.val.i.i47.i.i.i.i.i.i.i, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %i.cc, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
-  %.val4.i.i.i40.i.i.i.i.i.i.i = phi ptr [ %.val4.i.i.i38.i.i.i.i.i.i.i, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %2, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.val4.i.i.i40.i.i.i.i.i.i.i = phi ptr [ %.val4.i.i.i38.i.i.i.i.i.i.i, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.dc = phi ptr [ %i.by, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.us-phi33.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bz, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %i.by, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizefE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.us-phi33.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
@@ -694,15 +693,15 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgW
   %i.bx = phi double [ %i.db, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecdE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %i.bi, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ]
   %.val.i.i47.i.i.i.i.i.i.i = phi i64 [ %.val.i.i44.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecdE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %i.ak, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 4 uses
   %.val4.i.i.i38.i.i.i.i.i.i.i = phi ptr [ %.val4.i.i.i40.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecdE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %scevgep.i.i.i, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 2 uses
-  %i.by = phi ptr [ %i.dc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecdE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %scevgep.i.i.i, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 10 uses
+  %i.by = phi ptr [ %i.dc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecdE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %scevgep.i.i.i, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 9 uses
   %i.bz = phi ptr [ %i.dd, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecdE7reserveCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i.i ], [ %i.bj, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 2 uses
   %i.ca = icmp eq ptr %i.bz, %.val4.i.i.i38.i.i.i.i.i.i.i
   br i1 %i.ca, label %.lr.ph.preheader.i.i.i.i.i.i, label %bb.g
 
 .lr.ph.preheader.i.i.i.i.i.i:                     ; preds = %.split.i.i.i.preheader.i.i.i.i.i.i
-  %umin.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ad, i64 %.val.i.i47.i.i.i.i.i.i.i) ; 6 uses
+  %umin.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ad, i64 %.val.i.i47.i.i.i.i.i.i.i) ; 5 uses
   %i.cb = shl i64 %umin.i.i.i.i.i.i, 3
-  %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.by, i64 %i.cb
+  %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.by, i64 %i.cb ; 2 uses
   %i.cc = sub i64 %.val.i.i47.i.i.i.i.i.i.i, %umin.i.i.i.i.i.i
   %.not.i1.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.by, null
   %i.cd = icmp eq i64 %.val.i.i47.i.i.i.i.i.i.i, 0
@@ -773,14 +772,13 @@ _RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8ad
 
 _RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.epil, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.unr-lcssa
   %.lcssa = phi double [ %i.cu, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.unr-lcssa ], [ %i.cy, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.epil ]
-  %2 = getelementptr [8 x i8], ptr %i.by, i64 %umin.i.i.i.i.i.i
   %i.da = call double @llvm.sqrt.f64(double %.lcssa)
   br label %bb.g
 
 bb.g:                                             ; preds = %.split.i.i.i.preheader.i.i.i.i.i.i, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.db = phi double [ %i.bx, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %i.da, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.val.i.i44.i.i.i.i.i.i.i = phi i64 [ %.val.i.i47.i.i.i.i.i.i.i, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %i.cc, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
-  %.val4.i.i.i40.i.i.i.i.i.i.i = phi ptr [ %.val4.i.i.i38.i.i.i.i.i.i.i, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %2, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.val4.i.i.i40.i.i.i.i.i.i.i = phi ptr [ %.val4.i.i.i38.i.i.i.i.i.i.i, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.dc = phi ptr [ %i.by, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.us-phi31.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bz, %.split.i.i.i.preheader.i.i.i.i.i.i ], [ %i.by, %_RINvXs26_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumdNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterdENCINvNtCs9JgWGBoX3PY_12lance_linalg7kernels9normalizedE0EEB22_.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.us-phi31.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses

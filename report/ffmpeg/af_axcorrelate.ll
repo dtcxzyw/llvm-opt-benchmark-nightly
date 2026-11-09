@@ -205,13 +205,12 @@ mean_sum_f.exit60.us:                             ; preds = %mean_sum_f.exit60.u
   br label %.lr.ph.us.a
 
 .lr.ph.us.a:                                      ; preds = %.lr.ph75.split.us..lr.ph.us_crit_edge, %mean_sum_f.exit60.us
-  %.pre = phi float [ %.pre.pre, %.lr.ph75.split.us..lr.ph.us_crit_edge ], [ %.06.lcssa.i52.us, %mean_sum_f.exit60.us ]
-  %.1.us = phi i32 [ %i.aa, %.lr.ph75.split.us..lr.ph.us_crit_edge ], [ 1, %mean_sum_f.exit60.us ]
+  %.pre = phi float [ %.06.lcssa.i52.us, %mean_sum_f.exit60.us ], [ %.pre.pre, %.lr.ph75.split.us..lr.ph.us_crit_edge ]
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.us.a, %xcorrelate_f.exit.us
-  %i.dm = phi float [ %.pre, %.lr.ph.us.a ], [ %i.fz, %xcorrelate_f.exit.us ]
-  %indvars.iv115 = phi i64 [ 0, %.lr.ph.us.a ], [ %indvars.iv.next116, %xcorrelate_f.exit.us ] ; 5 uses
+  %i.dm = phi float [ %i.fz, %xcorrelate_f.exit.us ], [ %.pre, %.lr.ph.us.a ]
+  %indvars.iv115 = phi i64 [ %indvars.iv.next116, %xcorrelate_f.exit.us ], [ 0, %.lr.ph.us.a ] ; 5 uses
   %i.dn = add nsw i64 %indvars.iv115, %i.ag       ; 2 uses
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv115 ; 4 uses
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %indvars.iv115 ; 4 uses
@@ -321,7 +320,7 @@ xcorrelate_f.exit.us:                             ; preds = %._crit_edge.loopexi
 ._crit_edge.us:                                   ; preds = %xcorrelate_f.exit.us
   %indvars.iv.next121 = add nuw nsw i64 %indvars.iv120, 1 ; 2 uses
   %exitcond124.not = icmp eq i64 %indvars.iv.next121, %wide.trip.count123
-  br i1 %exitcond124.not, label %._crit_edge76, label %.lr.ph75.split.us, !llvm.loop !73
+  br i1 %exitcond124.not, label %._crit_edge76.loopexit, label %.lr.ph75.split.us, !llvm.loop !73
 
 .lr.ph75.split:                                   ; preds = %.lr.ph75
   br i1 %.not, label %.lr.ph75.split.split.us, label %._crit_edge76
@@ -533,6 +532,10 @@ mean_sum_f.exit.us78:                             ; preds = %mean_sum_f.exit.us7
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge76.loopexit150.unr-lcssa, label %mean_sum_f.exit.us78, !llvm.loop !73
 
+._crit_edge76.loopexit:                           ; preds = %._crit_edge.us
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.aa, i32 1)
+  br label %._crit_edge76
+
 ._crit_edge76.loopexit150.unr-lcssa:              ; preds = %mean_sum_f.exit.us78
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge76, label %mean_sum_f.exit.us78.epil.preheader
@@ -557,8 +560,8 @@ mean_sum_f.exit.us78.epil:                        ; preds = %mean_sum_f.exit.us7
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge76, label %mean_sum_f.exit.us78.epil, !llvm.loop !76
 
-._crit_edge76:                                    ; preds = %._crit_edge76.loopexit150.unr-lcssa, %mean_sum_f.exit.us78.epil, %mean_sum_f.exit60.loopexit.us92.us, %._crit_edge.us, %.lr.ph75.split, %bb.a
-  %.050.lcssa = phi i32 [ undef, %bb.a ], [ 1, %mean_sum_f.exit60.loopexit.us92.us ], [ %.1.us, %._crit_edge.us ], [ %i.aa, %.lr.ph75.split ], [ 1, %mean_sum_f.exit.us78.epil ], [ 1, %._crit_edge76.loopexit150.unr-lcssa ]
+._crit_edge76:                                    ; preds = %._crit_edge76.loopexit150.unr-lcssa, %mean_sum_f.exit.us78.epil, %mean_sum_f.exit60.loopexit.us92.us, %.lr.ph75.split, %._crit_edge76.loopexit, %bb.a
+  %.050.lcssa = phi i32 [ undef, %bb.a ], [ 1, %mean_sum_f.exit60.loopexit.us92.us ], [ %i.aa, %.lr.ph75.split ], [ %umax, %._crit_edge76.loopexit ], [ 1, %mean_sum_f.exit.us78.epil ], [ 1, %._crit_edge76.loopexit150.unr-lcssa ]
   ret i32 %.050.lcssa
 }
 
@@ -821,13 +824,12 @@ square_sum_f.exit106.us:                          ; preds = %square_sum_f.exit10
   br label %.lr.ph.us.a
 
 .lr.ph.us.a:                                      ; preds = %.lr.ph114.split.us..lr.ph.us_crit_edge, %square_sum_f.exit106.us
-  %.pre = phi float [ %.pre.pre, %.lr.ph114.split.us..lr.ph.us_crit_edge ], [ %.08.lcssa.i98.us, %square_sum_f.exit106.us ]
-  %.1.us = phi i32 [ %i.ae, %.lr.ph114.split.us..lr.ph.us_crit_edge ], [ 1, %square_sum_f.exit106.us ]
+  %.pre = phi float [ %.08.lcssa.i98.us, %square_sum_f.exit106.us ], [ %.pre.pre, %.lr.ph114.split.us..lr.ph.us_crit_edge ]
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.us.a, %bb.e
-  %i.dj = phi float [ %.pre, %.lr.ph.us.a ], [ %i.fa, %bb.e ]
-  %indvars.iv160 = phi i64 [ 0, %.lr.ph.us.a ], [ %indvars.iv.next161, %bb.e ] ; 5 uses
+  %i.dj = phi float [ %i.fa, %bb.e ], [ %.pre, %.lr.ph.us.a ]
+  %indvars.iv160 = phi i64 [ %indvars.iv.next161, %bb.e ], [ 0, %.lr.ph.us.a ] ; 5 uses
   %i.dk = add nsw i64 %indvars.iv160, %i.ak       ; 2 uses
   %i.dl = load float, ptr %i.av, align 4, !tbaa !48
   %i.dm = fmul nsz float %i.dl, %i.dj
@@ -892,7 +894,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 ._crit_edge.us:                                   ; preds = %bb.e
   %indvars.iv.next166 = add nuw nsw i64 %indvars.iv165, 1 ; 2 uses
   %exitcond169.not = icmp eq i64 %indvars.iv.next166, %wide.trip.count168
-  br i1 %exitcond169.not, label %._crit_edge115, label %.lr.ph114.split.us, !llvm.loop !81
+  br i1 %exitcond169.not, label %._crit_edge115.loopexit, label %.lr.ph114.split.us, !llvm.loop !81
 
 .lr.ph114.split:                                  ; preds = %.lr.ph114
   br i1 %.not, label %.lr.ph114.split.split.us, label %._crit_edge115
@@ -1131,6 +1133,10 @@ square_sum_f.exit97.us117:                        ; preds = %square_sum_f.exit97
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge115.loopexit194.unr-lcssa, label %square_sum_f.exit97.us117, !llvm.loop !81
 
+._crit_edge115.loopexit:                          ; preds = %._crit_edge.us
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 1)
+  br label %._crit_edge115
+
 ._crit_edge115.loopexit194.unr-lcssa:             ; preds = %square_sum_f.exit97.us117
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge115, label %square_sum_f.exit97.us117.epil.preheader
@@ -1150,8 +1156,8 @@ square_sum_f.exit97.us117.epil.preheader:         ; preds = %._crit_edge115.loop
   store float 0.000000e+00, ptr %i.ip, align 4, !tbaa !48
   br label %._crit_edge115
 
-._crit_edge115:                                   ; preds = %square_sum_f.exit97.us117.epil.preheader, %._crit_edge115.loopexit194.unr-lcssa, %square_sum_f.exit106.loopexit.us138.us, %._crit_edge.us, %.lr.ph114.split, %bb.a
-  %.084.lcssa = phi i32 [ undef, %bb.a ], [ 1, %square_sum_f.exit106.loopexit.us138.us ], [ %.1.us, %._crit_edge.us ], [ %i.ae, %.lr.ph114.split ], [ 1, %._crit_edge115.loopexit194.unr-lcssa ], [ 1, %square_sum_f.exit97.us117.epil.preheader ]
+._crit_edge115:                                   ; preds = %square_sum_f.exit97.us117.epil.preheader, %._crit_edge115.loopexit194.unr-lcssa, %square_sum_f.exit106.loopexit.us138.us, %.lr.ph114.split, %._crit_edge115.loopexit, %bb.a
+  %.084.lcssa = phi i32 [ undef, %bb.a ], [ 1, %square_sum_f.exit106.loopexit.us138.us ], [ %i.ae, %.lr.ph114.split ], [ %umax, %._crit_edge115.loopexit ], [ 1, %._crit_edge115.loopexit194.unr-lcssa ], [ 1, %square_sum_f.exit97.us117.epil.preheader ]
   ret i32 %.084.lcssa
 }
 
@@ -1242,8 +1248,12 @@ bb.a:
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
-._crit_edge162:                                   ; preds = %._crit_edge, %bb.a
-  %.0114.lcssa = phi i32 [ undef, %bb.a ], [ %.1, %._crit_edge ]
+._crit_edge162.loopexit:                          ; preds = %._crit_edge
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.am, i32 1)
+  br label %._crit_edge162
+
+._crit_edge162:                                   ; preds = %._crit_edge162.loopexit, %bb.a
+  %.0114.lcssa = phi i32 [ undef, %bb.a ], [ %umax, %._crit_edge162.loopexit ]
   ret i32 %.0114.lcssa
 
 bb.b:                                             ; preds = %.lr.ph161, %._crit_edge
@@ -1572,7 +1582,6 @@ mean_sum_f.exit149:                               ; preds = %mean_sum_f.exit149.
   br label %bb.d
 
 bb.d:                                             ; preds = %mean_sum_f.exit149, %bb.b
-  %.1 = phi i32 [ %i.am, %bb.b ], [ 1, %mean_sum_f.exit149 ]
   br i1 %i.aq, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
@@ -1582,7 +1591,7 @@ bb.d:                                             ; preds = %mean_sum_f.exit149,
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
   %indvars.iv.next169 = add nuw nsw i64 %indvars.iv168, 1 ; 2 uses
   %exitcond172.not = icmp eq i64 %indvars.iv.next169, %wide.trip.count171
-  br i1 %exitcond172.not, label %._crit_edge162, label %bb.b, !llvm.loop !90
+  br i1 %exitcond172.not, label %._crit_edge162.loopexit, label %bb.b, !llvm.loop !90
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
   %i.gs = phi float [ %.pre, %.lr.ph.preheader ], [ %i.jb, %bb.f ]
@@ -1899,13 +1908,12 @@ mean_sum_d.exit60.us:                             ; preds = %mean_sum_d.exit60.u
   br label %.lr.ph.us.a
 
 .lr.ph.us.a:                                      ; preds = %.lr.ph75.split.us..lr.ph.us_crit_edge, %mean_sum_d.exit60.us
-  %.pre = phi double [ %.pre.pre, %.lr.ph75.split.us..lr.ph.us_crit_edge ], [ %.06.lcssa.i52.us, %mean_sum_d.exit60.us ]
-  %.1.us = phi i32 [ %i.aa, %.lr.ph75.split.us..lr.ph.us_crit_edge ], [ 1, %mean_sum_d.exit60.us ]
+  %.pre = phi double [ %.06.lcssa.i52.us, %mean_sum_d.exit60.us ], [ %.pre.pre, %.lr.ph75.split.us..lr.ph.us_crit_edge ]
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.us.a, %xcorrelate_d.exit.us
-  %i.dm = phi double [ %.pre, %.lr.ph.us.a ], [ %i.fz, %xcorrelate_d.exit.us ]
-  %indvars.iv115 = phi i64 [ 0, %.lr.ph.us.a ], [ %indvars.iv.next116, %xcorrelate_d.exit.us ] ; 5 uses
+  %i.dm = phi double [ %i.fz, %xcorrelate_d.exit.us ], [ %.pre, %.lr.ph.us.a ]
+  %indvars.iv115 = phi i64 [ %indvars.iv.next116, %xcorrelate_d.exit.us ], [ 0, %.lr.ph.us.a ] ; 5 uses
   %i.dn = add nsw i64 %indvars.iv115, %i.ag       ; 2 uses
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %indvars.iv115 ; 4 uses
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv115 ; 4 uses
@@ -2016,7 +2024,7 @@ xcorrelate_d.exit.us:                             ; preds = %._crit_edge.loopexi
 ._crit_edge.us:                                   ; preds = %xcorrelate_d.exit.us
   %indvars.iv.next121 = add nuw nsw i64 %indvars.iv120, 1 ; 2 uses
   %exitcond124.not = icmp eq i64 %indvars.iv.next121, %wide.trip.count123
-  br i1 %exitcond124.not, label %._crit_edge76, label %.lr.ph75.split.us, !llvm.loop !96
+  br i1 %exitcond124.not, label %._crit_edge76.loopexit, label %.lr.ph75.split.us, !llvm.loop !96
 
 .lr.ph75.split:                                   ; preds = %.lr.ph75
   br i1 %.not, label %.lr.ph75.split.split.us, label %._crit_edge76
@@ -2228,6 +2236,10 @@ mean_sum_d.exit.us78:                             ; preds = %mean_sum_d.exit.us7
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge76.loopexit151.unr-lcssa, label %mean_sum_d.exit.us78, !llvm.loop !96
 
+._crit_edge76.loopexit:                           ; preds = %._crit_edge.us
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.aa, i32 1)
+  br label %._crit_edge76
+
 ._crit_edge76.loopexit151.unr-lcssa:              ; preds = %mean_sum_d.exit.us78
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge76, label %mean_sum_d.exit.us78.epil.preheader
@@ -2252,8 +2264,8 @@ mean_sum_d.exit.us78.epil:                        ; preds = %mean_sum_d.exit.us7
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge76, label %mean_sum_d.exit.us78.epil, !llvm.loop !99
 
-._crit_edge76:                                    ; preds = %._crit_edge76.loopexit151.unr-lcssa, %mean_sum_d.exit.us78.epil, %mean_sum_d.exit60.loopexit.us92.us, %._crit_edge.us, %.lr.ph75.split, %bb.a
-  %.050.lcssa = phi i32 [ undef, %bb.a ], [ 1, %mean_sum_d.exit60.loopexit.us92.us ], [ %.1.us, %._crit_edge.us ], [ %i.aa, %.lr.ph75.split ], [ 1, %mean_sum_d.exit.us78.epil ], [ 1, %._crit_edge76.loopexit151.unr-lcssa ]
+._crit_edge76:                                    ; preds = %._crit_edge76.loopexit151.unr-lcssa, %mean_sum_d.exit.us78.epil, %mean_sum_d.exit60.loopexit.us92.us, %.lr.ph75.split, %._crit_edge76.loopexit, %bb.a
+  %.050.lcssa = phi i32 [ undef, %bb.a ], [ 1, %mean_sum_d.exit60.loopexit.us92.us ], [ %i.aa, %.lr.ph75.split ], [ %umax, %._crit_edge76.loopexit ], [ 1, %mean_sum_d.exit.us78.epil ], [ 1, %._crit_edge76.loopexit151.unr-lcssa ]
   ret i32 %.050.lcssa
 }
 
@@ -2516,13 +2528,12 @@ square_sum_d.exit106.us:                          ; preds = %square_sum_d.exit10
   br label %.lr.ph.us.a
 
 .lr.ph.us.a:                                      ; preds = %.lr.ph114.split.us..lr.ph.us_crit_edge, %square_sum_d.exit106.us
-  %.pre = phi double [ %.pre.pre, %.lr.ph114.split.us..lr.ph.us_crit_edge ], [ %.08.lcssa.i98.us, %square_sum_d.exit106.us ]
-  %.1.us = phi i32 [ %i.ae, %.lr.ph114.split.us..lr.ph.us_crit_edge ], [ 1, %square_sum_d.exit106.us ]
+  %.pre = phi double [ %.08.lcssa.i98.us, %square_sum_d.exit106.us ], [ %.pre.pre, %.lr.ph114.split.us..lr.ph.us_crit_edge ]
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.us.a, %bb.e
-  %i.dj = phi double [ %.pre, %.lr.ph.us.a ], [ %i.fa, %bb.e ]
-  %indvars.iv160 = phi i64 [ 0, %.lr.ph.us.a ], [ %indvars.iv.next161, %bb.e ] ; 5 uses
+  %i.dj = phi double [ %i.fa, %bb.e ], [ %.pre, %.lr.ph.us.a ]
+  %indvars.iv160 = phi i64 [ %indvars.iv.next161, %bb.e ], [ 0, %.lr.ph.us.a ] ; 5 uses
   %i.dk = add nsw i64 %indvars.iv160, %i.ak       ; 2 uses
   %i.dl = load double, ptr %i.av, align 8, !tbaa !51
   %i.dm = fmul nsz double %i.dl, %i.dj
@@ -2587,7 +2598,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 ._crit_edge.us:                                   ; preds = %bb.e
   %indvars.iv.next166 = add nuw nsw i64 %indvars.iv165, 1 ; 2 uses
   %exitcond169.not = icmp eq i64 %indvars.iv.next166, %wide.trip.count168
-  br i1 %exitcond169.not, label %._crit_edge115, label %.lr.ph114.split.us, !llvm.loop !104
+  br i1 %exitcond169.not, label %._crit_edge115.loopexit, label %.lr.ph114.split.us, !llvm.loop !104
 
 .lr.ph114.split:                                  ; preds = %.lr.ph114
   br i1 %.not, label %.lr.ph114.split.split.us, label %._crit_edge115
@@ -2826,6 +2837,10 @@ square_sum_d.exit97.us117:                        ; preds = %square_sum_d.exit97
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge115.loopexit194.unr-lcssa, label %square_sum_d.exit97.us117, !llvm.loop !104
 
+._crit_edge115.loopexit:                          ; preds = %._crit_edge.us
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 1)
+  br label %._crit_edge115
+
 ._crit_edge115.loopexit194.unr-lcssa:             ; preds = %square_sum_d.exit97.us117
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge115, label %square_sum_d.exit97.us117.epil.preheader
@@ -2845,8 +2860,8 @@ square_sum_d.exit97.us117.epil.preheader:         ; preds = %._crit_edge115.loop
   store double 0.000000e+00, ptr %i.ip, align 8, !tbaa !51
   br label %._crit_edge115
 
-._crit_edge115:                                   ; preds = %square_sum_d.exit97.us117.epil.preheader, %._crit_edge115.loopexit194.unr-lcssa, %square_sum_d.exit106.loopexit.us138.us, %._crit_edge.us, %.lr.ph114.split, %bb.a
-  %.084.lcssa = phi i32 [ undef, %bb.a ], [ 1, %square_sum_d.exit106.loopexit.us138.us ], [ %.1.us, %._crit_edge.us ], [ %i.ae, %.lr.ph114.split ], [ 1, %._crit_edge115.loopexit194.unr-lcssa ], [ 1, %square_sum_d.exit97.us117.epil.preheader ]
+._crit_edge115:                                   ; preds = %square_sum_d.exit97.us117.epil.preheader, %._crit_edge115.loopexit194.unr-lcssa, %square_sum_d.exit106.loopexit.us138.us, %.lr.ph114.split, %._crit_edge115.loopexit, %bb.a
+  %.084.lcssa = phi i32 [ undef, %bb.a ], [ 1, %square_sum_d.exit106.loopexit.us138.us ], [ %i.ae, %.lr.ph114.split ], [ %umax, %._crit_edge115.loopexit ], [ 1, %._crit_edge115.loopexit194.unr-lcssa ], [ 1, %square_sum_d.exit97.us117.epil.preheader ]
   ret i32 %.084.lcssa
 }
 
@@ -2937,8 +2952,12 @@ bb.a:
   %i.bc = shufflevector <2 x double> %i.bb, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
-._crit_edge162:                                   ; preds = %._crit_edge, %bb.a
-  %.0114.lcssa = phi i32 [ undef, %bb.a ], [ %.1, %._crit_edge ]
+._crit_edge162.loopexit:                          ; preds = %._crit_edge
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.am, i32 1)
+  br label %._crit_edge162
+
+._crit_edge162:                                   ; preds = %._crit_edge162.loopexit, %bb.a
+  %.0114.lcssa = phi i32 [ undef, %bb.a ], [ %umax, %._crit_edge162.loopexit ]
   ret i32 %.0114.lcssa
 
 bb.b:                                             ; preds = %.lr.ph161, %._crit_edge
@@ -3267,7 +3286,6 @@ mean_sum_d.exit149:                               ; preds = %mean_sum_d.exit149.
   br label %bb.d
 
 bb.d:                                             ; preds = %mean_sum_d.exit149, %bb.b
-  %.1 = phi i32 [ %i.am, %bb.b ], [ 1, %mean_sum_d.exit149 ]
   br i1 %i.aq, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
@@ -3277,7 +3295,7 @@ bb.d:                                             ; preds = %mean_sum_d.exit149,
 ._crit_edge:                                      ; preds = %bb.f, %bb.d
   %indvars.iv.next169 = add nuw nsw i64 %indvars.iv168, 1 ; 2 uses
   %exitcond172.not = icmp eq i64 %indvars.iv.next169, %wide.trip.count171
-  br i1 %exitcond172.not, label %._crit_edge162, label %bb.b, !llvm.loop !113
+  br i1 %exitcond172.not, label %._crit_edge162.loopexit, label %bb.b, !llvm.loop !113
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
   %i.gs = phi double [ %.pre, %.lr.ph.preheader ], [ %i.jb, %bb.f ]
@@ -3420,6 +3438,9 @@ declare i32 @ff_outlink_frame_wanted(ptr noundef) local_unnamed_addr #3
 declare void @ff_inlink_request_frame(ptr noundef) local_unnamed_addr #3
 
 declare void @ff_avfilter_link_set_in_status(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
