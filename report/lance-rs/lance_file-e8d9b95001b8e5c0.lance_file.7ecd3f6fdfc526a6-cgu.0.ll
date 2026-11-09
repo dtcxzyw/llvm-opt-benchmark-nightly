@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvNtCskAO0uQb8M5a_5prost8encoding10merge_loopNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingNCINvNtB2_7message5mergeBJ_QNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesE0B23_EBP_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.m = add nsw i32 %3, -1                       ; 7 uses
+  %i.m = add nsw i32 %3, -1                       ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13189)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13190)
   %i.n = tail call fastcc { i64, ptr } @_RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2), !noalias !13189 ; 2 uses
@@ -301,7 +301,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_RINvNtCskAO0uQb8M5a_5prost8encoding10merge_loopNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingNCINvNtB2_7message5mergeBJ_QNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesE0B23_EBP_.exit
 
 bb.p:                                             ; preds = %bb.n
-  %.sroa.11.8.extract.trunc.i.i = trunc nuw nsw i64 %i.ae to i8 ; 7 uses
+  %.sroa.11.8.extract.trunc.i.i = trunc nuw nsw i64 %i.ae to i8 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13196)
   %switch.i.i.i = icmp ult ptr %i.aa, inttoptr (i64 32 to ptr)
   br i1 %switch.i.i.i, label %bb.r, label %bb.q
@@ -312,8 +312,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13198)
-  %i.ao = load i64, ptr %1, align 8, !range !139, !alias.scope !13199, !noundef !76 ; 13 uses
-  %.not22.i.i.i.i = icmp eq i64 %i.ao, -1         ; 5 uses
+  %i.ao = load i64, ptr %1, align 8, !range !139, !alias.scope !13199, !noundef !76 ; 14 uses
   switch i32 %i.ak, label %default.unreachable.i.i.i [
     i32 1, label %bb.s
     i32 2, label %bb.t
@@ -324,13 +323,18 @@ default.unreachable.i.i.i:                        ; preds = %bb.r
   unreachable
 
 bb.s:                                             ; preds = %bb.r
+  %.not22.i.i.i.i = icmp eq i64 %i.ao, -1         ; 2 uses
   br i1 %.not22.i.i.i.i, label %bb.w, label %bb.v
 
 bb.t:                                             ; preds = %bb.r
-  br i1 %.not22.i.i.i.i, label %bb.ad, label %bb.ac
+  %.not18.i.i.i.i = icmp eq i64 %i.ao, -1         ; 2 uses
+  br i1 %.not18.i.i.i.i, label %bb.ad, label %bb.ac
 
 bb.u:                                             ; preds = %bb.r
-  br i1 %.not22.i.i.i.i, label %bb.an, label %bb.am
+  switch i64 %i.ao, label %bb.am [
+    i64 -1, label %4
+    i64 -9223372036854775806, label %bb.an
+  ]
 
 bb.v:                                             ; preds = %bb.s
   %i.ap = icmp ne i64 %i.ao, -9223372036854775807
@@ -410,7 +414,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEs_0EBQ_.exit.i.i.i.i
 
 bb.ai:                                            ; preds = %bb.af
-  br i1 %.not22.i.i.i.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encoding8LocationEEB15_.exit.i.i.i.i, label %bb.aj
+  br i1 %.not18.i.i.i.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encoding8LocationEEB15_.exit.i.i.i.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.ba = icmp ne i64 %i.ao, -9223372036854775807
@@ -443,19 +447,21 @@ bb.al:                                            ; preds = %bb.ak
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val24.i.i.i.i, i64 noundef %.val.i.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #44, !noalias !13200
   br label %common.resume.i.i.i
 
+4:                                                ; preds = %bb.u
+  %5 = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.m), !noalias !13199 ; 2 uses
+  %.not17.i.i.i.i = icmp eq ptr %5, null
+  br i1 %.not17.i.i.i.i, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread.i.i.i.a, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread5.i.i.i
+
 bb.am:                                            ; preds = %bb.u
   %i.bd = icmp ne i64 %i.ao, -9223372036854775807
   tail call void @llvm.assume(i1 %i.bd)
-  %4 = icmp ne i64 %i.ao, -9223372036854775806
   %i.be = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.m), !noalias !13199 ; 2 uses
   %.not1759.i.i.i.i = icmp eq ptr %i.be, null
-  %or.cond.i.i.i.i = and i1 %4, %.not1759.i.i.i.i
-  br i1 %or.cond.i.i.i.i, label %bb.ao, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i
+  br i1 %.not1759.i.i.i.i, label %bb.ao, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread5.i.i.i
 
 bb.an:                                            ; preds = %bb.u
-  %i.bf = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.m), !noalias !13199 ; 2 uses
-  %.not17.i.i.i.i = icmp eq ptr %i.bf, null
-  br i1 %.not17.i.i.i.i, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread.i.i.i.a, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread5.i.i.i
+  %i.bf = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.m), !noalias !13199
+  br label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i
 
 bb.ao:                                            ; preds = %bb.am
   %or.cond.i.i33.i.i.i.i = icmp slt i64 %i.ao, 1
@@ -466,19 +472,19 @@ bb.ap:                                            ; preds = %bb.ao
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2661.i.i.i.i, i64 noundef %i.ao, i64 noundef range(i64 1, -9223372036854775807) 1) #44, !noalias !13200
   br label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread.i.i.i.a
 
-_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread.i.i.i.a: ; preds = %bb.ap, %bb.ao, %bb.an
+_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread.i.i.i.a: ; preds = %bb.ap, %bb.ao, %4
   store i64 -9223372036854775806, ptr %1, align 8, !alias.scope !13199
   br label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesE0BV_.exit.i
 
-_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i: ; preds = %bb.am, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEs_0EBQ_.exit.i.i.i.i, %bb.ae, %bb.ab, %bb.x
-  %.sroa.0.0.i.i.i.i = phi ptr [ %i.as, %bb.x ], [ %i.ar, %bb.ab ], [ %i.ay, %bb.ae ], [ %i.ax, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEs_0EBQ_.exit.i.i.i.i ], [ %i.be, %bb.am ] ; 2 uses
+_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i: ; preds = %bb.an, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEs_0EBQ_.exit.i.i.i.i, %bb.ae, %bb.ab, %bb.x
+  %.sroa.0.0.i.i.i.i = phi ptr [ %i.as, %bb.x ], [ %i.ar, %bb.ab ], [ %i.ay, %bb.ae ], [ %i.ax, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEs_0EBQ_.exit.i.i.i.i ], [ %i.bf, %bb.an ] ; 2 uses
   %.not.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i, null
   br i1 %.not.i.i.i, label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesE0BV_.exit.i, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread5.i.i.i
 
-_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread5.i.i.i: ; preds = %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i, %bb.an
-  %.sroa.0.0.i8.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i ], [ %i.bf, %bb.an ]
+_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.thread5.i.i.i: ; preds = %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i, %bb.am, %4
+  %.sroa.0.0.i5.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEBc_.exit.i.i.i ], [ %i.be, %bb.am ], [ %5, %4 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13204
-  store ptr %.sroa.0.0.i8.i.i.i, ptr %i.a, align 8, !noalias !13205
+  store ptr %.sroa.0.0.i5.i.i.i, ptr %i.a, align 8, !noalias !13205
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @418, i64 noundef 8, ptr noalias noundef nonnull readonly captures(address, read_provenance) @419, i64 noundef 8)
           to label %_RNCINvXsl_NtNtCsaSXGKSfiU2E_10lance_file6format6pbfileNtB8_8EncodingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesE0Bc_.exit.i.i.i unwind label %bb.aq, !noalias !13204
 
@@ -542,7 +548,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvNtCskAO0uQb8M5a_5prost8encoding10merge_loopNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingNCINvNtB2_7message5mergeBJ_QRShE0B23_EBP_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.r = add nsw i32 %3, -1                       ; 7 uses
+  %i.r = add nsw i32 %3, -1                       ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13238)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13239)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13240)
@@ -797,15 +803,14 @@ _RINvNtNtCskAO0uQb8M5a_5prost8encoding6varint13decode_varintQRShECsaSXGKSfiU2E_1
   br label %_RINvNtCskAO0uQb8M5a_5prost8encoding10merge_loopNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingNCINvNtB2_7message5mergeBJ_QRShE0B23_EBP_.exit
 
 bb.aa:                                            ; preds = %bb.y
-  %.sroa.11.8.extract.trunc.i.i = trunc nuw nsw i64 %i.ch to i8 ; 7 uses
+  %.sroa.11.8.extract.trunc.i.i = trunc nuw nsw i64 %i.ch to i8 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13256)
   %switch.i.i.i = icmp ult i64 %.sroa.6.0.i9.i.i, 32
   br i1 %switch.i.i.i, label %bb.ab, label %_RNCINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8EncodingQRShE0BV_.exit.i
 
 bb.ab:                                            ; preds = %bb.aa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13257)
-  %i.cq = load i64, ptr %1, align 8, !range !139, !alias.scope !13258, !noundef !76 ; 13 uses
-  %.not22.i.i.i.i = icmp eq i64 %i.cq, -1         ; 5 uses
+  %i.cq = load i64, ptr %1, align 8, !range !139, !alias.scope !13258, !noundef !76 ; 14 uses
   switch i32 %i.cn, label %default.unreachable.i.i.i [
     i32 1, label %bb.ac
     i32 2, label %bb.ad
@@ -816,13 +821,18 @@ default.unreachable.i.i.i:                        ; preds = %bb.ab
   unreachable
 
 bb.ac:                                            ; preds = %bb.ab
+  %.not22.i.i.i.i = icmp eq i64 %i.cq, -1         ; 2 uses
   br i1 %.not22.i.i.i.i, label %bb.ag, label %bb.af
 
 bb.ad:                                            ; preds = %bb.ab
-  br i1 %.not22.i.i.i.i, label %bb.an, label %bb.am
+  %.not18.i.i.i.i = icmp eq i64 %i.cq, -1         ; 2 uses
+  br i1 %.not18.i.i.i.i, label %bb.an, label %bb.am
 
 bb.ae:                                            ; preds = %bb.ab
-  br i1 %.not22.i.i.i.i, label %bb.ax, label %bb.aw
+  switch i64 %i.cq, label %bb.aw [
+    i64 -1, label %4
+    i64 -9223372036854775806, label %bb.ax
+  ]
 
 bb.af:                                            ; preds = %bb.ac
   %i.cr = icmp ne i64 %i.cq, -9223372036854775807
@@ -902,7 +912,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQRShEs_0EBQ_.exit.i.i.i.i
 
 bb.as:                                            ; preds = %bb.ap
-  br i1 %.not22.i.i.i.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encoding8LocationEEB15_.exit.i.i.i.i, label %bb.at
+  br i1 %.not18.i.i.i.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encoding8LocationEEB15_.exit.i.i.i.i, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.dc = icmp ne i64 %i.cq, -9223372036854775807
@@ -935,19 +945,21 @@ bb.av:                                            ; preds = %bb.au
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val24.i.i.i.i, i64 noundef %.val.i.i2.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #44, !noalias !13259
   br label %common.resume.i.i.i
 
+4:                                                ; preds = %bb.ae
+  %5 = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.r), !noalias !13258 ; 2 uses
+  %.not17.i.i.i.i = icmp eq ptr %5, null
+  br i1 %.not17.i.i.i.i, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread.i.i.i.a, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread5.i.i.i
+
 bb.aw:                                            ; preds = %bb.ae
   %i.df = icmp ne i64 %i.cq, -9223372036854775807
   tail call void @llvm.assume(i1 %i.df)
-  %4 = icmp ne i64 %i.cq, -9223372036854775806
   %i.dg = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.r), !noalias !13258 ; 2 uses
   %.not1759.i.i.i.i = icmp eq ptr %i.dg, null
-  %or.cond.i.i.i.i = and i1 %4, %.not1759.i.i.i.i
-  br i1 %or.cond.i.i.i.i, label %bb.ay, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i
+  br i1 %.not1759.i.i.i.i, label %bb.ay, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread5.i.i.i
 
 bb.ax:                                            ; preds = %bb.ae
-  %i.dh = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.r), !noalias !13258 ; 2 uses
-  %.not17.i.i.i.i = icmp eq ptr %i.dh, null
-  br i1 %.not17.i.i.i.i, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread.i.i.i.a, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread5.i.i.i
+  %i.dh = tail call fastcc noundef align 8 ptr @_RINvNtNtCskAO0uQb8M5a_5prost8encoding7message5mergeuQRShECsaSXGKSfiU2E_10lance_file(i8 noundef range(i8 0, 6) %.sroa.11.8.extract.trunc.i.i, ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %2, i32 noundef range(i32 98, 100) %i.r), !noalias !13258
+  br label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i
 
 bb.ay:                                            ; preds = %bb.aw
   %or.cond.i.i33.i.i.i.i = icmp slt i64 %i.cq, 1
@@ -958,19 +970,19 @@ bb.az:                                            ; preds = %bb.ay
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2661.i.i.i.i, i64 noundef %i.cq, i64 noundef range(i64 1, -9223372036854775807) 1) #44, !noalias !13259
   br label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread.i.i.i.a
 
-_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread.i.i.i.a: ; preds = %bb.az, %bb.ay, %bb.ax
+_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread.i.i.i.a: ; preds = %bb.az, %bb.ay, %4
   store i64 -9223372036854775806, ptr %1, align 8, !alias.scope !13258
   br label %thread-pre-split.i
 
-_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i: ; preds = %bb.aw, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQRShEs_0EBQ_.exit.i.i.i.i, %bb.ao, %bb.al, %bb.ah
-  %.sroa.0.0.i.i.i.i = phi ptr [ %i.cu, %bb.ah ], [ %i.ct, %bb.al ], [ %i.da, %bb.ao ], [ %i.cz, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQRShEs_0EBQ_.exit.i.i.i.i ], [ %i.dg, %bb.aw ] ; 2 uses
+_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i: ; preds = %bb.ax, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQRShEs_0EBQ_.exit.i.i.i.i, %bb.ao, %bb.al, %bb.ah
+  %.sroa.0.0.i.i.i.i = phi ptr [ %i.cu, %bb.ah ], [ %i.ct, %bb.al ], [ %i.da, %bb.ao ], [ %i.cz, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtBK_8Location5mergeQRShEs_0EBQ_.exit.i.i.i.i ], [ %i.dh, %bb.ax ] ; 2 uses
   %.not.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i, null
   br i1 %.not.i.i.i, label %thread-pre-split.i, label %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread5.i.i.i
 
-_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread5.i.i.i: ; preds = %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i, %bb.ax
-  %.sroa.0.0.i8.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i ], [ %i.dh, %bb.ax ]
+_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.thread5.i.i.i: ; preds = %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i, %bb.aw, %4
+  %.sroa.0.0.i5.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %_RINvMs3_NtNtNtCsaSXGKSfiU2E_10lance_file6format6pbfile8encodingNtB6_8Location5mergeQRShEBc_.exit.i.i.i ], [ %i.dg, %bb.aw ], [ %5, %4 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13263
-  store ptr %.sroa.0.0.i8.i.i.i, ptr %i.a, align 8, !noalias !13264
+  store ptr %.sroa.0.0.i5.i.i.i, ptr %i.a, align 8, !noalias !13264
   invoke void @_RNvMNtCskAO0uQb8M5a_5prost5errorNtB2_11DecodeError4push(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @418, i64 noundef 8, ptr noalias noundef nonnull readonly captures(address, read_provenance) @419, i64 noundef 8)
           to label %_RNCINvXsl_NtNtCsaSXGKSfiU2E_10lance_file6format6pbfileNtB8_8EncodingNtNtCskAO0uQb8M5a_5prost7message7Message11merge_fieldQRShE0Bc_.exit.i.i.i unwind label %bb.ba, !noalias !13263
 

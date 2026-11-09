@@ -205,7 +205,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread1820:     ; preds = %bb.b, %_ZN4llvmeqEN
 bb.h:                                             ; preds = %bb.a
   %.sroa.0291.0.copyload = load ptr, ptr %15, align 8, !tbaa !186 ; 283 uses
   %.sroa.2292.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %.sroa.2292.0.copyload = load i64, ptr %.sroa.2292.0..sroa_idx, align 8, !tbaa !187 ; 36 uses
+  %.sroa.2292.0.copyload = load i64, ptr %.sroa.2292.0..sroa_idx, align 8, !tbaa !187 ; 37 uses
   switch i64 %.sroa.2292.0.copyload, label %_ZN4llvmeqENS_9StringRefES0_.exit1097.thread2206 [
     i64 21, label %_ZN4llvmeqENS_9StringRefES0_.exit454
     i64 24, label %_ZN4llvmeqENS_9StringRefES0_.exit459
@@ -608,7 +608,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit1097.thread2206.thread.thread: ; preds = %_ZN4l
 
 bb.v:                                             ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit1097.thread2206.thread
   %i.ayo = icmp eq i64 %.sroa.2292.0.copyload, 15
-  br i1 %i.ayo, label %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i, label %_ZNK4llvm9StringRef11starts_withES0_.exit.i
+  br i1 %i.ayo, label %_ZN4llvm11PassBuilder19parsePassParametersIRFNS_8ExpectedIbEENS_9StringRefEEEEDTclfp_tlS4_EEEOT_S4_S4_.exit.thread, label %_ZNK4llvm9StringRef11starts_withES0_.exit.i
 
 _ZNK4llvm9StringRef11starts_withES0_.exit.i:      ; preds = %bb.v
   %i.ayp = getelementptr inbounds nuw i8, ptr %.sroa.0291.0.copyload, i64 15
@@ -623,13 +623,15 @@ _ZN4llvm11PassBuilder25checkParametrizedPassNameENS_9StringRefES1_.exit: ; preds
   %i.ayt = icmp eq i8 %lhsc15.i, 62
   br i1 %i.ayt, label %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i, label %.thread
 
-_ZNK4llvm9StringRef11starts_withES0_.exit.i.i:    ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit1097.thread2206.thread.thread, %bb.v, %_ZN4llvm11PassBuilder25checkParametrizedPassNameENS_9StringRefES1_.exit
+_ZNK4llvm9StringRef11starts_withES0_.exit.i.i:    ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit1097.thread2206.thread.thread, %_ZN4llvm11PassBuilder25checkParametrizedPassNameENS_9StringRefES1_.exit
   %.not.i.i.i = icmp ugt i64 %.sroa.2292.0.copyload, 14
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.ayu = icmp eq i64 %.sroa.2292.0.copyload, 15
   br i1 %i.ayu, label %_ZN4llvm11PassBuilder19parsePassParametersIRFNS_8ExpectedIbEENS_9StringRefEEEEDTclfp_tlS4_EEEOT_S4_S4_.exit.thread, label %_ZN4llvm11PassBuilder19parsePassParametersIRFNS_8ExpectedIbEENS_9StringRefEEEEDTclfp_tlS4_EEEOT_S4_S4_.exit
 
-_ZN4llvm11PassBuilder19parsePassParametersIRFNS_8ExpectedIbEENS_9StringRefEEEEDTclfp_tlS4_EEEOT_S4_S4_.exit.thread: ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i
+_ZN4llvm11PassBuilder19parsePassParametersIRFNS_8ExpectedIbEENS_9StringRefEEEEDTclfp_tlS4_EEEOT_S4_S4_.exit.thread: ; preds = %bb.v, %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i
+  %.not.i.i.i2474 = icmp ugt i64 %.sroa.2292.0.copyload, 14
+  tail call void @llvm.assume(i1 %.not.i.i.i2474)
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   br label %bb.x
 

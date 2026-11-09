@@ -205,7 +205,7 @@ bb.a:
   %i.x = load ptr, ptr %i.d, align 8, !tbaa !102, !nonnull !103, !align !104
   tail call void @_ZN5clang12Preprocessor3LexERNS_5TokenE(ptr noundef nonnull align 8 dereferenceable(3344) %i.x, ptr noundef nonnull align 8 dereferenceable(20) %i.a) #22
   %trunc = trunc i64 %i.v to i32
-  switch i32 %trunc, label %.unreachabledefault [
+  switch i32 %trunc, label %unreachable [
     i32 8, label %bb.b
     i32 7, label %bb.c
     i32 9, label %bb.d
@@ -293,9 +293,6 @@ _ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_
   %spec.select305 = select i1 %.not.i.i94, i64 ptrtoint (ptr @_ZN5clang6Parser22HandlePragmaMSFunctionEN4llvm9StringRefENS_14SourceLocationE to i64), i64 ptrtoint (ptr @_ZN5clang6Parser22HandlePragmaMSOptimizeEN4llvm9StringRefENS_14SourceLocationE to i64)
   br label %_ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit124
 
-.unreachabledefault:                              ; preds = %bb.a
-  unreachable
-
 _ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit106.thread286.thread: ; preds = %bb.d
   %i.br = load i64, ptr %i.u, align 1
   %i.bs = xor i64 %i.br, 7598538395475013225
@@ -309,6 +306,9 @@ _ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_
   %.not.i.i121 = icmp eq i32 %i.bz, 0
   %spec.select302 = select i1 %.not.i.i121, i64 ptrtoint (ptr @_ZN5clang6Parser23HandlePragmaMSIntrinsicEN4llvm9StringRefENS_14SourceLocationE to i64), i64 ptrtoint (ptr @_ZN5clang6Parser21HandlePragmaMSSegmentEN4llvm9StringRefENS_14SourceLocationE to i64)
   br label %_ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit124
+
+unreachable:                                      ; preds = %bb.a
+  unreachable
 
 _ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit124: ; preds = %bb.a, %_ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit88.thread261, %_ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit106.thread286.thread, %bb.h, %bb.f, %bb.g, %bb.e, %bb.d, %bb.c, %bb.b
   %.sroa.26.10 = phi i64 [ ptrtoint (ptr @_ZN5clang6Parser21HandlePragmaMSSegmentEN4llvm9StringRefENS_14SourceLocationE to i64), %bb.c ], [ %spec.select, %bb.f ], [ ptrtoint (ptr @_ZN5clang6Parser21HandlePragmaMSSegmentEN4llvm9StringRefENS_14SourceLocationE to i64), %bb.e ], [ ptrtoint (ptr @_ZN5clang6Parser21HandlePragmaMSSegmentEN4llvm9StringRefENS_14SourceLocationE to i64), %bb.b ], [ ptrtoint (ptr @_ZN5clang6Parser21HandlePragmaMSSegmentEN4llvm9StringRefENS_14SourceLocationE to i64), %bb.d ], [ %spec.select300, %bb.h ], [ %spec.select305, %_ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit88.thread261 ], [ %spec.select302, %_ZN4llvm12StringSwitchIMN5clang6ParserEFbNS_9StringRefENS1_14SourceLocationEES6_E4CaseENS_13StringLiteralES6_.exit106.thread286.thread ], [ ptrtoint (ptr @_ZN5clang6Parser21HandlePragmaMSInitSegEN4llvm9StringRefENS_14SourceLocationE to i64), %bb.g ], [ ptrtoint (ptr @_ZN5clang6Parser23HandlePragmaMSAllocTextEN4llvm9StringRefENS_14SourceLocationE to i64), %bb.a ]
@@ -712,14 +712,13 @@ bb.e:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 4 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1032 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 10 uses
-  %i.n = load i64, ptr %i.l, align 8, !tbaa !1034
+  %i.n = load i64, ptr %i.l, align 8, !tbaa !1034 ; 2 uses
   %trunc = trunc i64 %i.n to i32
-  switch i32 %trunc, label %_ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteralES2_.exit103.thread [
+  switch i32 %trunc, label %13 [
     i32 6, label %bb.f
     i32 3, label %bb.g
     i32 8, label %bb.h
     i32 4, label %bb.j
-    i32 9, label %bb.k
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -775,7 +774,12 @@ bb.j:                                             ; preds = %bb.e
   %.not.i.i93 = icmp eq i32 %i.au, 0
   br i1 %.not.i.i93, label %_ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteralES2_.exit103, label %_ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteralES2_.exit103.thread
 
-bb.k:                                             ; preds = %bb.e
+13:                                               ; preds = %bb.e
+  %14 = and i64 %i.n, 4294967295
+  %.not.i.i.i.i99 = icmp eq i64 %14, 9
+  br i1 %.not.i.i.i.i99, label %bb.k, label %_ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteralES2_.exit103.thread
+
+bb.k:                                             ; preds = %13
   %i.av = load i64, ptr %i.m, align 1
   %i.aw = xor i64 %i.av, 7523097642930302819
   %i.ax = getelementptr i8, ptr %i.m, i64 8
@@ -798,7 +802,7 @@ _ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteral
   %i.bj = icmp eq i32 %i.bi, 19
   br i1 %i.bj, label %bb.l, label %bb.m
 
-_ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteralES2_.exit103.thread: ; preds = %bb.e, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k
+_ZN4llvm12StringSwitchIN5clang19PragmaMSCommentKindES2_E4CaseENS_13StringLiteralES2_.exit103.thread: ; preds = %bb.g, %bb.h, %bb.i, %bb.j, %13, %bb.k
   %i.bk = load i32, ptr %3, align 8, !tbaa !353
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !994, !noalias !1811
@@ -1201,9 +1205,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !1032 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 16 ; 19 uses
-  %i.as = load i64, ptr %i.aq, align 8, !tbaa !1034
+  %i.as = load i64, ptr %i.aq, align 8, !tbaa !1034 ; 2 uses
   %trunc = trunc i64 %i.as to i32
-  switch i32 %trunc, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit116.thread [
+  switch i32 %trunc, label %12 [
     i32 9, label %bb.e
     i32 10, label %bb.f
     i32 6, label %bb.g
@@ -1213,7 +1217,6 @@ bb.d:                                             ; preds = %bb.c
     i32 12, label %bb.l
     i32 8, label %bb.m
     i32 28, label %bb.n
-    i32 4, label %bb.o
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -1331,14 +1334,19 @@ bb.n:                                             ; preds = %bb.d
   %.not.i.i106 = icmp eq i32 %i.dp, 0
   br i1 %.not.i.i106, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit108, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit116.thread
 
-bb.o:                                             ; preds = %bb.d
+12:                                               ; preds = %bb.d
+  %13 = and i64 %i.as, 4294967295
+  %.not.i.i.i.i112 = icmp eq i64 %13, 4
+  br i1 %.not.i.i.i.i112, label %bb.o, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit116.thread
+
+bb.o:                                             ; preds = %12
   %i.dq = load i32, ptr %i.ar, align 1
   %i.dr = icmp ne i32 %i.dq, 1835231596
   %i.ds = zext i1 %i.dr to i32
   %.not.i.i114 = icmp eq i32 %i.ds, 0
   br i1 %.not.i.i114, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit108, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit116.thread
 
-_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit116.thread: ; preds = %bb.d, %bb.e, %bb.i, %bb.h, %bb.g, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o
+_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit116.thread: ; preds = %bb.e, %bb.i, %bb.h, %bb.g, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %12, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   %i.dt = load i32, ptr %3, align 8, !tbaa !353
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 56

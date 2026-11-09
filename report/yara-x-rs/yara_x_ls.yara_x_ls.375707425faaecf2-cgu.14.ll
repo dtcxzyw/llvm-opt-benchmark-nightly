@@ -202,15 +202,11 @@ bb.cc:                                            ; preds = %bb.as
 
 bb.cd:                                            ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw)
-  %.val267 = load i64, ptr %i.ax, align 8, !range !1236, !noundef !8 ; 2 uses
+  %.val267 = load i64, ptr %i.ax, align 8, !range !1236, !noundef !8
   %i.jn = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %.val268 = load ptr, ptr %i.jn, align 8         ; 142 uses
-  %3 = icmp eq i64 %.val267, -1
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtCs7gfv9tzbXmh_6yara_x8compiler8CompilerNtNtB10_6errors12CompileErrorEECs4KzxGwe94yc_9yara_x_ls.exit, label %bb.ce
-
-bb.ce:                                            ; preds = %bb.cd
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
-  switch i64 %.val267, label %4 [
+  %.val268 = load ptr, ptr %i.jn, align 8         ; 180 uses
+  switch i64 %.val267, label %bb.ce [
+    i64 -1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtCs7gfv9tzbXmh_6yara_x8compiler8CompilerNtNtB10_6errors12CompileErrorEECs4KzxGwe94yc_9yara_x_ls.exit
     i64 0, label %.invoke.invoke.i.i
     i64 1, label %bb.cr
     i64 2, label %bb.cs
@@ -260,18 +256,19 @@ bb.ce:                                            ; preds = %bb.cd
     i64 46, label %bb.mo
   ]
 
-4:                                                ; preds = %bb.ce
+bb.ce:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(256) %.val268)
           to label %bb.cg unwind label %bb.cf
 
-bb.cf:                                            ; preds = %4
+bb.cf:                                            ; preds = %bb.ce
   %i.jo = landingpad { ptr, i32 }
           cleanup
   %i.jp = getelementptr inbounds nuw i8, ptr %.val268, i64 168
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.jp) #22
           to label %.body.i.i.i.i unwind label %bb.cq
 
-bb.cg:                                            ; preds = %4
+bb.cg:                                            ; preds = %bb.ce
   %i.jq = getelementptr inbounds nuw i8, ptr %.val268, i64 168 ; 3 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.jq)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs4KzxGwe94yc_9yara_x_ls.exit.i.i.i.i.i unwind label %bb.ch
@@ -374,11 +371,13 @@ common.resume.i.i:                                ; preds = %bb.mv, %bb.ms, %bb.
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val268, i64 noundef %.sink.i.i, i64 noundef 8) #25
   br label %.body283
 
-bb.cr:                                            ; preds = %bb.ce
+bb.cr:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6errors12CompileErrorECs4KzxGwe94yc_9yara_x_ls.exit.i unwind label %bb.mv
 
-bb.cs:                                            ; preds = %bb.ce
+bb.cs:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.cu unwind label %bb.ct
 
@@ -417,7 +416,8 @@ bb.cy:                                            ; preds = %bb.ct
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.cz:                                            ; preds = %bb.ce
+bb.cz:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.db unwind label %bb.da
 
@@ -451,7 +451,8 @@ bb.de:                                            ; preds = %bb.da
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.df:                                            ; preds = %bb.ce
+bb.df:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.dh unwind label %bb.dg
 
@@ -517,7 +518,8 @@ bb.dn:                                            ; preds = %.body.i.i52.i.i, %b
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.do:                                            ; preds = %bb.ce
+bb.do:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(224) %.val268)
           to label %bb.dq unwind label %bb.dp
 
@@ -556,7 +558,8 @@ bb.dt:                                            ; preds = %bb.dp
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.du:                                            ; preds = %bb.ce
+bb.du:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(224) %.val268)
           to label %bb.dw unwind label %bb.dv
 
@@ -595,7 +598,8 @@ bb.ea:                                            ; preds = %_RINvNtCskKLDkoKarT
           cleanup
   br label %common.resume.i.i
 
-bb.eb:                                            ; preds = %bb.ce
+bb.eb:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.ed unwind label %bb.ec
 
@@ -629,7 +633,8 @@ bb.eg:                                            ; preds = %bb.ec
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.eh:                                            ; preds = %bb.ce
+bb.eh:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.ej unwind label %bb.ei
 
@@ -668,7 +673,8 @@ bb.en:                                            ; preds = %bb.ei
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.eo:                                            ; preds = %bb.ce
+bb.eo:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.eq unwind label %bb.ep
 
@@ -702,7 +708,8 @@ bb.et:                                            ; preds = %bb.ep
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.eu:                                            ; preds = %bb.ce
+bb.eu:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.ew unwind label %bb.ev
 
@@ -736,7 +743,8 @@ bb.ez:                                            ; preds = %bb.ev
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.fa:                                            ; preds = %bb.ce
+bb.fa:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.fc unwind label %bb.fb
 
@@ -770,7 +778,8 @@ bb.ff:                                            ; preds = %bb.fb
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.fg:                                            ; preds = %bb.ce
+bb.fg:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.fi unwind label %bb.fh
 
@@ -804,7 +813,8 @@ bb.fl:                                            ; preds = %bb.fh
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.fm:                                            ; preds = %bb.ce
+bb.fm:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.fo unwind label %bb.fn
 
@@ -838,7 +848,8 @@ bb.fr:                                            ; preds = %bb.fn
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.fs:                                            ; preds = %bb.ce
+bb.fs:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.fu unwind label %bb.ft
 
@@ -872,7 +883,8 @@ bb.fx:                                            ; preds = %bb.ft
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.fy:                                            ; preds = %bb.ce
+bb.fy:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.ga unwind label %bb.fz
 
@@ -938,7 +950,8 @@ bb.gg:                                            ; preds = %.body.i.i77.i.i, %b
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.gh:                                            ; preds = %bb.ce
+bb.gh:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.gj unwind label %bb.gi
 
@@ -972,7 +985,8 @@ bb.gm:                                            ; preds = %bb.gi
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.gn:                                            ; preds = %bb.ce
+bb.gn:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(272) %.val268)
           to label %bb.gp unwind label %bb.go
 
@@ -1084,7 +1098,8 @@ bb.ha:                                            ; preds = %_RINvNtCskKLDkoKarT
           cleanup
   br label %common.resume.i.i
 
-bb.hb:                                            ; preds = %bb.ce
+bb.hb:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(256) %.val268)
           to label %bb.hd unwind label %bb.hc
 
@@ -1192,7 +1207,8 @@ bb.ho:                                            ; preds = %_RINvNtCskKLDkoKarT
           cleanup
   br label %common.resume.i.i
 
-bb.hp:                                            ; preds = %bb.ce
+bb.hp:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.hr unwind label %bb.hq
 
@@ -1226,7 +1242,8 @@ bb.hu:                                            ; preds = %bb.hq
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.hv:                                            ; preds = %bb.ce
+bb.hv:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.hx unwind label %bb.hw
 
@@ -1297,7 +1314,8 @@ bb.ie:                                            ; preds = %.body.i.i107.i.i, %
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.if:                                            ; preds = %bb.ce
+bb.if:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.ih unwind label %bb.ig
 
@@ -1331,7 +1349,8 @@ bb.ik:                                            ; preds = %bb.ig
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.il:                                            ; preds = %bb.ce
+bb.il:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.in unwind label %bb.im
 
@@ -1365,7 +1384,8 @@ bb.iq:                                            ; preds = %bb.im
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.ir:                                            ; preds = %bb.ce
+bb.ir:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.it unwind label %bb.is
 
@@ -1431,7 +1451,8 @@ bb.iz:                                            ; preds = %.body.i.i117.i.i, %
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.ja:                                            ; preds = %bb.ce
+bb.ja:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(248) %.val268)
           to label %bb.jc unwind label %bb.jb
 
@@ -1502,7 +1523,8 @@ bb.ji:                                            ; preds = %.body.i.i123.i.i, %
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.jj:                                            ; preds = %bb.ce
+bb.jj:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.jl unwind label %bb.jk
 
@@ -1573,7 +1595,8 @@ bb.js:                                            ; preds = %.body.i.i129.i.i, %
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.jt:                                            ; preds = %bb.ce
+bb.jt:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(248) %.val268)
           to label %bb.jv unwind label %bb.ju
 
@@ -1644,7 +1667,8 @@ bb.kc:                                            ; preds = %_RINvNtCskKLDkoKarT
           cleanup
   br label %common.resume.i.i
 
-bb.kd:                                            ; preds = %bb.ce
+bb.kd:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %.val268)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6errors12CompileErrorECs4KzxGwe94yc_9yara_x_ls.exit.i unwind label %bb.ke
 
@@ -1653,7 +1677,8 @@ bb.ke:                                            ; preds = %bb.kd
           cleanup
   br label %common.resume.i.i
 
-bb.kf:                                            ; preds = %bb.ce
+bb.kf:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.kh unwind label %bb.kg
 
@@ -1692,7 +1717,8 @@ bb.kl:                                            ; preds = %bb.kg
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.km:                                            ; preds = %bb.ce
+bb.km:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.ko unwind label %bb.kn
 
@@ -1726,7 +1752,8 @@ bb.kr:                                            ; preds = %bb.kn
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.ks:                                            ; preds = %bb.ce
+bb.ks:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %.val268)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6errors12CompileErrorECs4KzxGwe94yc_9yara_x_ls.exit.i unwind label %bb.kt
 
@@ -1735,7 +1762,8 @@ bb.kt:                                            ; preds = %bb.ks
           cleanup
   br label %common.resume.i.i
 
-.invoke.invoke.i.i:                               ; preds = %bb.ce, %bb.ce, %bb.ce, %bb.ce, %bb.ce, %bb.ce, %bb.ce, %bb.ce, %bb.ce, %bb.ce
+.invoke.invoke.i.i:                               ; preds = %bb.cd, %bb.cd, %bb.cd, %bb.cd, %bb.cd, %bb.cd, %bb.cd, %bb.cd, %bb.cd, %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %.val268)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6errors12CompileErrorECs4KzxGwe94yc_9yara_x_ls.exit.i unwind label %bb.ku
 
@@ -1744,7 +1772,8 @@ bb.ku:                                            ; preds = %.invoke.invoke.i.i
           cleanup
   br label %common.resume.i.i
 
-bb.kv:                                            ; preds = %bb.ce
+bb.kv:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.kx unwind label %bb.kw
 
@@ -1778,7 +1807,8 @@ bb.la:                                            ; preds = %bb.kw
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.lb:                                            ; preds = %bb.ce
+bb.lb:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.ld unwind label %bb.lc
 
@@ -1854,7 +1884,8 @@ bb.lk:                                            ; preds = %.body.i.i147.i.i, %
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.ll:                                            ; preds = %bb.ce
+bb.ll:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.ln unwind label %bb.lm
 
@@ -1888,7 +1919,8 @@ bb.lq:                                            ; preds = %bb.lm
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.lr:                                            ; preds = %bb.ce
+bb.lr:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.lt unwind label %bb.ls
 
@@ -1922,7 +1954,8 @@ bb.lw:                                            ; preds = %bb.ls
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.lx:                                            ; preds = %bb.ce
+bb.lx:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val268)
           to label %bb.lz unwind label %bb.ly
 
@@ -1998,7 +2031,8 @@ bb.mh:                                            ; preds = %_RINvNtCskKLDkoKarT
           cleanup
   br label %common.resume.i.i
 
-bb.mi:                                            ; preds = %bb.ce
+bb.mi:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.mk unwind label %bb.mj
 
@@ -2037,7 +2071,8 @@ bb.mn:                                            ; preds = %bb.mj
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.mo:                                            ; preds = %bb.ce
+bb.mo:                                            ; preds = %bb.cd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val268) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report6ReportECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %.val268)
           to label %bb.mq unwind label %bb.mp
 

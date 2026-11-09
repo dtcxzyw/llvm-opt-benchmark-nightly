@@ -204,18 +204,23 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = tail call i16 @_RNvMs5_NtNtCsjJXvCMGntp8_6syntax3ast8expr_extNtNtNtB7_9generated5nodes7BinExpr7op_kind(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.c) ; 2 uses
   %.sroa.06.0.extract.trunc = trunc i16 %i.d to i8 ; 2 uses
-  %.not = icmp eq i8 %.sroa.06.0.extract.trunc, -1
-  br i1 %.not, label %bb.d, label %bb.c
+  switch i8 %.sroa.06.0.extract.trunc, label %bb.c [
+    i8 -1, label %bb.d
+    i8 3, label %1
+  ]
+
+1:                                                ; preds = %bb.b
+  %2 = and i16 %i.d, 256
+  %3 = icmp ne i16 %2, 0
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.e = icmp ne i8 %.sroa.06.0.extract.trunc, 5
   tail call void @llvm.assume(i1 %i.e)
-  %1 = and i16 %i.d, 511
-  %.sroa.0.0 = icmp eq i16 %1, 259
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
-  %.sroa.0.1 = phi i1 [ %.sroa.0.0, %bb.c ], [ false, %bb.a ], [ false, %bb.b ]
+bb.d:                                             ; preds = %1, %bb.c, %bb.b, %bb.a
+  %.sroa.0.1 = phi i1 [ false, %bb.b ], [ false, %bb.a ], [ %3, %1 ], [ false, %bb.c ]
   ret i1 %.sroa.0.1
 }
 
