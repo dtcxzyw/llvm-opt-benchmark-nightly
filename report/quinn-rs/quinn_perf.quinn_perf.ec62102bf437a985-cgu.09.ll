@@ -204,7 +204,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j), !dbg !3464, !noalias !3108
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !3328, !noalias !3108
     #dbg_value(ptr %.val, !3290, !DIExpression(), !2848)
-  %i.dv = load i64, ptr %i.l, align 8, !dbg !3465, !noalias !3092, !noundef !718 ; 5 uses
+  %i.dv = load i64, ptr %i.l, align 8, !dbg !3465, !noalias !3092, !noundef !718 ; 6 uses
   %i.dw = icmp sgt i64 %i.dv, -1, !dbg !3466
   call void @llvm.assume(i1 %i.dw), !dbg !3467
   %i.dx = sub nsw i64 %i.dv, %i.el, !dbg !3468    ; 4 uses
@@ -367,10 +367,10 @@ bb.ax:                                            ; preds = %bb.aw
 
 .lr.ph.i.preheader:                               ; preds = %bb.ax
   %i.ew = icmp samesign ult i64 %i.dv, %i.el
-  br label %.lr.ph.i, !dbg !3500
+  br i1 %i.ew, label %bb.ay, label %.lr.ph.i, !dbg !3500, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.ex = phi i64 [ %i.ff, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dv, %.lr.ph.i.preheader ], !dbg !3501 ; 6 uses
+  %i.ex = phi i64 [ %i.ff, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dv, %.lr.ph.i.preheader ], !dbg !3501 ; 5 uses
   %.sroa.016.017.i = phi i64 [ %i.ey, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.017.i, !3084, !DIExpression(), !2888)
     #dbg_value(i64 %.sroa.016.017.i, !3097, !DIExpression(), !2543)
@@ -392,23 +392,20 @@ bb.ax:                                            ; preds = %bb.aw
     #dbg_value(i64 %i.ex, !1842, !DIExpression(), !2908)
   %i.ez = icmp sgt i64 %i.ex, -1, !dbg !3504
   call void @llvm.assume(i1 %i.ez), !dbg !3505
-  br i1 %i.ew, label %bb.ay, label %2, !dbg !3500, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !2909)
-  %3 = load i64, ptr %.val, align 8, !dbg !3506, !range !1731, !alias.scope !3301, !noalias !3092, !noundef !718
-  %4 = icmp eq i64 %i.ex, %3, !dbg !3507
-  br i1 %4, label %bb.az, label %bb.ba, !dbg !3507
+  %2 = load i64, ptr %.val, align 8, !dbg !3506, !range !1731, !alias.scope !3301, !noalias !3092, !noundef !718
+  %3 = icmp eq i64 %i.ex, %2, !dbg !3507
+  br i1 %3, label %bb.az, label %bb.ba, !dbg !3507
 
-bb.ay:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.el, i64 noundef %i.ex, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !3508, !noalias !3302
+bb.ay:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.el, i64 noundef %i.dv, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !3508, !noalias !3302
   unreachable, !dbg !3508
 
-bb.az:                                            ; preds = %2
+bb.az:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !3509, !noalias !3092
   br label %bb.ba, !dbg !3510
 
-bb.ba:                                            ; preds = %bb.az, %2
+bb.ba:                                            ; preds = %bb.az, %.lr.ph.i
   %i.fa = load ptr, ptr %i.m, align 8, !dbg !3511, !alias.scope !3301, !noalias !3092, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.fa, !1856, !DIExpression(), !2898)
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 %i.el, !dbg !3512 ; 3 uses
@@ -811,7 +808,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i), !dbg !4465, !noalias !4161
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !4349, !noalias !4161
     #dbg_value(ptr %.val, !4311, !DIExpression(), !3901)
-  %i.di = load i64, ptr %i.k, align 8, !dbg !4466, !noalias !4145, !noundef !718 ; 5 uses
+  %i.di = load i64, ptr %i.k, align 8, !dbg !4466, !noalias !4145, !noundef !718 ; 6 uses
   %i.dj = icmp sgt i64 %i.di, -1, !dbg !4467
   call void @llvm.assume(i1 %i.dj), !dbg !4468
   %i.dk = sub nsw i64 %i.di, %i.dy, !dbg !4469    ; 4 uses
@@ -974,10 +971,10 @@ bb.aj:                                            ; preds = %bb.ai
 
 .lr.ph.i.preheader:                               ; preds = %bb.aj
   %i.ej = icmp samesign ult i64 %i.di, %i.dy
-  br label %.lr.ph.i, !dbg !4501
+  br i1 %i.ej, label %bb.ak, label %.lr.ph.i, !dbg !4501, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.ek = phi i64 [ %i.es, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.di, %.lr.ph.i.preheader ], !dbg !4502 ; 6 uses
+  %i.ek = phi i64 [ %i.es, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.di, %.lr.ph.i.preheader ], !dbg !4502 ; 5 uses
   %.sroa.016.017.i = phi i64 [ %i.el, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.017.i, !4137, !DIExpression(), !3941)
     #dbg_value(i64 %.sroa.016.017.i, !4150, !DIExpression(), !3624)
@@ -999,23 +996,20 @@ bb.aj:                                            ; preds = %bb.ai
     #dbg_value(i64 %i.ek, !1842, !DIExpression(), !3961)
   %i.em = icmp sgt i64 %i.ek, -1, !dbg !4505
   call void @llvm.assume(i1 %i.em), !dbg !4506
-  br i1 %i.ej, label %bb.ak, label %2, !dbg !4501, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !3962)
-  %3 = load i64, ptr %.val, align 8, !dbg !4507, !range !1731, !alias.scope !4322, !noalias !4145, !noundef !718
-  %4 = icmp eq i64 %i.ek, %3, !dbg !4508
-  br i1 %4, label %bb.al, label %bb.am, !dbg !4508
+  %2 = load i64, ptr %.val, align 8, !dbg !4507, !range !1731, !alias.scope !4322, !noalias !4145, !noundef !718
+  %3 = icmp eq i64 %i.ek, %2, !dbg !4508
+  br i1 %3, label %bb.al, label %bb.am, !dbg !4508
 
-bb.ak:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.dy, i64 noundef %i.ek, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !4509, !noalias !4323
+bb.ak:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.dy, i64 noundef %i.di, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !4509, !noalias !4323
   unreachable, !dbg !4509
 
-bb.al:                                            ; preds = %2
+bb.al:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !4510, !noalias !4145
   br label %bb.am, !dbg !4511
 
-bb.am:                                            ; preds = %bb.al, %2
+bb.am:                                            ; preds = %bb.al, %.lr.ph.i
   %i.en = load ptr, ptr %i.l, align 8, !dbg !4512, !alias.scope !4322, !noalias !4145, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.en, !1856, !DIExpression(), !3951)
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.dy, !dbg !4513 ; 3 uses
@@ -1418,7 +1412,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h), !dbg !5014, !noalias !4881
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !4973, !noalias !4881
     #dbg_value(ptr %.val, !4935, !DIExpression(), !4695)
-  %i.ar = load i64, ptr %i.j, align 8, !dbg !5015, !noalias !4865, !noundef !718 ; 5 uses
+  %i.ar = load i64, ptr %i.j, align 8, !dbg !5015, !noalias !4865, !noundef !718 ; 6 uses
   %i.as = icmp sgt i64 %i.ar, -1, !dbg !5016
   call void @llvm.assume(i1 %i.as), !dbg !5017
   %i.at = sub nsw i64 %i.ar, %i.bh, !dbg !5018    ; 4 uses
@@ -1585,10 +1579,10 @@ bb.ab:                                            ; preds = %bb.aa
 
 .lr.ph.i.preheader:                               ; preds = %bb.ab
   %i.bs = icmp samesign ult i64 %i.ar, %i.bh
-  br label %.lr.ph.i, !dbg !5050
+  br i1 %i.bs, label %bb.ac, label %.lr.ph.i, !dbg !5050, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.bt = phi i64 [ %i.cb, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ar, %.lr.ph.i.preheader ], !dbg !5051 ; 6 uses
+  %i.bt = phi i64 [ %i.cb, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ar, %.lr.ph.i.preheader ], !dbg !5051 ; 5 uses
   %.sroa.016.012.i = phi i64 [ %i.bu, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.012.i, !4834, !DIExpression(), !4735)
     #dbg_value(i64 %.sroa.016.012.i, !4870, !DIExpression(), !4585)
@@ -1610,23 +1604,20 @@ bb.ab:                                            ; preds = %bb.aa
     #dbg_value(i64 %i.bt, !1842, !DIExpression(), !4755)
   %i.bv = icmp sgt i64 %i.bt, -1, !dbg !5054
   call void @llvm.assume(i1 %i.bv), !dbg !5055
-  br i1 %i.bs, label %bb.ac, label %2, !dbg !5050, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !4756)
-  %3 = load i64, ptr %.val, align 8, !dbg !5056, !range !1731, !alias.scope !4946, !noalias !4865, !noundef !718
-  %4 = icmp eq i64 %i.bt, %3, !dbg !5057
-  br i1 %4, label %bb.ad, label %bb.ae, !dbg !5057
+  %2 = load i64, ptr %.val, align 8, !dbg !5056, !range !1731, !alias.scope !4946, !noalias !4865, !noundef !718
+  %3 = icmp eq i64 %i.bt, %2, !dbg !5057
+  br i1 %3, label %bb.ad, label %bb.ae, !dbg !5057
 
-bb.ac:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.bh, i64 noundef %i.bt, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !5058, !noalias !4947
+bb.ac:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.bh, i64 noundef %i.ar, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !5058, !noalias !4947
   unreachable, !dbg !5058
 
-bb.ad:                                            ; preds = %2
+bb.ad:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !5059, !noalias !4865
   br label %bb.ae, !dbg !5060
 
-bb.ae:                                            ; preds = %bb.ad, %2
+bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i
   %i.bw = load ptr, ptr %i.k, align 8, !dbg !5061, !alias.scope !4946, !noalias !4865, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.bw, !1856, !DIExpression(), !4745)
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bh, !dbg !5062 ; 3 uses
@@ -2029,7 +2020,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j), !dbg !5911, !noalias !5673
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !5792, !noalias !5673
     #dbg_value(ptr %.val, !5754, !DIExpression(), !5412)
-  %i.dg = load i64, ptr %i.l, align 8, !dbg !5912, !noalias !5657, !noundef !718 ; 5 uses
+  %i.dg = load i64, ptr %i.l, align 8, !dbg !5912, !noalias !5657, !noundef !718 ; 6 uses
   %i.dh = icmp sgt i64 %i.dg, -1, !dbg !5913
   call void @llvm.assume(i1 %i.dh), !dbg !5914
   %i.di = sub nsw i64 %i.dg, %i.dw, !dbg !5915    ; 4 uses
@@ -2192,10 +2183,10 @@ bb.aj:                                            ; preds = %bb.ai
 
 .lr.ph.i.preheader:                               ; preds = %bb.aj
   %i.eh = icmp samesign ult i64 %i.dg, %i.dw
-  br label %.lr.ph.i, !dbg !5947
+  br i1 %i.eh, label %bb.ak, label %.lr.ph.i, !dbg !5947, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.ei = phi i64 [ %i.eq, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dg, %.lr.ph.i.preheader ], !dbg !5948 ; 6 uses
+  %i.ei = phi i64 [ %i.eq, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dg, %.lr.ph.i.preheader ], !dbg !5948 ; 5 uses
   %.sroa.016.014.i = phi i64 [ %i.ej, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.014.i, !5649, !DIExpression(), !5452)
     #dbg_value(i64 %.sroa.016.014.i, !5662, !DIExpression(), !5174)
@@ -2217,23 +2208,20 @@ bb.aj:                                            ; preds = %bb.ai
     #dbg_value(i64 %i.ei, !1842, !DIExpression(), !5472)
   %i.ek = icmp sgt i64 %i.ei, -1, !dbg !5951
   call void @llvm.assume(i1 %i.ek), !dbg !5952
-  br i1 %i.eh, label %bb.ak, label %2, !dbg !5947, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !5473)
-  %3 = load i64, ptr %.val, align 8, !dbg !5953, !range !1731, !alias.scope !5765, !noalias !5657, !noundef !718
-  %4 = icmp eq i64 %i.ei, %3, !dbg !5954
-  br i1 %4, label %bb.al, label %bb.am, !dbg !5954
+  %2 = load i64, ptr %.val, align 8, !dbg !5953, !range !1731, !alias.scope !5765, !noalias !5657, !noundef !718
+  %3 = icmp eq i64 %i.ei, %2, !dbg !5954
+  br i1 %3, label %bb.al, label %bb.am, !dbg !5954
 
-bb.ak:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.dw, i64 noundef %i.ei, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !5955, !noalias !5766
+bb.ak:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.dw, i64 noundef %i.dg, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !5955, !noalias !5766
   unreachable, !dbg !5955
 
-bb.al:                                            ; preds = %2
+bb.al:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !5956, !noalias !5657
   br label %bb.am, !dbg !5957
 
-bb.am:                                            ; preds = %bb.al, %2
+bb.am:                                            ; preds = %bb.al, %.lr.ph.i
   %i.el = load ptr, ptr %i.m, align 8, !dbg !5958, !alias.scope !5765, !noalias !5657, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.el, !1856, !DIExpression(), !5462)
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.dw, !dbg !5959 ; 3 uses
@@ -2636,7 +2624,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h), !dbg !6460, !noalias !6327
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !6419, !noalias !6327
     #dbg_value(ptr %.val, !6381, !DIExpression(), !6141)
-  %i.ar = load i64, ptr %i.j, align 8, !dbg !6461, !noalias !6311, !noundef !718 ; 5 uses
+  %i.ar = load i64, ptr %i.j, align 8, !dbg !6461, !noalias !6311, !noundef !718 ; 6 uses
   %i.as = icmp sgt i64 %i.ar, -1, !dbg !6462
   call void @llvm.assume(i1 %i.as), !dbg !6463
   %i.at = sub nsw i64 %i.ar, %i.bh, !dbg !6464    ; 4 uses
@@ -2803,10 +2791,10 @@ bb.ab:                                            ; preds = %bb.aa
 
 .lr.ph.i.preheader:                               ; preds = %bb.ab
   %i.bs = icmp samesign ult i64 %i.ar, %i.bh
-  br label %.lr.ph.i, !dbg !6496
+  br i1 %i.bs, label %bb.ac, label %.lr.ph.i, !dbg !6496, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.bt = phi i64 [ %i.cb, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ar, %.lr.ph.i.preheader ], !dbg !6497 ; 6 uses
+  %i.bt = phi i64 [ %i.cb, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ar, %.lr.ph.i.preheader ], !dbg !6497 ; 5 uses
   %.sroa.016.012.i = phi i64 [ %i.bu, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.012.i, !6280, !DIExpression(), !6181)
     #dbg_value(i64 %.sroa.016.012.i, !6316, !DIExpression(), !6031)
@@ -2828,23 +2816,20 @@ bb.ab:                                            ; preds = %bb.aa
     #dbg_value(i64 %i.bt, !1842, !DIExpression(), !6201)
   %i.bv = icmp sgt i64 %i.bt, -1, !dbg !6500
   call void @llvm.assume(i1 %i.bv), !dbg !6501
-  br i1 %i.bs, label %bb.ac, label %2, !dbg !6496, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !6202)
-  %3 = load i64, ptr %.val, align 8, !dbg !6502, !range !1731, !alias.scope !6392, !noalias !6311, !noundef !718
-  %4 = icmp eq i64 %i.bt, %3, !dbg !6503
-  br i1 %4, label %bb.ad, label %bb.ae, !dbg !6503
+  %2 = load i64, ptr %.val, align 8, !dbg !6502, !range !1731, !alias.scope !6392, !noalias !6311, !noundef !718
+  %3 = icmp eq i64 %i.bt, %2, !dbg !6503
+  br i1 %3, label %bb.ad, label %bb.ae, !dbg !6503
 
-bb.ac:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.bh, i64 noundef %i.bt, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !6504, !noalias !6393
+bb.ac:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.bh, i64 noundef %i.ar, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !6504, !noalias !6393
   unreachable, !dbg !6504
 
-bb.ad:                                            ; preds = %2
+bb.ad:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !6505, !noalias !6311
   br label %bb.ae, !dbg !6506
 
-bb.ae:                                            ; preds = %bb.ad, %2
+bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i
   %i.bw = load ptr, ptr %i.k, align 8, !dbg !6507, !alias.scope !6392, !noalias !6311, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.bw, !1856, !DIExpression(), !6191)
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bh, !dbg !6508 ; 3 uses
@@ -3247,7 +3232,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i), !dbg !7338, !noalias !7110
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !7227, !noalias !7110
     #dbg_value(ptr %.val, !7189, !DIExpression(), !6855)
-  %i.dc = load i64, ptr %i.k, align 8, !dbg !7339, !noalias !7094, !noundef !718 ; 5 uses
+  %i.dc = load i64, ptr %i.k, align 8, !dbg !7339, !noalias !7094, !noundef !718 ; 6 uses
   %i.dd = icmp sgt i64 %i.dc, -1, !dbg !7340
   call void @llvm.assume(i1 %i.dd), !dbg !7341
   %i.de = sub nsw i64 %i.dc, %i.ds, !dbg !7342    ; 4 uses
@@ -3406,10 +3391,10 @@ bb.ai:                                            ; preds = %bb.ah
 
 .lr.ph.i.preheader:                               ; preds = %bb.ai
   %i.ed = icmp samesign ult i64 %i.dc, %i.ds
-  br label %.lr.ph.i, !dbg !7374
+  br i1 %i.ed, label %bb.aj, label %.lr.ph.i, !dbg !7374, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.ee = phi i64 [ %i.em, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dc, %.lr.ph.i.preheader ], !dbg !7375 ; 6 uses
+  %i.ee = phi i64 [ %i.em, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dc, %.lr.ph.i.preheader ], !dbg !7375 ; 5 uses
   %.sroa.016.014.i = phi i64 [ %i.ef, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.014.i, !7086, !DIExpression(), !6895)
     #dbg_value(i64 %.sroa.016.014.i, !7099, !DIExpression(), !6620)
@@ -3431,23 +3416,20 @@ bb.ai:                                            ; preds = %bb.ah
     #dbg_value(i64 %i.ee, !1842, !DIExpression(), !6915)
   %i.eg = icmp sgt i64 %i.ee, -1, !dbg !7378
   call void @llvm.assume(i1 %i.eg), !dbg !7379
-  br i1 %i.ed, label %bb.aj, label %2, !dbg !7374, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !6916)
-  %3 = load i64, ptr %.val, align 8, !dbg !7380, !range !1731, !alias.scope !7200, !noalias !7094, !noundef !718
-  %4 = icmp eq i64 %i.ee, %3, !dbg !7381
-  br i1 %4, label %bb.ak, label %bb.al, !dbg !7381
+  %2 = load i64, ptr %.val, align 8, !dbg !7380, !range !1731, !alias.scope !7200, !noalias !7094, !noundef !718
+  %3 = icmp eq i64 %i.ee, %2, !dbg !7381
+  br i1 %3, label %bb.ak, label %bb.al, !dbg !7381
 
-bb.aj:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.ds, i64 noundef %i.ee, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !7382, !noalias !7201
+bb.aj:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.ds, i64 noundef %i.dc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !7382, !noalias !7201
   unreachable, !dbg !7382
 
-bb.ak:                                            ; preds = %2
+bb.ak:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !7383, !noalias !7094
   br label %bb.al, !dbg !7384
 
-bb.al:                                            ; preds = %bb.ak, %2
+bb.al:                                            ; preds = %bb.ak, %.lr.ph.i
   %i.eh = load ptr, ptr %i.l, align 8, !dbg !7385, !alias.scope !7200, !noalias !7094, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.eh, !1856, !DIExpression(), !6905)
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 %i.ds, !dbg !7386 ; 3 uses
@@ -3819,7 +3801,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g), !dbg !7842, !noalias !7729
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !7810, !noalias !7729
     #dbg_value(ptr %.val, !7772, !DIExpression(), !7543)
-  %i.ai = load i64, ptr %i.i, align 8, !dbg !7843, !noalias !7713, !noundef !718 ; 5 uses
+  %i.ai = load i64, ptr %i.i, align 8, !dbg !7843, !noalias !7713, !noundef !718 ; 6 uses
   %i.aj = icmp sgt i64 %i.ai, -1, !dbg !7844
   call void @llvm.assume(i1 %i.aj), !dbg !7845
   %i.ak = sub nsw i64 %i.ai, %i.ay, !dbg !7846    ; 4 uses
@@ -3982,10 +3964,10 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph.i.preheader:                               ; preds = %bb.w
   %i.bj = icmp samesign ult i64 %i.ai, %i.ay
-  br label %.lr.ph.i, !dbg !7878
+  br i1 %i.bj, label %bb.x, label %.lr.ph.i, !dbg !7878, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.bk = phi i64 [ %i.bs, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ai, %.lr.ph.i.preheader ], !dbg !7879 ; 6 uses
+  %i.bk = phi i64 [ %i.bs, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ai, %.lr.ph.i.preheader ], !dbg !7879 ; 5 uses
   %.sroa.016.012.i = phi i64 [ %i.bl, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.012.i, !7682, !DIExpression(), !7583)
     #dbg_value(i64 %.sroa.016.012.i, !7718, !DIExpression(), !7458)
@@ -4007,23 +3989,20 @@ bb.w:                                             ; preds = %bb.v
     #dbg_value(i64 %i.bk, !1842, !DIExpression(), !7603)
   %i.bm = icmp sgt i64 %i.bk, -1, !dbg !7882
   call void @llvm.assume(i1 %i.bm), !dbg !7883
-  br i1 %i.bj, label %bb.x, label %2, !dbg !7878, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !7604)
-  %3 = load i64, ptr %.val, align 8, !dbg !7884, !range !1731, !alias.scope !7783, !noalias !7713, !noundef !718
-  %4 = icmp eq i64 %i.bk, %3, !dbg !7885
-  br i1 %4, label %bb.y, label %bb.z, !dbg !7885
+  %2 = load i64, ptr %.val, align 8, !dbg !7884, !range !1731, !alias.scope !7783, !noalias !7713, !noundef !718
+  %3 = icmp eq i64 %i.bk, %2, !dbg !7885
+  br i1 %3, label %bb.y, label %bb.z, !dbg !7885
 
-bb.x:                                             ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.ay, i64 noundef %i.bk, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !7886, !noalias !7784
+bb.x:                                             ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.ay, i64 noundef %i.ai, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !7886, !noalias !7784
   unreachable, !dbg !7886
 
-bb.y:                                             ; preds = %2
+bb.y:                                             ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !7887, !noalias !7713
   br label %bb.z, !dbg !7888
 
-bb.z:                                             ; preds = %bb.y, %2
+bb.z:                                             ; preds = %bb.y, %.lr.ph.i
   %i.bn = load ptr, ptr %i.j, align 8, !dbg !7889, !alias.scope !7783, !noalias !7713, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.bn, !1856, !DIExpression(), !7593)
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.ay, !dbg !7890 ; 3 uses
@@ -4426,7 +4405,7 @@ _RNCINvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB5_9DERWriter14write_sequenceuNCINvCscbFF
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskigd7sy4fqX_10quinn_perf(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j), !dbg !8844, !noalias !8542
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !8712, !noalias !8542
     #dbg_value(ptr %.val, !8674, !DIExpression(), !8283)
-  %i.dq = load i64, ptr %i.l, align 8, !dbg !8845, !noalias !8526, !noundef !718 ; 5 uses
+  %i.dq = load i64, ptr %i.l, align 8, !dbg !8845, !noalias !8526, !noundef !718 ; 6 uses
   %i.dr = icmp sgt i64 %i.dq, -1, !dbg !8846
   call void @llvm.assume(i1 %i.dr), !dbg !8847
   %i.ds = sub nsw i64 %i.dq, %i.eg, !dbg !8848    ; 4 uses
@@ -4589,10 +4568,10 @@ bb.al:                                            ; preds = %bb.ak
 
 .lr.ph.i.preheader:                               ; preds = %bb.al
   %i.er = icmp samesign ult i64 %i.dq, %i.eg
-  br label %.lr.ph.i, !dbg !8880
+  br i1 %i.er, label %bb.am, label %.lr.ph.i, !dbg !8880, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.es = phi i64 [ %i.fa, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dq, %.lr.ph.i.preheader ], !dbg !8881 ; 6 uses
+  %i.es = phi i64 [ %i.fa, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.dq, %.lr.ph.i.preheader ], !dbg !8881 ; 5 uses
   %.sroa.016.014.i = phi i64 [ %i.et, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.014.i, !8518, !DIExpression(), !8323)
     #dbg_value(i64 %.sroa.016.014.i, !8531, !DIExpression(), !8002)
@@ -4614,23 +4593,20 @@ bb.al:                                            ; preds = %bb.ak
     #dbg_value(i64 %i.es, !1842, !DIExpression(), !8343)
   %i.eu = icmp sgt i64 %i.es, -1, !dbg !8884
   call void @llvm.assume(i1 %i.eu), !dbg !8885
-  br i1 %i.er, label %bb.am, label %2, !dbg !8880, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !8344)
-  %3 = load i64, ptr %.val, align 8, !dbg !8886, !range !1731, !alias.scope !8685, !noalias !8526, !noundef !718
-  %4 = icmp eq i64 %i.es, %3, !dbg !8887
-  br i1 %4, label %bb.an, label %bb.ao, !dbg !8887
+  %2 = load i64, ptr %.val, align 8, !dbg !8886, !range !1731, !alias.scope !8685, !noalias !8526, !noundef !718
+  %3 = icmp eq i64 %i.es, %2, !dbg !8887
+  br i1 %3, label %bb.an, label %bb.ao, !dbg !8887
 
-bb.am:                                            ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.eg, i64 noundef %i.es, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !8888, !noalias !8686
+bb.am:                                            ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.eg, i64 noundef %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !8888, !noalias !8686
   unreachable, !dbg !8888
 
-bb.an:                                            ; preds = %2
+bb.an:                                            ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !8889, !noalias !8526
   br label %bb.ao, !dbg !8890
 
-bb.ao:                                            ; preds = %bb.an, %2
+bb.ao:                                            ; preds = %bb.an, %.lr.ph.i
   %i.ev = load ptr, ptr %i.m, align 8, !dbg !8891, !alias.scope !8685, !noalias !8526, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.ev, !1856, !DIExpression(), !8333)
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.eg, !dbg !8892 ; 3 uses
@@ -4949,7 +4925,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCskigd7sy4fqX_10quinn_per
   call void @_RNvMNtCsk5jvY4Bb3tQ_5yasna6writerNtB2_9DERWriter18write_bitvec_bytes(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.y, i64 noundef %i.z, i64 noundef %i.ab), !dbg !9249
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !9250, !noalias !9193
     #dbg_value(ptr %.val, !9176, !DIExpression(), !9016)
-  %i.ac = load i64, ptr %i.d, align 8, !dbg !9251, !noalias !9160, !noundef !718 ; 5 uses
+  %i.ac = load i64, ptr %i.d, align 8, !dbg !9251, !noalias !9160, !noundef !718 ; 6 uses
   %i.ad = icmp sgt i64 %i.ac, -1, !dbg !9252
   call void @llvm.assume(i1 %i.ad), !dbg !9253
   %i.ae = sub nsw i64 %i.ac, %i.u, !dbg !9254     ; 4 uses
@@ -5010,10 +4986,10 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.preheader:                               ; preds = %bb.g
   %i.ap = icmp samesign ult i64 %i.ac, %i.u
-  br label %.lr.ph.i, !dbg !9274
+  br i1 %i.ap, label %bb.h, label %.lr.ph.i, !dbg !9274, !prof !1834
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i
-  %i.aq = phi i64 [ %i.ay, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ac, %.lr.ph.i.preheader ], !dbg !9275 ; 6 uses
+  %i.aq = phi i64 [ %i.ay, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ %i.ac, %.lr.ph.i.preheader ], !dbg !9275 ; 5 uses
   %.sroa.016.012.i = phi i64 [ %i.ar, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCskigd7sy4fqX_10quinn_perf.exit.i ], [ 0, %.lr.ph.i.preheader ]
     #dbg_value(i64 %.sroa.016.012.i, !9129, !DIExpression(), !9035)
     #dbg_value(i64 %.sroa.016.012.i, !9165, !DIExpression(), !8962)
@@ -5035,23 +5011,20 @@ bb.g:                                             ; preds = %bb.f
     #dbg_value(i64 %i.aq, !1842, !DIExpression(), !9055)
   %i.as = icmp sgt i64 %i.aq, -1, !dbg !9278
   call void @llvm.assume(i1 %i.as), !dbg !9279
-  br i1 %i.ap, label %bb.h, label %2, !dbg !9274, !prof !1834
-
-2:                                                ; preds = %.lr.ph.i
     #dbg_value(ptr %.val, !1862, !DIExpression(), !9056)
-  %3 = load i64, ptr %.val, align 8, !dbg !9280, !range !1731, !alias.scope !9206, !noalias !9160, !noundef !718
-  %4 = icmp eq i64 %i.aq, %3, !dbg !9281
-  br i1 %4, label %bb.i, label %bb.j, !dbg !9281
+  %2 = load i64, ptr %.val, align 8, !dbg !9280, !range !1731, !alias.scope !9206, !noalias !9160, !noundef !718
+  %3 = icmp eq i64 %i.aq, %2, !dbg !9281
+  br i1 %3, label %bb.i, label %bb.j, !dbg !9281
 
-bb.h:                                             ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef %i.aq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !9282, !noalias !9206
+bb.h:                                             ; preds = %.lr.ph.i.preheader
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef %i.ac, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #14, !dbg !9282, !noalias !9206
   unreachable, !dbg !9282
 
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #13, !dbg !9283
   br label %bb.j, !dbg !9284
 
-bb.j:                                             ; preds = %bb.i, %2
+bb.j:                                             ; preds = %bb.i, %.lr.ph.i
   %i.at = load ptr, ptr %i.e, align 8, !dbg !9285, !alias.scope !9206, !noalias !9160, !nonnull !718, !noundef !718
     #dbg_value(ptr %i.at, !1856, !DIExpression(), !9045)
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.u, !dbg !9286 ; 3 uses
