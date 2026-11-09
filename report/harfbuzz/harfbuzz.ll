@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.c
   %scevgep.i.i = getelementptr i8, ptr %1, i64 4
-  %wcslen.i.i = tail call i64 @wcslen(ptr %scevgep.i.i)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i.i)
   %i.h = trunc i64 %wcslen.i.i to i32
   %i.i = add i32 %i.h, 1
   br label %_ZN13hb_utf32_xe_tIjLb1EE6strlenEPKj.exit.i
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.c
   %scevgep.i.i = getelementptr i8, ptr %1, i64 4
-  %wcslen.i.i = tail call i64 @wcslen(ptr %scevgep.i.i)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i.i)
   %i.f = trunc i64 %wcslen.i.i to i32
   %i.g = add i32 %i.f, 1
   br label %_ZN13hb_utf32_xe_tIjLb0EE6strlenEPKj.exit.i
@@ -1011,9 +1011,9 @@ _ZNK2OT8GSUBGPOS17find_script_indexEjPj.exit.thread: ; preds = %_ZNK2OT8GSUBGPOS
 ; Function Attrs: mustprogress nounwind uwtable
 define range(i32 0, 2) i32 @hb_ot_layout_table_choose_script(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
-  %wcslen = tail call i64 @wcslen(ptr %2)
+  %wcslen = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2)
   %i.a = trunc i64 %wcslen to i32
-  %i.b = tail call i32 @hb_ot_layout_table_select_script(ptr noundef %0, i32 noundef %1, i32 noundef %i.a, ptr noundef %2, ptr noundef %3, ptr noundef %4)
+  %i.b = tail call i32 @hb_ot_layout_table_select_script(ptr noundef %0, i32 noundef %1, i32 noundef %i.a, ptr noundef nonnull %2, ptr noundef %3, ptr noundef %4)
   ret i32 %i.b
 }
 

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
   %i.dd = load ptr, ptr %i.bp, align 8, !tbaa !81
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !83 ; 2 uses
-  %i.dg = call noundef i64 @wcslen(ptr noundef nonnull %i.df) #29
+  %i.dg = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.df) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #28
   %i.dh = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 0, ptr %9, align 4, !tbaa !84
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.l
   %i.cr = load ptr, ptr %i.bd, align 8, !tbaa !81
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !83 ; 2 uses
-  %i.cu = call noundef i64 @wcslen(ptr noundef nonnull %i.ct) #29
+  %i.cu = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ct) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #28
   %.sroa.4.8.extract.trunc = trunc i64 %5 to i32
   %i.cv = sub nsw i32 %.sroa.4.8.extract.trunc, %.sroa.049.sroa.0.0.extract.trunc
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i64 @wcslen(ptr noundef nonnull %1) #29 ; 5 uses
+  %i.k = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 5 uses
   %i.l = and i64 %i.k, 4294967295                 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !156

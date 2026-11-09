@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %_RINvNtNtNtNtCs6JMX
   store i64 %i.gx, ptr %.sroa.0.0144412, align 8, !alias.scope !343
   store i64 %.sroa.0.0.copyload.i.i8.i59, ptr %i.gw, align 8, !alias.scope !343
   %i.gy = add nuw nsw i64 %i.gv, 1                ; 2 uses
-  %i.gz = sub nuw i64 %.sroa.15.0143413, %i.gy
+  %i.gz = sub nuw nsw i64 %.sroa.15.0143413, %i.gy
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0144412, i64 %i.gy
   br label %.backedge
 
@@ -608,7 +608,7 @@ bb.s:                                             ; preds = %_RINvNtNtNtNtCs6JMX
   store i64 %i.gx, ptr %.sroa.0.0144412, align 8, !alias.scope !413
   store i64 %.sroa.0.0.copyload.i.i8.i59, ptr %i.gw, align 8, !alias.scope !413
   %i.gy = add nuw nsw i64 %i.gv, 1                ; 2 uses
-  %i.gz = sub nuw i64 %.sroa.15.0143413, %i.gy
+  %i.gz = sub nuw nsw i64 %.sroa.15.0143413, %i.gy
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0144412, i64 %i.gy
   br label %.backedge
 

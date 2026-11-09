@@ -205,7 +205,7 @@ _ZZN22default_implementation12_GLOBAL__N_19LLPrepareINS0_9UpTo8BitsEEEP25JxlFast
 
 _ZZN22default_implementation12_GLOBAL__N_19LLPrepareINS0_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiENKUljjE_clEjj.exit.backedge.us.preheader.i: ; preds = %.lr.ph.i83
   %scevgep.i102 = getelementptr i8, ptr %.0129, i64 8
-  %wcslen.i = tail call i64 @wcslen(ptr %scevgep.i102)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep.i102)
   %i.ahi = shl i64 %wcslen.i, 2
   %i.ahj = getelementptr i8, ptr %.0129, i64 %i.ahi ; 2 uses
   %scevgep154.i = getelementptr i8, ptr %i.ahj, i64 4
@@ -487,7 +487,7 @@ bb.cx:                                            ; preds = %_ZZN22default_imple
 
 .critedge64.backedge.us.preheader.i:              ; preds = %.lr.ph103.i
   %scevgep156.i = getelementptr i8, ptr %.154120.i, i64 8 ; 2 uses
-  %wcslen157.i = tail call i64 @wcslen(ptr %scevgep156.i)
+  %wcslen157.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %scevgep156.i)
   %i.anp = shl i64 %wcslen157.i, 2
   %scevgep158.i = getelementptr i8, ptr %scevgep156.i, i64 %i.anp
   br label %.critedge64._ZZN22default_implementation12_GLOBAL__N_19LLPrepareINS0_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiENKUljjE_clEjj.exit31.preheader_crit_edge.i

@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.k, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.split.preheader
-  %i.l = tail call i64 @wcslen(ptr noundef nonnull %i.h) #4
+  %i.l = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.h) #4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.split.preheader
@@ -210,7 +210,7 @@ bb.c:                                             ; preds = %bb.b, %.split.prehe
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = tail call i64 @wcslen(ptr noundef nonnull %i.j) #4
+  %i.o = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.j) #4
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -266,7 +266,7 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br i1 %i.ak, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.split.us.preheader
-  %i.al = tail call i64 @wcslen(ptr noundef nonnull %i.ah) #4
+  %i.al = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.ah) #4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.split.us.preheader
@@ -275,7 +275,7 @@ bb.l:                                             ; preds = %bb.k, %.split.us.pr
   br i1 %i.an, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ao = tail call i64 @wcslen(ptr noundef nonnull %i.aj) #4
+  %i.ao = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.aj) #4
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -311,7 +311,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bf, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %.split.us
-  %i.bg = tail call i64 @wcslen(ptr noundef nonnull %i.bc) #4
+  %i.bg = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.bc) #4
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.split.us
@@ -320,7 +320,7 @@ bb.q:                                             ; preds = %bb.p, %.split.us
   br i1 %i.bi, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bj = tail call i64 @wcslen(ptr noundef nonnull %i.be) #4
+  %i.bj = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.be) #4
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
@@ -356,7 +356,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bz, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.split
-  %i.ca = tail call i64 @wcslen(ptr noundef nonnull %i.bw) #4
+  %i.ca = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.bw) #4
   br label %bb.v
 
 bb.v:                                             ; preds = %.split, %bb.u
@@ -365,7 +365,7 @@ bb.v:                                             ; preds = %.split, %bb.u
   br i1 %i.cc, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cd = tail call i64 @wcslen(ptr noundef nonnull %i.by) #4
+  %i.cd = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.by) #4
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.v, %bb.w

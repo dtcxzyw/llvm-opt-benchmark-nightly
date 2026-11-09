@@ -206,7 +206,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bn = add i64 %.02429.i.i, 1
   %i.bo = call i64 @llvm.umax.i64(i64 %i.bl, i64 %i.bn)
   %i.bp = sub i64 %i.bo, %.02429.i.i              ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bp, 32
+  %min.iters.check = icmp ult i64 %i.bp, 80
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.i.i
@@ -609,7 +609,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noalias noundef ptr @_PyMem_DefaultRawWcsdup(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #43 !guid !1179 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #58 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #58 ; 2 uses
   %i.b = icmp ugt i64 %i.a, 2305843009213693950
   br i1 %i.b, label %bb.d, label %bb.b
 
@@ -1012,7 +1012,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_PyMem_RawWcsdup(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 !guid !1204 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #58 ; 2 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #58 ; 2 uses
   %i.b = icmp ugt i64 %i.a, 2305843009213693950
   br i1 %i.b, label %PyMem_RawMalloc.exit.thread, label %PyMem_RawMalloc.exit
 

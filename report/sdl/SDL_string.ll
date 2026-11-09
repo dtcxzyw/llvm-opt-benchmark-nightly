@@ -204,7 +204,7 @@ declare i64 @strnlen(ptr noundef captures(none), i64 noundef) local_unnamed_addr
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i64 @SDL_wcslen_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef %0) #23
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #23
   ret i64 %i.a
 }
 
@@ -244,7 +244,7 @@ declare i64 @wcslcat(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define hidden noalias ptr @SDL_wcsdup_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef readonly %0) #23
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #23
   %i.b = shl i64 %i.a, 2
   %i.c = add i64 %i.b, 4                          ; 2 uses
   %i.d = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.c) #22 ; 3 uses
@@ -252,7 +252,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.d, ptr align 4 %0, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.d, ptr nonnull align 4 %0, i64 %i.c, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -267,7 +267,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nofree nounwind memory(read) uwtable
 define hidden noundef ptr @SDL_wcsnstr_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly %1, i64 noundef %2) local_unnamed_addr #11 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef readonly %1) #23 ; 4 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %1) #23 ; 4 uses
   %i.b = icmp eq i64 %i.a, 0
   br i1 %i.b, label %.critedge, label %.preheader
 
@@ -283,7 +283,7 @@ bb.a:
   br i1 %.not17, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.d = tail call i32 @wcsncmp(ptr noundef nonnull readonly %.01519, ptr noundef readonly %1, i64 noundef %i.a) #23
+  %i.d = tail call i32 @wcsncmp(ptr noundef nonnull readonly %.01519, ptr noundef nonnull readonly %1, i64 noundef %i.a) #23
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %.critedge, label %bb.c
 
@@ -686,7 +686,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not55, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly %2) #23
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %2) #23
   %i.c = shl i64 %i.b, 2
   %i.d = add i64 %i.c, 4
   %i.e = tail call ptr @SDL_iconv_string_REAL(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull %2, i64 noundef %i.d) #22 ; 2 uses
@@ -761,7 +761,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.r = call i64 @wcslen(ptr noundef nonnull readonly %i.p) #23
+  %i.r = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.p) #23
   %i.s = trunc i64 %i.r to i32
   call void @SDL_free_REAL(ptr noundef nonnull %i.p) #22
   br label %bb.o

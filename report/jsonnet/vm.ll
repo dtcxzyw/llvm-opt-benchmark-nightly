@@ -204,7 +204,7 @@ bb.aas:                                           ; preds = %bb.aal
   store i32 0, ptr %i.ee, align 4, !tbaa !76
   call void @llvm.lifetime.start.p0(ptr nonnull %140) #39
   store ptr %i.ef, ptr %140, align 8, !tbaa !74
-  %wcslen.i.i = call noundef i64 @wcslen(ptr nonnull %i.t) ; 6 uses
+  %wcslen.i.i = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.t) ; 6 uses
   %.idx.i = shl nuw nsw i64 %wcslen.i.i, 2        ; 3 uses
   %i.doz = icmp ugt i64 %wcslen.i.i, 3
   br i1 %i.doz, label %bb.aat, label %._crit_edge.i.i3049
@@ -607,7 +607,7 @@ bb.aa:                                            ; preds = %bb.z
 _ZN7jsonnet8internal12_GLOBAL__N_15Stack3popEv.exit: ; preds = %bb.z, %bb.aa
   store ptr %i.cr, ptr %i.ai, align 8, !tbaa !219
   call fastcc void @_ZN7jsonnet8internal12_GLOBAL__N_15FrameD2Ev(ptr noundef nonnull align 8 dead_on_return(400) dereferenceable(400) %i.cr) #39
-  %wcslen.i.i.i141 = call noundef i64 @wcslen(ptr nonnull %.057456) ; 6 uses
+  %wcslen.i.i.i141 = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.057456) ; 6 uses
   %i.cw = load i64, ptr %i.c, align 8, !tbaa !73  ; 5 uses
   %i.cx = sub i64 1152921504606846975, %i.cw
   %i.cy = icmp ult i64 %i.cx, %wcslen.i.i.i141
@@ -1010,7 +1010,7 @@ bb.cw:                                            ; preds = %bb.cv
 _ZN7jsonnet8internal12_GLOBAL__N_15Stack3popEv.exit277: ; preds = %bb.cv, %bb.cw
   store ptr %i.mc, ptr %i.kx, align 8, !tbaa !219
   call fastcc void @_ZN7jsonnet8internal12_GLOBAL__N_15FrameD2Ev(ptr noundef nonnull align 8 dead_on_return(400) dereferenceable(400) %i.mc) #39
-  %wcslen.i.i.i278 = call noundef i64 @wcslen(ptr nonnull %.0450) ; 6 uses
+  %wcslen.i.i.i278 = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %.0450) ; 6 uses
   %i.mh = load i64, ptr %i.c, align 8, !tbaa !73  ; 5 uses
   %i.mi = sub i64 1152921504606846975, %i.mh
   %i.mj = icmp ult i64 %i.mi, %wcslen.i.i.i278

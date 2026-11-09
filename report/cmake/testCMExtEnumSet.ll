@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.noexc.i, %bb.k
 _ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i.lr.ph: ; preds = %bb.m
   %i.cg = xor i64 %.sroa.0.0118.i, -1
   %i.ch = add i64 %umax.i, %i.cg                  ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ch, 32
+  %min.iters.check = icmp ult i64 %i.ch, 64
   br i1 %min.iters.check, label %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i.lr.ph
@@ -338,7 +338,7 @@ _ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.peel.i.i: ; preds
   %i.dq = zext i8 %i.dp to i64
   %i.dr = call i64 @llvm.usub.sat.i64(i64 %i.dq, i64 2) ; 2 uses
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
-  %min.iters.check318 = icmp samesign ult i64 %i.dr, 79
+  %min.iters.check318 = icmp samesign ult i64 %i.dr, 143
   br i1 %min.iters.check318, label %.preheader.i.i.i.preheader398, label %vector.scevcheck315
 
 vector.scevcheck315:                              ; preds = %.preheader.i.i.i.preheader
@@ -477,7 +477,7 @@ _ZNSt8_Rb_treeIhhSt9_IdentityIhESt4lessIhESaIhEE10_M_insert_IhNS5_11_Alloc_nodeE
 
 .preheader.i.i69.preheader.i:                     ; preds = %.noexc67.i, %bb.t
   %i.fj = phi i64 [ %i.fi, %.noexc67.i ], [ %i.di, %bb.t ] ; 2 uses
-  %min.iters.check299 = icmp samesign ult i64 %i.dl, 81
+  %min.iters.check299 = icmp samesign ult i64 %i.dl, 129
   %i.fk = call i64 @llvm.usub.sat.i64(i64 %i.dl, i64 2)
   %i.fl = trunc nuw i64 %i.fk to i8
   %i.fm = icmp ugt i8 %i.fl, %i.dk
@@ -754,7 +754,7 @@ bb.ag:                                            ; preds = %.noexc.i34, %bb.ae
 _ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i.i.lr.ph: ; preds = %bb.ag
   %i.ip = xor i64 %.sroa.0737.0862.i, -1
   %i.iq = add i64 %umax.i20, %i.ip                ; 3 uses
-  %min.iters.check335 = icmp ult i64 %i.iq, 32
+  %min.iters.check335 = icmp ult i64 %i.iq, 64
   br i1 %min.iters.check335, label %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i.i.preheader, label %vector.ph336
 
 vector.ph336:                                     ; preds = %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i.i.lr.ph

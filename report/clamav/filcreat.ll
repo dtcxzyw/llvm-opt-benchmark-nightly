@@ -103,8 +103,8 @@ define noundef zeroext i1 @_Z18GetAutoRenamedNamePwm(ptr noundef %0, i64 noundef
 bb.a:
   %i.a = alloca [2048 x i32], align 16            ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %i.b = tail call i64 @wcslen(ptr noundef %0) #6
-  %i.c = tail call noundef ptr @_Z6GetExtPKw(ptr noundef %0) ; 2 uses
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #6
+  %i.c = tail call noundef ptr @_Z6GetExtPKw(ptr noundef nonnull %0) ; 2 uses
   %i.d = icmp eq ptr %i.c, null
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.b
   %.016 = select i1 %i.d, ptr %i.e, ptr %i.c      ; 3 uses
@@ -113,19 +113,19 @@ bb.a:
   %i.h = sub i64 %i.f, %i.g
   %i.i = lshr exact i64 %i.h, 2
   %i.j = trunc i64 %i.i to i32                    ; 2 uses
-  %i.k = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.a, i64 noundef 2048, ptr noundef nonnull @.str, i32 noundef %i.j, ptr noundef %0, i32 noundef 1, ptr noundef %.016) #5 ; 0 uses
+  %i.k = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.a, i64 noundef 2048, ptr noundef nonnull @.str, i32 noundef %i.j, ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull %.016) #5 ; 0 uses
   %i.l = call noundef zeroext i1 @_Z9FileExistPKw(ptr noundef nonnull %i.a)
   br i1 %i.l, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a, %.lr.ph
   %.0152021 = phi i32 [ %i.m, %.lr.ph ], [ 1, %bb.a ]
   %i.m = add nuw nsw i32 %.0152021, 1             ; 3 uses
-  %i.n = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.a, i64 noundef 2048, ptr noundef nonnull @.str, i32 noundef %i.j, ptr noundef %0, i32 noundef %i.m, ptr noundef %.016) #5 ; 0 uses
+  %i.n = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.a, i64 noundef 2048, ptr noundef nonnull @.str, i32 noundef %i.j, ptr noundef nonnull %0, i32 noundef %i.m, ptr noundef nonnull %.016) #5 ; 0 uses
   %i.o = call noundef zeroext i1 @_Z9FileExistPKw(ptr noundef nonnull %i.a)
   br i1 %i.o, label %.lr.ph, label %._crit_edge, !llvm.loop !29
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.a
-  call void @_Z8wcsncpyzPwPKwm(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %1)
+  call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef %1)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader

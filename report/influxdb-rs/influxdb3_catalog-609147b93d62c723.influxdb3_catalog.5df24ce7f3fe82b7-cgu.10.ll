@@ -205,7 +205,7 @@ bb.ch:                                            ; preds = %_RINvNtNtNtNtCs4NRV
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fo, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %i.fp = add nuw nsw i64 %i.ek, 1                ; 2 uses
-  %i.fq = sub nuw i64 %.sroa.15.0301764, %i.fp
+  %i.fq = sub nuw nsw i64 %.sroa.15.0301764, %i.fp
   %i.fr = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0302763, i64 %i.fp
   br label %.backedge
 
@@ -608,7 +608,7 @@ bb.ch:                                            ; preds = %_RINvNtNtNtNtCs4NRV
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fo, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %i.fp = add nuw nsw i64 %i.ek, 1                ; 2 uses
-  %i.fq = sub nuw i64 %.sroa.15.0301764, %i.fp
+  %i.fq = sub nuw nsw i64 %.sroa.15.0301764, %i.fp
   %i.fr = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0302763, i64 %i.fp
   br label %.backedge
 
@@ -909,7 +909,7 @@ bb.j:                                             ; preds = %_RINvNtNtNtNtCs4NRV
 bb.k:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicNtCs1LivM9IBWqb_12object_store10ObjectMetaNCINvB2_9quicksortB1x_NCINvMB8_SB1x_16sort_unstable_byNCNCNvNtNtNtCs844E4pPEVZX_17influxdb3_catalog9serialize8versions2v112load_catalog00E0E0EB3h_.exit.i
   tail call void @_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtCs1LivM9IBWqb_12object_store10ObjectMeta14swap_uncheckedCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull align 8 %.sroa.0.081121, i64 noundef range(i64 17, 96076792050570582) %.sroa.15.080122, i64 noundef 0, i64 noundef %i.ce, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10)
   %i.cq = add nuw nsw i64 %i.ce, 1                ; 2 uses
-  %i.cr = sub nuw i64 %.sroa.15.080122, %i.cq
+  %i.cr = sub nuw nsw i64 %.sroa.15.080122, %i.cq
   %i.cs = getelementptr inbounds nuw [96 x i8], ptr %.sroa.0.081121, i64 %i.cq
   br label %.backedge
 
@@ -1210,7 +1210,7 @@ bb.j:                                             ; preds = %_RINvNtNtNtNtCs4NRV
 bb.k:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicNtCs1LivM9IBWqb_12object_store10ObjectMetaNCINvB2_9quicksortB1x_NCINvMB8_SB1x_16sort_unstable_byNCNCNvNtNtNtCs844E4pPEVZX_17influxdb3_catalog9serialize8versions2v212load_catalog0s1_0E0E0EB3h_.exit.i
   tail call void @_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtCs1LivM9IBWqb_12object_store10ObjectMeta14swap_uncheckedCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull align 8 %.sroa.0.081121, i64 noundef range(i64 17, 96076792050570582) %.sroa.15.080122, i64 noundef 0, i64 noundef %i.ce, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10)
   %i.cq = add nuw nsw i64 %i.ce, 1                ; 2 uses
-  %i.cr = sub nuw i64 %.sroa.15.080122, %i.cq
+  %i.cr = sub nuw nsw i64 %.sroa.15.080122, %i.cq
   %i.cs = getelementptr inbounds nuw [96 x i8], ptr %.sroa.0.081121, i64 %i.cq
   br label %.backedge
 
@@ -1534,7 +1534,7 @@ bb.n:                                             ; preds = %_RINvNtNtNtNtCs4NRV
 bb.o:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicNtNtCs1LivM9IBWqb_12object_store4path4PathNCINvB2_9quicksortB1x_NvYB1x_NtNtBa_3cmp10PartialOrd2ltE0ECs844E4pPEVZX_17influxdb3_catalog.exit.i
   tail call void @_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCs1LivM9IBWqb_12object_store4path4Path14swap_uncheckedCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull align 8 %.sroa.0.0110192, i64 noundef range(i64 33, 384307168202282326) %.sroa.15.0109193, i64 noundef 0, i64 noundef %i.bn, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10)
   %i.bw = add nuw nsw i64 %i.bn, 1                ; 2 uses
-  %i.bx = sub nuw i64 %.sroa.15.0109193, %i.bw
+  %i.bx = sub nuw nsw i64 %.sroa.15.0109193, %i.bw
   %i.by = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0110192, i64 %i.bw
   br label %.backedge
 
@@ -1853,7 +1853,7 @@ bb.j:                                             ; preds = %_RINvNtNtNtNtCs4NRV
 bb.k:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v424ColumnDefinitionSnapshotNCINvB2_9quicksortB1x_NCINvMB8_SB1x_20sort_unstable_by_keyINtNtBa_6option6OptionNtCsbFlE7Gjht9i_12influxdb3_id8ColumnIdENCNvXs10_NtNtNtB1F_7catalog8versions2v2NtB52_9ColumnSetNtB52_8Snapshot8snapshots_0E0E0EB1F_.exit.i
   tail call void @_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v424ColumnDefinitionSnapshot14swap_uncheckedBC_(ptr noalias noundef nonnull align 8 %.sroa.0.074109, i64 noundef range(i64 33, 230584300921369396) %.sroa.15.073110, i64 noundef 0, i64 noundef %i.cr, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10)
   %i.dd = add nuw nsw i64 %i.cr, 1                ; 2 uses
-  %i.de = sub nuw i64 %.sroa.15.073110, %i.dd
+  %i.de = sub nuw nsw i64 %.sroa.15.073110, %i.dd
   %i.df = getelementptr inbounds nuw [40 x i8], ptr %.sroa.0.074109, i64 %i.dd
   br label %.backedge
 

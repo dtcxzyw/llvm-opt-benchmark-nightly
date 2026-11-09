@@ -204,7 +204,7 @@ _ZNK5clang4Type6castAsINS_17FunctionProtoTypeEEEPKT_v.exit: ; preds = %bb.a, %bb
   %i.q = lshr i64 %i.p, 48
   %i.r = trunc nuw nsw i64 %i.q to i32
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.t = load i32, ptr %i.s, align 8, !tbaa !785  ; 3 uses
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !785  ; 4 uses
   %i.u = add nuw nsw i32 %2, %i.r
   %.not = icmp eq i32 %i.t, %i.u
   br i1 %.not, label %bb.k, label %bb.c
@@ -269,7 +269,7 @@ _ZNK5clang8CallExpr11getBeginLocEv.exit:          ; preds = %bb.d, %bb.f, %bb.g,
   br label %_ZN5clangL31checkOpenCLEnqueueLocalSizeArgsERNS_4SemaEPNS_8CallExprEjj.exit
 
 bb.k:                                             ; preds = %_ZNK5clang4Type6castAsINS_17FunctionProtoTypeEEEPKT_v.exit
-  %i.at = add nsw i32 %i.t, -1                    ; 2 uses
+  %i.at = add nsw i32 %i.t, -1
   %.not14.i = icmp samesign ugt i32 %2, %i.at
   br i1 %.not14.i, label %_ZN5clangL31checkOpenCLEnqueueLocalSizeArgsERNS_4SemaEPNS_8CallExprEjj.exit, label %.lr.ph.i
 
@@ -277,18 +277,19 @@ bb.k:                                             ; preds = %_ZNK5clang4Type6cas
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = zext nneg i32 %2 to i64
+  %wide.trip.count = zext nneg i32 %i.t to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i, %.lr.ph.i
-  %.016.i = phi i32 [ %2, %.lr.ph.i ], [ %6, %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i ] ; 2 uses
-  %.0915.i = phi i1 [ false, %.lr.ph.i ], [ %.0.i.i, %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i ], [ %5, %.lr.ph.i ] ; 2 uses
+  %.0915.i = phi i1 [ %.0.i.i, %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i ], [ false, %.lr.ph.i ]
   %i.ax = load i32, ptr %1, align 8
   %i.ay = lshr i32 %i.ax, 19
   %i.az = and i32 %i.ay, 1
   %i.ba = zext nneg i32 %i.az to i64
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.ba
-  %5 = zext i32 %.016.i to i64
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %5
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %indvars.iv
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !778 ; 4 uses
   %i.be = load ptr, ptr %i.av, align 8, !tbaa !771, !nonnull !19, !align !90
   %i.bf = call i64 @_ZNK5clang10ASTContext11getSizeTypeEv(ptr noundef nonnull align 8 dereferenceable(23904) %i.be) #17
@@ -399,9 +400,9 @@ bb.m:                                             ; preds = %_ZNK5clang4Type13is
 _ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i: ; preds = %bb.m, %_ZNK5clang4Type13isIntegerTypeEv.exit.thread.i.i
   %.0.i.i = phi i1 [ %.0915.i, %bb.m ], [ true, %_ZNK5clang4Type13isIntegerTypeEv.exit.thread.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %6 = add i32 %.016.i, 1                         ; 2 uses
-  %.not.i16 = icmp ugt i32 %6, %i.at
-  br i1 %.not.i16, label %_ZN5clangL31checkOpenCLEnqueueLocalSizeArgsERNS_4SemaEPNS_8CallExprEjj.exit, label %bb.l, !llvm.loop !854
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %_ZN5clangL31checkOpenCLEnqueueLocalSizeArgsERNS_4SemaEPNS_8CallExprEjj.exit, label %bb.l, !llvm.loop !854
 
 _ZN5clangL31checkOpenCLEnqueueLocalSizeArgsERNS_4SemaEPNS_8CallExprEjj.exit: ; preds = %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i, %bb.k, %_ZNK5clang8CallExpr11getBeginLocEv.exit
   %.0 = phi i1 [ true, %_ZNK5clang8CallExpr11getBeginLocEv.exit ], [ false, %bb.k ], [ %.0.i.i, %_ZN5clangL25checkOpenCLEnqueueIntTypeERNS_4SemaEPNS_4ExprERKNS_8QualTypeE.exit.i ]

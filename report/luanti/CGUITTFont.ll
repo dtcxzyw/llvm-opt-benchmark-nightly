@@ -205,7 +205,7 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly %1), !noalias !259 ; 11 uses
+  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly dereferenceable(4) %1), !noalias !259 ; 11 uses
   %.idx.i.i = shl nuw nsw i64 %wcslen.i.i.i, 2    ; 4 uses
   %i.c = icmp ugt i64 %wcslen.i.i.i, 3
   br i1 %i.c, label %bb.c, label %._crit_edge.i.i.i
@@ -608,7 +608,7 @@ bb.a:
   store i32 %3, ptr %7, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
   %i.a = load ptr, ptr %1, align 8, !tbaa !207    ; 2 uses
-  %i.b = tail call noundef i64 @wcslen(ptr noundef nonnull %i.a) #28
+  %i.b = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #28
   call void @_ZN14EnrichedStringC1ESt17basic_string_viewIwSt11char_traitsIwEERKN5video6SColorE(ptr noundef nonnull align 8 dereferenceable(80) %8, i64 %i.b, ptr nonnull %i.a, ptr noundef nonnull align 4 dereferenceable(4) %7)
   invoke void @_ZN3gui10CGUITTFont4drawERK14EnrichedStringRKN4core4rectIiEEbbPS7_(ptr noundef nonnull align 8 dereferenceable(248) %0, ptr noundef nonnull align 8 dereferenceable(80) %8, ptr noundef nonnull align 4 dereferenceable(16) %2, i1 noundef zeroext %4, i1 noundef zeroext %5, ptr noundef %6)
           to label %bb.b unwind label %bb.d
@@ -792,7 +792,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %._cri
   unreachable
 
 bb.g:                                             ; preds = %bb.f
-  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly %i.aw), !noalias !308 ; 8 uses
+  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly dereferenceable(4) %i.aw), !noalias !308 ; 8 uses
   %.idx.i.i = shl nuw nsw i64 %wcslen.i.i.i, 2    ; 4 uses
   %i.az = icmp ugt i64 %wcslen.i.i.i, 3
   br i1 %i.az, label %bb.h, label %._crit_edge.i.i.i
@@ -1195,7 +1195,7 @@ bb.ar:                                            ; preds = %bb.aq
   store ptr %i.bz, ptr %7, align 8, !tbaa !322
   store i64 0, ptr %i.ca, align 8, !tbaa !323
   store i32 0, ptr %i.bz, align 8, !tbaa !211
-  %i.kt = call i64 @wcslen(ptr noundef nonnull %i.b) #28
+  %i.kt = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #28
   %i.ku = and i64 %i.kt, 4294967295               ; 5 uses
   %.not279 = icmp eq i64 %i.ku, 0
   br i1 %.not279, label %_ZN4core6stringIwEC2IwEEPKT_.exit, label %bb.as
@@ -1598,7 +1598,7 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly %1), !noalias !334 ; 6 uses
+  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly dereferenceable(4) %1), !noalias !334 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %wcslen.i.i.i, 2    ; 3 uses
   %i.c = icmp ugt i64 %wcslen.i.i.i, 3
   br i1 %i.c, label %bb.c, label %._crit_edge.i.i.i
@@ -1690,7 +1690,7 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %wcslen.i.i = tail call noundef i64 @wcslen(ptr nonnull %2) ; 6 uses
+  %wcslen.i.i = tail call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %2) ; 6 uses
   %.idx.i = shl nuw nsw i64 %wcslen.i.i, 2        ; 3 uses
   %i.c = icmp ugt i64 %wcslen.i.i, 3
   br i1 %i.c, label %bb.c, label %._crit_edge.i.i
@@ -1977,7 +1977,7 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly %1), !noalias !341 ; 6 uses
+  %wcslen.i.i.i = call noundef i64 @wcslen(ptr nonnull readonly dereferenceable(4) %1), !noalias !341 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %wcslen.i.i.i, 2    ; 4 uses
   %i.d = icmp ugt i64 %wcslen.i.i.i, 3
   br i1 %i.d, label %bb.c, label %._crit_edge.i.i.i

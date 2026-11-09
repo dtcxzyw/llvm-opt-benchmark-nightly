@@ -120,7 +120,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bw, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.bx = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.bx = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   call fastcc void @Abc_TtSwapVars(ptr noundef nonnull %i.c, i32 noundef %i.h, i32 noundef %.017.i.i, i32 noundef %i.bx)
   br label %bb.f
 
@@ -166,7 +166,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.cq, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.cr = trunc nsw i64 %indvars.iv.next.i53.i to i32
+  %i.cr = trunc nuw nsw i64 %indvars.iv.next.i53.i to i32
   call fastcc void @Abc_TtSwapVars(ptr noundef nonnull %i.d, i32 noundef %i.h, i32 noundef %.017.i52.i, i32 noundef %i.cr)
   br label %bb.k
 
@@ -237,7 +237,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ed, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.ee = trunc nsw i64 %indvars.iv.next.i59.i to i32
+  %i.ee = trunc nuw nsw i64 %indvars.iv.next.i59.i to i32
   call fastcc void @Abc_TtSwapVars(ptr noundef nonnull %i.e, i32 noundef %i.h, i32 noundef %.017.i58.i, i32 noundef %i.ee)
   br label %bb.q
 
@@ -640,7 +640,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.oo, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.op = trunc nsw i64 %indvars.iv.next.i89.i to i32
+  %i.op = trunc nuw nsw i64 %indvars.iv.next.i89.i to i32
   tail call fastcc void @Abc_TtSwapVars(ptr noundef nonnull %i.iu, i32 noundef %i.h, i32 noundef %.017.i.i35, i32 noundef %i.op)
   br label %bb.aj
 
@@ -695,7 +695,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.pm, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.pn = trunc nsw i64 %indvars.iv.next.i93.i to i32
+  %i.pn = trunc nuw nsw i64 %indvars.iv.next.i93.i to i32
   tail call fastcc void @Abc_TtSwapVars(ptr noundef nonnull %i.lj, i32 noundef %i.ov, i32 noundef %.017.i92.i, i32 noundef %i.pn)
   br label %bb.ao
 
@@ -962,7 +962,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.ts, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
-  %i.tt = trunc nsw i64 %indvars.iv.next.i115.i to i32
+  %i.tt = trunc nuw nsw i64 %indvars.iv.next.i115.i to i32
   tail call fastcc void @Abc_TtSwapVars(ptr noundef nonnull %i.qm, i32 noundef %i.ta, i32 noundef %.017.i114.i, i32 noundef %i.tt)
   br label %bb.au
 

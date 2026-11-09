@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 .thread58.thread.i:                               ; preds = %bb.d, %bb.b, %bb.c
   %i.i = phi i64 [ 0, %bb.b ], [ %spec.select, %bb.d ], [ 0, %bb.c ]
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.i ; 2 uses
-  %i.k = tail call i64 @wcslen(ptr noundef nonnull %i.j) #6
+  %i.k = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.j) #6
   %i.l = shl i64 %i.k, 2
   %i.m = add i64 %i.l, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 4 %i.j, i64 %i.m, i1 false)
@@ -240,7 +240,7 @@ bb.d:                                             ; preds = %bb.c
 .thread:                                          ; preds = %bb.b, %bb.c, %bb.d
   %.ph = phi i64 [ 0, %bb.d ], [ 5, %bb.c ], [ 0, %bb.b ]
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.ph ; 2 uses
-  %i.j = tail call i64 @wcslen(ptr noundef nonnull %i.i) #6
+  %i.j = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.i) #6
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -248,7 +248,7 @@ bb.e:                                             ; preds = %bb.d
   %.not = icmp eq i32 %i.k, 0                     ; 3 uses
   %i.l = select i1 %.not, i64 8, i64 7
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l ; 3 uses
-  %i.n = tail call i64 @wcslen(ptr noundef nonnull %i.m) #6 ; 2 uses
+  %i.n = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.m) #6 ; 2 uses
   %.idx.i = select i1 %.not, i64 0, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i ; 2 uses
   br i1 %.not, label %bb.g, label %bb.f

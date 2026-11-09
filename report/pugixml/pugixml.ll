@@ -205,7 +205,7 @@ _ZN4pugi4impl12_GLOBAL__N_112auto_deleterI8_IO_FILEED2Ev.exit9: ; preds = %bb.i,
 define internal fastcc noalias noundef ptr @_ZN4pugi4impl12_GLOBAL__N_114open_file_wideEPKwS3_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #6 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 5 uses
-  %wcslen.i.i = tail call i64 @wcslen(ptr readonly %0) ; 2 uses
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) ; 2 uses
   %i.b = shl i64 %wcslen.i.i, 2                   ; 2 uses
   %i.c = ashr exact i64 %i.b, 2                   ; 4 uses
   %.not17.i.i.i.i = icmp eq i64 %i.b, 0           ; 2 uses
@@ -608,10 +608,10 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4pugi7as_utf8B5cxx11EPKw(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 {
 bb.a:
-  %wcslen.i = tail call i64 @wcslen(ptr readonly %1)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %1)
   %i.a = shl i64 %wcslen.i, 2
   %i.b = ashr exact i64 %i.a, 2
-  tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_112as_utf8_implB5cxx11EPKwm(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef %1, i64 noundef %i.b)
+  tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_112as_utf8_implB5cxx11EPKwm(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull %1, i64 noundef %i.b)
   ret void
 }
 

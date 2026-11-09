@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %_RINvNtNtNtNtCskKLD
 bb.k:                                             ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENCINvB2_9quicksortB1x_NCINvMB8_SB1x_20sort_unstable_by_keyNtNtCsG258MDvU3F_3std4time10SystemTimeNCINvNtB29_17session_directory12merge_shardsRNtNtB4y_4path4PathB5O_E0E0E0ECsjHtSR7YjKD4_8xet_data.exit.i
   tail call void @_RNvMNtCskKLDkoKarTP_4core5sliceSINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileE14swap_uncheckedCsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef nonnull align 8 %.sroa.0.086133, i64 noundef range(i64 33, 1152921504606846976) %.sroa.15.085134, i64 noundef 0, i64 noundef %i.ff, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18)
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
-  %i.fh = sub nuw i64 %.sroa.15.085134, %i.fg
+  %i.fh = sub nuw nsw i64 %.sroa.15.085134, %i.fg
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.086133, i64 %i.fg
   br label %.backedge
 
@@ -561,7 +561,7 @@ bb.j:                                             ; preds = %_RINvNtNtNtNtCskKLD
 bb.k:                                             ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENCINvB2_9quicksortB1x_NCINvMB8_SB1x_20sort_unstable_by_keyNtNtCsG258MDvU3F_3std4time10SystemTimeNCINvNtB29_17session_directory12merge_shardsRNtNtB4y_4path7PathBufB5O_E0E0E0ECsjHtSR7YjKD4_8xet_data.exit.i
   tail call void @_RNvMNtCskKLDkoKarTP_4core5sliceSINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileE14swap_uncheckedCsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef nonnull align 8 %.sroa.0.086133, i64 noundef range(i64 33, 1152921504606846976) %.sroa.15.085134, i64 noundef 0, i64 noundef %i.ff, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18)
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
-  %i.fh = sub nuw i64 %.sroa.15.085134, %i.fg
+  %i.fh = sub nuw nsw i64 %.sroa.15.085134, %i.fg
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.086133, i64 %i.fg
   br label %.backedge
 
@@ -803,7 +803,7 @@ bb.h:                                             ; preds = %_RINvNtNtNtNtCskKLD
 bb.i:                                             ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicTyTmmEENCINvB2_9quicksortB1x_NCINvMB8_SB1x_20sort_unstable_by_keyyNCINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard14set_operations13set_operationINtNtNtBa_2io6cursor6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEEB4w_Es2_0E0E0ECsjHtSR7YjKD4_8xet_data.exit.i
   tail call void @_RNvMNtCskKLDkoKarTP_4core5sliceSTyTmmEE14swap_uncheckedCsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef nonnull align 8 %.sroa.0.080121, i64 noundef range(i64 33, 576460752303423488) %.sroa.15.079122, i64 noundef 0, i64 noundef %i.bb, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18)
   %i.bm = add nuw nsw i64 %i.bb, 1                ; 2 uses
-  %i.bn = sub nuw i64 %.sroa.15.079122, %i.bm
+  %i.bn = sub nuw nsw i64 %.sroa.15.079122, %i.bm
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.080121, i64 %i.bm
   br label %.backedge
 

@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
-  %i.cx = tail call i64 @wcslen(ptr noundef nonnull %i.cs) #20
+  %i.cx = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.cs) #20
   %i.cy = call ptr @archive_wstrncat(ptr noundef nonnull %3, ptr noundef nonnull %i.cs, i64 noundef %i.cx) #18 ; 0 uses
   %i.cz = load i64, ptr %i.cw, align 8, !tbaa !156 ; 5 uses
   %.not349 = icmp eq i64 %i.cz, 0
@@ -351,7 +351,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not288, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.ei = call i64 @wcslen(ptr noundef nonnull %i.eh) #20 ; 2 uses
+  %i.ei = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.eh) #20 ; 2 uses
   %.not291 = icmp eq i64 %i.ei, 0
   br i1 %.not291, label %.thread324, label %.split
 
@@ -411,7 +411,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not293, label %bb.au, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.fd = call i64 @wcslen(ptr noundef nonnull %i.fc) #20 ; 2 uses
+  %i.fd = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.fc) #20 ; 2 uses
   %.not297 = icmp eq i64 %i.fd, 0
   br i1 %.not297, label %.thread327, label %bb.as
 

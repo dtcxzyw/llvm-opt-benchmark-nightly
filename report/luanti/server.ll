@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull %1) #39 ; 5 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #39 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #34
   store i64 %i.d, ptr %i.a, align 8, !tbaa !145
   %i.e = icmp ugt i64 %i.d, 3

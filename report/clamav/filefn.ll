@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 4 uses
   %2 = alloca %class.RarTime, align 8             ; 5 uses
   %i.b = alloca [50 x i32], align 16              ; 9 uses
-  %i.c = tail call i64 @wcslen(ptr noundef %0) #15 ; 4 uses
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #15 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   store i64 0, ptr %2, align 8, !tbaa !19
   call void @_ZN7RarTime14SetCurrentTimeEv(ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -215,7 +215,7 @@ bb.a:
   %i.h = urem i32 %i.f, 50000                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.i = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.b, i64 noundef 50, ptr noundef nonnull @.str.3, i32 noundef %i.g, i32 noundef %i.h) #13 ; 0 uses
-  %i.j = call i64 @wcslen(ptr noundef nonnull %i.b) #15
+  %i.j = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #15
   %i.k = add i64 %i.j, %i.c
   %.not = icmp ult i64 %i.k, %1
   br i1 %.not, label %.lr.ph, label %.thread26
@@ -230,7 +230,7 @@ bb.b:                                             ; preds = %bb.c
   %i.o = add nuw i32 %i.n, %i.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.p = call i32 (ptr, i64, ptr, ...) @swprintf(ptr noundef nonnull %i.b, i64 noundef 50, ptr noundef nonnull @.str.3, i32 noundef %i.g, i32 noundef %i.o) #13 ; 0 uses
-  %i.q = call i64 @wcslen(ptr noundef nonnull %i.b) #15
+  %i.q = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #15
   %i.r = add i64 %i.q, %i.c
   %i.s = icmp uge i64 %i.r, %1
   %i.t = icmp eq i32 %i.n, 1000
@@ -243,9 +243,9 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %.01928 = phi i32 [ 0, %.lr.ph ], [ %i.n, %bb.b ]
-  call void @_Z8wcsncpyzPwPKwm(ptr noundef %i.l, ptr noundef nonnull %i.b, i64 noundef %i.m)
+  call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.l, ptr noundef nonnull %i.b, i64 noundef %i.m)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %i.u = call noundef zeroext i1 @_Z10WideToCharPKwPcm(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 2048) ; 0 uses
+  %i.u = call noundef zeroext i1 @_Z10WideToCharPKwPcm(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 2048) ; 0 uses
   %i.v = call i32 @access(ptr noundef nonnull %i.a, i32 noundef 0) #13
   %i.w = icmp eq i32 %i.v, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
@@ -648,18 +648,18 @@ bb.a:
   %i.b = alloca [2048 x i32], align 16            ; 12 uses
   %3 = alloca %struct.FindData, align 8           ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  %i.c = tail call i64 @wcslen(ptr noundef %0) #15
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #15
   %i.d = icmp ugt i64 %i.c, 2047
   br i1 %i.d, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.b, ptr noundef %0, i64 noundef 2048)
-  %i.e = call i64 @wcslen(ptr noundef %1) #15     ; 3 uses
+  call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.b, ptr noundef nonnull %0, i64 noundef 2048)
+  %i.e = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #15 ; 3 uses
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = call i32 @wcsncmp(ptr noundef nonnull %i.b, ptr noundef %1, i64 noundef %i.e) #15
+  %i.f = call i32 @wcsncmp(ptr noundef nonnull %i.b, ptr noundef nonnull %1, i64 noundef %i.e) #15
   %.not46 = icmp eq i32 %i.f, 0
   %spec.store.select = select i1 %.not46, i64 %i.e, i64 0
   br label %bb.d
@@ -714,7 +714,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
 
 .loopexit:                                        ; preds = %bb.h, %.critedge
   %.1 = phi ptr [ %i.b, %.critedge ], [ %.034, %bb.h ] ; 2 uses
-  %i.x = call i64 @wcslen(ptr noundef nonnull %i.b) #15
+  %i.x = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.b) #15
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.x
   %.062 = getelementptr inbounds i8, ptr %i.y, i64 -4 ; 2 uses
   %.not49.not63 = icmp ugt ptr %.062, %.1
@@ -764,8 +764,8 @@ bb.m:                                             ; preds = %.critedge52, %bb.i
 
 .critedge54:                                      ; preds = %bb.m, %.loopexit
   %i.aj = load i64, ptr %i.g, align 8, !tbaa !31
-  %i.ak = call noundef i64 @wcslen(ptr noundef %0) #15
-  %i.al = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %i.aj, ptr noundef %0, i64 noundef %i.ak) ; 0 uses
+  %i.ak = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #15
+  %i.al = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %i.aj, ptr noundef nonnull %0, i64 noundef %i.ak) ; 0 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %.critedge54, %bb.a

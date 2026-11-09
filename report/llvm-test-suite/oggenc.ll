@@ -205,7 +205,7 @@ oggpack_look.exit69:                              ; preds = %bb.k
   %i.er = add nsw i64 %i.em, -2
   %i.es = tail call i64 @llvm.umin.i64(i64 %i.eq, i64 %i.er)
   %i.et = add i64 %i.es, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %i.et, 48
+  %min.iters.check = icmp ult i64 %i.et, 112
   br i1 %min.iters.check, label %.lr.ph.split.us.preheader177, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.us.preheader

@@ -204,13 +204,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 bb.j:                                             ; preds = %.loopexit42
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %i.y = tail call i64 @wcslen(ptr noundef %2) #13
+  %i.y = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %2) #13
   %i.z = icmp ugt i64 %i.y, 2047
   br i1 %i.z, label %_ZL10LinkInPathPKw.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.a, ptr noundef %2, i64 noundef 2048)
-  %i.aa = call i64 @wcslen(ptr noundef nonnull %i.a) #13 ; 2 uses
+  call void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.a, ptr noundef nonnull %2, i64 noundef 2048)
+  %i.aa = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #13 ; 2 uses
   %.not1517.i = icmp ugt i64 %i.aa, 1
   br i1 %.not1517.i, label %.lr.ph.i, label %_ZL10LinkInPathPKw.exit
 
@@ -270,7 +270,7 @@ _ZL10LinkInPathPKw.exit:                          ; preds = %bb.p, %bb.k
   %.031.lcssa45 = phi i32 [ %.031.ph47, %.loopexit42 ], [ %.031.ph47, %_ZL10LinkInPathPKw.exit ], [ %i.d, %.preheader.preheader ] ; 2 uses
   %i.am = call fastcc noundef i32 @_ZL16CalcAllowedDepthPKw(ptr noundef %1)
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16416 ; 2 uses
-  %i.ao = call i64 @wcslen(ptr noundef nonnull %i.an) #13 ; 3 uses
+  %i.ao = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.an) #13 ; 3 uses
   %.not38 = icmp eq i64 %i.ao, 0
   br i1 %.not38, label %.loopexit, label %bb.q
 

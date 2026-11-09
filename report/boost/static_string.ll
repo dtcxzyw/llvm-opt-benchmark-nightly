@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %_ZN5boost14static_s
 bb.g:                                             ; preds = %bb.f
   %i.ac = load i8, ptr %2, align 4, !tbaa !95     ; 2 uses
   %i.ad = zext i8 %i.ac to i64                    ; 2 uses
-  %i.ae = call noundef i64 @wcslen(ptr noundef nonnull %1) #35
+  %i.ae = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #35
   %or.cond.not.i = icmp eq i64 %i.ae, %i.ad
   br i1 %or.cond.not.i, label %bb.h, label %_ZN5boost14static_stringseqILm11EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -326,7 +326,7 @@ bb.f:                                             ; preds = %_ZN5boost14static_s
 bb.g:                                             ; preds = %bb.f
   %i.z = load i8, ptr %2, align 4, !tbaa !99      ; 2 uses
   %i.aa = zext i8 %i.z to i64                     ; 2 uses
-  %i.ab = call noundef i64 @wcslen(ptr noundef nonnull %1) #35
+  %i.ab = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #35
   %or.cond.not.i = icmp eq i64 %i.ab, %i.aa
   br i1 %or.cond.not.i, label %bb.h, label %_ZN5boost14static_stringseqILm20EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -375,7 +375,7 @@ _ZN5boost14static_strings17to_static_wstringEd.exit: ; preds = %bb.a, %bb.b
   %i.g = load ptr, ptr %3, align 8, !tbaa !109    ; 4 uses
   %i.h = load i8, ptr %2, align 4, !tbaa !103     ; 2 uses
   %i.i = zext i8 %i.h to i64                      ; 2 uses
-  %i.j = call noundef i64 @wcslen(ptr noundef %i.g) #35
+  %i.j = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.g) #35
   %or.cond.not.i = icmp eq i64 %i.j, %i.i
   br i1 %or.cond.not.i, label %bb.c, label %_ZN5boost14static_stringseqILm25EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -384,7 +384,7 @@ bb.c:                                             ; preds = %_ZN5boost14static_s
   br i1 %i.k, label %_ZN5boost14static_stringseqILm25EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = call i32 @wmemcmp(ptr noundef nonnull %i.a, ptr noundef %i.g, i64 noundef %i.i) #35
+  %i.l = call i32 @wmemcmp(ptr noundef nonnull %i.a, ptr noundef nonnull %i.g, i64 noundef %i.i) #35
   %i.m = icmp eq i32 %i.l, 0
   br label %_ZN5boost14static_stringseqILm25EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -398,7 +398,7 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i: 
   %i.p = load i64, ptr %i.n, align 8, !tbaa !24
   %i.q = shl i64 %i.p, 2
   %i.r = add i64 %i.q, 4
-  call void @_ZdlPvm(ptr noundef %i.g, i64 noundef %i.r) #34
+  call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.r) #34
   br label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %_ZN5boost14static_stringseqILm25EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i
@@ -437,7 +437,7 @@ _ZN5boost14static_strings17to_static_wstringEe.exit: ; preds = %bb.a, %bb.b
   %i.g = load ptr, ptr %3, align 8, !tbaa !109    ; 4 uses
   %i.h = load i8, ptr %2, align 4, !tbaa !105     ; 2 uses
   %i.i = zext i8 %i.h to i64                      ; 2 uses
-  %i.j = call noundef i64 @wcslen(ptr noundef %i.g) #35
+  %i.j = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.g) #35
   %or.cond.not.i = icmp eq i64 %i.j, %i.i
   br i1 %or.cond.not.i, label %bb.c, label %_ZN5boost14static_stringseqILm31EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -446,7 +446,7 @@ bb.c:                                             ; preds = %_ZN5boost14static_s
   br i1 %i.k, label %_ZN5boost14static_stringseqILm31EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = call i32 @wmemcmp(ptr noundef nonnull %i.a, ptr noundef %i.g, i64 noundef %i.i) #35
+  %i.l = call i32 @wmemcmp(ptr noundef nonnull %i.a, ptr noundef nonnull %i.g, i64 noundef %i.i) #35
   %i.m = icmp eq i32 %i.l, 0
   br label %_ZN5boost14static_stringseqILm31EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -460,7 +460,7 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i: 
   %i.p = load i64, ptr %i.n, align 8, !tbaa !24
   %i.q = shl i64 %i.p, 2
   %i.r = add i64 %i.q, 4
-  call void @_ZdlPvm(ptr noundef %i.g, i64 noundef %i.r) #34
+  call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.r) #34
   br label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %_ZN5boost14static_stringseqILm31EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i
@@ -500,7 +500,7 @@ _ZN5boost14static_strings17to_static_wstringEf.exit: ; preds = %bb.a, %bb.b
   %i.h = load ptr, ptr %3, align 8, !tbaa !109    ; 4 uses
   %i.i = load i8, ptr %2, align 4, !tbaa !101     ; 2 uses
   %i.j = zext i8 %i.i to i64                      ; 2 uses
-  %i.k = call noundef i64 @wcslen(ptr noundef %i.h) #35
+  %i.k = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.h) #35
   %or.cond.not.i = icmp eq i64 %i.k, %i.j
   br i1 %or.cond.not.i, label %bb.c, label %_ZN5boost14static_stringseqILm17EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -509,7 +509,7 @@ bb.c:                                             ; preds = %_ZN5boost14static_s
   br i1 %i.l, label %_ZN5boost14static_stringseqILm17EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = call i32 @wmemcmp(ptr noundef nonnull %i.b, ptr noundef %i.h, i64 noundef %i.j) #35
+  %i.m = call i32 @wmemcmp(ptr noundef nonnull %i.b, ptr noundef nonnull %i.h, i64 noundef %i.j) #35
   %i.n = icmp eq i32 %i.m, 0
   br label %_ZN5boost14static_stringseqILm17EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit
 
@@ -523,7 +523,7 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i: 
   %i.q = load i64, ptr %i.o, align 8, !tbaa !24
   %i.r = shl i64 %i.q, 2
   %i.s = add i64 %i.r, 4
-  call void @_ZdlPvm(ptr noundef %i.h, i64 noundef %i.s) #34
+  call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.s) #34
   br label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %_ZN5boost14static_stringseqILm17EwSt11char_traitsIwEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i

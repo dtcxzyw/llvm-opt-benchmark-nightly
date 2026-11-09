@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bb = add i32 %i.ag, %n.vec438                ; 2 uses
   %broadcast.splatinsert441 = insertelement <16 x i32> poison, i32 %i.ag, i64 0
   %broadcast.splat442 = shufflevector <16 x i32> %broadcast.splatinsert441, <16 x i32> poison, <16 x i32> zeroinitializer
-  %induction443 = add nsw <16 x i32> %broadcast.splat442, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %induction443 = add nuw nsw <16 x i32> %broadcast.splat442, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %cmp.n450 = icmp eq i32 %i.at, %n.vec438
   %min.epilog.iters.check454.not.not = icmp eq i32 %i.ba, 0
   %n.vec458 = and i32 %i.at, -8                   ; 3 uses
@@ -356,7 +356,7 @@ vector.body444:                                   ; preds = %vector.ph437, %vect
   %i.ew = extractelement <16 x i16> %i.eg, i64 15
   store i16 %i.ew, ptr %i.cz, align 2, !tbaa !102
   %index.next447 = add nuw i32 %index445, 16      ; 2 uses
-  %vec.ind.next448 = add nsw <16 x i32> %vec.ind446, splat (i32 16)
+  %vec.ind.next448 = add nuw nsw <16 x i32> %vec.ind446, splat (i32 16)
   %i.ex = icmp eq i32 %index.next447, %n.vec438
   br i1 %i.ex, label %middle.block449, label %vector.body444, !llvm.loop !136
 
@@ -373,7 +373,7 @@ vec.epilog.ph455:                                 ; preds = %vector.main.loop.it
   %broadcast.splat460 = shufflevector <8 x i32> %broadcast.splatinsert459, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert461 = insertelement <8 x i32> poison, i32 %bc.resume.val457, i64 0
   %broadcast.splat462 = shufflevector <8 x i32> %broadcast.splatinsert461, <8 x i32> poison, <8 x i32> zeroinitializer
-  %induction463 = add nsw <8 x i32> %broadcast.splat462, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %induction463 = add nuw nsw <8 x i32> %broadcast.splat462, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body464
 
 vec.epilog.vector.body464:                        ; preds = %vec.epilog.vector.body464, %vec.epilog.ph455
@@ -433,7 +433,7 @@ vec.epilog.vector.body464:                        ; preds = %vec.epilog.vector.b
   %i.gq = extractelement <8 x i16> %i.gi, i64 7
   store i16 %i.gq, ptr %i.fr, align 2, !tbaa !102
   %index.next467 = add nuw i32 %index465, 8       ; 2 uses
-  %vec.ind.next468 = add nsw <8 x i32> %vec.ind466, splat (i32 8)
+  %vec.ind.next468 = add nuw nsw <8 x i32> %vec.ind466, splat (i32 8)
   %i.gr = icmp eq i32 %index.next467, %n.vec458
   br i1 %i.gr, label %vec.epilog.middle.block469, label %vec.epilog.vector.body464, !llvm.loop !137
 
@@ -460,7 +460,7 @@ vec.epilog.scalar.ph453:                          ; preds = %vec.epilog.scalar.p
   %i.gw = load i16, ptr %gep406, align 2, !tbaa !102
   %i.gx = add i16 %i.gw, 1
   store i16 %i.gx, ptr %gep406, align 2, !tbaa !102
-  %i.gy = add nsw i32 %.0107334, 1                ; 2 uses
+  %i.gy = add nuw nsw i32 %.0107334, 1            ; 2 uses
   %i.gz = icmp slt i32 %i.gy, %i.ah
   br i1 %i.gz, label %vec.epilog.scalar.ph453, label %._crit_edge, !llvm.loop !139
 

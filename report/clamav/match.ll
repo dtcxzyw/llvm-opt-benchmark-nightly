@@ -18,13 +18,13 @@ bb.a:
   br i1 %.not, label %bb.s, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call i64 @wcslen(ptr noundef %0) #5 ; 2 uses
+  %i.e = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #5 ; 2 uses
   %i.f = add nsw i32 %i.d, -5                     ; 2 uses
   %or.cond4 = icmp ult i32 %i.f, -3
   br i1 %or.cond4, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call noundef i32 @wcsncmp(ptr noundef readonly %0, ptr noundef readonly %1, i64 noundef %i.e) #5
+  %i.g = tail call noundef i32 @wcsncmp(ptr noundef nonnull readonly %0, ptr noundef readonly %1, i64 noundef %i.e) #5
   %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %bb.d, label %bb.e
 
@@ -44,7 +44,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .thread:                                          ; preds = %bb.b, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  call void @_Z11GetFilePathPKwPwm(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 2048)
+  call void @_Z11GetFilePathPKwPwm(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 2048)
   call void @_Z11GetFilePathPKwPwm(ptr noundef %1, ptr noundef nonnull %i.b, i64 noundef 2048)
   %trunc = trunc i32 %2 to i16
   switch i16 %trunc, label %bb.j [
@@ -86,7 +86,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.o, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.q = call noundef zeroext i1 @_Z10IsWildcardPKw(ptr noundef %0)
+  %i.q = call noundef zeroext i1 @_Z10IsWildcardPKw(ptr noundef nonnull %0)
   br i1 %i.q, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -95,7 +95,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not68, label %.thread74, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.s = call i64 @wcslen(ptr noundef nonnull %i.a) #5
+  %i.s = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a) #5
   %i.t = call noundef i32 @wcsncmp(ptr noundef nonnull readonly %i.a, ptr noundef nonnull readonly %i.b, i64 noundef %i.s) #5
   %.not69 = icmp eq i32 %i.t, 0
   br i1 %.not69, label %.thread74, label %.thread80
@@ -117,7 +117,7 @@ _ZL10mwcsicompcPKwS0_b.exit71:                    ; preds = %bb.q, %bb.r
   br i1 %.not67, label %.thread74, label %.thread80
 
 .thread80.sink.split:                             ; preds = %bb.k, %bb.i, %.thread
-  %i.w = call fastcc noundef zeroext i1 @_ZL5matchPKwS0_b(ptr noundef %0, ptr noundef %1, i1 noundef zeroext %i.c)
+  %i.w = call fastcc noundef zeroext i1 @_ZL5matchPKwS0_b(ptr noundef nonnull %0, ptr noundef %1, i1 noundef zeroext %i.c)
   br label %.thread80
 
 .thread80:                                        ; preds = %.thread80.sink.split, %bb.o, %_ZL10mwcsicompcPKwS0_b.exit, %_ZL10mwcsicompcPKwS0_b.exit71

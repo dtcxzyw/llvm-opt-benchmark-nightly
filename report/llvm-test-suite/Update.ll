@@ -205,7 +205,7 @@ _ZN18COutMultiVolStream14CSubStreamInfoC2Ev.exit: ; preds = %.noexc.i, %._crit_e
           to label %bb.g unwind label %bb.r
 
 bb.g:                                             ; preds = %_ZN18COutMultiVolStream14CSubStreamInfoC2Ev.exit
-  %wcslen.i.i = call i64 @wcslen(ptr nonnull %i.a)
+  %wcslen.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.a)
   %i.bn = trunc i64 %wcslen.i.i to i32            ; 5 uses
   %i.bo = add nsw i32 %i.bn, 1                    ; 3 uses
   %i.bp = icmp eq i32 %i.bo, 0
@@ -608,7 +608,7 @@ bb.a:
   store i32 0, ptr %i.a, align 8, !tbaa !100
   %i.b = load ptr, ptr %0, align 8, !tbaa !101    ; 2 uses
   store i32 0, ptr %i.b, align 4, !tbaa !103
-  %wcslen.i = tail call i64 @wcslen(ptr %1)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1)
   %i.c = trunc i64 %wcslen.i to i32               ; 3 uses
   %i.d = add nsw i32 %i.c, 1                      ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
@@ -1011,7 +1011,7 @@ bb.gd:                                            ; preds = %bb.gc
   store i32 0, ptr %i.anh, align 8, !tbaa !100
   %i.ano = load ptr, ptr %i.ang, align 8, !tbaa !101 ; 2 uses
   store i32 0, ptr %i.ano, align 4, !tbaa !103
-  %wcslen.i.i.i.i = call i64 @wcslen(ptr nonnull %i.c)
+  %wcslen.i.i.i.i = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.c)
   %i.anp = trunc i64 %wcslen.i.i.i.i to i32       ; 3 uses
   %i.anq = add nsw i32 %i.anp, 1                  ; 3 uses
   %i.anr = load i32, ptr %i.ani, align 4, !tbaa !99
@@ -1414,7 +1414,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(16) ptr @_ZN11CStringBaseIwEpLEPKw(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 !guid !479 {
 bb.a:
-  %wcslen.i = tail call i64 @wcslen(ptr %1)
+  %wcslen.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1)
   %i.a = trunc i64 %wcslen.i to i32               ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !99   ; 6 uses

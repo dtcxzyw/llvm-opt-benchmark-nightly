@@ -205,7 +205,7 @@ _ZN8NWindows5NFile5NFind9CFileInfoC2Ev.exit:      ; preds = %bb.c, %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %1)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1)
   %i.k = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.l = add nsw i32 %i.k, 1                      ; 3 uses
   %i.m = icmp ne i32 %i.l, 0
@@ -608,7 +608,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %0)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.b = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.c = add nsw i32 %i.b, 1                      ; 3 uses
   %i.d = icmp ne i32 %i.c, 0
@@ -964,7 +964,7 @@ bb.h:                                             ; preds = %._crit_edge.thread.
   %i.cv = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.cw = getelementptr inbounds nuw i8, ptr %6, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
-  %wcslen.i.i53 = call i64 @wcslen(ptr %0)
+  %wcslen.i.i53 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.cx = trunc i64 %wcslen.i.i53 to i32          ; 3 uses
   %i.cy = add nsw i32 %i.cx, 1                    ; 3 uses
   %i.cz = icmp eq i32 %i.cy, 0
@@ -1150,7 +1150,7 @@ bb.ad:                                            ; preds = %bb.aa, %bb.z
   %i.eo = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %9, i64 12 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false)
-  %wcslen.i.i106 = call i64 @wcslen(ptr %0)
+  %wcslen.i.i106 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.eq = trunc i64 %wcslen.i.i106 to i32         ; 3 uses
   %i.er = add nsw i32 %i.eq, 1                    ; 3 uses
   %i.es = icmp ne i32 %i.er, 0
@@ -1553,7 +1553,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %0)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.b = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.c = add nsw i32 %i.b, 1                      ; 3 uses
   %i.d = icmp ne i32 %i.c, 0
@@ -1695,7 +1695,7 @@ bb.m:                                             ; preds = %bb.i
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
-  %wcslen.i.i35 = call i64 @wcslen(ptr %0)
+  %wcslen.i.i35 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.at = trunc i64 %wcslen.i.i35 to i32          ; 3 uses
   %i.au = add nsw i32 %i.at, 1                    ; 3 uses
   %i.av = icmp eq i32 %i.au, 0
@@ -1913,7 +1913,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %0)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.b = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.c = add nsw i32 %i.b, 1                      ; 3 uses
   %i.d = icmp ne i32 %i.c, 0
@@ -2055,7 +2055,7 @@ bb.m:                                             ; preds = %bb.i
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
-  %wcslen.i.i35 = call i64 @wcslen(ptr %0)
+  %wcslen.i.i35 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.au = trunc i64 %wcslen.i.i35 to i32          ; 3 uses
   %i.av = add nsw i32 %i.au, 1                    ; 3 uses
   %i.aw = icmp eq i32 %i.av, 0
@@ -2273,7 +2273,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  %wcslen.i.i = tail call i64 @wcslen(ptr %0)
+  %wcslen.i.i = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.b = trunc i64 %wcslen.i.i to i32             ; 3 uses
   %i.c = add nsw i32 %i.b, 1                      ; 3 uses
   %i.d = icmp ne i32 %i.c, 0
@@ -2410,7 +2410,7 @@ bb.m:                                             ; preds = %bb.i
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
-  %wcslen.i.i35 = call i64 @wcslen(ptr %0)
+  %wcslen.i.i35 = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0)
   %i.ap = trunc i64 %wcslen.i.i35 to i32          ; 3 uses
   %i.aq = add nsw i32 %i.ap, 1                    ; 3 uses
   %i.ar = icmp eq i32 %i.aq, 0

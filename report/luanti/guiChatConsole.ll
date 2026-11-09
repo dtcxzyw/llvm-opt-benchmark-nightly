@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.cc, label %_ZN4core6stringIwEC2IwEEPKT_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.cd = call i64 @wcslen(ptr noundef nonnull %i.bv) #29 ; 3 uses
+  %i.cd = call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.bv) #29 ; 3 uses
   %i.ce = and i64 %i.cd, 4294967295               ; 8 uses
   %.not39 = icmp eq i64 %i.ce, 0
   br i1 %.not39, label %_ZN4core6stringIwEC2IwEEPKT_.exit, label %bb.m
@@ -607,7 +607,7 @@ bb.cn:                                            ; preds = %bb.cm
   unreachable
 
 bb.co:                                            ; preds = %bb.cm
-  %i.kn = call noundef i64 @wcslen(ptr noundef nonnull %i.kk) #29 ; 5 uses
+  %i.kn = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %i.kk) #29 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   store i64 %i.kn, ptr %i.a, align 8, !tbaa !86
   %i.ko = icmp ugt i64 %i.kn, 3
@@ -762,7 +762,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull %1) #29 ; 5 uses
+  %i.d = tail call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   store i64 %i.d, ptr %i.a, align 8, !tbaa !86
   %i.e = icmp ugt i64 %i.d, 3
@@ -1165,7 +1165,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i64 @wcslen(ptr noundef nonnull %1) #29 ; 5 uses
+  %i.k = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #29 ; 5 uses
   %i.l = and i64 %i.k, 4294967295                 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !136

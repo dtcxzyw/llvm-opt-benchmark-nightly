@@ -204,7 +204,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2
   %.sroa.014.024.i = phi ptr [ %i.v, %bb.e ], [ %i.c, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2fm3lSD_3xet.exit.i ] ; 4 uses
   %.sroa.7.023.i = phi i64 [ %i.u, %bb.e ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2fm3lSD_3xet.exit.i ] ; 2 uses
   %.sroa.10.022.i = phi i64 [ %i.p, %bb.e ], [ %i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2fm3lSD_3xet.exit.i ]
-  %i.p = add i64 %.sroa.10.022.i, -1              ; 2 uses
+  %i.p = add nsw i64 %.sroa.10.022.i, -1          ; 2 uses
   %i.q = icmp eq ptr %.sroa.014.024.i, %i.n
   br i1 %i.q, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs4Sxm5svDswZ_18reqwest_middleware10middleware10MiddlewareEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.c
 
@@ -279,7 +279,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2
   %.sroa.014.024.i = phi ptr [ %i.v, %bb.e ], [ %i.c, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2fm3lSD_3xet.exit.i ] ; 4 uses
   %.sroa.7.023.i = phi i64 [ %i.u, %bb.e ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2fm3lSD_3xet.exit.i ] ; 2 uses
   %.sroa.10.022.i = phi i64 [ %i.p, %bb.e ], [ %i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsQbU2fm3lSD_3xet.exit.i ]
-  %i.p = add i64 %.sroa.10.022.i, -1              ; 2 uses
+  %i.p = add nsw i64 %.sroa.10.022.i, -1          ; 2 uses
   %i.q = icmp eq ptr %.sroa.014.024.i, %i.n
   br i1 %i.q, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs4Sxm5svDswZ_18reqwest_middleware8req_init18RequestInitialiserEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.c
 

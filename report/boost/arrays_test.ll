@@ -204,7 +204,7 @@ bb.bh:                                            ; preds = %.noexc108.i
   call void @llvm.lifetime.end.p0(ptr nonnull %303)
   store <2 x i64> %i.ef, ptr %323, align 16
   %i.eg = load i64, ptr %i.dz, align 8, !tbaa !53 ; 3 uses
-  %i.eh = call noundef i64 @wcslen(ptr noundef nonnull %323) #33
+  %i.eh = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %323) #33
   %i.ei = icmp eq i64 %i.eg, %i.eh
   br i1 %i.ei, label %bb.bi, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i
 
@@ -260,7 +260,7 @@ bb.bn:                                            ; preds = %bb.bk
   %i.ew = load <2 x i64>, ptr %301, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %301)
   store <2 x i64> %i.ew, ptr %324, align 16
-  %i.ex = call noundef i64 @wcslen(ptr noundef nonnull %324) #33
+  %i.ex = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %324) #33
   %i.ey = icmp eq i64 %i.ep, %i.ex
   br i1 %i.ey, label %bb.bo, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit118.i
 
@@ -318,7 +318,7 @@ bb.bu:                                            ; preds = %.noexc124.i
   call void @llvm.lifetime.end.p0(ptr nonnull %299)
   store <2 x i64> %i.fi, ptr %325, align 16
   %i.fj = load i64, ptr %i.dz, align 8, !tbaa !53 ; 3 uses
-  %i.fk = call noundef i64 @wcslen(ptr noundef nonnull %325) #33
+  %i.fk = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %325) #33
   %i.fl = icmp eq i64 %i.fj, %i.fk
   br i1 %i.fl, label %bb.bv, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit128.i
 
@@ -374,7 +374,7 @@ bb.ca:                                            ; preds = %bb.bx
   %i.fz = load <2 x i64>, ptr %297, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %297)
   store <2 x i64> %i.fz, ptr %326, align 16
-  %i.ga = call noundef i64 @wcslen(ptr noundef nonnull %326) #33
+  %i.ga = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %326) #33
   %i.gb = icmp eq i64 %i.fs, %i.ga
   br i1 %i.gb, label %bb.cb, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit139.i
 
@@ -740,7 +740,7 @@ bb.dk:                                            ; preds = %.body167.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %331, ptr noundef nonnull align 4 dereferenceable(12) @.str.29, i64 12, i1 false)
   %i.ix = getelementptr inbounds nuw i8, ptr %331, i64 12
   store i32 0, ptr %i.ix, align 4, !tbaa !71, !alias.scope !437
-  %wcslen.i.i.i.i = call noundef i64 @wcslen(ptr nonnull %331)
+  %wcslen.i.i.i.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %331)
   %i.iy = icmp eq i64 %wcslen.i.i.i.i, 3
   %i.iz = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.37, ptr noundef nonnull @.str.1, i32 noundef 221, ptr noundef nonnull @__PRETTY_FUNCTION__._ZL43testing_template_array_output_on_char_valueIN5boost5arrayEEvv, i1 noundef zeroext %i.iy)
           to label %bb.dl unwind label %.body176.i ; 0 uses
@@ -780,7 +780,7 @@ bb.do:                                            ; preds = %bb.dl
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 dereferenceable(1200) %332, ptr align 4 %i.jf, i64 %.idx.i.i.i184.i, i1 false)
   %i.jg = getelementptr inbounds nuw i8, ptr %332, i64 %.idx.i.i.i184.i
   store i32 0, ptr %i.jg, align 4, !tbaa !71, !alias.scope !438
-  %wcslen.i.i.i188.i = call noundef i64 @wcslen(ptr nonnull %332)
+  %wcslen.i.i.i188.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %332)
   %i.jh = icmp eq i64 %i.ja, %wcslen.i.i.i188.i
   br i1 %i.jh, label %bb.dp, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit194.i
 
@@ -1183,7 +1183,7 @@ bb.hk:                                            ; preds = %bb.hg
   store i32 0, ptr %i.td, align 4, !tbaa !55, !alias.scope !443
   call void @llvm.lifetime.end.p0(ptr nonnull %242) #31, !noalias !443
   %i.te = load i64, ptr %i.sn, align 8, !tbaa !53 ; 3 uses
-  %i.tf = call noundef i64 @wcslen(ptr noundef nonnull %280) #33
+  %i.tf = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %280) #33
   %i.tg = icmp eq i64 %i.te, %i.tf
   br i1 %i.tg, label %bb.hl, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i9
 
@@ -1261,7 +1261,7 @@ bb.hs:                                            ; preds = %bb.ho
   store i32 0, ptr %i.ub, align 4, !tbaa !55, !alias.scope !444
   call void @llvm.lifetime.end.p0(ptr nonnull %239) #31, !noalias !444
   %i.uc = load i64, ptr %i.sn, align 8, !tbaa !53 ; 3 uses
-  %i.ud = call noundef i64 @wcslen(ptr noundef nonnull %281) #33
+  %i.ud = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %281) #33
   %i.ue = icmp eq i64 %i.uc, %i.ud
   br i1 %i.ue, label %bb.ht, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit124.i
 
@@ -1664,7 +1664,7 @@ bb.jq:                                            ; preds = %bb.jm
   store i32 0, ptr %i.zl, align 4, !tbaa !71, !alias.scope !447
   call void @llvm.lifetime.end.p0(ptr nonnull %224) #31, !noalias !447
   %i.zm = load i64, ptr %i.yv, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i12 = call noundef i64 @wcslen(ptr nonnull %286)
+  %wcslen.i.i.i.i12 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %286)
   %i.zn = icmp eq i64 %i.zm, %wcslen.i.i.i.i12
   br i1 %i.zn, label %bb.jr, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i
 
@@ -1749,7 +1749,7 @@ bb.jx:                                            ; preds = %bb.jt
   store i32 0, ptr %i.aak, align 4, !tbaa !71, !alias.scope !448
   call void @llvm.lifetime.end.p0(ptr nonnull %221) #31, !noalias !448
   %i.aal = load i64, ptr %i.yv, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i175.i = call noundef i64 @wcslen(ptr nonnull %287)
+  %wcslen.i.i.i175.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %287)
   %i.aam = icmp eq i64 %i.aal, %wcslen.i.i.i175.i
   br i1 %i.aam, label %bb.jy, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit181.i
 
@@ -2152,7 +2152,7 @@ bb.nv:                                            ; preds = %bb.nr
   store i32 0, ptr %i.akt, align 4, !tbaa !55, !alias.scope !453
   call void @llvm.lifetime.end.p0(ptr nonnull %170) #31, !noalias !453
   %i.aku = load i64, ptr %i.akd, align 8, !tbaa !53 ; 3 uses
-  %i.akv = call noundef i64 @wcslen(ptr noundef nonnull %208) #33
+  %i.akv = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %208) #33
   %i.akw = icmp eq i64 %i.aku, %i.akv
   br i1 %i.akw, label %bb.nw, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i59
 
@@ -2230,7 +2230,7 @@ bb.od:                                            ; preds = %bb.nz
   store i32 0, ptr %i.alr, align 4, !tbaa !55, !alias.scope !454
   call void @llvm.lifetime.end.p0(ptr nonnull %167) #31, !noalias !454
   %i.als = load i64, ptr %i.akd, align 8, !tbaa !53 ; 3 uses
-  %i.alt = call noundef i64 @wcslen(ptr noundef nonnull %209) #33
+  %i.alt = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %209) #33
   %i.alu = icmp eq i64 %i.als, %i.alt
   br i1 %i.alu, label %bb.oe, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit124.i62
 
@@ -2633,7 +2633,7 @@ bb.qb:                                            ; preds = %bb.px
   store i32 0, ptr %i.arb, align 4, !tbaa !71, !alias.scope !457
   call void @llvm.lifetime.end.p0(ptr nonnull %152) #31, !noalias !457
   %i.arc = load i64, ptr %i.aql, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i91 = call noundef i64 @wcslen(ptr nonnull %214)
+  %wcslen.i.i.i.i91 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %214)
   %i.ard = icmp eq i64 %i.arc, %wcslen.i.i.i.i91
   br i1 %i.ard, label %bb.qc, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i92
 
@@ -2718,7 +2718,7 @@ bb.qi:                                            ; preds = %bb.qe
   store i32 0, ptr %i.asa, align 4, !tbaa !71, !alias.scope !458
   call void @llvm.lifetime.end.p0(ptr nonnull %149) #31, !noalias !458
   %i.asb = load i64, ptr %i.aql, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i175.i95 = call noundef i64 @wcslen(ptr nonnull %215)
+  %wcslen.i.i.i175.i95 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %215)
   %i.asc = icmp eq i64 %i.asb, %wcslen.i.i.i175.i95
   br i1 %i.asc, label %bb.qj, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit181.i96
 
@@ -3121,7 +3121,7 @@ bb.ty:                                            ; preds = %.noexc107.i
   store i32 0, ptr %i.bci, align 4, !tbaa !55, !alias.scope !463
   call void @llvm.lifetime.end.p0(ptr nonnull %98) #31, !noalias !463
   %i.bcj = load i64, ptr %i.bbt, align 8, !tbaa !53 ; 3 uses
-  %i.bck = call noundef i64 @wcslen(ptr noundef nonnull %136) #33
+  %i.bck = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %136) #33
   %i.bcl = icmp eq i64 %i.bcj, %i.bck
   br i1 %i.bcl, label %bb.tz, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i146
 
@@ -3198,7 +3198,7 @@ bb.uf:                                            ; preds = %.noexc110.i
   store i32 0, ptr %i.bdf, align 4, !tbaa !55, !alias.scope !464
   call void @llvm.lifetime.end.p0(ptr nonnull %95) #31, !noalias !464
   %i.bdg = load i64, ptr %i.bbt, align 8, !tbaa !53 ; 3 uses
-  %i.bdh = call noundef i64 @wcslen(ptr noundef nonnull %137) #33
+  %i.bdh = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %137) #33
   %i.bdi = icmp eq i64 %i.bdg, %i.bdh
   br i1 %i.bdi, label %bb.ug, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit114.i
 
@@ -3601,7 +3601,7 @@ bb.vy:                                            ; preds = %.noexc147.i
   store i32 0, ptr %i.bin, align 4, !tbaa !71, !alias.scope !467
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #31, !noalias !467
   %i.bio = load i64, ptr %i.bhy, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i156 = call noundef i64 @wcslen(ptr nonnull %142)
+  %wcslen.i.i.i.i156 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %142)
   %i.bip = icmp eq i64 %i.bio, %wcslen.i.i.i.i156
   br i1 %i.bip, label %bb.vz, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i157
 
@@ -3685,7 +3685,7 @@ bb.we:                                            ; preds = %.noexc155.i
   store i32 0, ptr %i.bjl, align 4, !tbaa !71, !alias.scope !468
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #31, !noalias !468
   %i.bjm = load i64, ptr %i.bhy, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i159.i = call noundef i64 @wcslen(ptr nonnull %143)
+  %wcslen.i.i.i159.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %143)
   %i.bjn = icmp eq i64 %i.bjm, %wcslen.i.i.i159.i
   br i1 %i.bjn, label %bb.wf, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit165.i
 
@@ -4088,7 +4088,7 @@ bb.zt:                                            ; preds = %.noexc107.i217
   store i32 0, ptr %i.bts, align 4, !tbaa !55, !alias.scope !473
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #31, !noalias !473
   %i.btt = load i64, ptr %i.btd, align 8, !tbaa !53 ; 3 uses
-  %i.btu = call noundef i64 @wcslen(ptr noundef nonnull %64) #33
+  %i.btu = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %64) #33
   %i.btv = icmp eq i64 %i.btt, %i.btu
   br i1 %i.btv, label %bb.zu, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i218
 
@@ -4165,7 +4165,7 @@ bb.aaa:                                           ; preds = %.noexc110.i221
   store i32 0, ptr %i.bup, align 4, !tbaa !55, !alias.scope !474
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #31, !noalias !474
   %i.buq = load i64, ptr %i.btd, align 8, !tbaa !53 ; 3 uses
-  %i.bur = call noundef i64 @wcslen(ptr noundef nonnull %65) #33
+  %i.bur = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %65) #33
   %i.bus = icmp eq i64 %i.buq, %i.bur
   br i1 %i.bus, label %bb.aab, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit114.i222
 
@@ -4568,7 +4568,7 @@ bb.abt:                                           ; preds = %.noexc147.i253
   store i32 0, ptr %i.bzu, align 4, !tbaa !71, !alias.scope !477
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #31, !noalias !477
   %i.bzv = load i64, ptr %i.bzf, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i254 = call noundef i64 @wcslen(ptr nonnull %70)
+  %wcslen.i.i.i.i254 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %70)
   %i.bzw = icmp eq i64 %i.bzv, %wcslen.i.i.i.i254
   br i1 %i.bzw, label %bb.abu, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i255
 
@@ -4652,7 +4652,7 @@ bb.abz:                                           ; preds = %.noexc155.i258
   store i32 0, ptr %i.cas, align 4, !tbaa !71, !alias.scope !478
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31, !noalias !478
   %i.cat = load i64, ptr %i.bzf, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i159.i259 = call noundef i64 @wcslen(ptr nonnull %71)
+  %wcslen.i.i.i159.i259 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %71)
   %i.cau = icmp eq i64 %i.cat, %wcslen.i.i.i159.i259
   br i1 %i.cau, label %bb.aca, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit165.i260
 
@@ -5055,7 +5055,7 @@ bb.bh:                                            ; preds = %.noexc108.i
   call void @llvm.lifetime.end.p0(ptr nonnull %303)
   store <2 x i64> %i.ef, ptr %323, align 16
   %i.eg = load i64, ptr %i.dz, align 8, !tbaa !53 ; 3 uses
-  %i.eh = call noundef i64 @wcslen(ptr noundef nonnull %323) #33
+  %i.eh = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %323) #33
   %i.ei = icmp eq i64 %i.eg, %i.eh
   br i1 %i.ei, label %bb.bi, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i
 
@@ -5111,7 +5111,7 @@ bb.bn:                                            ; preds = %bb.bk
   %i.ew = load <2 x i64>, ptr %301, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %301)
   store <2 x i64> %i.ew, ptr %324, align 16
-  %i.ex = call noundef i64 @wcslen(ptr noundef nonnull %324) #33
+  %i.ex = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %324) #33
   %i.ey = icmp eq i64 %i.ep, %i.ex
   br i1 %i.ey, label %bb.bo, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit118.i
 
@@ -5169,7 +5169,7 @@ bb.bu:                                            ; preds = %.noexc124.i
   call void @llvm.lifetime.end.p0(ptr nonnull %299)
   store <2 x i64> %i.fi, ptr %325, align 16
   %i.fj = load i64, ptr %i.dz, align 8, !tbaa !53 ; 3 uses
-  %i.fk = call noundef i64 @wcslen(ptr noundef nonnull %325) #33
+  %i.fk = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %325) #33
   %i.fl = icmp eq i64 %i.fj, %i.fk
   br i1 %i.fl, label %bb.bv, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit128.i
 
@@ -5225,7 +5225,7 @@ bb.ca:                                            ; preds = %bb.bx
   %i.fz = load <2 x i64>, ptr %297, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %297)
   store <2 x i64> %i.fz, ptr %326, align 16
-  %i.ga = call noundef i64 @wcslen(ptr noundef nonnull %326) #33
+  %i.ga = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %326) #33
   %i.gb = icmp eq i64 %i.fs, %i.ga
   br i1 %i.gb, label %bb.cb, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit139.i
 
@@ -5591,7 +5591,7 @@ bb.dk:                                            ; preds = %.body167.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %331, ptr noundef nonnull align 4 dereferenceable(12) @.str.29, i64 12, i1 false)
   %i.ix = getelementptr inbounds nuw i8, ptr %331, i64 12
   store i32 0, ptr %i.ix, align 4, !tbaa !71, !alias.scope !581
-  %wcslen.i.i.i.i = call noundef i64 @wcslen(ptr nonnull %331)
+  %wcslen.i.i.i.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %331)
   %i.iy = icmp eq i64 %wcslen.i.i.i.i, 3
   %i.iz = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.37, ptr noundef nonnull @.str.1, i32 noundef 221, ptr noundef nonnull @__PRETTY_FUNCTION__._ZL43testing_template_array_output_on_char_valueISt5arrayEvv, i1 noundef zeroext %i.iy)
           to label %bb.dl unwind label %.body176.i ; 0 uses
@@ -5631,7 +5631,7 @@ bb.do:                                            ; preds = %bb.dl
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 dereferenceable(1200) %332, ptr align 4 %i.jf, i64 %.idx.i.i.i184.i, i1 false)
   %i.jg = getelementptr inbounds nuw i8, ptr %332, i64 %.idx.i.i.i184.i
   store i32 0, ptr %i.jg, align 4, !tbaa !71, !alias.scope !582
-  %wcslen.i.i.i188.i = call noundef i64 @wcslen(ptr nonnull %332)
+  %wcslen.i.i.i188.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %332)
   %i.jh = icmp eq i64 %i.ja, %wcslen.i.i.i188.i
   br i1 %i.jh, label %bb.dp, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit194.i
 
@@ -6034,7 +6034,7 @@ bb.hk:                                            ; preds = %bb.hg
   store i32 0, ptr %i.td, align 4, !tbaa !55, !alias.scope !587
   call void @llvm.lifetime.end.p0(ptr nonnull %242) #31, !noalias !587
   %i.te = load i64, ptr %i.sn, align 8, !tbaa !53 ; 3 uses
-  %i.tf = call noundef i64 @wcslen(ptr noundef nonnull %280) #33
+  %i.tf = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %280) #33
   %i.tg = icmp eq i64 %i.te, %i.tf
   br i1 %i.tg, label %bb.hl, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i9
 
@@ -6112,7 +6112,7 @@ bb.hs:                                            ; preds = %bb.ho
   store i32 0, ptr %i.ub, align 4, !tbaa !55, !alias.scope !588
   call void @llvm.lifetime.end.p0(ptr nonnull %239) #31, !noalias !588
   %i.uc = load i64, ptr %i.sn, align 8, !tbaa !53 ; 3 uses
-  %i.ud = call noundef i64 @wcslen(ptr noundef nonnull %281) #33
+  %i.ud = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %281) #33
   %i.ue = icmp eq i64 %i.uc, %i.ud
   br i1 %i.ue, label %bb.ht, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit124.i
 
@@ -6515,7 +6515,7 @@ bb.jq:                                            ; preds = %bb.jm
   store i32 0, ptr %i.zl, align 4, !tbaa !71, !alias.scope !591
   call void @llvm.lifetime.end.p0(ptr nonnull %224) #31, !noalias !591
   %i.zm = load i64, ptr %i.yv, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i12 = call noundef i64 @wcslen(ptr nonnull %286)
+  %wcslen.i.i.i.i12 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %286)
   %i.zn = icmp eq i64 %i.zm, %wcslen.i.i.i.i12
   br i1 %i.zn, label %bb.jr, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i
 
@@ -6600,7 +6600,7 @@ bb.jx:                                            ; preds = %bb.jt
   store i32 0, ptr %i.aak, align 4, !tbaa !71, !alias.scope !592
   call void @llvm.lifetime.end.p0(ptr nonnull %221) #31, !noalias !592
   %i.aal = load i64, ptr %i.yv, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i175.i = call noundef i64 @wcslen(ptr nonnull %287)
+  %wcslen.i.i.i175.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %287)
   %i.aam = icmp eq i64 %i.aal, %wcslen.i.i.i175.i
   br i1 %i.aam, label %bb.jy, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit181.i
 
@@ -7003,7 +7003,7 @@ bb.nv:                                            ; preds = %bb.nr
   store i32 0, ptr %i.akt, align 4, !tbaa !55, !alias.scope !597
   call void @llvm.lifetime.end.p0(ptr nonnull %170) #31, !noalias !597
   %i.aku = load i64, ptr %i.akd, align 8, !tbaa !53 ; 3 uses
-  %i.akv = call noundef i64 @wcslen(ptr noundef nonnull %208) #33
+  %i.akv = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %208) #33
   %i.akw = icmp eq i64 %i.aku, %i.akv
   br i1 %i.akw, label %bb.nw, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i59
 
@@ -7081,7 +7081,7 @@ bb.od:                                            ; preds = %bb.nz
   store i32 0, ptr %i.alr, align 4, !tbaa !55, !alias.scope !598
   call void @llvm.lifetime.end.p0(ptr nonnull %167) #31, !noalias !598
   %i.als = load i64, ptr %i.akd, align 8, !tbaa !53 ; 3 uses
-  %i.alt = call noundef i64 @wcslen(ptr noundef nonnull %209) #33
+  %i.alt = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %209) #33
   %i.alu = icmp eq i64 %i.als, %i.alt
   br i1 %i.alu, label %bb.oe, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit124.i62
 
@@ -7484,7 +7484,7 @@ bb.qb:                                            ; preds = %bb.px
   store i32 0, ptr %i.arb, align 4, !tbaa !71, !alias.scope !601
   call void @llvm.lifetime.end.p0(ptr nonnull %152) #31, !noalias !601
   %i.arc = load i64, ptr %i.aql, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i91 = call noundef i64 @wcslen(ptr nonnull %214)
+  %wcslen.i.i.i.i91 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %214)
   %i.ard = icmp eq i64 %i.arc, %wcslen.i.i.i.i91
   br i1 %i.ard, label %bb.qc, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i92
 
@@ -7569,7 +7569,7 @@ bb.qi:                                            ; preds = %bb.qe
   store i32 0, ptr %i.asa, align 4, !tbaa !71, !alias.scope !602
   call void @llvm.lifetime.end.p0(ptr nonnull %149) #31, !noalias !602
   %i.asb = load i64, ptr %i.aql, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i175.i95 = call noundef i64 @wcslen(ptr nonnull %215)
+  %wcslen.i.i.i175.i95 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %215)
   %i.asc = icmp eq i64 %i.asb, %wcslen.i.i.i175.i95
   br i1 %i.asc, label %bb.qj, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit181.i96
 
@@ -7972,7 +7972,7 @@ bb.ty:                                            ; preds = %.noexc107.i
   store i32 0, ptr %i.bci, align 4, !tbaa !55, !alias.scope !607
   call void @llvm.lifetime.end.p0(ptr nonnull %98) #31, !noalias !607
   %i.bcj = load i64, ptr %i.bbt, align 8, !tbaa !53 ; 3 uses
-  %i.bck = call noundef i64 @wcslen(ptr noundef nonnull %136) #33
+  %i.bck = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %136) #33
   %i.bcl = icmp eq i64 %i.bcj, %i.bck
   br i1 %i.bcl, label %bb.tz, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i146
 
@@ -8049,7 +8049,7 @@ bb.uf:                                            ; preds = %.noexc110.i
   store i32 0, ptr %i.bdf, align 4, !tbaa !55, !alias.scope !608
   call void @llvm.lifetime.end.p0(ptr nonnull %95) #31, !noalias !608
   %i.bdg = load i64, ptr %i.bbt, align 8, !tbaa !53 ; 3 uses
-  %i.bdh = call noundef i64 @wcslen(ptr noundef nonnull %137) #33
+  %i.bdh = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %137) #33
   %i.bdi = icmp eq i64 %i.bdg, %i.bdh
   br i1 %i.bdi, label %bb.ug, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit114.i
 
@@ -8452,7 +8452,7 @@ bb.vy:                                            ; preds = %.noexc147.i
   store i32 0, ptr %i.bin, align 4, !tbaa !71, !alias.scope !611
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #31, !noalias !611
   %i.bio = load i64, ptr %i.bhy, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i156 = call noundef i64 @wcslen(ptr nonnull %142)
+  %wcslen.i.i.i.i156 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %142)
   %i.bip = icmp eq i64 %i.bio, %wcslen.i.i.i.i156
   br i1 %i.bip, label %bb.vz, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i157
 
@@ -8536,7 +8536,7 @@ bb.we:                                            ; preds = %.noexc155.i
   store i32 0, ptr %i.bjl, align 4, !tbaa !71, !alias.scope !612
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #31, !noalias !612
   %i.bjm = load i64, ptr %i.bhy, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i159.i = call noundef i64 @wcslen(ptr nonnull %143)
+  %wcslen.i.i.i159.i = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %143)
   %i.bjn = icmp eq i64 %i.bjm, %wcslen.i.i.i159.i
   br i1 %i.bjn, label %bb.wf, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit165.i
 
@@ -8939,7 +8939,7 @@ bb.zt:                                            ; preds = %.noexc107.i217
   store i32 0, ptr %i.bts, align 4, !tbaa !55, !alias.scope !617
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #31, !noalias !617
   %i.btt = load i64, ptr %i.btd, align 8, !tbaa !53 ; 3 uses
-  %i.btu = call noundef i64 @wcslen(ptr noundef nonnull %64) #33
+  %i.btu = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %64) #33
   %i.btv = icmp eq i64 %i.btt, %i.btu
   br i1 %i.btv, label %bb.zu, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i218
 
@@ -9016,7 +9016,7 @@ bb.aaa:                                           ; preds = %.noexc110.i221
   store i32 0, ptr %i.bup, align 4, !tbaa !55, !alias.scope !618
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #31, !noalias !618
   %i.buq = load i64, ptr %i.btd, align 8, !tbaa !53 ; 3 uses
-  %i.bur = call noundef i64 @wcslen(ptr noundef nonnull %65) #33
+  %i.bur = call noundef i64 @wcslen(ptr noundef nonnull dereferenceable(4) %65) #33
   %i.bus = icmp eq i64 %i.buq, %i.bur
   br i1 %i.bus, label %bb.aab, label %_ZSteqIwSt11char_traitsIwESaIwEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit114.i222
 
@@ -9419,7 +9419,7 @@ bb.abt:                                           ; preds = %.noexc147.i253
   store i32 0, ptr %i.bzu, align 4, !tbaa !71, !alias.scope !621
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #31, !noalias !621
   %i.bzv = load i64, ptr %i.bzf, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i.i254 = call noundef i64 @wcslen(ptr nonnull %70)
+  %wcslen.i.i.i.i254 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %70)
   %i.bzw = icmp eq i64 %i.bzv, %wcslen.i.i.i.i254
   br i1 %i.bzw, label %bb.abu, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.i255
 
@@ -9503,7 +9503,7 @@ bb.abz:                                           ; preds = %.noexc155.i258
   store i32 0, ptr %i.cas, align 4, !tbaa !71, !alias.scope !622
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31, !noalias !622
   %i.cat = load i64, ptr %i.bzf, align 8, !tbaa !69 ; 3 uses
-  %wcslen.i.i.i159.i259 = call noundef i64 @wcslen(ptr nonnull %71)
+  %wcslen.i.i.i159.i259 = call noundef i64 @wcslen(ptr nonnull dereferenceable(4) %71)
   %i.cau = icmp eq i64 %i.cat, %wcslen.i.i.i159.i259
   br i1 %i.cau, label %bb.aca, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit165.i260
 

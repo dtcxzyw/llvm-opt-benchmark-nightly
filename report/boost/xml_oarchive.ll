@@ -204,9 +204,9 @@ define weak_odr void @_ZN5boost7archive17xml_oarchive_implINS0_12xml_oarchiveEE4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !53, !nonnull !26, !align !54
-  %i.c = tail call i64 @wcslen(ptr noundef %1) #19
+  %i.c = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %1) #19
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.c
-  tail call void @_ZN5boost7archive13save_iteratorIPKwEEvRSoT_S5_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef %1, ptr noundef %i.d)
+  tail call void @_ZN5boost7archive13save_iteratorIPKwEEvRSoT_S5_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull %1, ptr noundef nonnull %i.d)
   ret void
 }
 
