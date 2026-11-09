@@ -205,7 +205,6 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !78   ; 7 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 96
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !90   ; 3 uses
-  %9 = ptrtoaddr ptr %i.l to i64                  ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 28
   %i.n = load i32, ptr %i.m, align 4, !tbaa !89   ; 6 uses
   %i.o = mul nsw i32 %i.n, %1
@@ -219,22 +218,22 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.v, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.c
+  %9 = ptrtoaddr ptr %i.l to i64
   %i.w = getelementptr i8, ptr %i.t, i64 8
   %.val95 = load ptr, ptr %i.w, align 8, !tbaa !53
   %i.x = getelementptr inbounds nuw i8, ptr %i.j, i64 128
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !138  ; 14 uses
-  %i.z = ptrtoaddr ptr %i.y to i64                ; 2 uses
+  %i.z = ptrtoaddr ptr %i.y to i64
   %i.aa = icmp sgt i32 %i.n, 0                    ; 2 uses
   %wide.trip.count.i = zext i32 %i.n to i64       ; 11 uses
   %wide.trip.count = zext nneg i32 %i.u to i64
+  %10 = sub i64 %i.z, %9                          ; 2 uses
   %min.iters.check258 = icmp ult i32 %i.n, 4
-  %invariant.op = sub i64 %9, %i.z
   %n.vec262 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %cmp.n269 = icmp eq i64 %n.vec262, %wide.trip.count.i
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %min.iters.check = icmp ult i32 %i.n, 6
-  %invariant.op383 = sub i64 %9, %i.z
   %n.vec = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   %xtraiter362 = and i64 %wide.trip.count.i, 3    ; 2 uses
@@ -261,8 +260,8 @@ bb.d:                                             ; preds = %.lr.ph, %_ZL14Tt_Eq
 
 vector.memcheck259:                               ; preds = %.lr.ph.i.preheader
   %i.ai = shl nsw i64 %i.af, 3
-  %.reass = add i64 %i.ai, %invariant.op
-  %diff.check260 = icmp ugt i64 %.reass, -32
+  %11 = sub i64 %i.ai, %10
+  %diff.check260 = icmp ugt i64 %11, -32
   br i1 %diff.check260, label %.lr.ph.i.preheader356, label %vector.body263
 
 vector.body263:                                   ; preds = %vector.memcheck259, %vector.body263
@@ -315,8 +314,8 @@ middle.block268:                                  ; preds = %vector.body263
 
 vector.memcheck:                                  ; preds = %.lr.ph18.i.preheader
   %i.aw = shl nsw i64 %i.af, 3
-  %.reass384 = add i64 %i.aw, %invariant.op383
-  %diff.check = icmp ugt i64 %.reass384, -32
+  %12 = sub i64 %i.aw, %10
+  %diff.check = icmp ugt i64 %12, -32
   br i1 %diff.check, label %.lr.ph18.i.preheader355, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
@@ -649,12 +648,13 @@ _ZL7Vi_DropP3vi_i.exit:                           ; preds = %.lr.ph.i112, %.lr.p
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gn, i64 28
   %wide.trip.count.i118 = zext nneg i32 %.lcssa.i to i64
   %i.gr = load ptr, ptr %i.go, align 8, !tbaa !138 ; 27 uses
-  %i.gs = ptrtoaddr ptr %i.gr to i64              ; 2 uses
+  %i.gs = ptrtoaddr ptr %i.gr to i64
   %i.gt = load ptr, ptr %i.gp, align 8, !tbaa !90 ; 4 uses
-  %i.gu = ptrtoaddr ptr %i.gt to i64              ; 2 uses
+  %i.gu = ptrtoaddr ptr %i.gt to i64
   %i.gv = load i32, ptr %i.gq, align 4, !tbaa !89 ; 7 uses
   %i.gw = icmp sgt i32 %i.gv, 0                   ; 4 uses
   %wide.trip.count.i13.i = zext i32 %i.gv to i64  ; 23 uses
+  %13 = sub i64 %i.gs, %i.gu                      ; 2 uses
   %i.gx = shl nuw nsw i64 %wide.trip.count.i13.i, 3
   %scevgep = getelementptr i8, ptr %i.gr, i64 %i.gx ; 2 uses
   %min.iters.check328 = icmp ult i32 %i.gv, 4
@@ -669,13 +669,11 @@ _ZL7Vi_DropP3vi_i.exit:                           ; preds = %.lr.ph.i112, %.lr.p
   %xtraiter368 = and i64 %wide.trip.count.i13.i, 3 ; 2 uses
   %lcmp.mod369.not = icmp eq i64 %xtraiter368, 0
   %min.iters.check290 = icmp ult i32 %i.gv, 4
-  %invariant.op385 = sub i64 %i.gu, %i.gs
   %n.vec294 = and i64 %wide.trip.count.i13.i, 2147483644 ; 3 uses
   %cmp.n301 = icmp eq i64 %n.vec294, %wide.trip.count.i13.i
   %xtraiter371 = and i64 %wide.trip.count.i13.i, 3 ; 2 uses
   %lcmp.mod372.not = icmp eq i64 %xtraiter371, 0
   %min.iters.check274 = icmp ult i32 %i.gv, 6
-  %invariant.op387 = sub i64 %i.gu, %i.gs
   %n.vec278 = and i64 %wide.trip.count.i13.i, 2147483644 ; 3 uses
   %cmp.n285 = icmp eq i64 %n.vec278, %wide.trip.count.i13.i
   %xtraiter374 = and i64 %wide.trip.count.i13.i, 3 ; 2 uses
@@ -706,8 +704,8 @@ bb.p:                                             ; preds = %bb.o
 
 vector.memcheck291:                               ; preds = %.lr.ph.i.i.preheader
   %i.hh = shl nsw i64 %i.he, 3
-  %.reass386 = add i64 %i.hh, %invariant.op385
-  %diff.check292 = icmp ugt i64 %.reass386, -32
+  %14 = sub i64 %i.hh, %13
+  %diff.check292 = icmp ugt i64 %14, -32
   br i1 %diff.check292, label %.lr.ph.i.i.preheader347, label %vector.body295
 
 vector.body295:                                   ; preds = %vector.memcheck291, %vector.body295
@@ -760,8 +758,8 @@ middle.block300:                                  ; preds = %vector.body295
 
 vector.memcheck275:                               ; preds = %.lr.ph18.i.i.preheader
   %i.hv = shl nsw i64 %i.he, 3
-  %.reass388 = add i64 %i.hv, %invariant.op387
-  %diff.check276 = icmp ugt i64 %.reass388, -32
+  %15 = sub i64 %i.hv, %13
+  %diff.check276 = icmp ugt i64 %15, -32
   br i1 %diff.check276, label %.lr.ph18.i.i.preheader346, label %vector.body279
 
 vector.body279:                                   ; preds = %vector.memcheck275, %vector.body279

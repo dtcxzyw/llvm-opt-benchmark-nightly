@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 Vec_WrdStart.exit:                                ; preds = %bb.a, %bb.b
   %i.r = phi ptr [ %i.q, %bb.b ], [ null, %bb.a ] ; 4 uses
-  %i.s = ptrtoaddr ptr %i.r to i64                ; 2 uses
+  %i.s = ptrtoaddr ptr %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr %i.r, ptr %i.u, align 8, !tbaa !65
@@ -366,9 +366,8 @@ Vec_IntFind.exit85.thread:                        ; preds = %bb.i, %bb.e, %Vec_I
   %i.ck = mul i32 %.val, %.098
   %i.cl = zext i32 %i.ck to i64                   ; 2 uses
   %wide.trip.count = zext nneg i32 %.val to i64
-  %i.cm = mul i64 %i.ab, %i.cl                    ; 2 uses
-  %3 = add i64 %i.cm, %i.s
-  %i.cn = add i64 %i.cm, %i.s
+  %i.cm = mul i64 %i.ab, %i.cl
+  %i.cn = add i64 %i.cm, %i.s                     ; 2 uses
   br label %.lr.ph96.split.us
 
 .lr.ph96.split.us:                                ; preds = %.lr.ph96.split.us.preheader, %Abc_TtXor.exit.loopexit.us
@@ -397,7 +396,7 @@ vector.memcheck:                                  ; preds = %.lr.ph22.preheader.
   %i.cy = sub i64 %.val67.us126, %i.cn
   %diff.check = icmp ugt i64 %i.cy, -32
   %i.cz = mul i64 %indvars.iv110, %i.aa
-  %i.da = add i64 %3, %i.cz
+  %i.da = add i64 %i.cn, %i.cz
   %i.db = shl nsw i64 %i.cw, 3
   %i.dc = add i64 %i.db, %.val66.us127
   %i.dd = sub i64 %i.dc, %i.da
