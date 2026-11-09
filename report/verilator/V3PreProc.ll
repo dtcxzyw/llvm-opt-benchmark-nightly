@@ -205,12 +205,9 @@ _ZN8FileLine9linenoIncEv.exit.i:                  ; preds = %bb.c, %bb.b
   %i.ai = or disjoint i64 %i.ah, 4294967296
   store i64 %i.ai, ptr %i.af, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses
-  %i.ak = load i32, ptr %i.aj, align 4            ; 2 uses
-  %0 = and i32 %i.ak, -2
-  %i.al = add i32 %0, 2
-  %1 = and i32 %i.ak, 1
-  %2 = or disjoint i32 %i.al, %1
-  store i32 %2, ptr %i.aj, align 4
+  %i.ak = load i32, ptr %i.aj, align 4
+  %i.al = add i32 %i.ak, 2
+  store i32 %i.al, ptr %i.aj, align 4
   br label %_ZN8V3PreLex9linenoIncEv.exit
 
 _ZN8V3PreLex9linenoIncEv.exit:                    ; preds = %_ZN8V3PreLex10curStreampEv.exit1.i, %_ZN8FileLine9linenoIncEv.exit.i
@@ -613,12 +610,9 @@ _ZN8FileLine9linenoIncEv.exit:                    ; preds = %bb.bf, %bb.bg
   %i.ir = or disjoint i64 %i.iq, 4294967296
   store i64 %i.ir, ptr %i.io, align 8
   %i.is = getelementptr inbounds nuw i8, ptr %i.ig, i64 4 ; 2 uses
-  %i.it = load i32, ptr %i.is, align 4            ; 2 uses
-  %10 = and i32 %i.it, -2
-  %i.iu = add i32 %10, 2
-  %11 = and i32 %i.it, 1
-  %12 = or disjoint i32 %i.iu, %11
-  store i32 %12, ptr %i.is, align 4
+  %i.it = load i32, ptr %i.is, align 4
+  %i.iu = add i32 %i.it, 2
+  store i32 %i.iu, ptr %i.is, align 4
   br label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bd

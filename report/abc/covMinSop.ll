@@ -205,13 +205,10 @@ bb.ak:                                            ; preds = %bb.aj
   %i.gi = xor i32 %i.gd, %i.gh
   store i32 %i.gi, ptr %i.gg, align 4, !tbaa !26
   %i.gj = getelementptr inbounds nuw i8, ptr %.2232.i, i64 8 ; 11 uses
-  %i.gk = load i32, ptr %i.gj, align 8            ; 2 uses
-  %1 = and i32 %i.gk, -4194304
-  %i.gl = add i32 %1, 4194304                     ; 2 uses
-  %2 = and i32 %i.gk, 4194303
-  %3 = or disjoint i32 %i.gl, %2
-  store i32 %3, ptr %i.gj, align 8
-  %i.gm = lshr exact i32 %i.gl, 22
+  %i.gk = load i32, ptr %i.gj, align 8
+  %i.gl = add i32 %i.gk, 4194304                  ; 2 uses
+  store i32 %i.gl, ptr %i.gj, align 8
+  %i.gm = lshr i32 %i.gl, 22
   %i.gn = load ptr, ptr %i.f, align 8, !tbaa !19
   %i.go = add nuw nsw i32 %i.gm, 1
   %wide.trip.count.i288.i = zext nneg i32 %i.go to i64
@@ -333,12 +330,9 @@ bb.as:                                            ; preds = %Min_CoverContainsCu
   %i.ip = load i32, ptr %i.io, align 4, !tbaa !26
   %i.iq = xor i32 %i.il, %i.ip
   store i32 %i.iq, ptr %i.io, align 4, !tbaa !26
-  %i.ir = load i32, ptr %i.gj, align 8            ; 2 uses
-  %4 = and i32 %i.ir, -4194304
-  %i.is = add i32 %4, 4194304
-  %5 = and i32 %i.ir, 4194303
-  %6 = or disjoint i32 %i.is, %5
-  store i32 %6, ptr %i.gj, align 8
+  %i.ir = load i32, ptr %i.gj, align 8
+  %i.is = add i32 %i.ir, 4194304
+  store i32 %i.is, ptr %i.gj, align 8
   %i.it = load i32, ptr %i.c, align 8, !tbaa !18
   br label %bb.at
 
@@ -392,12 +386,9 @@ bb.au:                                            ; preds = %Min_SopAddCube.exit
   %i.jy = xor i32 %i.js, %i.jx
   store i32 %i.jy, ptr %i.jw, align 4, !tbaa !26
   %i.jz = getelementptr inbounds nuw i8, ptr %.3.i, i64 8 ; 2 uses
-  %i.ka = load i32, ptr %i.jz, align 8            ; 2 uses
-  %7 = and i32 %i.ka, -4194304
-  %i.kb = add i32 %7, 4194304
-  %8 = and i32 %i.ka, 4194303
-  %9 = or disjoint i32 %i.kb, %8
-  store i32 %9, ptr %i.jz, align 8
+  %i.ka = load i32, ptr %i.jz, align 8
+  %i.kb = add i32 %i.ka, 4194304
+  store i32 %i.kb, ptr %i.jz, align 8
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.av, %bb.au
@@ -502,12 +493,9 @@ Min_CoverContainsCube.exit341.i:                  ; preds = %._crit_edge.i335.i
   %i.ls = xor i32 %i.lm, %i.lr
   store i32 %i.ls, ptr %i.lq, align 4, !tbaa !26
   %i.lt = getelementptr inbounds nuw i8, ptr %.2232.i, i64 8 ; 2 uses
-  %i.lu = load i32, ptr %i.lt, align 8            ; 2 uses
-  %10 = and i32 %i.lu, -4194304
-  %i.lv = add i32 %10, 4194304
-  %11 = and i32 %i.lu, 4194303
-  %12 = or disjoint i32 %i.lv, %11
-  store i32 %12, ptr %i.lt, align 8
+  %i.lu = load i32, ptr %i.lt, align 8
+  %i.lv = add i32 %i.lu, 4194304
+  store i32 %i.lv, ptr %i.lt, align 8
   %i.lw = load i32, ptr %i.b, align 4, !tbaa !26  ; 2 uses
   %i.lx = xor i32 %.1216.i, 3
   %i.ly = shl nsw i32 %i.lw, 1

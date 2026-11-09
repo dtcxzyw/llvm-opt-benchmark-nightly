@@ -205,14 +205,11 @@ bb.a:
   br i1 %i.c, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %tailrecurse
-  %i.d = phi i32 [ %i.u, %tailrecurse ], [ %i.a, %bb.a ] ; 3 uses
+  %i.d = phi i32 [ %i.u, %tailrecurse ], [ %i.a, %bb.a ] ; 2 uses
   %.tr5 = phi ptr [ %i.r, %tailrecurse ], [ %0, %bb.a ] ; 5 uses
   %accumulator.tr4 = phi i32 [ %i.t, %tailrecurse ], [ 0, %bb.a ] ; 2 uses
-  %1 = and i32 %i.d, -256
-  %i.e = add i32 %1, 256
-  %2 = and i32 %i.d, 255
-  %3 = or disjoint i32 %i.e, %2
-  store i32 %3, ptr %.tr5, align 4
+  %i.e = add i32 %i.d, 256
+  store i32 %i.e, ptr %.tr5, align 4
   %.not = icmp ult i32 %i.d, 256
   br i1 %.not, label %tailrecurse, label %._crit_edge
 

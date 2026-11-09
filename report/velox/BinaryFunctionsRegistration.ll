@@ -205,12 +205,9 @@ bb.o:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIPKN8facebook5velox6BufferEE6setTagEmm.exit, %bb.o
-  %i.cb = load i64, ptr %i.a, align 8, !tbaa !1468 ; 2 uses
-  %6 = and i64 %i.cb, -256
-  %i.cc = add i64 %6, 256
-  %7 = and i64 %i.cb, 255
-  %8 = or disjoint i64 %i.cc, %7
-  store i64 %8, ptr %i.a, align 8, !tbaa !1468
+  %i.cb = load i64, ptr %i.a, align 8, !tbaa !1468
+  %i.cc = add i64 %i.cb, 256
+  store i64 %i.cc, ptr %i.a, align 8, !tbaa !1468
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit

@@ -205,12 +205,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_10BasicBlockEZNS_16MemorySSAUpdate
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !40
   %i.db = or i32 %i.cx, %i.da
   store i32 %i.db, ptr %i.cz, align 4, !tbaa !40
-  %.val.i.i.i.i = load i32, ptr %13, align 8      ; 2 uses
-  %29 = and i32 %.val.i.i.i.i, -2
-  %i.dc = add i32 %29, 2
-  %30 = and i32 %.val.i.i.i.i, 1
-  %31 = or disjoint i32 %i.dc, %30
-  store i32 %31, ptr %13, align 8
+  %.val.i.i.i.i = load i32, ptr %13, align 8
+  %i.dc = add i32 %.val.i.i.i.i, 2
+  store i32 %i.dc, ptr %13, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.az, ptr %i.co, align 8, !tbaa !43
   %i.dd = getelementptr inbounds nuw i8, ptr %i.co, i64 8
@@ -613,12 +610,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.ua = load i32, ptr %i.tz, align 4, !tbaa !40
   %i.ub = or i32 %i.tx, %i.ua
   store i32 %i.ub, ptr %i.tz, align 4, !tbaa !40
-  %i.uc = load i32, ptr %14, align 8              ; 2 uses
-  %32 = and i32 %i.uc, -2
-  %i.ud = add i32 %32, 2
-  %33 = and i32 %i.uc, 1
-  %34 = or disjoint i32 %i.ud, %33
-  store i32 %34, ptr %14, align 8
+  %i.uc = load i32, ptr %14, align 8
+  %i.ud = add i32 %i.uc, 2
+  store i32 %i.ud, ptr %14, align 8
   store ptr %i.fa, ptr %i.tq, align 8
   %.sroa.6907.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.tq, i64 8
   store ptr %i.dy, ptr %.sroa.6907.0..sroa_idx, align 8
@@ -1021,12 +1015,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_10BasicBlockEPNS_12MemoryAccessELj
   %i.ala = load i32, ptr %i.akz, align 4, !tbaa !40
   %i.alb = or i32 %i.akx, %i.ala
   store i32 %i.alb, ptr %i.akz, align 4, !tbaa !40
-  %i.alc = load i32, ptr %20, align 8             ; 2 uses
-  %35 = and i32 %i.alc, -2
-  %i.ald = add i32 %35, 2
-  %36 = and i32 %i.alc, 1
-  %37 = or disjoint i32 %i.ald, %36
-  store i32 %37, ptr %20, align 8
+  %i.alc = load i32, ptr %20, align 8
+  %i.ald = add i32 %i.alc, 2
+  store i32 %i.ald, ptr %20, align 8
   store ptr %i.aex, ptr %i.akq, align 8, !tbaa !43
   %i.ale = getelementptr inbounds nuw i8, ptr %i.akq, i64 8
   store ptr null, ptr %i.ale, align 8, !tbaa !151
@@ -1184,12 +1175,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_10BasicBlockEPNS_12MemoryAccessELj
   %i.aou = load i32, ptr %i.aot, align 4, !tbaa !40
   %i.aov = or i32 %i.aor, %i.aou
   store i32 %i.aov, ptr %i.aot, align 4, !tbaa !40
-  %i.aow = load i32, ptr %20, align 8             ; 2 uses
-  %38 = and i32 %i.aow, -2
-  %i.aox = add i32 %38, 2
-  %39 = and i32 %i.aow, 1
-  %40 = or disjoint i32 %i.aox, %39
-  store i32 %40, ptr %20, align 8
+  %i.aow = load i32, ptr %20, align 8
+  %i.aox = add i32 %i.aow, 2
+  store i32 %i.aox, ptr %20, align 8
   store ptr %i.alo, ptr %i.aok, align 8, !tbaa !43
   %i.aoy = getelementptr inbounds nuw i8, ptr %i.aok, i64 8
   store ptr null, ptr %i.aoy, align 8, !tbaa !151
@@ -1346,12 +1334,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.asx = load i32, ptr %i.asw, align 4, !tbaa !40
   %i.asy = or i32 %i.asu, %i.asx
   store i32 %i.asy, ptr %i.asw, align 4, !tbaa !40
-  %i.asz = load i32, ptr %14, align 8             ; 2 uses
-  %41 = and i32 %i.asz, -2
-  %i.ata = add i32 %41, 2
-  %42 = and i32 %i.asz, 1
-  %43 = or disjoint i32 %i.ata, %42
-  store i32 %43, ptr %14, align 8
+  %i.asz = load i32, ptr %14, align 8
+  %i.ata = add i32 %i.asz, 2
+  store i32 %i.ata, ptr %14, align 8
   store ptr %i.alo, ptr %i.asn, align 8
   %.sroa.6873.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.asn, i64 8
   store ptr %i.adm, ptr %.sroa.6873.0..sroa_idx, align 8
@@ -1754,12 +1739,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_10BasicBlockEPNS_12MemoryAccessELj
   %i.bak = load i32, ptr %i.baj, align 4, !tbaa !40
   %i.bal = or i32 %i.bah, %i.bak
   store i32 %i.bal, ptr %i.baj, align 4, !tbaa !40
-  %i.bam = load i32, ptr %20, align 8             ; 2 uses
-  %44 = and i32 %i.bam, -2
-  %i.ban = add i32 %44, 2
-  %45 = and i32 %i.bam, 1
-  %46 = or disjoint i32 %i.ban, %45
-  store i32 %46, ptr %20, align 8
+  %i.bam = load i32, ptr %20, align 8
+  %i.ban = add i32 %i.bam, 2
+  store i32 %i.ban, ptr %20, align 8
   store ptr %i.axe, ptr %i.baa, align 8, !tbaa !43
   %i.bao = getelementptr inbounds nuw i8, ptr %i.baa, i64 8
   store ptr null, ptr %i.bao, align 8, !tbaa !151
@@ -1916,12 +1898,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.ben = load i32, ptr %i.bem, align 4, !tbaa !40
   %i.beo = or i32 %i.bek, %i.ben
   store i32 %i.beo, ptr %i.bem, align 4, !tbaa !40
-  %i.bep = load i32, ptr %14, align 8             ; 2 uses
-  %47 = and i32 %i.bep, -2
-  %i.beq = add i32 %47, 2
-  %48 = and i32 %i.bep, 1
-  %49 = or disjoint i32 %i.beq, %48
-  store i32 %49, ptr %14, align 8
+  %i.bep = load i32, ptr %14, align 8
+  %i.beq = add i32 %i.bep, 2
+  store i32 %i.beq, ptr %14, align 8
   store ptr %i.axe, ptr %i.bed, align 8
   %.sroa.6858.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bed, i64 8
   store ptr %i.adm, ptr %.sroa.6858.0..sroa_idx, align 8
@@ -2184,12 +2163,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.bkc = load i32, ptr %i.bkb, align 4, !tbaa !40
   %i.bkd = or i32 %i.bjz, %i.bkc
   store i32 %i.bkd, ptr %i.bkb, align 4, !tbaa !40
-  %i.bke = load i32, ptr %14, align 8             ; 2 uses
-  %50 = and i32 %i.bke, -2
-  %i.bkf = add i32 %50, 2
-  %51 = and i32 %i.bke, 1
-  %52 = or disjoint i32 %i.bkf, %51
-  store i32 %52, ptr %14, align 8
+  %i.bke = load i32, ptr %14, align 8
+  %i.bkf = add i32 %i.bke, 2
+  store i32 %i.bkf, ptr %14, align 8
   store ptr %i.bge, ptr %i.bjs, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bjs, i64 8
   store ptr %i.adm, ptr %.sroa.6.0..sroa_idx, align 8
@@ -2592,12 +2568,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_9MemoryPhiEPNS_12MemoryAccessELj4E
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !40
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !40
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.bk, -2
-  %i.bl = add i32 %2, 2
-  %3 = and i32 %i.bk, 1
-  %4 = or disjoint i32 %i.bl, %3
-  store i32 %4, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !209
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !209
@@ -3000,12 +2973,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !40
   %i.dp = or i32 %i.dl, %i.do
   store i32 %i.dp, ptr %i.dn, align 4, !tbaa !40
-  %i.dq = load i32, ptr %3, align 8               ; 2 uses
-  %6 = and i32 %i.dq, -2
-  %i.dr = add i32 %6, 2
-  %7 = and i32 %i.dq, 1
-  %8 = or disjoint i32 %i.dr, %7
-  store i32 %8, ptr %3, align 8
+  %i.dq = load i32, ptr %3, align 8
+  %i.dr = add i32 %i.dq, 2
+  store i32 %i.dr, ptr %3, align 8
   store ptr %i.f, ptr %i.de, align 8
   %.sroa.6121.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   store ptr %i.i, ptr %.sroa.6121.0..sroa_idx, align 8
@@ -3177,12 +3147,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.ib = load i32, ptr %i.ia, align 4, !tbaa !40
   %i.ic = or i32 %i.hy, %i.ib
   store i32 %i.ic, ptr %i.ia, align 4, !tbaa !40
-  %i.id = load i32, ptr %3, align 8               ; 2 uses
-  %9 = and i32 %i.id, -2
-  %i.ie = add i32 %9, 2
-  %10 = and i32 %i.id, 1
-  %11 = or disjoint i32 %i.ie, %10
-  store i32 %11, ptr %3, align 8
+  %i.id = load i32, ptr %3, align 8
+  %i.ie = add i32 %i.id, 2
+  store i32 %i.ie, ptr %3, align 8
   store ptr %i.dy, ptr %i.hr, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hr, i64 8
   store ptr %i.ea, ptr %.sroa.6.0..sroa_idx, align 8
@@ -3365,12 +3332,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.mw = load i32, ptr %i.mv, align 4, !tbaa !40
   %i.mx = or i32 %i.mt, %i.mw
   store i32 %i.mx, ptr %i.mv, align 4, !tbaa !40
-  %i.my = load i32, ptr %3, align 8               ; 2 uses
-  %12 = and i32 %i.my, -2
-  %i.mz = add i32 %12, 2
-  %13 = and i32 %i.my, 1
-  %14 = or disjoint i32 %i.mz, %13
-  store i32 %14, ptr %3, align 8
+  %i.my = load i32, ptr %3, align 8
+  %i.mz = add i32 %i.my, 2
+  store i32 %i.mz, ptr %3, align 8
   store ptr %i.io, ptr %i.mm, align 8
   %.sroa.6129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.mm, i64 8
   store ptr %i.iq, ptr %.sroa.6129.0..sroa_idx, align 8
@@ -3543,12 +3507,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.rk = load i32, ptr %i.rj, align 4, !tbaa !40
   %i.rl = or i32 %i.rh, %i.rk
   store i32 %i.rl, ptr %i.rj, align 4, !tbaa !40
-  %i.rm = load i32, ptr %3, align 8               ; 2 uses
-  %15 = and i32 %i.rm, -2
-  %i.rn = add i32 %15, 2
-  %16 = and i32 %i.rm, 1
-  %17 = or disjoint i32 %i.rn, %16
-  store i32 %17, ptr %3, align 8
+  %i.rm = load i32, ptr %3, align 8
+  %i.rn = add i32 %i.rm, 2
+  store i32 %i.rn, ptr %3, align 8
   store ptr %i.ng, ptr %i.ra, align 8
   %.sroa.6125.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ra, i64 8
   store ptr %i.nj, ptr %.sroa.6125.0..sroa_idx, align 8
@@ -3828,12 +3789,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !40
   %i.ee = or i32 %i.ea, %i.ed
   store i32 %i.ee, ptr %i.ec, align 4, !tbaa !40
-  %i.ef = load i32, ptr %2, align 8               ; 2 uses
-  %7 = and i32 %i.ef, -2
-  %i.eg = add i32 %7, 2
-  %8 = and i32 %i.ef, 1
-  %9 = or disjoint i32 %i.eg, %8
-  store i32 %9, ptr %2, align 8
+  %i.ef = load i32, ptr %2, align 8
+  %i.eg = add i32 %i.ef, 2
+  store i32 %i.eg, ptr %2, align 8
   store ptr %.sroa.0.0.copyload.i, ptr %i.dt, align 8
   %.sroa.657.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
   store ptr %i.al, ptr %.sroa.657.0..sroa_idx, align 8
@@ -4006,12 +3964,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.ir = load i32, ptr %i.iq, align 4, !tbaa !40
   %i.is = or i32 %i.io, %i.ir
   store i32 %i.is, ptr %i.iq, align 4, !tbaa !40
-  %i.it = load i32, ptr %2, align 8               ; 2 uses
-  %10 = and i32 %i.it, -2
-  %i.iu = add i32 %10, 2
-  %11 = and i32 %i.it, 1
-  %12 = or disjoint i32 %i.iu, %11
-  store i32 %12, ptr %2, align 8
+  %i.it = load i32, ptr %2, align 8
+  %i.iu = add i32 %i.it, 2
+  store i32 %i.iu, ptr %2, align 8
   store ptr %i.en, ptr %i.ih, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ih, i64 8
   store ptr %i.eq, ptr %.sroa.6.0..sroa_idx, align 8
@@ -4219,12 +4174,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !40
   %i.cy = or i32 %i.cu, %i.cx
   store i32 %i.cy, ptr %i.cw, align 4, !tbaa !40
-  %i.cz = load i32, ptr %2, align 8               ; 2 uses
-  %4 = and i32 %i.cz, -2
-  %i.da = add i32 %4, 2
-  %5 = and i32 %i.cz, 1
-  %6 = or disjoint i32 %i.da, %5
-  store i32 %6, ptr %2, align 8
+  %i.cz = load i32, ptr %2, align 8
+  %i.da = add i32 %i.cz, 2
+  store i32 %i.da, ptr %2, align 8
   store ptr %.sroa.0.0.copyload.i, ptr %i.cn, align 8
   %.sroa.646.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   store ptr %i.f, ptr %.sroa.646.0..sroa_idx, align 8
@@ -4397,12 +4349,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.hl = load i32, ptr %i.hk, align 4, !tbaa !40
   %i.hm = or i32 %i.hi, %i.hl
   store i32 %i.hm, ptr %i.hk, align 4, !tbaa !40
-  %i.hn = load i32, ptr %2, align 8               ; 2 uses
-  %7 = and i32 %i.hn, -2
-  %i.ho = add i32 %7, 2
-  %8 = and i32 %i.hn, 1
-  %9 = or disjoint i32 %i.ho, %8
-  store i32 %9, ptr %2, align 8
+  %i.hn = load i32, ptr %2, align 8
+  %i.ho = add i32 %i.hn, 2
+  store i32 %i.ho, ptr %2, align 8
   store ptr %i.dh, ptr %i.hb, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hb, i64 8
   store ptr %i.dk, ptr %.sroa.6.0..sroa_idx, align 8
@@ -4539,12 +4488,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_10BasicBlockENS_9GraphDiffIS3_Lb0E
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !40
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !40
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.bk, -2
-  %i.bl = add i32 %2, 2
-  %3 = and i32 %i.bk, 1
-  %4 = or disjoint i32 %i.bl, %3
-  store i32 %4, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !43
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !43
@@ -4947,12 +4893,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_EiLj4ENS_1
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !40
   %i.bz = or i32 %i.bv, %i.by
   store i32 %i.bz, ptr %i.bx, align 4, !tbaa !40
-  %i.ca = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.ca, -2
-  %i.cb = add i32 %2, 2
-  %3 = and i32 %i.ca, 1
-  %4 = or disjoint i32 %i.cb, %3
-  store i32 %4, ptr %0, align 8
+  %i.ca = load i32, ptr %0, align 8
+  %i.cb = add i32 %i.ca, 2
+  store i32 %i.cb, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bm, i64 16

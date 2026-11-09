@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bh, %bb.bf
-  %i.ld = load i32, ptr %i.iv, align 8            ; 4 uses
+  %i.ld = load i32, ptr %i.iv, align 8            ; 3 uses
   %i.le = lshr i32 %i.ld, 6                       ; 2 uses
   %i.lf = icmp ult i32 %i.le, %i.lb
   br i1 %i.lf, label %bb.bh, label %bb.bi
@@ -214,11 +214,8 @@ bb.bh:                                            ; preds = %bb.bg
   %i.lg = zext nneg i32 %i.le to i64
   %i.lh = getelementptr inbounds nuw [8 x i8], ptr %i.lc, i64 %i.lg
   %i.li = load ptr, ptr %i.lh, align 8, !tbaa !289
-  %29 = and i32 %i.ld, -64
-  %i.lj = add i32 %29, 64
-  %30 = and i32 %i.ld, 63
-  %31 = or disjoint i32 %i.lj, %30
-  store i32 %31, ptr %i.iv, align 8
+  %i.lj = add i32 %i.ld, 64
+  store i32 %i.lj, ptr %i.iv, align 8
   %i.lk = lshr i32 %i.ld, 4
   %i.ll = and i32 %i.lk, 3
   %i.lm = call fastcc noundef zeroext i1 @_ZN12rewriter_tplIN12_GLOBAL__N_115th_rewriter_cfgEE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.li, i32 noundef %i.ll), !inline_history !416
@@ -621,7 +618,7 @@ bb.gx:                                            ; preds = %bb.gw, %bb.gv
   br label %bb.gy
 
 bb.gy:                                            ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.gx
-  %i.ahk = load i32, ptr %i.iv, align 8           ; 4 uses
+  %i.ahk = load i32, ptr %i.iv, align 8           ; 3 uses
   %i.ahl = lshr i32 %i.ahk, 6                     ; 5 uses
   %i.ahm = icmp ult i32 %i.ahl, %i.ahg
   br i1 %i.ahm, label %bb.gz, label %bb.hd
@@ -659,11 +656,8 @@ bb.hc:                                            ; preds = %bb.ha
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.gz, %bb.hb, %bb.hc
   %.0.in.i = phi ptr [ %i.aid, %bb.hc ], [ %i.ahv, %bb.hb ], [ %i.ahj, %bb.gz ]
   %.0.i294 = load ptr, ptr %.0.in.i, align 8, !tbaa !289
-  %32 = and i32 %i.ahk, -64
-  %i.aie = add i32 %32, 64
-  %33 = and i32 %i.ahk, 63
-  %34 = or disjoint i32 %i.aie, %33
-  store i32 %34, ptr %i.iv, align 8
+  %i.aie = add i32 %i.ahk, 64
+  store i32 %i.aie, ptr %i.iv, align 8
   %i.aif = lshr i32 %i.ahk, 4
   %i.aig = and i32 %i.aif, 3
   %i.aih = call fastcc noundef zeroext i1 @_ZN12rewriter_tplIN12_GLOBAL__N_115th_rewriter_cfgEE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i294, i32 noundef %i.aig), !inline_history !419
@@ -1066,7 +1060,7 @@ bb.oa:                                            ; preds = %_ZN12rewriter_tplIN
   br i1 %i.bjs, label %bb.ob, label %bb.oz
 
 bb.ob:                                            ; preds = %bb.oa
-  %.mask.i = and i32 %i.bjq, -64                  ; 2 uses
+  %.mask.i = and i32 %i.bjq, -64
   %i.bjt = icmp eq i32 %.mask.i, 64
   br i1 %i.bjt, label %bb.oc, label %_ZN12rewriter_tplIN12_GLOBAL__N_115th_rewriter_cfgEE13constant_foldEP3appRN13rewriter_core5frameE.exit
 
@@ -1405,10 +1399,8 @@ _ZN12rewriter_tplIN12_GLOBAL__N_115th_rewriter_cfgEE13constant_foldEP3appRN13rew
   %i.bpf = zext nneg i32 %i.bjr to i64
   %i.bpg = getelementptr inbounds nuw [8 x i8], ptr %i.bjp, i64 %i.bpf
   %i.bph = load ptr, ptr %i.bpg, align 8, !tbaa !289
-  %i.bpi = add i32 %.mask.i, 64
-  %35 = and i32 %i.bjq, 63
-  %36 = or disjoint i32 %i.bpi, %35
-  store i32 %36, ptr %i.bhw, align 8
+  %i.bpi = add i32 %i.bjq, 64
+  store i32 %i.bpi, ptr %i.bhw, align 8
   %i.bpj = lshr i32 %i.bjq, 4
   %i.bpk = and i32 %i.bpj, 3
   %i.bpl = call fastcc noundef zeroext i1 @_ZN12rewriter_tplIN12_GLOBAL__N_115th_rewriter_cfgEE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.bph, i32 noundef %i.bpk), !inline_history !426
@@ -1811,7 +1803,7 @@ bb.sk:                                            ; preds = %bb.sj, %bb.si
   br label %bb.sl
 
 bb.sl:                                            ; preds = %_ZNK10quantifier9get_childEj.exit684, %bb.sk
-  %i.cfx = load i32, ptr %i.bhw, align 8          ; 4 uses
+  %i.cfx = load i32, ptr %i.bhw, align 8          ; 3 uses
   %i.cfy = lshr i32 %i.cfx, 6                     ; 5 uses
   %i.cfz = icmp ult i32 %i.cfy, %i.cft
   br i1 %i.cfz, label %bb.sm, label %bb.sq
@@ -1849,11 +1841,8 @@ bb.sp:                                            ; preds = %bb.sn
 _ZNK10quantifier9get_childEj.exit684:             ; preds = %bb.sm, %bb.so, %bb.sp
   %.0.in.i682 = phi ptr [ %i.cgq, %bb.sp ], [ %i.cgi, %bb.so ], [ %i.cfw, %bb.sm ]
   %.0.i683 = load ptr, ptr %.0.in.i682, align 8, !tbaa !289
-  %37 = and i32 %i.cfx, -64
-  %i.cgr = add i32 %37, 64
-  %38 = and i32 %i.cfx, 63
-  %39 = or disjoint i32 %i.cgr, %38
-  store i32 %39, ptr %i.bhw, align 8
+  %i.cgr = add i32 %i.cfx, 64
+  store i32 %i.cgr, ptr %i.bhw, align 8
   %i.cgs = lshr i32 %i.cfx, 4
   %i.cgt = and i32 %i.cgs, 3
   %i.cgu = call fastcc noundef zeroext i1 @_ZN12rewriter_tplIN12_GLOBAL__N_115th_rewriter_cfgEE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i683, i32 noundef %i.cgt), !inline_history !429

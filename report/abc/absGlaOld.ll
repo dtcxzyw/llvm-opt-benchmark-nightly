@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.pl = load i32, ptr %i.pk, align 4, !tbaa !33
   %i.pm = sext i32 %i.pl to i64
   %i.pn = getelementptr inbounds [4 x i8], ptr %.val225, i64 %i.pm ; 4 uses
-  %i.po = and i32 %i.oo, 511                      ; 4 uses
+  %i.po = and i32 %i.oo, 511                      ; 3 uses
   store i32 %i.po, ptr %i.mh, align 4
   %i.pp = getelementptr inbounds nuw i8, ptr %i.me, i64 8 ; 4 uses
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pn, i64 4
@@ -236,17 +236,15 @@ bb.cm:                                            ; preds = %bb.cl
   %i.qc = getelementptr inbounds nuw i8, ptr %i.qb, i64 8
   %i.qd = load i32, ptr %i.qc, align 4, !tbaa !100
   %i.qe = lshr i32 %i.px, 9
-  %2 = and i32 %i.px, -512
-  %i.qf = add nuw nsw i32 %2, 512
-  %3 = or disjoint i32 %i.qf, %i.po               ; 2 uses
-  store i32 %3, ptr %i.mh, align 4
+  %i.qf = add nuw nsw i32 %i.px, 512              ; 2 uses
+  store i32 %i.qf, ptr %i.mh, align 4
   %i.qg = zext nneg i32 %i.qe to i64
   %i.qh = getelementptr inbounds nuw [4 x i8], ptr %i.pp, i64 %i.qg
   store i32 %i.qd, ptr %i.qh, align 4, !tbaa !33
   br label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm, %bb.cl
-  %i.qi = phi i32 [ %3, %bb.cm ], [ %i.px, %bb.cl ] ; 4 uses
+  %i.qi = phi i32 [ %i.qf, %bb.cm ], [ %i.px, %bb.cl ] ; 3 uses
   %i.qj = getelementptr inbounds nuw i8, ptr %i.pn, i64 12
   %i.qk = load i32, ptr %i.qj, align 4, !tbaa !33 ; 2 uses
   %.not221.2 = icmp eq i32 %i.qk, -1
@@ -258,18 +256,15 @@ bb.co:                                            ; preds = %bb.cn
   %i.qn = getelementptr inbounds nuw i8, ptr %i.qm, i64 8
   %i.qo = load i32, ptr %i.qn, align 4, !tbaa !100
   %i.qp = lshr i32 %i.qi, 9
-  %4 = and i32 %i.qi, -512
-  %i.qq = add nuw nsw i32 %4, 512
-  %5 = and i32 %i.qi, 511
-  %6 = or disjoint i32 %i.qq, %5                  ; 2 uses
-  store i32 %6, ptr %i.mh, align 4
+  %i.qq = add nuw nsw i32 %i.qi, 512              ; 2 uses
+  store i32 %i.qq, ptr %i.mh, align 4
   %i.qr = zext nneg i32 %i.qp to i64
   %i.qs = getelementptr inbounds nuw [4 x i8], ptr %i.pp, i64 %i.qr
   store i32 %i.qo, ptr %i.qs, align 4, !tbaa !33
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %bb.cn
-  %i.qt = phi i32 [ %6, %bb.co ], [ %i.qi, %bb.cn ] ; 3 uses
+  %i.qt = phi i32 [ %i.qq, %bb.co ], [ %i.qi, %bb.cn ] ; 2 uses
   %i.qu = getelementptr inbounds nuw i8, ptr %i.pn, i64 16
   %i.qv = load i32, ptr %i.qu, align 4, !tbaa !33 ; 2 uses
   %.not221.3 = icmp eq i32 %i.qv, -1
@@ -281,11 +276,8 @@ bb.cq:                                            ; preds = %bb.cp
   %i.qy = getelementptr inbounds nuw i8, ptr %i.qx, i64 8
   %i.qz = load i32, ptr %i.qy, align 4, !tbaa !100
   %i.ra = lshr i32 %i.qt, 9
-  %7 = and i32 %i.qt, -512
-  %i.rb = add nuw nsw i32 %7, 512
-  %8 = and i32 %i.qt, 511
-  %9 = or disjoint i32 %i.rb, %8
-  store i32 %9, ptr %i.mh, align 4
+  %i.rb = add nuw nsw i32 %i.qt, 512
+  store i32 %i.rb, ptr %i.mh, align 4
   %i.rc = zext nneg i32 %i.ra to i64
   %i.rd = getelementptr inbounds nuw [4 x i8], ptr %i.pp, i64 %i.rc
   store i32 %i.qz, ptr %i.rd, align 4, !tbaa !33

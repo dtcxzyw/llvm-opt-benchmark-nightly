@@ -205,12 +205,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclEN12_GLOBAL__N_110D
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !268
   %i.dn = or i32 %i.dj, %i.dm
   store i32 %i.dn, ptr %i.dl, align 4, !tbaa !268
-  %.val.i.i.i.i = load i32, ptr %i.be, align 8    ; 2 uses
-  %7 = and i32 %.val.i.i.i.i, -2
-  %i.do = add i32 %7, 2
-  %8 = and i32 %.val.i.i.i.i, 1
-  %9 = or disjoint i32 %i.do, %8
-  store i32 %9, ptr %i.be, align 8
+  %.val.i.i.i.i = load i32, ptr %i.be, align 8
+  %i.do = add i32 %.val.i.i.i.i, 2
+  store i32 %i.do, ptr %i.be, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.bg, ptr %i.da, align 8, !tbaa !270
   %i.dp = getelementptr inbounds nuw i8, ptr %i.da, i64 8
@@ -613,12 +610,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclEN12_GLOBAL__N_110D
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !268
   %i.bh = or i32 %i.bd, %i.bg
   store i32 %i.bh, ptr %i.bf, align 4, !tbaa !268
-  %.val.i.i.i = load i32, ptr %0, align 8         ; 2 uses
-  %1 = and i32 %.val.i.i.i, -2
-  %i.bi = add i32 %1, 2
-  %2 = and i32 %.val.i.i.i, 1
-  %3 = or disjoint i32 %i.bi, %2
-  store i32 %3, ptr %0, align 8
+  %.val.i.i.i = load i32, ptr %0, align 8
+  %i.bi = add i32 %.val.i.i.i, 2
+  store i32 %i.bi, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %.0.val, ptr %i.au, align 8, !tbaa !270
   %i.bj = getelementptr inbounds nuw i8, ptr %i.au, i64 8
@@ -1021,12 +1015,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclESt4pairIjPNS2_7Var
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !268
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !268
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %3 = and i32 %i.bk, -2
-  %i.bl = add i32 %3, 2
-  %4 = and i32 %i.bk, 1
-  %5 = or disjoint i32 %i.bl, %4
-  store i32 %5, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !270
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !270
@@ -1429,12 +1420,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclEN12_GLOBAL__N_110D
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !268
   %i.bh = or i32 %i.bd, %i.bg
   store i32 %i.bh, ptr %i.bf, align 4, !tbaa !268
-  %.val.i.i.i = load i32, ptr %0, align 8         ; 2 uses
-  %1 = and i32 %.val.i.i.i, -2
-  %i.bi = add i32 %1, 2
-  %2 = and i32 %.val.i.i.i, 1
-  %3 = or disjoint i32 %i.bi, %2
-  store i32 %3, ptr %0, align 8
+  %.val.i.i.i = load i32, ptr %0, align 8
+  %i.bi = add i32 %.val.i.i.i, 2
+  store i32 %i.bi, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %.0.val, ptr %i.au, align 8, !tbaa !270
   %i.bj = getelementptr inbounds nuw i8, ptr %i.au, i64 8
@@ -1837,12 +1825,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclEPKNS2_4ExprELj8ENS
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !268
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !268
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %3 = and i32 %i.bk, -2
-  %i.bl = add i32 %3, 2
-  %4 = and i32 %i.bk, 1
-  %5 = or disjoint i32 %i.bl, %4
-  store i32 %5, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !270
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !270
@@ -2245,12 +2230,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPN5clang4DeclENS_6detail13DenseSetEmpt
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !268
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !268
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.bk, -2
-  %i.bl = add i32 %2, 2
-  %3 = and i32 %i.bk, 1
-  %4 = or disjoint i32 %i.bl, %3
-  store i32 %4, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !1665
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !1665
@@ -2653,12 +2635,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclENS_6detail13DenseS
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !268
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !268
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.bk, -2
-  %i.bl = add i32 %2, 2
-  %3 = and i32 %i.bk, 1
-  %4 = or disjoint i32 %i.bl, %3
-  store i32 %4, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !270
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !270
@@ -3061,12 +3040,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclEPKNS2_4ExprELj4ENS
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !268
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !268
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.bk, -2
-  %i.bl = add i32 %2, 2
-  %3 = and i32 %i.bk, 1
-  %4 = or disjoint i32 %i.bl, %3
-  store i32 %4, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !270
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !270
@@ -3469,12 +3445,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclEPKNS2_4ExprELj4ENS
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !268
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !268
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.bk, -2
-  %i.bl = add i32 %2, 2
-  %3 = and i32 %i.bk, 1
-  %4 = or disjoint i32 %i.bl, %3
-  store i32 %4, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !270
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !270

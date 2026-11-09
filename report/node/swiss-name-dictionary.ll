@@ -204,7 +204,6 @@ _ZN2v88internal19SwissNameDictionary13IndexIterable3endEv.exit: ; preds = %bb.d,
   br i1 %.not39, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN2v88internal19SwissNameDictionary13IndexIterable3endEv.exit
-  %storemerge.i.i32 = zext i32 %storemerge.i.i32.shrunk to i64
   %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %0, align 8 ; 3 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.c, i64 104
   %i.cc = add i64 %.sroa.0.0.copyload.i.i.i.i.i, 11
@@ -219,9 +218,8 @@ _ZN2v88internal19SwissNameDictionary13IndexIterable3endEv.exit: ; preds = %bb.d,
 bb.g:                                             ; preds = %.lr.ph, %_ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit
   %.sroa.017.4.extract.trunc42 = phi i32 [ 0, %.lr.ph ], [ %.sroa.017.4.extract.trunc, %_ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
   %.041 = phi i32 [ 0, %.lr.ph ], [ %.2, %_ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit ] ; 3 uses
-  %.sroa.017.040 = phi i64 [ %storemerge.i.i32, %.lr.ph ], [ %.sroa.017.4.insert.insert, %_ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit ] ; 3 uses
-  %.sroa.017.0.extract.trunc = trunc i64 %.sroa.017.040 to i32
-  %i.cf = icmp eq i32 %.sroa.017.4.extract.trunc42, %.sroa.017.0.extract.trunc
+  %.sroa.017.040 = phi i64 [ 0, %.lr.ph ], [ %.sroa.017.4.insert.shift, %_ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit ]
+  %i.cf = icmp eq i32 %.sroa.017.4.extract.trunc42, %storemerge.i.i32.shrunk
   br i1 %i.cf, label %_ZN2v88internal19SwissNameDictionary13IndexIteratordeEv.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -314,10 +312,7 @@ _ZN2v88internal6Object9FilterKeyENS0_6TaggedIS1_EENS0_14PropertyFilterE.exit: ; 
 
 _ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZN2v88internal8IsSymbolENS0_6TaggedINS0_6ObjectEEE.exit.i, %_ZN2v88internal19SwissNameDictionary13IndexIteratordeEv.exit, %_ZN2v88internal6Object9FilterKeyENS0_6TaggedIS1_EENS0_14PropertyFilterE.exit
   %.2 = phi i32 [ %.041, %_ZN2v88internal19SwissNameDictionary13IndexIteratordeEv.exit ], [ %spec.select, %_ZN2v88internal6Object9FilterKeyENS0_6TaggedIS1_EENS0_14PropertyFilterE.exit ], [ %.041, %_ZN2v88internal8IsSymbolENS0_6TaggedINS0_6ObjectEEE.exit.i ] ; 2 uses
-  %1 = and i64 %.sroa.017.040, -4294967296
-  %.sroa.017.4.insert.shift = add i64 %1, 4294967296 ; 2 uses
-  %.sroa.017.4.insert.mask = and i64 %.sroa.017.040, 4294967295
-  %.sroa.017.4.insert.insert = or disjoint i64 %.sroa.017.4.insert.shift, %.sroa.017.4.insert.mask
+  %.sroa.017.4.insert.shift = add i64 %.sroa.017.040, 4294967296 ; 2 uses
   %.sroa.017.4.extract.shift = lshr exact i64 %.sroa.017.4.insert.shift, 32
   %.sroa.017.4.extract.trunc = trunc nuw i64 %.sroa.017.4.extract.shift to i32 ; 2 uses
   %.not = icmp eq i32 %.sroa.010.0.insert.insert.i, %.sroa.017.4.extract.trunc
@@ -437,7 +432,6 @@ _ZN2v88internal19SwissNameDictionary13IndexIterable3endEv.exit: ; preds = %bb.d,
   br i1 %.not48, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN2v88internal19SwissNameDictionary13IndexIterable3endEv.exit
-  %storemerge.i.i38 = zext i32 %storemerge.i.i38.shrunk to i64
   %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %0, align 8 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 656
   %i.ca = add i64 %.sroa.0.0.copyload.i.i.i.i.i, -1
@@ -445,9 +439,8 @@ _ZN2v88internal19SwissNameDictionary13IndexIterable3endEv.exit: ; preds = %bb.d,
 
 bb.g:                                             ; preds = %.lr.ph, %bb.n
   %.sroa.018.4.extract.trunc50 = phi i32 [ 0, %.lr.ph ], [ %.sroa.018.4.extract.trunc, %bb.n ] ; 2 uses
-  %.sroa.018.049 = phi i64 [ %storemerge.i.i38, %.lr.ph ], [ %.sroa.018.4.insert.insert, %bb.n ] ; 3 uses
-  %.sroa.018.0.extract.trunc = trunc i64 %.sroa.018.049 to i32
-  %i.cb = icmp eq i32 %.sroa.018.4.extract.trunc50, %.sroa.018.0.extract.trunc
+  %.sroa.018.049 = phi i64 [ 0, %.lr.ph ], [ %.sroa.018.4.insert.shift, %bb.n ]
+  %i.cb = icmp eq i32 %.sroa.018.4.extract.trunc50, %storemerge.i.i38.shrunk
   br i1 %i.cb, label %_ZN2v88internal19SwissNameDictionary13IndexIteratordeEv.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -517,10 +510,7 @@ bb.m:                                             ; preds = %_ZN2v88internal19Sw
   br i1 %i.dn, label %_ZN2v88internal19SwissNameDictionary5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZN2v88internal19SwissNameDictionary13IndexIteratordeEv.exit
-  %3 = and i64 %.sroa.018.049, -4294967296
-  %.sroa.018.4.insert.shift = add i64 %3, 4294967296 ; 2 uses
-  %.sroa.018.4.insert.mask = and i64 %.sroa.018.049, 4294967295
-  %.sroa.018.4.insert.insert = or disjoint i64 %.sroa.018.4.insert.shift, %.sroa.018.4.insert.mask
+  %.sroa.018.4.insert.shift = add i64 %.sroa.018.049, 4294967296 ; 2 uses
   %.sroa.018.4.extract.shift = lshr exact i64 %.sroa.018.4.insert.shift, 32
   %.sroa.018.4.extract.trunc = trunc nuw i64 %.sroa.018.4.extract.shift to i32 ; 2 uses
   %.not = icmp eq i32 %.sroa.010.0.insert.insert.i, %.sroa.018.4.extract.trunc

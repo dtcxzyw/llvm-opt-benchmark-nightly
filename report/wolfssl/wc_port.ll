@@ -38,20 +38,17 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %or.cond, label %wolfSSL_Atomic_Uint_CompareExchange.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = and i32 %.sroa.0.01215, -8
-  %i.j = or disjoint i32 %i.i, 2                  ; 2 uses
+  %i.i = and i32 %.sroa.0.01215, -8               ; 2 uses
+  %i.j = or disjoint i32 %i.i, 2
+  %1 = add i32 %i.i, 10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.d
   %.sroa.0.1 = phi i32 [ %.sroa.0.01215, %bb.b ], [ %i.j, %bb.d ]
-  %.sroa.0.0 = phi i32 [ 1, %bb.b ], [ %i.j, %bb.d ] ; 2 uses
-  %1 = and i32 %.sroa.0.0, -8
-  %2 = add i32 %1, 8
-  %3 = and i32 %.sroa.0.0, 7                      ; 2 uses
-  %4 = or disjoint i32 %2, %3
-  %i.k = cmpxchg volatile ptr %0, i32 %.sroa.0.1, i32 %4 seq_cst acquire, align 4 ; 2 uses
+  %.sroa.0.0 = phi i32 [ 9, %bb.b ], [ %1, %bb.d ] ; 2 uses
+  %i.k = cmpxchg volatile ptr %0, i32 %.sroa.0.1, i32 %.sroa.0.0 seq_cst acquire, align 4 ; 2 uses
   %i.l = extractvalue { i32, i1 } %i.k, 1
-  br i1 %i.l, label %wolfSSL_Atomic_Uint_CompareExchange.exit.thread, label %wolfSSL_Atomic_Uint_CompareExchange.exit
+  br i1 %i.l, label %2, label %wolfSSL_Atomic_Uint_CompareExchange.exit
 
 wolfSSL_Atomic_Uint_CompareExchange.exit:         ; preds = %bb.e
   %i.m = extractvalue { i32, i1 } %i.k, 0         ; 2 uses
@@ -59,8 +56,12 @@ wolfSSL_Atomic_Uint_CompareExchange.exit:         ; preds = %bb.e
   %i.o = icmp eq i32 %i.n, 536870911
   br i1 %i.o, label %wolfSSL_Atomic_Uint_CompareExchange.exit.thread, label %.lr.ph
 
-wolfSSL_Atomic_Uint_CompareExchange.exit.thread:  ; preds = %wolfSSL_Atomic_Uint_CompareExchange.exit, %bb.b, %bb.c, %bb.e, %bb.a
-  %.0 = phi i32 [ -1008, %bb.a ], [ %3, %bb.e ], [ -192, %bb.b ], [ -192, %bb.c ], [ -1008, %wolfSSL_Atomic_Uint_CompareExchange.exit ]
+2:                                                ; preds = %bb.e
+  %3 = and i32 %.sroa.0.0, 7
+  br label %wolfSSL_Atomic_Uint_CompareExchange.exit.thread
+
+wolfSSL_Atomic_Uint_CompareExchange.exit.thread:  ; preds = %wolfSSL_Atomic_Uint_CompareExchange.exit, %bb.b, %bb.c, %bb.a, %2
+  %.0 = phi i32 [ %3, %2 ], [ -1008, %bb.a ], [ -1008, %wolfSSL_Atomic_Uint_CompareExchange.exit ], [ -192, %bb.b ], [ -192, %bb.c ]
   ret i32 %.0
 }
 
@@ -224,18 +225,15 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %or.cond.i, label %wc_local_InitUpDone.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = and i32 %.sroa.0.01215.i, -8
-  %i.l = or disjoint i32 %i.k, 2                  ; 2 uses
+  %i.k = and i32 %.sroa.0.01215.i, -8             ; 2 uses
+  %i.l = or disjoint i32 %i.k, 2
+  %0 = add i32 %i.k, 10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
   %.sroa.0.1.i = phi i32 [ %.sroa.0.01215.i, %bb.c ], [ %i.l, %bb.e ]
-  %.sroa.0.0.i = phi i32 [ 1, %bb.c ], [ %i.l, %bb.e ] ; 2 uses
-  %0 = and i32 %.sroa.0.0.i, -8
-  %1 = add i32 %0, 8
-  %2 = and i32 %.sroa.0.0.i, 7                    ; 2 uses
-  %3 = or disjoint i32 %1, %2
-  %i.m = cmpxchg volatile ptr @wolfcrypt_init_state, i32 %.sroa.0.1.i, i32 %3 seq_cst acquire, align 4 ; 2 uses
+  %.sroa.0.0.i = phi i32 [ 9, %bb.c ], [ %0, %bb.e ] ; 2 uses
+  %i.m = cmpxchg volatile ptr @wolfcrypt_init_state, i32 %.sroa.0.1.i, i32 %.sroa.0.0.i seq_cst acquire, align 4 ; 2 uses
   %i.n = extractvalue { i32, i1 } %i.m, 1
   br i1 %i.n, label %wc_local_InitUp.exit, label %wolfSSL_Atomic_Uint_CompareExchange.exit.i
 
@@ -246,7 +244,8 @@ wolfSSL_Atomic_Uint_CompareExchange.exit.i:       ; preds = %bb.f
   br i1 %i.q, label %wc_local_InitUpDone.exit, label %.lr.ph.i
 
 wc_local_InitUp.exit:                             ; preds = %bb.f
-  %i.r = icmp eq i32 %2, 2
+  %1 = and i32 %.sroa.0.0.i, 7
+  %i.r = icmp eq i32 %1, 2
   br i1 %i.r, label %wc_local_InitUpDone.exit, label %bb.g
 
 bb.g:                                             ; preds = %wc_local_InitUp.exit
@@ -270,8 +269,8 @@ wc_local_InitUpDone.exit.sink.split:              ; preds = %bb.h, %bb.g
   store atomic volatile i32 %i.w, ptr @wolfcrypt_init_state release, align 4
   br label %wc_local_InitUpDone.exit
 
-wc_local_InitUpDone.exit:                         ; preds = %wolfSSL_Atomic_Uint_CompareExchange.exit.i, %bb.d, %bb.c, %wc_local_InitUpDone.exit.sink.split, %bb.b, %bb.h, %wc_local_InitUp.exit, %bb.a
-  %.0 = phi i32 [ 0, %wc_local_InitUp.exit ], [ -1000, %bb.a ], [ -173, %bb.h ], [ -1008, %bb.b ], [ %.0.ph, %wc_local_InitUpDone.exit.sink.split ], [ -192, %bb.d ], [ -1008, %wolfSSL_Atomic_Uint_CompareExchange.exit.i ], [ -192, %bb.c ]
+wc_local_InitUpDone.exit:                         ; preds = %bb.d, %bb.c, %wolfSSL_Atomic_Uint_CompareExchange.exit.i, %wc_local_InitUpDone.exit.sink.split, %bb.b, %bb.h, %wc_local_InitUp.exit, %bb.a
+  %.0 = phi i32 [ -173, %bb.h ], [ -1000, %bb.a ], [ -1008, %bb.b ], [ %.0.ph, %wc_local_InitUpDone.exit.sink.split ], [ 0, %wc_local_InitUp.exit ], [ -192, %bb.c ], [ -192, %bb.d ], [ -1008, %wolfSSL_Atomic_Uint_CompareExchange.exit.i ]
   ret i32 %.0
 }
 

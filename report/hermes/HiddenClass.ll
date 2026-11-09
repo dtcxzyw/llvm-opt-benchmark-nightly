@@ -205,7 +205,7 @@ bb.a:
   store ptr %1, ptr %i.a, align 8, !tbaa !99
   %i.b = load i32, ptr %0, align 8                ; 3 uses
   %i.c = lshr i32 %i.b, 1                         ; 2 uses
-  %i.d = and i32 %i.b, 1                          ; 2 uses
+  %i.d = and i32 %i.b, 1
   %.not.i.i.i = icmp eq i32 %i.d, 0
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load i32, ptr %i.e, align 8
@@ -234,19 +234,15 @@ bb.c:                                             ; preds = %bb.a
   %.sink.i = phi i32 [ %i.k, %bb.b ], [ %i.g, %bb.c ]
   tail call void @_ZN4llvh13SmallDenseMapIN6hermes2vm6detail10TransitionENS2_7WeakRefINS2_11HiddenClassEEELj8ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S7_EEE4growEj(ptr noundef nonnull align 8 dereferenceable(136) %0, i32 noundef %.sink.i)
   %i.p = call noundef zeroext i1 @_ZN4llvh12DenseMapBaseINS_13SmallDenseMapIN6hermes2vm6detail10TransitionENS3_7WeakRefINS3_11HiddenClassEEELj8ENS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_S8_EEEES5_S8_SA_SD_E15LookupBucketForIS5_EEbRKT_RPSD_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(6) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
-  %.pre = load i32, ptr %0, align 8               ; 2 uses
+  %.pre = load i32, ptr %0, align 8
   %.pre10 = load ptr, ptr %i.a, align 8, !tbaa !99
-  %.pre11 = and i32 %.pre, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %.sink.split.i, %bb.c
-  %.pre-phi = phi i32 [ %.pre11, %.sink.split.i ], [ %i.d, %bb.c ]
   %i.q = phi ptr [ %.pre10, %.sink.split.i ], [ %1, %bb.c ] ; 5 uses
   %i.r = phi i32 [ %.pre, %.sink.split.i ], [ %i.b, %bb.c ]
-  %5 = and i32 %i.r, -2
-  %i.s = add i32 %5, 2
-  %6 = or disjoint i32 %i.s, %.pre-phi
-  store i32 %6, ptr %0, align 8
+  %i.s = add i32 %i.r, 2
+  store i32 %i.s, ptr %0, align 8
   %i.t = load i32, ptr %i.q, align 4, !tbaa !17
   %i.u = icmp eq i32 %i.t, 536870911
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 4
@@ -649,12 +645,9 @@ _ZN4llvh12DenseMapBaseINS_13SmallDenseMapIN6hermes2vm6detail10TransitionENS3_7We
   %i.bm = getelementptr inbounds nuw i8, ptr %.024, i64 8
   %i.bn = load i64, ptr %i.bm, align 8
   store i64 %i.bn, ptr %i.bl, align 8
-  %i.bo = load i32, ptr %0, align 8               ; 2 uses
-  %3 = and i32 %i.bo, -2
-  %i.bp = add i32 %3, 2
-  %4 = and i32 %i.bo, 1
-  %5 = or disjoint i32 %i.bp, %4
-  store i32 %5, ptr %0, align 8
+  %i.bo = load i32, ptr %0, align 8
+  %i.bp = add i32 %i.bo, 2
+  store i32 %i.bp, ptr %0, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN4llvh12DenseMapBaseINS_13SmallDenseMapIN6hermes2vm6detail10TransitionENS3_7WeakRefINS3_11HiddenClassEEELj8ENS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_S8_EEEES5_S8_SA_SD_E15LookupBucketForIS5_EEbRKT_RPSD_.exit, %.lr.ph

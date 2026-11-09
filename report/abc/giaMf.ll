@@ -205,12 +205,9 @@ bb.f:                                             ; preds = %.lr.ph120, %bb.f
   %i.cx = sext i32 %i.cw to i64
   %i.cy = getelementptr inbounds [16 x i8], ptr %.val107, i64 %i.cx
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 12 ; 2 uses
-  %i.da = load i32, ptr %i.cz, align 4            ; 2 uses
-  %1 = and i32 %i.da, -65536
-  %i.db = add i32 %1, 65536
-  %2 = and i32 %i.da, 65535
-  %3 = or disjoint i32 %i.db, %2
-  store i32 %3, ptr %i.cz, align 4
+  %i.da = load i32, ptr %i.cz, align 4
+  %i.db = add i32 %i.da, 65536
+  store i32 %i.db, ptr %i.cz, align 4
   %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses
   %i.dc = load ptr, ptr %i.i, align 8, !tbaa !57  ; 3 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 72
@@ -382,12 +379,9 @@ bb.i:                                             ; preds = %bb.h
   %i.go = sext i32 %i.gn to i64
   %i.gp = getelementptr inbounds [16 x i8], ptr %.val106, i64 %i.go
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 12 ; 2 uses
-  %i.gr = load i32, ptr %i.gq, align 4            ; 2 uses
-  %4 = and i32 %i.gr, -65536
-  %i.gs = add i32 %4, 65536
-  %5 = and i32 %i.gr, 65535
-  %6 = or disjoint i32 %i.gs, %5
-  store i32 %6, ptr %i.gq, align 4
+  %i.gr = load i32, ptr %i.gq, align 4
+  %i.gs = add i32 %i.gr, 65536
+  store i32 %i.gs, ptr %i.gq, align 4
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1
   %.val98 = load i32, ptr %i.gj, align 4, !tbaa !24 ; 2 uses
   %i.gt = and i32 %.val98, 31                     ; 2 uses
@@ -790,12 +784,9 @@ bb.g:                                             ; preds = %.lr.ph, %bb.j
   %i.w = sext i32 %i.v to i64
   %i.x = getelementptr inbounds [16 x i8], ptr %.val25, i64 %i.w
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 12 ; 2 uses
-  %i.z = load i32, ptr %i.y, align 4              ; 3 uses
-  %2 = and i32 %i.z, -65536
-  %i.aa = add i32 %2, 65536
-  %3 = and i32 %i.z, 65535
-  %4 = or disjoint i32 %i.aa, %3
-  store i32 %4, ptr %i.y, align 4
+  %i.z = load i32, ptr %i.y, align 4              ; 2 uses
+  %i.aa = add i32 %i.z, 65536
+  store i32 %i.aa, ptr %i.y, align 4
   %.not18 = icmp ult i32 %i.z, 65536
   br i1 %.not18, label %bb.h, label %bb.j
 
@@ -1078,12 +1069,9 @@ Vec_IntPush.exit:                                 ; preds = %.Vec_IntPush.exit_c
   %i.au = sext i32 %i.at to i64
   %i.av = getelementptr inbounds [16 x i8], ptr %.val35, i64 %i.au
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 12 ; 2 uses
-  %i.ax = load i32, ptr %i.aw, align 4            ; 3 uses
-  %4 = and i32 %i.ax, -65536
-  %i.ay = add i32 %4, 65536
-  %5 = and i32 %i.ax, 65535
-  %6 = or disjoint i32 %i.ay, %5
-  store i32 %6, ptr %i.aw, align 4
+  %i.ax = load i32, ptr %i.aw, align 4            ; 2 uses
+  %i.ay = add i32 %i.ax, 65536
+  store i32 %i.ay, ptr %i.aw, align 4
   %.not28 = icmp ult i32 %i.ax, 65536
   br i1 %.not28, label %bb.p, label %bb.r
 
@@ -1486,12 +1474,9 @@ bb.d:                                             ; preds = %.lr.ph106, %bb.d
   %i.bk = sext i32 %i.bj to i64
   %i.bl = getelementptr inbounds [16 x i8], ptr %.val76, i64 %i.bk
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 12 ; 2 uses
-  %i.bn = load i32, ptr %i.bm, align 4            ; 2 uses
-  %2 = and i32 %i.bn, -65536
-  %i.bo = add i32 %2, 65536
-  %3 = and i32 %i.bn, 65535
-  %4 = or disjoint i32 %i.bo, %3
-  store i32 %4, ptr %i.bm, align 4
+  %i.bn = load i32, ptr %i.bm, align 4
+  %i.bo = add i32 %i.bn, 65536
+  store i32 %i.bo, ptr %i.bm, align 4
   %i.bp = add nuw nsw i32 %.3110, 1               ; 2 uses
   %.val80 = load ptr, ptr %i.c, align 8, !tbaa !147
   %i.bq = getelementptr i8, ptr %.val80, i64 8
@@ -1608,12 +1593,9 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph23.i
   %i.dt = sext i32 %i.ds to i64
   %i.du = getelementptr inbounds [16 x i8], ptr %.val18.i, i64 %i.dt
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 12 ; 2 uses
-  %i.dw = load i32, ptr %i.dv, align 4            ; 2 uses
-  %5 = and i32 %i.dw, -65536
-  %i.dx = add i32 %5, 65536
-  %6 = and i32 %i.dw, 65535
-  %7 = or disjoint i32 %i.dx, %6
-  store i32 %7, ptr %i.dv, align 4
+  %i.dw = load i32, ptr %i.dv, align 4
+  %i.dx = add i32 %i.dw, 65536
+  store i32 %i.dx, ptr %i.dv, align 4
   %indvars.iv.next26.i = add nuw nsw i64 %indvars.iv25.i, 1 ; 2 uses
   %.val.i = load i32, ptr %i.dj, align 4, !tbaa !37
   %i.dy = sext i32 %.val.i to i64

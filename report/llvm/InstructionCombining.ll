@@ -205,12 +205,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPKNS_10BasicBlockES5_ENS_6deta
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !123, !noalias !1375
   %i.fc = or i32 %i.ey, %i.fb
   store i32 %i.fc, ptr %i.fa, align 4, !tbaa !123, !noalias !1375
-  %i.fd = load i32, ptr %i.v, align 8, !noalias !1375 ; 2 uses
-  %2 = and i32 %i.fd, -2
-  %i.fe = add i32 %2, 2
-  %3 = and i32 %i.fd, 1
-  %4 = or disjoint i32 %i.fe, %3
-  store i32 %4, ptr %i.v, align 8, !noalias !1375
+  %i.fd = load i32, ptr %i.v, align 8, !noalias !1375
+  %i.fe = add i32 %i.fd, 2
+  store i32 %i.fe, ptr %i.v, align 8, !noalias !1375
   store ptr %i.ag, ptr %i.er, align 8, !noalias !1375
   %.sroa.68.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.er, i64 8
   store ptr %i.ax, ptr %.sroa.68.0..sroa_idx, align 8, !noalias !1375
@@ -613,12 +610,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_10BasicBlockEPNS_11InstructionELj4
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !123
   %i.bj = or i32 %i.bf, %i.bi
   store i32 %i.bj, ptr %i.bh, align 4, !tbaa !123
-  %i.bk = load i32, ptr %0, align 8               ; 2 uses
-  %3 = and i32 %i.bk, -2
-  %i.bl = add i32 %3, 2
-  %4 = and i32 %i.bk, 1
-  %5 = or disjoint i32 %i.bl, %4
-  store i32 %5, ptr %0, align 8
+  %i.bk = load i32, ptr %0, align 8
+  %i.bl = add i32 %i.bk, 2
+  store i32 %i.bl, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = load ptr, ptr %1, align 8, !tbaa !286
   store ptr %i.bm, ptr %i.aw, align 8, !tbaa !286
@@ -1021,12 +1015,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_ENS_6detai
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !123
   %i.bz = or i32 %i.bv, %i.by
   store i32 %i.bz, ptr %i.bx, align 4, !tbaa !123
-  %i.ca = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.ca, -2
-  %i.cb = add i32 %2, 2
-  %3 = and i32 %i.ca, 1
-  %4 = or disjoint i32 %i.cb, %3
-  store i32 %4, ptr %0, align 8
+  %i.ca = load i32, ptr %0, align 8
+  %i.cb = add i32 %i.ca, 2
+  store i32 %i.cb, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
   br label %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_10BasicBlockES4_ENS_6detail13DenseSetEmptyELj8ENS_12DenseMapInfoIS5_vEENS6_12DenseSetPairIS5_EEEES5_S7_S9_SB_E15LookupBucketForIS5_EEbRKT_RPSB_.exit
@@ -1429,12 +1420,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPKNS_11InstructionENS_13DebugV
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !123
   %i.ah = or i32 %i.ad, %i.ag
   store i32 %i.ah, ptr %i.af, align 4, !tbaa !123
-  %i.ai = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.ai, -2
-  %i.aj = add i32 %2, 2
-  %3 = and i32 %i.ai, 1
-  %4 = or disjoint i32 %i.aj, %3
-  store i32 %4, ptr %0, align 8
+  %i.ai = load i32, ptr %0, align 8
+  %i.aj = add i32 %i.ai, 2
+  store i32 %i.aj, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.p, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.p, i64 48
@@ -1837,12 +1825,9 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPKNS_11InstructionENS_13DebugV
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !123
   %i.ah = or i32 %i.ad, %i.ag
   store i32 %i.ah, ptr %i.af, align 4, !tbaa !123
-  %i.ai = load i32, ptr %0, align 8               ; 2 uses
-  %2 = and i32 %i.ai, -2
-  %i.aj = add i32 %2, 2
-  %3 = and i32 %i.ai, 1
-  %4 = or disjoint i32 %i.aj, %3
-  store i32 %4, ptr %0, align 8
+  %i.ai = load i32, ptr %0, align 8
+  %i.aj = add i32 %i.ai, 2
+  store i32 %i.aj, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.p, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.p, i64 48

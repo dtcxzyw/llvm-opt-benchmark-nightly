@@ -205,11 +205,8 @@ bb.ac:                                            ; preds = %bb.ab
 
 _ZN2v88internal6maglev18MaglevGraphBuilder35GetTryCatchBlockForNonEagerInliningEPNS1_20ExceptionHandlerInfoE.exit: ; preds = %bb.aa, %bb.ab, %bb.ac
   %.sroa.0.0.i = phi ptr [ %i.fm, %bb.aa ], [ %.sroa.0.0.copyload.i53, %bb.ac ], [ null, %bb.ab ]
-  %.sroa.4.0.i = phi i64 [ %.sroa.4.9.insert.insert.i, %bb.aa ], [ %.sroa.4.9.insert.insert11.i, %bb.ac ], [ 0, %bb.ab ] ; 2 uses
-  %20 = and i64 %.sroa.4.0.i, -4294967296
-  %.sroa.4.12.insert.ext = add i64 %20, 4294967296
-  %.sroa.4.12.insert.mask = and i64 %.sroa.4.0.i, 4294967295
-  %.sroa.4.12.insert.insert = or disjoint i64 %.sroa.4.12.insert.ext, %.sroa.4.12.insert.mask
+  %.sroa.4.0.i = phi i64 [ %.sroa.4.9.insert.insert.i, %bb.aa ], [ %.sroa.4.9.insert.insert11.i, %bb.ac ], [ 0, %bb.ab ]
+  %.sroa.4.12.insert.ext = add i64 %.sroa.4.0.i, 4294967296
   %i.fs = call noundef i32 @_ZNK2v88internal8compiler16BytecodeArrayRef6lengthEv(ptr noundef nonnull align 8 dereferenceable(8) %14) #33
   %i.ft = sitofp i32 %i.fs to float
   %i.fu = fdiv float %.0.i, %i.ft
@@ -298,7 +295,7 @@ _ZNK2v88internal6maglev16KnownNodeAspects5CloneEPNS0_4ZoneE.exit: ; preds = %_ZN
   %i.hr = getelementptr inbounds nuw i8, ptr %19, i64 104 ; 2 uses
   store ptr %.sroa.0.0.i, ptr %i.hr, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 112
-  store i64 %.sroa.4.12.insert.insert, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.4.12.insert.ext, ptr %.sroa.4.0..sroa_idx, align 8
   %i.hs = getelementptr inbounds nuw i8, ptr %19, i64 120
   %i.ht = load ptr, ptr %i.ae, align 8            ; 2 uses
   %.not5.i = icmp eq ptr %i.ht, null
@@ -626,16 +623,13 @@ _ZN2v88internal6maglev18MaglevGraphBuilder23GetCatchBlockFrameStateEv.exit: ; pr
 
 bb.f:                                             ; preds = %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCatchBlockFrameStateEv.exit
   %.sroa.0.0.i4552 = phi ptr [ %i.as, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCatchBlockFrameStateEv.exit ], [ %.sroa.0.0.copyload.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit ]
-  %.sroa.4.0.i4650 = phi i64 [ %.sroa.4.8.insert.ext.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCatchBlockFrameStateEv.exit ], [ %.sroa.4.0.copyload.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit ] ; 2 uses
-  %10 = and i64 %.sroa.4.0.i4650, -4294967296
-  %.sroa.426.12.insert.ext = add i64 %10, 4294967296
-  %.sroa.426.12.insert.mask = and i64 %.sroa.4.0.i4650, 4294967295
-  %.sroa.426.12.insert.insert = or disjoint i64 %.sroa.426.12.insert.ext, %.sroa.426.12.insert.mask
+  %.sroa.4.0.i4650 = phi i64 [ %.sroa.4.8.insert.ext.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCatchBlockFrameStateEv.exit ], [ %.sroa.4.0.copyload.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit ]
+  %.sroa.426.12.insert.ext = add i64 %.sroa.4.0.i4650, 4294967296
   br label %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit.thread
 
 _ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit.thread: ; preds = %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit.thread41, %bb.d, %bb.f, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit
   %.sroa.0.0.i34 = phi ptr [ %.sroa.0.0.i4552, %bb.f ], [ %.sroa.0.0.copyload.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit ], [ null, %bb.d ], [ %i.as, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit.thread41 ]
-  %.sroa.426.0 = phi i64 [ %.sroa.426.12.insert.insert, %bb.f ], [ %.sroa.4.0.copyload.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit ], [ 0, %bb.d ], [ %.sroa.4.8.insert.ext.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit.thread41 ]
+  %.sroa.426.0 = phi i64 [ %.sroa.426.12.insert.ext, %bb.f ], [ %.sroa.4.0.copyload.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit ], [ 0, %bb.d ], [ %.sroa.4.8.insert.ext.i, %_ZN2v88internal6maglev18MaglevGraphBuilder23GetCurrentTryCatchBlockEv.exit.thread41 ]
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
   %i.bt = load ptr, ptr %i.bs, align 8
   %i.bu = tail call noundef ptr @_ZNK2v88internal6maglev21MaglevCompilationUnit4zoneEv(ptr noundef nonnull align 8 dereferenceable(52) %i.bt) #33 ; 3 uses

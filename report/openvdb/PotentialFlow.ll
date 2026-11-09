@@ -205,7 +205,7 @@ bb.a:
   %.fca.1.extract2 = extractvalue { i64, i32 } %i.h, 1 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.i = add i64 %.fca.0.extract1, 1
-  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 3 uses
+  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 2 uses
   %.sroa.0.0.insert.ext.i.i.i = and i64 %i.i, 4294967295
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.0.0.insert.ext.i.i.i, %.sroa.2.0.insert.shift.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %6, align 8
@@ -223,10 +223,8 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.sroa.2.0.insert.shift.i.i.i, 4294967296
-  %.sroa.0.0.insert.ext.i.i8.i = and i64 %.fca.0.extract1, 4294967295
-  %.sroa.0.0.insert.insert.i.i9.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i7.i, %.sroa.0.0.insert.ext.i.i8.i
-  store i64 %.sroa.0.0.insert.insert.i.i9.i, ptr %4, align 8
+  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.fca.0.extract1, 4294967296
+  store i64 %.sroa.2.0.insert.shift.i.i7.i, ptr %4, align 8
   %.sroa.24.0..sroa_idx.i10.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %.fca.1.extract2, ptr %.sroa.24.0..sroa_idx.i10.i, align 8
   %i.m = call noundef nonnull align 4 dereferenceable(4) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %4) ; 0 uses
@@ -629,7 +627,7 @@ bb.a:
   %.fca.1.extract2 = extractvalue { i64, i32 } %i.h, 1 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.i = add i64 %.fca.0.extract1, 1
-  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 3 uses
+  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 2 uses
   %.sroa.0.0.insert.ext.i.i.i = and i64 %i.i, 4294967295
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.0.0.insert.ext.i.i.i, %.sroa.2.0.insert.shift.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %6, align 8
@@ -647,10 +645,8 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.sroa.2.0.insert.shift.i.i.i, 4294967296
-  %.sroa.0.0.insert.ext.i.i8.i = and i64 %.fca.0.extract1, 4294967295
-  %.sroa.0.0.insert.insert.i.i9.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i7.i, %.sroa.0.0.insert.ext.i.i8.i
-  store i64 %.sroa.0.0.insert.insert.i.i9.i, ptr %4, align 8
+  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.fca.0.extract1, 4294967296
+  store i64 %.sroa.2.0.insert.shift.i.i7.i, ptr %4, align 8
   %.sroa.24.0..sroa_idx.i10.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %.fca.1.extract2, ptr %.sroa.24.0..sroa_idx.i10.i, align 8
   %i.m = call noundef nonnull align 4 dereferenceable(4) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %4) ; 0 uses
@@ -1053,7 +1049,7 @@ bb.a:
   %.fca.1.extract2 = extractvalue { i64, i32 } %i.e, 1 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.f = add i64 %.fca.0.extract1, 1
-  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 3 uses
+  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 2 uses
   %.sroa.0.0.insert.ext.i.i.i = and i64 %i.f, 4294967295
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.0.0.insert.ext.i.i.i, %.sroa.2.0.insert.shift.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %6, align 8
@@ -1071,10 +1067,8 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.sroa.2.0.insert.shift.i.i.i, 4294967296
-  %.sroa.0.0.insert.ext.i.i8.i = and i64 %.fca.0.extract1, 4294967295
-  %.sroa.0.0.insert.insert.i.i9.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i7.i, %.sroa.0.0.insert.ext.i.i8.i
-  store i64 %.sroa.0.0.insert.insert.i.i9.i, ptr %4, align 8
+  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.fca.0.extract1, 4294967296
+  store i64 %.sroa.2.0.insert.shift.i.i7.i, ptr %4, align 8
   %.sroa.24.0..sroa_idx.i10.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %.fca.1.extract2, ptr %.sroa.24.0..sroa_idx.i10.i, align 8
   %i.j = call noundef nonnull align 4 dereferenceable(4) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %i.a, ptr noundef nonnull align 4 dereferenceable(12) %4) ; 0 uses
@@ -1477,7 +1471,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.i = add i64 %.fca.0.extract1, 1
-  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 3 uses
+  %.sroa.2.0.insert.shift.i.i.i = and i64 %.fca.0.extract1, -4294967296 ; 2 uses
   %.sroa.0.0.insert.ext.i.i.i = and i64 %i.i, 4294967295
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.0.0.insert.ext.i.i.i, %.sroa.2.0.insert.shift.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %6, align 8
@@ -1495,10 +1489,8 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.sroa.2.0.insert.shift.i.i.i, 4294967296
-  %.sroa.0.0.insert.ext.i.i8.i = and i64 %.fca.0.extract1, 4294967295
-  %.sroa.0.0.insert.insert.i.i9.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i7.i, %.sroa.0.0.insert.ext.i.i8.i
-  store i64 %.sroa.0.0.insert.insert.i.i9.i, ptr %4, align 8
+  %.sroa.2.0.insert.shift.i.i7.i = add i64 %.fca.0.extract1, 4294967296
+  store i64 %.sroa.2.0.insert.shift.i.i7.i, ptr %4, align 8
   %.sroa.24.0..sroa_idx.i10.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %.fca.1.extract2, ptr %.sroa.24.0..sroa_idx.i10.i, align 8
   %i.m = call noundef nonnull align 4 dereferenceable(4) ptr @_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordE(ptr noundef nonnull align 8 dereferenceable(96) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %4) ; 0 uses

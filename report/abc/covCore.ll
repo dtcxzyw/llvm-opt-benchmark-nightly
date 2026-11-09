@@ -202,7 +202,7 @@ bb.az:                                            ; preds = %bb.bg, %bb.ay
 
 bb.ba:                                            ; preds = %bb.bd, %.lr.ph.i.i
   %i.ii = phi ptr [ %i.id, %.lr.ph.i.i ], [ %i.ji, %bb.bd ] ; 3 uses
-  %i.ij = phi i32 [ %i.hy, %.lr.ph.i.i ], [ %i.jj, %bb.bd ] ; 4 uses
+  %i.ij = phi i32 [ %i.hy, %.lr.ph.i.i ], [ %i.jj, %bb.bd ] ; 3 uses
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.bd ] ; 4 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ii, i64 8
   %i.il = load ptr, ptr %i.ik, align 8, !tbaa !45
@@ -235,17 +235,14 @@ bb.bc:                                            ; preds = %bb.bb
   %i.jf = load i32, ptr %i.je, align 4, !tbaa !46
   %i.jg = xor i32 %i.jf, %i.jb
   store i32 %i.jg, ptr %i.je, align 4, !tbaa !46
-  %3 = and i32 %i.ij, -4194304
-  %i.jh = add i32 %3, 4194304
-  %4 = and i32 %i.ij, 4194303
-  %5 = or disjoint i32 %i.jh, %4                  ; 2 uses
-  store i32 %5, ptr %i.hq, align 8
+  %i.jh = add i32 %i.ij, 4194304                  ; 2 uses
+  store i32 %i.jh, ptr %i.hq, align 8
   %.pre.i.i = load ptr, ptr %i.hi, align 8, !tbaa !43
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.ba
   %i.ji = phi ptr [ %i.ii, %bb.bb ], [ %i.ii, %bb.ba ], [ %.pre.i.i, %bb.bc ] ; 2 uses
-  %i.jj = phi i32 [ %i.ij, %bb.bb ], [ %i.ij, %bb.ba ], [ %5, %bb.bc ]
+  %i.jj = phi i32 [ %i.ij, %bb.bb ], [ %i.ij, %bb.ba ], [ %i.jh, %bb.bc ]
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %i.ji, i64 4
   %i.jl = load i32, ptr %i.jk, align 4, !tbaa !44
@@ -323,7 +320,7 @@ bb.bh:                                            ; preds = %bb.bo, %.preheader.
 
 bb.bi:                                            ; preds = %bb.bl, %.lr.ph102.i.i
   %i.kv = phi ptr [ %i.kq, %.lr.ph102.i.i ], [ %i.lv, %bb.bl ] ; 3 uses
-  %i.kw = phi i32 [ %i.kl, %.lr.ph102.i.i ], [ %i.lw, %bb.bl ] ; 4 uses
+  %i.kw = phi i32 [ %i.kl, %.lr.ph102.i.i ], [ %i.lw, %bb.bl ] ; 3 uses
   %indvars.iv111.i.i = phi i64 [ 0, %.lr.ph102.i.i ], [ %indvars.iv.next112.i.i, %bb.bl ] ; 4 uses
   %i.kx = getelementptr inbounds nuw i8, ptr %i.kv, i64 8
   %i.ky = load ptr, ptr %i.kx, align 8, !tbaa !45
@@ -356,17 +353,14 @@ bb.bk:                                            ; preds = %bb.bj
   %i.ls = load i32, ptr %i.lr, align 4, !tbaa !46
   %i.lt = xor i32 %i.ls, %i.lo
   store i32 %i.lt, ptr %i.lr, align 4, !tbaa !46
-  %6 = and i32 %i.kw, -4194304
-  %i.lu = add i32 %6, 4194304
-  %7 = and i32 %i.kw, 4194303
-  %8 = or disjoint i32 %i.lu, %7                  ; 2 uses
-  store i32 %8, ptr %i.kd, align 8
+  %i.lu = add i32 %i.kw, 4194304                  ; 2 uses
+  store i32 %i.lu, ptr %i.kd, align 8
   %.pre114.i.i = load ptr, ptr %i.hk, align 8, !tbaa !47
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.bi
   %i.lv = phi ptr [ %i.kv, %bb.bj ], [ %i.kv, %bb.bi ], [ %.pre114.i.i, %bb.bk ] ; 2 uses
-  %i.lw = phi i32 [ %i.kw, %bb.bj ], [ %i.kw, %bb.bi ], [ %8, %bb.bk ]
+  %i.lw = phi i32 [ %i.kw, %bb.bj ], [ %i.kw, %bb.bi ], [ %i.lu, %bb.bk ]
   %indvars.iv.next112.i.i = add nuw nsw i64 %indvars.iv111.i.i, 1 ; 2 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lv, i64 4
   %i.ly = load i32, ptr %i.lx, align 4, !tbaa !44
@@ -769,7 +763,7 @@ bb.f:                                             ; preds = %._crit_edge
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph91, %bb.m
-  %i.bp = phi i32 [ %i.bj, %.lr.ph91 ], [ %i.dd, %bb.m ] ; 3 uses
+  %i.bp = phi i32 [ %i.bj, %.lr.ph91 ], [ %i.dd, %bb.m ] ; 2 uses
   %indvars.iv103 = phi i64 [ 0, %.lr.ph91 ], [ %indvars.iv.next104, %bb.m ] ; 5 uses
   %i.bq = load ptr, ptr %i.g, align 8, !tbaa !43
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
@@ -828,15 +822,12 @@ bb.l:                                             ; preds = %bb.k
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !46
   %i.db = xor i32 %i.da, %i.cw
   store i32 %i.db, ptr %i.cz, align 4, !tbaa !46
-  %5 = and i32 %i.bp, -4194304
-  %i.dc = add i32 %5, 4194304
-  %6 = and i32 %i.bp, 4194303
-  %7 = or disjoint i32 %i.dc, %6                  ; 2 uses
-  store i32 %7, ptr %i.bb, align 8
+  %i.dc = add i32 %i.bp, 4194304                  ; 2 uses
+  store i32 %i.dc, ptr %i.bb, align 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l
-  %i.dd = phi i32 [ %i.bp, %bb.k ], [ %7, %bb.l ]
+  %i.dd = phi i32 [ %i.bp, %bb.k ], [ %i.dc, %bb.l ]
   %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
   %exitcond107.not = icmp eq i64 %indvars.iv.next104, %wide.trip.count106
   br i1 %exitcond107.not, label %._crit_edge92, label %bb.g, !llvm.loop !104

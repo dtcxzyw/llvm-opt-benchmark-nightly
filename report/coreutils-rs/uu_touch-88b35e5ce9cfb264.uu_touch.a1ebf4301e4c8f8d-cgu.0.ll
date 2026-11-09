@@ -204,10 +204,7 @@ bb.k:                                             ; preds = %bb.a
   br i1 %i.ao, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_RNvNtCscxuc9kp9KZq_9jiff_core5civil13days_in_month.exit.thread.i, %_RNvNtCscxuc9kp9KZq_9jiff_core5civil13days_in_month.exit.i33, %bb.k
-  %2 = and i32 %0, -16777216
-  %.sroa.528.0.insert.shift.i = add i32 %2, 16777216
-  %3 = and i32 %0, 16777215
-  %.sroa.026.0.insert.insert.i = or disjoint i32 %.sroa.528.0.insert.shift.i, %3
+  %.sroa.528.0.insert.shift.i = add i32 %0, 16777216
   br label %_RNvMNtNtCscxuc9kp9KZq_9jiff_core5civil4dateNtB2_4Date9yesterday.exit
 
 bb.m:                                             ; preds = %bb.k
@@ -258,7 +255,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_RNvMNtNtCscxuc9kp9KZq_9jiff_core5civil4dateNtB2_4Date9yesterday.exit
 
 _RNvMNtNtCscxuc9kp9KZq_9jiff_core5civil4dateNtB2_4Date9yesterday.exit: ; preds = %bb.p, %.thread.i, %bb.o, %bb.l, %bb.j, %_RNvNtCscxuc9kp9KZq_9jiff_core5civil13days_in_month.exit.i, %bb.f, %bb.e, %bb.b, %bb.a, %bb.q
-  %.sroa.6.0 = phi i32 [ %0, %bb.a ], [ %.sroa.0.0.insert.insert.i, %bb.q ], [ 8447, %bb.f ], [ 6399, %bb.b ], [ %.sroa.028.0.insert.insert.i, %bb.e ], [ %.sroa.022.0.insert.insert.i, %bb.j ], [ %.sroa.025.0.insert.insert.i, %_RNvNtCscxuc9kp9KZq_9jiff_core5civil13days_in_month.exit.i ], [ %.sroa.026.0.insert.insert.i, %bb.l ], [ %.sroa.020.0.insert.insert.i, %bb.p ], [ %.sroa.023.0.insert.insert.i, %.thread.i ], [ 8447, %bb.o ]
+  %.sroa.6.0 = phi i32 [ %0, %bb.a ], [ %.sroa.0.0.insert.insert.i, %bb.q ], [ 8447, %bb.f ], [ 6399, %bb.b ], [ %.sroa.028.0.insert.insert.i, %bb.e ], [ %.sroa.022.0.insert.insert.i, %bb.j ], [ %.sroa.025.0.insert.insert.i, %_RNvNtCscxuc9kp9KZq_9jiff_core5civil13days_in_month.exit.i ], [ %.sroa.528.0.insert.shift.i, %bb.l ], [ %.sroa.020.0.insert.insert.i, %bb.p ], [ %.sroa.023.0.insert.insert.i, %.thread.i ], [ 8447, %bb.o ]
   %.sroa.06.0 = phi i16 [ 0, %bb.a ], [ 0, %bb.q ], [ 1, %bb.f ], [ 1, %bb.b ], [ 0, %bb.e ], [ 0, %bb.j ], [ 0, %_RNvNtCscxuc9kp9KZq_9jiff_core5civil13days_in_month.exit.i ], [ 0, %bb.l ], [ 0, %bb.p ], [ 0, %.thread.i ], [ 1, %bb.o ]
   %.sroa.6.0.insert.ext = zext i32 %.sroa.6.0 to i48
   %.sroa.6.0.insert.shift = shl nuw i48 %.sroa.6.0.insert.ext, 16

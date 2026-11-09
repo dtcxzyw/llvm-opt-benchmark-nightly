@@ -204,17 +204,15 @@ Vec_PtrPush.exit:                                 ; preds = %bb.a, %bb.f, %Vec_P
   %i.al = inttoptr i64 %i.ak to ptr
   %i.am = getelementptr i8, ptr %i.al, i64 32     ; 2 uses
   %.val = load i32, ptr %i.am, align 8            ; 2 uses
-  %2 = and i32 %.val, -64                         ; 2 uses
   br i1 %.not, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %Vec_PtrPush.exit
-  %i.an = add i32 %2, 64
-  %3 = and i32 %.val, 63
-  %4 = or disjoint i32 %i.an, %3
-  store i32 %4, ptr %i.am, align 8
+  %i.an = add i32 %.val, 64
+  store i32 %i.an, ptr %i.am, align 8
   br label %bb.m
 
 bb.l:                                             ; preds = %Vec_PtrPush.exit
+  %2 = and i32 %.val, -64
   %i.ao = load i32, ptr %i.b, align 8
   %i.ap = and i32 %i.ao, 63
   %i.aq = or disjoint i32 %i.ap, %2
@@ -303,12 +301,9 @@ bb.c:                                             ; preds = %bb.b
   %i.f = and i64 %i.e, -2
   %i.g = inttoptr i64 %i.f to ptr
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 8              ; 2 uses
-  %4 = and i32 %i.i, -64
-  %i.j = add i32 %4, 64
-  %5 = and i32 %i.i, 63
-  %6 = or disjoint i32 %i.j, %5
-  store i32 %6, ptr %i.h, align 8
+  %i.i = load i32, ptr %i.h, align 8
+  %i.j = add i32 %i.i, 64
+  store i32 %i.j, ptr %i.h, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -321,12 +316,9 @@ bb.e:                                             ; preds = %bb.d
   %i.l = and i64 %i.k, -2
   %i.m = inttoptr i64 %i.l to ptr
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 2 uses
-  %i.o = load i32, ptr %i.n, align 8              ; 2 uses
-  %7 = and i32 %i.o, -64
-  %i.p = add i32 %7, 64
-  %8 = and i32 %i.o, 63
-  %9 = or disjoint i32 %i.p, %8
-  store i32 %9, ptr %i.n, align 8
+  %i.o = load i32, ptr %i.n, align 8
+  %i.p = add i32 %i.o, 64
+  store i32 %i.p, ptr %i.n, align 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a

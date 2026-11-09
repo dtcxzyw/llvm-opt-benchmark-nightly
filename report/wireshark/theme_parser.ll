@@ -204,7 +204,7 @@ _ZN5QListI7QStringEC2ERKS1_.exit:                 ; preds = %bb.b, %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %_ZN7QStringD2Ev.exit173
-  %.sroa.8254.0 = phi i64 [ %35, %_ZN7QStringD2Ev.exit173 ], [ 1, %.preheader ] ; 6 uses
+  %.sroa.8254.0 = phi i64 [ %i.ei, %_ZN7QStringD2Ev.exit173 ], [ 1, %.preheader ] ; 5 uses
   %i.af = invoke noundef zeroext i1 @_ZN11QJsonObject6detachEx(ptr noundef nonnull align 8 dereferenceable_or_null(8) %11, i64 noundef 0)
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -607,10 +607,7 @@ bb.bk:                                            ; preds = %_ZN17QArrayDataPoin
 
 _ZN7QStringD2Ev.exit173:                          ; preds = %bb.bj, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i171, %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #21
-  %33 = and i64 %.sroa.8254.0, -2
-  %i.ei = add i64 %33, 2
-  %34 = and i64 %.sroa.8254.0, 1
-  %35 = or disjoint i64 %i.ei, %34
+  %i.ei = add i64 %.sroa.8254.0, 2
   br label %bb.d, !llvm.loop !31
 
 bb.bl:                                            ; preds = %bb.bh, %_ZN17QArrayDataPointerIDsED2Ev.exit169

@@ -205,7 +205,7 @@ bb.cw:                                            ; preds = %_ZN17QArrayDataPoin
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.gq, %bb.cw
-  %.sroa.9.0 = phi i64 [ 1, %bb.cw ], [ %147, %bb.gq ] ; 7 uses
+  %.sroa.9.0 = phi i64 [ 1, %bb.cw ], [ %i.nr, %bb.gq ] ; 6 uses
   %i.gq = invoke noundef i64 @_ZNK11QJsonObject4sizeEv(ptr noundef nonnull align 8 dereferenceable_or_null(8) %27)
           to label %bb.cy unwind label %bb.da
 
@@ -553,7 +553,7 @@ bb.ek:                                            ; preds = %bb.dz, %_ZN17QArray
   br label %bb.fg
 
 bb.el:                                            ; preds = %.lr.ph, %_ZN5QListI6QColorE6appendERKS0_.exit
-  %.sroa.61539.01636 = phi i64 [ 0, %.lr.ph ], [ %144, %_ZN5QListI6QColorE6appendERKS0_.exit ] ; 3 uses
+  %.sroa.61539.01636 = phi i64 [ 0, %.lr.ph ], [ %i.jq, %_ZN5QListI6QColorE6appendERKS0_.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #28
   store ptr %46, ptr %50, align 8
@@ -638,11 +638,8 @@ _ZN5QListI6QColorE6appendERKS0_.exit:             ; preds = %_ZNK17QArrayDataPoi
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #28
   call void @_ZN10QJsonValueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %49) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #28
-  %142 = and i64 %.sroa.61539.01636, -2
-  %i.jq = add i64 %142, 2                         ; 2 uses
-  %143 = and i64 %.sroa.61539.01636, 1
-  %144 = or disjoint i64 %i.jq, %143
-  %.not1640 = icmp eq i64 %i.jq, %i.im
+  %i.jq = add i64 %.sroa.61539.01636, 2           ; 2 uses
+  %.not1640 = icmp eq i64 %i.im, %i.jq
   br i1 %.not1640, label %.loopexit, label %bb.el
 
 bb.es:                                            ; preds = %bb.er, %bb.eq
@@ -1045,10 +1042,7 @@ bb.gp:                                            ; preds = %_ZN7QStringD2Ev.exi
   br label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp, %_ZN7QStringD2Ev.exit471
-  %145 = and i64 %.sroa.9.0, -2
-  %i.nr = add i64 %145, 2
-  %146 = and i64 %.sroa.9.0, 1
-  %147 = or disjoint i64 %i.nr, %146
+  %i.nr = add i64 %.sroa.9.0, 2
   br label %bb.cx, !llvm.loop !60
 
 bb.gr:                                            ; preds = %_ZN17QArrayDataPointerIDsED2Ev.exit633, %_ZN17QArrayDataPointerIDsED2Ev.exit641, %_ZN17QArrayDataPointerIDsED2Ev.exit673, %_ZN17QArrayDataPointerIDsED2Ev.exit665, %bb.fh, %_ZN17QArrayDataPointerIDsED2Ev.exit523, %bb.ed
@@ -1111,7 +1105,7 @@ bb.gx:                                            ; preds = %bb.gv, %_ZN17QArray
   br label %bb.gy
 
 bb.gy:                                            ; preds = %bb.ju, %bb.gx
-  %.sroa.7.0 = phi i64 [ 1, %bb.gx ], [ %150, %bb.ju ] ; 5 uses
+  %.sroa.7.0 = phi i64 [ 1, %bb.gx ], [ %i.sp, %bb.ju ] ; 4 uses
   %i.oo = invoke noundef i64 @_ZNK11QJsonObject4sizeEv(ptr noundef nonnull align 8 dereferenceable_or_null(8) %67)
           to label %bb.gz unwind label %bb.hf
 
@@ -1514,10 +1508,7 @@ _ZN17QArrayDataPointerIDsED2Ev.exit853:           ; preds = %bb.jt, %_ZN17QArray
 
 bb.ju:                                            ; preds = %_ZN7QStringD2Ev.exit712, %.critedge291.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #28
-  %148 = and i64 %.sroa.7.0, -2
-  %i.sp = add i64 %148, 2
-  %149 = and i64 %.sroa.7.0, 1
-  %150 = or disjoint i64 %i.sp, %149
+  %i.sp = add i64 %.sroa.7.0, 2
   br label %bb.gy, !llvm.loop !61
 
 bb.jv:                                            ; preds = %_ZN17QArrayDataPointerIDsED2Ev.exit845, %_ZN17QArrayDataPointerIDsED2Ev.exit853, %_ZN17QArrayDataPointerIDsED2Ev.exit821, %_ZN17QArrayDataPointerIDsED2Ev.exit813, %_ZN17QArrayDataPointerIDsED2Ev.exit789, %_ZN17QArrayDataPointerIDsED2Ev.exit781, %_ZN17QArrayDataPointerIDsED2Ev.exit757, %_ZN17QArrayDataPointerIDsED2Ev.exit749, %bb.ia
@@ -1778,7 +1769,7 @@ bb.kq:                                            ; preds = %_ZN17QArrayDataPoin
   br label %bb.rm
 
 bb.kr:                                            ; preds = %.lr.ph1638, %_ZN7QStringD2Ev.exit1280
-  %.sroa.6.01637 = phi i64 [ 0, %.lr.ph1638 ], [ %153, %_ZN7QStringD2Ev.exit1280 ] ; 3 uses
+  %.sroa.6.01637 = phi i64 [ 0, %.lr.ph1638 ], [ %i.aid, %_ZN7QStringD2Ev.exit1280 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %89) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %90) #28
   store ptr %86, ptr %90, align 8
@@ -2181,11 +2172,8 @@ _ZN7QStringD2Ev.exit1280:                         ; preds = %bb.rc, %_ZN17QArray
   call void @llvm.lifetime.end.p0(ptr nonnull %91) #28
   call void @_ZN10QJsonValueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %89) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %89) #28
-  %151 = and i64 %.sroa.6.01637, -2
-  %i.aid = add i64 %151, 2                        ; 2 uses
-  %152 = and i64 %.sroa.6.01637, 1
-  %153 = or disjoint i64 %i.aid, %152
-  %.not1642 = icmp eq i64 %i.aid, %i.tf
+  %i.aid = add i64 %.sroa.6.01637, 2              ; 2 uses
+  %.not1642 = icmp eq i64 %i.tf, %i.aid
   br i1 %.not1642, label %._crit_edge, label %bb.kr
 
 bb.re:                                            ; preds = %bb.qv, %_ZN17QArrayDataPointerIDsED2Ev.exit1261, %_ZN7QStringD2Ev.exit1241, %bb.ph, %_ZN10QByteArrayD2Ev.exit1187, %_ZN17QArrayDataPointerIDsED2Ev.exit1183, %_ZN17QArrayDataPointerIDsED2Ev.exit1175, %_ZN17QArrayDataPointerIDsED2Ev.exit1167, %_ZN17QArrayDataPointerIDsED2Ev.exit1159, %_ZN17QArrayDataPointerIDsED2Ev.exit1151, %_ZN17QArrayDataPointerIDsED2Ev.exit1143, %_ZN17QArrayDataPointerIDsED2Ev.exit1135, %_ZN17QArrayDataPointerIDsED2Ev.exit1127, %_ZN17QArrayDataPointerIDsED2Ev.exit1119, %_ZN17QArrayDataPointerIDsED2Ev.exit1111

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %i.h = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.h = load i32, ptr %i.a, align 8              ; 3 uses
   %i.i = lshr i32 %i.h, 6                         ; 2 uses
   %i.j = icmp ult i32 %i.i, %i.f
   br i1 %i.j, label %bb.d, label %bb.e
@@ -214,11 +214,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !760
-  %8 = and i32 %i.h, -64
-  %i.n = add i32 %8, 64
-  %9 = and i32 %i.h, 63
-  %10 = or disjoint i32 %i.n, %9
-  store i32 %10, ptr %i.a, align 8
+  %i.n = add i32 %i.h, 64
+  store i32 %i.n, ptr %i.a, align 8
   %i.o = lshr i32 %i.h, 4
   %i.p = and i32 %i.o, 3
   %i.q = tail call noundef zeroext i1 @_ZN12rewriter_tplI19ng_push_app_ite_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.m, i32 noundef %i.p)
@@ -621,16 +618,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %_ZN12rewriter_tplI19ng_push_app_ite_cfgE18set_new_child_flagEP4expr.exit162, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.l = load i32, ptr %i.a, align 8              ; 3 uses
   %i.m = lshr i32 %i.l, 6
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !760
-  %5 = and i32 %i.l, -64
-  %i.q = add i32 %5, 64
-  %6 = and i32 %i.l, 63
-  %7 = or disjoint i32 %i.q, %6
-  store i32 %7, ptr %i.a, align 8
+  %i.q = add i32 %i.l, 64
+  store i32 %i.q, ptr %i.a, align 8
   %i.r = lshr i32 %i.l, 4
   %i.s = and i32 %i.r, 3
   %i.t = tail call noundef zeroext i1 @_ZN12rewriter_tplI19ng_push_app_ite_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.p, i32 noundef %i.s)
@@ -1033,7 +1027,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %i.h = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.h = load i32, ptr %i.a, align 8              ; 3 uses
   %i.i = lshr i32 %i.h, 6                         ; 2 uses
   %i.j = icmp ult i32 %i.i, %i.f
   br i1 %i.j, label %bb.d, label %bb.e
@@ -1042,11 +1036,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !760
-  %8 = and i32 %i.h, -64
-  %i.n = add i32 %8, 64
-  %9 = and i32 %i.h, 63
-  %10 = or disjoint i32 %i.n, %9
-  store i32 %10, ptr %i.a, align 8
+  %i.n = add i32 %i.h, 64
+  store i32 %i.n, ptr %i.a, align 8
   %i.o = lshr i32 %i.h, 4
   %i.p = and i32 %i.o, 3
   %i.q = tail call noundef zeroext i1 @_ZN12rewriter_tplI16push_app_ite_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.m, i32 noundef %i.p)
@@ -1449,16 +1440,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %_ZN12rewriter_tplI16push_app_ite_cfgE18set_new_child_flagEP4expr.exit162, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.l = load i32, ptr %i.a, align 8              ; 3 uses
   %i.m = lshr i32 %i.l, 6
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !760
-  %5 = and i32 %i.l, -64
-  %i.q = add i32 %5, 64
-  %6 = and i32 %i.l, 63
-  %7 = or disjoint i32 %i.q, %6
-  store i32 %7, ptr %i.a, align 8
+  %i.q = add i32 %i.l, 64
+  store i32 %i.q, ptr %i.a, align 8
   %i.r = lshr i32 %i.l, 4
   %i.s = and i32 %i.r, 3
   %i.t = tail call noundef zeroext i1 @_ZN12rewriter_tplI16push_app_ite_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.p, i32 noundef %i.s)
@@ -1861,7 +1849,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %i.h = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.h = load i32, ptr %i.a, align 8              ; 3 uses
   %i.i = lshr i32 %i.h, 6                         ; 2 uses
   %i.j = icmp ult i32 %i.i, %i.f
   br i1 %i.j, label %bb.d, label %bb.e
@@ -1870,11 +1858,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !760
-  %6 = and i32 %i.h, -64
-  %i.n = add i32 %6, 64
-  %7 = and i32 %i.h, 63
-  %8 = or disjoint i32 %i.n, %7
-  store i32 %8, ptr %i.a, align 8
+  %i.n = add i32 %i.h, 64
+  store i32 %i.n, ptr %i.a, align 8
   %i.o = lshr i32 %i.h, 4
   %i.p = and i32 %i.o, 3
   %i.q = tail call noundef zeroext i1 @_ZN12rewriter_tplI15elim_bounds_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.m, i32 noundef %i.p)
@@ -2277,7 +2262,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -2315,11 +2300,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i113 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %9 = and i32 %i.ba, -64
-  %i.bu = add i32 %9, 64
-  %10 = and i32 %i.ba, 63
-  %11 = or disjoint i32 %i.bu, %10
-  store i32 %11, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI15elim_bounds_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i113, i32 noundef %i.bw)
@@ -2722,16 +2704,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %_ZN12rewriter_tplI15elim_bounds_cfgE18set_new_child_flagEP4expr.exit162, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.l = load i32, ptr %i.a, align 8              ; 3 uses
   %i.m = lshr i32 %i.l, 6
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !760
-  %5 = and i32 %i.l, -64
-  %i.q = add i32 %5, 64
-  %6 = and i32 %i.l, 63
-  %7 = or disjoint i32 %i.q, %6
-  store i32 %7, ptr %i.a, align 8
+  %i.q = add i32 %i.l, 64
+  store i32 %i.q, ptr %i.a, align 8
   %i.r = lshr i32 %i.l, 4
   %i.s = and i32 %i.r, 3
   %i.t = tail call noundef zeroext i1 @_ZN12rewriter_tplI15elim_bounds_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.p, i32 noundef %i.s)
@@ -3134,7 +3113,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -3172,11 +3151,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i104 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %7 = and i32 %i.ba, -64
-  %i.bu = add i32 %7, 64
-  %8 = and i32 %i.ba, 63
-  %9 = or disjoint i32 %i.bu, %8
-  store i32 %9, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI15elim_bounds_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i104, i32 noundef %i.bw)
@@ -3579,7 +3555,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %i.h = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.h = load i32, ptr %i.a, align 8              ; 3 uses
   %i.i = lshr i32 %i.h, 6                         ; 2 uses
   %i.j = icmp ult i32 %i.i, %i.f
   br i1 %i.j, label %bb.d, label %bb.e
@@ -3588,11 +3564,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !760
-  %6 = and i32 %i.h, -64
-  %i.n = add i32 %6, 64
-  %7 = and i32 %i.h, 63
-  %8 = or disjoint i32 %i.n, %7
-  store i32 %8, ptr %i.a, align 8
+  %i.n = add i32 %i.h, 64
+  store i32 %i.n, ptr %i.a, align 8
   %i.o = lshr i32 %i.h, 4
   %i.p = and i32 %i.o, 3
   %i.q = tail call noundef zeroext i1 @_ZN12rewriter_tplI11bv_elim_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.m, i32 noundef %i.p)
@@ -3995,7 +3968,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -4033,11 +4006,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i113 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %9 = and i32 %i.ba, -64
-  %i.bu = add i32 %9, 64
-  %10 = and i32 %i.ba, 63
-  %11 = or disjoint i32 %i.bu, %10
-  store i32 %11, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI11bv_elim_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i113, i32 noundef %i.bw)
@@ -4440,16 +4410,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %_ZN12rewriter_tplI11bv_elim_cfgE18set_new_child_flagEP4expr.exit162, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.l = load i32, ptr %i.a, align 8              ; 3 uses
   %i.m = lshr i32 %i.l, 6
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !760
-  %5 = and i32 %i.l, -64
-  %i.q = add i32 %5, 64
-  %6 = and i32 %i.l, 63
-  %7 = or disjoint i32 %i.q, %6
-  store i32 %7, ptr %i.a, align 8
+  %i.q = add i32 %i.l, 64
+  store i32 %i.q, ptr %i.a, align 8
   %i.r = lshr i32 %i.l, 4
   %i.s = and i32 %i.r, 3
   %i.t = tail call noundef zeroext i1 @_ZN12rewriter_tplI11bv_elim_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.p, i32 noundef %i.s)
@@ -4852,7 +4819,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -4890,11 +4857,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i104 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %7 = and i32 %i.ba, -64
-  %i.bu = add i32 %7, 64
-  %8 = and i32 %i.ba, 63
-  %9 = or disjoint i32 %i.bu, %8
-  store i32 %9, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI11bv_elim_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i104, i32 noundef %i.bw)
@@ -5297,7 +5261,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %i.h = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.h = load i32, ptr %i.a, align 8              ; 3 uses
   %i.i = lshr i32 %i.h, 6                         ; 2 uses
   %i.j = icmp ult i32 %i.i, %i.f
   br i1 %i.j, label %bb.d, label %bb.e
@@ -5306,11 +5270,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !760
-  %8 = and i32 %i.h, -64
-  %i.n = add i32 %8, 64
-  %9 = and i32 %i.h, 63
-  %10 = or disjoint i32 %i.n, %9
-  store i32 %10, ptr %i.a, align 8
+  %i.n = add i32 %i.h, 64
+  store i32 %i.n, ptr %i.a, align 8
   %i.o = lshr i32 %i.h, 4
   %i.p = and i32 %i.o, 3
   %i.q = tail call noundef zeroext i1 @_ZN12rewriter_tplI17elim_term_ite_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.m, i32 noundef %i.p)
@@ -5713,7 +5674,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -5751,11 +5712,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i113 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %9 = and i32 %i.ba, -64
-  %i.bu = add i32 %9, 64
-  %10 = and i32 %i.ba, 63
-  %11 = or disjoint i32 %i.bu, %10
-  store i32 %11, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI17elim_term_ite_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i113, i32 noundef %i.bw)
@@ -6158,16 +6116,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %_ZN12rewriter_tplI17elim_term_ite_cfgE18set_new_child_flagEP4expr.exit162, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.l = load i32, ptr %i.a, align 8              ; 3 uses
   %i.m = lshr i32 %i.l, 6
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !760
-  %5 = and i32 %i.l, -64
-  %i.q = add i32 %5, 64
-  %6 = and i32 %i.l, 63
-  %7 = or disjoint i32 %i.q, %6
-  store i32 %7, ptr %i.a, align 8
+  %i.q = add i32 %i.l, 64
+  store i32 %i.q, ptr %i.a, align 8
   %i.r = lshr i32 %i.l, 4
   %i.s = and i32 %i.r, 3
   %i.t = tail call noundef zeroext i1 @_ZN12rewriter_tplI17elim_term_ite_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.p, i32 noundef %i.s)
@@ -6570,7 +6525,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -6608,11 +6563,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i104 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %7 = and i32 %i.ba, -64
-  %i.bu = add i32 %7, 64
-  %8 = and i32 %i.ba, 63
-  %9 = or disjoint i32 %i.bu, %8
-  store i32 %9, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI17elim_term_ite_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i104, i32 noundef %i.bw)
@@ -7015,7 +6967,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %i.h = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.h = load i32, ptr %i.a, align 8              ; 3 uses
   %i.i = lshr i32 %i.h, 6                         ; 2 uses
   %i.j = icmp ult i32 %i.i, %i.f
   br i1 %i.j, label %bb.d, label %bb.e
@@ -7024,11 +6976,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !760
-  %6 = and i32 %i.h, -64
-  %i.n = add i32 %6, 64
-  %7 = and i32 %i.h, 63
-  %8 = or disjoint i32 %i.n, %7
-  store i32 %8, ptr %i.a, align 8
+  %i.n = add i32 %i.h, 64
+  store i32 %i.n, ptr %i.a, align 8
   %i.o = lshr i32 %i.h, 4
   %i.p = and i32 %i.o, 3
   %i.q = tail call noundef zeroext i1 @_ZN12rewriter_tplI21pattern_inference_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.m, i32 noundef %i.p)
@@ -7431,7 +7380,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -7469,11 +7418,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i113 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %9 = and i32 %i.ba, -64
-  %i.bu = add i32 %9, 64
-  %10 = and i32 %i.ba, 63
-  %11 = or disjoint i32 %i.bu, %10
-  store i32 %11, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI21pattern_inference_cfgE5visitILb1EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i113, i32 noundef %i.bw)
@@ -7876,16 +7822,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %_ZN12rewriter_tplI21pattern_inference_cfgE18set_new_child_flagEP4expr.exit162, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %i.a, align 8              ; 4 uses
+  %i.l = load i32, ptr %i.a, align 8              ; 3 uses
   %i.m = lshr i32 %i.l, 6
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !760
-  %5 = and i32 %i.l, -64
-  %i.q = add i32 %5, 64
-  %6 = and i32 %i.l, 63
-  %7 = or disjoint i32 %i.q, %6
-  store i32 %7, ptr %i.a, align 8
+  %i.q = add i32 %i.l, 64
+  store i32 %i.q, ptr %i.a, align 8
   %i.r = lshr i32 %i.l, 4
   %i.s = and i32 %i.r, 3
   %i.t = tail call noundef zeroext i1 @_ZN12rewriter_tplI21pattern_inference_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %i.p, i32 noundef %i.s)
@@ -8288,7 +8231,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK10quantifier9get_childEj.exit, %bb.i
-  %i.ba = load i32, ptr %i.c, align 8             ; 4 uses
+  %i.ba = load i32, ptr %i.c, align 8             ; 3 uses
   %i.bb = lshr i32 %i.ba, 6                       ; 5 uses
   %i.bc = icmp ult i32 %i.bb, %i.ax
   br i1 %i.bc, label %bb.k, label %bb.o
@@ -8326,11 +8269,8 @@ bb.n:                                             ; preds = %bb.l
 _ZNK10quantifier9get_childEj.exit:                ; preds = %bb.k, %bb.m, %bb.n
   %.0.in.i = phi ptr [ %i.bt, %bb.n ], [ %i.bl, %bb.m ], [ %i.az, %bb.k ]
   %.0.i104 = load ptr, ptr %.0.in.i, align 8, !tbaa !760
-  %7 = and i32 %i.ba, -64
-  %i.bu = add i32 %7, 64
-  %8 = and i32 %i.ba, 63
-  %9 = or disjoint i32 %i.bu, %8
-  store i32 %9, ptr %i.c, align 8
+  %i.bu = add i32 %i.ba, 64
+  store i32 %i.bu, ptr %i.c, align 8
   %i.bv = lshr i32 %i.ba, 4
   %i.bw = and i32 %i.bv, 3
   %i.bx = tail call noundef zeroext i1 @_ZN12rewriter_tplI21pattern_inference_cfgE5visitILb0EEEbP4exprj(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %.0.i104, i32 noundef %i.bw)
