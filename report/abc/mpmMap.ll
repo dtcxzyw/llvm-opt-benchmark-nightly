@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.h
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv ; 2 uses
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !12 ; 2 uses
-  %i.ai = load i32, ptr %i.q, align 4             ; 3 uses
+  %i.ai = load i32, ptr %i.q, align 4             ; 2 uses
   %i.aj = lshr i32 %i.ai, 27                      ; 6 uses
   %.not.i = icmp eq i32 %i.aj, 0
   br i1 %.not.i, label %Mpm_CutFindLeaf.exit, label %.lr.ph.preheader.i
@@ -243,11 +243,8 @@ Mpm_CutFindLeaf.exit.thread:                      ; preds = %bb.d, %Mpm_CutFindL
   br i1 %i.aq, label %Vec_IntSelectSort.exit, label %bb.e
 
 bb.e:                                             ; preds = %Mpm_CutFindLeaf.exit.thread
-  %4 = and i32 %i.ai, -134217728
-  %i.ar = add i32 %4, 134217728
-  %5 = and i32 %i.ai, 134217727
-  %6 = or disjoint i32 %i.ar, %5
-  store i32 %6, ptr %i.q, align 4
+  %i.ar = add i32 %i.ai, 134217728
+  store i32 %i.ar, ptr %i.q, align 4
   %i.as = zext nneg i32 %i.aj to i64
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.as
   store i32 %i.ah, ptr %i.at, align 4, !tbaa !12
@@ -309,7 +306,7 @@ bb.j:                                             ; preds = %bb.o, %.lr.ph.1
   %indvars.iv.1 = phi i64 [ 0, %.lr.ph.1 ], [ %indvars.iv.next.1, %bb.o ] ; 3 uses
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %indvars.iv.1 ; 2 uses
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !12 ; 2 uses
-  %i.bv = load i32, ptr %i.q, align 4             ; 3 uses
+  %i.bv = load i32, ptr %i.q, align 4             ; 2 uses
   %i.bw = lshr i32 %i.bv, 27                      ; 6 uses
   %.not.i.1 = icmp eq i32 %i.bw, 0
   br i1 %.not.i.1, label %Mpm_CutFindLeaf.exit.1, label %.lr.ph.preheader.i.1
@@ -347,11 +344,8 @@ Mpm_CutFindLeaf.exit.1.thread:                    ; preds = %bb.k, %Mpm_CutFindL
   br i1 %i.cd, label %Vec_IntSelectSort.exit, label %bb.l
 
 bb.l:                                             ; preds = %Mpm_CutFindLeaf.exit.1.thread
-  %7 = and i32 %i.bv, -134217728
-  %i.ce = add i32 %7, 134217728
-  %8 = and i32 %i.bv, 134217727
-  %9 = or disjoint i32 %i.ce, %8
-  store i32 %9, ptr %i.q, align 4
+  %i.ce = add i32 %i.bv, 134217728
+  store i32 %i.ce, ptr %i.q, align 4
   %i.cf = zext nneg i32 %i.bw to i64
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.cf
   store i32 %i.bu, ptr %i.cg, align 4, !tbaa !12
@@ -402,7 +396,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %.lr.ph119, %bb.s
   %i.dc = phi i32 [ %i.da, %.lr.ph119 ], [ %i.dr, %bb.s ]
-  %i.dd = phi i32 [ %i.t, %.lr.ph119 ], [ %i.ds, %bb.s ] ; 4 uses
+  %i.dd = phi i32 [ %i.t, %.lr.ph119 ], [ %i.ds, %bb.s ] ; 3 uses
   %indvars.iv134 = phi i64 [ 0, %.lr.ph119 ], [ %indvars.iv.next135, %bb.s ] ; 2 uses
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %indvars.iv134
   %i.df = load i32, ptr %i.de, align 4, !tbaa !12 ; 2 uses
@@ -438,11 +432,8 @@ Mpm_CutFindLeaf.exit101.thread:                   ; preds = %bb.q, %bb.p, %Mpm_C
   br i1 %i.dn, label %Vec_IntSelectSort.exit, label %bb.r
 
 bb.r:                                             ; preds = %Mpm_CutFindLeaf.exit101.thread
-  %10 = and i32 %i.dd, -134217728
-  %i.do = add i32 %10, 134217728
-  %11 = and i32 %i.dd, 134217727
-  %12 = or disjoint i32 %i.do, %11                ; 2 uses
-  store i32 %12, ptr %i.q, align 4
+  %i.do = add i32 %i.dd, 134217728                ; 2 uses
+  store i32 %i.do, ptr %i.q, align 4
   %i.dp = zext nneg i32 %i.dg to i64
   %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.dp
   store i32 %i.df, ptr %i.dq, align 4, !tbaa !12
@@ -451,7 +442,7 @@ bb.r:                                             ; preds = %Mpm_CutFindLeaf.exi
 
 bb.s:                                             ; preds = %Mpm_CutFindLeaf.exit101, %bb.r
   %i.dr = phi i32 [ %i.dc, %Mpm_CutFindLeaf.exit101 ], [ %.pre139, %bb.r ] ; 2 uses
-  %i.ds = phi i32 [ %i.dd, %Mpm_CutFindLeaf.exit101 ], [ %12, %bb.r ] ; 2 uses
+  %i.ds = phi i32 [ %i.dd, %Mpm_CutFindLeaf.exit101 ], [ %i.do, %bb.r ] ; 2 uses
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1 ; 2 uses
   %i.dt = lshr i32 %i.dr, 27
   %i.du = zext nneg i32 %i.dt to i64
@@ -475,7 +466,7 @@ bb.s:                                             ; preds = %Mpm_CutFindLeaf.exi
 
 bb.t:                                             ; preds = %bb.w, %.lr.ph119.1
   %i.eb = phi i32 [ %i.dz, %.lr.ph119.1 ], [ %i.eq, %bb.w ]
-  %i.ec = phi i32 [ %i.dw, %.lr.ph119.1 ], [ %i.er, %bb.w ] ; 4 uses
+  %i.ec = phi i32 [ %i.dw, %.lr.ph119.1 ], [ %i.er, %bb.w ] ; 3 uses
   %indvars.iv134.1 = phi i64 [ 0, %.lr.ph119.1 ], [ %indvars.iv.next135.1, %bb.w ] ; 2 uses
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.ea, i64 %indvars.iv134.1
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !12 ; 2 uses
@@ -511,11 +502,8 @@ Mpm_CutFindLeaf.exit101.1.thread:                 ; preds = %bb.u, %bb.t, %Mpm_C
   br i1 %i.em, label %Vec_IntSelectSort.exit, label %bb.v
 
 bb.v:                                             ; preds = %Mpm_CutFindLeaf.exit101.1.thread
-  %13 = and i32 %i.ec, -134217728
-  %i.en = add i32 %13, 134217728
-  %14 = and i32 %i.ec, 134217727
-  %15 = or disjoint i32 %i.en, %14                ; 2 uses
-  store i32 %15, ptr %i.q, align 4
+  %i.en = add i32 %i.ec, 134217728                ; 2 uses
+  store i32 %i.en, ptr %i.q, align 4
   %i.eo = zext nneg i32 %i.ef to i64
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.eo
   store i32 %i.ee, ptr %i.ep, align 4, !tbaa !12
@@ -524,7 +512,7 @@ bb.v:                                             ; preds = %Mpm_CutFindLeaf.exi
 
 bb.w:                                             ; preds = %bb.v, %Mpm_CutFindLeaf.exit101.1
   %i.eq = phi i32 [ %.pre140, %bb.v ], [ %i.eb, %Mpm_CutFindLeaf.exit101.1 ] ; 2 uses
-  %i.er = phi i32 [ %15, %bb.v ], [ %i.ec, %Mpm_CutFindLeaf.exit101.1 ]
+  %i.er = phi i32 [ %i.en, %bb.v ], [ %i.ec, %Mpm_CutFindLeaf.exit101.1 ]
   %indvars.iv.next135.1 = add nuw nsw i64 %indvars.iv134.1, 1 ; 2 uses
   %i.es = lshr i32 %i.eq, 27
   %i.et = zext nneg i32 %i.es to i64

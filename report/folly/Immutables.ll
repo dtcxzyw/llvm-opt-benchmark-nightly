@@ -205,12 +205,9 @@ _ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cxx1112basic_str
   store ptr %i.eb, ptr %5, align 8, !tbaa !48
   store i64 0, ptr %i.ei, align 8, !tbaa !50
   store i8 0, ptr %i.eb, align 8, !tbaa !43
-  %i.el = load i64, ptr %i.a, align 8, !tbaa !37  ; 2 uses
-  %6 = and i64 %i.el, -256
-  %i.em = add i64 %6, 256
-  %7 = and i64 %i.el, 255
-  %8 = or disjoint i64 %i.em, %7
-  store i64 %8, ptr %i.a, align 8, !tbaa !37
+  %i.el = load i64, ptr %i.a, align 8, !tbaa !37
+  %i.em = add i64 %i.el, 256
+  store i64 %i.em, ptr %i.a, align 8, !tbaa !37
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZNK5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS8_EEbRKT_RKj.exit.thread, %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEEEE13insertAtBlankIJS9_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmEDpOT_.exit
@@ -613,12 +610,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %_ZN5folly3f146detai
   %.sroa.0.1 = lshr i32 %.sroa.0.060, %.pn        ; 2 uses
   %.sroa.8.1 = add i32 %.sroa.8.1.in, 1
   store i8 %i.bz, ptr %i.bv, align 1, !tbaa !43
-  %i.ca = load i64, ptr %i.d, align 8, !tbaa !37  ; 2 uses
-  %3 = and i64 %i.ca, -256
-  %i.cb = add i64 %3, 256
-  %4 = and i64 %i.ca, 255
-  %5 = or disjoint i64 %i.cb, %4                  ; 2 uses
-  store i64 %5, ptr %i.d, align 8, !tbaa !37
+  %i.ca = load i64, ptr %i.d, align 8, !tbaa !37
+  %i.cb = add i64 %i.ca, 256                      ; 2 uses
+  store i64 %i.cb, ptr %i.d, align 8, !tbaa !37
   %i.cc = add i64 %.03561, 1
   %.not57 = icmp eq i32 %.sroa.0.1, 0
   br i1 %.not57, label %._crit_edge.loopexit, label %bb.i, !llvm.loop !147
@@ -629,7 +623,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %_ZN5folly3f146detai
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
   %i.cd = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.as, %bb.h ] ; 2 uses
-  %i.ce = phi i64 [ %5, %._crit_edge.loopexit ], [ %i.at, %bb.h ] ; 2 uses
+  %i.ce = phi i64 [ %i.cb, %._crit_edge.loopexit ], [ %i.at, %bb.h ] ; 2 uses
   %i.cf = getelementptr inbounds i8, ptr %.037, i64 -64
   %i.cg = getelementptr inbounds i8, ptr %.036, i64 -64
   %.not.unshifted = xor i64 %i.cd, %i.ce
@@ -839,12 +833,9 @@ bb.m:                                             ; preds = %._crit_edge.i
   call void @llvm.assume(i1 %i.ci)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   store i32 %i.av, ptr %i.ch, align 4, !tbaa !34
-  %i.cj = load i64, ptr %i.a, align 8, !tbaa !37  ; 2 uses
-  %4 = and i64 %i.cj, -256
-  %i.ck = add i64 %4, 256
-  %5 = and i64 %i.cj, 255
-  %6 = or disjoint i64 %i.ck, %5
-  store i64 %6, ptr %i.a, align 8, !tbaa !37
+  %i.cj = load i64, ptr %i.a, align 8, !tbaa !37
+  %i.ck = add i64 %i.cj, 256
+  store i64 %i.ck, ptr %i.a, align 8, !tbaa !37
   %.not134 = icmp eq i32 %.sroa.093.2, 0
   br i1 %.not134, label %.loopexit, label %.lr.ph159, !llvm.loop !149
 
@@ -1128,12 +1119,9 @@ bb.z:                                             ; preds = %._crit_edge.i71
   call void @llvm.assume(i1 %i.ii)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ih) ]
   store i32 %i.ct, ptr %i.ih, align 4, !tbaa !34
-  %i.ij = load i64, ptr %i.a, align 8, !tbaa !37  ; 2 uses
-  %7 = and i64 %i.ij, -256
-  %i.ik = add i64 %7, 256
-  %8 = and i64 %i.ij, 255
-  %9 = or disjoint i64 %i.ik, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !37
+  %i.ij = load i64, ptr %i.a, align 8, !tbaa !37
+  %i.ik = add i64 %i.ij, 256
+  store i64 %i.ik, ptr %i.a, align 8, !tbaa !37
   %.not133 = icmp eq i32 %.sroa.093.3, 0
   br i1 %.not133, label %.loopexit, label %.lr.ph155, !llvm.loop !150
 

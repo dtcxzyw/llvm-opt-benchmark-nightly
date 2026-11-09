@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca i64, align 8                      ; 5 uses
-  %i.e = load i32, ptr %1, align 4                ; 6 uses
+  %i.e = load i32, ptr %1, align 4                ; 5 uses
   %i.f = and i32 %i.e, 4
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.c, label %bb.b, !prof !37
@@ -231,9 +231,8 @@ bb.c:                                             ; preds = %bb.a
   %i.t = add nuw nsw i64 %i.j, %i.n
   %i.u = add nuw nsw i64 %i.t, %i.m
   %i.v = add nuw nsw i64 %i.u, %i.s               ; 2 uses
-  %5 = and i32 %i.e, -8
-  %i.w = add i32 %5, 8                            ; 2 uses
-  %i.x = lshr exact i32 %i.w, 3                   ; 2 uses
+  %i.w = add i32 %i.e, 8
+  %i.x = lshr i32 %i.w, 3                         ; 2 uses
   %i.y = zext nneg i32 %i.x to i64                ; 2 uses
   %i.z = add nuw nsw i64 %i.y, 4
   %i.aa = xor i32 %i.x, 3
@@ -244,9 +243,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ae = add nuw nsw i64 %i.z, %i.ad
   %i.af = add nuw nsw i64 %i.ae, %i.s
   %i.ag = add nuw nsw i64 %i.af, %i.ac            ; 3 uses
-  %6 = or i32 %i.e, -8
-  %7 = add i32 %6, %i.w
-  store i32 %7, ptr %1, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24
   %i.ah = call ptr @zmalloc_usable(i64 noundef 8, ptr noundef nonnull %i.d) #24 ; 5 uses
   %i.ai = icmp eq ptr %i.ah, null
@@ -393,17 +389,14 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.pre-phi109 = phi i64 [ %.pre108, %bb.n ], [ %i.cb, %bb.m ]
-  %i.ce = phi i32 [ %.pre102, %bb.n ], [ %i.bn, %bb.m ] ; 2 uses
+  %i.ce = phi i32 [ %.pre102, %bb.n ], [ %i.bn, %bb.m ]
   %i.cf = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.bw ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 1
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.cg, ptr nonnull align 1 %i.cf, i64 %.pre-phi109, i1 false)
   store i8 %2, ptr %i.cf, align 1, !tbaa !38
-  %8 = and i32 %i.ce, -8
-  %i.ch = add i32 %8, 8                           ; 2 uses
-  %9 = and i32 %i.ce, 7
-  %10 = or disjoint i32 %i.ch, %9
-  store i32 %10, ptr %i.ao, align 4
-  %i.ci = lshr exact i32 %i.ch, 3                 ; 2 uses
+  %i.ch = add i32 %i.ce, 8                        ; 2 uses
+  store i32 %i.ch, ptr %i.ao, align 4
+  %i.ci = lshr i32 %i.ch, 3                       ; 2 uses
   %i.cj = zext nneg i32 %i.ci to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.cj
   %i.cl = xor i32 %i.ci, 3

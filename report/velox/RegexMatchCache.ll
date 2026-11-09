@@ -205,12 +205,9 @@ bb.x:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit.i
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit.i: ; preds = %bb.x, %_ZN5folly3f146detail8F14ChunkISt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEEE6setTagEmm.exit.i
-  %i.ef = load i64, ptr %i.at, align 8, !tbaa !20233, !noalias !22336 ; 2 uses
-  %9 = and i64 %i.ef, -256
-  %i.eg = add i64 %9, 256
-  %10 = and i64 %i.ef, 255
-  %11 = or disjoint i64 %i.eg, %10
-  store i64 %11, ptr %i.at, align 8, !tbaa !20233, !noalias !22336
+  %i.ef = load i64, ptr %i.at, align 8, !tbaa !20233, !noalias !22336
+  %i.eg = add i64 %i.ef, 256
+  store i64 %i.eg, ptr %i.at, align 8, !tbaa !20233, !noalias !22336
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE19tryEmplaceValueImplISB_JRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkISP_ISL_SD_EEEEEbESP_ImmERKT_DpOT0_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE19tryEmplaceValueImplISB_JRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkISP_ISL_SD_EEEEEbESP_ImmERKT_DpOT0_.exit: ; preds = %bb.n, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit.i
@@ -489,7 +486,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit.i: ; preds = %bb.ap
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.iq, i64 %i.il
   %i.is = icmp ne ptr %.1.i126, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.is)
-  %i.it = load i64, ptr %i.ba, align 8, !tbaa !20233, !noalias !22338 ; 3 uses
+  %i.it = load i64, ptr %i.ba, align 8, !tbaa !20233, !noalias !22338 ; 2 uses
   %i.iu = lshr i64 %i.it, 8                       ; 2 uses
   %i.iv = trunc i64 %i.iu to i32
   store i32 %i.iv, ptr %i.ir, align 4, !tbaa !20326, !noalias !22338
@@ -498,11 +495,8 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit.i: ; preds = %bb.ap
   %i.iy = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %i.ix
   %i.iz = load ptr, ptr %.sroa.055.087, align 8, !tbaa !20303, !noalias !22338
   store ptr %i.iz, ptr %i.iy, align 8, !tbaa !20303, !noalias !22338
-  %12 = and i64 %i.it, -256
-  %i.ja = add i64 %12, 256
-  %13 = and i64 %i.it, 255
-  %14 = or disjoint i64 %i.ja, %13
-  store i64 %14, ptr %i.ba, align 8, !tbaa !20233, !noalias !22338
+  %i.ja = add i64 %i.it, 256
+  store i64 %i.ja, ptr %i.ba, align 8, !tbaa !20233, !noalias !22338
   br label %.noexc46
 
 .noexc46:                                         ; preds = %bb.ah, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit.i
@@ -905,12 +899,9 @@ bb.f:                                             ; preds = %_ZN5folly15catch_ex
 
 _ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_18RegexMatchCacheKeyENS_15RegexMatchCache17RegexToMatchEntryEvvvEEE29adjustSizeAndBeginAfterInsertENS1_11F14ItemIterIPNS1_8F14ChunkIPSt4pairIKS4_S6_EEEEE.exit: ; preds = %_ZN5folly15catch_exceptionIZNS_3f146detail8F14TableINS2_19NodeContainerPolicyINS_18RegexMatchCacheKeyENS_15RegexMatchCache17RegexToMatchEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKS5_EESE_IJEEEEEvNS2_11F14ItemIterIPNS2_8F14ChunkIPSt4pairISF_S7_EEEEESL_ImmEDpOT_EUlvE_PFvPS9_SQ_SR_EJSW_RSQ_RSR_EvEET2_OT_OT0_DpOT1_.exit, %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.v, -256
-  %i.w = add i64 %8, 256
-  %9 = and i64 %i.v, 255
-  %10 = or disjoint i64 %i.w, %9
-  store i64 %10, ptr %i.u, align 8, !tbaa !20233
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !20233
+  %i.w = add i64 %i.v, 256
+  store i64 %i.w, ptr %i.u, align 8, !tbaa !20233
   ret void
 }
 
@@ -1313,12 +1304,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNS_18RegexMatchCacheKeyEmvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKS6_EESD_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISE_mEEEEESK_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNS_18RegexMatchCacheKeyEmvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKS6_EESD_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISE_mEEEEESK_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKPKNS_18RegexMatchCacheKeyEmEE6setTagEmm.exit, %bb.n
-  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.cc, -256
-  %i.cd = add i64 %8, 256
-  %9 = and i64 %i.cc, 255
-  %10 = or disjoint i64 %i.cd, %9
-  store i64 %10, ptr %i.a, align 8, !tbaa !20233
+  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233
+  %i.cd = add i64 %i.cc, 256
+  store i64 %i.cd, ptr %i.a, align 8, !tbaa !20233
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNS_18RegexMatchCacheKeyEmvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKS6_EESD_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISE_mEEEEESK_ImmEDpOT_.exit
@@ -1721,12 +1709,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyImPKNS_18RegexMatchCacheKeyEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKmEESD_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISE_S6_EEEEESK_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyImPKNS_18RegexMatchCacheKeyEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKmEESD_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISE_S6_EEEEESK_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKmPKNS_18RegexMatchCacheKeyEEE6setTagEmm.exit, %bb.n
-  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.cc, -256
-  %i.cd = add i64 %8, 256
-  %9 = and i64 %i.cc, 255
-  %10 = or disjoint i64 %i.cd, %9
-  store i64 %10, ptr %i.a, align 8, !tbaa !20233
+  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233
+  %i.cd = add i64 %i.cc, 256
+  store i64 %i.cd, ptr %i.a, align 8, !tbaa !20233
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyImPKNS_18RegexMatchCacheKeyEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKmEESD_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISE_S6_EEEEESK_ImmEDpOT_.exit
@@ -2129,12 +2114,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cl, align 8, !tbaa !20259
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cg, i64 24
   store i64 0, ptr %i.cm, align 8, !tbaa !20233
-  %i.cn = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.cn, -256
-  %i.co = add i64 %8, 256
-  %9 = and i64 %i.cn, 255
-  %10 = or disjoint i64 %i.co, %9
-  store i64 %10, ptr %i.a, align 8, !tbaa !20233
+  %i.cn = load i64, ptr %i.a, align 8, !tbaa !20233
+  %i.co = add i64 %i.cn, 256
+  store i64 %i.co, ptr %i.a, align 8, !tbaa !20233
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -2537,12 +2519,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEEE6setTagEmm.exit, %bb.n
-  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.cc, -256
-  %i.cd = add i64 %8, 256
-  %9 = and i64 %i.cc, 255
-  %10 = or disjoint i64 %i.cd, %9
-  store i64 %10, ptr %i.a, align 8, !tbaa !20233
+  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233
+  %i.cd = add i64 %i.cc, 256
+  store i64 %i.cd, ptr %i.a, align 8, !tbaa !20233
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit
@@ -2945,7 +2924,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %i.bt ; 2 uses
   %i.ca = icmp ne ptr %.1, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.ca)
-  %i.cb = load i64, ptr %i.a, align 8, !tbaa !20233 ; 3 uses
+  %i.cb = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
   %i.cc = lshr i64 %i.cb, 8                       ; 2 uses
   %i.cd = trunc i64 %i.cc to i32
   store i32 %i.cd, ptr %i.bz, align 4, !tbaa !20326
@@ -2954,11 +2933,8 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %i.cf
   %i.ch = load ptr, ptr %5, align 8, !tbaa !20303
   store ptr %i.ch, ptr %i.cg, align 8, !tbaa !20303
-  %6 = and i64 %i.cb, -256
-  %i.ci = add i64 %6, 256
-  %7 = and i64 %i.cb, 255
-  %8 = or disjoint i64 %i.ci, %7
-  store i64 %8, ptr %i.a, align 8, !tbaa !20233
+  %i.ci = add i64 %i.cb, 256
+  store i64 %i.ci, ptr %i.a, align 8, !tbaa !20233
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -3361,12 +3337,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache17MatchToRegexEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache17MatchToRegexEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache17MatchToRegexEntryEEE6setTagEmm.exit, %bb.n
-  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.cc, -256
-  %i.cd = add i64 %8, 256
-  %9 = and i64 %i.cc, 255
-  %10 = or disjoint i64 %i.cd, %9
-  store i64 %10, ptr %i.a, align 8, !tbaa !20233
+  %i.cc = load i64, ptr %i.a, align 8, !tbaa !20233
+  %i.cd = add i64 %i.cc, 256
+  store i64 %i.cd, ptr %i.a, align 8, !tbaa !20233
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache17MatchToRegexEntryEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKSB_EESK_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairISL_SD_EEEEESR_ImmEDpOT_.exit
@@ -3769,12 +3742,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cl, align 8, !tbaa !20259
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cg, i64 24
   store i64 0, ptr %i.cm, align 8, !tbaa !20233
-  %i.cn = load i64, ptr %i.a, align 8, !tbaa !20233 ; 2 uses
-  %8 = and i64 %i.cn, -256
-  %i.co = add i64 %8, 256
-  %9 = and i64 %i.cn, 255
-  %10 = or disjoint i64 %i.co, %9
-  store i64 %10, ptr %i.a, align 8, !tbaa !20233
+  %i.cn = load i64, ptr %i.a, align 8, !tbaa !20233
+  %i.co = add i64 %i.cn, 256
+  store i64 %i.co, ptr %i.a, align 8, !tbaa !20233
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -4177,7 +4147,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit.i: ; preds = %bb.ba
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %i.gg
   %i.gn = icmp ne ptr %.1.i, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.gn)
-  %i.go = load i64, ptr %i.cm, align 8, !tbaa !20233, !noalias !22698 ; 3 uses
+  %i.go = load i64, ptr %i.cm, align 8, !tbaa !20233, !noalias !22698 ; 2 uses
   %i.gp = lshr i64 %i.go, 8                       ; 2 uses
   %i.gq = trunc i64 %i.gp to i32
   store i32 %i.gq, ptr %i.gm, align 4, !tbaa !20326, !noalias !22698
@@ -4186,11 +4156,8 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit.i: ; preds = %bb.ba
   %i.gt = getelementptr inbounds nuw [8 x i8], ptr %i.gr, i64 %i.gs
   %i.gu = load ptr, ptr %.sroa.0414.0703, align 8, !tbaa !20303, !noalias !22698
   store ptr %i.gu, ptr %i.gt, align 8, !tbaa !20303, !noalias !22698
-  %19 = and i64 %i.go, -256
-  %i.gv = add i64 %19, 256
-  %20 = and i64 %i.go, 255
-  %21 = or disjoint i64 %i.gv, %20
-  store i64 %21, ptr %i.cm, align 8, !tbaa !20233, !noalias !22698
+  %i.gv = add i64 %i.go, 256
+  store i64 %i.gv, ptr %i.cm, align 8, !tbaa !20233, !noalias !22698
   br label %.noexc289
 
 .noexc289:                                        ; preds = %bb.as, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit.i

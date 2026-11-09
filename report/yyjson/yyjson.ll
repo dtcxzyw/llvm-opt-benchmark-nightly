@@ -205,7 +205,7 @@ bb.bn:                                            ; preds = %unsafe_yyjson_mut_v
   br i1 %.not245, label %yyjson_mut_obj_add.exit303, label %yyjson_mut_is_obj.exit316
 
 yyjson_mut_is_obj.exit316:                        ; preds = %bb.bn
-  %i.hz = load i64, ptr %.1191795, align 8, !tbaa !99 ; 4 uses
+  %i.hz = load i64, ptr %.1191795, align 8, !tbaa !99 ; 3 uses
   %i.ia = and i64 %i.hz, 7
   %i.ib = icmp eq i64 %i.ia, 7
   br i1 %i.ib, label %bb.bo, label %yyjson_mut_obj_add.exit303, !prof !62
@@ -238,11 +238,8 @@ unsafe_yyjson_mut_obj_add.exit:                   ; preds = %bb.bp, %bb.bq
   store ptr %i.hv, ptr %i.im, align 8, !tbaa !104
   %i.in = getelementptr inbounds nuw i8, ptr %.1191795, i64 8
   store ptr %.sink1109, ptr %i.in, align 8, !tbaa !100
-  %9 = and i64 %i.hz, 255
-  %10 = and i64 %i.hz, -256
-  %i.io = add i64 %10, 256
-  %11 = or disjoint i64 %i.io, %9
-  store i64 %11, ptr %.1191795, align 8, !tbaa !99
+  %i.io = add i64 %i.hz, 256
+  store i64 %i.io, ptr %.1191795, align 8, !tbaa !99
   br label %yyjson_mut_obj_add.exit303
 
 yyjson_mut_obj_add.exit303:                       ; preds = %yyjson_mut_is_obj.exit316, %unsafe_yyjson_mut_obj_add.exit, %bb.bo, %bb.bn
@@ -366,7 +363,7 @@ bb.bz:                                            ; preds = %bb.by
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %ptr_next_token.exit265, %ptr_mut_obj_get.exit.thread, %bb.ac
-  %i.jr = phi i64 [ %i.af, %bb.ac ], [ %i.af, %ptr_mut_obj_get.exit.thread ], [ %i.fp, %ptr_next_token.exit265 ], [ %.pre928, %.loopexit.loopexit ] ; 11 uses
+  %i.jr = phi i64 [ %i.af, %bb.ac ], [ %i.af, %ptr_mut_obj_get.exit.thread ], [ %i.fp, %ptr_next_token.exit265 ], [ %.pre928, %.loopexit.loopexit ] ; 10 uses
   %.0419468475 = phi ptr [ %.0419, %bb.ac ], [ null, %ptr_mut_obj_get.exit.thread ], [ %.0419468474, %ptr_next_token.exit265 ], [ %.0419468474, %.loopexit.loopexit ] ; 8 uses
   %.1417469473 = phi i8 [ %.1417, %bb.ac ], [ %.1417.ph, %ptr_mut_obj_get.exit.thread ], [ %.1417469472, %ptr_next_token.exit265 ], [ %.1417469472, %.loopexit.loopexit ] ; 2 uses
   %.3431 = phi i64 [ %.6434, %bb.ac ], [ %.6434890, %ptr_mut_obj_get.exit.thread ], [ %.1429, %ptr_next_token.exit265 ], [ %.4432, %.loopexit.loopexit ] ; 7 uses
@@ -769,11 +766,8 @@ bb.dl:                                            ; preds = %bb.dk
   br label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl, %bb.dk
-  %12 = and i64 %i.jr, 255
-  %13 = and i64 %i.jr, -256
-  %i.pq = add i64 %13, 256
-  %14 = or disjoint i64 %i.pq, %12
-  store i64 %14, ptr %.2192, align 8, !tbaa !99
+  %i.pq = add i64 %i.jr, 256
+  store i64 %i.pq, ptr %.2192, align 8, !tbaa !99
   br label %.critedge253
 
 bb.dn:                                            ; preds = %bb.dj
@@ -907,7 +901,7 @@ bb.ed:                                            ; preds = %bb.ec
 
 bb.ee:                                            ; preds = %.critedge253
   %.not239 = icmp eq ptr %.3185, null
-  %i.rh = load i64, ptr %.3189, align 8, !tbaa !99 ; 7 uses
+  %i.rh = load i64, ptr %.3189, align 8, !tbaa !99 ; 5 uses
   %i.ri = and i64 %i.rh, 7                        ; 2 uses
   br i1 %.not239, label %yyjson_mut_is_arr.exit321, label %yyjson_mut_is_obj.exit318
 
@@ -945,11 +939,8 @@ unsafe_yyjson_mut_obj_add.exit306:                ; preds = %bb.eg, %bb.eh
   store ptr %.3, ptr %i.rv, align 8, !tbaa !104
   %i.rw = getelementptr inbounds nuw i8, ptr %.3189, i64 8
   store ptr %.3185, ptr %i.rw, align 8, !tbaa !100
-  %15 = and i64 %i.rh, 255
-  %16 = and i64 %i.rh, -256
-  %i.rx = add i64 %16, 256
-  %17 = or disjoint i64 %i.rx, %15
-  store i64 %17, ptr %.3189, align 8, !tbaa !99
+  %i.rx = add i64 %i.rh, 256
+  store i64 %i.rx, ptr %.3189, align 8, !tbaa !99
   br label %yyjson_mut_obj_add.exit
 
 yyjson_mut_is_arr.exit321:                        ; preds = %bb.ee
@@ -959,11 +950,8 @@ yyjson_mut_is_arr.exit321:                        ; preds = %bb.ee
   br i1 %i.sa, label %bb.ei, label %yyjson_mut_obj_add.exit, !prof !62
 
 bb.ei:                                            ; preds = %yyjson_mut_is_arr.exit321
-  %18 = and i64 %i.rh, 254
-  %19 = and i64 %i.rh, -256
-  %i.sb = add i64 %19, 256
-  %20 = or disjoint i64 %i.sb, %18
-  store i64 %20, ptr %.3189, align 8, !tbaa !99
+  %i.sb = add i64 %i.rh, 256
+  store i64 %i.sb, ptr %.3189, align 8, !tbaa !99
   %i.sc = icmp ult i64 %i.rh, 256
   br i1 %i.sc, label %bb.ek, label %bb.ej
 
@@ -1366,7 +1354,7 @@ unsafe_yyjson_equals_strn.exit.thread:            ; preds = %.lr.ph, %unsafe_yyj
 yyjson_mut_is_obj.exit:                           ; preds = %unsafe_yyjson_equals_strn.exit.thread, %yyjson_is_obj.exit.i86
   %i.au = call ptr @yyjson_val_mut_copy(ptr noundef nonnull %0, ptr noundef nonnull %.054152) ; 6 uses
   %i.av = call ptr @yyjson_val_mut_copy(ptr noundef nonnull %0, ptr noundef nonnull %.053153) ; 3 uses
-  %i.aw = load i64, ptr %i.l, align 8, !tbaa !99  ; 4 uses
+  %i.aw = load i64, ptr %i.l, align 8, !tbaa !99  ; 3 uses
   %i.ax = and i64 %i.aw, 7
   %i.ay = icmp ne i64 %i.ax, 7
   %.not.i72 = icmp eq ptr %i.au, null
@@ -1401,11 +1389,8 @@ yyjson_mut_obj_add.exit65:                        ; preds = %bb.h, %bb.i
   %i.bj = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store ptr %i.av, ptr %i.bj, align 8, !tbaa !104
   store ptr %i.au, ptr %i.v, align 8, !tbaa !100
-  %4 = and i64 %i.aw, 255
-  %5 = and i64 %i.aw, -256
-  %i.bk = add i64 %5, 256
-  %6 = or disjoint i64 %i.bk, %4
-  store i64 %6, ptr %i.l, align 8, !tbaa !99
+  %i.bk = add i64 %i.aw, 256
+  store i64 %i.bk, ptr %i.l, align 8, !tbaa !99
   br label %yyjson_obj_getn.exit92
 
 yyjson_obj_getn.exit92:                           ; preds = %unsafe_yyjson_equals_strn.exit, %yyjson_mut_obj_add.exit65
@@ -1500,7 +1485,7 @@ bb.k:                                             ; preds = %unsafe_yyjson_equal
 yyjson_mut_is_obj.exit71:                         ; preds = %unsafe_yyjson_equals_strn.exit94.thread, %yyjson_is_obj.exit.i82, %bb.k
   %.1.i83 = phi ptr [ %i.db, %bb.k ], [ null, %yyjson_is_obj.exit.i82 ], [ null, %unsafe_yyjson_equals_strn.exit94.thread ]
   %i.dc = call ptr @yyjson_merge_patch(ptr noundef nonnull %0, ptr noundef %.1.i83, ptr noundef nonnull %.0160) ; 3 uses
-  %i.dd = load i64, ptr %i.l, align 8, !tbaa !99  ; 4 uses
+  %i.dd = load i64, ptr %i.l, align 8, !tbaa !99  ; 3 uses
   %i.de = and i64 %i.dd, 7
   %i.df = icmp ne i64 %i.de, 7
   %.not.i73 = icmp eq ptr %i.cc, null
@@ -1535,11 +1520,8 @@ yyjson_mut_obj_add.exit:                          ; preds = %bb.m, %bb.n
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
   store ptr %i.dc, ptr %i.dq, align 8, !tbaa !104
   store ptr %i.cc, ptr %i.by, align 8, !tbaa !100
-  %7 = and i64 %i.dd, 255
-  %8 = and i64 %i.dd, -256
-  %i.dr = add i64 %8, 256
-  %9 = or disjoint i64 %i.dr, %7
-  store i64 %9, ptr %i.l, align 8, !tbaa !99
+  %i.dr = add i64 %i.dd, 256
+  store i64 %i.dr, ptr %i.l, align 8, !tbaa !99
   %.pre171 = load i64, ptr %.0160, align 8, !tbaa !99
   br label %bb.o
 
@@ -1724,7 +1706,7 @@ bb.l:                                             ; preds = %yyjson_mut_val_mut_
 
 yyjson_mut_is_obj.exit:                           ; preds = %yyjson_mut_val_mut_copy.exit107, %bb.l
   %.0.i109 = phi ptr [ %i.ay, %bb.l ], [ null, %yyjson_mut_val_mut_copy.exit107 ] ; 3 uses
-  %i.az = load i64, ptr %i.l, align 8, !tbaa !99  ; 4 uses
+  %i.az = load i64, ptr %i.l, align 8, !tbaa !99  ; 3 uses
   %i.ba = and i64 %i.az, 7
   %i.bb = icmp ne i64 %i.ba, 7
   %.not.i82 = icmp eq ptr %i.ax, null
@@ -1759,11 +1741,8 @@ yyjson_mut_obj_add.exit71:                        ; preds = %bb.n, %bb.o
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   store ptr %.0.i109, ptr %i.bm, align 8, !tbaa !104
   store ptr %i.ax, ptr %i.ab, align 8, !tbaa !100
-  %3 = and i64 %i.az, 255
-  %4 = and i64 %i.az, -256
-  %i.bn = add i64 %4, 256
-  %5 = or disjoint i64 %i.bn, %3
-  store i64 %5, ptr %i.l, align 8, !tbaa !99
+  %i.bn = add i64 %i.az, 256
+  store i64 %i.bn, ptr %i.l, align 8, !tbaa !99
   br label %bb.p
 
 bb.p:                                             ; preds = %yyjson_mut_obj_add.exit71, %yyjson_mut_obj_getn.exit102
@@ -1879,7 +1858,7 @@ bb.x:                                             ; preds = %.split192
 yyjson_mut_is_obj.exit77:                         ; preds = %unsafe_yyjson_equals_strn.exit104.backedge, %yyjson_mut_val_mut_copy.exit113, %yyjson_mut_obj_size.exit.i, %bb.x
   %.1.i88 = phi ptr [ %i.df, %bb.x ], [ null, %yyjson_mut_val_mut_copy.exit113 ], [ null, %yyjson_mut_obj_size.exit.i ], [ null, %unsafe_yyjson_equals_strn.exit104.backedge ]
   %i.dg = tail call ptr @yyjson_mut_merge_patch(ptr noundef nonnull %0, ptr noundef %.1.i88, ptr noundef nonnull %.0221) ; 3 uses
-  %i.dh = load i64, ptr %i.l, align 8, !tbaa !99  ; 4 uses
+  %i.dh = load i64, ptr %i.l, align 8, !tbaa !99  ; 3 uses
   %i.di = and i64 %i.dh, 7
   %i.dj = icmp ne i64 %i.di, 7
   %.not.i83 = icmp eq ptr %.0.i112, null
@@ -1914,11 +1893,8 @@ yyjson_mut_obj_add.exit:                          ; preds = %bb.z, %bb.aa
   %i.du = getelementptr inbounds nuw i8, ptr %.0.i112, i64 16
   store ptr %i.dg, ptr %i.du, align 8, !tbaa !104
   store ptr %.0.i112, ptr %i.cg, align 8, !tbaa !100
-  %6 = and i64 %i.dh, 255
-  %7 = and i64 %i.dh, -256
-  %i.dv = add i64 %7, 256
-  %8 = or disjoint i64 %i.dv, %6
-  store i64 %8, ptr %i.l, align 8, !tbaa !99
+  %i.dv = add i64 %i.dh, 256
+  store i64 %i.dv, ptr %i.l, align 8, !tbaa !99
   br label %bb.ab
 
 bb.ab:                                            ; preds = %yyjson_mut_obj_add.exit, %bb.s

@@ -205,7 +205,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.sroa.16.sroa.3.5.copyload = load i64, ptr %i.l, align 4, !alias.scope !10258 ; 5 uses
   %.sroa.16.sroa.5.5..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %.sroa.16.sroa.5.5.copyload = load i32, ptr %.sroa.16.sroa.5.5..sroa_idx, align 4, !alias.scope !10258 ; 14 uses
+  %.sroa.16.sroa.5.5.copyload = load i32, ptr %.sroa.16.sroa.5.5..sroa_idx, align 4, !alias.scope !10258 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.m = icmp samesign ult i8 %i.k, 7
   br i1 %i.m, label %bb.g, label %bb.b
@@ -478,7 +478,7 @@ common.resume:                                    ; preds = %bb.cm, %bb.cn, %bb.
   resume { ptr, i32 } %common.resume.op
 
 "_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17heaadf476ce029772E.exit73.i": ; preds = %bb.ao, %bb.at, %.thread23.i, %bb.z, %bb.ac, %bb.af, %bb.u
-  %.sroa.06.0.i = phi i32 [ %.sroa.4142.5.insert.insert166, %bb.ac ], [ %.sroa.16.sroa.5.5.copyload, %bb.u ], [ %.sroa.4142.5.insert.insert, %bb.z ], [ %.sroa.4142.5.insert.insert163, %bb.af ], [ %.sroa.4169.5.insert.insert191, %bb.at ], [ %.sroa.4169.5.insert.insert, %bb.ao ], [ %.sroa.4169.5.insert.insert188, %.thread23.i ]
+  %.sroa.06.0.i = phi i32 [ %.sroa.4142.5.insert.insert166, %bb.ac ], [ %.sroa.16.sroa.5.5.copyload, %bb.u ], [ %.sroa.4142.5.insert.insert, %bb.z ], [ %.sroa.4142.5.insert.insert163, %bb.af ], [ %.sroa.4169.5.insert.insert191, %bb.at ], [ %.sroa.4169.5.insert.shift, %bb.ao ], [ %.sroa.4169.5.insert.insert188, %.thread23.i ]
   %i.cq = sext i8 %.sroa.0.0.i.i to i64
   %i.cr = mul nsw i64 %i.cq, 86400000000000
   %i.cs = add nsw i64 %i.cr, %i.al
@@ -503,10 +503,7 @@ bb.an:                                            ; preds = %bb.w
   br i1 %i.cw, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %.thread.i, %bb.aq, %bb.an
-  %.sroa.4169.4.insert.insert = and i32 %.sroa.16.sroa.5.5.copyload, 16777215
-  %2 = and i32 %.sroa.16.sroa.5.5.copyload, -16777216
-  %.sroa.4169.5.insert.shift = add i32 %2, 16777216
-  %.sroa.4169.5.insert.insert = or disjoint i32 %.sroa.4169.5.insert.shift, %.sroa.4169.4.insert.insert
+  %.sroa.4169.5.insert.shift = add i32 %.sroa.16.sroa.5.5.copyload, 16777216
   br label %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17heaadf476ce029772E.exit73.i"
 
 bb.ap:                                            ; preds = %bb.an
@@ -909,7 +906,7 @@ bb.n:                                             ; preds = %"_ZN69_$LT$jiff..tz
   %.sroa.910.sroa.8.0..sroa.910.8..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 36
   %.sroa.910.sroa.8.0.copyload.i = load i32, ptr %.sroa.910.sroa.8.0..sroa.910.8..sroa_idx.sroa_idx.i, align 4, !alias.scope !10814, !noalias !10809
   %.sroa.910.sroa.9.0..sroa.910.8..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 40
-  %.sroa.910.sroa.9.0.copyload.i = load i32, ptr %.sroa.910.sroa.9.0..sroa.910.8..sroa_idx.sroa_idx.i, align 8, !alias.scope !10814, !noalias !10809 ; 7 uses
+  %.sroa.910.sroa.9.0.copyload.i = load i32, ptr %.sroa.910.sroa.9.0..sroa.910.8..sroa_idx.sroa_idx.i, align 8, !alias.scope !10814, !noalias !10809 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !10809
   %i.aw = ptrtoint ptr %i.at to i64               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !10809
@@ -923,10 +920,7 @@ bb.n:                                             ; preds = %"_ZN69_$LT$jiff..tz
   br i1 %i.ax, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.thread.i.i.i, %bb.q, %bb.n
-  %.sroa.5.4.insert.insert.i.i = and i32 %.sroa.910.sroa.9.0.copyload.i, 16777215
-  %3 = and i32 %.sroa.910.sroa.9.0.copyload.i, -16777216
-  %.sroa.5.5.insert.shift.i.i = add i32 %3, 16777216
-  %.sroa.5.5.insert.insert.i.i = or disjoint i32 %.sroa.5.5.insert.shift.i.i, %.sroa.5.4.insert.insert.i.i
+  %.sroa.5.5.insert.shift.i.i = add i32 %.sroa.910.sroa.9.0.copyload.i, 16777216
   br label %bb.v
 
 bb.p:                                             ; preds = %bb.n
@@ -987,7 +981,7 @@ bb.u:                                             ; preds = %_ZN4jiff4util1b4Yea
   br label %._crit_edge
 
 bb.v:                                             ; preds = %bb.t, %.thread23.i.i.i, %bb.o
-  %.sroa.5.0.ph.i.i = phi i32 [ %.sroa.5.5.insert.insert45.i.i, %bb.t ], [ %.sroa.5.5.insert.insert.i.i, %bb.o ], [ %.sroa.5.5.insert.insert42.i.i, %.thread23.i.i.i ]
+  %.sroa.5.0.ph.i.i = phi i32 [ %.sroa.5.5.insert.insert45.i.i, %bb.t ], [ %.sroa.5.5.insert.shift.i.i, %bb.o ], [ %.sroa.5.5.insert.insert42.i.i, %.thread23.i.i.i ]
   %.sroa.511.8.insert.ext.i.i = zext i32 %.sroa.5.0.ph.i.i to i64
   %.sroa.511.8.insert.shift.i.i = shl nuw i64 %.sroa.511.8.insert.ext.i.i, 32
   %.sroa.511.0.insert.ext.i.i = zext i32 %.sroa.910.sroa.8.0.copyload.i to i64
@@ -1390,7 +1384,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %_ZN4jiff6shared4util5itime5IDate9yesterday17h76797f4329835d97E.exit
 
 bb.m:                                             ; preds = %bb.a
-  %.sroa.09.0.copyload = load i32, ptr %0, align 2 ; 7 uses
+  %.sroa.09.0.copyload = load i32, ptr %0, align 2 ; 6 uses
   %.sroa.03.0.extract.trunc.i = trunc i32 %.sroa.09.0.copyload to i16 ; 3 uses
   %.sroa.4.0.extract.shift.i = lshr i32 %.sroa.09.0.copyload, 16
   %.sroa.4.0.extract.trunc.i = trunc i32 %.sroa.4.0.extract.shift.i to i8 ; 4 uses
@@ -1400,10 +1394,7 @@ bb.m:                                             ; preds = %bb.a
   br i1 %i.ap, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %.thread.i, %bb.p, %bb.m
-  %2 = and i32 %.sroa.09.0.copyload, -16777216
-  %.sroa.521.0.insert.shift.i = add i32 %2, 16777216
-  %3 = and i32 %.sroa.09.0.copyload, 16777215
-  %.sroa.019.0.insert.insert.i = or disjoint i32 %.sroa.521.0.insert.shift.i, %3
+  %.sroa.521.0.insert.shift.i = add i32 %.sroa.09.0.copyload, 16777216
   br label %_ZN4jiff6shared4util5itime5IDate9yesterday17h76797f4329835d97E.exit
 
 bb.o:                                             ; preds = %bb.m
@@ -1450,7 +1441,7 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZN4jiff6shared4util5itime5IDate9yesterday17h76797f4329835d97E.exit
 
 _ZN4jiff6shared4util5itime5IDate9yesterday17h76797f4329835d97E.exit: ; preds = %bb.b, %bb.s, %.thread23.i, %bb.r, %bb.n, %bb.l, %bb.i, %bb.g, %bb.f, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit, %bb.c
-  %.sroa.6.0 = phi i32 [ 11, %bb.g ], [ %.sroa.06.0.copyload, %bb.c ], [ %.sroa.0.0.insert.insert.i, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit ], [ 8, %bb.r ], [ %.sroa.020.0.insert.insert.i, %bb.f ], [ %.sroa.013.0.insert.insert.i, %bb.i ], [ %.sroa.017.0.insert.insert.i, %bb.l ], [ %.sroa.019.0.insert.insert.i, %bb.n ], [ %.sroa.013.0.insert.insert.i27, %bb.s ], [ %.sroa.016.0.insert.insert.i, %.thread23.i ], [ 5, %bb.b ]
+  %.sroa.6.0 = phi i32 [ 11, %bb.g ], [ %.sroa.06.0.copyload, %bb.c ], [ %.sroa.0.0.insert.insert.i, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit ], [ 8, %bb.r ], [ %.sroa.020.0.insert.insert.i, %bb.f ], [ %.sroa.013.0.insert.insert.i, %bb.i ], [ %.sroa.017.0.insert.insert.i, %bb.l ], [ %.sroa.521.0.insert.shift.i, %bb.n ], [ %.sroa.013.0.insert.insert.i27, %bb.s ], [ %.sroa.016.0.insert.insert.i, %.thread23.i ], [ 5, %bb.b ]
   %.sroa.0.0 = phi i16 [ 1, %bb.g ], [ 0, %bb.c ], [ 0, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit ], [ 1, %bb.r ], [ 0, %bb.f ], [ 0, %bb.i ], [ 0, %bb.l ], [ 0, %bb.n ], [ 0, %bb.s ], [ 0, %.thread23.i ], [ 1, %bb.b ]
   %.sroa.6.0.insert.ext = zext i32 %.sroa.6.0 to i48
   %.sroa.6.0.insert.shift = shl nuw i48 %.sroa.6.0.insert.ext, 16

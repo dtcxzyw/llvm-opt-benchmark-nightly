@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
 
 bb.d:                                             ; preds = %.lr.ph37, %bb.f
   %i.au = phi i32 [ %i.ab, %.lr.ph37 ], [ %i.br, %bb.f ]
-  %i.av = phi i64 [ %i.n, %.lr.ph37 ], [ %i.bs, %bb.f ] ; 4 uses
+  %i.av = phi i64 [ %i.n, %.lr.ph37 ], [ %i.bs, %bb.f ] ; 3 uses
   %i.aw = phi ptr [ %.pre42, %.lr.ph37 ], [ %i.bt, %bb.f ] ; 2 uses
   %indvars.iv39 = phi i64 [ 0, %.lr.ph37 ], [ %indvars.iv.next40, %bb.f ] ; 4 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.aw, i64 %indvars.iv39
@@ -234,18 +234,15 @@ bb.e:                                             ; preds = %bb.d
   %i.bo = or i64 %sh.diff, 1
   %i.bp = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @Dss_ManSharedMap.Buffer, i64 24), i64 %i.bo
   store i8 %i.bn, ptr %i.bp, align 1, !tbaa !42
-  %5 = and i64 %i.av, -576460752303423488
-  %i.bq = add i64 %5, 576460752303423488
-  %6 = and i64 %i.av, 576460752303423487
-  %7 = or disjoint i64 %i.bq, %6                  ; 2 uses
-  store i64 %7, ptr getelementptr inbounds nuw (i8, ptr @Dss_ManSharedMap.Buffer, i64 16), align 16
+  %i.bq = add i64 %i.av, 576460752303423488       ; 2 uses
+  store i64 %i.bq, ptr getelementptr inbounds nuw (i8, ptr @Dss_ManSharedMap.Buffer, i64 16), align 16
   %.pre = load ptr, ptr %i.ad, align 8, !tbaa !82
   %.pre43 = load i32, ptr %i.aa, align 4, !tbaa !36
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.br = phi i32 [ %i.au, %bb.d ], [ %.pre43, %bb.e ] ; 2 uses
-  %i.bs = phi i64 [ %i.av, %bb.d ], [ %7, %bb.e ] ; 2 uses
+  %i.bs = phi i64 [ %i.av, %bb.d ], [ %i.bq, %bb.e ] ; 2 uses
   %i.bt = phi ptr [ %i.aw, %bb.d ], [ %.pre, %bb.e ]
   %indvars.iv.next40 = add nuw nsw i64 %indvars.iv39, 1 ; 2 uses
   %i.bu = sext i32 %i.br to i64

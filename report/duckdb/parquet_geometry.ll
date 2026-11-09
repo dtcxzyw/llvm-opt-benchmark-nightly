@@ -204,7 +204,7 @@ _ZN13duckdb_yyjsonL14yyjson_mut_objEPNS_14yyjson_mut_docE.exit.i194: ; preds = %
   br i1 %.not.i320, label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_objEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit199.thread, label %.noexc280, !prof !226
 
 .noexc280:                                        ; preds = %_ZN13duckdb_yyjsonL14yyjson_mut_objEPNS_14yyjson_mut_docE.exit.i194
-  %i.hy = load i64, ptr %.1.i809, align 8, !tbaa !79 ; 4 uses
+  %i.hy = load i64, ptr %.1.i809, align 8, !tbaa !79 ; 3 uses
   %i.hz = and i64 %i.hy, 7
   %i.ia = icmp ne i64 %i.hz, 7
   %.not.i734 = icmp eq ptr %.1.i514851, null
@@ -241,11 +241,8 @@ bb.aw:                                            ; preds = %bb.au, %bb.av
   store ptr %.1.i.i195, ptr %i.im, align 8, !tbaa !225
   %i.in = getelementptr inbounds nuw i8, ptr %.1.i809, i64 8
   store ptr %.1.i514851, ptr %i.in, align 8, !tbaa !98
-  %16 = and i64 %i.hy, 255
-  %17 = and i64 %i.hy, -256
-  %i.io = add i64 %17, 256
-  %18 = or disjoint i64 %i.io, %16
-  store i64 %18, ptr %.1.i809, align 8, !tbaa !79
+  %i.io = add i64 %i.hy, 256
+  store i64 %i.io, ptr %.1.i809, align 8, !tbaa !79
   br label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_objEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit199.thread
 
 _ZN13duckdb_yyjsonL22yyjson_mut_obj_add_objEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit199.thread: ; preds = %_ZN13duckdb_yyjsonL14yyjson_mut_objEPNS_14yyjson_mut_docE.exit.i194, %.noexc280, %bb.at, %bb.aw
@@ -350,7 +347,7 @@ _ZN13duckdb_yyjsonL14yyjson_mut_objEPNS_14yyjson_mut_docE.exit.i: ; preds = %.no
   br i1 %.not.i318, label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_strEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKcS5_.exit, label %.noexc284, !prof !226
 
 .noexc284:                                        ; preds = %_ZN13duckdb_yyjsonL14yyjson_mut_objEPNS_14yyjson_mut_docE.exit.i
-  %i.js = load i64, ptr %i.ip, align 8, !tbaa !79 ; 4 uses
+  %i.js = load i64, ptr %i.ip, align 8, !tbaa !79 ; 3 uses
   %i.jt = and i64 %i.js, 7
   %i.ju = icmp ne i64 %i.jt, 7
   %.not.i732 = icmp eq ptr %.1.i556936, null
@@ -385,11 +382,8 @@ bb.bf:                                            ; preds = %bb.bd, %bb.be
   %i.kf = getelementptr inbounds nuw i8, ptr %.1.i556936, i64 16
   store ptr %.1.i.i, ptr %i.kf, align 8, !tbaa !225
   store ptr %.1.i556936, ptr %i.it, align 8, !tbaa !98
-  %19 = and i64 %i.js, 255
-  %20 = and i64 %i.js, -256
-  %i.kg = add i64 %20, 256
-  %21 = or disjoint i64 %i.kg, %19
-  store i64 %21, ptr %i.ip, align 8, !tbaa !79
+  %i.kg = add i64 %i.js, 256
+  store i64 %i.kg, ptr %i.ip, align 8, !tbaa !79
   br i1 %.not.i164, label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_strEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKcS5_.exit.thread, label %.noexc204, !prof !104
 
 .noexc204:                                        ; preds = %bb.bf
@@ -543,7 +537,7 @@ bb.bo:                                            ; preds = %_ZN13duckdb_yyjsonL
   br i1 %.not.i324, label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_arrEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit213.thread, label %.noexc273, !prof !229
 
 .noexc273:                                        ; preds = %.noexc211
-  %i.md = load i64, ptr %i.mc, align 8, !tbaa !79 ; 4 uses
+  %i.md = load i64, ptr %i.mc, align 8, !tbaa !79 ; 3 uses
   %i.me = and i64 %i.md, 7
   %i.mf = icmp ne i64 %i.me, 7
   %.not.i738 = icmp eq ptr %.1.i469970, null
@@ -580,11 +574,8 @@ bb.bs:                                            ; preds = %bb.bq, %bb.br
   store ptr %.1.i602, ptr %i.mr, align 8, !tbaa !225
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mc, i64 8
   store ptr %.1.i469970, ptr %i.ms, align 8, !tbaa !98
-  %22 = and i64 %i.md, 255
-  %23 = and i64 %i.md, -256
-  %i.mt = add i64 %23, 256
-  %24 = or disjoint i64 %i.mt, %22
-  store i64 %24, ptr %i.mc, align 8, !tbaa !79
+  %i.mt = add i64 %i.md, 256
+  store i64 %i.mt, ptr %i.mc, align 8, !tbaa !79
   br label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_arrEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit213.thread
 
 _ZN13duckdb_yyjsonL22yyjson_mut_obj_add_arrEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit213.thread: ; preds = %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_strEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKcS5_.exit.thread, %.noexc211, %.noexc273, %bb.bp, %bb.bs
@@ -752,17 +743,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i661: ; preds 
   store i64 %i.ot, ptr %.0.i293, align 8, !tbaa !215
   %i.ou = getelementptr inbounds nuw i8, ptr %.0.i293, i64 8
   store ptr %i.op, ptr %i.ou, align 8, !tbaa !98
-  %i.ov = load i64, ptr %i.mv, align 8, !tbaa !79 ; 4 uses
+  %i.ov = load i64, ptr %i.mv, align 8, !tbaa !79 ; 3 uses
   %i.ow = and i64 %i.ov, 7
   %i.ox = icmp eq i64 %i.ow, 6
   br i1 %i.ox, label %bb.cb, label %_ZN13duckdb_yyjsonL25yyjson_mut_arr_add_strcpyEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit, !prof !221
 
 bb.cb:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i661
-  %25 = and i64 %i.ov, 254
-  %26 = and i64 %i.ov, -256
-  %i.oy = add i64 %26, 256
-  %27 = or disjoint i64 %i.oy, %25
-  store i64 %27, ptr %i.mv, align 8, !tbaa !79
+  %i.oy = add i64 %i.ov, 256
+  store i64 %i.oy, ptr %i.mv, align 8, !tbaa !79
   %i.oz = icmp ult i64 %i.ov, 256
   br i1 %i.oz, label %bb.cd, label %bb.cc
 
@@ -863,7 +851,7 @@ bb.cj:                                            ; preds = %_ZN13duckdb_yyjsonL
   br i1 %.not.i3241242, label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_arrEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit.thread, label %.noexc276, !prof !226
 
 .noexc276:                                        ; preds = %.noexc208
-  %i.pt = load i64, ptr %i.mu, align 8, !tbaa !79 ; 4 uses
+  %i.pt = load i64, ptr %i.mu, align 8, !tbaa !79 ; 3 uses
   %i.pu = and i64 %i.pt, 7
   %i.pv = icmp ne i64 %i.pu, 7
   %.not.i736 = icmp eq ptr %.1.i4731064, null
@@ -900,11 +888,8 @@ bb.cn:                                            ; preds = %bb.cl, %bb.cm
   store ptr %.1.i608, ptr %i.qh, align 8, !tbaa !225
   %i.qi = getelementptr inbounds nuw i8, ptr %i.mu, i64 8
   store ptr %.1.i4731064, ptr %i.qi, align 8, !tbaa !98
-  %28 = and i64 %i.pt, 255
-  %29 = and i64 %i.pt, -256
-  %i.qj = add i64 %29, 256
-  %30 = or disjoint i64 %i.qj, %28
-  store i64 %30, ptr %i.mu, align 8, !tbaa !79
+  %i.qj = add i64 %i.pt, 256
+  store i64 %i.qj, ptr %i.mu, align 8, !tbaa !79
   br label %_ZN13duckdb_yyjsonL22yyjson_mut_obj_add_arrEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit.thread
 
 _ZN13duckdb_yyjsonL22yyjson_mut_obj_add_arrEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEPKc.exit.thread: ; preds = %.noexc208, %.noexc276, %bb.ck, %bb.cn
@@ -960,17 +945,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i: ; preds = %
   store i64 20, ptr %i.rc, align 8, !tbaa !215
   %i.re = getelementptr inbounds nuw i8, ptr %i.rc, i64 8
   store double %i.qu, ptr %i.re, align 8, !tbaa !98
-  %i.rf = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.rf = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.rg = and i64 %i.rf, 7
   %i.rh = icmp eq i64 %i.rg, 6
   br i1 %i.rh, label %bb.cr, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit613, !prof !237
 
 bb.cr:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i
-  %31 = and i64 %i.rf, 254
-  %32 = and i64 %i.rf, -256
-  %i.ri = add i64 %32, 256
-  %33 = or disjoint i64 %i.ri, %31
-  store i64 %33, ptr %i.qk, align 8, !tbaa !79
+  %i.ri = add i64 %i.rf, 256
+  store i64 %i.ri, ptr %i.qk, align 8, !tbaa !79
   %i.rj = icmp ult i64 %i.rf, 256
   br i1 %i.rj, label %bb.ct, label %bb.cs
 
@@ -1025,17 +1007,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i634: ; preds 
   store i64 20, ptr %i.ry, align 8, !tbaa !215
   %i.sa = getelementptr inbounds nuw i8, ptr %i.ry, i64 8
   store double %i.rq, ptr %i.sa, align 8, !tbaa !98
-  %i.sb = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.sb = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.sc = and i64 %i.sb, 7
   %i.sd = icmp eq i64 %i.sc, 6
   br i1 %i.sd, label %bb.cw, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit615, !prof !237
 
 bb.cw:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i634
-  %34 = and i64 %i.sb, 254
-  %35 = and i64 %i.sb, -256
-  %i.se = add i64 %35, 256
-  %36 = or disjoint i64 %i.se, %34
-  store i64 %36, ptr %i.qk, align 8, !tbaa !79
+  %i.se = add i64 %i.sb, 256
+  store i64 %i.se, ptr %i.qk, align 8, !tbaa !79
   %i.sf = icmp ult i64 %i.sb, 256
   br i1 %i.sf, label %bb.cy, label %bb.cx
 
@@ -1090,17 +1069,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i637: ; preds 
   store i64 20, ptr %i.su, align 8, !tbaa !215
   %i.sw = getelementptr inbounds nuw i8, ptr %i.su, i64 8
   store double %i.sm, ptr %i.sw, align 8, !tbaa !98
-  %i.sx = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.sx = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.sy = and i64 %i.sx, 7
   %i.sz = icmp eq i64 %i.sy, 6
   br i1 %i.sz, label %bb.db, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit617, !prof !237
 
 bb.db:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i637
-  %37 = and i64 %i.sx, 254
-  %38 = and i64 %i.sx, -256
-  %i.ta = add i64 %38, 256
-  %39 = or disjoint i64 %i.ta, %37
-  store i64 %39, ptr %i.qk, align 8, !tbaa !79
+  %i.ta = add i64 %i.sx, 256
+  store i64 %i.ta, ptr %i.qk, align 8, !tbaa !79
   %i.tb = icmp ult i64 %i.sx, 256
   br i1 %i.tb, label %bb.dd, label %bb.dc
 
@@ -1155,17 +1131,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i640: ; preds 
   store i64 20, ptr %i.tq, align 8, !tbaa !215
   %i.ts = getelementptr inbounds nuw i8, ptr %i.tq, i64 8
   store double %i.ti, ptr %i.ts, align 8, !tbaa !98
-  %i.tt = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.tt = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.tu = and i64 %i.tt, 7
   %i.tv = icmp eq i64 %i.tu, 6
   br i1 %i.tv, label %bb.dg, label %_ZN13duckdb_yyjsonL23yyjson_mut_arr_add_realEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEd.exit250, !prof !237
 
 bb.dg:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i640
-  %40 = and i64 %i.tt, 254
-  %41 = and i64 %i.tt, -256
-  %i.tw = add i64 %41, 256
-  %42 = or disjoint i64 %i.tw, %40
-  store i64 %42, ptr %i.qk, align 8, !tbaa !79
+  %i.tw = add i64 %i.tt, 256
+  store i64 %i.tw, ptr %i.qk, align 8, !tbaa !79
   %i.tx = icmp ult i64 %i.tt, 256
   br i1 %i.tx, label %_ZN13duckdb_yyjsonL23yyjson_mut_arr_add_realEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEd.exit250.sink.split, label %_ZN13duckdb_yyjsonL23yyjson_mut_arr_add_realEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEd.exit250.sink.split.sink.split
 
@@ -1206,17 +1179,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i643: ; preds 
   store i64 20, ptr %i.uf, align 8, !tbaa !215
   %i.uh = getelementptr inbounds nuw i8, ptr %i.uf, i64 8
   store double %i.qu, ptr %i.uh, align 8, !tbaa !98
-  %i.ui = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.ui = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.uj = and i64 %i.ui, 7
   %i.uk = icmp eq i64 %i.uj, 6
   br i1 %i.uk, label %bb.dk, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit621, !prof !237
 
 bb.dk:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i643
-  %43 = and i64 %i.ui, 254
-  %44 = and i64 %i.ui, -256
-  %i.ul = add i64 %44, 256
-  %45 = or disjoint i64 %i.ul, %43
-  store i64 %45, ptr %i.qk, align 8, !tbaa !79
+  %i.ul = add i64 %i.ui, 256
+  store i64 %i.ul, ptr %i.qk, align 8, !tbaa !79
   %i.um = icmp ult i64 %i.ui, 256
   br i1 %i.um, label %bb.dm, label %bb.dl
 
@@ -1271,17 +1241,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i646: ; preds 
   store i64 20, ptr %i.vb, align 8, !tbaa !215
   %i.vd = getelementptr inbounds nuw i8, ptr %i.vb, i64 8
   store double %i.ut, ptr %i.vd, align 8, !tbaa !98
-  %i.ve = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.ve = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.vf = and i64 %i.ve, 7
   %i.vg = icmp eq i64 %i.vf, 6
   br i1 %i.vg, label %bb.dp, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit623, !prof !237
 
 bb.dp:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i646
-  %46 = and i64 %i.ve, 254
-  %47 = and i64 %i.ve, -256
-  %i.vh = add i64 %47, 256
-  %48 = or disjoint i64 %i.vh, %46
-  store i64 %48, ptr %i.qk, align 8, !tbaa !79
+  %i.vh = add i64 %i.ve, 256
+  store i64 %i.vh, ptr %i.qk, align 8, !tbaa !79
   %i.vi = icmp ult i64 %i.ve, 256
   br i1 %i.vi, label %bb.dr, label %bb.dq
 
@@ -1336,17 +1303,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i649: ; preds 
   store i64 20, ptr %i.vx, align 8, !tbaa !215
   %i.vz = getelementptr inbounds nuw i8, ptr %i.vx, i64 8
   store double %i.vp, ptr %i.vz, align 8, !tbaa !98
-  %i.wa = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.wa = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.wb = and i64 %i.wa, 7
   %i.wc = icmp eq i64 %i.wb, 6
   br i1 %i.wc, label %bb.du, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit625, !prof !237
 
 bb.du:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i649
-  %49 = and i64 %i.wa, 254
-  %50 = and i64 %i.wa, -256
-  %i.wd = add i64 %50, 256
-  %51 = or disjoint i64 %i.wd, %49
-  store i64 %51, ptr %i.qk, align 8, !tbaa !79
+  %i.wd = add i64 %i.wa, 256
+  store i64 %i.wd, ptr %i.qk, align 8, !tbaa !79
   %i.we = icmp ult i64 %i.wa, 256
   br i1 %i.we, label %bb.dw, label %bb.dv
 
@@ -1401,17 +1365,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i652: ; preds 
   store i64 20, ptr %i.wt, align 8, !tbaa !215
   %i.wv = getelementptr inbounds nuw i8, ptr %i.wt, i64 8
   store double %i.wl, ptr %i.wv, align 8, !tbaa !98
-  %i.ww = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.ww = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.wx = and i64 %i.ww, 7
   %i.wy = icmp eq i64 %i.wx, 6
   br i1 %i.wy, label %bb.dz, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit627, !prof !237
 
 bb.dz:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i652
-  %52 = and i64 %i.ww, 254
-  %53 = and i64 %i.ww, -256
-  %i.wz = add i64 %53, 256
-  %54 = or disjoint i64 %i.wz, %52
-  store i64 %54, ptr %i.qk, align 8, !tbaa !79
+  %i.wz = add i64 %i.ww, 256
+  store i64 %i.wz, ptr %i.qk, align 8, !tbaa !79
   %i.xa = icmp ult i64 %i.ww, 256
   br i1 %i.xa, label %bb.eb, label %bb.ea
 
@@ -1466,17 +1427,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i655: ; preds 
   store i64 20, ptr %i.xp, align 8, !tbaa !215
   %i.xr = getelementptr inbounds nuw i8, ptr %i.xp, i64 8
   store double %i.xh, ptr %i.xr, align 8, !tbaa !98
-  %i.xs = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.xs = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.xt = and i64 %i.xs, 7
   %i.xu = icmp eq i64 %i.xt, 6
   br i1 %i.xu, label %bb.ee, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit629, !prof !237
 
 bb.ee:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i655
-  %55 = and i64 %i.xs, 254
-  %56 = and i64 %i.xs, -256
-  %i.xv = add i64 %56, 256
-  %57 = or disjoint i64 %i.xv, %55
-  store i64 %57, ptr %i.qk, align 8, !tbaa !79
+  %i.xv = add i64 %i.xs, 256
+  store i64 %i.xv, ptr %i.qk, align 8, !tbaa !79
   %i.xw = icmp ult i64 %i.xs, 256
   br i1 %i.xw, label %bb.eg, label %bb.ef
 
@@ -1531,17 +1489,14 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i658: ; preds 
   store i64 20, ptr %i.yl, align 8, !tbaa !215
   %i.yn = getelementptr inbounds nuw i8, ptr %i.yl, i64 8
   store double %i.yd, ptr %i.yn, align 8, !tbaa !98
-  %i.yo = load i64, ptr %i.qk, align 8, !tbaa !79 ; 4 uses
+  %i.yo = load i64, ptr %i.qk, align 8, !tbaa !79 ; 3 uses
   %i.yp = and i64 %i.yo, 7
   %i.yq = icmp eq i64 %i.yp, 6
   br i1 %i.yq, label %bb.ej, label %_ZN13duckdb_yyjsonL23yyjson_mut_arr_add_realEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEd.exit250, !prof !237
 
 bb.ej:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i658
-  %58 = and i64 %i.yo, 254
-  %59 = and i64 %i.yo, -256
-  %i.yr = add i64 %59, 256
-  %60 = or disjoint i64 %i.yr, %58
-  store i64 %60, ptr %i.qk, align 8, !tbaa !79
+  %i.yr = add i64 %i.yo, 256
+  store i64 %i.yr, ptr %i.qk, align 8, !tbaa !79
   %i.ys = icmp ult i64 %i.yo, 256
   br i1 %i.ys, label %_ZN13duckdb_yyjsonL23yyjson_mut_arr_add_realEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEd.exit250.sink.split, label %_ZN13duckdb_yyjsonL23yyjson_mut_arr_add_realEPNS_14yyjson_mut_docEPNS_14yyjson_mut_valEd.exit250.sink.split.sink.split
 
@@ -1656,7 +1611,7 @@ _ZN13duckdb_yyjsonL17yyjson_mut_strcpyEPNS_14yyjson_mut_docEPKc.exit272: ; preds
   br i1 %.not.i3241242, label %_ZN13duckdb_yyjsonL18yyjson_mut_obj_addEPNS_14yyjson_mut_valES1_S1_.exit290, label %.noexc288, !prof !226
 
 .noexc288:                                        ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_strcpyEPNS_14yyjson_mut_docEPKc.exit272
-  %i.zx = load i64, ptr %i.mu, align 8, !tbaa !79 ; 4 uses
+  %i.zx = load i64, ptr %i.mu, align 8, !tbaa !79 ; 3 uses
   %i.zy = and i64 %i.zx, 7
   %i.zz = icmp ne i64 %i.zy, 7
   %.not.i731 = icmp eq ptr %.1.i269, null
@@ -1693,11 +1648,8 @@ bb.et:                                            ; preds = %bb.es
   store ptr %i.zg, ptr %i.aal, align 8, !tbaa !225
   %i.aam = getelementptr inbounds nuw i8, ptr %i.mu, i64 8
   store ptr %.1.i269, ptr %i.aam, align 8, !tbaa !98
-  %61 = and i64 %i.zx, 255
-  %62 = and i64 %i.zx, -256
-  %i.aan = add i64 %62, 256
-  %63 = or disjoint i64 %i.aan, %61
-  store i64 %63, ptr %i.mu, align 8, !tbaa !79
+  %i.aan = add i64 %i.zx, 256
+  store i64 %i.aan, ptr %i.mu, align 8, !tbaa !79
   br label %_ZN13duckdb_yyjsonL18yyjson_mut_obj_addEPNS_14yyjson_mut_valES1_S1_.exit290
 
 _ZN13duckdb_yyjsonL18yyjson_mut_obj_addEPNS_14yyjson_mut_valES1_S1_.exit290: ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_strcpyEPNS_14yyjson_mut_docEPKc.exit272, %.noexc288, %.noexc289, %bb.er

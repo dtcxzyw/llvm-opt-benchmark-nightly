@@ -202,7 +202,7 @@ _ZN17QArrayDataPointerIDsED2Ev.exit166:           ; preds = %bb.av, %_ZN17QArray
   br label %bb.gz
 
 bb.aw:                                            ; preds = %.lr.ph, %_ZN15LearnCardWidget8LinkTypeD2Ev.exit
-  %.sroa.6694.0716 = phi i64 [ 0, %.lr.ph ], [ %68, %_ZN15LearnCardWidget8LinkTypeD2Ev.exit ] ; 3 uses
+  %.sroa.6694.0716 = phi i64 [ 0, %.lr.ph ], [ %i.hm, %_ZN15LearnCardWidget8LinkTypeD2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #21
   store ptr %13, ptr %17, align 8
@@ -605,11 +605,8 @@ _ZN15LearnCardWidget8LinkTypeD2Ev.exit:           ; preds = %_ZN7QStringD2Ev.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #21
   call void @_ZN10QJsonValueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %16) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #21
-  %66 = and i64 %.sroa.6694.0716, -2
-  %i.hm = add i64 %66, 2                          ; 2 uses
-  %67 = and i64 %.sroa.6694.0716, 1
-  %68 = or disjoint i64 %i.hm, %67
-  %.not721 = icmp eq i64 %i.hm, %i.bk
+  %i.hm = add i64 %.sroa.6694.0716, 2             ; 2 uses
+  %.not721 = icmp eq i64 %i.bk, %i.hm
   br i1 %.not721, label %._crit_edge, label %bb.aw
 
 bb.di:                                            ; preds = %_ZNK17QArrayDataPointerIN15LearnCardWidget8LinkTypeEE11needsDetachEv.exit.thread.i.i.i.i.i, %bb.dd
@@ -776,7 +773,7 @@ bb.dw:                                            ; preds = %_ZN17QArrayDataPoin
   br label %bb.gt
 
 bb.dx:                                            ; preds = %.lr.ph719, %_ZN15LearnCardWidget10ButtonTypeD2Ev.exit
-  %.sroa.6621.0717 = phi i64 [ 0, %.lr.ph719 ], [ %71, %_ZN15LearnCardWidget10ButtonTypeD2Ev.exit ] ; 3 uses
+  %.sroa.6621.0717 = phi i64 [ 0, %.lr.ph719 ], [ %i.ot, %_ZN15LearnCardWidget10ButtonTypeD2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #21
   store ptr %38, ptr %42, align 8
@@ -1179,11 +1176,8 @@ _ZN15LearnCardWidget10ButtonTypeD2Ev.exit:        ; preds = %_ZN7QStringD2Ev.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %43) #21
   call void @_ZN10QJsonValueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %41) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %41) #21
-  %69 = and i64 %.sroa.6621.0717, -2
-  %i.ot = add i64 %69, 2                          ; 2 uses
-  %70 = and i64 %.sroa.6621.0717, 1
-  %71 = or disjoint i64 %i.ot, %70
-  %.not723 = icmp eq i64 %i.ot, %i.hw
+  %i.ot = add i64 %.sroa.6621.0717, 2             ; 2 uses
+  %.not723 = icmp eq i64 %i.hw, %i.ot
   br i1 %.not723, label %._crit_edge720, label %bb.dx
 
 bb.gq:                                            ; preds = %_ZNK17QArrayDataPointerIN15LearnCardWidget10ButtonTypeEE11needsDetachEv.exit.thread.i.i.i.i.i, %bb.gm

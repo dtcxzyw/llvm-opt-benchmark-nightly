@@ -205,12 +205,9 @@ bb.u:                                             ; preds = %bb.t
   %i.fn = load i32, ptr %i.w, align 4, !tbaa !230
   %i.fo = sext i32 %i.fn to i64
   %i.fp = getelementptr inbounds [4 x i8], ptr %i.fm, i64 %i.fo ; 2 uses
-  %i.fq = load i32, ptr %i.fp, align 4, !tbaa !57 ; 2 uses
-  %9 = and i32 %i.fq, -65536
-  %i.fr = add i32 %9, 65536
-  %10 = and i32 %i.fq, 65535
-  %11 = or disjoint i32 %i.fr, %10
-  store i32 %11, ptr %i.fp, align 4, !tbaa !57
+  %i.fq = load i32, ptr %i.fp, align 4, !tbaa !57
+  %i.fr = add i32 %i.fq, 65536
+  store i32 %i.fr, ptr %i.fp, align 4, !tbaa !57
   store ptr %i.fm, ptr %i.bn, align 8, !tbaa !229
   %i.fs = load i32, ptr %i.c, align 8, !tbaa !234
   store i32 %i.fs, ptr %i.cn, align 8, !tbaa !234
@@ -380,22 +377,16 @@ bb.w:                                             ; preds = %bb.v
   %i.jt = load i32, ptr %i.w, align 4, !tbaa !230
   %i.ju = sext i32 %i.jt to i64
   %i.jv = getelementptr inbounds [4 x i8], ptr %i.js, i64 %i.ju ; 2 uses
-  %i.jw = load i32, ptr %i.jv, align 4, !tbaa !57 ; 2 uses
-  %12 = and i32 %i.jw, -65536
-  %i.jx = add i32 %12, 65536
-  %13 = and i32 %i.jw, 65535
-  %14 = or disjoint i32 %i.jx, %13
-  store i32 %14, ptr %i.jv, align 4, !tbaa !57
+  %i.jw = load i32, ptr %i.jv, align 4, !tbaa !57
+  %i.jx = add i32 %i.jw, 65536
+  store i32 %i.jx, ptr %i.jv, align 4, !tbaa !57
   %i.jy = load ptr, ptr %.ptr.1, align 16, !tbaa !229 ; 2 uses
   %i.jz = load i32, ptr %i.w, align 4, !tbaa !230
   %i.ka = sext i32 %i.jz to i64
   %i.kb = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %i.ka ; 2 uses
-  %i.kc = load i32, ptr %i.kb, align 4, !tbaa !57 ; 2 uses
-  %15 = and i32 %i.kc, -65536
-  %i.kd = add i32 %15, 65536
-  %16 = and i32 %i.kc, 65535
-  %17 = or disjoint i32 %i.kd, %16
-  store i32 %17, ptr %i.kb, align 4, !tbaa !57
+  %i.kc = load i32, ptr %i.kb, align 4, !tbaa !57
+  %i.kd = add i32 %i.kc, 65536
+  store i32 %i.kd, ptr %i.kb, align 4, !tbaa !57
   %.not579718 = icmp samesign ugt i64 %indvars.iv, %i.al
   br i1 %.not579718, label %._crit_edge722, label %.lr.ph721.preheader
 
@@ -798,12 +789,9 @@ bb.ay:                                            ; preds = %.preheader789, %bb.
   %i.sq = load i32, ptr %i.w, align 4, !tbaa !230
   %i.sr = sext i32 %i.sq to i64
   %i.ss = getelementptr inbounds [4 x i8], ptr %i.sm, i64 %i.sr ; 2 uses
-  %i.st = load i32, ptr %i.ss, align 4, !tbaa !57 ; 2 uses
-  %18 = and i32 %i.st, -65536
-  %i.su = add i32 %18, 65536
-  %19 = and i32 %i.st, 65535
-  %20 = or disjoint i32 %i.su, %19
-  store i32 %20, ptr %i.ss, align 4, !tbaa !57
+  %i.st = load i32, ptr %i.ss, align 4, !tbaa !57
+  %i.su = add i32 %i.st, 65536
+  store i32 %i.su, ptr %i.ss, align 4, !tbaa !57
   %i.sv = sext i32 %i.sn to i64                   ; 2 uses
   %i.sw = getelementptr inbounds [4 x i8], ptr @_ZN10tetgenmesh10facepivot1E, i64 %i.sv
   %i.sx = load i32, ptr %i.sw, align 4, !tbaa !57
@@ -846,12 +834,9 @@ bb.ba:                                            ; preds = %bb.az
   %i.tu = load i32, ptr %i.w, align 4, !tbaa !230
   %i.tv = sext i32 %i.tu to i64
   %i.tw = getelementptr inbounds [4 x i8], ptr %.lcssa744771, i64 %i.tv ; 2 uses
-  %i.tx = load i32, ptr %i.tw, align 4, !tbaa !57 ; 2 uses
-  %21 = and i32 %i.tx, -65536
-  %i.ty = add i32 %21, 65536
-  %22 = and i32 %i.tx, 65535
-  %23 = or disjoint i32 %i.ty, %22
-  store i32 %23, ptr %i.tw, align 4, !tbaa !57
+  %i.tx = load i32, ptr %i.tw, align 4, !tbaa !57
+  %i.ty = add i32 %i.tx, 65536
+  store i32 %i.ty, ptr %i.tw, align 4, !tbaa !57
   store ptr %.lcssa744771, ptr %i.mz, align 8, !tbaa !229
   store i32 %storemerge, ptr %i.oc, align 8, !tbaa !234
   %i.tz = icmp samesign ult i64 %indvars.iv848, %i.am
@@ -1047,21 +1032,15 @@ bb.bd:                                            ; preds = %.split502, %.split
   %i.yi = load i32, ptr %i.w, align 4, !tbaa !230
   %i.yj = sext i32 %i.yi to i64
   %i.yk = getelementptr inbounds [4 x i8], ptr %i.xs, i64 %i.yj ; 2 uses
-  %i.yl = load i32, ptr %i.yk, align 4, !tbaa !57 ; 2 uses
-  %24 = and i32 %i.yl, -65536
-  %i.ym = add i32 %24, 65536
-  %25 = and i32 %i.yl, 65535
-  %26 = or disjoint i32 %i.ym, %25
-  store i32 %26, ptr %i.yk, align 4, !tbaa !57
+  %i.yl = load i32, ptr %i.yk, align 4, !tbaa !57
+  %i.ym = add i32 %i.yl, 65536
+  store i32 %i.ym, ptr %i.yk, align 4, !tbaa !57
   %i.yn = load i32, ptr %i.w, align 4, !tbaa !230
   %i.yo = sext i32 %i.yn to i64
   %i.yp = getelementptr inbounds [4 x i8], ptr %i.yb, i64 %i.yo ; 2 uses
-  %i.yq = load i32, ptr %i.yp, align 4, !tbaa !57 ; 2 uses
-  %27 = and i32 %i.yq, -65536
-  %i.yr = add i32 %27, 65536
-  %28 = and i32 %i.yq, 65535
-  %29 = or disjoint i32 %i.yr, %28
-  store i32 %29, ptr %i.yp, align 4, !tbaa !57
+  %i.yq = load i32, ptr %i.yp, align 4, !tbaa !57
+  %i.yr = add i32 %i.yq, 65536
+  store i32 %i.yr, ptr %i.yp, align 4, !tbaa !57
   store ptr %i.xs, ptr %i.mz, align 8, !tbaa !229
   %i.ys = load i32, ptr %i.c, align 8, !tbaa !234
   store i32 %i.ys, ptr %i.oc, align 8, !tbaa !234
@@ -1464,34 +1443,25 @@ bb.ce:                                            ; preds = %bb.cd
   %i.ahe = load i32, ptr %i.ahc, align 4, !tbaa !230
   %i.ahf = sext i32 %i.ahe to i64
   %i.ahg = getelementptr inbounds [4 x i8], ptr %i.ahd, i64 %i.ahf ; 2 uses
-  %i.ahh = load i32, ptr %i.ahg, align 4, !tbaa !57 ; 2 uses
-  %30 = and i32 %i.ahh, -65536
-  %i.ahi = add i32 %30, 65536
-  %31 = and i32 %i.ahh, 65535
-  %32 = or disjoint i32 %i.ahi, %31
-  store i32 %32, ptr %i.ahg, align 4, !tbaa !57
+  %i.ahh = load i32, ptr %i.ahg, align 4, !tbaa !57
+  %i.ahi = add i32 %i.ahh, 65536
+  store i32 %i.ahi, ptr %i.ahg, align 4, !tbaa !57
   %i.ahj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ahk = load ptr, ptr %i.ahj, align 8, !tbaa !229
   %i.ahl = load i32, ptr %i.ahc, align 4, !tbaa !230
   %i.ahm = sext i32 %i.ahl to i64
   %i.ahn = getelementptr inbounds [4 x i8], ptr %i.ahk, i64 %i.ahm ; 2 uses
-  %i.aho = load i32, ptr %i.ahn, align 4, !tbaa !57 ; 2 uses
-  %33 = and i32 %i.aho, -65536
-  %i.ahp = add i32 %33, 65536
-  %34 = and i32 %i.aho, 65535
-  %35 = or disjoint i32 %i.ahp, %34
-  store i32 %35, ptr %i.ahn, align 4, !tbaa !57
+  %i.aho = load i32, ptr %i.ahn, align 4, !tbaa !57
+  %i.ahp = add i32 %i.aho, 65536
+  store i32 %i.ahp, ptr %i.ahn, align 4, !tbaa !57
   %i.ahq = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ahr = load ptr, ptr %i.ahq, align 8, !tbaa !229
   %i.ahs = load i32, ptr %i.ahc, align 4, !tbaa !230
   %i.aht = sext i32 %i.ahs to i64
   %i.ahu = getelementptr inbounds [4 x i8], ptr %i.ahr, i64 %i.aht ; 2 uses
-  %i.ahv = load i32, ptr %i.ahu, align 4, !tbaa !57 ; 2 uses
-  %36 = and i32 %i.ahv, -65536
-  %i.ahw = add i32 %36, 65536
-  %37 = and i32 %i.ahv, 65535
-  %38 = or disjoint i32 %i.ahw, %37
-  store i32 %38, ptr %i.ahu, align 4, !tbaa !57
+  %i.ahv = load i32, ptr %i.ahu, align 4, !tbaa !57
+  %i.ahw = add i32 %i.ahv, 65536
+  store i32 %i.ahw, ptr %i.ahu, align 4, !tbaa !57
   br label %.critedge602
 
 bb.cf:                                            ; preds = %bb.ce, %.critedge611

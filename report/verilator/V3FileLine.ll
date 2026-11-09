@@ -204,12 +204,9 @@ _ZN8FileLine9linenoIncEv.exit:                    ; preds = %bb.k, %bb.l
   %i.ah = or disjoint i64 %i.ag, 4294967296
   store i64 %i.ah, ptr %i.ae, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.aj = load i32, ptr %i.ai, align 4            ; 2 uses
-  %4 = and i32 %i.aj, -2
-  %i.ak = add i32 %4, 2
-  %5 = and i32 %i.aj, 1
-  %6 = or disjoint i32 %i.ak, %5
-  store i32 %6, ptr %i.ai, align 4
+  %i.aj = load i32, ptr %i.ai, align 4
+  %i.ak = add i32 %i.aj, 2
+  store i32 %i.ak, ptr %i.ai, align 4
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN8FileLine9linenoIncEv.exit, %bb.h
@@ -612,7 +609,7 @@ bb.a:
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.f
-  %i.h = phi i32 [ %i.w, %bb.f ], [ %.promoted21, %.lr.ph.split.us.preheader ] ; 4 uses
+  %i.h = phi i32 [ %i.w, %bb.f ], [ %.promoted21, %.lr.ph.split.us.preheader ] ; 3 uses
   %i.i = phi i64 [ %i.x, %bb.f ], [ %.promoted20, %.lr.ph.split.us.preheader ] ; 4 uses
   %i.j = phi i32 [ %i.y, %bb.f ], [ %.promoted19, %.lr.ph.split.us.preheader ] ; 4 uses
   %storemerge.i18.us = phi i16 [ %storemerge.i16.us, %bb.f ], [ %.promoted, %.lr.ph.split.us.preheader ] ; 4 uses
@@ -644,11 +641,8 @@ _ZN8FileLine9linenoIncEv.exit.us:                 ; preds = %bb.d, %bb.c
   store i16 %storemerge.i.us, ptr %i.d, align 8, !tbaa !160
   %i.p = and i64 %i.i, -72057589742960641
   %i.q = or disjoint i64 %i.p, 4294967296
-  %4 = and i32 %i.h, -2
-  %i.r = add i32 %4, 2
-  %5 = and i32 %i.h, 1
-  %6 = or disjoint i32 %i.r, %5                   ; 2 uses
-  store i32 %6, ptr %i.g, align 4
+  %i.r = add i32 %i.h, 2                          ; 2 uses
+  store i32 %i.r, ptr %i.g, align 4
   br label %.sink.split
 
 bb.e:                                             ; preds = %.lr.ph.split.us
@@ -660,7 +654,7 @@ bb.e:                                             ; preds = %.lr.ph.split.us
 
 .sink.split:                                      ; preds = %_ZN8FileLine9linenoIncEv.exit.us, %bb.e
   %.sink = phi i64 [ %i.v, %bb.e ], [ %i.q, %_ZN8FileLine9linenoIncEv.exit.us ] ; 2 uses
-  %.ph = phi i32 [ %i.h, %bb.e ], [ %6, %_ZN8FileLine9linenoIncEv.exit.us ]
+  %.ph = phi i32 [ %i.h, %bb.e ], [ %i.r, %_ZN8FileLine9linenoIncEv.exit.us ]
   %.ph27 = phi i32 [ %i.j, %bb.e ], [ %i.o, %_ZN8FileLine9linenoIncEv.exit.us ]
   %storemerge.i16.us.ph = phi i16 [ %storemerge.i18.us, %bb.e ], [ %storemerge.i.us, %_ZN8FileLine9linenoIncEv.exit.us ]
   store i64 %.sink, ptr %i.f, align 8

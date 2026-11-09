@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %_ZN7QStringD2Ev.exi
   br label %bb.eg
 
 bb.o:                                             ; preds = %.lr.ph, %_ZN7QStringD2Ev.exit274
-  %.sroa.6.0326 = phi i64 [ 0, %.lr.ph ], [ %45, %_ZN7QStringD2Ev.exit274 ] ; 3 uses
+  %.sroa.6.0326 = phi i64 [ 0, %.lr.ph ], [ %i.hf, %_ZN7QStringD2Ev.exit274 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   store ptr %13, ptr %15, align 8
@@ -608,11 +608,8 @@ _ZN7QStringD2Ev.exit274:                          ; preds = %bb.dn, %_ZN17QArray
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #26
   call void @_ZN10QJsonValueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %14) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #26
-  %43 = and i64 %.sroa.6.0326, -2
-  %i.hf = add i64 %43, 2                          ; 2 uses
-  %44 = and i64 %.sroa.6.0326, 1
-  %45 = or disjoint i64 %i.hf, %44
-  %.not327 = icmp eq i64 %i.hf, %i.ac
+  %i.hf = add i64 %.sroa.6.0326, 2                ; 2 uses
+  %.not327 = icmp eq i64 %i.ac, %i.hf
   br i1 %.not327, label %._crit_edge, label %bb.o
 
 bb.dp:                                            ; preds = %bb.db

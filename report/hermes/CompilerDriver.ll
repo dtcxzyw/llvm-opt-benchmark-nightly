@@ -205,12 +205,9 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN4llvh12DenseMapInfoINS_9StringRefEE7isEqualES1_S1_.exit: ; preds = %bb.c, %bb.d, %bb.b
   %.0 = phi ptr [ %3, %bb.c ], [ %i.t, %bb.d ], [ %i.n, %bb.b ] ; 2 uses
-  %i.u = load i32, ptr %0, align 8                ; 2 uses
-  %4 = and i32 %i.u, -2
-  %i.v = add i32 %4, 2
-  %5 = and i32 %i.u, 1
-  %6 = or disjoint i32 %i.v, %5
-  store i32 %6, ptr %0, align 8
+  %i.u = load i32, ptr %0, align 8
+  %i.v = add i32 %i.u, 2
+  store i32 %i.v, ptr %0, align 8
   %.sroa.01.0.copyload = load ptr, ptr %.0, align 8, !tbaa !468
   %i.w = icmp eq ptr %.sroa.01.0.copyload, inttoptr (i64 -1 to ptr)
   br i1 %i.w, label %bb.f, label %bb.e
@@ -369,12 +366,9 @@ bb.e:                                             ; preds = %_ZN4llvh12DenseMapI
   %i.aw = load ptr, ptr %i.b, align 8, !tbaa !668
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aw, ptr noundef nonnull align 8 dereferenceable(16) %.028.i, i64 16, i1 false), !tbaa.struct !594
-  %i.ax = load i32, ptr %0, align 8               ; 2 uses
-  %3 = and i32 %i.ax, -2
-  %i.ay = add i32 %3, 2
-  %4 = and i32 %i.ax, 1
-  %5 = or disjoint i32 %i.ay, %4
-  store i32 %5, ptr %0, align 8
+  %i.ax = load i32, ptr %0, align 8
+  %i.ay = add i32 %i.ax, 2
+  store i32 %i.ay, ptr %0, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %_ZN4llvh12DenseMapInfoINS_9StringRefEE7isEqualES1_S1_.exit.i
@@ -541,12 +535,9 @@ bb.n:                                             ; preds = %_ZN4llvh12DenseMapI
   %i.ci = load ptr, ptr %i.a, align 8, !tbaa !668
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ci, ptr noundef nonnull align 8 dereferenceable(16) %.028.i56, i64 16, i1 false), !tbaa.struct !594
-  %i.cj = load i32, ptr %0, align 8               ; 2 uses
-  %6 = and i32 %i.cj, -2
-  %i.ck = add i32 %6, 2
-  %7 = and i32 %i.cj, 1
-  %8 = or disjoint i32 %i.ck, %7
-  store i32 %8, ptr %0, align 8
+  %i.cj = load i32, ptr %0, align 8
+  %i.ck = add i32 %i.cj, 2
+  store i32 %i.ck, ptr %0, align 8
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_ZN4llvh12DenseMapInfoINS_9StringRefEE7isEqualES1_S1_.exit.i55

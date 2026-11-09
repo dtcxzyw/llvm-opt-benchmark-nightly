@@ -204,7 +204,7 @@ _ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.us: ; p
 _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit: ; preds = %.lr.ph, %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit
   %.sroa.0213.0565 = phi ptr [ %i.mq, %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit ], [ %i.ly, %.lr.ph ] ; 2 uses
   %i.me = tail call noundef ptr @_ZNK6duckdb12VariantValue6ToJSONERNS_13ClientContextEPN13duckdb_yyjson14yyjson_mut_docE(ptr noundef nonnull align 8 dereferenceable(144) %.sroa.0213.0565, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr noundef %2) ; 5 uses
-  %i.mf = load i64, ptr %.1.i101, align 8, !tbaa !304 ; 4 uses
+  %i.mf = load i64, ptr %.1.i101, align 8, !tbaa !304 ; 3 uses
   %i.mg = and i64 %i.mf, 7
   %i.mh = icmp eq i64 %i.mg, 6
   %i.mi = icmp ne ptr %i.me, null
@@ -212,11 +212,8 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit: ; preds = %.l
   br i1 %i.mj, label %bb.ct, label %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit, !prof !305
 
 bb.ct:                                            ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit
-  %16 = and i64 %i.mf, 254
-  %17 = and i64 %i.mf, -256
-  %i.mk = add i64 %17, 256
-  %18 = or disjoint i64 %i.mk, %16
-  store i64 %18, ptr %.1.i101, align 8, !tbaa !304
+  %i.mk = add i64 %i.mf, 256
+  store i64 %i.mk, ptr %.1.i101, align 8, !tbaa !304
   %i.ml = icmp ult i64 %i.mf, 256
   br i1 %i.ml, label %bb.cv, label %bb.cu
 

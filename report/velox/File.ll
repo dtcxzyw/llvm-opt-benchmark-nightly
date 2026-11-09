@@ -205,12 +205,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %_ZN5folly3f146detai
   %.sroa.0.1 = lshr i32 %.sroa.0.055, %.pn52      ; 2 uses
   %.sroa.8.1 = add i32 %.sroa.8.1.in, 1
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !274
-  %i.bw = load i64, ptr %i.d, align 8, !tbaa !253 ; 2 uses
-  %3 = and i64 %i.bw, -256
-  %i.bx = add i64 %3, 256
-  %4 = and i64 %i.bw, 255
-  %5 = or disjoint i64 %i.bx, %4                  ; 2 uses
-  store i64 %5, ptr %i.d, align 8, !tbaa !253
+  %i.bw = load i64, ptr %i.d, align 8, !tbaa !253
+  %i.bx = add i64 %i.bw, 256                      ; 2 uses
+  store i64 %i.bx, ptr %i.d, align 8, !tbaa !253
   %i.by = add i64 %.03256, 1
   %.not51 = icmp eq i32 %.sroa.0.1, 0
   br i1 %.not51, label %._crit_edge.loopexit, label %bb.i, !llvm.loop !857
@@ -221,7 +218,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %_ZN5folly3f146detai
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
   %i.bz = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.ar, %bb.h ] ; 2 uses
-  %i.ca = phi i64 [ %5, %._crit_edge.loopexit ], [ %i.as, %bb.h ] ; 2 uses
+  %i.ca = phi i64 [ %i.bx, %._crit_edge.loopexit ], [ %i.as, %bb.h ] ; 2 uses
   %.not.unshifted = xor i64 %i.bz, %i.ca
   %.not = icmp ult i64 %.not.unshifted, 256
   br i1 %.not, label %.loopexit, label %bb.h, !llvm.loop !858
@@ -418,12 +415,9 @@ bb.m:                                             ; preds = %._crit_edge.i
   %i.ca = icmp ne ptr %.lcssa21.i, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.ca)
   store i32 %i.as, ptr %i.bz, align 4, !tbaa !248
-  %i.cb = load i64, ptr %i.a, align 8, !tbaa !253 ; 2 uses
-  %4 = and i64 %i.cb, -256
-  %i.cc = add i64 %4, 256
-  %5 = and i64 %i.cb, 255
-  %6 = or disjoint i64 %i.cc, %5
-  store i64 %6, ptr %i.a, align 8, !tbaa !253
+  %i.cb = load i64, ptr %i.a, align 8, !tbaa !253
+  %i.cc = add i64 %i.cb, 256
+  store i64 %i.cc, ptr %i.a, align 8, !tbaa !253
   %.not127 = icmp eq i32 %.sroa.086.2, 0
   br i1 %.not127, label %.loopexit, label %.lr.ph150, !llvm.loop !860
 
@@ -697,12 +691,9 @@ bb.z:                                             ; preds = %._crit_edge.i65
   %i.hu = icmp ne ptr %.lcssa21.i69, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.hu)
   store i32 %i.cj, ptr %i.ht, align 4, !tbaa !248
-  %i.hv = load i64, ptr %i.a, align 8, !tbaa !253 ; 2 uses
-  %7 = and i64 %i.hv, -256
-  %i.hw = add i64 %7, 256
-  %8 = and i64 %i.hv, 255
-  %9 = or disjoint i64 %i.hw, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !253
+  %i.hv = load i64, ptr %i.a, align 8, !tbaa !253
+  %i.hw = add i64 %i.hv, 256
+  store i64 %i.hw, ptr %i.a, align 8, !tbaa !253
   %.not126 = icmp eq i32 %.sroa.086.3, 0
   br i1 %.not126, label %.loopexit, label %.lr.ph146, !llvm.loop !861
 
@@ -1105,12 +1096,9 @@ bb.i:                                             ; preds = %bb.g
   unreachable
 
 _ZN5folly15catch_exceptionIZNS_3f146detail8F14TableINS2_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEEEE13insertAtBlankIJRKSA_SD_EEEvNS2_11F14ItemIterIPNS2_8F14ChunkIjEEEESt4pairImmEDpOT_EUlvE_PFvPSH_SP_SR_EJSW_RSP_RSR_EvEET2_OT_OT0_DpOT1_.exit: ; preds = %_ZZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEEEE13insertAtBlankIJRKS9_SC_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmEDpOT_ENKUlvE_clEv.exit, %_ZN5folly11invoke_coldIPFvPNS_3f146detail8F14TableINS2_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEEEEENS2_11F14ItemIterIPNS2_8F14ChunkIjEEEESt4pairImmEEJSI_RSN_RSP_ESQ_TnNSt9enable_ifIXsr3std11is_functionIT1_EE5valueEiE4typeELi0EvEET3_OT_DpOT0_.exit
-  %i.ab = load i64, ptr %i.a, align 8, !tbaa !253 ; 2 uses
-  %7 = and i64 %i.ab, -256
-  %i.ac = add i64 %7, 256
-  %8 = and i64 %i.ab, 255
-  %9 = or disjoint i64 %i.ac, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !253
+  %i.ab = load i64, ptr %i.a, align 8, !tbaa !253
+  %i.ac = add i64 %i.ab, 256
+  store i64 %i.ac, ptr %i.a, align 8, !tbaa !253
   ret void
 }
 
@@ -1513,12 +1501,9 @@ bb.i:                                             ; preds = %bb.g
   unreachable
 
 _ZN5folly15catch_exceptionIZNS_3f146detail8F14TableINS2_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEEEE13insertAtBlankIJRKSA_RKSD_EEEvNS2_11F14ItemIterIPNS2_8F14ChunkIjEEEESt4pairImmEDpOT_EUlvE_PFvPSH_SR_ST_EJSY_RSR_RST_EvEET2_OT_OT0_DpOT1_.exit: ; preds = %_ZZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEEEE13insertAtBlankIJRKS9_RKSC_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmEDpOT_ENKUlvE_clEv.exit, %_ZN5folly11invoke_coldIPFvPNS_3f146detail8F14TableINS2_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEEEEENS2_11F14ItemIterIPNS2_8F14ChunkIjEEEESt4pairImmEEJSI_RSN_RSP_ESQ_TnNSt9enable_ifIXsr3std11is_functionIT1_EE5valueEiE4typeELi0EvEET3_OT_DpOT0_.exit.i
-  %i.ab = load i64, ptr %i.a, align 8, !tbaa !253 ; 2 uses
-  %7 = and i64 %i.ab, -256
-  %i.ac = add i64 %7, 256
-  %8 = and i64 %i.ab, 255
-  %9 = or disjoint i64 %i.ac, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !253
+  %i.ab = load i64, ptr %i.a, align 8, !tbaa !253
+  %i.ac = add i64 %i.ab, 256
+  store i64 %i.ac, ptr %i.a, align 8, !tbaa !253
   ret void
 }
 
@@ -1921,12 +1906,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %_ZN5folly3f146detai
   %.sroa.0.1 = lshr i32 %.sroa.0.061, %.pn58      ; 2 uses
   %.sroa.8.1 = add i32 %.sroa.8.1.in, 1
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !274
-  %i.bw = load i64, ptr %i.d, align 8, !tbaa !253 ; 2 uses
-  %3 = and i64 %i.bw, -256
-  %i.bx = add i64 %3, 256
-  %4 = and i64 %i.bw, 255
-  %5 = or disjoint i64 %i.bx, %4                  ; 2 uses
-  store i64 %5, ptr %i.d, align 8, !tbaa !253
+  %i.bw = load i64, ptr %i.d, align 8, !tbaa !253
+  %i.bx = add i64 %i.bw, 256                      ; 2 uses
+  store i64 %i.bx, ptr %i.d, align 8, !tbaa !253
   %i.by = add i64 %.03462, 1
   %.not57 = icmp eq i32 %.sroa.0.1, 0
   br i1 %.not57, label %._crit_edge.loopexit, label %bb.i, !llvm.loop !1222
@@ -1937,7 +1919,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %_ZN5folly3f146detai
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
   %i.bz = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.ar, %bb.h ] ; 2 uses
-  %i.ca = phi i64 [ %5, %._crit_edge.loopexit ], [ %i.as, %bb.h ] ; 2 uses
+  %i.ca = phi i64 [ %i.bx, %._crit_edge.loopexit ], [ %i.as, %bb.h ] ; 2 uses
   %.not.unshifted = xor i64 %i.bz, %i.ca
   %.not = icmp ult i64 %.not.unshifted, 256
   br i1 %.not, label %.loopexit, label %bb.h, !llvm.loop !1223
@@ -2134,12 +2116,9 @@ bb.m:                                             ; preds = %._crit_edge.i
   %i.ca = icmp ne ptr %.lcssa21.i, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.ca)
   store i32 %i.as, ptr %i.bz, align 4, !tbaa !248
-  %i.cb = load i64, ptr %i.a, align 8, !tbaa !253 ; 2 uses
-  %4 = and i64 %i.cb, -256
-  %i.cc = add i64 %4, 256
-  %5 = and i64 %i.cb, 255
-  %6 = or disjoint i64 %i.cc, %5
-  store i64 %6, ptr %i.a, align 8, !tbaa !253
+  %i.cb = load i64, ptr %i.a, align 8, !tbaa !253
+  %i.cc = add i64 %i.cb, 256
+  store i64 %i.cc, ptr %i.a, align 8, !tbaa !253
   %.not129 = icmp eq i32 %.sroa.088.2, 0
   br i1 %.not129, label %.loopexit, label %.lr.ph152, !llvm.loop !1225
 
@@ -2413,12 +2392,9 @@ bb.z:                                             ; preds = %._crit_edge.i67
   %i.hu = icmp ne ptr %.lcssa21.i71, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.hu)
   store i32 %i.cj, ptr %i.ht, align 4, !tbaa !248
-  %i.hv = load i64, ptr %i.a, align 8, !tbaa !253 ; 2 uses
-  %7 = and i64 %i.hv, -256
-  %i.hw = add i64 %7, 256
-  %8 = and i64 %i.hv, 255
-  %9 = or disjoint i64 %i.hw, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !253
+  %i.hv = load i64, ptr %i.a, align 8, !tbaa !253
+  %i.hw = add i64 %i.hv, 256
+  store i64 %i.hw, ptr %i.a, align 8, !tbaa !253
   %.not128 = icmp eq i32 %.sroa.088.3, 0
   br i1 %.not128, label %.loopexit, label %.lr.ph148, !llvm.loop !1226
 

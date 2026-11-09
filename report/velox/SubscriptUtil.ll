@@ -205,12 +205,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !729
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -613,12 +610,9 @@ bb.o:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbivvN8facebook5velox6memory12StlAllocatorISt4pairIKbiEEEEEE13insertAtBlankIJbRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbivvN8facebook5velox6memory12StlAllocatorISt4pairIKbiEEEEEE13insertAtBlankIJbRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKbiEE6setTagEmm.exit, %bb.o
-  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.ci, -256
-  %i.cj = add i64 %7, 256
-  %8 = and i64 %i.ci, 255
-  %9 = or disjoint i64 %i.cj, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cj = add i64 %i.ci, 256
+  store i64 %i.cj, ptr %i.a, align 8, !tbaa !496
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbivvN8facebook5velox6memory12StlAllocatorISt4pairIKbiEEEEEE13insertAtBlankIJbRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
@@ -1021,12 +1015,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !780
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -1429,12 +1420,9 @@ bb.o:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiivvN8facebook5velox6memory12StlAllocatorISt4pairIKiiEEEEEE13insertAtBlankIJiRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiivvN8facebook5velox6memory12StlAllocatorISt4pairIKiiEEEEEE13insertAtBlankIJiRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKiiEE6setTagEmm.exit, %bb.o
-  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.ci, -256
-  %i.cj = add i64 %7, 256
-  %8 = and i64 %i.ci, 255
-  %9 = or disjoint i64 %i.cj, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cj = add i64 %i.ci, 256
+  store i64 %i.cj, ptr %i.a, align 8, !tbaa !496
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiivvN8facebook5velox6memory12StlAllocatorISt4pairIKiiEEEEEE13insertAtBlankIJiRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
@@ -1837,12 +1825,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !809
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -2245,12 +2230,9 @@ bb.o:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaivvN8facebook5velox6memory12StlAllocatorISt4pairIKaiEEEEEE13insertAtBlankIJaRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaivvN8facebook5velox6memory12StlAllocatorISt4pairIKaiEEEEEE13insertAtBlankIJaRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKaiEE6setTagEmm.exit, %bb.o
-  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.ci, -256
-  %i.cj = add i64 %7, 256
-  %8 = and i64 %i.ci, 255
-  %9 = or disjoint i64 %i.cj, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cj = add i64 %i.ci, 256
+  store i64 %i.cj, ptr %i.a, align 8, !tbaa !496
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaivvN8facebook5velox6memory12StlAllocatorISt4pairIKaiEEEEEE13insertAtBlankIJaRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
@@ -2653,12 +2635,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !838
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -3061,12 +3040,9 @@ bb.o:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsivvN8facebook5velox6memory12StlAllocatorISt4pairIKsiEEEEEE13insertAtBlankIJsRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsivvN8facebook5velox6memory12StlAllocatorISt4pairIKsiEEEEEE13insertAtBlankIJsRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKsiEE6setTagEmm.exit, %bb.o
-  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.ci, -256
-  %i.cj = add i64 %7, 256
-  %8 = and i64 %i.ci, 255
-  %9 = or disjoint i64 %i.cj, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cj = add i64 %i.ci, 256
+  store i64 %i.cj, ptr %i.a, align 8, !tbaa !496
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsivvN8facebook5velox6memory12StlAllocatorISt4pairIKsiEEEEEE13insertAtBlankIJsRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
@@ -3469,12 +3445,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !867
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -3877,12 +3850,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlivvN8facebook5velox6memory12StlAllocatorISt4pairIKliEEEEEE13insertAtBlankIJlRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlivvN8facebook5velox6memory12StlAllocatorISt4pairIKliEEEEEE13insertAtBlankIJlRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKliEE6setTagEmm.exit, %bb.n
-  %i.cg = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.cg, -256
-  %i.ch = add i64 %7, 256
-  %8 = and i64 %i.cg, 255
-  %9 = or disjoint i64 %i.ch, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.cg = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.ch = add i64 %i.cg, 256
+  store i64 %i.ch, ptr %i.a, align 8, !tbaa !496
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlivvN8facebook5velox6memory12StlAllocatorISt4pairIKliEEEEEE13insertAtBlankIJlRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISA_EEEES8_ImmEDpOT_.exit
@@ -4285,12 +4255,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cn, align 8, !tbaa !893
   %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 32
   store i64 0, ptr %i.co, align 8, !tbaa !496
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.cp, -256
-  %i.cq = add i64 %7, 256
-  %8 = and i64 %i.cp, 255
-  %9 = or disjoint i64 %i.cq, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cq = add i64 %i.cp, 256
+  store i64 %i.cq, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -4693,7 +4660,7 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.bu ; 2 uses
   %i.cb = icmp ne ptr %.1, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.cb)
-  %i.cc = load i64, ptr %i.a, align 8, !tbaa !496 ; 3 uses
+  %i.cc = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
   %i.cd = lshr i64 %i.cc, 8                       ; 2 uses
   %i.ce = trunc i64 %i.cd to i32
   store i32 %i.ce, ptr %i.ca, align 4, !tbaa !385
@@ -4707,11 +4674,8 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   %i.cl = load i64, ptr %6, align 8, !tbaa !409
   %i.cm = trunc i64 %i.cl to i32
   store i32 %i.cm, ptr %i.ck, align 16, !tbaa !900
-  %7 = and i64 %i.cc, -256
-  %i.cn = add i64 %7, 256
-  %8 = and i64 %i.cc, 255
-  %9 = or disjoint i64 %i.cn, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.cn = add i64 %i.cc, 256
+  store i64 %i.cn, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -5114,12 +5078,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !921
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -5522,12 +5483,9 @@ bb.o:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfiN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEENS5_6memory12StlAllocatorISt4pairIKfiEEEEEE13insertAtBlankIJfRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISG_EEEESE_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfiN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEENS5_6memory12StlAllocatorISt4pairIKfiEEEEEE13insertAtBlankIJfRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISG_EEEESE_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKfiEE6setTagEmm.exit, %bb.o
-  %i.ck = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.ck, -256
-  %i.cl = add i64 %7, 256
-  %8 = and i64 %i.ck, 255
-  %9 = or disjoint i64 %i.cl, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.ck = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cl = add i64 %i.ck, 256
+  store i64 %i.cl, ptr %i.a, align 8, !tbaa !496
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfiN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEENS5_6memory12StlAllocatorISt4pairIKfiEEEEEE13insertAtBlankIJfRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISG_EEEESE_ImmEDpOT_.exit
@@ -5930,12 +5888,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !960
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -6338,12 +6293,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdiN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEENS5_6memory12StlAllocatorISt4pairIKdiEEEEEE13insertAtBlankIJdRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISG_EEEESE_ImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdiN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEENS5_6memory12StlAllocatorISt4pairIKdiEEEEEE13insertAtBlankIJdRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISG_EEEESE_ImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKdiEE6setTagEmm.exit, %bb.n
-  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.ci, -256
-  %i.cj = add i64 %7, 256
-  %8 = and i64 %i.ci, 255
-  %9 = or disjoint i64 %i.cj, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.ci = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cj = add i64 %i.ci, 256
+  store i64 %i.cj, ptr %i.a, align 8, !tbaa !496
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdiN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEENS5_6memory12StlAllocatorISt4pairIKdiEEEEEE13insertAtBlankIJdRmEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISG_EEEESE_ImmEDpOT_.exit
@@ -6746,12 +6698,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cn, align 8, !tbaa !995
   %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 32
   store i64 0, ptr %i.co, align 8, !tbaa !496
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.cp, -256
-  %i.cq = add i64 %7, 256
-  %8 = and i64 %i.cp, 255
-  %9 = or disjoint i64 %i.cq, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cq = add i64 %i.cp, 256
+  store i64 %i.cq, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -7154,12 +7103,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.n
   %i.er = load i64, ptr %6, align 8, !tbaa !409
   %i.es = trunc i64 %i.er to i32
   store i32 %i.es, ptr %i.eq, align 8, !tbaa !1011
-  %i.et = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.et, -256
-  %i.eu = add i64 %7, 256
-  %8 = and i64 %i.et, 255
-  %9 = or disjoint i64 %i.eu, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.et = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.eu = add i64 %i.et, 256
+  store i64 %i.eu, ptr %i.a, align 8, !tbaa !496
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEivvNS4_6memory12StlAllocatorISt4pairIKS5_iEEESt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -7562,12 +7508,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cn, align 8, !tbaa !1031
   %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 32
   store i64 0, ptr %i.co, align 8, !tbaa !496
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.cp, -256
-  %i.cq = add i64 %7, 256
-  %8 = and i64 %i.cp, 255
-  %9 = or disjoint i64 %i.cq, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cq = add i64 %i.cp, 256
+  store i64 %i.cq, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -7970,12 +7913,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   %i.cn = load i64, ptr %6, align 8, !tbaa !409
   %i.co = trunc i64 %i.cn to i32
   store i32 %i.co, ptr %i.cm, align 8, !tbaa !1037
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.cp, -256
-  %i.cq = add i64 %7, 256
-  %8 = and i64 %i.cp, 255
-  %9 = or disjoint i64 %i.cq, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cq = add i64 %i.cp, 256
+  store i64 %i.cq, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -8378,12 +8318,9 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.m
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.cm, align 8, !tbaa !480
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cn, i8 0, i64 16, i1 false)
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %7 = and i64 %i.co, -256
-  %i.cp = add i64 %7, 256
-  %8 = and i64 %i.co, 255
-  %9 = or disjoint i64 %i.cp, %8
-  store i64 %9, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.g, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -8786,12 +8723,9 @@ bb.n:                                             ; preds = %_ZN5folly3f146detai
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9functions6detail6MapKeyEvNS7_12MapKeyHasherEvNS5_6memory12StlAllocatorIS8_EEEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit
 
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9functions6detail6MapKeyEvNS7_12MapKeyHasherEvNS5_6memory12StlAllocatorIS8_EEEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIN8facebook5velox9functions6detail6MapKeyEE6setTagEmm.exit, %bb.n
-  %i.co = load i64, ptr %i.a, align 8, !tbaa !496 ; 2 uses
-  %6 = and i64 %i.co, -256
-  %i.cp = add i64 %6, 256
-  %7 = and i64 %i.co, 255
-  %8 = or disjoint i64 %i.cp, %7
-  store i64 %8, ptr %i.a, align 8, !tbaa !496
+  %i.co = load i64, ptr %i.a, align 8, !tbaa !496
+  %i.cp = add i64 %i.co, 256
+  store i64 %i.cp, ptr %i.a, align 8, !tbaa !496
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9functions6detail6MapKeyEvNS7_12MapKeyHasherEvNS5_6memory12StlAllocatorIS8_EEEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit

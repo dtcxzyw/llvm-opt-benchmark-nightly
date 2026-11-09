@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %Abc_ObjFanin0Ntk.ex
   br label %bb.g
 
 bb.g:                                             ; preds = %Abc_ObjFanin0Ntk.exit, %bb.f
-  %.val5.i40 = phi i32 [ %i.z, %Abc_ObjFanin0Ntk.exit ], [ %i.ae, %bb.f ] ; 5 uses
+  %.val5.i40 = phi i32 [ %i.z, %Abc_ObjFanin0Ntk.exit ], [ %i.ae, %bb.f ] ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.val27 = load i32, ptr %i.g, align 4, !tbaa !31 ; 3 uses
   %i.af = sext i32 %.val27 to i64
@@ -236,15 +236,12 @@ Abc_ObjIsBarBuf.exit:                             ; preds = %bb.i
   br i1 %.not, label %.critedge.thread, label %Abc_ObjIsBarBuf.exit.thread
 
 Abc_ObjIsBarBuf.exit.thread:                      ; preds = %bb.h, %bb.i, %Abc_ObjIsBarBuf.exit
-  %1 = and i32 %.val5.i40, -4096
-  %i.ao = add i32 %1, 4096
-  %2 = and i32 %.val5.i40, 4095
-  %3 = or disjoint i32 %i.ao, %2                  ; 2 uses
-  store i32 %3, ptr %i.a, align 4
+  %i.ao = add i32 %.val5.i40, 4096                ; 2 uses
+  store i32 %i.ao, ptr %i.a, align 4
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.c, %._crit_edge, %bb.a, %bb.a, %.critedge, %Abc_ObjIsBarBuf.exit, %Abc_ObjIsBarBuf.exit.thread
-  %.020.in = phi i32 [ %.020.in.pre, %._crit_edge ], [ %.val25, %bb.a ], [ %.val25, %bb.a ], [ %.val5.i40, %.critedge ], [ %.val5.i40, %Abc_ObjIsBarBuf.exit ], [ %3, %Abc_ObjIsBarBuf.exit.thread ], [ %i.f, %bb.c ]
+  %.020.in = phi i32 [ %.020.in.pre, %._crit_edge ], [ %.val25, %bb.a ], [ %.val25, %bb.a ], [ %.val5.i40, %.critedge ], [ %.val5.i40, %Abc_ObjIsBarBuf.exit ], [ %i.ao, %Abc_ObjIsBarBuf.exit.thread ], [ %i.f, %bb.c ]
   %.020 = lshr i32 %.020.in, 12
   ret i32 %.020
 }
@@ -340,7 +337,7 @@ bb.g:                                             ; preds = %Abc_ObjFanout0Ntk.e
   br i1 %i.ah, label %bb.d, label %.critedge, !llvm.loop !172
 
 .critedge:                                        ; preds = %bb.g, %bb.c
-  %i.ai = phi i32 [ %i.g, %bb.c ], [ %.val5.i37, %bb.g ] ; 5 uses
+  %i.ai = phi i32 [ %i.g, %bb.c ], [ %.val5.i37, %bb.g ] ; 4 uses
   %i.aj = getelementptr i8, ptr %0, i64 28
   %.val25 = load i32, ptr %i.aj, align 4, !tbaa !31 ; 2 uses
   %i.ak = icmp sgt i32 %.val25, 0
@@ -367,15 +364,12 @@ Abc_ObjIsBarBuf.exit:                             ; preds = %bb.i
   br i1 %.not, label %bb.j, label %Abc_ObjIsBarBuf.exit.thread
 
 Abc_ObjIsBarBuf.exit.thread:                      ; preds = %bb.h, %bb.i, %Abc_ObjIsBarBuf.exit
-  %1 = and i32 %i.ai, -4096
-  %i.ar = add i32 %1, 4096
-  %2 = and i32 %i.ai, 4095
-  %3 = or disjoint i32 %i.ar, %2                  ; 2 uses
-  store i32 %3, ptr %i.a, align 4
+  %i.ar = add i32 %i.ai, 4096                     ; 2 uses
+  store i32 %i.ar, ptr %i.a, align 4
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge, %bb.a, %.critedge, %Abc_ObjIsBarBuf.exit, %Abc_ObjIsBarBuf.exit.thread
-  %.020.in = phi i32 [ %.020.in.pre, %._crit_edge ], [ %.val26, %bb.a ], [ %i.ai, %.critedge ], [ %i.ai, %Abc_ObjIsBarBuf.exit ], [ %3, %Abc_ObjIsBarBuf.exit.thread ]
+  %.020.in = phi i32 [ %.020.in.pre, %._crit_edge ], [ %.val26, %bb.a ], [ %i.ai, %.critedge ], [ %i.ai, %Abc_ObjIsBarBuf.exit ], [ %i.ar, %Abc_ObjIsBarBuf.exit.thread ]
   %.020 = lshr i32 %.020.in, 12
   ret i32 %.020
 }

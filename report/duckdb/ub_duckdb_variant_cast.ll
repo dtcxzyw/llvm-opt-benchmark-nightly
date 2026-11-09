@@ -205,7 +205,7 @@ _ZNSt6vectorIPN13duckdb_yyjson14yyjson_mut_valESaIS2_EED2Ev.exit.i: ; preds = %b
   resume { ptr, i32 } %lpad.loopexit.split-lp
 
 _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i: ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i.preheader, %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i
-  %i.aj = phi i64 [ %i.av, %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i ], [ %.pre, %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i.preheader ] ; 5 uses
+  %i.aj = phi i64 [ %i.av, %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i ], [ %.pre, %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i.preheader ] ; 4 uses
   %.sroa.08.047 = phi ptr [ %i.aw, %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i ], [ %.sroa.011.4, %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i.preheader ] ; 3 uses
   %i.ak = load ptr, ptr %.sroa.08.047, align 8, !tbaa !307 ; 5 uses
   %i.al = and i64 %i.aj, 7
@@ -215,11 +215,8 @@ _ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i: ; preds = %
   br i1 %i.ao, label %bb.m, label %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i, !prof !308
 
 bb.m:                                             ; preds = %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i
-  %4 = and i64 %i.aj, 254
-  %5 = and i64 %i.aj, -256
-  %i.ap = add i64 %5, 256
-  %6 = or disjoint i64 %i.ap, %4                  ; 2 uses
-  store i64 %6, ptr %.1.i.i, align 8, !tbaa !277
+  %i.ap = add i64 %i.aj, 256                      ; 2 uses
+  store i64 %i.ap, ptr %.1.i.i, align 8, !tbaa !277
   %i.aq = icmp ult i64 %i.aj, 256
   br i1 %i.aq, label %bb.o, label %bb.n
 
@@ -238,7 +235,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br label %_ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i
 
 _ZN13duckdb_yyjsonL21yyjson_mut_arr_appendEPNS_14yyjson_mut_valES1_.exit.i: ; preds = %bb.o, %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i
-  %i.av = phi i64 [ %6, %bb.o ], [ %i.aj, %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i ]
+  %i.av = phi i64 [ %i.ap, %bb.o ], [ %i.aj, %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i ]
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.08.047, i64 8
   %.not28 = icmp eq ptr %.sroa.08.047, %.pn
   br i1 %.not28, label %_ZN6duckdb12_GLOBAL__N_113JSONConverter10VisitArrayERKNS_24UnifiedVariantVectorDataEmRKNS_17VariantNestedDataEPN13duckdb_yyjson14yyjson_mut_docE.exit, label %_ZN13duckdb_yyjsonL17yyjson_mut_is_arrEPNS_14yyjson_mut_valE.exit.i

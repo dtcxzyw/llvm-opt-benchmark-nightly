@@ -202,12 +202,9 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.ax, label %bb.d, label %.critedge4, !llvm.loop !116
 
 .critedge4:                                       ; preds = %bb.f, %bb.c
-  %i.ay = phi i32 [ %i.ab, %bb.c ], [ %i.aw, %bb.f ] ; 2 uses
-  %5 = and i32 %i.ay, -4096
-  %i.az = add i32 %5, 4096
-  %6 = and i32 %i.ay, 4095
-  %7 = or disjoint i32 %i.az, %6                  ; 2 uses
-  store i32 %7, ptr %i.z, align 4
+  %i.ay = phi i32 [ %i.ab, %bb.c ], [ %i.aw, %bb.f ]
+  %i.az = add i32 %i.ay, 4096                     ; 2 uses
+  store i32 %i.az, ptr %i.z, align 4
   %indvars.iv.next129 = add nuw nsw i64 %indvars.iv128, 1 ; 2 uses
   %.val84 = load i32, ptr %i.g, align 4, !tbaa !31 ; 2 uses
   %i.ba = sext i32 %.val84 to i64
@@ -216,7 +213,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 .critedge2:                                       ; preds = %.critedge4, %.critedge.preheader..critedge2_crit_edge
   %.val117141 = phi i32 [ %.val84106, %.critedge.preheader..critedge2_crit_edge ], [ %.val84, %.critedge4 ]
-  %i.bc = phi i32 [ %.pre, %.critedge.preheader..critedge2_crit_edge ], [ %7, %.critedge4 ]
+  %i.bc = phi i32 [ %.pre, %.critedge.preheader..critedge2_crit_edge ], [ %i.az, %.critedge4 ]
   %.177.lcssa = phi ptr [ %.076.lcssa, %.critedge.preheader..critedge2_crit_edge ], [ %i.y, %.critedge4 ]
   %i.bd = lshr i32 %i.bc, 12
   %i.be = icmp sgt i32 %i.bd, %4
@@ -336,12 +333,9 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 .critedge10:                                      ; preds = %bb.l, %bb.i
   %i.dd = load ptr, ptr %i.bx, align 8, !tbaa !40
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 20 ; 2 uses
-  %i.df = load i32, ptr %i.de, align 4            ; 2 uses
-  %8 = and i32 %i.df, -4096
-  %i.dg = add i32 %8, 4096
-  %9 = and i32 %i.df, 4095
-  %10 = or disjoint i32 %i.dg, %9
-  store i32 %10, ptr %i.de, align 4
+  %i.df = load i32, ptr %i.de, align 4
+  %i.dg = add i32 %i.df, 4096
+  store i32 %i.dg, ptr %i.de, align 4
   %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1 ; 2 uses
   %.val = load i32, ptr %i.g, align 4, !tbaa !31
   %i.dh = sext i32 %.val to i64

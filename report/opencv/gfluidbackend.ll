@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit490: ; preds = %bb
 
 bb.ls:                                            ; preds = %bb.lg, %bb.lh, %bb.jp, %bb.jj
   %.sroa.0644.sroa.0.0 = phi i32 [ %.sroa.0644.sroa.0.0.extract.trunc657, %bb.jj ], [ %.0.i15.i, %bb.jp ], [ %i.akl, %bb.lh ], [ %.sroa.0.sroa.0.0.extract.trunc.i, %bb.lg ] ; 3 uses
-  %.sroa.0644.sroa.8.0 = phi i32 [ %.sroa.0644.sroa.8.0.extract.trunc661, %bb.jj ], [ %.0.i.i, %bb.jp ], [ %i.akm, %bb.lh ], [ %.sroa.0.sroa.4.0.extract.trunc.i, %bb.lg ] ; 7 uses
-  %.sroa.11.0 = phi i64 [ %.sroa.7.0.copyload, %bb.jj ], [ %.sroa.3.8.insert.insert.i, %bb.jp ], [ %.sroa.53.12.insert.insert.i, %bb.lh ], [ %.sroa.7.0.copyload, %bb.lg ] ; 5 uses
+  %.sroa.0644.sroa.8.0 = phi i32 [ %.sroa.0644.sroa.8.0.extract.trunc661, %bb.jj ], [ %.0.i.i, %bb.jp ], [ %i.akm, %bb.lh ], [ %.sroa.0.sroa.4.0.extract.trunc.i, %bb.lg ] ; 6 uses
+  %.sroa.11.0 = phi i64 [ %.sroa.7.0.copyload, %bb.jj ], [ %.sroa.3.8.insert.insert.i, %bb.jp ], [ %.sroa.53.12.insert.insert.i, %bb.lh ], [ %.sroa.7.0.copyload, %bb.lg ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #30
   %i.ald = load ptr, ptr %i.cr, align 8, !tbaa !75, !noalias !715, !nonnull !89, !noundef !89 ; 7 uses
   %i.ale = getelementptr inbounds nuw i8, ptr %i.ald, i64 8 ; 7 uses
@@ -609,19 +609,15 @@ _ZNKSt10_HashtableIN3ade7details10MetadataIdESt4pairIKS2_St10unique_ptrINS1_8Met
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
   %i.aqe = load i32, ptr %i.aqd, align 8, !tbaa !352
   %i.aqf = icmp eq i32 %i.aqe, 2
-  br i1 %i.aqf, label %69, label %76
+  br i1 %i.aqf, label %bb.nn, label %bb.nu
 
-69:                                               ; preds = %.loopexit737
-  %70 = and i32 %.sroa.0644.sroa.8.0, 1
-  %.not117 = icmp eq i32 %70, 0
-  br i1 %.not117, label %bb.nu, label %bb.nn
-
-bb.nn:                                            ; preds = %69
-  %71 = add nsw i32 %.sroa.0644.sroa.8.0, -1
-  %72 = and i64 %.sroa.11.0, -4294967296
-  %.sroa.11.12.insert.ext = add i64 %72, 4294967296
-  %.sroa.11.12.insert.mask = and i64 %.sroa.11.0, 4294967295
-  %.sroa.11.12.insert.insert = or disjoint i64 %.sroa.11.12.insert.ext, %.sroa.11.12.insert.mask
+bb.nn:                                            ; preds = %.loopexit737
+  %.not117 = trunc i32 %.sroa.0644.sroa.8.0 to i1
+  %.sroa.11.12.insert.insert = add i64 %.sroa.11.0, 4294967296
+  %.sroa.0644.sroa.8.1 = and i32 %.sroa.0644.sroa.8.0, -2
+  %.sroa.11.1 = select i1 %.not117, i64 %.sroa.11.12.insert.insert, i64 %.sroa.11.0 ; 2 uses
+  %.sroa.11.12.insert.mask = and i64 %.sroa.11.1, 4294967296
+  %spec.select734 = add i64 %.sroa.11.1, %.sroa.11.12.insert.mask
   br label %bb.nu
 
 bb.no:                                            ; preds = %bb.lz
@@ -679,29 +675,15 @@ bb.nt:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void %i.aqr(ptr noundef nonnull align 8 dereferenceable(16) %i.aqi) #30, !inline_history !8
   br label %_ZN3ade6HandleINS_4NodeEED2Ev.exit562
 
-bb.nu:                                            ; preds = %bb.nn, %69
-  %.sroa.0644.sroa.8.1.a = phi i32 [ %.sroa.0644.sroa.8.0, %69 ], [ %71, %bb.nn ] ; 2 uses
-  %.sroa.11.1.a = phi i64 [ %.sroa.11.0, %69 ], [ %.sroa.11.12.insert.insert, %bb.nn ] ; 4 uses
-  %73 = and i64 %.sroa.11.1.a, 4294967296
-  %.not118 = icmp eq i64 %73, 0
-  br i1 %.not118, label %76, label %74
+bb.nu:                                            ; preds = %bb.nn, %.loopexit737
+  %.sroa.0644.sroa.8.1.a = phi i32 [ %.sroa.0644.sroa.8.1, %bb.nn ], [ %.sroa.0644.sroa.8.0, %.loopexit737 ]
+  %.sroa.11.1.a = phi i64 [ %spec.select734, %bb.nn ], [ %.sroa.11.0, %.loopexit737 ]
+  %69 = load ptr, ptr %i.dh, align 8, !tbaa !75   ; 4 uses
+  %.not118 = icmp eq ptr %69, null
+  br i1 %.not118, label %_ZN3ade6HandleINS_4NodeEED2Ev.exit567, label %bb.nv
 
-74:                                               ; preds = %bb.nu
-  %75 = and i64 %.sroa.11.1.a, -4294967296
-  %.sroa.11.12.insert.shift650 = add i64 %75, 4294967296
-  %.sroa.11.12.insert.mask651 = and i64 %.sroa.11.1.a, 4294967295
-  %.sroa.11.12.insert.insert652 = or disjoint i64 %.sroa.11.12.insert.shift650, %.sroa.11.12.insert.mask651
-  br label %76
-
-76:                                               ; preds = %bb.nu, %74, %.loopexit737
-  %.sroa.0644.sroa.8.2 = phi i32 [ %.sroa.0644.sroa.8.1.a, %bb.nu ], [ %.sroa.0644.sroa.8.1.a, %74 ], [ %.sroa.0644.sroa.8.0, %.loopexit737 ]
-  %.sroa.11.2 = phi i64 [ %.sroa.11.1.a, %bb.nu ], [ %.sroa.11.12.insert.insert652, %74 ], [ %.sroa.11.0, %.loopexit737 ]
-  %77 = load ptr, ptr %i.dh, align 8, !tbaa !75   ; 4 uses
-  %.not.i.i.i563 = icmp eq ptr %77, null
-  br i1 %.not.i.i.i563, label %_ZN3ade6HandleINS_4NodeEED2Ev.exit567, label %bb.nv
-
-bb.nv:                                            ; preds = %76
-  %i.aqs = getelementptr inbounds nuw i8, ptr %77, i64 12 ; 3 uses
+bb.nv:                                            ; preds = %bb.nu
+  %i.aqs = getelementptr inbounds nuw i8, ptr %69, i64 12 ; 3 uses
   %i.aqt = load i8, ptr @__libc_single_threaded, align 1, !tbaa !65
   %.not.i.i.i.i564 = icmp eq i8 %i.aqt, 0
   br i1 %.not.i.i.i.i564, label %bb.nx, label %bb.nw
@@ -722,13 +704,13 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i565: ; preds = %bb.nx
   br i1 %i.aqx, label %bb.ny, label %_ZN3ade6HandleINS_4NodeEED2Ev.exit567
 
 bb.ny:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i565
-  %i.aqy = load ptr, ptr %77, align 8, !tbaa !59
+  %i.aqy = load ptr, ptr %69, align 8, !tbaa !59
   %i.aqz = getelementptr inbounds nuw i8, ptr %i.aqy, i64 24
   %i.ara = load ptr, ptr %i.aqz, align 8
-  call void %i.ara(ptr noundef nonnull align 8 dereferenceable(16) %77) #30, !inline_history !8
+  call void %i.ara(ptr noundef nonnull align 8 dereferenceable(16) %69) #30, !inline_history !8
   br label %_ZN3ade6HandleINS_4NodeEED2Ev.exit567
 
-_ZN3ade6HandleINS_4NodeEED2Ev.exit567:            ; preds = %76, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i565, %bb.ny
+_ZN3ade6HandleINS_4NodeEED2Ev.exit567:            ; preds = %bb.nu, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i565, %bb.ny
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #30
   br label %bb.nz
 
@@ -738,8 +720,8 @@ _ZN3ade6HandleINS_4NodeEED2Ev.exit562:            ; preds = %bb.nt, %_ZN9__gnu_c
   br label %.body332
 
 bb.nz:                                            ; preds = %_ZN3ade6HandleINS_4NodeEED2Ev.exit567, %bb.ma
-  %.sroa.0644.sroa.8.3 = phi i32 [ %.sroa.0644.sroa.8.0, %bb.ma ], [ %.sroa.0644.sroa.8.2, %_ZN3ade6HandleINS_4NodeEED2Ev.exit567 ]
-  %.sroa.11.3 = phi i64 [ %.sroa.11.0, %bb.ma ], [ %.sroa.11.2, %_ZN3ade6HandleINS_4NodeEED2Ev.exit567 ] ; 2 uses
+  %.sroa.0644.sroa.8.3 = phi i32 [ %.sroa.0644.sroa.8.0, %bb.ma ], [ %.sroa.0644.sroa.8.1.a, %_ZN3ade6HandleINS_4NodeEED2Ev.exit567 ]
+  %.sroa.11.3 = phi i64 [ %.sroa.11.0, %bb.ma ], [ %.sroa.11.1.a, %_ZN3ade6HandleINS_4NodeEED2Ev.exit567 ] ; 2 uses
   %i.arb = getelementptr inbounds nuw i8, ptr %i.abg, i64 20
   %i.arc = load i32, ptr %i.arb, align 4, !tbaa !356 ; 2 uses
   %i.ard = getelementptr inbounds nuw i8, ptr %i.xo, i64 36

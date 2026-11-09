@@ -202,8 +202,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bo = sub i32 %.sroa.054.4.extract.trunc, %i.d
   %i.bp = add i32 %i.bo, %.1.lcssa.i
   %.sroa.054.4.insert.ext = zext i32 %i.bp to i64
-  %.sroa.054.4.insert.shift = shl nuw i64 %.sroa.054.4.insert.ext, 32 ; 2 uses
-  %.sroa.054.4.insert.insert = or disjoint i64 %.sroa.054.4.insert.shift, %i.bd ; 2 uses
+  %.sroa.054.4.insert.shift = shl nuw i64 %.sroa.054.4.insert.ext, 32
+  %.sroa.054.4.insert.insert = or disjoint i64 %.sroa.054.4.insert.shift, %i.bd ; 3 uses
   %i.bq = sext i32 %i.d to i64
   %i.br = getelementptr inbounds nuw i8, ptr %5, i64 %i.bq
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !10
@@ -221,13 +221,12 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bz, label %.lr.ph.preheader, label %.loopexit184
 
 .lr.ph.preheader:                                 ; preds = %bb.l
-  %.sroa.054.4.insert.ext59262 = add i64 %.sroa.054.4.insert.shift, 4294967296 ; 2 uses
+  %.sroa.054.4.insert.ext59262 = add i64 %.sroa.054.4.insert.insert, 4294967296 ; 2 uses
   %i.ca = icmp sgt i32 %i.d, 1
   br i1 %i.ca, label %.lr.ph266, label %.lr.ph._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph266
-  %8 = and i64 %.sroa.054.4.insert.ext59265, -4294967296
-  %.sroa.054.4.insert.ext59 = add i64 %8, 4294967296 ; 2 uses
+  %.sroa.054.4.insert.ext59 = add i64 %.sroa.054.4.insert.ext59265, 4294967296 ; 2 uses
   %i.cb = icmp sgt i64 %indvars.iv263, 1
   br i1 %i.cb, label %.lr.ph266, label %.lr.ph._crit_edge, !llvm.loop !37
 
