@@ -204,13 +204,18 @@ bb.aa:                                            ; preds = %_ZNSt6vectorIhSaIhE
 
 bb.ab:                                            ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit228, %bb.aa
   %i.fj = phi ptr [ %i.fi, %bb.aa ], [ %i.ew, %_ZNSt6vectorIhSaIhEE6resizeEm.exit228 ] ; 2 uses
-  %11 = ptrtoaddr ptr %i.fj to i64
   %i.fk = icmp sgt i32 %i.ff, 0
-  br i1 %i.fk, label %.lr.ph297, label %._crit_edge298
+  br i1 %i.fk, label %.lr.ph297.preheader, label %._crit_edge298
 
-.lr.ph297:                                        ; preds = %bb.ab, %._crit_edge
-  %.0187295 = phi i32 [ %i.gj, %._crit_edge ], [ 0, %bb.ab ] ; 3 uses
-  %.0294 = phi i32 [ %.sroa.speculated268, %._crit_edge ], [ %i.fc, %bb.ab ]
+.lr.ph297.preheader:                              ; preds = %bb.ab
+  %11 = ptrtoaddr ptr %i.fj to i64
+  %12 = sub i64 %11, %i.bb
+  %invariant.op = add i64 %12, -1
+  br label %.lr.ph297
+
+.lr.ph297:                                        ; preds = %.lr.ph297.preheader, %._crit_edge
+  %.0187295 = phi i32 [ %i.gj, %._crit_edge ], [ 0, %.lr.ph297.preheader ] ; 3 uses
+  %.0294 = phi i32 [ %.sroa.speculated268, %._crit_edge ], [ %i.fc, %.lr.ph297.preheader ]
   %i.fl = sub nsw i32 %i.ff, %.0187295
   %.sroa.speculated268 = call i32 @llvm.smin.i32(i32 %i.fl, i32 %.0294) ; 6 uses
   %i.fm = icmp sgt i32 %.sroa.speculated268, 0
@@ -221,15 +226,12 @@ iter.check:                                       ; preds = %.lr.ph297
   %wide.trip.count = zext nneg i32 %.sroa.speculated268 to i64 ; 8 uses
   %invariant.gep = getelementptr i8, ptr %i.fj, i64 %i.fn ; 7 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated268, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
+  %.reass = add i64 %i.fn, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
+  %or.cond463 = select i1 %min.iters.check, i1 true, i1 %diff.check
+  br i1 %or.cond463, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %iter.check
-  %12 = add i64 %11, %i.fn
-  %13 = sub i64 %i.bb, %12
-  %diff.check = icmp ugt i64 %13, -32
-  br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check431 = icmp ult i32 %.sroa.speculated268, 32
   br i1 %min.iters.check431, label %vec.epilog.ph, label %vector.ph
 
@@ -279,8 +281,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n437 = icmp eq i64 %n.vec433, %wide.trip.count
   br i1 %cmp.n437, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec433, %vec.epilog.middle.block ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec433, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol

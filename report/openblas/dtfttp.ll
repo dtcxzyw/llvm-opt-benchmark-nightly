@@ -202,7 +202,9 @@ bb.l:                                             ; preds = %.thread420
 
 .lr.ph464.preheader:                              ; preds = %bb.l
   %i.ez = zext nneg i32 %.0328 to i64             ; 9 uses
+  %6 = sub i64 %i.b, %i.a
   %ident.check954.not = icmp ult i32 %i.h, 2
+  %invariant.op = add i64 %6, -1
   br label %iter.check973
 
 iter.check973:                                    ; preds = %.lr.ph464.preheader, %.loopexit1583
@@ -222,12 +224,10 @@ iter.check973:                                    ; preds = %.lr.ph464.preheader
   br i1 %or.cond1588, label %vector.memcheck958, label %vec.epilog.scalar.ph975.preheader
 
 vector.memcheck958:                               ; preds = %iter.check973
-  %6 = shl nsw i64 %i.fe, 3
-  %i.fg = shl nsw i64 %i.fd, 3
-  %7 = add i64 %6, %i.b
-  %i.fh = add i64 %i.fg, %i.a
-  %8 = sub i64 %i.fh, %7
-  %diff.check959 = icmp ugt i64 %8, -128
+  %7 = sub nsw i64 %i.fe, %i.fd
+  %i.fg = shl nsw i64 %7, 3
+  %i.fh = add i64 %i.fg, %invariant.op
+  %diff.check959 = icmp ult i64 %i.fh, 127
   br i1 %diff.check959, label %vec.epilog.scalar.ph975.preheader, label %vector.main.loop.iter.check960
 
 vector.main.loop.iter.check960:                   ; preds = %vector.memcheck958
@@ -630,6 +630,8 @@ vec.epilog.middle.block1225:                      ; preds = %vec.epilog.vector.b
 .lr.ph549:                                        ; preds = %._crit_edge535
   %i.lf = add nuw nsw i32 %i.s, 1
   %i.lg = add nuw i32 %.901, 1
+  %8 = sub i64 %i.b, %i.a
+  %invariant.op1688 = add i64 %8, -1
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph549, %._crit_edge542
@@ -654,12 +656,10 @@ iter.check1247:                                   ; preds = %bb.p
   br i1 %min.iters.check1231, label %.lr.ph541.preheader, label %vector.memcheck1232
 
 vector.memcheck1232:                              ; preds = %iter.check1247
-  %9 = shl nsw i64 %i.lp, 3
-  %i.lq = shl nsw i64 %i.lo, 3
-  %10 = add i64 %9, %i.b
-  %i.lr = add i64 %i.lq, %i.a
-  %11 = sub i64 %i.lr, %10
-  %diff.check1233 = icmp ugt i64 %11, -128
+  %9 = sub nsw i64 %i.lp, %i.lo
+  %i.lq = shl nsw i64 %9, 3
+  %i.lr = add i64 %i.lq, %invariant.op1688
+  %diff.check1233 = icmp ult i64 %i.lr, 127
   br i1 %diff.check1233, label %.lr.ph541.preheader, label %vector.main.loop.iter.check1234
 
 vector.main.loop.iter.check1234:                  ; preds = %vector.memcheck1232
@@ -1062,7 +1062,9 @@ vec.epilog.middle.block1365:                      ; preds = %vec.epilog.vector.b
   br i1 %.not379, label %iter.check1118.preheader, label %.preheader432.preheader
 
 iter.check1118.preheader:                         ; preds = %.thread423
+  %10 = sub i64 %i.b, %i.a
   %ident.check1095.not = icmp ult i32 %i.h, 2
+  %invariant.op1671 = add i64 %10, -1
   br label %iter.check1118
 
 .preheader432.preheader:                          ; preds = %.thread423
@@ -1376,12 +1378,10 @@ iter.check1118:                                   ; preds = %iter.check1118.preh
   br i1 %or.cond1589, label %vector.memcheck1103, label %vec.epilog.scalar.ph1120.preheader
 
 vector.memcheck1103:                              ; preds = %iter.check1118
-  %12 = shl nsw i64 %i.vq, 3
-  %i.vs = shl nsw i64 %i.vp, 3
-  %13 = add i64 %12, %i.b
-  %i.vt = add i64 %i.vs, %i.a
-  %14 = sub i64 %i.vt, %13
-  %diff.check1104 = icmp ugt i64 %14, -128
+  %11 = sub nsw i64 %i.vq, %i.vp
+  %i.vs = shl nsw i64 %11, 3
+  %i.vt = add i64 %i.vs, %invariant.op1671
+  %diff.check1104 = icmp ult i64 %i.vt, 127
   br i1 %diff.check1104, label %vec.epilog.scalar.ph1120.preheader, label %vector.main.loop.iter.check1105
 
 vector.main.loop.iter.check1105:                  ; preds = %vector.memcheck1103
@@ -1679,6 +1679,7 @@ bb.v:                                             ; preds = %bb.j
   %i.zi = add nuw nsw i32 %i.s, 1
   %i.zj = zext nneg i32 %i.s to i64               ; 11 uses
   %i.zk = zext nneg i32 %i.zh to i64              ; 5 uses
+  %12 = tail call i64 @llvm.umax.i64(i64 %i.zj, i64 1)
   %broadcast.splatinsert1391 = insertelement <4 x i64> poison, i64 %i.zj, i64 0
   %broadcast.splat1392 = shufflevector <4 x i64> %broadcast.splatinsert1391, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.zl = shl nuw nsw <4 x i64> %broadcast.splat1392, splat (i64 2) ; 5 uses
@@ -1726,7 +1727,7 @@ iter.check1414:                                   ; preds = %bb.w
   %i.zz = sext i32 %indvars.iv822 to i64          ; 9 uses
   %i.aaa = sext i32 %.24580 to i64                ; 8 uses
   %i.aab = select i1 %i.zw, i64 2, i64 1
-  %i.aac = udiv i64 %i.zy, %i.zj
+  %i.aac = udiv i64 %i.zy, %12
   %i.aad = add i64 %i.aab, %i.aac                 ; 7 uses
   %min.iters.check1382 = icmp ult i64 %i.aad, 4
   br i1 %min.iters.check1382, label %.lr.ph576.preheader, label %vector.memcheck1383
@@ -1857,6 +1858,8 @@ vec.epilog.middle.block1436:                      ; preds = %vec.epilog.vector.b
 
 .lr.ph597:                                        ; preds = %.loopexit427
   %i.abp = add nuw nsw i32 %i.s, 1
+  %13 = sub i64 %i.b, %i.a
+  %invariant.op1708 = add i64 %13, -1
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph597, %._crit_edge590
@@ -1881,12 +1884,10 @@ iter.check1458:                                   ; preds = %bb.x
   br i1 %min.iters.check1442, label %.lr.ph589.preheader, label %vector.memcheck1443
 
 vector.memcheck1443:                              ; preds = %iter.check1458
-  %15 = shl nsw i64 %i.aby, 3
-  %i.abz = shl nsw i64 %i.abx, 3
-  %16 = add i64 %15, %i.b
-  %i.aca = add i64 %i.abz, %i.a
-  %17 = sub i64 %i.aca, %16
-  %diff.check1444 = icmp ugt i64 %17, -128
+  %14 = sub nsw i64 %i.aby, %i.abx
+  %i.abz = shl nsw i64 %14, 3
+  %i.aca = add i64 %i.abz, %invariant.op1708
+  %diff.check1444 = icmp ult i64 %i.aca, 127
   br i1 %diff.check1444, label %.lr.ph589.preheader, label %vector.main.loop.iter.check1445
 
 vector.main.loop.iter.check1445:                  ; preds = %vector.memcheck1443

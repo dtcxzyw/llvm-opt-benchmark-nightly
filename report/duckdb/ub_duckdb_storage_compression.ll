@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.d
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr i64 @duckdb_fsst_decompress(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #9 comdat !guid !2748 {
 bb.a:
-  %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %4 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 9 ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 11 uses
   %i.e = icmp ugt i64 %3, 31                      ; 2 uses
@@ -444,11 +444,17 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %._cri
   %.7173 = phi i64 [ %i.ef, %bb.p ], [ %.6172, %bb.o ], [ %.0166.lcssa, %._crit_edge ] ; 2 uses
   %.7 = phi i64 [ %i.dv, %bb.p ], [ %.6, %bb.o ], [ %.0165.lcssa, %._crit_edge ] ; 2 uses
   %i.eg = icmp ult i64 %.7, %1
-  br i1 %i.eg, label %.lr.ph200, label %._crit_edge201
+  br i1 %i.eg, label %.lr.ph200.preheader, label %._crit_edge201
 
-.lr.ph200:                                        ; preds = %bb.q, %.loopexit
-  %.8198 = phi i64 [ %.9, %.loopexit ], [ %.7, %bb.q ] ; 3 uses
-  %.8174197 = phi i64 [ %.9175, %.loopexit ], [ %.7173, %bb.q ] ; 14 uses
+.lr.ph200.preheader:                              ; preds = %bb.q
+  %5 = add i64 %i.b, -264
+  %6 = sub i64 %5, %i.a
+  %invariant.op = add i64 %6, -1
+  br label %.lr.ph200
+
+.lr.ph200:                                        ; preds = %.lr.ph200.preheader, %.loopexit
+  %.8198 = phi i64 [ %.9, %.loopexit ], [ %.7, %.lr.ph200.preheader ] ; 3 uses
+  %.8174197 = phi i64 [ %.9175, %.loopexit ], [ %.7173, %.lr.ph200.preheader ] ; 14 uses
   %i.eh = add nuw i64 %.8198, 1                   ; 6 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %2, i64 %.8198
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !702 ; 2 uses
@@ -475,10 +481,8 @@ iter.check:                                       ; preds = %bb.r
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.eu = shl nuw nsw i64 %i.ek, 3
-  %5 = add i64 %.8174197, %i.a
-  %6 = add i64 %i.eu, %i.b
-  %i.ev = sub i64 %5, %6
-  %i.ew = add i64 %i.ev, -265
+  %i.ev = sub i64 %.8174197, %i.eu
+  %i.ew = add i64 %i.ev, %invariant.op
   %diff.check = icmp ult i64 %i.ew, 31
   br i1 %diff.check, label %.lr.ph196.preheader, label %vector.main.loop.iter.check
 
@@ -881,7 +885,9 @@ bb.ai:                                            ; preds = %_ZN6duckdb15Selecti
   %i.dw = ptrtoaddr ptr %i.dv to i64
   %.pre243 = load i64, ptr %i.dt, align 8, !tbaa !1223
   %.pre244 = load i64, ptr %i.du, align 8, !tbaa !1224
+  %15 = sub i64 %i.dw, %i.dj
   %i.dx = load ptr, ptr %i.q, align 8, !tbaa !1112
+  %invariant.op360 = add i64 %15, -1
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.lr.ph214, %.loopexit
@@ -1028,12 +1034,10 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %min.iters.check, label %.lr.ph208.preheader318, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph208.preheader
-  %15 = shl i64 %.0113210, 2
-  %i.gf = shl i64 %.0111211, 2
-  %16 = add i64 %15, %i.dw
-  %i.gg = add i64 %i.gf, %i.dj
-  %17 = sub i64 %i.gg, %16
-  %diff.check = icmp ugt i64 %17, -32
+  %16 = sub i64 %.0113210, %.0111211
+  %i.gf = shl i64 %16, 2
+  %i.gg = add i64 %i.gf, %invariant.op360
+  %diff.check = icmp ult i64 %i.gg, 31
   br i1 %diff.check, label %.lr.ph208.preheader318, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -1436,7 +1440,9 @@ bb.ai:                                            ; preds = %_ZN6duckdb15Selecti
   %i.dw = ptrtoaddr ptr %i.dv to i64
   %.pre243 = load i64, ptr %i.dt, align 8, !tbaa !1313
   %.pre244 = load i64, ptr %i.du, align 8, !tbaa !1314
+  %15 = sub i64 %i.dw, %i.dj
   %i.dx = load ptr, ptr %i.q, align 8, !tbaa !1112
+  %invariant.op360 = add i64 %15, -1
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.lr.ph214, %.loopexit
@@ -1583,12 +1589,10 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %min.iters.check, label %.lr.ph208.preheader318, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph208.preheader
-  %15 = shl i64 %.0113210, 2
-  %i.gf = shl i64 %.0111211, 2
-  %16 = add i64 %15, %i.dw
-  %i.gg = add i64 %i.gf, %i.dj
-  %17 = sub i64 %i.gg, %16
-  %diff.check = icmp ugt i64 %17, -32
+  %16 = sub i64 %.0113210, %.0111211
+  %i.gf = shl i64 %16, 2
+  %i.gg = add i64 %i.gf, %invariant.op360
+  %diff.check = icmp ult i64 %i.gg, 31
   br i1 %diff.check, label %.lr.ph208.preheader318, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -1991,20 +1995,23 @@ _ZN6duckdb21AlpRDCompressionStateIfED2Ev.exit:    ; preds = %_ZN6duckdb3alp20Alp
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6duckdb21AlpRDCompressionStateIfE6AppendERNS_19UnifiedVectorFormatEm(ptr noundef nonnull align 8 dereferenceable(26848) %0, ptr noundef nonnull align 8 dereferenceable(73) %1, i64 noundef %2) local_unnamed_addr #1 comdat align 2 !guid !4973 {
 bb.a:
-  %3 = ptrtoaddr ptr %0 to i64
   tail call void @_ZNK6duckdb19UnifiedVectorFormat16VerifyVectorTypeIfEEvv(ptr noundef nonnull align 8 dereferenceable(73) %1)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !812  ; 9 uses
-  %4 = ptrtoaddr ptr %i.b to i64
   %.not48 = icmp eq i64 %2, 0
   br i1 %.not48, label %._crit_edge, label %.lr.ph54
 
 .lr.ph54:                                         ; preds = %bb.a
+  %3 = ptrtoaddr ptr %i.b to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4216 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
+  %5 = add i64 %4, 120
+  %6 = sub i64 %5, %3
+  %invariant.op = add i64 %6, -1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph54, %bb.d
@@ -2084,12 +2091,9 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader: ; preds = %.lr.ph47
   br i1 %min.iters.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader82, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader
-  %5 = shl i64 %i.h, 2
-  %i.ai = shl i64 %.03449, 2
-  %6 = add i64 %5, %3
-  %7 = add i64 %i.ai, %4
-  %8 = sub i64 %6, %7
-  %i.aj = add i64 %8, 119
+  %7 = sub i64 %i.h, %.03449
+  %i.ai = shl i64 %7, 2
+  %i.aj = add i64 %i.ai, %invariant.op
   %diff.check = icmp ult i64 %i.aj, 31
   br i1 %diff.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader82, label %vector.ph
 

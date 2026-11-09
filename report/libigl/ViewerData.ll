@@ -205,7 +205,10 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE18conservative
   %not. = xor i1 %i.ce, true
   %.mux = zext i1 %not. to i64
   %i.cg = mul nsw i64 %.mux67, %i.ca
+  %9 = shl i64 %.mux67, 3
+  %10 = add i64 %9, %i.bv
   %i.ch = select i1 %i.ce, i64 0, i64 8
+  %11 = add i64 %10, %i.ch
   %min.iters.check117 = icmp ult i64 %i.bz, 10
   %ident.check110 = icmp ne i64 %i.ca, 1
   %ident.check111 = icmp ne i64 %i.bs, 1
@@ -221,7 +224,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE18conservative
   %ident.check = icmp ne i64 %i.ca, 1
   %ident.check94 = icmp ne i64 %i.cd, 1
   %i.cm = or i1 %ident.check, %ident.check94
-  %invariant.op = add i64 %i.bv, %i.ch
+  %invariant.op = add i64 %11, -1
   %n.vec100 = and i64 %.sroa.650.0, 9223372036854775804 ; 3 uses
   %cmp.n107 = icmp eq i64 %.sroa.650.0, %n.vec100
   %xtraiter133 = and i64 %.sroa.650.0, 3          ; 2 uses
@@ -360,11 +363,10 @@ _ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0
   br i1 %brmerge138, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i39.preheader130, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i39.preheader
-  %9 = add i64 %.mux67, %i.ct
-  %i.eh = shl i64 %9, 3
-  %.reass = add i64 %i.eh, %invariant.op
-  %10 = sub i64 %.sroa.0.096, %.reass
-  %diff.check = icmp ugt i64 %10, -32
+  %i.eh = shl nuw nsw i64 %i.ct, 3
+  %12 = sub i64 %i.eh, %.sroa.0.096
+  %.reass = add i64 %12, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i39.preheader130, label %vector.body101
 
 vector.body101:                                   ; preds = %vector.memcheck, %vector.body101

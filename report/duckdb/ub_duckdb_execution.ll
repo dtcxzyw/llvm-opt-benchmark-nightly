@@ -205,6 +205,8 @@ bb.a:
   %i.c = ptrtoaddr ptr %i.b to i64
   %i.d = tail call noundef ptr @_ZN6duckdb22TupleDataChunkIterator15GetRowLocationsEv(ptr noundef nonnull align 8 dereferenceable(624) %0) ; 7 uses
   %i.e = ptrtoaddr ptr %i.d to i64
+  %2 = sub i64 %i.c, %i.e
+  %invariant.op = add i64 %2, -1
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
@@ -220,9 +222,8 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.h = shl i64 %.015, 3
-  %i.i = add i64 %i.h, %i.c
-  %2 = sub i64 %i.e, %i.i
-  %diff.check = icmp ugt i64 %2, -32
+  %i.i = add i64 %i.h, %invariant.op
+  %diff.check = icmp ult i64 %i.i, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -329,12 +330,14 @@ bb.b:                                             ; preds = %bb.a
 .noexc:                                           ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !586  ; 2 uses
-  %5 = ptrtoaddr ptr %i.j to i64
   %i.k = invoke noundef ptr @_ZN6duckdb22TupleDataChunkIterator15GetRowLocationsEv(ptr noundef nonnull align 8 dereferenceable(632) %4)
           to label %.noexc16.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 7 uses
 
 .noexc16.preheader:                               ; preds = %.noexc
+  %5 = ptrtoaddr ptr %i.j to i64
   %i.l = ptrtoaddr ptr %i.k to i64
+  %6 = sub i64 %5, %i.l
+  %invariant.op = add i64 %6, -1
   br label %.noexc16
 
 .noexc16:                                         ; preds = %.noexc16.preheader, %.noexc18
@@ -353,9 +356,8 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.o = shl i64 %.015.i, 3
-  %i.p = add i64 %i.o, %5
-  %6 = sub i64 %i.l, %i.p
-  %diff.check = icmp ugt i64 %6, -32
+  %i.p = add i64 %i.o, %invariant.op
+  %diff.check = icmp ult i64 %i.p, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

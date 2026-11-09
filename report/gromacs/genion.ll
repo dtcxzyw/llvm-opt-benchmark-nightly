@@ -205,26 +205,27 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge
 
 bb.ab:                                            ; preds = %bb.aa
   %i.hh = load i32, ptr %i.d, align 4, !tbaa !12  ; 2 uses
-  %i.hi = load i32, ptr %i.f, align 4, !tbaa !12  ; 9 uses
-  %i.hj = mul nsw i32 %i.hi, %i.hh
+  %i.hi = load i32, ptr %i.f, align 4, !tbaa !12
+  %19 = freeze i32 %i.hi                          ; 9 uses
+  %i.hj = mul nsw i32 %19, %i.hh
   %i.hk = load i32, ptr %i.e, align 4, !tbaa !12  ; 2 uses
   %i.hl = load i32, ptr %i.g, align 4, !tbaa !12  ; 5 uses
   %i.hm = mul nsw i32 %i.hl, %i.hk
   %i.hn = add i32 %i.hj, %.056.lcssa
   %i.ho = add i32 %i.hn, %i.hm                    ; 3 uses
   %.0.i.i = call noundef i32 @llvm.abs.i32(i32 %i.hl, i1 true) ; 2 uses
-  %.0.i4.i = call noundef i32 @llvm.abs.i32(i32 %i.hi, i1 true) ; 2 uses
+  %.0.i4.i = call noundef i32 @llvm.abs.i32(i32 %19, i1 true) ; 2 uses
   %i.hp = icmp eq i32 %i.hl, 0
   br i1 %i.hp, label %_ZSt3gcdIiiENSt11common_typeIJT_T0_EE4typeES1_S2_.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.hq = icmp eq i32 %i.hi, 0
+  %i.hq = icmp eq i32 %19, 0
   br i1 %i.hq, label %_ZSt3gcdIiiENSt11common_typeIJT_T0_EE4typeES1_S2_.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.hr = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.hl, i1 true) ; 2 uses
   %i.hs = lshr exact i32 %.0.i.i, %i.hr           ; 3 uses
-  %i.ht = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.hi, i1 true) ; 2 uses
+  %i.ht = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %19, i1 true) ; 2 uses
   %i.hu = lshr exact i32 %.0.i4.i, %i.ht          ; 3 uses
   %i.hv = call i32 @llvm.umin.i32(i32 %i.hr, i32 %i.ht)
   %spec.select34.i.i = call i32 @llvm.umin.i32(i32 %i.hs, i32 %i.hu) ; 2 uses
@@ -256,7 +257,11 @@ _ZSt3gcdIiiENSt11common_typeIJT_T0_EE4typeES1_S2_.exit: ; preds = %bb.ab, %bb.ac
 
 .preheader219:                                    ; preds = %_ZSt3gcdIiiENSt11common_typeIJT_T0_EE4typeES1_S2_.exit
   %.not84252 = icmp eq i32 %i.ho, 0
-  br i1 %.not84252, label %.loopexit220, label %.preheader218
+  br i1 %.not84252, label %.loopexit220, label %.preheader218.preheader
+
+.preheader218.preheader:                          ; preds = %.preheader219
+  %20 = call i32 @llvm.umax.i32(i32 %19, i32 1)
+  br label %.preheader218
 
 bb.ae:                                            ; preds = %_ZSt3gcdIiiENSt11common_typeIJT_T0_EE4typeES1_S2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
@@ -293,21 +298,21 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %.not84 = icmp eq i32 %i.jk, 0
   br i1 %.not84, label %.loopexit220, label %.preheader218, !llvm.loop !79
 
-.preheader218:                                    ; preds = %.preheader219, %.loopexit217
-  %.054255 = phi i32 [ %i.jk, %.loopexit217 ], [ %i.ho, %.preheader219 ] ; 6 uses
-  %.lcssa245248254 = phi i32 [ %i.jj, %.loopexit217 ], [ %i.hk, %.preheader219 ]
-  %.lcssa240251253 = phi i32 [ %.lcssa240250386, %.loopexit217 ], [ %i.hh, %.preheader219 ] ; 4 uses
+.preheader218:                                    ; preds = %.preheader218.preheader, %.loopexit217
+  %.054255 = phi i32 [ %i.jk, %.loopexit217 ], [ %i.ho, %.preheader218.preheader ] ; 6 uses
+  %.lcssa245248254 = phi i32 [ %i.jj, %.loopexit217 ], [ %i.hk, %.preheader218.preheader ]
+  %.lcssa240251253 = phi i32 [ %.lcssa240250386, %.loopexit217 ], [ %i.hh, %.preheader218.preheader ] ; 4 uses
   %i.ih = icmp slt i32 %.054255, 0
   br i1 %i.ih, label %iter.check, label %.lr.ph243.preheader
 
 iter.check:                                       ; preds = %.preheader218
-  %i.ii = add i32 %i.hi, %.054255                 ; 3 uses
+  %i.ii = add i32 %19, %.054255                   ; 3 uses
   %smax = call i32 @llvm.smax.i32(i32 %i.ii, i32 0)
   %.lobit = lshr i32 %i.ii, 31                    ; 2 uses
   %i.ij = add nuw nsw i32 %.lobit, 1
   %i.ik = add i32 %.lobit, %i.ii
   %i.il = sub i32 %smax, %i.ik
-  %i.im = udiv i32 %i.il, %i.hi
+  %i.im = udiv i32 %i.il, %20
   %i.in = add i32 %i.ij, %i.im                    ; 7 uses
   %min.iters.check = icmp ult i32 %i.in, 4
   br i1 %min.iters.check, label %.lr.ph238.preheader, label %vector.main.loop.iter.check
@@ -319,7 +324,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.io = and i32 %i.in, 28
   %n.vec = and i32 %i.in, -32                     ; 4 uses
-  %i.ip = mul i32 %n.vec, %i.hi
+  %i.ip = mul i32 %n.vec, %19
   %i.iq = add i32 %.054255, %i.ip                 ; 2 uses
   %i.ir = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.lcssa240251253, i64 0
   br label %vector.body
@@ -354,7 +359,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.ix, %vec.epilog.iter.check ], [ %.lcssa240251253, %vector.main.loop.iter.check ]
   %n.vec431 = and i32 %i.in, -4                   ; 3 uses
-  %i.iy = mul i32 %n.vec431, %i.hi
+  %i.iy = mul i32 %n.vec431, %19
   %i.iz = add i32 %.054255, %i.iy                 ; 2 uses
   %i.ja = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
@@ -393,7 +398,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.1237 = phi i32 [ %i.jg, %.lr.ph238 ], [ %.1237.ph, %.lr.ph238.preheader ]
   %i.je = phi i32 [ %i.jf, %.lr.ph238 ], [ %.ph, %.lr.ph238.preheader ]
   %i.jf = add nsw i32 %i.je, 1                    ; 2 uses
-  %i.jg = add nsw i32 %.1237, %i.hi               ; 3 uses
+  %i.jg = add nsw i32 %.1237, %19                 ; 3 uses
   %i.jh = icmp slt i32 %i.jg, 0
   br i1 %i.jh, label %.lr.ph238, label %.preheader216, !llvm.loop !82
 

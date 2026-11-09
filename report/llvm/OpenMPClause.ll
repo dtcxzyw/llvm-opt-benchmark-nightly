@@ -205,6 +205,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 .lr.ph83:                                         ; preds = %bb.d, %.lr.ph83.unr-lcssa
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.i
   %i.ax = load ptr, ptr %i.a, align 8, !tbaa !215
+  %invariant.op = add i64 31, %.0.i.i.i98
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph71.new
@@ -272,9 +273,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph77.preheader
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.cc = zext i32 %.06180 to i64
   %i.cd = shl nuw nsw i64 %i.cc, 3
-  %7 = add i64 %i.cd, %.0.i.i.i98
-  %8 = sub i64 %7, %i.bn
-  %diff.check = icmp ugt i64 %8, -32
+  %7 = sub i64 %i.cd, %i.bn
+  %op.rdx101.reass = add i64 %7, %invariant.op
+  %diff.check = icmp ult i64 %op.rdx101.reass, 31
   br i1 %diff.check, label %.lr.ph77.preheader101, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

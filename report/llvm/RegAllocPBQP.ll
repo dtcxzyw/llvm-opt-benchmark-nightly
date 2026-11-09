@@ -204,17 +204,21 @@ _ZN4llvm4PBQP6MatrixC2Ejjf.exit.i:                ; preds = %_ZN4llvm12DenseMapB
   %i.ys = getelementptr inbounds nuw i8, ptr %i.ol, i64 8 ; 2 uses
   %i.yt = load i32, ptr %i.ol, align 8, !tbaa !408 ; 2 uses
   %i.yu = icmp eq i32 %i.yt, 0
-  br i1 %i.yu, label %bb.cc, label %.lr.ph26.split.i
+  br i1 %i.yu, label %bb.cc, label %.lr.ph26.split.i.preheader
+
+.lr.ph26.split.i.preheader:                       ; preds = %.lr.ph26.i
+  %invariant.op = add i64 3, %i.yp
+  br label %.lr.ph26.split.i
 
 ._crit_edge27.i:                                  ; preds = %._crit_edge.i
   br i1 %.140.lcssa.i, label %bb.br, label %bb.cc
 
-.lr.ph26.split.i:                                 ; preds = %.lr.ph26.i, %._crit_edge.i
-  %i.yv = phi i32 [ %i.abh, %._crit_edge.i ], [ %i.yq, %.lr.ph26.i ] ; 4 uses
-  %i.yw = phi i32 [ %i.abi, %._crit_edge.i ], [ %i.yt, %.lr.ph26.i ] ; 12 uses
-  %i.yx = phi i32 [ %i.abj, %._crit_edge.i ], [ 1, %.lr.ph26.i ]
-  %.03825.i = phi i32 [ %.pre-phi35.i, %._crit_edge.i ], [ 0, %.lr.ph26.i ] ; 3 uses
-  %.03924.i = phi i1 [ %.140.lcssa.i, %._crit_edge.i ], [ false, %.lr.ph26.i ] ; 6 uses
+.lr.ph26.split.i:                                 ; preds = %.lr.ph26.split.i.preheader, %._crit_edge.i
+  %i.yv = phi i32 [ %i.abh, %._crit_edge.i ], [ %i.yq, %.lr.ph26.split.i.preheader ] ; 4 uses
+  %i.yw = phi i32 [ %i.abi, %._crit_edge.i ], [ %i.yt, %.lr.ph26.split.i.preheader ] ; 12 uses
+  %i.yx = phi i32 [ %i.abj, %._crit_edge.i ], [ 1, %.lr.ph26.split.i.preheader ]
+  %.03825.i = phi i32 [ %.pre-phi35.i, %._crit_edge.i ], [ 0, %.lr.ph26.split.i.preheader ] ; 3 uses
+  %.03924.i = phi i1 [ %.140.lcssa.i, %._crit_edge.i ], [ false, %.lr.ph26.split.i.preheader ] ; 6 uses
   %i.yy = zext i32 %.03825.i to i64
   %i.yz = load ptr, ptr %i.yr, align 8, !tbaa !400
   %i.za = getelementptr inbounds nuw [4 x i8], ptr %i.yz, i64 %i.yy
@@ -247,9 +251,8 @@ _ZN4llvm4PBQP6MatrixC2Ejjf.exit.i:                ; preds = %_ZN4llvm12DenseMapB
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.i
   %i.zl = ptrtoaddr ptr %i.zh to i64
   %i.zm = shl nuw nsw i64 %i.zf, 2
-  %19 = add i64 %i.zm, %i.yp
-  %i.zn = sub i64 %19, %i.zl
-  %i.zo = add i64 %i.zn, 3
+  %i.zn = sub i64 %i.zm, %i.zl
+  %i.zo = add i64 %i.zn, %invariant.op
   %diff.check = icmp ult i64 %i.zo, 15
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

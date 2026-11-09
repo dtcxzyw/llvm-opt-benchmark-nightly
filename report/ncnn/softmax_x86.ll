@@ -205,20 +205,23 @@ bb.l:                                             ; preds = %._crit_edge184.i, %
   %.0120.lcssa.i = phi ptr [ %i.uz, %bb.l ], [ %i.xq, %.lr.ph.i43 ] ; 7 uses
   %.0118.lcssa.i = phi ptr [ %5, %bb.l ], [ %i.xr, %.lr.ph.i43 ] ; 7 uses
   %.0116.lcssa.i = phi ptr [ %6, %bb.l ], [ %i.xs, %.lr.ph.i43 ] ; 7 uses
-  %.0114.lcssa.i = phi i32 [ 0, %bb.l ], [ %i.ud, %.lr.ph.i43 ] ; 5 uses
+  %.0114.lcssa.i = phi i32 [ 0, %bb.l ], [ %i.ud, %.lr.ph.i43 ] ; 6 uses
   %i.va = icmp slt i32 %.0114.lcssa.i, %4
   br i1 %i.va, label %.lr.ph183.i.preheader, label %._crit_edge184.i
 
 .lr.ph183.i.preheader:                            ; preds = %.preheader156.i
   %i.vb = xor i32 %.0114.lcssa.i, -1
   %i.vc = add i32 %4, %i.vb                       ; 2 uses
-  %i.vd = zext i32 %i.vc to i64                   ; 2 uses
+  %i.vd = zext i32 %i.vc to i64
   %i.ve = add nuw nsw i64 %i.vd, 1                ; 2 uses
   %min.iters.check191 = icmp ult i32 %i.vc, 3
   br i1 %min.iters.check191, label %.lr.ph183.i.preheader291, label %vector.memcheck192
 
 vector.memcheck192:                               ; preds = %.lr.ph183.i.preheader
-  %i.vf = shl nuw nsw i64 %i.vd, 2
+  %7 = xor i32 %.0114.lcssa.i, -1
+  %8 = add i32 %4, %7
+  %9 = zext i32 %8 to i64
+  %i.vf = shl nuw nsw i64 %9, 2
   %i.vg = add nuw nsw i64 %i.vf, 4                ; 3 uses
   %i.vh = getelementptr i8, ptr %.0120.lcssa.i, i64 %i.vg ; 2 uses
   %i.vi = getelementptr i8, ptr %.0116.lcssa.i, i64 %i.vg ; 2 uses
@@ -536,20 +539,23 @@ bb.m:                                             ; preds = %._crit_edge207.i, %
 .preheader.i42:                                   ; preds = %.preheader.i42.loopexit.unr-lcssa, %.lr.ph199.i.epil, %bb.m
   %.0102.lcssa.i = phi ptr [ %i.aaf, %bb.m ], [ %i.acg, %.preheader.i42.loopexit.unr-lcssa ], [ %i.aaj, %.lr.ph199.i.epil ] ; 6 uses
   %.0100.lcssa.i = phi ptr [ %6, %bb.m ], [ %i.ach, %.preheader.i42.loopexit.unr-lcssa ], [ %i.aak, %.lr.ph199.i.epil ] ; 6 uses
-  %.098.lcssa.i = phi i32 [ 0, %bb.m ], [ %i.zv, %.lr.ph199.i.epil ], [ %i.zv, %.preheader.i42.loopexit.unr-lcssa ] ; 5 uses
+  %.098.lcssa.i = phi i32 [ 0, %bb.m ], [ %i.zv, %.lr.ph199.i.epil ], [ %i.zv, %.preheader.i42.loopexit.unr-lcssa ] ; 6 uses
   %i.aal = icmp slt i32 %.098.lcssa.i, %4
   br i1 %i.aal, label %.lr.ph206.i.preheader, label %._crit_edge207.i
 
 .lr.ph206.i.preheader:                            ; preds = %.preheader.i42
   %i.aam = xor i32 %.098.lcssa.i, -1
   %i.aan = add i32 %4, %i.aam                     ; 2 uses
-  %i.aao = zext i32 %i.aan to i64                 ; 2 uses
+  %i.aao = zext i32 %i.aan to i64
   %i.aap = add nuw nsw i64 %i.aao, 1              ; 2 uses
   %min.iters.check242 = icmp ult i32 %i.aan, 7
   br i1 %min.iters.check242, label %.lr.ph206.i.preheader285, label %vector.memcheck243
 
 vector.memcheck243:                               ; preds = %.lr.ph206.i.preheader
-  %i.aaq = shl nuw nsw i64 %i.aao, 2
+  %10 = xor i32 %.098.lcssa.i, -1
+  %11 = add i32 %4, %10
+  %12 = zext i32 %11 to i64
+  %i.aaq = shl nuw nsw i64 %12, 2
   %i.aar = add nuw nsw i64 %i.aaq, 4              ; 2 uses
   %i.aas = getelementptr i8, ptr %.0102.lcssa.i, i64 %i.aar
   %i.aat = getelementptr i8, ptr %.0100.lcssa.i, i64 %i.aar
@@ -952,20 +958,23 @@ bb.j:                                             ; preds = %._crit_edge191.i, %
   %.0118.lcssa.i = phi ptr [ %i.ja, %bb.j ], [ %i.mo, %.lr.ph.i43 ] ; 4 uses
   %.0116.lcssa.i = phi ptr [ %5, %bb.j ], [ %i.mp, %.lr.ph.i43 ] ; 6 uses
   %.0114.lcssa.i = phi ptr [ %6, %bb.j ], [ %i.mq, %.lr.ph.i43 ] ; 6 uses
-  %.0112.lcssa.i = phi i32 [ 0, %bb.j ], [ %i.hy, %.lr.ph.i43 ] ; 5 uses
+  %.0112.lcssa.i = phi i32 [ 0, %bb.j ], [ %i.hy, %.lr.ph.i43 ] ; 6 uses
   %i.jb = icmp slt i32 %.0112.lcssa.i, %4
   br i1 %i.jb, label %.lr.ph190.i.preheader, label %._crit_edge191.i
 
 .lr.ph190.i.preheader:                            ; preds = %.preheader163.i
   %i.jc = xor i32 %.0112.lcssa.i, -1
   %i.jd = add i32 %4, %i.jc                       ; 2 uses
-  %i.je = zext i32 %i.jd to i64                   ; 2 uses
+  %i.je = zext i32 %i.jd to i64
   %i.jf = add nuw nsw i64 %i.je, 1                ; 2 uses
   %min.iters.check139 = icmp ult i32 %i.jd, 3
   br i1 %min.iters.check139, label %.lr.ph190.i.preheader208, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph190.i.preheader
-  %i.jg = shl nuw nsw i64 %i.je, 2
+  %7 = xor i32 %.0112.lcssa.i, -1
+  %8 = add i32 %4, %7
+  %9 = zext i32 %8 to i64
+  %i.jg = shl nuw nsw i64 %9, 2
   %i.jh = add nuw nsw i64 %i.jg, 4                ; 2 uses
   %i.ji = getelementptr i8, ptr %.0114.lcssa.i, i64 %i.jh
   %i.jj = getelementptr i8, ptr %.0116.lcssa.i, i64 %i.jh

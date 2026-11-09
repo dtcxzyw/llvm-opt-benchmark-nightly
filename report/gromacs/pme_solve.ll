@@ -205,7 +205,8 @@ bb.a:
   %.not10.i406 = icmp ult i32 %i.dg, 16           ; 2 uses
   %i.dl = sext i32 %i.da to i64                   ; 12 uses
   %i.dm = sext i32 %i.aj to i64                   ; 10 uses
-  %i.dn = sext i32 %i.dd to i64                   ; 14 uses
+  %i.dn = sext i32 %i.dd to i64                   ; 15 uses
+  %6 = add nsw i64 %i.dl, 1                       ; 2 uses
   %i.do = add nsw i64 %i.dl, 1                    ; 2 uses
   br i1 %4, label %.lr.ph482.split.us.preheader, label %.lr.ph482.split.preheader
 
@@ -321,7 +322,6 @@ bb.a:
   %i.ey = add nsw i64 %i.dn, -1
   %i.ez = extractelement <2 x i32> %i.z, i64 0
   %i.fa = extractelement <2 x i32> %i.z, i64 0
-  %invariant.op = add nsw i64 %i.dl, 1
   br label %.lr.ph482.split
 
 .lr.ph482.split.us:                               ; preds = %.lr.ph482.split.us.preheader, %.loopexit.us
@@ -507,17 +507,19 @@ _ZL19calc_exponentials_qiifN3gmx8ArrayRefIKNS_9SimdFloatEEES3_NS0_IS1_EE.exit.us
 .lr.ph457.us.preheader:                           ; preds = %_ZL19calc_exponentials_qiifN3gmx8ArrayRefIKNS_9SimdFloatEEES3_NS0_IS1_EE.exit.us
   %i.jh = and i1 %i.ga, %i.gb
   %i.ji = and i1 %i.jh, %i.db
-  %umin531 = zext i1 %i.ji to i64                 ; 3 uses
+  %umin531 = zext i1 %i.ji to i64                 ; 4 uses
   %i.jj = add nsw i64 %i.dl, %umin531             ; 6 uses
   %.reass1063 = add nsw i64 %umin531, %invariant.op1062
-  %i.jk = call i64 @llvm.smax.i64(i64 %.reass1063, i64 %i.dn) ; 3 uses
+  %i.jk = call i64 @llvm.smax.i64(i64 %.reass1063, i64 %i.dn)
   %i.jl = add nsw i64 %umin531, %i.dl
   %i.jm = sub i64 %i.jk, %i.jl                    ; 3 uses
   %min.iters.check728 = icmp ult i64 %i.jm, 8
   br i1 %min.iters.check728, label %.lr.ph457.us.preheader1044, label %vector.memcheck729
 
 vector.memcheck729:                               ; preds = %.lr.ph457.us.preheader
-  %i.jn = add i64 %i.jk, %i.fv
+  %7 = add nsw i64 %6, %umin531
+  %8 = call i64 @llvm.smax.i64(i64 %7, i64 %i.dn) ; 2 uses
+  %i.jn = add i64 %8, %i.fv
   %i.jo = add i64 %i.jn, %i.fy
   %i.jp = shl nsw i64 %i.jo, 3
   %i.jq = shl nsw i64 %i.jj, 3
@@ -526,7 +528,7 @@ vector.memcheck729:                               ; preds = %.lr.ph457.us.prehea
   %i.jt = getelementptr i8, ptr %2, i64 %i.js     ; 2 uses
   %i.ju = shl nsw i64 %i.jj, 2                    ; 2 uses
   %i.jv = getelementptr i8, ptr %i.bm, i64 %i.ju  ; 2 uses
-  %i.jw = shl nsw i64 %i.jk, 2                    ; 2 uses
+  %i.jw = shl nsw i64 %8, 2                       ; 2 uses
   %i.jx = getelementptr i8, ptr %i.bm, i64 %i.jw  ; 2 uses
   %i.jy = getelementptr i8, ptr %i.bp, i64 %i.ju  ; 2 uses
   %i.jz = getelementptr i8, ptr %i.bp, i64 %i.jw  ; 2 uses
@@ -929,7 +931,7 @@ iter.check:                                       ; preds = %_ZL19calc_exponenti
   br i1 %min.iters.check, label %.lr.ph447.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %.reass1061 = add nsw i64 %umin511, %invariant.op
+  %.reass1061 = add nsw i64 %6, %umin511
   %i.acl = call i64 @llvm.smax.i64(i64 %.reass1061, i64 %i.dn) ; 2 uses
   %i.acm = add i64 %i.acl, %i.rp
   %i.acn = add i64 %i.acm, %i.rs

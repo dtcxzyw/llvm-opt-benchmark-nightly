@@ -15,8 +15,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dstein_(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6, ptr noundef %7, ptr nofree noundef readonly captures(none) %8, ptr noundef %9, ptr noundef %10, ptr nofree noundef writeonly captures(none) %11, ptr nofree noundef captures(none) initializes((0, 4)) %12) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %7 to i64
-  %i.b = ptrtoaddr ptr %9 to i64
+  %i.a = ptrtoaddr ptr %9 to i64
+  %i.b = ptrtoaddr ptr %7 to i64
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 13 uses
   %i.e = alloca [4 x i32], align 16               ; 4 uses
@@ -171,7 +171,9 @@ bb.k:                                             ; preds = %bb.i
   %i.br = shl nsw i64 %i.r, 3                     ; 2 uses
   %scevgep = getelementptr i8, ptr %7, i64 %i.br
   %i.bs = zext nneg i32 %i.bb to i64
-  %invariant.op501 = add i64 %i.a, %i.br
+  %13 = add i64 %i.br, %i.b
+  %14 = sub i64 %13, %i.a
+  %invariant.op501 = add i64 %14, -1
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph377, %._crit_edge360
@@ -574,8 +576,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.mw = sext i32 %i.mv to i64
   %i.mx = shl nsw i64 %i.mw, 3
   %.reass502 = add i64 %i.mx, %invariant.op501
-  %13 = sub i64 %i.b, %.reass502
-  %diff.check = icmp ugt i64 %13, -128
+  %diff.check = icmp ult i64 %.reass502, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

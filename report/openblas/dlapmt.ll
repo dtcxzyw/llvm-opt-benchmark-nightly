@@ -10,7 +10,7 @@ define void @dlapmt_(ptr nofree noundef readonly captures(none) %0, ptr nofree n
 bb.a:
   %i.a = load i32, ptr %4, align 4, !tbaa !25     ; 5 uses
   %narrow = xor i32 %i.a, -1
-  %i.b = sext i32 %narrow to i64                  ; 5 uses
+  %i.b = sext i32 %narrow to i64                  ; 4 uses
   %i.c = getelementptr inbounds [8 x i8], ptr %3, i64 %i.b ; 4 uses
   %i.d = getelementptr inbounds i8, ptr %5, i64 -4 ; 6 uses
   %i.e = load i32, ptr %2, align 4, !tbaa !25     ; 5 uses
@@ -111,6 +111,12 @@ bb.b:                                             ; preds = %.loopexit237
 .lr.ph125.preheader:                              ; preds = %bb.b
   %i.ac = add nuw i32 %i.ab, 1
   %wide.trip.count151 = zext i32 %i.ac to i64
+  %6 = shl nsw i64 %i.b, 3                        ; 3 uses
+  %7 = add nsw i64 %6, 8                          ; 2 uses
+  %8 = getelementptr i8, ptr %3, i64 %7
+  %invariant.gep242 = getelementptr i8, ptr %3, i64 %6
+  %9 = getelementptr i8, ptr %3, i64 %7
+  %invariant.gep244 = getelementptr i8, ptr %3, i64 %6
   br label %.lr.ph125
 
 .lr.ph125:                                        ; preds = %.lr.ph125.preheader, %.loopexit112
@@ -156,18 +162,14 @@ bb.c:                                             ; preds = %.lr.ph125
   br i1 %min.iters.check197, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %6 = add nsw i64 %i.ar, %i.b
-  %i.av = shl nsw i64 %6, 3                       ; 2 uses
-  %7 = getelementptr i8, ptr %3, i64 %i.av
-  %i.aw = getelementptr i8, ptr %7, i64 8
+  %i.av = shl nsw i64 %i.ar, 3                    ; 2 uses
+  %i.aw = getelementptr i8, ptr %8, i64 %i.av
   %i.ax = shl nuw nsw i64 %wide.trip.count146, 3  ; 2 uses
-  %i.ay = getelementptr i8, ptr %3, i64 %i.av
+  %i.ay = getelementptr i8, ptr %invariant.gep242, i64 %i.av
   %i.az = getelementptr i8, ptr %i.ay, i64 %i.ax
-  %8 = add nsw i64 %i.as, %i.b
-  %i.ba = shl nsw i64 %8, 3                       ; 2 uses
-  %9 = getelementptr i8, ptr %3, i64 %i.ba
-  %i.bb = getelementptr i8, ptr %9, i64 8
-  %i.bc = getelementptr i8, ptr %3, i64 %i.ba
+  %i.ba = shl nsw i64 %i.as, 3                    ; 2 uses
+  %i.bb = getelementptr i8, ptr %9, i64 %i.ba
+  %i.bc = getelementptr i8, ptr %invariant.gep244, i64 %i.ba
   %i.bd = getelementptr i8, ptr %i.bc, i64 %i.ax
   %bound0 = icmp ult ptr %i.aw, %i.bd
   %bound1 = icmp ult ptr %i.bb, %i.az
@@ -284,19 +286,23 @@ bb.d:                                             ; preds = %.loopexit237
   %i.ce = sext i32 %i.a to i64                    ; 3 uses
   %i.cf = add nuw i32 %i.ab, 1
   %wide.trip.count163 = zext i32 %i.cf to i64
+  %10 = shl nsw i64 %i.b, 3                       ; 2 uses
   %i.cg = or i64 %i.ce, %i.b
   %i.ch = shl nsw i64 %i.cg, 3                    ; 2 uses
   %i.ci = shl nsw i64 %i.ce, 3
-  %i.cj = getelementptr i8, ptr %3, i64 %i.ch
+  %11 = getelementptr i8, ptr %3, i64 %i.ch
+  %12 = getelementptr i8, ptr %11, i64 8
+  %13 = getelementptr i8, ptr %3, i64 %i.ch
+  %i.cj = getelementptr i8, ptr %3, i64 %10
   %i.ck = getelementptr i8, ptr %i.cj, i64 8
-  %i.cl = getelementptr i8, ptr %3, i64 %i.ch
+  %i.cl = getelementptr i8, ptr %3, i64 %10
   br label %.lr.ph138
 
 .lr.ph138:                                        ; preds = %.lr.ph138.preheader, %.loopexit
   %indvar = phi i64 [ 0, %.lr.ph138.preheader ], [ %indvar.next, %.loopexit ] ; 2 uses
   %indvars.iv160 = phi i64 [ 1, %.lr.ph138.preheader ], [ %indvars.iv.next161, %.loopexit ] ; 5 uses
   %i.cm = mul i64 %i.ci, %indvar                  ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.ck, i64 %i.cm
+  %scevgep = getelementptr i8, ptr %12, i64 %i.cm
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv160 ; 2 uses
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !25 ; 2 uses
   %i.cp = icmp sgt i32 %i.co, 0
@@ -312,7 +318,7 @@ bb.e:                                             ; preds = %.lr.ph138
 .lr.ph133:                                        ; preds = %bb.e
   %i.ct = mul nsw i64 %indvars.iv160, %i.ce
   %invariant.gep176 = getelementptr [8 x i8], ptr %i.c, i64 %i.ct ; 6 uses
-  %i.cu = getelementptr i8, ptr %i.cl, i64 %i.cm
+  %i.cu = getelementptr i8, ptr %13, i64 %i.cm
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph133, %._crit_edge130
@@ -334,11 +340,9 @@ bb.f:                                             ; preds = %.lr.ph133, %._crit_
 vector.memcheck221:                               ; preds = %.lr.ph129
   %i.da = shl nuw nsw i64 %wide.trip.count158, 3  ; 2 uses
   %i.db = getelementptr i8, ptr %i.cu, i64 %i.da
-  %10 = add nsw i64 %i.cx, %i.b
-  %i.dc = shl nsw i64 %10, 3                      ; 2 uses
-  %11 = getelementptr i8, ptr %3, i64 %i.dc
-  %i.dd = getelementptr i8, ptr %11, i64 8
-  %i.de = getelementptr i8, ptr %3, i64 %i.dc
+  %i.dc = shl nsw i64 %i.cx, 3                    ; 2 uses
+  %i.dd = getelementptr i8, ptr %i.ck, i64 %i.dc
+  %i.de = getelementptr i8, ptr %i.cl, i64 %i.dc
   %i.df = getelementptr i8, ptr %i.de, i64 %i.da
   %bound0222 = icmp ult ptr %scevgep, %i.df
   %bound1223 = icmp ult ptr %i.dd, %i.db

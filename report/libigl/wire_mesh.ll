@@ -206,11 +206,11 @@ _ZN5Eigen10QuaternionIdLi0EE14FromTwoVectorsINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEES
   %i.kn = load ptr, ptr %1, align 8, !tbaa !49
   %i.ko = getelementptr [4 x i8], ptr %i.kn, i64 %indvars.iv553 ; 2 uses
   %i.kp = load ptr, ptr %0, align 8, !tbaa !29, !noalias !339 ; 3 uses
-  %i.kq = ptrtoaddr ptr %i.kp to i64              ; 2 uses
+  %i.kq = ptrtoaddr ptr %i.kp to i64
   %i.kr = load i64, ptr %i.i, align 8, !tbaa !24  ; 10 uses
   %i.ks = shl nuw nsw i64 %indvars.iv553, 1       ; 2 uses
   %i.kt = load ptr, ptr %5, align 8, !tbaa !29, !noalias !340 ; 3 uses
-  %i.ku = ptrtoaddr ptr %i.kt to i64              ; 2 uses
+  %i.ku = ptrtoaddr ptr %i.kt to i64
   %i.kv = load i64, ptr %i.cf, align 8, !tbaa !92, !noalias !340 ; 13 uses
   %i.kw = load i64, ptr %i.ag, align 8, !tbaa !24 ; 8 uses
   %i.kx = icmp sgt i64 %i.kv, 0
@@ -220,6 +220,7 @@ _ZN5Eigen10QuaternionIdLi0EE14FromTwoVectorsINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEES
   %i.la = or disjoint i64 %i.ks, 1
   %reass.mul.i.1 = mul i64 %i.ke, %i.la
   %i.lb = add i64 %i.kr, %reass.mul.i.1
+  %28 = sub i64 %i.ku, %i.kq                      ; 2 uses
   %i.lc = shufflevector <2 x double> %.sink74.i.i, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.ld = insertelement <2 x double> %i.lc, double %.sink.i.i, i64 1 ; 2 uses
   %i.le = insertelement <2 x double> %i.lc, double %.sink.i.i, i64 0 ; 2 uses
@@ -229,6 +230,7 @@ _ZN5Eigen10QuaternionIdLi0EE14FromTwoVectorsINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEES
   %ident.check724 = icmp ne i64 %i.kw, 1
   %ident.check725 = icmp ne i64 %i.kr, 1
   %i.lh = or i1 %ident.check724, %ident.check725
+  %invariant.op = add i64 %28, -1
   %n.vec733 = and i64 %i.kv, 9223372036854775804  ; 3 uses
   %cmp.n746 = icmp eq i64 %i.kv, %n.vec733
   %xtraiter900 = and i64 %i.kv, 1
@@ -237,6 +239,7 @@ _ZN5Eigen10QuaternionIdLi0EE14FromTwoVectorsINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEES
   %ident.check = icmp ne i64 %i.kw, 1
   %ident.check717 = icmp ne i64 %i.kr, 1
   %i.li = or i1 %ident.check, %ident.check717
+  %invariant.op925 = add i64 %28, -1
   %n.vec = and i64 %i.kv, 9223372036854775804     ; 3 uses
   %cmp.n = icmp eq i64 %i.kv, %n.vec
   %xtraiter905 = and i64 %i.kv, 1
@@ -327,10 +330,9 @@ bb.aa:                                            ; preds = %.lr.ph515, %.split5
 
 vector.memcheck730:                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.preheader
   %i.nk = shl nsw i64 %i.na, 3
-  %28 = add i64 %i.ni, %i.ku
-  %i.nl = add i64 %i.nk, %i.kq
-  %29 = sub i64 %i.nl, %28
-  %diff.check731 = icmp ugt i64 %29, -32
+  %29 = sub nsw i64 %i.ni, %i.nk
+  %i.nl = add i64 %29, %invariant.op
+  %diff.check731 = icmp ult i64 %i.nl, 31
   br i1 %diff.check731, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.ph732
 
 vector.ph732:                                     ; preds = %vector.memcheck730
@@ -457,10 +459,9 @@ _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS_13Cwis
 
 vector.memcheck:                                  ; preds = %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS5_IS8_KNS1_IdLi1ELi3ELi1ELi1ELi3EEEKNS0_IKS2_Li1ELin1ELb0EEEEEKNS5_INS6_17scalar_product_opIddEEKNS_14CwiseNullaryOpINS6_18scalar_constant_opIdEESA_EESA_EEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit
   %i.qd = shl nsw i64 %i.ps, 3
-  %30 = add i64 %i.qb, %i.ku
-  %i.qe = add i64 %i.qd, %i.kq
-  %31 = sub i64 %i.qe, %30
-  %diff.check = icmp ugt i64 %31, -32
+  %30 = sub nsw i64 %i.qb, %i.qd
+  %i.qe = add i64 %30, %invariant.op925
+  %diff.check = icmp ult i64 %i.qe, 31
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.1.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

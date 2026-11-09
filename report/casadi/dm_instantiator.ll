@@ -205,9 +205,11 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.us.us.i.preheader:                         ; preds = %.lr.ph38.us.i
   %i.aq = shl i64 %i.am, 3
+  %5 = add i64 %i.aq, %i.w
+  %6 = sub i64 %i.p, %5
   %i.ar = sub i64 %i.ao, %i.am                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.ar, 4
-  %i.as = add i64 %i.aq, %i.w
+  %i.as = add i64 %6, -1
   %n.vec = and i64 %i.ar, -4                      ; 4 uses
   %i.at = add i64 %i.am, %n.vec
   %i.au = getelementptr [8 x i8], ptr %i.v, i64 %i.am
@@ -223,9 +225,8 @@ bb.d:                                             ; preds = %bb.c
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.us.i
   %i.ax = shl i64 %.235.us.us.i, 3
-  %i.ay = add i64 %i.ax, %i.p
-  %5 = sub i64 %i.as, %i.ay
-  %diff.check = icmp ugt i64 %5, -32
+  %i.ay = add i64 %i.ax, %i.as
+  %diff.check = icmp ult i64 %i.ay, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

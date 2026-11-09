@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define i32 @Cec_ManSimRefineMappedFrame(ptr nofree noundef captures(none) initializes((16, 20)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #23 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 3 uses
   store i32 0, ptr %i.c, align 4, !tbaa !34
@@ -284,12 +284,15 @@ bb.d:                                             ; preds = %Cec_ManSimMemRelink
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.as = sext i32 %3 to i64
+  %5 = sub i64 4, %i.a                            ; 2 uses
   %min.iters.check289 = icmp ult i32 %4, 8
+  %invariant.op = add i64 %5, -1
   %n.vec293 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
   %cmp.n300 = icmp eq i64 %n.vec293, %wide.trip.count.i
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %min.iters.check = icmp ult i32 %4, 8
+  %invariant.op365 = add i64 %5, -1
   %n.vec = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   %xtraiter349 = and i64 %wide.trip.count.i, 3    ; 2 uses
@@ -410,12 +413,15 @@ Gia_ObjIsHead.exit.thread:                        ; preds = %.lr.ph, %Gia_ObjIsH
   %i.cn = sext i32 %4 to i64                      ; 3 uses
   %i.co = icmp sgt i32 %4, 0                      ; 2 uses
   %wide.trip.count.i149 = zext i32 %4 to i64      ; 10 uses
+  %6 = sub i64 4, %i.a                            ; 2 uses
   %min.iters.check321 = icmp ult i32 %4, 8
+  %invariant.op367 = add i64 %6, -1
   %n.vec325 = and i64 %wide.trip.count.i149, 2147483640 ; 3 uses
   %cmp.n332 = icmp eq i64 %n.vec325, %wide.trip.count.i149
   %xtraiter352 = and i64 %wide.trip.count.i149, 3 ; 2 uses
   %lcmp.mod353.not = icmp eq i64 %xtraiter352, 0
   %min.iters.check305 = icmp ult i32 %4, 12
+  %invariant.op369 = add i64 %6, -1
   %n.vec309 = and i64 %wide.trip.count.i149, 2147483640 ; 3 uses
   %cmp.n316 = icmp eq i64 %n.vec309, %wide.trip.count.i149
   %xtraiter355 = and i64 %wide.trip.count.i149, 3 ; 2 uses
@@ -459,9 +465,8 @@ bb.o:                                             ; preds = %bb.n
 vector.memcheck290:                               ; preds = %.lr.ph.i126.preheader
   %i.df = mul nsw i64 %i.db, %i.am
   %i.dg = shl i64 %i.df, 2
-  %5 = add i64 %i.dg, %i.a
-  %i.dh = sub i64 %i.cz, %5
-  %i.di = add i64 %i.dh, 3
+  %i.dh = sub i64 %i.cz, %i.dg
+  %i.di = add i64 %i.dh, %invariant.op
   %diff.check291 = icmp ult i64 %i.di, 31
   br i1 %diff.check291, label %.lr.ph.i126.preheader342, label %vector.body294
 
@@ -517,9 +522,8 @@ middle.block299:                                  ; preds = %vector.body294
 vector.memcheck:                                  ; preds = %.lr.ph24.i.preheader
   %i.dx = mul nsw i64 %i.db, %i.am
   %i.dy = shl i64 %i.dx, 2
-  %6 = add i64 %i.dy, %i.a
-  %i.dz = sub i64 %i.cz, %6
-  %i.ea = add i64 %i.dz, 3
+  %i.dz = sub i64 %i.cz, %i.dy
+  %i.ea = add i64 %i.dz, %invariant.op365
   %diff.check = icmp ult i64 %i.ea, 31
   br i1 %diff.check, label %.lr.ph24.i.preheader341, label %vector.body
 
@@ -919,10 +923,9 @@ vector.memcheck322:                               ; preds = %.lr.ph.i150.prehead
   %i.ka = shl nsw i64 %i.jm, 2
   %i.kb = mul nsw i64 %i.jw, %i.cn
   %i.kc = shl i64 %i.kb, 2
-  %7 = add i64 %i.ka, %i.jh
-  %i.kd = add i64 %i.kc, %i.a
-  %i.ke = sub i64 %7, %i.kd
-  %i.kf = add i64 %i.ke, 3
+  %i.kd = add i64 %i.ka, %i.jh
+  %i.ke = sub i64 %i.kd, %i.kc
+  %i.kf = add i64 %i.ke, %invariant.op367
   %diff.check323 = icmp ult i64 %i.kf, 31
   br i1 %diff.check323, label %.lr.ph.i150.preheader336, label %vector.body326
 
@@ -979,10 +982,9 @@ vector.memcheck306:                               ; preds = %.lr.ph24.i157.prehe
   %i.ku = shl nsw i64 %i.jm, 2
   %i.kv = mul nsw i64 %i.jw, %i.cn
   %i.kw = shl i64 %i.kv, 2
-  %8 = add i64 %i.ku, %i.jh
-  %i.kx = add i64 %i.kw, %i.a
-  %i.ky = sub i64 %8, %i.kx
-  %i.kz = add i64 %i.ky, 3
+  %i.kx = add i64 %i.ku, %i.jh
+  %i.ky = sub i64 %i.kx, %i.kw
+  %i.kz = add i64 %i.ky, %invariant.op369
   %diff.check307 = icmp ult i64 %i.kz, 31
   br i1 %diff.check307, label %.lr.ph24.i157.preheader335, label %vector.body310
 

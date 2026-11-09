@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %._crit_edge.us
   %.neg = add i32 %indvar, 1
   %i.aa = add i32 %i.v, %indvar
   %i.ab = sext i32 %i.aa to i64
-  %i.ac = shl nsw i64 %i.ab, 3                    ; 2 uses
+  %i.ac = shl nsw i64 %i.ab, 3                    ; 3 uses
   %i.ad = sub i32 %i.w, %indvar
   %i.ae = zext i32 %i.ad to i64
   %i.af = shl nuw nsw i64 %i.ae, 3                ; 2 uses
@@ -328,7 +328,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ci = zext i32 %i.ch to i64
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.ch, 3
-  %invariant.gep187.a = getelementptr i8, ptr %1, i64 %i.af
+  %invariant.gep187 = getelementptr i8, ptr %1, i64 %i.ac
+  %6 = getelementptr i8, ptr %1, i64 %i.ac
+  %7 = getelementptr i8, ptr %6, i64 8
+  %invariant.gep187.a = getelementptr i8, ptr %7, i64 %i.af
   %n.vec = and i64 %i.cj, 8589934588              ; 3 uses
   %i.ck = add nsw i64 %n.vec, %i.ag
   %cmp.n = icmp eq i64 %i.cj, %n.vec
@@ -352,12 +355,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.us
-  %i.cu = shl nsw i64 %i.cn, 5
-  %6 = add nsw i64 %i.cu, %i.ac                   ; 2 uses
-  %7 = getelementptr i8, ptr %1, i64 %6
-  %gep188 = getelementptr i8, ptr %invariant.gep187.a, i64 %6
-  %i.cv = getelementptr i8, ptr %gep188, i64 8
-  %bound0 = icmp ult ptr %7, %scevgep178
+  %i.cu = shl nsw i64 %i.cn, 5                    ; 2 uses
+  %gep188 = getelementptr i8, ptr %invariant.gep187, i64 %i.cu
+  %i.cv = getelementptr i8, ptr %invariant.gep187.a, i64 %i.cu
+  %bound0 = icmp ult ptr %gep188, %scevgep178
   %bound1 = icmp ult ptr %scevgep179, %i.cv
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph

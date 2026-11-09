@@ -205,7 +205,8 @@ bb.a:
   %.idx = shl nsw i64 %i.a, 3
   %.not.i.i = icmp eq i64 %7, 0
   %.pre = load ptr, ptr %1, align 8, !tbaa !569
-  %i.b = shl i64 %7, 3                            ; 2 uses
+  %i.b = shl i64 %7, 3
+  %12 = add i64 %i.b, -8                          ; 2 uses
   %i.c = shl i64 %7, 3
   %invariant.op = add i64 %i.c, -8
   %i.d = shl i64 %7, 3
@@ -560,13 +561,13 @@ bb.v:                                             ; preds = %bb.u
   br i1 %min.iters.check374, label %.lr.ph.i30.preheader418, label %vector.memcheck375
 
 vector.memcheck375:                               ; preds = %.lr.ph.i30.preheader
-  %12 = add i64 %i.b, %i.ce
-  %reass.sub = sub i64 %i.g, %12
-  %.not405.a = add i64 %reass.sub, 7
-  %i.dm = and i64 %.not405.a, -8                  ; 3 uses
-  %i.dn = getelementptr i8, ptr %.sroa.071.0, i64 %i.dm ; 2 uses
-  %i.do = getelementptr i8, ptr %.sroa.078.0, i64 %i.dm ; 2 uses
-  %i.dp = getelementptr i8, ptr %i.cd, i64 %i.dm  ; 2 uses
+  %reass.sub = sub i64 %i.ce, %i.g
+  %.not405.a = add i64 %12, %reass.sub
+  %i.dm = and i64 %.not405.a, -8
+  %13 = xor i64 %i.dm, -8                         ; 3 uses
+  %i.dn = getelementptr i8, ptr %.sroa.071.0, i64 %13 ; 2 uses
+  %i.do = getelementptr i8, ptr %.sroa.078.0, i64 %13 ; 2 uses
+  %i.dp = getelementptr i8, ptr %i.cd, i64 %13    ; 2 uses
   %bound0376 = icmp ult ptr %i.dn, %.sroa.078.0
   %bound1377 = icmp ult ptr %i.do, %.sroa.071.0
   %found.conflict378 = and i1 %bound0376, %bound1377
@@ -654,12 +655,12 @@ bb.w:                                             ; preds = %bb.u
   br i1 %min.iters.check337, label %.lr.ph.i34.preheader415, label %vector.memcheck338
 
 vector.memcheck338:                               ; preds = %.lr.ph.i34.preheader
-  %13 = add i64 %i.b, %i.ce
-  %reass.sub407 = sub i64 %i.g, %13
-  %.not406.a = add i64 %reass.sub407, 7
-  %i.em = and i64 %.not406.a, -8                  ; 2 uses
-  %i.en = getelementptr i8, ptr %i.cd, i64 %i.em
-  %i.eo = getelementptr i8, ptr %.sroa.071.0, i64 %i.em
+  %reass.sub407 = sub i64 %i.ce, %i.g
+  %.not406.a = add i64 %12, %reass.sub407
+  %i.em = and i64 %.not406.a, -8
+  %14 = xor i64 %i.em, -8                         ; 2 uses
+  %i.en = getelementptr i8, ptr %i.cd, i64 %14
+  %i.eo = getelementptr i8, ptr %.sroa.071.0, i64 %14
   %bound0339 = icmp ult ptr %i.en, %.sroa.071.0
   %bound1340 = icmp ult ptr %i.eo, %i.cd
   %found.conflict341 = and i1 %bound0339, %bound1340
@@ -1062,7 +1063,8 @@ bb.a:
   %.idx = shl nsw i64 %i.a, 3
   %.not.i.i = icmp eq i64 %7, 0
   %.pre = load ptr, ptr %1, align 8, !tbaa !685
-  %i.b = shl i64 %7, 3                            ; 2 uses
+  %i.b = shl i64 %7, 3
+  %12 = add i64 %i.b, -8                          ; 2 uses
   %i.c = shl i64 %7, 3
   %invariant.op = add i64 %i.c, -8
   %i.d = shl i64 %7, 3
@@ -1417,13 +1419,13 @@ bb.v:                                             ; preds = %bb.u
   br i1 %min.iters.check374, label %.lr.ph.i30.preheader418, label %vector.memcheck375
 
 vector.memcheck375:                               ; preds = %.lr.ph.i30.preheader
-  %12 = add i64 %i.b, %i.ce
-  %reass.sub = sub i64 %i.g, %12
-  %.not405.a = add i64 %reass.sub, 7
-  %i.dm = and i64 %.not405.a, -8                  ; 3 uses
-  %i.dn = getelementptr i8, ptr %.sroa.071.0, i64 %i.dm ; 2 uses
-  %i.do = getelementptr i8, ptr %.sroa.078.0, i64 %i.dm ; 2 uses
-  %i.dp = getelementptr i8, ptr %i.cd, i64 %i.dm  ; 2 uses
+  %reass.sub = sub i64 %i.ce, %i.g
+  %.not405.a = add i64 %12, %reass.sub
+  %i.dm = and i64 %.not405.a, -8
+  %13 = xor i64 %i.dm, -8                         ; 3 uses
+  %i.dn = getelementptr i8, ptr %.sroa.071.0, i64 %13 ; 2 uses
+  %i.do = getelementptr i8, ptr %.sroa.078.0, i64 %13 ; 2 uses
+  %i.dp = getelementptr i8, ptr %i.cd, i64 %13    ; 2 uses
   %bound0376 = icmp ult ptr %i.dn, %.sroa.078.0
   %bound1377 = icmp ult ptr %i.do, %.sroa.071.0
   %found.conflict378 = and i1 %bound0376, %bound1377
@@ -1511,12 +1513,12 @@ bb.w:                                             ; preds = %bb.u
   br i1 %min.iters.check337, label %.lr.ph.i34.preheader415, label %vector.memcheck338
 
 vector.memcheck338:                               ; preds = %.lr.ph.i34.preheader
-  %13 = add i64 %i.b, %i.ce
-  %reass.sub407 = sub i64 %i.g, %13
-  %.not406.a = add i64 %reass.sub407, 7
-  %i.em = and i64 %.not406.a, -8                  ; 2 uses
-  %i.en = getelementptr i8, ptr %i.cd, i64 %i.em
-  %i.eo = getelementptr i8, ptr %.sroa.071.0, i64 %i.em
+  %reass.sub407 = sub i64 %i.ce, %i.g
+  %.not406.a = add i64 %12, %reass.sub407
+  %i.em = and i64 %.not406.a, -8
+  %14 = xor i64 %i.em, -8                         ; 2 uses
+  %i.en = getelementptr i8, ptr %i.cd, i64 %14
+  %i.eo = getelementptr i8, ptr %.sroa.071.0, i64 %14
   %bound0339 = icmp ult ptr %i.en, %.sroa.071.0
   %bound1340 = icmp ult ptr %i.eo, %i.cd
   %found.conflict341 = and i1 %bound0339, %bound1340

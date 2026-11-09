@@ -204,6 +204,7 @@ bb.c:                                             ; preds = %._crit_edge.thread,
   %wide.trip.count586 = zext nneg i32 %2 to i64
   %ident.check627.not = icmp eq i32 %2, 1
   %ident.check.not = icmp eq i32 %2, 1
+  %invariant.op677 = sub i64 -1, %i.a
   br label %.lr.ph540.split
 
 .lr.ph540.splitthread-pre-split:                  ; preds = %.loopexit
@@ -341,6 +342,7 @@ bb.h:                                             ; preds = %._crit_edge592, %bb
   %i.ew = zext nneg i32 %i.du to i64              ; 2 uses
   %min.iters.check = icmp ugt i32 %i.du, 7
   %or.cond = and i1 %min.iters.check, %ident.check.not
+  %invariant.op.reass = add i64 %i.bz, %invariant.op677
   %n.vec = and i64 %i.ew, 2147483644              ; 5 uses
   %i.ex = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.ew
@@ -361,13 +363,11 @@ bb.h:                                             ; preds = %._crit_edge592, %bb
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.preheader.us.us.us
-  %6 = shl nsw i64 %i.ey, 3
-  %i.fa = add nsw i64 %i.ez, %i.ci
+  %6 = sub nsw i64 %i.ez, %i.ey
+  %i.fa = add nsw i64 %6, %i.ci
   %i.fb = shl nsw i64 %i.fa, 3
-  %7 = add i64 %i.fb, %i.bz
-  %i.fc = add i64 %6, %i.a
-  %8 = sub i64 %i.fc, %7
-  %diff.check = icmp ugt i64 %8, -32
+  %i.fc = add i64 %i.fb, %invariant.op.reass
+  %diff.check = icmp ult i64 %i.fc, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -589,12 +589,17 @@ bb.l:                                             ; preds = %._crit_edge591, %bb
   %i.jk = add nsw i32 %i.hy, %i.jj
   %i.jl = add nsw i32 %i.ij, -1
   %i.jm = zext i32 %i.jl to i64
-  %i.jn = shl nuw nsw i64 %i.jm, 3                ; 2 uses
+  %7 = shl nuw nsw i64 %i.jm, 3                   ; 2 uses
+  %i.jn = shl nsw i64 %i.gx, 3                    ; 2 uses
   %i.jo = zext nneg i32 %i.ij to i64              ; 2 uses
   %min.iters.check638 = icmp ugt i32 %i.ij, 3
   %or.cond654 = and i1 %min.iters.check638, %ident.check627.not
-  %invariant.gep671.a = getelementptr i8, ptr %i.go, i64 %i.jn
-  %invariant.gep673 = getelementptr i8, ptr %4, i64 %i.jn
+  %invariant.gep671 = getelementptr i8, ptr %i.go, i64 %i.jn
+  %8 = getelementptr i8, ptr %i.go, i64 %i.jn
+  %9 = getelementptr i8, ptr %8, i64 8
+  %10 = getelementptr i8, ptr %9, i64 %7
+  %invariant.gep671.a = getelementptr i8, ptr %4, i64 %7
+  %invariant.gep673 = getelementptr i8, ptr %invariant.gep671.a, i64 8
   %n.vec641 = and i64 %i.jo, 2147483644           ; 5 uses
   %i.jp = trunc nuw nsw i64 %n.vec641 to i32
   %cmp.n650 = icmp eq i64 %n.vec641, %i.jo
@@ -615,17 +620,14 @@ bb.l:                                             ; preds = %._crit_edge591, %bb
   br i1 %or.cond654, label %vector.memcheck639, label %scalar.ph637.preheader
 
 vector.memcheck639:                               ; preds = %.preheader472.us.us
-  %9 = add nsw i64 %i.jr, %i.gx
-  %i.js = shl nsw i64 %9, 3                       ; 2 uses
-  %10 = getelementptr i8, ptr %i.go, i64 %i.js
-  %gep672 = getelementptr i8, ptr %invariant.gep671.a, i64 %i.js
-  %i.jt = getelementptr i8, ptr %gep672, i64 8
+  %i.js = shl nsw i64 %i.jr, 3                    ; 2 uses
+  %gep672 = getelementptr i8, ptr %invariant.gep671, i64 %i.js
+  %i.jt = getelementptr i8, ptr %10, i64 %i.js
   %i.ju = shl nsw i64 %i.jq, 3                    ; 2 uses
-  %11 = getelementptr i8, ptr %4, i64 %i.ju
-  %gep674 = getelementptr i8, ptr %invariant.gep673, i64 %i.ju
-  %i.jv = getelementptr i8, ptr %gep674, i64 8
-  %bound0 = icmp ult ptr %10, %i.jv
-  %bound1 = icmp ult ptr %11, %i.jt
+  %gep674 = getelementptr i8, ptr %4, i64 %i.ju
+  %i.jv = getelementptr i8, ptr %invariant.gep673, i64 %i.ju
+  %bound0 = icmp ult ptr %gep672, %i.jv
+  %bound1 = icmp ult ptr %gep674, %i.jt
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph637.preheader, label %vector.ph640
 

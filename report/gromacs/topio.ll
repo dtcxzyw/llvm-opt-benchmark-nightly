@@ -205,7 +205,9 @@ bb.ay:                                            ; preds = %.loopexit279.i
 
 .lr.ph346.split.us.preheader.i:                   ; preds = %.lr.ph346.i
   %wide.trip.count399.i = zext nneg i32 %.0186.lcssa.i to i64 ; 8 uses
+  %8 = sub i64 %i.mg, %.0263.lcssa.i526
   %min.iters.check527 = icmp ult i32 %.0186.lcssa.i, 4
+  %invariant.op = add i64 %8, -1
   %min.iters.check531 = icmp ult i32 %.0186.lcssa.i, 32
   %i.mj = and i64 %wide.trip.count399.i, 28
   %n.vec533 = and i64 %wide.trip.count399.i, 2147483616 ; 4 uses
@@ -232,9 +234,8 @@ iter.check543:                                    ; preds = %.lr.ph346.split.us.
 
 vector.memcheck528:                               ; preds = %iter.check543
   %i.mp = shl nuw nsw i64 %i.mo, 2
-  %i.mq = add i64 %i.mp, %i.mg
-  %8 = sub i64 %.0263.lcssa.i526, %i.mq
-  %diff.check529 = icmp ugt i64 %8, -128
+  %i.mq = add i64 %i.mp, %invariant.op
+  %diff.check529 = icmp ult i64 %i.mq, 127
   br i1 %diff.check529, label %.preheader278.us.i.preheader, label %vector.main.loop.iter.check530
 
 vector.main.loop.iter.check530:                   ; preds = %vector.memcheck528

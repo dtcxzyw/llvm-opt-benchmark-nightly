@@ -39,7 +39,7 @@ bb.a:
   %i.n = getelementptr inbounds [8 x i8], ptr %5, i64 %i.m ; 13 uses
   %i.o = load i32, ptr %8, align 4, !tbaa !25     ; 8 uses
   %narrow225 = xor i32 %i.o, -1
-  %i.p = sext i32 %narrow225 to i64               ; 5 uses
+  %i.p = sext i32 %narrow225 to i64               ; 4 uses
   %i.q = getelementptr inbounds [8 x i8], ptr %7, i64 %i.p ; 10 uses
   store i32 0, ptr %9, align 4, !tbaa !25
   %i.r = load i32, ptr %0, align 4, !tbaa !25     ; 4 uses
@@ -97,10 +97,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ak = sext i32 %i.o to i64
   %invariant.gep306 = getelementptr [8 x i8], ptr %i.q, i64 %i.ak
   %i.al = zext nneg i32 %i.t to i64
-  %i.am = shl nsw i64 %i.p, 3
+  %i.am = shl nsw i64 %i.p, 3                     ; 3 uses
   %i.an = add i64 %i.am, %i.c
   %ident.check337.not = icmp eq i32 %i.i, 1
   %ident.check.not = icmp eq i32 %i.i, 1
+  %10 = getelementptr i8, ptr %7, i64 %i.am
+  %11 = getelementptr i8, ptr %10, i64 8
+  %invariant.gep421 = getelementptr i8, ptr %7, i64 %i.am
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph244, %bb.j
@@ -348,11 +351,9 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.du = shl nuw nsw i64 %wide.trip.count262, 3  ; 2 uses
   %i.dv = getelementptr i8, ptr %3, i64 %i.dr
   %i.dw = getelementptr i8, ptr %i.dv, i64 %i.du
-  %10 = add nsw i64 %.pre295, %i.p
-  %i.dx = shl nsw i64 %10, 3                      ; 2 uses
-  %11 = getelementptr i8, ptr %7, i64 %i.dx
-  %i.dy = getelementptr i8, ptr %11, i64 8
-  %i.dz = getelementptr i8, ptr %7, i64 %i.dx
+  %i.dx = shl nsw i64 %.pre295, 3                 ; 2 uses
+  %i.dy = getelementptr i8, ptr %11, i64 %i.dx
+  %i.dz = getelementptr i8, ptr %invariant.gep421, i64 %i.dx
   %i.ea = getelementptr i8, ptr %i.dz, i64 %i.du
   %bound0 = icmp ult ptr %i.dt, %i.ea
   %bound1 = icmp ult ptr %i.dy, %i.dw
@@ -623,7 +624,7 @@ vector.memcheck372:                               ; preds = %vector.scevcheck368
   %i.id = add i32 %i.he, %i.ic
   %i.ie = sub i32 %i.id, %i.hd
   %i.if = sext i32 %i.ie to i64
-  %i.ig = add nsw i64 %i.if, %i.m
+  %i.ig = add nsw i64 %i.m, %i.if
   %i.ih = shl nsw i64 %i.ig, 3
   %i.ii = add i64 %i.ih, %i.a
   %i.ij = sub i64 %i.ii, %i.ia

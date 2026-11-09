@@ -205,7 +205,9 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIffEC2ERKS1_RKNS0_3ROIENS1_8WrapMod
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 84
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.bp = shl nsw i64 %i.bf, 2
+  %3 = sub i64 %i.e, %i.bp
   %min.iters.check = icmp ult i32 %.fr17.i.i.i, 8
+  %invariant.op = add i64 %3, -1
   %n.vec = and i64 %wide.trip.count.i.i.i, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i.i
   %xtraiter = and i64 %wide.trip.count.i.i.i, 3   ; 2 uses
@@ -265,12 +267,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
   %i.cv = ptrtoaddr ptr %i.cu to i64
-  %i.cw = add i64 %i.cg, %i.e
-  %i.cx = add i64 %i.cw, %i.cl
-  %3 = add i64 %i.cx, %i.cq
-  %i.cy = add i64 %i.bp, %i.cv
-  %4 = sub i64 %i.cy, %3
-  %diff.check = icmp ugt i64 %4, -32
+  %i.cw = add i64 %i.cg, %i.cl
+  %i.cx = add i64 %i.cw, %i.cq
+  %4 = sub i64 %i.cx, %i.cv
+  %i.cy = add i64 %4, %invariant.op
+  %diff.check = icmp ult i64 %i.cy, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
@@ -673,7 +674,9 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfES4_EC2ERKS1_RKNS0
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 84
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.bp = shl nsw i64 %i.bf, 1
+  %3 = sub i64 %i.e, %i.bp
   %min.iters.check = icmp ult i32 %.fr17.i.i.i, 4
+  %invariant.op = add i64 %3, -1
   %min.iters.check12 = icmp ult i32 %.fr17.i.i.i, 16
   %i.bq = and i64 %wide.trip.count.i.i.i, 12
   %n.vec = and i64 %wide.trip.count.i.i.i, 2147483632 ; 4 uses
@@ -738,12 +741,11 @@ iter.check:                                       ; preds = %bb.d, %_ZN11OpenIma
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cw = ptrtoaddr ptr %i.cv to i64
-  %i.cx = add i64 %i.ch, %i.e
-  %i.cy = add i64 %i.cx, %i.cm
-  %3 = add i64 %i.cy, %i.cr
-  %i.cz = add i64 %i.bp, %i.cw
-  %4 = sub i64 %i.cz, %3
-  %diff.check = icmp ugt i64 %4, -32
+  %i.cx = add i64 %i.ch, %i.cm
+  %i.cy = add i64 %i.cx, %i.cr
+  %4 = sub i64 %i.cy, %i.cw
+  %i.cz = add i64 %4, %invariant.op
+  %diff.check = icmp ult i64 %i.cz, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1146,7 +1148,9 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfEtEC2ERKS1_RKNS0_3
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 84
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.bp = shl nsw i64 %i.bf, 1
+  %3 = sub i64 %i.e, %i.bp
   %min.iters.check = icmp ult i32 %.fr17.i.i.i, 8
+  %invariant.op = add i64 %3, -1
   %n.vec = and i64 %wide.trip.count.i.i.i, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i.i
   br label %_ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfEtEC2ERKS1_RKNS0_3ROIENS1_8WrapModeE.exit.split.us.i.i.i
@@ -1204,12 +1208,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
   %i.cv = ptrtoaddr ptr %i.cu to i64
-  %i.cw = add i64 %i.cg, %i.e
-  %i.cx = add i64 %i.cw, %i.cl
-  %3 = add i64 %i.cx, %i.cq
-  %i.cy = add i64 %i.bp, %i.cv
-  %4 = sub i64 %i.cy, %3
-  %diff.check = icmp ugt i64 %4, -16
+  %i.cw = add i64 %i.cg, %i.cl
+  %i.cx = add i64 %i.cw, %i.cq
+  %4 = sub i64 %i.cx, %i.cv
+  %i.cy = add i64 %4, %invariant.op
+  %diff.check = icmp ult i64 %i.cy, 15
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
@@ -1612,7 +1615,9 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIttEC2ERKS1_RKNS0_3ROIENS1_8WrapMod
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 84
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.bp = shl nsw i64 %i.bf, 1
+  %3 = sub i64 %i.e, %i.bp
   %min.iters.check = icmp ult i32 %.fr17.i.i.i, 4
+  %invariant.op = add i64 %3, -1
   %min.iters.check12 = icmp ult i32 %.fr17.i.i.i, 16
   %i.bq = and i64 %wide.trip.count.i.i.i, 12
   %n.vec = and i64 %wide.trip.count.i.i.i, 2147483632 ; 4 uses
@@ -1677,12 +1682,11 @@ iter.check:                                       ; preds = %bb.d, %_ZN11OpenIma
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cw = ptrtoaddr ptr %i.cv to i64
-  %i.cx = add i64 %i.ch, %i.e
-  %i.cy = add i64 %i.cx, %i.cm
-  %3 = add i64 %i.cy, %i.cr
-  %i.cz = add i64 %i.bp, %i.cw
-  %4 = sub i64 %i.cz, %3
-  %diff.check = icmp ugt i64 %4, -32
+  %i.cx = add i64 %i.ch, %i.cm
+  %i.cy = add i64 %i.cx, %i.cr
+  %4 = sub i64 %i.cy, %i.cw
+  %i.cz = add i64 %4, %invariant.op
+  %diff.check = icmp ult i64 %i.cz, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

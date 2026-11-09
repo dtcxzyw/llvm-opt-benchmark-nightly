@@ -55,8 +55,9 @@ bb.e:                                             ; preds = %bb.d
   %invariant.op = add i32 %i.r, 1
   %i.u = add i32 %i.a, %i.r
   %i.v = shl nsw i64 %i.b, 3                      ; 2 uses
+  %invariant.gep = getelementptr i8, ptr %3, i64 %i.v
   %invariant.gep.a = getelementptr i8, ptr %3, i64 %i.v
-  %invariant.op212 = add i64 %i.v, 8
+  %9 = getelementptr i8, ptr %invariant.gep.a, i64 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph91, %._crit_edge
@@ -105,11 +106,10 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.at = add i32 %smax, %.reass
   %i.au = sext i32 %i.at to i64
   %i.av = shl nsw i64 %i.au, 3                    ; 2 uses
-  %gep = getelementptr i8, ptr %invariant.gep.a, i64 %i.av
-  %9 = add i64 %i.ar, %i.av
-  %.reass213.a = add i64 %9, %invariant.op212
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.av
+  %.reass213.a = add i64 %i.ar, %i.av
   %i.aw = sub i64 %.reass213.a, %i.an
-  %i.ax = getelementptr i8, ptr %3, i64 %i.aw
+  %i.ax = getelementptr i8, ptr %9, i64 %i.aw
   %bound0 = icmp ult ptr %i.ap, %i.ax
   %bound1 = icmp ult ptr %gep, %i.as
   %found.conflict = and i1 %bound0, %bound1
@@ -233,16 +233,19 @@ bb.g:                                             ; preds = %bb.d
   br i1 %.not7997, label %.loopexit, label %.lr.ph100
 
 .lr.ph100:                                        ; preds = %bb.g
-  %i.co = load i32, ptr %2, align 4, !tbaa !22    ; 2 uses
+  %i.co = load i32, ptr %2, align 4, !tbaa !22    ; 3 uses
   %i.cp = add nuw i32 %i.q, 1
   %wide.trip.count116 = zext i32 %i.cp to i64
   %.198102 = add i32 %i.a, -1
   %i.cq = zext nneg i32 %i.q to i64
-  %i.cr = add i32 %i.co, 1                        ; 2 uses
+  %i.cr = add i32 %i.co, 1
   %i.cs = add i32 %i.a, 1                         ; 2 uses
   %i.ct = shl nsw i64 %i.b, 3                     ; 2 uses
   %i.cu = zext nneg i32 %i.q to i64
-  %invariant.gep218 = getelementptr i8, ptr %3, i64 %i.ct
+  %10 = add i32 %i.co, 1
+  %invariant.gep216 = getelementptr i8, ptr %3, i64 %i.ct
+  %11 = getelementptr i8, ptr %3, i64 %i.ct
+  %invariant.gep218 = getelementptr i8, ptr %11, i64 8
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph100, %._crit_edge96
@@ -251,7 +254,7 @@ bb.h:                                             ; preds = %.lr.ph100, %._crit_
   %indvars.iv110 = phi i64 [ 1, %.lr.ph100 ], [ %indvars.iv.next111, %._crit_edge96 ] ; 15 uses
   %i.cv = trunc i64 %indvar154 to i32
   %i.cw = trunc i64 %indvar154 to i32
-  %i.cx = add i32 %i.cr, %i.cw
+  %i.cx = add i32 %10, %i.cw
   %i.cy = sext i32 %i.cx to i64
   %smin168 = tail call i64 @llvm.smin.i64(i64 %i.cu, i64 %i.cy)
   %smax169 = tail call i64 @llvm.smax.i64(i64 %smin168, i64 %indvars.iv110)
@@ -302,13 +305,11 @@ vector.memcheck171:                               ; preds = %vector.scevcheck150
   %i.ee = add i32 %i.cs, %i.ed
   %i.ef = sext i32 %i.ee to i64
   %i.eg = shl nsw i64 %i.ef, 3                    ; 2 uses
-  %gep219 = getelementptr i8, ptr %invariant.gep218, i64 %i.eg
-  %10 = getelementptr i8, ptr %3, i64 %i.dz
-  %i.eh = getelementptr i8, ptr %10, i64 %i.eg
-  %i.ei = getelementptr i8, ptr %i.eh, i64 %i.ct
-  %i.ej = getelementptr i8, ptr %i.ei, i64 8
+  %i.eh = getelementptr i8, ptr %invariant.gep216, i64 %i.eg
+  %i.ei = getelementptr i8, ptr %invariant.gep218, i64 %i.dz
+  %i.ej = getelementptr i8, ptr %i.ei, i64 %i.eg
   %bound0172 = icmp ult ptr %i.dv, %i.ej
-  %bound1173 = icmp ult ptr %gep219, %i.ec
+  %bound1173 = icmp ult ptr %i.eh, %i.ec
   %found.conflict174 = and i1 %bound0172, %bound1173
   br i1 %found.conflict174, label %vec.epilog.scalar.ph196.preheader, label %vector.main.loop.iter.check175
 

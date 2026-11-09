@@ -203,14 +203,12 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !56
   %i.dq = getelementptr inbounds nuw [24 x i8], ptr %i.dp, i64 %indvars.iv385 ; 5 uses
   %i.dr = load ptr, ptr %i.ak, align 8, !tbaa !44 ; 2 uses
-  %9 = ptrtoaddr ptr %i.dr to i64
   %i.ds = load ptr, ptr %i.am, align 8, !tbaa !58
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.ds, i64 %indvars.iv385
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !7
   %i.dv = sext i32 %i.du to i64                   ; 2 uses
   %i.dw = getelementptr inbounds [8 x i8], ptr %i.dr, i64 %i.dv ; 6 uses
   %i.dx = load ptr, ptr %i.an, align 8, !tbaa !59 ; 2 uses
-  %10 = ptrtoaddr ptr %i.dx to i64
   %i.dy = load ptr, ptr %i.ao, align 8, !tbaa !60
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %indvars.iv385
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !61
@@ -224,6 +222,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.eh, label %.lr.ph348, label %._crit_edge349
 
 .lr.ph348:                                        ; preds = %.lr.ph352
+  %9 = ptrtoaddr ptr %i.dx to i64
+  %10 = ptrtoaddr ptr %i.dr to i64
   %i.ei = getelementptr inbounds nuw i8, ptr %i.dn, i64 4
   %i.ej = getelementptr inbounds nuw i8, ptr %i.dn, i64 12
   %i.ek = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
@@ -232,6 +232,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.en = getelementptr inbounds nuw i8, ptr %i.dq, i64 12
   %i.eo = getelementptr inbounds nuw i8, ptr %i.dq, i64 16
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
+  %11 = shl nsw i64 %i.ed, 3
+  %12 = add i64 %11, %9
+  %invariant.op = add i64 %12, -1
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph348, %.critedge
@@ -383,14 +386,13 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.preheader.us.us
-  %11 = add nsw i64 %i.if, %i.dv
-  %i.ih = shl nsw i64 %11, 3
-  %12 = add i64 %i.ih, %9
-  %i.ii = add nsw i64 %i.ig, %i.ed
+  %i.ih = shl nsw i64 %i.ig, 3
+  %i.ii = add nsw i64 %i.dv, %i.if
   %i.ij = shl nsw i64 %i.ii, 3
   %i.ik = add i64 %i.ij, %10
-  %i.il = sub i64 %12, %i.ik
-  %diff.check = icmp ugt i64 %i.il, -32
+  %i.il = sub i64 %i.ih, %i.ik
+  %.reass = add i64 %i.il, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

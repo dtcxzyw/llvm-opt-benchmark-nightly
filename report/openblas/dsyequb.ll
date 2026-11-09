@@ -17,8 +17,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dsyequb_(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef captures(none) %6, ptr noundef %7, ptr nofree noundef captures(none) initializes((0, 4)) %8) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %7 to i64
-  %i.b = ptrtoaddr ptr %4 to i64
+  %i.a = ptrtoaddr ptr %4 to i64
+  %i.b = ptrtoaddr ptr %7 to i64
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca double, align 8                   ; 5 uses
   %i.e = alloca double, align 8                   ; 5 uses
@@ -344,6 +344,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ej = add i32 %i.f, 1
   %i.ek = sext i32 %i.f to i64                    ; 13 uses
   %.pre = load i32, ptr %1, align 4, !tbaa !35
+  %9 = sub i64 %i.b, %i.a
+  %invariant.op878 = add i64 %9, -1
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge556, %._crit_edge609
@@ -715,9 +717,8 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph564.ne
 
 vector.memcheck:                                  ; preds = %.lr.ph585
   %i.lv = shl nsw i64 %i.lt, 3                    ; 2 uses
-  %i.lw = add i64 %i.lv, %i.a
-  %9 = sub i64 %i.b, %i.lw
-  %diff.check = icmp ugt i64 %9, -64
+  %i.lw = add i64 %i.lv, %invariant.op878
+  %diff.check = icmp ult i64 %i.lw, 63
   %i.lx = add nsw i64 %i.lv, -1
   %diff.check800 = icmp ult i64 %i.lx, 63
   %conflict.rdx = or i1 %diff.check, %diff.check800

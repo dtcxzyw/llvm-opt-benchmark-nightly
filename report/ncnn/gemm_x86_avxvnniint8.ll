@@ -205,10 +205,10 @@ iter.check266:                                    ; preds = %._crit_edge113.us.i
 vector.memcheck245:                               ; preds = %iter.check266
   %i.iv = getelementptr i8, ptr %.12116.us.i, i64 %i.hw
   %i.iw = getelementptr i8, ptr %i.iv, i64 4
-  %i.ix = getelementptr i8, ptr %i.im, i64 %i.is
-  %i.iy = getelementptr i8, ptr %i.ix, i64 %i.hw
-  %i.iz = getelementptr i8, ptr %i.iy, i64 %i.hj
-  %i.ja = getelementptr i8, ptr %i.iz, i64 4
+  %i.ix = getelementptr i8, ptr %i.im, i64 %i.hw
+  %i.iy = getelementptr i8, ptr %i.ix, i64 %i.hj
+  %i.iz = getelementptr i8, ptr %i.iy, i64 4
+  %i.ja = getelementptr i8, ptr %i.iz, i64 %i.is
   %bound0246 = icmp ult ptr %.12116.us.i, %i.ja
   %bound1247 = icmp ult ptr %i.iu, %i.iw
   %found.conflict248 = and i1 %bound0246, %bound1247
@@ -428,7 +428,7 @@ bb.d:                                             ; preds = %._crit_edge94.i, %.
   br i1 %i.lm, label %iter.check174, label %.preheader13.i
 
 iter.check174:                                    ; preds = %.preheader14.i
-  %i.ln = sub i32 %i.ea, %.0158.lcssa.i           ; 3 uses
+  %i.ln = sub i32 %i.eb, %.0158.lcssa.i           ; 3 uses
   %i.lo = lshr i32 %i.ln, 1
   %narrow = add nuw i32 %i.lo, 1
   %i.lp = zext i32 %narrow to i64                 ; 5 uses
@@ -436,7 +436,7 @@ iter.check174:                                    ; preds = %.preheader14.i
   br i1 %min.iters.check148, label %.lr.ph84.i.preheader, label %vector.memcheck149
 
 vector.memcheck149:                               ; preds = %iter.check174
-  %i.lq = sub i32 %i.eb, %.0158.lcssa.i
+  %i.lq = sub i32 %i.ea, %.0158.lcssa.i
   %i.lr = zext i32 %i.lq to i64                   ; 2 uses
   %i.ls = shl nuw nsw i64 %i.lr, 1
   %i.lt = and i64 %i.ls, 8589934588
@@ -839,10 +839,10 @@ iter.check266:                                    ; preds = %._crit_edge113.us.i
 vector.memcheck245:                               ; preds = %iter.check266
   %i.iv = getelementptr i8, ptr %.12116.us.i, i64 %i.hw
   %i.iw = getelementptr i8, ptr %i.iv, i64 4
-  %i.ix = getelementptr i8, ptr %i.im, i64 %i.is
-  %i.iy = getelementptr i8, ptr %i.ix, i64 %i.hw
-  %i.iz = getelementptr i8, ptr %i.iy, i64 %i.hj
-  %i.ja = getelementptr i8, ptr %i.iz, i64 4
+  %i.ix = getelementptr i8, ptr %i.im, i64 %i.hw
+  %i.iy = getelementptr i8, ptr %i.ix, i64 %i.hj
+  %i.iz = getelementptr i8, ptr %i.iy, i64 4
+  %i.ja = getelementptr i8, ptr %i.iz, i64 %i.is
   %bound0246 = icmp ult ptr %.12116.us.i, %i.ja
   %bound1247 = icmp ult ptr %i.iu, %i.iw
   %found.conflict248 = and i1 %bound0246, %bound1247
@@ -1062,7 +1062,7 @@ bb.d:                                             ; preds = %._crit_edge94.i, %.
   br i1 %i.lm, label %iter.check174, label %.preheader13.i
 
 iter.check174:                                    ; preds = %.preheader14.i
-  %i.ln = sub i32 %i.ea, %.0158.lcssa.i           ; 3 uses
+  %i.ln = sub i32 %i.eb, %.0158.lcssa.i           ; 3 uses
   %i.lo = lshr i32 %i.ln, 1
   %narrow = add nuw i32 %i.lo, 1
   %i.lp = zext i32 %narrow to i64                 ; 5 uses
@@ -1070,7 +1070,7 @@ iter.check174:                                    ; preds = %.preheader14.i
   br i1 %min.iters.check148, label %.lr.ph84.i.preheader, label %vector.memcheck149
 
 vector.memcheck149:                               ; preds = %iter.check174
-  %i.lq = sub i32 %i.eb, %.0158.lcssa.i
+  %i.lq = sub i32 %i.ea, %.0158.lcssa.i
   %i.lr = zext i32 %i.lq to i64                   ; 2 uses
   %i.ls = shl nuw nsw i64 %i.lr, 1
   %i.lt = and i64 %i.ls, 8589934588
@@ -1473,7 +1473,7 @@ bb.c:                                             ; preds = %._crit_edge.i, %.lr
 
 .preheader153.i:                                  ; preds = %.lr.ph292.i, %.preheader154.i
   %.1410.lcssa.i = phi ptr [ %.0409.lcssa.i, %.preheader154.i ], [ %i.aau, %.lr.ph292.i ] ; 8 uses
-  %.1407.lcssa.i = phi i32 [ %.0406.lcssa.i, %.preheader154.i ], [ %i.aav, %.lr.ph292.i ] ; 5 uses
+  %.1407.lcssa.i = phi i32 [ %.0406.lcssa.i, %.preheader154.i ], [ %i.aav, %.lr.ph292.i ] ; 6 uses
   %.24.lcssa.i = phi ptr [ %.23.lcssa.i, %.preheader154.i ], [ %i.aat, %.lr.ph292.i ] ; 8 uses
   %i.yy = icmp slt i32 %.1407.lcssa.i, %5
   br i1 %i.yy, label %.lr.ph299.i.preheader, label %._crit_edge.i
@@ -1481,20 +1481,23 @@ bb.c:                                             ; preds = %._crit_edge.i, %.lr
 .lr.ph299.i.preheader:                            ; preds = %.preheader153.i
   %i.yz = xor i32 %.1407.lcssa.i, -1
   %i.za = add i32 %5, %i.yz                       ; 2 uses
-  %i.zb = zext i32 %i.za to i64                   ; 3 uses
+  %i.zb = zext i32 %i.za to i64
   %i.zc = add nuw nsw i64 %i.zb, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.za, 7
   br i1 %min.iters.check, label %.lr.ph299.i.preheader247, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph299.i.preheader
-  %i.zd = shl nuw nsw i64 %i.zb, 1
+  %7 = xor i32 %.1407.lcssa.i, -1
+  %8 = add i32 %5, %7
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %i.zd = shl nuw nsw i64 %9, 1
   %i.ze = getelementptr i8, ptr %.24.lcssa.i, i64 %i.zd
   %i.zf = getelementptr i8, ptr %i.ze, i64 2      ; 2 uses
   %i.zg = getelementptr i8, ptr %.1410.lcssa.i, i64 %i.xd
-  %i.zh = shl nuw nsw i64 %i.zb, 2                ; 2 uses
+  %i.zh = shl nuw nsw i64 %9, 2                   ; 2 uses
   %i.zi = getelementptr i8, ptr %.1410.lcssa.i, i64 %i.xd
-  %i.zj = getelementptr i8, ptr %i.zi, i64 %i.zh
-  %i.zk = getelementptr i8, ptr %i.zj, i64 4
+  %i.zj = getelementptr i8, ptr %i.zi, i64 4
+  %i.zk = getelementptr i8, ptr %i.zj, i64 %i.zh
   %i.zl = getelementptr i8, ptr %.1410.lcssa.i, i64 %i.zh
   %i.zm = getelementptr i8, ptr %i.zl, i64 4
   %bound0 = icmp ult ptr %.24.lcssa.i, %i.zk
@@ -1897,7 +1900,7 @@ bb.c:                                             ; preds = %._crit_edge.i, %.lr
 
 .preheader136.i:                                  ; preds = %.lr.ph275.i, %.preheader137.i
   %.1355.lcssa.i = phi ptr [ %.0354.lcssa.i, %.preheader137.i ], [ %i.yv, %.lr.ph275.i ] ; 8 uses
-  %.1352.lcssa.i = phi i32 [ %.0351.lcssa.i, %.preheader137.i ], [ %i.yw, %.lr.ph275.i ] ; 5 uses
+  %.1352.lcssa.i = phi i32 [ %.0351.lcssa.i, %.preheader137.i ], [ %i.yw, %.lr.ph275.i ] ; 6 uses
   %.24.lcssa.i = phi ptr [ %.23.lcssa.i, %.preheader137.i ], [ %i.yu, %.lr.ph275.i ] ; 8 uses
   %i.wz = icmp slt i32 %.1352.lcssa.i, %5
   br i1 %i.wz, label %.lr.ph282.i.preheader, label %._crit_edge.i
@@ -1905,20 +1908,23 @@ bb.c:                                             ; preds = %._crit_edge.i, %.lr
 .lr.ph282.i.preheader:                            ; preds = %.preheader136.i
   %i.xa = xor i32 %.1352.lcssa.i, -1
   %i.xb = add i32 %5, %i.xa                       ; 2 uses
-  %i.xc = zext i32 %i.xb to i64                   ; 3 uses
+  %i.xc = zext i32 %i.xb to i64
   %i.xd = add nuw nsw i64 %i.xc, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.xb, 7
   br i1 %min.iters.check, label %.lr.ph282.i.preheader245, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph282.i.preheader
-  %i.xe = shl nuw nsw i64 %i.xc, 1
+  %7 = xor i32 %.1352.lcssa.i, -1
+  %8 = add i32 %5, %7
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %i.xe = shl nuw nsw i64 %9, 1
   %i.xf = getelementptr i8, ptr %.24.lcssa.i, i64 %i.xe
   %i.xg = getelementptr i8, ptr %i.xf, i64 2      ; 2 uses
   %i.xh = getelementptr i8, ptr %.1355.lcssa.i, i64 %i.vm
-  %i.xi = shl nuw nsw i64 %i.xc, 2                ; 2 uses
+  %i.xi = shl nuw nsw i64 %9, 2                   ; 2 uses
   %i.xj = getelementptr i8, ptr %.1355.lcssa.i, i64 %i.vm
-  %i.xk = getelementptr i8, ptr %i.xj, i64 %i.xi
-  %i.xl = getelementptr i8, ptr %i.xk, i64 4
+  %i.xk = getelementptr i8, ptr %i.xj, i64 4
+  %i.xl = getelementptr i8, ptr %i.xk, i64 %i.xi
   %i.xm = getelementptr i8, ptr %.1355.lcssa.i, i64 %i.xi
   %i.xn = getelementptr i8, ptr %i.xm, i64 4
   %bound0 = icmp ult ptr %.24.lcssa.i, %i.xl

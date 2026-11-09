@@ -204,15 +204,19 @@ bb.c:                                             ; preds = %._crit_edge.thread,
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.ba = load ptr, ptr %i.i, align 8, !tbaa !34  ; 2 uses
   %i.bb = icmp eq ptr %i.ba, null
-  br i1 %i.bb, label %._crit_edge508, label %.lr.ph507.split
+  br i1 %i.bb, label %._crit_edge508, label %.lr.ph507.split.preheader
+
+.lr.ph507.split.preheader:                        ; preds = %.lr.ph507
+  %invariant.op634 = sub i64 -1, %i.a
+  br label %.lr.ph507.split
 
 .lr.ph507.splitthread-pre-split:                  ; preds = %.critedge
   %.pr = load ptr, ptr %i.i, align 8, !tbaa !34
   br label %.lr.ph507.split
 
-.lr.ph507.split:                                  ; preds = %.lr.ph507, %.lr.ph507.splitthread-pre-split
-  %i.bc = phi ptr [ %.pr, %.lr.ph507.splitthread-pre-split ], [ %i.ba, %.lr.ph507 ] ; 2 uses
-  %indvars.iv548 = phi i64 [ %indvars.iv.next549, %.lr.ph507.splitthread-pre-split ], [ 0, %.lr.ph507 ] ; 4 uses
+.lr.ph507.split:                                  ; preds = %.lr.ph507.split.preheader, %.lr.ph507.splitthread-pre-split
+  %i.bc = phi ptr [ %.pr, %.lr.ph507.splitthread-pre-split ], [ %i.ba, %.lr.ph507.split.preheader ] ; 2 uses
+  %indvars.iv548 = phi i64 [ %indvars.iv.next549, %.lr.ph507.splitthread-pre-split ], [ 0, %.lr.ph507.split.preheader ] ; 4 uses
   %i.bd = load ptr, ptr %i.an, align 8, !tbaa !34
   %i.be = getelementptr inbounds nuw [24 x i8], ptr %i.bd, i64 %indvars.iv548 ; 6 uses
   %.not438 = icmp eq ptr %i.bc, null
@@ -328,11 +332,16 @@ bb.i:                                             ; preds = %._crit_edge551, %bb
   %i.eg = add nsw i32 %i.cv, %i.ef
   %i.eh = add nsw i32 %i.dg, -1
   %i.ei = zext i32 %i.eh to i64
-  %i.ej = shl nuw nsw i64 %i.ei, 3                ; 2 uses
+  %4 = shl nuw nsw i64 %i.ei, 3                   ; 2 uses
+  %i.ej = shl nsw i64 %i.bq, 3                    ; 2 uses
   %i.ek = zext nneg i32 %i.dg to i64              ; 2 uses
   %min.iters.check596 = icmp ult i32 %i.dg, 4
-  %invariant.gep628.a = getelementptr i8, ptr %i.bl, i64 %i.ej
-  %invariant.gep630.a = getelementptr i8, ptr %2, i64 %i.ej
+  %invariant.gep628 = getelementptr i8, ptr %i.bl, i64 %i.ej
+  %5 = getelementptr i8, ptr %i.bl, i64 %i.ej
+  %6 = getelementptr i8, ptr %5, i64 8
+  %7 = getelementptr i8, ptr %6, i64 %4
+  %invariant.gep628.a = getelementptr i8, ptr %2, i64 %4
+  %invariant.gep630.a = getelementptr i8, ptr %invariant.gep628.a, i64 8
   %n.vec599 = and i64 %i.ek, 2147483644           ; 5 uses
   %i.el = trunc nuw nsw i64 %n.vec599 to i32
   %cmp.n608 = icmp eq i64 %n.vec599, %i.ek
@@ -353,17 +362,14 @@ bb.i:                                             ; preds = %._crit_edge551, %bb
   br i1 %min.iters.check596, label %scalar.ph595.preheader, label %vector.memcheck597
 
 vector.memcheck597:                               ; preds = %.preheader455.us.us
-  %4 = add nsw i64 %i.en, %i.bq
-  %i.eo = shl nsw i64 %4, 3                       ; 2 uses
-  %5 = getelementptr i8, ptr %i.bl, i64 %i.eo
-  %gep629 = getelementptr i8, ptr %invariant.gep628.a, i64 %i.eo
-  %i.ep = getelementptr i8, ptr %gep629, i64 8
+  %i.eo = shl nsw i64 %i.en, 3                    ; 2 uses
+  %gep629 = getelementptr i8, ptr %invariant.gep628, i64 %i.eo
+  %i.ep = getelementptr i8, ptr %7, i64 %i.eo
   %i.eq = shl nsw i64 %i.em, 3                    ; 2 uses
-  %6 = getelementptr i8, ptr %2, i64 %i.eq
-  %gep631.a = getelementptr i8, ptr %invariant.gep630.a, i64 %i.eq
-  %i.er = getelementptr i8, ptr %gep631.a, i64 8
-  %bound0 = icmp ult ptr %5, %i.er
-  %bound1 = icmp ult ptr %6, %i.ep
+  %gep631.a = getelementptr i8, ptr %2, i64 %i.eq
+  %i.er = getelementptr i8, ptr %invariant.gep630.a, i64 %i.eq
+  %bound0 = icmp ult ptr %gep629, %i.er
+  %bound1 = icmp ult ptr %gep631.a, %i.ep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph595.preheader, label %vector.ph598
 
@@ -549,6 +555,7 @@ bb.n:                                             ; preds = %._crit_edge552, %bb
   %i.id = add nsw i32 %i.gs, %i.ic
   %i.ie = zext nneg i32 %i.hd to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %i.hd, 6
+  %invariant.op.reass = add i64 %i.bm, %invariant.op634
   %n.vec = and i64 %i.ie, 2147483644              ; 5 uses
   %i.if = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.ie
@@ -569,13 +576,11 @@ bb.n:                                             ; preds = %._crit_edge552, %bb
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.us.us
-  %7 = shl nsw i64 %i.ig, 3
-  %i.ii = add nsw i64 %i.ih, %i.bq
+  %8 = sub nsw i64 %i.ih, %i.ig
+  %i.ii = add nsw i64 %8, %i.bq
   %i.ij = shl nsw i64 %i.ii, 3
-  %8 = add i64 %i.ij, %i.bm
-  %i.ik = add i64 %7, %i.a
-  %9 = sub i64 %i.ik, %8
-  %diff.check = icmp ugt i64 %9, -32
+  %i.ik = add i64 %i.ij, %invariant.op.reass
+  %diff.check = icmp ult i64 %i.ik, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -978,7 +983,7 @@ bb.h:                                             ; preds = %._crit_edge301, %bb
 
 vector.memcheck:                                  ; preds = %.preheader.us.us
   %i.el = shl nsw i64 %i.ej, 3
-  %i.em = add nsw i64 %i.ek, %i.bq
+  %i.em = add nsw i64 %i.bq, %i.ek
   %i.en = shl nsw i64 %i.em, 3
   %i.eo = add i64 %i.en, %i.bm
   %i.ep = add i64 %i.el, %i.a

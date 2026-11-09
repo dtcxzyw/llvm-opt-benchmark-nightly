@@ -204,6 +204,7 @@ bb.a:
   %i.j = load ptr, ptr %i.d, align 8, !tbaa !38
   %i.k = load ptr, ptr %i.i, align 8, !tbaa !38
   %wide.trip.count = zext nneg i32 %i.f to i64
+  %invariant.op115 = add i64 %i.a, -1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph74, %.loopexit
@@ -266,11 +267,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ay = load i32, ptr %i.z, align 4, !tbaa !11  ; 2 uses
   %i.az = sext i32 %i.ay to i64                   ; 5 uses
   %i.ba = sext i32 %i.ax to i64                   ; 5 uses
+  %3 = shl nsw i64 %i.v, 3
   %i.bb = zext nneg i32 %i.av to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %i.av, 8
   %ident.check = icmp ne i32 %i.ay, 1
   %ident.check109 = icmp ne i32 %i.ax, 1
   %i.bc = or i1 %ident.check, %ident.check109
+  %invariant.op.reass = add i64 %3, %invariant.op115
   %n.vec = and i64 %i.bb, 2147483644              ; 5 uses
   %i.bd = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.bb
@@ -298,14 +301,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
+  %4 = shl nsw i64 %i.be, 3
   %i.bg = add nsw i64 %i.r, %i.bf
   %i.bh = shl nsw i64 %i.bg, 3
-  %3 = add i64 %i.bh, %i.b
-  %i.bi = add nsw i64 %i.v, %i.be
-  %4 = shl nsw i64 %i.bi, 3
-  %i.bj = add i64 %4, %i.a
-  %5 = sub i64 %3, %i.bj
-  %diff.check = icmp ugt i64 %5, -32
+  %i.bi = add i64 %i.bh, %i.b
+  %5 = sub i64 %4, %i.bi
+  %i.bj = add i64 %5, %invariant.op.reass
+  %diff.check = icmp ult i64 %i.bj, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

@@ -205,6 +205,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit634:            ; preds = %bb.cc, %.noexc633, 
 .lr.ph2042.preheader:                             ; preds = %.lr.ph2047
   %invariant.gep = getelementptr i8, ptr %i.yb, i64 %i.yp
   %invariant.gep3412 = getelementptr i8, ptr %i.yb, i64 %i.yp
+  %30 = getelementptr i8, ptr %invariant.gep3412, i64 1
   br label %.lr.ph2042
 
 bb.cd:                                            ; preds = %bb.cb
@@ -255,8 +256,7 @@ vector.memcheck3020:                              ; preds = %vector.scevcheck300
   %i.zm = add i64 %i.zf, %i.et
   %i.zn = add i64 %i.zm, %i.zj
   %i.zo = mul i64 %i.zn, %i.yo
-  %gep3413 = getelementptr i8, ptr %invariant.gep3412, i64 %i.zo
-  %i.zp = getelementptr i8, ptr %gep3413, i64 1
+  %i.zp = getelementptr i8, ptr %30, i64 %i.zo
   %bound03021 = icmp ult ptr %i.ze, %i.zp
   %bound13022 = icmp ult ptr %gep3411, %i.zi
   %found.conflict3023 = and i1 %bound03021, %bound13022
@@ -659,7 +659,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit843.thread:          ; preds = %.thread1709, %.spli
   %i.aui = zext nneg i8 %i.auh to i64
   %i.auj = load i8, ptr %i.aa, align 1, !tbaa !206
   %i.auk = zext i8 %i.auj to i64
-  %i.aul = mul nuw nsw i64 %i.aui, %i.auk         ; 3 uses
+  %i.aul = mul nuw nsw i64 %i.aui, %i.auk         ; 4 uses
   %i.aum = load i8, ptr %i.ae, align 8, !tbaa !207 ; 2 uses
   %.not.i.i847 = icmp eq i8 %i.aum, 0
   %i.aun = load i8, ptr %i.ag, align 1            ; 2 uses
@@ -675,10 +675,14 @@ _ZNSt6vectorIhSaIhEED2Ev.exit843.thread:          ; preds = %.thread1709, %.spli
   %i.aus = zext i8 %narrow.i850.fr to i32         ; 2 uses
   %i.aut = icmp eq i8 %narrow.i850.fr, 0
   %.02129 = add nsw i32 %i.aus, -1
-  %i.auu = zext i32 %.02129 to i64                ; 6 uses
+  %i.auu = zext i32 %.02129 to i64                ; 7 uses
   %invariant.gep2741 = getelementptr inbounds nuw i8, ptr %i.aue, i64 %i.aul
   %brmerge2743 = or i1 %.not5262136, %i.aut
-  %invariant.op = add nuw nsw i64 %i.aul, %i.auu
+  %31 = getelementptr i8, ptr %i.aue, i64 %i.aul
+  %32 = getelementptr i8, ptr %31, i64 %i.auu
+  %33 = getelementptr i8, ptr %i.aue, i64 %i.aul
+  %34 = getelementptr i8, ptr %33, i64 1
+  %35 = getelementptr i8, ptr %34, i64 %i.auu
   br label %bb.fx
 
 bb.fx:                                            ; preds = %.lr.ph2148, %._crit_edge2141
@@ -714,14 +718,12 @@ vector.memcheck:                                  ; preds = %.lr.ph2133
   %i.avh = getelementptr i8, ptr %i.avg, i64 %i.avd
   %i.avi = getelementptr i8, ptr %i.avh, i64 1
   %i.avj = add nuw nsw i64 %i.auw, %i.auy
-  %i.avk = mul nuw nsw i64 %i.auq, %i.avj
-  %.reass3414 = add nuw nsw i64 %i.avk, %invariant.op ; 2 uses
-  %i.avl = sub nsw i64 %.reass3414, %i.avd
-  %30 = getelementptr i8, ptr %i.aue, i64 %i.avl
-  %i.avm = getelementptr i8, ptr %i.aue, i64 %.reass3414
-  %i.avn = getelementptr i8, ptr %i.avm, i64 1
+  %i.avk = mul nuw nsw i64 %i.auq, %i.avj         ; 2 uses
+  %i.avl = sub nsw i64 %i.avk, %i.avd
+  %i.avm = getelementptr i8, ptr %32, i64 %i.avl
+  %i.avn = getelementptr i8, ptr %35, i64 %i.avk
   %bound0 = icmp ult ptr %i.avf, %i.avn
-  %bound1 = icmp ult ptr %30, %i.avi
+  %bound1 = icmp ult ptr %i.avm, %i.avi
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

@@ -205,7 +205,11 @@ _ZNK6duckdb9SortedRun27CreateRunForMaterializationEv.exit: ; preds = %bb.k
   br i1 %i.am, label %.lr.ph55, label %._crit_edge56
 
 .lr.ph55:                                         ; preds = %_ZNK6duckdb9SortedRun27CreateRunForMaterializationEv.exit
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 256
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 256
+  %6 = shl i64 %i.d, 4                            ; 2 uses
+  %7 = getelementptr i8, ptr %i.b, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 8
+  %i.an = getelementptr i8, ptr %i.b, i64 %6
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph55, %bb.av
@@ -249,13 +253,11 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.bb = shl nuw nsw i64 %i.ar, 3                ; 2 uses
   %i.bc = getelementptr i8, ptr %i.h, i64 %i.bb   ; 2 uses
   %i.bd = getelementptr i8, ptr %i.m, i64 %i.bb   ; 2 uses
-  %5 = add i64 %i.ap, %i.d                        ; 2 uses
-  %i.be = shl i64 %5, 4
-  %6 = getelementptr i8, ptr %i.b, i64 %i.be
-  %i.bf = getelementptr i8, ptr %6, i64 8         ; 2 uses
-  %7 = add i64 %5, %i.ar
-  %8 = shl i64 %7, 4
-  %i.bg = getelementptr i8, ptr %i.b, i64 %8      ; 2 uses
+  %i.be = shl i64 %i.ap, 4                        ; 2 uses
+  %i.bf = getelementptr i8, ptr %8, i64 %i.be     ; 2 uses
+  %9 = shl nuw nsw i64 %i.ar, 4
+  %gep = getelementptr i8, ptr %i.an, i64 %i.be
+  %i.bg = getelementptr i8, ptr %gep, i64 %9      ; 2 uses
   %bound0 = icmp ult ptr %i.h, %i.bd
   %bound1 = icmp ult ptr %i.m, %i.bc
   %found.conflict = and i1 %bound0, %bound1
@@ -387,7 +389,7 @@ bb.w:                                             ; preds = %bb.v, %bb.s
 
 bb.x:                                             ; preds = %bb.w
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 936
-  invoke void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.dm, ptr noundef nonnull align 8 dereferenceable(104) %i.an)
+  invoke void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.dm, ptr noundef nonnull align 8 dereferenceable(104) %5)
           to label %bb.y unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.y:                                             ; preds = %bb.x
@@ -783,7 +785,11 @@ _ZNK6duckdb9SortedRun27CreateRunForMaterializationEv.exit: ; preds = %bb.k
   br i1 %i.am, label %.lr.ph55, label %._crit_edge56
 
 .lr.ph55:                                         ; preds = %_ZNK6duckdb9SortedRun27CreateRunForMaterializationEv.exit
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 256
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 256
+  %6 = mul i64 %i.d, 24                           ; 2 uses
+  %7 = getelementptr i8, ptr %i.b, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 16
+  %i.an = getelementptr i8, ptr %i.b, i64 %6
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph55, %bb.av
@@ -827,13 +833,11 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.bb = shl nuw nsw i64 %i.ar, 3                ; 2 uses
   %i.bc = getelementptr i8, ptr %i.h, i64 %i.bb   ; 2 uses
   %i.bd = getelementptr i8, ptr %i.m, i64 %i.bb   ; 2 uses
-  %5 = add i64 %i.ap, %i.d                        ; 2 uses
-  %i.be = mul i64 %5, 24
-  %6 = getelementptr i8, ptr %i.b, i64 %i.be
-  %i.bf = getelementptr i8, ptr %6, i64 16        ; 2 uses
-  %7 = add i64 %5, %i.ar
-  %8 = mul i64 %7, 24
-  %i.bg = getelementptr i8, ptr %i.b, i64 %8      ; 2 uses
+  %i.be = mul i64 %i.ap, 24                       ; 2 uses
+  %i.bf = getelementptr i8, ptr %8, i64 %i.be     ; 2 uses
+  %9 = mul nuw nsw i64 %i.ar, 24
+  %gep = getelementptr i8, ptr %i.an, i64 %i.be
+  %i.bg = getelementptr i8, ptr %gep, i64 %9      ; 2 uses
   %bound0 = icmp ult ptr %i.h, %i.bd
   %bound1 = icmp ult ptr %i.m, %i.bc
   %found.conflict = and i1 %bound0, %bound1
@@ -965,7 +969,7 @@ bb.w:                                             ; preds = %bb.v, %bb.s
 
 bb.x:                                             ; preds = %bb.w
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 936
-  invoke void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.dm, ptr noundef nonnull align 8 dereferenceable(104) %i.an)
+  invoke void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.dm, ptr noundef nonnull align 8 dereferenceable(104) %5)
           to label %bb.y unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.y:                                             ; preds = %bb.x
@@ -1361,7 +1365,11 @@ _ZNK6duckdb9SortedRun27CreateRunForMaterializationEv.exit: ; preds = %bb.k
   br i1 %i.am, label %.lr.ph55, label %._crit_edge56
 
 .lr.ph55:                                         ; preds = %_ZNK6duckdb9SortedRun27CreateRunForMaterializationEv.exit
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 256
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 256
+  %6 = shl i64 %i.d, 5                            ; 2 uses
+  %7 = getelementptr i8, ptr %i.b, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 24
+  %i.an = getelementptr i8, ptr %i.b, i64 %6
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph55, %bb.av
@@ -1405,13 +1413,11 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.bb = shl nuw nsw i64 %i.ar, 3                ; 2 uses
   %i.bc = getelementptr i8, ptr %i.h, i64 %i.bb   ; 2 uses
   %i.bd = getelementptr i8, ptr %i.m, i64 %i.bb   ; 2 uses
-  %5 = add i64 %i.ap, %i.d                        ; 2 uses
-  %i.be = shl i64 %5, 5
-  %6 = getelementptr i8, ptr %i.b, i64 %i.be
-  %i.bf = getelementptr i8, ptr %6, i64 24        ; 2 uses
-  %7 = add i64 %5, %i.ar
-  %8 = shl i64 %7, 5
-  %i.bg = getelementptr i8, ptr %i.b, i64 %8      ; 2 uses
+  %i.be = shl i64 %i.ap, 5                        ; 2 uses
+  %i.bf = getelementptr i8, ptr %8, i64 %i.be     ; 2 uses
+  %9 = shl nuw nsw i64 %i.ar, 5
+  %gep = getelementptr i8, ptr %i.an, i64 %i.be
+  %i.bg = getelementptr i8, ptr %gep, i64 %9      ; 2 uses
   %bound0 = icmp ult ptr %i.h, %i.bd
   %bound1 = icmp ult ptr %i.m, %i.bc
   %found.conflict = and i1 %bound0, %bound1
@@ -1543,7 +1549,7 @@ bb.w:                                             ; preds = %bb.v, %bb.s
 
 bb.x:                                             ; preds = %bb.w
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 936
-  invoke void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.dm, ptr noundef nonnull align 8 dereferenceable(104) %i.an)
+  invoke void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.dm, ptr noundef nonnull align 8 dereferenceable(104) %5)
           to label %bb.y unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.y:                                             ; preds = %bb.x

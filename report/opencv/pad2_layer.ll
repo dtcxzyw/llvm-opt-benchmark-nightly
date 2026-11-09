@@ -205,11 +205,13 @@ bb.a:
   %i.bf = zext i32 %i.bb to i64                   ; 2 uses
   %i.bg = zext nneg i32 %i.j to i64
   %wide.trip.count173.i.i.i = zext nneg i32 %i.h to i64
+  %2 = add i64 %i.aj, %i.be
   %xtraiter = and i64 %i.bd, 3                    ; 3 uses
   %i.bh = icmp ult i32 %i.an, 4
   %unroll_iter = and i64 %i.bd, 2147483644
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod21 = icmp ne i64 %xtraiter, 0
+  %invariant.op = add i64 %2, -1
   br label %.lr.ph137.split.us.i.i.i
 
 .lr.ph137.split.us.i.i.i:                         ; preds = %._crit_edge134.us.i.i.i, %.lr.ph137.split.us.preheader.i.i.i
@@ -390,13 +392,12 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.ez = add i64 %i.ey, %i.do
   %i.fa = add i64 %i.ez, %i.df
   %i.fb = add i64 %i.fa, %i.db
-  %i.fc = add i64 %i.cv, %i.aj
-  %i.fd = add i64 %i.fc, %i.cr
-  %i.fe = add i64 %i.fd, %i.cn
-  %2 = add i64 %i.fe, %i.cj
-  %i.ff = add i64 %2, %i.be
-  %3 = sub i64 %i.fb, %i.ff
-  %diff.check = icmp ugt i64 %3, -32
+  %i.fc = add i64 %i.cv, %i.cr
+  %i.fd = add i64 %i.fc, %i.cn
+  %i.fe = add i64 %i.fd, %i.cj
+  %3 = sub i64 %i.fe, %i.fb
+  %i.ff = add i64 %3, %invariant.op
+  %diff.check = icmp ult i64 %i.ff, 31
   br i1 %diff.check, label %.lr.ph123.us.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -799,6 +800,7 @@ bb.a:
   %wide.trip.count76.i.i.i = zext nneg i32 %i.i to i64
   %wide.trip.count.i.i.i = zext i32 %i.ao to i64  ; 5 uses
   %wide.trip.count71.i.i.i = zext i32 %i.k to i64 ; 3 uses
+  %2 = sub i64 %i.ak, %i.aa
   %xtraiter = and i64 %wide.trip.count.i.i.i, 3   ; 3 uses
   %i.bh = icmp ult i32 %i.ao, 4
   %unroll_iter = and i64 %wide.trip.count.i.i.i, 2147483644
@@ -809,6 +811,7 @@ bb.a:
   %broadcast.splatinsert53 = insertelement <2 x i64> poison, i64 %i.af, i64 0
   %broadcast.splat54 = shufflevector <2 x i64> %broadcast.splatinsert53, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %cmp.n59 = icmp eq i64 %n.vec52, %wide.trip.count.i.i.i
+  %invariant.op = add i64 %2, -1
   %broadcast.splatinsert30 = insertelement <2 x i64> poison, i64 %i.af, i64 0
   %broadcast.splat31 = shufflevector <2 x i64> %broadcast.splatinsert30, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %min.iters.check = icmp ult i32 %i.k, 4
@@ -1006,11 +1009,10 @@ vector.memcheck:                                  ; preds = %.lr.ph24.us.prehead
   %i.fd = add i64 %i.fc, %i.db
   %i.fe = add i64 %i.fd, %i.cx
   %i.ff = shl i64 %i.fe, 3
-  %i.fg = add i64 %i.ex, %i.ak
-  %2 = add i64 %i.fg, %i.fb
-  %i.fh = add i64 %i.ff, %i.aa
-  %3 = sub i64 %i.fh, %2
-  %diff.check = icmp ugt i64 %3, -32
+  %i.fg = add i64 %i.ex, %i.fb
+  %3 = sub i64 %i.fg, %i.ff
+  %i.fh = add i64 %3, %invariant.op
+  %diff.check = icmp ult i64 %i.fh, 31
   br i1 %diff.check, label %.lr.ph24.us.i.i.i.preheader, label %vector.ph40
 
 vector.ph40:                                      ; preds = %vector.memcheck

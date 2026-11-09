@@ -205,8 +205,12 @@ _ZNK6vectorIP3appLb0EjE3endEv.exit51:             ; preds = %_ZN6vectorIP4exprLb
   %i.da = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cz
   %.not4073 = icmp eq i32 %i.cx, 0
   %.pre91 = load ptr, ptr %5, align 8             ; 8 uses
+  br i1 %.not4073, label %._crit_edge77, label %.lr.ph76.preheader
+
+.lr.ph76.preheader:                               ; preds = %_ZNK6vectorIP3appLb0EjE3endEv.exit51
   %.pre91135 = ptrtoaddr ptr %.pre91 to i64
-  br i1 %.not4073, label %._crit_edge77, label %.lr.ph76
+  %invariant.op = add i64 -33, %.pre91135
+  br label %.lr.ph76
 
 ._crit_edge77.loopexit:                           ; preds = %._crit_edge71
   %.pre90 = load ptr, ptr %5, align 8, !tbaa !135
@@ -224,9 +228,9 @@ bb.r:                                             ; preds = %bb.c, %bb.b, %bb.g
           cleanup
   br label %bb.y
 
-.lr.ph76:                                         ; preds = %_ZNK6vectorIP3appLb0EjE3endEv.exit51, %._crit_edge71
-  %.03075 = phi ptr [ %i.em, %._crit_edge71 ], [ %i.cu, %_ZNK6vectorIP3appLb0EjE3endEv.exit51 ] ; 2 uses
-  %.03174 = phi i32 [ %.1.lcssa, %._crit_edge71 ], [ 0, %_ZNK6vectorIP3appLb0EjE3endEv.exit51 ] ; 8 uses
+.lr.ph76:                                         ; preds = %.lr.ph76.preheader, %._crit_edge71
+  %.03075 = phi ptr [ %i.em, %._crit_edge71 ], [ %i.cu, %.lr.ph76.preheader ] ; 2 uses
+  %.03174 = phi i32 [ %.1.lcssa, %._crit_edge71 ], [ 0, %.lr.ph76.preheader ] ; 8 uses
   %i.dg = load ptr, ptr %.03075, align 8, !tbaa !94 ; 3 uses
   %i.dh = ptrtoaddr ptr %i.dg to i64
   %i.di = getelementptr inbounds nuw i8, ptr %i.dg, i64 24
@@ -252,9 +256,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph70
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.dr = zext i32 %.03174 to i64
   %i.ds = shl nuw nsw i64 %i.dr, 3
-  %6 = add i64 %i.ds, %.pre91135
-  %i.dt = sub i64 %6, %i.dh
-  %i.du = add i64 %i.dt, -33
+  %i.dt = sub i64 %i.ds, %i.dh
+  %i.du = add i64 %i.dt, %invariant.op
   %diff.check = icmp ult i64 %i.du, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

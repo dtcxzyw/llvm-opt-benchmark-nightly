@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.split.i.us
   br i1 %i.de, label %.lr.ph62.i.us, label %.preheader22.i.us, !llvm.loop !32
 
 .preheader22.i.us:                                ; preds = %.lr.ph62.i.us, %bb.c
-  %.0412.lcssa.i.us = phi i32 [ 0, %bb.c ], [ %i.t, %.lr.ph62.i.us ] ; 5 uses
+  %.0412.lcssa.i.us = phi i32 [ 0, %bb.c ], [ %i.t, %.lr.ph62.i.us ] ; 6 uses
   %.0400.lcssa.i.us = phi ptr [ %i.cd, %bb.c ], [ %i.db, %.lr.ph62.i.us ] ; 6 uses
   %.0398.lcssa.i.us = phi ptr [ %i.cc, %bb.c ], [ %i.da, %.lr.ph62.i.us ] ; 6 uses
   %.0396.lcssa.i.us = phi ptr [ %i.cb, %bb.c ], [ %i.cz, %.lr.ph62.i.us ] ; 6 uses
@@ -216,16 +216,19 @@ bb.c:                                             ; preds = %.split.i.us
 .lr.ph75.i.us.preheader:                          ; preds = %.preheader22.i.us
   %i.dg = xor i32 %.0412.lcssa.i.us, -1
   %i.dh = add i32 %5, %i.dg                       ; 2 uses
-  %i.di = zext i32 %i.dh to i64                   ; 3 uses
+  %i.di = zext i32 %i.dh to i64
   %i.dj = add nuw nsw i64 %i.di, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.dh, 15
   br i1 %min.iters.check, label %.lr.ph75.i.us.preheader814, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph75.i.us.preheader
-  %i.dk = shl nuw nsw i64 %i.di, 5
+  %6 = xor i32 %.0412.lcssa.i.us, -1
+  %7 = add i32 %5, %6
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %i.dk = shl nuw nsw i64 %8, 5
   %i.dl = getelementptr i8, ptr %.7.lcssa.i.us, i64 %i.dk
   %i.dm = getelementptr i8, ptr %i.dl, i64 32     ; 4 uses
-  %i.dn = shl nuw nsw i64 %i.di, 3
+  %i.dn = shl nuw nsw i64 %8, 3
   %i.do = add nuw nsw i64 %i.dn, 8                ; 4 uses
   %i.dp = getelementptr i8, ptr %.0400.lcssa.i.us, i64 %i.do
   %i.dq = getelementptr i8, ptr %.0398.lcssa.i.us, i64 %i.do
@@ -628,7 +631,7 @@ bb.g:                                             ; preds = %bb.f
 .preheader14.i:                                   ; preds = %.lr.ph112.i.epil.preheader, %.preheader14.i.loopexit.unr-lcssa, %bb.g
   %.3407.lcssa.i = phi ptr [ %i.yc, %bb.g ], [ %i.acr, %.preheader14.i.loopexit.unr-lcssa ], [ %i.aan, %.lr.ph112.i.epil.preheader ] ; 6 uses
   %.0394.lcssa.i = phi ptr [ %i.aac, %bb.g ], [ %i.acs, %.preheader14.i.loopexit.unr-lcssa ], [ %i.aao, %.lr.ph112.i.epil.preheader ] ; 6 uses
-  %.0392.lcssa.i = phi i32 [ 0, %bb.g ], [ %i.kr, %.preheader14.i.loopexit.unr-lcssa ], [ %i.kr, %.lr.ph112.i.epil.preheader ] ; 5 uses
+  %.0392.lcssa.i = phi i32 [ 0, %bb.g ], [ %i.kr, %.preheader14.i.loopexit.unr-lcssa ], [ %i.kr, %.lr.ph112.i.epil.preheader ] ; 6 uses
   %.17.lcssa.i = phi ptr [ %.13137.i, %bb.g ], [ %i.acq, %.preheader14.i.loopexit.unr-lcssa ], [ %i.aam, %.lr.ph112.i.epil.preheader ] ; 8 uses
   %i.aap = icmp slt i32 %.0392.lcssa.i, %5
   br i1 %i.aap, label %.lr.ph121.i.preheader, label %.loopexit13.i
@@ -636,16 +639,19 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph121.i.preheader:                            ; preds = %.preheader14.i
   %i.aaq = xor i32 %.0392.lcssa.i, -1
   %i.aar = add i32 %5, %i.aaq                     ; 2 uses
-  %i.aas = zext i32 %i.aar to i64                 ; 3 uses
+  %i.aas = zext i32 %i.aar to i64
   %i.aat = add nuw nsw i64 %i.aas, 1              ; 2 uses
   %min.iters.check275 = icmp ult i32 %i.aar, 15
   br i1 %min.iters.check275, label %.lr.ph121.i.preheader800, label %vector.memcheck276
 
 vector.memcheck276:                               ; preds = %.lr.ph121.i.preheader
-  %i.aau = shl nuw nsw i64 %i.aas, 4
+  %9 = xor i32 %.0392.lcssa.i, -1
+  %10 = add i32 %5, %9
+  %11 = zext i32 %10 to i64                       ; 2 uses
+  %i.aau = shl nuw nsw i64 %11, 4
   %i.aav = getelementptr i8, ptr %.17.lcssa.i, i64 %i.aau
   %i.aaw = getelementptr i8, ptr %i.aav, i64 16   ; 2 uses
-  %i.aax = shl nuw nsw i64 %i.aas, 3
+  %i.aax = shl nuw nsw i64 %11, 3
   %i.aay = add nuw nsw i64 %i.aax, 8              ; 2 uses
   %i.aaz = getelementptr i8, ptr %.0394.lcssa.i, i64 %i.aay
   %i.aba = getelementptr i8, ptr %.3407.lcssa.i, i64 %i.aay
@@ -1048,7 +1054,7 @@ bb.c:                                             ; preds = %.split.i.us
   br i1 %i.de, label %.lr.ph62.i.us, label %.preheader22.i.us, !llvm.loop !187
 
 .preheader22.i.us:                                ; preds = %.lr.ph62.i.us, %bb.c
-  %.0412.lcssa.i.us = phi i32 [ 0, %bb.c ], [ %i.t, %.lr.ph62.i.us ] ; 5 uses
+  %.0412.lcssa.i.us = phi i32 [ 0, %bb.c ], [ %i.t, %.lr.ph62.i.us ] ; 6 uses
   %.0400.lcssa.i.us = phi ptr [ %i.cd, %bb.c ], [ %i.db, %.lr.ph62.i.us ] ; 6 uses
   %.0398.lcssa.i.us = phi ptr [ %i.cc, %bb.c ], [ %i.da, %.lr.ph62.i.us ] ; 6 uses
   %.0396.lcssa.i.us = phi ptr [ %i.cb, %bb.c ], [ %i.cz, %.lr.ph62.i.us ] ; 6 uses
@@ -1060,16 +1066,19 @@ bb.c:                                             ; preds = %.split.i.us
 .lr.ph75.i.us.preheader:                          ; preds = %.preheader22.i.us
   %i.dg = xor i32 %.0412.lcssa.i.us, -1
   %i.dh = add i32 %5, %i.dg                       ; 2 uses
-  %i.di = zext i32 %i.dh to i64                   ; 3 uses
+  %i.di = zext i32 %i.dh to i64
   %i.dj = add nuw nsw i64 %i.di, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.dh, 15
   br i1 %min.iters.check, label %.lr.ph75.i.us.preheader814, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph75.i.us.preheader
-  %i.dk = shl nuw nsw i64 %i.di, 5
+  %6 = xor i32 %.0412.lcssa.i.us, -1
+  %7 = add i32 %5, %6
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %i.dk = shl nuw nsw i64 %8, 5
   %i.dl = getelementptr i8, ptr %.7.lcssa.i.us, i64 %i.dk
   %i.dm = getelementptr i8, ptr %i.dl, i64 32     ; 4 uses
-  %i.dn = shl nuw nsw i64 %i.di, 3
+  %i.dn = shl nuw nsw i64 %8, 3
   %i.do = add nuw nsw i64 %i.dn, 8                ; 4 uses
   %i.dp = getelementptr i8, ptr %.0400.lcssa.i.us, i64 %i.do
   %i.dq = getelementptr i8, ptr %.0398.lcssa.i.us, i64 %i.do
@@ -1472,7 +1481,7 @@ bb.g:                                             ; preds = %bb.f
 .preheader14.i:                                   ; preds = %.lr.ph112.i.epil.preheader, %.preheader14.i.loopexit.unr-lcssa, %bb.g
   %.3407.lcssa.i = phi ptr [ %i.yc, %bb.g ], [ %i.acr, %.preheader14.i.loopexit.unr-lcssa ], [ %i.aan, %.lr.ph112.i.epil.preheader ] ; 6 uses
   %.0394.lcssa.i = phi ptr [ %i.aac, %bb.g ], [ %i.acs, %.preheader14.i.loopexit.unr-lcssa ], [ %i.aao, %.lr.ph112.i.epil.preheader ] ; 6 uses
-  %.0392.lcssa.i = phi i32 [ 0, %bb.g ], [ %i.kr, %.preheader14.i.loopexit.unr-lcssa ], [ %i.kr, %.lr.ph112.i.epil.preheader ] ; 5 uses
+  %.0392.lcssa.i = phi i32 [ 0, %bb.g ], [ %i.kr, %.preheader14.i.loopexit.unr-lcssa ], [ %i.kr, %.lr.ph112.i.epil.preheader ] ; 6 uses
   %.17.lcssa.i = phi ptr [ %.13137.i, %bb.g ], [ %i.acq, %.preheader14.i.loopexit.unr-lcssa ], [ %i.aam, %.lr.ph112.i.epil.preheader ] ; 8 uses
   %i.aap = icmp slt i32 %.0392.lcssa.i, %5
   br i1 %i.aap, label %.lr.ph121.i.preheader, label %.loopexit13.i
@@ -1480,16 +1489,19 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph121.i.preheader:                            ; preds = %.preheader14.i
   %i.aaq = xor i32 %.0392.lcssa.i, -1
   %i.aar = add i32 %5, %i.aaq                     ; 2 uses
-  %i.aas = zext i32 %i.aar to i64                 ; 3 uses
+  %i.aas = zext i32 %i.aar to i64
   %i.aat = add nuw nsw i64 %i.aas, 1              ; 2 uses
   %min.iters.check275 = icmp ult i32 %i.aar, 15
   br i1 %min.iters.check275, label %.lr.ph121.i.preheader800, label %vector.memcheck276
 
 vector.memcheck276:                               ; preds = %.lr.ph121.i.preheader
-  %i.aau = shl nuw nsw i64 %i.aas, 4
+  %9 = xor i32 %.0392.lcssa.i, -1
+  %10 = add i32 %5, %9
+  %11 = zext i32 %10 to i64                       ; 2 uses
+  %i.aau = shl nuw nsw i64 %11, 4
   %i.aav = getelementptr i8, ptr %.17.lcssa.i, i64 %i.aau
   %i.aaw = getelementptr i8, ptr %i.aav, i64 16   ; 2 uses
-  %i.aax = shl nuw nsw i64 %i.aas, 3
+  %i.aax = shl nuw nsw i64 %11, 3
   %i.aay = add nuw nsw i64 %i.aax, 8              ; 2 uses
   %i.aaz = getelementptr i8, ptr %.0394.lcssa.i, i64 %i.aay
   %i.aba = getelementptr i8, ptr %.3407.lcssa.i, i64 %i.aay

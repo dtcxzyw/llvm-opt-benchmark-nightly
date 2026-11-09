@@ -204,8 +204,9 @@ bb.eh:                                            ; preds = %.lr.ph1359
   %i.aap = phi i8 [ %i.zl, %bb.eg ], [ %.pre1537.pre, %.lr.ph1359 ], [ %i.aam, %bb.eh ]
   %i.aaq = add nsw i32 %i.ze, -1
   %i.aar = zext i8 %i.aap to i32                  ; 2 uses
-  %i.aas = lshr i32 %i.aaq, %i.aar                ; 4 uses
-  %i.aat = add i32 %i.aas, 1                      ; 10 uses
+  %i.aas = lshr i32 %i.aaq, %i.aar
+  %.fr1815 = freeze i32 %i.aas                    ; 4 uses
+  %i.aat = add i32 %.fr1815, 1                    ; 10 uses
   %i.aau = getelementptr inbounds nuw i8, ptr %i.e, i64 445
   %i.aav = icmp sgt i32 %i.ze, 0
   br i1 %i.aav, label %iter.check, label %._crit_edge
@@ -213,7 +214,7 @@ bb.eh:                                            ; preds = %.lr.ph1359
 iter.check:                                       ; preds = %.critedge
   %i.aaw = getelementptr inbounds nuw i8, ptr %i.e, i64 450 ; 3 uses
   %smax1746 = tail call i32 @llvm.smax.i32(i32 %i.ze, i32 %i.aat)
-  %i.aax = xor i32 %i.aas, -1
+  %i.aax = xor i32 %.fr1815, -1
   %i.aay = add i32 %smax1746, %i.aax              ; 2 uses
   %i.aaz = icmp ne i32 %i.aay, 0
   %umin1747 = zext i1 %i.aaz to i32               ; 2 uses
@@ -226,9 +227,9 @@ iter.check:                                       ; preds = %.critedge
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %ident.check = icmp ugt i32 %i.aas, 2147483646
+  %ident.check = icmp ugt i32 %.fr1815, 2147483646
   %smax = tail call i32 @llvm.smax.i32(i32 %i.ze, i32 %i.aat)
-  %i.abe = xor i32 %i.aas, -1
+  %i.abe = xor i32 %.fr1815, -1
   %i.abf = add i32 %smax, %i.abe                  ; 2 uses
   %i.abg = icmp ne i32 %i.abf, 0
   %umin = zext i1 %i.abg to i32                   ; 2 uses
@@ -366,8 +367,9 @@ bb.ei:                                            ; preds = %.lr.ph1365
   %i.ada = phi i8 [ %i.acl, %._crit_edge ], [ %.pre1538.pre, %.lr.ph1365 ], [ %i.acx, %bb.ei ] ; 2 uses
   %i.adb = add nsw i32 %i.zs, -1
   %i.adc = zext nneg i8 %i.ada to i32
-  %i.add = lshr i32 %i.adb, %i.adc                ; 4 uses
-  %i.ade = add i32 %i.add, 1                      ; 10 uses
+  %i.add = lshr i32 %i.adb, %i.adc
+  %.fr1816 = freeze i32 %i.add                    ; 4 uses
+  %i.ade = add i32 %.fr1816, 1                    ; 10 uses
   %i.adf = getelementptr inbounds nuw i8, ptr %i.e, i64 449
   %i.adg = icmp sgt i32 %i.zs, 0
   br i1 %i.adg, label %iter.check1791, label %.loopexit1324
@@ -375,7 +377,7 @@ bb.ei:                                            ; preds = %.lr.ph1365
 iter.check1791:                                   ; preds = %.critedge15
   %i.adh = getelementptr inbounds nuw i8, ptr %i.e, i64 580 ; 3 uses
   %smax1771 = tail call i32 @llvm.smax.i32(i32 %i.zs, i32 %i.ade)
-  %i.adi = xor i32 %i.add, -1
+  %i.adi = xor i32 %.fr1816, -1
   %i.adj = add i32 %smax1771, %i.adi              ; 2 uses
   %i.adk = icmp ne i32 %i.adj, 0
   %umin1772 = zext i1 %i.adk to i32               ; 2 uses
@@ -388,9 +390,9 @@ iter.check1791:                                   ; preds = %.critedge15
   br i1 %min.iters.check1774, label %vec.epilog.scalar.ph1793.preheader, label %vector.scevcheck1766
 
 vector.scevcheck1766:                             ; preds = %iter.check1791
-  %ident.check1767 = icmp ugt i32 %i.add, 2147483646
+  %ident.check1767 = icmp ugt i32 %.fr1816, 2147483646
   %smax1768 = tail call i32 @llvm.smax.i32(i32 %i.zs, i32 %i.ade)
-  %i.adp = xor i32 %i.add, -1
+  %i.adp = xor i32 %.fr1816, -1
   %i.adq = add i32 %smax1768, %i.adp              ; 2 uses
   %i.adr = icmp ne i32 %i.adq, 0
   %umin1769 = zext i1 %i.adr to i32               ; 2 uses

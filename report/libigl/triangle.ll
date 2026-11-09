@@ -205,15 +205,19 @@ bb.s:                                             ; preds = %_Z8traverseP10memor
   %i.cg = getelementptr i8, ptr %i.cf, i64 4
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !32
   %i.ci = icmp eq i32 %i.ch, -32768
-  br i1 %i.ci, label %bb.p, label %.lr.ph82, !llvm.loop !3
+  br i1 %i.ci, label %bb.p, label %.lr.ph82.preheader, !llvm.loop !3
 
-.lr.ph82:                                         ; preds = %bb.s, %_Z14vertextraverseP4mesh.exit72
-  %i.cj = phi ptr [ %i.fj, %_Z14vertextraverseP4mesh.exit72 ], [ %i.bv, %bb.s ]
-  %.promoted.i69 = phi ptr [ %i.fo, %_Z14vertextraverseP4mesh.exit72 ], [ %i.ca, %bb.s ]
-  %.05081 = phi i32 [ %.1, %_Z14vertextraverseP4mesh.exit72 ], [ %i.bc, %bb.s ] ; 4 uses
-  %.05280 = phi ptr [ %i.fl, %_Z14vertextraverseP4mesh.exit72 ], [ %i.bx, %bb.s ] ; 12 uses
-  %.05379 = phi i32 [ %.2, %_Z14vertextraverseP4mesh.exit72 ], [ 0, %bb.s ] ; 3 uses
-  %.05578 = phi i32 [ %.156, %_Z14vertextraverseP4mesh.exit72 ], [ 0, %bb.s ] ; 3 uses
+.lr.ph82.preheader:                               ; preds = %bb.s
+  %invariant.op = add i64 -17, %i.ak
+  br label %.lr.ph82
+
+.lr.ph82:                                         ; preds = %.lr.ph82.preheader, %_Z14vertextraverseP4mesh.exit72
+  %i.cj = phi ptr [ %i.fj, %_Z14vertextraverseP4mesh.exit72 ], [ %i.bv, %.lr.ph82.preheader ]
+  %.promoted.i69 = phi ptr [ %i.fo, %_Z14vertextraverseP4mesh.exit72 ], [ %i.ca, %.lr.ph82.preheader ]
+  %.05081 = phi i32 [ %.1, %_Z14vertextraverseP4mesh.exit72 ], [ %i.bc, %.lr.ph82.preheader ] ; 4 uses
+  %.05280 = phi ptr [ %i.fl, %_Z14vertextraverseP4mesh.exit72 ], [ %i.bx, %.lr.ph82.preheader ] ; 12 uses
+  %.05379 = phi i32 [ %.2, %_Z14vertextraverseP4mesh.exit72 ], [ 0, %.lr.ph82.preheader ] ; 3 uses
+  %.05578 = phi i32 [ %.156, %_Z14vertextraverseP4mesh.exit72 ], [ 0, %.lr.ph82.preheader ] ; 3 uses
   %.05280125 = ptrtoaddr ptr %.05280 to i64
   %i.ck = load i32, ptr %i.a, align 4, !tbaa !47
   %.not62 = icmp eq i32 %i.ck, 0
@@ -250,9 +254,8 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph82
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.da = shl nsw i64 %i.cz, 3
-  %5 = add i64 %i.da, %i.ak
-  %i.db = sub i64 %5, %.05280125
-  %i.dc = add i64 %i.db, -17
+  %i.db = sub i64 %i.da, %.05280125
+  %i.dc = add i64 %i.db, %invariant.op
   %diff.check = icmp ult i64 %i.dc, 31
   br i1 %diff.check, label %.lr.ph.preheader128, label %vector.ph
 
@@ -655,7 +658,10 @@ bb.m:                                             ; preds = %_Z8traverseP10memor
   %i.bu = load i32, ptr %i.bt, align 8, !tbaa !30
   %i.bv = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 82716
-  %invariant.op.a = add i64 %i.ab, -16
+  %invariant.op.a = add i64 %i.ab, -16            ; 3 uses
+  %invariant.op = add i64 %invariant.op.a, -1
+  %invariant.op267 = add i64 %invariant.op.a, -1
+  %invariant.op269 = add i64 %invariant.op.a, -1
   br label %bb.n
 
 bb.n:                                             ; preds = %_Z16triangletraverseP4mesh.exit124, %.lr.ph149
@@ -701,15 +707,17 @@ bb.n:                                             ; preds = %_Z16triangletravers
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.cx = shl nsw i64 %i.cu, 3
-  %.reass = add i64 %i.cx, %invariant.op.a        ; 3 uses
-  %8 = sub i64 %i.cc, %.reass
-  %diff.check = icmp ugt i64 %8, -16
-  %9 = sub i64 %i.ci, %.reass
-  %diff.check242 = icmp ugt i64 %9, -16
+  %i.cx = shl nsw i64 %i.cu, 3                    ; 3 uses
+  %8 = sub i64 %i.cx, %i.cc
+  %.reass = add i64 %8, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 15
+  %9 = sub i64 %i.cx, %i.ci
+  %.reass268 = add i64 %9, %invariant.op267
+  %diff.check242 = icmp ult i64 %.reass268, 15
   %conflict.rdx = or i1 %diff.check, %diff.check242
-  %i.cy = sub i64 %i.cl, %.reass
-  %diff.check243 = icmp ugt i64 %i.cy, -16
+  %i.cy = sub i64 %i.cx, %i.cl
+  %.reass270 = add i64 %i.cy, %invariant.op269
+  %diff.check243 = icmp ult i64 %.reass270, 15
   %conflict.rdx244 = or i1 %conflict.rdx, %diff.check243
   br i1 %conflict.rdx244, label %scalar.ph.preheader, label %vector.ph
 

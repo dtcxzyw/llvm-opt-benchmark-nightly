@@ -16,7 +16,7 @@ define void @ff_vp9_intra_recon_8bpp(ptr nofree noundef readonly captures(none) 
 bb.a:
   %i.a = alloca [96 x i8], align 16               ; 10 uses
   %i.b = alloca [64 x i8], align 16               ; 42 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
+  %i.c = ptrtoaddr ptr %i.b to i64
   %i.d = load ptr, ptr %0, align 16, !tbaa !34    ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !35   ; 7 uses
@@ -419,6 +419,7 @@ vec.epilog.middle.block340:                       ; preds = %vec.epilog.vector.b
   %i.oc = shl i32 %i.na, 1
   %i.od = shl nuw i32 1, %i.oc
   %i.oe = zext nneg i32 %i.od to i64
+  %3 = or disjoint i64 %i.c, 1                    ; 2 uses
   br label %.preheader87.lr.ph.us
 
 .preheader87.lr.ph.us:                            ; preds = %.preheader87.lr.ph.us.preheader, %..loopexit_crit_edge.split.us.us
@@ -821,8 +822,8 @@ bb.bi:                                            ; preds = %bb.bg
 iter.check388:                                    ; preds = %.preheader83.us.us
   %wide.trip.count190 = zext nneg i32 %i.sk to i64 ; 5 uses
   %ident.check372.not = icmp ne i64 %i.sv, 1
-  %i.ws = sub i64 %i.c, %i.su
-  %diff.check376 = icmp ult i64 %i.ws, 31
+  %i.ws = sub i64 %i.su, %3
+  %diff.check376 = icmp ugt i64 %i.ws, -32
   %or.cond482 = select i1 %ident.check372.not, i1 true, i1 %diff.check376
   br i1 %or.cond482, label %.lr.ph123.us.us.preheader, label %vector.main.loop.iter.check377
 
@@ -921,8 +922,8 @@ vec.epilog.vector.body395:                        ; preds = %vec.epilog.vector.b
 iter.check357:                                    ; preds = %.preheader.us.us
   %i.xz = zext nneg i32 %i.sr to i64              ; 8 uses
   %ident.check344.not = icmp ne i64 %i.sv, 1
-  %i.ya = sub i64 %i.c, %i.su
-  %diff.check = icmp ult i64 %i.ya, 31
+  %i.ya = sub i64 %i.su, %3
+  %diff.check = icmp ugt i64 %i.ya, -32
   %or.cond483 = select i1 %ident.check344.not, i1 true, i1 %diff.check
   br i1 %or.cond483, label %.lr.ph125.us.us.preheader, label %vector.main.loop.iter.check346
 
