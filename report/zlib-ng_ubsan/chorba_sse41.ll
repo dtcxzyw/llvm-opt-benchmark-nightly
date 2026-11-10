@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %_mm_store_si128.exi
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @8, i64 %i.ag, i64 %i.ah) #6, !nosanitize !22
   br label %.lr.ph.preheader, !nosanitize !22
 
-.lr.ph.preheader:                                 ; preds = %bb.s, %_mm_store_si128.exit.1
+.lr.ph.preheader:                                 ; preds = %_mm_store_si128.exit.1, %bb.s
   %i.ai = zext i32 %.0 to i64
   %i.aj = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.ai, i64 0
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(432) %i.af, i8 0, i64 432, i1 false)
@@ -315,12 +315,12 @@ _mm_load_si128.exit115._crit_edge.peel:           ; preds = %bb.y, %_mm_load_si1
   br label %.preheader150
 
 .preheader150:                                    ; preds = %.preheader150.loopexit, %_mm_load_si128.exit115._crit_edge.peel
-  %.lcssa624 = phi ptr [ %i.cc, %_mm_load_si128.exit115._crit_edge.peel ], [ %i.dc, %.preheader150.loopexit ] ; 2 uses
-  %.lcssa623 = phi i64 [ 64, %_mm_load_si128.exit115._crit_edge.peel ], [ %i.dd, %.preheader150.loopexit ] ; 2 uses
-  %.lcssa622 = phi ptr [ %i.by, %_mm_load_si128.exit115._crit_edge.peel ], [ %33, %.preheader150.loopexit ] ; 2 uses
-  %.lcssa621 = phi ptr [ %i.bu, %_mm_load_si128.exit115._crit_edge.peel ], [ %25, %.preheader150.loopexit ] ; 2 uses
-  %.lcssa620 = phi ptr [ %i.bq, %_mm_load_si128.exit115._crit_edge.peel ], [ %17, %.preheader150.loopexit ] ; 2 uses
-  %.lcssa619 = phi <2 x i64> [ %i.bm, %_mm_load_si128.exit115._crit_edge.peel ], [ %8, %.preheader150.loopexit ] ; 4 uses
+  %.lcssa519 = phi <2 x i64> [ %i.bm, %_mm_load_si128.exit115._crit_edge.peel ], [ %8, %.preheader150.loopexit ] ; 4 uses
+  %.lcssa518 = phi ptr [ %i.bq, %_mm_load_si128.exit115._crit_edge.peel ], [ %13, %.preheader150.loopexit ] ; 2 uses
+  %.lcssa622 = phi ptr [ %i.bu, %_mm_load_si128.exit115._crit_edge.peel ], [ %17, %.preheader150.loopexit ] ; 2 uses
+  %.lcssa621 = phi ptr [ %i.by, %_mm_load_si128.exit115._crit_edge.peel ], [ %21, %.preheader150.loopexit ] ; 2 uses
+  %.lcssa620 = phi ptr [ %i.cc, %_mm_load_si128.exit115._crit_edge.peel ], [ %i.dc, %.preheader150.loopexit ] ; 2 uses
+  %.lcssa514 = phi i64 [ 64, %_mm_load_si128.exit115._crit_edge.peel ], [ %i.dd, %.preheader150.loopexit ] ; 2 uses
   %.lcssa618 = phi ptr [ %i.be, %_mm_load_si128.exit115._crit_edge.peel ], [ %i.cx, %.preheader150.loopexit ] ; 2 uses
   %.0462.i164.lcssa = phi i1 [ false, %_mm_load_si128.exit115._crit_edge.peel ], [ %i.cf, %.preheader150.loopexit ]
   br i1 %.0462.i164.lcssa, label %.lr.ph180, label %.preheader149
@@ -329,10 +329,10 @@ _mm_load_si128.exit115._crit_edge.peel:           ; preds = %bb.y, %_mm_load_si1
   %.0451.i165 = phi <2 x i64> [ %8, %_mm_store_si128.exit40 ], [ %i.bm, %_mm_load_si128.exit115._crit_edge.peel ]
   %.0462.i164 = phi i64 [ %i.dd, %_mm_store_si128.exit40 ], [ 64, %_mm_load_si128.exit115._crit_edge.peel ] ; 4 uses
   %.0473.i163 = phi ptr [ %i.cx, %_mm_store_si128.exit40 ], [ %i.be, %_mm_load_si128.exit115._crit_edge.peel ] ; 7 uses
-  %.0480.i162 = phi ptr [ %i.dc, %_mm_store_si128.exit40 ], [ %i.cc, %_mm_load_si128.exit115._crit_edge.peel ] ; 6 uses
-  %.0484.i161 = phi ptr [ %33, %_mm_store_si128.exit40 ], [ %i.by, %_mm_load_si128.exit115._crit_edge.peel ] ; 6 uses
-  %.0488.i160 = phi ptr [ %25, %_mm_store_si128.exit40 ], [ %i.bu, %_mm_load_si128.exit115._crit_edge.peel ] ; 6 uses
-  %.0492.i159 = phi ptr [ %17, %_mm_store_si128.exit40 ], [ %i.bq, %_mm_load_si128.exit115._crit_edge.peel ] ; 6 uses
+  %.0480.i162 = phi ptr [ %i.dc, %_mm_store_si128.exit40 ], [ %i.cc, %_mm_load_si128.exit115._crit_edge.peel ] ; 5 uses
+  %.0484.i161 = phi ptr [ %21, %_mm_store_si128.exit40 ], [ %i.by, %_mm_load_si128.exit115._crit_edge.peel ] ; 5 uses
+  %.0488.i160 = phi ptr [ %17, %_mm_store_si128.exit40 ], [ %i.bu, %_mm_load_si128.exit115._crit_edge.peel ] ; 5 uses
+  %.0492.i159 = phi ptr [ %13, %_mm_store_si128.exit40 ], [ %i.bq, %_mm_load_si128.exit115._crit_edge.peel ] ; 5 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.0473.i163, i64 16 ; 3 uses
   %i.ch = ptrtoint ptr %.0473.i163 to i64, !nosanitize !22 ; 4 uses
   %i.ci = add i64 %i.ch, 16, !nosanitize !22      ; 2 uses
@@ -382,15 +382,15 @@ _mm_load_si128.exit115:                           ; preds = %bb.ad, %_mm_load_si
   %i.cw = load <2 x i64>, ptr %i.cp, align 16, !tbaa !25 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.0473.i163, i64 64 ; 2 uses
   %.not781.i = icmp ugt ptr %i.ct, inttoptr (i64 -17 to ptr)
-  br i1 %.not781.i, label %bb.ae, label %_mm_load_si128.exit115._crit_edge, !prof !24, !nosanitize !22
+  br i1 %.not781.i, label %bb.ae, label %_mm_store_si128.exit40, !prof !24, !nosanitize !22
 
 bb.ae:                                            ; preds = %_mm_load_si128.exit115
   %i.cy = ptrtoint ptr %i.ct to i64, !nosanitize !22 ; 2 uses
   %i.cz = add i64 %i.cy, 16, !nosanitize !22
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @12, i64 %i.cy, i64 %i.cz) #6, !nosanitize !22
-  br label %_mm_load_si128.exit115._crit_edge, !nosanitize !22
+  br label %_mm_store_si128.exit40, !nosanitize !22
 
-_mm_load_si128.exit115._crit_edge:                ; preds = %bb.ae, %_mm_load_si128.exit115
+_mm_store_si128.exit40:                           ; preds = %bb.ae, %_mm_load_si128.exit115
   %3 = load <2 x i64>, ptr %i.ct, align 16, !tbaa !25 ; 3 uses
   %4 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.co, <2 x i32> <i32 1, i32 2>
   %5 = shufflevector <2 x i64> %i.co, <2 x i64> %i.cs, <2 x i32> <i32 1, i32 2> ; 3 uses
@@ -399,73 +399,33 @@ _mm_load_si128.exit115._crit_edge:                ; preds = %bb.ae, %_mm_load_si
   %8 = shufflevector <2 x i64> %3, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2> ; 2 uses
   %9 = xor <2 x i64> %.0451.i165, %4              ; 3 uses
   %10 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 16
-  %.pre332 = ptrtoint ptr %.0492.i159 to i64, !nosanitize !22 ; 2 uses
-  %11 = and i64 %.pre332, 15, !nosanitize !22
-  %12 = icmp eq i64 %11, 0, !nosanitize !22
-  br i1 %12, label %14, label %13, !prof !23, !nosanitize !22
-
-13:                                               ; preds = %_mm_load_si128.exit115._crit_edge
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre332) #6, !nosanitize !22
-  br label %14, !nosanitize !22
-
-14:                                               ; preds = %_mm_load_si128.exit115._crit_edge, %13
   store <2 x i64> %9, ptr %.0492.i159, align 16, !tbaa !25
-  %15 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 32
+  %11 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 32
   store <2 x i64> %5, ptr %10, align 16, !tbaa !25
-  %16 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 48
-  store <2 x i64> %6, ptr %15, align 16, !tbaa !25
-  %17 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 64 ; 2 uses
-  store <2 x i64> %7, ptr %16, align 16, !tbaa !25
-  %18 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 16
-  %.pre340 = ptrtoint ptr %.0488.i160 to i64, !nosanitize !22 ; 2 uses
-  %19 = and i64 %.pre340, 15, !nosanitize !22
-  %20 = icmp eq i64 %19, 0, !nosanitize !22
-  br i1 %20, label %22, label %21, !prof !23, !nosanitize !22
-
-21:                                               ; preds = %14
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre340) #6, !nosanitize !22
-  br label %22, !nosanitize !22
-
-22:                                               ; preds = %14, %21
+  %12 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 48
+  store <2 x i64> %6, ptr %11, align 16, !tbaa !25
+  %13 = getelementptr inbounds nuw i8, ptr %.0492.i159, i64 64 ; 2 uses
+  store <2 x i64> %7, ptr %12, align 16, !tbaa !25
+  %14 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 16
   store <2 x i64> %9, ptr %.0488.i160, align 16, !tbaa !25
-  %23 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 32
-  store <2 x i64> %5, ptr %18, align 16, !tbaa !25
-  %24 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 48
-  store <2 x i64> %6, ptr %23, align 16, !tbaa !25
-  %25 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 64 ; 2 uses
-  store <2 x i64> %7, ptr %24, align 16, !tbaa !25
-  %26 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 16
-  %.pre348 = ptrtoint ptr %.0484.i161 to i64, !nosanitize !22 ; 2 uses
-  %27 = and i64 %.pre348, 15, !nosanitize !22
-  %28 = icmp eq i64 %27, 0, !nosanitize !22
-  br i1 %28, label %30, label %29, !prof !23, !nosanitize !22
-
-29:                                               ; preds = %22
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre348) #6, !nosanitize !22
-  br label %30, !nosanitize !22
-
-30:                                               ; preds = %22, %29
+  %15 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 32
+  store <2 x i64> %5, ptr %14, align 16, !tbaa !25
+  %16 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 48
+  store <2 x i64> %6, ptr %15, align 16, !tbaa !25
+  %17 = getelementptr inbounds nuw i8, ptr %.0488.i160, i64 64 ; 2 uses
+  store <2 x i64> %7, ptr %16, align 16, !tbaa !25
+  %18 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 16
   store <2 x i64> %9, ptr %.0484.i161, align 16, !tbaa !25
-  %31 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 32
-  store <2 x i64> %5, ptr %26, align 16, !tbaa !25
-  %32 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 48
-  store <2 x i64> %6, ptr %31, align 16, !tbaa !25
-  %33 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 64 ; 2 uses
-  store <2 x i64> %7, ptr %32, align 16, !tbaa !25
-  %34 = getelementptr inbounds nuw i8, ptr %.0480.i162, i64 16
-  %.pre356 = ptrtoint ptr %.0480.i162 to i64, !nosanitize !22 ; 2 uses
-  %35 = and i64 %.pre356, 15, !nosanitize !22
-  %36 = icmp eq i64 %35, 0, !nosanitize !22
-  br i1 %36, label %_mm_store_si128.exit40, label %37, !prof !23, !nosanitize !22
-
-37:                                               ; preds = %30
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre356) #6, !nosanitize !22
-  br label %_mm_store_si128.exit40, !nosanitize !22
-
-_mm_store_si128.exit40:                           ; preds = %30, %37
+  %19 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 32
+  store <2 x i64> %5, ptr %18, align 16, !tbaa !25
+  %20 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 48
+  store <2 x i64> %6, ptr %19, align 16, !tbaa !25
+  %21 = getelementptr inbounds nuw i8, ptr %.0484.i161, i64 64 ; 2 uses
+  store <2 x i64> %7, ptr %20, align 16, !tbaa !25
+  %22 = getelementptr inbounds nuw i8, ptr %.0480.i162, i64 16
   store <2 x i64> %i.co, ptr %.0480.i162, align 16, !tbaa !25
   %i.da = getelementptr inbounds nuw i8, ptr %.0480.i162, i64 32
-  store <2 x i64> %i.cs, ptr %34, align 16, !tbaa !25
+  store <2 x i64> %i.cs, ptr %22, align 16, !tbaa !25
   %i.db = getelementptr inbounds nuw i8, ptr %.0480.i162, i64 48
   store <2 x i64> %i.cw, ptr %i.da, align 16, !tbaa !25
   %i.dc = getelementptr inbounds nuw i8, ptr %.0480.i162, i64 64 ; 2 uses
@@ -484,25 +444,25 @@ _mm_store_si128.exit40:                           ; preds = %30, %37
 
 .preheader149:                                    ; preds = %.preheader149.loopexit, %.preheader150
   %.pre-phi = phi i1 [ %i.di, %.preheader149.loopexit ], [ false, %.preheader150 ]
-  %.1493.i.lcssa = phi ptr [ %i.ef, %.preheader149.loopexit ], [ %.lcssa620, %.preheader150 ] ; 2 uses
-  %.1489.i.lcssa = phi ptr [ %i.et, %.preheader149.loopexit ], [ %.lcssa621, %.preheader150 ] ; 2 uses
-  %.1485.i.lcssa = phi ptr [ %58, %.preheader149.loopexit ], [ %.lcssa622, %.preheader150 ] ; 2 uses
-  %.1481.i.lcssa = phi ptr [ %i.ey, %.preheader149.loopexit ], [ %.lcssa624, %.preheader150 ] ; 2 uses
+  %.1493.i.lcssa = phi ptr [ %i.ef, %.preheader149.loopexit ], [ %.lcssa518, %.preheader150 ] ; 2 uses
+  %.1489.i.lcssa = phi ptr [ %i.et, %.preheader149.loopexit ], [ %.lcssa622, %.preheader150 ] ; 2 uses
+  %.1485.i.lcssa = phi ptr [ %34, %.preheader149.loopexit ], [ %.lcssa621, %.preheader150 ] ; 2 uses
+  %.1481.i.lcssa = phi ptr [ %i.ey, %.preheader149.loopexit ], [ %.lcssa620, %.preheader150 ] ; 2 uses
   %.1474.i.lcssa = phi ptr [ %i.ea, %.preheader149.loopexit ], [ %.lcssa618, %.preheader150 ] ; 2 uses
-  %.1463.i.lcssa = phi i64 [ %i.ez, %.preheader149.loopexit ], [ %.lcssa623, %.preheader150 ] ; 2 uses
-  %.1455.i.lcssa = phi <2 x i64> [ %i.ev, %.preheader149.loopexit ], [ %.lcssa619, %.preheader150 ] ; 2 uses
-  %.1452.i.lcssa = phi <2 x i64> [ %43, %.preheader149.loopexit ], [ %.lcssa619, %.preheader150 ] ; 4 uses
+  %.1463.i.lcssa = phi i64 [ %i.ez, %.preheader149.loopexit ], [ %.lcssa514, %.preheader150 ] ; 2 uses
+  %.1455.i.lcssa = phi <2 x i64> [ %i.ev, %.preheader149.loopexit ], [ %.lcssa519, %.preheader150 ] ; 2 uses
+  %.1452.i.lcssa = phi <2 x i64> [ %28, %.preheader149.loopexit ], [ %.lcssa519, %.preheader150 ] ; 4 uses
   br i1 %.pre-phi, label %.lr.ph198, label %.preheader148
 
 .lr.ph180:                                        ; preds = %.preheader150, %_mm_store_si128.exit56
-  %.1452.i179 = phi <2 x i64> [ %43, %_mm_store_si128.exit56 ], [ %.lcssa619, %.preheader150 ]
-  %.1455.i178 = phi <2 x i64> [ %i.ev, %_mm_store_si128.exit56 ], [ %.lcssa619, %.preheader150 ]
-  %.1463.i177 = phi i64 [ %i.ez, %_mm_store_si128.exit56 ], [ %.lcssa623, %.preheader150 ] ; 4 uses
+  %.1452.i179 = phi <2 x i64> [ %28, %_mm_store_si128.exit56 ], [ %.lcssa519, %.preheader150 ]
+  %.1455.i178 = phi <2 x i64> [ %i.ev, %_mm_store_si128.exit56 ], [ %.lcssa519, %.preheader150 ]
+  %.1463.i177 = phi i64 [ %i.ez, %_mm_store_si128.exit56 ], [ %.lcssa514, %.preheader150 ] ; 4 uses
   %.1474.i176 = phi ptr [ %i.ea, %_mm_store_si128.exit56 ], [ %.lcssa618, %.preheader150 ] ; 7 uses
-  %.1481.i175 = phi ptr [ %i.ey, %_mm_store_si128.exit56 ], [ %.lcssa624, %.preheader150 ] ; 6 uses
-  %.1485.i174 = phi ptr [ %58, %_mm_store_si128.exit56 ], [ %.lcssa622, %.preheader150 ] ; 6 uses
-  %.1489.i173 = phi ptr [ %i.et, %_mm_store_si128.exit56 ], [ %.lcssa621, %.preheader150 ] ; 5 uses
-  %.1493.i172 = phi ptr [ %i.ef, %_mm_store_si128.exit56 ], [ %.lcssa620, %.preheader150 ] ; 6 uses
+  %.1481.i175 = phi ptr [ %i.ey, %_mm_store_si128.exit56 ], [ %.lcssa620, %.preheader150 ] ; 5 uses
+  %.1485.i174 = phi ptr [ %34, %_mm_store_si128.exit56 ], [ %.lcssa621, %.preheader150 ] ; 5 uses
+  %.1489.i173 = phi ptr [ %i.et, %_mm_store_si128.exit56 ], [ %.lcssa622, %.preheader150 ] ; 5 uses
+  %.1493.i172 = phi ptr [ %i.ef, %_mm_store_si128.exit56 ], [ %.lcssa518, %.preheader150 ] ; 5 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.1474.i176, i64 16 ; 3 uses
   %i.dk = ptrtoint ptr %.1474.i176 to i64, !nosanitize !22 ; 4 uses
   %i.dl = add i64 %i.dk, 16, !nosanitize !22      ; 2 uses
@@ -552,41 +512,31 @@ _mm_load_si128.exit119:                           ; preds = %bb.aj, %_mm_load_si
   %i.dz = load <2 x i64>, ptr %i.ds, align 16, !tbaa !25 ; 3 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %.1474.i176, i64 64 ; 2 uses
   %.not759.i = icmp ugt ptr %i.dw, inttoptr (i64 -17 to ptr)
-  br i1 %.not759.i, label %bb.ak, label %_mm_load_si128.exit119._crit_edge, !prof !24, !nosanitize !22
+  br i1 %.not759.i, label %bb.ak, label %bb.al, !prof !24, !nosanitize !22
 
 bb.ak:                                            ; preds = %_mm_load_si128.exit119
   %i.eb = ptrtoint ptr %i.dw to i64, !nosanitize !22 ; 2 uses
   %i.ec = add i64 %i.eb, 16, !nosanitize !22
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @16, i64 %i.eb, i64 %i.ec) #6, !nosanitize !22
-  br label %_mm_load_si128.exit119._crit_edge, !nosanitize !22
-
-_mm_load_si128.exit119._crit_edge:                ; preds = %bb.ak, %_mm_load_si128.exit119
-  %38 = load <2 x i64>, ptr %i.dw, align 16, !tbaa !25 ; 3 uses
-  %39 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.dr, <2 x i32> <i32 1, i32 2> ; 2 uses
-  %40 = shufflevector <2 x i64> %i.dr, <2 x i64> %i.dv, <2 x i32> <i32 1, i32 2> ; 3 uses
-  %41 = shufflevector <2 x i64> %i.dv, <2 x i64> %i.dz, <2 x i32> <i32 1, i32 2> ; 3 uses
-  %42 = shufflevector <2 x i64> %i.dz, <2 x i64> %38, <2 x i32> <i32 1, i32 2> ; 3 uses
-  %43 = shufflevector <2 x i64> %38, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2> ; 3 uses
-  %44 = xor <2 x i64> %.1452.i179, %39            ; 2 uses
-  %45 = getelementptr inbounds nuw i8, ptr %.1493.i172, i64 16
-  %.pre370 = ptrtoint ptr %.1493.i172 to i64, !nosanitize !22 ; 2 uses
-  %46 = and i64 %.pre370, 15, !nosanitize !22
-  %47 = icmp eq i64 %46, 0, !nosanitize !22
-  br i1 %47, label %bb.al, label %48, !prof !23, !nosanitize !22
-
-48:                                               ; preds = %_mm_load_si128.exit119._crit_edge
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre370) #6, !nosanitize !22
   br label %bb.al, !nosanitize !22
 
-bb.al:                                            ; preds = %_mm_load_si128.exit119._crit_edge, %48
-  store <2 x i64> %44, ptr %.1493.i172, align 16, !tbaa !25
+bb.al:                                            ; preds = %bb.ak, %_mm_load_si128.exit119
+  %23 = load <2 x i64>, ptr %i.dw, align 16, !tbaa !25 ; 3 uses
+  %24 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.dr, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %25 = shufflevector <2 x i64> %i.dr, <2 x i64> %i.dv, <2 x i32> <i32 1, i32 2> ; 3 uses
+  %26 = shufflevector <2 x i64> %i.dv, <2 x i64> %i.dz, <2 x i32> <i32 1, i32 2> ; 3 uses
+  %27 = shufflevector <2 x i64> %i.dz, <2 x i64> %23, <2 x i32> <i32 1, i32 2> ; 3 uses
+  %28 = shufflevector <2 x i64> %23, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2> ; 3 uses
+  %29 = xor <2 x i64> %.1452.i179, %24            ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %.1493.i172, i64 16
+  store <2 x i64> %29, ptr %.1493.i172, align 16, !tbaa !25
   %i.ed = getelementptr inbounds nuw i8, ptr %.1493.i172, i64 32
-  store <2 x i64> %40, ptr %45, align 16, !tbaa !25
+  store <2 x i64> %25, ptr %30, align 16, !tbaa !25
   %i.ee = getelementptr inbounds nuw i8, ptr %.1493.i172, i64 48
-  store <2 x i64> %41, ptr %i.ed, align 16, !tbaa !25
+  store <2 x i64> %26, ptr %i.ed, align 16, !tbaa !25
   %i.ef = getelementptr inbounds nuw i8, ptr %.1493.i172, i64 64 ; 2 uses
-  store <2 x i64> %42, ptr %i.ee, align 16, !tbaa !25
-  %i.eg = xor <2 x i64> %.1455.i178, %39
+  store <2 x i64> %27, ptr %i.ee, align 16, !tbaa !25
+  %i.eg = xor <2 x i64> %.1455.i178, %24
   %i.eh = getelementptr inbounds nuw i8, ptr %.1489.i173, i64 16 ; 3 uses
   %i.ei = ptrtoint ptr %i.eh to i64, !nosanitize !22 ; 3 uses
   %i.ej = and i64 %i.ei, 15, !nosanitize !22
@@ -599,63 +549,43 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.al, %bb.am
   %i.el = load <2 x i64>, ptr %i.eh, align 16, !tbaa !25
-  %i.em = xor <2 x i64> %i.el, %40
+  %i.em = xor <2 x i64> %i.el, %25
   %i.en = getelementptr inbounds nuw i8, ptr %.1489.i173, i64 32 ; 2 uses
   %i.eo = load <2 x i64>, ptr %i.en, align 16, !tbaa !25
-  %i.ep = xor <2 x i64> %i.eo, %41
+  %i.ep = xor <2 x i64> %i.eo, %26
   %i.eq = getelementptr inbounds nuw i8, ptr %.1489.i173, i64 48 ; 2 uses
   %i.er = load <2 x i64>, ptr %i.eq, align 16, !tbaa !25
-  %i.es = xor <2 x i64> %i.er, %42
+  %i.es = xor <2 x i64> %i.er, %27
   %i.et = getelementptr inbounds nuw i8, ptr %.1489.i173, i64 64 ; 3 uses
   %i.eu = load <2 x i64>, ptr %i.et, align 16, !tbaa !25
-  %i.ev = xor <2 x i64> %i.eu, %43                ; 2 uses
+  %i.ev = xor <2 x i64> %i.eu, %28                ; 2 uses
   store <2 x i64> %i.eg, ptr %.1489.i173, align 16, !tbaa !25
-  br i1 %i.ek, label %50, label %49, !prof !23, !nosanitize !22
+  br i1 %i.ek, label %_mm_store_si128.exit56, label %bb.ao, !prof !23, !nosanitize !22
 
-49:                                               ; preds = %bb.an
+bb.ao:                                            ; preds = %bb.an
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.ei) #6, !nosanitize !22
-  br label %50, !nosanitize !22
+  br label %_mm_store_si128.exit56, !nosanitize !22
 
-50:                                               ; preds = %49, %bb.an
+_mm_store_si128.exit56:                           ; preds = %bb.ao, %bb.an
   store <2 x i64> %i.em, ptr %i.eh, align 16, !tbaa !25
   store <2 x i64> %i.ep, ptr %i.en, align 16, !tbaa !25
   store <2 x i64> %i.es, ptr %i.eq, align 16, !tbaa !25
-  %51 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 16
-  %.pre378 = ptrtoint ptr %.1485.i174 to i64, !nosanitize !22 ; 2 uses
-  %52 = and i64 %.pre378, 15, !nosanitize !22
-  %53 = icmp eq i64 %52, 0, !nosanitize !22
-  br i1 %53, label %55, label %54, !prof !23, !nosanitize !22
-
-54:                                               ; preds = %50
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre378) #6, !nosanitize !22
-  br label %55, !nosanitize !22
-
-55:                                               ; preds = %50, %54
-  store <2 x i64> %44, ptr %.1485.i174, align 16, !tbaa !25
-  %56 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 32
-  store <2 x i64> %40, ptr %51, align 16, !tbaa !25
-  %57 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 48
-  store <2 x i64> %41, ptr %56, align 16, !tbaa !25
-  %58 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 64 ; 2 uses
-  store <2 x i64> %42, ptr %57, align 16, !tbaa !25
-  %59 = getelementptr inbounds nuw i8, ptr %.1481.i175, i64 16
-  %.pre386 = ptrtoint ptr %.1481.i175 to i64, !nosanitize !22 ; 2 uses
-  %60 = and i64 %.pre386, 15, !nosanitize !22
-  %61 = icmp eq i64 %60, 0, !nosanitize !22
-  br i1 %61, label %_mm_store_si128.exit56, label %bb.ao, !prof !23, !nosanitize !22
-
-bb.ao:                                            ; preds = %55
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre386) #6, !nosanitize !22
-  br label %_mm_store_si128.exit56, !nosanitize !22
-
-_mm_store_si128.exit56:                           ; preds = %55, %bb.ao
+  %31 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 16
+  store <2 x i64> %29, ptr %.1485.i174, align 16, !tbaa !25
+  %32 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 32
+  store <2 x i64> %25, ptr %31, align 16, !tbaa !25
+  %33 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 48
+  store <2 x i64> %26, ptr %32, align 16, !tbaa !25
+  %34 = getelementptr inbounds nuw i8, ptr %.1485.i174, i64 64 ; 2 uses
+  store <2 x i64> %27, ptr %33, align 16, !tbaa !25
+  %35 = getelementptr inbounds nuw i8, ptr %.1481.i175, i64 16
   store <2 x i64> %i.dr, ptr %.1481.i175, align 16, !tbaa !25
   %i.ew = getelementptr inbounds nuw i8, ptr %.1481.i175, i64 32
-  store <2 x i64> %i.dv, ptr %59, align 16, !tbaa !25
+  store <2 x i64> %i.dv, ptr %35, align 16, !tbaa !25
   %i.ex = getelementptr inbounds nuw i8, ptr %.1481.i175, i64 48
   store <2 x i64> %i.dz, ptr %i.ew, align 16, !tbaa !25
   %i.ey = getelementptr inbounds nuw i8, ptr %.1481.i175, i64 64 ; 2 uses
-  store <2 x i64> %38, ptr %i.ex, align 16, !tbaa !25
+  store <2 x i64> %23, ptr %i.ex, align 16, !tbaa !25
   %i.ez = add nuw nsw i64 %.1463.i177, 64         ; 2 uses
   %i.fa = add nuw nsw i64 %.1463.i177, 2528
   %i.fb = icmp ult i64 %i.fa, %.028
@@ -962,7 +892,7 @@ bb.cb:                                            ; preds = %.preheader148, %bb.
   %indvars.iv = phi i64 [ %i.fe, %.preheader148 ], [ %indvars.iv.next, %bb.fh ] ; 2 uses
   %.3495.i = phi ptr [ %.2494.i.lcssa, %.preheader148 ], [ %i.lz, %bb.fh ] ; 12 uses
   %.3491.i = phi ptr [ %.2490.i.lcssa, %.preheader148 ], [ %i.nh, %bb.fh ] ; 12 uses
-  %.3487.i = phi ptr [ %.2486.i.lcssa, %.preheader148 ], [ %i.pf, %bb.fh ] ; 18 uses
+  %.3487.i = phi ptr [ %.2486.i.lcssa, %.preheader148 ], [ %i.pf, %bb.fh ] ; 16 uses
   %.3483.i = phi ptr [ %.2482.i.lcssa, %.preheader148 ], [ %i.ps, %bb.fh ] ; 7 uses
   %.0478.i = phi ptr [ %i.u, %.preheader148 ], [ %.1479.i, %bb.fh ] ; 8 uses
   %.3476.i = phi ptr [ %.2475.i.lcssa, %.preheader148 ], [ %.4477.i, %bb.fh ] ; 10 uses
@@ -1190,15 +1120,12 @@ bb.db:                                            ; preds = %_mm_load_si128.exit
   %i.la = shufflevector <2 x i64> %.0446.i, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2> ; 4 uses
   %i.lb = xor <2 x i64> %.3461.i, %i.kw
   %i.lc = getelementptr inbounds nuw i8, ptr %.3495.i, i64 16 ; 4 uses
-  %i.ld = ptrtoint ptr %.3495.i to i64, !nosanitize !22 ; 9 uses
-  %62 = add i64 %i.ld, 16, !nosanitize !22        ; 3 uses
-  %63 = icmp ne i64 %62, 0, !nosanitize !22
-  %64 = icmp ult ptr %.3495.i, inttoptr (i64 -16 to ptr)
-  %65 = and i1 %64, %63, !nosanitize !22          ; 2 uses
-  br i1 %65, label %bb.dd, label %bb.dc, !prof !23, !nosanitize !22
+  %i.ld = ptrtoint ptr %.3495.i to i64, !nosanitize !22 ; 8 uses
+  %.not147 = icmp eq ptr %.3495.i, inttoptr (i64 -16 to ptr) ; 2 uses
+  br i1 %.not147, label %bb.dc, label %bb.dd, !prof !24, !nosanitize !22
 
 bb.dc:                                            ; preds = %bb.db
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @51, i64 %i.ld, i64 %62) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @51, i64 %i.ld, i64 0) #6, !nosanitize !22
   br label %bb.dd, !nosanitize !22
 
 bb.dd:                                            ; preds = %bb.dc, %bb.db
@@ -1258,10 +1185,10 @@ bb.dk:                                            ; preds = %bb.dj
 bb.dl:                                            ; preds = %bb.dj, %bb.dk
   %i.me = load <2 x i64>, ptr %i.lz, align 16, !tbaa !25
   %i.mf = xor <2 x i64> %i.me, %i.la
-  br i1 %65, label %_mm_store_si128.exit103, label %bb.dm, !prof !23, !nosanitize !22
+  br i1 %.not147, label %bb.dm, label %_mm_store_si128.exit103, !prof !24, !nosanitize !22
 
 bb.dm:                                            ; preds = %bb.dl
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @56, i64 %i.ld, i64 %62) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @56, i64 %i.ld, i64 0) #6, !nosanitize !22
   br label %_mm_store_si128.exit103, !nosanitize !22
 
 _mm_store_si128.exit103:                          ; preds = %bb.dl, %bb.dm
@@ -1305,15 +1232,12 @@ _mm_store_si128.exit100:                          ; preds = %_mm_store_si128.exi
   store <2 x i64> %i.ly, ptr %i.lr, align 16, !tbaa !25
   %i.mj = xor <2 x i64> %.3457.i, %i.kw
   %i.mk = getelementptr inbounds nuw i8, ptr %.3491.i, i64 16 ; 4 uses
-  %i.ml = ptrtoint ptr %.3491.i to i64, !nosanitize !22 ; 9 uses
-  %66 = add i64 %i.ml, 16, !nosanitize !22        ; 3 uses
-  %67 = icmp ne i64 %66, 0, !nosanitize !22
-  %68 = icmp ult ptr %.3491.i, inttoptr (i64 -16 to ptr)
-  %69 = and i1 %68, %67, !nosanitize !22          ; 2 uses
-  br i1 %69, label %bb.dt, label %bb.ds, !prof !23, !nosanitize !22
+  %i.ml = ptrtoint ptr %.3491.i to i64, !nosanitize !22 ; 8 uses
+  %.not148 = icmp eq ptr %.3491.i, inttoptr (i64 -16 to ptr) ; 2 uses
+  br i1 %.not148, label %bb.ds, label %bb.dt, !prof !24, !nosanitize !22
 
 bb.ds:                                            ; preds = %_mm_store_si128.exit100
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @60, i64 %i.ml, i64 %66) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @60, i64 %i.ml, i64 0) #6, !nosanitize !22
   br label %bb.dt, !nosanitize !22
 
 bb.dt:                                            ; preds = %bb.ds, %_mm_store_si128.exit100
@@ -1373,10 +1297,10 @@ bb.ea:                                            ; preds = %bb.dz
 bb.eb:                                            ; preds = %bb.dz, %bb.ea
   %i.nm = load <2 x i64>, ptr %i.nh, align 16, !tbaa !25
   %i.nn = xor <2 x i64> %i.nm, %i.la
-  br i1 %69, label %_mm_store_si128.exit99, label %bb.ec, !prof !23, !nosanitize !22
+  br i1 %.not148, label %bb.ec, label %_mm_store_si128.exit99, !prof !24, !nosanitize !22
 
 bb.ec:                                            ; preds = %bb.eb
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @65, i64 %i.ml, i64 %66) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @65, i64 %i.ml, i64 0) #6, !nosanitize !22
   br label %_mm_store_si128.exit99, !nosanitize !22
 
 _mm_store_si128.exit99:                           ; preds = %bb.eb, %bb.ec
@@ -1430,14 +1354,12 @@ _mm_store_si128.exit96._crit_edge:                ; preds = %_mm_store_si128.exi
 bb.ei:                                            ; preds = %_mm_store_si128.exit96
   %i.nt = getelementptr inbounds nuw i8, ptr %.3487.i, i64 16 ; 2 uses
   %i.nu = ptrtoint ptr %.3487.i to i64, !nosanitize !22 ; 9 uses
-  %i.nv = add i64 %i.nu, 16, !nosanitize !22      ; 3 uses
-  %70 = icmp ne i64 %i.nv, 0, !nosanitize !22
-  %71 = icmp ult ptr %.3487.i, inttoptr (i64 -16 to ptr)
-  %72 = and i1 %71, %70, !nosanitize !22
-  br i1 %72, label %bb.ek, label %bb.ej, !prof !23, !nosanitize !22
+  %i.nv = add i64 %i.nu, 16, !nosanitize !22      ; 2 uses
+  %.not149 = icmp eq i64 %i.nv, 0, !nosanitize !22
+  br i1 %.not149, label %bb.ej, label %bb.ek, !prof !24, !nosanitize !22
 
 bb.ej:                                            ; preds = %bb.ei
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @69, i64 %i.nu, i64 %i.nv) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @69, i64 %i.nu, i64 0) #6, !nosanitize !22
   br label %bb.ek, !nosanitize !22
 
 bb.ek:                                            ; preds = %bb.ej, %bb.ei
@@ -1498,20 +1420,18 @@ bb.es:                                            ; preds = %bb.eq, %bb.er
   br label %bb.et
 
 bb.et:                                            ; preds = %_mm_store_si128.exit96._crit_edge, %bb.es
-  %.pre-phi421 = phi i64 [ %.pre420, %_mm_store_si128.exit96._crit_edge ], [ %i.nv, %bb.es ] ; 2 uses
+  %.pre-phi421 = phi i64 [ %.pre420, %_mm_store_si128.exit96._crit_edge ], [ %i.nv, %bb.es ]
   %.pre-phi419 = phi i64 [ %.pre418, %_mm_store_si128.exit96._crit_edge ], [ %i.nu, %bb.es ] ; 3 uses
   %.4.i = phi <2 x i64> [ %i.la, %_mm_store_si128.exit96._crit_edge ], [ %i.ov, %bb.es ]
   %.0445.i = phi <2 x i64> [ %i.kx, %_mm_store_si128.exit96._crit_edge ], [ %i.oa, %bb.es ]
   %.0444.i = phi <2 x i64> [ %i.ky, %_mm_store_si128.exit96._crit_edge ], [ %i.oh, %bb.es ]
   %.0443.i = phi <2 x i64> [ %i.kz, %_mm_store_si128.exit96._crit_edge ], [ %i.oo, %bb.es ]
   %i.ow = getelementptr inbounds nuw i8, ptr %.3487.i, i64 16 ; 3 uses
-  %73 = icmp ne i64 %.pre-phi421, 0, !nosanitize !22
-  %74 = icmp ult ptr %.3487.i, inttoptr (i64 -16 to ptr)
-  %75 = and i1 %74, %73, !nosanitize !22
-  br i1 %75, label %bb.ev, label %bb.eu, !prof !23, !nosanitize !22
+  %.not150 = icmp eq i64 %.pre-phi421, 0, !nosanitize !22
+  br i1 %.not150, label %bb.eu, label %bb.ev, !prof !24, !nosanitize !22
 
 bb.eu:                                            ; preds = %bb.et
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @74, i64 %.pre-phi419, i64 %.pre-phi421) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @74, i64 %.pre-phi419, i64 0) #6, !nosanitize !22
   br label %bb.ev, !nosanitize !22
 
 bb.ev:                                            ; preds = %bb.eu, %bb.et
@@ -1562,15 +1482,12 @@ bb.ez:                                            ; preds = %_mm_store_si128.exi
 _mm_store_si128.exit92:                           ; preds = %bb.ez, %_mm_store_si128.exit93
   store <2 x i64> %.0443.i, ptr %i.pc, align 16, !tbaa !25
   %i.pi = getelementptr inbounds nuw i8, ptr %.3483.i, i64 16 ; 3 uses
-  %i.pj = ptrtoint ptr %.3483.i to i64, !nosanitize !22 ; 4 uses
-  %76 = add i64 %i.pj, 16, !nosanitize !22        ; 2 uses
-  %77 = icmp ne i64 %76, 0, !nosanitize !22
-  %78 = icmp ult ptr %.3483.i, inttoptr (i64 -16 to ptr)
-  %79 = and i1 %78, %77, !nosanitize !22
-  br i1 %79, label %bb.fb, label %bb.fa, !prof !23, !nosanitize !22
+  %i.pj = ptrtoint ptr %.3483.i to i64, !nosanitize !22 ; 3 uses
+  %.not151 = icmp eq ptr %.3483.i, inttoptr (i64 -16 to ptr)
+  br i1 %.not151, label %bb.fa, label %bb.fb, !prof !24, !nosanitize !22
 
 bb.fa:                                            ; preds = %_mm_store_si128.exit92
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @78, i64 %i.pj, i64 %76) #6, !nosanitize !22
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @78, i64 %i.pj, i64 0) #6, !nosanitize !22
   br label %bb.fb, !nosanitize !22
 
 bb.fb:                                            ; preds = %bb.fa, %_mm_store_si128.exit92
@@ -1729,7 +1646,7 @@ bb.fu:                                            ; preds = %.lr.ph210
   br label %.lr.ph210._crit_edge, !nosanitize !22
 
 .lr.ph210._crit_edge:                             ; preds = %.lr.ph210, %bb.fu
-  %i.qx = and i64 %i.qv, 15, !nosanitize !22
+  %i.qx = and i64 %i.qv, 8, !nosanitize !22
   %i.qy = icmp eq i64 %i.qx, 0, !nosanitize !22
   br i1 %i.qy, label %_mm_store_si128.exit107, label %bb.fv, !prof !23, !nosanitize !22
 

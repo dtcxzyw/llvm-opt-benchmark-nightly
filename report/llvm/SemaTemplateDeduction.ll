@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not121, label %.lr.ph99.split.us, label %.lr.ph99.split
 
 .lr.ph99.split.us:                                ; preds = %.lr.ph99
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   %.0.copyload.i.i.i.i.i.i36.us112 = load i64, ptr %1, align 8
   %i.h = and i64 %.0.copyload.i.i.i.i.i.i36.us112, -8
   %i.i = inttoptr i64 %i.h to ptr
@@ -214,7 +213,6 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not88.us113, label %._crit_edge.loopexit, label %._crit_edge
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph99.split.us
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   %.0.copyload.i.i.i.i.i.i36.us = load i64, ptr %i.c, align 8
   %i.k = and i64 %.0.copyload.i.i.i.i.i.i36.us, -8
   %i.l = inttoptr i64 %i.k to ptr
@@ -228,9 +226,8 @@ bb.d:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit.thread79
   %.094 = phi ptr [ %.1, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit.thread79 ], [ %i.g, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.060.093 = phi ptr [ %i.ae, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit.thread79 ], [ %i.c, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.060.093 = phi ptr [ %i.ae, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit.thread79 ], [ %i.c, %.lr.ph.preheader ] ; 3 uses
   %.sroa.060.09092 = phi ptr [ %.sroa.060.089, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit.thread79 ], [ %1, %.lr.ph.preheader ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.060.093, i64 8) ]
   %.0.copyload.i.i.i.i.i.i35 = load i64, ptr %.sroa.060.093, align 8
   %i.o = and i64 %.0.copyload.i.i.i.i.i.i35, -8
   %i.p = inttoptr i64 %i.o to ptr
@@ -268,8 +265,7 @@ _ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit.thread79: ; preds = %.lr.ph, %
   br i1 %.not86, label %.lr.ph99, label %.lr.ph, !llvm.loop !2224
 
 .lr.ph99.split:                                   ; preds = %.lr.ph99, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit39.thread
-  %.sroa.053.097 = phi ptr [ %i.at, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit39.thread ], [ %1, %.lr.ph99 ] ; 4 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.053.097, i64 8) ]
+  %.sroa.053.097 = phi ptr [ %i.at, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit39.thread ], [ %1, %.lr.ph99 ] ; 3 uses
   %.0.copyload.i.i.i.i.i.i36 = load i64, ptr %.sroa.053.097, align 8
   %i.af = and i64 %.0.copyload.i.i.i.i.i.i36, -8
   %i.ag = inttoptr i64 %i.af to ptr
@@ -320,7 +316,7 @@ _ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit39.thread: ; preds = %bb.g, %_Z
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph120, %_ZN5clang19StreamingDiagnosticD2Ev.exit
-  %.sroa.0.0118 = phi ptr [ %1, %.lr.ph120 ], [ %i.db, %_ZN5clang19StreamingDiagnosticD2Ev.exit ] ; 6 uses
+  %.sroa.0.0118 = phi ptr [ %1, %.lr.ph120 ], [ %i.db, %_ZN5clang19StreamingDiagnosticD2Ev.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
   store i64 0, ptr %12, align 8
   %i.bc = load i32, ptr %i.aw, align 8, !tbaa !1117
@@ -332,7 +328,6 @@ bb.h:                                             ; preds = %.lr.ph120, %_ZN5cla
   br i1 %.not.i, label %_ZN5clang17PartialDiagnosticC2ERKS0_.exit.thread, label %_ZN5clang17PartialDiagnosticC2ERKS0_.exit
 
 _ZN5clang17PartialDiagnosticC2ERKS0_.exit.thread: ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.0.0118, i64 8) ]
   %.0.copyload.i.i.i.i.i.i40143 = load i64, ptr %.sroa.0.0118, align 8
   %i.bf = and i64 %.0.copyload.i.i.i.i.i.i40143, -8 ; 2 uses
   %i.bg = inttoptr i64 %i.bf to ptr
@@ -344,7 +339,6 @@ _ZN5clang17PartialDiagnosticC2ERKS0_.exit:        ; preds = %bb.h
   %i.bi = load ptr, ptr %7, align 8, !tbaa !1063
   %i.bj = call noundef nonnull align 8 dereferenceable(928) ptr @_ZN5clang17DiagnosticStorageaSERKS0_(ptr noundef nonnull align 8 dereferenceable(928) %i.bh, ptr noundef nonnull align 8 dereferenceable(928) %i.bi) ; 0 uses
   %.pre = load ptr, ptr %12, align 8, !tbaa !1063 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.0.0118, i64 8) ]
   %.0.copyload.i.i.i.i.i.i40 = load i64, ptr %.sroa.0.0118, align 8
   %i.bk = and i64 %.0.copyload.i.i.i.i.i.i40, -8  ; 3 uses
   %i.bl = inttoptr i64 %i.bk to ptr               ; 2 uses

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph
   br i1 %i.bj, label %bb.k, label %GC_find_header.exit78, !llvm.loop !2
 
 GC_find_header.exit78:                            ; preds = %bb.k
-  %i.bl = lshr i64 %i.bb, 12
+  %i.bl = lshr exact i64 %i.bb, 12
   %i.bm = and i64 %i.bl, 1023
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %.0.i77, i64 %i.bm
   %.051 = load ptr, ptr %i.bn, align 8            ; 3 uses
@@ -358,7 +358,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph
   br i1 %i.ag, label %bb.g, label %GC_find_header.exit39, !llvm.loop !2
 
 GC_find_header.exit39:                            ; preds = %bb.g
-  %i.ai = lshr i64 %i.y, 12
+  %i.ai = lshr exact i64 %i.y, 12
   %i.aj = and i64 %i.ai, 1023
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %i.aj
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
@@ -533,7 +533,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i
   br i1 %i.an, label %bb.h, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.h
-  %i.ap = lshr i64 %i.af, 12
+  %i.ap = lshr exact i64 %i.af, 12
   %i.aq = and i64 %i.ap, 1023
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.aq
   %i.as = load ptr, ptr %i.ar, align 8            ; 3 uses
@@ -643,7 +643,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph
   br i1 %i.ae, label %bb.e, label %GC_find_header.exit, !llvm.loop !2
 
 GC_find_header.exit:                              ; preds = %bb.e
-  %i.ag = lshr i64 %i.w, 12
+  %i.ag = lshr exact i64 %i.w, 12
   %i.ah = and i64 %i.ag, 1023
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.ah
   %i.aj = load ptr, ptr %i.ai, align 8            ; 3 uses
@@ -1046,7 +1046,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ae, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ag = lshr i64 %i.w, 12
+  %i.ag = lshr exact i64 %i.w, 12
   %i.ah = and i64 %i.ag, 1023
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.ah
   %i.aj = load ptr, ptr %i.ai, align 8            ; 3 uses
@@ -1356,7 +1356,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   br i1 %i.af, label %bb.f, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.f
-  %i.ah = lshr i64 %i.x, 12
+  %i.ah = lshr exact i64 %i.x, 12
   %i.ai = and i64 %i.ah, 1023
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.ai
   %i.ak = load ptr, ptr %i.aj, align 8            ; 3 uses
@@ -1743,7 +1743,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ae, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ag = lshr i64 %i.w, 12
+  %i.ag = lshr exact i64 %i.w, 12
   %i.ah = and i64 %i.ag, 1023
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.ah
   %i.aj = load ptr, ptr %i.ai, align 8            ; 3 uses
@@ -2101,7 +2101,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i
   br i1 %i.ao, label %bb.i, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.i
-  %i.aq = lshr i64 %i.ag, 12
+  %i.aq = lshr exact i64 %i.ag, 12
   %i.ar = and i64 %i.aq, 1023
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.ar
   %i.at = load ptr, ptr %i.as, align 8            ; 3 uses
@@ -2504,7 +2504,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ag, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ai = lshr i64 %i.y, 12
+  %i.ai = lshr exact i64 %i.y, 12
   %i.aj = and i64 %i.ai, 1023
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.aj
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
@@ -2733,7 +2733,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ag, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ai = lshr i64 %i.y, 12
+  %i.ai = lshr exact i64 %i.y, 12
   %i.aj = and i64 %i.ai, 1023
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.aj
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
@@ -2951,7 +2951,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ag, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ai = lshr i64 %i.y, 12
+  %i.ai = lshr exact i64 %i.y, 12
   %i.aj = and i64 %i.ai, 1023
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.aj
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
@@ -3169,7 +3169,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ag, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ai = lshr i64 %i.y, 12
+  %i.ai = lshr exact i64 %i.y, 12
   %i.aj = and i64 %i.ai, 1023
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.aj
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
@@ -3572,7 +3572,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ae, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.ag = lshr i64 %i.w, 12
+  %i.ag = lshr exact i64 %i.w, 12
   %i.ah = and i64 %i.ag, 1023
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.ah
   %i.aj = load ptr, ptr %i.ai, align 8            ; 3 uses
@@ -3975,14 +3975,13 @@ bb.m:                                             ; preds = %bb.k
 
 GC_push_all.exit46:                               ; preds = %bb.m, %bb.j, %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.i, i64 4096 ; 2 uses
-  %i.ar = ptrtoint ptr %i.aq to i64               ; 2 uses
+  %i.ar = ptrtoint ptr %i.aq to i64
   %.not3658 = icmp ult i64 %i.e, %i.ar
   br i1 %.not3658, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %GC_push_all.exit46, %GC_push_all.exit52
-  %3 = phi i64 [ %i.bs, %GC_push_all.exit52 ], [ %i.ar, %GC_push_all.exit46 ]
   %i.as = phi ptr [ %i.br, %GC_push_all.exit52 ], [ %i.aq, %GC_push_all.exit46 ] ; 3 uses
-  %.059 = phi ptr [ %i.as, %GC_push_all.exit52 ], [ %i.i, %GC_push_all.exit46 ] ; 2 uses
+  %.059 = phi ptr [ %i.as, %GC_push_all.exit52 ], [ %i.i, %GC_push_all.exit46 ] ; 4 uses
   %i.at = tail call i32 %2(ptr noundef nonnull %.059) #43, !callees !145
   %.not39 = icmp eq i32 %i.at, 0
   br i1 %.not39, label %GC_push_all.exit52, label %bb.n
@@ -3998,17 +3997,14 @@ bb.n:                                             ; preds = %.lr.ph
   %i.bb = mul i64 %i.ba, 3
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = icmp ugt i64 %i.az, %i.bc
-  %4 = ptrtoint ptr %.059 to i64
-  %5 = add i64 %4, 7
-  %6 = and i64 %5, -8                             ; 6 uses
-  br i1 %i.bd, label %bb.o, label %8
+  br i1 %i.bd, label %bb.o, label %bb.r
 
 bb.o:                                             ; preds = %bb.n
-  %.not.i47 = icmp ult i64 %6, %i.e
+  %3 = ptrtoint ptr %.059 to i64                  ; 2 uses
+  %.not.i47 = icmp ugt i64 %i.e, %3
   br i1 %.not.i47, label %bb.p, label %GC_push_all.exit
 
 bb.p:                                             ; preds = %bb.o
-  %7 = inttoptr i64 %6 to ptr
   %i.be = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 16
   store volatile ptr %i.bf, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -4023,13 +4019,7 @@ bb.q:                                             ; preds = %bb.p
   tail call void @abort() #46
   unreachable
 
-8:                                                ; preds = %bb.n
-  %9 = inttoptr i64 %6 to ptr
-  %10 = and i64 %3, -8                            ; 2 uses
-  %.not.i50 = icmp ult i64 %6, %10
-  br i1 %.not.i50, label %bb.r, label %GC_push_all.exit52
-
-bb.r:                                             ; preds = %8
+bb.r:                                             ; preds = %bb.n
   %i.bj = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
   store volatile ptr %i.bk, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -4045,22 +4035,21 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 bb.t:                                             ; preds = %bb.r
-  %11 = sub nuw i64 %10, %6
   %i.bo = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
-  store ptr %9, ptr %i.bo, align 8
+  store ptr %.059, ptr %i.bo, align 8
   %i.bp = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  store i64 %11, ptr %i.bq, align 8
+  store i64 4096, ptr %i.bq, align 8
   br label %GC_push_all.exit52
 
-GC_push_all.exit52:                               ; preds = %bb.t, %8, %.lr.ph
+GC_push_all.exit52:                               ; preds = %bb.t, %.lr.ph
   %i.br = getelementptr inbounds nuw i8, ptr %i.as, i64 4096 ; 2 uses
-  %i.bs = ptrtoint ptr %i.br to i64               ; 2 uses
+  %i.bs = ptrtoint ptr %i.br to i64
   %.not36 = icmp ult i64 %i.e, %i.bs
   br i1 %.not36, label %._crit_edge, label %.lr.ph, !llvm.loop !144
 
 ._crit_edge:                                      ; preds = %GC_push_all.exit52, %GC_push_all.exit46
-  %.0.lcssa = phi ptr [ %i.i, %GC_push_all.exit46 ], [ %i.as, %GC_push_all.exit52 ] ; 3 uses
+  %.0.lcssa = phi ptr [ %i.i, %GC_push_all.exit46 ], [ %i.as, %GC_push_all.exit52 ] ; 4 uses
   %.not37 = icmp eq ptr %.0.lcssa, %i.f
   br i1 %.not37, label %GC_push_all.exit, label %bb.u
 
@@ -4070,14 +4059,11 @@ bb.u:                                             ; preds = %._crit_edge
   br i1 %.not38, label %GC_push_all.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bu = ptrtoint ptr %.0.lcssa to i64
-  %12 = add i64 %i.bu, 7
-  %13 = and i64 %12, -8                           ; 3 uses
-  %.not.i53 = icmp ult i64 %13, %i.e
+  %i.bu = ptrtoint ptr %.0.lcssa to i64           ; 2 uses
+  %.not.i53 = icmp ugt i64 %i.e, %i.bu
   br i1 %.not.i53, label %bb.w, label %GC_push_all.exit
 
 bb.w:                                             ; preds = %bb.v
-  %14 = inttoptr i64 %13 to ptr
   %i.bv = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
   store volatile ptr %i.bw, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -4093,8 +4079,8 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 GC_push_all.exit.sink.split:                      ; preds = %bb.w, %bb.p, %bb.h, %bb.d
-  %.sink81 = phi i64 [ %6, %bb.p ], [ %i.c, %bb.h ], [ %i.c, %bb.d ], [ %13, %bb.w ]
-  %.sink79 = phi ptr [ %7, %bb.p ], [ %i.ab, %bb.h ], [ %i.l, %bb.d ], [ %14, %bb.w ]
+  %.sink81 = phi i64 [ %3, %bb.p ], [ %i.c, %bb.h ], [ %i.c, %bb.d ], [ %i.bu, %bb.w ]
+  %.sink79 = phi ptr [ %.059, %bb.p ], [ %i.ab, %bb.h ], [ %i.l, %bb.d ], [ %.0.lcssa, %bb.w ]
   %i.ca = sub nuw i64 %i.e, %.sink81
   %i.cb = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %.sink79, ptr %i.cb, align 8
@@ -4497,7 +4483,7 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i18
   br i1 %i.er, label %bb.v, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.v
-  %i.et = lshr i64 %i.ej, 12
+  %i.et = lshr exact i64 %i.ej, 12
   %i.eu = and i64 %i.et, 1023
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.eu
   %i.ew = load ptr, ptr %i.ev, align 8            ; 3 uses
@@ -4900,7 +4886,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i
   br i1 %i.ar, label %bb.g, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.g
-  %i.at = lshr i64 %i.aj, 12
+  %i.at = lshr exact i64 %i.aj, 12
   %i.au = and i64 %i.at, 1023
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.au
   %i.aw = load ptr, ptr %i.av, align 8            ; 3 uses
@@ -5303,7 +5289,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.ai, label %bb.d, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.d
-  %i.ak = lshr i64 %i.aa, 12
+  %i.ak = lshr exact i64 %i.aa, 12
   %i.al = and i64 %i.ak, 1023
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.al
   %i.an = load ptr, ptr %i.am, align 8            ; 3 uses
@@ -5452,7 +5438,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i
   br i1 %i.bf, label %bb.h, label %GC_find_header.exit.i.i, !llvm.loop !2
 
 GC_find_header.exit.i.i:                          ; preds = %bb.h
-  %i.bh = lshr i64 %i.ax, 12
+  %i.bh = lshr exact i64 %i.ax, 12
   %i.bi = and i64 %i.bh, 1023
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i5, i64 %i.bi
   %i.bk = load ptr, ptr %i.bj, align 8            ; 3 uses
@@ -5669,7 +5655,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.ad, label %bb.e, label %GC_find_header.exit.i, !llvm.loop !2
 
 GC_find_header.exit.i:                            ; preds = %bb.e
-  %i.af = lshr i64 %i.v, 12
+  %i.af = lshr exact i64 %i.v, 12
   %i.ag = and i64 %i.af, 1023
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %i.ag
   %i.ai = load ptr, ptr %i.ah, align 8            ; 3 uses
