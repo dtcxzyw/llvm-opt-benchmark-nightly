@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %.lr.ph133.i.i.i
 
 bb.af:                                            ; preds = %.outer.split.i.i.i, %bb.ag
   %.sroa.016.1.i.i.i = phi i64 [ %i.he, %bb.ag ], [ %.sroa.016.1.ph128.i.i.i, %.outer.split.i.i.i ]
-  %i.he = add i64 %.sroa.016.1.i.i.i, -1          ; 6 uses
+  %i.he = add nsw i64 %.sroa.016.1.i.i.i, -1      ; 6 uses
   %i.hf = icmp ult i64 %i.he, 573
   br i1 %i.hf, label %bb.ag, label %bb.ah
 
@@ -607,7 +607,7 @@ bb.bv:                                            ; preds = %.lr.ph133.i.i52.i
 
 bb.bw:                                            ; preds = %.outer.split.i.i56.i, %bb.bx
   %.sroa.016.1.i.i59.i = phi i64 [ %i.qh, %bb.bx ], [ %.sroa.016.1.ph128.i.i58.i, %.outer.split.i.i56.i ]
-  %i.qh = add i64 %.sroa.016.1.i.i59.i, -1        ; 6 uses
+  %i.qh = add nsw i64 %.sroa.016.1.i.i59.i, -1    ; 6 uses
   %i.qi = icmp ult i64 %i.qh, 573
   br i1 %i.qi, label %bb.bx, label %bb.by
 
@@ -1010,7 +1010,7 @@ bb.dm:                                            ; preds = %.lr.ph133.i.i.i.i
 
 bb.dn:                                            ; preds = %.outer.split.i.i.i.i, %bb.do
   %.sroa.016.1.i.i.i.i = phi i64 [ %i.zp, %bb.do ], [ %.sroa.016.1.ph128.i.i.i.i, %.outer.split.i.i.i.i ]
-  %i.zp = add i64 %.sroa.016.1.i.i.i.i, -1        ; 6 uses
+  %i.zp = add nsw i64 %.sroa.016.1.i.i.i.i, -1    ; 6 uses
   %i.zq = icmp ult i64 %i.zp, 573
   br i1 %i.zq, label %bb.do, label %bb.dp
 

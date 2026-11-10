@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.us.i.i.i
   %.034.i.us.i.i.i = phi i64 [ %.014.us.i.i.i, %.lr.ph.i.us.i.i.i ], [ %spec.select.i.us.i.i.i, %bb.c ] ; 2 uses
-  %i.u = shl i64 %.034.i.us.i.i.i, 1              ; 3 uses
+  %i.u = shl nuw i64 %.034.i.us.i.i.i, 1          ; 3 uses
   %i.v = add i64 %i.u, 2                          ; 2 uses
   %i.w = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.v
   %i.x = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.u
@@ -272,7 +272,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i.i.i
   %.034.i.i.i.i = phi i64 [ %.014.i.i.i, %.lr.ph.i.i.i.i ], [ %spec.select.i.i.i.i, %bb.f ] ; 2 uses
-  %i.ba = shl i64 %.034.i.i.i.i, 1                ; 3 uses
+  %i.ba = shl nuw i64 %.034.i.i.i.i, 1            ; 3 uses
   %i.bb = add i64 %i.ba, 2                        ; 2 uses
   %i.bc = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.bb
   %i.bd = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.ba
@@ -366,7 +366,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.k, %.lr.ph.i.i.i16.i
   %.034.i.i.i18.i = phi i64 [ 0, %.lr.ph.i.i.i16.i ], [ %spec.select.i.i.i21.i, %bb.k ] ; 2 uses
-  %i.cp = shl i64 %.034.i.i.i18.i, 1              ; 3 uses
+  %i.cp = shl nuw i64 %.034.i.i.i18.i, 1          ; 3 uses
   %i.cq = add i64 %i.cp, 2                        ; 2 uses
   %i.cr = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.cq
   %i.cs = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.cp

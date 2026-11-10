@@ -205,10 +205,10 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u,
   br label %dissect_nfs4_cb_resp_op.exit
 
 dissect_nfs4_cb_resp_op.exit:                     ; preds = %bb.x, %bb.d, %.lr.ph.i, %bb.n, %._crit_edge.loopexit.split.loop.exit.i
-  %i.dk = phi ptr [ %i.af, %bb.d ], [ %i.ag, %.lr.ph.i ], [ %i.ag, %bb.n ], [ %i.ag, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.ag, %bb.x ]
-  %i.dl = phi ptr [ %i.ad, %bb.d ], [ %i.ah, %.lr.ph.i ], [ %i.ah, %bb.n ], [ %i.ah, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.ah, %bb.x ] ; 2 uses
-  %.085.lcssa.i = phi i32 [ 0, %bb.d ], [ 0, %.lr.ph.i ], [ 1, %bb.n ], [ %i.dj, %._crit_edge.loopexit.split.loop.exit.i ], [ %.08391111.i, %bb.x ]
-  %.0.lcssa.i = phi i32 [ %i.v, %bb.d ], [ %i.v, %.lr.ph.i ], [ %.1.peel.i, %bb.n ], [ %.094.i, %._crit_edge.loopexit.split.loop.exit.i ], [ %.1.i, %bb.x ]
+  %i.dk = phi ptr [ %i.af, %bb.d ], [ %i.ag, %bb.n ], [ %i.ag, %.lr.ph.i ], [ %i.ag, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.ag, %bb.x ]
+  %i.dl = phi ptr [ %i.ad, %bb.d ], [ %i.ah, %bb.n ], [ %i.ah, %.lr.ph.i ], [ %i.ah, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.ah, %bb.x ] ; 2 uses
+  %.085.lcssa.i = phi i32 [ 0, %bb.d ], [ 1, %bb.n ], [ 0, %.lr.ph.i ], [ %i.dj, %._crit_edge.loopexit.split.loop.exit.i ], [ %.08391111.i, %bb.x ]
+  %.0.lcssa.i = phi i32 [ %i.v, %bb.d ], [ %.1.peel.i, %bb.n ], [ %i.v, %.lr.ph.i ], [ %.094.i, %._crit_edge.loopexit.split.loop.exit.i ], [ %.1.i, %bb.x ]
   %i.dm = load ptr, ptr %i.dl, align 8
   %i.dn = call noalias dereferenceable_or_null(64) ptr @wmem_alloc0(ptr noundef %i.dm, i64 noundef 64) #22 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(64) %i.dn, ptr noundef align 8 dereferenceable(64) %3, i64 64, i1 false)

@@ -205,7 +205,7 @@ vector.ph109:                                     ; preds = %vector.memcheck102
 
 vector.body111:                                   ; preds = %vector.body111, %vector.ph109
   %index112 = phi i64 [ 0, %vector.ph109 ], [ %index.next118, %vector.body111 ] ; 3 uses
-  %i.dh = shl i64 %index112, 2                    ; 2 uses
+  %i.dh = shl nuw i64 %index112, 2                ; 2 uses
   %i.di = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dh
   %wide.vec113 = load <16 x float>, ptr %i.di, align 64, !tbaa !35, !alias.scope !66 ; 3 uses
   %strided.vec114 = shufflevector <16 x float> %wide.vec113, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
@@ -238,7 +238,7 @@ middle.block119:                                  ; preds = %vector.body111
   br i1 %lcmp.mod123.not, label %.lr.ph67.prol.loopexit, label %.lr.ph67.prol
 
 .lr.ph67.prol:                                    ; preds = %.lr.ph67.preheader121
-  %i.dt = shl i64 %.065.ph, 2                     ; 5 uses
+  %i.dt = shl nuw i64 %.065.ph, 2                 ; 5 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dt
   %i.dv = load float, ptr %i.du, align 64, !tbaa !35
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %.pre72, i64 %.065.ph
@@ -320,7 +320,7 @@ middle.block119:                                  ; preds = %vector.body111
 
 .lr.ph67:                                         ; preds = %.lr.ph67.prol.loopexit, %.lr.ph67
   %.065 = phi i64 [ %i.hp, %.lr.ph67 ], [ %.065.unr, %.lr.ph67.prol.loopexit ] ; 4 uses
-  %i.fu = shl i64 %.065, 2                        ; 5 uses
+  %i.fu = shl nuw i64 %.065, 2                    ; 5 uses
   %i.fv = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.fu
   %i.fw = load float, ptr %i.fv, align 16, !tbaa !35
   %i.fx = getelementptr inbounds nuw [4 x i8], ptr %.pre72, i64 %.065
@@ -348,7 +348,7 @@ middle.block119:                                  ; preds = %vector.body111
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.gn
   store float %i.gp, ptr %i.gq, align 4, !tbaa !35
   %i.gr = add nuw i64 %.065, 1                    ; 2 uses
-  %i.gs = shl i64 %i.gr, 2                        ; 5 uses
+  %i.gs = shl nuw i64 %i.gr, 2                    ; 5 uses
   %i.gt = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gs
   %i.gu = load float, ptr %i.gt, align 16, !tbaa !35
   %i.gv = getelementptr inbounds nuw [4 x i8], ptr %.pre72, i64 %i.gr
