@@ -47,20 +47,20 @@ bb.a:
   br i1 %i.n, label %CreatePreparedDictionaryWithParams.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %3 = shl nuw nsw i32 1, %.014.lcssa
-  %4 = shl nuw nsw i64 8, %i.i
+  %3 = shl i64 %2, 2
+  %4 = add i64 %i.l, %3
   %i.o = shl nuw nsw i64 4, %i.k
-  %5 = shl i64 %2, 2
-  %6 = add i64 %i.l, %5
-  %i.p = add i64 %6, %i.o
-  %7 = add i64 %i.p, %4                           ; 2 uses
-  %.not.i = icmp ne i64 %7, 0
+  %5 = add i64 %4, %i.o
+  %6 = shl nuw nsw i64 8, %i.i
+  %i.p = add i64 %5, %6                           ; 2 uses
+  %7 = shl nuw nsw i32 1, %.014.lcssa
+  %.not.i = icmp ne i64 %i.p, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.q = tail call ptr @BrotliAllocate(ptr noundef %0, i64 noundef %7) #6 ; 6 uses
+  %i.q = tail call ptr @BrotliAllocate(ptr noundef %0, i64 noundef %i.p) #6 ; 6 uses
   %i.r = zext i32 %i.f to i64                     ; 7 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.r ; 3 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.r ; 5 uses
-  %i.u = zext nneg i32 %3 to i64                  ; 7 uses
+  %i.u = zext nneg i32 %7 to i64                  ; 7 uses
   %i.v = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %i.u ; 4 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.u ; 6 uses
   %i.x = shl nuw nsw i64 %i.u, 1
@@ -154,8 +154,8 @@ bb.h:                                             ; preds = %bb.f
 .new:                                             ; preds = %._crit_edge.i
   %i.bf = zext i32 %i.be to i64                   ; 2 uses
   %i.bg = shl nuw nsw i64 %i.bf, 2
-  %i.bh = add nuw i64 %i.l, 32
-  %i.bi = add i64 %i.bh, %i.j
+  %i.bh = add nuw nsw i64 %i.l, 32
+  %i.bi = add nuw i64 %i.bh, %i.j
   %i.bj = add i64 %i.bi, %i.bg                    ; 2 uses
   %.not193.i = icmp ne i64 %i.bj, 0
   tail call void @llvm.assume(i1 %.not193.i)

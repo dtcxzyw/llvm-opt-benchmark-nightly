@@ -204,11 +204,6 @@ bb.be:                                            ; preds = %bb.bd
   %.pre.i148.i = load i32, ptr %i.u, align 8, !tbaa !38
   br label %opal_pointer_array_get_item.exit.split.i142.i, !llvm.loop !96
 
-get_capacity.exit123.thread190.i:                 ; preds = %opal_pointer_array_get_item.exit.split.us.i134.i, %get_capacity.exit123.thread.i, %opal_pointer_array_get_item.exit27.us.i138.i, %opal_pointer_array_get_item.exit27.i145.i
-  call void (i32, ptr, ...) @opal_output(i32 noundef 0, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.2, i32 noundef 805, ptr noundef nonnull @__func__.min_cost_flow_ssp) #12
-  call void @abort() #14
-  unreachable
-
 .loopexit.i:                                      ; preds = %.lr.ph.i136.i, %bb.bd
   %.us-phi.i141.i = phi ptr [ %.pn.i143.i, %bb.bd ], [ %.pn.us30.i137.i, %.lr.ph.i136.i ]
   %i.je = getelementptr inbounds nuw i8, ptr %.us-phi.i141.i, i64 96
@@ -218,6 +213,11 @@ get_capacity.exit123.thread190.i:                 ; preds = %opal_pointer_array_
   %.063.i = load i32, ptr %.063.in.i, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp eq i32 %.063.i, -1
   br i1 %.not.i, label %.loopexit206.loopexit.i, label %.lr.ph.i, !llvm.loop !97
+
+get_capacity.exit123.thread190.i:                 ; preds = %opal_pointer_array_get_item.exit.split.us.i134.i, %get_capacity.exit123.thread.i, %opal_pointer_array_get_item.exit27.us.i138.i, %opal_pointer_array_get_item.exit27.i145.i
+  call void (i32, ptr, ...) @opal_output(i32 noundef 0, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.2, i32 noundef 805, ptr noundef nonnull @__func__.min_cost_flow_ssp) #12
+  call void @abort() #14
+  unreachable
 
 min_cost_flow_ssp.exit:                           ; preds = %bb.e, %bb.f
   %.sink295.i = phi i32 [ 753, %bb.e ], [ 761, %bb.f ]

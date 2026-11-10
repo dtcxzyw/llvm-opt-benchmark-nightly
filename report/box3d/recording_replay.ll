@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph49, %bb.h
   %i.p = getelementptr i8, ptr %i.m, i64 %i.o
   %i.q = getelementptr i8, ptr %i.p, i64 16       ; 3 uses
   store ptr %i.q, ptr %i.g, align 8, !tbaa !105
-  %i.r = shl i64 %.02446, 1                       ; 3 uses
+  %i.r = shl nuw i64 %.02446, 1                   ; 3 uses
   %i.s = add i64 %i.r, 8
   tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.q, i8 0, i64 %i.s, i1 false)
   %i.t = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %.02446

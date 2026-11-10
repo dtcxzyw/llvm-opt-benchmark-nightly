@@ -205,7 +205,7 @@ define internal double @m_remainder(double noundef %0, double noundef %1) #11 !g
 bb.a:
   %i.a = tail call double @llvm.fabs.f64(double %0) ; 4 uses
   %i.b = fcmp ueq double %i.a, +inf
-  %i.c = tail call double @llvm.fabs.f64(double %1) ; 4 uses
+  %i.c = tail call double @llvm.fabs.f64(double %1) ; 3 uses
   %i.d = fcmp ueq double %i.c, +inf
   %or.cond = or i1 %i.b, %i.d
   br i1 %or.cond, label %bb.h, label %bb.b
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.k, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = frem double %i.a, %i.c                   ; 6 uses
+  %i.f = frem double %i.a, %1                     ; 6 uses
   %i.g = fsub double %i.c, %i.f                   ; 3 uses
   %i.h = fcmp olt double %i.f, %i.g
   br i1 %i.h, label %bb.g, label %bb.d
