@@ -205,7 +205,7 @@ bb.a:
   %i.ai = alloca [32 x i8], align 8               ; 4 uses
   %i.aj = alloca [40 x i8], align 8               ; 8 uses
   %i.ak = alloca [16 x i8], align 8               ; 5 uses
-  %i.al = alloca [88 x i8], align 8               ; 13 uses
+  %i.al = alloca [88 x i8], align 8               ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
   call void @_RNvMs4_NtCs4lawaffTVVK_9sqlparser6parserNtB5_6Parser10peek_token(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.al, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %2)
   %i.am = load atomic i64, ptr @_RNvCsaljjC7ZTCQu_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8 ; 2 uses
@@ -219,74 +219,74 @@ bb.b:                                             ; preds = %bb.m, %.thread41, %
   ret void
 
 bb.c:                                             ; preds = %bb.g, %bb.a
-  %i.ap = load i8, ptr %i.al, align 8, !range !99, !noundef !54 ; 2 uses
-  switch i8 %i.ap, label %3 [
+  %i.ap = load i8, ptr %i.al, align 8, !range !99, !noundef !54
+  switch i8 %i.ap, label %bb.db [
     i8 1, label %bb.h
-    i8 23, label %bb.de
-    i8 24, label %bb.de
-    i8 25, label %bb.de
-    i8 26, label %bb.de
-    i8 27, label %bb.de
-    i8 28, label %bb.de
-    i8 29, label %bb.de
-    i8 30, label %bb.de
+    i8 23, label %bb.df
+    i8 24, label %bb.df
+    i8 25, label %bb.df
+    i8 26, label %bb.df
+    i8 27, label %bb.df
+    i8 28, label %bb.df
+    i8 29, label %bb.df
+    i8 30, label %bb.df
     i8 31, label %.thread41.sink.split
     i8 32, label %.thread41.sink.split
-    i8 33, label %bb.db
-    i8 34, label %bb.db
-    i8 35, label %bb.db
-    i8 36, label %bb.db
-    i8 37, label %bb.db
-    i8 40, label %bb.dc
-    i8 42, label %bb.dg
-    i8 43, label %bb.de
-    i8 46, label %bb.dg
-    i8 48, label %bb.dd
-    i8 49, label %bb.dh
-    i8 50, label %bb.df
-    i8 54, label %bb.df
-    i8 55, label %bb.dh
-    i8 56, label %bb.de
-    i8 57, label %bb.de
-    i8 58, label %bb.de
-    i8 59, label %bb.de
-    i8 60, label %bb.de
-    i8 61, label %bb.de
-    i8 62, label %bb.de
-    i8 63, label %bb.de
-    i8 64, label %bb.df
-    i8 65, label %bb.df
-    i8 66, label %bb.dh
-    i8 67, label %bb.dg
-    i8 69, label %bb.dh
-    i8 70, label %bb.dg
-    i8 74, label %bb.di
-    i8 75, label %bb.di
-    i8 76, label %bb.di
-    i8 78, label %bb.dh
-    i8 79, label %bb.dh
-    i8 80, label %bb.dh
-    i8 81, label %bb.dh
-    i8 82, label %bb.dh
-    i8 83, label %bb.dh
-    i8 84, label %bb.dh
-    i8 85, label %bb.dh
-    i8 86, label %bb.dh
-    i8 87, label %bb.dh
-    i8 88, label %bb.dh
-    i8 89, label %bb.dh
-    i8 90, label %bb.dh
-    i8 91, label %bb.dh
-    i8 93, label %bb.di
-    i8 94, label %bb.di
-    i8 95, label %bb.di
-    i8 96, label %bb.di
-    i8 97, label %bb.di
-    i8 98, label %bb.di
-    i8 99, label %bb.di
-    i8 100, label %bb.di
-    i8 101, label %bb.dh
-    i8 102, label %bb.di
+    i8 33, label %bb.dc
+    i8 34, label %bb.dc
+    i8 35, label %bb.dc
+    i8 36, label %bb.dc
+    i8 37, label %bb.dc
+    i8 40, label %bb.dd
+    i8 42, label %bb.dh
+    i8 43, label %bb.df
+    i8 46, label %bb.dh
+    i8 48, label %bb.de
+    i8 49, label %bb.di
+    i8 50, label %bb.dg
+    i8 54, label %bb.dg
+    i8 55, label %bb.di
+    i8 56, label %bb.df
+    i8 57, label %bb.df
+    i8 58, label %bb.df
+    i8 59, label %bb.df
+    i8 60, label %bb.df
+    i8 61, label %bb.df
+    i8 62, label %bb.df
+    i8 63, label %bb.df
+    i8 64, label %bb.dg
+    i8 65, label %bb.dg
+    i8 66, label %bb.di
+    i8 67, label %bb.dh
+    i8 69, label %bb.di
+    i8 70, label %bb.dh
+    i8 74, label %bb.dj
+    i8 75, label %bb.dj
+    i8 76, label %bb.dj
+    i8 78, label %bb.di
+    i8 79, label %bb.di
+    i8 80, label %bb.di
+    i8 81, label %bb.di
+    i8 82, label %bb.di
+    i8 83, label %bb.di
+    i8 84, label %bb.di
+    i8 85, label %bb.di
+    i8 86, label %bb.di
+    i8 87, label %bb.di
+    i8 88, label %bb.di
+    i8 89, label %bb.di
+    i8 90, label %bb.di
+    i8 91, label %bb.di
+    i8 93, label %bb.dj
+    i8 94, label %bb.dj
+    i8 95, label %bb.dj
+    i8 96, label %bb.dj
+    i8 97, label %bb.dj
+    i8 98, label %bb.dj
+    i8 99, label %bb.dj
+    i8 100, label %bb.dj
+    i8 101, label %bb.di
+    i8 102, label %bb.dj
   ]
 
 bb.d:                                             ; preds = %bb.bt, %bb.am, %bb.e
@@ -326,7 +326,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.c
 
 bb.h:                                             ; preds = %bb.c
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.al, i64 8 ; 18 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.al, i64 8 ; 21 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.al, i64 36
   %i.az = load i16, ptr %i.ay, align 4, !range !143, !noundef !54
   switch i16 %i.az, label %.thread42 [
@@ -370,7 +370,8 @@ bb.j:                                             ; preds = %bb.h
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.ba, align 8
   store i64 3, ptr %0, align 8
-  br label %bb.dj
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ax)
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser9tokenizer4WordECs14kWLkQVSKO_14deltalake_core.exit unwind label %bb.dk
 
 bb.k:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -773,57 +774,48 @@ bb.da:                                            ; preds = %bb.cz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   br label %bb.m
 
-.thread41.sink.split:                             ; preds = %bb.c, %bb.c, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db
-  %.sink = phi i8 [ 16, %bb.di ], [ 40, %bb.db ], [ 100, %bb.dc ], [ 23, %bb.dd ], [ 20, %bb.de ], [ 22, %bb.df ], [ 50, %bb.dg ], [ 21, %bb.dh ], [ 30, %bb.c ], [ 30, %bb.c ]
+.thread41.sink.split:                             ; preds = %bb.c, %bb.c, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db
+  %.sink = phi i8 [ 0, %bb.db ], [ 16, %bb.dj ], [ 40, %bb.dc ], [ 100, %bb.dd ], [ 23, %bb.de ], [ 20, %bb.df ], [ 22, %bb.dg ], [ 50, %bb.dh ], [ 21, %bb.di ], [ 30, %bb.c ], [ 30, %bb.c ]
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %.sink, ptr %i.ef, align 8
   store i64 3, ptr %0, align 8
   br label %.thread41
 
-.thread41:                                        ; preds = %.thread41.sink.split, %3, %bb.m
+.thread41:                                        ; preds = %.thread41.sink.split, %bb.m
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser9tokenizer5TokenECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(56) %i.al)
   br label %bb.b
 
-3:                                                ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %4, align 8
-  store i64 3, ptr %0, align 8
-  %5 = icmp eq i8 %i.ap, 1
-  br i1 %5, label %bb.dj, label %.thread41
-
-bb.db:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+bb.db:                                            ; preds = %bb.c
   br label %.thread41.sink.split
 
-bb.dc:                                            ; preds = %bb.c
+bb.dc:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
   br label %.thread41.sink.split
 
 bb.dd:                                            ; preds = %bb.c
   br label %.thread41.sink.split
 
-bb.de:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+bb.de:                                            ; preds = %bb.c
   br label %.thread41.sink.split
 
-bb.df:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c
+bb.df:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
   br label %.thread41.sink.split
 
 bb.dg:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c
   br label %.thread41.sink.split
 
-bb.dh:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+bb.dh:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c
   br label %.thread41.sink.split
 
-bb.di:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+bb.di:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
   br label %.thread41.sink.split
 
-bb.dj:                                            ; preds = %.thread42, %3
-  %6 = getelementptr inbounds nuw i8, ptr %i.al, i64 8 ; 3 uses
-  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(32) %6)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser9tokenizer4WordECs14kWLkQVSKO_14deltalake_core.exit unwind label %bb.dk
+bb.dj:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+  br label %.thread41.sink.split
 
-bb.dk:                                            ; preds = %bb.dj
+bb.dk:                                            ; preds = %.thread42
   %i.eg = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(32) %6)
+  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ax)
           to label %common.resume unwind label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk
@@ -836,8 +828,8 @@ common.resume:                                    ; preds = %bb.dm, %bb.dn, %bb.
   %common.resume.op = phi { ptr, i32 } [ %i.eg, %bb.dk ], [ %.pn35, %bb.do ], [ %.pn35, %bb.dn ], [ %.pn35, %bb.dm ]
   resume { ptr, i32 } %common.resume.op
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser9tokenizer4WordECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.dj
-  call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(32) %6)
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser9tokenizer4WordECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %.thread42
+  call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ax)
   br label %bb.b
 
 bb.dm:                                            ; preds = %bb.d

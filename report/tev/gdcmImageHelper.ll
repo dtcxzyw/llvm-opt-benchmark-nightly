@@ -204,8 +204,8 @@ bb.ba:                                            ; preds = %bb.az, %bb.ax, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
-  %i.cv = load i32, ptr %3, align 4, !tbaa !29    ; 2 uses
-  switch i32 %i.cv, label %19 [
+  %i.cv = load i32, ptr %3, align 4, !tbaa !29
+  switch i32 %i.cv, label %bb.cw [
     i32 9, label %bb.bb
     i32 15, label %bb.bb
     i32 95, label %bb.bb
@@ -218,10 +218,6 @@ bb.ba:                                            ; preds = %bb.az, %bb.ax, %bb.
     i32 86, label %bb.bb
     i32 68, label %bb.bb
     i32 88, label %bb.bb
-  ]
-
-19:                                               ; preds = %bb.ba
-  switch i32 %i.cv, label %bb.cw [
     i32 87, label %bb.bb
     i32 79, label %bb.bb
     i32 92, label %bb.bb
@@ -231,7 +227,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ax, %bb.
     i32 91, label %bb.bb
   ]
 
-bb.bb:                                            ; preds = %19, %19, %19, %19, %19, %19, %19, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba
+bb.bb:                                            ; preds = %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #29
   store i16 20992, ptr %15, align 4, !tbaa !30
   %i.cw = getelementptr inbounds nuw i8, ptr %15, i64 2
@@ -610,7 +606,7 @@ bb.cv:                                            ; preds = %_ZN4gdcm12SmartPoin
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #29
   br label %bb.cw
 
-bb.cw:                                            ; preds = %19, %bb.cv
+bb.cw:                                            ; preds = %bb.ba, %bb.cv
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
   ret void
 

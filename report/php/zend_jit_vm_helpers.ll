@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ct = and i8 %i.cs, 14
   %.not787 = icmp eq i8 %i.ct, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.0624, i64 28
-  %.pre = load i8, ptr %.phi.trans.insert, align 4, !tbaa !145 ; 4 uses
+  %.pre = load i8, ptr %.phi.trans.insert, align 4, !tbaa !145 ; 3 uses
   br i1 %.not787, label %.thread931._crit_edge, label %bb.x
 
 bb.x:                                             ; preds = %.thread931
@@ -293,21 +293,18 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.2691 = phi i8 [ %i.dr, %bb.ag ], [ -1, %bb.z ], [ -1, %bb.z ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %bb.x ], [ -1, %.thread931 ]
   %.1682 = phi ptr [ %.0681, %bb.ag ], [ null, %bb.z ], [ null, %bb.z ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %bb.x ], [ null, %.thread931 ] ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.0624, i64 28 ; 3 uses
-  switch i8 %.pre, label %6 [
+  switch i8 %.pre, label %bb.an [
     i8 23, label %bb.ah
     i8 24, label %bb.ah
     i8 25, label %bb.ah
     i8 27, label %bb.ah
     i8 28, label %bb.ah
     i8 29, label %bb.ah
+    i8 32, label %bb.ah
+    i8 33, label %bb.ah
   ]
 
-6:                                                ; preds = %.thread931._crit_edge
-  %7 = and i8 %.pre, -2
-  %switch = icmp eq i8 %7, 32
-  br i1 %switch, label %bb.ah, label %bb.an
-
-bb.ah:                                            ; preds = %6, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge
+bb.ah:                                            ; preds = %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge, %.thread931._crit_edge
   %i.dt = getelementptr inbounds nuw i8, ptr %.0624, i64 61
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !146
   %i.dv = and i8 %i.du, 14
@@ -350,8 +347,8 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.el = or i8 %.1605, %.1687
   br label %bb.an
 
-bb.an:                                            ; preds = %6, %bb.ah, %bb.am
-  %.2688 = phi i8 [ %i.el, %bb.am ], [ -1, %bb.ah ], [ -1, %6 ]
+bb.an:                                            ; preds = %.thread931._crit_edge, %bb.ah, %bb.am
+  %.2688 = phi i8 [ %i.el, %bb.am ], [ -1, %bb.ah ], [ -1, %.thread931._crit_edge ]
   %i.em = zext nneg i32 %.2699 to i64
   %i.en = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.em ; 5 uses
   store i8 0, ptr %i.en, align 8, !tbaa !17

@@ -205,43 +205,44 @@ bb.s:                                             ; preds = %bb.m, %bb.q, %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.bn = getelementptr i8, ptr %i.e, i64 16
-  %i.bo = load i32, ptr %i.bn, align 8            ; 3 uses
+  %i.bo = load i32, ptr %i.bn, align 8            ; 2 uses
   switch i32 %i.bo, label %bb.y [
-    i32 3, label %7
-    i32 4, label %7
-    i32 5, label %7
-    i32 6, label %7
-    i32 7, label %7
-    i32 35, label %7
-    i32 8, label %7
-    i32 9, label %7
-    i32 10, label %7
-    i32 11, label %7
-    i32 12, label %7
-    i32 13, label %7
-    i32 14, label %7
-    i32 15, label %7
-    i32 16, label %7
-    i32 17, label %7
-    i32 18, label %7
-    i32 19, label %7
+    i32 3, label %bb.u
+    i32 4, label %bb.u
+    i32 5, label %bb.u
+    i32 6, label %bb.u
+    i32 7, label %bb.u
+    i32 35, label %bb.u
+    i32 8, label %bb.u
+    i32 9, label %bb.u
+    i32 10, label %bb.u
+    i32 11, label %bb.u
+    i32 12, label %bb.u
+    i32 13, label %bb.u
+    i32 14, label %bb.u
+    i32 15, label %bb.u
+    i32 16, label %bb.u
+    i32 17, label %bb.u
+    i32 18, label %bb.u
+    i32 19, label %bb.u
   ]
 
-7:                                                ; preds = %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t
-  switch i32 %i.bo, label %bb.u [
+bb.u:                                             ; preds = %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t
+  %7 = getelementptr i8, ptr %2, i64 24
+  switch i32 %i.bo, label %bb.w [
     i32 3, label %bb.v
     i32 4, label %bb.v
     i32 5, label %bb.v
     i32 6, label %bb.v
     i32 7, label %bb.v
     i32 35, label %bb.v
+    i32 8, label %bb.v
+    i32 9, label %bb.v
+    i32 10, label %bb.v
+    i32 11, label %bb.v
   ]
 
-bb.u:                                             ; preds = %7
-  %switch = icmp samesign ult i32 %i.bo, 12
-  br i1 %switch, label %bb.v, label %bb.w
-
-bb.v:                                             ; preds = %bb.u, %7, %7, %7, %7, %7, %7
+bb.v:                                             ; preds = %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u
   %i.bp = call ptr @proto_tree_add_uint(ptr noundef %3, i32 noundef %4, ptr noundef %.1145, i32 noundef 0, i32 noundef %.2150, i32 noundef %.2150)
   br label %bb.x
 
@@ -251,8 +252,7 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.sink = phi ptr [ %i.bq, %bb.w ], [ %i.bp, %bb.v ] ; 2 uses
-  %8 = getelementptr i8, ptr %2, i64 24
-  store ptr %.sink, ptr %8, align 8
+  store ptr %.sink, ptr %7, align 8
   %i.br = getelementptr i8, ptr %2, i64 24
   %i.bs = icmp eq i32 %.2150, 1
   %i.bt = select i1 %i.bs, ptr @.str.45, ptr @.str.46
@@ -655,43 +655,44 @@ bb.ah:                                            ; preds = %bb.m, %.thread210, 
 
 bb.ai:                                            ; preds = %bb.ah
   %i.cu = getelementptr i8, ptr %i.f, i64 16
-  %i.cv = load i32, ptr %i.cu, align 8            ; 3 uses
+  %i.cv = load i32, ptr %i.cu, align 8            ; 2 uses
   switch i32 %i.cv, label %bb.an [
-    i32 3, label %9
-    i32 4, label %9
-    i32 5, label %9
-    i32 6, label %9
-    i32 7, label %9
-    i32 35, label %9
-    i32 8, label %9
-    i32 9, label %9
-    i32 10, label %9
-    i32 11, label %9
-    i32 12, label %9
-    i32 13, label %9
-    i32 14, label %9
-    i32 15, label %9
-    i32 16, label %9
-    i32 17, label %9
-    i32 18, label %9
-    i32 19, label %9
+    i32 3, label %bb.aj
+    i32 4, label %bb.aj
+    i32 5, label %bb.aj
+    i32 6, label %bb.aj
+    i32 7, label %bb.aj
+    i32 35, label %bb.aj
+    i32 8, label %bb.aj
+    i32 9, label %bb.aj
+    i32 10, label %bb.aj
+    i32 11, label %bb.aj
+    i32 12, label %bb.aj
+    i32 13, label %bb.aj
+    i32 14, label %bb.aj
+    i32 15, label %bb.aj
+    i32 16, label %bb.aj
+    i32 17, label %bb.aj
+    i32 18, label %bb.aj
+    i32 19, label %bb.aj
   ]
 
-9:                                                ; preds = %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai
-  switch i32 %i.cv, label %bb.aj [
+bb.aj:                                            ; preds = %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai, %bb.ai
+  %9 = getelementptr i8, ptr %2, i64 24
+  switch i32 %i.cv, label %bb.al [
     i32 3, label %bb.ak
     i32 4, label %bb.ak
     i32 5, label %bb.ak
     i32 6, label %bb.ak
     i32 7, label %bb.ak
     i32 35, label %bb.ak
+    i32 8, label %bb.ak
+    i32 9, label %bb.ak
+    i32 10, label %bb.ak
+    i32 11, label %bb.ak
   ]
 
-bb.aj:                                            ; preds = %9
-  %switch = icmp samesign ult i32 %i.cv, 12
-  br i1 %switch, label %bb.ak, label %bb.al
-
-bb.ak:                                            ; preds = %bb.aj, %9, %9, %9, %9, %9, %9
+bb.ak:                                            ; preds = %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj
   %i.cw = call ptr @proto_tree_add_uint(ptr noundef %3, i32 noundef %4, ptr noundef %.4, i32 noundef 0, i32 noundef %.0151, i32 noundef %.0151)
   br label %bb.am
 
@@ -701,8 +702,7 @@ bb.al:                                            ; preds = %bb.aj
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %.sink = phi ptr [ %i.cx, %bb.al ], [ %i.cw, %bb.ak ] ; 2 uses
-  %10 = getelementptr i8, ptr %2, i64 24
-  store ptr %.sink, ptr %10, align 8
+  store ptr %.sink, ptr %9, align 8
   %i.cy = icmp eq i32 %.0151, 1
   %i.cz = select i1 %i.cy, ptr @.str.45, ptr @.str.46
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %.sink, ptr noundef nonnull %i.cz)
@@ -1105,8 +1105,8 @@ bb.bp:                                            ; preds = %._crit_edge348, %bb
   %.0249 = phi i32 [ %i.ab, %bb.m ], [ %i.hy, %bb.bo ], [ %i.gp, %bb.bi ], [ %i.hc, %bb.bk ], [ %i.fz, %bb.bg ], [ %i.fz, %._crit_edge348 ] ; 3 uses
   %.0248 = phi i32 [ 0, %bb.m ], [ %i.hx, %bb.bo ], [ 1, %bb.bi ], [ 2, %bb.bk ], [ %.0238.lcssa, %bb.bg ], [ %.0238.lcssa, %._crit_edge348 ] ; 3 uses
   %i.ia = getelementptr i8, ptr %i.p, i64 16
-  %i.ib = load i32, ptr %i.ia, align 8            ; 2 uses
-  switch i32 %i.ib, label %10 [
+  %i.ib = load i32, ptr %i.ia, align 8
+  switch i32 %i.ib, label %bb.bt [
     i32 3, label %bb.bq
     i32 4, label %bb.bq
     i32 5, label %bb.bq
@@ -1125,6 +1125,8 @@ bb.bp:                                            ; preds = %._crit_edge348, %bb
     i32 17, label %bb.br
     i32 18, label %bb.br
     i32 19, label %bb.br
+    i32 24, label %bb.bs
+    i32 25, label %bb.bs
   ]
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bp, %bb.bp, %bb.bp, %bb.bp, %bb.bp, %bb.bp, %bb.bp, %bb.bp, %bb.bp
@@ -1149,18 +1151,13 @@ bb.br:                                            ; preds = %bb.bp, %bb.bp, %bb.
   %i.ik = call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %i.ij, ptr noundef %i.ig, ptr noundef @ei_per_size_constraint_value, ptr noundef @.str.181, i64 noundef %.3253, i64 noundef %5, i64 noundef %6) ; 0 uses
   br label %per_check_value64.exit
 
-10:                                               ; preds = %bb.bp
-  %11 = and i32 %i.ib, -2
-  %switch = icmp eq i32 %11, 24
-  br i1 %switch, label %bb.bs, label %bb.bt
-
-bb.bs:                                            ; preds = %10
+bb.bs:                                            ; preds = %bb.bp, %bb.bp
   %i.il = and i64 %.3253, 4294967295
   store i64 %i.il, ptr %9, align 8
   %i.im = call ptr @proto_tree_add_time(ptr noundef %3, i32 noundef %4, ptr noundef %0, i32 noundef %.0249, i32 noundef %.0248, ptr noundef nonnull %9)
   br label %per_check_value64.exit
 
-bb.bt:                                            ; preds = %10
+bb.bt:                                            ; preds = %bb.bp
   call void @except_throw(i64 noundef 1, i64 noundef 3, ptr noundef null) #12
   unreachable
 

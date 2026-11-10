@@ -205,7 +205,7 @@ _ssa_result_info.exit:                            ; preds = %.lr.ph.i312.prol.lo
 
 _ssa_result_info.exit.thread:                     ; preds = %bb.as, %bb.bd, %_ssa_result_info.exit, %bb.an
   %i.np = getelementptr inbounds nuw i8, ptr %.08506.i, i64 28 ; 10 uses
-  %i.nq = load i8, ptr %i.np, align 4, !tbaa !55  ; 17 uses
+  %i.nq = load i8, ptr %i.np, align 4, !tbaa !55  ; 16 uses
   switch i8 %i.nq, label %_ssa_op1_info.exit46.thread [
     i8 27, label %bb.bf
     i8 28, label %bb.bf
@@ -608,10 +608,10 @@ _ssa_op1_info.exit46.thread:                      ; preds = %bb.bj, %bb.bu, %bb.
     i8 -87, label %bb.fy
     i8 -89, label %bb.fy
     i8 -58, label %switch.lookup
-    i8 26, label %7
-    i8 27, label %7
-    i8 28, label %7
-    i8 29, label %7
+    i8 -86, label %bb.ayq
+    i8 40, label %bb.ayg
+    i8 41, label %bb.ayg
+    i8 38, label %bb.ayg
     i8 34, label %bb.mc
     i8 35, label %bb.mc
     i8 36, label %bb.ng
@@ -706,10 +706,10 @@ _ssa_op1_info.exit46.thread:                      ; preds = %bb.bj, %bb.bu, %bb.
     i8 -70, label %bb.axr
     i8 -114, label %bb.axy
     i8 39, label %bb.ayg
-    i8 38, label %bb.ayg
-    i8 41, label %bb.ayg
-    i8 40, label %bb.ayg
-    i8 -86, label %bb.ayq
+    i8 28, label %bb.ho
+    i8 27, label %bb.ib
+    i8 29, label %bb.in
+    i8 26, label %bb.ja
   ]
 
 bb.dm:                                            ; preds = %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread
@@ -1112,14 +1112,7 @@ bb.hn:                                            ; preds = %bb.hm
   store i32 %.58093.i, ptr %i.amw, align 8, !tbaa !117
   br label %_zend_update_type_info.exit
 
-7:                                                ; preds = %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread
-  switch i8 %i.nq, label %bb.ja [
-    i8 28, label %bb.ho
-    i8 27, label %bb.ib
-    i8 29, label %bb.in
-  ]
-
-bb.ho:                                            ; preds = %7
+bb.ho:                                            ; preds = %_ssa_op1_info.exit46.thread
   %i.ana = tail call fastcc ptr @zend_fetch_prop_info(ptr noundef %0, ptr noundef %1, ptr noundef %.08506.i, ptr noundef %.08507.i) ; 10 uses
   %.not.i369 = icmp eq ptr %i.ana, null
   br i1 %.not.i369, label %zend_fetch_prop_type.exit, label %bb.hp
@@ -1210,7 +1203,7 @@ bb.ia:                                            ; preds = %bb.hz
   %i.aon = load i32, ptr %i.aom, align 8, !tbaa !117
   br label %_ssa_op1_info.exit
 
-bb.ib:                                            ; preds = %7
+bb.ib:                                            ; preds = %_ssa_op1_info.exit46.thread
   %i.aoo = lshr i32 %.0.i481487, 10
   %spec.select10374.i = and i32 %i.aoo, 1024      ; 7 uses
   %i.aop = tail call i32 @zend_array_element_type(i32 noundef %.0.i481487, i8 noundef zeroext %i.n, i32 noundef 1, i32 noundef 0) ; 7 uses
@@ -1289,7 +1282,7 @@ bb.im:                                            ; preds = %bb.il
   %i.apw = load i32, ptr %i.apv, align 8, !tbaa !117
   br label %_ssa_op1_info.exit
 
-bb.in:                                            ; preds = %7
+bb.in:                                            ; preds = %_ssa_op1_info.exit46.thread
   %i.apx = tail call fastcc ptr @zend_fetch_static_prop_info(ptr noundef %2, ptr noundef %0, ptr noundef %.08506.i) ; 10 uses
   %.not.i371 = icmp eq ptr %i.apx, null
   br i1 %.not.i371, label %zend_fetch_prop_type.exit373, label %bb.io
@@ -1380,7 +1373,7 @@ bb.iz:                                            ; preds = %bb.iy
   %i.ark = load i32, ptr %i.arj, align 8, !tbaa !117
   br label %_ssa_op1_info.exit
 
-bb.ja:                                            ; preds = %7
+bb.ja:                                            ; preds = %_ssa_op1_info.exit46.thread
   %i.arl = and i32 %.0.i481487, 1024
   br label %_ssa_op1_info.exit
 
@@ -1783,7 +1776,7 @@ bb.ash:                                           ; preds = %bb.asg
   store i32 %.57645.i, ptr %i.frf, align 8, !tbaa !117
   br label %bb.asi
 
-bb.asi:                                           ; preds = %bb.ash, %bb.asf, %bb.asb, %bb.asa, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread
+bb.asi:                                           ; preds = %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %_ssa_op1_info.exit46.thread, %bb.ash, %bb.asf, %bb.asb, %bb.asa
   %i.frj = getelementptr inbounds nuw i8, ptr %.08507.i, i64 20 ; 2 uses
   %i.frk = load i32, ptr %i.frj, align 4, !tbaa !38
   %i.frl = icmp sgt i32 %i.frk, -1
@@ -2186,7 +2179,7 @@ _ssa_result_info.exit:                            ; preds = %.lr.ph.i698.prol.lo
 
 _ssa_result_info.exit.thread:                     ; preds = %bb.da, %bb.dl, %_ssa_result_info.exit, %bb.cv
   %i.zh = getelementptr inbounds nuw i8, ptr %.08506.i, i64 28 ; 14 uses
-  %i.zi = load i8, ptr %i.zh, align 4, !tbaa !55  ; 13 uses
+  %i.zi = load i8, ptr %i.zh, align 4, !tbaa !55  ; 12 uses
   switch i8 %i.zi, label %_ssa_op1_info.exit402.thread [
     i8 27, label %bb.dn
     i8 28, label %bb.dn
@@ -2589,10 +2582,10 @@ _ssa_op1_info.exit402.thread:                     ; preds = %bb.dr, %bb.ec, %bb.
     i8 -87, label %bb.hg
     i8 -89, label %bb.hg
     i8 -58, label %switch.lookup
-    i8 26, label %5
-    i8 27, label %5
-    i8 28, label %5
-    i8 29, label %5
+    i8 -86, label %bb.arw
+    i8 40, label %bb.arp
+    i8 41, label %bb.arp
+    i8 38, label %bb.arp
     i8 34, label %bb.mt
     i8 35, label %bb.mt
     i8 36, label %bb.nr
@@ -2687,10 +2680,10 @@ _ssa_op1_info.exit402.thread:                     ; preds = %bb.dr, %bb.ec, %bb.
     i8 -70, label %bb.arh
     i8 -114, label %bb.arl
     i8 39, label %bb.arp
-    i8 38, label %bb.arp
-    i8 41, label %bb.arp
-    i8 40, label %bb.arp
-    i8 -86, label %bb.arw
+    i8 28, label %bb.iq
+    i8 27, label %bb.jd
+    i8 29, label %bb.jp
+    i8 26, label %bb.kc
   ]
 
 bb.fh:                                            ; preds = %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread
@@ -3093,14 +3086,7 @@ bb.ip:                                            ; preds = %.thread991
   call fastcc void @add_usages(ptr noundef nonnull %0, ptr noundef %2, ptr noundef %3, i32 noundef %i.bay)
   br label %_zend_update_type_info.exit.thread
 
-5:                                                ; preds = %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread
-  switch i8 %i.zi, label %bb.kc [
-    i8 28, label %bb.iq
-    i8 27, label %bb.jd
-    i8 29, label %bb.jp
-  ]
-
-bb.iq:                                            ; preds = %5
+bb.iq:                                            ; preds = %_ssa_op1_info.exit402.thread
   %i.bbt = call fastcc ptr @zend_fetch_prop_info(ptr noundef %0, ptr noundef %2, ptr noundef %.08506.i, ptr noundef %.08507.i) ; 10 uses
   %.not.i760 = icmp eq ptr %i.bbt, null
   br i1 %.not.i760, label %zend_fetch_prop_type.exit, label %bb.ir
@@ -3189,7 +3175,7 @@ bb.jc:                                            ; preds = %bb.jb
   %i.bde = load i32, ptr %i.bdd, align 8, !tbaa !117
   br label %_ssa_op1_info.exit
 
-bb.jd:                                            ; preds = %5
+bb.jd:                                            ; preds = %_ssa_op1_info.exit402.thread
   %i.bdf = lshr i32 %.0.i4043437, 10
   %spec.select10374.i = and i32 %i.bdf, 1024      ; 7 uses
   %i.bdg = call i32 @zend_array_element_type(i32 noundef %.0.i4043437, i8 noundef zeroext %i.ll, i32 noundef 1, i32 noundef 0) ; 7 uses
@@ -3266,7 +3252,7 @@ bb.jo:                                            ; preds = %bb.jn
   %i.bel = load i32, ptr %i.bek, align 8, !tbaa !117
   br label %_ssa_op1_info.exit
 
-bb.jp:                                            ; preds = %5
+bb.jp:                                            ; preds = %_ssa_op1_info.exit402.thread
   %i.bem = call fastcc ptr @zend_fetch_static_prop_info(ptr noundef %1, ptr noundef %0, ptr noundef %.08506.i) ; 10 uses
   %.not.i762 = icmp eq ptr %i.bem, null
   br i1 %.not.i762, label %zend_fetch_prop_type.exit764, label %bb.jq
@@ -3355,7 +3341,7 @@ bb.kb:                                            ; preds = %bb.ka
   %i.bfx = load i32, ptr %i.bfw, align 8, !tbaa !117
   br label %_ssa_op1_info.exit
 
-bb.kc:                                            ; preds = %5
+bb.kc:                                            ; preds = %_ssa_op1_info.exit402.thread
   %i.bfy = and i32 %.0.i4043437, 1024
   br label %_ssa_op1_info.exit
 
@@ -3758,7 +3744,7 @@ bb.ano:                                           ; preds = %.thread1502
   call fastcc void @add_usages(ptr noundef nonnull %0, ptr noundef nonnull %2, ptr noundef %3, i32 noundef %i.gsx)
   br label %bb.anp
 
-bb.anp:                                           ; preds = %.thread1498, %bb.ano, %bb.ann, %bb.anl, %bb.ank, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread
+bb.anp:                                           ; preds = %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %_ssa_op1_info.exit402.thread, %.thread1498, %bb.ano, %bb.ann, %bb.anl, %bb.ank
   %i.gul = getelementptr inbounds nuw i8, ptr %.08507.i, i64 20 ; 4 uses
   %i.gum = load i32, ptr %i.gul, align 4, !tbaa !38
   %i.gun = icmp sgt i32 %i.gum, -1

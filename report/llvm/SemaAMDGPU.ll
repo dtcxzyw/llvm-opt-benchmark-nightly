@@ -204,12 +204,12 @@ begin_hunk_0_@_ZN5clang10SemaAMDGPU30CheckAMDGCNBuiltinFunctionCallEjPNS_8CallEx
     i32 2108, label %bb.bo
     i32 2111, label %bb.bo
     i32 2110, label %bb.bo
-    i32 2516, label %35
-    i32 2408, label %35
+    i32 2467, label %bb.ct
+    i32 2494, label %bb.ct
     i32 2493, label %bb.ct
     i32 2476, label %bb.ct
-    i32 2494, label %bb.ct
-    i32 2467, label %bb.ct
+    i32 2516, label %bb.ci
+    i32 2408, label %bb.ck
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
@@ -612,18 +612,7 @@ _ZN4llvm5APIntD2Ev.exit152:                       ; preds = %bb.cf, %bb.cg, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #20
   br label %_ZN5clang10SemaAMDGPU22checkAtomicMonitorLoadEPNS_8CallExprE.exit
 
-35:                                               ; preds = %bb.a, %bb.a
-  switch i32 %1, label %._crit_edge [
-    i32 2516, label %bb.ci
-    i32 2408, label %bb.ck
-  ]
-
-._crit_edge:                                      ; preds = %35
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %bb.cm
-
-bb.ci:                                            ; preds = %35
+bb.ci:                                            ; preds = %bb.a
   %i.kw = load ptr, ptr %0, align 8, !tbaa !23, !nonnull !24, !align !25
   %i.kx = call noundef zeroext i1 @_ZN5clang4Sema18checkArgCountRangeEPNS_8CallExprEjj(ptr noundef nonnull align 8 dereferenceable(18640) %i.kw, ptr noundef %2, i32 noundef 7, i32 noundef 8) #20
   br i1 %i.kx, label %_ZN5clang10SemaAMDGPU22checkAtomicMonitorLoadEPNS_8CallExprE.exit, label %bb.cj
@@ -634,7 +623,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.la = icmp eq i32 %i.kz, 7
   br i1 %i.la, label %_ZN5clang10SemaAMDGPU22checkAtomicMonitorLoadEPNS_8CallExprE.exit, label %bb.cm
 
-bb.ck:                                            ; preds = %35
+bb.ck:                                            ; preds = %bb.a
   %i.lb = load ptr, ptr %0, align 8, !tbaa !23, !nonnull !24, !align !25
   %i.lc = call noundef zeroext i1 @_ZN5clang4Sema18checkArgCountRangeEPNS_8CallExprEjj(ptr noundef nonnull align 8 dereferenceable(18640) %i.lb, ptr noundef %2, i32 noundef 8, i32 noundef 9) #20
   br i1 %i.lc, label %_ZN5clang10SemaAMDGPU22checkAtomicMonitorLoadEPNS_8CallExprE.exit, label %bb.cl
@@ -645,9 +634,9 @@ bb.cl:                                            ; preds = %bb.ck
   %i.lf = icmp eq i32 %i.le, 8
   br i1 %i.lf, label %_ZN5clang10SemaAMDGPU22checkAtomicMonitorLoadEPNS_8CallExprE.exit, label %bb.cm
 
-bb.cm:                                            ; preds = %._crit_edge, %bb.cl, %bb.cj
-  %36 = phi i32 [ %.pre, %._crit_edge ], [ %i.le, %bb.cl ], [ %i.kz, %bb.cj ]
-  %i.lg = add i32 %36, -1
+bb.cm:                                            ; preds = %bb.cl, %bb.cj
+  %35 = phi i32 [ %i.le, %bb.cl ], [ %i.kz, %bb.cj ]
+  %i.lg = add i32 %35, -1
   %i.lh = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.li = load i32, ptr %2, align 8
   %i.lj = lshr i32 %i.li, 19

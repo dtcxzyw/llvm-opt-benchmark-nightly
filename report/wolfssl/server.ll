@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.u, %bb.t, %bb.s,
   %i.ay = getelementptr inbounds nuw i8, ptr %.09.lcssa.i, i64 8
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !40 ; 3 uses
   %.not74.i = icmp eq i32 %i.az, 0
-  br i1 %.not74.i, label %mygetopt_long.exit, label %bb.m
+  br i1 %.not74.i, label %mygetopt_long.exit.thread.a, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ba = icmp slt i32 %i.ax, %i.p
@@ -220,19 +220,17 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.bc = load i8, ptr %.pre15.i, align 1, !tbaa !21
   %.not76.i = icmp eq i8 %i.bc, 45
-  br i1 %.not76.i, label %mygetopt_long.exit, label %._crit_edge.i
+  br i1 %.not76.i, label %mygetopt_long.exit.thread.a, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.o, %bb.n
   store ptr %.pre15.i, ptr @myoptarg, align 8, !tbaa !20
   %i.bd = add nsw i32 %i.ab, 2
   store i32 %i.bd, ptr @myoptind, align 4, !tbaa !9
-  br label %mygetopt_long.exit
+  br label %mygetopt_long.exit.thread.a
 
 bb.p:                                             ; preds = %bb.m
-  %.not75.i = icmp ne i32 %i.az, 2
-  %.not.a = icmp eq i32 %i.aw, -1
-  %or.cond713 = select i1 %.not75.i, i1 true, i1 %.not.a
-  br i1 %or.cond713, label %mygetopt_long.exit.thread677, label %mygetopt_long.exit.thread.a
+  %.not.a = icmp eq i32 %i.az, 2
+  br i1 %.not.a, label %mygetopt_long.exit.thread.a, label %mygetopt_long.exit.thread677
 
 bb.q:                                             ; preds = %bb.k
   %i.be = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.at, ptr noundef nonnull dereferenceable(10) @.str.8) #24
@@ -343,13 +341,10 @@ bb.ah:                                            ; preds = %bb.ag
   store i32 %i.cg, ptr @myoptind, align 4, !tbaa !9
   br label %mygetopt_long.exit.thread.a
 
-mygetopt_long.exit:                               ; preds = %bb.l, %bb.o, %._crit_edge.i
-  %.not.old = icmp eq i32 %i.aw, -1
-  br i1 %.not.old, label %mygetopt_long.exit.thread677, label %mygetopt_long.exit.thread.a
-
-mygetopt_long.exit.thread.a:                      ; preds = %bb.p, %bb.ad, %bb.af, %bb.ag, %bb.ah, %bb.ae, %bb.x, %bb.z, %bb.ab, %mygetopt_long.exit
-  %.1.i675 = phi i32 [ %i.aw, %mygetopt_long.exit ], [ %i.bo, %bb.ad ], [ %i.bo, %bb.af ], [ %i.bo, %bb.ag ], [ %i.bo, %bb.ah ], [ %i.bo, %bb.ae ], [ %i.bo, %bb.x ], [ %i.bo, %bb.z ], [ %i.bo, %bb.ab ], [ %i.aw, %bb.p ]
-  switch i32 %.1.i675, label %bb.fc [
+mygetopt_long.exit.thread.a:                      ; preds = %bb.p, %bb.l, %bb.o, %._crit_edge.i, %bb.x, %bb.z, %bb.ab, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah
+  %.1.i = phi i32 [ %i.bo, %bb.ae ], [ %i.bo, %bb.z ], [ %i.bo, %bb.ah ], [ %i.bo, %bb.ag ], [ %i.bo, %bb.ab ], [ %i.bo, %bb.x ], [ %i.bo, %bb.af ], [ %i.bo, %bb.ad ], [ %i.aw, %bb.l ], [ %i.aw, %._crit_edge.i ], [ %i.aw, %bb.o ], [ %i.aw, %bb.p ]
+  switch i32 %.1.i, label %bb.fc [
+    i32 -1, label %mygetopt_long.exit.thread677
     i32 63, label %mygetopt_long.exit.thread.thread
     i32 257, label %bb.ak
     i32 258, label %bb.al
@@ -419,7 +414,7 @@ mygetopt_long.exit.thread.a:                      ; preds = %bb.p, %bb.ad, %bb.a
     i32 268, label %.lr.ph.backedge
   ]
 
-mygetopt_long.exit.thread.thread:                 ; preds = %bb.w, %bb.aa, %mygetopt_long.exit.thread.a
+mygetopt_long.exit.thread.thread:                 ; preds = %bb.aa, %bb.w, %mygetopt_long.exit.thread.a
   %i.ch = load ptr, ptr @myoptarg, align 8, !tbaa !20 ; 2 uses
   %.not539 = icmp eq ptr %i.ch, null
   br i1 %.not539, label %bb.aj, label %bb.ai
@@ -822,7 +817,7 @@ bb.ew:                                            ; preds = %.preheader718.15
   store i32 33, ptr %i.l, align 4, !tbaa !9
   br label %.lr.ph.backedge
 
-.lr.ph.backedge:                                  ; preds = %.thread, %bb.ex, %bb.ax, %bb.cp, %bb.cs, %.loopexit, %bb.cb, %bb.bw, %bb.bc, %bb.bg, %bb.bk, %bb.bo, %bb.bq, %bb.bm, %bb.bi, %bb.be, %bb.ay, %bb.fb, %bb.fa, %bb.cw, %bb.cr, %bb.cq, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.cd, %bb.ca, %bb.bz, %bb.by, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.ba, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a
+.lr.ph.backedge:                                  ; preds = %.thread, %bb.ex, %bb.ax, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread.a, %bb.cp, %bb.cs, %.loopexit, %bb.cb, %bb.bw, %bb.bc, %bb.bg, %bb.bk, %bb.bo, %bb.bq, %bb.bm, %bb.bi, %bb.be, %bb.ay, %bb.fb, %bb.fa, %bb.cw, %bb.cr, %bb.cq, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.cd, %bb.ca, %bb.bz, %bb.by, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.ba, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am
   %.03521605.be = phi i32 [ %.03521605, %.thread ], [ %.03521605, %bb.am ], [ %.03521605, %bb.an ], [ %.03521605, %bb.ao ], [ %.03521605, %bb.ap ], [ %.03521605, %bb.aq ], [ %.03521605, %bb.ar ], [ %.03521605, %bb.as ], [ %.03521605, %bb.at ], [ %.03521605, %bb.au ], [ %.03521605, %bb.av ], [ %.03521605, %bb.aw ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %bb.ay ], [ %.03521605, %bb.ba ], [ %.03521605, %bb.bc ], [ %.03521605, %bb.be ], [ %.03521605, %bb.bg ], [ %.03521605, %bb.bi ], [ %.03521605, %bb.bk ], [ %.03521605, %bb.bm ], [ 1, %bb.bo ], [ %.03521605, %bb.bq ], [ %.03521605, %bb.bs ], [ %.03521605, %bb.bt ], [ %.03521605, %bb.bu ], [ %.03521605, %bb.bv ], [ %.03521605, %bb.bw ], [ %.03521605, %bb.by ], [ %.03521605, %bb.bz ], [ %.03521605, %bb.ca ], [ %.03521605, %bb.cb ], [ %.03521605, %bb.cd ], [ %.03521605, %.loopexit ], [ %.03521605, %bb.cj ], [ %.03521605, %bb.ck ], [ %.03521605, %bb.cl ], [ %.03521605, %bb.cm ], [ %.03521605, %bb.cn ], [ %.03521605, %bb.co ], [ %.03521605, %bb.cp ], [ %.03521605, %bb.cq ], [ %.03521605, %bb.cr ], [ %.03521605, %bb.cs ], [ %.03521605, %bb.cw ], [ %.03521605, %bb.ax ], [ %.03521605, %bb.fa ], [ %.03521605, %bb.fb ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %mygetopt_long.exit.thread.a ], [ %.03521605, %bb.ex ]
   %.03541603.be = phi i32 [ %.03541603, %.thread ], [ %.03541603, %bb.am ], [ %.03541603, %bb.an ], [ %.03541603, %bb.ao ], [ %.03541603, %bb.ap ], [ %.03541603, %bb.aq ], [ %.03541603, %bb.ar ], [ %.03541603, %bb.as ], [ %.03541603, %bb.at ], [ %.03541603, %bb.au ], [ %.03541603, %bb.av ], [ %.03541603, %bb.aw ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %bb.ay ], [ %.03541603, %bb.ba ], [ %.03541603, %bb.bc ], [ %.03541603, %bb.be ], [ %.03541603, %bb.bg ], [ %.03541603, %bb.bi ], [ 2, %bb.bk ], [ 1, %bb.bm ], [ %.03541603, %bb.bo ], [ %.03541603, %bb.bq ], [ %.03541603, %bb.bs ], [ %.03541603, %bb.bt ], [ %.03541603, %bb.bu ], [ %.03541603, %bb.bv ], [ %.03541603, %bb.bw ], [ %.03541603, %bb.by ], [ %.03541603, %bb.bz ], [ %.03541603, %bb.ca ], [ %.03541603, %bb.cb ], [ %.03541603, %bb.cd ], [ %.03541603, %.loopexit ], [ %.03541603, %bb.cj ], [ %.03541603, %bb.ck ], [ %.03541603, %bb.cl ], [ %.03541603, %bb.cm ], [ %.03541603, %bb.cn ], [ %.03541603, %bb.co ], [ %.03541603, %bb.cp ], [ %.03541603, %bb.cq ], [ %.03541603, %bb.cr ], [ %.03541603, %bb.cs ], [ %.03541603, %bb.cw ], [ %.03541603, %bb.ax ], [ %.03541603, %bb.fa ], [ %.03541603, %bb.fb ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %mygetopt_long.exit.thread.a ], [ %.03541603, %bb.ex ]
   %.03561601.be = phi i32 [ %.03561601, %.thread ], [ %.03561601, %bb.am ], [ %.03561601, %bb.an ], [ %.03561601, %bb.ao ], [ %.03561601, %bb.ap ], [ %.03561601, %bb.aq ], [ %.03561601, %bb.ar ], [ %.03561601, %bb.as ], [ %.03561601, %bb.at ], [ %.03561601, %bb.au ], [ %.03561601, %bb.av ], [ %.03561601, %bb.aw ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %bb.ay ], [ %.03561601, %bb.ba ], [ %.03561601, %bb.bc ], [ 1, %bb.be ], [ %.03561601, %bb.bg ], [ %.03561601, %bb.bi ], [ %.03561601, %bb.bk ], [ %.03561601, %bb.bm ], [ %.03561601, %bb.bo ], [ %.03561601, %bb.bq ], [ %.03561601, %bb.bs ], [ %.03561601, %bb.bt ], [ %.03561601, %bb.bu ], [ %.03561601, %bb.bv ], [ %.03561601, %bb.bw ], [ %.03561601, %bb.by ], [ %.03561601, %bb.bz ], [ %.03561601, %bb.ca ], [ %.03561601, %bb.cb ], [ %.03561601, %bb.cd ], [ %.03561601, %.loopexit ], [ %.03561601, %bb.cj ], [ %.03561601, %bb.ck ], [ %.03561601, %bb.cl ], [ %.03561601, %bb.cm ], [ %.03561601, %bb.cn ], [ %.03561601, %bb.co ], [ %.03561601, %bb.cp ], [ %.03561601, %bb.cq ], [ %.03561601, %bb.cr ], [ %.03561601, %bb.cs ], [ %.03561601, %bb.cw ], [ %.03561601, %bb.ax ], [ %.03561601, %bb.fa ], [ %.03561601, %bb.fb ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %mygetopt_long.exit.thread.a ], [ %.03561601, %bb.ex ]
@@ -899,7 +894,7 @@ mygetopt_long.exit.thread677.sink.split:          ; preds = %.thread1.i, %bb.h, 
   store ptr %.sink, ptr @myoptarg, align 8, !tbaa !20
   br label %mygetopt_long.exit.thread677
 
-mygetopt_long.exit.thread677:                     ; preds = %bb.p, %bb.u, %mygetopt_long.exit, %mygetopt_long.exit.thread677.sink.split, %bb.i
+mygetopt_long.exit.thread677:                     ; preds = %bb.u, %bb.p, %mygetopt_long.exit.thread.a, %mygetopt_long.exit.thread677.sink.split, %bb.i
   store i32 0, ptr @myoptind, align 4, !tbaa !9
   %i.jq = icmp eq i32 %.04331535, -99
   %.not475 = icmp eq i32 %.04231545, 0            ; 2 uses

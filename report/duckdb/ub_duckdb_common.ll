@@ -205,7 +205,7 @@ bb.cs:                                            ; preds = %bb.cp
   ]
 
 bb.ct:                                            ; preds = %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs, %bb.cs
-  switch i8 %i.hv, label %_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i [
+  switch i8 %i.hv, label %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140 [
     i8 11, label %bb.cu
     i8 12, label %bb.cu
     i8 13, label %bb.cu
@@ -219,6 +219,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cs, %bb.
     i8 30, label %bb.cu
     i8 31, label %bb.cu
     i8 49, label %bb.cu
+    i8 10, label %bb.cx
   ]
 
 bb.cu:                                            ; preds = %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct, %bb.ct
@@ -250,11 +251,11 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cv, %bb.
   %i.ia = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN6duckdb11LogicalTypeaSERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %68, ptr noundef nonnull align 8 dereferenceable(24) %2), !inline_history !8864 ; 0 uses
   br label %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread
 
-_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i:    ; preds = %bb.cs, %bb.ct
+_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i:    ; preds = %bb.cs
   %i.ib = icmp eq i8 %i.hv, 10
   br i1 %i.ib, label %bb.cx, label %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140
 
-bb.cx:                                            ; preds = %_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i
+bb.cx:                                            ; preds = %bb.ct, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i
   switch i8 %i.hl, label %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140 [
     i8 11, label %bb.cy
     i8 12, label %bb.cy
@@ -657,7 +658,7 @@ _ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11L
   call void @llvm.lifetime.end.p0(ptr nonnull %25)
   br label %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140
 
-_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140: ; preds = %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140.sink.split, %bb.cx, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i, %bb.cv, %.split, %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit
+_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140: ; preds = %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit.thread140.sink.split, %bb.cx, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit.i, %bb.cv, %bb.ct, %.split, %_ZN6duckdbL28TryGetMaxLogicalTypeInternalINS_21ForceGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit
   %.val11 = load i8, ptr %1, align 8, !tbaa !3057
   %i.acr = call fastcc noundef i64 @_ZN6duckdbL19GetLogicalTypeScoreERKNS_11LogicalTypeE(i8 %.val11)
   %.val = load i8, ptr %2, align 8, !tbaa !3057
@@ -1060,7 +1061,7 @@ bb.cn:                                            ; preds = %bb.ck
   ]
 
 bb.co:                                            ; preds = %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn, %bb.cn
-  switch i8 %i.hc, label %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36 [
+  switch i8 %i.hc, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit [
     i8 11, label %bb.cp
     i8 12, label %bb.cp
     i8 13, label %bb.cp
@@ -1074,6 +1075,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.cn, %bb.
     i8 30, label %bb.cp
     i8 31, label %bb.cp
     i8 49, label %bb.cp
+    i8 10, label %bb.cs
   ]
 
 bb.cp:                                            ; preds = %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co, %bb.co
@@ -1102,11 +1104,11 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cq, %bb.
   %i.hh = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN6duckdb11LogicalTypeaSERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %1), !inline_history !8899 ; 0 uses
   br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
 
-_ZNK6duckdb11LogicalType10IsIntegralEv.exit36:    ; preds = %bb.cn, %bb.co
+_ZNK6duckdb11LogicalType10IsIntegralEv.exit36:    ; preds = %bb.cn
   %i.hi = icmp eq i8 %i.hc, 10
   br i1 %i.hi, label %bb.cs, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
 
-bb.cs:                                            ; preds = %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36
+bb.cs:                                            ; preds = %bb.co, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36
   switch i8 %i.gs, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit [
     i8 11, label %bb.ct
     i8 12, label %bb.ct
@@ -1466,8 +1468,8 @@ _ZN6duckdbL17CombineEqualTypesINS_19TryGetTypeOperationEEEbRKNS_11LogicalTypeES4
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
   br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %bb.ba, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i97, %bb.aw, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i94, %bb.aq, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit41, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit40, %bb.bs, %bb.bu, %bb.by, %bb.bz, %bb.ca, %bb.ce, %bb.cf, %bb.cg, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit39, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit, %bb.cp, %bb.cr, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36, %bb.ct, %bb.bl, %_ZN6duckdb11LogicalType13NormalizeTypeERKS0_.exit, %bb.cs, %bb.cq, %bb.ae, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i44, %bb.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i47, %bb.ao, %bb.ab, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i29, %bb.x, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i26, %bb.r, %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.d, %_ZN6duckdbL17CombineEqualTypesINS_19TryGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit
-  %.0 = phi i1 [ %.473.i, %_ZN6duckdbL17CombineEqualTypesINS_19TryGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit ], [ true, %bb.n ], [ true, %bb.ab ], [ true, %bb.d ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i ], [ true, %bb.j ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i ], [ true, %bb.r ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i26 ], [ true, %bb.x ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i29 ], [ true, %bb.ao ], [ false, %bb.cq ], [ true, %bb.ae ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i44 ], [ true, %bb.ak ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i47 ], [ %i.fy, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit41 ], [ %i.gb, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit40 ], [ true, %bb.bs ], [ true, %bb.bu ], [ false, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36 ], [ true, %bb.cg ], [ true, %bb.ca ], [ %i.ha, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit39 ], [ %i.he, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit ], [ true, %bb.cp ], [ true, %bb.cr ], [ true, %bb.ct ], [ true, %bb.by ], [ true, %bb.bz ], [ true, %bb.ce ], [ true, %bb.cf ], [ true, %_ZN6duckdb11LogicalType13NormalizeTypeERKS0_.exit ], [ true, %bb.bl ], [ false, %bb.cs ], [ true, %bb.aq ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i94 ], [ true, %bb.aw ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i97 ], [ true, %bb.ba ]
+_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %bb.ba, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i97, %bb.aw, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i94, %bb.aq, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit41, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit40, %bb.bs, %bb.bu, %bb.by, %bb.bz, %bb.ca, %bb.ce, %bb.cf, %bb.cg, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit39, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit, %bb.cp, %bb.cr, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36, %bb.ct, %bb.bl, %_ZN6duckdb11LogicalType13NormalizeTypeERKS0_.exit, %bb.cs, %bb.cq, %bb.co, %bb.ae, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i44, %bb.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i47, %bb.ao, %bb.ab, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i29, %bb.x, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i26, %bb.r, %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.d, %_ZN6duckdbL17CombineEqualTypesINS_19TryGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit
+  %.0 = phi i1 [ %.473.i, %_ZN6duckdbL17CombineEqualTypesINS_19TryGetTypeOperationEEEbRKNS_11LogicalTypeES4_RS2_.exit ], [ true, %bb.n ], [ true, %bb.ab ], [ true, %bb.d ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i ], [ true, %bb.j ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i ], [ true, %bb.r ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i26 ], [ true, %bb.x ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i29 ], [ true, %bb.ao ], [ false, %bb.co ], [ true, %bb.ae ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i44 ], [ true, %bb.ak ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i47 ], [ %i.fy, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit41 ], [ %i.gb, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit40 ], [ true, %bb.bs ], [ true, %bb.bu ], [ false, %_ZNK6duckdb11LogicalType10IsIntegralEv.exit36 ], [ true, %bb.cg ], [ true, %bb.ca ], [ %i.ha, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit39 ], [ %i.he, %_ZN6duckdb19TryGetTypeOperation9OperationERKNS_11LogicalTypeES3_RS1_.exit ], [ true, %bb.cp ], [ true, %bb.cr ], [ true, %bb.ct ], [ true, %bb.by ], [ true, %bb.bz ], [ true, %bb.ce ], [ true, %bb.cf ], [ true, %_ZN6duckdb11LogicalType13NormalizeTypeERKS0_.exit ], [ true, %bb.bl ], [ false, %bb.cs ], [ false, %bb.cq ], [ true, %bb.aq ], [ true, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i94 ], [ true, %bb.aw ], [ true, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i97 ], [ true, %bb.ba ]
   ret i1 %.0
 }
 

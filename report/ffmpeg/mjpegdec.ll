@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %reset_icc_profile.e
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.g, i64 1848 ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.g, i64 1860 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.g, i64 1752 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.g, i64 1776 ; 7 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 528
-  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 4 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.g, i64 912 ; 7 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 916 ; 4 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.g, i64 920 ; 5 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 4 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.g, i64 912 ; 7 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.g, i64 916 ; 4 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.g, i64 920 ; 5 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.g, i64 1752 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 1776 ; 7 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 528
   %i.az = getelementptr inbounds nuw i8, ptr %i.g, i64 1880
   %i.ba = getelementptr inbounds nuw i8, ptr %i.g, i64 1888
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 2 uses
@@ -261,7 +261,7 @@ bb.e:                                             ; preds = %.lr.ph1035
 .lr.ph1035:                                       ; preds = %.lr.ph.i676, %bb.e
   %.1.i1034 = phi ptr [ %i.ca, %bb.e ], [ %i.bx, %.lr.ph.i676 ] ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.1.i1034, i64 1 ; 23 uses
-  %i.cb = load i8, ptr %.1.i1034, align 1, !tbaa !63 ; 8 uses
+  %i.cb = load i8, ptr %.1.i1034, align 1, !tbaa !63 ; 7 uses
   %.not18.i = icmp eq i8 %i.cb, -1
   br i1 %.not18.i, label %bb.e, label %bb.f, !llvm.loop !2
 
@@ -664,8 +664,8 @@ bb.dp:                                            ; preds = %bb.do, %bb.do, %bb.
   switch i8 %i.cb, label %bb.fc [
     i8 -40, label %bb.dq
     i8 -60, label %bb.dr
-    i8 -64, label %bb.dt
-    i8 -63, label %bb.dt
+    i8 -56, label %bb.fb
+    i8 -49, label %bb.fb
     i8 -62, label %bb.du
     i8 -61, label %bb.dv
     i8 -9, label %bb.dw
@@ -681,12 +681,12 @@ bb.dp:                                            ; preds = %bb.do, %bb.do, %bb.
     i8 -53, label %bb.fb
     i8 -51, label %bb.fb
     i8 -50, label %bb.fb
-    i8 -49, label %bb.fb
-    i8 -56, label %bb.fb
+    i8 -64, label %bb.dt
+    i8 -63, label %6
   ]
 
 bb.dq:                                            ; preds = %bb.dp
-  store i32 0, ptr %i.as, align 8, !tbaa !125
+  store i32 0, ptr %i.aw, align 8, !tbaa !125
   store ptr %i.ca, ptr %i.az, align 8, !tbaa !109
   store i64 %i.ci, ptr %i.ba, align 16, !tbaa !110
   br label %bb.fc
@@ -700,40 +700,42 @@ bb.ds:                                            ; preds = %bb.dr
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.58) #10
   br label %.loopexit746
 
-bb.dt:                                            ; preds = %bb.dp, %bb.dp
-  %6 = icmp eq i8 %i.cb, -64
-  %spec.select1009 = select i1 %6, i32 192, i32 193
-  store i32 %spec.select1009, ptr %i.av, align 8, !tbaa !330
-  store i32 0, ptr %i.aw, align 16, !tbaa !77
-  store i32 0, ptr %i.ax, align 4, !tbaa !83
-  store i32 0, ptr %i.ay, align 8, !tbaa !82
+6:                                                ; preds = %bb.dp
+  br label %bb.dt
+
+bb.dt:                                            ; preds = %bb.dp, %6
+  %storemerge = phi i32 [ 193, %6 ], [ 192, %bb.dp ]
+  store i32 %storemerge, ptr %i.as, align 8, !tbaa !330
+  store i32 0, ptr %i.at, align 16, !tbaa !77
+  store i32 0, ptr %i.au, align 4, !tbaa !83
+  store i32 0, ptr %i.av, align 8, !tbaa !82
   %i.pj = call i32 @ff_mjpeg_decode_sof(ptr noundef nonnull %i.g) ; 2 uses
   %i.pk = icmp slt i32 %i.pj, 0
   br i1 %i.pk, label %.loopexit746, label %bb.fc
 
 bb.du:                                            ; preds = %bb.dp
-  store i32 194, ptr %i.av, align 8, !tbaa !330
-  store i32 0, ptr %i.aw, align 16, !tbaa !77
-  store i32 0, ptr %i.ax, align 4, !tbaa !83
-  store i32 1, ptr %i.ay, align 8, !tbaa !82
+  store i32 194, ptr %i.as, align 8, !tbaa !330
+  store i32 0, ptr %i.at, align 16, !tbaa !77
+  store i32 0, ptr %i.au, align 4, !tbaa !83
+  store i32 1, ptr %i.av, align 8, !tbaa !82
   %i.pl = call i32 @ff_mjpeg_decode_sof(ptr noundef nonnull %i.g) ; 2 uses
   %i.pm = icmp slt i32 %i.pl, 0
   br i1 %i.pm, label %.loopexit746, label %bb.fc
 
 bb.dv:                                            ; preds = %bb.dp
-  store i32 195, ptr %i.av, align 8, !tbaa !330
-  store i32 1, ptr %i.aw, align 16, !tbaa !77
-  store i32 0, ptr %i.ax, align 4, !tbaa !83
-  store i32 0, ptr %i.ay, align 8, !tbaa !82
+  store i32 195, ptr %i.as, align 8, !tbaa !330
+  store i32 1, ptr %i.at, align 16, !tbaa !77
+  store i32 0, ptr %i.au, align 4, !tbaa !83
+  store i32 0, ptr %i.av, align 8, !tbaa !82
   %i.pn = call i32 @ff_mjpeg_decode_sof(ptr noundef nonnull %i.g) ; 2 uses
   %i.po = icmp slt i32 %i.pn, 0
   br i1 %i.po, label %.loopexit746, label %bb.fc
 
 bb.dw:                                            ; preds = %bb.dp
-  store i32 247, ptr %i.av, align 8, !tbaa !330
-  store i32 1, ptr %i.aw, align 16, !tbaa !77
-  store i32 1, ptr %i.ax, align 4, !tbaa !83
-  store i32 0, ptr %i.ay, align 8, !tbaa !82
+  store i32 247, ptr %i.as, align 8, !tbaa !330
+  store i32 1, ptr %i.at, align 16, !tbaa !77
+  store i32 1, ptr %i.au, align 4, !tbaa !83
+  store i32 0, ptr %i.av, align 8, !tbaa !82
   %i.pp = call i32 @ff_mjpeg_decode_sof(ptr noundef nonnull %i.g) ; 2 uses
   %i.pq = icmp slt i32 %i.pp, 0
   br i1 %i.pq, label %.loopexit746, label %bb.fc
@@ -755,12 +757,12 @@ bb.dz:                                            ; preds = %bb.dp, %bb.fh
   br i1 %.not640, label %bb.ea, label %mjpeg_idct_scan_progressive_ac.exit
 
 bb.ea:                                            ; preds = %bb.dz
-  %i.pv = load i32, ptr %i.ay, align 8, !tbaa !82
+  %i.pv = load i32, ptr %i.av, align 8, !tbaa !82
   %.not641 = icmp eq i32 %i.pv, 0
   br i1 %.not641, label %mjpeg_idct_scan_progressive_ac.exit, label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea
-  %i.pw = load i32, ptr %i.at, align 16, !tbaa !74
+  %i.pw = load i32, ptr %i.ax, align 16, !tbaa !74
   %.not642 = icmp eq i32 %i.pw, 0
   br i1 %.not642, label %mjpeg_idct_scan_progressive_ac.exit, label %bb.ec
 
@@ -770,7 +772,7 @@ bb.ec:                                            ; preds = %bb.eb
   br i1 %.not643, label %mjpeg_idct_scan_progressive_ac.exit.thread, label %bb.ed
 
 mjpeg_idct_scan_progressive_ac.exit.thread:       ; preds = %bb.ec
-  store i32 0, ptr %i.at, align 16, !tbaa !74
+  store i32 0, ptr %i.ax, align 16, !tbaa !74
   br label %bb.em
 
 bb.ed:                                            ; preds = %bb.ec
@@ -779,11 +781,11 @@ bb.ed:                                            ; preds = %bb.ec
   br i1 %i.pz, label %.lr.ph79.i, label %mjpeg_idct_scan_progressive_ac.exit.thread979
 
 mjpeg_idct_scan_progressive_ac.exit.thread979:    ; preds = %bb.ed
-  store i32 0, ptr %i.at, align 16, !tbaa !74
+  store i32 0, ptr %i.ax, align 16, !tbaa !74
   br label %bb.en
 
 .lr.ph79.i:                                       ; preds = %bb.ed
-  %i.qa = load i32, ptr %i.aw, align 16, !tbaa !77
+  %i.qa = load i32, ptr %i.at, align 16, !tbaa !77
   %.not.i694 = icmp eq i32 %i.qa, 0
   %i.qb = load i32, ptr %i.bc, align 4, !tbaa !91
   %i.qc = icmp sgt i32 %i.qb, 8
@@ -1071,7 +1073,7 @@ shift_output.exit.i:                              ; preds = %middle.block, %shif
 
 mjpeg_idct_scan_progressive_ac.exit:              ; preds = %._crit_edge76.split.i, %bb.eb, %bb.ea, %bb.dz
   %.pr977 = load i32, ptr %i.ap, align 16, !tbaa !52
-  store i32 0, ptr %i.at, align 16, !tbaa !74
+  store i32 0, ptr %i.ax, align 16, !tbaa !74
   %.not644 = icmp eq i32 %.pr977, 0
   br i1 %.not644, label %bb.em, label %bb.en
 
@@ -1118,7 +1120,7 @@ bb.es:                                            ; preds = %bb.er, %bb.ep
   br i1 %i.vb, label %.critedge, label %bb.et
 
 bb.et:                                            ; preds = %bb.es
-  %i.vc = load i32, ptr %i.aw, align 16, !tbaa !77
+  %i.vc = load i32, ptr %i.at, align 16, !tbaa !77
   %.not648 = icmp eq i32 %i.vc, 0
   br i1 %.not648, label %bb.ev, label %bb.eu
 
@@ -1132,7 +1134,7 @@ bb.eu:                                            ; preds = %bb.et
 bb.ev:                                            ; preds = %bb.eu, %bb.et
   store i32 1, ptr %2, align 4, !tbaa !55
   store i32 0, ptr %i.ap, align 16, !tbaa !52
-  %i.vg = load i32, ptr %i.aw, align 16, !tbaa !77
+  %i.vg = load i32, ptr %i.at, align 16, !tbaa !77
   %.not649 = icmp eq i32 %i.vg, 0
   br i1 %.not649, label %bb.ew, label %bb.fj
 
@@ -1155,15 +1157,15 @@ bb.ex:                                            ; preds = %bb.ew
   br label %bb.fj
 
 bb.ey:                                            ; preds = %bb.dp
-  %i.vp = load i32, ptr %i.at, align 16, !tbaa !74
+  %i.vp = load i32, ptr %i.ax, align 16, !tbaa !74
   %i.vq = add nsw i32 %i.vp, 1
-  store i32 %i.vq, ptr %i.at, align 16, !tbaa !74
+  store i32 %i.vq, ptr %i.ax, align 16, !tbaa !74
   %i.vr = call i32 @ff_mjpeg_decode_sos(ptr noundef nonnull %i.g) ; 2 uses
   %i.vs = icmp slt i32 %i.vr, 0
   br i1 %i.vs, label %bb.ez, label %bb.fc
 
 bb.ez:                                            ; preds = %bb.ey
-  %i.vt = load i32, ptr %i.au, align 8, !tbaa !73
+  %i.vt = load i32, ptr %i.ay, align 8, !tbaa !73
   %i.vu = and i32 %i.vt, 8
   %.not637 = icmp eq i32 %i.vu, 0
   br i1 %.not637, label %bb.fc, label %.loopexit746
@@ -1182,7 +1184,7 @@ mjpeg_decode_dri.exit:                            ; preds = %bb.fa
   %i.vz = load i16, ptr %i.vw, align 1, !tbaa !63
   %i.wa = call i16 @llvm.bswap.i16(i16 %i.vz)
   %i.wb = zext i16 %i.wa to i32                   ; 2 uses
-  store i32 %i.wb, ptr %i.as, align 8, !tbaa !125
+  store i32 %i.wb, ptr %i.aw, align 8, !tbaa !125
   %i.wc = load ptr, ptr %i.af, align 8, !tbaa !49
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.wc, i32 noundef 48, ptr noundef nonnull @.str.145, i32 noundef %i.wb) #10
   br label %bb.fc
@@ -1191,9 +1193,9 @@ bb.fb:                                            ; preds = %bb.dp, %bb.dp, %bb.
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.61, i32 noundef %i.cg) #10
   br label %bb.fc
 
-bb.fc:                                            ; preds = %mjpeg_decode_dri.exit, %bb.ey, %bb.ez, %bb.eo, %bb.dy, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.dr, %bb.fb, %bb.em, %bb.dq, %bb.dp
-  %.2713 = phi ptr [ %.1712, %bb.em ], [ %.1712, %bb.eo ], [ %i.ca, %bb.dp ], [ %i.ca, %bb.dq ], [ %i.ca, %bb.dr ], [ %i.ca, %bb.dt ], [ %i.ca, %bb.du ], [ %i.ca, %bb.dv ], [ %i.ca, %bb.dw ], [ %i.ca, %bb.dy ], [ %i.ca, %bb.ez ], [ %i.ca, %bb.ey ], [ %i.ca, %mjpeg_decode_dri.exit ], [ %i.ca, %bb.fb ] ; 3 uses
-  %.3569 = phi i32 [ %.2568, %bb.em ], [ %.2568, %bb.eo ], [ %i.cg, %bb.dp ], [ 216, %bb.dq ], [ 196, %bb.dr ], [ %i.cg, %bb.dt ], [ 194, %bb.du ], [ 195, %bb.dv ], [ 247, %bb.dw ], [ 248, %bb.dy ], [ 218, %bb.ez ], [ 218, %bb.ey ], [ 221, %mjpeg_decode_dri.exit ], [ %i.cg, %bb.fb ] ; 3 uses
+bb.fc:                                            ; preds = %mjpeg_decode_dri.exit, %bb.dp, %bb.ey, %bb.ez, %bb.eo, %bb.dy, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.dr, %bb.fb, %bb.em, %bb.dq
+  %.2713 = phi ptr [ %.1712, %bb.em ], [ %.1712, %bb.eo ], [ %i.ca, %bb.dp ], [ %i.ca, %bb.dq ], [ %i.ca, %bb.dr ], [ %i.ca, %bb.du ], [ %i.ca, %bb.dv ], [ %i.ca, %bb.dw ], [ %i.ca, %bb.dy ], [ %i.ca, %bb.ez ], [ %i.ca, %bb.ey ], [ %i.ca, %mjpeg_decode_dri.exit ], [ %i.ca, %bb.fb ], [ %i.ca, %bb.dt ] ; 3 uses
+  %.3569 = phi i32 [ %.2568, %bb.em ], [ %.2568, %bb.eo ], [ %i.cg, %bb.dp ], [ 216, %bb.dq ], [ 196, %bb.dr ], [ 194, %bb.du ], [ 195, %bb.dv ], [ 247, %bb.dw ], [ 248, %bb.dy ], [ 218, %bb.ez ], [ 218, %bb.ey ], [ 221, %mjpeg_decode_dri.exit ], [ %i.cg, %bb.fb ], [ %i.cg, %bb.dt ] ; 3 uses
   %i.wd = load i32, ptr %i.ar, align 8, !tbaa !104
   %i.we = icmp eq i32 %i.wd, 48
   br i1 %i.we, label %bb.fd, label %bb.ff
@@ -1239,7 +1241,7 @@ ff_mjpeg_find_marker.exit.thread:                 ; preds = %.loopexit.i, %bb.d,
   br i1 %.not638, label %bb.fi, label %bb.fg
 
 bb.fg:                                            ; preds = %ff_mjpeg_find_marker.exit.thread
-  %i.wo = load i32, ptr %i.at, align 16, !tbaa !74
+  %i.wo = load i32, ptr %i.ax, align 16, !tbaa !74
   %.not639 = icmp eq i32 %i.wo, 0
   br i1 %.not639, label %bb.fi, label %bb.fh
 

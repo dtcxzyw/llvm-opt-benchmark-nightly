@@ -206,7 +206,7 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, ptr noundef nonnull align 8 dereferenceable(24) %i.r, i64 24, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 3 uses
   store i32 0, ptr %i.v, align 8, !alias.scope !5243
-  %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 52 ; 11 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 52 ; 10 uses
   store i8 0, ptr %i.w, align 4, !alias.scope !5243
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules13logical_lines16LogicalLineTokenENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBO_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %_RNvMsa_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules13logical_linesNtB5_19LogicalLinesBuilder13with_capacity.exit unwind label %bb.e, !noalias !5243
@@ -337,37 +337,36 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   store i8 %i.al, ptr %i.w, align 4, !alias.scope !5245
   br label %bb.r
 
-bb.l:                                             ; preds = %4, %bb.m
-  %3 = phi i8 [ %i.an, %bb.m ], [ %5, %4 ]
+bb.l:                                             ; preds = %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m
+  %3 = or i8 %i.am, 3                             ; 2 uses
   %.off.i = add nsw i8 %i.af, -24
   %switch.i = icmp ult i8 %.off.i, 3
-  br i1 %switch.i, label %bb.o, label %bb.n
+  br i1 %switch.i, label %bb.o, label %.thread8.i
 
 bb.m:                                             ; preds = %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k
   %i.am = load i8, ptr %i.w, align 4, !alias.scope !5245, !noundef !8 ; 2 uses
-  %i.an = or i8 %i.am, 1                          ; 2 uses
+  %i.an = or i8 %i.am, 1                          ; 4 uses
   store i8 %i.an, ptr %i.w, align 4, !alias.scope !5245
-  switch i8 %i.af, label %bb.l [
-    i8 20, label %4
-    i8 21, label %4
-    i8 22, label %4
-    i8 23, label %4
-    i8 38, label %4
-    i8 39, label %4
+  switch i8 %i.af, label %bb.n [
+    i8 20, label %bb.l
+    i8 21, label %bb.l
+    i8 22, label %bb.l
+    i8 23, label %bb.l
+    i8 38, label %bb.l
+    i8 39, label %bb.l
+    i8 24, label %bb.o
+    i8 25, label %bb.o
+    i8 26, label %bb.o
   ]
 
-4:                                                ; preds = %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m
-  %5 = or i8 %i.am, 3                             ; 2 uses
-  store i8 %5, ptr %i.w, align 4, !alias.scope !5245
-  br label %bb.l
-
-bb.n:                                             ; preds = %bb.l, %bb.k
+bb.n:                                             ; preds = %bb.m, %bb.k
   %i.ao = add nsw i8 %i.af, -67
   %or.cond.i = icmp ult i8 %i.ao, 39
   br i1 %or.cond.i, label %bb.q, label %bb.p
 
-bb.o:                                             ; preds = %bb.l
-  %i.ap = or i8 %3, 4
+bb.o:                                             ; preds = %bb.m, %bb.m, %bb.m, %bb.l
+  %4 = phi i8 [ %3, %bb.l ], [ %i.an, %bb.m ], [ %i.an, %bb.m ], [ %i.an, %bb.m ]
+  %i.ap = or i8 %4, 4
   br label %.thread8.i
 
 bb.p:                                             ; preds = %bb.n
@@ -396,9 +395,9 @@ bb.s:                                             ; preds = %bb.r
   invoke void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules13logical_lines16LogicalLineTokenE8grow_oneBV_(ptr noalias noundef nonnull align 8 dereferenceable(56) %i.d)
           to label %bb.ab unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.thread8.i:                                       ; preds = %bb.q, %..thread8_crit_edge.i, %bb.o
-  %6 = phi i8 [ %.pre.i, %..thread8_crit_edge.i ], [ %i.ap, %bb.o ], [ %i.ar, %bb.q ]
-  %i.aw = or i8 %6, 32
+.thread8.i:                                       ; preds = %bb.q, %..thread8_crit_edge.i, %bb.o, %bb.l
+  %5 = phi i8 [ %.pre.i, %..thread8_crit_edge.i ], [ %3, %bb.l ], [ %i.ap, %bb.o ], [ %i.ar, %bb.q ]
+  %i.aw = or i8 %5, 32
   store i8 %i.aw, ptr %i.w, align 4, !alias.scope !5245
   br label %bb.r
 
@@ -801,8 +800,8 @@ bb.b:                                             ; preds = %bb.a
     i64 16, label %bb.al
     i64 15, label %bb.ba
     i64 13, label %bb.bi
-    i64 6, label %bb.cf
     i64 21, label %bb.ck
+    i64 6, label %bb.cf
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -891,7 +890,7 @@ bb.i:                                             ; preds = %bb.b
   %i.bn = icmp ne i128 %i.bm, 0
   %i.bo = zext i1 %i.bn to i32
   %i.bp = icmp eq i32 %i.bo, 0
-  br label %bb.cl
+  br i1 %i.bp, label %bb.cl, label %.thread
 
 bb.j:                                             ; preds = %bb.b
   %i.bq = load i128, ptr %0, align 1
@@ -1294,7 +1293,7 @@ bb.bd:                                            ; preds = %bb.ba
   %i.qm = icmp ne i64 %i.ql, 0
   %i.qn = zext i1 %i.qm to i32
   %i.qo = icmp eq i32 %i.qn, 0
-  br label %bb.cl
+  br i1 %i.qo, label %bb.cl, label %.thread
 
 bb.be:                                            ; preds = %bb.az
   %i.qp = load i32, ptr %0, align 1
@@ -1386,7 +1385,7 @@ bb.bl:                                            ; preds = %bb.bi
   %i.tc = icmp ne i64 %i.tb, 0
   %i.td = zext i1 %i.tc to i32
   %i.te = icmp eq i32 %i.td, 0
-  br label %bb.cl
+  br i1 %i.te, label %bb.cl, label %.thread
 
 bb.bm:                                            ; preds = %bb.j
   %i.tf = load i128, ptr %0, align 1
@@ -1399,6 +1398,9 @@ bb.bm:                                            ; preds = %bb.j
   %i.tm = icmp ne i128 %i.tl, 0
   %i.tn = zext i1 %i.tm to i32
   %i.to = icmp eq i32 %i.tn, 0
+  br i1 %i.to, label %bb.cl, label %.thread
+
+.thread:                                          ; preds = %bb.bl, %bb.bd, %bb.i, %bb.bm
   br label %bb.cl
 
 bb.bn:                                            ; preds = %bb.bj
@@ -1684,8 +1686,8 @@ bb.ck:                                            ; preds = %bb.b
   %i.abr = icmp eq i32 %i.abq, 0
   br label %bb.cl
 
-bb.cl:                                            ; preds = %bb.cj, %bb.ci, %bb.ch, %bb.cf, %bb.ce, %bb.ca, %bb.bz, %bb.bw, %bb.bv, %bb.bm, %bb.bl, %bb.bd, %bb.i, %bb.cd, %bb.ck, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bu, %bb.bx, %bb.by, %bb.cb, %bb.cc, %bb.cg, %bb.a
-  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ true, %bb.c ], [ %i.qo, %bb.bd ], [ %i.yg, %bb.ca ], [ %i.zs, %bb.ce ], [ true, %bb.cg ], [ %i.yc, %bb.bz ], [ %i.aac, %bb.cf ], [ %i.zi, %bb.cd ], [ true, %bb.cc ], [ true, %bb.cb ], [ %i.wq, %bb.bv ], [ %i.aaz, %bb.ci ], [ true, %bb.by ], [ true, %bb.bx ], [ false, %bb.b ], [ %i.bp, %bb.i ], [ true, %bb.bu ], [ true, %bb.bt ], [ true, %bb.bs ], [ true, %bb.br ], [ true, %bb.bq ], [ true, %bb.bp ], [ true, %bb.bo ], [ true, %bb.bn ], [ %i.te, %bb.bl ], [ %i.xa, %bb.bw ], [ true, %bb.bk ], [ true, %bb.bj ], [ true, %bb.bi ], [ true, %bb.bh ], [ true, %bb.bg ], [ true, %bb.bf ], [ true, %bb.be ], [ %i.to, %bb.bm ], [ true, %bb.bc ], [ true, %bb.bb ], [ true, %bb.ba ], [ true, %bb.az ], [ true, %bb.ay ], [ true, %bb.ax ], [ true, %bb.aw ], [ true, %bb.av ], [ true, %bb.au ], [ true, %bb.at ], [ true, %bb.as ], [ true, %bb.ar ], [ true, %bb.aq ], [ true, %bb.ap ], [ true, %bb.ao ], [ true, %bb.an ], [ true, %bb.am ], [ true, %bb.al ], [ true, %bb.ak ], [ true, %bb.aj ], [ true, %bb.ai ], [ true, %bb.ah ], [ true, %bb.ag ], [ true, %bb.af ], [ true, %bb.ae ], [ true, %bb.ad ], [ true, %bb.ac ], [ true, %bb.ab ], [ true, %bb.aa ], [ true, %bb.z ], [ true, %bb.y ], [ true, %bb.x ], [ true, %bb.w ], [ true, %bb.v ], [ true, %bb.u ], [ true, %bb.t ], [ true, %bb.s ], [ true, %bb.r ], [ true, %bb.q ], [ true, %bb.p ], [ true, %bb.o ], [ true, %bb.n ], [ true, %bb.m ], [ true, %bb.l ], [ true, %bb.k ], [ true, %bb.j ], [ %i.abi, %bb.cj ], [ true, %bb.h ], [ true, %bb.g ], [ true, %bb.f ], [ true, %bb.e ], [ true, %bb.d ], [ %i.abr, %bb.ck ], [ %i.aav, %bb.ch ]
+bb.cl:                                            ; preds = %bb.cj, %bb.ci, %bb.ch, %bb.cf, %bb.ce, %bb.ca, %bb.bz, %bb.bw, %bb.bv, %bb.b, %.thread, %bb.cd, %bb.ck, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bu, %bb.bx, %bb.by, %bb.cb, %bb.cc, %bb.cg, %bb.a
+  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ true, %bb.c ], [ %i.yg, %bb.ca ], [ %i.zs, %bb.ce ], [ %i.yc, %bb.bz ], [ true, %bb.cg ], [ false, %bb.b ], [ %i.wq, %bb.bv ], [ %i.zi, %bb.cd ], [ true, %bb.cc ], [ true, %bb.cb ], [ %i.xa, %bb.bw ], [ %i.aac, %bb.cf ], [ true, %bb.by ], [ true, %bb.bx ], [ false, %.thread ], [ %i.abi, %bb.cj ], [ true, %bb.bu ], [ true, %bb.bt ], [ true, %bb.bs ], [ true, %bb.br ], [ true, %bb.bq ], [ true, %bb.bp ], [ true, %bb.bo ], [ true, %bb.bn ], [ true, %bb.bm ], [ true, %bb.bl ], [ true, %bb.bk ], [ true, %bb.bj ], [ true, %bb.bi ], [ true, %bb.bh ], [ true, %bb.bg ], [ true, %bb.bf ], [ true, %bb.be ], [ true, %bb.bd ], [ true, %bb.bc ], [ true, %bb.bb ], [ true, %bb.ba ], [ true, %bb.az ], [ true, %bb.ay ], [ true, %bb.ax ], [ true, %bb.aw ], [ true, %bb.av ], [ true, %bb.au ], [ true, %bb.at ], [ true, %bb.as ], [ true, %bb.ar ], [ true, %bb.aq ], [ true, %bb.ap ], [ true, %bb.ao ], [ true, %bb.an ], [ true, %bb.am ], [ true, %bb.al ], [ true, %bb.ak ], [ true, %bb.aj ], [ true, %bb.ai ], [ true, %bb.ah ], [ true, %bb.ag ], [ true, %bb.af ], [ true, %bb.ae ], [ true, %bb.ad ], [ true, %bb.ac ], [ true, %bb.ab ], [ true, %bb.aa ], [ true, %bb.z ], [ true, %bb.y ], [ true, %bb.x ], [ true, %bb.w ], [ true, %bb.v ], [ true, %bb.u ], [ true, %bb.t ], [ true, %bb.s ], [ true, %bb.r ], [ true, %bb.q ], [ true, %bb.p ], [ true, %bb.o ], [ true, %bb.n ], [ true, %bb.m ], [ true, %bb.l ], [ true, %bb.k ], [ true, %bb.j ], [ true, %bb.i ], [ true, %bb.h ], [ true, %bb.g ], [ true, %bb.f ], [ true, %bb.e ], [ true, %bb.d ], [ %i.abr, %bb.ck ], [ %i.aav, %bb.ch ], [ %i.aaz, %bb.ci ]
   ret i1 %.sroa.0.0
 }
 

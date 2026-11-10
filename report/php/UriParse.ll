@@ -204,8 +204,8 @@ bb.m:                                             ; preds = %bb.o, %bb.l
   br i1 %i.v, label %bb.n, label %.critedge.i.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.w = load i8, ptr %.042.i.i, align 1, !tbaa !17 ; 2 uses
-  switch i8 %i.w, label %4 [
+  %i.w = load i8, ptr %.042.i.i, align 1, !tbaa !17
+  switch i8 %i.w, label %.critedge.i.i [
     i8 37, label %bb.o
     i8 33, label %bb.o
     i8 36, label %bb.o
@@ -284,6 +284,8 @@ bb.n:                                             ; preds = %bb.m
     i8 46, label %bb.o
     i8 95, label %bb.o
     i8 126, label %bb.o
+    i8 58, label %bb.p
+    i8 64, label %bb.q
   ]
 
 bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n
@@ -291,13 +293,7 @@ bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n,
   %.not.i30.i = icmp eq ptr %i.x, null
   br i1 %.not.i30.i, label %uriParsePathAbsNoLeadSlashA.exit, label %bb.m, !llvm.loop !96
 
-4:                                                ; preds = %bb.n
-  switch i8 %i.w, label %.critedge.i.i [
-    i8 58, label %bb.p
-    i8 64, label %bb.q
-  ]
-
-bb.p:                                             ; preds = %4
+bb.p:                                             ; preds = %bb.n
   %i.y = load ptr, ptr %0, align 8, !tbaa !16     ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 40
   store ptr %.042.i.i, ptr %i.z, align 8, !tbaa !43
@@ -307,7 +303,7 @@ bb.p:                                             ; preds = %4
   %i.ac = tail call fastcc ptr @uriParseOwnPortUserInfoA(ptr noundef nonnull %0, ptr noundef %i.aa, ptr noundef nonnull %2, ptr noundef %3)
   br label %uriParseAuthorityA.exit
 
-bb.q:                                             ; preds = %4
+bb.q:                                             ; preds = %bb.n
   %i.ad = load ptr, ptr %0, align 8, !tbaa !16    ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   store ptr %.042.i.i, ptr %i.ae, align 8, !tbaa !39
@@ -317,7 +313,7 @@ bb.q:                                             ; preds = %4
   %i.ah = tail call fastcc ptr @uriParseOwnHostA(ptr noundef nonnull %0, ptr noundef %i.af, ptr noundef nonnull %2, ptr noundef %3)
   br label %uriParseAuthorityA.exit
 
-.critedge.i.i:                                    ; preds = %bb.m, %4
+.critedge.i.i:                                    ; preds = %bb.n, %bb.m
   %i.ai = icmp eq ptr %.042.i.i, %i.c
   %i.aj = load ptr, ptr %0, align 8, !tbaa !16    ; 4 uses
   br i1 %i.ai, label %bb.r, label %bb.s
@@ -720,8 +716,8 @@ bb.m:                                             ; preds = %bb.o, %bb.l
   br i1 %i.v, label %bb.n, label %.critedge.i.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.w = load i32, ptr %.042.i.i, align 4, !tbaa !58 ; 2 uses
-  switch i32 %i.w, label %4 [
+  %i.w = load i32, ptr %.042.i.i, align 4, !tbaa !58
+  switch i32 %i.w, label %.critedge.i.i [
     i32 37, label %bb.o
     i32 33, label %bb.o
     i32 36, label %bb.o
@@ -800,6 +796,8 @@ bb.n:                                             ; preds = %bb.m
     i32 46, label %bb.o
     i32 95, label %bb.o
     i32 126, label %bb.o
+    i32 58, label %bb.p
+    i32 64, label %bb.q
   ]
 
 bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n
@@ -807,13 +805,7 @@ bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n,
   %.not.i31.i = icmp eq ptr %i.x, null
   br i1 %.not.i31.i, label %uriParsePathAbsNoLeadSlashW.exit, label %bb.m, !llvm.loop !107
 
-4:                                                ; preds = %bb.n
-  switch i32 %i.w, label %.critedge.i.i [
-    i32 58, label %bb.p
-    i32 64, label %bb.q
-  ]
-
-bb.p:                                             ; preds = %4
+bb.p:                                             ; preds = %bb.n
   %i.y = load ptr, ptr %0, align 8, !tbaa !57     ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 40
   store ptr %.042.i.i, ptr %i.z, align 8, !tbaa !79
@@ -823,7 +815,7 @@ bb.p:                                             ; preds = %4
   %i.ac = tail call fastcc ptr @uriParseOwnPortUserInfoW(ptr noundef nonnull %0, ptr noundef %i.aa, ptr noundef nonnull %2, ptr noundef %3)
   br label %uriParseAuthorityW.exit
 
-bb.q:                                             ; preds = %4
+bb.q:                                             ; preds = %bb.n
   %i.ad = load ptr, ptr %0, align 8, !tbaa !57    ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   store ptr %.042.i.i, ptr %i.ae, align 8, !tbaa !75
@@ -833,7 +825,7 @@ bb.q:                                             ; preds = %4
   %i.ah = tail call fastcc ptr @uriParseOwnHostW(ptr noundef nonnull %0, ptr noundef %i.af, ptr noundef nonnull %2, ptr noundef %3)
   br label %uriParseAuthorityW.exit
 
-.critedge.i.i:                                    ; preds = %bb.m, %4
+.critedge.i.i:                                    ; preds = %bb.n, %bb.m
   %i.ai = icmp eq ptr %.042.i.i, %i.c
   %i.aj = load ptr, ptr %0, align 8, !tbaa !57    ; 4 uses
   br i1 %i.ai, label %bb.r, label %bb.s

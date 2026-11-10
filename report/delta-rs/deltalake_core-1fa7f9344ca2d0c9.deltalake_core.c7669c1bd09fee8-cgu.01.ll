@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.a
     i8 97, label %.split209.i
     i8 98, label %.split209.i
     i8 99, label %.split209.i
-    i8 100, label %.split209.i
+    i8 115, label %.split209.i
     i8 101, label %.split209.i
     i8 102, label %.split209.i
     i8 103, label %.split209.i
@@ -219,13 +219,15 @@ bb.e:                                             ; preds = %bb.a
     i8 112, label %.split209.i
     i8 113, label %.split209.i
     i8 114, label %.split209.i
-    i8 115, label %.split209.i
   ]
 
-default.unreachable.a:                            ; preds = %bb.am, %bb.e
+default.unreachable:                              ; preds = %bb.am
   unreachable
 
-.split209.i:                                      ; preds = %.thread, %bb.bf, %bb.v, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e
+default.unreachable.a:                            ; preds = %bb.e
+  unreachable
+
+.split209.i:                                      ; preds = %bb.e, %.thread, %bb.bf, %bb.v, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !31308
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !31308
   store ptr %i.aj, ptr %i.j, align 8, !noalias !31308
@@ -471,7 +473,7 @@ bb.al:                                            ; preds = %bb.aa
 bb.am:                                            ; preds = %bb.e, %bb.e
   %.sroa.055.0.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dk = load i64, ptr %.sroa.055.0.i, align 8, !range !61, !alias.scope !31307, !noundef !40 ; 3 uses
-  switch i64 %i.dk, label %default.unreachable.a [
+  switch i64 %i.dk, label %default.unreachable [
     i64 0, label %_RNvMs8_NtCsjHlmExTLNuX_14datafusion_sql7plannerINtB5_8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE24convert_simple_data_typeB14_.exit
     i64 1, label %bb.an
     i64 2, label %bb.ao

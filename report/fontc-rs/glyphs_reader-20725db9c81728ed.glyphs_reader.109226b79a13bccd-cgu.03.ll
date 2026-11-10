@@ -204,8 +204,8 @@ bb.a:
     i64 3, label %bb.br
     i64 22, label %bb.dj
     i64 12, label %bb.dn
-    i64 13, label %bb.fb
     i64 2, label %bb.ff
+    i64 13, label %bb.fb
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -608,7 +608,7 @@ bb.ff:                                            ; preds = %bb.a
   %i.abx = icmp eq i32 %i.abw, 0
   br i1 %i.abx, label %bb.fh, label %bb.fg
 
-bb.fg:                                            ; preds = %bb.fd, %bb.fb, %bb.ez, %bb.ex, %bb.el, %bb.ed, %bb.dj, %bb.bh, %bb.t, %bb.ev, %bb.er, %bb.dx, %bb.a, %bb.ff
+bb.fg:                                            ; preds = %bb.a, %bb.t, %bb.bh, %bb.dj, %bb.fd, %bb.fb, %bb.ez, %bb.ex, %bb.el, %bb.ed, %bb.ev, %bb.er, %bb.dx, %bb.ff
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMsB_Cs9NoVXegZYB5_8smol_strNtB5_4Repr3new(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !noalias !5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
