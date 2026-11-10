@@ -204,19 +204,17 @@ vector.ph109:                                     ; preds = %.lr.ph.i55.preheade
 vector.body111:                                   ; preds = %vector.body111, %vector.ph109
   %index112 = phi i64 [ 0, %vector.ph109 ], [ %index.next118, %vector.body111 ] ; 2 uses
   %i.hb = xor i64 %index112, -1
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.hb ; 4 uses
-  %i.hc = getelementptr inbounds i8, ptr %gep, i64 -12
-  %i.hd = getelementptr inbounds i8, ptr %gep, i64 -28
+  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.hb ; 2 uses
+  %i.hc = getelementptr inbounds i8, ptr %gep, i64 -12 ; 2 uses
+  %i.hd = getelementptr inbounds i8, ptr %gep, i64 -28 ; 2 uses
   %wide.load113 = load <4 x i32>, ptr %i.hc, align 4
   %wide.load114 = load <4 x i32>, ptr %i.hd, align 4
   %i.he = sitofp <4 x i32> %wide.load113 to <4 x float>
   %i.hf = sitofp <4 x i32> %wide.load114 to <4 x float>
   %i.hg = fmul nnan <4 x float> %i.he, splat (float f0x30000000)
   %i.hh = fmul nnan <4 x float> %i.hf, splat (float f0x30000000)
-  %4 = getelementptr inbounds i8, ptr %gep, i64 -12
-  %5 = getelementptr inbounds i8, ptr %gep, i64 -28
-  store <4 x float> %i.hg, ptr %4, align 4
-  store <4 x float> %i.hh, ptr %5, align 4
+  store <4 x float> %i.hg, ptr %i.hc, align 4
+  store <4 x float> %i.hh, ptr %i.hd, align 4
   %index.next118 = add nuw i64 %index112, 8       ; 2 uses
   %i.hi = icmp eq i64 %index.next118, %n.vec110
   br i1 %i.hi, label %middle.block119, label %vector.body111, !llvm.loop !37

@@ -205,12 +205,12 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.hx = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.hh, i64 %i.hx ; 4 uses
-  %next.gep1645 = getelementptr i8, ptr %i.gj, i64 %i.hx ; 8 uses
+  %next.gep1645 = getelementptr i8, ptr %i.gj, i64 %i.hx ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3534)
   call void @llvm.experimental.noalias.scope.decl(metadata !3535)
-  %i.hy = getelementptr i8, ptr %next.gep1645, i64 32
-  %i.hz = getelementptr i8, ptr %next.gep1645, i64 64
-  %i.ia = getelementptr i8, ptr %next.gep1645, i64 96
+  %i.hy = getelementptr i8, ptr %next.gep1645, i64 32 ; 2 uses
+  %i.hz = getelementptr i8, ptr %next.gep1645, i64 64 ; 2 uses
+  %i.ia = getelementptr i8, ptr %next.gep1645, i64 96 ; 2 uses
   %wide.load = load <4 x i64>, ptr %next.gep1645, align 8, !tbaa !2020, !alias.scope !3536
   %wide.load1646 = load <4 x i64>, ptr %i.hy, align 8, !tbaa !2020, !alias.scope !3536
   %wide.load1647 = load <4 x i64>, ptr %i.hz, align 8, !tbaa !2020, !alias.scope !3536
@@ -222,13 +222,10 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <4 x i64> %wide.load1646, ptr %i.ib, align 8, !tbaa !2020, !alias.scope !3537, !noalias !3538
   store <4 x i64> %wide.load1647, ptr %i.ic, align 8, !tbaa !2020, !alias.scope !3537, !noalias !3538
   store <4 x i64> %wide.load1648, ptr %i.id, align 8, !tbaa !2020, !alias.scope !3537, !noalias !3538
-  %37 = getelementptr i8, ptr %next.gep1645, i64 32
-  %38 = getelementptr i8, ptr %next.gep1645, i64 64
-  %39 = getelementptr i8, ptr %next.gep1645, i64 96
   store <4 x ptr> splat (ptr null), ptr %next.gep1645, align 8, !tbaa !2020, !alias.scope !3536
-  store <4 x ptr> splat (ptr null), ptr %37, align 8, !tbaa !2020, !alias.scope !3536
-  store <4 x ptr> splat (ptr null), ptr %38, align 8, !tbaa !2020, !alias.scope !3536
-  store <4 x ptr> splat (ptr null), ptr %39, align 8, !tbaa !2020, !alias.scope !3536
+  store <4 x ptr> splat (ptr null), ptr %i.hy, align 8, !tbaa !2020, !alias.scope !3536
+  store <4 x ptr> splat (ptr null), ptr %i.hz, align 8, !tbaa !2020, !alias.scope !3536
+  store <4 x ptr> splat (ptr null), ptr %i.ia, align 8, !tbaa !2020, !alias.scope !3536
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ie = icmp eq i64 %index.next, %n.vec
   br i1 %i.ie, label %middle.block, label %vector.body, !llvm.loop !3511

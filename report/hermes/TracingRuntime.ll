@@ -204,18 +204,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bd = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.au, i64 %i.bd ; 2 uses
-  %next.gep30 = getelementptr i8, ptr %i.aj, i64 %i.bd ; 4 uses
+  %next.gep30 = getelementptr i8, ptr %i.aj, i64 %i.bd ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !487)
   call void @llvm.experimental.noalias.scope.decl(metadata !488)
-  %i.be = getelementptr i8, ptr %next.gep30, i64 16
+  %i.be = getelementptr i8, ptr %next.gep30, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep30, align 8, !tbaa !198, !alias.scope !488
   %wide.load31 = load <2 x i64>, ptr %i.be, align 8, !tbaa !198, !alias.scope !488
   %i.bf = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !487
   store <2 x i64> %wide.load31, ptr %i.bf, align 8, !tbaa !198, !alias.scope !487
-  %6 = getelementptr i8, ptr %next.gep30, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep30, align 8, !tbaa !198, !alias.scope !488
-  store <2 x ptr> splat (ptr null), ptr %6, align 8, !tbaa !198, !alias.scope !488
+  store <2 x ptr> splat (ptr null), ptr %i.be, align 8, !tbaa !198, !alias.scope !488
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bg = icmp eq i64 %index.next, %n.vec
   br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !481
@@ -393,18 +392,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ah = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.y, i64 %i.ah ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.n, i64 %i.ah ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.n, i64 %i.ah ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !496)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !497)
-  %i.ai = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ai = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !497
   %wide.load10 = load <2 x i64>, ptr %i.ai, align 8, !tbaa !198, !alias.scope !497
   %i.aj = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !496
   store <2 x i64> %wide.load10, ptr %i.aj, align 8, !tbaa !198, !alias.scope !496
-  %3 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !497
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !497
+  store <2 x ptr> splat (ptr null), ptr %i.ai, align 8, !tbaa !198, !alias.scope !497
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
   br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !493
@@ -604,18 +602,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !508)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !509)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !509
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !509
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !508
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !508
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !509
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !509
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !509
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !503
@@ -765,18 +762,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !520)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !521)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !521
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !521
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !520
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !520
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !521
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !521
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !521
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !515
@@ -1020,18 +1016,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !535)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !536)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !536
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !536
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !535
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !535
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !536
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !536
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !536
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !530
@@ -1275,18 +1270,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !548)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !549)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !549
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !549
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !548
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !548
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !549
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !549
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !549
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !545
@@ -1555,18 +1549,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.af ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !563)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !564)
-  %i.ag = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ag = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !564
   %wide.load10 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !198, !alias.scope !564
   %i.ah = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !563
   store <2 x i64> %wide.load10, ptr %i.ah, align 8, !tbaa !198, !alias.scope !563
-  %4 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !564
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !564
+  store <2 x ptr> splat (ptr null), ptr %i.ag, align 8, !tbaa !198, !alias.scope !564
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !558
@@ -1969,18 +1962,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !584)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !585)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !585
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !585
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !584
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !584
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !585
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !585
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !585
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !581
@@ -2296,18 +2288,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ai = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.z, i64 %i.ai ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.o, i64 %i.ai ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.o, i64 %i.ai ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !598)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !599)
-  %i.aj = getelementptr i8, ptr %next.gep8, i64 16
+  %i.aj = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !599
   %wide.load9 = load <2 x i64>, ptr %i.aj, align 8, !tbaa !198, !alias.scope !599
   %i.ak = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !598
   store <2 x i64> %wide.load9, ptr %i.ak, align 8, !tbaa !198, !alias.scope !598
-  %5 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !599
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !599
+  store <2 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !198, !alias.scope !599
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.al = icmp eq i64 %index.next, %n.vec
   br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !595
@@ -2569,18 +2560,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ai = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.z, i64 %i.ai ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.o, i64 %i.ai ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.o, i64 %i.ai ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !611)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !612)
-  %i.aj = getelementptr i8, ptr %next.gep8, i64 16
+  %i.aj = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !612
   %wide.load9 = load <2 x i64>, ptr %i.aj, align 8, !tbaa !198, !alias.scope !612
   %i.ak = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !611
   store <2 x i64> %wide.load9, ptr %i.ak, align 8, !tbaa !198, !alias.scope !611
-  %5 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !612
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !612
+  store <2 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !198, !alias.scope !612
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.al = icmp eq i64 %index.next, %n.vec
   br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !608
@@ -2889,18 +2879,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ai = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.z, i64 %i.ai ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.o, i64 %i.ai ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.o, i64 %i.ai ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !628)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !629)
-  %i.aj = getelementptr i8, ptr %next.gep8, i64 16
+  %i.aj = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !629
   %wide.load9 = load <2 x i64>, ptr %i.aj, align 8, !tbaa !198, !alias.scope !629
   %i.ak = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !628
   store <2 x i64> %wide.load9, ptr %i.ak, align 8, !tbaa !198, !alias.scope !628
-  %5 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !629
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !629
+  store <2 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !198, !alias.scope !629
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.al = icmp eq i64 %index.next, %n.vec
   br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !621
@@ -3214,18 +3203,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ay = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ap, i64 %i.ay ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !641)
   call void @llvm.experimental.noalias.scope.decl(metadata !642)
-  %i.az = getelementptr i8, ptr %next.gep10, i64 16
+  %i.az = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !642
   %wide.load11 = load <2 x i64>, ptr %i.az, align 8, !tbaa !198, !alias.scope !642
   %i.ba = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !641
   store <2 x i64> %wide.load11, ptr %i.ba, align 8, !tbaa !198, !alias.scope !641
-  %5 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !642
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !642
+  store <2 x ptr> splat (ptr null), ptr %i.az, align 8, !tbaa !198, !alias.scope !642
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !638
@@ -3545,18 +3533,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ay = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ap, i64 %i.ay ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !654)
   call void @llvm.experimental.noalias.scope.decl(metadata !655)
-  %i.az = getelementptr i8, ptr %next.gep10, i64 16
+  %i.az = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !655
   %wide.load11 = load <2 x i64>, ptr %i.az, align 8, !tbaa !198, !alias.scope !655
   %i.ba = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !654
   store <2 x i64> %wide.load11, ptr %i.ba, align 8, !tbaa !198, !alias.scope !654
-  %5 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !655
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !655
+  store <2 x ptr> splat (ptr null), ptr %i.az, align 8, !tbaa !198, !alias.scope !655
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !651
@@ -3811,18 +3798,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !667)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !668)
-  %i.af = getelementptr i8, ptr %next.gep9, i64 16
+  %i.af = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !668
   %wide.load10 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !668
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !667
   store <2 x i64> %wide.load10, ptr %i.ag, align 8, !tbaa !198, !alias.scope !667
-  %5 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !668
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !668
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !668
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !664
@@ -4142,18 +4128,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ay = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ap, i64 %i.ay ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !680)
   call void @llvm.experimental.noalias.scope.decl(metadata !681)
-  %i.az = getelementptr i8, ptr %next.gep10, i64 16
+  %i.az = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !681
   %wide.load11 = load <2 x i64>, ptr %i.az, align 8, !tbaa !198, !alias.scope !681
   %i.ba = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !680
   store <2 x i64> %wide.load11, ptr %i.ba, align 8, !tbaa !198, !alias.scope !680
-  %5 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !681
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !681
+  store <2 x ptr> splat (ptr null), ptr %i.az, align 8, !tbaa !198, !alias.scope !681
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !677
@@ -4473,18 +4458,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ay = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ap, i64 %i.ay ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.ae, i64 %i.ay ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !693)
   call void @llvm.experimental.noalias.scope.decl(metadata !694)
-  %i.az = getelementptr i8, ptr %next.gep10, i64 16
+  %i.az = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !694
   %wide.load11 = load <2 x i64>, ptr %i.az, align 8, !tbaa !198, !alias.scope !694
   %i.ba = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !693
   store <2 x i64> %wide.load11, ptr %i.ba, align 8, !tbaa !198, !alias.scope !693
-  %5 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !694
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !694
+  store <2 x ptr> splat (ptr null), ptr %i.az, align 8, !tbaa !198, !alias.scope !694
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !690
@@ -4739,18 +4723,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !706)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !707)
-  %i.af = getelementptr i8, ptr %next.gep9, i64 16
+  %i.af = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !707
   %wide.load10 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !707
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !706
   store <2 x i64> %wide.load10, ptr %i.ag, align 8, !tbaa !198, !alias.scope !706
-  %5 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !707
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !707
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !707
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !703
@@ -5071,18 +5054,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bb = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.as, i64 %i.bb ; 2 uses
-  %next.gep30 = getelementptr i8, ptr %i.ah, i64 %i.bb ; 4 uses
+  %next.gep30 = getelementptr i8, ptr %i.ah, i64 %i.bb ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !719)
   call void @llvm.experimental.noalias.scope.decl(metadata !720)
-  %i.bc = getelementptr i8, ptr %next.gep30, i64 16
+  %i.bc = getelementptr i8, ptr %next.gep30, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep30, align 8, !tbaa !198, !alias.scope !720
   %wide.load31 = load <2 x i64>, ptr %i.bc, align 8, !tbaa !198, !alias.scope !720
   %i.bd = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !719
   store <2 x i64> %wide.load31, ptr %i.bd, align 8, !tbaa !198, !alias.scope !719
-  %5 = getelementptr i8, ptr %next.gep30, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep30, align 8, !tbaa !198, !alias.scope !720
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !720
+  store <2 x ptr> splat (ptr null), ptr %i.bc, align 8, !tbaa !198, !alias.scope !720
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.be = icmp eq i64 %index.next, %n.vec
   br i1 %i.be, label %middle.block, label %vector.body, !llvm.loop !716
@@ -5485,18 +5467,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aw = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.an, i64 %i.aw ; 2 uses
-  %next.gep31 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 4 uses
+  %next.gep31 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !742)
   call void @llvm.experimental.noalias.scope.decl(metadata !743)
-  %i.ax = getelementptr i8, ptr %next.gep31, i64 16
+  %i.ax = getelementptr i8, ptr %next.gep31, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep31, align 8, !tbaa !198, !alias.scope !743
   %wide.load32 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !198, !alias.scope !743
   %i.ay = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !742
   store <2 x i64> %wide.load32, ptr %i.ay, align 8, !tbaa !198, !alias.scope !742
-  %5 = getelementptr i8, ptr %next.gep31, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep31, align 8, !tbaa !198, !alias.scope !743
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !743
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !198, !alias.scope !743
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.az = icmp eq i64 %index.next, %n.vec
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !739
@@ -5899,18 +5880,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.az = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.aq, i64 %i.az ; 2 uses
-  %next.gep26 = getelementptr i8, ptr %i.af, i64 %i.az ; 4 uses
+  %next.gep26 = getelementptr i8, ptr %i.af, i64 %i.az ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !757)
   call void @llvm.experimental.noalias.scope.decl(metadata !758)
-  %i.ba = getelementptr i8, ptr %next.gep26, i64 16
+  %i.ba = getelementptr i8, ptr %next.gep26, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep26, align 8, !tbaa !198, !alias.scope !758
   %wide.load27 = load <2 x i64>, ptr %i.ba, align 8, !tbaa !198, !alias.scope !758
   %i.bb = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !757
   store <2 x i64> %wide.load27, ptr %i.bb, align 8, !tbaa !198, !alias.scope !757
-  %5 = getelementptr i8, ptr %next.gep26, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep26, align 8, !tbaa !198, !alias.scope !758
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !758
+  store <2 x ptr> splat (ptr null), ptr %i.ba, align 8, !tbaa !198, !alias.scope !758
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bc = icmp eq i64 %index.next, %n.vec
   br i1 %i.bc, label %middle.block, label %vector.body, !llvm.loop !754
@@ -6313,18 +6293,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.af ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !774)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !775)
-  %i.ag = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ag = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !775
   %wide.load10 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !198, !alias.scope !775
   %i.ah = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !774
   store <2 x i64> %wide.load10, ptr %i.ah, align 8, !tbaa !198, !alias.scope !774
-  %4 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !775
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !775
+  store <2 x ptr> splat (ptr null), ptr %i.ag, align 8, !tbaa !198, !alias.scope !775
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !769
@@ -6727,18 +6706,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.af ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !794)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !795)
-  %i.ag = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ag = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !795
   %wide.load10 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !198, !alias.scope !795
   %i.ah = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !794
   store <2 x i64> %wide.load10, ptr %i.ah, align 8, !tbaa !198, !alias.scope !794
-  %4 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !795
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !795
+  store <2 x ptr> splat (ptr null), ptr %i.ag, align 8, !tbaa !198, !alias.scope !795
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !789
@@ -6866,18 +6844,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ad = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.u, i64 %i.ad ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.j, i64 %i.ad ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.j, i64 %i.ad ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !802)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !803)
-  %i.ae = getelementptr i8, ptr %next.gep8, i64 16
+  %i.ae = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !803
   %wide.load9 = load <2 x i64>, ptr %i.ae, align 8, !tbaa !198, !alias.scope !803
   %i.af = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !802
   store <2 x i64> %wide.load9, ptr %i.af, align 8, !tbaa !198, !alias.scope !802
-  %3 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !803
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !803
+  store <2 x ptr> splat (ptr null), ptr %i.ae, align 8, !tbaa !198, !alias.scope !803
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !799
@@ -7280,18 +7257,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !827)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !828)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !828
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !828
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !827
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !827
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !828
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !828
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !828
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !822
@@ -7550,18 +7526,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.af ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !839)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !840)
-  %i.ag = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ag = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !840
   %wide.load10 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !198, !alias.scope !840
   %i.ah = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !839
   store <2 x i64> %wide.load10, ptr %i.ah, align 8, !tbaa !198, !alias.scope !839
-  %4 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !840
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !840
+  store <2 x ptr> splat (ptr null), ptr %i.ag, align 8, !tbaa !198, !alias.scope !840
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !834
@@ -7964,18 +7939,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ag = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.x, i64 %i.ag ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.m, i64 %i.ag ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.m, i64 %i.ag ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !855)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !856)
-  %i.ah = getelementptr i8, ptr %next.gep10, i64 16
+  %i.ah = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !856
   %wide.load11 = load <2 x i64>, ptr %i.ah, align 8, !tbaa !198, !alias.scope !856
   %i.ai = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !855
   store <2 x i64> %wide.load11, ptr %i.ai, align 8, !tbaa !198, !alias.scope !855
-  %5 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !856
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !856
+  store <2 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !198, !alias.scope !856
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !850
@@ -8378,18 +8352,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.af ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !871)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !872)
-  %i.ag = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ag = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !872
   %wide.load10 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !198, !alias.scope !872
   %i.ah = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !871
   store <2 x i64> %wide.load10, ptr %i.ah, align 8, !tbaa !198, !alias.scope !871
-  %4 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !872
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !872
+  store <2 x ptr> splat (ptr null), ptr %i.ag, align 8, !tbaa !198, !alias.scope !872
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !866
@@ -8792,18 +8765,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.af ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.l, i64 %i.af ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !887)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !888)
-  %i.ag = getelementptr i8, ptr %next.gep9, i64 16
+  %i.ag = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !888
   %wide.load10 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !198, !alias.scope !888
   %i.ah = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !887
   store <2 x i64> %wide.load10, ptr %i.ah, align 8, !tbaa !198, !alias.scope !887
-  %4 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !888
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !888
+  store <2 x ptr> splat (ptr null), ptr %i.ag, align 8, !tbaa !198, !alias.scope !888
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !882
@@ -9117,18 +9089,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !902)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !903)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !903
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !903
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !902
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !902
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !903
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !903
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !903
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !897
@@ -9531,18 +9502,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ag = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.x, i64 %i.ag ; 2 uses
-  %next.gep7 = getelementptr i8, ptr %i.m, i64 %i.ag ; 4 uses
+  %next.gep7 = getelementptr i8, ptr %i.m, i64 %i.ag ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !928)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !929)
-  %i.ah = getelementptr i8, ptr %next.gep7, i64 16
+  %i.ah = getelementptr i8, ptr %next.gep7, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep7, align 8, !tbaa !198, !alias.scope !929
   %wide.load8 = load <2 x i64>, ptr %i.ah, align 8, !tbaa !198, !alias.scope !929
   %i.ai = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !928
   store <2 x i64> %wide.load8, ptr %i.ai, align 8, !tbaa !198, !alias.scope !928
-  %4 = getelementptr i8, ptr %next.gep7, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep7, align 8, !tbaa !198, !alias.scope !929
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !929
+  store <2 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !198, !alias.scope !929
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !922
@@ -9852,18 +9822,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ag = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.x, i64 %i.ag ; 2 uses
-  %next.gep7 = getelementptr i8, ptr %i.m, i64 %i.ag ; 4 uses
+  %next.gep7 = getelementptr i8, ptr %i.m, i64 %i.ag ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !950)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !951)
-  %i.ah = getelementptr i8, ptr %next.gep7, i64 16
+  %i.ah = getelementptr i8, ptr %next.gep7, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep7, align 8, !tbaa !198, !alias.scope !951
   %wide.load8 = load <2 x i64>, ptr %i.ah, align 8, !tbaa !198, !alias.scope !951
   %i.ai = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !950
   store <2 x i64> %wide.load8, ptr %i.ai, align 8, !tbaa !198, !alias.scope !950
-  %4 = getelementptr i8, ptr %next.gep7, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep7, align 8, !tbaa !198, !alias.scope !951
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !951
+  store <2 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !198, !alias.scope !951
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !944
@@ -10085,18 +10054,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ah = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.y, i64 %i.ah ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.n, i64 %i.ah ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.n, i64 %i.ah ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !963)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !964)
-  %i.ai = getelementptr i8, ptr %next.gep10, i64 16
+  %i.ai = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !964
   %wide.load11 = load <2 x i64>, ptr %i.ai, align 8, !tbaa !198, !alias.scope !964
   %i.aj = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !963
   store <2 x i64> %wide.load11, ptr %i.aj, align 8, !tbaa !198, !alias.scope !963
-  %5 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !964
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !964
+  store <2 x ptr> splat (ptr null), ptr %i.ai, align 8, !tbaa !198, !alias.scope !964
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
   br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !957
@@ -10499,18 +10467,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aj = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.aa, i64 %i.aj ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.p, i64 %i.aj ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.p, i64 %i.aj ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !979)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !980)
-  %i.ak = getelementptr i8, ptr %next.gep8, i64 16
+  %i.ak = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !980
   %wide.load9 = load <2 x i64>, ptr %i.ak, align 8, !tbaa !198, !alias.scope !980
   %i.al = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !979
   store <2 x i64> %wide.load9, ptr %i.al, align 8, !tbaa !198, !alias.scope !979
-  %5 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !980
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !980
+  store <2 x ptr> splat (ptr null), ptr %i.ak, align 8, !tbaa !198, !alias.scope !980
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.am = icmp eq i64 %index.next, %n.vec
   br i1 %i.am, label %middle.block, label %vector.body, !llvm.loop !973
@@ -10863,18 +10830,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aw = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.an, i64 %i.aw ; 2 uses
-  %next.gep22 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 4 uses
+  %next.gep22 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !992)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !993)
-  %i.ax = getelementptr i8, ptr %next.gep22, i64 16
+  %i.ax = getelementptr i8, ptr %next.gep22, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep22, align 8, !tbaa !198, !alias.scope !993
   %wide.load23 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !198, !alias.scope !993
   %i.ay = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !992
   store <2 x i64> %wide.load23, ptr %i.ay, align 8, !tbaa !198, !alias.scope !992
-  %5 = getelementptr i8, ptr %next.gep22, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep22, align 8, !tbaa !198, !alias.scope !993
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !993
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !198, !alias.scope !993
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.az = icmp eq i64 %index.next, %n.vec
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !989
@@ -11277,18 +11243,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aw = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.an, i64 %i.aw ; 2 uses
-  %next.gep22 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 4 uses
+  %next.gep22 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1011)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1012)
-  %i.ax = getelementptr i8, ptr %next.gep22, i64 16
+  %i.ax = getelementptr i8, ptr %next.gep22, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep22, align 8, !tbaa !198, !alias.scope !1012
   %wide.load23 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !198, !alias.scope !1012
   %i.ay = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1011
   store <2 x i64> %wide.load23, ptr %i.ay, align 8, !tbaa !198, !alias.scope !1011
-  %5 = getelementptr i8, ptr %next.gep22, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep22, align 8, !tbaa !198, !alias.scope !1012
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !1012
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !198, !alias.scope !1012
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.az = icmp eq i64 %index.next, %n.vec
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !1008
@@ -11502,18 +11467,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ag = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.x, i64 %i.ag ; 2 uses
-  %next.gep7 = getelementptr i8, ptr %i.m, i64 %i.ag ; 4 uses
+  %next.gep7 = getelementptr i8, ptr %i.m, i64 %i.ag ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1024)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1025)
-  %i.ah = getelementptr i8, ptr %next.gep7, i64 16
+  %i.ah = getelementptr i8, ptr %next.gep7, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep7, align 8, !tbaa !198, !alias.scope !1025
   %wide.load8 = load <2 x i64>, ptr %i.ah, align 8, !tbaa !198, !alias.scope !1025
   %i.ai = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1024
   store <2 x i64> %wide.load8, ptr %i.ai, align 8, !tbaa !198, !alias.scope !1024
-  %4 = getelementptr i8, ptr %next.gep7, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep7, align 8, !tbaa !198, !alias.scope !1025
-  store <2 x ptr> splat (ptr null), ptr %4, align 8, !tbaa !198, !alias.scope !1025
+  store <2 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !198, !alias.scope !1025
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !1018
@@ -11697,18 +11661,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ar = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ai, i64 %i.ar ; 2 uses
-  %next.gep7 = getelementptr i8, ptr %i.x, i64 %i.ar ; 4 uses
+  %next.gep7 = getelementptr i8, ptr %i.x, i64 %i.ar ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1033)
   call void @llvm.experimental.noalias.scope.decl(metadata !1034)
-  %i.as = getelementptr i8, ptr %next.gep7, i64 16
+  %i.as = getelementptr i8, ptr %next.gep7, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep7, align 8, !tbaa !198, !alias.scope !1034
   %wide.load8 = load <2 x i64>, ptr %i.as, align 8, !tbaa !198, !alias.scope !1034
   %i.at = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1033
   store <2 x i64> %wide.load8, ptr %i.at, align 8, !tbaa !198, !alias.scope !1033
-  %3 = getelementptr i8, ptr %next.gep7, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep7, align 8, !tbaa !198, !alias.scope !1034
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !1034
+  store <2 x ptr> splat (ptr null), ptr %i.as, align 8, !tbaa !198, !alias.scope !1034
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.au = icmp eq i64 %index.next, %n.vec
   br i1 %i.au, label %middle.block, label %vector.body, !llvm.loop !1030
@@ -12111,18 +12074,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.av = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.am, i64 %i.av ; 2 uses
-  %next.gep9 = getelementptr i8, ptr %i.ab, i64 %i.av ; 4 uses
+  %next.gep9 = getelementptr i8, ptr %i.ab, i64 %i.av ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1564)
   call void @llvm.experimental.noalias.scope.decl(metadata !1565)
-  %i.aw = getelementptr i8, ptr %next.gep9, i64 16
+  %i.aw = getelementptr i8, ptr %next.gep9, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep9, align 8, !tbaa !198, !alias.scope !1565
   %wide.load10 = load <2 x i64>, ptr %i.aw, align 8, !tbaa !198, !alias.scope !1565
   %i.ax = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1564
   store <2 x i64> %wide.load10, ptr %i.ax, align 8, !tbaa !198, !alias.scope !1564
-  %5 = getelementptr i8, ptr %next.gep9, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep9, align 8, !tbaa !198, !alias.scope !1565
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !1565
+  store <2 x ptr> splat (ptr null), ptr %i.aw, align 8, !tbaa !198, !alias.scope !1565
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec
   br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !1561
@@ -12256,18 +12218,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ad = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.u, i64 %i.ad ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.j, i64 %i.ad ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.j, i64 %i.ad ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1572)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1573)
-  %i.ae = getelementptr i8, ptr %next.gep8, i64 16
+  %i.ae = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !1573
   %wide.load9 = load <2 x i64>, ptr %i.ae, align 8, !tbaa !198, !alias.scope !1573
   %i.af = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1572
   store <2 x i64> %wide.load9, ptr %i.af, align 8, !tbaa !198, !alias.scope !1572
-  %3 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !1573
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !1573
+  store <2 x ptr> splat (ptr null), ptr %i.ae, align 8, !tbaa !198, !alias.scope !1573
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !1569
@@ -12531,18 +12492,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aw = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.an, i64 %i.aw ; 2 uses
-  %next.gep10 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 4 uses
+  %next.gep10 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1585)
   call void @llvm.experimental.noalias.scope.decl(metadata !1586)
-  %i.ax = getelementptr i8, ptr %next.gep10, i64 16
+  %i.ax = getelementptr i8, ptr %next.gep10, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !198, !alias.scope !1586
   %wide.load11 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !198, !alias.scope !1586
   %i.ay = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1585
   store <2 x i64> %wide.load11, ptr %i.ay, align 8, !tbaa !198, !alias.scope !1585
-  %7 = getelementptr i8, ptr %next.gep10, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !198, !alias.scope !1586
-  store <2 x ptr> splat (ptr null), ptr %7, align 8, !tbaa !198, !alias.scope !1586
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !198, !alias.scope !1586
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.az = icmp eq i64 %index.next, %n.vec
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !1582
@@ -12669,18 +12629,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ac = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.t, i64 %i.ac ; 2 uses
-  %next.gep5 = getelementptr i8, ptr %i.i, i64 %i.ac ; 4 uses
+  %next.gep5 = getelementptr i8, ptr %i.i, i64 %i.ac ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1593)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1594)
-  %i.ad = getelementptr i8, ptr %next.gep5, i64 16
+  %i.ad = getelementptr i8, ptr %next.gep5, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep5, align 8, !tbaa !198, !alias.scope !1594
   %wide.load6 = load <2 x i64>, ptr %i.ad, align 8, !tbaa !198, !alias.scope !1594
   %i.ae = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1593
   store <2 x i64> %wide.load6, ptr %i.ae, align 8, !tbaa !198, !alias.scope !1593
-  %2 = getelementptr i8, ptr %next.gep5, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep5, align 8, !tbaa !198, !alias.scope !1594
-  store <2 x ptr> splat (ptr null), ptr %2, align 8, !tbaa !198, !alias.scope !1594
+  store <2 x ptr> splat (ptr null), ptr %i.ad, align 8, !tbaa !198, !alias.scope !1594
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.af = icmp eq i64 %index.next, %n.vec
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !1590
@@ -12833,18 +12792,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ae ; 2 uses
-  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 4 uses
+  %next.gep6 = getelementptr i8, ptr %i.k, i64 %i.ae ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1607)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1608)
-  %i.af = getelementptr i8, ptr %next.gep6, i64 16
+  %i.af = getelementptr i8, ptr %next.gep6, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep6, align 8, !tbaa !198, !alias.scope !1608
   %wide.load7 = load <2 x i64>, ptr %i.af, align 8, !tbaa !198, !alias.scope !1608
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1607
   store <2 x i64> %wide.load7, ptr %i.ag, align 8, !tbaa !198, !alias.scope !1607
-  %3 = getelementptr i8, ptr %next.gep6, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep6, align 8, !tbaa !198, !alias.scope !1608
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !1608
+  store <2 x ptr> splat (ptr null), ptr %i.af, align 8, !tbaa !198, !alias.scope !1608
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !1602
@@ -13069,18 +13027,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.at = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ak, i64 %i.at ; 2 uses
-  %next.gep19 = getelementptr i8, ptr %i.z, i64 %i.at ; 4 uses
+  %next.gep19 = getelementptr i8, ptr %i.z, i64 %i.at ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1619)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1620)
-  %i.au = getelementptr i8, ptr %next.gep19, i64 16
+  %i.au = getelementptr i8, ptr %next.gep19, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep19, align 8, !tbaa !198, !alias.scope !1620
   %wide.load20 = load <2 x i64>, ptr %i.au, align 8, !tbaa !198, !alias.scope !1620
   %i.av = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1619
   store <2 x i64> %wide.load20, ptr %i.av, align 8, !tbaa !198, !alias.scope !1619
-  %3 = getelementptr i8, ptr %next.gep19, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep19, align 8, !tbaa !198, !alias.scope !1620
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !1620
+  store <2 x ptr> splat (ptr null), ptr %i.au, align 8, !tbaa !198, !alias.scope !1620
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aw = icmp eq i64 %index.next, %n.vec
   br i1 %i.aw, label %middle.block, label %vector.body, !llvm.loop !1616
@@ -13483,18 +13440,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aw = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.an, i64 %i.aw ; 2 uses
-  %next.gep22 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 4 uses
+  %next.gep22 = getelementptr i8, ptr %i.ac, i64 %i.aw ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1650)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1651)
-  %i.ax = getelementptr i8, ptr %next.gep22, i64 16
+  %i.ax = getelementptr i8, ptr %next.gep22, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep22, align 8, !tbaa !198, !alias.scope !1651
   %wide.load23 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !198, !alias.scope !1651
   %i.ay = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1650
   store <2 x i64> %wide.load23, ptr %i.ay, align 8, !tbaa !198, !alias.scope !1650
-  %5 = getelementptr i8, ptr %next.gep22, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep22, align 8, !tbaa !198, !alias.scope !1651
-  store <2 x ptr> splat (ptr null), ptr %5, align 8, !tbaa !198, !alias.scope !1651
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !198, !alias.scope !1651
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.az = icmp eq i64 %index.next, %n.vec
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !1647
@@ -13628,18 +13584,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ad = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.u, i64 %i.ad ; 2 uses
-  %next.gep8 = getelementptr i8, ptr %i.j, i64 %i.ad ; 4 uses
+  %next.gep8 = getelementptr i8, ptr %i.j, i64 %i.ad ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1658)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1659)
-  %i.ae = getelementptr i8, ptr %next.gep8, i64 16
+  %i.ae = getelementptr i8, ptr %next.gep8, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep8, align 8, !tbaa !198, !alias.scope !1659
   %wide.load9 = load <2 x i64>, ptr %i.ae, align 8, !tbaa !198, !alias.scope !1659
   %i.af = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !198, !alias.scope !1658
   store <2 x i64> %wide.load9, ptr %i.af, align 8, !tbaa !198, !alias.scope !1658
-  %3 = getelementptr i8, ptr %next.gep8, i64 16
   store <2 x ptr> splat (ptr null), ptr %next.gep8, align 8, !tbaa !198, !alias.scope !1659
-  store <2 x ptr> splat (ptr null), ptr %3, align 8, !tbaa !198, !alias.scope !1659
+  store <2 x ptr> splat (ptr null), ptr %i.ae, align 8, !tbaa !198, !alias.scope !1659
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !1655

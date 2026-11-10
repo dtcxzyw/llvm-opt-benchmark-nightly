@@ -204,58 +204,53 @@ bb.a:
   %i.b = tail call ptr @ptVis(ptr noundef %0, i32 noundef %6, double %4, double %5) #12 ; 2 uses
   %i.c = tail call ptr @makePath(double %1, double %2, i32 noundef %3, ptr noundef %i.a, double %4, double %5, i32 noundef %6, ptr noundef %i.b, ptr noundef %0) #12 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !22   ; 2 uses
-  %8 = sext i32 %i.e to i64
-  %9 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %8 ; 2 uses
-  %i.f = add nsw i32 %i.e, 1                      ; 4 uses
-  %.04648 = load i32, ptr %9, align 4, !tbaa !23  ; 2 uses
-  %.not49 = icmp eq i32 %.04648, %i.f
-  br i1 %.not49, label %._crit_edge.thread, label %.lr.ph.a
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !22   ; 3 uses
+  %i.f = add nsw i32 %i.e, 1                      ; 3 uses
+  br label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %bb.a, %.lr.ph.a
-  %.04651 = phi i32 [ %.046, %.lr.ph.a ], [ %.04648, %bb.a ]
-  %.04550 = phi i64 [ %10, %.lr.ph.a ], [ 1, %bb.a ] ; 2 uses
-  %10 = add i64 %.04550, 1                        ; 2 uses
+.lr.ph.a:                                         ; preds = %.lr.ph.a, %bb.a
+  %.04651 = phi i32 [ %i.e, %bb.a ], [ %.046, %.lr.ph.a ]
+  %.04550 = phi i64 [ 1, %bb.a ], [ %8, %.lr.ph.a ] ; 3 uses
   %i.g = sext i32 %.04651 to i64
   %i.h = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.g
   %.046 = load i32, ptr %i.h, align 4, !tbaa !23  ; 2 uses
   %.not = icmp eq i32 %.046, %i.f
+  %8 = add i64 %.04550, 1                         ; 7 uses
   br i1 %.not, label %._crit_edge.a, label %.lr.ph.a, !llvm.loop !39
 
 ._crit_edge.a:                                    ; preds = %.lr.ph.a
-  %11 = add i64 %.04550, 2                        ; 3 uses
-  %mul.ov.i = icmp ugt i64 %11, 1152921504606846975
+  %mul.ov.i = icmp ugt i64 %8, 1152921504606846975
   br i1 %mul.ov.i, label %bb.b, label %._crit_edge.thread
 
 bb.b:                                             ; preds = %._crit_edge.a
   %i.i = load ptr, ptr @stderr, align 8, !tbaa !42
-  %i.j = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.i, ptr noundef nonnull @.str, i64 noundef %11, i64 noundef 16) #14 ; 0 uses
+  %i.j = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.i, ptr noundef nonnull @.str, i64 noundef %8, i64 noundef 16) #14 ; 0 uses
   tail call fastcc void @graphviz_exit() #15
   unreachable
 
-._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge.a
-  %12 = phi i64 [ %11, %._crit_edge.a ], [ 2, %bb.a ] ; 4 uses
-  %.045.lcssa68 = phi i64 [ %10, %._crit_edge.a ], [ 1, %bb.a ] ; 2 uses
-  %i.k = icmp ne i64 %12, 0
-  %i.l = tail call noalias ptr @calloc(i64 noundef %12, i64 noundef 16) #13 ; 5 uses
+._crit_edge.thread:                               ; preds = %._crit_edge.a
+  %i.k = icmp ne i64 %8, 0
+  %i.l = tail call noalias ptr @calloc(i64 noundef %8, i64 noundef 16) #13 ; 5 uses
   %i.m = icmp eq ptr %i.l, null
   %or.cond3.i = and i1 %i.k, %i.m
   br i1 %or.cond3.i, label %bb.c, label %gv_calloc.exit
 
 bb.c:                                             ; preds = %._crit_edge.thread
   %i.n = load ptr, ptr @stderr, align 8, !tbaa !42
-  %i.o = shl nuw i64 %12, 4
+  %i.o = shl nuw i64 %8, 4
   %i.p = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.n, ptr noundef nonnull @.str.1, i64 noundef %i.o) #14 ; 0 uses
   tail call fastcc void @graphviz_exit() #15
   unreachable
 
 gv_calloc.exit:                                   ; preds = %._crit_edge.thread
-  %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.045.lcssa68 ; 2 uses
+  %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.04550 ; 2 uses
   store double %4, ptr %i.q, align 8, !tbaa !26
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store double %5, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !26
-  %.053.a = add nsw i64 %.045.lcssa68, -1         ; 2 uses
-  %.154.a = load i32, ptr %9, align 4, !tbaa !23  ; 2 uses
+  %9 = sext i32 %i.e to i64
+  %.1.in49 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %9
+  %.053.a = add nsw i64 %.04550, -1               ; 2 uses
+  %.154.a = load i32, ptr %.1.in49, align 4, !tbaa !23 ; 2 uses
   %.not4755 = icmp eq i32 %.154.a, %i.f
   br i1 %.not4755, label %._crit_edge59, label %.lr.ph58
 
@@ -286,7 +281,7 @@ bb.d:                                             ; preds = %.lr.ph58, %bb.d
   tail call void @free(ptr noundef %i.a) #12
   tail call void @free(ptr noundef %i.b) #12
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i64 %12, ptr %i.y, align 8, !tbaa !12
+  store i64 %8, ptr %i.y, align 8, !tbaa !12
   store ptr %i.l, ptr %7, align 8, !tbaa !24
   tail call void @free(ptr noundef nonnull %i.c) #12
   ret void

@@ -206,26 +206,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.al = xor i64 %index, -1
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.an = getelementptr [8 x i8], ptr %i.ak, i64 %i.al ; 4 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 16
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.an = getelementptr [8 x i8], ptr %i.ak, i64 %i.al ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.am, align 8, !alias.scope !1434
   %wide.load56 = load <2 x ptr>, ptr %i.ao, align 8, !alias.scope !1434
-  %i.ap = getelementptr i8, ptr %i.an, i64 -8
-  %i.aq = getelementptr i8, ptr %i.an, i64 -24
+  %i.ap = getelementptr i8, ptr %i.an, i64 -8     ; 2 uses
+  %i.aq = getelementptr i8, ptr %i.an, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.ap, align 8, !alias.scope !1435
   %wide.load58 = load <2 x i64>, ptr %i.aq, align 8, !alias.scope !1435
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   store <2 x i64> %reverse, ptr %i.am, align 8, !alias.scope !1434
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !1434
-  %7 = getelementptr i8, ptr %i.an, i64 -8
-  %8 = getelementptr i8, ptr %i.an, i64 -24
+  store <2 x i64> %reverse59, ptr %i.ao, align 8, !alias.scope !1434
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !1435
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !1435
+  store <2 x ptr> %reverse60, ptr %i.ap, align 8, !alias.scope !1435
+  store <2 x ptr> %reverse61, ptr %i.aq, align 8, !alias.scope !1435
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ar = icmp eq i64 %index.next, %n.vec
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !1428
@@ -628,26 +625,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ag = xor i64 %index, -1
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.ai = getelementptr [8 x i8], ptr %i.af, i64 %i.ag ; 4 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.ai = getelementptr [8 x i8], ptr %i.af, i64 %i.ag ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.ah, align 8, !alias.scope !2156
   %wide.load56 = load <2 x ptr>, ptr %i.aj, align 8, !alias.scope !2156
-  %i.ak = getelementptr i8, ptr %i.ai, i64 -8
-  %i.al = getelementptr i8, ptr %i.ai, i64 -24
+  %i.ak = getelementptr i8, ptr %i.ai, i64 -8     ; 2 uses
+  %i.al = getelementptr i8, ptr %i.ai, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.ak, align 8, !alias.scope !2157
   %wide.load58 = load <2 x i64>, ptr %i.al, align 8, !alias.scope !2157
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   store <2 x i64> %reverse, ptr %i.ah, align 8, !alias.scope !2156
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2156
-  %7 = getelementptr i8, ptr %i.ai, i64 -8
-  %8 = getelementptr i8, ptr %i.ai, i64 -24
+  store <2 x i64> %reverse59, ptr %i.aj, align 8, !alias.scope !2156
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2157
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2157
+  store <2 x ptr> %reverse60, ptr %i.ak, align 8, !alias.scope !2157
+  store <2 x ptr> %reverse61, ptr %i.al, align 8, !alias.scope !2157
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.am = icmp eq i64 %index.next, %n.vec
   br i1 %i.am, label %middle.block, label %vector.body, !llvm.loop !2149
@@ -975,26 +969,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2174
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2174
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2175
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2175
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2174
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2174
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2174
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2175
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2175
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2175
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2175
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2167
@@ -1322,26 +1313,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2192
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2192
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2193
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2193
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2192
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2192
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2192
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2193
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2193
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2193
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2193
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2185
@@ -1669,26 +1657,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2210
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2210
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2211
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2211
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2210
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2210
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2210
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2211
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2211
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2211
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2211
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2203
@@ -2016,26 +2001,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2228
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2228
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2229
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2229
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2228
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2228
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2228
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2229
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2229
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2229
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2229
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2221
@@ -2363,26 +2345,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2246
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2246
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2247
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2247
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2246
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2246
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2246
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2247
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2247
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2247
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2247
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2239
@@ -2710,26 +2689,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2264
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2264
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2265
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2265
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2264
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2264
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2264
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2265
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2265
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2265
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2265
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2257
@@ -3057,26 +3033,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2282
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2282
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2283
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2283
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2282
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2282
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2282
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2283
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2283
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2283
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2283
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2275
@@ -3404,26 +3377,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2300
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2300
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2301
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2301
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2300
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2300
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2300
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2301
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2301
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2301
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2301
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2293
@@ -3751,26 +3721,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bm = xor i64 %index, -1
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 4 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bo = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bn, align 8, !alias.scope !2318
   %wide.load56 = load <2 x ptr>, ptr %i.bp, align 8, !alias.scope !2318
-  %i.bq = getelementptr i8, ptr %i.bo, i64 -8
-  %i.br = getelementptr i8, ptr %i.bo, i64 -24
+  %i.bq = getelementptr i8, ptr %i.bo, i64 -8     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bo, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.bq, align 8, !alias.scope !2319
   %wide.load58 = load <2 x i64>, ptr %i.br, align 8, !alias.scope !2319
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> %reverse, ptr %i.bn, align 8, !alias.scope !2318
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2318
-  %7 = getelementptr i8, ptr %i.bo, i64 -8
-  %8 = getelementptr i8, ptr %i.bo, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bp, align 8, !alias.scope !2318
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2319
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2319
+  store <2 x ptr> %reverse60, ptr %i.bq, align 8, !alias.scope !2319
+  store <2 x ptr> %reverse61, ptr %i.br, align 8, !alias.scope !2319
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
   br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !2311
@@ -4098,26 +4065,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ba = xor i64 %index, -1
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.bc = getelementptr [8 x i8], ptr %i.az, i64 %i.ba ; 4 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.bc = getelementptr [8 x i8], ptr %i.az, i64 %i.ba ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.bb, align 8, !alias.scope !2357
   %wide.load56 = load <2 x ptr>, ptr %i.bd, align 8, !alias.scope !2357
-  %i.be = getelementptr i8, ptr %i.bc, i64 -8
-  %i.bf = getelementptr i8, ptr %i.bc, i64 -24
+  %i.be = getelementptr i8, ptr %i.bc, i64 -8     ; 2 uses
+  %i.bf = getelementptr i8, ptr %i.bc, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.be, align 8, !alias.scope !2358
   %wide.load58 = load <2 x i64>, ptr %i.bf, align 8, !alias.scope !2358
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   store <2 x i64> %reverse, ptr %i.bb, align 8, !alias.scope !2357
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2357
-  %7 = getelementptr i8, ptr %i.bc, i64 -8
-  %8 = getelementptr i8, ptr %i.bc, i64 -24
+  store <2 x i64> %reverse59, ptr %i.bd, align 8, !alias.scope !2357
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2358
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2358
+  store <2 x ptr> %reverse60, ptr %i.be, align 8, !alias.scope !2358
+  store <2 x ptr> %reverse61, ptr %i.bf, align 8, !alias.scope !2358
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bg = icmp eq i64 %index.next, %n.vec
   br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !2347
@@ -4520,26 +4484,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.de = xor i64 %index, -1
-  %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.dd, i64 %i.de ; 4 uses
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.df, i64 16
+  %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.dg = getelementptr [8 x i8], ptr %i.dd, i64 %i.de ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.df, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.df, align 8, !alias.scope !2393
   %wide.load56 = load <2 x ptr>, ptr %i.dh, align 8, !alias.scope !2393
-  %i.di = getelementptr i8, ptr %i.dg, i64 -8
-  %i.dj = getelementptr i8, ptr %i.dg, i64 -24
+  %i.di = getelementptr i8, ptr %i.dg, i64 -8     ; 2 uses
+  %i.dj = getelementptr i8, ptr %i.dg, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.di, align 8, !alias.scope !2394
   %wide.load58 = load <2 x i64>, ptr %i.dj, align 8, !alias.scope !2394
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.df, i64 16
   store <2 x i64> %reverse, ptr %i.df, align 8, !alias.scope !2393
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2393
-  %7 = getelementptr i8, ptr %i.dg, i64 -8
-  %8 = getelementptr i8, ptr %i.dg, i64 -24
+  store <2 x i64> %reverse59, ptr %i.dh, align 8, !alias.scope !2393
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2394
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2394
+  store <2 x ptr> %reverse60, ptr %i.di, align 8, !alias.scope !2394
+  store <2 x ptr> %reverse61, ptr %i.dj, align 8, !alias.scope !2394
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.dk = icmp eq i64 %index.next, %n.vec
   br i1 %i.dk, label %middle.block, label %vector.body, !llvm.loop !2377
@@ -4942,26 +4903,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.cr = xor i64 %index, -1
-  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.ct = getelementptr [8 x i8], ptr %i.cq, i64 %i.cr ; 4 uses
-  %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
+  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.ct = getelementptr [8 x i8], ptr %i.cq, i64 %i.cr ; 2 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.cs, align 8, !alias.scope !2450
   %wide.load56 = load <2 x ptr>, ptr %i.cu, align 8, !alias.scope !2450
-  %i.cv = getelementptr i8, ptr %i.ct, i64 -8
-  %i.cw = getelementptr i8, ptr %i.ct, i64 -24
+  %i.cv = getelementptr i8, ptr %i.ct, i64 -8     ; 2 uses
+  %i.cw = getelementptr i8, ptr %i.ct, i64 -24    ; 2 uses
   %wide.load57 = load <2 x i64>, ptr %i.cv, align 8, !alias.scope !2451
   %wide.load58 = load <2 x i64>, ptr %i.cw, align 8, !alias.scope !2451
   %reverse = shufflevector <2 x i64> %wide.load57, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   store <2 x i64> %reverse, ptr %i.cs, align 8, !alias.scope !2450
-  store <2 x i64> %reverse59, ptr %6, align 8, !alias.scope !2450
-  %7 = getelementptr i8, ptr %i.ct, i64 -8
-  %8 = getelementptr i8, ptr %i.ct, i64 -24
+  store <2 x i64> %reverse59, ptr %i.cu, align 8, !alias.scope !2450
   %reverse60 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse61 = shufflevector <2 x ptr> %wide.load56, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse60, ptr %7, align 8, !alias.scope !2451
-  store <2 x ptr> %reverse61, ptr %8, align 8, !alias.scope !2451
+  store <2 x ptr> %reverse60, ptr %i.cv, align 8, !alias.scope !2451
+  store <2 x ptr> %reverse61, ptr %i.cw, align 8, !alias.scope !2451
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cx = icmp eq i64 %index.next, %n.vec
   br i1 %i.cx, label %middle.block, label %vector.body, !llvm.loop !2422
@@ -5259,26 +5217,23 @@ vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnA
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.am = xor i64 %index, -1
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 4 uses
-  %i.ao = getelementptr [8 x i8], ptr %i.al, i64 %i.am ; 4 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 16
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index ; 3 uses
+  %i.ao = getelementptr [8 x i8], ptr %i.al, i64 %i.am ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %i.an, align 8, !alias.scope !2479
   %wide.load59 = load <2 x ptr>, ptr %i.ap, align 8, !alias.scope !2479
-  %i.aq = getelementptr i8, ptr %i.ao, i64 -8
-  %i.ar = getelementptr i8, ptr %i.ao, i64 -24
+  %i.aq = getelementptr i8, ptr %i.ao, i64 -8     ; 2 uses
+  %i.ar = getelementptr i8, ptr %i.ao, i64 -24    ; 2 uses
   %wide.load60 = load <2 x i64>, ptr %i.aq, align 8, !alias.scope !2480
   %wide.load61 = load <2 x i64>, ptr %i.ar, align 8, !alias.scope !2480
   %reverse = shufflevector <2 x i64> %wide.load60, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %reverse62 = shufflevector <2 x i64> %wide.load61, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %6 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   store <2 x i64> %reverse, ptr %i.an, align 8, !alias.scope !2479
-  store <2 x i64> %reverse62, ptr %6, align 8, !alias.scope !2479
-  %7 = getelementptr i8, ptr %i.ao, i64 -8
-  %8 = getelementptr i8, ptr %i.ao, i64 -24
+  store <2 x i64> %reverse62, ptr %i.ap, align 8, !alias.scope !2479
   %reverse63 = shufflevector <2 x ptr> %wide.load, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   %reverse64 = shufflevector <2 x ptr> %wide.load59, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %reverse63, ptr %7, align 8, !alias.scope !2480
-  store <2 x ptr> %reverse64, ptr %8, align 8, !alias.scope !2480
+  store <2 x ptr> %reverse63, ptr %i.aq, align 8, !alias.scope !2480
+  store <2 x ptr> %reverse64, ptr %i.ar, align 8, !alias.scope !2480
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.as = icmp eq i64 %index.next, %n.vec
   br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !2468
