@@ -205,6 +205,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ft = sext i32 %10 to i64
   %i.fu = sext i32 %8 to i64
   %i.fv = add i32 %7, 1
+  %scevgep2035 = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   %scevgep2029 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep2073 = getelementptr inbounds nuw i8, ptr %i.g, i64 1024 ; 2 uses
   %bound02076 = icmp ult ptr %0, %scevgep2073
@@ -234,6 +235,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gj = sext i32 %10 to i64
   %i.gk = sext i32 %8 to i64
   %i.gl = add i32 %7, 1
+  %scevgep2121 = getelementptr inbounds nuw i8, ptr %i.h, i64 1
   %scevgep2114 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep2158 = getelementptr inbounds nuw i8, ptr %i.h, i64 1024 ; 2 uses
   %bound02161 = icmp ult ptr %0, %scevgep2158
@@ -263,6 +265,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gz = sext i32 %10 to i64
   %i.ha = sext i32 %8 to i64
   %i.hb = add i32 %7, 1
+  %scevgep2207 = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %scevgep2199 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep2243 = getelementptr inbounds nuw i8, ptr %i.i, i64 1024 ; 2 uses
   %bound02246 = icmp ult ptr %0, %scevgep2243
@@ -432,7 +435,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i:   ; preds = %.lr.ph.i.i, %middle
 
 ._crit_edge.i:                                    ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i, %bb.ad
   %.promoted.i768 = phi ptr [ %.promoted10.i, %bb.ad ], [ %.lcssa, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i ] ; 8 uses
-  %.0.lcssa.i = phi i32 [ %i.hw, %bb.ad ], [ %i.iz, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i ] ; 7 uses
+  %.0.lcssa.i = phi i32 [ %i.hw, %bb.ad ], [ %i.iz, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i ] ; 8 uses
   %i.jb = icmp sgt i32 %.0.lcssa.i, 0
   br i1 %i.jb, label %.lr.ph.i5.i.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit
 
@@ -442,9 +445,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i:   ; preds = %.lr.ph.i.i, %middle
   br i1 %min.iters.check2201, label %.lr.ph.i5.i.preheader2269, label %vector.memcheck2202
 
 vector.memcheck2202:                              ; preds = %.lr.ph.i5.i.preheader
-  %i.jd = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
-  %i.je = getelementptr i8, ptr %i.i, i64 %i.jd   ; 2 uses
-  %i.jf = getelementptr i8, ptr %.promoted.i768, i64 %i.jd ; 2 uses
+  %20 = add nsw i32 %.0.lcssa.i, -1
+  %i.jd = zext i32 %20 to i64
+  %i.je = getelementptr i8, ptr %scevgep2207, i64 %i.jd ; 2 uses
+  %21 = zext nneg i32 %.0.lcssa.i to i64
+  %i.jf = getelementptr i8, ptr %.promoted.i768, i64 %21 ; 2 uses
   %bound02203 = icmp ult ptr %0, %i.je
   %found.conflict2205 = and i1 %bound02203, %bound12204
   %bound02206 = icmp ult ptr %0, %i.jf
@@ -701,7 +706,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i790: ; preds = %.lr.ph.i.i786, %mi
 
 ._crit_edge.i776:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i790, %bb.af
   %.promoted.i777 = phi ptr [ %.promoted10.i775, %bb.af ], [ %.lcssa1509, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i790 ] ; 8 uses
-  %.0.lcssa.i778 = phi i32 [ %i.la, %bb.af ], [ %i.md, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i790 ] ; 7 uses
+  %.0.lcssa.i778 = phi i32 [ %i.la, %bb.af ], [ %i.md, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i790 ] ; 8 uses
   %i.mf = icmp sgt i32 %.0.lcssa.i778, 0
   br i1 %i.mf, label %.lr.ph.i5.i779.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit791
 
@@ -711,9 +716,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i790: ; preds = %.lr.ph.i.i786, %mi
   br i1 %min.iters.check2116, label %.lr.ph.i5.i779.preheader2273, label %vector.memcheck2117
 
 vector.memcheck2117:                              ; preds = %.lr.ph.i5.i779.preheader
-  %i.mh = zext nneg i32 %.0.lcssa.i778 to i64     ; 2 uses
-  %i.mi = getelementptr i8, ptr %i.h, i64 %i.mh   ; 2 uses
-  %i.mj = getelementptr i8, ptr %.promoted.i777, i64 %i.mh ; 2 uses
+  %22 = add nsw i32 %.0.lcssa.i778, -1
+  %i.mh = zext i32 %22 to i64
+  %i.mi = getelementptr i8, ptr %scevgep2121, i64 %i.mh ; 2 uses
+  %23 = zext nneg i32 %.0.lcssa.i778 to i64
+  %i.mj = getelementptr i8, ptr %.promoted.i777, i64 %23 ; 2 uses
   %bound02118 = icmp ult ptr %0, %i.mi
   %found.conflict2120 = and i1 %bound02118, %bound12119
   %bound02121 = icmp ult ptr %0, %i.mj
@@ -983,7 +990,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i818: ; preds = %.lr.ph.i.i814, %mi
 
 ._crit_edge.i804:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i818, %bb.ah
   %.promoted.i805 = phi ptr [ %.promoted10.i803, %bb.ah ], [ %.lcssa1511, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i818 ] ; 8 uses
-  %.0.lcssa.i806 = phi i32 [ %i.oj, %bb.ah ], [ %i.pm, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i818 ] ; 7 uses
+  %.0.lcssa.i806 = phi i32 [ %i.oj, %bb.ah ], [ %i.pm, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i818 ] ; 8 uses
   %i.po = icmp sgt i32 %.0.lcssa.i806, 0
   br i1 %i.po, label %.lr.ph.i5.i807.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit819
 
@@ -993,9 +1000,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i818: ; preds = %.lr.ph.i.i814, %mi
   br i1 %min.iters.check2031, label %.lr.ph.i5.i807.preheader2278, label %vector.memcheck2032
 
 vector.memcheck2032:                              ; preds = %.lr.ph.i5.i807.preheader
-  %i.pq = zext nneg i32 %.0.lcssa.i806 to i64     ; 2 uses
-  %i.pr = getelementptr i8, ptr %i.g, i64 %i.pq   ; 2 uses
-  %i.ps = getelementptr i8, ptr %.promoted.i805, i64 %i.pq ; 2 uses
+  %24 = add nsw i32 %.0.lcssa.i806, -1
+  %i.pq = zext i32 %24 to i64
+  %i.pr = getelementptr i8, ptr %scevgep2035, i64 %i.pq ; 2 uses
+  %25 = zext nneg i32 %.0.lcssa.i806 to i64
+  %i.ps = getelementptr i8, ptr %.promoted.i805, i64 %25 ; 2 uses
   %bound02033 = icmp ult ptr %0, %i.pr
   %found.conflict2035 = and i1 %bound02033, %bound12034
   %bound02036 = icmp ult ptr %0, %i.ps
@@ -1148,6 +1157,7 @@ bb.al:                                            ; preds = %bb.z
   %i.rm = sext i32 %10 to i64
   %i.rn = sext i32 %8 to i64
   %i.ro = add i32 %7, 1
+  %scevgep1777 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %scevgep1774 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep1818 = getelementptr inbounds nuw i8, ptr %i.d, i64 1024 ; 2 uses
   %bound01821 = icmp ult ptr %0, %scevgep1818
@@ -1177,6 +1187,7 @@ bb.al:                                            ; preds = %bb.z
   %i.sc = sext i32 %10 to i64
   %i.sd = sext i32 %8 to i64
   %i.se = add i32 %7, 1
+  %scevgep1863 = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   %scevgep1859 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep1903 = getelementptr inbounds nuw i8, ptr %i.e, i64 1024 ; 2 uses
   %bound01906 = icmp ult ptr %0, %scevgep1903
@@ -1206,6 +1217,7 @@ bb.al:                                            ; preds = %bb.z
   %i.ss = sext i32 %10 to i64
   %i.st = sext i32 %8 to i64
   %i.su = add i32 %7, 1
+  %scevgep1949 = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   %scevgep1944 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep1988 = getelementptr inbounds nuw i8, ptr %i.f, i64 1024 ; 2 uses
   %bound01991 = icmp ult ptr %0, %scevgep1988
@@ -1372,7 +1384,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i846: ; preds = %.lr.ph.i.i842, %mi
 
 ._crit_edge.i832:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i846, %bb.an
   %.promoted.i833 = phi ptr [ %.promoted10.i831, %bb.an ], [ %.lcssa1513, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i846 ] ; 8 uses
-  %.0.lcssa.i834 = phi i32 [ %i.tp, %bb.an ], [ %i.us, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i846 ] ; 7 uses
+  %.0.lcssa.i834 = phi i32 [ %i.tp, %bb.an ], [ %i.us, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i846 ] ; 8 uses
   %i.uu = icmp sgt i32 %.0.lcssa.i834, 0
   br i1 %i.uu, label %.lr.ph.i5.i835.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit847
 
@@ -1382,9 +1394,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i846: ; preds = %.lr.ph.i.i842, %mi
   br i1 %min.iters.check1946, label %.lr.ph.i5.i835.preheader2283, label %vector.memcheck1947
 
 vector.memcheck1947:                              ; preds = %.lr.ph.i5.i835.preheader
-  %i.uw = zext nneg i32 %.0.lcssa.i834 to i64     ; 2 uses
-  %i.ux = getelementptr i8, ptr %i.f, i64 %i.uw   ; 2 uses
-  %i.uy = getelementptr i8, ptr %.promoted.i833, i64 %i.uw ; 2 uses
+  %26 = add nsw i32 %.0.lcssa.i834, -1
+  %i.uw = zext i32 %26 to i64
+  %i.ux = getelementptr i8, ptr %scevgep1949, i64 %i.uw ; 2 uses
+  %27 = zext nneg i32 %.0.lcssa.i834 to i64
+  %i.uy = getelementptr i8, ptr %.promoted.i833, i64 %27 ; 2 uses
   %bound01948 = icmp ult ptr %0, %i.ux
   %found.conflict1950 = and i1 %bound01948, %bound11949
   %bound01951 = icmp ult ptr %0, %i.uy
@@ -1662,7 +1676,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i868: ; preds = %.lr.ph.i.i864, %mi
 
 ._crit_edge.i854:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i868, %bb.aq
   %.promoted.i855 = phi ptr [ %.promoted10.i853, %bb.aq ], [ %.lcssa1515, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i868 ] ; 8 uses
-  %.0.lcssa.i856 = phi i32 [ %i.wy, %bb.aq ], [ %i.yb, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i868 ] ; 7 uses
+  %.0.lcssa.i856 = phi i32 [ %i.wy, %bb.aq ], [ %i.yb, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i868 ] ; 8 uses
   %i.yd = icmp sgt i32 %.0.lcssa.i856, 0
   br i1 %i.yd, label %.lr.ph.i5.i857.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit869
 
@@ -1672,9 +1686,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i868: ; preds = %.lr.ph.i.i864, %mi
   br i1 %min.iters.check1861, label %.lr.ph.i5.i857.preheader2288, label %vector.memcheck1862
 
 vector.memcheck1862:                              ; preds = %.lr.ph.i5.i857.preheader
-  %i.yf = zext nneg i32 %.0.lcssa.i856 to i64     ; 2 uses
-  %i.yg = getelementptr i8, ptr %i.e, i64 %i.yf   ; 2 uses
-  %i.yh = getelementptr i8, ptr %.promoted.i855, i64 %i.yf ; 2 uses
+  %28 = add nsw i32 %.0.lcssa.i856, -1
+  %i.yf = zext i32 %28 to i64
+  %i.yg = getelementptr i8, ptr %scevgep1863, i64 %i.yf ; 2 uses
+  %29 = zext nneg i32 %.0.lcssa.i856 to i64
+  %i.yh = getelementptr i8, ptr %.promoted.i855, i64 %29 ; 2 uses
   %bound01863 = icmp ult ptr %0, %i.yg
   %found.conflict1865 = and i1 %bound01863, %bound11864
   %bound01866 = icmp ult ptr %0, %i.yh
@@ -1966,7 +1982,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i896: ; preds = %.lr.ph.i.i892, %mi
 
 ._crit_edge.i882:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i896, %bb.as
   %.promoted.i883 = phi ptr [ %.promoted10.i881, %bb.as ], [ %.lcssa1517, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i896 ] ; 8 uses
-  %.0.lcssa.i884 = phi i32 [ %i.aal, %bb.as ], [ %i.abo, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i896 ] ; 7 uses
+  %.0.lcssa.i884 = phi i32 [ %i.aal, %bb.as ], [ %i.abo, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i896 ] ; 8 uses
   %i.abq = icmp sgt i32 %.0.lcssa.i884, 0
   br i1 %i.abq, label %.lr.ph.i5.i885.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit897
 
@@ -1976,9 +1992,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i896: ; preds = %.lr.ph.i.i892, %mi
   br i1 %min.iters.check1776, label %.lr.ph.i5.i885.preheader2293, label %vector.memcheck1777
 
 vector.memcheck1777:                              ; preds = %.lr.ph.i5.i885.preheader
-  %i.abs = zext nneg i32 %.0.lcssa.i884 to i64    ; 2 uses
-  %i.abt = getelementptr i8, ptr %i.d, i64 %i.abs ; 2 uses
-  %i.abu = getelementptr i8, ptr %.promoted.i883, i64 %i.abs ; 2 uses
+  %30 = add nsw i32 %.0.lcssa.i884, -1
+  %i.abs = zext i32 %30 to i64
+  %i.abt = getelementptr i8, ptr %scevgep1777, i64 %i.abs ; 2 uses
+  %31 = zext nneg i32 %.0.lcssa.i884 to i64
+  %i.abu = getelementptr i8, ptr %.promoted.i883, i64 %31 ; 2 uses
   %bound01778 = icmp ult ptr %0, %i.abt
   %found.conflict1780 = and i1 %bound01778, %bound11779
   %bound01781 = icmp ult ptr %0, %i.abu
@@ -2131,6 +2149,7 @@ bb.aw:                                            ; preds = %bb.z
   %i.ado = sext i32 %10 to i64
   %i.adp = sext i32 %8 to i64
   %i.adq = add i32 %7, 1
+  %scevgep = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %scevgep.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep1563 = getelementptr inbounds nuw i8, ptr %i.a, i64 1024 ; 2 uses
   %bound01566 = icmp ult ptr %0, %scevgep1563
@@ -2161,6 +2180,7 @@ bb.aw:                                            ; preds = %bb.z
   %i.aef = sext i32 %10 to i64
   %i.aeg = sext i32 %8 to i64
   %i.aeh = add i32 %7, 1
+  %scevgep1605 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %scevgep1604 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep1648 = getelementptr inbounds nuw i8, ptr %i.b, i64 1024 ; 2 uses
   %bound01651 = icmp ult ptr %0, %scevgep1648
@@ -2190,6 +2210,7 @@ bb.aw:                                            ; preds = %bb.z
   %i.aev = sext i32 %10 to i64
   %i.aew = sext i32 %8 to i64
   %i.aex = add i32 %7, 1
+  %scevgep1691 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %scevgep1689 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %scevgep1733 = getelementptr inbounds nuw i8, ptr %i.c, i64 1024 ; 2 uses
   %bound01736 = icmp ult ptr %0, %scevgep1733
@@ -2360,7 +2381,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i924: ; preds = %.lr.ph.i.i920, %mi
 
 ._crit_edge.i910:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i924, %bb.az
   %.promoted.i911 = phi ptr [ %.promoted10.i909, %bb.az ], [ %.lcssa1519, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i924 ] ; 8 uses
-  %.0.lcssa.i912 = phi i32 [ %i.aft, %bb.az ], [ %i.agw, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i924 ] ; 7 uses
+  %.0.lcssa.i912 = phi i32 [ %i.aft, %bb.az ], [ %i.agw, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i924 ] ; 8 uses
   %i.agy = icmp sgt i32 %.0.lcssa.i912, 0
   br i1 %i.agy, label %.lr.ph.i5.i913.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit925
 
@@ -2370,9 +2391,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i924: ; preds = %.lr.ph.i.i920, %mi
   br i1 %min.iters.check1691, label %.lr.ph.i5.i913.preheader2298, label %vector.memcheck1692
 
 vector.memcheck1692:                              ; preds = %.lr.ph.i5.i913.preheader
-  %i.aha = zext nneg i32 %.0.lcssa.i912 to i64    ; 2 uses
-  %i.ahb = getelementptr i8, ptr %i.c, i64 %i.aha ; 2 uses
-  %i.ahc = getelementptr i8, ptr %.promoted.i911, i64 %i.aha ; 2 uses
+  %32 = add nsw i32 %.0.lcssa.i912, -1
+  %i.aha = zext i32 %32 to i64
+  %i.ahb = getelementptr i8, ptr %scevgep1691, i64 %i.aha ; 2 uses
+  %33 = zext nneg i32 %.0.lcssa.i912 to i64
+  %i.ahc = getelementptr i8, ptr %.promoted.i911, i64 %33 ; 2 uses
   %bound01693 = icmp ult ptr %0, %i.ahb
   %found.conflict1695 = and i1 %bound01693, %bound11694
   %bound01696 = icmp ult ptr %0, %i.ahc
@@ -2654,7 +2677,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i946: ; preds = %.lr.ph.i.i942, %mi
 
 ._crit_edge.i932:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i946, %bb.bc
   %.promoted.i933 = phi ptr [ %.promoted10.i931, %bb.bc ], [ %.lcssa1521, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i946 ] ; 8 uses
-  %.0.lcssa.i934 = phi i32 [ %i.aji, %bb.bc ], [ %i.akl, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i946 ] ; 7 uses
+  %.0.lcssa.i934 = phi i32 [ %i.aji, %bb.bc ], [ %i.akl, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i946 ] ; 8 uses
   %i.akn = icmp sgt i32 %.0.lcssa.i934, 0
   br i1 %i.akn, label %.lr.ph.i5.i935.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit947
 
@@ -2664,9 +2687,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i946: ; preds = %.lr.ph.i.i942, %mi
   br i1 %min.iters.check1606, label %.lr.ph.i5.i935.preheader2303, label %vector.memcheck1607
 
 vector.memcheck1607:                              ; preds = %.lr.ph.i5.i935.preheader
-  %i.akp = zext nneg i32 %.0.lcssa.i934 to i64    ; 2 uses
-  %i.akq = getelementptr i8, ptr %i.b, i64 %i.akp ; 2 uses
-  %i.akr = getelementptr i8, ptr %.promoted.i933, i64 %i.akp ; 2 uses
+  %34 = add nsw i32 %.0.lcssa.i934, -1
+  %i.akp = zext i32 %34 to i64
+  %i.akq = getelementptr i8, ptr %scevgep1605, i64 %i.akp ; 2 uses
+  %35 = zext nneg i32 %.0.lcssa.i934 to i64
+  %i.akr = getelementptr i8, ptr %.promoted.i933, i64 %35 ; 2 uses
   %bound01608 = icmp ult ptr %0, %i.akq
   %found.conflict1610 = and i1 %bound01608, %bound11609
   %bound01611 = icmp ult ptr %0, %i.akr
@@ -2962,7 +2987,7 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i974: ; preds = %.lr.ph.i.i970, %mi
 
 ._crit_edge.i960:                                 ; preds = %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i974, %bb.bf
   %.promoted.i961 = phi ptr [ %.promoted10.i959, %bb.bf ], [ %.lcssa1523, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i974 ] ; 8 uses
-  %.0.lcssa.i962 = phi i32 [ %i.amx, %bb.bf ], [ %i.aoa, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i974 ] ; 7 uses
+  %.0.lcssa.i962 = phi i32 [ %i.amx, %bb.bf ], [ %i.aoa, %_ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i974 ] ; 8 uses
   %i.aoc = icmp sgt i32 %.0.lcssa.i962, 0
   br i1 %i.aoc, label %.lr.ph.i5.i963.preheader, label %_ZN7Imf_3_43Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit975
 
@@ -2972,9 +2997,11 @@ _ZN7Imf_3_49CharPtrIO9readCharsERPKcPci.exit.i974: ; preds = %.lr.ph.i.i970, %mi
   br i1 %min.iters.check, label %.lr.ph.i5.i963.preheader2308, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i5.i963.preheader
-  %i.aoe = zext nneg i32 %.0.lcssa.i962 to i64    ; 2 uses
-  %i.aof = getelementptr i8, ptr %i.a, i64 %i.aoe ; 2 uses
-  %i.aog = getelementptr i8, ptr %.promoted.i961, i64 %i.aoe ; 2 uses
+  %36 = add nsw i32 %.0.lcssa.i962, -1
+  %i.aoe = zext i32 %36 to i64
+  %i.aof = getelementptr i8, ptr %scevgep, i64 %i.aoe ; 2 uses
+  %37 = zext nneg i32 %.0.lcssa.i962 to i64
+  %i.aog = getelementptr i8, ptr %.promoted.i961, i64 %37 ; 2 uses
   %bound0 = icmp ult ptr %0, %i.aof
   %found.conflict = and i1 %bound0, %bound1
   %bound01537 = icmp ult ptr %0, %i.aog

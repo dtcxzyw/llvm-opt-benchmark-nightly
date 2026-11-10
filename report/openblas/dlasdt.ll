@@ -6,9 +6,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
 define void @dlasdt_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) initializes((0, 4)) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef captures(none) initializes((0, 4)) %3, ptr nofree noundef captures(none) initializes((0, 4)) %4, ptr nofree noundef captures(none) initializes((0, 4)) %5, ptr nofree noundef readonly captures(none) %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds i8, ptr %5, i64 -4 ; 6 uses
-  %i.b = getelementptr inbounds i8, ptr %4, i64 -4 ; 6 uses
-  %i.c = getelementptr inbounds i8, ptr %3, i64 -4 ; 6 uses
+  %i.a = getelementptr i8, ptr %5, i64 -4         ; 8 uses
+  %i.b = getelementptr i8, ptr %4, i64 -4         ; 8 uses
+  %i.c = getelementptr i8, ptr %3, i64 -4         ; 8 uses
   %i.d = load i32, ptr %0, align 4, !tbaa !21     ; 2 uses
   %i.e = icmp slt i32 %i.d, 2
   %i.f = uitofp nneg i32 %i.d to double
@@ -33,13 +33,19 @@ bb.a:
   store i32 %i.t, ptr %5, align 4, !tbaa !21
   %i.u = load i32, ptr %1, align 4, !tbaa !21     ; 2 uses
   %.not.not75 = icmp sgt i32 %i.u, 1
-  br i1 %.not.not75, label %.preheader, label %._crit_edge80
+  br i1 %.not.not75, label %.preheader.preheader, label %._crit_edge80
 
-.preheader:                                       ; preds = %bb.a, %._crit_edge
-  %.079 = phi i32 [ %.1.lcssa, %._crit_edge ], [ 1, %bb.a ] ; 2 uses
-  %.06378 = phi i32 [ %.164.lcssa, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
-  %.06677 = phi i32 [ %i.cx, %._crit_edge ], [ 1, %bb.a ] ; 5 uses
-  %.06776 = phi i32 [ %i.cy, %._crit_edge ], [ 1, %bb.a ]
+.preheader.preheader:                             ; preds = %bb.a
+  %scevgep = getelementptr i8, ptr %3, i64 4      ; 2 uses
+  %scevgep251 = getelementptr i8, ptr %5, i64 4   ; 2 uses
+  %scevgep252 = getelementptr i8, ptr %4, i64 4   ; 2 uses
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.079 = phi i32 [ %.1.lcssa, %._crit_edge ], [ 1, %.preheader.preheader ] ; 2 uses
+  %.06378 = phi i32 [ %.164.lcssa, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
+  %.06677 = phi i32 [ %i.cx, %._crit_edge ], [ 1, %.preheader.preheader ] ; 5 uses
+  %.06776 = phi i32 [ %i.cy, %._crit_edge ], [ 1, %.preheader.preheader ]
   %.not.not6970 = icmp sgt i32 %.06677, 0
   br i1 %.not.not6970, label %.lr.ph.preheader, label %._crit_edge
 
@@ -51,34 +57,30 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader395, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.y = shl nsw i64 %i.w, 2                      ; 2 uses
-  %7 = add nsw i64 %i.y, 4                        ; 3 uses
-  %i.z = getelementptr i8, ptr %4, i64 %7         ; 8 uses
-  %i.aa = shl nuw nsw i64 %i.x, 3                 ; 3 uses
+  %i.y = shl nsw i64 %i.w, 2                      ; 4 uses
+  %i.z = getelementptr i8, ptr %scevgep252, i64 %i.y ; 8 uses
+  %i.aa = shl nuw nsw i64 %i.x, 3                 ; 5 uses
   %i.ab = add nsw i64 %i.aa, %i.y                 ; 3 uses
   %i.ac = getelementptr i8, ptr %4, i64 %i.ab     ; 8 uses
-  %i.ad = getelementptr i8, ptr %5, i64 %7        ; 8 uses
+  %i.ad = getelementptr i8, ptr %scevgep251, i64 %i.y ; 8 uses
   %i.ae = getelementptr i8, ptr %5, i64 %i.ab     ; 8 uses
-  %i.af = getelementptr i8, ptr %3, i64 %7        ; 8 uses
+  %i.af = getelementptr i8, ptr %scevgep, i64 %i.y ; 8 uses
   %i.ag = getelementptr i8, ptr %3, i64 %i.ab     ; 8 uses
-  %i.ah = shl nsw i64 %i.v, 2                     ; 2 uses
-  %8 = add nsw i64 %i.ah, 4                       ; 3 uses
-  %i.ai = getelementptr i8, ptr %4, i64 %8        ; 8 uses
+  %i.ah = shl nsw i64 %i.v, 2                     ; 4 uses
+  %i.ai = getelementptr i8, ptr %scevgep252, i64 %i.ah ; 8 uses
   %i.aj = add nsw i64 %i.aa, %i.ah                ; 3 uses
   %i.ak = getelementptr i8, ptr %4, i64 %i.aj     ; 8 uses
-  %i.al = getelementptr i8, ptr %5, i64 %8        ; 8 uses
+  %i.al = getelementptr i8, ptr %scevgep251, i64 %i.ah ; 8 uses
   %i.am = getelementptr i8, ptr %5, i64 %i.aj     ; 8 uses
-  %i.an = getelementptr i8, ptr %3, i64 %8        ; 8 uses
+  %i.an = getelementptr i8, ptr %scevgep, i64 %i.ah ; 8 uses
   %i.ao = getelementptr i8, ptr %3, i64 %i.aj     ; 8 uses
-  %i.ap = shl nuw nsw i64 %i.x, 2
-  %9 = add nsw i64 %i.ap, -4                      ; 3 uses
-  %i.aq = getelementptr i8, ptr %4, i64 %9        ; 6 uses
-  %10 = add nsw i64 %i.aa, -4                     ; 3 uses
-  %i.ar = getelementptr i8, ptr %4, i64 %10       ; 6 uses
-  %i.as = getelementptr i8, ptr %3, i64 %9        ; 6 uses
-  %i.at = getelementptr i8, ptr %3, i64 %10       ; 6 uses
-  %i.au = getelementptr i8, ptr %5, i64 %9        ; 6 uses
-  %i.av = getelementptr i8, ptr %5, i64 %10       ; 6 uses
+  %i.ap = shl nuw nsw i64 %i.x, 2                 ; 3 uses
+  %i.aq = getelementptr i8, ptr %i.b, i64 %i.ap   ; 6 uses
+  %i.ar = getelementptr i8, ptr %i.b, i64 %i.aa   ; 6 uses
+  %i.as = getelementptr i8, ptr %i.c, i64 %i.ap   ; 6 uses
+  %i.at = getelementptr i8, ptr %i.c, i64 %i.aa   ; 6 uses
+  %i.au = getelementptr i8, ptr %i.a, i64 %i.ap   ; 6 uses
+  %i.av = getelementptr i8, ptr %i.a, i64 %i.aa   ; 6 uses
   %bound0 = icmp ult ptr %i.z, %i.ae
   %bound1 = icmp ult ptr %i.ad, %i.ac
   %found.conflict = and i1 %bound0, %bound1

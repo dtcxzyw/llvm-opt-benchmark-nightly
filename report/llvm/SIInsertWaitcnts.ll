@@ -205,7 +205,7 @@ _ZN12_GLOBAL__N_115WaitcntBracketsD2Ev.exit:      ; preds = %_ZN4llvm8DenseMapIN
   br label %bb.bn
 
 bb.bn:                                            ; preds = %_ZNSt10unique_ptrIN12_GLOBAL__N_115WaitcntBracketsESt14default_deleteIS1_EED2Ev.exit278, %_ZN12_GLOBAL__N_115WaitcntBracketsD2Ev.exit, %_ZNSt10unique_ptrIN12_GLOBAL__N_115WaitcntBracketsESt14default_deleteIS1_EED2Ev.exit271, %_ZN12_GLOBAL__N_115WaitcntBracketsaSERKS0_.exit
-  %.sroa.0629.2 = phi ptr [ %.sroa.0629.1850, %_ZN12_GLOBAL__N_115WaitcntBracketsaSERKS0_.exit ], [ %i.lh, %_ZNSt10unique_ptrIN12_GLOBAL__N_115WaitcntBracketsESt14default_deleteIS1_EED2Ev.exit271 ], [ %.sroa.0629.1850, %_ZN12_GLOBAL__N_115WaitcntBracketsD2Ev.exit ], [ %i.ow, %_ZNSt10unique_ptrIN12_GLOBAL__N_115WaitcntBracketsESt14default_deleteIS1_EED2Ev.exit278 ] ; 30 uses
+  %.sroa.0629.2 = phi ptr [ %.sroa.0629.1850, %_ZN12_GLOBAL__N_115WaitcntBracketsaSERKS0_.exit ], [ %i.lh, %_ZNSt10unique_ptrIN12_GLOBAL__N_115WaitcntBracketsESt14default_deleteIS1_EED2Ev.exit271 ], [ %.sroa.0629.1850, %_ZN12_GLOBAL__N_115WaitcntBracketsD2Ev.exit ], [ %i.ow, %_ZNSt10unique_ptrIN12_GLOBAL__N_115WaitcntBracketsESt14default_deleteIS1_EED2Ev.exit278 ] ; 28 uses
   %i.qt = load ptr, ptr %i.h, align 8, !tbaa !386, !nonnull !31, !align !163
   %i.qu = getelementptr inbounds nuw i8, ptr %i.qt, i64 897
   %i.qv = load i8, ptr %i.qu, align 1, !tbaa !517, !range !30, !noundef !31
@@ -567,7 +567,7 @@ bb.ch:                                            ; preds = %_ZN12_GLOBAL__N_116
   %i.wi = getelementptr inbounds nuw i8, ptr %.sroa.0629.2, i64 112
   %i.wj = getelementptr inbounds nuw i8, ptr %.sroa.0629.2, i64 248 ; 2 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %.sroa.0629.2, i64 256 ; 3 uses
-  %i.wl = getelementptr inbounds nuw i8, ptr %.sroa.0629.2, i64 312 ; 3 uses
+  %i.wl = getelementptr i8, ptr %.sroa.0629.2, i64 312 ; 5 uses
   %i.wm = getelementptr inbounds nuw i8, ptr %.sroa.0629.2, i64 184
   %i.wn = getelementptr inbounds nuw i8, ptr %.sroa.0629.2, i64 192 ; 2 uses
   br label %bb.ci
@@ -970,17 +970,18 @@ vector.scevcheck:                                 ; preds = %.lr.ph474.i
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.bcp = and i64 %i.bcd, 4294967295             ; 3 uses
-  %i.bcq = shl nuw nsw i64 %i.bcp, 2
-  %29 = add nuw nsw i64 %i.bcq, 312               ; 2 uses
-  %i.bcr = getelementptr i8, ptr %.val194, i64 %29 ; 2 uses
+  %i.bcq = shl nuw nsw i64 %i.bcp, 2              ; 2 uses
+  %29 = getelementptr i8, ptr %.val194, i64 %i.bcq
+  %i.bcr = getelementptr i8, ptr %29, i64 312     ; 2 uses
   %i.bcs = add i64 %i.bce, %i.bcp                 ; 2 uses
-  %i.bct = shl i64 %i.bcs, 2
-  %i.bcu = shl i64 %i.bcd, 2
+  %i.bct = shl i64 %i.bcs, 2                      ; 2 uses
+  %i.bcu = shl i64 %i.bcd, 2                      ; 2 uses
   %i.bcv = add i64 %i.bct, 312
-  %i.bcw = sub i64 %i.bcv, %i.bcu                 ; 2 uses
+  %i.bcw = sub i64 %i.bcv, %i.bcu
   %i.bcx = getelementptr i8, ptr %.val194, i64 %i.bcw ; 2 uses
-  %i.bcy = getelementptr i8, ptr %.sroa.0629.2, i64 %29
-  %i.bcz = getelementptr i8, ptr %.sroa.0629.2, i64 %i.bcw
+  %i.bcy = getelementptr i8, ptr %i.wl, i64 %i.bcq
+  %30 = sub i64 %i.bct, %i.bcu
+  %i.bcz = getelementptr i8, ptr %i.wl, i64 %30
   %i.bda = shl nuw nsw i64 %i.bcp, 4
   %i.bdb = getelementptr i8, ptr %14, i64 %i.bda
   %i.bdc = sub i64 %i.bcs, %i.bcd

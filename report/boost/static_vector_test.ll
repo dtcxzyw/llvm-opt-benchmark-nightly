@@ -205,7 +205,9 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14co
   br label %.lr.ph.i.i.i
 
 _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i69.preheader: ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 5 uses
+  %scevgep = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -382,7 +384,7 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
 .lr.ph.i.i.i71:                                   ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit93, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i69.preheader
   %.042157 = phi i64 [ %i.em, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit93 ], [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i69.preheader ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  store i64 10, ptr %i.l, align 8, !tbaa !128
+  store i64 10, ptr %2, align 8, !tbaa !128
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i72 = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   store <2 x i32> zeroinitializer, ptr %1, align 8, !tbaa !41
   store <2 x i32> <i32 1, i32 0>, ptr %i.m, align 8, !tbaa !41
@@ -402,7 +404,7 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
   %i.bz = select i1 %i.bx, i64 3, i64 %i.by       ; 2 uses
   %.idx = shl nuw nsw i64 %.042157, 3             ; 8 uses
   %.idx126128 = add nuw nsw i64 %i.bz, %.042157   ; 2 uses
-  %i.ca = shl nuw nsw i64 %.idx126128, 3          ; 6 uses
+  %i.ca = shl nuw nsw i64 %.idx126128, 3          ; 5 uses
   %.not.i80 = icmp samesign eq i64 %.idx, %i.ca
   br i1 %.not.i80, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS2_Lb1EEES9_.exit, label %bb.g
 
@@ -421,20 +423,19 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i71
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i82.preheader
   %i.cg = add nuw i64 %.idx, 52
-  %i.ch = shl nuw nsw i64 %i.cb, 3                ; 3 uses
+  %i.ch = shl nuw nsw i64 %i.cb, 3                ; 4 uses
   %i.ci = sub i64 %i.cg, %i.ch
   %i.cj = getelementptr i8, ptr %1, i64 %i.ci
-  %i.ck = getelementptr i8, ptr %1, i64 %i.ca
+  %i.ck = getelementptr i8, ptr %i.l, i64 %i.ch
   %i.cl = add nuw i64 %.idx, 56
   %i.cm = sub nuw i64 %i.cl, %i.ch
-  %2 = getelementptr i8, ptr %1, i64 %i.cm
-  %i.cn = getelementptr i8, ptr %1, i64 %i.ch
-  %i.co = getelementptr i8, ptr %i.cn, i64 28
+  %i.cn = getelementptr i8, ptr %1, i64 %i.cm
+  %i.co = getelementptr i8, ptr %scevgep, i64 %i.ch
   %bound0 = icmp samesign ult i64 %.042157, 10
   %bound1 = icmp ult ptr %i.ck, %i.cj
   %found.conflict = and i1 %bound0, %bound1
   %bound0206 = icmp samesign ult i64 %.042157, 10
-  %bound1207 = icmp ult ptr %i.co, %2
+  %bound1207 = icmp ult ptr %i.co, %i.cn
   %found.conflict208 = and i1 %bound0206, %bound1207
   %conflict.rdx = or i1 %found.conflict, %found.conflict208
   br i1 %conflict.rdx, label %.lr.ph.i.i82.preheader211, label %vector.ph
@@ -530,7 +531,7 @@ _ZN5boost9container4moveIP14counting_valueS3_EENS0_3dtl38disable_if_memtransfer_
 
 _ZN5boost9container15destroy_alloc_nINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEPS4_EENS2_33disable_if_trivially_destructibleIT0_vE4typeERT_S8_m.exit.i: ; preds = %.lr.ph.preheader.i.i87, %_ZN5boost9container4moveIP14counting_valueS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_S6_S7_.exit.i
   %i.dl = sub nsw i64 10, %i.dj
-  store i64 %i.dl, ptr %i.l, align 8, !tbaa !128, !noalias !658
+  store i64 %i.dl, ptr %2, align 8, !tbaa !128, !noalias !658
   br label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS2_Lb1EEES9_.exit
 
 _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS2_Lb1EEES9_.exit: ; preds = %_ZN5boost9container15destroy_alloc_nINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEPS4_EENS2_33disable_if_trivially_destructibleIT0_vE4typeERT_S8_m.exit.i, %.lr.ph.i.i.i71
@@ -538,7 +539,7 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
           to label %bb.h unwind label %bb.i       ; 0 uses
 
 bb.h:                                             ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS2_Lb1EEES9_.exit
-  %i.dn = load i64, ptr %i.l, align 8, !tbaa !102
+  %i.dn = load i64, ptr %2, align 8, !tbaa !102
   %i.do = sub nuw nsw i64 10, %i.bz
   %i.dp = icmp eq i64 %i.dn, %i.do
   %i.dq = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.80, ptr noundef nonnull @.str.1, i32 noundef 322, ptr noundef nonnull @__PRETTY_FUNCTION__._Z13test_erase_ndI14counting_valueLm10EEvv, i1 noundef zeroext %i.dp)
@@ -598,7 +599,7 @@ bb.k:                                             ; preds = %.lr.ph153
   br label %bb.n
 
 ._crit_edge156:                                   ; preds = %bb.l, %.preheader
-  %i.ek = load i64, ptr %i.l, align 8, !tbaa !102 ; 2 uses
+  %i.ek = load i64, ptr %2, align 8, !tbaa !102   ; 2 uses
   %.not3.i.i89 = icmp eq i64 %i.ek, 0
   br i1 %.not3.i.i89, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit93, label %.lr.ph.preheader.i.i90
 
@@ -648,7 +649,7 @@ bb.m:                                             ; preds = %.lr.ph155
 
 bb.n:                                             ; preds = %bb.m, %bb.k, %bb.i
   %.pn = phi { ptr, i32 } [ %i.eh, %bb.k ], [ %i.fb, %bb.m ], [ %i.dt, %bb.i ]
-  %i.fe = load i64, ptr %i.l, align 8, !tbaa !102 ; 2 uses
+  %i.fe = load i64, ptr %2, align 8, !tbaa !102   ; 2 uses
   %.not3.i.i94 = icmp eq i64 %i.fe, 0
   br i1 %.not3.i.i94, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit98, label %.lr.ph.preheader.i.i95
 
@@ -693,7 +694,8 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
   br label %_ZN5boost9container13static_vectorINS0_4test24movable_and_copyable_intELm10EvEC2ERKS4_.exit
 
 _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i81.preheader: ; preds = %.lr.ph.i.i61
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.14.0..sroa_idx275 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.23.0..sroa_idx285 = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.26.0..sroa_idx287 = getelementptr inbounds nuw i8, ptr %1, i64 36
@@ -874,7 +876,7 @@ bb.f:                                             ; preds = %.lr.ph174
 _ZN5boost9container13static_vectorINS0_4test24movable_and_copyable_intELm10EvEC2ERKS4_.exit92: ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i81.preheader, %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit111
   %.042182 = phi i64 [ %i.eo, %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit111 ], [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i81.preheader ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  store i64 10, ptr %i.k, align 8, !tbaa !139
+  store i64 10, ptr %2, align 8, !tbaa !139
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i84 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %1, align 16, !tbaa !82
   store <4 x i32> <i32 4, i32 5, i32 6, i32 7>, ptr %.sroa.14.0..sroa_idx275, align 16, !tbaa !82
@@ -888,7 +890,7 @@ _ZN5boost9container13static_vectorINS0_4test24movable_and_copyable_intELm10EvEC2
   %i.bo = select i1 %i.bm, i64 3, i64 %i.bn       ; 2 uses
   %.idx = shl nuw nsw i64 %.042182, 2             ; 7 uses
   %.idx151153 = add nuw nsw i64 %i.bo, %.042182   ; 2 uses
-  %i.bp = shl nuw nsw i64 %.idx151153, 2          ; 6 uses
+  %i.bp = shl nuw nsw i64 %.idx151153, 2          ; 5 uses
   %.not.i93 = icmp samesign eq i64 %.idx, %i.bp
   br i1 %.not.i93, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEESA_.exit, label %bb.g
 
@@ -907,10 +909,10 @@ bb.g:                                             ; preds = %_ZN5boost9container
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i95.preheader
   %i.bv = add nuw i64 %.idx, 28
-  %i.bw = shl nuw nsw i64 %i.bq, 2
+  %i.bw = shl nuw nsw i64 %i.bq, 2                ; 2 uses
   %i.bx = sub nuw i64 %i.bv, %i.bw
   %i.by = getelementptr i8, ptr %1, i64 %i.bx
-  %i.bz = getelementptr i8, ptr %1, i64 %i.bp
+  %i.bz = getelementptr i8, ptr %i.k, i64 %i.bw
   %bound0 = icmp samesign ult i64 %.042182, 10
   %bound1 = icmp ult ptr %i.bz, %i.by
   %found.conflict = and i1 %bound0, %bound1
@@ -1057,7 +1059,7 @@ _ZN5boost9container15destroy_alloc_nINS0_3dtl24static_storage_allocatorINS0_4tes
 
 _ZN5boost9container15destroy_alloc_nINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEPS5_EENS2_33disable_if_trivially_destructibleIT0_vE4typeERT_S9_m.exit.i: ; preds = %_ZN5boost9container15destroy_alloc_nINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEPS5_EENS2_33disable_if_trivially_destructibleIT0_vE4typeERT_S9_m.exit.i.loopexit, %_ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i
   %i.di = sub nsw i64 10, %i.ct
-  store i64 %i.di, ptr %i.k, align 8, !tbaa !139, !noalias !683
+  store i64 %i.di, ptr %2, align 8, !tbaa !139, !noalias !683
   br label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEESA_.exit
 
 _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEESA_.exit: ; preds = %_ZN5boost9container15destroy_alloc_nINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEPS5_EENS2_33disable_if_trivially_destructibleIT0_vE4typeERT_S9_m.exit.i, %_ZN5boost9container13static_vectorINS0_4test24movable_and_copyable_intELm10EvEC2ERKS4_.exit92
@@ -1065,7 +1067,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_
           to label %bb.h unwind label %bb.i       ; 0 uses
 
 bb.h:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEESA_.exit
-  %i.dk = load i64, ptr %i.k, align 8, !tbaa !141
+  %i.dk = load i64, ptr %2, align 8, !tbaa !141
   %i.dl = sub nuw nsw i64 10, %i.bo
   %i.dm = icmp eq i64 %i.dk, %i.dl
   %i.dn = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.80, ptr noundef nonnull @.str.1, i32 noundef 322, ptr noundef nonnull @__PRETTY_FUNCTION__._Z13test_erase_ndIN5boost9container4test24movable_and_copyable_intELm10EEvv, i1 noundef zeroext %i.dm)
@@ -1121,7 +1123,7 @@ bb.k:                                             ; preds = %.lr.ph178
   br label %bb.n
 
 ._crit_edge181:                                   ; preds = %bb.l, %.preheader
-  %i.ed = load i64, ptr %i.k, align 8, !tbaa !141 ; 7 uses
+  %i.ed = load i64, ptr %2, align 8, !tbaa !141   ; 7 uses
   %.not3.i.i102 = icmp eq i64 %i.ed, 0
   br i1 %.not3.i.i102, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit111, label %.lr.ph.i.preheader.i103
 
@@ -1208,7 +1210,7 @@ bb.m:                                             ; preds = %.lr.ph180
 
 bb.n:                                             ; preds = %bb.m, %bb.k, %bb.i
   %.pn = phi { ptr, i32 } [ %i.ea, %bb.k ], [ %i.ez, %bb.m ], [ %i.dq, %bb.i ]
-  %i.fc = load i64, ptr %i.k, align 8, !tbaa !141 ; 7 uses
+  %i.fc = load i64, ptr %2, align 8, !tbaa !141   ; 7 uses
   %.not3.i.i112 = icmp eq i64 %i.fc, 0
   br i1 %.not3.i.i112, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit121, label %.lr.ph.i.preheader.i113
 

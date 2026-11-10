@@ -205,7 +205,10 @@ bb.bn:                                            ; preds = %decode_cblk.exit.th
   br i1 %i.ahm, label %.lr.ph.preheader.i127.i, label %dequantization_float.exit.i
 
 .lr.ph.preheader.i127.i:                          ; preds = %.lr.ph47.i.i
-  %wide.trip.count.i128.i = zext nneg i32 %i.aha to i64 ; 5 uses
+  %wide.trip.count.i128.i = zext nneg i32 %i.aha to i64 ; 4 uses
+  %5 = shl nuw nsw i64 %wide.trip.count.i128.i, 2 ; 2 uses
+  %scevgep232 = getelementptr i8, ptr %4, i64 %5
+  %scevgep233 = getelementptr i8, ptr %i.ahl, i64 %5
   %min.iters.check231 = icmp ult i32 %i.aha, 4
   %n.vec241 = and i64 %wide.trip.count.i128.i, 2147483644 ; 3 uses
   %cmp.n249 = icmp eq i64 %n.vec241, %wide.trip.count.i128.i
@@ -228,12 +231,10 @@ bb.bn:                                            ; preds = %decode_cblk.exit.th
   br i1 %min.iters.check231, label %scalar.ph230.preheader, label %vector.memcheck232
 
 vector.memcheck232:                               ; preds = %.lr.ph.i129.i
-  %5 = add nsw i64 %i.aht, %wide.trip.count.i128.i
-  %i.ahz = shl nsw i64 %5, 2
-  %i.aia = getelementptr i8, ptr %i.ahl, i64 %i.ahz ; 2 uses
-  %6 = add nsw i64 %i.ahx, %wide.trip.count.i128.i
-  %i.aib = shl nsw i64 %6, 2
-  %i.aic = getelementptr i8, ptr %4, i64 %i.aib
+  %i.ahz = shl nsw i64 %i.aht, 2
+  %i.aia = getelementptr i8, ptr %scevgep233, i64 %i.ahz ; 2 uses
+  %i.aib = shl nsw i64 %i.ahx, 2
+  %i.aic = getelementptr i8, ptr %scevgep232, i64 %i.aib
   %bound0233 = icmp ult ptr %i.ahu, %i.aic
   %bound1234 = icmp ult ptr %i.ahy, %i.aia
   %found.conflict235 = and i1 %bound0233, %bound1234
@@ -328,7 +329,10 @@ bb.bo:                                            ; preds = %decode_cblk.exit.th
 
 .lr.ph57.split.us.split.us.preheader.i.i:         ; preds = %.lr.ph57.i.i
   %i.ajv = ptrtoaddr ptr %i.ajt to i64
-  %wide.trip.count79.i.i = zext nneg i32 %.fr64.i.i to i64 ; 10 uses
+  %wide.trip.count79.i.i = zext nneg i32 %.fr64.i.i to i64 ; 9 uses
+  %6 = shl nuw nsw i64 %wide.trip.count79.i.i, 2  ; 2 uses
+  %scevgep183 = getelementptr i8, ptr %4, i64 %6
+  %scevgep184 = getelementptr i8, ptr %i.ajt, i64 %6
   %min.iters.check184 = icmp ult i32 %.fr64.i.i, 4
   %n.vec190 = and i64 %wide.trip.count79.i.i, 2147483644 ; 3 uses
   %cmp.n200 = icmp eq i64 %n.vec190, %wide.trip.count79.i.i
@@ -363,12 +367,10 @@ bb.bo:                                            ; preds = %decode_cblk.exit.th
   br i1 %min.iters.check184, label %.preheader51.us.us.i.i.preheader259, label %vector.memcheck185
 
 vector.memcheck185:                               ; preds = %.preheader51.us.us.i.i.preheader
-  %7 = add nsw i64 %i.akd, %wide.trip.count79.i.i
-  %i.akl = shl nsw i64 %7, 2
-  %i.akm = getelementptr i8, ptr %i.ajt, i64 %i.akl ; 2 uses
-  %8 = add nsw i64 %i.akh, %wide.trip.count79.i.i
-  %i.akn = shl nsw i64 %8, 2
-  %i.ako = getelementptr i8, ptr %4, i64 %i.akn
+  %i.akl = shl nsw i64 %i.akd, 2
+  %i.akm = getelementptr i8, ptr %scevgep184, i64 %i.akl ; 2 uses
+  %i.akn = shl nsw i64 %i.akh, 2
+  %i.ako = getelementptr i8, ptr %scevgep183, i64 %i.akn
   %bound0 = icmp ult ptr %i.ake, %i.ako
   %bound1 = icmp ult ptr %i.aki, %i.akm
   %found.conflict = and i1 %bound0, %bound1

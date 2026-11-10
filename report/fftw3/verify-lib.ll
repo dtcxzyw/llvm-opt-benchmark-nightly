@@ -204,7 +204,9 @@ bb.a:
   %i.k = shl i64 %i.j, 4
   %i.l = add i64 %i.k, 16
   %i.m = mul i64 %i.l, %i.e
-  %scevgep98 = getelementptr i8, ptr %1, i64 %i.m
+  %scevgep99 = getelementptr i8, ptr %1, i64 %i.m
+  %5 = shl nuw nsw i64 %i.e, 4
+  %scevgep98 = getelementptr i8, ptr %0, i64 %5
   %i.n = shl nuw nsw i64 %wide.trip.count69, 4    ; 2 uses
   %i.o = add nuw nsw i64 %i.n, 16
   %i.p = shl nuw nsw i64 %i.e, 4
@@ -358,10 +360,9 @@ scalar.ph128:                                     ; preds = %scalar.ph128.prol.l
   br i1 %min.iters.check100, label %scalar.ph99.preheader, label %vector.memcheck101
 
 vector.memcheck101:                               ; preds = %..preheader46_crit_edge.us.us.us
-  %5 = add nsw i64 %i.ca, %i.e
-  %i.ce = shl nsw i64 %5, 4
-  %i.cf = getelementptr i8, ptr %0, i64 %i.ce
-  %bound0102 = icmp ult ptr %i.cb, %scevgep98
+  %i.ce = shl nsw i64 %i.ca, 4
+  %i.cf = getelementptr i8, ptr %scevgep98, i64 %i.ce
+  %bound0102 = icmp ult ptr %i.cb, %scevgep99
   %bound1103 = icmp ult ptr %1, %i.cf
   %found.conflict104 = and i1 %bound0102, %bound1103
   %i.cg = or i1 %found.conflict104, %stride.check105
@@ -474,7 +475,9 @@ scalar.ph99:                                      ; preds = %scalar.ph99.prol.lo
   %i.dz = shl i64 %i.dy, 4
   %i.ea = add i64 %i.dz, 16
   %i.eb = mul i64 %i.ea, %wide.trip.count
-  %scevgep.a = getelementptr i8, ptr %1, i64 %i.eb
+  %scevgep = getelementptr i8, ptr %1, i64 %i.eb
+  %6 = shl nuw nsw i64 %wide.trip.count, 4
+  %scevgep.a = getelementptr i8, ptr %0, i64 %6
   %min.iters.check = icmp ult i32 %4, 4
   %.mask = and i64 %i.dw, 576460752303423488
   %stride.check = icmp ne i64 %.mask, 0
@@ -495,10 +498,9 @@ scalar.ph99:                                      ; preds = %scalar.ph99.prol.lo
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader47
-  %6 = add nsw i64 %i.eg, %wide.trip.count
-  %i.ek = shl nsw i64 %6, 4
-  %i.el = getelementptr i8, ptr %0, i64 %i.ek
-  %bound0 = icmp ult ptr %i.eh, %scevgep.a
+  %i.ek = shl nsw i64 %i.eg, 4
+  %i.el = getelementptr i8, ptr %scevgep.a, i64 %i.ek
+  %bound0 = icmp ult ptr %i.eh, %scevgep
   %bound1 = icmp ult ptr %1, %i.el
   %found.conflict = and i1 %bound0, %bound1
   %i.em = or i1 %found.conflict, %stride.check

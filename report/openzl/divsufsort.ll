@@ -204,6 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
   %i.a = sext i32 %6 to i64                       ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 20 uses
+  %scevgep = getelementptr i8, ptr %5, i64 4      ; 2 uses
   br label %.backedge.outer
 
 .backedge.outer:                                  ; preds = %.backedge.outer.backedge, %bb.a
@@ -247,12 +248,12 @@ bb.c:                                             ; preds = %bb.b
 
 vector.memcheck152:                               ; preds = %.lr.ph.i.i.preheader
   %i.o = add i64 %i.e, 17179869180
-  %i.p = and i64 %i.o, 17179869180
-  %8 = add nuw nsw i64 %i.p, 4                    ; 2 uses
-  %i.q = getelementptr i8, ptr %5, i64 %8
-  %i.r = getelementptr i8, ptr %.0231, i64 %8
+  %i.p = and i64 %i.o, 17179869180                ; 2 uses
+  %8 = getelementptr i8, ptr %scevgep, i64 %i.p
+  %i.q = getelementptr i8, ptr %.0231, i64 %i.p
+  %i.r = getelementptr i8, ptr %i.q, i64 4
   %bound0153 = icmp ult ptr %5, %i.r
-  %bound1154 = icmp ult ptr %.0231, %i.q
+  %bound1154 = icmp ult ptr %.0231, %8
   %found.conflict155 = and i1 %bound0153, %bound1154
   br i1 %found.conflict155, label %.lr.ph.i.i.preheader177, label %vector.ph156
 
@@ -655,12 +656,12 @@ bb.ai:                                            ; preds = %bb.ah
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i339.preheader
   %i.iw = add i64 %i.in, 17179869180
-  %i.ix = and i64 %i.iw, 17179869180
-  %9 = add nuw nsw i64 %i.ix, 4                   ; 2 uses
-  %i.iy = getelementptr i8, ptr %5, i64 %9
-  %i.iz = getelementptr i8, ptr %.0229, i64 %9
+  %i.ix = and i64 %i.iw, 17179869180              ; 2 uses
+  %9 = getelementptr i8, ptr %scevgep, i64 %i.ix
+  %i.iy = getelementptr i8, ptr %.0229, i64 %i.ix
+  %i.iz = getelementptr i8, ptr %i.iy, i64 4
   %bound0 = icmp ult ptr %5, %i.iz
-  %bound1 = icmp ult ptr %.0229, %i.iy
+  %bound1 = icmp ult ptr %.0229, %9
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i339.preheader174, label %vector.ph127
 

@@ -205,6 +205,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %.preheader.preheader, label %._crit_edge55.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
+  %9 = shl i64 %i.w, 3
+  %scevgep = getelementptr i8, ptr %i.u, i64 %9
   %min.iters.check = icmp ult i64 %i.w, 6
   %ident.check = icmp ne i64 %i.y, 1
   %ident.check64 = icmp ne i64 %i.x, 1
@@ -259,9 +261,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %brmerge, label %.lr.ph.i.i.i.i.i.i.preheader70, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %9 = add i64 %i.w, %i.ar
-  %i.at = shl i64 %9, 3
-  %i.au = getelementptr i8, ptr %i.u, i64 %i.at
+  %i.at = shl nsw i64 %i.ar, 3
+  %i.au = getelementptr i8, ptr %scevgep, i64 %i.at
   %bound0 = icmp ult ptr %i.ai, %i.au
   %bound1 = icmp ult ptr %i.as, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
@@ -540,6 +541,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %.preheader.preheader, label %._crit_edge55.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
+  %9 = shl i64 %i.w, 3
+  %scevgep = getelementptr i8, ptr %i.u, i64 %9
   %min.iters.check = icmp ult i64 %i.w, 6
   %ident.check = icmp ne i64 %i.y, 1
   %ident.check64 = icmp ne i64 %i.x, 1
@@ -594,9 +597,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %brmerge, label %.lr.ph.i.i.i.i.i.i.preheader70, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %9 = add i64 %i.w, %i.ar
-  %i.at = shl i64 %9, 3
-  %i.au = getelementptr i8, ptr %i.u, i64 %i.at
+  %i.at = shl nsw i64 %i.ar, 3
+  %i.au = getelementptr i8, ptr %scevgep, i64 %i.at
   %bound0 = icmp ult ptr %i.ai, %i.au
   %bound1 = icmp ult ptr %i.as, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
@@ -756,6 +758,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %.preheader.preheader, label %._crit_edge55.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
+  %9 = shl i64 %i.w, 3
+  %scevgep = getelementptr i8, ptr %i.u, i64 %9
   %min.iters.check = icmp ult i64 %i.w, 6
   %ident.check = icmp ne i64 %i.y, 1
   %ident.check64 = icmp ne i64 %i.x, 1
@@ -810,9 +814,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %brmerge, label %.lr.ph.i.i.i.i.i.i.preheader70, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %9 = add i64 %i.w, %i.ar
-  %i.at = shl i64 %9, 3
-  %i.au = getelementptr i8, ptr %i.u, i64 %i.at
+  %i.at = shl nsw i64 %i.ar, 3
+  %i.au = getelementptr i8, ptr %scevgep, i64 %i.at
   %bound0 = icmp ult ptr %i.ai, %i.au
   %bound1 = icmp ult ptr %i.as, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
@@ -972,6 +975,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %.preheader.preheader, label %._crit_edge55.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
+  %9 = shl i64 %i.w, 3
+  %scevgep = getelementptr i8, ptr %i.u, i64 %9
   %min.iters.check = icmp ult i64 %i.w, 6
   %ident.check = icmp ne i64 %i.y, 1
   %ident.check64 = icmp ne i64 %i.x, 1
@@ -1026,9 +1031,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %brmerge, label %.lr.ph.i.i.i.i.i.i.preheader70, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %9 = add i64 %i.w, %i.ar
-  %i.at = shl i64 %9, 3
-  %i.au = getelementptr i8, ptr %i.u, i64 %i.at
+  %i.at = shl nsw i64 %i.ar, 3
+  %i.au = getelementptr i8, ptr %scevgep, i64 %i.at
   %bound0 = icmp ult ptr %i.ai, %i.au
   %bound1 = icmp ult ptr %i.as, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
@@ -1186,6 +1190,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %.preheader.preheader, label %._crit_edge55.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
+  %9 = shl i64 %i.w, 3
+  %scevgep = getelementptr i8, ptr %i.u, i64 %9
   %min.iters.check = icmp ult i64 %i.w, 6
   %ident.check = icmp ne i64 %i.y, 1
   %ident.check64 = icmp ne i64 %i.x, 1
@@ -1240,9 +1246,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %brmerge, label %.lr.ph.i.i.i.i.i.i.preheader70, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %9 = add i64 %i.w, %i.ar
-  %i.at = shl i64 %9, 3
-  %i.au = getelementptr i8, ptr %i.u, i64 %i.at
+  %i.at = shl nsw i64 %i.ar, 3
+  %i.au = getelementptr i8, ptr %scevgep, i64 %i.at
   %bound0 = icmp ult ptr %i.ai, %i.au
   %bound1 = icmp ult ptr %i.as, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
@@ -1384,10 +1389,10 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !24   ; 2 uses
   %i.n = load ptr, ptr %3, align 8, !tbaa !188
-  %i.o = load ptr, ptr %1, align 8, !tbaa !26, !noalias !189 ; 6 uses
+  %i.o = load ptr, ptr %1, align 8, !tbaa !26, !noalias !189 ; 4 uses
   %i.p = load ptr, ptr %5, align 8, !tbaa !26, !noalias !190 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !tbaa !32, !noalias !190 ; 23 uses
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !32, !noalias !190 ; 21 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.t = load i64, ptr %i.s, align 8, !tbaa !27   ; 12 uses
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -1398,6 +1403,8 @@ bb.d:                                             ; preds = %bb.c
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.idx = shl i64 %i.m, 3
   %.idx58 = shl i64 %i.h, 4
+  %9 = shl i64 %i.r, 3
+  %scevgep = getelementptr i8, ptr %i.o, i64 %9   ; 3 uses
   %i.x = add nuw i64 %i.r, %i.h
   %i.y = shl i64 %i.x, 3
   %i.z = getelementptr i8, ptr %i.p, i64 %i.y
@@ -1444,9 +1451,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %brmerge, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.memcheck105
 
 vector.memcheck105:                               ; preds = %.preheader
-  %9 = add i64 %i.r, %i.al
-  %i.an = shl i64 %9, 3
-  %i.ao = getelementptr i8, ptr %i.o, i64 %i.an
+  %i.an = shl nsw i64 %i.al, 3
+  %i.ao = getelementptr i8, ptr %scevgep, i64 %i.an
   %bound0106 = icmp ult ptr %i.p, %i.ao
   %bound1107 = icmp ult ptr %i.am, %scevgep.a
   %found.conflict108 = and i1 %bound0106, %bound1107
@@ -1551,9 +1557,8 @@ _ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1EL
   br i1 %brmerge132, label %.lr.ph.i.i.i.i.i.i.1.preheader, label %vector.memcheck76
 
 vector.memcheck76:                                ; preds = %_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEpLINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINS8_18scalar_constant_opIdEEKNS2_IdLi1ELin1ELi1ELi1ELin1EEEEEKNS1_IKS3_Li1ELin1ELb0EEEEEEERS4_RKNS0_IT_EE.exit.loopexit
-  %10 = add i64 %i.r, %i.cg
-  %i.ci = shl i64 %10, 3
-  %i.cj = getelementptr i8, ptr %i.o, i64 %i.ci
+  %i.ci = shl nsw i64 %i.cg, 3
+  %i.cj = getelementptr i8, ptr %scevgep, i64 %i.ci
   %bound077 = icmp ult ptr %i.p, %i.cj
   %bound178 = icmp ult ptr %i.ch, %scevgep.a
   %found.conflict79 = and i1 %bound077, %bound178
@@ -1646,9 +1651,8 @@ _ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1EL
   br i1 %brmerge133, label %.lr.ph.i.i.i.i.i.i.2.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEpLINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINS8_18scalar_constant_opIdEEKNS2_IdLi1ELin1ELi1ELi1ELin1EEEEEKNS1_IKS3_Li1ELin1ELb0EEEEEEERS4_RKNS0_IT_EE.exit.loopexit.1
-  %11 = add i64 %i.r, %i.dz
-  %i.eb = shl i64 %11, 3
-  %i.ec = getelementptr i8, ptr %i.o, i64 %i.eb
+  %i.eb = shl nsw i64 %i.dz, 3
+  %i.ec = getelementptr i8, ptr %scevgep, i64 %i.eb
   %bound0 = icmp ult ptr %i.p, %i.ec
   %bound1 = icmp ult ptr %i.ea, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1

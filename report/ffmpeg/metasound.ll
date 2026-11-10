@@ -204,8 +204,10 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph50.us.preheader.i:                          ; preds = %.lr.ph54.i
   %i.ea = sext i32 %i.dw to i64                   ; 7 uses
   %wide.trip.count70.i = sext i32 %i.dy to i64    ; 6 uses
+  %5 = shl nsw i64 %i.ea, 2
   %i.eb = sub nsw i64 %wide.trip.count70.i, %i.ea
   %i.ec = shl nsw i64 %i.eb, 2
+  %scevgep = getelementptr i8, ptr %4, i64 %5
   %i.ed = sub nsw i64 %wide.trip.count70.i, %i.ea ; 3 uses
   %min.iters.check72 = icmp ult i64 %i.ed, 8
   %n.vec78 = and i64 %i.ed, -8                    ; 4 uses
@@ -230,9 +232,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check72, label %scalar.ph71.preheader, label %vector.memcheck73
 
 vector.memcheck73:                                ; preds = %.lr.ph50.us.i
-  %5 = add nsw i64 %i.em, %i.ea
-  %i.en = shl nsw i64 %5, 2
-  %i.eo = getelementptr i8, ptr %4, i64 %i.en
+  %i.en = shl nsw i64 %i.em, 2
+  %i.eo = getelementptr i8, ptr %scevgep, i64 %i.en
   %i.ep = add nsw i64 %i.em, %wide.trip.count70.i
   %i.eq = shl nsw i64 %i.ep, 2
   %i.er = getelementptr i8, ptr %4, i64 %i.eq

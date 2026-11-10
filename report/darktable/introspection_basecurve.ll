@@ -205,6 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.fc = add nsw <2 x i32> %i.j, splat (i32 -1)  ; 2 uses
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.fb
   %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.fb
+  %scevgep = getelementptr i8, ptr %3, i64 12
   %scevgep587 = getelementptr i8, ptr %3, i64 16
   %i.ff = tail call i64 @llvm.usub.sat.i64(i64 %i.ex, i64 4)
   %i.fg = shl i64 %i.ff, 2                        ; 2 uses
@@ -241,6 +242,7 @@ bb.p:                                             ; preds = %bb.o
   %.pre-phi416 = phi i64 [ %.pre415, %.loopexit320.._crit_edge350_crit_edge ], [ %i.fb, %bb.ag ] ; 2 uses
   %.pre-phi414 = phi i32 [ %.pre413, %.loopexit320.._crit_edge350_crit_edge ], [ %i.fa, %bb.ag ]
   %i.fy = add nsw <2 x i32> %i.j, splat (i32 -1)  ; 2 uses
+  %scevgep715 = getelementptr i8, ptr %3, i64 12
   %scevgep755 = getelementptr i8, ptr %3, i64 16
   br label %.preheader313
 
@@ -643,12 +645,12 @@ middle.block612:                                  ; preds = %vector.body598
   br label %.preheader316
 
 vector.memcheck541:                               ; preds = %.lr.ph343
-  %i.ub = shl i64 %i.ty, 2                        ; 2 uses
-  %i.uc = and i64 %i.ub, -16
+  %i.ub = shl i64 %i.ty, 2
+  %i.uc = and i64 %i.ub, -16                      ; 2 uses
   %i.ud = add i64 %i.uc, 16                       ; 2 uses
   %i.ue = getelementptr i8, ptr %i.tx, i64 %i.ud  ; 2 uses
   %i.uf = getelementptr i8, ptr %i.tv, i64 %i.ud
-  %i.ug = getelementptr i8, ptr %3, i64 %i.ub
+  %i.ug = getelementptr i8, ptr %scevgep, i64 %i.uc
   %bound0542 = icmp ult ptr %i.tx, %i.uf
   %bound1543 = icmp ult ptr %i.tv, %i.ue
   %found.conflict544 = and i1 %bound0542, %bound1543
@@ -1051,8 +1053,9 @@ gauss_expand.exit304:                             ; preds = %._crit_edge.i302, %
 
 vector.memcheck715:                               ; preds = %.preheader308.lr.ph
   %i.afb = shl i64 %i.aey, 2                      ; 2 uses
+  %6 = and i64 %i.afb, -16
   %i.afc = getelementptr i8, ptr %i.aex, i64 %i.afb
-  %i.afd = getelementptr i8, ptr %3, i64 %i.afb
+  %i.afd = getelementptr i8, ptr %scevgep715, i64 %6
   %bound0716 = icmp ult ptr %i.aex, %i.afd
   %bound1717 = icmp ult ptr %3, %i.afc
   %found.conflict718 = and i1 %bound0716, %bound1717

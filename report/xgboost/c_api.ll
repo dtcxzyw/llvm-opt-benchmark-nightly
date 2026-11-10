@@ -205,7 +205,12 @@ _ZN7xgboost8BatchSetINS_13ExtSparsePageEE5beginEv.exit: ; preds = %_ZN7xgboost7D
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %19, i8 0, i64 16, i1 false), !alias.scope !664
   invoke void @_ZNSt12__shared_ptrIN7xgboost17BatchIteratorImplINS0_13ExtSparsePageEEELN9__gnu_cxx12_Lock_policyE2EE5resetIS3_EENSt9enable_ifIXsr21__sp_is_constructibleIS3_T_EE5valueEvE4typeEPS9_(ptr noundef nonnull align 8 dereferenceable(16) %19, ptr noundef null)
-          to label %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit unwind label %bb.aw
+          to label %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit.preheader unwind label %bb.aw
+
+_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit.preheader: ; preds = %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE5beginEv.exit
+  %scevgep = getelementptr i8, ptr %3, i64 4      ; 2 uses
+  %scevgep213 = getelementptr i8, ptr %4, i64 4   ; 2 uses
+  br label %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit
 
 bb.aw:                                            ; preds = %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE5beginEv.exit
   %i.cg = landingpad { ptr, i32 }
@@ -215,7 +220,7 @@ bb.aw:                                            ; preds = %_ZN7xgboost8BatchSe
   call void @_ZNSt12__shared_ptrIN7xgboost17BatchIteratorImplINS0_13ExtSparsePageEEELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %19) #19
   br label %.body125
 
-_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit: ; preds = %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE5beginEv.exit, %"_ZN7xgboost6common11ParallelForImZ21XGDMatrixGetDataAsCSRE3$_0EEvT_iOT0_.exit"
+_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit: ; preds = %_ZN7xgboost8BatchSetINS_13ExtSparsePageEE3endEv.exit.preheader, %"_ZN7xgboost6common11ParallelForImZ21XGDMatrixGetDataAsCSRE3$_0EEvT_iOT0_.exit"
   %i.ch = invoke noundef zeroext i1 @_ZNK7xgboost13BatchIteratorINS_13ExtSparsePageEE5AtEndEv(ptr noundef nonnull align 8 dereferenceable(16) %18)
           to label %bb.ax unwind label %bb.db
 
@@ -607,14 +612,13 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %min.iters.check, label %.lr.ph131.i.i.preheader258, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph131.i.i.preheader
-  %i.gy = shl i64 %i.gw, 2
-  %24 = add i64 %i.gy, 4                          ; 2 uses
-  %i.gz = getelementptr i8, ptr %4, i64 %24
+  %i.gy = shl i64 %i.gw, 2                        ; 2 uses
+  %i.gz = getelementptr i8, ptr %scevgep213, i64 %i.gy
   %i.ha = getelementptr i8, ptr %i.gg, i64 4
   %i.hb = shl i64 %i.gw, 3                        ; 2 uses
   %i.hc = getelementptr i8, ptr %i.gg, i64 %i.hb
   %i.hd = getelementptr i8, ptr %i.hc, i64 8
-  %i.he = getelementptr i8, ptr %3, i64 %24
+  %i.he = getelementptr i8, ptr %scevgep, i64 %i.gy
   %i.hf = getelementptr i8, ptr %i.gg, i64 %i.hb
   %i.hg = getelementptr i8, ptr %i.hf, i64 4
   %bound0 = icmp ult ptr %4, %i.hd
@@ -839,14 +843,13 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br i1 %min.iters.check236, label %.lr.ph123.i.i.preheader259, label %vector.memcheck237
 
 vector.memcheck237:                               ; preds = %.lr.ph123.i.i.preheader
-  %i.jk = shl i64 %i.ji, 2
-  %25 = add i64 %i.jk, 4                          ; 2 uses
-  %i.jl = getelementptr i8, ptr %4, i64 %25
+  %i.jk = shl i64 %i.ji, 2                        ; 2 uses
+  %i.jl = getelementptr i8, ptr %scevgep213, i64 %i.jk
   %i.jm = getelementptr i8, ptr %i.gg, i64 4
   %i.jn = shl i64 %i.ji, 3                        ; 2 uses
   %i.jo = getelementptr i8, ptr %i.gg, i64 %i.jn
   %i.jp = getelementptr i8, ptr %i.jo, i64 8
-  %i.jq = getelementptr i8, ptr %3, i64 %25
+  %i.jq = getelementptr i8, ptr %scevgep, i64 %i.jk
   %i.jr = getelementptr i8, ptr %i.gg, i64 %i.jn
   %i.js = getelementptr i8, ptr %i.jr, i64 4
   %bound0238 = icmp ult ptr %4, %i.jp

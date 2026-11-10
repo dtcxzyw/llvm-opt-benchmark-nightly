@@ -205,7 +205,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
 
 .split.us.preheader:                              ; preds = %.loopexit95
   %wide.trip.count121 = zext i32 %2 to i64
-  %i.ai = shl nuw nsw i64 %i.ac, 2                ; 2 uses
+  %i.ai = shl nuw nsw i64 %i.ac, 2                ; 3 uses
+  %scevgep234 = getelementptr i8, ptr %0, i64 %i.ai
   %i.aj = shl nuw nsw i64 %i.z, 2
   %i.ak = getelementptr i8, ptr %0, i64 %i.aj
   %scevgep.a = getelementptr i8, ptr %i.ak, i64 4
@@ -218,7 +219,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.aq = sub i32 %i.am, %.1
   %i.ar = zext i32 %i.aq to i64
   %i.as = shl nuw nsw i64 %i.ar, 2                ; 2 uses
-  %invariant.gep313.a = getelementptr i8, ptr %0, i64 %i.as
+  %6 = getelementptr i8, ptr %0, i64 %i.ai
+  %invariant.gep313.a = getelementptr i8, ptr %6, i64 %i.as
   %invariant.gep315.a = getelementptr i8, ptr %0, i64 %i.as
   %n.vec239 = and i64 %i.ap, 8589934588           ; 4 uses
   %i.at = shl nuw nsw i64 %n.vec239, 2
@@ -284,10 +286,9 @@ bb.d:                                             ; preds = %.split.us
   br i1 %min.iters.check233, label %.lr.ph.i73.us.preheader263, label %vector.memcheck234
 
 vector.memcheck234:                               ; preds = %.lr.ph.i73.us.preheader
-  %i.bw = shl nuw nsw i64 %.pre129, 2             ; 2 uses
-  %6 = add nuw nsw i64 %i.ai, %i.bw               ; 2 uses
-  %i.bx = getelementptr i8, ptr %0, i64 %6
-  %gep314.a = getelementptr i8, ptr %invariant.gep313.a, i64 %6
+  %i.bw = shl nuw nsw i64 %.pre129, 2             ; 3 uses
+  %i.bx = getelementptr i8, ptr %scevgep234, i64 %i.bw
+  %gep314.a = getelementptr i8, ptr %invariant.gep313.a, i64 %i.bw
   %i.by = getelementptr i8, ptr %gep314.a, i64 4
   %gep316.a = getelementptr i8, ptr %invariant.gep315.a, i64 %i.bw
   %i.bz = getelementptr i8, ptr %gep316.a, i64 4
@@ -549,7 +550,8 @@ celt_exp_rotation_impl.exit71.us:                 ; preds = %.prol.loopexit297, 
 
 .split.split.preheader:                           ; preds = %.split
   %wide.trip.count = zext i32 %2 to i64
-  %i.gm = shl nuw nsw i64 %i.ac, 2                ; 2 uses
+  %i.gm = shl nuw nsw i64 %i.ac, 2                ; 3 uses
+  %scevgep = getelementptr i8, ptr %0, i64 %i.gm
   %i.gn = shl nuw nsw i64 %i.z, 2
   %i.go = getelementptr i8, ptr %0, i64 %i.gn
   %scevgep259.a = getelementptr i8, ptr %i.go, i64 4
@@ -575,7 +577,8 @@ celt_exp_rotation_impl.exit71.us:                 ; preds = %.prol.loopexit297, 
   %i.hb = sub i32 %i.gx, %.1
   %i.hc = zext i32 %i.hb to i64
   %i.hd = shl nuw nsw i64 %i.hc, 2                ; 2 uses
-  %invariant.gep = getelementptr i8, ptr %0, i64 %i.hd
+  %7 = getelementptr i8, ptr %0, i64 %i.gm
+  %invariant.gep = getelementptr i8, ptr %7, i64 %i.hd
   %invariant.gep307 = getelementptr i8, ptr %0, i64 %i.hd
   %n.vec172 = and i64 %i.ha, 8589934588           ; 4 uses
   %i.he = shl nuw nsw i64 %n.vec172, 2
@@ -952,10 +955,9 @@ celt_exp_rotation_impl.exit:                      ; preds = %.prol.loopexit, %.l
   br i1 %min.iters.check166, label %.lr.ph.i62.preheader266, label %vector.memcheck167
 
 vector.memcheck167:                               ; preds = %.lr.ph.i62.preheader
-  %i.om = shl nuw nsw i64 %i.mg, 2                ; 2 uses
-  %7 = add nuw nsw i64 %i.gm, %i.om               ; 2 uses
-  %i.on = getelementptr i8, ptr %0, i64 %7
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %7
+  %i.om = shl nuw nsw i64 %i.mg, 2                ; 3 uses
+  %i.on = getelementptr i8, ptr %scevgep, i64 %i.om
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.om
   %i.oo = getelementptr i8, ptr %gep, i64 4
   %gep308 = getelementptr i8, ptr %invariant.gep307, i64 %i.om
   %i.op = getelementptr i8, ptr %gep308, i64 4
