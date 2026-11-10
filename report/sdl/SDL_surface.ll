@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_surface?download=true
-inline.NumInlined: 117
+inline.NumInlined: 118
 inline.NumDeleted: 4
 loop-unroll.NumRuntimeUnrolled: 6
 loop-unroll.NumUnrolled: 6
@@ -204,10 +204,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 ; Function Attrs: nounwind uwtable
 define hidden ptr @SDL_CreateSurface_REAL(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = icmp slt i32 %0, 0
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -232,28 +230,94 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.r
 
 bb.g:                                             ; preds = %bb.e
-  %3 = call zeroext i1 @SDL_CalculateSurfaceSize(i32 noundef %2, i32 noundef %0, i32 noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, i1 noundef zeroext false)
-  br i1 %3, label %bb.h, label %bb.r
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  store i64 0, ptr %i.a, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  store i64 0, ptr %i.b, align 8
+  %.mask.i = and i32 %2, -268435456
+  %.not25.i = icmp eq i32 %.mask.i, 268435456
+  br i1 %.not25.i, label %bb.h, label %22
 
 bb.h:                                             ; preds = %bb.g
-  %4 = call noalias ptr @SDL_malloc_REAL(i64 noundef 296) #10 ; 13 uses
-  %.not.a = icmp eq ptr %4, null
-  br i1 %.not.a, label %bb.r, label %bb.i
+  %3 = zext nneg i32 %0 to i64                    ; 2 uses
+  %4 = zext nneg i32 %1 to i64
+  %5 = and i32 %2, 63488
+  %.not.a = icmp eq i32 %5, 0
+  br i1 %.not.a, label %.critedge.i.i, label %switch.edge.i.i
 
-bb.i:                                             ; preds = %bb.h
-  %5 = load i64, ptr %i.a, align 8
-  %6 = trunc i64 %5 to i32
-  %7 = call fastcc zeroext i1 @SDL_InitializeSurface(ptr noundef %4, i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef 0, i32 noundef 0, ptr noundef null, i32 noundef %6, i1 noundef zeroext false)
-  br i1 %7, label %bb.j, label %bb.r
+switch.edge.i.i:                                  ; preds = %bb.h
+  %6 = and i32 %2, 255
+  %7 = zext nneg i32 %6 to i64
+  %8 = mul nuw nsw i64 %7, %3
+  br label %15
 
-bb.j:                                             ; preds = %bb.i
-  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
+.critedge.i.i:                                    ; preds = %bb.h
+  %9 = lshr i32 %2, 8
+  %10 = and i32 %9, 7
+  %11 = zext nneg i32 %10 to i64
+  %12 = mul nuw nsw i64 %11, %3
+  %13 = add nuw nsw i64 %12, 7
+  %14 = lshr i64 %13, 3
+  br label %15
+
+15:                                               ; preds = %switch.edge.i.i, %.critedge.i.i
+  %16 = phi i64 [ %8, %switch.edge.i.i ], [ %14, %.critedge.i.i ]
+  %17 = add nuw nsw i64 %16, 3
+  %18 = and i64 %17, -4                           ; 3 uses
+  %19 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 -2147483648, 2147483648) %4, i64 %18) ; 2 uses
+  %20 = extractvalue { i64, i1 } %19, 1
+  %21 = extractvalue { i64, i1 } %19, 0           ; 2 uses
+  br i1 %20, label %SDL_CalculateRGBSize.exit26.i, label %SDL_CalculateRGBSize.exit26.thread.i
+
+22:                                               ; preds = %bb.g
+  %23 = icmp eq i32 %2, 1196444237
+  br i1 %23, label %bb.i, label %24
+
+24:                                               ; preds = %22
+  %25 = call zeroext i1 @SDL_CalculateYUVSize(i32 noundef %2, i32 noundef %0, i32 noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #10
+  br i1 %25, label %.SDL_CalculateRGBSize.exit26.thread.i_crit_edge, label %SDL_CalculateSurfaceSize.exit
+
+.SDL_CalculateRGBSize.exit26.thread.i_crit_edge:  ; preds = %24
+  %.pre = load i64, ptr %i.b, align 8
+  %.pre40 = load i64, ptr %i.a, align 8
+  br label %SDL_CalculateRGBSize.exit26.thread.i
+
+SDL_CalculateRGBSize.exit26.i:                    ; preds = %15
+  %26 = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.34) #10
+  br i1 %26, label %SDL_CalculateRGBSize.exit26.thread.i, label %SDL_CalculateSurfaceSize.exit
+
+SDL_CalculateRGBSize.exit26.thread.i:             ; preds = %.SDL_CalculateRGBSize.exit26.thread.i_crit_edge, %SDL_CalculateRGBSize.exit26.i, %15
+  %27 = phi i64 [ %.pre40, %.SDL_CalculateRGBSize.exit26.thread.i_crit_edge ], [ %18, %SDL_CalculateRGBSize.exit26.i ], [ %18, %15 ]
+  %28 = phi i64 [ %.pre, %.SDL_CalculateRGBSize.exit26.thread.i_crit_edge ], [ %21, %SDL_CalculateRGBSize.exit26.i ], [ %21, %15 ]
+  %29 = trunc i64 %27 to i32
+  br label %bb.i
+
+SDL_CalculateSurfaceSize.exit:                    ; preds = %24, %SDL_CalculateRGBSize.exit26.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  br label %bb.r
+
+bb.i:                                             ; preds = %22, %SDL_CalculateRGBSize.exit26.thread.i
+  %.034.ph = phi i32 [ 0, %22 ], [ %29, %SDL_CalculateRGBSize.exit26.thread.i ]
+  %.033.ph = phi i64 [ 0, %22 ], [ %28, %SDL_CalculateRGBSize.exit26.thread.i ] ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  %30 = call noalias ptr @SDL_malloc_REAL(i64 noundef 296) #10 ; 13 uses
+  %.not = icmp eq ptr %30, null
+  br i1 %.not, label %bb.r, label %31
+
+31:                                               ; preds = %bb.i
+  %32 = call fastcc zeroext i1 @SDL_InitializeSurface(ptr noundef %30, i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef 0, i32 noundef 0, ptr noundef null, i32 noundef %.034.ph, i1 noundef zeroext false)
+  br i1 %32, label %bb.j, label %bb.r
+
+bb.j:                                             ; preds = %31
+  %i.i = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.j = load i32, ptr %i.i, align 8
   %.not28 = icmp eq i32 %i.j, 0
   br i1 %.not28, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %i.k = getelementptr inbounds nuw i8, ptr %30, i64 12
   %i.l = load i32, ptr %i.k, align 4
   %i.m = icmp ne i32 %i.l, 0
   %i.n = icmp ne i32 %2, 1196444237
@@ -261,46 +325,41 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond, label %bb.l, label %bb.r
 
 bb.l:                                             ; preds = %bb.k
-  %i.o = load i32, ptr %4, align 8
+  %i.o = load i32, ptr %30, align 8
   %i.p = and i32 %i.o, -2
-  store i32 %i.p, ptr %4, align 8
+  store i32 %i.p, ptr %30, align 8
   %i.q = call zeroext i1 @SDL_GetHintBoolean_REAL(ptr noundef nonnull @.str.4, i1 noundef zeroext false) #10
   br i1 %i.q, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %8 = load i64, ptr %i.b, align 8                ; 2 uses
-  %i.r = call noalias ptr @SDL_malloc_REAL(i64 noundef %8) #10
+  %i.r = call noalias ptr @SDL_malloc_REAL(i64 noundef %.033.ph) #10
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %i.s = load i32, ptr %4, align 8
+  %i.s = load i32, ptr %30, align 8
   %i.t = or i32 %i.s, 8
-  store i32 %i.t, ptr %4, align 8
+  store i32 %i.t, ptr %30, align 8
   %i.u = call i64 @SDL_GetSIMDAlignment_REAL() #10
-  %9 = load i64, ptr %i.b, align 8                ; 2 uses
-  %i.v = call noalias ptr @SDL_aligned_alloc_REAL(i64 noundef %i.u, i64 noundef %9) #10
+  %i.v = call noalias ptr @SDL_aligned_alloc_REAL(i64 noundef %i.u, i64 noundef %.033.ph) #10
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %10 = phi i64 [ %8, %bb.m ], [ %9, %bb.n ]
   %.sink = phi ptr [ %i.r, %bb.m ], [ %i.v, %bb.n ] ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.w = getelementptr inbounds nuw i8, ptr %30, i64 24
   store ptr %.sink, ptr %i.w, align 8
   %.not29 = icmp eq ptr %.sink, null
   br i1 %.not29, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  call void @SDL_DestroySurface_REAL(ptr noundef nonnull %4)
+  call void @SDL_DestroySurface_REAL(ptr noundef nonnull %30)
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.sink, i8 0, i64 %10, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.sink, i8 0, i64 %.033.ph, i1 false)
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.j, %bb.k, %bb.q, %bb.i, %bb.h, %bb.g, %bb.p, %bb.f, %bb.d, %bb.b
-  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.d ], [ null, %bb.f ], [ null, %bb.i ], [ null, %bb.p ], [ null, %bb.h ], [ null, %bb.g ], [ %4, %bb.q ], [ %4, %bb.k ], [ %4, %bb.j ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+bb.r:                                             ; preds = %SDL_CalculateSurfaceSize.exit, %bb.j, %bb.k, %bb.q, %31, %bb.i, %bb.p, %bb.f, %bb.d, %bb.b
+  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.d ], [ null, %bb.f ], [ null, %31 ], [ null, %bb.p ], [ null, %bb.i ], [ null, %SDL_CalculateSurfaceSize.exit ], [ %30, %bb.q ], [ %30, %bb.k ], [ %30, %bb.j ]
   ret ptr %.0
 }
 
