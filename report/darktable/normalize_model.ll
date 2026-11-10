@@ -203,16 +203,29 @@ bb.ap:                                            ; preds = %bb.ae
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 460 ; 64 uses
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 268 ; 73 uses
   %i.cp = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.cn, ptr noundef nonnull dereferenceable(1) %i.co) #9 ; 0 uses
-  %i.cq = load i32, ptr %i.a, align 4, !tbaa !89  ; 3 uses
-  switch i32 %i.cq, label %3 [
+  %i.cq = load i32, ptr %i.a, align 4, !tbaa !89
+  switch i32 %i.cq, label %.loopexit [
     i32 8, label %bb.aq
     i32 18, label %.preheader352.a
     i32 24, label %bb.bf
     i32 36, label %.preheader355.a
     i32 31, label %.preheader357.a
-    i32 40, label %1
-    i32 30, label %1
+    i32 29, label %bb.ej
+    i32 63, label %bb.ef
+    i32 43, label %.preheader
+    i32 45, label %.preheader337
+    i32 47, label %.preheader564
+    i32 32, label %.preheader564
+    i32 70, label %.preheader564
+    i32 49, label %bb.cy
+    i32 50, label %.preheader340
+    i32 59, label %bb.dp
+    i32 30, label %bb.bu
+    i32 40, label %bb.bw
   ]
+
+.preheader564:                                    ; preds = %.tail.thread, %.tail.thread, %.tail.thread
+  br label %bb.ct
 
 bb.aq:                                            ; preds = %.tail.thread
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 381696 ; 3 uses
@@ -540,11 +553,7 @@ bb.bt:                                            ; preds = %.loopexit358
   store i8 0, ptr %i.gp, align 1, !tbaa !93
   br label %.loopexit
 
-1:                                                ; preds = %.tail.thread, %.tail.thread
-  %2 = icmp eq i32 %i.cq, 30
-  br i1 %2, label %bb.bu, label %bb.bw
-
-bb.bu:                                            ; preds = %1
+bb.bu:                                            ; preds = %.tail.thread
   %i.gq = tail call i32 @strncasecmp(ptr noundef nonnull %i.co, ptr noundef nonnull @.str.58, i64 noundef 6) #8
   %.not184 = icmp eq i32 %i.gq, 0
   br i1 %.not184, label %bb.bv, label %bb.bw
@@ -555,7 +564,7 @@ bb.bv:                                            ; preds = %bb.bu
   store i64 27431081815730509, ptr %i.gs, align 4
   br label %.loopexit
 
-bb.bw:                                            ; preds = %1, %bb.bu
+bb.bw:                                            ; preds = %bb.bu, %.tail.thread
   store ptr getelementptr inbounds nuw (i8, ptr @_ZZN6LibRaw18GetNormalizedModelEvE21KonicaMinolta_aliases, i64 1), ptr @_ZZN6LibRaw18GetNormalizedModelEvE4orig, align 8, !tbaa !104
   %i.gt = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.co, ptr noundef nonnull dereferenceable(6) getelementptr inbounds nuw (i8, ptr @_ZZN6LibRaw18GetNormalizedModelEvE21KonicaMinolta_aliases, i64 1)) #8
   %.not186 = icmp eq i32 %i.gt, 0
@@ -616,25 +625,8 @@ bb.cg:                                            ; preds = %bb.cf
   %.not185.8 = icmp eq i32 %i.hh, 0
   br i1 %.not185.8, label %bb.by, label %.loopexit
 
-3:                                                ; preds = %.tail.thread
-  switch i32 %i.cq, label %.loopexit [
-    i32 43, label %.preheader
-    i32 45, label %.preheader337
-    i32 47, label %.preheader551
-    i32 32, label %.preheader551
-    i32 70, label %.preheader551
-    i32 49, label %bb.cy
-    i32 50, label %.preheader340
-    i32 59, label %bb.dp
-    i32 63, label %bb.ef
-    i32 29, label %bb.ej
-  ]
-
-.preheader551:                                    ; preds = %3, %3, %3
-  br label %bb.ct
-
-.preheader:                                       ; preds = %3, %.preheader.backedge
-  %.7379 = phi i32 [ %.7379.be, %.preheader.backedge ], [ 0, %3 ] ; 4 uses
+.preheader:                                       ; preds = %.tail.thread, %.preheader.backedge
+  %.7379 = phi i32 [ %.7379.be, %.preheader.backedge ], [ 0, %.tail.thread ] ; 4 uses
   %i.hi = zext nneg i32 %.7379 to i64             ; 2 uses
   %i.hj = getelementptr inbounds nuw [16 x i8], ptr @_ZZN6LibRaw18GetNormalizedModelEvE10nikonalias, i64 %i.hi ; 2 uses
   %i.hk = shl nuw nsw i64 1, %i.hi
@@ -669,8 +661,8 @@ bb.ck:                                            ; preds = %bb.ci
   %.7379.be = add nuw nsw i32 %.7379, 1
   br label %.preheader, !llvm.loop !18
 
-.preheader337:                                    ; preds = %3, %.preheader337.backedge
-  %.8378 = phi i32 [ %.8378.be, %.preheader337.backedge ], [ 0, %3 ] ; 4 uses
+.preheader337:                                    ; preds = %.tail.thread, %.preheader337.backedge
+  %.8378 = phi i32 [ %.8378.be, %.preheader337.backedge ], [ 0, %.tail.thread ] ; 4 uses
   %i.hs = zext nneg i32 %.8378 to i64
   %i.ht = getelementptr inbounds nuw [32 x i8], ptr @_ZZN6LibRaw18GetNormalizedModelEvE8olyalias, i64 %i.hs ; 3 uses
   %i.hu = load i8, ptr %i.ht, align 16, !tbaa !93
@@ -736,8 +728,8 @@ bb.cs:                                            ; preds = %bb.cr
   store i64 357962299186, ptr %i.ij, align 8, !tbaa !103
   br label %.loopexit
 
-bb.ct:                                            ; preds = %.preheader551, %.backedge.a
-  %.9377 = phi i32 [ %.9377.be, %.backedge.a ], [ 0, %.preheader551 ] ; 4 uses
+bb.ct:                                            ; preds = %.preheader564, %.backedge.a
+  %.9377 = phi i32 [ %.9377.be, %.backedge.a ], [ 0, %.preheader564 ] ; 4 uses
   %i.ik = zext nneg i32 %.9377 to i64
   %i.il = getelementptr inbounds nuw [16 x i8], ptr @_ZZN6LibRaw18GetNormalizedModelEvE8panalias, i64 %i.ik ; 3 uses
   %i.im = load i8, ptr %i.il, align 16, !tbaa !93
@@ -772,7 +764,7 @@ bb.cx:                                            ; preds = %bb.cv
   %.9377.be = add nuw nsw i32 %.9377, 1
   br label %bb.ct, !llvm.loop !20
 
-bb.cy:                                            ; preds = %3
+bb.cy:                                            ; preds = %.tail.thread
   %i.iv = getelementptr inbounds nuw i8, ptr %0, i64 381696 ; 2 uses
   %i.iw = load i64, ptr %i.iv, align 8, !tbaa !99
   %.not164 = icmp eq i64 %i.iw, 0
@@ -866,8 +858,8 @@ bb.dj:                                            ; preds = %.tail280
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(6) %i.js, ptr noundef nonnull align 1 dereferenceable(6) @.str.43, i64 6, i1 false) #9
   br label %.loopexit
 
-.preheader340:                                    ; preds = %3, %.preheader340.backedge
-  %.11375 = phi i32 [ %.11375.be, %.preheader340.backedge ], [ 0, %3 ] ; 4 uses
+.preheader340:                                    ; preds = %.tail.thread, %.preheader340.backedge
+  %.11375 = phi i32 [ %.11375.be, %.preheader340.backedge ], [ 0, %.tail.thread ] ; 4 uses
   %i.jt = zext nneg i32 %.11375 to i64            ; 2 uses
   %i.ju = getelementptr inbounds nuw [16 x i8], ptr @_ZZN6LibRaw18GetNormalizedModelEvE11phase1alias, i64 %i.jt ; 2 uses
   %i.jv = shl nuw nsw i64 1, %i.jt
@@ -915,7 +907,7 @@ bb.do:                                            ; preds = %.loopexit341
   store i32 0, ptr %i.kg, align 8, !tbaa !106
   br label %.loopexit
 
-bb.dp:                                            ; preds = %3
+bb.dp:                                            ; preds = %.tail.thread
   %i.kh = tail call noundef ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.co, ptr noundef nonnull dereferenceable(1) @.str.71) #8
   %.not148 = icmp eq ptr %i.kh, null
   br i1 %.not148, label %bb.dq, label %bb.dr
@@ -1011,7 +1003,7 @@ bb.ee:                                            ; preds = %bb.ec
   %.12374.be = add nuw nsw i32 %.12374, 1
   br label %.preheader342, !llvm.loop !23
 
-bb.ef:                                            ; preds = %3
+bb.ef:                                            ; preds = %.tail.thread
   %i.la = getelementptr inbounds nuw i8, ptr %0, i64 381696
   %i.lb = load i64, ptr %i.la, align 8, !tbaa !99 ; 8 uses
   %.not146 = icmp eq i64 %i.lb, 0
@@ -1112,7 +1104,7 @@ bb.ei:                                            ; preds = %bb.eh, %.split.loop
   %i.mo = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.cn, ptr noundef nonnull dereferenceable(1) %i.mn) #9 ; 0 uses
   br label %.loopexit
 
-bb.ej:                                            ; preds = %3
+bb.ej:                                            ; preds = %.tail.thread
   tail call void @_ZN6LibRaw17remove_caseSubstrEPcS0_(ptr noundef nonnull %i.cn, ptr noundef nonnull @.str.80)
   tail call void @_ZN6LibRaw17remove_caseSubstrEPcS0_(ptr noundef nonnull %i.cn, ptr noundef nonnull @.str.81)
   tail call void @_ZN6LibRaw21removeExcessiveSpacesEPc(ptr noundef nonnull %i.cn)
@@ -1230,8 +1222,8 @@ bb.ex:                                            ; preds = %bb.ev, %bb.ew
   %exitcond464.not = icmp eq i64 %indvars.iv.next462, 23
   br i1 %exitcond464.not, label %.loopexit, label %bb.ev, !llvm.loop !26
 
-.loopexit:                                        ; preds = %bb.bb, %bb.be, %bb.az, %bb.ar, %bb.ex, %bb.eg, %bb.ee, %bb.eb, %bb.cx, %bb.cu, %bb.ck, %bb.ch, %sub_0281, %bb.cg, %bb.bo, %3, %bb.aq, %bb.aq, %bb.bd, %bb.bk, %bb.bx, %bb.by, %bb.bv, %bb.cq, %bb.cs, %bb.cr, %.loopexit338, %bb.dj, %.tail280, %bb.ed, %.critedge, %bb.ef, %bb.ei, %.loopexit341, %bb.do, %bb.cw, %bb.cj, %.loopexit358, %bb.bt, %bb.bf, %bb.at, %bb.as, %bb.ay, %bb.ba, %bb.aw, %bb.av, %bb.au
-  %i.np = phi i1 [ false, %bb.at ], [ false, %bb.as ], [ false, %bb.ee ], [ false, %bb.aq ], [ false, %bb.aq ], [ true, %bb.ba ], [ false, %bb.eg ], [ false, %bb.ay ], [ false, %bb.aw ], [ false, %bb.av ], [ false, %bb.au ], [ false, %bb.ei ], [ false, %bb.bd ], [ false, %bb.ex ], [ false, %bb.bf ], [ false, %bb.bk ], [ false, %bb.ar ], [ false, %bb.bt ], [ false, %.loopexit358 ], [ false, %bb.bx ], [ false, %bb.by ], [ false, %bb.bo ], [ false, %bb.bv ], [ false, %sub_0281 ], [ false, %bb.cj ], [ false, %3 ], [ false, %.loopexit338 ], [ false, %bb.cr ], [ false, %bb.cs ], [ false, %bb.cq ], [ false, %bb.ef ], [ false, %bb.cw ], [ false, %bb.az ], [ false, %.tail280 ], [ false, %bb.dj ], [ false, %bb.do ], [ false, %.loopexit341 ], [ false, %.critedge ], [ false, %bb.cx ], [ false, %bb.ed ], [ false, %bb.ck ], [ false, %bb.cg ], [ false, %bb.ch ], [ false, %bb.cu ], [ false, %bb.eb ], [ false, %bb.be ], [ false, %bb.bb ]
+.loopexit:                                        ; preds = %bb.ee, %bb.eb, %bb.cx, %bb.cu, %bb.ck, %bb.ch, %bb.eg, %bb.ex, %bb.bb, %bb.be, %bb.az, %bb.ar, %sub_0281, %bb.cg, %bb.bo, %.tail.thread, %bb.aq, %bb.aq, %bb.bd, %bb.bk, %bb.bx, %bb.by, %bb.bv, %bb.cq, %bb.cs, %bb.cr, %.loopexit338, %bb.dj, %.tail280, %bb.ed, %.critedge, %bb.ef, %bb.ei, %.loopexit341, %bb.do, %bb.cw, %bb.cj, %.loopexit358, %bb.bt, %bb.bf, %bb.at, %bb.as, %bb.ay, %bb.ba, %bb.aw, %bb.av, %bb.au
+  %i.np = phi i1 [ false, %bb.at ], [ false, %bb.as ], [ false, %.tail.thread ], [ false, %bb.aq ], [ false, %bb.aq ], [ true, %bb.ba ], [ false, %sub_0281 ], [ false, %bb.ay ], [ false, %bb.aw ], [ false, %bb.av ], [ false, %bb.au ], [ false, %bb.cx ], [ false, %bb.bd ], [ false, %bb.ar ], [ false, %bb.bf ], [ false, %bb.bk ], [ false, %bb.ck ], [ false, %bb.bt ], [ false, %.loopexit358 ], [ false, %bb.bx ], [ false, %bb.by ], [ false, %bb.ex ], [ false, %bb.bv ], [ false, %bb.ef ], [ false, %bb.cj ], [ false, %bb.bo ], [ false, %.loopexit338 ], [ false, %bb.cr ], [ false, %bb.cs ], [ false, %bb.cq ], [ false, %bb.az ], [ false, %bb.cw ], [ false, %bb.bb ], [ false, %.tail280 ], [ false, %bb.dj ], [ false, %bb.do ], [ false, %.loopexit341 ], [ false, %.critedge ], [ false, %bb.ei ], [ false, %bb.ed ], [ false, %bb.eg ], [ false, %bb.cg ], [ false, %bb.be ], [ false, %bb.ch ], [ false, %bb.cu ], [ false, %bb.eb ], [ false, %bb.ee ]
   %i.nq = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 5 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %0, i64 1356 ; 10 uses
   %i.ns = load i8, ptr %i.nr, align 4, !tbaa !93  ; 3 uses

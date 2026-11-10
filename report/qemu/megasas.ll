@@ -205,34 +205,30 @@ megasas_map_dcmd.exit.i.i:                        ; preds = %megasas_sgl_get_add
   %.sink.i.i.i = phi i64 [ %i.lp, %megasas_sgl_get_addr.exit.i.i.i ], [ 0, %bb.dj ], [ 0, %bb.dg ], [ 0, %bb.dh ], [ 0, %bb.di ] ; 5 uses
   %i.lv = getelementptr inbounds nuw i8, ptr %i.dm, i64 104 ; 3 uses
   store i64 %.sink.i.i.i, ptr %i.lv, align 8
-  %i.lw = load i32, ptr %i.fj, align 8            ; 3 uses
-  switch i32 %i.lw, label %4 [
-    i32 16834816, label %.critedge.i.i
-    i32 16842752, label %.critedge.fold.split.i.i.a
-    i32 16908544, label %.critedge.fold.split65.i.i
-    i32 16908800, label %.critedge.fold.split66.i.i
-    i32 16974080, label %.critedge.fold.split67.i.i
-    i32 16974336, label %.critedge.fold.split68.i.i
-    i32 16974592, label %.critedge.fold.split69.i.i
-    i32 16974848, label %.critedge.fold.split70.i.i
-    i32 16975104, label %.critedge.fold.split71.i.i
-    i32 17039616, label %.critedge.fold.split72.i.i
-    i32 17040128, label %.critedge.fold.split73.i.i
-    i32 17040640, label %.critedge.fold.split74.i.i
-    i32 17104896, label %.critedge.fold.split75.i.i
-    i32 17170432, label %.critedge.fold.split76.i.i
-    i32 17301761, label %.critedge.fold.split77.i.i
-    i32 17301762, label %.critedge.fold.split78.i.i
-    i32 17563904, label %.critedge.fold.split79.i.i
-    i32 17629184, label %.critedge.fold.split80.i.i
-    i32 17695233, label %.critedge.fold.split81.i.i
-    i32 17695234, label %.critedge.fold.split82.i.i
-    i32 17829888, label %.critedge.fold.split83.i.i
-  ]
-
-4:                                                ; preds = %megasas_map_dcmd.exit.i.i
+  %i.lw = load i32, ptr %i.fj, align 8            ; 2 uses
   switch i32 %i.lw, label %bb.dt [
-    i32 33619968, label %.critedge.i.i
+    i32 16834816, label %.critedge.i.i
+    i32 16842752, label %.critedge.fold.split.i.i
+    i32 16908544, label %.critedge.fold.split.i.i.a
+    i32 16908800, label %.critedge.fold.split65.i.i
+    i32 16974080, label %.critedge.fold.split66.i.i
+    i32 16974336, label %.critedge.fold.split67.i.i
+    i32 16974592, label %.critedge.fold.split68.i.i
+    i32 16974848, label %.critedge.fold.split69.i.i
+    i32 16975104, label %.critedge.fold.split70.i.i
+    i32 17039616, label %.critedge.fold.split71.i.i
+    i32 17040128, label %.critedge.fold.split72.i.i
+    i32 17040640, label %.critedge.fold.split73.i.i
+    i32 17104896, label %.critedge.fold.split74.i.i
+    i32 17170432, label %.critedge.fold.split75.i.i
+    i32 17301761, label %.critedge.fold.split76.i.i
+    i32 17301762, label %.critedge.fold.split77.i.i
+    i32 17563904, label %.critedge.fold.split78.i.i
+    i32 17629184, label %.critedge.fold.split79.i.i
+    i32 17695233, label %.critedge.fold.split80.i.i
+    i32 17695234, label %.critedge.fold.split81.i.i
+    i32 17829888, label %.critedge.fold.split82.i.i
+    i32 33619968, label %.critedge.fold.split83.i.i
     i32 33620224, label %.critedge.fold.split84.i.i
     i32 33685504, label %.critedge.fold.split85.i.i
     i32 33751296, label %.critedge.fold.split86.i.i
@@ -259,7 +255,7 @@ megasas_map_dcmd.exit.i.i:                        ; preds = %megasas_sgl_get_add
     i32 134283776, label %.critedge.fold.split107.i.i
   ]
 
-bb.dt:                                            ; preds = %4
+bb.dt:                                            ; preds = %megasas_map_dcmd.exit.i.i
   %i.lx = load i32, ptr %i.dm, align 8            ; 3 uses
   %i.ly = trunc nuw i64 %.sink.i.i.i to i32       ; 6 uses
   %i.lz = load i32, ptr @trace_events_enabled_count, align 4
@@ -304,6 +300,9 @@ bb.dw:                                            ; preds = %trace_megasas_dcmd_
 bb.dx:                                            ; preds = %bb.dw
   call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.160, i32 noundef %i.mf, i64 noundef %i.me) #16
   br label %megasas_dcmd_dummy.exit.thread.i.i
+
+.critedge.fold.split.i.i:                         ; preds = %megasas_map_dcmd.exit.i.i
+  br label %.critedge.i.i
 
 .critedge.fold.split.i.i.a:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
@@ -365,80 +364,80 @@ bb.dx:                                            ; preds = %bb.dw
 .critedge.fold.split83.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split84.i.i:                       ; preds = %4
+.critedge.fold.split84.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split85.i.i:                       ; preds = %4
+.critedge.fold.split85.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split86.i.i:                       ; preds = %4
+.critedge.fold.split86.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split87.i.i:                       ; preds = %4
+.critedge.fold.split87.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split88.i.i:                       ; preds = %4
+.critedge.fold.split88.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split89.i.i:                       ; preds = %4
+.critedge.fold.split89.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split90.i.i:                       ; preds = %4
+.critedge.fold.split90.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split91.i.i:                       ; preds = %4
+.critedge.fold.split91.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split92.i.i:                       ; preds = %4
+.critedge.fold.split92.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split93.i.i:                       ; preds = %4
+.critedge.fold.split93.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split94.i.i:                       ; preds = %4
+.critedge.fold.split94.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split95.i.i:                       ; preds = %4
+.critedge.fold.split95.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split96.i.i:                       ; preds = %4
+.critedge.fold.split96.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split97.i.i:                       ; preds = %4
+.critedge.fold.split97.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split98.i.i:                       ; preds = %4
+.critedge.fold.split98.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split99.i.i:                       ; preds = %4
+.critedge.fold.split99.i.i:                       ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split100.i.i:                      ; preds = %4
+.critedge.fold.split100.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split101.i.i:                      ; preds = %4
+.critedge.fold.split101.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split102.i.i:                      ; preds = %4
+.critedge.fold.split102.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split103.i.i:                      ; preds = %4
+.critedge.fold.split103.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split104.i.i:                      ; preds = %4
+.critedge.fold.split104.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split105.i.i:                      ; preds = %4
+.critedge.fold.split105.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split106.i.i:                      ; preds = %4
+.critedge.fold.split106.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.fold.split107.i.i:                      ; preds = %4
+.critedge.fold.split107.i.i:                      ; preds = %megasas_map_dcmd.exit.i.i
   br label %.critedge.i.i
 
-.critedge.i.i:                                    ; preds = %.critedge.fold.split107.i.i, %.critedge.fold.split106.i.i, %.critedge.fold.split105.i.i, %.critedge.fold.split104.i.i, %.critedge.fold.split103.i.i, %.critedge.fold.split102.i.i, %.critedge.fold.split101.i.i, %.critedge.fold.split100.i.i, %.critedge.fold.split99.i.i, %.critedge.fold.split98.i.i, %.critedge.fold.split97.i.i, %.critedge.fold.split96.i.i, %.critedge.fold.split95.i.i, %.critedge.fold.split94.i.i, %.critedge.fold.split93.i.i, %.critedge.fold.split92.i.i, %.critedge.fold.split91.i.i, %.critedge.fold.split90.i.i, %.critedge.fold.split89.i.i, %.critedge.fold.split88.i.i, %.critedge.fold.split87.i.i, %.critedge.fold.split86.i.i, %.critedge.fold.split85.i.i, %.critedge.fold.split84.i.i, %.critedge.fold.split83.i.i, %.critedge.fold.split82.i.i, %.critedge.fold.split81.i.i, %.critedge.fold.split80.i.i, %.critedge.fold.split79.i.i, %.critedge.fold.split78.i.i, %.critedge.fold.split77.i.i, %.critedge.fold.split76.i.i, %.critedge.fold.split75.i.i, %.critedge.fold.split74.i.i, %.critedge.fold.split73.i.i, %.critedge.fold.split72.i.i, %.critedge.fold.split71.i.i, %.critedge.fold.split70.i.i, %.critedge.fold.split69.i.i, %.critedge.fold.split68.i.i, %.critedge.fold.split67.i.i, %.critedge.fold.split66.i.i, %.critedge.fold.split65.i.i, %.critedge.fold.split.i.i.a, %4, %megasas_map_dcmd.exit.i.i
-  %.057.lcssa.i.i = phi ptr [ @dcmd_cmd_tbl, %megasas_map_dcmd.exit.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1056), %.critedge.fold.split106.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 24), %.critedge.fold.split.i.i.a ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 48), %.critedge.fold.split65.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 72), %.critedge.fold.split66.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 96), %.critedge.fold.split67.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 120), %.critedge.fold.split68.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 144), %.critedge.fold.split69.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 168), %.critedge.fold.split70.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 192), %.critedge.fold.split71.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 216), %.critedge.fold.split72.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 240), %.critedge.fold.split73.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 264), %.critedge.fold.split74.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 288), %.critedge.fold.split75.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 312), %.critedge.fold.split76.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 336), %.critedge.fold.split77.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 360), %.critedge.fold.split78.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 384), %.critedge.fold.split79.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 408), %.critedge.fold.split80.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 432), %.critedge.fold.split81.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 456), %.critedge.fold.split82.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 504), %4 ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 480), %.critedge.fold.split83.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 528), %.critedge.fold.split84.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 552), %.critedge.fold.split85.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 576), %.critedge.fold.split86.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 600), %.critedge.fold.split87.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 624), %.critedge.fold.split88.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 648), %.critedge.fold.split89.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 672), %.critedge.fold.split90.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 696), %.critedge.fold.split91.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 720), %.critedge.fold.split92.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 744), %.critedge.fold.split93.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 768), %.critedge.fold.split94.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 792), %.critedge.fold.split95.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 816), %.critedge.fold.split96.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 840), %.critedge.fold.split97.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 864), %.critedge.fold.split98.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 888), %.critedge.fold.split99.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 912), %.critedge.fold.split100.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 936), %.critedge.fold.split101.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 960), %.critedge.fold.split102.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 984), %.critedge.fold.split103.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1008), %.critedge.fold.split104.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1032), %.critedge.fold.split105.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1080), %.critedge.fold.split107.i.i ] ; 2 uses
+.critedge.i.i:                                    ; preds = %.critedge.fold.split107.i.i, %.critedge.fold.split106.i.i, %.critedge.fold.split105.i.i, %.critedge.fold.split104.i.i, %.critedge.fold.split103.i.i, %.critedge.fold.split102.i.i, %.critedge.fold.split101.i.i, %.critedge.fold.split100.i.i, %.critedge.fold.split99.i.i, %.critedge.fold.split98.i.i, %.critedge.fold.split97.i.i, %.critedge.fold.split96.i.i, %.critedge.fold.split95.i.i, %.critedge.fold.split94.i.i, %.critedge.fold.split93.i.i, %.critedge.fold.split92.i.i, %.critedge.fold.split91.i.i, %.critedge.fold.split90.i.i, %.critedge.fold.split89.i.i, %.critedge.fold.split88.i.i, %.critedge.fold.split87.i.i, %.critedge.fold.split86.i.i, %.critedge.fold.split85.i.i, %.critedge.fold.split84.i.i, %.critedge.fold.split83.i.i, %.critedge.fold.split82.i.i, %.critedge.fold.split81.i.i, %.critedge.fold.split80.i.i, %.critedge.fold.split79.i.i, %.critedge.fold.split78.i.i, %.critedge.fold.split77.i.i, %.critedge.fold.split76.i.i, %.critedge.fold.split75.i.i, %.critedge.fold.split74.i.i, %.critedge.fold.split73.i.i, %.critedge.fold.split72.i.i, %.critedge.fold.split71.i.i, %.critedge.fold.split70.i.i, %.critedge.fold.split69.i.i, %.critedge.fold.split68.i.i, %.critedge.fold.split67.i.i, %.critedge.fold.split66.i.i, %.critedge.fold.split65.i.i, %.critedge.fold.split.i.i.a, %.critedge.fold.split.i.i, %megasas_map_dcmd.exit.i.i
+  %.057.lcssa.i.i = phi ptr [ @dcmd_cmd_tbl, %megasas_map_dcmd.exit.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1056), %.critedge.fold.split106.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 24), %.critedge.fold.split.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 48), %.critedge.fold.split.i.i.a ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 72), %.critedge.fold.split65.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 96), %.critedge.fold.split66.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 120), %.critedge.fold.split67.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 144), %.critedge.fold.split68.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 168), %.critedge.fold.split69.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 192), %.critedge.fold.split70.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 216), %.critedge.fold.split71.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 240), %.critedge.fold.split72.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 264), %.critedge.fold.split73.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 288), %.critedge.fold.split74.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 312), %.critedge.fold.split75.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 336), %.critedge.fold.split76.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 360), %.critedge.fold.split77.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 384), %.critedge.fold.split78.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 408), %.critedge.fold.split79.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 432), %.critedge.fold.split80.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 456), %.critedge.fold.split81.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 480), %.critedge.fold.split82.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 504), %.critedge.fold.split83.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 528), %.critedge.fold.split84.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 552), %.critedge.fold.split85.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 576), %.critedge.fold.split86.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 600), %.critedge.fold.split87.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 624), %.critedge.fold.split88.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 648), %.critedge.fold.split89.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 672), %.critedge.fold.split90.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 696), %.critedge.fold.split91.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 720), %.critedge.fold.split92.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 744), %.critedge.fold.split93.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 768), %.critedge.fold.split94.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 792), %.critedge.fold.split95.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 816), %.critedge.fold.split96.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 840), %.critedge.fold.split97.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 864), %.critedge.fold.split98.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 888), %.critedge.fold.split99.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 912), %.critedge.fold.split100.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 936), %.critedge.fold.split101.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 960), %.critedge.fold.split102.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 984), %.critedge.fold.split103.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1008), %.critedge.fold.split104.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1032), %.critedge.fold.split105.i.i ], [ getelementptr inbounds nuw (i8, ptr @dcmd_cmd_tbl, i64 1080), %.critedge.fold.split107.i.i ] ; 2 uses
   %i.mj = load i32, ptr %i.dm, align 8
   %i.mk = getelementptr inbounds nuw i8, ptr %.057.lcssa.i.i, i64 8
   %i.ml = load ptr, ptr %i.mk, align 8

@@ -202,13 +202,12 @@ bb.cg:                                            ; preds = %set_verbosity.exit,
 bb.ch:                                            ; preds = %bb.cg
   %i.he = call ptr @opt_init(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull @cmp_options) #11
   store ptr %i.he, ptr @prog, align 8, !tbaa !845
-  %2 = call i32 @opt_next() #11                   ; 2 uses
-  %.not19.i = icmp eq i32 %2, 0
-  br i1 %.not19.i, label %._crit_edge.i221, label %.lr.ph.i219
+  br label %.lr.ph.i219
 
-.lr.ph.i219:                                      ; preds = %bb.ch, %bb.hi
-  %3 = phi i32 [ %4, %bb.hi ], [ %2, %bb.ch ]     ; 4 uses
-  switch i32 %3, label %bb.hi [
+.lr.ph.i219:                                      ; preds = %bb.hi, %bb.ch
+  %2 = call i32 @opt_next() #11                   ; 4 uses
+  switch i32 %2, label %bb.hi [
+    i32 0, label %._crit_edge.i221
     i32 1543, label %bb.gz
     i32 -1, label %set_verbosity.exit.thread.i
     i32 1, label %bb.ci
@@ -611,7 +610,7 @@ bb.ed:                                            ; preds = %.lr.ph.i219
 
 bb.ee:                                            ; preds = %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219
   %i.jd = load ptr, ptr @vpm, align 8, !tbaa !852
-  %i.je = call i32 @opt_verify(i32 noundef %3, ptr noundef %i.jd) #11
+  %i.je = call i32 @opt_verify(i32 noundef %2, ptr noundef %i.jd) #11
   %.not15.i = icmp eq i32 %i.je, 0
   br i1 %.not15.i, label %set_verbosity.exit.thread.i, label %bb.hi
 
@@ -807,12 +806,12 @@ bb.fq:                                            ; preds = %.lr.ph.i219
   br label %bb.hi
 
 bb.fr:                                            ; preds = %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219, %.lr.ph.i219
-  %i.kt = call i32 @opt_provider(i32 noundef %3) #11
+  %i.kt = call i32 @opt_provider(i32 noundef %2) #11
   %.not14.i = icmp eq i32 %i.kt, 0
   br i1 %.not14.i, label %set_verbosity.exit.thread.i, label %bb.hi
 
 bb.fs:                                            ; preds = %.lr.ph.i219, %.lr.ph.i219
-  %i.ku = call i32 @opt_rand(i32 noundef %3) #11
+  %i.ku = call i32 @opt_rand(i32 noundef %2) #11
   %.not13.i = icmp eq i32 %i.ku, 0
   br i1 %.not13.i, label %set_verbosity.exit.thread.i, label %bb.hi
 
@@ -1012,11 +1011,9 @@ bb.hh:                                            ; preds = %.lr.ph.i219
   br label %bb.hi
 
 bb.hi:                                            ; preds = %bb.hh, %bb.hg, %bb.hf, %bb.he, %bb.hd, %bb.hc, %bb.hb, %bb.ha, %bb.gz, %bb.gy, %bb.gx, %bb.gw, %bb.gv, %bb.gu, %bb.gt, %bb.gs, %bb.gr, %bb.gq, %bb.gp, %bb.go, %bb.gn, %bb.gm, %bb.gl, %bb.gk, %bb.gj, %bb.gi, %bb.gh, %bb.gg, %bb.gf, %bb.ge, %bb.gd, %bb.gc, %bb.gb, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %bb.fw, %bb.fv, %bb.fu, %bb.ft, %bb.fs, %bb.fr, %bb.fq, %bb.fp, %bb.fo, %bb.fn, %bb.fm, %bb.fl, %bb.fk, %bb.fh, %bb.fg, %bb.ff, %bb.fe, %bb.fd, %bb.fc, %bb.fb, %bb.fa, %bb.ex, %bb.ew, %bb.ev, %bb.eu, %bb.et, %bb.es, %bb.er, %bb.eq, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.ek, %bb.ej, %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dp, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cx, %bb.cw, %bb.cv, %bb.cu, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %set_verbosity.exit.i227, %.lr.ph.i219
-  %4 = call i32 @opt_next() #11                   ; 2 uses
-  %.not.i220 = icmp eq i32 %4, 0
-  br i1 %.not.i220, label %._crit_edge.i221, label %.lr.ph.i219, !llvm.loop !880
+  br label %.lr.ph.i219, !llvm.loop !880
 
-._crit_edge.i221:                                 ; preds = %bb.hi, %bb.ch
+._crit_edge.i221:                                 ; preds = %.lr.ph.i219
   %i.ma = call i32 @opt_check_rest_arg(ptr noundef null) #11
   %.not12.i = icmp eq i32 %i.ma, 0
   br i1 %.not12.i, label %set_verbosity.exit.thread.i, label %get_opts.exit

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.backedge, %.prehea
   %i.v = icmp sgt i32 %.0421, 65534               ; 2 uses
   %spec.select = select i1 %i.v, i32 65535, i32 %.0421 ; 38 uses
   %spec.select494 = select i1 %i.v, ptr %.0379, ptr %.1368 ; 98 uses
-  %i.w = load i8, ptr %spec.select494, align 1, !tbaa !22 ; 30 uses
+  %i.w = load i8, ptr %spec.select494, align 1, !tbaa !22 ; 29 uses
   switch i8 %i.w, label %.thread563 [
     i8 -117, label %bb.d
     i8 -112, label %bb.d
@@ -308,9 +308,9 @@ bb.c:                                             ; preds = %.backedge, %.prehea
     i8 91, label %bb.am
     i8 92, label %bb.am
     i8 97, label %bb.am
-    i8 110, label %8
-    i8 111, label %8
-    i8 112, label %8
+    i8 -97, label %bb.ca
+    i8 -99, label %bb.ca
+    i8 3, label %bb.ca
     i8 115, label %bb.au
     i8 116, label %bb.au
     i8 113, label %bb.bd
@@ -361,9 +361,9 @@ bb.c:                                             ; preds = %.backedge, %.prehea
     i8 -95, label %bb.ca
     i8 -93, label %bb.ca
     i8 -101, label %bb.ca
-    i8 3, label %bb.ca
-    i8 -99, label %bb.ca
-    i8 -97, label %bb.ca
+    i8 112, label %bb.an
+    i8 110, label %bb.ao
+    i8 111, label %bb.ao
   ]
 
 .preheader676:                                    ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
@@ -644,7 +644,7 @@ bb.ag:                                            ; preds = %bb.c, %bb.c
   %i.gf = getelementptr inbounds nuw i8, ptr %spec.select494, i64 2
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+bb.ah:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.ag
   %.8375 = phi ptr [ %i.gf, %bb.ag ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ], [ %spec.select494, %bb.c ]
   %i.gg = add nsw i32 %spec.select, 1
   %i.gh = getelementptr inbounds nuw i8, ptr %.8375, i64 1
@@ -691,11 +691,7 @@ bb.am:                                            ; preds = %bb.c, %bb.c, %bb.c
   %i.gz = getelementptr inbounds nuw i8, ptr %spec.select511, i64 %i.gy
   br label %.backedge
 
-8:                                                ; preds = %bb.c, %bb.c, %bb.c
-  %9 = icmp eq i8 %i.w, 112
-  br i1 %9, label %bb.an, label %bb.ao
-
-bb.an:                                            ; preds = %8
+bb.an:                                            ; preds = %bb.c
   %i.ha = getelementptr inbounds nuw i8, ptr %spec.select494, i64 1
   %i.hb = load i8, ptr %i.ha, align 1, !tbaa !22
   %i.hc = zext i8 %i.hb to i64
@@ -707,7 +703,7 @@ bb.an:                                            ; preds = %8
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 %i.hg
   br label %bb.ap
 
-bb.ao:                                            ; preds = %8
+bb.ao:                                            ; preds = %bb.c, %bb.c
   %i.hj = load i8, ptr getelementptr inbounds nuw (i8, ptr @_pcre2_OP_lengths_8, i64 110), align 1, !tbaa !22
   %i.hk = zext i8 %i.hj to i64
   %i.hl = getelementptr inbounds nuw i8, ptr %spec.select494, i64 %i.hk

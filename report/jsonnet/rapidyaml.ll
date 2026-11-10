@@ -205,8 +205,8 @@ _ZNK2c415basic_substringIKcE11last_not_ofEcm.exit.i.i: ; preds = %.lr.ph
 .preheader.i:                                     ; preds = %bb.h, %_ZNK2c415basic_substringIKcE11last_not_ofEcm.exit.i.i
   %.01326.i = phi i64 [ %i.bc, %bb.h ], [ 0, %_ZNK2c415basic_substringIKcE11last_not_ofEcm.exit.i.i ] ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 %.01326.i
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !87  ; 2 uses
-  switch i8 %i.bb, label %8 [
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !87
+  switch i8 %i.bb, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit [
     i8 48, label %bb.h
     i8 49, label %bb.h
     i8 50, label %bb.h
@@ -249,10 +249,6 @@ _ZNK2c415basic_substringIKcE11last_not_ofEcm.exit.i.i: ; preds = %.lr.ph
     i8 68, label %bb.h
     i8 69, label %bb.h
     i8 70, label %bb.h
-  ]
-
-8:                                                ; preds = %.preheader.i
-  switch i8 %i.bb, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit [
     i8 71, label %bb.h
     i8 72, label %bb.h
     i8 73, label %bb.h
@@ -276,11 +272,11 @@ _ZNK2c415basic_substringIKcE11last_not_ofEcm.exit.i.i: ; preds = %.lr.ph
     i8 45, label %bb.h
   ]
 
-_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %8
+_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.i
   %.not63 = icmp eq i64 %.01326.i, -1
   br i1 %.not63, label %.critedge, label %bb.i, !prof !490
 
-bb.h:                                             ; preds = %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i
+bb.h:                                             ; preds = %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i
   %i.bc = add nuw i64 %.01326.i, 1                ; 2 uses
   %exitcond30.not.i = icmp eq i64 %i.bc, %spec.select
   br i1 %exitcond30.not.i, label %.critedge, label %.preheader.i, !llvm.loop !4

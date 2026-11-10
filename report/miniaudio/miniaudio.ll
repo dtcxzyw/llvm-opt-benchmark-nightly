@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.h
   br label %ma_is_standard_sample_rate.exit39
 
 ma_is_standard_sample_rate.exit39:                ; preds = %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.i, %bb.h, %bb.g
-  %i.ay = load i32, ptr %i.b, align 4, !tbaa !118 ; 5 uses
-  switch i32 %i.ay, label %6 [
+  %i.ay = load i32, ptr %i.b, align 4, !tbaa !118 ; 4 uses
+  switch i32 %i.ay, label %bb.j [
     i32 48000, label %ma_is_standard_sample_rate.exit
     i32 44100, label %ma_is_standard_sample_rate.exit
     i32 32000, label %ma_is_standard_sample_rate.exit
@@ -214,10 +214,6 @@ ma_is_standard_sample_rate.exit39:                ; preds = %bb.f, %bb.f, %bb.f,
     i32 22050, label %ma_is_standard_sample_rate.exit
     i32 88200, label %ma_is_standard_sample_rate.exit
     i32 96000, label %ma_is_standard_sample_rate.exit
-  ]
-
-6:                                                ; preds = %ma_is_standard_sample_rate.exit39
-  switch i32 %i.ay, label %bb.j [
     i32 176400, label %ma_is_standard_sample_rate.exit
     i32 192000, label %ma_is_standard_sample_rate.exit
     i32 16000, label %ma_is_standard_sample_rate.exit
@@ -227,7 +223,7 @@ ma_is_standard_sample_rate.exit39:                ; preds = %bb.f, %bb.f, %bb.f,
     i32 384000, label %ma_is_standard_sample_rate.exit
   ]
 
-bb.j:                                             ; preds = %6
+bb.j:                                             ; preds = %ma_is_standard_sample_rate.exit39
   %i.az = load i32, ptr %i.a, align 4, !tbaa !118
   %.not34 = icmp eq i32 %i.ay, %i.az
   br i1 %.not34, label %ma_is_standard_sample_rate.exit, label %bb.k
@@ -258,7 +254,7 @@ bb.m:                                             ; preds = %bb.l
   store i32 %i.bl, ptr %i.p, align 4, !tbaa !178
   br label %ma_is_standard_sample_rate.exit
 
-ma_is_standard_sample_rate.exit:                  ; preds = %6, %6, %6, %6, %6, %6, %6, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %bb.m, %bb.l, %bb.k, %bb.j
+ma_is_standard_sample_rate.exit:                  ; preds = %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %ma_is_standard_sample_rate.exit39, %bb.m, %bb.l, %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #55

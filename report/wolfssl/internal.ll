@@ -205,8 +205,8 @@ CheckAvailableSize.exit:                          ; preds = %bb.c, %bb.b, %bb.n,
 ; Function Attrs: nounwind uwtable
 define ptr @wolfSSL_ERR_reason_error_string(i64 noundef %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = trunc i64 %0 to i32                      ; 2 uses
-  %i.b = tail call i32 @llvm.abs.i32(i32 %i.a, i1 false) ; 5 uses
+  %i.a = trunc i64 %0 to i32
+  %i.b = tail call i32 @llvm.abs.i32(i32 %i.a, i1 false) ; 4 uses
   %i.c = add i32 %i.b, -97
   %or.cond = icmp ult i32 %i.c, 204
   %i.d = add i32 %i.b, -1000
@@ -220,13 +220,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %1 = icmp ne i32 %i.a, 0
-  %i.f = icmp ult i32 %i.b, 521
-  %or.cond16 = and i1 %1, %i.f
-  br i1 %or.cond16, label %switch.lookup, label %bb.d
+  %switch.tableidx = sub i32 520, %i.b            ; 2 uses
+  %i.f = icmp ult i32 %switch.tableidx, 520
+  br i1 %i.f, label %switch.lookup, label %bb.d
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.tableidx = sub nuw i32 520, %i.b
   %i.g = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.wolfSSL_ERR_reason_error_string, i64 %i.g
   %switch.load = load ptr, ptr %switch.gep, align 8

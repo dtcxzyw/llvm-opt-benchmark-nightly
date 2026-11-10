@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %i.x = tail call ptr @PMIx_Info_list_start() #13 ; 24 uses
+  %i.x = tail call ptr @PMIx_Info_list_start() #13 ; 23 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 904 ; 2 uses
   %i.z = load i64, ptr %i.y, align 8, !tbaa !45
   %.not1405 = icmp eq i64 %i.z, 0
@@ -605,20 +605,19 @@ pmix_obj_new_tma.exit942:                         ; preds = %.lr.ph.i.i939, %bb.
   switch i32 %i.alm, label %bb.is [
     i32 -60, label %bb.it
     i32 0, label %bb.it
-    i32 -2, label %.thread1014
+    i32 -2, label %6
   ]
-
-.thread1014:                                      ; preds = %pmix_obj_new_tma.exit942
-  call void @PMIx_Info_list_release(ptr noundef %i.x) #13
-  br label %bb.iy
 
 bb.is:                                            ; preds = %pmix_obj_new_tma.exit942
   %i.aln = call ptr @PMIx_Error_string(i32 noundef %i.alm) #13
   call void (i32, ptr, ...) @pmix_output(i32 noundef 0, ptr noundef nonnull @.str.12, ptr noundef %i.aln, ptr noundef nonnull @.str.13, i32 noundef 983) #13
+  br label %6
+
+6:                                                ; preds = %pmix_obj_new_tma.exit942, %bb.is
   br label %bb.it
 
-bb.it:                                            ; preds = %pmix_obj_new_tma.exit942, %pmix_obj_new_tma.exit942, %bb.is
-  %.11674 = phi i32 [ %.10673, %pmix_obj_new_tma.exit942 ], [ %.10673, %pmix_obj_new_tma.exit942 ], [ %i.alm, %bb.is ] ; 3 uses
+bb.it:                                            ; preds = %pmix_obj_new_tma.exit942, %pmix_obj_new_tma.exit942, %6
+  %.11674 = phi i32 [ %i.alm, %6 ], [ %.10673, %pmix_obj_new_tma.exit942 ], [ %.10673, %pmix_obj_new_tma.exit942 ] ; 3 uses
   call void @PMIx_Info_list_release(ptr noundef %i.x) #13
   %.not850 = icmp eq i32 %.11674, -47
   br i1 %.not850, label %bb.iy, label %bb.iu
@@ -644,8 +643,8 @@ bb.ix:                                            ; preds = %bb.iw
   %.854 = select i1 %i.alv, i32 -104, i32 0
   br label %bb.iy
 
-bb.iy:                                            ; preds = %.thread1014, %bb.ix, %bb.iw, %bb.iu, %bb.iv, %bb.it
-  %.12675 = phi i32 [ -47, %bb.it ], [ -46, %bb.iu ], [ %.854, %bb.ix ], [ -46, %bb.iw ], [ %.11674, %bb.iv ], [ -2, %.thread1014 ]
+bb.iy:                                            ; preds = %bb.ix, %bb.iw, %bb.iu, %bb.iv, %bb.it
+  %.12675 = phi i32 [ -47, %bb.it ], [ -46, %bb.iu ], [ %.854, %bb.ix ], [ -46, %bb.iw ], [ %.11674, %bb.iv ]
   %i.alw = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.alx = load i64, ptr %i.alw, align 8, !tbaa !157 ; 2 uses
   %i.aly = getelementptr inbounds nuw i8, ptr %i.akz, i64 856

@@ -204,13 +204,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ct
   %.sroa.0617.018835 = phi i8 [ 2, %.lr.ph ], [ %.sroa.0617.1, %bb.ct ] ; 92 uses
   %.sroa.0624.018834 = phi i8 [ 2, %.lr.ph ], [ %.sroa.0624.1, %bb.ct ] ; 92 uses
   %.sroa.0631.018833 = phi i8 [ 2, %.lr.ph ], [ %.sroa.0631.1, %bb.ct ] ; 92 uses
-  %i.jl = load i8, ptr %i.fv, align 1, !range !536, !noundef !7 ; 2 uses
+  %i.jl = load i8, ptr %i.fv, align 1, !range !536, !noundef !7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fs)
-  %.not = icmp eq i8 %i.jl, -1
-  br i1 %.not, label %bb.c, label %2
-
-2:                                                ; preds = %bb.b
   switch i8 %i.jl, label %default.unreachable [
+    i8 -1, label %bb.c
     i8 0, label %bb.d
     i8 1, label %bb.e
     i8 2, label %bb.f
@@ -307,366 +304,366 @@ bb.c:                                             ; preds = %bb.b
   %.not1091 = icmp eq i8 %.sroa.04.018928, 2
   br i1 %.not1091, label %bb.qm, label %bb.qp
 
-default.unreachable:                              ; preds = %2
+default.unreachable:                              ; preds = %bb.b
   unreachable
 
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.b
   %.not1270 = icmp eq i8 %.sroa.04.018928, 2
   br i1 %.not1270, label %bb.cq, label %bb.cp, !prof !17
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.b
   %.not1269 = icmp eq i8 %.sroa.09.018927, 2
   br i1 %.not1269, label %bb.cv, label %bb.cu, !prof !17
 
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.b
   %.not1268 = icmp eq i8 %.sroa.016.018926, 2
   br i1 %.not1268, label %bb.cz, label %bb.cy, !prof !17
 
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.b
   %.not1267 = icmp eq i8 %.sroa.023.018925, 2
   br i1 %.not1267, label %bb.dd, label %bb.dc, !prof !17
 
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.b
   %.not1266 = icmp eq i8 %.sroa.030.018924, 2
   br i1 %.not1266, label %bb.dh, label %bb.dg, !prof !17
 
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.b
   %.not1265 = icmp eq i8 %.sroa.037.018923, 2
   br i1 %.not1265, label %bb.dl, label %bb.dk, !prof !17
 
-bb.j:                                             ; preds = %2
+bb.j:                                             ; preds = %bb.b
   %.not1264 = icmp eq i8 %.sroa.044.018922, 2
   br i1 %.not1264, label %bb.dp, label %bb.do, !prof !17
 
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.b
   %.not1263 = icmp eq i8 %.sroa.051.018921, 2
   br i1 %.not1263, label %bb.dt, label %bb.ds, !prof !17
 
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.b
   %.not1262 = icmp eq i8 %.sroa.058.018920, 2
   br i1 %.not1262, label %bb.dx, label %bb.dw, !prof !17
 
-bb.m:                                             ; preds = %2
+bb.m:                                             ; preds = %bb.b
   %.not1261 = icmp eq i8 %.sroa.065.018919, 2
   br i1 %.not1261, label %bb.eb, label %bb.ea, !prof !17
 
-bb.n:                                             ; preds = %2
+bb.n:                                             ; preds = %bb.b
   %.not1260 = icmp eq i8 %.sroa.072.018918, 2
   br i1 %.not1260, label %bb.ef, label %bb.ee, !prof !17
 
-bb.o:                                             ; preds = %2
+bb.o:                                             ; preds = %bb.b
   %.not1259 = icmp eq i8 %.sroa.079.018917, 2
   br i1 %.not1259, label %bb.ej, label %bb.ei, !prof !17
 
-bb.p:                                             ; preds = %2
+bb.p:                                             ; preds = %bb.b
   %.not1258 = icmp eq i8 %.sroa.086.018916, 2
   br i1 %.not1258, label %bb.en, label %bb.em, !prof !17
 
-bb.q:                                             ; preds = %2
+bb.q:                                             ; preds = %bb.b
   %.not1257 = icmp eq i8 %.sroa.093.018915, 2
   br i1 %.not1257, label %bb.er, label %bb.eq, !prof !17
 
-bb.r:                                             ; preds = %2
+bb.r:                                             ; preds = %bb.b
   %.not1256 = icmp eq i8 %.sroa.0100.018914, 2
   br i1 %.not1256, label %bb.ev, label %bb.eu, !prof !17
 
-bb.s:                                             ; preds = %2
+bb.s:                                             ; preds = %bb.b
   %.not1255 = icmp eq i8 %.sroa.0107.018913, 2
   br i1 %.not1255, label %bb.ez, label %bb.ey, !prof !17
 
-bb.t:                                             ; preds = %2
+bb.t:                                             ; preds = %bb.b
   %.not1254 = icmp eq i8 %.sroa.0114.018912, 2
   br i1 %.not1254, label %bb.fd, label %bb.fc, !prof !17
 
-bb.u:                                             ; preds = %2
+bb.u:                                             ; preds = %bb.b
   %.not1253 = icmp eq i8 %.sroa.0121.018911, 2
   br i1 %.not1253, label %bb.fh, label %bb.fg, !prof !17
 
-bb.v:                                             ; preds = %2
+bb.v:                                             ; preds = %bb.b
   %.not1252 = icmp eq i8 %.sroa.0128.018910, 2
   br i1 %.not1252, label %bb.fl, label %bb.fk, !prof !17
 
-bb.w:                                             ; preds = %2
+bb.w:                                             ; preds = %bb.b
   %.not1251 = icmp eq i8 %.sroa.0135.018909, 2
   br i1 %.not1251, label %bb.fp, label %bb.fo, !prof !17
 
-bb.x:                                             ; preds = %2
+bb.x:                                             ; preds = %bb.b
   %.not1250 = icmp eq i8 %.sroa.0142.018908, 2
   br i1 %.not1250, label %bb.ft, label %bb.fs, !prof !17
 
-bb.y:                                             ; preds = %2
+bb.y:                                             ; preds = %bb.b
   %.not1249 = icmp eq i8 %.sroa.0149.018907, 2
   br i1 %.not1249, label %bb.fx, label %bb.fw, !prof !17
 
-bb.z:                                             ; preds = %2
+bb.z:                                             ; preds = %bb.b
   %.not1248 = icmp eq i8 %.sroa.0156.018906, 2
   br i1 %.not1248, label %bb.gb, label %bb.ga, !prof !17
 
-bb.aa:                                            ; preds = %2
+bb.aa:                                            ; preds = %bb.b
   %.not1247 = icmp eq i8 %.sroa.0163.018905, 2
   br i1 %.not1247, label %bb.gf, label %bb.ge, !prof !17
 
-bb.ab:                                            ; preds = %2
+bb.ab:                                            ; preds = %bb.b
   %.not1246 = icmp eq i8 %.sroa.0170.018904, 2
   br i1 %.not1246, label %bb.gj, label %bb.gi, !prof !17
 
-bb.ac:                                            ; preds = %2
+bb.ac:                                            ; preds = %bb.b
   %.not1245 = icmp eq i8 %.sroa.0177.018903, 2
   br i1 %.not1245, label %bb.gn, label %bb.gm, !prof !17
 
-bb.ad:                                            ; preds = %2
+bb.ad:                                            ; preds = %bb.b
   %.not1244 = icmp eq i8 %.sroa.0184.018902, 2
   br i1 %.not1244, label %bb.gr, label %bb.gq, !prof !17
 
-bb.ae:                                            ; preds = %2
+bb.ae:                                            ; preds = %bb.b
   %.not1243 = icmp eq i8 %.sroa.0191.018901, 2
   br i1 %.not1243, label %bb.gv, label %bb.gu, !prof !17
 
-bb.af:                                            ; preds = %2
+bb.af:                                            ; preds = %bb.b
   %.not1242 = icmp eq i8 %.sroa.0198.018900, 2
   br i1 %.not1242, label %bb.gz, label %bb.gy, !prof !17
 
-bb.ag:                                            ; preds = %2
+bb.ag:                                            ; preds = %bb.b
   %.not1241 = icmp eq i8 %.sroa.0205.018899, 2
   br i1 %.not1241, label %bb.hd, label %bb.hc, !prof !17
 
-bb.ah:                                            ; preds = %2
+bb.ah:                                            ; preds = %bb.b
   %.not1240 = icmp eq i8 %.sroa.0212.018898, 2
   br i1 %.not1240, label %bb.hh, label %bb.hg, !prof !17
 
-bb.ai:                                            ; preds = %2
+bb.ai:                                            ; preds = %bb.b
   %.not1239 = icmp eq i8 %.sroa.0219.018897, 2
   br i1 %.not1239, label %bb.hl, label %bb.hk, !prof !17
 
-bb.aj:                                            ; preds = %2
+bb.aj:                                            ; preds = %bb.b
   %.not1238 = icmp eq i8 %.sroa.0226.018896, 2
   br i1 %.not1238, label %bb.hp, label %bb.ho, !prof !17
 
-bb.ak:                                            ; preds = %2
+bb.ak:                                            ; preds = %bb.b
   %.not1237 = icmp eq i8 %.sroa.0233.018895, 2
   br i1 %.not1237, label %bb.ht, label %bb.hs, !prof !17
 
-bb.al:                                            ; preds = %2
+bb.al:                                            ; preds = %bb.b
   %.not1236 = icmp eq i8 %.sroa.0240.018894, 2
   br i1 %.not1236, label %bb.hx, label %bb.hw, !prof !17
 
-bb.am:                                            ; preds = %2
+bb.am:                                            ; preds = %bb.b
   %.not1235 = icmp eq i8 %.sroa.0247.018893, 2
   br i1 %.not1235, label %bb.ib, label %bb.ia, !prof !17
 
-bb.an:                                            ; preds = %2
+bb.an:                                            ; preds = %bb.b
   %.not1234 = icmp eq i8 %.sroa.0254.018892, 2
   br i1 %.not1234, label %bb.if, label %bb.ie, !prof !17
 
-bb.ao:                                            ; preds = %2
+bb.ao:                                            ; preds = %bb.b
   %.not1233 = icmp eq i8 %.sroa.0261.018891, 2
   br i1 %.not1233, label %bb.ij, label %bb.ii, !prof !17
 
-bb.ap:                                            ; preds = %2
+bb.ap:                                            ; preds = %bb.b
   %.not1232 = icmp eq i64 %.sroa.0268.018890, 2
   br i1 %.not1232, label %bb.in, label %bb.im, !prof !17
 
-bb.aq:                                            ; preds = %2
+bb.aq:                                            ; preds = %bb.b
   %.not1231 = icmp eq i64 %.sroa.0276.018888, 2
   br i1 %.not1231, label %bb.ir, label %bb.iq, !prof !17
 
-bb.ar:                                            ; preds = %2
+bb.ar:                                            ; preds = %bb.b
   %.not1230 = icmp eq i64 %.sroa.0284.018886, 2
   br i1 %.not1230, label %bb.iv, label %bb.iu, !prof !17
 
-bb.as:                                            ; preds = %2
+bb.as:                                            ; preds = %bb.b
   %.not1229 = icmp eq i8 %.sroa.0292.018884, 2
   br i1 %.not1229, label %bb.iz, label %bb.iy, !prof !17
 
-bb.at:                                            ; preds = %2
+bb.at:                                            ; preds = %bb.b
   %.not1228 = icmp eq i8 %.sroa.0299.018883, 2
   br i1 %.not1228, label %bb.jd, label %bb.jc, !prof !17
 
-bb.au:                                            ; preds = %2
+bb.au:                                            ; preds = %bb.b
   %.not1227 = icmp eq i8 %.sroa.0306.018882, 2
   br i1 %.not1227, label %bb.jh, label %bb.jg, !prof !17
 
-bb.av:                                            ; preds = %2
+bb.av:                                            ; preds = %bb.b
   %.not1226 = icmp eq i8 %.sroa.0313.018881, 2
   br i1 %.not1226, label %bb.jl, label %bb.jk, !prof !17
 
-bb.aw:                                            ; preds = %2
+bb.aw:                                            ; preds = %bb.b
   %.not1225 = icmp eq i8 %.sroa.0320.018880, 2
   br i1 %.not1225, label %bb.jp, label %bb.jo, !prof !17
 
-bb.ax:                                            ; preds = %2
+bb.ax:                                            ; preds = %bb.b
   %.not1224 = icmp eq i8 %.sroa.0327.018879, 2
   br i1 %.not1224, label %bb.jt, label %bb.js, !prof !17
 
-bb.ay:                                            ; preds = %2
+bb.ay:                                            ; preds = %bb.b
   %.not1223 = icmp eq i8 %.sroa.0334.018878, 2
   br i1 %.not1223, label %bb.jx, label %bb.jw, !prof !17
 
-bb.az:                                            ; preds = %2
+bb.az:                                            ; preds = %bb.b
   %.not1222 = icmp eq i8 %.sroa.0341.018877, 2
   br i1 %.not1222, label %bb.kb, label %bb.ka, !prof !17
 
-bb.ba:                                            ; preds = %2
+bb.ba:                                            ; preds = %bb.b
   %.not1221 = icmp eq i64 %.sroa.0348.018876, 2
   br i1 %.not1221, label %bb.kf, label %bb.ke, !prof !17
 
-bb.bb:                                            ; preds = %2
+bb.bb:                                            ; preds = %bb.b
   %.not1220 = icmp eq i8 %.sroa.0356.018874, 2
   br i1 %.not1220, label %bb.kj, label %bb.ki, !prof !17
 
-bb.bc:                                            ; preds = %2
+bb.bc:                                            ; preds = %bb.b
   %.not1219 = icmp eq i8 %.sroa.0363.018873, 2
   br i1 %.not1219, label %bb.kn, label %bb.km, !prof !17
 
-bb.bd:                                            ; preds = %2
+bb.bd:                                            ; preds = %bb.b
   %.not1218 = icmp eq i8 %.sroa.0370.018872, 2
   br i1 %.not1218, label %bb.kr, label %bb.kq, !prof !17
 
-bb.be:                                            ; preds = %2
+bb.be:                                            ; preds = %bb.b
   %.not1217 = icmp eq i8 %.sroa.0377.018871, 2
   br i1 %.not1217, label %bb.kv, label %bb.ku, !prof !17
 
-bb.bf:                                            ; preds = %2
+bb.bf:                                            ; preds = %bb.b
   %.not1216 = icmp eq i8 %.sroa.0384.018870, 2
   br i1 %.not1216, label %bb.kz, label %bb.ky, !prof !17
 
-bb.bg:                                            ; preds = %2
+bb.bg:                                            ; preds = %bb.b
   %.not1215 = icmp eq i8 %.sroa.0391.018869, 2
   br i1 %.not1215, label %bb.ld, label %bb.lc, !prof !17
 
-bb.bh:                                            ; preds = %2
+bb.bh:                                            ; preds = %bb.b
   %.not1214 = icmp eq i8 %.sroa.0398.018868, 2
   br i1 %.not1214, label %bb.lh, label %bb.lg, !prof !17
 
-bb.bi:                                            ; preds = %2
+bb.bi:                                            ; preds = %bb.b
   %.not1213 = icmp eq i8 %.sroa.0405.018867, 2
   br i1 %.not1213, label %bb.ll, label %bb.lk, !prof !17
 
-bb.bj:                                            ; preds = %2
+bb.bj:                                            ; preds = %bb.b
   %.not1212 = icmp eq i64 %.sroa.0412.018866, 2
   br i1 %.not1212, label %bb.lp, label %bb.lo, !prof !17
 
-bb.bk:                                            ; preds = %2
+bb.bk:                                            ; preds = %bb.b
   %.not1211 = icmp eq i64 %.sroa.0420.018864, 2
   br i1 %.not1211, label %bb.lt, label %bb.ls, !prof !17
 
-bb.bl:                                            ; preds = %2
+bb.bl:                                            ; preds = %bb.b
   %.not1210 = icmp eq i8 %.sroa.0428.018862, 2
   br i1 %.not1210, label %bb.lx, label %bb.lw, !prof !17
 
-bb.bm:                                            ; preds = %2
+bb.bm:                                            ; preds = %bb.b
   %.not1209 = icmp eq i8 %.sroa.0435.018861, 2
   br i1 %.not1209, label %bb.mb, label %bb.ma, !prof !17
 
-bb.bn:                                            ; preds = %2
+bb.bn:                                            ; preds = %bb.b
   %.not1208 = icmp eq i8 %.sroa.0442.018860, 2
   br i1 %.not1208, label %bb.mf, label %bb.me, !prof !17
 
-bb.bo:                                            ; preds = %2
+bb.bo:                                            ; preds = %bb.b
   %.not1207 = icmp eq i8 %.sroa.0449.018859, 2
   br i1 %.not1207, label %bb.mj, label %bb.mi, !prof !17
 
-bb.bp:                                            ; preds = %2
+bb.bp:                                            ; preds = %bb.b
   %.not1206 = icmp eq i8 %.sroa.0456.018858, 2
   br i1 %.not1206, label %bb.mn, label %bb.mm, !prof !17
 
-bb.bq:                                            ; preds = %2
+bb.bq:                                            ; preds = %bb.b
   %.not1205 = icmp eq i8 %.sroa.0463.018857, 2
   br i1 %.not1205, label %bb.mr, label %bb.mq, !prof !17
 
-bb.br:                                            ; preds = %2
+bb.br:                                            ; preds = %bb.b
   %.not1204 = icmp eq i8 %.sroa.0470.018856, 2
   br i1 %.not1204, label %bb.mv, label %bb.mu, !prof !17
 
-bb.bs:                                            ; preds = %2
+bb.bs:                                            ; preds = %bb.b
   %.not1203 = icmp eq i8 %.sroa.0477.018855, 2
   br i1 %.not1203, label %bb.mz, label %bb.my, !prof !17
 
-bb.bt:                                            ; preds = %2
+bb.bt:                                            ; preds = %bb.b
   %.not1202 = icmp eq i8 %.sroa.0484.018854, 2
   br i1 %.not1202, label %bb.nd, label %bb.nc, !prof !17
 
-bb.bu:                                            ; preds = %2
+bb.bu:                                            ; preds = %bb.b
   %.not1201 = icmp eq i8 %.sroa.0491.018853, 2
   br i1 %.not1201, label %bb.nh, label %bb.ng, !prof !17
 
-bb.bv:                                            ; preds = %2
+bb.bv:                                            ; preds = %bb.b
   %.not1200 = icmp eq i8 %.sroa.0498.018852, 2
   br i1 %.not1200, label %bb.nl, label %bb.nk, !prof !17
 
-bb.bw:                                            ; preds = %2
+bb.bw:                                            ; preds = %bb.b
   %.not1199 = icmp eq i8 %.sroa.0505.018851, 2
   br i1 %.not1199, label %bb.np, label %bb.no, !prof !17
 
-bb.bx:                                            ; preds = %2
+bb.bx:                                            ; preds = %bb.b
   %.not1198 = icmp eq i8 %.sroa.0512.018850, 2
   br i1 %.not1198, label %bb.nt, label %bb.ns, !prof !17
 
-bb.by:                                            ; preds = %2
+bb.by:                                            ; preds = %bb.b
   %.not1197 = icmp eq i8 %.sroa.0519.018849, 2
   br i1 %.not1197, label %bb.nx, label %bb.nw, !prof !17
 
-bb.bz:                                            ; preds = %2
+bb.bz:                                            ; preds = %bb.b
   %.not1196 = icmp eq i8 %.sroa.0526.018848, 2
   br i1 %.not1196, label %bb.ob, label %bb.oa, !prof !17
 
-bb.ca:                                            ; preds = %2
+bb.ca:                                            ; preds = %bb.b
   %.not1195 = icmp eq i8 %.sroa.0533.018847, 2
   br i1 %.not1195, label %bb.of, label %bb.oe, !prof !17
 
-bb.cb:                                            ; preds = %2
+bb.cb:                                            ; preds = %bb.b
   %.not1194 = icmp eq i8 %.sroa.0540.018846, 2
   br i1 %.not1194, label %bb.oj, label %bb.oi, !prof !17
 
-bb.cc:                                            ; preds = %2
+bb.cc:                                            ; preds = %bb.b
   %.not1193 = icmp eq i8 %.sroa.0547.018845, 2
   br i1 %.not1193, label %bb.on, label %bb.om, !prof !17
 
-bb.cd:                                            ; preds = %2
+bb.cd:                                            ; preds = %bb.b
   %.not1192 = icmp eq i8 %.sroa.0554.018844, 2
   br i1 %.not1192, label %bb.or, label %bb.oq, !prof !17
 
-bb.ce:                                            ; preds = %2
+bb.ce:                                            ; preds = %bb.b
   %.not1191 = icmp eq i8 %.sroa.0561.018843, 2
   br i1 %.not1191, label %bb.ov, label %bb.ou, !prof !17
 
-bb.cf:                                            ; preds = %2
+bb.cf:                                            ; preds = %bb.b
   %.not1190 = icmp eq i8 %.sroa.0568.018842, 2
   br i1 %.not1190, label %bb.oz, label %bb.oy, !prof !17
 
-bb.cg:                                            ; preds = %2
+bb.cg:                                            ; preds = %bb.b
   %.not1189 = icmp eq i8 %.sroa.0575.018841, 2
   br i1 %.not1189, label %bb.pd, label %bb.pc, !prof !17
 
-bb.ch:                                            ; preds = %2
+bb.ch:                                            ; preds = %bb.b
   %.not1188 = icmp eq i8 %.sroa.0582.018840, 2
   br i1 %.not1188, label %bb.ph, label %bb.pg, !prof !17
 
-bb.ci:                                            ; preds = %2
+bb.ci:                                            ; preds = %bb.b
   %.not1187 = icmp eq i8 %.sroa.0589.018839, 2
   br i1 %.not1187, label %bb.pl, label %bb.pk, !prof !17
 
-bb.cj:                                            ; preds = %2
+bb.cj:                                            ; preds = %bb.b
   %.not1186 = icmp eq i8 %.sroa.0596.018838, 2
   br i1 %.not1186, label %bb.pp, label %bb.po, !prof !17
 
-bb.ck:                                            ; preds = %2
+bb.ck:                                            ; preds = %bb.b
   %.not1185 = icmp eq i8 %.sroa.0603.018837, 2
   br i1 %.not1185, label %bb.pt, label %bb.ps, !prof !17
 
-bb.cl:                                            ; preds = %2
+bb.cl:                                            ; preds = %bb.b
   %.not1184 = icmp eq i8 %.sroa.0610.018836, 2
   br i1 %.not1184, label %bb.px, label %bb.pw, !prof !17
 
-bb.cm:                                            ; preds = %2
+bb.cm:                                            ; preds = %bb.b
   %.not1183 = icmp eq i8 %.sroa.0617.018835, 2
   br i1 %.not1183, label %bb.qb, label %bb.qa, !prof !17
 
-bb.cn:                                            ; preds = %2
+bb.cn:                                            ; preds = %bb.b
   %.not1182 = icmp eq i8 %.sroa.0624.018834, 2
   br i1 %.not1182, label %bb.qf, label %bb.qe, !prof !17
 
-bb.co:                                            ; preds = %2
+bb.co:                                            ; preds = %bb.b
   %.not1181 = icmp eq i8 %.sroa.0631.018833, 2
   br i1 %.not1181, label %bb.qj, label %bb.qi, !prof !17
 

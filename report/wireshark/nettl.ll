@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.l, label %bb.e, label %bb.aq
 
 bb.e:                                             ; preds = %bb.d
-  %i.m = load i16, ptr %i.k, align 2              ; 4 uses
+  %i.m = load i16, ptr %i.k, align 2              ; 3 uses
   %rev184 = call i16 @llvm.bswap.i16(i16 %i.m)    ; 2 uses
   %i.n = add i16 %rev, -64
   %i.o = zext i16 %i.n to i32
@@ -283,18 +283,14 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g
   %i.ao = getelementptr i8, ptr %2, i64 56
-  switch i16 %i.m, label %bb.i [
+  switch i16 %i.m, label %bb.n [
     i16 -3072, label %bb.o
     i16 3073, label %bb.o
     i16 2304, label %bb.o
     i16 2048, label %bb.o
     i16 1536, label %bb.o
     i16 512, label %bb.o
-  ]
-
-bb.i:                                             ; preds = %bb.h
-  switch i16 %i.m, label %bb.n [
-    i16 5888, label %bb.o
+    i16 5888, label %bb.i
     i16 -2816, label %bb.j
     i16 2817, label %bb.k
     i16 -20224, label %bb.l
@@ -305,23 +301,26 @@ bb.i:                                             ; preds = %bb.h
     i16 7936, label %bb.m
   ]
 
-bb.j:                                             ; preds = %bb.i
+bb.i:                                             ; preds = %bb.h
   br label %bb.o
 
-bb.k:                                             ; preds = %bb.i
+bb.j:                                             ; preds = %bb.h
   br label %bb.o
 
-bb.l:                                             ; preds = %bb.i, %bb.i, %bb.i, %bb.i
+bb.k:                                             ; preds = %bb.h
   br label %bb.o
 
-bb.m:                                             ; preds = %bb.i, %bb.i
+bb.l:                                             ; preds = %bb.h, %bb.h, %bb.h, %bb.h
   br label %bb.o
 
-bb.n:                                             ; preds = %bb.i
+bb.m:                                             ; preds = %bb.h, %bb.h
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.i, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.k, %bb.m, %bb.n, %bb.l, %bb.j
-  %.sink230 = phi i32 [ 70, %bb.h ], [ 94, %bb.k ], [ 72, %bb.m ], [ 71, %bb.n ], [ 73, %bb.l ], [ 65, %bb.j ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ], [ 64, %bb.i ]
+bb.n:                                             ; preds = %bb.h
+  br label %bb.o
+
+bb.o:                                             ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.i, %bb.k, %bb.m, %bb.n, %bb.l, %bb.j
+  %.sink230 = phi i32 [ 64, %bb.i ], [ 94, %bb.k ], [ 72, %bb.m ], [ 71, %bb.n ], [ 73, %bb.l ], [ 65, %bb.j ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ], [ 70, %bb.h ]
   store i32 %.sink230, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 36
   %i.aq = load i32, ptr %i.ap, align 4

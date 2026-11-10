@@ -202,7 +202,7 @@ define hidden i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
-  %i.c = alloca i32, align 4                      ; 8 uses
+  %i.c = alloca i32, align 4                      ; 7 uses
   %i.d = alloca ptr, align 8                      ; 9 uses
   %i.e = alloca i8, align 1                       ; 8 uses
   %i.f = alloca i32, align 4                      ; 10 uses
@@ -582,18 +582,17 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   store i32 1, ptr @ws_optreset, align 4
   store i32 1, ptr @ws_optind, align 4
   store i32 1, ptr @ws_opterr, align 4
-  %6 = load i32, ptr %i.c, align 4
-  %7 = call i32 @ws_getopt_long(i32 noundef %6, ptr noundef %1, ptr noundef @main.optstring, ptr noundef @main.long_options, ptr noundef null) ; 2 uses
-  %.not376667 = icmp eq i32 %7, -1
-  br i1 %.not376667, label %._crit_edge.a, label %.lr.ph.a
+  br label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %bb.ah, %protocolfilter_add_opt.exit
-  %i.dg = phi i32 [ %9, %protocolfilter_add_opt.exit ], [ %7, %bb.ah ] ; 4 uses
-  %.0306671 = phi i1 [ %.4310, %protocolfilter_add_opt.exit ], [ false, %bb.ah ] ; 64 uses
-  %.0320670 = phi ptr [ %.1321, %protocolfilter_add_opt.exit ], [ null, %bb.ah ] ; 63 uses
-  %.0329669 = phi ptr [ %.1330, %protocolfilter_add_opt.exit ], [ null, %bb.ah ] ; 63 uses
-  %.0331668 = phi i32 [ %.1332, %protocolfilter_add_opt.exit ], [ 0, %bb.ah ] ; 64 uses
-  switch i32 %i.dg, label %bb.en [
+.lr.ph.a:                                         ; preds = %protocolfilter_add_opt.exit, %bb.ah
+  %i.dg = phi i32 [ 0, %bb.ah ], [ %.1332, %protocolfilter_add_opt.exit ] ; 67 uses
+  %.0329 = phi ptr [ null, %bb.ah ], [ %.1330, %protocolfilter_add_opt.exit ] ; 66 uses
+  %.0320670 = phi ptr [ null, %bb.ah ], [ %.1321, %protocolfilter_add_opt.exit ] ; 64 uses
+  %.0306 = phi i1 [ false, %bb.ah ], [ %.4310, %protocolfilter_add_opt.exit ] ; 65 uses
+  %6 = load i32, ptr %i.c, align 4
+  %7 = call i32 @ws_getopt_long(i32 noundef %6, ptr noundef %1, ptr noundef @main.optstring, ptr noundef @main.long_options, ptr noundef null) ; 4 uses
+  switch i32 %7, label %bb.en [
+    i32 -1, label %._crit_edge.a
     i32 50, label %bb.ai
     i32 77, label %bb.al
     i32 97, label %bb.ao
@@ -677,7 +676,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %.1307 = phi i1 [ true, %bb.aj ], [ %.0306671, %bb.ai ]
+  %.1307 = phi i1 [ true, %bb.aj ], [ %.0306, %bb.ai ]
   store i1 true, ptr @perform_two_pass_analysis, align 1
   br label %protocolfilter_add_opt.exit
 
@@ -690,7 +689,7 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
-  %.2308 = phi i1 [ true, %bb.am ], [ %.0306671, %bb.al ]
+  %.2308 = phi i1 [ true, %bb.am ], [ %.0306, %bb.al ]
   %i.dh = load ptr, ptr @ws_optarg, align 8
   %i.di = call zeroext i1 @get_uint32(ptr noundef %i.dh, ptr noundef @.str.65, ptr noundef @epan_auto_reset_count)
   %not. = xor i1 %i.di, true
@@ -701,7 +700,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
 bb.ao:                                            ; preds = %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a
   %i.dj = call ptr @application_configuration_environment_prefix()
   %i.dk = load ptr, ptr @ws_optarg, align 8
-  %i.dl = call i32 @capture_opts_add_opt(ptr noundef %i.dj, ptr noundef @global_capture_opts, i32 noundef %i.dg, ptr noundef %i.dk)
+  %i.dl = call i32 @capture_opts_add_opt(ptr noundef %i.dj, ptr noundef @global_capture_opts, i32 noundef %7, ptr noundef %i.dk)
   store volatile i32 %i.dl, ptr %i.j, align 4
   %.0..0..0..0.263 = load volatile i32, ptr %i.j, align 4
   %.not442 = icmp eq i32 %.0..0..0..0.263, 0
@@ -931,11 +930,11 @@ bb.bu:                                            ; preds = %.lr.ph.a
   br i1 %.not435, label %protocolfilter_add_opt.exit, label %.thread521
 
 bb.bv:                                            ; preds = %.lr.ph.a
-  %i.fy = or i32 %.0331668, 1
+  %i.fy = or i32 %i.dg, 1
   br label %protocolfilter_add_opt.exit
 
 bb.bw:                                            ; preds = %.lr.ph.a
-  %i.fz = or i32 %.0331668, 2
+  %i.fz = or i32 %i.dg, 2
   br label %protocolfilter_add_opt.exit
 
 bb.bx:                                            ; preds = %.lr.ph.a
@@ -1201,7 +1200,7 @@ bb.de:                                            ; preds = %bb.dd
 
 bb.df:                                            ; preds = %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a
   %i.ia = load ptr, ptr @ws_optarg, align 8
-  %i.ib = call zeroext i1 @dissect_opts_handle_opt(i32 noundef %i.dg, ptr noundef %i.ia)
+  %i.ib = call zeroext i1 @dissect_opts_handle_opt(i32 noundef %7, ptr noundef %i.ia)
   br i1 %i.ib, label %protocolfilter_add_opt.exit, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
@@ -1380,7 +1379,7 @@ bb.em:                                            ; preds = %bb.el
   br label %.thread521
 
 bb.en:                                            ; preds = %.lr.ph.a
-  %i.jv = call zeroext i1 @ws_log_is_wslog_arg(i32 noundef %i.dg)
+  %i.jv = call zeroext i1 @ws_log_is_wslog_arg(i32 noundef %7)
   br i1 %i.jv, label %protocolfilter_add_opt.exit, label %bb.eo
 
 bb.eo:                                            ; preds = %bb.en
@@ -1413,21 +1412,14 @@ bb.et:                                            ; preds = %bb.es, %bb.er, %bb.
   store volatile i32 1, ptr %i.j, align 4
   br label %.thread521
 
-protocolfilter_add_opt.exit:                      ; preds = %bb.bm, %bb.bi, %bb.cb, %bb.bj, %bb.bf, %bb.ax, %bb.ba, %bb.az, %bb.en, %bb.el, %bb.ei, %bb.ds, %bb.dw, %bb.ea, %bb.ee, %bb.ec, %bb.dy, %bb.du, %bb.dj, %bb.df, %bb.dd, %bb.cj, %bb.cm, %bb.cp, %bb.ct, %bb.cu, %bb.cv, %bb.cw, %bb.cr, %bb.cn, %bb.cl, %bb.bu, %bb.bd, %bb.bb, %.lr.ph.a, %.lr.ph.a, %g_strdup_inline.exit475, %bb.ap, %bb.ao, %bb.ek, %g_strdup_inline.exit, %bb.do, %bb.dn, %bb.dm, %bb.dl, %g_strdup_inline.exit465, %.tail552.thread, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.bw, %bb.bv, %bb.bs, %bb.bo, %bb.an, %bb.ak, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a
-  %.1332 = phi i32 [ %.0331668, %bb.en ], [ %.0331668, %bb.ak ], [ %.0331668, %bb.an ], [ %.0331668, %bb.ao ], [ %.0331668, %bb.ap ], [ %.0331668, %g_strdup_inline.exit475 ], [ %.0331668, %bb.el ], [ %.0331668, %bb.bb ], [ %.0331668, %bb.bd ], [ %.0331668, %bb.ax ], [ %.0331668, %bb.bi ], [ %.0331668, %bb.bo ], [ %.0331668, %bb.bs ], [ %.0331668, %bb.bu ], [ %i.fy, %bb.bv ], [ %i.fz, %bb.bw ], [ %.0331668, %bb.cb ], [ %.0331668, %bb.cc ], [ %.0331668, %bb.cd ], [ %.0331668, %bb.ce ], [ %.0331668, %bb.cf ], [ %.0331668, %bb.cj ], [ %.0331668, %bb.cl ], [ %.0331668, %bb.cm ], [ %.0331668, %bb.cn ], [ %.0331668, %bb.cp ], [ %.0331668, %bb.cr ], [ %.0331668, %bb.ct ], [ %.0331668, %bb.cu ], [ %.0331668, %bb.cv ], [ %.0331668, %bb.cw ], [ %.0331668, %.tail552.thread ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %.lr.ph.a ], [ %.0331668, %g_strdup_inline.exit465 ], [ %.0331668, %bb.dd ], [ %.0331668, %bb.df ], [ %.0331668, %bb.dj ], [ %.0331668, %bb.dl ], [ %.0331668, %bb.dm ], [ %.0331668, %bb.dn ], [ %.0331668, %bb.do ], [ %.0331668, %g_strdup_inline.exit ], [ %.0331668, %bb.ds ], [ %.0331668, %bb.du ], [ %.0331668, %bb.dw ], [ %.0331668, %bb.dy ], [ %.0331668, %bb.ea ], [ %.0331668, %bb.ec ], [ %.0331668, %bb.ee ], [ %.0331668, %bb.ei ], [ %.0331668, %bb.ek ], [ %.0331668, %bb.az ], [ %.0331668, %bb.ba ], [ %.0331668, %bb.bf ], [ %.0331668, %bb.bj ], [ %.0331668, %bb.bm ] ; 2 uses
-  %.1330 = phi ptr [ %.0329669, %bb.en ], [ %.0329669, %bb.ak ], [ %.0329669, %bb.an ], [ %.0329669, %bb.ao ], [ %.0329669, %bb.ap ], [ %.0329669, %g_strdup_inline.exit475 ], [ %.0329669, %bb.el ], [ %.0329669, %bb.bb ], [ %.0329669, %bb.bd ], [ %.0329669, %bb.ax ], [ %.0329669, %bb.bi ], [ %.0329669, %bb.bo ], [ %.0329669, %bb.bs ], [ %.0329669, %bb.bu ], [ %.0329669, %bb.bv ], [ %.0329669, %bb.bw ], [ %.0329669, %bb.cb ], [ %.0329669, %bb.cc ], [ %.0329669, %bb.cd ], [ %i.gj, %bb.ce ], [ %.0329669, %bb.cf ], [ %.0329669, %bb.cj ], [ %.0329669, %bb.cl ], [ %.0329669, %bb.cm ], [ %.0329669, %bb.cn ], [ %.0329669, %bb.cp ], [ %.0329669, %bb.cr ], [ %.0329669, %bb.ct ], [ %.0329669, %bb.cu ], [ %.0329669, %bb.cv ], [ %.0329669, %bb.cw ], [ %.0329669, %.tail552.thread ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %.lr.ph.a ], [ %.0329669, %g_strdup_inline.exit465 ], [ %.0329669, %bb.dd ], [ %.0329669, %bb.df ], [ %.0329669, %bb.dj ], [ %.0329669, %bb.dl ], [ %.0329669, %bb.dm ], [ %.0329669, %bb.dn ], [ %.0329669, %bb.do ], [ %.0329669, %g_strdup_inline.exit ], [ %.0329669, %bb.ds ], [ %.0329669, %bb.du ], [ %.0329669, %bb.dw ], [ %.0329669, %bb.dy ], [ %.0329669, %bb.ea ], [ %.0329669, %bb.ec ], [ %.0329669, %bb.ee ], [ %.0329669, %bb.ei ], [ %.0329669, %bb.ek ], [ %.0329669, %bb.az ], [ %.0329669, %bb.ba ], [ %.0329669, %bb.bf ], [ %.0329669, %bb.bj ], [ %.0329669, %bb.bm ] ; 2 uses
-  %.1321 = phi ptr [ %.0320670, %bb.en ], [ %.0320670, %bb.ak ], [ %.0320670, %bb.an ], [ %.0320670, %bb.ao ], [ %.0320670, %bb.ap ], [ %.0320670, %g_strdup_inline.exit475 ], [ %.0320670, %bb.el ], [ %.0320670, %bb.bb ], [ %.0320670, %bb.bd ], [ %.0320670, %bb.ax ], [ %.0320670, %bb.bi ], [ %.0320670, %bb.bo ], [ %.0320670, %bb.bs ], [ %.0320670, %bb.bu ], [ %.0320670, %bb.bv ], [ %.0320670, %bb.bw ], [ %.0320670, %bb.cb ], [ %.0320670, %bb.cc ], [ %.0320670, %bb.cd ], [ %.0320670, %bb.ce ], [ %.0320670, %bb.cf ], [ %.0320670, %bb.cj ], [ %.0320670, %bb.cl ], [ %.0320670, %bb.cm ], [ %.0320670, %bb.cn ], [ %.0320670, %bb.cp ], [ %.0320670, %bb.cr ], [ %.0320670, %bb.ct ], [ %.0320670, %bb.cu ], [ %.0320670, %bb.cv ], [ %.0320670, %bb.cw ], [ %.0320670, %.tail552.thread ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %g_strdup_inline.exit465 ], [ %.0320670, %bb.dd ], [ %.0320670, %bb.df ], [ %.0320670, %bb.dj ], [ %.0320670, %bb.dl ], [ %.0320670, %bb.dm ], [ %.0320670, %bb.dn ], [ %i.ij, %bb.do ], [ %.0320670, %g_strdup_inline.exit ], [ %.0320670, %bb.ds ], [ %.0320670, %bb.du ], [ %.0320670, %bb.dw ], [ %.0320670, %bb.dy ], [ %.0320670, %bb.ea ], [ %.0320670, %bb.ec ], [ %.0320670, %bb.ee ], [ %.0320670, %bb.ei ], [ %.0320670, %bb.ek ], [ %.0320670, %bb.az ], [ %.0320670, %bb.ba ], [ %.0320670, %bb.bf ], [ %.0320670, %bb.bj ], [ %.0320670, %bb.bm ] ; 2 uses
-  %.4310 = phi i1 [ %.0306671, %bb.en ], [ %.1307, %bb.ak ], [ %spec.select453, %bb.an ], [ %.0306671, %bb.ao ], [ %.0306671, %bb.ap ], [ %.0306671, %g_strdup_inline.exit475 ], [ %.0306671, %bb.el ], [ %.0306671, %bb.bb ], [ %.0306671, %bb.bd ], [ %.0306671, %bb.ax ], [ %.0306671, %bb.bi ], [ %.0306671, %bb.bo ], [ %.0306671, %bb.bs ], [ %.0306671, %bb.bu ], [ %.0306671, %bb.bv ], [ %.0306671, %bb.bw ], [ %.0306671, %bb.cb ], [ %.0306671, %bb.cc ], [ %.0306671, %bb.cd ], [ %.0306671, %bb.ce ], [ %.0306671, %bb.cf ], [ %.0306671, %bb.cj ], [ %.0306671, %bb.cl ], [ %.0306671, %bb.cm ], [ %.0306671, %bb.cn ], [ %.0306671, %bb.cp ], [ %.0306671, %bb.cr ], [ %.0306671, %bb.ct ], [ %.0306671, %bb.cu ], [ %.0306671, %bb.cv ], [ %.0306671, %bb.cw ], [ %.0306671, %.tail552.thread ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %.lr.ph.a ], [ %.0306671, %g_strdup_inline.exit465 ], [ %.0306671, %bb.dd ], [ %.0306671, %bb.df ], [ %.0306671, %bb.dj ], [ %.0306671, %bb.dl ], [ %.0306671, %bb.dm ], [ %.0306671, %bb.dn ], [ %.0306671, %bb.do ], [ %.0306671, %g_strdup_inline.exit ], [ %.0306671, %bb.ds ], [ %.0306671, %bb.du ], [ %.0306671, %bb.dw ], [ %.0306671, %bb.dy ], [ %.0306671, %bb.ea ], [ %.0306671, %bb.ec ], [ %.0306671, %bb.ee ], [ %.0306671, %bb.ei ], [ %.0306671, %bb.ek ], [ %.0306671, %bb.az ], [ %.0306671, %bb.ba ], [ %.0306671, %bb.bf ], [ %.0306671, %bb.bj ], [ %.0306671, %bb.bm ] ; 2 uses
-  %8 = load i32, ptr %i.c, align 4
-  %9 = call i32 @ws_getopt_long(i32 noundef %8, ptr noundef %1, ptr noundef @main.optstring, ptr noundef @main.long_options, ptr noundef null) ; 2 uses
-  %.not376 = icmp eq i32 %9, -1
-  br i1 %.not376, label %._crit_edge.a, label %.lr.ph.a, !llvm.loop !12
+protocolfilter_add_opt.exit:                      ; preds = %bb.bm, %bb.bi, %bb.cb, %bb.bj, %bb.bf, %bb.ax, %bb.ba, %bb.az, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %.lr.ph.a, %bb.en, %bb.el, %bb.ei, %bb.ds, %bb.dw, %bb.ea, %bb.ee, %bb.ec, %bb.dy, %bb.du, %bb.dj, %bb.df, %bb.dd, %bb.cj, %bb.cm, %bb.cp, %bb.ct, %bb.cu, %bb.cv, %bb.cw, %bb.cr, %bb.cn, %bb.cl, %bb.bu, %bb.bd, %bb.bb, %g_strdup_inline.exit475, %bb.ap, %bb.ao, %bb.ek, %g_strdup_inline.exit, %bb.do, %bb.dn, %bb.dm, %bb.dl, %g_strdup_inline.exit465, %.tail552.thread, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.bw, %bb.bv, %bb.bs, %bb.bo, %bb.an, %bb.ak
+  %.1332 = phi i32 [ %i.dg, %bb.en ], [ %i.dg, %bb.ak ], [ %i.dg, %bb.an ], [ %i.dg, %bb.ao ], [ %i.dg, %bb.ap ], [ %i.dg, %g_strdup_inline.exit475 ], [ %i.dg, %bb.el ], [ %i.dg, %bb.bb ], [ %i.dg, %bb.bd ], [ %i.dg, %bb.ax ], [ %i.dg, %bb.bi ], [ %i.dg, %bb.bo ], [ %i.dg, %bb.bs ], [ %i.dg, %bb.bu ], [ %i.fy, %bb.bv ], [ %i.fz, %bb.bw ], [ %i.dg, %bb.cb ], [ %i.dg, %bb.cc ], [ %i.dg, %bb.cd ], [ %i.dg, %bb.ce ], [ %i.dg, %bb.cf ], [ %i.dg, %bb.cj ], [ %i.dg, %bb.cl ], [ %i.dg, %bb.cm ], [ %i.dg, %bb.cn ], [ %i.dg, %bb.cp ], [ %i.dg, %bb.cr ], [ %i.dg, %bb.ct ], [ %i.dg, %bb.cu ], [ %i.dg, %bb.cv ], [ %i.dg, %bb.cw ], [ %i.dg, %.tail552.thread ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %.lr.ph.a ], [ %i.dg, %g_strdup_inline.exit465 ], [ %i.dg, %bb.dd ], [ %i.dg, %bb.df ], [ %i.dg, %bb.dj ], [ %i.dg, %bb.dl ], [ %i.dg, %bb.dm ], [ %i.dg, %bb.dn ], [ %i.dg, %bb.do ], [ %i.dg, %g_strdup_inline.exit ], [ %i.dg, %bb.ds ], [ %i.dg, %bb.du ], [ %i.dg, %bb.dw ], [ %i.dg, %bb.dy ], [ %i.dg, %bb.ea ], [ %i.dg, %bb.ec ], [ %i.dg, %bb.ee ], [ %i.dg, %bb.ei ], [ %i.dg, %bb.ek ], [ %i.dg, %bb.az ], [ %i.dg, %bb.ba ], [ %i.dg, %bb.bf ], [ %i.dg, %bb.bj ], [ %i.dg, %bb.bm ]
+  %.1330 = phi ptr [ %.0329, %bb.en ], [ %.0329, %bb.ak ], [ %.0329, %bb.an ], [ %.0329, %bb.ao ], [ %.0329, %bb.ap ], [ %.0329, %g_strdup_inline.exit475 ], [ %.0329, %bb.el ], [ %.0329, %bb.bb ], [ %.0329, %bb.bd ], [ %.0329, %bb.ax ], [ %.0329, %bb.bi ], [ %.0329, %bb.bo ], [ %.0329, %bb.bs ], [ %.0329, %bb.bu ], [ %.0329, %bb.bv ], [ %.0329, %bb.bw ], [ %.0329, %bb.cb ], [ %.0329, %bb.cc ], [ %.0329, %bb.cd ], [ %i.gj, %bb.ce ], [ %.0329, %bb.cf ], [ %.0329, %bb.cj ], [ %.0329, %bb.cl ], [ %.0329, %bb.cm ], [ %.0329, %bb.cn ], [ %.0329, %bb.cp ], [ %.0329, %bb.cr ], [ %.0329, %bb.ct ], [ %.0329, %bb.cu ], [ %.0329, %bb.cv ], [ %.0329, %bb.cw ], [ %.0329, %.tail552.thread ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %.lr.ph.a ], [ %.0329, %g_strdup_inline.exit465 ], [ %.0329, %bb.dd ], [ %.0329, %bb.df ], [ %.0329, %bb.dj ], [ %.0329, %bb.dl ], [ %.0329, %bb.dm ], [ %.0329, %bb.dn ], [ %.0329, %bb.do ], [ %.0329, %g_strdup_inline.exit ], [ %.0329, %bb.ds ], [ %.0329, %bb.du ], [ %.0329, %bb.dw ], [ %.0329, %bb.dy ], [ %.0329, %bb.ea ], [ %.0329, %bb.ec ], [ %.0329, %bb.ee ], [ %.0329, %bb.ei ], [ %.0329, %bb.ek ], [ %.0329, %bb.az ], [ %.0329, %bb.ba ], [ %.0329, %bb.bf ], [ %.0329, %bb.bj ], [ %.0329, %bb.bm ]
+  %.1321 = phi ptr [ %.0320670, %bb.en ], [ %.0320670, %bb.ak ], [ %.0320670, %bb.an ], [ %.0320670, %bb.ao ], [ %.0320670, %bb.ap ], [ %.0320670, %g_strdup_inline.exit475 ], [ %.0320670, %bb.el ], [ %.0320670, %bb.bb ], [ %.0320670, %bb.bd ], [ %.0320670, %bb.ax ], [ %.0320670, %bb.bi ], [ %.0320670, %bb.bo ], [ %.0320670, %bb.bs ], [ %.0320670, %bb.bu ], [ %.0320670, %bb.bv ], [ %.0320670, %bb.bw ], [ %.0320670, %bb.cb ], [ %.0320670, %bb.cc ], [ %.0320670, %bb.cd ], [ %.0320670, %bb.ce ], [ %.0320670, %bb.cf ], [ %.0320670, %bb.cj ], [ %.0320670, %bb.cl ], [ %.0320670, %bb.cm ], [ %.0320670, %bb.cn ], [ %.0320670, %bb.cp ], [ %.0320670, %bb.cr ], [ %.0320670, %bb.ct ], [ %.0320670, %bb.cu ], [ %.0320670, %bb.cv ], [ %.0320670, %bb.cw ], [ %.0320670, %.tail552.thread ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %.lr.ph.a ], [ %.0320670, %g_strdup_inline.exit465 ], [ %.0320670, %bb.dd ], [ %.0320670, %bb.df ], [ %.0320670, %bb.dj ], [ %.0320670, %bb.dl ], [ %.0320670, %bb.dm ], [ %.0320670, %bb.dn ], [ %i.ij, %bb.do ], [ %.0320670, %g_strdup_inline.exit ], [ %.0320670, %bb.ds ], [ %.0320670, %bb.du ], [ %.0320670, %bb.dw ], [ %.0320670, %bb.dy ], [ %.0320670, %bb.ea ], [ %.0320670, %bb.ec ], [ %.0320670, %bb.ee ], [ %.0320670, %bb.ei ], [ %.0320670, %bb.ek ], [ %.0320670, %bb.az ], [ %.0320670, %bb.ba ], [ %.0320670, %bb.bf ], [ %.0320670, %bb.bj ], [ %.0320670, %bb.bm ]
+  %.4310 = phi i1 [ %.0306, %bb.en ], [ %.1307, %bb.ak ], [ %spec.select453, %bb.an ], [ %.0306, %bb.ao ], [ %.0306, %bb.ap ], [ %.0306, %g_strdup_inline.exit475 ], [ %.0306, %bb.el ], [ %.0306, %bb.bb ], [ %.0306, %bb.bd ], [ %.0306, %bb.ax ], [ %.0306, %bb.bi ], [ %.0306, %bb.bo ], [ %.0306, %bb.bs ], [ %.0306, %bb.bu ], [ %.0306, %bb.bv ], [ %.0306, %bb.bw ], [ %.0306, %bb.cb ], [ %.0306, %bb.cc ], [ %.0306, %bb.cd ], [ %.0306, %bb.ce ], [ %.0306, %bb.cf ], [ %.0306, %bb.cj ], [ %.0306, %bb.cl ], [ %.0306, %bb.cm ], [ %.0306, %bb.cn ], [ %.0306, %bb.cp ], [ %.0306, %bb.cr ], [ %.0306, %bb.ct ], [ %.0306, %bb.cu ], [ %.0306, %bb.cv ], [ %.0306, %bb.cw ], [ %.0306, %.tail552.thread ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %.lr.ph.a ], [ %.0306, %g_strdup_inline.exit465 ], [ %.0306, %bb.dd ], [ %.0306, %bb.df ], [ %.0306, %bb.dj ], [ %.0306, %bb.dl ], [ %.0306, %bb.dm ], [ %.0306, %bb.dn ], [ %.0306, %bb.do ], [ %.0306, %g_strdup_inline.exit ], [ %.0306, %bb.ds ], [ %.0306, %bb.du ], [ %.0306, %bb.dw ], [ %.0306, %bb.dy ], [ %.0306, %bb.ea ], [ %.0306, %bb.ec ], [ %.0306, %bb.ee ], [ %.0306, %bb.ei ], [ %.0306, %bb.ek ], [ %.0306, %bb.az ], [ %.0306, %bb.ba ], [ %.0306, %bb.bf ], [ %.0306, %bb.bj ], [ %.0306, %bb.bm ]
+  br label %.lr.ph.a, !llvm.loop !12
 
-._crit_edge.a:                                    ; preds = %protocolfilter_add_opt.exit, %bb.ah
-  %.0331.lcssa = phi i32 [ 0, %bb.ah ], [ %.1332, %protocolfilter_add_opt.exit ] ; 3 uses
-  %.0329.lcssa = phi ptr [ null, %bb.ah ], [ %.1330, %protocolfilter_add_opt.exit ] ; 3 uses
-  %.0320.lcssa = phi ptr [ null, %bb.ah ], [ %.1321, %protocolfilter_add_opt.exit ]
-  %.0306.lcssa = phi i1 [ false, %bb.ah ], [ %.4310, %protocolfilter_add_opt.exit ]
+._crit_edge.a:                                    ; preds = %.lr.ph.a
   %i.jy = load i32, ptr @output_action, align 4
   %i.jz = icmp eq i32 %i.jy, 0
   br i1 %i.jz, label %bb.eu, label %bb.ev
@@ -1726,7 +1718,7 @@ bb.gh:                                            ; preds = %bb.gg
   br i1 %.not385, label %bb.gi, label %.thread521
 
 bb.gi:                                            ; preds = %bb.gh, %bb.gg, %bb.gf
-  br i1 %.0306.lcssa, label %bb.gj, label %bb.gk
+  br i1 %.0306, label %bb.gj, label %bb.gk
 
 bb.gj:                                            ; preds = %bb.gi
   %i.mn = load ptr, ptr @stderr, align 8
@@ -1792,7 +1784,7 @@ bb.gs:                                            ; preds = %bb.go
   br label %.thread521
 
 .thread526:                                       ; preds = %bb.gr, %bb.gp, %bb.gn
-  %i.mx = icmp eq ptr %.0329.lcssa, null          ; 3 uses
+  %i.mx = icmp eq ptr %.0329, null                ; 3 uses
   %.b366 = load i1, ptr @perform_two_pass_analysis, align 1 ; 2 uses
   %or.cond27 = select i1 %i.mx, i1 true, i1 %.b366
   br i1 %or.cond27, label %bb.gu, label %bb.gt
@@ -1803,7 +1795,7 @@ bb.gt:                                            ; preds = %.thread526
   br label %.thread521
 
 bb.gu:                                            ; preds = %.thread526
-  %.not388 = icmp eq i32 %.0331.lcssa, 0          ; 2 uses
+  %.not388 = icmp eq i32 %i.dg, 0                 ; 2 uses
   %.0..0..0..0.232 = load volatile ptr, ptr %i.p, align 8
   %.not389 = icmp eq ptr %.0..0..0..0.232, null   ; 2 uses
   br i1 %.not388, label %bb.gz, label %bb.gv
@@ -1812,7 +1804,7 @@ bb.gv:                                            ; preds = %bb.gu
   br i1 %.not389, label %bb.gx, label %bb.gw
 
 bb.gw:                                            ; preds = %bb.gv
-  %i.my = and i32 %.0331.lcssa, 1
+  %i.my = and i32 %i.dg, 1
   %.not431 = icmp eq i32 %i.my, 0
   %i.mz = select i1 %.not431, ptr @.str.123, ptr @.str.122
   call void (ptr, ...) @cmdarg_err(ptr noundef @.str.121, ptr noundef nonnull %i.mz)
@@ -2209,7 +2201,7 @@ bb.jh:                                            ; preds = %bb.jf
   br i1 %.not403, label %bb.jj, label %bb.ji
 
 bb.ji:                                            ; preds = %bb.jh
-  %i.qe = call fastcc i32 @dump_glossary(ptr noundef %.0322, ptr noundef %.0320.lcssa)
+  %i.qe = call fastcc i32 @dump_glossary(ptr noundef %.0322, ptr noundef %.0320670)
   store volatile i32 %i.qe, ptr %i.j, align 4
   br label %.thread521
 
@@ -2219,13 +2211,13 @@ bb.jj:                                            ; preds = %bb.jh
   br i1 %i.mx, label %bb.jm, label %bb.jk
 
 bb.jk:                                            ; preds = %bb.jj
-  %i.qf = call fastcc zeroext i1 @_compile_dfilter(ptr noundef nonnull %.0329.lcssa, ptr noundef nonnull %i.s)
+  %i.qf = call fastcc zeroext i1 @_compile_dfilter(ptr noundef nonnull %.0329, ptr noundef nonnull %i.s)
   br i1 %i.qf, label %bb.jm, label %bb.jl
 
 bb.jl:                                            ; preds = %bb.jk
   call void @epan_cleanup()
   call void @extcap_cleanup()
-  call fastcc void @warn_about_capture_filter(ptr noundef nonnull %.0329.lcssa)
+  call fastcc void @warn_about_capture_filter(ptr noundef nonnull %.0329)
   store volatile i32 4, ptr %i.j, align 4
   br label %.thread521
 
@@ -2628,7 +2620,7 @@ bb.lp:                                            ; preds = %.lr.ph695
   br label %.thread545
 
 bb.lq:                                            ; preds = %.lr.ph695
-  %i.ut = call i32 @capture_opts_print_if_capabilities(ptr noundef nonnull %i.ul, ptr noundef %i.uj, i32 noundef %.0331.lcssa)
+  %i.ut = call i32 @capture_opts_print_if_capabilities(ptr noundef nonnull %i.ul, ptr noundef %i.uj, i32 noundef %i.dg)
   store volatile i32 %i.ut, ptr %i.j, align 4
   %.0..0..0..0.269 = load volatile i32, ptr %i.j, align 4
   %.not419 = icmp eq i32 %.0..0..0..0.269, 0

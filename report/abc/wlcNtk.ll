@@ -205,8 +205,8 @@ Vec_IntStart.exit:
   %i.b = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 60, ptr %i.b, align 8, !tbaa !30
-  %calloc = tail call dereferenceable_or_null(240) ptr @calloc(i64 1, i64 240) ; 20 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 24 uses
+  %calloc = tail call dereferenceable_or_null(240) ptr @calloc(i64 1, i64 240) ; 27 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 17 uses
   store ptr %calloc, ptr %i.d, align 8, !tbaa !29
   store i32 60, ptr %i.c, align 4, !tbaa !35
   %i.e = getelementptr i8, ptr %0, i64 36
@@ -263,9 +263,32 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   %i.t = getelementptr i8, ptr %0, i64 700
   %i.u = getelementptr i8, ptr %0, i64 704
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 688
+  %3 = getelementptr inbounds nuw i8, ptr %calloc, i64 188 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %calloc, i64 184 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %calloc, i64 180 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %calloc, i64 176 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %calloc, i64 172 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %calloc, i64 168 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %calloc, i64 164 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %calloc, i64 160 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %calloc, i64 156 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %calloc, i64 152 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %calloc, i64 148 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %calloc, i64 144 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %calloc, i64 140 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %calloc, i64 136 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %calloc, i64 132 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %calloc, i64 128 ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %calloc, i64 124 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %calloc, i64 120 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %calloc, i64 116 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %calloc, i64 112 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %calloc, i64 108 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %calloc, i64 104 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %calloc, i64 192 ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %calloc, i64 200 ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %calloc, i64 204 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %calloc, i64 208 ; 2 uses
   br label %bb.d
 
 .preheader817:                                    ; preds = %bb.c, %.preheader817
@@ -284,22 +307,6 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   br i1 %exitcond838.not, label %.preheader, label %.preheader817, !llvm.loop !112
 
 bb.d:                                             ; preds = %.lr.ph, %bb.cf
-  %.val386 = phi ptr [ %calloc, %.lr.ph ], [ %.val386885, %bb.cf ] ; 36 uses
-  %.val385 = phi ptr [ %calloc, %.lr.ph ], [ %.val385883, %bb.cf ] ; 34 uses
-  %.val384 = phi ptr [ %calloc, %.lr.ph ], [ %.val384881, %bb.cf ] ; 32 uses
-  %.val383 = phi ptr [ %calloc, %.lr.ph ], [ %.val383879, %bb.cf ] ; 30 uses
-  %.val382 = phi ptr [ %calloc, %.lr.ph ], [ %.val382877, %bb.cf ] ; 28 uses
-  %.val381 = phi ptr [ %calloc, %.lr.ph ], [ %.val381875, %bb.cf ] ; 26 uses
-  %.val380 = phi ptr [ %calloc, %.lr.ph ], [ %.val380873, %bb.cf ] ; 24 uses
-  %.val379 = phi ptr [ %calloc, %.lr.ph ], [ %.val379871, %bb.cf ] ; 22 uses
-  %.val378 = phi ptr [ %calloc, %.lr.ph ], [ %.val378869, %bb.cf ] ; 20 uses
-  %.val377 = phi ptr [ %calloc, %.lr.ph ], [ %.val377867, %bb.cf ] ; 18 uses
-  %.val376 = phi ptr [ %calloc, %.lr.ph ], [ %.val376865, %bb.cf ] ; 16 uses
-  %.val375 = phi ptr [ %calloc, %.lr.ph ], [ %.val375863, %bb.cf ] ; 14 uses
-  %.val374 = phi ptr [ %calloc, %.lr.ph ], [ %.val374861, %bb.cf ] ; 12 uses
-  %.val373 = phi ptr [ %calloc, %.lr.ph ], [ %.val373859, %bb.cf ] ; 10 uses
-  %.val372 = phi ptr [ %calloc, %.lr.ph ], [ %.val372857, %bb.cf ] ; 8 uses
-  %.val371 = phi ptr [ %calloc, %.lr.ph ], [ %.val371855, %bb.cf ] ; 6 uses
   %indvars.iv839 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next840, %bb.cf ] ; 6 uses
   %.0328825 = phi i64 [ 0, %.lr.ph ], [ %.1329, %bb.cf ]
   %.0330824 = phi i32 [ 0, %.lr.ph ], [ %.1331, %bb.cf ]
@@ -702,7 +709,7 @@ bb.ar:                                            ; preds = %Wlc_NtkPrintDistrib
   %.val363 = load i32, ptr %i.jl, align 4, !tbaa !41
   %i.jm = add nsw i32 %.val363, -2
   %i.jn = mul nsw i32 %i.jk, %i.jm
-  %.val410 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val410 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.jo = getelementptr inbounds nuw i8, ptr %.val410, i64 32 ; 2 uses
   %i.jp = load i32, ptr %i.jo, align 4, !tbaa !18
   %i.jq = add nsw i32 %i.jn, %i.jp
@@ -743,7 +750,7 @@ Wlc_ObjFanin0.exit597:                            ; preds = %bb.as, %Wlc_ObjHasA
   %i.kk = tail call i32 @llvm.umin.i32(i32 %i.ke, i32 %i.kj)
   %i.kl = mul nuw nsw i32 %i.kk, 3
   %i.km = select i1 %i.kh, i32 3, i32 %i.kl
-  %.val409 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val409 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.kn = getelementptr inbounds nuw i8, ptr %.val409, i64 36 ; 2 uses
   %i.ko = load i32, ptr %i.kn, align 4, !tbaa !18
   %i.kp = add nsw i32 %i.km, %i.ko
@@ -786,7 +793,7 @@ Wlc_ObjFanin0.exit600:                            ; preds = %bb.at, %Wlc_ObjHasA
   %i.ll = mul nuw i32 %i.kr, 3
   %i.lm = add nuw i32 %i.ll, 3
   %i.ln = mul nuw nsw i32 %i.lm, %i.lk
-  %.val408 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val408 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.lo = getelementptr inbounds nuw i8, ptr %.val408, i64 40 ; 2 uses
   %i.lp = load i32, ptr %i.lo, align 4, !tbaa !18
   %i.lq = add nsw i32 %i.ln, %i.lp
@@ -829,7 +836,7 @@ Wlc_ObjFanin0.exit604:                            ; preds = %bb.au, %Wlc_ObjHasA
   %i.mm = mul nuw i32 %i.ls, 3
   %i.mn = add nuw i32 %i.mm, 3
   %i.mo = mul nuw nsw i32 %i.mn, %i.ml
-  %.val407 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val407 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.mp = getelementptr inbounds nuw i8, ptr %.val407, i64 44 ; 2 uses
   %i.mq = load i32, ptr %i.mp, align 4, !tbaa !18
   %i.mr = add nsw i32 %i.mo, %i.mq
@@ -872,7 +879,7 @@ Wlc_ObjFanin0.exit608:                            ; preds = %bb.av, %Wlc_ObjHasA
   %i.nn = mul nuw i32 %i.mt, 3
   %i.no = add nuw i32 %i.nn, 3
   %i.np = mul nuw nsw i32 %i.no, %i.nm
-  %.val406 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val406 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.nq = getelementptr inbounds nuw i8, ptr %.val406, i64 48 ; 2 uses
   %i.nr = load i32, ptr %i.nq, align 4, !tbaa !18
   %i.ns = add nsw i32 %i.np, %i.nr
@@ -915,7 +922,7 @@ Wlc_ObjFanin0.exit612:                            ; preds = %bb.aw, %Wlc_ObjHasA
   %i.oo = mul nuw i32 %i.nu, 3
   %i.op = add nuw i32 %i.oo, 3
   %i.oq = mul nuw nsw i32 %i.op, %i.on
-  %.val405 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val405 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.or = getelementptr inbounds nuw i8, ptr %.val405, i64 52 ; 2 uses
   %i.os = load i32, ptr %i.or, align 4, !tbaa !18
   %i.ot = add nsw i32 %i.oq, %i.os
@@ -958,7 +965,7 @@ Wlc_ObjFanin0.exit616:                            ; preds = %bb.ax, %Wlc_ObjHasA
   %i.pp = mul nuw i32 %i.ov, 3
   %i.pq = add nuw i32 %i.pp, 3
   %i.pr = mul nuw nsw i32 %i.pq, %i.po
-  %.val404 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val404 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.ps = getelementptr inbounds nuw i8, ptr %.val404, i64 56 ; 2 uses
   %i.pt = load i32, ptr %i.ps, align 4, !tbaa !18
   %i.pu = add nsw i32 %i.pr, %i.pt
@@ -989,7 +996,7 @@ Wlc_ObjFanin0.exit620:                            ; preds = %bb.ay, %Wlc_ObjHasA
   %i.qg = sub nsw i32 %.val512, %.val513
   %i.qh = tail call i32 @llvm.abs.i32(i32 %i.qg, i1 true)
   %i.qi = add nuw nsw i32 %i.qh, 1
-  %.val402 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val402 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.qj = getelementptr inbounds nuw i8, ptr %.val402, i64 64 ; 2 uses
   %i.qk = load i32, ptr %i.qj, align 4, !tbaa !18
   %i.ql = add nsw i32 %i.qi, %i.qk
@@ -1020,7 +1027,7 @@ Wlc_ObjFanin0.exit623:                            ; preds = %bb.az, %Wlc_ObjHasA
   %i.qx = sub nsw i32 %.val510, %.val511
   %i.qy = tail call i32 @llvm.abs.i32(i32 %i.qx, i1 true)
   %i.qz = add nuw nsw i32 %i.qy, 1
-  %.val401 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val401 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.ra = getelementptr inbounds nuw i8, ptr %.val401, i64 68 ; 2 uses
   %i.rb = load i32, ptr %i.ra, align 4, !tbaa !18
   %i.rc = add nsw i32 %i.qz, %i.rb
@@ -1051,7 +1058,7 @@ Wlc_ObjFanin0.exit626:                            ; preds = %bb.ba, %Wlc_ObjHasA
   %i.ro = sub nsw i32 %.val508, %.val509
   %i.rp = tail call i32 @llvm.abs.i32(i32 %i.ro, i1 true)
   %i.rq = mul i32 %i.rp, 3
-  %.val400 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val400 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.rr = getelementptr inbounds nuw i8, ptr %.val400, i64 72 ; 2 uses
   %i.rs = load i32, ptr %i.rr, align 4, !tbaa !18
   %i.rt = add i32 %i.rs, 3
@@ -1083,7 +1090,7 @@ Wlc_ObjFanin0.exit629:                            ; preds = %bb.bb, %Wlc_ObjHasA
   %i.sg = sub nsw i32 %.val506, %.val507
   %i.sh = tail call i32 @llvm.abs.i32(i32 %i.sg, i1 true)
   %i.si = add nuw nsw i32 %i.sh, 1
-  %.val399 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val399 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.sj = getelementptr inbounds nuw i8, ptr %.val399, i64 76 ; 2 uses
   %i.sk = load i32, ptr %i.sj, align 4, !tbaa !18
   %i.sl = add nsw i32 %i.si, %i.sk
@@ -1114,7 +1121,7 @@ Wlc_ObjFanin0.exit632:                            ; preds = %bb.bc, %Wlc_ObjHasA
   %i.sx = sub nsw i32 %.val504, %.val505
   %i.sy = tail call i32 @llvm.abs.i32(i32 %i.sx, i1 true)
   %i.sz = add nuw nsw i32 %i.sy, 1
-  %.val398 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val398 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.ta = getelementptr inbounds nuw i8, ptr %.val398, i64 80 ; 2 uses
   %i.tb = load i32, ptr %i.ta, align 4, !tbaa !18
   %i.tc = add nsw i32 %i.sz, %i.tb
@@ -1145,7 +1152,7 @@ Wlc_ObjFanin0.exit635:                            ; preds = %bb.bd, %Wlc_ObjHasA
   %i.to = sub nsw i32 %.val502, %.val503
   %i.tp = tail call i32 @llvm.abs.i32(i32 %i.to, i1 true)
   %i.tq = mul i32 %i.tp, 3
-  %.val397 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val397 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.tr = getelementptr inbounds nuw i8, ptr %.val397, i64 84 ; 2 uses
   %i.ts = load i32, ptr %i.tr, align 4, !tbaa !18
   %i.tt = add i32 %i.ts, 3
@@ -1321,13 +1328,11 @@ Wlc_ObjFanin1.exit656:                            ; preds = %Wlc_ObjFanin0.exit6
   %.val489 = load i32, ptr %i.xj, align 4, !tbaa !40
   %i.xk = sub nsw i32 %.val488, %.val489
   %i.xl = tail call i32 @llvm.abs.i32(i32 %i.xk, i1 true)
-  %.val389 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.val389, i64 116 ; 2 uses
-  %i.xm = load i32, ptr %3, align 4, !tbaa !18
+  %i.xm = load i32, ptr %21, align 4, !tbaa !18
   %i.xn = add nuw i32 %i.xa, 1
-  %i.xo = add nuw i32 %i.xn, %i.xl
-  %i.xp = add nsw i32 %i.xo, %i.xm
-  store i32 %i.xp, ptr %3, align 4, !tbaa !18
+  %i.xo = add i32 %i.xn, %i.xm
+  %i.xp = add i32 %i.xo, %i.xl
+  store i32 %i.xp, ptr %21, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bi:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1372,13 +1377,11 @@ Wlc_ObjFanin1.exit662:                            ; preds = %Wlc_ObjFanin0.exit6
   %.val485 = load i32, ptr %i.yl, align 4, !tbaa !40
   %i.ym = sub nsw i32 %.val484, %.val485
   %i.yn = tail call i32 @llvm.abs.i32(i32 %i.ym, i1 true)
-  %.val388 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.val388, i64 120 ; 2 uses
-  %i.yo = load i32, ptr %4, align 4, !tbaa !18
+  %i.yo = load i32, ptr %20, align 4, !tbaa !18
   %i.yp = add nuw i32 %i.yc, 3
-  %i.yq = add i32 %i.yp, %i.yn
-  %i.yr = add nsw i32 %i.yq, %i.yo
-  store i32 %i.yr, ptr %4, align 4, !tbaa !18
+  %i.yq = add i32 %i.yp, %i.yo
+  %i.yr = add i32 %i.yq, %i.yn
+  store i32 %i.yr, ptr %20, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bj:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1405,12 +1408,10 @@ Wlc_ObjFanin0.exit665:                            ; preds = %bb.bj, %Wlc_ObjHasA
   %i.zd = sub nsw i32 %.val482, %.val483
   %i.ze = tail call i32 @llvm.abs.i32(i32 %i.zd, i1 true)
   %i.zf = shl i32 %i.ze, 2
-  %.val387 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.val387, i64 124 ; 2 uses
-  %i.zg = load i32, ptr %5, align 4, !tbaa !18
+  %i.zg = load i32, ptr %19, align 4, !tbaa !18
   %i.zh = add i32 %i.zg, 3
   %i.zi = add i32 %i.zh, %i.zf
-  store i32 %i.zi, ptr %5, align 4, !tbaa !18
+  store i32 %i.zi, ptr %19, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bk:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1437,11 +1438,10 @@ Wlc_ObjFanin0.exit668:                            ; preds = %bb.bk, %Wlc_ObjHasA
   %i.zu = sub nsw i32 %.val480, %.val481
   %i.zv = tail call i32 @llvm.abs.i32(i32 %i.zu, i1 true)
   %i.zw = shl i32 %i.zv, 2
-  %6 = getelementptr inbounds nuw i8, ptr %.val386, i64 128 ; 2 uses
-  %i.zx = load i32, ptr %6, align 4, !tbaa !18
+  %i.zx = load i32, ptr %18, align 4, !tbaa !18
   %i.zy = add i32 %i.zx, 3
   %i.zz = add i32 %i.zy, %i.zw
-  store i32 %i.zz, ptr %6, align 4, !tbaa !18
+  store i32 %i.zz, ptr %18, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bl:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1468,10 +1468,9 @@ Wlc_ObjFanin0.exit671:                            ; preds = %bb.bl, %Wlc_ObjHasA
   %i.aal = sub nsw i32 %.val478, %.val479
   %i.aam = tail call i32 @llvm.abs.i32(i32 %i.aal, i1 true)
   %i.aan = mul i32 %i.aam, 6
-  %7 = getelementptr inbounds nuw i8, ptr %.val385, i64 132 ; 2 uses
-  %i.aao = load i32, ptr %7, align 4, !tbaa !18
+  %i.aao = load i32, ptr %17, align 4, !tbaa !18
   %i.aap = add nsw i32 %i.aan, %i.aao
-  store i32 %i.aap, ptr %7, align 4, !tbaa !18
+  store i32 %i.aap, ptr %17, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bm:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1498,10 +1497,9 @@ Wlc_ObjFanin0.exit674:                            ; preds = %bb.bm, %Wlc_ObjHasA
   %i.abb = sub nsw i32 %.val476, %.val477
   %i.abc = tail call i32 @llvm.abs.i32(i32 %i.abb, i1 true)
   %i.abd = mul i32 %i.abc, 6
-  %8 = getelementptr inbounds nuw i8, ptr %.val384, i64 136 ; 2 uses
-  %i.abe = load i32, ptr %8, align 4, !tbaa !18
+  %i.abe = load i32, ptr %16, align 4, !tbaa !18
   %i.abf = add nsw i32 %i.abd, %i.abe
-  store i32 %i.abf, ptr %8, align 4, !tbaa !18
+  store i32 %i.abf, ptr %16, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bn:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1528,10 +1526,9 @@ Wlc_ObjFanin0.exit677:                            ; preds = %bb.bn, %Wlc_ObjHasA
   %i.abr = sub nsw i32 %.val474, %.val475
   %i.abs = tail call i32 @llvm.abs.i32(i32 %i.abr, i1 true)
   %i.abt = mul i32 %i.abs, 6
-  %9 = getelementptr inbounds nuw i8, ptr %.val383, i64 140 ; 2 uses
-  %i.abu = load i32, ptr %9, align 4, !tbaa !18
+  %i.abu = load i32, ptr %15, align 4, !tbaa !18
   %i.abv = add nsw i32 %i.abt, %i.abu
-  store i32 %i.abv, ptr %9, align 4, !tbaa !18
+  store i32 %i.abv, ptr %15, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bo:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1558,10 +1555,9 @@ Wlc_ObjFanin0.exit680:                            ; preds = %bb.bo, %Wlc_ObjHasA
   %i.ach = sub nsw i32 %.val472, %.val473
   %i.aci = tail call i32 @llvm.abs.i32(i32 %i.ach, i1 true)
   %i.acj = mul i32 %i.aci, 6
-  %10 = getelementptr inbounds nuw i8, ptr %.val382, i64 144 ; 2 uses
-  %i.ack = load i32, ptr %10, align 4, !tbaa !18
+  %i.ack = load i32, ptr %14, align 4, !tbaa !18
   %i.acl = add nsw i32 %i.acj, %i.ack
-  store i32 %i.acl, ptr %10, align 4, !tbaa !18
+  store i32 %i.acl, ptr %14, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bp:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1587,10 +1583,9 @@ Wlc_ObjFanin0.exit683:                            ; preds = %bb.bp, %Wlc_ObjHasA
   %.val471 = load i32, ptr %i.acw, align 4, !tbaa !40
   %i.acx = sub nsw i32 %.val470, %.val471
   %i.acy = tail call i32 @llvm.abs.i32(i32 %i.acx, i1 true)
-  %11 = getelementptr inbounds nuw i8, ptr %.val381, i64 148 ; 2 uses
-  %i.acz = load i32, ptr %11, align 4, !tbaa !18
-  %i.ada = add nsw i32 %i.acz, %i.acy
-  store i32 %i.ada, ptr %11, align 4, !tbaa !18
+  %i.acz = load i32, ptr %13, align 4, !tbaa !18
+  %i.ada = add nsw i32 %i.acy, %i.acz
+  store i32 %i.ada, ptr %13, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bq:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1616,9 +1611,8 @@ Wlc_ObjFanin0.exit686:                            ; preds = %bb.bq, %Wlc_ObjHasA
   %.val469 = load i32, ptr %i.adl, align 4, !tbaa !40
   %i.adm = sub nsw i32 %.val468, %.val469
   %i.adn = tail call i32 @llvm.abs.i32(i32 %i.adm, i1 true)
-  %12 = getelementptr inbounds nuw i8, ptr %.val380, i64 152 ; 2 uses
   %i.ado = load i32, ptr %12, align 4, !tbaa !18
-  %i.adp = add nsw i32 %i.ado, %i.adn
+  %i.adp = add nsw i32 %i.adn, %i.ado
   store i32 %i.adp, ptr %12, align 4, !tbaa !18
   br label %bb.cf
 
@@ -1646,10 +1640,9 @@ Wlc_ObjFanin0.exit689:                            ; preds = %bb.br, %Wlc_ObjHasA
   %i.aeb = sub nsw i32 %.val466, %.val467
   %i.aec = tail call i32 @llvm.abs.i32(i32 %i.aeb, i1 true)
   %i.aed = mul i32 %i.aec, 3
-  %13 = getelementptr inbounds nuw i8, ptr %.val379, i64 156 ; 2 uses
-  %i.aee = load i32, ptr %13, align 4, !tbaa !18
+  %i.aee = load i32, ptr %11, align 4, !tbaa !18
   %i.aef = add nsw i32 %i.aed, %i.aee
-  store i32 %i.aef, ptr %13, align 4, !tbaa !18
+  store i32 %i.aef, ptr %11, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bs:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1675,10 +1668,9 @@ Wlc_ObjFanin0.exit692:                            ; preds = %bb.bs, %Wlc_ObjHasA
   %.val465 = load i32, ptr %i.aeq, align 4, !tbaa !40
   %i.aer = sub nsw i32 %.val464, %.val465
   %i.aes = tail call i32 @llvm.abs.i32(i32 %i.aer, i1 true)
-  %14 = getelementptr inbounds nuw i8, ptr %.val378, i64 160 ; 2 uses
-  %i.aet = load i32, ptr %14, align 4, !tbaa !18
-  %i.aeu = add nsw i32 %i.aet, %i.aes
-  store i32 %i.aeu, ptr %14, align 4, !tbaa !18
+  %i.aet = load i32, ptr %10, align 4, !tbaa !18
+  %i.aeu = add nsw i32 %i.aes, %i.aet
+  store i32 %i.aeu, ptr %10, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bt:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1704,10 +1696,9 @@ Wlc_ObjFanin0.exit695:                            ; preds = %bb.bt, %Wlc_ObjHasA
   %.val463 = load i32, ptr %i.aff, align 4, !tbaa !40
   %i.afg = sub nsw i32 %.val462, %.val463
   %i.afh = tail call i32 @llvm.abs.i32(i32 %i.afg, i1 true)
-  %15 = getelementptr inbounds nuw i8, ptr %.val377, i64 164 ; 2 uses
-  %i.afi = load i32, ptr %15, align 4, !tbaa !18
-  %i.afj = add nsw i32 %i.afi, %i.afh
-  store i32 %i.afj, ptr %15, align 4, !tbaa !18
+  %i.afi = load i32, ptr %9, align 4, !tbaa !18
+  %i.afj = add nsw i32 %i.afh, %i.afi
+  store i32 %i.afj, ptr %9, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bu:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1734,10 +1725,9 @@ Wlc_ObjFanin0.exit698:                            ; preds = %bb.bu, %Wlc_ObjHasA
   %i.afv = sub nsw i32 %.val460, %.val461
   %i.afw = tail call i32 @llvm.abs.i32(i32 %i.afv, i1 true)
   %i.afx = mul i32 %i.afw, 3
-  %16 = getelementptr inbounds nuw i8, ptr %.val376, i64 168 ; 2 uses
-  %i.afy = load i32, ptr %16, align 4, !tbaa !18
+  %i.afy = load i32, ptr %8, align 4, !tbaa !18
   %i.afz = add nsw i32 %i.afx, %i.afy
-  store i32 %i.afz, ptr %16, align 4, !tbaa !18
+  store i32 %i.afz, ptr %8, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bv:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1764,11 +1754,10 @@ Wlc_ObjFanin0.exit701:                            ; preds = %bb.bv, %Wlc_ObjHasA
   %i.agl = sub nsw i32 %.val458, %.val459
   %i.agm = tail call i32 @llvm.abs.i32(i32 %i.agl, i1 true)
   %i.agn = mul i32 %i.agm, 9
-  %17 = getelementptr inbounds nuw i8, ptr %.val375, i64 172 ; 2 uses
-  %i.ago = load i32, ptr %17, align 4, !tbaa !18
+  %i.ago = load i32, ptr %7, align 4, !tbaa !18
   %i.agp = add i32 %i.ago, 9
   %i.agq = add i32 %i.agp, %i.agn
-  store i32 %i.agq, ptr %17, align 4, !tbaa !18
+  store i32 %i.agq, ptr %7, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bw:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1795,11 +1784,10 @@ Wlc_ObjFanin0.exit704:                            ; preds = %bb.bw, %Wlc_ObjHasA
   %i.ahc = sub nsw i32 %.val456, %.val457
   %i.ahd = tail call i32 @llvm.abs.i32(i32 %i.ahc, i1 true)
   %i.ahe = mul i32 %i.ahd, 9
-  %18 = getelementptr inbounds nuw i8, ptr %.val374, i64 176 ; 2 uses
-  %i.ahf = load i32, ptr %18, align 4, !tbaa !18
+  %i.ahf = load i32, ptr %6, align 4, !tbaa !18
   %i.ahg = add i32 %i.ahf, 9
   %i.ahh = add i32 %i.ahg, %i.ahe
-  store i32 %i.ahh, ptr %18, align 4, !tbaa !18
+  store i32 %i.ahh, ptr %6, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bx:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1848,10 +1836,9 @@ Wlc_ObjFanin1.exit710:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.aih = tail call i32 @llvm.abs.i32(i32 %i.aig, i1 true)
   %i.aii = add nuw nsw i32 %i.aih, 1
   %i.aij = mul nsw i32 %i.aii, %i.ahw
-  %19 = getelementptr inbounds nuw i8, ptr %.val373, i64 180 ; 2 uses
-  %i.aik = load i32, ptr %19, align 4, !tbaa !18
+  %i.aik = load i32, ptr %5, align 4, !tbaa !18
   %i.ail = add nsw i32 %i.aij, %i.aik
-  store i32 %i.ail, ptr %19, align 4, !tbaa !18
+  store i32 %i.ail, ptr %5, align 4, !tbaa !18
   br label %bb.cf
 
 bb.by:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1918,12 +1905,11 @@ Wlc_ObjFanin0.exit719:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.ajv = sub nsw i32 %.val446, %.val447
   %i.ajw = tail call i32 @llvm.abs.i32(i32 %i.ajv, i1 true)
   %i.ajx = mul i32 %i.ajw, -19
-  %20 = getelementptr inbounds nuw i8, ptr %.val372, i64 184 ; 2 uses
-  %i.ajy = load i32, ptr %20, align 4, !tbaa !18
+  %i.ajy = load i32, ptr %4, align 4, !tbaa !18
   %i.ajz = add i32 %i.ajm, -9
   %i.aka = add i32 %i.ajz, %i.ajy
   %i.akb = add i32 %i.aka, %i.ajx
-  store i32 %i.akb, ptr %20, align 4, !tbaa !18
+  store i32 %i.akb, ptr %4, align 4, !tbaa !18
   br label %bb.cf
 
 bb.bz:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -1990,12 +1976,11 @@ Wlc_ObjFanin0.exit728:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.all = sub nsw i32 %.val440, %.val441
   %i.alm = tail call i32 @llvm.abs.i32(i32 %i.all, i1 true)
   %i.aln = mul i32 %i.alm, -7
-  %21 = getelementptr inbounds nuw i8, ptr %.val371, i64 188 ; 2 uses
-  %i.alo = load i32, ptr %21, align 4, !tbaa !18
+  %i.alo = load i32, ptr %3, align 4, !tbaa !18
   %i.alp = add i32 %i.alc, -9
   %i.alq = add i32 %i.alp, %i.alo
   %i.alr = add i32 %i.alq, %i.aln
-  store i32 %i.alr, ptr %21, align 4, !tbaa !18
+  store i32 %i.alr, ptr %3, align 4, !tbaa !18
   br label %bb.cf
 
 bb.ca:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit
@@ -2062,8 +2047,6 @@ Wlc_ObjFanin0.exit737:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.anb = sub nsw i32 %.val434, %.val435
   %i.anc = tail call i32 @llvm.abs.i32(i32 %i.anb, i1 true)
   %i.and = mul i32 %i.anc, -7
-  %.val370 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %22 = getelementptr inbounds nuw i8, ptr %.val370, i64 192 ; 2 uses
   %i.ane = load i32, ptr %22, align 4, !tbaa !18
   %i.anf = add i32 %i.ams, -9
   %i.ang = add i32 %i.anf, %i.ane
@@ -2119,7 +2102,7 @@ Wlc_ObjFanin0.exit743:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.aoj = tail call double @pow(double noundef %i.anw, double noundef %i.aoi) #27
   %i.aok = fptosi double %i.aoj to i32
   %i.aol = mul nsw i32 %i.aok, 10
-  %.val369 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
+  %.val369 = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.aom = getelementptr inbounds nuw i8, ptr %.val369, i64 196 ; 2 uses
   %i.aon = load i32, ptr %i.aom, align 4, !tbaa !18
   %i.aoo = add nsw i32 %i.aon, %i.aol
@@ -2150,8 +2133,6 @@ Wlc_ObjFanin0.exit746:                            ; preds = %bb.cc, %Wlc_ObjHasA
   %i.apa = sub nsw i32 %.val428, %.val429
   %i.apb = tail call i32 @llvm.abs.i32(i32 %i.apa, i1 true)
   %i.apc = shl i32 %i.apb, 2
-  %.val368 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.val368, i64 200 ; 2 uses
   %i.apd = load i32, ptr %23, align 4, !tbaa !18
   %i.ape = add i32 %i.apd, 4
   %i.apf = add i32 %i.ape, %i.apc
@@ -2225,8 +2206,6 @@ Wlc_ObjFanin0.exit755:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.aqs = mul i32 %i.aqr, 5
   %i.aqt = add i32 %i.aqs, 5
   %i.aqu = lshr i32 %i.aqt, 1
-  %.val367 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %24 = getelementptr inbounds nuw i8, ptr %.val367, i64 204 ; 2 uses
   %i.aqv = load i32, ptr %24, align 4, !tbaa !18
   %i.aqw = add nsw i32 %i.aqh, -5
   %i.aqx = add i32 %i.aqw, %i.aqv
@@ -2280,30 +2259,12 @@ Wlc_ObjFanin1.exit761:                            ; preds = %Wlc_ObjFanin0.exit7
   %i.ary = tail call i32 @llvm.abs.i32(i32 %i.arx, i1 true)
   %i.arz = add nuw nsw i32 %i.ary, 1
   %i.asa = mul nsw i32 %i.arz, %i.arn
-  %.val366 = load ptr, ptr %i.d, align 8, !tbaa !29 ; 17 uses
-  %25 = getelementptr inbounds nuw i8, ptr %.val366, i64 208 ; 2 uses
   %i.asb = load i32, ptr %25, align 4, !tbaa !18
   %i.asc = add nsw i32 %i.asa, %i.asb
   store i32 %i.asc, ptr %25, align 4, !tbaa !18
   br label %bb.cf
 
 bb.cf:                                            ; preds = %Wlc_NtkPrintDistribAddOne.exit, %bb.ar, %Wlc_ObjFanin0.exit600, %Wlc_ObjFanin0.exit608, %Wlc_ObjFanin0.exit616, %Wlc_ObjFanin0.exit620, %Wlc_ObjFanin0.exit626, %Wlc_ObjFanin0.exit632, %Wlc_ObjFanin0.exit638, %Wlc_ObjFanin1.exit650, %Wlc_ObjFanin1.exit662, %Wlc_ObjFanin0.exit668, %Wlc_ObjFanin0.exit674, %Wlc_ObjFanin0.exit680, %Wlc_ObjFanin0.exit686, %Wlc_ObjFanin0.exit692, %Wlc_ObjFanin0.exit698, %Wlc_ObjFanin0.exit704, %Wlc_ObjFanin0.exit719, %Wlc_ObjFanin0.exit737, %Wlc_ObjFanin0.exit746, %Wlc_ObjFanin1.exit761, %Wlc_ObjFanin0.exit755, %Wlc_ObjFanin0.exit743, %Wlc_ObjFanin0.exit728, %Wlc_ObjFanin1.exit710, %Wlc_ObjFanin0.exit701, %Wlc_ObjFanin0.exit695, %Wlc_ObjFanin0.exit689, %Wlc_ObjFanin0.exit683, %Wlc_ObjFanin0.exit677, %Wlc_ObjFanin0.exit671, %Wlc_ObjFanin0.exit665, %Wlc_ObjFanin1.exit656, %Wlc_ObjFanin1.exit644, %Wlc_ObjFanin0.exit635, %Wlc_ObjFanin0.exit629, %Wlc_ObjFanin0.exit623, %Wlc_ObjFanin0.exit612, %Wlc_ObjFanin0.exit604, %Wlc_ObjFanin0.exit597
-  %.val386885 = phi ptr [ %.val386, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val386, %Wlc_ObjFanin0.exit638 ], [ %.val386, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val386, %Wlc_ObjFanin0.exit674 ], [ %.val386, %Wlc_ObjFanin0.exit680 ], [ %.val386, %Wlc_ObjFanin0.exit686 ], [ %.val386, %Wlc_ObjFanin0.exit692 ], [ %.val386, %Wlc_ObjFanin0.exit698 ], [ %.val386, %Wlc_ObjFanin0.exit704 ], [ %.val386, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val386, %Wlc_ObjFanin0.exit728 ], [ %.val386, %Wlc_ObjFanin1.exit710 ], [ %.val386, %Wlc_ObjFanin0.exit701 ], [ %.val386, %Wlc_ObjFanin0.exit695 ], [ %.val386, %Wlc_ObjFanin0.exit689 ], [ %.val386, %Wlc_ObjFanin0.exit683 ], [ %.val386, %Wlc_ObjFanin0.exit677 ], [ %.val386, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val386, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val385883 = phi ptr [ %.val385, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val385, %Wlc_ObjFanin0.exit638 ], [ %.val385, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val385, %Wlc_ObjFanin0.exit674 ], [ %.val385, %Wlc_ObjFanin0.exit680 ], [ %.val385, %Wlc_ObjFanin0.exit686 ], [ %.val385, %Wlc_ObjFanin0.exit692 ], [ %.val385, %Wlc_ObjFanin0.exit698 ], [ %.val385, %Wlc_ObjFanin0.exit704 ], [ %.val385, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val385, %Wlc_ObjFanin0.exit728 ], [ %.val385, %Wlc_ObjFanin1.exit710 ], [ %.val385, %Wlc_ObjFanin0.exit701 ], [ %.val385, %Wlc_ObjFanin0.exit695 ], [ %.val385, %Wlc_ObjFanin0.exit689 ], [ %.val385, %Wlc_ObjFanin0.exit683 ], [ %.val385, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val385, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val384881 = phi ptr [ %.val384, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val384, %Wlc_ObjFanin0.exit638 ], [ %.val384, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val384, %Wlc_ObjFanin0.exit680 ], [ %.val384, %Wlc_ObjFanin0.exit686 ], [ %.val384, %Wlc_ObjFanin0.exit692 ], [ %.val384, %Wlc_ObjFanin0.exit698 ], [ %.val384, %Wlc_ObjFanin0.exit704 ], [ %.val384, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val384, %Wlc_ObjFanin0.exit728 ], [ %.val384, %Wlc_ObjFanin1.exit710 ], [ %.val384, %Wlc_ObjFanin0.exit701 ], [ %.val384, %Wlc_ObjFanin0.exit695 ], [ %.val384, %Wlc_ObjFanin0.exit689 ], [ %.val384, %Wlc_ObjFanin0.exit683 ], [ %.val384, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val384, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val383879 = phi ptr [ %.val383, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val383, %Wlc_ObjFanin0.exit638 ], [ %.val383, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val383, %Wlc_ObjFanin0.exit680 ], [ %.val383, %Wlc_ObjFanin0.exit686 ], [ %.val383, %Wlc_ObjFanin0.exit692 ], [ %.val383, %Wlc_ObjFanin0.exit698 ], [ %.val383, %Wlc_ObjFanin0.exit704 ], [ %.val383, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val383, %Wlc_ObjFanin0.exit728 ], [ %.val383, %Wlc_ObjFanin1.exit710 ], [ %.val383, %Wlc_ObjFanin0.exit701 ], [ %.val383, %Wlc_ObjFanin0.exit695 ], [ %.val383, %Wlc_ObjFanin0.exit689 ], [ %.val383, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val383, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val382877 = phi ptr [ %.val382, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val382, %Wlc_ObjFanin0.exit638 ], [ %.val382, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val382, %Wlc_ObjFanin0.exit686 ], [ %.val382, %Wlc_ObjFanin0.exit692 ], [ %.val382, %Wlc_ObjFanin0.exit698 ], [ %.val382, %Wlc_ObjFanin0.exit704 ], [ %.val382, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val382, %Wlc_ObjFanin0.exit728 ], [ %.val382, %Wlc_ObjFanin1.exit710 ], [ %.val382, %Wlc_ObjFanin0.exit701 ], [ %.val382, %Wlc_ObjFanin0.exit695 ], [ %.val382, %Wlc_ObjFanin0.exit689 ], [ %.val382, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val382, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val381875 = phi ptr [ %.val381, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val381, %Wlc_ObjFanin0.exit638 ], [ %.val381, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val381, %Wlc_ObjFanin0.exit686 ], [ %.val381, %Wlc_ObjFanin0.exit692 ], [ %.val381, %Wlc_ObjFanin0.exit698 ], [ %.val381, %Wlc_ObjFanin0.exit704 ], [ %.val381, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val381, %Wlc_ObjFanin0.exit728 ], [ %.val381, %Wlc_ObjFanin1.exit710 ], [ %.val381, %Wlc_ObjFanin0.exit701 ], [ %.val381, %Wlc_ObjFanin0.exit695 ], [ %.val381, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val381, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val380873 = phi ptr [ %.val380, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val380, %Wlc_ObjFanin0.exit638 ], [ %.val380, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val380, %Wlc_ObjFanin0.exit692 ], [ %.val380, %Wlc_ObjFanin0.exit698 ], [ %.val380, %Wlc_ObjFanin0.exit704 ], [ %.val380, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val380, %Wlc_ObjFanin0.exit728 ], [ %.val380, %Wlc_ObjFanin1.exit710 ], [ %.val380, %Wlc_ObjFanin0.exit701 ], [ %.val380, %Wlc_ObjFanin0.exit695 ], [ %.val380, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val380, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val379871 = phi ptr [ %.val379, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val379, %Wlc_ObjFanin0.exit638 ], [ %.val379, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val379, %Wlc_ObjFanin0.exit692 ], [ %.val379, %Wlc_ObjFanin0.exit698 ], [ %.val379, %Wlc_ObjFanin0.exit704 ], [ %.val379, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val379, %Wlc_ObjFanin0.exit728 ], [ %.val379, %Wlc_ObjFanin1.exit710 ], [ %.val379, %Wlc_ObjFanin0.exit701 ], [ %.val379, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val379, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val378869 = phi ptr [ %.val378, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val378, %Wlc_ObjFanin0.exit638 ], [ %.val378, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val378, %Wlc_ObjFanin0.exit698 ], [ %.val378, %Wlc_ObjFanin0.exit704 ], [ %.val378, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val378, %Wlc_ObjFanin0.exit728 ], [ %.val378, %Wlc_ObjFanin1.exit710 ], [ %.val378, %Wlc_ObjFanin0.exit701 ], [ %.val378, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val378, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val377867 = phi ptr [ %.val377, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val377, %Wlc_ObjFanin0.exit638 ], [ %.val377, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val377, %Wlc_ObjFanin0.exit698 ], [ %.val377, %Wlc_ObjFanin0.exit704 ], [ %.val377, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val377, %Wlc_ObjFanin0.exit728 ], [ %.val377, %Wlc_ObjFanin1.exit710 ], [ %.val377, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val377, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val376865 = phi ptr [ %.val376, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val376, %Wlc_ObjFanin0.exit638 ], [ %.val376, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val376, %Wlc_ObjFanin0.exit698 ], [ %.val376, %Wlc_ObjFanin0.exit704 ], [ %.val376, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val376, %Wlc_ObjFanin0.exit728 ], [ %.val376, %Wlc_ObjFanin1.exit710 ], [ %.val376, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val376, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val375863 = phi ptr [ %.val375, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val375, %Wlc_ObjFanin0.exit638 ], [ %.val375, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val376, %Wlc_ObjFanin0.exit698 ], [ %.val375, %Wlc_ObjFanin0.exit704 ], [ %.val375, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val375, %Wlc_ObjFanin0.exit728 ], [ %.val375, %Wlc_ObjFanin1.exit710 ], [ %.val375, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val375, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val374861 = phi ptr [ %.val374, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val374, %Wlc_ObjFanin0.exit638 ], [ %.val374, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val376, %Wlc_ObjFanin0.exit698 ], [ %.val374, %Wlc_ObjFanin0.exit704 ], [ %.val374, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val374, %Wlc_ObjFanin0.exit728 ], [ %.val374, %Wlc_ObjFanin1.exit710 ], [ %.val375, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val374, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val373859 = phi ptr [ %.val373, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val373, %Wlc_ObjFanin0.exit638 ], [ %.val373, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val376, %Wlc_ObjFanin0.exit698 ], [ %.val374, %Wlc_ObjFanin0.exit704 ], [ %.val373, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val373, %Wlc_ObjFanin0.exit728 ], [ %.val373, %Wlc_ObjFanin1.exit710 ], [ %.val375, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val373, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val372857 = phi ptr [ %.val372, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val372, %Wlc_ObjFanin0.exit638 ], [ %.val372, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val376, %Wlc_ObjFanin0.exit698 ], [ %.val374, %Wlc_ObjFanin0.exit704 ], [ %.val372, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val372, %Wlc_ObjFanin0.exit728 ], [ %.val373, %Wlc_ObjFanin1.exit710 ], [ %.val375, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val372, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
-  %.val371855 = phi ptr [ %.val371, %Wlc_NtkPrintDistribAddOne.exit ], [ %.val410, %bb.ar ], [ %.val408, %Wlc_ObjFanin0.exit600 ], [ %.val406, %Wlc_ObjFanin0.exit608 ], [ %.val404, %Wlc_ObjFanin0.exit616 ], [ %.val402, %Wlc_ObjFanin0.exit620 ], [ %.val400, %Wlc_ObjFanin0.exit626 ], [ %.val398, %Wlc_ObjFanin0.exit632 ], [ %.val371, %Wlc_ObjFanin0.exit638 ], [ %.val371, %Wlc_ObjFanin1.exit650 ], [ %.val388, %Wlc_ObjFanin1.exit662 ], [ %.val386, %Wlc_ObjFanin0.exit668 ], [ %.val384, %Wlc_ObjFanin0.exit674 ], [ %.val382, %Wlc_ObjFanin0.exit680 ], [ %.val380, %Wlc_ObjFanin0.exit686 ], [ %.val378, %Wlc_ObjFanin0.exit692 ], [ %.val376, %Wlc_ObjFanin0.exit698 ], [ %.val374, %Wlc_ObjFanin0.exit704 ], [ %.val372, %Wlc_ObjFanin0.exit719 ], [ %.val370, %Wlc_ObjFanin0.exit737 ], [ %.val368, %Wlc_ObjFanin0.exit746 ], [ %.val366, %Wlc_ObjFanin1.exit761 ], [ %.val367, %Wlc_ObjFanin0.exit755 ], [ %.val369, %Wlc_ObjFanin0.exit743 ], [ %.val371, %Wlc_ObjFanin0.exit728 ], [ %.val373, %Wlc_ObjFanin1.exit710 ], [ %.val375, %Wlc_ObjFanin0.exit701 ], [ %.val377, %Wlc_ObjFanin0.exit695 ], [ %.val379, %Wlc_ObjFanin0.exit689 ], [ %.val381, %Wlc_ObjFanin0.exit683 ], [ %.val383, %Wlc_ObjFanin0.exit677 ], [ %.val385, %Wlc_ObjFanin0.exit671 ], [ %.val387, %Wlc_ObjFanin0.exit665 ], [ %.val389, %Wlc_ObjFanin1.exit656 ], [ %.val371, %Wlc_ObjFanin1.exit644 ], [ %.val397, %Wlc_ObjFanin0.exit635 ], [ %.val399, %Wlc_ObjFanin0.exit629 ], [ %.val401, %Wlc_ObjFanin0.exit623 ], [ %.val405, %Wlc_ObjFanin0.exit612 ], [ %.val407, %Wlc_ObjFanin0.exit604 ], [ %.val409, %Wlc_ObjFanin0.exit597 ]
   %indvars.iv.next840 = add nuw nsw i64 %indvars.iv839, 1 ; 2 uses
   %.val362 = load i32, ptr %i.q, align 8, !tbaa !34
   %i.asd = sext i32 %.val362 to i64
