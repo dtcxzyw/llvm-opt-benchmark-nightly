@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/ts?download=true
-inline.NumInlined: 8
-inline.NumDeleted: 8
+inline.NumInlined: 7
+inline.NumDeleted: 7
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.backedge, %bb.b
   %.0150 = phi ptr [ null, %bb.b ], [ %.0150.be, %.backedge ] ; 27 uses
   %.0148 = phi ptr [ null, %bb.b ], [ %.0148.be, %.backedge ] ; 27 uses
-  %.0146 = phi ptr [ %i.c, %bb.b ], [ %.0146.be, %.backedge ] ; 29 uses
+  %.0146 = phi ptr [ %i.c, %bb.b ], [ %.0146.be, %.backedge ] ; 28 uses
   %.0144 = phi ptr [ null, %bb.b ], [ %.0144.be, %.backedge ] ; 28 uses
   %.0142 = phi ptr [ null, %bb.b ], [ %.0142.be, %.backedge ] ; 28 uses
   %.0139 = phi ptr [ null, %bb.b ], [ %.0139.be, %.backedge ] ; 30 uses
@@ -294,7 +294,67 @@ bb.c:                                             ; preds = %.backedge, %bb.b
     i32 2022, label %bb.ac
   ]
 
-.backedge:                                        ; preds = %bb.c, %bb.f, %bb.j, %bb.i, %bb.ad, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.h, %bb.g, %bb.e, %bb.d
+.loopexit.sink.split:                             ; preds = %bb.f, %bb.af
+  %.str.132.sink = phi ptr [ @.str.132, %bb.af ], [ @.str.131, %bb.f ]
+  %i.h = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.i = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.h, ptr noundef nonnull %.str.132.sink, ptr noundef %i.f) #6 ; 0 uses
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %bb.c, %.loopexit.sink.split, %bb.ay, %bb.bb, %bb.aw, %bb.au, %bb.at, %bb.aq, %bb.ap, %bb.ah, %bb.ae
+  %.0152 = phi ptr [ null, %bb.ae ], [ null, %bb.ah ], [ %2, %bb.bb ], [ null, %.loopexit.sink.split ], [ %2, %bb.ap ], [ %2, %bb.aq ], [ %2, %bb.at ], [ %2, %bb.au ], [ %2, %bb.aw ], [ %2, %bb.ay ], [ null, %bb.c ]
+  %i.j = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.k = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.j, ptr noundef nonnull @.str.129, ptr noundef %i.f) #6 ; 0 uses
+  br label %load_config_file.exit
+
+load_config_file.exit.loopexit:                   ; preds = %bb.c
+  tail call void @opt_help(ptr noundef nonnull @ts_options) #6
+  %i.l = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.m = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.l, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.27) #6 ; 0 uses
+  %i.n = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.o = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.n, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.136) #6 ; 0 uses
+  %i.p = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.q = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.p, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.137) #6 ; 0 uses
+  %i.r = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.s = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.r, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.138) #6 ; 0 uses
+  %i.t = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.u = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.t, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.139) #6 ; 0 uses
+  %i.v = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.w = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.v, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.27) #6 ; 0 uses
+  %i.x = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.y = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.x, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.140) #6 ; 0 uses
+  %i.z = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.aa = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.z, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.141) #6 ; 0 uses
+  %i.ab = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.ac = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ab, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.142) #6 ; 0 uses
+  %i.ad = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.ae = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ad, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.143) #6 ; 0 uses
+  %i.af = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.ag = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.af, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.144) #6 ; 0 uses
+  %i.ah = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.ai = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ah, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.145) #6 ; 0 uses
+  %i.aj = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.ak = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.aj, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.27) #6 ; 0 uses
+  %i.al = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.am = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.al, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.146) #6 ; 0 uses
+  %i.an = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.ao = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.an, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.147) #6 ; 0 uses
+  %i.ap = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %i.aq = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ap, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.148) #6 ; 0 uses
+  br label %load_config_file.exit
+
+bb.d:                                             ; preds = %bb.c
+  %i.ar = tail call ptr @opt_arg() #6
+  br label %.backedge
+
+bb.e:                                             ; preds = %bb.c
+  %i.as = tail call ptr @opt_arg() #6
+  br label %.backedge
+
+bb.f:                                             ; preds = %bb.c, %bb.c, %bb.c
+  %.not175 = icmp eq i32 %.0115, -1
+  br i1 %.not175, label %.backedge, label %.loopexit.sink.split
+
+.backedge:                                        ; preds = %bb.f, %bb.c, %bb.j, %bb.i, %bb.ad, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.h, %bb.g, %bb.e, %bb.d
   %.0150.be = phi ptr [ %.0150, %bb.c ], [ %.0150, %bb.d ], [ %.0150, %bb.e ], [ %.0150, %bb.ad ], [ %.0150, %bb.g ], [ %.0150, %bb.h ], [ %.0150, %bb.i ], [ %.0150, %bb.j ], [ %.0150, %bb.k ], [ %.0150, %bb.l ], [ %.0150, %bb.m ], [ %.0150, %bb.n ], [ %.0150, %bb.o ], [ %.0150, %bb.p ], [ %.0150, %bb.q ], [ %.0150, %bb.r ], [ %.0150, %bb.s ], [ %.0150, %bb.t ], [ %.0150, %bb.u ], [ %.0150, %bb.v ], [ %.0150, %bb.w ], [ %.0150, %bb.x ], [ %i.bg, %bb.y ], [ %.0150, %bb.z ], [ %.0150, %bb.aa ], [ %.0150, %bb.ab ], [ %.0150, %bb.f ]
   %.0148.be = phi ptr [ %.0148, %bb.c ], [ %.0148, %bb.d ], [ %.0148, %bb.e ], [ %.0148, %bb.ad ], [ %.0148, %bb.g ], [ %.0148, %bb.h ], [ %.0148, %bb.i ], [ %.0148, %bb.j ], [ %.0148, %bb.k ], [ %.0148, %bb.l ], [ %.0148, %bb.m ], [ %.0148, %bb.n ], [ %.0148, %bb.o ], [ %.0148, %bb.p ], [ %.0148, %bb.q ], [ %.0148, %bb.r ], [ %.0148, %bb.s ], [ %.0148, %bb.t ], [ %.0148, %bb.u ], [ %.0148, %bb.v ], [ %.0148, %bb.w ], [ %.0148, %bb.x ], [ %.0148, %bb.y ], [ %.0148, %bb.z ], [ %i.bi, %bb.aa ], [ %.0148, %bb.ab ], [ %.0148, %bb.f ]
   %.0146.be = phi ptr [ %.0146, %bb.c ], [ %i.ar, %bb.d ], [ %.0146, %bb.e ], [ %.0146, %bb.ad ], [ %.0146, %bb.g ], [ %.0146, %bb.h ], [ %.0146, %bb.i ], [ %.0146, %bb.j ], [ %.0146, %bb.k ], [ %.0146, %bb.l ], [ %.0146, %bb.m ], [ %.0146, %bb.n ], [ %.0146, %bb.o ], [ %.0146, %bb.p ], [ %.0146, %bb.q ], [ %.0146, %bb.r ], [ %.0146, %bb.s ], [ %.0146, %bb.t ], [ %.0146, %bb.u ], [ %.0146, %bb.v ], [ %.0146, %bb.w ], [ %.0146, %bb.x ], [ %.0146, %bb.y ], [ %.0146, %bb.z ], [ %.0146, %bb.aa ], [ %.0146, %bb.ab ], [ %.0146, %bb.f ]
@@ -320,66 +380,6 @@ bb.c:                                             ; preds = %.backedge, %bb.b
   %.0104.be = phi i32 [ %.0104, %bb.c ], [ %.0104, %bb.d ], [ %.0104, %bb.e ], [ %.0104, %bb.ad ], [ %.0104, %bb.g ], [ %.0104, %bb.h ], [ %.0104, %bb.i ], [ %.0104, %bb.j ], [ %.0104, %bb.k ], [ %.0104, %bb.l ], [ %.0104, %bb.m ], [ %.0104, %bb.n ], [ 1, %bb.o ], [ %.0104, %bb.p ], [ %.0104, %bb.q ], [ %.0104, %bb.r ], [ %.0104, %bb.s ], [ %.0104, %bb.t ], [ %.0104, %bb.u ], [ %.0104, %bb.v ], [ %.0104, %bb.w ], [ %.0104, %bb.x ], [ %.0104, %bb.y ], [ %.0104, %bb.z ], [ %.0104, %bb.aa ], [ %.0104, %bb.ab ], [ %.0104, %bb.f ]
   %.0.be = phi i32 [ %.0, %bb.c ], [ %.0, %bb.d ], [ %.0, %bb.e ], [ %.0, %bb.ad ], [ %.0, %bb.g ], [ %.0, %bb.h ], [ %.0, %bb.i ], [ %.0, %bb.j ], [ %.0, %bb.k ], [ %.0, %bb.l ], [ %.0, %bb.m ], [ %.0, %bb.n ], [ %.0, %bb.o ], [ %.0, %bb.p ], [ 1, %bb.q ], [ %.0, %bb.r ], [ %.0, %bb.s ], [ %.0, %bb.t ], [ %.0, %bb.u ], [ %.0, %bb.v ], [ %.0, %bb.w ], [ %.0, %bb.x ], [ %.0, %bb.y ], [ %.0, %bb.z ], [ %.0, %bb.aa ], [ %.0, %bb.ab ], [ %.0, %bb.f ]
   br label %bb.c, !llvm.loop !13
-
-.loopexit.sink.split:                             ; preds = %bb.f, %bb.af
-  %.str.132.sink = phi ptr [ @.str.132, %bb.af ], [ @.str.131, %bb.f ]
-  %i.h = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.i = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.h, ptr noundef nonnull %.str.132.sink, ptr noundef %i.f) #6 ; 0 uses
-  br label %.loopexit.a
-
-.loopexit.a:                                      ; preds = %bb.c, %.loopexit.sink.split, %bb.ay, %bb.bb, %bb.aw, %bb.au, %bb.at, %bb.aq, %bb.ap, %bb.ah, %bb.ae
-  %.0152 = phi ptr [ null, %bb.ae ], [ null, %bb.ah ], [ %3, %bb.bb ], [ null, %.loopexit.sink.split ], [ %3, %bb.ap ], [ %3, %bb.aq ], [ %3, %bb.at ], [ %3, %bb.au ], [ %3, %bb.aw ], [ %3, %bb.ay ], [ null, %bb.c ]
-  %i.j = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.k = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.j, ptr noundef nonnull @.str.129, ptr noundef %i.f) #6 ; 0 uses
-  br label %load_config_file.exit
-
-load_config_file.exit.loopexit:                   ; preds = %bb.c
-  tail call void @opt_help(ptr noundef nonnull @ts_options) #6
-  %i.l = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.m = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.l, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.27) #6 ; 0 uses
-  %i.n = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.o = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.n, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.136) #6 ; 0 uses
-  %i.p = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.q = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.p, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.137) #6 ; 0 uses
-  %i.r = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.s = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.r, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.138) #6 ; 0 uses
-  %i.t = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.u = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.t, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.139) #6 ; 0 uses
-  %i.v = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.w = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.v, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.27) #6 ; 0 uses
-  %i.x = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.y = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.x, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.140) #6 ; 0 uses
-  %i.z = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.aa = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.z, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.141) #6 ; 0 uses
-  %i.ab = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.ac = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ab, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.142) #6 ; 0 uses
-  %i.ad = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.ae = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ad, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.143) #6 ; 0 uses
-  %i.af = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.ag = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.af, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.144) #6 ; 0 uses
-  %i.ah = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.ai = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ah, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.145) #6 ; 0 uses
-  %i.aj = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.ak = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.aj, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.27) #6 ; 0 uses
-  %i.al = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.am = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.al, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.146) #6 ; 0 uses
-  %i.an = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.ao = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.an, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.147) #6 ; 0 uses
-  %i.ap = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %i.aq = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ap, ptr noundef nonnull @.str.130, ptr noundef nonnull @.str.148) #6 ; 0 uses
-  br label %load_config_file.exit
-
-bb.d:                                             ; preds = %bb.c
-  %i.ar = tail call ptr @opt_arg() #6
-  br label %.backedge
-
-bb.e:                                             ; preds = %bb.c
-  %i.as = tail call ptr @opt_arg() #6
-  br label %.backedge
-
-bb.f:                                             ; preds = %bb.c, %bb.c, %bb.c
-  %.not175 = icmp eq i32 %.0115, -1
-  br i1 %.not175, label %.backedge, label %.loopexit.sink.split
 
 bb.g:                                             ; preds = %bb.c
   %i.at = tail call ptr @opt_arg() #6
@@ -500,62 +500,30 @@ bb.ai:                                            ; preds = %bb.ah
   %i.br = icmp eq i32 %.0115, 15                  ; 2 uses
   %i.bs = icmp ne ptr %.0127, null
   %or.cond = select i1 %i.br, i1 %i.bs, i1 false
-  br i1 %or.cond, label %bb.aj, label %2
+  br i1 %or.cond, label %bb.aj, label %bb.al
 
 bb.aj:                                            ; preds = %bb.ai
   %i.bt = call i32 @app_passwd(ptr noundef nonnull %.0127, ptr noundef null, ptr noundef nonnull %i.a, ptr noundef null) #6
   %.not163 = icmp eq i32 %i.bt, 0
-  br i1 %.not163, label %bb.ak, label %2
+  br i1 %.not163, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.bu = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.bu = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.bv = call i32 @BIO_puts(ptr noundef %i.bu, ptr noundef nonnull @.str.134) #6 ; 0 uses
   br label %load_config_file.exit
 
-2:                                                ; preds = %bb.aj, %bb.ai
-  %3 = call ptr @app_load_config_internal(ptr noundef %.0146, i32 noundef 0) #6 ; 17 uses
-  %.not.i = icmp eq ptr %3, null
-  br i1 %.not.i, label %load_config_file.exit, label %4
+bb.al:                                            ; preds = %bb.aj, %bb.ai
+  %2 = call fastcc ptr @load_config_file(ptr noundef %.0146) ; 15 uses
+  %.not15.i = icmp eq ptr %2, null
+  br i1 %.not15.i, label %load_config_file.exit, label %bb.am
 
-4:                                                ; preds = %2
-  %5 = load ptr, ptr @bio_err, align 8, !tbaa !12
-  %6 = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %5, ptr noundef nonnull @.str.149, ptr noundef %.0146) #6 ; 0 uses
-  %7 = call ptr @app_conf_try_string(ptr noundef nonnull %3, ptr noundef null, ptr noundef nonnull @.str.150) #6 ; 2 uses
-  %.not13.i = icmp eq ptr %7, null
-  br i1 %.not13.i, label %bb.al, label %8
-
-8:                                                ; preds = %4
-  %9 = call ptr @BIO_new_file(ptr noundef nonnull %7, ptr noundef nonnull @.str.151) #6 ; 3 uses
-  %.not14.i = icmp eq ptr %9, null
-  br i1 %.not14.i, label %10, label %12
-
-10:                                               ; preds = %8
-  %11 = load ptr, ptr @bio_err, align 8, !tbaa !12
-  call void @ERR_print_errors(ptr noundef %11) #6
-  br label %bb.al
-
-12:                                               ; preds = %8
-  %13 = call i32 @OBJ_create_objects(ptr noundef nonnull %9) #6 ; 0 uses
-  call void @BIO_free_all(ptr noundef nonnull %9) #6
-  br label %bb.al
-
-bb.al:                                            ; preds = %12, %10, %4
-  %14 = call i32 @add_oid_section(ptr noundef nonnull %3) #6
-  %.not15.i = icmp eq i32 %14, 0
-  br i1 %.not15.i, label %15, label %bb.am
-
-15:                                               ; preds = %bb.al
-  %16 = load ptr, ptr @bio_err, align 8, !tbaa !12
-  call void @ERR_print_errors(ptr noundef %16) #6
-  br label %bb.am
-
-bb.am:                                            ; preds = %bb.al, %15
+bb.am:                                            ; preds = %bb.al
   %i.bw = load ptr, ptr @default_config_file, align 8, !tbaa !15
   %.not164 = icmp eq ptr %.0146, %i.bw
   br i1 %.not164, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.bx = call i32 @app_load_modules(ptr noundef nonnull %3) #6
+  %i.bx = call i32 @app_load_modules(ptr noundef nonnull %2) #6
   %.not165 = icmp eq i32 %i.bx, 0
   br i1 %.not165, label %load_config_file.exit, label %bb.ao
 
@@ -598,7 +566,7 @@ bb.av:                                            ; preds = %bb.au
 .split:                                           ; preds = %bb.av
   %i.cg = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.ch = load ptr, ptr %i.b, align 8, !tbaa !17
-  %i.ci = call fastcc i32 @reply_command(ptr noundef %3, ptr noundef %.0144, ptr noundef %.0129, ptr noundef %i.cg, ptr noundef %.0125, ptr noundef %i.ch, ptr noundef %.0123, ptr noundef %.0121, ptr noundef %.0135, ptr noundef nonnull %.0133, i32 noundef %.0104, ptr noundef %.0131, i32 noundef %.0, i32 noundef %.0108)
+  %i.ci = call fastcc i32 @reply_command(ptr noundef %2, ptr noundef %.0144, ptr noundef %.0129, ptr noundef %i.cg, ptr noundef %.0125, ptr noundef %i.ch, ptr noundef %.0123, ptr noundef %.0121, ptr noundef %.0135, ptr noundef nonnull %.0133, i32 noundef %.0104, ptr noundef %.0131, i32 noundef %.0, i32 noundef %.0108)
   br label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
@@ -609,7 +577,7 @@ bb.aw:                                            ; preds = %bb.av
 .split154:                                        ; preds = %bb.aw
   %i.ck = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.cl = load ptr, ptr %i.b, align 8, !tbaa !17
-  %i.cm = call fastcc i32 @reply_command(ptr noundef %3, ptr noundef %.0144, ptr noundef nonnull %.0129, ptr noundef %i.ck, ptr noundef %.0125, ptr noundef %i.cl, ptr noundef %.0123, ptr noundef %.0121, ptr noundef %.0135, ptr noundef null, i32 noundef 0, ptr noundef %.0131, i32 noundef %.0, i32 noundef %.0108)
+  %i.cm = call fastcc i32 @reply_command(ptr noundef %2, ptr noundef %.0144, ptr noundef nonnull %.0129, ptr noundef %i.ck, ptr noundef %.0125, ptr noundef %i.cl, ptr noundef %.0123, ptr noundef %.0121, ptr noundef %.0135, ptr noundef null, i32 noundef 0, ptr noundef %.0131, i32 noundef %.0, i32 noundef %.0108)
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.split154, %.split
@@ -652,9 +620,9 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
   %i.cv = zext i1 %.not167 to i32
   br label %load_config_file.exit
 
-load_config_file.exit:                            ; preds = %bb.ac, %bb.j, %bb.i, %load_config_file.exit.loopexit, %2, %bb.ar, %bb.bc, %bb.ax, %bb.an, %bb.ag, %bb.a, %bb.ak, %.loopexit.a
-  %.1153 = phi ptr [ null, %bb.a ], [ %.0152, %.loopexit.a ], [ null, %bb.ag ], [ %3, %bb.an ], [ null, %bb.ak ], [ null, %load_config_file.exit.loopexit ], [ null, %2 ], [ %3, %bb.ar ], [ %3, %bb.ax ], [ %3, %bb.bc ], [ null, %bb.i ], [ null, %bb.j ], [ null, %bb.ac ]
-  %.0114 = phi i32 [ 1, %bb.a ], [ 1, %.loopexit.a ], [ 1, %bb.ag ], [ 1, %bb.an ], [ 1, %bb.ak ], [ 0, %load_config_file.exit.loopexit ], [ 1, %2 ], [ %i.cd, %bb.ar ], [ %i.cn, %bb.ax ], [ %i.cv, %bb.bc ], [ 1, %bb.i ], [ 1, %bb.j ], [ 1, %bb.ac ]
+load_config_file.exit:                            ; preds = %bb.ac, %bb.j, %bb.i, %load_config_file.exit.loopexit, %bb.ar, %bb.bc, %bb.ax, %bb.an, %bb.al, %bb.ag, %bb.a, %bb.ak, %.loopexit.a
+  %.1153 = phi ptr [ null, %bb.a ], [ %.0152, %.loopexit.a ], [ null, %bb.ag ], [ %2, %bb.an ], [ null, %bb.ak ], [ null, %load_config_file.exit.loopexit ], [ null, %bb.al ], [ %2, %bb.ar ], [ %2, %bb.ax ], [ %2, %bb.bc ], [ null, %bb.i ], [ null, %bb.j ], [ null, %bb.ac ]
+  %.0114 = phi i32 [ 1, %bb.a ], [ 1, %.loopexit.a ], [ 1, %bb.ag ], [ 1, %bb.an ], [ 1, %bb.ak ], [ 0, %load_config_file.exit.loopexit ], [ 1, %bb.al ], [ %i.cd, %bb.ar ], [ %i.cn, %bb.ax ], [ %i.cv, %bb.bc ], [ 1, %bb.i ], [ 1, %bb.j ], [ 1, %bb.ac ]
   call void @X509_VERIFY_PARAM_free(ptr noundef %i.d) #6
   %i.cw = load ptr, ptr %i.b, align 8, !tbaa !17
   call void @EVP_MD_free(ptr noundef %i.cw) #6
@@ -700,6 +668,48 @@ declare i32 @opt_md(ptr noundef, ptr noundef) local_unnamed_addr #2
 declare i32 @app_passwd(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare i32 @BIO_puts(ptr noundef, ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nounwind uwtable
+define internal fastcc ptr @load_config_file(ptr noundef %0) unnamed_addr #0 {
+  %2 = tail call ptr @app_load_config_internal(ptr noundef %0, i32 noundef 0) #6 ; 4 uses
+  %.not = icmp eq ptr %2, null
+  br i1 %.not, label %17, label %3
+
+3:                                                ; preds = %1
+  %4 = load ptr, ptr @bio_err, align 8, !tbaa !11
+  %5 = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %4, ptr noundef nonnull @.str.149, ptr noundef %0) #6 ; 0 uses
+  %6 = tail call ptr @app_conf_try_string(ptr noundef nonnull %2, ptr noundef null, ptr noundef nonnull @.str.150) #6 ; 2 uses
+  %.not13 = icmp eq ptr %6, null
+  br i1 %.not13, label %13, label %7
+
+7:                                                ; preds = %3
+  %8 = tail call ptr @BIO_new_file(ptr noundef nonnull %6, ptr noundef nonnull @.str.151) #6 ; 3 uses
+  %.not14 = icmp eq ptr %8, null
+  br i1 %.not14, label %9, label %11
+
+9:                                                ; preds = %7
+  %10 = load ptr, ptr @bio_err, align 8, !tbaa !11
+  tail call void @ERR_print_errors(ptr noundef %10) #6
+  br label %13
+
+11:                                               ; preds = %7
+  %12 = tail call i32 @OBJ_create_objects(ptr noundef nonnull %8) #6 ; 0 uses
+  tail call void @BIO_free_all(ptr noundef nonnull %8) #6
+  br label %13
+
+13:                                               ; preds = %9, %11, %3
+  %14 = tail call i32 @add_oid_section(ptr noundef nonnull %2) #6
+  %.not15 = icmp eq i32 %14, 0
+  br i1 %.not15, label %15, label %17
+
+15:                                               ; preds = %13
+  %16 = load ptr, ptr @bio_err, align 8, !tbaa !11
+  tail call void @ERR_print_errors(ptr noundef %16) #6
+  br label %17
+
+17:                                               ; preds = %13, %15, %1
+  ret ptr %2
+}
 
 declare i32 @app_load_modules(ptr noundef) local_unnamed_addr #2
 
@@ -776,7 +786,7 @@ bb.m:                                             ; preds = %bb.k, %bb.j, %bb.i,
   %.126 = phi ptr [ null, %bb.b ], [ %.025, %bb.f ], [ %.025, %bb.h ], [ %.025, %bb.l ], [ %.025, %bb.i ], [ %.025, %bb.j ], [ %.025, %bb.k ], [ null, %bb.e ]
   %.2 = phi ptr [ null, %bb.b ], [ %.124, %bb.f ], [ %.124, %bb.h ], [ %.124, %bb.l ], [ %.124, %bb.i ], [ %.124, %bb.j ], [ %.124, %bb.k ], [ null, %bb.e ]
   %.1 = phi ptr [ null, %bb.b ], [ null, %bb.f ], [ null, %bb.h ], [ %.0, %bb.l ], [ %i.j, %bb.i ], [ null, %bb.j ], [ %i.m, %bb.k ], [ null, %bb.e ]
-  %i.p = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.p = load ptr, ptr @bio_err, align 8, !tbaa !11
   tail call void @ERR_print_errors(ptr noundef %i.p) #6
   tail call void @BIO_free_all(ptr noundef %.126) #6
   tail call void @BIO_free_all(ptr noundef %.2) #6
@@ -967,7 +977,7 @@ create_response.exit:                             ; preds = %bb.ag, %.thread.i
   tail call void @TS_RESP_CTX_free(ptr noundef %.089.i) #6
   tail call void @BIO_free_all(ptr noundef %i.n) #6
   %.not57 = icmp eq ptr %.1.i68, null
-  %i.ak = load ptr, ptr @bio_err, align 8, !tbaa !12 ; 2 uses
+  %i.ak = load ptr, ptr @bio_err, align 8, !tbaa !11 ; 2 uses
   br i1 %.not57, label %.thread, label %.thread71
 
 .thread71:                                        ; preds = %create_response.exit
@@ -1038,7 +1048,7 @@ bb.as:                                            ; preds = %.thread, %bb.ap, %b
   %.145 = phi ptr [ null, %bb.b ], [ null, %bb.ah ], [ %.04474, %bb.aj ], [ %.04474, %bb.ar ], [ %.04474, %bb.al ], [ %.04474, %bb.am ], [ %.04474, %bb.an ], [ %.04474, %bb.ap ], [ %.04474, %bb.aq ], [ null, %.thread ]
   %.143 = phi ptr [ null, %bb.b ], [ %i.a, %bb.ah ], [ %.04275, %bb.aj ], [ %.04275, %bb.ar ], [ %.04275, %bb.al ], [ %.04275, %bb.am ], [ %.04275, %bb.an ], [ %.04275, %bb.ap ], [ %.04275, %bb.aq ], [ null, %.thread ]
   %.141 = phi ptr [ null, %bb.b ], [ null, %bb.ah ], [ null, %bb.aj ], [ %.040, %bb.ar ], [ %i.ao, %bb.al ], [ %i.ao, %bb.am ], [ null, %bb.an ], [ %i.at, %bb.ap ], [ %i.at, %bb.aq ], [ null, %.thread ]
-  %i.ay = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.ay = load ptr, ptr @bio_err, align 8, !tbaa !11
   tail call void @ERR_print_errors(ptr noundef %i.ay) #6
   tail call void @BIO_free_all(ptr noundef %.143) #6
   tail call void @BIO_free_all(ptr noundef null) #6
@@ -1117,7 +1127,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.r
 
 bb.m:                                             ; preds = %bb.l
-  %i.r = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.r = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.s = call i32 @BIO_puts(ptr noundef %i.r, ptr noundef nonnull @.str.169) #6 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %.thread.i
@@ -1154,7 +1164,7 @@ bb.r:                                             ; preds = %bb.q, %.thread69.i,
   br i1 %i.ad, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %i.ae = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.ae = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.af = call i32 @BIO_puts(ptr noundef %i.ae, ptr noundef nonnull @.str.171) #6 ; 0 uses
   br label %create_cert_store.exit.i
 
@@ -1170,7 +1180,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.ai, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.aj = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.aj = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.ak = call i32 @BIO_puts(ptr noundef %i.aj, ptr noundef nonnull @.str.171) #6 ; 0 uses
   br label %bb.ak
 
@@ -1180,7 +1190,7 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.am, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.an = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.an = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.ao = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.an, ptr noundef nonnull @.str.172, ptr noundef nonnull %5) #6 ; 0 uses
   br label %bb.ak
 
@@ -1195,7 +1205,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ar, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.as = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.as = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.at = call i32 @BIO_puts(ptr noundef %i.as, ptr noundef nonnull @.str.171) #6 ; 0 uses
   br label %bb.ak
 
@@ -1205,7 +1215,7 @@ bb.ab:                                            ; preds = %bb.z
   br i1 %i.av, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.aw = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.aw = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.ax = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.aw, ptr noundef nonnull @.str.173, ptr noundef nonnull %6) #6 ; 0 uses
   br label %bb.ak
 
@@ -1220,7 +1230,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ba, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.bb = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.bb = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.bc = call i32 @BIO_puts(ptr noundef %i.bb, ptr noundef nonnull @.str.171) #6 ; 0 uses
   br label %bb.ak
 
@@ -1230,7 +1240,7 @@ bb.ag:                                            ; preds = %bb.ae
   br i1 %i.be, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.bf = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.bf = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.bg = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.bf, ptr noundef nonnull @.str.174, ptr noundef nonnull %7) #6 ; 0 uses
   br label %bb.ak
 
@@ -1314,7 +1324,7 @@ bb.at:                                            ; preds = %.thread, %bb.ar
   %.144 = phi ptr [ %.1.ph, %.thread ], [ %.023, %bb.ar ]
   %.12542 = phi ptr [ %.125.ph, %.thread ], [ %.024, %bb.ar ]
   %puts = call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
-  %i.br = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.br = load ptr, ptr @bio_err, align 8, !tbaa !11
   call void @ERR_print_errors(ptr noundef %i.br) #6
   br label %bb.au
 
@@ -1464,7 +1474,7 @@ bb.n:                                             ; preds = %bb.i
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.n
-  %i.ag = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.ag = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.ah = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.ag, ptr noundef nonnull @.str.154, i32 noundef %i.q) #6 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %create_digest.exit
@@ -1538,9 +1548,9 @@ bb.w:                                             ; preds = %bb.v
   %.03491 = phi ptr [ %i.f, %.thread77 ], [ null, %bb.a ], [ %i.f, %bb.g ], [ %i.f, %bb.q ], [ %i.f, %bb.r ], [ %i.f, %bb.u ], [ %i.f, %bb.v ], [ %i.f, %bb.w ], [ null, %bb.b ], [ %i.f, %bb.t ], [ %i.f, %create_digest.exit ], [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ null, %bb.c ], [ %i.f, %bb.h ], [ %i.f, %.thread46.i ]
   %.06389 = phi ptr [ %.164.ph, %.thread77 ], [ null, %bb.a ], [ null, %bb.g ], [ %.164.ph, %bb.q ], [ %.164.ph, %bb.r ], [ %.164.ph, %bb.u ], [ %.164.ph, %bb.v ], [ %.164.ph, %bb.w ], [ null, %bb.b ], [ %.164.ph, %bb.t ], [ null, %create_digest.exit ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.h ], [ null, %.thread46.i ]
   call void @TS_REQ_free(ptr noundef %i.c) #6
-  %i.at = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.at = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.au = call i32 @BIO_puts(ptr noundef %i.at, ptr noundef nonnull @.str.152) #6 ; 0 uses
-  %i.av = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.av = load ptr, ptr @bio_err, align 8, !tbaa !11
   call void @ERR_print_errors(ptr noundef %i.av) #6
   br label %bb.x
 
@@ -1593,7 +1603,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.c = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.d = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.c, ptr noundef nonnull @.str.155, ptr noundef nonnull %0) #6 ; 0 uses
   br label %bb.c
 
@@ -1632,7 +1642,7 @@ bb.e:                                             ; preds = %bb.d
 
 select.unfold:                                    ; preds = %bb.b, %bb.e, %bb.d
   %.0.ph = phi ptr [ %i.e, %bb.e ], [ null, %bb.d ], [ null, %bb.b ]
-  %i.h = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.h = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.i = call i32 @BIO_puts(ptr noundef %i.h, ptr noundef nonnull @.str.156) #6 ; 0 uses
   br label %bb.f
 
@@ -1739,7 +1749,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void @ERR_clear_error() #6
-  %i.f = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.f = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.g = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.f, ptr noundef nonnull @.str.161, ptr noundef %1) #6 ; 0 uses
   %i.h = tail call i32 @ASN1_INTEGER_set(ptr noundef nonnull %i.b, i64 noundef 1) #6
   %.not32.i = icmp eq i32 %i.h, 0
@@ -1752,7 +1762,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.j = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.k = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.j, ptr noundef nonnull @.str.162, ptr noundef %1) #6 ; 0 uses
   br label %.thread.i
 
@@ -1819,7 +1829,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.y, label %.thread.i8, label %save_ts_serial.exit
 
 .thread.i8:                                       ; preds = %bb.n, %bb.m, %bb.l
-  %i.z = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.z = load ptr, ptr @bio_err, align 8, !tbaa !11
   %i.aa = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.z, ptr noundef nonnull @.str.165, ptr noundef %1) #6 ; 0 uses
   br label %save_ts_serial.exit
 
@@ -1963,17 +1973,17 @@ attributes #6 = { nounwind }
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
 !9 = !{!"any pointer", !5, i64 0}
-!10 = !{!"llvm.loop.mustprogress"}
-!11 = !{!"p1 _ZTS6bio_st", !9, i64 0}
-!12 = !{!11, !11, i64 0}
-!13 = distinct !{!13, !10}
+!10 = !{!"p1 _ZTS6bio_st", !9, i64 0}
+!11 = !{!10, !10, i64 0}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = distinct !{!13, !12}
 !14 = !{!"p1 omnipotent char", !9, i64 0}
 !15 = !{!14, !14, i64 0}
 !16 = !{!"p1 _ZTS9evp_md_st", !9, i64 0}
 !17 = !{!16, !16, i64 0}
 !18 = !{!"long", !5, i64 0}
 !19 = !{!18, !18, i64 0}
-!20 = distinct !{!20, !10}
+!20 = distinct !{!20, !12}
 !21 = !{!"p1 _ZTS14asn1_object_st", !9, i64 0}
 !22 = !{!"p1 _ZTS12asn1_type_st", !9, i64 0}
 !23 = !{!"X509_algor_st", !21, i64 0, !22, i64 8}
@@ -1981,6 +1991,6 @@ attributes #6 = { nounwind }
 !25 = !{!23, !22, i64 8}
 !26 = !{!"asn1_type_st", !6, i64 0, !5, i64 8}
 !27 = !{!26, !6, i64 0}
-!28 = distinct !{!28, !10}
+!28 = distinct !{!28, !12}
 !29 = !{!5, !5, i64 0}
 end_hunk_0

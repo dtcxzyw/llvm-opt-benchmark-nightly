@@ -205,8 +205,6 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_AMDGPUTargetTransformInfo.cpp, ptr null }]
 @switch.table._ZNK4llvm10GCNTTIImpl13fpenvIEEEModeERKNS_11InstructionE = private unnamed_addr constant [19 x i8] c"\02\02\02\02\01\01\02\01\02\02\01\01\01\01\01\01\01\02\02", align 4
 @switch.table._ZNK4llvm16BasicTTIImplBaseINS_10GCNTTIImplEE11getFPOpCostEPNS_4TypeE = private unnamed_addr constant [5 x i8] c"\04\04\10\10\04", align 8
-@switch.table._ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE30getTypeBasedIntrinsicInstrCostERKNS_23IntrinsicCostAttributesENS_19TargetTransformInfo14TargetCostKindE = private unnamed_addr constant [5 x i8] [i8 21, i8 24, i8 poison, i8 20, i8 23], align 4
-@switch.table._ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE30getTypeBasedIntrinsicInstrCostERKNS_23IntrinsicCostAttributesENS_19TargetTransformInfo14TargetCostKindE.23 = private unnamed_addr constant [5 x i16] [i16 532, i16 534, i16 poison, i16 531, i16 533], align 8
 
 @_ZN4llvm13AMDGPUTTIImplC1EPKNS_19AMDGPUTargetMachineERKNS_8FunctionE = unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN4llvm13AMDGPUTTIImplC2EPKNS_19AMDGPUTargetMachineERKNS_8FunctionE
 @_ZN4llvm10GCNTTIImplC1EPKNS_19AMDGPUTargetMachineERKNS_8FunctionE = unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN4llvm10GCNTTIImplC2EPKNS_19AMDGPUTargetMachineERKNS_8FunctionE
@@ -609,7 +607,7 @@ bb.a:
   %78 = alloca %"class.llvm::IntrinsicCostAttributes", align 8 ; 5 uses
   %79 = alloca %"class.llvm::InstructionCost", align 8 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !401  ; 23 uses
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !401  ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !402  ; 90 uses
@@ -745,18 +743,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
     i32 396, label %bb.ei
     i32 185, label %bb.ej
     i32 186, label %bb.ej
-    i32 75, label %bb.el
-    i32 74, label %bb.em
-    i32 76, label %bb.en
-    i32 20, label %bb.eo
-    i32 19, label %bb.ep
-    i32 389, label %bb.eq
-    i32 337, label %bb.er
-    i32 28, label %bb.es
+    i32 75, label %80
+    i32 74, label %81
+    i32 76, label %82
+    i32 20, label %bb.el
+    i32 19, label %bb.em
+    i32 389, label %bb.en
+    i32 337, label %bb.eo
+    i32 28, label %bb.ep
     i32 246, label %switch.lookup
-    i32 243, label %switch.lookup
-    i32 247, label %switch.lookup
-    i32 244, label %switch.lookup
+    i32 243, label %bb.eq
+    i32 247, label %bb.er
+    i32 244, label %bb.es
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -1159,6 +1157,15 @@ bb.ek:                                            ; preds = %bb.ej
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #24
   br label %bb.jf
 
+80:                                               ; preds = %bb.c
+  br label %bb.ex
+
+81:                                               ; preds = %bb.c
+  br label %bb.ex
+
+82:                                               ; preds = %bb.c
+  br label %bb.ex
+
 bb.el:                                            ; preds = %bb.c
   br label %bb.ex
 
@@ -1175,26 +1182,19 @@ bb.ep:                                            ; preds = %bb.c
   br label %bb.ex
 
 bb.eq:                                            ; preds = %bb.c
-  br label %bb.ex
+  br label %switch.lookup
 
 bb.er:                                            ; preds = %bb.c
-  br label %bb.ex
+  br label %switch.lookup
 
 bb.es:                                            ; preds = %bb.c
-  br label %bb.ex
+  br label %switch.lookup
 
-switch.lookup:                                    ; preds = %bb.c, %bb.c, %bb.c, %bb.c
-  %switch.tableidx = add nsw i32 %i.l, -243       ; 2 uses
-  %80 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE30getTypeBasedIntrinsicInstrCostERKNS_23IntrinsicCostAttributesENS_19TargetTransformInfo14TargetCostKindE, i64 %80
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
-  %81 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep2418 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE30getTypeBasedIntrinsicInstrCostERKNS_23IntrinsicCostAttributesENS_19TargetTransformInfo14TargetCostKindE.23, i64 %81
-  %switch.load2419 = load i16, ptr %switch.gep2418, align 2
-  %switch.ext2420 = zext i16 %switch.load2419 to i64
+switch.lookup:                                    ; preds = %bb.c, %bb.es, %bb.er, %bb.eq
+  %.01166 = phi i32 [ 24, %bb.es ], [ 21, %bb.eq ], [ 23, %bb.er ], [ 20, %bb.c ]
+  %.1 = phi i64 [ 534, %bb.es ], [ 532, %bb.eq ], [ 533, %bb.er ], [ 531, %bb.c ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %37, i8 0, i64 16, i1 false)
-  %i.mn = tail call { i64, i32 } @_ZNK4llvm10GCNTTIImpl22getArithmeticInstrCostEjPNS_4TypeENS_19TargetTransformInfo14TargetCostKindENS3_16OperandValueInfoES5_NS_8ArrayRefIPKNS_5ValueEEEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(128) %0, i32 noundef %switch.ext, ptr noundef %i.n, i32 noundef %2, i64 0, i64 0, ptr noundef nonnull byval(%"class.llvm::ArrayRef.319") align 8 %37, ptr noundef null) ; 2 uses
+  %i.mn = tail call { i64, i32 } @_ZNK4llvm10GCNTTIImpl22getArithmeticInstrCostEjPNS_4TypeENS_19TargetTransformInfo14TargetCostKindENS3_16OperandValueInfoES5_NS_8ArrayRefIPKNS_5ValueEEEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(128) %0, i32 noundef %.01166, ptr noundef %i.n, i32 noundef %2, i64 0, i64 0, ptr noundef nonnull byval(%"class.llvm::ArrayRef.319") align 8 %37, ptr noundef null) ; 2 uses
   %.fca.0.extract699 = extractvalue { i64, i32 } %i.mn, 0
   %.fca.1.extract700 = extractvalue { i64, i32 } %i.mn, 1
   store i64 %.fca.0.extract699, ptr %11, align 8
@@ -1270,7 +1270,7 @@ _ZNK4llvm18TargetLoweringBase24isOperationLegalOrCustomEjNS_3EVTEb.exit: ; preds
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ni, i64 6184
   %i.nk = zext i16 %.sroa.025.0.lcssa38.sink.i2195 to i64
   %i.nl = getelementptr inbounds nuw [537 x i8], ptr %i.nj, i64 %i.nk
-  %i.nm = getelementptr inbounds nuw i8, ptr %i.nl, i64 %switch.ext2420
+  %i.nm = getelementptr inbounds nuw i8, ptr %i.nl, i64 %.1
   %i.nn = load i8, ptr %i.nm, align 1, !tbaa !384
   %i.no = and i8 %i.nn, -5
   %spec.select.i1263 = icmp eq i8 %i.no, 0
@@ -1298,10 +1298,10 @@ _ZN4llvm15InstructionCostpLERKS0_.exit1265:       ; preds = %_ZNK4llvm18TargetLo
   store i64 %.0.i1264, ptr %11, align 8, !tbaa !330
   br label %bb.jf
 
-bb.ex:                                            ; preds = %.thread2189, %bb.c, %bb.es, %bb.er, %bb.eq, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  %i.nx = phi ptr [ %i.n, %bb.es ], [ %i.n, %bb.aa ], [ %i.n, %bb.ab ], [ %i.n, %bb.ac ], [ %i.n, %bb.ad ], [ %i.n, %bb.ae ], [ %i.n, %bb.af ], [ %i.n, %bb.ag ], [ %i.n, %bb.ah ], [ %i.n, %bb.ai ], [ %i.n, %bb.aj ], [ %i.n, %bb.ak ], [ %i.n, %bb.al ], [ %i.n, %bb.am ], [ %i.n, %bb.an ], [ %i.n, %bb.ao ], [ %i.n, %bb.ap ], [ %i.n, %bb.aq ], [ %i.n, %bb.ar ], [ %i.n, %bb.as ], [ %i.n, %bb.at ], [ %i.n, %bb.au ], [ %i.n, %bb.av ], [ %i.n, %bb.aw ], [ %i.n, %bb.ax ], [ %i.n, %bb.ay ], [ %i.n, %bb.az ], [ %i.n, %bb.ba ], [ %i.n, %bb.bb ], [ %i.n, %bb.bc ], [ %i.n, %bb.bd ], [ %i.n, %bb.be ], [ %i.n, %bb.bf ], [ %i.n, %bb.bg ], [ %i.n, %bb.bh ], [ %i.n, %bb.bi ], [ %i.n, %bb.bj ], [ %i.n, %bb.bk ], [ %i.n, %bb.bl ], [ %i.n, %bb.bm ], [ %i.n, %bb.bn ], [ %i.n, %bb.bo ], [ %i.n, %bb.bp ], [ %i.n, %bb.c ], [ %i.n, %bb.bq ], [ %i.n, %bb.dq ], [ %i.n, %bb.dr ], [ %i.n, %bb.ds ], [ %i.n, %bb.dt ], [ %i.n, %bb.du ], [ %i.n, %bb.dv ], [ %i.n, %bb.dw ], [ %i.n, %bb.dx ], [ %i.n, %bb.dy ], [ %i.n, %bb.dz ], [ %i.n, %bb.ea ], [ %i.n, %bb.eb ], [ %i.n, %bb.ec ], [ %i.n, %bb.ed ], [ %i.n, %bb.ee ], [ %i.n, %bb.ef ], [ %i.n, %bb.eg ], [ %i.n, %bb.eh ], [ %i.n, %bb.ei ], [ %.pre2367, %.thread2189 ], [ %i.n, %bb.el ], [ %i.n, %bb.em ], [ %i.n, %bb.en ], [ %i.n, %bb.eo ], [ %i.n, %bb.ep ], [ %i.n, %bb.eq ], [ %i.n, %bb.er ] ; 4 uses
-  %.2 = phi i64 [ 205, %bb.es ], [ 264, %bb.aa ], [ 265, %bb.ab ], [ 305, %bb.ac ], [ 306, %bb.ad ], [ 307, %bb.ae ], [ 266, %bb.af ], [ 267, %bb.ag ], [ 268, %bb.ah ], [ 269, %bb.ai ], [ 276, %bb.aj ], [ 270, %bb.ak ], [ 271, %bb.al ], [ 272, %bb.am ], [ 281, %bb.an ], [ 282, %bb.ao ], [ 283, %bb.ap ], [ 278, %bb.aq ], [ 280, %bb.ar ], [ 279, %bb.as ], [ 275, %bb.at ], [ 261, %bb.au ], [ 160, %bb.av ], [ 295, %bb.aw ], [ 296, %bb.ax ], [ 299, %bb.ay ], [ 300, %bb.az ], [ 301, %bb.ba ], [ 302, %bb.bb ], [ 158, %bb.bc ], [ 290, %bb.bd ], [ 284, %bb.be ], [ 285, %bb.bf ], [ 287, %bb.bg ], [ 286, %bb.bh ], [ 293, %bb.bi ], [ 294, %bb.bj ], [ 288, %bb.bk ], [ 289, %bb.bl ], [ 291, %bb.bm ], [ 292, %bb.bn ], [ 273, %bb.bo ], [ 155, %bb.bp ], [ 262, %bb.c ], [ 109, %bb.bq ], [ 196, %bb.dq ], [ 203, %bb.dr ], [ 204, %bb.ds ], [ 188, %bb.dt ], [ 187, %bb.du ], [ 190, %bb.dv ], [ 189, %bb.dw ], [ 85, %bb.dx ], [ 87, %bb.dy ], [ 86, %bb.dz ], [ 88, %bb.ea ], [ 91, %bb.eb ], [ 92, %bb.ec ], [ 79, %bb.ed ], [ 81, %bb.ee ], [ 80, %bb.ef ], [ 82, %bb.eg ], [ 83, %bb.eh ], [ 84, %bb.ei ], [ %i.mm, %.thread2189 ], [ 213, %bb.el ], [ 212, %bb.em ], [ 211, %bb.en ], [ 210, %bb.eo ], [ 214, %bb.ep ], [ 192, %bb.eq ], [ 191, %bb.er ] ; 2 uses
-  %.01156 = phi i64 [ %i.ae, %bb.es ], [ %i.ae, %bb.aa ], [ %i.ae, %bb.ab ], [ %i.ae, %bb.ac ], [ %i.ae, %bb.ad ], [ %i.ae, %bb.ae ], [ %i.ae, %bb.af ], [ %i.ae, %bb.ag ], [ %i.ae, %bb.ah ], [ %i.ae, %bb.ai ], [ %i.ae, %bb.aj ], [ %i.ae, %bb.ak ], [ %i.ae, %bb.al ], [ %i.ae, %bb.am ], [ %i.ae, %bb.an ], [ %i.ae, %bb.ao ], [ %i.ae, %bb.ap ], [ %i.ae, %bb.aq ], [ %i.ae, %bb.ar ], [ %i.ae, %bb.as ], [ %i.ae, %bb.at ], [ %i.ae, %bb.au ], [ %i.ae, %bb.av ], [ %i.ae, %bb.aw ], [ %i.ae, %bb.ax ], [ %i.ae, %bb.ay ], [ %i.ae, %bb.az ], [ %i.ae, %bb.ba ], [ %i.ae, %bb.bb ], [ %i.ae, %bb.bc ], [ %i.ae, %bb.bd ], [ %i.ae, %bb.be ], [ %i.ae, %bb.bf ], [ %i.ae, %bb.bg ], [ %i.ae, %bb.bh ], [ %i.ae, %bb.bi ], [ %i.ae, %bb.bj ], [ %i.ae, %bb.bk ], [ %i.ae, %bb.bl ], [ %i.ae, %bb.bm ], [ %i.ae, %bb.bn ], [ %i.ae, %bb.bo ], [ %i.ae, %bb.bp ], [ %i.ae, %bb.c ], [ %i.ae, %bb.bq ], [ %i.ae, %bb.dq ], [ %i.ae, %bb.dr ], [ %i.ae, %bb.ds ], [ %i.ae, %bb.dt ], [ %i.ae, %bb.du ], [ %i.ae, %bb.dv ], [ %i.ae, %bb.dw ], [ %i.ae, %bb.dx ], [ %i.ae, %bb.dy ], [ %i.ae, %bb.dz ], [ %i.ae, %bb.ea ], [ %i.ae, %bb.eb ], [ %i.ae, %bb.ec ], [ %i.ae, %bb.ed ], [ %i.ae, %bb.ee ], [ %i.ae, %bb.ef ], [ %i.ae, %bb.eg ], [ %i.ae, %bb.eh ], [ %i.ae, %bb.ei ], [ %i.ae, %.thread2189 ], [ 4, %bb.el ], [ %i.ae, %bb.em ], [ %i.ae, %bb.en ], [ %i.ae, %bb.eo ], [ %i.ae, %bb.ep ], [ %i.ae, %bb.eq ], [ %i.ae, %bb.er ]
+bb.ex:                                            ; preds = %.thread2189, %bb.c, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %82, %81, %80, %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
+  %i.nx = phi ptr [ %i.n, %bb.ep ], [ %i.n, %bb.aa ], [ %i.n, %bb.ab ], [ %i.n, %bb.ac ], [ %i.n, %bb.ad ], [ %i.n, %bb.ae ], [ %i.n, %bb.af ], [ %i.n, %bb.ag ], [ %i.n, %bb.ah ], [ %i.n, %bb.ai ], [ %i.n, %bb.aj ], [ %i.n, %bb.ak ], [ %i.n, %bb.al ], [ %i.n, %bb.am ], [ %i.n, %bb.an ], [ %i.n, %bb.ao ], [ %i.n, %bb.ap ], [ %i.n, %bb.aq ], [ %i.n, %bb.ar ], [ %i.n, %bb.as ], [ %i.n, %bb.at ], [ %i.n, %bb.au ], [ %i.n, %bb.av ], [ %i.n, %bb.aw ], [ %i.n, %bb.ax ], [ %i.n, %bb.ay ], [ %i.n, %bb.az ], [ %i.n, %bb.ba ], [ %i.n, %bb.bb ], [ %i.n, %bb.bc ], [ %i.n, %bb.bd ], [ %i.n, %bb.be ], [ %i.n, %bb.bf ], [ %i.n, %bb.bg ], [ %i.n, %bb.bh ], [ %i.n, %bb.bi ], [ %i.n, %bb.bj ], [ %i.n, %bb.bk ], [ %i.n, %bb.bl ], [ %i.n, %bb.bm ], [ %i.n, %bb.bn ], [ %i.n, %bb.bo ], [ %i.n, %bb.bp ], [ %i.n, %bb.c ], [ %i.n, %bb.bq ], [ %i.n, %bb.dq ], [ %i.n, %bb.dr ], [ %i.n, %bb.ds ], [ %i.n, %bb.dt ], [ %i.n, %bb.du ], [ %i.n, %bb.dv ], [ %i.n, %bb.dw ], [ %i.n, %bb.dx ], [ %i.n, %bb.dy ], [ %i.n, %bb.dz ], [ %i.n, %bb.ea ], [ %i.n, %bb.eb ], [ %i.n, %bb.ec ], [ %i.n, %bb.ed ], [ %i.n, %bb.ee ], [ %i.n, %bb.ef ], [ %i.n, %bb.eg ], [ %i.n, %bb.eh ], [ %i.n, %bb.ei ], [ %.pre2367, %.thread2189 ], [ %i.n, %80 ], [ %i.n, %81 ], [ %i.n, %82 ], [ %i.n, %bb.el ], [ %i.n, %bb.em ], [ %i.n, %bb.en ], [ %i.n, %bb.eo ] ; 4 uses
+  %.2 = phi i64 [ 205, %bb.ep ], [ 264, %bb.aa ], [ 265, %bb.ab ], [ 305, %bb.ac ], [ 306, %bb.ad ], [ 307, %bb.ae ], [ 266, %bb.af ], [ 267, %bb.ag ], [ 268, %bb.ah ], [ 269, %bb.ai ], [ 276, %bb.aj ], [ 270, %bb.ak ], [ 271, %bb.al ], [ 272, %bb.am ], [ 281, %bb.an ], [ 282, %bb.ao ], [ 283, %bb.ap ], [ 278, %bb.aq ], [ 280, %bb.ar ], [ 279, %bb.as ], [ 275, %bb.at ], [ 261, %bb.au ], [ 160, %bb.av ], [ 295, %bb.aw ], [ 296, %bb.ax ], [ 299, %bb.ay ], [ 300, %bb.az ], [ 301, %bb.ba ], [ 302, %bb.bb ], [ 158, %bb.bc ], [ 290, %bb.bd ], [ 284, %bb.be ], [ 285, %bb.bf ], [ 287, %bb.bg ], [ 286, %bb.bh ], [ 293, %bb.bi ], [ 294, %bb.bj ], [ 288, %bb.bk ], [ 289, %bb.bl ], [ 291, %bb.bm ], [ 292, %bb.bn ], [ 273, %bb.bo ], [ 155, %bb.bp ], [ 262, %bb.c ], [ 109, %bb.bq ], [ 196, %bb.dq ], [ 203, %bb.dr ], [ 204, %bb.ds ], [ 188, %bb.dt ], [ 187, %bb.du ], [ 190, %bb.dv ], [ 189, %bb.dw ], [ 85, %bb.dx ], [ 87, %bb.dy ], [ 86, %bb.dz ], [ 88, %bb.ea ], [ 91, %bb.eb ], [ 92, %bb.ec ], [ 79, %bb.ed ], [ 81, %bb.ee ], [ 80, %bb.ef ], [ 82, %bb.eg ], [ 83, %bb.eh ], [ 84, %bb.ei ], [ %i.mm, %.thread2189 ], [ 213, %80 ], [ 212, %81 ], [ 211, %82 ], [ 210, %bb.el ], [ 214, %bb.em ], [ 192, %bb.en ], [ 191, %bb.eo ] ; 2 uses
+  %.01156 = phi i64 [ %i.ae, %bb.ep ], [ %i.ae, %bb.aa ], [ %i.ae, %bb.ab ], [ %i.ae, %bb.ac ], [ %i.ae, %bb.ad ], [ %i.ae, %bb.ae ], [ %i.ae, %bb.af ], [ %i.ae, %bb.ag ], [ %i.ae, %bb.ah ], [ %i.ae, %bb.ai ], [ %i.ae, %bb.aj ], [ %i.ae, %bb.ak ], [ %i.ae, %bb.al ], [ %i.ae, %bb.am ], [ %i.ae, %bb.an ], [ %i.ae, %bb.ao ], [ %i.ae, %bb.ap ], [ %i.ae, %bb.aq ], [ %i.ae, %bb.ar ], [ %i.ae, %bb.as ], [ %i.ae, %bb.at ], [ %i.ae, %bb.au ], [ %i.ae, %bb.av ], [ %i.ae, %bb.aw ], [ %i.ae, %bb.ax ], [ %i.ae, %bb.ay ], [ %i.ae, %bb.az ], [ %i.ae, %bb.ba ], [ %i.ae, %bb.bb ], [ %i.ae, %bb.bc ], [ %i.ae, %bb.bd ], [ %i.ae, %bb.be ], [ %i.ae, %bb.bf ], [ %i.ae, %bb.bg ], [ %i.ae, %bb.bh ], [ %i.ae, %bb.bi ], [ %i.ae, %bb.bj ], [ %i.ae, %bb.bk ], [ %i.ae, %bb.bl ], [ %i.ae, %bb.bm ], [ %i.ae, %bb.bn ], [ %i.ae, %bb.bo ], [ %i.ae, %bb.bp ], [ %i.ae, %bb.c ], [ %i.ae, %bb.bq ], [ %i.ae, %bb.dq ], [ %i.ae, %bb.dr ], [ %i.ae, %bb.ds ], [ %i.ae, %bb.dt ], [ %i.ae, %bb.du ], [ %i.ae, %bb.dv ], [ %i.ae, %bb.dw ], [ %i.ae, %bb.dx ], [ %i.ae, %bb.dy ], [ %i.ae, %bb.dz ], [ %i.ae, %bb.ea ], [ %i.ae, %bb.eb ], [ %i.ae, %bb.ec ], [ %i.ae, %bb.ed ], [ %i.ae, %bb.ee ], [ %i.ae, %bb.ef ], [ %i.ae, %bb.eg ], [ %i.ae, %bb.eh ], [ %i.ae, %bb.ei ], [ %i.ae, %.thread2189 ], [ 4, %80 ], [ %i.ae, %81 ], [ %i.ae, %82 ], [ %i.ae, %bb.el ], [ %i.ae, %bb.em ], [ %i.ae, %bb.en ], [ %i.ae, %bb.eo ]
   %i.ny = getelementptr inbounds nuw i8, ptr %i.nx, i64 8
   %i.nz = load i32, ptr %i.ny, align 8
   %i.oa = and i32 %i.nz, 255
@@ -1704,7 +1704,7 @@ bb.a:
   %76 = alloca %"class.llvm::IntrinsicCostAttributes", align 8 ; 5 uses
   %77 = alloca %"class.llvm::InstructionCost", align 8 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !401  ; 23 uses
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !401  ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !402  ; 90 uses
@@ -1840,18 +1840,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
     i32 396, label %bb.dx
     i32 185, label %bb.dy
     i32 186, label %bb.dy
-    i32 75, label %bb.ea
-    i32 74, label %bb.eb
-    i32 76, label %bb.ec
-    i32 20, label %bb.ed
-    i32 19, label %bb.ee
-    i32 389, label %bb.ef
-    i32 337, label %bb.eg
-    i32 28, label %bb.eh
+    i32 75, label %78
+    i32 74, label %79
+    i32 76, label %80
+    i32 20, label %bb.ea
+    i32 19, label %bb.eb
+    i32 389, label %bb.ec
+    i32 337, label %bb.ed
+    i32 28, label %bb.ee
     i32 246, label %switch.lookup
-    i32 243, label %switch.lookup
-    i32 247, label %switch.lookup
-    i32 244, label %switch.lookup
+    i32 243, label %bb.ef
+    i32 247, label %bb.eg
+    i32 244, label %bb.eh
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2254,6 +2254,15 @@ bb.dz:                                            ; preds = %bb.dy
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #24
   br label %bb.jc
 
+78:                                               ; preds = %bb.c
+  br label %bb.em
+
+79:                                               ; preds = %bb.c
+  br label %bb.em
+
+80:                                               ; preds = %bb.c
+  br label %bb.em
+
 bb.ea:                                            ; preds = %bb.c
   br label %bb.em
 
@@ -2270,26 +2279,19 @@ bb.ee:                                            ; preds = %bb.c
   br label %bb.em
 
 bb.ef:                                            ; preds = %bb.c
-  br label %bb.em
+  br label %switch.lookup
 
 bb.eg:                                            ; preds = %bb.c
-  br label %bb.em
+  br label %switch.lookup
 
 bb.eh:                                            ; preds = %bb.c
-  br label %bb.em
+  br label %switch.lookup
 
-switch.lookup:                                    ; preds = %bb.c, %bb.c, %bb.c, %bb.c
-  %switch.tableidx = add nsw i32 %i.l, -243       ; 2 uses
-  %78 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE30getTypeBasedIntrinsicInstrCostERKNS_23IntrinsicCostAttributesENS_19TargetTransformInfo14TargetCostKindE, i64 %78
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
-  %79 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep2422 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE30getTypeBasedIntrinsicInstrCostERKNS_23IntrinsicCostAttributesENS_19TargetTransformInfo14TargetCostKindE.23, i64 %79
-  %switch.load2423 = load i16, ptr %switch.gep2422, align 2
-  %switch.ext2424 = zext i16 %switch.load2423 to i64
+switch.lookup:                                    ; preds = %bb.c, %bb.eh, %bb.eg, %bb.ef
+  %.01166 = phi i32 [ 24, %bb.eh ], [ 21, %bb.ef ], [ 23, %bb.eg ], [ 20, %bb.c ]
+  %.1 = phi i64 [ 534, %bb.eh ], [ 532, %bb.ef ], [ 533, %bb.eg ], [ 531, %bb.c ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %35, i8 0, i64 16, i1 false)
-  %i.lc = tail call { i64, i32 } @_ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE22getArithmeticInstrCostEjPNS_4TypeENS_19TargetTransformInfo14TargetCostKindENS5_16OperandValueInfoES7_NS_8ArrayRefIPKNS_5ValueEEEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %switch.ext, ptr noundef %i.n, i32 noundef %2, i64 0, i64 0, ptr noundef nonnull byval(%"class.llvm::ArrayRef.319") align 8 %35, ptr noundef null) ; 2 uses
+  %i.lc = tail call { i64, i32 } @_ZNK4llvm16BasicTTIImplBaseINS_13AMDGPUTTIImplEE22getArithmeticInstrCostEjPNS_4TypeENS_19TargetTransformInfo14TargetCostKindENS5_16OperandValueInfoES7_NS_8ArrayRefIPKNS_5ValueEEEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %.01166, ptr noundef %i.n, i32 noundef %2, i64 0, i64 0, ptr noundef nonnull byval(%"class.llvm::ArrayRef.319") align 8 %35, ptr noundef null) ; 2 uses
   %.fca.0.extract699 = extractvalue { i64, i32 } %i.lc, 0
   %.fca.1.extract700 = extractvalue { i64, i32 } %i.lc, 1
   store i64 %.fca.0.extract699, ptr %9, align 8
@@ -2365,7 +2367,7 @@ _ZNK4llvm18TargetLoweringBase24isOperationLegalOrCustomEjNS_3EVTEb.exit: ; preds
   %i.ly = getelementptr inbounds nuw i8, ptr %i.lx, i64 6184
   %i.lz = zext i16 %.sroa.025.0.lcssa38.sink.i2202 to i64
   %i.ma = getelementptr inbounds nuw [537 x i8], ptr %i.ly, i64 %i.lz
-  %i.mb = getelementptr inbounds nuw i8, ptr %i.ma, i64 %switch.ext2424
+  %i.mb = getelementptr inbounds nuw i8, ptr %i.ma, i64 %.1
   %i.mc = load i8, ptr %i.mb, align 1, !tbaa !384
   %i.md = and i8 %i.mc, -5
   %spec.select.i1262 = icmp eq i8 %i.md, 0
@@ -2393,10 +2395,10 @@ _ZN4llvm15InstructionCostpLERKS0_.exit1264:       ; preds = %_ZNK4llvm18TargetLo
   store i64 %.0.i1263, ptr %9, align 8, !tbaa !330
   br label %bb.jc
 
-bb.em:                                            ; preds = %.thread2196, %bb.c, %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dp, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  %i.mm = phi ptr [ %i.n, %bb.eh ], [ %i.n, %bb.aa ], [ %i.n, %bb.ab ], [ %i.n, %bb.ac ], [ %i.n, %bb.ad ], [ %i.n, %bb.ae ], [ %i.n, %bb.af ], [ %i.n, %bb.ag ], [ %i.n, %bb.ah ], [ %i.n, %bb.ai ], [ %i.n, %bb.aj ], [ %i.n, %bb.ak ], [ %i.n, %bb.al ], [ %i.n, %bb.am ], [ %i.n, %bb.an ], [ %i.n, %bb.ao ], [ %i.n, %bb.ap ], [ %i.n, %bb.aq ], [ %i.n, %bb.ar ], [ %i.n, %bb.as ], [ %i.n, %bb.at ], [ %i.n, %bb.au ], [ %i.n, %bb.av ], [ %i.n, %bb.aw ], [ %i.n, %bb.ax ], [ %i.n, %bb.ay ], [ %i.n, %bb.az ], [ %i.n, %bb.ba ], [ %i.n, %bb.bb ], [ %i.n, %bb.bc ], [ %i.n, %bb.bd ], [ %i.n, %bb.be ], [ %i.n, %bb.bf ], [ %i.n, %bb.bg ], [ %i.n, %bb.bh ], [ %i.n, %bb.bi ], [ %i.n, %bb.bj ], [ %i.n, %bb.bk ], [ %i.n, %bb.bl ], [ %i.n, %bb.bm ], [ %i.n, %bb.bn ], [ %i.n, %bb.bo ], [ %i.n, %bb.bp ], [ %i.n, %bb.c ], [ %i.n, %bb.bq ], [ %i.n, %bb.df ], [ %i.n, %bb.dg ], [ %i.n, %bb.dh ], [ %i.n, %bb.di ], [ %i.n, %bb.dj ], [ %i.n, %bb.dk ], [ %i.n, %bb.dl ], [ %i.n, %bb.dm ], [ %i.n, %bb.dn ], [ %i.n, %bb.do ], [ %i.n, %bb.dp ], [ %i.n, %bb.dq ], [ %i.n, %bb.dr ], [ %i.n, %bb.ds ], [ %i.n, %bb.dt ], [ %i.n, %bb.du ], [ %i.n, %bb.dv ], [ %i.n, %bb.dw ], [ %i.n, %bb.dx ], [ %.pre, %.thread2196 ], [ %i.n, %bb.ea ], [ %i.n, %bb.eb ], [ %i.n, %bb.ec ], [ %i.n, %bb.ed ], [ %i.n, %bb.ee ], [ %i.n, %bb.ef ], [ %i.n, %bb.eg ] ; 4 uses
-  %.2 = phi i64 [ 205, %bb.eh ], [ 264, %bb.aa ], [ 265, %bb.ab ], [ 305, %bb.ac ], [ 306, %bb.ad ], [ 307, %bb.ae ], [ 266, %bb.af ], [ 267, %bb.ag ], [ 268, %bb.ah ], [ 269, %bb.ai ], [ 276, %bb.aj ], [ 270, %bb.ak ], [ 271, %bb.al ], [ 272, %bb.am ], [ 281, %bb.an ], [ 282, %bb.ao ], [ 283, %bb.ap ], [ 278, %bb.aq ], [ 280, %bb.ar ], [ 279, %bb.as ], [ 275, %bb.at ], [ 261, %bb.au ], [ 160, %bb.av ], [ 295, %bb.aw ], [ 296, %bb.ax ], [ 299, %bb.ay ], [ 300, %bb.az ], [ 301, %bb.ba ], [ 302, %bb.bb ], [ 158, %bb.bc ], [ 290, %bb.bd ], [ 284, %bb.be ], [ 285, %bb.bf ], [ 287, %bb.bg ], [ 286, %bb.bh ], [ 293, %bb.bi ], [ 294, %bb.bj ], [ 288, %bb.bk ], [ 289, %bb.bl ], [ 291, %bb.bm ], [ 292, %bb.bn ], [ 273, %bb.bo ], [ 155, %bb.bp ], [ 262, %bb.c ], [ 109, %bb.bq ], [ 196, %bb.df ], [ 203, %bb.dg ], [ 204, %bb.dh ], [ 188, %bb.di ], [ 187, %bb.dj ], [ 190, %bb.dk ], [ 189, %bb.dl ], [ 85, %bb.dm ], [ 87, %bb.dn ], [ 86, %bb.do ], [ 88, %bb.dp ], [ 91, %bb.dq ], [ 92, %bb.dr ], [ 79, %bb.ds ], [ 81, %bb.dt ], [ 80, %bb.du ], [ 82, %bb.dv ], [ 83, %bb.dw ], [ 84, %bb.dx ], [ %i.lb, %.thread2196 ], [ 213, %bb.ea ], [ 212, %bb.eb ], [ 211, %bb.ec ], [ 210, %bb.ed ], [ 214, %bb.ee ], [ 192, %bb.ef ], [ 191, %bb.eg ] ; 2 uses
-  %.01156 = phi i64 [ %i.ae, %bb.eh ], [ %i.ae, %bb.aa ], [ %i.ae, %bb.ab ], [ %i.ae, %bb.ac ], [ %i.ae, %bb.ad ], [ %i.ae, %bb.ae ], [ %i.ae, %bb.af ], [ %i.ae, %bb.ag ], [ %i.ae, %bb.ah ], [ %i.ae, %bb.ai ], [ %i.ae, %bb.aj ], [ %i.ae, %bb.ak ], [ %i.ae, %bb.al ], [ %i.ae, %bb.am ], [ %i.ae, %bb.an ], [ %i.ae, %bb.ao ], [ %i.ae, %bb.ap ], [ %i.ae, %bb.aq ], [ %i.ae, %bb.ar ], [ %i.ae, %bb.as ], [ %i.ae, %bb.at ], [ %i.ae, %bb.au ], [ %i.ae, %bb.av ], [ %i.ae, %bb.aw ], [ %i.ae, %bb.ax ], [ %i.ae, %bb.ay ], [ %i.ae, %bb.az ], [ %i.ae, %bb.ba ], [ %i.ae, %bb.bb ], [ %i.ae, %bb.bc ], [ %i.ae, %bb.bd ], [ %i.ae, %bb.be ], [ %i.ae, %bb.bf ], [ %i.ae, %bb.bg ], [ %i.ae, %bb.bh ], [ %i.ae, %bb.bi ], [ %i.ae, %bb.bj ], [ %i.ae, %bb.bk ], [ %i.ae, %bb.bl ], [ %i.ae, %bb.bm ], [ %i.ae, %bb.bn ], [ %i.ae, %bb.bo ], [ %i.ae, %bb.bp ], [ %i.ae, %bb.c ], [ %i.ae, %bb.bq ], [ %i.ae, %bb.df ], [ %i.ae, %bb.dg ], [ %i.ae, %bb.dh ], [ %i.ae, %bb.di ], [ %i.ae, %bb.dj ], [ %i.ae, %bb.dk ], [ %i.ae, %bb.dl ], [ %i.ae, %bb.dm ], [ %i.ae, %bb.dn ], [ %i.ae, %bb.do ], [ %i.ae, %bb.dp ], [ %i.ae, %bb.dq ], [ %i.ae, %bb.dr ], [ %i.ae, %bb.ds ], [ %i.ae, %bb.dt ], [ %i.ae, %bb.du ], [ %i.ae, %bb.dv ], [ %i.ae, %bb.dw ], [ %i.ae, %bb.dx ], [ %i.ae, %.thread2196 ], [ 4, %bb.ea ], [ %i.ae, %bb.eb ], [ %i.ae, %bb.ec ], [ %i.ae, %bb.ed ], [ %i.ae, %bb.ee ], [ %i.ae, %bb.ef ], [ %i.ae, %bb.eg ]
+bb.em:                                            ; preds = %.thread2196, %bb.c, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %80, %79, %78, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dp, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
+  %i.mm = phi ptr [ %i.n, %bb.ee ], [ %i.n, %bb.aa ], [ %i.n, %bb.ab ], [ %i.n, %bb.ac ], [ %i.n, %bb.ad ], [ %i.n, %bb.ae ], [ %i.n, %bb.af ], [ %i.n, %bb.ag ], [ %i.n, %bb.ah ], [ %i.n, %bb.ai ], [ %i.n, %bb.aj ], [ %i.n, %bb.ak ], [ %i.n, %bb.al ], [ %i.n, %bb.am ], [ %i.n, %bb.an ], [ %i.n, %bb.ao ], [ %i.n, %bb.ap ], [ %i.n, %bb.aq ], [ %i.n, %bb.ar ], [ %i.n, %bb.as ], [ %i.n, %bb.at ], [ %i.n, %bb.au ], [ %i.n, %bb.av ], [ %i.n, %bb.aw ], [ %i.n, %bb.ax ], [ %i.n, %bb.ay ], [ %i.n, %bb.az ], [ %i.n, %bb.ba ], [ %i.n, %bb.bb ], [ %i.n, %bb.bc ], [ %i.n, %bb.bd ], [ %i.n, %bb.be ], [ %i.n, %bb.bf ], [ %i.n, %bb.bg ], [ %i.n, %bb.bh ], [ %i.n, %bb.bi ], [ %i.n, %bb.bj ], [ %i.n, %bb.bk ], [ %i.n, %bb.bl ], [ %i.n, %bb.bm ], [ %i.n, %bb.bn ], [ %i.n, %bb.bo ], [ %i.n, %bb.bp ], [ %i.n, %bb.c ], [ %i.n, %bb.bq ], [ %i.n, %bb.df ], [ %i.n, %bb.dg ], [ %i.n, %bb.dh ], [ %i.n, %bb.di ], [ %i.n, %bb.dj ], [ %i.n, %bb.dk ], [ %i.n, %bb.dl ], [ %i.n, %bb.dm ], [ %i.n, %bb.dn ], [ %i.n, %bb.do ], [ %i.n, %bb.dp ], [ %i.n, %bb.dq ], [ %i.n, %bb.dr ], [ %i.n, %bb.ds ], [ %i.n, %bb.dt ], [ %i.n, %bb.du ], [ %i.n, %bb.dv ], [ %i.n, %bb.dw ], [ %i.n, %bb.dx ], [ %.pre, %.thread2196 ], [ %i.n, %78 ], [ %i.n, %79 ], [ %i.n, %80 ], [ %i.n, %bb.ea ], [ %i.n, %bb.eb ], [ %i.n, %bb.ec ], [ %i.n, %bb.ed ] ; 4 uses
+  %.2 = phi i64 [ 205, %bb.ee ], [ 264, %bb.aa ], [ 265, %bb.ab ], [ 305, %bb.ac ], [ 306, %bb.ad ], [ 307, %bb.ae ], [ 266, %bb.af ], [ 267, %bb.ag ], [ 268, %bb.ah ], [ 269, %bb.ai ], [ 276, %bb.aj ], [ 270, %bb.ak ], [ 271, %bb.al ], [ 272, %bb.am ], [ 281, %bb.an ], [ 282, %bb.ao ], [ 283, %bb.ap ], [ 278, %bb.aq ], [ 280, %bb.ar ], [ 279, %bb.as ], [ 275, %bb.at ], [ 261, %bb.au ], [ 160, %bb.av ], [ 295, %bb.aw ], [ 296, %bb.ax ], [ 299, %bb.ay ], [ 300, %bb.az ], [ 301, %bb.ba ], [ 302, %bb.bb ], [ 158, %bb.bc ], [ 290, %bb.bd ], [ 284, %bb.be ], [ 285, %bb.bf ], [ 287, %bb.bg ], [ 286, %bb.bh ], [ 293, %bb.bi ], [ 294, %bb.bj ], [ 288, %bb.bk ], [ 289, %bb.bl ], [ 291, %bb.bm ], [ 292, %bb.bn ], [ 273, %bb.bo ], [ 155, %bb.bp ], [ 262, %bb.c ], [ 109, %bb.bq ], [ 196, %bb.df ], [ 203, %bb.dg ], [ 204, %bb.dh ], [ 188, %bb.di ], [ 187, %bb.dj ], [ 190, %bb.dk ], [ 189, %bb.dl ], [ 85, %bb.dm ], [ 87, %bb.dn ], [ 86, %bb.do ], [ 88, %bb.dp ], [ 91, %bb.dq ], [ 92, %bb.dr ], [ 79, %bb.ds ], [ 81, %bb.dt ], [ 80, %bb.du ], [ 82, %bb.dv ], [ 83, %bb.dw ], [ 84, %bb.dx ], [ %i.lb, %.thread2196 ], [ 213, %78 ], [ 212, %79 ], [ 211, %80 ], [ 210, %bb.ea ], [ 214, %bb.eb ], [ 192, %bb.ec ], [ 191, %bb.ed ] ; 2 uses
+  %.01156 = phi i64 [ %i.ae, %bb.ee ], [ %i.ae, %bb.aa ], [ %i.ae, %bb.ab ], [ %i.ae, %bb.ac ], [ %i.ae, %bb.ad ], [ %i.ae, %bb.ae ], [ %i.ae, %bb.af ], [ %i.ae, %bb.ag ], [ %i.ae, %bb.ah ], [ %i.ae, %bb.ai ], [ %i.ae, %bb.aj ], [ %i.ae, %bb.ak ], [ %i.ae, %bb.al ], [ %i.ae, %bb.am ], [ %i.ae, %bb.an ], [ %i.ae, %bb.ao ], [ %i.ae, %bb.ap ], [ %i.ae, %bb.aq ], [ %i.ae, %bb.ar ], [ %i.ae, %bb.as ], [ %i.ae, %bb.at ], [ %i.ae, %bb.au ], [ %i.ae, %bb.av ], [ %i.ae, %bb.aw ], [ %i.ae, %bb.ax ], [ %i.ae, %bb.ay ], [ %i.ae, %bb.az ], [ %i.ae, %bb.ba ], [ %i.ae, %bb.bb ], [ %i.ae, %bb.bc ], [ %i.ae, %bb.bd ], [ %i.ae, %bb.be ], [ %i.ae, %bb.bf ], [ %i.ae, %bb.bg ], [ %i.ae, %bb.bh ], [ %i.ae, %bb.bi ], [ %i.ae, %bb.bj ], [ %i.ae, %bb.bk ], [ %i.ae, %bb.bl ], [ %i.ae, %bb.bm ], [ %i.ae, %bb.bn ], [ %i.ae, %bb.bo ], [ %i.ae, %bb.bp ], [ %i.ae, %bb.c ], [ %i.ae, %bb.bq ], [ %i.ae, %bb.df ], [ %i.ae, %bb.dg ], [ %i.ae, %bb.dh ], [ %i.ae, %bb.di ], [ %i.ae, %bb.dj ], [ %i.ae, %bb.dk ], [ %i.ae, %bb.dl ], [ %i.ae, %bb.dm ], [ %i.ae, %bb.dn ], [ %i.ae, %bb.do ], [ %i.ae, %bb.dp ], [ %i.ae, %bb.dq ], [ %i.ae, %bb.dr ], [ %i.ae, %bb.ds ], [ %i.ae, %bb.dt ], [ %i.ae, %bb.du ], [ %i.ae, %bb.dv ], [ %i.ae, %bb.dw ], [ %i.ae, %bb.dx ], [ %i.ae, %.thread2196 ], [ 4, %78 ], [ %i.ae, %79 ], [ %i.ae, %80 ], [ %i.ae, %bb.ea ], [ %i.ae, %bb.eb ], [ %i.ae, %bb.ec ], [ %i.ae, %bb.ed ]
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mm, i64 8
   %i.mo = load i32, ptr %i.mn, align 8
   %i.mp = and i32 %i.mo, 255

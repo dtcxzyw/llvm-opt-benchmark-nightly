@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.ck = phi i32 [ %.pre, %bb.m ], [ %i.cd, %bb.l ] ; 4 uses
+  %i.ck = phi i32 [ %.pre, %bb.m ], [ %i.cd, %bb.l ] ; 5 uses
   %.0121 = phi i32 [ 0, %bb.m ], [ %i.cf, %bb.l ] ; 29 uses
   %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8 ; 4 uses
   switch i32 %i.ck, label %._crit_edge.i [
@@ -240,12 +240,12 @@ bb.r:                                             ; preds = %._crit_edge.i
 
 bb.s:                                             ; preds = %bb.r, %bb.r, %._crit_edge.i
   switch i32 %i.ck, label %audit_field_valid.exit.thread [
-    i32 200, label %bb.t
-    i32 201, label %bb.t
-    i32 202, label %bb.t
-    i32 203, label %bb.t
-    i32 10, label %bb.t
-    i32 101, label %bb.t
+    i32 112, label %.thread39.i
+    i32 111, label %.thread39.i
+    i32 108, label %.thread39.i
+    i32 106, label %.thread39.i
+    i32 26, label %.thread39.i
+    i32 11, label %.thread39.i
     i32 1, label %.thread38.i.a
     i32 2, label %.thread38.i.a
     i32 3, label %.thread38.i.a
@@ -280,12 +280,12 @@ bb.s:                                             ; preds = %bb.r, %bb.r, %._cri
     i32 107, label %.thread39.i
     i32 210, label %.thread39.i
     i32 24, label %.thread39.i
-    i32 11, label %.thread39.i
-    i32 26, label %.thread39.i
-    i32 106, label %.thread39.i
-    i32 108, label %.thread39.i
-    i32 111, label %.thread39.i
-    i32 112, label %.thread39.i
+    i32 10, label %audit_field_valid.exit
+    i32 101, label %audit_field_valid.exit
+    i32 200, label %audit_field_valid.exit
+    i32 201, label %audit_field_valid.exit
+    i32 202, label %audit_field_valid.exit
+    i32 203, label %audit_field_valid.exit
   ]
 
 .thread38.i.a:                                    ; preds = %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.o, %bb.o
@@ -299,40 +299,13 @@ bb.s:                                             ; preds = %bb.r, %bb.r, %._cri
   %switch31.i = icmp ult i32 %i.co, 2
   br i1 %switch31.i, label %bb.t, label %audit_field_valid.exit.thread
 
-bb.t:                                             ; preds = %.thread39.i, %.thread38.i.a, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s
-  switch i32 %i.ck, label %audit_field_valid.exit.thread227 [
+bb.t:                                             ; preds = %.thread39.i, %.thread38.i.a
+  switch i32 %i.ck, label %audit_field_valid.exit [
     i32 24, label %bb.u
     i32 106, label %bb.v
     i32 108, label %bb.w
     i32 111, label %bb.x
     i32 113, label %bb.y
-    i32 9, label %bb.z
-    i32 1, label %bb.z
-    i32 2, label %bb.z
-    i32 3, label %bb.z
-    i32 4, label %bb.z
-    i32 109, label %bb.z
-    i32 5, label %bb.aa
-    i32 6, label %bb.aa
-    i32 7, label %bb.aa
-    i32 8, label %bb.aa
-    i32 110, label %bb.aa
-    i32 11, label %bb.ab
-    i32 13, label %bb.ac
-    i32 14, label %bb.ac
-    i32 15, label %bb.ac
-    i32 16, label %bb.ac
-    i32 17, label %bb.ac
-    i32 19, label %bb.ac
-    i32 20, label %bb.ac
-    i32 21, label %bb.ac
-    i32 22, label %bb.ac
-    i32 23, label %bb.ac
-    i32 105, label %bb.ag
-    i32 107, label %bb.al
-    i32 102, label %bb.ap
-    i32 210, label %bb.au
-    i32 112, label %bb.ax
   ]
 
 bb.u:                                             ; preds = %bb.t
@@ -366,25 +339,56 @@ bb.y:                                             ; preds = %bb.t
   %i.db = icmp ugt i32 %i.da, 45
   br i1 %i.db, label %audit_field_valid.exit.thread, label %audit_field_valid.exit.thread227
 
-bb.z:                                             ; preds = %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t
+audit_field_valid.exit:                           ; preds = %bb.t, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s
+  switch i32 %i.ck, label %audit_field_valid.exit.thread227 [
+    i32 9, label %bb.z
+    i32 1, label %bb.z
+    i32 2, label %bb.z
+    i32 3, label %bb.z
+    i32 4, label %bb.z
+    i32 109, label %bb.z
+    i32 5, label %bb.aa
+    i32 6, label %bb.aa
+    i32 7, label %bb.aa
+    i32 8, label %bb.aa
+    i32 110, label %bb.aa
+    i32 11, label %bb.ab
+    i32 13, label %bb.ac
+    i32 14, label %bb.ac
+    i32 15, label %bb.ac
+    i32 16, label %bb.ac
+    i32 17, label %bb.ac
+    i32 19, label %bb.ac
+    i32 20, label %bb.ac
+    i32 21, label %bb.ac
+    i32 22, label %bb.ac
+    i32 23, label %bb.ac
+    i32 105, label %bb.ag
+    i32 107, label %bb.al
+    i32 102, label %bb.ap
+    i32 210, label %bb.au
+    i32 112, label %bb.ax
+  ]
+
+bb.z:                                             ; preds = %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit
   %i.dc = getelementptr i8, ptr %i.bw, i64 8
   store i32 %.0121, ptr %i.dc, align 8
   %.not271 = icmp eq i32 %.0121, -1
   br i1 %.not271, label %audit_field_valid.exit.thread, label %bb.bc
 
-bb.aa:                                            ; preds = %bb.t, %bb.t, %bb.t, %bb.t, %bb.t
+bb.aa:                                            ; preds = %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit
   %i.dd = getelementptr i8, ptr %i.bw, i64 8
   store i32 %.0121, ptr %i.dd, align 8
   %.not270 = icmp eq i32 %.0121, -1
   br i1 %.not270, label %audit_field_valid.exit.thread, label %bb.bc
 
-bb.ab:                                            ; preds = %bb.t
+bb.ab:                                            ; preds = %audit_field_valid.exit
   %i.de = getelementptr i8, ptr %i.bw, i64 8
   store i32 %.0121, ptr %i.de, align 8
   store ptr %i.bw, ptr %i.bt, align 8
   br label %bb.bc
 
-bb.ac:                                            ; preds = %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t, %bb.t
+bb.ac:                                            ; preds = %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit, %audit_field_valid.exit
   %i.df = zext i32 %.0121 to i64                  ; 6 uses
   %i.dg = icmp eq ptr %.0215291, null
   %i.dh = icmp eq i32 %.0121, 0
@@ -437,7 +441,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.dz = tail call i32 (ptr, ...) @_printk(ptr noundef @.str.6, ptr noundef nonnull %i.dl) #16 ; 0 uses
   br label %bb.bc
 
-bb.ag:                                            ; preds = %bb.t
+bb.ag:                                            ; preds = %audit_field_valid.exit
   %i.ea = zext i32 %.0121 to i64                  ; 6 uses
   %i.eb = icmp eq ptr %.0215291, null
   %i.ec = icmp eq i32 %.0121, 0
@@ -487,7 +491,7 @@ bb.ak:                                            ; preds = %bb.ai
   store i32 %i.eq, ptr %i.bo, align 8
   br label %bb.bc
 
-bb.al:                                            ; preds = %bb.t
+bb.al:                                            ; preds = %audit_field_valid.exit
   %i.er = zext i32 %.0121 to i64                  ; 6 uses
   %i.es = icmp eq ptr %.0215291, null
   %i.et = icmp eq i32 %.0121, 0
@@ -534,7 +538,7 @@ bb.ao:                                            ; preds = %bb.an
   store i32 %i.fh, ptr %i.bo, align 8
   br label %bb.bc
 
-bb.ap:                                            ; preds = %bb.t
+bb.ap:                                            ; preds = %audit_field_valid.exit
   %i.fi = getelementptr i8, ptr %i.bw, i64 8
   store i32 %.0121, ptr %i.fi, align 8
   %i.fj = load i32, ptr %.phi.trans.insert.i, align 8
@@ -567,7 +571,7 @@ audit_to_inode.exit:                              ; preds = %bb.at
   store ptr %i.bw, ptr %i.bq, align 8
   br label %bb.bc
 
-bb.au:                                            ; preds = %bb.t
+bb.au:                                            ; preds = %audit_field_valid.exit
   %i.fo = load ptr, ptr %i.bp, align 8
   %i.fp = icmp ne ptr %i.fo, null
   %i.fq = icmp ugt i32 %.0121, 256
@@ -611,7 +615,7 @@ bb.aw:                                            ; preds = %audit_unpack_string
   store ptr %i.fw, ptr %i.bp, align 8
   br label %bb.bc
 
-bb.ax:                                            ; preds = %bb.t
+bb.ax:                                            ; preds = %audit_field_valid.exit
   %i.gf = load ptr, ptr %i.bn, align 8
   %i.gg = icmp ne ptr %i.gf, null
   %i.gh = icmp ugt i32 %.0121, 4096
@@ -666,7 +670,7 @@ bb.bb:                                            ; preds = %bb.az
   store ptr %i.gu, ptr %i.bn, align 8
   br label %bb.bc
 
-audit_field_valid.exit.thread227:                 ; preds = %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y
+audit_field_valid.exit.thread227:                 ; preds = %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %audit_field_valid.exit
   %i.ha = getelementptr i8, ptr %i.bw, i64 8
   store i32 %.0121, ptr %i.ha, align 8
   br label %bb.bc

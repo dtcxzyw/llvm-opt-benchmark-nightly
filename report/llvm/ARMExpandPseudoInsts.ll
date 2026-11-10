@@ -159,10 +159,9 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @_ZSt15__once_callable = external thread_local local_unnamed_addr global ptr, align 8
 @_ZSt11__once_call = external thread_local local_unnamed_addr global ptr, align 8
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_ARMExpandPseudoInsts.cpp, ptr null }]
-@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_ = private unnamed_addr constant [8 x i64] [i64 -4059, i64 poison, i64 poison, i64 poison, i64 -4190, i64 -4192, i64 poison, i64 -4260], align 8
-@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31 = private unnamed_addr constant [3 x i8] c"\05\04\01", align 4
-@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32 = private unnamed_addr constant [3 x i8] c"\06\05\03", align 4
-@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.33 = private unnamed_addr constant [3 x i8] c"\08\07\07", align 4
+@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.30 = private unnamed_addr constant [3 x i8] c"\05\04\01", align 4
+@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31 = private unnamed_addr constant [3 x i8] c"\06\05\03", align 4
+@switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32 = private unnamed_addr constant [3 x i8] c"\08\07\07", align 4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #0
@@ -565,7 +564,7 @@ bb.a:
   %187 = alloca %"struct.std::array.231", align 8 ; 7 uses
   store ptr %2, ptr %83, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 52
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !188  ; 25 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !188  ; 24 uses
   switch i32 %i.d, label %bb.et [
     i32 2221, label %bb.b
     i32 2222, label %bb.b
@@ -589,10 +588,10 @@ bb.a:
     i32 394, label %bb.av
     i32 745, label %bb.aw
     i32 414, label %bb.aw
-    i32 733, label %switch.lookup.a
-    i32 734, label %switch.lookup.a
-    i32 729, label %switch.lookup.a
-    i32 736, label %switch.lookup.a
+    i32 445, label %bb.es
+    i32 386, label %bb.es
+    i32 698, label %bb.eo
+    i32 345, label %bb.em
     i32 362, label %bb.ax
     i32 391, label %_ZNK4llvm19MachineInstrBuilder3addENS_8ArrayRefINS_14MachineOperandEEE.exit837
     i32 339, label %_ZNK4llvm19MachineInstrBuilder3addENS_8ArrayRefINS_14MachineOperandEEE.exit837
@@ -923,10 +922,10 @@ bb.a:
     i32 356, label %bb.ek
     i32 357, label %bb.el
     i32 779, label %bb.em
-    i32 345, label %bb.em
-    i32 698, label %bb.eo
-    i32 386, label %bb.es
-    i32 445, label %bb.es
+    i32 733, label %switch.lookup.a
+    i32 734, label %188
+    i32 729, label %189
+    i32 736, label %190
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -1329,11 +1328,17 @@ bb.aw:                                            ; preds = %bb.a, %bb.a
   %i.aeo = call ptr @_ZN4llvm12MachineInstr15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(80) %2) #20 ; 0 uses
   br label %bb.et
 
-switch.lookup.a:                                  ; preds = %bb.a, %bb.a, %bb.a, %bb.a
-  %188 = sext i32 %i.d to i64
-  %189 = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_, i64 %188
-  %switch.gep = getelementptr i8, ptr %189, i64 -5832
-  %switch.load = load i64, ptr %switch.gep, align 8
+188:                                              ; preds = %bb.a
+  br label %switch.lookup.a
+
+189:                                              ; preds = %bb.a
+  br label %switch.lookup.a
+
+190:                                              ; preds = %bb.a
+  br label %switch.lookup.a
+
+switch.lookup.a:                                  ; preds = %bb.a, %190, %189, %188
+  %.0728.neg = phi i64 [ -4260, %190 ], [ -4192, %188 ], [ -4059, %189 ], [ -4190, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %137) #20
   %i.aep = getelementptr inbounds nuw i8, ptr %2, i64 72
   %.sroa.0245.0.copyload = load ptr, ptr %i.aep, align 8, !tbaa !191
@@ -1344,7 +1349,7 @@ switch.lookup.a:                                  ; preds = %bb.a, %bb.a, %bb.a,
   %i.aes = load ptr, ptr %i.aer, align 8, !tbaa !159
   %i.aet = getelementptr inbounds nuw i8, ptr %i.aes, i64 8
   %i.aeu = load ptr, ptr %i.aet, align 8, !tbaa !195
-  %i.aev = getelementptr inbounds [32 x i8], ptr %i.aeu, i64 %switch.load
+  %i.aev = getelementptr inbounds [32 x i8], ptr %i.aeu, i64 %.0728.neg
   %i.aew = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 6 uses
   %i.aex = load ptr, ptr %i.aew, align 8, !tbaa !189
   %i.aey = getelementptr inbounds nuw i8, ptr %i.aex, i64 36
@@ -1747,17 +1752,17 @@ bb.cm:                                            ; preds = %bb.cl
 
 switch.lookup1421:                                ; preds = %bb.cm
   %i.bbz = zext nneg i8 %switch.tableidx1420 to i64
-  %switch.gep1422 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.bbz
+  %switch.gep1422 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.30, i64 %i.bbz
   %switch.load1423 = load i8, ptr %switch.gep1422, align 1
   %switch.ext = zext i8 %switch.load1423 to i32
   %i.bca = zext nneg i8 %switch.tableidx1420 to i64
-  %switch.gep1424 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.bca
+  %switch.gep1424 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.bca
   %switch.load1425 = load i8, ptr %switch.gep1424, align 1
   %switch.ext1426 = zext i8 %switch.load1425 to i32
   %narrow1474 = sub nuw nsw i8 9, %i.baq
   %switch.offset = zext nneg i8 %narrow1474 to i32
   %i.bcb = zext nneg i8 %switch.tableidx1420 to i64
-  %switch.gep1427 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.33, i64 %i.bcb
+  %switch.gep1427 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.bcb
   %switch.load1428 = load i8, ptr %switch.gep1427, align 1
   %switch.ext1429 = zext i8 %switch.load1428 to i32
   br label %_ZL11GetDSubRegsjN12_GLOBAL__N_114NEONRegSpacingEPKN4llvm18TargetRegisterInfoERNS1_10MCRegisterES6_S6_S6_.exit.i
@@ -2090,17 +2095,17 @@ bb.dc:                                            ; preds = %bb.db
 
 switch.lookup1431:                                ; preds = %bb.dc
   %i.bhr = zext nneg i8 %switch.tableidx1430 to i64
-  %switch.gep1432 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.bhr
+  %switch.gep1432 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.30, i64 %i.bhr
   %switch.load1433 = load i8, ptr %switch.gep1432, align 1
   %switch.ext1434 = zext i8 %switch.load1433 to i32
   %i.bhs = zext nneg i8 %switch.tableidx1430 to i64
-  %switch.gep1435 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.bhs
+  %switch.gep1435 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.bhs
   %switch.load1436 = load i8, ptr %switch.gep1435, align 1
   %switch.ext1437 = zext i8 %switch.load1436 to i32
   %narrow1473 = sub nuw nsw i8 9, %i.bfi
   %switch.offset1440 = zext nneg i8 %narrow1473 to i32
   %i.bht = zext nneg i8 %switch.tableidx1430 to i64
-  %switch.gep1441 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.33, i64 %i.bht
+  %switch.gep1441 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.bht
   %switch.load1442 = load i8, ptr %switch.gep1441, align 1
   %switch.ext1443 = zext i8 %switch.load1442 to i32
   br label %_ZL11GetDSubRegsjN12_GLOBAL__N_114NEONRegSpacingEPKN4llvm18TargetRegisterInfoERNS1_10MCRegisterES6_S6_S6_.exit.i876
@@ -2325,17 +2330,17 @@ bb.dl:                                            ; preds = %bb.dk
 
 switch.lookup1445:                                ; preds = %bb.dl
   %i.blt = zext nneg i8 %switch.tableidx1444 to i64
-  %switch.gep1446 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.blt
+  %switch.gep1446 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.30, i64 %i.blt
   %switch.load1447 = load i8, ptr %switch.gep1446, align 1
   %switch.ext1448 = zext i8 %switch.load1447 to i32
   %i.blu = zext nneg i8 %switch.tableidx1444 to i64
-  %switch.gep1449 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.blu
+  %switch.gep1449 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.blu
   %switch.load1450 = load i8, ptr %switch.gep1449, align 1
   %switch.ext1451 = zext i8 %switch.load1450 to i32
   %narrow = sub nsw i32 9, %.0.i895
   %switch.offset1454 = and i32 %narrow, 255
   %i.blv = zext nneg i8 %switch.tableidx1444 to i64
-  %switch.gep1455 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.33, i64 %i.blv
+  %switch.gep1455 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.blv
   %switch.load1456 = load i8, ptr %switch.gep1455, align 1
   %switch.ext1457 = zext i8 %switch.load1456 to i32
   br label %_ZL11GetDSubRegsjN12_GLOBAL__N_114NEONRegSpacingEPKN4llvm18TargetRegisterInfoERNS1_10MCRegisterES6_S6_S6_.exit.i900
@@ -2475,17 +2480,17 @@ bb.du:                                            ; preds = %bb.dt
 
 switch.lookup1459:                                ; preds = %bb.du
   %i.bnr = zext nneg i8 %switch.tableidx1458 to i64
-  %switch.gep1460 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.bnr
+  %switch.gep1460 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.30, i64 %i.bnr
   %switch.load1461 = load i8, ptr %switch.gep1460, align 1
   %switch.ext1462 = zext i8 %switch.load1461 to i32
   %i.bns = zext nneg i8 %switch.tableidx1458 to i64
-  %switch.gep1463 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.bns
+  %switch.gep1463 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.31, i64 %i.bns
   %switch.load1464 = load i8, ptr %switch.gep1463, align 1
   %switch.ext1465 = zext i8 %switch.load1464 to i32
   %narrow1472 = sub nsw i32 9, %.0.i895
   %switch.offset1468 = and i32 %narrow1472, 255
   %i.bnt = zext nneg i8 %switch.tableidx1458 to i64
-  %switch.gep1469 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.33, i64 %i.bnt
+  %switch.gep1469 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_115ARMExpandPseudo8ExpandMIERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERS6_.32, i64 %i.bnt
   %switch.load1470 = load i8, ptr %switch.gep1469, align 1
   %switch.ext1471 = zext i8 %switch.load1470 to i32
   br label %_ZL11GetDSubRegsjN12_GLOBAL__N_114NEONRegSpacingEPKN4llvm18TargetRegisterInfoERNS1_10MCRegisterES6_S6_S6_.exit93.i
