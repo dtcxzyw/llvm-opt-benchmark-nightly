@@ -205,7 +205,7 @@ bb.ft:                                            ; preds = %bb.el
   %i.aae = icmp eq i32 %i.aad, 0
   br i1 %i.aae, label %bb.fv, label %bb.fu
 
-bb.fu:                                            ; preds = %bb.fn, %bb.fd, %bb.fb, %bb.ez, %bb.et, %bb.eb, %bb.br, %bb.fr, %bb.fj, %bb.bd, %bb.a, %bb.ft
+bb.fu:                                            ; preds = %bb.a, %bb.bd, %bb.br, %bb.fn, %bb.fd, %bb.fb, %bb.ez, %bb.et, %bb.eb, %bb.fr, %bb.fj, %bb.ft
   store i8 -1, ptr %0, align 8
   br label %bb.fw
 

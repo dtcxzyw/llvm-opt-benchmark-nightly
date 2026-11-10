@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %.sink.split, %bb.f,
     i64 2147484673, label %bb.aj
     i64 2147484418, label %bb.ak
     i64 2147484240, label %bb.al
-    i64 2147484048, label %bb.ao
-    i64 2147484257, label %bb.ap
-    i64 2147484295, label %bb.aq
-    i64 2147484455, label %bb.aq
+    i64 2147484048, label %6
+    i64 2147484257, label %bb.ao
+    i64 2147484244, label %bb.az
+    i64 2147484487, label %bb.ay
     i64 2147484453, label %bb.ar
     i64 2147484496, label %bb.as
     i64 2147484022, label %bb.at
@@ -218,8 +218,8 @@ bb.i:                                             ; preds = %.sink.split, %bb.f,
     i64 2147484417, label %bb.ax
     i64 2147484454, label %bb.ax
     i64 2147484563, label %bb.ay
-    i64 2147484487, label %bb.ay
-    i64 2147484244, label %bb.az
+    i64 2147484295, label %bb.aq
+    i64 2147484455, label %bb.ap
   ]
 
 bb.j:                                             ; preds = %bb.i, %bb.i
@@ -409,15 +409,16 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   %i.cd = add nsw i16 %i.bz, 278
   br label %.critedge
 
+6:                                                ; preds = %bb.i
+  br label %.critedge
+
 bb.ao:                                            ; preds = %bb.i
   br label %.critedge
 
 bb.ap:                                            ; preds = %bb.i
   br label %.critedge
 
-bb.aq:                                            ; preds = %bb.i, %bb.i
-  %6 = icmp eq i64 %1, 2147484295
-  %. = select i1 %6, i16 54, i16 58
+bb.aq:                                            ; preds = %bb.i
   br label %.critedge
 
 bb.ar:                                            ; preds = %bb.i
@@ -447,20 +448,20 @@ bb.ay:                                            ; preds = %bb.i, %bb.i
 bb.az:                                            ; preds = %bb.i
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.i, %bb.i, %bb.t, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.ak, %bb.aj, %bb.ai, %.thread385, %bb.aa, %bb.z, %.thread349, %bb.u
-  %.1254 = phi i16 [ 246, %bb.au ], [ 255, %bb.av ], [ 234, %bb.aw ], [ 295, %bb.ax ], [ 222, %bb.at ], [ %i.au, %bb.u ], [ 0, %bb.t ], [ %i.bf, %.thread349 ], [ %spec.select311, %bb.z ], [ 230, %bb.aa ], [ %i.bu, %.thread385 ], [ 226, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 353, %bb.ak ], [ %i.cb, %bb.an ], [ 388, %bb.ay ], [ 214, %bb.ao ], [ 234, %bb.ap ], [ 232, %bb.aq ], [ 358, %bb.ar ], [ 393, %bb.as ], [ 273, %bb.i ], [ 273, %bb.i ] ; 3 uses
-  %.0252 = phi i16 [ 250, %bb.au ], [ 259, %bb.av ], [ 238, %bb.aw ], [ 299, %bb.ax ], [ 0, %bb.at ], [ %i.aw, %bb.u ], [ 0, %bb.t ], [ %narrow281, %.thread349 ], [ 149, %bb.z ], [ 234, %bb.aa ], [ %narrow274, %.thread385 ], [ 230, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 357, %bb.ak ], [ %i.cd, %bb.an ], [ 392, %bb.ay ], [ 218, %bb.ao ], [ 238, %bb.ap ], [ 236, %bb.aq ], [ 362, %bb.ar ], [ 397, %bb.as ], [ 277, %bb.i ], [ 277, %bb.i ] ; 3 uses
-  %.0251 = phi i16 [ 248, %bb.au ], [ 257, %bb.av ], [ 236, %bb.aw ], [ 297, %bb.ax ], [ 0, %bb.at ], [ %i.av, %bb.u ], [ 0, %bb.t ], [ %i.bg, %.thread349 ], [ 147, %bb.z ], [ 232, %bb.aa ], [ %i.bv, %.thread385 ], [ 228, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 355, %bb.ak ], [ %i.cc, %bb.an ], [ 390, %bb.ay ], [ 216, %bb.ao ], [ 236, %bb.ap ], [ 234, %bb.aq ], [ 360, %bb.ar ], [ 395, %bb.as ], [ 275, %bb.i ], [ 275, %bb.i ] ; 3 uses
-  %7 = phi i1 [ false, %bb.au ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.ax ], [ true, %bb.at ], [ false, %bb.u ], [ false, %bb.t ], [ false, %.thread349 ], [ false, %bb.z ], [ false, %bb.aa ], [ false, %.thread385 ], [ true, %bb.az ], [ false, %bb.ai ], [ false, %bb.aj ], [ false, %bb.ak ], [ false, %bb.an ], [ false, %bb.ay ], [ true, %bb.ao ], [ false, %bb.ap ], [ false, %bb.aq ], [ false, %bb.ar ], [ false, %bb.as ], [ false, %bb.i ], [ false, %bb.i ] ; 3 uses
-  %.0250 = phi i32 [ 0, %bb.au ], [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 2355, %bb.at ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread385 ], [ 2359, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.an ], [ 0, %bb.ay ], [ 2347, %bb.ao ], [ 0, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
-  %.0249 = phi i16 [ 30, %bb.au ], [ 30, %bb.av ], [ 30, %bb.aw ], [ 35, %bb.ax ], [ 29, %bb.at ], [ 30, %bb.u ], [ 30, %bb.t ], [ %i.bc, %.thread349 ], [ 40, %bb.z ], [ 30, %bb.aa ], [ %i.br, %.thread385 ], [ 29, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 35, %bb.ak ], [ 30, %bb.an ], [ 35, %bb.ay ], [ 29, %bb.ao ], [ 30, %bb.ap ], [ 30, %bb.aq ], [ 35, %bb.ar ], [ 35, %bb.as ], [ 29, %bb.i ], [ 29, %bb.i ] ; 3 uses
-  %.1247 = phi i16 [ 49, %bb.au ], [ 53, %bb.av ], [ 56, %bb.aw ], [ 125, %bb.ax ], [ 48, %bb.at ], [ 53, %bb.u ], [ 53, %bb.t ], [ %i.bd, %.thread349 ], [ 39, %bb.z ], [ 49, %bb.aa ], [ %i.bs, %.thread385 ], [ 48, %bb.az ], [ 150, %bb.ai ], [ 150, %bb.aj ], [ 131, %bb.ak ], [ %i.ca, %bb.an ], [ 150, %bb.ay ], [ 48, %bb.ao ], [ 49, %bb.ap ], [ %., %bb.aq ], [ 132, %bb.ar ], [ 150, %bb.as ], [ 48, %bb.i ], [ 48, %bb.i ] ; 2 uses
-  %.not287 = phi i1 [ false, %bb.au ], [ false, %bb.av ], [ false, %bb.aw ], [ true, %bb.ax ], [ true, %bb.at ], [ false, %bb.u ], [ false, %bb.t ], [ true, %.thread349 ], [ true, %bb.z ], [ false, %bb.aa ], [ true, %.thread385 ], [ true, %bb.az ], [ true, %bb.ai ], [ true, %bb.aj ], [ true, %bb.ak ], [ false, %bb.an ], [ true, %bb.ay ], [ true, %bb.ao ], [ false, %bb.ap ], [ true, %bb.aq ], [ true, %bb.ar ], [ true, %bb.as ], [ true, %bb.i ], [ true, %bb.i ] ; 3 uses
-  %.0245 = phi i64 [ 7, %bb.au ], [ 7, %bb.av ], [ 7, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.at ], [ 7, %bb.u ], [ 7, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 7, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 7, %bb.an ], [ 0, %bb.ay ], [ 0, %bb.ao ], [ 7, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
-  %.not289 = phi i1 [ false, %bb.au ], [ true, %bb.av ], [ true, %bb.aw ], [ true, %bb.ax ], [ true, %bb.at ], [ true, %bb.u ], [ true, %bb.t ], [ true, %.thread349 ], [ true, %bb.z ], [ false, %bb.aa ], [ true, %.thread385 ], [ true, %bb.az ], [ true, %bb.ai ], [ true, %bb.aj ], [ true, %bb.ak ], [ true, %bb.an ], [ true, %bb.ay ], [ true, %bb.ao ], [ false, %bb.ap ], [ true, %bb.aq ], [ true, %bb.ar ], [ true, %bb.as ], [ true, %bb.i ], [ true, %bb.i ] ; 3 uses
-  %.0244 = phi i16 [ 190, %bb.au ], [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.at ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 191, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.az ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.an ], [ 0, %bb.ay ], [ 0, %bb.ao ], [ 191, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
-  %.not286 = phi i1 [ true, %bb.au ], [ true, %bb.av ], [ true, %bb.aw ], [ true, %bb.ax ], [ true, %bb.at ], [ true, %bb.u ], [ true, %bb.t ], [ true, %.thread349 ], [ true, %bb.z ], [ true, %bb.aa ], [ true, %.thread385 ], [ true, %bb.az ], [ false, %bb.ai ], [ false, %bb.aj ], [ false, %bb.ak ], [ true, %bb.an ], [ true, %bb.ay ], [ true, %bb.ao ], [ true, %bb.ap ], [ true, %bb.aq ], [ true, %bb.ar ], [ true, %bb.as ], [ true, %bb.i ], [ true, %bb.i ] ; 3 uses
-  %.0243 = phi i16 [ 0, %bb.au ], [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.at ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.az ], [ 1498, %bb.ai ], [ 1408, %bb.aj ], [ 946, %bb.ak ], [ 0, %bb.an ], [ 0, %bb.ay ], [ 0, %bb.ao ], [ 0, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
+.critedge:                                        ; preds = %bb.i, %bb.i, %bb.ap, %bb.t, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao, %6, %bb.an, %bb.ak, %bb.aj, %bb.ai, %.thread385, %bb.aa, %bb.z, %.thread349, %bb.u
+  %.1254 = phi i16 [ 255, %bb.av ], [ 234, %bb.aw ], [ 295, %bb.ax ], [ 388, %bb.ay ], [ 246, %bb.au ], [ %i.au, %bb.u ], [ 0, %bb.t ], [ %i.bf, %.thread349 ], [ %spec.select311, %bb.z ], [ 230, %bb.aa ], [ %i.bu, %.thread385 ], [ 232, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 353, %bb.ak ], [ %i.cb, %bb.an ], [ 232, %bb.ap ], [ 214, %6 ], [ 234, %bb.ao ], [ 226, %bb.az ], [ 358, %bb.ar ], [ 393, %bb.as ], [ 222, %bb.at ], [ 273, %bb.i ], [ 273, %bb.i ] ; 3 uses
+  %.0252 = phi i16 [ 259, %bb.av ], [ 238, %bb.aw ], [ 299, %bb.ax ], [ 392, %bb.ay ], [ 250, %bb.au ], [ %i.aw, %bb.u ], [ 0, %bb.t ], [ %narrow281, %.thread349 ], [ 149, %bb.z ], [ 234, %bb.aa ], [ %narrow274, %.thread385 ], [ 236, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 357, %bb.ak ], [ %i.cd, %bb.an ], [ 236, %bb.ap ], [ 218, %6 ], [ 238, %bb.ao ], [ 230, %bb.az ], [ 362, %bb.ar ], [ 397, %bb.as ], [ 0, %bb.at ], [ 277, %bb.i ], [ 277, %bb.i ] ; 3 uses
+  %.0251 = phi i16 [ 257, %bb.av ], [ 236, %bb.aw ], [ 297, %bb.ax ], [ 390, %bb.ay ], [ 248, %bb.au ], [ %i.av, %bb.u ], [ 0, %bb.t ], [ %i.bg, %.thread349 ], [ 147, %bb.z ], [ 232, %bb.aa ], [ %i.bv, %.thread385 ], [ 234, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 355, %bb.ak ], [ %i.cc, %bb.an ], [ 234, %bb.ap ], [ 216, %6 ], [ 236, %bb.ao ], [ 228, %bb.az ], [ 360, %bb.ar ], [ 395, %bb.as ], [ 0, %bb.at ], [ 275, %bb.i ], [ 275, %bb.i ] ; 3 uses
+  %7 = phi i1 [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.ax ], [ false, %bb.ay ], [ false, %bb.au ], [ false, %bb.u ], [ false, %bb.t ], [ false, %.thread349 ], [ false, %bb.z ], [ false, %bb.aa ], [ false, %.thread385 ], [ false, %bb.aq ], [ false, %bb.ai ], [ false, %bb.aj ], [ false, %bb.ak ], [ false, %bb.an ], [ false, %bb.ap ], [ true, %6 ], [ false, %bb.ao ], [ true, %bb.az ], [ false, %bb.ar ], [ false, %bb.as ], [ true, %bb.at ], [ false, %bb.i ], [ false, %bb.i ] ; 3 uses
+  %.0250 = phi i32 [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.ay ], [ 0, %bb.au ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 2347, %6 ], [ 0, %bb.ao ], [ 2359, %bb.az ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 2355, %bb.at ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
+  %.0249 = phi i16 [ 30, %bb.av ], [ 30, %bb.aw ], [ 35, %bb.ax ], [ 35, %bb.ay ], [ 30, %bb.au ], [ 30, %bb.u ], [ 30, %bb.t ], [ %i.bc, %.thread349 ], [ 40, %bb.z ], [ 30, %bb.aa ], [ %i.br, %.thread385 ], [ 30, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 35, %bb.ak ], [ 30, %bb.an ], [ 30, %bb.ap ], [ 29, %6 ], [ 30, %bb.ao ], [ 29, %bb.az ], [ 35, %bb.ar ], [ 35, %bb.as ], [ 29, %bb.at ], [ 29, %bb.i ], [ 29, %bb.i ] ; 3 uses
+  %.1247 = phi i16 [ 53, %bb.av ], [ 56, %bb.aw ], [ 125, %bb.ax ], [ 150, %bb.ay ], [ 49, %bb.au ], [ 53, %bb.u ], [ 53, %bb.t ], [ %i.bd, %.thread349 ], [ 39, %bb.z ], [ 49, %bb.aa ], [ %i.bs, %.thread385 ], [ 54, %bb.aq ], [ 150, %bb.ai ], [ 150, %bb.aj ], [ 131, %bb.ak ], [ %i.ca, %bb.an ], [ 58, %bb.ap ], [ 48, %6 ], [ 49, %bb.ao ], [ 48, %bb.az ], [ 132, %bb.ar ], [ 150, %bb.as ], [ 48, %bb.at ], [ 48, %bb.i ], [ 48, %bb.i ] ; 2 uses
+  %.not287 = phi i1 [ false, %bb.av ], [ false, %bb.aw ], [ true, %bb.ax ], [ true, %bb.ay ], [ false, %bb.au ], [ false, %bb.u ], [ false, %bb.t ], [ true, %.thread349 ], [ true, %bb.z ], [ false, %bb.aa ], [ true, %.thread385 ], [ true, %bb.aq ], [ true, %bb.ai ], [ true, %bb.aj ], [ true, %bb.ak ], [ false, %bb.an ], [ true, %bb.ap ], [ true, %6 ], [ false, %bb.ao ], [ true, %bb.az ], [ true, %bb.ar ], [ true, %bb.as ], [ true, %bb.at ], [ true, %bb.i ], [ true, %bb.i ] ; 3 uses
+  %.0245 = phi i64 [ 7, %bb.av ], [ 7, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.ay ], [ 7, %bb.au ], [ 7, %bb.u ], [ 7, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 7, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 7, %bb.an ], [ 0, %bb.ap ], [ 0, %6 ], [ 7, %bb.ao ], [ 0, %bb.az ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.at ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
+  %.not289 = phi i1 [ true, %bb.av ], [ true, %bb.aw ], [ true, %bb.ax ], [ true, %bb.ay ], [ false, %bb.au ], [ true, %bb.u ], [ true, %bb.t ], [ true, %.thread349 ], [ true, %bb.z ], [ false, %bb.aa ], [ true, %.thread385 ], [ true, %bb.aq ], [ true, %bb.ai ], [ true, %bb.aj ], [ true, %bb.ak ], [ true, %bb.an ], [ true, %bb.ap ], [ true, %6 ], [ false, %bb.ao ], [ true, %bb.az ], [ true, %bb.ar ], [ true, %bb.as ], [ true, %bb.at ], [ true, %bb.i ], [ true, %bb.i ] ; 3 uses
+  %.0244 = phi i16 [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.ay ], [ 190, %bb.au ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 191, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.aq ], [ 0, %bb.ai ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 0, %6 ], [ 191, %bb.ao ], [ 0, %bb.az ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.at ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
+  %.not286 = phi i1 [ true, %bb.av ], [ true, %bb.aw ], [ true, %bb.ax ], [ true, %bb.ay ], [ true, %bb.au ], [ true, %bb.u ], [ true, %bb.t ], [ true, %.thread349 ], [ true, %bb.z ], [ true, %bb.aa ], [ true, %.thread385 ], [ true, %bb.aq ], [ false, %bb.ai ], [ false, %bb.aj ], [ false, %bb.ak ], [ true, %bb.an ], [ true, %bb.ap ], [ true, %6 ], [ true, %bb.ao ], [ true, %bb.az ], [ true, %bb.ar ], [ true, %bb.as ], [ true, %bb.at ], [ true, %bb.i ], [ true, %bb.i ] ; 3 uses
+  %.0243 = phi i16 [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.ay ], [ 0, %bb.au ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %.thread349 ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread385 ], [ 0, %bb.aq ], [ 1498, %bb.ai ], [ 1408, %bb.aj ], [ 946, %bb.ak ], [ 0, %bb.an ], [ 0, %bb.ap ], [ 0, %6 ], [ 0, %bb.ao ], [ 0, %bb.az ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.at ], [ 0, %bb.i ], [ 0, %bb.i ] ; 3 uses
   %i.ce = zext nneg i16 %.1247 to i32
   %i.cf = icmp ugt i32 %3, %i.ce
   br i1 %i.cf, label %bb.ba, label %.critedge.thread

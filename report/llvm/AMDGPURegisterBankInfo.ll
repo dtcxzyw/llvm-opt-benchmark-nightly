@@ -205,7 +205,7 @@ _ZN4llvm15SmallVectorImplIPKNS_16RegisterBankInfo12ValueMappingEE7reserveEm.exit
   br label %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit
 
 _ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit: ; preds = %bb.ak, %.sink.split.i.i.i1778
-  %i.gj = load i32, ptr %i.f, align 4, !tbaa !396 ; 3 uses
+  %i.gj = load i32, ptr %i.f, align 4, !tbaa !396 ; 2 uses
   switch i32 %i.gj, label %bb.am [
     i32 64, label %bb.an
     i32 65, label %bb.an
@@ -382,9 +382,9 @@ _ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit: ; pr
     i32 4151, label %bb.pq
     i32 4152, label %bb.pq
     i32 4153, label %bb.pq
-    i32 4129, label %bb.pr
-    i32 4127, label %bb.pr
-    i32 4128, label %bb.pr
+    i32 4148, label %bb.ts
+    i32 4140, label %bb.ts
+    i32 4184, label %bb.tr
     i32 140, label %bb.qm
     i32 142, label %bb.qm
     i32 166, label %bb.sz
@@ -415,9 +415,9 @@ _ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit: ; pr
     i32 91, label %bb.tp
     i32 135, label %bb.tq
     i32 4185, label %bb.tr
-    i32 4184, label %bb.tr
-    i32 4140, label %bb.ts
-    i32 4148, label %bb.ts
+    i32 4128, label %bb.pr
+    i32 4127, label %80
+    i32 4129, label %80
   ]
 
 bb.am:                                            ; preds = %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit
@@ -694,7 +694,7 @@ _ZN4llvm6AMDGPU15getValueMappingEjj.exit1814:     ; preds = %_ZNK4llvm22AMDGPURe
   store ptr %i.km, ptr %i.ko, align 8, !tbaa !97
   br label %.thread2655
 
-bb.bi:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit1787, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit
+bb.bi:                                            ; preds = %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZNK4llvm8TypeSizecvmEv.exit1787
   %i.kp = call noundef zeroext i1 @_ZNK4llvm22AMDGPURegisterBankInfo13isSALUMappingERKNS_12MachineInstrE(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 8 dereferenceable(80) %1)
   br i1 %i.kp, label %bb.bj, label %bb.br
 
@@ -1097,7 +1097,7 @@ bb.fn:                                            ; preds = %.thread2673, %bb.fm
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #21
   br label %.thread2655
 
-bb.fo:                                            ; preds = %.thread2675, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit
+bb.fo:                                            ; preds = %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %.thread2675
   %i.abv = call noundef i32 @_ZNK4llvm22AMDGPURegisterBankInfo14getMappingTypeERKNS_19MachineRegisterInfoERKNS_12MachineInstrE(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 8 dereferenceable(520) %i.e, ptr noundef nonnull align 8 dereferenceable(80) %1) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #21
   %i.abw = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -1500,12 +1500,17 @@ bb.pq:                                            ; preds = %_ZN4llvm11SmallVect
   %i.ckc = call noundef nonnull align 8 dereferenceable(20) ptr @_ZNK4llvm22AMDGPURegisterBankInfo15getImageMappingERKNS_19MachineRegisterInfoERKNS_12MachineInstrEi(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 8 dereferenceable(520) %i.e, ptr noundef nonnull align 8 dereferenceable(80) %1, i32 noundef %i.ckb)
   br label %.thread2669
 
-bb.pr:                                            ; preds = %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit
-  %80 = add nsw i32 %i.gj, -4129
-  %spec.select2734 = icmp ult i32 %80, -2         ; 2 uses
+80:                                               ; preds = %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit
+  %81 = icmp eq i32 %i.gj, 4127
+  br label %bb.pr
+
+bb.pr:                                            ; preds = %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit, %80
+  %82 = phi i1 [ true, %_ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj8EEC2Em.exit ], [ %81, %80 ] ; 3 uses
+  %not. = xor i1 %82, true
+  %.neg = sext i1 %not. to i32
   %i.ckd = call noundef i32 @_ZNK4llvm12MachineInstr22getNumExplicitOperandsEv(ptr noundef nonnull align 8 dereferenceable(80) %1) #21
-  %81 = select i1 %spec.select2734, i32 -2, i32 -1
-  %i.cke = add i32 %81, %i.ckd                    ; 4 uses
+  %83 = add i32 %i.ckd, -1
+  %i.cke = add i32 %83, %.neg                     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #21
   %i.ckf = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.ckg = load ptr, ptr %i.ckf, align 8, !tbaa !82
@@ -1548,7 +1553,6 @@ _ZNK4llvm8TypeSizecvmEv.exit2137:                 ; preds = %_ZNK4llvm19MachineR
   %i.ckw = call noundef ptr @_ZN4llvm6AMDGPU15getValueMappingEjj(i32 noundef 3, i32 noundef %i.ckv)
   %i.ckx = load ptr, ptr %7, align 8, !tbaa !93
   store ptr %i.ckw, ptr %i.ckx, align 8, !tbaa !97
-  %82 = icmp slt i32 %i.gj, 4129
   br i1 %82, label %bb.pv, label %bb.qc
 
 bb.pv:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit2137
@@ -1638,7 +1642,7 @@ _ZNK4llvm8TypeSizecvmEv.exit2143:                 ; preds = %_ZNK4llvm19MachineR
   call void @llvm.lifetime.end.p0(ptr nonnull %72) #21
   br label %bb.qc
 
-bb.qc:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit2137, %_ZNK4llvm8TypeSizecvmEv.exit2143
+bb.qc:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit2143, %_ZNK4llvm8TypeSizecvmEv.exit2137
   %i.cmk = load ptr, ptr %i.ckf, align 8, !tbaa !82
   %i.cml = zext i32 %i.cke to i64                 ; 2 uses
   %i.cmm = getelementptr inbounds nuw [32 x i8], ptr %i.cmk, i64 %i.cml
@@ -1701,7 +1705,7 @@ _ZNK4llvm8TypeSizecvmEv.exit2146:                 ; preds = %_ZNK4llvm19MachineR
   br label %.thread2655
 
 bb.qh:                                            ; preds = %bb.qc
-  %i.cnp = select i1 %spec.select2734, i32 2, i32 4 ; 2 uses
+  %i.cnp = select i1 %82, i32 4, i32 2            ; 2 uses
   %i.cnq = icmp ult i32 %i.cnp, %i.cke
   br i1 %i.cnq, label %.lr.ph2773, label %.thread2655
 
@@ -2104,7 +2108,7 @@ _ZNK4llvm8TypeSizecvmEv.exit2300:                 ; preds = %_ZNK4llvm8TypeSizec
   store ptr %i.dtf, ptr %i.dtg, align 8, !tbaa !97
   br label %.thread2655
 
-.thread2655:                                      ; preds = %bb.tk, %bb.sv, %_ZNK4llvm8TypeSizecvmEv.exit2149, %_ZNK4llvm8TypeSizecvmEv.exit1985, %scalar.ph, %middle.block, %bb.tg, %bb.sq, %bb.qh, %bb.im, %_ZNK4llvm8TypeSizecvmEv.exit1902, %_ZNK4llvm8TypeSizecvmEv.exit2152, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2161, %_ZNK4llvm8TypeSizecvmEv.exit2167, %bb.ra, %bb.rb, %bb.rc, %bb.rd, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2207, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2213, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2219, %_ZNK4llvm8TypeSizecvmEv.exit2220, %_ZNK4llvm8TypeSizecvmEv.exit2221, %bb.rl, %bb.rm, %bb.rn, %bb.ro, %bb.rp, %bb.rq, %bb.rr, %bb.rs, %_ZNK4llvm8TypeSizecvmEv.exit2225, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2234, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2240, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2246, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2252, %bb.rz, %bb.sa, %switch.lookup3106, %bb.si, %bb.sj, %bb.sk, %bb.sl, %bb.sm, %bb.sn, %bb.so, %bb.sw, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1814, %bb.bd, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1799, %bb.fn, %bb.ej, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2281, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2287, %_ZNK4llvm8TypeSizecvmEv.exit2146, %_ZNK4llvm8TypeSizecvmEv.exit2002, %_ZNK4llvm8TypeSizecvmEv.exit2005, %bb.kf, %_ZNK4llvm8TypeSizecvmEv.exit2015, %_ZNK4llvm8TypeSizecvmEv.exit2024, %_ZNK4llvm8TypeSizecvmEv.exit2030, %_ZNK4llvm8TypeSizecvmEv.exit2041, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit2054, %_ZNK4llvm8TypeSizecvmEv.exit2055, %_ZNK4llvm8TypeSizecvmEv.exit2057, %_ZNK4llvm8TypeSizecvmEv.exit2058, %_ZNK4llvm8TypeSizecvmEv.exit2059, %_ZNK4llvm8TypeSizecvmEv.exit2060, %bb.my, %bb.ni, %bb.ns, %switch.lookup, %_ZNK4llvm8TypeSizecvmEv.exit2086, %_ZNK4llvm8TypeSizecvmEv.exit2098, %_ZNK4llvm8TypeSizecvmEv.exit2104, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit2109, %_ZNK4llvm8TypeSizecvmEv.exit2111, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit2116, %_ZNK4llvm8TypeSizecvmEv.exit2122, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2131, %_ZNK4llvm8TypeSizecvmEv.exit2134, %_ZNK4llvm8TypeSizecvmEv.exit2300, %bb.tr, %bb.tq, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2297, %bb.tn, %bb.tm, %_ZNK4llvm8TypeSizecvmEv.exit1996, %bb.iz, %_ZNK4llvm8TypeSizecvmEv.exit1993, %bb.ir, %bb.iq, %bb.ip, %bb.il, %_ZL12regBankUnionjj.exit1970, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1952, %_ZNK4llvm8TypeSizecvmEv.exit1940, %_ZNK4llvm8TypeSizecvmEv.exit1937, %_ZNK4llvm8TypeSizecvmEv.exit1931, %_ZNK4llvm8TypeSizecvmEv.exit1929, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1925, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1916, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit1907, %_ZNK4llvm8TypeSizecvmEv.exit1884, %_ZNK4llvm8TypeSizecvmEv.exit1880, %bb.et, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1871, %_ZNK4llvm8TypeSizecvmEv.exit1862, %_ZNK4llvm8TypeSizecvmEv.exit1859
+.thread2655:                                      ; preds = %_ZNK4llvm8TypeSizecvmEv.exit2149, %bb.tk, %bb.sv, %_ZNK4llvm8TypeSizecvmEv.exit1985, %scalar.ph, %middle.block, %bb.qh, %bb.tg, %bb.sq, %bb.im, %_ZNK4llvm8TypeSizecvmEv.exit1902, %_ZNK4llvm8TypeSizecvmEv.exit2152, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2161, %_ZNK4llvm8TypeSizecvmEv.exit2167, %bb.ra, %bb.rb, %bb.rc, %bb.rd, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2207, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2213, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2219, %_ZNK4llvm8TypeSizecvmEv.exit2220, %_ZNK4llvm8TypeSizecvmEv.exit2221, %bb.rl, %bb.rm, %bb.rn, %bb.ro, %bb.rp, %bb.rq, %bb.rr, %bb.rs, %_ZNK4llvm8TypeSizecvmEv.exit2225, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2234, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2240, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2246, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2252, %bb.rz, %bb.sa, %switch.lookup3106, %bb.si, %bb.sj, %bb.sk, %bb.sl, %bb.sm, %bb.sn, %bb.so, %bb.sw, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1814, %bb.bd, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1799, %bb.fn, %bb.ej, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2281, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2287, %_ZNK4llvm8TypeSizecvmEv.exit2146, %_ZNK4llvm8TypeSizecvmEv.exit2002, %_ZNK4llvm8TypeSizecvmEv.exit2005, %bb.kf, %_ZNK4llvm8TypeSizecvmEv.exit2015, %_ZNK4llvm8TypeSizecvmEv.exit2024, %_ZNK4llvm8TypeSizecvmEv.exit2030, %_ZNK4llvm8TypeSizecvmEv.exit2041, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit2054, %_ZNK4llvm8TypeSizecvmEv.exit2055, %_ZNK4llvm8TypeSizecvmEv.exit2057, %_ZNK4llvm8TypeSizecvmEv.exit2058, %_ZNK4llvm8TypeSizecvmEv.exit2059, %_ZNK4llvm8TypeSizecvmEv.exit2060, %bb.my, %bb.ni, %bb.ns, %switch.lookup, %_ZNK4llvm8TypeSizecvmEv.exit2086, %_ZNK4llvm8TypeSizecvmEv.exit2098, %_ZNK4llvm8TypeSizecvmEv.exit2104, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit2109, %_ZNK4llvm8TypeSizecvmEv.exit2111, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit2116, %_ZNK4llvm8TypeSizecvmEv.exit2122, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2131, %_ZNK4llvm8TypeSizecvmEv.exit2134, %_ZNK4llvm8TypeSizecvmEv.exit2300, %bb.tr, %bb.tq, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit2297, %bb.tn, %bb.tm, %_ZNK4llvm8TypeSizecvmEv.exit1996, %bb.iz, %_ZNK4llvm8TypeSizecvmEv.exit1993, %bb.ir, %bb.iq, %bb.ip, %bb.il, %_ZL12regBankUnionjj.exit1970, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1952, %_ZNK4llvm8TypeSizecvmEv.exit1940, %_ZNK4llvm8TypeSizecvmEv.exit1937, %_ZNK4llvm8TypeSizecvmEv.exit1931, %_ZNK4llvm8TypeSizecvmEv.exit1929, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1925, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1916, %_ZNK4llvm22AMDGPURegisterBankInfo12getRegBankIDENS_8RegisterERKNS_19MachineRegisterInfoEj.exit1907, %_ZNK4llvm8TypeSizecvmEv.exit1884, %_ZNK4llvm8TypeSizecvmEv.exit1880, %bb.et, %_ZN4llvm6AMDGPU15getValueMappingEjj.exit1871, %_ZNK4llvm8TypeSizecvmEv.exit1862, %_ZNK4llvm8TypeSizecvmEv.exit1859
   %i.dth = call noundef ptr @_ZNK4llvm16RegisterBankInfo18getOperandsMappingERKNS_15SmallVectorImplIPKNS0_12ValueMappingEEE(ptr noundef nonnull align 8 dereferenceable(160) %0, ptr noundef nonnull align 8 dereferenceable(16) %7) #21
   %i.dti = load i24, ptr %i.fw, align 8
   %i.dtj = zext i24 %i.dti to i32

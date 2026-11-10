@@ -205,17 +205,14 @@ bb.lb:                                            ; preds = %.split45
   br label %bb.lc
 
 bb.lc:                                            ; preds = %bb.jf, %bb.jg, %bb.jh, %bb.ji, %bb.ja, %bb.jb, %bb.jc, %bb.jd, %bb.kc, %bb.kd, %bb.ke, %bb.kf, %bb.jx, %bb.jy, %bb.jz, %bb.ka, %bb.kw, %bb.kv, %bb.ku, %bb.kt, %bb.lb, %bb.la, %bb.kz, %bb.ky, %bb.kl, %bb.kk, %bb.kj, %bb.ki, %bb.kq, %bb.kp, %bb.ko, %bb.kn, %bb.jp, %bb.jo, %bb.jn, %bb.jm, %bb.ju, %bb.jt, %bb.js, %bb.jr, %bb.gd, %bb.ge, %bb.gf, %bb.gg, %bb.fy, %bb.fz, %bb.ga, %bb.gb, %bb.ha, %bb.hb, %bb.hc, %bb.hd, %bb.gv, %bb.gw, %bb.gx, %bb.gy, %bb.hu, %bb.ht, %bb.hs, %bb.hr, %bb.hz, %bb.hy, %bb.hx, %bb.hw, %bb.hj, %bb.hi, %bb.hh, %bb.hg, %bb.ho, %bb.hn, %bb.hm, %bb.hl, %bb.gn, %bb.gm, %bb.gl, %bb.gk, %bb.gs, %bb.gr, %bb.gq, %bb.gp, %bb.dg, %bb.dh, %bb.di, %bb.dj, %bb.db, %bb.dc, %bb.dd, %bb.de, %bb.ed, %bb.ee, %bb.ef, %bb.eg, %bb.dy, %bb.dz, %bb.ea, %bb.eb, %bb.ex, %bb.ew, %bb.ev, %bb.eu, %bb.fc, %bb.fb, %bb.fa, %bb.ez, %bb.em, %bb.el, %bb.ek, %bb.ej, %bb.er, %bb.eq, %bb.ep, %bb.eo, %bb.dq, %bb.dp, %bb.do, %bb.dn, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.fh, %bb.fi, %bb.fj, %bb.fk, %bb.ij, %bb.ik, %bb.il, %bb.im, %bb.p, %bb.q, %bb.r, %bb.s, %bb.ck, %bb.cl, %bb.cm, %bb.cn
-  %i.of = load i8, ptr %2, align 8, !tbaa !22     ; 2 uses
-  switch i8 %i.of, label %3 [
+  %i.of = load i8, ptr %2, align 8, !tbaa !22
+  switch i8 %i.of, label %bb.lw [
     i8 28, label %bb.ld
     i8 43, label %bb.ld
+    i8 29, label %bb.ld
   ]
 
-3:                                                ; preds = %bb.lc
-  %4 = icmp eq i8 %i.of, 29
-  br i1 %4, label %bb.ld, label %bb.lw
-
-bb.ld:                                            ; preds = %bb.lc, %bb.lc, %3
+bb.ld:                                            ; preds = %bb.lc, %bb.lc, %bb.lc
   switch i8 %spec.select, label %bb.le [
     i8 -1, label %bb.lo
     i8 0, label %bb.lf
@@ -396,7 +393,7 @@ bb.lv:                                            ; preds = %ir_ref_spill_slot.e
   tail call fastcc void @ir_emit_store_mem_fp(ptr noundef nonnull readonly %0, i32 noundef range(i32 0, 256) %i.f, i64 noundef %.0.i.i.i951, i8 noundef signext 0)
   br label %ir_emit_store.exit
 
-bb.lw:                                            ; preds = %3
+bb.lw:                                            ; preds = %bb.lc
   %i.rm = zext i8 %i.e to i64
   %i.rn = getelementptr inbounds nuw i8, ptr @ir_type_size, i64 %i.rm
   %i.ro = load i8, ptr %i.rn, align 1, !tbaa !22  ; 2 uses

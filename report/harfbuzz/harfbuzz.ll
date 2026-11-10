@@ -205,11 +205,8 @@ bb.a:
   %i.b = alloca [64 x i8], align 16               ; 7 uses
   %i.c = alloca [64 x i8], align 16               ; 6 uses
   %i.d = alloca [20 x i8], align 16               ; 12 uses
-  %1 = icmp eq i32 %0, 1684434036
-  br i1 %1, label %hb_language_from_string.exit, label %2
-
-2:                                                ; preds = %bb.a
   switch i32 %0, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader [
+    i32 1684434036, label %hb_language_from_string.exit
     i32 1095521312, label %bb.b
     i32 1095782472, label %bb.c
     i32 1095912224, label %bb.d
@@ -276,322 +273,322 @@ bb.a:
     i32 1515864352, label %bb.bm
   ]
 
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a
   %i.e = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.295) ; 2 uses
   %.not11.i.i = icmp eq ptr %i.e, null
   br i1 %.not11.i.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.f = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.296) ; 2 uses
   %.not11.i1.i = icmp eq ptr %i.f, null
   br i1 %.not11.i1.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.a
   %i.g = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.297) ; 2 uses
   %.not11.i4.i = icmp eq ptr %i.g, null
   br i1 %.not11.i4.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
   %i.h = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.298) ; 2 uses
   %.not11.i7.i = icmp eq ptr %i.h, null
   br i1 %.not11.i7.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.a
   %i.i = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.299) ; 2 uses
   %.not11.i10.i = icmp eq ptr %i.i, null
   br i1 %.not11.i10.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.a
   %i.j = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.300) ; 2 uses
   %.not11.i13.i = icmp eq ptr %i.j, null
   br i1 %.not11.i13.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.a
   %i.k = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.301) ; 2 uses
   %.not11.i16.i = icmp eq ptr %i.k, null
   br i1 %.not11.i16.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.a
   %i.l = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.302) ; 2 uses
   %.not11.i19.i = icmp eq ptr %i.l, null
   br i1 %.not11.i19.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.j:                                             ; preds = %2
+bb.j:                                             ; preds = %bb.a
   %i.m = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.303) ; 2 uses
   %.not11.i22.i = icmp eq ptr %i.m, null
   br i1 %.not11.i22.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.a
   %i.n = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.304) ; 2 uses
   %.not11.i25.i = icmp eq ptr %i.n, null
   br i1 %.not11.i25.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.a
   %i.o = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.305) ; 2 uses
   %.not11.i28.i = icmp eq ptr %i.o, null
   br i1 %.not11.i28.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.m:                                             ; preds = %2
+bb.m:                                             ; preds = %bb.a
   %i.p = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.306) ; 2 uses
   %.not11.i31.i = icmp eq ptr %i.p, null
   br i1 %.not11.i31.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.n:                                             ; preds = %2
+bb.n:                                             ; preds = %bb.a
   %i.q = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.307) ; 2 uses
   %.not11.i34.i = icmp eq ptr %i.q, null
   br i1 %.not11.i34.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.o:                                             ; preds = %2
+bb.o:                                             ; preds = %bb.a
   %i.r = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.308) ; 2 uses
   %.not11.i37.i = icmp eq ptr %i.r, null
   br i1 %.not11.i37.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.p:                                             ; preds = %2
+bb.p:                                             ; preds = %bb.a
   %i.s = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.309) ; 2 uses
   %.not11.i40.i = icmp eq ptr %i.s, null
   br i1 %.not11.i40.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.q:                                             ; preds = %2
+bb.q:                                             ; preds = %bb.a
   %i.t = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.310) ; 2 uses
   %.not11.i43.i = icmp eq ptr %i.t, null
   br i1 %.not11.i43.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.r:                                             ; preds = %2
+bb.r:                                             ; preds = %bb.a
   %i.u = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.311) ; 2 uses
   %.not11.i46.i = icmp eq ptr %i.u, null
   br i1 %.not11.i46.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.s:                                             ; preds = %2
+bb.s:                                             ; preds = %bb.a
   %i.v = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.312) ; 2 uses
   %.not11.i49.i = icmp eq ptr %i.v, null
   br i1 %.not11.i49.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.t:                                             ; preds = %2
+bb.t:                                             ; preds = %bb.a
   %i.w = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.313) ; 2 uses
   %.not11.i52.i = icmp eq ptr %i.w, null
   br i1 %.not11.i52.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.u:                                             ; preds = %2
+bb.u:                                             ; preds = %bb.a
   %i.x = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.314) ; 2 uses
   %.not11.i55.i = icmp eq ptr %i.x, null
   br i1 %.not11.i55.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.v:                                             ; preds = %2
+bb.v:                                             ; preds = %bb.a
   %i.y = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.315) ; 2 uses
   %.not11.i58.i = icmp eq ptr %i.y, null
   br i1 %.not11.i58.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.w:                                             ; preds = %2
+bb.w:                                             ; preds = %bb.a
   %i.z = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.316) ; 2 uses
   %.not11.i61.i = icmp eq ptr %i.z, null
   br i1 %.not11.i61.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.x:                                             ; preds = %2
+bb.x:                                             ; preds = %bb.a
   %i.aa = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.317) ; 2 uses
   %.not11.i64.i = icmp eq ptr %i.aa, null
   br i1 %.not11.i64.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.y:                                             ; preds = %2
+bb.y:                                             ; preds = %bb.a
   %i.ab = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.318) ; 2 uses
   %.not11.i67.i = icmp eq ptr %i.ab, null
   br i1 %.not11.i67.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.z:                                             ; preds = %2
+bb.z:                                             ; preds = %bb.a
   %i.ac = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.319) ; 2 uses
   %.not11.i70.i = icmp eq ptr %i.ac, null
   br i1 %.not11.i70.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.aa:                                            ; preds = %2
+bb.aa:                                            ; preds = %bb.a
   %i.ad = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.320) ; 2 uses
   %.not11.i73.i = icmp eq ptr %i.ad, null
   br i1 %.not11.i73.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ab:                                            ; preds = %2
+bb.ab:                                            ; preds = %bb.a
   %i.ae = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.321) ; 2 uses
   %.not11.i76.i = icmp eq ptr %i.ae, null
   br i1 %.not11.i76.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ac:                                            ; preds = %2
+bb.ac:                                            ; preds = %bb.a
   %i.af = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.322) ; 2 uses
   %.not11.i79.i = icmp eq ptr %i.af, null
   br i1 %.not11.i79.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ad:                                            ; preds = %2
+bb.ad:                                            ; preds = %bb.a
   %i.ag = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.323) ; 2 uses
   %.not11.i82.i = icmp eq ptr %i.ag, null
   br i1 %.not11.i82.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ae:                                            ; preds = %2
+bb.ae:                                            ; preds = %bb.a
   %i.ah = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.324) ; 2 uses
   %.not11.i85.i = icmp eq ptr %i.ah, null
   br i1 %.not11.i85.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.af:                                            ; preds = %2
+bb.af:                                            ; preds = %bb.a
   %i.ai = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.325) ; 2 uses
   %.not11.i88.i = icmp eq ptr %i.ai, null
   br i1 %.not11.i88.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ag:                                            ; preds = %2
+bb.ag:                                            ; preds = %bb.a
   %i.aj = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.326) ; 2 uses
   %.not11.i91.i = icmp eq ptr %i.aj, null
   br i1 %.not11.i91.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ah:                                            ; preds = %2
+bb.ah:                                            ; preds = %bb.a
   %i.ak = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.327) ; 2 uses
   %.not11.i94.i = icmp eq ptr %i.ak, null
   br i1 %.not11.i94.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ai:                                            ; preds = %2
+bb.ai:                                            ; preds = %bb.a
   %i.al = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.328) ; 2 uses
   %.not11.i97.i = icmp eq ptr %i.al, null
   br i1 %.not11.i97.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.aj:                                            ; preds = %2
+bb.aj:                                            ; preds = %bb.a
   %i.am = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.329) ; 2 uses
   %.not11.i100.i = icmp eq ptr %i.am, null
   br i1 %.not11.i100.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ak:                                            ; preds = %2
+bb.ak:                                            ; preds = %bb.a
   %i.an = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.330) ; 2 uses
   %.not11.i103.i = icmp eq ptr %i.an, null
   br i1 %.not11.i103.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.al:                                            ; preds = %2
+bb.al:                                            ; preds = %bb.a
   %i.ao = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.331) ; 2 uses
   %.not11.i106.i = icmp eq ptr %i.ao, null
   br i1 %.not11.i106.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.am:                                            ; preds = %2
+bb.am:                                            ; preds = %bb.a
   %i.ap = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.332) ; 2 uses
   %.not11.i109.i = icmp eq ptr %i.ap, null
   br i1 %.not11.i109.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.an:                                            ; preds = %2
+bb.an:                                            ; preds = %bb.a
   %i.aq = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.333) ; 2 uses
   %.not11.i112.i = icmp eq ptr %i.aq, null
   br i1 %.not11.i112.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ao:                                            ; preds = %2
+bb.ao:                                            ; preds = %bb.a
   %i.ar = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.334) ; 2 uses
   %.not11.i115.i = icmp eq ptr %i.ar, null
   br i1 %.not11.i115.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ap:                                            ; preds = %2
+bb.ap:                                            ; preds = %bb.a
   %i.as = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.335) ; 2 uses
   %.not11.i118.i = icmp eq ptr %i.as, null
   br i1 %.not11.i118.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.aq:                                            ; preds = %2
+bb.aq:                                            ; preds = %bb.a
   %i.at = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.336) ; 2 uses
   %.not11.i121.i = icmp eq ptr %i.at, null
   br i1 %.not11.i121.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ar:                                            ; preds = %2
+bb.ar:                                            ; preds = %bb.a
   %i.au = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.337) ; 2 uses
   %.not11.i124.i = icmp eq ptr %i.au, null
   br i1 %.not11.i124.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.as:                                            ; preds = %2
+bb.as:                                            ; preds = %bb.a
   %i.av = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.338) ; 2 uses
   %.not11.i127.i = icmp eq ptr %i.av, null
   br i1 %.not11.i127.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.at:                                            ; preds = %2
+bb.at:                                            ; preds = %bb.a
   %i.aw = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.339) ; 2 uses
   %.not11.i130.i = icmp eq ptr %i.aw, null
   br i1 %.not11.i130.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.au:                                            ; preds = %2
+bb.au:                                            ; preds = %bb.a
   %i.ax = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.340) ; 2 uses
   %.not11.i133.i = icmp eq ptr %i.ax, null
   br i1 %.not11.i133.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.av:                                            ; preds = %2
+bb.av:                                            ; preds = %bb.a
   %i.ay = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.341) ; 2 uses
   %.not11.i136.i = icmp eq ptr %i.ay, null
   br i1 %.not11.i136.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.aw:                                            ; preds = %2
+bb.aw:                                            ; preds = %bb.a
   %i.az = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.342) ; 2 uses
   %.not11.i139.i = icmp eq ptr %i.az, null
   br i1 %.not11.i139.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ax:                                            ; preds = %2
+bb.ax:                                            ; preds = %bb.a
   %i.ba = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.343) ; 2 uses
   %.not11.i142.i = icmp eq ptr %i.ba, null
   br i1 %.not11.i142.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ay:                                            ; preds = %2
+bb.ay:                                            ; preds = %bb.a
   %i.bb = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.344) ; 2 uses
   %.not11.i145.i = icmp eq ptr %i.bb, null
   br i1 %.not11.i145.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.az:                                            ; preds = %2
+bb.az:                                            ; preds = %bb.a
   %i.bc = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.345) ; 2 uses
   %.not11.i148.i = icmp eq ptr %i.bc, null
   br i1 %.not11.i148.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.ba:                                            ; preds = %2
+bb.ba:                                            ; preds = %bb.a
   %i.bd = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.346) ; 2 uses
   %.not11.i151.i = icmp eq ptr %i.bd, null
   br i1 %.not11.i151.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bb:                                            ; preds = %2
+bb.bb:                                            ; preds = %bb.a
   %i.be = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.347) ; 2 uses
   %.not11.i154.i = icmp eq ptr %i.be, null
   br i1 %.not11.i154.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bc:                                            ; preds = %2
+bb.bc:                                            ; preds = %bb.a
   %i.bf = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.348) ; 2 uses
   %.not11.i157.i = icmp eq ptr %i.bf, null
   br i1 %.not11.i157.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bd:                                            ; preds = %2
+bb.bd:                                            ; preds = %bb.a
   %i.bg = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.349) ; 2 uses
   %.not11.i160.i = icmp eq ptr %i.bg, null
   br i1 %.not11.i160.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.be:                                            ; preds = %2
+bb.be:                                            ; preds = %bb.a
   %i.bh = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.350) ; 2 uses
   %.not11.i163.i = icmp eq ptr %i.bh, null
   br i1 %.not11.i163.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bf:                                            ; preds = %2
+bb.bf:                                            ; preds = %bb.a
   %i.bi = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.351) ; 2 uses
   %.not11.i166.i = icmp eq ptr %i.bi, null
   br i1 %.not11.i166.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bg:                                            ; preds = %2
+bb.bg:                                            ; preds = %bb.a
   %i.bj = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.352) ; 2 uses
   %.not11.i169.i = icmp eq ptr %i.bj, null
   br i1 %.not11.i169.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bh:                                            ; preds = %2
+bb.bh:                                            ; preds = %bb.a
   %i.bk = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.353) ; 2 uses
   %.not11.i172.i = icmp eq ptr %i.bk, null
   br i1 %.not11.i172.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bi:                                            ; preds = %2
+bb.bi:                                            ; preds = %bb.a
   %i.bl = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.354) ; 2 uses
   %.not11.i175.i = icmp eq ptr %i.bl, null
   br i1 %.not11.i175.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bj:                                            ; preds = %2
+bb.bj:                                            ; preds = %bb.a
   %i.bm = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.355) ; 2 uses
   %.not11.i178.i = icmp eq ptr %i.bm, null
   br i1 %.not11.i178.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bk:                                            ; preds = %2
+bb.bk:                                            ; preds = %bb.a
   %i.bn = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.356) ; 2 uses
   %.not11.i181.i = icmp eq ptr %i.bn, null
   br i1 %.not11.i181.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bl:                                            ; preds = %2
+bb.bl:                                            ; preds = %bb.a
   %i.bo = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.357) ; 2 uses
   %.not11.i184.i = icmp eq ptr %i.bo, null
   br i1 %.not11.i184.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
 
-bb.bm:                                            ; preds = %2
+bb.bm:                                            ; preds = %bb.a
   %i.bp = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef @.str.358) ; 2 uses
   %.not11.i187.i = icmp eq ptr %i.bp, null
   br i1 %.not11.i187.i, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit, !prof !265
@@ -603,7 +600,7 @@ _ZL31hb_ot_ambiguous_tag_to_languagej.exit:       ; preds = %bb.b, %bb.c, %bb.d,
   %.not = icmp eq ptr %i.br, null
   br i1 %.not, label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader, label %hb_language_from_string.exit
 
-_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader: ; preds = %bb.bm, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %2, %bb.bl, %_ZL31hb_ot_ambiguous_tag_to_languagej.exit
+_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.preheader: ; preds = %bb.a, %bb.bm, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.bl, %_ZL31hb_ot_ambiguous_tag_to_languagej.exit
   br label %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread
 
 _ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread.1: ; preds = %_ZL31hb_ot_ambiguous_tag_to_languagej.exit.thread
@@ -946,7 +943,7 @@ hb_language_from_string.exit64:                   ; preds = %bb.ce, %bb.cf, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #59
   br label %hb_language_from_string.exit
 
-hb_language_from_string.exit:                     ; preds = %.loopexit, %bb.bw, %bb.bx, %hb_language_from_string.exit64, %.split.loop.exit208, %bb.bo, %bb.bp, %.split.loop.exit220, %bb.bs, %bb.bt, %bb.a, %_ZL31hb_ot_ambiguous_tag_to_languagej.exit
+hb_language_from_string.exit:                     ; preds = %bb.a, %.loopexit, %bb.bw, %bb.bx, %hb_language_from_string.exit64, %.split.loop.exit208, %bb.bo, %bb.bp, %.split.loop.exit220, %bb.bs, %bb.bt, %_ZL31hb_ot_ambiguous_tag_to_languagej.exit
   %.4 = phi ptr [ %i.br, %_ZL31hb_ot_ambiguous_tag_to_languagej.exit ], [ null, %bb.a ], [ %.08.i60, %hb_language_from_string.exit64 ], [ %i.dd, %bb.bp ], [ %i.eh, %bb.bt ], [ null, %bb.bo ], [ null, %.split.loop.exit208 ], [ null, %bb.bs ], [ null, %.split.loop.exit220 ], [ %i.fc, %bb.bx ], [ null, %.loopexit ], [ null, %bb.bw ]
   ret ptr %.4
 }

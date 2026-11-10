@@ -205,16 +205,9 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1455
   %i.cu = extractvalue { i32, i32 } %i.ct, 0
   %i.cv = icmp ne i32 %i.cu, 0                    ; 2 uses
-  %i.cw = call noundef i8 @_RNvMs15_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5classNtB6_12ClassLiteral5known(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.c, ptr noundef nonnull %i.af, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.ah), !noalias !1455 ; 2 uses
-  %.not41.i = icmp eq i8 %i.cw, -1
-  br i1 %.not41.i, label %bb.r, label %5
-
-bb.q:                                             ; preds = %bb.o
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1455
-  br label %_RNCNvMsN_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8functionNtB7_15OverloadLiteral13raw_signatures_0Bb_.exit.thread
-
-5:                                                ; preds = %bb.p
+  %i.cw = call noundef i8 @_RNvMs15_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5classNtB6_12ClassLiteral5known(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.c, ptr noundef nonnull %i.af, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.ah), !noalias !1455
   switch i8 %i.cw, label %default.unreachable [
+    i8 -1, label %bb.r
     i8 0, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i
     i8 1, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i
     i8 2, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i
@@ -325,10 +318,14 @@ bb.q:                                             ; preds = %bb.o
     i8 107, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i
   ]
 
-default.unreachable:                              ; preds = %5
+bb.q:                                             ; preds = %bb.o
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1455
+  br label %_RNCNvMsN_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8functionNtB7_15OverloadLiteral13raw_signatures_0Bb_.exit.thread
+
+default.unreachable:                              ; preds = %bb.p
   unreachable
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i: ; preds = %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5, %5
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i: ; preds = %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p
   %or.cond7.i = or i1 %.sroa.014.0.i, %i.cv
   br i1 %or.cond7.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.thread.i, label %bb.s
 
@@ -336,7 +333,7 @@ bb.r:                                             ; preds = %bb.p
   %or.cond3.i = or i1 %.sroa.014.0.i, %i.cv
   br i1 %or.cond3.i, label %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.thread.i, label %bb.s
 
-_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.thread.i: ; preds = %bb.r, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i, %5, %5, %5
+_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.thread.i: ; preds = %bb.r, %_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2_10KnownClass17is_fallback_class.exit.i, %bb.p, %bb.p, %bb.p
   %i.cx = call { i32, i32 } @_RNvMs_NtCs2O29vuvTAEJ_14ty_python_core10definitionNtB4_10Definition5scope(i32 noundef %i.bv, i32 noundef %i.bx, ptr noundef nonnull %i.af, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.ah), !noalias !1455 ; 2 uses
   %i.cy = extractvalue { i32, i32 } %i.cx, 0      ; 3 uses
   %i.cz = extractvalue { i32, i32 } %i.cx, 1      ; 3 uses

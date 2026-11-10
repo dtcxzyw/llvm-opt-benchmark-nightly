@@ -203,8 +203,8 @@ bb.dt:                                            ; preds = %bb.ds
   br label %.thread292
 
 .thread229:                                       ; preds = %bb.cx, %bb.cs, %.loopexit, %bb.cj, %bb.cp, %bb.cg, %bb.cd, %bb.dd, %bb.dl, %bb.do, %bb.dr
-  %i.hw = load i16, ptr %i.d, align 2, !tbaa !82  ; 5 uses
-  switch i16 %i.hw, label %.thread257 [
+  %i.hw = load i16, ptr %i.d, align 2, !tbaa !82  ; 4 uses
+  switch i16 %i.hw, label %.thread260 [
     i16 4090, label %bb.dx
     i16 4096, label %bb.du
     i16 4088, label %bb.dv
@@ -215,6 +215,8 @@ bb.dt:                                            ; preds = %bb.ds
     i16 6496, label %.thread229._crit_edge428.a
     i16 7262, label %.thread229._crit_edge426.a
     i16 7224, label %.thread229._crit_edge.a
+    i16 7216, label %.thread257._crit_edge435
+    i16 7212, label %.thread257._crit_edge
   ]
 
 bb.du:                                            ; preds = %.thread229
@@ -327,18 +329,12 @@ bb.ek:                                            ; preds = %bb.ej
   %i.in = icmp eq i16 %.pre425.a, 5420
   br i1 %i.in, label %bb.el, label %.thread260
 
-.thread257:                                       ; preds = %.thread229
-  switch i16 %i.hw, label %.thread260 [
-    i16 7216, label %.thread257._crit_edge435
-    i16 7212, label %.thread257._crit_edge
-  ]
-
-.thread257._crit_edge435:                         ; preds = %.thread257
+.thread257._crit_edge435:                         ; preds = %.thread229
   %.pre436 = load i16, ptr %i.c, align 8, !tbaa !83
   %i.io = icmp eq i16 %.pre436, 5412
   br i1 %i.io, label %bb.el, label %.thread260
 
-.thread257._crit_edge:                            ; preds = %.thread257
+.thread257._crit_edge:                            ; preds = %.thread229
   %.pre434 = load i16, ptr %i.c, align 8, !tbaa !83
   %i.ip = icmp eq i16 %.pre434, 5412
   %i.iq = add nsw i32 %i.i, -39031344
@@ -346,7 +342,7 @@ bb.ek:                                            ; preds = %bb.ej
   %or.cond206 = select i1 %i.ip, i1 true, i1 %or.cond
   br i1 %or.cond206, label %bb.el, label %.thread283
 
-.thread260:                                       ; preds = %bb.du, %bb.dw, %.thread257, %bb.dv, %bb.eb, %.thread229._crit_edge430.a, %.thread229._crit_edge428.a, %.thread229._crit_edge426.a, %.thread229._crit_edge432.a, %.thread229._crit_edge.a, %.thread257._crit_edge435
+.thread260:                                       ; preds = %bb.du, %bb.dw, %.thread229, %bb.dv, %bb.eb, %.thread229._crit_edge430.a, %.thread229._crit_edge428.a, %.thread229._crit_edge426.a, %.thread229._crit_edge432.a, %.thread229._crit_edge.a, %.thread257._crit_edge435
   %.old = add nsw i32 %i.i, -39031344
   %or.cond.old = icmp ult i32 %.old, 979968
   br i1 %or.cond.old, label %bb.el, label %bb.fb
@@ -749,10 +745,21 @@ bb.hz:                                            ; preds = %bb.hy
 
 .thread292:                                       ; preds = %sub_1389, %sub_0388, %sub_1369, %sub_0368, %bb.hh, %bb.he, %bb.hi, %bb.hr, %bb.hk, %bb.hj, %bb.hs, %bb.gc, %bb.gd, %bb.ci, %bb.ch, %bb.co, %bb.cn, %bb.cu, %bb.ct, %bb.da, %bb.cz, %.tail367, %bb.dk, %bb.dj, %bb.dh, %bb.dq, %bb.dp, %bb.ea, %bb.dz, %bb.eg, %bb.ef, %.tail372.thread, %bb.fa, %bb.ev, %bb.eu, %bb.ez, %bb.ey, %.tail387, %bb.fx, %bb.fy, %bb.hd, %bb.hc, %bb.hq, %bb.hp, %bb.hy, %bb.hz, %bb.ht, %bb.hf, %bb.hg, %.tail392.thread, %bb.gr, %bb.gt, %bb.gs, %bb.gu, %bb.fk, %bb.fj, %bb.fp, %bb.fo, %bb.ej, %bb.ek, %bb.ec, %bb.ds, %bb.dt, %bb.dm, %bb.dn, %bb.db, %bb.dc, %bb.cv, %bb.cw, %bb.cq, %bb.cr, %bb.ck, %bb.cl, %bb.ce, %bb.cf
   %.178 = phi i32 [ %.077, %bb.ce ], [ %.077, %bb.cf ], [ %.077, %bb.ch ], [ %.077, %bb.ci ], [ %.077, %bb.ck ], [ %.077, %bb.cl ], [ %.077, %bb.cn ], [ %.077, %bb.co ], [ 1, %bb.cq ], [ 1, %bb.cr ], [ %.077, %bb.ct ], [ %.077, %bb.cu ], [ %.077, %bb.cv ], [ %.077, %bb.cw ], [ %.077, %bb.cz ], [ %.077, %bb.da ], [ %.077, %bb.db ], [ %.077, %bb.dc ], [ %.077, %.tail367 ], [ 0, %bb.dk ], [ 0, %bb.dj ], [ 0, %bb.dh ], [ %.077, %bb.dm ], [ %.077, %bb.dn ], [ %.077, %bb.dp ], [ %.077, %bb.dq ], [ %.077, %bb.ds ], [ %.077, %bb.dt ], [ %.077, %bb.dz ], [ %.077, %bb.ea ], [ %.077, %bb.ec ], [ %.077, %bb.ef ], [ %.077, %bb.eg ], [ %.077, %bb.ej ], [ %.077, %bb.ek ], [ %.077, %.tail372.thread ], [ %.077, %bb.fa ], [ 0, %bb.ey ], [ 0, %bb.ez ], [ 0, %bb.eu ], [ 0, %bb.ev ], [ %.077, %bb.fo ], [ %.077, %bb.fp ], [ %.077, %bb.fj ], [ %.077, %bb.fk ], [ %.077, %.tail387 ], [ %.077, %bb.hh ], [ %.077, %bb.fx ], [ %.077, %bb.fy ], [ 0, %bb.gs ], [ 0, %bb.gt ], [ 0, %bb.gr ], [ 0, %bb.gu ], [ %.077, %.tail392.thread ], [ %.077, %bb.hc ], [ %.077, %bb.hd ], [ %.077, %bb.hf ], [ %.077, %bb.hg ], [ %.077, %bb.hp ], [ %.077, %bb.hq ], [ %.077, %bb.hy ], [ %.077, %bb.hz ], [ %.077, %bb.ht ], [ 0, %bb.gd ], [ 0, %bb.gc ], [ %.077, %bb.hs ], [ %.077, %bb.hj ], [ %.077, %bb.hk ], [ %.077, %bb.hr ], [ %.077, %bb.hi ], [ %.077, %bb.he ], [ %.077, %sub_1369 ], [ %.077, %sub_0368 ], [ %.077, %sub_0388 ], [ %.077, %sub_1389 ]
-  %i.nq = load i16, ptr %i.d, align 2, !tbaa !82  ; 2 uses
-  switch i16 %i.nq, label %1 [
+  %i.nq = load i16, ptr %i.d, align 2, !tbaa !82
+  switch i16 %i.nq, label %.thread316 [
     i16 4090, label %.thread293
     i16 4096, label %bb.ia
+    i16 5568, label %bb.ib
+    i16 6542, label %bb.ic
+    i16 7262, label %bb.id
+    i16 7410, label %bb.ie
+    i16 8282, label %bb.if
+    i16 8374, label %bb.ig
+    i16 8384, label %bb.ih
+    i16 9044, label %bb.ii
+    i16 10320, label %bb.ij
+    i16 12000, label %bb.ik
+    i16 11904, label %bb.il
   ]
 
 .thread293:                                       ; preds = %.thread292
@@ -766,72 +773,57 @@ bb.ia:                                            ; preds = %.thread292
     i16 5456, label %bb.im
   ]
 
-1:                                                ; preds = %.thread292
-  switch i16 %i.nq, label %.thread316 [
-    i16 5568, label %bb.ib
-    i16 11904, label %bb.il
-    i16 6542, label %bb.ic
-    i16 7262, label %bb.id
-    i16 7410, label %bb.ie
-    i16 8282, label %bb.if
-    i16 8374, label %bb.ig
-    i16 8384, label %bb.ih
-    i16 9044, label %bb.ii
-    i16 10320, label %bb.ij
-    i16 12000, label %bb.ik
-  ]
-
-bb.ib:                                            ; preds = %1
+bb.ib:                                            ; preds = %.thread292
   %i.ns = load i16, ptr %i.c, align 8, !tbaa !83
   %i.nt = icmp eq i16 %i.ns, 3648
   br i1 %i.nt, label %bb.im, label %.thread316
 
-bb.ic:                                            ; preds = %1
+bb.ic:                                            ; preds = %.thread292
   %i.nu = load i16, ptr %i.c, align 8, !tbaa !83
   %i.nv = icmp eq i16 %i.nu, 4916
   br i1 %i.nv, label %bb.im, label %.thread316
 
-bb.id:                                            ; preds = %1
+bb.id:                                            ; preds = %.thread292
   %i.nw = load i16, ptr %i.c, align 8, !tbaa !83
   %i.nx = icmp eq i16 %i.nw, 5456
   br i1 %i.nx, label %bb.im, label %.thread316
 
-bb.ie:                                            ; preds = %1
+bb.ie:                                            ; preds = %.thread292
   %i.ny = load i16, ptr %i.c, align 8, !tbaa !83
   %i.nz = icmp eq i16 %i.ny, 5586
   br i1 %i.nz, label %bb.im, label %.thread316
 
-bb.if:                                            ; preds = %1
+bb.if:                                            ; preds = %.thread292
   %i.oa = load i16, ptr %i.c, align 8, !tbaa !83
   %i.ob = icmp eq i16 %i.oa, 6240
   br i1 %i.ob, label %bb.im, label %.thread316
 
-bb.ig:                                            ; preds = %1
+bb.ig:                                            ; preds = %.thread292
   %i.oc = load i16, ptr %i.c, align 8, !tbaa !83
   %i.od = icmp eq i16 %i.oc, 6304
   br i1 %i.od, label %bb.im, label %.thread316
 
-bb.ih:                                            ; preds = %1
+bb.ih:                                            ; preds = %.thread292
   %i.oe = load i16, ptr %i.c, align 8, !tbaa !83
   %i.of = icmp eq i16 %i.oe, 6304
   br i1 %i.of, label %bb.im, label %.thread316
 
-bb.ii:                                            ; preds = %1
+bb.ii:                                            ; preds = %.thread292
   %i.og = load i16, ptr %i.c, align 8, !tbaa !83
   %i.oh = icmp eq i16 %i.og, 6732
   br i1 %i.oh, label %bb.im, label %.thread316
 
-bb.ij:                                            ; preds = %1
+bb.ij:                                            ; preds = %.thread292
   %i.oi = load i16, ptr %i.c, align 8, !tbaa !83
   %i.oj = icmp eq i16 %i.oi, 7752
   br i1 %i.oj, label %bb.im, label %.thread316
 
-bb.ik:                                            ; preds = %1
+bb.ik:                                            ; preds = %.thread292
   %i.ok = load i16, ptr %i.c, align 8, !tbaa !83
   %i.ol = icmp eq i16 %i.ok, 8816
   br i1 %i.ol, label %bb.im, label %.thread316
 
-bb.il:                                            ; preds = %1
+bb.il:                                            ; preds = %.thread292
   %i.om = load i16, ptr %i.c, align 8, !tbaa !83
   %i.on = icmp eq i16 %i.om, 8842
   br i1 %i.on, label %bb.im, label %.thread316
@@ -841,7 +833,7 @@ bb.im:                                            ; preds = %bb.ia, %bb.ia, %.th
   store i32 1, ptr %i.oo, align 4, !tbaa !93
   br label %.thread316
 
-.thread316:                                       ; preds = %bb.ia, %1, %bb.ib, %bb.ic, %bb.id, %bb.ie, %bb.if, %bb.ig, %bb.ih, %bb.ii, %bb.ij, %bb.ik, %bb.im, %bb.il
+.thread316:                                       ; preds = %.thread292, %bb.ia, %bb.ib, %bb.ic, %bb.id, %bb.ie, %bb.if, %bb.ig, %bb.ih, %bb.ii, %bb.ij, %bb.ik, %bb.im, %bb.il
   %i.op = load i8, ptr %i.j, align 4, !tbaa !15
   %i.oq = icmp ne i8 %i.op, 0
   %i.or = icmp ne i32 %.178, 0

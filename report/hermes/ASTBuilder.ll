@@ -202,7 +202,7 @@ bb.a:
   %27 = alloca %"class.llvh::Twine", align 8      ; 6 uses
   %28 = alloca %"class.llvh::Twine", align 8      ; 6 uses
   %i.p = alloca ptr, align 8                      ; 5 uses
-  %29 = alloca %"class.llvh::simple_ilist", align 8 ; 8 uses
+  %29 = alloca %"class.llvh::simple_ilist", align 8 ; 9 uses
   %i.q = alloca ptr, align 8                      ; 5 uses
   %i.r = alloca ptr, align 8                      ; 5 uses
   %i.s = alloca ptr, align 8                      ; 5 uses
@@ -605,10 +605,10 @@ bb.p:                                             ; preds = %bb.o
 _ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread: ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424, %bb.p, %bb.o, %bb.n, %bb.g
   %.sroa.262.0 = phi ptr [ null, %bb.g ], [ null, %bb.o ], [ null, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit ], [ %i.rj, %bb.p ], [ null, %bb.n ], [ null, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424 ] ; 258 uses
   %.sroa.05391.0 = phi ptr [ null, %bb.g ], [ null, %bb.o ], [ null, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit ], [ %i.rh, %bb.p ], [ null, %bb.n ], [ null, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424 ] ; 258 uses
-  %.sroa.01036.0.copyload = load ptr, ptr %11, align 8, !tbaa !635 ; 435 uses
+  %.sroa.01036.0.copyload = load ptr, ptr %11, align 8, !tbaa !635 ; 433 uses
   %.sroa.21037.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
-  %.sroa.21037.0.copyload = load i64, ptr %.sroa.21037.0..sroa_idx, align 8, !tbaa !617 ; 2 uses
-  switch i64 %.sroa.21037.0.copyload, label %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread [
+  %.sroa.21037.0.copyload = load i64, ptr %.sroa.21037.0..sroa_idx, align 8, !tbaa !617
+  switch i64 %.sroa.21037.0.copyload, label %_ZNK4llvh9StringRef6equalsES0_.exit2401.thread [
     i64 12, label %_ZNK4llvh9StringRef6equalsES0_.exit
     i64 14, label %_ZNK4llvh9StringRef6equalsES0_.exit1627
     i64 7, label %_ZNK4llvh9StringRef6equalsES0_.exit1630
@@ -628,6 +628,10 @@ _ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10ca
     i64 11, label %_ZNK4llvh9StringRef6equalsES0_.exit1687
     i64 13, label %_ZNK4llvh9StringRef6equalsES0_.exit1702
     i64 22, label %_ZNK4llvh9StringRef6equalsES0_.exit1771
+    i64 25, label %_ZNK4llvh9StringRef6equalsES0_.exit2017
+    i64 26, label %_ZNK4llvh9StringRef6equalsES0_.exit1936
+    i64 27, label %_ZNK4llvh9StringRef6equalsES0_.exit2002
+    i64 28, label %_ZNK4llvh9StringRef6equalsES0_.exit2014
   ]
 
 _ZNK4llvh9StringRef6equalsES0_.exit:              ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread
@@ -1030,6 +1034,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit1654.thread6098: ; preds = %_ZNK4llvh9StringR
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #11
   store ptr null, ptr %i.p, align 8, !tbaa !642
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %29, i8 0, i64 16, i1 false)
   store ptr %29, ptr %29, align 8, !tbaa !639
   %i.alu = getelementptr inbounds nuw i8, ptr %29, i64 8
   store ptr %29, ptr %i.alu, align 8, !tbaa !640
@@ -1046,7 +1051,8 @@ bb.bj:                                            ; preds = %_ZNK4llvh9StringRef
   %i.alw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.alx = load ptr, ptr %i.alw, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #11
-  %i.aly = getelementptr inbounds nuw i8, ptr %30, i64 16
+  %i.aly = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 2 uses
+  store i8 1, ptr %i.aly, align 8, !tbaa !613
   %i.alz = getelementptr inbounds nuw i8, ptr %30, i64 17
   store i8 1, ptr %i.alz, align 1, !tbaa !611
   store ptr @.str.52, ptr %30, align 8, !tbaa !612
@@ -1449,7 +1455,7 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit1687:          ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread, %_ZNK4llvh9StringRef6equalsES0_.exit1633.thread.thread7754
-  %.sroa.01032.0.copyload724072437340 = phi ptr [ %.sroa.01036.0.copyload, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread ], [ @.str.6, %_ZNK4llvh9StringRef6equalsES0_.exit1633.thread.thread7754 ] ; 11 uses
+  %.sroa.01032.0.copyload724072437340 = phi ptr [ %.sroa.01036.0.copyload, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread ], [ @.str.6, %_ZNK4llvh9StringRef6equalsES0_.exit1633.thread.thread7754 ] ; 28 uses
   %i.azi = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.azj = xor i64 %i.azi, 7800906809134380115
   %i.azk = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
@@ -1693,7 +1699,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit1699.thread6134: ; preds = %_ZNK4llvh9StringR
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit1702:          ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread, %_ZNK4llvh9StringRef6equalsES0_.exit1633.thread.thread7757
-  %.sroa.01032.0.copyload724072437335 = phi ptr [ %.sroa.01036.0.copyload, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread ], [ @.str.8, %_ZNK4llvh9StringRef6equalsES0_.exit1633.thread.thread7757 ] ; 13 uses
+  %.sroa.01032.0.copyload724072437335 = phi ptr [ %.sroa.01036.0.copyload, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread ], [ @.str.8, %_ZNK4llvh9StringRef6equalsES0_.exit1633.thread.thread7757 ] ; 32 uses
   %i.bdn = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.bdo = xor i64 %i.bdn, 8386111882724141399
   %i.bdp = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
@@ -2096,7 +2102,8 @@ _ZN6hermes6ESTree12_GLOBAL__N_110ASTBuilder16extractNodeLabelEPKNS_6parser10JSON
   %i.ceh = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cei = load ptr, ptr %i.ceh, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %96) #11
-  %i.cej = getelementptr inbounds nuw i8, ptr %96, i64 16
+  %i.cej = getelementptr inbounds nuw i8, ptr %96, i64 16 ; 2 uses
+  store i8 1, ptr %i.cej, align 8, !tbaa !613
   %i.cek = getelementptr inbounds nuw i8, ptr %96, i64 17
   store i8 1, ptr %i.cek, align 1, !tbaa !611
   store ptr @.str.200, ptr %96, align 8, !tbaa !612
@@ -2115,7 +2122,8 @@ bb.gn:                                            ; preds = %bb.gm
   %i.ceo = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cep = load ptr, ptr %i.ceo, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %97) #11
-  %i.ceq = getelementptr inbounds nuw i8, ptr %97, i64 16
+  %i.ceq = getelementptr inbounds nuw i8, ptr %97, i64 16 ; 2 uses
+  store i8 1, ptr %i.ceq, align 8, !tbaa !613
   %i.cer = getelementptr inbounds nuw i8, ptr %97, i64 17
   store i8 1, ptr %i.cer, align 1, !tbaa !611
   store ptr @.str.201, ptr %97, align 8, !tbaa !612
@@ -2132,7 +2140,8 @@ bb.gp:                                            ; preds = %bb.go
   %i.cet = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ceu = load ptr, ptr %i.cet, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %98) #11
-  %i.cev = getelementptr inbounds nuw i8, ptr %98, i64 16
+  %i.cev = getelementptr inbounds nuw i8, ptr %98, i64 16 ; 2 uses
+  store i8 1, ptr %i.cev, align 8, !tbaa !613
   %i.cew = getelementptr inbounds nuw i8, ptr %98, i64 17
   store i8 1, ptr %i.cew, align 1, !tbaa !611
   store ptr @.str.202, ptr %98, align 8, !tbaa !612
@@ -2535,8 +2544,7 @@ bb.jr:                                            ; preds = %_ZNK4llvh9StringRef
   %i.dde = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ddf = load ptr, ptr %i.dde, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %139) #11
-  %i.ddg = getelementptr inbounds nuw i8, ptr %139, i64 16 ; 2 uses
-  store i8 1, ptr %i.ddg, align 8, !tbaa !613
+  %i.ddg = getelementptr inbounds nuw i8, ptr %139, i64 16
   %i.ddh = getelementptr inbounds nuw i8, ptr %139, i64 17
   store i8 1, ptr %i.ddh, align 1, !tbaa !611
   store ptr @.str.272, ptr %139, align 8, !tbaa !612
@@ -2553,8 +2561,7 @@ bb.jt:                                            ; preds = %bb.js
   %i.ddj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ddk = load ptr, ptr %i.ddj, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %140) #11
-  %i.ddl = getelementptr inbounds nuw i8, ptr %140, i64 16 ; 2 uses
-  store i8 1, ptr %i.ddl, align 8, !tbaa !613
+  %i.ddl = getelementptr inbounds nuw i8, ptr %140, i64 16
   %i.ddm = getelementptr inbounds nuw i8, ptr %140, i64 17
   store i8 1, ptr %i.ddm, align 1, !tbaa !611
   store ptr @.str.274, ptr %140, align 8, !tbaa !612
@@ -2689,29 +2696,6 @@ bb.jy:                                            ; preds = %_ZN6hermes6ESTree12
   store ptr %.sroa.262.0, ptr %.sroa.2.0..sroa_idx.i2578, align 8, !tbaa !635
   %i.dfx = ptrtoint ptr %i.dfq to i64
   br label %bb.aly
-
-_ZNK4llvh9StringRef6equalsES0_.exit1831.thread:   ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread
-  switch i64 %.sroa.21037.0.copyload, label %_ZNK4llvh9StringRef6equalsES0_.exit2401.thread [
-    i64 23, label %_ZNK4llvh9StringRef6equalsES0_.exit2044
-    i64 16, label %_ZNK4llvh9StringRef6equalsES0_.exit1837
-    i64 15, label %_ZNK4llvh9StringRef6equalsES0_.exit1840
-    i64 25, label %_ZNK4llvh9StringRef6equalsES0_.exit2017
-    i64 13, label %_ZNK4llvh9StringRef6equalsES0_.exit1846
-    i64 20, label %_ZNK4llvh9StringRef6equalsES0_.exit1849
-    i64 17, label %_ZNK4llvh9StringRef6equalsES0_.exit1855
-    i64 22, label %_ZNK4llvh9StringRef6equalsES0_.exit1861
-    i64 24, label %_ZNK4llvh9StringRef6equalsES0_.exit1864
-    i64 12, label %_ZNK4llvh9StringRef6equalsES0_.exit1888
-    i64 11, label %_ZNK4llvh9StringRef6equalsES0_.exit1891
-    i64 18, label %_ZNK4llvh9StringRef6equalsES0_.exit1897
-    i64 19, label %_ZNK4llvh9StringRef6equalsES0_.exit1903
-    i64 14, label %_ZNK4llvh9StringRef6equalsES0_.exit1927
-    i64 26, label %_ZNK4llvh9StringRef6equalsES0_.exit1936
-    i64 28, label %_ZNK4llvh9StringRef6equalsES0_.exit2014
-    i64 10, label %_ZNK4llvh9StringRef6equalsES0_.exit1978
-    i64 27, label %_ZNK4llvh9StringRef6equalsES0_.exit2002
-    i64 21, label %_ZNK4llvh9StringRef6equalsES0_.exit2011
-  ]
 
 _ZNK4llvh9StringRef6equalsES0_.exit1834:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1639
   %i.dfy = load i64, ptr %.sroa.01036.0.copyload, align 1
@@ -2894,7 +2878,7 @@ bb.kh:                                            ; preds = %bb.kg, %_ZN6hermes6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.co) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1837:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1801, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1837:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1801
   %i.dja = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.djb = icmp ne i128 %i.dja, 146793563361271670531309280789352508483
   %i.djc = zext i1 %i.djb to i32
@@ -3002,7 +2986,7 @@ bb.ko:                                            ; preds = %bb.kn, %bb.km, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1840:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1840:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831
   %i.dki = load i64, ptr %.sroa.01036.0.copyload, align 1
   %i.dkj = xor i64 %i.dki, 8104303891612527683
   %i.dkk = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 7
@@ -3196,11 +3180,10 @@ bb.kz:                                            ; preds = %_ZN6hermes6ESTree13
   call void @llvm.lifetime.end.p0(ptr nonnull %159) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1846:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1756, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
-  %.sroa.01032.0.copyload72407243734873517683 = phi ptr [ %.sroa.01036.0.copyload, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread ], [ %.sroa.01032.0.copyload724072437335, %_ZNK4llvh9StringRef6equalsES0_.exit1756 ] ; 20 uses
-  %i.dna = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+_ZNK4llvh9StringRef6equalsES0_.exit1846:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1756
+  %i.dna = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.dnb = xor i64 %i.dna, 8030569542342241347
-  %i.dnc = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.dnc = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.dnd = load i64, ptr %i.dnc, align 1
   %i.dne = xor i64 %i.dnd, 8751745755891331664
   %i.dnf = or i64 %i.dnb, %i.dne
@@ -3388,7 +3371,7 @@ bb.lg:                                            ; preds = %bb.lf, %_ZN6hermes6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.da) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1849:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1774, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1849:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1774
   %i.dqm = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.dqn = xor i128 %i.dqm, 149452199043554442704462625271000951875
   %i.dqo = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 16
@@ -3707,7 +3690,7 @@ bb.lu:                                            ; preds = %bb.lt, %_ZN6hermes6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dk) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1855:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1789, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1855:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1789
   %i.dvz = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.dwa = xor i128 %i.dvz, 148091859182316675043969065675190725961
   %i.dwb = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 16
@@ -3915,7 +3898,7 @@ bb.mg:                                            ; preds = %bb.mf, %_ZN6hermes6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dn) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1861:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1771, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1861:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1771
   %i.dzf = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.dzg = xor i128 %i.dzf, 134835257486462643941002275390911180105
   %i.dzh = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 6
@@ -3970,7 +3953,7 @@ bb.mj:                                            ; preds = %bb.mi, %bb.mh
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dp) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1864:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1828, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1864:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1828
   %i.eab = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.eac = xor i128 %i.eab, 110852361311344386986478157109641899337
   %i.ead = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 16
@@ -4373,9 +4356,9 @@ bb.nl:                                            ; preds = %bb.nk, %_ZN6hermes6
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit1885:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1846
-  %i.eih = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.eih = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.eii = xor i64 %i.eih, 7012232590067917391
-  %i.eij = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.eij = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.eik = load i64, ptr %i.eij, align 1
   %i.eil = xor i64 %i.eik, 7958535042360234100
   %i.eim = or i64 %i.eii, %i.eil
@@ -4456,7 +4439,7 @@ bb.np:                                            ; preds = %_ZN6hermes6ESTree17
   call void @llvm.lifetime.end.p0(ptr nonnull %196) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1888:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1810, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1888:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1810
   %i.ejo = load i64, ptr %.sroa.01036.0.copyload, align 1
   %i.ejp = xor i64 %i.ejo, 8386072463396729409
   %i.ejq = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 8
@@ -4541,11 +4524,10 @@ bb.nt:                                            ; preds = %_ZN6hermes6ESTree16
   call void @llvm.lifetime.end.p0(ptr nonnull %198) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1891:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1816, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
-  %.sroa.01032.0.copyload72407243734873517669 = phi ptr [ %.sroa.01036.0.copyload, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread ], [ %.sroa.01032.0.copyload724072437340, %_ZNK4llvh9StringRef6equalsES0_.exit1816 ] ; 18 uses
-  %i.ekw = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+_ZNK4llvh9StringRef6equalsES0_.exit1891:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1816
+  %i.ekw = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.ekx = xor i64 %i.ekw, 7882825768344184146
-  %i.eky = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.eky = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.ekz = load i64, ptr %i.eky, align 1
   %i.ela = xor i64 %i.ekz, 8389754676365247860
   %i.elb = or i64 %i.ekx, %i.ela
@@ -4676,7 +4658,7 @@ bb.ob:                                            ; preds = %bb.oa, %bb.nz, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ed) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1897:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1819, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1897:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1819
   %i.emw = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.emx = xor i128 %i.emw, 129285360986660811297780399604743037261
   %i.emy = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 16
@@ -4862,7 +4844,7 @@ bb.om:                                            ; preds = %_ZN6hermes6ESTree19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ei) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1903:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1822, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1903:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1822
   %i.epo = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.epp = xor i128 %i.epo, 89631688074181545525624196441602023757
   %i.epq = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 3
@@ -5265,7 +5247,7 @@ bb.pn:                                            ; preds = %_ZN6hermes6ESTree21
   call void @llvm.lifetime.end.p0(ptr nonnull %218) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1927:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1768, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1927:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1768
   %i.eyn = load i64, ptr %.sroa.01036.0.copyload, align 1
   %i.eyo = xor i64 %i.eyn, 5796782980143014221
   %i.eyp = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 6
@@ -5499,7 +5481,7 @@ bb.qb:                                            ; preds = %bb.qa, %bb.pz, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.eu) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1936:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1936:          ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread
   %i.fby = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.fbz = xor i128 %i.fby, 134856694479411836211455609964707733837
   %i.fca = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 10
@@ -5634,9 +5616,9 @@ _ZNK4llvh9StringRef6equalsES0_.exit1939.thread6384: ; preds = %_ZNK4llvh9StringR
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit1942:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1885
-  %i.fec = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.fec = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.fed = xor i64 %i.fec, 8389754637239472970
-  %i.fee = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.fee = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.fef = load i64, ptr %i.fee, align 1
   %i.feg = xor i64 %i.fef, 8243110581548379749
   %i.feh = or i64 %i.fed, %i.feg
@@ -6039,7 +6021,7 @@ bb.rr:                                            ; preds = %bb.rq
   %i.frg = ptrtoint ptr %i.fra to i64
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit1978:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1813, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit1978:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1813
   %i.frh = load i64, ptr %.sroa.01036.0.copyload, align 1
   %i.fri = xor i64 %i.frh, 7308609285986472778
   %i.frj = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 8
@@ -6149,9 +6131,9 @@ bb.rx:                                            ; preds = %_ZN6hermes6ESTree14
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit1981:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1891
-  %i.fsx = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.fsx = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.fsy = xor i64 %i.fsx, 7883376816169702218
-  %i.fsz = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.fsz = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.fta = load i64, ptr %i.fsz, align 1
   %i.ftb = xor i64 %i.fta, 8389754676398092870
   %i.ftc = or i64 %i.fsy, %i.ftb
@@ -6439,7 +6421,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit1999.thread6436: ; preds = %_ZNK4llvh9StringR
   %i.fyg = ptrtoint ptr %i.fyc to i64
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit2002:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit2002:          ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread
   %i.fyh = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.fyi = xor i128 %i.fyh, 149503515756999892791673827451909338195
   %i.fyj = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 11
@@ -6655,7 +6637,7 @@ bb.sk:                                            ; preds = %_ZNK4llvh9StringRef
   %i.gcr = ptrtoint ptr %i.gcm to i64
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit2011:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1792, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit2011:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1792
   %i.gcs = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.gct = xor i128 %i.gcs, 154769032262741043665786802140278124354
   %i.gcu = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 5
@@ -6682,7 +6664,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit2011.thread6454: ; preds = %_ZNK4llvh9StringR
   %i.gdg = ptrtoint ptr %i.gdc to i64
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit2014:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit2014:          ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread
   %i.gdh = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.gdi = xor i128 %i.gdh, 161274938646864646770545751344655855426
   %i.gdj = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 12
@@ -6763,7 +6745,7 @@ bb.sm:                                            ; preds = %bb.sl
   %i.gex = ptrtoint ptr %i.ger to i64
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit2017:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread
+_ZNK4llvh9StringRef6equalsES0_.exit2017:          ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread
   %i.gey = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.gez = xor i128 %i.gey, 86926522951342587535600982312746775886
   %i.gfa = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 9
@@ -7166,7 +7148,7 @@ bb.tc:                                            ; preds = %bb.tb, %_ZN6hermes6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fw) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit2044:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread, %_ZNK4llvh9StringRef6equalsES0_.exit1648
+_ZNK4llvh9StringRef6equalsES0_.exit2044:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1648
   %i.gnq = load i128, ptr %.sroa.01036.0.copyload, align 1
   %i.gnr = xor i128 %i.gnq, 146787558584257228308558561915872046915
   %i.gns = getelementptr i8, ptr %.sroa.01036.0.copyload, i64 7
@@ -7569,9 +7551,9 @@ bb.wf:                                            ; preds = %bb.we, %bb.wd, %bb.
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2101:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1942
-  %i.hkn = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.hkn = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.hko = xor i64 %i.hkn, 7234314066065389908
-  %i.hkp = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.hkp = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.hkq = load i64, ptr %i.hkp, align 1
   %i.hkr = xor i64 %i.hkq, 7310575174727001458
   %i.hks = or i64 %i.hko, %i.hkr
@@ -7760,8 +7742,7 @@ bb.wo:                                            ; preds = %_ZNK4llvh9StringRef
   %i.hnp = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hnq = load ptr, ptr %i.hnp, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %308) #11
-  %i.hnr = getelementptr inbounds nuw i8, ptr %308, i64 16 ; 2 uses
-  store i8 1, ptr %i.hnr, align 8, !tbaa !613
+  %i.hnr = getelementptr inbounds nuw i8, ptr %308, i64 16
   %i.hns = getelementptr inbounds nuw i8, ptr %308, i64 17
   store i8 1, ptr %i.hns, align 1, !tbaa !611
   store ptr @.str.605, ptr %308, align 8, !tbaa !612
@@ -7779,8 +7760,7 @@ bb.wq:                                            ; preds = %bb.wp
   %i.hnv = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hnw = load ptr, ptr %i.hnv, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %309) #11
-  %i.hnx = getelementptr inbounds nuw i8, ptr %309, i64 16 ; 2 uses
-  store i8 1, ptr %i.hnx, align 8, !tbaa !613
+  %i.hnx = getelementptr inbounds nuw i8, ptr %309, i64 16
   %i.hny = getelementptr inbounds nuw i8, ptr %309, i64 17
   store i8 1, ptr %i.hny, align 1, !tbaa !611
   store ptr @.str.607, ptr %309, align 8, !tbaa !612
@@ -8183,9 +8163,9 @@ bb.yj:                                            ; preds = %bb.yi, %bb.yh
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2131:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1981
-  %i.hyj = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.hyj = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.hyk = xor i64 %i.hyj, 5216701506134435140
-  %i.hyl = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.hyl = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.hym = load i64, ptr %i.hyl, align 1
   %i.hyn = xor i64 %i.hym, 7741528641203495276
   %i.hyo = or i64 %i.hyk, %i.hyn
@@ -8437,9 +8417,9 @@ bb.yw:                                            ; preds = %bb.yv, %_ZN6hermes6
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2140:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2131
-  %i.icf = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.icf = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.icg = xor i64 %i.icf, 5000528724020651332
-  %i.ich = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.ich = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.ici = load i64, ptr %i.ich, align 1
   %i.icj = xor i64 %i.ici, 7887331566743085420
   %i.ick = or i64 %i.icg, %i.icj
@@ -8657,9 +8637,9 @@ bb.zi:                                            ; preds = %bb.zh, %bb.zg
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2149:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2101
-  %i.ifq = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.ifq = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.ifr = xor i64 %i.ifq, 5576989476324074820
-  %i.ifs = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.ifs = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.ift = load i64, ptr %i.ifs, align 1
   %i.ifu = xor i64 %i.ift, 7308345369539994994
   %i.ifv = or i64 %i.ifr, %i.ifu
@@ -9062,9 +9042,9 @@ bb.ach:                                           ; preds = %_ZN6hermes6ESTree28
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2194:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2149
-  %i.jcp = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.jcp = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.jcq = xor i64 %i.jcp, 7021781766951172436
-  %i.jcr = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.jcr = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.jcs = load i64, ptr %i.jcr, align 1
   %i.jct = xor i64 %i.jcs, 8243122671947182689
   %i.jcu = or i64 %i.jcq, %i.jct
@@ -9467,9 +9447,9 @@ _ZNK4llvh9StringRef6equalsES0_.exit2266.thread6696: ; preds = %_ZNK4llvh9StringR
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2269:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2194
-  %i.kem = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.kem = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.ken = xor i64 %i.kem, 7299038025086292820
-  %i.keo = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.keo = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.kep = load i64, ptr %i.keo, align 1
   %i.keq = xor i64 %i.kep, 7237970110066281316
   %i.ker = or i64 %i.ken, %i.keq
@@ -9626,9 +9606,9 @@ _ZNK4llvh9StringRef6equalsES0_.exit2284.thread6708: ; preds = %_ZNK4llvh9StringR
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2287:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2269
-  %i.khv = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.khv = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.khw = xor i64 %i.khv, 7021786319681246036
-  %i.khx = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.khx = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.khy = load i64, ptr %i.khx, align 1
   %i.khz = xor i64 %i.khy, 7309475598724854373
   %i.kia = or i64 %i.khw, %i.khz
@@ -9759,9 +9739,9 @@ bb.afw:                                           ; preds = %bb.afv, %bb.afu, %b
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2293:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2140
-  %i.kju = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.kju = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.kjv = xor i64 %i.kju, 6087003515538985812
-  %i.kjw = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.kjw = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.kjx = load i64, ptr %i.kjw, align 1
   %i.kjy = xor i64 %i.kjx, 7309475598942958194
   %i.kjz = or i64 %i.kjv, %i.kjy
@@ -10164,9 +10144,9 @@ bb.agw:                                           ; preds = %bb.agv, %bb.agu, %b
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2311:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2293
-  %i.kqw = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.kqw = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.kqx = xor i64 %i.kqw, 6081386102094320468
-  %i.kqy = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.kqy = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.kqz = load i64, ptr %i.kqy, align 1
   %i.kra = xor i64 %i.kqz, 7309475598608134261
   %i.krb = or i64 %i.kqx, %i.kra
@@ -10569,9 +10549,9 @@ bb.aiz:                                           ; preds = %bb.aiy, %bb.aix, %b
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2344:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2287
-  %i.lfz = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.lfz = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.lga = xor i64 %i.lfz, 7308345369539990356
-  %i.lgb = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.lgb = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.lgc = load i64, ptr %i.lgb, align 1
   %i.lgd = xor i64 %i.lgc, 7738151095513738357
   %i.lge = or i64 %i.lga, %i.lgd
@@ -10934,9 +10914,9 @@ bb.ajr:                                           ; preds = %_ZN6hermes6ESTree32
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2359:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2311
-  %i.llp = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.llp = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.llq = xor i64 %i.llp, 6083922645237453652
-  %i.llr = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.llr = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.lls = load i64, ptr %i.llr, align 1
   %i.llt = xor i64 %i.lls, 7309475598759324014
   %i.llu = or i64 %i.llq, %i.llt
@@ -11091,9 +11071,9 @@ bb.ajz:                                           ; preds = %_ZN6hermes6ESTree22
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2365:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2359
-  %i.loa = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.loa = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.lob = xor i64 %i.loa, 8453649509297443668
-  %i.loc = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.loc = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.lod = load i64, ptr %i.loc, align 1
   %i.loe = xor i64 %i.lod, 8751168580485476473
   %i.lof = or i64 %i.lob, %i.loe
@@ -11271,9 +11251,9 @@ bb.akl:                                           ; preds = %bb.akk, %bb.akj, %b
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2371:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2344
-  %i.lqo = load i64, ptr %.sroa.01032.0.copyload72407243734873517683, align 1
+  %i.lqo = load i64, ptr %.sroa.01032.0.copyload724072437335, align 1
   %i.lqp = xor i64 %i.lqo, 7587551005958755156
-  %i.lqq = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517683, i64 5
+  %i.lqq = getelementptr i8, ptr %.sroa.01032.0.copyload724072437335, i64 5
   %i.lqr = load i64, ptr %i.lqq, align 1
   %i.lqs = xor i64 %i.lqr, 7809649008907471973
   %i.lqt = or i64 %i.lqp, %i.lqs
@@ -11676,9 +11656,9 @@ bb.all:                                           ; preds = %_ZN6hermes6ESTree30
   br label %bb.aly
 
 _ZNK4llvh9StringRef6equalsES0_.exit2386:          ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit2365
-  %i.lzo = load i64, ptr %.sroa.01032.0.copyload72407243734873517669, align 1
+  %i.lzo = load i64, ptr %.sroa.01032.0.copyload724072437340, align 1
   %i.lzp = xor i64 %i.lzo, 7594873701691904852
-  %i.lzq = getelementptr i8, ptr %.sroa.01032.0.copyload72407243734873517669, i64 3
+  %i.lzq = getelementptr i8, ptr %.sroa.01032.0.copyload724072437340, i64 3
   %i.lzr = load i64, ptr %i.lzq, align 1
   %i.lzs = xor i64 %i.lzr, 8318822965070881903
   %i.lzt = or i64 %i.lzp, %i.lzs
@@ -12001,7 +11981,7 @@ bb.alx:                                           ; preds = %bb.alw, %_ZN6hermes
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ml) #11
   br label %bb.aly
 
-_ZNK4llvh9StringRef6equalsES0_.exit2401.thread:   ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit1741, %_ZNK4llvh9StringRef6equalsES0_.exit2392, %_ZNK4llvh9StringRef6equalsES0_.exit2389, %_ZNK4llvh9StringRef6equalsES0_.exit2386, %_ZNK4llvh9StringRef6equalsES0_.exit2383, %_ZNK4llvh9StringRef6equalsES0_.exit2377, %_ZNK4llvh9StringRef6equalsES0_.exit2374, %_ZNK4llvh9StringRef6equalsES0_.exit2371, %_ZNK4llvh9StringRef6equalsES0_.exit2356, %_ZNK4llvh9StringRef6equalsES0_.exit2353, %_ZNK4llvh9StringRef6equalsES0_.exit2338, %_ZNK4llvh9StringRef6equalsES0_.exit2326, %_ZNK4llvh9StringRef6equalsES0_.exit2284, %_ZNK4llvh9StringRef6equalsES0_.exit2191, %_ZNK4llvh9StringRef6equalsES0_.exit2188, %_ZNK4llvh9StringRef6equalsES0_.exit2146, %_ZNK4llvh9StringRef6equalsES0_.exit2107, %_ZNK4llvh9StringRef6equalsES0_.exit2104, %_ZNK4llvh9StringRef6equalsES0_.exit2098, %_ZNK4llvh9StringRef6equalsES0_.exit2089, %_ZNK4llvh9StringRef6equalsES0_.exit1975, %_ZNK4llvh9StringRef6equalsES0_.exit2398, %_ZNK4llvh9StringRef6equalsES0_.exit1831.thread, %_ZNK4llvh9StringRef6equalsES0_.exit2401
+_ZNK4llvh9StringRef6equalsES0_.exit2401.thread:   ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424.thread, %_ZNK4llvh9StringRef6equalsES0_.exit1741, %_ZNK4llvh9StringRef6equalsES0_.exit1975, %_ZNK4llvh9StringRef6equalsES0_.exit2146, %_ZNK4llvh9StringRef6equalsES0_.exit2104, %_ZNK4llvh9StringRef6equalsES0_.exit2191, %_ZNK4llvh9StringRef6equalsES0_.exit2188, %_ZNK4llvh9StringRef6equalsES0_.exit2089, %_ZNK4llvh9StringRef6equalsES0_.exit2107, %_ZNK4llvh9StringRef6equalsES0_.exit2098, %_ZNK4llvh9StringRef6equalsES0_.exit2284, %_ZNK4llvh9StringRef6equalsES0_.exit2353, %_ZNK4llvh9StringRef6equalsES0_.exit2356, %_ZNK4llvh9StringRef6equalsES0_.exit2371, %_ZNK4llvh9StringRef6equalsES0_.exit2374, %_ZNK4llvh9StringRef6equalsES0_.exit2377, %_ZNK4llvh9StringRef6equalsES0_.exit2338, %_ZNK4llvh9StringRef6equalsES0_.exit2383, %_ZNK4llvh9StringRef6equalsES0_.exit2386, %_ZNK4llvh9StringRef6equalsES0_.exit2392, %_ZNK4llvh9StringRef6equalsES0_.exit2398, %_ZNK4llvh9StringRef6equalsES0_.exit2389, %_ZNK4llvh9StringRef6equalsES0_.exit2326, %_ZNK4llvh9StringRef6equalsES0_.exit2401
   %i.mfg = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.mfh = load ptr, ptr %i.mfg, align 8, !tbaa !1256, !nonnull !588, !align !589
   call void @llvm.lifetime.start.p0(ptr nonnull %509) #11

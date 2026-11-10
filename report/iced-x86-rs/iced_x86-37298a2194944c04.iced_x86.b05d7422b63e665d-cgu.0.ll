@@ -205,21 +205,21 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_pref
   store i8 1, ptr %i.b, align 1, !alias.scope !10872
   br label %bb.ao
 
-bb.ar:                                            ; preds = %bb.at, %bb.av, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit154, %bb.ao
+bb.ar:                                            ; preds = %bb.av, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter3gasNtB4_12GasFormatter13format_prefix.exit154, %bb.at, %bb.ao
   %or.cond = or i1 %i.ii, %i.ei
   br i1 %or.cond, label %bb.c, label %bb.ay
 
 bb.as:                                            ; preds = %bb.ao
   %i.jp = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.jq = load i16, ptr %i.jp, align 8, !range !28, !noundef !21 ; 3 uses
+  %i.jq = load i16, ptr %i.jp, align 8, !range !28, !noundef !21 ; 2 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 260
   %i.js = load i32, ptr %i.jr, align 4, !noundef !21
   %i.jt = and i32 %i.js, 4
   %.not22 = icmp eq i32 %i.jt, 0
-  br i1 %.not22, label %7, label %bb.au
+  br i1 %.not22, label %bb.at, label %bb.au
 
-7:                                                ; preds = %bb.as
-  switch i16 %i.jq, label %bb.at [
+bb.at:                                            ; preds = %bb.as
+  switch i16 %i.jq, label %bb.ar [
     i16 153, label %bb.au
     i16 154, label %bb.au
     i16 155, label %bb.au
@@ -294,14 +294,12 @@ bb.as:                                            ; preds = %bb.ao
     i16 4830, label %bb.au
     i16 4831, label %bb.au
     i16 4832, label %bb.au
+    i16 394, label %bb.au
+    i16 395, label %bb.au
+    i16 396, label %bb.au
   ]
 
-bb.at:                                            ; preds = %7
-  %.off = add nsw i16 %i.jq, -394
-  %switch = icmp ult i16 %.off, 3
-  br i1 %switch, label %bb.au, label %bb.ar
-
-bb.au:                                            ; preds = %bb.at, %bb.as, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7
+bb.au:                                            ; preds = %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.as
   %i.ju = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.jv = load ptr, ptr %i.ju, align 8, !nonnull !21, !align !25, !noundef !21 ; 2 uses
   switch i16 %i.jq, label %bb.av [
@@ -704,21 +702,21 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_pr
   store i8 1, ptr %i.a, align 1, !alias.scope !11228
   br label %bb.ah
 
-bb.ak:                                            ; preds = %bb.am, %bb.ao, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit154, %bb.ah
+bb.ak:                                            ; preds = %bb.ao, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter13format_prefix.exit154, %bb.am, %bb.ah
   %or.cond = or i1 %i.ex, %i.aa
   br i1 %or.cond, label %bb.av, label %bb.ar
 
 bb.al:                                            ; preds = %bb.ah
   %i.gd = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ge = load i16, ptr %i.gd, align 8, !range !28, !noundef !21 ; 3 uses
+  %i.ge = load i16, ptr %i.gd, align 8, !range !28, !noundef !21 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 260
   %i.gg = load i32, ptr %i.gf, align 4, !noundef !21
   %i.gh = and i32 %i.gg, 4
   %.not33 = icmp eq i32 %i.gh, 0
-  br i1 %.not33, label %7, label %bb.an
+  br i1 %.not33, label %bb.am, label %bb.an
 
-7:                                                ; preds = %bb.al
-  switch i16 %i.ge, label %bb.am [
+bb.am:                                            ; preds = %bb.al
+  switch i16 %i.ge, label %bb.ak [
     i16 153, label %bb.an
     i16 154, label %bb.an
     i16 155, label %bb.an
@@ -793,14 +791,12 @@ bb.al:                                            ; preds = %bb.ah
     i16 4830, label %bb.an
     i16 4831, label %bb.an
     i16 4832, label %bb.an
+    i16 394, label %bb.an
+    i16 395, label %bb.an
+    i16 396, label %bb.an
   ]
 
-bb.am:                                            ; preds = %7
-  %.off = add nsw i16 %i.ge, -394
-  %switch = icmp ult i16 %.off, 3
-  br i1 %switch, label %bb.an, label %bb.ak
-
-bb.an:                                            ; preds = %bb.am, %bb.al, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7
+bb.an:                                            ; preds = %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.al
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.gj = load ptr, ptr %i.gi, align 8, !nonnull !21, !align !25, !noundef !21 ; 2 uses
   switch i16 %i.ge, label %bb.ao [
@@ -1203,21 +1199,21 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_pr
   store i8 1, ptr %i.a, align 1, !alias.scope !11609
   br label %bb.ah
 
-bb.ak:                                            ; preds = %bb.am, %bb.ao, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit135, %bb.ah
+bb.ak:                                            ; preds = %bb.ao, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter13format_prefix.exit135, %bb.am, %bb.ah
   %or.cond = or i1 %i.fn, %i.bp
   br i1 %or.cond, label %bb.av, label %bb.ar
 
 bb.al:                                            ; preds = %bb.ah
   %i.gt = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.gu = load i16, ptr %i.gt, align 8, !range !28, !noundef !21 ; 3 uses
+  %i.gu = load i16, ptr %i.gt, align 8, !range !28, !noundef !21 ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %0, i64 260
   %i.gw = load i32, ptr %i.gv, align 4, !noundef !21
   %i.gx = and i32 %i.gw, 4
   %.not15 = icmp eq i32 %i.gx, 0
-  br i1 %.not15, label %7, label %bb.an
+  br i1 %.not15, label %bb.am, label %bb.an
 
-7:                                                ; preds = %bb.al
-  switch i16 %i.gu, label %bb.am [
+bb.am:                                            ; preds = %bb.al
+  switch i16 %i.gu, label %bb.ak [
     i16 153, label %bb.an
     i16 154, label %bb.an
     i16 155, label %bb.an
@@ -1292,14 +1288,12 @@ bb.al:                                            ; preds = %bb.ah
     i16 4830, label %bb.an
     i16 4831, label %bb.an
     i16 4832, label %bb.an
+    i16 394, label %bb.an
+    i16 395, label %bb.an
+    i16 396, label %bb.an
   ]
 
-bb.am:                                            ; preds = %7
-  %.off = add nsw i16 %i.gu, -394
-  %switch = icmp ult i16 %.off, 3
-  br i1 %switch, label %bb.an, label %bb.ak
-
-bb.an:                                            ; preds = %bb.am, %bb.al, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7
+bb.an:                                            ; preds = %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.al
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.gz = load ptr, ptr %i.gy, align 8, !nonnull !21, !align !25, !noundef !21 ; 2 uses
   switch i16 %i.gu, label %bb.ao [
@@ -1702,21 +1696,21 @@ _RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_
   store i8 1, ptr %i.a, align 1, !alias.scope !11973
   br label %bb.ao
 
-bb.ar:                                            ; preds = %bb.at, %bb.av, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit166, %bb.ao
+bb.ar:                                            ; preds = %bb.av, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter5intelNtB4_14IntelFormatter13format_prefix.exit166, %bb.at, %bb.ao
   %or.cond = or i1 %i.gq, %i.bp
   br i1 %or.cond, label %bb.bc, label %bb.ay
 
 bb.as:                                            ; preds = %bb.ao
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.hx = load i16, ptr %i.hw, align 8, !range !28, !noundef !21 ; 3 uses
+  %i.hx = load i16, ptr %i.hw, align 8, !range !28, !noundef !21 ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %0, i64 260
   %i.hz = load i32, ptr %i.hy, align 4, !noundef !21
   %i.ia = and i32 %i.hz, 4
   %.not17 = icmp eq i32 %i.ia, 0
-  br i1 %.not17, label %7, label %bb.au
+  br i1 %.not17, label %bb.at, label %bb.au
 
-7:                                                ; preds = %bb.as
-  switch i16 %i.hx, label %bb.at [
+bb.at:                                            ; preds = %bb.as
+  switch i16 %i.hx, label %bb.ar [
     i16 153, label %bb.au
     i16 154, label %bb.au
     i16 155, label %bb.au
@@ -1791,14 +1785,12 @@ bb.as:                                            ; preds = %bb.ao
     i16 4830, label %bb.au
     i16 4831, label %bb.au
     i16 4832, label %bb.au
+    i16 394, label %bb.au
+    i16 395, label %bb.au
+    i16 396, label %bb.au
   ]
 
-bb.at:                                            ; preds = %7
-  %.off = add nsw i16 %i.hx, -394
-  %switch = icmp ult i16 %.off, 3
-  br i1 %switch, label %bb.au, label %bb.ar
-
-bb.au:                                            ; preds = %bb.at, %bb.as, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7, %7
+bb.au:                                            ; preds = %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.at, %bb.as
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.ic = load ptr, ptr %i.ib, align 8, !nonnull !21, !align !25, !noundef !21 ; 2 uses
   switch i16 %i.hx, label %bb.av [

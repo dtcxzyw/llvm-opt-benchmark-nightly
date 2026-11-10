@@ -205,7 +205,7 @@ declare i64 @mul_size(i64 noundef, i64 noundef) local_unnamed_addr #3
 define internal fastcc void @DCH_to_char(ptr nofree noundef readonly captures(none) %0, i1 noundef zeroext %1, ptr nofree noundef nonnull readonly captures(none) %2, ptr noundef %3, i32 noundef %4) unnamed_addr #0 {
 bb.a:
   tail call void @cache_locale_time() #16
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 21 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 22 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 21 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 13 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
@@ -239,7 +239,7 @@ bb.e:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %.0614, i64 16 ; 13 uses
   %i.o = load ptr, ptr %i.n, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %i.q = load i32, ptr %i.p, align 8              ; 8 uses
+  %i.q = load i32, ptr %i.p, align 8              ; 7 uses
   switch i32 %i.q, label %bb.hv [
     i32 1, label %bb.f
     i32 40, label %bb.f
@@ -305,12 +305,12 @@ bb.e:                                             ; preds = %bb.b
     i32 28, label %bb.gm
     i32 56, label %bb.gv
     i32 29, label %bb.gv
-    i32 57, label %bb.he
-    i32 30, label %bb.he
+    i32 31, label %bb.ht
+    i32 52, label %bb.hr
     i32 43, label %bb.hk
     i32 97, label %bb.hk
-    i32 52, label %bb.hr
-    i32 31, label %bb.ht
+    i32 57, label %bb.he
+    i32 30, label %bb.hg
   ]
 
 bb.f:                                             ; preds = %bb.e, %bb.e
@@ -713,24 +713,21 @@ bb.hd:                                            ; preds = %bb.hc
   %i.ahv = tail call ptr @strcat(ptr noundef nonnull dereferenceable(1) %.0613, ptr noundef nonnull dereferenceable(1) %i.ahu) #16 ; 0 uses
   br label %.sink.split
 
-bb.he:                                            ; preds = %bb.e, %bb.e
-  %5 = icmp eq i32 %i.q, 57
-  %i.ahw = load i32, ptr %i.a, align 8            ; 5 uses
-  br i1 %5, label %6, label %bb.hg
-
-6:                                                ; preds = %bb.he
+bb.he:                                            ; preds = %bb.e
+  %i.ahw = load i32, ptr %i.a, align 8            ; 4 uses
   br i1 %1, label %bb.hi, label %bb.hf
 
-bb.hf:                                            ; preds = %6
+bb.hf:                                            ; preds = %bb.he
   %i.ahx = icmp slt i32 %i.ahw, 1
   %i.ahy = sub i32 1, %i.ahw
   %spec.select678 = select i1 %i.ahx, i32 %i.ahy, i32 %i.ahw
   br label %bb.hi
 
-bb.hg:                                            ; preds = %bb.he
+bb.hg:                                            ; preds = %bb.e
+  %5 = load i32, ptr %i.a, align 8
   %i.ahz = load i32, ptr %i.b, align 4
   %i.aia = load i32, ptr %i.c, align 8
-  %i.aib = tail call i32 @date2isoyear(i32 noundef %i.ahw, i32 noundef %i.ahz, i32 noundef %i.aia) #16 ; 2 uses
+  %i.aib = tail call i32 @date2isoyear(i32 noundef %5, i32 noundef %i.ahz, i32 noundef %i.aia) #16 ; 2 uses
   br i1 %1, label %bb.hi, label %bb.hh
 
 bb.hh:                                            ; preds = %bb.hg
@@ -743,8 +740,8 @@ bb.hh:                                            ; preds = %bb.hg
   %spec.select972 = select i1 %i.aic, i32 %i.aih, i32 %i.aig
   br label %bb.hi
 
-bb.hi:                                            ; preds = %bb.hh, %bb.hg, %6, %bb.hf
-  %i.aii = phi i32 [ %i.aib, %bb.hg ], [ %spec.select972, %bb.hh ], [ %spec.select678, %bb.hf ], [ %i.ahw, %6 ]
+bb.hi:                                            ; preds = %bb.hh, %bb.hg, %bb.he, %bb.hf
+  %i.aii = phi i32 [ %i.aib, %bb.hg ], [ %spec.select972, %bb.hh ], [ %spec.select678, %bb.hf ], [ %i.ahw, %bb.he ]
   %i.aij = srem i32 %i.aii, 10
   %i.aik = tail call i32 (ptr, ptr, ...) @pg_sprintf(ptr noundef %.0613, ptr noundef nonnull @.str.58, i32 noundef %i.aij) #16 ; 0 uses
   %i.ail = getelementptr inbounds nuw i8, ptr %.0614, i64 9
