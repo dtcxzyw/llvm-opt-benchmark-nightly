@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/drbgtest?download=true
 inline.NumInlined: 30
 inline.NumDeleted: 13
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0
 @.str.58 = private unnamed_addr constant [53 x i8] c"ERROR: %d duplicate prefixes in public random output\00", align 1
 @.str.59 = private unnamed_addr constant [54 x i8] c"ERROR: %d duplicate prefixes in private random output\00", align 1
@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [32 x i8], align 16               ; 7 uses
   %i.d = alloca [2 x i32], align 8                ; 24 uses
   %i.e = alloca [32 x i8], align 16               ; 6 uses
-  %i.f = alloca [320 x i8], align 16              ; 24 uses
+  %i.f = alloca [320 x i8], align 16              ; 69 uses
   %1 = alloca [20 x %struct.drbg_fork_result_st], align 16 ; 51 uses
   %i.g = alloca [1 x i8], align 1                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #13
@@ -249,9 +249,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.05062.i = phi i32 [ 1, %bb.d ], [ %i.r, %bb.e ] ; 4 uses
   %.04664.i = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 80 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 136
-  store i32 %.05062.i, ptr %i.s, align 4, !tbaa !23
+  store i32 %.05062.i, ptr %i.s, align 8, !tbaa !23
   %i.t = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 96
-  store i32 %.05062.i, ptr %i.t, align 4, !tbaa !23
+  store i32 %.05062.i, ptr %i.t, align 16, !tbaa !23
   %i.u = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 108 ; 2 uses
   %i.v = call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %i.u, i64 noundef 10, ptr noundef nonnull @.str.54, i32 noundef %.05062.i) #13 ; 0 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 148
@@ -305,16 +305,16 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ar = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 100
-  store i32 %i.aa, ptr %i.ar, align 4, !tbaa !37
+  store i32 %i.aa, ptr %i.ar, align 4, !tbaa !36
   %i.as = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 104
-  store i32 0, ptr %i.as, align 4, !tbaa !25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.04664.i, ptr noundef nonnull align 16 dereferenceable(16) %i.c, i64 16, i1 false)
+  store i32 0, ptr %i.as, align 8, !tbaa !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.04664.i, ptr noundef nonnull align 16 dereferenceable(16) %i.c, i64 16, i1 false)
   %i.at = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 120
   %i.au = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 140
-  store i32 %i.aa, ptr %i.au, align 4, !tbaa !37
+  store i32 %i.aa, ptr %i.au, align 4, !tbaa !36
   %i.av = getelementptr inbounds nuw i8, ptr %.pn5963.i, i64 144
-  store i32 1, ptr %i.av, align 4, !tbaa !25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.at, ptr noundef nonnull align 16 dereferenceable(16) %i.q, i64 16, i1 false)
+  store i32 1, ptr %i.av, align 16, !tbaa !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.at, ptr noundef nonnull align 16 dereferenceable(16) %i.q, i64 16, i1 false)
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j
@@ -376,12 +376,12 @@ bb.s:                                             ; preds = %bb.r
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 68
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(7) %i.bq, ptr noundef nonnull align 1 dereferenceable(7) @.str.57, i64 7, i1 false) #13
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store i32 %i.n, ptr %i.br, align 4, !tbaa !37
+  store i32 %i.n, ptr %i.br, align 4, !tbaa !36
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i32 0, ptr %i.bs, align 8, !tbaa !25
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %1, ptr noundef nonnull align 16 dereferenceable(16) %i.e, i64 16, i1 false)
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 60
-  store i32 %i.n, ptr %i.bt, align 4, !tbaa !37
+  store i32 %i.n, ptr %i.bt, align 4, !tbaa !36
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   store i32 1, ptr %i.bu, align 16, !tbaa !25
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, ptr noundef nonnull align 16 dereferenceable(16) %i.bl, i64 16, i1 false)
@@ -443,8 +443,8 @@ bb.s:                                             ; preds = %bb.r
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.de, ptr noundef nonnull align 8 dereferenceable(16) %i.df, i64 16, i1 false)
   call void @qsort(ptr noundef nonnull %1, i64 noundef 20, i64 noundef 40, ptr noundef nonnull @compare_drbg_fork_result) #13
-  %i.dg = load i8, ptr %i.bp, align 8, !tbaa !38  ; 2 uses
-  %i.dh = load i8, ptr %1, align 16, !tbaa !38
+  %i.dg = load i8, ptr %i.bp, align 8, !tbaa !37  ; 2 uses
+  %i.dh = load i8, ptr %1, align 16, !tbaa !37
   %i.di = icmp eq i8 %i.dg, %i.dh
   br i1 %i.di, label %bb.t, label %bb.u
 
@@ -458,7 +458,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.do = load i8, ptr %i.bx, align 16, !tbaa !38 ; 2 uses
+  %i.do = load i8, ptr %i.bx, align 16, !tbaa !37 ; 2 uses
   %i.dp = icmp eq i8 %i.do, %i.dg
   br i1 %i.dp, label %bb.v, label %bb.w
 
@@ -473,7 +473,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.dw = load i8, ptr %i.bz, align 8, !tbaa !38  ; 2 uses
+  %i.dw = load i8, ptr %i.bz, align 8, !tbaa !37  ; 2 uses
   %i.dx = icmp eq i8 %i.dw, %i.do
   br i1 %i.dx, label %bb.x, label %bb.y
 
@@ -488,7 +488,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  %i.ee = load i8, ptr %i.cb, align 16, !tbaa !38 ; 2 uses
+  %i.ee = load i8, ptr %i.cb, align 16, !tbaa !37 ; 2 uses
   %i.ef = icmp eq i8 %i.ee, %i.dw
   br i1 %i.ef, label %bb.z, label %bb.aa
 
@@ -503,7 +503,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %i.em = load i8, ptr %i.cd, align 8, !tbaa !38  ; 2 uses
+  %i.em = load i8, ptr %i.cd, align 8, !tbaa !37  ; 2 uses
   %i.en = icmp eq i8 %i.em, %i.ee
   br i1 %i.en, label %bb.ab, label %bb.ac
 
@@ -518,7 +518,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
-  %i.eu = load i8, ptr %i.cf, align 16, !tbaa !38 ; 2 uses
+  %i.eu = load i8, ptr %i.cf, align 16, !tbaa !37 ; 2 uses
   %i.ev = icmp eq i8 %i.eu, %i.em
   br i1 %i.ev, label %bb.ad, label %bb.ae
 
@@ -533,7 +533,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %i.fc = load i8, ptr %i.ch, align 8, !tbaa !38  ; 2 uses
+  %i.fc = load i8, ptr %i.ch, align 8, !tbaa !37  ; 2 uses
   %i.fd = icmp eq i8 %i.fc, %i.eu
   br i1 %i.fd, label %bb.af, label %bb.ag
 
@@ -548,7 +548,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %i.fk = load i8, ptr %i.cj, align 16, !tbaa !38 ; 2 uses
+  %i.fk = load i8, ptr %i.cj, align 16, !tbaa !37 ; 2 uses
   %i.fl = icmp eq i8 %i.fk, %i.fc
   br i1 %i.fl, label %bb.ah, label %bb.ai
 
@@ -563,7 +563,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %i.fs = load i8, ptr %i.cl, align 8, !tbaa !38  ; 2 uses
+  %i.fs = load i8, ptr %i.cl, align 8, !tbaa !37  ; 2 uses
   %i.ft = icmp eq i8 %i.fs, %i.fk
   br i1 %i.ft, label %bb.aj, label %bb.ak
 
@@ -578,7 +578,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %i.ga = load i8, ptr %i.cn, align 16, !tbaa !38 ; 2 uses
+  %i.ga = load i8, ptr %i.cn, align 16, !tbaa !37 ; 2 uses
   %i.gb = icmp eq i8 %i.ga, %i.fs
   br i1 %i.gb, label %bb.al, label %bb.am
 
@@ -593,7 +593,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %i.gi = load i8, ptr %i.cp, align 8, !tbaa !38  ; 2 uses
+  %i.gi = load i8, ptr %i.cp, align 8, !tbaa !37  ; 2 uses
   %i.gj = icmp eq i8 %i.gi, %i.ga
   br i1 %i.gj, label %bb.an, label %bb.ao
 
@@ -608,7 +608,7 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %i.gq = load i8, ptr %i.cr, align 16, !tbaa !38 ; 2 uses
+  %i.gq = load i8, ptr %i.cr, align 16, !tbaa !37 ; 2 uses
   %i.gr = icmp eq i8 %i.gq, %i.gi
   br i1 %i.gr, label %bb.ap, label %bb.aq
 
@@ -623,7 +623,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %i.gy = load i8, ptr %i.ct, align 8, !tbaa !38  ; 2 uses
+  %i.gy = load i8, ptr %i.ct, align 8, !tbaa !37  ; 2 uses
   %i.gz = icmp eq i8 %i.gy, %i.gq
   br i1 %i.gz, label %bb.ar, label %bb.as
 
@@ -638,7 +638,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
-  %i.hg = load i8, ptr %i.cv, align 16, !tbaa !38 ; 2 uses
+  %i.hg = load i8, ptr %i.cv, align 16, !tbaa !37 ; 2 uses
   %i.hh = icmp eq i8 %i.hg, %i.gy
   br i1 %i.hh, label %bb.at, label %bb.au
 
@@ -653,7 +653,7 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
-  %i.ho = load i8, ptr %i.cx, align 8, !tbaa !38  ; 2 uses
+  %i.ho = load i8, ptr %i.cx, align 8, !tbaa !37  ; 2 uses
   %i.hp = icmp eq i8 %i.ho, %i.hg
   br i1 %i.hp, label %bb.av, label %bb.aw
 
@@ -668,7 +668,7 @@ bb.av:                                            ; preds = %bb.au
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
-  %i.hw = load i8, ptr %i.cz, align 16, !tbaa !38 ; 2 uses
+  %i.hw = load i8, ptr %i.cz, align 16, !tbaa !37 ; 2 uses
   %i.hx = icmp eq i8 %i.hw, %i.ho
   br i1 %i.hx, label %bb.ax, label %bb.ay
 
@@ -683,7 +683,7 @@ bb.ax:                                            ; preds = %bb.aw
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
-  %i.ie = load i8, ptr %i.db, align 8, !tbaa !38  ; 2 uses
+  %i.ie = load i8, ptr %i.db, align 8, !tbaa !37  ; 2 uses
   %i.if = icmp eq i8 %i.ie, %i.hw
   br i1 %i.if, label %bb.az, label %bb.ba
 
@@ -698,7 +698,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
-  %i.im = load i8, ptr %i.dd, align 16, !tbaa !38 ; 2 uses
+  %i.im = load i8, ptr %i.dd, align 16, !tbaa !37 ; 2 uses
   %i.in = icmp eq i8 %i.im, %i.ie
   br i1 %i.in, label %bb.bb, label %bb.bc
 
@@ -713,7 +713,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %i.iu = load i8, ptr %i.df, align 8, !tbaa !38
+  %i.iu = load i8, ptr %i.df, align 8, !tbaa !37
   %i.iv = icmp eq i8 %i.iu, %i.im
   br i1 %i.iv, label %bb.bd, label %bb.be
 
@@ -741,42 +741,289 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
   %i.je = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.jf = load i32, ptr %i.je, align 4, !tbaa !24 ; 2 uses
   %i.jg = icmp sgt i32 %i.jf, 7
-  br i1 %i.jg, label %bb.bh, label %2
+  br i1 %i.jg, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
   call void (ptr, ...) @test_note(ptr noundef nonnull @.str.59, i32 noundef %i.jf) #13
-  br label %2
-
-2:                                                ; preds = %bb.bh, %bb.bg
-  %.149.i = phi i32 [ 0, %bb.bh ], [ %.048.i, %bb.bg ] ; 2 uses
-  call void @qsort(ptr noundef nonnull %i.f, i64 noundef 160, i64 noundef 2, ptr noundef nonnull @compare_rand_chunk) #13
   br label %bb.bi
 
-bb.bi:                                            ; preds = %bb.bi, %2
-  %.pn70.i = phi ptr [ %i.f, %2 ], [ %.171.i, %bb.bi ] ; 2 uses
-  %.369.i = phi i32 [ 2, %2 ], [ %i.jm, %bb.bi ]  ; 2 uses
-  %3 = phi i32 [ 0, %2 ], [ %spec.select.i.a, %bb.bi ]
-  %.171.i = getelementptr inbounds nuw i8, ptr %.pn70.i, i64 2 ; 2 uses
-  %i.jh = load i16, ptr %.pn70.i, align 1
-  %i.ji = load i16, ptr %.171.i, align 1
-  %4 = icmp ne i16 %i.jh, %i.ji
-  %i.jj = zext i1 %4 to i32
-  %i.jk = icmp eq i32 %i.jj, 0
+bb.bi:                                            ; preds = %bb.bh, %bb.bg
+  %.149.i = phi i32 [ 0, %bb.bh ], [ %.048.i, %bb.bg ] ; 2 uses
+  call void @qsort(ptr noundef nonnull %i.f, i64 noundef 160, i64 noundef 2, ptr noundef nonnull @compare_rand_chunk) #13
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 2
+  %wide.load = load <4 x i16>, ptr %2, align 2    ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 10
+  %wide.load18 = load <4 x i16>, ptr %3, align 2  ; 3 uses
+  %4 = shufflevector <4 x i16> %wide.load, <4 x i16> %wide.load18, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %5 = icmp eq <4 x i16> %4, %wide.load18
+  %6 = zext <4 x i1> %5 to <4 x i32>
+  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 18
+  %wide.load.1 = load <4 x i16>, ptr %7, align 2  ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 26
+  %wide.load18.1 = load <4 x i16>, ptr %8, align 2 ; 3 uses
+  %9 = shufflevector <4 x i16> %wide.load.1, <4 x i16> %wide.load18.1, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %10 = icmp eq <4 x i16> %9, %wide.load18.1
+  %11 = zext <4 x i1> %10 to <4 x i32>
+  %12 = add nuw nsw <4 x i32> %6, %11
+  %13 = getelementptr inbounds nuw i8, ptr %i.f, i64 34
+  %wide.load.2 = load <4 x i16>, ptr %13, align 2 ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.f, i64 42
+  %wide.load18.2 = load <4 x i16>, ptr %14, align 2 ; 3 uses
+  %15 = shufflevector <4 x i16> %wide.load.2, <4 x i16> %wide.load18.2, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %16 = icmp eq <4 x i16> %15, %wide.load18.2
+  %17 = zext <4 x i1> %16 to <4 x i32>
+  %18 = add nuw nsw <4 x i32> %12, %17
+  %19 = getelementptr inbounds nuw i8, ptr %i.f, i64 50
+  %wide.load.3 = load <4 x i16>, ptr %19, align 2 ; 3 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.f, i64 58
+  %wide.load18.3 = load <4 x i16>, ptr %20, align 2 ; 3 uses
+  %21 = shufflevector <4 x i16> %wide.load.3, <4 x i16> %wide.load18.3, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %22 = icmp eq <4 x i16> %21, %wide.load18.3
+  %23 = zext <4 x i1> %22 to <4 x i32>
+  %24 = add nuw nsw <4 x i32> %18, %23
+  %25 = getelementptr inbounds nuw i8, ptr %i.f, i64 66
+  %wide.load.4 = load <4 x i16>, ptr %25, align 2 ; 3 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.f, i64 74
+  %wide.load18.4 = load <4 x i16>, ptr %26, align 2 ; 3 uses
+  %27 = shufflevector <4 x i16> %wide.load.4, <4 x i16> %wide.load18.4, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %28 = icmp eq <4 x i16> %27, %wide.load18.4
+  %29 = zext <4 x i1> %28 to <4 x i32>
+  %30 = add nuw nsw <4 x i32> %24, %29
+  %31 = getelementptr inbounds nuw i8, ptr %i.f, i64 82
+  %wide.load.5 = load <4 x i16>, ptr %31, align 2 ; 3 uses
+  %32 = getelementptr inbounds nuw i8, ptr %i.f, i64 90
+  %wide.load18.5 = load <4 x i16>, ptr %32, align 2 ; 3 uses
+  %33 = shufflevector <4 x i16> %wide.load.5, <4 x i16> %wide.load18.5, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %34 = icmp eq <4 x i16> %33, %wide.load18.5
+  %35 = zext <4 x i1> %34 to <4 x i32>
+  %36 = add nuw nsw <4 x i32> %30, %35
+  %37 = getelementptr inbounds nuw i8, ptr %i.f, i64 98
+  %wide.load.6 = load <4 x i16>, ptr %37, align 2 ; 3 uses
+  %38 = getelementptr inbounds nuw i8, ptr %i.f, i64 106
+  %wide.load18.6 = load <4 x i16>, ptr %38, align 2 ; 3 uses
+  %39 = shufflevector <4 x i16> %wide.load.6, <4 x i16> %wide.load18.6, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %40 = icmp eq <4 x i16> %39, %wide.load18.6
+  %41 = zext <4 x i1> %40 to <4 x i32>
+  %42 = add nuw nsw <4 x i32> %36, %41
+  %43 = getelementptr inbounds nuw i8, ptr %i.f, i64 114
+  %wide.load.7 = load <4 x i16>, ptr %43, align 2 ; 3 uses
+  %44 = getelementptr inbounds nuw i8, ptr %i.f, i64 122
+  %wide.load18.7 = load <4 x i16>, ptr %44, align 2 ; 3 uses
+  %45 = shufflevector <4 x i16> %wide.load.7, <4 x i16> %wide.load18.7, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %46 = icmp eq <4 x i16> %45, %wide.load18.7
+  %47 = zext <4 x i1> %46 to <4 x i32>
+  %48 = add <4 x i32> %42, %47
+  %49 = getelementptr inbounds nuw i8, ptr %i.f, i64 130
+  %wide.load.8 = load <4 x i16>, ptr %49, align 2 ; 3 uses
+  %50 = getelementptr inbounds nuw i8, ptr %i.f, i64 138
+  %wide.load18.8 = load <4 x i16>, ptr %50, align 2 ; 3 uses
+  %51 = shufflevector <4 x i16> %wide.load.8, <4 x i16> %wide.load18.8, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %52 = icmp eq <4 x i16> %51, %wide.load18.8
+  %53 = zext <4 x i1> %52 to <4 x i32>
+  %54 = add <4 x i32> %48, %53
+  %55 = getelementptr inbounds nuw i8, ptr %i.f, i64 146
+  %wide.load.9 = load <4 x i16>, ptr %55, align 2 ; 3 uses
+  %56 = getelementptr inbounds nuw i8, ptr %i.f, i64 154
+  %wide.load18.9 = load <4 x i16>, ptr %56, align 2 ; 3 uses
+  %57 = shufflevector <4 x i16> %wide.load.9, <4 x i16> %wide.load18.9, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %58 = icmp eq <4 x i16> %57, %wide.load18.9
+  %59 = zext <4 x i1> %58 to <4 x i32>
+  %60 = add <4 x i32> %54, %59
+  %61 = getelementptr inbounds nuw i8, ptr %i.f, i64 162
+  %wide.load.10 = load <4 x i16>, ptr %61, align 2 ; 3 uses
+  %62 = getelementptr inbounds nuw i8, ptr %i.f, i64 170
+  %wide.load18.10 = load <4 x i16>, ptr %62, align 2 ; 3 uses
+  %63 = shufflevector <4 x i16> %wide.load.10, <4 x i16> %wide.load18.10, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %64 = icmp eq <4 x i16> %63, %wide.load18.10
+  %65 = zext <4 x i1> %64 to <4 x i32>
+  %66 = add <4 x i32> %60, %65
+  %67 = getelementptr inbounds nuw i8, ptr %i.f, i64 178
+  %wide.load.11 = load <4 x i16>, ptr %67, align 2 ; 3 uses
+  %68 = getelementptr inbounds nuw i8, ptr %i.f, i64 186
+  %wide.load18.11 = load <4 x i16>, ptr %68, align 2 ; 3 uses
+  %69 = shufflevector <4 x i16> %wide.load.11, <4 x i16> %wide.load18.11, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %70 = icmp eq <4 x i16> %69, %wide.load18.11
+  %71 = zext <4 x i1> %70 to <4 x i32>
+  %72 = add <4 x i32> %66, %71
+  %73 = getelementptr inbounds nuw i8, ptr %i.f, i64 194
+  %wide.load.12 = load <4 x i16>, ptr %73, align 2 ; 3 uses
+  %74 = getelementptr inbounds nuw i8, ptr %i.f, i64 202
+  %wide.load18.12 = load <4 x i16>, ptr %74, align 2 ; 3 uses
+  %75 = shufflevector <4 x i16> %wide.load.12, <4 x i16> %wide.load18.12, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %76 = icmp eq <4 x i16> %75, %wide.load18.12
+  %77 = zext <4 x i1> %76 to <4 x i32>
+  %78 = add <4 x i32> %72, %77
+  %79 = getelementptr inbounds nuw i8, ptr %i.f, i64 210
+  %wide.load.13 = load <4 x i16>, ptr %79, align 2 ; 3 uses
+  %80 = getelementptr inbounds nuw i8, ptr %i.f, i64 218
+  %wide.load18.13 = load <4 x i16>, ptr %80, align 2 ; 3 uses
+  %81 = shufflevector <4 x i16> %wide.load.13, <4 x i16> %wide.load18.13, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %82 = icmp eq <4 x i16> %81, %wide.load18.13
+  %83 = zext <4 x i1> %82 to <4 x i32>
+  %84 = add <4 x i32> %78, %83
+  %85 = getelementptr inbounds nuw i8, ptr %i.f, i64 226
+  %wide.load.14 = load <4 x i16>, ptr %85, align 2 ; 3 uses
+  %86 = getelementptr inbounds nuw i8, ptr %i.f, i64 234
+  %wide.load18.14 = load <4 x i16>, ptr %86, align 2 ; 3 uses
+  %87 = shufflevector <4 x i16> %wide.load.14, <4 x i16> %wide.load18.14, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %88 = icmp eq <4 x i16> %87, %wide.load18.14
+  %89 = zext <4 x i1> %88 to <4 x i32>
+  %90 = add <4 x i32> %84, %89
+  %91 = getelementptr inbounds nuw i8, ptr %i.f, i64 242
+  %wide.load.15 = load <4 x i16>, ptr %91, align 2 ; 3 uses
+  %92 = getelementptr inbounds nuw i8, ptr %i.f, i64 250
+  %wide.load18.15 = load <4 x i16>, ptr %92, align 2 ; 3 uses
+  %93 = shufflevector <4 x i16> %wide.load.15, <4 x i16> %wide.load18.15, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %94 = icmp eq <4 x i16> %93, %wide.load18.15
+  %95 = zext <4 x i1> %94 to <4 x i32>
+  %96 = add <4 x i32> %90, %95
+  %97 = getelementptr inbounds nuw i8, ptr %i.f, i64 258
+  %wide.load.16 = load <4 x i16>, ptr %97, align 2 ; 3 uses
+  %98 = getelementptr inbounds nuw i8, ptr %i.f, i64 266
+  %wide.load18.16 = load <4 x i16>, ptr %98, align 2 ; 3 uses
+  %99 = shufflevector <4 x i16> %wide.load.16, <4 x i16> %wide.load18.16, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %100 = icmp eq <4 x i16> %99, %wide.load18.16
+  %101 = zext <4 x i1> %100 to <4 x i32>
+  %102 = add <4 x i32> %96, %101
+  %103 = getelementptr inbounds nuw i8, ptr %i.f, i64 274
+  %wide.load.17 = load <4 x i16>, ptr %103, align 2 ; 3 uses
+  %104 = getelementptr inbounds nuw i8, ptr %i.f, i64 282
+  %wide.load18.17 = load <4 x i16>, ptr %104, align 2 ; 3 uses
+  %105 = shufflevector <4 x i16> %wide.load.17, <4 x i16> %wide.load18.17, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %106 = icmp eq <4 x i16> %105, %wide.load18.17
+  %107 = zext <4 x i1> %106 to <4 x i32>
+  %108 = add <4 x i32> %102, %107
+  %109 = getelementptr inbounds nuw i8, ptr %i.f, i64 290
+  %wide.load.18 = load <4 x i16>, ptr %109, align 2 ; 3 uses
+  %110 = getelementptr inbounds nuw i8, ptr %i.f, i64 298
+  %wide.load18.18 = load <4 x i16>, ptr %110, align 2 ; 3 uses
+  %111 = shufflevector <4 x i16> %wide.load.18, <4 x i16> %wide.load18.18, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %112 = icmp eq <4 x i16> %111, %wide.load18.18
+  %113 = zext <4 x i1> %112 to <4 x i32>
+  %114 = add <4 x i32> %108, %113
+  %lhsv.pre.i = load i16, ptr %i.f, align 16
+  %vector.recur.init = insertelement <4 x i16> poison, i16 %lhsv.pre.i, i64 3
+  %115 = shufflevector <4 x i16> %vector.recur.init, <4 x i16> %wide.load, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %116 = icmp eq <4 x i16> %115, %wide.load
+  %117 = zext <4 x i1> %116 to <4 x i32>
+  %118 = shufflevector <4 x i16> %wide.load18, <4 x i16> %wide.load.1, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %119 = icmp eq <4 x i16> %118, %wide.load.1
+  %120 = zext <4 x i1> %119 to <4 x i32>
+  %121 = add nuw nsw <4 x i32> %117, %120
+  %122 = shufflevector <4 x i16> %wide.load18.1, <4 x i16> %wide.load.2, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %123 = icmp eq <4 x i16> %122, %wide.load.2
+  %124 = zext <4 x i1> %123 to <4 x i32>
+  %125 = add nuw nsw <4 x i32> %121, %124
+  %126 = shufflevector <4 x i16> %wide.load18.2, <4 x i16> %wide.load.3, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %127 = icmp eq <4 x i16> %126, %wide.load.3
+  %128 = zext <4 x i1> %127 to <4 x i32>
+  %129 = add nuw nsw <4 x i32> %125, %128
+  %130 = shufflevector <4 x i16> %wide.load18.3, <4 x i16> %wide.load.4, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %131 = icmp eq <4 x i16> %130, %wide.load.4
+  %132 = zext <4 x i1> %131 to <4 x i32>
+  %133 = add nuw nsw <4 x i32> %129, %132
+  %134 = shufflevector <4 x i16> %wide.load18.4, <4 x i16> %wide.load.5, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %135 = icmp eq <4 x i16> %134, %wide.load.5
+  %136 = zext <4 x i1> %135 to <4 x i32>
+  %137 = add nuw nsw <4 x i32> %133, %136
+  %138 = shufflevector <4 x i16> %wide.load18.5, <4 x i16> %wide.load.6, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %139 = icmp eq <4 x i16> %138, %wide.load.6
+  %140 = zext <4 x i1> %139 to <4 x i32>
+  %141 = add nuw nsw <4 x i32> %137, %140
+  %142 = shufflevector <4 x i16> %wide.load18.6, <4 x i16> %wide.load.7, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %143 = icmp eq <4 x i16> %142, %wide.load.7
+  %144 = zext <4 x i1> %143 to <4 x i32>
+  %145 = add <4 x i32> %141, %144
+  %146 = shufflevector <4 x i16> %wide.load18.7, <4 x i16> %wide.load.8, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %147 = icmp eq <4 x i16> %146, %wide.load.8
+  %148 = zext <4 x i1> %147 to <4 x i32>
+  %149 = add <4 x i32> %145, %148
+  %150 = shufflevector <4 x i16> %wide.load18.8, <4 x i16> %wide.load.9, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %151 = icmp eq <4 x i16> %150, %wide.load.9
+  %152 = zext <4 x i1> %151 to <4 x i32>
+  %153 = add <4 x i32> %149, %152
+  %154 = shufflevector <4 x i16> %wide.load18.9, <4 x i16> %wide.load.10, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %155 = icmp eq <4 x i16> %154, %wide.load.10
+  %156 = zext <4 x i1> %155 to <4 x i32>
+  %157 = add <4 x i32> %153, %156
+  %158 = shufflevector <4 x i16> %wide.load18.10, <4 x i16> %wide.load.11, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %159 = icmp eq <4 x i16> %158, %wide.load.11
+  %160 = zext <4 x i1> %159 to <4 x i32>
+  %161 = add <4 x i32> %157, %160
+  %162 = shufflevector <4 x i16> %wide.load18.11, <4 x i16> %wide.load.12, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %163 = icmp eq <4 x i16> %162, %wide.load.12
+  %164 = zext <4 x i1> %163 to <4 x i32>
+  %165 = add <4 x i32> %161, %164
+  %166 = shufflevector <4 x i16> %wide.load18.12, <4 x i16> %wide.load.13, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %167 = icmp eq <4 x i16> %166, %wide.load.13
+  %168 = zext <4 x i1> %167 to <4 x i32>
+  %169 = add <4 x i32> %165, %168
+  %170 = shufflevector <4 x i16> %wide.load18.13, <4 x i16> %wide.load.14, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %171 = icmp eq <4 x i16> %170, %wide.load.14
+  %172 = zext <4 x i1> %171 to <4 x i32>
+  %173 = add <4 x i32> %169, %172
+  %174 = shufflevector <4 x i16> %wide.load18.14, <4 x i16> %wide.load.15, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %175 = icmp eq <4 x i16> %174, %wide.load.15
+  %176 = zext <4 x i1> %175 to <4 x i32>
+  %177 = add <4 x i32> %173, %176
+  %178 = shufflevector <4 x i16> %wide.load18.15, <4 x i16> %wide.load.16, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %179 = icmp eq <4 x i16> %178, %wide.load.16
+  %180 = zext <4 x i1> %179 to <4 x i32>
+  %181 = add <4 x i32> %177, %180
+  %182 = shufflevector <4 x i16> %wide.load18.16, <4 x i16> %wide.load.17, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %183 = icmp eq <4 x i16> %182, %wide.load.17
+  %184 = zext <4 x i1> %183 to <4 x i32>
+  %185 = add <4 x i32> %181, %184
+  %186 = shufflevector <4 x i16> %wide.load18.17, <4 x i16> %wide.load.18, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %187 = icmp eq <4 x i16> %186, %wide.load.18
+  %188 = zext <4 x i1> %187 to <4 x i32>
+  %189 = add <4 x i32> %185, %188
+  %bin.rdx = add <4 x i32> %114, %189
+  %190 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx)
+  %vector.recur.extract = extractelement <4 x i16> %wide.load18.18, i64 3
+  %.172.i = getelementptr inbounds nuw i8, ptr %i.f, i64 306
+  %rhsv.i = load i16, ptr %.172.i, align 2        ; 2 uses
+  %.not60.i = icmp eq i16 %vector.recur.extract, %rhsv.i
+  %191 = zext i1 %.not60.i to i32
+  %spec.select.i = add nuw nsw i32 %190, %191
+  %.172.i.1 = getelementptr inbounds nuw i8, ptr %i.f, i64 308
+  %rhsv.i.1 = load i16, ptr %.172.i.1, align 4    ; 2 uses
+  %.not60.i.1 = icmp eq i16 %rhsv.i, %rhsv.i.1
+  %192 = zext i1 %.not60.i.1 to i32
+  %spec.select.i.1 = add nuw nsw i32 %spec.select.i, %192
+  %.172.i.2 = getelementptr inbounds nuw i8, ptr %i.f, i64 310
+  %rhsv.i.2 = load i16, ptr %.172.i.2, align 2    ; 2 uses
+  %.not60.i.2 = icmp eq i16 %rhsv.i.1, %rhsv.i.2
+  %193 = zext i1 %.not60.i.2 to i32
+  %spec.select.i.2 = add nuw nsw i32 %spec.select.i.1, %193
+  %.171.i = getelementptr inbounds nuw i8, ptr %i.f, i64 312
+  %i.jh = load i16, ptr %.171.i, align 8          ; 2 uses
+  %.not60.i.3 = icmp eq i16 %rhsv.i.2, %i.jh
+  %194 = zext i1 %.not60.i.3 to i32
+  %spec.select.i.3 = add nuw nsw i32 %spec.select.i.2, %194
+  %.172.i.4 = getelementptr inbounds nuw i8, ptr %i.f, i64 314
+  %i.ji = load i16, ptr %.172.i.4, align 2        ; 2 uses
+  %.not60.i.4 = icmp eq i16 %i.jh, %i.ji
+  %i.jj = zext i1 %.not60.i.4 to i32
+  %spec.select.i.4 = add nuw nsw i32 %spec.select.i.3, %i.jj
+  %.172.i.5 = getelementptr inbounds nuw i8, ptr %i.f, i64 316
+  %rhsv.i.5 = load i16, ptr %.172.i.5, align 4    ; 2 uses
+  %i.jk = icmp eq i16 %i.ji, %rhsv.i.5
   %i.jl = zext i1 %i.jk to i32
-  %spec.select.i.a = add nuw nsw i32 %3, %i.jl    ; 3 uses
-  %i.jm = add nuw nsw i32 %.369.i, 2
-  %5 = icmp samesign ult i32 %.369.i, 318
-  br i1 %5, label %bb.bi, label %6, !llvm.loop !35
+  %spec.select.i.a = add nuw nsw i32 %spec.select.i.4, %i.jl
+  %.172.i.6 = getelementptr inbounds nuw i8, ptr %i.f, i64 318
+  %rhsv.i.6 = load i16, ptr %.172.i.6, align 2
+  %.not60.i.6 = icmp eq i16 %rhsv.i.5, %rhsv.i.6
+  %195 = zext i1 %.not60.i.6 to i32
+  %i.jm = add nuw nsw i32 %spec.select.i.a, %195  ; 2 uses
+  %196 = icmp samesign ugt i32 %i.jm, 7
+  br i1 %196, label %.thread.i, label %bb.bj
 
-6:                                                ; preds = %bb.bi
-  %7 = icmp samesign ugt i32 %spec.select.i.a, 7
-  br i1 %7, label %.thread.i, label %bb.bj
-
-.thread.i:                                        ; preds = %6
-  call void (ptr, ...) @test_note(ptr noundef nonnull @.str.60, i32 noundef %spec.select.i.a) #13
+.thread.i:                                        ; preds = %bb.bi
+  call void (ptr, ...) @test_note(ptr noundef nonnull @.str.60, i32 noundef %i.jm) #13
   br label %.preheader.preheader.i
 
-bb.bj:                                            ; preds = %6
+bb.bj:                                            ; preds = %bb.bi
   %i.jn = icmp ne i32 %.149.i, 0
   %or.cond.i = and i1 %.not56.i, %i.jn
   br i1 %or.cond.i, label %test_rand_reseed_on_fork.exit, label %.preheader.preheader.i
@@ -790,7 +1037,7 @@ bb.bj:                                            ; preds = %6
   %i.jo = getelementptr inbounds nuw [40 x i8], ptr %1, i64 %indvars.iv.i ; 4 uses
   %i.jp = call ptr @OPENSSL_buf2hexstr(ptr noundef nonnull %i.jo, i64 noundef 16) #13 ; 2 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jo, i64 20
-  %i.jr = load i32, ptr %i.jq, align 4, !tbaa !37
+  %i.jr = load i32, ptr %i.jq, align 4, !tbaa !36
   %i.js = getelementptr inbounds nuw i8, ptr %i.jo, i64 28
   %i.jt = getelementptr inbounds nuw i8, ptr %i.jo, i64 24
   %i.ju = load i32, ptr %i.jt, align 8, !tbaa !25
@@ -800,7 +1047,7 @@ bb.bj:                                            ; preds = %6
   call void @CRYPTO_free(ptr noundef %i.jp, ptr noundef nonnull @.str.4, i32 noundef 509) #13
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond79.not.i = icmp eq i64 %indvars.iv.next.i, 20
-  br i1 %exitcond79.not.i, label %test_rand_reseed_on_fork.exit, label %.preheader.i, !llvm.loop !36
+  br i1 %exitcond79.not.i, label %test_rand_reseed_on_fork.exit, label %.preheader.i, !llvm.loop !35
 
 test_rand_reseed_on_fork.exit:                    ; preds = %test_drbg_reseed_in_child.exit.i, %.preheader.i, %bb.r, %bb.bj
   %.0.i = phi i32 [ %.286.i, %.preheader.i ], [ 0, %bb.r ], [ 1, %bb.bj ], [ 0, %test_drbg_reseed_in_child.exit.i ]
@@ -1203,7 +1450,7 @@ bb.a:
   %i.g = getelementptr i8, ptr %0, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !tbaa !16
   %i.h = getelementptr inbounds nuw i8, ptr %.val.i, i64 208
-  store atomic i32 %i.f, ptr %i.h seq_cst, align 4, !tbaa !39
+  store atomic i32 %i.f, ptr %i.h seq_cst, align 4, !tbaa !38
   ret void
 }
 
@@ -1606,7 +1853,7 @@ bb.q:                                             ; preds = %rand_priv_bytes.exi
   %i.ai = call i64 @time(ptr noundef null) #13
   %i.aj = sub nsw i64 %i.ai, %i.d
   %i.ak = icmp slt i64 %i.aj, 5
-  br i1 %i.ak, label %.preheader, label %.loopexit, !llvm.loop !40
+  br i1 %i.ak, label %.preheader, label %.loopexit, !llvm.loop !39
 
 .loopexit:                                        ; preds = %bb.q, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
@@ -1629,6 +1876,9 @@ declare void @OPENSSL_thread_stop() local_unnamed_addr #1
 declare void @OSSL_PARAM_construct_int(ptr dead_on_unwind writable sret(%struct.ossl_param_st) align 8, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 declare i32 @pthread_join(i64 noundef, ptr noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #12
@@ -1693,9 +1943,8 @@ attributes #15 = { nounwind willreturn memory(read) }
 !33 = !{!20, !11, i64 48}
 !34 = distinct !{!34, !21}
 !35 = distinct !{!35, !21}
-!36 = distinct !{!36, !21}
-!37 = !{!22, !8, i64 20}
-!38 = !{!7, !7, i64 0}
-!39 = !{!20, !7, i64 208}
-!40 = distinct !{!40, !21}
+!36 = !{!22, !8, i64 20}
+!37 = !{!7, !7, i64 0}
+!38 = !{!20, !7, i64 208}
+!39 = distinct !{!39, !21}
 end_hunk_2
