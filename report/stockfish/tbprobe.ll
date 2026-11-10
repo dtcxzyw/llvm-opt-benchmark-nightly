@@ -205,6 +205,7 @@ bb.af:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.hq = select i1 %i.hf, i8 4, i8 1             ; 11 uses
   %wide.trip.count197.i.i = zext nneg i8 %i.hq to i64 ; 5 uses
   %wide.trip.count192.i.i = zext nneg i32 %i.hc to i64
+  %scevgep = getelementptr i8, ptr %.0.val.i, i64 1144
   %invariant.op = add i64 183, %.0.val.i27
   br label %.preheader141.i.i
 
@@ -330,9 +331,8 @@ iter.check56:                                     ; preds = %.preheader139.prehe
 
 vector.memcheck43:                                ; preds = %iter.check56
   %i.ju = mul nuw nsw i64 %i.jp, 240
-  %12 = getelementptr i8, ptr %.0.val.i, i64 %i.ju
-  %i.jv = getelementptr i8, ptr %12, i64 %wide.trip.count.i.i
-  %i.jw = getelementptr i8, ptr %i.jv, i64 1144
+  %i.jv = getelementptr i8, ptr %scevgep, i64 %i.ju
+  %i.jw = getelementptr i8, ptr %i.jv, i64 %wide.trip.count.i.i
   %i.jx = getelementptr i8, ptr %.087150.i.i, i64 %i.ji
   %i.jy = getelementptr i8, ptr %i.jx, i64 %wide.trip.count.i.i
   %bound0 = icmp ult ptr %i.jr, %i.jy

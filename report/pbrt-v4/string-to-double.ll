@@ -204,13 +204,13 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.i, i64 1 ; 3 uses
   store ptr %i.g, ptr %0, align 8, !tbaa !17
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZN17double_conversionL7AdvanceIPcEEbPT_tiRS2_.exit, label %.backedge.us, !llvm.loop !64
+  br i1 %i.h, label %_ZN17double_conversionL7AdvanceIPcEEbPT_tiRS2_.exit, label %.backedge.us
 
 .backedge.us:                                     ; preds = %.split.us.preheader, %.split.us
   %i.i = phi ptr [ %i.g, %.split.us ], [ %i.e, %.split.us.preheader ] ; 3 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !24    ; 2 uses
   %i.k = icmp eq i8 %i.j, 48
-  br i1 %i.k, label %.split.us, label %.preheader208, !llvm.loop !64
+  br i1 %i.k, label %.split.us, label %.preheader208
 
 .preheader208:                                    ; preds = %.backedge, %.backedge.us, %bb.a
   %i.l = phi i8 [ %i.j, %.backedge.us ], [ %i.a, %bb.a ], [ %i.w, %.backedge ] ; 3 uses
@@ -244,7 +244,7 @@ bb.a:
   %i.w = phi i8 [ %.pr, %.backedgethread-pre-split ], [ %i.ab, %bb.c ] ; 2 uses
   %i.x = phi ptr [ %.ph, %.backedgethread-pre-split ], [ %i.u, %bb.c ] ; 2 uses
   %i.y = icmp eq i8 %i.w, 48
-  br i1 %i.y, label %.lr.ph.split, label %.preheader208, !llvm.loop !64
+  br i1 %i.y, label %.lr.ph.split, label %.preheader208
 
 bb.b:                                             ; preds = %.lr.ph.split
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 2 ; 4 uses

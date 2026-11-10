@@ -204,7 +204,8 @@ _ZN6casadi23casadi_clear_casadi_intEPxx.exit.thread: ; preds = %bb.a
   %i.em = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.en = getelementptr i8, ptr %11, i64 8        ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.ep = shl i64 %7, 3
+  %i.ep = shl i64 %7, 3                           ; 2 uses
+  %scevgep = getelementptr i8, ptr %6, i64 %i.ep
   %scevgep.a = getelementptr i8, ptr %0, i64 %i.ep ; 2 uses
   %min.iters.check261 = icmp ult i64 %7, 4
   %bound0262 = icmp ult ptr %0, %i.en
@@ -266,9 +267,8 @@ _ZN6casadi23casadi_clear_casadi_intEPxx.exit.thread: ; preds = %bb.a
   br i1 %min.iters.check261, label %scalar.ph260.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph200
-  %12 = add i64 %i.fu, %7
-  %i.fw = shl i64 %12, 3
-  %i.fx = getelementptr i8, ptr %6, i64 %i.fw
+  %i.fw = shl i64 %i.fu, 3
+  %i.fx = getelementptr i8, ptr %scevgep, i64 %i.fw
   %bound0 = icmp ult ptr %0, %i.fx
   %bound1 = icmp ult ptr %i.fv, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1

@@ -205,7 +205,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.d
   %.be103 = phi ptr [ %i.v, %.loopexit ], [ %i.bt, %_ZN4mold9read_ulebEPPh.exit43 ]
   %.06.i20.be = phi i64 [ %i.ac, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit43 ]
   %.0.i21.be = phi i32 [ %i.ad, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit43 ]
-  br label %.loopexit, !llvm.loop !28
+  br label %.loopexit
 
 _ZN4mold9read_ulebEPPh.exit23:                    ; preds = %.loopexit
   %i.ae = icmp eq i64 %i.ac, 0
@@ -300,7 +300,7 @@ _ZN4mold9read_ulebEPPh.exit48.backedge:           ; preds = %.preheader, %_ZN4mo
   %.be = phi ptr [ %i.bj, %_ZN4mold9read_ulebEPPh.exit48 ], [ %i.bt, %bb.j ], [ %i.cf, %.preheader ]
   %.06.i35.be = phi i64 [ %i.bq, %_ZN4mold9read_ulebEPPh.exit48 ], [ 0, %bb.j ], [ 0, %.preheader ]
   %.0.i36.be = phi i32 [ %i.br, %_ZN4mold9read_ulebEPPh.exit48 ], [ 0, %bb.j ], [ 0, %.preheader ]
-  br label %_ZN4mold9read_ulebEPPh.exit48, !llvm.loop !28
+  br label %_ZN4mold9read_ulebEPPh.exit48
 
 _ZN4mold9read_ulebEPPh.exit38:                    ; preds = %_ZN4mold9read_ulebEPPh.exit48, %_ZN4mold9read_ulebEPPh.exit38
   %i.bs = phi ptr [ %i.bt, %_ZN4mold9read_ulebEPPh.exit38 ], [ %i.bj, %_ZN4mold9read_ulebEPPh.exit48 ] ; 2 uses
@@ -703,7 +703,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.g
   %.be107 = phi ptr [ %i.ak, %.loopexit ], [ %i.ci, %_ZN4mold9read_ulebEPPh.exit47 ]
   %.06.i24.be = phi i64 [ %i.ar, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit47 ]
   %.0.i25.be = phi i32 [ %i.as, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit47 ]
-  br label %.loopexit, !llvm.loop !28
+  br label %.loopexit
 
 _ZN4mold9read_ulebEPPh.exit27:                    ; preds = %.loopexit
   %i.at = icmp eq i64 %i.ar, 0
@@ -798,7 +798,7 @@ _ZN4mold9read_ulebEPPh.exit52.backedge:           ; preds = %.preheader, %_ZN4mo
   %.be = phi ptr [ %i.by, %_ZN4mold9read_ulebEPPh.exit52 ], [ %i.ci, %bb.m ], [ %i.cu, %.preheader ]
   %.06.i39.be = phi i64 [ %i.cf, %_ZN4mold9read_ulebEPPh.exit52 ], [ 0, %bb.m ], [ 0, %.preheader ]
   %.0.i40.be = phi i32 [ %i.cg, %_ZN4mold9read_ulebEPPh.exit52 ], [ 0, %bb.m ], [ 0, %.preheader ]
-  br label %_ZN4mold9read_ulebEPPh.exit52, !llvm.loop !28
+  br label %_ZN4mold9read_ulebEPPh.exit52
 
 _ZN4mold9read_ulebEPPh.exit42:                    ; preds = %_ZN4mold9read_ulebEPPh.exit52, %_ZN4mold9read_ulebEPPh.exit42
   %i.ch = phi ptr [ %i.ci, %_ZN4mold9read_ulebEPPh.exit42 ], [ %i.by, %_ZN4mold9read_ulebEPPh.exit52 ] ; 2 uses
@@ -916,7 +916,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.d
   %.be103 = phi ptr [ %i.u, %.loopexit ], [ %i.bs, %_ZN4mold9read_ulebEPPh.exit43 ]
   %.06.i20.be = phi i64 [ %i.ab, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit43 ]
   %.0.i21.be = phi i32 [ %i.ac, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit43 ]
-  br label %.loopexit, !llvm.loop !28
+  br label %.loopexit
 
 _ZN4mold9read_ulebEPPh.exit23:                    ; preds = %.loopexit
   %i.ad = icmp eq i64 %i.ab, 0
@@ -1011,7 +1011,7 @@ _ZN4mold9read_ulebEPPh.exit48.backedge:           ; preds = %.preheader, %_ZN4mo
   %.be = phi ptr [ %i.bi, %_ZN4mold9read_ulebEPPh.exit48 ], [ %i.bs, %bb.j ], [ %i.ce, %.preheader ]
   %.06.i35.be = phi i64 [ %i.bp, %_ZN4mold9read_ulebEPPh.exit48 ], [ 0, %bb.j ], [ 0, %.preheader ]
   %.0.i36.be = phi i32 [ %i.bq, %_ZN4mold9read_ulebEPPh.exit48 ], [ 0, %bb.j ], [ 0, %.preheader ]
-  br label %_ZN4mold9read_ulebEPPh.exit48, !llvm.loop !28
+  br label %_ZN4mold9read_ulebEPPh.exit48
 
 _ZN4mold9read_ulebEPPh.exit38:                    ; preds = %_ZN4mold9read_ulebEPPh.exit48, %_ZN4mold9read_ulebEPPh.exit38
   %i.br = phi ptr [ %i.bs, %_ZN4mold9read_ulebEPPh.exit38 ], [ %i.bi, %_ZN4mold9read_ulebEPPh.exit48 ] ; 2 uses
@@ -1304,7 +1304,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.g
   %.be107 = phi ptr [ %i.aj, %.loopexit ], [ %i.ch, %_ZN4mold9read_ulebEPPh.exit47 ]
   %.06.i24.be = phi i64 [ %i.aq, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit47 ]
   %.0.i25.be = phi i32 [ %i.ar, %.loopexit ], [ 0, %_ZN4mold9read_ulebEPPh.exit47 ]
-  br label %.loopexit, !llvm.loop !28
+  br label %.loopexit
 
 _ZN4mold9read_ulebEPPh.exit27:                    ; preds = %.loopexit
   %i.as = icmp eq i64 %i.aq, 0
@@ -1399,7 +1399,7 @@ _ZN4mold9read_ulebEPPh.exit52.backedge:           ; preds = %.preheader, %_ZN4mo
   %.be = phi ptr [ %i.bx, %_ZN4mold9read_ulebEPPh.exit52 ], [ %i.ch, %bb.m ], [ %i.ct, %.preheader ]
   %.06.i39.be = phi i64 [ %i.ce, %_ZN4mold9read_ulebEPPh.exit52 ], [ 0, %bb.m ], [ 0, %.preheader ]
   %.0.i40.be = phi i32 [ %i.cf, %_ZN4mold9read_ulebEPPh.exit52 ], [ 0, %bb.m ], [ 0, %.preheader ]
-  br label %_ZN4mold9read_ulebEPPh.exit52, !llvm.loop !28
+  br label %_ZN4mold9read_ulebEPPh.exit52
 
 _ZN4mold9read_ulebEPPh.exit42:                    ; preds = %_ZN4mold9read_ulebEPPh.exit52, %_ZN4mold9read_ulebEPPh.exit42
   %i.cg = phi ptr [ %i.ch, %_ZN4mold9read_ulebEPPh.exit42 ], [ %i.bx, %_ZN4mold9read_ulebEPPh.exit52 ] ; 2 uses

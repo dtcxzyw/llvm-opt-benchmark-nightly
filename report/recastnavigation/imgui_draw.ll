@@ -205,7 +205,7 @@ select.unfold.us:                                 ; preds = %bb.o, %bb.l, %bb.k
   %.058.be.us = phi ptr [ %.159.us, %select.unfold.us ], [ null, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit.us ]
   %.056.be.us = phi ptr [ %.157.us, %select.unfold.us ], [ %spec.select.i.us, %_ZL26CalcWordWrapNextLineStartAPKcS0_.exit.us ] ; 3 uses
   %i.aw = icmp ult ptr %.056.be.us, %.065
-  br i1 %i.aw, label %.lr.ph.split.us, label %.loopexit, !llvm.loop !846
+  br i1 %i.aw, label %.lr.ph.split.us, label %.loopexit
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %select.unfold
   %.056113 = phi ptr [ %.157, %select.unfold ], [ %4, %.lr.ph ] ; 5 uses
@@ -292,7 +292,7 @@ select.unfold:                                    ; preds = %bb.w, %bb.s, %bb.t
   %.263 = phi float [ %.061111, %bb.s ], [ 0.000000e+00, %bb.t ], [ %i.bv, %bb.w ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #35
   %i.bx = icmp ult ptr %.157, %.065
-  br i1 %i.bx, label %.lr.ph.split, label %.loopexit, !llvm.loop !846
+  br i1 %i.bx, label %.lr.ph.split, label %.loopexit
 
 .loopexit:                                        ; preds = %select.unfold, %.backedge.us, %bb.c, %.thread99
   %.sroa.0.0109 = phi <2 x float> [ %.us-phi, %.thread99 ], [ zeroinitializer, %bb.c ], [ %.sroa.0.0.be.us, %.backedge.us ], [ %.sroa.0.2, %select.unfold ] ; 3 uses
