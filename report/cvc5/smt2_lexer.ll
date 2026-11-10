@@ -205,8 +205,8 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 13 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.d, align 4, !tbaa !42
-  %i.g = load <2 x i32>, ptr %i.c, align 8, !tbaa !62
-  store <2 x i32> %i.g, ptr %i.b, align 8, !tbaa !62
+  %i.g = load <2 x i32>, ptr %i.c, align 8, !tbaa !61
+  store <2 x i32> %i.g, ptr %i.b, align 8, !tbaa !61
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32884 ; 10 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32864 ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32872 ; 8 uses
@@ -390,7 +390,7 @@ _ZN4cvc56parser5Lexer8nextCharEv.exit86.thread:   ; preds = %_ZN4cvc56parser5Lex
 
 .loopexit201.backedge:                            ; preds = %_ZN4cvc56parser5Lexer8nextCharEv.exit86, %_ZN4cvc56parser5Lexer8nextCharEv.exit86.thread, %bb.j, %.thread
   %.be = phi i32 [ 0, %.thread ], [ 0, %_ZN4cvc56parser5Lexer8nextCharEv.exit86.thread ], [ %i.as, %bb.j ], [ %i.cg, %_ZN4cvc56parser5Lexer8nextCharEv.exit86 ]
-  br label %.loopexit201, !llvm.loop !59
+  br label %.loopexit201
 
 bb.s:                                             ; preds = %_ZN4cvc56parser5Lexer12readNextCharEv.exit.i83, %_ZN4cvc56parser5Lexer12readNextCharEv.exit.thread.i85
   %i.cd = phi i32 [ -1, %_ZN4cvc56parser5Lexer12readNextCharEv.exit.thread.i85 ], [ %i.bz, %_ZN4cvc56parser5Lexer12readNextCharEv.exit.i83 ]
@@ -417,8 +417,8 @@ _ZN4cvc56parser5Lexer8nextCharEv.exit86:          ; preds = %bb.l, %bb.s
   %i.cj = phi i32 [ %.pre, %.thread178.loopexit204 ], [ %i.ba, %.thread ]
   %.0.i175177181 = phi i32 [ %.0.i, %.thread178.loopexit204 ], [ 10, %.thread ] ; 2 uses
   %i.ck = phi ptr [ %i.ch, %.thread178.loopexit204 ], [ %i.o, %.thread ]
-  store i32 %i.cj, ptr %i.b, align 8, !tbaa !63
-  store i32 %i.ci, ptr %i.e, align 4, !tbaa !64
+  store i32 %i.cj, ptr %i.b, align 8, !tbaa !62
+  store i32 %i.ci, ptr %i.e, align 4, !tbaa !63
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 32896 ; 6 uses
   %i.cm = trunc i32 %.0.i175177181 to i8          ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 32904 ; 12 uses
@@ -649,7 +649,7 @@ _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS
 
 _ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit98:  ; preds = %bb.ai, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i97
   %.not74 = icmp eq i32 %.0.i88183, 124
-  br i1 %.not74, label %.loopexit, label %.preheader, !llvm.loop !60
+  br i1 %.not74, label %.loopexit, label %.preheader, !llvm.loop !59
 
 bb.an:                                            ; preds = %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit
   %i.fl = tail call noundef i32 @_ZN4cvc56parser5Lexer8nextCharEv(ptr noundef nonnull align 8 dereferenceable(32892) %0)
@@ -1052,7 +1052,7 @@ bb.cm:                                            ; preds = %.thread190
   br label %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit149.backedge
 
 _ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit149.backedge: ; preds = %bb.cm, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i148
-  br label %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit149, !llvm.loop !61
+  br label %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit149, !llvm.loop !60
 
 bb.cn:                                            ; preds = %.thread190
   %i.kp = load ptr, ptr %i.cl, align 8, !tbaa !37 ; 4 uses
@@ -1455,7 +1455,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit.backedge
 
 _ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit.backedge: ; preds = %bb.m, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i
-  br label %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit, !llvm.loop !65
+  br label %_ZN4cvc56parser9Smt2Lexer11pushToTokenEi.exit, !llvm.loop !64
 
 bb.n:                                             ; preds = %bb.l
   %i.bb = load ptr, ptr %i.l, align 8, !tbaa !37  ; 4 uses
@@ -1681,7 +1681,7 @@ bb.u:                                             ; preds = %bb.t
 ._crit_edge:                                      ; preds = %bb.s, %bb.u, %.fold.split
   %.1 = phi i32 [ 72, %.fold.split ], [ 14, %bb.u ], [ %.01419, %bb.s ] ; 2 uses
   %exitcond.not = icmp eq i64 %i.ce, %i.bv
-  br i1 %exitcond.not, label %.loopexit, label %bb.s, !llvm.loop !66
+  br i1 %exitcond.not, label %.loopexit, label %bb.s, !llvm.loop !65
 
 bb.v:                                             ; preds = %bb.a, %bb.q, %bb.r, %bb.p, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.h, %bb.i, %bb.j, %bb.e, %bb.f, %bb.g, %bb.c, %bb.d, %bb.b
   br label %.loopexit
@@ -1757,7 +1757,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64
   %i.g = sub i64 %i.e, %i.f
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef %i.g) #19, !inline_history !67
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef %i.g) #19, !inline_history !66
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit.i
 
 _ZNSt6vectorIcSaIcEED2Ev.exit.i:                  ; preds = %bb.b, %bb.a
@@ -1773,7 +1773,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorIcSaIcE
   %i.l = ptrtoint ptr %i.k to i64
   %i.m = ptrtoint ptr %i.i to i64
   %i.n = sub i64 %i.l, %i.m
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #19, !inline_history !67
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #19, !inline_history !66
   br label %_ZNSt6vectorIN4cvc56parser5TokenESaIS2_EED2Ev.exit.i.i
 
 _ZNSt6vectorIN4cvc56parser5TokenESaIS2_EED2Ev.exit.i.i: ; preds = %bb.c, %_ZNSt6vectorIcSaIcEED2Ev.exit.i
@@ -1786,7 +1786,7 @@ _ZNSt6vectorIN4cvc56parser5TokenESaIS2_EED2Ev.exit.i.i: ; preds = %bb.c, %_ZNSt6
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt6vectorIN4cvc56parser5TokenESaIS2_EED2Ev.exit.i.i
   %i.s = load i64, ptr %i.q, align 8, !tbaa !16
   %i.t = add i64 %i.s, 1
-  tail call void @_ZdlPvm(ptr noundef %i.p, i64 noundef %i.t) #19, !inline_history !67
+  tail call void @_ZdlPvm(ptr noundef %i.p, i64 noundef %i.t) #19, !inline_history !66
   br label %_ZN4cvc56parser9Smt2LexerD2Ev.exit
 
 _ZN4cvc56parser9Smt2LexerD2Ev.exit:               ; preds = %_ZNSt6vectorIN4cvc56parser5TokenESaIS2_EED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -1918,11 +1918,10 @@ attributes #19 = { builtin nounwind }
 !58 = !{!"llvm.loop.unroll.disable"}
 !59 = distinct !{!59, !53}
 !60 = distinct !{!60, !53}
-!61 = distinct !{!61, !53}
-!62 = !{!5, !5, i64 0}
-!63 = !{!28, !5, i64 8}
-!64 = !{!28, !5, i64 12}
+!61 = !{!5, !5, i64 0}
+!62 = !{!28, !5, i64 8}
+!63 = !{!28, !5, i64 12}
+!64 = distinct !{!64, !53}
 !65 = distinct !{!65, !53}
-!66 = distinct !{!66, !53}
-!67 = !{ptr @_ZN4cvc56parser9Smt2LexerD2Ev}
+!66 = !{ptr @_ZN4cvc56parser9Smt2LexerD2Ev}
 end_hunk_2

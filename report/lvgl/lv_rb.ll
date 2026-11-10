@@ -202,7 +202,7 @@ bb.ao:                                            ; preds = %rb_left_rotate.exit
   %.0.be.i = phi ptr [ %.5.i, %bb.ao ], [ %i.ah, %bb.i ], [ %i.ah, %bb.z ] ; 2 uses
   %i.cn = load ptr, ptr %.0.be.i, align 8, !tbaa !23 ; 2 uses
   %.not.i46 = icmp eq ptr %i.cn, null
-  br i1 %.not.i46, label %rb_insert_color.exit, label %.lr.ph.i45, !llvm.loop !29
+  br i1 %.not.i46, label %rb_insert_color.exit, label %.lr.ph.i45
 
 rb_insert_color.exit:                             ; preds = %.lr.ph.i45, %.backedge.i, %rb_find_leaf_parent.exit
   %i.co = load ptr, ptr %0, align 8, !tbaa !15
@@ -605,7 +605,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.
   %i.ec = getelementptr inbounds nuw i8, ptr %.0.sink, i64 24
   store i32 0, ptr %i.ec, align 8, !tbaa !24
   %.3 = load ptr, ptr %.071, align 8, !tbaa !23
-  br label %.preheader107, !llvm.loop !30
+  br label %.preheader107, !llvm.loop !29
 
 .critedge.sink.split:                             ; preds = %bb.ae, %bb.bf
   %.sink = phi ptr [ %i.do, %bb.bf ], [ %i.bj, %bb.ae ]
@@ -715,7 +715,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
   %i.c = getelementptr inbounds nuw i8, ptr %.01326.i.i, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !20
-  %i.e = tail call i32 %i.b(ptr noundef %1, ptr noundef %i.d) #5, !inline_history !31 ; 2 uses
+  %i.e = tail call i32 %i.b(ptr noundef %1, ptr noundef %i.d) #5, !inline_history !30 ; 2 uses
   %.not20.i.i = icmp eq i32 %i.e, 0
   br i1 %.not20.i.i, label %lv_rb_remove.exit, label %bb.b
 
@@ -803,7 +803,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
 bb.i:                                             ; preds = %bb.c, %.lr.ph, %bb.h
   %.1 = phi ptr [ %i.f, %bb.h ], [ %i.c, %.lr.ph ], [ %i.e, %bb.c ] ; 2 uses
   %.not22 = icmp eq ptr %.1, null
-  br i1 %.not22, label %._crit_edge, label %.lr.ph, !llvm.loop !32
+  br i1 %.not22, label %._crit_edge, label %.lr.ph, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.b
   store ptr null, ptr %0, align 8, !tbaa !15
@@ -922,7 +922,6 @@ attributes #5 = { nounwind }
 !27 = distinct !{null}
 !28 = distinct !{!28, !22}
 !29 = distinct !{!29, !22}
-!30 = distinct !{!30, !22}
-!31 = !{ptr @lv_rb_remove, ptr @lv_rb_find}
-!32 = distinct !{!32, !22}
+!30 = !{ptr @lv_rb_remove, ptr @lv_rb_find}
+!31 = distinct !{!31, !22}
 end_hunk_1

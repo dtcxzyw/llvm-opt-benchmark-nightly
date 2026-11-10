@@ -205,7 +205,7 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.ex
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef zeroext i1 @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE14lockSharedImplINS3_11WaitForeverEEEbRjPNS_16SharedMutexTokenERT_(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef %2, ptr noundef nonnull align 1 dereferenceable(1) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !137 {
+define linkonce_odr noundef zeroext i1 @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE14lockSharedImplINS3_11WaitForeverEEEbRjPNS_16SharedMutexTokenERT_(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef %2, ptr noundef nonnull align 1 dereferenceable(1) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !136 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -385,7 +385,7 @@ _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; 
   br label %.backedge
 
 .backedge:                                        ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit, %bb.u, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit63, %.thread82, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit, %bb.o
-  br label %bb.c, !llvm.loop !136
+  br label %bb.c
 
 bb.q:                                             ; preds = %.thread77
   %i.bx = load atomic i32, ptr %0 acquire, align 4 ; 2 uses
@@ -469,7 +469,7 @@ declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #14
 declare noundef zeroext i1 @_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE(ptr noundef nonnull align 8 dereferenceable(65800), ptr noundef nonnull, ptr noundef nonnull) local_unnamed_addr #10
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef ptr @_ZN5folly14AccessSpreaderISt6atomicE14pickGetcpuFuncEv() #0 comdat align 2 !guid !138 {
+define linkonce_odr noundef ptr @_ZN5folly14AccessSpreaderISt6atomicE14pickGetcpuFuncEv() #0 comdat align 2 !guid !137 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN5folly6Getcpu15resolveVdsoFuncEv() ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -482,7 +482,7 @@ declare noundef nonnull align 8 dereferenceable(80) ptr @_ZN5folly13CacheLocalit
 declare noundef ptr @_ZN5folly6Getcpu15resolveVdsoFuncEv() local_unnamed_addr #10
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef i32 @_ZN5folly14FallbackGetcpuINS_18SequentialThreadIdEE6getcpuEPjS3_Pv(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 comdat align 2 !guid !139 {
+define linkonce_odr noundef i32 @_ZN5folly14FallbackGetcpuINS_18SequentialThreadIdEE6getcpuEPjS3_Pv(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 comdat align 2 !guid !138 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN5folly18SequentialThreadId3getEv() ; 2 uses
   %.not = icmp eq ptr %0, null
@@ -688,8 +688,7 @@ attributes #22 = { cold }
 !133 = distinct !{null}
 !134 = !{i64 -227505617863360783}
 !135 = distinct !{null}
-!136 = distinct !{!136, !44}
-!137 = !{i64 -1827275614869131945}
-!138 = !{i64 8478549931465664677}
-!139 = !{i64 105585867046486539}
+!136 = !{i64 -1827275614869131945}
+!137 = !{i64 8478549931465664677}
+!138 = !{i64 105585867046486539}
 end_hunk_0

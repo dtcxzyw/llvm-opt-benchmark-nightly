@@ -131,27 +131,27 @@ lv_tick_get.exit:                                 ; preds = %bb.c
   br i1 %.not7.i.i.us, label %.preheader.i.i.us.backedge, label %lv_tick_elaps.exit.loopexit.us
 
 .preheader.i.i.us.backedge:                       ; preds = %.preheader.i.i.us, %._crit_edge.us
-  br label %.preheader.i.i.us, !llvm.loop !37
+  br label %.preheader.i.i.us
 
 bb.d:                                             ; preds = %lv_tick_elaps.exit.loopexit.us
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store volatile i32 %0, ptr %i.b, align 4, !tbaa !40
-  store volatile i32 0, ptr %i.a, align 4, !tbaa !40
-  %.0..0..0..0.18.us = load volatile i32, ptr %i.a, align 4, !tbaa !40
+  store volatile i32 %0, ptr %i.b, align 4, !tbaa !39
+  store volatile i32 0, ptr %i.a, align 4, !tbaa !39
+  %.0..0..0..0.18.us = load volatile i32, ptr %i.a, align 4, !tbaa !39
   %i.k = icmp ult i32 %.0..0..0..0.18.us, 100
   br i1 %i.k, label %.lr.ph.us, label %._crit_edge.us
 
 .lr.ph.us:                                        ; preds = %bb.d, %.lr.ph.us
-  %.0..0..0..0..us = load volatile i32, ptr %i.b, align 4, !tbaa !40
+  %.0..0..0..0..us = load volatile i32, ptr %i.b, align 4, !tbaa !39
   %i.l = mul i32 %.0..0..0..0..us, 3
-  store volatile i32 %i.l, ptr %i.b, align 4, !tbaa !40
-  %.0..0..0..0.2.us = load volatile i32, ptr %i.a, align 4, !tbaa !40
+  store volatile i32 %i.l, ptr %i.b, align 4, !tbaa !39
+  %.0..0..0..0.2.us = load volatile i32, ptr %i.a, align 4, !tbaa !39
   %i.m = add i32 %.0..0..0..0.2.us, 1
-  store volatile i32 %i.m, ptr %i.a, align 4, !tbaa !40
-  %.0..0..0..0.1.us = load volatile i32, ptr %i.a, align 4, !tbaa !40
+  store volatile i32 %i.m, ptr %i.a, align 4, !tbaa !39
+  %.0..0..0..0.1.us = load volatile i32, ptr %i.a, align 4, !tbaa !39
   %i.n = icmp ult i32 %.0..0..0..0.1.us, 100
-  br i1 %i.n, label %.lr.ph.us, label %._crit_edge.us, !llvm.loop !38
+  br i1 %i.n, label %.lr.ph.us, label %._crit_edge.us, !llvm.loop !37
 
 ._crit_edge.us:                                   ; preds = %.lr.ph.us, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -169,7 +169,7 @@ lv_tick_get.exit.split:                           ; preds = %lv_tick_get.exit, %
   br i1 %.not.i.i, label %.preheader.i.i, label %bb.e
 
 bb.e:                                             ; preds = %lv_tick_get.exit.split
-  %i.r = tail call i32 %i.q() #6, !inline_history !41
+  %i.r = tail call i32 %i.q() #6, !inline_history !40
   %.pre12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @lv_global, i64 344), align 8, !tbaa !13
   br label %lv_tick_elaps.exit
 
@@ -190,27 +190,27 @@ lv_tick_elaps.exit:                               ; preds = %.preheader.i.i, %bb
 bb.f:                                             ; preds = %lv_tick_elaps.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store volatile i32 %0, ptr %i.b, align 4, !tbaa !40
-  store volatile i32 0, ptr %i.a, align 4, !tbaa !40
-  %.0..0..0..0.18 = load volatile i32, ptr %i.a, align 4, !tbaa !40
+  store volatile i32 %0, ptr %i.b, align 4, !tbaa !39
+  store volatile i32 0, ptr %i.a, align 4, !tbaa !39
+  %.0..0..0..0.18 = load volatile i32, ptr %i.a, align 4, !tbaa !39
   %i.x = icmp ult i32 %.0..0..0..0.18, 100
   br i1 %i.x, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.f, %.lr.ph
-  %.0..0..0..0. = load volatile i32, ptr %i.b, align 4, !tbaa !40
+  %.0..0..0..0. = load volatile i32, ptr %i.b, align 4, !tbaa !39
   %i.y = mul i32 %.0..0..0..0., 3
-  store volatile i32 %i.y, ptr %i.b, align 4, !tbaa !40
-  %.0..0..0..0.2 = load volatile i32, ptr %i.a, align 4, !tbaa !40
+  store volatile i32 %i.y, ptr %i.b, align 4, !tbaa !39
+  %.0..0..0..0.2 = load volatile i32, ptr %i.a, align 4, !tbaa !39
   %i.z = add i32 %.0..0..0..0.2, 1
-  store volatile i32 %i.z, ptr %i.a, align 4, !tbaa !40
-  %.0..0..0..0.1 = load volatile i32, ptr %i.a, align 4, !tbaa !40
+  store volatile i32 %i.z, ptr %i.a, align 4, !tbaa !39
+  %.0..0..0..0.1 = load volatile i32, ptr %i.a, align 4, !tbaa !39
   %i.aa = icmp ult i32 %.0..0..0..0.1, 100
-  br i1 %i.aa, label %.lr.ph, label %._crit_edge, !llvm.loop !38
+  br i1 %i.aa, label %.lr.ph, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %lv_tick_get.exit.split, !llvm.loop !39
+  br label %lv_tick_get.exit.split, !llvm.loop !38
 
 .loopexit:                                        ; preds = %lv_tick_elaps.exit, %lv_tick_elaps.exit.loopexit.us, %bb.b
   ret void
@@ -287,9 +287,8 @@ attributes #6 = { nounwind }
 !35 = !{!34, !9, i64 352}
 !36 = !{!34, !9, i64 344}
 !37 = distinct !{!37, !14}
-!38 = distinct !{!38, !14}
-!39 = distinct !{!39, !14, !42}
-!40 = !{!6, !6, i64 0}
-!41 = !{ptr @lv_tick_elaps, ptr @lv_tick_get}
-!42 = !{!"llvm.loop.unswitch.partial.disable"}
+!38 = distinct !{!38, !14, !41}
+!39 = !{!6, !6, i64 0}
+!40 = !{ptr @lv_tick_elaps, ptr @lv_tick_get}
+!41 = !{!"llvm.loop.unswitch.partial.disable"}
 end_hunk_0

@@ -205,6 +205,9 @@ mbedtls_mpi_cmp_mpi.exit:                         ; preds = %bb.t
   %brmerge = or i1 %i.ce, %.not44.i
   br i1 %brmerge, label %.critedge.backedge, label %.lr.ph.i.i.preheader
 
+.critedge.backedge:                               ; preds = %.lr.ph258, %.preheader.i, %bb.w, %mbedtls_mpi_cmp_mpi.exit, %.preheader.preheader.i.i, %mbedtls_mpi_cmp_mpi.exit.thread, %._crit_edge52.i, %bb.u
+  br label %.critedge
+
 mbedtls_mpi_cmp_mpi.exit.thread:                  ; preds = %bb.v
   br i1 %.not44.i, label %.critedge.backedge, label %.lr.ph.i.i.preheader
 
@@ -231,10 +234,7 @@ bb.w:                                             ; preds = %.lr.ph.i.i
 .preheader.preheader.i.i:                         ; preds = %.lr.ph51.i.i
   %i.ck = load i64, ptr %i.au, align 8, !tbaa !26
   %i.cl = icmp ugt i64 %i.ck, 1
-  br i1 %i.cl, label %mbedtls_mpi_cmp_int.exit, label %.critedge.backedge, !llvm.loop !7
-
-.critedge.backedge:                               ; preds = %.preheader.i, %.lr.ph258, %bb.w, %mbedtls_mpi_cmp_mpi.exit, %.preheader.preheader.i.i, %mbedtls_mpi_cmp_mpi.exit.thread, %._crit_edge52.i, %bb.u
-  br label %.critedge, !llvm.loop !59
+  br i1 %i.cl, label %mbedtls_mpi_cmp_int.exit, label %.critedge.backedge
 
 mbedtls_mpi_cmp_int.exit:                         ; preds = %.lr.ph51.i.i, %.preheader.preheader.i.i
   store i16 %i.av, ptr %i.i, align 2
@@ -567,7 +567,7 @@ mbedtls_mpi_cmp_int.exit97.thread:                ; preds = %bb.ba, %bb.bc, %bb.
 
 .backedge.backedge:                               ; preds = %mbedtls_mpi_cmp_int.exit97.thread, %mbedtls_mpi_cmp_int.exit97
   %.0149.be = phi i64 [ %.old, %mbedtls_mpi_cmp_int.exit97.thread ], [ %i.gc, %mbedtls_mpi_cmp_int.exit97 ]
-  br label %.backedge, !llvm.loop !60
+  br label %.backedge, !llvm.loop !59
 
 ..critedge2.loopexit134_crit_edge150:             ; preds = %bb.be
   br label %.critedge2, !llvm.loop !7
@@ -587,7 +587,7 @@ mbedtls_mpi_cmp_mpi.exit65.thread:                ; preds = %.preheader.i59, %.p
   %.promoted171 = phi i16 [ %i.cn, %mbedtls_mpi_cmp_mpi.exit65.thread118 ], [ %i.cn, %._crit_edge52.i54 ], [ %.promoted172, %bb.bg ], [ %i.cn, %mbedtls_mpi_cmp_mpi.exit65 ], [ %i.cn, %.preheader.preheader.i58 ], [ %i.cn, %.preheader.i59 ]
   %i.gh = add nuw i64 %.019151, 1                 ; 2 uses
   %exitcond169.not = icmp eq i64 %i.gh, %1
-  br i1 %exitcond169.not, label %mbedtls_mpi_fill_random.exit.thread, label %.critedge.preheader, !llvm.loop !61
+  br i1 %exitcond169.not, label %mbedtls_mpi_fill_random.exit.thread, label %.critedge.preheader, !llvm.loop !60
 
 mbedtls_mpi_fill_random.exit.thread.loopexit135:  ; preds = %mbedtls_mpi_fill_random.exit, %bb.p, %bb.n, %mbedtls_mpi_free.exit12.i.i
   %i.gi = phi ptr [ null, %mbedtls_mpi_free.exit12.i.i ], [ null, %bb.n ], [ %i.au, %bb.p ], [ %i.ar, %mbedtls_mpi_fill_random.exit ]
@@ -990,5 +990,4 @@ attributes #19 = { nounwind willreturn memory(read) }
 !58 = distinct !{!58, !27}
 !59 = distinct !{!59, !27}
 !60 = distinct !{!60, !27}
-!61 = distinct !{!61, !27}
 end_hunk_1

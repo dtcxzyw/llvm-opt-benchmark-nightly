@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.backedge
 
 bb.c:                                             ; preds = %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 728
-  store ptr @Curl_scheme_smtps, ptr %i.ai, align 8, !tbaa !145
+  store ptr @Curl_scheme_smtps, ptr %i.ai, align 8, !tbaa !144
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.backedge
@@ -215,7 +215,7 @@ bb.d:                                             ; preds = %bb.c, %.backedge
 
 bb.e:                                             ; preds = %bb.d
   %i.an = load i8, ptr %i.l, align 8
-  store i16 0, ptr %i.m, align 8, !tbaa !146
+  store i16 0, ptr %i.m, align 8, !tbaa !145
   store i16 0, ptr %i.n, align 4, !tbaa !101
   %i.ao = and i8 %i.an, -20
   %i.ap = or disjoint i8 %i.ao, 1
@@ -282,7 +282,7 @@ bb.l:                                             ; preds = %smtp_perform_upgrad
   br i1 %i.be, label %.critedge, label %bb.m
 
 bb.m:                                             ; preds = %.thread, %bb.l, %.preheader192
-  %i.bf = load i64, ptr %i.r, align 8, !tbaa !147
+  %i.bf = load i64, ptr %i.r, align 8, !tbaa !146
   %.not73 = icmp eq i64 %i.bf, 0
   br i1 %.not73, label %.preheader, label %bb.n
 
@@ -304,7 +304,7 @@ bb.o:                                             ; preds = %.preheader
   br i1 %or.cond3, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  store i32 %i.bk, ptr %i.s, align 8, !tbaa !148
+  store i32 %i.bk, ptr %i.s, align 8, !tbaa !147
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -335,7 +335,7 @@ bb.t:                                             ; preds = %bb.s
   br label %.critedge
 
 bb.u:                                             ; preds = %bb.s
-  store i16 0, ptr %i.m, align 8, !tbaa !146
+  store i16 0, ptr %i.m, align 8, !tbaa !145
   store i16 0, ptr %i.n, align 4, !tbaa !101
   %i.bm = load i8, ptr %i.l, align 8
   %i.bn = and i8 %i.bm, -19
@@ -385,7 +385,7 @@ bb.aa:                                            ; preds = %bb.r
   br i1 %or.cond.i88, label %bb.ab, label %bb.ak
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ce = load i8, ptr %i.ac, align 4, !tbaa !149
+  %i.ce = load i8, ptr %i.ac, align 4, !tbaa !148
   %i.cf = icmp ult i8 %i.ce, 2
   br i1 %i.cf, label %bb.ad, label %bb.ac
 
@@ -533,7 +533,7 @@ bb.as:                                            ; preds = %.thread102.i
 .lr.ph.i.backedge:                                ; preds = %.critedge3.i, %.critedge94.i
   %.1113.i.be = phi i64 [ %i.dp, %.critedge3.i ], [ %i.dz, %.critedge94.i ]
   %.178112.i.be = phi ptr [ %i.do, %.critedge3.i ], [ %i.dy, %.critedge94.i ]
-  br label %.lr.ph.i, !llvm.loop !142
+  br label %.lr.ph.i
 
 .critedge.preheader.i:                            ; preds = %.lr.ph.i, %.critedge.i
   %.075115.i = phi i64 [ %i.ds, %.critedge.i ], [ 0, %.lr.ph.i ] ; 6 uses
@@ -549,7 +549,7 @@ bb.as:                                            ; preds = %.thread102.i
 .critedge.i:                                      ; preds = %.critedge.preheader.i
   %i.ds = add nuw i64 %.075115.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %.1113.i
-  br i1 %exitcond.not.i, label %.critedge5.i, label %.critedge.preheader.i, !llvm.loop !143
+  br i1 %exitcond.not.i, label %.critedge5.i, label %.critedge.preheader.i, !llvm.loop !142
 
 .critedge5.i:                                     ; preds = %.critedge.i, %.critedge.preheader.i, %.critedge.preheader.i, %.critedge.preheader.i, %.critedge.preheader.i
   %.075.lcssa.i = phi i64 [ %.075115.i, %.critedge.preheader.i ], [ %.075115.i, %.critedge.preheader.i ], [ %.075115.i, %.critedge.preheader.i ], [ %.075115.i, %.critedge.preheader.i ], [ %.1113.i, %.critedge.i ] ; 4 uses
@@ -561,9 +561,9 @@ bb.as:                                            ; preds = %.thread102.i
   br i1 %or.cond97.i, label %bb.at, label %.critedge94.i
 
 bb.at:                                            ; preds = %.critedge5.i
-  %i.dw = load i16, ptr %i.m, align 8, !tbaa !146
+  %i.dw = load i16, ptr %i.m, align 8, !tbaa !145
   %i.dx = or i16 %i.dw, %i.dt
-  store i16 %i.dx, ptr %i.m, align 8, !tbaa !146
+  store i16 %i.dx, ptr %i.m, align 8, !tbaa !145
   br label %.critedge94.i
 
 .critedge94.i:                                    ; preds = %bb.at, %.critedge5.i
@@ -578,7 +578,7 @@ bb.at:                                            ; preds = %.critedge5.i
   br i1 %i.bl, label %bb.au, label %smtp_state_servergreet_resp.exit.thread178thread-pre-split
 
 bb.au:                                            ; preds = %.thread103.i
-  %i.ea = load i8, ptr %i.ac, align 4, !tbaa !149
+  %i.ea = load i8, ptr %i.ac, align 4, !tbaa !148
   %.not92.i = icmp eq i8 %i.ea, 0
   br i1 %.not92.i, label %bb.bb, label %bb.av
 
@@ -598,7 +598,7 @@ bb.ax:                                            ; preds = %bb.aw
   br label %smtp_state_servergreet_resp.exit
 
 bb.ay:                                            ; preds = %bb.aw
-  %i.eg = load i8, ptr %i.ac, align 4, !tbaa !149
+  %i.eg = load i8, ptr %i.ac, align 4, !tbaa !148
   %i.eh = icmp eq i8 %i.eg, 1
   br i1 %i.eh, label %bb.az, label %bb.ba
 
@@ -656,7 +656,7 @@ bb.bj:                                            ; preds = %bb.bh
   br i1 %.old1.i.i, label %smtp_state_servergreet_resp.exit.thread178.thread.sink.split.sink.split, label %smtp_state_servergreet_resp.exit.thread178.thread.sink.split
 
 bb.bk:                                            ; preds = %bb.r
-  %i.es = load i64, ptr %i.ab, align 8, !tbaa !150
+  %i.es = load i64, ptr %i.ab, align 8, !tbaa !149
   %.not.i101 = icmp eq i64 %i.es, 0
   br i1 %.not.i101, label %bb.bl, label %.critedge
 
@@ -665,7 +665,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %.not12.i, label %bb.bo, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.et = load i8, ptr %i.ac, align 4, !tbaa !149
+  %i.et = load i8, ptr %i.ac, align 4, !tbaa !148
   %.not13.i = icmp eq i8 %i.et, 1
   br i1 %.not13.i, label %smtp_state_starttls_resp.exit, label %bb.bn
 
@@ -832,7 +832,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ci
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 8
-  %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !151 ; 2 uses
+  %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !150 ; 2 uses
   store ptr %i.gf, ptr %i.v, align 8, !tbaa !84
   %.not39.i = icmp eq ptr %i.gf, null
   br i1 %.not39.i, label %bb.cl, label %bb.ck
@@ -941,7 +941,7 @@ bb.db:                                            ; preds = %bb.cz
 bb.dc:                                            ; preds = %bb.da, %bb.cz
   %i.he = load ptr, ptr %i.v, align 8, !tbaa !84
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 8
-  %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !151 ; 3 uses
+  %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !150 ; 3 uses
   store ptr %i.hg, ptr %i.v, align 8, !tbaa !84
   %.not28.i = icmp eq ptr %i.hg, null
   br i1 %.not28.i, label %bb.de, label %bb.dd
@@ -1158,7 +1158,7 @@ smtp_state_servergreet_resp.exit.thread178.thread184.sink.split: ; preds = %smtp
 
 smtp_state_servergreet_resp.exit.thread178.thread184: ; preds = %smtp_state_servergreet_resp.exit.thread178.thread184.sink.split, %smtp_state_servergreet_resp.exit.thread178
   %i.jf = call zeroext i1 @Curl_pp_moredata(ptr noundef nonnull %i.f) #7
-  br i1 %i.jf, label %.preheader, label %.critedge, !llvm.loop !144
+  br i1 %i.jf, label %.preheader, label %.critedge, !llvm.loop !143
 
 .critedge:                                        ; preds = %bb.bk, %bb.dg, %bb.ad, %bb.u, %smtp_state_starttls_resp.exit, %smtp_state_servergreet_resp.exit.thread178.thread184, %bb.q, %smtp_state_servergreet_resp.exit, %smtp_state_servergreet_resp.exit.thread178, %.preheader, %smtp_perform_upgrade_tls.exit, %bb.l, %smtp_state_servergreet_resp.exit.thread178.thread, %bb.bn, %bb.dn, %bb.db, %bb.cw, %bb.cf, %bb.be, %bb.ba, %bb.aj, %bb.bc, %bb.t, %bb.df, %smtp_state_postdata_resp.exit, %smtp_perform_upgrade_tls.exit.thread, %bb.a, %bb.n
   %.064 = phi i32 [ 2, %bb.a ], [ %i.bg, %bb.n ], [ 64, %bb.ba ], [ 9, %bb.aj ], [ %i.aj, %smtp_perform_upgrade_tls.exit ], [ 8, %bb.bc ], [ 64, %bb.bn ], [ 8, %bb.t ], [ 55, %bb.df ], [ %.0.i.ph, %smtp_perform_upgrade_tls.exit.thread ], [ 55, %bb.dn ], [ 8, %smtp_state_postdata_resp.exit ], [ 55, %bb.db ], [ 55, %bb.cw ], [ 8, %bb.cf ], [ 9, %bb.be ], [ 0, %smtp_state_servergreet_resp.exit.thread178.thread ], [ 0, %bb.l ], [ 8, %bb.bk ], [ %i.fc, %smtp_state_starttls_resp.exit ], [ %i.bp, %bb.u ], [ %i.cj, %bb.ad ], [ %i.hl, %bb.dg ], [ 0, %bb.q ], [ 0, %smtp_state_servergreet_resp.exit.thread178 ], [ 0, %smtp_state_servergreet_resp.exit.thread178.thread184 ], [ %.0, %smtp_state_servergreet_resp.exit ], [ %i.bh, %.preheader ]
@@ -1561,7 +1561,7 @@ bb.d:                                             ; preds = %.critedge, %bb.c
 .critedge:                                        ; preds = %bb.d, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %.026, i64 1
   %i.m = add i64 %.0, -1
-  br label %bb.d, !llvm.loop !152
+  br label %bb.d, !llvm.loop !151
 
 .lr.ph:                                           ; preds = %.preheader, %bb.e
   %.134 = phi i64 [ %i.n, %bb.e ], [ %.0, %.preheader ] ; 2 uses
@@ -1577,7 +1577,7 @@ bb.d:                                             ; preds = %.critedge, %bb.c
 
 bb.e:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
   %.not32 = icmp eq i64 %i.n, 0
-  br i1 %.not32, label %._crit_edge, label %.lr.ph, !llvm.loop !153
+  br i1 %.not32, label %._crit_edge, label %.lr.ph, !llvm.loop !152
 
 ._crit_edge:                                      ; preds = %bb.e, %.lr.ph, %.preheader
   %.1.lcssa = phi i64 [ 0, %.preheader ], [ %.134, %.lr.ph ], [ 0, %bb.e ] ; 2 uses
@@ -1768,14 +1768,13 @@ attributes #8 = { nounwind willreturn memory(read) }
 !141 = !{!117, !27, i64 8}
 !142 = distinct !{!142, !105}
 !143 = distinct !{!143, !105}
-!144 = distinct !{!144, !105}
-!145 = !{!114, !113, i64 728}
-!146 = !{!100, !40, i64 176}
-!147 = !{!100, !12, i64 16}
-!148 = !{!73, !7, i64 4640}
-!149 = !{!73, !6, i64 2180}
-!150 = !{!100, !12, i64 112}
-!151 = !{!103, !34, i64 8}
+!144 = !{!114, !113, i64 728}
+!145 = !{!100, !40, i64 176}
+!146 = !{!100, !12, i64 16}
+!147 = !{!73, !7, i64 4640}
+!148 = !{!73, !6, i64 2180}
+!149 = !{!100, !12, i64 112}
+!150 = !{!103, !34, i64 8}
+!151 = distinct !{!151, !105}
 !152 = distinct !{!152, !105}
-!153 = distinct !{!153, !105}
 end_hunk_1

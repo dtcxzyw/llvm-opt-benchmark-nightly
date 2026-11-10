@@ -202,7 +202,7 @@ bb.a:
 
 .preheader.i.backedge:                            ; preds = %.preheader.i, %dma_fence_put.exit.backedge
   %.pn.i.pn.i.be = phi ptr [ %i.e, %.preheader.i ], [ %i.u, %dma_fence_put.exit.backedge ]
-  br label %.preheader.i, !llvm.loop !26
+  br label %.preheader.i
 
 vma_res_itree_iter_first.exit:                    ; preds = %.preheader.i
   %.019.i.le.i = getelementptr i8, ptr %.pn.i.pn.i, i64 -144 ; 2 uses
@@ -287,7 +287,7 @@ define dso_local i32 @i915_vma_resource_bind_dep_await(ptr nofree noundef readon
 bb.a:
   %i.a = add i64 %3, %2                           ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %i.c = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr @current_task) #11, !srcloc !28
+  %i.c = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr @current_task) #11, !srcloc !27
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = getelementptr i8, ptr %i.d, i64 44
   %i.f = load i32, ptr %i.e, align 4
@@ -510,7 +510,7 @@ vma_res_itree_subtree_search.exit.loopexit.split.loop.exit.i: ; preds = %bb.p
 vma_res_itree_iter_next.exit:                     ; preds = %bb.t, %vma_res_itree_subtree_search.exit.loopexit.split.loop.exit.i
   %.1 = phi ptr [ %.019.i.le.i30, %vma_res_itree_subtree_search.exit.loopexit.split.loop.exit.i ], [ %i.cb, %bb.t ] ; 2 uses
   %.not = icmp eq ptr %.1, null
-  br i1 %.not, label %vma_res_itree_iter_next.exit.thread, label %.lr.ph, !llvm.loop !27
+  br i1 %.not, label %vma_res_itree_iter_next.exit.thread, label %.lr.ph, !llvm.loop !26
 
 vma_res_itree_iter_next.exit.thread:              ; preds = %bb.g, %vma_res_itree_iter_next.exit, %bb.j, %bb.s, %bb.o, %vma_res_itree_subtree_search.exit.thread.i, %bb.e, %bb.d, %i915_vma_resource_color_adjust_range.exit, %vma_res_itree_iter_first.exit
   %.2 = phi i32 [ 0, %vma_res_itree_iter_first.exit ], [ 0, %bb.s ], [ 0, %vma_res_itree_iter_next.exit ], [ 0, %bb.o ], [ 0, %i915_vma_resource_color_adjust_range.exit ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %vma_res_itree_subtree_search.exit.thread.i ], [ %i.bb, %bb.j ], [ 0, %bb.g ]
@@ -766,6 +766,5 @@ attributes #11 = { nounwind memory(none) }
 !24 = !{ptr @i915_vma_resource_unbind_work}
 !25 = distinct !{!25, !16}
 !26 = distinct !{!26, !16}
-!27 = distinct !{!27, !16}
-!28 = !{i64 2149665782}
+!27 = !{i64 2149665782}
 end_hunk_0

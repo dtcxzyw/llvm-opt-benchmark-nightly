@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !49
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !48
   %.not76 = icmp eq i32 %i.ac, 0
   br i1 %.not76, label %.thread, label %bb.aa
 
@@ -305,7 +305,7 @@ b64_write.exit:                                   ; preds = %bb.o, %._crit_edge.
   br i1 %i.bq, label %bb.q, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %b64_write.exit, %bb.t, %bb.w
-  br label %.backedge, !llvm.loop !48
+  br label %.backedge
 
 bb.q:                                             ; preds = %b64_write.exit
   %i.br = sext i32 %.0103.i to i64
@@ -336,7 +336,7 @@ bb.u:                                             ; preds = %bb.r
   br i1 %.not72, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.by = load i32, ptr %i.i, align 4, !tbaa !49
+  %i.by = load i32, ptr %i.i, align 4, !tbaa !48
   %.not73 = icmp eq i32 %i.by, 0
   br i1 %.not73, label %bb.x, label %bb.w
 
@@ -406,7 +406,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 0, ptr %i.d, align 8, !tbaa !28
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 0, ptr %i.e, align 8, !tbaa !50
+  store i32 0, ptr %i.e, align 8, !tbaa !49
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -545,7 +545,6 @@ attributes #5 = { nounwind }
 !45 = !{!"llvm.loop.unroll.runtime.disable"}
 !46 = !{!"branch_weights", i32 4, i32 28}
 !47 = !{!"llvm.loop.unroll.disable"}
-!48 = distinct !{!48, !25}
-!49 = !{!19, !6, i64 28}
-!50 = !{!16, !6, i64 48}
+!48 = !{!19, !6, i64 28}
+!49 = !{!16, !6, i64 48}
 end_hunk_0

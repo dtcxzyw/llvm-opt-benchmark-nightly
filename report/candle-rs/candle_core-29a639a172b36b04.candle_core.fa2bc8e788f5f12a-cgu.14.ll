@@ -205,7 +205,10 @@ bb.ab:                                            ; preds = %_RNvXs3_NtNtNtCsf3T
   br i1 %i.dp, label %.split.us.split.us, label %.split.us.split.preheader
 
 .split.us.split.preheader:                        ; preds = %.split.us
+  %scevgep = getelementptr i8, ptr %i.dk, i64 17
   %i.dq = add i64 %i.dl, -17
+  %scevgep289 = getelementptr i8, ptr %i.dh, i64 68
+  %scevgep290 = getelementptr i8, ptr %i.dh, i64 64
   %i.dr = add i64 %i.dl, -17
   br label %.split.us.split
 
@@ -608,20 +611,17 @@ bb.bk:                                            ; preds = %bb.bj
 
 vector.memcheck:                                  ; preds = %.lr.ph.us
   %i.pe = shl i64 %.sroa.012.097.us, 2
-  %4 = getelementptr i8, ptr %i.dh, i64 %i.pe
-  %i.pf = getelementptr i8, ptr %4, i64 64
+  %i.pf = getelementptr i8, ptr %scevgep290, i64 %i.pe
   %i.pg = call i64 @llvm.umax.i64(i64 %i.di, i64 %i.op)
   %i.ph = add i64 %i.pg, -16
   %i.pi = sub i64 %i.ph, %.sroa.012.097.us
   %i.pj = call i64 @llvm.umin.i64(i64 %i.pi, i64 %i.dq) ; 2 uses
   %i.pk = add i64 %.sroa.012.097.us, %i.pj
   %i.pl = shl i64 %i.pk, 2
-  %5 = getelementptr i8, ptr %i.dh, i64 %i.pl
-  %6 = getelementptr i8, ptr %5, i64 68
-  %i.pm = getelementptr i8, ptr %i.dk, i64 %i.pj
-  %i.pn = getelementptr i8, ptr %i.pm, i64 17
+  %i.pm = getelementptr i8, ptr %scevgep289, i64 %i.pl
+  %i.pn = getelementptr i8, ptr %scevgep, i64 %i.pj
   %bound0 = icmp ult ptr %i.pf, %i.pn
-  %bound1 = icmp ult ptr %i.dn, %6
+  %bound1 = icmp ult ptr %i.dn, %i.pm
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -1024,6 +1024,7 @@ bb.z:                                             ; preds = %bb.y, %_RNvNtNtCsds
   %.sroa.03.0 = phi float [ %i.cq, %_RNvNtNtCsdsILkMb8ZHY_4half8binary164arch19f16_to_f32_fallback.exit36 ], [ %i.cr, %bb.y ] ; 2 uses
   %i.cs = getelementptr i8, ptr %.sroa.0.0.copyload, i64 16
   %i.ct = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 4 ; 4 uses
+  %scevgep = getelementptr i8, ptr %.sroa.6.0.copyload, i64 4
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ah, %bb.z
@@ -1106,8 +1107,7 @@ vector.memcheck146:                               ; preds = %bb.af
   %i.er = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.eq
   %i.es = add i64 %.sroa.08.078, %i.eo
   %i.et = shl i64 %i.es, 2
-  %4 = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.et
-  %i.eu = getelementptr i8, ptr %4, i64 4
+  %i.eu = getelementptr i8, ptr %scevgep, i64 %i.et
   %i.ev = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.eo
   %i.ew = getelementptr i8, ptr %i.ev, i64 %i.cw
   %i.ex = getelementptr i8, ptr %i.ew, i64 17
@@ -1510,7 +1510,7 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTRNtNtNtCsltEA4u8Pg
   store ptr %i.q, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1244
   %.sroa.0.0.copyload = load ptr, ptr %i.p, align 8, !noalias !1244 ; 7 uses
   %.sroa.6.0..sroa_idx66 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx66, align 8, !noalias !1244 ; 9 uses
+  %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx66, align 8, !noalias !1244 ; 8 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !1244 ; 3 uses
   %.not = icmp eq ptr %.sroa.0.0.copyload, null
@@ -1709,6 +1709,7 @@ bb.z:                                             ; preds = %bb.y, %_RNvNtNtCsds
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 48 ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 16 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 4 ; 4 uses
+  %scevgep = getelementptr i8, ptr %.sroa.6.0.copyload, i64 4 ; 2 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.thread89, %bb.z
@@ -1812,8 +1813,7 @@ vector.memcheck227:                               ; preds = %.lr.ph
   %i.fa = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.ez ; 2 uses
   %i.fb = add i64 %.sroa.012.0127, %i.ex
   %i.fc = shl i64 %i.fb, 2
-  %4 = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.fc
-  %i.fd = getelementptr i8, ptr %4, i64 4         ; 2 uses
+  %i.fd = getelementptr i8, ptr %scevgep, i64 %i.fc ; 2 uses
   %i.fe = getelementptr i8, ptr %.sroa.471.0.copyload, i64 %.sroa.573.0.copyload
   %i.ff = add i64 %.sroa.573.0.copyload, %i.ex
   %i.fg = add i64 %i.ff, 1                        ; 2 uses
@@ -1911,8 +1911,7 @@ vector.memcheck:                                  ; preds = %.lr.ph123
   %i.gp = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.go ; 2 uses
   %i.gq = add i64 %i.gm, %.sroa.012.1.lcssa
   %i.gr = shl i64 %i.gq, 2
-  %5 = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.gr
-  %i.gs = getelementptr i8, ptr %5, i64 4         ; 2 uses
+  %i.gs = getelementptr i8, ptr %scevgep, i64 %i.gr ; 2 uses
   %i.gt = getelementptr i8, ptr %.sroa.477.0.copyload, i64 %.sroa.579.0.copyload
   %i.gu = add i64 %.sroa.579.0.copyload, %i.gm
   %i.gv = add i64 %i.gu, 1                        ; 2 uses

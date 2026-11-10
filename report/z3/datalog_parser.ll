@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 .backedge:                                        ; preds = %bb.f, %_ZN6vectorImLb0EjE9push_backERKm.exit
   %.be = phi ptr [ %i.i, %bb.f ], [ %.promoted16, %_ZN6vectorImLb0EjE9push_backERKm.exit ]
-  br label %bb.e, !llvm.loop !609
+  br label %bb.e
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
@@ -423,7 +423,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.lr.ph.i.i, %bb.l, %bb.k
   %i.ay = getelementptr inbounds nuw i8, ptr %.031.i.i, i64 24 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ay, %i.ao
-  br i1 %.not.i.i, label %.lr.ph34.i.i.preheader, label %.lr.ph.i.i, !llvm.loop !610
+  br i1 %.not.i.i, label %.lr.ph34.i.i.preheader, label %.lr.ph.i.i, !llvm.loop !609
 
 .lr.ph34.i.i.preheader:                           ; preds = %bb.m, %_ZNK14core_hashtableI17default_map_entryI6symbolP9hashtableIm11uint64_hash10default_eqImEEEN9table2mapIS8_16symbol_hash_proc14symbol_eq_procE15entry_hash_procENSC_13entry_eq_procEE8get_hashERK9_key_dataIS1_S7_E.exit.i.i
   br label %.lr.ph34.i.i
@@ -495,7 +495,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r, %bb.q, %.lr.ph.i.i25
   %i.ca = getelementptr inbounds nuw i8, ptr %.031.i.i26, i64 16 ; 2 uses
   %.not.i.i28 = icmp eq ptr %i.ca, %i.bs
-  br i1 %.not.i.i28, label %.preheader.i.i29, label %.lr.ph.i.i25, !llvm.loop !611
+  br i1 %.not.i.i28, label %.preheader.i.i29, label %.lr.ph.i.i25, !llvm.loop !610
 
 .lr.ph34.i.i31:                                   ; preds = %.preheader.i.i29, %bb.v
   %.133.i.i32 = phi ptr [ %i.ci, %bb.v ], [ %i.bo, %.preheader.i.i29 ] ; 4 uses
@@ -520,7 +520,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u, %bb.t, %.lr.ph34.i.i31
   %i.ci = getelementptr inbounds nuw i8, ptr %.133.i.i32, i64 16 ; 2 uses
   %.not27.i.i33 = icmp eq ptr %i.ci, %i.bq
-  br i1 %.not27.i.i33, label %.loopexit55, label %.lr.ph34.i.i31, !llvm.loop !612
+  br i1 %.not27.i.i33, label %.loopexit55, label %.lr.ph34.i.i31, !llvm.loop !611
 
 .loopexit55:                                      ; preds = %.lr.ph.i.i25, %.lr.ph34.i.i31, %bb.v, %.preheader.i.i29
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -623,7 +623,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %.lr.ph.i.i.i
   %i.dx = getelementptr inbounds nuw i8, ptr %.031.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.dx, %i.dp
-  br i1 %.not.i.i.i, label %.preheader.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !613
+  br i1 %.not.i.i.i, label %.preheader.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !612
 
 .lr.ph34.i.i.i:                                   ; preds = %.preheader.i.i.i, %bb.af
   %.133.i.i.i = phi ptr [ %i.ef, %bb.af ], [ %i.dl, %.preheader.i.i.i ] ; 5 uses
@@ -648,7 +648,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %.lr.ph34.i.i.i
   %i.ef = getelementptr inbounds nuw i8, ptr %.133.i.i.i, i64 24 ; 2 uses
   %.not27.i.i.i = icmp eq ptr %i.ef, %i.dn
-  br i1 %.not27.i.i.i, label %.loopexit, label %.lr.ph34.i.i.i, !llvm.loop !614
+  br i1 %.not27.i.i.i, label %.loopexit, label %.lr.ph34.i.i.i, !llvm.loop !613
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i, %bb.af, %.lr.ph34.i.i.i, %.preheader.i.i.i
   %i.eg = tail call ptr @__cxa_allocate_exception(i64 40) #27 ; 3 uses
@@ -1051,5 +1051,4 @@ begin_hunk_1_@bcmp
 !611 = distinct !{!611, !137}
 !612 = distinct !{!612, !137}
 !613 = distinct !{!613, !137}
-!614 = distinct !{!614, !137}
 end_hunk_1

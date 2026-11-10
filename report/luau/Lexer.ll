@@ -205,7 +205,7 @@ switch.early.test:                                ; preds = %_ZNK4Luau5Lexer6pee
   store i32 %i.o, ptr %i.a, align 8, !tbaa !65
   %i.p = zext i32 %i.o to i64                     ; 2 uses
   %i.q = icmp ugt i64 %i.c, %i.p
-  br i1 %i.q, label %_ZNK4Luau5Lexer6peekchEv.exit13, label %_ZNK4Luau5Lexer6peekchEv.exit9.thread, !llvm.loop !99
+  br i1 %i.q, label %_ZNK4Luau5Lexer6peekchEv.exit13, label %_ZNK4Luau5Lexer6peekchEv.exit9.thread
 
 bb.b:                                             ; preds = %switch.early.test, %switch.early.test
   %i.r = add i32 %i.i, 2                          ; 4 uses
@@ -259,7 +259,7 @@ _ZNK4Luau5Lexer6peekchEv.exit5:                   ; preds = %_ZNK4Luau5Lexer6pee
   store i32 %i.an, ptr %i.a, align 8, !tbaa !65
   %i.ao = zext i32 %i.an to i64                   ; 2 uses
   %i.ap = icmp ugt i64 %i.c, %i.ao
-  br i1 %i.ap, label %_ZNK4Luau5Lexer6peekchEv.exit6, label %_ZNK4Luau5Lexer6peekchEv.exit.thread, !llvm.loop !100
+  br i1 %i.ap, label %_ZNK4Luau5Lexer6peekchEv.exit6, label %_ZNK4Luau5Lexer6peekchEv.exit.thread, !llvm.loop !99
 
 _ZNK4Luau5Lexer6peekchEv.exit.thread:             ; preds = %.critedge2, %_ZNK4Luau5Lexer6peekchEv.exit5, %_ZNK4Luau5Lexer6peekchEv.exit9.thread
   %.lcssa = phi i32 [ %.promoted31, %_ZNK4Luau5Lexer6peekchEv.exit9.thread ], [ %i.an, %.critedge2 ], [ %i.aa, %_ZNK4Luau5Lexer6peekchEv.exit5 ] ; 2 uses
@@ -331,7 +331,7 @@ _ZNK4Luau5Lexer6peekchEv.exit10:                  ; preds = %_ZNK4Luau5Lexer6pee
   store i32 %i.u, ptr %i.a, align 8, !tbaa !65
   %i.v = zext i32 %i.u to i64                     ; 2 uses
   %i.w = icmp ugt i64 %i.d, %i.v
-  br i1 %i.w, label %_ZNK4Luau5Lexer6peekchEv.exit11, label %_ZNK4Luau5Lexer6peekchEv.exit.thread, !llvm.loop !101
+  br i1 %i.w, label %_ZNK4Luau5Lexer6peekchEv.exit11, label %_ZNK4Luau5Lexer6peekchEv.exit.thread
 
 _ZNK4Luau5Lexer6peekchEv.exit.thread:             ; preds = %.backedge, %_ZNK4Luau5Lexer6peekchEv.exit10, %bb.a
   %.lcssa = phi i32 [ %i.e, %bb.a ], [ %i.u, %.backedge ], [ %i.j, %_ZNK4Luau5Lexer6peekchEv.exit10 ]
@@ -339,7 +339,7 @@ _ZNK4Luau5Lexer6peekchEv.exit.thread:             ; preds = %.backedge, %_ZNK4Lu
   %i.y = load i8, ptr %i.x, align 1, !tbaa !69, !range !70, !noundef !54
   %i.z = trunc nuw i8 %i.y to i1
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !102, !nonnull !54, !align !55 ; 3 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !100, !nonnull !54, !align !55 ; 3 uses
   %i.ac = load ptr, ptr %0, align 8, !tbaa !63
   %i.ad = zext i32 %i.b to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ad ; 4 uses
@@ -650,7 +650,7 @@ bb.d:                                             ; preds = %.lr.ph237
   %.0137.be = phi i64 [ %i.j, %bb.d ], [ %i.mu, %_ZN4LuauL8unescapeEc.exit ], [ %i.t, %bb.g ], [ %i.ls, %bb.aw ], [ %i.v, %bb.i ], [ %i.v, %bb.h ], [ %i.bi, %.thread170 ], [ %i.mq, %.thread195 ], [ %.0137234, %.preheader207 ], [ %.0137234, %.lr.ph ] ; 2 uses
   %.0127.be = phi i64 [ %i.l, %bb.d ], [ %i.r, %_ZN4LuauL8unescapeEc.exit ], [ %i.r, %bb.g ], [ %i.lo, %bb.aw ], [ %spec.select, %bb.i ], [ %i.r, %bb.h ], [ %i.ad, %.thread170 ], [ %.7134.lcssa289, %.thread195 ], [ %i.r, %.preheader207 ], [ %.2129220, %.lr.ph ] ; 2 uses
   %i.m = icmp ult i64 %.0127.be, %i.f
-  br i1 %i.m, label %.lr.ph237, label %._crit_edge238, !llvm.loop !103
+  br i1 %i.m, label %.lr.ph237, label %._crit_edge238, !llvm.loop !101
 
 bb.e:                                             ; preds = %.lr.ph237
   %i.n = add nuw i64 %.0127235, 1                 ; 2 uses
@@ -758,7 +758,7 @@ bb.k:                                             ; preds = %.preheader206
 bb.l:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
   %i.bm = add i64 %.2129220, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.bm, %i.f
-  br i1 %exitcond.not, label %._crit_edge238, label %.lr.ph, !llvm.loop !104
+  br i1 %exitcond.not, label %._crit_edge238, label %.lr.ph, !llvm.loop !102
 
 bb.m:                                             ; preds = %bb.f
   %i.bn = add i64 %.0127235, 5                    ; 4 uses
@@ -1161,7 +1161,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   store i8 %.sink22, ptr %.0, align 1, !tbaa !22
   %i.o = getelementptr inbounds nuw i8, ptr %.120, i64 %.sink
   %.1 = getelementptr inbounds nuw i8, ptr %.0, i64 1
-  br label %bb.f, !llvm.loop !105
+  br label %bb.f, !llvm.loop !103
 
 bb.j:                                             ; preds = %bb.f
   %i.p = load ptr, ptr %0, align 8, !tbaa !31
@@ -1260,7 +1260,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %i.y = add nuw nsw i64 %.09.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.loopexit.i, label %bb.c, !llvm.loop !106
+  br i1 %epil.iter.cmp.not, label %._crit_edge.loopexit.i, label %bb.c, !llvm.loop !104
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.c, %._crit_edge.loopexit.i.unr-lcssa
   %.lcssa = phi i32 [ %i.aw, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.x, %bb.c ]
@@ -1337,7 +1337,7 @@ _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.thread: ; preds =
   %i.bl = add i64 %.01832, 1                      ; 3 uses
   %i.bm = add i64 %i.bl, %.01933
   %.not = icmp ugt i64 %i.bl, %i.p
-  br i1 %.not, label %.thread, label %bb.e, !llvm.loop !107
+  br i1 %.not, label %.thread, label %bb.e, !llvm.loop !105
 
 .thread:                                          ; preds = %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.thread, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit25, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit, %bb.a
   %.4 = phi ptr [ null, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit ], [ null, %bb.a ], [ %i.ba, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit25 ], [ null, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27 ], [ null, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.thread ]
@@ -1407,7 +1407,7 @@ _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfac
   %i.r = add nuw i64 %.05.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, 2
-  br i1 %epil.iter.cmp.not, label %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EEC2ERKS3_m.exit.loopexit, label %.lr.ph.i.i.epil, !llvm.loop !108
+  br i1 %epil.iter.cmp.not, label %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EEC2ERKS3_m.exit.loopexit, label %.lr.ph.i.i.epil, !llvm.loop !106
 
 _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EEC2ERKS3_m.exit.loopexit: ; preds = %.lr.ph.i.i.epil, %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EEC2ERKS3_m.exit.loopexit.unr-lcssa
   %.pre = load i64, ptr %i.a, align 8, !tbaa !45
@@ -1426,8 +1426,8 @@ _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfac
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EEC2ERKS3_m.exit
-  %.pre28 = load ptr, ptr %0, align 8, !tbaa !111 ; 2 uses
-  store ptr %.sroa.0.0, ptr %0, align 8, !tbaa !111
+  %.pre28 = load ptr, ptr %0, align 8, !tbaa !109 ; 2 uses
+  store ptr %.sroa.0.0, ptr %0, align 8, !tbaa !109
   store i64 %spec.select, ptr %i.a, align 8, !tbaa !30
   %.not.i11 = icmp eq ptr %.pre28, null
   br i1 %.not.i11, label %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EED2Ev.exit, label %bb.c
@@ -1503,7 +1503,7 @@ _ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i.preheader: ; preds = %.
   %i.al = add nuw nsw i64 %.09.i.i.epil, 1
   %epil.iter43.next = add i64 %epil.iter43, 1     ; 2 uses
   %epil.iter43.cmp.not = icmp eq i64 %epil.iter43.next, %xtraiter42
-  br i1 %epil.iter43.cmp.not, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i12.epil, !llvm.loop !109
+  br i1 %epil.iter43.cmp.not, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i12.epil, !llvm.loop !107
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i12.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.bj, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.ak, %.lr.ph.i.i12.epil ]
@@ -1586,10 +1586,10 @@ _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfac
 bb.f:                                             ; preds = %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EE13insert_unsafeERKS3_.exit, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit
   %i.bw = add nuw i64 %.025, 1                    ; 2 uses
   %i.bx = icmp ult i64 %i.bw, %i.s
-  br i1 %i.bx, label %bb.d, label %._crit_edge.thread, !llvm.loop !110
+  br i1 %i.bx, label %bb.d, label %._crit_edge.thread, !llvm.loop !108
 
 ._crit_edge.thread:                               ; preds = %bb.f
-  store ptr %.sroa.0.0, ptr %0, align 8, !tbaa !111
+  store ptr %.sroa.0.0, ptr %0, align 8, !tbaa !109
   store i64 %spec.select, ptr %i.a, align 8, !tbaa !30
   br label %bb.c
 }
@@ -1751,16 +1751,14 @@ attributes #25 = { builtin nounwind }
 !97 = distinct !{!97, !38}
 !98 = distinct !{!98, !38}
 !99 = distinct !{!99, !38}
-!100 = distinct !{!100, !38}
+!100 = !{!62, !56, i64 80}
 !101 = distinct !{!101, !38}
-!102 = !{!62, !56, i64 80}
+!102 = distinct !{!102, !38}
 !103 = distinct !{!103, !38}
-!104 = distinct !{!104, !38}
+!104 = distinct !{!104, !37}
 !105 = distinct !{!105, !38}
 !106 = distinct !{!106, !37}
-!107 = distinct !{!107, !38}
-!108 = distinct !{!108, !37}
-!109 = distinct !{!109, !37}
-!110 = distinct !{!110, !38}
-!111 = !{!40, !40, i64 0}
+!107 = distinct !{!107, !37}
+!108 = distinct !{!108, !38}
+!109 = !{!40, !40, i64 0}
 end_hunk_1

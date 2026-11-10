@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %tohex.exit44.i
   %.026.be.i = phi ptr [ %i.y, %bb.j ], [ %i.ad, %.thread.i ]
   %.027.be.i = getelementptr inbounds nuw i8, ptr %.02750.i, i64 1 ; 2 uses
   %.not.i = icmp eq i64 %.030.be.i, 0
-  br i1 %.not.i, label %url_decode.exit, label %.preheader.i, !llvm.loop !107
+  br i1 %.not.i, label %url_decode.exit, label %.preheader.i
 
 url_decode.exit:                                  ; preds = %.preheader.i, %.backedge.i
   %.027.lcssa.i = phi ptr [ %.027.be.i, %.backedge.i ], [ %.02750.i, %.preheader.i ]
@@ -272,7 +272,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.aq = add nsw i64 %.14656.i, -1               ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.157.i, i64 1
   %.not117.i = icmp eq i64 %i.aq, 0
-  br i1 %.not117.i, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i, !llvm.loop !108
+  br i1 %.not117.i, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i, !llvm.loop !107
 
 .outer.i:                                         ; preds = %bb.l
   %i.as = zext i8 %i.ao to i32                    ; 5 uses
@@ -314,7 +314,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bf = add nsw i64 %.14656.i.1, -1             ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.157.i.1, i64 1
   %.not117.i.1 = icmp eq i64 %i.bf, 0
-  br i1 %.not117.i.1, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i.1, !llvm.loop !108
+  br i1 %.not117.i.1, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i.1, !llvm.loop !107
 
 .lr.ph.split.i.2:                                 ; preds = %.outer.i.1, %bb.s
   %.157.i.2 = phi ptr [ %i.bs, %bb.s ], [ %i.bc, %.outer.i.1 ] ; 5 uses
@@ -349,7 +349,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.br = add nsw i64 %.14656.i.2, -1             ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.157.i.2, i64 1
   %.not117.i.2 = icmp eq i64 %i.br, 0
-  br i1 %.not117.i.2, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i.2, !llvm.loop !108
+  br i1 %.not117.i.2, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i.2, !llvm.loop !107
 
 .lr.ph.split.i.3:                                 ; preds = %.outer.i.2, %bb.v
   %.157.i.3 = phi ptr [ %i.ce, %bb.v ], [ %i.bo, %.outer.i.2 ] ; 5 uses
@@ -383,7 +383,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.cd = add nsw i64 %.14656.i.3, -1             ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.157.i.3, i64 1
   %.not117.i.3 = icmp eq i64 %i.cd, 0
-  br i1 %.not117.i.3, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i.3, !llvm.loop !108
+  br i1 %.not117.i.3, label %.outer._crit_edge.loopexit.split.loop.exit151.i, label %.lr.ph.split.i.3, !llvm.loop !107
 
 .outer._crit_edge.loopexit.split.loop.exit151.i:  ; preds = %bb.v, %bb.s, %bb.p, %bb.m
   %.0.ph110.i.lcssa115 = phi i32 [ 1, %bb.p ], [ 2, %bb.s ], [ 0, %bb.m ], [ 3, %bb.v ]
@@ -432,7 +432,7 @@ bb.z:                                             ; preds = %bb.y, %.outer._crit
   %i.cr = sext i32 %i.cq to i64
   %i.cs = getelementptr inbounds i8, ptr %.043113.i, i64 %i.cr ; 2 uses
   %.not51.i = icmp eq i64 %.2.i, 0
-  br i1 %.not51.i, label %base64_decode.exit, label %.preheader.i17, !llvm.loop !109
+  br i1 %.not51.i, label %base64_decode.exit, label %.preheader.i17, !llvm.loop !108
 
 base64_decode.exit:                               ; preds = %bb.z
   %i.ct = ptrtoint ptr %i.cs to i64
@@ -611,7 +611,7 @@ bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %.03321, i64 1
   %.1 = add nsw i64 %.122, -1                     ; 2 uses
   %.not = icmp eq i64 %.1, 0
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !110
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !109
 
 .critedge:                                        ; preds = %.lr.ph, %bb.e, %bb.c
   %.033.lcssa = phi ptr [ %.035, %bb.c ], [ %scevgep, %bb.e ], [ %.03321, %.lr.ph ] ; 3 uses
@@ -1014,7 +1014,7 @@ bb.j:                                             ; preds = %bb.h
   %i.o = getelementptr inbounds nuw i8, ptr %.0813, i64 24
   %i.p = add nsw i32 %.014, -1
   %i.q = icmp sgt i32 %.014, 1
-  br i1 %i.q, label %bb.b, label %.critedge, !llvm.loop !111
+  br i1 %i.q, label %bb.b, label %.critedge, !llvm.loop !110
 
 .critedge:                                        ; preds = %bb.b, %bb.j, %bb.i, %bb.d
   %.09 = phi i32 [ -30, %bb.d ], [ -30, %bb.i ], [ 0, %bb.j ], [ 0, %bb.b ]
@@ -1134,7 +1134,7 @@ bb.i:                                             ; preds = %.lr.ph.i
   br label %readline.exit.thread
 
 bb.j:                                             ; preds = %.lr.ph.i
-  %i.u = load ptr, ptr %i.b, align 8, !tbaa !113
+  %i.u = load ptr, ptr %i.b, align 8, !tbaa !112
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 %.04367.i
   %i.w = load i64, ptr %i.a, align 8, !tbaa !44
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr nonnull align 1 %.04268.i, i64 %i.w, i1 false)
@@ -1159,7 +1159,7 @@ tar_flush_unconsumed.exit60.i:                    ; preds = %.thread.i59.i, %bb.
   br i1 %.not54.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %tar_flush_unconsumed.exit60.i
-  %i.ac = load ptr, ptr %i.b, align 8, !tbaa !113
+  %i.ac = load ptr, ptr %i.b, align 8, !tbaa !112
   br label %readline.exit
 
 bb.m:                                             ; preds = %tar_flush_unconsumed.exit60.i
@@ -1247,10 +1247,10 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.r, %bb.s, %bb.t
   %.1 = phi i64 [ %i.bd, %bb.t ], [ 9223372036854775807, %bb.s ], [ 9223372036854775807, %bb.r ] ; 2 uses
   %i.be = icmp sgt i64 %.04478, 1
-  br i1 %i.be, label %.preheaderthread-pre-split, label %..loopexit.loopexit_crit_edge82, !llvm.loop !112
+  br i1 %i.be, label %.preheaderthread-pre-split, label %..loopexit.loopexit_crit_edge82, !llvm.loop !111
 
 ..loopexit.loopexit_crit_edge82:                  ; preds = %bb.u
-  br label %.loopexit, !llvm.loop !112
+  br label %.loopexit, !llvm.loop !111
 
 .loopexit:                                        ; preds = %readline.exit, %bb.q, %.preheaderthread-pre-split, %.lr.ph, %..loopexit.loopexit_crit_edge82, %readline.exit.thread
   %.024 = phi i64 [ -30, %readline.exit.thread ], [ -20, %..loopexit.loopexit_crit_edge82 ], [ -20, %.lr.ph ], [ %.1, %.preheaderthread-pre-split ], [ 0, %bb.q ], [ -30, %readline.exit ]
@@ -1405,6 +1405,5 @@ attributes #15 = { nounwind allocsize(0) }
 !109 = distinct !{!109, !15}
 !110 = distinct !{!110, !15}
 !111 = distinct !{!111, !15}
-!112 = distinct !{!112, !15}
-!113 = !{!38, !18, i64 120}
+!112 = !{!38, !18, i64 120}
 end_hunk_1

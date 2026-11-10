@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !51
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !50
   %.not76 = icmp eq i32 %i.ac, 0
   br i1 %.not76, label %.thread, label %bb.aa
 
@@ -305,7 +305,7 @@ _ZL9b64_writeP6bio_stPKci.exit:                   ; preds = %bb.o, %._crit_edge.
   br i1 %i.bq, label %bb.q, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %_ZL9b64_writeP6bio_stPKci.exit, %bb.t, %bb.w
-  br label %.backedge, !llvm.loop !50
+  br label %.backedge
 
 bb.q:                                             ; preds = %_ZL9b64_writeP6bio_stPKci.exit
   %i.br = sext i32 %.0101.i to i64
@@ -336,7 +336,7 @@ bb.u:                                             ; preds = %bb.r
   br i1 %.not72, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.by = load i32, ptr %i.i, align 4, !tbaa !51
+  %i.by = load i32, ptr %i.i, align 4, !tbaa !50
   %.not73 = icmp eq i32 %i.by, 0
   br i1 %.not73, label %bb.x, label %bb.w
 
@@ -406,7 +406,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 0, ptr %i.d, align 8, !tbaa !30
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 0, ptr %i.e, align 8, !tbaa !52
+  store i32 0, ptr %i.e, align 8, !tbaa !51
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -547,7 +547,6 @@ attributes #5 = { nounwind }
 !47 = !{!"llvm.loop.unroll.runtime.disable"}
 !48 = !{!"branch_weights", i32 4, i32 28}
 !49 = !{!"llvm.loop.unroll.disable"}
-!50 = distinct !{!50, !27}
-!51 = !{!21, !9, i64 28}
-!52 = !{!18, !9, i64 24}
+!50 = !{!21, !9, i64 28}
+!51 = !{!18, !9, i64 24}
 end_hunk_0

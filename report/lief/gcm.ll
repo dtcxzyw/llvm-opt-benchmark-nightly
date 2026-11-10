@@ -205,7 +205,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 15 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 17 uses
   %i.d = trunc i32 %1 to i8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 424
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
@@ -254,13 +254,11 @@ iter.check:                                       ; preds = %.preheader54
   br i1 %min.iters.check, label %.lr.ph58.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %4 = getelementptr i8, ptr %0, i64 %.0.i46.lcssa
-  %5 = getelementptr i8, ptr %4, i64 392
-  %i.q = getelementptr i8, ptr %0, i64 %i.n
-  %i.r = getelementptr i8, ptr %i.q, i64 392
+  %i.q = getelementptr i8, ptr %i.c, i64 %.0.i46.lcssa
+  %i.r = getelementptr i8, ptr %i.c, i64 %i.n
   %i.s = getelementptr i8, ptr %.061, i64 %.0.i46.lcssa
   %i.t = getelementptr i8, ptr %.061, i64 %i.n
-  %bound0 = icmp ult ptr %5, %i.t
+  %bound0 = icmp ult ptr %i.q, %i.t
   %bound1 = icmp ult ptr %i.s, %i.r
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph58.preheader, label %vec.epilog.ph

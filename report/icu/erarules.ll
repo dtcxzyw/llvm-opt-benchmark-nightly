@@ -204,7 +204,7 @@ _ZN6icu_78L25compareEncodedDateWithYMDEiiii.exit.thread: ; preds = %.lr.ph.split
 
 .critedge.backedge.us:                            ; preds = %.lr.ph62.split.us
   %i.aq = icmp samesign ugt i64 %indvars.iv109, 1
-  br i1 %i.aq, label %.lr.ph62.split.us, label %.critedge._crit_edge, !llvm.loop !46
+  br i1 %i.aq, label %.lr.ph62.split.us, label %.critedge._crit_edge
 
 .lr.ph62.split:                                   ; preds = %.lr.ph62
   %i.ar = icmp sgt i32 %1, 32767
@@ -221,7 +221,7 @@ _ZN6icu_78L25compareEncodedDateWithYMDEiiii.exit.thread: ; preds = %.lr.ph.split
 
 .critedge.backedge.us67:                          ; preds = %.lr.ph62.split.split.us
   %i.av = icmp samesign ugt i64 %indvars.iv106, 1
-  br i1 %i.av, label %.lr.ph62.split.split.us, label %.critedge._crit_edge, !llvm.loop !46
+  br i1 %i.av, label %.lr.ph62.split.split.us, label %.critedge._crit_edge
 
 .lr.ph62.split.split:                             ; preds = %.lr.ph62.split, %.critedge.backedge
   %indvars.iv103 = phi i64 [ %indvars.iv.next104, %.critedge.backedge ], [ %i.as, %.lr.ph62.split ] ; 2 uses
@@ -235,7 +235,7 @@ _ZN6icu_78L25compareEncodedDateWithYMDEiiii.exit.thread: ; preds = %.lr.ph.split
 
 .critedge.backedge:                               ; preds = %.lr.ph62.split.split
   %i.az = icmp samesign ugt i64 %indvars.iv103, 1
-  br i1 %i.az, label %.lr.ph62.split.split, label %.critedge._crit_edge, !llvm.loop !46
+  br i1 %i.az, label %.lr.ph62.split.split, label %.critedge._crit_edge
 
 _ZN6icu_78L25compareEncodedDateWithYMDEiiii.exit41.thread: ; preds = %.lr.ph62.split.split, %.lr.ph62.split.split.us, %.lr.ph62.split.us
   %.us-phi63.in = phi i64 [ %indvars.iv.next110, %.lr.ph62.split.us ], [ %indvars.iv.next107, %.lr.ph62.split.split.us ], [ %indvars.iv.next104, %.lr.ph62.split.split ]
@@ -350,5 +350,4 @@ attributes #15 = { allocsize(0) }
 !43 = !{!"llvm.loop.unroll.runtime.disable"}
 !44 = !{!"llvm.loop.unroll.disable"}
 !45 = distinct !{!45, !23}
-!46 = distinct !{!46, !23}
 end_hunk_0

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.critedge
   br i1 %.not3, label %bb.c, label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %bb.b, %.critedge
-  br label %.critedge, !llvm.loop !6
+  br label %.critedge
 
 bb.c:                                             ; preds = %bb.b
   ret float %i.d
@@ -264,7 +264,7 @@ bb.b:                                             ; preds = %.critedge
   br i1 %.not3, label %bb.c, label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %bb.b, %.critedge
-  br label %.critedge, !llvm.loop !7
+  br label %.critedge
 
 bb.c:                                             ; preds = %bb.b
   ret double %i.g
@@ -464,6 +464,4 @@ attributes #6 = { nounwind }
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
 !5 = !{!"llvm.loop.mustprogress"}
-!6 = distinct !{!6, !5}
-!7 = distinct !{!7, !5}
 end_hunk_0

@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %.lr.ph
 .backedge:                                        ; preds = %bb.n, %bb.k
   %i.as = tail call ptr @list_next(ptr noundef %i.aa) #14 ; 2 uses
   %.not78 = icmp eq ptr %i.as, null
-  br i1 %.not78, label %._crit_edge, label %.lr.ph, !llvm.loop !18
+  br i1 %.not78, label %._crit_edge, label %.lr.ph
 
 bb.l:                                             ; preds = %.preheader, %bb.n
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.n ] ; 8 uses
@@ -237,7 +237,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.m
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 3
-  br i1 %exitcond.not, label %.backedge, label %bb.l, !llvm.loop !19
+  br i1 %exitcond.not, label %.backedge, label %bb.l, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.j
   tail call void @list_iterator_destroy(ptr noundef %i.aa) #14
@@ -640,5 +640,4 @@ attributes #20 = { cold }
 !16 = distinct !{!16, !8, !9}
 !17 = distinct !{!17, !8, !9}
 !18 = distinct !{!18, !8, !9}
-!19 = distinct !{!19, !8, !9}
 end_hunk_1

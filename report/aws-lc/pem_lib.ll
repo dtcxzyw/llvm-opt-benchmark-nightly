@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.preheader143
 
 .preheader143.backedge:                           ; preds = %bb.d, %.backedge
   %.0108146.be = phi i32 [ %i.r, %bb.d ], [ %i.al, %.backedge ]
-  br label %.preheader143, !llvm.loop !20
+  br label %.preheader143
 
 .critedge:                                        ; preds = %bb.d, %.preheader143
   %.0108.lcssa = phi i32 [ -1, %bb.d ], [ %.0108146, %.preheader143 ]
@@ -255,12 +255,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ar, label %OPENSSL_memcpy.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !25
+  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !24
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.as, ptr nonnull readonly align 1 %i.m, i64 range(i64 -2147483648, 2147483648) %i.aq, i1 false)
   br label %OPENSSL_memcpy.exit
 
 OPENSSL_memcpy.exit:                              ; preds = %bb.g, %bb.h
-  %i.at = load ptr, ptr %i.ap, align 8, !tbaa !25
+  %i.at = load ptr, ptr %i.ap, align 8, !tbaa !24
   %i.au = getelementptr inbounds i8, ptr %i.at, i64 %i.aq
   store i8 0, ptr %i.au, align 1, !tbaa !9
   %i.av = call i64 @BUF_MEM_grow(ptr noundef %i.e, i64 noundef 256) #8
@@ -269,7 +269,7 @@ OPENSSL_memcpy.exit:                              ; preds = %bb.g, %bb.h
 
 bb.i:                                             ; preds = %OPENSSL_memcpy.exit
   %i.aw = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !25
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !24
   store i8 0, ptr %i.ax, align 1, !tbaa !9
   %i.ay = call i32 @BIO_gets(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 254) #8 ; 2 uses
   %i.az = icmp slt i32 %i.ay, 1
@@ -291,7 +291,7 @@ bb.j:                                             ; preds = %.preheader141, %bb.
 bb.k:                                             ; preds = %bb.j
   %i.bf = add nsw i32 %.1109147, -1
   %i.bg = icmp sgt i32 %.1109147, 0
-  br i1 %i.bg, label %bb.j, label %.critedge5, !llvm.loop !21
+  br i1 %i.bg, label %bb.j, label %.critedge5, !llvm.loop !20
 
 .critedge5:                                       ; preds = %bb.k, %bb.j
   %.1109.lcssa = phi i32 [ -1, %bb.k ], [ %.1109147, %bb.j ] ; 2 uses
@@ -321,11 +321,11 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bu, label %._crit_edge149, label %OPENSSL_memcpy.exit136
 
 OPENSSL_memcpy.exit136:                           ; preds = %bb.m
-  %i.bv = load ptr, ptr %i.aw, align 8, !tbaa !25
+  %i.bv = load ptr, ptr %i.aw, align 8, !tbaa !24
   %i.bw = zext nneg i32 %.0107148 to i64
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bw
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull readonly align 16 %i.c, i64 range(i64 -2147483648, 2147483648) %i.bl, i1 false)
-  %i.by = load ptr, ptr %i.aw, align 8, !tbaa !25
+  %i.by = load ptr, ptr %i.aw, align 8, !tbaa !24
   %i.bz = zext nneg i32 %i.bp to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.bz
   store i8 0, ptr %i.ca, align 1, !tbaa !9
@@ -343,7 +343,7 @@ OPENSSL_memcpy.exit136:                           ; preds = %bb.m
 
 bb.n:                                             ; preds = %._crit_edge149
   %i.ce = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 3 uses
-  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !25
+  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !24
   store i8 0, ptr %i.cf, align 1, !tbaa !9
   br i1 %.not127, label %.preheader139, label %bb.s
 
@@ -364,7 +364,7 @@ bb.n:                                             ; preds = %._crit_edge149
 bb.o:                                             ; preds = %.preheader138
   %i.cn = add nsw i32 %.2156, -1
   %i.co = icmp sgt i32 %.2156, 0
-  br i1 %i.co, label %.preheader138, label %.critedge7, !llvm.loop !22
+  br i1 %i.co, label %.preheader138, label %.critedge7, !llvm.loop !21
 
 .critedge7:                                       ; preds = %bb.o, %.preheader138
   %.2.lcssa = phi i32 [ -1, %bb.o ], [ %.2156, %.preheader138 ] ; 4 uses
@@ -392,11 +392,11 @@ bb.p:                                             ; preds = %.critedge7
   br i1 %.not129, label %.loopexit140, label %OPENSSL_memcpy.exit137
 
 OPENSSL_memcpy.exit137:                           ; preds = %bb.p
-  %i.dc = load ptr, ptr %i.ce, align 8, !tbaa !25
+  %i.dc = load ptr, ptr %i.ce, align 8, !tbaa !24
   %i.dd = sext i32 %i.cg to i64
   %i.de = getelementptr inbounds i8, ptr %i.dc, i64 %i.dd
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.de, ptr nonnull readonly align 16 %i.c, i64 range(i64 -2147483648, 2147483648) %i.ct, i1 false)
-  %i.df = load ptr, ptr %i.ce, align 8, !tbaa !25
+  %i.df = load ptr, ptr %i.ce, align 8, !tbaa !24
   %i.dg = add nsw i32 %i.cg, %i.cs                ; 5 uses
   %i.dh = sext i32 %i.dg to i64
   %i.di = getelementptr inbounds i8, ptr %i.df, i64 %i.dh
@@ -421,7 +421,7 @@ bb.q:                                             ; preds = %OPENSSL_memcpy.exit
 bb.r:                                             ; preds = %.preheader
   %i.dp = add nsw i32 %.3157, -1
   %i.dq = icmp sgt i32 %.3157, 0
-  br i1 %i.dq, label %.preheader, label %.critedge9, !llvm.loop !23
+  br i1 %i.dq, label %.preheader, label %.critedge9, !llvm.loop !22
 
 .critedge9:                                       ; preds = %bb.r, %.preheader
   %.3.lcssa = phi i32 [ -1, %bb.r ], [ %.3157, %.preheader ]
@@ -441,14 +441,14 @@ bb.s:                                             ; preds = %bb.n
   %i.dv = phi i32 [ %.0107.lcssa, %bb.s ], [ %i.dg, %bb.q ], [ %i.dg, %.critedge9 ], [ %i.cg, %.critedge7 ], [ %i.cg, %.preheader139 ]
   %.0104 = phi ptr [ %i.f, %bb.s ], [ %i.e, %bb.q ], [ %i.e, %.critedge9 ], [ %i.e, %.critedge7 ], [ %i.e, %.preheader139 ] ; 6 uses
   %.0 = phi ptr [ %i.e, %bb.s ], [ %i.f, %bb.q ], [ %i.f, %.critedge9 ], [ %i.f, %.critedge7 ], [ %i.f, %.preheader139 ] ; 6 uses
-  %i.dw = load ptr, ptr %i.ap, align 8, !tbaa !25
+  %i.dw = load ptr, ptr %i.ap, align 8, !tbaa !24
   %i.dx = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.dw) #9
   %i.dy = call i32 @CRYPTO_memcmp(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.13, i64 noundef 9) #8
   %.not131 = icmp eq i32 %i.dy, 0
   br i1 %.not131, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %.loopexit
-  %i.dz = load ptr, ptr %i.ap, align 8, !tbaa !25
+  %i.dz = load ptr, ptr %i.ap, align 8, !tbaa !24
   %i.ea = getelementptr inbounds nuw i8, ptr %i.c, i64 9
   %sext132 = shl i64 %i.dx, 32                    ; 2 uses
   %i.eb = ashr exact i64 %sext132, 32
@@ -471,7 +471,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %.loop
 bb.w:                                             ; preds = %bb.u
   call void @EVP_DecodeInit(ptr noundef nonnull %5) #8
   %i.eg = getelementptr inbounds nuw i8, ptr %.0, i64 8 ; 3 uses
-  %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !25 ; 2 uses
+  %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !24 ; 2 uses
   %i.ei = sext i32 %i.dv to i64
   %i.ej = call i32 @EVP_DecodeUpdate(ptr noundef nonnull %5, ptr noundef %i.eh, ptr noundef nonnull %i.b, ptr noundef %i.eh, i64 noundef %i.ei) #8
   %i.ek = icmp slt i32 %i.ej, 0
@@ -482,7 +482,7 @@ bb.x:                                             ; preds = %bb.w
   br label %.loopexit140
 
 bb.y:                                             ; preds = %bb.w
-  %i.el = load ptr, ptr %i.eg, align 8, !tbaa !25
+  %i.el = load ptr, ptr %i.eg, align 8, !tbaa !24
   %i.em = load i32, ptr %i.b, align 4, !tbaa !16
   %i.en = sext i32 %i.em to i64
   %i.eo = getelementptr inbounds i8, ptr %i.el, i64 %i.en
@@ -503,12 +503,12 @@ bb.aa:                                            ; preds = %bb.y
   br i1 %i.eu, label %.loopexit140, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ev = load ptr, ptr %i.ap, align 8, !tbaa !25
+  %i.ev = load ptr, ptr %i.ap, align 8, !tbaa !24
   store ptr %i.ev, ptr %1, align 8, !tbaa !13
   %i.ew = getelementptr inbounds nuw i8, ptr %.0104, i64 8
-  %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !25
+  %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !24
   store ptr %i.ex, ptr %2, align 8, !tbaa !13
-  %i.ey = load ptr, ptr %i.eg, align 8, !tbaa !25
+  %i.ey = load ptr, ptr %i.eg, align 8, !tbaa !24
   store ptr %i.ey, ptr %3, align 8, !tbaa !13
   %i.ez = sext i32 %i.et to i64
   store i64 %i.ez, ptr %4, align 8, !tbaa !15
@@ -599,7 +599,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 1
-  br label %.preheader, !llvm.loop !26
+  br label %.preheader, !llvm.loop !25
 
 bb.j:                                             ; preds = %.preheader
   tail call void @ERR_put_error(i32 noundef 9, i32 noundef 0, i32 noundef 112, ptr noundef nonnull @.str.8, i32 noundef 408) #8
@@ -1002,7 +1002,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.y = sub nuw nsw i64 %.04876, %i.p            ; 2 uses
   %i.z = add nuw nsw i64 %.04678, %i.p
   %.not79 = icmp eq i64 %i.y, 0
-  br i1 %.not79, label %._crit_edge, label %.lr.ph, !llvm.loop !27
+  br i1 %.not79, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.j, %.preheader
   %.047.lcssa = phi i64 [ 0, %.preheader ], [ %i.x, %bb.j ]
@@ -1113,7 +1113,7 @@ bb.c:                                             ; preds = %.lr.ph31
   store i8 %i.q, ptr %i.o, align 1, !tbaa !9
   %i.r = add nuw nsw i64 %.01829, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.r, %i.c
-  br i1 %exitcond.not, label %.critedge, label %.lr.ph31, !llvm.loop !28
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph31, !llvm.loop !27
 
 .critedge:                                        ; preds = %bb.c, %bb.a
   %.020.lcssa = phi ptr [ %i.b, %bb.a ], [ %i.g, %bb.c ]
@@ -1268,10 +1268,9 @@ attributes #10 = { noreturn nounwind }
 !20 = distinct !{!20, !10}
 !21 = distinct !{!21, !10}
 !22 = distinct !{!22, !10}
-!23 = distinct !{!23, !10}
-!24 = !{!"buf_mem_st", !14, i64 0, !12, i64 8, !14, i64 16}
-!25 = !{!24, !12, i64 8}
+!23 = !{!"buf_mem_st", !14, i64 0, !12, i64 8, !14, i64 16}
+!24 = !{!23, !12, i64 8}
+!25 = distinct !{!25, !10}
 !26 = distinct !{!26, !10}
 !27 = distinct !{!27, !10}
-!28 = distinct !{!28, !10}
 end_hunk_1

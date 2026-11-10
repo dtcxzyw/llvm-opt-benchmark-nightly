@@ -202,7 +202,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
 .backedge.i:                                      ; preds = %bb.ay, %bb.ax, %bb.au, %_validate_cpus_links.exitthread-pre-split.i, %.critedge139.i
   %i.du = tail call ptr @slurm_list_next(ptr noundef %i.by) #9 ; 2 uses
   %.not114.i = icmp eq ptr %i.du, null
-  br i1 %.not114.i, label %._crit_edge157.i, label %.lr.ph156.i, !llvm.loop !16
+  br i1 %.not114.i, label %._crit_edge157.i, label %.lr.ph156.i
 
 .critedge.i:                                      ; preds = %_match_gres.exit.i, %.lr.ph156.i
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cb, i64 40
@@ -251,7 +251,7 @@ bb.az:                                            ; preds = %.lr.ph160.i
 bb.ba:                                            ; preds = %bb.az, %.lr.ph160.i
   %i.eg = tail call ptr @slurm_list_next(ptr noundef %i.bz) #9 ; 2 uses
   %.not115.i = icmp eq ptr %i.eg, null
-  br i1 %.not115.i, label %._crit_edge161.i, label %.lr.ph160.i, !llvm.loop !17
+  br i1 %.not115.i, label %._crit_edge161.i, label %.lr.ph160.i, !llvm.loop !16
 
 ._crit_edge161.i:                                 ; preds = %bb.ba, %._crit_edge157.i
   tail call void @slurm_list_iterator_destroy(ptr noundef %i.bz) #9
@@ -583,7 +583,7 @@ bb.d:                                             ; preds = %.lr.ph.split, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.t = zext i32 %i.s to i64
   %i.u = icmp samesign ult i64 %indvars.iv.next, %i.t
-  br i1 %i.u, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !18
+  br i1 %i.u, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %bb.d, %.lr.ph, %bb.a
   ret ptr %i.a
@@ -906,7 +906,6 @@ attributes #11 = { nounwind willreturn memory(read) }
 !14 = distinct !{!14, !8, !9}
 !15 = distinct !{!15, !8, !9}
 !16 = distinct !{!16, !8, !9}
-!17 = distinct !{!17, !8, !9}
-!18 = distinct !{!18, !8, !9, !19}
-!19 = !{!"llvm.loop.unswitch.partial.disable"}
+!17 = distinct !{!17, !8, !9, !18}
+!18 = !{!"llvm.loop.unswitch.partial.disable"}
 end_hunk_0

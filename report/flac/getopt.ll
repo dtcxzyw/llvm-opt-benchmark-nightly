@@ -139,8 +139,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.u, label %.lr.ph67.preheader.i, label %exchange.exit
 
 .lr.ph67.preheader.i:                             ; preds = %bb.r
-  %i.v = sext i32 %i.m to i64                     ; 2 uses
-  %invariant.gep79.i = getelementptr [8 x i8], ptr %1, i64 %i.v ; 5 uses
+  %i.v = sext i32 %i.m to i64
+  %invariant.gep79.i = getelementptr [8 x i8], ptr %1, i64 %i.v ; 6 uses
   br label %.lr.ph67.i
 
 .lr.ph67.i:                                       ; preds = %._crit_edge63.i, %.lr.ph67.preheader.i
@@ -163,12 +163,11 @@ bb.r:                                             ; preds = %bb.q
   br i1 %min.iters.check482, label %.lr.ph.i.preheader, label %vector.memcheck483
 
 vector.memcheck483:                               ; preds = %.lr.ph.preheader.i
+  %6 = shl nuw nsw i64 %wide.trip.count.i, 3
   %i.ab = add nsw i64 %i.aa, %wide.trip.count.i
   %i.ac = shl nsw i64 %i.ab, 3
   %i.ad = getelementptr i8, ptr %1, i64 %i.ac
-  %6 = add nsw i64 %i.v, %wide.trip.count.i
-  %7 = shl nsw i64 %6, 3
-  %i.ae = getelementptr i8, ptr %1, i64 %7
+  %i.ae = getelementptr i8, ptr %invariant.gep79.i, i64 %6
   %bound0484 = icmp ult ptr %invariant.gep.i, %i.ae
   %bound1485 = icmp ult ptr %invariant.gep79.i, %i.ad
   %found.conflict486 = and i1 %bound0484, %bound1485
@@ -441,8 +440,8 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cx, label %.lr.ph67.preheader.i267, label %exchange.exit296
 
 .lr.ph67.preheader.i267:                          ; preds = %bb.x
-  %i.cy = sext i32 %i.ci to i64                   ; 2 uses
-  %invariant.gep79.i268 = getelementptr [8 x i8], ptr %1, i64 %i.cy ; 5 uses
+  %i.cy = sext i32 %i.ci to i64
+  %invariant.gep79.i268 = getelementptr [8 x i8], ptr %1, i64 %i.cy ; 6 uses
   br label %.lr.ph67.i269
 
 .lr.ph67.i269:                                    ; preds = %._crit_edge63.i274, %.lr.ph67.preheader.i267
@@ -465,12 +464,11 @@ bb.x:                                             ; preds = %bb.w
   br i1 %min.iters.check529, label %.lr.ph.i280.preheader, label %vector.memcheck530
 
 vector.memcheck530:                               ; preds = %.lr.ph.preheader.i277
+  %7 = shl nuw nsw i64 %wide.trip.count.i278, 3
   %i.de = add nsw i64 %i.dd, %wide.trip.count.i278
   %i.df = shl nsw i64 %i.de, 3
   %i.dg = getelementptr i8, ptr %1, i64 %i.df
-  %8 = add nsw i64 %i.cy, %wide.trip.count.i278
-  %9 = shl nsw i64 %8, 3
-  %i.dh = getelementptr i8, ptr %1, i64 %9
+  %i.dh = getelementptr i8, ptr %invariant.gep79.i268, i64 %7
   %bound0531 = icmp ult ptr %invariant.gep.i279, %i.dh
   %bound1532 = icmp ult ptr %invariant.gep79.i268, %i.dg
   %found.conflict533 = and i1 %bound0531, %bound1532

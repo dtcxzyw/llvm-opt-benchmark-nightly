@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bs = getelementptr inbounds nuw i8, ptr %.8.i, i64 1 ; 2 uses
   store i32 0, ptr %i.d, align 8, !tbaa !71
   %i.bt = icmp ult ptr %i.bs, %i.l
-  br i1 %i.bt, label %.loopexit274.i, label %php_dechunk.exit, !llvm.loop !113
+  br i1 %i.bt, label %.loopexit274.i, label %php_dechunk.exit
 
 .backedge.jt9.i:                                  ; preds = %.loopexit, %bb.r, %bb.ag
   %.0114.be.jt9.ph.i = phi ptr [ %.8.i, %bb.ag ], [ %.5.i, %bb.r ], [ %.0114179269.i, %.loopexit ] ; 4 uses
@@ -213,7 +213,7 @@ bb.t:                                             ; preds = %bb.s
   %.0.be.jt9.ph.i = phi i64 [ %.2.i, %bb.ag ], [ %.0181255.i, %bb.r ], [ %.0181252.i, %.loopexit ] ; 3 uses
   store i32 9, ptr %i.d, align 8, !tbaa !71
   %i.bu = icmp ult ptr %.0114.be.jt9.ph.i, %i.l
-  br i1 %i.bu, label %.loopexit280.i, label %php_dechunk.exit, !llvm.loop !113
+  br i1 %i.bu, label %.loopexit280.i, label %php_dechunk.exit
 
 bb.u:                                             ; preds = %bb.s
   %i.bv = icmp eq ptr %i.bo, %i.l
@@ -324,7 +324,7 @@ php_dechunk.exit:                                 ; preds = %.lr.ph185.i, %bb.t,
   tail call void @php_stream_bucket_append(ptr noundef %3, ptr noundef %i.f) #17
   %i.co = load ptr, ptr %2, align 8, !tbaa !15    ; 2 uses
   %.not = icmp eq ptr %i.co, null
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !114
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !113
 
 ._crit_edge:                                      ; preds = %php_dechunk.exit, %bb.a
   %.0.lcssa = phi i64 [ 0, %bb.a ], [ %i.i, %php_dechunk.exit ]
@@ -555,9 +555,8 @@ attributes #22 = { nounwind allocsize(0,1) }
 !108 = !{!"short", !8, i64 0}
 !109 = !{!108, !108, i64 0}
 !110 = distinct !{!110, !23}
-!111 = distinct !{!111, !23, !115}
+!111 = distinct !{!111, !23, !114}
 !112 = distinct !{!112, !23}
 !113 = distinct !{!113, !23}
-!114 = distinct !{!114, !23}
-!115 = !{!"llvm.loop.peeled.count", i32 1}
+!114 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_0

@@ -202,10 +202,9 @@ attributes #7 = { nounwind }
 !47 = !{!12, !11, i64 56}
 !48 = !{!12, !11, i64 96}
 !49 = distinct !{null}
-!50 = distinct !{!50, !54, !55}
+!50 = distinct !{!50, !54}
 !51 = !{!32, !6, i64 36}
 !52 = !{!17, !9, i64 48}
 !53 = !{!17, !9, i64 56}
-!54 = !{!"llvm.loop.mustprogress"}
-!55 = !{!"llvm.loop.peeled.count", i32 1}
+!54 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_0

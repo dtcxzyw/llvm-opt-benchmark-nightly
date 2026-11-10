@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 .thread.backedge:                                 ; preds = %bb.d, %bb.i, %bb.e
-  br label %.thread, !llvm.loop !86
+  br label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.u = load ptr, ptr %i.d, align 8, !tbaa !34
@@ -244,12 +244,12 @@ declare hidden void @_Z13luau_finishopP9lua_State(ptr noundef) local_unnamed_add
 define internal void @_GLOBAL__sub_I_ldo.cpp() #14 section ".text.startup" {
 bb.a:
   store i8 0, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, align 8, !tbaa !78
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 1), align 1, !tbaa !87
-  store ptr @.str, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 8), align 8, !tbaa !88
-  %i.a = load ptr, ptr @_ZN4Luau6FValueIbE4listE, align 8, !tbaa !89
-  store ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 16), align 8, !tbaa !90
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 24), align 8, !tbaa !91
-  store ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, ptr @_ZN4Luau6FValueIbE4listE, align 8, !tbaa !89
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 1), align 1, !tbaa !86
+  store ptr @.str, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 8), align 8, !tbaa !87
+  %i.a = load ptr, ptr @_ZN4Luau6FValueIbE4listE, align 8, !tbaa !88
+  store ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 16), align 8, !tbaa !89
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, i64 24), align 8, !tbaa !90
+  store ptr @_ZN5FFlag29LuauXpcallFixMessageYieldPathE, ptr @_ZN4Luau6FValueIbE4listE, align 8, !tbaa !88
   ret void
 }
 
@@ -367,10 +367,9 @@ attributes #19 = { builtin nounwind }
 !83 = !{!"llvm.loop.unroll.disable"}
 !84 = !{!43, !19, i64 8}
 !85 = distinct !{!85, !44}
-!86 = distinct !{!86, !44}
-!87 = !{!77, !18, i64 1}
-!88 = !{!77, !75, i64 8}
-!89 = !{!76, !76, i64 0}
-!90 = !{!77, !76, i64 16}
-!91 = !{!77, !7, i64 24}
+!86 = !{!77, !18, i64 1}
+!87 = !{!77, !75, i64 8}
+!88 = !{!76, !76, i64 0}
+!89 = !{!77, !76, i64 16}
+!90 = !{!77, !7, i64 24}
 end_hunk_0

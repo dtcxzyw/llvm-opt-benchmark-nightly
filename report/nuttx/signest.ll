@@ -202,7 +202,7 @@ bb.an:                                            ; preds = %.critedge
   br i1 %i.dh, label %.critedge.backedge, label %bb.ao
 
 .critedge.backedge:                               ; preds = %bb.an, %.critedge
-  br label %.critedge, !llvm.loop !16
+  br label %.critedge
 
 bb.ao:                                            ; preds = %bb.an
   %i.di = add nsw i32 %.11, %.11107               ; 3 uses
@@ -286,7 +286,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.el = call ptr @signal(i32 noundef %.3170, ptr noundef nonnull inttoptr (i64 1 to ptr)) #9 ; 0 uses
   %i.em = add nuw nsw i32 %.3170, 1               ; 2 uses
   %exitcond173.not = icmp eq i32 %i.em, 64
-  br i1 %exitcond173.not, label %bb.ba, label %.preheader, !llvm.loop !17
+  br i1 %exitcond173.not, label %bb.ba, label %.preheader, !llvm.loop !16
 
 bb.ba:                                            ; preds = %.preheader
   %i.en = call i32 @sem_destroy(ptr noundef nonnull @g_waiter_sem) #9 ; 0 uses
@@ -371,7 +371,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.d, %bb.d, %bb.e
   %i.k = add nuw nsw i32 %.016, 2
   %i.l = icmp samesign ult i32 %.016, 61
-  br i1 %i.l, label %bb.d, label %.preheader, !llvm.loop !18
+  br i1 %i.l, label %bb.d, label %.preheader, !llvm.loop !17
 
 .preheader:                                       ; preds = %bb.f, %bb.i
   %.117 = phi i32 [ %i.r, %bb.i ], [ 1, %bb.f ]   ; 3 uses
@@ -395,7 +395,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.preheader, %.preheader, %.preheader, %bb.g
   %i.r = add nuw nsw i32 %.117, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.r, 63
-  br i1 %exitcond.not, label %bb.j, label %.preheader, !llvm.loop !19
+  br i1 %exitcond.not, label %bb.j, label %.preheader, !llvm.loop !18
 
 bb.j:                                             ; preds = %bb.i
   store ptr @interfere_action, ptr %2, align 8
@@ -413,7 +413,7 @@ bb.j:                                             ; preds = %bb.i
   %i.x = call i32 @sem_wait(ptr noundef nonnull @g_waiter_sem) #9 ; 0 uses
   %i.y = load volatile i8, ptr @g_done, align 1, !range !8, !noundef !9
   %i.z = trunc nuw i8 %i.y to i1
-  br i1 %i.z, label %._crit_edge, label %.lr.ph, !llvm.loop !20
+  br i1 %i.z, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.j
   store volatile i8 0, ptr @g_waiter_running, align 1
@@ -438,7 +438,7 @@ bb.a:
   %i.c = tail call i32 @sem_wait(ptr noundef nonnull @g_interferer_sem) #9 ; 0 uses
   %i.d = load volatile i8, ptr @g_done, align 1, !range !8, !noundef !9
   %i.e = trunc nuw i8 %i.d to i1
-  br i1 %i.e, label %._crit_edge, label %.lr.ph, !llvm.loop !21
+  br i1 %i.e, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   store volatile i8 0, ptr @g_interferer_running, align 1
@@ -477,7 +477,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.d = add nsw i32 %.28, -1
   %i.e = icmp sgt i32 %.28, 1
-  br i1 %i.e, label %.lr.ph, label %._crit_edge, !llvm.loop !22
+  br i1 %i.e, label %.lr.ph, label %._crit_edge, !llvm.loop !21
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %.28 = phi i32 [ %i.d, %bb.b ], [ %.28.ph, %.lr.ph.preheader ] ; 2 uses
@@ -650,5 +650,4 @@ attributes #11 = { noredzone optsize }
 !19 = distinct !{!19, !7}
 !20 = distinct !{!20, !7}
 !21 = distinct !{!21, !7}
-!22 = distinct !{!22, !7}
 end_hunk_0

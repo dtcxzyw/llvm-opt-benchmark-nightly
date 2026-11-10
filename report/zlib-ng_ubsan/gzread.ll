@@ -202,7 +202,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   br i1 %.not20, label %.critedge, label %.critedge2.backedge
 
 .critedge2.backedge:                              ; preds = %bb.bi, %bb.bd
-  br label %.critedge2, !llvm.loop !59
+  br label %.critedge2
 
 .critedge:                                        ; preds = %bb.bi, %.critedge29, %bb.g, %bb.ax, %bb.m, %bb.h, %.critedge24, %.critedge26
   %.0 = phi i32 [ 0, %.critedge26 ], [ -1, %.critedge24 ], [ 0, %bb.bi ], [ 0, %.critedge29 ], [ 0, %bb.m ], [ -1, %bb.g ], [ -1, %bb.h ], [ -1, %bb.ax ]
@@ -374,14 +374,14 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 bb.p:                                             ; preds = %bb.o
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @156, i64 %i.b) #10, !nosanitize !12
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !60
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !59
   call void @free(ptr noundef %i.s) #10
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @157, i64 %i.b) #10, !nosanitize !12
   br label %bb.q, !nosanitize !12
 
 .critedge:                                        ; preds = %bb.o
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !60
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !59
   call void @free(ptr noundef %i.u) #10
   br label %bb.q
 
@@ -409,7 +409,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #6
 declare i32 @close(i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -1, 1) i32 @gz_load(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull %3) unnamed_addr #0 !func_sanitize !62 {
+define internal fastcc range(i32 -1, 1) i32 @gz_load(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull %3) unnamed_addr #0 !func_sanitize !61 {
 bb.a:
   %i.a = ptrtoint ptr %3 to i64, !nosanitize !12  ; 6 uses
   %i.b = and i64 %i.a, 3, !nosanitize !12
@@ -529,7 +529,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.al = phi i32 [ %.pre, %bb.v ], [ %i.ah, %bb.u ]
   %i.am = icmp ult i32 %i.al, %2
-  br i1 %i.am, label %bb.d, label %.loopexit, !llvm.loop !61
+  br i1 %i.am, label %bb.d, label %.loopexit, !llvm.loop !60
 
 bb.x:                                             ; preds = %bb.p
   %i.an = icmp slt i64 %i.ac, 0
@@ -657,7 +657,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.v = icmp ne i32 %i.u, 0
   %i.w = icmp ne i32 %i.t, 1
   %i.x = and i1 %i.w, %i.v
-  br i1 %i.x, label %.split.us, label %.loopexit29, !llvm.loop !63
+  br i1 %i.x, label %.split.us, label %.loopexit29, !llvm.loop !62
 
 .split.split.us:                                  ; preds = %bb.g, %bb.s
   %.0.us47 = phi i32 [ %i.ae, %bb.s ], [ 0, %bb.g ]
@@ -699,7 +699,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.ag = icmp ne i32 %i.af, 0
   %i.ah = icmp ne i32 %i.ae, 1
   %i.ai = and i1 %i.ah, %i.ag
-  br i1 %i.ai, label %.split.split.us, label %.loopexit29, !llvm.loop !63
+  br i1 %i.ai, label %.split.split.us, label %.loopexit29, !llvm.loop !62
 
 .split39.us:                                      ; preds = %bb.o, %bb.i
   %.us-phi = phi i32 [ %.0.us, %bb.i ], [ %.0.us47, %bb.o ]
@@ -723,7 +723,7 @@ bb.t:                                             ; preds = %.split45.us
 
 bb.u:                                             ; preds = %bb.t, %.split45.us
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !64
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !63
   %i.al = icmp eq ptr %i.ak, null
   br i1 %i.al, label %bb.y, label %bb.v
 
@@ -735,7 +735,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x, !nosanitize !12
 
 bb.x:                                             ; preds = %bb.v, %bb.w
-  %i.am = load ptr, ptr %i.aj, align 8, !tbaa !64
+  %i.am = load ptr, ptr %i.aj, align 8, !tbaa !63
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.u, %bb.x
@@ -952,7 +952,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !66
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !65
   %i.v = load ptr, ptr %i.e, align 8, !tbaa !41
   %i.w = load i32, ptr %i.r, align 8, !tbaa !40
   br label %bb.s
@@ -1015,7 +1015,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.not25 = icmp eq i32 %i.al, 0
-  br i1 %.not25, label %.loopexit, label %bb.s, !llvm.loop !65
+  br i1 %.not25, label %.loopexit, label %bb.s, !llvm.loop !64
 
 .loopexit:                                        ; preds = %bb.ac, %bb.o
   br i1 %i.d, label %bb.ae, label %bb.ad, !prof !13, !nosanitize !12
@@ -1026,7 +1026,7 @@ bb.ad:                                            ; preds = %.loopexit
 
 bb.ae:                                            ; preds = %bb.ad, %.loopexit
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !66 ; 3 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !65 ; 3 uses
   %i.aq = load i32, ptr %i.r, align 8, !tbaa !40
   %i.ar = zext i32 %i.aq to i64                   ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ar
@@ -1093,7 +1093,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.ap, !nosanitize !12
 
 bb.ap:                                            ; preds = %bb.an, %bb.ao
-  %i.br = load ptr, ptr %i.ao, align 8, !tbaa !66
+  %i.br = load ptr, ptr %i.ao, align 8, !tbaa !65
   store ptr %i.br, ptr %i.e, align 8, !tbaa !41
   br label %bb.aq
 
@@ -1192,12 +1192,11 @@ attributes #13 = { nounwind willreturn memory(none) }
 !56 = !{i32 -1056584962, i32 2140770246}
 !57 = distinct !{!57, !35}
 !58 = !{i32 -1056584962, i32 -1778573453}
-!59 = distinct !{!59, !35}
-!60 = !{!20, !15, i64 32}
-!61 = distinct !{!61, !35}
-!62 = !{i32 -1056584962, i32 1906499746}
-!63 = distinct !{!63, !35}
-!64 = !{!19, !15, i64 48}
-!65 = distinct !{!65, !35}
-!66 = !{!20, !15, i64 48}
+!59 = !{!20, !15, i64 32}
+!60 = distinct !{!60, !35}
+!61 = !{i32 -1056584962, i32 1906499746}
+!62 = distinct !{!62, !35}
+!63 = !{!19, !15, i64 48}
+!64 = distinct !{!64, !35}
+!65 = !{!20, !15, i64 48}
 end_hunk_0

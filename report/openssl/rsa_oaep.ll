@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.e
   %i.n = xor i32 %i.f, -1                         ; 2 uses
   %i.o = add nsw i32 %4, %i.n                     ; 11 uses
   %i.p = sext i32 %i.o to i64                     ; 4 uses
-  %i.q = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.p, ptr noundef nonnull @.str, i32 noundef 227) #6 ; 17 uses
+  %i.q = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.p, ptr noundef nonnull @.str, i32 noundef 227) #6 ; 16 uses
   %i.r = icmp eq ptr %i.q, null
   %.pre229 = zext nneg i32 %4 to i64              ; 3 uses
   br i1 %i.r, label %._crit_edge228, label %bb.h
@@ -515,10 +515,9 @@ bb.i:                                             ; preds = %._crit_edge185
 .lr.ph203:                                        ; preds = %._crit_edge192
   %i.dt = sub i32 %.0144.lcssa, %i.f
   %.4196 = add nuw nsw i32 %i.f, 1                ; 2 uses
-  %i.du = zext nneg i32 %.4196 to i64             ; 10 uses
+  %i.du = zext nneg i32 %.4196 to i64             ; 9 uses
   %i.dv = add nuw nsw i64 %i.du, 1                ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.q, i64 %i.du
-  %invariant.gep345 = getelementptr i8, ptr %i.q, i64 %i.du
+  %invariant.gep345 = getelementptr i8, ptr %i.q, i64 %i.du ; 2 uses
   br label %bb.j
 
 .preheader:                                       ; preds = %._crit_edge200, %._crit_edge192
@@ -558,7 +557,7 @@ vector.memcheck:                                  ; preds = %iter.check310
   %gep346 = getelementptr i8, ptr %invariant.gep345, i64 %i.ef
   %i.ek = getelementptr i8, ptr %i.q, i64 %i.ei
   %i.el = getelementptr i8, ptr %i.ek, i64 %i.ef
-  %bound0 = icmp ult ptr %scevgep, %i.el
+  %bound0 = icmp ult ptr %invariant.gep345, %i.el
   %bound1 = icmp ult ptr %gep346, %i.ej
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph312.preheader, label %vector.main.loop.iter.check297

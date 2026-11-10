@@ -205,9 +205,9 @@ zend_parse_arg_string.exit:                       ; preds = %zend_parse_arg_str_
 
 zend_parse_arg_str_ex.exit.i.thread:              ; preds = %zend_parse_arg_str_ex.exit.i, %bb.c
   %.in = phi ptr [ %i.f, %bb.c ], [ %i.a, %zend_parse_arg_str_ex.exit.i ]
-  %i.k = load ptr, ptr %.in, align 8              ; 5 uses
+  %i.k = load ptr, ptr %.in, align 8              ; 4 uses
   %i.l = ptrtoaddr ptr %i.k to i64
-  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 7 uses
+  %i.m = getelementptr i8, ptr %i.k, i64 24       ; 8 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.o = load i64, ptr %i.n, align 8, !tbaa !41
   %.fr = freeze i64 %i.o                          ; 7 uses
@@ -262,6 +262,7 @@ select.unfold.preheader:                          ; preds = %.critedge266
   %or.cond267 = icmp ult i8 %i.af, 27
   %i.ag = add i64 %.fr, -1                        ; 4 uses
   %spec.select = select i1 %or.cond267, i64 2, i64 1
+  %scevgep = getelementptr i8, ptr %i.k, i64 23
   %invariant.op = add i64 23, %i.l
   br label %select.unfold
 
@@ -334,12 +335,10 @@ vector.memcheck:                                  ; preds = %.lr.ph353.preheader
   %i.bb = sub i64 %i.ax, %i.ay
   %i.bc = getelementptr i8, ptr %.0, i64 %i.bb
   %i.bd = getelementptr i8, ptr %.0, i64 1
-  %2 = getelementptr i8, ptr %i.k, i64 %.0204
-  %3 = getelementptr i8, ptr %2, i64 24
-  %i.be = getelementptr i8, ptr %i.k, i64 %i.ay
-  %i.bf = getelementptr i8, ptr %i.be, i64 23
+  %i.be = getelementptr i8, ptr %i.m, i64 %.0204
+  %i.bf = getelementptr i8, ptr %scevgep, i64 %i.ay
   %bound0 = icmp ult ptr %i.bc, %i.bf
-  %bound1 = icmp ult ptr %3, %i.bd
+  %bound1 = icmp ult ptr %i.be, %i.bd
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph353.preheader608, label %vector.ph
 

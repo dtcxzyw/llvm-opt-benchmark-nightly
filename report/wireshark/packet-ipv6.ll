@@ -204,7 +204,7 @@ bb.ds:                                            ; preds = %bb.dr
   %i.qc = icmp ne i16 %.0123.be.i.i, 0
   %i.qd = icmp samesign ule i32 %i.kq, %i.qb
   %i.qe = select i1 %i.qc, i1 %i.qd, i1 false
-  br i1 %i.qe, label %bb.bu, label %._crit_edge.i.i, !llvm.loop !23
+  br i1 %i.qe, label %bb.bu, label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.backedge.i.i, %bb.bt
   %.1131.lcssa.i.i = phi i32 [ %.0130.i.i, %bb.bt ], [ %.1131.be.i.i, %.backedge.i.i ] ; 2 uses
@@ -607,5 +607,4 @@ attributes #22 = { nounwind memory(none) }
 !20 = !{i64 2152811299}
 !21 = distinct !{!21, !8}
 !22 = distinct !{!22, !8}
-!23 = distinct !{!23, !8}
 end_hunk_1

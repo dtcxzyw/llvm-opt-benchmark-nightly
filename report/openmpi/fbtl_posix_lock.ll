@@ -16,18 +16,18 @@ bb.b:                                             ; preds = %bb.a
   %i.d = trunc i32 %2 to i16
   store i16 %i.d, ptr %0, align 8, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 0, ptr %i.e, align 2, !tbaa !37
+  store i16 0, ptr %i.e, align 2, !tbaa !36
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 -1, i64 16, i1 false)
-  store i32 0, ptr %i.h, align 8, !tbaa !38
+  store i32 0, ptr %i.h, align 8, !tbaa !37
   %i.i = icmp eq i64 %4, 0
   br i1 %i.i, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !39   ; 2 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !38   ; 2 uses
   %i.l = and i32 %i.k, 128
   %.not = icmp eq i32 %i.l, 0
   br i1 %.not, label %bb.e, label %bb.d
@@ -52,7 +52,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !40
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !39
   %i.q = sext i32 %i.p to i64                     ; 3 uses
   %i.r = srem i64 %3, %i.q                        ; 2 uses
   %.not58 = icmp eq i64 %i.r, 0
@@ -114,7 +114,7 @@ bb.l:                                             ; preds = %.lr.ph
   %i.al = tail call i32 (i32, i32, ...) @fcntl(i32 noundef %i.ak, i32 noundef 7, ptr noundef nonnull %0) #5 ; 2 uses
   %.not60 = icmp eq i32 %i.al, 0
   %i.am = add nuw nsw i32 %i.ad, 1
-  br i1 %.not60, label %.critedge, label %.lr.ph, !llvm.loop !36
+  br i1 %.not60, label %.critedge, label %.lr.ph
 
 .critedge:                                        ; preds = %.critedge2.backedge, %bb.l, %thread-pre-split, %bb.i, %bb.k, %bb.e, %bb.b, %bb.a
   %.051 = phi i32 [ 0, %bb.e ], [ 0, %bb.a ], [ 0, %thread-pre-split ], [ 0, %bb.b ], [ 0, %bb.k ], [ 0, %bb.i ], [ %i.ae, %bb.l ], [ 0, %.critedge2.backedge ]
@@ -208,10 +208,8 @@ attributes #5 = { nounwind }
 !33 = !{!11, !10, i64 8}
 !34 = !{!11, !10, i64 16}
 !35 = !{!32, !5, i64 0}
-!36 = distinct !{!36, !41}
-!37 = !{!11, !9, i64 2}
-!38 = !{!11, !5, i64 24}
-!39 = !{!32, !5, i64 104}
-!40 = !{!32, !5, i64 120}
-!41 = !{!"llvm.loop.mustprogress"}
+!36 = !{!11, !9, i64 2}
+!37 = !{!11, !5, i64 24}
+!38 = !{!32, !5, i64 104}
+!39 = !{!32, !5, i64 120}
 end_hunk_0

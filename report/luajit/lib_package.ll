@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 .backedge:                                        ; preds = %bb.e, %bb.i
   %.013.i.be = phi ptr [ %i.d, %bb.e ], [ %.0.i, %bb.i ]
-  br label %bb.d, !llvm.loop !19
+  br label %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.e = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.013.i, i32 noundef 59) #8 ; 2 uses
@@ -444,9 +444,9 @@ bb.a:
   %1 = alloca %struct.lua_Debug, align 8          ; 4 uses
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #7 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !18
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !21
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19
   tail call void @luaL_pushmodule(ptr noundef %0, ptr noundef %i.a, i32 noundef 1) #7
   tail call void @lua_getfield(ptr noundef %0, i32 noundef -1, ptr noundef nonnull @.str.45) #7
   %i.f = tail call i32 @lua_type(ptr noundef %0, i32 noundef -1) #7
@@ -511,7 +511,7 @@ setfenv.exit:                                     ; preds = %bb.e, %bb.f
   call void @lua_call(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 0) #7
   %i.z = add nuw i32 %.07.i, 1
   %exitcond.not.i = icmp eq i32 %.07.i, %i.r
-  br i1 %exitcond.not.i, label %dooptions.exit, label %.lr.ph.i, !llvm.loop !20
+  br i1 %exitcond.not.i, label %dooptions.exit, label %.lr.ph.i, !llvm.loop !18
 
 dooptions.exit:                                   ; preds = %.lr.ph.i, %setfenv.exit
   ret i32 0
@@ -530,7 +530,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !18
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !17
   %i.e = getelementptr inbounds i8, ptr %i.d, i64 -8
   %i.f = load i64, ptr %i.e, align 8, !tbaa !11
   %i.g = icmp eq i64 %i.f, -9151314442816847757
@@ -592,9 +592,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.i
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !18   ; 2 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !17   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store ptr %i.v, ptr %i.t, align 8, !tbaa !18
+  store ptr %i.v, ptr %i.t, align 8, !tbaa !17
   store i64 -9151314442816847757, ptr %i.u, align 8, !tbaa !11
   tail call void @lua_setfield(ptr noundef %0, i32 noundef 2, ptr noundef %i.a) #7
   tail call void @lua_pushstring(ptr noundef %0, ptr noundef %i.a) #7
@@ -609,7 +609,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   tail call void @lua_getfield(ptr noundef nonnull %0, i32 noundef 2, ptr noundef %i.a) #7
-  %i.y = load ptr, ptr %i.t, align 8, !tbaa !18
+  %i.y = load ptr, ptr %i.t, align 8, !tbaa !17
   %i.z = getelementptr inbounds i8, ptr %i.y, i64 -8
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !11
   %i.ab = icmp eq i64 %i.aa, -9151314442816847757
@@ -672,14 +672,13 @@ attributes #8 = { nounwind willreturn memory(read) }
 !9 = !{!"any pointer", !5, i64 0}
 !10 = !{!9, !9, i64 0}
 !11 = !{!5, !5, i64 0}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = !{!"long", !5, i64 0}
-!14 = !{!"GCRef", !13, i64 0}
-!15 = !{!"MRef", !13, i64 0}
-!16 = !{!"p1 _ZTS6TValue", !9, i64 0}
-!17 = !{!"lua_State", !14, i64 0, !5, i64 8, !5, i64 9, !5, i64 10, !5, i64 11, !15, i64 16, !14, i64 24, !16, i64 32, !16, i64 40, !15, i64 48, !15, i64 56, !14, i64 64, !14, i64 72, !9, i64 80, !6, i64 88}
-!18 = !{!17, !16, i64 40}
-!19 = distinct !{!19, !12}
-!20 = distinct !{!20, !12}
-!21 = !{!17, !16, i64 32}
+!12 = !{!"long", !5, i64 0}
+!13 = !{!"GCRef", !12, i64 0}
+!14 = !{!"MRef", !12, i64 0}
+!15 = !{!"p1 _ZTS6TValue", !9, i64 0}
+!16 = !{!"lua_State", !13, i64 0, !5, i64 8, !5, i64 9, !5, i64 10, !5, i64 11, !14, i64 16, !13, i64 24, !15, i64 32, !15, i64 40, !14, i64 48, !14, i64 56, !13, i64 64, !13, i64 72, !9, i64 80, !6, i64 88}
+!17 = !{!16, !15, i64 40}
+!18 = distinct !{!18, !20}
+!19 = !{!16, !15, i64 32}
+!20 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

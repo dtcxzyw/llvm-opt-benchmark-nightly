@@ -76,7 +76,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.v = phi ptr [ %i.u, %bb.f ], [ %i.p, %bb.e ] ; 125 uses
+  %i.v = phi ptr [ %i.u, %bb.f ], [ %i.p, %bb.e ] ; 123 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 288
   store ptr %i.i, ptr %i.w, align 8, !tbaa !43
   %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 1
@@ -479,7 +479,7 @@ vector.ph:                                        ; preds = %bb.br, %bb.bq
   store i64 0, ptr %i.rr, align 8, !tbaa !46
   %i.rs = getelementptr inbounds nuw i8, ptr %i.v, i64 136
   store i64 1048575, ptr %i.rs, align 8, !tbaa !46
-  %i.rt = getelementptr inbounds nuw i8, ptr %i.v, i64 296 ; 74 uses
+  %i.rt = getelementptr inbounds nuw i8, ptr %i.v, i64 296 ; 76 uses
   %i.ru = getelementptr inbounds nuw i8, ptr %i.v, i64 312
   store <4 x i32> splat (i32 2304), ptr %i.rt, align 8, !tbaa !44
   store <4 x i32> splat (i32 2304), ptr %i.ru, align 8, !tbaa !44
@@ -614,6 +614,7 @@ vector.ph:                                        ; preds = %bb.br, %bb.bq
   br i1 %.not119147, label %._crit_edge151, label %.lr.ph150.preheader
 
 .lr.ph150.preheader:                              ; preds = %vector.ph
+  %scevgep199 = getelementptr i8, ptr %i.v, i64 808
   %i.ui = getelementptr i8, ptr %i.v, i64 328
   %i.uj = getelementptr i8, ptr %i.v, i64 360
   %i.uk = getelementptr i8, ptr %i.v, i64 392
@@ -640,13 +641,11 @@ vector.ph:                                        ; preds = %bb.br, %bb.bq
   %i.va = getelementptr inbounds nuw i8, ptr %i.uf, i64 %indvars.iv177 ; 6 uses
   %i.vb = sext i32 %i.uz to i64                   ; 18 uses
   %i.vc = shl nsw i64 %i.vb, 2                    ; 2 uses
-  %4 = getelementptr i8, ptr %i.v, i64 %i.vc
-  %5 = getelementptr i8, ptr %4, i64 296
-  %i.vd = getelementptr i8, ptr %i.v, i64 %i.vc
-  %i.ve = getelementptr i8, ptr %i.vd, i64 808
+  %i.vd = getelementptr i8, ptr %i.rt, i64 %i.vc
+  %i.ve = getelementptr i8, ptr %scevgep199, i64 %i.vc
   %i.vf = getelementptr i8, ptr %i.i, i64 %indvars.iv177
   %i.vg = getelementptr i8, ptr %i.vf, i64 18
-  %bound0 = icmp ult ptr %5, %i.vg
+  %bound0 = icmp ult ptr %i.vd, %i.vg
   %bound1 = icmp ult ptr %i.va, %i.ve
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph, label %vector.body200
@@ -775,6 +774,7 @@ middle.block203:                                  ; preds = %scalar.ph, %vector.
 
 .lr.ph150.1:                                      ; preds = %._crit_edge151
   %i.xq = sext i32 %.7.lcssa to i64               ; 2 uses
+  %scevgep214 = getelementptr i8, ptr %i.v, i64 552
   %i.xr = getelementptr i8, ptr %i.i, i64 %i.xq
   %i.xs = getelementptr i8, ptr %i.xr, i64 18
   %i.xt = getelementptr i8, ptr %i.v, i64 328
@@ -796,12 +796,10 @@ vector.memcheck214:                               ; preds = %middle.block224, %.
   %i.yd = getelementptr inbounds i8, ptr %i.uf, i64 %indvars.iv177.1 ; 6 uses
   %i.ye = sext i32 %i.yc to i64                   ; 10 uses
   %i.yf = shl nsw i64 %i.ye, 2                    ; 2 uses
-  %6 = getelementptr i8, ptr %i.v, i64 %i.yf
-  %7 = getelementptr i8, ptr %6, i64 296
-  %i.yg = getelementptr i8, ptr %i.v, i64 %i.yf
-  %i.yh = getelementptr i8, ptr %i.yg, i64 552
+  %i.yg = getelementptr i8, ptr %i.rt, i64 %i.yf
+  %i.yh = getelementptr i8, ptr %scevgep214, i64 %i.yf
   %i.yi = getelementptr i8, ptr %i.xs, i64 %indvar
-  %bound0215 = icmp ult ptr %7, %i.yi
+  %bound0215 = icmp ult ptr %i.yg, %i.yi
   %bound1216 = icmp ult ptr %i.yd, %i.yh
   %found.conflict217 = and i1 %bound0215, %bound1216
   br i1 %found.conflict217, label %scalar.ph213, label %vector.body221

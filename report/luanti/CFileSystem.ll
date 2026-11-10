@@ -205,7 +205,7 @@ sub_0:                                            ; preds = %bb.m
   br i1 %i.ea, label %.backedge, label %sub_196
 
 .backedge:                                        ; preds = %.tail, %.tail94, %_ZN4core6stringIcED2Ev.exit57
-  br label %bb.l, !llvm.loop !123
+  br label %bb.l
 
 sub_196:                                          ; preds = %.tail
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dv, i64 20
@@ -261,16 +261,16 @@ _ZN4core6stringIcED2Ev.exit53:                    ; preds = %bb.p, %_ZNKSt7__cxx
   br i1 %i.ep, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.tail94.thread
-  %i.eq = load i64, ptr %i.ds, align 8, !tbaa !126
+  %i.eq = load i64, ptr %i.ds, align 8, !tbaa !125
   %i.er = trunc i64 %i.eq to i32
-  %i.es = load i32, ptr %i.dt, align 8, !tbaa !127
+  %i.es = load i32, ptr %i.dt, align 8, !tbaa !126
   %i.et = and i32 %i.es, 61440
   %i.eu = icmp eq i32 %i.et, 16384
   br label %bb.s
 
 bb.r:                                             ; preds = %.tail94.thread
   %i.ev = getelementptr inbounds nuw i8, ptr %i.dv, i64 18
-  %i.ew = load i8, ptr %i.ev, align 2, !tbaa !130
+  %i.ew = load i8, ptr %i.ev, align 2, !tbaa !129
   %i.ex = icmp eq i8 %i.ew, 4
   br label %bb.s
 
@@ -673,12 +673,11 @@ attributes #29 = { noreturn nounwind }
 !120 = distinct !{!120, !37, !41, !42}
 !121 = distinct !{!121, !37, !41, !42}
 !122 = distinct !{!122, !37, !42, !41}
-!123 = distinct !{!123, !37}
-!124 = !{!"_ZTS8timespec", !16, i64 0, !16, i64 8}
-!125 = !{!"_ZTS4stat", !16, i64 0, !16, i64 8, !16, i64 16, !7, i64 24, !7, i64 28, !7, i64 32, !7, i64 36, !16, i64 40, !16, i64 48, !16, i64 56, !16, i64 64, !124, i64 72, !124, i64 88, !124, i64 104, !6, i64 120}
-!126 = !{!125, !16, i64 48}
-!127 = !{!125, !7, i64 24}
-!128 = !{!"short", !6, i64 0}
-!129 = !{!"_ZTS6dirent", !16, i64 0, !16, i64 8, !128, i64 16, !6, i64 18, !6, i64 19}
-!130 = !{!129, !6, i64 18}
+!123 = !{!"_ZTS8timespec", !16, i64 0, !16, i64 8}
+!124 = !{!"_ZTS4stat", !16, i64 0, !16, i64 8, !16, i64 16, !7, i64 24, !7, i64 28, !7, i64 32, !7, i64 36, !16, i64 40, !16, i64 48, !16, i64 56, !16, i64 64, !123, i64 72, !123, i64 88, !123, i64 104, !6, i64 120}
+!125 = !{!124, !16, i64 48}
+!126 = !{!124, !7, i64 24}
+!127 = !{!"short", !6, i64 0}
+!128 = !{!"_ZTS6dirent", !16, i64 0, !16, i64 8, !127, i64 16, !6, i64 18, !6, i64 19}
+!129 = !{!128, !6, i64 18}
 end_hunk_1

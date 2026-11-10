@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %read_1_byte.exit.i.
 read_1_byte.exit.i.us.backedge:                   ; preds = %bb.b, %process_SOFn.exit.us
   %.05.i.us.be = phi i32 [ %i.l, %bb.b ], [ %i.af, %process_SOFn.exit.us ]
   %.0.i.us.be = phi i32 [ %i.j, %bb.b ], [ 0, %process_SOFn.exit.us ]
-  br label %read_1_byte.exit.i.us, !llvm.loop !25
+  br label %read_1_byte.exit.i.us
 
 .preheader.i.us:                                  ; preds = %read_1_byte.exit.i.us, %.preheader.i.us
   %i.n = load ptr, ptr @infile, align 8, !tbaa !18
@@ -325,7 +325,7 @@ bb.m:                                             ; preds = %read_1_byte.exit.i
 read_1_byte.exit.i.backedge:                      ; preds = %bb.m, %process_SOFn.exit
   %.05.i.be = phi i32 [ %i.an, %bb.m ], [ %i.dy, %process_SOFn.exit ]
   %.0.i.be = phi i32 [ %i.al, %bb.m ], [ 0, %process_SOFn.exit ]
-  br label %read_1_byte.exit.i, !llvm.loop !25
+  br label %read_1_byte.exit.i
 
 .split.us:                                        ; preds = %bb.m, %bb.b
   %i.ap = load ptr, ptr @stderr, align 8, !tbaa !18
@@ -512,7 +512,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %read_1_byte.exit13.i
   %i.cz = add nuw nsw i32 %.015.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.cz, %i.cm
-  br i1 %exitcond.not.i, label %process_SOFn.exit, label %.lr.ph.i, !llvm.loop !26
+  br i1 %exitcond.not.i, label %process_SOFn.exit, label %.lr.ph.i, !llvm.loop !25
 
 .lr.ph.i:                                         ; preds = %.preheader.i12, %bb.ad
   %.015.i = phi i32 [ %i.cz, %bb.ad ], [ 0, %.preheader.i12 ]
@@ -717,7 +717,7 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.d
   %i.s = add i32 %.01423.us, -1                   ; 2 uses
   %.not.us = icmp eq i32 %i.s, 0
-  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !27
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !26
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %read_1_byte.exit
   %.01423 = phi i32 [ %i.aa, %read_1_byte.exit ], [ %i.f, %.lr.ph ]
@@ -737,7 +737,7 @@ read_1_byte.exit:                                 ; preds = %.lr.ph.split
   %i.z = tail call i32 @putc(i32 noundef %i.u, ptr noundef %i.y) ; 0 uses
   %i.aa = add i32 %.01423, -1                     ; 2 uses
   %.not = icmp eq i32 %i.aa, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !27
+  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %read_1_byte.exit, %bb.k, %bb.c
   %putchar = tail call i32 @putchar(i32 10)       ; 0 uses
@@ -845,5 +845,4 @@ attributes #14 = { nounwind }
 !24 = !{!7, !7, i64 0}
 !25 = distinct !{!25, !19}
 !26 = distinct !{!26, !19}
-!27 = distinct !{!27, !19}
 end_hunk_0

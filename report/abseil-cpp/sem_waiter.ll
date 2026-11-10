@@ -109,8 +109,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   br i1 %.not18, label %.split39.us, label %.split39
 
-.split39.us:                                      ; preds = %bb.a, %.split30.us.us
-  %.03.us = phi i1 [ false, %.split30.us.us ], [ true, %bb.a ]
+.split39.us:                                      ; preds = %bb.a, %.split39.us.backedge
+  %.03.us = phi i1 [ false, %.split39.us.backedge ], [ true, %bb.a ]
   %i.d = load atomic i32, ptr %i.a monotonic, align 8 ; 3 uses
   %.not26.us.not = icmp eq i32 %i.d, 0
   br i1 %.not26.us.not, label %._crit_edge.us, label %.lr.ph.us
@@ -143,20 +143,20 @@ bb.c:                                             ; preds = %._crit_edge.us
 .split.us.us:                                     ; preds = %bb.c, %._crit_edge.us
   %i.m = tail call i32 @sem_wait(ptr noundef nonnull %0)
   %i.n = icmp eq i32 %i.m, 0
-  br i1 %i.n, label %.split30.us.us, label %.backedge.us.lr.ph.us
+  br i1 %i.n, label %.split39.us.backedge, label %.backedge.us.lr.ph.us
+
+.split39.us.backedge:                             ; preds = %bb.d, %.split.us.us
+  br label %.split39.us
 
 bb.d:                                             ; preds = %.backedge.us.us
   %i.o = tail call i32 @sem_wait(ptr noundef nonnull %0)
   %i.p = icmp eq i32 %i.o, 0
-  br i1 %i.p, label %.split30.us.us, label %.backedge.us.us, !llvm.loop !12
+  br i1 %i.p, label %.split39.us.backedge, label %.backedge.us.us, !llvm.loop !12
 
 .backedge.us.us:                                  ; preds = %.backedge.us.lr.ph.us, %bb.d
   %i.q = load i32, ptr %i.s, align 4, !tbaa !9    ; 2 uses
   %i.r = icmp eq i32 %i.q, 4
   br i1 %i.r, label %bb.d, label %.split32.us
-
-.split30.us.us:                                   ; preds = %bb.d, %.split.us.us
-  br label %.split39.us, !llvm.loop !13
 
 .backedge.us.lr.ph.us:                            ; preds = %.split.us.us
   %i.s = tail call ptr @__errno_location() #6
@@ -166,8 +166,8 @@ bb.d:                                             ; preds = %.backedge.us.us
   %i.t = trunc i64 %.fr60 to i1
   br i1 %i.t, label %.split39.split.us, label %.split39.split
 
-.split39.split.us:                                ; preds = %.split39, %.split30.split.us.us
-  %.03.us42 = phi i1 [ false, %.split30.split.us.us ], [ true, %.split39 ]
+.split39.split.us:                                ; preds = %.split39, %.split39.split.us.backedge
+  %.03.us42 = phi i1 [ false, %.split39.split.us.backedge ], [ true, %.split39 ]
   %i.u = load atomic i32, ptr %i.a monotonic, align 8 ; 3 uses
   %.not26.us43.not = icmp eq i32 %i.u, 0
   br i1 %.not26.us43.not, label %._crit_edge.us49, label %.lr.ph.us44
@@ -210,7 +210,10 @@ bb.f:                                             ; preds = %._crit_edge.us49
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.ah = icmp eq i32 %i.ag, 0
-  br i1 %i.ah, label %.split30.split.us.us, label %.lr.ph38.us
+  br i1 %i.ah, label %.split39.split.us.backedge, label %.lr.ph38.us
+
+.split39.split.us.backedge:                       ; preds = %.backedge.us33.us, %.split.us
+  br label %.split39.split.us
 
 .lr.ph38.us:                                      ; preds = %.split.us
   %i.ai = tail call ptr @__errno_location() #6
@@ -236,13 +239,10 @@ bb.g:                                             ; preds = %.backedge.us33.us, 
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.ao = icmp eq i32 %i.an, 0
-  br i1 %i.ao, label %.split30.split.us.us, label %bb.g, !llvm.loop !12
+  br i1 %i.ao, label %.split39.split.us.backedge, label %bb.g, !llvm.loop !12
 
-.split30.split.us.us:                             ; preds = %.backedge.us33.us, %.split.us
-  br label %.split39.split.us, !llvm.loop !13
-
-.split39.split:                                   ; preds = %.split39, %.split30.split
-  %.03 = phi i1 [ false, %.split30.split ], [ true, %.split39 ]
+.split39.split:                                   ; preds = %.split39, %.split39.split.backedge
+  %.03 = phi i1 [ false, %.split39.split.backedge ], [ true, %.split39 ]
   %i.ap = load atomic i32, ptr %i.a monotonic, align 8 ; 2 uses
   %.not26.not = icmp eq i32 %i.ap, 0
   br i1 %.not26.not, label %._crit_edge, label %.lr.ph
@@ -279,7 +279,10 @@ bb.h:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.ay = icmp eq i32 %i.ax, 0
-  br i1 %i.ay, label %.split30.split, label %.lr.ph37
+  br i1 %i.ay, label %.split39.split.backedge, label %.lr.ph37
+
+.split39.split.backedge:                          ; preds = %.backedge, %.split
+  br label %.split39.split
 
 .lr.ph37:                                         ; preds = %.split
   %i.az = tail call ptr @__errno_location() #6
@@ -298,7 +301,7 @@ bb.h:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.be = icmp eq i32 %i.bd, 0
-  br i1 %i.be, label %.split30.split, label %bb.i, !llvm.loop !12
+  br i1 %i.be, label %.split39.split.backedge, label %bb.i, !llvm.loop !12
 
 .split32.us:                                      ; preds = %.backedge.us.us
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 68), i32 noundef 88, ptr noundef nonnull @.str.2, i32 noundef %i.q)
@@ -315,9 +318,6 @@ bb.i:                                             ; preds = %.lr.ph37, %.backedg
   %.us-phi = phi i32 [ %i.aj, %bb.g ], [ %i.bf, %bb.i ]
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 68), i32 noundef 93, ptr noundef nonnull @.str.3, i32 noundef %.us-phi)
   unreachable
-
-.split30.split:                                   ; preds = %.backedge, %.split
-  br label %.split39.split, !llvm.loop !13
 
 _ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread: ; preds = %.lr.ph, %bb.i, %.lr.ph.us44, %bb.e, %bb.g, %.lr.ph.us, %bb.b
   %.not21 = phi i1 [ true, %bb.e ], [ true, %bb.b ], [ true, %.lr.ph.us44 ], [ false, %bb.i ], [ true, %.lr.ph.us ], [ false, %bb.g ], [ true, %.lr.ph ]
@@ -397,7 +397,6 @@ attributes #6 = { nounwind willreturn memory(none) }
 !9 = !{!6, !6, i64 0}
 !10 = !{!"_ZTSSt13__atomic_baseIiE", !6, i64 0}
 !11 = !{!10, !6, i64 0}
-!12 = distinct !{!12, !14}
-!13 = distinct !{!13, !14}
-!14 = !{!"llvm.loop.mustprogress"}
+!12 = distinct !{!12, !13}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

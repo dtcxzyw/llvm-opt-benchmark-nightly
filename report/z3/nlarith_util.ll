@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZNK6vectorIP4exprL
 
 bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 24
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !466  ; 4 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !465  ; 4 uses
   %i.t = invoke noundef zeroext i1 @_ZNK8ast_mark9is_markedEP3ast(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef %i.s)
           to label %bb.e unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -588,7 +588,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ag
 .backedge:                                        ; preds = %bb.x, %bb.am, %bb.z, %_ZN6vectorIP3appLb0EjE9push_backERKS1_.exit, %.preheader, %.preheader81, %bb.c
   %i.ff = load ptr, ptr %5, align 8, !tbaa !104   ; 2 uses
   %i.fg = icmp eq ptr %i.ff, null
-  br i1 %i.fg, label %_ZN6vectorIP4exprLb0EjED2Ev.exit, label %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit, !llvm.loop !463
+  br i1 %i.fg, label %_ZN6vectorIP4exprLb0EjED2Ev.exit, label %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit
 
 bb.an:                                            ; preds = %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit
   %i.fh = getelementptr inbounds i8, ptr %i.h, i64 -8
@@ -716,7 +716,7 @@ _ZN8ast_markD2Ev.exit:                            ; preds = %_ZN8obj_markI4decl1
 bb.f:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !467
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !466
 
 bb.g:                                             ; preds = %.lr.ph
   %i.m = landingpad { ptr, i32 }
@@ -1119,7 +1119,7 @@ _ZN7nlarith4util3imp13simple_branch6removeEP3app.exit: ; preds = %bb.f, %bb.g
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.au = load ptr, ptr %i.a, align 8, !tbaa !140 ; 2 uses
   %i.av = icmp eq ptr %i.au, null
-  br i1 %i.av, label %.critedge.preheader, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !468
+  br i1 %i.av, label %.critedge.preheader, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !467
 
 _ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit13: ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit13.lr.ph, %_ZN7nlarith4util3imp13simple_branch6insertEP3app.exit
   %indvars.iv27 = phi i64 [ 0, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit13.lr.ph ], [ %indvars.iv.next28, %_ZN7nlarith4util3imp13simple_branch6insertEP3app.exit ] ; 3 uses
@@ -1206,7 +1206,7 @@ _ZN7nlarith4util3imp13simple_branch6insertEP3app.exit: ; preds = %bb.l, %bb.m
   %indvars.iv.next28 = add nuw nsw i64 %indvars.iv27, 1
   %i.cg = load ptr, ptr %i.f, align 8, !tbaa !140 ; 2 uses
   %i.ch = icmp eq ptr %i.cg, null
-  br i1 %i.ch, label %.critedge23, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit13, !llvm.loop !469
+  br i1 %i.ch, label %.critedge23, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit13, !llvm.loop !468
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -1570,7 +1570,7 @@ bb.q:                                             ; preds = %_ZN15ref_vector_cor
   %i.ch = phi ptr [ %.pre38, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %i.ab, %bb.e ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ci = icmp eq ptr %i.ch, null
-  br i1 %i.ci, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !470
+  br i1 %i.ci, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !469
 
 bb.r:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
   %.not.i27 = icmp eq ptr %i.ak, null
@@ -1973,7 +1973,7 @@ bb.o:                                             ; preds = %_ZN15ref_vector_cor
   %i.br = phi ptr [ %.pre, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %i.t, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.bs = icmp eq ptr %i.br, null
-  br i1 %i.bs, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !471
+  br i1 %i.bs, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !470
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.n, %bb.j, %bb.g, %bb.ac, %bb.w, %bb.s, %bb.p, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
   %lpad.loopexit.split-lp79 = landingpad { ptr, i32 }
@@ -2376,7 +2376,7 @@ bb.r:                                             ; preds = %_ZN15ref_vector_cor
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.az = load ptr, ptr %i.i, align 8, !tbaa !140 ; 2 uses
   %i.ba = icmp eq ptr %i.az, null
-  br i1 %i.ba, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !472
+  br i1 %i.ba, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !471
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -2779,7 +2779,7 @@ bb.r:                                             ; preds = %bb.p, %bb.o, %bb.q
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.by = load ptr, ptr %i.a, align 8, !tbaa !140 ; 2 uses
   %i.bz = icmp eq ptr %i.by, null
-  br i1 %i.bz, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !473
+  br i1 %i.bz, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !472
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.q, %bb.l, %bb.m, %bb.h, %bb.v, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
   %lpad.loopexit.split-lp59 = landingpad { ptr, i32 }
@@ -3182,7 +3182,7 @@ bb.n:                                             ; preds = %.noexc14, %bb.d
   store i32 %i.cb, ptr %i.by, align 4, !tbaa !125
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.d, !llvm.loop !474
+  br i1 %exitcond.not, label %.loopexit, label %bb.d, !llvm.loop !473
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.l, %bb.p, %bb.a
   %lpad.loopexit.split-lp86 = landingpad { ptr, i32 }
@@ -3233,7 +3233,7 @@ _ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_
   %.pre57 = phi ptr [ %.pre, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %.pre56, %bb.c ], [ %.pre53, %bb.n ]
   %i.cs = phi ptr [ %.pre, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %i.e, %bb.c ], [ %i.bv, %bb.n ] ; 2 uses
   %i.ct = icmp eq ptr %i.cs, null
-  br i1 %i.ct, label %_ZN6vectorIP3appLb0EjED2Ev.exit, label %_ZNK6vectorIP3appLb0EjE5emptyEv.exit, !llvm.loop !475
+  br i1 %i.ct, label %_ZN6vectorIP3appLb0EjED2Ev.exit, label %_ZNK6vectorIP3appLb0EjE5emptyEv.exit, !llvm.loop !474
 
 bb.q:                                             ; preds = %_ZNK6vectorIP3appLb0EjE5emptyEv.exit
   %i.cu = getelementptr inbounds i8, ptr %i.e, i64 -8
@@ -3636,7 +3636,7 @@ _ZN6vectorIN7nlarith4util11atom_updateELb0EjE9push_backERKS2_.exit: ; preds = %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !140 ; 2 uses
   %i.ap = icmp eq ptr %i.ao, null
-  br i1 %i.ap, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !476
+  br i1 %i.ap, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !475
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -4039,7 +4039,7 @@ bb.bm:                                            ; preds = %_ZN7nlarith4util11l
   %i.mf = phi ptr [ %.pre246, %_ZN7nlarith4util11literal_set5x_infEv.exit173._crit_edge ], [ %i.li, %bb.bi ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.mg = icmp eq ptr %i.mf, null
-  br i1 %i.mg, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !477
+  br i1 %i.mg, label %.critedge, label %_ZNK7nlarith4util11literal_set4sizeEv.exit, !llvm.loop !476
 
 _ZN7nlarith4util11literal_set5x_supEv.exit167:    ; preds = %.noexc166, %.critedge
   %i.mh = phi ptr [ %.pre.i165, %.noexc166 ], [ %i.lo, %.critedge ]
@@ -4442,7 +4442,7 @@ _ZNK8rational6is_oneEv.exit:                      ; preds = %bb.v, %_ZN8rational
 
 .loopexit:                                        ; preds = %bb.cn, %bb.ar
   %i.er = icmp sgt i64 %indvars.iv, 1
-  br i1 %i.er, label %bb.af, label %._crit_edge, !llvm.loop !478
+  br i1 %i.er, label %bb.af, label %._crit_edge, !llvm.loop !477
 
 ._crit_edge:                                      ; preds = %.loopexit, %_ZNK8rational6is_oneEv.exit
   br i1 %.not.i.i77, label %_ZN7obj_refI3app11ast_managerED2Ev.exit, label %bb.w
@@ -4845,7 +4845,7 @@ bb.cn:                                            ; preds = %bb.cl, %_ZN11ast_ma
   %.0 = add i32 %.0162, -1                        ; 2 uses
   %i.mp = sext i32 %.0 to i64
   %.not = icmp sgt i64 %indvars.iv.next, %i.mp
-  br i1 %.not, label %.loopexit, label %bb.as, !llvm.loop !479
+  br i1 %.not, label %.loopexit, label %bb.as, !llvm.loop !478
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.cm, %bb.ap, %bb.aj, %bb.al
   %lpad.loopexit.split-lp216 = landingpad { ptr, i32 }
@@ -5248,11 +5248,11 @@ bb.x:                                             ; preds = %bb.v, %_ZN11ast_man
   store ptr %i.ew, ptr %i.ey, align 8, !tbaa !146
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !480
+  br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !479
 
 .loopexit:                                        ; preds = %bb.dg, %bb.ah
   %i.fi = icmp sgt i64 %indvars.iv269, 1
-  br i1 %i.fi, label %bb.ac, label %._crit_edge, !llvm.loop !481
+  br i1 %i.fi, label %bb.ac, label %._crit_edge, !llvm.loop !480
 
 ._crit_edge:                                      ; preds = %.loopexit, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit, %.preheader
   %i.fj = load ptr, ptr %i.dm, align 8, !tbaa !140 ; 5 uses
@@ -5655,7 +5655,7 @@ bb.df:                                            ; preds = %bb.dd, %_ZN11ast_ma
 
 bb.dg:                                            ; preds = %bb.df, %bb.bj
   %i.qs = icmp samesign ugt i64 %indvars.iv266, 1
-  br i1 %i.qs, label %.lr.ph254, label %.loopexit, !llvm.loop !482
+  br i1 %i.qs, label %.lr.ph254, label %.loopexit, !llvm.loop !481
 
 .body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body189, %.body216, %.body168
   %.pn75.pn = phi { ptr, i32 } [ %eh.lpad-body169, %.body168 ], [ %eh.lpad-body190, %.body189 ], [ %eh.lpad-body217, %.body216 ], [ %lpad.loopexit.split-lp355, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
@@ -6058,10 +6058,10 @@ begin_hunk_12_@llvm.umin.i64
 !460 = distinct !{!460, !129}
 !461 = distinct !{!461, !129}
 !462 = distinct !{!462, !129}
-!463 = distinct !{!463, !129}
-!464 = !{!"_ZTS15quantifier_kind", !13, i64 0}
-!465 = !{!"_ZTS10quantifier", !176, i64 0, !464, i64 16, !14, i64 20, !126, i64 24, !90, i64 32, !14, i64 40, !14, i64 44, !25, i64 48, !25, i64 49, !60, i64 56, !60, i64 64, !14, i64 72, !14, i64 76, !13, i64 80}
-!466 = !{!465, !126, i64 24}
+!463 = !{!"_ZTS15quantifier_kind", !13, i64 0}
+!464 = !{!"_ZTS10quantifier", !176, i64 0, !463, i64 16, !14, i64 20, !126, i64 24, !90, i64 32, !14, i64 40, !14, i64 44, !25, i64 48, !25, i64 49, !60, i64 56, !60, i64 64, !14, i64 72, !14, i64 76, !13, i64 80}
+!465 = !{!464, !126, i64 24}
+!466 = distinct !{!466, !129}
 !467 = distinct !{!467, !129}
 !468 = distinct !{!468, !129}
 !469 = distinct !{!469, !129}
@@ -6077,5 +6077,4 @@ begin_hunk_12_@llvm.umin.i64
 !479 = distinct !{!479, !129}
 !480 = distinct !{!480, !129}
 !481 = distinct !{!481, !129}
-!482 = distinct !{!482, !129}
 end_hunk_12

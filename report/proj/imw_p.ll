@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ak, label %.critedge2.backedge, label %.critedge.thread
 
 .critedge2.backedge:                              ; preds = %bb.j, %bb.i
-  br label %.critedge2, !llvm.loop !63
+  br label %.critedge2
 
 .critedge:                                        ; preds = %bb.h
   %i.al = tail call i32 @proj_errno_set(ptr noundef %2, i32 noundef 2050) ; 0 uses
@@ -289,7 +289,7 @@ bb.c:                                             ; preds = %bb.b
   %i.an = load double, ptr %i.am, align 8, !tbaa !47
   %i.ao = fmul double %0, %i.an                   ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %i.aq = load double, ptr %i.ap, align 8, !tbaa !65 ; 2 uses
+  %i.aq = load double, ptr %i.ap, align 8, !tbaa !63 ; 2 uses
   %i.ar = tail call double @sin(double noundef %i.ao) #8
   %i.as = fmul double %i.aq, %i.ar                ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 64
@@ -307,7 +307,7 @@ bb.d:                                             ; preds = %.thread, %bb.c
   %i.ba = load double, ptr %i.az, align 8, !tbaa !46
   %i.bb = fmul double %0, %i.ba                   ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.bd = load double, ptr %i.bc, align 8, !tbaa !66 ; 2 uses
+  %i.bd = load double, ptr %i.bc, align 8, !tbaa !64 ; 2 uses
   %i.be = tail call double @sin(double noundef %i.bb) #8
   %i.bf = fmul double %i.bd, %i.be
   %i.bg = tail call double @cos(double noundef %i.bb) #8
@@ -440,8 +440,6 @@ attributes #8 = { nounwind }
 !60 = !{!36, !8, i64 104}
 !61 = !{!36, !8, i64 112}
 !62 = !{!36, !8, i64 152}
-!63 = distinct !{!63, !64}
-!64 = !{!"llvm.loop.mustprogress"}
-!65 = !{!39, !14, i64 40}
-!66 = !{!39, !14, i64 32}
+!63 = !{!39, !14, i64 40}
+!64 = !{!39, !14, i64 32}
 end_hunk_0

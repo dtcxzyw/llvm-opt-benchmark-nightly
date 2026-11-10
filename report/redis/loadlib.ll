@@ -65,7 +65,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.51 = private unnamed_addr constant [25 x i8] c"module '%s' not found:%s\00", align 1, !guid !60
 
 ; Function Attrs: nounwind uwtable
-define dso_local noundef i32 @luaopen_package(ptr noundef %0) local_unnamed_addr #0 !guid !64 {
+define dso_local noundef i32 @luaopen_package(ptr noundef %0) local_unnamed_addr #0 !guid !63 {
 bb.a:
   %i.a = tail call i32 @luaL_newmetatable(ptr noundef %0, ptr noundef nonnull @.str) #6 ; 0 uses
   tail call void @lua_pushcclosure(ptr noundef %0, ptr noundef nonnull @gctm, i32 noundef 0) #6
@@ -135,7 +135,7 @@ declare i32 @luaL_newmetatable(ptr noundef, ptr noundef) local_unnamed_addr #2
 declare void @lua_pushcclosure(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @gctm(ptr noundef %0) #0 !guid !65 {
+define internal noundef i32 @gctm(ptr noundef %0) #0 !guid !64 {
 bb.a:
   %i.a = tail call ptr @luaL_checkudata(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str) #6
   store ptr null, ptr %i.a, align 8, !tbaa !62
@@ -166,7 +166,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 declare ptr @luaL_checkudata(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @ll_loadlib(ptr noundef %0) #0 !guid !66 {
+define internal noundef i32 @ll_loadlib(ptr noundef %0) #0 !guid !65 {
 bb.a:
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6
   %i.b = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 2, ptr noundef null) #6 ; 0 uses
@@ -180,7 +180,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @ll_seeall(ptr noundef %0) #0 !guid !67 {
+define internal noundef i32 @ll_seeall(ptr noundef %0) #0 !guid !66 {
 bb.a:
   tail call void @luaL_checktype(ptr noundef %0, i32 noundef 1, i32 noundef 5) #6
   %i.a = tail call i32 @lua_getmetatable(ptr noundef %0, i32 noundef 1) #6
@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 declare ptr @luaL_checklstring(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 1, 3) i32 @ll_loadfunc(ptr noundef %0, ptr noundef %1) unnamed_addr #0 !guid !68 {
+define internal fastcc range(i32 1, 3) i32 @ll_loadfunc(ptr noundef %0, ptr noundef %1) unnamed_addr #0 !guid !67 {
 bb.a:
   %i.a = tail call ptr (ptr, ptr, ...) @lua_pushfstring(ptr noundef %0, ptr noundef nonnull @.str.19, ptr noundef nonnull @.str.20, ptr noundef %1) #6 ; 0 uses
   tail call void @lua_gettable(ptr noundef %0, i32 noundef -10000) #6
@@ -268,7 +268,7 @@ declare void @luaL_checktype(ptr noundef, i32 noundef, i32 noundef) local_unname
 declare i32 @lua_getmetatable(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @loader_preload(ptr noundef %0) #0 !guid !69 {
+define internal noundef i32 @loader_preload(ptr noundef %0) #0 !guid !68 {
 bb.a:
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6 ; 2 uses
   tail call void @lua_getfield(ptr noundef %0, i32 noundef -10001, ptr noundef nonnull @.str.14) #6
@@ -295,7 +295,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @loader_Lua(ptr noundef %0) #0 !guid !70 {
+define internal noundef i32 @loader_Lua(ptr noundef %0) #0 !guid !69 {
 bb.a:
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6
   %i.b = tail call fastcc ptr @findfile(ptr noundef %0, ptr noundef %i.a, ptr noundef nonnull @.str.4) ; 3 uses
@@ -318,7 +318,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @loader_C(ptr noundef %0) #0 !guid !71 {
+define internal noundef i32 @loader_C(ptr noundef %0) #0 !guid !70 {
 bb.a:
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6 ; 3 uses
   %i.b = tail call fastcc ptr @findfile(ptr noundef %0, ptr noundef %i.a, ptr noundef nonnull @.str.7) ; 3 uses
@@ -344,7 +344,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @loader_Croot(ptr noundef %0) #0 !guid !72 {
+define internal range(i32 0, 2) i32 @loader_Croot(ptr noundef %0) #0 !guid !71 {
 bb.a:
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6 ; 6 uses
   %i.b = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.a, i32 noundef 46) #7 ; 2 uses
@@ -391,7 +391,7 @@ bb.f:                                             ; preds = %bb.b, %bb.a, %bb.e
 declare i32 @luaL_error(ptr noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @findfile(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 !guid !74 {
+define internal fastcc ptr @findfile(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 !guid !72 {
 bb.a:
   %i.a = tail call ptr @luaL_gsub(ptr noundef %0, ptr noundef %1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.26) #6
   tail call void @lua_getfield(ptr noundef %0, i32 noundef -10001, ptr noundef %2) #6
@@ -409,7 +409,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.backedge, %bb.c
   %.013.i = phi ptr [ %i.b, %bb.c ], [ %.013.i.be, %.backedge ] ; 7 uses
-  %i.e = load i8, ptr %.013.i, align 1, !tbaa !75
+  %i.e = load i8, ptr %.013.i, align 1, !tbaa !73
   switch i8 %i.e, label %bb.f [
     i8 59, label %bb.e
     i8 0, label %pushnexttemplate.exit.thread
@@ -421,7 +421,7 @@ bb.e:                                             ; preds = %bb.d
 
 .backedge:                                        ; preds = %bb.e, %bb.i
   %.013.i.be = phi ptr [ %i.f, %bb.e ], [ %.0.i, %bb.i ]
-  br label %bb.d, !llvm.loop !73
+  br label %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.013.i, i32 noundef 59) #7 ; 2 uses
@@ -487,7 +487,7 @@ declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #4
 declare noundef ptr @getenv(ptr noundef captures(none)) local_unnamed_addr #5
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @ll_module(ptr noundef %0) #0 !guid !77 {
+define internal i32 @ll_module(ptr noundef %0) #0 !guid !75 {
 bb.a:
   %1 = alloca %struct.lua_Debug, align 8          ; 4 uses
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6 ; 9 uses
@@ -573,7 +573,7 @@ setfenv.exit:                                     ; preds = %bb.i, %bb.j
   call void @lua_call(ptr noundef %0, i32 noundef 1, i32 noundef 0) #6
   %i.w = add nuw i32 %.07.i, 1
   %exitcond.not.i = icmp eq i32 %.07.i, %i.b
-  br i1 %exitcond.not.i, label %dooptions.exit, label %.lr.ph.i, !llvm.loop !76
+  br i1 %exitcond.not.i, label %dooptions.exit, label %.lr.ph.i, !llvm.loop !74
 
 dooptions.exit:                                   ; preds = %.lr.ph.i, %setfenv.exit, %bb.c
   %.0 = phi i32 [ %i.g, %bb.c ], [ 0, %setfenv.exit ], [ 0, %.lr.ph.i ]
@@ -581,7 +581,7 @@ dooptions.exit:                                   ; preds = %.lr.ph.i, %setfenv.
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @ll_require(ptr noundef %0) #0 !guid !78 {
+define internal noundef i32 @ll_require(ptr noundef %0) #0 !guid !77 {
 bb.a:
   %i.a = tail call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef null) #6 ; 9 uses
   tail call void @lua_settop(ptr noundef %0, i32 noundef 1) #6
@@ -780,20 +780,19 @@ attributes #7 = { nounwind willreturn memory(read) }
 !60 = !{i64 -8114700283671805320}
 !61 = !{!"any pointer", !5, i64 0}
 !62 = !{!61, !61, i64 0}
-!63 = !{!"llvm.loop.mustprogress"}
-!64 = !{i64 3567431607794448565}
-!65 = !{i64 -5781141711033678696}
-!66 = !{i64 -4403879901584797107}
-!67 = !{i64 -8762273087654548840}
-!68 = !{i64 7072120335808761469}
-!69 = !{i64 5444080686236261653}
-!70 = !{i64 -534122442855475325}
-!71 = !{i64 -2973415838633479310}
-!72 = !{i64 9104094067174640954}
-!73 = distinct !{!73, !63}
-!74 = !{i64 -494255113216586513}
-!75 = !{!5, !5, i64 0}
-!76 = distinct !{!76, !63}
-!77 = !{i64 5257986605706619627}
-!78 = !{i64 3566399279535576290}
+!63 = !{i64 3567431607794448565}
+!64 = !{i64 -5781141711033678696}
+!65 = !{i64 -4403879901584797107}
+!66 = !{i64 -8762273087654548840}
+!67 = !{i64 7072120335808761469}
+!68 = !{i64 5444080686236261653}
+!69 = !{i64 -534122442855475325}
+!70 = !{i64 -2973415838633479310}
+!71 = !{i64 9104094067174640954}
+!72 = !{i64 -494255113216586513}
+!73 = !{!5, !5, i64 0}
+!74 = distinct !{!74, !76}
+!75 = !{i64 5257986605706619627}
+!76 = !{!"llvm.loop.mustprogress"}
+!77 = !{i64 3566399279535576290}
 end_hunk_0

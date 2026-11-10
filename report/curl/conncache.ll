@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
 
 .lr.ph.i.backedge:                                ; preds = %.critedge.loopexit.i, %cpool_foreach.exit
   %.01625.i.be = phi ptr [ %i.ac, %.critedge.loopexit.i ], [ %i.am, %cpool_foreach.exit ]
-  br label %.lr.ph.i, !llvm.loop !142
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader, %.lr.ph.i.backedge
   %.01625.i = phi ptr [ %.01625.i.be, %.lr.ph.i.backedge ], [ %i.z, %.preheader ]
@@ -605,7 +605,7 @@ bb.l:                                             ; preds = %cpool_do_conn.exit
   br i1 %i.ae, label %bb.m, label %cpool_do_conn.exit, !llvm.loop !0
 
 bb.m:                                             ; preds = %bb.l
-  call void %2(ptr noundef nonnull %i.aa, ptr noundef nonnull %0, ptr noundef %3) #7, !inline_history !143
+  call void %2(ptr noundef nonnull %i.aa, ptr noundef nonnull %0, ptr noundef %3) #7, !inline_history !142
   br label %cpool_foreach.exit, !llvm.loop !1
 
 cpool_foreach.exit:                               ; preds = %.critedge.loopexit.i, %bb.k, %bb.m
@@ -831,7 +831,7 @@ cpool_foreach.exit:                               ; preds = %.critedge.loopexit.
 
 .lr.ph.i24.backedge:                              ; preds = %.critedge.loopexit.i30, %cpool_foreach.exit32
   %.01625.i25.be = phi ptr [ %i.ai, %.critedge.loopexit.i30 ], [ %i.ar, %cpool_foreach.exit32 ]
-  br label %.lr.ph.i24, !llvm.loop !144
+  br label %.lr.ph.i24
 
 .lr.ph.i24:                                       ; preds = %cpool_foreach.exit, %.lr.ph.i24.backedge
   %.01625.i25 = phi ptr [ %.01625.i25.be, %.lr.ph.i24.backedge ], [ %i.af, %cpool_foreach.exit ]
@@ -1081,7 +1081,5 @@ attributes #8 = { nounwind willreturn memory(read) }
 !139 = distinct !{null, null}
 !140 = !{!18, !13, i64 56}
 !141 = !{!114, !7, i64 732}
-!142 = distinct !{!142, !91}
-!143 = distinct !{null, null}
-!144 = distinct !{!144, !91}
+!142 = distinct !{null, null}
 end_hunk_1

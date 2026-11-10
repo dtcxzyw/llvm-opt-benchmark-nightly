@@ -204,12 +204,12 @@ bb.a:
   %i.l = shl nsw i64 %i.j, 2
   %i.m = select i1 %i.k, i64 -1, i64 %i.l
   %i.n = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.m) #28
-          to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 14 uses
+          to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 13 uses
 
 bb.b:                                             ; preds = %bb.a
   %i.o = load i32, ptr %i.g, align 8, !tbaa !34
-  %i.p = sext i32 %i.o to i64                     ; 2 uses
-  %i.q = getelementptr [4 x i8], ptr %i.n, i64 %i.p ; 9 uses
+  %i.p = sext i32 %i.o to i64
+  %i.q = getelementptr [4 x i8], ptr %i.n, i64 %i.p ; 10 uses
   %i.r = load i64, ptr %3, align 8, !tbaa !81     ; 2 uses
   %i.s = icmp sgt i64 %i.r, 0
   %.pre111 = load i32, ptr %0, align 4, !tbaa !122 ; 5 uses
@@ -612,15 +612,13 @@ _ZN5faiss13InvertedLists11ScopedCodesC2EPKS0_mm.exit: ; preds = %bb.x
   br i1 %i.fw, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.fv to i64   ; 7 uses
+  %wide.trip.count = zext nneg i32 %i.fv to i64   ; 6 uses
   %min.iters.check147 = icmp ult i32 %i.fv, 8
   br i1 %min.iters.check147, label %.lr.ph.preheader169, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.fx = shl nuw nsw i64 %wide.trip.count, 2
-  %15 = add nsw i64 %i.p, %wide.trip.count
-  %16 = shl nsw i64 %15, 2
-  %i.fy = getelementptr i8, ptr %i.n, i64 %16
+  %i.fx = shl nuw nsw i64 %wide.trip.count, 2     ; 2 uses
+  %i.fy = getelementptr i8, ptr %i.q, i64 %i.fx
   %i.fz = getelementptr i8, ptr %i.n, i64 %i.fx
   %bound0 = icmp ult ptr %i.q, %i.fz
   %bound1 = icmp ult ptr %i.n, %i.fy

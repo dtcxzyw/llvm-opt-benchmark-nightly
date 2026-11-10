@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 .backedge96:                                      ; preds = %bb.ap, %bb.ba
   %.pre = load i32, ptr %i.w, align 8, !tbaa !104
-  br label %bb.ak, !llvm.loop !171
+  br label %bb.ak
 
 bb.aq:                                            ; preds = %bb.al
   %i.li = load ptr, ptr %i.jp, align 8, !tbaa !79
@@ -335,7 +335,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw, %.lr
   %i.nt = load i32, ptr %i.jt, align 4, !tbaa !91
   %i.nu = zext i32 %i.nt to i64
   %i.nv = icmp samesign ult i64 %indvars.iv.next, %i.nu
-  br i1 %i.nv, label %.lr.ph116, label %._crit_edge, !llvm.loop !172
+  br i1 %i.nv, label %.lr.ph116, label %._crit_edge, !llvm.loop !171
 
 bb.az:                                            ; preds = %._crit_edge
   %i.nw = getelementptr inbounds nuw i8, ptr %i.mo, i64 8
@@ -476,7 +476,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.rc, ptr %i.ra, align 4, !tbaa !114
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rd = icmp eq i64 %index.next, %n.vec
-  br i1 %i.rd, label %middle.block, label %vector.body, !llvm.loop !173
+  br i1 %i.rd, label %middle.block, label %vector.body, !llvm.loop !172
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.qu, %n.vec
@@ -496,7 +496,7 @@ middle.block:                                     ; preds = %vector.body
   store float %i.rg, ptr %.066112, align 4, !tbaa !114
   %i.rh = add i32 %.0113, -1                      ; 2 uses
   %.not78 = icmp eq i32 %i.rh, 0
-  br i1 %.not78, label %.loopexit97, label %.lr.ph114, !llvm.loop !174
+  br i1 %.not78, label %.loopexit97, label %.lr.ph114, !llvm.loop !173
 
 .loopexit97:                                      ; preds = %.lr.ph114, %middle.block, %bb.be, %bb.bf
   %i.ri = getelementptr inbounds nuw i8, ptr %.tr110, i64 64
@@ -663,7 +663,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   store i32 %i.y, ptr %i.f, align 8, !tbaa !75
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !175
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !174
 }
 
 declare noundef i32 @_ZN4ojph5local8precinct16prepare_precinctEiPjPNS_21mem_elastic_allocatorE(ptr noundef nonnull align 8 dereferenceable(98), i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -694,7 +694,7 @@ bb.a:
   %i.l = mul i32 %i.k, %i.j
   %i.m = sext i32 %i.l to i64
   %i.n = icmp slt i64 %indvars.iv.next, %i.m
-  br i1 %i.n, label %.lr.ph, label %._crit_edge, !llvm.loop !176
+  br i1 %i.n, label %.lr.ph, label %._crit_edge, !llvm.loop !175
 }
 
 declare void @_ZN4ojph5local8precinct5writeEPNS_12outfile_baseE(ptr noundef nonnull align 8 dereferenceable(98), ptr noundef) local_unnamed_addr #2
@@ -831,7 +831,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.am = zext i32 %i.al to i64
   %i.an = mul nuw i64 %i.am, %i.ak
   %i.ao = icmp ugt i64 %i.an, %i.aj
-  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !177
+  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !176
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.b, %bb.a
   ret void
@@ -1120,10 +1120,9 @@ attributes #9 = { nounwind }
 !169 = distinct !{!169, !88, !112, !111}
 !170 = distinct !{!170, !88, !112, !111}
 !171 = distinct !{!171, !88}
-!172 = distinct !{!172, !88}
-!173 = distinct !{!173, !88, !111, !112}
-!174 = distinct !{!174, !88, !112, !111}
+!172 = distinct !{!172, !88, !111, !112}
+!173 = distinct !{!173, !88, !112, !111}
+!174 = distinct !{!174, !88}
 !175 = distinct !{!175, !88}
 !176 = distinct !{!176, !88}
-!177 = distinct !{!177, !88}
 end_hunk_0

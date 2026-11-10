@@ -205,7 +205,7 @@ declare i32 @ftruncate(i32 noundef, i64 noundef) local_unnamed_addr #24
 declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #21
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc void @zip_central_dir_delete(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) unnamed_addr #13 !guid !587 {
+define internal fastcc void @zip_central_dir_delete(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) unnamed_addr #13 !guid !586 {
 bb.a:
   %i.a = icmp sgt i32 %2, 0
   br i1 %i.a, label %.preheader63.lr.ph, label %._crit_edge71
@@ -234,7 +234,7 @@ bb.a:
 
 .preheader63.backedge:                            ; preds = %.preheader63, %zip_central_dir_move.exit
   %indvars.iv.be = phi i64 [ %indvars.iv.next, %.preheader63 ], [ %indvars.iv78, %zip_central_dir_move.exit ]
-  br label %.preheader63, !llvm.loop !577
+  br label %.preheader63
 
 .preheader62:                                     ; preds = %.preheader63, %.preheader62
   %indvar = phi i64 [ %indvar.next, %.preheader62 ], [ 0, %.preheader63 ] ; 3 uses
@@ -246,7 +246,7 @@ bb.a:
   %i.o = and i1 %i.n, %i.m
   %indvars.iv.next79 = add nsw i64 %indvars.iv78, 1
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.o, label %.preheader62, label %bb.b, !llvm.loop !578
+  br i1 %i.o, label %.preheader62, label %bb.b, !llvm.loop !577
 
 bb.b:                                             ; preds = %.preheader62
   %i.p = trunc nsw i64 %indvars.iv to i32
@@ -315,7 +315,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.aq, ptr %i.ao, align 4, !tbaa !18
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ar = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !579
+  br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !578
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ak, %n.vec
@@ -333,7 +333,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.au, ptr %i.as, align 4, !tbaa !18
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count62.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %scalar.ph, !llvm.loop !580
+  br i1 %exitcond.not.i, label %.loopexit.i, label %scalar.ph, !llvm.loop !579
 
 .loopexit54.i:                                    ; preds = %bb.e
   %i.av = mul i64 %.049.i, %i.w
@@ -371,7 +371,7 @@ vector.body12:                                    ; preds = %vector.body12, %vec
   store <4 x i32> %i.be, ptr %i.bc, align 4, !tbaa !18
   %index.next16 = add nuw i64 %index13, 8         ; 2 uses
   %i.bf = icmp eq i64 %index.next16, %n.vec9
-  br i1 %i.bf, label %middle.block17, label %vector.body12, !llvm.loop !581
+  br i1 %i.bf, label %middle.block17, label %vector.body12, !llvm.loop !580
 
 middle.block17:                                   ; preds = %vector.body12
   %cmp.n18 = icmp eq i64 %i.ay, %n.vec9
@@ -389,7 +389,7 @@ scalar.ph6:                                       ; preds = %scalar.ph6.preheade
   store i32 %i.bi, ptr %i.bg, align 4, !tbaa !18
   %indvars.iv.next60.i = add nsw i64 %indvars.iv59.i, 1 ; 2 uses
   %exitcond63.not.i = icmp eq i64 %indvars.iv.next60.i, %wide.trip.count62.i
-  br i1 %exitcond63.not.i, label %.loopexit.i, label %scalar.ph6, !llvm.loop !582
+  br i1 %exitcond63.not.i, label %.loopexit.i, label %scalar.ph6, !llvm.loop !581
 
 .loopexit.i:                                      ; preds = %scalar.ph6, %scalar.ph, %middle.block17, %middle.block, %bb.f, %bb.g, %.loopexit54.i
   %i.bj = add i64 %.049.i, %i.w
@@ -413,7 +413,7 @@ bb.h:                                             ; preds = %bb.h, %.preheader59
   %i.bn = icmp slt i64 %indvars.iv81, %i.f
   %i.bo = and i1 %i.bn, %.not
   %indvars.iv.next82 = add nsw i64 %indvars.iv81, 1
-  br i1 %i.bo, label %bb.h, label %bb.i, !llvm.loop !583
+  br i1 %i.bo, label %bb.h, label %bb.i, !llvm.loop !582
 
 bb.i:                                             ; preds = %bb.h
   %i.bp = trunc nsw i64 %indvars.iv81 to i32      ; 3 uses
@@ -430,7 +430,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bv = and i1 %i.bu, %i.bt
   %indvars.iv.next85 = add nsw i64 %indvars.iv84, 1
   %indvar.next23 = add i64 %indvar22, 1
-  br i1 %i.bv, label %.preheader58, label %.preheader, !llvm.loop !584
+  br i1 %i.bv, label %.preheader58, label %.preheader, !llvm.loop !583
 
 .preheader:                                       ; preds = %.preheader58
   %i.bw = trunc nsw i64 %indvars.iv84 to i32      ; 3 uses
@@ -473,7 +473,7 @@ vector.body28:                                    ; preds = %vector.body28, %vec
   store <4 x i32> %wide.load31, ptr %i.cl, align 4, !tbaa !18
   %index.next32 = add nuw i64 %index29, 8         ; 2 uses
   %i.cm = icmp eq i64 %index.next32, %n.vec27
-  br i1 %i.cm, label %middle.block33, label %vector.body28, !llvm.loop !585
+  br i1 %i.cm, label %middle.block33, label %vector.body28, !llvm.loop !584
 
 middle.block33:                                   ; preds = %vector.body28
   %cmp.n34 = icmp eq i64 %i.ce, %n.vec27
@@ -499,7 +499,7 @@ scalar.ph24:                                      ; preds = %scalar.ph24.prehead
   %indvars.iv.next93 = add nuw nsw i64 %indvars.iv92, 1
   %indvars.iv.next91 = add nsw i64 %indvars.iv90, 1 ; 2 uses
   %i.cr = icmp slt i64 %indvars.iv.next91, %i.f
-  br i1 %i.cr, label %scalar.ph24, label %._crit_edge, !llvm.loop !586
+  br i1 %i.cr, label %scalar.ph24, label %._crit_edge, !llvm.loop !585
 
 ._crit_edge71:                                    ; preds = %bb.i, %bb.a, %._crit_edge.thread
   %.050.lcssa = phi i32 [ %i.bz, %._crit_edge.thread ], [ 0, %bb.a ], [ %.05070, %bb.i ]
@@ -507,7 +507,7 @@ scalar.ph24:                                      ; preds = %scalar.ph24.prehead
   %i.ct = sext i32 %i.cs to i64
   %i.cu = shl nsw i64 %i.ct, 2
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %i.cu, ptr %i.cv, align 8, !tbaa !588
+  store i64 %i.cu, ptr %i.cv, align 8, !tbaa !587
   ret void
 }
 
@@ -910,15 +910,14 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !575 = !{i64 235850052019602902}
 !576 = !{i64 -1435924492973142331}
 !577 = distinct !{!577, !82}
-!578 = distinct !{!578, !82}
-!579 = distinct !{!579, !82, !141, !142}
-!580 = distinct !{!580, !82, !142, !141}
-!581 = distinct !{!581, !82, !141, !142}
-!582 = distinct !{!582, !82, !142, !141}
+!578 = distinct !{!578, !82, !141, !142}
+!579 = distinct !{!579, !82, !142, !141}
+!580 = distinct !{!580, !82, !141, !142}
+!581 = distinct !{!581, !82, !142, !141}
+!582 = distinct !{!582, !82}
 !583 = distinct !{!583, !82}
-!584 = distinct !{!584, !82}
-!585 = distinct !{!585, !82, !141, !142}
-!586 = distinct !{!586, !82, !141}
-!587 = !{i64 2460330534957039597}
-!588 = !{!164, !85, i64 40}
+!584 = distinct !{!584, !82, !141, !142}
+!585 = distinct !{!585, !82, !141}
+!586 = !{i64 2460330534957039597}
+!587 = !{!164, !85, i64 40}
 end_hunk_1

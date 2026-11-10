@@ -205,7 +205,7 @@ bb.a:
   %.sroa.7 = alloca [32 x i8], align 8            ; 5 uses
   %.sroa.8 = alloca [24 x i8], align 8            ; 4 uses
   %i.e = alloca [208 x i8], align 8               ; 5 uses
-  %i.f = alloca [72 x i8], align 8                ; 8 uses
+  %i.f = alloca [72 x i8], align 8                ; 7 uses
   %i.g = alloca [4 x i8], align 4                 ; 4 uses
   %i.h = alloca [208 x i8], align 8               ; 11 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 89
@@ -231,7 +231,7 @@ _RNvXs1f_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6tr
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.8.0..sroa_idx8.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx2.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %.sroa.6.0..sroa_idx2.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 9 uses
+  %.sroa.6.0..sroa_idx2.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 10 uses
   %..i.i.i41 = tail call noundef i64 @llvm.umin.i64(i64 %i.k, i64 %4) ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 %..i.i.i41
   %i.u = sub nuw nsw i64 %4, %..i.i.i41
@@ -359,8 +359,7 @@ iter.check:                                       ; preds = %_RNvNtNtNtCs5yxAJGb
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.aq = getelementptr i8, ptr %.sroa.0.03542, i64 %..i.i.i15
-  %5 = getelementptr i8, ptr %i.f, i64 %..i.i.i15
-  %i.ar = getelementptr i8, ptr %5, i64 8
+  %i.ar = getelementptr i8, ptr %.sroa.6.0..sroa_idx2.i, i64 %..i.i.i15
   %bound0 = icmp ult ptr %.sroa.0.03542, %i.ar
   %bound1 = icmp ult ptr %.sroa.6.0..sroa_idx2.i, %i.aq
   %found.conflict = and i1 %bound0, %bound1

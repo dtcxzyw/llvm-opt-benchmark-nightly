@@ -204,7 +204,7 @@ _ZN13sentencepiece17SentencePieceText22_internal_mutable_textB5cxx11Ev.exit: ; p
 
 _ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge: ; preds = %bb.r, %bb.s, %_ZN13sentencepiece17SentencePieceText22_internal_mutable_textB5cxx11Ev.exit, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit, %bb.x
   %.035.be = phi ptr [ %i.bc, %_ZN13sentencepiece17SentencePieceText22_internal_mutable_textB5cxx11Ev.exit ], [ %i.du, %bb.x ], [ %i.ec, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ], [ %i.cx, %bb.s ], [ %i.cx, %bb.r ]
-  br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit, !llvm.loop !112
+  br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit
 
 bb.h:                                             ; preds = %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit.thread
   %i.bd = and i32 %.046, 255
@@ -339,7 +339,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.dj = load i8, ptr %i.cx, align 1, !tbaa !54
   %i.dk = icmp eq i8 %i.dj, 18
-  br i1 %i.dk, label %bb.j, label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge, !llvm.loop !113
+  br i1 %i.dk, label %bb.j, label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge, !llvm.loop !112
 
 bb.t:                                             ; preds = %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit.thread
   %i.dl = and i32 %.046, 255
@@ -350,7 +350,7 @@ bb.u:                                             ; preds = %bb.t
   %.0.copyload.i2.i = load float, ptr %.1.i47, align 1
   store float %.0.copyload.i2.i, ptr %i.d, align 8, !tbaa !48
   %i.dn = getelementptr inbounds nuw i8, ptr %.1.i47, i64 4
-  br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.outer, !llvm.loop !112
+  br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.outer, !llvm.loop !113
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit.thread, %bb.t, %bb.h, %bb.e
   %i.do = and i32 %.046, 7
@@ -753,7 +753,7 @@ _ZN6google8protobuf8internal7ReadTagEPKcPjj.exit.thread: ; preds = %_ZN6google8p
   %.1.i33 = phi ptr [ %.fca.0.extract.i, %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit ], [ %i.ak, %bb.f ], [ %i.ad, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread25 ] ; 3 uses
   %.02132 = phi i32 [ %.fca.1.extract.i, %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit ], [ %i.ai, %bb.f ], [ %i.ab, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread25 ] ; 5 uses
   %i.am = icmp eq i32 %.02132, 10
-  br i1 %i.am, label %bb.g, label %bb.r, !prof !119
+  br i1 %i.am, label %bb.g, label %bb.r, !prof !118
 
 bb.g:                                             ; preds = %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit.thread
   %i.an = getelementptr inbounds i8, ptr %.1.i33, i64 -1
@@ -922,7 +922,7 @@ _ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx
 
 .backedge:                                        ; preds = %bb.p, %bb.q, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit
   %.022.be = phi ptr [ %i.de, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ], [ %i.cf, %bb.q ], [ %i.cf, %bb.p ]
-  br label %bb.b, !llvm.loop !118
+  br label %bb.b
 
 _ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread: ; preds = %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit, %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit, %bb.o, %bb.m, %bb.n, %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit.i, %bb.d, %.thread38
   %.3 = phi ptr [ null, %bb.o ], [ %spec.select, %bb.d ], [ %.1.i33, %.thread38 ], [ null, %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit.i ], [ null, %bb.n ], [ null, %bb.m ], [ null, %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit ], [ null, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ], [ %.fca.0.extract.i.i, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ]
@@ -1036,7 +1036,7 @@ _ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit: ; pred
   %i.ar = tail call noundef ptr @_ZNK13sentencepiece17SentencePieceText18_InternalSerializeEPhPN6google8protobuf2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(88) %i.n, ptr noundef nonnull %.021.i.i, ptr noundef nonnull %2) ; 2 uses
   %i.as = add nuw i32 %.020, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.as, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !120
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !119
 
 _ZNK6google8protobuf8internal16InternalMetadata14unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKT_PFSC_vE.exit: ; preds = %._crit_edge
   %i.at = and i64 %i.f, -2
@@ -1335,7 +1335,7 @@ bb.a:
 
 _ZNK13sentencepiece17SentencePieceText13IsInitializedEv.exit.loopexit.i: ; preds = %bb.d, %bb.c
   %i.f = icmp slt i64 %indvars.iv.i, 2
-  br i1 %i.f, label %_ZN6google8protobuf8internal17AllAreInitializedIN13sentencepiece17SentencePieceTextEEEbRKNS0_16RepeatedPtrFieldIT_EE.exit, label %bb.b, !llvm.loop !121
+  br i1 %i.f, label %_ZN6google8protobuf8internal17AllAreInitializedIN13sentencepiece17SentencePieceTextEEEbRKNS0_16RepeatedPtrFieldIT_EE.exit, label %bb.b, !llvm.loop !120
 
 bb.b:                                             ; preds = %_ZNK13sentencepiece17SentencePieceText13IsInitializedEv.exit.loopexit.i, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %i.e, %.lr.ph.i ], [ %indvars.iv.next.i, %_ZNK13sentencepiece17SentencePieceText13IsInitializedEv.exit.loopexit.i ] ; 3 uses
@@ -1476,7 +1476,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN13sentencepiece31SentencePieceText_SentencePieceE, i64 16), ptr %i.b, align 8, !tbaa !30
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   invoke void @_ZN6google8protobuf8internal12ExtensionSetC1EPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef null)
-          to label %.noexc unwind label %bb.e, !inline_history !122
+          to label %.noexc unwind label %bb.e, !inline_history !121
 
 .noexc:                                           ; preds = %bb.b
   %.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -1535,7 +1535,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit: ; preds = %bb.f, %bb.g
   %i.v = tail call noundef ptr @_ZN6google8protobuf5Arena21AllocateAlignedNoHookEm(ptr noundef nonnull align 8 dereferenceable(40) %0, i64 noundef 80) ; 2 uses
-  tail call void @_ZN13sentencepiece31SentencePieceText_SentencePieceC1EPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(80) %i.v, ptr noundef nonnull %0), !inline_history !123
+  tail call void @_ZN13sentencepiece31SentencePieceText_SentencePieceC1EPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(80) %i.v, ptr noundef nonnull %0), !inline_history !122
   br label %_ZN6google8protobuf5Arena21CreateMessageInternalIN13sentencepiece31SentencePieceText_SentencePieceEEEPT_PS1_.exit
 
 _ZN6google8protobuf5Arena21CreateMessageInternalIN13sentencepiece31SentencePieceText_SentencePieceEEEPT_PS1_.exit: ; preds = %_ZN13sentencepiece31SentencePieceText_SentencePieceC2Ev.exit, %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit
@@ -1556,7 +1556,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN13sentencepiece17SentencePieceTextE, i64 16), ptr %i.b, align 8, !tbaa !30
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   invoke void @_ZN6google8protobuf8internal12ExtensionSetC1EPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef null)
-          to label %.noexc unwind label %bb.e, !inline_history !124
+          to label %.noexc unwind label %bb.e, !inline_history !123
 
 .noexc:                                           ; preds = %bb.b
   %.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -1613,7 +1613,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit: ; preds = %bb.f, %bb.g
   %i.u = tail call noundef ptr @_ZN6google8protobuf5Arena21AllocateAlignedNoHookEm(ptr noundef nonnull align 8 dereferenceable(40) %0, i64 noundef 88) ; 2 uses
-  tail call void @_ZN13sentencepiece17SentencePieceTextC1EPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(88) %i.u, ptr noundef nonnull %0), !inline_history !125
+  tail call void @_ZN13sentencepiece17SentencePieceTextC1EPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(88) %i.u, ptr noundef nonnull %0), !inline_history !124
   br label %_ZN6google8protobuf5Arena21CreateMessageInternalIN13sentencepiece17SentencePieceTextEEEPT_PS1_.exit
 
 _ZN6google8protobuf5Arena21CreateMessageInternalIN13sentencepiece17SentencePieceTextEEEPT_PS1_.exit: ; preds = %_ZN13sentencepiece17SentencePieceTextC2Ev.exit, %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit
@@ -1668,7 +1668,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit: ; preds = %bb.d, %bb.e
   %i.q = tail call noundef ptr @_ZN6google8protobuf5Arena21AllocateAlignedNoHookEm(ptr noundef nonnull align 8 dereferenceable(40) %0, i64 noundef 48) ; 2 uses
-  tail call void @_ZN13sentencepiece22NBestSentencePieceTextC1EPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(48) %i.q, ptr noundef nonnull %0), !inline_history !126
+  tail call void @_ZN13sentencepiece22NBestSentencePieceTextC1EPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(48) %i.q, ptr noundef nonnull %0), !inline_history !125
   br label %_ZN6google8protobuf5Arena21CreateMessageInternalIN13sentencepiece22NBestSentencePieceTextEEEPT_PS1_.exit
 
 _ZN6google8protobuf5Arena21CreateMessageInternalIN13sentencepiece22NBestSentencePieceTextEEEPT_PS1_.exit: ; preds = %bb.c, %bb.b, %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit
@@ -2037,13 +2037,12 @@ attributes #18 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !115 = !{!46, !46, i64 0}
 !116 = distinct !{null}
 !117 = distinct !{!117, !94}
-!118 = distinct !{!118, !94}
-!119 = !{!"branch_weights", i32 2000, i32 2002}
+!118 = !{!"branch_weights", i32 2000, i32 2002}
+!119 = distinct !{!119, !94}
 !120 = distinct !{!120, !94}
-!121 = distinct !{!121, !94}
+!121 = distinct !{null}
 !122 = distinct !{null}
 !123 = distinct !{null}
 !124 = distinct !{null}
 !125 = distinct !{null}
-!126 = distinct !{null}
 end_hunk_1

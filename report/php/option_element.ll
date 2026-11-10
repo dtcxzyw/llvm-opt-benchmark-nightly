@@ -49,28 +49,28 @@ bb.a:
 
 .critedge.preheader:                              ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !31   ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !30   ; 2 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge.preheader, %.critedge.backedge
   %i.e = phi ptr [ %i.k, %.critedge.backedge ], [ %i.c, %.critedge.preheader ] ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !32
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !31
   %.not = icmp eq i64 %i.g, 164
   br i1 %.not, label %bb.b, label %.critedge.backedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !33
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !32
   %.not15 = icmp eq i64 %i.i, 2
   br i1 %.not15, label %bb.c, label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %bb.b, %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 56
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !31   ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !30   ; 2 uses
   %i.l = icmp eq ptr %i.k, null
-  br i1 %i.l, label %.loopexit, label %.lr.ph, !llvm.loop !30
+  br i1 %i.l, label %.loopexit, label %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.m = tail call ptr @lxb_html_select_get_enabled_selectedcontent(ptr noundef nonnull %i.e) #2 ; 2 uses
@@ -138,9 +138,7 @@ attributes #2 = { nounwind }
 !27 = !{!26, !12, i64 160}
 !28 = !{!17, !15, i64 32}
 !29 = !{!17, !9, i64 88}
-!30 = distinct !{!30, !34}
-!31 = !{!17, !16, i64 56}
-!32 = !{!17, !14, i64 8}
-!33 = !{!17, !14, i64 24}
-!34 = !{!"llvm.loop.mustprogress"}
+!30 = !{!17, !16, i64 56}
+!31 = !{!17, !14, i64 8}
+!32 = !{!17, !14, i64 24}
 end_hunk_0
