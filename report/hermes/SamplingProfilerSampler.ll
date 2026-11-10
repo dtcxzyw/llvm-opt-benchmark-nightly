@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackTraceESaIS3_EE13_M_deall
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr noundef double @_ZNSt19normal_distributionIdEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEdRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(5000) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat align 2 !guid !176 {
+define linkonce_odr noundef double @_ZNSt19normal_distributionIdEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEdRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(5000) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat align 2 !guid !175 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !71, !range !73, !noundef !74
@@ -369,7 +369,7 @@ select.unfold.i.i.backedge:                       ; preds = %_ZNSt23mersenne_twi
   %.023.i.i.be = phi i64 [ %i.cr, %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv.exit ], [ %spec.select.i.i, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26 ]
   %.01422.i.i.be = phi double [ %i.cq, %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv.exit ], [ 1.000000e+00, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26 ]
   %.01521.i.i.be = phi double [ %i.cn, %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv.exit ], [ 0.000000e+00, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26 ]
-  br label %select.unfold.i.i, !llvm.loop !172
+  br label %select.unfold.i.i
 
 bb.d:                                             ; preds = %bb.c
   br label %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit
@@ -419,7 +419,7 @@ vector.body82:                                    ; preds = %vector.body82, %vec
   store <2 x i64> %i.dk, ptr %i.cx, align 8, !tbaa !17
   %index.next88 = add nuw i64 %index83, 2         ; 2 uses
   %i.dl = icmp eq i64 %index.next88, 226
-  br i1 %i.dl, label %vector.ph, label %vector.body82, !llvm.loop !173
+  br i1 %i.dl, label %vector.ph, label %vector.body82, !llvm.loop !172
 
 vector.ph:                                        ; preds = %vector.body82
   %vector.recur.extract = extractelement <2 x i64> %wide.load86, i64 1
@@ -461,7 +461,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.ej, ptr %i.dx, align 8, !tbaa !17
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ek = icmp eq i64 %index.next, 396
-  br i1 %i.ek, label %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i39, label %vector.body, !llvm.loop !174
+  br i1 %i.ek, label %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i39, label %vector.body, !llvm.loop !173
 
 _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i39: ; preds = %vector.body
   %i.el = load i64, ptr %i.k, align 8, !tbaa !17
@@ -503,7 +503,7 @@ _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm429496
   %i.fp = fptrunc x86_fp80 %i.fo to double        ; 2 uses
   %i.fq = add i64 %.023.i.i21, -1                 ; 2 uses
   %.not.i.i24 = icmp eq i64 %i.fq, 0
-  br i1 %.not.i.i24, label %bb.e, label %select.unfold.i.i20, !llvm.loop !175
+  br i1 %.not.i.i24, label %bb.e, label %select.unfold.i.i20, !llvm.loop !174
 
 bb.f:                                             ; preds = %bb.e
   br label %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26
@@ -553,7 +553,7 @@ declare i32 @pthread_cond_clockwait(ptr noundef, ptr noundef, i32 noundef, ptr n
 declare void @_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef, ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNSt6thread24_M_thread_deps_never_runEv() #0 comdat align 2 !guid !179 {
+define linkonce_odr void @_ZNSt6thread24_M_thread_deps_never_runEv() #0 comdat align 2 !guid !178 {
 bb.a:
   ret void
 }
@@ -562,7 +562,7 @@ bb.a:
 declare void @_ZNSt6thread6_StateD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8)) unnamed_addr #1
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJMN6hermes2vm17sampling_profiler7SamplerEFvdEPS6_dEEEEED0Ev(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #11 comdat align 2 !guid !180 {
+define linkonce_odr hidden void @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJMN6hermes2vm17sampling_profiler7SamplerEFvdEPS6_dEEEEED0Ev(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #11 comdat align 2 !guid !179 {
 bb.a:
   tail call void @_ZNSt6thread6_StateD2Ev(ptr noundef nonnull align 8 dereferenceable(40) %0) #14
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #16
@@ -570,11 +570,11 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJMN6hermes2vm17sampling_profiler7SamplerEFvdEPS6_dEEEEE6_M_runEv(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #0 comdat align 2 !guid !182 {
+define linkonce_odr hidden void @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJMN6hermes2vm17sampling_profiler7SamplerEFvdEPS6_dEEEEE6_M_runEv(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #0 comdat align 2 !guid !181 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !183
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !182
   %.unpack.i.i.i.i = load i64, ptr %i.a, align 8, !tbaa !58 ; 3 uses
   %.elt3.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.unpack4.i.i.i.i = load i64, ptr %.elt3.i.i.i.i, align 8, !tbaa !58
@@ -597,8 +597,8 @@ bb.c:                                             ; preds = %bb.a
 _ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm17sampling_profiler7SamplerEFvdEPS5_dEEEclEv.exit: ; preds = %bb.b, %bb.c
   %i.k = phi ptr [ %i.i, %bb.b ], [ %i.j, %bb.c ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.m = load double, ptr %i.l, align 8, !tbaa !184
-  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(208) %i.d, double noundef %i.m) #14, !inline_history !181
+  %i.m = load double, ptr %i.l, align 8, !tbaa !183
+  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(208) %i.d, double noundef %i.m) #14, !inline_history !180
   ret void
 }
 
@@ -813,19 +813,18 @@ attributes #17 = { builtin nounwind allocsize(0) }
 !167 = !{!158}
 !168 = !{!159}
 !169 = !{!158, !159}
-!170 = distinct !{!170, !32, !177, !178}
-!171 = distinct !{!171, !32, !177, !178}
-!172 = distinct !{!172, !32}
-!173 = distinct !{!173, !32, !177, !178}
-!174 = distinct !{!174, !32, !177, !178}
-!175 = distinct !{!175, !32}
-!176 = !{i64 -7692725526086168878}
-!177 = !{!"llvm.loop.isvectorized", i32 1}
-!178 = !{!"llvm.loop.unroll.runtime.disable"}
-!179 = !{i64 7069532069847734166}
-!180 = !{i64 5012755659366687576}
-!181 = distinct !{null, null, null, null}
-!182 = !{i64 -7172192401363517478}
-!183 = !{!75, !75, i64 0}
-!184 = !{!65, !65, i64 0}
+!170 = distinct !{!170, !32, !176, !177}
+!171 = distinct !{!171, !32, !176, !177}
+!172 = distinct !{!172, !32, !176, !177}
+!173 = distinct !{!173, !32, !176, !177}
+!174 = distinct !{!174, !32}
+!175 = !{i64 -7692725526086168878}
+!176 = !{!"llvm.loop.isvectorized", i32 1}
+!177 = !{!"llvm.loop.unroll.runtime.disable"}
+!178 = !{i64 7069532069847734166}
+!179 = !{i64 5012755659366687576}
+!180 = distinct !{null, null, null, null}
+!181 = !{i64 -7172192401363517478}
+!182 = !{!75, !75, i64 0}
+!183 = !{!65, !65, i64 0}
 end_hunk_0

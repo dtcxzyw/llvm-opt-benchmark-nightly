@@ -200,12 +200,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %.backedge
   %i.h = phi ptr [ %i.e, %.lr.ph ], [ %i.p, %.backedge ]
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !19
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !18
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 19 ; 2 uses
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !20
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !19
   %i.l = sext i8 %i.k to i64
   %i.m = getelementptr inbounds [2 x i8], ptr %i.i, i64 %i.l
-  %i.n = load i16, ptr %i.m, align 2, !tbaa !21
+  %i.n = load i16, ptr %i.m, align 2, !tbaa !20
   %i.o = and i16 %i.n, 2048
   %.not27 = icmp eq i16 %i.o, 0
   br i1 %.not27, label %.backedge, label %bb.d
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %.lr.ph, %.backedge
 .backedge:                                        ; preds = %bb.f, %bb.g, %bb.e, %bb.c
   %i.p = tail call ptr @readdir(ptr noundef nonnull %i.a) #9 ; 2 uses
   %.not = icmp eq ptr %i.p, null
-  br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !15
+  br i1 %.not, label %._crit_edge, label %bb.c
 
 bb.d:                                             ; preds = %bb.c
   %i.q = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.j, ptr noundef null, i32 noundef 10) #9
@@ -291,7 +291,7 @@ bb.n:                                             ; preds = %.lr.ph38, %bb.m
   %i.ak = phi i32 [ %i.ai, %.lr.ph38 ], [ %.pre, %bb.m ] ; 2 uses
   %i.al = add nuw nsw i32 %.036, 1                ; 2 uses
   %i.am = icmp slt i32 %i.al, %i.ak
-  br i1 %i.am, label %.lr.ph38, label %.loopexit, !llvm.loop !16
+  br i1 %i.am, label %.lr.ph38, label %.loopexit, !llvm.loop !15
 
 .loopexit:                                        ; preds = %bb.n, %bb.l, %._crit_edge
   ret void
@@ -351,10 +351,9 @@ attributes #10 = { nounwind willreturn memory(none) }
 !13 = !{!"sockaddr", !10, i64 0, !4, i64 2}
 !14 = !{!13, !10, i64 0}
 !15 = distinct !{!15, !9}
-!16 = distinct !{!16, !9}
-!17 = !{!"any pointer", !4, i64 0}
-!18 = !{!"p1 short", !17, i64 0}
-!19 = !{!18, !18, i64 0}
-!20 = !{!4, !4, i64 0}
-!21 = !{!10, !10, i64 0}
+!16 = !{!"any pointer", !4, i64 0}
+!17 = !{!"p1 short", !16, i64 0}
+!18 = !{!17, !17, i64 0}
+!19 = !{!4, !4, i64 0}
+!20 = !{!10, !10, i64 0}
 end_hunk_0

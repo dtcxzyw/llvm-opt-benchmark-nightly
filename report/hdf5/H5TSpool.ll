@@ -96,7 +96,7 @@ declare i32 @H5TS_thread_create(ptr noundef, ptr noundef, ptr noundef) local_unn
 define internal noundef ptr @H5TS__pool_do(ptr noundef %0) #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
-  br i1 %i.a, label %.thread, label %.preheader.i.preheader.lr.ph, !prof !27
+  br i1 %i.a, label %.thread, label %.preheader.i.preheader.lr.ph, !prof !26
 
 .preheader.i.preheader.lr.ph:                     ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
@@ -109,16 +109,16 @@ bb.a:
   switch i32 %i.e, label %.thread [
     i32 -1, label %bb.b
     i32 0, label %H5TS_semaphore_wait.exit
-  ], !prof !28
+  ], !prof !27
 
 bb.b:                                             ; preds = %.preheader.i
   %i.f = tail call ptr @__errno_location() #7
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !29
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !28
   %i.h = icmp eq i32 %i.g, 4
   br i1 %i.h, label %.preheader.i.backedge, label %.thread
 
 .preheader.i.backedge:                            ; preds = %bb.b, %bb.g
-  br label %.preheader.i, !llvm.loop !26
+  br label %.preheader.i
 
 H5TS_semaphore_wait.exit:                         ; preds = %.preheader.i
   %i.i = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.b) #6
@@ -126,22 +126,22 @@ H5TS_semaphore_wait.exit:                         ; preds = %.preheader.i
   br i1 %.not, label %bb.c, label %.thread, !prof !19
 
 bb.c:                                             ; preds = %H5TS_semaphore_wait.exit
-  %i.j = load ptr, ptr %i.c, align 8, !tbaa !30   ; 5 uses
+  %i.j = load ptr, ptr %i.c, align 8, !tbaa !29   ; 5 uses
   %.not20 = icmp eq ptr %i.j, null
   br i1 %.not20, label %.split.us, label %bb.d, !prof !9
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !32   ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !31   ; 2 uses
   %.not22 = icmp eq ptr %i.l, null
   br i1 %.not22, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  store ptr null, ptr %i.d, align 8, !tbaa !33
+  store ptr null, ptr %i.d, align 8, !tbaa !32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  store ptr %i.l, ptr %i.c, align 8, !tbaa !30
+  store ptr %i.l, ptr %i.c, align 8, !tbaa !29
   %i.m = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.b) #6
   %.not23 = icmp eq i32 %i.m, 0
   br i1 %.not23, label %bb.g, label %.thread, !prof !19
@@ -155,9 +155,9 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !34
+  %i.o = load ptr, ptr %i.j, align 8, !tbaa !33
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !35
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !34
   %i.r = tail call ptr %i.o(ptr noundef %i.q) #6  ; 0 uses
   tail call void @free(ptr noundef nonnull %i.j) #6
   br label %.preheader.i.backedge
@@ -253,7 +253,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.h = add nuw i32 %.01329, 1                   ; 2 uses
   %i.i = load i32, ptr %i.f, align 8, !tbaa !16   ; 2 uses
   %i.j = icmp ult i32 %i.h, %i.i
-  br i1 %i.j, label %.lr.ph, label %._crit_edge, !llvm.loop !36
+  br i1 %i.j, label %.lr.ph, label %._crit_edge, !llvm.loop !35
 
 .lr.ph:                                           ; preds = %.preheader, %bb.d
   %.01329 = phi i32 [ %i.h, %bb.d ], [ 0, %.preheader ]
@@ -384,15 +384,14 @@ attributes #7 = { nounwind willreturn memory(none) }
 !23 = !{!"branch_weights", i32 4001, i32 4000000}
 !24 = !{!"p1 _ZTS11H5TS_pool_t", !11, i64 0}
 !25 = !{!24, !24, i64 0}
-!26 = distinct !{!26, !17}
-!27 = !{!"branch_weights", i32 1, i32 127}
-!28 = !{!"branch_weights", i32 1, i32 2001, i32 2000}
-!29 = !{!6, !6, i64 0}
-!30 = !{!14, !12, i64 80}
-!31 = !{!"H5TS_pool_task_t", !11, i64 0, !11, i64 8, !12, i64 16}
-!32 = !{!31, !12, i64 16}
-!33 = !{!14, !12, i64 88}
-!34 = !{!31, !11, i64 0}
-!35 = !{!31, !11, i64 8}
-!36 = distinct !{!36, !17}
+!26 = !{!"branch_weights", i32 1, i32 127}
+!27 = !{!"branch_weights", i32 1, i32 2001, i32 2000}
+!28 = !{!6, !6, i64 0}
+!29 = !{!14, !12, i64 80}
+!30 = !{!"H5TS_pool_task_t", !11, i64 0, !11, i64 8, !12, i64 16}
+!31 = !{!30, !12, i64 16}
+!32 = !{!14, !12, i64 88}
+!33 = !{!30, !11, i64 0}
+!34 = !{!30, !11, i64 8}
+!35 = distinct !{!35, !17}
 end_hunk_0

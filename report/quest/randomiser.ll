@@ -204,7 +204,7 @@ declare double @sqrt(double noundef) local_unnamed_addr #14
 define linkonce_odr noundef double @_ZNSt19normal_distributionIdEclISt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEEEdRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(2504) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #6 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !63, !noundef !64
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !62, !noundef !63
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %.preheader
 
@@ -366,7 +366,7 @@ select.unfold.i.i.backedge:                       ; preds = %_ZNSt23mersenne_twi
   %.023.i.i.be = phi i64 [ %i.cr, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv.exit ], [ %spec.select.i.i, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEdEclEv.exit26 ]
   %.01422.i.i.be = phi double [ %i.cq, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv.exit ], [ 1.000000e+00, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEdEclEv.exit26 ]
   %.01521.i.i.be = phi double [ %i.cn, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv.exit ], [ 0.000000e+00, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEdEclEv.exit26 ]
-  br label %select.unfold.i.i, !llvm.loop !60
+  br label %select.unfold.i.i
 
 bb.d:                                             ; preds = %bb.c
   br label %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEdEclEv.exit
@@ -416,7 +416,7 @@ vector.body83:                                    ; preds = %vector.body83, %vec
   store <2 x i64> %i.dk, ptr %i.cx, align 8, !tbaa !20
   %index.next89 = add nuw i64 %index84, 2         ; 2 uses
   %i.dl = icmp eq i64 %index.next89, 156
-  br i1 %i.dl, label %vector.ph, label %vector.body83, !llvm.loop !61
+  br i1 %i.dl, label %vector.ph, label %vector.body83, !llvm.loop !60
 
 vector.ph:                                        ; preds = %vector.body83
   %.pre24.i.i34 = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !20
@@ -445,7 +445,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.dz, ptr %i.dn, align 8, !tbaa !20
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ea = icmp eq i64 %index.next, 154
-  br i1 %i.ea, label %.preheader.i.i35, label %vector.body, !llvm.loop !62
+  br i1 %i.ea, label %.preheader.i.i35, label %vector.body, !llvm.loop !61
 
 .preheader.i.i35:                                 ; preds = %vector.body
   %vector.recur.extract = extractelement <2 x i64> %wide.load, i64 1
@@ -530,8 +530,8 @@ bb.g:                                             ; preds = %_ZNSt8__detail8_Ada
 bb.h:                                             ; preds = %bb.g, %bb.b
   %.0 = phi double [ %i.t, %bb.b ], [ %i.gd, %bb.g ]
   %i.ge = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.gf = load double, ptr %i.ge, align 8, !tbaa !65
-  %i.gg = load double, ptr %2, align 8, !tbaa !66
+  %i.gf = load double, ptr %i.ge, align 8, !tbaa !64
+  %i.gg = load double, ptr %2, align 8, !tbaa !65
   %i.gh = tail call double @llvm.fmuladd.f64(double %.0, double %i.gf, double %i.gg)
   ret double %i.gh
 }
@@ -685,11 +685,10 @@ attributes #23 = { builtin allocsize(0) }
 !57 = !{!55, !28, i64 0}
 !58 = distinct !{!58, !25, !26, !27}
 !59 = distinct !{!59, !25, !26, !27}
-!60 = distinct !{!60, !25}
+!60 = distinct !{!60, !25, !26, !27}
 !61 = distinct !{!61, !25, !26, !27}
-!62 = distinct !{!62, !25, !26, !27}
-!63 = !{i8 0, i8 2}
-!64 = !{}
-!65 = !{!30, !28, i64 8}
-!66 = !{!30, !28, i64 0}
+!62 = !{i8 0, i8 2}
+!63 = !{}
+!64 = !{!30, !28, i64 8}
+!65 = !{!30, !28, i64 0}
 end_hunk_0

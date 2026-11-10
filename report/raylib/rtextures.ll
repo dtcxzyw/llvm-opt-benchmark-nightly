@@ -205,7 +205,7 @@ stbi__mul2sizes_valid.exit12.i.i.i:               ; preds = %stbi__mul2sizes_val
 stbi__malloc_mad3.exit.i:                         ; preds = %stbi__mul2sizes_valid.exit12.i.i.i, %stbi__mul2sizes_valid.exit.thread15.i.i.i
   %i.adi = mul nuw nsw i32 %i.adc, %i.acz
   %i.adj = sext i32 %i.adi to i64
-  %i.adk = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %i.adj) #53 ; 30 uses
+  %i.adk = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %i.adj) #53 ; 29 uses
   %.not369.i = icmp eq ptr %i.adk, null
   br i1 %.not369.i, label %stbi__malloc_mad3.exit.thread.i, label %bb.cq
 
@@ -608,10 +608,9 @@ bb.gw:                                            ; preds = %.loopexit40.i
 
 .lr.ph92.preheader.i:                             ; preds = %.lr.ph95.i
   %wide.trip.count112.i = zext nneg i32 %i.bbz to i64
-  %wide.trip.count107.i = zext nneg i32 %factor.op.mul.i to i64 ; 10 uses
+  %wide.trip.count107.i = zext nneg i32 %factor.op.mul.i to i64 ; 9 uses
+  %invariant.gep = getelementptr i8, ptr %i.adk, i64 %wide.trip.count107.i ; 2 uses
   %min.iters.check = icmp ult i32 %factor.op.mul.i, 4
-  %invariant.gep = getelementptr i8, ptr %i.adk, i64 %wide.trip.count107.i
-  %invariant.gep133 = getelementptr i8, ptr %i.adk, i64 %wide.trip.count107.i
   %min.iters.check22 = icmp ult i32 %factor.op.mul.i, 32
   %i.bcc = and i64 %wide.trip.count107.i, 28
   %n.vec = and i64 %wide.trip.count107.i, 2147483616 ; 4 uses
@@ -639,7 +638,7 @@ iter.check:                                       ; preds = %._crit_edge93.i, %.
 
 vector.memcheck:                                  ; preds = %iter.check
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.bcf
-  %gep134 = getelementptr i8, ptr %invariant.gep133, i64 %i.bck
+  %gep134 = getelementptr i8, ptr %invariant.gep, i64 %i.bck
   %bound0 = icmp ult ptr %i.bcg, %gep134
   %bound1 = icmp ult ptr %i.bcl, %gep
   %found.conflict = and i1 %bound0, %bound1

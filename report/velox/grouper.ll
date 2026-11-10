@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %i.d, align 8, !tbaa !422  ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !424  ; 3 uses
-  %i.i = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.e ; 5 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !424  ; 2 uses
+  %i.i = getelementptr [4 x i8], ptr %i.h, i64 %i.e ; 6 uses
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !424  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   call void @_ZN5arrow8internal23OptionalBitBlockCounterC1EPKhll(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef %i.j, i64 noundef %i.e, i64 noundef %i.b)
@@ -216,8 +216,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph23.i:                                       ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.n = shl i64 %i.e, 2                          ; 2 uses
-  %invariant.gep = getelementptr i8, ptr %i.h, i64 %i.n
+  %i.n = shl i64 %i.e, 2
   %i.o = getelementptr i8, ptr %i.h, i64 %i.n
   %i.p = getelementptr i8, ptr %i.o, i64 4
   br label %bb.c
@@ -252,7 +251,7 @@ vector.memcheck:                                  ; preds = %.lr.ph18.i
   %i.aa = getelementptr i8, ptr %i.v, i64 %i.x
   %i.ab = getelementptr i8, ptr %i.aa, i64 %i.z
   %i.ac = shl i64 %.02422.i, 2                    ; 2 uses
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.ac
+  %gep = getelementptr i8, ptr %i.i, i64 %i.ac
   %i.ad = getelementptr i8, ptr %i.p, i64 %i.ac
   %i.ae = getelementptr i8, ptr %i.ad, i64 %i.z
   %bound0 = icmp ult ptr %i.y, %i.ae
@@ -655,8 +654,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %i.d, align 8, !tbaa !422  ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !424  ; 3 uses
-  %i.i = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.e ; 5 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !424  ; 2 uses
+  %i.i = getelementptr [8 x i8], ptr %i.h, i64 %i.e ; 6 uses
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !424  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   call void @_ZN5arrow8internal23OptionalBitBlockCounterC1EPKhll(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef %i.j, i64 noundef %i.e, i64 noundef %i.b)
@@ -666,8 +665,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph21.i:                                       ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.n = shl i64 %i.e, 3                          ; 2 uses
-  %invariant.gep = getelementptr i8, ptr %i.h, i64 %i.n
+  %i.n = shl i64 %i.e, 3
   %i.o = getelementptr i8, ptr %i.h, i64 %i.n
   %i.p = getelementptr i8, ptr %i.o, i64 8
   br label %bb.c
@@ -698,7 +696,7 @@ bb.c:                                             ; preds = %.loopexit.i, %.lr.p
 vector.memcheck:                                  ; preds = %.lr.ph17.i
   %i.x = getelementptr i8, ptr %i.w, i64 8
   %i.y = shl i64 %.02420.i, 3
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.y
+  %gep = getelementptr i8, ptr %i.i, i64 %i.y
   %i.z = add i64 %.02420.i, %i.s
   %i.aa = shl i64 %i.z, 3
   %i.ab = getelementptr i8, ptr %i.p, i64 %i.aa

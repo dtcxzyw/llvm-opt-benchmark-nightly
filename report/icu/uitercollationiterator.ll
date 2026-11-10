@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cb = load ptr, ptr %i.d, align 8, !tbaa !19, !nonnull !20, !align !21 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 32
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !24
-  %i.ce = tail call noundef i32 %i.cd(ptr noundef nonnull %i.cb, i32 noundef 1), !inline_history !73 ; 3 uses
+  %i.ce = tail call noundef i32 %i.cd(ptr noundef nonnull %i.cb, i32 noundef 1), !inline_history !72 ; 3 uses
   store i32 %i.ce, ptr %i.b, align 8, !tbaa !47
   store i32 %i.ce, ptr %i.e, align 4, !tbaa !48
   %i.cf = load i32, ptr %i.c, align 4, !tbaa !45
@@ -217,7 +217,7 @@ bb.w:                                             ; preds = %bb.u
   %i.ck = load i32, ptr %i.c, align 4, !tbaa !45
   %i.cl = load i32, ptr %i.e, align 4, !tbaa !48
   %i.cm = sub nsw i32 %i.ck, %i.cl
-  %i.cn = tail call noundef i32 %i.cj(ptr noundef nonnull %i.ch, i32 noundef %i.cm, i32 noundef 1), !inline_history !73 ; 0 uses
+  %i.cn = tail call noundef i32 %i.cj(ptr noundef nonnull %i.ch, i32 noundef %i.cm, i32 noundef 1), !inline_history !72 ; 0 uses
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.u
@@ -231,7 +231,7 @@ _ZN6icu_7825FCDUIterCollationIterator16switchToBackwardEv.exit: ; preds = %bb.p,
   br label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %_ZN6icu_7825FCDUIterCollationIterator16switchToBackwardEv.exit, %.critedge
-  br label %.backedge, !llvm.loop !72
+  br label %.backedge
 
 _ZN6icu_7812CollationFCD7hasLcccEi.exit.thread:   ; preds = %.critedge, %bb.d, %bb.e, %_ZN6icu_7812CollationFCD7hasLcccEi.exit, %bb.o, %bb.n, %bb.m, %bb.t, %bb.q, %bb.c
   %.221 = phi i32 [ -1, %bb.c ], [ %i.j, %bb.o ], [ %i.bx, %bb.t ], [ %i.bp, %bb.q ], [ %i.bg, %bb.m ], [ %i.j, %bb.n ], [ %i.j, %bb.e ], [ %i.j, %_ZN6icu_7812CollationFCD7hasLcccEi.exit ], [ -1, %.critedge ], [ %i.j, %bb.d ]
@@ -411,7 +411,7 @@ _ZNK6icu_7815Normalizer2Impl8getFCD16Ei.exit53.thread: ; preds = %bb.s, %bb.q, %
 
 bb.u:                                             ; preds = %_ZNK6icu_7815Normalizer2Impl8getFCD16Ei.exit53
   %i.br = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString6appendEi(ptr noundef nonnull align 8 dereferenceable(64) %2, i32 noundef %i.at)
-          to label %bb.n unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.loop !74 ; 0 uses
+          to label %bb.n unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.loop !73 ; 0 uses
 
 .loopexit:                                        ; preds = %bb.p, %bb.n, %_ZNK6icu_7815Normalizer2Impl8getFCD16Ei.exit53.thread
   %i.bs = load i16, ptr %i.i, align 8, !tbaa !49  ; 2 uses
@@ -567,7 +567,7 @@ bb.a:
   %i.d = add nsw i32 %.03, -1
   %i.e = icmp sgt i32 %.03, 1
   %or.cond = select i1 %i.c, i1 %i.e, i1 false
-  br i1 %or.cond, label %.lr.ph, label %.critedge, !llvm.loop !75
+  br i1 %or.cond, label %.lr.ph, label %.critedge, !llvm.loop !74
 
 .critedge:                                        ; preds = %.lr.ph, %bb.a
   ret void
@@ -586,7 +586,7 @@ bb.a:
   %i.d = add nsw i32 %.03, -1
   %i.e = icmp sgt i32 %.03, 1
   %or.cond = select i1 %i.c, i1 %i.e, i1 false
-  br i1 %or.cond, label %.lr.ph, label %.critedge, !llvm.loop !76
+  br i1 %or.cond, label %.lr.ph, label %.critedge, !llvm.loop !75
 
 .critedge:                                        ; preds = %.lr.ph, %bb.a
   ret void
@@ -710,9 +710,8 @@ attributes #5 = { nounwind }
 !69 = distinct !{!69, !37}
 !70 = distinct !{!70, !37}
 !71 = distinct !{!71, !37}
-!72 = distinct !{!72, !37}
-!73 = !{ptr @_ZN6icu_7825FCDUIterCollationIterator16switchToBackwardEv}
+!72 = !{ptr @_ZN6icu_7825FCDUIterCollationIterator16switchToBackwardEv}
+!73 = distinct !{!73, !37}
 !74 = distinct !{!74, !37}
 !75 = distinct !{!75, !37}
-!76 = distinct !{!76, !37}
 end_hunk_0

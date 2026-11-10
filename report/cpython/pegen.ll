@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @_PyPegen_run_parser(ptr noundef %0) local_unnamed_addr #1 !guid !177 {
+define hidden ptr @_PyPegen_run_parser(ptr noundef %0) local_unnamed_addr #1 !guid !176 {
 bb.a:
   %i.a = tail call ptr @_PyPegen_parse(ptr noundef %0) #14 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
@@ -341,10 +341,10 @@ reset_parser_state_for_error_pass.exit:           ; preds = %reset_parser_state_
   %i.bd = getelementptr i8, ptr %0, i64 16
   store i32 0, ptr %i.bd, align 8, !tbaa !55
   %i.be = getelementptr i8, ptr %0, i64 148
-  store i32 1, ptr %i.be, align 4, !tbaa !179
+  store i32 1, ptr %i.be, align 4, !tbaa !178
   %i.bf = load ptr, ptr %0, align 8, !tbaa !63
   %i.bg = getelementptr i8, ptr %i.bf, i64 2844
-  store i32 1, ptr %i.bg, align 4, !tbaa !180
+  store i32 1, ptr %i.bg, align 4, !tbaa !179
   %i.bh = tail call ptr @_PyPegen_parse(ptr noundef nonnull %0) #14 ; 0 uses
   tail call void @_Pypegen_set_syntax_error(ptr noundef nonnull %0, ptr noundef %i.r) #14
   %i.bi = load ptr, ptr @PyExc_SyntaxError, align 8, !tbaa !43
@@ -376,7 +376,7 @@ bb.k:                                             ; preds = %PyObject_TypeCheck.
 PyObject_TypeCheck.exit.thread.i:                 ; preds = %PyObject_TypeCheck.exit.i, %bb.j
   %i.bo = load ptr, ptr %0, align 8, !tbaa !63    ; 4 uses
   %i.bp = getelementptr i8, ptr %i.bo, i64 2824
-  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !181 ; 2 uses
+  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !180 ; 2 uses
   %.not35.i = icmp eq ptr %i.bq, null
   br i1 %.not35.i, label %bb.l, label %.thread48.i
 
@@ -395,7 +395,7 @@ bb.m:                                             ; preds = %bb.l
 .thread48.i:                                      ; preds = %bb.m, %PyObject_TypeCheck.exit.thread.i
   %.12851.i = phi ptr [ %i.bu, %bb.m ], [ %i.bq, %PyObject_TypeCheck.exit.thread.i ] ; 3 uses
   %i.bv = getelementptr i8, ptr %i.bo, i64 2760
-  %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !182 ; 2 uses
+  %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !181 ; 2 uses
   %i.bx = icmp eq ptr %i.bw, null
   br i1 %i.bx, label %bb.n, label %bb.o
 
@@ -426,9 +426,9 @@ bb.q:                                             ; preds = %.thread52.i
 
 Py_INCREF.exit.i:                                 ; preds = %bb.q, %.thread52.i, %bb.p
   %.1.i = phi ptr [ %.0.i, %bb.p ], [ @_Py_NoneStruct, %.thread52.i ], [ @_Py_NoneStruct, %bb.q ] ; 4 uses
-  %i.ce = load i32, ptr %i.s, align 4, !tbaa !183
+  %i.ce = load i32, ptr %i.s, align 4, !tbaa !182
   %i.cf = getelementptr i8, ptr %0, i64 160
-  %i.cg = load i32, ptr %i.cf, align 8, !tbaa !184
+  %i.cg = load i32, ptr %i.cf, align 8, !tbaa !183
   %i.ch = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.18, i32 noundef %i.ce, i32 noundef %i.cg, ptr noundef nonnull %.1.i) #14 ; 2 uses
   %.not41.i = icmp eq ptr %i.ch, null
   br i1 %.not41.i, label %bb.r, label %bb.u
@@ -454,7 +454,7 @@ Py_DECREF.exit.i:                                 ; preds = %bb.t, %bb.s, %bb.r
 
 bb.u:                                             ; preds = %Py_INCREF.exit.i
   %i.cl = getelementptr i8, ptr %i.bk, i64 136    ; 2 uses
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !186 ; 4 uses
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !185 ; 4 uses
   %.not.i44.i = icmp eq ptr %i.cm, null
   br i1 %.not.i44.i, label %Py_XDECREF.exit.i, label %bb.v
 
@@ -474,7 +474,7 @@ bb.x:                                             ; preds = %bb.w
   br label %Py_XDECREF.exit.i
 
 Py_XDECREF.exit.i:                                ; preds = %bb.x, %bb.w, %bb.v, %bb.u
-  store ptr %i.ch, ptr %i.cl, align 8, !tbaa !186
+  store ptr %i.ch, ptr %i.cl, align 8, !tbaa !185
   tail call void @PyErr_SetRaisedException(ptr noundef nonnull %i.bk) #14
   br label %_PyPegen_set_syntax_error_metadata.exit
 
@@ -487,7 +487,7 @@ bb.y:                                             ; preds = %bb.a
 bb.z:                                             ; preds = %bb.y
   %.val24 = load ptr, ptr %0, align 8, !tbaa !63  ; 2 uses
   %i.ct = getelementptr i8, ptr %.val24, i64 8
-  %.val24.val = load ptr, ptr %i.ct, align 8, !tbaa !187 ; 2 uses
+  %.val24.val = load ptr, ptr %i.ct, align 8, !tbaa !186 ; 2 uses
   %i.cu = load i8, ptr %.val24.val, align 1, !tbaa !42
   br label %.loopexit.i
 
@@ -511,7 +511,7 @@ bb.z:                                             ; preds = %bb.y
 .loopexit.i.backedge:                             ; preds = %.preheader.i, %.preheader.i, %.critedge.i
   %.121.i.be = phi ptr [ %i.cv, %.critedge.i ], [ %.222.i, %.preheader.i ], [ %.222.i, %.preheader.i ]
   %.1.i26.be = phi i8 [ %i.cw, %.critedge.i ], [ %.2.i, %.preheader.i ], [ %.2.i, %.preheader.i ]
-  br label %.loopexit.i, !llvm.loop !175
+  br label %.loopexit.i
 
 .preheader.i:                                     ; preds = %.loopexit.i, %bb.aa
   %.222.i = phi ptr [ %i.cx, %bb.aa ], [ %.121.i, %.loopexit.i ] ; 3 uses
@@ -524,7 +524,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %.preheader.i
   %i.cx = getelementptr i8, ptr %.222.i, i64 1    ; 2 uses
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !42
-  br label %.preheader.i, !llvm.loop !176
+  br label %.preheader.i, !llvm.loop !175
 
 bad_single_statement.exit:                        ; preds = %.loopexit.i
   %i.cz = getelementptr i8, ptr %.val24, i64 64
@@ -549,7 +549,7 @@ declare i32 @PyErr_ExceptionMatches(ptr noundef) local_unnamed_addr #3
 declare void @_Pypegen_set_syntax_error(ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @_PyPegen_run_parser_from_file_pointer(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr noundef %7, ptr noundef %8, ptr noundef %9) local_unnamed_addr #1 !guid !188 {
+define hidden ptr @_PyPegen_run_parser_from_file_pointer(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr noundef %7, ptr noundef %8, ptr noundef %9) local_unnamed_addr #1 !guid !187 {
 bb.a:
   %i.a = tail call ptr @_PyTokenizer_FromFile(ptr noundef %0, ptr noundef %3, ptr noundef %4, ptr noundef %5) #14 ; 9 uses
   %i.b = icmp eq ptr %i.a, null
@@ -566,7 +566,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %i.a, i64 72
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !189
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !188
   %i.f = icmp eq ptr %i.e, null
   %i.g = icmp ne ptr %4, null
   %or.cond = or i1 %i.g, %i.f
@@ -689,7 +689,7 @@ declare ptr @PyUnicode_FromString(ptr noundef) local_unnamed_addr #3
 declare void @_PyTokenizer_Free(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @_PyPegen_run_parser_from_string(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #1 !guid !190 {
+define hidden ptr @_PyPegen_run_parser_from_string(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #1 !guid !189 {
 bb.a:
   %i.a = icmp eq i32 %1, 257
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -774,7 +774,7 @@ bb.l:                                             ; preds = %_Py_XNewRef.exit
 
 bb.m:                                             ; preds = %bb.l
   %i.z = getelementptr i8, ptr %3, i64 4
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !191
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !190
   br label %compute_parser_flags.exit.thread
 
 compute_parser_flags.exit.thread:                 ; preds = %_Py_XNewRef.exit, %bb.l, %bb.m
@@ -829,7 +829,7 @@ declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #9
 declare ptr @_PyAST_Name(ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @parsenumber_raw(ptr noundef nonnull %0) unnamed_addr #1 !guid !192 {
+define internal fastcc ptr @parsenumber_raw(ptr noundef nonnull %0) unnamed_addr #1 !guid !191 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
@@ -1152,23 +1152,22 @@ attributes #16 = { nounwind willreturn memory(none) }
 !171 = distinct !{!171, !44}
 !172 = !{i64 7852282500829356107}
 !173 = distinct !{!173, !44}
-!174 = distinct !{!174, !178}
+!174 = distinct !{!174, !177}
 !175 = distinct !{!175, !44}
-!176 = distinct !{!176, !44}
-!177 = !{i64 -291205067691115691}
-!178 = !{!"llvm.loop.unroll.disable"}
-!179 = !{!40, !9, i64 148}
-!180 = !{!66, !9, i64 2844}
-!181 = !{!66, !64, i64 2824}
-!182 = !{!66, !64, i64 2760}
-!183 = !{!40, !9, i64 156}
-!184 = !{!40, !9, i64 160}
-!185 = !{!"", !46, i64 0, !36, i64 16, !36, i64 24, !36, i64 32, !36, i64 40, !36, i64 48, !36, i64 56, !8, i64 64, !36, i64 72, !36, i64 80, !36, i64 88, !36, i64 96, !36, i64 104, !36, i64 112, !36, i64 120, !36, i64 128, !36, i64 136}
-!186 = !{!185, !36, i64 136}
-!187 = !{!66, !64, i64 8}
-!188 = !{i64 -9137027190150413152}
-!189 = !{!66, !65, i64 72}
-!190 = !{i64 6310428685954525947}
-!191 = !{!97, !9, i64 4}
-!192 = !{i64 3344939239457265948}
+!176 = !{i64 -291205067691115691}
+!177 = !{!"llvm.loop.unroll.disable"}
+!178 = !{!40, !9, i64 148}
+!179 = !{!66, !9, i64 2844}
+!180 = !{!66, !64, i64 2824}
+!181 = !{!66, !64, i64 2760}
+!182 = !{!40, !9, i64 156}
+!183 = !{!40, !9, i64 160}
+!184 = !{!"", !46, i64 0, !36, i64 16, !36, i64 24, !36, i64 32, !36, i64 40, !36, i64 48, !36, i64 56, !8, i64 64, !36, i64 72, !36, i64 80, !36, i64 88, !36, i64 96, !36, i64 104, !36, i64 112, !36, i64 120, !36, i64 128, !36, i64 136}
+!185 = !{!184, !36, i64 136}
+!186 = !{!66, !64, i64 8}
+!187 = !{i64 -9137027190150413152}
+!188 = !{!66, !65, i64 72}
+!189 = !{i64 6310428685954525947}
+!190 = !{!97, !9, i64 4}
+!191 = !{i64 3344939239457265948}
 end_hunk_0

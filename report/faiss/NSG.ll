@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond56.not, label %_ZNSt10unique_ptrIN5faiss16DistanceComputerESt14default_deleteIS1_EED2Ev.exit, label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %bb.s, %bb.r
-  br label %.critedge, !llvm.loop !232
+  br label %.critedge
 
 _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.q, %.critedge, %.noexc58, %bb.l, %bb.h, %bb.i, %bb.j
   %lpad.loopexit.split-lp133 = landingpad { ptr, i32 }
@@ -389,7 +389,7 @@ _ZNSt11_Deque_baseIiSaIiEE16_M_allocate_nodeEv.exit.i: ; preds = %.lr.ph.i
   store ptr %i.l, ptr %.011.i, align 8, !tbaa !124
   %i.m = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 2 uses
   %i.n = icmp ult ptr %i.m, %i.k
-  br i1 %i.n, label %.lr.ph.i, label %_ZNSt11_Deque_baseIiSaIiEE15_M_create_nodesEPPiS3_.exit, !llvm.loop !233
+  br i1 %i.n, label %.lr.ph.i, label %_ZNSt11_Deque_baseIiSaIiEE15_M_create_nodesEPPiS3_.exit, !llvm.loop !232
 
 bb.a:                                             ; preds = %.lr.ph.i
   %i.o = landingpad { ptr, i32 }
@@ -467,7 +467,7 @@ _ZNSt11_Deque_baseIiSaIiEE15_M_create_nodesEPPiS3_.exit: ; preds = %_ZNSt11_Dequ
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 512
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !126
-  store ptr %i.ag, ptr %i.ae, align 8, !tbaa !234
+  store ptr %i.ag, ptr %i.ae, align 8, !tbaa !233
   %i.ar = and i64 %1, 127
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %i.ar
   store ptr %i.as, ptr %i.ak, align 8, !tbaa !120
@@ -870,7 +870,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.j
   %.185 = phi i32 [ %i.bd, %bb.j ], [ %.084197, %.lr.ph ] ; 2 uses
   %i.be = add nuw i64 %.090196, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.be, %invariant.umin
-  br i1 %exitcond.not, label %.preheader182, label %.lr.ph, !llvm.loop !235
+  br i1 %exitcond.not, label %.preheader182, label %.lr.ph, !llvm.loop !234
 
 .preheader178:                                    ; preds = %bb.p, %.preheader182
   %.not212 = icmp eq ptr %.0.i.i.i.i.i, %.sroa.0158.0
@@ -896,7 +896,7 @@ bb.l:                                             ; preds = %.lr.ph201
           to label %bb.m unwind label %.loopexit.split-lp174.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.m:                                             ; preds = %bb.l
-  br i1 %i.bn, label %bb.p, label %bb.n, !llvm.loop !236
+  br i1 %i.bn, label %bb.p, label %bb.n, !llvm.loop !235
 
 bb.n:                                             ; preds = %bb.m
   %i.bo = sext i32 %.286200 to i64
@@ -1030,7 +1030,7 @@ _ZNSt6vectorIN5faiss3nsg4NodeESaIS2_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17
 _ZNSt6vectorIN5faiss3nsg4NodeESaIS2_EE12emplace_backIJRiRfEEERS2_DpOT_.exit: ; preds = %_ZNSt6vectorIN5faiss3nsg4NodeESaIS2_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.t
   %i.dk = add nuw i64 %.091202, 1                 ; 2 uses
   %exitcond226.not = icmp eq i64 %i.dk, %i.aq
-  br i1 %exitcond226.not, label %._crit_edge, label %bb.r, !llvm.loop !237
+  br i1 %exitcond226.not, label %._crit_edge, label %bb.r, !llvm.loop !236
 
 .lr.ph209:                                        ; preds = %.noexc115
   %i.dl = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
@@ -1291,7 +1291,7 @@ bb.aq:                                            ; preds = %_ZN5faiss3nsg16inse
   %.2 = phi i32 [ %.0204, %bb.ab ], [ %.0204, %.lr.ph206 ], [ %.sroa.speculated, %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit ], [ %.0204, %_ZNSt6vectorIN5faiss3nsg4NodeESaIS2_EE12emplace_backIJRiRfEEERS2_DpOT_.exit128 ] ; 2 uses
   %i.hb = add nuw i64 %.088205, 1                 ; 2 uses
   %exitcond229.not = icmp eq i64 %i.hb, %i.ea
-  br i1 %exitcond229.not, label %.loopexit, label %.lr.ph206, !llvm.loop !238
+  br i1 %exitcond229.not, label %.loopexit, label %.lr.ph206, !llvm.loop !237
 
 .loopexit:                                        ; preds = %bb.aq, %.preheader, %bb.y
   %.3 = phi i32 [ %5, %bb.y ], [ %5, %.preheader ], [ %.2, %bb.aq ] ; 2 uses
@@ -1299,7 +1299,7 @@ bb.aq:                                            ; preds = %_ZN5faiss3nsg16inse
   %i.hc = add nsw i32 %.089208, 1
   %i.hd = select i1 %.not, i32 %i.hc, i32 %.3     ; 2 uses
   %i.he = icmp slt i32 %i.hd, %5
-  br i1 %i.he, label %bb.y, label %._crit_edge210, !llvm.loop !239
+  br i1 %i.he, label %bb.y, label %._crit_edge210, !llvm.loop !238
 
 ._crit_edge210:                                   ; preds = %.loopexit, %._crit_edge
   %.not.i.i.i129 = icmp eq ptr %.sroa.0150.0, null
@@ -1411,7 +1411,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !240
+  br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !239
 
 bb.d:                                             ; preds = %.preheader.us, %bb.c
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.c ] ; 2 uses
@@ -1769,12 +1769,11 @@ attributes #26 = { noreturn }
 !230 = distinct !{!230, !70}
 !231 = distinct !{!231, !70}
 !232 = distinct !{!232, !70}
-!233 = distinct !{!233, !70}
-!234 = !{!119, !72, i64 16}
+!233 = !{!119, !72, i64 16}
+!234 = distinct !{!234, !70}
 !235 = distinct !{!235, !70}
 !236 = distinct !{!236, !70}
 !237 = distinct !{!237, !70}
 !238 = distinct !{!238, !70}
 !239 = distinct !{!239, !70}
-!240 = distinct !{!240, !70}
 end_hunk_1

@@ -202,7 +202,7 @@ bb.au:                                            ; preds = %lpGetValue.exit43, 
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noundef ptr @lpNextRandom(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #3 !guid !142 {
+define dso_local noundef ptr @lpNextRandom(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #3 !guid !141 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = icmp sgt i32 %4, 0
@@ -287,7 +287,7 @@ bb.g:                                             ; preds = %.lr.ph, %.backedge
   %i.w = icmp ult i32 %.025.be, %.016.in.i
   %i.x = icmp ne ptr %i.v, null
   %i.y = and i1 %i.x, %i.w
-  br i1 %i.y, label %bb.g, label %.loopexit, !llvm.loop !141
+  br i1 %i.y, label %bb.g, label %.loopexit
 
 bb.h:                                             ; preds = %bb.g
   %i.z = sub nuw i32 %.016.in.i, %.02538
@@ -310,7 +310,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @lpRepr(ptr noundef %0) local_unnamed_addr #3 !guid !145 {
+define dso_local void @lpRepr(ptr noundef %0) local_unnamed_addr #3 !guid !144 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -636,7 +636,7 @@ lpGet.exit:                                       ; preds = %bb.x, %bb.z, %bb.ab
   %.062.i.i = phi ptr [ %i.bo, %bb.x ], [ %i.by, %bb.z ], [ %i.cd, %bb.ab ], [ %i.c, %bb.am ] ; 2 uses
   %i.dk = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.23) ; 0 uses
   %i.dl = icmp sgt i64 %.037, 40
-  %i.dm = load ptr, ptr @stdout, align 8, !tbaa !147 ; 2 uses
+  %i.dm = load ptr, ptr @stdout, align 8, !tbaa !146 ; 2 uses
   br i1 %i.dl, label %bb.ao, label %bb.ar
 
 bb.an:                                            ; preds = %lpEncodeBacklenBytes.exit, %bb.an
@@ -649,7 +649,7 @@ bb.an:                                            ; preds = %lpEncodeBacklenByte
   %i.ds = add i32 %.045, 1                        ; 2 uses
   %i.dt = zext i32 %i.ds to i64                   ; 2 uses
   %i.du = icmp samesign ugt i64 %i.be, %i.dt
-  br i1 %i.du, label %bb.an, label %bb.w, !llvm.loop !143
+  br i1 %i.du, label %bb.an, label %bb.w, !llvm.loop !142
 
 bb.ao:                                            ; preds = %lpGet.exit
   %i.dv = call i64 @fwrite(ptr noundef nonnull %.062.i.i, i64 noundef 40, i64 noundef 1, ptr noundef %i.dm)
@@ -678,7 +678,7 @@ bb.at:                                            ; preds = %bb.ar, %bb.as, %bb.
   %i.ea = add nuw nsw i32 %.02849, 1
   %i.eb = call ptr @lpNext(ptr noundef nonnull %0, ptr noundef nonnull %.02947) ; 2 uses
   %.not = icmp eq ptr %i.eb, null
-  br i1 %.not, label %._crit_edge, label %bb.g, !llvm.loop !144
+  br i1 %.not, label %._crit_edge, label %bb.g, !llvm.loop !143
 
 ._crit_edge:                                      ; preds = %bb.at, %lpLength.exit
   %puts = call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
@@ -889,11 +889,10 @@ attributes #24 = { cold }
 !138 = !{!136, !13, i64 4}
 !139 = distinct !{!139, !44}
 !140 = !{i64 -8600289614445305647}
-!141 = distinct !{!141, !44}
-!142 = !{i64 -720080534877263253}
+!141 = !{i64 -720080534877263253}
+!142 = distinct !{!142, !44}
 !143 = distinct !{!143, !44}
-!144 = distinct !{!144, !44}
-!145 = !{i64 5164726159497769671}
-!146 = !{!"p1 _ZTS8_IO_FILE", !48, i64 0}
-!147 = !{!146, !146, i64 0}
+!144 = !{i64 5164726159497769671}
+!145 = !{!"p1 _ZTS8_IO_FILE", !48, i64 0}
+!146 = !{!145, !145, i64 0}
 end_hunk_0

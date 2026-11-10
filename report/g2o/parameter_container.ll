@@ -202,7 +202,7 @@ bb.a:
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
-  store ptr %i.b, ptr %4, align 8, !tbaa !77
+  store ptr %i.b, ptr %4, align 8, !tbaa !76
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i64 0, ptr %i.c, align 8, !tbaa !45
   store i8 0, ptr %i.b, align 8, !tbaa !46
@@ -211,7 +211,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
-  store i64 4, ptr %5, align 8, !tbaa !78
+  store i64 4, ptr %5, align 8, !tbaa !77
   %.not = icmp eq ptr %2, null
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -287,7 +287,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br label %.split.us.backedge
 
 .split.us.backedge:                               ; preds = %bb.n, %bb.g, %bb.f, %bb.e
-  br label %.split.us, !llvm.loop !75
+  br label %.split.us
 
 .split:                                           ; preds = %bb.b, %.split.backedge
   %i.ab = invoke noundef i32 @_ZN3g2o8readLineERSiRNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(128) %3)
@@ -362,7 +362,7 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
   %.1.in.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 %.1.in.v.i.i.i
   %.1.i.i.i = load ptr, ptr %.1.in.i.i.i, align 8, !tbaa !40 ; 2 uses
   %.not.i.i.i = icmp eq ptr %.1.i.i.i, null
-  br i1 %.not.i.i.i, label %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !76
+  br i1 %.not.i.i.i, label %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !75
 
 _ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i
   %i.av = icmp eq ptr %.19.i.i.i, %i.g
@@ -454,7 +454,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br label %.split.backedge
 
 .split.backedge:                                  ; preds = %bb.af, %bb.y, %bb.r, %bb.s, %bb.t
-  br label %.split, !llvm.loop !75
+  br label %.split
 
 .split43:                                         ; preds = %.split43.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.split47.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   %.pn.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp75, %.split47.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp73, %.split43.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
@@ -511,7 +511,7 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
   %i.cn = getelementptr inbounds i8, ptr %3, i64 %i.cm
   store ptr %i.ck, ptr %i.cn, align 8, !tbaa !21
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 0, ptr %i.co, align 8, !tbaa !80
+  store i64 0, ptr %i.co, align 8, !tbaa !79
   %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 128
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.cp) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
@@ -579,10 +579,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !47
   tail call void @_ZNSt8_Rb_treeIiSt4pairIKiPN3g2o9ParameterEESt10_Select1stIS5_ESt4lessIiESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %.07, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !82   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !81   ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.07, i64 noundef 48) #18
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !81
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !80
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -632,7 +632,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %.in.i = getelementptr inbounds nuw i8, ptr %.02024.i, i64 %.in.v.i
   %.020.i = load ptr, ptr %.in.i, align 8, !tbaa !40 ; 2 uses
   %.not.i = icmp eq ptr %.020.i, null
-  br i1 %.not.i, label %._crit_edge.i, label %bb.e, !llvm.loop !83
+  br i1 %.not.i, label %._crit_edge.i, label %bb.e, !llvm.loop !82
 
 ._crit_edge.i:                                    ; preds = %bb.e
   br i1 %i.o, label %._crit_edge.thread.i, label %bb.g
@@ -704,7 +704,7 @@ bb.l:                                             ; preds = %bb.j
   %.in.i15 = getelementptr inbounds nuw i8, ptr %.02024.i13, i64 %.in.v.i14
   %.020.i16 = load ptr, ptr %.in.i15, align 8, !tbaa !40 ; 2 uses
   %.not.i17 = icmp eq ptr %.020.i16, null
-  br i1 %.not.i17, label %._crit_edge.i18, label %.lr.ph.i12, !llvm.loop !83
+  br i1 %.not.i17, label %._crit_edge.i18, label %.lr.ph.i12, !llvm.loop !82
 
 ._crit_edge.i18:                                  ; preds = %.lr.ph.i12
   br i1 %i.an, label %._crit_edge.thread.i27, label %bb.n
@@ -769,7 +769,7 @@ bb.s:                                             ; preds = %bb.q
   %.in.i35 = getelementptr inbounds nuw i8, ptr %.02024.i33, i64 %.in.v.i34
   %.020.i36 = load ptr, ptr %.in.i35, align 8, !tbaa !40 ; 2 uses
   %.not.i37 = icmp eq ptr %.020.i36, null
-  br i1 %.not.i37, label %._crit_edge.i38, label %.lr.ph.i32, !llvm.loop !83
+  br i1 %.not.i37, label %._crit_edge.i38, label %.lr.ph.i32, !llvm.loop !82
 
 ._crit_edge.i38:                                  ; preds = %.lr.ph.i32
   br i1 %i.bg, label %._crit_edge.thread.i47, label %bb.u
@@ -952,12 +952,11 @@ attributes #20 = { noreturn }
 !73 = !{!"_ZTSSt5ctypeIcE", !69, i64 0, !70, i64 16, !27, i64 24, !71, i64 32, !71, i64 40, !72, i64 48, !6, i64 56, !6, i64 57, !6, i64 313, !6, i64 569}
 !74 = !{!73, !6, i64 56}
 !75 = distinct !{!75, !35}
-!76 = distinct !{!76, !35}
-!77 = !{!42, !41, i64 0}
-!78 = !{!14, !14, i64 0}
-!79 = !{!"_ZTSSi", !14, i64 8}
-!80 = !{!79, !14, i64 8}
-!81 = distinct !{!81, !35}
-!82 = !{!13, !12, i64 16}
-!83 = distinct !{!83, !35}
+!76 = !{!42, !41, i64 0}
+!77 = !{!14, !14, i64 0}
+!78 = !{!"_ZTSSi", !14, i64 8}
+!79 = !{!78, !14, i64 8}
+!80 = distinct !{!80, !35}
+!81 = !{!13, !12, i64 16}
+!82 = distinct !{!82, !35}
 end_hunk_0

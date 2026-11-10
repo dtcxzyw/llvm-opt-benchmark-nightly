@@ -204,7 +204,7 @@ search_postfix_clear.exit55:                      ; preds = %search_state_decref
 
 .preheader64.backedge:                            ; preds = %.preheader64, %search_postfix_add.exit62
   %.0.i56.be = phi ptr [ %i.be, %.preheader64 ], [ %i.by, %search_postfix_add.exit62 ]
-  br label %.preheader64, !llvm.loop !61
+  br label %.preheader64
 
 bb.u:                                             ; preds = %.preheader64
   %i.bf = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i56) #21 ; 3 uses
@@ -275,7 +275,7 @@ search_postfix_add.exit62:                        ; preds = %.thread24.i61, %.th
   %i.cd = load ptr, ptr %i.cc, align 8            ; 2 uses
   store ptr %.014.i, ptr %i.cc, align 8
   %.not.i63 = icmp eq ptr %i.cd, null
-  br i1 %.not.i63, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !62
+  br i1 %.not.i63, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !61
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %.pre.i = load ptr, ptr %i.aq, align 8
@@ -307,7 +307,7 @@ bb.y:                                             ; preds = %bb.p
   %i.cm = call fastcc i32 @evdns_base_set_option_impl(ptr noundef %0, ptr noundef nonnull %i.ci, ptr noundef nonnull %i.cl, i32 noundef %2) ; 0 uses
   %i.cn = call ptr @strtok_r(ptr noundef null, ptr noundef nonnull @.str.78, ptr noundef nonnull %i.a) #19 ; 2 uses
   %.not41 = icmp eq ptr %i.cn, null
-  br i1 %.not41, label %search_postfix_add.exit, label %.lr.ph, !llvm.loop !63
+  br i1 %.not41, label %search_postfix_add.exit, label %.lr.ph, !llvm.loop !62
 
 search_postfix_add.exit:                          ; preds = %.lr.ph, %.preheader, %bb.o, %.thread.i, %.thread24.i, %search_reverse.exit, %bb.y, %bb.d, %bb.c, %bb.f, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -527,7 +527,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.x, ptr %i.y, align 8
   store ptr %i.q, ptr %i.x, align 8
   store ptr %i.q, ptr %i.k, align 8
-  br i1 %.not34, label %bb.e, label %.thread, !llvm.loop !64
+  br i1 %.not34, label %bb.e, label %.thread, !llvm.loop !63
 
 .thread:                                          ; preds = %bb.i, %bb.g, %bb.e, %bb.j, %sockaddr_getport.exit, %bb.c, %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
@@ -682,5 +682,4 @@ attributes #21 = { nounwind willreturn memory(read) }
 !61 = distinct !{!61, !13}
 !62 = distinct !{!62, !13}
 !63 = distinct !{!63, !13}
-!64 = distinct !{!64, !13}
 end_hunk_0

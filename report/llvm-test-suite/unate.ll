@@ -204,10 +204,14 @@ bb.n:                                             ; preds = %bb.m, %unate_inters
   %.idx125 = shl nsw i64 %i.gc, 2
   %i.gd = getelementptr inbounds i8, ptr %i.fx, i64 %.idx125
   %i.ge = icmp sgt i32 %i.gb, 0
-  br i1 %i.ge, label %.lr.ph123, label %._crit_edge124
+  br i1 %i.ge, label %.lr.ph123.preheader, label %._crit_edge124
 
-.lr.ph123:                                        ; preds = %._crit_edge120, %.loopexit
-  %.197121 = phi ptr [ %i.hr, %.loopexit ], [ %i.fx, %._crit_edge120 ] ; 7 uses
+.lr.ph123.preheader:                              ; preds = %._crit_edge120
+  %scevgep = getelementptr i8, ptr %i.fv, i64 4
+  br label %.lr.ph123
+
+.lr.ph123:                                        ; preds = %.lr.ph123.preheader, %.loopexit
+  %.197121 = phi ptr [ %i.hr, %.loopexit ], [ %i.fx, %.lr.ph123.preheader ] ; 7 uses
   %i.gf = load i32, ptr %i.fv, align 4, !tbaa !7  ; 2 uses
   %i.gg = and i32 %i.gf, 1023
   %i.gh = load i32, ptr %.197121, align 4, !tbaa !7
@@ -226,11 +230,11 @@ bb.n:                                             ; preds = %bb.m, %unate_inters
 vector.memcheck:                                  ; preds = %.lr.ph123
   %i.gp = select i1 %i.gm, i64 4, i64 0           ; 2 uses
   %i.gq = getelementptr i8, ptr %.197121, i64 %i.gp
-  %i.gr = shl nuw nsw i64 %i.gl, 2
-  %2 = add nuw nsw i64 %i.gr, 4                   ; 2 uses
-  %i.gs = getelementptr i8, ptr %.197121, i64 %2
+  %i.gr = shl nuw nsw i64 %i.gl, 2                ; 2 uses
+  %2 = getelementptr i8, ptr %.197121, i64 %i.gr
+  %i.gs = getelementptr i8, ptr %2, i64 4
   %i.gt = getelementptr i8, ptr %i.fv, i64 %i.gp
-  %i.gu = getelementptr i8, ptr %i.fv, i64 %2
+  %i.gu = getelementptr i8, ptr %scevgep, i64 %i.gr
   %bound0 = icmp ult ptr %i.gq, %i.gu
   %bound1 = icmp ult ptr %i.gt, %i.gs
   %found.conflict = and i1 %bound0, %bound1

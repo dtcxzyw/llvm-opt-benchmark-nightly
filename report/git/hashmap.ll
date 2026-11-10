@@ -204,7 +204,7 @@ entry_equals.exit:                                ; preds = %bb.b
   %.not = icmp eq ptr %.0, null
   %i.l = icmp eq ptr %1, %.0
   %or.cond = or i1 %.not, %i.l
-  br i1 %or.cond, label %entry_equals.exit.thread, label %bb.b, !llvm.loop !51
+  br i1 %or.cond, label %entry_equals.exit.thread, label %bb.b
 
 entry_equals.exit.thread:                         ; preds = %entry_equals.exit, %.critedge.backedge, %bb.a
   %.0.lcssa = phi ptr [ %.011, %bb.a ], [ %.0, %.critedge.backedge ], [ %.014, %entry_equals.exit ]
@@ -607,7 +607,7 @@ memhash.exit.loopexit.unr-lcssa:                  ; preds = %.lr.ph.i
   %i.ad = xor i32 %i.ac, %i.ab                    ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %memhash.exit, label %.lr.ph.i.epil, !llvm.loop !52
+  br i1 %epil.iter.cmp.not, label %memhash.exit, label %.lr.ph.i.epil, !llvm.loop !51
 
 memhash.exit:                                     ; preds = %memhash.exit.loopexit.unr-lcssa, %.lr.ph.i.epil, %bb.c
   %.06.lcssa.i = phi i32 [ -2128831035, %bb.c ], [ %i.y, %memhash.exit.loopexit.unr-lcssa ], [ %i.ad, %.lr.ph.i.epil ] ; 2 uses
@@ -644,7 +644,7 @@ bb.d:                                             ; preds = %memhash.exit
 entry_equals.exit.i.i:                            ; preds = %.lr.ph.i.i
   %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @memintern.map, i64 8), align 8, !tbaa !26
   %i.at = load ptr, ptr getelementptr inbounds nuw (i8, ptr @memintern.map, i64 16), align 8, !tbaa !27
-  %i.au = call i32 %i.as(ptr noundef %i.at, ptr noundef nonnull %i.an, ptr noundef nonnull %2, ptr noundef %0) #15, !inline_history !53
+  %i.au = call i32 %i.as(ptr noundef %i.at, ptr noundef nonnull %i.an, ptr noundef nonnull %2, ptr noundef %0) #15, !inline_history !52
   %.not.i.not.i.i = icmp eq i32 %i.au, 0
   %.pre.pre.i = load ptr, ptr %.018.i.i, align 8, !tbaa !32 ; 2 uses
   br i1 %.not.i.not.i.i, label %hashmap_get.exit, label %entry_equals.exit.thread.i.i
@@ -821,7 +821,6 @@ attributes #16 = { noreturn nounwind }
 !48 = distinct !{!48, !19}
 !49 = distinct !{!49, !19}
 !50 = distinct !{null}
-!51 = distinct !{!51, !19}
-!52 = distinct !{!52, !20}
-!53 = distinct !{ptr @hashmap_get, null, null}
+!51 = distinct !{!51, !20}
+!52 = distinct !{ptr @hashmap_get, null, null}
 end_hunk_1

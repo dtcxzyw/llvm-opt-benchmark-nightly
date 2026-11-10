@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.m, label %.thread64, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %i.n = tail call fastcc i32 @perform_atomic_semop(ptr noundef %0, ptr noundef %.072) #18, !srcloc !129 ; 3 uses
+  %i.n = tail call fastcc i32 @perform_atomic_semop(ptr noundef %0, ptr noundef %.072) #18, !srcloc !128 ; 3 uses
   %i.o = icmp sgt i32 %i.n, 0
   br i1 %i.o, label %bb.p, label %bb.d
 
@@ -378,7 +378,7 @@ bb.p:                                             ; preds = %bb.o, %bb.c, %.thre
 .lr.ph.backedge:                                  ; preds = %bb.p, %.loopexit
   %.072.be = phi ptr [ %.03673, %bb.p ], [ %i.k, %.loopexit ]
   %.171.be = phi i32 [ %.3.ph, %bb.p ], [ 1, %.loopexit ]
-  br label %.lr.ph, !llvm.loop !128
+  br label %.lr.ph
 
 .thread64:                                        ; preds = %.loopexit, %bb.p, %bb.b, %bb.a
   %.1.lcssa = phi i32 [ 0, %bb.a ], [ 1, %.loopexit ], [ %.3.ph, %bb.p ], [ %.171, %bb.b ]
@@ -406,7 +406,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %.033 = phi ptr [ %i.f, %.lr.ph ], [ %.02534, %bb.f ] ; 8 uses
   %.02732 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.f ] ; 2 uses
   %.02534 = load ptr, ptr %.033, align 8          ; 2 uses
-  %i.h = tail call fastcc i32 @perform_atomic_semop(ptr noundef %0, ptr noundef %.033) #18, !srcloc !131 ; 3 uses
+  %i.h = tail call fastcc i32 @perform_atomic_semop(ptr noundef %0, ptr noundef %.033) #18, !srcloc !130 ; 3 uses
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %bb.f, label %bb.c
 
@@ -461,7 +461,7 @@ wake_up_sem_queue_prepare.exit:                   ; preds = %bb.e, %.sink.split.
 bb.f:                                             ; preds = %bb.b, %wake_up_sem_queue_prepare.exit
   %.2 = phi i32 [ %spec.select, %wake_up_sem_queue_prepare.exit ], [ %.02732, %bb.b ] ; 2 uses
   %.not = icmp eq ptr %.02534, %.026
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !130
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !129
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
   %.027.lcssa = phi i32 [ 0, %bb.a ], [ %.2, %bb.f ]
@@ -656,8 +656,7 @@ attributes #19 = { noredzone nounwind allocsize(2) "no-builtin-wcslen" }
 !125 = distinct !{!125, !19}
 !126 = distinct !{!126, !19}
 !127 = !{i64 2158807210}
-!128 = distinct !{!128, !19}
-!129 = !{i64 27912}
-!130 = distinct !{!130, !19}
-!131 = !{i64 24903}
+!128 = !{i64 27912}
+!129 = distinct !{!129, !19}
+!130 = !{i64 24903}
 end_hunk_0

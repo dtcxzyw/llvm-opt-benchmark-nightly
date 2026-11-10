@@ -205,7 +205,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 
 _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.lr.ph: ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
   %i.ee = load ptr, ptr %1, align 8, !tbaa !63
-  %i.ef = load ptr, ptr %2, align 8, !tbaa !14, !noalias !75 ; 11 uses
+  %i.ef = load ptr, ptr %2, align 8, !tbaa !14, !noalias !75 ; 9 uses
   %i.eg = load i64, ptr %i.dn, align 8, !tbaa !15, !noalias !75 ; 2 uses
   %i.eh = icmp eq i64 %i.eg, 1                    ; 5 uses
   %.sroa.565.0 = zext i1 %i.eh to i64             ; 6 uses
@@ -220,14 +220,12 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   %wide.trip.count125 = and i64 %i.g, 2147483647
   %i.eq = mul i64 %i.en, %i.ej
   %i.er = add i64 %i.eq, %i.eo
-  %8 = shl i64 %i.er, 2                           ; 2 uses
-  %i.es = shl i64 %i.ek, 2
+  %i.es = shl i64 %i.er, 2
+  %scevgep = getelementptr i8, ptr %i.ef, i64 %i.es ; 2 uses
+  %8 = shl i64 %i.ek, 2
   %9 = select i1 %i.eh, i64 4, i64 0
-  %10 = add i64 %i.es, %9                         ; 2 uses
-  %11 = getelementptr i8, ptr %i.ef, i64 %10
-  %12 = getelementptr i8, ptr %i.ef, i64 %10
   %i.et = getelementptr i8, ptr %i.ef, i64 %8
-  %i.eu = getelementptr i8, ptr %i.ef, i64 %8
+  %i.eu = getelementptr i8, ptr %i.et, i64 %9     ; 2 uses
   br label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader242, %.lr.ph
@@ -294,10 +292,10 @@ vector.memcheck:                                  ; preds = %_ZN5Eigen16CommaIni
   %i.gd = shl nuw nsw i64 %i.ga, 2                ; 2 uses
   %i.ge = add nsw i64 %i.gb, %i.gd                ; 3 uses
   %i.gf = getelementptr i8, ptr %i.ef, i64 %i.ge  ; 3 uses
-  %i.gg = getelementptr i8, ptr %11, i64 %i.gb    ; 3 uses
-  %i.gh = getelementptr i8, ptr %12, i64 %i.ge    ; 3 uses
-  %i.gi = getelementptr i8, ptr %i.et, i64 %i.gb  ; 3 uses
-  %i.gj = getelementptr i8, ptr %i.eu, i64 %i.ge  ; 3 uses
+  %i.gg = getelementptr i8, ptr %i.eu, i64 %i.gb  ; 3 uses
+  %i.gh = getelementptr i8, ptr %i.eu, i64 %i.ge  ; 3 uses
+  %i.gi = getelementptr i8, ptr %scevgep, i64 %i.gb ; 3 uses
+  %i.gj = getelementptr i8, ptr %scevgep, i64 %i.ge ; 3 uses
   %i.gk = getelementptr i8, ptr %i.fi, i64 %i.gd
   %i.gl = getelementptr i8, ptr %i.gk, i64 4      ; 3 uses
   %bound0 = icmp ult ptr %i.gc, %i.gh

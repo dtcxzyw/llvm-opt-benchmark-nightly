@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = load atomic i32, ptr @_ZZN5folly19shared_mutex_detail21getMaxDeferredReadersEvE5cache monotonic, align 4 ; 2 uses
   %.not.i = icmp eq i32 %i.d, 0
-  br i1 %.not.i, label %bb.b, label %_ZN5folly19shared_mutex_detail21getMaxDeferredReadersEv.exit, !prof !75
+  br i1 %.not.i, label %bb.b, label %_ZN5folly19shared_mutex_detail21getMaxDeferredReadersEv.exit, !prof !74
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call noundef i32 @_ZN5folly19shared_mutex_detail25getMaxDeferredReadersSlowERNS_14relaxed_atomicIjEE(ptr noundef nonnull align 4 dereferenceable(4) @_ZZN5folly19shared_mutex_detail21getMaxDeferredReadersEvE5cache) #26
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.v, label %bb.e, label %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE15waitForZeroBitsINS3_11WaitForeverEEEbRjjjRT_.exit, !prof !15
 
 bb.e:                                             ; preds = %.lr.ph.i
-  call void asm sideeffect "pause", "~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !76
+  call void asm sideeffect "pause", "~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !75
   %i.w = load atomic i32, ptr %0 acquire, align 4 ; 3 uses
   store i32 %i.w, ptr %1, align 4, !tbaa !14
   %i.x = and i32 %i.w, 128
@@ -273,7 +273,7 @@ bb.f:                                             ; preds = %_ZN5folly15SharedMu
 bb.g:                                             ; preds = %bb.f
   %i.ah = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5folly14AccessSpreaderISt6atomicE5stateEvE5state, i64 65792) acquire, align 8
   %.not.i59 = icmp eq ptr %i.ah, null
-  br i1 %.not.i59, label %bb.h, label %_ZN5folly14AccessSpreaderISt6atomicE5stateEv.exit, !prof !75
+  br i1 %.not.i59, label %bb.h, label %_ZN5folly14AccessSpreaderISt6atomicE5stateEv.exit, !prof !74
 
 bb.h:                                             ; preds = %bb.g
   %i.ai = call noundef zeroext i1 @_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE(ptr noundef nonnull align 8 dereferenceable(65800) @_ZZN5folly14AccessSpreaderISt6atomicE5stateEvE5state, ptr noundef nonnull @_ZN5folly14AccessSpreaderISt6atomicE14pickGetcpuFuncEv, ptr noundef nonnull @_ZN5folly13CacheLocality6systemISt6atomicEERKS0_v) ; 0 uses
@@ -377,7 +377,7 @@ _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; 
   br label %.backedge
 
 .backedge:                                        ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit, %bb.u, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit63, %.thread82, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit, %bb.o
-  br label %bb.c, !llvm.loop !74
+  br label %bb.c
 
 bb.q:                                             ; preds = %.thread77
   %i.bx = load atomic i32, ptr %0 acquire, align 4 ; 2 uses
@@ -516,7 +516,7 @@ bb.e:                                             ; preds = %.thread.us.i, %bb.d
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.us.i: ; preds = %bb.e
   %i.w = extractvalue { i32, i1 } %i.u, 0
   store i32 %i.w, ptr %1, align 4
-  br label %bb.f, !llvm.loop !77
+  br label %bb.f, !llvm.loop !76
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread.us.i: ; preds = %bb.e, %bb.d
   %.01926.us.i = phi i32 [ %i.q, %bb.d ], [ %.01925.us.i, %bb.e ]
@@ -544,7 +544,7 @@ bb.g:                                             ; preds = %.lr.ph.split.i
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i: ; preds = %bb.g
   %i.af = extractvalue { i32, i1 } %i.ad, 0
   store i32 %i.af, ptr %1, align 4
-  br label %bb.h, !llvm.loop !77
+  br label %bb.h, !llvm.loop !76
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread.i: ; preds = %bb.g, %.lr.ph.split.i
   %i.ag = tail call noundef i32 @_ZN5folly6detail13futexWaitImplEPKSt6atomicIjEjPKNSt6chrono10time_pointINS5_3_V212system_clockENS5_8durationIlSt5ratioILl1ELl1000000000EEEEEEPKNS6_INS7_12steady_clockESC_EEj(ptr noundef nonnull align 4 dereferenceable(4) %0, i32 noundef %i.ac, ptr noundef null, ptr noundef null, i32 noundef %3) ; 0 uses
@@ -756,8 +756,7 @@ attributes #26 = { cold }
 !71 = !{!70, !70, i64 0}
 !72 = distinct !{!72, !46}
 !73 = distinct !{null}
-!74 = distinct !{!74, !46}
-!75 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!76 = !{i64 8355069}
-!77 = distinct !{!77, !46}
+!74 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!75 = !{i64 8355069}
+!76 = distinct !{!76, !46}
 end_hunk_0

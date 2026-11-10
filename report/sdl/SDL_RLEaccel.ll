@@ -204,12 +204,13 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 bb.bs:                                            ; preds = %bb.br
   %i.pz = ptrtoint ptr %.16.ph to i64
   %i.qa = and i64 %i.pz, 2
-  %i.qb = getelementptr inbounds nuw i8, ptr %.16.ph, i64 %i.qa
+  %4 = getelementptr inbounds nuw i8, ptr %.16.ph, i64 %i.qa
+  %i.qb = getelementptr i8, ptr %.0250, i64 2
   br label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bv, %bb.bs
   %.3298 = phi i32 [ 0, %bb.bs ], [ %.4299, %bb.bv ]
-  %.17 = phi ptr [ %i.qb, %bb.bs ], [ %.19, %bb.bv ] ; 4 uses
+  %.17 = phi ptr [ %4, %bb.bs ], [ %.19, %bb.bv ] ; 4 uses
   %i.qc = load i16, ptr %.17, align 2
   %i.qd = zext i16 %i.qc to i32
   %i.qe = add i32 %.3298, %i.qd                   ; 3 uses
@@ -232,8 +233,7 @@ vector.memcheck642:                               ; preds = %bb.bu
   %i.qn = zext i32 %i.qm to i64                   ; 2 uses
   %i.qo = add nsw i64 %i.qj, %i.qn
   %i.qp = shl nsw i64 %i.qo, 1
-  %4 = getelementptr i8, ptr %.0250, i64 %i.qp
-  %i.qq = getelementptr i8, ptr %4, i64 2
+  %i.qq = getelementptr i8, ptr %i.qb, i64 %i.qp
   %i.qr = shl nuw nsw i64 %i.qn, 2
   %i.qs = getelementptr i8, ptr %.17, i64 %i.qr
   %i.qt = getelementptr i8, ptr %i.qs, i64 8
@@ -384,12 +384,13 @@ bb.cc:                                            ; preds = %bb.cb, %bb.ca
 bb.cd:                                            ; preds = %bb.cc
   %i.ti = ptrtoint ptr %.24.ph to i64
   %i.tj = and i64 %i.ti, 2
-  %i.tk = getelementptr inbounds nuw i8, ptr %.24.ph, i64 %i.tj
+  %5 = getelementptr inbounds nuw i8, ptr %.24.ph, i64 %i.tj
+  %i.tk = getelementptr i8, ptr %.2252, i64 2
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cg, %bb.cd
   %.3291 = phi i32 [ 0, %bb.cd ], [ %.4292, %bb.cg ]
-  %.25 = phi ptr [ %i.tk, %bb.cd ], [ %.27, %bb.cg ] ; 4 uses
+  %.25 = phi ptr [ %5, %bb.cd ], [ %.27, %bb.cg ] ; 4 uses
   %i.tl = load i16, ptr %.25, align 2
   %i.tm = zext i16 %i.tl to i32
   %i.tn = add i32 %.3291, %i.tm                   ; 3 uses
@@ -412,8 +413,7 @@ vector.memcheck615:                               ; preds = %bb.cf
   %i.tw = zext i32 %i.tv to i64                   ; 2 uses
   %i.tx = add nsw i64 %i.ts, %i.tw
   %i.ty = shl nsw i64 %i.tx, 1
-  %5 = getelementptr i8, ptr %.2252, i64 %i.ty
-  %i.tz = getelementptr i8, ptr %5, i64 2
+  %i.tz = getelementptr i8, ptr %i.tk, i64 %i.ty
   %i.ua = shl nuw nsw i64 %i.tw, 2
   %i.ub = getelementptr i8, ptr %.25, i64 %i.ua
   %i.uc = getelementptr i8, ptr %i.ub, i64 8
@@ -559,11 +559,15 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %.2260.ph = phi i32 [ %i.wp, %bb.cl ], [ %i.we, %bb.cm ] ; 2 uses
   %.32.ph = phi ptr [ %i.wo, %bb.cl ], [ %i.wh, %bb.cm ] ; 2 uses
   %i.wq = icmp slt i32 %.2260.ph, %i.b
-  br i1 %i.wq, label %bb.ck, label %.preheader, !llvm.loop !194
+  br i1 %i.wq, label %bb.ck, label %.preheader.preheader, !llvm.loop !194
 
-.preheader:                                       ; preds = %bb.cn, %bb.cp
-  %.3261 = phi i32 [ %.4262, %bb.cp ], [ 0, %bb.cn ]
-  %.33 = phi ptr [ %.35, %bb.cp ], [ %.32.ph, %bb.cn ] ; 4 uses
+.preheader.preheader:                             ; preds = %bb.cn
+  %scevgep = getelementptr i8, ptr %.4254, i64 4
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %bb.cp
+  %.3261 = phi i32 [ %.4262, %bb.cp ], [ 0, %.preheader.preheader ]
+  %.33 = phi ptr [ %.35, %bb.cp ], [ %.32.ph, %.preheader.preheader ] ; 4 uses
   %i.wr = load i16, ptr %.33, align 2
   %i.ws = zext i16 %i.wr to i32
   %i.wt = add i32 %.3261, %i.ws                   ; 3 uses
@@ -587,8 +591,7 @@ vector.memcheck589:                               ; preds = %bb.co
   %i.xd = shl nuw nsw i64 %i.xc, 2
   %i.xe = add nsw i64 %i.wy, %i.xc
   %i.xf = shl nsw i64 %i.xe, 2
-  %6 = getelementptr i8, ptr %.4254, i64 %i.xf
-  %i.xg = getelementptr i8, ptr %6, i64 4
+  %i.xg = getelementptr i8, ptr %scevgep, i64 %i.xf
   %i.xh = getelementptr i8, ptr %.33, i64 %i.xd
   %i.xi = getelementptr i8, ptr %i.xh, i64 8
   %bound0590 = icmp ult ptr %i.wz, %i.xi

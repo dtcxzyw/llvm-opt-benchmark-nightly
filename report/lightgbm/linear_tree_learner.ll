@@ -205,13 +205,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLi1ELin1ELi1ELi1ELin1EEEE6resizeEl.exit: 
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph235, %_ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEENS_10MatrixBaseEEmIINS_7ProductINS1_INS1_IS3_Lin1ELi1ELb1EEELin1ELi1ELb0EEENS1_INS1_IS3_Li1ELin1ELb0EEELi1ELin1ELb0EEELi0EEEEERS4_RKNS5_IT_EE.exit.thread
-  %.060232 = phi i64 [ 0, %.lr.ph235 ], [ %i.ws, %_ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEENS_10MatrixBaseEEmIINS_7ProductINS1_INS1_IS3_Lin1ELi1ELb1EEELin1ELi1ELb0EEENS1_INS1_IS3_Li1ELin1ELb0EEELi1ELin1ELb0EEELi0EEEEERS4_RKNS5_IT_EE.exit.thread ] ; 32 uses
+  %.060232 = phi i64 [ 0, %.lr.ph235 ], [ %i.ws, %_ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEENS_10MatrixBaseEEmIINS_7ProductINS1_INS1_IS3_Lin1ELi1ELb1EEELin1ELi1ELb0EEENS1_INS1_IS3_Li1ELin1ELb0EEELi1ELin1ELb0EEELi0EEEEERS4_RKNS5_IT_EE.exit.thread ] ; 31 uses
   %.061231 = phi i64 [ 0, %.lr.ph235 ], [ %.2, %_ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEENS_10MatrixBaseEEmIINS_7ProductINS1_INS1_IS3_Lin1ELi1ELb1EEELin1ELi1ELb0EEENS1_INS1_IS3_Li1ELin1ELb0EEELi1ELin1ELb0EEELi0EEEEERS4_RKNS5_IT_EE.exit.thread ] ; 5 uses
   %i.gk = xor i64 %.060232, -1
-  %1 = add i64 %i.b, %i.gk                        ; 4 uses
-  %2 = shl i64 %.060232, 3                        ; 2 uses
-  %i.gl = add i64 %2, 8
-  %i.gm = shl i64 %.060232, 3                     ; 2 uses
+  %i.gl = add i64 %i.b, %i.gk                     ; 4 uses
+  %i.gm = shl i64 %.060232, 3
   %i.gn = add i64 %i.gm, 8                        ; 2 uses
   %i.go = shl i64 %.060232, 3
   %i.gp = sub i64 %i.gi, %i.go
@@ -236,12 +234,12 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.he, label %.lr.ph.i.i.i.i71.preheader, label %.preheader25.i.i.i.i
 
 .lr.ph.i.i.i.i71.preheader:                       ; preds = %bb.t
-  %xtraiter506 = and i64 %1, 1
+  %xtraiter506 = and i64 %i.gl, 1
   %i.hf = icmp eq i64 %i.gj, %.060232
   br i1 %i.hf, label %.lr.ph.i.i.i.i71.epil.preheader, label %.lr.ph.i.i.i.i71.preheader.new
 
 .lr.ph.i.i.i.i71.preheader.new:                   ; preds = %.lr.ph.i.i.i.i71.preheader
-  %unroll_iter513 = and i64 %1, -2
+  %unroll_iter513 = and i64 %i.gl, -2
   br label %.lr.ph.i.i.i.i71
 
 .preheader25.i.i.i.i.loopexit.unr-lcssa:          ; preds = %.lr.ph.i.i.i.i71
@@ -253,7 +251,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.10.4.i.i.epil.init = phi double [ %i.hd, %.lr.ph.i.i.i.i71.preheader ], [ %.sroa.10.5.i.i.1, %.preheader25.i.i.i.i.loopexit.unr-lcssa ]
   %.02127.i.i.i.i.epil.init = phi i64 [ 1, %.lr.ph.i.i.i.i71.preheader ], [ %i.hz, %.preheader25.i.i.i.i.loopexit.unr-lcssa ] ; 2 uses
   %.epil.init = phi double [ %i.hd, %.lr.ph.i.i.i.i71.preheader ], [ %i.hy, %.preheader25.i.i.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod512 = trunc i64 %1 to i1
+  %lcmp.mod512 = trunc i64 %i.gl to i1
   tail call void @llvm.assume(i1 %lcmp.mod512)
   %i.hg = getelementptr [8 x i8], ptr %i.gz, i64 %.02127.i.i.i.i.epil.init
   %i.hh = load double, ptr %i.hg, align 8, !tbaa !189
@@ -273,7 +271,7 @@ bb.t:                                             ; preds = %bb.s
 
 .preheader.i.i.i.i.preheader:                     ; preds = %.preheader25.i.i.i.i
   %xtraiter515 = and i64 %i.gq, 1
-  %i.hm = icmp eq i64 %1, 0
+  %i.hm = icmp eq i64 %i.gl, 0
   %unroll_iter525 = and i64 %i.gq, -2
   %lcmp.mod519.not = icmp eq i64 %xtraiter515, 0
   %lcmp.mod524 = trunc i64 %i.gq to i1
@@ -676,13 +674,13 @@ _ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi
   br i1 %i.rp, label %.lr.ph.i.i.i.i.i.preheader, label %_ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEENS_10MatrixBaseEEmIINS_7ProductINS1_INS1_IS3_Lin1ELi1ELb1EEELin1ELi1ELb0EEENS1_INS1_IS3_Li1ELin1ELb0EEELi1ELin1ELb0EEELi0EEEEERS4_RKNS5_IT_EE.exit.thread
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEdVERKd.exit
-  %i.rq = load ptr, ptr %0, align 8, !tbaa !307, !noalias !650 ; 9 uses
-  %i.rr = load i64, ptr %i.a, align 8, !tbaa !305, !noalias !650 ; 9 uses
+  %i.rq = load ptr, ptr %0, align 8, !tbaa !307, !noalias !650 ; 5 uses
+  %i.rr = load i64, ptr %i.a, align 8, !tbaa !305, !noalias !650 ; 7 uses
   %i.rs = mul i64 %i.rr, %.060232
   %i.rt = getelementptr [8 x i8], ptr %i.rq, i64 %i.rs
   %i.ru = add i64 %i.gq, -1                       ; 8 uses
-  %i.rv = sub i64 %i.rr, %i.ru                    ; 2 uses
-  %i.rw = getelementptr [8 x i8], ptr %i.rt, i64 %i.rv ; 10 uses
+  %i.rv = sub i64 %i.rr, %i.ru
+  %i.rw = getelementptr [8 x i8], ptr %i.rt, i64 %i.rv ; 12 uses
   %i.rx = getelementptr inbounds nuw [8 x i8], ptr %i.rq, i64 %.060232
   %i.ry = load i64, ptr %i.bl, align 8, !tbaa !306, !noalias !651
   %i.rz = add nsw i64 %i.gr, -1                   ; 2 uses
@@ -692,23 +690,13 @@ _ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi
   %i.sd = add nuw nsw i64 %.060232, 1             ; 2 uses
   %i.se = getelementptr inbounds nuw [8 x i8], ptr %i.rq, i64 %i.sd
   %i.sf = mul nsw i64 %i.rr, %i.sd
-  %i.sg = getelementptr inbounds [8 x i8], ptr %i.se, i64 %i.sf
+  %i.sg = getelementptr inbounds [8 x i8], ptr %i.se, i64 %i.sf ; 3 uses
   %i.sh = mul i64 %i.rr, %i.gn
   %scevgep = getelementptr i8, ptr %i.rq, i64 %i.sh
-  %3 = mul i64 %i.rr, %i.gm
-  %4 = shl i64 %i.rv, 3                           ; 2 uses
-  %i.si = add i64 %i.rr, 1                        ; 2 uses
-  %5 = mul i64 %i.gn, %i.si                       ; 2 uses
-  %6 = mul i64 %i.rr, %2
-  %i.sj = mul i64 %i.gl, %i.si
-  %invariant.gep = getelementptr i8, ptr %i.rq, i64 %i.sj
-  %7 = getelementptr i8, ptr %i.rq, i64 %6
-  %8 = getelementptr i8, ptr %7, i64 %4
-  %invariant.gep581 = getelementptr i8, ptr %i.rq, i64 %5
-  %9 = getelementptr i8, ptr %i.rq, i64 %i.gp
-  %10 = getelementptr i8, ptr %9, i64 %5
-  %i.sk = getelementptr i8, ptr %i.rq, i64 %3
-  %i.sl = getelementptr i8, ptr %i.sk, i64 %4
+  %i.si = add i64 %i.rr, 1
+  %i.sj = mul i64 %i.gn, %i.si
+  %i.sk = getelementptr i8, ptr %i.rq, i64 %i.gp
+  %i.sl = getelementptr i8, ptr %i.sk, i64 %i.sj
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %_ZNK5Eigen8internal20generic_product_implINS_5BlockINS2_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEENS2_INS2_IS4_Li1ELin1ELb0EEELi1ELin1ELb0EEENS_10DenseShapeES9_Li5EE3subclINS2_INS2_IS4_Lin1ELin1ELb0EEELin1ELi1ELb1EEENS_13CwiseBinaryOpINS0_17scalar_product_opIddEEKNS_14CwiseNullaryOpINS0_18scalar_constant_opIdEEKNS3_IdLin1ELi1ELi0ELin1ELi1EEEEEKS6_EEEEvRKT_RKT0_.exit.i.i.i.i.i
@@ -748,9 +736,9 @@ vector.memcheck337:                               ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.tc = shl i64 %.029.i.i.i.i.i, 3
   %i.td = mul i64 %i.sm, %i.tc
   %i.te = shl i64 %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, 3 ; 2 uses
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.td
+  %gep = getelementptr i8, ptr %i.sg, i64 %i.td
   %i.tf = getelementptr i8, ptr %gep, i64 %i.te
-  %i.tg = getelementptr i8, ptr %8, i64 %i.te
+  %i.tg = getelementptr i8, ptr %i.rw, i64 %i.te
   %bound0338 = icmp ult ptr %i.so, %i.tg
   %bound1339 = icmp ult ptr %i.rw, %i.tf
   %found.conflict340 = and i1 %bound0338, %bound1339
@@ -853,11 +841,11 @@ vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.
   %i.us = mul i64 %i.sm, %i.ur                    ; 2 uses
   %i.ut = shl i64 %i.sy, 4                        ; 2 uses
   %i.uu = shl i64 %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, 3 ; 2 uses
-  %gep582 = getelementptr i8, ptr %invariant.gep581, i64 %i.us
+  %gep582 = getelementptr i8, ptr %i.sg, i64 %i.us
   %i.uv = getelementptr i8, ptr %gep582, i64 %i.ut
   %i.uw = getelementptr i8, ptr %i.uv, i64 %i.uu
-  %i.ux = getelementptr i8, ptr %10, i64 %i.us
-  %i.uy = getelementptr i8, ptr %i.sl, i64 %i.ut
+  %i.ux = getelementptr i8, ptr %i.sl, i64 %i.us
+  %i.uy = getelementptr i8, ptr %i.rw, i64 %i.ut
   %i.uz = getelementptr i8, ptr %i.uy, i64 %i.uu
   %bound0 = icmp ult ptr %i.uw, %scevgep
   %bound1 = icmp ult ptr %i.uz, %i.ux
@@ -1260,6 +1248,8 @@ bb.a:
   %i.ak = shl i64 %6, 5
   %i.al = add i64 %6, %3
   %i.am = shl i64 %i.al, 5
+  %scevgep135 = getelementptr i8, ptr %1, i64 %i.am
+  %scevgep136 = getelementptr i8, ptr %1, i64 %i.ak
   %i.an = insertelement <4 x ptr> poison, ptr %scevgep133, i64 0
   %i.ao = insertelement <4 x ptr> %i.an, ptr %scevgep131, i64 1
   %i.ap = insertelement <4 x ptr> %i.ao, ptr %scevgep129, i64 2
@@ -1271,8 +1261,6 @@ bb.a:
   %min.iters.check = icmp ult i64 %3, 28
   %mul.result = shl i64 %i.m, 5                   ; 3 uses
   %mul.overflow = icmp ugt i64 %i.m, 576460752303423487
-  %7 = getelementptr i8, ptr %1, i64 %i.ak
-  %8 = getelementptr i8, ptr %1, i64 %i.am
   %.mask = and i64 %i.h, 288230376151711744
   %stride.check = icmp ne i64 %.mask, 0
   %n.vec = and i64 %3, 1152921504606846974        ; 4 uses
@@ -1317,8 +1305,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.us
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.bs = shl i64 %.05175.us, 3                   ; 2 uses
-  %i.bt = getelementptr i8, ptr %7, i64 %i.bs
-  %i.bu = getelementptr i8, ptr %8, i64 %i.bs
+  %i.bt = getelementptr i8, ptr %scevgep136, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %scevgep135, i64 %i.bs
   %i.bv = insertelement <4 x ptr> poison, ptr %i.bt, i64 0
   %i.bw = shufflevector <4 x ptr> %i.bv, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.bx = icmp ult <4 x ptr> %i.bw, %i.aq
@@ -1721,6 +1709,7 @@ bb.a:
   %i.ab = mul i64 %i.g, 24
   %scevgep112 = getelementptr i8, ptr %i.e, i64 %i.ab
   %i.ac = shl i64 %3, 5
+  %scevgep113 = getelementptr i8, ptr %1, i64 %i.ac
   %i.ad = insertelement <4 x ptr> poison, ptr %scevgep111, i64 0
   %i.ae = insertelement <4 x ptr> %i.ad, ptr %scevgep109, i64 1
   %i.af = insertelement <4 x ptr> %i.ae, ptr %scevgep107, i64 2
@@ -1732,7 +1721,6 @@ bb.a:
   %min.iters.check = icmp ult i64 %3, 28
   %mul.result = shl i64 %i.i, 5                   ; 3 uses
   %mul.overflow = icmp ugt i64 %i.i, 576460752303423487
-  %7 = getelementptr i8, ptr %1, i64 %i.ac
   %.mask = and i64 %i.g, 288230376151711744
   %stride.check = icmp ne i64 %.mask, 0
   %n.vec = and i64 %3, 1152921504606846974        ; 4 uses
@@ -1777,7 +1765,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.us
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.bh = shl i64 %.04559.us, 3                   ; 2 uses
   %i.bi = getelementptr i8, ptr %1, i64 %i.bh
-  %i.bj = getelementptr i8, ptr %7, i64 %i.bh
+  %i.bj = getelementptr i8, ptr %scevgep113, i64 %i.bh
   %i.bk = insertelement <4 x ptr> poison, ptr %i.bi, i64 0
   %i.bl = shufflevector <4 x ptr> %i.bk, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.bm = icmp ult <4 x ptr> %i.bl, %i.ag

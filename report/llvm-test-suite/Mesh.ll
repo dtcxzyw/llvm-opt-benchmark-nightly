@@ -205,6 +205,10 @@ bb.i:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !65
   %i.fs = load ptr, ptr %1, align 8               ; 11 uses
   %wide.trip.count115 = zext nneg i32 %i.fm to i64
+  %scevgep = getelementptr i8, ptr %i.fs, i64 8
+  %scevgep170 = getelementptr i8, ptr %i.br, i64 8
+  %scevgep171 = getelementptr i8, ptr %i.fs, i64 -8
+  %scevgep172 = getelementptr i8, ptr %i.br, i64 -8
   br label %bb.j
 
 ._crit_edge106:                                   ; preds = %._crit_edge, %bb.i
@@ -242,17 +246,15 @@ bb.j:                                             ; preds = %.lr.ph105, %._crit_
   br i1 %min.iters.check, label %.lr.ph.preheader177, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.gj = shl nsw i64 %i.gh, 4                    ; 3 uses
+  %i.gj = shl nsw i64 %i.gh, 4                    ; 4 uses
   %i.gk = getelementptr i8, ptr %i.br, i64 %i.gj
-  %i.gl = shl nsw i64 %wide.trip.count, 4         ; 3 uses
-  %11 = add nsw i64 %i.gl, -8                     ; 2 uses
-  %i.gm = getelementptr i8, ptr %i.br, i64 %11
+  %i.gl = shl nsw i64 %wide.trip.count, 4         ; 4 uses
+  %i.gm = getelementptr i8, ptr %scevgep172, i64 %i.gl
   %i.gn = getelementptr i8, ptr %i.fs, i64 %i.gj
-  %i.go = getelementptr i8, ptr %i.fs, i64 %11
-  %12 = or disjoint i64 %i.gj, 8                  ; 2 uses
-  %i.gp = getelementptr i8, ptr %i.br, i64 %12
+  %i.go = getelementptr i8, ptr %scevgep171, i64 %i.gl
+  %i.gp = getelementptr i8, ptr %scevgep170, i64 %i.gj
   %i.gq = getelementptr i8, ptr %i.br, i64 %i.gl
-  %i.gr = getelementptr i8, ptr %i.fs, i64 %12
+  %i.gr = getelementptr i8, ptr %scevgep, i64 %i.gj
   %i.gs = getelementptr i8, ptr %i.fs, i64 %i.gl
   %bound0 = icmp ult ptr %i.gk, %i.go
   %bound1 = icmp ult ptr %i.gn, %i.gm

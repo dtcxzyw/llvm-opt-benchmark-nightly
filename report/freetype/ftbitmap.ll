@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.ft = icmp eq i32 %.0106, 0
   %i.fu = zext i32 %.0107144 to i64
   %brmerge = select i1 %.not128152, i1 true, i1 %i.ft
-  %wide.trip.count = zext nneg i32 %.0106 to i64  ; 10 uses
+  %wide.trip.count = zext nneg i32 %.0106 to i64  ; 9 uses
   %min.iters.check = icmp ult i32 %.0106, 4
   %min.iters.check225 = icmp ult i32 %.0106, 32
   %i.fv = and i64 %wide.trip.count, 28
@@ -220,7 +220,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 .preheader136:                                    ; preds = %.preheader136.lr.ph, %._crit_edge155.split
   %.0105158 = phi i32 [ 0, %.preheader136.lr.ph ], [ %i.kd, %._crit_edge155.split ]
-  %.1111156 = phi ptr [ %.0110, %.preheader136.lr.ph ], [ %i.kc, %._crit_edge155.split ] ; 16 uses
+  %.1111156 = phi ptr [ %.0110, %.preheader136.lr.ph ], [ %i.kc, %._crit_edge155.split ] ; 15 uses
   br i1 %.not217, label %._crit_edge155.split, label %.lr.ph149
 
 .lr.ph149:                                        ; preds = %.preheader136
@@ -230,7 +230,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br i1 %brmerge, label %._crit_edge155.split, label %.lr.ph151.preheader
 
 .lr.ph151.preheader:                              ; preds = %.preheader
-  %scevgep = getelementptr i8, ptr %.1111156, i64 %wide.trip.count
+  %scevgep = getelementptr i8, ptr %.1111156, i64 %wide.trip.count ; 2 uses
   br label %iter.check
 
 .lr.ph:                                           ; preds = %.lr.ph149, %.loopexit
@@ -369,14 +369,13 @@ iter.check:                                       ; preds = %.lr.ph151.preheader
   %.1153 = phi i32 [ %i.jz, %._crit_edge ], [ 1, %.lr.ph151.preheader ] ; 3 uses
   %i.ih = load i32, ptr %i.bm, align 8, !tbaa !13
   %i.ii = mul nsw i32 %i.ih, %.1153
-  %i.ij = sext i32 %i.ii to i64                   ; 2 uses
-  %i.ik = sub nsw i64 0, %i.ij
+  %i.ij = sext i32 %i.ii to i64
+  %i.ik = sub nsw i64 0, %i.ij                    ; 2 uses
   %i.il = getelementptr inbounds i8, ptr %.1111156, i64 %i.ik ; 8 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %5 = sub nsw i64 %wide.trip.count, %i.ij
-  %i.im = getelementptr i8, ptr %.1111156, i64 %5
+  %i.im = getelementptr i8, ptr %scevgep, i64 %i.ik
   %bound0 = icmp ult ptr %i.il, %scevgep
   %bound1 = icmp ult ptr %.1111156, %i.im
   %found.conflict = and i1 %bound0, %bound1

@@ -202,7 +202,7 @@ bb.bc:                                            ; preds = %.lr.ph.i
 collectMatchesForHeapRow.exit.backedge.i:         ; preds = %bb.ba, %._crit_edge.i, %.thread54.i
   %.3 = phi i64 [ %i.nr, %._crit_edge.i ], [ %.2, %.thread54.i ], [ %.2, %bb.ba ] ; 2 uses
   %i.ns = call fastcc zeroext i1 @scanGetCandidate(ptr noundef nonnull readonly %0, ptr noundef %5)
-  br i1 %i.ns, label %bb.g, label %collectMatchesForHeapRow.exit._crit_edge.i, !llvm.loop !15
+  br i1 %i.ns, label %bb.g, label %collectMatchesForHeapRow.exit._crit_edge.i
 
 collectMatchesForHeapRow.exit._crit_edge.i:       ; preds = %collectMatchesForHeapRow.exit.backedge.i, %bb.f
   %.156 = phi i64 [ 0, %bb.f ], [ %.3, %collectMatchesForHeapRow.exit.backedge.i ]
@@ -605,7 +605,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %.backedge96.backedge
 
 .backedge96.backedge:                             ; preds = %bb.i, %bb.n, %bb.o
-  br label %.backedge96, !llvm.loop !40
+  br label %.backedge96
 
 .critedge2:                                       ; preds = %bb.f
   %.pre = load i8, ptr %i.r, align 2, !range !5
@@ -668,7 +668,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bc = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.bb
   %i.bd = load i16, ptr %i.bc, align 2            ; 2 uses
   %.not73 = icmp ugt i16 %i.bd, %.sroa.11.0.extract.trunc
-  br i1 %.not73, label %.loopexit94, label %.lr.ph, !llvm.loop !41
+  br i1 %.not73, label %.loopexit94, label %.lr.ph, !llvm.loop !40
 
 .loopexit94:                                      ; preds = %.lr.ph, %..loopexit94_crit_edge, %.preheader93
   %i.be = phi i16 [ %.pre123, %..loopexit94_crit_edge ], [ %i.ax, %.preheader93 ], [ %i.bd, %.lr.ph ]
@@ -1049,7 +1049,7 @@ bb.as:                                            ; preds = %bb.aq
 bb.at:                                            ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.backedge.i.backedge, label %.lr.ph.i, !llvm.loop !42
+  br i1 %exitcond.not.i, label %.backedge.i.backedge, label %.lr.ph.i, !llvm.loop !41
 
 entryLoadMoreItems.exit:                          ; preds = %bb.v, %bb.aj, %bb.ar, %bb.as
   %i.hu = load i8, ptr %i.cg, align 2, !range !5, !noundef !6
@@ -1057,7 +1057,7 @@ entryLoadMoreItems.exit:                          ; preds = %bb.v, %bb.aj, %bb.a
   br i1 %i.hv, label %bb.au, label %.backedge153
 
 .backedge153:                                     ; preds = %entryLoadMoreItems.exit, %bb.av
-  br label %bb.t, !llvm.loop !43
+  br label %bb.t
 
 bb.au:                                            ; preds = %entryLoadMoreItems.exit
   store i16 -1, ptr %i.bx, align 8
@@ -1217,6 +1217,4 @@ attributes #8 = { cold nounwind }
 !39 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !40 = distinct !{!40, !7}
 !41 = distinct !{!41, !7}
-!42 = distinct !{!42, !7}
-!43 = distinct !{!43, !7}
 end_hunk_1

@@ -64,7 +64,7 @@ Py_DECREF.exit:                                   ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @namespace_repr(ptr noundef %0) #0 !guid !47 {
+define internal ptr @namespace_repr(ptr noundef %0) #0 !guid !46 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = getelementptr i8, ptr %0, i64 8
@@ -74,7 +74,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %.val81, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !48
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !47
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -143,14 +143,14 @@ bb.k:                                             ; preds = %bb.j
   %i.y = getelementptr i8, ptr %i.x, i64 8
   %.val = load ptr, ptr %i.y, align 8, !tbaa !32
   %i.z = getelementptr i8, ptr %.val, i64 168
-  %.val82 = load i64, ptr %i.z, align 8, !tbaa !49
+  %.val82 = load i64, ptr %i.z, align 8, !tbaa !48
   %i.aa = and i64 %.val82, 268435456
   %.not58 = icmp eq i64 %i.aa, 0
   br i1 %.not58, label %.critedge, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
   %i.ab = getelementptr i8, ptr %i.x, i64 16
-  %.val83 = load i64, ptr %i.ab, align 8, !tbaa !52
+  %.val83 = load i64, ptr %i.ab, align 8, !tbaa !51
   %i.ac = icmp sgt i64 %.val83, 0
   br i1 %i.ac, label %bb.m, label %.critedge
 
@@ -229,7 +229,7 @@ Py_DECREF.exit69:                                 ; preds = %bb.u, %bb.v, %bb.w
 .backedge:                                        ; preds = %bb.k, %bb.j, %.critedge, %Py_DECREF.exit69
   %i.av = call ptr @PyIter_Next(ptr noundef nonnull %i.r) #3 ; 2 uses
   %.not56 = icmp eq ptr %i.av, null
-  br i1 %.not56, label %._crit_edge, label %.lr.ph, !llvm.loop !46
+  br i1 %.not56, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.backedge, %.preheader
   %i.aw = call ptr @PyErr_Occurred() #3
@@ -376,7 +376,7 @@ declare ptr @PyObject_GenericGetAttr(ptr noundef, ptr noundef) #1
 declare i32 @PyObject_GenericSetAttr(ptr noundef, ptr noundef, ptr noundef) #1
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @namespace_traverse(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) #0 !guid !54 {
+define internal i32 @namespace_traverse(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) #0 !guid !52 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !42   ; 2 uses
@@ -397,7 +397,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @namespace_clear(ptr nofree noundef captures(none) %0) #0 !guid !55 {
+define internal noundef i32 @namespace_clear(ptr nofree noundef captures(none) %0) #0 !guid !53 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 4 uses
@@ -425,7 +425,7 @@ Py_DECREF.exit:                                   ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @namespace_richcompare(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #0 !guid !57 {
+define internal ptr @namespace_richcompare(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #0 !guid !55 {
 bb.a:
   %i.a = and i32 %2, -2
   %or.cond = icmp eq i32 %i.a, 2
@@ -438,7 +438,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %PyObject_TypeCheck.exit.thread, label %PyObject_TypeCheck.exit
 
 PyObject_TypeCheck.exit:                          ; preds = %bb.b
-  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val9, ptr noundef nonnull @_PyNamespace_Type) #3, !inline_history !56
+  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val9, ptr noundef nonnull @_PyNamespace_Type) #3, !inline_history !54
   %.not14 = icmp eq i32 %i.c, 0
   br i1 %.not14, label %bb.c, label %PyObject_TypeCheck.exit.thread
 
@@ -449,7 +449,7 @@ PyObject_TypeCheck.exit.thread:                   ; preds = %bb.b, %PyObject_Typ
   br i1 %.not.i10, label %PyObject_TypeCheck.exit11.thread, label %PyObject_TypeCheck.exit11
 
 PyObject_TypeCheck.exit11:                        ; preds = %PyObject_TypeCheck.exit.thread
-  %i.e = tail call i32 @PyType_IsSubtype(ptr noundef %.val, ptr noundef nonnull @_PyNamespace_Type) #3, !inline_history !56
+  %i.e = tail call i32 @PyType_IsSubtype(ptr noundef %.val, ptr noundef nonnull @_PyNamespace_Type) #3, !inline_history !54
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %bb.c, label %PyObject_TypeCheck.exit11.thread
 
@@ -467,7 +467,7 @@ bb.c:                                             ; preds = %PyObject_TypeCheck.
 }
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @namespace_init(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 !guid !58 {
+define internal i32 @namespace_init(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 !guid !56 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -561,7 +561,7 @@ bb.m:                                             ; preds = %bb.l
 declare ptr @PyType_GenericAlloc(ptr noundef, i64 noundef) #1
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @namespace_new(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2) #0 !guid !59 {
+define internal ptr @namespace_new(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2) #0 !guid !57 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 304
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !43
@@ -599,10 +599,10 @@ bb.e:                                             ; preds = %bb.d
 declare void @PyObject_GC_Del(ptr noundef) #1
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @_PyNamespace_New(ptr noundef %0) local_unnamed_addr #0 !guid !60 {
+define dso_local ptr @_PyNamespace_New(ptr noundef %0) local_unnamed_addr #0 !guid !58 {
 bb.a:
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyNamespace_Type, i64 304), align 8, !tbaa !43
-  %i.b = tail call ptr %i.a(ptr noundef nonnull @_PyNamespace_Type, i64 noundef 0) #3, !inline_history !61 ; 9 uses
+  %i.b = tail call ptr %i.a(ptr noundef nonnull @_PyNamespace_Type, i64 noundef 0) #3, !inline_history !59 ; 9 uses
   %.not.i10 = icmp eq ptr %i.b, null
   br i1 %.not.i10, label %Py_DECREF.exit, label %bb.b
 
@@ -692,7 +692,7 @@ declare ptr @PyObject_RichCompare(ptr noundef, ptr noundef, i32 noundef) local_u
 declare i32 @PyType_IsSubtype(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @namespace_reduce(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1) #0 !guid !62 {
+define internal ptr @namespace_reduce(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1) #0 !guid !60 {
 bb.a:
   %i.a = tail call ptr @PyTuple_New(i64 noundef 0) #3 ; 5 uses
   %.not = icmp eq ptr %i.a, null
@@ -724,7 +724,7 @@ Py_DECREF.exit:                                   ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @namespace_replace(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 !guid !63 {
+define internal ptr @namespace_replace(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 !guid !61 {
 bb.a:
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.c, label %bb.b
@@ -866,22 +866,20 @@ attributes #3 = { nounwind }
 !43 = !{!40, !26, i64 304}
 !44 = !{i64 8924525360046774965}
 !45 = !{!40, !26, i64 320}
-!46 = distinct !{!46, !53}
-!47 = !{i64 3035548956044010042}
-!48 = !{!40, !35, i64 24}
-!49 = !{!40, !33, i64 168}
-!50 = !{!"_PyUnicodeObject_state", !9, i64 0, !9, i64 0, !9, i64 0, !9, i64 0, !9, i64 0}
-!51 = !{!"", !31, i64 0, !33, i64 16, !33, i64 24, !50, i64 32}
-!52 = !{!51, !33, i64 16}
-!53 = !{!"llvm.loop.mustprogress"}
-!54 = !{i64 -4133181949232426694}
-!55 = !{i64 -7755100723586625694}
-!56 = distinct !{null}
-!57 = !{i64 -3508290031417143918}
-!58 = !{i64 4781203599709666759}
-!59 = !{i64 -1179754543936234569}
-!60 = !{i64 659760833811344075}
-!61 = !{ptr @namespace_new}
-!62 = !{i64 7493618953702151271}
-!63 = !{i64 1296167793650469665}
+!46 = !{i64 3035548956044010042}
+!47 = !{!40, !35, i64 24}
+!48 = !{!40, !33, i64 168}
+!49 = !{!"_PyUnicodeObject_state", !9, i64 0, !9, i64 0, !9, i64 0, !9, i64 0, !9, i64 0}
+!50 = !{!"", !31, i64 0, !33, i64 16, !33, i64 24, !49, i64 32}
+!51 = !{!50, !33, i64 16}
+!52 = !{i64 -4133181949232426694}
+!53 = !{i64 -7755100723586625694}
+!54 = distinct !{null}
+!55 = !{i64 -3508290031417143918}
+!56 = !{i64 4781203599709666759}
+!57 = !{i64 -1179754543936234569}
+!58 = !{i64 659760833811344075}
+!59 = !{ptr @namespace_new}
+!60 = !{i64 7493618953702151271}
+!61 = !{i64 1296167793650469665}
 end_hunk_0

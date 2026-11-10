@@ -203,6 +203,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %1, i64 1024       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %scevgep = getelementptr i8, ptr %0, i64 1024
   br label %bb.b
 
 .loopexit145:                                     ; preds = %BrotliCompareAndPushToQueueLiteral.exit, %bb.b
@@ -220,6 +221,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %.not171 = icmp eq i64 %7, 0
   %i.g = getelementptr i8, ptr %1, i64 1024       ; 3 uses
+  %scevgep228 = getelementptr i8, ptr %0, i64 1024
   %min.iters.check = icmp ult i64 %7, 8
   %n.vec = and i64 %7, -8                         ; 3 uses
   %cmp.n = icmp eq i64 %7, %n.vec
@@ -344,8 +346,7 @@ vector.memcheck:                                  ; preds = %bb.m, %bb.l
   %i.bm = add i64 %i.bl, %i.bk
   store i64 %i.bm, ptr %i.b, align 8, !tbaa !14
   %i.bn = mul nuw nsw i64 %i.s, 1040
-  %11 = getelementptr i8, ptr %0, i64 %i.bn
-  %i.bo = getelementptr i8, ptr %11, i64 1024
+  %i.bo = getelementptr i8, ptr %scevgep, i64 %i.bn
   %bound0 = icmp ult ptr %1, %i.bo
   %bound1 = icmp ult ptr %i.av, %i.b
   %found.conflict = and i1 %bound0, %bound1
@@ -748,8 +749,7 @@ vector.memcheck228:                               ; preds = %bb.an, %bb.am
   %i.km = add i64 %i.kl, %i.kk
   store i64 %i.km, ptr %i.g, align 8, !tbaa !14
   %i.kn = mul nuw nsw i64 %i.is, 1040
-  %12 = getelementptr i8, ptr %0, i64 %i.kn
-  %i.ko = getelementptr i8, ptr %12, i64 1024
+  %i.ko = getelementptr i8, ptr %scevgep228, i64 %i.kn
   %bound0229 = icmp ult ptr %1, %i.ko
   %bound1230 = icmp ult ptr %i.jv, %i.g
   %found.conflict231 = and i1 %bound0229, %bound1230
@@ -1152,6 +1152,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %1, i64 2816       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %scevgep = getelementptr i8, ptr %0, i64 2816
   br label %bb.b
 
 .loopexit145:                                     ; preds = %BrotliCompareAndPushToQueueCommand.exit, %bb.b
@@ -1169,6 +1170,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %.not171 = icmp eq i64 %7, 0
   %i.g = getelementptr i8, ptr %1, i64 2816       ; 3 uses
+  %scevgep228 = getelementptr i8, ptr %0, i64 2816
   %min.iters.check = icmp ult i64 %7, 8
   %n.vec = and i64 %7, -8                         ; 3 uses
   %cmp.n = icmp eq i64 %7, %n.vec
@@ -1293,8 +1295,7 @@ vector.memcheck:                                  ; preds = %bb.m, %bb.l
   %i.bm = add i64 %i.bl, %i.bk
   store i64 %i.bm, ptr %i.b, align 8, !tbaa !31
   %i.bn = mul nuw nsw i64 %i.s, 2832
-  %11 = getelementptr i8, ptr %0, i64 %i.bn
-  %i.bo = getelementptr i8, ptr %11, i64 2816
+  %i.bo = getelementptr i8, ptr %scevgep, i64 %i.bn
   %bound0 = icmp ult ptr %1, %i.bo
   %bound1 = icmp ult ptr %i.av, %i.b
   %found.conflict = and i1 %bound0, %bound1
@@ -1697,8 +1698,7 @@ vector.memcheck228:                               ; preds = %bb.an, %bb.am
   %i.km = add i64 %i.kl, %i.kk
   store i64 %i.km, ptr %i.g, align 8, !tbaa !31
   %i.kn = mul nuw nsw i64 %i.is, 2832
-  %12 = getelementptr i8, ptr %0, i64 %i.kn
-  %i.ko = getelementptr i8, ptr %12, i64 2816
+  %i.ko = getelementptr i8, ptr %scevgep228, i64 %i.kn
   %bound0229 = icmp ult ptr %1, %i.ko
   %bound1230 = icmp ult ptr %i.jv, %i.g
   %found.conflict231 = and i1 %bound0229, %bound1230
@@ -2101,6 +2101,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %1, i64 2176       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %scevgep = getelementptr i8, ptr %0, i64 2176
   br label %bb.b
 
 .loopexit145:                                     ; preds = %BrotliCompareAndPushToQueueDistance.exit, %bb.b
@@ -2118,6 +2119,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %.not171 = icmp eq i64 %7, 0
   %i.g = getelementptr i8, ptr %1, i64 2176       ; 3 uses
+  %scevgep228 = getelementptr i8, ptr %0, i64 2176
   %min.iters.check = icmp ult i64 %7, 8
   %n.vec = and i64 %7, -8                         ; 3 uses
   %cmp.n = icmp eq i64 %7, %n.vec
@@ -2242,8 +2244,7 @@ vector.memcheck:                                  ; preds = %bb.m, %bb.l
   %i.bm = add i64 %i.bl, %i.bk
   store i64 %i.bm, ptr %i.b, align 8, !tbaa !35
   %i.bn = mul nuw nsw i64 %i.s, 2192
-  %11 = getelementptr i8, ptr %0, i64 %i.bn
-  %i.bo = getelementptr i8, ptr %11, i64 2176
+  %i.bo = getelementptr i8, ptr %scevgep, i64 %i.bn
   %bound0 = icmp ult ptr %1, %i.bo
   %bound1 = icmp ult ptr %i.av, %i.b
   %found.conflict = and i1 %bound0, %bound1
@@ -2646,8 +2647,7 @@ vector.memcheck228:                               ; preds = %bb.an, %bb.am
   %i.km = add i64 %i.kl, %i.kk
   store i64 %i.km, ptr %i.g, align 8, !tbaa !35
   %i.kn = mul nuw nsw i64 %i.is, 2192
-  %12 = getelementptr i8, ptr %0, i64 %i.kn
-  %i.ko = getelementptr i8, ptr %12, i64 2176
+  %i.ko = getelementptr i8, ptr %scevgep228, i64 %i.kn
   %bound0229 = icmp ult ptr %1, %i.ko
   %bound1230 = icmp ult ptr %i.jv, %i.g
   %found.conflict231 = and i1 %bound0229, %bound1230

@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 80), align 8, !tbaa !47 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !40   ; 20 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !40   ; 19 uses
   %i.e = ptrtoaddr ptr %i.d to i64
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !40
@@ -223,6 +223,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.l = ptrtoint ptr %0 to i64                   ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.d, i64 4    ; 2 uses
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
@@ -360,13 +361,13 @@ scalar.ph188:                                     ; preds = %scalar.ph188.prol.l
 vector.memcheck171:                               ; preds = %.lr.ph
   %i.bi = select i1 %i.bf, i64 4, i64 0           ; 2 uses
   %i.bj = getelementptr i8, ptr %i.d, i64 %i.bi
-  %i.bk = shl nuw nsw i64 %i.be, 2
-  %1 = add nuw nsw i64 %i.bk, 4                   ; 2 uses
-  %i.bl = getelementptr i8, ptr %i.d, i64 %1
-  %i.bm = getelementptr i8, ptr %i.ba, i64 %i.bi
-  %i.bn = getelementptr i8, ptr %i.ba, i64 %1
+  %i.bk = shl nuw nsw i64 %i.be, 2                ; 2 uses
+  %1 = getelementptr i8, ptr %scevgep, i64 %i.bk
+  %i.bl = getelementptr i8, ptr %i.ba, i64 %i.bi
+  %i.bm = getelementptr i8, ptr %i.ba, i64 %i.bk
+  %i.bn = getelementptr i8, ptr %i.bm, i64 4
   %bound0172 = icmp ult ptr %i.bj, %i.bn
-  %bound1173 = icmp ult ptr %i.bm, %i.bl
+  %bound1173 = icmp ult ptr %i.bl, %1
   %found.conflict174 = and i1 %bound0172, %bound1173
   br i1 %found.conflict174, label %scalar.ph169.preheader, label %vector.ph175
 
@@ -517,13 +518,13 @@ bb.v:                                             ; preds = %bb.u
 vector.memcheck:                                  ; preds = %bb.v
   %i.dg = select i1 %i.dd, i64 4, i64 0           ; 2 uses
   %i.dh = getelementptr i8, ptr %i.d, i64 %i.dg
-  %i.di = shl nuw nsw i64 %i.dc, 2
-  %2 = add nuw nsw i64 %i.di, 4                   ; 2 uses
-  %i.dj = getelementptr i8, ptr %i.d, i64 %2
-  %i.dk = getelementptr i8, ptr %i.da, i64 %i.dg
-  %i.dl = getelementptr i8, ptr %i.da, i64 %2
+  %i.di = shl nuw nsw i64 %i.dc, 2                ; 2 uses
+  %2 = getelementptr i8, ptr %scevgep, i64 %i.di
+  %i.dj = getelementptr i8, ptr %i.da, i64 %i.dg
+  %i.dk = getelementptr i8, ptr %i.da, i64 %i.di
+  %i.dl = getelementptr i8, ptr %i.dk, i64 4
   %bound0 = icmp ult ptr %i.dh, %i.dl
-  %bound1 = icmp ult ptr %i.dk, %i.dj
+  %bound1 = icmp ult ptr %i.dj, %2
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -745,6 +746,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph89.i:                                       ; preds = %.preheader81.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = ptrtoint ptr %0 to i64
+  %scevgep = getelementptr i8, ptr %i.h, i64 4
   br label %bb.l
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.f
@@ -868,13 +870,13 @@ bb.o:                                             ; preds = %bb.n
 vector.memcheck:                                  ; preds = %bb.o
   %i.bm = select i1 %i.bj, i64 4, i64 0           ; 2 uses
   %i.bn = getelementptr i8, ptr %i.h, i64 %i.bm
-  %i.bo = shl nuw nsw i64 %i.bi, 2
-  %2 = add nuw nsw i64 %i.bo, 4                   ; 2 uses
-  %i.bp = getelementptr i8, ptr %i.h, i64 %2
-  %i.bq = getelementptr i8, ptr %i.bg, i64 %i.bm
-  %i.br = getelementptr i8, ptr %i.bg, i64 %2
+  %i.bo = shl nuw nsw i64 %i.bi, 2                ; 2 uses
+  %2 = getelementptr i8, ptr %scevgep, i64 %i.bo
+  %i.bp = getelementptr i8, ptr %i.bg, i64 %i.bm
+  %i.bq = getelementptr i8, ptr %i.bg, i64 %i.bo
+  %i.br = getelementptr i8, ptr %i.bq, i64 4
   %bound0 = icmp ult ptr %i.bn, %i.br
-  %bound1 = icmp ult ptr %i.bq, %i.bp
+  %bound1 = icmp ult ptr %i.bp, %2
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

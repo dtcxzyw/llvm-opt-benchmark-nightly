@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = phi ptr [ %i.k, %bb.d ], [ %i.m, %bb.e ]
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !30   ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !29   ; 3 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.g, label %bb.h
 
@@ -227,7 +227,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .backedge.backedge:                               ; preds = %bb.i, %bb.n, %bb.o
   %.0.be = phi ptr [ %i.x, %bb.i ], [ %i.am, %bb.n ], [ %i.c, %bb.o ]
-  br label %.backedge, !llvm.loop !29
+  br label %.backedge
 
 bb.j:                                             ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %.0, i64 2
@@ -435,6 +435,5 @@ attributes #27 = { nounwind allocsize(1) }
 !26 = distinct !{!26, !19, !27}
 !27 = !{!"llvm.loop.peeled.count", i32 1}
 !28 = distinct !{!28, !19}
-!29 = distinct !{!29, !19}
-!30 = !{!10, !10, i64 0}
+!29 = !{!10, !10, i64 0}
 end_hunk_0

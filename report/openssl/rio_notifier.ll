@@ -95,7 +95,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = tail call ptr @__errno_location() #8
   %i.f = load i32, ptr %i.e, align 4, !tbaa !8
   %i.g = icmp eq i32 %i.f, 4
-  br i1 %i.g, label %bb.b, label %.critedge, !llvm.loop !13
+  br i1 %i.g, label %bb.b, label %.critedge, !llvm.loop !12
 
 .critedge:                                        ; preds = %bb.b, %bb.c
   ret i32 1
@@ -128,7 +128,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %.critedge.backedge, label %.critedge2
 
 .critedge.backedge:                               ; preds = %bb.c, %.critedge
-  br label %.critedge, !llvm.loop !14
+  br label %.critedge
 
 .critedge2:                                       ; preds = %bb.c
   %i.i = tail call i32 @BIO_fd_non_fatal_error(i32 noundef %i.g) #7
@@ -175,7 +175,6 @@ attributes #8 = { nounwind willreturn memory(none) }
 !9 = !{!"rio_notifier_st", !5, i64 0, !5, i64 4}
 !10 = !{!9, !5, i64 0}
 !11 = !{!9, !5, i64 4}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = distinct !{!13, !12}
-!14 = distinct !{!14, !12}
+!12 = distinct !{!12, !13}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZNSt23mersenne_twi
 define linkonce_odr noundef double @_ZNSt19normal_distributionIdEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEdRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(5000) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !23, !range !32, !noundef !33
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !23, !range !31, !noundef !32
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %.preheader
 
@@ -418,7 +418,7 @@ select.unfold.i.i.backedge:                       ; preds = %_ZNSt23mersenne_twi
   %.023.i.i.be = phi i64 [ %i.ek, %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv.exit ], [ %spec.select.i.i, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26 ]
   %.01422.i.i.be = phi double [ %i.ej, %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv.exit ], [ 1.000000e+00, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26 ]
   %.01521.i.i.be = phi double [ %i.eg, %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv.exit ], [ 0.000000e+00, %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit26 ]
-  br label %select.unfold.i.i, !llvm.loop !29
+  br label %select.unfold.i.i
 
 bb.d:                                             ; preds = %bb.c
   br label %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEdEclEv.exit
@@ -484,7 +484,7 @@ vector.body82:                                    ; preds = %vector.body82, %vec
   store <2 x i64> %i.fp, ptr %i.fq, align 8, !tbaa !17
   %index.next90 = add nuw i64 %index83, 4         ; 2 uses
   %i.fr = icmp eq i64 %index.next90, 224
-  br i1 %i.fr, label %vector.ph, label %vector.body82, !llvm.loop !30
+  br i1 %i.fr, label %vector.ph, label %vector.body82, !llvm.loop !29
 
 vector.ph:                                        ; preds = %vector.body82
   %vector.recur.extract = extractelement <2 x i64> %wide.load87, i64 1
@@ -550,7 +550,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.hj, ptr %i.gx, align 8, !tbaa !17
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.hk = icmp eq i64 %index.next, 396
-  br i1 %i.hk, label %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i39, label %vector.body, !llvm.loop !31
+  br i1 %i.hk, label %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i39, label %vector.body, !llvm.loop !30
 
 _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i39: ; preds = %vector.body
   %i.hl = load i64, ptr %i.k, align 8, !tbaa !17
@@ -622,8 +622,8 @@ bb.g:                                             ; preds = %_ZNSt8__detail8_Ada
 bb.h:                                             ; preds = %bb.g, %bb.b
   %.0 = phi double [ %i.af, %bb.b ], [ %i.jd, %bb.g ]
   %i.je = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.jf = load double, ptr %i.je, align 8, !tbaa !34
-  %i.jg = load double, ptr %2, align 8, !tbaa !35
+  %i.jf = load double, ptr %i.je, align 8, !tbaa !33
+  %i.jg = load double, ptr %2, align 8, !tbaa !34
   %i.jh = tail call double @llvm.fmuladd.f64(double %.0, double %i.jf, double %i.jg)
   ret double %i.jh
 }
@@ -637,7 +637,7 @@ bb.a:
   %i.a = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @_ZN5EigenL4lastE) ; 0 uses
   %i.b = tail call ptr @llvm.invariant.start.p0(i64 2, ptr nonnull @_ZN5EigenL6lastp1E) ; 0 uses
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @_ZN5EigenL3allE) ; 0 uses
-  store <2 x double> <double 0.000000e+00, double 1.000000e+00>, ptr @_ZN3g2oL18_univariateSamplerE, align 16, !tbaa !36
+  store <2 x double> <double 0.000000e+00, double 1.000000e+00>, ptr @_ZN3g2oL18_univariateSamplerE, align 16, !tbaa !35
   store double 0.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2oL18_univariateSamplerE, i64 16), align 16, !tbaa !24
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2oL18_univariateSamplerE, i64 24), align 8, !tbaa !23
   store double 1.000000e+00, ptr @_ZN3g2oL12_uniformRealE.1, align 8, !tbaa !13
@@ -723,12 +723,11 @@ attributes #5 = { nounwind }
 !26 = distinct !{!26, !10, !18, !19}
 !27 = distinct !{!27, !10, !18, !19}
 !28 = distinct !{!28, !10, !18, !19}
-!29 = distinct !{!29, !10}
+!29 = distinct !{!29, !10, !18, !19}
 !30 = distinct !{!30, !10, !18, !19}
-!31 = distinct !{!31, !10, !18, !19}
-!32 = !{i8 0, i8 2}
-!33 = !{}
-!34 = !{!20, !11, i64 8}
-!35 = !{!20, !11, i64 0}
-!36 = !{!11, !11, i64 0}
+!31 = !{i8 0, i8 2}
+!32 = !{}
+!33 = !{!20, !11, i64 8}
+!34 = !{!20, !11, i64 0}
+!35 = !{!11, !11, i64 0}
 end_hunk_0

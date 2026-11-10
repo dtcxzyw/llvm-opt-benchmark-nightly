@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/e_padlock?download=true
 inline.NumInlined: 18
 inline.NumDeleted: 18
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@padlock_cfb_cipher:bb.a
   store i8 %i.cz, ptr %i.cu, align 1, !tbaa !34
   %i.db = getelementptr inbounds nuw i8, ptr %.074130, i64 4
@@ -204,7 +205,7 @@ declare i32 @padlock_cfb_encrypt(ptr noundef, ptr noundef, ptr noundef, i64 noun
 declare void @padlock_aes_block(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @padlock_ofb_cipher(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 !guid !84 {
+define internal range(i32 0, 2) i32 @padlock_ofb_cipher(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 !guid !83 {
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
@@ -220,7 +221,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = tail call ptr @EVP_CIPHER_CTX_iv_noconst(ptr noundef %0) #6 ; 3 uses
+  %i.k = tail call ptr @EVP_CIPHER_CTX_iv_noconst(ptr noundef %0) #6 ; 5 uses
   %i.l = ptrtoaddr ptr %i.k to i64
   %i.m = icmp ult i32 %i.j, 16
   br i1 %i.m, label %.preheader, label %.critedge
@@ -230,7 +231,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not78, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.preheader
-  %i.n = zext nneg i32 %i.j to i64                ; 6 uses
+  %i.n = zext nneg i32 %i.j to i64                ; 8 uses
   %i.o = add i64 %3, -1
   %i.p = sub nuw nsw i64 15, %i.n
   %umin = tail call i64 @llvm.umin.i64(i64 %i.o, i64 %i.p) ; 2 uses
@@ -248,28 +249,43 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %vector.memcheck
-  %n.vec95 = and i64 %i.q, 28                     ; 6 uses
+  %n.vec95 = and i64 %i.q, 28                     ; 7 uses
   %i.u = add nuw nsw i64 %n.vec95, %i.n           ; 2 uses
   %i.v = sub i64 %3, %n.vec95                     ; 2 uses
   %i.w = getelementptr i8, ptr %2, i64 %n.vec95   ; 2 uses
   %i.x = getelementptr i8, ptr %1, i64 %n.vec95   ; 2 uses
-  %invariant.gep = getelementptr i8, ptr %i.k, i64 %i.n
-  br label %vec.epilog.vector.body
+  %wide.load99 = load <4 x i8>, ptr %2, align 1, !tbaa !34
+  %invariant.gep = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n
+  %wide.load100 = load <4 x i8>, ptr %invariant.gep, align 1, !tbaa !34
+  %4 = xor <4 x i8> %wide.load100, %wide.load99
+  store <4 x i8> %4, ptr %1, align 1, !tbaa !34
+  %5 = icmp eq i64 %n.vec95, 4
+  br i1 %5, label %vec.epilog.middle.block, label %vec.epilog.vector.body
 
-vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index96 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next101, %vec.epilog.vector.body ] ; 4 uses
-  %next.gep97 = getelementptr i8, ptr %2, i64 %index96
-  %next.gep98 = getelementptr i8, ptr %1, i64 %index96
-  %wide.load99 = load <4 x i8>, ptr %next.gep97, align 1, !tbaa !34
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %index96
+vec.epilog.vector.body:                           ; preds = %vec.epilog.ph
+  %next.gep97.1 = getelementptr i8, ptr %2, i64 4
+  %next.gep97 = getelementptr i8, ptr %1, i64 4
+  %wide.load99.1 = load <4 x i8>, ptr %next.gep97.1, align 1, !tbaa !34
+  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 4
+  %gep = getelementptr inbounds nuw i8, ptr %6, i64 %i.n
   %wide.load100.a = load <4 x i8>, ptr %gep, align 1, !tbaa !34
-  %i.y = xor <4 x i8> %wide.load100.a, %wide.load99
-  store <4 x i8> %i.y, ptr %next.gep98, align 1, !tbaa !34
-  %index.next101 = add nuw i64 %index96, 4        ; 2 uses
-  %i.z = icmp eq i64 %index.next101, %n.vec95
-  br i1 %i.z, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !78
+  %i.y = xor <4 x i8> %wide.load100.a, %wide.load99.1
+  store <4 x i8> %i.y, ptr %next.gep97, align 1, !tbaa !34
+  %i.z = icmp eq i64 %n.vec95, 8
+  br i1 %i.z, label %vec.epilog.middle.block, label %vec.epilog.vector.body.2
 
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+vec.epilog.vector.body.2:                         ; preds = %vec.epilog.vector.body
+  %next.gep97.2 = getelementptr i8, ptr %2, i64 8
+  %next.gep98.2 = getelementptr i8, ptr %1, i64 8
+  %wide.load99.2 = load <4 x i8>, ptr %next.gep97.2, align 1, !tbaa !34
+  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %i.n
+  %wide.load100.2 = load <4 x i8>, ptr %8, align 1, !tbaa !34
+  %9 = xor <4 x i8> %wide.load100.2, %wide.load99.2
+  store <4 x i8> %9, ptr %next.gep98.2, align 1, !tbaa !34
+  br label %vec.epilog.middle.block
+
+vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body.2, %vec.epilog.vector.body, %vec.epilog.ph
   %cmp.n102 = icmp eq i64 %i.q, %n.vec95
   br i1 %cmp.n102, label %._crit_edge.loopexit, label %.lr.ph.preheader
 
@@ -297,7 +313,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ai = icmp samesign ult i64 %.04670, 15
   %i.aj = icmp ne i64 %i.ah, 0
   %i.ak = select i1 %i.ai, i1 %i.aj, i1 false
-  br i1 %i.ak, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !79
+  br i1 %i.ak, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !78
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %vec.epilog.middle.block
   %.lcssa90 = phi ptr [ %i.w, %vec.epilog.middle.block ], [ %i.aa, %.lr.ph ]
@@ -395,7 +411,7 @@ vector.body123:                                   ; preds = %vector.ph121, %vect
   store <16 x i8> %i.bj, ptr %i.bk, align 1, !tbaa !34
   %index.next132 = add nuw i64 %index124, 32      ; 2 uses
   %i.bl = icmp eq i64 %index.next132, %n.vec122
-  br i1 %i.bl, label %middle.block133, label %vector.body123, !llvm.loop !80
+  br i1 %i.bl, label %middle.block133, label %vector.body123, !llvm.loop !79
 
 middle.block133:                                  ; preds = %vector.body123
   %cmp.n134 = icmp eq i64 %.366, %n.vec122
@@ -425,7 +441,7 @@ vec.epilog.vector.body142:                        ; preds = %vec.epilog.vector.b
   store <4 x i8> %i.bq, ptr %next.gep146, align 1, !tbaa !34
   %index.next149 = add nuw i64 %index143, 4       ; 2 uses
   %i.br = icmp eq i64 %index.next149, %n.vec141
-  br i1 %i.br, label %vec.epilog.middle.block150, label %vec.epilog.vector.body142, !llvm.loop !81
+  br i1 %i.br, label %vec.epilog.middle.block150, label %vec.epilog.vector.body142, !llvm.loop !80
 
 vec.epilog.middle.block150:                       ; preds = %vec.epilog.vector.body142
   %cmp.n151 = icmp eq i64 %.366, %n.vec141
@@ -457,7 +473,7 @@ vec.epilog.scalar.ph137.prol:                     ; preds = %vec.epilog.scalar.p
   %i.bz = add i64 %.476.prol, -1                  ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph137.prol.loopexit, label %vec.epilog.scalar.ph137.prol, !llvm.loop !82
+  br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph137.prol.loopexit, label %vec.epilog.scalar.ph137.prol, !llvm.loop !81
 
 vec.epilog.scalar.ph137.prol.loopexit:            ; preds = %vec.epilog.scalar.ph137.prol, %vec.epilog.scalar.ph137.preheader
   %.077.unr = phi ptr [ %.077.ph, %vec.epilog.scalar.ph137.preheader ], [ %i.by, %vec.epilog.scalar.ph137.prol ]
@@ -502,7 +518,7 @@ vec.epilog.scalar.ph137:                          ; preds = %vec.epilog.scalar.p
   %i.cy = getelementptr inbounds nuw i8, ptr %.077, i64 4
   %i.cz = add i64 %.476, -4                       ; 2 uses
   %.not63.3 = icmp eq i64 %i.cz, 0
-  br i1 %.not63.3, label %.loopexit, label %vec.epilog.scalar.ph137, !llvm.loop !83
+  br i1 %.not63.3, label %.loopexit, label %vec.epilog.scalar.ph137, !llvm.loop !82
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph137.prol.loopexit, %vec.epilog.scalar.ph137, %middle.block133, %vec.epilog.middle.block150, %bb.f
   %i.da = tail call ptr @EVP_CIPHER_CTX_iv_noconst(ptr noundef %0) #6
@@ -517,7 +533,7 @@ vec.epilog.scalar.ph137:                          ; preds = %vec.epilog.scalar.p
 declare i32 @padlock_ofb_encrypt(ptr noundef, ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @padlock_ctr_cipher(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 !guid !85 {
+define internal range(i32 0, 2) i32 @padlock_ctr_cipher(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 !guid !84 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #6
@@ -551,7 +567,7 @@ declare void @CRYPTO_ctr128_encrypt_ctr32(ptr noundef, ptr noundef, i64 noundef,
 declare ptr @EVP_CIPHER_CTX_buf_noconst(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal void @padlock_ctr32_encrypt_glue(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef initializes((0, 16)) %3, ptr nofree noundef readonly captures(none) %4) #0 !guid !86 {
+define internal void @padlock_ctr32_encrypt_glue(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef initializes((0, 16)) %3, ptr nofree noundef readonly captures(none) %4) #0 !guid !85 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 1 dereferenceable(16) %4, i64 16, i1 false)
   %i.a = shl i64 %2, 4
@@ -654,13 +670,12 @@ attributes #6 = { nounwind }
 !75 = !{!63}
 !76 = !{!64}
 !77 = !{!63, !62}
-!78 = distinct !{!78, !35, !36, !37}
-!79 = distinct !{!79, !35, !36}
+!78 = distinct !{!78, !35, !36}
+!79 = distinct !{!79, !35, !36, !37}
 !80 = distinct !{!80, !35, !36, !37}
-!81 = distinct !{!81, !35, !36, !37}
-!82 = distinct !{!82, !39}
-!83 = distinct !{!83, !35, !36}
-!84 = !{i64 -4015646898816171357}
-!85 = !{i64 1484856218269825983}
-!86 = !{i64 5828591204123089884}
+!81 = distinct !{!81, !39}
+!82 = distinct !{!82, !35, !36}
+!83 = !{i64 -4015646898816171357}
+!84 = !{i64 1484856218269825983}
+!85 = !{i64 5828591204123089884}
 end_hunk_0

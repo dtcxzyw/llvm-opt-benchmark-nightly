@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i64.us.us, label %.backedge.us.us.peel.backedge, label %be_underlying_writebuf_full.exit65.us.us
 
 .backedge.us.us.peel.backedge:                    ; preds = %bb.m, %be_underlying_writebuf_full.exit65.us.us
-  br label %.backedge.us.us.peel, !llvm.loop !5
+  br label %.backedge.us.us.peel, !llvm.loop !3
 
 be_underlying_writebuf_full.exit65.us.us:         ; preds = %bb.m
   %i.cb = getelementptr inbounds nuw i8, ptr %.val62.us.us, i64 280
@@ -256,7 +256,7 @@ be_underlying_writebuf_full.exit67.us:            ; preds = %bb.q
   br i1 %cond.fr.us, label %.split.us.us.backedge, label %.critedge61
 
 .split.us.us.backedge:                            ; preds = %be_underlying_writebuf_full.exit67.us, %bb.q
-  br label %.split.us.us, !llvm.loop !6
+  br label %.split.us.us, !llvm.loop !4
 
 .split:                                           ; preds = %.split.preheader, %be_underlying_writebuf_full.exit67.thread
   %i.ct = load ptr, ptr %i.v, align 8
@@ -278,7 +278,7 @@ bb.r:                                             ; preds = %.critedge80
   %i.df = load ptr, ptr %i.w, align 8
   %i.dg = tail call i32 %i.da(ptr noundef %i.db, ptr noundef %i.de, i64 noundef -1, i32 noundef %1, ptr noundef %i.df) #3
   %i.dh = icmp eq i32 %i.dg, 0
-  br i1 %i.dh, label %.lr.ph, label %.critedge.thread, !llvm.loop !7
+  br i1 %i.dh, label %.lr.ph, label %.critedge.thread
 
 .lr.ph:                                           ; preds = %.split, %bb.r
   store i32 1, ptr %2, align 4
@@ -318,7 +318,7 @@ be_underlying_writebuf_full.exit67.thread:        ; preds = %bb.t
   %i.ds = load ptr, ptr %i.o, align 8
   %i.dt = tail call i64 @evbuffer_get_length(ptr noundef %i.ds) #3
   %.not54 = icmp eq i64 %i.dt, 0
-  br i1 %.not54, label %.critedge61, label %.split, !llvm.loop !6
+  br i1 %.not54, label %.critedge61, label %.split, !llvm.loop !4
 
 .critedge61:                                      ; preds = %.split, %bufferevent_trigger_nolock_.exit, %bb.t, %be_underlying_writebuf_full.exit67.thread, %bb.e, %bufferevent_trigger_nolock_.exit.us, %bb.o, %bb.p, %be_underlying_writebuf_full.exit67.us
   %i.du = phi ptr [ %i.aa, %bb.e ], [ %i.aa, %be_underlying_writebuf_full.exit67.us ], [ %i.aa, %bb.p ], [ %i.aa, %bb.o ], [ %i.aa, %bufferevent_trigger_nolock_.exit.us ], [ %i.q, %be_underlying_writebuf_full.exit67.thread ], [ %i.q, %bb.t ], [ %i.q, %bufferevent_trigger_nolock_.exit ], [ %i.q, %.split ]
@@ -390,7 +390,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = load ptr, ptr %i.n, align 8
   %i.p = load ptr, ptr %i.g, align 8
   %i.q = load ptr, ptr %i.j, align 8
-  %i.r = tail call i32 %i.l(ptr noundef %i.o, ptr noundef %i.p, i64 noundef -1, i32 noundef 2, ptr noundef %i.q) #3, !inline_history !9
+  %i.r = tail call i32 %i.l(ptr noundef %i.o, ptr noundef %i.p, i64 noundef -1, i32 noundef 2, ptr noundef %i.q) #3, !inline_history !7
   %.not24 = icmp eq i32 %i.r, 0
   br i1 %.not24, label %.lr.ph.i, label %be_filter_process_input.exit.thread
 
@@ -401,9 +401,9 @@ bb.c:                                             ; preds = %.critedge46.i
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = load ptr, ptr %i.g, align 8
   %i.x = load ptr, ptr %i.j, align 8
-  %i.y = tail call i32 %i.s(ptr noundef %i.v, ptr noundef %i.w, i64 noundef -1, i32 noundef 2, ptr noundef %i.x) #3, !inline_history !9
+  %i.y = tail call i32 %i.s(ptr noundef %i.v, ptr noundef %i.w, i64 noundef -1, i32 noundef 2, ptr noundef %i.x) #3, !inline_history !7
   %i.z = icmp eq i32 %i.y, 0
-  br i1 %i.z, label %.lr.ph.i, label %.critedge.thread.i, !llvm.loop !0
+  br i1 %i.z, label %.lr.ph.i, label %.critedge.thread.i
 
 .lr.ph.i:                                         ; preds = %.split13, %bb.c
   %i.aa = load i16, ptr %i.k, align 8
@@ -570,7 +570,7 @@ bb.h:                                             ; preds = %bb.g
 
 be_readbuf_full.exit.thread.split.us.backedge:    ; preds = %bb.h, %be_readbuf_full.exit41.us
   %.be = phi i64 [ 0, %bb.h ], [ %i.al, %be_readbuf_full.exit41.us ]
-  br label %be_readbuf_full.exit.thread.split.us, !llvm.loop !0
+  br label %be_readbuf_full.exit.thread.split.us
 
 be_readbuf_full.exit41.us:                        ; preds = %bb.h
   %i.aj = load ptr, ptr %i.l, align 8
@@ -604,7 +604,7 @@ bb.i:                                             ; preds = %.critedge46
   %i.be = load ptr, ptr %i.ap, align 8
   %i.bf = tail call i32 %i.az(ptr noundef %i.bc, ptr noundef %i.bd, i64 noundef -1, i32 noundef %1, ptr noundef %i.be) #3
   %i.bg = icmp eq i32 %i.bf, 0
-  br i1 %i.bg, label %.lr.ph, label %.critedge, !llvm.loop !0
+  br i1 %i.bg, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %be_readbuf_full.exit.thread.split, %bb.i
   store i32 1, ptr %2, align 4
@@ -656,17 +656,15 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { nounwind }
 
-!llvm.module.flags = !{!1, !2}
-!llvm.ident = !{!3}
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
 
-!0 = distinct !{!0, !4}
-!1 = !{i32 8, !"PIC Level", i32 2}
-!2 = !{i32 7, !"uwtable", i32 2}
-!3 = !{!"Ubuntu clang version 24.0.0 (++20260816081927+7cb5d896117c-1~exp1~20260816201937.1790)"}
-!4 = !{!"llvm.loop.mustprogress"}
-!5 = distinct !{!5, !4, !8}
-!6 = distinct !{!6, !4}
-!7 = distinct !{!7, !4}
-!8 = !{!"llvm.loop.peeled.count", i32 1}
-!9 = distinct !{null}
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"uwtable", i32 2}
+!2 = !{!"Ubuntu clang version 24.0.0 (++20260816081927+7cb5d896117c-1~exp1~20260816201937.1790)"}
+!3 = distinct !{!3, !5}
+!4 = distinct !{!4, !6}
+!5 = !{!"llvm.loop.peeled.count", i32 1}
+!6 = !{!"llvm.loop.mustprogress"}
+!7 = distinct !{null}
 end_hunk_0

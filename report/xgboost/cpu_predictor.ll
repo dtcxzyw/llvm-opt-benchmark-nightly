@@ -205,7 +205,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.m = load i64, ptr %i.l, align 8              ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.o = load i64, ptr %i.n, align 8              ; 9 uses
+  %i.o = load i64, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.q = load i64, ptr %i.p, align 8              ; 3 uses
   %i.r = icmp eq i64 %i.q, 0
@@ -222,6 +222,9 @@ bb.a:
   %i.aa = load ptr, ptr %.in.i.i, align 8         ; 3 uses
   %i.ab = icmp ne ptr %i.aa, null
   %i.ac = icmp eq i64 %i.o, 0
+  %9 = shl i64 %i.o, 2                            ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.s, i64 %9
+  %scevgep68 = getelementptr i8, ptr %i.aa, i64 %9
   %min.iters.check = icmp ult i64 %i.o, 8
   %ident.check = icmp ne i64 %i.w, 1
   %ident.check64 = icmp ne i64 %i.m, 1
@@ -380,12 +383,10 @@ _ZNK7xgboost6linalg10TensorViewIfLi2EE5SliceIJmNS0_6detail6AllTagEEEEDaDpOT_.exi
   br i1 %brmerge, label %.lr.ph.split.preheader71, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.preheader
-  %9 = add i64 %i.ci, %i.o
-  %i.cm = shl i64 %9, 2
-  %i.cn = getelementptr i8, ptr %i.aa, i64 %i.cm
-  %10 = add i64 %i.cc, %i.o
-  %i.co = shl i64 %10, 2
-  %i.cp = getelementptr i8, ptr %i.s, i64 %i.co
+  %i.cm = shl i64 %i.ci, 2
+  %i.cn = getelementptr i8, ptr %scevgep68, i64 %i.cm
+  %i.co = shl i64 %i.cc, 2
+  %i.cp = getelementptr i8, ptr %scevgep, i64 %i.co
   %bound0 = icmp ult ptr %i.cl, %i.cp
   %bound1 = icmp ult ptr %i.cf, %i.cn
   %found.conflict = and i1 %bound0, %bound1

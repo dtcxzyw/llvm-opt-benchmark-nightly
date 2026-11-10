@@ -205,6 +205,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.z, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
+  %3 = shl i64 %.fr90, 3
+  %scevgep131 = getelementptr i8, ptr %i.c, i64 %3
   %min.iters.check132 = icmp ugt i64 %.fr90, 5
   %ident.check127.not = icmp eq i64 %i.b, 1
   %or.cond = select i1 %min.iters.check132, i1 %ident.check127.not, i1 false
@@ -256,9 +258,8 @@ bb.f:                                             ; preds = %bb.d
   br i1 %or.cond, label %vector.memcheck133, label %.lr.ph.i.i.i.i.i.i.us.us.preheader
 
 vector.memcheck133:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader.us.us
-  %3 = add i64 %.fr90, %.03787.us.us
-  %i.am = shl i64 %3, 3
-  %i.an = getelementptr i8, ptr %i.c, i64 %i.am
+  %i.am = shl nsw i64 %.03787.us.us, 3
+  %i.an = getelementptr i8, ptr %scevgep131, i64 %i.am
   %bound0 = icmp ult ptr %i.al, %scevgep
   %bound1 = icmp ult ptr %i.ah, %i.an
   %found.conflict = and i1 %bound0, %bound1
@@ -358,7 +359,7 @@ bb.g:                                             ; preds = %.preheader
 
 .preheader.backedge:                              ; preds = %bb.g, %.loopexit
   %.182.be = phi i64 [ %i.bs, %bb.g ], [ %i.bv, %.loopexit ]
-  br label %.preheader, !llvm.loop !600
+  br label %.preheader
 
 bb.h:                                             ; preds = %.preheader
   %i.bu = getelementptr inbounds i8, ptr %calloc, i64 %.182

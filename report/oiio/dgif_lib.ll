@@ -205,12 +205,12 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !21   ; 15 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !21   ; 14 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 2 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !54   ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8536 ; 11 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 4439 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 344 ; 13 uses
+  %i.h = getelementptr i8, ptr %i.c, i64 344      ; 14 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !50
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 12
@@ -381,6 +381,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bl = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.bm = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.bn = zext i32 %2 to i64                      ; 3 uses
+  %scevgep = getelementptr i8, ptr %i.c, i64 343
+  %scevgep263 = getelementptr i8, ptr %1, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph170, %bb.y
@@ -591,16 +593,13 @@ vector.memcheck265:                               ; preds = %iter.check280
   %i.ex = add nsw i64 %i.ew, %i.bn
   %i.ey = add nsw i64 %i.ep, -1
   %i.ez = tail call i64 @llvm.umin.i64(i64 %i.ex, i64 %i.ey) ; 2 uses
-  %3 = getelementptr i8, ptr %1, i64 %i.ez
-  %i.fa = getelementptr i8, ptr %3, i64 %i.eq
-  %i.fb = getelementptr i8, ptr %i.fa, i64 1
-  %4 = add nsw i64 %i.ep, 343
-  %i.fc = sub i64 %4, %i.ez
-  %5 = getelementptr i8, ptr %i.c, i64 %i.fc
-  %i.fd = getelementptr i8, ptr %i.c, i64 %i.ep
-  %i.fe = getelementptr i8, ptr %i.fd, i64 344
+  %i.fa = getelementptr i8, ptr %scevgep263, i64 %i.ez
+  %i.fb = getelementptr i8, ptr %i.fa, i64 %i.eq
+  %i.fc = sub i64 %i.ep, %i.ez
+  %i.fd = getelementptr i8, ptr %scevgep, i64 %i.fc
+  %i.fe = getelementptr i8, ptr %i.h, i64 %i.ep
   %bound0266 = icmp ult ptr %i.ev, %i.fe
-  %bound1267 = icmp ult ptr %5, %i.fb
+  %bound1267 = icmp ult ptr %i.fd, %i.fb
   %found.conflict268 = and i1 %bound0266, %bound1267
   br i1 %found.conflict268, label %.lr.ph161.preheader, label %vector.main.loop.iter.check269
 

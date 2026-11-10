@@ -202,14 +202,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.v = extractvalue { i64, ptr } %i.k, 1        ; 2 uses
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !95
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !94
   %.sroa.012.4.extract.shift.i = lshr i64 %i.l, 32
   %.sroa.012.4.extract.trunc.i = trunc nuw i64 %.sroa.012.4.extract.shift.i to i32
   tail call void %i.w(ptr noundef nonnull %i.v, i32 noundef %.sroa.012.4.extract.trunc.i), !inline_history !92
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.d, %bb.c
-  br label %bb.b, !llvm.loop !93
+  br label %bb.b
 
 _ZZN4grpc12_GLOBAL__N_121CallbackAlternativeCQ3RefEvENKUlPvE_clES2_.exit: ; preds = %bb.b
   ret void
@@ -375,7 +375,6 @@ attributes #22 = { builtin nounwind }
 !90 = !{!87, !86, i64 8}
 !91 = !{!87, !63, i64 16}
 !92 = distinct !{null}
-!93 = distinct !{!93, !61}
-!94 = !{!"_ZTS29grpc_completion_queue_functor", !14, i64 0, !6, i64 8, !6, i64 12, !63, i64 16}
-!95 = !{!94, !14, i64 0}
+!93 = !{!"_ZTS29grpc_completion_queue_functor", !14, i64 0, !6, i64 8, !6, i64 12, !63, i64 16}
+!94 = !{!93, !14, i64 0}
 end_hunk_0

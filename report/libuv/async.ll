@@ -190,14 +190,14 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   br i1 %i.d, label %uv__async_spin.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void asm sideeffect "rep; nop", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !4
+  tail call void asm sideeffect "rep; nop", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !3
   %i.e = add nuw nsw i32 %.07.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.e, 997
   br i1 %exitcond.not.i, label %bb.d, label %.backedge
 
 .backedge:                                        ; preds = %bb.c, %bb.d
   %.07.i.be = phi i32 [ %i.e, %bb.c ], [ 0, %bb.d ]
-  br label %bb.b, !llvm.loop !0
+  br label %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = tail call i32 @sched_yield() #7          ; 0 uses
@@ -330,7 +330,7 @@ bb.g:                                             ; preds = %bb.f
 .backedge:                                        ; preds = %bb.g, %bb.e, %bb.f
   %i.ac = load ptr, ptr %3, align 8               ; 2 uses
   %.not = icmp eq ptr %3, %i.ac
-  br i1 %.not, label %._crit_edge, label %bb.e, !llvm.loop !6
+  br i1 %.not, label %._crit_edge, label %bb.e, !llvm.loop !5
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.d, %uv__queue_move.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
@@ -393,7 +393,7 @@ uv__queue_move.exit:                              ; preds = %bb.b
 uv__async_spin.exit.loopexit:                     ; preds = %bb.d
   %i.n = load ptr, ptr %1, align 8                ; 2 uses
   %.not = icmp eq ptr %1, %i.n
-  br i1 %.not, label %uv__async_spin.exit._crit_edge, label %bb.c, !llvm.loop !7
+  br i1 %.not, label %uv__async_spin.exit._crit_edge, label %bb.c, !llvm.loop !6
 
 bb.c:                                             ; preds = %.lr.ph, %uv__async_spin.exit.loopexit
   %i.o = phi ptr [ %.pre, %.lr.ph ], [ %i.n, %uv__async_spin.exit.loopexit ] ; 7 uses
@@ -421,14 +421,14 @@ bb.d:                                             ; preds = %.backedge, %bb.c
   br i1 %i.y, label %uv__async_spin.exit.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  call void asm sideeffect "rep; nop", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !4
+  call void asm sideeffect "rep; nop", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !3
   %i.z = add nuw nsw i32 %.07.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.z, 997
   br i1 %exitcond.not.i, label %bb.f, label %.backedge
 
 .backedge:                                        ; preds = %bb.e, %bb.f
   %.07.i.be = phi i32 [ %i.z, %bb.e ], [ 0, %bb.f ]
-  br label %bb.d, !llvm.loop !0
+  br label %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = call i32 @sched_yield() #7              ; 0 uses
@@ -532,7 +532,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store i32 0, ptr %i.v, align 8
   %i.w = load ptr, ptr %1, align 8                ; 2 uses
   %.not = icmp eq ptr %1, %i.w
-  br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !8
+  br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !7
 
 ._crit_edge:                                      ; preds = %bb.c, %uv__queue_move.exit.thread, %uv__queue_move.exit
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 3 uses
@@ -609,16 +609,15 @@ attributes #7 = { nounwind }
 attributes #8 = { nounwind willreturn memory(none) }
 attributes #9 = { noreturn nounwind }
 
-!llvm.module.flags = !{!1, !2}
-!llvm.ident = !{!3}
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
 
-!0 = distinct !{!0, !5}
-!1 = !{i32 8, !"PIC Level", i32 2}
-!2 = !{i32 7, !"uwtable", i32 2}
-!3 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
-!4 = !{i64 11111}
-!5 = !{!"llvm.loop.mustprogress"}
-!6 = distinct !{!6, !5}
-!7 = distinct !{!7, !5}
-!8 = distinct !{!8, !5}
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"uwtable", i32 2}
+!2 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
+!3 = !{i64 11111}
+!4 = !{!"llvm.loop.mustprogress"}
+!5 = distinct !{!5, !4}
+!6 = distinct !{!6, !4}
+!7 = distinct !{!7, !4}
 end_hunk_0

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE16clear_and_deleteEPSE_PSC_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !562 {
+define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE16clear_and_deleteEPSE_PSC_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !561 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 11 ; 2 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !71    ; 2 uses
@@ -354,7 +354,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cx
   %.147.be.in = phi i64 [ %.248, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %i.ce, %bb.g ]
   %.1.be = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %i.bq, %bb.g ]
   %.147.be = add nuw nsw i64 %.147.be.in, 1
-  br label %bb.d, !llvm.loop !560
+  br label %bb.d
 
 .preheader77:                                     ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66, %bb.f
   %i.bn = phi i8 [ %i.cd, %bb.f ], [ %i.bl, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ] ; 2 uses
@@ -396,7 +396,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bq, i64 10
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !71  ; 2 uses
   %.not = icmp ult i8 %i.bp, %i.cd
-  br i1 %.not, label %bb.g, label %.preheader77, !llvm.loop !561
+  br i1 %.not, label %bb.g, label %.preheader77, !llvm.loop !560
 
 bb.g:                                             ; preds = %bb.f
   %i.ce = zext i8 %i.bp to i64
@@ -412,7 +412,7 @@ bb.g:                                             ; preds = %bb.f
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE23rebalance_right_to_leftEhPSE_PSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !565 {
+define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE23rebalance_right_to_leftEhPSE_PSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !564 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 7 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !71
@@ -676,7 +676,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.new
   store ptr %0, ptr %i.di, align 8, !tbaa !217
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.f, !llvm.loop !563
+  br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.f, !llvm.loop !562
 
 bb.g:                                             ; preds = %.lr.ph63, %bb.g
   %.062 = phi i8 [ 0, %.lr.ph63 ], [ %i.dt, %bb.g ] ; 4 uses
@@ -696,7 +696,7 @@ bb.g:                                             ; preds = %.lr.ph63, %bb.g
   %i.dw = zext i8 %i.dv to i32
   %i.dx = sub nsw i32 %i.dw, %i.x
   %.not = icmp slt i32 %i.dx, %i.du
-  br i1 %.not, label %.loopexit, label %bb.g, !llvm.loop !564
+  br i1 %.not, label %.loopexit, label %bb.g, !llvm.loop !563
 
 .loopexit:                                        ; preds = %bb.g, %.preheader, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE10transfer_nEmmmPSE_PSC_.exit57
   %i.dy = load i8, ptr %i.a, align 2, !tbaa !71
@@ -709,7 +709,7 @@ bb.g:                                             ; preds = %.lr.ph63, %bb.g
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE23rebalance_left_to_rightEhPSE_PSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !568 {
+define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE23rebalance_left_to_rightEhPSE_PSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !567 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 4 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !71    ; 2 uses
@@ -986,7 +986,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
   %i.du = and i64 %indvars.iv.next.1, 255
   %.not58.1 = icmp eq i64 %i.du, 0
-  br i1 %.not58.1, label %.preheader, label %.lr.ph.new, !llvm.loop !566
+  br i1 %.not58.1, label %.preheader, label %.lr.ph.new, !llvm.loop !565
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph63.new
   %indvars.iv65 = phi i64 [ 1, %.lr.ph63.new ], [ %indvars.iv.next66.1, %bb.g ] ; 6 uses
@@ -1021,7 +1021,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph63.new
   %indvars.iv.next66.1 = add nuw nsw i64 %indvars.iv65, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !567
+  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !566
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.g
   %lcmp.mod86.not = icmp eq i64 %xtraiter85, 0
@@ -1058,7 +1058,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph63.new
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE5splitEiPSE_PSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !572 {
+define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE5splitEiPSE_PSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 !guid !571 {
 bb.a:
   switch i32 %1, label %bb.c [
     i32 0, label %bb.b
@@ -1279,7 +1279,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
   store i8 %i.ct, ptr %i.cs, align 1, !tbaa !71
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !569
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !568
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph.i27
   %indvars.iv.unr = phi i64 [ %i.ci, %.lr.ph.i27 ], [ %i.co, %.prol.preheader ]
@@ -1321,7 +1321,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
   %i.ds = trunc nuw i64 %i.dh to i8
   store i8 %i.ds, ptr %i.dr, align 1, !tbaa !71
   %.wide.3 = icmp ugt i64 %i.dn, %i.cj
-  br i1 %.wide.3, label %.lr.ph.i27.new, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13emplace_valueIJPS9_EEEvhPSC_DpOT_.exit, !llvm.loop !570
+  br i1 %.wide.3, label %.lr.ph.i27.new, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13emplace_valueIJPS9_EEEvhPSC_DpOT_.exit, !llvm.loop !569
 
 _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13emplace_valueIJPS9_EEEvhPSC_DpOT_.exit: ; preds = %.prol.loopexit, %.lr.ph.i27.new, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE10value_initIJPS9_EEEvhPSC_DpOT_.exit.i, %bb.h
   %i.dt = load i8, ptr %i.h, align 2, !tbaa !71
@@ -1373,7 +1373,7 @@ bb.j:                                             ; preds = %bb.i, %bb.j
   %i.es = add i8 %.02530, 1                       ; 2 uses
   %i.et = load i8, ptr %i.j, align 1, !tbaa !71
   %.not = icmp ugt i8 %i.es, %i.et
-  br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !571
+  br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !570
 
 .loopexit:                                        ; preds = %bb.j, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13value_destroyEhPSC_.exit
   ret void
@@ -1382,7 +1382,7 @@ bb.j:                                             ; preds = %bb.i, %bb.j
 declare noundef i64 @_ZN4absl12lts_2025051218container_internal42GrowSooTableToNextCapacityAndPrepareInsertILm8ELb1EEEmRNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmNS1_6ctrl_tE(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(72), i64 noundef, i8 noundef signext) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr hidden noundef i64 @_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_6HashEqIPKN6google8protobuf14FileDescriptorEvE4HashES8_EEmPKvPv(ptr noundef %0, ptr noundef %1) #0 comdat !guid !573 {
+define linkonce_odr hidden noundef i64 @_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_6HashEqIPKN6google8protobuf14FileDescriptorEvE4HashES8_EEmPKvPv(ptr noundef %0, ptr noundef %1) #0 comdat !guid !572 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !129
   %i.b = ptrtoint ptr %i.a to i64                 ; 2 uses
@@ -1396,7 +1396,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress noinline nounwind uwtable
-define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal20TransferNRelocatableILm8EEEvPvS3_S3_m(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #23 comdat !guid !574 {
+define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal20TransferNRelocatableILm8EEEvPvS3_S3_m(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #23 comdat !guid !573 {
 bb.a:
   %i.a = shl i64 %3, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %1, ptr align 1 %2, i64 %i.a, i1 false)
@@ -1404,7 +1404,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvSL_PFvSL_hmmE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) #4 comdat align 2 personality ptr @__gxx_personality_v0 !guid !576 {
+define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvSL_PFvSL_hmmE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) #4 comdat align 2 personality ptr @__gxx_personality_v0 !guid !575 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !127    ; 4 uses
   %i.b = lshr i64 %i.a, 1                         ; 4 uses
@@ -1441,7 +1441,7 @@ bb.c:                                             ; preds = %bb.a, %._crit_edge
 ._crit_edge:                                      ; preds = %bb.i, %bb.c
   %i.s = add nuw i64 %.05162, 16                  ; 2 uses
   %i.t = icmp ult i64 %i.s, %i.b
-  br i1 %i.t, label %bb.c, label %bb.b, !llvm.loop !575
+  br i1 %i.t, label %bb.c, label %bb.b, !llvm.loop !574
 
 .lr.ph:                                           ; preds = %bb.c, %bb.i
   %.sroa.054.061 = phi i16 [ %i.bd, %bb.i ], [ %i.r, %bb.c ] ; 3 uses
@@ -1844,20 +1844,19 @@ begin_hunk_1_@llvm.umin.i8
 !558 = distinct !{!558, !132}
 !559 = distinct !{!559, !132}
 !560 = distinct !{!560, !132}
-!561 = distinct !{!561, !132}
-!562 = !{i64 2324386382233339218}
+!561 = !{i64 2324386382233339218}
+!562 = distinct !{!562, !132}
 !563 = distinct !{!563, !132}
-!564 = distinct !{!564, !132}
-!565 = !{i64 -5792653414947581211}
+!564 = !{i64 -5792653414947581211}
+!565 = distinct !{!565, !132}
 !566 = distinct !{!566, !132}
-!567 = distinct !{!567, !132}
-!568 = !{i64 4136048477129134684}
-!569 = distinct !{!569, !221}
+!567 = !{i64 4136048477129134684}
+!568 = distinct !{!568, !221}
+!569 = distinct !{!569, !132}
 !570 = distinct !{!570, !132}
-!571 = distinct !{!571, !132}
-!572 = !{i64 7487441976630112542}
-!573 = !{i64 3865287087218986918}
-!574 = !{i64 -4796906857823210088}
-!575 = distinct !{!575, !132}
-!576 = !{i64 -4885465400600749240}
+!571 = !{i64 7487441976630112542}
+!572 = !{i64 3865287087218986918}
+!573 = !{i64 -4796906857823210088}
+!574 = distinct !{!574, !132}
+!575 = !{i64 -4885465400600749240}
 end_hunk_1

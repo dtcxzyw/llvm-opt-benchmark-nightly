@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not21, label %.critedge, label %.critedge2.backedge
 
 .critedge2.backedge:                              ; preds = %bb.o, %bb.n
-  br label %.critedge2, !llvm.loop !48
+  br label %.critedge2
 
 .critedge:                                        ; preds = %bb.o, %bb.m, %bb.k, %bb.c, %bb.b, %gz_load.exit, %bb.l, %.loopexit
   %.0 = phi i32 [ -1, %bb.l ], [ -1, %gz_load.exit ], [ 0, %.loopexit ], [ 0, %bb.o ], [ 0, %bb.m ], [ 0, %bb.c ], [ -1, %bb.k ], [ -1, %bb.b ]
@@ -292,7 +292,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.o = select i1 %i.n, i32 -5, i32 0
   tail call void @gz_error(ptr noundef nonnull %0, i32 noundef 0, ptr noundef null) #11
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !49
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !48
   tail call void @free(ptr noundef %i.q) #11
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.s = load i32, ptr %i.r, align 4, !tbaa !30
@@ -396,7 +396,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !51   ; 2 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !50   ; 2 uses
   %i.x = icmp eq ptr %i.w, null
   %spec.select = select i1 %i.x, ptr @.str.6, ptr %i.w
   tail call void @gz_error(ptr noundef nonnull %0, i32 noundef -3, ptr noundef nonnull %spec.select) #11
@@ -406,7 +406,7 @@ bb.o:                                             ; preds = %bb.i
   %i.y = icmp ne i32 %i.p, 0
   %i.z = icmp ne i32 %i.o, 1
   %i.aa = select i1 %i.y, i1 %i.z, i1 false
-  br i1 %i.aa, label %bb.b, label %.loopexit, !llvm.loop !50
+  br i1 %i.aa, label %bb.b, label %.loopexit, !llvm.loop !49
 
 .loopexit:                                        ; preds = %bb.o, %bb.f, %bb.g, %bb.n, %bb.m, %bb.k, %bb.j, %bb.d
   %.1 = phi i32 [ %i.k, %bb.d ], [ %.0, %bb.f ], [ %.0, %bb.g ], [ %i.o, %bb.j ], [ -4, %bb.k ], [ 0, %bb.m ], [ -3, %bb.n ], [ %i.o, %bb.o ] ; 2 uses
@@ -507,7 +507,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <16 x i8> %wide.load60, ptr %i.v, align 1, !tbaa !32
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.w = icmp eq i64 %index.next, %n.vec
-  br i1 %i.w, label %middle.block, label %vector.body, !llvm.loop !52
+  br i1 %i.w, label %middle.block, label %vector.body, !llvm.loop !51
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.n
@@ -515,7 +515,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.p, 0
-  br i1 %min.epilog.iters.check, label %.preheader.preheader, label %vec.epilog.ph, !prof !58
+  br i1 %min.epilog.iters.check, label %.preheader.preheader, label %vec.epilog.ph, !prof !57
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -534,7 +534,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <4 x i8> %wide.load65, ptr %next.gep63, align 1, !tbaa !32
   %index.next66 = add nuw i64 %index62, 4         ; 2 uses
   %i.ab = icmp eq i64 %index.next66, %n.vec61
-  br i1 %i.ab, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !53
+  br i1 %i.ab, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !52
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n67 = icmp eq i64 %n.vec61, %i.n
@@ -561,7 +561,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ag = add i32 %.0.prol, -1                    ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !54
+  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !53
 
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
   %.022.unr = phi ptr [ %.022.ph, %.preheader.preheader ], [ %i.af, %.preheader.prol ]
@@ -608,7 +608,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.be, ptr %i.bc, align 1, !tbaa !32
   %i.bg = add i32 %.0, -8                         ; 2 uses
   %.not31.7 = icmp eq i32 %i.bg, 0
-  br i1 %.not31.7, label %.loopexit38.loopexit, label %.preheader, !llvm.loop !55
+  br i1 %.not31.7, label %.loopexit38.loopexit, label %.preheader, !llvm.loop !54
 
 .loopexit38.loopexit:                             ; preds = %.preheader.prol.loopexit, %.preheader, %vec.epilog.middle.block, %middle.block
   %.pre = load i32, ptr %i.g, align 8, !tbaa !37
@@ -782,16 +782,15 @@ attributes #14 = { nounwind willreturn memory(read) }
 !45 = !{!16, !7, i64 44}
 !46 = !{!16, !11, i64 136}
 !47 = distinct !{!47, !27}
-!48 = distinct !{!48, !27}
-!49 = !{!16, !11, i64 32}
-!50 = distinct !{!50, !27}
-!51 = !{!15, !11, i64 48}
-!52 = distinct !{!52, !27, !56, !57}
-!53 = distinct !{!53, !27, !56, !57}
-!54 = distinct !{!54, !59}
-!55 = distinct !{!55, !27, !56}
-!56 = !{!"llvm.loop.isvectorized", i32 1}
-!57 = !{!"llvm.loop.unroll.runtime.disable"}
-!58 = !{!"branch_weights", i32 4, i32 28}
-!59 = !{!"llvm.loop.unroll.disable"}
+!48 = !{!16, !11, i64 32}
+!49 = distinct !{!49, !27}
+!50 = !{!15, !11, i64 48}
+!51 = distinct !{!51, !27, !55, !56}
+!52 = distinct !{!52, !27, !55, !56}
+!53 = distinct !{!53, !58}
+!54 = distinct !{!54, !27, !55}
+!55 = !{!"llvm.loop.isvectorized", i32 1}
+!56 = !{!"llvm.loop.unroll.runtime.disable"}
+!57 = !{!"branch_weights", i32 4, i32 28}
+!58 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

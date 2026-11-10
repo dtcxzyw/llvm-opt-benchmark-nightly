@@ -205,8 +205,10 @@ bb.cx:                                            ; preds = %bb.cw
   %i.agr = add nsw i64 %wide.trip.count.i566, -1  ; 2 uses
   %i.ags = shl nsw i64 %i.afy, 6                  ; 2 uses
   %i.agt = shl nuw nsw i64 %wide.trip.count.i566, 5
-  %i.agu = getelementptr i8, ptr %scevgep1058, i64 %i.ags
-  %scevgep1059 = getelementptr i8, ptr %i.agu, i64 %i.agt
+  %19 = getelementptr i8, ptr %scevgep1058, i64 %i.ags
+  %i.agu = getelementptr i8, ptr %19, i64 %i.agt
+  %20 = shl nuw nsw i64 %wide.trip.count.i566, 2
+  %scevgep1059 = getelementptr i8, ptr %i.agq, i64 %20
   %i.agv = add nsw i32 %i.agm, -1
   %i.agw = zext i32 %i.agv to i64
   %i.agx = shl nuw nsw i64 %i.agw, 5
@@ -248,17 +250,15 @@ vector.scevcheck:                                 ; preds = %.preheader.i567
   br i1 %i.ahp, label %scalar.ph1062.preheader, label %vector.memcheck1064
 
 vector.memcheck1064:                              ; preds = %vector.scevcheck
-  %i.ahq = sext i32 %invariant.op.i to i64        ; 2 uses
-  %i.ahr = shl nsw i64 %i.ahq, 2
+  %i.ahq = sext i32 %invariant.op.i to i64
+  %i.ahr = shl nsw i64 %i.ahq, 2                  ; 2 uses
   %i.ahs = getelementptr i8, ptr %i.agq, i64 %i.ahr ; 2 uses
-  %19 = add nsw i64 %i.ahq, %wide.trip.count.i566
-  %20 = shl nsw i64 %19, 2
-  %i.aht = getelementptr i8, ptr %i.agq, i64 %20  ; 2 uses
+  %i.aht = getelementptr i8, ptr %scevgep1059, i64 %i.ahr ; 2 uses
   %bound0 = icmp ult ptr %i.agn, %i.aht
   %bound1 = icmp ult ptr %i.ahs, %scevgep1061
   %found.conflict = and i1 %bound0, %bound1
   %bound01065 = icmp ult ptr %i.ago, %i.aht
-  %bound11066 = icmp ult ptr %i.ahs, %scevgep1059
+  %bound11066 = icmp ult ptr %i.ahs, %i.agu
   %found.conflict1067 = and i1 %bound01065, %bound11066
   %conflict.rdx = or i1 %found.conflict, %found.conflict1067
   br i1 %conflict.rdx, label %scalar.ph1062.preheader, label %vector.ph1068

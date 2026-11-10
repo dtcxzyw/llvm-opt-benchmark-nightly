@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .loopexit:                                        ; preds = %bb.g, %desc_read.exit.i, %desc_read.exit.i, %desc_read.exit.i, %bb.e, %desc_read.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !85
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !84
   %i.an = load volatile i64, ptr %i.c, align 8    ; 2 uses
   %i.ao = icmp eq i64 %i.an, %.01726
   br i1 %i.ao, label %arch_atomic64_try_cmpxchg.exit.thread, label %.backedge
@@ -228,7 +228,7 @@ arch_atomic64_try_cmpxchg.exit:                   ; preds = %bb.i
   %i.aw = zext nneg i32 %.val to i64              ; 2 uses
   %.highbits.i = lshr i64 %i.av, %i.aw
   %i.ax = icmp eq i64 %.highbits.i, 0
-  br i1 %i.ax, label %.lr.ph.i, label %arch_atomic64_try_cmpxchg.exit.thread, !llvm.loop !84
+  br i1 %i.ax, label %.lr.ph.i, label %arch_atomic64_try_cmpxchg.exit.thread
 
 arch_atomic64_try_cmpxchg.exit.thread:            ; preds = %.loopexit, %.backedge, %bb.i, %bb.b, %bb.a
   %.0 = phi i1 [ true, %bb.a ], [ true, %bb.b ], [ true, %.backedge ], [ false, %.loopexit ], [ true, %bb.i ]
@@ -349,6 +349,5 @@ attributes #13 = { noredzone nounwind "no-builtin-wcslen" }
 !81 = distinct !{!81, !29}
 !82 = !{i64 76531}
 !83 = distinct !{!83, !29}
-!84 = distinct !{!84, !29}
-!85 = !{i64 2153702848}
+!84 = !{i64 2153702848}
 end_hunk_0

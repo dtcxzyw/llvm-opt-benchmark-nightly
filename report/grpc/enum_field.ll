@@ -205,7 +205,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cx
   %.147.be.in = phi i64 [ %.248, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %i.ce, %bb.g ]
   %.1.be = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %i.bq, %bb.g ]
   %.147.be = add nuw nsw i64 %.147.be.in, 1
-  br label %bb.d, !llvm.loop !422
+  br label %bb.d
 
 .preheader77:                                     ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66, %bb.f
   %i.bn = phi i8 [ %i.cd, %bb.f ], [ %i.bl, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ] ; 2 uses
@@ -247,7 +247,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bq, i64 10
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !21  ; 2 uses
   %.not = icmp ult i8 %i.bp, %i.cd
-  br i1 %.not, label %bb.g, label %.preheader77, !llvm.loop !423
+  br i1 %.not, label %bb.g, label %.preheader77, !llvm.loop !422
 
 bb.g:                                             ; preds = %bb.f
   %i.ce = zext i8 %i.bp to i64
@@ -527,7 +527,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.new
   store ptr %0, ptr %i.di, align 8, !tbaa !168
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.f, !llvm.loop !424
+  br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.f, !llvm.loop !423
 
 bb.g:                                             ; preds = %.lr.ph63, %bb.g
   %.062 = phi i8 [ 0, %.lr.ph63 ], [ %i.dt, %bb.g ] ; 4 uses
@@ -547,7 +547,7 @@ bb.g:                                             ; preds = %.lr.ph63, %bb.g
   %i.dw = zext i8 %i.dv to i32
   %i.dx = sub nsw i32 %i.dw, %i.x
   %.not = icmp slt i32 %i.dx, %i.du
-  br i1 %.not, label %.loopexit, label %bb.g, !llvm.loop !425
+  br i1 %.not, label %.loopexit, label %bb.g, !llvm.loop !424
 
 .loopexit:                                        ; preds = %bb.g, %.preheader, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE10transfer_nEmmmPSE_PSC_.exit57
   %i.dy = load i8, ptr %i.a, align 2, !tbaa !21
@@ -837,7 +837,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
   %i.du = and i64 %indvars.iv.next.1, 255
   %.not58.1 = icmp eq i64 %i.du, 0
-  br i1 %.not58.1, label %.preheader, label %.lr.ph.new, !llvm.loop !426
+  br i1 %.not58.1, label %.preheader, label %.lr.ph.new, !llvm.loop !425
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph63.new
   %indvars.iv65 = phi i64 [ 1, %.lr.ph63.new ], [ %indvars.iv.next66.1, %bb.g ] ; 6 uses
@@ -872,7 +872,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph63.new
   %indvars.iv.next66.1 = add nuw nsw i64 %indvars.iv65, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !427
+  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !426
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.g
   %lcmp.mod86.not = icmp eq i64 %xtraiter85, 0
@@ -1130,7 +1130,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
   store i8 %i.ct, ptr %i.cs, align 1, !tbaa !21
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !428
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !427
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph.i27
   %indvars.iv.unr = phi i64 [ %i.ci, %.lr.ph.i27 ], [ %i.co, %.prol.preheader ]
@@ -1172,7 +1172,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
   %i.ds = trunc nuw i64 %i.dh to i8
   store i8 %i.ds, ptr %i.dr, align 1, !tbaa !21
   %.wide.3 = icmp ugt i64 %i.dn, %i.cj
-  br i1 %.wide.3, label %.lr.ph.i27.new, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13emplace_valueIJPS9_EEEvhPSC_DpOT_.exit, !llvm.loop !429
+  br i1 %.wide.3, label %.lr.ph.i27.new, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13emplace_valueIJPS9_EEEvhPSC_DpOT_.exit, !llvm.loop !428
 
 _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13emplace_valueIJPS9_EEEvhPSC_DpOT_.exit: ; preds = %.prol.loopexit, %.lr.ph.i27.new, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE10value_initIJPS9_EEEvhPSC_DpOT_.exit.i, %bb.h
   %i.dt = load i8, ptr %i.h, align 2, !tbaa !21
@@ -1224,7 +1224,7 @@ bb.j:                                             ; preds = %bb.i, %bb.j
   %i.es = add i8 %.02530, 1                       ; 2 uses
   %i.et = load i8, ptr %i.j, align 1, !tbaa !21
   %.not = icmp ugt i8 %i.es, %i.et
-  br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !430
+  br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !429
 
 .loopexit:                                        ; preds = %bb.j, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE13value_destroyEhPSC_.exit
   ret void
@@ -1292,7 +1292,7 @@ bb.c:                                             ; preds = %bb.a, %._crit_edge
 ._crit_edge:                                      ; preds = %bb.i, %bb.c
   %i.s = add nuw i64 %.05162, 16                  ; 2 uses
   %i.t = icmp ult i64 %i.s, %i.b
-  br i1 %i.t, label %bb.c, label %bb.b, !llvm.loop !431
+  br i1 %i.t, label %bb.c, label %bb.b, !llvm.loop !430
 
 .lr.ph:                                           ; preds = %bb.c, %bb.i
   %.sroa.054.061 = phi i16 [ %i.bd, %bb.i ], [ %i.r, %bb.c ] ; 3 uses
@@ -1695,9 +1695,8 @@ begin_hunk_1_@llvm.umin.i8
 !424 = distinct !{!424, !82}
 !425 = distinct !{!425, !82}
 !426 = distinct !{!426, !82}
-!427 = distinct !{!427, !82}
-!428 = distinct !{!428, !172}
+!427 = distinct !{!427, !172}
+!428 = distinct !{!428, !82}
 !429 = distinct !{!429, !82}
 !430 = distinct !{!430, !82}
-!431 = distinct !{!431, !82}
 end_hunk_1

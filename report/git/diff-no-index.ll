@@ -204,7 +204,7 @@ bb.a:
   %i.l = tail call ptr @string_list_insert(ptr noundef nonnull %1, ptr noundef nonnull %i.k) #12 ; 0 uses
   %i.m = tail call ptr @readdir_skip_dot_and_dotdot(ptr noundef nonnull %i.c) #12 ; 2 uses
   %.not27.us = icmp eq ptr %i.m, null
-  br i1 %.not27.us, label %._crit_edge, label %.backedge.us, !llvm.loop !110
+  br i1 %.not27.us, label %._crit_edge, label %.backedge.us
 
 bb.b:                                             ; preds = %bb.a
   %i.n = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.14, ptr noundef nonnull %0) #12 ; 0 uses
@@ -246,7 +246,7 @@ strbuf_setlen.exit:                               ; preds = %bb.e, %bb.f
   %i.v = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.u) #14
   call void @strbuf_add(ptr noundef nonnull %3, ptr noundef nonnull %i.u, i64 noundef %i.v) #12
   %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 18
-  %i.x = load i8, ptr %i.w, align 2, !tbaa !112   ; 2 uses
+  %i.x = load i8, ptr %i.w, align 2, !tbaa !111   ; 2 uses
   %i.y = icmp ne i8 %i.x, 0
   %i.z = load i32, ptr @false_but_the_compiler_does_not_know_it_, align 4
   %i.aa = icmp ne i32 %i.z, 0
@@ -322,7 +322,7 @@ bb.l:                                             ; preds = %bb.k
 .backedge:                                        ; preds = %bb.l, %bb.k
   %i.av = call ptr @readdir_skip_dot_and_dotdot(ptr noundef nonnull %i.c) #12 ; 2 uses
   %.not27 = icmp eq ptr %i.av, null
-  br i1 %.not27, label %._crit_edge, label %.lr.ph.split, !llvm.loop !110
+  br i1 %.not27, label %._crit_edge, label %.lr.ph.split
 
 ._crit_edge:                                      ; preds = %.backedge, %.backedge.us, %.preheader.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre36, %.preheader.._crit_edge_crit_edge ], [ %i.f, %.backedge.us ], [ %i.f, %.backedge ] ; 3 uses
@@ -542,7 +542,6 @@ attributes #14 = { nounwind willreturn memory(read) }
 !107 = !{!106, !12, i64 48}
 !108 = !{!106, !13, i64 64}
 !109 = !{!106, !15, i64 40}
-!110 = distinct !{!110, !38}
-!111 = !{!"dirent", !13, i64 0, !13, i64 8, !39, i64 16, !8, i64 18, !8, i64 19}
-!112 = !{!111, !8, i64 18}
+!110 = !{!"dirent", !13, i64 0, !13, i64 8, !39, i64 16, !8, i64 18, !8, i64 19}
+!111 = !{!110, !8, i64 18}
 end_hunk_0

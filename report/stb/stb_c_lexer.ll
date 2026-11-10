@@ -201,7 +201,7 @@ switch.early.test299:                             ; preds = %.lr.ph295
   %i.bh = sext i32 %i.bg to i64
   %.not186 = icmp slt i64 %indvars.iv.next, %i.bh
   %indvars.iv.next331 = add nuw nsw i64 %indvars.iv330, 1
-  br i1 %.not186, label %.lr.ph295, label %._crit_edge296, !llvm.loop !36
+  br i1 %.not186, label %.lr.ph295, label %._crit_edge296
 
 bb.l:                                             ; preds = %switch.early.test299
   %i.bi = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv ; 2 uses
@@ -604,7 +604,7 @@ bb.br:                                            ; preds = %.thread209.thread
   %i.hw = call i32 @stb__clex_parse_char(ptr noundef nonnull %i.hv, ptr noundef nonnull %i.b) ; 2 uses
   %i.hx = sext i32 %i.hw to i64
   %i.hy = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i64 %i.hx, ptr %i.hy, align 8, !tbaa !38
+  store i64 %i.hx, ptr %i.hy, align 8, !tbaa !37
   %i.hz = icmp slt i32 %i.hw, 0
   br i1 %i.hz, label %bb.bs, label %bb.bt
 
@@ -668,7 +668,7 @@ bb.bz:                                            ; preds = %bb.by, %bb.by
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.is = call i64 @strtol(ptr noundef nonnull %i.m, ptr noundef nonnull %i.c, i32 noundef 16) #9
   %i.it = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i64 %i.is, ptr %i.it, align 8, !tbaa !38
+  store i64 %i.is, ptr %i.it, align 8, !tbaa !37
   %i.iu = load ptr, ptr %i.c, align 8, !tbaa !24  ; 2 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %i.m, i64 2
   %i.iw = icmp eq ptr %i.iu, %i.iv                ; 3 uses
@@ -704,7 +704,7 @@ bb.cb:                                            ; preds = %.lr.ph290
   %i.jc = getelementptr inbounds nuw i8, ptr %storemerge288, i64 1 ; 3 uses
   store ptr %i.jc, ptr %i.d, align 8, !tbaa !24
   %.not169 = icmp eq ptr %i.jc, %i.j
-  br i1 %.not169, label %.critedge13.thread, label %.lr.ph290, !llvm.loop !37
+  br i1 %.not169, label %.critedge13.thread, label %.lr.ph290, !llvm.loop !36
 
 .critedge13:                                      ; preds = %.lr.ph290
   switch i8 %i.ja, label %.critedge13.thread [
@@ -716,7 +716,7 @@ bb.cb:                                            ; preds = %.lr.ph290
 .critedge207:                                     ; preds = %.critedge13, %.critedge13, %.critedge13
   %i.jd = call double @strtod(ptr noundef %i.m, ptr noundef nonnull %i.d) #9
   %i.je = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store double %i.jd, ptr %i.je, align 8, !tbaa !39
+  store double %i.jd, ptr %i.je, align 8, !tbaa !38
   %i.jf = load ptr, ptr %i.d, align 8, !tbaa !24  ; 2 uses
   %i.jg = getelementptr inbounds i8, ptr %i.jf, i64 -1
   %i.jh = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -742,7 +742,7 @@ bb.cc:                                            ; preds = %.critedge13.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
   store ptr %i.m, ptr %i.e, align 8, !tbaa !24
   %i.jp = call i64 @strtol(ptr noundef %i.m, ptr noundef nonnull %i.e, i32 noundef 8) #9
-  store i64 %i.jp, ptr %i.jl, align 8, !tbaa !38
+  store i64 %i.jp, ptr %i.jl, align 8, !tbaa !37
   %i.jq = load ptr, ptr %i.e, align 8, !tbaa !24  ; 2 uses
   %i.jr = getelementptr inbounds i8, ptr %i.jq, i64 -1
   store i64 258, ptr %i.jm, align 8, !tbaa !21
@@ -756,7 +756,7 @@ bb.cd:                                            ; preds = %.critedge13.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
   store ptr %i.m, ptr %i.f, align 8, !tbaa !24
   %i.js = call i64 @strtol(ptr noundef %i.m, ptr noundef nonnull %i.f, i32 noundef 10) #9
-  store i64 %i.js, ptr %i.jl, align 8, !tbaa !38
+  store i64 %i.js, ptr %i.jl, align 8, !tbaa !37
   %i.jt = load ptr, ptr %i.f, align 8, !tbaa !24  ; 2 uses
   %i.ju = getelementptr inbounds i8, ptr %i.jt, i64 -1
   store i64 258, ptr %i.jm, align 8, !tbaa !21
@@ -830,7 +830,6 @@ attributes #9 = { nounwind }
 !34 = distinct !{!34, !20}
 !35 = distinct !{!35, !20}
 !36 = distinct !{!36, !20}
-!37 = distinct !{!37, !20}
-!38 = !{!13, !11, i64 72}
-!39 = !{!13, !12, i64 64}
+!37 = !{!13, !11, i64 72}
+!38 = !{!13, !12, i64 64}
 end_hunk_1

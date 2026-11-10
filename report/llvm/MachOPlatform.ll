@@ -205,7 +205,11 @@ middle.block:                                     ; preds = %vector.body
   %.1.lcssa = phi i64 [ %.029.lcssa, %._crit_edge91 ], [ %i.au, %middle.block ], [ %i.bf, %.lr.ph97 ] ; 2 uses
   %.sroa.049.0112 = load ptr, ptr %i.i, align 8, !tbaa !579 ; 2 uses
   %.not72113 = icmp eq ptr %.sroa.049.0112, %i.i
-  br i1 %.not72113, label %.loopexit76, label %.lr.ph116
+  br i1 %.not72113, label %.loopexit76, label %.lr.ph116.preheader
+
+.lr.ph116.preheader:                              ; preds = %.preheader
+  %scevgep151 = getelementptr i8, ptr %1, i64 16
+  br label %.lr.ph116
 
 .lr.ph97:                                         ; preds = %.lr.ph97.preheader171, %.lr.ph97
   %.195 = phi i64 [ %i.bf, %.lr.ph97 ], [ %.195.ph, %.lr.ph97.preheader171 ] ; 2 uses
@@ -224,9 +228,9 @@ middle.block:                                     ; preds = %vector.body
   %.not72 = icmp eq ptr %.sroa.049.0, %i.i
   br i1 %.not72, label %.loopexit76, label %.lr.ph116
 
-.lr.ph116:                                        ; preds = %.preheader, %.loopexit
-  %.sroa.049.0115 = phi ptr [ %.sroa.049.0, %.loopexit ], [ %.sroa.049.0112, %.preheader ] ; 3 uses
-  %.2114 = phi i64 [ %.3.lcssa, %.loopexit ], [ %.1.lcssa, %.preheader ] ; 2 uses
+.lr.ph116:                                        ; preds = %.lr.ph116.preheader, %.loopexit
+  %.sroa.049.0115 = phi ptr [ %.sroa.049.0, %.loopexit ], [ %.sroa.049.0112, %.lr.ph116.preheader ] ; 3 uses
+  %.2114 = phi i64 [ %.3.lcssa, %.loopexit ], [ %.1.lcssa, %.lr.ph116.preheader ] ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.049.0115, i64 104
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !682 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.049.0115, i64 112
@@ -258,9 +262,8 @@ middle.block:                                     ; preds = %vector.body
 vector.memcheck153:                               ; preds = %.lr.ph103.preheader
   %i.bw = getelementptr i8, ptr %1, i64 %.3108
   %i.bx = and i64 %i.bt, -16                      ; 2 uses
-  %4 = getelementptr i8, ptr %1, i64 %.3108
-  %i.by = getelementptr i8, ptr %4, i64 %i.bx
-  %i.bz = getelementptr i8, ptr %i.by, i64 16
+  %i.by = getelementptr i8, ptr %scevgep151, i64 %.3108
+  %i.bz = getelementptr i8, ptr %i.by, i64 %i.bx
   %i.ca = getelementptr i8, ptr %i.bn, i64 %i.bx
   %i.cb = getelementptr i8, ptr %i.ca, i64 16
   %bound0154 = icmp ult ptr %i.bw, %i.cb

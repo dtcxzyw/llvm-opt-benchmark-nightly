@@ -205,7 +205,8 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader.i.preheader, label %tailrecurse._crit_edge
 
 .lr.ph.preheader.i.preheader:                     ; preds = %bb.a
-  %scevgep.a = getelementptr i8, ptr %2, i64 4
+  %scevgep = getelementptr i8, ptr %2, i64 8
+  %scevgep.a = getelementptr i8, ptr %2, i64 4    ; 2 uses
   br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.preheader, %unriffle.exit
@@ -228,8 +229,7 @@ vector.memcheck36:                                ; preds = %.lr.ph.preheader.i
   %i.j = getelementptr i8, ptr %.tr14, i64 %i.i
   %i.k = getelementptr i8, ptr %i.j, i64 4
   %i.l = shl nuw nsw i64 %i.h, 3
-  %3 = getelementptr i8, ptr %2, i64 %i.l
-  %i.m = getelementptr i8, ptr %3, i64 4
+  %i.m = getelementptr i8, ptr %scevgep.a, i64 %i.l
   %bound037 = icmp ult ptr %.tr14, %i.m
   %bound138 = icmp ult ptr %2, %i.k
   %found.conflict39 = and i1 %bound037, %bound138
@@ -343,8 +343,7 @@ vector.memcheck:                                  ; preds = %.lr.ph23.i.preheade
   %i.bl = getelementptr i8, ptr %.tr14, i64 %i.bk
   %i.bm = getelementptr i8, ptr %i.bl, i64 8
   %i.bn = shl nuw nsw i64 %i.bi, 3
-  %4 = getelementptr i8, ptr %2, i64 %i.bn
-  %i.bo = getelementptr i8, ptr %4, i64 8
+  %i.bo = getelementptr i8, ptr %scevgep, i64 %i.bn
   %bound0 = icmp ult ptr %i.bh, %i.bo
   %bound1 = icmp ult ptr %scevgep.a, %i.bm
   %found.conflict = and i1 %bound0, %bound1
@@ -422,7 +421,8 @@ tailrecurse:                                      ; preds = %prev_pow2.exit, %bb
   br i1 %i.a, label %.preheader.preheader, label %tailrecurse._crit_edge
 
 .preheader.preheader:                             ; preds = %tailrecurse
-  %scevgep.a = getelementptr i8, ptr %2, i64 4
+  %scevgep = getelementptr i8, ptr %2, i64 8
+  %scevgep.a = getelementptr i8, ptr %2, i64 4    ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %unriffle.exit
@@ -479,8 +479,7 @@ vector.memcheck55:                                ; preds = %.lr.ph.preheader.i
   %i.z = sub nsw i64 %i.y, %i.u
   %i.aa = getelementptr i8, ptr %.tr17, i64 %i.z
   %i.ab = shl nuw nsw i64 %i.r, 3
-  %3 = getelementptr i8, ptr %2, i64 %i.ab
-  %i.ac = getelementptr i8, ptr %3, i64 4
+  %i.ac = getelementptr i8, ptr %scevgep.a, i64 %i.ab
   %bound056 = icmp ult ptr %i.i, %i.ac
   %bound157 = icmp ult ptr %2, %i.aa
   %found.conflict58 = and i1 %bound056, %bound157
@@ -603,8 +602,7 @@ vector.memcheck:                                  ; preds = %.lr.ph23.i.preheade
   %i.cj = sub i64 %i.ci, %i.bw
   %i.ck = getelementptr i8, ptr %.tr17, i64 %i.cj
   %i.cl = shl nsw i64 %i.cd, 3
-  %4 = getelementptr i8, ptr %2, i64 %i.cl
-  %i.cm = getelementptr i8, ptr %4, i64 8
+  %i.cm = getelementptr i8, ptr %scevgep, i64 %i.cl
   %bound0 = icmp ult ptr %i.cc, %i.cm
   %bound1 = icmp ult ptr %scevgep.a, %i.ck
   %found.conflict = and i1 %bound0, %bound1

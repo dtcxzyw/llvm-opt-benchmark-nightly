@@ -49,17 +49,22 @@ bb.a:
   %i.b = getelementptr inbounds i8, ptr %0, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !13    ; 2 uses
   %.not68 = icmp eq i8 %i.c, 32
-  br i1 %.not68, label %.preheader, label %.lr.ph72
+  br i1 %.not68, label %.preheader, label %.lr.ph72.preheader
+
+.lr.ph72.preheader:                               ; preds = %bb.a
+  %scevgep = getelementptr i8, ptr %0, i64 4
+  %scevgep100 = getelementptr i8, ptr %2, i64 3
+  br label %.lr.ph72
 
 .preheader:                                       ; preds = %skip_to_newline.exit, %bb.a
   %.056.lcssa = phi i32 [ 0, %bb.a ], [ %.1.lcssa, %skip_to_newline.exit ]
   %.lcssa = phi i64 [ %i.a, %bb.a ], [ %i.la, %skip_to_newline.exit ]
   br label %bb.f
 
-.lr.ph72:                                         ; preds = %bb.a, %skip_to_newline.exit
-  %i.d = phi i8 [ %i.lc, %skip_to_newline.exit ], [ %i.c, %bb.a ]
-  %.05670 = phi i32 [ %.1.lcssa, %skip_to_newline.exit ], [ 0, %bb.a ] ; 6 uses
-  %.05769 = phi i32 [ %i.kz, %skip_to_newline.exit ], [ %1, %bb.a ]
+.lr.ph72:                                         ; preds = %.lr.ph72.preheader, %skip_to_newline.exit
+  %i.d = phi i8 [ %i.lc, %skip_to_newline.exit ], [ %i.c, %.lr.ph72.preheader ]
+  %.05670 = phi i32 [ %.1.lcssa, %skip_to_newline.exit ], [ 0, %.lr.ph72.preheader ] ; 6 uses
+  %.05769 = phi i32 [ %i.kz, %skip_to_newline.exit ], [ %1, %.lr.ph72.preheader ]
   %i.e = and i8 %i.d, 63                          ; 2 uses
   %i.f = add i32 %.05769, 1                       ; 2 uses
   %.not75 = icmp eq i8 %i.e, 32
@@ -83,14 +88,12 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.p = sext i32 %.05670 to i64                  ; 2 uses
   %i.q = getelementptr i8, ptr %2, i64 %i.p
   %i.r = mul nuw nsw i64 %i.n, 3
-  %3 = getelementptr i8, ptr %2, i64 %i.r
-  %i.s = getelementptr i8, ptr %3, i64 %i.p
-  %i.t = getelementptr i8, ptr %i.s, i64 3
+  %i.s = getelementptr i8, ptr %scevgep100, i64 %i.r
+  %i.t = getelementptr i8, ptr %i.s, i64 %i.p
   %i.u = getelementptr i8, ptr %0, i64 %i.i
   %i.v = shl nuw nsw i64 %i.n, 2
-  %4 = getelementptr i8, ptr %0, i64 %i.v
-  %i.w = getelementptr i8, ptr %4, i64 %i.i
-  %i.x = getelementptr i8, ptr %i.w, i64 4
+  %i.w = getelementptr i8, ptr %scevgep, i64 %i.v
+  %i.x = getelementptr i8, ptr %i.w, i64 %i.i
   %bound0 = icmp ult ptr %i.q, %i.x
   %bound1 = icmp ult ptr %i.u, %i.t
   %found.conflict = and i1 %bound0, %bound1

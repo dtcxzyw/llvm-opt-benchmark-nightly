@@ -205,6 +205,7 @@ If_CutTruthW.exit:                                ; preds = %.lr.ph.i.i.prol.loo
   %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 5 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 8 uses
   %i.da = getelementptr i8, ptr %3, i64 8
+  %scevgep = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph94, %bb.z
@@ -399,16 +400,17 @@ bb.v:                                             ; preds = %.split
   %.158.lcssa138141150 = phi i64 [ %indvars.iv.next, %bb.v ], [ %indvars.iv.next, %.split ], [ %i.df, %.thread ], [ %indvars.iv.next, %._crit_edge ]
   %i.fj = phi i32 [ %i.fd, %bb.v ], [ %i.fd, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ] ; 6 uses
   %wide.trip.count = zext nneg i32 %i.fh to i64   ; 2 uses
-  %i.fk = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1) ; 2 uses
-  %i.fl = zext nneg i32 %i.fj to i64
+  %8 = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1) ; 2 uses
+  %i.fk = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1)
+  %i.fl = zext nneg i32 %i.fk to i64
+  %scevgep181 = getelementptr i8, ptr %scevgep, i64 %i.fl
   %i.fm = shl nuw nsw i64 %wide.trip.count, 3
   %scevgep.a = getelementptr i8, ptr %i.fi, i64 %i.fm
   %min.iters.check182 = icmp samesign ult i32 %i.fj, 6
-  %i.fn = and i32 %i.fk, 255
+  %i.fn = and i32 %8, 255
   %i.fo = icmp eq i32 %i.fn, 255
-  %i.fp = icmp samesign ugt i32 %i.fk, 255
+  %i.fp = icmp samesign ugt i32 %8, 255
   %i.fq = or i1 %i.fo, %i.fp
-  %invariant.gep = getelementptr i8, ptr %i.a, i64 %i.fl
   %i.fr = and i32 %i.fj, 2147483644
   %n.vec185 = zext nneg i32 %i.fr to i64          ; 2 uses
   br label %.lr.ph84
@@ -426,7 +428,7 @@ scalar.ph181.preheader:                           ; preds = %.lr.ph84, %vector.m
 
 vector.memcheck183:                               ; preds = %.lr.ph84
   %i.ft = getelementptr i8, ptr %i.a, i64 %.281
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %.281
+  %gep = getelementptr i8, ptr %scevgep181, i64 %.281
   %bound0 = icmp ult ptr %i.fi, %gep
   %bound1 = icmp ult ptr %i.ft, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1

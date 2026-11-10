@@ -202,7 +202,7 @@ switch.early.test:                                ; preds = %.critedge102
   ]
 
 .critedge102.backedge:                            ; preds = %switch.early.test, %switch.early.test, %.critedge102
-  br label %.critedge102, !llvm.loop !54
+  br label %.critedge102
 
 bb.k:                                             ; preds = %switch.early.test
   %i.as = trunc nsw i64 %indvars.iv.next123 to i32
@@ -257,7 +257,7 @@ switch.early.test133:                             ; preds = %.critedge104
 
 .critedge104.backedge:                            ; preds = %switch.early.test133, %switch.early.test133, %.critedge104
   %indvars.iv.next118 = add i64 %indvars.iv117, 1
-  br label %.critedge104, !llvm.loop !55
+  br label %.critedge104
 
 bb.m:                                             ; preds = %switch.early.test133
   %i.bf = trunc nsw i64 %indvars.iv.next115 to i32
@@ -278,7 +278,7 @@ bb.m:                                             ; preds = %switch.early.test13
 
 bb.n:                                             ; preds = %.preheader
   %indvars.iv.next120 = add nsw i64 %indvars.iv119, 1
-  br label %.preheader, !llvm.loop !56
+  br label %.preheader, !llvm.loop !54
 
 bb.o:                                             ; preds = %.preheader
   %i.bl = tail call fastcc i32 @find_keyword(ptr noundef nonnull %i.b, i64 noundef %i.bh, ptr noundef nonnull @js_types) #28
@@ -335,7 +335,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !20
   %.not = icmp eq i8 %i.h, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !57
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !55
 
 ._crit_edge:                                      ; preds = %bb.c, %.lr.ph, %bb.d, %bb.a
   %.011 = phi i32 [ 0, %bb.a ], [ 0, %.lr.ph ], [ 0, %bb.d ], [ 1, %bb.c ]
@@ -463,6 +463,4 @@ attributes #29 = { cold optsize }
 !53 = distinct !{!53, !24}
 !54 = distinct !{!54, !24}
 !55 = distinct !{!55, !24}
-!56 = distinct !{!56, !24}
-!57 = distinct !{!57, !24}
 end_hunk_0

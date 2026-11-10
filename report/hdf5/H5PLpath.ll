@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
   %.040.be.i = phi ptr [ %.04085.i, %sub_0.i ], [ %.04085.i, %.tail.i ], [ %.04085.i, %sub_1.i ], [ %.04085.i, %bb.e ], [ %.040.be.ph.i, %.backedge.sink.split.i ] ; 2 uses
   %i.by = call ptr @readdir64(ptr noundef nonnull %i.z) #12 ; 2 uses
   %.not53.i = icmp eq ptr %i.by, null
-  br i1 %.not53.i, label %.loopexit.thread.i, label %sub_0.i, !llvm.loop !30
+  br i1 %.not53.i, label %.loopexit.thread.i, label %sub_0.i
 
 .loopexit.i:                                      ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
@@ -397,8 +397,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.bb, label %.backedge.sink.split.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bc = load i32, ptr %0, align 8, !tbaa !37
-  %i.bd = load ptr, ptr %i.i, align 8, !tbaa !38
+  %i.bc = load i32, ptr %0, align 8, !tbaa !36
+  %i.bd = load ptr, ptr %i.i, align 8, !tbaa !37
   %i.be = tail call i32 @H5PL__open(ptr noundef nonnull %i.al, i32 noundef %i.bc, ptr noundef %i.bd, ptr noundef nonnull %1, ptr noundef null, ptr noundef nonnull %2) #12
   %i.bf = icmp slt i32 %i.be, 0
   br i1 %i.bf, label %bb.n, label %bb.o
@@ -428,7 +428,7 @@ bb.o:                                             ; preds = %bb.m
   %.035.be.i = phi ptr [ %.03570.i, %sub_0.i ], [ %.03570.i, %.tail.i ], [ %.03570.i, %sub_1.i ], [ %.03570.i, %bb.g ], [ %i.bm, %.backedge.sink.split.i ] ; 2 uses
   %i.bn = tail call ptr @readdir64(ptr noundef nonnull %i.v) #12 ; 2 uses
   %.not44.i = icmp eq ptr %i.bn, null
-  br i1 %.not44.i, label %.loopexit.i, label %sub_0.i, !llvm.loop !34
+  br i1 %.not44.i, label %.loopexit.i, label %sub_0.i
 
 bb.p:                                             ; preds = %bb.e
   %i.bo = load i64, ptr @H5E_PLUGIN_g, align 8, !tbaa !21
@@ -570,9 +570,8 @@ attributes #15 = { nounwind willreturn memory(none) }
 !31 = distinct !{null}
 !32 = distinct !{!32, !22}
 !33 = distinct !{!33, !22}
-!34 = distinct !{!34, !22}
-!35 = !{!"p1 _ZTS10H5PL_key_t", !8, i64 0}
-!36 = !{!"H5PL_search_params_t", !5, i64 0, !35, i64 8}
-!37 = !{!36, !5, i64 0}
-!38 = !{!36, !35, i64 8}
+!34 = !{!"p1 _ZTS10H5PL_key_t", !8, i64 0}
+!35 = !{!"H5PL_search_params_t", !5, i64 0, !34, i64 8}
+!36 = !{!35, !5, i64 0}
+!37 = !{!35, !34, i64 8}
 end_hunk_0

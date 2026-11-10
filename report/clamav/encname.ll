@@ -38,7 +38,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %invariant.umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %2) ; 7 uses
   %.pre = load i32, ptr %i.h, align 4, !tbaa !23
+  %scevgep = getelementptr i8, ptr %1, i64 1      ; 2 uses
   %i.i = add i64 %invariant.umin, -1              ; 2 uses
+  %scevgep135 = getelementptr i8, ptr %5, i64 4   ; 2 uses
   %broadcast.splatinsert154 = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat155 = shufflevector <4 x i32> %broadcast.splatinsert154, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %bb.d
@@ -167,14 +169,12 @@ vector.memcheck148:                               ; preds = %.lr.ph.preheader
   %i.bk = tail call i64 @llvm.umin.i64(i64 %i.bj, i64 %i.be) ; 2 uses
   %i.bl = add i64 %.074107, %i.bk
   %i.bm = shl i64 %i.bl, 2
-  %7 = getelementptr i8, ptr %5, i64 %i.bm
-  %8 = getelementptr i8, ptr %7, i64 4
-  %i.bn = getelementptr i8, ptr %1, i64 %.074107
+  %i.bn = getelementptr i8, ptr %scevgep135, i64 %i.bm
   %i.bo = getelementptr i8, ptr %1, i64 %.074107
-  %i.bp = getelementptr i8, ptr %i.bo, i64 %i.bk
-  %i.bq = getelementptr i8, ptr %i.bp, i64 1
+  %i.bp = getelementptr i8, ptr %scevgep, i64 %.074107
+  %i.bq = getelementptr i8, ptr %i.bp, i64 %i.bk
   %bound0149 = icmp ult ptr %i.bi, %i.bq
-  %bound1150 = icmp ult ptr %i.bn, %8
+  %bound1150 = icmp ult ptr %i.bo, %i.bn
   %found.conflict151 = and i1 %bound0149, %bound1150
   br i1 %found.conflict151, label %.lr.ph.preheader167, label %vector.ph152
 
@@ -256,14 +256,12 @@ vector.memcheck:                                  ; preds = %.lr.ph104.preheader
   %i.cz = tail call i64 @llvm.umin.i64(i64 %i.cy, i64 %i.ct) ; 2 uses
   %i.da = add i64 %.074107, %i.cz
   %i.db = shl i64 %i.da, 2
-  %9 = getelementptr i8, ptr %5, i64 %i.db
-  %10 = getelementptr i8, ptr %9, i64 4
-  %i.dc = getelementptr i8, ptr %1, i64 %.074107
+  %i.dc = getelementptr i8, ptr %scevgep135, i64 %i.db
   %i.dd = getelementptr i8, ptr %1, i64 %.074107
-  %i.de = getelementptr i8, ptr %i.dd, i64 %i.cz
-  %i.df = getelementptr i8, ptr %i.de, i64 1
+  %i.de = getelementptr i8, ptr %scevgep, i64 %.074107
+  %i.df = getelementptr i8, ptr %i.de, i64 %i.cz
   %bound0 = icmp ult ptr %i.cx, %i.df
-  %bound1 = icmp ult ptr %i.dc, %10
+  %bound1 = icmp ult ptr %i.dd, %i.dc
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph104.preheader166, label %vector.ph
 

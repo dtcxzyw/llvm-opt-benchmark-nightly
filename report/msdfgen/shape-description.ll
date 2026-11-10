@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.critedge.i
   ]
 
 .critedge.i98.backedge:                           ; preds = %.critedge.i98, %.critedge.i98, %.critedge.i98, %.critedge.i98, %bb.j, %bb.s, %bb.v, %bb.y, %bb.g
-  br label %.critedge.i98, !llvm.loop !44
+  br label %.critedge.i98
 
 _ZN7msdfgen9readCharFEP8_IO_FILE.exit100:         ; preds = %.critedge.i98
   %.not91 = icmp eq i32 %i.o, %3                  ; 7 uses
@@ -605,7 +605,7 @@ bb.n:                                             ; preds = %.lr.ph
 _ZN7msdfgen9readCharSEPPKc.exit58:                ; preds = %.critedge.i55
   store ptr %i.bk, ptr %i.b, align 8, !tbaa !14
   %i.bm = icmp eq i8 %i.bl, 123
-  br i1 %i.bm, label %.lr.ph, label %._crit_edge.loopexit172, !llvm.loop !45
+  br i1 %i.bm, label %.lr.ph, label %._crit_edge.loopexit172, !llvm.loop !44
 
 ._crit_edge.loopexit172:                          ; preds = %_ZN7msdfgen9readCharSEPPKc.exit58
   %i.bn = sext i8 %i.bl to i32
@@ -889,7 +889,7 @@ bb.q:                                             ; preds = %bb.p
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.q, %bb.ag, %bb.aj, %bb.am, %bb.m
-  br label %bb.i, !llvm.loop !46
+  br label %bb.i, !llvm.loop !45
 
 bb.r:                                             ; preds = %bb.p
   %i.az = landingpad { ptr, i32 }
@@ -1284,44 +1284,44 @@ bb.a:
   br i1 %i.a, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %1, align 8, !tbaa !51     ; 2 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !50     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !51   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !50   ; 2 uses
   %.not1724.not.i = icmp eq ptr %i.b, %i.d
   br i1 %.not1724.not.i, label %_ZN7msdfgenL9isColoredERKNS_5ShapeE.exit, label %.lr.ph28.i
 
 .lr.ph28.i:                                       ; preds = %bb.b, %._crit_edge.i
   %i.e = phi ptr [ %i.n, %._crit_edge.i ], [ %i.d, %bb.b ]
   %.sroa.010.025.i = phi ptr [ %i.o, %._crit_edge.i ], [ %i.b, %bb.b ] ; 3 uses
-  %i.f = load ptr, ptr %.sroa.010.025.i, align 8, !tbaa !52 ; 2 uses
+  %i.f = load ptr, ptr %.sroa.010.025.i, align 8, !tbaa !51 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.010.025.i, i64 8 ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !52
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !51
   %.not1822.i = icmp eq ptr %i.f, %i.h
   br i1 %.not1822.i, label %._crit_edge.i, label %.lr.ph.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.06.023.i, i64 8 ; 2 uses
-  %i.j = load ptr, ptr %i.g, align 8, !tbaa !52
+  %i.j = load ptr, ptr %i.g, align 8, !tbaa !51
   %.not18.i = icmp eq ptr %i.i, %i.j
-  br i1 %.not18.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !47
+  br i1 %.not18.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !46
 
 .lr.ph.i:                                         ; preds = %.lr.ph28.i, %bb.c
   %.sroa.06.023.i = phi ptr [ %i.i, %bb.c ], [ %i.f, %.lr.ph28.i ] ; 2 uses
   %i.k = tail call noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.06.023.i)
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.m = load i32, ptr %i.l, align 8, !tbaa !55
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !54
   %.not.i = icmp eq i32 %i.m, 7
   br i1 %.not.i, label %bb.c, label %_ZN7msdfgenL9isColoredERKNS_5ShapeE.exit
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.c
-  %.pre.i = load ptr, ptr %i.c, align 8, !tbaa !51
+  %.pre.i = load ptr, ptr %i.c, align 8, !tbaa !50
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.lr.ph28.i
   %i.n = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.e, %.lr.ph28.i ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.010.025.i, i64 24 ; 2 uses
   %.not17.not.i = icmp eq ptr %i.o, %i.n
-  br i1 %.not17.not.i, label %_ZN7msdfgenL9isColoredERKNS_5ShapeE.exit, label %.lr.ph28.i, !llvm.loop !48
+  br i1 %.not17.not.i, label %_ZN7msdfgenL9isColoredERKNS_5ShapeE.exit, label %.lr.ph28.i, !llvm.loop !47
 
 _ZN7msdfgenL9isColoredERKNS_5ShapeE.exit:         ; preds = %._crit_edge.i, %.lr.ph.i, %bb.b
   %.not1721.i = phi i1 [ true, %.lr.ph.i ], [ false, %bb.b ], [ false, %._crit_edge.i ]
@@ -1340,17 +1340,17 @@ bb.e:                                             ; preds = %_ZN7msdfgenL9isColo
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %_ZN7msdfgenL9isColoredERKNS_5ShapeE.exit
-  %i.q = load ptr, ptr %1, align 8, !tbaa !51     ; 2 uses
-  %i.r = load ptr, ptr %i.c, align 8, !tbaa !51
+  %i.q = load ptr, ptr %1, align 8, !tbaa !50     ; 2 uses
+  %i.r = load ptr, ptr %i.c, align 8, !tbaa !50
   %.not8893 = icmp eq ptr %i.q, %i.r
   br i1 %.not8893, label %.loopexit, label %.lr.ph96
 
 .lr.ph96:                                         ; preds = %bb.f, %bb.v
   %.sroa.083.094 = phi ptr [ %i.av, %bb.v ], [ %i.q, %bb.f ] ; 3 uses
   %fwrite55 = tail call i64 @fwrite(ptr nonnull @.str.10, i64 2, i64 1, ptr %0) ; 0 uses
-  %i.s = load ptr, ptr %.sroa.083.094, align 8, !tbaa !52 ; 2 uses
+  %i.s = load ptr, ptr %.sroa.083.094, align 8, !tbaa !51 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.083.094, i64 8 ; 2 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !52
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !51
   %i.v = icmp eq ptr %i.s, %i.u
   br i1 %i.v, label %bb.v, label %.lr.ph
 
@@ -1365,7 +1365,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %_ZN7m
 bb.g:                                             ; preds = %.lr.ph
   %i.w = tail call noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.077.092)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !55
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !54
   switch i32 %i.y, label %bb.l [
     i32 3, label %bb.h
     i32 5, label %bb.i
@@ -1389,12 +1389,12 @@ bb.l:                                             ; preds = %bb.h, %bb.i, %bb.j,
   %.not = phi i1 [ true, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ true, %.lr.ph ] ; 3 uses
   %.053 = phi i32 [ 0, %bb.g ], [ 121, %bb.h ], [ 109, %bb.i ], [ 99, %bb.j ], [ 119, %bb.k ], [ 0, %.lr.ph ] ; 3 uses
   %i.z = tail call noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.077.092) ; 2 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !57
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !56
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
   %i.ac = load ptr, ptr %i.ab, align 8
   %i.ad = tail call noundef ptr %i.ac(ptr noundef nonnull align 8 dereferenceable(12) %i.z) ; 12 uses
   %i.ae = tail call noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.077.092) ; 2 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !57
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !56
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = tail call noundef i32 %i.ah(ptr noundef nonnull align 8 dereferenceable(12) %i.ae)
@@ -1471,16 +1471,16 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %bb.m, %bb.n, %bb.t, %bb.q, %bb.l
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.077.092, i64 8 ; 2 uses
-  %i.au = load ptr, ptr %i.t, align 8, !tbaa !52
+  %i.au = load ptr, ptr %i.t, align 8, !tbaa !51
   %.not89 = icmp eq ptr %i.at, %i.au
-  br i1 %.not89, label %._crit_edge, label %.lr.ph, !llvm.loop !49
+  br i1 %.not89, label %._crit_edge, label %.lr.ph, !llvm.loop !48
 
 bb.v:                                             ; preds = %._crit_edge, %.lr.ph96
   %fwrite76 = tail call i64 @fwrite(ptr nonnull @.str.20, i64 2, i64 1, ptr %0) ; 0 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.083.094, i64 24 ; 2 uses
-  %i.aw = load ptr, ptr %i.c, align 8, !tbaa !51
+  %i.aw = load ptr, ptr %i.c, align 8, !tbaa !50
   %.not88 = icmp eq ptr %i.av, %i.aw
-  br i1 %.not88, label %.loopexit, label %.lr.ph96, !llvm.loop !50
+  br i1 %.not88, label %.loopexit, label %.lr.ph96, !llvm.loop !49
 
 .loopexit:                                        ; preds = %bb.v, %bb.f, %bb.a
   ret i1 %i.a
@@ -1592,12 +1592,11 @@ attributes #13 = { builtin nounwind }
 !47 = distinct !{!47, !19}
 !48 = distinct !{!48, !19}
 !49 = distinct !{!49, !19}
-!50 = distinct !{!50, !19}
-!51 = !{!23, !23, i64 0}
-!52 = !{!27, !27, i64 0}
-!53 = !{!"_ZTSN7msdfgen9EdgeColorE", !8, i64 0}
-!54 = !{!"_ZTSN7msdfgen11EdgeSegmentE", !53, i64 8}
-!55 = !{!54, !53, i64 8}
-!56 = !{!"vtable pointer", !7, i64 0}
-!57 = !{!56, !56, i64 0}
+!50 = !{!23, !23, i64 0}
+!51 = !{!27, !27, i64 0}
+!52 = !{!"_ZTSN7msdfgen9EdgeColorE", !8, i64 0}
+!53 = !{!"_ZTSN7msdfgen11EdgeSegmentE", !52, i64 8}
+!54 = !{!53, !52, i64 8}
+!55 = !{!"vtable pointer", !7, i64 0}
+!56 = !{!55, !55, i64 0}
 end_hunk_1

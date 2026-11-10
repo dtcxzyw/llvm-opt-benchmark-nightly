@@ -202,10 +202,10 @@ declare void @_ZSt20__throw_system_errori(i32 noundef) local_unnamed_addr #19
 declare i32 @pthread_mutex_lock(ptr noundef) local_unnamed_addr #8
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef double @_ZNSt19normal_distributionIdEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEdRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #2 comdat align 2 !guid !230 {
+define linkonce_odr noundef double @_ZNSt19normal_distributionIdEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEdRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #2 comdat align 2 !guid !229 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !59, !range !231, !noundef !232
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !59, !range !230, !noundef !231
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %.preheader
 
@@ -223,13 +223,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.a, align 8, !tbaa !59
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.k = load double, ptr %i.j, align 8, !tbaa !233
+  %i.k = load double, ptr %i.j, align 8, !tbaa !232
   br label %bb.h
 
 bb.c:                                             ; preds = %select.unfold.i.i
   %i.l = fdiv double %i.s, %i.v                   ; 2 uses
   %i.m = fcmp ult double %i.l, 1.000000e+00
-  br i1 %i.m, label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit, label %bb.d, !prof !234
+  br i1 %i.m, label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit, label %bb.d, !prof !233
 
 select.unfold.i.i:                                ; preds = %select.unfold.i.i.backedge, %.preheader
   %.023.i.i = phi i64 [ %spec.select.i.i, %.preheader ], [ %.023.i.i.be, %select.unfold.i.i.backedge ]
@@ -253,7 +253,7 @@ select.unfold.i.i.backedge:                       ; preds = %select.unfold.i.i, 
   %.01422.i.i.be = phi double [ %i.v, %select.unfold.i.i ], [ 1.000000e+00, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27 ]
   %.01521.i.i.be = phi double [ %i.s, %select.unfold.i.i ], [ 0.000000e+00, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27 ]
   %.be = phi i64 [ %i.p, %select.unfold.i.i ], [ %i.ac, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27 ]
-  br label %select.unfold.i.i, !llvm.loop !228
+  br label %select.unfold.i.i
 
 bb.d:                                             ; preds = %bb.c
   br label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit
@@ -266,7 +266,7 @@ bb.e:                                             ; preds = %select.unfold.i.i21
   %i.x = tail call double @llvm.fmuladd.f64(double %.016.i.i, double 2.000000e+00, double -1.000000e+00) ; 3 uses
   %i.y = fdiv double %i.af, %i.ai                 ; 2 uses
   %i.z = fcmp ult double %i.y, 1.000000e+00
-  br i1 %i.z, label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27, label %bb.f, !prof !234
+  br i1 %i.z, label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27, label %bb.f, !prof !233
 
 select.unfold.i.i21:                              ; preds = %select.unfold.i.i21, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit
   %.023.i.i22 = phi i64 [ %spec.select.i.i, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ %i.aj, %select.unfold.i.i21 ]
@@ -283,7 +283,7 @@ select.unfold.i.i21:                              ; preds = %select.unfold.i.i21
   %i.ai = fptrunc x86_fp80 %i.ah to double        ; 2 uses
   %i.aj = add i64 %.023.i.i22, -1                 ; 2 uses
   %.not.i.i25 = icmp eq i64 %i.aj, 0
-  br i1 %.not.i.i25, label %bb.e, label %select.unfold.i.i21, !llvm.loop !229
+  br i1 %.not.i.i25, label %bb.e, label %select.unfold.i.i21, !llvm.loop !228
 
 bb.f:                                             ; preds = %bb.e
   br label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27
@@ -306,7 +306,7 @@ bb.g:                                             ; preds = %_ZNSt8__detail8_Ada
   %i.at = tail call double @sqrt(double noundef %i.as) #24, !tbaa !7 ; 2 uses
   %i.au = fmul double %i.x, %i.at
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %i.au, ptr %i.av, align 8, !tbaa !233
+  store double %i.au, ptr %i.av, align 8, !tbaa !232
   store i8 1, ptr %i.a, align 8, !tbaa !59
   %i.aw = fmul double %i.ak, %i.at
   br label %bb.h
@@ -314,7 +314,7 @@ bb.g:                                             ; preds = %_ZNSt8__detail8_Ada
 bb.h:                                             ; preds = %bb.g, %bb.b
   %.0 = phi double [ %i.k, %bb.b ], [ %i.aw, %bb.g ]
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ay = load double, ptr %i.ax, align 8, !tbaa !235
+  %i.ay = load double, ptr %i.ax, align 8, !tbaa !234
   %i.az = load double, ptr %2, align 8, !tbaa !55
   %i.ba = tail call double @llvm.fmuladd.f64(double %.0, double %i.ay, double %i.az)
   ret double %i.ba
@@ -604,11 +604,10 @@ attributes #28 = { noreturn }
 !226 = !{i64 7563835619963438012}
 !227 = !{i64 -1366934246806776045}
 !228 = distinct !{!228, !47}
-!229 = distinct !{!229, !47}
-!230 = !{i64 4363924241473502216}
-!231 = !{i8 0, i8 2}
-!232 = !{}
-!233 = !{!58, !53, i64 16}
-!234 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!235 = !{!54, !53, i64 8}
+!229 = !{i64 4363924241473502216}
+!230 = !{i8 0, i8 2}
+!231 = !{}
+!232 = !{!58, !53, i64 16}
+!233 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!234 = !{!54, !53, i64 8}
 end_hunk_0

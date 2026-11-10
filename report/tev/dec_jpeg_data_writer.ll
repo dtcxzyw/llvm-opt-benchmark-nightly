@@ -205,10 +205,12 @@ _ZNSt3__15dequeIN3jxl4jpeg11OutputChunkENS_9allocatorIS3_EEE3endB8nn180100Ev.exi
   %i.ka = trunc i64 %.3101.i.i.i to i8
   %i.kb = getelementptr inbounds nuw i8, ptr %i.jv, i64 3
   store i8 %i.ka, ptr %i.kb, align 1, !tbaa !73
+  %scevgep = getelementptr i8, ptr %i.jv, i64 16
+  %scevgep89 = getelementptr i8, ptr %i.jv, i64 17
   br label %bb.z
 
 bb.z:                                             ; preds = %._crit_edge.i.i.i, %_ZNSt3__15dequeIN3jxl4jpeg11OutputChunkENS_9allocatorIS3_EEE3endB8nn180100Ev.exit.i.i26.i.i
-  %.087.i.i.i = phi i64 [ 4, %_ZNSt3__15dequeIN3jxl4jpeg11OutputChunkENS_9allocatorIS3_EEE3endB8nn180100Ev.exit.i.i26.i.i ], [ %.2.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.087.i.i.i = phi i64 [ 4, %_ZNSt3__15dequeIN3jxl4jpeg11OutputChunkENS_9allocatorIS3_EEE3endB8nn180100Ev.exit.i.i26.i.i ], [ %.2.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 4 uses
   %i.kc = load i32, ptr %i.al, align 8, !tbaa !243 ; 2 uses
   %i.kd = add nsw i32 %i.kc, 1
   store i32 %i.kd, ptr %i.al, align 8, !tbaa !243
@@ -611,32 +613,31 @@ _ZN3jxl4jpeg12_GLOBAL__N_121BuildHuffmanCodeTableERKNS0_15JPEGHuffmanCodeEPNS0_1
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph134.i.i.i
-  %2 = getelementptr i8, ptr %i.jv, i64 %.188.15.i.i.i
-  %i.xr = getelementptr i8, ptr %i.jv, i64 %.087.i.i.i
-  %i.xs = getelementptr i8, ptr %i.xr, i64 %i.na
-  %i.xt = getelementptr i8, ptr %i.xs, i64 %i.mw
-  %i.xu = getelementptr i8, ptr %i.xt, i64 %i.ms
-  %i.xv = getelementptr i8, ptr %i.xu, i64 %i.mo
-  %i.xw = getelementptr i8, ptr %i.xv, i64 %i.mk
-  %i.xx = getelementptr i8, ptr %i.xw, i64 %i.mg
-  %i.xy = getelementptr i8, ptr %i.xx, i64 %i.mc
-  %i.xz = getelementptr i8, ptr %i.xy, i64 %i.ly
-  %i.ya = getelementptr i8, ptr %i.xz, i64 %i.lu
-  %i.yb = getelementptr i8, ptr %i.ya, i64 %i.lq
-  %i.yc = getelementptr i8, ptr %i.yb, i64 %i.lm
-  %i.yd = getelementptr i8, ptr %i.yc, i64 %i.li
-  %i.ye = getelementptr i8, ptr %i.yd, i64 %i.le
-  %i.yf = getelementptr i8, ptr %i.ye, i64 %i.la
-  %i.yg = getelementptr i8, ptr %i.yf, i64 %i.kw
-  %i.yh = getelementptr i8, ptr %i.yg, i64 %i.ks
-  %i.yi = getelementptr i8, ptr %i.yh, i64 %i.kp
-  %i.yj = getelementptr i8, ptr %i.yi, i64 16
+  %i.xr = getelementptr i8, ptr %scevgep89, i64 %.087.i.i.i
+  %i.xs = getelementptr i8, ptr %scevgep, i64 %.087.i.i.i
+  %i.xt = getelementptr i8, ptr %i.xs, i64 %i.na
+  %i.xu = getelementptr i8, ptr %i.xt, i64 %i.mw
+  %i.xv = getelementptr i8, ptr %i.xu, i64 %i.ms
+  %i.xw = getelementptr i8, ptr %i.xv, i64 %i.mo
+  %i.xx = getelementptr i8, ptr %i.xw, i64 %i.mk
+  %i.xy = getelementptr i8, ptr %i.xx, i64 %i.mg
+  %i.xz = getelementptr i8, ptr %i.xy, i64 %i.mc
+  %i.ya = getelementptr i8, ptr %i.xz, i64 %i.ly
+  %i.yb = getelementptr i8, ptr %i.ya, i64 %i.lu
+  %i.yc = getelementptr i8, ptr %i.yb, i64 %i.lq
+  %i.yd = getelementptr i8, ptr %i.yc, i64 %i.lm
+  %i.ye = getelementptr i8, ptr %i.yd, i64 %i.li
+  %i.yf = getelementptr i8, ptr %i.ye, i64 %i.le
+  %i.yg = getelementptr i8, ptr %i.yf, i64 %i.la
+  %i.yh = getelementptr i8, ptr %i.yg, i64 %i.kw
+  %i.yi = getelementptr i8, ptr %i.yh, i64 %i.ks
+  %i.yj = getelementptr i8, ptr %i.yi, i64 %i.kp
   %i.yk = mul nsw i64 %i.ke, 1104
   %i.yl = shl nuw nsw i64 %i.nb, 2
   %i.ym = getelementptr i8, ptr %i.kg, i64 %i.yk
   %i.yn = getelementptr i8, ptr %i.ym, i64 %i.yl
   %i.yo = getelementptr i8, ptr %i.yn, i64 64
-  %bound0 = icmp ult ptr %2, %i.yo
+  %bound0 = icmp ult ptr %i.xr, %i.yo
   %bound1 = icmp ult ptr %i.xq, %i.yj
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
@@ -978,7 +979,7 @@ bb.ax:                                            ; preds = %bb.av
   %i.ado = trunc i32 %i.adn to i8
   %i.adp = getelementptr i8, ptr %i.xm, i64 16
   store i8 %i.ado, ptr %i.adp, align 1, !tbaa !73
-  %.188.15.i.i.i = add i64 %.087.i.i.i, 17        ; 6 uses
+  %.188.15.i.i.i = add i64 %.087.i.i.i, 17        ; 5 uses
   %i.adq = add nsw i64 %i.nb, -1                  ; 4 uses
   %.not136.i.i.i = icmp eq i64 %i.adq, 0
   br i1 %.not136.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph134.i.i.i

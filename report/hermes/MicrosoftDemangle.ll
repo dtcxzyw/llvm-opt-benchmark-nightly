@@ -205,7 +205,7 @@ _ZN12_GLOBAL__N_19Demangler26demangleThrowSpecificationER10StringView.exit: ; pr
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler29demangleFunctionParameterListER10StringView(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1) unnamed_addr #3 align 2 !guid !250 {
+define internal fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler29demangleFunctionParameterListER10StringView(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1) unnamed_addr #3 align 2 !guid !249 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !59     ; 3 uses
@@ -429,7 +429,7 @@ bb.n:                                             ; preds = %_ZN4llvh11ms_demang
   %.032.be = getelementptr inbounds nuw i8, ptr %.sink.i40.pn, i64 8
   %i.cx = load i8, ptr %i.ac, align 8, !tbaa !47, !range !70, !noundef !71
   %i.cy = trunc nuw i8 %i.cx to i1
-  br i1 %i.cy, label %.critedge, label %bb.e, !llvm.loop !249
+  br i1 %i.cy, label %.critedge, label %bb.e
 
 bb.o:                                             ; preds = %_ZNK10StringView10startsWithEc.exit, %_ZNK10StringView10startsWithEc.exit
   %.0..0..0..0..0..0. = load ptr, ptr %i.a, align 8, !tbaa !135
@@ -471,7 +471,7 @@ bb.p:                                             ; preds = %_ZN10StringView12co
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden noundef ptr @_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_17PrimitiveTypeNodeEJNS0_13PrimitiveKindEEEEPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #3 comdat align 2 !guid !251 {
+define linkonce_odr hidden noundef ptr @_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_17PrimitiveTypeNodeEJNS0_13PrimitiveKindEEEEPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #3 comdat align 2 !guid !250 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !53     ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !50
@@ -521,7 +521,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler24demangleFunctionEncodingER10StringView(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1) unnamed_addr #3 align 2 !guid !252 {
+define internal fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler24demangleFunctionEncodingER10StringView(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1) unnamed_addr #3 align 2 !guid !251 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !60   ; 2 uses
@@ -866,7 +866,7 @@ bb.ap:                                            ; preds = %bb.ao, %.split.i
 _ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit: ; preds = %.thread.i, %.split.i, %bb.ao, %bb.ap
   %i.cn = phi i64 [ %i.cm, %bb.ap ], [ %.sroa.0.4.i.i, %bb.ao ], [ 0, %.thread.i ], [ %.sroa.0.4.i.i, %.split.i ]
   %i.co = trunc i64 %i.cn to i32
-  store i32 %i.co, ptr %i.bj, align 8, !tbaa !255
+  store i32 %i.co, ptr %i.bj, align 8, !tbaa !254
   br label %bb.bu
 
 bb.aq:                                            ; preds = %_ZN12_GLOBAL__N_19Demangler21demangleFunctionClassER10StringView.exit
@@ -1032,7 +1032,7 @@ _ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit58: ; preds = %.th
   %i.ex = phi i64 [ %i.ev, %bb.ba ], [ %.sroa.0.4.i.i55, %bb.az ], [ 0, %.thread.i50 ], [ %.sroa.0.4.i.i55, %.split.i57 ]
   %i.ey = trunc i64 %i.ex to i32
   %i.ez = getelementptr inbounds nuw i8, ptr %.sink27.i38, i64 60
-  store i32 %i.ey, ptr %i.ez, align 4, !tbaa !256
+  store i32 %i.ey, ptr %i.ez, align 4, !tbaa !255
   %i.fa = icmp eq ptr %i.ew, %.pre143
   br i1 %i.fa, label %_ZN10StringView12consumeFrontEc.exit.i.i60, label %_ZNK10StringView10startsWithEc.exit.i.i.i59
 
@@ -1125,7 +1125,7 @@ _ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit77: ; preds = %.th
   %i.gc = phi i64 [ %i.ga, %bb.bg ], [ %.sroa.0.4.i.i74, %bb.bf ], [ 0, %.thread.i69 ], [ %.sroa.0.4.i.i74, %.split.i76 ]
   %i.gd = trunc i64 %i.gc to i32
   %i.ge = getelementptr inbounds nuw i8, ptr %.sink27.i38, i64 64
-  store i32 %i.gd, ptr %i.ge, align 8, !tbaa !257
+  store i32 %i.gd, ptr %i.ge, align 8, !tbaa !256
   br label %bb.bh
 
 bb.bh:                                            ; preds = %_ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit77, %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_18ThunkSignatureNodeEJEEEPT_DpOT0_.exit39
@@ -1222,7 +1222,7 @@ _ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit96: ; preds = %.th
   %i.hi = phi i64 [ %i.hg, %bb.bn ], [ %.sroa.0.4.i.i93, %bb.bm ], [ 0, %.thread.i88 ], [ %.sroa.0.4.i.i93, %.split.i95 ]
   %i.hj = trunc i64 %i.hi to i32
   %i.hk = getelementptr inbounds nuw i8, ptr %.sink27.i38, i64 68
-  store i32 %i.hj, ptr %i.hk, align 4, !tbaa !258
+  store i32 %i.hj, ptr %i.hk, align 4, !tbaa !257
   %i.hl = icmp eq ptr %i.hh, %.pre143
   br i1 %i.hl, label %_ZN10StringView12consumeFrontEc.exit.i.i98, label %_ZNK10StringView10startsWithEc.exit.i.i.i97
 
@@ -1313,7 +1313,7 @@ bb.bt:                                            ; preds = %bb.bs, %.split.i114
 _ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit115: ; preds = %.thread.i107, %.split.i114, %bb.bs, %bb.bt
   %i.im = phi i64 [ %i.il, %bb.bt ], [ %.sroa.0.4.i.i112, %bb.bs ], [ 0, %.thread.i107 ], [ %.sroa.0.4.i.i112, %.split.i114 ]
   %i.in = trunc i64 %i.im to i32
-  store i32 %i.in, ptr %i.dt, align 8, !tbaa !255
+  store i32 %i.in, ptr %i.dt, align 8, !tbaa !254
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.aq, %_ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit115, %_ZN12_GLOBAL__N_19Demangler14demangleSignedER10StringView.exit
@@ -1458,7 +1458,7 @@ _ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_18FunctionSymbolNodeEJEEEPT_DpOT
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1, i8 noundef zeroext range(i8 0, 6) %2) unnamed_addr #3 align 2 !guid !260 {
+define internal fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1, i8 noundef zeroext range(i8 0, 6) %2) unnamed_addr #3 align 2 !guid !259 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !53   ; 3 uses
@@ -1649,7 +1649,7 @@ _ZNK10StringView10startsWithES_.exit.i:           ; preds = %_ZL15startsWithDigi
   br i1 %.not9.i.i.i.i.i.i, label %_ZNK10StringView10startsWithES_.exit.thread.i, label %_ZNK10StringView10startsWithES_.exit.thread9.i
 
 _ZNK10StringView10startsWithES_.exit.thread.i:    ; preds = %_ZNK10StringView10startsWithES_.exit.i
-  %i.cb = tail call fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler33demangleTemplateInstantiationNameER10StringView19NameBackrefBehavior(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i8 noundef zeroext 1), !inline_history !259
+  %i.cb = tail call fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler33demangleTemplateInstantiationNameER10StringView19NameBackrefBehavior(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i8 noundef zeroext 1), !inline_history !258
   br label %_ZN12_GLOBAL__N_19Demangler27demangleUnqualifiedTypeNameER10StringViewb.exit
 
 _ZNK10StringView10startsWithES_.exit.thread9.i:   ; preds = %_ZNK10StringView10startsWithES_.exit.i, %_ZL15startsWithDigit10StringView.exit.thread.i
@@ -1664,7 +1664,7 @@ _ZN12_GLOBAL__N_19Demangler27demangleUnqualifiedTypeNameER10StringViewb.exit: ; 
   br i1 %i.cf, label %_ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView.exit, label %bb.m
 
 bb.m:                                             ; preds = %_ZN12_GLOBAL__N_19Demangler27demangleUnqualifiedTypeNameER10StringViewb.exit
-  %i.cg = tail call fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler22demangleNameScopeChainER10StringViewPN4llvh11ms_demangle14IdentifierNodeE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %.0.i), !inline_history !261 ; 0 uses
+  %i.cg = tail call fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler22demangleNameScopeChainER10StringViewPN4llvh11ms_demangle14IdentifierNodeE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %.0.i), !inline_history !260 ; 0 uses
   br label %_ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView.exit
 
 _ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView.exit: ; preds = %bb.m, %_ZN12_GLOBAL__N_19Demangler27demangleUnqualifiedTypeNameER10StringViewb.exit, %_ZN12_GLOBAL__N_19Demangler18demangleQualifiersER10StringView.exit
@@ -2019,17 +2019,16 @@ attributes #25 = { builtin nounwind }
 !246 = !{i64 3905517530860816136}
 !247 = !{i64 9118186260596337862}
 !248 = !{i64 6083616991378047019}
-!249 = distinct !{!249, !35}
-!250 = !{i64 -4578388260683620112}
-!251 = !{i64 -3622272129717677005}
-!252 = !{i64 5255898074521787025}
-!253 = !{!"_ZTSN4llvh11ms_demangle18ThunkSignatureNode12ThisAdjustorE", !11, i64 0, !11, i64 4, !11, i64 8, !11, i64 12}
-!254 = !{!"_ZTSN4llvh11ms_demangle18ThunkSignatureNodeE", !106, i64 0, !253, i64 56}
-!255 = !{!254, !11, i64 56}
-!256 = !{!254, !11, i64 60}
-!257 = !{!254, !11, i64 64}
-!258 = !{!254, !11, i64 68}
-!259 = distinct !{null, ptr @_ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView}
-!260 = !{i64 4204669199933604604}
-!261 = !{ptr @_ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView}
+!249 = !{i64 -4578388260683620112}
+!250 = !{i64 -3622272129717677005}
+!251 = !{i64 5255898074521787025}
+!252 = !{!"_ZTSN4llvh11ms_demangle18ThunkSignatureNode12ThisAdjustorE", !11, i64 0, !11, i64 4, !11, i64 8, !11, i64 12}
+!253 = !{!"_ZTSN4llvh11ms_demangle18ThunkSignatureNodeE", !106, i64 0, !252, i64 56}
+!254 = !{!253, !11, i64 56}
+!255 = !{!253, !11, i64 60}
+!256 = !{!253, !11, i64 64}
+!257 = !{!253, !11, i64 68}
+!258 = distinct !{null, ptr @_ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView}
+!259 = !{i64 4204669199933604604}
+!260 = !{ptr @_ZN12_GLOBAL__N_19Demangler30demangleFullyQualifiedTypeNameER10StringView}
 end_hunk_0

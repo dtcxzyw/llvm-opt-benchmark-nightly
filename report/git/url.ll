@@ -158,7 +158,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   ]
 
 .preheader.backedge:                              ; preds = %bb.e, %bb.e, %bb.e, %is_urlschemechar.exit15
-  br label %.preheader, !llvm.loop !21
+  br label %.preheader
 
 is_urlschemechar.exit15:                          ; preds = %bb.e
   br i1 %i.m, label %.critedge, label %.preheader.backedge
@@ -561,6 +561,4 @@ attributes #9 = { nounwind }
 !18 = !{!17, !16, i64 0}
 !19 = !{!17, !16, i64 8}
 !20 = !{!17, !14, i64 16}
-!21 = distinct !{!21, !22}
-!22 = !{!"llvm.loop.mustprogress"}
 end_hunk_1

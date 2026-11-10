@@ -204,6 +204,8 @@ bb.a:
   %putchar = tail call i32 @putchar(i32 10)       ; 0 uses
   %.not106 = icmp eq i32 %5, 0                    ; 2 uses
   %.not107 = icmp eq i32 %4, 0                    ; 2 uses
+  %scevgep = getelementptr i8, ptr %1, i64 8
+  %scevgep200 = getelementptr i8, ptr %3, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge127, %._crit_edge
@@ -305,11 +307,10 @@ vector.memcheck:                                  ; preds = %.lr.ph122.preheader
   %i.an = shl nuw nsw i64 %i.ai, 2                ; 2 uses
   %i.ao = getelementptr i8, ptr %3, i64 %i.an
   %i.ap = add nuw nsw i64 %i.ai, %i.al
-  %i.aq = shl nuw nsw i64 %i.ap, 2
-  %6 = add nuw nsw i64 %i.aq, 8                   ; 2 uses
-  %i.ar = getelementptr i8, ptr %3, i64 %6
+  %i.aq = shl nuw nsw i64 %i.ap, 2                ; 2 uses
+  %i.ar = getelementptr i8, ptr %scevgep200, i64 %i.aq
   %i.as = getelementptr i8, ptr %1, i64 %i.an
-  %i.at = getelementptr i8, ptr %1, i64 %6
+  %i.at = getelementptr i8, ptr %scevgep, i64 %i.aq
   %bound0 = icmp ult ptr %i.ao, %i.at
   %bound1 = icmp ult ptr %i.as, %i.ar
   %found.conflict = and i1 %bound0, %bound1

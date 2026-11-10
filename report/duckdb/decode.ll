@@ -205,7 +205,7 @@ _ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit407:
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 848 ; 13 uses
+  %i.bh = getelementptr i8, ptr %0, i64 848       ; 14 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 2672 ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 2668 ; 4 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 344
@@ -216,7 +216,7 @@ _ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit407:
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 250
-  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 1392 ; 9 uses
+  %i.bs = getelementptr i8, ptr %0, i64 1392      ; 10 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 720
@@ -229,6 +229,8 @@ _ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit407:
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 764 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
+  %scevgep = getelementptr i8, ptr %0, i64 1392
+  %scevgep736 = getelementptr i8, ptr %0, i64 848
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit407
@@ -631,11 +633,9 @@ bb.cp:                                            ; preds = %bb.co
 .lr.ph44.i:                                       ; preds = %.preheader.i457
   %i.vb = add i64 %i.up, 1
   %i.vc = shl nuw nsw i64 %i.uu, 3
+  %i.vd = getelementptr i8, ptr %scevgep, i64 %i.vc
+  %i.ve = getelementptr i8, ptr %scevgep736, i64 %i.uu
   %min.iters.check = icmp ult i32 %i.us, 2
-  %6 = getelementptr i8, ptr %0, i64 %i.uu
-  %i.vd = getelementptr i8, ptr %6, i64 848
-  %i.ve = getelementptr i8, ptr %0, i64 %i.vc
-  %7 = getelementptr i8, ptr %i.ve, i64 1392
   %n.vec = and i64 %i.uu, 4294967292              ; 2 uses
   %xtraiter762 = and i64 %i.uu, 1
   %i.vf = icmp eq i32 %i.us, 0
@@ -692,13 +692,11 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %b
   br i1 %i.vf, label %scalar.ph.epil.preheader, label %scalar.ph
 
 vector.memcheck:                                  ; preds = %bb.cq
-  %8 = getelementptr i8, ptr %0, i64 %.143.i
-  %i.wc = getelementptr i8, ptr %8, i64 848
-  %i.wd = getelementptr i8, ptr %i.vd, i64 %.143.i
+  %i.wc = getelementptr i8, ptr %i.bh, i64 %.143.i
+  %i.wd = getelementptr i8, ptr %i.ve, i64 %.143.i
   %i.we = shl i64 %.143.i, 3                      ; 2 uses
-  %9 = getelementptr i8, ptr %0, i64 %i.we
-  %i.wf = getelementptr i8, ptr %9, i64 1392
-  %i.wg = getelementptr i8, ptr %7, i64 %i.we
+  %i.wf = getelementptr i8, ptr %i.bs, i64 %i.we
+  %i.wg = getelementptr i8, ptr %i.vd, i64 %i.we
   %bound0 = icmp ult ptr %i.wc, %i.wg
   %bound1 = icmp ult ptr %i.wf, %i.wd
   %found.conflict = and i1 %bound0, %bound1

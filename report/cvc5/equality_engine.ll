@@ -205,10 +205,7 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit:  ; preds = %bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 936 ; 2 uses
   br label %bb.b
 
-..loopexit549_crit_edge:                          ; preds = %_ZNSt5queueIjSt5dequeIjSaIjEEE3popEv.exit
-  br label %.backedge, !llvm.loop !519
-
-bb.b:                                             ; preds = %.backedge, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit
+bb.b:                                             ; preds = %.backedge.backedge, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit
   %i.bb = load ptr, ptr %i.d, align 8, !tbaa !297 ; 2 uses
   %i.bc = load ptr, ptr %i.e, align 8, !tbaa !297 ; 8 uses
   %i.bd = icmp eq ptr %i.bb, %i.bc
@@ -238,7 +235,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bl = load ptr, ptr %i.f, align 8, !tbaa !328 ; 2 uses
   %i.bm = load ptr, ptr %i.g, align 8, !tbaa !328 ; 2 uses
   %i.bn = icmp eq ptr %i.bl, %i.bm
-  br i1 %i.bn, label %.backedge, label %.lr.ph575, !llvm.loop !519
+  br i1 %i.bn, label %.backedge.backedge, label %.lr.ph575
 
 .lr.ph575:                                        ; preds = %.preheader
   %.pre611 = load ptr, ptr %i.ay, align 8, !tbaa !330
@@ -308,7 +305,7 @@ _ZNSt5queueIjSt5dequeIjSaIjEEE3popEv.exit:        ; preds = %bb.h, %bb.i
   %storemerge.i.i = phi ptr [ %i.cf, %bb.h ], [ %i.cj, %bb.i ] ; 3 uses
   store ptr %storemerge.i.i, ptr %i.g, align 8, !tbaa !335
   %i.cn = icmp eq ptr %i.cl, %storemerge.i.i
-  br i1 %i.cn, label %..loopexit549_crit_edge, label %bb.g, !llvm.loop !521
+  br i1 %i.cn, label %.backedge.backedge, label %bb.g, !llvm.loop !521
 
 bb.j:                                             ; preds = %.thread, %bb.d
   %i.co = load ptr, ptr %i.f, align 8, !tbaa !328
@@ -318,10 +315,7 @@ bb.j:                                             ; preds = %.thread, %bb.d
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_ZN4cvc58internal6theory2eq14EqualityEngine22processEvaluationQueueEv(ptr noundef nonnull align 8 dereferenceable(1784) %0)
-          to label %.backedge unwind label %.loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-
-.backedge:                                        ; preds = %_ZNSt5dequeIN4cvc58internal6theory2eq14MergeCandidateESaIS4_EE9pop_frontEv.exit124, %_ZNSt6vectorIjSaIjEED2Ev.exit, %bb.ae, %.preheader, %..loopexit549_crit_edge, %bb.k
-  br label %bb.b, !llvm.loop !519
+          to label %.backedge.backedge unwind label %.loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.l:                                             ; preds = %bb.j
   %.sroa.0514.0.copyload = load i32, ptr %i.bc, align 8 ; 2 uses
@@ -365,7 +359,10 @@ _ZNSt5dequeIN4cvc58internal6theory2eq14MergeCandidateESaIS4_EE9pop_frontEv.exit1
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !203 ; 3 uses
   %i.dk = icmp eq i32 %i.df, %i.dj
-  br i1 %i.dk, label %.backedge, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit158, !llvm.loop !519
+  br i1 %i.dk, label %.backedge.backedge, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit158
+
+.backedge.backedge:                               ; preds = %_ZNSt5queueIjSt5dequeIjSaIjEEE3popEv.exit, %_ZNSt5dequeIN4cvc58internal6theory2eq14MergeCandidateESaIS4_EE9pop_frontEv.exit124, %_ZNSt6vectorIjSaIjEED2Ev.exit, %bb.ae, %.preheader, %bb.k
+  br label %bb.b
 
 _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit158: ; preds = %_ZNSt5dequeIN4cvc58internal6theory2eq14MergeCandidateESaIS4_EE9pop_frontEv.exit124
   %i.dl = zext i32 %i.df to i64                   ; 8 uses
@@ -639,7 +636,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hk, i64 32
   %i.hm = load ptr, ptr %i.hl, align 8
   invoke void %i.hm(ptr noundef nonnull align 8 dereferenceable(8) %i.he, ptr noundef nonnull align 8 %3, ptr noundef nonnull align 8 %4)
-          to label %.backedge unwind label %.loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.loop !519
+          to label %.backedge.backedge unwind label %.loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .loopexit.split-lp553.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ad, %bb.w, %bb.k, %bb.s, %bb.p, %_ZNKSt6vectorIN4cvc58internal6theory2eq14EqualityEngine8EqualityESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.ae, %bb.aa
   %lpad.loopexit.split-lp782 = landingpad { ptr, i32 }
@@ -1042,7 +1039,7 @@ bb.cl:                                            ; preds = %.critedge6
 
 _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %.critedge6, %bb.cl
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
-  br label %.backedge
+  br label %.backedge.backedge
 
 bb.cm:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp
   %i.yh = load ptr, ptr %i.ax, align 8, !tbaa !234

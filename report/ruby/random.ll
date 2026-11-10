@@ -204,7 +204,7 @@ declare i64 @rb_big_minus(i64 noundef, i64 noundef) local_unnamed_addr #1
 declare i64 @rb_big_norm(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @random_ulong_limited_big(i64 noundef %0, ptr noundef %1, i64 noundef %2) unnamed_addr #0 !guid !207 {
+define internal fastcc i64 @random_ulong_limited_big(i64 noundef %0, ptr noundef %1, i64 noundef %2) unnamed_addr #0 !guid !206 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -272,7 +272,7 @@ bb.g:                                             ; preds = %.lr.ph.us
 
 .lr.ph.us.backedge:                               ; preds = %bb.g, %.loopexit.us
   %.041.us.be = phi i64 [ %i.ab, %bb.g ], [ 0, %.loopexit.us ]
-  br label %.lr.ph.us, !llvm.loop !206
+  br label %.lr.ph.us
 
 .loopexit.us:                                     ; preds = %.lr.ph.us
   %i.ad = call fastcc i64 @obj_random_bytes(i64 noundef %0, ptr noundef nonnull %i.p, i64 noundef %i.r) ; 0 uses
@@ -351,7 +351,7 @@ declare i64 @rb_uint2big(i64 noundef) local_unnamed_addr #1
 declare i64 @rb_integer_unpack(ptr noundef, i64 noundef, i64 noundef, i64 noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @limited_big_rand(ptr nofree noundef readonly captures(none) %0, ptr noundef nonnull %1, i64 noundef %2) unnamed_addr #0 !guid !209 {
+define internal fastcc i64 @limited_big_rand(ptr nofree noundef readonly captures(none) %0, ptr noundef nonnull %1, i64 noundef %2) unnamed_addr #0 !guid !208 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -445,7 +445,7 @@ bb.i:                                             ; preds = %bb.f, %.thread, %bb
   %.03451.be = phi i64 [ %.034, %bb.i ], [ %.03448, %bb.g ]
   %.03350.be = phi i32 [ %.1, %bb.i ], [ 1, %bb.g ]
   %.03549.be = phi i32 [ %i.aj, %bb.i ], [ 0, %bb.g ]
-  br label %.lr.ph, !llvm.loop !208
+  br label %.lr.ph, !llvm.loop !207
 
 .loopexit._crit_edge:                             ; preds = %bb.i, %bb.e
   %i.am = call i64 @rb_integer_unpack(ptr noundef %i.l, i64 noundef %i.b, i64 noundef 4, i64 noundef 0, i32 noundef 66) #23
@@ -464,12 +464,12 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #16
 declare i64 @rb_data_typed_object_zalloc(i64 noundef, i64 noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @rand_init_default(ptr nofree noundef nonnull readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 !guid !210 {
+define internal fastcc i64 @rand_init_default(ptr nofree noundef nonnull readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 !guid !209 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store i64 0, ptr %i.a, align 8, !tbaa !81
-  %i.b = load i64, ptr %0, align 8, !tbaa !211
+  %i.b = load i64, ptr %0, align 8, !tbaa !210
   %i.c = add i64 %i.b, 31                         ; 2 uses
   %i.d = lshr i64 %i.c, 5                         ; 5 uses
   %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
@@ -519,7 +519,7 @@ declare void @rb_error_frozen_object(i64 noundef) local_unnamed_addr #6
 declare void @rb_str_modify(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @rand_random(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, ptr noundef %3) unnamed_addr #0 !guid !212 {
+define internal fastcc i64 @rand_random(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, ptr noundef %3) unnamed_addr #0 !guid !211 {
 bb.a:
   %or.cond.i = icmp ugt i32 %0, 1
   br i1 %or.cond.i, label %bb.b, label %rb_check_arity.exit
@@ -678,7 +678,7 @@ rb_float_new_inline.exit:                         ; preds = %bb.t, %bb.s, %bb.r,
 }
 
 ; Function Attrs: noreturn nounwind sspstrong uwtable
-define internal fastcc void @invalid_argument(i64 noundef %0) unnamed_addr #20 !guid !213 {
+define internal fastcc void @invalid_argument(i64 noundef %0) unnamed_addr #20 !guid !212 {
 bb.a:
   %i.a = load i64, ptr @rb_eArgError, align 8, !tbaa !81
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.a, ptr noundef nonnull @.str.32, i64 noundef %0) #25
@@ -705,7 +705,7 @@ declare i64 @rb_obj_class(i64 noundef) local_unnamed_addr #1
 declare i64 @rb_equal(i64 noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @default_rand_mark(ptr nofree noundef readonly captures(none) %0) #0 !guid !214 {
+define internal void @default_rand_mark(ptr nofree noundef readonly captures(none) %0) #0 !guid !213 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !73
   tail call void @rb_gc_mark(i64 noundef %i.a) #23
@@ -965,13 +965,12 @@ attributes #29 = { memory(none) }
 !203 = !{i64 -6419421539499502092}
 !204 = distinct !{!204, !76}
 !205 = !{i64 -6210003124978558637}
-!206 = distinct !{!206, !76}
-!207 = !{i64 7241088983536865751}
-!208 = distinct !{!208, !76}
-!209 = !{i64 2431904265198942822}
-!210 = !{i64 5002100422888269363}
-!211 = !{!95, !67, i64 0}
-!212 = !{i64 3790297298130787840}
-!213 = !{i64 -3790246132529796416}
-!214 = !{i64 8118399104846734153}
+!206 = !{i64 7241088983536865751}
+!207 = distinct !{!207, !76}
+!208 = !{i64 2431904265198942822}
+!209 = !{i64 5002100422888269363}
+!210 = !{!95, !67, i64 0}
+!211 = !{i64 3790297298130787840}
+!212 = !{i64 -3790246132529796416}
+!213 = !{i64 8118399104846734153}
 end_hunk_0

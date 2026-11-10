@@ -28,10 +28,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #4
-  %i.i = load i32, ptr %4, align 4, !tbaa !34     ; 4 uses
+  %i.i = load i32, ptr %4, align 4, !tbaa !34     ; 6 uses
   %narrow = xor i32 %i.i, -1
-  %i.j = sext i32 %narrow to i64                  ; 2 uses
-  %i.k = getelementptr inbounds [8 x i8], ptr %3, i64 %i.j ; 15 uses
+  %i.j = sext i32 %narrow to i64                  ; 3 uses
+  %i.k = getelementptr [8 x i8], ptr %3, i64 %i.j ; 16 uses
   %i.l = load i32, ptr %6, align 4, !tbaa !34     ; 11 uses
   %narrow257 = xor i32 %i.l, -1
   %i.m = sext i32 %narrow257 to i64
@@ -94,24 +94,26 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = sext i32 %i.l to i64
   %invariant.gep344 = getelementptr [8 x i8], ptr %i.n, i64 %i.aj
   %i.ak = zext nneg i32 %i.r to i64
-  %i.al = add i32 %i.i, 2                         ; 4 uses
-  %i.am = add i32 %i.i, 1                         ; 4 uses
-  %i.an = shl nsw i64 %i.j, 3                     ; 3 uses
-  %10 = add i64 %i.an, %i.c
-  %ident.check383 = icmp ne i32 %i.o, 1
+  %i.al = add i32 %i.i, 2                         ; 2 uses
+  %i.am = add i32 %i.i, 1                         ; 2 uses
+  %i.an = shl nsw i64 %i.j, 3
+  %10 = getelementptr i8, ptr %3, i64 %i.an
+  %scevgep = getelementptr i8, ptr %10, i64 -8
+  %scevgep366 = getelementptr i8, ptr %7, i64 -16
+  %scevgep367 = getelementptr i8, ptr %7, i64 -8
+  %11 = add i32 %i.i, 2                           ; 2 uses
+  %12 = add i32 %i.i, 1                           ; 2 uses
+  %ident.check385 = icmp ne i32 %i.o, 1
   %invariant.op = add i64 -9, %i.b
   %ident.check = icmp ne i32 %i.o, 1
-  %invariant.gep528 = getelementptr i8, ptr %3, i64 %i.an
-  %11 = getelementptr i8, ptr %3, i64 %i.an
-  %12 = getelementptr i8, ptr %11, i64 -8
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph278, %bb.j
   %indvar = phi i32 [ 0, %.lr.ph278 ], [ %indvar.next, %bb.j ] ; 5 uses
   %indvars.iv307 = phi i64 [ 1, %.lr.ph278 ], [ %indvars.iv.next308, %bb.j ] ; 7 uses
   %indvars.iv300 = phi i32 [ 0, %.lr.ph278 ], [ %indvars.iv.next301, %bb.j ] ; 3 uses
-  %i.ao = mul i32 %i.am, %indvar
-  %i.ap = add i32 %i.al, %i.ao                    ; 2 uses
+  %i.ao = mul i32 %12, %indvar
+  %i.ap = add i32 %11, %i.ao                      ; 2 uses
   %i.aq = mul i32 %i.am, %indvar
   %i.ar = add i32 %i.al, %i.aq                    ; 2 uses
   %indvars309 = trunc nuw i64 %indvars.iv307 to i32 ; 7 uses
@@ -158,16 +160,17 @@ vector.scevcheck382:                              ; preds = %iter.check400
   %i.bo = icmp slt i32 %i.bn, %i.ap
   %i.bp = icmp ugt i64 %i.bl, 4294967295
   %i.bq = or i1 %i.bo, %i.bp
-  %i.br = or i1 %ident.check383, %i.bq
+  %i.br = or i1 %ident.check385, %i.bq
   br i1 %i.br, label %vec.epilog.scalar.ph402.preheader, label %vector.memcheck386
 
 vector.memcheck386:                               ; preds = %vector.scevcheck382
   %i.bs = shl nsw i64 %i.bf, 3
-  %i.bt = mul i32 %indvar, %i.am
-  %i.bu = add i32 %i.al, %i.bt
+  %i.bt = mul i32 %indvar, %12
+  %i.bu = add i32 %11, %i.bt
   %i.bv = sext i32 %i.bu to i64
-  %i.bw = shl nsw i64 %i.bv, 3
-  %i.bx = add i64 %10, %i.bw
+  %13 = add nsw i64 %i.j, %i.bv
+  %i.bw = shl nsw i64 %13, 3
+  %i.bx = add i64 %i.bw, %i.c
   %i.by = sub i64 %i.bs, %i.bx
   %op.rdx515.reass = add i64 %i.by, %invariant.op
   %diff.check = icmp ult i64 %op.rdx515.reass, 127
@@ -350,18 +353,16 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ey = shl nsw i64 %i.eo, 3                    ; 2 uses
-  %13 = getelementptr i8, ptr %7, i64 %i.ey
-  %i.ez = getelementptr i8, ptr %13, i64 -8
+  %i.ez = getelementptr i8, ptr %scevgep367, i64 %i.ey
   %i.fa = shl nuw nsw i64 %wide.trip.count305, 3  ; 2 uses
-  %14 = getelementptr i8, ptr %7, i64 %i.ey
-  %i.fb = getelementptr i8, ptr %14, i64 %i.fa
-  %i.fc = getelementptr i8, ptr %i.fb, i64 -16
+  %i.fb = getelementptr i8, ptr %scevgep366, i64 %i.ey
+  %i.fc = getelementptr i8, ptr %i.fb, i64 %i.fa
   %i.fd = mul i32 %indvar, %i.am
   %i.fe = add i32 %i.al, %i.fd
   %i.ff = sext i32 %i.fe to i64
   %i.fg = shl nsw i64 %i.ff, 3                    ; 2 uses
-  %gep529 = getelementptr i8, ptr %invariant.gep528, i64 %i.fg
-  %i.fh = getelementptr i8, ptr %12, i64 %i.fg
+  %gep529 = getelementptr i8, ptr %i.k, i64 %i.fg
+  %i.fh = getelementptr i8, ptr %scevgep, i64 %i.fg
   %i.fi = getelementptr i8, ptr %i.fh, i64 %i.fa
   %bound0 = icmp ult ptr %i.ez, %i.fi
   %bound1 = icmp ult ptr %gep529, %i.fc
