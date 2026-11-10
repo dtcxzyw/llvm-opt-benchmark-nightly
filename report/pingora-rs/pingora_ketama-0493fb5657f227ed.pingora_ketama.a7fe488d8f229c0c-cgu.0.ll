@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 
 .preheader.i:                                     ; preds = %.lr.ph182
   %.sroa.0.0.i41.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i.i181, i64 -8 ; 3 uses
-  %i.dg = load i64, ptr %.sroa.0.0.i41.1.i.i, align 4, !alias.scope !115, !noalias !113
-  store i64 %i.dg, ptr %.sroa.0.0.i41.1.i.i181, align 4, !alias.scope !115, !noalias !113
+  %i.dg = load i64, ptr %.sroa.0.0.i41.1.i.i, align 8, !alias.scope !115, !noalias !113
+  store i64 %i.dg, ptr %.sroa.0.0.i41.1.i.i181, align 8, !alias.scope !115, !noalias !113
   %i.dh = icmp eq ptr %.sroa.0.0.i41.1.i.i, %i.cv
   br i1 %i.dh, label %._crit_edge183, label %.lr.ph182
 
@@ -272,7 +272,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtCseqd
   %i.ea = icmp ult i32 %.sroa.017.0.val.i.i.i, %.sroa.015.0.val.i.i.i ; 3 uses
   %..i.i.i.i = select i1 %i.ea, ptr %.sroa.015.06.i.i.i, ptr %.sroa.017.05.i.i.i
   %i.eb = xor i1 %i.ea, true
-  %i.ec = load i64, ptr %..i.i.i.i, align 4, !alias.scope !119, !noalias !122
+  %i.ec = load i64, ptr %..i.i.i.i, align 8, !alias.scope !119, !noalias !122
   store i64 %i.ec, ptr %.sroa.019.04.i.i.i, align 4, !alias.scope !116, !noalias !123
   %.neg.i.i.i.i = sext i1 %i.eb to i64
   %i.ed = getelementptr [8 x i8], ptr %.sroa.017.05.i.i.i, i64 %.neg.i.i.i.i ; 2 uses
@@ -338,8 +338,8 @@ bb.l:                                             ; preds = %bb.k
 
 .preheader5.i:                                    ; preds = %.lr.ph175
   %.sroa.0.0.i41.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i.i174, i64 -8 ; 3 uses
-  %i.eu = load i64, ptr %.sroa.0.0.i41.i.i, align 4, !alias.scope !115, !noalias !113
-  store i64 %i.eu, ptr %.sroa.0.0.i41.i.i174, align 4, !alias.scope !115, !noalias !113
+  %i.eu = load i64, ptr %.sroa.0.0.i41.i.i, align 8, !alias.scope !115, !noalias !113
+  store i64 %i.eu, ptr %.sroa.0.0.i41.i.i174, align 8, !alias.scope !115, !noalias !113
   %i.ev = icmp eq ptr %.sroa.0.0.i41.i.i, %i.a
   br i1 %i.ev, label %._crit_edge176, label %.lr.ph175
 

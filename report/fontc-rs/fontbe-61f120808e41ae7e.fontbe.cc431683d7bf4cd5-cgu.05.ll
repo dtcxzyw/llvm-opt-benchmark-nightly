@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2286)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2287)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2288)
-  %.val9.i.i.i.i = load i16, ptr %.sroa.0.05, align 2, !alias.scope !2289, !noundef !10 ; 5 uses
-  %.val10.i.i.i.i = load i16, ptr %i.d, align 2, !alias.scope !2290, !noundef !10 ; 2 uses
+  %.val9.i.i.i.i = load i16, ptr %.sroa.0.05, align 8, !alias.scope !2289, !noundef !10 ; 5 uses
+  %.val10.i.i.i.i = load i16, ptr %i.d, align 8, !alias.scope !2290, !noundef !10 ; 2 uses
   %i.e = icmp eq i16 %.val9.i.i.i.i, %.val10.i.i.i.i
   %i.f = icmp ult i16 %.val9.i.i.i.i, %.val10.i.i.i.i
   br i1 %i.e, label %bb.d, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit.i
@@ -222,8 +222,8 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.05, i64 4
   %i.l = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -28
-  %.val.i.i.i.i = load i16, ptr %i.k, align 2, !alias.scope !2289, !noundef !10 ; 3 uses
-  %.val6.i.i.i.i = load i16, ptr %i.l, align 2, !alias.scope !2290, !noundef !10 ; 2 uses
+  %.val.i.i.i.i = load i16, ptr %i.k, align 4, !alias.scope !2289, !noundef !10 ; 3 uses
+  %.val6.i.i.i.i = load i16, ptr %i.l, align 4, !alias.scope !2290, !noundef !10 ; 2 uses
   %i.m = icmp eq i16 %.val.i.i.i.i, %.val6.i.i.i.i
   %i.n = icmp ult i16 %.val.i.i.i.i, %.val6.i.i.i.i
   br i1 %i.m, label %.split.i, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit.i
@@ -263,7 +263,7 @@ bb.f:                                             ; preds = %_RNCINvMNtCsgCecv3e
 .lr.ph.i:                                         ; preds = %bb.f, %.backedge.i
   %.sroa.0.06.i = phi ptr [ %i.s, %.backedge.i ], [ %i.d, %bb.f ] ; 7 uses
   %i.s = getelementptr inbounds i8, ptr %.sroa.0.06.i, i64 -32 ; 4 uses
-  %.val10.i.i.i9.i = load i16, ptr %i.s, align 2, !alias.scope !2291, !noundef !10 ; 2 uses
+  %.val10.i.i.i9.i = load i16, ptr %i.s, align 8, !alias.scope !2291, !noundef !10 ; 2 uses
   %i.t = icmp eq i16 %.val9.i.i.i.i, %.val10.i.i.i9.i
   %i.u = icmp ult i16 %.val9.i.i.i.i, %.val10.i.i.i9.i
   br i1 %i.t, label %bb.g, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit17.i
@@ -277,7 +277,7 @@ bb.g:                                             ; preds = %.lr.ph.i
 
 bb.h:                                             ; preds = %bb.g
   %i.y = getelementptr inbounds i8, ptr %.sroa.0.06.i, i64 -28
-  %.val6.i.i.i14.i = load i16, ptr %i.y, align 2, !alias.scope !2291, !noundef !10 ; 2 uses
+  %.val6.i.i.i14.i = load i16, ptr %i.y, align 4, !alias.scope !2291, !noundef !10 ; 2 uses
   %i.z = icmp eq i16 %.sroa.514.0.copyload.i, %.val6.i.i.i14.i
   %i.aa = icmp ult i16 %.sroa.514.0.copyload.i, %.val6.i.i.i14.i
   br i1 %i.z, label %.split5.i, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit17.i
@@ -419,8 +419,8 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %.lr.ph, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTtINtNtNtCs8n5UXKvQVD9_10read_fonts11collections7int_set6IntSetNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENvYB18_NtNtBa_3cmp10PartialOrd2ltECshxhuDJfZv4T_6fontbe.exit
   %.sroa.0.06 = phi ptr [ %i.d, %.lr.ph ], [ %i.v, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTtINtNtNtCs8n5UXKvQVD9_10read_fonts11collections7int_set6IntSetNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENvYB18_NtNtBa_3cmp10PartialOrd2ltECshxhuDJfZv4T_6fontbe.exit ] ; 7 uses
   %i.f = getelementptr inbounds i8, ptr %.sroa.0.06, i64 -80 ; 4 uses
-  %.val.i.i.i = load i16, ptr %.sroa.0.06, align 2, !noundef !10 ; 2 uses
-  %.val3.i.i.i = load i16, ptr %i.f, align 2, !noundef !10 ; 2 uses
+  %.val.i.i.i = load i16, ptr %.sroa.0.06, align 8, !noundef !10 ; 2 uses
+  %.val3.i.i.i = load i16, ptr %i.f, align 8, !noundef !10 ; 2 uses
   %i.g = icmp eq i16 %.val.i.i.i, %.val3.i.i.i
   br i1 %i.g, label %_RNvYNvYTtINtNtNtCs8n5UXKvQVD9_10read_fonts11collections7int_set6IntSetNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1Z_3ops8function5FnMutTRB5_B36_EE8call_mutCshxhuDJfZv4T_6fontbe.exit.i, label %.split.i
 
@@ -446,7 +446,7 @@ bb.e:                                             ; preds = %_RNvYNvYTtINtNtNtCs
   %.sroa.0.07.i = phi ptr [ %i.n, %.backedge.i ], [ %i.f, %bb.e ] ; 6 uses
   %i.n = getelementptr inbounds i8, ptr %.sroa.0.07.i, i64 -80 ; 4 uses
   %.val.i.i8.i = load i16, ptr %i.a, align 8, !noundef !10 ; 2 uses
-  %.val3.i.i9.i = load i16, ptr %i.n, align 2, !noundef !10 ; 2 uses
+  %.val3.i.i9.i = load i16, ptr %i.n, align 8, !noundef !10 ; 2 uses
   %i.o = icmp eq i16 %.val.i.i8.i, %.val3.i.i9.i
   br i1 %i.o, label %bb.f, label %.split5.i
 
@@ -512,7 +512,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTtlENvYB18_NtNtBa_3cmp10PartialOrd2ltECshxhuDJfZv4T_6fontbe.exit
   %.sroa.0.05 = phi ptr [ %i.s, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTtlENvYB18_NtNtBa_3cmp10PartialOrd2ltECshxhuDJfZv4T_6fontbe.exit ], [ %i.c, %.lr.ph.preheader ] ; 6 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -8 ; 4 uses
-  %.val11.i = load i16, ptr %.sroa.0.05, align 2, !noundef !10 ; 5 uses
+  %.val11.i = load i16, ptr %.sroa.0.05, align 4, !noundef !10 ; 5 uses
   %i.e = getelementptr i8, ptr %.sroa.0.05, i64 4
   %.val12.i = load i32, ptr %i.e, align 4         ; 3 uses
   %.val13.i = load i16, ptr %i.d, align 4, !noundef !10 ; 2 uses
@@ -539,7 +539,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph9:                                          ; preds = %.preheader.preheader, %.preheader
   %.sroa.0.0.i8 = phi ptr [ %i.n, %.preheader ], [ %i.d, %.preheader.preheader ] ; 4 uses
   %i.n = getelementptr inbounds i8, ptr %.sroa.0.0.i8, i64 -8 ; 4 uses
-  %.val9.i = load i16, ptr %i.n, align 2, !noundef !10 ; 2 uses
+  %.val9.i = load i16, ptr %i.n, align 4, !noundef !10 ; 2 uses
   %i.o = getelementptr i8, ptr %.sroa.0.0.i8, i64 -4
   %.val10.i = load i32, ptr %i.o, align 4
   %i.p = icmp eq i16 %.val11.i, %.val9.i
@@ -942,7 +942,7 @@ bb.j:                                             ; preds = %.split.i.1, %_RNCIN
 .lr.ph.i30.1:                                     ; preds = %bb.j, %.backedge.i.1
   %.sroa.0.06.i.1 = phi ptr [ %i.ae, %.backedge.i.1 ], [ %i.o, %bb.j ] ; 7 uses
   %i.ae = getelementptr inbounds i8, ptr %.sroa.0.06.i.1, i64 -32 ; 4 uses
-  %.val10.i.i.i9.i.1 = load i16, ptr %i.ae, align 2, !alias.scope !3297, !noundef !10 ; 2 uses
+  %.val10.i.i.i9.i.1 = load i16, ptr %i.ae, align 8, !alias.scope !3297, !noundef !10 ; 2 uses
   %i.af = icmp eq i16 %.val9.i.i.i.i26.1, %.val10.i.i.i9.i.1
   %i.ag = icmp ult i16 %.val9.i.i.i.i26.1, %.val10.i.i.i9.i.1
   br i1 %i.af, label %bb.k, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit17.i.1
@@ -956,7 +956,7 @@ bb.k:                                             ; preds = %.lr.ph.i30.1
 
 bb.l:                                             ; preds = %bb.k
   %i.ak = getelementptr inbounds i8, ptr %.sroa.0.06.i.1, i64 -28
-  %.val6.i.i.i14.i.1 = load i16, ptr %i.ak, align 2, !alias.scope !3297, !noundef !10 ; 2 uses
+  %.val6.i.i.i14.i.1 = load i16, ptr %i.ak, align 4, !alias.scope !3297, !noundef !10 ; 2 uses
   %i.al = icmp eq i16 %.sroa.514.0.copyload.i.1, %.val6.i.i.i14.i.1
   %i.am = icmp ult i16 %.sroa.514.0.copyload.i.1, %.val6.i.i.i14.i.1
   br i1 %i.al, label %.split5.i.1, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit17.i.1
@@ -1024,8 +1024,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTTtttNt
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3302)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3303)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3304)
-  %.val9.i.i.i.i = load i16, ptr %.sroa.011.07.i, align 2, !alias.scope !3305, !noundef !10 ; 2 uses
-  %.val10.i.i.i.i = load i16, ptr %.sroa.06.08.i, align 2, !alias.scope !3306, !noundef !10 ; 2 uses
+  %.val9.i.i.i.i = load i16, ptr %.sroa.011.07.i, align 8, !alias.scope !3305, !noundef !10 ; 2 uses
+  %.val10.i.i.i.i = load i16, ptr %.sroa.06.08.i, align 8, !alias.scope !3306, !noundef !10 ; 2 uses
   %i.ba = icmp eq i16 %.val9.i.i.i.i, %.val10.i.i.i.i
   %i.bb = icmp ult i16 %.val9.i.i.i.i, %.val10.i.i.i.i
   br i1 %i.ba, label %bb.m, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit.i
@@ -1042,8 +1042,8 @@ bb.m:                                             ; preds = %.lr.ph.i
 bb.n:                                             ; preds = %bb.m
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.011.07.i, i64 4
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i, i64 4
-  %.val.i.i.i.i = load i16, ptr %i.bg, align 2, !alias.scope !3305, !noundef !10 ; 2 uses
-  %.val6.i.i.i.i = load i16, ptr %i.bh, align 2, !alias.scope !3306, !noundef !10 ; 2 uses
+  %.val.i.i.i.i = load i16, ptr %i.bg, align 4, !alias.scope !3305, !noundef !10 ; 2 uses
+  %.val6.i.i.i.i = load i16, ptr %i.bh, align 4, !alias.scope !3306, !noundef !10 ; 2 uses
   %i.bi = icmp eq i16 %.val.i.i.i.i, %.val6.i.i.i.i
   %i.bj = icmp ult i16 %.val.i.i.i.i, %.val6.i.i.i.i
   br i1 %i.bi, label %bb.o, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit.i
@@ -1072,8 +1072,8 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3311)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3312)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3313)
-  %.val9.i.i.i22.i = load i16, ptr %.sroa.017.05.i, align 2, !alias.scope !3314, !noundef !10 ; 2 uses
-  %.val10.i.i.i23.i = load i16, ptr %.sroa.015.06.i, align 2, !alias.scope !3315, !noundef !10 ; 2 uses
+  %.val9.i.i.i22.i = load i16, ptr %.sroa.017.05.i, align 8, !alias.scope !3314, !noundef !10 ; 2 uses
+  %.val10.i.i.i23.i = load i16, ptr %.sroa.015.06.i, align 8, !alias.scope !3315, !noundef !10 ; 2 uses
   %i.bt = icmp eq i16 %.val9.i.i.i22.i, %.val10.i.i.i23.i
   %i.bu = icmp ult i16 %.val9.i.i.i22.i, %.val10.i.i.i23.i
   br i1 %i.bt, label %bb.p, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit31.i
@@ -1090,8 +1090,8 @@ bb.p:                                             ; preds = %_RNCINvMNtCsgCecv3e
 bb.q:                                             ; preds = %bb.p
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.017.05.i, i64 4
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.015.06.i, i64 4
-  %.val.i.i.i27.i = load i16, ptr %i.bz, align 2, !alias.scope !3314, !noundef !10 ; 2 uses
-  %.val6.i.i.i28.i = load i16, ptr %i.ca, align 2, !alias.scope !3315, !noundef !10 ; 2 uses
+  %.val.i.i.i27.i = load i16, ptr %i.bz, align 4, !alias.scope !3314, !noundef !10 ; 2 uses
+  %.val6.i.i.i28.i = load i16, ptr %i.ca, align 4, !alias.scope !3315, !noundef !10 ; 2 uses
   %i.cb = icmp eq i16 %.val.i.i.i27.i, %.val6.i.i.i28.i
   %i.cc = icmp ult i16 %.val.i.i.i27.i, %.val6.i.i.i28.i
   br i1 %i.cb, label %bb.r, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit31.i
@@ -1225,7 +1225,7 @@ bb.y:                                             ; preds = %_RNCINvMNtCsgCecv3e
 .lr.ph.i30:                                       ; preds = %bb.y, %.backedge.i
   %.sroa.0.06.i = phi ptr [ %i.dm, %.backedge.i ], [ %i.cw, %bb.y ] ; 7 uses
   %i.dm = getelementptr inbounds i8, ptr %.sroa.0.06.i, i64 -32 ; 4 uses
-  %.val10.i.i.i9.i = load i16, ptr %i.dm, align 2, !alias.scope !3297, !noundef !10 ; 2 uses
+  %.val10.i.i.i9.i = load i16, ptr %i.dm, align 8, !alias.scope !3297, !noundef !10 ; 2 uses
   %i.dn = icmp eq i16 %.val9.i.i.i.i26, %.val10.i.i.i9.i
   %i.do = icmp ult i16 %.val9.i.i.i.i26, %.val10.i.i.i9.i
   br i1 %i.dn, label %bb.z, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit17.i
@@ -1239,7 +1239,7 @@ bb.z:                                             ; preds = %.lr.ph.i30
 
 bb.aa:                                            ; preds = %bb.z
   %i.ds = getelementptr inbounds i8, ptr %.sroa.0.06.i, i64 -28
-  %.val6.i.i.i14.i = load i16, ptr %i.ds, align 2, !alias.scope !3297, !noundef !10 ; 2 uses
+  %.val6.i.i.i14.i = load i16, ptr %i.ds, align 4, !alias.scope !3297, !noundef !10 ; 2 uses
   %i.dt = icmp eq i16 %.sroa.514.0.copyload.i, %.val6.i.i.i14.i
   %i.du = icmp ult i16 %.sroa.514.0.copyload.i, %.val6.i.i.i14.i
   br i1 %i.dt, label %.split5.i, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTTtttNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdENtNtB7_6string6StringE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB21_8BTreeMapBz_B1n_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB32_8adapters3map3MapINtNtB4e_5chain5ChainINtNtNtB7_3vec9into_iter8IntoIterNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4name10NameRecordEINtNtB4e_6cloned6ClonedINtNtNtB34_5slice4iter4IterB5t_EEENvNvNtCshxhuDJfZv4T_6fontbe4name18merge_name_records20split_key_and_stringEE0E0B7q_.exit17.i

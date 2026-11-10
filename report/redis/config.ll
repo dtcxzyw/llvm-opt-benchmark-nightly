@@ -204,7 +204,7 @@ bb.a:
 .lr.ph16:                                         ; preds = %.lr.ph, %bb.b
   %.051015 = phi ptr [ %i.e, %bb.b ], [ @maxmemory_policy_enum, %.lr.ph ] ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.051015, i64 16 ; 2 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !497  ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 16, !tbaa !497 ; 2 uses
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !628
 
@@ -607,13 +607,13 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   tail call void %i.f(ptr noundef nonnull %.020) #25
-  %.pre = load ptr, ptr %.020, align 8, !tbaa !589
+  %.pre = load ptr, ptr %.020, align 16, !tbaa !589
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
   %i.g = phi ptr [ %.pre, %bb.b ], [ %i.d, %.lr.ph ]
   %i.h = tail call noalias dereferenceable_or_null(128) ptr @zmalloc(i64 noundef 128) #28 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.h, ptr noundef nonnull readonly align 8 dereferenceable(128) %.020, i64 128, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.h, ptr noundef nonnull readonly align 16 dereferenceable(128) %.020, i64 128, i1 false)
   %i.i = load ptr, ptr @configs, align 8, !tbaa !548
   %i.j = tail call ptr @sdsnew(ptr noundef %i.g) #25
   %i.k = tail call i32 @dictAdd(ptr noundef %i.i, ptr noundef %i.j, ptr noundef nonnull %i.h) #25
@@ -633,12 +633,12 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.n = tail call noalias dereferenceable_or_null(128) ptr @zmalloc(i64 noundef 128) #28 ; 4 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.n, ptr noundef nonnull readonly align 8 dereferenceable(128) %.020, i64 128, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.n, ptr noundef nonnull readonly align 16 dereferenceable(128) %.020, i64 128, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !551
   %i.q = or i32 %i.p, 128
   store i32 %i.q, ptr %i.o, align 8, !tbaa !551
-  %i.r = load <2 x ptr>, ptr %.020, align 8, !tbaa !499
+  %i.r = load <2 x ptr>, ptr %.020, align 16, !tbaa !499
   %i.s = shufflevector <2 x ptr> %i.r, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.s, ptr %i.n, align 8, !tbaa !499
   %i.t = load ptr, ptr @configs, align 8, !tbaa !548
@@ -654,7 +654,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %.020, i64 128 ; 2 uses
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !589  ; 2 uses
+  %i.x = load ptr, ptr %i.w, align 16, !tbaa !589 ; 2 uses
   %.not = icmp eq ptr %i.x, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !838
 }

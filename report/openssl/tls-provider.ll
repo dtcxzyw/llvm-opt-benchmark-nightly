@@ -204,7 +204,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -225,7 +225,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -271,7 +271,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -674,7 +674,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -695,7 +695,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -741,7 +741,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -955,7 +955,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -976,7 +976,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -1022,7 +1022,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -1161,7 +1161,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -1182,7 +1182,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -1228,7 +1228,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -1376,7 +1376,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -1397,7 +1397,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -1443,7 +1443,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -1662,7 +1662,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -1683,7 +1683,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -1729,7 +1729,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -1878,7 +1878,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -1899,7 +1899,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -1945,7 +1945,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -2049,7 +2049,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -2070,7 +2070,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -2116,7 +2116,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -2220,7 +2220,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -2241,7 +2241,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -2287,7 +2287,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -2426,7 +2426,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -2447,7 +2447,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -2493,7 +2493,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -2641,7 +2641,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -2662,7 +2662,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -2708,7 +2708,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i
@@ -2847,7 +2847,7 @@ xor_prov_get_keymgmt_new.exit.i:
 
 bb.a:                                             ; preds = %bb.c, %xor_prov_get_keymgmt_new.exit.i
   %.0.i21.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_new.exit.i ], [ %i.c, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i21.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i21.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_get_keymgmt_free.exit.i
     i32 10, label %bb.b
@@ -2868,7 +2868,7 @@ xor_prov_get_keymgmt_free.exit.i:                 ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.e, %xor_prov_get_keymgmt_free.exit.i
   %.0.i24.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %xor_prov_get_keymgmt_free.exit.i ], [ %i.e, %bb.e ] ; 3 uses
-  %i.d = load i32, ptr %.0.i24.i, align 8, !tbaa !27
+  %i.d = load i32, ptr %.0.i24.i, align 16, !tbaa !27
   switch i32 %i.d, label %bb.e [
     i32 0, label %xor_prov_import_key.exit
     i32 40, label %xor_prov_get_keymgmt_import.exit.i
@@ -2914,7 +2914,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i.i = phi ptr [ @xor_xorhmacsha2sig_keymgmt_functions, %bb.a ], [ %i.b, %bb.c ] ; 3 uses
-  %i.a = load i32, ptr %.0.i.i, align 8, !tbaa !27
+  %i.a = load i32, ptr %.0.i.i, align 16, !tbaa !27
   switch i32 %i.a, label %bb.c [
     i32 0, label %xor_prov_free_key.exit
     i32 10, label %xor_prov_get_keymgmt_free.exit.i

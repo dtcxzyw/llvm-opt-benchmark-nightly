@@ -205,8 +205,8 @@ bb.z:                                             ; preds = %bb.y
   %i.dk = phi ptr [ %i.ds, %.lr.ph.i.i ], [ %i.bz, %.critedge.i ] ; 2 uses
   %.sroa.0.02.i.i = phi ptr [ %i.dr, %.lr.ph.i.i ], [ %i.cu, %.critedge.i ] ; 3 uses
   %i.dl = phi ptr [ %i.dp, %.lr.ph.i.i ], [ %2, %.critedge.i ] ; 3 uses
-  %.sroa.0.0.val.i.i = load i32, ptr %.sroa.0.02.i.i, align 4, !range !52, !alias.scope !23981, !noalias !23985, !noundef !28
-  %.val.i19.i = load i32, ptr %i.dl, align 4, !range !52, !alias.scope !23982, !noalias !23985, !noundef !28
+  %.sroa.0.0.val.i.i = load i32, ptr %.sroa.0.02.i.i, align 8, !range !52, !alias.scope !23981, !noalias !23985, !noundef !28
+  %.val.i19.i = load i32, ptr %i.dl, align 8, !range !52, !alias.scope !23982, !noalias !23985, !noundef !28
   %i.dm = icmp samesign ult i32 %.sroa.0.0.val.i.i, %.val.i19.i ; 3 uses
   %i.dn = xor i1 %i.dm, true
   %.sroa.05.0.i.i = select i1 %i.dm, ptr %.sroa.0.02.i.i, ptr %i.dl
@@ -609,7 +609,7 @@ bb.l:                                             ; preds = %.lr.ph308
 .lr.ph308:                                        ; preds = %bb.k, %bb.l
   %.sroa.0.0.i41.1.i306 = phi ptr [ %i.cl, %bb.l ], [ %i.cf, %bb.k ] ; 3 uses
   %i.cl = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i306, i64 -16 ; 4 uses
-  %.val8.i42.1.i = load i32, ptr %i.cl, align 4, !range !52, !alias.scope !26464, !noundef !28
+  %.val8.i42.1.i = load i32, ptr %i.cl, align 8, !range !52, !alias.scope !26464, !noundef !28
   %i.cm = icmp samesign ult i32 %.val9.i40.1.i, %.val8.i42.1.i
   br i1 %i.cm, label %bb.l, label %._crit_edge309
 
@@ -648,8 +648,8 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTcjENCI
   %.sroa.017.05.i.i = phi ptr [ %i.dg, %.lr.ph.i.i ], [ %i.cq, %.loopexit.1.i ] ; 3 uses
   %.sroa.019.04.i.i = phi ptr [ %i.di, %.lr.ph.i.i ], [ %i.cp, %.loopexit.1.i ] ; 2 uses
   %i.cw = add nuw nsw i64 %.sroa.04.09.i.i, 1     ; 2 uses
-  %.sroa.011.0.val.i.i = load i32, ptr %.sroa.011.07.i.i, align 4, !range !52, !alias.scope !26467, !noundef !28
-  %.sroa.06.0.val.i.i = load i32, ptr %.sroa.06.08.i.i, align 4, !range !52, !alias.scope !26467, !noundef !28
+  %.sroa.011.0.val.i.i = load i32, ptr %.sroa.011.07.i.i, align 8, !range !52, !alias.scope !26467, !noundef !28
+  %.sroa.06.0.val.i.i = load i32, ptr %.sroa.06.08.i.i, align 8, !range !52, !alias.scope !26467, !noundef !28
   %i.cx = icmp samesign ult i32 %.sroa.011.0.val.i.i, %.sroa.06.0.val.i.i ; 3 uses
   %..i21.i.i = select i1 %i.cx, ptr %.sroa.011.07.i.i, ptr %.sroa.06.08.i.i
   %i.cy = xor i1 %i.cx, true
@@ -659,8 +659,8 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTcjENCI
   %i.db = zext i1 %i.cy to i64
   %i.dc = getelementptr inbounds nuw [16 x i8], ptr %.sroa.06.08.i.i, i64 %i.db ; 5 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 16 ; 2 uses
-  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 4, !range !52, !alias.scope !26467, !noundef !28
-  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 4, !range !52, !alias.scope !26467, !noundef !28
+  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 8, !range !52, !alias.scope !26467, !noundef !28
+  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 8, !range !52, !alias.scope !26467, !noundef !28
   %i.de = icmp samesign ult i32 %.sroa.017.0.val.i.i, %.sroa.015.0.val.i.i ; 3 uses
   %..i.i.i = select i1 %i.de, ptr %.sroa.015.06.i.i, ptr %.sroa.017.05.i.i
   %i.df = xor i1 %i.de, true
@@ -733,7 +733,7 @@ bb.r:                                             ; preds = %.lr.ph301
 .lr.ph301:                                        ; preds = %bb.q, %bb.r
   %.sroa.0.0.i41.i299 = phi ptr [ %i.eb, %bb.r ], [ %i.dv, %bb.q ] ; 3 uses
   %i.eb = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i299, i64 -16 ; 4 uses
-  %.val8.i42.i = load i32, ptr %i.eb, align 4, !range !52, !alias.scope !26464, !noundef !28
+  %.val8.i42.i = load i32, ptr %i.eb, align 8, !range !52, !alias.scope !26464, !noundef !28
   %i.ec = icmp samesign ult i32 %.val9.i40.i, %.val8.i42.i
   br i1 %i.ec, label %bb.r, label %._crit_edge302
 
@@ -771,10 +771,10 @@ bb.s:                                             ; preds = %.lr.ph295
   br label %bb.t
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared5pivot7median3TcjENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSBZ_7sort_byNCINvXs1o_NtNtNtB1b_11collections5btree3mapINtB1X_8BTreeMapcjEINtNtNtNtBa_4iter6traits7collect12FromIteratorBZ_E9from_iterINtNtNtB2U_8adapters10filter_map9FilterMapINtNtB3Q_9enumerate9EnumerateINtNtB8_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5g_17invocation_parserNtB60_16InvocationParser16parse_invocations0_0EE0E0EB5g_.exit.i: ; preds = %.lr.ph295
-  %.val6.i = load i32, ptr %.sroa.0.0.ph127, align 4, !range !52, !alias.scope !26471, !noundef !28 ; 2 uses
-  %.val7.i = load i32, ptr %i.eg, align 4, !range !52, !alias.scope !26471, !noundef !28 ; 2 uses
+  %.val6.i = load i32, ptr %.sroa.0.0.ph127, align 8, !range !52, !alias.scope !26471, !noundef !28 ; 2 uses
+  %.val7.i = load i32, ptr %i.eg, align 8, !range !52, !alias.scope !26471, !noundef !28 ; 2 uses
   %i.ek = icmp samesign ult i32 %.val6.i, %.val7.i ; 2 uses
-  %.val5.i = load i32, ptr %i.eh, align 4, !range !52, !alias.scope !26471, !noundef !28 ; 2 uses
+  %.val5.i = load i32, ptr %i.eh, align 8, !range !52, !alias.scope !26471, !noundef !28 ; 2 uses
   %i.el = icmp samesign ult i32 %.val6.i, %.val5.i
   %i.em = xor i1 %i.ek, %i.el
   %i.en = icmp samesign ult i32 %.val7.i, %.val5.i

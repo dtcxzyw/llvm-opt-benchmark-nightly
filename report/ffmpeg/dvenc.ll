@@ -204,7 +204,7 @@ bb.sg:                                            ; preds = %.backedge2369, %.ou
   %.1652 = phi i32 [ %.1652.ph, %.outer2368 ], [ %.1652.be, %.backedge2369 ] ; 6 uses
   %.1.i319 = phi i32 [ %.1.i319.ph, %.outer2368 ], [ %.1.i319.be, %.backedge2369 ] ; 8 uses
   %i.hjh = load ptr, ptr %i.hje, align 8, !tbaa !129
-  %i.hji = load ptr, ptr %i.hjf, align 8, !tbaa !130 ; 3 uses
+  %i.hji = load ptr, ptr %i.hjf, align 16, !tbaa !130 ; 3 uses
   %i.hjj = ptrtoint ptr %i.hjh to i64
   %i.hjk = ptrtoint ptr %i.hji to i64
   %i.hjl = sub i64 %i.hjj, %i.hjk                 ; 3 uses
@@ -223,7 +223,7 @@ bb.sh:                                            ; preds = %bb.sg
 bb.si:                                            ; preds = %bb.sh
   %i.hjr = sub nsw i32 %.1.i319, %i.hjp           ; 3 uses
   %i.hjs = lshr i32 %.1652, %i.hjr                ; 3 uses
-  %i.hjt = load i32, ptr %.137.i318.ph, align 8, !tbaa !131 ; 2 uses
+  %i.hjt = load i32, ptr %.137.i318.ph, align 16, !tbaa !131 ; 2 uses
   %i.hju = icmp slt i32 %i.hjp, %i.hjm
   br i1 %i.hju, label %bb.sj, label %bb.sk
 
@@ -260,7 +260,7 @@ put_bits.exit591:                                 ; preds = %bb.sj, %bb.sn
   %.026.i.i589 = phi i32 [ %i.hjw, %bb.sj ], [ %i.hjs, %bb.sn ]
   %.pn1022 = phi i32 [ %i.hjm, %bb.sj ], [ %reass.sub.i588, %bb.sn ]
   %.0.i.i590 = sub i32 %.pn1022, %i.hjp
-  store i32 %.026.i.i589, ptr %.137.i318.ph, align 8, !tbaa !131
+  store i32 %.026.i.i589, ptr %.137.i318.ph, align 16, !tbaa !131
   store i32 %.0.i.i590, ptr %i.hjg, align 4, !tbaa !132
   %notmask.i = shl nsw i32 -1, %i.hjr
   %i.hkf = xor i32 %notmask.i, -1
@@ -281,7 +281,7 @@ bb.sp:                                            ; preds = %bb.so
   br label %dv_encode_ac.exit324
 
 bb.sq:                                            ; preds = %bb.sg
-  %i.hkj = load i32, ptr %.137.i318.ph, align 8, !tbaa !131 ; 2 uses
+  %i.hkj = load i32, ptr %.137.i318.ph, align 16, !tbaa !131 ; 2 uses
   %i.hkk = icmp slt i32 %.1.i319, %i.hjm
   br i1 %i.hkk, label %bb.sr, label %bb.ss
 
@@ -302,9 +302,9 @@ bb.st:                                            ; preds = %bb.ss
   %i.hks = or i32 %i.hkp, %i.hkr
   %i.hkt = call i32 @llvm.bswap.i32(i32 %i.hks)
   store i32 %i.hkt, ptr %i.hji, align 1, !tbaa !48
-  %i.hku = load ptr, ptr %i.hjf, align 8, !tbaa !130
+  %i.hku = load ptr, ptr %i.hjf, align 16, !tbaa !130
   %i.hkv = getelementptr inbounds nuw i8, ptr %i.hku, i64 4
-  store ptr %i.hkv, ptr %i.hjf, align 8, !tbaa !130
+  store ptr %i.hkv, ptr %i.hjf, align 16, !tbaa !130
   br label %bb.sv
 
 bb.su:                                            ; preds = %bb.ss
@@ -319,7 +319,7 @@ bb.sv:                                            ; preds = %bb.su, %bb.st
 put_bits.exit595:                                 ; preds = %bb.sr, %bb.sv
   %.026.i.i593 = phi i32 [ %i.hkm, %bb.sr ], [ %.1652, %bb.sv ]
   %.0.i.i594 = phi i32 [ %i.hkn, %bb.sr ], [ %i.hkw, %bb.sv ]
-  store i32 %.026.i.i593, ptr %.137.i318.ph, align 8, !tbaa !131
+  store i32 %.026.i.i593, ptr %.137.i318.ph, align 16, !tbaa !131
   store i32 %.0.i.i594, ptr %i.hjg, align 4, !tbaa !132
   %i.hkx = load i32, ptr %i.hjb, align 4, !tbaa !121 ; 3 uses
   %i.hky = icmp sgt i32 %i.hkx, 63

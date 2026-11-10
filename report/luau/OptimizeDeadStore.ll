@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <4 x i32>, ptr %next.gep22, align 4, !tbaa !87
   %wide.load23 = load <4 x i32>, ptr %i.al, align 4, !tbaa !87
   %i.am = getelementptr i8, ptr %next.gep, i64 16
-  store <4 x i32> %wide.load, ptr %next.gep, align 4, !tbaa !87
-  store <4 x i32> %wide.load23, ptr %i.am, align 4, !tbaa !87
+  store <4 x i32> %wide.load, ptr %next.gep, align 8, !tbaa !87
+  store <4 x i32> %wide.load23, ptr %i.am, align 8, !tbaa !87
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.an = icmp eq i64 %index.next, %n.vec
   br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !376

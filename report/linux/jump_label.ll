@@ -204,7 +204,7 @@ static_key_set_entries.exit:                      ; preds = %.lr.ph
   %i.w = getelementptr i8, ptr %i.j, i64 8        ; 2 uses
   %i.x = load i64, ptr %i.w, align 8
   %i.y = and i64 %i.x, 3
-  %i.z = or i64 %i.y, %i.l
+  %i.z = or disjoint i64 %i.y, %i.l
   store i64 %i.z, ptr %i.w, align 8
   br label %bb.c
 

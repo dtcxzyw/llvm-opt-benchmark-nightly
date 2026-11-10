@@ -205,52 +205,52 @@ bb.bp:                                            ; preds = %.loopexit
   %.02735.i = phi i32 [ %i.ahs, %.preheader.i158 ], [ %.039.i, %.preheader.preheader.i ]
   %.02636.i = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 144 ; 3 uses
   %i.agf = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 128 ; 2 uses
-  %i.agg = load <2 x double>, ptr %i.agf, align 8, !tbaa !62 ; 2 uses
-  %i.agh = load <2 x double>, ptr %.02636.i, align 8, !tbaa !62
+  %i.agg = load <2 x double>, ptr %i.agf, align 16, !tbaa !62 ; 2 uses
+  %i.agh = load <2 x double>, ptr %.02636.i, align 16, !tbaa !62
   %i.agi = shufflevector <2 x double> %i.agh, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.agj = fmul <2 x double> %i.agi, %i.afb
   %i.agk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.agg, <2 x double> %i.age, <2 x double> %i.agj)
-  store <2 x double> %i.agk, ptr %i.agf, align 8, !tbaa !62
+  store <2 x double> %i.agk, ptr %i.agf, align 16, !tbaa !62
   %i.agl = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 160 ; 2 uses
   %i.agm = fmul <2 x double> %i.afa, %i.agg
   %i.agn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.agi, <2 x double> %i.age, <2 x double> %i.agm)
   %i.ago = shufflevector <2 x double> %i.agn, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %i.ago, ptr %.02636.i, align 8, !tbaa !62
+  store <2 x double> %i.ago, ptr %.02636.i, align 16, !tbaa !62
   %i.agp = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 112 ; 2 uses
-  %i.agq = load <2 x double>, ptr %i.agp, align 8, !tbaa !62 ; 2 uses
-  %i.agr = load <2 x double>, ptr %i.agl, align 8, !tbaa !62
+  %i.agq = load <2 x double>, ptr %i.agp, align 16, !tbaa !62 ; 2 uses
+  %i.agr = load <2 x double>, ptr %i.agl, align 16, !tbaa !62
   %i.ags = shufflevector <2 x double> %i.agr, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.agt = fmul <2 x double> %i.ags, %i.afi
   %i.agu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.agq, <2 x double> %i.agc, <2 x double> %i.agt)
-  store <2 x double> %i.agu, ptr %i.agp, align 8, !tbaa !62
+  store <2 x double> %i.agu, ptr %i.agp, align 16, !tbaa !62
   %i.agv = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 176 ; 2 uses
   %i.agw = fmul <2 x double> %i.afh, %i.agq
   %i.agx = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ags, <2 x double> %i.agc, <2 x double> %i.agw)
   %i.agy = shufflevector <2 x double> %i.agx, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %i.agy, ptr %i.agl, align 8, !tbaa !62
+  store <2 x double> %i.agy, ptr %i.agl, align 16, !tbaa !62
   %i.agz = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 96 ; 2 uses
-  %i.aha = load <2 x double>, ptr %i.agz, align 8, !tbaa !62 ; 2 uses
-  %i.ahb = load <2 x double>, ptr %i.agv, align 8, !tbaa !62
+  %i.aha = load <2 x double>, ptr %i.agz, align 16, !tbaa !62 ; 2 uses
+  %i.ahb = load <2 x double>, ptr %i.agv, align 16, !tbaa !62
   %i.ahc = shufflevector <2 x double> %i.ahb, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.ahd = fmul <2 x double> %i.ahc, %i.afp
   %i.ahe = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aha, <2 x double> %i.aga, <2 x double> %i.ahd)
-  store <2 x double> %i.ahe, ptr %i.agz, align 8, !tbaa !62
+  store <2 x double> %i.ahe, ptr %i.agz, align 16, !tbaa !62
   %i.ahf = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 192 ; 2 uses
   %i.ahg = fmul <2 x double> %i.afo, %i.aha
   %i.ahh = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ahc, <2 x double> %i.aga, <2 x double> %i.ahg)
   %i.ahi = shufflevector <2 x double> %i.ahh, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %i.ahi, ptr %i.agv, align 8, !tbaa !62
+  store <2 x double> %i.ahi, ptr %i.agv, align 16, !tbaa !62
   %i.ahj = getelementptr inbounds nuw i8, ptr %.02636.pn.i, i64 80 ; 2 uses
-  %i.ahk = load <2 x double>, ptr %i.ahj, align 8, !tbaa !62 ; 2 uses
-  %i.ahl = load <2 x double>, ptr %i.ahf, align 8, !tbaa !62
+  %i.ahk = load <2 x double>, ptr %i.ahj, align 16, !tbaa !62 ; 2 uses
+  %i.ahl = load <2 x double>, ptr %i.ahf, align 16, !tbaa !62
   %i.ahm = shufflevector <2 x double> %i.ahl, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.ahn = fmul <2 x double> %i.ahm, %i.afw
   %i.aho = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ahk, <2 x double> %i.afy, <2 x double> %i.ahn)
-  store <2 x double> %i.aho, ptr %i.ahj, align 8, !tbaa !62
+  store <2 x double> %i.aho, ptr %i.ahj, align 16, !tbaa !62
   %i.ahp = fmul <2 x double> %i.afv, %i.ahk
   %i.ahq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ahm, <2 x double> %i.afy, <2 x double> %i.ahp)
   %i.ahr = shufflevector <2 x double> %i.ahq, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %i.ahr, ptr %i.ahf, align 8, !tbaa !62
+  store <2 x double> %i.ahr, ptr %i.ahf, align 16, !tbaa !62
   %i.ahs = add nsw i32 %.02735.i, -1              ; 2 uses
   %.not28.i = icmp eq i32 %i.ahs, 0
   br i1 %.not28.i, label %III_antialias.exit, label %.preheader.i158, !llvm.loop !116

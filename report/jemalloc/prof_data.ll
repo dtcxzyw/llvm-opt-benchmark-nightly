@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %prof_tdata_comp.exi
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !39   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.056.i, i64 16
-  store ptr %i.q, ptr %i.r, align 8, !tbaa !57
+  store ptr %i.q, ptr %i.r, align 16, !tbaa !57
   br label %bb.g
 
 bb.e:                                             ; preds = %prof_tdata_comp.exit.i
@@ -214,7 +214,7 @@ bb.e:                                             ; preds = %prof_tdata_comp.exi
   %i.v = and i64 %i.u, -2                         ; 2 uses
   %i.w = inttoptr i64 %i.v to ptr                 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.056.i, i64 16
-  store ptr %i.w, ptr %i.x, align 8, !tbaa !57
+  store ptr %i.w, ptr %i.x, align 16, !tbaa !57
   %i.y = icmp eq i32 %.0.i.i10, 0
   br i1 %i.y, label %bb.f, label %bb.g
 
@@ -617,7 +617,7 @@ bb.q:                                             ; preds = %prof_tctx_comp.exit
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bc, i64 112
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !86 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.0375.i.i, i64 16
-  store ptr %i.bt, ptr %i.bu, align 8, !tbaa !81
+  store ptr %i.bt, ptr %i.bu, align 16, !tbaa !81
   br label %bb.t
 
 bb.r:                                             ; preds = %prof_tctx_comp.exit.i.i
@@ -627,7 +627,7 @@ bb.r:                                             ; preds = %prof_tctx_comp.exit
   %i.by = and i64 %i.bx, -2                       ; 2 uses
   %i.bz = inttoptr i64 %i.by to ptr               ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.0375.i.i, i64 16
-  store ptr %i.bz, ptr %i.ca, align 8, !tbaa !81
+  store ptr %i.bz, ptr %i.ca, align 16, !tbaa !81
   %i.cb = icmp eq i32 %.1.i.i.i, 0
   br i1 %i.cb, label %bb.s, label %bb.t
 

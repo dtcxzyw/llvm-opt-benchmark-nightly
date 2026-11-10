@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge1
   %i.op = extractelement <2 x float> %foldExtExtBinop306, i64 0
   %i.oq = fmul float %i.op, 5.000000e-01          ; 2 uses
   %i.or = fadd float %i.oo, %i.ok
-  store float %i.or, ptr %.076.i, align 4
+  store float %i.or, ptr %.076.i, align 16
   %i.os = fsub float %i.oo, %i.ok
   %i.ot = getelementptr inbounds i8, ptr %.077.i, i64 -8
   store float %i.os, ptr %i.ot, align 4
@@ -246,7 +246,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge1
   %i.pu = fmul float %i.pt, 5.000000e-01          ; 2 uses
   %i.pv = fadd float %i.ps, %i.pp
   %i.pw = getelementptr inbounds nuw i8, ptr %.076.i, i64 8
-  store float %i.pv, ptr %i.pw, align 4
+  store float %i.pv, ptr %i.pw, align 8
   %i.px = fsub float %i.ps, %i.pp
   store float %i.px, ptr %i.om, align 4
   %i.py = fadd float %i.pu, %i.pq
@@ -277,7 +277,7 @@ bb.c:                                             ; preds = %.lr.ph153, %bb.c
   %.3121150 = phi ptr [ %i.qh, %.lr.ph153 ], [ %i.qj, %bb.c ]
   %.0122149 = phi ptr [ %i.g, %.lr.ph153 ], [ %i.qx, %bb.c ] ; 2 uses
   %i.qj = getelementptr inbounds i8, ptr %.3121150, i64 -4 ; 2 uses
-  %i.qk = load <2 x float>, ptr %.0122149, align 4 ; 2 uses
+  %i.qk = load <2 x float>, ptr %.0122149, align 8 ; 2 uses
   %i.ql = load <2 x float>, ptr %.3114151, align 4
   %i.qm = fmul <2 x float> %i.qk, %i.ql
   %i.qn = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.qm)

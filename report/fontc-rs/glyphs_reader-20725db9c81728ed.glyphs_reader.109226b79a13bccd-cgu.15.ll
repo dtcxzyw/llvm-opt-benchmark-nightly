@@ -202,8 +202,8 @@ _RNvYNvYTlNtCs9NoVXegZYB5_8smol_str7SmolStrENtNtCsf3Ta7LF998c_4core3cmp10Partial
   tail call void @llvm.experimental.noalias.scope.decl(metadata !719)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !720)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !721)
-  %.val.i.i.i18 = load i32, ptr %.sroa.0.02.i, align 4, !alias.scope !722, !noalias !723, !noundef !4 ; 2 uses
-  %.val3.i.i.i19 = load i32, ptr %.sroa.0.2, align 4, !alias.scope !724, !noalias !723, !noundef !4 ; 2 uses
+  %.val.i.i.i18 = load i32, ptr %.sroa.0.02.i, align 8, !alias.scope !722, !noalias !723, !noundef !4 ; 2 uses
+  %.val3.i.i.i19 = load i32, ptr %.sroa.0.2, align 8, !alias.scope !724, !noalias !723, !noundef !4 ; 2 uses
   %i.z = icmp eq i32 %.val.i.i.i18, %.val3.i.i.i19
   br i1 %i.z, label %bb.f, label %bb.e
 

@@ -200,7 +200,7 @@ bb.j:                                             ; preds = %.preheader, %bb.q
   %i.eo = load i32, ptr %i.en, align 4, !tbaa !38 ; 3 uses
   %i.ep = icmp eq i32 %i.eo, 0
   %i.eq = getelementptr inbounds nuw i8, ptr %.2235, i64 8
-  %i.er = load i32, ptr %i.eq, align 4, !tbaa !38 ; 2 uses
+  %i.er = load i32, ptr %i.eq, align 8, !tbaa !38 ; 2 uses
   %i.es = icmp eq i32 %i.er, 0
   %or.cond244 = select i1 %i.ep, i1 %i.es, i1 false
   br i1 %or.cond244, label %bb.k, label %._crit_edge238
@@ -213,7 +213,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ew = getelementptr inbounds nuw i8, ptr %.2235, i64 16
-  %i.ex = load i32, ptr %i.ew, align 4, !tbaa !38
+  %i.ex = load i32, ptr %i.ew, align 16, !tbaa !38
   %i.ey = icmp eq i32 %i.ex, 0
   br i1 %i.ey, label %bb.m, label %._crit_edge238
 
@@ -225,7 +225,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.fc = getelementptr inbounds nuw i8, ptr %.2235, i64 24
-  %i.fd = load i32, ptr %i.fc, align 4, !tbaa !38
+  %i.fd = load i32, ptr %i.fc, align 8, !tbaa !38
   %i.fe = icmp eq i32 %i.fd, 0
   br i1 %i.fe, label %bb.o, label %._crit_edge238
 
@@ -236,7 +236,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.fh, label %bb.p, label %._crit_edge238
 
 bb.p:                                             ; preds = %bb.o
-  %i.fi = load i32, ptr %.2235, align 4, !tbaa !38
+  %i.fi = load i32, ptr %.2235, align 16, !tbaa !38
   %i.fj = lshr i32 %i.fi, 5
   %i.fk = and i32 %i.fj, 1023
   %i.fl = zext nneg i32 %i.fk to i64
@@ -255,15 +255,15 @@ bb.p:                                             ; preds = %bb.o
 
 ._crit_edge238:                                   ; preds = %bb.j, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k
   %i.ft = phi i32 [ %i.er, %bb.j ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.k ] ; 2 uses
-  %i.fu = load i32, ptr %.2235, align 4, !tbaa !38 ; 2 uses
+  %i.fu = load i32, ptr %.2235, align 16, !tbaa !38 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.2235, i64 16
-  %i.fw = load i32, ptr %i.fv, align 4, !tbaa !38 ; 2 uses
+  %i.fw = load i32, ptr %i.fv, align 16, !tbaa !38 ; 2 uses
   %i.fx = add i32 %i.fw, %i.fu                    ; 2 uses
   %i.fy = sub i32 %i.fu, %i.fw                    ; 2 uses
   %i.fz = shl i32 %i.ft, 16
   %i.ga = ashr exact i32 %i.fz, 16
   %i.gb = getelementptr inbounds nuw i8, ptr %.2235, i64 24
-  %i.gc = load i32, ptr %i.gb, align 4, !tbaa !38 ; 2 uses
+  %i.gc = load i32, ptr %i.gb, align 8, !tbaa !38 ; 2 uses
   %i.gd = shl i32 %i.gc, 16
   %i.ge = ashr exact i32 %i.gd, 16
   %i.gf = add i32 %i.gc, %i.ft                    ; 3 uses

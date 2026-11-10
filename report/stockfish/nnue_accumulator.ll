@@ -205,7 +205,7 @@ bb.a:
   %i.w = zext i32 %i.v to i64
   %i.x = shl nuw nsw i64 %i.w, 10
   %i.y = getelementptr inbounds nuw i8, ptr %.0102124, i64 %i.x ; 16 uses
-  %i.z = load <32 x i8>, ptr %i.y, align 32, !tbaa !26
+  %i.z = load <32 x i8>, ptr %i.y, align 64, !tbaa !26
   %i.aa = sext <32 x i8> %i.z to <32 x i16>
   %i.ab = sub <32 x i16> %.sroa.0.1.epil.init, %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 32
@@ -213,7 +213,7 @@ bb.a:
   %i.ae = sext <32 x i8> %i.ad to <32 x i16>
   %i.af = sub <32 x i16> %.sroa.8.1.epil.init, %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 64
-  %i.ah = load <32 x i8>, ptr %i.ag, align 32, !tbaa !26
+  %i.ah = load <32 x i8>, ptr %i.ag, align 64, !tbaa !26
   %i.ai = sext <32 x i8> %i.ah to <32 x i16>
   %i.aj = sub <32 x i16> %.sroa.12.1.epil.init, %i.ai
   %i.ak = getelementptr inbounds nuw i8, ptr %i.y, i64 96
@@ -221,7 +221,7 @@ bb.a:
   %i.am = sext <32 x i8> %i.al to <32 x i16>
   %i.an = sub <32 x i16> %.sroa.16.1.epil.init, %i.am
   %i.ao = getelementptr inbounds nuw i8, ptr %i.y, i64 128
-  %i.ap = load <32 x i8>, ptr %i.ao, align 32, !tbaa !26
+  %i.ap = load <32 x i8>, ptr %i.ao, align 64, !tbaa !26
   %i.aq = sext <32 x i8> %i.ap to <32 x i16>
   %i.ar = sub <32 x i16> %.sroa.20.1.epil.init, %i.aq
   %i.as = getelementptr inbounds nuw i8, ptr %i.y, i64 160
@@ -229,7 +229,7 @@ bb.a:
   %i.au = sext <32 x i8> %i.at to <32 x i16>
   %i.av = sub <32 x i16> %.sroa.24.1.epil.init, %i.au
   %i.aw = getelementptr inbounds nuw i8, ptr %i.y, i64 192
-  %i.ax = load <32 x i8>, ptr %i.aw, align 32, !tbaa !26
+  %i.ax = load <32 x i8>, ptr %i.aw, align 64, !tbaa !26
   %i.ay = sext <32 x i8> %i.ax to <32 x i16>
   %i.az = sub <32 x i16> %.sroa.28.1.epil.init, %i.ay
   %i.ba = getelementptr inbounds nuw i8, ptr %i.y, i64 224
@@ -237,7 +237,7 @@ bb.a:
   %i.bc = sext <32 x i8> %i.bb to <32 x i16>
   %i.bd = sub <32 x i16> %.sroa.32.1.epil.init, %i.bc
   %i.be = getelementptr inbounds nuw i8, ptr %i.y, i64 256
-  %i.bf = load <32 x i8>, ptr %i.be, align 32, !tbaa !26
+  %i.bf = load <32 x i8>, ptr %i.be, align 64, !tbaa !26
   %i.bg = sext <32 x i8> %i.bf to <32 x i16>
   %i.bh = sub <32 x i16> %.sroa.36.1.epil.init, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %i.y, i64 288
@@ -245,7 +245,7 @@ bb.a:
   %i.bk = sext <32 x i8> %i.bj to <32 x i16>
   %i.bl = sub <32 x i16> %.sroa.40.1.epil.init, %i.bk
   %i.bm = getelementptr inbounds nuw i8, ptr %i.y, i64 320
-  %i.bn = load <32 x i8>, ptr %i.bm, align 32, !tbaa !26
+  %i.bn = load <32 x i8>, ptr %i.bm, align 64, !tbaa !26
   %i.bo = sext <32 x i8> %i.bn to <32 x i16>
   %i.bp = sub <32 x i16> %.sroa.44.1.epil.init, %i.bo
   %i.bq = getelementptr inbounds nuw i8, ptr %i.y, i64 352
@@ -253,7 +253,7 @@ bb.a:
   %i.bs = sext <32 x i8> %i.br to <32 x i16>
   %i.bt = sub <32 x i16> %.sroa.48.1.epil.init, %i.bs
   %i.bu = getelementptr inbounds nuw i8, ptr %i.y, i64 384
-  %i.bv = load <32 x i8>, ptr %i.bu, align 32, !tbaa !26
+  %i.bv = load <32 x i8>, ptr %i.bu, align 64, !tbaa !26
   %i.bw = sext <32 x i8> %i.bv to <32 x i16>
   %i.bx = sub <32 x i16> %.sroa.52.1.epil.init, %i.bw
   %i.by = getelementptr inbounds nuw i8, ptr %i.y, i64 416
@@ -261,7 +261,7 @@ bb.a:
   %i.ca = sext <32 x i8> %i.bz to <32 x i16>
   %i.cb = sub <32 x i16> %.sroa.56.1.epil.init, %i.ca
   %i.cc = getelementptr inbounds nuw i8, ptr %i.y, i64 448
-  %i.cd = load <32 x i8>, ptr %i.cc, align 32, !tbaa !26
+  %i.cd = load <32 x i8>, ptr %i.cc, align 64, !tbaa !26
   %i.ce = sext <32 x i8> %i.cd to <32 x i16>
   %i.cf = sub <32 x i16> %.sroa.60.1.epil.init, %i.ce
   %i.cg = getelementptr inbounds nuw i8, ptr %i.y, i64 480
@@ -326,49 +326,49 @@ bb.a:
   %i.cq = zext i32 %i.cp to i64
   %i.cr = shl nuw nsw i64 %i.cq, 10
   %i.cs = getelementptr inbounds nuw i8, ptr %.0102124, i64 %i.cr ; 16 uses
-  %i.ct = load <32 x i8>, ptr %i.cs, align 32, !tbaa !26
+  %i.ct = load <32 x i8>, ptr %i.cs, align 64, !tbaa !26
   %i.cu = sext <32 x i8> %i.ct to <32 x i16>
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cs, i64 32
   %i.cw = load <32 x i8>, ptr %i.cv, align 32, !tbaa !26
   %i.cx = sext <32 x i8> %i.cw to <32 x i16>
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cs, i64 64
-  %i.cz = load <32 x i8>, ptr %i.cy, align 32, !tbaa !26
+  %i.cz = load <32 x i8>, ptr %i.cy, align 64, !tbaa !26
   %i.da = sext <32 x i8> %i.cz to <32 x i16>
   %i.db = getelementptr inbounds nuw i8, ptr %i.cs, i64 96
   %i.dc = load <32 x i8>, ptr %i.db, align 32, !tbaa !26
   %i.dd = sext <32 x i8> %i.dc to <32 x i16>
   %i.de = getelementptr inbounds nuw i8, ptr %i.cs, i64 128
-  %i.df = load <32 x i8>, ptr %i.de, align 32, !tbaa !26
+  %i.df = load <32 x i8>, ptr %i.de, align 64, !tbaa !26
   %i.dg = sext <32 x i8> %i.df to <32 x i16>
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cs, i64 160
   %i.di = load <32 x i8>, ptr %i.dh, align 32, !tbaa !26
   %i.dj = sext <32 x i8> %i.di to <32 x i16>
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cs, i64 192
-  %i.dl = load <32 x i8>, ptr %i.dk, align 32, !tbaa !26
+  %i.dl = load <32 x i8>, ptr %i.dk, align 64, !tbaa !26
   %i.dm = sext <32 x i8> %i.dl to <32 x i16>
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cs, i64 224
   %i.do = load <32 x i8>, ptr %i.dn, align 32, !tbaa !26
   %i.dp = sext <32 x i8> %i.do to <32 x i16>
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cs, i64 256
-  %i.dr = load <32 x i8>, ptr %i.dq, align 32, !tbaa !26
+  %i.dr = load <32 x i8>, ptr %i.dq, align 64, !tbaa !26
   %i.ds = sext <32 x i8> %i.dr to <32 x i16>
   %i.dt = getelementptr inbounds nuw i8, ptr %i.cs, i64 288
   %i.du = load <32 x i8>, ptr %i.dt, align 32, !tbaa !26
   %i.dv = sext <32 x i8> %i.du to <32 x i16>
   %i.dw = getelementptr inbounds nuw i8, ptr %i.cs, i64 320
-  %i.dx = load <32 x i8>, ptr %i.dw, align 32, !tbaa !26
+  %i.dx = load <32 x i8>, ptr %i.dw, align 64, !tbaa !26
   %i.dy = sext <32 x i8> %i.dx to <32 x i16>
   %i.dz = getelementptr inbounds nuw i8, ptr %i.cs, i64 352
   %i.ea = load <32 x i8>, ptr %i.dz, align 32, !tbaa !26
   %i.eb = sext <32 x i8> %i.ea to <32 x i16>
   %i.ec = getelementptr inbounds nuw i8, ptr %i.cs, i64 384
-  %i.ed = load <32 x i8>, ptr %i.ec, align 32, !tbaa !26
+  %i.ed = load <32 x i8>, ptr %i.ec, align 64, !tbaa !26
   %i.ee = sext <32 x i8> %i.ed to <32 x i16>
   %i.ef = getelementptr inbounds nuw i8, ptr %i.cs, i64 416
   %i.eg = load <32 x i8>, ptr %i.ef, align 32, !tbaa !26
   %i.eh = sext <32 x i8> %i.eg to <32 x i16>
   %i.ei = getelementptr inbounds nuw i8, ptr %i.cs, i64 448
-  %i.ej = load <32 x i8>, ptr %i.ei, align 32, !tbaa !26
+  %i.ej = load <32 x i8>, ptr %i.ei, align 64, !tbaa !26
   %i.ek = sext <32 x i8> %i.ej to <32 x i16>
   %i.el = getelementptr inbounds nuw i8, ptr %i.cs, i64 480
   %i.em = load <32 x i8>, ptr %i.el, align 32, !tbaa !26
@@ -379,7 +379,7 @@ bb.a:
   %i.er = zext i32 %i.eq to i64
   %i.es = shl nuw nsw i64 %i.er, 10
   %i.et = getelementptr inbounds nuw i8, ptr %.0102124, i64 %i.es ; 16 uses
-  %i.eu = load <32 x i8>, ptr %i.et, align 32, !tbaa !26
+  %i.eu = load <32 x i8>, ptr %i.et, align 64, !tbaa !26
   %i.ev = sext <32 x i8> %i.eu to <32 x i16>
   %i.ew = add nsw <32 x i16> %i.cu, %i.ev
   %i.ex = sub <32 x i16> %.sroa.0.1, %i.ew        ; 3 uses
@@ -389,7 +389,7 @@ bb.a:
   %i.fb = add nsw <32 x i16> %i.cx, %i.fa
   %i.fc = sub <32 x i16> %.sroa.8.1, %i.fb        ; 3 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.et, i64 64
-  %i.fe = load <32 x i8>, ptr %i.fd, align 32, !tbaa !26
+  %i.fe = load <32 x i8>, ptr %i.fd, align 64, !tbaa !26
   %i.ff = sext <32 x i8> %i.fe to <32 x i16>
   %i.fg = add nsw <32 x i16> %i.da, %i.ff
   %i.fh = sub <32 x i16> %.sroa.12.1, %i.fg       ; 3 uses
@@ -399,7 +399,7 @@ bb.a:
   %i.fl = add nsw <32 x i16> %i.dd, %i.fk
   %i.fm = sub <32 x i16> %.sroa.16.1, %i.fl       ; 3 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.et, i64 128
-  %i.fo = load <32 x i8>, ptr %i.fn, align 32, !tbaa !26
+  %i.fo = load <32 x i8>, ptr %i.fn, align 64, !tbaa !26
   %i.fp = sext <32 x i8> %i.fo to <32 x i16>
   %i.fq = add nsw <32 x i16> %i.dg, %i.fp
   %i.fr = sub <32 x i16> %.sroa.20.1, %i.fq       ; 3 uses
@@ -409,7 +409,7 @@ bb.a:
   %i.fv = add nsw <32 x i16> %i.dj, %i.fu
   %i.fw = sub <32 x i16> %.sroa.24.1, %i.fv       ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.et, i64 192
-  %i.fy = load <32 x i8>, ptr %i.fx, align 32, !tbaa !26
+  %i.fy = load <32 x i8>, ptr %i.fx, align 64, !tbaa !26
   %i.fz = sext <32 x i8> %i.fy to <32 x i16>
   %i.ga = add nsw <32 x i16> %i.dm, %i.fz
   %i.gb = sub <32 x i16> %.sroa.28.1, %i.ga       ; 3 uses
@@ -419,7 +419,7 @@ bb.a:
   %i.gf = add nsw <32 x i16> %i.dp, %i.ge
   %i.gg = sub <32 x i16> %.sroa.32.1, %i.gf       ; 3 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.et, i64 256
-  %i.gi = load <32 x i8>, ptr %i.gh, align 32, !tbaa !26
+  %i.gi = load <32 x i8>, ptr %i.gh, align 64, !tbaa !26
   %i.gj = sext <32 x i8> %i.gi to <32 x i16>
   %i.gk = add nsw <32 x i16> %i.ds, %i.gj
   %i.gl = sub <32 x i16> %.sroa.36.1, %i.gk       ; 3 uses
@@ -429,7 +429,7 @@ bb.a:
   %i.gp = add nsw <32 x i16> %i.dv, %i.go
   %i.gq = sub <32 x i16> %.sroa.40.1, %i.gp       ; 3 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.et, i64 320
-  %i.gs = load <32 x i8>, ptr %i.gr, align 32, !tbaa !26
+  %i.gs = load <32 x i8>, ptr %i.gr, align 64, !tbaa !26
   %i.gt = sext <32 x i8> %i.gs to <32 x i16>
   %i.gu = add nsw <32 x i16> %i.dy, %i.gt
   %i.gv = sub <32 x i16> %.sroa.44.1, %i.gu       ; 3 uses
@@ -439,7 +439,7 @@ bb.a:
   %i.gz = add nsw <32 x i16> %i.eb, %i.gy
   %i.ha = sub <32 x i16> %.sroa.48.1, %i.gz       ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.et, i64 384
-  %i.hc = load <32 x i8>, ptr %i.hb, align 32, !tbaa !26
+  %i.hc = load <32 x i8>, ptr %i.hb, align 64, !tbaa !26
   %i.hd = sext <32 x i8> %i.hc to <32 x i16>
   %i.he = add nsw <32 x i16> %i.ee, %i.hd
   %i.hf = sub <32 x i16> %.sroa.52.1, %i.he       ; 3 uses
@@ -449,7 +449,7 @@ bb.a:
   %i.hj = add nsw <32 x i16> %i.eh, %i.hi
   %i.hk = sub <32 x i16> %.sroa.56.1, %i.hj       ; 3 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.et, i64 448
-  %i.hm = load <32 x i8>, ptr %i.hl, align 32, !tbaa !26
+  %i.hm = load <32 x i8>, ptr %i.hl, align 64, !tbaa !26
   %i.hn = sext <32 x i8> %i.hm to <32 x i16>
   %i.ho = add nsw <32 x i16> %i.ek, %i.hn
   %i.hp = sub <32 x i16> %.sroa.60.1, %i.ho       ; 3 uses
@@ -492,7 +492,7 @@ bb.a:
   %i.hx = zext i32 %i.hw to i64
   %i.hy = shl nuw nsw i64 %i.hx, 10
   %i.hz = getelementptr inbounds nuw i8, ptr %.0102124, i64 %i.hy ; 16 uses
-  %i.ia = load <32 x i8>, ptr %i.hz, align 32, !tbaa !26
+  %i.ia = load <32 x i8>, ptr %i.hz, align 64, !tbaa !26
   %i.ib = sext <32 x i8> %i.ia to <32 x i16>
   %i.ic = add <32 x i16> %.sroa.0.3.epil.init, %i.ib
   %i.id = getelementptr inbounds nuw i8, ptr %i.hz, i64 32
@@ -500,7 +500,7 @@ bb.a:
   %i.if = sext <32 x i8> %i.ie to <32 x i16>
   %i.ig = add <32 x i16> %.sroa.8.3.epil.init, %i.if
   %i.ih = getelementptr inbounds nuw i8, ptr %i.hz, i64 64
-  %i.ii = load <32 x i8>, ptr %i.ih, align 32, !tbaa !26
+  %i.ii = load <32 x i8>, ptr %i.ih, align 64, !tbaa !26
   %i.ij = sext <32 x i8> %i.ii to <32 x i16>
   %i.ik = add <32 x i16> %.sroa.12.3.epil.init, %i.ij
   %i.il = getelementptr inbounds nuw i8, ptr %i.hz, i64 96
@@ -508,7 +508,7 @@ bb.a:
   %i.in = sext <32 x i8> %i.im to <32 x i16>
   %i.io = add <32 x i16> %.sroa.16.3.epil.init, %i.in
   %i.ip = getelementptr inbounds nuw i8, ptr %i.hz, i64 128
-  %i.iq = load <32 x i8>, ptr %i.ip, align 32, !tbaa !26
+  %i.iq = load <32 x i8>, ptr %i.ip, align 64, !tbaa !26
   %i.ir = sext <32 x i8> %i.iq to <32 x i16>
   %i.is = add <32 x i16> %.sroa.20.3.epil.init, %i.ir
   %i.it = getelementptr inbounds nuw i8, ptr %i.hz, i64 160
@@ -516,7 +516,7 @@ bb.a:
   %i.iv = sext <32 x i8> %i.iu to <32 x i16>
   %i.iw = add <32 x i16> %.sroa.24.3.epil.init, %i.iv
   %i.ix = getelementptr inbounds nuw i8, ptr %i.hz, i64 192
-  %i.iy = load <32 x i8>, ptr %i.ix, align 32, !tbaa !26
+  %i.iy = load <32 x i8>, ptr %i.ix, align 64, !tbaa !26
   %i.iz = sext <32 x i8> %i.iy to <32 x i16>
   %i.ja = add <32 x i16> %.sroa.28.3.epil.init, %i.iz
   %i.jb = getelementptr inbounds nuw i8, ptr %i.hz, i64 224
@@ -524,7 +524,7 @@ bb.a:
   %i.jd = sext <32 x i8> %i.jc to <32 x i16>
   %i.je = add <32 x i16> %.sroa.32.3.epil.init, %i.jd
   %i.jf = getelementptr inbounds nuw i8, ptr %i.hz, i64 256
-  %i.jg = load <32 x i8>, ptr %i.jf, align 32, !tbaa !26
+  %i.jg = load <32 x i8>, ptr %i.jf, align 64, !tbaa !26
   %i.jh = sext <32 x i8> %i.jg to <32 x i16>
   %i.ji = add <32 x i16> %.sroa.36.3.epil.init, %i.jh
   %i.jj = getelementptr inbounds nuw i8, ptr %i.hz, i64 288
@@ -532,7 +532,7 @@ bb.a:
   %i.jl = sext <32 x i8> %i.jk to <32 x i16>
   %i.jm = add <32 x i16> %.sroa.40.3.epil.init, %i.jl
   %i.jn = getelementptr inbounds nuw i8, ptr %i.hz, i64 320
-  %i.jo = load <32 x i8>, ptr %i.jn, align 32, !tbaa !26
+  %i.jo = load <32 x i8>, ptr %i.jn, align 64, !tbaa !26
   %i.jp = sext <32 x i8> %i.jo to <32 x i16>
   %i.jq = add <32 x i16> %.sroa.44.3.epil.init, %i.jp
   %i.jr = getelementptr inbounds nuw i8, ptr %i.hz, i64 352
@@ -540,7 +540,7 @@ bb.a:
   %i.jt = sext <32 x i8> %i.js to <32 x i16>
   %i.ju = add <32 x i16> %.sroa.48.3.epil.init, %i.jt
   %i.jv = getelementptr inbounds nuw i8, ptr %i.hz, i64 384
-  %i.jw = load <32 x i8>, ptr %i.jv, align 32, !tbaa !26
+  %i.jw = load <32 x i8>, ptr %i.jv, align 64, !tbaa !26
   %i.jx = sext <32 x i8> %i.jw to <32 x i16>
   %i.jy = add <32 x i16> %.sroa.52.3.epil.init, %i.jx
   %i.jz = getelementptr inbounds nuw i8, ptr %i.hz, i64 416
@@ -548,7 +548,7 @@ bb.a:
   %i.kb = sext <32 x i8> %i.ka to <32 x i16>
   %i.kc = add <32 x i16> %.sroa.56.3.epil.init, %i.kb
   %i.kd = getelementptr inbounds nuw i8, ptr %i.hz, i64 448
-  %i.ke = load <32 x i8>, ptr %i.kd, align 32, !tbaa !26
+  %i.ke = load <32 x i8>, ptr %i.kd, align 64, !tbaa !26
   %i.kf = sext <32 x i8> %i.ke to <32 x i16>
   %i.kg = add <32 x i16> %.sroa.60.3.epil.init, %i.kf
   %i.kh = getelementptr inbounds nuw i8, ptr %i.hz, i64 480
@@ -632,7 +632,7 @@ bb.a:
   %i.ko = zext i32 %i.kn to i64
   %i.kp = shl nuw nsw i64 %i.ko, 10
   %i.kq = getelementptr inbounds nuw i8, ptr %.0102124, i64 %i.kp ; 16 uses
-  %i.kr = load <32 x i8>, ptr %i.kq, align 32, !tbaa !26
+  %i.kr = load <32 x i8>, ptr %i.kq, align 64, !tbaa !26
   %i.ks = sext <32 x i8> %i.kr to <32 x i16>
   %i.kt = add <32 x i16> %.sroa.0.3, %i.ks
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kq, i64 32
@@ -640,7 +640,7 @@ bb.a:
   %i.kw = sext <32 x i8> %i.kv to <32 x i16>
   %i.kx = add <32 x i16> %.sroa.8.3, %i.kw
   %i.ky = getelementptr inbounds nuw i8, ptr %i.kq, i64 64
-  %i.kz = load <32 x i8>, ptr %i.ky, align 32, !tbaa !26
+  %i.kz = load <32 x i8>, ptr %i.ky, align 64, !tbaa !26
   %i.la = sext <32 x i8> %i.kz to <32 x i16>
   %i.lb = add <32 x i16> %.sroa.12.3, %i.la
   %i.lc = getelementptr inbounds nuw i8, ptr %i.kq, i64 96
@@ -648,7 +648,7 @@ bb.a:
   %i.le = sext <32 x i8> %i.ld to <32 x i16>
   %i.lf = add <32 x i16> %.sroa.16.3, %i.le
   %i.lg = getelementptr inbounds nuw i8, ptr %i.kq, i64 128
-  %i.lh = load <32 x i8>, ptr %i.lg, align 32, !tbaa !26
+  %i.lh = load <32 x i8>, ptr %i.lg, align 64, !tbaa !26
   %i.li = sext <32 x i8> %i.lh to <32 x i16>
   %i.lj = add <32 x i16> %.sroa.20.3, %i.li
   %i.lk = getelementptr inbounds nuw i8, ptr %i.kq, i64 160
@@ -656,7 +656,7 @@ bb.a:
   %i.lm = sext <32 x i8> %i.ll to <32 x i16>
   %i.ln = add <32 x i16> %.sroa.24.3, %i.lm
   %i.lo = getelementptr inbounds nuw i8, ptr %i.kq, i64 192
-  %i.lp = load <32 x i8>, ptr %i.lo, align 32, !tbaa !26
+  %i.lp = load <32 x i8>, ptr %i.lo, align 64, !tbaa !26
   %i.lq = sext <32 x i8> %i.lp to <32 x i16>
   %i.lr = add <32 x i16> %.sroa.28.3, %i.lq
   %i.ls = getelementptr inbounds nuw i8, ptr %i.kq, i64 224
@@ -664,7 +664,7 @@ bb.a:
   %i.lu = sext <32 x i8> %i.lt to <32 x i16>
   %i.lv = add <32 x i16> %.sroa.32.3, %i.lu
   %i.lw = getelementptr inbounds nuw i8, ptr %i.kq, i64 256
-  %i.lx = load <32 x i8>, ptr %i.lw, align 32, !tbaa !26
+  %i.lx = load <32 x i8>, ptr %i.lw, align 64, !tbaa !26
   %i.ly = sext <32 x i8> %i.lx to <32 x i16>
   %i.lz = add <32 x i16> %.sroa.36.3, %i.ly
   %i.ma = getelementptr inbounds nuw i8, ptr %i.kq, i64 288
@@ -672,7 +672,7 @@ bb.a:
   %i.mc = sext <32 x i8> %i.mb to <32 x i16>
   %i.md = add <32 x i16> %.sroa.40.3, %i.mc
   %i.me = getelementptr inbounds nuw i8, ptr %i.kq, i64 320
-  %i.mf = load <32 x i8>, ptr %i.me, align 32, !tbaa !26
+  %i.mf = load <32 x i8>, ptr %i.me, align 64, !tbaa !26
   %i.mg = sext <32 x i8> %i.mf to <32 x i16>
   %i.mh = add <32 x i16> %.sroa.44.3, %i.mg
   %i.mi = getelementptr inbounds nuw i8, ptr %i.kq, i64 352
@@ -680,7 +680,7 @@ bb.a:
   %i.mk = sext <32 x i8> %i.mj to <32 x i16>
   %i.ml = add <32 x i16> %.sroa.48.3, %i.mk
   %i.mm = getelementptr inbounds nuw i8, ptr %i.kq, i64 384
-  %i.mn = load <32 x i8>, ptr %i.mm, align 32, !tbaa !26
+  %i.mn = load <32 x i8>, ptr %i.mm, align 64, !tbaa !26
   %i.mo = sext <32 x i8> %i.mn to <32 x i16>
   %i.mp = add <32 x i16> %.sroa.52.3, %i.mo
   %i.mq = getelementptr inbounds nuw i8, ptr %i.kq, i64 416
@@ -688,7 +688,7 @@ bb.a:
   %i.ms = sext <32 x i8> %i.mr to <32 x i16>
   %i.mt = add <32 x i16> %.sroa.56.3, %i.ms
   %i.mu = getelementptr inbounds nuw i8, ptr %i.kq, i64 448
-  %i.mv = load <32 x i8>, ptr %i.mu, align 32, !tbaa !26
+  %i.mv = load <32 x i8>, ptr %i.mu, align 64, !tbaa !26
   %i.mw = sext <32 x i8> %i.mv to <32 x i16>
   %i.mx = add <32 x i16> %.sroa.60.3, %i.mw
   %i.my = getelementptr inbounds nuw i8, ptr %i.kq, i64 480
@@ -701,7 +701,7 @@ bb.a:
   %i.nf = zext i32 %i.ne to i64
   %i.ng = shl nuw nsw i64 %i.nf, 10
   %i.nh = getelementptr inbounds nuw i8, ptr %.0102124, i64 %i.ng ; 16 uses
-  %i.ni = load <32 x i8>, ptr %i.nh, align 32, !tbaa !26
+  %i.ni = load <32 x i8>, ptr %i.nh, align 64, !tbaa !26
   %i.nj = sext <32 x i8> %i.ni to <32 x i16>
   %i.nk = add <32 x i16> %i.kt, %i.nj             ; 3 uses
   %i.nl = getelementptr inbounds nuw i8, ptr %i.nh, i64 32
@@ -709,7 +709,7 @@ bb.a:
   %i.nn = sext <32 x i8> %i.nm to <32 x i16>
   %i.no = add <32 x i16> %i.kx, %i.nn             ; 3 uses
   %i.np = getelementptr inbounds nuw i8, ptr %i.nh, i64 64
-  %i.nq = load <32 x i8>, ptr %i.np, align 32, !tbaa !26
+  %i.nq = load <32 x i8>, ptr %i.np, align 64, !tbaa !26
   %i.nr = sext <32 x i8> %i.nq to <32 x i16>
   %i.ns = add <32 x i16> %i.lb, %i.nr             ; 3 uses
   %i.nt = getelementptr inbounds nuw i8, ptr %i.nh, i64 96
@@ -717,7 +717,7 @@ bb.a:
   %i.nv = sext <32 x i8> %i.nu to <32 x i16>
   %i.nw = add <32 x i16> %i.lf, %i.nv             ; 3 uses
   %i.nx = getelementptr inbounds nuw i8, ptr %i.nh, i64 128
-  %i.ny = load <32 x i8>, ptr %i.nx, align 32, !tbaa !26
+  %i.ny = load <32 x i8>, ptr %i.nx, align 64, !tbaa !26
   %i.nz = sext <32 x i8> %i.ny to <32 x i16>
   %i.oa = add <32 x i16> %i.lj, %i.nz             ; 3 uses
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nh, i64 160
@@ -725,7 +725,7 @@ bb.a:
   %i.od = sext <32 x i8> %i.oc to <32 x i16>
   %i.oe = add <32 x i16> %i.ln, %i.od             ; 3 uses
   %i.of = getelementptr inbounds nuw i8, ptr %i.nh, i64 192
-  %i.og = load <32 x i8>, ptr %i.of, align 32, !tbaa !26
+  %i.og = load <32 x i8>, ptr %i.of, align 64, !tbaa !26
   %i.oh = sext <32 x i8> %i.og to <32 x i16>
   %i.oi = add <32 x i16> %i.lr, %i.oh             ; 3 uses
   %i.oj = getelementptr inbounds nuw i8, ptr %i.nh, i64 224
@@ -733,7 +733,7 @@ bb.a:
   %i.ol = sext <32 x i8> %i.ok to <32 x i16>
   %i.om = add <32 x i16> %i.lv, %i.ol             ; 3 uses
   %i.on = getelementptr inbounds nuw i8, ptr %i.nh, i64 256
-  %i.oo = load <32 x i8>, ptr %i.on, align 32, !tbaa !26
+  %i.oo = load <32 x i8>, ptr %i.on, align 64, !tbaa !26
   %i.op = sext <32 x i8> %i.oo to <32 x i16>
   %i.oq = add <32 x i16> %i.lz, %i.op             ; 3 uses
   %i.or = getelementptr inbounds nuw i8, ptr %i.nh, i64 288
@@ -741,7 +741,7 @@ bb.a:
   %i.ot = sext <32 x i8> %i.os to <32 x i16>
   %i.ou = add <32 x i16> %i.md, %i.ot             ; 3 uses
   %i.ov = getelementptr inbounds nuw i8, ptr %i.nh, i64 320
-  %i.ow = load <32 x i8>, ptr %i.ov, align 32, !tbaa !26
+  %i.ow = load <32 x i8>, ptr %i.ov, align 64, !tbaa !26
   %i.ox = sext <32 x i8> %i.ow to <32 x i16>
   %i.oy = add <32 x i16> %i.mh, %i.ox             ; 3 uses
   %i.oz = getelementptr inbounds nuw i8, ptr %i.nh, i64 352
@@ -749,7 +749,7 @@ bb.a:
   %i.pb = sext <32 x i8> %i.pa to <32 x i16>
   %i.pc = add <32 x i16> %i.ml, %i.pb             ; 3 uses
   %i.pd = getelementptr inbounds nuw i8, ptr %i.nh, i64 384
-  %i.pe = load <32 x i8>, ptr %i.pd, align 32, !tbaa !26
+  %i.pe = load <32 x i8>, ptr %i.pd, align 64, !tbaa !26
   %i.pf = sext <32 x i8> %i.pe to <32 x i16>
   %i.pg = add <32 x i16> %i.mp, %i.pf             ; 3 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.nh, i64 416
@@ -757,7 +757,7 @@ bb.a:
   %i.pj = sext <32 x i8> %i.pi to <32 x i16>
   %i.pk = add <32 x i16> %i.mt, %i.pj             ; 3 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %i.nh, i64 448
-  %i.pm = load <32 x i8>, ptr %i.pl, align 32, !tbaa !26
+  %i.pm = load <32 x i8>, ptr %i.pl, align 64, !tbaa !26
   %i.pn = sext <32 x i8> %i.pm to <32 x i16>
   %i.po = add <32 x i16> %i.mx, %i.pn             ; 3 uses
   %i.pp = getelementptr inbounds nuw i8, ptr %i.nh, i64 480

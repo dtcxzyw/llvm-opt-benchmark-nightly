@@ -205,10 +205,10 @@ bb.k:                                             ; preds = %inv.exit85.i, %inv.
   %.052125.i = phi ptr [ %i.z, %inv.exit63.i ], [ %i.ej, %inv.exit85.i ] ; 8 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %.052125.i, i64 4
   %i.di = getelementptr inbounds i8, ptr %.0127.i, i64 -4
-  %i.dj = load <2 x i16>, ptr %.052125.i, align 2, !tbaa !127
-  store <2 x i16> %i.dj, ptr %i.di, align 2, !tbaa !127
+  %i.dj = load <2 x i16>, ptr %.052125.i, align 4, !tbaa !127
+  store <2 x i16> %i.dj, ptr %i.di, align 4, !tbaa !127
   %i.dk = getelementptr inbounds nuw i8, ptr %.052125.i, i64 6
-  %i.dl = load i16, ptr %i.dh, align 2, !tbaa !127 ; 4 uses
+  %i.dl = load i16, ptr %i.dh, align 4, !tbaa !127 ; 4 uses
   %i.dm = icmp ult i16 %i.dl, 2
   br i1 %i.dm, label %inv.exit74.i, label %bb.l
 
@@ -324,7 +324,7 @@ inv.exit85.i:                                     ; preds = %bb.u, %bb.s, %bb.r,
   %i.fh = shufflevector <2 x i16> %i.ei, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i16> %i.fh, ptr %i.fg, align 2, !tbaa !127
   %i.fi = getelementptr inbounds i8, ptr %.0127.i, i64 -12 ; 2 uses
-  store i16 %.028.i73.i, ptr %i.fi, align 2, !tbaa !127
+  store i16 %.028.i73.i, ptr %i.fi, align 4, !tbaa !127
   %i.fj = add nuw nsw i32 %.049126.i, 1           ; 2 uses
   %exitcond.not.i55 = icmp eq i32 %i.fj, 8
   br i1 %exitcond.not.i55, label %bb.v, label %bb.k, !llvm.loop !211
@@ -614,7 +614,7 @@ bb.ao:                                            ; preds = %mul.exit62.i89, %bb
   %.046.i73 = phi i16 [ %i.jz, %bb.an ], [ %i.mp, %mul.exit62.i89 ] ; 3 uses
   %.0.i74 = phi i32 [ 8, %bb.an ], [ %i.ms, %mul.exit62.i89 ]
   %i.ka = getelementptr inbounds nuw i8, ptr %.050.i69, i64 2
-  %i.kb = load i16, ptr %.050.i69, align 2, !tbaa !127 ; 3 uses
+  %i.kb = load i16, ptr %.050.i69, align 4, !tbaa !127 ; 3 uses
   %.not.i.i75 = icmp eq i16 %.049.i70, 0
   br i1 %.not.i.i75, label %bb.as, label %bb.ap
 
@@ -649,7 +649,7 @@ mul.exit.i77:                                     ; preds = %bb.as, %bb.ar, %bb.
   %i.kp = load i16, ptr %i.ka, align 2, !tbaa !127
   %i.kq = add i16 %i.kp, %.048.in.i71             ; 2 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %.050.i69, i64 6
-  %i.ks = load i16, ptr %i.ko, align 2, !tbaa !127
+  %i.ks = load i16, ptr %i.ko, align 4, !tbaa !127
   %i.kt = add i16 %i.ks, %.047.in.i72             ; 3 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %.050.i69, i64 8
   %i.kv = load i16, ptr %i.kr, align 2, !tbaa !127 ; 3 uses
@@ -685,7 +685,7 @@ mul.exit54.i81:                                   ; preds = %bb.aw, %bb.av, %bb.
   %.0.i53.i82 = phi i16 [ %i.lf, %bb.au ], [ %i.lg, %bb.av ], [ %i.lh, %bb.aw ] ; 3 uses
   %i.li = xor i16 %i.kt, %.0.i.i78                ; 2 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %.050.i69, i64 10
-  %i.lk = load i16, ptr %i.ku, align 2, !tbaa !127 ; 3 uses
+  %i.lk = load i16, ptr %i.ku, align 4, !tbaa !127 ; 3 uses
   %.not.i55.i83 = icmp eq i16 %.0.i.i78, %i.kt
   br i1 %.not.i55.i83, label %bb.ba, label %bb.ax
 
@@ -842,7 +842,7 @@ bb.bm:                                            ; preds = %mul.exit62.i, %..pr
   %.046.i = phi i16 [ %i.oc, %..preheader_crit_edge.us.us.i ], [ %i.qs, %mul.exit62.i ] ; 3 uses
   %.0.i = phi i32 [ 8, %..preheader_crit_edge.us.us.i ], [ %i.qv, %mul.exit62.i ]
   %i.od = getelementptr inbounds nuw i8, ptr %.050.i, i64 2
-  %i.oe = load i16, ptr %.050.i, align 2, !tbaa !127 ; 3 uses
+  %i.oe = load i16, ptr %.050.i, align 4, !tbaa !127 ; 3 uses
   %.not.i.i66 = icmp eq i16 %.049.i, 0
   br i1 %.not.i.i66, label %bb.bq, label %bb.bn
 
@@ -877,7 +877,7 @@ mul.exit.i:                                       ; preds = %bb.bq, %bb.bp, %bb.
   %i.os = load i16, ptr %i.od, align 2, !tbaa !127
   %i.ot = add i16 %i.os, %.048.in.i               ; 2 uses
   %i.ou = getelementptr inbounds nuw i8, ptr %.050.i, i64 6
-  %i.ov = load i16, ptr %i.or, align 2, !tbaa !127
+  %i.ov = load i16, ptr %i.or, align 4, !tbaa !127
   %i.ow = add i16 %i.ov, %.047.in.i               ; 3 uses
   %i.ox = getelementptr inbounds nuw i8, ptr %.050.i, i64 8
   %i.oy = load i16, ptr %i.ou, align 2, !tbaa !127 ; 3 uses
@@ -913,7 +913,7 @@ mul.exit54.i:                                     ; preds = %bb.bu, %bb.bt, %bb.
   %.0.i53.i = phi i16 [ %i.pi, %bb.bs ], [ %i.pj, %bb.bt ], [ %i.pk, %bb.bu ] ; 3 uses
   %i.pl = xor i16 %i.ow, %.0.i.i67                ; 2 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %.050.i, i64 10
-  %i.pn = load i16, ptr %i.ox, align 2, !tbaa !127 ; 3 uses
+  %i.pn = load i16, ptr %i.ox, align 4, !tbaa !127 ; 3 uses
   %.not.i55.i = icmp eq i16 %.0.i.i67, %i.ow
   br i1 %.not.i55.i, label %bb.by, label %bb.bv
 
@@ -1127,7 +1127,7 @@ bb.cn:                                            ; preds = %mul.exit62.i153, %b
   %.046.i137 = phi i16 [ %i.sz, %bb.cm ], [ %i.vp, %mul.exit62.i153 ] ; 3 uses
   %.0.i138 = phi i32 [ 8, %bb.cm ], [ %i.vs, %mul.exit62.i153 ]
   %i.ta = getelementptr inbounds nuw i8, ptr %.050.i133, i64 2
-  %i.tb = load i16, ptr %.050.i133, align 2, !tbaa !127 ; 3 uses
+  %i.tb = load i16, ptr %.050.i133, align 4, !tbaa !127 ; 3 uses
   %.not.i.i139 = icmp eq i16 %.049.i134, 0
   br i1 %.not.i.i139, label %bb.cr, label %bb.co
 
@@ -1162,7 +1162,7 @@ mul.exit.i141:                                    ; preds = %bb.cr, %bb.cq, %bb.
   %i.tp = load i16, ptr %i.ta, align 2, !tbaa !127
   %i.tq = add i16 %i.tp, %.048.in.i135            ; 2 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %.050.i133, i64 6
-  %i.ts = load i16, ptr %i.to, align 2, !tbaa !127
+  %i.ts = load i16, ptr %i.to, align 4, !tbaa !127
   %i.tt = add i16 %i.ts, %.047.in.i136            ; 3 uses
   %i.tu = getelementptr inbounds nuw i8, ptr %.050.i133, i64 8
   %i.tv = load i16, ptr %i.tr, align 2, !tbaa !127 ; 3 uses
@@ -1198,7 +1198,7 @@ mul.exit54.i145:                                  ; preds = %bb.cv, %bb.cu, %bb.
   %.0.i53.i146 = phi i16 [ %i.uf, %bb.ct ], [ %i.ug, %bb.cu ], [ %i.uh, %bb.cv ] ; 3 uses
   %i.ui = xor i16 %i.tt, %.0.i.i142               ; 2 uses
   %i.uj = getelementptr inbounds nuw i8, ptr %.050.i133, i64 10
-  %i.uk = load i16, ptr %i.tu, align 2, !tbaa !127 ; 3 uses
+  %i.uk = load i16, ptr %i.tu, align 4, !tbaa !127 ; 3 uses
   %.not.i55.i147 = icmp eq i16 %.0.i.i142, %i.tt
   br i1 %.not.i55.i147, label %bb.cz, label %bb.cw
 
@@ -1355,7 +1355,7 @@ bb.dl:                                            ; preds = %mul.exit62.i121, %.
   %.046.i105 = phi i16 [ %i.xc, %..preheader_crit_edge.us.us.i61 ], [ %i.zs, %mul.exit62.i121 ] ; 3 uses
   %.0.i106 = phi i32 [ 8, %..preheader_crit_edge.us.us.i61 ], [ %i.zv, %mul.exit62.i121 ]
   %i.xd = getelementptr inbounds nuw i8, ptr %.050.i101, i64 2
-  %i.xe = load i16, ptr %.050.i101, align 2, !tbaa !127 ; 3 uses
+  %i.xe = load i16, ptr %.050.i101, align 4, !tbaa !127 ; 3 uses
   %.not.i.i107 = icmp eq i16 %.049.i102, 0
   br i1 %.not.i.i107, label %bb.dp, label %bb.dm
 
@@ -1390,7 +1390,7 @@ mul.exit.i109:                                    ; preds = %bb.dp, %bb.do, %bb.
   %i.xs = load i16, ptr %i.xd, align 2, !tbaa !127
   %i.xt = add i16 %i.xs, %.048.in.i103            ; 2 uses
   %i.xu = getelementptr inbounds nuw i8, ptr %.050.i101, i64 6
-  %i.xv = load i16, ptr %i.xr, align 2, !tbaa !127
+  %i.xv = load i16, ptr %i.xr, align 4, !tbaa !127
   %i.xw = add i16 %i.xv, %.047.in.i104            ; 3 uses
   %i.xx = getelementptr inbounds nuw i8, ptr %.050.i101, i64 8
   %i.xy = load i16, ptr %i.xu, align 2, !tbaa !127 ; 3 uses
@@ -1426,7 +1426,7 @@ mul.exit54.i113:                                  ; preds = %bb.dt, %bb.ds, %bb.
   %.0.i53.i114 = phi i16 [ %i.yi, %bb.dr ], [ %i.yj, %bb.ds ], [ %i.yk, %bb.dt ] ; 3 uses
   %i.yl = xor i16 %i.xw, %.0.i.i110               ; 2 uses
   %i.ym = getelementptr inbounds nuw i8, ptr %.050.i101, i64 10
-  %i.yn = load i16, ptr %i.xx, align 2, !tbaa !127 ; 3 uses
+  %i.yn = load i16, ptr %i.xx, align 4, !tbaa !127 ; 3 uses
   %.not.i55.i115 = icmp eq i16 %.0.i.i110, %i.xw
   br i1 %.not.i55.i115, label %bb.dx, label %bb.du
 

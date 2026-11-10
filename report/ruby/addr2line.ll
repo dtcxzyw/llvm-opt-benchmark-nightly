@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = getelementptr i8, ptr @follow_debuglink_build_id.tbl, i64 %i.s
   %i.u = load i8, ptr %i.t, align 1, !tbaa !55
   %i.v = getelementptr i8, ptr %.02526, i64 1
-  store i8 %i.u, ptr %.02526, align 1, !tbaa !55
+  store i8 %i.u, ptr %.02526, align 2, !tbaa !55
   %i.w = and i32 %i.q, 15
   %i.x = zext nneg i32 %i.w to i64
   %i.y = getelementptr i8, ptr @follow_debuglink_build_id.tbl, i64 %i.x
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ah = getelementptr i8, ptr @follow_debuglink_build_id.tbl, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !55
   %i.aj = getelementptr i8, ptr %.02526, i64 3
-  store i8 %i.ai, ptr %i.aa, align 1, !tbaa !55
+  store i8 %i.ai, ptr %i.aa, align 2, !tbaa !55
   %i.ak = and i32 %i.ae, 15
   %i.al = zext nneg i32 %i.ak to i64
   %i.am = getelementptr i8, ptr @follow_debuglink_build_id.tbl, i64 %i.al
@@ -250,7 +250,7 @@ bb.c:                                             ; preds = %bb.b
   %i.av = getelementptr i8, ptr @follow_debuglink_build_id.tbl, i64 %i.au
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !55
   %i.ax = getelementptr i8, ptr %.02526.epil.init, i64 1
-  store i8 %i.aw, ptr %.02526.epil.init, align 1, !tbaa !55
+  store i8 %i.aw, ptr %.02526.epil.init, align 2, !tbaa !55
   %i.ay = and i32 %i.as, 15
   %i.az = zext nneg i32 %i.ay to i64
   %i.ba = getelementptr i8, ptr @follow_debuglink_build_id.tbl, i64 %i.az

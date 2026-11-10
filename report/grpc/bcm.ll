@@ -205,7 +205,7 @@ bn_big_endian_to_words.exit:                      ; preds = %bb.d, %bb.e
   %.02846.i.i = phi ptr [ %i.dz, %.lr.ph.i.i ], [ %i.c, %.preheader42.i.i ] ; 5 uses
   %.03045.i.i = phi ptr [ %i.eb, %.lr.ph.i.i ], [ %1, %.preheader42.i.i ] ; 5 uses
   %.04044.i.i = phi i64 [ %i.dx, %.lr.ph.i.i ], [ 0, %.preheader42.i.i ]
-  %i.cc = load i64, ptr %.02846.i.i, align 8, !tbaa !96
+  %i.cc = load i64, ptr %.02846.i.i, align 16, !tbaa !96
   %i.cd = load i64, ptr %.02647.i.i, align 8, !tbaa !96
   %i.ce = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %i.cc, i64 %i.cd) ; 2 uses
   %i.cf = extractvalue { i64, i1 } %i.ce, 1
@@ -231,7 +231,7 @@ bn_big_endian_to_words.exit:                      ; preds = %bb.d, %bb.e
   %i.cy = getelementptr inbounds nuw i8, ptr %.03045.i.i, i64 8
   store i64 %i.cv, ptr %i.cy, align 8, !tbaa !96
   %i.cz = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 16
-  %i.da = load i64, ptr %i.cz, align 8, !tbaa !96
+  %i.da = load i64, ptr %i.cz, align 16, !tbaa !96
   %i.db = getelementptr inbounds nuw i8, ptr %.02647.i.i, i64 16
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !96
   %i.dd = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %i.da, i64 %i.dc) ; 2 uses
@@ -634,25 +634,25 @@ _ZL14OPENSSL_memsetPvim.exit30.i.i:               ; preds = %bb.u, %bb.t
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.032.i.i
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !96
   %i.cn = tail call noundef i64 @llvm.bswap.i64(i64 %i.cm)
-  store i64 %i.cn, ptr %.02831.i.i, align 1
+  store i64 %i.cn, ptr %.02831.i.i, align 8
   %i.co = getelementptr inbounds nuw i8, ptr %.02831.i.i, i64 8
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.032.i.i
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !96
   %i.cs = tail call noundef i64 @llvm.bswap.i64(i64 %i.cr)
-  store i64 %i.cs, ptr %i.co, align 1
+  store i64 %i.cs, ptr %i.co, align 8
   %i.ct = getelementptr inbounds nuw i8, ptr %.02831.i.i, i64 16
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.032.i.i
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !96
   %i.cx = tail call noundef i64 @llvm.bswap.i64(i64 %i.cw)
-  store i64 %i.cx, ptr %i.ct, align 1
+  store i64 %i.cx, ptr %i.ct, align 8
   %i.cy = getelementptr inbounds nuw i8, ptr %.02831.i.i, i64 24
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.032.i.i
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 24
   %i.db = load i64, ptr %i.da, align 8, !tbaa !96
   %i.dc = tail call noundef i64 @llvm.bswap.i64(i64 %i.db)
-  store i64 %i.dc, ptr %i.cy, align 1
+  store i64 %i.dc, ptr %i.cy, align 8
   %i.dd = getelementptr inbounds nuw i8, ptr %.02831.i.i, i64 32 ; 2 uses
   %i.de = add nuw nsw i64 %.032.i.i, 4            ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -677,7 +677,7 @@ BCM_sha512_final.exit.loopexit.unr-lcssa:         ; preds = %.lr.ph.i.i
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.032.i.i.epil
   %i.dg = load i64, ptr %i.df, align 8, !tbaa !96
   %i.dh = tail call noundef i64 @llvm.bswap.i64(i64 %i.dg)
-  store i64 %i.dh, ptr %.02831.i.i.epil, align 1
+  store i64 %i.dh, ptr %.02831.i.i.epil, align 8
   %i.di = getelementptr inbounds nuw i8, ptr %.02831.i.i.epil, i64 8
   %i.dj = add nuw nsw i64 %.032.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -1080,7 +1080,7 @@ bn_rshift_words.exit:                             ; preds = %bn_big_endian_to_wo
   %i.fa = extractvalue { i64, i1 } %i.ey, 0
   %i.fb = or i1 %i.ew, %i.ez
   %i.fc = zext i1 %i.fb to i64
-  store i64 %i.fa, ptr %.03045.i.i, align 8, !tbaa !96
+  store i64 %i.fa, ptr %.03045.i.i, align 16, !tbaa !96
   %i.fd = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 8
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !96
   %i.ff = getelementptr inbounds nuw i8, ptr %.02647.i.i, i64 8
@@ -1108,7 +1108,7 @@ bn_rshift_words.exit:                             ; preds = %bn_big_endian_to_wo
   %i.ga = or i1 %i.fv, %i.fy
   %i.gb = zext i1 %i.ga to i64
   %i.gc = getelementptr inbounds nuw i8, ptr %.03045.i.i, i64 16
-  store i64 %i.fz, ptr %i.gc, align 8, !tbaa !96
+  store i64 %i.fz, ptr %i.gc, align 16, !tbaa !96
   %i.gd = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 24
   %i.ge = load i64, ptr %i.gd, align 8, !tbaa !96
   %i.gf = getelementptr inbounds nuw i8, ptr %.02647.i.i, i64 24

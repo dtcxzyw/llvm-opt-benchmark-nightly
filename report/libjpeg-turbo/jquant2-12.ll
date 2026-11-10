@@ -205,13 +205,13 @@ bb.v:                                             ; preds = %bb.cb, %.lr.ph.i37
   %.079104.i = phi ptr [ %i.d, %bb.v ], [ %i.op, %bb.ca ] ; 33 uses
   %.181103.i = phi ptr [ %i.a, %bb.v ], [ %i.oo, %bb.ca ] ; 34 uses
   %.087102.i = phi i32 [ 3, %bb.v ], [ %i.os, %bb.ca ] ; 2 uses
-  %i.in = load i64, ptr %.181103.i, align 8, !tbaa !77
+  %i.in = load i64, ptr %.181103.i, align 16, !tbaa !77
   %i.io = icmp slt i64 %.078105.i, %i.in
   br i1 %i.io, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %.preheader88.i
-  store i64 %.078105.i, ptr %.181103.i, align 8, !tbaa !77
-  store i16 %i.ha, ptr %.079104.i, align 2, !tbaa !65
+  store i64 %.078105.i, ptr %.181103.i, align 16, !tbaa !77
+  store i16 %i.ha, ptr %.079104.i, align 16, !tbaa !65
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %.preheader88.i
@@ -230,14 +230,14 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y, %bb.x
   %i.iu = add nsw i64 %i.ip, %i.if                ; 3 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %.181103.i, i64 16 ; 2 uses
-  %i.iw = load i64, ptr %i.iv, align 8, !tbaa !77
+  %i.iw = load i64, ptr %i.iv, align 16, !tbaa !77
   %i.ix = icmp slt i64 %i.iu, %i.iw
   br i1 %i.ix, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
   %i.iy = getelementptr inbounds nuw i8, ptr %.079104.i, i64 4
-  store i64 %i.iu, ptr %i.iv, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.iy, align 2, !tbaa !65
+  store i64 %i.iu, ptr %i.iv, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.iy, align 4, !tbaa !65
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
@@ -256,14 +256,14 @@ bb.ac:                                            ; preds = %bb.ab
 .preheader.1.i:                                   ; preds = %bb.ac, %bb.ab
   %i.je = getelementptr inbounds nuw i8, ptr %.181103.i, i64 32 ; 2 uses
   %i.jf = add nsw i64 %.078105.i, %i.ic           ; 4 uses
-  %i.jg = load i64, ptr %i.je, align 8, !tbaa !77
+  %i.jg = load i64, ptr %i.je, align 16, !tbaa !77
   %i.jh = icmp slt i64 %i.jf, %i.jg
   br i1 %i.jh, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %.preheader.1.i
   %i.ji = getelementptr inbounds nuw i8, ptr %.079104.i, i64 8
-  store i64 %i.jf, ptr %i.je, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.ji, align 2, !tbaa !65
+  store i64 %i.jf, ptr %i.je, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.ji, align 8, !tbaa !65
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.preheader.1.i
@@ -282,14 +282,14 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.jo = add nsw i64 %i.jj, %i.if                ; 3 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %.181103.i, i64 48 ; 2 uses
-  %i.jq = load i64, ptr %i.jp, align 8, !tbaa !77
+  %i.jq = load i64, ptr %i.jp, align 16, !tbaa !77
   %i.jr = icmp slt i64 %i.jo, %i.jq
   br i1 %i.jr, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.js = getelementptr inbounds nuw i8, ptr %.079104.i, i64 12
-  store i64 %i.jo, ptr %i.jp, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.js, align 2, !tbaa !65
+  store i64 %i.jo, ptr %i.jp, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.js, align 4, !tbaa !65
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
@@ -308,14 +308,14 @@ bb.aj:                                            ; preds = %bb.ai
 .preheader.2.i:                                   ; preds = %bb.aj, %bb.ai
   %i.jy = getelementptr inbounds nuw i8, ptr %.181103.i, i64 64 ; 2 uses
   %i.jz = add nsw i64 %i.jf, %i.ih                ; 4 uses
-  %i.ka = load i64, ptr %i.jy, align 8, !tbaa !77
+  %i.ka = load i64, ptr %i.jy, align 16, !tbaa !77
   %i.kb = icmp slt i64 %i.jz, %i.ka
   br i1 %i.kb, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %.preheader.2.i
   %i.kc = getelementptr inbounds nuw i8, ptr %.079104.i, i64 16
-  store i64 %i.jz, ptr %i.jy, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.kc, align 2, !tbaa !65
+  store i64 %i.jz, ptr %i.jy, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.kc, align 16, !tbaa !65
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %.preheader.2.i
@@ -334,14 +334,14 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am, %bb.al
   %i.ki = add nsw i64 %i.kd, %i.if                ; 3 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %.181103.i, i64 80 ; 2 uses
-  %i.kk = load i64, ptr %i.kj, align 8, !tbaa !77
+  %i.kk = load i64, ptr %i.kj, align 16, !tbaa !77
   %i.kl = icmp slt i64 %i.ki, %i.kk
   br i1 %i.kl, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
   %i.km = getelementptr inbounds nuw i8, ptr %.079104.i, i64 20
-  store i64 %i.ki, ptr %i.kj, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.km, align 2, !tbaa !65
+  store i64 %i.ki, ptr %i.kj, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.km, align 4, !tbaa !65
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
@@ -360,14 +360,14 @@ bb.aq:                                            ; preds = %bb.ap
 .preheader.3.i:                                   ; preds = %bb.aq, %bb.ap
   %i.ks = getelementptr inbounds nuw i8, ptr %.181103.i, i64 96 ; 2 uses
   %i.kt = add nsw i64 %i.jz, %i.ii                ; 4 uses
-  %i.ku = load i64, ptr %i.ks, align 8, !tbaa !77
+  %i.ku = load i64, ptr %i.ks, align 16, !tbaa !77
   %i.kv = icmp slt i64 %i.kt, %i.ku
   br i1 %i.kv, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %.preheader.3.i
   %i.kw = getelementptr inbounds nuw i8, ptr %.079104.i, i64 24
-  store i64 %i.kt, ptr %i.ks, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.kw, align 2, !tbaa !65
+  store i64 %i.kt, ptr %i.ks, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.kw, align 8, !tbaa !65
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %.preheader.3.i
@@ -386,14 +386,14 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %bb.at, %bb.as
   %i.lc = add nsw i64 %i.kx, %i.if                ; 3 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %.181103.i, i64 112 ; 2 uses
-  %i.le = load i64, ptr %i.ld, align 8, !tbaa !77
+  %i.le = load i64, ptr %i.ld, align 16, !tbaa !77
   %i.lf = icmp slt i64 %i.lc, %i.le
   br i1 %i.lf, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
   %i.lg = getelementptr inbounds nuw i8, ptr %.079104.i, i64 28
-  store i64 %i.lc, ptr %i.ld, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.lg, align 2, !tbaa !65
+  store i64 %i.lc, ptr %i.ld, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.lg, align 4, !tbaa !65
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
@@ -412,14 +412,14 @@ bb.ax:                                            ; preds = %bb.aw
 .preheader.4.i:                                   ; preds = %bb.ax, %bb.aw
   %i.lm = getelementptr inbounds nuw i8, ptr %.181103.i, i64 128 ; 2 uses
   %i.ln = add nsw i64 %i.kt, %i.ij                ; 4 uses
-  %i.lo = load i64, ptr %i.lm, align 8, !tbaa !77
+  %i.lo = load i64, ptr %i.lm, align 16, !tbaa !77
   %i.lp = icmp slt i64 %i.ln, %i.lo
   br i1 %i.lp, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %.preheader.4.i
   %i.lq = getelementptr inbounds nuw i8, ptr %.079104.i, i64 32
-  store i64 %i.ln, ptr %i.lm, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.lq, align 2, !tbaa !65
+  store i64 %i.ln, ptr %i.lm, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.lq, align 16, !tbaa !65
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %.preheader.4.i
@@ -438,14 +438,14 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.lw = add nsw i64 %i.lr, %i.if                ; 3 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %.181103.i, i64 144 ; 2 uses
-  %i.ly = load i64, ptr %i.lx, align 8, !tbaa !77
+  %i.ly = load i64, ptr %i.lx, align 16, !tbaa !77
   %i.lz = icmp slt i64 %i.lw, %i.ly
   br i1 %i.lz, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
   %i.ma = getelementptr inbounds nuw i8, ptr %.079104.i, i64 36
-  store i64 %i.lw, ptr %i.lx, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.ma, align 2, !tbaa !65
+  store i64 %i.lw, ptr %i.lx, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.ma, align 4, !tbaa !65
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
@@ -464,14 +464,14 @@ bb.be:                                            ; preds = %bb.bd
 .preheader.5.i:                                   ; preds = %bb.be, %bb.bd
   %i.mg = getelementptr inbounds nuw i8, ptr %.181103.i, i64 160 ; 2 uses
   %i.mh = add nsw i64 %i.ln, %i.ik                ; 4 uses
-  %i.mi = load i64, ptr %i.mg, align 8, !tbaa !77
+  %i.mi = load i64, ptr %i.mg, align 16, !tbaa !77
   %i.mj = icmp slt i64 %i.mh, %i.mi
   br i1 %i.mj, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %.preheader.5.i
   %i.mk = getelementptr inbounds nuw i8, ptr %.079104.i, i64 40
-  store i64 %i.mh, ptr %i.mg, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.mk, align 2, !tbaa !65
+  store i64 %i.mh, ptr %i.mg, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.mk, align 8, !tbaa !65
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %.preheader.5.i
@@ -490,14 +490,14 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.mq = add nsw i64 %i.ml, %i.if                ; 3 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %.181103.i, i64 176 ; 2 uses
-  %i.ms = load i64, ptr %i.mr, align 8, !tbaa !77
+  %i.ms = load i64, ptr %i.mr, align 16, !tbaa !77
   %i.mt = icmp slt i64 %i.mq, %i.ms
   br i1 %i.mt, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
   %i.mu = getelementptr inbounds nuw i8, ptr %.079104.i, i64 44
-  store i64 %i.mq, ptr %i.mr, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.mu, align 2, !tbaa !65
+  store i64 %i.mq, ptr %i.mr, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.mu, align 4, !tbaa !65
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi
@@ -516,14 +516,14 @@ bb.bl:                                            ; preds = %bb.bk
 .preheader.6.i:                                   ; preds = %bb.bl, %bb.bk
   %i.na = getelementptr inbounds nuw i8, ptr %.181103.i, i64 192 ; 2 uses
   %i.nb = add nsw i64 %i.mh, %i.il                ; 4 uses
-  %i.nc = load i64, ptr %i.na, align 8, !tbaa !77
+  %i.nc = load i64, ptr %i.na, align 16, !tbaa !77
   %i.nd = icmp slt i64 %i.nb, %i.nc
   br i1 %i.nd, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %.preheader.6.i
   %i.ne = getelementptr inbounds nuw i8, ptr %.079104.i, i64 48
-  store i64 %i.nb, ptr %i.na, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.ne, align 2, !tbaa !65
+  store i64 %i.nb, ptr %i.na, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.ne, align 16, !tbaa !65
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm, %.preheader.6.i
@@ -542,14 +542,14 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bo, %bb.bn
   %i.nk = add nsw i64 %i.nf, %i.if                ; 3 uses
   %i.nl = getelementptr inbounds nuw i8, ptr %.181103.i, i64 208 ; 2 uses
-  %i.nm = load i64, ptr %i.nl, align 8, !tbaa !77
+  %i.nm = load i64, ptr %i.nl, align 16, !tbaa !77
   %i.nn = icmp slt i64 %i.nk, %i.nm
   br i1 %i.nn, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %bb.bp
   %i.no = getelementptr inbounds nuw i8, ptr %.079104.i, i64 52
-  store i64 %i.nk, ptr %i.nl, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.no, align 2, !tbaa !65
+  store i64 %i.nk, ptr %i.nl, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.no, align 4, !tbaa !65
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp
@@ -568,14 +568,14 @@ bb.bs:                                            ; preds = %bb.br
 .preheader.7.i:                                   ; preds = %bb.bs, %bb.br
   %i.nu = getelementptr inbounds nuw i8, ptr %.181103.i, i64 224 ; 2 uses
   %i.nv = add nsw i64 %i.im, %i.nb                ; 3 uses
-  %i.nw = load i64, ptr %i.nu, align 8, !tbaa !77
+  %i.nw = load i64, ptr %i.nu, align 16, !tbaa !77
   %i.nx = icmp slt i64 %i.nv, %i.nw
   br i1 %i.nx, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %.preheader.7.i
   %i.ny = getelementptr inbounds nuw i8, ptr %.079104.i, i64 56
-  store i64 %i.nv, ptr %i.nu, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.ny, align 2, !tbaa !65
+  store i64 %i.nv, ptr %i.nu, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.ny, align 8, !tbaa !65
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %.preheader.7.i
@@ -594,14 +594,14 @@ bb.bv:                                            ; preds = %bb.bu
 bb.bw:                                            ; preds = %bb.bv, %bb.bu
   %i.oe = add nsw i64 %i.nz, %i.if                ; 3 uses
   %i.of = getelementptr inbounds nuw i8, ptr %.181103.i, i64 240 ; 2 uses
-  %i.og = load i64, ptr %i.of, align 8, !tbaa !77
+  %i.og = load i64, ptr %i.of, align 16, !tbaa !77
   %i.oh = icmp slt i64 %i.oe, %i.og
   br i1 %i.oh, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
   %i.oi = getelementptr inbounds nuw i8, ptr %.079104.i, i64 60
-  store i64 %i.oe, ptr %i.of, align 8, !tbaa !77
-  store i16 %i.ha, ptr %i.oi, align 2, !tbaa !65
+  store i64 %i.oe, ptr %i.of, align 16, !tbaa !77
+  store i16 %i.ha, ptr %i.oi, align 4, !tbaa !65
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %bb.bw

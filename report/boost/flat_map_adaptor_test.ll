@@ -205,7 +205,7 @@ _ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_
   %.sroa.0.016.i.i.i.i.i.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.f, %_ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.i.i.i ] ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i, i64 32
   %i.m = load i32, ptr %i.l, align 4, !tbaa !337, !noalias !5523
-  store i32 %i.m, ptr %.01417.i.i.i.i.i.i.i.i, align 4, !tbaa !337, !noalias !5523
+  store i32 %i.m, ptr %.01417.i.i.i.i.i.i.i.i, align 8, !tbaa !337, !noalias !5523
   %i.n = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.i.i.i.i.i, i64 4
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i, i64 36
   %i.p = load i32, ptr %i.o, align 4, !tbaa !337, !noalias !5523
@@ -608,7 +608,7 @@ _ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_
   %.sroa.0.016.i.i.i.i.i.i.i.i244 = phi ptr [ %i.gu, %.lr.ph.i.i.i.i.i.i.i.i241 ], [ %i.gj, %_ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.i.i.i237 ] ; 3 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i244, i64 32
   %i.gq = load i32, ptr %i.gp, align 4, !tbaa !337, !noalias !5530
-  store i32 %i.gq, ptr %.01417.i.i.i.i.i.i.i.i243, align 4, !tbaa !337, !noalias !5530
+  store i32 %i.gq, ptr %.01417.i.i.i.i.i.i.i.i243, align 8, !tbaa !337, !noalias !5530
   %i.gr = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.i.i.i.i.i243, i64 4
   %i.gs = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i244, i64 36
   %i.gt = load i32, ptr %i.gs, align 4, !tbaa !337, !noalias !5530
@@ -1011,7 +1011,7 @@ _ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_
   %.sroa.0.016.i.i.i.i.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.f, %_ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.i.i.i ] ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i, i64 32
   %i.k = load i32, ptr %i.j, align 4, !tbaa !337, !noalias !8095
-  store i32 %i.k, ptr %.01417.i.i.i.i.i.i.i.i, align 4, !tbaa !337, !noalias !8095
+  store i32 %i.k, ptr %.01417.i.i.i.i.i.i.i.i, align 8, !tbaa !337, !noalias !8095
   %i.l = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.i.i.i.i.i, i64 4
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i, i64 36
   %i.n = load i32, ptr %i.m, align 4, !tbaa !337, !noalias !8095
@@ -1101,7 +1101,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024.i = phi ptr [ %i.an, %bb.f ], [ %6, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread.i ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.019.025.i, i64 32
   %i.ag = load <2 x i32>, ptr %i.af, align 4
-  %i.ah = load <2 x i32>, ptr %.sroa.015.024.i, align 4
+  %i.ah = load <2 x i32>, ptr %.sroa.015.024.i, align 8
   %i.ai = icmp eq <2 x i32> %i.ag, %i.ah          ; 2 uses
   %i.aj = extractelement <2 x i1> %i.ai, i64 0
   %i.ak = extractelement <2 x i1> %i.ai, i64 1
@@ -1152,7 +1152,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024.i135 = phi ptr [ %i.bc, %bb.i ], [ %6, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread.i131 ] ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.019.025.i134, i64 32
   %i.av = load <2 x i32>, ptr %i.au, align 4
-  %i.aw = load <2 x i32>, ptr %.sroa.015.024.i135, align 4
+  %i.aw = load <2 x i32>, ptr %.sroa.015.024.i135, align 8
   %i.ax = icmp eq <2 x i32> %i.av, %i.aw          ; 2 uses
   %i.ay = extractelement <2 x i1> %i.ax, i64 0
   %i.az = extractelement <2 x i1> %i.ax, i64 1
@@ -1273,7 +1273,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024.i156 = phi ptr [ %i.ch, %bb.n ], [ %6, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread.i152 ] ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.019.025.i155, i64 32
   %i.ca = load <2 x i32>, ptr %i.bz, align 4
-  %i.cb = load <2 x i32>, ptr %.sroa.015.024.i156, align 4
+  %i.cb = load <2 x i32>, ptr %.sroa.015.024.i156, align 8
   %i.cc = icmp eq <2 x i32> %i.ca, %i.cb          ; 2 uses
   %i.cd = extractelement <2 x i1> %i.cc, i64 0
   %i.ce = extractelement <2 x i1> %i.cc, i64 1
@@ -1404,7 +1404,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024.i189 = phi ptr [ %i.dn, %bb.t ], [ %6, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread.i185 ] ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.019.025.i188, i64 32
   %i.dg = load <2 x i32>, ptr %i.df, align 4
-  %i.dh = load <2 x i32>, ptr %.sroa.015.024.i189, align 4
+  %i.dh = load <2 x i32>, ptr %.sroa.015.024.i189, align 8
   %i.di = icmp eq <2 x i32> %i.dg, %i.dh          ; 2 uses
   %i.dj = extractelement <2 x i1> %i.di, i64 0
   %i.dk = extractelement <2 x i1> %i.di, i64 1
@@ -1542,7 +1542,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024.i227 = phi ptr [ %i.ez, %bb.aa ], [ %6, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread.i223 ] ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.sroa.019.025.i226, i64 32
   %i.es = load <2 x i32>, ptr %i.er, align 4
-  %i.et = load <2 x i32>, ptr %.sroa.015.024.i227, align 4
+  %i.et = load <2 x i32>, ptr %.sroa.015.024.i227, align 8
   %i.eu = icmp eq <2 x i32> %i.es, %i.et          ; 2 uses
   %i.ev = extractelement <2 x i1> %i.eu, i64 0
   %i.ew = extractelement <2 x i1> %i.eu, i64 1
@@ -1659,7 +1659,7 @@ _ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_
   %.sroa.0.016.i.i.i.i.i.i.i.i246 = phi ptr [ %i.ga, %.lr.ph.i.i.i.i.i.i.i.i243 ], [ %i.fr, %_ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.i.i.i240 ] ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i246, i64 32
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !337, !noalias !8097
-  store i32 %i.fw, ptr %.01417.i.i.i.i.i.i.i.i245, align 4, !tbaa !337, !noalias !8097
+  store i32 %i.fw, ptr %.01417.i.i.i.i.i.i.i.i245, align 8, !tbaa !337, !noalias !8097
   %i.fx = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.i.i.i.i.i245, i64 4
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i.i.i246, i64 36
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !337, !noalias !8097
@@ -1811,7 +1811,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024.i266 = phi ptr [ %i.hj, %bb.as ], [ %11, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread.i262 ] ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %.sroa.019.025.i265, i64 32
   %i.hc = load <2 x i32>, ptr %i.hb, align 4
-  %i.hd = load <2 x i32>, ptr %.sroa.015.024.i266, align 4
+  %i.hd = load <2 x i32>, ptr %.sroa.015.024.i266, align 8
   %i.he = icmp eq <2 x i32> %i.hc, %i.hd          ; 2 uses
   %i.hf = extractelement <2 x i1> %i.he, i64 0
   %i.hg = extractelement <2 x i1> %i.he, i64 1
@@ -2214,8 +2214,8 @@ bb.p:                                             ; preds = %bb.o
 .lr.ph.i:                                         ; preds = %bb.p, %bb.q
   %.sroa.021.028.i = phi ptr [ %i.cl, %bb.q ], [ %2, %bb.p ] ; 2 uses
   %.sroa.016.027.i = phi ptr [ %i.cm, %bb.q ], [ %1, %bb.p ] ; 2 uses
-  %i.cf = load <2 x i32>, ptr %.sroa.021.028.i, align 4
-  %i.cg = load <2 x i32>, ptr %.sroa.016.027.i, align 4
+  %i.cf = load <2 x i32>, ptr %.sroa.021.028.i, align 8
+  %i.cg = load <2 x i32>, ptr %.sroa.016.027.i, align 8
   %i.ch = icmp eq <2 x i32> %i.cf, %i.cg          ; 2 uses
   %i.ci = extractelement <2 x i1> %i.ch, i64 0
   %i.cj = extractelement <2 x i1> %i.ch, i64 1
@@ -2352,8 +2352,8 @@ bb.x:                                             ; preds = %_ZN5boost9container
 .lr.ph.i127:                                      ; preds = %bb.x, %bb.y
   %.sroa.021.028.i128 = phi ptr [ %i.ef, %bb.y ], [ %0, %bb.x ] ; 2 uses
   %.sroa.016.027.i129 = phi ptr [ %i.eg, %bb.y ], [ %1, %bb.x ] ; 2 uses
-  %i.dz = load <2 x i32>, ptr %.sroa.021.028.i128, align 4
-  %i.ea = load <2 x i32>, ptr %.sroa.016.027.i129, align 4
+  %i.dz = load <2 x i32>, ptr %.sroa.021.028.i128, align 8
+  %i.ea = load <2 x i32>, ptr %.sroa.016.027.i129, align 8
   %i.eb = icmp eq <2 x i32> %i.dz, %i.ea          ; 2 uses
   %i.ec = extractelement <2 x i1> %i.eb, i64 0
   %i.ed = extractelement <2 x i1> %i.eb, i64 1
@@ -2369,8 +2369,8 @@ bb.y:                                             ; preds = %.lr.ph.i127
 .lr.ph.i135:                                      ; preds = %bb.y, %bb.z
   %.sroa.021.028.i136 = phi ptr [ %i.en, %bb.z ], [ %0, %bb.y ] ; 2 uses
   %.sroa.016.027.i137 = phi ptr [ %i.eo, %bb.z ], [ %1, %bb.y ] ; 2 uses
-  %i.eh = load <2 x i32>, ptr %.sroa.021.028.i136, align 4
-  %i.ei = load <2 x i32>, ptr %.sroa.016.027.i137, align 4
+  %i.eh = load <2 x i32>, ptr %.sroa.021.028.i136, align 8
+  %i.ei = load <2 x i32>, ptr %.sroa.016.027.i137, align 8
   %i.ej = icmp eq <2 x i32> %i.eh, %i.ei          ; 2 uses
   %i.ek = extractelement <2 x i1> %i.ej, i64 0
   %i.el = extractelement <2 x i1> %i.ej, i64 1
@@ -2633,8 +2633,8 @@ bb.ap:                                            ; preds = %bb.ao
 .lr.ph.i184:                                      ; preds = %bb.ap, %bb.aq
   %.sroa.021.028.i185 = phi ptr [ %i.hr, %bb.aq ], [ %5, %bb.ap ] ; 2 uses
   %.sroa.016.027.i186 = phi ptr [ %i.hs, %bb.aq ], [ %4, %bb.ap ] ; 2 uses
-  %i.hl = load <2 x i32>, ptr %.sroa.021.028.i185, align 4
-  %i.hm = load <2 x i32>, ptr %.sroa.016.027.i186, align 4
+  %i.hl = load <2 x i32>, ptr %.sroa.021.028.i185, align 8
+  %i.hm = load <2 x i32>, ptr %.sroa.016.027.i186, align 8
   %i.hn = icmp eq <2 x i32> %i.hl, %i.hm          ; 2 uses
   %i.ho = extractelement <2 x i1> %i.hn, i64 0
   %i.hp = extractelement <2 x i1> %i.hn, i64 1
@@ -2672,8 +2672,8 @@ bb.at:                                            ; preds = %bb.as
 .lr.ph.i193:                                      ; preds = %bb.at, %bb.au
   %.sroa.021.028.i194 = phi ptr [ %i.id, %bb.au ], [ %3, %bb.at ] ; 2 uses
   %.sroa.016.027.i195 = phi ptr [ %i.ie, %bb.au ], [ %4, %bb.at ] ; 2 uses
-  %i.hx = load <2 x i32>, ptr %.sroa.021.028.i194, align 4
-  %i.hy = load <2 x i32>, ptr %.sroa.016.027.i195, align 4
+  %i.hx = load <2 x i32>, ptr %.sroa.021.028.i194, align 8
+  %i.hy = load <2 x i32>, ptr %.sroa.016.027.i195, align 8
   %i.hz = icmp eq <2 x i32> %i.hx, %i.hy          ; 2 uses
   %i.ia = extractelement <2 x i1> %i.hz, i64 0
   %i.ib = extractelement <2 x i1> %i.hz, i64 1
@@ -2689,8 +2689,8 @@ bb.au:                                            ; preds = %.lr.ph.i193
 .lr.ph.i202:                                      ; preds = %bb.au, %bb.av
   %.sroa.021.028.i203 = phi ptr [ %i.il, %bb.av ], [ %3, %bb.au ] ; 2 uses
   %.sroa.016.027.i204 = phi ptr [ %i.im, %bb.av ], [ %4, %bb.au ] ; 2 uses
-  %i.if = load <2 x i32>, ptr %.sroa.021.028.i203, align 4
-  %i.ig = load <2 x i32>, ptr %.sroa.016.027.i204, align 4
+  %i.if = load <2 x i32>, ptr %.sroa.021.028.i203, align 8
+  %i.ig = load <2 x i32>, ptr %.sroa.016.027.i204, align 8
   %i.ih = icmp eq <2 x i32> %i.if, %i.ig          ; 2 uses
   %i.ii = extractelement <2 x i1> %i.ih, i64 0
   %i.ij = extractelement <2 x i1> %i.ih, i64 1
@@ -3063,8 +3063,8 @@ bb.bo:                                            ; preds = %bb.bn
 .lr.ph.i265:                                      ; preds = %bb.bo, %bb.bp
   %.sroa.021.028.i266 = phi ptr [ %i.nh, %bb.bp ], [ %8, %bb.bo ] ; 2 uses
   %.sroa.016.027.i267 = phi ptr [ %i.ni, %bb.bp ], [ %7, %bb.bo ] ; 2 uses
-  %i.nb = load <2 x i32>, ptr %.sroa.021.028.i266, align 4
-  %i.nc = load <2 x i32>, ptr %.sroa.016.027.i267, align 4
+  %i.nb = load <2 x i32>, ptr %.sroa.021.028.i266, align 8
+  %i.nc = load <2 x i32>, ptr %.sroa.016.027.i267, align 8
   %i.nd = icmp eq <2 x i32> %i.nb, %i.nc          ; 2 uses
   %i.ne = extractelement <2 x i1> %i.nd, i64 0
   %i.nf = extractelement <2 x i1> %i.nd, i64 1
@@ -3109,8 +3109,8 @@ bb.bt:                                            ; preds = %bb.bs
 .lr.ph.i273:                                      ; preds = %bb.bt, %bb.bu
   %.sroa.021.028.i274 = phi ptr [ %i.nu, %bb.bu ], [ %6, %bb.bt ] ; 2 uses
   %.sroa.016.027.i275 = phi ptr [ %i.nv, %bb.bu ], [ %7, %bb.bt ] ; 2 uses
-  %i.no = load <2 x i32>, ptr %.sroa.021.028.i274, align 4
-  %i.np = load <2 x i32>, ptr %.sroa.016.027.i275, align 4
+  %i.no = load <2 x i32>, ptr %.sroa.021.028.i274, align 8
+  %i.np = load <2 x i32>, ptr %.sroa.016.027.i275, align 8
   %i.nq = icmp eq <2 x i32> %i.no, %i.np          ; 2 uses
   %i.nr = extractelement <2 x i1> %i.nq, i64 0
   %i.ns = extractelement <2 x i1> %i.nq, i64 1
@@ -3126,8 +3126,8 @@ bb.bu:                                            ; preds = %.lr.ph.i273
 .lr.ph.i281:                                      ; preds = %bb.bu, %bb.bv
   %.sroa.021.028.i282 = phi ptr [ %i.oc, %bb.bv ], [ %6, %bb.bu ] ; 2 uses
   %.sroa.016.027.i283 = phi ptr [ %i.od, %bb.bv ], [ %7, %bb.bu ] ; 2 uses
-  %i.nw = load <2 x i32>, ptr %.sroa.021.028.i282, align 4
-  %i.nx = load <2 x i32>, ptr %.sroa.016.027.i283, align 4
+  %i.nw = load <2 x i32>, ptr %.sroa.021.028.i282, align 8
+  %i.nx = load <2 x i32>, ptr %.sroa.016.027.i283, align 8
   %i.ny = icmp eq <2 x i32> %i.nw, %i.nx          ; 2 uses
   %i.nz = extractelement <2 x i1> %i.ny, i64 0
   %i.oa = extractelement <2 x i1> %i.ny, i64 1
@@ -3300,8 +3300,8 @@ bb.cj:                                            ; preds = %bb.ci
 .lr.ph.i295:                                      ; preds = %bb.cj, %bb.ck
   %.sroa.021.028.i296 = phi ptr [ %i.pb, %bb.ck ], [ %17, %bb.cj ] ; 2 uses
   %.sroa.016.027.i297 = phi ptr [ %i.pc, %bb.ck ], [ %12, %bb.cj ] ; 2 uses
-  %i.ov = load <2 x i32>, ptr %.sroa.021.028.i296, align 4
-  %i.ow = load <2 x i32>, ptr %.sroa.016.027.i297, align 4
+  %i.ov = load <2 x i32>, ptr %.sroa.021.028.i296, align 8
+  %i.ow = load <2 x i32>, ptr %.sroa.016.027.i297, align 8
   %i.ox = icmp eq <2 x i32> %i.ov, %i.ow          ; 2 uses
   %i.oy = extractelement <2 x i1> %i.ox, i64 0
   %i.oz = extractelement <2 x i1> %i.ox, i64 1
@@ -3339,8 +3339,8 @@ bb.cn:                                            ; preds = %bb.cm
 .lr.ph.i304:                                      ; preds = %bb.cn, %bb.co
   %.sroa.021.028.i305 = phi ptr [ %i.pn, %bb.co ], [ %11, %bb.cn ] ; 2 uses
   %.sroa.016.027.i306 = phi ptr [ %i.po, %bb.co ], [ %12, %bb.cn ] ; 2 uses
-  %i.ph = load <2 x i32>, ptr %.sroa.021.028.i305, align 4
-  %i.pi = load <2 x i32>, ptr %.sroa.016.027.i306, align 4
+  %i.ph = load <2 x i32>, ptr %.sroa.021.028.i305, align 8
+  %i.pi = load <2 x i32>, ptr %.sroa.016.027.i306, align 8
   %i.pj = icmp eq <2 x i32> %i.ph, %i.pi          ; 2 uses
   %i.pk = extractelement <2 x i1> %i.pj, i64 0
   %i.pl = extractelement <2 x i1> %i.pj, i64 1
@@ -3356,8 +3356,8 @@ bb.co:                                            ; preds = %.lr.ph.i304
 .lr.ph.i313:                                      ; preds = %bb.co, %.lr.ph.i313
   %.sroa.021.028.i314 = phi ptr [ %i.pv, %.lr.ph.i313 ], [ %11, %bb.co ] ; 2 uses
   %.sroa.016.027.i315 = phi ptr [ %i.pw, %.lr.ph.i313 ], [ %12, %bb.co ] ; 2 uses
-  %i.pp = load <2 x i32>, ptr %.sroa.021.028.i314, align 4
-  %i.pq = load <2 x i32>, ptr %.sroa.016.027.i315, align 4
+  %i.pp = load <2 x i32>, ptr %.sroa.021.028.i314, align 8
+  %i.pq = load <2 x i32>, ptr %.sroa.016.027.i315, align 8
   %i.pr = icmp eq <2 x i32> %i.pp, %i.pq          ; 2 uses
   %i.ps = extractelement <2 x i1> %i.pr, i64 0
   %i.pt = extractelement <2 x i1> %i.pr, i64 1
@@ -3760,7 +3760,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.015.021.i = phi ptr [ %i.bu, %bb.d ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !364
-  %i.bp = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.bp = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.bp, %i.bo
   br i1 %.not10.i, label %bb.c, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -4059,7 +4059,7 @@ bb.p:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i114 = phi ptr [ %i.fv, %bb.r ], [ %2, %.lr.ph.preheader.i111 ] ; 3 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i113, i64 32
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !364
-  %i.fq = load i32, ptr %.sroa.015.021.i114, align 4, !tbaa !346
+  %i.fq = load i32, ptr %.sroa.015.021.i114, align 8, !tbaa !346
   %.not10.i115 = icmp eq i32 %i.fq, %i.fp
   br i1 %.not10.i115, label %bb.q, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -4141,7 +4141,7 @@ bb.u:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i127 = phi ptr [ %i.gy, %bb.w ], [ %0, %.lr.ph.preheader.i124 ] ; 3 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i126, i64 32
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !364
-  %i.gt = load i32, ptr %.sroa.015.021.i127, align 4, !tbaa !346
+  %i.gt = load i32, ptr %.sroa.015.021.i127, align 8, !tbaa !346
   %.not10.i128 = icmp eq i32 %i.gt, %i.gs
   br i1 %.not10.i128, label %bb.v, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -4179,7 +4179,7 @@ bb.x:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i139 = phi ptr [ %i.hk, %bb.z ], [ %2, %.lr.ph.preheader.i136 ] ; 3 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i138, i64 32
   %i.he = load i32, ptr %i.hd, align 4, !tbaa !364
-  %i.hf = load i32, ptr %.sroa.015.021.i139, align 4, !tbaa !346
+  %i.hf = load i32, ptr %.sroa.015.021.i139, align 8, !tbaa !346
   %.not10.i140 = icmp eq i32 %i.hf, %i.he
   br i1 %.not10.i140, label %bb.y, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -4258,7 +4258,7 @@ bb.ac:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i157 = phi ptr [ %i.ik, %bb.ae ], [ %0, %.lr.ph.preheader.i154 ] ; 3 uses
   %i.id = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i156, i64 32
   %i.ie = load i32, ptr %i.id, align 4, !tbaa !364
-  %i.if = load i32, ptr %.sroa.015.021.i157, align 4, !tbaa !346
+  %i.if = load i32, ptr %.sroa.015.021.i157, align 8, !tbaa !346
   %.not10.i158 = icmp eq i32 %i.if, %i.ie
   br i1 %.not10.i158, label %bb.ad, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -4296,7 +4296,7 @@ bb.af:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i169 = phi ptr [ %i.iw, %bb.ah ], [ %2, %.lr.ph.preheader.i166 ] ; 3 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i168, i64 32
   %i.iq = load i32, ptr %i.ip, align 4, !tbaa !364
-  %i.ir = load i32, ptr %.sroa.015.021.i169, align 4, !tbaa !346
+  %i.ir = load i32, ptr %.sroa.015.021.i169, align 8, !tbaa !346
   %.not10.i170 = icmp eq i32 %i.ir, %i.iq
   br i1 %.not10.i170, label %bb.ag, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -4571,7 +4571,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.015.021.i = phi ptr [ %i.w, %bb.d ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.q = load i32, ptr %i.p, align 4, !tbaa !364
-  %i.r = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.r = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.r, %i.q
   br i1 %.not10.i, label %bb.c, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit242.thread519
 
@@ -4654,7 +4654,7 @@ bb.g:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i207 = phi ptr [ %i.ax, %bb.i ], [ %2, %.lr.ph.preheader.i204 ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i206, i64 32
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !364
-  %i.as = load i32, ptr %.sroa.015.021.i207, align 4, !tbaa !346
+  %i.as = load i32, ptr %.sroa.015.021.i207, align 8, !tbaa !346
   %.not10.i208 = icmp eq i32 %i.as, %i.ar
   br i1 %.not10.i208, label %bb.h, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit242.thread519
 
@@ -4707,7 +4707,7 @@ bb.j:                                             ; preds = %._crit_edge.thread,
   %.sroa.015.021.i218 = phi ptr [ %i.bn, %bb.l ], [ %0, %.lr.ph.preheader.i215 ] ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i217, i64 32
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !364
-  %i.bi = load i32, ptr %.sroa.015.021.i218, align 4, !tbaa !346
+  %i.bi = load i32, ptr %.sroa.015.021.i218, align 8, !tbaa !346
   %.not10.i219 = icmp eq i32 %i.bi, %i.bh
   br i1 %.not10.i219, label %bb.k, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit242.thread519
 
@@ -4924,7 +4924,7 @@ bb.w:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i238 = phi ptr [ %i.es, %bb.y ], [ %2, %.lr.ph.preheader.i235 ] ; 3 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i237, i64 32
   %i.em = load i32, ptr %i.el, align 4, !tbaa !364
-  %i.en = load i32, ptr %.sroa.015.021.i238, align 4, !tbaa !346
+  %i.en = load i32, ptr %.sroa.015.021.i238, align 8, !tbaa !346
   %.not10.i239 = icmp eq i32 %i.en, %i.em
   br i1 %.not10.i239, label %bb.x, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit242.thread519
 
@@ -4991,7 +4991,7 @@ bb.aa:                                            ; preds = %bb.z
   %.sroa.015.021.i250 = phi ptr [ %i.fl, %bb.ac ], [ %0, %.lr.ph.preheader.i247 ] ; 3 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i249, i64 32
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !364
-  %i.fg = load i32, ptr %.sroa.015.021.i250, align 4, !tbaa !346
+  %i.fg = load i32, ptr %.sroa.015.021.i250, align 8, !tbaa !346
   %.not10.i251 = icmp eq i32 %i.fg, %i.ff
   br i1 %.not10.i251, label %bb.ab, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit361.thread526
 
@@ -5106,7 +5106,7 @@ bb.ag:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i284 = phi ptr [ %i.gx, %bb.ai ], [ %2, %.lr.ph.preheader.i281 ] ; 3 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i283, i64 32
   %i.gr = load i32, ptr %i.gq, align 4, !tbaa !364
-  %i.gs = load i32, ptr %.sroa.015.021.i284, align 4, !tbaa !346
+  %i.gs = load i32, ptr %.sroa.015.021.i284, align 8, !tbaa !346
   %.not10.i285 = icmp eq i32 %i.gs, %i.gr
   br i1 %.not10.i285, label %bb.ah, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit361.thread526
 
@@ -5327,7 +5327,7 @@ bb.av:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i345 = phi ptr [ %i.kf, %bb.ax ], [ %0, %.lr.ph.preheader.i342 ] ; 3 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i344, i64 32
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !364
-  %i.ka = load i32, ptr %.sroa.015.021.i345, align 4, !tbaa !346
+  %i.ka = load i32, ptr %.sroa.015.021.i345, align 8, !tbaa !346
   %.not10.i346 = icmp eq i32 %i.ka, %i.jz
   br i1 %.not10.i346, label %bb.aw, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit361.thread526
 
@@ -5366,7 +5366,7 @@ bb.ay:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i357 = phi ptr [ %i.ks, %bb.ba ], [ %2, %.lr.ph.preheader.i354 ] ; 3 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i356, i64 32
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !364
-  %i.kn = load i32, ptr %.sroa.015.021.i357, align 4, !tbaa !346
+  %i.kn = load i32, ptr %.sroa.015.021.i357, align 8, !tbaa !346
   %.not10.i358 = icmp eq i32 %i.kn, %i.km
   br i1 %.not10.i358, label %bb.az, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit361.thread526
 
@@ -5769,7 +5769,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.019.026.i = phi ptr [ %i.rm, %bb.bp ], [ %0, %.preheader.i ] ; 2 uses
   %.sroa.015.025.i = phi ptr [ %i.rn, %bb.bp ], [ %i.rc, %.preheader.i ] ; 2 uses
   %i.rf = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i, i64 32
-  %i.rg = load <2 x i32>, ptr %.sroa.019.026.i, align 4
+  %i.rg = load <2 x i32>, ptr %.sroa.019.026.i, align 8
   %i.rh = load <2 x i32>, ptr %i.rf, align 4
   %i.ri = icmp eq <2 x i32> %i.rg, %i.rh          ; 2 uses
   %i.rj = extractelement <2 x i1> %i.ri, i64 0
@@ -5924,7 +5924,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.019.026.i448 = phi ptr [ %i.tl, %bb.by ], [ %2, %.preheader.i445 ] ; 2 uses
   %.sroa.015.025.i449 = phi ptr [ %i.tm, %bb.by ], [ %i.tb, %.preheader.i445 ] ; 2 uses
   %i.te = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i449, i64 32
-  %i.tf = load <2 x i32>, ptr %.sroa.019.026.i448, align 4
+  %i.tf = load <2 x i32>, ptr %.sroa.019.026.i448, align 8
   %i.tg = load <2 x i32>, ptr %i.te, align 4
   %i.th = icmp eq <2 x i32> %i.tf, %i.tg          ; 2 uses
   %i.ti = extractelement <2 x i1> %i.th, i64 0
@@ -6135,7 +6135,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.015.021.i = phi ptr [ %i.bu, %bb.d ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !364
-  %i.bp = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.bp = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.bp, %i.bo
   br i1 %.not10.i, label %bb.c, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6434,7 +6434,7 @@ bb.p:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i123 = phi ptr [ %i.fv, %bb.r ], [ %2, %.lr.ph.preheader.i120 ] ; 3 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i122, i64 32
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !364
-  %i.fq = load i32, ptr %.sroa.015.021.i123, align 4, !tbaa !346
+  %i.fq = load i32, ptr %.sroa.015.021.i123, align 8, !tbaa !346
   %.not10.i124 = icmp eq i32 %i.fq, %i.fp
   br i1 %.not10.i124, label %bb.q, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6560,7 +6560,7 @@ bb.v:                                             ; preds = %_ZNSt3mapIiiSt4less
   %.sroa.015.021.i135 = phi ptr [ %i.hq, %bb.x ], [ %0, %.lr.ph.preheader.i132 ] ; 3 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i134, i64 32
   %i.hk = load i32, ptr %i.hj, align 4, !tbaa !364
-  %i.hl = load i32, ptr %.sroa.015.021.i135, align 4, !tbaa !346
+  %i.hl = load i32, ptr %.sroa.015.021.i135, align 8, !tbaa !346
   %.not10.i136 = icmp eq i32 %i.hl, %i.hk
   br i1 %.not10.i136, label %bb.w, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6599,7 +6599,7 @@ bb.y:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i147 = phi ptr [ %i.id, %bb.aa ], [ %2, %.lr.ph.preheader.i144 ] ; 3 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i146, i64 32
   %i.hx = load i32, ptr %i.hw, align 4, !tbaa !364
-  %i.hy = load i32, ptr %.sroa.015.021.i147, align 4, !tbaa !346
+  %i.hy = load i32, ptr %.sroa.015.021.i147, align 8, !tbaa !346
   %.not10.i148 = icmp eq i32 %i.hy, %i.hx
   br i1 %.not10.i148, label %bb.z, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6705,7 +6705,7 @@ bb.ad:                                            ; preds = %_ZNSt3mapIiiSt4less
   %.sroa.015.021.i165 = phi ptr [ %i.ji, %bb.af ], [ %0, %.lr.ph.preheader.i162 ] ; 3 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i164, i64 32
   %i.jc = load i32, ptr %i.jb, align 4, !tbaa !364
-  %i.jd = load i32, ptr %.sroa.015.021.i165, align 4, !tbaa !346
+  %i.jd = load i32, ptr %.sroa.015.021.i165, align 8, !tbaa !346
   %.not10.i166 = icmp eq i32 %i.jd, %i.jc
   br i1 %.not10.i166, label %bb.ae, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6744,7 +6744,7 @@ bb.ag:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i177 = phi ptr [ %i.jv, %bb.ai ], [ %2, %.lr.ph.preheader.i174 ] ; 3 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i176, i64 32
   %i.jp = load i32, ptr %i.jo, align 4, !tbaa !364
-  %i.jq = load i32, ptr %.sroa.015.021.i177, align 4, !tbaa !346
+  %i.jq = load i32, ptr %.sroa.015.021.i177, align 8, !tbaa !346
   %.not10.i178 = icmp eq i32 %i.jq, %i.jp
   br i1 %.not10.i178, label %bb.ah, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6925,7 +6925,7 @@ bb.al:                                            ; preds = %_ZNSt8multimapIiiSt
   %.sroa.015.021.i216 = phi ptr [ %i.ly, %bb.an ], [ %0, %.lr.ph.preheader.i213 ] ; 3 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i215, i64 32
   %i.ls = load i32, ptr %i.lr, align 4, !tbaa !364
-  %i.lt = load i32, ptr %.sroa.015.021.i216, align 4, !tbaa !346
+  %i.lt = load i32, ptr %.sroa.015.021.i216, align 8, !tbaa !346
   %.not10.i217 = icmp eq i32 %i.lt, %i.ls
   br i1 %.not10.i217, label %bb.am, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -6964,7 +6964,7 @@ bb.ao:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i228 = phi ptr [ %i.ml, %bb.aq ], [ %2, %.lr.ph.preheader.i225 ] ; 3 uses
   %i.me = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i227, i64 32
   %i.mf = load i32, ptr %i.me, align 4, !tbaa !364
-  %i.mg = load i32, ptr %.sroa.015.021.i228, align 4, !tbaa !346
+  %i.mg = load i32, ptr %.sroa.015.021.i228, align 8, !tbaa !346
   %.not10.i229 = icmp eq i32 %i.mg, %i.mf
   br i1 %.not10.i229, label %bb.ap, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -7333,7 +7333,7 @@ bb.be:                                            ; preds = %_ZNSt8multimapIiiSt
   %.sroa.015.021.i297 = phi ptr [ %i.qx, %bb.bg ], [ %0, %.lr.ph.preheader.i294 ] ; 3 uses
   %i.qq = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i296, i64 32
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !364
-  %i.qs = load i32, ptr %.sroa.015.021.i297, align 4, !tbaa !346
+  %i.qs = load i32, ptr %.sroa.015.021.i297, align 8, !tbaa !346
   %.not10.i298 = icmp eq i32 %i.qs, %i.qr
   br i1 %.not10.i298, label %bb.bf, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -7372,7 +7372,7 @@ bb.bh:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i309 = phi ptr [ %i.rk, %bb.bj ], [ %2, %.lr.ph.preheader.i306 ] ; 3 uses
   %i.rd = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i308, i64 32
   %i.re = load i32, ptr %i.rd, align 4, !tbaa !364
-  %i.rf = load i32, ptr %.sroa.015.021.i309, align 4, !tbaa !346
+  %i.rf = load i32, ptr %.sroa.015.021.i309, align 8, !tbaa !346
   %.not10.i310 = icmp eq i32 %i.rf, %i.re
   br i1 %.not10.i310, label %bb.bi, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit.thread
 
@@ -7415,7 +7415,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.019.026.i = phi ptr [ %i.rw, %bb.bk ], [ %0, %.preheader.i ] ; 2 uses
   %.sroa.015.025.i = phi ptr [ %i.rx, %bb.bk ], [ %i.rm, %.preheader.i ] ; 2 uses
   %i.rp = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i, i64 32
-  %i.rq = load <2 x i32>, ptr %.sroa.019.026.i, align 4
+  %i.rq = load <2 x i32>, ptr %.sroa.019.026.i, align 8
   %i.rr = load <2 x i32>, ptr %i.rp, align 4
   %i.rs = icmp eq <2 x i32> %i.rq, %i.rr          ; 2 uses
   %i.rt = extractelement <2 x i1> %i.rs, i64 0
@@ -7458,7 +7458,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.019.026.i333 = phi ptr [ %i.sj, %bb.bl ], [ %2, %.preheader.i330 ] ; 2 uses
   %.sroa.015.025.i334 = phi ptr [ %i.sk, %bb.bl ], [ %i.rz, %.preheader.i330 ] ; 2 uses
   %i.sc = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i334, i64 32
-  %i.sd = load <2 x i32>, ptr %.sroa.019.026.i333, align 4
+  %i.sd = load <2 x i32>, ptr %.sroa.019.026.i333, align 8
   %i.se = load <2 x i32>, ptr %i.sc, align 4
   %i.sf = icmp eq <2 x i32> %i.sd, %i.se          ; 2 uses
   %i.sg = extractelement <2 x i1> %i.sf, i64 0
@@ -7861,7 +7861,7 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.015.021.i = phi ptr [ %i.bf, %bb.g ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !364
-  %i.ba = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.ba = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.ba, %i.az
   br i1 %.not10.i, label %bb.f, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit
 
@@ -7965,7 +7965,7 @@ bb.j:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i27 = phi ptr [ %i.cr, %bb.l ], [ %2, %.lr.ph.preheader.i24 ] ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i26, i64 32
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !364
-  %i.cm = load i32, ptr %.sroa.015.021.i27, align 4, !tbaa !346
+  %i.cm = load i32, ptr %.sroa.015.021.i27, align 8, !tbaa !346
   %.not10.i28 = icmp eq i32 %i.cm, %i.cl
   br i1 %.not10.i28, label %bb.k, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit
 
@@ -8124,7 +8124,7 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.015.021.i = phi ptr [ %i.bf, %bb.g ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !364
-  %i.ba = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.ba = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.ba, %i.az
   br i1 %.not10.i, label %bb.f, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit
 
@@ -8228,7 +8228,7 @@ bb.j:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i27 = phi ptr [ %i.cr, %bb.l ], [ %2, %.lr.ph.preheader.i24 ] ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i26, i64 32
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !364
-  %i.cm = load i32, ptr %.sroa.015.021.i27, align 4, !tbaa !346
+  %i.cm = load i32, ptr %.sroa.015.021.i27, align 8, !tbaa !346
   %.not10.i28 = icmp eq i32 %i.cm, %i.cl
   br i1 %.not10.i28, label %bb.k, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit
 
@@ -8607,7 +8607,7 @@ bb.s:                                             ; preds = %bb.r
   %.sroa.015.021.i = phi ptr [ %i.ep, %bb.u ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.ej = load i32, ptr %i.ei, align 4, !tbaa !364
-  %i.ek = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.ek = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.ek, %i.ej
   br i1 %.not10.i, label %bb.t, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit144
 
@@ -8646,7 +8646,7 @@ bb.v:                                             ; preds = %_ZN5boost9container
   %.sroa.015.021.i93 = phi ptr [ %i.fc, %bb.x ], [ %2, %.lr.ph.preheader.i90 ] ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i92, i64 32
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !364
-  %i.ex = load i32, ptr %.sroa.015.021.i93, align 4, !tbaa !346
+  %i.ex = load i32, ptr %.sroa.015.021.i93, align 8, !tbaa !346
   %.not10.i94 = icmp eq i32 %i.ex, %i.ew
   br i1 %.not10.i94, label %bb.w, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit144
 
@@ -8871,7 +8871,7 @@ bb.an:                                            ; preds = %.critedge85
   %.sroa.015.021.i128 = phi ptr [ %i.ig, %bb.ap ], [ %0, %.lr.ph.preheader.i125 ] ; 3 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i127, i64 32
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !364
-  %i.ib = load i32, ptr %.sroa.015.021.i128, align 4, !tbaa !346
+  %i.ib = load i32, ptr %.sroa.015.021.i128, align 8, !tbaa !346
   %.not10.i129 = icmp eq i32 %i.ib, %i.ia
   br i1 %.not10.i129, label %bb.ao, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit144
 
@@ -8910,7 +8910,7 @@ bb.aq:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i140 = phi ptr [ %i.it, %bb.as ], [ %2, %.lr.ph.preheader.i137 ] ; 3 uses
   %i.im = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i139, i64 32
   %i.in = load i32, ptr %i.im, align 4, !tbaa !364
-  %i.io = load i32, ptr %.sroa.015.021.i140, align 4, !tbaa !346
+  %i.io = load i32, ptr %.sroa.015.021.i140, align 8, !tbaa !346
   %.not10.i141 = icmp eq i32 %i.io, %i.in
   br i1 %.not10.i141, label %bb.ar, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt8multimapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit144
 
@@ -9313,7 +9313,7 @@ _ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0
   %.sroa.015.021.i = phi ptr [ %i.fc, %bb.t ], [ %0, %.lr.ph.preheader.i ] ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !364
-  %i.ex = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.ex = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.ex, %i.ew
   br i1 %.not10.i, label %bb.s, label %_ZN5boost7movelib10unique_ptrINS_9container8flat_mapIiiSt4lessIiENS2_13static_vectorISt4pairIiiELm500EvEEEENS0_14default_deleteISA_EEED2Ev.exit
 
@@ -9439,7 +9439,7 @@ bb.aa:                                            ; preds = %bb.z
   %.sroa.015.021.i234 = phi ptr [ %i.gl, %bb.ac ], [ %0, %.lr.ph.preheader.i231 ] ; 3 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i233, i64 32
   %i.gf = load i32, ptr %i.ge, align 4, !tbaa !364
-  %i.gg = load i32, ptr %.sroa.015.021.i234, align 4, !tbaa !346
+  %i.gg = load i32, ptr %.sroa.015.021.i234, align 8, !tbaa !346
   %.not10.i235 = icmp eq i32 %i.gg, %i.gf
   br i1 %.not10.i235, label %bb.ab, label %_ZN5boost7movelib10unique_ptrINS_9container8flat_mapIiiSt4lessIiENS2_13static_vectorISt4pairIiiELm500EvEEEENS0_14default_deleteISA_EEED2Ev.exit
 
@@ -9775,7 +9775,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.al:                                            ; preds = %bb.am, %.preheader.i.i.i.i.i.i
   %.0.i.i.i.i.i.i = phi ptr [ %i.kx, %bb.am ], [ %2, %.preheader.i.i.i.i.i.i ] ; 4 uses
-  %i.kv = load i32, ptr %.0.i.i.i.i.i.i, align 4, !tbaa !337
+  %i.kv = load i32, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !337
   %i.kw = icmp slt i32 %i.ku, %i.kv
   br i1 %i.kw, label %bb.an, label %bb.am
 
@@ -9792,7 +9792,7 @@ bb.an:                                            ; preds = %bb.al
 bb.ao:                                            ; preds = %bb.aq, %bb.an
   %.025.i.i.i.i.i.i = phi ptr [ %i.kq, %bb.an ], [ %i.lb, %bb.aq ] ; 2 uses
   %i.lb = getelementptr inbounds i8, ptr %.025.i.i.i.i.i.i, i64 -8 ; 3 uses
-  %i.lc = load i32, ptr %i.lb, align 4, !tbaa !337
+  %i.lc = load i32, ptr %i.lb, align 8, !tbaa !337
   %i.ld = icmp slt i32 %i.lc, %i.la
   br i1 %i.ld, label %bb.ap, label %bb.aq
 
@@ -9890,7 +9890,7 @@ _ZN5boost9container4test24CheckEqualPairContainersINS0_13flat_multimapIiiSt4less
   %.sroa.015.021.i275 = phi ptr [ %i.ml, %bb.au ], [ %2, %.lr.ph.preheader.i272 ] ; 3 uses
   %i.me = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i274, i64 32
   %i.mf = load i32, ptr %i.me, align 4, !tbaa !364
-  %i.mg = load i32, ptr %.sroa.015.021.i275, align 4, !tbaa !346
+  %i.mg = load i32, ptr %.sroa.015.021.i275, align 8, !tbaa !346
   %.not10.i276 = icmp eq i32 %i.mg, %i.mf
   br i1 %.not10.i276, label %bb.at, label %_ZN5boost7movelib10unique_ptrINS_9container8flat_mapIiiSt4lessIiENS2_13static_vectorISt4pairIiiELm500EvEEEENS0_14default_deleteISA_EEED2Ev.exit
 
@@ -9945,7 +9945,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.ay:                                            ; preds = %bb.az, %.preheader.i.i.i.i.i.i286
   %.0.i.i.i.i.i.i287 = phi ptr [ %i.nb, %bb.az ], [ %2, %.preheader.i.i.i.i.i.i286 ] ; 4 uses
-  %i.mz = load i32, ptr %.0.i.i.i.i.i.i287, align 4, !tbaa !337
+  %i.mz = load i32, ptr %.0.i.i.i.i.i.i287, align 8, !tbaa !337
   %i.na = icmp slt i32 %i.my, %i.mz
   br i1 %i.na, label %bb.ba, label %bb.az
 
@@ -9962,7 +9962,7 @@ bb.ba:                                            ; preds = %bb.ay
 bb.bb:                                            ; preds = %bb.bd, %bb.ba
   %.025.i.i.i.i.i.i288 = phi ptr [ %i.mu, %bb.ba ], [ %i.nf, %bb.bd ] ; 2 uses
   %i.nf = getelementptr inbounds i8, ptr %.025.i.i.i.i.i.i288, i64 -8 ; 3 uses
-  %i.ng = load i32, ptr %i.nf, align 4, !tbaa !337
+  %i.ng = load i32, ptr %i.nf, align 8, !tbaa !337
   %i.nh = icmp slt i32 %i.ng, %i.ne
   br i1 %i.nh, label %bb.bc, label %bb.bd
 
@@ -10062,7 +10062,7 @@ bb.bf:                                            ; preds = %_ZN5boost9container
   %.sroa.015.021.i312 = phi ptr [ %i.op, %bb.bh ], [ %2, %.lr.ph.preheader.i309 ] ; 3 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i311, i64 32
   %i.oj = load i32, ptr %i.oi, align 4, !tbaa !364
-  %i.ok = load i32, ptr %.sroa.015.021.i312, align 4, !tbaa !346
+  %i.ok = load i32, ptr %.sroa.015.021.i312, align 8, !tbaa !346
   %.not10.i313 = icmp eq i32 %i.ok, %i.oj
   br i1 %.not10.i313, label %bb.bg, label %_ZN5boost7movelib10unique_ptrINS_9container8flat_mapIiiSt4lessIiENS2_13static_vectorISt4pairIiiELm500EvEEEENS0_14default_deleteISA_EEED2Ev.exit
 
@@ -10465,7 +10465,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.019.026 = phi ptr [ %i.r, %bb.c ], [ %0, %.preheader ] ; 2 uses
   %.sroa.015.025 = phi ptr [ %i.s, %bb.c ], [ %i.g, %.preheader ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.015.025, i64 32
-  %i.l = load <2 x i32>, ptr %.sroa.019.026, align 4
+  %i.l = load <2 x i32>, ptr %.sroa.019.026, align 8
   %i.m = load <2 x i32>, ptr %i.k, align 4
   %i.n = icmp eq <2 x i32> %i.l, %i.m             ; 2 uses
   %i.o = extractelement <2 x i1> %i.n, i64 0
@@ -10524,7 +10524,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.019.026 = phi ptr [ %i.r, %bb.c ], [ %0, %.preheader ] ; 2 uses
   %.sroa.015.025 = phi ptr [ %i.s, %bb.c ], [ %i.g, %.preheader ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.015.025, i64 32
-  %i.l = load <2 x i32>, ptr %.sroa.019.026, align 4
+  %i.l = load <2 x i32>, ptr %.sroa.019.026, align 8
   %i.m = load <2 x i32>, ptr %i.k, align 4
   %i.n = icmp eq <2 x i32> %i.l, %i.m             ; 2 uses
   %i.o = extractelement <2 x i1> %i.n, i64 0
@@ -10802,7 +10802,7 @@ bb.e:                                             ; preds = %_ZN5boost9container
 
 bb.f:                                             ; preds = %bb.g, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.bx, %bb.g ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.bv = load i32, ptr %.0.i.i, align 4, !tbaa !337
+  %i.bv = load i32, ptr %.0.i.i, align 8, !tbaa !337
   %i.bw = icmp slt i32 %i.bu, %i.bv
   br i1 %i.bw, label %bb.h, label %bb.g
 
@@ -10819,7 +10819,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.k, %bb.h
   %.025.i.i = phi ptr [ %i.br, %bb.h ], [ %i.cb, %bb.k ] ; 2 uses
   %i.cb = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !337
+  %i.cc = load i32, ptr %i.cb, align 8, !tbaa !337
   %i.cd = icmp slt i32 %i.cc, %i.ca
   br i1 %i.cd, label %bb.j, label %bb.k
 
@@ -11012,7 +11012,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.d:                                             ; preds = %bb.e, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.bk, %bb.e ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.bi = load i32, ptr %.0.i.i, align 4, !tbaa !337
+  %i.bi = load i32, ptr %.0.i.i, align 8, !tbaa !337
   %i.bj = icmp slt i32 %i.bh, %i.bi
   br i1 %i.bj, label %bb.f, label %bb.e
 
@@ -11029,7 +11029,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.i, %bb.f
   %.025.i.i = phi ptr [ %i.be, %bb.f ], [ %i.bo, %bb.i ] ; 2 uses
   %i.bo = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !337
+  %i.bp = load i32, ptr %i.bo, align 8, !tbaa !337
   %i.bq = icmp slt i32 %i.bp, %i.bn
   br i1 %i.bq, label %bb.h, label %bb.i
 
@@ -11085,8 +11085,8 @@ bb.a:
   br i1 %i.h, label %_ZN5boost9intrusive28algo_lexicographical_compareINS_9container12vec_iteratorIPSt4pairIiiELb1EEES7_EEbT_S8_T0_S9_.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i
-  %i.i = load i32, ptr %.sroa.02.0.i, align 4, !tbaa !346 ; 2 uses
-  %i.j = load i32, ptr %i.g, align 4, !tbaa !346  ; 2 uses
+  %i.i = load i32, ptr %.sroa.02.0.i, align 8, !tbaa !346 ; 2 uses
+  %i.j = load i32, ptr %i.g, align 8, !tbaa !346  ; 2 uses
   %i.k = icmp slt i32 %i.i, %i.j
   br i1 %i.k, label %_ZN5boost9intrusive28algo_lexicographical_compareINS_9container12vec_iteratorIPSt4pairIiiELb1EEES7_EEbT_S8_T0_S9_.exit, label %bb.c
 
@@ -11146,8 +11146,8 @@ bb.a:
   br i1 %i.h, label %_ZN5boost9containerltERKNS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESA_.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
-  %i.i = load i32, ptr %.sroa.02.0.i.i, align 4, !tbaa !346 ; 2 uses
-  %i.j = load i32, ptr %i.g, align 4, !tbaa !346  ; 2 uses
+  %i.i = load i32, ptr %.sroa.02.0.i.i, align 8, !tbaa !346 ; 2 uses
+  %i.j = load i32, ptr %i.g, align 8, !tbaa !346  ; 2 uses
   %i.k = icmp slt i32 %i.i, %i.j
   br i1 %i.k, label %_ZN5boost9containerltERKNS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESA_.exit, label %bb.c
 
@@ -11207,8 +11207,8 @@ bb.a:
   br i1 %i.h, label %_ZN5boost9containerltERKNS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESA_.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
-  %i.i = load i32, ptr %.sroa.02.0.i.i, align 4, !tbaa !346 ; 2 uses
-  %i.j = load i32, ptr %i.g, align 4, !tbaa !346  ; 2 uses
+  %i.i = load i32, ptr %.sroa.02.0.i.i, align 8, !tbaa !346 ; 2 uses
+  %i.j = load i32, ptr %i.g, align 8, !tbaa !346  ; 2 uses
   %i.k = icmp slt i32 %i.i, %i.j
   br i1 %i.k, label %_ZN5boost9containerltERKNS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESA_.exit, label %bb.c
 
@@ -11268,8 +11268,8 @@ bb.a:
   br i1 %i.h, label %_ZN5boost9containerltERKNS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESA_.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
-  %i.i = load i32, ptr %.sroa.02.0.i.i, align 4, !tbaa !346 ; 2 uses
-  %i.j = load i32, ptr %i.g, align 4, !tbaa !346  ; 2 uses
+  %i.i = load i32, ptr %.sroa.02.0.i.i, align 8, !tbaa !346 ; 2 uses
+  %i.j = load i32, ptr %i.g, align 8, !tbaa !346  ; 2 uses
   %i.k = icmp slt i32 %i.i, %i.j
   br i1 %i.k, label %_ZN5boost9containerltERKNS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESA_.exit, label %bb.c
 
@@ -11672,7 +11672,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.015.021 = phi ptr [ %i.o, %bb.d ], [ %0, %.lr.ph.preheader ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.022, i64 32
   %i.i = load i32, ptr %i.h, align 4, !tbaa !364
-  %i.j = load i32, ptr %.sroa.015.021, align 4, !tbaa !346
+  %i.j = load i32, ptr %.sroa.015.021, align 8, !tbaa !346
   %.not10 = icmp eq i32 %i.j, %i.i
   br i1 %.not10, label %bb.c, label %.critedge
 
@@ -11721,7 +11721,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.015.021 = phi ptr [ %i.o, %bb.d ], [ %0, %.lr.ph.preheader ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.022, i64 32
   %i.i = load i32, ptr %i.h, align 4, !tbaa !364
-  %i.j = load i32, ptr %.sroa.015.021, align 4, !tbaa !346
+  %i.j = load i32, ptr %.sroa.015.021, align 8, !tbaa !346
   %.not10 = icmp eq i32 %i.j, %i.i
   br i1 %.not10, label %bb.c, label %.critedge
 
@@ -12124,7 +12124,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.k:                                             ; preds = %bb.l, %.preheader.i
   %.0.i = phi ptr [ %i.al, %bb.l ], [ %0, %.preheader.i ] ; 4 uses
-  %i.aj = load i32, ptr %.0.i, align 4, !tbaa !337
+  %i.aj = load i32, ptr %.0.i, align 8, !tbaa !337
   %i.ak = icmp slt i32 %i.ai, %i.aj
   br i1 %i.ak, label %bb.m, label %bb.l
 
@@ -12141,7 +12141,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.p, %bb.m
   %.025.i = phi ptr [ %i.ae, %bb.m ], [ %i.ap, %bb.p ] ; 2 uses
   %i.ap = getelementptr inbounds i8, ptr %.025.i, i64 -8 ; 3 uses
-  %i.aq = load i32, ptr %i.ap, align 4, !tbaa !337
+  %i.aq = load i32, ptr %i.ap, align 8, !tbaa !337
   %i.ar = icmp slt i32 %i.aq, %i.ao
   br i1 %i.ar, label %bb.o, label %bb.p
 
@@ -12481,7 +12481,7 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.015.021.i = phi ptr [ %i.du, %bb.p ], [ %4, %.lr.ph.preheader.i ] ; 3 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !364
-  %i.dp = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.dp = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.dp, %i.do
   br i1 %.not10.i, label %bb.o, label %.critedge116
 
@@ -12664,7 +12664,7 @@ bb.ad:                                            ; preds = %bb.ac
   %.sroa.015.021.i134 = phi ptr [ %i.gc, %bb.af ], [ %4, %.lr.ph.preheader.i131 ] ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i133, i64 32
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !364
-  %i.fx = load i32, ptr %.sroa.015.021.i134, align 4, !tbaa !346
+  %i.fx = load i32, ptr %.sroa.015.021.i134, align 8, !tbaa !346
   %.not10.i135 = icmp eq i32 %i.fx, %i.fw
   br i1 %.not10.i135, label %bb.ae, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit138
 
@@ -12914,7 +12914,7 @@ bb.ap:                                            ; preds = %bb.ao
   %.sroa.015.021.i146 = phi ptr [ %i.jq, %bb.ar ], [ %8, %.lr.ph.preheader.i143 ] ; 3 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i145, i64 32
   %i.jk = load i32, ptr %i.jj, align 4, !tbaa !364
-  %i.jl = load i32, ptr %.sroa.015.021.i146, align 4, !tbaa !346
+  %i.jl = load i32, ptr %.sroa.015.021.i146, align 8, !tbaa !346
   %.not10.i147 = icmp eq i32 %i.jl, %i.jk
   br i1 %.not10.i147, label %bb.aq, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit163
 
@@ -13009,7 +13009,7 @@ bb.az:                                            ; preds = %bb.ay
   %.sroa.015.021.i159 = phi ptr [ %i.ks, %bb.bb ], [ %8, %.lr.ph.preheader.i156 ] ; 3 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i158, i64 32
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !364
-  %i.kn = load i32, ptr %.sroa.015.021.i159, align 4, !tbaa !346
+  %i.kn = load i32, ptr %.sroa.015.021.i159, align 8, !tbaa !346
   %.not10.i160 = icmp eq i32 %i.kn, %i.km
   br i1 %.not10.i160, label %bb.ba, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit163
 
@@ -13394,7 +13394,7 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.015.021.i = phi ptr [ %i.du, %bb.p ], [ %4, %.lr.ph.preheader.i ] ; 3 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 32
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !364
-  %i.dp = load i32, ptr %.sroa.015.021.i, align 4, !tbaa !346
+  %i.dp = load i32, ptr %.sroa.015.021.i, align 8, !tbaa !346
   %.not10.i = icmp eq i32 %i.dp, %i.do
   br i1 %.not10.i, label %bb.o, label %.critedge116
 
@@ -13577,7 +13577,7 @@ bb.ad:                                            ; preds = %bb.ac
   %.sroa.015.021.i134 = phi ptr [ %i.gc, %bb.af ], [ %4, %.lr.ph.preheader.i131 ] ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i133, i64 32
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !364
-  %i.fx = load i32, ptr %.sroa.015.021.i134, align 4, !tbaa !346
+  %i.fx = load i32, ptr %.sroa.015.021.i134, align 8, !tbaa !346
   %.not10.i135 = icmp eq i32 %i.fx, %i.fw
   br i1 %.not10.i135, label %bb.ae, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit138
 
@@ -13827,7 +13827,7 @@ bb.ap:                                            ; preds = %bb.ao
   %.sroa.015.021.i146 = phi ptr [ %i.jq, %bb.ar ], [ %8, %.lr.ph.preheader.i143 ] ; 3 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i145, i64 32
   %i.jk = load i32, ptr %i.jj, align 4, !tbaa !364
-  %i.jl = load i32, ptr %.sroa.015.021.i146, align 4, !tbaa !346
+  %i.jl = load i32, ptr %.sroa.015.021.i146, align 8, !tbaa !346
   %.not10.i147 = icmp eq i32 %i.jl, %i.jk
   br i1 %.not10.i147, label %bb.aq, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit163
 
@@ -13922,7 +13922,7 @@ bb.az:                                            ; preds = %bb.ay
   %.sroa.015.021.i159 = phi ptr [ %i.ks, %bb.bb ], [ %8, %.lr.ph.preheader.i156 ] ; 3 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i158, i64 32
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !364
-  %i.kn = load i32, ptr %.sroa.015.021.i159, align 4, !tbaa !346
+  %i.kn = load i32, ptr %.sroa.015.021.i159, align 8, !tbaa !346
   %.not10.i160 = icmp eq i32 %i.kn, %i.km
   br i1 %.not10.i160, label %bb.ba, label %_ZN5boost9container4test24CheckEqualPairContainersINS0_8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEEESt3mapIiiS5_SaIS7_IKiiEEEEEbRKT_RKT0_.exit163
 
@@ -14325,7 +14325,7 @@ bb.f:                                             ; preds = %_ZN5boost9container
 
 bb.g:                                             ; preds = %bb.h, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.ak, %bb.h ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.ai = load i32, ptr %.0.i.i, align 4, !tbaa !337
+  %i.ai = load i32, ptr %.0.i.i, align 8, !tbaa !337
   %i.aj = icmp slt i32 %i.ah, %i.ai
   br i1 %i.aj, label %bb.i, label %bb.h
 
@@ -14342,7 +14342,7 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.l, %bb.i
   %.025.i.i = phi ptr [ %i.ae, %bb.i ], [ %i.ao, %bb.l ] ; 2 uses
   %i.ao = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !337
+  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !337
   %i.aq = icmp slt i32 %i.ap, %i.an
   br i1 %i.aq, label %bb.k, label %bb.l
 
@@ -14429,7 +14429,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.f:                                             ; preds = %bb.g, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.v, %bb.g ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.t = load i32, ptr %.0.i.i, align 4, !tbaa !337
+  %i.t = load i32, ptr %.0.i.i, align 8, !tbaa !337
   %i.u = icmp slt i32 %i.s, %i.t
   br i1 %i.u, label %bb.h, label %bb.g
 
@@ -14446,7 +14446,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.k, %bb.h
   %.025.i.i = phi ptr [ %i.p, %bb.h ], [ %i.z, %bb.k ] ; 2 uses
   %i.z = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !337
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !337
   %i.ab = icmp slt i32 %i.aa, %i.y
   br i1 %i.ab, label %bb.j, label %bb.k
 
@@ -14580,7 +14580,7 @@ bb.f:                                             ; preds = %_ZN5boost9container
 
 bb.g:                                             ; preds = %bb.h, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.ak, %bb.h ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.ai = load i32, ptr %.0.i.i, align 4, !tbaa !337
+  %i.ai = load i32, ptr %.0.i.i, align 8, !tbaa !337
   %i.aj = icmp slt i32 %i.ah, %i.ai
   br i1 %i.aj, label %bb.i, label %bb.h
 
@@ -14597,7 +14597,7 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.l, %bb.i
   %.025.i.i = phi ptr [ %i.ae, %bb.i ], [ %i.ao, %bb.l ] ; 2 uses
   %i.ao = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !337
+  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !337
   %i.aq = icmp slt i32 %i.ap, %i.an
   br i1 %i.aq, label %bb.k, label %bb.l
 
@@ -14684,7 +14684,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.f:                                             ; preds = %bb.g, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.v, %bb.g ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.t = load i32, ptr %.0.i.i, align 4, !tbaa !337
+  %i.t = load i32, ptr %.0.i.i, align 8, !tbaa !337
   %i.u = icmp slt i32 %i.s, %i.t
   br i1 %i.u, label %bb.h, label %bb.g
 
@@ -14701,7 +14701,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.k, %bb.h
   %.025.i.i = phi ptr [ %i.p, %bb.h ], [ %i.z, %bb.k ] ; 2 uses
   %i.z = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !337
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !337
   %i.ab = icmp slt i32 %i.aa, %i.y
   br i1 %i.ab, label %bb.j, label %bb.k
 
@@ -14764,7 +14764,7 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %.sroa.015.024 = phi ptr [ %i.r, %bb.c ], [ %1, %_ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiEEEENS_7movelib9iter_sizeIT_E4typeES9_S9_.exit.thread ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.019.025, i64 32
   %i.k = load <2 x i32>, ptr %i.j, align 4
-  %i.l = load <2 x i32>, ptr %.sroa.015.024, align 4
+  %i.l = load <2 x i32>, ptr %.sroa.015.024, align 8
   %i.m = icmp eq <2 x i32> %i.k, %i.l             ; 2 uses
   %i.n = extractelement <2 x i1> %i.m, i64 0
   %i.o = extractelement <2 x i1> %i.m, i64 1
@@ -14817,7 +14817,7 @@ _ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i, i64 32
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01417.i.i.i.i.i.i) ]
   %i.i = load i32, ptr %i.h, align 4, !tbaa !337, !noalias !9663
-  store i32 %i.i, ptr %.01417.i.i.i.i.i.i, align 4, !tbaa !337, !noalias !9663
+  store i32 %i.i, ptr %.01417.i.i.i.i.i.i, align 8, !tbaa !337, !noalias !9663
   %i.j = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.i.i.i, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i, i64 36
   %i.l = load i32, ptr %i.k, align 4, !tbaa !337, !noalias !9663
@@ -14850,7 +14850,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 bb.c:                                             ; preds = %bb.d, %.preheader.i
   %.0.i = phi ptr [ %i.x, %bb.d ], [ %0, %.preheader.i ] ; 4 uses
-  %i.v = load i32, ptr %.0.i, align 4, !tbaa !337
+  %i.v = load i32, ptr %.0.i, align 8, !tbaa !337
   %i.w = icmp slt i32 %i.u, %i.v
   br i1 %i.w, label %bb.e, label %bb.d
 
@@ -14867,7 +14867,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.h, %bb.e
   %.025.i = phi ptr [ %i.q, %bb.e ], [ %i.ab, %bb.h ] ; 2 uses
   %i.ab = getelementptr inbounds i8, ptr %.025.i, i64 -8 ; 3 uses
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !337
+  %i.ac = load i32, ptr %i.ab, align 8, !tbaa !337
   %i.ad = icmp slt i32 %i.ac, %i.aa
   br i1 %i.ad, label %bb.g, label %bb.h
 
@@ -14938,7 +14938,7 @@ _ZN5boost9intrusive18iterator_udistanceISt17_Rb_tree_iteratorISt4pairIKiiEEEENS_
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i, i64 32
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01417.i.i.i.i.i.i) ]
   %i.i = load i32, ptr %i.h, align 4, !tbaa !337, !noalias !9680
-  store i32 %i.i, ptr %.01417.i.i.i.i.i.i, align 4, !tbaa !337, !noalias !9680
+  store i32 %i.i, ptr %.01417.i.i.i.i.i.i, align 8, !tbaa !337, !noalias !9680
   %i.j = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.i.i.i, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.i.i.i, i64 36
   %i.l = load i32, ptr %i.k, align 4, !tbaa !337, !noalias !9680
@@ -14995,7 +14995,7 @@ _ZN5boost9container6vectorISt4pairIiiENS0_3dtl24static_storage_allocatorIS3_Lm50
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %bb.c
   %.sroa.09.0 = phi ptr [ %i.ah, %bb.c ], [ %0, %.preheader.i.preheader ] ; 4 uses
-  %i.af = load i32, ptr %.sroa.09.0, align 4, !tbaa !337
+  %i.af = load i32, ptr %.sroa.09.0, align 8, !tbaa !337
   %i.ag = icmp slt i32 %i.ae, %i.af
   br i1 %i.ag, label %bb.d, label %bb.c
 
@@ -15320,8 +15320,8 @@ _ZN5boost7movelib7pdqsortIPSt4pairIiiENS_9container3dtl23flat_tree_value_compare
   %indvar = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvar.next, %bb.f ] ; 2 uses
   %i.j = phi ptr [ %1, %.lr.ph.i.preheader ], [ %i.at, %bb.f ] ; 7 uses
   %.sroa.0.017.i = phi ptr [ %.sroa.0.015.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.f ] ; 6 uses
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !337, !noalias !9714 ; 4 uses
-  %i.l = load i32, ptr %.sroa.0.017.i, align 4, !tbaa !337, !noalias !9714
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !337, !noalias !9714 ; 4 uses
+  %i.l = load i32, ptr %.sroa.0.017.i, align 8, !tbaa !337, !noalias !9714
   %.not9.i = icmp slt i32 %i.k, %i.l
   br i1 %.not9.i, label %bb.f, label %.preheader.i
 

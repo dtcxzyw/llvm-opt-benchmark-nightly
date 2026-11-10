@@ -205,7 +205,7 @@ bb.a:
   %.02340.i = phi ptr [ %i.a, %bb.a ], [ %i.hh, %.preheader29.i ] ; 65 uses
   %.02439.i = phi ptr [ %1, %bb.a ], [ %i.hn, %.preheader29.i ] ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.02340.i, i64 8
-  %i.j = load double, ptr %.02340.i, align 8, !tbaa !18
+  %i.j = load double, ptr %.02340.i, align 256, !tbaa !18
   store double %i.j, ptr %.02439.i, align 8, !tbaa !18
   %i.k = getelementptr inbounds [8 x i8], ptr %.02439.i, i64 %2 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.02340.i, i64 16
@@ -213,7 +213,7 @@ bb.a:
   store double %i.m, ptr %i.k, align 8, !tbaa !18
   %i.n = getelementptr inbounds [8 x i8], ptr %i.k, i64 %2 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.02340.i, i64 24
-  %i.p = load double, ptr %i.l, align 8, !tbaa !18
+  %i.p = load double, ptr %i.l, align 16, !tbaa !18
   store double %i.p, ptr %i.n, align 8, !tbaa !18
   %i.q = getelementptr inbounds [8 x i8], ptr %i.n, i64 %2 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.02340.i, i64 32
@@ -222,7 +222,7 @@ bb.a:
   %i.t = getelementptr inbounds [8 x i8], ptr %i.q, i64 %2
   %i.u = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.d ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.02340.i, i64 40
-  %i.w = load double, ptr %i.r, align 8, !tbaa !18
+  %i.w = load double, ptr %i.r, align 32, !tbaa !18
   store double %i.w, ptr %i.u, align 8, !tbaa !18
   %i.x = getelementptr inbounds [8 x i8], ptr %i.u, i64 %2 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.02340.i, i64 48
@@ -230,7 +230,7 @@ bb.a:
   store double %i.z, ptr %i.x, align 8, !tbaa !18
   %i.aa = getelementptr inbounds [8 x i8], ptr %i.x, i64 %2 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.02340.i, i64 56
-  %i.ac = load double, ptr %i.y, align 8, !tbaa !18
+  %i.ac = load double, ptr %i.y, align 16, !tbaa !18
   store double %i.ac, ptr %i.aa, align 8, !tbaa !18
   %i.ad = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %2 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.02340.i, i64 64
@@ -239,7 +239,7 @@ bb.a:
   %i.ag = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %2
   %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.d ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.02340.i, i64 72
-  %i.aj = load double, ptr %i.ae, align 8, !tbaa !18
+  %i.aj = load double, ptr %i.ae, align 64, !tbaa !18
   store double %i.aj, ptr %i.ah, align 8, !tbaa !18
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %2 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.02340.i, i64 80
@@ -247,7 +247,7 @@ bb.a:
   store double %i.am, ptr %i.ak, align 8, !tbaa !18
   %i.an = getelementptr inbounds [8 x i8], ptr %i.ak, i64 %2 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.02340.i, i64 88
-  %i.ap = load double, ptr %i.al, align 8, !tbaa !18
+  %i.ap = load double, ptr %i.al, align 16, !tbaa !18
   store double %i.ap, ptr %i.an, align 8, !tbaa !18
   %i.aq = getelementptr inbounds [8 x i8], ptr %i.an, i64 %2 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.02340.i, i64 96
@@ -256,7 +256,7 @@ bb.a:
   %i.at = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %2
   %i.au = getelementptr inbounds [8 x i8], ptr %i.at, i64 %i.d ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.02340.i, i64 104
-  %i.aw = load double, ptr %i.ar, align 8, !tbaa !18
+  %i.aw = load double, ptr %i.ar, align 32, !tbaa !18
   store double %i.aw, ptr %i.au, align 8, !tbaa !18
   %i.ax = getelementptr inbounds [8 x i8], ptr %i.au, i64 %2 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.02340.i, i64 112
@@ -264,7 +264,7 @@ bb.a:
   store double %i.az, ptr %i.ax, align 8, !tbaa !18
   %i.ba = getelementptr inbounds [8 x i8], ptr %i.ax, i64 %2 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.02340.i, i64 120
-  %i.bc = load double, ptr %i.ay, align 8, !tbaa !18
+  %i.bc = load double, ptr %i.ay, align 16, !tbaa !18
   store double %i.bc, ptr %i.ba, align 8, !tbaa !18
   %i.bd = getelementptr inbounds [8 x i8], ptr %i.ba, i64 %2 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.02340.i, i64 128
@@ -274,7 +274,7 @@ bb.a:
   %i.bh = getelementptr inbounds [8 x i8], ptr %i.bg, i64 %i.d
   %i.bi = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %i.f ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.02340.i, i64 136
-  %i.bk = load double, ptr %i.be, align 8, !tbaa !18
+  %i.bk = load double, ptr %i.be, align 128, !tbaa !18
   store double %i.bk, ptr %i.bi, align 8, !tbaa !18
   %i.bl = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %2 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.02340.i, i64 144
@@ -282,7 +282,7 @@ bb.a:
   store double %i.bn, ptr %i.bl, align 8, !tbaa !18
   %i.bo = getelementptr inbounds [8 x i8], ptr %i.bl, i64 %2 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.02340.i, i64 152
-  %i.bq = load double, ptr %i.bm, align 8, !tbaa !18
+  %i.bq = load double, ptr %i.bm, align 16, !tbaa !18
   store double %i.bq, ptr %i.bo, align 8, !tbaa !18
   %i.br = getelementptr inbounds [8 x i8], ptr %i.bo, i64 %2 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.02340.i, i64 160
@@ -291,7 +291,7 @@ bb.a:
   %i.bu = getelementptr inbounds [8 x i8], ptr %i.br, i64 %2
   %i.bv = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %i.d ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.02340.i, i64 168
-  %i.bx = load double, ptr %i.bs, align 8, !tbaa !18
+  %i.bx = load double, ptr %i.bs, align 32, !tbaa !18
   store double %i.bx, ptr %i.bv, align 8, !tbaa !18
   %i.by = getelementptr inbounds [8 x i8], ptr %i.bv, i64 %2 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.02340.i, i64 176
@@ -299,7 +299,7 @@ bb.a:
   store double %i.ca, ptr %i.by, align 8, !tbaa !18
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.by, i64 %2 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.02340.i, i64 184
-  %i.cd = load double, ptr %i.bz, align 8, !tbaa !18
+  %i.cd = load double, ptr %i.bz, align 16, !tbaa !18
   store double %i.cd, ptr %i.cb, align 8, !tbaa !18
   %i.ce = getelementptr inbounds [8 x i8], ptr %i.cb, i64 %2 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.02340.i, i64 192
@@ -308,7 +308,7 @@ bb.a:
   %i.ch = getelementptr inbounds [8 x i8], ptr %i.ce, i64 %2
   %i.ci = getelementptr inbounds [8 x i8], ptr %i.ch, i64 %i.d ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.02340.i, i64 200
-  %i.ck = load double, ptr %i.cf, align 8, !tbaa !18
+  %i.ck = load double, ptr %i.cf, align 64, !tbaa !18
   store double %i.ck, ptr %i.ci, align 8, !tbaa !18
   %i.cl = getelementptr inbounds [8 x i8], ptr %i.ci, i64 %2 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.02340.i, i64 208
@@ -316,7 +316,7 @@ bb.a:
   store double %i.cn, ptr %i.cl, align 8, !tbaa !18
   %i.co = getelementptr inbounds [8 x i8], ptr %i.cl, i64 %2 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.02340.i, i64 216
-  %i.cq = load double, ptr %i.cm, align 8, !tbaa !18
+  %i.cq = load double, ptr %i.cm, align 16, !tbaa !18
   store double %i.cq, ptr %i.co, align 8, !tbaa !18
   %i.cr = getelementptr inbounds [8 x i8], ptr %i.co, i64 %2 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.02340.i, i64 224
@@ -325,7 +325,7 @@ bb.a:
   %i.cu = getelementptr inbounds [8 x i8], ptr %i.cr, i64 %2
   %i.cv = getelementptr inbounds [8 x i8], ptr %i.cu, i64 %i.d ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.02340.i, i64 232
-  %i.cx = load double, ptr %i.cs, align 8, !tbaa !18
+  %i.cx = load double, ptr %i.cs, align 32, !tbaa !18
   store double %i.cx, ptr %i.cv, align 8, !tbaa !18
   %i.cy = getelementptr inbounds [8 x i8], ptr %i.cv, i64 %2 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.02340.i, i64 240
@@ -333,7 +333,7 @@ bb.a:
   store double %i.da, ptr %i.cy, align 8, !tbaa !18
   %i.db = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %2 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.02340.i, i64 248
-  %i.dd = load double, ptr %i.cz, align 8, !tbaa !18
+  %i.dd = load double, ptr %i.cz, align 16, !tbaa !18
   store double %i.dd, ptr %i.db, align 8, !tbaa !18
   %i.de = getelementptr inbounds [8 x i8], ptr %i.db, i64 %2 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.02340.i, i64 256
@@ -343,7 +343,7 @@ bb.a:
   %i.di = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.d
   %i.dj = getelementptr inbounds [8 x i8], ptr %i.di, i64 %i.f ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.02340.i, i64 264
-  %i.dl = load double, ptr %i.df, align 8, !tbaa !18
+  %i.dl = load double, ptr %i.df, align 256, !tbaa !18
   store double %i.dl, ptr %i.dj, align 8, !tbaa !18
   %i.dm = getelementptr inbounds [8 x i8], ptr %i.dj, i64 %2 ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.02340.i, i64 272
@@ -351,7 +351,7 @@ bb.a:
   store double %i.do, ptr %i.dm, align 8, !tbaa !18
   %i.dp = getelementptr inbounds [8 x i8], ptr %i.dm, i64 %2 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.02340.i, i64 280
-  %i.dr = load double, ptr %i.dn, align 8, !tbaa !18
+  %i.dr = load double, ptr %i.dn, align 16, !tbaa !18
   store double %i.dr, ptr %i.dp, align 8, !tbaa !18
   %i.ds = getelementptr inbounds [8 x i8], ptr %i.dp, i64 %2 ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %.02340.i, i64 288
@@ -360,7 +360,7 @@ bb.a:
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.ds, i64 %2
   %i.dw = getelementptr inbounds [8 x i8], ptr %i.dv, i64 %i.d ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %.02340.i, i64 296
-  %i.dy = load double, ptr %i.dt, align 8, !tbaa !18
+  %i.dy = load double, ptr %i.dt, align 32, !tbaa !18
   store double %i.dy, ptr %i.dw, align 8, !tbaa !18
   %i.dz = getelementptr inbounds [8 x i8], ptr %i.dw, i64 %2 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %.02340.i, i64 304
@@ -368,7 +368,7 @@ bb.a:
   store double %i.eb, ptr %i.dz, align 8, !tbaa !18
   %i.ec = getelementptr inbounds [8 x i8], ptr %i.dz, i64 %2 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %.02340.i, i64 312
-  %i.ee = load double, ptr %i.ea, align 8, !tbaa !18
+  %i.ee = load double, ptr %i.ea, align 16, !tbaa !18
   store double %i.ee, ptr %i.ec, align 8, !tbaa !18
   %i.ef = getelementptr inbounds [8 x i8], ptr %i.ec, i64 %2 ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.02340.i, i64 320
@@ -377,7 +377,7 @@ bb.a:
   %i.ei = getelementptr inbounds [8 x i8], ptr %i.ef, i64 %2
   %i.ej = getelementptr inbounds [8 x i8], ptr %i.ei, i64 %i.d ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.02340.i, i64 328
-  %i.el = load double, ptr %i.eg, align 8, !tbaa !18
+  %i.el = load double, ptr %i.eg, align 64, !tbaa !18
   store double %i.el, ptr %i.ej, align 8, !tbaa !18
   %i.em = getelementptr inbounds [8 x i8], ptr %i.ej, i64 %2 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %.02340.i, i64 336
@@ -385,7 +385,7 @@ bb.a:
   store double %i.eo, ptr %i.em, align 8, !tbaa !18
   %i.ep = getelementptr inbounds [8 x i8], ptr %i.em, i64 %2 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.02340.i, i64 344
-  %i.er = load double, ptr %i.en, align 8, !tbaa !18
+  %i.er = load double, ptr %i.en, align 16, !tbaa !18
   store double %i.er, ptr %i.ep, align 8, !tbaa !18
   %i.es = getelementptr inbounds [8 x i8], ptr %i.ep, i64 %2 ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.02340.i, i64 352
@@ -394,7 +394,7 @@ bb.a:
   %i.ev = getelementptr inbounds [8 x i8], ptr %i.es, i64 %2
   %i.ew = getelementptr inbounds [8 x i8], ptr %i.ev, i64 %i.d ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %.02340.i, i64 360
-  %i.ey = load double, ptr %i.et, align 8, !tbaa !18
+  %i.ey = load double, ptr %i.et, align 32, !tbaa !18
   store double %i.ey, ptr %i.ew, align 8, !tbaa !18
   %i.ez = getelementptr inbounds [8 x i8], ptr %i.ew, i64 %2 ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.02340.i, i64 368
@@ -402,7 +402,7 @@ bb.a:
   store double %i.fb, ptr %i.ez, align 8, !tbaa !18
   %i.fc = getelementptr inbounds [8 x i8], ptr %i.ez, i64 %2 ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.02340.i, i64 376
-  %i.fe = load double, ptr %i.fa, align 8, !tbaa !18
+  %i.fe = load double, ptr %i.fa, align 16, !tbaa !18
   store double %i.fe, ptr %i.fc, align 8, !tbaa !18
   %i.ff = getelementptr inbounds [8 x i8], ptr %i.fc, i64 %2 ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %.02340.i, i64 384
@@ -412,7 +412,7 @@ bb.a:
   %i.fj = getelementptr inbounds [8 x i8], ptr %i.fi, i64 %i.d
   %i.fk = getelementptr inbounds [8 x i8], ptr %i.fj, i64 %i.f ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %.02340.i, i64 392
-  %i.fm = load double, ptr %i.fg, align 8, !tbaa !18
+  %i.fm = load double, ptr %i.fg, align 128, !tbaa !18
   store double %i.fm, ptr %i.fk, align 8, !tbaa !18
   %i.fn = getelementptr inbounds [8 x i8], ptr %i.fk, i64 %2 ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.02340.i, i64 400
@@ -420,7 +420,7 @@ bb.a:
   store double %i.fp, ptr %i.fn, align 8, !tbaa !18
   %i.fq = getelementptr inbounds [8 x i8], ptr %i.fn, i64 %2 ; 2 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %.02340.i, i64 408
-  %i.fs = load double, ptr %i.fo, align 8, !tbaa !18
+  %i.fs = load double, ptr %i.fo, align 16, !tbaa !18
   store double %i.fs, ptr %i.fq, align 8, !tbaa !18
   %i.ft = getelementptr inbounds [8 x i8], ptr %i.fq, i64 %2 ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %.02340.i, i64 416
@@ -429,7 +429,7 @@ bb.a:
   %i.fw = getelementptr inbounds [8 x i8], ptr %i.ft, i64 %2
   %i.fx = getelementptr inbounds [8 x i8], ptr %i.fw, i64 %i.d ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %.02340.i, i64 424
-  %i.fz = load double, ptr %i.fu, align 8, !tbaa !18
+  %i.fz = load double, ptr %i.fu, align 32, !tbaa !18
   store double %i.fz, ptr %i.fx, align 8, !tbaa !18
   %i.ga = getelementptr inbounds [8 x i8], ptr %i.fx, i64 %2 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %.02340.i, i64 432
@@ -437,7 +437,7 @@ bb.a:
   store double %i.gc, ptr %i.ga, align 8, !tbaa !18
   %i.gd = getelementptr inbounds [8 x i8], ptr %i.ga, i64 %2 ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %.02340.i, i64 440
-  %i.gf = load double, ptr %i.gb, align 8, !tbaa !18
+  %i.gf = load double, ptr %i.gb, align 16, !tbaa !18
   store double %i.gf, ptr %i.gd, align 8, !tbaa !18
   %i.gg = getelementptr inbounds [8 x i8], ptr %i.gd, i64 %2 ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %.02340.i, i64 448
@@ -446,7 +446,7 @@ bb.a:
   %i.gj = getelementptr inbounds [8 x i8], ptr %i.gg, i64 %2
   %i.gk = getelementptr inbounds [8 x i8], ptr %i.gj, i64 %i.d ; 2 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %.02340.i, i64 456
-  %i.gm = load double, ptr %i.gh, align 8, !tbaa !18
+  %i.gm = load double, ptr %i.gh, align 64, !tbaa !18
   store double %i.gm, ptr %i.gk, align 8, !tbaa !18
   %i.gn = getelementptr inbounds [8 x i8], ptr %i.gk, i64 %2 ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %.02340.i, i64 464
@@ -454,7 +454,7 @@ bb.a:
   store double %i.gp, ptr %i.gn, align 8, !tbaa !18
   %i.gq = getelementptr inbounds [8 x i8], ptr %i.gn, i64 %2 ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %.02340.i, i64 472
-  %i.gs = load double, ptr %i.go, align 8, !tbaa !18
+  %i.gs = load double, ptr %i.go, align 16, !tbaa !18
   store double %i.gs, ptr %i.gq, align 8, !tbaa !18
   %i.gt = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %2 ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.02340.i, i64 480
@@ -463,7 +463,7 @@ bb.a:
   %i.gw = getelementptr inbounds [8 x i8], ptr %i.gt, i64 %2
   %i.gx = getelementptr inbounds [8 x i8], ptr %i.gw, i64 %i.d ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %.02340.i, i64 488
-  %i.gz = load double, ptr %i.gu, align 8, !tbaa !18
+  %i.gz = load double, ptr %i.gu, align 32, !tbaa !18
   store double %i.gz, ptr %i.gx, align 8, !tbaa !18
   %i.ha = getelementptr inbounds [8 x i8], ptr %i.gx, i64 %2 ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %.02340.i, i64 496
@@ -471,7 +471,7 @@ bb.a:
   store double %i.hc, ptr %i.ha, align 8, !tbaa !18
   %i.hd = getelementptr inbounds [8 x i8], ptr %i.ha, i64 %2 ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %.02340.i, i64 504
-  %i.hf = load double, ptr %i.hb, align 8, !tbaa !18
+  %i.hf = load double, ptr %i.hb, align 16, !tbaa !18
   store double %i.hf, ptr %i.hd, align 8, !tbaa !18
   %i.hg = getelementptr inbounds [8 x i8], ptr %i.hd, i64 %2 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %.02340.i, i64 512

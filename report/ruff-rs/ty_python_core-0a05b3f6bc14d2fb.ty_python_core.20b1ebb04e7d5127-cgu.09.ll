@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.lr.ph32
 .lr.ph32:                                         ; preds = %bb.h, %bb.i
   %.sroa.0.0.i54.1.i30 = phi ptr [ %i.ec, %bb.i ], [ %i.ds, %bb.h ] ; 4 uses
   %i.ec = getelementptr inbounds i8, ptr %.sroa.0.0.i54.1.i30, i64 -24 ; 4 uses
-  %.val9.i55.1.i = load i32, ptr %i.ec, align 4, !range !7, !alias.scope !853, !noundef !5 ; 2 uses
+  %.val9.i55.1.i = load i32, ptr %i.ec, align 8, !range !7, !alias.scope !853, !noundef !5 ; 2 uses
   %i.ed = getelementptr i8, ptr %.sroa.0.0.i54.1.i30, i64 -20
   %.val10.i56.1.i = load i32, ptr %i.ed, align 4, !alias.scope !853
   %i.ee = icmp eq i32 %.val11.i50.1.i, %.val9.i55.1.i
@@ -269,10 +269,10 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.ex, i64 0, i64 24
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx ; 5 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 24 ; 2 uses
-  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 4, !range !7, !alias.scope !857, !noundef !5 ; 2 uses
+  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 8, !range !7, !alias.scope !857, !noundef !5 ; 2 uses
   %i.ez = getelementptr i8, ptr %.sroa.017.05.i.i, i64 4
   %.sroa.017.0.val26.i.i = load i32, ptr %i.ez, align 4, !alias.scope !857
-  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 4, !range !7, !alias.scope !857, !noundef !5 ; 2 uses
+  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 8, !range !7, !alias.scope !857, !noundef !5 ; 2 uses
   %i.fa = getelementptr i8, ptr %.sroa.015.06.i.i, i64 4
   %.sroa.015.0.val27.i.i = load i32, ptr %i.fa, align 4, !alias.scope !857
   %i.fb = icmp eq i32 %.sroa.017.0.val.i.i, %.sroa.015.0.val.i.i
@@ -357,7 +357,7 @@ bb.o:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.n, %bb.o
   %.sroa.0.0.i54.i27 = phi ptr [ %i.fz, %bb.o ], [ %i.fp, %bb.n ] ; 4 uses
   %i.fz = getelementptr inbounds i8, ptr %.sroa.0.0.i54.i27, i64 -24 ; 4 uses
-  %.val9.i55.i = load i32, ptr %i.fz, align 4, !range !7, !alias.scope !853, !noundef !5 ; 2 uses
+  %.val9.i55.i = load i32, ptr %i.fz, align 8, !range !7, !alias.scope !853, !noundef !5 ; 2 uses
   %i.ga = getelementptr i8, ptr %.sroa.0.0.i54.i27, i64 -20
   %.val10.i56.i = load i32, ptr %i.ga, align 4, !alias.scope !853
   %i.gb = icmp eq i32 %.val11.i50.i, %.val9.i55.i
@@ -546,7 +546,7 @@ bb.i:                                             ; preds = %.lr.ph33
 .lr.ph33:                                         ; preds = %bb.h, %bb.i
   %.sroa.0.0.i41.1.i31 = phi ptr [ %i.bz, %bb.i ], [ %i.bu, %bb.h ] ; 3 uses
   %i.bz = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i31, i64 -24 ; 4 uses
-  %.val8.i42.1.i = load i32, ptr %i.bz, align 4, !range !7, !alias.scope !882, !noundef !5
+  %.val8.i42.1.i = load i32, ptr %i.bz, align 8, !range !7, !alias.scope !882, !noundef !5
   %i.ca = icmp ult i32 %.val9.i40.1.i, %.val8.i42.1.i
   br i1 %i.ca, label %bb.i, label %._crit_edge34
 
@@ -596,8 +596,8 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not, i64 0, i64 24
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx ; 5 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 24 ; 2 uses
-  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 4, !range !7, !alias.scope !886, !noundef !5
-  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 4, !range !7, !alias.scope !886, !noundef !5
+  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 8, !range !7, !alias.scope !886, !noundef !5
+  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 8, !range !7, !alias.scope !886, !noundef !5
   %i.cm = icmp ult i32 %.sroa.017.0.val.i.i, %.sroa.015.0.val.i.i ; 3 uses
   %..i.i.i = select i1 %i.cm, ptr %.sroa.015.06.i.i, ptr %.sroa.017.05.i.i
   %i.cn = xor i1 %i.cm, true
@@ -670,7 +670,7 @@ bb.o:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.n, %bb.o
   %.sroa.0.0.i41.i28 = phi ptr [ %i.dc, %bb.o ], [ %i.cx, %bb.n ] ; 3 uses
   %i.dc = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i28, i64 -24 ; 4 uses
-  %.val8.i42.i = load i32, ptr %i.dc, align 4, !range !7, !alias.scope !882, !noundef !5
+  %.val8.i42.i = load i32, ptr %i.dc, align 8, !range !7, !alias.scope !882, !noundef !5
   %i.dd = icmp ult i32 %.val9.i40.i, %.val8.i42.i
   br i1 %i.dd, label %bb.o, label %._crit_edge
 
@@ -1073,15 +1073,15 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %i.co, label %._crit_edge35, label %.lr.ph34
 
 .preheader:                                       ; preds = %.lr.ph34
-  %i.cp = load i64, ptr %i.cr, align 4, !alias.scope !1027
-  store i64 %i.cp, ptr %.sroa.0.0.i41.1.i33, align 4, !alias.scope !1027
+  %i.cp = load i64, ptr %i.cr, align 8, !alias.scope !1027
+  store i64 %i.cp, ptr %.sroa.0.0.i41.1.i33, align 8, !alias.scope !1027
   %i.cq = icmp eq ptr %i.cr, %i.cf
   br i1 %i.cq, label %._crit_edge35, label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %.preheader.preheader, %.preheader
   %.sroa.0.0.i41.1.i33 = phi ptr [ %i.cr, %.preheader ], [ %i.ck, %.preheader.preheader ] ; 3 uses
   %i.cr = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i33, i64 -8 ; 4 uses
-  %.val8.i42.1.i = load i32, ptr %i.cr, align 4, !range !7, !alias.scope !1027, !noundef !5
+  %.val8.i42.1.i = load i32, ptr %i.cr, align 8, !range !7, !alias.scope !1027, !noundef !5
   %i.cs = icmp ugt i32 %.val8.i42.1.i, %i.cl
   br i1 %i.cs, label %.preheader, label %._crit_edge35
 
@@ -1130,12 +1130,12 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not, i64 0, i64 8
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx ; 5 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 8 ; 2 uses
-  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 4, !range !7, !alias.scope !1030, !noundef !5
-  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 4, !range !7, !alias.scope !1030, !noundef !5
+  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 8, !range !7, !alias.scope !1030, !noundef !5
+  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 8, !range !7, !alias.scope !1030, !noundef !5
   %i.df = icmp ult i32 %.sroa.017.0.val.i.i, %.sroa.015.0.val.i.i ; 3 uses
   %..i.i.i = select i1 %i.df, ptr %.sroa.015.06.i.i, ptr %.sroa.017.05.i.i
   %i.dg = xor i1 %i.df, true
-  %i.dh = load i64, ptr %..i.i.i, align 4, !alias.scope !1030, !noalias !1033
+  %i.dh = load i64, ptr %..i.i.i, align 8, !alias.scope !1030, !noalias !1033
   store i64 %i.dh, ptr %.sroa.019.04.i.i, align 4, !alias.scope !1026, !noalias !1034
   %.neg.i.i.i = sext i1 %i.dg to i64
   %i.di = getelementptr [8 x i8], ptr %.sroa.017.05.i.i, i64 %.neg.i.i.i ; 2 uses
@@ -1198,15 +1198,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.dx, label %._crit_edge, label %.lr.ph
 
 .preheader5:                                      ; preds = %.lr.ph
-  %i.dy = load i64, ptr %i.ea, align 4, !alias.scope !1027
-  store i64 %i.dy, ptr %.sroa.0.0.i41.i31, align 4, !alias.scope !1027
+  %i.dy = load i64, ptr %i.ea, align 8, !alias.scope !1027
+  store i64 %i.dy, ptr %.sroa.0.0.i41.i31, align 8, !alias.scope !1027
   %i.dz = icmp eq ptr %i.ea, %i.a
   br i1 %i.dz, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader5.preheader, %.preheader5
   %.sroa.0.0.i41.i31 = phi ptr [ %i.ea, %.preheader5 ], [ %i.dt, %.preheader5.preheader ] ; 3 uses
   %i.ea = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i31, i64 -8 ; 4 uses
-  %.val8.i42.i = load i32, ptr %i.ea, align 4, !range !7, !alias.scope !1027, !noundef !5
+  %.val8.i42.i = load i32, ptr %i.ea, align 8, !range !7, !alias.scope !1027, !noundef !5
   %i.eb = icmp ugt i32 %.val8.i42.i, %i.du
   br i1 %i.eb, label %.preheader5, label %._crit_edge
 
@@ -1609,15 +1609,15 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %i.co, label %._crit_edge35, label %.lr.ph34
 
 .preheader:                                       ; preds = %.lr.ph34
-  %i.cp = load i64, ptr %i.cr, align 4, !alias.scope !1338
-  store i64 %i.cp, ptr %.sroa.0.0.i41.1.i33, align 4, !alias.scope !1338
+  %i.cp = load i64, ptr %i.cr, align 8, !alias.scope !1338
+  store i64 %i.cp, ptr %.sroa.0.0.i41.1.i33, align 8, !alias.scope !1338
   %i.cq = icmp eq ptr %i.cr, %i.cf
   br i1 %i.cq, label %._crit_edge35, label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %.preheader.preheader, %.preheader
   %.sroa.0.0.i41.1.i33 = phi ptr [ %i.cr, %.preheader ], [ %i.ck, %.preheader.preheader ] ; 3 uses
   %i.cr = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i33, i64 -8 ; 4 uses
-  %.val8.i42.1.i = load i32, ptr %i.cr, align 4, !range !7, !alias.scope !1338, !noundef !5
+  %.val8.i42.1.i = load i32, ptr %i.cr, align 8, !range !7, !alias.scope !1338, !noundef !5
   %i.cs = icmp ugt i32 %.val8.i42.1.i, %i.cl
   br i1 %i.cs, label %.preheader, label %._crit_edge35
 
@@ -1666,12 +1666,12 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtNt
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not, i64 0, i64 8
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx ; 5 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 8 ; 2 uses
-  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 4, !range !7, !alias.scope !1341, !noundef !5
-  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 4, !range !7, !alias.scope !1341, !noundef !5
+  %.sroa.017.0.val.i.i = load i32, ptr %.sroa.017.05.i.i, align 8, !range !7, !alias.scope !1341, !noundef !5
+  %.sroa.015.0.val.i.i = load i32, ptr %.sroa.015.06.i.i, align 8, !range !7, !alias.scope !1341, !noundef !5
   %i.df = icmp ult i32 %.sroa.017.0.val.i.i, %.sroa.015.0.val.i.i ; 3 uses
   %..i.i.i = select i1 %i.df, ptr %.sroa.015.06.i.i, ptr %.sroa.017.05.i.i
   %i.dg = xor i1 %i.df, true
-  %i.dh = load i64, ptr %..i.i.i, align 4, !alias.scope !1341, !noalias !1344
+  %i.dh = load i64, ptr %..i.i.i, align 8, !alias.scope !1341, !noalias !1344
   store i64 %i.dh, ptr %.sroa.019.04.i.i, align 4, !alias.scope !1337, !noalias !1345
   %.neg.i.i.i = sext i1 %i.dg to i64
   %i.di = getelementptr [8 x i8], ptr %.sroa.017.05.i.i, i64 %.neg.i.i.i ; 2 uses
@@ -1734,15 +1734,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.dx, label %._crit_edge, label %.lr.ph
 
 .preheader5:                                      ; preds = %.lr.ph
-  %i.dy = load i64, ptr %i.ea, align 4, !alias.scope !1338
-  store i64 %i.dy, ptr %.sroa.0.0.i41.i31, align 4, !alias.scope !1338
+  %i.dy = load i64, ptr %i.ea, align 8, !alias.scope !1338
+  store i64 %i.dy, ptr %.sroa.0.0.i41.i31, align 8, !alias.scope !1338
   %i.dz = icmp eq ptr %i.ea, %i.a
   br i1 %i.dz, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader5.preheader, %.preheader5
   %.sroa.0.0.i41.i31 = phi ptr [ %i.ea, %.preheader5 ], [ %i.dt, %.preheader5.preheader ] ; 3 uses
   %i.ea = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i31, i64 -8 ; 4 uses
-  %.val8.i42.i = load i32, ptr %i.ea, align 4, !range !7, !alias.scope !1338, !noundef !5
+  %.val8.i42.i = load i32, ptr %i.ea, align 8, !range !7, !alias.scope !1338, !noundef !5
   %i.eb = icmp ugt i32 %.val8.i42.i, %i.du
   br i1 %i.eb, label %.preheader5, label %._crit_edge
 
@@ -2145,10 +2145,10 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionINtNtCscdodAO9FK5_5alloc5boxed3BoxSTNtNtB1d_9statement9StatementNtNtNtB1d_7ast_ids8node_key17ExpressionNodeKeyEEENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB4y_9FrozenMapB19_B25_E12from_entries0E0EB1d_.exit
   %.sroa.0.05 = phi ptr [ %i.s, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionINtNtCscdodAO9FK5_5alloc5boxed3BoxSTNtNtB1d_9statement9StatementNtNtNtB1d_7ast_ids8node_key17ExpressionNodeKeyEEENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB4y_9FrozenMapB19_B25_E12from_entries0E0EB1d_.exit ], [ %i.c, %.lr.ph.preheader ] ; 7 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -24 ; 4 uses
-  %.val11.i = load i32, ptr %.sroa.0.05, align 4, !range !7, !noundef !5 ; 5 uses
+  %.val11.i = load i32, ptr %.sroa.0.05, align 8, !range !7, !noundef !5 ; 5 uses
   %i.e = getelementptr i8, ptr %.sroa.0.05, i64 4
   %.val12.i = load i32, ptr %i.e, align 4         ; 3 uses
-  %.val13.i = load i32, ptr %i.d, align 4, !range !7, !noundef !5 ; 2 uses
+  %.val13.i = load i32, ptr %i.d, align 8, !range !7, !noundef !5 ; 2 uses
   %i.f = getelementptr i8, ptr %.sroa.0.05, i64 -20
   %.val14.i = load i32, ptr %i.f, align 4
   %i.g = icmp eq i32 %.val11.i, %.val13.i
@@ -2173,7 +2173,7 @@ bb.e:                                             ; preds = %.lr.ph10
 .lr.ph10:                                         ; preds = %bb.d, %bb.e
   %.sroa.0.0.i8 = phi ptr [ %i.m, %bb.e ], [ %i.d, %bb.d ] ; 4 uses
   %i.m = getelementptr inbounds i8, ptr %.sroa.0.0.i8, i64 -24 ; 4 uses
-  %.val9.i = load i32, ptr %i.m, align 4, !range !7, !noundef !5 ; 2 uses
+  %.val9.i = load i32, ptr %i.m, align 8, !range !7, !noundef !5 ; 2 uses
   %i.n = getelementptr i8, ptr %.sroa.0.0.i8, i64 -20
   %.val10.i = load i32, ptr %i.n, align 4
   %i.o = icmp eq i32 %.val11.i, %.val9.i
@@ -2225,8 +2225,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core10definition17DefinitionNodeKeyINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtB1b_10DefinitionEENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB3J_9FrozenMapB19_B2c_E12from_entries0E0EB1d_.exit
   %.sroa.0.05 = phi ptr [ %i.j, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core10definition17DefinitionNodeKeyINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtB1b_10DefinitionEENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB3J_9FrozenMapB19_B2c_E12from_entries0E0EB1d_.exit ], [ %i.c, %.lr.ph.preheader ] ; 5 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -24 ; 4 uses
-  %.val9.i = load i32, ptr %.sroa.0.05, align 4, !range !7, !noundef !5 ; 3 uses
-  %.val10.i = load i32, ptr %i.d, align 4, !range !7, !noundef !5
+  %.val9.i = load i32, ptr %.sroa.0.05, align 8, !range !7, !noundef !5 ; 3 uses
+  %.val10.i = load i32, ptr %i.d, align 8, !range !7, !noundef !5
   %i.e = icmp ult i32 %.val9.i, %.val10.i
   br i1 %i.e, label %bb.d, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core10definition17DefinitionNodeKeyINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtB1b_10DefinitionEENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB3J_9FrozenMapB19_B2c_E12from_entries0E0EB1d_.exit
 
@@ -2246,7 +2246,7 @@ bb.e:                                             ; preds = %.lr.ph10
 .lr.ph10:                                         ; preds = %bb.d, %bb.e
   %.sroa.0.0.i8 = phi ptr [ %i.h, %bb.e ], [ %i.d, %bb.d ] ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %.sroa.0.0.i8, i64 -24 ; 4 uses
-  %.val8.i = load i32, ptr %i.h, align 4, !range !7, !noundef !5
+  %.val8.i = load i32, ptr %i.h, align 8, !range !7, !noundef !5
   %i.i = icmp ult i32 %.val9.i, %.val8.i
   br i1 %i.i, label %bb.e, label %._crit_edge11
 

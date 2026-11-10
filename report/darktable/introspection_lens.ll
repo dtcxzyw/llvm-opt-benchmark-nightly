@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %._crit_edge.i53, %.
   %.0232253.i = phi ptr [ %i.oo, %bb.ah ], [ %i.js, %.preheader251.preheader.i ] ; 13 uses
   %i.kr = load i32, ptr %i.jy, align 4, !tbaa !128
   %.not247.i = icmp eq i32 %i.kr, 0
-  %.pre286.i = load float, ptr %.0232253.i, align 4, !tbaa !21 ; 2 uses
+  %.pre286.i = load float, ptr %.0232253.i, align 8, !tbaa !21 ; 2 uses
   br i1 %.not247.i, label %.preheader251._crit_edge.i, label %bb.t
 
 .preheader251._crit_edge.i:                       ; preds = %.preheader251.i
@@ -265,7 +265,7 @@ bb.v:                                             ; preds = %bb.u, %.preheader25
 
 bb.w:                                             ; preds = %bb.v, %.thread.i
   %i.lt = getelementptr inbounds nuw i8, ptr %.0232253.i, i64 8 ; 2 uses
-  %i.lu = load float, ptr %i.lt, align 4, !tbaa !21
+  %i.lu = load float, ptr %i.lt, align 8, !tbaa !21
   %i.lv = call float @llvm.fabs.f32(float %i.lu)
   %i.lw = fcmp ueq float %i.lv, +inf
   br i1 %i.lw, label %.thread342.i, label %bb.x
@@ -284,7 +284,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %._crit_edge289.i
   %.in259 = phi ptr [ %.phi.trans.insert290.i, %._crit_edge289.i ], [ %i.lt, %bb.x ]
-  %i.mc = load <2 x float>, ptr %.in259, align 4, !tbaa !21
+  %i.mc = load <2 x float>, ptr %.in259, align 8, !tbaa !21
   %i.md = load <4 x i32>, ptr %4, align 4, !tbaa !24 ; 3 uses
   %i.me = sitofp reassoc nsz arcp contract afn <4 x i32> %i.md to <4 x float> ; 2 uses
   %i.mf = shufflevector <4 x float> %i.me, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -310,7 +310,7 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge2
 
 bb.z:                                             ; preds = %bb.y, %.thread342.i
   %i.ms = getelementptr inbounds nuw i8, ptr %.0232253.i, i64 16 ; 2 uses
-  %i.mt = load float, ptr %i.ms, align 4, !tbaa !21
+  %i.mt = load float, ptr %i.ms, align 8, !tbaa !21
   %i.mu = call float @llvm.fabs.f32(float %i.mt)
   %i.mv = fcmp ueq float %i.mu, +inf
   br i1 %i.mv, label %bb.ac, label %bb.aa
@@ -324,7 +324,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa, %._crit_edge296.i
   %.in260 = phi ptr [ %.phi.trans.insert297.i, %._crit_edge296.i ], [ %i.ms, %bb.aa ]
-  %i.na = load <2 x float>, ptr %.in260, align 4, !tbaa !21
+  %i.na = load <2 x float>, ptr %.in260, align 8, !tbaa !21
   %i.nb = load <4 x i32>, ptr %4, align 4, !tbaa !24 ; 3 uses
   %i.nc = sitofp reassoc nsz arcp contract afn <4 x i32> %i.nb to <4 x float> ; 2 uses
   %i.nd = shufflevector <4 x float> %i.nc, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -350,7 +350,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.np = load i32, ptr %i.jy, align 4, !tbaa !128
   %.not246.i = icmp eq i32 %i.np, 0
   %.phi.trans.insert303.i = getelementptr inbounds nuw i8, ptr %.0232253.i, i64 8
-  %.pre304.i = load float, ptr %.phi.trans.insert303.i, align 4, !tbaa !21 ; 2 uses
+  %.pre304.i = load float, ptr %.phi.trans.insert303.i, align 8, !tbaa !21 ; 2 uses
   br i1 %.not246.i, label %._crit_edge302.i, label %bb.ae
 
 ._crit_edge302.i:                                 ; preds = %bb.ad
@@ -560,7 +560,7 @@ bb.ao:                                            ; preds = %._crit_edge267.i, %
   %.0225264.i = phi ptr [ %i.wa, %bb.bd ], [ %i.rf, %.preheader.preheader.i ] ; 13 uses
   %i.sd = load i32, ptr %i.rk, align 4, !tbaa !128
   %.not242.i = icmp eq i32 %i.sd, 0
-  %.pre309.i = load float, ptr %.0225264.i, align 4, !tbaa !21 ; 2 uses
+  %.pre309.i = load float, ptr %.0225264.i, align 8, !tbaa !21 ; 2 uses
   br i1 %.not242.i, label %.preheader._crit_edge.i, label %bb.ap
 
 .preheader._crit_edge.i:                          ; preds = %.preheader.i55
@@ -620,7 +620,7 @@ bb.ar:                                            ; preds = %bb.aq, %.preheader.
 
 bb.as:                                            ; preds = %bb.ar, %.thread344.i
   %i.tf = getelementptr inbounds nuw i8, ptr %.0225264.i, i64 8 ; 2 uses
-  %i.tg = load float, ptr %i.tf, align 4, !tbaa !21
+  %i.tg = load float, ptr %i.tf, align 8, !tbaa !21
   %i.th = call float @llvm.fabs.f32(float %i.tg)
   %i.ti = fcmp ueq float %i.th, +inf
   br i1 %i.ti, label %.thread346.i, label %bb.at
@@ -639,7 +639,7 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.at, %._crit_edge313.i
   %.in261 = phi ptr [ %.phi.trans.insert314.i, %._crit_edge313.i ], [ %i.tf, %bb.at ]
-  %i.to = load <2 x float>, ptr %.in261, align 4, !tbaa !21
+  %i.to = load <2 x float>, ptr %.in261, align 8, !tbaa !21
   %i.tp = load <4 x i32>, ptr %4, align 4, !tbaa !24 ; 3 uses
   %i.tq = sitofp reassoc nsz arcp contract afn <4 x i32> %i.tp to <4 x float> ; 2 uses
   %i.tr = shufflevector <4 x float> %i.tq, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -665,7 +665,7 @@ bb.au:                                            ; preds = %bb.at, %._crit_edge
 
 bb.av:                                            ; preds = %bb.au, %.thread346.i
   %i.ue = getelementptr inbounds nuw i8, ptr %.0225264.i, i64 16 ; 2 uses
-  %i.uf = load float, ptr %i.ue, align 4, !tbaa !21
+  %i.uf = load float, ptr %i.ue, align 8, !tbaa !21
   %i.ug = call float @llvm.fabs.f32(float %i.uf)
   %i.uh = fcmp ueq float %i.ug, +inf
   br i1 %i.uh, label %bb.ay, label %bb.aw
@@ -679,7 +679,7 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw, %._crit_edge320.i
   %.in262 = phi ptr [ %.phi.trans.insert321.i, %._crit_edge320.i ], [ %i.ue, %bb.aw ]
-  %i.um = load <2 x float>, ptr %.in262, align 4, !tbaa !21
+  %i.um = load <2 x float>, ptr %.in262, align 8, !tbaa !21
   %i.un = load <4 x i32>, ptr %4, align 4, !tbaa !24 ; 3 uses
   %i.uo = sitofp reassoc nsz arcp contract afn <4 x i32> %i.un to <4 x float> ; 2 uses
   %i.up = shufflevector <4 x float> %i.uo, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -705,7 +705,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.vb = load i32, ptr %i.rk, align 4, !tbaa !128
   %.not241.i = icmp eq i32 %i.vb, 0
   %.phi.trans.insert327.i = getelementptr inbounds nuw i8, ptr %.0225264.i, i64 8
-  %.pre328.i = load float, ptr %.phi.trans.insert327.i, align 4, !tbaa !21 ; 2 uses
+  %.pre328.i = load float, ptr %.phi.trans.insert327.i, align 8, !tbaa !21 ; 2 uses
   br i1 %.not241.i, label %._crit_edge326.i, label %bb.ba
 
 ._crit_edge326.i:                                 ; preds = %bb.az
@@ -1108,7 +1108,7 @@ bb.i:                                             ; preds = %._crit_edge.i, %.lr
   %i.bu = load i32, ptr %i.ba, align 4, !tbaa !128
   %.not78.i = icmp eq i32 %i.bu, 0
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.0721.i, i64 8
-  %.pre9.i = load float, ptr %.phi.trans.insert.i, align 4, !tbaa !21 ; 2 uses
+  %.pre9.i = load float, ptr %.phi.trans.insert.i, align 8, !tbaa !21 ; 2 uses
   br i1 %.not78.i, label %.lr.ph._crit_edge.i, label %bb.j
 
 .lr.ph._crit_edge.i:                              ; preds = %.lr.ph.i

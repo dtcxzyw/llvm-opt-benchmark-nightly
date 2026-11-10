@@ -205,8 +205,8 @@ define internal fastcc void @_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9
   %.sroa.017.011 = phi ptr [ %i.ai, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit32 ], [ %i.d, %.lr.ph.preheader ] ; 6 uses
   %.sroa.019.010 = phi ptr [ %i.ak, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit32 ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
   %i.k = add nuw nsw i64 %.sroa.04.017, 1, !dbg !57962 ; 2 uses
-  %.sroa.011.0.val = load i16, ptr %.sroa.011.014, align 2, !dbg !57963, !alias.scope !3915, !noundef !3509 ; 4 uses
-  %.sroa.06.0.val = load i16, ptr %.sroa.06.015, align 2, !dbg !57963 ; 5 uses
+  %.sroa.011.0.val = load i16, ptr %.sroa.011.014, align 4, !dbg !57963, !alias.scope !3915, !noundef !3509 ; 4 uses
+  %.sroa.06.0.val = load i16, ptr %.sroa.06.015, align 4, !dbg !57963 ; 5 uses
   %i.l = and i16 %.sroa.011.0.val, 32767, !dbg !57964 ; 2 uses
   %i.m = icmp samesign ugt i16 %i.l, 31744, !dbg !57964
   br i1 %i.m, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit, label %bb.a, !dbg !57957
@@ -252,8 +252,8 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164p
   %i.w = zext i1 %i.s to i64, !dbg !57977
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %.sroa.06.015, i64 %i.w, !dbg !57978 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.018, i64 8, !dbg !57979 ; 2 uses
-  %.sroa.017.0.val = load i16, ptr %.sroa.017.011, align 2, !dbg !57980, !alias.scope !3915, !noundef !3509 ; 4 uses
-  %.sroa.015.0.val = load i16, ptr %.sroa.015.013, align 2, !dbg !57980 ; 5 uses
+  %.sroa.017.0.val = load i16, ptr %.sroa.017.011, align 4, !dbg !57980, !alias.scope !3915, !noundef !3509 ; 4 uses
+  %.sroa.015.0.val = load i16, ptr %.sroa.015.013, align 4, !dbg !57980 ; 5 uses
   %i.z = and i16 %.sroa.017.0.val, 32767, !dbg !57981 ; 2 uses
   %i.aa = icmp samesign ugt i16 %i.z, 31744, !dbg !57981
   br i1 %i.aa, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit32, label %bb.g, !dbg !57982
@@ -656,8 +656,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB18_7sort_byNCINvNtB1d_4sort18arg_sort_ascendingB19_mINtNtNtNtBa_4iter8adapters3map3MapINtNtNtBa_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4r_5BlockRSB19_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit
   %.sroa.0.07 = phi ptr [ %i.aa, %_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB18_7sort_byNCINvNtB1d_4sort18arg_sort_ascendingB19_mINtNtNtNtBa_4iter8adapters3map3MapINtNtNtBa_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4r_5BlockRSB19_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit ], [ %i.c, %.lr.ph.preheader ] ; 5 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.07, i64 -8, !dbg !58984 ; 5 uses
-  %.val9.i = load i16, ptr %.sroa.0.07, align 2, !dbg !58985, !alias.scope !58974, !noundef !3509 ; 8 uses
-  %.val10.i = load i16, ptr %i.d, align 2, !dbg !58985 ; 5 uses
+  %.val9.i = load i16, ptr %.sroa.0.07, align 4, !dbg !58985, !alias.scope !58974, !noundef !3509 ; 8 uses
+  %.val10.i = load i16, ptr %i.d, align 4, !dbg !58985 ; 5 uses
   %i.e = and i16 %.val9.i, 32767, !dbg !58986     ; 3 uses
   %i.f = icmp samesign ugt i16 %i.e, 31744, !dbg !58986
   br i1 %i.f, label %_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB18_7sort_byNCINvNtB1d_4sort18arg_sort_ascendingB19_mINtNtNtNtBa_4iter8adapters3map3MapINtNtNtBa_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4r_5BlockRSB19_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit, label %bb.d, !dbg !58982
@@ -704,7 +704,7 @@ bb.i:                                             ; preds = %bb.h, %.split.i.i.i
 .lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i
   %.sroa.0.08.us.i = phi ptr [ %i.p, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i ], [ %i.d, %.lr.ph.split.i ] ; 3 uses
   %i.p = getelementptr inbounds i8, ptr %.sroa.0.08.us.i, i64 -8, !dbg !58997 ; 4 uses
-  %.val8.us.i = load i16, ptr %i.p, align 2, !dbg !58998 ; 3 uses
+  %.val8.us.i = load i16, ptr %i.p, align 4, !dbg !58998 ; 3 uses
   %i.q = and i16 %.val8.us.i, 32767, !dbg !58999
   %i.r = icmp samesign ugt i16 %i.q, 31744, !dbg !58999
   br i1 %i.r, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i, label %bb.j, !dbg !59000
@@ -724,7 +724,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164p
 .lr.ph.split.split.i:                             ; preds = %.lr.ph.split.i, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i
   %.sroa.0.08.i = phi ptr [ %i.u, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i ], [ %i.d, %.lr.ph.split.i ] ; 4 uses
   %i.u = getelementptr inbounds i8, ptr %.sroa.0.08.i, i64 -8, !dbg !58997 ; 4 uses
-  %.val8.i = load i16, ptr %i.u, align 2, !dbg !58998 ; 4 uses
+  %.val8.i = load i16, ptr %i.u, align 4, !dbg !58998 ; 4 uses
   %i.v = and i16 %.val8.i, 32767, !dbg !58999
   %i.w = icmp samesign ugt i16 %i.v, 31744, !dbg !58999
   br i1 %i.w, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i, label %bb.k, !dbg !59000
@@ -1127,7 +1127,7 @@ bb.o:                                             ; preds = %bb.n, %.split.i.i.i
 .lr.ph.split.split.i.1:                           ; preds = %.lr.ph.split.i.1, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i.1
   %.sroa.0.08.i.1 = phi ptr [ %i.an, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i.1 ], [ %i.ac, %.lr.ph.split.i.1 ] ; 4 uses
   %i.an = getelementptr inbounds i8, ptr %.sroa.0.08.i.1, i64 -8, !dbg !60572 ; 4 uses
-  %.val8.i.1 = load i16, ptr %i.an, align 2, !dbg !60573 ; 4 uses
+  %.val8.i.1 = load i16, ptr %i.an, align 4, !dbg !60573 ; 4 uses
   %i.ao = and i16 %.val8.i.1, 32767, !dbg !60574
   %i.ap = icmp samesign ugt i16 %i.ao, 31744, !dbg !60574
   br i1 %i.ap, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i.1, label %bb.p, !dbg !60575
@@ -1154,7 +1154,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164p
 .lr.ph.split.split.us.i.1:                        ; preds = %.lr.ph.split.i.1, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i.1
   %.sroa.0.08.us.i.1 = phi ptr [ %i.at, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i.1 ], [ %i.ac, %.lr.ph.split.i.1 ] ; 3 uses
   %i.at = getelementptr inbounds i8, ptr %.sroa.0.08.us.i.1, i64 -8, !dbg !60572 ; 4 uses
-  %.val8.us.i.1 = load i16, ptr %i.at, align 2, !dbg !60573 ; 2 uses
+  %.val8.us.i.1 = load i16, ptr %i.at, align 4, !dbg !60573 ; 2 uses
   %i.au = and i16 %.val8.us.i.1, 32767, !dbg !60574
   %i.av = icmp samesign ugt i16 %i.au, 31744, !dbg !60574
   %or.cond.i18.us.i.1 = icmp sgt i16 %.val8.us.i.1, %i.ad
@@ -1247,7 +1247,7 @@ bb.y:                                             ; preds = %bb.x, %.split.i.i.i
 .lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i
   %.sroa.0.08.us.i = phi ptr [ %i.bp, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.us.i ], [ %i.be, %.lr.ph.split.i ] ; 3 uses
   %i.bp = getelementptr inbounds i8, ptr %.sroa.0.08.us.i, i64 -8, !dbg !60572 ; 4 uses
-  %.val8.us.i = load i16, ptr %i.bp, align 2, !dbg !60573 ; 2 uses
+  %.val8.us.i = load i16, ptr %i.bp, align 4, !dbg !60573 ; 2 uses
   %i.bq = and i16 %.val8.us.i, 32767, !dbg !60574
   %i.br = icmp samesign ugt i16 %i.bq, 31744, !dbg !60574
   %or.cond.i18.us.i = icmp sgt i16 %.val8.us.i, %i.bf
@@ -1263,7 +1263,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164p
 .lr.ph.split.split.i:                             ; preds = %.lr.ph.split.i, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i
   %.sroa.0.08.i = phi ptr [ %i.bu, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i ], [ %i.be, %.lr.ph.split.i ] ; 4 uses
   %i.bu = getelementptr inbounds i8, ptr %.sroa.0.08.i, i64 -8, !dbg !60572 ; 4 uses
-  %.val8.i = load i16, ptr %i.bu, align 2, !dbg !60573 ; 4 uses
+  %.val8.i = load i16, ptr %i.bu, align 4, !dbg !60573 ; 4 uses
   %i.bv = and i16 %.val8.i, 32767, !dbg !60574
   %i.bw = icmp samesign ugt i16 %i.bv, 31744, !dbg !60574
   br i1 %i.bw, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit19.i, label %bb.z, !dbg !60575

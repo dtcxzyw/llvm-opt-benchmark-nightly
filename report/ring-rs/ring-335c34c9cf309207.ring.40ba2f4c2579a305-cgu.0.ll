@@ -205,10 +205,10 @@ _RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.041.0.copyload4850) ]
   %i.up = getelementptr inbounds nuw i8, ptr %.sroa.041.0.copyload4850, i64 %.sroa.543.0.copyload.fr
   %i.uq = load <16 x i8>, ptr %i.up, align 1, !noalias !6529
-  %i.ur = load <16 x i8>, ptr %.sroa.013.051, align 1
+  %i.ur = load <16 x i8>, ptr %.sroa.013.051, align 16
   %i.us = xor <16 x i8> %i.ur, %i.uq
-  store <16 x i8> %i.us, ptr %.sroa.013.051, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.041.0.copyload4850, ptr noundef nonnull readonly align 1 dereferenceable(16) %.sroa.013.051, i64 16, i1 false)
+  store <16 x i8> %i.us, ptr %.sroa.013.051, align 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.041.0.copyload4850, ptr noundef nonnull readonly align 16 dereferenceable(16) %.sroa.013.051, i64 16, i1 false)
   %i.ut = add i64 %i.uo, -16
   %.not.i.1 = icmp ugt i64 %i.ck, %i.ut
   br i1 %.not.i.1, label %.split, label %bb.i, !prof !29
@@ -218,10 +218,10 @@ bb.i:                                             ; preds = %.lr.ph.split.1
   %i.uv = getelementptr inbounds nuw i8, ptr %.sroa.041.0.copyload4850, i64 16 ; 2 uses
   %i.uw = getelementptr inbounds nuw i8, ptr %i.uv, i64 %.sroa.543.0.copyload.fr
   %i.ux = load <16 x i8>, ptr %i.uw, align 1, !noalias !6529
-  %i.uy = load <16 x i8>, ptr %i.uu, align 1
+  %i.uy = load <16 x i8>, ptr %i.uu, align 16
   %i.uz = xor <16 x i8> %i.uy, %i.ux
-  store <16 x i8> %i.uz, ptr %i.uu, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.uv, ptr noundef nonnull readonly align 1 dereferenceable(16) %i.uu, i64 16, i1 false)
+  store <16 x i8> %i.uz, ptr %i.uu, align 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.uv, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.uu, i64 16, i1 false)
   %i.va = add i64 %i.uo, -32                      ; 2 uses
   %i.vb = getelementptr inbounds nuw i8, ptr %.sroa.041.0.copyload4850, i64 32 ; 2 uses
   %i.vc = getelementptr inbounds nuw i8, ptr %.sroa.013.051, i64 32 ; 2 uses
