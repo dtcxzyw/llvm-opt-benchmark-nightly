@@ -205,13 +205,13 @@ bb.cb:                                            ; preds = %bb.ca
 
 .lr.ph477:                                        ; preds = %bb.cb, %.lr.ph477
   %i.lr = phi ptr [ %i.mb, %.lr.ph477 ], [ %i.kr, %bb.cb ]
-  %.2161475 = phi i32 [ %i.ls, %.lr.ph477 ], [ %i.lo, %bb.cb ]
-  %storemerge474 = phi ptr [ %i.ma, %.lr.ph477 ], [ %i.kl, %bb.cb ] ; 2 uses
+  %storemerge479 = phi ptr [ %i.ma, %.lr.ph477 ], [ %i.kl, %bb.cb ] ; 2 uses
+  %.2161478 = phi i32 [ %i.ls, %.lr.ph477 ], [ %i.lo, %bb.cb ]
   store i32 %i.jr, ptr %i.lr, align 8, !tbaa !487
-  %i.ls = add nsw i32 %.2161475, -1               ; 2 uses
-  %i.lt = getelementptr inbounds nuw i8, ptr %storemerge474, i64 20
+  %i.ls = add nsw i32 %.2161478, -1               ; 2 uses
+  %i.lt = getelementptr inbounds nuw i8, ptr %storemerge479, i64 20
   store i32 %i.ls, ptr %i.lt, align 4, !tbaa !488
-  %i.lu = getelementptr inbounds nuw i8, ptr %storemerge474, i64 8
+  %i.lu = getelementptr inbounds nuw i8, ptr %storemerge479, i64 8
   %i.lv = load i32, ptr %i.lu, align 8, !tbaa !489
   %i.lw = sext i32 %i.lv to i64
   %i.lx = getelementptr inbounds [12 x i8], ptr %i.m, i64 %i.lw

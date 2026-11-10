@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.w = shl i64 %index, 2                        ; 3 uses
+  %i.w = shl nuw i64 %index, 2                    ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index
   %wide.load = load <8 x float>, ptr %i.x, align 4, !tbaa !34 ; 4 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.w
@@ -259,7 +259,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.02628 = phi i64 [ %i.cu, %scalar.ph ], [ %.02628.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.bf = shl i64 %.02628, 2                      ; 3 uses
+  %i.bf = shl nuw i64 %.02628, 2                  ; 3 uses
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02628
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bf ; 2 uses
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !34
@@ -374,7 +374,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.w = shl i64 %index, 2                        ; 3 uses
+  %i.w = shl nuw i64 %index, 2                    ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index
   %wide.load = load <8 x float>, ptr %i.x, align 4, !tbaa !34 ; 4 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.w
@@ -419,7 +419,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.02628 = phi i64 [ %i.cf, %scalar.ph ], [ %.02628.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.aw = shl i64 %.02628, 2                      ; 3 uses
+  %i.aw = shl nuw i64 %.02628, 2                  ; 3 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02628
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.aw ; 2 uses
   %i.az = load float, ptr %i.ay, align 4, !tbaa !34
@@ -538,7 +538,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.ac = shl i64 %index, 2                       ; 3 uses
+  %i.ac = shl nuw i64 %index, 2                   ; 3 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index
   %wide.load = load <8 x float>, ptr %i.ad, align 4, !tbaa !34 ; 4 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ac
@@ -586,7 +586,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.03032 = phi i64 [ %i.cu, %scalar.ph ], [ %.03032.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.bf = shl i64 %.03032, 2                      ; 3 uses
+  %i.bf = shl nuw i64 %.03032, 2                  ; 3 uses
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.03032
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bf ; 2 uses
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !34
@@ -989,7 +989,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.w = shl i64 %index, 2                        ; 3 uses
+  %i.w = shl nuw i64 %index, 2                    ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index
   %wide.load = load <8 x float>, ptr %i.x, align 4, !tbaa !34 ; 4 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.w
@@ -1037,7 +1037,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.02527 = phi i64 [ %i.ck, %scalar.ph ], [ %.02527.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.az = shl i64 %.02527, 2                      ; 3 uses
+  %i.az = shl nuw i64 %.02527, 2                  ; 3 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02527
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.az ; 2 uses
   %i.bc = load float, ptr %i.bb, align 4, !tbaa !34
@@ -1440,7 +1440,7 @@ bb.a:
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader43
-  %i.b = shl i64 %.02123.ph, 2                    ; 3 uses
+  %i.b = shl nuw i64 %.02123.ph, 2                ; 3 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02123.ph
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.b ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -1500,7 +1500,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.am = shl i64 %index, 2                       ; 3 uses
+  %i.am = shl nuw i64 %index, 2                   ; 3 uses
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index
   %wide.load = load <8 x float>, ptr %i.an, align 4, !tbaa !34 ; 4 uses
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.am
@@ -1544,7 +1544,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.02123 = phi i64 [ %i.do, %.lr.ph ], [ %.02123.unr, %.lr.ph.prol.loopexit ] ; 4 uses
-  %i.bl = shl i64 %.02123, 2                      ; 3 uses
+  %i.bl = shl nuw i64 %.02123, 2                  ; 3 uses
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02123
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bl ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
@@ -1573,7 +1573,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cl = fmul reassoc arcp contract afn <4 x float> %i.ck, <float 1.000000e+02, float 1.280000e+02, float 1.280000e+02, float 1.000000e+00>
   store <4 x float> %i.cl, ptr %i.bt, align 4, !tbaa !34
   %i.cm = add nuw i64 %.02123, 1                  ; 2 uses
-  %i.cn = shl i64 %i.cm, 2                        ; 3 uses
+  %i.cn = shl nuw i64 %i.cm, 2                    ; 3 uses
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.cm
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cn ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8

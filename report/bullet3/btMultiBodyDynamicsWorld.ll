@@ -204,23 +204,17 @@ bb.be:                                            ; preds = %.loopexit554
   %i.mp = shl nsw i32 %i.mk, 3
   %i.mq = add nsw i32 %i.mo, %i.mp                ; 2 uses
   %i.mr = icmp sgt i32 %i.mq, 0
-  br i1 %i.mr, label %8, label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352
+  call void @llvm.assume(i1 %i.mr)
+  %8 = zext nneg i32 %i.mq to i64
+  %9 = shl nuw nsw i64 %8, 2                      ; 2 uses
+  %10 = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %9, i32 noundef 16)
+          to label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352 unwind label %.thread531 ; 36 uses
 
-8:                                                ; preds = %bb.be
-  %9 = zext nneg i32 %i.mq to i64
-  %10 = shl nuw nsw i64 %9, 2                     ; 2 uses
-  %11 = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %10, i32 noundef 16)
-          to label %.lr.ph.i331 unwind label %.thread531 ; 2 uses
-
-.lr.ph.i331:                                      ; preds = %8
-  call void @llvm.memset.p0.i64(ptr align 4 %11, i8 0, i64 %10, i1 false), !tbaa !177
-  br label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352
-
-_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352: ; preds = %.lr.ph.i331, %bb.be
-  %.sroa.10521.2 = phi ptr [ null, %bb.be ], [ %11, %.lr.ph.i331 ] ; 35 uses
-  %.sroa.10521.2819 = ptrtoaddr ptr %.sroa.10521.2 to i64 ; 26 uses
+_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352: ; preds = %bb.be
+  %11 = ptrtoaddr ptr %10 to i64                  ; 26 uses
+  call void @llvm.memset.p0.i64(ptr align 4 %10, i8 0, i64 %9, i1 false), !tbaa !177
   %i.ms = sext i32 %i.mn to i64                   ; 2 uses
-  %i.mt = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.ms ; 22 uses
+  %i.mt = getelementptr inbounds [4 x i8], ptr %10, i64 %i.ms ; 22 uses
   %i.mu = getelementptr inbounds [4 x i8], ptr %i.mt, i64 %i.ms ; 28 uses
   %i.mv = sext i32 %i.mk to i64                   ; 8 uses
   %i.mw = getelementptr inbounds [4 x i8], ptr %i.mu, i64 %i.mv ; 14 uses
@@ -232,30 +226,30 @@ _ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352: ; preds = %.lr.ph.i331, %bb.be
   %i.nc = getelementptr inbounds [4 x i8], ptr %i.nb, i64 %i.mv ; 8 uses
   %i.nd = getelementptr inbounds nuw i8, ptr %i.hv, i64 56
   %i.ne = load float, ptr %i.nd, align 8, !tbaa !177
-  store float %i.ne, ptr %.sroa.10521.2, align 4, !tbaa !177
+  store float %i.ne, ptr %10, align 4, !tbaa !177
   %i.nf = getelementptr inbounds nuw i8, ptr %i.hv, i64 60
   %i.ng = load float, ptr %i.nf, align 4, !tbaa !177
-  %i.nh = getelementptr inbounds nuw i8, ptr %.sroa.10521.2, i64 4
+  %i.nh = getelementptr inbounds nuw i8, ptr %10, i64 4
   store float %i.ng, ptr %i.nh, align 4, !tbaa !177
   %i.ni = getelementptr inbounds nuw i8, ptr %i.hv, i64 64
   %i.nj = load float, ptr %i.ni, align 8, !tbaa !177
-  %i.nk = getelementptr inbounds nuw i8, ptr %.sroa.10521.2, i64 8
+  %i.nk = getelementptr inbounds nuw i8, ptr %10, i64 8
   store float %i.nj, ptr %i.nk, align 4, !tbaa !177
   %i.nl = getelementptr inbounds nuw i8, ptr %i.hv, i64 68
   %i.nm = load float, ptr %i.nl, align 4, !tbaa !177
-  %i.nn = getelementptr inbounds nuw i8, ptr %.sroa.10521.2, i64 12
+  %i.nn = getelementptr inbounds nuw i8, ptr %10, i64 12
   store float %i.nm, ptr %i.nn, align 4, !tbaa !177
   %i.no = getelementptr inbounds nuw i8, ptr %i.hv, i64 24
   %i.np = load float, ptr %i.no, align 8, !tbaa !177
-  %i.nq = getelementptr inbounds nuw i8, ptr %.sroa.10521.2, i64 16
+  %i.nq = getelementptr inbounds nuw i8, ptr %10, i64 16
   store float %i.np, ptr %i.nq, align 4, !tbaa !177
   %i.nr = getelementptr inbounds nuw i8, ptr %i.hv, i64 28
   %i.ns = load float, ptr %i.nr, align 4, !tbaa !177
-  %i.nt = getelementptr inbounds nuw i8, ptr %.sroa.10521.2, i64 20
+  %i.nt = getelementptr inbounds nuw i8, ptr %10, i64 20
   store float %i.ns, ptr %i.nt, align 4, !tbaa !177
   %i.nu = getelementptr inbounds nuw i8, ptr %i.hv, i64 32
   %i.nv = load float, ptr %i.nu, align 8, !tbaa !177
-  %i.nw = getelementptr inbounds nuw i8, ptr %.sroa.10521.2, i64 24
+  %i.nw = getelementptr inbounds nuw i8, ptr %10, i64 24
   store float %i.nv, ptr %i.nw, align 4, !tbaa !177
   %i.nx = load i32, ptr %i.ib, align 4, !tbaa !61 ; 2 uses
   %i.ny = icmp sgt i32 %i.nx, 0
@@ -266,7 +260,7 @@ _ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit352: ; preds = %.lr.ph.i331, %bb.be
   %i.oa = load ptr, ptr %i.nz, align 8, !tbaa !62 ; 2 uses
   %i.ob = ptrtoaddr ptr %i.oa to i64
   %wide.trip.count633.a = zext nneg i32 %i.nx to i64
-  %i.oc = add i64 %.sroa.10521.2819, -464
+  %i.oc = add i64 %11, -464
   %i.od = sub i64 %i.oc, %i.ob
   br label %.preheader
 
@@ -285,7 +279,7 @@ vector.memcheck1158:                              ; preds = %.lr.ph587
   %i.oh = ptrtoaddr ptr %i.og to i64
   %i.oi = sext i32 %i.mm to i64
   %i.oj = shl nsw i64 %i.oi, 3
-  %i.ok = add i64 %i.oj, %.sroa.10521.2819
+  %i.ok = add i64 %i.oj, %11
   %i.ol = sub i64 %i.ok, %i.oh
   %i.om = add i64 %i.ol, 55
   %diff.check1159 = icmp ult i64 %i.om, 31
@@ -386,7 +380,7 @@ vector.body1178:                                  ; preds = %vector.body1178, %v
   %i.ps = trunc nuw nsw i64 %index1179 to i32
   %i.pt = add i32 %invariant.op, %i.ps
   %i.pu = sext i32 %i.pt to i64
-  %i.pv = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.pu ; 2 uses
+  %i.pv = getelementptr inbounds [4 x i8], ptr %10, i64 %i.pu ; 2 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %i.pv, i64 16
   store <4 x float> %wide.load1180, ptr %i.pv, align 4, !tbaa !177
   store <4 x float> %wide.load1181, ptr %i.pw, align 4, !tbaa !177
@@ -412,7 +406,7 @@ scalar.ph1172.prol:                               ; preds = %scalar.ph1172.prehe
   %i.qa = trunc nuw nsw i64 %indvars.iv625.prol to i32
   %.reass.prol = add i32 %invariant.op, %i.qa
   %i.qb = sext i32 %.reass.prol to i64
-  %i.qc = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.qb
+  %i.qc = getelementptr inbounds [4 x i8], ptr %10, i64 %i.qb
   store float %i.pz, ptr %i.qc, align 4, !tbaa !177
   %indvars.iv.next626.prol = add nuw nsw i64 %indvars.iv625.prol, 1 ; 2 uses
   %prol.iter1245.next = add i64 %prol.iter1245, 1 ; 2 uses
@@ -425,7 +419,7 @@ scalar.ph1172.prol.loopexit:                      ; preds = %scalar.ph1172.prol,
   %i.qe = icmp ugt i64 %i.qd, -4
   br i1 %i.qe, label %._crit_edge584, label %scalar.ph1172
 
-.thread531:                                       ; preds = %bb.az, %bb.bc, %bb.at, %bb.aw, %bb.bd, %bb.ap, %bb.aq, %8
+.thread531:                                       ; preds = %bb.az, %bb.bc, %bb.at, %bb.aw, %bb.bd, %bb.ap, %bb.aq, %bb.be
   %i.qf = landingpad { ptr, i32 }
           cleanup
   br label %_ZN20btAlignedObjectArrayIfED2Ev.exit508
@@ -442,7 +436,7 @@ scalar.ph1172:                                    ; preds = %scalar.ph1172.prol.
   %i.qi = trunc nuw nsw i64 %indvars.iv625 to i32
   %.reass = add i32 %invariant.op, %i.qi
   %i.qj = sext i32 %.reass to i64
-  %i.qk = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.qj
+  %i.qk = getelementptr inbounds [4 x i8], ptr %10, i64 %i.qj
   store float %i.qh, ptr %i.qk, align 4, !tbaa !177
   %indvars.iv.next626 = add nuw nsw i64 %indvars.iv625, 1 ; 2 uses
   %i.ql = getelementptr inbounds nuw [4 x i8], ptr %i.pb, i64 %indvars.iv.next626
@@ -450,7 +444,7 @@ scalar.ph1172:                                    ; preds = %scalar.ph1172.prol.
   %i.qn = trunc nuw nsw i64 %indvars.iv.next626 to i32
   %.reass.1 = add i32 %invariant.op, %i.qn
   %i.qo = sext i32 %.reass.1 to i64
-  %i.qp = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.qo
+  %i.qp = getelementptr inbounds [4 x i8], ptr %10, i64 %i.qo
   store float %i.qm, ptr %i.qp, align 4, !tbaa !177
   %indvars.iv.next626.1 = add nuw nsw i64 %indvars.iv625, 2 ; 2 uses
   %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.pb, i64 %indvars.iv.next626.1
@@ -458,7 +452,7 @@ scalar.ph1172:                                    ; preds = %scalar.ph1172.prol.
   %i.qs = trunc nuw nsw i64 %indvars.iv.next626.1 to i32
   %.reass.2 = add i32 %invariant.op, %i.qs
   %i.qt = sext i32 %.reass.2 to i64
-  %i.qu = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.qt
+  %i.qu = getelementptr inbounds [4 x i8], ptr %10, i64 %i.qt
   store float %i.qr, ptr %i.qu, align 4, !tbaa !177
   %indvars.iv.next626.2 = add nuw nsw i64 %indvars.iv625, 3 ; 2 uses
   %i.qv = getelementptr inbounds nuw [4 x i8], ptr %i.pb, i64 %indvars.iv.next626.2
@@ -466,7 +460,7 @@ scalar.ph1172:                                    ; preds = %scalar.ph1172.prol.
   %i.qx = trunc nuw nsw i64 %indvars.iv.next626.2 to i32
   %.reass.3 = add i32 %invariant.op, %i.qx
   %i.qy = sext i32 %.reass.3 to i64
-  %i.qz = getelementptr inbounds [4 x i8], ptr %.sroa.10521.2, i64 %i.qy
+  %i.qz = getelementptr inbounds [4 x i8], ptr %10, i64 %i.qy
   store float %i.qw, ptr %i.qz, align 4, !tbaa !177
   %indvars.iv.next626.3 = add nuw nsw i64 %indvars.iv625, 4 ; 2 uses
   %exitcond629.not.3 = icmp eq i64 %indvars.iv.next626.3, %wide.trip.count628
@@ -525,7 +519,7 @@ vector.memcheck1142:                              ; preds = %.lr.ph.preheader.i
   %i.ry = sext i32 %i.mm to i64
   %i.rz = shl nsw i64 %i.ry, 3
   %i.sa = shl nsw i64 %i.ru, 2
-  %i.sb = add i64 %i.rx, %.sroa.10521.2819
+  %i.sb = add i64 %i.rx, %11
   %i.sc = add i64 %i.sb, %i.rz
   %i.sd = add i64 %i.sa, %i.rt
   %i.se = sub i64 %i.sc, %i.sd
@@ -630,7 +624,7 @@ vector.ph1128:                                    ; preds = %vector.memcheck1126
 
 vector.body1130:                                  ; preds = %vector.body1130, %vector.ph1128
   %index1131 = phi i64 [ 0, %vector.ph1128 ], [ %index.next1134, %vector.body1130 ] ; 3 uses
-  %i.tj = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %index1131 ; 2 uses
+  %i.tj = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %index1131 ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %i.tj, i64 16
   %wide.load1132 = load <4 x float>, ptr %i.tj, align 4, !tbaa !177
   %wide.load1133 = load <4 x float>, ptr %i.tk, align 4, !tbaa !177
@@ -658,7 +652,7 @@ scalar.ph1124.preheader:                          ; preds = %vector.memcheck1126
 scalar.ph1124.prol:                               ; preds = %scalar.ph1124.preheader, %scalar.ph1124.prol
   %indvars.iv.i360.prol = phi i64 [ %indvars.iv.next.i361.prol, %scalar.ph1124.prol ], [ %indvars.iv.i360.ph, %scalar.ph1124.preheader ] ; 3 uses
   %prol.iter1254 = phi i64 [ %prol.iter1254.next, %scalar.ph1124.prol ], [ 0, %scalar.ph1124.preheader ]
-  %i.tr = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.i360.prol
+  %i.tr = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i360.prol
   %i.ts = load float, ptr %i.tr, align 4, !tbaa !177
   %i.tt = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.i360.prol
   store float %i.ts, ptr %i.tt, align 4, !tbaa !177
@@ -674,22 +668,22 @@ scalar.ph1124.prol.loopexit:                      ; preds = %scalar.ph1124.prol,
 
 scalar.ph1124:                                    ; preds = %scalar.ph1124.prol.loopexit, %scalar.ph1124
   %indvars.iv.i360 = phi i64 [ %indvars.iv.next.i361.3, %scalar.ph1124 ], [ %indvars.iv.i360.unr, %scalar.ph1124.prol.loopexit ] ; 6 uses
-  %i.tv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.i360
+  %i.tv = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i360
   %i.tw = load float, ptr %i.tv, align 4, !tbaa !177
   %i.tx = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.i360
   store float %i.tw, ptr %i.tx, align 4, !tbaa !177
   %indvars.iv.next.i361 = add nuw nsw i64 %indvars.iv.i360, 1 ; 2 uses
-  %i.ty = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i361
+  %i.ty = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i361
   %i.tz = load float, ptr %i.ty, align 4, !tbaa !177
   %i.ua = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i361
   store float %i.tz, ptr %i.ua, align 4, !tbaa !177
   %indvars.iv.next.i361.1 = add nuw nsw i64 %indvars.iv.i360, 2 ; 2 uses
-  %i.ub = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i361.1
+  %i.ub = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i361.1
   %i.uc = load float, ptr %i.ub, align 4, !tbaa !177
   %i.ud = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i361.1
   store float %i.uc, ptr %i.ud, align 4, !tbaa !177
   %indvars.iv.next.i361.2 = add nuw nsw i64 %indvars.iv.i360, 3 ; 2 uses
-  %i.ue = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i361.2
+  %i.ue = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i361.2
   %i.uf = load float, ptr %i.ue, align 4, !tbaa !177
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i361.2
   store float %i.uf, ptr %i.ug, align 4, !tbaa !177
@@ -816,7 +810,7 @@ vector.memcheck1086:                              ; preds = %.lr.ph.preheader.i3
   %i.vx = shl nsw i64 %i.vw, 2
   %i.vy = sext i32 %i.mm to i64
   %i.vz = shl nsw i64 %i.vy, 3
-  %i.wa = add i64 %i.vx, %.sroa.10521.2819
+  %i.wa = add i64 %i.vx, %11
   %i.wb = add i64 %i.wa, %i.vz
   %i.wc = sub i64 %i.vr, %i.wb
   %i.wd = add i64 %i.wc, -81
@@ -923,7 +917,7 @@ vector.memcheck1070:                              ; preds = %.lr.ph.preheader.i3
   %i.xn = sext i32 %i.mm to i64
   %i.xo = shl nsw i64 %i.xn, 3
   %i.xp = shl nsw i64 %i.xj, 2
-  %i.xq = add i64 %i.xm, %.sroa.10521.2819
+  %i.xq = add i64 %i.xm, %11
   %i.xr = add i64 %i.xq, %i.xo
   %i.xs = add i64 %i.xp, %i.xi
   %i.xt = sub i64 %i.xr, %i.xs
@@ -1028,7 +1022,7 @@ vector.ph1056:                                    ; preds = %vector.memcheck1054
 
 vector.body1058:                                  ; preds = %vector.body1058, %vector.ph1056
   %index1059 = phi i64 [ 0, %vector.ph1056 ], [ %index.next1062, %vector.body1058 ] ; 3 uses
-  %i.yy = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %index1059 ; 2 uses
+  %i.yy = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %index1059 ; 2 uses
   %i.yz = getelementptr inbounds nuw i8, ptr %i.yy, i64 16
   %wide.load1060 = load <4 x float>, ptr %i.yy, align 4, !tbaa !177
   %wide.load1061 = load <4 x float>, ptr %i.yz, align 4, !tbaa !177
@@ -1056,7 +1050,7 @@ scalar.ph1052.preheader:                          ; preds = %vector.memcheck1054
 scalar.ph1052.prol:                               ; preds = %scalar.ph1052.preheader, %scalar.ph1052.prol
   %indvars.iv.i386.prol = phi i64 [ %indvars.iv.next.i387.prol, %scalar.ph1052.prol ], [ %indvars.iv.i386.ph, %scalar.ph1052.preheader ] ; 3 uses
   %prol.iter1266 = phi i64 [ %prol.iter1266.next, %scalar.ph1052.prol ], [ 0, %scalar.ph1052.preheader ]
-  %i.zg = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.i386.prol
+  %i.zg = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i386.prol
   %i.zh = load float, ptr %i.zg, align 4, !tbaa !177
   %i.zi = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.i386.prol
   store float %i.zh, ptr %i.zi, align 4, !tbaa !177
@@ -1072,22 +1066,22 @@ scalar.ph1052.prol.loopexit:                      ; preds = %scalar.ph1052.prol,
 
 scalar.ph1052:                                    ; preds = %scalar.ph1052.prol.loopexit, %scalar.ph1052
   %indvars.iv.i386 = phi i64 [ %indvars.iv.next.i387.3, %scalar.ph1052 ], [ %indvars.iv.i386.unr, %scalar.ph1052.prol.loopexit ] ; 6 uses
-  %i.zk = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.i386
+  %i.zk = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i386
   %i.zl = load float, ptr %i.zk, align 4, !tbaa !177
   %i.zm = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.i386
   store float %i.zl, ptr %i.zm, align 4, !tbaa !177
   %indvars.iv.next.i387 = add nuw nsw i64 %indvars.iv.i386, 1 ; 2 uses
-  %i.zn = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i387
+  %i.zn = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i387
   %i.zo = load float, ptr %i.zn, align 4, !tbaa !177
   %i.zp = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i387
   store float %i.zo, ptr %i.zp, align 4, !tbaa !177
   %indvars.iv.next.i387.1 = add nuw nsw i64 %indvars.iv.i386, 2 ; 2 uses
-  %i.zq = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i387.1
+  %i.zq = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i387.1
   %i.zr = load float, ptr %i.zq, align 4, !tbaa !177
   %i.zs = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i387.1
   store float %i.zr, ptr %i.zs, align 4, !tbaa !177
   %indvars.iv.next.i387.2 = add nuw nsw i64 %indvars.iv.i386, 3 ; 2 uses
-  %i.zt = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i387.2
+  %i.zt = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i387.2
   %i.zu = load float, ptr %i.zt, align 4, !tbaa !177
   %i.zv = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i387.2
   store float %i.zu, ptr %i.zv, align 4, !tbaa !177
@@ -1208,11 +1202,11 @@ middle.block1047:                                 ; preds = %vector.body1040
   br i1 %min.iters.check1013, label %.lr.ph.i400.preheader, label %vector.memcheck1014
 
 vector.memcheck1014:                              ; preds = %.lr.ph.preheader.i397
-  %i.abj = sext i32 %i.mm to i64
-  %i.abk = sext i32 %i.mj to i64
+  %i.abj = sext i32 %i.mj to i64
+  %i.abk = sext i32 %i.mm to i64
   %i.abl = add nsw i64 %i.abj, %i.abk
   %i.abm = shl nsw i64 %i.abl, 3
-  %i.abn = add i64 %i.abm, %.sroa.10521.2819
+  %i.abn = add i64 %i.abm, %11
   %i.abo = sub i64 %i.abe, %i.abn
   %i.abp = add i64 %i.abo, -105
   %diff.check1015 = icmp ult i64 %i.abp, 31
@@ -1318,7 +1312,7 @@ vector.memcheck998:                               ; preds = %.lr.ph.preheader.i4
   %i.acz = sext i32 %i.mm to i64
   %i.ada = shl nsw i64 %i.acz, 3
   %i.adb = shl nsw i64 %i.acv, 2
-  %i.adc = add i64 %i.acy, %.sroa.10521.2819
+  %i.adc = add i64 %i.acy, %11
   %i.add = add i64 %i.adc, %i.ada
   %i.ade = add i64 %i.adb, %i.acu
   %i.adf = sub i64 %i.add, %i.ade
@@ -1423,7 +1417,7 @@ vector.ph984:                                     ; preds = %vector.memcheck982
 
 vector.body986:                                   ; preds = %vector.body986, %vector.ph984
   %index987 = phi i64 [ 0, %vector.ph984 ], [ %index.next990, %vector.body986 ] ; 3 uses
-  %i.aek = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %index987 ; 2 uses
+  %i.aek = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %index987 ; 2 uses
   %i.ael = getelementptr inbounds nuw i8, ptr %i.aek, i64 16
   %wide.load988 = load <4 x float>, ptr %i.aek, align 4, !tbaa !177
   %wide.load989 = load <4 x float>, ptr %i.ael, align 4, !tbaa !177
@@ -1451,7 +1445,7 @@ scalar.ph980.preheader:                           ; preds = %vector.memcheck982,
 scalar.ph980.prol:                                ; preds = %scalar.ph980.preheader, %scalar.ph980.prol
   %indvars.iv.i415.prol = phi i64 [ %indvars.iv.next.i416.prol, %scalar.ph980.prol ], [ %indvars.iv.i415.ph, %scalar.ph980.preheader ] ; 3 uses
   %prol.iter1278 = phi i64 [ %prol.iter1278.next, %scalar.ph980.prol ], [ 0, %scalar.ph980.preheader ]
-  %i.aes = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.i415.prol
+  %i.aes = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i415.prol
   %i.aet = load float, ptr %i.aes, align 4, !tbaa !177
   %i.aeu = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.i415.prol
   store float %i.aet, ptr %i.aeu, align 4, !tbaa !177
@@ -1467,22 +1461,22 @@ scalar.ph980.prol.loopexit:                       ; preds = %scalar.ph980.prol, 
 
 scalar.ph980:                                     ; preds = %scalar.ph980.prol.loopexit, %scalar.ph980
   %indvars.iv.i415 = phi i64 [ %indvars.iv.next.i416.3, %scalar.ph980 ], [ %indvars.iv.i415.unr, %scalar.ph980.prol.loopexit ] ; 6 uses
-  %i.aew = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.i415
+  %i.aew = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i415
   %i.aex = load float, ptr %i.aew, align 4, !tbaa !177
   %i.aey = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.i415
   store float %i.aex, ptr %i.aey, align 4, !tbaa !177
   %indvars.iv.next.i416 = add nuw nsw i64 %indvars.iv.i415, 1 ; 2 uses
-  %i.aez = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i416
+  %i.aez = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i416
   %i.afa = load float, ptr %i.aez, align 4, !tbaa !177
   %i.afb = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i416
   store float %i.afa, ptr %i.afb, align 4, !tbaa !177
   %indvars.iv.next.i416.1 = add nuw nsw i64 %indvars.iv.i415, 2 ; 2 uses
-  %i.afc = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i416.1
+  %i.afc = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i416.1
   %i.afd = load float, ptr %i.afc, align 4, !tbaa !177
   %i.afe = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i416.1
   store float %i.afd, ptr %i.afe, align 4, !tbaa !177
   %indvars.iv.next.i416.2 = add nuw nsw i64 %indvars.iv.i415, 3 ; 2 uses
-  %i.aff = getelementptr inbounds nuw [4 x i8], ptr %.sroa.10521.2, i64 %indvars.iv.next.i416.2
+  %i.aff = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.i416.2
   %i.afg = load float, ptr %i.aff, align 4, !tbaa !177
   %i.afh = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv.next.i416.2
   store float %i.afg, ptr %i.afh, align 4, !tbaa !177
@@ -1607,7 +1601,7 @@ vector.memcheck942:                               ; preds = %.lr.ph.preheader.i4
   %i.agx = sext i32 %i.mj to i64
   %.neg1206 = mul nsw i64 %i.agx, -12
   %i.agy = add i64 %i.agq, -128
-  %i.agz = add i64 %i.agw, %.sroa.10521.2819
+  %i.agz = add i64 %i.agw, %11
   %i.aha = sub i64 %i.agy, %i.agz
   %i.ahb = add i64 %.neg1206, %i.aha
   %i.ahc = add i64 %i.ahb, -1
@@ -1714,7 +1708,7 @@ vector.memcheck926:                               ; preds = %.lr.ph.preheader.i4
   %i.aim = sext i32 %i.mm to i64
   %i.ain = shl nsw i64 %i.aim, 3
   %i.aio = shl nsw i64 %i.aii, 2
-  %i.aip = add i64 %i.ail, %.sroa.10521.2819
+  %i.aip = add i64 %i.ail, %11
   %i.aiq = add i64 %i.aip, %i.ain
   %i.air = add i64 %i.aio, %i.aih
   %i.ais = sub i64 %i.aiq, %i.air
@@ -1853,102 +1847,102 @@ vector.memcheck870:                               ; preds = %.lr.ph591
   %i.akb = mul nsw i64 %i.aka, 28                 ; 2 uses
   %i.akc = sext i32 %i.mm to i64
   %i.akd = shl nsw i64 %i.akc, 3                  ; 16 uses
-  %i.ake = add i64 %i.akb, %.sroa.10521.2819
+  %i.ake = add i64 %i.akb, %11
   %i.akf = add i64 %i.ake, %i.akd
   %i.akg = sub i64 %i.akf, %i.ajs
   %i.akh = add i64 %i.akg, 223
   %diff.check872.a = icmp ult i64 %i.akh, 15
   %conflict.rdx873.a = or i1 %diff.check871, %diff.check872.a
   %i.aki = mul nsw i64 %i.aka, 24                 ; 2 uses
-  %i.akj = add i64 %i.aki, %.sroa.10521.2819
+  %i.akj = add i64 %i.aki, %11
   %i.akk = add i64 %i.akj, %i.akd
   %i.akl = sub i64 %i.akk, %i.ajs
   %i.akm = add i64 %i.akl, 199
   %diff.check874.a = icmp ult i64 %i.akm, 15
   %conflict.rdx875.a = or i1 %conflict.rdx873.a, %diff.check874.a
   %i.akn = mul nsw i64 %i.aka, 20                 ; 2 uses
-  %i.ako = add i64 %i.akn, %.sroa.10521.2819
+  %i.ako = add i64 %i.akn, %11
   %i.akp = add i64 %i.ako, %i.akd
   %i.akq = sub i64 %i.akp, %i.ajs
   %i.akr = add i64 %i.akq, 175
   %diff.check876.a = icmp ult i64 %i.akr, 15
   %conflict.rdx877.a = or i1 %conflict.rdx875.a, %diff.check876.a
   %i.aks = shl nsw i64 %i.aka, 4                  ; 2 uses
-  %i.akt = add i64 %i.aks, %.sroa.10521.2819
+  %i.akt = add i64 %i.aks, %11
   %i.aku = add i64 %i.akt, %i.akd
   %i.akv = sub i64 %i.aku, %i.ajs
   %i.akw = add i64 %i.akv, 151
   %diff.check878.a = icmp ult i64 %i.akw, 15
   %conflict.rdx879.a = or i1 %conflict.rdx877.a, %diff.check878.a
   %i.akx = mul nsw i64 %i.aka, 12                 ; 2 uses
-  %i.aky = add i64 %i.akd, %.sroa.10521.2819
+  %i.aky = add i64 %i.akd, %11
   %i.akz = add i64 %i.aky, %i.akx
   %i.ala = sub i64 %i.ajs, %i.akz
   %i.alb = add i64 %i.ala, -129
   %diff.check880.a = icmp ult i64 %i.alb, 15
   %conflict.rdx881.a = or i1 %conflict.rdx879.a, %diff.check880.a
   %i.alc = shl nsw i64 %i.aka, 3                  ; 2 uses
-  %i.ald = add i64 %i.akd, %.sroa.10521.2819
-  %i.ale = add i64 %i.ald, %i.alc
+  %i.ald = add i64 %i.alc, %11
+  %i.ale = add i64 %i.ald, %i.akd
   %i.alf = sub i64 %i.ajs, %i.ale
   %i.alg = add i64 %i.alf, -105
   %diff.check882.a = icmp ult i64 %i.alg, 15
   %conflict.rdx883.a = or i1 %conflict.rdx881.a, %diff.check882.a
   %i.alh = shl nsw i64 %i.aka, 2                  ; 2 uses
-  %i.ali = add i64 %i.alh, %.sroa.10521.2819
+  %i.ali = add i64 %i.alh, %11
   %i.alj = add i64 %i.ali, %i.akd
   %i.alk = sub i64 %i.ajs, %i.alj
   %i.all = add i64 %i.alk, -81
   %diff.check884.a = icmp ult i64 %i.all, 15
   %conflict.rdx885.a = or i1 %conflict.rdx883.a, %diff.check884.a
-  %i.alm = add i64 %i.akd, %.sroa.10521.2819
+  %i.alm = add i64 %i.akd, %11
   %i.aln = sub i64 %i.ajs, %i.alm
   %i.alo = add i64 %i.aln, -57
   %diff.check886.a = icmp ult i64 %i.alo, 15
   %conflict.rdx887.a = or i1 %conflict.rdx885.a, %diff.check886.a
-  %i.alp = add i64 %i.akd, %.sroa.10521.2819
+  %i.alp = add i64 %i.akd, %11
   %i.alq = add i64 %i.alp, %i.akb
   %i.alr = sub i64 %i.ajy, %i.alq
   %i.als = add i64 %i.alr, -225
   %diff.check888.a = icmp ult i64 %i.als, 15
   %conflict.rdx889.a = or i1 %conflict.rdx887.a, %diff.check888.a
-  %i.alt = add i64 %i.akd, %.sroa.10521.2819
+  %i.alt = add i64 %i.akd, %11
   %i.alu = add i64 %i.alt, %i.aki
   %i.alv = sub i64 %i.ajy, %i.alu
   %i.alw = add i64 %i.alv, -201
   %diff.check890 = icmp ult i64 %i.alw, 15
   %conflict.rdx891 = or i1 %conflict.rdx889.a, %diff.check890
-  %i.alx = add i64 %i.akd, %.sroa.10521.2819
+  %i.alx = add i64 %i.akd, %11
   %i.aly = add i64 %i.alx, %i.akn
   %i.alz = sub i64 %i.ajy, %i.aly
   %i.ama = add i64 %i.alz, -177
   %diff.check892 = icmp ult i64 %i.ama, 15
   %conflict.rdx893 = or i1 %conflict.rdx891, %diff.check892
-  %i.amb = add i64 %i.akd, %.sroa.10521.2819
+  %i.amb = add i64 %i.akd, %11
   %i.amc = add i64 %i.amb, %i.aks
   %i.amd = sub i64 %i.ajy, %i.amc
   %i.ame = add i64 %i.amd, -153
   %diff.check894 = icmp ult i64 %i.ame, 15
   %conflict.rdx895 = or i1 %conflict.rdx893, %diff.check894
-  %i.amf = add i64 %i.akd, %.sroa.10521.2819
+  %i.amf = add i64 %i.akd, %11
   %i.amg = add i64 %i.amf, %i.akx
   %i.amh = sub i64 %i.ajy, %i.amg
   %i.ami = add i64 %i.amh, -129
   %diff.check896 = icmp ult i64 %i.ami, 15
   %conflict.rdx897 = or i1 %conflict.rdx895, %diff.check896
-  %i.amj = add i64 %i.akd, %.sroa.10521.2819
-  %i.amk = add i64 %i.amj, %i.alc
+  %i.amj = add i64 %i.alc, %11
+  %i.amk = add i64 %i.amj, %i.akd
   %i.aml = sub i64 %i.ajy, %i.amk
   %i.amm = add i64 %i.aml, -105
   %diff.check898 = icmp ult i64 %i.amm, 15
   %conflict.rdx899 = or i1 %conflict.rdx897, %diff.check898
-  %i.amn = add i64 %i.alh, %.sroa.10521.2819
+  %i.amn = add i64 %i.alh, %11
   %i.amo = add i64 %i.amn, %i.akd
   %i.amp = sub i64 %i.ajy, %i.amo
   %i.amq = add i64 %i.amp, -81
   %diff.check900 = icmp ult i64 %i.amq, 15
   %conflict.rdx901 = or i1 %conflict.rdx899, %diff.check900
-  %i.amr = add i64 %i.akd, %.sroa.10521.2819
+  %i.amr = add i64 %i.akd, %11
   %i.ams = sub i64 %i.ajy, %i.amr
   %i.amt = add i64 %i.ams, -57
   %diff.check902 = icmp ult i64 %i.amt, 15
@@ -2024,7 +2018,7 @@ scalar.ph868.preheader:                           ; preds = %vector.memcheck870,
 vector.memcheck822:                               ; preds = %.lr.ph.preheader.i485
   %i.anw = sext i32 %i.mm to i64
   %i.anx = shl nsw i64 %i.anw, 3
-  %i.any = add i64 %i.anx, %.sroa.10521.2819
+  %i.any = add i64 %i.anx, %11
   %i.anz = sub i64 %i.anr, %i.any
   %i.aoa = add i64 %i.anz, -57
   %diff.check823 = icmp ult i64 %i.aoa, 31
@@ -2427,7 +2421,7 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %bb.bu, %_ZN20btAlignedObjectArrayIfED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %.sroa.10521.2)
+  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %10)
           to label %_ZN20btAlignedObjectArrayIfED2Ev.exit505 unwind label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
@@ -2445,7 +2439,7 @@ bb.by:                                            ; preds = %.loopexit.split-lp.
 
 .thread536:                                       ; preds = %bb.by, %bb.bm
   %.pn244.pn.pn = phi { ptr, i32 } [ %i.aoz, %bb.bm ], [ %.pn.pn.pn, %bb.by ]
-  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %.sroa.10521.2)
+  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %10)
           to label %_ZN20btAlignedObjectArrayIfED2Ev.exit508 unwind label %bb.bz
 
 bb.bz:                                            ; preds = %.thread536
@@ -2848,11 +2842,11 @@ declare i32 @llvm.smax.i32(i32, i32) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #8
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #16
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #17
+declare void @llvm.assume(i1 noundef) #16
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
+declare void @llvm.experimental.noalias.scope.decl(metadata) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #8
@@ -2879,8 +2873,8 @@ attributes #12 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" 
 attributes #13 = { cold nofree noreturn }
 attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #18 = { nounwind }
 attributes #19 = { builtin allocsize(0) }
 attributes #20 = { noreturn nounwind }

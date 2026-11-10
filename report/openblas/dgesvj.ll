@@ -63,7 +63,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #7
-  %i.t = getelementptr inbounds i8, ptr %7, i64 -8 ; 45 uses
+  %i.t = getelementptr inbounds i8, ptr %7, i64 -8 ; 44 uses
   %i.u = load i32, ptr %6, align 4, !tbaa !43     ; 52 uses
   %narrow1678 = xor i32 %i.u, -1
   %i.v = sext i32 %narrow1678 to i64
@@ -466,8 +466,8 @@ bb.cq:                                            ; preds = %bb.co
   br label %._crit_edge1977
 
 ._crit_edge1977:                                  ; preds = %._crit_edge1977.sink.split, %bb.cn
-  %.pn.pre-phi = phi i64 [ %i.vi, %bb.cn ], [ %i.wb, %._crit_edge1977.sink.split ] ; 2 uses
-  %storemerge1669 = phi double [ %i.vk, %bb.cn ], [ %i.we, %._crit_edge1977.sink.split ] ; 4 uses
+  %.pn.pre-phi = phi i64 [ %i.vi, %bb.cn ], [ %i.wb, %._crit_edge1977.sink.split ]
+  %storemerge1669 = phi double [ %i.vk, %bb.cn ], [ %i.we, %._crit_edge1977.sink.split ] ; 3 uses
   %i.wg = phi i32 [ %i.vh, %bb.cn ], [ %i.wa, %._crit_edge1977.sink.split ] ; 3 uses
   store double %storemerge1669, ptr %i.f, align 8, !tbaa !45
   %i.wh = fcmp ogt double %storemerge1669, 0.000000e+00
@@ -870,8 +870,6 @@ bb.ej:                                            ; preds = %bb.ei
   br label %bb.em
 
 bb.ek:                                            ; preds = %._crit_edge1977
-  %storemerge1669.in = getelementptr inbounds [8 x i8], ptr %i.t, i64 %.pn.pre-phi
-  store double %storemerge1669, ptr %storemerge1669.in, align 8, !tbaa !45
   %i.aoz = fcmp oeq double %storemerge1669, 0.000000e+00
   %or.cond19 = and i1 %i.tv, %i.aoz
   br i1 %or.cond19, label %bb.el, label %bb.em

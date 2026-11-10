@@ -205,7 +205,7 @@ vector.ph1765:                                    ; preds = %vector.memcheck1758
 
 vector.body1767:                                  ; preds = %vector.body1767, %vector.ph1765
   %index1768 = phi i64 [ 0, %vector.ph1765 ], [ %index.next1778, %vector.body1767 ] ; 3 uses
-  %i.ril = shl nuw i64 %index1768, 2              ; 2 uses
+  %i.ril = shl nuw nsw i64 %index1768, 2          ; 2 uses
   %i.rim = getelementptr inbounds nuw [4 x i8], ptr %i.rgv, i64 %index1768
   %wide.load1769 = load <4 x float>, ptr %i.rim, align 4, !tbaa !12, !alias.scope !605, !noalias !602 ; 3 uses
   %i.rin = getelementptr inbounds nuw [4 x i8], ptr %i.anu, i64 %i.ril ; 2 uses
@@ -241,7 +241,7 @@ vector.body1767:                                  ; preds = %vector.body1767, %v
 
 .lr.ph.i615:                                      ; preds = %.lr.ph.i615.preheader, %.lr.ph.i615
   %.07280.i = phi i64 [ %i.rke, %.lr.ph.i615 ], [ %.07280.i.ph, %.lr.ph.i615.preheader ] ; 3 uses
-  %i.rjb = shl nuw i64 %.07280.i, 2               ; 4 uses
+  %i.rjb = shl nuw nsw i64 %.07280.i, 2           ; 4 uses
   %i.rjc = getelementptr inbounds nuw [4 x i8], ptr %i.rgv, i64 %.07280.i ; 3 uses
   %i.rjd = load float, ptr %i.rjc, align 4, !tbaa !12, !noalias !602
   %i.rje = getelementptr inbounds nuw [4 x i8], ptr %i.anu, i64 %i.rjb ; 3 uses

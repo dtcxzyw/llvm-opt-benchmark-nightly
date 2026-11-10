@@ -204,8 +204,8 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.lcssa.i = phi i32 [ %i.aa, %bb.o ], [ %i.bf, %bb.q ]
   %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.07.i, %bb.o ], [ %.sroa.012.0.i, %bb.q ], !dbg !48173
   %i.az = zext nneg i32 %.sroa.012.0.lcssa.i to i64, !dbg !48177
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7006, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !48008)
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7016, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !48010)
+    #dbg_value(i64 %i.az, !7006, !DIExpression(), !48008)
+    #dbg_value(i64 %i.az, !7016, !DIExpression(), !48010)
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.az, !dbg !48178
   %i.bb = load double, ptr %i.ba, align 8, !dbg !48179, !noalias !48102, !noundef !2044 ; 2 uses
     #dbg_value(double %i.bb, !6987, !DIExpression(), !48013)
@@ -608,8 +608,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.sroa.0.0.lcssa.i = phi i32 [ %.sroa.015.0, %bb.s ], [ %i.bk, %bb.u ]
   %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.07.i, %bb.s ], [ %.sroa.012.0.i, %bb.u ], !dbg !49132
   %i.be = zext nneg i32 %.sroa.012.0.lcssa.i to i64, !dbg !49136
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7006, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !48934)
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7016, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !48936)
+    #dbg_value(i64 %i.be, !7006, !DIExpression(), !48934)
+    #dbg_value(i64 %i.be, !7016, !DIExpression(), !48936)
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.be, !dbg !49137
   %i.bg = load double, ptr %i.bf, align 8, !dbg !49138, !noalias !49053, !noundef !2044 ; 2 uses
     #dbg_value(double %i.bg, !6987, !DIExpression(), !48939)
@@ -1012,8 +1012,8 @@ bb.g:                                             ; preds = %.loopexit54
   %.sroa.0.0.lcssa.i = phi i32 [ %.sroa.0.0.lcssa52, %bb.g ], [ %i.ae, %bb.i ]
   %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.07.i, %bb.g ], [ %.sroa.012.0.i, %bb.i ], !dbg !49739
   %i.y = zext nneg i32 %.sroa.012.0.lcssa.i to i64, !dbg !49743
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7006, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !49657)
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7016, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !49659)
+    #dbg_value(i64 %i.y, !7006, !DIExpression(), !49657)
+    #dbg_value(i64 %i.y, !7016, !DIExpression(), !49659)
   %i.z = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.y, !dbg !49744
   %i.aa = load double, ptr %i.z, align 8, !dbg !49745, !noalias !49713, !noundef !2044 ; 2 uses
     #dbg_value(double %i.aa, !6987, !DIExpression(), !49662)
@@ -1416,8 +1416,8 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.0.0.lcssa.i = phi i32 [ %4, %bb.k ], [ %i.am, %bb.m ]
   %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.07.i, %bb.k ], [ %.sroa.012.0.i, %bb.m ], !dbg !50025
   %i.ag = zext nneg i32 %.sroa.012.0.lcssa.i to i64, !dbg !50029
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7006, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !49912)
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7016, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !49914)
+    #dbg_value(i64 %i.ag, !7006, !DIExpression(), !49912)
+    #dbg_value(i64 %i.ag, !7016, !DIExpression(), !49914)
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.ag, !dbg !50030
   %i.ai = load double, ptr %i.ah, align 8, !dbg !50031, !noalias !49985, !noundef !2044 ; 2 uses
     #dbg_value(double %i.ai, !6987, !DIExpression(), !49917)
@@ -1820,8 +1820,8 @@ _RNvXs5_NtCsenfyI6F4F2A_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit45.t
   %.sroa.0.0.lcssa.i.i = phi i32 [ %.sroa.07.076.i, %_RNvXs5_NtCsenfyI6F4F2A_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit45.thread.i ], [ %i.aq, %bb.g ]
   %.sroa.012.0.lcssa.i.i = phi i32 [ %.sroa.012.028.i.i, %_RNvXs5_NtCsenfyI6F4F2A_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit45.thread.i ], [ %.sroa.012.0.i.i, %bb.g ], !dbg !50728
   %i.ak = zext nneg i32 %.sroa.012.0.lcssa.i.i to i64, !dbg !50732
-    #dbg_value(i32 %.sroa.012.0.lcssa.i.i, !7059, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !50605)
-    #dbg_value(i32 %.sroa.012.0.lcssa.i.i, !7062, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !50607)
+    #dbg_value(i64 %i.ak, !7059, !DIExpression(), !50605)
+    #dbg_value(i64 %i.ak, !7062, !DIExpression(), !50607)
   %i.al = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.ak, !dbg !50733
   %i.am = load double, ptr %i.al, align 8, !dbg !50734, !noalias !50686, !noundef !2044 ; 2 uses
     #dbg_value(double %i.am, !7056, !DIExpression(), !50611)
@@ -2224,8 +2224,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.sroa.0.0.lcssa.i = phi i32 [ %.sroa.015.0, %bb.j ], [ %i.au, %bb.l ]
   %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.028.i, %bb.j ], [ %.sroa.012.0.i, %bb.l ], !dbg !51624
   %i.ao = zext nneg i32 %.sroa.012.0.lcssa.i to i64, !dbg !51628
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7059, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !51490)
-    #dbg_value(i32 %.sroa.012.0.lcssa.i, !7062, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !51492)
+    #dbg_value(i64 %i.ao, !7059, !DIExpression(), !51490)
+    #dbg_value(i64 %i.ao, !7062, !DIExpression(), !51492)
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.ao, !dbg !51629
   %i.aq = load double, ptr %i.ap, align 8, !dbg !51630, !noalias !51583, !noundef !2044 ; 2 uses
     #dbg_value(double %i.aq, !7056, !DIExpression(), !51496)

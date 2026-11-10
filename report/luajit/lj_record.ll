@@ -205,8 +205,8 @@ bb.v:                                             ; preds = %bb.p
 bb.w:                                             ; preds = %bb.v
   %i.fk = lshr i32 %i.fi, 16                      ; 2 uses
   %i.fl = zext nneg i32 %i.fk to i64
-  %1 = getelementptr i8, ptr %i.fg, i64 -262140
-  %2 = getelementptr [4 x i8], ptr %1, i64 %i.fl
+  %1 = getelementptr [4 x i8], ptr %i.fg, i64 %i.fl
+  %2 = getelementptr i8, ptr %1, i64 -262140
   store ptr %2, ptr %i.p, align 8, !tbaa !90
   %i.fm = shl nuw nsw i32 %i.fk, 2
   %i.fn = sub nuw nsw i32 131072, %i.fm
