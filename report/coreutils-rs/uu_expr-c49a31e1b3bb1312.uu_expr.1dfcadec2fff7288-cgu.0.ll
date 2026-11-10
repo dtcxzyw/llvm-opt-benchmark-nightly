@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.08.024.i = phi ptr [ %i.l, %.thread20.i ], [ %i.m, %bb.d ]
   %.sroa.5.023.i = phi i64 [ 8, %.thread20.i ], [ %i.p, %bb.d ]
   %i.r = load i64, ptr %.sroa.08.024.i, align 8, !noundef !4
-  %i.s = icmp samesign eq i64 %.sroa.5.023.i, 8
+  %i.s = icmp eq i64 %.sroa.5.023.i, 8
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit: ; preds = %.lr.ph.preheader.i, %bb.d, %bb.c

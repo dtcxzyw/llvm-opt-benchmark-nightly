@@ -204,7 +204,7 @@ _ZN10QCPPainter8drawLineERK6QLineF.exit21:        ; preds = %bb.g, %bb.h
   %i.ba = sitofp <2 x i32> %i.az to <2 x double>
   %i.bb = fmul nnan <2 x double> %i.ba, splat (double 5.000000e-01) ; 3 uses
   %i.bc = shufflevector <2 x double> %i.bb, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 1>
-  %19 = shufflevector <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x double> %i.bc, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  %19 = shufflevector <4 x double> %i.bc, <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x i32> <i32 4, i32 1, i32 6, i32 3>
   store <4 x double> %19, ptr %12, align 8
   %i.bd = load i8, ptr %i.o, align 4, !range !175, !noundef !176
   %i.be = trunc nuw i8 %i.bd to i1
@@ -278,7 +278,7 @@ bb.n:                                             ; preds = %bb.a
   %i.ch = sitofp <2 x i32> %i.cg to <2 x double>
   %i.ci = fmul nnan <2 x double> %i.ch, splat (double 5.000000e-01) ; 3 uses
   %i.cj = shufflevector <2 x double> %i.ci, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 1>
-  %20 = shufflevector <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x double> %i.cj, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  %20 = shufflevector <4 x double> %i.cj, <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x i32> <i32 4, i32 1, i32 6, i32 3>
   store <4 x double> %20, ptr %15, align 8
   %i.ck = getelementptr i8, ptr %1, i64 12        ; 2 uses
   %i.cl = load i8, ptr %i.ck, align 4, !range !175, !noundef !176
@@ -681,7 +681,7 @@ _ZN5QListI6QPointED2Ev.exit429:                   ; preds = %_ZN5QListI6QPointED
   %i.ri = extractelement <2 x double> %i.rf, i64 1
   %i.rj = fadd double %i.ri, %i.rh                ; 4 uses
   %i.rk = shufflevector <1 x double> %i.rg, <1 x double> poison, <2 x i32> zeroinitializer
-  %61 = shufflevector <2 x double> <double 0.000000e+00, double poison>, <2 x double> %i.rf, <2 x i32> <i32 0, i32 2>
+  %61 = shufflevector <2 x double> %i.rf, <2 x double> <double 0.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.rl = fadd <2 x double> %i.rk, %61            ; 4 uses
   %i.rm = extractelement <2 x double> %i.rl, i64 0
   store double %i.rm, ptr %46, align 8, !alias.scope !1370
@@ -986,7 +986,7 @@ _ZN5QListI6QPointED2Ev.exit507:                   ; preds = %_ZN5QListI6QPointED
   %i.vp = extractelement <2 x double> %i.vm, i64 1
   %i.vq = fadd double %i.vp, %i.vo                ; 4 uses
   %i.vr = shufflevector <1 x double> %i.vn, <1 x double> poison, <2 x i32> zeroinitializer
-  %62 = shufflevector <2 x double> <double 0.000000e+00, double poison>, <2 x double> %i.vm, <2 x i32> <i32 0, i32 2>
+  %62 = shufflevector <2 x double> %i.vm, <2 x double> <double 0.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.vs = fadd <2 x double> %i.vr, %62            ; 4 uses
   %i.vt = extractelement <2 x double> %i.vs, i64 0
   store double %i.vt, ptr %55, align 8, !alias.scope !1373
@@ -1274,7 +1274,7 @@ _ZN10QCPPainter6setPenERK4QPen.exit555:           ; preds = %bb.di, %bb.dj
   %i.ys = extractelement <2 x double> %i.yo, i64 1
   %i.yt = fadd double %i.ys, %i.yr                ; 4 uses
   %i.yu = shufflevector <1 x double> %i.yp, <1 x double> poison, <2 x i32> zeroinitializer
-  %63 = shufflevector <2 x double> <double 0.000000e+00, double poison>, <2 x double> %i.yo, <2 x i32> <i32 0, i32 2>
+  %63 = shufflevector <2 x double> %i.yo, <2 x double> <double 0.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.yv = fadd <2 x double> %i.yu, %63            ; 4 uses
   %i.yw = extractelement <2 x double> %i.yv, i64 0
   store double %i.yw, ptr %58, align 8, !alias.scope !1376

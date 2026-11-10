@@ -205,7 +205,7 @@ bb.lc:                                            ; preds = %bb.la
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.lc, %bb.lb
   %.sroa.5.023.i.i = phi i64 [ %i.avk, %bb.lc ], [ 8, %bb.lb ]
-  %i.avm = icmp samesign ne i64 %.sroa.5.023.i.i, 8
+  %i.avm = icmp ne i64 %.sroa.5.023.i.i, 8
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i187
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i187: ; preds = %.lr.ph.preheader.i.i, %bb.lc, %bb.lb
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.08.024.i.i = phi ptr [ %i.f, %.thread20.i.i ], [ %i.g, %bb.c ]
   %.sroa.5.023.i.i = phi i64 [ 8, %.thread20.i.i ], [ %i.j, %bb.c ]
   %i.l = load i64, ptr %.sroa.08.024.i.i, align 8, !noalias !35566, !noundef !12
-  %i.m = icmp samesign eq i64 %.sroa.5.023.i.i, 8
+  %i.m = icmp eq i64 %.sroa.5.023.i.i, 8
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i: ; preds = %.lr.ph.preheader.i.i, %bb.c, %bb.b
@@ -1011,7 +1011,7 @@ bb.t:                                             ; preds = %_RNvXs9_NtNtCsioiJd
   %.sroa.08.024.i.i = phi ptr [ %i.an, %.thread20.i.i ], [ %i.ao, %bb.t ]
   %.sroa.5.023.i.i = phi i64 [ 8, %.thread20.i.i ], [ %i.ar, %bb.t ]
   %i.at = load i64, ptr %.sroa.08.024.i.i, align 8, !noalias !35990, !noundef !12
-  %i.au = icmp samesign eq i64 %.sroa.5.023.i.i, 8
+  %i.au = icmp eq i64 %.sroa.5.023.i.i, 8
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i: ; preds = %.lr.ph.preheader.i.i, %bb.t, %bb.s
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.08.024.i.i = phi ptr [ %i.j, %.thread20.i.i ], [ %i.k, %bb.c ]
   %.sroa.5.023.i.i = phi i64 [ 8, %.thread20.i.i ], [ %i.n, %bb.c ]
   %i.s = load i64, ptr %.sroa.08.024.i.i, align 8, !noalias !36125, !noundef !12
-  %i.t = icmp samesign eq i64 %.sroa.5.023.i.i, 8
+  %i.t = icmp eq i64 %.sroa.5.023.i.i, 8
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i: ; preds = %.lr.ph.preheader.i.i, %bb.c, %bb.b
@@ -1718,7 +1718,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.08.024.i.i = phi ptr [ %i.g, %.thread20.i.i ], [ %i.h, %bb.c ]
   %.sroa.5.023.i.i = phi i64 [ 8, %.thread20.i.i ], [ %i.k, %bb.c ]
   %i.m = load i64, ptr %.sroa.08.024.i.i, align 8, !noalias !36154, !noundef !12
-  %i.n = icmp samesign eq i64 %.sroa.5.023.i.i, 8
+  %i.n = icmp eq i64 %.sroa.5.023.i.i, 8
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i: ; preds = %.lr.ph.preheader.i.i, %bb.c, %bb.b

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %6 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bn, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %6 = shufflevector <4 x i32> %i.bn, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -608,7 +608,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %4 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bs, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %4 = shufflevector <4 x i32> %i.bs, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1011,7 +1011,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
 vector.ph:                                        ; preds = %.lr.ph80.i.i.i.preheader
   %n.vec = and i64 %i.as, -8                      ; 3 uses
   %i.at = add i64 %i.r, %n.vec
-  %3 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.aq, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %3 = shufflevector <4 x i32> %i.aq, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   %i.au = getelementptr [4 x i8], ptr %.sroa.0126.1144, i64 %i.r
   br label %vector.body
 
@@ -1414,7 +1414,7 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %2 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.be, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %2 = shufflevector <4 x i32> %i.be, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1817,7 +1817,7 @@ bb.s:                                             ; preds = %bb.r, %._crit_edge.
 
 vector.ph217:                                     ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec218 = and i64 %.0.i.i.i.i.i.i.i.i12, 9223372036854775800 ; 3 uses
-  %5 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.gs, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %5 = shufflevector <4 x i32> %i.gs, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body219
 
 vector.body219:                                   ; preds = %vector.body219, %vector.ph217
@@ -2220,7 +2220,7 @@ bb.ae:                                            ; preds = %bb.ad, %._crit_edge
 
 vector.ph300:                                     ; preds = %.lr.ph85.i.i.i.i40.preheader
   %n.vec301 = and i64 %.0.i.i.i.i.i.i.i.i27, 9223372036854775800 ; 3 uses
-  %6 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.oe, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %6 = shufflevector <4 x i32> %i.oe, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body302
 
 vector.body302:                                   ; preds = %vector.body302, %vector.ph300
@@ -2623,7 +2623,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %6 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bn, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %6 = shufflevector <4 x i32> %i.bn, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3026,7 +3026,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %4 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bs, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %4 = shufflevector <4 x i32> %i.bs, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3429,7 +3429,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %6 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bn, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %6 = shufflevector <4 x i32> %i.bn, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3832,7 +3832,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %4 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bs, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %4 = shufflevector <4 x i32> %i.bs, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -4235,7 +4235,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %6 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bn, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %6 = shufflevector <4 x i32> %i.bn, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -4638,7 +4638,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 
 vector.ph:                                        ; preds = %.lr.ph85.i.i.i.i.preheader
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i, 9223372036854775800 ; 3 uses
-  %4 = shufflevector <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> %i.bs, <4 x i32> <i32 4, i32 0, i32 0, i32 0>
+  %4 = shufflevector <4 x i32> %i.bs, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

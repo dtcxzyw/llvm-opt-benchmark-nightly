@@ -21,10 +21,10 @@ bb.a:
   store <2 x i64> %.val5, ptr %i.b, align 16
   %i.c = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %.val5, i8 1)
   %i.d = bitcast <2 x i64> %.val to <16 x i8>
-  %2 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.d, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %2 = shufflevector <16 x i8> %i.d, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.e = bitcast <16 x i8> %2 to <2 x i64>
   %i.f = xor <2 x i64> %.val, %i.e                ; 2 uses
-  %3 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.f, <2 x i32> <i32 1, i32 2>
+  %3 = shufflevector <2 x i64> %i.f, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.g = bitcast <2 x i64> %i.c to <4 x i32>
   %i.h = shufflevector <4 x i32> %i.g, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.i = bitcast <4 x i32> %i.h to <2 x i64>
@@ -34,10 +34,10 @@ bb.a:
   store <2 x i64> %i.k, ptr %i.l, align 16
   %i.m = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.k, i8 1)
   %i.n = bitcast <2 x i64> %.val5 to <16 x i8>
-  %4 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.n, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %4 = shufflevector <16 x i8> %i.n, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.o = bitcast <16 x i8> %4 to <2 x i64>
   %i.p = xor <2 x i64> %.val5, %i.o               ; 2 uses
-  %5 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.p, <2 x i32> <i32 1, i32 2>
+  %5 = shufflevector <2 x i64> %i.p, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.q = bitcast <2 x i64> %i.m to <4 x i32>
   %i.r = shufflevector <4 x i32> %i.q, <4 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.s = bitcast <4 x i32> %i.r to <2 x i64>
@@ -47,10 +47,10 @@ bb.a:
   store <2 x i64> %i.u, ptr %i.v, align 16
   %i.w = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.u, i8 2)
   %i.x = bitcast <2 x i64> %i.k to <16 x i8>
-  %6 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.x, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %6 = shufflevector <16 x i8> %i.x, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.y = bitcast <16 x i8> %6 to <2 x i64>
   %i.z = xor <2 x i64> %i.k, %i.y                 ; 2 uses
-  %7 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.z, <2 x i32> <i32 1, i32 2>
+  %7 = shufflevector <2 x i64> %i.z, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.aa = bitcast <2 x i64> %i.w to <4 x i32>
   %i.ab = shufflevector <4 x i32> %i.aa, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.ac = bitcast <4 x i32> %i.ab to <2 x i64>
@@ -60,10 +60,10 @@ bb.a:
   store <2 x i64> %i.ae, ptr %i.af, align 16
   %i.ag = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.ae, i8 2)
   %i.ah = bitcast <2 x i64> %i.u to <16 x i8>
-  %8 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.ah, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %8 = shufflevector <16 x i8> %i.ah, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.ai = bitcast <16 x i8> %8 to <2 x i64>
   %i.aj = xor <2 x i64> %i.u, %i.ai               ; 2 uses
-  %9 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.aj, <2 x i32> <i32 1, i32 2>
+  %9 = shufflevector <2 x i64> %i.aj, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.ak = bitcast <2 x i64> %i.ag to <4 x i32>
   %i.al = shufflevector <4 x i32> %i.ak, <4 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.am = bitcast <4 x i32> %i.al to <2 x i64>
@@ -73,10 +73,10 @@ bb.a:
   store <2 x i64> %i.ao, ptr %i.ap, align 16
   %i.aq = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.ao, i8 4)
   %i.ar = bitcast <2 x i64> %i.ae to <16 x i8>
-  %10 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.ar, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %10 = shufflevector <16 x i8> %i.ar, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.as = bitcast <16 x i8> %10 to <2 x i64>
   %i.at = xor <2 x i64> %i.ae, %i.as              ; 2 uses
-  %11 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.at, <2 x i32> <i32 1, i32 2>
+  %11 = shufflevector <2 x i64> %i.at, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.au = bitcast <2 x i64> %i.aq to <4 x i32>
   %i.av = shufflevector <4 x i32> %i.au, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.aw = bitcast <4 x i32> %i.av to <2 x i64>
@@ -86,10 +86,10 @@ bb.a:
   store <2 x i64> %i.ay, ptr %i.az, align 16
   %i.ba = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.ay, i8 4)
   %i.bb = bitcast <2 x i64> %i.ao to <16 x i8>
-  %12 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.bb, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %12 = shufflevector <16 x i8> %i.bb, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.bc = bitcast <16 x i8> %12 to <2 x i64>
   %i.bd = xor <2 x i64> %i.ao, %i.bc              ; 2 uses
-  %13 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.bd, <2 x i32> <i32 1, i32 2>
+  %13 = shufflevector <2 x i64> %i.bd, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.be = bitcast <2 x i64> %i.ba to <4 x i32>
   %i.bf = shufflevector <4 x i32> %i.be, <4 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.bg = bitcast <4 x i32> %i.bf to <2 x i64>
@@ -99,10 +99,10 @@ bb.a:
   store <2 x i64> %i.bi, ptr %i.bj, align 16
   %i.bk = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.bi, i8 8)
   %i.bl = bitcast <2 x i64> %i.ay to <16 x i8>
-  %14 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.bl, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %14 = shufflevector <16 x i8> %i.bl, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.bm = bitcast <16 x i8> %14 to <2 x i64>
   %i.bn = xor <2 x i64> %i.ay, %i.bm              ; 2 uses
-  %15 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.bn, <2 x i32> <i32 1, i32 2>
+  %15 = shufflevector <2 x i64> %i.bn, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.bo = bitcast <2 x i64> %i.bk to <4 x i32>
   %i.bp = shufflevector <4 x i32> %i.bo, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.bq = bitcast <4 x i32> %i.bp to <2 x i64>
@@ -112,10 +112,10 @@ bb.a:
   store <2 x i64> %i.bs, ptr %i.bt, align 16
   %i.bu = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.bs, i8 8)
   %i.bv = bitcast <2 x i64> %i.bi to <16 x i8>
-  %16 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.bv, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %16 = shufflevector <16 x i8> %i.bv, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.bw = bitcast <16 x i8> %16 to <2 x i64>
   %i.bx = xor <2 x i64> %i.bi, %i.bw              ; 2 uses
-  %17 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.bx, <2 x i32> <i32 1, i32 2>
+  %17 = shufflevector <2 x i64> %i.bx, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.by = bitcast <2 x i64> %i.bu to <4 x i32>
   %i.bz = shufflevector <4 x i32> %i.by, <4 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.ca = bitcast <4 x i32> %i.bz to <2 x i64>
@@ -125,10 +125,10 @@ bb.a:
   store <2 x i64> %i.cc, ptr %i.cd, align 16
   %i.ce = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.cc, i8 16)
   %i.cf = bitcast <2 x i64> %i.bs to <16 x i8>
-  %18 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.cf, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %18 = shufflevector <16 x i8> %i.cf, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.cg = bitcast <16 x i8> %18 to <2 x i64>
   %i.ch = xor <2 x i64> %i.bs, %i.cg              ; 2 uses
-  %19 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.ch, <2 x i32> <i32 1, i32 2>
+  %19 = shufflevector <2 x i64> %i.ch, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.ci = bitcast <2 x i64> %i.ce to <4 x i32>
   %i.cj = shufflevector <4 x i32> %i.ci, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.ck = bitcast <4 x i32> %i.cj to <2 x i64>
@@ -138,10 +138,10 @@ bb.a:
   store <2 x i64> %i.cm, ptr %i.cn, align 16
   %i.co = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.cm, i8 16)
   %i.cp = bitcast <2 x i64> %i.cc to <16 x i8>
-  %20 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.cp, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %20 = shufflevector <16 x i8> %i.cp, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.cq = bitcast <16 x i8> %20 to <2 x i64>
   %i.cr = xor <2 x i64> %i.cc, %i.cq              ; 2 uses
-  %21 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.cr, <2 x i32> <i32 1, i32 2>
+  %21 = shufflevector <2 x i64> %i.cr, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.cs = bitcast <2 x i64> %i.co to <4 x i32>
   %i.ct = shufflevector <4 x i32> %i.cs, <4 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.cu = bitcast <4 x i32> %i.ct to <2 x i64>
@@ -151,10 +151,10 @@ bb.a:
   store <2 x i64> %i.cw, ptr %i.cx, align 16
   %i.cy = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.cw, i8 32)
   %i.cz = bitcast <2 x i64> %i.cm to <16 x i8>
-  %22 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.cz, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %22 = shufflevector <16 x i8> %i.cz, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.da = bitcast <16 x i8> %22 to <2 x i64>
   %i.db = xor <2 x i64> %i.cm, %i.da              ; 2 uses
-  %23 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.db, <2 x i32> <i32 1, i32 2>
+  %23 = shufflevector <2 x i64> %i.db, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.dc = bitcast <2 x i64> %i.cy to <4 x i32>
   %i.dd = shufflevector <4 x i32> %i.dc, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.de = bitcast <4 x i32> %i.dd to <2 x i64>
@@ -164,10 +164,10 @@ bb.a:
   store <2 x i64> %i.dg, ptr %i.dh, align 16
   %i.di = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.dg, i8 32)
   %i.dj = bitcast <2 x i64> %i.cw to <16 x i8>
-  %24 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.dj, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %24 = shufflevector <16 x i8> %i.dj, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.dk = bitcast <16 x i8> %24 to <2 x i64>
   %i.dl = xor <2 x i64> %i.cw, %i.dk              ; 2 uses
-  %25 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.dl, <2 x i32> <i32 1, i32 2>
+  %25 = shufflevector <2 x i64> %i.dl, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.dm = bitcast <2 x i64> %i.di to <4 x i32>
   %i.dn = shufflevector <4 x i32> %i.dm, <4 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.do = bitcast <4 x i32> %i.dn to <2 x i64>
@@ -177,10 +177,10 @@ bb.a:
   store <2 x i64> %i.dq, ptr %i.dr, align 16
   %i.ds = tail call <2 x i64> @llvm.x86.aesni.aeskeygenassist(<2 x i64> %i.dq, i8 64)
   %i.dt = bitcast <2 x i64> %i.dg to <16 x i8>
-  %26 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.dt, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %26 = shufflevector <16 x i8> %i.dt, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.du = bitcast <16 x i8> %26 to <2 x i64>
   %i.dv = xor <2 x i64> %i.dg, %i.du              ; 2 uses
-  %27 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.dv, <2 x i32> <i32 1, i32 2>
+  %27 = shufflevector <2 x i64> %i.dv, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.dw = bitcast <2 x i64> %i.ds to <4 x i32>
   %i.dx = shufflevector <4 x i32> %i.dw, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.dy = bitcast <4 x i32> %i.dx to <2 x i64>
@@ -203,15 +203,15 @@ bb.a:
   %i.eo = tail call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.en, <2 x i64> %i.dq)
   %i.ep = tail call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.eo, <2 x i64> %i.ea)
   %i.eq = getelementptr i8, ptr %0, i64 240
-  %i.er = bitcast <2 x i64> %i.ep to <16 x i8>
-  %i.es = shufflevector <16 x i8> %i.er, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0> ; 2 uses
+  %i.er = bitcast <2 x i64> %i.ep to <16 x i8>    ; 2 uses
+  %i.es = shufflevector <16 x i8> %i.er, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   %i.et = bitcast <16 x i8> %i.es to <2 x i64>    ; 2 uses
   %.neg.i = ashr <2 x i64> %i.et, splat (i64 63)
   %i.eu = bitcast <2 x i64> %.neg.i to <4 x i32>
   %i.ev = shufflevector <4 x i32> %i.eu, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.ew = bitcast <4 x i32> %i.ev to <2 x i64>
   %i.ex = and <2 x i64> %i.ew, <i64 1, i64 -4467570830351532032>
-  %28 = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.es, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %28 = shufflevector <16 x i8> %i.er, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8>
   %i.ey = bitcast <16 x i8> %28 to <2 x i64>
   %i.ez = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %i.et, <2 x i64> %i.ey, <2 x i64> splat (i64 1))
   %i.fa = xor <2 x i64> %i.ex, %i.ez              ; 29 uses
@@ -234,7 +234,7 @@ bb.a:
   %i.fp = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.fj, <2 x i64> %i.fa, i8 16)
   %i.fq = xor <2 x i64> %i.fp, %i.fo              ; 2 uses
   %i.fr = shufflevector <2 x i64> %i.fq, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %29 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.fq, <2 x i32> <i32 1, i32 2>
+  %29 = shufflevector <2 x i64> %i.fq, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.fs = xor <2 x i64> %i.fn, %29                ; 2 uses
   %i.ft = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.fs, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.fu = shufflevector <2 x i64> %i.fs, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -263,7 +263,7 @@ bb.a:
   %i.gp = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.gj, <2 x i64> %i.fa, i8 16)
   %i.gq = xor <2 x i64> %i.gp, %i.go              ; 2 uses
   %i.gr = shufflevector <2 x i64> %i.gq, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %30 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.gq, <2 x i32> <i32 1, i32 2>
+  %30 = shufflevector <2 x i64> %i.gq, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.gs = xor <2 x i64> %i.gn, %30                ; 2 uses
   %i.gt = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.gs, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.gu = shufflevector <2 x i64> %i.gs, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -292,7 +292,7 @@ bb.a:
   %i.hp = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.hj, <2 x i64> %i.fa, i8 16)
   %i.hq = xor <2 x i64> %i.hp, %i.ho              ; 2 uses
   %i.hr = shufflevector <2 x i64> %i.hq, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %31 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.hq, <2 x i32> <i32 1, i32 2>
+  %31 = shufflevector <2 x i64> %i.hq, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.hs = xor <2 x i64> %i.hn, %31                ; 2 uses
   %i.ht = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.hs, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.hu = shufflevector <2 x i64> %i.hs, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -321,7 +321,7 @@ bb.a:
   %i.ip = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.ij, <2 x i64> %i.fa, i8 16)
   %i.iq = xor <2 x i64> %i.ip, %i.io              ; 2 uses
   %i.ir = shufflevector <2 x i64> %i.iq, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %32 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.iq, <2 x i32> <i32 1, i32 2>
+  %32 = shufflevector <2 x i64> %i.iq, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.is = xor <2 x i64> %i.in, %32                ; 2 uses
   %i.it = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.is, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.iu = shufflevector <2 x i64> %i.is, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -350,7 +350,7 @@ bb.a:
   %i.jp = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.jj, <2 x i64> %i.fa, i8 16)
   %i.jq = xor <2 x i64> %i.jp, %i.jo              ; 2 uses
   %i.jr = shufflevector <2 x i64> %i.jq, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %33 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.jq, <2 x i32> <i32 1, i32 2>
+  %33 = shufflevector <2 x i64> %i.jq, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.js = xor <2 x i64> %i.jn, %33                ; 2 uses
   %i.jt = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.js, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.ju = shufflevector <2 x i64> %i.js, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -379,7 +379,7 @@ bb.a:
   %i.kp = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.kj, <2 x i64> %i.fa, i8 16)
   %i.kq = xor <2 x i64> %i.kp, %i.ko              ; 2 uses
   %i.kr = shufflevector <2 x i64> %i.kq, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %34 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.kq, <2 x i32> <i32 1, i32 2>
+  %34 = shufflevector <2 x i64> %i.kq, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.ks = xor <2 x i64> %i.kn, %34                ; 2 uses
   %i.kt = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.ks, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.ku = shufflevector <2 x i64> %i.ks, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -782,7 +782,7 @@ begin_hunk_1_@crypto_aead_aes256gcm_encrypt_detached_afternm:bb.a
   %i.aac = xor <2 x i64> %i.aab, %i.zz            ; 2 uses
   %i.aad = add <2 x i64> %.0237505.i, <i64 14, i64 0> ; 2 uses
   %i.aae = shufflevector <2 x i64> %i.aac, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %11 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.aac, <2 x i32> <i32 1, i32 2>
+  %11 = shufflevector <2 x i64> %i.aac, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.aaf = xor <2 x i64> %i.aaa, %11              ; 2 uses
   %i.aag = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.aaf, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.aah = shufflevector <2 x i64> %i.aaf, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -900,7 +900,7 @@ begin_hunk_1_@crypto_aead_aes256gcm_encrypt_detached_afternm:bb.a
   %i.aeb = xor <2 x i64> %i.ads, %i.ady
   %i.aec = xor <2 x i64> %i.aeb, %i.adz           ; 2 uses
   %i.aed = shufflevector <2 x i64> %i.aec, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %12 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.aec, <2 x i32> <i32 1, i32 2>
+  %12 = shufflevector <2 x i64> %i.aec, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.aee = xor <2 x i64> %i.aea, %12              ; 2 uses
   %i.aef = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.aee, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.aeg = shufflevector <2 x i64> %i.aee, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -1303,7 +1303,7 @@ begin_hunk_2_@crypto_aead_aes256gcm_encrypt_detached_afternm:bb.a
   %i.avr = xor <2 x i64> %i.avq, %i.avo           ; 2 uses
   %i.avs = add <2 x i64> %.2239517.i, <i64 7, i64 0> ; 2 uses
   %i.avt = shufflevector <2 x i64> %i.avr, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %13 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.avr, <2 x i32> <i32 1, i32 2>
+  %13 = shufflevector <2 x i64> %i.avr, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.avu = xor <2 x i64> %i.avp, %13              ; 2 uses
   %i.avv = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.avu, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.avw = shufflevector <2 x i64> %i.avu, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -1413,7 +1413,7 @@ begin_hunk_2_@crypto_aead_aes256gcm_encrypt_detached_afternm:bb.a
   %i.azi = xor <2 x i64> %i.ayz, %i.azf
   %i.azj = xor <2 x i64> %i.azi, %i.azg           ; 2 uses
   %i.azk = shufflevector <2 x i64> %i.azj, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %14 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.azj, <2 x i32> <i32 1, i32 2>
+  %14 = shufflevector <2 x i64> %i.azj, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.azl = xor <2 x i64> %i.azh, %14              ; 2 uses
   %i.azm = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.azl, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.azn = shufflevector <2 x i64> %i.azl, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -1666,7 +1666,7 @@ bb.i:                                             ; preds = %._crit_edge519.i, %
   %i.bif = xor <2 x i64> %i.bie, %i.bic           ; 2 uses
   %i.big = add <2 x i64> %.4241532.i, <i64 4, i64 0> ; 2 uses
   %i.bih = shufflevector <2 x i64> %i.bif, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %15 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.bif, <2 x i32> <i32 1, i32 2>
+  %15 = shufflevector <2 x i64> %i.bif, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.bii = xor <2 x i64> %i.bid, %15              ; 2 uses
   %i.bij = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.bii, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.bik = shufflevector <2 x i64> %i.bii, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -1820,7 +1820,7 @@ bb.i:                                             ; preds = %._crit_edge519.i, %
   %i.bng = xor <2 x i64> %i.bnf, %i.bnb
   %i.bnh = xor <2 x i64> %i.bng, %i.bnc           ; 2 uses
   %i.bni = shufflevector <2 x i64> %i.bnh, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %16 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.bnh, <2 x i32> <i32 1, i32 2>
+  %16 = shufflevector <2 x i64> %i.bnh, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.bnj = xor <2 x i64> %i.bne, %16              ; 2 uses
   %i.bnk = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.bnj, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.bnl = shufflevector <2 x i64> %i.bnj, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -1918,7 +1918,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.i
   %i.bqf = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.bqb, <2 x i64> %i.bpx, i8 16)
   %i.bqg = xor <2 x i64> %i.bqf, %i.bqe           ; 2 uses
   %i.bqh = shufflevector <2 x i64> %i.bqg, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %17 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.bqg, <2 x i32> <i32 1, i32 2>
+  %17 = shufflevector <2 x i64> %i.bqg, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.bqi = xor <2 x i64> %i.bqd, %17              ; 2 uses
   %i.bqj = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.bqi, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.bqk = shufflevector <2 x i64> %i.bqi, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -2321,7 +2321,7 @@ begin_hunk_3_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.rh = xor <2 x i64> %i.qx, %i.re
   %i.ri = xor <2 x i64> %i.rh, %i.rf              ; 2 uses
   %i.rj = shufflevector <2 x i64> %i.ri, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %11 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.ri, <2 x i32> <i32 1, i32 2>
+  %11 = shufflevector <2 x i64> %i.ri, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.rk = xor <2 x i64> %i.rg, %11                ; 2 uses
   %i.rl = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.rk, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.rm = shufflevector <2 x i64> %i.rk, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -2649,7 +2649,7 @@ begin_hunk_3_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.aci = xor <2 x i64> %i.aby, %i.acf
   %i.acj = xor <2 x i64> %i.aci, %i.acg           ; 2 uses
   %i.ack = shufflevector <2 x i64> %i.acj, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %12 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.acj, <2 x i32> <i32 1, i32 2>
+  %12 = shufflevector <2 x i64> %i.acj, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.acl = xor <2 x i64> %i.ach, %12              ; 2 uses
   %i.acm = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.acl, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.acn = shufflevector <2 x i64> %i.acl, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -2919,7 +2919,7 @@ begin_hunk_3_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.alg = xor <2 x i64> %i.akw, %i.ald
   %i.alh = xor <2 x i64> %i.alg, %i.ale           ; 2 uses
   %i.ali = shufflevector <2 x i64> %i.alh, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %13 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.alh, <2 x i32> <i32 1, i32 2>
+  %13 = shufflevector <2 x i64> %i.alh, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.alj = xor <2 x i64> %i.alf, %13              ; 2 uses
   %i.alk = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.alj, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.all = shufflevector <2 x i64> %i.alj, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3141,7 +3141,7 @@ begin_hunk_3_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.ast = xor <2 x i64> %i.ass, %i.aso
   %i.asu = xor <2 x i64> %i.ast, %i.asp           ; 2 uses
   %i.asv = shufflevector <2 x i64> %i.asu, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %14 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.asu, <2 x i32> <i32 1, i32 2>
+  %14 = shufflevector <2 x i64> %i.asu, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.asw = xor <2 x i64> %i.asr, %14              ; 2 uses
   %i.asx = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.asw, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.asy = shufflevector <2 x i64> %i.asw, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3271,7 +3271,7 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %i.aww = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.aws, <2 x i64> %i.awp, i8 16)
   %i.awx = xor <2 x i64> %i.aww, %i.awv           ; 2 uses
   %i.awy = shufflevector <2 x i64> %i.awx, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %15 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.awx, <2 x i32> <i32 1, i32 2>
+  %15 = shufflevector <2 x i64> %i.awx, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.awz = xor <2 x i64> %i.awu, %15              ; 2 uses
   %i.axa = call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.awz, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.axb = shufflevector <2 x i64> %i.awz, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3674,7 +3674,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.gf = xor <2 x i64> %i.gb, %i.fu
   %i.gg = xor <2 x i64> %i.gf, %i.gc              ; 2 uses
   %i.gh = shufflevector <2 x i64> %i.gg, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %4 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.gg, <2 x i32> <i32 1, i32 2>
+  %4 = shufflevector <2 x i64> %i.gg, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.gi = xor <2 x i64> %i.ge, %4                 ; 2 uses
   %i.gj = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.gi, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.gk = shufflevector <2 x i64> %i.gi, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3797,7 +3797,7 @@ bb.c:                                             ; preds = %.lr.ph137, %bb.c
   %i.ka = xor <2 x i64> %i.jw, %i.jp
   %i.kb = xor <2 x i64> %i.ka, %i.jx              ; 2 uses
   %i.kc = shufflevector <2 x i64> %i.kb, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %5 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.kb, <2 x i32> <i32 1, i32 2>
+  %5 = shufflevector <2 x i64> %i.kb, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.kd = xor <2 x i64> %i.jz, %5                 ; 2 uses
   %i.ke = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.kd, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.kf = shufflevector <2 x i64> %i.kd, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3879,7 +3879,7 @@ bb.d:                                             ; preds = %.lr.ph145, %bb.d
   %i.mj = xor <2 x i64> %i.mf, %i.ly
   %i.mk = xor <2 x i64> %i.mj, %i.mg              ; 2 uses
   %i.ml = shufflevector <2 x i64> %i.mk, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %6 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.mk, <2 x i32> <i32 1, i32 2>
+  %6 = shufflevector <2 x i64> %i.mk, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.mm = xor <2 x i64> %i.mi, %6                 ; 2 uses
   %i.mn = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.mm, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.mo = shufflevector <2 x i64> %i.mm, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3923,7 +3923,7 @@ bb.d:                                             ; preds = %.lr.ph145, %bb.d
   %i.nr = xor <2 x i64> %i.nq, %i.nm
   %i.ns = xor <2 x i64> %i.nr, %i.nn              ; 2 uses
   %i.nt = shufflevector <2 x i64> %i.ns, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %7 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.ns, <2 x i32> <i32 1, i32 2>
+  %7 = shufflevector <2 x i64> %i.ns, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.nu = xor <2 x i64> %i.np, %7                 ; 2 uses
   %i.nv = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.nu, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.nw = shufflevector <2 x i64> %i.nu, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
@@ -3958,7 +3958,7 @@ bb.e:                                             ; preds = %._crit_edge
   %i.oo = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.ok, <2 x i64> %i.oh, i8 16)
   %i.op = xor <2 x i64> %i.oo, %i.on              ; 2 uses
   %i.oq = shufflevector <2 x i64> %i.op, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 1, i32 2>
-  %8 = shufflevector <2 x i64> <i64 poison, i64 0>, <2 x i64> %i.op, <2 x i32> <i32 1, i32 2>
+  %8 = shufflevector <2 x i64> %i.op, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
   %i.or = xor <2 x i64> %i.om, %8                 ; 2 uses
   %i.os = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.or, <2 x i64> <i64 -4467570830351532032, i64 poison>, i8 0)
   %i.ot = shufflevector <2 x i64> %i.or, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
