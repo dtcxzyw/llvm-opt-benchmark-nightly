@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-dcerpc-pn-io?download=true
 inline.NumInlined: 136
 inline.NumDeleted: 40
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@dissect_CIMSNMPReal_block:bb.a
 bb.c:                                             ; preds = %bb.a
   %i.f = load i32, ptr @hf_pn_io_snmp_control, align 4
@@ -204,7 +202,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.x = add i32 %.0110125, 4
   %i.y = zext i16 %i.w to i32
   %i.z = add i32 %i.x, %i.y                       ; 2 uses
-  %spec.select = call i32 @llvm.smin.i32(i32 %i.z, i32 %i.m) ; 8 uses
+  %spec.select = call i32 @llvm.smin.i32(i32 %i.z, i32 %i.m) ; 6 uses
   %i.aa = sub i32 %spec.select, %.0110125
   %i.ab = load i32, ptr @ett_pn_io_sxp_ch_entry, align 4
   %i.ac = add nuw nsw i32 %indvars.iv, 1          ; 3 uses
@@ -243,48 +241,25 @@ bb.f:                                             ; preds = %bb.e
   %i.bb = add i32 %i.as, %i.ba
   br label %.preheader
 
-.preheader:                                       ; preds = %bb.d, %bb.e, %bb.f
-  %.2.ph = phi i32 [ %i.as, %bb.d ], [ %i.as, %bb.e ], [ %i.bb, %bb.f ] ; 6 uses
-  %9 = icmp sge i32 %.2.ph, %spec.select          ; 2 uses
-  %i.bc = and i32 %.2.ph, 3
-  %.not116 = icmp eq i32 %i.bc, 0
-  %or.cond120 = or i1 %9, %.not116
-  br i1 %or.cond120, label %.critedge, label %10
+.preheader:                                       ; preds = %bb.f, %bb.e, %bb.d
+  %.2.ph = phi i32 [ %i.bb, %bb.f ], [ %i.as, %bb.e ], [ %i.as, %bb.d ] ; 4 uses
+  %smax = call i32 @llvm.smax.i32(i32 %.2.ph, i32 %spec.select)
+  %9 = sub i32 %smax, %.2.ph
+  %10 = sub i32 0, %.2.ph
+  %i.bc = and i32 %10, 3
+  %umin = call i32 @llvm.umin.i32(i32 %9, i32 %i.bc)
+  %11 = add i32 %.2.ph, %umin                     ; 9 uses
+  %.exit.not = icmp slt i32 %11, %spec.select
+  br i1 %.exit.not, label %bb.g, label %bb.k
 
-10:                                               ; preds = %.preheader
-  %11 = add nsw i32 %.2.ph, 1                     ; 3 uses
-  %12 = icmp sge i32 %11, %spec.select            ; 2 uses
-  %13 = and i32 %11, 3
-  %.not116.1 = icmp eq i32 %13, 0
-  %or.cond120.1 = or i1 %12, %.not116.1
-  br i1 %or.cond120.1, label %.critedge, label %14
-
-14:                                               ; preds = %10
-  %15 = add nsw i32 %.2.ph, 2                     ; 3 uses
-  %16 = icmp sge i32 %15, %spec.select            ; 2 uses
-  %17 = and i32 %15, 3
-  %.not116.2 = icmp eq i32 %17, 0
-  %or.cond120.2 = or i1 %16, %.not116.2
-  br i1 %or.cond120.2, label %.critedge, label %18
-
-18:                                               ; preds = %14
-  %19 = add nsw i32 %.2.ph, 3                     ; 2 uses
-  %20 = icmp sge i32 %19, %spec.select
-  br label %.critedge
-
-.critedge:                                        ; preds = %18, %14, %10, %.preheader
-  %.2.lcssa = phi i32 [ %.2.ph, %.preheader ], [ %11, %10 ], [ %15, %14 ], [ %19, %18 ] ; 8 uses
-  %.lcssa = phi i1 [ %9, %.preheader ], [ %12, %10 ], [ %16, %14 ], [ %20, %18 ]
-  br i1 %.lcssa, label %bb.k, label %bb.g
-
-bb.g:                                             ; preds = %.critedge
+bb.g:                                             ; preds = %.preheader
   %i.bd = zext i16 %i.am to i32                   ; 2 uses
   %i.be = and i32 %i.bd, 1
   %.not117 = icmp eq i32 %i.be, 0
   br i1 %.not117, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bf = call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %.2.lcssa)
+  %i.bf = call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %11)
   %i.bg = icmp ugt i32 %i.bf, 3
   br i1 %i.bg, label %.sink.split, label %bb.k
 
@@ -294,7 +269,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not118, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bi = call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %.2.lcssa)
+  %i.bi = call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %11)
   %i.bj = icmp ugt i32 %i.bi, 5
   br i1 %i.bj, label %.sink.split, label %bb.k
 
@@ -302,12 +277,12 @@ bb.j:                                             ; preds = %bb.i
   %hf_pn_io_sxp_ch_station_ip.sink = phi ptr [ @hf_pn_io_sxp_ch_station_ip, %bb.h ], [ @hf_pn_io_sxp_ch_station_mac, %bb.j ]
   %.sink134 = phi i32 [ 4, %bb.h ], [ 6, %bb.j ]  ; 2 uses
   %i.bk = load i32, ptr %hf_pn_io_sxp_ch_station_ip.sink, align 4
-  %i.bl = call ptr @proto_tree_add_item(ptr noundef %i.ad, i32 noundef %i.bk, ptr noundef %0, i32 noundef %.2.lcssa, i32 noundef %.sink134, i32 noundef 0) ; 0 uses
-  %i.bm = add i32 %.2.lcssa, %.sink134
+  %i.bl = call ptr @proto_tree_add_item(ptr noundef %i.ad, i32 noundef %i.bk, ptr noundef %0, i32 noundef %11, i32 noundef %.sink134, i32 noundef 0) ; 0 uses
+  %i.bm = add i32 %11, %.sink134
   br label %bb.k
 
-bb.k:                                             ; preds = %.sink.split, %bb.h, %bb.j, %bb.i, %.critedge
-  %.3 = phi i32 [ %.2.lcssa, %bb.i ], [ %.2.lcssa, %bb.h ], [ %.2.lcssa, %.critedge ], [ %.2.lcssa, %bb.j ], [ %i.bm, %.sink.split ] ; 4 uses
+bb.k:                                             ; preds = %.sink.split, %bb.h, %bb.j, %bb.i, %.preheader
+  %.3 = phi i32 [ %11, %bb.i ], [ %11, %bb.h ], [ %11, %.preheader ], [ %11, %bb.j ], [ %i.bm, %.sink.split ] ; 4 uses
   %i.bn = icmp slt i32 %.3, %spec.select
   br i1 %i.bn, label %bb.l, label %bb.n
 
@@ -709,6 +684,9 @@ declare i32 @llvm.smax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15
