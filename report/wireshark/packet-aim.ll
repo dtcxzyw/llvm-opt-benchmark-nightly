@@ -204,57 +204,53 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a, %bb.a
-  %i.n = tail call zeroext i16 @tvb_get_letohs(ptr noundef %2, i32 noundef 10) ; 2 uses
+  %i.n = tail call zeroext i16 @tvb_get_letohs(ptr noundef %2, i32 noundef 10)
   %i.o = load i32, ptr @hf_icq_meta_subtype, align 4
   %i.p = tail call ptr @proto_tree_add_item(ptr noundef %i.b, i32 noundef %i.o, ptr noundef %2, i32 noundef 10, i32 noundef 2, i32 noundef -2147483648)
-  switch i16 %i.n, label %.lr.ph.41 [
+  switch i16 %i.n, label %._crit_edge62 [
     i16 1, label %._crit_edge62.a
     i16 100, label %._crit_edge
-    i16 110, label %._crit_edge.fold.split
-    i16 120, label %._crit_edge.fold.split68
-    i16 130, label %._crit_edge.fold.split69
-    i16 135, label %._crit_edge.fold.split70
-    i16 140, label %._crit_edge.fold.split71
-    i16 150, label %._crit_edge.fold.split72
-    i16 160, label %._crit_edge.fold.split73
-    i16 170, label %._crit_edge.fold.split74
-    i16 180, label %._crit_edge.fold.split75
-    i16 190, label %._crit_edge.fold.split76
-    i16 200, label %._crit_edge.fold.split77
-    i16 210, label %._crit_edge.fold.split78
-    i16 220, label %._crit_edge.fold.split79
-    i16 230, label %._crit_edge.fold.split80
-    i16 235, label %._crit_edge.fold.split81
-    i16 240, label %._crit_edge.fold.split82
-    i16 250, label %._crit_edge.fold.split83
-    i16 260, label %._crit_edge.fold.split84
-    i16 270, label %._crit_edge.fold.split85
-    i16 420, label %._crit_edge.fold.split86
-    i16 770, label %._crit_edge.fold.split87
-    i16 870, label %._crit_edge.fold.split88
-    i16 1002, label %._crit_edge.fold.split89
-    i16 1011, label %._crit_edge.fold.split90
-    i16 1021, label %._crit_edge.fold.split91
-    i16 1030, label %._crit_edge.fold.split92
-    i16 1035, label %._crit_edge.fold.split93
-    i16 1040, label %._crit_edge.fold.split94
-    i16 1050, label %._crit_edge.fold.split95
-    i16 1060, label %._crit_edge.fold.split96
-    i16 1070, label %._crit_edge.fold.split97
-    i16 1090, label %._crit_edge.fold.split98
-    i16 1202, label %._crit_edge.fold.split99
-    i16 1210, label %._crit_edge.fold.split100
-    i16 1220, label %._crit_edge.fold.split101
-    i16 1301, label %._crit_edge.fold.split102
-    i16 1385, label %._crit_edge.fold.split103
-    i16 1375, label %._crit_edge.fold.split104
-    i16 1395, label %._crit_edge.fold.split105
-    i16 1870, label %._crit_edge.fold.split106
-  ]
-
-.lr.ph.41:                                        ; preds = %bb.c
-  switch i16 %i.n, label %._crit_edge62.a [
-    i16 2200, label %._crit_edge
+    i16 110, label %.lr.ph.41
+    i16 120, label %._crit_edge.fold.split
+    i16 130, label %._crit_edge.fold.split68
+    i16 135, label %._crit_edge.fold.split69
+    i16 140, label %._crit_edge.fold.split70
+    i16 150, label %._crit_edge.fold.split71
+    i16 160, label %._crit_edge.fold.split72
+    i16 170, label %._crit_edge.fold.split73
+    i16 180, label %._crit_edge.fold.split74
+    i16 190, label %._crit_edge.fold.split75
+    i16 200, label %._crit_edge.fold.split76
+    i16 210, label %._crit_edge.fold.split77
+    i16 220, label %._crit_edge.fold.split78
+    i16 230, label %._crit_edge.fold.split79
+    i16 235, label %._crit_edge.fold.split80
+    i16 240, label %._crit_edge.fold.split81
+    i16 250, label %._crit_edge.fold.split82
+    i16 260, label %._crit_edge.fold.split83
+    i16 270, label %._crit_edge.fold.split84
+    i16 420, label %._crit_edge.fold.split85
+    i16 770, label %._crit_edge.fold.split86
+    i16 870, label %._crit_edge.fold.split87
+    i16 1002, label %._crit_edge.fold.split88
+    i16 1011, label %._crit_edge.fold.split89
+    i16 1021, label %._crit_edge.fold.split90
+    i16 1030, label %._crit_edge.fold.split91
+    i16 1035, label %._crit_edge.fold.split92
+    i16 1040, label %._crit_edge.fold.split93
+    i16 1050, label %._crit_edge.fold.split94
+    i16 1060, label %._crit_edge.fold.split95
+    i16 1070, label %._crit_edge.fold.split96
+    i16 1090, label %._crit_edge.fold.split97
+    i16 1202, label %._crit_edge.fold.split98
+    i16 1210, label %._crit_edge.fold.split99
+    i16 1220, label %._crit_edge.fold.split100
+    i16 1301, label %._crit_edge.fold.split101
+    i16 1385, label %._crit_edge.fold.split102
+    i16 1375, label %._crit_edge.fold.split103
+    i16 1395, label %._crit_edge.fold.split104
+    i16 1870, label %._crit_edge.fold.split105
+    i16 2200, label %._crit_edge.fold.split106
     i16 2725, label %._crit_edge.fold.split107
     i16 2735, label %._crit_edge.fold.split108
     i16 3130, label %._crit_edge.fold.split109
@@ -263,7 +259,10 @@ bb.c:                                             ; preds = %bb.a, %bb.a
     i16 2210, label %._crit_edge.fold.split112
     i16 3135, label %._crit_edge.fold.split113
     i16 8210, label %._crit_edge.fold.split114
-  ], !llvm.loop !35
+  ]
+
+.lr.ph.41:                                        ; preds = %bb.c
+  br label %._crit_edge
 
 ._crit_edge.fold.split:                           ; preds = %bb.c
   br label %._crit_edge
@@ -385,42 +384,45 @@ bb.c:                                             ; preds = %bb.a, %bb.a
 ._crit_edge.fold.split106:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split107:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split107:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split108:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split108:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split109:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split109:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split110:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split110:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split111:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split111:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split112:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split112:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split113:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split113:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge.fold.split114:                        ; preds = %.lr.ph.41
+._crit_edge.fold.split114:                        ; preds = %bb.c
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph.41, %._crit_edge.fold.split114, %._crit_edge.fold.split113, %._crit_edge.fold.split112, %._crit_edge.fold.split111, %._crit_edge.fold.split110, %._crit_edge.fold.split109, %._crit_edge.fold.split108, %._crit_edge.fold.split107, %bb.c, %._crit_edge.fold.split106, %._crit_edge.fold.split105, %._crit_edge.fold.split104, %._crit_edge.fold.split103, %._crit_edge.fold.split102, %._crit_edge.fold.split101, %._crit_edge.fold.split100, %._crit_edge.fold.split99, %._crit_edge.fold.split98, %._crit_edge.fold.split97, %._crit_edge.fold.split96, %._crit_edge.fold.split95, %._crit_edge.fold.split94, %._crit_edge.fold.split93, %._crit_edge.fold.split92, %._crit_edge.fold.split91, %._crit_edge.fold.split90, %._crit_edge.fold.split89, %._crit_edge.fold.split88, %._crit_edge.fold.split87, %._crit_edge.fold.split86, %._crit_edge.fold.split85, %._crit_edge.fold.split84, %._crit_edge.fold.split83, %._crit_edge.fold.split82, %._crit_edge.fold.split81, %._crit_edge.fold.split80, %._crit_edge.fold.split79, %._crit_edge.fold.split78, %._crit_edge.fold.split77, %._crit_edge.fold.split76, %._crit_edge.fold.split75, %._crit_edge.fold.split74, %._crit_edge.fold.split73, %._crit_edge.fold.split72, %._crit_edge.fold.split71, %._crit_edge.fold.split70, %._crit_edge.fold.split69, %._crit_edge.fold.split68, %._crit_edge.fold.split
-  %.lcssa67 = phi ptr [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 24), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1176), %._crit_edge.fold.split113 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 48), %._crit_edge.fold.split ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 72), %._crit_edge.fold.split68 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 96), %._crit_edge.fold.split69 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 120), %._crit_edge.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 144), %._crit_edge.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 168), %._crit_edge.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 192), %._crit_edge.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 216), %._crit_edge.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 240), %._crit_edge.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 264), %._crit_edge.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 288), %._crit_edge.fold.split77 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 312), %._crit_edge.fold.split78 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 336), %._crit_edge.fold.split79 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 360), %._crit_edge.fold.split80 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 384), %._crit_edge.fold.split81 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 408), %._crit_edge.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 432), %._crit_edge.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 456), %._crit_edge.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 480), %._crit_edge.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 504), %._crit_edge.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 528), %._crit_edge.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 552), %._crit_edge.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 576), %._crit_edge.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 600), %._crit_edge.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 624), %._crit_edge.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 648), %._crit_edge.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 672), %._crit_edge.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 696), %._crit_edge.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 720), %._crit_edge.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 744), %._crit_edge.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 768), %._crit_edge.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 792), %._crit_edge.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 816), %._crit_edge.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 840), %._crit_edge.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 864), %._crit_edge.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 888), %._crit_edge.fold.split102 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 912), %._crit_edge.fold.split103 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 936), %._crit_edge.fold.split104 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 960), %._crit_edge.fold.split105 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1008), %.lr.ph.41 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 984), %._crit_edge.fold.split106 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1032), %._crit_edge.fold.split107 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1056), %._crit_edge.fold.split108 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1080), %._crit_edge.fold.split109 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1104), %._crit_edge.fold.split110 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1128), %._crit_edge.fold.split111 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1152), %._crit_edge.fold.split112 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1200), %._crit_edge.fold.split114 ]
-  %indvars.iv.next.lcssa66 = phi i64 [ 1, %bb.c ], [ 49, %._crit_edge.fold.split113 ], [ 2, %._crit_edge.fold.split ], [ 3, %._crit_edge.fold.split68 ], [ 4, %._crit_edge.fold.split69 ], [ 5, %._crit_edge.fold.split70 ], [ 6, %._crit_edge.fold.split71 ], [ 7, %._crit_edge.fold.split72 ], [ 8, %._crit_edge.fold.split73 ], [ 9, %._crit_edge.fold.split74 ], [ 10, %._crit_edge.fold.split75 ], [ 11, %._crit_edge.fold.split76 ], [ 12, %._crit_edge.fold.split77 ], [ 13, %._crit_edge.fold.split78 ], [ 14, %._crit_edge.fold.split79 ], [ 15, %._crit_edge.fold.split80 ], [ 16, %._crit_edge.fold.split81 ], [ 17, %._crit_edge.fold.split82 ], [ 18, %._crit_edge.fold.split83 ], [ 19, %._crit_edge.fold.split84 ], [ 20, %._crit_edge.fold.split85 ], [ 21, %._crit_edge.fold.split86 ], [ 22, %._crit_edge.fold.split87 ], [ 23, %._crit_edge.fold.split88 ], [ 24, %._crit_edge.fold.split89 ], [ 25, %._crit_edge.fold.split90 ], [ 26, %._crit_edge.fold.split91 ], [ 27, %._crit_edge.fold.split92 ], [ 28, %._crit_edge.fold.split93 ], [ 29, %._crit_edge.fold.split94 ], [ 30, %._crit_edge.fold.split95 ], [ 31, %._crit_edge.fold.split96 ], [ 32, %._crit_edge.fold.split97 ], [ 33, %._crit_edge.fold.split98 ], [ 34, %._crit_edge.fold.split99 ], [ 35, %._crit_edge.fold.split100 ], [ 36, %._crit_edge.fold.split101 ], [ 37, %._crit_edge.fold.split102 ], [ 38, %._crit_edge.fold.split103 ], [ 39, %._crit_edge.fold.split104 ], [ 40, %._crit_edge.fold.split105 ], [ 42, %.lr.ph.41 ], [ 41, %._crit_edge.fold.split106 ], [ 43, %._crit_edge.fold.split107 ], [ 44, %._crit_edge.fold.split108 ], [ 45, %._crit_edge.fold.split109 ], [ 46, %._crit_edge.fold.split110 ], [ 47, %._crit_edge.fold.split111 ], [ 48, %._crit_edge.fold.split112 ], [ 50, %._crit_edge.fold.split114 ]
+._crit_edge:                                      ; preds = %bb.c, %._crit_edge.fold.split114, %._crit_edge.fold.split113, %._crit_edge.fold.split112, %._crit_edge.fold.split111, %._crit_edge.fold.split110, %._crit_edge.fold.split109, %._crit_edge.fold.split108, %._crit_edge.fold.split107, %._crit_edge.fold.split106, %._crit_edge.fold.split105, %._crit_edge.fold.split104, %._crit_edge.fold.split103, %._crit_edge.fold.split102, %._crit_edge.fold.split101, %._crit_edge.fold.split100, %._crit_edge.fold.split99, %._crit_edge.fold.split98, %._crit_edge.fold.split97, %._crit_edge.fold.split96, %._crit_edge.fold.split95, %._crit_edge.fold.split94, %._crit_edge.fold.split93, %._crit_edge.fold.split92, %._crit_edge.fold.split91, %._crit_edge.fold.split90, %._crit_edge.fold.split89, %._crit_edge.fold.split88, %._crit_edge.fold.split87, %._crit_edge.fold.split86, %._crit_edge.fold.split85, %._crit_edge.fold.split84, %._crit_edge.fold.split83, %._crit_edge.fold.split82, %._crit_edge.fold.split81, %._crit_edge.fold.split80, %._crit_edge.fold.split79, %._crit_edge.fold.split78, %._crit_edge.fold.split77, %._crit_edge.fold.split76, %._crit_edge.fold.split75, %._crit_edge.fold.split74, %._crit_edge.fold.split73, %._crit_edge.fold.split72, %._crit_edge.fold.split71, %._crit_edge.fold.split70, %._crit_edge.fold.split69, %._crit_edge.fold.split68, %._crit_edge.fold.split, %.lr.ph.41
+  %.lcssa67 = phi ptr [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 24), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1176), %._crit_edge.fold.split113 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 48), %.lr.ph.41 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 72), %._crit_edge.fold.split ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 96), %._crit_edge.fold.split68 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 120), %._crit_edge.fold.split69 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 144), %._crit_edge.fold.split70 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 168), %._crit_edge.fold.split71 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 192), %._crit_edge.fold.split72 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 216), %._crit_edge.fold.split73 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 240), %._crit_edge.fold.split74 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 264), %._crit_edge.fold.split75 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 288), %._crit_edge.fold.split76 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 312), %._crit_edge.fold.split77 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 336), %._crit_edge.fold.split78 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 360), %._crit_edge.fold.split79 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 384), %._crit_edge.fold.split80 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 408), %._crit_edge.fold.split81 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 432), %._crit_edge.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 456), %._crit_edge.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 480), %._crit_edge.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 504), %._crit_edge.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 528), %._crit_edge.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 552), %._crit_edge.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 576), %._crit_edge.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 600), %._crit_edge.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 624), %._crit_edge.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 648), %._crit_edge.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 672), %._crit_edge.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 696), %._crit_edge.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 720), %._crit_edge.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 744), %._crit_edge.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 768), %._crit_edge.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 792), %._crit_edge.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 816), %._crit_edge.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 840), %._crit_edge.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 864), %._crit_edge.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 888), %._crit_edge.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 912), %._crit_edge.fold.split102 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 936), %._crit_edge.fold.split103 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 960), %._crit_edge.fold.split104 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 984), %._crit_edge.fold.split105 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1008), %._crit_edge.fold.split106 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1032), %._crit_edge.fold.split107 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1056), %._crit_edge.fold.split108 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1080), %._crit_edge.fold.split109 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1104), %._crit_edge.fold.split110 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1128), %._crit_edge.fold.split111 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1152), %._crit_edge.fold.split112 ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1200), %._crit_edge.fold.split114 ]
+  %indvars.iv.next.lcssa66 = phi i64 [ 1, %bb.c ], [ 49, %._crit_edge.fold.split113 ], [ 2, %.lr.ph.41 ], [ 3, %._crit_edge.fold.split ], [ 4, %._crit_edge.fold.split68 ], [ 5, %._crit_edge.fold.split69 ], [ 6, %._crit_edge.fold.split70 ], [ 7, %._crit_edge.fold.split71 ], [ 8, %._crit_edge.fold.split72 ], [ 9, %._crit_edge.fold.split73 ], [ 10, %._crit_edge.fold.split74 ], [ 11, %._crit_edge.fold.split75 ], [ 12, %._crit_edge.fold.split76 ], [ 13, %._crit_edge.fold.split77 ], [ 14, %._crit_edge.fold.split78 ], [ 15, %._crit_edge.fold.split79 ], [ 16, %._crit_edge.fold.split80 ], [ 17, %._crit_edge.fold.split81 ], [ 18, %._crit_edge.fold.split82 ], [ 19, %._crit_edge.fold.split83 ], [ 20, %._crit_edge.fold.split84 ], [ 21, %._crit_edge.fold.split85 ], [ 22, %._crit_edge.fold.split86 ], [ 23, %._crit_edge.fold.split87 ], [ 24, %._crit_edge.fold.split88 ], [ 25, %._crit_edge.fold.split89 ], [ 26, %._crit_edge.fold.split90 ], [ 27, %._crit_edge.fold.split91 ], [ 28, %._crit_edge.fold.split92 ], [ 29, %._crit_edge.fold.split93 ], [ 30, %._crit_edge.fold.split94 ], [ 31, %._crit_edge.fold.split95 ], [ 32, %._crit_edge.fold.split96 ], [ 33, %._crit_edge.fold.split97 ], [ 34, %._crit_edge.fold.split98 ], [ 35, %._crit_edge.fold.split99 ], [ 36, %._crit_edge.fold.split100 ], [ 37, %._crit_edge.fold.split101 ], [ 38, %._crit_edge.fold.split102 ], [ 39, %._crit_edge.fold.split103 ], [ 40, %._crit_edge.fold.split104 ], [ 41, %._crit_edge.fold.split105 ], [ 42, %._crit_edge.fold.split106 ], [ 43, %._crit_edge.fold.split107 ], [ 44, %._crit_edge.fold.split108 ], [ 45, %._crit_edge.fold.split109 ], [ 46, %._crit_edge.fold.split110 ], [ 47, %._crit_edge.fold.split111 ], [ 48, %._crit_edge.fold.split112 ], [ 50, %._crit_edge.fold.split114 ]
   %i.q = getelementptr [24 x i8], ptr @icq_calls, i64 %indvars.iv.next.lcssa66
   %i.r = getelementptr i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   br label %._crit_edge62.a
 
-._crit_edge62.a:                                  ; preds = %.lr.ph.41, %bb.c, %._crit_edge
-  %.lcssa = phi ptr [ %.lcssa67, %._crit_edge ], [ @icq_calls, %bb.c ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1224), %.lr.ph.41 ]
-  %i.t = phi ptr [ %i.s, %._crit_edge ], [ @.str.769, %bb.c ], [ @.str.110, %.lr.ph.41 ]
-  %spec.select = phi ptr [ %i.s, %._crit_edge ], [ @.str.769, %bb.c ], [ @.str.767, %.lr.ph.41 ]
+._crit_edge62:                                    ; preds = %bb.c
+  br label %._crit_edge62.a, !llvm.loop !35
+
+._crit_edge62.a:                                  ; preds = %bb.c, %._crit_edge62, %._crit_edge
+  %.lcssa = phi ptr [ %.lcssa67, %._crit_edge ], [ getelementptr inbounds nuw (i8, ptr @icq_calls, i64 1224), %._crit_edge62 ], [ @icq_calls, %bb.c ]
+  %i.t = phi ptr [ %i.s, %._crit_edge ], [ @.str.110, %._crit_edge62 ], [ @.str.769, %bb.c ]
+  %spec.select = phi ptr [ %i.s, %._crit_edge ], [ @.str.767, %._crit_edge62 ], [ @.str.769, %bb.c ]
   %i.u = getelementptr i8, ptr %3, i64 8
   %i.v = load ptr, ptr %i.u, align 8
   tail call void @col_set_str(ptr noundef %i.v, i32 noundef 25, ptr noundef nonnull %spec.select)

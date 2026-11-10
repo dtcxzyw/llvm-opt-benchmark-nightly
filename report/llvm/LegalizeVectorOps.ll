@@ -204,13 +204,14 @@ bb.ao:                                            ; preds = %.critedge1329, %.cr
   %.sroa.21.0.copyload.i1380 = load ptr, ptr %.sroa.21.0..sroa_idx.i1379, align 8, !tbaa !128 ; 5 uses
   store i16 %.sroa.0.0.copyload.i1378, ptr %38, align 8, !tbaa !126
   store ptr %.sroa.21.0.copyload.i1380, ptr %i.gv, align 8, !tbaa !128
-  %140 = and i32 %i.gx, -2
-  switch i32 %140, label %thread-pre-split [
+  switch i32 %i.gx, label %thread-pre-split [
     i32 148, label %.thread4289
+    i32 149, label %.thread4289
     i32 152, label %bb.ap
+    i32 153, label %bb.ap
   ]
 
-.thread4289:                                      ; preds = %bb.ao
+.thread4289:                                      ; preds = %bb.ao, %bb.ao
   %i.jt = getelementptr inbounds nuw i8, ptr %i.bi, i64 40
   %i.ju = load ptr, ptr %i.jt, align 8, !tbaa !145 ; 2 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 40
@@ -228,7 +229,7 @@ bb.ao:                                            ; preds = %.critedge1329, %.cr
   store ptr %.sroa.21.0.copyload.i.i, ptr %i.gv, align 8, !tbaa !128
   br label %thread-pre-split
 
-bb.ap:                                            ; preds = %bb.ao
+bb.ap:                                            ; preds = %bb.ao, %bb.ao
   %i.kd = getelementptr inbounds nuw i8, ptr %i.bi, i64 40
   %i.ke = load ptr, ptr %i.kd, align 8, !tbaa !145 ; 3 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %i.ke, i64 40

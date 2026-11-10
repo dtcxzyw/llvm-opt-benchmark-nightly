@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
     i8 97, label %bb.bz
     i8 98, label %bb.bz
     i8 99, label %bb.bz
-    i8 100, label %bb.bz
+    i8 115, label %bb.bz
     i8 101, label %bb.bz
     i8 102, label %bb.bz
     i8 103, label %bb.bz
@@ -220,10 +220,12 @@ bb.e:                                             ; preds = %bb.a
     i8 112, label %bb.bz
     i8 113, label %bb.bz
     i8 114, label %bb.bz
-    i8 115, label %bb.bz
   ]
 
-default.unreachable.a:                            ; preds = %bb.ak, %bb.e
+default.unreachable:                              ; preds = %bb.ak
+  unreachable
+
+default.unreachable.a:                            ; preds = %bb.e
   unreachable
 
 bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e
@@ -462,7 +464,7 @@ bb.aj:                                            ; preds = %bb.aa
 bb.ak:                                            ; preds = %bb.e, %bb.e
   %.sroa.055.0.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.da = load i64, ptr %.sroa.055.0.i, align 8, !range !345, !alias.scope !85649, !noundef !321 ; 3 uses
-  switch i64 %i.da, label %default.unreachable.a [
+  switch i64 %i.da, label %default.unreachable [
     i64 0, label %_RNvMs8_NtCsf6gb3FOA7sv_14datafusion_sql7plannerINtB5_8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24convert_simple_data_typeB12_.exit
     i64 1, label %bb.al
     i64 2, label %bb.am
@@ -865,7 +867,7 @@ bb.by:                                            ; preds = %_RINvNtCscI6d9CVNmL
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i299.i, i64 noundef %.val.i298.i, i64 noundef range(i64 1, -9223372036854775807) 1) #71, !noalias !85687, !inline_history !85570
   br label %common.resume
 
-bb.bz:                                            ; preds = %.thread, %bb.bb, %bb.v, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e
+bb.bz:                                            ; preds = %bb.e, %.thread, %bb.bb, %bb.v, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !85650
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !85650
   store ptr %i.ad, ptr %i.e, align 8, !noalias !85650

@@ -205,35 +205,35 @@ bb.g:                                             ; preds = %_RNvMNtNtCs63DIHKhv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae)
   %i.be = load i8, ptr %i.af, align 8, !range !110, !noundef !48 ; 4 uses
   %i.bf = icmp eq i8 %i.be, 1
-  %i.bg = load i8, ptr %i.bd, align 8, !range !110 ; 13 uses
+  %i.bg = load i8, ptr %i.bd, align 8, !range !110 ; 12 uses
   %i.bh = icmp eq i8 %i.bg, 1
   %or.cond = select i1 %i.bf, i1 %i.bh, i1 false
   br i1 %or.cond, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   switch i8 %i.be, label %bb.z [
-    i8 2, label %4
-    i8 3, label %4
-    i8 4, label %4
-    i8 5, label %4
-    i8 6, label %4
-    i8 7, label %4
-    i8 8, label %4
-    i8 9, label %4
-    i8 10, label %4
-    i8 11, label %4
-    i8 12, label %4
-    i8 35, label %4
-    i8 36, label %4
-    i8 37, label %4
-    i8 38, label %4
-    i8 13, label %4
-    i8 14, label %4
-    i8 15, label %4
-    i8 16, label %4
-    i8 17, label %4
-    i8 18, label %4
-    i8 19, label %4
+    i8 2, label %bb.l
+    i8 3, label %bb.l
+    i8 4, label %bb.l
+    i8 5, label %bb.l
+    i8 6, label %bb.l
+    i8 7, label %bb.l
+    i8 8, label %bb.l
+    i8 9, label %bb.l
+    i8 10, label %bb.l
+    i8 11, label %bb.l
+    i8 12, label %bb.l
+    i8 35, label %bb.l
+    i8 36, label %bb.l
+    i8 37, label %bb.l
+    i8 38, label %bb.l
+    i8 13, label %bb.l
+    i8 14, label %bb.l
+    i8 15, label %bb.l
+    i8 16, label %bb.l
+    i8 17, label %bb.l
+    i8 18, label %bb.l
+    i8 19, label %bb.l
     i8 20, label %bb.o
     i8 22, label %bb.o
     i8 23, label %bb.o
@@ -275,8 +275,8 @@ bb.k:                                             ; preds = %_RINvMNtCscI6d9CVNm
     i8 34, label %bb.bb
   ]
 
-4:                                                ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h
-  switch i8 %i.bg, label %bb.l [
+bb.l:                                             ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h
+  switch i8 %i.bg, label %bb.n [
     i8 2, label %bb.m
     i8 3, label %bb.m
     i8 4, label %bb.m
@@ -292,14 +292,16 @@ bb.k:                                             ; preds = %_RINvMNtCscI6d9CVNm
     i8 36, label %bb.m
     i8 37, label %bb.m
     i8 38, label %bb.m
+    i8 13, label %bb.m
+    i8 14, label %bb.m
+    i8 15, label %bb.m
+    i8 16, label %bb.m
+    i8 17, label %bb.m
+    i8 18, label %bb.m
+    i8 19, label %bb.m
   ]
 
-bb.l:                                             ; preds = %4
-  %.off = add nsw i8 %i.bg, -13
-  %switch = icmp ult i8 %.off, 7
-  br i1 %switch, label %bb.m, label %bb.n
-
-bb.m:                                             ; preds = %bb.l, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4
+bb.m:                                             ; preds = %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %i.af, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)

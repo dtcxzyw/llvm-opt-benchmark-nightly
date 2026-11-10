@@ -202,7 +202,7 @@ bb.bn:                                            ; preds = %bb.bi, %bb.a
   %or.cond = and i1 %i.ve, %i.vd
   br i1 %or.cond, label %bb.bo, label %.thread
 
-.thread:                                          ; preds = %bb.bm, %bb.ac, %bb.ad, %bb.ah, %bb.ao, %bb.at, %bb.au, %bb.aw, %bb.ax, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bh, %bb.bk, %bb.bl, %bb.bo, %bb.bn
+.thread:                                          ; preds = %bb.bm, %bb.ad, %bb.ah, %bb.ao, %bb.at, %bb.au, %bb.aw, %bb.ax, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bh, %bb.bk, %bb.ac, %bb.bl, %bb.bo, %bb.bn
   %i.vf = icmp ugt i8 %2, 10
   br i1 %i.vf, label %bb.bq, label %.thread140
 
@@ -360,10 +360,10 @@ _RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.threa
     i64 19, label %bb.ak
     i64 4, label %bb.am
     i64 25, label %bb.as
-    i64 21, label %bb.bo
-    i64 3, label %bb.cc
-    i64 6, label %bb.cv
     i64 2, label %bb.dk
+    i64 21, label %bb.bo
+    i64 6, label %bb.cv
+    i64 3, label %bb.cc
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -386,10 +386,10 @@ bb.b:                                             ; preds = %bb.a
     i64 19, label %bb.ak
     i64 4, label %bb.am
     i64 25, label %bb.as
-    i64 21, label %bb.bo
-    i64 3, label %bb.cc
-    i64 6, label %bb.cv
     i64 2, label %bb.dk
+    i64 21, label %bb.bo
+    i64 6, label %bb.cv
+    i64 3, label %bb.cc
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -479,7 +479,7 @@ bb.i:                                             ; preds = %bb.h
   %i.be = icmp eq i32 %i.bd, 0
   br i1 %i.be, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.m
 
-.thread330.a:                                     ; preds = %.split, %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread326
+.thread330.a:                                     ; preds = %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread326, %.split
   %bcmp168 = tail call i32 @bcmp(ptr nonnull %0, ptr nonnull @11, i64 %1)
   %i.bf = icmp eq i32 %bcmp168, 0
   br i1 %i.bf, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.aa
@@ -578,7 +578,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ch = icmp eq i32 %i.cg, 0
   br i1 %i.ch, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.ab
 
-.thread331.a:                                     ; preds = %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit, %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread326
+.thread331.a:                                     ; preds = %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread326, %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit
   %bcmp185 = tail call i32 @bcmp(ptr nonnull %0, ptr nonnull @76, i64 %1)
   %i.ci = icmp eq i32 %bcmp185, 0
   br i1 %i.ci, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.aq
@@ -981,8 +981,16 @@ bb.dw:                                            ; preds = %bb.do
   br i1 %i.km, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.ex
 
 bb.dx:                                            ; preds = %bb.dv
-  %bcmp288 = tail call i32 @bcmp(ptr nonnull %0, ptr nonnull @135, i64 %1)
-  %i.kn = icmp eq i32 %bcmp288, 0
+  %4 = load i16, ptr %0, align 1
+  %5 = xor i16 %4, 26989
+  %6 = getelementptr i8, ptr %0, i64 2
+  %7 = load i8, ptr %6, align 1
+  %8 = zext i8 %7 to i16
+  %9 = xor i16 %8, 110
+  %10 = or i16 %5, %9
+  %11 = icmp ne i16 %10, 0
+  %12 = zext i1 %11 to i32
+  %i.kn = icmp eq i32 %12, 0
   br i1 %i.kn, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.ea
 
 bb.dy:                                            ; preds = %bb.ds
@@ -1136,7 +1144,7 @@ bb.ew:                                            ; preds = %bb.er
   %i.mq = icmp eq i32 %bcmp313, 0
   br i1 %i.mq, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread, label %bb.ex
 
-bb.ex:                                            ; preds = %bb.b, %bb.ep, %bb.eo, %bb.em, %bb.ej, %bb.dw, %bb.dk, %bb.dd, %bb.cn, %bb.bu, %bb.bt, %bb.bp, %bb.bo, %bb.bd, %bb.as, %bb.ap, %bb.ae, %bb.o, %bb.n, %bb.ev, %bb.et, %bb.bm, %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread326, %bb.ew
+bb.ex:                                            ; preds = %bb.b, %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread326, %bb.bd, %bb.as, %bb.ap, %bb.ae, %bb.o, %bb.n, %bb.dw, %bb.bm, %bb.bo, %bb.bp, %bb.bt, %bb.bu, %bb.cn, %bb.dd, %bb.dk, %bb.ep, %bb.eo, %bb.em, %bb.ej, %bb.ev, %bb.et, %bb.ew
   %i.mr = icmp ugt i8 %2, 9
   br i1 %i.mr, label %bb.ez, label %_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib8builtins18is_ipython_builtin.exit.thread
 
