@@ -205,7 +205,7 @@ bb.a:
     i8 72, label %bb.s
     i8 115, label %bb.t
     i8 116, label %bb.u
-    i8 -124, label %4
+    i8 -124, label %.critedge
     i8 -123, label %bb.v
     i8 1, label %bb.x
     i8 2, label %bb.y
@@ -343,6 +343,31 @@ bb.u:                                             ; preds = %bb.a
   tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter18countStringLiteralEj(ptr noundef nonnull align 8 dereferenceable(152) %0, i32 noundef %i.ax)
   br label %_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit
 
+.critedge:                                        ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %5 = load i32, ptr %4, align 1, !tbaa !81
+  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter18countStringLiteralEj(ptr noundef nonnull align 8 dereferenceable(152) %0, i32 noundef %5)
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 6
+  %7 = load i32, ptr %6, align 1, !tbaa !81
+  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter18countStringLiteralEj(ptr noundef nonnull align 8 dereferenceable(152) %0, i32 noundef %7)
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 10
+  %9 = load i32, ptr %8, align 1, !tbaa !81       ; 4 uses
+  %10 = icmp eq i32 %9, -1
+  br i1 %10, label %_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit, label %11
+
+11:                                               ; preds = %.critedge
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %13 = load ptr, ptr %12, align 8, !tbaa !99
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 152
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %14, align 8, !tbaa !353
+  %15 = zext i32 %9 to i64
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i, i64 %15
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %.sroa.3.0.copyload.i = load i32, ptr %.sroa.3.0..sroa_idx.i, align 4, !tbaa !15
+  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter12appendRecordEN4llvh9StringRefEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr nonnull @.str.48, i64 16, i32 noundef %9, i32 noundef 8)
+  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter12appendRecordEN4llvh9StringRefEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr nonnull @.str.49, i64 19, i32 noundef %9, i32 noundef %.sroa.3.0.copyload.i)
+  br label %_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit
+
 bb.v:                                             ; preds = %bb.a
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.az = load i32, ptr %i.ay, align 1, !tbaa !81
@@ -440,32 +465,7 @@ bb.aa:                                            ; preds = %bb.a
   tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter23countSerializedLiteralsEN4llvh8ArrayRefIhEEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr %.sroa.0.0.copyload.i90, i32 noundef %i.dg, i32 noundef %i.dj)
   br label %_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit
 
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %6 = load i32, ptr %5, align 1, !tbaa !81
-  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter18countStringLiteralEj(ptr noundef nonnull align 8 dereferenceable(152) %0, i32 noundef %6)
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %8 = load i32, ptr %7, align 1, !tbaa !81
-  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter18countStringLiteralEj(ptr noundef nonnull align 8 dereferenceable(152) %0, i32 noundef %8)
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  %10 = load i32, ptr %9, align 1, !tbaa !81      ; 4 uses
-  %11 = icmp eq i32 %10, -1
-  br i1 %11, label %_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit, label %12
-
-12:                                               ; preds = %4
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %14 = load ptr, ptr %13, align 8, !tbaa !99
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 152
-  %.sroa.0.0.copyload.i.i = load ptr, ptr %15, align 8, !tbaa !353
-  %16 = zext i32 %10 to i64
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i, i64 %16
-  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %17, i64 4
-  %.sroa.3.0.copyload.i = load i32, ptr %.sroa.3.0..sroa_idx.i, align 4, !tbaa !15
-  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter12appendRecordEN4llvh9StringRefEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr nonnull @.str.48, i64 16, i32 noundef %10, i32 noundef 8)
-  tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter12appendRecordEN4llvh9StringRefEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr nonnull @.str.49, i64 19, i32 noundef %10, i32 noundef %.sroa.3.0.copyload.i)
-  br label %_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit
-
-_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit: ; preds = %bb.a, %bb.u, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %12, %4, %bb.w, %bb.v, %bb.aa, %bb.z, %bb.y, %bb.x
+_ZN12_GLOBAL__N_112UsageCounter14visitSwitchImmEPKN6hermes4inst4InstE.exit: ; preds = %bb.a, %bb.u, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.w, %bb.v, %11, %.critedge, %bb.aa, %bb.z, %bb.y, %bb.x
   ret void
 }
 

@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.o, %bb.p, %.lr.p
   br i1 %i.dd, label %bb.go, label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.r
-  %.079 = phi i32 [ %i.dc, %bb.t ], [ %i.ch, %bb.r ] ; 3 uses
+  %.079 = phi i32 [ %i.dc, %bb.t ], [ %i.ch, %bb.r ] ; 2 uses
   %i.de = sext i32 %.079 to i64                   ; 2 uses
   %i.df = getelementptr inbounds i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser5yyr2_E, i64 %i.de
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !136 ; 2 uses
@@ -382,6 +382,7 @@ bb.ai:                                            ; preds = %bb.ad, %_ZN8faceboo
     i32 47, label %bb.fm
     i32 48, label %.invoke
     i32 49, label %bb.ga
+    i32 0, label %_ZN8facebook5velox9functions9prestosql6Parser6yypop_Ei.exit
   ]
 
 bb.aj:                                            ; preds = %bb.ai
@@ -784,11 +785,10 @@ bb.gi:                                            ; preds = %bb.gg, %bb.gh
   br label %.loopexit294
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %bb.ai
-  %.not291 = icmp eq i32 %.079, 0
-  br i1 %.not291, label %_ZN8facebook5velox9functions9prestosql6Parser6yypop_Ei.exit, label %.lr.ph.i.i
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.invoke834, %.invoke833, %.invoke, %bb.ai, %bb.bh, %bb.gb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit193, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139, %bb.dv, %bb.dr, %bb.do, %bb.dl, %bb.de, %bb.db, %bb.cx, %bb.cu, %bb.cr, %bb.ci, %bb.bz, %bb.bt, %bb.bq, %bb.bn, %bb.bf, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.at, %bb.aq, %bb.ao, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit
-  %.269732 = phi i32 [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ], [ %.067443, %.invoke ], [ 0, %bb.ai ], [ %.067443, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit193 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %.067443, %bb.ao ], [ %.067443, %bb.dv ], [ %.067443, %bb.dr ], [ %.067443, %bb.do ], [ %.067443, %bb.dl ], [ %.067443, %.invoke833 ], [ %.067443, %bb.de ], [ %.067443, %bb.db ], [ %.067443, %bb.at ], [ %.067443, %bb.cx ], [ %.067443, %bb.cu ], [ %.067443, %bb.cr ], [ %.067443, %bb.ci ], [ %.067443, %bb.bz ], [ %.067443, %bb.bt ], [ %.067443, %bb.bq ], [ %.067443, %bb.bn ], [ %.067443, %bb.aq ], [ %.067443, %.invoke834 ], [ %.067443, %bb.av ], [ %.067443, %bb.aw ], [ %.067443, %bb.ax ], [ %.067443, %bb.ay ], [ %.067443, %bb.gb ], [ %.067443, %bb.bh ], [ %.067443, %bb.bf ], [ %.067443, %bb.bd ], [ %.067443, %bb.bc ], [ %.067443, %bb.bb ], [ %.067443, %bb.ba ], [ %.067443, %bb.az ]
+.lr.ph.i.i:                                       ; preds = %bb.ai, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit, %.invoke834, %.invoke833, %.invoke, %bb.bh, %bb.gb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit193, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139, %bb.dv, %bb.dr, %bb.do, %bb.dl, %bb.de, %bb.db, %bb.cx, %bb.cu, %bb.cr, %bb.ci, %bb.bz, %bb.bt, %bb.bq, %bb.bn, %bb.bf, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.at, %bb.aq, %bb.ao, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit
+  %.269732 = phi i32 [ %.067443, %bb.az ], [ %.067443, %.invoke ], [ 0, %bb.ai ], [ %.067443, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit193 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148 ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit139 ], [ %.067443, %bb.ao ], [ %.067443, %bb.dv ], [ %.067443, %bb.dr ], [ %.067443, %bb.do ], [ %.067443, %bb.dl ], [ %.067443, %.invoke833 ], [ %.067443, %bb.de ], [ %.067443, %bb.db ], [ %.067443, %bb.at ], [ %.067443, %bb.cx ], [ %.067443, %bb.cu ], [ %.067443, %bb.cr ], [ %.067443, %bb.ci ], [ %.067443, %bb.bz ], [ %.067443, %bb.bt ], [ %.067443, %bb.bq ], [ %.067443, %bb.bn ], [ %.067443, %bb.aq ], [ %.067443, %.invoke834 ], [ %.067443, %bb.av ], [ %.067443, %bb.aw ], [ %.067443, %bb.ax ], [ %.067443, %bb.ay ], [ %.067443, %bb.gb ], [ %.067443, %bb.bh ], [ %.067443, %bb.bf ], [ %.067443, %bb.bd ], [ %.067443, %bb.bc ], [ %.067443, %bb.bb ], [ %.067443, %bb.ba ], [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ]
   %i.xi = zext nneg i32 %i.dh to i64
   br label %bb.gj
 
@@ -802,8 +802,8 @@ bb.gj:                                            ; preds = %bb.gj, %.lr.ph.i.i
   %i.xm = icmp samesign ugt i64 %.02.i.i, 1
   br i1 %i.xm, label %bb.gj, label %_ZN8facebook5velox9functions9prestosql6Parser6yypop_Ei.exit, !llvm.loop !3
 
-_ZN8facebook5velox9functions9prestosql6Parser6yypop_Ei.exit: ; preds = %bb.gj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit
-  %.269733 = phi i32 [ %.067443, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit ], [ %.269732, %bb.gj ]
+_ZN8facebook5velox9functions9prestosql6Parser6yypop_Ei.exit: ; preds = %bb.gj, %bb.ai
+  %.269733 = phi i32 [ %.067443, %bb.ai ], [ %.269732, %bb.gj ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
   invoke void @_ZN8facebook5velox9functions9prestosql6Parser17stack_symbol_typeC1Ev(ptr noundef nonnull align 16 dereferenceable(64) %2)
           to label %.noexc unwind label %bb.aa

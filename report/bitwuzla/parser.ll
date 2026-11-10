@@ -205,7 +205,7 @@ bb.hg:                                            ; preds = %bb.hd, %bb.hc
   br i1 %exitcond.not, label %.critedge855, label %bb.hc, !llvm.loop !862
 
 .critedge855:                                     ; preds = %bb.hg, %_ZNSt6vectorIN8bitwuzla4TermESaIS1_EE6resizeEm.exit
-  switch i32 %i.a, label %.critedge857 [
+  switch i32 %i.a, label %.critedge876.thread [
     i32 4098, label %bb.hh
     i32 4099, label %bb.hh
     i32 4096, label %bb.is
@@ -608,7 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1854: ; preds = %_
 bb.rt:                                            ; preds = %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855
   br label %bb.ru
 
-bb.ru:                                            ; preds = %bb.rt, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855
+bb.ru:                                            ; preds = %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855, %bb.rt
   %.0578 = phi i1 [ true, %bb.rt ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ], [ false, %.critedge855 ] ; 2 uses
   %.not7042645.not = icmp eq i64 %i.r, 0
   br i1 %.not7042645.not, label %.critedge857, label %.lr.ph2649.preheader
@@ -1011,7 +1011,7 @@ bb.aal:                                           ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %203) #30
   br label %.critedge857
 
-.critedge857:                                     ; preds = %bb.sz, %bb.vb, %bb.qc, %bb.jt, %bb.ir, %bb.sj, %bb.nn, %bb.ru, %bb.nb, %bb.is, %bb.hh, %.critedge870.thread, %.critedge857.critedge, %.critedge855, %bb.vx, %.critedge870, %bb.ve, %.critedge874
+.critedge857:                                     ; preds = %bb.sz, %bb.vb, %bb.qc, %bb.jt, %bb.ir, %bb.sj, %bb.nn, %bb.ru, %bb.nb, %bb.is, %bb.hh, %.critedge870.thread, %.critedge857.critedge, %bb.vx, %.critedge870, %bb.ve, %.critedge874
   switch i32 %i.a, label %.critedge876.thread [
     i32 16391, label %bb.aam
     i32 16399, label %bb.abu
@@ -1414,7 +1414,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2507: ; preds = %_
   call void @llvm.lifetime.end.p0(ptr nonnull %263) #30
   br label %bb.afm
 
-.critedge876.thread:                              ; preds = %.critedge857, %bb.kg, %bb.le, %bb.mq, %bb.rk, %bb.abv, %.critedge876, %bb.aek, %bb.acr, %bb.abm
+.critedge876.thread:                              ; preds = %.critedge855, %.critedge857, %bb.kg, %bb.le, %bb.mq, %bb.rk, %bb.abv, %.critedge876, %bb.aek, %bb.acr, %bb.abm
   %i.exl = load ptr, ptr %i.f, align 8, !tbaa !184 ; 3 uses
   %i.exm = load ptr, ptr %i.e, align 8, !tbaa !183 ; 2 uses
   %i.exn = ptrtoint ptr %i.exl to i64

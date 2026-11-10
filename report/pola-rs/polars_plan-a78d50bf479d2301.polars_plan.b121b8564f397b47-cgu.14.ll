@@ -205,17 +205,17 @@ bb.bf:                                            ; preds = %switch.lookup
   %i.bz = phi i8 [ 19, %switch.hole_check311 ], [ 19, %switch.hole_check317 ], [ 19, %bb.bq ], [ 15, %bb.bn ], [ 15, %bb.bl ], [ 27, %bb.as ], [ %.val201251, %bb.bt ], [ 19, %bb.br ], [ 15, %bb.bp ], [ 15, %.thread225.thread239 ], [ 28, %bb.bk ], [ 19, %bb.bj ], [ 15, %.thread225 ], [ %.val201251, %.thread220 ], [ 15, %bb.bh ], [ %.val201251, %bb.bf ], [ 30, %bb.av ], [ 18, %bb.bc ], [ 18, %switch.hole_check283 ], [ %.val201251, %bb.bg ], [ 18, %bb.bb ], [ 18, %bb.ba ], [ 18, %switch.hole_check289 ], [ 30, %bb.bi ], [ 30, %switch.hole_check303 ], [ %.val201251, %switch.hole_check275 ], [ %.val201251, %switch.hole_check ], [ %.val201251, %bb.ay ], [ %.val201251, %bb.az ], [ %.val201251, %bb.aw ], [ 15, %switch.hole_check297 ] ; 4 uses
   %i.ca = phi i8 [ 19, %switch.hole_check311 ], [ 19, %switch.hole_check317 ], [ 19, %bb.bq ], [ 15, %bb.bn ], [ 15, %bb.bl ], [ 27, %bb.as ], [ %i.cg, %bb.bt ], [ 19, %bb.br ], [ 15, %bb.bp ], [ 15, %.thread225.thread239 ], [ 28, %bb.bk ], [ 19, %bb.bj ], [ 15, %.thread225 ], [ %.val201251, %.thread220 ], [ 15, %bb.bh ], [ %i.bq, %bb.bf ], [ 30, %bb.av ], [ 18, %bb.bc ], [ 18, %switch.hole_check283 ], [ %.val201251, %bb.bg ], [ 18, %bb.bb ], [ 18, %bb.ba ], [ 18, %switch.hole_check289 ], [ 30, %bb.bi ], [ 30, %switch.hole_check303 ], [ %.val201251, %switch.hole_check275 ], [ %.val201251, %switch.hole_check ], [ %.val201251, %bb.ay ], [ %.val201251, %bb.az ], [ %.val201251, %bb.aw ], [ 15, %switch.hole_check297 ] ; 7 uses
   switch i8 %4, label %bb.cb [
-    i8 17, label %bb.bv
-    i8 16, label %bb.bv
-    i8 15, label %bb.bv
-    i8 7, label %bb.bv
-    i8 6, label %bb.bv
-    i8 5, label %bb.bv
-    i8 4, label %bb.bv
-    i8 3, label %bb.bv
-    i8 2, label %bb.bv
-    i8 1, label %bb.bv
     i8 0, label %bb.bv
+    i8 1, label %bb.bv
+    i8 2, label %bb.bv
+    i8 3, label %bb.bv
+    i8 4, label %bb.bv
+    i8 5, label %bb.bv
+    i8 6, label %bb.bv
+    i8 7, label %bb.bv
+    i8 15, label %bb.bv
+    i8 16, label %bb.bv
+    i8 17, label %bb.bv
   ], !dbg !105171
 
 bb.bg:                                            ; preds = %bb.bd

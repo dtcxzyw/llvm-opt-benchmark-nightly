@@ -202,7 +202,7 @@ bb.kc:                                            ; preds = %thread-pre-split103
   store i32 0, ptr %i.u, align 8, !tbaa !182
   br label %.outer2298
 
-.loopexit:                                        ; preds = %._crit_edge, %bb.k
+.loopexit:                                        ; preds = %bb.k, %._crit_edge
   %i.asc = load i64, ptr %i.t, align 8, !tbaa !94
   %.not736 = icmp eq i64 %i.asc, 0
   br i1 %.not736, label %.thread1011, label %BSD__sprint.exit881

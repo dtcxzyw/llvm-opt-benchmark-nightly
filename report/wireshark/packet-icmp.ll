@@ -202,7 +202,7 @@ bb.az:                                            ; preds = %bb.ab, %bb.ac
     i8 18, label %bb.ed
   ]
 
-.thread410:                                       ; preds = %bb.az, %bb.az, %bb.az, %bb.az, %bb.az, %bb.aa, %bb.ar, %bb.ak, %bb.al, %bb.ah, %bb.ai, %bb.aq, %proto_item_set_generated.exit358, %bb.aw, %proto_item_set_generated.exit361
+.thread410:                                       ; preds = %bb.aa, %bb.ar, %bb.ak, %bb.al, %bb.ah, %bb.ai, %bb.aq, %proto_item_set_generated.exit358, %bb.aw, %proto_item_set_generated.exit361, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az
   %i.gl = getelementptr i8, ptr %1, i64 276       ; 4 uses
   %i.gm = load i8, ptr %i.gl, align 4             ; 2 uses
   %i.gn = or i8 %i.gm, 1
@@ -605,7 +605,7 @@ bb.ee:                                            ; preds = %.thread412
   %i.wo = call i32 @dissect_icmp_extension(ptr noundef %i.wn, ptr noundef %1, ptr noundef %i.bm, ptr poison) ; 0 uses
   br label %bb.ef
 
-bb.ef:                                            ; preds = %bb.az, %bb.aa, %.thread412, %bb.ee, %.thread462, %._crit_edge, %bb.dp, %proto_item_set_generated.exit372, %bb.dn, %bb.cz, %bb.de, %bb.bh, %bb.bj, %bb.bi, %bb.ed, %get_best_guess_mstimeofday.exit402
+bb.ef:                                            ; preds = %bb.aa, %bb.az, %.thread412, %bb.ee, %.thread462, %._crit_edge, %bb.dp, %proto_item_set_generated.exit372, %bb.dn, %bb.cz, %bb.de, %bb.bh, %bb.bj, %bb.bi, %bb.ed, %get_best_guess_mstimeofday.exit402
   %.1328 = phi ptr [ null, %bb.az ], [ null, %bb.bj ], [ null, %bb.bi ], [ null, %bb.bh ], [ %.0327, %bb.de ], [ %.0327, %bb.cz ], [ %.0327, %proto_item_set_generated.exit372 ], [ %.0327, %bb.dn ], [ null, %bb.dp ], [ null, %._crit_edge ], [ null, %.thread462 ], [ null, %get_best_guess_mstimeofday.exit402 ], [ null, %bb.ed ], [ null, %bb.ee ], [ null, %.thread412 ], [ null, %bb.aa ] ; 2 uses
   %i.wp = getelementptr i8, ptr %1, i64 80
   %i.wq = load ptr, ptr %i.wp, align 8

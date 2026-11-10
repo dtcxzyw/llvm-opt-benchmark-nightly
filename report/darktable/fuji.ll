@@ -204,7 +204,7 @@ bb.ce:                                            ; preds = %bb.bx, %bb.bz
   br i1 %exitcond765.not, label %.loopexit639, label %.lr.ph, !llvm.loop !117
 
 .loopexit639:                                     ; preds = %bb.ce, %_ZN6LibRaw23guess_RAFDataGenerationEPh.exit, %bb.cd
-  %i.nj = load i16, ptr %i.bz, align 8, !tbaa !75 ; 3 uses
+  %i.nj = load i16, ptr %i.bz, align 8, !tbaa !75 ; 2 uses
   switch i16 %i.nj, label %bb.cf [
     i16 608, label %bb.cz
     i16 609, label %bb.cz
@@ -325,7 +325,7 @@ bb.cz:                                            ; preds = %.loopexit639, %.loo
 
 bb.da:                                            ; preds = %bb.cz, %bb.cy
   %.not468 = phi i1 [ false, %bb.cz ], [ true, %bb.cy ] ; 2 uses
-  switch i16 %i.nj, label %bb.eq [
+  switch i16 %i.nj, label %bb.er [
     i16 17664, label %.thread606
     i16 326, label %bb.db
     i16 329, label %bb.db
@@ -368,6 +368,7 @@ bb.da:                                            ; preds = %bb.cz, %bb.cy
     i16 872, label %bb.en
     i16 873, label %bb.eo
     i16 874, label %bb.ep
+    i16 875, label %bb.eq
   ]
 
 bb.db:                                            ; preds = %bb.da, %bb.da, %bb.da
@@ -529,10 +530,9 @@ bb.ep:                                            ; preds = %bb.da
   br label %.thread606
 
 bb.eq:                                            ; preds = %bb.da
-  %2 = icmp eq i16 %i.nj, 875
-  br i1 %2, label %.thread606, label %bb.er
+  br label %.thread606
 
-bb.er:                                            ; preds = %bb.eq
+bb.er:                                            ; preds = %bb.da
   %i.oz = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(7) @.str.32) #11
   %.not390 = icmp eq i32 %i.oz, 0
   br i1 %.not390, label %bb.es, label %bb.eu
@@ -935,8 +935,8 @@ bb.ki:                                            ; preds = %bb.hm, %bb.fd, %bb.
   %.not466 = icmp eq i32 %.0338700, 0
   br i1 %.not466, label %.thread, label %.thread606
 
-.thread606:                                       ; preds = %bb.hm, %bb.fd, %bb.hp, %bb.gj, %bb.ht, %bb.fo, %bb.hy, %bb.gm, %bb.ic, %bb.ez, %bb.if, %bb.gp, %bb.ii, %bb.fs, %bb.il, %bb.gs, %bb.ip, %bb.fh, %bb.it, %bb.gv, %bb.ix, %bb.fw, %bb.ja, %bb.gy, %bb.jd, %bb.ew, %bb.hb, %bb.jl, %bb.ga, %bb.jr, %bb.he, %bb.jv, %bb.fl, %bb.jz, %bb.hj, %bb.kh, %bb.et, %bb.ei, %bb.ef, %bb.dv, %bb.dt, %bb.gf, %bb.ea, %bb.eb, %bb.dx, %bb.dy, %bb.hw, %bb.jf, %bb.jj, %bb.jg, %bb.jn, %bb.jt, %bb.jx, %bb.kb, %bb.kf, %bb.kd, %bb.eq, %bb.ek, %bb.hh, %bb.ej, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.jh, %bb.eh, %bb.jp, %bb.eg, %bb.jo, %bb.ed, %bb.dz, %bb.dw, %bb.dr, %bb.da, %bb.du, %bb.kc, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.ki
-  %.1339609 = phi i32 [ %.0338700, %bb.ki ], [ 5084, %bb.fd ], [ 8424, %bb.hp ], [ 5248, %bb.gj ], [ 8456, %bb.ht ], [ 5148, %bb.fo ], [ 8652, %bb.hy ], [ 5296, %bb.gm ], [ 8652, %bb.ic ], [ 5036, %bb.ez ], [ 8670, %bb.if ], [ 6068, %bb.gp ], [ 2878, %bb.ii ], [ 5156, %bb.fs ], [ 2880, %bb.il ], [ 6180, %bb.gs ], [ 3186, %bb.ip ], [ 5136, %bb.fh ], [ 3246, %bb.it ], [ 6208, %bb.gv ], [ 3258, %bb.ix ], [ 8524, %bb.fw ], [ 3274, %bb.ja ], [ 8212, %bb.gy ], [ 3306, %bb.jd ], [ 4976, %bb.ew ], [ 3162, %bb.hb ], [ 6640, %bb.jl ], [ 5188, %bb.ga ], [ 5028, %bb.jr ], [ 8312, %bb.he ], [ 5004, %bb.jv ], [ 5140, %bb.fl ], [ 4740, %bb.jz ], [ 8392, %bb.hj ], [ 4820, %bb.kh ], [ 4956, %bb.et ], [ 2878, %bb.ei ], [ 8652, %bb.ef ], [ 8420, %bb.dv ], [ 8392, %bb.dt ], [ 5236, %bb.gf ], [ 8524, %bb.ea ], [ 8648, %bb.hw ], [ 6632, %bb.jf ], [ 6632, %bb.jj ], [ 6640, %bb.jg ], [ 5028, %bb.jn ], [ 5004, %bb.jt ], [ 4740, %bb.jx ], [ 4736, %bb.kb ], [ 4736, %bb.kf ], [ 4820, %bb.kd ], [ 3306, %bb.eq ], [ %spec.select532, %bb.ek ], [ 8376, %bb.hh ], [ 3186, %bb.ej ], [ 3274, %bb.ep ], [ 3162, %bb.eo ], [ 3258, %bb.en ], [ 6208, %bb.em ], [ 3246, %bb.el ], [ 6640, %bb.jh ], [ 8670, %bb.eh ], [ 5028, %bb.jp ], [ 2880, %bb.eg ], [ 5028, %bb.jo ], [ 8648, %bb.ed ], [ 8312, %bb.dz ], [ 8424, %bb.dw ], [ 8456, %bb.dx ], [ 5136, %bb.db ], [ 8376, %bb.dr ], [ 5036, %bb.da ], [ 5156, %bb.du ], [ 4736, %bb.kc ], [ 8212, %bb.do ], [ 5148, %bb.dn ], [ 5156, %bb.dm ], [ 4976, %bb.dl ], [ 5084, %bb.dk ], [ 4956, %bb.dj ], [ 6068, %bb.di ], [ 6180, %bb.dh ], [ 5188, %bb.dg ], [ 5296, %bb.df ], [ 5140, %bb.de ], [ 5248, %bb.dd ], [ 5236, %bb.dc ], [ 8456, %bb.dy ], [ 8524, %bb.eb ], [ 8420, %bb.hm ] ; 4 uses
+.thread606:                                       ; preds = %bb.hm, %bb.fd, %bb.hp, %bb.gj, %bb.ht, %bb.fo, %bb.hy, %bb.gm, %bb.ic, %bb.ez, %bb.if, %bb.gp, %bb.ii, %bb.fs, %bb.il, %bb.gs, %bb.ip, %bb.fh, %bb.it, %bb.gv, %bb.ix, %bb.fw, %bb.ja, %bb.gy, %bb.jd, %bb.ew, %bb.hb, %bb.jl, %bb.ga, %bb.jr, %bb.he, %bb.jv, %bb.fl, %bb.jz, %bb.hj, %bb.kh, %bb.et, %bb.ei, %bb.ef, %bb.dv, %bb.dt, %bb.gf, %bb.ea, %bb.eb, %bb.dx, %bb.dy, %bb.hw, %bb.jf, %bb.jj, %bb.jg, %bb.jn, %bb.jt, %bb.jx, %bb.kb, %bb.kf, %bb.kd, %bb.ej, %bb.ek, %bb.hh, %bb.eq, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.jh, %bb.eh, %bb.jp, %bb.eg, %bb.jo, %bb.ed, %bb.dz, %bb.dw, %bb.dr, %bb.da, %bb.du, %bb.kc, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.ki
+  %.1339609 = phi i32 [ %.0338700, %bb.ki ], [ 5084, %bb.fd ], [ 8424, %bb.hp ], [ 5248, %bb.gj ], [ 8456, %bb.ht ], [ 5148, %bb.fo ], [ 8652, %bb.hy ], [ 5296, %bb.gm ], [ 8652, %bb.ic ], [ 5036, %bb.ez ], [ 8670, %bb.if ], [ 6068, %bb.gp ], [ 2878, %bb.ii ], [ 5156, %bb.fs ], [ 2880, %bb.il ], [ 6180, %bb.gs ], [ 3186, %bb.ip ], [ 5136, %bb.fh ], [ 3246, %bb.it ], [ 6208, %bb.gv ], [ 3258, %bb.ix ], [ 8524, %bb.fw ], [ 3274, %bb.ja ], [ 8212, %bb.gy ], [ 3306, %bb.jd ], [ 4976, %bb.ew ], [ 3162, %bb.hb ], [ 6640, %bb.jl ], [ 5188, %bb.ga ], [ 5028, %bb.jr ], [ 8312, %bb.he ], [ 5004, %bb.jv ], [ 5140, %bb.fl ], [ 4740, %bb.jz ], [ 8392, %bb.hj ], [ 4820, %bb.kh ], [ 4956, %bb.et ], [ 2878, %bb.ei ], [ 8652, %bb.ef ], [ 8420, %bb.dv ], [ 8392, %bb.dt ], [ 5236, %bb.gf ], [ 8524, %bb.ea ], [ 8648, %bb.hw ], [ 6632, %bb.jf ], [ 6632, %bb.jj ], [ 6640, %bb.jg ], [ 5028, %bb.jn ], [ 5004, %bb.jt ], [ 4740, %bb.jx ], [ 4736, %bb.kb ], [ 4736, %bb.kf ], [ 4820, %bb.kd ], [ 3186, %bb.ej ], [ %spec.select532, %bb.ek ], [ 8376, %bb.hh ], [ 3306, %bb.eq ], [ 3274, %bb.ep ], [ 3162, %bb.eo ], [ 3258, %bb.en ], [ 6208, %bb.em ], [ 3246, %bb.el ], [ 6640, %bb.jh ], [ 8670, %bb.eh ], [ 5028, %bb.jp ], [ 2880, %bb.eg ], [ 5028, %bb.jo ], [ 8648, %bb.ed ], [ 8312, %bb.dz ], [ 8424, %bb.dw ], [ 8456, %bb.dx ], [ 5136, %bb.db ], [ 8376, %bb.dr ], [ 5036, %bb.da ], [ 5156, %bb.du ], [ 4736, %bb.kc ], [ 8212, %bb.do ], [ 5148, %bb.dn ], [ 5156, %bb.dm ], [ 4976, %bb.dl ], [ 5084, %bb.dk ], [ 4956, %bb.dj ], [ 6068, %bb.di ], [ 6180, %bb.dh ], [ 5188, %bb.dg ], [ 5296, %bb.df ], [ 5140, %bb.de ], [ 5248, %bb.dd ], [ 5236, %bb.dc ], [ 8456, %bb.dy ], [ 8524, %bb.eb ], [ 8420, %bb.hm ] ; 4 uses
   %i.uq = add i32 %.1339609, %i.cw                ; 5 uses
   %i.ur = invoke noundef zeroext i1 @_ZN24fuji_wb_checked_buffer_t4isWBEj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.uq)
           to label %bb.kj unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
