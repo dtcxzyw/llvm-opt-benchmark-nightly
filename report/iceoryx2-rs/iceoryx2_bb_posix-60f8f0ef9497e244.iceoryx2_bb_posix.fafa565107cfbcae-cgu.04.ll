@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i32 %0, ptr %i.b, align 4
-  %i.d = sext i32 %0 to i64                       ; 2 uses
+  %i.d = sext i32 %0 to i64
   store atomic i64 %i.d, ptr @_RNvNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6signal11LAST_SIGNAL monotonic, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
@@ -224,7 +224,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.i = icmp ugt i32 %0, 31
-  %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.h, i64 %i.d
+  %1 = zext nneg i32 %0 to i64
+  %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.h, i64 %1
   %.sroa.0.0 = select i1 %i.i, ptr @13, ptr %i.j  ; 2 uses
   %i.k = load ptr, ptr %.sroa.0.0, align 8, !noundef !4 ; 2 uses
   %.not2 = icmp eq ptr %i.k, null
