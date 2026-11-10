@@ -50,7 +50,7 @@ bb.a:
   %i.u = load <2 x i64>, ptr %i.t, align 16, !tbaa !16
   %i.v = getelementptr i8, ptr %i.g, i64 80
   %i.w = load <2 x i64>, ptr %i.v, align 16, !tbaa !16
-  %3 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.o, <2 x i32> <i32 0, i32 2> ; 5 uses
+  %3 = shufflevector <2 x i64> %i.o, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0> ; 5 uses
   %i.x = xor <2 x i64> %3, %i.u
   %i.y = xor <2 x i64> %i.x, %i.p                 ; 8 uses
   %i.z = shl <2 x i64> %i.y, splat (i64 17)
@@ -64,7 +64,7 @@ bb.a:
   %i.ah = shl <2 x i64> %i.y, splat (i64 44)
   %i.ai = or disjoint <2 x i64> %i.ag, %i.ah
   %i.aj = lshr <2 x i64> %i.y, splat (i64 20)     ; 2 uses
-  %4 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.af, <2 x i32> <i32 0, i32 2>
+  %4 = shufflevector <2 x i64> %i.af, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.ak = xor <2 x i64> %i.w, %i.aa
   %i.al = xor <2 x i64> %i.ak, %i.z
   %i.am = xor <2 x i64> %i.al, %4
@@ -83,7 +83,7 @@ bb.a:
   %i.az = or disjoint <2 x i64> %i.ax, %i.ay
   %i.ba = lshr <2 x i64> %i.ap, splat (i64 20)    ; 2 uses
   %.uncasted603 = shufflevector <2 x i64> %i.af, <2 x i64> %i.aw, <2 x i32> <i32 1, i32 2>
-  %5 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.aj, <2 x i32> <i32 0, i32 2>
+  %5 = shufflevector <2 x i64> %i.aj, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.bb = shufflevector <2 x i64> %i.aw, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 1, i32 3>
   %.uncasted604 = shufflevector <2 x i64> %i.aj, <2 x i64> %i.ba, <2 x i32> <i32 1, i32 2>
   %i.bc = shufflevector <2 x i64> %i.ba, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 1, i32 3>
@@ -111,7 +111,7 @@ bb.a:
   %i.by = or disjoint <2 x i64> %i.bw, %i.bx
   %i.bz = lshr <2 x i64> %i.bo, splat (i64 20)    ; 2 uses
   %.uncasted605 = shufflevector <2 x i64> %i.q, <2 x i64> %i.r, <2 x i32> <i32 1, i32 2> ; 5 uses
-  %6 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.bv, <2 x i32> <i32 0, i32 2>
+  %6 = shufflevector <2 x i64> %i.bv, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.ca = xor <2 x i64> %i.bg, %.uncasted604
   %i.cb = xor <2 x i64> %i.ca, %i.az
   %i.cc = xor <2 x i64> %i.cb, %i.bb
@@ -132,7 +132,7 @@ bb.a:
   %i.cr = or disjoint <2 x i64> %i.cp, %i.cq
   %i.cs = lshr <2 x i64> %i.ch, splat (i64 20)    ; 2 uses
   %.uncasted606 = shufflevector <2 x i64> %i.bv, <2 x i64> %i.co, <2 x i32> <i32 1, i32 2>
-  %7 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.bz, <2 x i32> <i32 0, i32 2>
+  %7 = shufflevector <2 x i64> %i.bz, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %.uncasted607 = shufflevector <2 x i64> %i.bz, <2 x i64> %i.cs, <2 x i32> <i32 1, i32 2>
   %i.ct = shufflevector <2 x i64> %i.co, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 1, i32 3>
   %i.cu = getelementptr i8, ptr %i.g, i64 128
@@ -159,7 +159,7 @@ bb.a:
   %i.dp = shl <2 x i64> %i.dg, splat (i64 44)
   %i.dq = or disjoint <2 x i64> %i.do, %i.dp
   %i.dr = lshr <2 x i64> %i.dg, splat (i64 20)    ; 2 uses
-  %8 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.dn, <2 x i32> <i32 0, i32 2>
+  %8 = shufflevector <2 x i64> %i.dn, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.ds = xor <2 x i64> %i.cx, %i.cr
   %i.dt = xor <2 x i64> %i.ds, %.uncasted607
   %i.du = xor <2 x i64> %i.dt, %i.ct
@@ -206,7 +206,7 @@ bb.a:
   %i.fh = or disjoint <2 x i64> %i.ff, %i.fg
   %i.fi = lshr <2 x i64> %i.ex, splat (i64 20)    ; 2 uses
   %i.fj = xor <2 x i64> %i.p, %i.o                ; 2 uses
-  %9 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.fe, <2 x i32> <i32 0, i32 2>
+  %9 = shufflevector <2 x i64> %i.fe, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.fk = xor <2 x i64> %i.ep, %i.ei
   %i.fl = xor <2 x i64> %i.fk, %.uncasted609
   %i.fm = xor <2 x i64> %i.fl, %i.el
@@ -255,7 +255,7 @@ bb.a:
   %i.hb = shl <2 x i64> %i.gs, splat (i64 44)
   %i.hc = or disjoint <2 x i64> %i.ha, %i.hb
   %i.hd = lshr <2 x i64> %i.gs, splat (i64 20)    ; 2 uses
-  %10 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.gz, <2 x i32> <i32 0, i32 2>
+  %10 = shufflevector <2 x i64> %i.gz, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.he = xor <2 x i64> %i.q, %i.p                ; 2 uses
   %i.hf = xor <2 x i64> %i.gj, %i.gc
   %i.hg = xor <2 x i64> %i.hf, %.uncasted611
@@ -308,7 +308,7 @@ bb.a:
   %i.iz = shl <2 x i64> %i.iq, splat (i64 44)
   %i.ja = or disjoint <2 x i64> %i.iy, %i.iz
   %i.jb = lshr <2 x i64> %i.iq, splat (i64 20)    ; 2 uses
-  %11 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.ix, <2 x i32> <i32 0, i32 2>
+  %11 = shufflevector <2 x i64> %i.ix, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.jc = xor <2 x i64> %i.s, %i.p                ; 2 uses
   %i.jd = xor <2 x i64> %i.ig, %i.hz
   %i.je = xor <2 x i64> %i.jd, %.uncasted613
@@ -359,7 +359,7 @@ bb.a:
   %i.kv = shl <2 x i64> %i.km, splat (i64 44)
   %i.kw = or disjoint <2 x i64> %i.ku, %i.kv
   %i.kx = lshr <2 x i64> %i.km, splat (i64 20)    ; 2 uses
-  %12 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.kt, <2 x i32> <i32 0, i32 2>
+  %12 = shufflevector <2 x i64> %i.kt, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.ky = xor <2 x i64> %i.kd, %i.jw
   %i.kz = xor <2 x i64> %i.ky, %.uncasted615
   %i.la = xor <2 x i64> %i.kz, %i.jz
@@ -408,7 +408,7 @@ bb.a:
   %i.mp = shl <2 x i64> %i.mg, splat (i64 44)
   %i.mq = or disjoint <2 x i64> %i.mo, %i.mp
   %i.mr = lshr <2 x i64> %i.mg, splat (i64 20)    ; 2 uses
-  %13 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.mn, <2 x i32> <i32 0, i32 2>
+  %13 = shufflevector <2 x i64> %i.mn, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.ms = xor <2 x i64> %i.ly, %i.lr
   %i.mt = xor <2 x i64> %i.ms, %.uncasted617
   %i.mu = xor <2 x i64> %i.mt, %i.lu
@@ -465,7 +465,7 @@ bb.a:
   %i.ok = shl <2 x i64> %i.ob, splat (i64 44)
   %i.ol = or disjoint <2 x i64> %i.oj, %i.ok
   %i.om = lshr <2 x i64> %i.ob, splat (i64 20)    ; 2 uses
-  %14 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.oi, <2 x i32> <i32 0, i32 2>
+  %14 = shufflevector <2 x i64> %i.oi, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.on = xor <2 x i64> %i.oa, %.1594631
   %i.oo = xor <2 x i64> %i.on, %i.od
   %i.op = xor <2 x i64> %i.oo, %i.oc
@@ -482,7 +482,7 @@ bb.a:
   %i.pa = or disjoint <2 x i64> %i.oy, %i.oz
   %i.pb = lshr <2 x i64> %i.oq, splat (i64 20)    ; 2 uses
   %.uncasted = shufflevector <2 x i64> %i.oi, <2 x i64> %i.ox, <2 x i32> <i32 1, i32 2>
-  %15 = shufflevector <2 x i64> <i64 0, i64 poison>, <2 x i64> %i.om, <2 x i32> <i32 0, i32 2>
+  %15 = shufflevector <2 x i64> %i.om, <2 x i64> <i64 0, i64 poison>, <2 x i32> <i32 2, i32 0>
   %i.pc = shufflevector <2 x i64> %i.ox, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 1, i32 3>
   %.uncasted601 = shufflevector <2 x i64> %i.om, <2 x i64> %i.pb, <2 x i32> <i32 1, i32 2>
   %i.pd = xor <2 x i64> %15, %.1596630

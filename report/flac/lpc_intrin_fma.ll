@@ -85,14 +85,14 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_8(ptr nofre
 vector.ph:                                        ; preds = %.preheader.preheader
   %n.vec = and i64 %i.bl, -4                      ; 3 uses
   %i.bm = add nsw i64 %n.vec, 8
-  %4 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.bj, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
-  %5 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.bj, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %6 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.bj, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %4 = shufflevector <4 x double> %i.bj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
+  %5 = shufflevector <4 x double> %i.bj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x double> %i.bj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
   %i.bn = shufflevector <4 x double> %i.bj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bo = shufflevector <4 x double> %i.bc, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %7 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.bc, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %8 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.bc, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %9 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.bc, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
+  %7 = shufflevector <4 x double> %i.bc, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x double> %i.bc, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %9 = shufflevector <4 x double> %i.bc, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -379,20 +379,20 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
 vector.ph:                                        ; preds = %.preheader.preheader
   %n.vec = and i64 %i.et, -4                      ; 3 uses
   %i.ew = add nsw i64 %n.vec, 12
-  %4 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.ep, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %4 = shufflevector <4 x double> %i.ep, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
   %i.ex = shufflevector <2 x double> %i.dq, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ey = shufflevector <4 x double> %i.ex, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %5 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.eq, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %5 = shufflevector <4 x double> %i.eq, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
   %i.ez = shufflevector <2 x double> %i.eo, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.fa = shufflevector <4 x double> %i.ez, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.fb = shufflevector <4 x double> %i.ek, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %6 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.ek, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %7 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.ek, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %8 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.ek, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
+  %6 = shufflevector <4 x double> %i.ek, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x double> %i.ek, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x double> %i.ek, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
   %i.fc = shufflevector <4 x double> %i.cj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %9 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.cj, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %10 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.cj, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %11 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.cj, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
+  %9 = shufflevector <4 x double> %i.cj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
+  %10 = shufflevector <4 x double> %i.cj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %11 = shufflevector <4 x double> %i.cj, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -795,22 +795,22 @@ vector.ph:                                        ; preds = %.preheader.preheade
   %n.vec = and i64 %i.ia, -4                      ; 3 uses
   %i.ib = add nsw i64 %n.vec, 16
   %i.ic = shufflevector <2 x double> %i.hz, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %4 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.ic, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %4 = shufflevector <4 x double> %i.ic, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
   %i.id = shufflevector <4 x double> %i.ic, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %5 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.hy, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
-  %6 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.hy, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %7 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.hy, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %5 = shufflevector <4 x double> %i.hy, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x double> %i.hy, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x double> %i.hy, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
   %i.ie = shufflevector <4 x double> %i.hy, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.if = shufflevector <4 x double> %i.hg, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %8 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.hg, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %9 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.hg, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %10 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.hg, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
+  %8 = shufflevector <4 x double> %i.hg, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
+  %9 = shufflevector <4 x double> %i.hg, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %10 = shufflevector <4 x double> %i.hg, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
   %i.ig = insertelement <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, double %i.hh, i64 0
   %i.ih = insertelement <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, double %i.hf, i64 0
   %i.ii = shufflevector <4 x double> %i.gh, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %11 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.gh, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %12 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.gh, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
-  %13 = shufflevector <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x double> %i.gh, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
+  %11 = shufflevector <4 x double> %i.gh, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 6, i32 7>
+  %12 = shufflevector <4 x double> %i.gh, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 2, i32 5, i32 6, i32 7>
+  %13 = shufflevector <4 x double> %i.gh, <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

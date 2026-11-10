@@ -205,8 +205,8 @@ bb.bo:                                            ; preds = %bb.bn
   %i.mo = sitofp <2 x i16> %i.mn to <2 x float>
   %i.mp = fmul nnan <2 x float> %i.mo, splat (float f0x38800000) ; 2 uses
   %i.mq = getelementptr inbounds nuw i8, ptr %.1274.i, i64 4
-  %5 = shufflevector <2 x float> <float 0.000000e+00, float poison>, <2 x float> %i.mp, <2 x i32> <i32 0, i32 2>
-  %6 = shufflevector <2 x float> <float poison, float 0.000000e+00>, <2 x float> %i.mp, <2 x i32> <i32 3, i32 1>
+  %5 = shufflevector <2 x float> %i.mp, <2 x float> <float 0.000000e+00, float poison>, <2 x i32> <i32 2, i32 0>
+  %6 = shufflevector <2 x float> %i.mp, <2 x float> <float poison, float 0.000000e+00>, <2 x i32> <i32 1, i32 3>
   br label %bb.br
 
 bb.bp:                                            ; preds = %bb.bn

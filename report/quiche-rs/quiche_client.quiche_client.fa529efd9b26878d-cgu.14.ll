@@ -202,42 +202,42 @@ define hidden { i64, i64 } @_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5impls
 bb.a:
     #dbg_value(ptr %1, !9099, !DIExpression(), !9107)
     #dbg_value(ptr %0, !9098, !DIExpression(), !9107)
-  %i.a = load ptr, ptr %0, align 8, !dbg !9126, !nonnull !414, !align !1797, !noundef !414 ; 2 uses
-  %.val = load ptr, ptr %i.a, align 8, !dbg !9127, !nonnull !414, !align !1797, !noundef !414
-  %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !9127
-  %.val2 = load ptr, ptr %i.b, align 8, !dbg !9127, !nonnull !414, !noundef !414 ; 2 uses
-  %.val3 = load i64, ptr %1, align 8, !dbg !9127, !noundef !414
+  %i.a = load ptr, ptr %0, align 8, !dbg !9125, !nonnull !414, !align !1797, !noundef !414 ; 2 uses
+  %.val = load ptr, ptr %i.a, align 8, !dbg !9126, !nonnull !414, !align !1797, !noundef !414
+  %i.b = getelementptr i8, ptr %i.a, i64 8, !dbg !9126
+  %.val2 = load ptr, ptr %i.b, align 8, !dbg !9126, !nonnull !414, !noundef !414 ; 2 uses
+  %.val3 = load i64, ptr %1, align 8, !dbg !9126, !noundef !414
     #dbg_value(ptr poison, !9108, !DIExpression(DW_OP_deref), !9069)
     #dbg_value(ptr poison, !9112, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8), !9069)
     #dbg_declare(ptr poison, !9113, !DIExpression(), !9070)
-    #dbg_value(i64 %.val3, !9111, !DIExpression(DW_OP_LLVM_implicit_pointer), !9069)
-    #dbg_value(ptr poison, !9120, !DIExpression(DW_OP_deref, DW_OP_deref), !9073)
-    #dbg_value(i64 %.val3, !9124, !DIExpression(DW_OP_LLVM_implicit_pointer), !9073)
-  %i.c = load i64, ptr %.val, align 8, !dbg !9128, !noundef !414
-  %i.d = icmp eq i64 %.val3, %i.c, !dbg !9129
-  %i.e = load i64, ptr %.val2, align 8, !dbg !9130, !noundef !414 ; 2 uses
-  br i1 %i.d, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8position5checkRyNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB1q_21ConnectionIdentifiers27mark_advertise_new_scid_seq0E0CslusEaBCZKLp_13quiche_client.exit, label %bb.b, !dbg !9131
+    #dbg_value(ptr poison, !9111, !DIExpression(), !9069)
+    #dbg_value(ptr poison, !9119, !DIExpression(DW_OP_deref, DW_OP_deref), !9073)
+    #dbg_value(ptr poison, !9123, !DIExpression(), !9073)
+  %i.c = load i64, ptr %.val, align 8, !dbg !9127, !noundef !414
+  %i.d = icmp eq i64 %.val3, %i.c, !dbg !9128
+  %i.e = load i64, ptr %.val2, align 8, !dbg !9129, !noundef !414 ; 2 uses
+  br i1 %i.d, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8position5checkRyNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB1q_21ConnectionIdentifiers27mark_advertise_new_scid_seq0E0CslusEaBCZKLp_13quiche_client.exit, label %bb.b, !dbg !9130
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add i64 %i.e, 1, !dbg !9132
-  store i64 %i.f, ptr %.val2, align 8, !dbg !9132
-  br label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8position5checkRyNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB1q_21ConnectionIdentifiers27mark_advertise_new_scid_seq0E0CslusEaBCZKLp_13quiche_client.exit, !dbg !9133
+  %i.f = add i64 %i.e, 1, !dbg !9131
+  store i64 %i.f, ptr %.val2, align 8, !dbg !9131
+  br label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8position5checkRyNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB1q_21ConnectionIdentifiers27mark_advertise_new_scid_seq0E0CslusEaBCZKLp_13quiche_client.exit, !dbg !9132
 
 _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8position5checkRyNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB1q_21ConnectionIdentifiers27mark_advertise_new_scid_seq0E0CslusEaBCZKLp_13quiche_client.exit: ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i = phi i64 [ 0, %bb.b ], [ 1, %bb.a ], !dbg !9130
-  %i.g = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i, 0, !dbg !9134
-  %i.h = insertvalue { i64, i64 } %i.g, i64 %i.e, 1, !dbg !9134
-  ret { i64, i64 } %i.h, !dbg !9135
+  %.sroa.0.0.i = phi i64 [ 0, %bb.b ], [ 1, %bb.a ], !dbg !9129
+  %i.g = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i, 0, !dbg !9133
+  %i.h = insertvalue { i64, i64 } %i.g, i64 %i.e, 1, !dbg !9133
+  ret { i64, i64 } %i.h, !dbg !9134
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtNtB8_3mem9alignment9AlignmentNtB6_5Debug3fmtCslusEaBCZKLp_13quiche_client(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !dbg !9137 {
+define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtNtB8_3mem9alignment9AlignmentNtB6_5Debug3fmtCslusEaBCZKLp_13quiche_client(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !dbg !9136 {
 bb.a:
-    #dbg_value(ptr %0, !9146, !DIExpression(), !9151)
-    #dbg_value(ptr %1, !9147, !DIExpression(), !9151)
-  %i.a = load ptr, ptr %0, align 8, !dbg !9152, !nonnull !414, !align !1797, !noundef !414
-  %i.b = tail call noundef zeroext i1 @_RNvXs_NtNtCskKLDkoKarTP_4core3mem9alignmentNtB4_9AlignmentNtNtB8_3fmt5Debug3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1), !dbg !9153
-  ret i1 %i.b, !dbg !9154
+    #dbg_value(ptr %0, !9145, !DIExpression(), !9150)
+    #dbg_value(ptr %1, !9146, !DIExpression(), !9150)
+  %i.a = load ptr, ptr %0, align 8, !dbg !9151, !nonnull !414, !align !1797, !noundef !414
+  %i.b = tail call noundef zeroext i1 @_RNvXs_NtNtCskKLDkoKarTP_4core3mem9alignmentNtB4_9AlignmentNtNtB8_3fmt5Debug3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1), !dbg !9152
+  ret i1 %i.b, !dbg !9153
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -640,7 +640,7 @@ begin_hunk_1_@llvm.usub.sat.i64
 !9068 = distinct !DILocation(line: 298, column: 21, scope: !9066)
 !9069 = distinct !DILocation(line: 0, scope: !9067, inlinedAt: !9068)
 !9070 = distinct !DILocation(line: 3141, column: 19, scope: !9067, inlinedAt: !9068)
-!9071 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB7_21ConnectionIdentifiers27mark_advertise_new_scid_seq0CslusEaBCZKLp_13quiche_client", scope: !9084, file: !1801, line: 741, type: !9123, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !414, retainedNodes: !9125)
+!9071 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB7_21ConnectionIdentifiers27mark_advertise_new_scid_seq0CslusEaBCZKLp_13quiche_client", scope: !9084, file: !1801, line: 741, type: !9122, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !414, retainedNodes: !9124)
 !9072 = distinct !DILocation(line: 3142, column: 20, scope: !9067, inlinedAt: !9068)
 !9073 = distinct !DILocation(line: 0, scope: !9071, inlinedAt: !9072)
 !9074 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut core::iter::traits::iterator::Iterator::position::check::{closure_env#0}<&u64, quiche::cid::{impl#2}::mark_advertise_new_scid_seq::{closure_env#0}>", baseType: !9060, size: 64, align: 64, dwarfAddressSpace: 0)
@@ -686,39 +686,39 @@ begin_hunk_1_@llvm.usub.sat.i64
 !9114 = !{!9111, !9108, !9112, !9113}
 !9115 = !DITemplateTypeParameter(name: "impl FnMut(T) -> bool + 'a", type: !9059)
 !9116 = !{!1761, !9115}
-!9120 = !DILocalVariable(name: "scid_seq", scope: !9071, file: !1801, line: 734, type: !332, align: 64)
-!9121 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut quiche::cid::{impl#2}::mark_advertise_new_scid_seq::{closure_env#0}", baseType: !9059, size: 64, align: 64, dwarfAddressSpace: 0)
-!9122 = !{!424, !9121, !1760}
-!9123 = !DISubroutineType(cc: DW_CC_nocall, types: !9122)
-!9124 = !DILocalVariable(name: "s", arg: 2, scope: !9071, file: !1801, line: 741, type: !1760)
-!9125 = !{!9124, !9120}
-!9126 = !DILocation(line: 298, column: 13, scope: !9066)
-!9127 = !DILocation(line: 298, column: 21, scope: !9066)
-!9128 = !DILocation(line: 741, column: 33, scope: !9071, inlinedAt: !9072)
-!9129 = !DILocation(line: 741, column: 27, scope: !9071, inlinedAt: !9072)
-!9130 = !DILocation(line: 0, scope: !9067, inlinedAt: !9068)
-!9131 = !DILocation(line: 3142, column: 20, scope: !9067, inlinedAt: !9068)
-!9132 = !DILocation(line: 3145, column: 21, scope: !9067, inlinedAt: !9068)
-!9133 = !DILocation(line: 3142, column: 17, scope: !9067, inlinedAt: !9068)
-!9134 = !DILocation(line: 3148, column: 14, scope: !9067, inlinedAt: !9068)
-!9135 = !DILocation(line: 299, column: 10, scope: !9066)
-!9136 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "Alignment", scope: !331, file: !311, size: 64, align: 64, flags: DIFlagPublic, elements: !9145, templateParams: !414, identifier: "c67b16fbb8da1285801bfe1dbac65451")
-!9137 = distinct !DISubprogram(name: "fmt<core::mem::alignment::Alignment>", linkageName: "_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtNtB8_3mem9alignment9AlignmentNtB6_5Debug3fmtCslusEaBCZKLp_13quiche_client", scope: !9139, file: !9138, line: 2887, type: !9143, scopeLine: 2887, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !9150, retainedNodes: !9148)
-!9138 = !DIFile(filename: "library/core/src/fmt/mod.rs", directory: "/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed", checksumkind: CSK_MD5, checksum: "12cfba091d4ac621dc20425387516488")
-!9139 = !DINamespace(name: "{impl#80}", scope: !1382)
-!9140 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&core::mem::alignment::Alignment", baseType: !9136, size: 64, align: 64, dwarfAddressSpace: 0)
-!9141 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&&core::mem::alignment::Alignment", baseType: !9140, size: 64, align: 64, dwarfAddressSpace: 0)
-!9142 = !{!238, !9141, !1393}
-!9143 = !DISubroutineType(types: !9142)
-!9144 = !DIDerivedType(tag: DW_TAG_member, name: "_inner_repr_trick", scope: !9136, file: !311, baseType: !398, size: 64, align: 64, flags: DIFlagPrivate)
-!9145 = !{!9144}
-!9146 = !DILocalVariable(name: "self", arg: 1, scope: !9137, file: !9138, line: 2887, type: !9141)
-!9147 = !DILocalVariable(name: "f", arg: 2, scope: !9137, file: !9138, line: 2887, type: !1393)
-!9148 = !{!9146, !9147}
-!9149 = !DITemplateTypeParameter(name: "T", type: !9136)
-!9150 = !{!9149}
-!9151 = !DILocation(line: 0, scope: !9137)
-!9152 = !DILocation(line: 2887, column: 71, scope: !9137)
-!9153 = !DILocation(line: 2887, column: 62, scope: !9137)
-!9154 = !DILocation(line: 2887, column: 84, scope: !9137)
+!9119 = !DILocalVariable(name: "scid_seq", scope: !9071, file: !1801, line: 734, type: !332, align: 64)
+!9120 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut quiche::cid::{impl#2}::mark_advertise_new_scid_seq::{closure_env#0}", baseType: !9059, size: 64, align: 64, dwarfAddressSpace: 0)
+!9121 = !{!424, !9120, !1760}
+!9122 = !DISubroutineType(cc: DW_CC_nocall, types: !9121)
+!9123 = !DILocalVariable(name: "s", arg: 2, scope: !9071, file: !1801, line: 741, type: !1760)
+!9124 = !{!9123, !9119}
+!9125 = !DILocation(line: 298, column: 13, scope: !9066)
+!9126 = !DILocation(line: 298, column: 21, scope: !9066)
+!9127 = !DILocation(line: 741, column: 33, scope: !9071, inlinedAt: !9072)
+!9128 = !DILocation(line: 741, column: 27, scope: !9071, inlinedAt: !9072)
+!9129 = !DILocation(line: 0, scope: !9067, inlinedAt: !9068)
+!9130 = !DILocation(line: 3142, column: 20, scope: !9067, inlinedAt: !9068)
+!9131 = !DILocation(line: 3145, column: 21, scope: !9067, inlinedAt: !9068)
+!9132 = !DILocation(line: 3142, column: 17, scope: !9067, inlinedAt: !9068)
+!9133 = !DILocation(line: 3148, column: 14, scope: !9067, inlinedAt: !9068)
+!9134 = !DILocation(line: 299, column: 10, scope: !9066)
+!9135 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "Alignment", scope: !331, file: !311, size: 64, align: 64, flags: DIFlagPublic, elements: !9144, templateParams: !414, identifier: "c67b16fbb8da1285801bfe1dbac65451")
+!9136 = distinct !DISubprogram(name: "fmt<core::mem::alignment::Alignment>", linkageName: "_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtNtB8_3mem9alignment9AlignmentNtB6_5Debug3fmtCslusEaBCZKLp_13quiche_client", scope: !9138, file: !9137, line: 2887, type: !9142, scopeLine: 2887, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !9149, retainedNodes: !9147)
+!9137 = !DIFile(filename: "library/core/src/fmt/mod.rs", directory: "/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed", checksumkind: CSK_MD5, checksum: "12cfba091d4ac621dc20425387516488")
+!9138 = !DINamespace(name: "{impl#80}", scope: !1382)
+!9139 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&core::mem::alignment::Alignment", baseType: !9135, size: 64, align: 64, dwarfAddressSpace: 0)
+!9140 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&&core::mem::alignment::Alignment", baseType: !9139, size: 64, align: 64, dwarfAddressSpace: 0)
+!9141 = !{!238, !9140, !1393}
+!9142 = !DISubroutineType(types: !9141)
+!9143 = !DIDerivedType(tag: DW_TAG_member, name: "_inner_repr_trick", scope: !9135, file: !311, baseType: !398, size: 64, align: 64, flags: DIFlagPrivate)
+!9144 = !{!9143}
+!9145 = !DILocalVariable(name: "self", arg: 1, scope: !9136, file: !9137, line: 2887, type: !9140)
+!9146 = !DILocalVariable(name: "f", arg: 2, scope: !9136, file: !9137, line: 2887, type: !1393)
+!9147 = !{!9145, !9146}
+!9148 = !DITemplateTypeParameter(name: "T", type: !9135)
+!9149 = !{!9148}
+!9150 = !DILocation(line: 0, scope: !9136)
+!9151 = !DILocation(line: 2887, column: 71, scope: !9136)
+!9152 = !DILocation(line: 2887, column: 62, scope: !9136)
+!9153 = !DILocation(line: 2887, column: 84, scope: !9136)
 end_hunk_1

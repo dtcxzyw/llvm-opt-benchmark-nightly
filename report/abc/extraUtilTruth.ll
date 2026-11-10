@@ -205,9 +205,9 @@ vector.ph:                                        ; preds = %.lr.ph96
   %i.ax = shufflevector <4 x i16> %i.aw, <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.ay = shufflevector <8 x i16> %i.aj, <8 x i16> poison, <4 x i32> <i32 4, i32 poison, i32 poison, i32 poison>
   %i.az = shufflevector <4 x i16> %i.ay, <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %3 = shufflevector <8 x i16> <i16 poison, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <8 x i16> %i.aj, <4 x i32> <i32 11, i32 1, i32 2, i32 3>
-  %4 = shufflevector <8 x i16> <i16 poison, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <8 x i16> %i.aj, <4 x i32> <i32 10, i32 1, i32 2, i32 3>
-  %5 = shufflevector <8 x i16> <i16 poison, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <8 x i16> %i.aj, <4 x i32> <i32 9, i32 1, i32 2, i32 3>
+  %3 = shufflevector <8 x i16> %i.aj, <8 x i16> <i16 poison, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <4 x i32> <i32 3, i32 9, i32 10, i32 11>
+  %4 = shufflevector <8 x i16> %i.aj, <8 x i16> <i16 poison, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <4 x i32> <i32 2, i32 9, i32 10, i32 11>
+  %5 = shufflevector <8 x i16> %i.aj, <8 x i16> <i16 poison, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <4 x i32> <i32 1, i32 9, i32 10, i32 11>
   %i.ba = shufflevector <8 x i16> %i.aj, <8 x i16> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.bb = shufflevector <4 x i16> %i.ba, <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %vector.body

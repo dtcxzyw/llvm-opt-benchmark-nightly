@@ -63,9 +63,9 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %wide.load = load <8 x i8>, ptr %i.t, align 1, !tbaa !8
   %wide.load41 = load <8 x i8>, ptr %i.u, align 1, !tbaa !8
-  %interleaved.vec = shufflevector <8 x i8> zeroinitializer, <8 x i8> %wide.load, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  %interleaved.vec = shufflevector <8 x i8> %wide.load, <8 x i8> zeroinitializer, <16 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 13, i32 5, i32 14, i32 6, i32 15, i32 7>
   store <16 x i8> %interleaved.vec, ptr %i.q, align 1, !tbaa !8
-  %interleaved.vec42 = shufflevector <8 x i8> zeroinitializer, <8 x i8> %wide.load41, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  %interleaved.vec42 = shufflevector <8 x i8> %wide.load41, <8 x i8> zeroinitializer, <16 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 13, i32 5, i32 14, i32 6, i32 15, i32 7>
   store <16 x i8> %interleaved.vec42, ptr %i.s, align 1, !tbaa !8
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
@@ -91,7 +91,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.y = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.x
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 %index44
   %wide.load45 = load <4 x i8>, ptr %i.z, align 1, !tbaa !8
-  %interleaved.vec46 = shufflevector <4 x i8> zeroinitializer, <4 x i8> %wide.load45, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec46 = shufflevector <4 x i8> %wide.load45, <4 x i8> zeroinitializer, <8 x i32> <i32 4, i32 0, i32 5, i32 1, i32 6, i32 2, i32 7, i32 3>
   store <8 x i8> %interleaved.vec46, ptr %i.y, align 1, !tbaa !8
   %index.next47 = add nuw i64 %index44, 4         ; 2 uses
   %i.aa = icmp eq i64 %index.next47, %n.vec43
@@ -428,9 +428,9 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %wide.load = load <8 x i8>, ptr %i.z, align 1, !tbaa !8
   %wide.load91 = load <8 x i8>, ptr %i.aa, align 1, !tbaa !8
-  %interleaved.vec = shufflevector <8 x i8> zeroinitializer, <8 x i8> %wide.load, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  %interleaved.vec = shufflevector <8 x i8> %wide.load, <8 x i8> zeroinitializer, <16 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 13, i32 5, i32 14, i32 6, i32 15, i32 7>
   store <16 x i8> %interleaved.vec, ptr %i.w, align 1, !tbaa !8
-  %interleaved.vec92 = shufflevector <8 x i8> zeroinitializer, <8 x i8> %wide.load91, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  %interleaved.vec92 = shufflevector <8 x i8> %wide.load91, <8 x i8> zeroinitializer, <16 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 13, i32 5, i32 14, i32 6, i32 15, i32 7>
   store <16 x i8> %interleaved.vec92, ptr %i.y, align 1, !tbaa !8
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
@@ -456,7 +456,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ae = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.ad
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %index94
   %wide.load95 = load <4 x i8>, ptr %i.af, align 1, !tbaa !8
-  %interleaved.vec96 = shufflevector <4 x i8> zeroinitializer, <4 x i8> %wide.load95, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec96 = shufflevector <4 x i8> %wide.load95, <4 x i8> zeroinitializer, <8 x i32> <i32 4, i32 0, i32 5, i32 1, i32 6, i32 2, i32 7, i32 3>
   store <8 x i8> %interleaved.vec96, ptr %i.ae, align 1, !tbaa !8
   %index.next97 = add nuw i64 %index94, 4         ; 2 uses
   %i.ag = icmp eq i64 %index.next97, %n.vec93
