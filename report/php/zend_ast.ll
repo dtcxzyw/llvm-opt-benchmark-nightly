@@ -202,17 +202,17 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.backedge
   %.02088 = phi ptr [ %.tr18232090, %.lr.ph ], [ %.0.be, %.backedge ] ; 169 uses
-  %i.b = load i16, ptr %.02088, align 8, !tbaa !70 ; 2 uses
+  %i.b = load i16, ptr %.02088, align 8, !tbaa !70
   switch i16 %i.b, label %bb.um [
     i16 64, label %bb.c
     i16 65, label %bb.d
     i16 66, label %bb.g
     i16 2, label %bb.n
     i16 1025, label %bb.tz
-    i16 68, label %4
-    i16 69, label %4
-    i16 72, label %4
-    i16 70, label %4
+    i16 1024, label %bb.tk
+    i16 1026, label %bb.tc
+    i16 1536, label %bb.sc
+    i16 773, label %bb.rt
     i16 71, label %bb.bw
     i16 128, label %.loopexit
     i16 131, label %.loopexit
@@ -310,10 +310,10 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
     i16 770, label %bb.qm
     i16 771, label %bb.qt
     i16 772, label %bb.rk
-    i16 773, label %bb.rt
-    i16 1536, label %bb.sc
-    i16 1026, label %bb.tc
-    i16 1024, label %bb.tk
+    i16 72, label %bb.q
+    i16 68, label %bb.u
+    i16 69, label %bb.u
+    i16 70, label %bb.u
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -471,11 +471,7 @@ smart_str_appendl.exit1376:                       ; preds = %bb.o, %bb.p
   store i64 %.1.i.i1375, ptr %i.bk, align 8, !tbaa !64
   br label %zend_ast_export_list_ex.exit
 
-4:                                                ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %5 = icmp eq i16 %i.b, 72
-  br i1 %5, label %bb.q, label %bb.u
-
-bb.q:                                             ; preds = %4
+bb.q:                                             ; preds = %bb.b
   %i.bl = getelementptr inbounds nuw i8, ptr %.02088, i64 2
   %i.bm = load i16, ptr %i.bl, align 2, !tbaa !76
   %i.bn = and i16 %i.bm, 1
@@ -512,7 +508,7 @@ smart_str_appendc_ex.exit1414:                    ; preds = %bb.s, %bb.t
   store i64 %.1.i.i1413, ptr %i.bx, align 8, !tbaa !64
   br label %bb.u
 
-bb.u:                                             ; preds = %smart_str_appendc_ex.exit1414, %bb.q, %4
+bb.u:                                             ; preds = %bb.b, %bb.b, %bb.b, %smart_str_appendc_ex.exit1414, %bb.q
   %i.by = getelementptr inbounds nuw i8, ptr %.02088, i64 32
   %i.bz = getelementptr inbounds nuw i8, ptr %.02088, i64 64
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !72 ; 2 uses
@@ -915,7 +911,7 @@ bb.gz:                                            ; preds = %smart_str_appendc_e
   tail call fastcc void @zend_ast_export_ex(ptr noundef %0, ptr noundef nonnull %i.abm, i32 noundef 0, i32 noundef %3)
   %.pre2634.a = load ptr, ptr %0, align 8, !tbaa !117 ; 2 uses
   %.not.i.i1515 = icmp eq ptr %.pre2634.a, null
-  br i1 %.not.i.i1515, label %bb.ha, label %.thread3377, !prof !121
+  br i1 %.not.i.i1515, label %bb.ha, label %.thread3377, !prof !199
 
 .thread3377:                                      ; preds = %smart_str_appendc_ex.exit1514, %bb.gz
   %i.abn = phi ptr [ %.pre2634.a, %bb.gz ], [ %i.abj, %smart_str_appendc_ex.exit1514 ] ; 2 uses
@@ -1096,7 +1092,7 @@ bb.hn:                                            ; preds = %bb.hh
   tail call fastcc void @zend_ast_export_ns_name(ptr noundef %0, ptr noundef nonnull %i.adg, i32 noundef %3)
   %.pr1805 = load ptr, ptr %0, align 8, !tbaa !117 ; 3 uses
   %.not.i.i1530 = icmp eq ptr %.pr1805, null
-  br i1 %.not.i.i1530, label %bb.hp, label %._crit_edge2622, !prof !122
+  br i1 %.not.i.i1530, label %bb.hp, label %._crit_edge2622, !prof !121
 
 ._crit_edge2622:                                  ; preds = %bb.hn
   %.phi.trans.insert2623 = getelementptr inbounds nuw i8, ptr %.pr1805, i64 16
@@ -1409,7 +1405,7 @@ bb.in:                                            ; preds = %bb.if
   tail call fastcc void @zend_ast_export_ns_name(ptr noundef %0, ptr noundef nonnull %i.ahj, i32 noundef %3)
   %.pr1808 = load ptr, ptr %0, align 8, !tbaa !117 ; 3 uses
   %.not.i1197 = icmp eq ptr %.pr1808, null
-  br i1 %.not.i1197, label %bb.io, label %..thread1809_crit_edge, !prof !121
+  br i1 %.not.i1197, label %bb.io, label %..thread1809_crit_edge, !prof !122
 
 ..thread1809_crit_edge:                           ; preds = %bb.in
   %.phi.trans.insert2604 = getelementptr inbounds nuw i8, ptr %.pr1808, i64 16
@@ -1611,7 +1607,7 @@ bb.jd:                                            ; preds = %bb.jc
   tail call fastcc void @zend_ast_export_attributes(ptr noundef %0, ptr noundef nonnull %i.ale, i32 noundef %3, i1 noundef zeroext false)
   %.pre2580.a = load ptr, ptr %0, align 8, !tbaa !117 ; 2 uses
   %.not.i1182 = icmp eq ptr %.pre2580.a, null
-  br i1 %.not.i1182, label %bb.je, label %.thread3379, !prof !199
+  br i1 %.not.i1182, label %bb.je, label %.thread3379, !prof !122
 
 .thread3379:                                      ; preds = %bb.jc, %bb.jd
   %i.alf = phi ptr [ %.pre2580.a, %bb.jd ], [ %i.akx, %bb.jc ] ; 2 uses
@@ -2014,7 +2010,7 @@ bb.tr:                                            ; preds = %bb.tq, %bb.tp
   tail call fastcc void @zend_ast_export_ex(ptr noundef %0, ptr noundef %i.cbn, i32 noundef 0, i32 noundef %3)
   %.pre2369 = load ptr, ptr %0, align 8, !tbaa !117 ; 2 uses
   %.not.i.i1715 = icmp eq ptr %.pre2369, null
-  br i1 %.not.i.i1715, label %bb.ts, label %.thread3381, !prof !199
+  br i1 %.not.i.i1715, label %bb.ts, label %.thread3381, !prof !122
 
 .thread3381:                                      ; preds = %smart_str_appendc_ex.exit1709, %bb.tr
   %i.cbo = phi ptr [ %.pre2369, %bb.tr ], [ %i.cbc, %smart_str_appendc_ex.exit1709 ] ; 2 uses
@@ -2068,7 +2064,7 @@ bb.tv:                                            ; preds = %bb.tu, %bb.tt
   tail call fastcc void @zend_ast_export_ex(ptr noundef %0, ptr noundef %i.cci, i32 noundef 0, i32 noundef %3)
   %.pre2372 = load ptr, ptr %0, align 8, !tbaa !117 ; 2 uses
   %.not.i917 = icmp eq ptr %.pre2372, null
-  br i1 %.not.i917, label %bb.tw, label %.thread3383, !prof !199
+  br i1 %.not.i917, label %bb.tw, label %.thread3383, !prof !122
 
 .thread3383:                                      ; preds = %smart_str_appendc_ex.exit1719, %bb.tv
   %i.ccj = phi ptr [ %.pre2372, %bb.tv ], [ %i.cbx, %smart_str_appendc_ex.exit1719 ] ; 2 uses
@@ -2471,7 +2467,7 @@ bb.ar:                                            ; preds = %bb.ab, %smart_str_a
 ._crit_edge:                                      ; preds = %bb.ar
   %.pre139 = load ptr, ptr %0, align 8, !tbaa !117 ; 2 uses
   %.not.i.i113 = icmp eq ptr %.pre139, null
-  br i1 %.not.i.i113, label %bb.as, label %._crit_edge.thread, !prof !121
+  br i1 %.not.i.i113, label %bb.as, label %._crit_edge.thread, !prof !122
 
 ._crit_edge.thread:                               ; preds = %smart_str_appendc_ex.exit, %._crit_edge
   %i.ff = phi ptr [ %.pre139, %._crit_edge ], [ %i.cj, %smart_str_appendc_ex.exit ] ; 2 uses
@@ -2869,7 +2865,7 @@ bb.af:                                            ; preds = %bb.y
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 16
   %i.dz = load i64, ptr %i.dy, align 8, !tbaa !64 ; 3 uses
   %.not.i.i.i40 = icmp eq ptr %.pr, null
-  br i1 %.not.i.i.i40, label %bb.ah, label %bb.ag, !prof !122
+  br i1 %.not.i.i.i40, label %bb.ah, label %bb.ag, !prof !121
 
 bb.ag:                                            ; preds = %.thread, %bb.af
   %i.ea = phi i64 [ %i.dv, %.thread ], [ %i.dz, %bb.af ] ; 3 uses
@@ -2985,7 +2981,7 @@ bb.ao:                                            ; preds = %smart_str_appendc_e
 zend_ast_export_attribute_group.exit:             ; preds = %bb.ao, %bb.t
   %.pre85 = load ptr, ptr %0, align 8, !tbaa !117 ; 2 uses
   %.not.i.i = icmp eq ptr %.pre85, null
-  br i1 %.not.i.i, label %bb.ap, label %zend_ast_export_attribute_group.exit.thread, !prof !121
+  br i1 %.not.i.i, label %bb.ap, label %zend_ast_export_attribute_group.exit.thread, !prof !122
 
 zend_ast_export_attribute_group.exit.thread:      ; preds = %smart_str_alloc.exit, %zend_ast_export_attribute_group.exit
   %i.fr = phi ptr [ %.pre85, %zend_ast_export_attribute_group.exit ], [ %i.p, %smart_str_alloc.exit ] ; 2 uses
@@ -3388,7 +3384,7 @@ bb.j:                                             ; preds = %bb.c
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !64 ; 3 uses
   %.not.i.i = icmp eq ptr %.pr, null
-  br i1 %.not.i.i, label %bb.l, label %bb.k, !prof !122
+  br i1 %.not.i.i, label %bb.l, label %bb.k, !prof !121
 
 bb.k:                                             ; preds = %.thread, %bb.j
   %i.aj = phi i64 [ %i.ae, %.thread ], [ %i.ai, %bb.j ] ; 3 uses
@@ -3791,8 +3787,8 @@ attributes #17 = { "function-inline-cost-multiplier"="2" }
 !118 = !{!116, !32, i64 8}
 !119 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
 !120 = !{!"llvm.loop.peeled.count", i32 1}
-!121 = !{!"branch_weights", !"expected", i32 1717128, i32 2145766520}
-!122 = !{!"branch_weights", !"expected", i32 3219615, i32 2144264033}
+!121 = !{!"branch_weights", !"expected", i32 3219615, i32 2144264033}
+!122 = !{!"branch_weights", !"expected", i32 1717128, i32 2145766520}
 !123 = !{ptr @zend_ast_export_name}
 !124 = !{!"branch_weights", !"expected", i32 2861879, i32 2144621769}
 !125 = !{!"branch_weights", !"expected", i32 2861880, i32 2144621768}

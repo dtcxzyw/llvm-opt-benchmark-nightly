@@ -202,11 +202,9 @@ bb.c:                                             ; preds = %bb.a
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex11__get_action(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, i64 noundef %2, i8 noundef range(i8 -1, 83) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
-  %.not = icmp eq i8 %3, -1
-  br i1 %.not, label %bb.b, label %bb.a
-
-bb.a:                                             ; preds = %4
+bb.a:
   switch i8 %3, label %default.unreachable [
+    i8 -1, label %bb.b
     i8 0, label %bb.d
     i8 1, label %bb.e
     i8 2, label %bb.f
@@ -292,7 +290,7 @@ bb.a:                                             ; preds = %4
     i8 82, label %bb.ch
   ]
 
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i64, ptr %i.a, align 8, !noundef !5
   %i.c = add i64 %i.b, 1

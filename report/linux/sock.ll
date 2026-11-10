@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
     i32 35, label %sock_flag.exit233
     i32 63, label %sock_flag.exit239
     i32 64, label %sock_flag.exit245
-    i32 37, label %9
-    i32 65, label %9
+    i32 74, label %bb.ck
+    i32 73, label %bb.cj
     i32 20, label %bb.s
     i32 66, label %bb.s
     i32 21, label %bb.y
@@ -246,8 +246,8 @@ bb.c:                                             ; preds = %bb.b
     i32 62, label %bb.cf
     i32 71, label %bb.cg
     i32 72, label %bb.ci
-    i32 73, label %bb.cj
-    i32 74, label %bb.ck
+    i32 37, label %bb.r
+    i32 65, label %sock_flag.exit251
   ]
 
 sock_flag.exit:                                   ; preds = %bb.c
@@ -475,18 +475,14 @@ bb.q:                                             ; preds = %sock_flag.exit248, 
   store i32 %i.dk, ptr %6, align 8
   br label %sock_get_timeout.exit
 
-9:                                                ; preds = %bb.c, %bb.c
-  %10 = icmp eq i32 %2, 37
-  br i1 %10, label %bb.r, label %sock_flag.exit251
-
-sock_flag.exit251:                                ; preds = %9
+sock_flag.exit251:                                ; preds = %bb.c
   %i.dl = getelementptr i8, ptr %0, i64 96
   %i.dm = load volatile i64, ptr %i.dl, align 8
   %i.dn = and i64 %i.dm, 67108864
   %.not352 = icmp eq i64 %i.dn, 0
   br i1 %.not352, label %sock_get_timeout.exit, label %bb.r
 
-bb.r:                                             ; preds = %9, %sock_flag.exit251
+bb.r:                                             ; preds = %bb.c, %sock_flag.exit251
   %i.do = getelementptr i8, ptr %0, i64 352
   %i.dp = load volatile i32, ptr %i.do, align 8
   store i32 %i.dp, ptr %6, align 8
@@ -889,7 +885,7 @@ bb.cm:                                            ; preds = %sk_is_tcp.exit
   store i32 %i.mt, ptr %6, align 8
   br label %sock_get_timeout.exit
 
-sock_get_timeout.exit:                            ; preds = %bb.cb, %.critedge.i255, %bb.ad, %bb.ac, %.critedge.i, %bb.x, %bb.w, %bb.bx, %bb.by, %sock_flag.exit251, %bb.r, %sock_error.exit, %sock_error.exit.thread, %bb.cm, %bb.cj, %bb.ci, %bb.ch, %bb.cf, %bb.ce, %sock_flag.exit299, %bb.cd, %bb.bz, %bb.bv, %bb.bu, %sock_flag.exit296, %bb.bt, %sock_flag.exit293, %sock_flag.exit290, %bb.bq, %sock_flag.exit287, %sock_flag.exit284, %sock_flag.exit281, %sock_flag.exit278, %bb.bo, %bb.bm, %bb.bk, %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ae, %bb.q, %bb.p, %bb.o, %bb.n, %sock_flag.exit221, %bb.m, %bb.l, %sock_flag.exit218, %bb.j, %bb.i, %bb.h, %sock_flag.exit215, %bb.g, %bb.f, %bb.e, %bb.d, %sock_flag.exit212, %sock_flag.exit209, %sock_flag.exit, %bb.c
+sock_get_timeout.exit:                            ; preds = %bb.cb, %.critedge.i255, %bb.ad, %bb.ac, %.critedge.i, %bb.x, %bb.w, %bb.c, %bb.bx, %bb.by, %sock_flag.exit251, %bb.r, %sock_error.exit, %sock_error.exit.thread, %bb.cm, %bb.cj, %bb.ci, %bb.ch, %bb.cf, %bb.ce, %sock_flag.exit299, %bb.cd, %bb.bz, %bb.bv, %bb.bu, %sock_flag.exit296, %bb.bt, %sock_flag.exit293, %sock_flag.exit290, %bb.bq, %sock_flag.exit287, %sock_flag.exit284, %sock_flag.exit281, %sock_flag.exit278, %bb.bo, %bb.bm, %bb.bk, %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ae, %bb.q, %bb.p, %bb.o, %bb.n, %sock_flag.exit221, %bb.m, %bb.l, %sock_flag.exit218, %bb.j, %bb.i, %bb.h, %sock_flag.exit215, %bb.g, %bb.f, %bb.e, %bb.d, %sock_flag.exit212, %sock_flag.exit209, %sock_flag.exit
   %.0170 = phi i32 [ 4, %sock_flag.exit ], [ 4, %sock_flag.exit209 ], [ 4, %sock_flag.exit212 ], [ 4, %bb.d ], [ 4, %bb.e ], [ 4, %bb.f ], [ 4, %bb.g ], [ 4, %sock_flag.exit215 ], [ 4, %bb.h ], [ 4, %bb.i ], [ 4, %bb.j ], [ 4, %sock_error.exit.thread ], [ 4, %sock_error.exit ], [ 4, %sock_flag.exit218 ], [ 4, %bb.l ], [ 4, %bb.m ], [ 8, %sock_flag.exit221 ], [ 4, %bb.c ], [ 4, %bb.n ], [ 4, %bb.o ], [ 4, %bb.p ], [ 4, %bb.q ], [ 8, %bb.r ], [ 8, %sock_flag.exit251 ], [ 16, %bb.ad ], [ 16, %.critedge.i ], [ 4, %bb.ae ], [ 4, %bb.af ], [ 4, %bb.ah ], [ 4, %bb.aj ], [ 4, %bb.al ], [ 4, %bb.bk ], [ 4, %bb.bm ], [ 4, %bb.bo ], [ 4, %sock_flag.exit278 ], [ 4, %sock_flag.exit281 ], [ 4, %sock_flag.exit284 ], [ 4, %sock_flag.exit287 ], [ 4, %bb.bq ], [ 4, %sock_flag.exit290 ], [ 4, %sock_flag.exit293 ], [ 4, %bb.bt ], [ 4, %sock_flag.exit296 ], [ 4, %bb.bu ], [ 4, %bb.bv ], [ 8, %bb.bx ], [ 4, %bb.by ], [ 4, %bb.bz ], [ 4, %bb.cb ], [ 16, %.critedge.i255 ], [ 8, %bb.cd ], [ 4, %sock_flag.exit299 ], [ 8, %bb.ce ], [ 4, %bb.cf ], [ 8, %bb.ch ], [ 4, %bb.ci ], [ 4, %bb.cj ], [ 4, %bb.cm ], [ 8, %bb.w ], [ 16, %bb.x ], [ 8, %bb.ac ] ; 3 uses
   %i.mu = load i32, ptr %i.a, align 4             ; 2 uses
   %i.mv = icmp sgt i32 %i.mu, %.0170

@@ -205,11 +205,11 @@ _ZN4llvm14SmallBitVectorC2ERKS0_.exit:            ; preds = %._crit_edge978, %_Z
   store ptr %i.qm, ptr %19, align 8, !tbaa !793
   %i.qn = getelementptr inbounds nuw i8, ptr %19, i64 8
   store ptr %0, ptr %i.qn, align 8, !tbaa !1378
-  %i.qo = load i32, ptr %i.i, align 4, !tbaa !380 ; 3 uses
+  %i.qo = load i32, ptr %i.i, align 4, !tbaa !380 ; 2 uses
   switch i32 %i.qo, label %bb.fr [
     i32 57, label %bb.be
-    i32 66, label %69
-    i32 63, label %69
+    i32 69, label %bb.fs
+    i32 65, label %bb.fm
     i32 67, label %bb.bu
     i32 64, label %bb.bu
     i32 40, label %bb.do
@@ -257,8 +257,8 @@ _ZN4llvm14SmallBitVectorC2ERKS0_.exit:            ; preds = %._crit_edge978, %_Z
     i32 33, label %bb.eu
     i32 34, label %bb.ey
     i32 58, label %bb.fl
-    i32 65, label %bb.fm
-    i32 69, label %bb.fs
+    i32 66, label %bb.bq
+    i32 63, label %bb.br
   ]
 
 bb.aw:                                            ; preds = %.lr.ph977, %_ZN4llvm14SmallBitVector3setEj.exit
@@ -661,17 +661,13 @@ bb.bp:                                            ; preds = %bb.bg, %_ZN4llvm11S
   %.not422 = icmp eq ptr %i.xn, %i.tz
   br i1 %.not422, label %._crit_edge1027, label %bb.bg
 
-69:                                               ; preds = %_ZN4llvm14SmallBitVectorC2ERKS0_.exit, %_ZN4llvm14SmallBitVectorC2ERKS0_.exit
-  %70 = icmp eq i32 %i.qo, 66
-  br i1 %70, label %bb.bq, label %bb.br
-
-bb.bq:                                            ; preds = %69
+bb.bq:                                            ; preds = %_ZN4llvm14SmallBitVectorC2ERKS0_.exit
   %i.xo = getelementptr inbounds nuw i8, ptr %i.pu, i64 248
   %i.xp = load i32, ptr %i.xo, align 8, !tbaa !371
   %.not.i485 = icmp eq i32 %i.xp, 0
   br i1 %.not.i485, label %bb.br, label %bb.fs
 
-bb.br:                                            ; preds = %bb.bq, %69
+bb.br:                                            ; preds = %_ZN4llvm14SmallBitVectorC2ERKS0_.exit, %bb.bq
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #31
   %i.xq = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   store i32 1, ptr %i.xq, align 8, !tbaa !765
@@ -1074,7 +1070,7 @@ _ZL12getValueTypePN4llvm5ValueEb.exit596:         ; preds = %.thread36.i595, %.s
   store ptr %i.atj, ptr %i.e, align 8, !tbaa !653
   br label %bb.ej
 
-bb.ej:                                            ; preds = %_ZL12getValueTypePN4llvm5ValueEb.exit596, %_ZN4llvm14SmallBitVectorC2ERKS0_.exit
+bb.ej:                                            ; preds = %_ZN4llvm14SmallBitVectorC2ERKS0_.exit, %_ZL12getValueTypePN4llvm5ValueEb.exit596
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #31
   store i32 42, ptr %40, align 8, !tbaa !1399
   %i.atk = getelementptr inbounds nuw i8, ptr %40, i64 4 ; 2 uses

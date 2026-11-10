@@ -38,80 +38,79 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %nlmsg_perm.exit.sink.split, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
-  switch i16 %1, label %.lr.ph.i.64 [
-    i16 16, label %bb.c
-    i16 17, label %.fold.split
-    i16 18, label %.fold.split65
-    i16 19, label %.fold.split66
-    i16 20, label %.fold.split67
-    i16 21, label %.fold.split68
-    i16 22, label %.fold.split69
-    i16 24, label %.fold.split70
-    i16 25, label %.fold.split71
-    i16 26, label %.fold.split72
-    i16 28, label %.fold.split73
-    i16 29, label %.fold.split74
-    i16 30, label %.fold.split75
-    i16 32, label %.fold.split76
-    i16 33, label %.fold.split77
-    i16 34, label %.fold.split78
-    i16 36, label %.fold.split79
-    i16 37, label %.fold.split80
-    i16 38, label %.fold.split81
-    i16 40, label %.fold.split82
-    i16 41, label %.fold.split83
-    i16 42, label %.fold.split84
-    i16 44, label %.fold.split85
-    i16 45, label %.fold.split86
-    i16 46, label %.fold.split87
-    i16 48, label %.fold.split88
-    i16 49, label %.fold.split89
-    i16 50, label %.fold.split90
-    i16 52, label %.fold.split91
-    i16 58, label %.fold.split92
-    i16 62, label %.fold.split93
-    i16 66, label %.fold.split94
-    i16 67, label %.fold.split95
-    i16 72, label %.fold.split96
-    i16 73, label %.fold.split97
-    i16 74, label %.fold.split98
-    i16 78, label %.fold.split99
-    i16 79, label %.fold.split100
-    i16 80, label %.fold.split101
-    i16 81, label %.fold.split102
-    i16 82, label %.fold.split103
-    i16 84, label %.fold.split104
-    i16 85, label %.fold.split105
-    i16 86, label %.fold.split106
-    i16 88, label %.fold.split107
-    i16 89, label %.fold.split108
-    i16 90, label %.fold.split109
-    i16 92, label %.fold.split110
-    i16 94, label %.fold.split111
-    i16 95, label %.fold.split112
-    i16 96, label %.fold.split113
-    i16 100, label %.fold.split114
-    i16 101, label %.fold.split115
-    i16 102, label %.fold.split116
-    i16 104, label %.fold.split117
-    i16 105, label %.fold.split118
-    i16 106, label %.fold.split119
-    i16 108, label %.fold.split120
-    i16 109, label %.fold.split121
-    i16 112, label %.fold.split122
-    i16 113, label %.fold.split123
-    i16 114, label %.fold.split124
-    i16 116, label %.fold.split125
-    i16 117, label %.fold.split126
-  ]
-
-.lr.ph.i.64:                                      ; preds = %.lr.ph.i.preheader
   switch i16 %1, label %nlmsg_perm.exit [
-    i16 118, label %bb.c
+    i16 16, label %bb.c
+    i16 17, label %.lr.ph.i.64
+    i16 18, label %.fold.split
+    i16 19, label %.fold.split65
+    i16 20, label %.fold.split66
+    i16 21, label %.fold.split67
+    i16 22, label %.fold.split68
+    i16 24, label %.fold.split69
+    i16 25, label %.fold.split70
+    i16 26, label %.fold.split71
+    i16 28, label %.fold.split72
+    i16 29, label %.fold.split73
+    i16 30, label %.fold.split74
+    i16 32, label %.fold.split75
+    i16 33, label %.fold.split76
+    i16 34, label %.fold.split77
+    i16 36, label %.fold.split78
+    i16 37, label %.fold.split79
+    i16 38, label %.fold.split80
+    i16 40, label %.fold.split81
+    i16 41, label %.fold.split82
+    i16 42, label %.fold.split83
+    i16 44, label %.fold.split84
+    i16 45, label %.fold.split85
+    i16 46, label %.fold.split86
+    i16 48, label %.fold.split87
+    i16 49, label %.fold.split88
+    i16 50, label %.fold.split89
+    i16 52, label %.fold.split90
+    i16 58, label %.fold.split91
+    i16 62, label %.fold.split92
+    i16 66, label %.fold.split93
+    i16 67, label %.fold.split94
+    i16 72, label %.fold.split95
+    i16 73, label %.fold.split96
+    i16 74, label %.fold.split97
+    i16 78, label %.fold.split98
+    i16 79, label %.fold.split99
+    i16 80, label %.fold.split100
+    i16 81, label %.fold.split101
+    i16 82, label %.fold.split102
+    i16 84, label %.fold.split103
+    i16 85, label %.fold.split104
+    i16 86, label %.fold.split105
+    i16 88, label %.fold.split106
+    i16 89, label %.fold.split107
+    i16 90, label %.fold.split108
+    i16 92, label %.fold.split109
+    i16 94, label %.fold.split110
+    i16 95, label %.fold.split111
+    i16 96, label %.fold.split112
+    i16 100, label %.fold.split113
+    i16 101, label %.fold.split114
+    i16 102, label %.fold.split115
+    i16 104, label %.fold.split116
+    i16 105, label %.fold.split117
+    i16 106, label %.fold.split118
+    i16 108, label %.fold.split119
+    i16 109, label %.fold.split120
+    i16 112, label %.fold.split121
+    i16 113, label %.fold.split122
+    i16 114, label %.fold.split123
+    i16 116, label %.fold.split124
+    i16 117, label %.fold.split125
+    i16 118, label %.fold.split126
     i16 120, label %.fold.split127
     i16 121, label %.fold.split128
     i16 122, label %.fold.split129
   ]
+
+.lr.ph.i.64:                                      ; preds = %.lr.ph.i.preheader
+  br label %bb.c
 
 .fold.split:                                      ; preds = %.lr.ph.i.preheader
   br label %bb.c
@@ -302,17 +301,17 @@ bb.b:                                             ; preds = %bb.a
 .fold.split126:                                   ; preds = %.lr.ph.i.preheader
   br label %bb.c
 
-.fold.split127:                                   ; preds = %.lr.ph.i.64
+.fold.split127:                                   ; preds = %.lr.ph.i.preheader
   br label %bb.c
 
-.fold.split128:                                   ; preds = %.lr.ph.i.64
+.fold.split128:                                   ; preds = %.lr.ph.i.preheader
   br label %bb.c
 
-.fold.split129:                                   ; preds = %.lr.ph.i.64
+.fold.split129:                                   ; preds = %.lr.ph.i.preheader
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph.i.64, %.fold.split129, %.fold.split128, %.fold.split127, %.lr.ph.i.preheader, %.fold.split126, %.fold.split125, %.fold.split124, %.fold.split123, %.fold.split122, %.fold.split121, %.fold.split120, %.fold.split119, %.fold.split118, %.fold.split117, %.fold.split116, %.fold.split115, %.fold.split114, %.fold.split113, %.fold.split112, %.fold.split111, %.fold.split110, %.fold.split109, %.fold.split108, %.fold.split107, %.fold.split106, %.fold.split105, %.fold.split104, %.fold.split103, %.fold.split102, %.fold.split101, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split97, %.fold.split96, %.fold.split95, %.fold.split94, %.fold.split93, %.fold.split92, %.fold.split91, %.fold.split90, %.fold.split89, %.fold.split88, %.fold.split87, %.fold.split86, %.fold.split85, %.fold.split84, %.fold.split83, %.fold.split82, %.fold.split81, %.fold.split80, %.fold.split79, %.fold.split78, %.fold.split77, %.fold.split76, %.fold.split75, %.fold.split74, %.fold.split73, %.fold.split72, %.fold.split71, %.fold.split70, %.fold.split69, %.fold.split68, %.fold.split67, %.fold.split66, %.fold.split65, %.fold.split
-  %.lcssa = phi i64 [ 0, %.lr.ph.i.preheader ], [ 66, %.fold.split128 ], [ 1, %.fold.split ], [ 2, %.fold.split65 ], [ 3, %.fold.split66 ], [ 4, %.fold.split67 ], [ 5, %.fold.split68 ], [ 6, %.fold.split69 ], [ 7, %.fold.split70 ], [ 8, %.fold.split71 ], [ 9, %.fold.split72 ], [ 10, %.fold.split73 ], [ 11, %.fold.split74 ], [ 12, %.fold.split75 ], [ 13, %.fold.split76 ], [ 14, %.fold.split77 ], [ 15, %.fold.split78 ], [ 16, %.fold.split79 ], [ 17, %.fold.split80 ], [ 18, %.fold.split81 ], [ 19, %.fold.split82 ], [ 20, %.fold.split83 ], [ 21, %.fold.split84 ], [ 22, %.fold.split85 ], [ 23, %.fold.split86 ], [ 24, %.fold.split87 ], [ 25, %.fold.split88 ], [ 26, %.fold.split89 ], [ 27, %.fold.split90 ], [ 28, %.fold.split91 ], [ 29, %.fold.split92 ], [ 30, %.fold.split93 ], [ 31, %.fold.split94 ], [ 32, %.fold.split95 ], [ 33, %.fold.split96 ], [ 34, %.fold.split97 ], [ 35, %.fold.split98 ], [ 36, %.fold.split99 ], [ 37, %.fold.split100 ], [ 38, %.fold.split101 ], [ 39, %.fold.split102 ], [ 40, %.fold.split103 ], [ 41, %.fold.split104 ], [ 42, %.fold.split105 ], [ 43, %.fold.split106 ], [ 44, %.fold.split107 ], [ 45, %.fold.split108 ], [ 46, %.fold.split109 ], [ 47, %.fold.split110 ], [ 48, %.fold.split111 ], [ 49, %.fold.split112 ], [ 50, %.fold.split113 ], [ 51, %.fold.split114 ], [ 52, %.fold.split115 ], [ 53, %.fold.split116 ], [ 54, %.fold.split117 ], [ 55, %.fold.split118 ], [ 56, %.fold.split119 ], [ 57, %.fold.split120 ], [ 58, %.fold.split121 ], [ 59, %.fold.split122 ], [ 60, %.fold.split123 ], [ 61, %.fold.split124 ], [ 62, %.fold.split125 ], [ 64, %.lr.ph.i.64 ], [ 63, %.fold.split126 ], [ 65, %.fold.split127 ], [ 67, %.fold.split129 ]
+bb.c:                                             ; preds = %.lr.ph.i.preheader, %.fold.split129, %.fold.split128, %.fold.split127, %.fold.split126, %.fold.split125, %.fold.split124, %.fold.split123, %.fold.split122, %.fold.split121, %.fold.split120, %.fold.split119, %.fold.split118, %.fold.split117, %.fold.split116, %.fold.split115, %.fold.split114, %.fold.split113, %.fold.split112, %.fold.split111, %.fold.split110, %.fold.split109, %.fold.split108, %.fold.split107, %.fold.split106, %.fold.split105, %.fold.split104, %.fold.split103, %.fold.split102, %.fold.split101, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split97, %.fold.split96, %.fold.split95, %.fold.split94, %.fold.split93, %.fold.split92, %.fold.split91, %.fold.split90, %.fold.split89, %.fold.split88, %.fold.split87, %.fold.split86, %.fold.split85, %.fold.split84, %.fold.split83, %.fold.split82, %.fold.split81, %.fold.split80, %.fold.split79, %.fold.split78, %.fold.split77, %.fold.split76, %.fold.split75, %.fold.split74, %.fold.split73, %.fold.split72, %.fold.split71, %.fold.split70, %.fold.split69, %.fold.split68, %.fold.split67, %.fold.split66, %.fold.split65, %.fold.split, %.lr.ph.i.64
+  %.lcssa = phi i64 [ 0, %.lr.ph.i.preheader ], [ 66, %.fold.split128 ], [ 1, %.lr.ph.i.64 ], [ 2, %.fold.split ], [ 3, %.fold.split65 ], [ 4, %.fold.split66 ], [ 5, %.fold.split67 ], [ 6, %.fold.split68 ], [ 7, %.fold.split69 ], [ 8, %.fold.split70 ], [ 9, %.fold.split71 ], [ 10, %.fold.split72 ], [ 11, %.fold.split73 ], [ 12, %.fold.split74 ], [ 13, %.fold.split75 ], [ 14, %.fold.split76 ], [ 15, %.fold.split77 ], [ 16, %.fold.split78 ], [ 17, %.fold.split79 ], [ 18, %.fold.split80 ], [ 19, %.fold.split81 ], [ 20, %.fold.split82 ], [ 21, %.fold.split83 ], [ 22, %.fold.split84 ], [ 23, %.fold.split85 ], [ 24, %.fold.split86 ], [ 25, %.fold.split87 ], [ 26, %.fold.split88 ], [ 27, %.fold.split89 ], [ 28, %.fold.split90 ], [ 29, %.fold.split91 ], [ 30, %.fold.split92 ], [ 31, %.fold.split93 ], [ 32, %.fold.split94 ], [ 33, %.fold.split95 ], [ 34, %.fold.split96 ], [ 35, %.fold.split97 ], [ 36, %.fold.split98 ], [ 37, %.fold.split99 ], [ 38, %.fold.split100 ], [ 39, %.fold.split101 ], [ 40, %.fold.split102 ], [ 41, %.fold.split103 ], [ 42, %.fold.split104 ], [ 43, %.fold.split105 ], [ 44, %.fold.split106 ], [ 45, %.fold.split107 ], [ 46, %.fold.split108 ], [ 47, %.fold.split109 ], [ 48, %.fold.split110 ], [ 49, %.fold.split111 ], [ 50, %.fold.split112 ], [ 51, %.fold.split113 ], [ 52, %.fold.split114 ], [ 53, %.fold.split115 ], [ 54, %.fold.split116 ], [ 55, %.fold.split117 ], [ 56, %.fold.split118 ], [ 57, %.fold.split119 ], [ 58, %.fold.split120 ], [ 59, %.fold.split121 ], [ 60, %.fold.split122 ], [ 61, %.fold.split123 ], [ 62, %.fold.split124 ], [ 63, %.fold.split125 ], [ 64, %.fold.split126 ], [ 65, %.fold.split127 ], [ 67, %.fold.split129 ]
   %i.c = getelementptr [8 x i8], ptr @nlmsg_route_perms, i64 %.lcssa
   br label %nlmsg_perm.exit.sink.split.sink.split
 
@@ -448,8 +447,8 @@ nlmsg_perm.exit.sink.split:                       ; preds = %nlmsg_perm.exit.sin
   store i32 %.sink, ptr %2, align 4
   br label %nlmsg_perm.exit
 
-nlmsg_perm.exit:                                  ; preds = %.lr.ph.i28.preheader, %nlmsg_perm.exit.sink.split, %.lr.ph.i32.preheader, %.lr.ph.i24.preheader, %.lr.ph.i.64, %bb.a
-  %.0 = phi i32 [ -22, %.lr.ph.i24.preheader ], [ -22, %.lr.ph.i32.preheader ], [ -2, %bb.a ], [ -22, %.lr.ph.i.64 ], [ -22, %.lr.ph.i28.preheader ], [ 0, %nlmsg_perm.exit.sink.split ]
+nlmsg_perm.exit:                                  ; preds = %.lr.ph.i28.preheader, %nlmsg_perm.exit.sink.split, %.lr.ph.i32.preheader, %.lr.ph.i24.preheader, %.lr.ph.i.preheader, %bb.a
+  %.0 = phi i32 [ -22, %.lr.ph.i24.preheader ], [ -22, %.lr.ph.i32.preheader ], [ -2, %bb.a ], [ -22, %.lr.ph.i.preheader ], [ -22, %.lr.ph.i28.preheader ], [ 0, %nlmsg_perm.exit.sink.split ]
   ret i32 %.0
 }
 

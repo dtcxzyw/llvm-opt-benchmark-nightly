@@ -204,7 +204,7 @@ bb.a:
   %i.h = and i16 %i.e, 255
   %narrow = select i1 %or.cond, i16 %i.h, i16 0   ; 2 uses
   %.01195 = zext nneg i16 %narrow to i32          ; 3 uses
-  %.01189 = select i1 %or.cond, i16 %i.g, i16 %i.e ; 23 uses
+  %.01189 = select i1 %or.cond, i16 %i.g, i16 %i.e ; 22 uses
   %i.i = zext i16 %.01189 to i32                  ; 12 uses
   switch i16 %.01189, label %bb.b [
     i16 30729, label %.thread
@@ -553,9 +553,9 @@ bb.ai:                                            ; preds = %bb.h, %.thread1276
   %switch1221 = icmp ult i8 %i.fi, -3
   %or.cond1222.not = and i1 %.011731340, %switch1221
   %i.fj = getelementptr i8, ptr %1, i64 416       ; 17 uses
-  %i.fk = icmp eq i16 %.01189, 31234
-  %.not = icmp eq i16 %narrow, 0
-  %i.fl = icmp eq i16 %.01189, 13057
+  %i.fk = icmp eq i16 %narrow, 0
+  %.not = icmp eq i16 %.01189, 13057
+  %i.fl = icmp eq i16 %.01189, 31234
   %i.fm = icmp ne i16 %.01189, 515
   %i.fn = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.fo = icmp eq i16 %.01189, 20481
@@ -958,10 +958,10 @@ bb.cg:                                            ; preds = %bb.bq
     i16 11014, label %bb.da
     i16 11015, label %bb.da
     i16 11016, label %bb.da
-    i16 10497, label %9
-    i16 10498, label %9
-    i16 10499, label %9
-    i16 10500, label %9
+    i16 31234, label %bb.fu
+    i16 31233, label %bb.fu
+    i16 30977, label %bb.fu
+    i16 30733, label %bb.ft
     i16 5121, label %bb.do
     i16 5122, label %bb.do
     i16 5123, label %bb.do
@@ -1065,10 +1065,10 @@ bb.cg:                                            ; preds = %bb.bq
     i16 30735, label %bb.fq
     i16 30731, label %bb.fr
     i16 30732, label %bb.fs
-    i16 30733, label %bb.ft
-    i16 30977, label %bb.fu
-    i16 31233, label %bb.fu
-    i16 31234, label %bb.fu
+    i16 10497, label %bb.dj
+    i16 10498, label %bb.dk
+    i16 10499, label %bb.dl
+    i16 10500, label %bb.dm
   ]
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cg, %bb.cg, %bb.cg
@@ -1448,42 +1448,31 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   call void @proto_item_set_len(ptr noundef %i.rg, i32 noundef %i.rh)
   br label %bb.fx
 
-9:                                                ; preds = %bb.cg, %bb.cg, %bb.cg, %bb.cg
-  switch i16 %.01189, label %default.unreachable [
-    i16 10497, label %bb.dj
-    i16 10498, label %bb.dk
-    i16 10499, label %bb.dl
-    i16 10500, label %bb.dm
-  ]
-
-bb.dj:                                            ; preds = %9
+bb.dj:                                            ; preds = %bb.cg
   %i.ri = call i32 @tvb_get_letohl(ptr noundef nonnull %0, i32 noundef %i.hn)
   %i.rj = load ptr, ptr %i.b, align 8
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.rj, ptr noundef @.str.947, i32 noundef %i.ri)
   br label %bb.dn
 
-bb.dk:                                            ; preds = %9
+bb.dk:                                            ; preds = %bb.cg
   %i.rk = call zeroext i16 @tvb_get_letohs(ptr noundef nonnull %0, i32 noundef %i.hn)
   %i.rl = load ptr, ptr %i.b, align 8
   %i.rm = sext i16 %i.rk to i32
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.rl, ptr noundef @.str.947, i32 noundef %i.rm)
   br label %bb.dn
 
-bb.dl:                                            ; preds = %9
+bb.dl:                                            ; preds = %bb.cg
   %i.rn = call float @tvb_get_letohieee_float(ptr noundef nonnull %0, i32 noundef %i.hn)
   %i.ro = load ptr, ptr %i.b, align 8
   %i.rp = fpext float %i.rn to double
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.ro, ptr noundef @.str.948, double noundef %i.rp)
   br label %bb.dn
 
-bb.dm:                                            ; preds = %9
+bb.dm:                                            ; preds = %bb.cg
   %i.rq = call double @tvb_get_letohieee_double(ptr noundef nonnull %0, i32 noundef %i.hn)
   %i.rr = load ptr, ptr %i.b, align 8
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.rr, ptr noundef @.str.948, double noundef %i.rq)
   br label %bb.dn
-
-default.unreachable:                              ; preds = %9
-  unreachable
 
 bb.dn:                                            ; preds = %bb.dm, %bb.dl, %bb.dk, %bb.dj
   %hf_dnp3_al_anaoutdbl.sink = phi ptr [ @hf_dnp3_al_anaoutdbl, %bb.dm ], [ @hf_dnp3_al_anaoutflt, %bb.dl ], [ @hf_dnp3_al_anaout16, %bb.dk ], [ @hf_dnp3_al_anaout32, %bb.dj ]
@@ -1835,7 +1824,7 @@ bb.eo:                                            ; preds = %bb.cg, %bb.cg, %bb.
   %i.uy = load ptr, ptr %i.b, align 8
   %i.uz = sub i32 %i.ux, %.011721313
   call void @proto_item_set_len(ptr noundef %i.uy, i32 noundef %i.uz)
-  br i1 %i.fl, label %bb.ep, label %bb.fx
+  br i1 %.not, label %bb.ep, label %bb.fx
 
 bb.ep:                                            ; preds = %bb.eo
   call void @nstime_copy(ptr noundef %6, ptr noundef nonnull %8)
@@ -2019,7 +2008,7 @@ bb.ff:                                            ; preds = %bb.fe, %bb.fd
   br label %bb.fx
 
 bb.fg:                                            ; preds = %bb.cg, %bb.cg
-  br i1 %.not, label %bb.fx, label %bb.fh
+  br i1 %i.fk, label %bb.fx, label %bb.fh
 
 bb.fh:                                            ; preds = %bb.fg
   %i.zj = load i32, ptr @hf_dnp3_al_octet_string, align 4
@@ -2235,7 +2224,7 @@ bb.fu:                                            ; preds = %bb.cg, %bb.cg, %bb.
   %i.afl = load i32, ptr @hf_dnp3_al_cnt32, align 4
   %i.afm = call ptr @proto_tree_add_item(ptr noundef %i.fq, i32 noundef %i.afl, ptr noundef nonnull %0, i32 noundef %i.afi, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
   %i.afn = add i32 %i.hn, 7                       ; 2 uses
-  br i1 %i.fk, label %bb.fv, label %bb.fx
+  br i1 %i.fl, label %bb.fv, label %bb.fx
 
 bb.fv:                                            ; preds = %bb.fu
   %i.afo = load i32, ptr @hf_dnp3_al_timestamp, align 4

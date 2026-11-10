@@ -205,8 +205,8 @@ _ZN4llvh6TripleC2ERKS0_.exit:                     ; preds = %._crit_edge.i.i.i, 
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false)
-  %i.q = load i32, ptr %i.p, align 8, !tbaa !168  ; 2 uses
-  switch i32 %i.q, label %_ZNK4llvh6Triple14isLittleEndianEv.exit [
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !168
+  switch i32 %i.q, label %bb.m [
     i32 3, label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
     i32 20, label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
     i32 39, label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
@@ -243,10 +243,6 @@ _ZN4llvh6TripleC2ERKS0_.exit:                     ; preds = %._crit_edge.i.i.i, 
     i32 28, label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
     i32 49, label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
     i32 50, label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
-  ]
-
-_ZNK4llvh6Triple14isLittleEndianEv.exit:          ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
-  switch i32 %i.q, label %bb.m [
     i32 0, label %bb.e
     i32 46, label %bb.e
     i32 16, label %bb.e
@@ -263,39 +259,39 @@ _ZNK4llvh6Triple14isLittleEndianEv.exit:          ; preds = %_ZN4llvh6TripleC2ER
     i32 23, label %bb.l
   ]
 
-bb.e:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit, %_ZNK4llvh6Triple14isLittleEndianEv.exit, %_ZNK4llvh6Triple14isLittleEndianEv.exit, %_ZNK4llvh6Triple14isLittleEndianEv.exit, %_ZNK4llvh6Triple14isLittleEndianEv.exit, %_ZNK4llvh6Triple14isLittleEndianEv.exit, %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.e:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str, i64 7)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.f:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.f:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.28, i64 5)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.g:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.g:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.1, i64 7)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.h:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.h:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.7, i64 5)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.i:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.i:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.13, i64 8)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.j:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.j:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.11, i64 6)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.k:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.k:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.17, i64 11)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.l:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.l:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull @.str.25, i64 7)
   br label %_ZNK4llvh6Triple14isLittleEndianEv.exit.thread
 
-bb.m:                                             ; preds = %_ZNK4llvh6Triple14isLittleEndianEv.exit
+bb.m:                                             ; preds = %_ZN4llvh6TripleC2ERKS0_.exit
   unreachable
 
 _ZNK4llvh6Triple14isLittleEndianEv.exit.thread:   ; preds = %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %_ZN4llvh6TripleC2ERKS0_.exit, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e

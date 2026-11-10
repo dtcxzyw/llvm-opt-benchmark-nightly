@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.y, label %bb.f, label %bb.cs
 
 bb.f:                                             ; preds = %bb.e
-  %i.z = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %6) ; 5 uses
+  %i.z = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %6) ; 4 uses
   %i.aa = load i32, ptr @hf_s7comm_userdata_szl_id, align 4
   %i.ab = load i32, ptr @ett_s7comm_userdata_szl_id, align 4
   %i.ac = tail call ptr @proto_tree_add_bitmask(ptr noundef %2, ptr noundef %0, i32 noundef %6, i32 noundef %i.aa, i32 noundef %i.ab, ptr noundef @s7comm_userdata_szl_id_fields, i32 noundef 0) ; 0 uses
@@ -262,9 +262,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.bh, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
-  %7 = icmp eq i16 %i.ae, 0                       ; 2 uses
   %i.bi = add nsw i32 %i.aj, -148                 ; 2 uses
   %i.bj = tail call i32 @llvm.fshl.i32(i32 %i.bi, i32 %i.bi, i32 24) ; 2 uses
+  %7 = icmp eq i16 %i.ae, 0                       ; 2 uses
   %i.bk = getelementptr i8, ptr %1, i64 416
   %i.bl = icmp ult i32 %i.bj, 8
   %i.bm = zext nneg i32 %i.bj to i64
@@ -331,25 +331,25 @@ bb.k:                                             ; preds = %.lr.ph, %.thread
     i16 19601, label %bb.bs
     i16 3473, label %bb.bs
     i16 3729, label %bb.bs
-    i16 146, label %8
-    i16 402, label %8
-    i16 658, label %8
-    i16 914, label %8
-    i16 1170, label %8
-    i16 1426, label %8
-    i16 1682, label %8
-    i16 16530, label %8
-    i16 17042, label %8
-    i16 18066, label %8
-    i16 148, label %bb.cc
-    i16 404, label %bb.cc
-    i16 660, label %bb.cc
-    i16 1684, label %bb.cc
-    i16 1940, label %bb.cc
-    i16 1686, label %bb.co
-    i16 3222, label %bb.co
-    i16 292, label %bb.cp
     i16 1060, label %bb.cp
+    i16 292, label %bb.cp
+    i16 3222, label %bb.co
+    i16 1686, label %bb.co
+    i16 1940, label %bb.cc
+    i16 1684, label %bb.cc
+    i16 660, label %bb.cc
+    i16 404, label %bb.cc
+    i16 148, label %bb.cc
+    i16 146, label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
+    i16 16530, label %bb.bv
+    i16 402, label %bb.bw
+    i16 658, label %bb.bx
+    i16 1170, label %bb.by
+    i16 1682, label %bb.bz
+    i16 18066, label %bb.ca
+    i16 914, label %bb.cb
+    i16 1426, label %bb.cb
+    i16 17042, label %bb.cb
   ]
 
 s7comm_decode_szl_id_xy00.exit:                   ; preds = %bb.k
@@ -752,40 +752,29 @@ s7comm_decode_szl_id_xy91_idx_0000.exit:          ; preds = %bb.bs, %bb.bs, %bb.
   %i.tu = add i32 %.0219239, 16
   br label %.thread
 
-8:                                                ; preds = %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k, %bb.k
-  switch i16 %i.z, label %bb.cb [
-    i16 146, label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
-    i16 16530, label %bb.bv
-    i16 402, label %bb.bw
-    i16 658, label %bb.bx
-    i16 1170, label %bb.by
-    i16 1682, label %bb.bz
-    i16 18066, label %bb.ca
-  ]
-
-bb.bv:                                            ; preds = %8
+bb.bv:                                            ; preds = %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-bb.bw:                                            ; preds = %8
+bb.bw:                                            ; preds = %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-bb.bx:                                            ; preds = %8
+bb.bx:                                            ; preds = %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-bb.by:                                            ; preds = %8
+bb.by:                                            ; preds = %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-bb.bz:                                            ; preds = %8
+bb.bz:                                            ; preds = %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-bb.ca:                                            ; preds = %8
+bb.ca:                                            ; preds = %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-bb.cb:                                            ; preds = %8
+bb.cb:                                            ; preds = %bb.k, %bb.k, %bb.k
   br label %s7comm_decode_szl_id_xy92_idx_xxxx.exit
 
-s7comm_decode_szl_id_xy92_idx_xxxx.exit:          ; preds = %8, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb
-  %.0.i231 = phi ptr [ @.str.2790, %bb.cb ], [ @.str.2789, %bb.ca ], [ @.str.2784, %bb.bv ], [ @.str.2785, %bb.bw ], [ @.str.2786, %bb.bx ], [ @.str.2787, %bb.by ], [ @.str.2788, %bb.bz ], [ @.str.2783, %8 ] ; 16 uses
+s7comm_decode_szl_id_xy92_idx_xxxx.exit:          ; preds = %bb.k, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb
+  %.0.i231 = phi ptr [ @.str.2790, %bb.cb ], [ @.str.2789, %bb.ca ], [ @.str.2784, %bb.bv ], [ @.str.2785, %bb.bw ], [ @.str.2786, %bb.bx ], [ @.str.2787, %bb.by ], [ @.str.2788, %bb.bz ], [ @.str.2783, %bb.k ] ; 16 uses
   %i.tv = load i32, ptr @hf_s7comm_szl_0092_0xxx_status_0, align 4
   %i.tw = call fastcc i32 @add_station_byte_with_bitinfo(ptr noundef %0, ptr noundef %i.br, i32 noundef %i.tv, ptr noundef nonnull %.0.i231, i32 noundef 1, i32 noundef %.0219239)
   %i.tx = load i32, ptr @hf_s7comm_szl_0092_0xxx_status_1, align 4
@@ -1053,7 +1042,7 @@ bb.cq:                                            ; preds = %bb.cp
   %i.zz = add i32 %.0219239, 20
   br label %.thread
 
-bb.cr:                                            ; preds = %bb.m, %bb.af, %bb.aq, %bb.cp, %bb.k
+bb.cr:                                            ; preds = %bb.k, %bb.m, %bb.af, %bb.aq, %bb.cp
   %i.aaa = load i32, ptr @hf_s7comm_userdata_szl_partial_list, align 4
   %i.aab = call ptr @proto_tree_add_item(ptr noundef %i.br, i32 noundef %i.aaa, ptr noundef %0, i32 noundef %.0219239, i32 noundef %i.ap, i32 noundef 0) ; 0 uses
   %i.aac = add i32 %.0219239, %i.ap

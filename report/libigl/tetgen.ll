@@ -205,9 +205,8 @@ bb.e:                                             ; preds = %bb.eg, %bb.d
   %i.cp = load ptr, ptr %i.ch, align 8, !tbaa !48 ; 45 uses
   %i.cq = sext i32 %.01176 to i64                 ; 6 uses
   %i.cr = getelementptr i8, ptr %i.cp, i64 %i.cq  ; 10 uses
-  %i.cs = load i8, ptr %i.cr, align 1, !tbaa !46  ; 3 uses
-  %3 = sext i8 %i.cs to i32
-  switch i8 %i.cs, label %4 [
+  %i.cs = load i8, ptr %i.cr, align 1, !tbaa !46  ; 2 uses
+  switch i8 %i.cs, label %bb.ef [
     i8 0, label %.loopexit1504
     i8 112, label %bb.f
     i8 89, label %bb.o
@@ -250,6 +249,8 @@ bb.e:                                             ; preds = %bb.eg, %bb.d
     i8 108, label %bb.eg
     i8 120, label %bb.dx
     i8 72, label %bb.ec
+    i8 104, label %bb.ee
+    i8 63, label %bb.ee
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -652,17 +653,12 @@ bb.ed:                                            ; preds = %bb.ec
   store i8 0, ptr %i.cf, align 1, !tbaa !46
   br label %.loopexit1504
 
-4:                                                ; preds = %bb.e
-  switch i8 %i.cs, label %bb.ef [
-    i8 104, label %bb.ee
-    i8 63, label %bb.ee
-  ]
-
-bb.ee:                                            ; preds = %4, %4
+bb.ee:                                            ; preds = %bb.e, %bb.e
   call void @_ZN14tetgenbehavior5usageEv(ptr nonnull align 8 poison)
   unreachable
 
-bb.ef:                                            ; preds = %4
+bb.ef:                                            ; preds = %bb.e
+  %3 = sext i8 %i.cs to i32
   %i.xj = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.245, i32 noundef %3) ; 0 uses
   br label %bb.eg
 

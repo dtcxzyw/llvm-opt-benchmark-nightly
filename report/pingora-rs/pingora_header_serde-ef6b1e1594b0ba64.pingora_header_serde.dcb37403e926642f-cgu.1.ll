@@ -43,92 +43,80 @@ target triple = "x86_64-unknown-linux-gnu"
 @32 = private unnamed_addr constant [14 x i8] c"accept-charset", align 1
 @33 = private unnamed_addr constant [15 x i8] c"accept-encoding", align 1
 @34 = private unnamed_addr constant [15 x i8] c"accept-language", align 1
-@35 = private unnamed_addr constant [13 x i8] c"accept-ranges", align 1
-@36 = private unnamed_addr constant [32 x i8] c"access-control-allow-credentials", align 1
-@37 = private unnamed_addr constant [28 x i8] c"access-control-allow-headers", align 1
-@38 = private unnamed_addr constant [28 x i8] c"access-control-allow-methods", align 1
-@39 = private unnamed_addr constant [27 x i8] c"access-control-allow-origin", align 1
-@40 = private unnamed_addr constant [29 x i8] c"access-control-expose-headers", align 1
-@41 = private unnamed_addr constant [22 x i8] c"access-control-max-age", align 1
-@42 = private unnamed_addr constant [30 x i8] c"access-control-request-headers", align 1
-@43 = private unnamed_addr constant [29 x i8] c"access-control-request-method", align 1
-@44 = private unnamed_addr constant [3 x i8] c"age", align 1
-@45 = private unnamed_addr constant [5 x i8] c"allow", align 1
-@46 = private unnamed_addr constant [7 x i8] c"alt-svc", align 1
-@47 = private unnamed_addr constant [13 x i8] c"authorization", align 1
-@48 = private unnamed_addr constant [13 x i8] c"cache-control", align 1
-@49 = private unnamed_addr constant [12 x i8] c"cache-status", align 1
-@50 = private unnamed_addr constant [17 x i8] c"cdn-cache-control", align 1
-@51 = private unnamed_addr constant [10 x i8] c"connection", align 1
-@52 = private unnamed_addr constant [19 x i8] c"content-disposition", align 1
-@53 = private unnamed_addr constant [16 x i8] c"content-encoding", align 1
-@54 = private unnamed_addr constant [16 x i8] c"content-language", align 1
-@55 = private unnamed_addr constant [14 x i8] c"content-length", align 1
-@56 = private unnamed_addr constant [16 x i8] c"content-location", align 1
-@57 = private unnamed_addr constant [13 x i8] c"content-range", align 1
-@58 = private unnamed_addr constant [23 x i8] c"content-security-policy", align 1
-@59 = private unnamed_addr constant [35 x i8] c"content-security-policy-report-only", align 1
-@60 = private unnamed_addr constant [12 x i8] c"content-type", align 1
-@61 = private unnamed_addr constant [6 x i8] c"cookie", align 1
-@62 = private unnamed_addr constant [3 x i8] c"dnt", align 1
-@63 = private unnamed_addr constant [4 x i8] c"date", align 1
-@64 = private unnamed_addr constant [4 x i8] c"etag", align 1
-@65 = private unnamed_addr constant [6 x i8] c"expect", align 1
-@66 = private unnamed_addr constant [7 x i8] c"expires", align 1
-@67 = private unnamed_addr constant [9 x i8] c"forwarded", align 1
-@68 = private unnamed_addr constant [4 x i8] c"from", align 1
-@69 = private unnamed_addr constant [4 x i8] c"host", align 1
-@70 = private unnamed_addr constant [8 x i8] c"if-match", align 1
-@71 = private unnamed_addr constant [17 x i8] c"if-modified-since", align 1
-@72 = private unnamed_addr constant [13 x i8] c"if-none-match", align 1
-@73 = private unnamed_addr constant [8 x i8] c"if-range", align 1
-@74 = private unnamed_addr constant [19 x i8] c"if-unmodified-since", align 1
-@75 = private unnamed_addr constant [13 x i8] c"last-modified", align 1
-@76 = private unnamed_addr constant [4 x i8] c"link", align 1
-@77 = private unnamed_addr constant [8 x i8] c"location", align 1
-@78 = private unnamed_addr constant [12 x i8] c"max-forwards", align 1
-@79 = private unnamed_addr constant [6 x i8] c"origin", align 1
-@80 = private unnamed_addr constant [6 x i8] c"pragma", align 1
-@81 = private unnamed_addr constant [18 x i8] c"proxy-authenticate", align 1
-@82 = private unnamed_addr constant [19 x i8] c"proxy-authorization", align 1
-@83 = private unnamed_addr constant [15 x i8] c"public-key-pins", align 1
-@84 = private unnamed_addr constant [27 x i8] c"public-key-pins-report-only", align 1
-@85 = private unnamed_addr constant [5 x i8] c"range", align 1
-@86 = private unnamed_addr constant [7 x i8] c"referer", align 1
-@87 = private unnamed_addr constant [15 x i8] c"referrer-policy", align 1
-@88 = private unnamed_addr constant [7 x i8] c"refresh", align 1
-@89 = private unnamed_addr constant [11 x i8] c"retry-after", align 1
-@90 = private unnamed_addr constant [20 x i8] c"sec-websocket-accept", align 1
-@91 = private unnamed_addr constant [24 x i8] c"sec-websocket-extensions", align 1
-@92 = private unnamed_addr constant [17 x i8] c"sec-websocket-key", align 1
-@93 = private unnamed_addr constant [22 x i8] c"sec-websocket-protocol", align 1
-@94 = private unnamed_addr constant [21 x i8] c"sec-websocket-version", align 1
-@95 = private unnamed_addr constant [6 x i8] c"server", align 1
-@96 = private unnamed_addr constant [10 x i8] c"set-cookie", align 1
-@97 = private unnamed_addr constant [25 x i8] c"strict-transport-security", align 1
-@98 = private unnamed_addr constant [2 x i8] c"te", align 1
-@99 = private unnamed_addr constant [7 x i8] c"trailer", align 1
-@100 = private unnamed_addr constant [17 x i8] c"transfer-encoding", align 1
-@101 = private unnamed_addr constant [10 x i8] c"user-agent", align 1
-@102 = private unnamed_addr constant [7 x i8] c"upgrade", align 1
-@103 = private unnamed_addr constant [25 x i8] c"upgrade-insecure-requests", align 1
-@104 = private unnamed_addr constant [4 x i8] c"vary", align 1
-@105 = private unnamed_addr constant [3 x i8] c"via", align 1
-@106 = private unnamed_addr constant [7 x i8] c"warning", align 1
-@107 = private unnamed_addr constant [16 x i8] c"www-authenticate", align 1
-@108 = private unnamed_addr constant [22 x i8] c"x-content-type-options", align 1
-@109 = private unnamed_addr constant [22 x i8] c"x-dns-prefetch-control", align 1
-@110 = private unnamed_addr constant [15 x i8] c"x-frame-options", align 1
-@111 = private unnamed_addr constant [16 x i8] c"x-xss-protection", align 1
-@112 = private unnamed_addr constant [15 x i8] c"compress header", align 1
-@113 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c"a\00\00\00\00\00\00\00\22\09\00\00&\00\00\00" }>, align 8
-@114 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c"a\00\00\00\00\00\00\00*\09\00\003\00\00\00" }>, align 8
-@115 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBL_3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1R_4SyncEL_EINtNtB4_7convert4FromNtNtBN_6string6StringE4from11StringErrorECsiWMK64dCVjf_20pingora_header_serde, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs_NvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4fromNtB4_11StringErrorNtNtB11_3fmt7Display3fmt }>, align 8
-@116 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr }> <{ ptr @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBL_3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1R_4SyncEL_EINtNtB4_7convert4FromNtNtBN_6string6StringE4from11StringErrorECsiWMK64dCVjf_20pingora_header_serde, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs0_NvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBd_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB12_6marker4SendNtB1z_4SyncEL_EINtNtB12_7convert4FromNtNtBf_6string6StringE4fromNtB5_11StringErrorNtNtB12_3fmt5Debug3fmt, ptr @_RNvXs_NvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4fromNtB4_11StringErrorNtNtB11_3fmt7Display3fmt, ptr @115, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_6sourceCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_5causeCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7provideCsiWMK64dCVjf_20pingora_header_serde }>, align 8
-@117 = private unnamed_addr constant [40 x i8] c"description() is deprecated; use Display", align 1
-@118 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -1562177306831591964 to ptr), ptr inttoptr (i64 8243298732992676743 to ptr) }>, align 8
+@35 = private unnamed_addr constant [32 x i8] c"access-control-allow-credentials", align 1
+@36 = private unnamed_addr constant [28 x i8] c"access-control-allow-headers", align 1
+@37 = private unnamed_addr constant [28 x i8] c"access-control-allow-methods", align 1
+@38 = private unnamed_addr constant [27 x i8] c"access-control-allow-origin", align 1
+@39 = private unnamed_addr constant [29 x i8] c"access-control-expose-headers", align 1
+@40 = private unnamed_addr constant [22 x i8] c"access-control-max-age", align 1
+@41 = private unnamed_addr constant [30 x i8] c"access-control-request-headers", align 1
+@42 = private unnamed_addr constant [29 x i8] c"access-control-request-method", align 1
+@43 = private unnamed_addr constant [5 x i8] c"allow", align 1
+@44 = private unnamed_addr constant [7 x i8] c"alt-svc", align 1
+@45 = private unnamed_addr constant [13 x i8] c"authorization", align 1
+@46 = private unnamed_addr constant [12 x i8] c"cache-status", align 1
+@47 = private unnamed_addr constant [17 x i8] c"cdn-cache-control", align 1
+@48 = private unnamed_addr constant [19 x i8] c"content-disposition", align 1
+@49 = private unnamed_addr constant [16 x i8] c"content-language", align 1
+@50 = private unnamed_addr constant [16 x i8] c"content-location", align 1
+@51 = private unnamed_addr constant [13 x i8] c"content-range", align 1
+@52 = private unnamed_addr constant [23 x i8] c"content-security-policy", align 1
+@53 = private unnamed_addr constant [35 x i8] c"content-security-policy-report-only", align 1
+@54 = private unnamed_addr constant [6 x i8] c"cookie", align 1
+@55 = private unnamed_addr constant [3 x i8] c"dnt", align 1
+@56 = private unnamed_addr constant [4 x i8] c"etag", align 1
+@57 = private unnamed_addr constant [6 x i8] c"expect", align 1
+@58 = private unnamed_addr constant [7 x i8] c"expires", align 1
+@59 = private unnamed_addr constant [9 x i8] c"forwarded", align 1
+@60 = private unnamed_addr constant [4 x i8] c"from", align 1
+@61 = private unnamed_addr constant [8 x i8] c"if-match", align 1
+@62 = private unnamed_addr constant [17 x i8] c"if-modified-since", align 1
+@63 = private unnamed_addr constant [13 x i8] c"if-none-match", align 1
+@64 = private unnamed_addr constant [8 x i8] c"if-range", align 1
+@65 = private unnamed_addr constant [19 x i8] c"if-unmodified-since", align 1
+@66 = private unnamed_addr constant [13 x i8] c"last-modified", align 1
+@67 = private unnamed_addr constant [4 x i8] c"link", align 1
+@68 = private unnamed_addr constant [8 x i8] c"location", align 1
+@69 = private unnamed_addr constant [12 x i8] c"max-forwards", align 1
+@70 = private unnamed_addr constant [6 x i8] c"origin", align 1
+@71 = private unnamed_addr constant [6 x i8] c"pragma", align 1
+@72 = private unnamed_addr constant [18 x i8] c"proxy-authenticate", align 1
+@73 = private unnamed_addr constant [19 x i8] c"proxy-authorization", align 1
+@74 = private unnamed_addr constant [15 x i8] c"public-key-pins", align 1
+@75 = private unnamed_addr constant [27 x i8] c"public-key-pins-report-only", align 1
+@76 = private unnamed_addr constant [5 x i8] c"range", align 1
+@77 = private unnamed_addr constant [7 x i8] c"referer", align 1
+@78 = private unnamed_addr constant [15 x i8] c"referrer-policy", align 1
+@79 = private unnamed_addr constant [7 x i8] c"refresh", align 1
+@80 = private unnamed_addr constant [11 x i8] c"retry-after", align 1
+@81 = private unnamed_addr constant [20 x i8] c"sec-websocket-accept", align 1
+@82 = private unnamed_addr constant [24 x i8] c"sec-websocket-extensions", align 1
+@83 = private unnamed_addr constant [17 x i8] c"sec-websocket-key", align 1
+@84 = private unnamed_addr constant [22 x i8] c"sec-websocket-protocol", align 1
+@85 = private unnamed_addr constant [21 x i8] c"sec-websocket-version", align 1
+@86 = private unnamed_addr constant [25 x i8] c"strict-transport-security", align 1
+@87 = private unnamed_addr constant [2 x i8] c"te", align 1
+@88 = private unnamed_addr constant [7 x i8] c"trailer", align 1
+@89 = private unnamed_addr constant [10 x i8] c"user-agent", align 1
+@90 = private unnamed_addr constant [7 x i8] c"upgrade", align 1
+@91 = private unnamed_addr constant [25 x i8] c"upgrade-insecure-requests", align 1
+@92 = private unnamed_addr constant [4 x i8] c"vary", align 1
+@93 = private unnamed_addr constant [3 x i8] c"via", align 1
+@94 = private unnamed_addr constant [7 x i8] c"warning", align 1
+@95 = private unnamed_addr constant [16 x i8] c"www-authenticate", align 1
+@96 = private unnamed_addr constant [22 x i8] c"x-content-type-options", align 1
+@97 = private unnamed_addr constant [22 x i8] c"x-dns-prefetch-control", align 1
+@98 = private unnamed_addr constant [15 x i8] c"x-frame-options", align 1
+@99 = private unnamed_addr constant [16 x i8] c"x-xss-protection", align 1
+@100 = private unnamed_addr constant [15 x i8] c"compress header", align 1
+@101 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c"a\00\00\00\00\00\00\00\22\09\00\00&\00\00\00" }>, align 8
+@102 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c"a\00\00\00\00\00\00\00*\09\00\003\00\00\00" }>, align 8
+@103 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBL_3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1R_4SyncEL_EINtNtB4_7convert4FromNtNtBN_6string6StringE4from11StringErrorECsiWMK64dCVjf_20pingora_header_serde, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs_NvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4fromNtB4_11StringErrorNtNtB11_3fmt7Display3fmt }>, align 8
+@104 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr }> <{ ptr @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBL_3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1R_4SyncEL_EINtNtB4_7convert4FromNtNtBN_6string6StringE4from11StringErrorECsiWMK64dCVjf_20pingora_header_serde, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs0_NvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBd_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB12_6marker4SendNtB1z_4SyncEL_EINtNtB12_7convert4FromNtNtBf_6string6StringE4fromNtB5_11StringErrorNtNtB12_3fmt5Debug3fmt, ptr @_RNvXs_NvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4fromNtB4_11StringErrorNtNtB11_3fmt7Display3fmt, ptr @103, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_6sourceCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_5causeCsiWMK64dCVjf_20pingora_header_serde, ptr @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7provideCsiWMK64dCVjf_20pingora_header_serde }>, align 8
+@105 = private unnamed_addr constant [40 x i8] c"description() is deprecated; use Display", align 1
+@106 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -1562177306831591964 to ptr), ptr inttoptr (i64 8243298732992676743 to ptr) }>, align 8
 @switch.table._RNvMCsiWMK64dCVjf_20pingora_header_serdeNtB2_11HeaderSerde9serialize = private unnamed_addr constant [81 x i8] c"\06\0E\0F\0F\0D \1C\1C\1B\1D\16\1E\1D\03\05\07\0D\0D\0C\11\0A\13\10\10\0E\10\0D\17#\0C\06\03\04\04\06\07\09\04\04\08\11\0D\08\13\0D\04\08\0C\06\06\12\13\0F\1B\05\07\0F\07\0B\14\18\11\16\15\06\0A\19\02\07\11\0A\07\19\04\03\07\10\16\16\0F\10", align 8
-@switch.table._RNvMCsiWMK64dCVjf_20pingora_header_serdeNtB2_11HeaderSerde9serialize.27 = private unnamed_addr constant [81 x ptr] [ptr @31, ptr @32, ptr @33, ptr @34, ptr @35, ptr @36, ptr @37, ptr @38, ptr @39, ptr @40, ptr @41, ptr @42, ptr @43, ptr @44, ptr @45, ptr @46, ptr @47, ptr @48, ptr @49, ptr @50, ptr @51, ptr @52, ptr @53, ptr @54, ptr @55, ptr @56, ptr @57, ptr @58, ptr @59, ptr @60, ptr @61, ptr @62, ptr @63, ptr @64, ptr @65, ptr @66, ptr @67, ptr @68, ptr @69, ptr @70, ptr @71, ptr @72, ptr @73, ptr @74, ptr @75, ptr @76, ptr @77, ptr @78, ptr @79, ptr @80, ptr @81, ptr @82, ptr @83, ptr @84, ptr @85, ptr @86, ptr @87, ptr @88, ptr @89, ptr @90, ptr @91, ptr @92, ptr @93, ptr @94, ptr @95, ptr @96, ptr @97, ptr @98, ptr @99, ptr @100, ptr @101, ptr @102, ptr @103, ptr @104, ptr @105, ptr @106, ptr @107, ptr @108, ptr @109, ptr @110, ptr @111], align 8
+@switch.table._RNvMCsiWMK64dCVjf_20pingora_header_serdeNtB2_11HeaderSerde9serialize.27 = private unnamed_addr constant [81 x ptr] [ptr @31, ptr @32, ptr @33, ptr @34, ptr @0, ptr @35, ptr @36, ptr @37, ptr @38, ptr @39, ptr @40, ptr @41, ptr @42, ptr @1, ptr @43, ptr @44, ptr @45, ptr @2, ptr @46, ptr @47, ptr @3, ptr @48, ptr @4, ptr @49, ptr @5, ptr @50, ptr @51, ptr @52, ptr @53, ptr @6, ptr @54, ptr @55, ptr @7, ptr @56, ptr @57, ptr @58, ptr @59, ptr @60, ptr @8, ptr @61, ptr @62, ptr @63, ptr @64, ptr @65, ptr @66, ptr @67, ptr @68, ptr @69, ptr @70, ptr @71, ptr @72, ptr @73, ptr @74, ptr @75, ptr @76, ptr @77, ptr @78, ptr @79, ptr @80, ptr @81, ptr @82, ptr @83, ptr @84, ptr @85, ptr @9, ptr @10, ptr @86, ptr @87, ptr @88, ptr @11, ptr @89, ptr @90, ptr @91, ptr @92, ptr @93, ptr @94, ptr @95, ptr @96, ptr @97, ptr @98, ptr @99], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1S_4SyncEL_EEECsiWMK64dCVjf_20pingora_header_serde(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -531,7 +519,7 @@ common.resume.sink.split.i:                       ; preds = %bb.p, %bb.l, %bb.j,
   br label %bb.bj
 
 _RNCNvMs_CsiWMK64dCVjf_20pingora_header_serdeNtB6_15ZstdCompression20decompress_to_buffer0B6_.exit.i: ; preds = %.noexc11
-  %i.bh = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.v, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.u, ptr noundef %i.ba, ptr nonnull @116)
+  %i.bh = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.v, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.u, ptr noundef %i.ba, ptr nonnull @104)
           to label %.thread unwind label %bb.r
 
 .thread:                                          ; preds = %_RNCNvMs_CsiWMK64dCVjf_20pingora_header_serdeNtB6_15ZstdCompression20decompress_to_buffer0B6_.exit.i
@@ -612,7 +600,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond13.i18.i, label %bb.bj, label %common.resume.sink.split.i
 
 _RNCNvMs_CsiWMK64dCVjf_20pingora_header_serdeNtB6_15ZstdCompression20decompress_to_buffers_0B6_.exit.i: ; preds = %.noexc14
-  %i.by = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.q, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.p, ptr noundef %i.br, ptr nonnull @116)
+  %i.by = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.q, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.p, ptr noundef %i.br, ptr nonnull @104)
           to label %.split.thread unwind label %bb.r
 
 .split.thread:                                    ; preds = %_RNCNvMs_CsiWMK64dCVjf_20pingora_header_serdeNtB6_15ZstdCompression20decompress_to_buffers_0B6_.exit.i
@@ -1015,7 +1003,7 @@ bb.h:                                             ; preds = %bb.f
 .invoke:                                          ; preds = %bb.i, %bb.f
   %i.bp = phi i64 [ %.sroa.13.0.i.i, %bb.f ], [ %.sroa.7.0.i.i, %bb.i ]
   %i.bq = phi i64 [ %i.bc, %bb.f ], [ %i.bg, %bb.i ]
-  %i.br = phi ptr [ @113, %bb.f ], [ @114, %bb.i ]
+  %i.br = phi ptr [ @101, %bb.f ], [ @102, %bb.i ]
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.bp, i64 noundef %i.bq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.br) #23
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -1072,78 +1060,28 @@ bb.p:                                             ; preds = %bb.o, %bb.l
   %i.ce = load ptr, ptr %.sroa.0.0.i.i.i, align 8, !noalias !209, !noundef !4
   %.not23.i.i = icmp eq ptr %i.ce, null
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 72 ; 2 uses
-  br i1 %.not23.i.i, label %3, label %5
+  br i1 %.not23.i.i, label %switch.lookup, label %4
 
-3:                                                ; preds = %bb.p
-  %4 = load i8, ptr %i.cf, align 8, !range !11, !noalias !209, !noundef !4 ; 3 uses
-  switch i8 %4, label %switch.lookup [
-    i8 4, label %.thread.i.i
-    i8 13, label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-    i8 17, label %.thread79.i.i
-    i8 20, label %.thread84.i.i
-    i8 22, label %.thread89.i.i
-    i8 24, label %.thread94.i.i
-    i8 29, label %.thread99.i.i
-    i8 32, label %.thread104.i.i
-    i8 38, label %.thread109.i.i
-    i8 64, label %.thread114.i.i
-    i8 65, label %.thread119.i.i
-    i8 69, label %.thread124.i.i
-  ]
-
-.thread79.i.i:                                    ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread84.i.i:                                    ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread89.i.i:                                    ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread94.i.i:                                    ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread99.i.i:                                    ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread104.i.i:                                   ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread109.i.i:                                   ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread114.i.i:                                   ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread119.i.i:                                   ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread124.i.i:                                   ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-.thread.i.i:                                      ; preds = %3
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-5:                                                ; preds = %bb.p
-  %6 = load ptr, ptr %i.cf, align 8, !noalias !209, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %i.cd, i64 80
-  %8 = load i64, ptr %7, align 8, !noalias !209, !noundef !4
-  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
-
-switch.lookup:                                    ; preds = %3
-  %i.cg = zext nneg i8 %4 to i64
+switch.lookup:                                    ; preds = %bb.p
+  %3 = load i8, ptr %i.cf, align 8, !range !11, !noalias !209, !noundef !4 ; 2 uses
+  %i.cg = zext nneg i8 %3 to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvMCsiWMK64dCVjf_20pingora_header_serdeNtB2_11HeaderSerde9serialize, i64 %i.cg
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %i.ch = zext nneg i8 %4 to i64
+  %i.ch = zext nneg i8 %3 to i64
   %switch.gep54 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMCsiWMK64dCVjf_20pingora_header_serdeNtB2_11HeaderSerde9serialize.27, i64 %i.ch
-  %switch.load55 = load ptr, ptr %switch.gep54, align 8
   br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
 
-_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i: ; preds = %switch.lookup, %5, %.thread.i.i, %.thread124.i.i, %.thread119.i.i, %.thread114.i.i, %.thread109.i.i, %.thread104.i.i, %.thread99.i.i, %.thread94.i.i, %.thread89.i.i, %.thread84.i.i, %.thread79.i.i, %3
-  %9 = phi i64 [ 3, %3 ], [ 13, %.thread79.i.i ], [ 10, %.thread84.i.i ], [ 16, %.thread89.i.i ], [ 14, %.thread94.i.i ], [ 12, %.thread99.i.i ], [ 4, %.thread104.i.i ], [ 4, %.thread109.i.i ], [ 6, %.thread114.i.i ], [ 10, %.thread119.i.i ], [ 17, %.thread124.i.i ], [ 13, %.thread.i.i ], [ %8, %5 ], [ %switch.ext, %switch.lookup ]
-  %10 = phi ptr [ @1, %3 ], [ @2, %.thread79.i.i ], [ @3, %.thread84.i.i ], [ @4, %.thread89.i.i ], [ @5, %.thread94.i.i ], [ @6, %.thread99.i.i ], [ @7, %.thread104.i.i ], [ @8, %.thread109.i.i ], [ @9, %.thread114.i.i ], [ @10, %.thread119.i.i ], [ @11, %.thread124.i.i ], [ @0, %.thread.i.i ], [ %6, %5 ], [ %switch.load55, %switch.lookup ]
-  invoke void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsiWMK64dCVjf_20pingora_header_serde(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %10, i64 noundef range(i64 0, -9223372036854775808) %9)
+4:                                                ; preds = %bb.p
+  %5 = getelementptr inbounds nuw i8, ptr %i.cd, i64 80
+  %6 = load i64, ptr %5, align 8, !noalias !209, !noundef !4
+  br label %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
+
+_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i: ; preds = %switch.lookup, %4
+  %7 = phi i64 [ %6, %4 ], [ %switch.ext, %switch.lookup ]
+  %.in = phi ptr [ %i.cf, %4 ], [ %switch.gep54, %switch.lookup ]
+  %8 = load ptr, ptr %.in, align 8
+  invoke void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsiWMK64dCVjf_20pingora_header_serde(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %8, i64 noundef range(i64 0, -9223372036854775808) %7)
           to label %.noexc12 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc12:                                         ; preds = %_RNvMsP_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_14StandardHeader6as_str.exit.i.i
@@ -1221,14 +1159,14 @@ bb.u:                                             ; preds = %.noexc19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !213
   store i64 0, ptr %i.b, align 8, !noalias !213
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @112, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !213
+  store ptr @100, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !213
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 15, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !noalias !213
   %i.df = invoke fastcc ptr @_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB1G_4SyncEL_EE4intoCsiWMK64dCVjf_20pingora_header_serde(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dc, i64 noundef %i.de)
           to label %.noexc20 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc20:                                         ; preds = %bb.u
-  %i.dg = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noundef %i.df, ptr nonnull @116)
+  %i.dg = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noundef %i.df, ptr nonnull @104)
           to label %.noexc21 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc21:                                         ; preds = %.noexc20
@@ -1257,14 +1195,14 @@ bb.x:                                             ; preds = %.noexc18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !215
   store i64 0, ptr %i.a, align 8, !noalias !215
   %.sroa.4.0..sroa_idx.i1.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @112, ptr %.sroa.4.0..sroa_idx.i1.i, align 8, !noalias !215
+  store ptr @100, ptr %.sroa.4.0..sroa_idx.i1.i, align 8, !noalias !215
   %.sroa.5.0..sroa_idx.i2.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 15, ptr %.sroa.5.0..sroa_idx.i2.i, align 8, !noalias !215
   %i.dm = invoke fastcc ptr @_RNvXs1_NtCskKLDkoKarTP_4core7convertReINtB5_4IntoINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB1G_4SyncEL_EE4intoCsiWMK64dCVjf_20pingora_header_serde(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dj, i64 noundef %i.dl)
           to label %.noexc22 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc22:                                         ; preds = %bb.x
-  %i.dn = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noundef %i.dm, ptr nonnull @116)
+  %i.dn = invoke fastcc noalias noundef nonnull align 8 ptr @_RNvMs2_CsfsXztIhCltD_13pingora_errorNtB5_5Error6create(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noundef %i.dm, ptr nonnull @104)
           to label %.noexc23 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc23:                                         ; preds = %.noexc22
@@ -1667,7 +1605,7 @@ bb.e:                                             ; preds = %bb.b
   br i1 %cond, label %bb.h, label %bb.g, !prof !18
 
 bb.f:                                             ; preds = %bb.b
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.e, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @113) #23
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.e, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @101) #23
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -1709,7 +1647,7 @@ bb.l:                                             ; preds = %bb.g
   br i1 %i.ad, label %bb.n, label %bb.o
 
 bb.m:                                             ; preds = %bb.g
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.s, i64 noundef %i.u, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @114) #23
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.s, i64 noundef %i.u, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @102) #23
   unreachable
 
 bb.n:                                             ; preds = %bb.l
@@ -1784,7 +1722,7 @@ bb.e:                                             ; preds = %bb.b
   br i1 %cond, label %bb.h, label %bb.g, !prof !18
 
 bb.f:                                             ; preds = %bb.b
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.e, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @113) #23
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.e, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @101) #23
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -1826,7 +1764,7 @@ bb.l:                                             ; preds = %bb.g
   br i1 %i.ad, label %bb.n, label %bb.o
 
 bb.m:                                             ; preds = %bb.g
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.s, i64 noundef %i.u, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @114) #23
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.s, i64 noundef %i.u, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @102) #23
   unreachable
 
 bb.n:                                             ; preds = %bb.l
@@ -1852,7 +1790,7 @@ bb.p:                                             ; preds = %bb.c, %bb.k
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define internal noundef { ptr, i64 } @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_11descriptionCsiWMK64dCVjf_20pingora_header_serde(ptr noalias nofree readonly align 8 captures(none) %0) unnamed_addr #5 {
 bb.a:
-  ret { ptr, i64 } { ptr @117, i64 40 }
+  ret { ptr, i64 } { ptr @105, i64 40 }
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -1870,7 +1808,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal void @_RNvYNtNvXsf_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtBc_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtB11_6marker4SendNtB1y_4SyncEL_EINtNtB11_7convert4FromNtNtBe_6string6StringE4from11StringErrorBX_7type_idCsiWMK64dCVjf_20pingora_header_serde(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias nofree readonly align 8 captures(none) %1) unnamed_addr #6 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @118, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @106, i64 16, i1 false)
   ret void
 }
 

@@ -142,7 +142,7 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge2:                                       ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %.032115, i64 2
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !73    ; 2 uses
+  %i.w = load i8, ptr %i.v, align 1, !tbaa !73
   %i.x = getelementptr inbounds nuw i8, ptr %.032115, i64 3
   %i.y = load i8, ptr %i.x, align 1, !tbaa !73
   %i.z = zext i8 %i.y to i32
@@ -201,44 +201,40 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %._cri
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ao
   store i8 0, ptr %i.aq, align 1, !tbaa !73
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  switch i8 %i.w, label %bb.h [
-    i8 3, label %bb.i
-    i8 4, label %.fold.split
-    i8 5, label %.fold.split143
-    i8 7, label %.fold.split144
-    i8 10, label %.fold.split145
-    i8 12, label %.fold.split146
-    i8 15, label %.fold.split147
-    i8 20, label %.fold.split148
-    i8 22, label %.fold.split149
-    i8 25, label %.fold.split150
-    i8 26, label %.fold.split151
-    i8 27, label %.fold.split152
-    i8 30, label %.fold.split153
-    i8 35, label %.fold.split154
-    i8 37, label %.fold.split155
-    i8 38, label %.fold.split156
-    i8 40, label %.fold.split157
-    i8 45, label %.fold.split158
-    i8 47, label %.fold.split159
-    i8 50, label %.fold.split160
-    i8 55, label %.fold.split161
-    i8 60, label %.fold.split162
-    i8 62, label %.fold.split163
-    i8 63, label %.fold.split164
-    i8 65, label %.fold.split165
-    i8 70, label %.fold.split166
-    i8 80, label %.fold.split167
-    i8 85, label %.fold.split168
-    i8 90, label %.fold.split169
-    i8 92, label %.fold.split170
-    i8 95, label %.fold.split171
-    i8 100, label %.fold.split172
-  ]
-
-bb.h:                                             ; preds = %bb.g
   switch i8 %i.w, label %.loopexit [
-    i8 101, label %bb.i
+    i8 3, label %bb.i
+    i8 4, label %bb.h
+    i8 5, label %.fold.split
+    i8 7, label %.fold.split143
+    i8 10, label %.fold.split144
+    i8 12, label %.fold.split145
+    i8 15, label %.fold.split146
+    i8 20, label %.fold.split147
+    i8 22, label %.fold.split148
+    i8 25, label %.fold.split149
+    i8 26, label %.fold.split150
+    i8 27, label %.fold.split151
+    i8 30, label %.fold.split152
+    i8 35, label %.fold.split153
+    i8 37, label %.fold.split154
+    i8 38, label %.fold.split155
+    i8 40, label %.fold.split156
+    i8 45, label %.fold.split157
+    i8 47, label %.fold.split158
+    i8 50, label %.fold.split159
+    i8 55, label %.fold.split160
+    i8 60, label %.fold.split161
+    i8 62, label %.fold.split162
+    i8 63, label %.fold.split163
+    i8 65, label %.fold.split164
+    i8 70, label %.fold.split165
+    i8 80, label %.fold.split166
+    i8 85, label %.fold.split167
+    i8 90, label %.fold.split168
+    i8 92, label %.fold.split169
+    i8 95, label %.fold.split170
+    i8 100, label %.fold.split171
+    i8 101, label %.fold.split172
     i8 103, label %.fold.split173
     i8 105, label %.fold.split174
     i8 110, label %.fold.split175
@@ -259,6 +255,9 @@ bb.h:                                             ; preds = %bb.g
     i8 -26, label %.fold.split190
     i8 -25, label %.fold.split191
   ]
+
+bb.h:                                             ; preds = %bb.g
+  br label %bb.i
 
 .fold.split:                                      ; preds = %bb.g
   br label %bb.i
@@ -353,66 +352,66 @@ bb.h:                                             ; preds = %bb.g
 .fold.split172:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split173:                                   ; preds = %bb.h
+.fold.split173:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split174:                                   ; preds = %bb.h
+.fold.split174:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split175:                                   ; preds = %bb.h
+.fold.split175:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split176:                                   ; preds = %bb.h
+.fold.split176:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split177:                                   ; preds = %bb.h
+.fold.split177:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split178:                                   ; preds = %bb.h
+.fold.split178:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split179:                                   ; preds = %bb.h
+.fold.split179:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split180:                                   ; preds = %bb.h
+.fold.split180:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split181:                                   ; preds = %bb.h
+.fold.split181:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split182:                                   ; preds = %bb.h
+.fold.split182:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split183:                                   ; preds = %bb.h
+.fold.split183:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split184:                                   ; preds = %bb.h
+.fold.split184:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split185:                                   ; preds = %bb.h
+.fold.split185:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split186:                                   ; preds = %bb.h
+.fold.split186:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split187:                                   ; preds = %bb.h
+.fold.split187:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split188:                                   ; preds = %bb.h
+.fold.split188:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split189:                                   ; preds = %bb.h
+.fold.split189:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split190:                                   ; preds = %bb.h
+.fold.split190:                                   ; preds = %bb.g
   br label %bb.i
 
-.fold.split191:                                   ; preds = %bb.h
+.fold.split191:                                   ; preds = %bb.g
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %.fold.split191, %.fold.split190, %.fold.split189, %.fold.split188, %.fold.split187, %.fold.split186, %.fold.split185, %.fold.split184, %.fold.split183, %.fold.split182, %.fold.split181, %.fold.split180, %.fold.split179, %.fold.split178, %.fold.split177, %.fold.split176, %.fold.split175, %.fold.split174, %.fold.split173, %bb.g, %.fold.split172, %.fold.split171, %.fold.split170, %.fold.split169, %.fold.split168, %.fold.split167, %.fold.split166, %.fold.split165, %.fold.split164, %.fold.split163, %.fold.split162, %.fold.split161, %.fold.split160, %.fold.split159, %.fold.split158, %.fold.split157, %.fold.split156, %.fold.split155, %.fold.split154, %.fold.split153, %.fold.split152, %.fold.split151, %.fold.split150, %.fold.split149, %.fold.split148, %.fold.split147, %.fold.split146, %.fold.split145, %.fold.split144, %.fold.split143, %.fold.split
-  %.lcssa119 = phi ptr [ @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1600), %.fold.split190 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 32), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 64), %.fold.split143 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 96), %.fold.split144 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 128), %.fold.split145 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 160), %.fold.split146 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 192), %.fold.split147 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 224), %.fold.split148 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 256), %.fold.split149 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 288), %.fold.split150 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 320), %.fold.split151 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 352), %.fold.split152 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 384), %.fold.split153 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 416), %.fold.split154 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 448), %.fold.split155 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 480), %.fold.split156 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 512), %.fold.split157 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 544), %.fold.split158 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 576), %.fold.split159 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 608), %.fold.split160 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 640), %.fold.split161 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 672), %.fold.split162 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 704), %.fold.split163 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 736), %.fold.split164 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 768), %.fold.split165 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 800), %.fold.split166 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 832), %.fold.split167 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 864), %.fold.split168 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 896), %.fold.split169 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 928), %.fold.split170 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 960), %.fold.split171 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1024), %bb.h ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 992), %.fold.split172 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1056), %.fold.split173 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1088), %.fold.split174 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1120), %.fold.split175 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1152), %.fold.split176 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1184), %.fold.split177 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1216), %.fold.split178 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1248), %.fold.split179 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1280), %.fold.split180 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1312), %.fold.split181 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1344), %.fold.split182 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1376), %.fold.split183 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1408), %.fold.split184 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1440), %.fold.split185 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1472), %.fold.split186 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1504), %.fold.split187 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1536), %.fold.split188 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1568), %.fold.split189 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1632), %.fold.split191 ]
-  %.lcssa = phi i64 [ 0, %bb.g ], [ 50, %.fold.split190 ], [ 1, %.fold.split ], [ 2, %.fold.split143 ], [ 3, %.fold.split144 ], [ 4, %.fold.split145 ], [ 5, %.fold.split146 ], [ 6, %.fold.split147 ], [ 7, %.fold.split148 ], [ 8, %.fold.split149 ], [ 9, %.fold.split150 ], [ 10, %.fold.split151 ], [ 11, %.fold.split152 ], [ 12, %.fold.split153 ], [ 13, %.fold.split154 ], [ 14, %.fold.split155 ], [ 15, %.fold.split156 ], [ 16, %.fold.split157 ], [ 17, %.fold.split158 ], [ 18, %.fold.split159 ], [ 19, %.fold.split160 ], [ 20, %.fold.split161 ], [ 21, %.fold.split162 ], [ 22, %.fold.split163 ], [ 23, %.fold.split164 ], [ 24, %.fold.split165 ], [ 25, %.fold.split166 ], [ 26, %.fold.split167 ], [ 27, %.fold.split168 ], [ 28, %.fold.split169 ], [ 29, %.fold.split170 ], [ 30, %.fold.split171 ], [ 32, %bb.h ], [ 31, %.fold.split172 ], [ 33, %.fold.split173 ], [ 34, %.fold.split174 ], [ 35, %.fold.split175 ], [ 36, %.fold.split176 ], [ 37, %.fold.split177 ], [ 38, %.fold.split178 ], [ 39, %.fold.split179 ], [ 40, %.fold.split180 ], [ 41, %.fold.split181 ], [ 42, %.fold.split182 ], [ 43, %.fold.split183 ], [ 44, %.fold.split184 ], [ 45, %.fold.split185 ], [ 46, %.fold.split186 ], [ 47, %.fold.split187 ], [ 48, %.fold.split188 ], [ 49, %.fold.split189 ], [ 51, %.fold.split191 ]
+bb.i:                                             ; preds = %bb.g, %.fold.split191, %.fold.split190, %.fold.split189, %.fold.split188, %.fold.split187, %.fold.split186, %.fold.split185, %.fold.split184, %.fold.split183, %.fold.split182, %.fold.split181, %.fold.split180, %.fold.split179, %.fold.split178, %.fold.split177, %.fold.split176, %.fold.split175, %.fold.split174, %.fold.split173, %.fold.split172, %.fold.split171, %.fold.split170, %.fold.split169, %.fold.split168, %.fold.split167, %.fold.split166, %.fold.split165, %.fold.split164, %.fold.split163, %.fold.split162, %.fold.split161, %.fold.split160, %.fold.split159, %.fold.split158, %.fold.split157, %.fold.split156, %.fold.split155, %.fold.split154, %.fold.split153, %.fold.split152, %.fold.split151, %.fold.split150, %.fold.split149, %.fold.split148, %.fold.split147, %.fold.split146, %.fold.split145, %.fold.split144, %.fold.split143, %.fold.split, %bb.h
+  %.lcssa119 = phi ptr [ @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1600), %.fold.split190 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 32), %bb.h ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 64), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 96), %.fold.split143 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 128), %.fold.split144 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 160), %.fold.split145 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 192), %.fold.split146 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 224), %.fold.split147 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 256), %.fold.split148 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 288), %.fold.split149 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 320), %.fold.split150 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 352), %.fold.split151 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 384), %.fold.split152 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 416), %.fold.split153 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 448), %.fold.split154 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 480), %.fold.split155 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 512), %.fold.split156 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 544), %.fold.split157 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 576), %.fold.split158 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 608), %.fold.split159 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 640), %.fold.split160 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 672), %.fold.split161 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 704), %.fold.split162 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 736), %.fold.split163 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 768), %.fold.split164 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 800), %.fold.split165 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 832), %.fold.split166 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 864), %.fold.split167 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 896), %.fold.split168 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 928), %.fold.split169 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 960), %.fold.split170 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 992), %.fold.split171 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1024), %.fold.split172 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1056), %.fold.split173 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1088), %.fold.split174 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1120), %.fold.split175 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1152), %.fold.split176 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1184), %.fold.split177 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1216), %.fold.split178 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1248), %.fold.split179 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1280), %.fold.split180 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1312), %.fold.split181 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1344), %.fold.split182 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1376), %.fold.split183 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1408), %.fold.split184 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1440), %.fold.split185 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1472), %.fold.split186 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1504), %.fold.split187 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1536), %.fold.split188 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1568), %.fold.split189 ], [ getelementptr inbounds nuw (i8, ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 1632), %.fold.split191 ]
+  %.lcssa = phi i64 [ 0, %bb.g ], [ 50, %.fold.split190 ], [ 1, %bb.h ], [ 2, %.fold.split ], [ 3, %.fold.split143 ], [ 4, %.fold.split144 ], [ 5, %.fold.split145 ], [ 6, %.fold.split146 ], [ 7, %.fold.split147 ], [ 8, %.fold.split148 ], [ 9, %.fold.split149 ], [ 10, %.fold.split150 ], [ 11, %.fold.split151 ], [ 12, %.fold.split152 ], [ 13, %.fold.split153 ], [ 14, %.fold.split154 ], [ 15, %.fold.split155 ], [ 16, %.fold.split156 ], [ 17, %.fold.split157 ], [ 18, %.fold.split158 ], [ 19, %.fold.split159 ], [ 20, %.fold.split160 ], [ 21, %.fold.split161 ], [ 22, %.fold.split162 ], [ 23, %.fold.split163 ], [ 24, %.fold.split164 ], [ 25, %.fold.split165 ], [ 26, %.fold.split166 ], [ 27, %.fold.split167 ], [ 28, %.fold.split168 ], [ 29, %.fold.split169 ], [ 30, %.fold.split170 ], [ 31, %.fold.split171 ], [ 32, %.fold.split172 ], [ 33, %.fold.split173 ], [ 34, %.fold.split174 ], [ 35, %.fold.split175 ], [ 36, %.fold.split176 ], [ 37, %.fold.split177 ], [ 38, %.fold.split178 ], [ 39, %.fold.split179 ], [ 40, %.fold.split180 ], [ 41, %.fold.split181 ], [ 42, %.fold.split182 ], [ 43, %.fold.split183 ], [ 44, %.fold.split184 ], [ 45, %.fold.split185 ], [ 46, %.fold.split186 ], [ 47, %.fold.split187 ], [ 48, %.fold.split188 ], [ 49, %.fold.split189 ], [ 51, %.fold.split191 ]
   %i.ar = getelementptr inbounds nuw i8, ptr %.lcssa119, i64 8
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !85 ; 6 uses
   %i.at = shl nuw nsw i64 1, %.lcssa
@@ -683,7 +682,7 @@ bb.x:                                             ; preds = %_ZN11OpenImageIO4v3
           cleanup
   br label %bb.y
 
-.loopexit:                                        ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50, %_ZN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEC2EPKc.exit58
+.loopexit:                                        ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50, %_ZN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEC2EPKc.exit58
   %i.de = load ptr, ptr %3, align 8, !tbaa !81    ; 2 uses
   %i.df = icmp eq ptr %i.de, %i.d
   br i1 %i.df, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit61, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i59

@@ -205,14 +205,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val = load ptr, ptr %i.c, align 8             ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7373)
-  %i.d = load i64, ptr %1, align 8, !range !7374, !alias.scope !7373, !noundef !7 ; 4 uses
+  %i.d = load i64, ptr %1, align 8, !range !7374, !alias.scope !7373, !noundef !7 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !7373 ; 6 uses
-  %.not.i = icmp eq i64 %i.d, -1
-  br i1 %.not.i, label %.thread.i, label %2
-
-2:                                                ; preds = %bb.a
   switch i64 %i.d, label %default.unreachable [
+    i64 -1, label %.thread.i
     i64 0, label %bb.b
     i64 1, label %bb.b
     i64 2, label %bb.b
@@ -309,7 +306,7 @@ bb.a:
     i64 93, label %_RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules37invalid_formatter_suppression_commentNtB4_26UselessSuppressionComments25check_suppression_comment.exit
   ]
 
-bb.b:                                             ; preds = %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2
+bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 57
   %i.h = load i8, ptr %i.g, align 1, !range !9, !alias.scope !7373, !noundef !7 ; 2 uses
   %i.i = icmp eq i8 %i.h, 2
@@ -323,7 +320,7 @@ bb.b:                                             ; preds = %2, %2, %2, %2, %2, 
     i8 0, label %_RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules37invalid_formatter_suppression_commentNtB4_26UselessSuppressionComments25check_suppression_comment.exit.thread
   ]
 
-default.unreachable:                              ; preds = %2
+default.unreachable:                              ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %.thread.i, %bb.b
@@ -452,8 +449,8 @@ bb.r:                                             ; preds = %bb.e, %.thread.i
   %.old45.i = trunc nuw i8 %.old44.i to i1
   br i1 %.old45.i, label %_RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules37invalid_formatter_suppression_commentNtB4_26UselessSuppressionComments25check_suppression_comment.exit.thread, label %_RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules37invalid_formatter_suppression_commentNtB4_26UselessSuppressionComments25check_suppression_comment.exit
 
-_RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules37invalid_formatter_suppression_commentNtB4_26UselessSuppressionComments25check_suppression_comment.exit: ; preds = %bb.q, %bb.k, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2, %bb.r, %bb.c
-  %.sroa.0.0.i = phi i8 [ 4, %bb.q ], [ 1, %bb.k ], [ 3, %bb.r ], [ 2, %bb.c ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ], [ 0, %2 ]
+_RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules37invalid_formatter_suppression_commentNtB4_26UselessSuppressionComments25check_suppression_comment.exit: ; preds = %bb.q, %bb.k, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.r, %bb.c
+  %.sroa.0.0.i = phi i8 [ 4, %bb.q ], [ 1, %bb.k ], [ 3, %bb.r ], [ 2, %bb.c ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ], [ 0, %bb.a ]
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bb = load <2 x i32>, ptr %i.ba, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses

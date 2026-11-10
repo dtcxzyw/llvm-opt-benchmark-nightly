@@ -204,17 +204,17 @@ bb.f:                                             ; preds = %_ZN22photos_editing
   %scevgep.i.i = getelementptr i8, ptr %.019, i64 %.020
   br label %.preheader.i.i
 
-.loopexit.i.i:                                    ; preds = %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %8, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
-  %i.an = icmp eq i64 %7, 0
+.loopexit.i.i:                                    ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
+  %6 = add i64 %.in.i.i, -1                       ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.01116.i.i, i64 1
+  %i.an = icmp eq i64 %6, 0
   br i1 %i.an, label %.loopexit, label %.preheader.i.i, !llvm.loop !0
 
 .preheader.i.i:                                   ; preds = %.loopexit.i.i, %.preheader.preheader.i.i
-  %.in.i.i = phi i64 [ %7, %.loopexit.i.i ], [ %.020, %.preheader.preheader.i.i ]
-  %.01116.i.i = phi ptr [ %6, %.loopexit.i.i ], [ %.019, %.preheader.preheader.i.i ] ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.01116.i.i, i64 1
-  %i.ao = load i8, ptr %.01116.i.i, align 1, !tbaa !35 ; 2 uses
-  %7 = add i64 %.in.i.i, -1                       ; 2 uses
-  switch i8 %i.ao, label %8 [
+  %.in.i.i = phi i64 [ %6, %.loopexit.i.i ], [ %.020, %.preheader.preheader.i.i ]
+  %.01116.i.i = phi ptr [ %7, %.loopexit.i.i ], [ %.019, %.preheader.preheader.i.i ] ; 3 uses
+  %i.ao = load i8, ptr %.01116.i.i, align 1, !tbaa !35
+  switch i8 %i.ao, label %.loopexit [
     i8 65, label %.loopexit.i.i
     i8 66, label %.loopexit.i.i
     i8 67, label %.loopexit.i.i
@@ -257,10 +257,6 @@ bb.f:                                             ; preds = %_ZN22photos_editing
     i8 110, label %.loopexit.i.i
     i8 111, label %.loopexit.i.i
     i8 112, label %.loopexit.i.i
-  ]
-
-8:                                                ; preds = %.preheader.i.i
-  switch i8 %i.ao, label %.loopexit [
     i8 113, label %.loopexit.i.i
     i8 114, label %.loopexit.i.i
     i8 115, label %.loopexit.i.i
@@ -287,8 +283,8 @@ bb.f:                                             ; preds = %_ZN22photos_editing
     i8 58, label %.loopexit.i.i
   ]
 
-.loopexit:                                        ; preds = %8, %.loopexit.i.i, %bb.f
-  %.01116.lcssa.sink.i.i = phi ptr [ %.019, %bb.f ], [ %.01116.i.i, %8 ], [ %scevgep.i.i, %.loopexit.i.i ]
+.loopexit:                                        ; preds = %.preheader.i.i, %.loopexit.i.i, %bb.f
+  %.01116.lcssa.sink.i.i = phi ptr [ %.019, %bb.f ], [ %.01116.i.i, %.preheader.i.i ], [ %scevgep.i.i, %.loopexit.i.i ]
   %i.ap = ptrtoint ptr %.01116.lcssa.sink.i.i to i64
   %i.aq = ptrtoint ptr %.019 to i64
   %i.ar = sub i64 %i.ap, %i.aq                    ; 3 uses
