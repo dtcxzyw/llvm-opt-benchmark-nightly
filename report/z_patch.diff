@@ -1,0 +1,1159 @@
+diff --git a/clang/lib/CodeGen/CGBuilder.h b/clang/lib/CodeGen/CGBuilder.h
+index 63f5ffc72204a4..af817c174d5ab1 100644
+--- a/clang/lib/CodeGen/CGBuilder.h
++++ b/clang/lib/CodeGen/CGBuilder.h
+@@ -94,19 +94,27 @@ class CGBuilderTy : public CGBuilderBaseTy {
+   CGBuilderTy(const CodeGenModule &CGM, llvm::LLVMContext &C)
+       : CGBuilderBaseTy(CGM.getModule(),
+                         llvm::TargetFolder(CGM.getDataLayout())),
+-        TypeCache(CGM) {}
++        TypeCache(CGM) {
++    disableGEPCanonicalization();
++  }
+   CGBuilderTy(const CodeGenModule &CGM, llvm::LLVMContext &C,
+               const CGBuilderInserterTy &Inserter)
+       : CGBuilderBaseTy(CGM.getModule(),
+                         llvm::TargetFolder(CGM.getDataLayout()), Inserter),
+-        TypeCache(CGM) {}
++        TypeCache(CGM) {
++    disableGEPCanonicalization();
++  }
+   CGBuilderTy(const CodeGenModule &CGM, llvm::Instruction *I)
+       : CGBuilderBaseTy(I->getIterator(),
+                         llvm::TargetFolder(CGM.getDataLayout())),
+-        TypeCache(CGM) {}
++        TypeCache(CGM) {
++    disableGEPCanonicalization();
++  }
+   CGBuilderTy(const CodeGenModule &CGM, llvm::BasicBlock *BB)
+       : CGBuilderBaseTy(BB, llvm::TargetFolder(CGM.getDataLayout())),
+-        TypeCache(CGM) {}
++        TypeCache(CGM) {
++    disableGEPCanonicalization();
++  }
+ 
+   llvm::ConstantInt *getSize(CharUnits N) {
+     return llvm::ConstantInt::getSigned(TypeCache.SizeTy, N.getQuantity());
+diff --git a/clang/lib/CodeGen/CGGPUBuiltin.cpp b/clang/lib/CodeGen/CGGPUBuiltin.cpp
+index 327a317a1e78ed..c8f9bbc895a616 100644
+--- a/clang/lib/CodeGen/CGGPUBuiltin.cpp
++++ b/clang/lib/CodeGen/CGGPUBuiltin.cpp
+@@ -182,6 +182,7 @@ RValue CodeGenFunction::EmitAMDGPUDevicePrintfCallExpr(const CallExpr *E) {
+   }
+ 
+   llvm::IRBuilder<> IRB(Builder.GetInsertPoint());
++  IRB.disableGEPCanonicalization();
+   IRB.SetCurrentDebugLocation(Builder.getCurrentDebugLocation());
+ 
+   bool isBuffered = (CGM.getTarget().getTargetOpts().AMDGPUPrintfKindVal ==
+diff --git a/llvm/include/llvm/Frontend/OpenMP/OMPIRBuilder.h b/llvm/include/llvm/Frontend/OpenMP/OMPIRBuilder.h
+index 4bb38028b24da2..ee83c02005cb9d 100644
+--- a/llvm/include/llvm/Frontend/OpenMP/OMPIRBuilder.h
++++ b/llvm/include/llvm/Frontend/OpenMP/OMPIRBuilder.h
+@@ -526,7 +526,9 @@ class OpenMPIRBuilder {
+   /// not have an effect on \p M (see initialize)
+   OpenMPIRBuilder(Module &M)
+       : M(M), Builder(M), OffloadInfoManager(this), T(M.getTargetTriple()),
+-        IsFinalized(false) {}
++        IsFinalized(false) {
++    Builder.disableGEPCanonicalization();
++  }
+   LLVM_ABI ~OpenMPIRBuilder();
+ 
+   class AtomicInfo : public llvm::AtomicInfo {
+diff --git a/llvm/include/llvm/IR/IRBuilder.h b/llvm/include/llvm/IR/IRBuilder.h
+index 7b215448d566b8..282c1351dbc5ff 100644
+--- a/llvm/include/llvm/IR/IRBuilder.h
++++ b/llvm/include/llvm/IR/IRBuilder.h
+@@ -125,7 +125,7 @@ class IRBuilderBase {
+   MDNode *DefaultFPMathTag = nullptr;
+   FastMathFlags FMF;
+ 
+-  bool CanonicalizeGEPs = false;
++  bool CanonicalizeGEPs = true;
+   bool IsFPConstrained = false;
+   fp::ExceptionBehavior DefaultConstrainedExcept = fp::ebStrict;
+   RoundingMode DefaultConstrainedRounding = RoundingMode::Dynamic;
+@@ -345,7 +345,10 @@ class IRBuilderBase {
+     DefaultOperandBundles = OpBundles;
+   }
+ 
+-  void enableGEPCanonicalization() { CanonicalizeGEPs = true; }
++  /// Disable canonicalization of getelementptr instructions to ptradd form.
++  /// This is a temporary test migration helper and will be removed in the
++  /// future.
++  void disableGEPCanonicalization() { CanonicalizeGEPs = false; }
+ 
+   //===--------------------------------------------------------------------===//
+   // RAII helpers.
+diff --git a/llvm/include/llvm/SandboxIR/Module.h b/llvm/include/llvm/SandboxIR/Module.h
+index 7c40fee024e486..e031ec54db6e05 100644
+--- a/llvm/include/llvm/SandboxIR/Module.h
++++ b/llvm/include/llvm/SandboxIR/Module.h
+@@ -37,7 +37,9 @@ class Module {
+   IRBuilder<ConstantFolder> LLVMIRBuilder;
+ 
+   Module(llvm::Module &LLVMM, Context &Ctx)
+-      : LLVMM(LLVMM), Ctx(Ctx), LLVMIRBuilder(LLVMM) {}
++      : LLVMM(LLVMM), Ctx(Ctx), LLVMIRBuilder(LLVMM) {
++    LLVMIRBuilder.disableGEPCanonicalization();
++  }
+   friend class Context; // For constructor.
+ 
+   auto &getLLVMIRBuilder() { return LLVMIRBuilder; }
+diff --git a/llvm/include/llvm/Transforms/IPO/InstrumentorUtils.h b/llvm/include/llvm/Transforms/IPO/InstrumentorUtils.h
+index c8b66e7719fb5c..28714760192fa8 100644
+--- a/llvm/include/llvm/Transforms/IPO/InstrumentorUtils.h
++++ b/llvm/include/llvm/Transforms/IPO/InstrumentorUtils.h
+@@ -41,7 +41,9 @@ struct InstrumentorIRBuilderTy {
+         IRB(M, ConstantFolder(),
+             // Save the inserted instructions in a structure.
+             IRBuilderCallbackInserter(
+-                [&](Instruction *I) { NewInsts[I] = Epoch; })) {}
++                [&](Instruction *I) { NewInsts[I] = Epoch; })) {
++    IRB.disableGEPCanonicalization();
++  }
+ 
+   /// Destroy the IR builder and remove all erasable instructions cached during
+   /// the process of instrumenting.
+diff --git a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+index b5af0d552613b9..1135bc41494b3d 100644
+--- a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
++++ b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+@@ -127,9 +127,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+         TLI(TLI), DT(DT), DL(DL),
+         SQ(DL, &TLI, &DT, &AC, nullptr, /*UseInstrInfo*/ true,
+            /*CanUseUndef*/ true, &DC),
+-        ORE(ORE), BFI(BFI), BPI(BPI), PSI(PSI), RPOT(RPOT) {
+-    Builder.enableGEPCanonicalization();
+-  }
++        ORE(ORE), BFI(BFI), BPI(BPI), PSI(PSI), RPOT(RPOT) {}
+ 
+   virtual ~InstCombiner() = default;
+ 
+diff --git a/llvm/lib/CodeGen/AtomicExpandPass.cpp b/llvm/lib/CodeGen/AtomicExpandPass.cpp
+index 7f2097633d4217..81e465c4aacbbc 100644
+--- a/llvm/lib/CodeGen/AtomicExpandPass.cpp
++++ b/llvm/lib/CodeGen/AtomicExpandPass.cpp
+@@ -685,6 +685,7 @@ void AtomicExpandImpl::expandElementwiseAtomicRMW(AtomicRMWInst *AI) {
+   Value *Val = AI->getValOperand();
+ 
+   ReplacementIRBuilder Builder(AI, *DL);
++  Builder.disableGEPCanonicalization();
+   IntegerType *IdxTy =
+       DL->getIndexType(AI->getContext(), AI->getPointerAddressSpace());
+ 
+diff --git a/llvm/lib/CodeGen/CodeGenPrepare.cpp b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+index 86f6d38a155a7d..394f83f44e768a 100644
+--- a/llvm/lib/CodeGen/CodeGenPrepare.cpp
++++ b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+@@ -1199,6 +1199,7 @@ simplifyRelocatesOffABase(GCRelocateInst *RelocatedBase,
+ 
+     // Insert after RelocatedBase
+     IRBuilder<> Builder(RelocatedBase->getNextNode());
++    Builder.disableGEPCanonicalization();
+     Builder.SetCurrentDebugLocation(ToReplace->getDebugLoc());
+ 
+     Value *Replacement = Builder.CreateGEP(Derived->getSourceElementType(),
+@@ -6190,6 +6191,7 @@ bool CodeGenPrepare::optimizeGatherScatterInst(Instruction *MemoryInst,
+     auto NumElts = cast<VectorType>(Ptr->getType())->getElementCount();
+ 
+     IRBuilder<> Builder(MemoryInst);
++    Builder.disableGEPCanonicalization();
+ 
+     Type *SourceTy = GEP->getSourceElementType();
+     Type *ScalarIndexTy = DL->getIndexType(Ops[0]->getType()->getScalarType());
+@@ -6230,6 +6232,7 @@ bool CodeGenPrepare::optimizeGatherScatterInst(Instruction *MemoryInst,
+     auto NumElts = cast<VectorType>(Ptr->getType())->getElementCount();
+ 
+     IRBuilder<> Builder(MemoryInst);
++    Builder.disableGEPCanonicalization();
+ 
+     // Emit a vector GEP with a scalar pointer and all 0s vector index.
+     Type *ScalarIndexTy = DL->getIndexType(V->getType()->getScalarType());
+@@ -8471,6 +8474,7 @@ static bool splitMergedValStore(StoreInst &SI, const DataLayout &DL,
+ 
+   // Start to split store.
+   IRBuilder<> Builder(&SI);
++  Builder.disableGEPCanonicalization();
+ 
+   // If LValue/HValue is a bitcast in another BB, create a new one in current
+   // BB so it may be merged with the splitted stores by dag combiner.
+diff --git a/llvm/lib/CodeGen/SafeStack.cpp b/llvm/lib/CodeGen/SafeStack.cpp
+index 390234b312e1a0..e584ec2f91d2c3 100644
+--- a/llvm/lib/CodeGen/SafeStack.cpp
++++ b/llvm/lib/CodeGen/SafeStack.cpp
+@@ -786,6 +786,7 @@ bool SafeStack::run() {
+     ++NumUnsafeStackRestorePointsFunctions;
+ 
+   IRBuilder<> IRB(F.begin()->getFirstInsertionPt());
++  IRB.disableGEPCanonicalization();
+   // Calls must always have a debug location, or else inlining breaks. So
+   // we explicitly set a artificial debug location here.
+   if (DISubprogram *SP = F.getSubprogram())
+diff --git a/llvm/lib/CodeGen/SjLjEHPrepare.cpp b/llvm/lib/CodeGen/SjLjEHPrepare.cpp
+index 44129b69c5dcf1..dfba2339785378 100644
+--- a/llvm/lib/CodeGen/SjLjEHPrepare.cpp
++++ b/llvm/lib/CodeGen/SjLjEHPrepare.cpp
+@@ -134,6 +134,7 @@ bool SjLjEHPrepareImpl::doInitialization(Module &M) {
+ /// function context
+ void SjLjEHPrepareImpl::insertCallSiteStore(Instruction *I, int Number) {
+   IRBuilder<> Builder(I);
++  Builder.disableGEPCanonicalization();
+ 
+   // Get a reference to the call_site field.
+   Type *Int32Ty = Type::getInt32Ty(I->getContext());
+@@ -211,6 +212,7 @@ SjLjEHPrepareImpl::setupFunctionContext(Function &F,
+   // Fill in the function context structure.
+   for (LandingPadInst *LPI : LPads) {
+     IRBuilder<> Builder(LPI->getParent()->getFirstInsertionPt());
++    Builder.disableGEPCanonicalization();
+ 
+     // Reference the __data field.
+     Value *FCData =
+@@ -235,6 +237,7 @@ SjLjEHPrepareImpl::setupFunctionContext(Function &F,
+ 
+   // Personality function
+   IRBuilder<> Builder(EntryBB->getTerminator());
++  Builder.disableGEPCanonicalization();
+   Value *PersonalityFn = F.getPersonalityFn();
+   Value *PersonalityFieldPtr = Builder.CreateConstGEP2_32(
+       FunctionContextTy, FuncCtx, 0, 3, "pers_fn_gep");
+@@ -412,6 +415,7 @@ bool SjLjEHPrepareImpl::setupEntryBlockAndCallSites(Function &F) {
+       setupFunctionContext(F, ArrayRef(LPads.begin(), LPads.end()));
+   BasicBlock *EntryBB = &F.front();
+   IRBuilder<> Builder(EntryBB->getTerminator());
++  Builder.disableGEPCanonicalization();
+ 
+   // Get a reference to the jump buffer.
+   Value *JBufPtr =
+diff --git a/llvm/lib/CodeGen/WasmEHPrepare.cpp b/llvm/lib/CodeGen/WasmEHPrepare.cpp
+index 9af32731ad9792..13440a13b22fa2 100644
+--- a/llvm/lib/CodeGen/WasmEHPrepare.cpp
++++ b/llvm/lib/CodeGen/WasmEHPrepare.cpp
+@@ -334,6 +334,7 @@ void WasmEHPrepareImpl::prepareEHPad(BasicBlock *BB, bool NeedPersonality,
+                                      unsigned Index) {
+   assert(BB->isEHPad() && "BB is not an EHPad!");
+   IRBuilder<> IRB(BB->getFirstInsertionPt());
++  IRB.disableGEPCanonicalization();
+ 
+   auto *FPI = cast<FuncletPadInst>(BB->getFirstNonPHIIt());
+   Instruction *GetExnCI = nullptr, *GetSelectorCI = nullptr;
+diff --git a/llvm/lib/Frontend/Offloading/OffloadWrapper.cpp b/llvm/lib/Frontend/Offloading/OffloadWrapper.cpp
+index bcd65513bc8428..b9ee754aa6538d 100644
+--- a/llvm/lib/Frontend/Offloading/OffloadWrapper.cpp
++++ b/llvm/lib/Frontend/Offloading/OffloadWrapper.cpp
+@@ -404,6 +404,7 @@ Function *createRegisterGlobalsFunction(Module &M, bool IsHIP,
+ 
+   // Create the loop to register all the entries.
+   IRBuilder<> Builder(BasicBlock::Create(C, "entry", RegGlobalsFn));
++  Builder.disableGEPCanonicalization();
+   auto *EntryBB = BasicBlock::Create(C, "while.entry", RegGlobalsFn);
+   auto *IfKindBB = BasicBlock::Create(C, "if.kind", RegGlobalsFn);
+   auto *IfThenBB = BasicBlock::Create(C, "if.then", RegGlobalsFn);
+diff --git a/llvm/lib/IR/Core.cpp b/llvm/lib/IR/Core.cpp
+index c185045816bd92..138462000ff2bd 100644
+--- a/llvm/lib/IR/Core.cpp
++++ b/llvm/lib/IR/Core.cpp
+@@ -3481,7 +3481,10 @@ struct DelayedIRBuilder {
+   std::optional<IRBuilder<>> Builder;
+ 
+   DelayedIRBuilder() = default;
+-  DelayedIRBuilder(Module &M) { Builder.emplace(M); }
++  DelayedIRBuilder(Module &M) {
++    Builder.emplace(M);
++    Builder->disableGEPCanonicalization();
++  }
+ 
+   void initUsingInsertionBlock(BasicBlock *BB) {
+     if (Builder)
+@@ -3491,6 +3494,7 @@ struct DelayedIRBuilder {
+       if (Function *F = BB->getParent()) {
+         if (Module *M = F->getParent()) {
+           Builder.emplace(*M);
++          Builder->disableGEPCanonicalization();
+           return;
+         }
+       }
+diff --git a/llvm/lib/Target/AArch64/AArch64ISelLowering.cpp b/llvm/lib/Target/AArch64/AArch64ISelLowering.cpp
+index 7ff81371f81705..f6504ba80b0aa5 100644
+--- a/llvm/lib/Target/AArch64/AArch64ISelLowering.cpp
++++ b/llvm/lib/Target/AArch64/AArch64ISelLowering.cpp
+@@ -20098,6 +20098,7 @@ bool AArch64TargetLowering::lowerDeinterleaveIntrinsicToLoad(
+                                                 UseScalable, LdTy, PtrTy);
+ 
+   IRBuilder<> Builder(LI);
++  Builder.disableGEPCanonicalization();
+   Value *Pred = nullptr;
+   if (UseScalable)
+     Pred =
+@@ -20178,6 +20179,7 @@ bool AArch64TargetLowering::lowerInterleaveIntrinsicToStore(
+                                                  UseScalable, StTy, PtrTy);
+ 
+   IRBuilder<> Builder(SI);
++  Builder.disableGEPCanonicalization();
+ 
+   Value *BaseAddr = SI->getPointerOperand();
+   Value *Pred = nullptr;
+diff --git a/llvm/lib/Target/AArch64/AArch64StackTagging.cpp b/llvm/lib/Target/AArch64/AArch64StackTagging.cpp
+index 7acb45333b2913..a9c401213e2684 100644
+--- a/llvm/lib/Target/AArch64/AArch64StackTagging.cpp
++++ b/llvm/lib/Target/AArch64/AArch64StackTagging.cpp
+@@ -402,6 +402,7 @@ void AArch64StackTagging::tagAlloca(AllocaInst *AI, Instruction *InsertBefore,
+   }
+ 
+   IRBuilder<> IRB(InsertBefore);
++  IRB.disableGEPCanonicalization();
+   IB.generate(IRB);
+ }
+ 
+@@ -449,6 +450,7 @@ Instruction *AArch64StackTagging::insertBaseTaggedPointer(
+   assert(PrologueBB);
+ 
+   IRBuilder<> IRB(&PrologueBB->front());
++  IRB.disableGEPCanonicalization();
+   Instruction *Base = IRB.CreateIntrinsicWithoutFolding(
+       Intrinsic::aarch64_irg_sp, {},
+       {Constant::getNullValue(IRB.getInt64Ty())});
+diff --git a/llvm/lib/Target/AMDGPU/AMDGPUCtorDtorLowering.cpp b/llvm/lib/Target/AMDGPU/AMDGPUCtorDtorLowering.cpp
+index bc40ce01e8443e..c9c2e193c12031 100644
+--- a/llvm/lib/Target/AMDGPU/AMDGPUCtorDtorLowering.cpp
++++ b/llvm/lib/Target/AMDGPU/AMDGPUCtorDtorLowering.cpp
+@@ -74,6 +74,7 @@ static void createInitOrFiniCalls(Function &F, bool IsCtor) {
+   LLVMContext &C = M.getContext();
+ 
+   IRBuilder<> IRB(BasicBlock::Create(C, "entry", &F));
++  IRB.disableGEPCanonicalization();
+   auto *LoopBB = BasicBlock::Create(C, "while.entry", &F);
+   auto *ExitBB = BasicBlock::Create(C, "while.end", &F);
+   Type *PtrTy = IRB.getPtrTy(AMDGPUAS::GLOBAL_ADDRESS);
+diff --git a/llvm/lib/Target/AMDGPU/AMDGPULowerModuleLDSPass.cpp b/llvm/lib/Target/AMDGPU/AMDGPULowerModuleLDSPass.cpp
+index b9bfc531041564..955111fe07a267 100644
+--- a/llvm/lib/Target/AMDGPU/AMDGPULowerModuleLDSPass.cpp
++++ b/llvm/lib/Target/AMDGPU/AMDGPULowerModuleLDSPass.cpp
+@@ -383,6 +383,7 @@ class AMDGPULowerModuleLDS {
+ 
+     LLVMContext &Ctx = M.getContext();
+     IRBuilder<> Builder(M);
++    Builder.disableGEPCanonicalization();
+     Type *I32 = Type::getInt32Ty(Ctx);
+ 
+     for (size_t Index = 0; Index < ModuleScopeVariables.size(); Index++) {
+@@ -837,6 +838,7 @@ class AMDGPULowerModuleLDS {
+     if (!KernelsThatIndirectlyAllocateDynamicLDS.empty()) {
+       LLVMContext &Ctx = M.getContext();
+       IRBuilder<> Builder(M);
++      Builder.disableGEPCanonicalization();
+       Type *LocalPtrTy = PointerType::get(Ctx, AMDGPUAS::LOCAL_ADDRESS);
+ 
+       std::vector<Constant *> newDynamicLDS;
+diff --git a/llvm/lib/Target/AMDGPU/AMDGPUPromoteAlloca.cpp b/llvm/lib/Target/AMDGPU/AMDGPUPromoteAlloca.cpp
+index 4a2b047332c9d4..b8747b80e2ce8d 100644
+--- a/llvm/lib/Target/AMDGPU/AMDGPUPromoteAlloca.cpp
++++ b/llvm/lib/Target/AMDGPU/AMDGPUPromoteAlloca.cpp
+@@ -1603,6 +1603,7 @@ bool AMDGPUPromoteAllocaImpl::tryPromoteAllocaToLDS(
+     return false;
+ 
+   IRBuilder<> Builder(AA.Alloca);
++  Builder.disableGEPCanonicalization();
+ 
+   const Function &ContainingFunction = *AA.Alloca->getParent()->getParent();
+   const AMDGPUSubtarget &ST = AMDGPUSubtarget::get(TM, ContainingFunction);
+diff --git a/llvm/lib/Target/AMDGPU/AMDGPUSwLowerLDS.cpp b/llvm/lib/Target/AMDGPU/AMDGPUSwLowerLDS.cpp
+index 0dcac4e67df11f..b9b297faae3a5e 100644
+--- a/llvm/lib/Target/AMDGPU/AMDGPUSwLowerLDS.cpp
++++ b/llvm/lib/Target/AMDGPU/AMDGPUSwLowerLDS.cpp
+@@ -164,7 +164,9 @@ struct FunctionsAndLDSAccess {
+ class AMDGPUSwLowerLDS {
+ public:
+   AMDGPUSwLowerLDS(Module &Mod, DomTreeCallback Callback)
+-      : M(Mod), IRB(M), DTCallback(Callback) {}
++      : M(Mod), IRB(M), DTCallback(Callback) {
++    IRB.disableGEPCanonicalization();
++  }
+   bool run();
+   void getUsesOfLDSByNonKernels();
+   void getNonKernelsWithLDSInstructions(const CallGraph &CG);
+diff --git a/llvm/lib/Target/ARM/ARMISelLowering.cpp b/llvm/lib/Target/ARM/ARMISelLowering.cpp
+index d910f9cc2e4ec3..4c1ba9c10a1d1d 100644
+--- a/llvm/lib/Target/ARM/ARMISelLowering.cpp
++++ b/llvm/lib/Target/ARM/ARMISelLowering.cpp
+@@ -22226,6 +22226,7 @@ bool ARMTargetLowering::lowerInterleavedLoad(
+     VecTy = FixedVectorType::get(DL.getIntPtrType(EltTy), VecTy);
+ 
+   IRBuilder<> Builder(LI);
++  Builder.disableGEPCanonicalization();
+ 
+   // The base address of the load.
+   Value *BaseAddr = LI->getPointerOperand();
+@@ -22374,6 +22375,7 @@ bool ARMTargetLowering::lowerInterleavedStore(Instruction *Store,
+   Value *Op0 = SVI->getOperand(0);
+   Value *Op1 = SVI->getOperand(1);
+   IRBuilder<> Builder(SI);
++  Builder.disableGEPCanonicalization();
+ 
+   // StN intrinsics don't support pointer vectors as arguments. Convert pointer
+   // vectors to integer vectors.
+diff --git a/llvm/lib/Target/BPF/BPFFuncTable.cpp b/llvm/lib/Target/BPF/BPFFuncTable.cpp
+index 017e0e015b402c..dcc6cfa6367699 100644
+--- a/llvm/lib/Target/BPF/BPFFuncTable.cpp
++++ b/llvm/lib/Target/BPF/BPFFuncTable.cpp
+@@ -191,6 +191,7 @@ static bool runFuncTable(Module &M) {
+                               "__bpf_func_table");
+ 
+     IRBuilder<> B(CB);
++    B.disableGEPCanonicalization();
+     Value *Idx = B.CreatePtrToInt(CB->getCalledOperand(), I64);
+     Idx = B.CreateSub(Idx, ConstantInt::get(I64, R.First));
+     Idx = B.CreateBinaryIntrinsic(Intrinsic::umin, Idx,
+diff --git a/llvm/lib/Target/NVPTX/NVPTXCtorDtorLowering.cpp b/llvm/lib/Target/NVPTX/NVPTXCtorDtorLowering.cpp
+index 58a088e58b267b..3e5cfad4c03334 100644
+--- a/llvm/lib/Target/NVPTX/NVPTXCtorDtorLowering.cpp
++++ b/llvm/lib/Target/NVPTX/NVPTXCtorDtorLowering.cpp
+@@ -88,6 +88,7 @@ static void createInitOrFiniCalls(Function &F, bool IsCtor) {
+   LLVMContext &C = M.getContext();
+ 
+   IRBuilder<> IRB(BasicBlock::Create(C, "entry", &F));
++  IRB.disableGEPCanonicalization();
+   auto *LoopBB = BasicBlock::Create(C, "while.entry", &F);
+   auto *ExitBB = BasicBlock::Create(C, "while.end", &F);
+   Type *PtrTy = IRB.getPtrTy(llvm::ADDRESS_SPACE_GLOBAL);
+diff --git a/llvm/lib/Target/RISCV/RISCVGatherScatterLowering.cpp b/llvm/lib/Target/RISCV/RISCVGatherScatterLowering.cpp
+index 9dfff0f6a9cf7d..63de6beacd9447 100644
+--- a/llvm/lib/Target/RISCV/RISCVGatherScatterLowering.cpp
++++ b/llvm/lib/Target/RISCV/RISCVGatherScatterLowering.cpp
+@@ -569,6 +569,7 @@ bool RISCVGatherScatterLoweringImpl::tryCreateStridedLoadStore(
+     return false;
+ 
+   IRBuilder Builder(PtrI->getIterator(), InstSimplifyFolder(*DL));
++  Builder.disableGEPCanonicalization();
+ 
+   Value *BasePtr, *Stride;
+   std::tie(BasePtr, Stride) = determineBaseAndStride(PtrI, Builder);
+diff --git a/llvm/lib/Target/WebAssembly/WebAssemblyLowerEmscriptenEHSjLj.cpp b/llvm/lib/Target/WebAssembly/WebAssemblyLowerEmscriptenEHSjLj.cpp
+index 76ea39e445db68..308c236d0cba83 100644
+--- a/llvm/lib/Target/WebAssembly/WebAssemblyLowerEmscriptenEHSjLj.cpp
++++ b/llvm/lib/Target/WebAssembly/WebAssemblyLowerEmscriptenEHSjLj.cpp
+@@ -1642,6 +1642,7 @@ void WebAssemblyLowerEmscriptenEHSjLjImpl::handleLongjmpableCallsForWasmSjLj(
+   Module &M = *F.getParent();
+   LLVMContext &C = F.getContext();
+   IRBuilder<> IRB(M);
++  IRB.disableGEPCanonicalization();
+ 
+   // A function with catchswitch/catchpad instruction should have a personality
+   // function attached to it. Search for the wasm personality function, and if
+diff --git a/llvm/lib/Target/X86/X86InterleavedAccess.cpp b/llvm/lib/Target/X86/X86InterleavedAccess.cpp
+index 4188487d759117..b2c0bf5facf452 100644
+--- a/llvm/lib/Target/X86/X86InterleavedAccess.cpp
++++ b/llvm/lib/Target/X86/X86InterleavedAccess.cpp
+@@ -816,6 +816,7 @@ bool X86TargetLowering::lowerInterleavedLoad(
+ 
+   // Create an interleaved access group.
+   IRBuilder<> Builder(LI);
++  Builder.disableGEPCanonicalization();
+   X86InterleavedAccessGroup Grp(LI, Shuffles, Indices, Factor, Subtarget,
+                                 Builder);
+ 
+diff --git a/llvm/lib/Target/X86/X86LowerAMXIntrinsics.cpp b/llvm/lib/Target/X86/X86LowerAMXIntrinsics.cpp
+index 8c88613d081a83..e74836d8880652 100644
+--- a/llvm/lib/Target/X86/X86LowerAMXIntrinsics.cpp
++++ b/llvm/lib/Target/X86/X86LowerAMXIntrinsics.cpp
+@@ -546,6 +546,7 @@ bool X86LowerAMXIntrinsics::lowerTileLoadStore(Instruction *TileLoadStore) {
+   BasicBlock *End =
+       SplitBlock(InsertI->getParent(), InsertI, &DTU, LI, nullptr, "continue");
+   IRBuilder<> Builder(TileLoadStore);
++  Builder.disableGEPCanonicalization();
+   Value *ResVec = createTileLoadStoreLoops<IsTileLoad>(
+       Start, End, Builder, M, NDWord, Ptr, StrideDWord,
+       IsTileLoad ? nullptr : Tile);
+diff --git a/llvm/lib/Target/X86/X86WinEHState.cpp b/llvm/lib/Target/X86/X86WinEHState.cpp
+index 86b21292070bf0..f766b1e46a152d 100644
+--- a/llvm/lib/Target/X86/X86WinEHState.cpp
++++ b/llvm/lib/Target/X86/X86WinEHState.cpp
+@@ -314,6 +314,7 @@ void WinEHStateFnPassImpl::emitExceptionRegistrationRecord(Function *F) {
+          Personality == EHPersonality::MSVC_X86SEH);
+ 
+   IRBuilder<> Builder(F->getEntryBlock().begin());
++  Builder.disableGEPCanonicalization();
+   Type *Int8PtrType = Builder.getPtrTy();
+   Type *Int32Ty = Builder.getInt32Ty();
+   Type *VoidTy = Builder.getVoidTy();
+@@ -824,6 +825,7 @@ void WinEHStateFnPassImpl::addStateStores(Function &F,
+     bool InCleanup = isa<CleanupPadInst>(FuncletEntryBB->getFirstNonPHIIt());
+ 
+     IRBuilder<> Builder(Call);
++    Builder.disableGEPCanonicalization();
+     Value *State;
+     if (InCleanup) {
+       Value *StateField =
+@@ -838,6 +840,7 @@ void WinEHStateFnPassImpl::addStateStores(Function &F,
+ 
+ void WinEHStateFnPassImpl::insertStateNumberStore(Instruction *IP, int State) {
+   IRBuilder<> Builder(IP);
++  Builder.disableGEPCanonicalization();
+   Value *StateField =
+       Builder.CreateStructGEP(RegNodeTy, RegNode, StateFieldIndex);
+   Builder.CreateStore(Builder.getInt32(State), StateField);
+diff --git a/llvm/lib/Transforms/IPO/ExpandVariadics.cpp b/llvm/lib/Transforms/IPO/ExpandVariadics.cpp
+index 538bb6de9ad31b..bacc2e211b5443 100644
+--- a/llvm/lib/Transforms/IPO/ExpandVariadics.cpp
++++ b/llvm/lib/Transforms/IPO/ExpandVariadics.cpp
+@@ -353,6 +353,7 @@ bool ExpandVariadics::runOnModule(Module &M) {
+ 
+   const DataLayout &DL = M.getDataLayout();
+   IRBuilder<> Builder(M);
++  Builder.disableGEPCanonicalization();
+ 
+   // Lowering needs to run on all functions exactly once.
+   // Optimize could run on functions containing va_start exactly once.
+diff --git a/llvm/lib/Transforms/Instrumentation/DataFlowSanitizer.cpp b/llvm/lib/Transforms/Instrumentation/DataFlowSanitizer.cpp
+index 2f17ca49312140..1bcf6b8ad16422 100644
+--- a/llvm/lib/Transforms/Instrumentation/DataFlowSanitizer.cpp
++++ b/llvm/lib/Transforms/Instrumentation/DataFlowSanitizer.cpp
+@@ -2093,6 +2093,7 @@ Value *DataFlowSanitizer::loadNextOrigin(BasicBlock::iterator Pos,
+                                          Align OriginAlign,
+                                          Value **OriginAddr) {
+   IRBuilder<> IRB(Pos);
++  IRB.disableGEPCanonicalization();
+   *OriginAddr =
+       IRB.CreateGEP(OriginTy, *OriginAddr, ConstantInt::get(IntptrTy, 1));
+   return IRB.CreateAlignedLoad(OriginTy, *OriginAddr, OriginAlign);
+@@ -2125,6 +2126,7 @@ std::pair<Value *, Value *> DFSanFunction::loadShadowFast(
+       ShadowSize == 4 ? Type::getInt32Ty(*DFS.Ctx) : Type::getInt64Ty(*DFS.Ctx);
+ 
+   IRBuilder<> IRB(Pos);
++  IRB.disableGEPCanonicalization();
+   Value *CombinedWideShadow =
+       IRB.CreateAlignedLoad(WideShadowTy, ShadowAddr, ShadowAlign);
+ 
+@@ -2269,6 +2271,7 @@ std::pair<Value *, Value *> DFSanFunction::loadShadowOriginSansLoadTracking(
+   }
+   case 2: {
+     IRBuilder<> IRB(Pos);
++    IRB.disableGEPCanonicalization();
+     Value *ShadowAddr1 = IRB.CreateGEP(DFS.PrimitiveShadowTy, ShadowAddr,
+                                        ConstantInt::get(DFS.IntptrTy, 1));
+     Value *Load =
+@@ -2489,6 +2492,7 @@ void DFSanFunction::storeOrigin(BasicBlock::iterator Pos, Value *Addr,
+   const Align OriginAlignment = getOriginAlign(InstAlignment);
+   Value *CollapsedShadow = collapseToPrimitiveShadow(Shadow, Pos);
+   IRBuilder<> IRB(Pos);
++  IRB.disableGEPCanonicalization();
+   if (auto *ConstantShadow = dyn_cast<Constant>(CollapsedShadow)) {
+     if (!ConstantShadow->isNullValue())
+       paintOrigin(IRB, updateOrigin(Origin, IRB), StoreOriginAddr, Size,
+@@ -2506,6 +2510,7 @@ void DFSanFunction::storeOrigin(BasicBlock::iterator Pos, Value *Addr,
+     Instruction *CheckTerm = SplitBlockAndInsertIfThen(
+         Cmp, &*IRB.GetInsertPoint(), false, DFS.OriginStoreWeights, &DTU);
+     IRBuilder<> IRBNew(CheckTerm);
++    IRBNew.disableGEPCanonicalization();
+     paintOrigin(IRBNew, updateOrigin(Origin, IRBNew), StoreOriginAddr, Size,
+                 OriginAlignment);
+     ++NumOriginStores;
+@@ -2556,6 +2561,7 @@ void DFSanFunction::storePrimitiveShadowOrigin(Value *Addr, uint64_t Size,
+   }
+ 
+   IRBuilder<> IRB(Pos);
++  IRB.disableGEPCanonicalization();
+   Value *ShadowAddr, *OriginAddr;
+   std::tie(ShadowAddr, OriginAddr) =
+       DFS.getShadowOriginAddress(Addr, InstAlignment, Pos);
+@@ -3038,6 +3044,7 @@ void DFSanVisitor::addOriginArguments(Function &F, CallBase &CB,
+ 
+ bool DFSanVisitor::visitWrappedCallBase(Function &F, CallBase &CB) {
+   IRBuilder<> IRB(&CB);
++  IRB.disableGEPCanonicalization();
+   switch (DFSF.DFS.getWrapperKind(&F)) {
+   case DataFlowSanitizer::WK_Warning:
+     CB.setCalledFunction(&F);
+diff --git a/llvm/lib/Transforms/Instrumentation/GCOVProfiling.cpp b/llvm/lib/Transforms/Instrumentation/GCOVProfiling.cpp
+index 434eab24dda584..3c1f150ea87e80 100644
+--- a/llvm/lib/Transforms/Instrumentation/GCOVProfiling.cpp
++++ b/llvm/lib/Transforms/Instrumentation/GCOVProfiling.cpp
+@@ -1104,6 +1104,7 @@ Function *GCOVProfiler::insertCounterWriteout(
+ 
+   BasicBlock *BB = BasicBlock::Create(*Ctx, "entry", WriteoutF);
+   IRBuilder<> Builder(BB);
++  Builder.disableGEPCanonicalization();
+ 
+   auto *TLI = &GetTLI(*WriteoutF);
+ 
+diff --git a/llvm/lib/Transforms/Instrumentation/HWAddressSanitizer.cpp b/llvm/lib/Transforms/Instrumentation/HWAddressSanitizer.cpp
+index c09fd212672eef..501f56413bd56c 100644
+--- a/llvm/lib/Transforms/Instrumentation/HWAddressSanitizer.cpp
++++ b/llvm/lib/Transforms/Instrumentation/HWAddressSanitizer.cpp
+@@ -1338,6 +1338,7 @@ void HWAddressSanitizer::instrumentStack(OptimizationRemarkEmitter &ORE,
+     auto *AI = KV.first;
+     memtag::AllocaInfo &Info = KV.second;
+     IRBuilder<> IRB(AI->getNextNode());
++    IRB.disableGEPCanonicalization();
+ 
+     // Replace uses of the alloca with tagged address.
+     Value *Tag = getAllocaTag(IRB, StackTag, N);
+@@ -1529,6 +1530,7 @@ void HWAddressSanitizer::sanitizeFunction(Function &F,
+ 
+   BasicBlock::iterator InsertPt = F.getEntryBlock().begin();
+   IRBuilder<> EntryIRB(InsertPt);
++  EntryIRB.disableGEPCanonicalization();
+   emitPrologue(EntryIRB,
+                /*WithFrameRecord*/ Opts.hwasan_record_stack_history !=
+                        RecordStackHistoryMode::none &&
+diff --git a/llvm/lib/Transforms/Instrumentation/KCFI.cpp b/llvm/lib/Transforms/Instrumentation/KCFI.cpp
+index 558058456fb4cc..61acbe0b9d3582 100644
+--- a/llvm/lib/Transforms/Instrumentation/KCFI.cpp
++++ b/llvm/lib/Transforms/Instrumentation/KCFI.cpp
+@@ -92,6 +92,7 @@ PreservedAnalyses KCFIPass::run(Function &F, FunctionAnalysisManager &AM) {
+ 
+     // Emit a check and trap if the target hash doesn't match.
+     IRBuilder<> Builder(Call);
++    Builder.disableGEPCanonicalization();
+     Value *FuncPtr = Call->getCalledOperand();
+     // ARM uses the least significant bit of the function pointer to select
+     // between ARM and Thumb modes for the callee. Instructions are always
+diff --git a/llvm/lib/Transforms/Instrumentation/MemProfInstrumentation.cpp b/llvm/lib/Transforms/Instrumentation/MemProfInstrumentation.cpp
+index 73bfb07726bdca..c8e5558ace669f 100644
+--- a/llvm/lib/Transforms/Instrumentation/MemProfInstrumentation.cpp
++++ b/llvm/lib/Transforms/Instrumentation/MemProfInstrumentation.cpp
+@@ -343,6 +343,7 @@ void MemProfiler::instrumentMaskedLoadOrStore(const DataLayout &DL, Value *Mask,
+     }
+ 
+     IRBuilder<> IRB(InsertBefore);
++    IRB.disableGEPCanonicalization();
+     InstrumentedAddress =
+         IRB.CreateGEP(VTy, Addr, {Zero, ConstantInt::get(IntptrTy, Idx)});
+     instrumentAddress(I, InsertBefore, InstrumentedAddress, IsWrite);
+diff --git a/llvm/lib/Transforms/Instrumentation/MemorySanitizer.cpp b/llvm/lib/Transforms/Instrumentation/MemorySanitizer.cpp
+index f7a263d3c7a929..10984801c8f8a4 100644
+--- a/llvm/lib/Transforms/Instrumentation/MemorySanitizer.cpp
++++ b/llvm/lib/Transforms/Instrumentation/MemorySanitizer.cpp
+@@ -1097,6 +1097,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+ 
+     if (MS.CompileKernel) {
+       IRBuilder<> IRB(FnPrologueEnd);
++      IRB.disableGEPCanonicalization();
+       insertKmsanPrologue(IRB);
+     }
+ 
+@@ -1227,6 +1228,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+       Instruction *CheckTerm = SplitBlockAndInsertIfThen(
+           Cmp, &*IRB.GetInsertPoint(), false, MS.OriginStoreWeights);
+       IRBuilder<> IRBNew(CheckTerm);
++      IRBNew.disableGEPCanonicalization();
+       paintOrigin(IRBNew, updateOrigin(Origin, IRBNew), OriginPtr, StoreSize,
+                   OriginAlignment);
+     }
+@@ -1235,6 +1237,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+   void materializeStores() {
+     for (StoreInst *SI : StoreList) {
+       IRBuilder<> IRB(SI);
++      IRB.disableGEPCanonicalization();
+       Value *Val = SI->getValueOperand();
+       Value *Addr = SI->getPointerOperand();
+       Value *Shadow = SI->isAtomic() ? getCleanShadow(Val) : getShadow(Val);
+@@ -4467,6 +4470,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+   //       stores are lowered to Intrinsic::masked_store.
+   void handleMaskedStore(IntrinsicInst &I) {
+     IRBuilder<> IRB(&I);
++    IRB.disableGEPCanonicalization();
+     Value *V = I.getArgOperand(0);
+     Value *Ptr = I.getArgOperand(1);
+     const Align Alignment = I.getParamAlign(1).valueOrOne();
+@@ -4628,6 +4632,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+     assert(I.arg_size() == 3);
+ 
+     IRBuilder<> IRB(&I);
++    IRB.disableGEPCanonicalization();
+ 
+     Value *Dst = I.getArgOperand(0);
+     assert(Dst->getType()->isPointerTy() && "Destination is not a pointer!");
+@@ -5556,6 +5561,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+   /// MSan logic, simply by applying the corresponding intrinsic to the shadow.
+   void handleNEONVectorStoreIntrinsic(IntrinsicInst &I, bool useLane) {
+     IRBuilder<> IRB(&I);
++    IRB.disableGEPCanonicalization();
+ 
+     // Don't use getNumOperands() because it includes the callee
+     int numArgOperands = I.arg_size();
+@@ -7765,6 +7771,7 @@ struct MemorySanitizerVisitor : public InstVisitor<MemorySanitizerVisitor> {
+       maybeMarkSanitizerLibraryCallNoBuiltin(Call, TLI);
+     }
+     IRBuilder<> IRB(&CB);
++    IRB.disableGEPCanonicalization();
+     bool MayCheckCall = MS.EagerChecks;
+     if (Function *Func = CB.getCalledFunction()) {
+       // __sanitizer_unaligned_{load,store} functions may be called by users
+@@ -8602,6 +8609,7 @@ struct VarArgAMD64Helper : public VarArgHelperBase {
+     // Copy va_list shadow from the backup copy of the TLS contents.
+     for (CallInst *OrigInst : VAStartInstrumentationList) {
+       NextNodeIRBuilder IRB(OrigInst);
++      IRB.disableGEPCanonicalization();
+       Value *VAListTag = OrigInst->getArgOperand(0);
+ 
+       Value *RegSaveAreaPtrPtr =
+@@ -9477,6 +9485,7 @@ struct VarArgSystemZHelper : public VarArgHelperBase {
+     // Copy va_list shadow from the backup copy of the TLS contents.
+     for (CallInst *OrigInst : VAStartInstrumentationList) {
+       NextNodeIRBuilder IRB(OrigInst);
++      IRB.disableGEPCanonicalization();
+       Value *VAListTag = OrigInst->getArgOperand(0);
+       copyRegSaveArea(IRB, VAListTag);
+       copyOverflowArea(IRB, VAListTag);
+diff --git a/llvm/lib/Transforms/Instrumentation/PGOCtxProfLowering.cpp b/llvm/lib/Transforms/Instrumentation/PGOCtxProfLowering.cpp
+index a16ab027926e9e..d6c708aa5f6cf9 100644
+--- a/llvm/lib/Transforms/Instrumentation/PGOCtxProfLowering.cpp
++++ b/llvm/lib/Transforms/Instrumentation/PGOCtxProfLowering.cpp
+@@ -275,6 +275,7 @@ bool CtxInstrumentationLowerer::lowerFunction(Function &F) {
+       assert(Mark->getIndex()->isZero());
+ 
+       IRBuilder<> Builder(Mark);
++      Builder.disableGEPCanonicalization();
+       Guid = Builder.getInt64(cast<Function>(*Mark->getNameValue()).getGUID());
+       // The type of the context of this function is now knowable since we have
+       // NumCallsites and NumCounters. We declare it here because it's more
+@@ -351,6 +352,7 @@ bool CtxInstrumentationLowerer::lowerFunction(Function &F) {
+     for (auto &I : llvm::make_early_inc_range(BB)) {
+       if (auto *Instr = dyn_cast<InstrProfCntrInstBase>(&I)) {
+         IRBuilder<> Builder(Instr);
++        Builder.disableGEPCanonicalization();
+         switch (Instr->getIntrinsicID()) {
+         case llvm::Intrinsic::instrprof_increment:
+         case llvm::Intrinsic::instrprof_increment_step: {
+diff --git a/llvm/lib/Transforms/Scalar/ExpandMemCmp.cpp b/llvm/lib/Transforms/Scalar/ExpandMemCmp.cpp
+index 27ad52324d45ae..4feb783a3135b9 100644
+--- a/llvm/lib/Transforms/Scalar/ExpandMemCmp.cpp
++++ b/llvm/lib/Transforms/Scalar/ExpandMemCmp.cpp
+@@ -316,6 +316,7 @@ MemCmpExpansion::MemCmpExpansion(
+       MaxBytesPerBlock(MaxBytesPerBlock), IsUsedForZeroCmp(IsUsedForZeroCmp),
+       DL(TheDataLayout), TTI(TTI), CommonAlign(CommonAlign), DTU(DTU),
+       Builder(CI) {
++  Builder.disableGEPCanonicalization();
+   assert(Size > 0 && "zero blocks");
+   assert(NumLoadsPerBlock > 0 && "zero loads per block");
+   // Scale the max size down if the target can load more bytes than we need.
+diff --git a/llvm/lib/Transforms/Scalar/LICM.cpp b/llvm/lib/Transforms/Scalar/LICM.cpp
+index beacb150e56287..4217d1a1013995 100644
+--- a/llvm/lib/Transforms/Scalar/LICM.cpp
++++ b/llvm/lib/Transforms/Scalar/LICM.cpp
+@@ -2355,6 +2355,7 @@ static bool hoistGEP(Instruction &I, Loop &L, const LICMDependencies &Deps) {
+ 
+   BasicBlock *Preheader = L.getLoopPreheader();
+   IRBuilder<> Builder(Preheader->getTerminator());
++  Builder.disableGEPCanonicalization();
+   Value *NewSrc = Builder.CreateGEP(GEP->getSourceElementType(), SrcPtr,
+                                     SmallVector<Value *>(GEP->indices()),
+                                     "invariant.gep", IsInBounds);
+diff --git a/llvm/lib/Transforms/Scalar/LoopFlatten.cpp b/llvm/lib/Transforms/Scalar/LoopFlatten.cpp
+index f1b67b9df06ea9..2b83bb2792bb21 100644
+--- a/llvm/lib/Transforms/Scalar/LoopFlatten.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopFlatten.cpp
+@@ -780,6 +780,7 @@ static bool DoFlattenLoopPair(FlattenInfo &FI, DominatorTree *DT, LoopInfo *LI,
+   // Replace all uses of the polynomial calculated from the two induction
+   // variables with the one new one.
+   IRBuilder<> Builder(FI.OuterInductionPHI->getParent()->getTerminator());
++  Builder.disableGEPCanonicalization();
+   for (Value *V : FI.LinearIVUses) {
+     Value *OuterValue = FI.OuterInductionPHI;
+     if (FI.Widened)
+diff --git a/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp b/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
+index 1f6dca01516117..384755d64c1a9c 100644
+--- a/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
+@@ -1962,6 +1962,7 @@ void LoopIdiomRecognize::optimizeCRCLoopUsingTableLookup(
+     };
+ 
+     IRBuilder<> Builder(CurLoop->getHeader()->getFirstNonPHIIt());
++    Builder.disableGEPCanonicalization();
+ 
+     // Create the CRC PHI, and initialize its incoming value to the initial
+     // value of CRC.
+diff --git a/llvm/lib/Transforms/Scalar/LowerMatrixIntrinsics.cpp b/llvm/lib/Transforms/Scalar/LowerMatrixIntrinsics.cpp
+index d09a81f22634ea..2bff04996c9fd3 100644
+--- a/llvm/lib/Transforms/Scalar/LowerMatrixIntrinsics.cpp
++++ b/llvm/lib/Transforms/Scalar/LowerMatrixIntrinsics.cpp
+@@ -1170,6 +1170,7 @@ class LowerMatrixIntrinsics {
+       Value *Op2;
+       MatrixTy Result;
+       IRBuilder<> Builder(Inst);
++      Builder.disableGEPCanonicalization();
+       if (auto *BinOp = dyn_cast<BinaryOperator>(Inst))
+         Result = VisitBinaryOperator(BinOp, SI, Builder);
+       else if (auto *Cast = dyn_cast<CastInst>(Inst))
+@@ -2001,6 +2002,7 @@ class LowerMatrixIntrinsics {
+     BasicBlock *End =
+         SplitBlock(InsertI->getParent(), InsertI, DT, LI, nullptr, "continue");
+     IRBuilder<> Builder(MatMul);
++    Builder.disableGEPCanonicalization();
+     BasicBlock *InnerBody = TI.CreateTiledLoops(Start, End, Builder, DTU, *LI);
+ 
+     Type *TileVecTy = FixedVectorType::get(MatMul->getType()->getScalarType(),
+@@ -2083,6 +2085,7 @@ class LowerMatrixIntrinsics {
+       createTiledLoops(MatMul, APtr, LShape, BPtr, RShape, Store);
+     else {
+       IRBuilder<> Builder(Store);
++      Builder.disableGEPCanonicalization();
+       for (unsigned J = 0; J < C; J += Opts.fuse_matrix_tile_size)
+         for (unsigned I = 0; I < R; I += Opts.fuse_matrix_tile_size) {
+           const unsigned TileR = std::min(R - I, Opts.fuse_matrix_tile_size);
+diff --git a/llvm/lib/Transforms/Scalar/NaryReassociate.cpp b/llvm/lib/Transforms/Scalar/NaryReassociate.cpp
+index 62560b58278010..f44d915373172d 100644
+--- a/llvm/lib/Transforms/Scalar/NaryReassociate.cpp
++++ b/llvm/lib/Transforms/Scalar/NaryReassociate.cpp
+@@ -395,6 +395,7 @@ NaryReassociatePass::tryReassociateGEPAtIndex(GetElementPtrInst *GEP,
+     return nullptr;
+ 
+   IRBuilder<> Builder(GEP);
++  Builder.disableGEPCanonicalization();
+   // Candidate should have the same pointer type as GEP.
+   assert(Candidate->getType() == GEP->getType());
+ 
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index a92ac5dcac245b..075ac5818082f0 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -5358,6 +5358,7 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+   // From here on, we can't fail and will be building new accesses, so rig up
+   // an IR builder.
+   IRBuilderTy IRB(&AI);
++  IRB.disableGEPCanonicalization();
+ 
+   // Collect the new slices which we will merge into the alloca slices.
+   SmallVector<Slice, 4> NewSlices;
+@@ -6430,6 +6431,7 @@ SROA::runOnAlloca(AllocaInst &AI) {
+   // First, split any FCA loads and stores touching this alloca to promote
+   // better splitting and promotion opportunities.
+   IRBuilderTy IRB(&AI);
++  IRB.disableGEPCanonicalization();
+   AggLoadStoreRewriter AggRewriter(DL, IRB);
+   Changed |= AggRewriter.rewrite(AI);
+ 
+diff --git a/llvm/lib/Transforms/Scalar/ScalarizeMaskedMemIntrin.cpp b/llvm/lib/Transforms/Scalar/ScalarizeMaskedMemIntrin.cpp
+index bfbfb4b7572c35..939e7b32f2fd3e 100644
+--- a/llvm/lib/Transforms/Scalar/ScalarizeMaskedMemIntrin.cpp
++++ b/llvm/lib/Transforms/Scalar/ScalarizeMaskedMemIntrin.cpp
+@@ -231,6 +231,7 @@ static void scalarizeMaskedLoad(const DataLayout &DL, bool HasBranchDivergence,
+ 
+   Instruction *InsertPt = CI;
+   IRBuilder<> Builder(InsertPt);
++  Builder.disableGEPCanonicalization();
+   BasicBlock *IfBlock = CI->getParent();
+ 
+   // Short-cut if the mask is all-true.
+@@ -416,6 +417,7 @@ static void scalarizeMaskedStore(const DataLayout &DL, bool HasBranchDivergence,
+ 
+   Instruction *InsertPt = CI;
+   IRBuilder<> Builder(InsertPt);
++  Builder.disableGEPCanonicalization();
+ 
+   // Short-cut if the mask is all-true.
+   if (isa<Constant>(Mask) && cast<Constant>(Mask)->isAllOnesValue()) {
+@@ -828,6 +830,7 @@ static void scalarizeMaskedExpandLoad(const DataLayout &DL,
+ 
+   Instruction *InsertPt = CI;
+   IRBuilder<> Builder(InsertPt);
++  Builder.disableGEPCanonicalization();
+   BasicBlock *IfBlock = CI->getParent();
+ 
+   unsigned VectorWidth = VecType->getNumElements();
+@@ -971,6 +974,7 @@ static void scalarizeMaskedCompressStore(const DataLayout &DL,
+ 
+   Instruction *InsertPt = CI;
+   IRBuilder<> Builder(InsertPt);
++  Builder.disableGEPCanonicalization();
+   BasicBlock *IfBlock = CI->getParent();
+ 
+   Type *EltTy = VecType->getElementType();
+diff --git a/llvm/lib/Transforms/Scalar/Scalarizer.cpp b/llvm/lib/Transforms/Scalar/Scalarizer.cpp
+index 080c88d1cd951a..5af07a4400aa98 100644
+--- a/llvm/lib/Transforms/Scalar/Scalarizer.cpp
++++ b/llvm/lib/Transforms/Scalar/Scalarizer.cpp
+@@ -387,6 +387,7 @@ Value *Scatterer::operator[](unsigned Frag) {
+   if (CV[Frag])
+     return CV[Frag];
+   IRBuilder<> Builder(BBI);
++  Builder.disableGEPCanonicalization();
+   if (IsPointer) {
+     if (Frag == 0)
+       CV[Frag] = V;
+@@ -872,6 +873,7 @@ bool ScalarizerVisitor::visitGetElementPtrInst(GetElementPtrInst &GEPI) {
+     return false;
+ 
+   IRBuilder<> Builder(&GEPI);
++  Builder.disableGEPCanonicalization();
+   unsigned NumIndices = GEPI.getNumIndices();
+ 
+   // The base pointer and indices might be scalar even if it's a vector GEP.
+diff --git a/llvm/lib/Transforms/Scalar/SeparateConstOffsetFromGEP.cpp b/llvm/lib/Transforms/Scalar/SeparateConstOffsetFromGEP.cpp
+index 9919680a38ca0a..e1ddf19d502ab7 100644
+--- a/llvm/lib/Transforms/Scalar/SeparateConstOffsetFromGEP.cpp
++++ b/llvm/lib/Transforms/Scalar/SeparateConstOffsetFromGEP.cpp
+@@ -969,6 +969,7 @@ APInt SeparateConstOffsetFromGEP::accumulateByteOffset(GetElementPtrInst *GEP,
+ void SeparateConstOffsetFromGEP::lowerToSingleIndexGEPs(
+     GetElementPtrInst *Variadic, const APInt &AccumulativeByteOffset) {
+   IRBuilder<> Builder(Variadic);
++  Builder.disableGEPCanonicalization();
+   Type *PtrIndexTy = DL->getIndexType(Variadic->getType());
+ 
+   Value *ResultPtr = Variadic->getOperand(0);
+@@ -1060,6 +1061,7 @@ bool SeparateConstOffsetFromGEP::reorderGEP(GetElementPtrInst *GEP,
+   }
+ 
+   IRBuilder<> Builder(GEP);
++  Builder.disableGEPCanonicalization();
+   // For trivial GEP chains, we can swap the indices.
+   Value *NewSrc = Builder.CreateGEP(
+       GEP->getSourceElementType(), PtrGEP->getPointerOperand(),
+diff --git a/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp b/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp
+index b614568baaa79e..c731e92a360d25 100644
+--- a/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp
++++ b/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp
+@@ -1741,6 +1741,7 @@ void llvm::SplitBlockAndInsertForEachLane(
+     std::function<void(IRBuilderBase &, Value *)> Func) {
+ 
+   IRBuilder<> IRB(InsertBefore);
++  IRB.disableGEPCanonicalization();
+ 
+   if (EC.isScalable()) {
+     Value *NumElements = IRB.CreateElementCount(IndexTy, EC);
+@@ -1765,6 +1766,7 @@ void llvm::SplitBlockAndInsertForEachLane(
+     std::function<void(IRBuilderBase &, Value *)> Func) {
+ 
+   IRBuilder<> IRB(InsertBefore);
++  IRB.disableGEPCanonicalization();
+   Type *Ty = EVL->getType();
+ 
+   if (!isa<ConstantInt>(EVL)) {
+diff --git a/llvm/lib/Transforms/Utils/LowerMemIntrinsics.cpp b/llvm/lib/Transforms/Utils/LowerMemIntrinsics.cpp
+index a519f84308c3d1..83ae7e4dbac27e 100644
+--- a/llvm/lib/Transforms/Utils/LowerMemIntrinsics.cpp
++++ b/llvm/lib/Transforms/Utils/LowerMemIntrinsics.cpp
+@@ -431,6 +431,7 @@ void llvm::createMemCpyLoopKnownSize(Instruction *InsertBefore, Value *SrcAddr,
+ 
+     // Fill MainLoopBB
+     IRBuilder<> MainLoopBuilder(LEI.MainLoopIP);
++    MainLoopBuilder.disableGEPCanonicalization();
+     Align PartDstAlign(commonAlignment(DstAlign, LoopOpSize));
+     Align PartSrcAlign(commonAlignment(SrcAlign, LoopOpSize));
+ 
+@@ -470,6 +471,7 @@ void llvm::createMemCpyLoopKnownSize(Instruction *InsertBefore, Value *SrcAddr,
+     return;
+ 
+   IRBuilder<> RBuilder(InsertBefore);
++  RBuilder.disableGEPCanonicalization();
+   SmallVector<Type *, 5> RemainingOps;
+   TTI.getMemcpyLoopResidualLoweringType(RemainingOps, Ctx, RemainingBytes,
+                                         SrcAS, DstAS, SrcAlign, DstAlign,
+@@ -553,6 +555,7 @@ void llvm::createMemCpyLoopUnknownSize(
+ 
+   // Fill MainLoopBB
+   IRBuilder<> MainLoopBuilder(LEI.MainLoopIP);
++  MainLoopBuilder.disableGEPCanonicalization();
+   Align PartSrcAlign(commonAlignment(SrcAlign, LoopOpSize));
+   Align PartDstAlign(commonAlignment(DstAlign, LoopOpSize));
+ 
+@@ -589,6 +592,7 @@ void llvm::createMemCpyLoopUnknownSize(
+   Align ResDstAlign(commonAlignment(PartDstAlign, ResidualLoopOpSize));
+ 
+   IRBuilder<> ResLoopBuilder(LEI.ResidualLoopIP);
++  ResLoopBuilder.disableGEPCanonicalization();
+   Value *ResSrcGEP = ResLoopBuilder.CreateInBoundsGEP(Int8Type, SrcAddr,
+                                                       LEI.ResidualLoopIndex);
+   LoadInst *ResLoad = ResLoopBuilder.CreateAlignedLoad(
+@@ -784,6 +788,7 @@ static void createMemMoveLoopUnknownSize(Instruction *InsertBefore,
+       BasicBlock *ResidualLoopBB = BasicBlock::Create(
+           F->getContext(), "memmove_bwd_residual_loop", F, MainLoopBB);
+       IRBuilder<> ResidualLoopBuilder(ResidualLoopBB);
++      ResidualLoopBuilder.disableGEPCanonicalization();
+       ResidualLoopBuilder.SetCurrentDebugLocation(DbgLoc);
+       PHINode *ResidualLoopPhi = ResidualLoopBuilder.CreatePHI(ILengthType, 0);
+       Value *ResidualIndex = ResidualLoopBuilder.CreateSub(
+@@ -828,6 +833,7 @@ static void createMemMoveLoopUnknownSize(Instruction *InsertBefore,
+ 
+     // main loop
+     IRBuilder<> MainLoopBuilder(MainLoopBB);
++    MainLoopBuilder.disableGEPCanonicalization();
+     MainLoopBuilder.SetCurrentDebugLocation(DbgLoc);
+     PHINode *MainLoopPhi = MainLoopBuilder.CreatePHI(ILengthType, 0);
+     Value *MainIndex =
+@@ -859,6 +865,7 @@ static void createMemMoveLoopUnknownSize(Instruction *InsertBefore,
+     BasicBlock *MainLoopBB =
+         BasicBlock::Create(F->getContext(), "memmove_fwd_main_loop", F, ExitBB);
+     IRBuilder<> MainLoopBuilder(MainLoopBB);
++    MainLoopBuilder.disableGEPCanonicalization();
+     MainLoopBuilder.SetCurrentDebugLocation(DbgLoc);
+     PHINode *MainLoopPhi =
+         MainLoopBuilder.CreatePHI(ILengthType, 0, "fwd_main_index");
+@@ -903,6 +910,7 @@ static void createMemMoveLoopUnknownSize(Instruction *InsertBefore,
+ 
+       // Residual loop
+       IRBuilder<> ResidualLoopBuilder(ResidualLoopBB);
++      ResidualLoopBuilder.disableGEPCanonicalization();
+       ResidualLoopBuilder.SetCurrentDebugLocation(DbgLoc);
+       PHINode *ResidualLoopPhi =
+           ResidualLoopBuilder.CreatePHI(ILengthType, 0, "fwd_residual_index");
+@@ -1017,6 +1025,7 @@ static void createMemMoveLoopKnownSize(Instruction *InsertBefore,
+     // load/store pair so that each one is inserted before the previous one
+     // instead of after it.
+     IRBuilder<> BwdResBuilder(CopyBackwardsBB->getFirstNonPHIIt());
++    BwdResBuilder.disableGEPCanonicalization();
+     BwdResBuilder.SetCurrentDebugLocation(DbgLoc);
+     SmallVector<Type *, 5> RemainingOps;
+     TTI.getMemcpyLoopResidualLoweringType(RemainingOps, Ctx, RemainingBytes,
+@@ -1040,6 +1049,7 @@ static void createMemMoveLoopKnownSize(Instruction *InsertBefore,
+       CopyBackwardsBB->setName("memmove_bwd_loop");
+     }
+     IRBuilder<> LoopBuilder(LoopBB->getTerminator());
++    LoopBuilder.disableGEPCanonicalization();
+     LoopBuilder.SetCurrentDebugLocation(DbgLoc);
+     PHINode *LoopPhi = LoopBuilder.CreatePHI(ILengthType, 0);
+     Value *Index = LoopBuilder.CreateSub(LoopPhi, CILoopOpSize, "bwd_index");
+@@ -1074,6 +1084,7 @@ static void createMemMoveLoopKnownSize(Instruction *InsertBefore,
+       FwdResidualBB = SuccBB;
+     }
+     IRBuilder<> LoopBuilder(LoopBB->getTerminator());
++    LoopBuilder.disableGEPCanonicalization();
+     LoopBuilder.SetCurrentDebugLocation(DbgLoc);
+     PHINode *LoopPhi = LoopBuilder.CreatePHI(ILengthType, 0, "fwd_index");
+     Value *LoadGEP = LoopBuilder.CreateInBoundsGEP(Int8Type, SrcAddr, LoopPhi);
+@@ -1099,6 +1110,7 @@ static void createMemMoveLoopKnownSize(Instruction *InsertBefore,
+     // Residual code is required to move the remaining bytes. In the forward
+     // case, we emit it in the normal order.
+     IRBuilder<> FwdResBuilder(FwdResidualBB->getTerminator());
++    FwdResBuilder.disableGEPCanonicalization();
+     FwdResBuilder.SetCurrentDebugLocation(DbgLoc);
+     SmallVector<Type *, 5> RemainingOps;
+     TTI.getMemcpyLoopResidualLoweringType(RemainingOps, Ctx, RemainingBytes,
+@@ -1204,6 +1216,7 @@ createMemSetLoopKnownSize(Instruction *InsertBefore, Value *DstAddr,
+ 
+     // Fill MainLoopBB
+     IRBuilder<> MainLoopBuilder(LEI.MainLoopIP);
++    MainLoopBuilder.disableGEPCanonicalization();
+     Align PartDstAlign(commonAlignment(DstAlign, LoopOpSize));
+ 
+     Value *DstGEP =
+@@ -1222,6 +1235,7 @@ createMemSetLoopKnownSize(Instruction *InsertBefore, Value *DstAddr,
+     return;
+ 
+   IRBuilder<> RBuilder(InsertBefore);
++  RBuilder.disableGEPCanonicalization();
+ 
+   assert(TTI && "there cannot be a residual loop without TTI");
+   SmallVector<Type *, 5> RemainingOps;
+@@ -1293,6 +1307,7 @@ createMemSetLoopUnknownSize(Instruction *InsertBefore, Value *DstAddr,
+ 
+   // Fill MainLoopBB
+   IRBuilder<> MainLoopBuilder(LEI.MainLoopIP);
++  MainLoopBuilder.disableGEPCanonicalization();
+   Align PartDstAlign(commonAlignment(DstAlign, LoopOpSize));
+ 
+   Value *DstGEP =
+@@ -1307,6 +1322,7 @@ createMemSetLoopUnknownSize(Instruction *InsertBefore, Value *DstAddr,
+   Align ResDstAlign(commonAlignment(PartDstAlign, ResidualLoopOpSize));
+ 
+   IRBuilder<> ResLoopBuilder(LEI.ResidualLoopIP);
++  ResLoopBuilder.disableGEPCanonicalization();
+ 
+   Value *ResDstGEP = ResLoopBuilder.CreateInBoundsGEP(Int8Type, DstAddr,
+                                                       LEI.ResidualLoopIndex);
+@@ -1393,6 +1409,7 @@ static void createMemSetPatternLoop(Instruction *InsertBefore, Value *DstAddr,
+ 
+     // Fill MainLoopBB
+     IRBuilder<> MainLoopBuilder(LEI.MainLoopIP);
++    MainLoopBuilder.disableGEPCanonicalization();
+     Value *DstGEP = MainLoopBuilder.CreateInBoundsGEP(MainLoopType, DstAddr,
+                                                       LEI.MainLoopIndex);
+     MainLoopBuilder.CreateAlignedStore(MainLoopSetValue, DstGEP, PartDstAlign,
+@@ -1407,6 +1424,7 @@ static void createMemSetPatternLoop(Instruction *InsertBefore, Value *DstAddr,
+       commonAlignment(PartDstAlign, DL.getTypeAllocSize(ResidualLoopType)));
+ 
+   IRBuilder<> ResLoopBuilder(LEI.ResidualLoopIP);
++  ResLoopBuilder.disableGEPCanonicalization();
+   Value *ResDstGEP = ResLoopBuilder.CreateInBoundsGEP(ResidualLoopType, DstAddr,
+                                                       LEI.ResidualLoopIndex);
+   ResLoopBuilder.CreateAlignedStore(SetValue, ResDstGEP, ResDstAlign,
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index aadee6b29931fd..f2722c2ef74fc4 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -9459,6 +9459,7 @@ bool SimplifyCFGOpt::simplifyOnce(BasicBlock *BB) {
+   }
+ 
+   IRBuilder<> Builder(BB);
++  Builder.disableGEPCanonicalization();
+   Instruction *Terminator = BB->getTerminator();
+   Builder.SetInsertPoint(Terminator);
+   switch (Terminator->getOpcode()) {
+diff --git a/llvm/lib/Transforms/Vectorize/LoopIdiomVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopIdiomVectorize.cpp
+index f08a52366de502..55a392bbc4c1a0 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopIdiomVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopIdiomVectorize.cpp
+@@ -1413,6 +1413,7 @@ void LoopIdiomVectorize::transformFindFirstByte(
+   BasicBlock *Preheader = CurLoop->getLoopPreheader();
+   UncondBrInst *PHBranch = cast<UncondBrInst>(Preheader->getTerminator());
+   IRBuilder<> Builder(PHBranch);
++  Builder.disableGEPCanonicalization();
+   DomTreeUpdater DTU(DT, DomTreeUpdater::UpdateStrategy::Lazy);
+   Builder.SetCurrentDebugLocation(PHBranch->getDebugLoc());
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index 0f0ecbf896c3f4..b30b6279062b78 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -5681,7 +5681,6 @@ DenseMap<const SCEV *, Value *> LoopVectorizationPlanner::executePlan(
+ 
+   // Perform the actual loop transformation.
+   IRBuilder<> Builder(PSE.getSE()->getModule());
+-  Builder.enableGEPCanonicalization();
+   VPTransformState State(&TTI, BestVF, LI, DT, Legal->getAssumptionCache(),
+                          Builder, &BestVPlan, OrigLoop->getParentLoop());
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+index ef4fe89429648d..77a7084486abb6 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+@@ -226,6 +226,7 @@ class slpvectorizer::BoUpSLP {
+         TTI(Tti), TLI(TLi), LI(Li), DT(Dt), AC(AC), DB(DB), DL(DL), ORE(ORE),
+         CostKind(getSLPCostKind(Func)),
+         Builder(Se->getModule(), TargetFolder(*DL)) {
++    Builder.disableGEPCanonicalization();
+     CodeMetrics::collectEphemeralValues(F, AC, EphValues);
+     // Use the vector register size specified by the target unless overridden
+     // by a command-line option.
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index ffdef6fbb1e521..7ae818dbf2c4a1 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -76,7 +76,9 @@ class VectorCombine {
+                 })),
+         TTI(TTI), DT(DT), AA(AA), DL(DL), CostKind(CostKind),
+         SQ(*DL, /*TLI=*/nullptr, &DT, &AC),
+-        TryEarlyFoldsOnly(TryEarlyFoldsOnly) {}
++        TryEarlyFoldsOnly(TryEarlyFoldsOnly) {
++    Builder.disableGEPCanonicalization();
++  }
+ 
+   bool run();
+ 
+diff --git a/llvm/unittests/IR/PatternMatch.cpp b/llvm/unittests/IR/PatternMatch.cpp
+index 0bbfb25d80bc50..59284a46e183eb 100644
+--- a/llvm/unittests/IR/PatternMatch.cpp
++++ b/llvm/unittests/IR/PatternMatch.cpp
+@@ -2757,6 +2757,7 @@ TEST_F(PatternMatchTest, PtrAdd) {
+   Constant *Null = Constant::getNullValue(PtrTy);
+   Constant *Offset = ConstantInt::get(IdxTy, 42);
+   Value *PtrAdd = IRB.CreatePtrAdd(Null, Offset);
++  IRB.disableGEPCanonicalization();
+   Value *OtherGEP = IRB.CreateGEP(IdxTy, Null, Offset);
+   Value *PtrAddConst = ConstantExpr::getPtrAdd(Null, Offset);
+ 
+diff --git a/mlir/lib/Target/LLVMIR/ModuleTranslation.cpp b/mlir/lib/Target/LLVMIR/ModuleTranslation.cpp
+index 41ead15f4ecb0d..b336ca5fe7b417 100644
+--- a/mlir/lib/Target/LLVMIR/ModuleTranslation.cpp
++++ b/mlir/lib/Target/LLVMIR/ModuleTranslation.cpp
+@@ -1782,6 +1782,7 @@ LogicalResult ModuleTranslation::convertOneFunction(LLVMFuncOp func) {
+   for (Block *bb : blocks) {
+     CapturingIRBuilder builder(*llvmModule,
+                                llvm::TargetFolder(llvmModule->getDataLayout()));
++    builder.disableGEPCanonicalization();
+     if (failed(convertBlockImpl(*bb, bb->isEntryBlock(), builder,
+                                 /*recordInsertions=*/true)))
+       return failure();
