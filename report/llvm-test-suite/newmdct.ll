@@ -204,55 +204,55 @@ vector.body:                                      ; preds = %vector.body, %.preh
 .preheader214:                                    ; preds = %.preheader215, %.preheader214
   %indvars.iv.i209 = phi i64 [ %indvars.iv.next.i210, %.preheader214 ], [ 11, %.preheader215 ] ; 3 uses
   %.0.i = phi ptr [ %i.vv, %.preheader214 ], [ @cos_l, %.preheader215 ] ; 46 uses
-  %i.tq = load double, ptr %.0.i, align 8, !tbaa !16
+  %i.tq = load double, ptr %.0.i, align 16, !tbaa !16
   %i.tr = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   %i.ts = load double, ptr %i.tr, align 8, !tbaa !16
   %i.tt = fmul double %i.na, %i.ts
   %i.tu = tail call double @llvm.fmuladd.f64(double %i.mz, double %i.tq, double %i.tt)
   %i.tv = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
-  %i.tw = load double, ptr %i.tv, align 8, !tbaa !16
+  %i.tw = load double, ptr %i.tv, align 16, !tbaa !16
   %i.tx = tail call double @llvm.fmuladd.f64(double %i.nb, double %i.tw, double %i.tu)
   %i.ty = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
   %i.tz = load double, ptr %i.ty, align 8, !tbaa !16
   %i.ua = tail call double @llvm.fmuladd.f64(double %i.nc, double %i.tz, double %i.tx)
   %i.ub = getelementptr inbounds nuw i8, ptr %.0.i, i64 32
-  %i.uc = load double, ptr %i.ub, align 8, !tbaa !16
+  %i.uc = load double, ptr %i.ub, align 16, !tbaa !16
   %i.ud = tail call double @llvm.fmuladd.f64(double %i.nd, double %i.uc, double %i.ua)
   %i.ue = getelementptr inbounds nuw i8, ptr %.0.i, i64 40
   %i.uf = load double, ptr %i.ue, align 8, !tbaa !16
   %i.ug = tail call double @llvm.fmuladd.f64(double %i.ne, double %i.uf, double %i.ud)
   %i.uh = getelementptr inbounds nuw i8, ptr %.0.i, i64 48
-  %i.ui = load double, ptr %i.uh, align 8, !tbaa !16
+  %i.ui = load double, ptr %i.uh, align 16, !tbaa !16
   %i.uj = tail call double @llvm.fmuladd.f64(double %i.nf, double %i.ui, double %i.ug)
   %i.uk = getelementptr inbounds nuw i8, ptr %.0.i, i64 56
   %i.ul = load double, ptr %i.uk, align 8, !tbaa !16
   %i.um = tail call double @llvm.fmuladd.f64(double %i.ng, double %i.ul, double %i.uj)
   %i.un = getelementptr inbounds nuw i8, ptr %.0.i, i64 64
-  %i.uo = load double, ptr %i.un, align 8, !tbaa !16
+  %i.uo = load double, ptr %i.un, align 16, !tbaa !16
   %i.up = tail call double @llvm.fmuladd.f64(double %i.nh, double %i.uo, double %i.um)
   %i.uq = getelementptr inbounds nuw i8, ptr %.0.i, i64 72
   %i.ur = load double, ptr %i.uq, align 8, !tbaa !16
   %i.us = tail call double @llvm.fmuladd.f64(double %i.ni, double %i.ur, double %i.up)
   %i.ut = getelementptr inbounds nuw i8, ptr %.0.i, i64 80
-  %i.uu = load double, ptr %i.ut, align 8, !tbaa !16
+  %i.uu = load double, ptr %i.ut, align 16, !tbaa !16
   %i.uv = tail call double @llvm.fmuladd.f64(double %i.nj, double %i.uu, double %i.us)
   %i.uw = getelementptr inbounds nuw i8, ptr %.0.i, i64 88
   %i.ux = load double, ptr %i.uw, align 8, !tbaa !16
   %i.uy = tail call double @llvm.fmuladd.f64(double %i.nk, double %i.ux, double %i.uv)
   %i.uz = getelementptr inbounds nuw i8, ptr %.0.i, i64 96
-  %i.va = load double, ptr %i.uz, align 8, !tbaa !16
+  %i.va = load double, ptr %i.uz, align 16, !tbaa !16
   %i.vb = tail call double @llvm.fmuladd.f64(double %i.nl, double %i.va, double %i.uy)
   %i.vc = getelementptr inbounds nuw i8, ptr %.0.i, i64 104
   %i.vd = load double, ptr %i.vc, align 8, !tbaa !16
   %i.ve = tail call double @llvm.fmuladd.f64(double %i.nm, double %i.vd, double %i.vb)
   %i.vf = getelementptr inbounds nuw i8, ptr %.0.i, i64 112
-  %i.vg = load double, ptr %i.vf, align 8, !tbaa !16
+  %i.vg = load double, ptr %i.vf, align 16, !tbaa !16
   %i.vh = tail call double @llvm.fmuladd.f64(double %i.nn, double %i.vg, double %i.ve)
   %i.vi = getelementptr inbounds nuw i8, ptr %.0.i, i64 120
   %i.vj = load double, ptr %i.vi, align 8, !tbaa !16
   %i.vk = tail call double @llvm.fmuladd.f64(double %i.no, double %i.vj, double %i.vh)
   %i.vl = getelementptr inbounds nuw i8, ptr %.0.i, i64 128
-  %i.vm = load double, ptr %i.vl, align 8, !tbaa !16
+  %i.vm = load double, ptr %i.vl, align 16, !tbaa !16
   %i.vn = tail call double @llvm.fmuladd.f64(double %i.np, double %i.vm, double %i.vk)
   %i.vo = getelementptr inbounds nuw i8, ptr %.0.i, i64 136
   %i.vp = load double, ptr %i.vo, align 8, !tbaa !16
@@ -591,7 +591,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.x = insertelement <2 x double> poison, double %i.u, i64 0
   %i.y = insertelement <2 x double> %i.x, double %i.w, i64 1
   %i.z = fmul <2 x double> %i.y, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.z, ptr %.0173, align 8, !tbaa !16
+  store <2 x double> %i.z, ptr %.0173, align 16, !tbaa !16
   %i.aa = extractelement <4 x double> %i.s, i64 2
   %i.ab = tail call double @cos(double noundef %i.aa) #6, !tbaa !7
   %i.ac = extractelement <4 x double> %i.s, i64 3
@@ -600,7 +600,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.af = insertelement <2 x double> poison, double %i.ab, i64 0
   %i.ag = insertelement <2 x double> %i.af, double %i.ad, i64 1
   %i.ah = fmul <2 x double> %i.ag, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.ah, ptr %i.p, align 8, !tbaa !16
+  store <2 x double> %i.ah, ptr %i.p, align 16, !tbaa !16
   %i.ai = getelementptr inbounds nuw i8, ptr %.0173, i64 48
   %i.aj = fmul nnan <4 x double> %i.r, <double 5.400000e+01, double 5.800000e+01, double 6.200000e+01, double 6.600000e+01> ; 4 uses
   %i.ak = extractelement <4 x double> %i.aj, i64 0
@@ -610,7 +610,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.ao = insertelement <2 x double> poison, double %i.al, i64 0
   %i.ap = insertelement <2 x double> %i.ao, double %i.an, i64 1
   %i.aq = fmul <2 x double> %i.ap, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.aq, ptr %i.ae, align 8, !tbaa !16
+  store <2 x double> %i.aq, ptr %i.ae, align 16, !tbaa !16
   %i.ar = extractelement <4 x double> %i.aj, i64 2
   %i.as = tail call double @cos(double noundef %i.ar) #6, !tbaa !7
   %i.at = extractelement <4 x double> %i.aj, i64 3
@@ -619,7 +619,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.aw = insertelement <2 x double> poison, double %i.as, i64 0
   %i.ax = insertelement <2 x double> %i.aw, double %i.au, i64 1
   %i.ay = fmul <2 x double> %i.ax, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.ay, ptr %i.ai, align 8, !tbaa !16
+  store <2 x double> %i.ay, ptr %i.ai, align 16, !tbaa !16
   %i.az = getelementptr inbounds nuw i8, ptr %.0173, i64 80
   %i.ba = fmul nnan <4 x double> %i.r, <double 7.000000e+01, double 1.100000e+02, double 1.140000e+02, double 1.180000e+02> ; 4 uses
   %i.bb = extractelement <4 x double> %i.ba, i64 0
@@ -629,7 +629,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.bf = insertelement <2 x double> poison, double %i.bc, i64 0
   %i.bg = insertelement <2 x double> %i.bf, double %i.be, i64 1
   %i.bh = fmul <2 x double> %i.bg, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.bh, ptr %i.av, align 8, !tbaa !16
+  store <2 x double> %i.bh, ptr %i.av, align 16, !tbaa !16
   %i.bi = extractelement <4 x double> %i.ba, i64 2
   %i.bj = tail call double @cos(double noundef %i.bi) #6, !tbaa !7
   %i.bk = extractelement <4 x double> %i.ba, i64 3
@@ -638,7 +638,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.bn = insertelement <2 x double> poison, double %i.bj, i64 0
   %i.bo = insertelement <2 x double> %i.bn, double %i.bl, i64 1
   %i.bp = fmul <2 x double> %i.bo, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.bp, ptr %i.az, align 8, !tbaa !16
+  store <2 x double> %i.bp, ptr %i.az, align 16, !tbaa !16
   %i.bq = getelementptr inbounds nuw i8, ptr %.0173, i64 112
   %i.br = fmul nnan <4 x double> %i.r, <double 1.220000e+02, double 1.260000e+02, double 1.300000e+02, double 1.340000e+02> ; 4 uses
   %i.bs = extractelement <4 x double> %i.br, i64 0
@@ -648,7 +648,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.bw = insertelement <2 x double> poison, double %i.bt, i64 0
   %i.bx = insertelement <2 x double> %i.bw, double %i.bv, i64 1
   %i.by = fmul <2 x double> %i.bx, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.by, ptr %i.bm, align 8, !tbaa !16
+  store <2 x double> %i.by, ptr %i.bm, align 16, !tbaa !16
   %i.bz = extractelement <4 x double> %i.br, i64 2
   %i.ca = tail call double @cos(double noundef %i.bz) #6, !tbaa !7
   %i.cb = extractelement <4 x double> %i.br, i64 3
@@ -657,7 +657,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.ce = insertelement <2 x double> poison, double %i.ca, i64 0
   %i.cf = insertelement <2 x double> %i.ce, double %i.cc, i64 1
   %i.cg = fmul <2 x double> %i.cf, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.cg, ptr %i.bq, align 8, !tbaa !16
+  store <2 x double> %i.cg, ptr %i.bq, align 16, !tbaa !16
   %i.ch = fmul nnan double %i.o, 1.380000e+02
   %i.ci = tail call double @cos(double noundef %i.ch) #6, !tbaa !7
   %i.cj = fmul nnan double %i.o, 1.420000e+02
@@ -666,7 +666,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.cm = insertelement <2 x double> poison, double %i.ci, i64 0
   %i.cn = insertelement <2 x double> %i.cm, double %i.ck, i64 1
   %i.co = fmul <2 x double> %i.cn, splat (double f0x3FBC71C71C71C71C)
-  store <2 x double> %i.co, ptr %i.cd, align 8, !tbaa !16
+  store <2 x double> %i.co, ptr %i.cd, align 16, !tbaa !16
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %.not = icmp eq i64 %indvars.iv, 0
   br i1 %.not, label %.preheader201.preheader, label %.preheader203, !llvm.loop !45
@@ -728,7 +728,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.dq = sub nuw nsw i64 30, %indvars.iv273
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.dq
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv273
-  %i.dt = load <2 x double>, ptr %.1165235, align 8, !tbaa !16 ; 3 uses
+  %i.dt = load <2 x double>, ptr %.1165235, align 16, !tbaa !16 ; 3 uses
   %i.du = extractelement <2 x double> %i.dt, i64 0 ; 14 uses
   %i.dv = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.dw = insertelement <2 x double> %i.dv, double %i.dc, i64 0
@@ -740,7 +740,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.ea = extractelement <2 x double> %i.dx, i64 1
   store double %i.ea, ptr %.1161236, align 8, !tbaa !16
   %.2166 = getelementptr inbounds nuw i8, ptr %.1165235, i64 16
-  %i.eb = load double, ptr %.2166, align 8, !tbaa !16
+  %i.eb = load double, ptr %.2166, align 16, !tbaa !16
   %i.ec = fdiv double %i.eb, %i.du
   %i.ed = getelementptr inbounds nuw i8, ptr %.1161236, i64 16
   store double %i.ec, ptr %i.dz, align 8, !tbaa !16
@@ -750,7 +750,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.eg = getelementptr inbounds nuw i8, ptr %.1161236, i64 24
   store double %i.ef, ptr %i.ed, align 8, !tbaa !16
   %.2166.2 = getelementptr inbounds nuw i8, ptr %.1165235, i64 32
-  %i.eh = load double, ptr %.2166.2, align 8, !tbaa !16
+  %i.eh = load double, ptr %.2166.2, align 16, !tbaa !16
   %i.ei = fdiv double %i.eh, %i.du
   %i.ej = getelementptr inbounds nuw i8, ptr %.1161236, i64 32
   store double %i.ei, ptr %i.eg, align 8, !tbaa !16
@@ -760,7 +760,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.em = getelementptr inbounds nuw i8, ptr %.1161236, i64 40
   store double %i.el, ptr %i.ej, align 8, !tbaa !16
   %.2166.4 = getelementptr inbounds nuw i8, ptr %.1165235, i64 48
-  %i.en = load double, ptr %.2166.4, align 8, !tbaa !16
+  %i.en = load double, ptr %.2166.4, align 16, !tbaa !16
   %i.eo = fdiv double %i.en, %i.du
   %i.ep = getelementptr inbounds nuw i8, ptr %.1161236, i64 48
   store double %i.eo, ptr %i.em, align 8, !tbaa !16
@@ -770,7 +770,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.es = getelementptr inbounds nuw i8, ptr %.1161236, i64 56
   store double %i.er, ptr %i.ep, align 8, !tbaa !16
   %.2166.6 = getelementptr inbounds nuw i8, ptr %.1165235, i64 64
-  %i.et = load double, ptr %.2166.6, align 8, !tbaa !16
+  %i.et = load double, ptr %.2166.6, align 16, !tbaa !16
   %i.eu = fdiv double %i.et, %i.du
   %i.ev = getelementptr inbounds nuw i8, ptr %.1161236, i64 64
   store double %i.eu, ptr %i.es, align 8, !tbaa !16
@@ -780,7 +780,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.ey = getelementptr inbounds nuw i8, ptr %.1161236, i64 72
   store double %i.ex, ptr %i.ev, align 8, !tbaa !16
   %.2166.8 = getelementptr inbounds nuw i8, ptr %.1165235, i64 80
-  %i.ez = load double, ptr %.2166.8, align 8, !tbaa !16
+  %i.ez = load double, ptr %.2166.8, align 16, !tbaa !16
   %i.fa = fdiv double %i.ez, %i.du
   %i.fb = getelementptr inbounds nuw i8, ptr %.1161236, i64 80
   store double %i.fa, ptr %i.ey, align 8, !tbaa !16
@@ -790,7 +790,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.fe = getelementptr inbounds nuw i8, ptr %.1161236, i64 88
   store double %i.fd, ptr %i.fb, align 8, !tbaa !16
   %.2166.10 = getelementptr inbounds nuw i8, ptr %.1165235, i64 96
-  %i.ff = load double, ptr %.2166.10, align 8, !tbaa !16
+  %i.ff = load double, ptr %.2166.10, align 16, !tbaa !16
   %i.fg = fdiv double %i.ff, %i.du
   %i.fh = getelementptr inbounds nuw i8, ptr %.1161236, i64 96
   store double %i.fg, ptr %i.fe, align 8, !tbaa !16
@@ -800,7 +800,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 !guid !48 {
   %i.fk = getelementptr inbounds nuw i8, ptr %.1161236, i64 104
   store double %i.fj, ptr %i.fh, align 8, !tbaa !16
   %.2166.12 = getelementptr inbounds nuw i8, ptr %.1165235, i64 112
-  %i.fl = load double, ptr %.2166.12, align 8, !tbaa !16
+  %i.fl = load double, ptr %.2166.12, align 16, !tbaa !16
   %i.fm = fdiv double %i.fl, %i.du
   %i.fn = getelementptr inbounds nuw i8, ptr %.1161236, i64 112
   store double %i.fm, ptr %i.fk, align 8, !tbaa !16

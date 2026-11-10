@@ -205,12 +205,12 @@ bb.y:                                             ; preds = %_ZL13copy_B_from_A1
   ]
 
 bb.z:                                             ; preds = %._crit_edge.i.i.us.i
-  %i.ef = load i8, ptr %.sroa.091.0134.us.i, align 1, !tbaa !23, !noalias !248
+  %i.ef = load i8, ptr %.sroa.091.0134.us.i, align 4, !tbaa !23, !noalias !248
   store i8 %i.ef, ptr %i.ee, align 1, !tbaa !23, !noalias !248
   br label %bb.ab
 
 bb.aa:                                            ; preds = %._crit_edge.i.i.us.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ee, ptr nonnull align 1 %.sroa.091.0134.us.i, i64 %i.ea, i1 false), !noalias !248
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ee, ptr nonnull align 4 %.sroa.091.0134.us.i, i64 %i.ea, i1 false), !noalias !248
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z, %._crit_edge.i.i.us.i
@@ -350,12 +350,12 @@ _ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit.us.i: ; preds = %_ZNSt6ve
   ]
 
 bb.ai:                                            ; preds = %._crit_edge.i.i57.us.i
-  %i.fr = load i8, ptr %.sroa.091.0134.us146.i, align 1, !tbaa !23, !noalias !248
+  %i.fr = load i8, ptr %.sroa.091.0134.us146.i, align 4, !tbaa !23, !noalias !248
   store i8 %i.fr, ptr %i.fq, align 1, !tbaa !23, !noalias !248
   br label %bb.ak
 
 bb.aj:                                            ; preds = %._crit_edge.i.i57.us.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fq, ptr nonnull align 1 %.sroa.091.0134.us146.i, i64 %i.fm, i1 false), !noalias !248
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fq, ptr nonnull align 4 %.sroa.091.0134.us146.i, i64 %i.fm, i1 false), !noalias !248
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai, %._crit_edge.i.i57.us.i
@@ -758,9 +758,9 @@ bb.bi:                                            ; preds = %_ZStgtIcSt11char_tr
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(36) %.0913.i.i, ptr noundef nonnull align 8 dereferenceable(36) %.015.i.i) #30
   %i.jr = getelementptr inbounds nuw i8, ptr %.0913.i.i, i64 32 ; 2 uses
   %i.js = getelementptr inbounds i8, ptr %.pn14.i.i, i64 -8 ; 2 uses
-  %i.jt = load i32, ptr %i.jr, align 4, !tbaa !63
+  %i.jt = load i32, ptr %i.jr, align 8, !tbaa !63
   %i.ju = load i32, ptr %i.js, align 4, !tbaa !63
-  store i32 %i.ju, ptr %i.jr, align 4, !tbaa !63
+  store i32 %i.ju, ptr %i.jr, align 8, !tbaa !63
   store i32 %i.jt, ptr %i.js, align 4, !tbaa !63
   %i.jv = getelementptr inbounds nuw i8, ptr %.0913.i.i, i64 40 ; 2 uses
   %.0.i.i168 = getelementptr inbounds i8, ptr %.015.i.i, i64 -40 ; 2 uses

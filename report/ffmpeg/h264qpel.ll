@@ -204,7 +204,7 @@ vector.memcheck:
   %i.gc = add nuw nsw <4 x i16> %i.fz, %i.fr
   %i.gd = add nsw <4 x i16> %i.gc, %i.gb
   %i.ge = add nsw <4 x i16> %i.gd, %i.fx
-  store <4 x i16> %i.ge, ptr %i.ff, align 16, !tbaa !14, !noalias !197
+  store <4 x i16> %i.ge, ptr %i.ff, align 8, !tbaa !14, !noalias !197
   %i.gf = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.gg = getelementptr inbounds i8, ptr %i.fg, i64 %i.e ; 7 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 1
@@ -258,7 +258,7 @@ vector.memcheck:
   %i.ic = add nuw nsw <4 x i16> %i.hz, %i.hr
   %i.id = add nsw <4 x i16> %i.ic, %i.ib
   %i.ie = add nsw <4 x i16> %i.id, %i.hx
-  store <4 x i16> %i.ie, ptr %i.hf, align 16, !tbaa !14, !noalias !197
+  store <4 x i16> %i.ie, ptr %i.hf, align 8, !tbaa !14, !noalias !197
   %i.if = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %sext3 = mul i64 %2, 12884901888
   %i.ig = ashr exact i64 %sext3, 32               ; 4 uses
@@ -298,29 +298,29 @@ vector.memcheck:
   br i1 %conflict.rdx47, label %scalar.ph, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck
-  %wide.load = load <4 x i16>, ptr %i.a, align 16, !tbaa !14, !noalias !197
+  %wide.load = load <4 x i16>, ptr %i.a, align 8, !tbaa !14, !noalias !197
   %i.ir = sext <4 x i16> %wide.load to <4 x i32>
   %i.is = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %wide.load48 = load <4 x i16>, ptr %i.is, align 8, !tbaa !14, !noalias !197
   %i.it = sext <4 x i16> %wide.load48 to <4 x i32> ; 2 uses
-  %wide.load49 = load <4 x i16>, ptr %i.if, align 16, !tbaa !14, !noalias !197
+  %wide.load49 = load <4 x i16>, ptr %i.if, align 8, !tbaa !14, !noalias !197
   %i.iu = sext <4 x i16> %wide.load49 to <4 x i32> ; 3 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %wide.load50 = load <4 x i16>, ptr %i.iv, align 8, !tbaa !14, !noalias !197
   %i.iw = sext <4 x i16> %wide.load50 to <4 x i32> ; 4 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %wide.load51 = load <4 x i16>, ptr %i.ix, align 16, !tbaa !14, !noalias !197
+  %wide.load51 = load <4 x i16>, ptr %i.ix, align 8, !tbaa !14, !noalias !197
   %i.iy = sext <4 x i16> %wide.load51 to <4 x i32> ; 4 uses
   %i.iz = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %wide.load52 = load <4 x i16>, ptr %i.iz, align 8, !tbaa !14, !noalias !197
   %i.ja = sext <4 x i16> %wide.load52 to <4 x i32> ; 4 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %wide.load53 = load <4 x i16>, ptr %i.jb, align 16, !tbaa !14, !noalias !197
+  %wide.load53 = load <4 x i16>, ptr %i.jb, align 8, !tbaa !14, !noalias !197
   %i.jc = sext <4 x i16> %wide.load53 to <4 x i32> ; 3 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %wide.load54 = load <4 x i16>, ptr %i.jd, align 8, !tbaa !14, !noalias !197
   %i.je = sext <4 x i16> %wide.load54 to <4 x i32> ; 2 uses
-  %wide.load55 = load <4 x i16>, ptr %i.hf, align 16, !tbaa !14, !noalias !197
+  %wide.load55 = load <4 x i16>, ptr %i.hf, align 8, !tbaa !14, !noalias !197
   %i.jf = sext <4 x i16> %wide.load55 to <4 x i32>
   %wide.load56 = load <4 x i8>, ptr %0, align 1, !tbaa !9, !alias.scope !198, !noalias !199
   %i.jg = zext <4 x i8> %wide.load56 to <4 x i16>

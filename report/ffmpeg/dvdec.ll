@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   store ptr %.sink619, ptr %i.cu, align 8, !tbaa !151
   %i.cv = getelementptr inbounds nuw i8, ptr %.0249497, i64 8
   store ptr %.sink618, ptr %i.cv, align 8, !tbaa !152
-  store ptr %.sink, ptr %.0249497, align 8, !tbaa !153
+  store ptr %.sink, ptr %.0249497, align 16, !tbaa !153
   %sh.diff = ashr i32 %i.ax, 21
   %tr.sh.diff = trunc nsw i32 %sh.diff to i16
   %i.cw = and i16 %tr.sh.diff, -4
@@ -215,9 +215,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %i.cz = zext nneg i32 %i.cy to i64
   %i.da = getelementptr inbounds nuw i8, ptr %.1257496, i64 %i.cz ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.0249497, i64 16 ; 3 uses
-  store i8 0, ptr %i.db, align 8, !tbaa !154
+  store i8 0, ptr %i.db, align 16, !tbaa !154
   %i.dc = getelementptr inbounds nuw i8, ptr %.0249497, i64 32 ; 2 uses
-  store i8 0, ptr %i.dc, align 8, !tbaa !155
+  store i8 0, ptr %i.dc, align 16, !tbaa !155
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.p, %bb.j
@@ -262,7 +262,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 bb.n:                                             ; preds = %bb.m
   %i.ec = sub nsw i32 %i.au, %.sink690            ; 2 uses
   %i.ed = trunc i32 %i.ec to i8
-  store i8 %i.ed, ptr %i.dc, align 8, !tbaa !155
+  store i8 %i.ed, ptr %i.dc, align 16, !tbaa !155
   %i.ee = and i32 %i.ec, 255
   %i.ef = lshr i32 -1, %i.ee
   %i.eg = xor i32 %i.ef, -1
@@ -300,7 +300,7 @@ dv_decode_ac.exit:                                ; preds = %bb.o, %bb.n
   %.158.i = phi i32 [ %.057.i, %bb.n ], [ %i.em, %bb.o ]
   %.2.i = phi i32 [ %i.au, %bb.n ], [ %i.ea, %bb.o ] ; 3 uses
   %i.fb = trunc i32 %.158.i to i8                 ; 2 uses
-  store i8 %i.fb, ptr %i.db, align 8, !tbaa !154
+  store i8 %i.fb, ptr %i.db, align 16, !tbaa !154
   %i.fc = icmp ugt i8 %i.fb, 63
   br i1 %i.fc, label %bb.q, label %bit_copy.exit
 
@@ -420,7 +420,7 @@ bit_copy.exit:                                    ; preds = %._crit_edge.i, %bb.
   %.sroa.29421.1.idx = phi i64 [ %.sroa.29421.0.idx491, %dv_decode_ac.exit ], [ %.sroa.29421.2.idx, %._crit_edge.i ], [ %.sroa.29421.2.idx, %bb.w ], [ %.sroa.29421.3.idx, %bb.aa ] ; 2 uses
   %.sroa.15414.1 = phi i32 [ %.sroa.15414.0492, %dv_decode_ac.exit ], [ %.sroa.15414.2, %._crit_edge.i ], [ %i.gq, %bb.w ], [ %i.gx, %bb.aa ] ; 2 uses
   %.sroa.0408.1 = phi i32 [ %.sroa.0408.0493, %dv_decode_ac.exit ], [ %.sroa.0408.2, %._crit_edge.i ], [ %i.gp, %bb.w ], [ %i.gm, %bb.aa ] ; 2 uses
-  %i.gy = load i8, ptr %i.db, align 8, !tbaa !154
+  %i.gy = load i8, ptr %i.db, align 16, !tbaa !154
   %i.gz = add i8 %i.gy, -64
   %or.cond290 = icmp ult i8 %i.gz, 63
   br i1 %or.cond290, label %bb.ab, label %bb.ac
@@ -561,7 +561,7 @@ flush_put_bits.exit:                              ; preds = %bb.ah, %put_bits32.
   %.1271505 = phi i32 [ %i.lr, %bb.as ], [ 0, %flush_put_bits.exit ]
   %.sroa.15.0504 = phi i32 [ %.sroa.15.1, %bb.as ], [ 0, %flush_put_bits.exit ] ; 6 uses
   %i.it = getelementptr inbounds nuw i8, ptr %.1250508, i64 16 ; 2 uses
-  %i.iu = load i8, ptr %i.it, align 8, !tbaa !154 ; 2 uses
+  %i.iu = load i8, ptr %i.it, align 16, !tbaa !154 ; 2 uses
   %i.iv = icmp ult i8 %i.iu, 64
   %i.iw = icmp sgt i32 %.013.i298, %.sroa.15.0504
   %or.cond446 = select i1 %i.iv, i1 %i.iw, i1 false
@@ -570,10 +570,10 @@ flush_put_bits.exit:                              ; preds = %bb.ah, %put_bits32.
 bb.ai:                                            ; preds = %.lr.ph511
   %i.ix = getelementptr inbounds nuw i8, ptr %.1250508, i64 8
   %i.iy = load ptr, ptr %i.ix, align 8, !tbaa !152
-  %i.iz = load ptr, ptr %.1250508, align 8, !tbaa !153
+  %i.iz = load ptr, ptr %.1250508, align 16, !tbaa !153
   %i.ja = zext nneg i8 %i.iu to i32
   %i.jb = getelementptr inbounds nuw i8, ptr %.1250508, i64 32 ; 3 uses
-  %i.jc = load i8, ptr %i.jb, align 8, !tbaa !155 ; 2 uses
+  %i.jc = load i8, ptr %i.jb, align 16, !tbaa !155 ; 2 uses
   %i.jd = lshr i32 %.sroa.15.0504, 3
   %i.je = zext nneg i32 %i.jd to i64
   %i.jf = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.je
@@ -591,7 +591,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.jn = load i32, ptr %i.jm, align 4, !tbaa !156
   %i.jo = or i32 %i.jn, %i.jl
   %i.jp = sub nsw i32 %.sroa.15.0504, %i.jk
-  store i8 0, ptr %i.jb, align 8, !tbaa !155
+  store i8 0, ptr %i.jb, align 16, !tbaa !155
   br label %.preheader775
 
 .preheader775:                                    ; preds = %bb.aj, %bb.ai
@@ -636,7 +636,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 bb.an:                                            ; preds = %bb.am
   %i.kk = sub i32 %.013.i298, %.154.i306          ; 2 uses
   %i.kl = trunc i32 %i.kk to i8
-  store i8 %i.kl, ptr %i.jb, align 8, !tbaa !155
+  store i8 %i.kl, ptr %i.jb, align 16, !tbaa !155
   %i.km = and i32 %i.kk, 255
   %i.kn = lshr i32 -1, %i.km
   %i.ko = xor i32 %i.kn, -1
@@ -679,7 +679,7 @@ dv_decode_ac.exit312:                             ; preds = %bb.ao, %bb.an
   %.158.i310 = phi i32 [ %.057.i305, %bb.an ], [ %i.ku, %bb.ao ]
   %.2.i311 = phi i32 [ %.013.i298, %bb.an ], [ %i.ki, %bb.ao ] ; 2 uses
   %i.lo = trunc i32 %.158.i310 to i8              ; 3 uses
-  store i8 %i.lo, ptr %i.it, align 8, !tbaa !154
+  store i8 %i.lo, ptr %i.it, align 16, !tbaa !154
   %i.lp = icmp ult i8 %i.lo, 64
   br i1 %i.lp, label %bit_copy.exit328, label %bb.aq
 
@@ -1082,8 +1082,8 @@ vector.body756:                                   ; preds = %vector.main.loop.it
   %index757 = phi i64 [ %index.next761, %vector.body756 ], [ 0, %vector.main.loop.iter.check ] ; 5 uses
   %i.afq = getelementptr inbounds nuw i8, ptr %.0241549, i64 %index757 ; 2 uses
   %i.afr = getelementptr inbounds nuw i8, ptr %i.afq, i64 16
-  %wide.load = load <16 x i8>, ptr %i.afq, align 1, !tbaa !29
-  %wide.load758 = load <16 x i8>, ptr %i.afr, align 1, !tbaa !29
+  %wide.load = load <16 x i8>, ptr %i.afq, align 8, !tbaa !29
+  %wide.load758 = load <16 x i8>, ptr %i.afr, align 8, !tbaa !29
   %i.afs = getelementptr inbounds nuw i8, ptr %.0242548, i64 %index757 ; 2 uses
   %i.aft = getelementptr inbounds nuw i8, ptr %i.afs, i64 16
   store <16 x i8> %wide.load, ptr %i.afs, align 1, !tbaa !29
@@ -1101,7 +1101,7 @@ vector.body756:                                   ; preds = %vector.main.loop.it
   br i1 %i.afy, label %._crit_edge547, label %vector.body756, !llvm.loop !131
 
 vec.epilog.vector.body:                           ; preds = %vector.main.loop.iter.check
-  %wide.load765 = load <4 x i8>, ptr %.0241549, align 1, !tbaa !29
+  %wide.load765 = load <4 x i8>, ptr %.0241549, align 8, !tbaa !29
   store <4 x i8> %wide.load765, ptr %.0242548, align 1, !tbaa !29
   %wide.load766 = load <4 x i8>, ptr %i.aey, align 1, !tbaa !29
   store <4 x i8> %wide.load766, ptr %i.afb, align 1, !tbaa !29
@@ -1109,7 +1109,7 @@ vec.epilog.vector.body:                           ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body.1:                         ; preds = %vec.epilog.vector.body
   %i.afz = getelementptr inbounds nuw i8, ptr %.0241549, i64 4
-  %wide.load765.1 = load <4 x i8>, ptr %i.afz, align 1, !tbaa !29
+  %wide.load765.1 = load <4 x i8>, ptr %i.afz, align 4, !tbaa !29
   %i.aga = getelementptr inbounds nuw i8, ptr %.0242548, i64 4
   store <4 x i8> %wide.load765.1, ptr %i.aga, align 1, !tbaa !29
   %i.agb = getelementptr inbounds nuw i8, ptr %i.aey, i64 4
@@ -1120,7 +1120,7 @@ vec.epilog.vector.body.1:                         ; preds = %vec.epilog.vector.b
 
 vec.epilog.vector.body.2:                         ; preds = %vec.epilog.vector.body.1
   %i.agd = getelementptr inbounds nuw i8, ptr %.0241549, i64 8
-  %wide.load765.2 = load <4 x i8>, ptr %i.agd, align 1, !tbaa !29
+  %wide.load765.2 = load <4 x i8>, ptr %i.agd, align 8, !tbaa !29
   %i.age = getelementptr inbounds nuw i8, ptr %.0242548, i64 8
   store <4 x i8> %wide.load765.2, ptr %i.age, align 1, !tbaa !29
   %i.agf = getelementptr inbounds nuw i8, ptr %i.aey, i64 8
@@ -1131,7 +1131,7 @@ vec.epilog.vector.body.2:                         ; preds = %vec.epilog.vector.b
 
 vec.epilog.vector.body.3:                         ; preds = %vec.epilog.vector.body.2
   %i.agh = getelementptr inbounds nuw i8, ptr %.0241549, i64 12
-  %wide.load765.3 = load <4 x i8>, ptr %i.agh, align 1, !tbaa !29
+  %wide.load765.3 = load <4 x i8>, ptr %i.agh, align 4, !tbaa !29
   %i.agi = getelementptr inbounds nuw i8, ptr %.0242548, i64 12
   store <4 x i8> %wide.load765.3, ptr %i.agi, align 1, !tbaa !29
   %i.agj = getelementptr inbounds nuw i8, ptr %i.aey, i64 12
@@ -1142,7 +1142,7 @@ vec.epilog.vector.body.3:                         ; preds = %vec.epilog.vector.b
 
 vec.epilog.vector.body.4:                         ; preds = %vec.epilog.vector.body.3
   %i.agl = getelementptr inbounds nuw i8, ptr %.0241549, i64 16
-  %wide.load765.4 = load <4 x i8>, ptr %i.agl, align 1, !tbaa !29
+  %wide.load765.4 = load <4 x i8>, ptr %i.agl, align 8, !tbaa !29
   %i.agm = getelementptr inbounds nuw i8, ptr %.0242548, i64 16
   store <4 x i8> %wide.load765.4, ptr %i.agm, align 1, !tbaa !29
   %i.agn = getelementptr inbounds nuw i8, ptr %i.aey, i64 16
@@ -1153,7 +1153,7 @@ vec.epilog.vector.body.4:                         ; preds = %vec.epilog.vector.b
 
 vec.epilog.vector.body.5:                         ; preds = %vec.epilog.vector.body.4
   %i.agp = getelementptr inbounds nuw i8, ptr %.0241549, i64 20
-  %wide.load765.5 = load <4 x i8>, ptr %i.agp, align 1, !tbaa !29
+  %wide.load765.5 = load <4 x i8>, ptr %i.agp, align 4, !tbaa !29
   %i.agq = getelementptr inbounds nuw i8, ptr %.0242548, i64 20
   store <4 x i8> %wide.load765.5, ptr %i.agq, align 1, !tbaa !29
   %i.agr = getelementptr inbounds nuw i8, ptr %i.aey, i64 20
@@ -1164,7 +1164,7 @@ vec.epilog.vector.body.5:                         ; preds = %vec.epilog.vector.b
 
 vec.epilog.vector.body.6:                         ; preds = %vec.epilog.vector.body.5
   %i.agt = getelementptr inbounds nuw i8, ptr %.0241549, i64 24
-  %wide.load765.6 = load <4 x i8>, ptr %i.agt, align 1, !tbaa !29
+  %wide.load765.6 = load <4 x i8>, ptr %i.agt, align 8, !tbaa !29
   %i.agu = getelementptr inbounds nuw i8, ptr %.0242548, i64 24
   store <4 x i8> %wide.load765.6, ptr %i.agu, align 1, !tbaa !29
   %i.agv = getelementptr inbounds nuw i8, ptr %i.aey, i64 24
@@ -1177,7 +1177,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %indvars.iv604 = phi i64 [ %indvars.iv.next605.1, %vec.epilog.scalar.ph ], [ 0, %vec.epilog.scalar.ph.preheader ] ; 6 uses
   %niter = phi i64 [ %niter.next.1, %vec.epilog.scalar.ph ], [ 0, %vec.epilog.scalar.ph.preheader ]
   %i.agx = getelementptr inbounds nuw i8, ptr %.0241549, i64 %indvars.iv604
-  %i.agy = load i8, ptr %i.agx, align 1, !tbaa !29
+  %i.agy = load i8, ptr %i.agx, align 2, !tbaa !29
   %i.agz = getelementptr inbounds nuw i8, ptr %.0242548, i64 %indvars.iv604
   store i8 %i.agy, ptr %i.agz, align 1, !tbaa !29
   %i.aha = getelementptr inbounds nuw i8, ptr %i.aey, i64 %indvars.iv604

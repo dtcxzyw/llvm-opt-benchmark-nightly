@@ -205,7 +205,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.an = ashr <8 x i32> %i.am, %broadcast.splat167
   %i.ao = trunc <8 x i32> %i.an to <8 x i16>
   %i.ap = getelementptr inbounds nuw [2 x i8], ptr %.097, i64 %index
-  store <8 x i16> %i.ao, ptr %i.ap, align 2, !tbaa !10
+  store <8 x i16> %i.ao, ptr %i.ap, align 16, !tbaa !10
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.aq = icmp eq i64 %index.next, %n.vec
   br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !25
@@ -273,11 +273,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 vector.body180:                                   ; preds = %.lr.ph125, %vector.body180
   %index181 = phi i64 [ %index.next184, %vector.body180 ], [ 0, %.lr.ph125 ] ; 3 uses
   %i.bk = getelementptr inbounds nuw [2 x i8], ptr %.198, i64 %index181 ; 2 uses
-  %wide.load182 = load <8 x i16>, ptr %i.bk, align 2, !tbaa !10
+  %wide.load182 = load <8 x i16>, ptr %i.bk, align 16, !tbaa !10
   %i.bl = sext <8 x i16> %wide.load182 to <8 x i32> ; 2 uses
   %i.bm = shl nsw <8 x i32> %i.bl, splat (i32 4)
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 256
-  %wide.load183 = load <8 x i16>, ptr %i.bn, align 2, !tbaa !10
+  %wide.load183 = load <8 x i16>, ptr %i.bn, align 16, !tbaa !10
   %i.bo = sext <8 x i16> %wide.load183 to <8 x i32>
   %i.bp = sub nsw <8 x i32> %i.bo, %i.bl
   %i.bq = mul nsw <8 x i32> %i.bp, %broadcast.splat173
@@ -680,7 +680,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.af = ashr <8 x i32> %i.ae, %broadcast.splat159
   %i.ag = trunc <8 x i32> %i.af to <8 x i16>
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %.088, i64 %index
-  store <8 x i16> %i.ag, ptr %i.ah, align 2, !tbaa !10
+  store <8 x i16> %i.ag, ptr %i.ah, align 16, !tbaa !10
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !48
@@ -740,11 +740,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 vector.body166:                                   ; preds = %.lr.ph117, %vector.body166
   %index167 = phi i64 [ %index.next170, %vector.body166 ], [ 0, %.lr.ph117 ] ; 3 uses
   %i.ba = getelementptr inbounds nuw [2 x i8], ptr %.1, i64 %index167 ; 2 uses
-  %wide.load168 = load <8 x i16>, ptr %i.ba, align 2, !tbaa !10
+  %wide.load168 = load <8 x i16>, ptr %i.ba, align 16, !tbaa !10
   %i.bb = sext <8 x i16> %wide.load168 to <8 x i32> ; 2 uses
   %i.bc = shl nsw <8 x i32> %i.bb, splat (i32 4)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 256
-  %wide.load169 = load <8 x i16>, ptr %i.bd, align 2, !tbaa !10
+  %wide.load169 = load <8 x i16>, ptr %i.bd, align 16, !tbaa !10
   %i.be = sext <8 x i16> %wide.load169 to <8 x i32>
   %i.bf = sub nsw <8 x i32> %i.be, %i.bb
   %i.bg = mul nsw <8 x i32> %i.bf, %broadcast.splat165
@@ -1147,7 +1147,7 @@ bb.a:
   %i.cb = add nsw i32 %i.ca, %i.bt
   %i.cc = ashr i32 %i.cb, %i.f
   %i.cd = trunc i32 %i.cc to i16
-  store i16 %i.cd, ptr %.092101, align 2, !tbaa !10
+  store i16 %i.cd, ptr %.092101, align 16, !tbaa !10
   %i.ce = add nsw i32 %.093100, %i.j              ; 2 uses
   %i.cf = add nsw i32 %i.ce, 512
   %i.cg = ashr i32 %i.cf, 10
@@ -1266,7 +1266,7 @@ bb.a:
   %i.go = ashr i32 %i.gn, %i.f
   %i.gp = trunc i32 %i.go to i16
   %i.gq = getelementptr inbounds nuw i8, ptr %.092101, i64 4
-  store i16 %i.gp, ptr %i.gq, align 2, !tbaa !10
+  store i16 %i.gp, ptr %i.gq, align 4, !tbaa !10
   %i.gr = add nsw i32 %i.ed, %i.j                 ; 2 uses
   %i.gs = add nsw i32 %i.gr, 512
   %i.gt = ashr i32 %i.gs, 10
@@ -1388,7 +1388,7 @@ bb.a:
   %i.le = ashr i32 %i.ld, %i.f
   %i.lf = trunc i32 %i.le to i16
   %i.lg = getelementptr inbounds nuw i8, ptr %.092101, i64 8
-  store i16 %i.lf, ptr %i.lg, align 2, !tbaa !10
+  store i16 %i.lf, ptr %i.lg, align 8, !tbaa !10
   %i.lh = add nsw i32 %i.it, %i.j                 ; 2 uses
   %i.li = add nsw i32 %i.lh, 512
   %i.lj = ashr i32 %i.li, 10
@@ -1510,7 +1510,7 @@ bb.a:
   %i.pu = ashr i32 %i.pt, %i.f
   %i.pv = trunc i32 %i.pu to i16
   %i.pw = getelementptr inbounds nuw i8, ptr %.092101, i64 12
-  store i16 %i.pv, ptr %i.pw, align 2, !tbaa !10
+  store i16 %i.pv, ptr %i.pw, align 4, !tbaa !10
   %.reass = add nsw i32 %i.nm, %invariant.op
   %i.px = ashr i32 %.reass, 10
   %i.py = sext i32 %i.px to i64
@@ -1793,7 +1793,7 @@ bb.a:
   %i.cb = add nsw i32 %i.ca, %i.bt
   %i.cc = ashr i32 %i.cb, %i.f
   %i.cd = trunc i32 %i.cc to i16
-  store i16 %i.cd, ptr %.08997, align 2, !tbaa !10
+  store i16 %i.cd, ptr %.08997, align 16, !tbaa !10
   %i.ce = add nsw i32 %.09096, %i.j               ; 2 uses
   %i.cf = add nsw i32 %i.ce, 512
   %i.cg = ashr i32 %i.cf, 10
@@ -1912,7 +1912,7 @@ bb.a:
   %i.go = ashr i32 %i.gn, %i.f
   %i.gp = trunc i32 %i.go to i16
   %i.gq = getelementptr inbounds nuw i8, ptr %.08997, i64 4
-  store i16 %i.gp, ptr %i.gq, align 2, !tbaa !10
+  store i16 %i.gp, ptr %i.gq, align 4, !tbaa !10
   %i.gr = add nsw i32 %i.ed, %i.j                 ; 2 uses
   %i.gs = add nsw i32 %i.gr, 512
   %i.gt = ashr i32 %i.gs, 10
@@ -2034,7 +2034,7 @@ bb.a:
   %i.le = ashr i32 %i.ld, %i.f
   %i.lf = trunc i32 %i.le to i16
   %i.lg = getelementptr inbounds nuw i8, ptr %.08997, i64 8
-  store i16 %i.lf, ptr %i.lg, align 2, !tbaa !10
+  store i16 %i.lf, ptr %i.lg, align 8, !tbaa !10
   %i.lh = add nsw i32 %i.it, %i.j                 ; 2 uses
   %i.li = add nsw i32 %i.lh, 512
   %i.lj = ashr i32 %i.li, 10
@@ -2156,7 +2156,7 @@ bb.a:
   %i.pu = ashr i32 %i.pt, %i.f
   %i.pv = trunc i32 %i.pu to i16
   %i.pw = getelementptr inbounds nuw i8, ptr %.08997, i64 12
-  store i16 %i.pv, ptr %i.pw, align 2, !tbaa !10
+  store i16 %i.pv, ptr %i.pw, align 4, !tbaa !10
   %.reass = add nsw i32 %i.nm, %invariant.op
   %i.px = ashr i32 %.reass, 10
   %i.py = sext i32 %i.px to i64
@@ -2559,7 +2559,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cq = ashr <8 x i32> %i.cp, %broadcast.splat276
   %i.cr = trunc <8 x i32> %i.cq to <8 x i16>
   %i.cs = getelementptr inbounds nuw [2 x i8], ptr %.0180, i64 %index
-  store <8 x i16> %i.cr, ptr %i.cs, align 2, !tbaa !10
+  store <8 x i16> %i.cr, ptr %i.cs, align 16, !tbaa !10
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ct = icmp eq i64 %index.next, %n.vec
   br i1 %i.ct, label %middle.block, label %vector.body, !llvm.loop !180
@@ -2690,34 +2690,34 @@ vector.body311:                                   ; preds = %vector.body311, %ve
   %index312 = phi i64 [ 0, %vector.ph287 ], [ %index.next321, %vector.body311 ] ; 3 uses
   %i.ey = getelementptr [2 x i8], ptr %.1, i64 %index312 ; 8 uses
   %i.ez = getelementptr i8, ptr %i.ey, i64 -768
-  %wide.load313 = load <8 x i16>, ptr %i.ez, align 2, !tbaa !10
+  %wide.load313 = load <8 x i16>, ptr %i.ez, align 16, !tbaa !10
   %i.fa = sext <8 x i16> %wide.load313 to <8 x i32>
   %i.fb = mul nsw <8 x i32> %i.fa, %i.ej
   %i.fc = getelementptr i8, ptr %i.ey, i64 -512
-  %wide.load314 = load <8 x i16>, ptr %i.fc, align 2, !tbaa !10
+  %wide.load314 = load <8 x i16>, ptr %i.fc, align 16, !tbaa !10
   %i.fd = sext <8 x i16> %wide.load314 to <8 x i32>
   %i.fe = mul nsw <8 x i32> %i.fd, %i.el
   %i.ff = getelementptr i8, ptr %i.ey, i64 -256
-  %wide.load315 = load <8 x i16>, ptr %i.ff, align 2, !tbaa !10
+  %wide.load315 = load <8 x i16>, ptr %i.ff, align 16, !tbaa !10
   %i.fg = sext <8 x i16> %wide.load315 to <8 x i32>
   %i.fh = mul nsw <8 x i32> %i.fg, %i.en
-  %wide.load316 = load <8 x i16>, ptr %i.ey, align 2, !tbaa !10
+  %wide.load316 = load <8 x i16>, ptr %i.ey, align 16, !tbaa !10
   %i.fi = sext <8 x i16> %wide.load316 to <8 x i32>
   %i.fj = mul nsw <8 x i32> %i.fi, %i.ep
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ey, i64 256
-  %wide.load317 = load <8 x i16>, ptr %i.fk, align 2, !tbaa !10
+  %wide.load317 = load <8 x i16>, ptr %i.fk, align 16, !tbaa !10
   %i.fl = sext <8 x i16> %wide.load317 to <8 x i32>
   %i.fm = mul nsw <8 x i32> %i.fl, %i.er
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ey, i64 512
-  %wide.load318 = load <8 x i16>, ptr %i.fn, align 2, !tbaa !10
+  %wide.load318 = load <8 x i16>, ptr %i.fn, align 16, !tbaa !10
   %i.fo = sext <8 x i16> %wide.load318 to <8 x i32>
   %i.fp = mul nsw <8 x i32> %i.fo, %i.et
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ey, i64 768
-  %wide.load319 = load <8 x i16>, ptr %i.fq, align 2, !tbaa !10
+  %wide.load319 = load <8 x i16>, ptr %i.fq, align 16, !tbaa !10
   %i.fr = sext <8 x i16> %wide.load319 to <8 x i32>
   %i.fs = mul nsw <8 x i32> %i.fr, %i.ev
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ey, i64 1024
-  %wide.load320 = load <8 x i16>, ptr %i.ft, align 2, !tbaa !10
+  %wide.load320 = load <8 x i16>, ptr %i.ft, align 16, !tbaa !10
   %i.fu = sext <8 x i16> %wide.load320 to <8 x i32>
   %i.fv = mul nsw <8 x i32> %i.fu, %i.ex
   %i.fw = add nsw <8 x i32> %i.fb, %broadcast.splat306
@@ -3120,7 +3120,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dh = ashr <8 x i32> %i.dg, %broadcast.splat280
   %i.di = trunc <8 x i32> %i.dh to <8 x i16>
   %i.dj = getelementptr inbounds nuw [2 x i8], ptr %.0181, i64 %index
-  store <8 x i16> %i.di, ptr %i.dj, align 2, !tbaa !10
+  store <8 x i16> %i.di, ptr %i.dj, align 16, !tbaa !10
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.dk = icmp eq i64 %index.next, %n.vec
   br i1 %i.dk, label %middle.block, label %vector.body, !llvm.loop !251
@@ -3265,34 +3265,34 @@ vector.body323:                                   ; preds = %.lr.ph226, %vector.
   %index324 = phi i64 [ %index.next333, %vector.body323 ], [ 0, %.lr.ph226 ] ; 3 uses
   %i.gu = getelementptr [2 x i8], ptr %.1182, i64 %index324 ; 8 uses
   %i.gv = getelementptr i8, ptr %i.gu, i64 -768
-  %wide.load325 = load <8 x i16>, ptr %i.gv, align 2, !tbaa !10
+  %wide.load325 = load <8 x i16>, ptr %i.gv, align 16, !tbaa !10
   %i.gw = sext <8 x i16> %wide.load325 to <8 x i32>
   %i.gx = mul nsw <8 x i32> %broadcast.splat308, %i.gw
   %i.gy = getelementptr i8, ptr %i.gu, i64 -512
-  %wide.load326 = load <8 x i16>, ptr %i.gy, align 2, !tbaa !10
+  %wide.load326 = load <8 x i16>, ptr %i.gy, align 16, !tbaa !10
   %i.gz = sext <8 x i16> %wide.load326 to <8 x i32>
   %i.ha = mul nsw <8 x i32> %broadcast.splat310, %i.gz
   %i.hb = getelementptr i8, ptr %i.gu, i64 -256
-  %wide.load327 = load <8 x i16>, ptr %i.hb, align 2, !tbaa !10
+  %wide.load327 = load <8 x i16>, ptr %i.hb, align 16, !tbaa !10
   %i.hc = sext <8 x i16> %wide.load327 to <8 x i32>
   %i.hd = mul nsw <8 x i32> %broadcast.splat312, %i.hc
-  %wide.load328 = load <8 x i16>, ptr %i.gu, align 2, !tbaa !10
+  %wide.load328 = load <8 x i16>, ptr %i.gu, align 16, !tbaa !10
   %i.he = sext <8 x i16> %wide.load328 to <8 x i32>
   %i.hf = mul nsw <8 x i32> %broadcast.splat314, %i.he
   %i.hg = getelementptr inbounds nuw i8, ptr %i.gu, i64 256
-  %wide.load329 = load <8 x i16>, ptr %i.hg, align 2, !tbaa !10
+  %wide.load329 = load <8 x i16>, ptr %i.hg, align 16, !tbaa !10
   %i.hh = sext <8 x i16> %wide.load329 to <8 x i32>
   %i.hi = mul nsw <8 x i32> %broadcast.splat316, %i.hh
   %i.hj = getelementptr inbounds nuw i8, ptr %i.gu, i64 512
-  %wide.load330 = load <8 x i16>, ptr %i.hj, align 2, !tbaa !10
+  %wide.load330 = load <8 x i16>, ptr %i.hj, align 16, !tbaa !10
   %i.hk = sext <8 x i16> %wide.load330 to <8 x i32>
   %i.hl = mul nsw <8 x i32> %broadcast.splat318, %i.hk
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gu, i64 768
-  %wide.load331 = load <8 x i16>, ptr %i.hm, align 2, !tbaa !10
+  %wide.load331 = load <8 x i16>, ptr %i.hm, align 16, !tbaa !10
   %i.hn = sext <8 x i16> %wide.load331 to <8 x i32>
   %i.ho = mul nsw <8 x i32> %broadcast.splat320, %i.hn
   %i.hp = getelementptr inbounds nuw i8, ptr %i.gu, i64 1024
-  %wide.load332 = load <8 x i16>, ptr %i.hp, align 2, !tbaa !10
+  %wide.load332 = load <8 x i16>, ptr %i.hp, align 16, !tbaa !10
   %i.hq = sext <8 x i16> %wide.load332 to <8 x i32>
   %i.hr = mul nsw <8 x i32> %broadcast.splat322, %i.hq
   %i.hs = add nsw <8 x i32> %i.gx, splat (i32 32)

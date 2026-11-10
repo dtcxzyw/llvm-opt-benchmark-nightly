@@ -205,7 +205,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.b:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i
   %.09.i.i29.i = phi ptr [ %.ptr, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i ], [ %.0.i.i30.i, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i ] ; 6 uses
   %.0.i.i30.i = getelementptr inbounds i8, ptr %.09.i.i29.i, i64 -8 ; 2 uses
-  %i.bw = load i32, ptr %.0.i.i30.i, align 4, !tbaa !274 ; 3 uses
+  %i.bw = load i32, ptr %.0.i.i30.i, align 8, !tbaa !274 ; 3 uses
   %i.bx = icmp ugt i32 %i.bw, %.sroa.0.0.extract.trunc.i.i26.i
   br i1 %i.bx, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i, label %bb.c
 
@@ -226,7 +226,7 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i: ; 
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i
   %i.cc = phi i32 [ %.pre.i.i38.i, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i ], [ %i.ca, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i ]
-  store i32 %i.bw, ptr %.09.i.i29.i, align 4, !tbaa !274
+  store i32 %i.bw, ptr %.09.i.i29.i, align 8, !tbaa !274
   %i.cd = getelementptr inbounds nuw i8, ptr %.09.i.i29.i, i64 4
   store i32 %i.cc, ptr %i.cd, align 4, !tbaa !275
   br label %bb.b, !llvm.loop !20
@@ -264,7 +264,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.1
   %.09.i.i29.i.1 = phi ptr [ %i.c, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.1 ], [ %.0.i.i30.i.1, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1 ] ; 6 uses
   %.0.i.i30.i.1 = getelementptr inbounds i8, ptr %.09.i.i29.i.1, i64 -8 ; 2 uses
-  %i.cn = load i32, ptr %.0.i.i30.i.1, align 4, !tbaa !274 ; 3 uses
+  %i.cn = load i32, ptr %.0.i.i30.i.1, align 8, !tbaa !274 ; 3 uses
   %i.co = icmp ugt i32 %i.cn, %.sroa.0.0.extract.trunc.i.i26.i.1
   br i1 %i.co, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1, label %bb.g
 
@@ -290,7 +290,7 @@ _ZSt25__unguarded_linear_insertIPSt4pairIjjEN9__gnu_cxx5__ops14_Val_less_iterEEv
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1: ; preds = %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.1
   %i.ct = phi i32 [ %.pre.i.i38.i.1, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1 ], [ %i.cr, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.1 ]
-  store i32 %i.cn, ptr %.09.i.i29.i.1, align 4, !tbaa !274
+  store i32 %i.cn, ptr %.09.i.i29.i.1, align 8, !tbaa !274
   %i.cu = getelementptr inbounds nuw i8, ptr %.09.i.i29.i.1, i64 4
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !275
   br label %bb.f, !llvm.loop !20
@@ -338,7 +338,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.j:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.2
   %.09.i.i29.i.2 = phi ptr [ %i.d, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.2 ], [ %.0.i.i30.i.2, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2 ] ; 6 uses
   %.0.i.i30.i.2 = getelementptr inbounds i8, ptr %.09.i.i29.i.2, i64 -8 ; 2 uses
-  %i.dn = load i32, ptr %.0.i.i30.i.2, align 4, !tbaa !274 ; 3 uses
+  %i.dn = load i32, ptr %.0.i.i30.i.2, align 8, !tbaa !274 ; 3 uses
   %i.do = icmp ugt i32 %i.dn, %.sroa.0.0.extract.trunc.i.i26.i.2
   br i1 %i.do, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2, label %bb.k
 
@@ -366,7 +366,7 @@ _ZSt25__unguarded_linear_insertIPSt4pairIjjEN9__gnu_cxx5__ops14_Val_less_iterEEv
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2: ; preds = %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.2
   %i.du = phi i32 [ %.pre.i.i38.i.2, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2 ], [ %i.dr, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.2 ]
-  store i32 %i.dn, ptr %.09.i.i29.i.2, align 4, !tbaa !274
+  store i32 %i.dn, ptr %.09.i.i29.i.2, align 8, !tbaa !274
   %i.dv = getelementptr inbounds nuw i8, ptr %.09.i.i29.i.2, i64 4
   store i32 %i.du, ptr %i.dv, align 4, !tbaa !275
   br label %bb.j, !llvm.loop !20
@@ -769,7 +769,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.b:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i
   %.09.i.i29.i = phi ptr [ %.ptr, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i ], [ %.0.i.i30.i, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i ] ; 6 uses
   %.0.i.i30.i = getelementptr inbounds i8, ptr %.09.i.i29.i, i64 -8 ; 2 uses
-  %i.bw = load i32, ptr %.0.i.i30.i, align 4, !tbaa !274 ; 3 uses
+  %i.bw = load i32, ptr %.0.i.i30.i, align 8, !tbaa !274 ; 3 uses
   %i.bx = icmp ugt i32 %i.bw, %.sroa.0.0.extract.trunc.i.i26.i
   br i1 %i.bx, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i, label %bb.c
 
@@ -790,7 +790,7 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i: ; 
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i
   %i.cc = phi i32 [ %.pre.i.i38.i, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i ], [ %i.ca, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i ]
-  store i32 %i.bw, ptr %.09.i.i29.i, align 4, !tbaa !274
+  store i32 %i.bw, ptr %.09.i.i29.i, align 8, !tbaa !274
   %i.cd = getelementptr inbounds nuw i8, ptr %.09.i.i29.i, i64 4
   store i32 %i.cc, ptr %i.cd, align 4, !tbaa !275
   br label %bb.b, !llvm.loop !20
@@ -828,7 +828,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.1
   %.09.i.i29.i.1 = phi ptr [ %i.c, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.1 ], [ %.0.i.i30.i.1, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1 ] ; 6 uses
   %.0.i.i30.i.1 = getelementptr inbounds i8, ptr %.09.i.i29.i.1, i64 -8 ; 2 uses
-  %i.cn = load i32, ptr %.0.i.i30.i.1, align 4, !tbaa !274 ; 3 uses
+  %i.cn = load i32, ptr %.0.i.i30.i.1, align 8, !tbaa !274 ; 3 uses
   %i.co = icmp ugt i32 %i.cn, %.sroa.0.0.extract.trunc.i.i26.i.1
   br i1 %i.co, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1, label %bb.g
 
@@ -854,7 +854,7 @@ _ZSt25__unguarded_linear_insertIPSt4pairIjjEN9__gnu_cxx5__ops14_Val_less_iterEEv
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1: ; preds = %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.1
   %i.ct = phi i32 [ %.pre.i.i38.i.1, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1 ], [ %i.cr, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.1 ]
-  store i32 %i.cn, ptr %.09.i.i29.i.1, align 4, !tbaa !274
+  store i32 %i.cn, ptr %.09.i.i29.i.1, align 8, !tbaa !274
   %i.cu = getelementptr inbounds nuw i8, ptr %.09.i.i29.i.1, i64 4
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !275
   br label %bb.f, !llvm.loop !20
@@ -902,7 +902,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.j:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.2
   %.09.i.i29.i.2 = phi ptr [ %i.d, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.2 ], [ %.0.i.i30.i.2, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2 ] ; 6 uses
   %.0.i.i30.i.2 = getelementptr inbounds i8, ptr %.09.i.i29.i.2, i64 -8 ; 2 uses
-  %i.dn = load i32, ptr %.0.i.i30.i.2, align 4, !tbaa !274 ; 3 uses
+  %i.dn = load i32, ptr %.0.i.i30.i.2, align 8, !tbaa !274 ; 3 uses
   %i.do = icmp ugt i32 %i.dn, %.sroa.0.0.extract.trunc.i.i26.i.2
   br i1 %i.do, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2, label %bb.k
 
@@ -930,7 +930,7 @@ _ZSt25__unguarded_linear_insertIPSt4pairIjjEN9__gnu_cxx5__ops14_Val_less_iterEEv
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2: ; preds = %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.2
   %i.du = phi i32 [ %.pre.i.i38.i.2, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2 ], [ %i.dr, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.2 ]
-  store i32 %i.dn, ptr %.09.i.i29.i.2, align 4, !tbaa !274
+  store i32 %i.dn, ptr %.09.i.i29.i.2, align 8, !tbaa !274
   %i.dv = getelementptr inbounds nuw i8, ptr %.09.i.i29.i.2, i64 4
   store i32 %i.du, ptr %i.dv, align 4, !tbaa !275
   br label %bb.j, !llvm.loop !20
@@ -1333,7 +1333,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.b:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i
   %.09.i.i29.i = phi ptr [ %.ptr, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i ], [ %.0.i.i30.i, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i ] ; 6 uses
   %.0.i.i30.i = getelementptr inbounds i8, ptr %.09.i.i29.i, i64 -8 ; 2 uses
-  %i.bw = load i32, ptr %.0.i.i30.i, align 4, !tbaa !274 ; 3 uses
+  %i.bw = load i32, ptr %.0.i.i30.i, align 8, !tbaa !274 ; 3 uses
   %i.bx = icmp ugt i32 %i.bw, %.sroa.0.0.extract.trunc.i.i26.i
   br i1 %i.bx, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i, label %bb.c
 
@@ -1354,7 +1354,7 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i: ; 
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i
   %i.cc = phi i32 [ %.pre.i.i38.i, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i ], [ %i.ca, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i ]
-  store i32 %i.bw, ptr %.09.i.i29.i, align 4, !tbaa !274
+  store i32 %i.bw, ptr %.09.i.i29.i, align 8, !tbaa !274
   %i.cd = getelementptr inbounds nuw i8, ptr %.09.i.i29.i, i64 4
   store i32 %i.cc, ptr %i.cd, align 4, !tbaa !275
   br label %bb.b, !llvm.loop !20
@@ -1392,7 +1392,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.1
   %.09.i.i29.i.1 = phi ptr [ %i.c, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.1 ], [ %.0.i.i30.i.1, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1 ] ; 6 uses
   %.0.i.i30.i.1 = getelementptr inbounds i8, ptr %.09.i.i29.i.1, i64 -8 ; 2 uses
-  %i.cn = load i32, ptr %.0.i.i30.i.1, align 4, !tbaa !274 ; 3 uses
+  %i.cn = load i32, ptr %.0.i.i30.i.1, align 8, !tbaa !274 ; 3 uses
   %i.co = icmp ugt i32 %i.cn, %.sroa.0.0.extract.trunc.i.i26.i.1
   br i1 %i.co, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1, label %bb.g
 
@@ -1418,7 +1418,7 @@ _ZSt25__unguarded_linear_insertIPSt4pairIjjEN9__gnu_cxx5__ops14_Val_less_iterEEv
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.1: ; preds = %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.1
   %i.ct = phi i32 [ %.pre.i.i38.i.1, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.1 ], [ %i.cr, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.1 ]
-  store i32 %i.cn, ptr %.09.i.i29.i.1, align 4, !tbaa !274
+  store i32 %i.cn, ptr %.09.i.i29.i.1, align 8, !tbaa !274
   %i.cu = getelementptr inbounds nuw i8, ptr %.09.i.i29.i.1, i64 4
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !275
   br label %bb.f, !llvm.loop !20
@@ -1466,7 +1466,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i2
 bb.j:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.2
   %.09.i.i29.i.2 = phi ptr [ %i.d, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread16.i25.i.2 ], [ %.0.i.i30.i.2, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2 ] ; 6 uses
   %.0.i.i30.i.2 = getelementptr inbounds i8, ptr %.09.i.i29.i.2, i64 -8 ; 2 uses
-  %i.dn = load i32, ptr %.0.i.i30.i.2, align 4, !tbaa !274 ; 3 uses
+  %i.dn = load i32, ptr %.0.i.i30.i.2, align 8, !tbaa !274 ; 3 uses
   %i.do = icmp ugt i32 %i.dn, %.sroa.0.0.extract.trunc.i.i26.i.2
   br i1 %i.do, label %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2, label %bb.k
 
@@ -1494,7 +1494,7 @@ _ZSt25__unguarded_linear_insertIPSt4pairIjjEN9__gnu_cxx5__ops14_Val_less_iterEEv
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread.i.i35.i.2: ; preds = %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.2
   %i.du = phi i32 [ %.pre.i.i38.i.2, %._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.thread_crit_edge.i.i36.i.2 ], [ %i.dr, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIjjEPS4_EEbRT_T0_.exit.i.i31.i.2 ]
-  store i32 %i.dn, ptr %.09.i.i29.i.2, align 4, !tbaa !274
+  store i32 %i.dn, ptr %.09.i.i29.i.2, align 8, !tbaa !274
   %i.dv = getelementptr inbounds nuw i8, ptr %.09.i.i29.i.2, i64 4
   store i32 %i.du, ptr %i.dv, align 4, !tbaa !275
   br label %bb.j, !llvm.loop !20

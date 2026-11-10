@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.m = zext nneg i32 %i.l to i64
   %i.n = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.m
   %i.o = load i16, ptr %i.n, align 2              ; 2 uses
-  store i16 %i.o, ptr %i.j, align 1
+  store i16 %i.o, ptr %i.j, align 2
   %i.p = lshr i32 %.0.i24, 8                      ; 2 uses
   %.not.i25 = icmp eq i32 %i.p, 0
   br i1 %.not.i25, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerIjEEvT_.exit, label %bb.f, !llvm.loop !9
@@ -395,7 +395,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.q = zext nneg i16 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.q
   %i.s = load i16, ptr %i.r, align 2              ; 2 uses
-  store i16 %i.s, ptr %i.n, align 1
+  store i16 %i.s, ptr %i.n, align 2
   %i.t = lshr i16 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i16 %i.t, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerItEEvT_.exit, label %bb.h, !llvm.loop !12
@@ -590,7 +590,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.q = zext nneg i16 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.q
   %i.s = load i16, ptr %i.r, align 2              ; 2 uses
-  store i16 %i.s, ptr %i.n, align 1
+  store i16 %i.s, ptr %i.n, align 2
   %i.t = lshr i16 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i16 %i.t, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerItEEvT_.exit, label %bb.h, !llvm.loop !12
@@ -784,7 +784,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
-  store i16 %i.r, ptr %i.m, align 1
+  store i16 %i.r, ptr %i.m, align 2
   %i.s = lshr i32 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i32 %i.s, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerIjEEvT_.exit, label %bb.h, !llvm.loop !9
@@ -976,7 +976,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
-  store i16 %i.r, ptr %i.m, align 1
+  store i16 %i.r, ptr %i.m, align 2
   %i.s = lshr i32 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i32 %i.s, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerIjEEvT_.exit, label %bb.h, !llvm.loop !9
@@ -1168,7 +1168,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.p = and i64 %i.o, 510
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
-  store i16 %i.r, ptr %i.n, align 1
+  store i16 %i.r, ptr %i.n, align 2
   %i.s = lshr i64 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i64 %i.s, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerImEEvT_.exit, label %bb.h, !llvm.loop !15
@@ -1359,7 +1359,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.p = and i64 %i.o, 510
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
-  store i16 %i.r, ptr %i.n, align 1
+  store i16 %i.r, ptr %i.n, align 2
   %i.s = lshr i64 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i64 %i.s, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerImEEvT_.exit, label %bb.h, !llvm.loop !15
@@ -1550,7 +1550,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.p = and i64 %i.o, 510
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
-  store i16 %i.r, ptr %i.n, align 1
+  store i16 %i.r, ptr %i.n, align 2
   %i.s = lshr i64 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i64 %i.s, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerIyEEvT_.exit, label %bb.h, !llvm.loop !18
@@ -1741,7 +1741,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.p = and i64 %i.o, 510
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
-  store i16 %i.r, ptr %i.n, align 1
+  store i16 %i.r, ptr %i.n, align 2
   %i.s = lshr i64 %.0.i30, 8                      ; 2 uses
   %.not.i31 = icmp eq i64 %i.s, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerIyEEvT_.exit, label %bb.h, !llvm.loop !18
@@ -1917,7 +1917,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.z = and i64 %i.y, 510
   %i.aa = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.z
   %i.ab = load i16, ptr %i.aa, align 2            ; 2 uses
-  store i16 %i.ab, ptr %i.x, align 1
+  store i16 %i.ab, ptr %i.x, align 2
   %i.ac = lshr i64 %.0.i.i, 8                     ; 2 uses
   %.not.i12.i = icmp eq i64 %i.ac, 0
   br i1 %.not.i12.i, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerImEEvT_.exit.i, label %bb.g, !llvm.loop !15
@@ -1996,7 +1996,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.w = and i64 %i.v, 510
   %i.x = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.w
   %i.y = load i16, ptr %i.x, align 2              ; 2 uses
-  store i16 %i.y, ptr %i.u, align 1
+  store i16 %i.y, ptr %i.u, align 2
   %i.z = lshr i64 %.0.i, 8                        ; 2 uses
   %.not.i12 = icmp eq i64 %i.z, 0
   br i1 %.not.i12, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerImEEvT_.exit, label %bb.f, !llvm.loop !15
@@ -2399,7 +2399,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.z = and i64 %i.y, 510
   %i.aa = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.z
   %i.ab = load i16, ptr %i.aa, align 2            ; 2 uses
-  store i16 %i.ab, ptr %i.x, align 1
+  store i16 %i.ab, ptr %i.x, align 2
   %i.ac = lshr i64 %.0.i.i, 8                     ; 2 uses
   %.not.i12.i = icmp eq i64 %i.ac, 0
   br i1 %.not.i12.i, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerImEEvT_.exit.i, label %bb.g, !llvm.loop !15
@@ -2802,7 +2802,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.z = and i64 %i.y, 510
   %i.aa = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.z
   %i.ab = load i16, ptr %i.aa, align 2            ; 2 uses
-  store i16 %i.ab, ptr %i.x, align 1
+  store i16 %i.ab, ptr %i.x, align 2
   %i.ac = lshr i64 %.0.i.i, 8                     ; 2 uses
   %.not.i12.i = icmp eq i64 %i.ac, 0
   br i1 %.not.i12.i, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_19IntDigits15PrintAsHexLowerImEEvT_.exit.i, label %bb.g, !llvm.loop !15
@@ -3205,7 +3205,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.ag = and i64 %i.af, 510
   %i.ah = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.ag
   %i.ai = load i16, ptr %i.ah, align 2            ; 2 uses
-  store i16 %i.ai, ptr %i.ae, align 1
+  store i16 %i.ai, ptr %i.ae, align 2
   %i.aj = zext i64 %.sroa.5.0.i28 to i128
   %i.ak = shl nuw i128 %i.aj, 64
   %i.al = zext i64 %.sroa.0.0.i29 to i128
@@ -3524,7 +3524,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.aa = and i64 %i.z, 510
   %i.ab = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 %i.aa
   %i.ac = load i16, ptr %i.ab, align 2            ; 2 uses
-  store i16 %i.ac, ptr %i.y, align 1
+  store i16 %i.ac, ptr %i.y, align 2
   %i.ad = zext i64 %.sroa.5.0.i33 to i128
   %i.ae = shl nuw i128 %i.ad, 64
   %i.af = zext i64 %.sroa.0.0.i34 to i128

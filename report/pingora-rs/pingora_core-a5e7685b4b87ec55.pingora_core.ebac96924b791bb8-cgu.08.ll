@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.02.06 = phi ptr [ %i.c, %.lr.ph ], [ %0, %bb.b ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.02.06, i64 2832 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.02.06, i64 2824
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %.sroa.02.06, i8 0, i64 2824, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %.sroa.02.06, i8 0, i64 2824, i1 false)
   store float 3.402000e+38, ptr %i.d, align 8, !alias.scope !287
   %i.e = icmp eq ptr %i.c, %i.a
   br i1 %i.e, label %._crit_edge, label %.lr.ph
@@ -234,7 +234,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.02.06 = phi ptr [ %i.c, %.lr.ph ], [ %0, %bb.b ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.02.06, i64 1040 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.02.06, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.06, i8 0, i64 1032, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.06, i8 0, i64 1032, i1 false)
   store float 3.402000e+38, ptr %i.d, align 8, !alias.scope !290
   %i.e = icmp eq ptr %i.c, %i.a
   br i1 %i.e, label %._crit_edge, label %.lr.ph
@@ -263,7 +263,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.02.06 = phi ptr [ %i.c, %.lr.ph ], [ %0, %bb.b ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.02.06, i64 2192 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.02.06, i64 2184
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %.sroa.02.06, i8 0, i64 2184, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %.sroa.02.06, i8 0, i64 2184, i1 false)
   store float 3.402000e+38, ptr %i.d, align 8, !alias.scope !293
   %i.e = icmp eq ptr %i.c, %i.a
   br i1 %i.e, label %._crit_edge, label %.lr.ph
@@ -666,7 +666,7 @@ bb.n:                                             ; preds = %bb.l
   %.sroa.02.06.i = phi ptr [ %i.ak, %.lr.ph.i ], [ %i.ai, %bb.m ] ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i, i64 1040 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i, i64 1032
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.06.i, i8 0, i64 1032, i1 false), !alias.scope !769
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.06.i, i8 0, i64 1032, i1 false), !alias.scope !769
   store float 3.402000e+38, ptr %i.al, align 8, !alias.scope !770
   %i.am = icmp eq ptr %i.ak, %i.aj
   br i1 %i.am, label %_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc9histogram15ClearHistogramsNtB2_16HistogramLiteralECskeugdADtBsi_12pingora_core.exit, label %.lr.ph.i
@@ -1069,7 +1069,7 @@ bb.ba:                                            ; preds = %bb.ay
   %.sroa.02.06.i166 = phi ptr [ %i.ga, %.lr.ph.i165 ], [ %i.fy, %bb.az ] ; 3 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i166, i64 1040 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i166, i64 1032
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.06.i166, i8 0, i64 1032, i1 false), !alias.scope !773
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.06.i166, i8 0, i64 1032, i1 false), !alias.scope !773
   store float 3.402000e+38, ptr %i.gb, align 8, !alias.scope !774
   %i.gc = icmp eq ptr %i.ga, %i.fz
   br i1 %i.gc, label %_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc9histogram15ClearHistogramsNtB2_16HistogramLiteralECskeugdADtBsi_12pingora_core.exit168, label %.lr.ph.i165
@@ -1472,7 +1472,7 @@ bb.av:                                            ; preds = %_RINvNtCskKLDkoKarT
   %.sroa.02.06.i.i = phi ptr [ %i.ch, %.lr.ph.i.i ], [ %i.bx, %bb.au ] ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i, i64 1040 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.06.i.i, i8 0, i64 1032, i1 false), !alias.scope !874, !noalias !873
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.06.i.i, i8 0, i64 1032, i1 false), !alias.scope !874, !noalias !873
   store float 3.402000e+38, ptr %i.ci, align 8, !alias.scope !876, !noalias !873
   %i.cj = icmp eq ptr %i.ch, %i.cg
   br i1 %i.cj, label %_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc9metablock24InitContextBlockSplitterNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocECskeugdADtBsi_12pingora_core.exit, label %.lr.ph.i.i

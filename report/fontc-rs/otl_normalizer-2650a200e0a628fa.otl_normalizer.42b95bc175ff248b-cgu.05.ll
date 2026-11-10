@@ -204,17 +204,17 @@ bb.t:                                             ; preds = %_RNCINvMNtCsf3Ta7LF
   br i1 %i.ar, label %.split5.us.1.i, label %.lr.ph60
 
 .split.us6.1.i:                                   ; preds = %bb.ab
-  %i.as = load i64, ptr %i.au, align 1, !alias.scope !596
-  store i64 %i.as, ptr %.sroa.0.0.i26.us8.1.i51, align 1, !alias.scope !596
+  %i.as = load i64, ptr %i.au, align 8, !alias.scope !596
+  store i64 %i.as, ptr %.sroa.0.0.i26.us8.1.i51, align 8, !alias.scope !596
   %i.at = icmp eq ptr %i.au, %i.x
   br i1 %i.at, label %.split5.us.1.i, label %.lr.ph52
 
 .lr.ph52:                                         ; preds = %.split.us6.1.i.preheader, %.split.us6.1.i
   %.sroa.0.0.i26.us8.1.i51 = phi ptr [ %i.au, %.split.us6.1.i ], [ %i.ac, %.split.us6.1.i.preheader ] ; 4 uses
   %i.au = getelementptr inbounds i8, ptr %.sroa.0.0.i26.us8.1.i51, i64 -8 ; 4 uses
-  %.val11.i.us9.1.i = load i32, ptr %i.au, align 1, !alias.scope !596 ; 2 uses
+  %.val11.i.us9.1.i = load i32, ptr %i.au, align 8, !alias.scope !596 ; 2 uses
   %i.av = getelementptr i8, ptr %.sroa.0.0.i26.us8.1.i51, i64 -4
-  %.val12.i.us10.1.i = load i32, ptr %i.av, align 1, !alias.scope !596 ; 2 uses
+  %.val12.i.us10.1.i = load i32, ptr %i.av, align 4, !alias.scope !596 ; 2 uses
   switch i32 %i.af, label %bb.v [
     i32 1414284868, label %_RNCNCNvNtCs5JazJsyow1H_14otl_normalizer6common16get_lang_systemss1_00B7_.exit.i18.i.us12.1.i
     i32 1953261156, label %bb.u
@@ -263,17 +263,17 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   br i1 %.sroa.0.0.i11.i22.i.us16.1.i, label %.split.us6.1.i, label %.split5.us.1.i
 
 .split.us.1.i:                                    ; preds = %bb.ag
-  %i.bb = load i64, ptr %i.bd, align 1, !alias.scope !596
-  store i64 %i.bb, ptr %.sroa.0.0.i26.us.1.i55, align 1, !alias.scope !596
+  %i.bb = load i64, ptr %i.bd, align 8, !alias.scope !596
+  store i64 %i.bb, ptr %.sroa.0.0.i26.us.1.i55, align 8, !alias.scope !596
   %i.bc = icmp eq ptr %i.bd, %i.x
   br i1 %i.bc, label %.split5.us.1.i, label %.lr.ph56
 
 .lr.ph56:                                         ; preds = %.split.us.1.i.preheader, %.split.us.1.i
   %.sroa.0.0.i26.us.1.i55 = phi ptr [ %i.bd, %.split.us.1.i ], [ %i.ac, %.split.us.1.i.preheader ] ; 4 uses
   %i.bd = getelementptr inbounds i8, ptr %.sroa.0.0.i26.us.1.i55, i64 -8 ; 4 uses
-  %.val11.i.us.1.i = load i32, ptr %i.bd, align 1, !alias.scope !596 ; 2 uses
+  %.val11.i.us.1.i = load i32, ptr %i.bd, align 8, !alias.scope !596 ; 2 uses
   %i.be = getelementptr i8, ptr %.sroa.0.0.i26.us.1.i55, i64 -4
-  %.val12.i.us.1.i = load i32, ptr %i.be, align 1, !alias.scope !596 ; 2 uses
+  %.val12.i.us.1.i = load i32, ptr %i.be, align 4, !alias.scope !596 ; 2 uses
   switch i32 %i.af, label %bb.ad [
     i32 1414284868, label %_RNCNCNvNtCs5JazJsyow1H_14otl_normalizer6common16get_lang_systemss1_00B7_.exit.i18.i.us.1.i
     i32 1953261156, label %bb.ac
@@ -309,17 +309,17 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %_RN
   br i1 %.sroa.0.0.i11.i22.i.us.1.i, label %.split.us.1.i, label %.split5.us.1.i
 
 .split.1.i:                                       ; preds = %bb.ao
-  %i.bh = load i64, ptr %i.bj, align 1, !alias.scope !596
-  store i64 %i.bh, ptr %.sroa.0.0.i26.1.i59, align 1, !alias.scope !596
+  %i.bh = load i64, ptr %i.bj, align 8, !alias.scope !596
+  store i64 %i.bh, ptr %.sroa.0.0.i26.1.i59, align 8, !alias.scope !596
   %i.bi = icmp eq ptr %i.bj, %i.x
   br i1 %i.bi, label %.split5.us.1.i, label %.lr.ph60
 
 .lr.ph60:                                         ; preds = %.split.1.i.preheader, %.split.1.i
   %.sroa.0.0.i26.1.i59 = phi ptr [ %i.bj, %.split.1.i ], [ %i.ac, %.split.1.i.preheader ] ; 4 uses
   %i.bj = getelementptr inbounds i8, ptr %.sroa.0.0.i26.1.i59, i64 -8 ; 4 uses
-  %.val11.i.1.i = load i32, ptr %i.bj, align 1, !alias.scope !596 ; 2 uses
+  %.val11.i.1.i = load i32, ptr %i.bj, align 8, !alias.scope !596 ; 2 uses
   %i.bk = getelementptr i8, ptr %.sroa.0.0.i26.1.i59, i64 -4
-  %.val12.i.1.i = load i32, ptr %i.bk, align 1, !alias.scope !596 ; 2 uses
+  %.val12.i.1.i = load i32, ptr %i.bk, align 4, !alias.scope !596 ; 2 uses
   switch i32 %i.af, label %bb.ai [
     i32 1414284868, label %_RNCNCNvNtCs5JazJsyow1H_14otl_normalizer6common16get_lang_systemss1_00B7_.exit.i18.i.1.i
     i32 1953261156, label %bb.ah
@@ -486,17 +486,17 @@ bb.ba:                                            ; preds = %_RNCINvMNtCsf3Ta7LF
   br i1 %i.cl, label %.split5.us.i, label %.lr.ph48
 
 .split.us.i:                                      ; preds = %bb.bf
-  %i.cm = load i64, ptr %i.co, align 1, !alias.scope !596
-  store i64 %i.cm, ptr %.sroa.0.0.i26.us.i43, align 1, !alias.scope !596
+  %i.cm = load i64, ptr %i.co, align 8, !alias.scope !596
+  store i64 %i.cm, ptr %.sroa.0.0.i26.us.i43, align 8, !alias.scope !596
   %i.cn = icmp eq ptr %i.co, %i.a
   br i1 %i.cn, label %.split5.us.i, label %.lr.ph44
 
 .lr.ph44:                                         ; preds = %.split.us.i.preheader, %.split.us.i
   %.sroa.0.0.i26.us.i43 = phi ptr [ %i.co, %.split.us.i ], [ %i.bw, %.split.us.i.preheader ] ; 4 uses
   %i.co = getelementptr inbounds i8, ptr %.sroa.0.0.i26.us.i43, i64 -8 ; 4 uses
-  %.val11.i.us.i = load i32, ptr %i.co, align 1, !alias.scope !596 ; 2 uses
+  %.val11.i.us.i = load i32, ptr %i.co, align 8, !alias.scope !596 ; 2 uses
   %i.cp = getelementptr i8, ptr %.sroa.0.0.i26.us.i43, i64 -4
-  %.val12.i.us.i = load i32, ptr %i.cp, align 1, !alias.scope !596 ; 2 uses
+  %.val12.i.us.i = load i32, ptr %i.cp, align 4, !alias.scope !596 ; 2 uses
   switch i32 %i.bz, label %bb.bc [
     i32 1414284868, label %_RNCNCNvNtCs5JazJsyow1H_14otl_normalizer6common16get_lang_systemss1_00B7_.exit.i18.i.us.i
     i32 1953261156, label %bb.bb
@@ -532,17 +532,17 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %_RN
   br i1 %.sroa.0.0.i11.i22.i.us.i, label %.split.us.i, label %.split5.us.i
 
 .split.us6.i:                                     ; preds = %bb.bn
-  %i.cs = load i64, ptr %i.cu, align 1, !alias.scope !596
-  store i64 %i.cs, ptr %.sroa.0.0.i26.us8.i41, align 1, !alias.scope !596
+  %i.cs = load i64, ptr %i.cu, align 8, !alias.scope !596
+  store i64 %i.cs, ptr %.sroa.0.0.i26.us8.i41, align 8, !alias.scope !596
   %i.ct = icmp eq ptr %i.cu, %i.a
   br i1 %i.ct, label %.split5.us.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.split.us6.i.preheader, %.split.us6.i
   %.sroa.0.0.i26.us8.i41 = phi ptr [ %i.cu, %.split.us6.i ], [ %i.bw, %.split.us6.i.preheader ] ; 4 uses
   %i.cu = getelementptr inbounds i8, ptr %.sroa.0.0.i26.us8.i41, i64 -8 ; 4 uses
-  %.val11.i.us9.i = load i32, ptr %i.cu, align 1, !alias.scope !596 ; 2 uses
+  %.val11.i.us9.i = load i32, ptr %i.cu, align 8, !alias.scope !596 ; 2 uses
   %i.cv = getelementptr i8, ptr %.sroa.0.0.i26.us8.i41, i64 -4
-  %.val12.i.us10.i = load i32, ptr %i.cv, align 1, !alias.scope !596 ; 2 uses
+  %.val12.i.us10.i = load i32, ptr %i.cv, align 4, !alias.scope !596 ; 2 uses
   switch i32 %i.bz, label %bb.bh [
     i32 1414284868, label %_RNCNCNvNtCs5JazJsyow1H_14otl_normalizer6common16get_lang_systemss1_00B7_.exit.i18.i.us12.i
     i32 1953261156, label %bb.bg
@@ -591,17 +591,17 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.
   br i1 %.sroa.0.0.i11.i22.i.us16.i, label %.split.us6.i, label %.split5.us.i
 
 .split.i:                                         ; preds = %bb.bv
-  %i.db = load i64, ptr %i.dd, align 1, !alias.scope !596
-  store i64 %i.db, ptr %.sroa.0.0.i26.i47, align 1, !alias.scope !596
+  %i.db = load i64, ptr %i.dd, align 8, !alias.scope !596
+  store i64 %i.db, ptr %.sroa.0.0.i26.i47, align 8, !alias.scope !596
   %i.dc = icmp eq ptr %i.dd, %i.a
   br i1 %i.dc, label %.split5.us.i, label %.lr.ph48
 
 .lr.ph48:                                         ; preds = %.split.i.preheader, %.split.i
   %.sroa.0.0.i26.i47 = phi ptr [ %i.dd, %.split.i ], [ %i.bw, %.split.i.preheader ] ; 4 uses
   %i.dd = getelementptr inbounds i8, ptr %.sroa.0.0.i26.i47, i64 -8 ; 4 uses
-  %.val11.i.i = load i32, ptr %i.dd, align 1, !alias.scope !596 ; 2 uses
+  %.val11.i.i = load i32, ptr %i.dd, align 8, !alias.scope !596 ; 2 uses
   %i.de = getelementptr i8, ptr %.sroa.0.0.i26.i47, i64 -4
-  %.val12.i.i = load i32, ptr %i.de, align 1, !alias.scope !596 ; 2 uses
+  %.val12.i.i = load i32, ptr %i.de, align 4, !alias.scope !596 ; 2 uses
   switch i32 %i.bz, label %bb.bp [
     i32 1414284868, label %_RNCNCNvNtCs5JazJsyow1H_14otl_normalizer6common16get_lang_systemss1_00B7_.exit.i18.i.i
     i32 1953261156, label %bb.bo
@@ -1004,8 +1004,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16NtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB2P_11collections5btree3mapINtB3C_8BTreeMapB19_B1W_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4F_8adapters3map3MapINtNtNtBa_3ops5range5RangetENCNvMNtCs5JazJsyow1H_14otl_normalizer11glyph_namesNtB6w_7NameMap9from_fonts_0EE0E0EB6y_.exit
   %.sroa.0.05 = phi ptr [ %i.j, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16NtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB2P_11collections5btree3mapINtB3C_8BTreeMapB19_B1W_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4F_8adapters3map3MapINtNtNtBa_3ops5range5RangetENCNvMNtCs5JazJsyow1H_14otl_normalizer11glyph_namesNtB6w_7NameMap9from_fonts_0EE0E0EB6y_.exit ], [ %i.c, %.lr.ph.preheader ] ; 5 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -32 ; 4 uses
-  %.val9.i = load i16, ptr %.sroa.0.05, align 2, !noundef !5 ; 3 uses
-  %.val10.i = load i16, ptr %i.d, align 2, !noundef !5
+  %.val9.i = load i16, ptr %.sroa.0.05, align 8, !noundef !5 ; 3 uses
+  %.val10.i = load i16, ptr %i.d, align 8, !noundef !5
   %i.e = icmp ult i16 %.val9.i, %.val10.i
   br i1 %i.e, label %bb.d, label %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16NtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB2P_11collections5btree3mapINtB3C_8BTreeMapB19_B1W_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4F_8adapters3map3MapINtNtNtBa_3ops5range5RangetENCNvMNtCs5JazJsyow1H_14otl_normalizer11glyph_namesNtB6w_7NameMap9from_fonts_0EE0E0EB6y_.exit
 
@@ -1025,7 +1025,7 @@ bb.e:                                             ; preds = %.lr.ph10
 .lr.ph10:                                         ; preds = %bb.d, %bb.e
   %.sroa.0.0.i8 = phi ptr [ %i.h, %bb.e ], [ %i.d, %bb.d ] ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %.sroa.0.0.i8, i64 -32 ; 4 uses
-  %.val8.i = load i16, ptr %i.h, align 2, !noundef !5
+  %.val8.i = load i16, ptr %i.h, align 8, !noundef !5
   %i.i = icmp ult i16 %.val9.i, %.val8.i
   br i1 %i.i, label %bb.e, label %._crit_edge11
 
@@ -1428,7 +1428,7 @@ bb.i:                                             ; preds = %.lr.ph73
 .lr.ph73:                                         ; preds = %bb.h, %bb.i
   %.sroa.0.0.i37.171 = phi ptr [ %i.bz, %bb.i ], [ %i.bu, %bb.h ] ; 3 uses
   %i.bz = getelementptr inbounds i8, ptr %.sroa.0.0.i37.171, i64 -32 ; 4 uses
-  %.val8.i38.1 = load i16, ptr %i.bz, align 2, !noundef !5
+  %.val8.i38.1 = load i16, ptr %i.bz, align 8, !noundef !5
   %i.ca = icmp ult i16 %.val9.i36.1, %.val8.i38.1
   br i1 %i.ca, label %bb.i, label %._crit_edge74
 
@@ -1468,8 +1468,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
   %.sroa.017.05.i = phi ptr [ %i.cu, %.lr.ph.i ], [ %i.ce, %.loopexit.1 ] ; 3 uses
   %.sroa.019.04.i = phi ptr [ %i.cw, %.lr.ph.i ], [ %i.cd, %.loopexit.1 ] ; 2 uses
   %i.ck = add nuw nsw i64 %.sroa.04.09.i, 1       ; 2 uses
-  %.sroa.011.0.val.i = load i16, ptr %.sroa.011.07.i, align 2, !alias.scope !779, !noundef !5
-  %.sroa.06.0.val.i = load i16, ptr %.sroa.06.08.i, align 2, !alias.scope !779, !noundef !5
+  %.sroa.011.0.val.i = load i16, ptr %.sroa.011.07.i, align 8, !alias.scope !779, !noundef !5
+  %.sroa.06.0.val.i = load i16, ptr %.sroa.06.08.i, align 8, !alias.scope !779, !noundef !5
   %i.cl = icmp ult i16 %.sroa.011.0.val.i, %.sroa.06.0.val.i ; 3 uses
   %..i21.i = select i1 %i.cl, ptr %.sroa.011.07.i, ptr %.sroa.06.08.i
   %i.cm = xor i1 %i.cl, true
@@ -1479,8 +1479,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs
   %i.cp = zext i1 %i.cm to i64
   %i.cq = getelementptr inbounds nuw [32 x i8], ptr %.sroa.06.08.i, i64 %i.cp ; 5 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 32 ; 2 uses
-  %.sroa.017.0.val.i = load i16, ptr %.sroa.017.05.i, align 2, !alias.scope !779, !noundef !5
-  %.sroa.015.0.val.i = load i16, ptr %.sroa.015.06.i, align 2, !alias.scope !779, !noundef !5
+  %.sroa.017.0.val.i = load i16, ptr %.sroa.017.05.i, align 8, !alias.scope !779, !noundef !5
+  %.sroa.015.0.val.i = load i16, ptr %.sroa.015.06.i, align 8, !alias.scope !779, !noundef !5
   %i.cs = icmp ult i16 %.sroa.017.0.val.i, %.sroa.015.0.val.i ; 3 uses
   %..i.i = select i1 %i.cs, ptr %.sroa.015.06.i, ptr %.sroa.017.05.i
   %i.ct = xor i1 %i.cs, true
@@ -1557,7 +1557,7 @@ bb.o:                                             ; preds = %.lr.ph68
 .lr.ph68:                                         ; preds = %bb.n, %bb.o
   %.sroa.0.0.i3767 = phi ptr [ %i.do, %bb.o ], [ %i.dj, %bb.n ] ; 3 uses
   %i.do = getelementptr inbounds i8, ptr %.sroa.0.0.i3767, i64 -32 ; 4 uses
-  %.val8.i38 = load i16, ptr %i.do, align 2, !noundef !5
+  %.val8.i38 = load i16, ptr %i.do, align 8, !noundef !5
   %i.dp = icmp ult i16 %.val9.i36, %.val8.i38
   br i1 %i.dp, label %bb.o, label %._crit_edge
 

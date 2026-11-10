@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.d = add i16 %i.c, %.01314.i                  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.01215.i, i64 2
   store i16 %i.d, ptr %i.e, align 2, !tbaa !243
-  store i16 %i.d, ptr %.01215.i, align 2, !tbaa !243
+  store i16 %i.d, ptr %.01215.i, align 4, !tbaa !243
   %i.f = getelementptr inbounds nuw i8, ptr %.01215.i, i64 4
   %i.g = getelementptr inbounds nuw [2 x i8], ptr @_ZZN11ImFontAtlas37GetGlyphRangesChineseSimplifiedCommonEvE32accumulative_offsets_from_0x4E00, i64 %indvars.iv.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 2
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.j = add i16 %i.i, %i.d                       ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.01215.i, i64 6
   store i16 %i.j, ptr %i.k, align 2, !tbaa !243
-  store i16 %i.j, ptr %i.f, align 2, !tbaa !243
+  store i16 %i.j, ptr %i.f, align 4, !tbaa !243
   %i.l = getelementptr inbounds nuw i8, ptr %.01215.i, i64 8
   %i.m = getelementptr inbounds nuw [2 x i8], ptr @_ZZN11ImFontAtlas37GetGlyphRangesChineseSimplifiedCommonEvE32accumulative_offsets_from_0x4E00, i64 %indvars.iv.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.p = add i16 %i.o, %i.j                       ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.01215.i, i64 10
   store i16 %i.p, ptr %i.q, align 2, !tbaa !243
-  store i16 %i.p, ptr %i.l, align 2, !tbaa !243
+  store i16 %i.p, ptr %i.l, align 4, !tbaa !243
   %i.r = getelementptr inbounds nuw i8, ptr %.01215.i, i64 12
   %i.s = getelementptr inbounds nuw [2 x i8], ptr @_ZZN11ImFontAtlas37GetGlyphRangesChineseSimplifiedCommonEvE32accumulative_offsets_from_0x4E00, i64 %indvars.iv.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 6
@@ -229,7 +229,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.v = add i16 %i.u, %i.p                       ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.01215.i, i64 14
   store i16 %i.v, ptr %i.w, align 2, !tbaa !243
-  store i16 %i.v, ptr %i.r, align 2, !tbaa !243
+  store i16 %i.v, ptr %i.r, align 4, !tbaa !243
   %i.x = getelementptr inbounds nuw i8, ptr %.01215.i, i64 16
   %i.y = getelementptr inbounds nuw [2 x i8], ptr @_ZZN11ImFontAtlas37GetGlyphRangesChineseSimplifiedCommonEvE32accumulative_offsets_from_0x4E00, i64 %indvars.iv.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
@@ -237,7 +237,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.ab = add i16 %i.aa, %i.v                     ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.01215.i, i64 18
   store i16 %i.ab, ptr %i.ac, align 2, !tbaa !243
-  store i16 %i.ab, ptr %i.x, align 2, !tbaa !243
+  store i16 %i.ab, ptr %i.x, align 4, !tbaa !243
   %indvars.iv.next.i.4 = add nuw nsw i64 %indvars.iv.i, 5 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.01215.i, i64 20 ; 2 uses
   %exitcond.not.i.4 = icmp eq i64 %indvars.iv.next.i.4, 2500
@@ -271,7 +271,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.d = add i16 %i.c, %.01314.i                  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.01215.i, i64 2
   store i16 %i.d, ptr %i.e, align 2, !tbaa !243
-  store i16 %i.d, ptr %.01215.i, align 2, !tbaa !243
+  store i16 %i.d, ptr %.01215.i, align 4, !tbaa !243
   %i.f = getelementptr inbounds nuw i8, ptr %.01215.i, i64 4
   %i.g = getelementptr inbounds nuw [2 x i8], ptr @_ZZN11ImFontAtlas22GetGlyphRangesJapaneseEvE32accumulative_offsets_from_0x4E00, i64 %indvars.iv.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 2
@@ -279,7 +279,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.j = add i16 %i.i, %i.d                       ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.01215.i, i64 6
   store i16 %i.j, ptr %i.k, align 2, !tbaa !243
-  store i16 %i.j, ptr %i.f, align 2, !tbaa !243
+  store i16 %i.j, ptr %i.f, align 4, !tbaa !243
   %i.l = getelementptr inbounds nuw i8, ptr %.01215.i, i64 8
   %i.m = getelementptr inbounds nuw [2 x i8], ptr @_ZZN11ImFontAtlas22GetGlyphRangesJapaneseEvE32accumulative_offsets_from_0x4E00, i64 %indvars.iv.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
@@ -287,7 +287,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.p = add i16 %i.o, %i.j                       ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.01215.i, i64 10
   store i16 %i.p, ptr %i.q, align 2, !tbaa !243
-  store i16 %i.p, ptr %i.l, align 2, !tbaa !243
+  store i16 %i.p, ptr %i.l, align 4, !tbaa !243
   %i.r = getelementptr inbounds nuw i8, ptr %.01215.i, i64 12 ; 2 uses
   %exitcond.not.i.2 = icmp eq i64 %indvars.iv.i, 2996
   br i1 %exitcond.not.i.2, label %_ZL35UnpackAccumulativeOffsetsIntoRangesiPKsiPt.exit, label %bb.d
@@ -299,7 +299,7 @@ bb.d:                                             ; preds = %bb.c
   %i.v = add i16 %i.u, %i.p                       ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.01215.i, i64 14
   store i16 %i.v, ptr %i.w, align 2, !tbaa !243
-  store i16 %i.v, ptr %i.r, align 2, !tbaa !243
+  store i16 %i.v, ptr %i.r, align 4, !tbaa !243
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4
   %i.x = getelementptr inbounds nuw i8, ptr %.01215.i, i64 16
   br label %bb.c

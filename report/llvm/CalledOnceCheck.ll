@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CalledOnceCheck?download=true
-inline.NumInlined: 2778
+inline.NumInlined: 2777
 inline.NumDeleted: 1609
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 4
@@ -205,7 +205,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit.i.i78.1.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_Z
   br label %_ZN12_GLOBAL__N_117CalledOnceChecker31shouldBlockArgumentBeCalledOnceEPKN5clang12FunctionDeclEj.exit.i.i.i.i.i
 
 _ZN12_GLOBAL__N_117CalledOnceChecker31shouldBlockArgumentBeCalledOnceEPKN5clang12FunctionDeclEj.exit.i.i.i.i.i: ; preds = %.loopexit.split.loop.exit12.i.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.split.loop.exit10.i.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.split.loop.exit8.i.i.i.i.i.i.i.i.i.i.i.i
-  %.028.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.wq, %.loopexit.split.loop.exit12.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.wp, %.loopexit.split.loop.exit10.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.wo, %.loopexit.split.loop.exit8.i.i.i.i.i.i.i.i.i.i.i.i ]
+  %.028.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.wp, %.loopexit.split.loop.exit10.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.wq, %.loopexit.split.loop.exit12.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.wo, %.loopexit.split.loop.exit8.i.i.i.i.i.i.i.i.i.i.i.i ]
   %.not.i.i.i.i37.i = icmp eq ptr %.028.i.i.i.i.i.i.i.i.i.i.i.i, getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_128KNOWN_CALLED_ONCE_PARAMETERSE, i64 192)
   br i1 %.not.i.i.i.i37.i, label %_ZN12_GLOBAL__N_117CalledOnceChecker31shouldBlockArgumentBeCalledOnceEPKN5clang12FunctionDeclEj.exit.thread.i.i.i.i.i, label %_ZNK12_GLOBAL__N_117CalledOnceChecker25getBlockGuaraneedCallSiteEPKN5clang9BlockExprE.exit.i.i
 

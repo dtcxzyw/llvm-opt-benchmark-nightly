@@ -204,7 +204,7 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   br label %bb.af, !dbg !136522
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5field5FieldENCNvMs_NtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr5arrayNtB2n_15IRArrayFunction9get_fields_0ENtNtNtB9_6traits8iterator8Iterator4nextB2v_.exit60.i: ; preds = %bb.ae
-  %i.fr = load ptr, ptr %i.fl, align 8, !dbg !136523, !alias.scope !136346, !noalias !136347, !noundef !2618 ; 2 uses
+  %i.fr = load ptr, ptr %i.fl, align 16, !dbg !136523, !alias.scope !136346, !noalias !136347, !noundef !2618 ; 2 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fj, i64 56, !dbg !136524
   %i.ft = load i64, ptr %i.fs, align 8, !dbg !136524, !alias.scope !136346, !noalias !136347, !noundef !2618
   %.not52.i = icmp eq ptr %i.fr, null, !dbg !136525

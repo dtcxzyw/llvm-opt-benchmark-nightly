@@ -205,13 +205,13 @@ middle.block:                                     ; preds = %vector.body.6, %vec
 Nf_CutGetSign.exit.i:                             ; preds = %.lr.ph.i.i, %middle.block, %bb.c
   %.pre-phi715 = phi i64 [ 0, %bb.c ], [ %wide.trip.count.i.i, %middle.block ], [ %wide.trip.count.i.i, %.lr.ph.i.i ]
   %.06.lcssa.i.i = phi i64 [ 0, %bb.c ], [ %i.dr, %middle.block ], [ %i.dx, %.lr.ph.i.i ]
-  store i64 %.06.lcssa.i.i, ptr %.03648.i, align 8, !tbaa !109
+  store i64 %.06.lcssa.i.i, ptr %.03648.i, align 16, !tbaa !109
   %i.dy = lshr i32 %i.as, 1
   %.not.i = icmp slt i32 %i.dy, %.val46.val.i
   %i.dz = select i1 %.not.i, i32 0, i32 67108864
   %i.ea = or disjoint i32 %i.at, %i.dz
   %i.eb = or disjoint i32 %i.ea, %i.as
-  store i32 %i.eb, ptr %i.ar, align 8
+  store i32 %i.eb, ptr %i.ar, align 16
   %i.ec = getelementptr inbounds nuw i8, ptr %.03648.i, i64 20
   %i.ed = shl i32 %.0.val.i, 2
   %i.ee = and i32 %i.ed, 124
@@ -462,13 +462,13 @@ middle.block965:                                  ; preds = %vector.body958.6, %
 Nf_CutGetSign.exit.i206:                          ; preds = %.lr.ph.i.i201, %middle.block965, %bb.g
   %.pre-phi713 = phi i64 [ 0, %bb.g ], [ %wide.trip.count.i.i200, %middle.block965 ], [ %wide.trip.count.i.i200, %.lr.ph.i.i201 ]
   %.06.lcssa.i.i207 = phi i64 [ 0, %bb.g ], [ %i.je, %middle.block965 ], [ %i.jk, %.lr.ph.i.i201 ]
-  store i64 %.06.lcssa.i.i207, ptr %.03648.i193, align 8, !tbaa !109
+  store i64 %.06.lcssa.i.i207, ptr %.03648.i193, align 16, !tbaa !109
   %i.jl = lshr i32 %i.gf, 1
   %.not.i210 = icmp slt i32 %i.jl, %.val46.val.i209
   %i.jm = select i1 %.not.i210, i32 0, i32 67108864
   %i.jn = or disjoint i32 %i.gg, %i.jm
   %i.jo = or disjoint i32 %i.jn, %i.gf
-  store i32 %i.jo, ptr %i.ge, align 8
+  store i32 %i.jo, ptr %i.ge, align 16
   %i.jp = getelementptr inbounds nuw i8, ptr %.03648.i193, i64 20
   %i.jq = shl i32 %.0.val.i195, 2
   %i.jr = and i32 %i.jq, 124
@@ -799,13 +799,13 @@ middle.block992:                                  ; preds = %vector.body985.6, %
 Nf_CutGetSign.exit.i239:                          ; preds = %.lr.ph.i.i234, %middle.block992, %bb.l
   %.pre-phi711 = phi i64 [ 0, %bb.l ], [ %wide.trip.count.i.i233, %middle.block992 ], [ %wide.trip.count.i.i233, %.lr.ph.i.i234 ]
   %.06.lcssa.i.i240 = phi i64 [ 0, %bb.l ], [ %i.pn, %middle.block992 ], [ %i.pt, %.lr.ph.i.i234 ]
-  store i64 %.06.lcssa.i.i240, ptr %.03648.i226, align 8, !tbaa !109
+  store i64 %.06.lcssa.i.i240, ptr %.03648.i226, align 16, !tbaa !109
   %i.pu = lshr i32 %i.mo, 1
   %.not.i243 = icmp slt i32 %i.pu, %.val46.val.i242
   %i.pv = select i1 %.not.i243, i32 0, i32 67108864
   %i.pw = or disjoint i32 %i.mp, %i.pv
   %i.px = or disjoint i32 %i.pw, %i.mo
-  store i32 %i.px, ptr %i.mn, align 8
+  store i32 %i.px, ptr %i.mn, align 16
   %i.py = getelementptr inbounds nuw i8, ptr %.03648.i226, i64 20
   %i.pz = shl i32 %.0.val.i228, 2
   %i.qa = and i32 %i.pz, 124
@@ -853,7 +853,7 @@ bb.m:                                             ; preds = %.lr.ph586, %Nf_CutP
   %i.qt = sext i32 %.0152584 to i64
   %i.qu = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.qt
   %i.qv = load ptr, ptr %i.qu, align 8, !tbaa !111 ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.qv, ptr noundef nonnull align 8 dereferenceable(48) %.0151585, i64 48, i1 false), !tbaa.struct !212
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.qv, ptr noundef nonnull align 16 dereferenceable(48) %.0151585, i64 48, i1 false), !tbaa.struct !212
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qv, i64 16 ; 2 uses
   %i.qx = load i32, ptr %i.qw, align 8            ; 5 uses
   %.masked = and i32 %i.qx, 67108863
@@ -1183,13 +1183,13 @@ middle.block1008:                                 ; preds = %vector.body1001.6, 
 Nf_CutGetSign.exit.i275:                          ; preds = %.lr.ph.i.i270, %middle.block1008, %bb.r
   %.pre-phi = phi i64 [ 0, %bb.r ], [ %wide.trip.count.i.i269, %middle.block1008 ], [ %wide.trip.count.i.i269, %.lr.ph.i.i270 ]
   %.06.lcssa.i.i276 = phi i64 [ 0, %bb.r ], [ %i.wy, %middle.block1008 ], [ %i.xe, %.lr.ph.i.i270 ]
-  store i64 %.06.lcssa.i.i276, ptr %.03648.i262, align 8, !tbaa !109
+  store i64 %.06.lcssa.i.i276, ptr %.03648.i262, align 16, !tbaa !109
   %i.xf = lshr i32 %i.tz, 1
   %.not.i279 = icmp slt i32 %i.xf, %.val46.val.i278
   %i.xg = select i1 %.not.i279, i32 0, i32 67108864
   %i.xh = or disjoint i32 %i.ua, %i.xg
   %i.xi = or disjoint i32 %i.xh, %i.tz
-  store i32 %i.xi, ptr %i.ty, align 8
+  store i32 %i.xi, ptr %i.ty, align 16
   %i.xj = getelementptr inbounds nuw i8, ptr %.03648.i262, i64 20
   %i.xk = shl i32 %.0.val.i264, 2
   %i.xl = and i32 %i.xk, 124
@@ -1301,10 +1301,10 @@ Nf_ManPrepareCuts.exit282:                        ; preds = %bb.s, %._crit_edge.
 bb.t:                                             ; preds = %Nf_SetAddCut.exit.us.us.us, %.preheader535.us.us.us
   %.0589.us.us.us = phi ptr [ %6, %.preheader535.us.us.us ], [ %i.ato, %Nf_SetAddCut.exit.us.us.us ] ; 4 uses
   %.4588.us.us.us = phi i32 [ %.3594.us.us.us, %.preheader535.us.us.us ], [ %.5.us.us.us, %Nf_SetAddCut.exit.us.us.us ] ; 14 uses
-  %i.zu = load i64, ptr %.0156597.us.us, align 8, !tbaa !109
-  %i.zv = load i64, ptr %.0154593.us.us.us, align 8, !tbaa !109
+  %i.zu = load i64, ptr %.0156597.us.us, align 16, !tbaa !109
+  %i.zv = load i64, ptr %.0154593.us.us.us, align 16, !tbaa !109
   %i.zw = or i64 %i.zv, %i.zu
-  %i.zx = load i64, ptr %.0589.us.us.us, align 8, !tbaa !109
+  %i.zx = load i64, ptr %.0589.us.us.us, align 16, !tbaa !109
   %i.zy = or i64 %i.zw, %i.zx                     ; 4 uses
   %i.zz = call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.zy)
   %i.aaa = trunc nuw nsw i64 %i.zz to i32
@@ -1318,12 +1318,12 @@ bb.u:                                             ; preds = %bb.t
   %i.aae = sext i32 %.4588.us.us.us to i64
   %i.aaf = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.aae
   %i.aag = load ptr, ptr %i.aaf, align 8, !tbaa !111 ; 19 uses
-  %i.aah = load i32, ptr %i.zq, align 8           ; 3 uses
+  %i.aah = load i32, ptr %i.zq, align 16          ; 3 uses
   %i.aai = lshr i32 %i.aah, 27                    ; 3 uses
-  %i.aaj = load i32, ptr %i.zs, align 8           ; 3 uses
+  %i.aaj = load i32, ptr %i.zs, align 16          ; 3 uses
   %i.aak = lshr i32 %i.aaj, 27                    ; 3 uses
   %i.aal = getelementptr inbounds nuw i8, ptr %.0589.us.us.us, i64 16
-  %i.aam = load i32, ptr %i.aal, align 8          ; 3 uses
+  %i.aam = load i32, ptr %i.aal, align 16         ; 3 uses
   %i.aan = lshr i32 %i.aam, 27                    ; 3 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %.0589.us.us.us, i64 20 ; 2 uses
   %i.aap = getelementptr inbounds nuw i8, ptr %i.aag, i64 20 ; 13 uses
@@ -1726,18 +1726,18 @@ Gia_ObjIsXor.exit:                                ; preds = %Gia_ObjIsMuxId.exit
 bb.cc:                                            ; preds = %.preheader.us, %Nf_SetAddCut.exit474.us
   %.7608.us = phi i32 [ %.6616.us, %.preheader.us ], [ %.8.us, %Nf_SetAddCut.exit474.us ] ; 18 uses
   %.1155607.us = phi ptr [ %3, %.preheader.us ], [ %i.bnp, %Nf_SetAddCut.exit474.us ] ; 5 uses
-  %i.auu = load i32, ptr %i.aus, align 8          ; 3 uses
+  %i.auu = load i32, ptr %i.aus, align 16         ; 3 uses
   %i.auv = lshr i32 %i.auu, 27                    ; 11 uses
   %i.auw = getelementptr inbounds nuw i8, ptr %.1155607.us, i64 16
-  %i.aux = load i32, ptr %i.auw, align 8          ; 3 uses
+  %i.aux = load i32, ptr %i.auw, align 16         ; 3 uses
   %i.auy = lshr i32 %i.aux, 27                    ; 11 uses
   %i.auz = add nuw nsw i32 %i.auy, %i.auv
   %i.ava = icmp sgt i32 %i.auz, %i.r
   br i1 %i.ava, label %bb.cd, label %bb.ce
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.avb = load i64, ptr %.1157615.us, align 8, !tbaa !109
-  %i.avc = load i64, ptr %.1155607.us, align 8, !tbaa !109
+  %i.avb = load i64, ptr %.1157615.us, align 16, !tbaa !109
+  %i.avc = load i64, ptr %.1155607.us, align 16, !tbaa !109
   %i.avd = or i64 %i.avc, %i.avb
   %i.ave = call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.avd)
   %i.avf = trunc nuw nsw i64 %i.ave to i32
@@ -1910,8 +1910,8 @@ bb.cn:                                            ; preds = %.lr.ph134.i.us
   %.fr818 = freeze i32 %i.axp                     ; 2 uses
   %i.axq = or i32 %.fr818, 67108863
   store i32 %i.axq, ptr %i.axl, align 8
-  %i.axr = load i64, ptr %.1157615.us, align 8, !tbaa !109
-  %i.axs = load i64, ptr %.1155607.us, align 8, !tbaa !109
+  %i.axr = load i64, ptr %.1157615.us, align 16, !tbaa !109
+  %i.axs = load i64, ptr %.1155607.us, align 16, !tbaa !109
   %i.axt = or i64 %i.axs, %i.axr                  ; 3 uses
   store i64 %i.axt, ptr %i.avl, align 8, !tbaa !109
   %i.axu = icmp sgt i32 %.7608.us, 0              ; 2 uses

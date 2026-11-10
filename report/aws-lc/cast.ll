@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.gi = xor i32 %i.gh, %i.gg
   %i.gj = xor i32 %i.gi, %i.fe
   %i.gk = xor i32 %i.gj, %i.ge
-  store i32 %i.gk, ptr %.0193, align 4, !tbaa !9
+  store i32 %i.gk, ptr %.0193, align 16, !tbaa !9
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.ff
   %i.gm = load i32, ptr %i.gl, align 4, !tbaa !9
   %i.gn = xor i32 %i.ee, %i.gm
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.hg = xor i32 %i.hb, %i.hf
   %i.hh = xor i32 %i.hg, %i.hd
   %i.hi = getelementptr inbounds nuw i8, ptr %.0193, i64 8
-  store i32 %i.hh, ptr %i.hi, align 4, !tbaa !9
+  store i32 %i.hh, ptr %i.hi, align 8, !tbaa !9
   %i.hj = zext nneg i32 %i.fv to i64
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table4, i64 %i.hj
   %i.hl = load i32, ptr %i.hk, align 4, !tbaa !9
@@ -353,7 +353,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.ly = xor i32 %i.lx, %i.iw
   %i.lz = xor i32 %i.ly, %i.lq
   %i.ma = getelementptr inbounds nuw i8, ptr %.0193, i64 16
-  store i32 %i.lz, ptr %i.ma, align 4, !tbaa !9
+  store i32 %i.lz, ptr %i.ma, align 16, !tbaa !9
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table4, i64 %i.ix
   %i.mc = load i32, ptr %i.mb, align 4, !tbaa !9
   %i.md = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.ir
@@ -382,7 +382,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.mz = xor i32 %i.my, %i.ju
   %i.na = xor i32 %i.mz, %i.mt
   %i.nb = getelementptr inbounds nuw i8, ptr %.0193, i64 24
-  store i32 %i.na, ptr %i.nb, align 4, !tbaa !9
+  store i32 %i.na, ptr %i.nb, align 8, !tbaa !9
   %i.nc = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table4, i64 %i.jv
   %i.nd = load i32, ptr %i.nc, align 4, !tbaa !9
   %i.ne = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.jy
@@ -506,7 +506,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.rr = xor i32 %i.rq, %i.ro
   %i.rs = xor i32 %i.rr, %i.on
   %i.rt = getelementptr inbounds nuw i8, ptr %.0193, i64 32
-  store i32 %i.rs, ptr %i.rt, align 4, !tbaa !9
+  store i32 %i.rs, ptr %i.rt, align 16, !tbaa !9
   %i.ru = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table4, i64 %i.oo
   %i.rv = load i32, ptr %i.ru, align 4, !tbaa !9  ; 2 uses
   %i.rw = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.oi
@@ -535,7 +535,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.ss = xor i32 %i.sr, %i.sq
   %i.st = xor i32 %i.ss, %i.pn
   %i.su = getelementptr inbounds nuw i8, ptr %.0193, i64 40
-  store i32 %i.st, ptr %i.su, align 4, !tbaa !9
+  store i32 %i.st, ptr %i.su, align 8, !tbaa !9
   %i.sv = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table4, i64 %i.po
   %i.sw = load i32, ptr %i.sv, align 4, !tbaa !9  ; 2 uses
   %i.sx = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.pr
@@ -655,7 +655,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.xg = xor i32 %i.xf, %i.xd
   %i.xh = xor i32 %i.xg, %i.wc
   %i.xi = getelementptr inbounds nuw i8, ptr %.0193, i64 48
-  store i32 %i.xh, ptr %i.xi, align 4, !tbaa !9
+  store i32 %i.xh, ptr %i.xi, align 16, !tbaa !9
   %i.xj = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.wd
   %i.xk = load i32, ptr %i.xj, align 4, !tbaa !9
   %i.xl = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table5, i64 %i.va
@@ -683,7 +683,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge.
   %i.yg = load i32, ptr %i.yf, align 4, !tbaa !9  ; 2 uses
   %i.yh = xor i32 %i.ye, %i.yg
   %i.yi = getelementptr inbounds nuw i8, ptr %.0193, i64 56
-  store i32 %i.yh, ptr %i.yi, align 4, !tbaa !9
+  store i32 %i.yh, ptr %i.yi, align 8, !tbaa !9
   %i.yj = zext nneg i32 %i.ws to i64
   %i.yk = getelementptr inbounds nuw [4 x i8], ptr @CAST_S_table4, i64 %i.yj
   %i.yl = load i32, ptr %i.yk, align 4, !tbaa !9

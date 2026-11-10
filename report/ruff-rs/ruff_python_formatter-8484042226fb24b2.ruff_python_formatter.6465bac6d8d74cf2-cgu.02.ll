@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_RNCNvXs5_NtNtCs8Cp
   %i.az = getelementptr inbounds i8, ptr %i.ay, i64 -12 ; 2 uses
   %i.ba = add i64 %.sroa.03.016.i, -1             ; 2 uses
   %i.bb = getelementptr inbounds i8, ptr %i.ay, i64 -4
-  %i.bc = load i8, ptr %i.bb, align 1, !range !16, !noalias !969, !noundef !5
+  %i.bc = load i8, ptr %i.bb, align 4, !range !16, !noalias !969, !noundef !5
   %i.bd = trunc nuw i8 %i.bc to i1
   br i1 %i.bd, label %_RNCNvXs5_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB7_7OperandINtCs7Ma6rQP8bRy_14ruff_formatter6FormatNtNtBb_7context15PyFormatContextE3fmt0Bb_.exit.backedge.i, label %bb.i
 
@@ -327,7 +327,7 @@ bb.m:                                             ; preds = %_RNCNvXs5_NtNtCs8Cp
   %i.cf = phi ptr [ %i.bv, %.lr.ph.i41 ], [ %i.cg, %_RNCNvXs5_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB7_7OperandINtCs7Ma6rQP8bRy_14ruff_formatter6FormatNtNtBb_7context15PyFormatContextE3fmts0_0Bb_.exit.thread.i ] ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 12 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
-  %i.ci = load i8, ptr %i.ch, align 1, !range !16, !noalias !974, !noundef !5
+  %i.ci = load i8, ptr %i.ch, align 4, !range !16, !noalias !974, !noundef !5
   %i.cj = trunc nuw i8 %i.ci to i1
   br i1 %i.cj, label %_RNCNvXs5_NtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression11binary_likeNtB7_7OperandINtCs7Ma6rQP8bRy_14ruff_formatter6FormatNtNtBb_7context15PyFormatContextE3fmts0_0Bb_.exit.thread.i, label %bb.n
 
@@ -444,7 +444,7 @@ bb.q:                                             ; preds = %_RNCNvXs5_NtNtCs8Cp
   %.sroa.012.091 = phi ptr [ %i.df, %.lr.ph ], [ %i.dd, %.loopexit69 ] ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.012.091, i64 12 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %.sroa.012.091, i64 8
-  store i8 1, ptr %i.dg, align 1
+  store i8 1, ptr %i.dg, align 4
   %i.dh = icmp eq ptr %i.df, %i.by
   br i1 %i.dh, label %._crit_edge, label %.lr.ph
 

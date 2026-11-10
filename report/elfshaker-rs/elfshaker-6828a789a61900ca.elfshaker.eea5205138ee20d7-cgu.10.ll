@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB29_11collections5btree3mapINtB2W_8BTreeMapmB1a_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB3W_8adapters3map3MapINtNtB4T_9enumerate9EnumerateINtNtNtB29_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7I_10ReadReaderINtNtNtNtB29_2io8buffered9bufreader9BufReaderNtNtCsaL1QbXo9JQH_3std2fs4FileEENtNtB7K_6config13DefaultConfigEE0EE0E0EB1e_.exit
   %.sroa.0.05 = phi ptr [ %i.j, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB29_11collections5btree3mapINtB2W_8BTreeMapmB1a_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB3W_8adapters3map3MapINtNtB4T_9enumerate9EnumerateINtNtNtB29_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7I_10ReadReaderINtNtNtNtB29_2io8buffered9bufreader9BufReaderNtNtCsaL1QbXo9JQH_3std2fs4FileEENtNtB7K_6config13DefaultConfigEE0EE0E0EB1e_.exit ], [ %i.c, %.lr.ph.preheader ] ; 5 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -24 ; 4 uses
-  %.val9.i = load i32, ptr %.sroa.0.05, align 4, !noundef !4 ; 3 uses
-  %.val10.i = load i32, ptr %i.d, align 4, !noundef !4
+  %.val9.i = load i32, ptr %.sroa.0.05, align 8, !noundef !4 ; 3 uses
+  %.val10.i = load i32, ptr %i.d, align 8, !noundef !4
   %i.e = icmp ult i32 %.val9.i, %.val10.i
   br i1 %i.e, label %bb.d, label %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB29_11collections5btree3mapINtB2W_8BTreeMapmB1a_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB3W_8adapters3map3MapINtNtB4T_9enumerate9EnumerateINtNtNtB29_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7I_10ReadReaderINtNtNtNtB29_2io8buffered9bufreader9BufReaderNtNtCsaL1QbXo9JQH_3std2fs4FileEENtNtB7K_6config13DefaultConfigEE0EE0E0EB1e_.exit
 
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %.lr.ph10
 .lr.ph10:                                         ; preds = %bb.d, %bb.e
   %.sroa.0.0.i8 = phi ptr [ %i.h, %bb.e ], [ %i.d, %bb.d ] ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %.sroa.0.0.i8, i64 -24 ; 4 uses
-  %.val8.i = load i32, ptr %i.h, align 4, !noundef !4
+  %.val8.i = load i32, ptr %i.h, align 8, !noundef !4
   %i.i = icmp ult i32 %.val9.i, %.val8.i
   br i1 %i.i, label %bb.e, label %._crit_edge11
 
@@ -271,8 +271,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB29_11collections5btree3mapINtB2W_8BTreeMapmB1a_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB3W_8adapters3map3MapINtNtB4T_9enumerate9EnumerateINtNtNtB29_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7I_10ReadReaderINtNtNtNtB29_2io8buffered9bufreader9BufReaderRShEENtNtB7K_6config13DefaultConfigEE0EE0E0EB1e_.exit
   %.sroa.0.05 = phi ptr [ %i.j, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB29_11collections5btree3mapINtB2W_8BTreeMapmB1a_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB3W_8adapters3map3MapINtNtB4T_9enumerate9EnumerateINtNtNtB29_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7I_10ReadReaderINtNtNtNtB29_2io8buffered9bufreader9BufReaderRShEENtNtB7K_6config13DefaultConfigEE0EE0E0EB1e_.exit ], [ %i.c, %.lr.ph.preheader ] ; 5 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -24 ; 4 uses
-  %.val9.i = load i32, ptr %.sroa.0.05, align 4, !noundef !4 ; 3 uses
-  %.val10.i = load i32, ptr %i.d, align 4, !noundef !4
+  %.val9.i = load i32, ptr %.sroa.0.05, align 8, !noundef !4 ; 3 uses
+  %.val10.i = load i32, ptr %i.d, align 8, !noundef !4
   %i.e = icmp ult i32 %.val9.i, %.val10.i
   br i1 %i.e, label %bb.d, label %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvXs1o_NtNtNtB29_11collections5btree3mapINtB2W_8BTreeMapmB1a_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB3W_8adapters3map3MapINtNtB4T_9enumerate9EnumerateINtNtNtB29_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7I_10ReadReaderINtNtNtNtB29_2io8buffered9bufreader9BufReaderRShEENtNtB7K_6config13DefaultConfigEE0EE0E0EB1e_.exit
 
@@ -292,7 +292,7 @@ bb.e:                                             ; preds = %.lr.ph10
 .lr.ph10:                                         ; preds = %bb.d, %bb.e
   %.sroa.0.0.i8 = phi ptr [ %i.h, %bb.e ], [ %i.d, %bb.d ] ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %.sroa.0.0.i8, i64 -24 ; 4 uses
-  %.val8.i = load i32, ptr %i.h, align 4, !noundef !4
+  %.val8.i = load i32, ptr %i.h, align 8, !noundef !4
   %i.i = icmp ult i32 %.val9.i, %.val8.i
   br i1 %i.i, label %bb.e, label %._crit_edge11
 
@@ -695,7 +695,7 @@ bb.i:                                             ; preds = %.lr.ph77
 .lr.ph77:                                         ; preds = %bb.h, %bb.i
   %.sroa.0.0.i41.175 = phi ptr [ %i.bz, %bb.i ], [ %i.bu, %bb.h ] ; 3 uses
   %i.bz = getelementptr inbounds i8, ptr %.sroa.0.0.i41.175, i64 -24 ; 4 uses
-  %.val8.i42.1 = load i32, ptr %i.bz, align 4, !noundef !4
+  %.val8.i42.1 = load i32, ptr %i.bz, align 8, !noundef !4
   %i.ca = icmp ult i32 %.val9.i40.1, %.val8.i42.1
   br i1 %i.ca, label %bb.i, label %._crit_edge78
 
@@ -735,8 +735,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtC
   %.sroa.017.05.i = phi ptr [ %i.cu, %.lr.ph.i ], [ %i.ce, %.loopexit.1 ] ; 3 uses
   %.sroa.019.04.i = phi ptr [ %i.cw, %.lr.ph.i ], [ %i.cd, %.loopexit.1 ] ; 2 uses
   %i.ck = add nuw nsw i64 %.sroa.04.09.i, 1       ; 2 uses
-  %.sroa.011.0.val.i = load i32, ptr %.sroa.011.07.i, align 4, !alias.scope !927, !noundef !4
-  %.sroa.06.0.val.i = load i32, ptr %.sroa.06.08.i, align 4, !alias.scope !927, !noundef !4
+  %.sroa.011.0.val.i = load i32, ptr %.sroa.011.07.i, align 8, !alias.scope !927, !noundef !4
+  %.sroa.06.0.val.i = load i32, ptr %.sroa.06.08.i, align 8, !alias.scope !927, !noundef !4
   %i.cl = icmp ult i32 %.sroa.011.0.val.i, %.sroa.06.0.val.i ; 3 uses
   %..i21.i = select i1 %i.cl, ptr %.sroa.011.07.i, ptr %.sroa.06.08.i
   %i.cm = xor i1 %i.cl, true
@@ -746,8 +746,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtC
   %i.cp = zext i1 %i.cm to i64
   %i.cq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.06.08.i, i64 %i.cp ; 5 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 24 ; 2 uses
-  %.sroa.017.0.val.i = load i32, ptr %.sroa.017.05.i, align 4, !alias.scope !927, !noundef !4
-  %.sroa.015.0.val.i = load i32, ptr %.sroa.015.06.i, align 4, !alias.scope !927, !noundef !4
+  %.sroa.017.0.val.i = load i32, ptr %.sroa.017.05.i, align 8, !alias.scope !927, !noundef !4
+  %.sroa.015.0.val.i = load i32, ptr %.sroa.015.06.i, align 8, !alias.scope !927, !noundef !4
   %i.cs = icmp ult i32 %.sroa.017.0.val.i, %.sroa.015.0.val.i ; 3 uses
   %..i.i = select i1 %i.cs, ptr %.sroa.015.06.i, ptr %.sroa.017.05.i
   %i.ct = xor i1 %i.cs, true
@@ -824,7 +824,7 @@ bb.o:                                             ; preds = %.lr.ph72
 .lr.ph72:                                         ; preds = %bb.n, %bb.o
   %.sroa.0.0.i4171 = phi ptr [ %i.do, %bb.o ], [ %i.dj, %bb.n ] ; 3 uses
   %i.do = getelementptr inbounds i8, ptr %.sroa.0.0.i4171, i64 -24 ; 4 uses
-  %.val8.i42 = load i32, ptr %i.do, align 4, !noundef !4
+  %.val8.i42 = load i32, ptr %i.do, align 8, !noundef !4
   %i.dp = icmp ult i32 %.val9.i40, %.val8.i42
   br i1 %i.dp, label %bb.o, label %._crit_edge
 
@@ -999,7 +999,7 @@ bb.i:                                             ; preds = %.lr.ph77
 .lr.ph77:                                         ; preds = %bb.h, %bb.i
   %.sroa.0.0.i41.175 = phi ptr [ %i.bz, %bb.i ], [ %i.bu, %bb.h ] ; 3 uses
   %i.bz = getelementptr inbounds i8, ptr %.sroa.0.0.i41.175, i64 -24 ; 4 uses
-  %.val8.i42.1 = load i32, ptr %i.bz, align 4, !noundef !4
+  %.val8.i42.1 = load i32, ptr %i.bz, align 8, !noundef !4
   %i.ca = icmp ult i32 %.val9.i40.1, %.val8.i42.1
   br i1 %i.ca, label %bb.i, label %._crit_edge78
 
@@ -1039,8 +1039,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtC
   %.sroa.017.05.i = phi ptr [ %i.cu, %.lr.ph.i ], [ %i.ce, %.loopexit.1 ] ; 3 uses
   %.sroa.019.04.i = phi ptr [ %i.cw, %.lr.ph.i ], [ %i.cd, %.loopexit.1 ] ; 2 uses
   %i.ck = add nuw nsw i64 %.sroa.04.09.i, 1       ; 2 uses
-  %.sroa.011.0.val.i = load i32, ptr %.sroa.011.07.i, align 4, !alias.scope !948, !noundef !4
-  %.sroa.06.0.val.i = load i32, ptr %.sroa.06.08.i, align 4, !alias.scope !948, !noundef !4
+  %.sroa.011.0.val.i = load i32, ptr %.sroa.011.07.i, align 8, !alias.scope !948, !noundef !4
+  %.sroa.06.0.val.i = load i32, ptr %.sroa.06.08.i, align 8, !alias.scope !948, !noundef !4
   %i.cl = icmp ult i32 %.sroa.011.0.val.i, %.sroa.06.0.val.i ; 3 uses
   %..i21.i = select i1 %i.cl, ptr %.sroa.011.07.i, ptr %.sroa.06.08.i
   %i.cm = xor i1 %i.cl, true
@@ -1050,8 +1050,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTmNtNtC
   %i.cp = zext i1 %i.cm to i64
   %i.cq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.06.08.i, i64 %i.cp ; 5 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 24 ; 2 uses
-  %.sroa.017.0.val.i = load i32, ptr %.sroa.017.05.i, align 4, !alias.scope !948, !noundef !4
-  %.sroa.015.0.val.i = load i32, ptr %.sroa.015.06.i, align 4, !alias.scope !948, !noundef !4
+  %.sroa.017.0.val.i = load i32, ptr %.sroa.017.05.i, align 8, !alias.scope !948, !noundef !4
+  %.sroa.015.0.val.i = load i32, ptr %.sroa.015.06.i, align 8, !alias.scope !948, !noundef !4
   %i.cs = icmp ult i32 %.sroa.017.0.val.i, %.sroa.015.0.val.i ; 3 uses
   %..i.i = select i1 %i.cs, ptr %.sroa.015.06.i, ptr %.sroa.017.05.i
   %i.ct = xor i1 %i.cs, true
@@ -1128,7 +1128,7 @@ bb.o:                                             ; preds = %.lr.ph72
 .lr.ph72:                                         ; preds = %bb.n, %bb.o
   %.sroa.0.0.i4171 = phi ptr [ %i.do, %bb.o ], [ %i.dj, %bb.n ] ; 3 uses
   %i.do = getelementptr inbounds i8, ptr %.sroa.0.0.i4171, i64 -24 ; 4 uses
-  %.val8.i42 = load i32, ptr %i.do, align 4, !noundef !4
+  %.val8.i42 = load i32, ptr %i.do, align 8, !noundef !4
   %i.dp = icmp ult i32 %.val9.i40, %.val8.i42
   br i1 %i.dp, label %bb.o, label %._crit_edge
 

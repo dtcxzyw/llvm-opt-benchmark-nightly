@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %.preheader, %bb.r
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !40 ; 2 uses
   %i.eh = icmp eq i32 %i.eg, 0
   %i.ei = getelementptr inbounds nuw i8, ptr %.1134146, i64 8
-  %i.ej = load i32, ptr %i.ei, align 4, !tbaa !40 ; 2 uses
+  %i.ej = load i32, ptr %i.ei, align 8, !tbaa !40 ; 2 uses
   %i.ek = icmp eq i32 %i.ej, 0
   %or.cond155 = select i1 %i.eh, i1 %i.ek, i1 false
   br i1 %or.cond155, label %bb.m, label %._crit_edge149
@@ -221,7 +221,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.er = getelementptr inbounds nuw i8, ptr %.1134146, i64 24
-  %i.es = load i32, ptr %i.er, align 4, !tbaa !40
+  %i.es = load i32, ptr %i.er, align 8, !tbaa !40
   %i.et = icmp eq i32 %i.es, 0
   br i1 %i.et, label %bb.p, label %._crit_edge149
 
@@ -232,7 +232,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ew, label %bb.q, label %._crit_edge149
 
 bb.q:                                             ; preds = %bb.p
-  %i.ex = load i32, ptr %.1134146, align 4, !tbaa !40
+  %i.ex = load i32, ptr %.1134146, align 16, !tbaa !40
   %i.ey = add i32 %i.ex, 8
   %i.ez = lshr i32 %i.ey, 4
   %i.fa = and i32 %i.ez, 16383
@@ -248,13 +248,13 @@ bb.q:                                             ; preds = %bb.p
 
 ._crit_edge149:                                   ; preds = %bb.l, %bb.p, %bb.o, %bb.n, %bb.m
   %i.fg = phi i32 [ %i.ej, %bb.l ], [ 0, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %bb.m ]
-  %i.fh = load i32, ptr %.1134146, align 4, !tbaa !40
+  %i.fh = load i32, ptr %.1134146, align 16, !tbaa !40
   %i.fi = sext i32 %i.fh to i64
   %i.fj = shl nsw i64 %i.fi, 14                   ; 2 uses
   %i.fk = zext i32 %i.fg to i64
   %i.fl = mul nuw nsw i64 %i.fk, 15137
   %i.fm = getelementptr inbounds nuw i8, ptr %.1134146, i64 24
-  %i.fn = load i32, ptr %i.fm, align 4, !tbaa !40
+  %i.fn = load i32, ptr %i.fm, align 8, !tbaa !40
   %i.fo = zext i32 %i.fn to i64
   %i.fp = mul nsw i64 %i.fo, -6270
   %i.fq = add nsw i64 %i.fp, %i.fl                ; 2 uses

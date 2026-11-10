@@ -205,9 +205,9 @@ bb.p:                                             ; preds = %bb.o, %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge
   %i.co = ptrtoint ptr %.0122.lcssa to i64
-  %i.cp = ptrtoint ptr %.4134.ptr to i64
-  %i.cq = sub i64 %i.cp, %i.co                    ; 6 uses
-  %i.cr = trunc i64 %i.cq to i32
+  %i.cp = ptrtoint ptr %.4134.ptr to i64          ; 4 uses
+  %i.cq = sub i64 %i.cp, %i.co                    ; 3 uses
+  %i.cr = trunc i64 %i.cp to i32
   %i.cs = and i32 %i.cr, 3                        ; 3 uses
   %notmask145 = shl nsw i64 -1, %i.cq
   %i.ct = xor i64 %notmask145, -1                 ; 2 uses
@@ -227,7 +227,7 @@ bb.q:                                             ; preds = %._crit_edge
   ]
 
 bb.r:                                             ; preds = %bb.q
-  %i.de = and i64 %i.cq, 3                        ; 2 uses
+  %i.de = and i64 %i.cp, 3                        ; 2 uses
   %i.df = add nuw nsw i64 %i.de, %.060.i
   %i.dg = icmp samesign ugt i64 %i.df, 3
   %i.dh = icmp samesign ult i32 %i.cs, 2
@@ -241,7 +241,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %or.cond3.not, label %bb.u, label %._crit_edge217
 
 ._crit_edge217:                                   ; preds = %bb.s
-  %.pre218 = and i64 %i.cq, 3
+  %.pre218 = and i64 %i.cp, 3
   br label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge217, %bb.r
@@ -582,9 +582,9 @@ bb.o:                                             ; preds = %.thread398, %.threa
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dg = ptrtoint ptr %.0253.lcssa to i64
-  %i.dh = ptrtoint ptr %.7271.ptr to i64
-  %i.di = sub i64 %i.dh, %i.dg                    ; 5 uses
-  %i.dj = trunc i64 %i.di to i32
+  %i.dh = ptrtoint ptr %.7271.ptr to i64          ; 3 uses
+  %i.di = sub i64 %i.dh, %i.dg                    ; 3 uses
+  %i.dj = trunc i64 %i.dh to i32
   %i.dk = and i32 %i.dj, 3                        ; 2 uses
   %notmask306 = shl nsw i64 -1, %i.di
   %i.dl = xor i64 %notmask306, -1                 ; 2 uses
@@ -598,7 +598,7 @@ bb.p:                                             ; preds = %._crit_edge
   %i.dt = call <16 x i32> @llvm.x86.avx512.pmaddw.d.512(<32 x i16> %i.ds, <32 x i16> <i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1>)
   %i.du = bitcast <16 x i32> %i.dt to <64 x i8>
   %i.dv = shufflevector <64 x i8> %i.du, <64 x i8> poison, <64 x i32> <i32 2, i32 1, i32 0, i32 6, i32 5, i32 4, i32 10, i32 9, i32 8, i32 14, i32 13, i32 12, i32 18, i32 17, i32 16, i32 22, i32 21, i32 20, i32 26, i32 25, i32 24, i32 30, i32 29, i32 28, i32 34, i32 33, i32 32, i32 38, i32 37, i32 36, i32 42, i32 41, i32 40, i32 46, i32 45, i32 44, i32 50, i32 49, i32 48, i32 54, i32 53, i32 52, i32 58, i32 57, i32 56, i32 62, i32 61, i32 60, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0> ; 8 uses
-  %i.dw = and i64 %i.di, 3                        ; 3 uses
+  %i.dw = and i64 %i.dh, 3                        ; 3 uses
   %i.dx = add i64 %i.dw, %i.d                     ; 3 uses
   %i.dy = icmp ugt i64 %i.dx, 4
   br i1 %i.dy, label %bb.q, label %bb.r
@@ -1001,9 +1001,9 @@ bb.p:                                             ; preds = %bb.o, %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge
   %i.co = ptrtoint ptr %.0122.lcssa to i64
-  %i.cp = ptrtoint ptr %.4134.ptr to i64
-  %i.cq = sub i64 %i.cp, %i.co                    ; 6 uses
-  %i.cr = trunc i64 %i.cq to i32
+  %i.cp = ptrtoint ptr %.4134.ptr to i64          ; 4 uses
+  %i.cq = sub i64 %i.cp, %i.co                    ; 3 uses
+  %i.cr = trunc i64 %i.cp to i32
   %i.cs = and i32 %i.cr, 3                        ; 3 uses
   %notmask145 = shl nsw i64 -1, %i.cq
   %i.ct = xor i64 %notmask145, -1                 ; 2 uses
@@ -1023,7 +1023,7 @@ bb.q:                                             ; preds = %._crit_edge
   ]
 
 bb.r:                                             ; preds = %bb.q
-  %i.de = and i64 %i.cq, 3                        ; 2 uses
+  %i.de = and i64 %i.cp, 3                        ; 2 uses
   %i.df = add nuw nsw i64 %i.de, %.060.i
   %i.dg = icmp samesign ugt i64 %i.df, 3
   %i.dh = icmp samesign ult i32 %i.cs, 2
@@ -1037,7 +1037,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %or.cond3.not, label %bb.u, label %._crit_edge217
 
 ._crit_edge217:                                   ; preds = %bb.s
-  %.pre218 = and i64 %i.cq, 3
+  %.pre218 = and i64 %i.cp, 3
   br label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge217, %bb.r
@@ -1378,9 +1378,9 @@ bb.o:                                             ; preds = %.thread398, %.threa
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dg = ptrtoint ptr %.0253.lcssa to i64
-  %i.dh = ptrtoint ptr %.7271.ptr to i64
-  %i.di = sub i64 %i.dh, %i.dg                    ; 5 uses
-  %i.dj = trunc i64 %i.di to i32
+  %i.dh = ptrtoint ptr %.7271.ptr to i64          ; 3 uses
+  %i.di = sub i64 %i.dh, %i.dg                    ; 3 uses
+  %i.dj = trunc i64 %i.dh to i32
   %i.dk = and i32 %i.dj, 3                        ; 2 uses
   %notmask306 = shl nsw i64 -1, %i.di
   %i.dl = xor i64 %notmask306, -1                 ; 2 uses
@@ -1394,7 +1394,7 @@ bb.p:                                             ; preds = %._crit_edge
   %i.dt = call <16 x i32> @llvm.x86.avx512.pmaddw.d.512(<32 x i16> %i.ds, <32 x i16> <i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1>)
   %i.du = bitcast <16 x i32> %i.dt to <64 x i8>
   %i.dv = shufflevector <64 x i8> %i.du, <64 x i8> poison, <64 x i32> <i32 2, i32 1, i32 0, i32 6, i32 5, i32 4, i32 10, i32 9, i32 8, i32 14, i32 13, i32 12, i32 18, i32 17, i32 16, i32 22, i32 21, i32 20, i32 26, i32 25, i32 24, i32 30, i32 29, i32 28, i32 34, i32 33, i32 32, i32 38, i32 37, i32 36, i32 42, i32 41, i32 40, i32 46, i32 45, i32 44, i32 50, i32 49, i32 48, i32 54, i32 53, i32 52, i32 58, i32 57, i32 56, i32 62, i32 61, i32 60, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0> ; 8 uses
-  %i.dw = and i64 %i.di, 3                        ; 3 uses
+  %i.dw = and i64 %i.dh, 3                        ; 3 uses
   %i.dx = add i64 %i.dw, %i.d                     ; 3 uses
   %i.dy = icmp ugt i64 %i.dx, 4
   br i1 %i.dy, label %bb.q, label %bb.r
@@ -1797,9 +1797,9 @@ bb.p:                                             ; preds = %bb.o, %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge
   %i.co = ptrtoint ptr %.0122.lcssa to i64
-  %i.cp = ptrtoint ptr %.4134.ptr to i64
-  %i.cq = sub i64 %i.cp, %i.co                    ; 6 uses
-  %i.cr = trunc i64 %i.cq to i32
+  %i.cp = ptrtoint ptr %.4134.ptr to i64          ; 4 uses
+  %i.cq = sub i64 %i.cp, %i.co                    ; 3 uses
+  %i.cr = trunc i64 %i.cp to i32
   %i.cs = and i32 %i.cr, 3                        ; 3 uses
   %notmask145 = shl nsw i64 -1, %i.cq
   %i.ct = xor i64 %notmask145, -1                 ; 2 uses
@@ -1819,7 +1819,7 @@ bb.q:                                             ; preds = %._crit_edge
   ]
 
 bb.r:                                             ; preds = %bb.q
-  %i.de = and i64 %i.cq, 3                        ; 2 uses
+  %i.de = and i64 %i.cp, 3                        ; 2 uses
   %i.df = add nuw nsw i64 %i.de, %.060.i
   %i.dg = icmp samesign ugt i64 %i.df, 3
   %i.dh = icmp samesign ult i32 %i.cs, 2
@@ -1833,7 +1833,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %or.cond3.not, label %bb.u, label %._crit_edge217
 
 ._crit_edge217:                                   ; preds = %bb.s
-  %.pre218 = and i64 %i.cq, 3
+  %.pre218 = and i64 %i.cp, 3
   br label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge217, %bb.r
@@ -2174,9 +2174,9 @@ bb.o:                                             ; preds = %.thread398, %.threa
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dg = ptrtoint ptr %.0253.lcssa to i64
-  %i.dh = ptrtoint ptr %.7271.ptr to i64
-  %i.di = sub i64 %i.dh, %i.dg                    ; 5 uses
-  %i.dj = trunc i64 %i.di to i32
+  %i.dh = ptrtoint ptr %.7271.ptr to i64          ; 3 uses
+  %i.di = sub i64 %i.dh, %i.dg                    ; 3 uses
+  %i.dj = trunc i64 %i.dh to i32
   %i.dk = and i32 %i.dj, 3                        ; 2 uses
   %notmask306 = shl nsw i64 -1, %i.di
   %i.dl = xor i64 %notmask306, -1                 ; 2 uses
@@ -2190,7 +2190,7 @@ bb.p:                                             ; preds = %._crit_edge
   %i.dt = call <16 x i32> @llvm.x86.avx512.pmaddw.d.512(<32 x i16> %i.ds, <32 x i16> <i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1>)
   %i.du = bitcast <16 x i32> %i.dt to <64 x i8>
   %i.dv = shufflevector <64 x i8> %i.du, <64 x i8> poison, <64 x i32> <i32 2, i32 1, i32 0, i32 6, i32 5, i32 4, i32 10, i32 9, i32 8, i32 14, i32 13, i32 12, i32 18, i32 17, i32 16, i32 22, i32 21, i32 20, i32 26, i32 25, i32 24, i32 30, i32 29, i32 28, i32 34, i32 33, i32 32, i32 38, i32 37, i32 36, i32 42, i32 41, i32 40, i32 46, i32 45, i32 44, i32 50, i32 49, i32 48, i32 54, i32 53, i32 52, i32 58, i32 57, i32 56, i32 62, i32 61, i32 60, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0> ; 8 uses
-  %i.dw = and i64 %i.di, 3                        ; 3 uses
+  %i.dw = and i64 %i.dh, 3                        ; 3 uses
   %i.dx = add i64 %i.dw, %i.d                     ; 3 uses
   %i.dy = icmp ugt i64 %i.dx, 4
   br i1 %i.dy, label %bb.q, label %bb.r
@@ -2593,9 +2593,9 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
 
 bb.l:                                             ; preds = %._crit_edge
   %i.cq = ptrtoint ptr %.0122.lcssa to i64
-  %i.cr = ptrtoint ptr %.4134.ptr to i64
-  %i.cs = sub i64 %i.cr, %i.cq                    ; 6 uses
-  %i.ct = trunc i64 %i.cs to i32
+  %i.cr = ptrtoint ptr %.4134.ptr to i64          ; 4 uses
+  %i.cs = sub i64 %i.cr, %i.cq                    ; 3 uses
+  %i.ct = trunc i64 %i.cr to i32
   %i.cu = and i32 %i.ct, 3                        ; 3 uses
   %notmask145 = shl nsw i64 -1, %i.cs
   %i.cv = xor i64 %notmask145, -1                 ; 2 uses
@@ -2615,7 +2615,7 @@ bb.l:                                             ; preds = %._crit_edge
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %i.dg = and i64 %i.cs, 3                        ; 2 uses
+  %i.dg = and i64 %i.cr, 3                        ; 2 uses
   %i.dh = add i64 %i.dg, %i.b
   %i.di = icmp ult i64 %i.dh, 4
   br i1 %i.di, label %bb.n, label %bb.q
@@ -2633,7 +2633,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %or.cond3, label %._crit_edge215, label %bb.q
 
 ._crit_edge215:                                   ; preds = %bb.o
-  %.pre = and i64 %i.cs, 3
+  %.pre = and i64 %i.cr, 3
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge215, %bb.n
@@ -2996,9 +2996,9 @@ bb.o:                                             ; preds = %.thread398, %.threa
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dv = ptrtoint ptr %.0253.lcssa to i64
-  %i.dw = ptrtoint ptr %.7271.ptr to i64
-  %i.dx = sub i64 %i.dw, %i.dv                    ; 5 uses
-  %i.dy = trunc i64 %i.dx to i32
+  %i.dw = ptrtoint ptr %.7271.ptr to i64          ; 3 uses
+  %i.dx = sub i64 %i.dw, %i.dv                    ; 3 uses
+  %i.dy = trunc i64 %i.dw to i32
   %i.dz = and i32 %i.dy, 3                        ; 2 uses
   %notmask306 = shl nsw i64 -1, %i.dx
   %i.ea = xor i64 %notmask306, -1                 ; 2 uses
@@ -3012,7 +3012,7 @@ bb.p:                                             ; preds = %._crit_edge
   %i.ei = call <16 x i32> @llvm.x86.avx512.pmaddw.d.512(<32 x i16> %i.eh, <32 x i16> <i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1>)
   %i.ej = bitcast <16 x i32> %i.ei to <64 x i8>
   %i.ek = shufflevector <64 x i8> %i.ej, <64 x i8> poison, <64 x i32> <i32 2, i32 1, i32 0, i32 6, i32 5, i32 4, i32 10, i32 9, i32 8, i32 14, i32 13, i32 12, i32 18, i32 17, i32 16, i32 22, i32 21, i32 20, i32 26, i32 25, i32 24, i32 30, i32 29, i32 28, i32 34, i32 33, i32 32, i32 38, i32 37, i32 36, i32 42, i32 41, i32 40, i32 46, i32 45, i32 44, i32 50, i32 49, i32 48, i32 54, i32 53, i32 52, i32 58, i32 57, i32 56, i32 62, i32 61, i32 60, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0> ; 8 uses
-  %i.el = and i64 %i.dx, 3                        ; 3 uses
+  %i.el = and i64 %i.dw, 3                        ; 3 uses
   %i.em = add i64 %i.el, %i.d                     ; 3 uses
   %i.en = icmp ugt i64 %i.em, 4
   br i1 %i.en, label %bb.q, label %bb.r
@@ -3415,9 +3415,9 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
 
 bb.l:                                             ; preds = %._crit_edge
   %i.cq = ptrtoint ptr %.0122.lcssa to i64
-  %i.cr = ptrtoint ptr %.4134.ptr to i64
-  %i.cs = sub i64 %i.cr, %i.cq                    ; 6 uses
-  %i.ct = trunc i64 %i.cs to i32
+  %i.cr = ptrtoint ptr %.4134.ptr to i64          ; 4 uses
+  %i.cs = sub i64 %i.cr, %i.cq                    ; 3 uses
+  %i.ct = trunc i64 %i.cr to i32
   %i.cu = and i32 %i.ct, 3                        ; 3 uses
   %notmask145 = shl nsw i64 -1, %i.cs
   %i.cv = xor i64 %notmask145, -1                 ; 2 uses
@@ -3437,7 +3437,7 @@ bb.l:                                             ; preds = %._crit_edge
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %i.dg = and i64 %i.cs, 3                        ; 2 uses
+  %i.dg = and i64 %i.cr, 3                        ; 2 uses
   %i.dh = add i64 %i.dg, %i.b
   %i.di = icmp ult i64 %i.dh, 4
   br i1 %i.di, label %bb.n, label %bb.q
@@ -3455,7 +3455,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %or.cond3, label %._crit_edge215, label %bb.q
 
 ._crit_edge215:                                   ; preds = %bb.o
-  %.pre = and i64 %i.cs, 3
+  %.pre = and i64 %i.cr, 3
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge215, %bb.n
@@ -3818,9 +3818,9 @@ bb.o:                                             ; preds = %.thread398, %.threa
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dv = ptrtoint ptr %.0253.lcssa to i64
-  %i.dw = ptrtoint ptr %.7271.ptr to i64
-  %i.dx = sub i64 %i.dw, %i.dv                    ; 5 uses
-  %i.dy = trunc i64 %i.dx to i32
+  %i.dw = ptrtoint ptr %.7271.ptr to i64          ; 3 uses
+  %i.dx = sub i64 %i.dw, %i.dv                    ; 3 uses
+  %i.dy = trunc i64 %i.dw to i32
   %i.dz = and i32 %i.dy, 3                        ; 2 uses
   %notmask306 = shl nsw i64 -1, %i.dx
   %i.ea = xor i64 %notmask306, -1                 ; 2 uses
@@ -3834,7 +3834,7 @@ bb.p:                                             ; preds = %._crit_edge
   %i.ei = call <16 x i32> @llvm.x86.avx512.pmaddw.d.512(<32 x i16> %i.eh, <32 x i16> <i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1>)
   %i.ej = bitcast <16 x i32> %i.ei to <64 x i8>
   %i.ek = shufflevector <64 x i8> %i.ej, <64 x i8> poison, <64 x i32> <i32 2, i32 1, i32 0, i32 6, i32 5, i32 4, i32 10, i32 9, i32 8, i32 14, i32 13, i32 12, i32 18, i32 17, i32 16, i32 22, i32 21, i32 20, i32 26, i32 25, i32 24, i32 30, i32 29, i32 28, i32 34, i32 33, i32 32, i32 38, i32 37, i32 36, i32 42, i32 41, i32 40, i32 46, i32 45, i32 44, i32 50, i32 49, i32 48, i32 54, i32 53, i32 52, i32 58, i32 57, i32 56, i32 62, i32 61, i32 60, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0> ; 8 uses
-  %i.el = and i64 %i.dx, 3                        ; 3 uses
+  %i.el = and i64 %i.dw, 3                        ; 3 uses
   %i.em = add i64 %i.el, %i.d                     ; 3 uses
   %i.en = icmp ugt i64 %i.em, 4
   br i1 %i.en, label %bb.q, label %bb.r
@@ -4237,9 +4237,9 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
 
 bb.l:                                             ; preds = %._crit_edge
   %i.cq = ptrtoint ptr %.0122.lcssa to i64
-  %i.cr = ptrtoint ptr %.4134.ptr to i64
-  %i.cs = sub i64 %i.cr, %i.cq                    ; 6 uses
-  %i.ct = trunc i64 %i.cs to i32
+  %i.cr = ptrtoint ptr %.4134.ptr to i64          ; 4 uses
+  %i.cs = sub i64 %i.cr, %i.cq                    ; 3 uses
+  %i.ct = trunc i64 %i.cr to i32
   %i.cu = and i32 %i.ct, 3                        ; 3 uses
   %notmask145 = shl nsw i64 -1, %i.cs
   %i.cv = xor i64 %notmask145, -1                 ; 2 uses
@@ -4259,7 +4259,7 @@ bb.l:                                             ; preds = %._crit_edge
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %i.dg = and i64 %i.cs, 3                        ; 2 uses
+  %i.dg = and i64 %i.cr, 3                        ; 2 uses
   %i.dh = add i64 %i.dg, %i.b
   %i.di = icmp ult i64 %i.dh, 4
   br i1 %i.di, label %bb.n, label %bb.q
@@ -4277,7 +4277,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %or.cond3, label %._crit_edge215, label %bb.q
 
 ._crit_edge215:                                   ; preds = %bb.o
-  %.pre = and i64 %i.cs, 3
+  %.pre = and i64 %i.cr, 3
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge215, %bb.n
@@ -4640,9 +4640,9 @@ bb.o:                                             ; preds = %.thread398, %.threa
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dv = ptrtoint ptr %.0253.lcssa to i64
-  %i.dw = ptrtoint ptr %.7271.ptr to i64
-  %i.dx = sub i64 %i.dw, %i.dv                    ; 5 uses
-  %i.dy = trunc i64 %i.dx to i32
+  %i.dw = ptrtoint ptr %.7271.ptr to i64          ; 3 uses
+  %i.dx = sub i64 %i.dw, %i.dv                    ; 3 uses
+  %i.dy = trunc i64 %i.dw to i32
   %i.dz = and i32 %i.dy, 3                        ; 2 uses
   %notmask306 = shl nsw i64 -1, %i.dx
   %i.ea = xor i64 %notmask306, -1                 ; 2 uses
@@ -4656,7 +4656,7 @@ bb.p:                                             ; preds = %._crit_edge
   %i.ei = call <16 x i32> @llvm.x86.avx512.pmaddw.d.512(<32 x i16> %i.eh, <32 x i16> <i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1, i16 4096, i16 1>)
   %i.ej = bitcast <16 x i32> %i.ei to <64 x i8>
   %i.ek = shufflevector <64 x i8> %i.ej, <64 x i8> poison, <64 x i32> <i32 2, i32 1, i32 0, i32 6, i32 5, i32 4, i32 10, i32 9, i32 8, i32 14, i32 13, i32 12, i32 18, i32 17, i32 16, i32 22, i32 21, i32 20, i32 26, i32 25, i32 24, i32 30, i32 29, i32 28, i32 34, i32 33, i32 32, i32 38, i32 37, i32 36, i32 42, i32 41, i32 40, i32 46, i32 45, i32 44, i32 50, i32 49, i32 48, i32 54, i32 53, i32 52, i32 58, i32 57, i32 56, i32 62, i32 61, i32 60, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0> ; 8 uses
-  %i.el = and i64 %i.dx, 3                        ; 3 uses
+  %i.el = and i64 %i.dw, 3                        ; 3 uses
   %i.em = add i64 %i.el, %i.d                     ; 3 uses
   %i.en = icmp ugt i64 %i.em, 4
   br i1 %i.en, label %bb.q, label %bb.r

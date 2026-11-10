@@ -202,51 +202,51 @@ bb.b:                                             ; preds = %_ZN11flatbuffers11F
   %i.a = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZN11flatbuffersL13flatc_optionsE, i64 11904), %bb.a ], [ %i.b, %_ZN11flatbuffers11FlatCOptionD2Ev.exit ] ; 8 uses
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -128 ; 3 uses
   %i.c = getelementptr inbounds i8, ptr %i.a, i64 -32
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !24   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 16, !tbaa !24  ; 2 uses
   %i.e = getelementptr inbounds i8, ptr %i.a, i64 -16 ; 2 uses
   %i.f = icmp eq ptr %i.d, %i.e
   br i1 %i.f, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.b
-  %i.g = load i64, ptr %i.e, align 8, !tbaa !46
+  %i.g = load i64, ptr %i.e, align 16, !tbaa !46
   %i.h = add i64 %i.g, 1
   tail call void @_ZdlPvm(ptr noundef %i.d, i64 noundef %i.h) #28
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.i = getelementptr inbounds i8, ptr %i.a, i64 -64
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !24   ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 16, !tbaa !24  ; 2 uses
   %i.k = getelementptr inbounds i8, ptr %i.a, i64 -48 ; 2 uses
   %i.l = icmp eq ptr %i.j, %i.k
   br i1 %i.l, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
-  %i.m = load i64, ptr %i.k, align 8, !tbaa !46
+  %i.m = load i64, ptr %i.k, align 16, !tbaa !46
   %i.n = add i64 %i.m, 1
   tail call void @_ZdlPvm(ptr noundef %i.j, i64 noundef %i.n) #28
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i
   %i.o = getelementptr inbounds i8, ptr %i.a, i64 -96
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !24   ; 2 uses
+  %i.p = load ptr, ptr %i.o, align 16, !tbaa !24  ; 2 uses
   %i.q = getelementptr inbounds i8, ptr %i.a, i64 -80 ; 2 uses
   %i.r = icmp eq ptr %i.p, %i.q
   br i1 %i.r, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i
-  %i.s = load i64, ptr %i.q, align 8, !tbaa !46
+  %i.s = load i64, ptr %i.q, align 16, !tbaa !46
   %i.t = add i64 %i.s, 1
   tail call void @_ZdlPvm(ptr noundef %i.p, i64 noundef %i.t) #28
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i
-  %i.u = load ptr, ptr %i.b, align 8, !tbaa !24   ; 2 uses
+  %i.u = load ptr, ptr %i.b, align 16, !tbaa !24  ; 2 uses
   %i.v = getelementptr inbounds i8, ptr %i.a, i64 -112 ; 2 uses
   %i.w = icmp eq ptr %i.u, %i.v
   br i1 %i.w, label %_ZN11flatbuffers11FlatCOptionD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i
-  %i.x = load i64, ptr %i.v, align 8, !tbaa !46
+  %i.x = load i64, ptr %i.v, align 16, !tbaa !46
   %i.y = add i64 %i.x, 1
   tail call void @_ZdlPvm(ptr noundef %i.u, i64 noundef %i.y) #28
   br label %_ZN11flatbuffers11FlatCOptionD2Ev.exit

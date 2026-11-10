@@ -206,13 +206,13 @@ bb.d:                                             ; preds = %bb.b
   %i.q = zext nneg i16 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.q
   %i.s = load i16, ptr %i.r, align 1
-  store i16 %i.s, ptr %i.n, align 1
+  store i16 %i.s, ptr %i.n, align 2
   %i.t = udiv i16 %.lhs.trunc.i.i, 100
   %i.u = shl nuw nsw i16 %i.t, 1
   %i.v = zext nneg i16 %i.u to i64
   %i.w = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.v
   %i.x = load i16, ptr %i.w, align 1
-  store i16 %i.x, ptr %i.l, align 1
+  store i16 %i.x, ptr %i.l, align 4
   %i.y = udiv i64 %.02333.i.i, 10000              ; 3 uses
   %i.z = icmp ugt i64 %.02333.i.i, 9999999
   br i1 %i.z, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !46
@@ -615,13 +615,13 @@ bb.c:                                             ; preds = %bb.a
   %i.l = zext nneg i16 %i.k to i64
   %i.m = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.l
   %i.n = load i16, ptr %i.m, align 1
-  store i16 %i.n, ptr %i.i, align 1
+  store i16 %i.n, ptr %i.i, align 2
   %i.o = udiv i16 %.lhs.trunc, 100
   %i.p = shl nuw nsw i16 %i.o, 1
   %i.q = zext nneg i16 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.q
   %i.s = load i16, ptr %i.r, align 1
-  store i16 %i.s, ptr %i.g, align 1
+  store i16 %i.s, ptr %i.g, align 4
   %i.t = udiv i64 %.02333, 10000                  ; 3 uses
   %i.u = icmp ugt i64 %.02333, 9999999
   br i1 %i.u, label %.lr.ph, label %._crit_edge, !llvm.loop !46
@@ -710,13 +710,13 @@ bb.d:                                             ; preds = %bb.b
   %i.n = zext nneg i16 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.n
   %i.p = load i16, ptr %i.o, align 1
-  store i16 %i.p, ptr %i.k, align 1
+  store i16 %i.p, ptr %i.k, align 2
   %i.q = udiv i16 %.lhs.trunc.i, 100
   %i.r = shl nuw nsw i16 %i.q, 1
   %i.s = zext nneg i16 %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.s
   %i.u = load i16, ptr %i.t, align 1
-  store i16 %i.u, ptr %i.i, align 1
+  store i16 %i.u, ptr %i.i, align 4
   %i.v = udiv i64 %.02333.i, 10000                ; 3 uses
   %i.w = icmp samesign ugt i64 %.02333.i, 9999999
   br i1 %i.w, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !46
@@ -795,13 +795,13 @@ bb.j:                                             ; preds = %bb.h
   %i.az = zext nneg i16 %i.ay to i64
   %i.ba = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.az
   %i.bb = load i16, ptr %i.ba, align 1
-  store i16 %i.bb, ptr %i.aw, align 1
+  store i16 %i.bb, ptr %i.aw, align 2
   %i.bc = udiv i16 %.lhs.trunc.i22, 100
   %i.bd = shl nuw nsw i16 %i.bc, 1
   %i.be = zext nneg i16 %i.bd to i64
   %i.bf = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.be
   %i.bg = load i16, ptr %i.bf, align 1
-  store i16 %i.bg, ptr %i.au, align 1
+  store i16 %i.bg, ptr %i.au, align 4
   %i.bh = udiv i64 %.02333.i21, 10000             ; 3 uses
   %i.bi = icmp ugt i64 %.02333.i21, 9999999
   br i1 %i.bi, label %.lr.ph.i19, label %._crit_edge.i23, !llvm.loop !46
@@ -1204,13 +1204,13 @@ bb.c:                                             ; preds = %bb.a
   %i.m = zext nneg i16 %i.l to i64
   %i.n = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.m
   %i.o = load i16, ptr %i.n, align 1
-  store i16 %i.o, ptr %i.j, align 1
+  store i16 %i.o, ptr %i.j, align 2
   %i.p = udiv i16 %.lhs.trunc.i, 100
   %i.q = shl nuw nsw i16 %i.p, 1
   %i.r = zext nneg i16 %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr @.str.108, i64 %i.r
   %i.t = load i16, ptr %i.s, align 1
-  store i16 %i.t, ptr %i.h, align 1
+  store i16 %i.t, ptr %i.h, align 4
   %i.u = udiv i64 %.02333.i, 10000                ; 3 uses
   %i.v = icmp ugt i64 %.02333.i, 9999999
   br i1 %i.v, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !46

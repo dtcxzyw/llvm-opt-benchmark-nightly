@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core5place13ScopedPlaceIdNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow19NarrowingConstraintENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB3S_9FrozenMapB19_B22_E12from_entries0E0EB28_.exit
   %.sroa.0.05 = phi ptr [ %i.v, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTNtNtCs2O29vuvTAEJ_14ty_python_core5place13ScopedPlaceIdNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow19NarrowingConstraintENCINvMB8_SB18_16sort_unstable_byNCNvMs2_NtB1d_6frozenINtB3S_9FrozenMapB19_B22_E12from_entries0E0EB28_.exit ], [ %i.c, %.lr.ph.preheader ] ; 8 uses
   %i.d = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -120 ; 4 uses
-  %.val11.i = load i32, ptr %.sroa.0.05, align 4, !range !19, !noundef !7 ; 2 uses
-  %.val13.i = load i32, ptr %i.d, align 4, !range !19, !noundef !7
+  %.val11.i = load i32, ptr %.sroa.0.05, align 8, !range !19, !noundef !7 ; 2 uses
+  %.val13.i = load i32, ptr %i.d, align 8, !range !19, !noundef !7
   %i.e = trunc nuw nsw i32 %.val11.i to i8        ; 2 uses
   %i.f = trunc nuw nsw i32 %.val13.i to i8
   %i.g = sub nsw i8 %i.e, %i.f                    ; 2 uses
@@ -244,7 +244,7 @@ bb.e:                                             ; preds = %bb.f
 .lr.ph12:                                         ; preds = %bb.d, %bb.e
   %.sroa.0.0.i10 = phi ptr [ %i.o, %bb.e ], [ %i.d, %bb.d ] ; 4 uses
   %i.o = getelementptr inbounds i8, ptr %.sroa.0.0.i10, i64 -120 ; 4 uses
-  %.val9.i = load i32, ptr %i.o, align 4, !range !19, !noundef !7
+  %.val9.i = load i32, ptr %i.o, align 8, !range !19, !noundef !7
   %i.p = trunc nuw nsw i32 %.val9.i to i8
   %i.q = sub nsw i8 %i.e, %i.p                    ; 2 uses
   %i.r = icmp eq i8 %i.q, 0
@@ -647,8 +647,8 @@ _RNvYNvYTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class24Structur
   br i1 %i.au, label %.backedge.i.1.i.i, label %.noexc._crit_edge.i.1.i.i
 
 .backedge.i.1.i.i:                                ; preds = %_RNvYNvYTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class24StructuralMemberPrioritymENtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1B_3ops8function5FnMutTRB5_B2I_EE8call_mutBc_.exit10.i.1.i.i, %.noexc.i.1.i.i
-  %i.av = load i64, ptr %i.aq, align 4, !alias.scope !24406, !noalias !24404
-  store i64 %i.av, ptr %.sroa.0.07.i.1.i.i, align 4, !alias.scope !24406, !noalias !24404
+  %i.av = load i64, ptr %i.aq, align 8, !alias.scope !24406, !noalias !24404
+  store i64 %i.av, ptr %.sroa.0.07.i.1.i.i, align 8, !alias.scope !24406, !noalias !24404
   %i.aw = icmp eq ptr %i.aq, %i.ab
   br i1 %i.aw, label %.noexc._crit_edge.i.1.i.i, label %.lr.ph.i33.1.i.i
 
@@ -752,7 +752,7 @@ _RNvYNvYTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class24Structur
   %.sroa.0.0.i.i25.i.i.i = phi i1 [ %i.bs, %bb.k ], [ %i.bx, %bb.l ] ; 3 uses
   %..i.i.i.i = select i1 %.sroa.0.0.i.i25.i.i.i, ptr %.sroa.015.06.i.i.i, ptr %.sroa.017.05.i.i.i
   %i.by = xor i1 %.sroa.0.0.i.i25.i.i.i, true
-  %i.bz = load i64, ptr %..i.i.i.i, align 4, !alias.scope !24422, !noalias !24433
+  %i.bz = load i64, ptr %..i.i.i.i, align 8, !alias.scope !24422, !noalias !24433
   store i64 %i.bz, ptr %.sroa.019.04.i.i.i, align 4, !alias.scope !24407, !noalias !24434
   %.neg.i.i.i.i = sext i1 %i.by to i64
   %i.ca = getelementptr [8 x i8], ptr %.sroa.017.05.i.i.i, i64 %.neg.i.i.i.i ; 2 uses
@@ -850,8 +850,8 @@ _RNvYNvYTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class24Structur
   br i1 %i.cy, label %.backedge.i.i.i, label %.noexc._crit_edge.i.i.i
 
 .backedge.i.i.i:                                  ; preds = %_RNvYNvYTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types14protocol_class24StructuralMemberPrioritymENtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1B_3ops8function5FnMutTRB5_B2I_EE8call_mutBc_.exit10.i.i.i, %.noexc.i.i.i
-  %i.cz = load i64, ptr %i.cu, align 4, !alias.scope !24406, !noalias !24404
-  store i64 %i.cz, ptr %.sroa.0.07.i.i.i, align 4, !alias.scope !24406, !noalias !24404
+  %i.cz = load i64, ptr %i.cu, align 8, !alias.scope !24406, !noalias !24404
+  store i64 %i.cz, ptr %.sroa.0.07.i.i.i, align 8, !alias.scope !24406, !noalias !24404
   %i.da = icmp eq ptr %i.cu, %i.d
   br i1 %i.da, label %.noexc._crit_edge.i.i.i, label %.lr.ph.i33.i.i
 

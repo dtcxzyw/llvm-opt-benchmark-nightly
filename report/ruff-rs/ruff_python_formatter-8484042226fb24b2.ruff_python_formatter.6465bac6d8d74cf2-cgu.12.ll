@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.h
 .lr.ph:                                           ; preds = %bb.l, %.lr.ph
   %.sroa.0.0138 = phi ptr [ %i.bd, %.lr.ph ], [ %.val38, %bb.l ] ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.0.0138, i64 8
-  store i8 1, ptr %i.bc, align 1
+  store i8 1, ptr %i.bc, align 4
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.0.0138, i64 12 ; 2 uses
   %i.be = icmp eq ptr %i.bd, %i.ba
   br i1 %i.be, label %._crit_edge, label %.lr.ph
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %.backedge, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 12
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %i.u = load i8, ptr %i.t, align 1, !range !12, !noalias !562, !noundef !5
+  %i.u = load i8, ptr %i.t, align 4, !range !12, !noalias !562, !noundef !5
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %.backedge, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments13SourceCommentENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvNvXNtBS_6formatNtB2M_21FormatLeadingCommentsINtCs7Ma6rQP8bRy_14ruff_formatter6FormatNtNtBU_7context15PyFormatContextE3fmt22write_leading_comments0EBU_.exit.i
 
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.k = load i8, ptr %i.j, align 1, !range !12, !noalias !791, !noundef !5
+  %i.k = load i8, ptr %i.j, align 4, !range !12, !noalias !791, !noundef !5
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %.backedge, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments13SourceCommentENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvXs2_NtBS_6formatNtB2N_37FormatDanglingOpenParenthesisCommentsINtCs7Ma6rQP8bRy_14ruff_formatter6FormatNtNtBU_7context15PyFormatContextE3fmt0EBU_.exit
 
@@ -1044,7 +1044,7 @@ bb.g:                                             ; preds = %_RINvXs2J_NtNtCs4NR
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i8 1, ptr %i.n, align 1
+  store i8 1, ptr %i.n, align 4
   br label %.backedge
 }
 

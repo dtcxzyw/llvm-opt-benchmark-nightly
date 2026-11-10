@@ -205,133 +205,133 @@ bb.f:                                             ; preds = %.loopexit138
 
 .preheader137:                                    ; preds = %.preheader137, %.preheader137.preheader
   %.051140 = phi ptr [ %.046.ptr, %.preheader137.preheader ], [ %i.gy, %.preheader137 ] ; 65 uses
-  store <32 x i16> splat (i16 8), ptr %.051140, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.051140, align 64, !tbaa !242
   %.0.ptr.32.i.i = getelementptr inbounds nuw i8, ptr %.051140, i64 64
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i, align 64, !tbaa !242
   %.0.ptr10.i.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 128
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 192
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.1, align 64, !tbaa !242
   %.0.ptr10.i.2 = getelementptr inbounds nuw i8, ptr %.051140, i64 256
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.2, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.2, align 64, !tbaa !242
   %.0.ptr.32.i.i.2 = getelementptr inbounds nuw i8, ptr %.051140, i64 320
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.2, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.2, align 64, !tbaa !242
   %.0.ptr10.i.3 = getelementptr inbounds nuw i8, ptr %.051140, i64 384
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.3, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.3, align 64, !tbaa !242
   %.0.ptr.32.i.i.3 = getelementptr inbounds nuw i8, ptr %.051140, i64 448
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.3, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.3, align 64, !tbaa !242
   %.0.ptr10.i.4 = getelementptr inbounds nuw i8, ptr %.051140, i64 512
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.4, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.4, align 64, !tbaa !242
   %.0.ptr.32.i.i.4 = getelementptr inbounds nuw i8, ptr %.051140, i64 576
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.4, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.4, align 64, !tbaa !242
   %.0.ptr10.i.5 = getelementptr inbounds nuw i8, ptr %.051140, i64 640
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.5, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.5, align 64, !tbaa !242
   %.0.ptr.32.i.i.5 = getelementptr inbounds nuw i8, ptr %.051140, i64 704
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.5, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.5, align 64, !tbaa !242
   %.0.ptr10.i.6 = getelementptr inbounds nuw i8, ptr %.051140, i64 768
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.6, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.6, align 64, !tbaa !242
   %.0.ptr.32.i.i.6 = getelementptr inbounds nuw i8, ptr %.051140, i64 832
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.6, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.6, align 64, !tbaa !242
   %.0.ptr10.i.7 = getelementptr inbounds nuw i8, ptr %.051140, i64 896
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.7, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.7, align 64, !tbaa !242
   %.0.ptr.32.i.i.7 = getelementptr inbounds nuw i8, ptr %.051140, i64 960
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.7, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.7, align 64, !tbaa !242
   %.0.ptr10.i.8 = getelementptr inbounds nuw i8, ptr %.051140, i64 1024
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.8, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.8, align 64, !tbaa !242
   %.0.ptr.32.i.i.8 = getelementptr inbounds nuw i8, ptr %.051140, i64 1088
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.8, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.8, align 64, !tbaa !242
   %.0.ptr10.i.9 = getelementptr inbounds nuw i8, ptr %.051140, i64 1152
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.9, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.9, align 64, !tbaa !242
   %.0.ptr.32.i.i.9 = getelementptr inbounds nuw i8, ptr %.051140, i64 1216
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.9, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.9, align 64, !tbaa !242
   %.0.ptr10.i.10 = getelementptr inbounds nuw i8, ptr %.051140, i64 1280
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.10, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.10, align 64, !tbaa !242
   %.0.ptr.32.i.i.10 = getelementptr inbounds nuw i8, ptr %.051140, i64 1344
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.10, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.10, align 64, !tbaa !242
   %.0.ptr10.i.11 = getelementptr inbounds nuw i8, ptr %.051140, i64 1408
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.11, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.11, align 64, !tbaa !242
   %.0.ptr.32.i.i.11 = getelementptr inbounds nuw i8, ptr %.051140, i64 1472
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.11, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.11, align 64, !tbaa !242
   %.0.ptr10.i.12 = getelementptr inbounds nuw i8, ptr %.051140, i64 1536
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.12, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.12, align 64, !tbaa !242
   %.0.ptr.32.i.i.12 = getelementptr inbounds nuw i8, ptr %.051140, i64 1600
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.12, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.12, align 64, !tbaa !242
   %.0.ptr10.i.13 = getelementptr inbounds nuw i8, ptr %.051140, i64 1664
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.13, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.13, align 64, !tbaa !242
   %.0.ptr.32.i.i.13 = getelementptr inbounds nuw i8, ptr %.051140, i64 1728
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.13, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.13, align 64, !tbaa !242
   %.0.ptr10.i.14 = getelementptr inbounds nuw i8, ptr %.051140, i64 1792
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.14, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.14, align 64, !tbaa !242
   %.0.ptr.32.i.i.14 = getelementptr inbounds nuw i8, ptr %.051140, i64 1856
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.14, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.14, align 64, !tbaa !242
   %.0.ptr10.i.15 = getelementptr inbounds nuw i8, ptr %.051140, i64 1920
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.15, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.15, align 64, !tbaa !242
   %.0.ptr.32.i.i.15 = getelementptr inbounds nuw i8, ptr %.051140, i64 1984
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.15, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.15, align 64, !tbaa !242
   %i.gx = getelementptr inbounds nuw i8, ptr %.051140, i64 2048
-  store <32 x i16> splat (i16 8), ptr %i.gx, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %i.gx, align 64, !tbaa !242
   %.0.ptr.32.i.i.1165 = getelementptr inbounds nuw i8, ptr %.051140, i64 2112
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.1165, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.1165, align 64, !tbaa !242
   %.0.ptr10.i.1.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2176
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.1.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.1.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.1.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2240
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.1.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.1.1, align 64, !tbaa !242
   %.0.ptr10.i.2.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2304
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.2.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.2.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.2.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2368
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.2.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.2.1, align 64, !tbaa !242
   %.0.ptr10.i.3.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2432
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.3.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.3.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.3.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2496
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.3.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.3.1, align 64, !tbaa !242
   %.0.ptr10.i.4.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2560
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.4.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.4.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.4.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2624
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.4.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.4.1, align 64, !tbaa !242
   %.0.ptr10.i.5.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2688
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.5.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.5.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.5.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2752
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.5.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.5.1, align 64, !tbaa !242
   %.0.ptr10.i.6.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2816
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.6.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.6.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.6.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2880
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.6.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.6.1, align 64, !tbaa !242
   %.0.ptr10.i.7.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 2944
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.7.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.7.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.7.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3008
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.7.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.7.1, align 64, !tbaa !242
   %.0.ptr10.i.8.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3072
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.8.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.8.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.8.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3136
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.8.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.8.1, align 64, !tbaa !242
   %.0.ptr10.i.9.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3200
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.9.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.9.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.9.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3264
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.9.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.9.1, align 64, !tbaa !242
   %.0.ptr10.i.10.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3328
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.10.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.10.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.10.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3392
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.10.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.10.1, align 64, !tbaa !242
   %.0.ptr10.i.11.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3456
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.11.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.11.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.11.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3520
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.11.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.11.1, align 64, !tbaa !242
   %.0.ptr10.i.12.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3584
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.12.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.12.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.12.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3648
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.12.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.12.1, align 64, !tbaa !242
   %.0.ptr10.i.13.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3712
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.13.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.13.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.13.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3776
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.13.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.13.1, align 64, !tbaa !242
   %.0.ptr10.i.14.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3840
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.14.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.14.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.14.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3904
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.14.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.14.1, align 64, !tbaa !242
   %.0.ptr10.i.15.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 3968
-  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.15.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr10.i.15.1, align 64, !tbaa !242
   %.0.ptr.32.i.i.15.1 = getelementptr inbounds nuw i8, ptr %.051140, i64 4032
-  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.15.1, align 2, !tbaa !242
+  store <32 x i16> splat (i16 8), ptr %.0.ptr.32.i.i.15.1, align 64, !tbaa !242
   %i.gy = getelementptr inbounds nuw i8, ptr %.051140, i64 4096 ; 2 uses
   %.not56.1 = icmp eq ptr %i.gy, %.ptr
   br i1 %.not56.1, label %.loopexit138, label %.preheader137
@@ -501,133 +501,133 @@ bb.h:                                             ; preds = %.loopexit.1
 
 .preheader.1183:                                  ; preds = %.preheader.1183, %.preheader.preheader.1181
   %.047143.1182 = phi ptr [ %.048.ptr.1180, %.preheader.preheader.1181 ], [ %i.he, %.preheader.1183 ] ; 65 uses
-  store <32 x i16> splat (i16 -529), ptr %.047143.1182, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.047143.1182, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1184 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 64
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1184, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1184, align 64, !tbaa !244
   %.0.ptr10.i60.1167.1185 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 128
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167.1185, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167.1185, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1168.1186 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 192
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168.1186, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168.1186, align 64, !tbaa !244
   %.0.ptr10.i60.2.1187 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 256
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2.1187, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2.1187, align 64, !tbaa !244
   %.0.ptr.32.i.i92.2.1188 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 320
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2.1188, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2.1188, align 64, !tbaa !244
   %.0.ptr10.i60.3.1189 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 384
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3.1189, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3.1189, align 64, !tbaa !244
   %.0.ptr.32.i.i92.3.1190 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 448
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3.1190, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3.1190, align 64, !tbaa !244
   %.0.ptr10.i60.4.1191 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 512
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4.1191, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4.1191, align 64, !tbaa !244
   %.0.ptr.32.i.i92.4.1192 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 576
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4.1192, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4.1192, align 64, !tbaa !244
   %.0.ptr10.i60.5.1193 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 640
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5.1193, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5.1193, align 64, !tbaa !244
   %.0.ptr.32.i.i92.5.1194 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 704
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5.1194, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5.1194, align 64, !tbaa !244
   %.0.ptr10.i60.6.1195 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 768
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6.1195, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6.1195, align 64, !tbaa !244
   %.0.ptr.32.i.i92.6.1196 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 832
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6.1196, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6.1196, align 64, !tbaa !244
   %.0.ptr10.i60.7.1197 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 896
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7.1197, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7.1197, align 64, !tbaa !244
   %.0.ptr.32.i.i92.7.1198 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 960
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7.1198, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7.1198, align 64, !tbaa !244
   %.0.ptr10.i60.8.1199 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1024
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8.1199, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8.1199, align 64, !tbaa !244
   %.0.ptr.32.i.i92.8.1200 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1088
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8.1200, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8.1200, align 64, !tbaa !244
   %.0.ptr10.i60.9.1201 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1152
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9.1201, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9.1201, align 64, !tbaa !244
   %.0.ptr.32.i.i92.9.1202 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1216
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9.1202, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9.1202, align 64, !tbaa !244
   %.0.ptr10.i60.10.1203 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1280
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10.1203, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10.1203, align 64, !tbaa !244
   %.0.ptr.32.i.i92.10.1204 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1344
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10.1204, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10.1204, align 64, !tbaa !244
   %.0.ptr10.i60.11.1205 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1408
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11.1205, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11.1205, align 64, !tbaa !244
   %.0.ptr.32.i.i92.11.1206 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1472
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11.1206, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11.1206, align 64, !tbaa !244
   %.0.ptr10.i60.12.1207 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1536
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12.1207, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12.1207, align 64, !tbaa !244
   %.0.ptr.32.i.i92.12.1208 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1600
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12.1208, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12.1208, align 64, !tbaa !244
   %.0.ptr10.i60.13.1209 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1664
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13.1209, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13.1209, align 64, !tbaa !244
   %.0.ptr.32.i.i92.13.1210 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1728
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13.1210, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13.1210, align 64, !tbaa !244
   %.0.ptr10.i60.14.1211 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1792
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14.1211, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14.1211, align 64, !tbaa !244
   %.0.ptr.32.i.i92.14.1212 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1856
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14.1212, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14.1212, align 64, !tbaa !244
   %.0.ptr10.i60.15.1213 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1920
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15.1213, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15.1213, align 64, !tbaa !244
   %.0.ptr.32.i.i92.15.1214 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 1984
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15.1214, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15.1214, align 64, !tbaa !244
   %i.hd = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2048
-  store <32 x i16> splat (i16 -529), ptr %i.hd, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %i.hd, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1173.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2112
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1173.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1173.1, align 64, !tbaa !244
   %.0.ptr10.i60.1167.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2176
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1168.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2240
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.2.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2304
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.2.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2368
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.3.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2432
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.3.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2496
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.4.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2560
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.4.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2624
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.5.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2688
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.5.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2752
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.6.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2816
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.6.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2880
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.7.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 2944
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.7.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3008
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.8.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3072
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.8.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3136
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.9.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3200
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.9.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3264
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.10.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3328
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.10.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3392
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.11.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3456
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.11.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3520
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.12.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3584
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.12.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3648
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.13.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3712
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.13.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3776
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.14.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3840
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.14.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3904
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14.1.1, align 64, !tbaa !244
   %.0.ptr10.i60.15.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 3968
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15.1.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.15.1.1 = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 4032
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15.1.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15.1.1, align 64, !tbaa !244
   %i.he = getelementptr inbounds nuw i8, ptr %.047143.1182, i64 4096 ; 2 uses
   %.not55.1174.1 = icmp eq ptr %i.he, %.ptr136.1179
   br i1 %.not55.1174.1, label %.loopexit.1217, label %.preheader.1183
@@ -797,133 +797,133 @@ bb.j:                                             ; preds = %.loopexit.1.1
 
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader
   %.047143 = phi ptr [ %.048.ptr, %.preheader.preheader ], [ %i.hk, %.preheader ] ; 65 uses
-  store <32 x i16> splat (i16 -529), ptr %.047143, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.047143, align 64, !tbaa !244
   %.0.ptr.32.i.i92 = getelementptr inbounds nuw i8, ptr %.047143, i64 64
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92, align 64, !tbaa !244
   %.0.ptr10.i60.1167 = getelementptr inbounds nuw i8, ptr %.047143, i64 128
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1168 = getelementptr inbounds nuw i8, ptr %.047143, i64 192
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168, align 64, !tbaa !244
   %.0.ptr10.i60.2 = getelementptr inbounds nuw i8, ptr %.047143, i64 256
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2, align 64, !tbaa !244
   %.0.ptr.32.i.i92.2 = getelementptr inbounds nuw i8, ptr %.047143, i64 320
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2, align 64, !tbaa !244
   %.0.ptr10.i60.3 = getelementptr inbounds nuw i8, ptr %.047143, i64 384
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3, align 64, !tbaa !244
   %.0.ptr.32.i.i92.3 = getelementptr inbounds nuw i8, ptr %.047143, i64 448
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3, align 64, !tbaa !244
   %.0.ptr10.i60.4 = getelementptr inbounds nuw i8, ptr %.047143, i64 512
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4, align 64, !tbaa !244
   %.0.ptr.32.i.i92.4 = getelementptr inbounds nuw i8, ptr %.047143, i64 576
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4, align 64, !tbaa !244
   %.0.ptr10.i60.5 = getelementptr inbounds nuw i8, ptr %.047143, i64 640
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5, align 64, !tbaa !244
   %.0.ptr.32.i.i92.5 = getelementptr inbounds nuw i8, ptr %.047143, i64 704
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5, align 64, !tbaa !244
   %.0.ptr10.i60.6 = getelementptr inbounds nuw i8, ptr %.047143, i64 768
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6, align 64, !tbaa !244
   %.0.ptr.32.i.i92.6 = getelementptr inbounds nuw i8, ptr %.047143, i64 832
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6, align 64, !tbaa !244
   %.0.ptr10.i60.7 = getelementptr inbounds nuw i8, ptr %.047143, i64 896
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7, align 64, !tbaa !244
   %.0.ptr.32.i.i92.7 = getelementptr inbounds nuw i8, ptr %.047143, i64 960
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7, align 64, !tbaa !244
   %.0.ptr10.i60.8 = getelementptr inbounds nuw i8, ptr %.047143, i64 1024
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8, align 64, !tbaa !244
   %.0.ptr.32.i.i92.8 = getelementptr inbounds nuw i8, ptr %.047143, i64 1088
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8, align 64, !tbaa !244
   %.0.ptr10.i60.9 = getelementptr inbounds nuw i8, ptr %.047143, i64 1152
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9, align 64, !tbaa !244
   %.0.ptr.32.i.i92.9 = getelementptr inbounds nuw i8, ptr %.047143, i64 1216
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9, align 64, !tbaa !244
   %.0.ptr10.i60.10 = getelementptr inbounds nuw i8, ptr %.047143, i64 1280
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10, align 64, !tbaa !244
   %.0.ptr.32.i.i92.10 = getelementptr inbounds nuw i8, ptr %.047143, i64 1344
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10, align 64, !tbaa !244
   %.0.ptr10.i60.11 = getelementptr inbounds nuw i8, ptr %.047143, i64 1408
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11, align 64, !tbaa !244
   %.0.ptr.32.i.i92.11 = getelementptr inbounds nuw i8, ptr %.047143, i64 1472
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11, align 64, !tbaa !244
   %.0.ptr10.i60.12 = getelementptr inbounds nuw i8, ptr %.047143, i64 1536
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12, align 64, !tbaa !244
   %.0.ptr.32.i.i92.12 = getelementptr inbounds nuw i8, ptr %.047143, i64 1600
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12, align 64, !tbaa !244
   %.0.ptr10.i60.13 = getelementptr inbounds nuw i8, ptr %.047143, i64 1664
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13, align 64, !tbaa !244
   %.0.ptr.32.i.i92.13 = getelementptr inbounds nuw i8, ptr %.047143, i64 1728
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13, align 64, !tbaa !244
   %.0.ptr10.i60.14 = getelementptr inbounds nuw i8, ptr %.047143, i64 1792
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14, align 64, !tbaa !244
   %.0.ptr.32.i.i92.14 = getelementptr inbounds nuw i8, ptr %.047143, i64 1856
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14, align 64, !tbaa !244
   %.0.ptr10.i60.15 = getelementptr inbounds nuw i8, ptr %.047143, i64 1920
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15, align 64, !tbaa !244
   %.0.ptr.32.i.i92.15 = getelementptr inbounds nuw i8, ptr %.047143, i64 1984
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15, align 64, !tbaa !244
   %i.hj = getelementptr inbounds nuw i8, ptr %.047143, i64 2048
-  store <32 x i16> splat (i16 -529), ptr %i.hj, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %i.hj, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1173 = getelementptr inbounds nuw i8, ptr %.047143, i64 2112
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1173, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1173, align 64, !tbaa !244
   %.0.ptr10.i60.1167.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2176
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.1167.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.1168.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2240
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.1168.1, align 64, !tbaa !244
   %.0.ptr10.i60.2.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2304
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.2.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.2.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2368
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.2.1, align 64, !tbaa !244
   %.0.ptr10.i60.3.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2432
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.3.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.3.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2496
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.3.1, align 64, !tbaa !244
   %.0.ptr10.i60.4.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2560
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.4.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.4.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2624
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.4.1, align 64, !tbaa !244
   %.0.ptr10.i60.5.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2688
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.5.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.5.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2752
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.5.1, align 64, !tbaa !244
   %.0.ptr10.i60.6.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2816
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.6.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.6.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2880
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.6.1, align 64, !tbaa !244
   %.0.ptr10.i60.7.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 2944
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.7.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.7.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3008
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.7.1, align 64, !tbaa !244
   %.0.ptr10.i60.8.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3072
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.8.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.8.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3136
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.8.1, align 64, !tbaa !244
   %.0.ptr10.i60.9.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3200
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.9.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.9.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3264
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.9.1, align 64, !tbaa !244
   %.0.ptr10.i60.10.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3328
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.10.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.10.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3392
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.10.1, align 64, !tbaa !244
   %.0.ptr10.i60.11.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3456
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.11.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.11.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3520
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.11.1, align 64, !tbaa !244
   %.0.ptr10.i60.12.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3584
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.12.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.12.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3648
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.12.1, align 64, !tbaa !244
   %.0.ptr10.i60.13.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3712
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.13.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.13.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3776
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.13.1, align 64, !tbaa !244
   %.0.ptr10.i60.14.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3840
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.14.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.14.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3904
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.14.1, align 64, !tbaa !244
   %.0.ptr10.i60.15.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 3968
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr10.i60.15.1, align 64, !tbaa !244
   %.0.ptr.32.i.i92.15.1 = getelementptr inbounds nuw i8, ptr %.047143, i64 4032
-  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15.1, align 2, !tbaa !244
+  store <32 x i16> splat (i16 -529), ptr %.0.ptr.32.i.i92.15.1, align 64, !tbaa !244
   %i.hk = getelementptr inbounds nuw i8, ptr %.047143, i64 4096 ; 2 uses
   %.not55.1174 = icmp eq ptr %i.hk, %.ptr136
   br i1 %.not55.1174, label %.loopexit, label %.preheader
@@ -1326,7 +1326,7 @@ bb.d:                                             ; preds = %_ZNK9Stockfish8Posi
 bb.e:                                             ; preds = %bb.i, %.lr.ph.i.i.i.i
   %.047.i.i.i.i = phi i64 [ %i.ae, %.lr.ph.i.i.i.i ], [ %i.at, %bb.i ] ; 2 uses
   %.02946.i.i.i.i = phi ptr [ %5, %.lr.ph.i.i.i.i ], [ %i.as, %bb.i ] ; 9 uses
-  %i.ah = load i16, ptr %.02946.i.i.i.i, align 2, !tbaa !303
+  %i.ah = load i16, ptr %.02946.i.i.i.i, align 8, !tbaa !303
   %i.ai = icmp eq i16 %i.ah, %.sroa.01.0.copyload
   br i1 %i.ai, label %_ZNK9Stockfish8MoveListILNS_7GenTypeE4EE8containsENS_4MoveE.exit, label %bb.f
 
@@ -1338,7 +1338,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i, i64 4
-  %i.an = load i16, ptr %i.am, align 2, !tbaa !303
+  %i.an = load i16, ptr %i.am, align 4, !tbaa !303
   %i.ao = icmp eq i16 %i.an, %.sroa.01.0.copyload
   br i1 %i.ao, label %_ZNK9Stockfish8MoveListILNS_7GenTypeE4EE8containsENS_4MoveE.exit.loopexit.split.loop.exit32, label %bb.h
 

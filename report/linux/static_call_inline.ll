@@ -204,13 +204,10 @@ bb.b:                                             ; preds = %.lr.ph.split.us.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.d
   %.012.i = phi ptr [ %i.w, %bb.d ], [ @__start_static_call_sites, %.lr.ph.i ] ; 4 uses
-  %i.n = getelementptr i8, ptr %.012.i, i64 4     ; 2 uses
+  %i.n = getelementptr i8, ptr %.012.i, i64 4
   %i.o = load i32, ptr %i.n, align 4
-  %2 = zext i32 %i.o to i64
-  %3 = ptrtoint ptr %i.n to i64
-  %4 = add i64 %2, %3
-  %5 = and i64 %4, 2
-  %.not10.i = icmp eq i64 %5, 0
+  %2 = and i32 %i.o, 2
+  %.not10.i = icmp eq i32 %2, 0
   br i1 %.not10.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph.split.i

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.loopexit121.i ]
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i.prol, i64 1040 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i.prol, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.05.i.i.i.prol, i8 0, i64 1032, i1 false), !alias.scope !35530, !noalias !35526
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.05.i.i.i.prol, i8 0, i64 1032, i1 false), !alias.scope !35530, !noalias !35526
   store float 3.402000e+38, ptr %i.by, align 8, !alias.scope !35531, !noalias !35526
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter4506
@@ -220,7 +220,7 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.02.05.i.i.i = phi ptr [ %i.co, %.lr.ph.i.i.i ], [ %.sroa.02.05.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 17 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 1040
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.05.i.i.i, i8 0, i64 1032, i1 false), !alias.scope !35530, !noalias !35526
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.05.i.i.i, i8 0, i64 1032, i1 false), !alias.scope !35530, !noalias !35526
   store float 3.402000e+38, ptr %i.cb, align 8, !alias.scope !35531, !noalias !35526
   %i.cc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 2080
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 2072
@@ -623,7 +623,7 @@ bb.ft:                                            ; preds = %bb.fs
   %.sroa.02.05.i.i206.i = phi ptr [ %i.amr, %.lr.ph.i.i205.i ], [ %i.bd, %bb.ft ] ; 3 uses
   %i.amr = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i206.i, i64 1040 ; 2 uses
   %i.ams = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i206.i, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.05.i.i206.i, i8 0, i64 1032, i1 false), !alias.scope !35625, !noalias !35526
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.05.i.i206.i, i8 0, i64 1032, i1 false), !alias.scope !35625, !noalias !35526
   store float 3.402000e+38, ptr %i.ams, align 8, !alias.scope !35626, !noalias !35526
   %i.amt = icmp eq ptr %i.amr, %i.amp
   br i1 %i.amt, label %_ZN6brotli3enc9histogram15ClearHistograms17h1aacda452d1c7728E.exit.i.i.preheader, label %.lr.ph.i.i205.i
@@ -1026,7 +1026,7 @@ bb.gj:                                            ; preds = %bb.gi
   %prol.iter4542 = phi i64 [ %prol.iter4542.next, %.lr.ph.i.i.i53.prol ], [ 0, %.loopexit115.i ]
   %i.asd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54.prol, i64 2832 ; 2 uses
   %i.ase = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54.prol, i64 2824
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %.sroa.02.05.i.i.i54.prol, i8 0, i64 2824, i1 false), !alias.scope !35646, !noalias !35642
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %.sroa.02.05.i.i.i54.prol, i8 0, i64 2824, i1 false), !alias.scope !35646, !noalias !35642
   store float 3.402000e+38, ptr %i.ase, align 8, !alias.scope !35647, !noalias !35642
   %prol.iter4542.next = add i64 %prol.iter4542, 1 ; 2 uses
   %prol.iter4542.cmp.not = icmp eq i64 %prol.iter4542.next, %xtraiter4540
@@ -1041,7 +1041,7 @@ bb.gj:                                            ; preds = %bb.gi
   %.sroa.02.05.i.i.i54 = phi ptr [ %i.asu, %.lr.ph.i.i.i53 ], [ %.sroa.02.05.i.i.i54.unr, %.lr.ph.i.i.i53.prol.loopexit ] ; 17 uses
   %i.asg = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 2832
   %i.ash = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 2824
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %.sroa.02.05.i.i.i54, i8 0, i64 2824, i1 false), !alias.scope !35646, !noalias !35642
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %.sroa.02.05.i.i.i54, i8 0, i64 2824, i1 false), !alias.scope !35646, !noalias !35642
   store float 3.402000e+38, ptr %i.ash, align 8, !alias.scope !35647, !noalias !35642
   %i.asi = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 5664
   %i.asj = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 5656
@@ -1444,7 +1444,7 @@ bb.mz:                                            ; preds = %bb.my
   %.sroa.02.05.i.i208.i = phi ptr [ %i.cdl, %.lr.ph.i.i207.i ], [ %i.arh, %bb.mz ] ; 3 uses
   %i.cdl = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i208.i, i64 2832 ; 2 uses
   %i.cdm = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i208.i, i64 2824
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %.sroa.02.05.i.i208.i, i8 0, i64 2824, i1 false), !alias.scope !35745, !noalias !35642
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %.sroa.02.05.i.i208.i, i8 0, i64 2824, i1 false), !alias.scope !35745, !noalias !35642
   store float 3.402000e+38, ptr %i.cdm, align 8, !alias.scope !35746, !noalias !35642
   %i.cdn = icmp eq ptr %i.cdl, %i.cdj
   br i1 %i.cdn, label %_ZN6brotli3enc9histogram15ClearHistograms17hc7930377f6afe753E.exit.i.i.preheader, label %.lr.ph.i.i207.i
@@ -1806,7 +1806,7 @@ bb.np:                                            ; preds = %bb.no
   %prol.iter4574 = phi i64 [ %prol.iter4574.next, %.lr.ph.i.i.i442.prol ], [ 0, %.loopexit115.i440 ]
   %i.cgp = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i443.prol, i64 2192 ; 2 uses
   %i.cgq = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i443.prol, i64 2184
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %.sroa.02.05.i.i.i443.prol, i8 0, i64 2184, i1 false), !alias.scope !35764, !noalias !35760
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %.sroa.02.05.i.i.i443.prol, i8 0, i64 2184, i1 false), !alias.scope !35764, !noalias !35760
   store float 3.402000e+38, ptr %i.cgq, align 8, !alias.scope !35765, !noalias !35760
   %prol.iter4574.next = add i64 %prol.iter4574, 1 ; 2 uses
   %prol.iter4574.cmp.not = icmp eq i64 %prol.iter4574.next, %xtraiter4572
@@ -1821,7 +1821,7 @@ bb.np:                                            ; preds = %bb.no
   %.sroa.02.05.i.i.i443 = phi ptr [ %i.chg, %.lr.ph.i.i.i442 ], [ %.sroa.02.05.i.i.i443.unr, %.lr.ph.i.i.i442.prol.loopexit ] ; 17 uses
   %i.cgs = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i443, i64 2192
   %i.cgt = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i443, i64 2184
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %.sroa.02.05.i.i.i443, i8 0, i64 2184, i1 false), !alias.scope !35764, !noalias !35760
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %.sroa.02.05.i.i.i443, i8 0, i64 2184, i1 false), !alias.scope !35764, !noalias !35760
   store float 3.402000e+38, ptr %i.cgt, align 8, !alias.scope !35765, !noalias !35760
   %i.cgu = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i443, i64 4384
   %i.cgv = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i443, i64 4376
@@ -2224,7 +2224,7 @@ bb.ui:                                            ; preds = %bb.uh
   %.sroa.02.05.i.i208.i619 = phi ptr [ %i.dsk, %.lr.ph.i.i207.i618 ], [ %i.cfv, %bb.ui ] ; 3 uses
   %i.dsk = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i208.i619, i64 2192 ; 2 uses
   %i.dsl = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i208.i619, i64 2184
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %.sroa.02.05.i.i208.i619, i8 0, i64 2184, i1 false), !alias.scope !35863, !noalias !35760
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %.sroa.02.05.i.i208.i619, i8 0, i64 2184, i1 false), !alias.scope !35863, !noalias !35760
   store float 3.402000e+38, ptr %i.dsl, align 8, !alias.scope !35864, !noalias !35760
   %i.dsm = icmp eq ptr %i.dsk, %i.dsi
   br i1 %i.dsm, label %_ZN6brotli3enc9histogram15ClearHistograms17h34e35a362bd23987E.exit.i.i.preheader, label %.lr.ph.i.i207.i618
@@ -2627,7 +2627,7 @@ bb.n:                                             ; preds = %bb.l
   %.sroa.02.05.i = phi ptr [ %i.ak, %.lr.ph.i ], [ %i.ai, %bb.m ] ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 1040 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.05.i, i8 0, i64 1032, i1 false), !alias.scope !39323
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.05.i, i8 0, i64 1032, i1 false), !alias.scope !39323
   store float 3.402000e+38, ptr %i.al, align 8, !alias.scope !39324
   %i.am = icmp eq ptr %i.ak, %i.aj
   br i1 %i.am, label %_ZN6brotli3enc9histogram15ClearHistograms17h1aacda452d1c7728E.exit, label %.lr.ph.i
@@ -3030,7 +3030,7 @@ bb.bb:                                            ; preds = %bb.ba
   %.sroa.02.05.i140 = phi ptr [ %i.hc, %.lr.ph.i139 ], [ %i.gz, %bb.bb ] ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i140, i64 1040 ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i140, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.05.i140, i8 0, i64 1032, i1 false), !alias.scope !39330
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.05.i140, i8 0, i64 1032, i1 false), !alias.scope !39330
   store float 3.402000e+38, ptr %i.hd, align 8, !alias.scope !39331
   %i.he = icmp eq ptr %i.hc, %i.ha
   br i1 %i.he, label %_ZN6brotli3enc9histogram15ClearHistograms17h1aacda452d1c7728E.exit142, label %.lr.ph.i139
@@ -3433,7 +3433,7 @@ bb.z:                                             ; preds = %_ZN4core5alloc6layo
   %.sroa.02.05.i.i = phi ptr [ %i.dk, %.lr.ph.i.i ], [ %i.cl, %"_ZN4core3ptr102drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$brotli..enc..histogram..HistogramLiteral$GT$$GT$17ha75054a7c6aed61aE.exit.i" ] ; 3 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 1040 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 1032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %.sroa.02.05.i.i, i8 0, i64 1032, i1 false), !alias.scope !39546, !noalias !39536
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %.sroa.02.05.i.i, i8 0, i64 1032, i1 false), !alias.scope !39546, !noalias !39536
   store float 3.402000e+38, ptr %i.dl, align 8, !alias.scope !39547, !noalias !39536
   %i.dm = icmp eq ptr %i.dk, %i.dj
   br i1 %i.dm, label %_ZN6brotli3enc9metablock24InitContextBlockSplitter17h2093562fdaa35bf0E.exit, label %.lr.ph.i.i

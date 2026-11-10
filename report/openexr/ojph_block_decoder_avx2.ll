@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.y, %bb.z, %_ZN4ojph5localL9rev_fetchEPNS0_10rev_structE.exit
   %.0772 = phi i16 [ %i.fw, %bb.z ], [ %i.fw, %bb.y ], [ %i.fs, %_ZN4ojph5localL9rev_fetchEPNS0_10rev_structE.exit ] ; 2 uses
   %.1724 = phi i32 [ %i.fy, %bb.z ], [ %i.fu, %bb.y ], [ %.0723972, %_ZN4ojph5localL9rev_fetchEPNS0_10rev_structE.exit ] ; 3 uses
-  store i16 %.0772, ptr %.0770970, align 2, !tbaa !66
+  store i16 %.0772, ptr %.0770970, align 8, !tbaa !66
   %i.fz = or disjoint i32 %.0771969, 2
   %i.ga = zext i16 %.0772 to i32                  ; 3 uses
   %i.gb = shl nuw nsw i32 %i.ga, 3                ; 2 uses
@@ -243,7 +243,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac, %bb.
   %.2725 = phi i32 [ %i.gv, %bb.ac ], [ %i.gr, %bb.ab ], [ %.1724, %bb.aa ] ; 3 uses
   %i.gw = select i1 %i.gq, i16 %.0773, i16 0      ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %.0770970, i64 4
-  store i16 %i.gw, ptr %i.gx, align 2, !tbaa !66
+  store i16 %i.gw, ptr %i.gx, align 4, !tbaa !66
   %i.gy = add i32 %.0771969, 4                    ; 2 uses
   %i.gz = zext i16 %i.gw to i32                   ; 4 uses
   %i.ha = shl nuw nsw i32 %i.gz, 3
@@ -368,13 +368,13 @@ bb.ai:                                            ; preds = %.lr.ph998, %bb.au
   %.0781993 = phi i32 [ 0, %.lr.ph998 ], [ %i.px, %bb.au ] ; 2 uses
   %.lcssa985991992 = phi ptr [ %.promoted987, %.lr.ph998 ], [ %.lcssa985988, %bb.au ] ; 6 uses
   %i.jq = getelementptr inbounds [2 x i8], ptr %.0776994, i64 %i.bg ; 2 uses
-  %i.jr = load i16, ptr %i.jq, align 2, !tbaa !66
+  %i.jr = load i16, ptr %i.jq, align 8, !tbaa !66
   %i.js = shl i16 %i.jr, 2
   %i.jt = and i16 %i.js, 640
   %i.ju = zext nneg i16 %i.jt to i32
   %i.jv = or i32 %.1732995, %i.ju
   %i.jw = getelementptr inbounds [2 x i8], ptr %.0776994, i64 %i.bi ; 2 uses
-  %i.jx = load i16, ptr %i.jw, align 2, !tbaa !66 ; 2 uses
+  %i.jx = load i16, ptr %i.jw, align 4, !tbaa !66 ; 2 uses
   %i.jy = shl i16 %i.jx, 4
   %i.jz = and i16 %i.jy, 512
   %i.ka = zext nneg i16 %i.jz to i32
@@ -579,21 +579,21 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.ap, %bb.aq, %_ZN4ojph5localL9rev_fetchEPNS0_10rev_structE.exit884
   %.0782 = phi i16 [ %i.oi, %bb.aq ], [ %i.oi, %bb.ap ], [ %i.oe, %_ZN4ojph5localL9rev_fetchEPNS0_10rev_structE.exit884 ] ; 2 uses
   %.6729 = phi i32 [ %i.ok, %bb.aq ], [ %i.og, %bb.ap ], [ %.5728996, %_ZN4ojph5localL9rev_fetchEPNS0_10rev_structE.exit884 ] ; 3 uses
-  store i16 %.0782, ptr %.0776994, align 2, !tbaa !66
+  store i16 %.0782, ptr %.0776994, align 8, !tbaa !66
   %i.ol = or disjoint i32 %.0781993, 2
   %i.om = zext i16 %.0782 to i32                  ; 4 uses
   %i.on = shl nuw nsw i32 %i.om, 2
   %i.oo = shl nuw nsw i32 %i.om, 1
   %i.op = or i32 %i.on, %i.oo
   %i.oq = and i32 %i.op, 256
-  %i.or = load i16, ptr %i.jq, align 2, !tbaa !66
+  %i.or = load i16, ptr %i.jq, align 8, !tbaa !66
   %i.os = and i16 %i.or, 128
   %i.ot = zext nneg i16 %i.os to i32
   %i.ou = shl i16 %i.jx, 2
   %i.ov = and i16 %i.ou, 640
   %i.ow = zext nneg i16 %i.ov to i32
   %i.ox = getelementptr inbounds [2 x i8], ptr %.0776994, i64 %i.bn
-  %i.oy = load i16, ptr %i.ox, align 2, !tbaa !66
+  %i.oy = load i16, ptr %i.ox, align 8, !tbaa !66
   %i.oz = shl i16 %i.oy, 4
   %i.pa = and i16 %i.oz, 512
   %i.pb = zext nneg i16 %i.pa to i32
@@ -630,14 +630,14 @@ bb.au:                                            ; preds = %bb.as, %bb.at, %bb.
   %.7730 = phi i32 [ %i.pu, %bb.at ], [ %i.pq, %bb.as ], [ %.6729, %bb.ar ] ; 2 uses
   %i.pv = select i1 %i.pp, i16 %.0783, i16 0      ; 2 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %.0776994, i64 4
-  store i16 %i.pv, ptr %i.pw, align 2, !tbaa !66
+  store i16 %i.pv, ptr %i.pw, align 4, !tbaa !66
   %i.px = add i32 %.0781993, 4                    ; 2 uses
   %i.py = zext i16 %i.pv to i32                   ; 4 uses
   %i.pz = shl nuw nsw i32 %i.py, 2
   %i.qa = shl nuw nsw i32 %i.py, 1
   %i.qb = or i32 %i.pz, %i.qa
   %i.qc = and i32 %i.qb, 256
-  %i.qd = load i16, ptr %i.jw, align 2, !tbaa !66
+  %i.qd = load i16, ptr %i.jw, align 4, !tbaa !66
   %i.qe = and i16 %i.qd, 128
   %i.qf = zext nneg i16 %i.qe to i32
   %i.qg = or disjoint i32 %i.qc, %i.qf
@@ -734,7 +734,7 @@ bb.aw:                                            ; preds = %.lr.ph1043, %_ZN4oj
   %.07951040 = phi ptr [ %i.b, %.lr.ph1043 ], [ %i.yx, %_ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.exit ] ; 2 uses
   %.07961039 = phi ptr [ %1, %.lr.ph1043 ], [ %i.yy, %_ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.exit ] ; 3 uses
   %.07971038 = phi i32 [ 0, %.lr.ph1043 ], [ %i.yv, %_ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.exit ]
-  %i.sp = load i64, ptr %.07841041, align 1, !tbaa !10
+  %i.sp = load i64, ptr %.07841041, align 8, !tbaa !10
   %i.sq = insertelement <4 x i64> poison, i64 %i.sp, i64 0
   %i.sr = bitcast <4 x i64> %i.sq to <8 x i32>
   %i.ss = shufflevector <8 x i32> %i.sr, <8 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1> ; 2 uses
@@ -937,7 +937,7 @@ _ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.
   %i.ys = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.so, i64 0
   %i.yt = bitcast <4 x i32> %i.ys to <2 x i64>
   %i.yu = or <2 x i64> %.0920, %i.yt              ; 2 uses
-  store <2 x i64> %i.yu, ptr %.07951040, align 1, !tbaa !10
+  store <2 x i64> %i.yu, ptr %.07951040, align 8, !tbaa !10
   %i.yv = add i32 %.07971038, 4                   ; 2 uses
   %i.yw = getelementptr inbounds nuw i8, ptr %.07841041, i64 8
   %i.yx = getelementptr inbounds nuw i8, ptr %.07951040, i64 8
@@ -959,9 +959,9 @@ bb.be:                                            ; preds = %bb.bd, %bb.bf
   %.08071046 = phi i32 [ 0, %bb.bd ], [ %i.aam, %bb.bf ]
   %.08081045 = phi ptr [ %i.zd, %bb.bd ], [ %i.aao, %bb.bf ] ; 2 uses
   %.08091044 = phi ptr [ %i.b, %bb.bd ], [ %i.aan, %bb.bf ] ; 4 uses
-  %i.ze = load <4 x i64>, ptr %.08091044, align 1, !tbaa !10
+  %i.ze = load <4 x i64>, ptr %.08091044, align 16, !tbaa !10
   %i.zf = getelementptr inbounds nuw i8, ptr %.08091044, i64 4
-  %i.zg = load <4 x i64>, ptr %i.zf, align 1, !tbaa !10
+  %i.zg = load <4 x i64>, ptr %i.zf, align 4, !tbaa !10
   %i.zh = or <4 x i64> %i.zg, %i.ze               ; 2 uses
   %i.zi = bitcast <4 x i64> %i.zh to <8 x i32>
   %i.zj = lshr <8 x i32> %i.zi, splat (i32 8)
@@ -977,7 +977,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bf
   %i.zt = tail call <16 x i16> @llvm.umin.v16i16(<16 x i16> %i.zs, <16 x i16> <i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0>)
   %i.zu = bitcast <16 x i16> %i.zt to <8 x i32>
   %i.zv = sub nsw <8 x i32> splat (i32 31), %i.zu
-  %i.zw = load <4 x i64>, ptr %.08081045, align 1, !tbaa !10 ; 3 uses
+  %i.zw = load <4 x i64>, ptr %.08081045, align 16, !tbaa !10 ; 3 uses
   %i.zx = bitcast <4 x i64> %i.zw to <8 x i32>
   %i.zy = bitcast <4 x i64> %i.zw to <8 x i32>
   %i.zz = and <8 x i32> %i.zy, splat (i32 240)
@@ -998,7 +998,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.aal = getelementptr inbounds nuw i8, ptr %.08091044, i64 2112
-  store <8 x i32> %i.aag, ptr %i.aal, align 1, !tbaa !10
+  store <8 x i32> %i.aag, ptr %i.aal, align 16, !tbaa !10
   %i.aam = add i32 %.08071046, 16                 ; 2 uses
   %i.aan = getelementptr inbounds nuw i8, ptr %.08091044, i64 32
   %i.aao = getelementptr inbounds nuw i8, ptr %.08081045, i64 32
@@ -1026,12 +1026,12 @@ bb.bg:                                            ; preds = %bb.bf
   %.08041049 = phi ptr [ %i.ahe, %_ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.exit894 ], [ %i.aar, %.lr.ph1052.preheader ] ; 3 uses
   %.08051048 = phi ptr [ %i.ahc, %_ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.exit894 ], [ %i.zd, %.lr.ph1052.preheader ] ; 2 uses
   %.08061047 = phi ptr [ %i.ahd, %_ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.exit894 ], [ %i.b, %.lr.ph1052.preheader ] ; 3 uses
-  %i.aav = load i64, ptr %.08051048, align 1, !tbaa !10
+  %i.aav = load i64, ptr %.08051048, align 8, !tbaa !10
   %i.aaw = insertelement <4 x i64> poison, i64 %i.aav, i64 0
   %i.aax = bitcast <4 x i64> %i.aaw to <8 x i32>
   %i.aay = shufflevector <8 x i32> %i.aax, <8 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
   %i.aaz = getelementptr inbounds nuw i8, ptr %.08061047, i64 2112
-  %i.aba = load i64, ptr %i.aaz, align 1, !tbaa !10
+  %i.aba = load i64, ptr %i.aaz, align 8, !tbaa !10
   %i.abb = insertelement <4 x i64> poison, i64 %i.aba, i64 0
   %i.abc = bitcast <4 x i64> %i.abb to <8 x i32>
   %i.abd = shufflevector <8 x i32> %i.abc, <8 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1> ; 2 uses
@@ -1225,7 +1225,7 @@ _ZN4ojph5localL22decode_two_quad32_avx2EDv4_xS1_PNS0_16frwd_struct_avx2EjRDv2_x.
   %i.agy = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.aau, i64 0
   %i.agz = bitcast <4 x i32> %i.agy to <2 x i64>
   %i.aha = or <2 x i64> %.0919, %i.agz            ; 2 uses
-  store <2 x i64> %i.aha, ptr %.08061047, align 1, !tbaa !10
+  store <2 x i64> %i.aha, ptr %.08061047, align 8, !tbaa !10
   %i.ahb = add nuw i32 %.08031050, 4              ; 2 uses
   %i.ahc = getelementptr inbounds nuw i8, ptr %.08051048, i64 8
   %i.ahd = getelementptr inbounds nuw i8, ptr %.08061047, i64 8
@@ -1291,7 +1291,7 @@ bb.bn:                                            ; preds = %.lr.ph1022, %_ZN4oj
   %.07991019 = phi ptr [ %1, %.lr.ph1022 ], [ %i.aoj, %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit ] ; 3 uses
   %.08001018 = phi ptr [ %i.c, %.lr.ph1022 ], [ %i.aoi, %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit ] ; 2 uses
   %.08011017 = phi ptr [ %i.a, %.lr.ph1022 ], [ %i.aoh, %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit ] ; 2 uses
-  %i.ahz = load <2 x i64>, ptr %.08011017, align 1, !tbaa !10 ; 2 uses
+  %i.ahz = load <2 x i64>, ptr %.08011017, align 16, !tbaa !10 ; 2 uses
   %i.aia = bitcast <2 x i64> %i.ahz to <4 x i32>
   %i.aib = lshr <4 x i32> %i.aia, splat (i32 16)  ; 3 uses
   %i.aic = icmp sgt <4 x i32> %i.aib, %i.ahj
@@ -1500,7 +1500,7 @@ _ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit: 
   %i.aoa = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.anz, i64 0
   %i.aob = bitcast <4 x i32> %i.aoa to <2 x i64>
   %i.aoc = or <2 x i64> %.0918, %i.aob            ; 2 uses
-  store <2 x i64> %i.aoc, ptr %.08001018, align 1, !tbaa !10
+  store <2 x i64> %i.aoc, ptr %.08001018, align 8, !tbaa !10
   %i.aod = shufflevector <32 x i8> %.0.i896, <32 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <32 x i32> <i32 32, i32 32, i32 0, i32 1, i32 32, i32 32, i32 4, i32 5, i32 32, i32 32, i32 8, i32 9, i32 32, i32 32, i32 12, i32 13, i32 48, i32 48, i32 16, i32 17, i32 48, i32 48, i32 20, i32 21, i32 48, i32 48, i32 24, i32 25, i32 48, i32 48, i32 28, i32 29>
   %i.aoe = shufflevector <32 x i8> %.0.i896, <32 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <32 x i32> <i32 32, i32 32, i32 2, i32 3, i32 32, i32 32, i32 6, i32 7, i32 32, i32 32, i32 10, i32 11, i32 32, i32 32, i32 14, i32 15, i32 48, i32 48, i32 18, i32 19, i32 48, i32 48, i32 22, i32 23, i32 48, i32 48, i32 26, i32 27, i32 48, i32 48, i32 30, i32 31>
   store <32 x i8> %i.aod, ptr %.07991019, align 1, !tbaa !10
@@ -1528,9 +1528,9 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bw
   %.07911025 = phi ptr [ %i.aoo, %bb.bu ], [ %i.apx, %bb.bw ] ; 2 uses
   %.07921024 = phi ptr [ %i.d, %bb.bu ], [ %i.apy, %bb.bw ] ; 2 uses
   %.07931023 = phi ptr [ %i.c, %bb.bu ], [ %i.apw, %bb.bw ] ; 3 uses
-  %i.aop = load <2 x i64>, ptr %.07931023, align 1, !tbaa !10
+  %i.aop = load <2 x i64>, ptr %.07931023, align 16, !tbaa !10
   %i.aoq = getelementptr inbounds nuw i8, ptr %.07931023, i64 2
-  %i.aor = load <2 x i64>, ptr %i.aoq, align 1, !tbaa !10
+  %i.aor = load <2 x i64>, ptr %i.aoq, align 2, !tbaa !10
   %i.aos = or <2 x i64> %i.aor, %i.aop
   %i.aot = bitcast <2 x i64> %i.aos to <8 x i16>
   %i.aou = zext <8 x i16> %i.aot to <8 x i32>     ; 2 uses
@@ -1545,7 +1545,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bw
   %i.apd = tail call <16 x i16> @llvm.umin.v16i16(<16 x i16> %i.apc, <16 x i16> <i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0, i16 32, i16 0>)
   %i.ape = bitcast <16 x i16> %i.apd to <8 x i32>
   %i.apf = sub nsw <8 x i32> splat (i32 31), %i.ape
-  %i.apg = load <4 x i64>, ptr %.07911025, align 1, !tbaa !10 ; 3 uses
+  %i.apg = load <4 x i64>, ptr %.07911025, align 16, !tbaa !10 ; 3 uses
   %i.aph = bitcast <4 x i64> %i.apg to <8 x i32>
   %i.api = bitcast <4 x i64> %i.apg to <8 x i32>
   %i.apj = and <8 x i32> %i.api, splat (i32 240)
@@ -1565,7 +1565,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bw
   br i1 %.not838.not, label %.thread933, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  store <8 x i32> %i.apq, ptr %.07921024, align 1, !tbaa !10
+  store <8 x i32> %i.apq, ptr %.07921024, align 16, !tbaa !10
   %i.apv = add i32 %.07901026, 16                 ; 2 uses
   %i.apw = getelementptr inbounds nuw i8, ptr %.07931023, i64 16
   %i.apx = getelementptr inbounds nuw i8, ptr %.07911025, i64 32
@@ -1595,8 +1595,8 @@ bb.bx:                                            ; preds = %bb.bw
   %.07871029 = phi ptr [ %i.awh, %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit903 ], [ %i.aoo, %.lr.ph1033.preheader ] ; 2 uses
   %.07881028 = phi ptr [ %i.awk, %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit903 ], [ %i.d, %.lr.ph1033.preheader ] ; 2 uses
   %.07891027 = phi ptr [ %i.awi, %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit903 ], [ %i.c, %.lr.ph1033.preheader ] ; 2 uses
-  %16 = load <8 x i16>, ptr %.07871029, align 1, !tbaa !10
-  %i.aqf = shufflevector <8 x i16> %16, <8 x i16> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 2, i32 2, i32 2, i32 2, i32 4, i32 4, i32 4, i32 4, i32 6, i32 6, i32 6, i32 6>
+  %16 = load <7 x i16>, ptr %.07871029, align 16, !tbaa !10
+  %i.aqf = shufflevector <7 x i16> %16, <7 x i16> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 2, i32 2, i32 2, i32 2, i32 4, i32 4, i32 4, i32 4, i32 6, i32 6, i32 6, i32 6>
   %i.aqg = and <16 x i16> %i.aqf, <i16 4368, i16 8736, i16 17472, i16 -30592, i16 4368, i16 8736, i16 17472, i16 -30592, i16 4368, i16 8736, i16 17472, i16 -30592, i16 4368, i16 8736, i16 17472, i16 -30592> ; 2 uses
   %i.aqh = icmp eq <16 x i16> %i.aqg, zeroinitializer ; 4 uses
   %i.aqi = sext <16 x i1> %i.aqh to <16 x i16>
@@ -1607,7 +1607,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %.not.i897, label %_ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit903, label %bb.by
 
 bb.by:                                            ; preds = %.lr.ph1033
-  %i.aqm = load <2 x i64>, ptr %.07881028, align 1, !tbaa !10 ; 2 uses
+  %i.aqm = load <2 x i64>, ptr %.07881028, align 16, !tbaa !10 ; 2 uses
   %i.aqn = bitcast <2 x i64> %i.aqm to <16 x i8>
   %i.aqo = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0>, <16 x i8> %i.aqn, <16 x i32> <i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29>
   %i.aqp = bitcast <16 x i8> %i.aqo to <2 x i64>
@@ -1795,7 +1795,7 @@ _ZN4ojph5localL18decode_four_quad16EDv2_xS1_PNS0_16frwd_struct_avx2EjRS1_.exit90
   %i.awa = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.avz, i64 0
   %i.awb = bitcast <4 x i32> %i.awa to <2 x i64>
   %i.awc = or <2 x i64> %.0, %i.awb               ; 2 uses
-  store <2 x i64> %i.awc, ptr %.07891027, align 1, !tbaa !10
+  store <2 x i64> %i.awc, ptr %.07891027, align 8, !tbaa !10
   %i.awd = shufflevector <32 x i8> %.0.i902, <32 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <32 x i32> <i32 32, i32 32, i32 0, i32 1, i32 32, i32 32, i32 4, i32 5, i32 32, i32 32, i32 8, i32 9, i32 32, i32 32, i32 12, i32 13, i32 48, i32 48, i32 16, i32 17, i32 48, i32 48, i32 20, i32 21, i32 48, i32 48, i32 24, i32 25, i32 48, i32 48, i32 28, i32 29>
   %i.awe = shufflevector <32 x i8> %.0.i902, <32 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <32 x i32> <i32 32, i32 32, i32 2, i32 3, i32 32, i32 32, i32 6, i32 7, i32 32, i32 32, i32 10, i32 11, i32 32, i32 32, i32 14, i32 15, i32 48, i32 48, i32 18, i32 19, i32 48, i32 48, i32 22, i32 23, i32 48, i32 48, i32 26, i32 27, i32 48, i32 48, i32 30, i32 31>
   store <32 x i8> %i.awd, ptr %.07861030, align 1, !tbaa !10
@@ -1870,7 +1870,7 @@ bb.cf:                                            ; preds = %.lr.ph1060.us, %bb.
   %.07771058.us = phi i32 [ 0, %.lr.ph1060.us ], [ %i.ayd, %bb.cf ]
   %.07781057.us = phi ptr [ %i.axh, %.lr.ph1060.us ], [ %i.ayf, %bb.cf ] ; 2 uses
   %.07791056.us = phi ptr [ %i.axc, %.lr.ph1060.us ], [ %i.aye, %bb.cf ] ; 3 uses
-  %i.axi = load <4 x i32>, ptr %.07791056.us, align 1, !tbaa !10 ; 2 uses
+  %i.axi = load <4 x i32>, ptr %.07791056.us, align 16, !tbaa !10 ; 2 uses
   %i.axj = lshr <4 x i32> %i.axi, splat (i32 4)
   %i.axk = bitcast <4 x i32> %i.axj to <2 x i64>
   %i.axl = and <2 x i64> %i.axk, splat (i64 12884901891)
@@ -1878,7 +1878,7 @@ bb.cf:                                            ; preds = %.lr.ph1060.us, %bb.
   %i.axn = bitcast <4 x i32> %i.axm to <2 x i64>
   %i.axo = and <2 x i64> %i.axn, splat (i64 206158430256)
   %i.axp = getelementptr inbounds nuw [2 x i8], ptr %.07791056.us, i64 %i.aws
-  %i.axq = load <2 x i64>, ptr %i.axp, align 1, !tbaa !10 ; 2 uses
+  %i.axq = load <2 x i64>, ptr %i.axp, align 16, !tbaa !10 ; 2 uses
   %i.axr = bitcast <2 x i64> %i.axq to <4 x i32>
   %i.axs = lshr <4 x i32> %i.axr, splat (i32 2)
   %i.axt = bitcast <4 x i32> %i.axs to <2 x i64>

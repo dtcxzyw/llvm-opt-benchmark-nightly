@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i.i = phi ptr [ %i.aa, %.lr.ph.i.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %.01618.i.i.i.i.i.i.i = phi ptr [ %i.ab, %.lr.ph.i.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.n = load i32, ptr %.0919.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !1130
-  store i32 %i.n, ptr %.01618.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !1130
+  store i32 %i.n, ptr %.01618.i.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !1130
   %i.o = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !1130 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 4
   %i.q = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 4
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 8
   %i.v = load i32, ptr %i.t, align 4, !tbaa !254, !noalias !1130
-  store i32 %i.v, ptr %i.u, align 4, !tbaa !254, !noalias !1130
+  store i32 %i.v, ptr %i.u, align 8, !tbaa !254, !noalias !1130
   %i.w = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 12
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 12
   %i.y = load i32, ptr %i.x, align 4, !tbaa !254, !noalias !1130
@@ -298,7 +298,7 @@ bb.b:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i.i = phi ptr [ %i.aa, %.lr.ph.i.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %.01618.i.i.i.i.i.i.i = phi ptr [ %i.ab, %.lr.ph.i.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.n = load i32, ptr %.0919.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !1135
-  store i32 %i.n, ptr %.01618.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !1135
+  store i32 %i.n, ptr %.01618.i.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !1135
   %i.o = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !1135 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 4
   %i.q = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 4
@@ -309,7 +309,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 8
   %i.v = load i32, ptr %i.t, align 4, !tbaa !254, !noalias !1135
-  store i32 %i.v, ptr %i.u, align 4, !tbaa !254, !noalias !1135
+  store i32 %i.v, ptr %i.u, align 8, !tbaa !254, !noalias !1135
   %i.w = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 12
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 12
   %i.y = load i32, ptr %i.x, align 4, !tbaa !254, !noalias !1135
@@ -392,7 +392,7 @@ bb.b:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i.i = phi ptr [ %i.aa, %.lr.ph.i.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %.01618.i.i.i.i.i.i.i = phi ptr [ %i.ab, %.lr.ph.i.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.n = load i32, ptr %.0919.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !1140
-  store i32 %i.n, ptr %.01618.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !1140
+  store i32 %i.n, ptr %.01618.i.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !1140
   %i.o = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !1140 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 4
   %i.q = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 4
@@ -403,7 +403,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 8
   %i.v = load i32, ptr %i.t, align 4, !tbaa !254, !noalias !1140
-  store i32 %i.v, ptr %i.u, align 4, !tbaa !254, !noalias !1140
+  store i32 %i.v, ptr %i.u, align 8, !tbaa !254, !noalias !1140
   %i.w = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 12
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 12
   %i.y = load i32, ptr %i.x, align 4, !tbaa !254, !noalias !1140
@@ -534,7 +534,7 @@ bb.c:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 6 uses
   %.01618.i.i.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.t = load i32, ptr %.0919.i.i.i.i.i.i, align 4, !tbaa !254
-  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 4, !tbaa !254
+  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 8, !tbaa !254
   store i32 0, ptr %.0919.i.i.i.i.i.i, align 4, !tbaa !254
   %i.u = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.v = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 4
@@ -548,7 +548,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 8
   %i.ab = add i64 %.020.i.i.i.i.i.i, -2           ; 2 uses
   %i.ac = load i32, ptr %i.z, align 4, !tbaa !254
-  store i32 %i.ac, ptr %i.aa, align 4, !tbaa !254
+  store i32 %i.ac, ptr %i.aa, align 8, !tbaa !254
   store i32 0, ptr %i.z, align 4, !tbaa !254
   %i.ad = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.ae = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 12
@@ -683,7 +683,7 @@ bb.c:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 6 uses
   %.01618.i.i.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.t = load i32, ptr %.0919.i.i.i.i.i.i, align 4, !tbaa !254
-  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 4, !tbaa !254
+  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 8, !tbaa !254
   store i32 0, ptr %.0919.i.i.i.i.i.i, align 4, !tbaa !254
   %i.u = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.v = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 4
@@ -697,7 +697,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 8
   %i.ab = add i64 %.020.i.i.i.i.i.i, -2           ; 2 uses
   %i.ac = load i32, ptr %i.z, align 4, !tbaa !254
-  store i32 %i.ac, ptr %i.aa, align 4, !tbaa !254
+  store i32 %i.ac, ptr %i.aa, align 8, !tbaa !254
   store i32 0, ptr %i.z, align 4, !tbaa !254
   %i.ad = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.ae = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 12
@@ -1100,7 +1100,7 @@ _ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_22small_vector_alloca
   %.0919.i.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i.i ], [ %.0919.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 6 uses
   %.01618.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i ], [ %.01618.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.t = load i32, ptr %.0919.i.i.i.i, align 4, !tbaa !254
-  store i32 %i.t, ptr %.01618.i.i.i.i, align 4, !tbaa !254
+  store i32 %i.t, ptr %.01618.i.i.i.i, align 8, !tbaa !254
   store i32 0, ptr %.0919.i.i.i.i, align 4, !tbaa !254
   %i.u = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.v = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i, i64 4
@@ -1114,7 +1114,7 @@ _ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_22small_vector_alloca
   %i.aa = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i, i64 8
   %i.ab = add i64 %.020.i.i.i.i, -2               ; 2 uses
   %i.ac = load i32, ptr %i.z, align 4, !tbaa !254
-  store i32 %i.ac, ptr %i.aa, align 4, !tbaa !254
+  store i32 %i.ac, ptr %i.aa, align 8, !tbaa !254
   store i32 0, ptr %i.z, align 4, !tbaa !254
   %i.ad = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.ae = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i, i64 12
@@ -1517,7 +1517,7 @@ bb.b:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %.01618.i.i.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.l = load i32, ptr %.0919.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !2786
-  store i32 %i.l, ptr %.01618.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !2786
+  store i32 %i.l, ptr %.01618.i.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !2786
   %i.m = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 4
   %i.n = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !254, !noalias !2786
@@ -1527,7 +1527,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 8
   %i.s = load i32, ptr %i.q, align 4, !tbaa !254, !noalias !2786
-  store i32 %i.s, ptr %i.r, align 4, !tbaa !254, !noalias !2786
+  store i32 %i.s, ptr %i.r, align 8, !tbaa !254, !noalias !2786
   %i.t = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 12
   %i.u = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !254, !noalias !2786
@@ -1616,7 +1616,7 @@ bb.b:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %.01618.i.i.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.l = load i32, ptr %.0919.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !2791
-  store i32 %i.l, ptr %.01618.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !2791
+  store i32 %i.l, ptr %.01618.i.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !2791
   %i.m = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 4
   %i.n = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !254, !noalias !2791
@@ -1626,7 +1626,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 8
   %i.s = load i32, ptr %i.q, align 4, !tbaa !254, !noalias !2791
-  store i32 %i.s, ptr %i.r, align 4, !tbaa !254, !noalias !2791
+  store i32 %i.s, ptr %i.r, align 8, !tbaa !254, !noalias !2791
   %i.t = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 12
   %i.u = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !254, !noalias !2791
@@ -1715,7 +1715,7 @@ bb.b:                                             ; preds = %bb.a
   %.0919.i.i.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i.i.i ], [ %.0919.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %.01618.i.i.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
   %i.l = load i32, ptr %.0919.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !2796
-  store i32 %i.l, ptr %.01618.i.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !2796
+  store i32 %i.l, ptr %.01618.i.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !2796
   %i.m = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 4
   %i.n = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !254, !noalias !2796
@@ -1725,7 +1725,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 8
   %i.s = load i32, ptr %i.q, align 4, !tbaa !254, !noalias !2796
-  store i32 %i.s, ptr %i.r, align 4, !tbaa !254, !noalias !2796
+  store i32 %i.s, ptr %i.r, align 8, !tbaa !254, !noalias !2796
   %i.t = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 12
   %i.u = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !254, !noalias !2796
@@ -1798,8 +1798,8 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %.01618.i.i.i.i.i.prol = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.prol ], [ %0, %.lr.ph.i.preheader.i.i.i.i ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i.i.i ]
   %i.e = add nsw i64 %.020.i.i.i.i.i.prol, -1     ; 2 uses
-  %i.f = load i32, ptr %.0819.i.i.i.i.i.prol, align 4, !tbaa !254
-  store i32 %i.f, ptr %.01618.i.i.i.i.i.prol, align 4, !tbaa !254
+  %i.f = load i32, ptr %.0819.i.i.i.i.i.prol, align 8, !tbaa !254
+  store i32 %i.f, ptr %.01618.i.i.i.i.i.prol, align 8, !tbaa !254
   %i.g = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.prol, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i.prol, i64 4
   %i.i = load i32, ptr %i.h, align 4, !tbaa !254
@@ -1821,24 +1821,24 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %.020.i.i.i.i.i = phi i64 [ %i.ae, %.lr.ph.i.i.i.i.i ], [ %.020.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ]
   %.0819.i.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i ], [ %.0819.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 9 uses
   %.01618.i.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %.01618.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 9 uses
-  %i.m = load i32, ptr %.0819.i.i.i.i.i, align 4, !tbaa !254
-  store i32 %i.m, ptr %.01618.i.i.i.i.i, align 4, !tbaa !254
+  %i.m = load i32, ptr %.0819.i.i.i.i.i, align 8, !tbaa !254
+  store i32 %i.m, ptr %.01618.i.i.i.i.i, align 8, !tbaa !254
   %i.n = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 4
   %i.o = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 4
   %i.p = load i32, ptr %i.o, align 4, !tbaa !254
   store i32 %i.p, ptr %i.n, align 4, !tbaa !254
   %i.q = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 8
-  %i.s = load i32, ptr %i.q, align 4, !tbaa !254
-  store i32 %i.s, ptr %i.r, align 4, !tbaa !254
+  %i.s = load i32, ptr %i.q, align 8, !tbaa !254
+  store i32 %i.s, ptr %i.r, align 8, !tbaa !254
   %i.t = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 12
   %i.u = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !254
   store i32 %i.v, ptr %i.t, align 4, !tbaa !254
   %i.w = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 16
   %i.x = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 16
-  %i.y = load i32, ptr %i.w, align 4, !tbaa !254
-  store i32 %i.y, ptr %i.x, align 4, !tbaa !254
+  %i.y = load i32, ptr %i.w, align 8, !tbaa !254
+  store i32 %i.y, ptr %i.x, align 8, !tbaa !254
   %i.z = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 20
   %i.aa = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 20
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !254
@@ -1846,8 +1846,8 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %i.ac = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 24
   %i.ae = add nsw i64 %.020.i.i.i.i.i, -4         ; 2 uses
-  %i.af = load i32, ptr %i.ac, align 4, !tbaa !254
-  store i32 %i.af, ptr %i.ad, align 4, !tbaa !254
+  %i.af = load i32, ptr %i.ac, align 8, !tbaa !254
+  store i32 %i.af, ptr %i.ad, align 8, !tbaa !254
   %i.ag = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 28
   %i.ah = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 28
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !254
@@ -2013,8 +2013,8 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %.01618.i.i.i.i.i.prol = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.prol ], [ %0, %.lr.ph.i.preheader.i.i.i.i ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i.i.i ]
   %i.e = add nsw i64 %.020.i.i.i.i.i.prol, -1     ; 2 uses
-  %i.f = load i32, ptr %.0819.i.i.i.i.i.prol, align 4, !tbaa !254
-  store i32 %i.f, ptr %.01618.i.i.i.i.i.prol, align 4, !tbaa !254
+  %i.f = load i32, ptr %.0819.i.i.i.i.i.prol, align 8, !tbaa !254
+  store i32 %i.f, ptr %.01618.i.i.i.i.i.prol, align 8, !tbaa !254
   %i.g = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.prol, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i.prol, i64 4
   %i.i = load i32, ptr %i.h, align 4, !tbaa !254
@@ -2036,24 +2036,24 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %.020.i.i.i.i.i = phi i64 [ %i.ae, %.lr.ph.i.i.i.i.i ], [ %.020.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ]
   %.0819.i.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i ], [ %.0819.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 9 uses
   %.01618.i.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %.01618.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 9 uses
-  %i.m = load i32, ptr %.0819.i.i.i.i.i, align 4, !tbaa !254
-  store i32 %i.m, ptr %.01618.i.i.i.i.i, align 4, !tbaa !254
+  %i.m = load i32, ptr %.0819.i.i.i.i.i, align 8, !tbaa !254
+  store i32 %i.m, ptr %.01618.i.i.i.i.i, align 8, !tbaa !254
   %i.n = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 4
   %i.o = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 4
   %i.p = load i32, ptr %i.o, align 4, !tbaa !254
   store i32 %i.p, ptr %i.n, align 4, !tbaa !254
   %i.q = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 8
-  %i.s = load i32, ptr %i.q, align 4, !tbaa !254
-  store i32 %i.s, ptr %i.r, align 4, !tbaa !254
+  %i.s = load i32, ptr %i.q, align 8, !tbaa !254
+  store i32 %i.s, ptr %i.r, align 8, !tbaa !254
   %i.t = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 12
   %i.u = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !254
   store i32 %i.v, ptr %i.t, align 4, !tbaa !254
   %i.w = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 16
   %i.x = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 16
-  %i.y = load i32, ptr %i.w, align 4, !tbaa !254
-  store i32 %i.y, ptr %i.x, align 4, !tbaa !254
+  %i.y = load i32, ptr %i.w, align 8, !tbaa !254
+  store i32 %i.y, ptr %i.x, align 8, !tbaa !254
   %i.z = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 20
   %i.aa = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 20
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !254
@@ -2061,8 +2061,8 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %i.ac = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 24
   %i.ae = add nsw i64 %.020.i.i.i.i.i, -4         ; 2 uses
-  %i.af = load i32, ptr %i.ac, align 4, !tbaa !254
-  store i32 %i.af, ptr %i.ad, align 4, !tbaa !254
+  %i.af = load i32, ptr %i.ac, align 8, !tbaa !254
+  store i32 %i.af, ptr %i.ad, align 8, !tbaa !254
   %i.ag = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 28
   %i.ah = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 28
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !254
@@ -2465,9 +2465,9 @@ bb.d:                                             ; preds = %_ZN5boost9container
   %.079.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i ], [ %.079.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 4 uses
   %i.an = getelementptr inbounds i8, ptr %.079.i.i.i.i, i64 -8 ; 2 uses
   %i.ao = getelementptr inbounds i8, ptr %.011.i.i.i.i, i64 -8
-  %i.ap = load i32, ptr %i.an, align 4, !tbaa !254, !noalias !2982
-  store i32 %i.ap, ptr %i.ao, align 4, !tbaa !254, !noalias !2982
-  store i32 0, ptr %i.an, align 4, !tbaa !254, !noalias !2982
+  %i.ap = load i32, ptr %i.an, align 8, !tbaa !254, !noalias !2982
+  store i32 %i.ap, ptr %i.ao, align 8, !tbaa !254, !noalias !2982
+  store i32 0, ptr %i.an, align 8, !tbaa !254, !noalias !2982
   %i.aq = getelementptr inbounds i8, ptr %.079.i.i.i.i, i64 -4 ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %.011.i.i.i.i, i64 -4
   %i.as = load i32, ptr %i.aq, align 4, !tbaa !254, !noalias !2982
@@ -2476,9 +2476,9 @@ bb.d:                                             ; preds = %_ZN5boost9container
   %i.at = add i64 %.0610.i.i.i.i, -2              ; 2 uses
   %i.au = getelementptr inbounds i8, ptr %.079.i.i.i.i, i64 -16 ; 3 uses
   %i.av = getelementptr inbounds i8, ptr %.011.i.i.i.i, i64 -16 ; 2 uses
-  %i.aw = load i32, ptr %i.au, align 4, !tbaa !254, !noalias !2982
-  store i32 %i.aw, ptr %i.av, align 4, !tbaa !254, !noalias !2982
-  store i32 0, ptr %i.au, align 4, !tbaa !254, !noalias !2982
+  %i.aw = load i32, ptr %i.au, align 8, !tbaa !254, !noalias !2982
+  store i32 %i.aw, ptr %i.av, align 8, !tbaa !254, !noalias !2982
+  store i32 0, ptr %i.au, align 8, !tbaa !254, !noalias !2982
   %i.ax = getelementptr inbounds i8, ptr %.079.i.i.i.i, i64 -12 ; 2 uses
   %i.ay = getelementptr inbounds i8, ptr %.011.i.i.i.i, i64 -12
   %i.az = load i32, ptr %i.ax, align 4, !tbaa !254, !noalias !2982
@@ -2664,9 +2664,9 @@ bb.h:                                             ; preds = %bb.f
   %.079.i.i.i.i.i = phi ptr [ %i.bs, %.lr.ph.i.i.i.i.i ], [ %.079.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
   %i.bl = getelementptr inbounds i8, ptr %.079.i.i.i.i.i, i64 -8 ; 2 uses
   %i.bm = getelementptr inbounds i8, ptr %.011.i.i.i.i.i, i64 -8
-  %i.bn = load i32, ptr %i.bl, align 4, !tbaa !254, !noalias !3005
-  store i32 %i.bn, ptr %i.bm, align 4, !tbaa !254, !noalias !3005
-  store i32 0, ptr %i.bl, align 4, !tbaa !254, !noalias !3005
+  %i.bn = load i32, ptr %i.bl, align 8, !tbaa !254, !noalias !3005
+  store i32 %i.bn, ptr %i.bm, align 8, !tbaa !254, !noalias !3005
+  store i32 0, ptr %i.bl, align 8, !tbaa !254, !noalias !3005
   %i.bo = getelementptr inbounds i8, ptr %.079.i.i.i.i.i, i64 -4 ; 2 uses
   %i.bp = getelementptr inbounds i8, ptr %.011.i.i.i.i.i, i64 -4
   %i.bq = load i32, ptr %i.bo, align 4, !tbaa !254, !noalias !3005
@@ -2675,9 +2675,9 @@ bb.h:                                             ; preds = %bb.f
   %i.br = add i64 %.0610.i.i.i.i.i, -2            ; 2 uses
   %i.bs = getelementptr inbounds i8, ptr %.079.i.i.i.i.i, i64 -16 ; 3 uses
   %i.bt = getelementptr inbounds i8, ptr %.011.i.i.i.i.i, i64 -16 ; 2 uses
-  %i.bu = load i32, ptr %i.bs, align 4, !tbaa !254, !noalias !3005
-  store i32 %i.bu, ptr %i.bt, align 4, !tbaa !254, !noalias !3005
-  store i32 0, ptr %i.bs, align 4, !tbaa !254, !noalias !3005
+  %i.bu = load i32, ptr %i.bs, align 8, !tbaa !254, !noalias !3005
+  store i32 %i.bu, ptr %i.bt, align 8, !tbaa !254, !noalias !3005
+  store i32 0, ptr %i.bs, align 8, !tbaa !254, !noalias !3005
   %i.bv = getelementptr inbounds i8, ptr %.079.i.i.i.i.i, i64 -12 ; 2 uses
   %i.bw = getelementptr inbounds i8, ptr %.011.i.i.i.i.i, i64 -12
   %i.bx = load i32, ptr %i.bv, align 4, !tbaa !254, !noalias !3005
@@ -2766,7 +2766,7 @@ bb.b:                                             ; preds = %bb.a
   %.01618.i.i.i.i.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01618.i.i.i.i.i.i) ]
   %i.t = load i32, ptr %.0919.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !3013
-  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !3013
+  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !3013
   %i.u = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !3013 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 4
   %i.w = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i, i64 4
@@ -2777,7 +2777,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 8
   %i.ab = load i32, ptr %i.z, align 4, !tbaa !254, !noalias !3013
-  store i32 %i.ab, ptr %i.aa, align 4, !tbaa !254, !noalias !3013
+  store i32 %i.ab, ptr %i.aa, align 8, !tbaa !254, !noalias !3013
   %i.ac = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 12
   %i.ad = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i, i64 12
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !254, !noalias !3013
@@ -2856,7 +2856,7 @@ _ZN5boost9container3dtl39flat_tree_container_inplace_sort_endingINS0_13static_ve
 
 bb.f:                                             ; preds = %bb.g, %.preheader.i.i
   %.0.i.i = phi ptr [ %i.bc, %bb.g ], [ %0, %.preheader.i.i ] ; 4 uses
-  %i.ba = load i32, ptr %.0.i.i, align 4, !tbaa !254
+  %i.ba = load i32, ptr %.0.i.i, align 8, !tbaa !254
   %i.bb = icmp slt i32 %i.az, %i.ba
   br i1 %i.bb, label %bb.h, label %bb.g
 
@@ -2873,7 +2873,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.k, %bb.h
   %.025.i.i = phi ptr [ %i.aw, %bb.h ], [ %i.bg, %bb.k ] ; 2 uses
   %i.bg = getelementptr inbounds i8, ptr %.025.i.i, i64 -8 ; 3 uses
-  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !254
+  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !254
   %i.bi = icmp slt i32 %i.bh, %i.bf
   br i1 %i.bi, label %bb.j, label %bb.k
 
@@ -3276,7 +3276,7 @@ bb.d:                                             ; preds = %bb.c
   %.0819.i = phi ptr [ %i.ay, %.lr.ph.i ], [ %.0819.i.unr, %.lr.ph.i.prol.loopexit ] ; 6 uses
   %.01618.i = phi ptr [ %i.az, %.lr.ph.i ], [ %.01618.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %i.aj = load i32, ptr %.0819.i, align 4, !tbaa !254
-  store i32 %i.aj, ptr %.01618.i, align 4, !tbaa !254
+  store i32 %i.aj, ptr %.01618.i, align 8, !tbaa !254
   store i32 0, ptr %.0819.i, align 4, !tbaa !254
   %i.ak = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.al = getelementptr inbounds nuw i8, ptr %.01618.i, i64 4
@@ -3290,7 +3290,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aq = getelementptr inbounds nuw i8, ptr %.01618.i, i64 8
   %i.ar = add i64 %.020.i, -2                     ; 2 uses
   %i.as = load i32, ptr %i.ap, align 4, !tbaa !254
-  store i32 %i.as, ptr %i.aq, align 4, !tbaa !254
+  store i32 %i.as, ptr %i.aq, align 8, !tbaa !254
   store i32 0, ptr %i.ap, align 4, !tbaa !254
   %i.at = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255
   %i.au = getelementptr inbounds nuw i8, ptr %.01618.i, i64 12
@@ -3693,7 +3693,7 @@ bb.b:                                             ; preds = %bb.a
   %.01618.i.i.i.i.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i.i.i.i ], [ %.01618.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01618.i.i.i.i.i.i) ]
   %i.t = load i32, ptr %.0919.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !16584
-  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 4, !tbaa !254, !noalias !16584
+  store i32 %i.t, ptr %.01618.i.i.i.i.i.i, align 8, !tbaa !254, !noalias !16584
   %i.u = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !16584 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 4
   %i.w = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i, i64 4
@@ -3704,7 +3704,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 8
   %i.ab = load i32, ptr %i.z, align 4, !tbaa !254, !noalias !16584
-  store i32 %i.ab, ptr %i.aa, align 4, !tbaa !254, !noalias !16584
+  store i32 %i.ab, ptr %i.aa, align 8, !tbaa !254, !noalias !16584
   %i.ac = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i, i64 12
   %i.ad = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i, i64 12
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !254, !noalias !16584
@@ -3738,7 +3738,7 @@ _ZN5boost9container6vectorISt4pairINS0_4test24movable_and_copyable_intES4_ENS0_3
 
 bb.d:                                             ; preds = %bb.e, %.preheader.i
   %.0.i = phi ptr [ %i.ar, %bb.e ], [ %0, %.preheader.i ] ; 4 uses
-  %i.ap = load i32, ptr %.0.i, align 4, !tbaa !254
+  %i.ap = load i32, ptr %.0.i, align 8, !tbaa !254
   %i.aq = icmp slt i32 %i.ao, %i.ap
   br i1 %i.aq, label %bb.f, label %bb.e
 
@@ -3755,7 +3755,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.i, %bb.f
   %.025.i = phi ptr [ %i.ak, %bb.f ], [ %i.av, %bb.i ] ; 2 uses
   %i.av = getelementptr inbounds i8, ptr %.025.i, i64 -8 ; 3 uses
-  %i.aw = load i32, ptr %i.av, align 4, !tbaa !254
+  %i.aw = load i32, ptr %i.av, align 8, !tbaa !254
   %i.ax = icmp slt i32 %i.aw, %i.au
   br i1 %i.ax, label %bb.h, label %bb.i
 
@@ -3847,11 +3847,11 @@ bb.b:                                             ; preds = %bb.a
   %.01520.i = phi ptr [ %0, %.lr.ph.i.preheader.new ], [ %i.u, %.lr.ph.i ] ; 7 uses
   %.01619.i = phi ptr [ %1, %.lr.ph.i.preheader.new ], [ %i.v, %.lr.ph.i ] ; 6 uses
   %niter129 = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter129.next.1, %.lr.ph.i ]
-  %i.g = load i32, ptr %.01520.i, align 4, !tbaa !254
-  store i32 0, ptr %.01520.i, align 4, !tbaa !254
-  %i.h = load i32, ptr %.01619.i, align 4, !tbaa !254
-  store i32 %i.h, ptr %.01520.i, align 4, !tbaa !254
-  store i32 %i.g, ptr %.01619.i, align 4, !tbaa !254
+  %i.g = load i32, ptr %.01520.i, align 8, !tbaa !254
+  store i32 0, ptr %.01520.i, align 8, !tbaa !254
+  %i.h = load i32, ptr %.01619.i, align 8, !tbaa !254
+  store i32 %i.h, ptr %.01520.i, align 8, !tbaa !254
+  store i32 %i.g, ptr %.01619.i, align 8, !tbaa !254
   %i.i = getelementptr inbounds nuw i8, ptr %.01520.i, i64 4 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.01619.i, i64 4 ; 2 uses
   %i.k = load i32, ptr %i.i, align 4, !tbaa !254
@@ -3861,11 +3861,11 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.k, ptr %i.j, align 4, !tbaa !254
   %i.m = getelementptr inbounds nuw i8, ptr %.01520.i, i64 8 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.01619.i, i64 8 ; 2 uses
-  %i.o = load i32, ptr %i.m, align 4, !tbaa !254
-  store i32 0, ptr %i.m, align 4, !tbaa !254
-  %i.p = load i32, ptr %i.n, align 4, !tbaa !254
-  store i32 %i.p, ptr %i.m, align 4, !tbaa !254
-  store i32 %i.o, ptr %i.n, align 4, !tbaa !254
+  %i.o = load i32, ptr %i.m, align 8, !tbaa !254
+  store i32 0, ptr %i.m, align 8, !tbaa !254
+  %i.p = load i32, ptr %i.n, align 8, !tbaa !254
+  store i32 %i.p, ptr %i.m, align 8, !tbaa !254
+  store i32 %i.o, ptr %i.n, align 8, !tbaa !254
   %i.q = getelementptr inbounds nuw i8, ptr %.01520.i, i64 12 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.01619.i, i64 12 ; 2 uses
   %i.s = load i32, ptr %i.q, align 4, !tbaa !254
@@ -3888,11 +3888,11 @@ bb.b:                                             ; preds = %bb.a
   %.01619.i.epil.init = phi ptr [ %1, %.lr.ph.i.preheader ], [ %i.v, %._crit_edge.i.loopexit.unr-lcssa ] ; 4 uses
   %lcmp.mod127 = trunc i64 %i.b to i1
   tail call void @llvm.assume(i1 %lcmp.mod127)
-  %i.w = load i32, ptr %.01520.i.epil.init, align 4, !tbaa !254
-  store i32 0, ptr %.01520.i.epil.init, align 4, !tbaa !254
-  %i.x = load i32, ptr %.01619.i.epil.init, align 4, !tbaa !254
-  store i32 %i.x, ptr %.01520.i.epil.init, align 4, !tbaa !254
-  store i32 %i.w, ptr %.01619.i.epil.init, align 4, !tbaa !254
+  %i.w = load i32, ptr %.01520.i.epil.init, align 8, !tbaa !254
+  store i32 0, ptr %.01520.i.epil.init, align 8, !tbaa !254
+  %i.x = load i32, ptr %.01619.i.epil.init, align 8, !tbaa !254
+  store i32 %i.x, ptr %.01520.i.epil.init, align 8, !tbaa !254
+  store i32 %i.w, ptr %.01619.i.epil.init, align 8, !tbaa !254
   %i.y = getelementptr inbounds nuw i8, ptr %.01520.i.epil.init, i64 4 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.01619.i.epil.init, i64 4 ; 2 uses
   %i.aa = load i32, ptr %i.y, align 4, !tbaa !254
@@ -4042,11 +4042,11 @@ bb.c:                                             ; preds = %bb.a
   %.01520.i13 = phi ptr [ %1, %.lr.ph.i11.preheader.new ], [ %i.ch, %.lr.ph.i11 ] ; 7 uses
   %.01619.i14 = phi ptr [ %0, %.lr.ph.i11.preheader.new ], [ %i.ci, %.lr.ph.i11 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.i11.preheader.new ], [ %niter.next.1, %.lr.ph.i11 ]
-  %i.bt = load i32, ptr %.01520.i13, align 4, !tbaa !254
-  store i32 0, ptr %.01520.i13, align 4, !tbaa !254
-  %i.bu = load i32, ptr %.01619.i14, align 4, !tbaa !254
-  store i32 %i.bu, ptr %.01520.i13, align 4, !tbaa !254
-  store i32 %i.bt, ptr %.01619.i14, align 4, !tbaa !254
+  %i.bt = load i32, ptr %.01520.i13, align 8, !tbaa !254
+  store i32 0, ptr %.01520.i13, align 8, !tbaa !254
+  %i.bu = load i32, ptr %.01619.i14, align 8, !tbaa !254
+  store i32 %i.bu, ptr %.01520.i13, align 8, !tbaa !254
+  store i32 %i.bt, ptr %.01619.i14, align 8, !tbaa !254
   %i.bv = getelementptr inbounds nuw i8, ptr %.01520.i13, i64 4 ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.01619.i14, i64 4 ; 2 uses
   %i.bx = load i32, ptr %i.bv, align 4, !tbaa !254
@@ -4056,11 +4056,11 @@ bb.c:                                             ; preds = %bb.a
   store i32 %i.bx, ptr %i.bw, align 4, !tbaa !254
   %i.bz = getelementptr inbounds nuw i8, ptr %.01520.i13, i64 8 ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.01619.i14, i64 8 ; 2 uses
-  %i.cb = load i32, ptr %i.bz, align 4, !tbaa !254
-  store i32 0, ptr %i.bz, align 4, !tbaa !254
-  %i.cc = load i32, ptr %i.ca, align 4, !tbaa !254
-  store i32 %i.cc, ptr %i.bz, align 4, !tbaa !254
-  store i32 %i.cb, ptr %i.ca, align 4, !tbaa !254
+  %i.cb = load i32, ptr %i.bz, align 8, !tbaa !254
+  store i32 0, ptr %i.bz, align 8, !tbaa !254
+  %i.cc = load i32, ptr %i.ca, align 8, !tbaa !254
+  store i32 %i.cc, ptr %i.bz, align 8, !tbaa !254
+  store i32 %i.cb, ptr %i.ca, align 8, !tbaa !254
   %i.cd = getelementptr inbounds nuw i8, ptr %.01520.i13, i64 12 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.01619.i14, i64 12 ; 2 uses
   %i.cf = load i32, ptr %i.cd, align 4, !tbaa !254
@@ -4083,11 +4083,11 @@ bb.c:                                             ; preds = %bb.a
   %.01619.i14.epil.init = phi ptr [ %0, %.lr.ph.i11.preheader ], [ %i.ci, %._crit_edge.i16.loopexit.unr-lcssa ] ; 4 uses
   %lcmp.mod120 = trunc i64 %i.d to i1
   tail call void @llvm.assume(i1 %lcmp.mod120)
-  %i.cj = load i32, ptr %.01520.i13.epil.init, align 4, !tbaa !254
-  store i32 0, ptr %.01520.i13.epil.init, align 4, !tbaa !254
-  %i.ck = load i32, ptr %.01619.i14.epil.init, align 4, !tbaa !254
-  store i32 %i.ck, ptr %.01520.i13.epil.init, align 4, !tbaa !254
-  store i32 %i.cj, ptr %.01619.i14.epil.init, align 4, !tbaa !254
+  %i.cj = load i32, ptr %.01520.i13.epil.init, align 8, !tbaa !254
+  store i32 0, ptr %.01520.i13.epil.init, align 8, !tbaa !254
+  %i.ck = load i32, ptr %.01619.i14.epil.init, align 8, !tbaa !254
+  store i32 %i.ck, ptr %.01520.i13.epil.init, align 8, !tbaa !254
+  store i32 %i.cj, ptr %.01619.i14.epil.init, align 8, !tbaa !254
   %i.cl = getelementptr inbounds nuw i8, ptr %.01520.i13.epil.init, i64 4 ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.01619.i14.epil.init, i64 4 ; 2 uses
   %i.cn = load i32, ptr %i.cl, align 4, !tbaa !254

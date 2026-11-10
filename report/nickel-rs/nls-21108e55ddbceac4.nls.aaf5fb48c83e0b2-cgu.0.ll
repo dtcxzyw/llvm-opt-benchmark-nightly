@@ -205,8 +205,8 @@ _ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E.exit67: ; preds = %"_ZN
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94309), !noalias !94304
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94310), !noalias !94304
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94311), !noalias !94304
-  %i.hw = load i32, ptr %i.hu, align 4, !alias.scope !94312, !noalias !94304, !noundef !46 ; 2 uses
-  %i.hx = load i32, ptr %i.hv, align 4, !alias.scope !94313, !noalias !94304, !noundef !46 ; 2 uses
+  %i.hw = load i32, ptr %i.hu, align 8, !alias.scope !94312, !noalias !94304, !noundef !46 ; 2 uses
+  %i.hx = load i32, ptr %i.hv, align 8, !alias.scope !94313, !noalias !94304, !noundef !46 ; 2 uses
   %i.hy = icmp eq i32 %i.hw, %i.hx
   br i1 %i.hy, label %bb.az, label %bb.ba
 
@@ -229,9 +229,9 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
 
 bb.bc:                                            ; preds = %bb.bb
   %i.ig = getelementptr inbounds nuw i8, ptr %.sroa.0.02.i.i, i64 88
-  %i.ih = load i32, ptr %i.ig, align 4, !alias.scope !94312, !noalias !94304, !noundef !46 ; 2 uses
+  %i.ih = load i32, ptr %i.ig, align 8, !alias.scope !94312, !noalias !94304, !noundef !46 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ht, i64 88
-  %i.ij = load i32, ptr %i.ii, align 4, !alias.scope !94313, !noalias !94304, !noundef !46 ; 2 uses
+  %i.ij = load i32, ptr %i.ii, align 8, !alias.scope !94313, !noalias !94304, !noundef !46 ; 2 uses
   %i.ik = icmp eq i32 %i.ih, %i.ij
   br i1 %i.ik, label %bb.bd, label %bb.be
 

@@ -205,7 +205,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageIN12_GLOBAL__N_129MoveCon
   %niter = phi i64 [ 0, %.lr.ph.i13.i.preheader.new ], [ %niter.next.1, %.lr.ph.i13.i ]
   %.val.i2.i.i = getelementptr inbounds nuw i8, ptr %.val.i2.i.pn.i, i64 8
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.01.i.i ; 2 uses
-  %i.cj = load i32, ptr %.val.i2.i.i, align 4, !tbaa !453
+  %i.cj = load i32, ptr %.val.i2.i.i, align 8, !tbaa !453
   store i32 %i.cj, ptr %i.ci, align 8, !tbaa !453
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
   %i.cl = getelementptr inbounds nuw i8, ptr %.val.i2.i.pn.i, i64 12 ; 2 uses
@@ -221,7 +221,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageIN12_GLOBAL__N_129MoveCon
   %.val.i2.i.i.1 = getelementptr inbounds nuw i8, ptr %.val.i2.i.pn.i, i64 16 ; 3 uses
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.01.i.i ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  %i.ct = load i32, ptr %.val.i2.i.i.1, align 4, !tbaa !453
+  %i.ct = load i32, ptr %.val.i2.i.i.1, align 8, !tbaa !453
   store i32 %i.ct, ptr %i.cs, align 8, !tbaa !453
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
   %i.cv = getelementptr inbounds nuw i8, ptr %.val.i2.i.pn.i, i64 20 ; 2 uses
@@ -251,7 +251,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIN12_GLOBAL
   tail call void @llvm.assume(i1 %lcmp.mod11)
   %.val.i2.i.i.epil = getelementptr inbounds nuw i8, ptr %.val.i2.i.pn.i.epil.init, i64 8
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.01.i.i.epil.init ; 2 uses
-  %i.de = load i32, ptr %.val.i2.i.i.epil, align 4, !tbaa !453
+  %i.de = load i32, ptr %.val.i2.i.i.epil, align 8, !tbaa !453
   store i32 %i.de, ptr %i.dd, align 8, !tbaa !453
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 4
   %i.dg = getelementptr inbounds nuw i8, ptr %.val.i2.i.pn.i.epil.init, i64 12 ; 2 uses
@@ -654,16 +654,16 @@ _ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit23.i.i.i.epil
   tail call void @llvm.assume(i1 %lcmp.mod15)
   %.0.i.i.i.epil = getelementptr inbounds nuw i8, ptr %.pn2730.i.i.i.epil.init, i64 8 ; 2 uses
   %.019.i.i.i.epil = getelementptr inbounds nuw i8, ptr %.pn29.i.i.i.epil.init, i64 8 ; 2 uses
-  %i.l = load i32, ptr %.0.i.i.i.epil, align 4, !tbaa !453
+  %i.l = load i32, ptr %.0.i.i.i.epil, align 8, !tbaa !453
   %i.m = getelementptr inbounds nuw i8, ptr %.pn2730.i.i.i.epil.init, i64 12 ; 3 uses
   %i.n = load i8, ptr %i.m, align 4, !tbaa !454, !range !189, !noundef !190
   store i8 0, ptr %i.m, align 4, !tbaa !454
-  %i.o = load i32, ptr %.019.i.i.i.epil, align 4, !tbaa !453
-  store i32 %i.o, ptr %.0.i.i.i.epil, align 4, !tbaa !453
+  %i.o = load i32, ptr %.019.i.i.i.epil, align 8, !tbaa !453
+  store i32 %i.o, ptr %.0.i.i.i.epil, align 8, !tbaa !453
   %i.p = getelementptr inbounds nuw i8, ptr %.pn29.i.i.i.epil.init, i64 12 ; 2 uses
   %i.q = load i8, ptr %i.p, align 4, !tbaa !454, !range !189, !noundef !190
   store i8 %i.q, ptr %i.m, align 4, !tbaa !454
-  store i32 %i.l, ptr %.019.i.i.i.epil, align 4, !tbaa !453
+  store i32 %i.l, ptr %.019.i.i.i.epil, align 8, !tbaa !453
   store i8 %i.n, ptr %i.p, align 4, !tbaa !454
   br label %._crit_edge.i.i.i
 
@@ -680,29 +680,29 @@ _ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit23.i.i.i: ; p
   %niter = phi i64 [ 0, %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit23.i.i.i.preheader.new ], [ %niter.next.1, %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit23.i.i.i ]
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn2730.i.i.i, i64 8 ; 2 uses
   %.019.i.i.i = getelementptr inbounds nuw i8, ptr %.pn29.i.i.i, i64 8 ; 2 uses
-  %i.u = load i32, ptr %.0.i.i.i, align 4, !tbaa !453
+  %i.u = load i32, ptr %.0.i.i.i, align 8, !tbaa !453
   %i.v = getelementptr inbounds nuw i8, ptr %.pn2730.i.i.i, i64 12 ; 3 uses
   %i.w = load i8, ptr %i.v, align 4, !tbaa !454, !range !189, !noundef !190
   store i8 0, ptr %i.v, align 4, !tbaa !454
-  %i.x = load i32, ptr %.019.i.i.i, align 4, !tbaa !453
-  store i32 %i.x, ptr %.0.i.i.i, align 4, !tbaa !453
+  %i.x = load i32, ptr %.019.i.i.i, align 8, !tbaa !453
+  store i32 %i.x, ptr %.0.i.i.i, align 8, !tbaa !453
   %i.y = getelementptr inbounds nuw i8, ptr %.pn29.i.i.i, i64 12 ; 2 uses
   %i.z = load i8, ptr %i.y, align 4, !tbaa !454, !range !189, !noundef !190
   store i8 %i.z, ptr %i.v, align 4, !tbaa !454
-  store i32 %i.u, ptr %.019.i.i.i, align 4, !tbaa !453
+  store i32 %i.u, ptr %.019.i.i.i, align 8, !tbaa !453
   store i8 %i.w, ptr %i.y, align 4, !tbaa !454
   %.0.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.pn2730.i.i.i, i64 16 ; 4 uses
   %.019.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.pn29.i.i.i, i64 16 ; 4 uses
-  %i.aa = load i32, ptr %.0.i.i.i.1, align 4, !tbaa !453
+  %i.aa = load i32, ptr %.0.i.i.i.1, align 8, !tbaa !453
   %i.ab = getelementptr inbounds nuw i8, ptr %.pn2730.i.i.i, i64 20 ; 3 uses
   %i.ac = load i8, ptr %i.ab, align 4, !tbaa !454, !range !189, !noundef !190
   store i8 0, ptr %i.ab, align 4, !tbaa !454
-  %i.ad = load i32, ptr %.019.i.i.i.1, align 4, !tbaa !453
-  store i32 %i.ad, ptr %.0.i.i.i.1, align 4, !tbaa !453
+  %i.ad = load i32, ptr %.019.i.i.i.1, align 8, !tbaa !453
+  store i32 %i.ad, ptr %.0.i.i.i.1, align 8, !tbaa !453
   %i.ae = getelementptr inbounds nuw i8, ptr %.pn29.i.i.i, i64 20 ; 2 uses
   %i.af = load i8, ptr %i.ae, align 4, !tbaa !454, !range !189, !noundef !190
   store i8 %i.af, ptr %i.ab, align 4, !tbaa !454
-  store i32 %i.aa, ptr %.019.i.i.i.1, align 4, !tbaa !453
+  store i32 %i.aa, ptr %.019.i.i.i.1, align 8, !tbaa !453
   store i8 %i.ac, ptr %i.ae, align 4, !tbaa !454
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -732,7 +732,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageIN12_GLOBAL__N_120NonSwap
   %.01.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %i.bi, %.lr.ph.i.i.i ] ; 3 uses
   %niter21 = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %niter21.next.1, %.lr.ph.i.i.i ]
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %.01.i.i.i ; 2 uses
-  %i.ao = load i32, ptr %.val.i2.i.i.i, align 4, !tbaa !453
+  %i.ao = load i32, ptr %.val.i2.i.i.i, align 8, !tbaa !453
   store i32 %i.ao, ptr %i.an, align 8, !tbaa !453
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   %i.aq = getelementptr inbounds nuw i8, ptr %.val.i2.i.i.i, i64 4 ; 2 uses
@@ -748,7 +748,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageIN12_GLOBAL__N_120NonSwap
   %i.aw = getelementptr inbounds nuw i8, ptr %.val.i2.i.i.i, i64 8
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %.01.i.i.i ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %i.az = load i32, ptr %i.aw, align 4, !tbaa !453
+  %i.az = load i32, ptr %i.aw, align 8, !tbaa !453
   store i32 %i.az, ptr %i.ay, align 8, !tbaa !453
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 12
   %i.bb = getelementptr inbounds nuw i8, ptr %.val.i2.i.i.i, i64 12 ; 2 uses
@@ -777,7 +777,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageIN12_GLOBAL__N_120NonSwap
   %lcmp.mod19 = trunc i64 %i.j to i1
   tail call void @llvm.assume(i1 %lcmp.mod19)
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %.01.i.i.i.epil.init ; 2 uses
-  %i.bk = load i32, ptr %.val.i2.i.i.i.epil.init, align 4, !tbaa !453
+  %i.bk = load i32, ptr %.val.i2.i.i.i.epil.init, align 8, !tbaa !453
   store i32 %i.bk, ptr %i.bj, align 8, !tbaa !453
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
   %i.bm = getelementptr inbounds nuw i8, ptr %.val.i2.i.i.i.epil.init, i64 4 ; 2 uses
@@ -916,7 +916,7 @@ _ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.i.i.i.3: ; p
   %.01.i.i = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %i.ec, %.lr.ph.i.i ] ; 3 uses
   %niter29 = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %niter29.next.1, %.lr.ph.i.i ]
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %.01.i.i ; 2 uses
-  %i.di = load i32, ptr %.val.i2.i.i, align 4, !tbaa !453
+  %i.di = load i32, ptr %.val.i2.i.i, align 8, !tbaa !453
   store i32 %i.di, ptr %i.dh, align 8, !tbaa !453
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
   %i.dk = getelementptr inbounds nuw i8, ptr %.val.i2.i.i, i64 4 ; 2 uses
@@ -932,7 +932,7 @@ _ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.i.i.i.3: ; p
   %i.dq = getelementptr inbounds nuw i8, ptr %.val.i2.i.i, i64 8
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %.01.i.i ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 8
-  %i.dt = load i32, ptr %i.dq, align 4, !tbaa !453
+  %i.dt = load i32, ptr %i.dq, align 8, !tbaa !453
   store i32 %i.dt, ptr %i.ds, align 8, !tbaa !453
   %i.du = getelementptr inbounds nuw i8, ptr %i.dr, i64 12
   %i.dv = getelementptr inbounds nuw i8, ptr %.val.i2.i.i, i64 12 ; 2 uses
@@ -962,7 +962,7 @@ _ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.i.i.i.3: ; p
   %lcmp.mod27 = trunc i64 %i.dg to i1
   tail call void @llvm.assume(i1 %lcmp.mod27)
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %.01.i.i.epil.init ; 2 uses
-  %i.ef = load i32, ptr %.val.i2.i.i.epil.init, align 4, !tbaa !453
+  %i.ef = load i32, ptr %.val.i2.i.i.epil.init, align 8, !tbaa !453
   store i32 %i.ef, ptr %i.ee, align 8, !tbaa !453
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ee, i64 4
   %i.eh = getelementptr inbounds nuw i8, ptr %.val.i2.i.i.epil.init, i64 4 ; 2 uses
@@ -1365,10 +1365,10 @@ bb.an:                                            ; preds = %bb.am
   %.010.i.pn.i.i.i = phi ptr [ %.010.i.i.i.i.1, %.lr.ph.i.i.i.i ], [ %.010.i.pn.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 4 uses
   %.079.i.i.i.i = phi ptr [ %i.it, %.lr.ph.i.i.i.i ], [ %.079.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 6 uses
   %.010.i.i.i.i = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 8 ; 2 uses
-  %i.ig = load i32, ptr %.079.i.i.i.i, align 4, !tbaa !211
-  %i.ih = load i32, ptr %.010.i.i.i.i, align 4, !tbaa !211
-  store i32 %i.ih, ptr %.079.i.i.i.i, align 4, !tbaa !211
-  store i32 %i.ig, ptr %.010.i.i.i.i, align 4, !tbaa !211
+  %i.ig = load i32, ptr %.079.i.i.i.i, align 8, !tbaa !211
+  %i.ih = load i32, ptr %.010.i.i.i.i, align 8, !tbaa !211
+  store i32 %i.ih, ptr %.079.i.i.i.i, align 8, !tbaa !211
+  store i32 %i.ig, ptr %.010.i.i.i.i, align 8, !tbaa !211
   %i.ii = getelementptr inbounds nuw i8, ptr %.079.i.i.i.i, i64 4 ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 12 ; 2 uses
   %i.ik = load i8, ptr %i.ii, align 4, !tbaa !696, !range !189, !noundef !190
@@ -1377,10 +1377,10 @@ bb.an:                                            ; preds = %bb.am
   store i8 %i.ik, ptr %i.ij, align 4, !tbaa !696
   %i.im = getelementptr inbounds nuw i8, ptr %.079.i.i.i.i, i64 8 ; 2 uses
   %.010.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 16 ; 3 uses
-  %i.in = load i32, ptr %i.im, align 4, !tbaa !211
-  %i.io = load i32, ptr %.010.i.i.i.i.1, align 4, !tbaa !211
-  store i32 %i.io, ptr %i.im, align 4, !tbaa !211
-  store i32 %i.in, ptr %.010.i.i.i.i.1, align 4, !tbaa !211
+  %i.in = load i32, ptr %i.im, align 8, !tbaa !211
+  %i.io = load i32, ptr %.010.i.i.i.i.1, align 8, !tbaa !211
+  store i32 %i.io, ptr %i.im, align 8, !tbaa !211
+  store i32 %i.in, ptr %.010.i.i.i.i.1, align 8, !tbaa !211
   %i.ip = getelementptr inbounds nuw i8, ptr %.079.i.i.i.i, i64 12 ; 2 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 20 ; 2 uses
   %i.ir = load i8, ptr %i.ip, align 4, !tbaa !696, !range !189, !noundef !190
@@ -1427,7 +1427,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageINS0_13test_internal20Cop
   %.012.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %i.jx, %bb.aq ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %niter.next.1, %bb.aq ]
   %i.jg = getelementptr inbounds nuw [8 x i8], ptr %i.ja, i64 %.012.i.i.i ; 2 uses
-  %i.jh = load i32, ptr %i.jf, align 4, !tbaa !453
+  %i.jh = load i32, ptr %i.jf, align 8, !tbaa !453
   store i32 %i.jh, ptr %i.jg, align 8, !tbaa !453
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jg, i64 4
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jf, i64 4
@@ -1446,7 +1446,7 @@ bb.ao:                                            ; preds = %.lr.ph.i.i.i
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
   %i.jo = getelementptr inbounds nuw [8 x i8], ptr %i.ja, i64 %.012.i.i.i ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jo, i64 8
-  %i.jq = load i32, ptr %i.jn, align 4, !tbaa !453
+  %i.jq = load i32, ptr %i.jn, align 8, !tbaa !453
   store i32 %i.jq, ptr %i.jp, align 8, !tbaa !453
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jo, i64 12
   %i.js = getelementptr inbounds nuw i8, ptr %i.jf, i64 12
@@ -1479,7 +1479,7 @@ bb.aq:                                            ; preds = %bb.ap, %.lr.ph.i.i.
   %lcmp.mod1605 = trunc i64 %i.hx to i1
   call void @llvm.assume(i1 %lcmp.mod1605)
   %i.jy = getelementptr inbounds nuw [8 x i8], ptr %i.ja, i64 %.012.i.i.i.epil.init ; 2 uses
-  %i.jz = load i32, ptr %.epil.init1602, align 4, !tbaa !453
+  %i.jz = load i32, ptr %.epil.init1602, align 8, !tbaa !453
   store i32 %i.jz, ptr %i.jy, align 8, !tbaa !453
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jy, i64 4
   %i.kb = getelementptr inbounds nuw i8, ptr %.epil.init1602, i64 4
@@ -1882,10 +1882,10 @@ bb.an:                                            ; preds = %bb.am
   %.010.i.pn.i.i.i = phi ptr [ %.010.i.i.i.i.1, %.lr.ph.i.i.i.i ], [ %.010.i.pn.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 4 uses
   %.079.i.i.i.i = phi ptr [ %i.ip, %.lr.ph.i.i.i.i ], [ %.079.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 6 uses
   %.010.i.i.i.i = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 8 ; 2 uses
-  %i.ic = load i32, ptr %.079.i.i.i.i, align 4, !tbaa !211
-  %i.id = load i32, ptr %.010.i.i.i.i, align 4, !tbaa !211
-  store i32 %i.id, ptr %.079.i.i.i.i, align 4, !tbaa !211
-  store i32 %i.ic, ptr %.010.i.i.i.i, align 4, !tbaa !211
+  %i.ic = load i32, ptr %.079.i.i.i.i, align 8, !tbaa !211
+  %i.id = load i32, ptr %.010.i.i.i.i, align 8, !tbaa !211
+  store i32 %i.id, ptr %.079.i.i.i.i, align 8, !tbaa !211
+  store i32 %i.ic, ptr %.010.i.i.i.i, align 8, !tbaa !211
   %i.ie = getelementptr inbounds nuw i8, ptr %.079.i.i.i.i, i64 4 ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 12 ; 2 uses
   %i.ig = load i8, ptr %i.ie, align 4, !tbaa !696, !range !189, !noundef !190
@@ -1894,10 +1894,10 @@ bb.an:                                            ; preds = %bb.am
   store i8 %i.ig, ptr %i.if, align 4, !tbaa !696
   %i.ii = getelementptr inbounds nuw i8, ptr %.079.i.i.i.i, i64 8 ; 2 uses
   %.010.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 16 ; 3 uses
-  %i.ij = load i32, ptr %i.ii, align 4, !tbaa !211
-  %i.ik = load i32, ptr %.010.i.i.i.i.1, align 4, !tbaa !211
-  store i32 %i.ik, ptr %i.ii, align 4, !tbaa !211
-  store i32 %i.ij, ptr %.010.i.i.i.i.1, align 4, !tbaa !211
+  %i.ij = load i32, ptr %i.ii, align 8, !tbaa !211
+  %i.ik = load i32, ptr %.010.i.i.i.i.1, align 8, !tbaa !211
+  store i32 %i.ik, ptr %i.ii, align 8, !tbaa !211
+  store i32 %i.ij, ptr %.010.i.i.i.i.1, align 8, !tbaa !211
   %i.il = getelementptr inbounds nuw i8, ptr %.079.i.i.i.i, i64 12 ; 2 uses
   %i.im = getelementptr inbounds nuw i8, ptr %.010.i.pn.i.i.i, i64 20 ; 2 uses
   %i.in = load i8, ptr %i.il, align 4, !tbaa !696, !range !189, !noundef !190
@@ -1942,7 +1942,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageINS0_13test_internal23Cop
   %.012.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %i.jo, %.lr.ph.i.i.i ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %niter.next.1, %.lr.ph.i.i.i ]
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %.012.i.i.i ; 2 uses
-  %i.jc = load i32, ptr %i.ja, align 4, !tbaa !453
+  %i.jc = load i32, ptr %i.ja, align 8, !tbaa !453
   store i32 %i.jc, ptr %i.jb, align 8, !tbaa !453
   %i.jd = getelementptr inbounds nuw i8, ptr %i.jb, i64 4
   %i.je = getelementptr inbounds nuw i8, ptr %i.ja, i64 4 ; 2 uses
@@ -1952,7 +1952,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageINS0_13test_internal23Cop
   %i.jg = getelementptr inbounds nuw i8, ptr %i.ja, i64 8
   %i.jh = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %.012.i.i.i ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
-  %i.jj = load i32, ptr %i.jg, align 4, !tbaa !453
+  %i.jj = load i32, ptr %i.jg, align 8, !tbaa !453
   store i32 %i.jj, ptr %i.ji, align 8, !tbaa !453
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jh, i64 12
   %i.jl = getelementptr inbounds nuw i8, ptr %i.ja, i64 12 ; 2 uses
@@ -1975,7 +1975,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageINS0_13test_internal23Cop
   %lcmp.mod1595 = trunc i64 %i.ht to i1
   call void @llvm.assume(i1 %lcmp.mod1595)
   %i.jp = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %.012.i.i.i.epil.init ; 2 uses
-  %i.jq = load i32, ptr %.epil.init, align 4, !tbaa !453
+  %i.jq = load i32, ptr %.epil.init, align 8, !tbaa !453
   store i32 %i.jq, ptr %i.jp, align 8, !tbaa !453
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 4
   %i.js = getelementptr inbounds nuw i8, ptr %.epil.init, i64 4 ; 2 uses
@@ -2378,7 +2378,7 @@ bb.aq:                                            ; preds = %_ZN7testing15Assert
   %niter = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %niter.next.1, %bb.at ]
   %i.fg = getelementptr inbounds nuw i8, ptr %.pn.i, i64 8
   %i.fh = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.012.i.i ; 2 uses
-  %i.fi = load i32, ptr %i.fg, align 4, !tbaa !453
+  %i.fi = load i32, ptr %i.fg, align 8, !tbaa !453
   store i32 %i.fi, ptr %i.fh, align 8, !tbaa !453
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 4
   %i.fk = getelementptr inbounds nuw i8, ptr %.pn.i, i64 12
@@ -2397,7 +2397,7 @@ bb.ar:                                            ; preds = %.lr.ph.i.i
   %i.fp = getelementptr inbounds nuw i8, ptr %.pn.i, i64 16 ; 3 uses
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.012.i.i ; 2 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 8
-  %i.fs = load i32, ptr %i.fp, align 4, !tbaa !453
+  %i.fs = load i32, ptr %i.fp, align 8, !tbaa !453
   store i32 %i.fs, ptr %i.fr, align 8, !tbaa !453
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fq, i64 12
   %i.fu = getelementptr inbounds nuw i8, ptr %.pn.i, i64 20
@@ -2431,7 +2431,7 @@ bb.at:                                            ; preds = %bb.as, %.lr.ph.i.i.
   call void @llvm.assume(i1 %lcmp.mod478)
   %i.gb = getelementptr inbounds nuw i8, ptr %.pn.i.epil.init, i64 8
   %i.gc = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.012.i.i.epil.init ; 2 uses
-  %i.gd = load i32, ptr %i.gb, align 4, !tbaa !453
+  %i.gd = load i32, ptr %i.gb, align 8, !tbaa !453
   store i32 %i.gd, ptr %i.gc, align 8, !tbaa !453
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gc, i64 4
   %i.gf = getelementptr inbounds nuw i8, ptr %.pn.i.epil.init, i64 12
@@ -2834,7 +2834,7 @@ bb.aq:                                            ; preds = %_ZN7testing15Assert
   %niter = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %niter.next.1, %.lr.ph.i.i ]
   %i.fc = getelementptr inbounds nuw i8, ptr %.pn.i, i64 8
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.012.i.i ; 2 uses
-  %i.fe = load i32, ptr %i.fc, align 4, !tbaa !453
+  %i.fe = load i32, ptr %i.fc, align 8, !tbaa !453
   store i32 %i.fe, ptr %i.fd, align 8, !tbaa !453
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fd, i64 4
   %i.fg = getelementptr inbounds nuw i8, ptr %.pn.i, i64 12 ; 2 uses
@@ -2844,7 +2844,7 @@ bb.aq:                                            ; preds = %_ZN7testing15Assert
   %i.fi = getelementptr inbounds nuw i8, ptr %.pn.i, i64 16 ; 3 uses
   %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.012.i.i ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
-  %i.fl = load i32, ptr %i.fi, align 4, !tbaa !453
+  %i.fl = load i32, ptr %i.fi, align 8, !tbaa !453
   store i32 %i.fl, ptr %i.fk, align 8, !tbaa !453
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fj, i64 12
   %i.fn = getelementptr inbounds nuw i8, ptr %.pn.i, i64 20 ; 2 uses
@@ -2868,7 +2868,7 @@ bb.aq:                                            ; preds = %_ZN7testing15Assert
   call void @llvm.assume(i1 %lcmp.mod476)
   %i.fr = getelementptr inbounds nuw i8, ptr %.pn.i.epil.init, i64 8
   %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.012.i.i.epil.init ; 2 uses
-  %i.ft = load i32, ptr %i.fr, align 4, !tbaa !453
+  %i.ft = load i32, ptr %i.fr, align 8, !tbaa !453
   store i32 %i.ft, ptr %i.fs, align 8, !tbaa !453
   %i.fu = getelementptr inbounds nuw i8, ptr %i.fs, i64 4
   %i.fv = getelementptr inbounds nuw i8, ptr %.pn.i.epil.init, i64 12 ; 2 uses
@@ -3271,7 +3271,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaINS0_13
   %i.lk = phi ptr [ %i.lw, %_ZN4absl12lts_2026052623inlined_vector_internal20IteratorValueAdapterISaINS0_13test_internal23CopyableMovableInstanceEESt13move_iteratorIPS4_EE10AssignNextES7_.exit.i.i ], [ %i.z, %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaINS0_13test_internal23CopyableMovableInstanceEEE8AllocateEm.exit.i ] ; 3 uses
   %.05.i.i = phi i64 [ %i.lx, %_ZN4absl12lts_2026052623inlined_vector_internal20IteratorValueAdapterISaINS0_13test_internal23CopyableMovableInstanceEESt13move_iteratorIPS4_EE10AssignNextES7_.exit.i.i ], [ 0, %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaINS0_13test_internal23CopyableMovableInstanceEEE8AllocateEm.exit.i ] ; 2 uses
   %i.ll = getelementptr inbounds nuw [8 x i8], ptr %.sink2.i.i, i64 %.05.i.i ; 2 uses
-  %i.lm = load i32, ptr %i.lk, align 4, !tbaa !453
+  %i.lm = load i32, ptr %i.lk, align 8, !tbaa !453
   store i32 %i.lm, ptr %i.ll, align 4, !tbaa !453
   %i.ln = getelementptr inbounds nuw i8, ptr %i.ll, i64 4 ; 2 uses
   %i.lo = load i8, ptr %i.ln, align 4, !tbaa !454, !range !189, !noundef !190
@@ -3674,7 +3674,7 @@ _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaINS0_13
   %i.ri = phi ptr [ %i.ru, %_ZN4absl12lts_2026052623inlined_vector_internal20IteratorValueAdapterISaINS0_13test_internal23CopyableMovableInstanceEESt13move_iteratorIPS4_EE10AssignNextES7_.exit.i.i399 ], [ %i.ac, %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaINS0_13test_internal23CopyableMovableInstanceEEE8AllocateEm.exit.i390 ] ; 3 uses
   %.05.i.i398 = phi i64 [ %i.rv, %_ZN4absl12lts_2026052623inlined_vector_internal20IteratorValueAdapterISaINS0_13test_internal23CopyableMovableInstanceEESt13move_iteratorIPS4_EE10AssignNextES7_.exit.i.i399 ], [ 0, %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaINS0_13test_internal23CopyableMovableInstanceEEE8AllocateEm.exit.i390 ] ; 2 uses
   %i.rj = getelementptr inbounds nuw [8 x i8], ptr %.sink2.i.i387, i64 %.05.i.i398 ; 2 uses
-  %i.rk = load i32, ptr %i.ri, align 4, !tbaa !453
+  %i.rk = load i32, ptr %i.ri, align 8, !tbaa !453
   store i32 %i.rk, ptr %i.rj, align 4, !tbaa !453
   %i.rl = getelementptr inbounds nuw i8, ptr %i.rj, i64 4 ; 2 uses
   %i.rm = load i8, ptr %i.rl, align 4, !tbaa !454, !range !189, !noundef !190

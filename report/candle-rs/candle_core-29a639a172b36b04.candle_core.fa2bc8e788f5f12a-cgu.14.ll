@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %_RNvN
   %i.cz = or disjoint <4 x i8> %i.cw, %i.ck
   %i.da = or disjoint <4 x i8> %i.cx, %i.cl
   %i.db = getelementptr inbounds nuw i8, ptr %i.cy, i64 4
-  store <4 x i8> %i.cz, ptr %i.cy, align 1
-  store <4 x i8> %i.da, ptr %i.db, align 1
+  store <4 x i8> %i.cz, ptr %i.cy, align 2
+  store <4 x i8> %i.da, ptr %i.db, align 2
   %i.dc = lshr <4 x i8> %i.cu, splat (i8 4)
   %i.dd = lshr <4 x i8> %i.cv, splat (i8 4)
   %i.de = and <4 x i8> %i.dc, splat (i8 1)
@@ -609,7 +609,7 @@ bb.x:                                             ; preds = %bb.w, %_RNvNtNtCsds
   %i.nd = getelementptr inbounds nuw i8, ptr %.sroa.054.0199, i64 24
   %i.ne = load <8 x i8>, ptr %.sroa.046.0201, align 1
   %i.nf = sext <8 x i8> %i.ne to <8 x i32>
-  %i.ng = load <8 x i8>, ptr %.sroa.054.0199, align 1
+  %i.ng = load <8 x i8>, ptr %.sroa.054.0199, align 16
   %i.nh = sext <8 x i8> %i.ng to <8 x i32>
   %i.ni = mul nsw <8 x i32> %i.nh, %i.nf
   %i.nj = insertelement <8 x i32> poison, i32 %i.mx, i64 0
@@ -618,21 +618,21 @@ bb.x:                                             ; preds = %bb.w, %_RNvNtNtCsds
   %i.nm = add <8 x i32> %i.nl, %i.mt
   %i.nn = load <8 x i8>, ptr %i.my, align 1
   %i.no = sext <8 x i8> %i.nn to <8 x i32>
-  %i.np = load <8 x i8>, ptr %i.mz, align 1
+  %i.np = load <8 x i8>, ptr %i.mz, align 8
   %i.nq = sext <8 x i8> %i.np to <8 x i32>
   %i.nr = mul nsw <8 x i32> %i.nq, %i.no
   %i.ns = mul nsw <8 x i32> %i.nr, %i.nk
   %i.nt = add <8 x i32> %i.ns, %i.nm
   %i.nu = load <8 x i8>, ptr %i.na, align 1
   %i.nv = sext <8 x i8> %i.nu to <8 x i32>
-  %i.nw = load <8 x i8>, ptr %i.nb, align 1
+  %i.nw = load <8 x i8>, ptr %i.nb, align 16
   %i.nx = sext <8 x i8> %i.nw to <8 x i32>
   %i.ny = mul nsw <8 x i32> %i.nx, %i.nv
   %i.nz = mul nsw <8 x i32> %i.ny, %i.nk
   %i.oa = add <8 x i32> %i.nz, %i.nt
   %i.ob = load <8 x i8>, ptr %i.nc, align 1
   %i.oc = sext <8 x i8> %i.ob to <8 x i32>
-  %i.od = load <8 x i8>, ptr %i.nd, align 1
+  %i.od = load <8 x i8>, ptr %i.nd, align 8
   %i.oe = sext <8 x i8> %i.od to <8 x i32>
   %i.of = mul nsw <8 x i32> %i.oe, %i.oc
   %i.og = mul nsw <8 x i32> %i.of, %i.nk
@@ -1035,7 +1035,7 @@ bb.x:                                             ; preds = %bb.w, %_RNvNtNtCsds
   %i.ou = getelementptr inbounds nuw i8, ptr %.sroa.072.0218, i64 24
   %i.ov = load <8 x i8>, ptr %.sroa.064.0220, align 1
   %i.ow = sext <8 x i8> %i.ov to <8 x i32>
-  %i.ox = load <8 x i8>, ptr %.sroa.072.0218, align 1
+  %i.ox = load <8 x i8>, ptr %.sroa.072.0218, align 16
   %i.oy = sext <8 x i8> %i.ox to <8 x i32>
   %i.oz = mul nsw <8 x i32> %i.oy, %i.ow
   %i.pa = insertelement <8 x i32> poison, i32 %i.oo, i64 0
@@ -1044,21 +1044,21 @@ bb.x:                                             ; preds = %bb.w, %_RNvNtNtCsds
   %i.pd = add <8 x i32> %i.pc, %i.ok
   %i.pe = load <8 x i8>, ptr %i.op, align 1
   %i.pf = sext <8 x i8> %i.pe to <8 x i32>
-  %i.pg = load <8 x i8>, ptr %i.oq, align 1
+  %i.pg = load <8 x i8>, ptr %i.oq, align 8
   %i.ph = sext <8 x i8> %i.pg to <8 x i32>
   %i.pi = mul nsw <8 x i32> %i.ph, %i.pf
   %i.pj = mul nsw <8 x i32> %i.pi, %i.pb
   %i.pk = add <8 x i32> %i.pj, %i.pd
   %i.pl = load <8 x i8>, ptr %i.or, align 1
   %i.pm = sext <8 x i8> %i.pl to <8 x i32>
-  %i.pn = load <8 x i8>, ptr %i.os, align 1
+  %i.pn = load <8 x i8>, ptr %i.os, align 16
   %i.po = sext <8 x i8> %i.pn to <8 x i32>
   %i.pp = mul nsw <8 x i32> %i.po, %i.pm
   %i.pq = mul nsw <8 x i32> %i.pp, %i.pb
   %i.pr = add <8 x i32> %i.pq, %i.pk
   %i.ps = load <8 x i8>, ptr %i.ot, align 1
   %i.pt = sext <8 x i8> %i.ps to <8 x i32>
-  %i.pu = load <8 x i8>, ptr %i.ou, align 1
+  %i.pu = load <8 x i8>, ptr %i.ou, align 8
   %i.pv = sext <8 x i8> %i.pu to <8 x i32>
   %i.pw = mul nsw <8 x i32> %i.pv, %i.pt
   %i.px = mul nsw <8 x i32> %i.pw, %i.pb
@@ -1461,12 +1461,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 8 uses
   %i.br = lshr i64 %index, 4
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bi, i64 %index
-  %wide.load = load <4 x i8>, ptr %i.bs, align 1  ; 2 uses
+  %wide.load = load <4 x i8>, ptr %i.bs, align 2  ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bj, i64 %index
-  %wide.load472 = load <4 x i8>, ptr %i.bt, align 1 ; 4 uses
+  %wide.load472 = load <4 x i8>, ptr %i.bt, align 2 ; 4 uses
   %i.bu = or disjoint i64 %index, 32              ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bu
-  %wide.load473 = load <4 x i8>, ptr %i.bv, align 1 ; 2 uses
+  %wide.load473 = load <4 x i8>, ptr %i.bv, align 2 ; 2 uses
   %i.bw = and <4 x i8> %wide.load473, splat (i8 15)
   %i.bx = shl <4 x i8> %wide.load472, splat (i8 2)
   %i.by = and <4 x i8> %i.bx, splat (i8 48)
@@ -1653,12 +1653,12 @@ vector.body488:                                   ; preds = %vector.body488, %ve
   %index489 = phi i64 [ 0, %vector.ph484 ], [ %index.next501, %vector.body488 ] ; 8 uses
   %i.gm = lshr i64 %index489, 4
   %i.gn = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 %index489
-  %wide.load490 = load <4 x i8>, ptr %i.gn, align 1 ; 2 uses
+  %wide.load490 = load <4 x i8>, ptr %i.gn, align 2 ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.av, i64 %index489
-  %wide.load491 = load <4 x i8>, ptr %i.go, align 1 ; 4 uses
+  %wide.load491 = load <4 x i8>, ptr %i.go, align 2 ; 4 uses
   %i.gp = or disjoint i64 %index489, 32           ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 %i.gp
-  %wide.load492 = load <4 x i8>, ptr %i.gq, align 1 ; 2 uses
+  %wide.load492 = load <4 x i8>, ptr %i.gq, align 2 ; 2 uses
   %i.gr = and <4 x i8> %wide.load492, splat (i8 15)
   %i.gs = shl <4 x i8> %wide.load491, splat (i8 2)
   %i.gt = and <4 x i8> %i.gs, splat (i8 48)
@@ -1938,7 +1938,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aa = fcmp ogt <4 x float> %i.z, splat (float 1.270000e+02)
   %i.ab = select <4 x i1> %i.aa, <4 x float> splat (float 1.270000e+02), <4 x float> %i.z
   %i.ac = tail call <4 x i8> @llvm.fptosi.sat.v4i8.v4f32(<4 x float> %i.ab)
-  store <4 x i8> %i.ac, ptr %next.gep, align 1
+  store <4 x i8> %i.ac, ptr %next.gep, align 4
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, 256
   br i1 %i.ad, label %.preheader, label %vector.body, !llvm.loop !1280
@@ -1948,96 +1948,96 @@ bb.c:                                             ; preds = %._crit_edge
   br label %bb.d
 
 .preheader:                                       ; preds = %vector.body
-  %i.ae = load <16 x i8>, ptr %.ptr49, align 1
+  %i.ae = load <16 x i8>, ptr %.ptr49, align 4
   %i.af = sext <16 x i8> %i.ae to <16 x i16>
   %i.ag = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.af)
-  store i16 %i.ag, ptr %i.u, align 2
+  store i16 %i.ag, ptr %i.u, align 4
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 20
-  %i.ai = load <16 x i8>, ptr %i.ah, align 2
+  %i.ai = load <16 x i8>, ptr %i.ah, align 4
   %i.aj = sext <16 x i8> %i.ai to <16 x i16>
   %i.ak = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.aj)
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 262
   store i16 %i.ak, ptr %i.al, align 2
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 36
-  %i.an = load <16 x i8>, ptr %i.am, align 2
+  %i.an = load <16 x i8>, ptr %i.am, align 4
   %i.ao = sext <16 x i8> %i.an to <16 x i16>
   %i.ap = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.ao)
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 264
-  store i16 %i.ap, ptr %i.aq, align 2
+  store i16 %i.ap, ptr %i.aq, align 4
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 52
-  %i.as = load <16 x i8>, ptr %i.ar, align 2
+  %i.as = load <16 x i8>, ptr %i.ar, align 4
   %i.at = sext <16 x i8> %i.as to <16 x i16>
   %i.au = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.at)
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 266
   store i16 %i.au, ptr %i.av, align 2
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 68
-  %i.ax = load <16 x i8>, ptr %i.aw, align 2
+  %i.ax = load <16 x i8>, ptr %i.aw, align 4
   %i.ay = sext <16 x i8> %i.ax to <16 x i16>
   %i.az = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.ay)
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 268
-  store i16 %i.az, ptr %i.ba, align 2
+  store i16 %i.az, ptr %i.ba, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 84
-  %i.bc = load <16 x i8>, ptr %i.bb, align 2
+  %i.bc = load <16 x i8>, ptr %i.bb, align 4
   %i.bd = sext <16 x i8> %i.bc to <16 x i16>
   %i.be = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.bd)
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 270
   store i16 %i.be, ptr %i.bf, align 2
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 100
-  %i.bh = load <16 x i8>, ptr %i.bg, align 2
+  %i.bh = load <16 x i8>, ptr %i.bg, align 4
   %i.bi = sext <16 x i8> %i.bh to <16 x i16>
   %i.bj = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.bi)
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 272
-  store i16 %i.bj, ptr %i.bk, align 2
+  store i16 %i.bj, ptr %i.bk, align 4
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 116
-  %i.bm = load <16 x i8>, ptr %i.bl, align 2
+  %i.bm = load <16 x i8>, ptr %i.bl, align 4
   %i.bn = sext <16 x i8> %i.bm to <16 x i16>
   %i.bo = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.bn)
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 274
   store i16 %i.bo, ptr %i.bp, align 2
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 132
-  %i.br = load <16 x i8>, ptr %i.bq, align 2
+  %i.br = load <16 x i8>, ptr %i.bq, align 4
   %i.bs = sext <16 x i8> %i.br to <16 x i16>
   %i.bt = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.bs)
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 276
-  store i16 %i.bt, ptr %i.bu, align 2
+  store i16 %i.bt, ptr %i.bu, align 4
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 148
-  %i.bw = load <16 x i8>, ptr %i.bv, align 2
+  %i.bw = load <16 x i8>, ptr %i.bv, align 4
   %i.bx = sext <16 x i8> %i.bw to <16 x i16>
   %i.by = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.bx)
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 278
   store i16 %i.by, ptr %i.bz, align 2
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 164
-  %i.cb = load <16 x i8>, ptr %i.ca, align 2
+  %i.cb = load <16 x i8>, ptr %i.ca, align 4
   %i.cc = sext <16 x i8> %i.cb to <16 x i16>
   %i.cd = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.cc)
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 280
-  store i16 %i.cd, ptr %i.ce, align 2
+  store i16 %i.cd, ptr %i.ce, align 4
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 180
-  %i.cg = load <16 x i8>, ptr %i.cf, align 2
+  %i.cg = load <16 x i8>, ptr %i.cf, align 4
   %i.ch = sext <16 x i8> %i.cg to <16 x i16>
   %i.ci = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.ch)
   %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 282
   store i16 %i.ci, ptr %i.cj, align 2
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 196
-  %i.cl = load <16 x i8>, ptr %i.ck, align 2
+  %i.cl = load <16 x i8>, ptr %i.ck, align 4
   %i.cm = sext <16 x i8> %i.cl to <16 x i16>
   %i.cn = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.cm)
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 284
-  store i16 %i.cn, ptr %i.co, align 2
+  store i16 %i.cn, ptr %i.co, align 4
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 212
-  %i.cq = load <16 x i8>, ptr %i.cp, align 2
+  %i.cq = load <16 x i8>, ptr %i.cp, align 4
   %i.cr = sext <16 x i8> %i.cq to <16 x i16>
   %i.cs = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.cr)
   %i.ct = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 286
   store i16 %i.cs, ptr %i.ct, align 2
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 228
-  %i.cv = load <16 x i8>, ptr %i.cu, align 2
+  %i.cv = load <16 x i8>, ptr %i.cu, align 4
   %i.cw = sext <16 x i8> %i.cv to <16 x i16>
   %i.cx = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.cw)
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 288
-  store i16 %i.cx, ptr %i.cy, align 2
+  store i16 %i.cx, ptr %i.cy, align 4
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 244
-  %i.da = load <16 x i8>, ptr %i.cz, align 2
+  %i.da = load <16 x i8>, ptr %i.cz, align 4
   %i.db = sext <16 x i8> %i.da to <16 x i16>
   %i.dc = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %i.db)
   %i.dd = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 290
@@ -2355,8 +2355,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.sroa.015.0.ptr29, i64 %index ; 2 uses
   %i.r = getelementptr i8, ptr %next.gep, i64 4
-  %wide.load = load <4 x i8>, ptr %next.gep, align 1
-  %wide.load40 = load <4 x i8>, ptr %i.r, align 1
+  %wide.load = load <4 x i8>, ptr %next.gep, align 4
+  %wide.load40 = load <4 x i8>, ptr %i.r, align 4
   %i.s = sitofp <4 x i8> %wide.load to <4 x float>
   %i.t = sitofp <4 x i8> %wide.load40 to <4 x float>
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index ; 2 uses

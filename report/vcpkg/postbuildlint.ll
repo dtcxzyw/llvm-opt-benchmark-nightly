@@ -205,7 +205,7 @@ bb.ys:                                            ; preds = %bb.yt
 bb.yt:                                            ; preds = %bb.ys, %.lr.ph.i.i1065
   %.sroa.09.014.i.i = phi ptr [ %i.dby, %.lr.ph.i.i1065 ], [ %i.dca, %bb.ys ] ; 2 uses
   call void @_ZN5vcpkg10StringViewC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %122, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.09.014.i.i) #23
-  %.sroa.0.0.copyload.i.i1067 = load ptr, ptr %.02918.i, align 8, !tbaa !65
+  %.sroa.0.0.copyload.i.i1067 = load ptr, ptr %.02918.i, align 16, !tbaa !65
   %.sroa.2.0.copyload.i.i1068 = load i64, ptr %.sroa.2.0..sroa_idx.i.i1066, align 8, !tbaa !37
   %i.dcb = load ptr, ptr %122, align 8
   %i.dcc = load i64, ptr %i.dbk, align 8
@@ -258,7 +258,7 @@ bb.yx:                                            ; preds = %bb.yw, %bb.yv, %._c
   %i.dco = getelementptr inbounds nuw i8, ptr %i.dcn, i64 %i.dcm
   store i8 0, ptr %i.dco, align 1, !tbaa !45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #23
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dbn, ptr noundef nonnull align 8 dereferenceable(16) %.02918.i, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dbn, ptr noundef nonnull align 16 dereferenceable(16) %.02918.i, i64 16, i1 false)
   %i.dcp = load ptr, ptr %i.dbp, align 8, !tbaa !132
   %.not.i.i.i1110 = icmp eq ptr %i.dbs, %i.dcp
   br i1 %.not.i.i.i1110, label %bb.za, label %bb.yy

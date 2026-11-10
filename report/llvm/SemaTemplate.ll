@@ -205,9 +205,8 @@ bb.i:                                             ; preds = %bb.h
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.outer, %bb.k
-  %.sroa.093.0144 = phi ptr [ %i.bp, %bb.k ], [ %.sroa.093.0144.ph, %.lr.ph.outer ] ; 4 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.093.0144, i64 8) ]
-  %.0.copyload.i.i.i.i.i.i74 = load i64, ptr %.sroa.093.0144, align 8
+  %.sroa.093.0144 = phi ptr [ %i.bp, %bb.k ], [ %.sroa.093.0144.ph, %.lr.ph.outer ] ; 3 uses
+  %.0.copyload.i.i.i.i.i.i74 = load i64, ptr %.sroa.093.0144, align 1
   %i.bi = and i64 %.0.copyload.i.i.i.i.i.i74, -8
   %i.bj = inttoptr i64 %i.bi to ptr               ; 3 uses
   %i.bk = call noundef ptr @_ZN5clang4Sema21getAsTemplateNameDeclEPNS_9NamedDeclEbb(ptr noundef %i.bj, i1 noundef zeroext true, i1 noundef zeroext true) ; 3 uses
