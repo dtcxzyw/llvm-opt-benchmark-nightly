@@ -204,10 +204,16 @@ _ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit: ; preds = %bb.d, %bb.e
   %.sink = phi i64 [ %i.u, %bb.d ], [ %i.z, %bb.e ]
   %.0.i = phi i64 [ %i.v, %bb.d ], [ %i.x, %bb.e ]
   store i64 %.sink, ptr %i.p, align 8, !tbaa !324
-  br label %.sink.split
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.0.copyload.i.i = load i8, ptr %2, align 8, !tbaa !325
+  %.sroa.speculated.i = tail call i8 @llvm.umax.i8(i8 %.sroa.0.0.copyload.i.i, i8 2)
+  store i8 %.sroa.speculated.i, ptr %2, align 8, !tbaa !325
+  tail call void @_ZN4llvm7CCState18ensureMaxAlignmentENS_5AlignE(ptr noundef nonnull align 8 dereferenceable(420) %0, i8 2) #8
+  %3 = trunc i64 %.0.i to i32
+  br label %bb.j
 
 bb.f:                                             ; preds = %bb.a
-  %2 = select i1 %i.j, i64 8, i64 4
+  %4 = select i1 %i.j, i32 8, i32 4
   switch i32 %.0.val, label %.critedge [
     i32 0, label %bb.j
     i32 1, label %bb.g
@@ -227,26 +233,18 @@ bb.h:                                             ; preds = %bb.g
   %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = add i64 %i.af, %i.ah
   %i.aj = and i64 %i.ai, -4
-  br label %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit29
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.g
   %i.ak = add i64 %i.af, 3
   %i.al = and i64 %i.ak, -4
   %i.am = zext nneg i32 %i.aa to i64
   %i.an = add nsw i64 %i.al, %i.am
-  br label %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit29
-
-_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit29: ; preds = %bb.h, %bb.i
-  %storemerge = phi i64 [ %i.an, %bb.i ], [ %i.aj, %bb.h ]
-  store i64 %storemerge, ptr %i.ae, align 8, !tbaa !324
   br label %.sink.split
 
-.critedge:                                        ; preds = %bb.f, %bb.a, %bb.b
-  tail call void @_ZN4llvm18report_fatal_errorEPKcb(ptr noundef nonnull @.str.4, i1 noundef zeroext true) #9
-  unreachable
-
-.sink.split:                                      ; preds = %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit29
-  %.0.ph = phi i64 [ 0, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit29 ], [ %.0.i, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit ]
+.sink.split:                                      ; preds = %bb.h, %bb.i
+  %.0.ph = phi i64 [ %i.an, %bb.i ], [ %i.aj, %bb.h ]
+  store i64 %.0.ph, ptr %i.ae, align 8, !tbaa !324
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %.sroa.0.0.copyload.i.i27 = load i8, ptr %i.ao, align 8, !tbaa !325
   %.sroa.speculated.i28 = tail call i8 @llvm.umax.i8(i8 %.sroa.0.0.copyload.i.i27, i8 2)
@@ -254,14 +252,18 @@ _ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit29: ; preds = %bb.h, %bb.i
   tail call void @_ZN4llvm7CCState18ensureMaxAlignmentENS_5AlignE(ptr noundef nonnull align 8 dereferenceable(420) %0, i8 2) #8
   br label %bb.j
 
-bb.j:                                             ; preds = %.sink.split, %bb.f
-  %.0 = phi i64 [ %2, %bb.f ], [ %.0.ph, %.sink.split ]
+.critedge:                                        ; preds = %bb.f, %bb.a, %bb.b
+  tail call void @_ZN4llvm18report_fatal_errorEPKcb(ptr noundef nonnull @.str.4, i1 noundef zeroext true) #9
+  unreachable
+
+bb.j:                                             ; preds = %bb.f, %.sink.split, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit
+  %.0 = phi i32 [ %3, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit ], [ 0, %.sink.split ], [ %4, %bb.f ] ; 2 uses
   %i.ap = icmp eq i32 %i.e, 2
   %or.cond = and i1 %i.ap, %i.j
-  %3 = select i1 %or.cond, i64 8, i64 0
-  %spec.select = add i64 %.0, %3
+  %5 = add i32 %.0, 8
+  %spec.select = select i1 %or.cond, i32 %5, i32 %.0
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #8
-  %4 = and i64 %spec.select, 4294967295
+  %6 = zext i32 %spec.select to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i32 %.0.val, ptr %i.ar, align 8, !tbaa !316, !alias.scope !936
@@ -278,7 +280,7 @@ bb.j:                                             ; preds = %.sink.split, %bb.f
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i16 %.0.val3, ptr %i.ba, align 8, !tbaa !317, !alias.scope !936
   store i8 1, ptr %i.aq, align 8, !tbaa !305, !alias.scope !936
-  store i64 %4, ptr %1, align 8, !tbaa !326, !alias.scope !936
+  store i64 %6, ptr %1, align 8, !tbaa !326, !alias.scope !936
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !318, !nonnull !300, !align !319 ; 4 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 3 uses

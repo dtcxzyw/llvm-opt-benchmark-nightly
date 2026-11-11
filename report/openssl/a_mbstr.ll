@@ -202,13 +202,16 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.2 = phi i64 [ %spec.select46, %bb.d ], [ %.1, %bb.c ] ; 2 uses
+  %.2 = phi i64 [ %spec.select46, %bb.d ], [ %.1, %bb.c ] ; 3 uses
   %i.n = icmp ult i64 %0, 128
   %i.o = and i64 %.2, -17
   %.3 = select i1 %i.n, i64 %.2, i64 %i.o         ; 2 uses
+  %2 = and i64 %.3, 4
+  %3 = icmp ne i64 %2, 0
   %i.p = icmp ugt i64 %0, 255
-  %i.q = and i64 %.3, -5
-  %.4 = select i1 %i.p, i64 %i.q, i64 %.3         ; 2 uses
+  %or.cond3 = and i1 %i.p, %3
+  %i.q = and i64 %.2, -21
+  %.4 = select i1 %or.cond3, i64 %i.q, i64 %.3    ; 2 uses
   %i.r = icmp ugt i64 %0, 65535
   %i.s = and i64 %.4, -2049
   %.5 = select i1 %i.r, i64 %i.s, i64 %.4         ; 4 uses

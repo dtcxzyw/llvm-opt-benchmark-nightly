@@ -204,19 +204,20 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   %i.ag = tail call i64 @FT_DivFix(i64 noundef %i.af, i64 noundef %i.p) #12
   %i.ah = trunc i64 %i.ag to i32                  ; 3 uses
   %i.ai = icmp slt i32 %i.ah, 0
-  %i.aj = tail call i32 @llvm.abs.i32(i32 %i.ah, i1 true) ; 2 uses
+  %i.aj = tail call i32 @llvm.abs.i32(i32 %i.ah, i1 true) ; 3 uses
   %i.ak = lshr i32 %i.aj, 9
   %i.al = icmp sgt i32 %i.ah, 0
   %i.am = icmp samesign ugt i32 %i.aj, 65535
   %or.cond.i = select i1 %i.al, i1 %i.am, i1 false
-  %spec.store.select4.i = select i1 %or.cond.i, i32 127, i32 %i.ak ; 2 uses
-  %2 = tail call i32 @llvm.umin.i32(i32 %spec.store.select4.i, i32 128)
-  %i.an = sub nsw i32 0, %2
-  %.p.i = select i1 %i.ai, i32 %i.an, i32 %spec.store.select4.i
-  %3 = trunc i32 %.p.i to i8
-  %4 = xor i8 %3, -128
+  %2 = icmp samesign ugt i32 %i.aj, 66047
+  %3 = select i1 %or.cond.i, i32 127, i32 %i.ak   ; 2 uses
+  %i.an = sub nsw i32 128, %3
+  %.p.i = select i1 %2, i32 0, i32 %i.an
+  %4 = xor i32 %3, 128
+  %5 = select i1 %i.ai, i32 %.p.i, i32 %4
+  %6 = trunc i32 %5 to i8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.s
-  store i8 %4, ptr %i.ao, align 1, !tbaa !70
+  store i8 %6, ptr %i.ao, align 1, !tbaa !70
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.q
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !143
@@ -619,19 +620,20 @@ bb.p:                                             ; preds = %bb.o
   %i.cu = call i64 @FT_DivFix(i64 noundef %i.ct, i64 noundef %i.ch) #12
   %i.cv = trunc i64 %i.cu to i32                  ; 3 uses
   %i.cw = icmp slt i32 %i.cv, 0
-  %i.cx = call i32 @llvm.abs.i32(i32 %i.cv, i1 true) ; 2 uses
+  %i.cx = call i32 @llvm.abs.i32(i32 %i.cv, i1 true) ; 3 uses
   %i.cy = lshr i32 %i.cx, 9
   %i.cz = icmp sgt i32 %i.cv, 0
   %i.da = icmp samesign ugt i32 %i.cx, 65535
   %or.cond.i.us.us.i = select i1 %i.cz, i1 %i.da, i1 false
-  %spec.store.select4.i.us.us.i = select i1 %or.cond.i.us.us.i, i32 127, i32 %i.cy ; 2 uses
-  %15 = call i32 @llvm.umin.i32(i32 %spec.store.select4.i.us.us.i, i32 128)
-  %i.db = sub nsw i32 0, %15
-  %.p.i.us.us.i = select i1 %i.cw, i32 %i.db, i32 %spec.store.select4.i.us.us.i
-  %16 = trunc i32 %.p.i.us.us.i to i8
-  %17 = xor i8 %16, -128
+  %15 = icmp samesign ugt i32 %i.cx, 66047
+  %16 = select i1 %or.cond.i.us.us.i, i32 127, i32 %i.cy ; 2 uses
+  %i.db = sub nsw i32 128, %16
+  %.p.i.us.us.i = select i1 %15, i32 0, i32 %i.db
+  %17 = xor i32 %16, 128
+  %18 = select i1 %i.cw, i32 %.p.i.us.us.i, i32 %17
+  %19 = trunc i32 %18 to i8
   %i.dc = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.cl
-  store i8 %17, ptr %i.dc, align 1, !tbaa !70
+  store i8 %19, ptr %i.dc, align 1, !tbaa !70
   %indvars.iv.next273.i = add nuw nsw i64 %indvars.iv272.i, 1 ; 2 uses
   %exitcond275.not.i = icmp eq i64 %indvars.iv.next273.i, %i.cj
   br i1 %exitcond275.not.i, label %._crit_edge246.split.us.us.i, label %bb.o, !llvm.loop !164
@@ -1034,19 +1036,20 @@ bb.au:                                            ; preds = %bb.at
   %i.xd = call i64 @FT_DivFix(i64 noundef %i.xc, i64 noundef %i.ch) #12
   %i.xe = trunc i64 %i.xd to i32                  ; 3 uses
   %i.xf = icmp slt i32 %i.xe, 0
-  %i.xg = call i32 @llvm.abs.i32(i32 %i.xe, i1 true) ; 2 uses
+  %i.xg = call i32 @llvm.abs.i32(i32 %i.xe, i1 true) ; 3 uses
   %i.xh = lshr i32 %i.xg, 9
   %i.xi = icmp sgt i32 %i.xe, 0
   %i.xj = icmp samesign ugt i32 %i.xg, 65535
   %or.cond.i.i = select i1 %i.xi, i1 %i.xj, i1 false
-  %spec.store.select4.i.i = select i1 %or.cond.i.i, i32 127, i32 %i.xh ; 2 uses
-  %18 = call i32 @llvm.umin.i32(i32 %spec.store.select4.i.i, i32 128)
-  %i.xk = sub nsw i32 0, %18
-  %.p.i.i = select i1 %i.xf, i32 %i.xk, i32 %spec.store.select4.i.i
-  %19 = trunc i32 %.p.i.i to i8
-  %20 = xor i8 %19, -128
+  %20 = icmp samesign ugt i32 %i.xg, 66047
+  %21 = select i1 %or.cond.i.i, i32 127, i32 %i.xh ; 2 uses
+  %i.xk = sub nsw i32 128, %21
+  %.p.i.i = select i1 %20, i32 0, i32 %i.xk
+  %22 = xor i32 %21, 128
+  %23 = select i1 %i.xf, i32 %.p.i.i, i32 %22
+  %24 = trunc i32 %23 to i8
   %i.xl = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.wt
-  store i8 %20, ptr %i.xl, align 1, !tbaa !70
+  store i8 %24, ptr %i.xl, align 1, !tbaa !70
   %indvars.iv.next266.i = add nuw nsw i64 %indvars.iv265.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next266.i, %i.cj
   br i1 %exitcond.not.i, label %._crit_edge246.split.i, label %bb.at, !llvm.loop !164

@@ -204,10 +204,11 @@ bb.i:                                             ; preds = %_ZNSt3mapIjN4llvm6M
 
 bb.j:                                             ; preds = %bb.i
   %i.bl = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 64
-  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !368, !noalias !730 ; 4 uses
+  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !368, !noalias !730 ; 5 uses
   %.01317.i.i.i.i.i.i = add i32 %i.bm, -1         ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 56
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !63, !noalias !730 ; 4 uses
+  %5 = zext i32 %i.bm to i64                      ; 2 uses
   %i.bp = zext nneg i32 %.01317.i.i.i.i.i.i to i64 ; 2 uses
   %i.bq = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %i.bp ; 2 uses
   %i.br = load i8, ptr %i.bq, align 8, !tbaa !371, !noalias !730
@@ -219,9 +220,11 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bw, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i, label %.backedge.i.i.i.i.i.i
 
 .backedge.i.i.i.i.i.i:                            ; preds = %bb.j, %.backedge.i.i.i.i.i.i
-  %indvars.iv.i.i.i.a = phi i64 [ %indvars.iv.next.i.i.i, %.backedge.i.i.i.i.i.i ], [ %i.bp, %bb.j ] ; 2 uses
-  %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i.a, -1 ; 3 uses
-  %i.bx = icmp sgt i64 %indvars.iv.i.i.i.a, 0
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.backedge.i.i.i.i.i.i ], [ %i.bp, %bb.j ] ; 2 uses
+  %indvars.iv.i.i.i.a = phi i64 [ %indvars.iv.next.i.i.i.i, %.backedge.i.i.i.i.i.i ], [ %5, %bb.j ]
+  %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, -1 ; 3 uses
+  %i.bx = icmp sgt i64 %indvars.iv.i.i.i, 0
+  %indvars.iv.next.i.i.i.i = add nsw i64 %indvars.iv.i.i.i.a, -1 ; 2 uses
   call void @llvm.assume(i1 %i.bx)
   %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %indvars.iv.next.i.i.i ; 2 uses
   %i.bz = load i8, ptr %i.by, align 8, !tbaa !371, !noalias !730
@@ -237,15 +240,14 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.lo
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.j
+  %indvars.iv.i.lcssa.i.i.i = phi i64 [ %5, %bb.j ], [ %indvars.iv.next.i.i.i.i, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i ] ; 2 uses
   %.01318.i.i.i.lcssa.i.i.i = phi i32 [ %.01317.i.i.i.i.i.i, %bb.j ], [ %i.cf, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i ] ; 2 uses
   %.not.i.not.i.i.i.i = icmp ne i32 %i.bm, %.01318.i.i.i.lcssa.i.i.i
-  %i.cg = add nuw i32 %.01318.i.i.i.lcssa.i.i.i, 1 ; 2 uses
+  %i.cg = add nuw i32 %.01318.i.i.i.lcssa.i.i.i, 1
   %.not1324.i.i.i.i = icmp ult i32 %i.cg, %i.bm
   call void @llvm.assume(i1 %.not.i.not.i.i.i.i)
   call void @llvm.assume(i1 %.not1324.i.i.i.i)
-  %5 = zext i32 %i.cg to i64                      ; 2 uses
-  %wide.trip.count.i.i.i.i = zext i32 %i.bm to i64
-  %i.ch = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %5
+  %i.ch = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %indvars.iv.i.lcssa.i.i.i
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !256, !noalias !730 ; 2 uses
   %i.ck = lshr i64 %i.cj, 56
@@ -254,9 +256,10 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.
   br i1 %.not.i3.i.i.i, label %_ZNK4llvm4bolt13MCPlusBuilder18tryGetAnnotationAsINS0_19MemoryAccessProfileEEENS_7ErrorOrIRKT_EERKNS_6MCInstEj.exit.thread.i, label %.critedge.i.i.i.i
 
 .critedge.i.i.i.i:                                ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i, %.critedge.i.i.i.i
-  %indvars.iv.i4.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.a, %.critedge.i.i.i.i ], [ %5, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i ]
-  %indvars.iv.next.i.i.i.i.a = add nuw nsw i64 %indvars.iv.i4.i.i.i, 1 ; 3 uses
-  %exitcond.not.i.i.i.i = icmp ne i64 %indvars.iv.next.i.i.i.i.a, %wide.trip.count.i.i.i.i
+  %indvars.iv.i4.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.a, %.critedge.i.i.i.i ], [ %indvars.iv.i.lcssa.i.i.i, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i ]
+  %indvars.iv.next.i.i.i.i.a = add nsw i64 %indvars.iv.i4.i.i.i, 1 ; 3 uses
+  %lftr.wideiv.i.i.i.i = trunc i64 %indvars.iv.next.i.i.i.i.a to i32
+  %exitcond.not.i.i.i.i = icmp ne i32 %i.bm, %lftr.wideiv.i.i.i.i
   call void @llvm.assume(i1 %exitcond.not.i.i.i.i)
   %i.cm = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %indvars.iv.next.i.i.i.i.a
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
@@ -659,10 +662,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !368, !noalias !1199 ; 4 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !368, !noalias !1199 ; 5 uses
   %.01317.i.i.i.i.i = add i32 %i.c, -1            ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !63, !noalias !1199 ; 4 uses
+  %4 = zext i32 %i.c to i64                       ; 2 uses
   %i.f = zext nneg i32 %.01317.i.i.i.i.i to i64   ; 2 uses
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.f ; 2 uses
   %i.h = load i8, ptr %i.g, align 8, !tbaa !371, !noalias !1199
@@ -674,9 +678,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i, label %.backedge.i.i.i.i.i
 
 .backedge.i.i.i.i.i:                              ; preds = %bb.b, %.backedge.i.i.i.i.i
-  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i, %.backedge.i.i.i.i.i ], [ %i.f, %bb.b ] ; 2 uses
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i.a, -1 ; 3 uses
-  %i.n = icmp sgt i64 %indvars.iv.i.i.a, 0
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.backedge.i.i.i.i.i ], [ %i.f, %bb.b ] ; 2 uses
+  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.i, %.backedge.i.i.i.i.i ], [ %4, %bb.b ]
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 3 uses
+  %i.n = icmp sgt i64 %indvars.iv.i.i, 0
+  %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.a, -1 ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.next.i.i ; 2 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !371, !noalias !1199
@@ -692,15 +698,14 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.lo
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.b
+  %indvars.iv.i.lcssa.i.i = phi i64 [ %4, %bb.b ], [ %indvars.iv.next.i.i.i, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i ] ; 2 uses
   %.01318.i.i.i.lcssa.i.i = phi i32 [ %.01317.i.i.i.i.i, %bb.b ], [ %i.v, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i ] ; 2 uses
   %.not.i.not.i.i.i = icmp ne i32 %i.c, %.01318.i.i.i.lcssa.i.i
-  %i.w = add nuw i32 %.01318.i.i.i.lcssa.i.i, 1   ; 2 uses
+  %i.w = add nuw i32 %.01318.i.i.i.lcssa.i.i, 1
   %.not1324.i.i.i = icmp ult i32 %i.w, %i.c
   tail call void @llvm.assume(i1 %.not.i.not.i.i.i)
   tail call void @llvm.assume(i1 %.not1324.i.i.i)
-  %4 = zext i32 %i.w to i64                       ; 2 uses
-  %wide.trip.count.i.i.i = zext i32 %i.c to i64
-  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %4
+  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.i.lcssa.i.i
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load i64, ptr %i.y, align 8, !tbaa !256, !noalias !1199 ; 2 uses
   %i.aa = lshr i64 %i.z, 56
@@ -709,9 +714,10 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.
   br i1 %.not.i3.i.i, label %_ZNK4llvm4bolt13MCPlusBuilder18tryGetAnnotationAsImEENS_7ErrorOrIRKT_EERKNS_6MCInstEj.exit.thread, label %.critedge.i.i.i
 
 .critedge.i.i.i:                                  ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i, %.critedge.i.i.i
-  %indvars.iv.i4.i.i = phi i64 [ %indvars.iv.next.i.i.i.a, %.critedge.i.i.i ], [ %4, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i ]
-  %indvars.iv.next.i.i.i.a = add nuw nsw i64 %indvars.iv.i4.i.i, 1 ; 3 uses
-  %exitcond.not.i.i.i = icmp ne i64 %indvars.iv.next.i.i.i.a, %wide.trip.count.i.i.i
+  %indvars.iv.i4.i.i = phi i64 [ %indvars.iv.next.i.i.i.a, %.critedge.i.i.i ], [ %indvars.iv.i.lcssa.i.i, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i ]
+  %indvars.iv.next.i.i.i.a = add nsw i64 %indvars.iv.i4.i.i, 1 ; 3 uses
+  %lftr.wideiv.i.i.i = trunc i64 %indvars.iv.next.i.i.i.a to i32
+  %exitcond.not.i.i.i = icmp ne i32 %i.c, %lftr.wideiv.i.i.i
   tail call void @llvm.assume(i1 %exitcond.not.i.i.i)
   %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.next.i.i.i.a
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
@@ -1114,10 +1120,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !368, !noalias !1308 ; 4 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !368, !noalias !1308 ; 5 uses
   %.01317.i.i.i.i.i = add i32 %i.c, -1            ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !63, !noalias !1308 ; 4 uses
+  %5 = zext i32 %i.c to i64                       ; 2 uses
   %i.f = zext nneg i32 %.01317.i.i.i.i.i to i64   ; 2 uses
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.f ; 2 uses
   %i.h = load i8, ptr %i.g, align 8, !tbaa !371, !noalias !1308
@@ -1129,9 +1136,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i, label %.backedge.i.i.i.i.i
 
 .backedge.i.i.i.i.i:                              ; preds = %bb.b, %.backedge.i.i.i.i.i
-  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i, %.backedge.i.i.i.i.i ], [ %i.f, %bb.b ] ; 2 uses
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i.a, -1 ; 3 uses
-  %i.n = icmp sgt i64 %indvars.iv.i.i.a, 0
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.backedge.i.i.i.i.i ], [ %i.f, %bb.b ] ; 2 uses
+  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.i, %.backedge.i.i.i.i.i ], [ %5, %bb.b ]
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 3 uses
+  %i.n = icmp sgt i64 %indvars.iv.i.i, 0
+  %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.a, -1 ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.next.i.i ; 2 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !371, !noalias !1308
@@ -1147,15 +1156,14 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.lo
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.b
+  %indvars.iv.i.lcssa.i.i = phi i64 [ %5, %bb.b ], [ %indvars.iv.next.i.i.i, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i ] ; 2 uses
   %.01318.i.i.i.lcssa.i.i = phi i32 [ %.01317.i.i.i.i.i, %bb.b ], [ %i.v, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i ] ; 2 uses
   %.not.i.not.i.i.i = icmp ne i32 %i.c, %.01318.i.i.i.lcssa.i.i
-  %i.w = add nuw i32 %.01318.i.i.i.lcssa.i.i, 1   ; 2 uses
+  %i.w = add nuw i32 %.01318.i.i.i.lcssa.i.i, 1
   %.not1324.i.i.i = icmp ult i32 %i.w, %i.c
   tail call void @llvm.assume(i1 %.not.i.not.i.i.i)
   tail call void @llvm.assume(i1 %.not1324.i.i.i)
-  %5 = zext i32 %i.w to i64                       ; 2 uses
-  %wide.trip.count.i.i.i = zext i32 %i.c to i64
-  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %5
+  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.i.lcssa.i.i
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load i64, ptr %i.y, align 8, !tbaa !256, !noalias !1308 ; 2 uses
   %i.aa = lshr i64 %i.z, 56
@@ -1164,9 +1172,10 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.
   br i1 %.not.i3.i.i, label %_ZNK4llvm4bolt13MCPlusBuilder18tryGetAnnotationAsINS_11SmallVectorINS0_19IndirectCallProfileELj4EEEEENS_7ErrorOrIRKT_EERKNS_6MCInstEj.exit.thread, label %.critedge.i.i.i
 
 .critedge.i.i.i:                                  ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i, %.critedge.i.i.i
-  %indvars.iv.i4.i.i = phi i64 [ %indvars.iv.next.i.i.i.a, %.critedge.i.i.i ], [ %5, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i ]
-  %indvars.iv.next.i.i.i.a = add nuw nsw i64 %indvars.iv.i4.i.i, 1 ; 3 uses
-  %exitcond.not.i.i.i = icmp ne i64 %indvars.iv.next.i.i.i.a, %wide.trip.count.i.i.i
+  %indvars.iv.i4.i.i = phi i64 [ %indvars.iv.next.i.i.i.a, %.critedge.i.i.i ], [ %indvars.iv.i.lcssa.i.i, %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i ]
+  %indvars.iv.next.i.i.i.a = add nsw i64 %indvars.iv.i4.i.i, 1 ; 3 uses
+  %lftr.wideiv.i.i.i = trunc i64 %indvars.iv.next.i.i.i.a to i32
+  %exitcond.not.i.i.i = icmp ne i32 %i.c, %lftr.wideiv.i.i.i
   tail call void @llvm.assume(i1 %exitcond.not.i.i.i)
   %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.next.i.i.i.a
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8

@@ -202,21 +202,22 @@ bb.e:                                             ; preds = %.lr.ph
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
-  %.071 = phi i64 [ 1000, %bb.e ], [ %spec.store.select18, %bb.g ]
+  %.071 = phi i64 [ 1000, %bb.e ], [ %spec.store.select18, %bb.g ] ; 2 uses
   %i.t = call i64 @prepare_to_wait_event(ptr noundef @destroy_wait, ptr noundef nonnull %1, i32 noundef 2) #18 ; 0 uses
   %i.u = load volatile ptr, ptr %i.p, align 8
-  %.not99 = icmp eq ptr %i.u, %i.p
-  br i1 %.not99, label %select.unfold, label %bb.g
+  %.not98 = icmp eq ptr %i.u, %i.p
+  %.not99 = icmp eq i64 %.071, 0
+  %spec.select = select i1 %.not98, i1 true, i1 %.not99
+  br i1 %spec.select, label %select.unfold, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.v = call i64 @schedule_timeout(i64 noundef %.071) #18 ; 2 uses
   %i.w = load volatile ptr, ptr %i.p, align 8
   %i.x = icmp ne ptr %i.w, %i.p                   ; 2 uses
-  %i.y = icmp ne i64 %i.v, 0
+  %i.y = icmp ne i64 %i.v, 0                      ; 2 uses
   %or.cond7 = select i1 %i.x, i1 true, i1 %i.y
-  %spec.store.select18 = select i1 %or.cond7, i64 %i.v, i64 1 ; 2 uses
-  %.not83 = icmp ne i64 %spec.store.select18, 0
-  %spec.select84.not = select i1 %i.x, i1 %.not83, i1 false
+  %spec.store.select18 = select i1 %or.cond7, i64 %i.v, i64 1
+  %spec.select84.not = select i1 %i.x, i1 %i.y, i1 false
   br i1 %spec.select84.not, label %bb.f, label %select.unfold
 
 select.unfold:                                    ; preds = %bb.g, %bb.f
@@ -243,21 +244,22 @@ bb.i:                                             ; preds = %._crit_edge
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %.072 = phi i64 [ 1000, %bb.i ], [ %spec.store.select21, %bb.k ]
+  %.072 = phi i64 [ 1000, %bb.i ], [ %spec.store.select21, %bb.k ] ; 2 uses
   %i.ae = call i64 @prepare_to_wait_event(ptr noundef @destroy_wait, ptr noundef nonnull %2, i32 noundef 2) #18 ; 0 uses
   %i.af = load volatile i32, ptr %i.ab, align 8
-  %.not100 = icmp eq i32 %i.af, 0
-  br i1 %.not100, label %select.unfold91, label %bb.k
+  %.not96 = icmp eq i32 %i.af, 0
+  %.not100 = icmp eq i64 %.072, 0
+  %spec.select85 = select i1 %.not96, i1 true, i1 %.not100
+  br i1 %spec.select85, label %select.unfold91, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ag = call i64 @schedule_timeout(i64 noundef %.072) #18 ; 2 uses
   %i.ah = load volatile i32, ptr %i.ab, align 8
   %i.ai = icmp ne i32 %i.ah, 0                    ; 2 uses
-  %i.aj = icmp ne i64 %i.ag, 0
+  %i.aj = icmp ne i64 %i.ag, 0                    ; 2 uses
   %or.cond16 = select i1 %i.ai, i1 true, i1 %i.aj
-  %spec.store.select21 = select i1 %or.cond16, i64 %i.ag, i64 1 ; 2 uses
-  %.not78 = icmp ne i64 %spec.store.select21, 0
-  %spec.select86.not = select i1 %i.ai, i1 %.not78, i1 false
+  %spec.store.select21 = select i1 %or.cond16, i64 %i.ag, i64 1
+  %spec.select86.not = select i1 %i.ai, i1 %i.aj, i1 false
   br i1 %spec.select86.not, label %bb.j, label %select.unfold91
 
 select.unfold91:                                  ; preds = %bb.k, %bb.j

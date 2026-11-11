@@ -204,19 +204,27 @@ bb.c:                                             ; preds = %tty_chars_in_buffer
   %i.j = getelementptr i8, ptr %i.i, i64 88
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not.i58 = icmp eq ptr %i.k, null
-  br i1 %.not.i58, label %select.unfold, label %tty_chars_in_buffer.exit60
+  br i1 %.not.i58, label %tty_chars_in_buffer.exit60.thread, label %tty_chars_in_buffer.exit60
+
+tty_chars_in_buffer.exit60.thread:                ; preds = %bb.c
+  %spec.store.select1068 = call i64 @llvm.umax.i64(i64 %.048, i64 1)
+  br label %select.unfold
 
 tty_chars_in_buffer.exit60:                       ; preds = %bb.c
   %i.l = call i32 %i.k(ptr noundef %0) #11, !inline_history !12
-  %.not116 = icmp eq i32 %i.l, 0
-  br i1 %.not116, label %select.unfold, label %bb.d
+  %3 = icmp ne i32 %i.l, 0                        ; 2 uses
+  %4 = icmp ne i64 %.048, 0                       ; 2 uses
+  %or.cond4 = select i1 %3, i1 true, i1 %4
+  %spec.store.select10 = select i1 %or.cond4, i64 %.048, i64 1 ; 2 uses
+  %spec.select.not = select i1 %3, i1 %4, i1 false
+  br i1 %spec.select.not, label %bb.d, label %select.unfold
 
 bb.d:                                             ; preds = %tty_chars_in_buffer.exit60
   %.not53 = icmp eq i64 %i.h, 0
   br i1 %.not53, label %bb.e, label %.thread75
 
 bb.e:                                             ; preds = %bb.d
-  %i.m = call i64 @schedule_timeout(i64 noundef %.048) #11 ; 3 uses
+  %i.m = call i64 @schedule_timeout(i64 noundef %spec.store.select10) #11 ; 3 uses
   %i.n = load ptr, ptr %i.b, align 8
   %i.o = getelementptr i8, ptr %i.n, i64 88
   %i.p = load ptr, ptr %i.o, align 8              ; 2 uses
@@ -230,15 +238,14 @@ tty_chars_in_buffer.exit63.thread:                ; preds = %bb.e
 tty_chars_in_buffer.exit63:                       ; preds = %bb.e
   %i.q = call i32 %i.p(ptr noundef %0) #11, !inline_history !12
   %i.r = icmp ne i32 %i.q, 0                      ; 2 uses
-  %i.s = icmp ne i64 %i.m, 0
+  %i.s = icmp ne i64 %i.m, 0                      ; 2 uses
   %or.cond7 = select i1 %i.r, i1 true, i1 %i.s
-  %spec.store.select11 = select i1 %or.cond7, i64 %i.m, i64 1 ; 3 uses
-  %.not54 = icmp ne i64 %spec.store.select11, 0
-  %spec.select56.not = select i1 %i.r, i1 %.not54, i1 false
+  %spec.store.select11 = select i1 %or.cond7, i64 %i.m, i64 1 ; 2 uses
+  %spec.select56.not = select i1 %i.r, i1 %i.s, i1 false
   br i1 %spec.select56.not, label %bb.c, label %select.unfold
 
-select.unfold:                                    ; preds = %tty_chars_in_buffer.exit63, %tty_chars_in_buffer.exit60, %bb.c, %tty_chars_in_buffer.exit63.thread
-  %.1.ph = phi i64 [ %spec.store.select1180, %tty_chars_in_buffer.exit63.thread ], [ %.048, %bb.c ], [ %spec.store.select11, %tty_chars_in_buffer.exit63 ], [ %.048, %tty_chars_in_buffer.exit60 ]
+select.unfold:                                    ; preds = %tty_chars_in_buffer.exit63, %tty_chars_in_buffer.exit60, %tty_chars_in_buffer.exit63.thread, %tty_chars_in_buffer.exit60.thread
+  %.1.ph = phi i64 [ %spec.store.select1180, %tty_chars_in_buffer.exit63.thread ], [ %spec.store.select1068, %tty_chars_in_buffer.exit60.thread ], [ %spec.store.select11, %tty_chars_in_buffer.exit63 ], [ %spec.store.select10, %tty_chars_in_buffer.exit60 ]
   call void @finish_wait(ptr noundef %i.g, ptr noundef nonnull %2) #11
   br label %.thread75
 
