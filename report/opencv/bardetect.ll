@@ -205,17 +205,19 @@ bb.a:
   %i.a = mul nsw i32 %1, %1
   %i.b = uitofp nneg i32 %i.a to float
   %i.c = fmul nnan float %i.b, 4.200000e-01
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 3 uses
-  %5 = load i32, ptr %i.d, align 4, !tbaa !58
-  %.fr = freeze i32 %5
-  %6 = sdiv i32 %.fr, %1                          ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
-  %8 = load i32, ptr %7, align 8, !tbaa !59
-  %9 = sdiv i32 %8, %1                            ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %6 = load <2 x i32>, ptr %5, align 8, !tbaa !28
+  %7 = freeze <2 x i32> %6
+  %8 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = sdiv <2 x i32> %7, %9                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  %.sroa.8.0.insert.ext162 = zext i32 %9 to i64   ; 2 uses
+  %11 = extractelement <2 x i32> %10, i64 0       ; 2 uses
+  %.sroa.8.0.insert.ext162 = zext i32 %11 to i64  ; 2 uses
   %.sroa.8.0.insert.shift163 = shl nuw i64 %.sroa.8.0.insert.ext162, 32
-  %.sroa.0.0.insert.ext155 = zext i32 %6 to i64   ; 2 uses
+  %12 = extractelement <2 x i32> %10, i64 1       ; 2 uses
+  %.sroa.0.0.insert.ext155 = zext i32 %12 to i64  ; 2 uses
   %.sroa.0.0.insert.insert157 = or disjoint i64 %.sroa.8.0.insert.shift163, %.sroa.0.0.insert.ext155 ; 3 uses
   call void @_ZN2cv3MatC1ENS_5Size_IiEEi(ptr noundef nonnull align 8 dereferenceable(208) %2, i64 %.sroa.0.0.insert.insert157, i32 noundef 0)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 560
@@ -259,7 +261,7 @@ bb.f:                                             ; preds = %bb.e
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !72   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1624
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !72   ; 2 uses
-  %i.u = icmp sgt i32 %9, 0
+  %i.u = icmp sgt i32 %11, 0
   br i1 %i.u, label %.lr.ph182, label %._crit_edge
 
 .lr.ph182:                                        ; preds = %bb.f
@@ -269,7 +271,7 @@ bb.f:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 896
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1000
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1104
-  %i.ab = icmp sgt i32 %6, 0
+  %i.ab = icmp sgt i32 %12, 0
   br i1 %i.ab, label %.lr.ph182.split.us.preheader, label %._crit_edge
 
 .lr.ph182.split.us.preheader:                     ; preds = %.lr.ph182
@@ -292,7 +294,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ao = mul i64 %i.an, %indvars.iv186
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ao
   %i.aq = mul nsw i64 %indvars.iv186, %i.ac       ; 2 uses
-  %i.ar = load i32, ptr %7, align 8, !tbaa !59    ; 2 uses
+  %i.ar = load i32, ptr %5, align 8, !tbaa !59    ; 2 uses
   %i.as = sext i32 %i.ar to i64
   %.not.us = icmp slt i64 %i.aq, %i.as
   %i.at = add nuw nsw i64 %indvars.iv186, 1       ; 3 uses

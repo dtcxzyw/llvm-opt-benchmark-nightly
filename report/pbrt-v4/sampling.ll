@@ -205,18 +205,19 @@ bb.c:                                             ; preds = %.lr.ph.i47
   %i.ak = fmul float %i.af, %i.aj
   %.fr248 = freeze float %i.ak                    ; 2 uses
   %i.al = fcmp ogt float %.fr248, f0x3F7FFFFF
-  %8 = insertelement <2 x float> poison, float %.fr, i64 0
-  %9 = insertelement <2 x float> %8, float %.fr248, i64 1
-  %10 = bitcast <2 x float> %9 to <2 x i32>
-  %11 = insertelement <2 x i1> poison, i1 %i.ac, i64 0
-  %12 = insertelement <2 x i1> %11, i1 %i.al, i64 1
-  %13 = select <2 x i1> %12, <2 x i32> splat (i32 1065353215), <2 x i32> %10
+  %8 = bitcast float %.fr to i32
+  %9 = bitcast float %.fr248 to i32
+  %. = select i1 %i.ac, i32 1065353215, i32 %8
+  %spec.select = select i1 %i.al, i32 1065353215, i32 %9
   br label %.thread221
 
 .thread221:                                       ; preds = %bb.b, %bb.c
-  %14 = phi <2 x i32> [ %13, %bb.c ], [ zeroinitializer, %bb.b ]
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
-  store <2 x i32> %14, ptr %i.am, align 4
+  %10 = phi i32 [ %., %bb.c ], [ 0, %bb.b ]
+  %11 = phi i32 [ %spec.select, %bb.c ], [ 0, %bb.b ]
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv ; 2 uses
+  store i32 %10, ptr %i.am, align 4
+  %.sroa_idx120 = getelementptr inbounds nuw i8, ptr %i.am, i64 4
+  store i32 %11, ptr %.sroa_idx120, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.thread, label %bb.b, !llvm.loop !128
