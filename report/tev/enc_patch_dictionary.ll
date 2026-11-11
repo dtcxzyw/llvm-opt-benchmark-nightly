@@ -205,7 +205,7 @@ bb.cy:                                            ; preds = %_ZNSt3__114__split_
 _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_.exit489.i: ; preds = %bb.cy, %_ZNSt3__114__split_bufferINS_4pairIjjEERNS_9allocatorIS2_EEE5clearB8nn180100Ev.exit.i.i.i485.i, %bb.cu
   %.0.i488.i = phi ptr [ %i.alv, %bb.cu ], [ %i.amn, %_ZNSt3__114__split_bufferINS_4pairIjjEERNS_9allocatorIS2_EEE5clearB8nn180100Ev.exit.i.i.i485.i ], [ %i.amn, %bb.cy ]
   store ptr %.0.i488.i, ptr %i.alp, align 8, !tbaa !215, !noalias !660
-  %i.amy = load ptr, ptr %i.wn, align 8, !tbaa !203, !noalias !660 ; 10 uses
+  %i.amy = load ptr, ptr %i.wn, align 8, !tbaa !203, !noalias !660 ; 9 uses
   %i.amz = getelementptr inbounds i8, ptr %i.amy, i64 -184 ; 4 uses
   %i.ana = add nuw nsw i64 %i.aih, 1
   store i64 %i.ana, ptr %i.amz, align 8, !tbaa !222, !noalias !660
@@ -215,13 +215,14 @@ _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_
   %.not352436.i = icmp ugt i64 %.2323.i, %.2320.i
   %i.and = getelementptr inbounds i8, ptr %i.amy, i64 -96
   %i.ane = getelementptr inbounds i8, ptr %i.amy, i64 -168
-  br i1 %.not352436.i, label %.split445.us.thread.i, label %.preheader.lr.ph.preheader.i
+  %.not353430.i = icmp ugt i64 %.2329.i, %.2326.i
+  %or.cond.i = select i1 %.not352436.i, i1 true, i1 %.not353430.i
+  br i1 %or.cond.i, label %.split445.us.thread.i, label %.preheader.lr.ph.preheader.i
 
 .preheader.lr.ph.preheader.i:                     ; preds = %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_.exit489.i
-  %.not353430.i = icmp ugt i64 %.2329.i, %.2326.i
   %i.anf = getelementptr inbounds i8, ptr %i.amy, i64 -72
   %i.ang = getelementptr inbounds i8, ptr %i.amy, i64 -144
-  br i1 %.not353430.i, label %.split445.us.thread.i, label %.preheader.i
+  br label %.preheader.i
 
 .split445.us.i:                                   ; preds = %._crit_edge434.2.i
   %i.anh = icmp samesign ult i32 %.sroa.speculated.2.i, 2
@@ -231,9 +232,9 @@ _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_
   %.pre = load ptr, ptr %i.wn, align 8, !tbaa !203, !noalias !660
   br label %.split445.us.thread.i
 
-.preheader.i:                                     ; preds = %.preheader.lr.ph.preheader.i, %._crit_edge434.i
-  %.0295438.i = phi i64 [ %i.apc, %._crit_edge434.i ], [ %.2323.i, %.preheader.lr.ph.preheader.i ] ; 3 uses
-  %.1437.i = phi i32 [ %.sroa.speculated.i, %._crit_edge434.i ], [ 0, %.preheader.lr.ph.preheader.i ]
+.preheader.i:                                     ; preds = %._crit_edge434.i, %.preheader.lr.ph.preheader.i
+  %.0295438.i = phi i64 [ %.2323.i, %.preheader.lr.ph.preheader.i ], [ %i.apc, %._crit_edge434.i ] ; 3 uses
+  %.1437.i = phi i32 [ 0, %.preheader.lr.ph.preheader.i ], [ %.sroa.speculated.i, %._crit_edge434.i ]
   %i.ani = sub i64 %.0295438.i, %.2323.i
   %i.anj = mul i64 %.0295438.i, %i.m
   br label %bb.db
@@ -283,8 +284,8 @@ bb.cz:                                            ; preds = %bb.cz, %.preheader.
   br label %.preheader.2.i
 
 .preheader.2.i:                                   ; preds = %._crit_edge434.2.i, %._crit_edge439.1.i
-  %.0295438.2.i = phi i64 [ %i.apb, %._crit_edge434.2.i ], [ %.2323.i, %._crit_edge439.1.i ] ; 3 uses
-  %.1437.2.i = phi i32 [ %.sroa.speculated.2.i, %._crit_edge434.2.i ], [ %.sroa.speculated.1.i, %._crit_edge439.1.i ]
+  %.0295438.2.i = phi i64 [ %.2323.i, %._crit_edge439.1.i ], [ %i.apb, %._crit_edge434.2.i ] ; 3 uses
+  %.1437.2.i = phi i32 [ %.sroa.speculated.1.i, %._crit_edge439.1.i ], [ %.sroa.speculated.2.i, %._crit_edge434.2.i ]
   %i.aoh = sub i64 %.0295438.2.i, %.2323.i
   %i.aoi = mul i64 %.0295438.2.i, %i.m
   br label %bb.da
@@ -353,8 +354,8 @@ bb.db:                                            ; preds = %bb.db, %.preheader.
   %.not353.i = icmp ugt i64 %i.apu, %.2326.i
   br i1 %.not353.i, label %._crit_edge434.i, label %bb.db, !llvm.loop !593
 
-.split445.us.thread.i:                            ; preds = %.split445.us.i..split445.us.thread.i_crit_edge, %.preheader.lr.ph.preheader.i, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_.exit489.i
-  %47 = phi ptr [ %.pre, %.split445.us.i..split445.us.thread.i_crit_edge ], [ %i.amy, %.preheader.lr.ph.preheader.i ], [ %i.amy, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_.exit489.i ] ; 4 uses
+.split445.us.thread.i:                            ; preds = %.split445.us.i..split445.us.thread.i_crit_edge, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_.exit489.i
+  %47 = phi ptr [ %.pre, %.split445.us.i..split445.us.thread.i_crit_edge ], [ %i.amy, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE12emplace_backIJjjEEERS2_DpOT_.exit489.i ] ; 4 uses
   %i.apv = getelementptr inbounds i8, ptr %47, i64 -24
   %i.apw = load ptr, ptr %i.apv, align 8, !tbaa !220, !noalias !660 ; 4 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.apw, null

@@ -205,7 +205,6 @@ Lf_ManPrepareSet.exit455:                         ; preds = %Lf_ManPrepareSet.ex
 
 .lr.ph692:                                        ; preds = %Lf_ManPrepareSet.exit455
   %i.lh = icmp sgt i32 %.1.i424, 0
-  %2 = icmp sgt i32 %.1.i450, 0
   %i.li = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %i.lj = zext nneg i32 %i.ac to i64
   %i.lk = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
@@ -215,11 +214,13 @@ Lf_ManPrepareSet.exit455:                         ; preds = %Lf_ManPrepareSet.ex
   %i.lo = shl nuw i32 1, %i.ln
   %i.lp = select i1 %i.lm, i32 1, i32 %i.lo
   %i.lq = sext i32 %i.ag to i64                   ; 3 uses
-  br i1 %i.lh, label %.lr.ph692.split.us, label %._crit_edge693
+  %2 = icmp sgt i32 %.1.i450, 0
+  %or.cond933 = and i1 %i.lh, %2
+  br i1 %or.cond933, label %.lr.ph692.split.us, label %._crit_edge693
 
 .lr.ph692.split.us:                               ; preds = %.lr.ph692, %..loopexit638_crit_edge.us
-  %.0691.us = phi ptr [ %.5.us, %..loopexit638_crit_edge.us ], [ null, %.lr.ph692 ] ; 3 uses
-  %.5323690.us = phi i32 [ %.10.us, %..loopexit638_crit_edge.us ], [ %.4322, %.lr.ph692 ] ; 3 uses
+  %.0691.us = phi ptr [ %.5.us.us, %..loopexit638_crit_edge.us ], [ null, %.lr.ph692 ] ; 2 uses
+  %.5323690.us = phi i32 [ %.10.us.us, %..loopexit638_crit_edge.us ], [ %.4322, %.lr.ph692 ] ; 2 uses
   %.1331689.us = phi i32 [ %i.rv, %..loopexit638_crit_edge.us ], [ 0, %.lr.ph692 ]
   %.1343686.us = phi ptr [ %i.ru, %..loopexit638_crit_edge.us ], [ %.0590, %.lr.ph692 ] ; 6 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %.1343686.us, i64 20 ; 2 uses
@@ -230,7 +231,7 @@ Lf_ManPrepareSet.exit455:                         ; preds = %Lf_ManPrepareSet.ex
 
 .preheader637.us:                                 ; preds = %.lr.ph692.split.us
   %i.lu = getelementptr inbounds nuw i8, ptr %.1343686.us, i64 24
-  br i1 %2, label %.lr.ph682.split.us.us, label %..loopexit638_crit_edge.us
+  br label %.lr.ph682.split.us.us
 
 .lr.ph682.split.us.us:                            ; preds = %.preheader637.us, %..loopexit636_crit_edge.us.us
   %.1681.us.us = phi ptr [ %.4.us.us, %..loopexit636_crit_edge.us.us ], [ %.0691.us, %.preheader637.us ] ; 2 uses
@@ -608,17 +609,17 @@ Lf_CutMergeOrderMux.exit.thread.us.us:            ; preds = %bb.av, %bb.ba, %bb.
   %exitcond786.not = icmp eq i32 %i.rt, %.1.i424
   br i1 %exitcond786.not, label %..loopexit638_crit_edge.us, label %.lr.ph682.split.us.us, !llvm.loop !179
 
-..loopexit638_crit_edge.us:                       ; preds = %..loopexit636_crit_edge.us.us, %.preheader637.us, %.lr.ph692.split.us
-  %.10.us = phi i32 [ %.5323690.us, %.lr.ph692.split.us ], [ %.5323690.us, %.preheader637.us ], [ %.9.us.us, %..loopexit636_crit_edge.us.us ] ; 2 uses
-  %.5.us = phi ptr [ %.0691.us, %.lr.ph692.split.us ], [ %.0691.us, %.preheader637.us ], [ %.4.us.us, %..loopexit636_crit_edge.us.us ] ; 2 uses
+..loopexit638_crit_edge.us:                       ; preds = %..loopexit636_crit_edge.us.us, %.lr.ph692.split.us
+  %.10.us.us = phi i32 [ %.5323690.us, %.lr.ph692.split.us ], [ %.9.us.us, %..loopexit636_crit_edge.us.us ] ; 2 uses
+  %.5.us.us = phi ptr [ %.0691.us, %.lr.ph692.split.us ], [ %.4.us.us, %..loopexit636_crit_edge.us.us ] ; 2 uses
   %i.ru = getelementptr inbounds [8 x i8], ptr %.1343686.us, i64 %i.lq
   %i.rv = add nuw nsw i32 %.1331689.us, 1         ; 2 uses
   %exitcond787.not = icmp eq i32 %i.rv, %.1.i
   br i1 %exitcond787.not, label %._crit_edge693, label %.lr.ph692.split.us, !llvm.loop !180
 
 ._crit_edge693:                                   ; preds = %..loopexit638_crit_edge.us, %.lr.ph692
-  %.5323.lcssa = phi i32 [ %.4322, %.lr.ph692 ], [ %.10.us, %..loopexit638_crit_edge.us ] ; 2 uses
-  %.0.lcssa = phi ptr [ null, %.lr.ph692 ], [ %.5.us, %..loopexit638_crit_edge.us ] ; 4 uses
+  %.5323.lcssa = phi i32 [ %.4322, %.lr.ph692 ], [ %.10.us.us, %..loopexit638_crit_edge.us ] ; 2 uses
+  %.0.lcssa = phi ptr [ null, %.lr.ph692 ], [ %.5.us.us, %..loopexit638_crit_edge.us ] ; 4 uses
   %i.rw = load ptr, ptr %i.w, align 8, !tbaa !69
   %i.rx = getelementptr inbounds nuw i8, ptr %i.rw, i64 132
   %i.ry = load i32, ptr %i.rx, align 4, !tbaa !76
