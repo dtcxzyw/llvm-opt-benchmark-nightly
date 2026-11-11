@@ -205,44 +205,34 @@ define hidden void @_RINvXs11_NtCsG258MDvU3F_3std4pathNtB7_7PathBufNtNtCskKLDkoK
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !10, !noundef !10 ; 12 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !10, !noundef !10 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load i64, ptr %i.d, align 8, !noundef !10 ; 11 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !10 ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !655)
   switch i64 %i.e, label %.lr.ph.preheader.split.i.split [
-    i64 0, label %._crit_edge.i
-    i64 1, label %._crit_edge.loopexit.peel.begin.thread.i
-    i64 2, label %._crit_edge.loopexit.peel.begin.i.peel.begin.thread
+    i64 0, label %.thread
+    i64 1, label %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge
   ]
 
 .lr.ph.preheader.split.i.split:                   ; preds = %bb.a
-  %i.f = add i64 %i.e, -3
+  %i.f = add i64 %i.e, -2                         ; 2 uses
   br label %.lr.ph.i
 
 ._crit_edge.loopexit.peel.begin.i.peel.begin:     ; preds = %bb.e
-  %2 = add nuw i64 %.sroa.019.030.i, 2            ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.o
   %i.h = load i8, ptr %i.g, align 1, !alias.scope !655, !noundef !10
   %i.i = icmp eq i8 %i.h, 47
-  br i1 %i.i, label %bb.b, label %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge
+  br i1 %i.i, label %bb.b, label %.thread
 
-._crit_edge.loopexit.peel.begin.i.peel.begin.thread: ; preds = %bb.a
-  %3 = load i8, ptr %i.c, align 1, !alias.scope !655, !noundef !10
-  %4 = icmp eq i8 %3, 47
-  br i1 %4, label %.thread, label %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge
-
-._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge: ; preds = %._crit_edge.loopexit.peel.begin.i.peel.begin.thread, %._crit_edge.loopexit.peel.begin.i.peel.begin
-  %5 = phi i64 [ 1, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ], [ %2, %._crit_edge.loopexit.peel.begin.i.peel.begin ] ; 2 uses
-  %6 = phi i64 [ 0, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ], [ %i.o, %._crit_edge.loopexit.peel.begin.i.peel.begin ]
-  %7 = phi i64 [ 0, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ], [ %.sroa.012.2.i, %._crit_edge.loopexit.peel.begin.i.peel.begin ]
-  %8 = phi i64 [ 0, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ], [ %.sroa.0.1.i, %._crit_edge.loopexit.peel.begin.i.peel.begin ]
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.c, i64 %5
-  %.pre = load i8, ptr %.phi.trans.insert, align 1, !alias.scope !655
-  br label %._crit_edge.loopexit.peel.begin.i.peel.next
+._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge: ; preds = %bb.a
+  %2 = load i8, ptr %i.c, align 1, !alias.scope !655, !noundef !10
+  %3 = icmp eq i8 %2, 47
+  %spec.select = zext i1 %3 to i64
+  br label %.thread
 
 bb.b:                                             ; preds = %._crit_edge.loopexit.peel.begin.i.peel.begin
-  %.not = icmp ult i64 %.sroa.019.030.i, %.sroa.0.1.i
-  br i1 %.not, label %.thread, label %bb.c
+  %.not = icmp ult i64 %i.f, %.sroa.0.1.i
+  br i1 %.not, label %_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = sub nuw i64 %i.o, %.sroa.0.1.i           ; 2 uses
@@ -250,125 +240,28 @@ bb.c:                                             ; preds = %bb.b
   %i.l = add i64 %i.j, %.sroa.012.2.i             ; 2 uses
   %i.m = tail call noundef i64 @llvm.fshl.i64(i64 %i.l, i64 %i.l, i64 62)
   tail call fastcc void @_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef %i.j) #29
-  br label %.thread
+  br label %_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit
 
-.thread:                                          ; preds = %._crit_edge.loopexit.peel.begin.i.peel.begin.thread, %bb.c, %bb.b
-  %9 = phi i64 [ %i.o, %bb.c ], [ %i.o, %bb.b ], [ 0, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ]
-  %i.n = phi i64 [ %2, %bb.c ], [ %2, %bb.b ], [ 1, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ] ; 4 uses
-  %.sroa.012.3.i.peel = phi i64 [ %i.m, %bb.c ], [ %.sroa.012.2.i, %bb.b ], [ 0, %._crit_edge.loopexit.peel.begin.i.peel.begin.thread ]
-  %10 = sub nuw i64 %i.e, %i.n
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.n ; 2 uses
-  %12 = icmp eq i64 %10, 1
-  %13 = load i8, ptr %11, align 1, !alias.scope !655, !noundef !10 ; 2 uses
-  %14 = icmp eq i8 %13, 46                        ; 2 uses
-  br i1 %12, label %20, label %15
-
-15:                                               ; preds = %.thread
-  br i1 %14, label %16, label %21
-
-16:                                               ; preds = %15
-  %17 = getelementptr inbounds nuw i8, ptr %11, i64 1
-  %18 = load i8, ptr %17, align 1, !alias.scope !655, !noundef !10
-  %19 = icmp eq i8 %18, 47
-  br i1 %19, label %22, label %21
-
-20:                                               ; preds = %.thread
-  br i1 %14, label %22, label %21
-
-21:                                               ; preds = %20, %16, %15
-  br label %22
-
-22:                                               ; preds = %21, %20, %16
-  %.sroa.024.0.i.peel = phi i64 [ 1, %20 ], [ 0, %21 ], [ 1, %16 ]
-  %23 = add i64 %.sroa.024.0.i.peel, %i.n
-  br label %._crit_edge.loopexit.peel.begin.i.peel.next
-
-._crit_edge.loopexit.peel.begin.i.peel.next:      ; preds = %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge, %22
-  %24 = phi i64 [ %i.n, %22 ], [ %5, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ]
-  %25 = phi i64 [ %9, %22 ], [ %6, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ] ; 2 uses
-  %26 = phi i8 [ %13, %22 ], [ %.pre, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ]
-  %.sroa.012.2.i.peel = phi i64 [ %.sroa.012.3.i.peel, %22 ], [ %7, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ] ; 3 uses
-  %.sroa.0.1.i.peel = phi i64 [ %23, %22 ], [ %8, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ] ; 4 uses
-  %27 = add nuw i64 %25, 2                        ; 8 uses
-  %28 = icmp eq i8 %26, 47
-  br i1 %28, label %31, label %._crit_edge.i
-
-._crit_edge.loopexit.peel.begin.thread.i:         ; preds = %bb.a
-  %29 = load i8, ptr %i.c, align 1, !alias.scope !655, !noundef !10
-  %30 = icmp eq i8 %29, 47
-  br i1 %30, label %.thread48.i, label %._crit_edge.i
-
-31:                                               ; preds = %._crit_edge.loopexit.peel.begin.i.peel.next
-  %.not.i = icmp ult i64 %25, %.sroa.0.1.i.peel
-  br i1 %.not.i, label %37, label %32
-
-32:                                               ; preds = %31
-  %33 = sub nuw i64 %24, %.sroa.0.1.i.peel        ; 2 uses
-  %34 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.0.1.i.peel
-  %35 = add i64 %33, %.sroa.012.2.i.peel          ; 2 uses
-  %36 = tail call noundef i64 @llvm.fshl.i64(i64 %35, i64 %35, i64 62)
-  tail call fastcc void @_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %34, i64 noundef %33) #29
-  br label %37
-
-37:                                               ; preds = %32, %31
-  %.sroa.012.3.peel.i = phi i64 [ %36, %32 ], [ %.sroa.012.2.i.peel, %31 ] ; 6 uses
-  %38 = sub nuw i64 %i.e, %27
-  %39 = getelementptr inbounds nuw i8, ptr %i.c, i64 %27 ; 3 uses
-  %40 = icmp eq i64 %38, 1
-  br i1 %40, label %49, label %41
-
-41:                                               ; preds = %37
-  %.not27.peel.i = icmp eq i64 %i.e, %27
-  br i1 %.not27.peel.i, label %.thread48.i, label %42
-
-42:                                               ; preds = %41
-  %43 = load i8, ptr %39, align 1, !alias.scope !655, !noundef !10
-  %44 = icmp eq i8 %43, 46
-  br i1 %44, label %45, label %.thread48.i
-
-45:                                               ; preds = %42
-  %46 = getelementptr inbounds nuw i8, ptr %39, i64 1
-  %47 = load i8, ptr %46, align 1, !alias.scope !655, !noundef !10
-  %48 = icmp eq i8 %47, 47
-  br i1 %48, label %53, label %.thread48.i
-
-49:                                               ; preds = %37
-  %50 = load i8, ptr %39, align 1, !alias.scope !655, !noundef !10
-  %51 = icmp eq i8 %50, 46
-  br i1 %51, label %53, label %.thread48.i
-
-.thread48.i:                                      ; preds = %49, %45, %42, %41, %._crit_edge.loopexit.peel.begin.thread.i
-  %.sroa.012.3.peel45.i = phi i64 [ %.sroa.012.3.peel.i, %49 ], [ %.sroa.012.3.peel.i, %45 ], [ %.sroa.012.3.peel.i, %42 ], [ %.sroa.012.3.peel.i, %41 ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i ]
-  %52 = phi i64 [ %27, %49 ], [ %27, %45 ], [ %27, %42 ], [ %i.e, %41 ], [ 1, %._crit_edge.loopexit.peel.begin.thread.i ]
-  br label %53
-
-53:                                               ; preds = %.thread48.i, %49, %45
-  %.sroa.012.3.peel44.i = phi i64 [ %.sroa.012.3.peel.i, %49 ], [ %.sroa.012.3.peel45.i, %.thread48.i ], [ %.sroa.012.3.peel.i, %45 ]
-  %54 = phi i64 [ %27, %49 ], [ %52, %.thread48.i ], [ %27, %45 ]
-  %.sroa.024.0.peel.i = phi i64 [ 1, %49 ], [ 0, %.thread48.i ], [ 1, %45 ]
-  %55 = add i64 %.sroa.024.0.peel.i, %54
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.a, %53, %._crit_edge.loopexit.peel.begin.thread.i, %._crit_edge.loopexit.peel.begin.i.peel.next
-  %.sroa.012.0.lcssa.i = phi i64 [ %i.e, %bb.a ], [ %.sroa.012.3.peel44.i, %53 ], [ %.sroa.012.2.i.peel, %._crit_edge.loopexit.peel.begin.i.peel.next ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i ] ; 2 uses
-  %.sroa.0.0.lcssa.i = phi i64 [ %i.e, %bb.a ], [ %55, %53 ], [ %.sroa.0.1.i.peel, %._crit_edge.loopexit.peel.begin.i.peel.next ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i ] ; 3 uses
-  %56 = icmp ult i64 %.sroa.0.0.lcssa.i, %i.e
-  br i1 %56, label %bb.d, label %_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit
+.thread:                                          ; preds = %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge, %._crit_edge.loopexit.peel.begin.i.peel.begin, %bb.a
+  %i.n = phi i64 [ %i.e, %bb.a ], [ 0, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ], [ %.sroa.012.2.i, %._crit_edge.loopexit.peel.begin.i.peel.begin ] ; 2 uses
+  %.sroa.012.3.i.peel = phi i64 [ %i.e, %bb.a ], [ %spec.select, %._crit_edge.loopexit.peel.begin.i.peel.begin.._crit_edge.loopexit.peel.begin.i.peel.next_crit_edge ], [ %.sroa.0.1.i, %._crit_edge.loopexit.peel.begin.i.peel.begin ] ; 3 uses
+  %4 = icmp ult i64 %.sroa.012.3.i.peel, %i.e
+  br i1 %4, label %bb.d, label %_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.preheader.split.i.split
   %.sroa.0.032.i = phi i64 [ %.sroa.0.1.i, %bb.e ], [ 0, %.lr.ph.preheader.split.i.split ] ; 4 uses
   %.sroa.012.031.i = phi i64 [ %.sroa.012.2.i, %bb.e ], [ 0, %.lr.ph.preheader.split.i.split ] ; 3 uses
-  %.sroa.019.030.i = phi i64 [ %i.o, %bb.e ], [ 0, %.lr.ph.preheader.split.i.split ] ; 7 uses
-  %i.o = add nuw i64 %.sroa.019.030.i, 1          ; 9 uses
+  %.sroa.019.030.i = phi i64 [ %i.o, %bb.e ], [ 0, %.lr.ph.preheader.split.i.split ] ; 5 uses
+  %i.o = add nuw i64 %.sroa.019.030.i, 1          ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.019.030.i
   %i.q = load i8, ptr %i.p, align 1, !alias.scope !655, !noundef !10
   %i.r = icmp eq i8 %i.q, 47
   br i1 %i.r, label %bb.f, label %bb.e
 
-bb.d:                                             ; preds = %._crit_edge.i
-  %i.s = sub nuw i64 %i.e, %.sroa.0.0.lcssa.i     ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.0.0.lcssa.i
-  %i.u = add i64 %i.s, %.sroa.012.0.lcssa.i       ; 2 uses
+bb.d:                                             ; preds = %.thread
+  %i.s = sub nuw i64 %i.e, %.sroa.012.3.i.peel    ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.012.3.i.peel
+  %i.u = add i64 %i.s, %i.n                       ; 2 uses
   %i.v = tail call noundef i64 @llvm.fshl.i64(i64 %i.u, i64 %i.u, i64 62)
   tail call fastcc void @_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.t, i64 noundef %i.s) #29
   br label %_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit
@@ -420,8 +313,8 @@ bb.m:                                             ; preds = %bb.l
   %i.aj = icmp eq i8 %i.ai, 47
   br i1 %i.aj, label %bb.k, label %bb.j
 
-_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit: ; preds = %._crit_edge.i, %bb.d
-  %.sroa.012.1.i = phi i64 [ %i.v, %bb.d ], [ %.sroa.012.0.lcssa.i, %._crit_edge.i ]
+_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtB9_4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.c, %bb.b, %.thread, %bb.d
+  %.sroa.012.1.i = phi i64 [ %i.v, %bb.d ], [ %i.n, %.thread ], [ %.sroa.012.2.i, %bb.b ], [ %i.m, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !657
   store i64 %.sroa.012.1.i, ptr %i.a, align 8, !noalias !657
   call fastcc void @_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 8) #29, !noalias !655
@@ -824,7 +717,7 @@ begin_hunk_1_@llvm.umin.i64
 !653 = distinct !{!653, i1 true, !"_RNvYNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher11write_usizeCsl8OoimOLbh_6qdrant"}
 !654 = distinct !{!654, !653, !"_RNvYNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher11write_usizeCsl8OoimOLbh_6qdrant: argument 0"}
 !655 = !{!650}
-!656 = !{!"llvm.loop.peeled.count", i32 2}
+!656 = !{!"llvm.loop.peeled.count", i32 1}
 !657 = !{!654, !650, !652}
 !658 = distinct !{!658, i1 true, !"_RNvXs3_NtNtCs577yCKf7gy3_4http6header3mapNtB5_9HeaderMapNtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsl8OoimOLbh_6qdrant"}
 !659 = distinct !{!659, !658, !"_RNvXs3_NtNtCs577yCKf7gy3_4http6header3mapNtB5_9HeaderMapNtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsl8OoimOLbh_6qdrant: argument 0"}

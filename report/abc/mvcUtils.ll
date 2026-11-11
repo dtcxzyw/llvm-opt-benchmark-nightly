@@ -204,17 +204,13 @@ bb.c:                                             ; preds = %.lr.ph23
   %i.aa = xor i32 %i.z, %i.v
   store i32 %i.aa, ptr %i.y, align 4, !tbaa !9
   %i.ab = and i32 %i.c, 16777215                  ; 2 uses
-  %i.ac = zext nneg i32 %i.ab to i64              ; 4 uses
-  %1 = icmp ne i32 %i.ab, 0
-  %.neg = sext i1 %1 to i64
-  %2 = add nuw nsw i64 %i.ac, 1
-  %3 = add nsw i64 %2, %.neg                      ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %i.ac = zext nneg i32 %i.ab to i64              ; 5 uses
+  %min.iters.check = icmp samesign ult i32 %i.ab, 8
   br i1 %min.iters.check, label %.lr.ph.preheader27, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %3, -8                         ; 3 uses
-  %4 = sub nsw i64 %i.ac, %n.vec
+  %n.vec = and i64 %i.ac, 16777208                ; 2 uses
+  %1 = and i64 %i.ac, 7
   %invariant.gep = getelementptr [4 x i8], ptr %i.w, i64 %i.ac
   br label %vector.body
 
@@ -235,11 +231,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !97
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.ac
   br i1 %cmp.n, label %.loopexit, label %.lr.ph.preheader27
 
 .lr.ph.preheader27:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ %i.ac, %.lr.ph.preheader ], [ %4, %middle.block ]
+  %indvars.iv.ph = phi i64 [ %i.ac, %.lr.ph.preheader ], [ %1, %middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader27, %.lr.ph

@@ -205,7 +205,7 @@ bb.a:
 define linkonce_odr hidden noundef float @_ZNK3AAT9TrackData12get_trackingEPKvff(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, float noundef %2, float noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = load i16, ptr %0, align 1, !tbaa !281
-  %i.b = tail call noundef i16 @llvm.bswap.i16(i16 %i.a) ; 3 uses
+  %i.b = tail call noundef i16 @llvm.bswap.i16(i16 %i.a) ; 2 uses
   %i.c = zext i16 %i.b to i32                     ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.e = load i32, ptr %i.d, align 1, !tbaa !276
@@ -223,9 +223,9 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %4 = tail call i32 @llvm.usub.sat.i32(i32 %i.c, i32 1) ; 3 uses
-  %wide.trip.count = zext nneg i32 %4 to i64
-  %exitcond.not57 = icmp ult i16 %i.b, 2
+  %4 = add nsw i32 %i.c, -1                       ; 4 uses
+  %wide.trip.count = zext i32 %4 to i64
+  %exitcond.not57 = icmp eq i32 %4, 0
   br i1 %exitcond.not57, label %.critedge, label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a
@@ -259,14 +259,14 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not4860, label %.critedge2, label %.lr.ph63
 
 bb.d:                                             ; preds = %.lr.ph63
-  %.045 = add i32 %.04562, -1                     ; 3 uses
+  %.045 = add nsw i32 %.04562, -1                 ; 3 uses
   %.not48 = icmp eq i32 %.045, 0
   br i1 %.not48, label %.critedge2, label %.lr.ph63, !llvm.loop !3347
 
 .lr.ph63:                                         ; preds = %.critedge, %bb.d
   %.04562 = phi i32 [ %.045, %bb.d ], [ %.04559, %.critedge ] ; 3 uses
   %.045.in61 = phi i32 [ %.04562, %bb.d ], [ %i.c, %.critedge ]
-  %i.v = add i32 %.045.in61, -2
+  %i.v = add nsw i32 %.045.in61, -2
   %i.w = zext i32 %i.v to i64
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.w
   %i.y = load i32, ptr %i.x, align 1, !tbaa !276

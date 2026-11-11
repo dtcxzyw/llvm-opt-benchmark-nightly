@@ -205,9 +205,9 @@ bb.au:                                            ; preds = %bb.at
 _ZN7lodepngL15decodeICCUint32EPKhmPm.exit294:     ; preds = %bb.au
   %i.mh = getelementptr inbounds nuw i8, ptr %1, i64 %.0.i256
   %i.mi = getelementptr inbounds nuw i8, ptr %i.mh, i64 8
-  %i.mj = load i32, ptr %i.mi, align 1
+  %i.mj = load i32, ptr %i.mi, align 1            ; 2 uses
   %i.mk = tail call i32 @llvm.bswap.i32(i32 %i.mj) ; 4 uses
-  %i.ml = zext i32 %i.mk to i64                   ; 4 uses
+  %i.ml = zext i32 %i.mk to i64                   ; 5 uses
   switch i32 %i.mk, label %bb.ax [
     i32 0, label %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread
     i32 1, label %bb.av
@@ -258,13 +258,12 @@ bb.ax:                                            ; preds = %_ZN7lodepngL15decod
   %i.nf = tail call noalias noundef ptr @malloc(i64 noundef %i.ne) #32 ; 4 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.me, i64 8
   store ptr %i.nf, ptr %i.ng, align 8, !tbaa !48
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ml, i64 1) ; 3 uses
-  %xtraiter = and i64 %umax, 1
-  %3 = icmp ult i32 %i.mk, 2
+  %xtraiter = and i64 %i.ml, 1
+  %3 = icmp eq i32 %i.mj, 16777216
   br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %umax, 33554430
+  %unroll_iter = and i64 %i.ml, 33554430
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.1, %.lr.ph.preheader.new
@@ -326,7 +325,7 @@ _ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.1:   ; preds = %bb.az, %_ZN7lodepng
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.1213398.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.oi, %.loopexit.loopexit.unr-lcssa ]
   %.1397.epil.init = phi i64 [ %i.mf, %.lr.ph.preheader ], [ %i.nu, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod422 = trunc i64 %umax to i1
+  %lcmp.mod422 = trunc i32 %i.mk to i1
   tail call void @llvm.assume(i1 %lcmp.mod422)
   %i.oj = add nuw nsw i64 %.1397.epil.init, 2     ; 2 uses
   %i.ok = icmp samesign ugt i64 %i.oj, %2

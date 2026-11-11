@@ -205,7 +205,7 @@ bb.ew:                                            ; preds = %bb.ew, %.new
   %i.qo = getelementptr i8, ptr %i.qn, i64 112
   %.val.i.i.i.i.3 = load i64, ptr %i.qo, align 8, !noundef !76
   %i.qp = add i64 %.val.i.i.i.i.3, %i.qm          ; 3 uses
-  %i.qq = add nuw i64 %.sroa.04.0.i.i.i.i, 4      ; 2 uses
+  %i.qq = add nuw nsw i64 %.sroa.04.0.i.i.i.i, 4  ; 2 uses
   %niter1227.next.3 = add i64 %niter1227, 4       ; 2 uses
   %niter1227.ncmp.3 = icmp eq i64 %niter1227.next.3, %unroll_iter1226
   br i1 %niter1227.ncmp.3, label %_RINvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map3MapINtNtNtBc_5slice4iter4IterNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesENCNCNvXs_NtCsaSXGKSfiU2E_10lance_file2ioNtB21_16LanceEncodingsIoNtCsjjpCCFGI3ul_14lance_encoding11EncodingsIo14submit_request00ENtNtNtBa_6traits8iterator8Iterator3sumjEB23_.exit.unr-lcssa, label %bb.ew
@@ -229,7 +229,7 @@ bb.ex:                                            ; preds = %bb.ex, %.epil.prehe
   %i.qs = getelementptr i8, ptr %i.qr, i64 16
   %.val.i.i.i.i.epil = load i64, ptr %i.qs, align 8, !noundef !76
   %i.qt = add i64 %.val.i.i.i.i.epil, %.sroa.02.0.i.i.i.i.epil ; 2 uses
-  %i.qu = add nuw i64 %.sroa.04.0.i.i.i.i.epil, 1
+  %i.qu = add nuw nsw i64 %.sroa.04.0.i.i.i.i.epil, 1
   %epil.iter1222.next = add i64 %epil.iter1222, 1 ; 2 uses
   %epil.iter1222.cmp.not = icmp eq i64 %epil.iter1222.next, %xtraiter1221
   br i1 %epil.iter1222.cmp.not, label %_RINvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map3MapINtNtNtBc_5slice4iter4IterNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesENCNCNvXs_NtCsaSXGKSfiU2E_10lance_file2ioNtB21_16LanceEncodingsIoNtCsjjpCCFGI3ul_14lance_encoding11EncodingsIo14submit_request00ENtNtNtBa_6traits8iterator8Iterator3sumjEB23_.exit, label %bb.ex, !llvm.loop !29395

@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.loopexit.i
   br i1 %.not24.i57.us.i, label %iseq_scan_bits.exit69.us.i, label %.lr.ph.i58.us.i
 
 .lr.ph.i58.us.i:                                  ; preds = %.lr.ph16.split.us.i
-  %invariant.gep.i.us.idx.i = shl i64 %indvars.iv26.i, 9
+  %invariant.gep.i.us.idx.i = shl nuw nsw i64 %indvars.iv26.i, 9
   %invariant.gep.i.us.i = getelementptr i8, ptr %i.p, i64 %invariant.gep.i.us.idx.i
   br label %.lr.ph.split.us.i65.us.i
 

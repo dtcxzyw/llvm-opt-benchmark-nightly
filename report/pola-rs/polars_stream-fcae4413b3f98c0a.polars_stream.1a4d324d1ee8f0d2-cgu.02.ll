@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.r = load ptr, ptr %i.m, align 8, !dbg !4151, !alias.scope !4127, !noalias !4124, !nonnull !3214, !noundef !3214
   %i.s = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %i.o, !dbg !4152
   store i64 %i.o, ptr %i.s, align 8, !dbg !4153, !noalias !4124
-  %i.t = add i64 %i.o, 1, !dbg !4154              ; 3 uses
+  %i.t = add nuw i64 %i.o, 1, !dbg !4154          ; 3 uses
   store i64 %i.t, ptr %i.n, align 8, !dbg !4154, !alias.scope !4127, !noalias !4124
   %exitcond.not.i = icmp eq i64 %i.t, %1, !dbg !4155
   br i1 %exitcond.not.i, label %_RNvMNtCsexZqwX5uBAL_16concurrent_queue7boundedINtB2_7BoundedINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCskY9G75ZWc4U_11polars_expr9hash_keys8HashKeysEE3newCs2g09Ig8GZd6_13polars_stream.exit, label %bb.f, !dbg !4146
@@ -374,7 +374,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.r = load ptr, ptr %i.m, align 8, !dbg !4299, !alias.scope !4275, !noalias !4272, !nonnull !3214, !noundef !3214
   %i.s = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %i.o, !dbg !4300
   store i64 %i.o, ptr %i.s, align 8, !dbg !4301, !noalias !4272
-  %i.t = add i64 %i.o, 1, !dbg !4302              ; 3 uses
+  %i.t = add nuw i64 %i.o, 1, !dbg !4302          ; 3 uses
   store i64 %i.t, ptr %i.n, align 8, !dbg !4302, !alias.scope !4275, !noalias !4272
   %exitcond.not.i = icmp eq i64 %i.t, %1, !dbg !4303
   br i1 %exitcond.not.i, label %_RNvMNtCsexZqwX5uBAL_16concurrent_queue7boundedINtB2_7BoundedINtNtCsgZ49sUHp3tW_5alloc3vec3VecTNtNtCs2g09Ig8GZd6_13polars_stream6morsel9MorselSeqNtNtCskAlUH1kY1DR_10polars_ooc11spill_frame10SpillFrameNtNtCskY9G75ZWc4U_11polars_expr9hash_keys8HashKeysEEE3newB1y_.exit, label %bb.f, !dbg !4294
@@ -544,7 +544,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.s = getelementptr inbounds nuw [40 x i8], ptr %i.r, i64 %i.o, !dbg !4448
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.s, i64 32, !dbg !4449
   store i64 %i.o, ptr %.sroa.3.0..sroa_idx.i, align 8, !dbg !4449, !noalias !4420
-  %i.t = add i64 %i.o, 1, !dbg !4450              ; 3 uses
+  %i.t = add nuw i64 %i.o, 1, !dbg !4450          ; 3 uses
   store i64 %i.t, ptr %i.n, align 8, !dbg !4450, !alias.scope !4423, !noalias !4420
   %exitcond.not.i = icmp eq i64 %i.t, %1, !dbg !4451
   br i1 %exitcond.not.i, label %_RNvMNtCsexZqwX5uBAL_16concurrent_queue7boundedINtB2_7BoundedINtNvMs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes8group_byNtB14_16GroupBySinkState14combine_locals6ToDropINtNtCsgZ49sUHp3tW_5alloc3vec3VecTjyNtNtCskY9G75ZWc4U_11polars_expr9hash_keys8HashKeysNtNtCskAlUH1kY1DR_10polars_ooc11spill_frame10SpillFrameEEIB2C_NtB14_6PreAggEEE3newB18_.exit, label %bb.f, !dbg !4442
