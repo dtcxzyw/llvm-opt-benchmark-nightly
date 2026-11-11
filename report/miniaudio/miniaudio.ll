@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %struct.ma_dr_wav__metadata_parser, align 8 ; 14 uses
   %i.g = alloca [12 x i8], align 8                ; 5 uses
   %i.h = alloca [4 x i8], align 4                 ; 5 uses
-  %i.i = alloca [4 x i8], align 1                 ; 8 uses
+  %i.i = alloca [4 x i8], align 4                 ; 5 uses
   %i.j = alloca [8 x i8], align 8                 ; 5 uses
   %i.k = alloca [16 x i8], align 16               ; 5 uses
   %i.l = alloca [4 x i8], align 4                 ; 7 uses
@@ -385,24 +385,13 @@ ma_dr_wav_bytes_to_u32_ex.exit590:                ; preds = %bb.i, %bb.i, %bb.j
   br i1 %.not479, label %bb.k, label %.critedge537
 
 bb.k:                                             ; preds = %ma_dr_wav_bytes_to_u32_ex.exit590
-  %9 = load i8, ptr %i.i, align 1, !tbaa !119
-  %10 = icmp eq i8 %9, 87
-  %11 = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %12 = load i8, ptr %11, align 1
-  %13 = icmp eq i8 %12, 65
-  %or.cond1042 = select i1 %10, i1 %13, i1 false
-  %14 = getelementptr inbounds nuw i8, ptr %i.i, i64 2
-  %15 = load i8, ptr %14, align 1
-  %16 = icmp eq i8 %15, 86
-  %or.cond1046 = select i1 %or.cond1042, i1 %16, i1 false
-  %17 = getelementptr inbounds nuw i8, ptr %i.i, i64 3
-  %18 = load i8, ptr %17, align 1
-  %.fr = freeze i8 %18
-  %.not1217 = icmp eq i8 %.fr, 69
-  %or.cond1255 = and i1 %or.cond1046, %.not1217
+  %9 = load <4 x i8>, ptr %i.i, align 4
+  %10 = freeze <4 x i8> %9
+  %.scalar = bitcast <4 x i8> %10 to i32
+  %.not1217 = icmp eq i32 %.scalar, 1163280727
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #55
-  br i1 %or.cond1255, label %.thread821, label %ma_dr_wav_free.exit779
+  br i1 %.not1217, label %.thread821, label %ma_dr_wav_free.exit779
 
 bb.l:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #55

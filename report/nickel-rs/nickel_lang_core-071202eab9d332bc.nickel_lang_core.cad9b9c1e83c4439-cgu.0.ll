@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %"_ZN121_$LT$hashbro
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc noundef align 8 ptr @"_ZN121_$LT$$RF$nickel_lang_core..typecheck..record..ShallowRecord$u20$as$u20$nickel_lang_core..typecheck..record..WalkSplit$GT$10walk_split17h5ec7d7e9174b44d2E"(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull align 8 dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(80) %2, ptr noalias noundef nonnull align 1 %3) unnamed_addr #2 personality ptr @rust_eh_personality !guid !19881 {
 bb.a:
-  %i.a = alloca [40 x i8], align 8                ; 16 uses
+  %i.a = alloca [40 x i8], align 16               ; 16 uses
   %i.b = alloca [40 x i8], align 8                ; 8 uses
   %i.c = alloca [40 x i8], align 8                ; 8 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -231,10 +231,10 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
-  %.val2.i22 = load ptr, ptr %i.r, align 8, !nonnull !152 ; 12 uses
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %.val3.i23.a = load ptr, ptr %4, align 8
-  %.val3.i37.fr = freeze ptr %.val3.i23.a         ; 11 uses
+  %.val3.i23 = load ptr, ptr %4, align 8
+  %.val3.i23.a = load ptr, ptr %i.r, align 8, !nonnull !152 ; 12 uses
+  %.val3.i37.fr = freeze ptr %.val3.i23           ; 11 uses
   %.not.i.i26 = icmp eq ptr %.val3.i37.fr, null
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 56
   %.val.i29 = load ptr, ptr %i.s, align 8, !nonnull !152 ; 12 uses
@@ -328,7 +328,7 @@ bb.h:                                             ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 %.idx140 ; 3 uses
   %.not.i.i40 = icmp eq ptr %.val3.i37.fr, null
   %.not.i5.i47 = icmp eq ptr %.val1.i44.fr, null  ; 2 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
@@ -347,11 +347,11 @@ bb.h:                                             ; preds = %bb.g
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us138, i64 168 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !19884)
-  %.val.i.i.i38.us = load i64, ptr %.val2.i22, align 8, !noalias !19885, !noundef !152 ; 2 uses
+  %.val.i.i.i38.us = load i64, ptr %.val3.i23.a, align 8, !noalias !19885, !noundef !152 ; 2 uses
   %i.bd = icmp ne i64 %.val.i.i.i38.us, 0
   call void @llvm.assume(i1 %i.bd)
   %i.be = add i64 %.val.i.i.i38.us, 1             ; 2 uses
-  store i64 %i.be, ptr %.val2.i22, align 8, !noalias !19885
+  store i64 %i.be, ptr %.val3.i23.a, align 8, !noalias !19885
   %i.bf = icmp eq i64 %i.be, 0
   br i1 %i.bf, label %.split60.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i39.us, !prof !154
 
@@ -377,11 +377,11 @@ bb.i:                                             ; preds = %_ZN5alloc2rc10RcInn
   br i1 %i.bl, label %.split64.us, label %bb.j, !prof !154
 
 bb.j:                                             ; preds = %bb.i, %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i46.us
-  store ptr %.val2.i22, ptr %i.a, align 8, !alias.scope !19884
+  store ptr %.val3.i23.a, ptr %i.a, align 16, !alias.scope !19884
   store ptr null, ptr %i.aw, align 8, !alias.scope !19884
-  store ptr %.val.i29, ptr %i.ax, align 8, !alias.scope !19884
+  store ptr %.val.i29, ptr %i.ax, align 16, !alias.scope !19884
   store ptr %.val1.i44.fr, ptr %i.ay, align 8, !alias.scope !19884
-  store i16 %i.v, ptr %i.az, align 8, !alias.scope !19884
+  store i16 %i.v, ptr %i.az, align 16, !alias.scope !19884
   %i.bm = invoke fastcc noundef align 8 ptr @"_ZN108_$LT$$RF$nickel_lang_core..typecheck..record..ResolvedField$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h4855382483d024aeE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %.sroa.0.0.us138, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.k unwind label %.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -397,22 +397,27 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ba, label %.split58.us, label %.lr.ph135
 
 .split.split.us.preheader:                        ; preds = %.split
-  br i1 %i.ba, label %.split58.us, label %.lr.ph137
+  br i1 %i.ba, label %.split58.us, label %.lr.ph137.preheader
+
+.lr.ph137.preheader:                              ; preds = %.split.split.us.preheader
+  %5 = insertelement <2 x ptr> poison, ptr %.val3.i23.a, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %.val3.i37.fr, i64 1
+  br label %.lr.ph137
 
 .split.split.us:                                  ; preds = %bb.l
   %i.bn = icmp eq ptr %i.bo, %i.av
   br i1 %i.bn, label %.split58.us, label %.lr.ph137
 
-.lr.ph137:                                        ; preds = %.split.split.us.preheader, %.split.split.us
-  %.sroa.0.0.us66136 = phi ptr [ %i.bo, %.split.split.us ], [ %i.as, %.split.split.us.preheader ] ; 2 uses
+.lr.ph137:                                        ; preds = %.lr.ph137.preheader, %.split.split.us
+  %.sroa.0.0.us66136 = phi ptr [ %i.bo, %.split.split.us ], [ %i.as, %.lr.ph137.preheader ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us66136, i64 168 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !19884)
-  %.val.i.i.i38.us67 = load i64, ptr %.val2.i22, align 8, !noalias !19885, !noundef !152 ; 2 uses
+  %.val.i.i.i38.us67 = load i64, ptr %.val3.i23.a, align 8, !noalias !19885, !noundef !152 ; 2 uses
   %i.bp = icmp ne i64 %.val.i.i.i38.us67, 0
   call void @llvm.assume(i1 %i.bp)
   %i.bq = add i64 %.val.i.i.i38.us67, 1           ; 2 uses
-  store i64 %i.bq, ptr %.val2.i22, align 8, !noalias !19885
+  store i64 %i.bq, ptr %.val3.i23.a, align 8, !noalias !19885
   %i.br = icmp eq i64 %i.bq, 0
   br i1 %i.br, label %.split60.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i39.us68, !prof !154
 
@@ -435,11 +440,10 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i39.us68: ; pred
   br i1 %i.bx, label %.split62.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i46.us71, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i46.us71: ; preds = %"_ZN96_$LT$nickel_lang_parser..environment..Environment$LT$K$C$V$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hcc98a2e55c6b3dbbE.exit.i42.us69"
-  store ptr %.val2.i22, ptr %i.a, align 8, !alias.scope !19884
-  store ptr %.val3.i37.fr, ptr %i.aw, align 8, !alias.scope !19884
-  store ptr %.val.i29, ptr %i.ax, align 8, !alias.scope !19884
+  store <2 x ptr> %6, ptr %i.a, align 16, !alias.scope !19884
+  store ptr %.val.i29, ptr %i.ax, align 16, !alias.scope !19884
   store ptr null, ptr %i.ay, align 8, !alias.scope !19884
-  store i16 %i.v, ptr %i.az, align 8, !alias.scope !19884
+  store i16 %i.v, ptr %i.az, align 16, !alias.scope !19884
   %i.by = invoke fastcc noundef align 8 ptr @"_ZN108_$LT$$RF$nickel_lang_core..typecheck..record..ResolvedField$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h4855382483d024aeE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %.sroa.0.0.us66136, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.l unwind label %.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -471,11 +475,11 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.experimental.noalias.scope.decl(metadata !19886)
-  %.val.i.i.i24 = load i64, ptr %.val2.i22, align 8, !noalias !19887, !noundef !152 ; 2 uses
+  %.val.i.i.i24 = load i64, ptr %.val3.i23.a, align 8, !noalias !19887, !noundef !152 ; 2 uses
   %i.ca = icmp ne i64 %.val.i.i.i24, 0
   call void @llvm.assume(i1 %i.ca)
   %i.cb = add i64 %.val.i.i.i24, 1                ; 2 uses
-  store i64 %i.cb, ptr %.val2.i22, align 8, !noalias !19887
+  store i64 %i.cb, ptr %.val3.i23.a, align 8, !noalias !19887
   %i.cc = icmp eq i64 %i.cb, 0
   br i1 %i.cc, label %bb.p, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i25, !prof !154
 
@@ -529,7 +533,7 @@ bb.u:                                             ; preds = %bb.t
   unreachable
 
 bb.v:                                             ; preds = %bb.t, %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i32
-  store ptr %.val2.i22, ptr %i.b, align 8, !alias.scope !19886
+  store ptr %.val3.i23.a, ptr %i.b, align 8, !alias.scope !19886
   store ptr %.val3.i37.fr, ptr %i.w, align 8, !alias.scope !19886
   store ptr %.val.i29, ptr %i.x, align 8, !alias.scope !19886
   store ptr %.val1.i44.fr, ptr %i.y, align 8, !alias.scope !19886
@@ -572,11 +576,11 @@ common.resume:                                    ; preds = %.loopexit.split.spl
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.0.0134, i64 168 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !19884)
-  %.val.i.i.i38 = load i64, ptr %.val2.i22, align 8, !noalias !19885, !noundef !152 ; 2 uses
+  %.val.i.i.i38 = load i64, ptr %.val3.i23.a, align 8, !noalias !19885, !noundef !152 ; 2 uses
   %i.cr = icmp ne i64 %.val.i.i.i38, 0
   call void @llvm.assume(i1 %i.cr)
   %i.cs = add i64 %.val.i.i.i38, 1                ; 2 uses
-  store i64 %i.cs, ptr %.val2.i22, align 8, !noalias !19885
+  store i64 %i.cs, ptr %.val3.i23.a, align 8, !noalias !19885
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %.split60.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i39, !prof !154
 
@@ -645,11 +649,11 @@ bb.aa:                                            ; preds = %bb.z
   ret ptr %.sroa.0.2
 
 bb.ab:                                            ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i46
-  store ptr %.val2.i22, ptr %i.a, align 8, !alias.scope !19884
+  store ptr %.val3.i23.a, ptr %i.a, align 16, !alias.scope !19884
   store ptr %.val3.i37.fr, ptr %i.aw, align 8, !alias.scope !19884
-  store ptr %.val.i29, ptr %i.ax, align 8, !alias.scope !19884
+  store ptr %.val.i29, ptr %i.ax, align 16, !alias.scope !19884
   store ptr %.val1.i44.fr, ptr %i.ay, align 8, !alias.scope !19884
-  store i16 %i.v, ptr %i.az, align 8, !alias.scope !19884
+  store i16 %i.v, ptr %i.az, align 16, !alias.scope !19884
   %i.df = invoke fastcc noundef align 8 ptr @"_ZN108_$LT$$RF$nickel_lang_core..typecheck..record..ResolvedField$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h4855382483d024aeE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %.sroa.0.0134, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.ac unwind label %.loopexit.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1052,13 +1056,13 @@ bb.n:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc noundef align 8 ptr @"_ZN69_$LT$$RF$$u5b$T$u5d$$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h15acd45b79436fe5E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull align 8 dereferenceable(56) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %3, ptr noalias noundef nonnull align 1 %4) unnamed_addr #2 personality ptr @rust_eh_personality !guid !110595 {
 bb.a:
-  %i.a = alloca [40 x i8], align 8                ; 20 uses
+  %i.a = alloca [40 x i8], align 16               ; 20 uses
   %.idx = mul nuw nsw i64 %1, 48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 4 uses
-  %.val2.i = load ptr, ptr %3, align 8, !nonnull !152 ; 12 uses
   %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.val3.i.a = load ptr, ptr %5, align 8
-  %.val3.i.fr = freeze ptr %.val3.i.a             ; 7 uses
+  %.val3.i = load ptr, ptr %5, align 8
+  %.val3.i.a = load ptr, ptr %3, align 8, !nonnull !152 ; 12 uses
+  %.val3.i.fr = freeze ptr %.val3.i               ; 7 uses
   %.not.i.i = icmp eq ptr %.val3.i.fr, null
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.val.i = load ptr, ptr %i.c, align 8, !nonnull !152 ; 12 uses
@@ -1068,7 +1072,7 @@ bb.a:
   %.not.i5.i = icmp eq ptr %.val1.i.fr, null      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.f = load i16, ptr %i.e, align 8, !range !179 ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 4 uses
@@ -1093,11 +1097,11 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.06.0.us.us108, i64 48 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !110596)
-  %.val.i.i.i.us.us = load i64, ptr %.val2.i, align 8, !noalias !110597, !noundef !152 ; 2 uses
+  %.val.i.i.i.us.us = load i64, ptr %.val3.i.a, align 8, !noalias !110597, !noundef !152 ; 2 uses
   %i.n = icmp ne i64 %.val.i.i.i.us.us, 0
   call void @llvm.assume(i1 %i.n)
   %i.o = add i64 %.val.i.i.i.us.us, 1             ; 2 uses
-  store i64 %i.o, ptr %.val2.i, align 8, !noalias !110597
+  store i64 %i.o, ptr %.val3.i.a, align 8, !noalias !110597
   %i.p = icmp eq i64 %i.o, 0
   br i1 %i.p, label %.split11.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us, !prof !154
 
@@ -1111,11 +1115,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us: ; preds
   br i1 %i.s, label %.split13.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.us, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.us: ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !110596
+  store ptr %.val3.i.a, ptr %i.a, align 16, !alias.scope !110596
   store ptr null, ptr %i.g, align 8, !alias.scope !110596
-  store ptr %.val.i, ptr %i.h, align 8, !alias.scope !110596
+  store ptr %.val.i, ptr %i.h, align 16, !alias.scope !110596
   store ptr null, ptr %i.i, align 8, !alias.scope !110596
-  store i16 %i.f, ptr %i.j, align 8, !alias.scope !110596
+  store i16 %i.f, ptr %i.j, align 16, !alias.scope !110596
   %i.t = invoke fastcc noundef align 8 ptr @"_ZN86_$LT$$RF$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h12d594c67900cadfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.06.0.us.us108, ptr noalias noundef align 8 dereferenceable(56) %2, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %4)
           to label %bb.b unwind label %.split17.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1133,11 +1137,11 @@ bb.b:                                             ; preds = %_ZN5alloc2rc10RcInn
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.06.0.us104, i64 48 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !110596)
-  %.val.i.i.i.us = load i64, ptr %.val2.i, align 8, !noalias !110597, !noundef !152 ; 2 uses
+  %.val.i.i.i.us = load i64, ptr %.val3.i.a, align 8, !noalias !110597, !noundef !152 ; 2 uses
   %i.w = icmp ne i64 %.val.i.i.i.us, 0
   call void @llvm.assume(i1 %i.w)
   %i.x = add i64 %.val.i.i.i.us, 1                ; 2 uses
-  store i64 %i.x, ptr %.val2.i, align 8, !noalias !110597
+  store i64 %i.x, ptr %.val3.i.a, align 8, !noalias !110597
   %i.y = icmp eq i64 %i.x, 0
   br i1 %i.y, label %.split11.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us, !prof !154
 
@@ -1160,11 +1164,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us: ; preds = 
   br i1 %i.ae, label %.split15.us, label %bb.c, !prof !154
 
 bb.c:                                             ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !110596
+  store ptr %.val3.i.a, ptr %i.a, align 16, !alias.scope !110596
   store ptr null, ptr %i.g, align 8, !alias.scope !110596
-  store ptr %.val.i, ptr %i.h, align 8, !alias.scope !110596
+  store ptr %.val.i, ptr %i.h, align 16, !alias.scope !110596
   store ptr %.val1.i.fr, ptr %i.i, align 8, !alias.scope !110596
-  store i16 %i.f, ptr %i.j, align 8, !alias.scope !110596
+  store i16 %i.f, ptr %i.j, align 16, !alias.scope !110596
   %i.af = invoke fastcc noundef align 8 ptr @"_ZN86_$LT$$RF$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h12d594c67900cadfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.06.0.us104, ptr noalias noundef align 8 dereferenceable(56) %2, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %4)
           to label %bb.d unwind label %.split17.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1180,22 +1184,27 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %.split9.us, label %.lr.ph
 
 .split.split.us.preheader:                        ; preds = %.split
-  br i1 %i.k, label %.split9.us, label %.lr.ph101
+  br i1 %i.k, label %.split9.us, label %.lr.ph101.preheader
+
+.lr.ph101.preheader:                              ; preds = %.split.split.us.preheader
+  %6 = insertelement <2 x ptr> poison, ptr %.val3.i.a, i64 0
+  %7 = insertelement <2 x ptr> %6, ptr %.val3.i.fr, i64 1
+  br label %.lr.ph101
 
 .split.split.us:                                  ; preds = %bb.e
   %i.ag = icmp eq ptr %i.ah, %i.b
   br i1 %i.ag, label %.split9.us, label %.lr.ph101
 
-.lr.ph101:                                        ; preds = %.split.split.us.preheader, %.split.split.us
-  %.sroa.06.0.us21100 = phi ptr [ %i.ah, %.split.split.us ], [ %0, %.split.split.us.preheader ] ; 2 uses
+.lr.ph101:                                        ; preds = %.lr.ph101.preheader, %.split.split.us
+  %.sroa.06.0.us21100 = phi ptr [ %i.ah, %.split.split.us ], [ %0, %.lr.ph101.preheader ] ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.06.0.us21100, i64 48 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !110596)
-  %.val.i.i.i.us22 = load i64, ptr %.val2.i, align 8, !noalias !110597, !noundef !152 ; 2 uses
+  %.val.i.i.i.us22 = load i64, ptr %.val3.i.a, align 8, !noalias !110597, !noundef !152 ; 2 uses
   %i.ai = icmp ne i64 %.val.i.i.i.us22, 0
   call void @llvm.assume(i1 %i.ai)
   %i.aj = add i64 %.val.i.i.i.us22, 1             ; 2 uses
-  store i64 %i.aj, ptr %.val2.i, align 8, !noalias !110597
+  store i64 %i.aj, ptr %.val3.i.a, align 8, !noalias !110597
   %i.ak = icmp eq i64 %i.aj, 0
   br i1 %i.ak, label %.split11.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us23, !prof !154
 
@@ -1218,11 +1227,10 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us23: ; preds 
   br i1 %i.aq, label %.split13.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us26, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us26: ; preds = %"_ZN96_$LT$nickel_lang_parser..environment..Environment$LT$K$C$V$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hcc98a2e55c6b3dbbE.exit.i.us24"
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !110596
-  store ptr %.val3.i.fr, ptr %i.g, align 8, !alias.scope !110596
-  store ptr %.val.i, ptr %i.h, align 8, !alias.scope !110596
+  store <2 x ptr> %7, ptr %i.a, align 16, !alias.scope !110596
+  store ptr %.val.i, ptr %i.h, align 16, !alias.scope !110596
   store ptr null, ptr %i.i, align 8, !alias.scope !110596
-  store i16 %i.f, ptr %i.j, align 8, !alias.scope !110596
+  store i16 %i.f, ptr %i.j, align 16, !alias.scope !110596
   %i.ar = invoke fastcc noundef align 8 ptr @"_ZN86_$LT$$RF$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h12d594c67900cadfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.06.0.us21100, ptr noalias noundef align 8 dereferenceable(56) %2, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %4)
           to label %bb.e unwind label %.split17.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1240,11 +1248,11 @@ bb.e:                                             ; preds = %_ZN5alloc2rc10RcInn
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.06.098, i64 48 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !110596)
-  %.val.i.i.i = load i64, ptr %.val2.i, align 8, !noalias !110597, !noundef !152 ; 2 uses
+  %.val.i.i.i = load i64, ptr %.val3.i.a, align 8, !noalias !110597, !noundef !152 ; 2 uses
   %i.au = icmp ne i64 %.val.i.i.i, 0
   call void @llvm.assume(i1 %i.au)
   %i.av = add i64 %.val.i.i.i, 1                  ; 2 uses
-  store i64 %i.av, ptr %.val2.i, align 8, !noalias !110597
+  store i64 %i.av, ptr %.val3.i.a, align 8, !noalias !110597
   %i.aw = icmp eq i64 %i.av, 0
   br i1 %i.aw, label %.split11.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i, !prof !154
 
@@ -1298,11 +1306,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i: ; preds = %"_
           to label %bb.i unwind label %bb.h
 
 bb.f:                                             ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !110596
+  store ptr %.val3.i.a, ptr %i.a, align 16, !alias.scope !110596
   store ptr %.val3.i.fr, ptr %i.g, align 8, !alias.scope !110596
-  store ptr %.val.i, ptr %i.h, align 8, !alias.scope !110596
+  store ptr %.val.i, ptr %i.h, align 16, !alias.scope !110596
   store ptr %.val1.i.fr, ptr %i.i, align 8, !alias.scope !110596
-  store i16 %i.f, ptr %i.j, align 8, !alias.scope !110596
+  store i16 %i.f, ptr %i.j, align 16, !alias.scope !110596
   %i.bg = invoke fastcc noundef align 8 ptr @"_ZN86_$LT$$RF$nickel_lang_parser..ast..Ast$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h12d594c67900cadfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.06.098, ptr noalias noundef align 8 dereferenceable(56) %2, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %4)
           to label %bb.g unwind label %.split17.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1705,13 +1713,13 @@ _ZN10serde_core3ser12SerializeMap15serialize_entry17h576f23f8e7c8a2c2E.exit: ; p
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(104) %0, ptr noalias noundef nonnull align 8 dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %2, ptr noalias noundef nonnull align 1 %3) unnamed_addr #2 personality ptr @rust_eh_personality !guid !120413 {
 bb.a:
-  %i.a = alloca [40 x i8], align 8                ; 20 uses
+  %i.a = alloca [40 x i8], align 16               ; 20 uses
   %i.b = alloca [40 x i8], align 8                ; 4 uses
-  %i.c = alloca [40 x i8], align 8                ; 20 uses
-  %.val2.i = load ptr, ptr %2, align 8, !nonnull !152 ; 24 uses
+  %i.c = alloca [40 x i8], align 16               ; 20 uses
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val3.i.a = load ptr, ptr %4, align 8
-  %.val3.i.fr = freeze ptr %.val3.i.a             ; 13 uses
+  %.val3.i = load ptr, ptr %4, align 8
+  %.val3.i.a = load ptr, ptr %2, align 8, !nonnull !152 ; 24 uses
+  %.val3.i.fr = freeze ptr %.val3.i               ; 13 uses
   %.not.i.i = icmp eq ptr %.val3.i.fr, null       ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.val.i = load ptr, ptr %i.d, align 8, !nonnull !152 ; 24 uses
@@ -1721,7 +1729,7 @@ bb.a:
   %.not.i5.i = icmp eq ptr %.val1.i.fr, null      ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.g = load i16, ptr %i.f, align 8, !range !179 ; 8 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 4 uses
@@ -1764,11 +1772,11 @@ bb.c:                                             ; preds = %tailrecurse.us.us
   %i.r = load ptr, ptr %i.q, align 8, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120414)
-  %.val.i.i.i.us.us = load i64, ptr %.val2.i, align 8, !noalias !120415, !noundef !152 ; 2 uses
+  %.val.i.i.i.us.us = load i64, ptr %.val3.i.a, align 8, !noalias !120415, !noundef !152 ; 2 uses
   %i.s = icmp ne i64 %.val.i.i.i.us.us, 0
   tail call void @llvm.assume(i1 %i.s)
   %i.t = add i64 %.val.i.i.i.us.us, 1             ; 2 uses
-  store i64 %i.t, ptr %.val2.i, align 8, !noalias !120415
+  store i64 %i.t, ptr %.val3.i.a, align 8, !noalias !120415
   %i.u = icmp eq i64 %i.t, 0
   br i1 %i.u, label %.split33.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us, !prof !154
 
@@ -1782,11 +1790,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us: ; preds
   br i1 %i.x, label %.split35.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.us, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.us: ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us
-  store ptr %.val2.i, ptr %i.c, align 8, !alias.scope !120414
+  store ptr %.val3.i.a, ptr %i.c, align 16, !alias.scope !120414
   store ptr null, ptr %i.h, align 8, !alias.scope !120414
-  store ptr %.val.i, ptr %i.i, align 8, !alias.scope !120414
+  store ptr %.val.i, ptr %i.i, align 16, !alias.scope !120414
   store ptr null, ptr %i.j, align 8, !alias.scope !120414
-  store i16 %i.g, ptr %i.k, align 8, !alias.scope !120414
+  store i16 %i.g, ptr %i.k, align 16, !alias.scope !120414
   %i.y = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.r, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull align 1 %3)
           to label %bb.d unwind label %.split39.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1835,11 +1843,11 @@ bb.f:                                             ; preds = %tailrecurse.us
   %i.ag = load ptr, ptr %i.af, align 8, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120414)
-  %.val.i.i.i.us = load i64, ptr %.val2.i, align 8, !noalias !120415, !noundef !152 ; 2 uses
+  %.val.i.i.i.us = load i64, ptr %.val3.i.a, align 8, !noalias !120415, !noundef !152 ; 2 uses
   %i.ah = icmp ne i64 %.val.i.i.i.us, 0
   tail call void @llvm.assume(i1 %i.ah)
   %i.ai = add i64 %.val.i.i.i.us, 1               ; 2 uses
-  store i64 %i.ai, ptr %.val2.i, align 8, !noalias !120415
+  store i64 %i.ai, ptr %.val3.i.a, align 8, !noalias !120415
   %i.aj = icmp eq i64 %i.ai, 0
   br i1 %i.aj, label %.split33.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us, !prof !154
 
@@ -1862,11 +1870,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us: ; preds = 
   br i1 %i.ap, label %.split37.us, label %bb.g, !prof !154
 
 bb.g:                                             ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us
-  store ptr %.val2.i, ptr %i.c, align 8, !alias.scope !120414
+  store ptr %.val3.i.a, ptr %i.c, align 16, !alias.scope !120414
   store ptr null, ptr %i.h, align 8, !alias.scope !120414
-  store ptr %.val.i, ptr %i.i, align 8, !alias.scope !120414
+  store ptr %.val.i, ptr %i.i, align 16, !alias.scope !120414
   store ptr %.val1.i.fr, ptr %i.j, align 8, !alias.scope !120414
-  store i16 %i.g, ptr %i.k, align 8, !alias.scope !120414
+  store i16 %i.g, ptr %i.k, align 16, !alias.scope !120414
   %i.aq = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.ag, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull align 1 %3)
           to label %bb.h unwind label %.split39.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -1882,10 +1890,15 @@ tailrecurse.backedge.us:                          ; preds = %bb.h, %tailrecurse.
   br label %tailrecurse.us
 
 .split:                                           ; preds = %bb.a
-  br i1 %.not.i5.i, label %tailrecurse.us44, label %tailrecurse
+  br i1 %.not.i5.i, label %tailrecurse.us44.preheader, label %tailrecurse
 
-tailrecurse.us44:                                 ; preds = %.split, %tailrecurse.backedge.us53
-  %.tr.us45 = phi ptr [ %.tr.be.us54, %tailrecurse.backedge.us53 ], [ %0, %.split ] ; 5 uses
+tailrecurse.us44.preheader:                       ; preds = %.split
+  %5 = insertelement <2 x ptr> poison, ptr %.val3.i.a, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %.val3.i.fr, i64 1
+  br label %tailrecurse.us44
+
+tailrecurse.us44:                                 ; preds = %tailrecurse.us44.preheader, %tailrecurse.backedge.us53
+  %.tr.us45 = phi ptr [ %.tr.be.us54, %tailrecurse.backedge.us53 ], [ %0, %tailrecurse.us44.preheader ] ; 5 uses
   %i.as = load i64, ptr %.tr.us45, align 8, !range !163, !noundef !152 ; 3 uses
   %i.at = icmp ne i64 %i.as, 12
   tail call void @llvm.assume(i1 %i.at)
@@ -1918,11 +1931,11 @@ bb.j:                                             ; preds = %tailrecurse.us44
   %i.ay = load ptr, ptr %i.ax, align 8, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120414)
-  %.val.i.i.i.us47 = load i64, ptr %.val2.i, align 8, !noalias !120415, !noundef !152 ; 2 uses
+  %.val.i.i.i.us47 = load i64, ptr %.val3.i.a, align 8, !noalias !120415, !noundef !152 ; 2 uses
   %i.az = icmp ne i64 %.val.i.i.i.us47, 0
   tail call void @llvm.assume(i1 %i.az)
   %i.ba = add i64 %.val.i.i.i.us47, 1             ; 2 uses
-  store i64 %i.ba, ptr %.val2.i, align 8, !noalias !120415
+  store i64 %i.ba, ptr %.val3.i.a, align 8, !noalias !120415
   %i.bb = icmp eq i64 %i.ba, 0
   br i1 %i.bb, label %.split33.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us48, !prof !154
 
@@ -1945,11 +1958,10 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us48: ; preds 
   br i1 %i.bh, label %.split35.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us51, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us51: ; preds = %"_ZN96_$LT$nickel_lang_parser..environment..Environment$LT$K$C$V$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hcc98a2e55c6b3dbbE.exit.i.us49"
-  store ptr %.val2.i, ptr %i.c, align 8, !alias.scope !120414
-  store ptr %.val3.i.fr, ptr %i.h, align 8, !alias.scope !120414
-  store ptr %.val.i, ptr %i.i, align 8, !alias.scope !120414
+  store <2 x ptr> %6, ptr %i.c, align 16, !alias.scope !120414
+  store ptr %.val.i, ptr %i.i, align 16, !alias.scope !120414
   store ptr null, ptr %i.j, align 8, !alias.scope !120414
-  store i16 %i.g, ptr %i.k, align 8, !alias.scope !120414
+  store i16 %i.g, ptr %i.k, align 16, !alias.scope !120414
   %i.bi = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.ay, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull align 1 %3)
           to label %bb.k unwind label %.split39.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -2008,11 +2020,11 @@ bb.l:                                             ; preds = %tailrecurse
   %i.bt = load ptr, ptr %i.bs, align 8, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120414)
-  %.val.i.i.i = load i64, ptr %.val2.i, align 8, !noalias !120415, !noundef !152 ; 2 uses
+  %.val.i.i.i = load i64, ptr %.val3.i.a, align 8, !noalias !120415, !noundef !152 ; 2 uses
   %i.bu = icmp ne i64 %.val.i.i.i, 0
   tail call void @llvm.assume(i1 %i.bu)
   %i.bv = add i64 %.val.i.i.i, 1                  ; 2 uses
-  store i64 %i.bv, ptr %.val2.i, align 8, !noalias !120415
+  store i64 %i.bv, ptr %.val3.i.a, align 8, !noalias !120415
   %i.bw = icmp eq i64 %i.bv, 0
   br i1 %i.bw, label %.split33.us, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i, !prof !154
 
@@ -2062,7 +2074,7 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i: ; preds = %"_
 .split30.us:                                      ; preds = %tailrecurse, %tailrecurse.us44, %tailrecurse.us, %tailrecurse.us.us
   %.us-phi31 = phi ptr [ %.tr.us45, %tailrecurse.us44 ], [ %.tr.us, %tailrecurse.us ], [ %.tr.us.us, %tailrecurse.us.us ], [ %.tr, %tailrecurse ]
   %i.cg = getelementptr inbounds nuw i8, ptr %.us-phi31, i64 8 ; 4 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 4 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 4 uses
@@ -2086,11 +2098,11 @@ bb.m:                                             ; preds = %tailrecurse.us.us.i
   %i.cr = load ptr, ptr %.tr.us.us.i, align 8, !noalias !120416, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !120417
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120418)
-  %.val.i.i.i.us.us.i = load i64, ptr %.val2.i, align 8, !noalias !120419, !noundef !152 ; 2 uses
+  %.val.i.i.i.us.us.i = load i64, ptr %.val3.i.a, align 8, !noalias !120419, !noundef !152 ; 2 uses
   %i.cs = icmp ne i64 %.val.i.i.i.us.us.i, 0
   tail call void @llvm.assume(i1 %i.cs)
   %i.ct = add i64 %.val.i.i.i.us.us.i, 1          ; 2 uses
-  store i64 %i.ct, ptr %.val2.i, align 8, !noalias !120419
+  store i64 %i.ct, ptr %.val3.i.a, align 8, !noalias !120419
   %i.cu = icmp eq i64 %i.ct, 0
   br i1 %i.cu, label %.split14.us.i, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us.i, !prof !154
 
@@ -2104,11 +2116,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us.i: ; pre
   br i1 %i.cx, label %.split16.us.i, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.us.i, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.us.i: ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.us.i
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !120418, !noalias !120417
+  store ptr %.val3.i.a, ptr %i.a, align 16, !alias.scope !120418, !noalias !120417
   store ptr null, ptr %i.ch, align 8, !alias.scope !120418, !noalias !120417
-  store ptr %.val.i, ptr %i.ci, align 8, !alias.scope !120418, !noalias !120417
+  store ptr %.val.i, ptr %i.ci, align 16, !alias.scope !120418, !noalias !120417
   store ptr null, ptr %i.cj, align 8, !alias.scope !120418, !noalias !120417
-  store i16 %i.g, ptr %i.ck, align 8, !alias.scope !120418, !noalias !120417
+  store i16 %i.g, ptr %i.ck, align 16, !alias.scope !120418, !noalias !120417
   %i.cy = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.cr, ptr noalias noundef nonnull align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.n unwind label %.split20.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !120420, !inline_history !120412 ; 2 uses
 
@@ -2132,11 +2144,11 @@ bb.o:                                             ; preds = %tailrecurse.us.i
   %i.df = load ptr, ptr %.tr.us.i, align 8, !noalias !120416, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !120417
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120418)
-  %.val.i.i.i.us.i = load i64, ptr %.val2.i, align 8, !noalias !120419, !noundef !152 ; 2 uses
+  %.val.i.i.i.us.i = load i64, ptr %.val3.i.a, align 8, !noalias !120419, !noundef !152 ; 2 uses
   %i.dg = icmp ne i64 %.val.i.i.i.us.i, 0
   tail call void @llvm.assume(i1 %i.dg)
   %i.dh = add i64 %.val.i.i.i.us.i, 1             ; 2 uses
-  store i64 %i.dh, ptr %.val2.i, align 8, !noalias !120419
+  store i64 %i.dh, ptr %.val3.i.a, align 8, !noalias !120419
   %i.di = icmp eq i64 %i.dh, 0
   br i1 %i.di, label %.split14.us.i, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us.i, !prof !154
 
@@ -2159,11 +2171,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.i: ; preds 
   br i1 %i.do, label %.split18.us.i, label %bb.p, !prof !154
 
 bb.p:                                             ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us.i
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !120418, !noalias !120417
+  store ptr %.val3.i.a, ptr %i.a, align 16, !alias.scope !120418, !noalias !120417
   store ptr null, ptr %i.ch, align 8, !alias.scope !120418, !noalias !120417
-  store ptr %.val.i, ptr %i.ci, align 8, !alias.scope !120418, !noalias !120417
+  store ptr %.val.i, ptr %i.ci, align 16, !alias.scope !120418, !noalias !120417
   store ptr %.val1.i.fr, ptr %i.cj, align 8, !alias.scope !120418, !noalias !120417
-  store i16 %i.g, ptr %i.ck, align 8, !alias.scope !120418, !noalias !120417
+  store i16 %i.g, ptr %i.ck, align 16, !alias.scope !120418, !noalias !120417
   %i.dp = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.df, ptr noalias noundef nonnull align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.q unwind label %.split20.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !120420, !inline_history !120412 ; 2 uses
 
@@ -2173,10 +2185,15 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.us.i, label %tailrecurse.us.i, label %"_ZN98_$LT$$RF$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17h5ea26f65a1dab92aE.exit"
 
 .split.i:                                         ; preds = %.split30.us
-  br i1 %.not.i5.i, label %tailrecurse.us24.i, label %tailrecurse.i
+  br i1 %.not.i5.i, label %tailrecurse.us24.i.preheader, label %tailrecurse.i
 
-tailrecurse.us24.i:                               ; preds = %.split.i, %bb.s
-  %.tr.us25.i = phi ptr [ %i.dv, %bb.s ], [ %i.cg, %.split.i ] ; 3 uses
+tailrecurse.us24.i.preheader:                     ; preds = %.split.i
+  %7 = insertelement <2 x ptr> poison, ptr %.val3.i.a, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %.val3.i.fr, i64 1
+  br label %tailrecurse.us24.i
+
+tailrecurse.us24.i:                               ; preds = %tailrecurse.us24.i.preheader, %bb.s
+  %.tr.us25.i = phi ptr [ %i.dv, %bb.s ], [ %i.cg, %tailrecurse.us24.i.preheader ] ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.tr.us25.i, i64 8
   %i.dr = load i32, ptr %i.dq, align 8, !range !169, !noalias !120416, !noundef !152 ; 2 uses
   %i.ds = icmp ne i32 %i.dr, 4
@@ -2190,11 +2207,11 @@ bb.r:                                             ; preds = %tailrecurse.us24.i
   %i.dw = load ptr, ptr %.tr.us25.i, align 8, !noalias !120416, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !120417
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120418)
-  %.val.i.i.i.us26.i = load i64, ptr %.val2.i, align 8, !noalias !120419, !noundef !152 ; 2 uses
+  %.val.i.i.i.us26.i = load i64, ptr %.val3.i.a, align 8, !noalias !120419, !noundef !152 ; 2 uses
   %i.dx = icmp ne i64 %.val.i.i.i.us26.i, 0
   tail call void @llvm.assume(i1 %i.dx)
   %i.dy = add i64 %.val.i.i.i.us26.i, 1           ; 2 uses
-  store i64 %i.dy, ptr %.val2.i, align 8, !noalias !120419
+  store i64 %i.dy, ptr %.val3.i.a, align 8, !noalias !120419
   %i.dz = icmp eq i64 %i.dy, 0
   br i1 %i.dz, label %.split14.us.i, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us27.i, !prof !154
 
@@ -2217,11 +2234,10 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.us27.i: ; pred
   br i1 %i.ef, label %.split16.us.i, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us30.i, !prof !154
 
 _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.us30.i: ; preds = %"_ZN96_$LT$nickel_lang_parser..environment..Environment$LT$K$C$V$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hcc98a2e55c6b3dbbE.exit.i.us28.i"
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !120418, !noalias !120417
-  store ptr %.val3.i.fr, ptr %i.ch, align 8, !alias.scope !120418, !noalias !120417
-  store ptr %.val.i, ptr %i.ci, align 8, !alias.scope !120418, !noalias !120417
+  store <2 x ptr> %8, ptr %i.a, align 16, !alias.scope !120418, !noalias !120417
+  store ptr %.val.i, ptr %i.ci, align 16, !alias.scope !120418, !noalias !120417
   store ptr null, ptr %i.cj, align 8, !alias.scope !120418, !noalias !120417
-  store i16 %i.g, ptr %i.ck, align 8, !alias.scope !120418, !noalias !120417
+  store i16 %i.g, ptr %i.ck, align 16, !alias.scope !120418, !noalias !120417
   %i.eg = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.dw, ptr noalias noundef nonnull align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.s unwind label %.split20.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !120420, !inline_history !120412 ; 2 uses
 
@@ -2245,11 +2261,11 @@ bb.t:                                             ; preds = %tailrecurse.i
   %i.en = load ptr, ptr %.tr.i, align 8, !noalias !120416, !nonnull !152, !align !156, !noundef !152
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !120417
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120418)
-  %.val.i.i.i.i = load i64, ptr %.val2.i, align 8, !noalias !120419, !noundef !152 ; 2 uses
+  %.val.i.i.i.i = load i64, ptr %.val3.i.a, align 8, !noalias !120419, !noundef !152 ; 2 uses
   %i.eo = icmp ne i64 %.val.i.i.i.i, 0
   tail call void @llvm.assume(i1 %i.eo)
   %i.ep = add i64 %.val.i.i.i.i, 1                ; 2 uses
-  store i64 %i.ep, ptr %.val2.i, align 8, !noalias !120419
+  store i64 %i.ep, ptr %.val3.i.a, align 8, !noalias !120419
   %i.eq = icmp eq i64 %i.ep, 0
   br i1 %i.eq, label %.split14.us.i, label %_ZN5alloc2rc10RcInnerPtr10inc_strong17h810ccca4ff72b1ddE.exit.i.i.i, !prof !154
 
@@ -2297,11 +2313,11 @@ _ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.i: ; preds = %
   unreachable
 
 bb.u:                                             ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i.i
-  store ptr %.val2.i, ptr %i.a, align 8, !alias.scope !120418, !noalias !120417
+  store ptr %.val3.i.a, ptr %i.a, align 16, !alias.scope !120418, !noalias !120417
   store ptr %.val3.i.fr, ptr %i.ch, align 8, !alias.scope !120418, !noalias !120417
-  store ptr %.val.i, ptr %i.ci, align 8, !alias.scope !120418, !noalias !120417
+  store ptr %.val.i, ptr %i.ci, align 16, !alias.scope !120418, !noalias !120417
   store ptr %.val1.i.fr, ptr %i.cj, align 8, !alias.scope !120418, !noalias !120417
-  store i16 %i.g, ptr %i.ck, align 8, !alias.scope !120418, !noalias !120417
+  store i16 %i.g, ptr %i.ck, align 16, !alias.scope !120418, !noalias !120417
   %i.fa = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.en, ptr noalias noundef nonnull align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull align 1 %3)
           to label %bb.v unwind label %.split20.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !120420, !inline_history !120412 ; 2 uses
 
@@ -2339,11 +2355,11 @@ bb.y:                                             ; preds = %.split26.us, %"_ZN9
   ret ptr %.sroa.0.0
 
 bb.z:                                             ; preds = %_ZN5alloc2rc10RcInnerPtr10inc_strong17h3962fc22add47a07E.exit.i.i
-  store ptr %.val2.i, ptr %i.c, align 8, !alias.scope !120414
+  store ptr %.val3.i.a, ptr %i.c, align 16, !alias.scope !120414
   store ptr %.val3.i.fr, ptr %i.h, align 8, !alias.scope !120414
-  store ptr %.val.i, ptr %i.i, align 8, !alias.scope !120414
+  store ptr %.val.i, ptr %i.i, align 16, !alias.scope !120414
   store ptr %.val1.i.fr, ptr %i.j, align 8, !alias.scope !120414
-  store i16 %i.g, ptr %i.k, align 8, !alias.scope !120414
+  store i16 %i.g, ptr %i.k, align 16, !alias.scope !120414
   %i.fc = invoke fastcc noundef align 8 ptr @"_ZN92_$LT$$RF$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_core..typecheck..Walk$GT$4walk17ha66a9845551de8dfE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.bt, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull align 1 %3)
           to label %bb.aa unwind label %.split39.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 

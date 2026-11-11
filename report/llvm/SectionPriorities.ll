@@ -205,27 +205,22 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt13move
   %i.e = sext i32 %i.c to i64
   %i.f = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %i.e ; 2 uses
   %i.g = getelementptr i8, ptr %i.f, i64 8
-  %.val5.i.i = load i64, ptr %i.g, align 8, !tbaa !162
-  %.val5.i.i.fr.i = freeze i64 %.val5.i.i         ; 2 uses
-  %3 = getelementptr i8, ptr %i.f, i64 16         ; 2 uses
-  %.val6.i.i = load i64, ptr %3, align 8
+  %3 = getelementptr i8, ptr %i.f, i64 16
+  %4 = load <2 x i64>, ptr %i.g, align 8
+  %5 = freeze <2 x i64> %4                        ; 2 uses
+  %6 = uitofp <2 x i64> %5 to <2 x double>        ; 3 uses
   %i.h = sext i32 %i.d to i64
   %i.i = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %i.h
   %i.j = getelementptr i8, ptr %i.i, i64 8        ; 2 uses
   %.val3.i.i = load i64, ptr %i.j, align 8, !tbaa !162
   %i.k = load <2 x i64>, ptr %i.j, align 8
   %i.l = uitofp <2 x i64> %i.k to <2 x double>    ; 2 uses
-  %4 = icmp eq i64 %.val5.i.i.fr.i, 0             ; 2 uses
-  %5 = uitofp i64 %.val6.i.i to double
-  %6 = uitofp i64 %.val5.i.i.fr.i to double       ; 2 uses
-  %7 = icmp eq i64 %.val3.i.i, 0
-  %8 = insertelement <2 x double> %i.l, double %5, i64 0
-  %9 = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %10 = insertelement <2 x double> %9, double %6, i64 0
-  %i.m = fdiv <2 x double> %8, %10                ; 2 uses
-  %11 = insertelement <2 x i1> poison, i1 %4, i64 0
-  %12 = insertelement <2 x i1> %11, i1 %7, i64 1
-  %i.n = select <2 x i1> %12, <2 x double> zeroinitializer, <2 x double> %i.m ; 2 uses
+  %7 = insertelement <2 x i64> %5, i64 %.val3.i.i, i64 1
+  %8 = icmp eq <2 x i64> %7, zeroinitializer      ; 2 uses
+  %9 = shufflevector <2 x double> %6, <2 x double> %i.l, <2 x i32> <i32 1, i32 3>
+  %10 = shufflevector <2 x double> %6, <2 x double> %i.l, <2 x i32> <i32 0, i32 2>
+  %i.m = fdiv <2 x double> %9, %10                ; 2 uses
+  %i.n = select <2 x i1> %8, <2 x double> zeroinitializer, <2 x double> %i.m ; 2 uses
   %i.o = extractelement <2 x double> %i.n, i64 0
   %i.p = extractelement <2 x double> %i.n, i64 1
   %i.q = fcmp ogt double %i.o, %i.p
@@ -255,7 +250,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit
 
 bb.g:                                             ; preds = %bb.b
-  br i1 %4, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit, label %.split.i
+  %11 = extractelement <2 x i1> %8, i64 0
+  br i1 %11, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit, label %.split.i
 
 .split.i:                                         ; preds = %bb.g
   %i.aa = load i32, ptr %.pn20, align 4, !tbaa !38 ; 2 uses
@@ -272,18 +268,22 @@ bb.g:                                             ; preds = %bb.b
   %.0.i7.i.i15.i = select i1 %i.af, double 0.000000e+00, double %i.aj
   %i.ak = extractelement <2 x double> %i.m, i64 0
   %i.al = fcmp ogt double %i.ak, %.0.i7.i.i15.i
-  br i1 %i.al, label %.lr.ph.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit
+  br i1 %i.al, label %.lr.ph.i.preheader, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit
 
-.lr.ph.i:                                         ; preds = %.split.i, %.lr.ph.i
-  %i.am = phi i32 [ %i.an, %.lr.ph.i ], [ %i.aa, %.split.i ]
-  %.sroa.0.017.i = phi ptr [ %.sroa.0.0.i, %.lr.ph.i ], [ %.pn20, %.split.i ] ; 3 uses
-  %.sroa.06.016.i = phi ptr [ %.sroa.0.017.i, %.lr.ph.i ], [ %.sroa.0.021, %.split.i ]
+.lr.ph.i.preheader:                               ; preds = %.split.i
+  %12 = extractelement <2 x double> %6, i64 0
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %i.am = phi i32 [ %i.an, %.lr.ph.i ], [ %i.aa, %.lr.ph.i.preheader ]
+  %.sroa.0.017.i = phi ptr [ %.sroa.0.0.i, %.lr.ph.i ], [ %.pn20, %.lr.ph.i.preheader ] ; 3 uses
+  %.sroa.06.016.i = phi ptr [ %.sroa.0.017.i, %.lr.ph.i ], [ %.sroa.0.021, %.lr.ph.i.preheader ]
   store i32 %i.am, ptr %.sroa.06.016.i, align 4, !tbaa !38
   %.sroa.0.0.i = getelementptr inbounds i8, ptr %.sroa.0.017.i, i64 -4 ; 2 uses
   %i.an = load i32, ptr %.sroa.0.0.i, align 4, !tbaa !38 ; 2 uses
   %.val6.i.i.i = load i64, ptr %3, align 8
   %i.ao = uitofp i64 %.val6.i.i.i to double
-  %i.ap = fdiv double %i.ao, %6
+  %i.ap = fdiv double %i.ao, %12
   %i.aq = sext i32 %i.an to i64
   %i.ar = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %i.aq
   %i.as = getelementptr i8, ptr %i.ar, i64 8      ; 2 uses
@@ -686,27 +686,22 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt13move
   %i.e = sext i32 %i.c to i64
   %i.f = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %i.e ; 2 uses
   %i.g = getelementptr i8, ptr %i.f, i64 8
-  %.val5.i.i = load i64, ptr %i.g, align 8, !tbaa !162
-  %.val5.i.i.fr.i = freeze i64 %.val5.i.i         ; 2 uses
-  %3 = getelementptr i8, ptr %i.f, i64 16         ; 2 uses
-  %.val6.i.i = load i64, ptr %3, align 8
+  %3 = getelementptr i8, ptr %i.f, i64 16
+  %4 = load <2 x i64>, ptr %i.g, align 8
+  %5 = freeze <2 x i64> %4                        ; 2 uses
+  %6 = uitofp <2 x i64> %5 to <2 x double>        ; 3 uses
   %i.h = sext i32 %i.d to i64
   %i.i = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %i.h
   %i.j = getelementptr i8, ptr %i.i, i64 8        ; 2 uses
   %.val3.i.i = load i64, ptr %i.j, align 8, !tbaa !162
   %i.k = load <2 x i64>, ptr %i.j, align 8
   %i.l = uitofp <2 x i64> %i.k to <2 x double>    ; 2 uses
-  %4 = icmp eq i64 %.val5.i.i.fr.i, 0             ; 2 uses
-  %5 = uitofp i64 %.val6.i.i to double
-  %6 = uitofp i64 %.val5.i.i.fr.i to double       ; 2 uses
-  %7 = icmp eq i64 %.val3.i.i, 0
-  %8 = insertelement <2 x double> %i.l, double %5, i64 0
-  %9 = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %10 = insertelement <2 x double> %9, double %6, i64 0
-  %i.m = fdiv <2 x double> %8, %10                ; 2 uses
-  %11 = insertelement <2 x i1> poison, i1 %4, i64 0
-  %12 = insertelement <2 x i1> %11, i1 %7, i64 1
-  %i.n = select <2 x i1> %12, <2 x double> zeroinitializer, <2 x double> %i.m ; 2 uses
+  %7 = insertelement <2 x i64> %5, i64 %.val3.i.i, i64 1
+  %8 = icmp eq <2 x i64> %7, zeroinitializer      ; 2 uses
+  %9 = shufflevector <2 x double> %6, <2 x double> %i.l, <2 x i32> <i32 1, i32 3>
+  %10 = shufflevector <2 x double> %6, <2 x double> %i.l, <2 x i32> <i32 0, i32 2>
+  %i.m = fdiv <2 x double> %9, %10                ; 2 uses
+  %i.n = select <2 x i1> %8, <2 x double> zeroinitializer, <2 x double> %i.m ; 2 uses
   %i.o = extractelement <2 x double> %i.n, i64 0
   %i.p = extractelement <2 x double> %i.n, i64 1
   %i.q = fcmp ogt double %i.o, %i.p
@@ -736,7 +731,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit
 
 bb.g:                                             ; preds = %bb.b
-  br i1 %4, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit, label %.split.i
+  %11 = extractelement <2 x i1> %8, i64 0
+  br i1 %11, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit, label %.split.i
 
 .split.i:                                         ; preds = %bb.g
   %i.aa = load i32, ptr %.pn20, align 4, !tbaa !38 ; 2 uses
@@ -753,18 +749,22 @@ bb.g:                                             ; preds = %bb.b
   %.0.i7.i.i15.i = select i1 %i.af, double 0.000000e+00, double %i.aj
   %i.ak = extractelement <2 x double> %i.m, i64 0
   %i.al = fcmp ogt double %i.ak, %.0.i7.i.i15.i
-  br i1 %i.al, label %.lr.ph.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit
+  br i1 %i.al, label %.lr.ph.i.preheader, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit
 
-.lr.ph.i:                                         ; preds = %.split.i, %.lr.ph.i
-  %i.am = phi i32 [ %i.an, %.lr.ph.i ], [ %i.aa, %.split.i ]
-  %.sroa.0.017.i = phi ptr [ %.sroa.0.0.i, %.lr.ph.i ], [ %.pn20, %.split.i ] ; 3 uses
-  %.sroa.06.016.i = phi ptr [ %.sroa.0.017.i, %.lr.ph.i ], [ %.sroa.0.021, %.split.i ]
+.lr.ph.i.preheader:                               ; preds = %.split.i
+  %12 = extractelement <2 x double> %6, i64 0
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %i.am = phi i32 [ %i.an, %.lr.ph.i ], [ %i.aa, %.lr.ph.i.preheader ]
+  %.sroa.0.017.i = phi ptr [ %.sroa.0.0.i, %.lr.ph.i ], [ %.pn20, %.lr.ph.i.preheader ] ; 3 uses
+  %.sroa.06.016.i = phi ptr [ %.sroa.0.017.i, %.lr.ph.i ], [ %.sroa.0.021, %.lr.ph.i.preheader ]
   store i32 %i.am, ptr %.sroa.06.016.i, align 4, !tbaa !38
   %.sroa.0.0.i = getelementptr inbounds i8, ptr %.sroa.0.017.i, i64 -4 ; 2 uses
   %i.an = load i32, ptr %.sroa.0.0.i, align 4, !tbaa !38 ; 2 uses
   %.val6.i.i.i = load i64, ptr %3, align 8
   %i.ao = uitofp i64 %.val6.i.i.i to double
-  %i.ap = fdiv double %i.ao, %6
+  %i.ap = fdiv double %i.ao, %12
   %i.aq = sext i32 %i.an to i64
   %i.ar = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %i.aq
   %i.as = getelementptr i8, ptr %i.ar, i64 8      ; 2 uses

@@ -204,58 +204,54 @@ bb.fk:                                            ; preds = %_ZSt13move_backward
   %.020.i.idx.i = phi i64 [ 2, %bb.fj ], [ %.020.i.add.i, %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i.i ] ; 4 uses
   %.pn19.i.i = phi ptr [ %i.xf, %bb.fj ], [ %.020.i.ptr.i, %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i.i ] ; 4 uses
   %.020.i.ptr.i = getelementptr inbounds nuw i8, ptr %i.xf, i64 %.020.i.idx.i ; 7 uses
-  %i.xn = load i16, ptr %.020.i.ptr.i, align 2    ; 3 uses
-  %i.xo = load i16, ptr %i.xf, align 2            ; 3 uses
-  %.signext.i.i253 = sext i16 %i.xn to i32
-  %6 = and i32 %.signext.i.i253, -2147483648
+  %i.xn = load i16, ptr %.020.i.ptr.i, align 2    ; 2 uses
+  %i.xo = load i16, ptr %i.xf, align 2            ; 2 uses
   %i.xp = insertelement <2 x i16> poison, i16 %i.xn, i64 0
   %i.xq = insertelement <2 x i16> %i.xp, i16 %i.xo, i64 1 ; 2 uses
-  %.inner = and <2 x i16> %i.xq, splat (i16 32767)
-  %i.xr = zext nneg <2 x i16> %.inner to <2 x i32>
-  %7 = or disjoint <2 x i32> %i.xr, splat (i32 1056964608)
-  %8 = bitcast <2 x i32> %7 to <2 x float>
-  %9 = fadd <2 x float> %8, splat (float -5.000000e-01)
-  %10 = zext <2 x i16> %i.xq to <2 x i32>
-  %11 = shl <2 x i32> %10, splat (i32 17)         ; 2 uses
-  %12 = lshr exact <2 x i32> %11, splat (i32 4)
-  %i.xs = or disjoint <2 x i32> %12, splat (i32 1879048192)
+  %i.xr = zext <2 x i16> %i.xq to <2 x i32>       ; 2 uses
+  %6 = shl <2 x i32> %i.xr, splat (i32 17)        ; 2 uses
+  %7 = lshr exact <2 x i32> %6, splat (i32 4)
+  %8 = or disjoint <2 x i32> %7, splat (i32 1879048192)
+  %9 = bitcast <2 x i32> %8 to <2 x float>
+  %10 = and <2 x i32> %i.xr, splat (i32 32767)
+  %i.xs = or disjoint <2 x i32> %10, splat (i32 1056964608)
   %i.xt = bitcast <2 x i32> %i.xs to <2 x float>
-  %i.xu = icmp ult <2 x i32> %11, splat (i32 134217728)
-  %i.xv = fmul <2 x float> %i.xt, splat (float 1.925930e-34)
-  %i.xw = select <2 x i1> %i.xu, <2 x float> %9, <2 x float> %i.xv ; 2 uses
+  %i.xu = icmp ult <2 x i32> %6, splat (i32 134217728)
+  %11 = fadd <2 x float> %i.xt, splat (float -5.000000e-01)
+  %i.xv = fmul <2 x float> %9, splat (float 1.925930e-34)
+  %i.xw = select <2 x i1> %i.xu, <2 x float> %11, <2 x float> %i.xv
   %bc951 = bitcast <2 x float> %i.xw to <2 x i32>
-  %13 = extractelement <2 x i32> %bc951, i64 0
-  %14 = or i32 %6, %13
-  %.fr746 = freeze i32 %14                        ; 4 uses
-  %15 = bitcast i32 %.fr746 to float              ; 17 uses
-  %bc952 = bitcast <2 x float> %i.xw to <2 x i32>
-  %16 = extractelement <2 x i32> %bc952, i64 1
-  %.signext.i3.i255 = sext i16 %i.xo to i32
-  %17 = and i32 %.signext.i3.i255, -2147483648
-  %18 = or i32 %17, %16                           ; 2 uses
-  %19 = bitcast i32 %18 to float                  ; 4 uses
-  %i.xx = fcmp olt float %15, %19
+  %12 = sext <2 x i16> %i.xq to <2 x i32>
+  %13 = and <2 x i32> %12, splat (i32 -2147483648)
+  %14 = or <2 x i32> %13, %bc951
+  %15 = freeze <2 x i32> %14                      ; 5 uses
+  %16 = bitcast <2 x i32> %15 to <2 x float>      ; 2 uses
+  %17 = extractelement <2 x float> %16, i64 0     ; 17 uses
+  %18 = extractelement <2 x float> %16, i64 1     ; 4 uses
+  %i.xx = fcmp olt float %17, %18
   br i1 %i.xx, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread, label %bb.fl
 
 bb.fl:                                            ; preds = %bb.fk
-  %i.xy = fcmp ogt float %15, %19
+  %i.xy = fcmp ogt float %17, %18
   br i1 %i.xy, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread468, label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fl
-  %i.xz = fcmp oeq float %15, 0.000000e+00
-  %i.ya = fcmp oeq float %15, %19
+  %i.xz = fcmp oeq float %17, 0.000000e+00
+  %i.ya = fcmp oeq float %17, %18
   %or.cond.i.i256 = and i1 %i.xz, %i.ya
   br i1 %or.cond.i.i256, label %.split470, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260
 
 .split470:                                        ; preds = %bb.fm
-  %i.yb = icmp slt i32 %.fr746, 0
-  %i.yc = icmp sgt i32 %18, -1
+  %19 = extractelement <2 x i32> %15, i64 0
+  %i.yb = icmp slt i32 %19, 0
+  %20 = extractelement <2 x i32> %15, i64 1
+  %i.yc = icmp sgt i32 %20, -1
   %spec.select.i259 = and i1 %i.yb, %i.yc
   br i1 %spec.select.i259, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread468
 
 _ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260: ; preds = %bb.fm
-  %i.yd = fcmp ord float %15, 0.000000e+00
-  %i.ye = fcmp uno float %19, 0.000000e+00
+  %i.yd = fcmp ord float %17, 0.000000e+00
+  %i.ye = fcmp uno float %18, 0.000000e+00
   %or.cond19.i.i257 = and i1 %i.yd, %i.ye
   br i1 %or.cond19.i.i257, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread468
 
@@ -291,35 +287,37 @@ _ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread468: ; pr
   %i.yu = and i32 %.signext.i3.i246, -2147483648
   %i.yv = or i32 %i.yu, %i.yt                     ; 2 uses
   %i.yw = bitcast i32 %i.yv to float              ; 4 uses
-  %i.yx = fcmp olt float %15, %i.yw
+  %i.yx = fcmp olt float %17, %i.yw
   br i1 %i.yx, label %.lr.ph.i.i.i133.preheader, label %bb.fp
 
 bb.fp:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread468
-  %i.yy = fcmp ogt float %15, %i.yw
+  %i.yy = fcmp ogt float %17, %i.yw
   br i1 %i.yy, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i.i, label %bb.fq
 
 bb.fq:                                            ; preds = %bb.fp
-  %i.yz = fcmp oeq float %15, 0.000000e+00
-  %i.za = fcmp oeq float %15, %i.yw
+  %i.yz = fcmp oeq float %17, 0.000000e+00
+  %i.za = fcmp oeq float %17, %i.yw
   %or.cond.i.i247 = and i1 %i.yz, %i.za
   br i1 %or.cond.i.i247, label %.split473, label %.split472
 
 .split473:                                        ; preds = %bb.fq
-  %i.zb = icmp slt i32 %.fr746, 0
+  %21 = extractelement <2 x i32> %15, i64 0
+  %i.zb = icmp slt i32 %21, 0
   %i.zc = icmp sgt i32 %i.yv, -1
   %spec.select.i250 = and i1 %i.zb, %i.zc
   br i1 %spec.select.i250, label %.lr.ph.i.i.i133.preheader, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i.i
 
 .split472:                                        ; preds = %bb.fq
-  %i.zd = fcmp ord float %15, 0.000000e+00
+  %i.zd = fcmp ord float %17, 0.000000e+00
   %i.ze = fcmp uno float %i.yw, 0.000000e+00
   %or.cond19.i.i248 = and i1 %i.zd, %i.ze
   br i1 %or.cond19.i.i248, label %.lr.ph.i.i.i133.preheader, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i.i
 
 .lr.ph.i.i.i133.preheader:                        ; preds = %.split472, %.split473, %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit260.thread468
-  %i.zf = fcmp oeq float %15, 0.000000e+00
-  %i.zg = fcmp ord float %15, 0.000000e+00        ; 2 uses
-  %i.zh = icmp slt i32 %.fr746, 0
+  %i.zf = fcmp oeq float %17, 0.000000e+00
+  %i.zg = fcmp ord float %17, 0.000000e+00        ; 2 uses
+  %22 = extractelement <2 x i32> %15, i64 0
+  %i.zh = icmp slt i32 %22, 0
   br i1 %i.zf, label %.lr.ph.i.i.i133, label %.lr.ph.i.i.i133.us
 
 .lr.ph.i.i.i133.us:                               ; preds = %.lr.ph.i.i.i133.preheader, %.lr.ph.i.i.i133.us.backedge
@@ -346,11 +344,11 @@ bb.fq:                                            ; preds = %bb.fp
   %i.zw = and i32 %.signext.i3.i237.us, -2147483648
   %i.zx = or i32 %i.zw, %i.zv
   %i.zy = bitcast i32 %i.zx to float              ; 3 uses
-  %i.zz = fcmp olt float %15, %i.zy
+  %i.zz = fcmp olt float %17, %i.zy
   br i1 %i.zz, label %.lr.ph.i.i.i133.us.backedge, label %bb.fr
 
 bb.fr:                                            ; preds = %.lr.ph.i.i.i133.us
-  %i.aaa = fcmp ule float %15, %i.zy
+  %i.aaa = fcmp ule float %17, %i.zy
   %i.aab = fcmp uno float %i.zy, 0.000000e+00
   %i.aac = and i1 %i.aab, %i.aaa
   %or.cond723 = and i1 %i.aac, %i.zg
@@ -383,15 +381,15 @@ bb.fr:                                            ; preds = %.lr.ph.i.i.i133.us
   %i.aar = and i32 %.signext.i3.i237, -2147483648
   %i.aas = or i32 %i.aar, %i.aaq                  ; 2 uses
   %i.aat = bitcast i32 %i.aas to float            ; 4 uses
-  %i.aau = fcmp olt float %15, %i.aat
+  %i.aau = fcmp olt float %17, %i.aat
   br i1 %i.aau, label %.lr.ph.i.i.i133.backedge, label %bb.fs
 
 bb.fs:                                            ; preds = %.lr.ph.i.i.i133
-  %i.aav = fcmp ogt float %15, %i.aat
+  %i.aav = fcmp ogt float %17, %i.aat
   br i1 %i.aav, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i.i, label %bb.ft
 
 bb.ft:                                            ; preds = %bb.fs
-  %i.aaw = fcmp oeq float %15, %i.aat
+  %i.aaw = fcmp oeq float %17, %i.aat
   br i1 %i.aaw, label %.split476, label %.split475
 
 .split476:                                        ; preds = %bb.ft
@@ -422,67 +420,65 @@ _ZSt16__insertion_sortIPtN9__gnu_cxx5__ops15_Iter_comp_iterIPFbttEEEEvT_S7_T0_.e
   %.08.i.i125 = phi ptr [ %i.adg, %_ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i ], [ %i.aaz, %_ZSt16__insertion_sortIPtN9__gnu_cxx5__ops15_Iter_comp_iterIPFbttEEEEvT_S7_T0_.exit.i ] ; 7 uses
   %.011.i.i.i126 = getelementptr inbounds i8, ptr %.08.i.i125, i64 -2 ; 3 uses
   %i.aba = load <2 x i16>, ptr %.011.i.i.i126, align 2 ; 4 uses
-  %.inner948 = and <2 x i16> %i.aba, splat (i16 32767)
-  %20 = zext nneg <2 x i16> %.inner948 to <2 x i32>
-  %21 = or disjoint <2 x i32> %20, splat (i32 1056964608)
-  %22 = bitcast <2 x i32> %21 to <2 x float>
-  %23 = fadd <2 x float> %22, splat (float -5.000000e-01)
-  %24 = extractelement <2 x i16> %i.aba, i64 1    ; 2 uses
-  %.signext.i.i226 = sext i16 %24 to i32
-  %25 = and i32 %.signext.i.i226, -2147483648
-  %i.abb = zext <2 x i16> %i.aba to <2 x i32>
+  %i.abb = zext <2 x i16> %i.aba to <2 x i32>     ; 2 uses
   %i.abc = shl <2 x i32> %i.abb, splat (i32 17)   ; 2 uses
   %i.abd = lshr exact <2 x i32> %i.abc, splat (i32 4)
   %i.abe = or disjoint <2 x i32> %i.abd, splat (i32 1879048192)
   %i.abf = bitcast <2 x i32> %i.abe to <2 x float>
-  %26 = fmul <2 x float> %i.abf, splat (float 1.925930e-34)
-  %27 = icmp ult <2 x i32> %i.abc, splat (i32 134217728)
-  %28 = select <2 x i1> %27, <2 x float> %23, <2 x float> %26 ; 2 uses
-  %bc953 = bitcast <2 x float> %28 to <2 x i32>
-  %29 = extractelement <2 x i32> %bc953, i64 1
-  %30 = or i32 %25, %29
-  %.fr748 = freeze i32 %30                        ; 3 uses
-  %31 = bitcast i32 %.fr748 to float              ; 12 uses
-  %bc954 = bitcast <2 x float> %28 to <2 x i32>
-  %32 = extractelement <2 x i32> %bc954, i64 0
-  %33 = extractelement <2 x i16> %i.aba, i64 0    ; 3 uses
-  %.signext.i3.i228 = sext i16 %33 to i32
-  %34 = and i32 %.signext.i3.i228, -2147483648
-  %35 = or i32 %34, %32                           ; 2 uses
-  %36 = bitcast i32 %35 to float                  ; 4 uses
-  %i.abg = fcmp olt float %31, %36
+  %23 = and <2 x i32> %i.abb, splat (i32 32767)
+  %24 = or disjoint <2 x i32> %23, splat (i32 1056964608)
+  %25 = bitcast <2 x i32> %24 to <2 x float>
+  %26 = icmp ult <2 x i32> %i.abc, splat (i32 134217728)
+  %27 = fadd <2 x float> %25, splat (float -5.000000e-01)
+  %28 = fmul <2 x float> %i.abf, splat (float 1.925930e-34)
+  %29 = select <2 x i1> %26, <2 x float> %27, <2 x float> %28
+  %30 = bitcast <2 x float> %29 to <2 x i32>
+  %31 = sext <2 x i16> %i.aba to <2 x i32>
+  %32 = and <2 x i32> %31, splat (i32 -2147483648)
+  %33 = or <2 x i32> %32, %30
+  %34 = freeze <2 x i32> %33                      ; 4 uses
+  %35 = bitcast <2 x i32> %34 to <2 x float>      ; 4 uses
+  %36 = extractelement <2 x float> %35, i64 0     ; 3 uses
+  %37 = extractelement <2 x float> %35, i64 1     ; 11 uses
+  %i.abg = fcmp olt float %37, %36
   br i1 %i.abg, label %.lr.ph.i.i12.i129.preheader, label %bb.fu
 
 bb.fu:                                            ; preds = %.lr.ph.i.i124
-  %i.abh = fcmp ogt float %31, %36
+  %i.abh = fcmp ogt float %37, %36
   br i1 %i.abh, label %_ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i, label %bb.fv
 
 bb.fv:                                            ; preds = %bb.fu
-  %i.abi = fcmp oeq float %31, 0.000000e+00
-  %i.abj = fcmp oeq float %31, %36
+  %i.abi = fcmp oeq float %37, 0.000000e+00
+  %i.abj = fcmp oeq float %37, %36
   %or.cond.i.i229 = and i1 %i.abi, %i.abj
   br i1 %or.cond.i.i229, label %.split479, label %.split478
 
 .split479:                                        ; preds = %bb.fv
-  %i.abk = icmp slt i32 %.fr748, 0
-  %i.abl = icmp sgt i32 %35, -1
+  %38 = extractelement <2 x i32> %34, i64 1
+  %i.abk = icmp slt i32 %38, 0
+  %39 = extractelement <2 x i32> %34, i64 0
+  %i.abl = icmp sgt i32 %39, -1
   %spec.select.i232 = and i1 %i.abk, %i.abl
   br i1 %spec.select.i232, label %.lr.ph.i.i12.i129.preheader, label %_ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i
 
 .split478:                                        ; preds = %bb.fv
-  %37 = fcmp ord float %31, 0.000000e+00
-  %38 = fcmp uno float %36, 0.000000e+00
-  %or.cond19.i.i230 = and i1 %37, %38
-  br i1 %or.cond19.i.i230, label %.lr.ph.i.i12.i129.preheader, label %_ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i
+  %40 = fcmp ord <2 x float> %35, zeroinitializer
+  %41 = fcmp uno <2 x float> %35, zeroinitializer
+  %42 = shufflevector <2 x i1> %41, <2 x i1> %40, <2 x i32> <i32 0, i32 3>
+  %43 = bitcast <2 x i1> %42 to i2
+  %44 = icmp eq i2 %43, -1
+  br i1 %44, label %.lr.ph.i.i12.i129.preheader, label %_ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i
 
 .lr.ph.i.i12.i129.preheader:                      ; preds = %.split478, %.split479, %.lr.ph.i.i124
-  %i.abm = fcmp oeq float %31, 0.000000e+00
-  %i.abn = fcmp ord float %31, 0.000000e+00       ; 2 uses
-  %i.abo = icmp slt i32 %.fr748, 0
+  %i.abm = fcmp oeq float %37, 0.000000e+00
+  %i.abn = fcmp ord float %37, 0.000000e+00       ; 2 uses
+  %45 = extractelement <2 x i32> %34, i64 1
+  %i.abo = icmp slt i32 %45, 0
+  %46 = extractelement <2 x i16> %i.aba, i64 0    ; 2 uses
   br i1 %i.abm, label %.lr.ph.i.i12.i129, label %.lr.ph.i.i12.i129.us
 
 .lr.ph.i.i12.i129.us:                             ; preds = %.lr.ph.i.i12.i129.preheader, %.lr.ph.i.i12.i129.us.backedge
-  %i.abp = phi i16 [ %i.abq, %.lr.ph.i.i12.i129.us.backedge ], [ %33, %.lr.ph.i.i12.i129.preheader ]
+  %i.abp = phi i16 [ %i.abq, %.lr.ph.i.i12.i129.us.backedge ], [ %46, %.lr.ph.i.i12.i129.preheader ]
   %.013.i.i13.i130.us = phi ptr [ %.0.i.i15.i132.us, %.lr.ph.i.i12.i129.us.backedge ], [ %.011.i.i.i126, %.lr.ph.i.i12.i129.preheader ] ; 3 uses
   %.0912.i.i14.i131.us = phi ptr [ %.013.i.i13.i130.us, %.lr.ph.i.i12.i129.us.backedge ], [ %.08.i.i125, %.lr.ph.i.i12.i129.preheader ]
   store i16 %i.abp, ptr %.0912.i.i14.i131.us, align 2
@@ -505,11 +501,11 @@ bb.fv:                                            ; preds = %bb.fu
   %i.acd = and i32 %.signext.i3.i219.us, -2147483648
   %i.ace = or i32 %i.acd, %i.acc
   %i.acf = bitcast i32 %i.ace to float            ; 3 uses
-  %i.acg = fcmp olt float %31, %i.acf
+  %i.acg = fcmp olt float %37, %i.acf
   br i1 %i.acg, label %.lr.ph.i.i12.i129.us.backedge, label %bb.fw
 
 bb.fw:                                            ; preds = %.lr.ph.i.i12.i129.us
-  %i.ach = fcmp ule float %31, %i.acf
+  %i.ach = fcmp ule float %37, %i.acf
   %i.aci = fcmp uno float %i.acf, 0.000000e+00
   %i.acj = and i1 %i.aci, %i.ach
   %or.cond724 = and i1 %i.acj, %i.abn
@@ -519,7 +515,7 @@ bb.fw:                                            ; preds = %.lr.ph.i.i12.i129.u
   br label %.lr.ph.i.i12.i129.us, !llvm.loop !71
 
 .lr.ph.i.i12.i129:                                ; preds = %.lr.ph.i.i12.i129.preheader, %.lr.ph.i.i12.i129.backedge
-  %i.ack = phi i16 [ %i.acl, %.lr.ph.i.i12.i129.backedge ], [ %33, %.lr.ph.i.i12.i129.preheader ]
+  %i.ack = phi i16 [ %i.acl, %.lr.ph.i.i12.i129.backedge ], [ %46, %.lr.ph.i.i12.i129.preheader ]
   %.013.i.i13.i130 = phi ptr [ %.0.i.i15.i132, %.lr.ph.i.i12.i129.backedge ], [ %.011.i.i.i126, %.lr.ph.i.i12.i129.preheader ] ; 5 uses
   %.0912.i.i14.i131 = phi ptr [ %.013.i.i13.i130, %.lr.ph.i.i12.i129.backedge ], [ %.08.i.i125, %.lr.ph.i.i12.i129.preheader ]
   store i16 %i.ack, ptr %.0912.i.i14.i131, align 2
@@ -542,15 +538,15 @@ bb.fw:                                            ; preds = %.lr.ph.i.i12.i129.u
   %i.acy = and i32 %.signext.i3.i219, -2147483648
   %i.acz = or i32 %i.acy, %i.acx                  ; 2 uses
   %i.ada = bitcast i32 %i.acz to float            ; 4 uses
-  %i.adb = fcmp olt float %31, %i.ada
+  %i.adb = fcmp olt float %37, %i.ada
   br i1 %i.adb, label %.lr.ph.i.i12.i129.backedge, label %bb.fx
 
 bb.fx:                                            ; preds = %.lr.ph.i.i12.i129
-  %i.adc = fcmp ogt float %31, %i.ada
+  %i.adc = fcmp ogt float %37, %i.ada
   br i1 %i.adc, label %_ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i, label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fx
-  %i.add = fcmp oeq float %31, %i.ada
+  %i.add = fcmp oeq float %37, %i.ada
   br i1 %i.add, label %.split482, label %.split481
 
 .split482:                                        ; preds = %bb.fy
@@ -568,7 +564,8 @@ bb.fy:                                            ; preds = %bb.fx
 
 _ZSt25__unguarded_linear_insertIPtN9__gnu_cxx5__ops14_Val_comp_iterIPFbttEEEEvT_T0_.exit.i.i: ; preds = %bb.fw, %.split481, %.split482, %bb.fx, %bb.fu, %.split479, %.split478
   %.09.lcssa.i.i.i127 = phi ptr [ %.08.i.i125, %.split479 ], [ %.08.i.i125, %.split478 ], [ %.08.i.i125, %bb.fu ], [ %.013.i.i13.i130, %.split481 ], [ %.013.i.i13.i130, %bb.fx ], [ %.013.i.i13.i130, %.split482 ], [ %.013.i.i13.i130.us, %bb.fw ]
-  store i16 %24, ptr %.09.lcssa.i.i.i127, align 2
+  %47 = extractelement <2 x i16> %i.aba, i64 1
+  store i16 %47, ptr %.09.lcssa.i.i.i127, align 2
   %i.adg = getelementptr inbounds nuw i8, ptr %.08.i.i125, i64 2 ; 2 uses
   %.not.i11.i128 = icmp eq ptr %i.adg, %i.xh
   br i1 %.not.i11.i128, label %_ZSt4sortIPhEvT_S1_.exit, label %.lr.ph.i.i124, !llvm.loop !73
@@ -584,58 +581,54 @@ bb.fz:                                            ; preds = %bb.fi
 .lr.ph.i17.i112:                                  ; preds = %.lr.ph.i17.i112.preheader, %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i
   %.020.i18.i = phi ptr [ %.0.i22.i114, %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i ], [ %.017.i16.i, %.lr.ph.i17.i112.preheader ] ; 9 uses
   %.pn19.i19.i = phi ptr [ %.020.i18.i, %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i ], [ %i.xf, %.lr.ph.i17.i112.preheader ] ; 5 uses
-  %i.adh = load i16, ptr %.020.i18.i, align 2     ; 3 uses
-  %i.adi = load i16, ptr %i.xf, align 2           ; 3 uses
-  %.signext.i.i208 = sext i16 %i.adh to i32
-  %39 = and i32 %.signext.i.i208, -2147483648
+  %i.adh = load i16, ptr %.020.i18.i, align 2     ; 2 uses
+  %i.adi = load i16, ptr %i.xf, align 2           ; 2 uses
   %i.adj = insertelement <2 x i16> poison, i16 %i.adh, i64 0
   %i.adk = insertelement <2 x i16> %i.adj, i16 %i.adi, i64 1 ; 2 uses
-  %.inner949 = and <2 x i16> %i.adk, splat (i16 32767)
-  %i.adl = zext nneg <2 x i16> %.inner949 to <2 x i32>
-  %40 = or disjoint <2 x i32> %i.adl, splat (i32 1056964608)
-  %41 = bitcast <2 x i32> %40 to <2 x float>
-  %42 = fadd <2 x float> %41, splat (float -5.000000e-01)
-  %43 = zext <2 x i16> %i.adk to <2 x i32>
-  %44 = shl <2 x i32> %43, splat (i32 17)         ; 2 uses
-  %45 = lshr exact <2 x i32> %44, splat (i32 4)
-  %i.adm = or disjoint <2 x i32> %45, splat (i32 1879048192)
+  %i.adl = zext <2 x i16> %i.adk to <2 x i32>     ; 2 uses
+  %48 = shl <2 x i32> %i.adl, splat (i32 17)      ; 2 uses
+  %49 = lshr exact <2 x i32> %48, splat (i32 4)
+  %50 = or disjoint <2 x i32> %49, splat (i32 1879048192)
+  %51 = bitcast <2 x i32> %50 to <2 x float>
+  %52 = and <2 x i32> %i.adl, splat (i32 32767)
+  %i.adm = or disjoint <2 x i32> %52, splat (i32 1056964608)
   %i.adn = bitcast <2 x i32> %i.adm to <2 x float>
-  %i.ado = icmp ult <2 x i32> %44, splat (i32 134217728)
-  %i.adp = fmul <2 x float> %i.adn, splat (float 1.925930e-34)
-  %i.adq = select <2 x i1> %i.ado, <2 x float> %42, <2 x float> %i.adp ; 2 uses
+  %i.ado = icmp ult <2 x i32> %48, splat (i32 134217728)
+  %53 = fadd <2 x float> %i.adn, splat (float -5.000000e-01)
+  %i.adp = fmul <2 x float> %51, splat (float 1.925930e-34)
+  %i.adq = select <2 x i1> %i.ado, <2 x float> %53, <2 x float> %i.adp
   %bc = bitcast <2 x float> %i.adq to <2 x i32>
-  %46 = extractelement <2 x i32> %bc, i64 0
-  %47 = or i32 %39, %46
-  %.fr = freeze i32 %47                           ; 4 uses
-  %48 = bitcast i32 %.fr to float                 ; 17 uses
-  %bc950 = bitcast <2 x float> %i.adq to <2 x i32>
-  %49 = extractelement <2 x i32> %bc950, i64 1
-  %.signext.i3.i210 = sext i16 %i.adi to i32
-  %50 = and i32 %.signext.i3.i210, -2147483648
-  %51 = or i32 %50, %49                           ; 2 uses
-  %52 = bitcast i32 %51 to float                  ; 4 uses
-  %i.adr = fcmp olt float %48, %52
+  %54 = sext <2 x i16> %i.adk to <2 x i32>
+  %55 = and <2 x i32> %54, splat (i32 -2147483648)
+  %56 = or <2 x i32> %55, %bc
+  %57 = freeze <2 x i32> %56                      ; 5 uses
+  %58 = bitcast <2 x i32> %57 to <2 x float>      ; 2 uses
+  %59 = extractelement <2 x float> %58, i64 0     ; 17 uses
+  %60 = extractelement <2 x float> %58, i64 1     ; 4 uses
+  %i.adr = fcmp olt float %59, %60
   br i1 %i.adr, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread, label %bb.ga
 
 bb.ga:                                            ; preds = %.lr.ph.i17.i112
-  %i.ads = fcmp ogt float %48, %52
+  %i.ads = fcmp ogt float %59, %60
   br i1 %i.ads, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread484, label %bb.gb
 
 bb.gb:                                            ; preds = %bb.ga
-  %i.adt = fcmp oeq float %48, 0.000000e+00
-  %i.adu = fcmp oeq float %48, %52
+  %i.adt = fcmp oeq float %59, 0.000000e+00
+  %i.adu = fcmp oeq float %59, %60
   %or.cond.i.i211 = and i1 %i.adt, %i.adu
   br i1 %or.cond.i.i211, label %.split486, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215
 
 .split486:                                        ; preds = %bb.gb
-  %i.adv = icmp slt i32 %.fr, 0
-  %i.adw = icmp sgt i32 %51, -1
+  %61 = extractelement <2 x i32> %57, i64 0
+  %i.adv = icmp slt i32 %61, 0
+  %62 = extractelement <2 x i32> %57, i64 1
+  %i.adw = icmp sgt i32 %62, -1
   %spec.select.i214 = and i1 %i.adv, %i.adw
   br i1 %spec.select.i214, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread484
 
 _ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215: ; preds = %bb.gb
-  %i.adx = fcmp ord float %48, 0.000000e+00
-  %i.ady = fcmp uno float %52, 0.000000e+00
+  %i.adx = fcmp ord float %59, 0.000000e+00
+  %i.ady = fcmp uno float %60, 0.000000e+00
   %or.cond19.i.i212 = and i1 %i.adx, %i.ady
   br i1 %or.cond19.i.i212, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread, label %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread484
 
@@ -681,35 +674,37 @@ _ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread484: ; pr
   %i.aev = and i32 %.signext.i3.i201, -2147483648
   %i.aew = or i32 %i.aev, %i.aeu                  ; 2 uses
   %i.aex = bitcast i32 %i.aew to float            ; 4 uses
-  %i.aey = fcmp olt float %48, %i.aex
+  %i.aey = fcmp olt float %59, %i.aex
   br i1 %i.aey, label %.lr.ph.i.i24.i116.preheader, label %bb.gf
 
 bb.gf:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread484
-  %i.aez = fcmp ogt float %48, %i.aex
+  %i.aez = fcmp ogt float %59, %i.aex
   br i1 %i.aez, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i, label %bb.gg
 
 bb.gg:                                            ; preds = %bb.gf
-  %i.afa = fcmp oeq float %48, 0.000000e+00
-  %i.afb = fcmp oeq float %48, %i.aex
+  %i.afa = fcmp oeq float %59, 0.000000e+00
+  %i.afb = fcmp oeq float %59, %i.aex
   %or.cond.i.i202 = and i1 %i.afa, %i.afb
   br i1 %or.cond.i.i202, label %.split489, label %.split488
 
 .split489:                                        ; preds = %bb.gg
-  %i.afc = icmp slt i32 %.fr, 0
+  %63 = extractelement <2 x i32> %57, i64 0
+  %i.afc = icmp slt i32 %63, 0
   %i.afd = icmp sgt i32 %i.aew, -1
   %spec.select.i205 = and i1 %i.afc, %i.afd
   br i1 %spec.select.i205, label %.lr.ph.i.i24.i116.preheader, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i
 
 .split488:                                        ; preds = %bb.gg
-  %i.afe = fcmp ord float %48, 0.000000e+00
+  %i.afe = fcmp ord float %59, 0.000000e+00
   %i.aff = fcmp uno float %i.aex, 0.000000e+00
   %or.cond19.i.i203 = and i1 %i.afe, %i.aff
   br i1 %or.cond19.i.i203, label %.lr.ph.i.i24.i116.preheader, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i
 
 .lr.ph.i.i24.i116.preheader:                      ; preds = %.split488, %.split489, %_ZN2v88internal12_GLOBAL__N_122LessThanFloat16RawBitsEtt.exit215.thread484
-  %i.afg = fcmp oeq float %48, 0.000000e+00
-  %i.afh = fcmp ord float %48, 0.000000e+00       ; 2 uses
-  %i.afi = icmp slt i32 %.fr, 0
+  %i.afg = fcmp oeq float %59, 0.000000e+00
+  %i.afh = fcmp ord float %59, 0.000000e+00       ; 2 uses
+  %64 = extractelement <2 x i32> %57, i64 0
+  %i.afi = icmp slt i32 %64, 0
   br i1 %i.afg, label %.lr.ph.i.i24.i116, label %.lr.ph.i.i24.i116.us
 
 .lr.ph.i.i24.i116.us:                             ; preds = %.lr.ph.i.i24.i116.preheader, %.lr.ph.i.i24.i116.us.backedge
@@ -736,11 +731,11 @@ bb.gg:                                            ; preds = %bb.gf
   %i.afx = and i32 %.signext.i3.i.us, -2147483648
   %i.afy = or i32 %i.afx, %i.afw
   %i.afz = bitcast i32 %i.afy to float            ; 3 uses
-  %i.aga = fcmp olt float %48, %i.afz
+  %i.aga = fcmp olt float %59, %i.afz
   br i1 %i.aga, label %.lr.ph.i.i24.i116.us.backedge, label %bb.gh
 
 bb.gh:                                            ; preds = %.lr.ph.i.i24.i116.us
-  %i.agb = fcmp ule float %48, %i.afz
+  %i.agb = fcmp ule float %59, %i.afz
   %i.agc = fcmp uno float %i.afz, 0.000000e+00
   %i.agd = and i1 %i.agc, %i.agb
   %or.cond725 = and i1 %i.agd, %i.afh
@@ -773,15 +768,15 @@ bb.gh:                                            ; preds = %.lr.ph.i.i24.i116.u
   %i.ags = and i32 %.signext.i3.i, -2147483648
   %i.agt = or i32 %i.ags, %i.agr                  ; 2 uses
   %i.agu = bitcast i32 %i.agt to float            ; 4 uses
-  %i.agv = fcmp olt float %48, %i.agu
+  %i.agv = fcmp olt float %59, %i.agu
   br i1 %i.agv, label %.lr.ph.i.i24.i116.backedge, label %bb.gi
 
 bb.gi:                                            ; preds = %.lr.ph.i.i24.i116
-  %i.agw = fcmp ogt float %48, %i.agu
+  %i.agw = fcmp ogt float %59, %i.agu
   br i1 %i.agw, label %_ZSt13move_backwardIPtS0_ET0_T_S2_S1_.exit.i20.i, label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gi
-  %i.agx = fcmp oeq float %48, %i.agu
+  %i.agx = fcmp oeq float %59, %i.agu
   br i1 %i.agx, label %.split492, label %.split491
 
 .split492:                                        ; preds = %bb.gj

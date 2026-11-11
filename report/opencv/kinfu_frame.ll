@@ -204,12 +204,12 @@ bb.a:
   %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %indvars.iv ; 3 uses
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !26, !noalias !143 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 4
-  %2 = load float, ptr %i.ar, align 4, !tbaa !26, !noalias !143 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  %i.as = load float, ptr %3, align 4, !tbaa !26, !noalias !143
-  %.fr.i = freeze float %i.as                     ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
+  %3 = load float, ptr %2, align 4, !tbaa !26, !noalias !143
+  %i.as = load float, ptr %i.ar, align 4, !tbaa !26, !noalias !143 ; 3 uses
+  %.fr.i = freeze float %3                        ; 3 uses
   %i.at = fcmp uno float %i.aq, 0.000000e+00
-  %spec.select.i = fcmp uno float %2, %.fr.i
+  %spec.select.i = fcmp uno float %i.as, %.fr.i
   %i.au = select i1 %i.at, i1 true, i1 %spec.select.i
   br i1 %i.au, label %bb.c, label %bb.b
 
@@ -222,12 +222,12 @@ bb.b:                                             ; preds = %.lr.ph
   %i.ba = fpext float %i.az to double             ; 3 uses
   %i.bb = tail call double @llvm.fmuladd.f64(double %i.ba, double %i.ba, double 0.000000e+00)
   %i.bc = fneg float %i.aq
-  %i.bd = fneg float %2
+  %i.bd = fneg float %i.as
   %i.be = fneg float %.fr.i
   %i.bf = fmul float %i.ax, 2.000000e+00
   %i.bg = load <2 x float>, ptr %i.aw, align 4, !tbaa !26, !noalias !144 ; 3 uses
   %i.bh = load <2 x float>, ptr %i.j, align 4, !tbaa !26, !noalias !145
-  %i.bi = insertelement <2 x float> poison, float %2, i64 0
+  %i.bi = insertelement <2 x float> poison, float %i.as, i64 0
   %i.bj = insertelement <2 x float> %i.bi, float %.fr.i, i64 1
   %i.bk = fsub <2 x float> %i.bh, %i.bj
   %i.bl = fpext <2 x float> %i.bk to <2 x double> ; 3 uses

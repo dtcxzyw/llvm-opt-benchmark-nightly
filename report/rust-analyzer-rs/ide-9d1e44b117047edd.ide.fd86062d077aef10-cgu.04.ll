@@ -205,8 +205,8 @@ bb.a:
   %i.d = alloca [152 x i8], align 8               ; 4 uses
   %i.e = alloca [152 x i8], align 8               ; 4 uses
   %i.f = alloca [40 x i8], align 8                ; 4 uses
-  %i.g = alloca [12 x i8], align 4                ; 7 uses
-  %i.h = alloca [24 x i8], align 8                ; 8 uses
+  %i.g = alloca [12 x i8], align 4                ; 6 uses
+  %i.h = alloca [24 x i8], align 8                ; 7 uses
   %i.i = alloca [12 x i8], align 4                ; 7 uses
   %i.j = alloca [152 x i8], align 8               ; 10 uses
   %i.k = alloca [40 x i8], align 8                ; 7 uses
@@ -244,9 +244,7 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.538.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 12
-  %.sroa.639.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.sroa.8.0..sroa_idx28.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %.sroa.929.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ag = load ptr, ptr %2, align 8, !nonnull !12, !align !14
@@ -474,8 +472,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs33K2ylI4knu_10hir_expand5files13I
 
 bb.ac:                                            ; preds = %bb.ab
   %.sroa.036.0.copyload.i.i.i = load ptr, ptr %i.h, align 8, !noalias !1562, !nonnull !12, !noundef !12 ; 2 uses
-  %.sroa.538.0.copyload.i.i.i = load i32, ptr %.sroa.538.0..sroa_idx.i.i.i, align 4, !noalias !1562
-  %.sroa.639.0.copyload.i.i.i = load i32, ptr %.sroa.639.0..sroa_idx.i.i.i, align 8, !noalias !1562
+  %3 = load <2 x i32>, ptr %.sroa.538.0..sroa_idx.i.i.i, align 4, !noalias !1562
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.036.0.copyload.i.i.i, i64 48 ; 2 uses
   %i.bl = load i32, ptr %i.bk, align 4, !noalias !1562, !noundef !12
   %i.bm = add i32 %i.bl, -1                       ; 2 uses
@@ -490,8 +487,9 @@ bb.ad:                                            ; preds = %bb.ac
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBG_9HirFileIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes2FnEECslLuZgPVt6hg_3ide.exit.i.i.i: ; preds = %bb.ad, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1562
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !1562
-  %.sroa.6.1.fr.i.i.i = freeze i32 %.sroa.538.0.copyload.i.i.i ; 2 uses
-  %.not.i7.i.i = icmp ne i32 %.sroa.6.1.fr.i.i.i, 0
+  %4 = freeze <2 x i32> %3                        ; 2 uses
+  %5 = extractelement <2 x i32> %4, i64 0
+  %.not.i7.i.i = icmp ne i32 %5, 0
   %i.bo = icmp eq i32 %i.bj, 1
   %or.cond.i.i = and i1 %i.bo, %.not.i7.i.i
   br i1 %or.cond.i.i, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs33K2ylI4knu_10hir_expand9HirFileIdE6filterNCNCNvNtCslLuZgPVt6hg_3ide9runnables9runnables0s1_0EB1A_.exit.i.i.i, label %.thread.i.i.i
@@ -499,8 +497,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs33K2ylI4knu_10hir_expand5files13I
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs33K2ylI4knu_10hir_expand9HirFileIdE6filterNCNCNvNtCslLuZgPVt6hg_3ide9runnables9runnables0s1_0EB1A_.exit.i.i.i: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBG_9HirFileIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes2FnEECslLuZgPVt6hg_3ide.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1562
   store i32 1, ptr %i.g, align 4, !noalias !1562
-  store i32 %.sroa.6.1.fr.i.i.i, ptr %.sroa.8.0..sroa_idx28.i.i.i, align 4, !noalias !1562
-  store i32 %.sroa.639.0.copyload.i.i.i, ptr %.sroa.929.0..sroa_idx.i.i.i, align 4, !noalias !1562
+  store <2 x i32> %4, ptr %.sroa.8.0..sroa_idx28.i.i.i, align 4, !noalias !1562
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !1562
   %i.bp = invoke noundef i64 @_RINvYINtNtCshzWfHUSfYae_4core4hash18BuildHasherDefaultNtCsh04pLiDBs3j_10rustc_hash8FxHasherENtB6_11BuildHasher8hash_oneRNtCs33K2ylI4knu_10hir_expand9HirFileIdECslLuZgPVt6hg_3ide(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aj, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.g)
           to label %.noexc10.i.i.i unwind label %bb.al, !noalias !1562

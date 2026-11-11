@@ -205,35 +205,32 @@ bb.ev:                                            ; preds = %bb.et
 
 .thread375:                                       ; preds = %.thread375.sink.split, %bb.er, %bb.er, %bb.et
   %i.re = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %5 = load i16, ptr %i.re, align 8, !tbaa !124
-  %6 = freeze i16 %5                              ; 8 uses
-  %i.rf = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 12 uses
-  %7 = load i16, ptr %i.rf, align 4, !tbaa !126   ; 3 uses
-  %.not188 = icmp ult i16 %6, %7
-  %narrow = sub nuw i16 %6, %7
-  %8 = lshr i16 %narrow, 1
-  %9 = and i16 %8, 32766
-  %10 = select i1 %.not188, i16 0, i16 %9         ; 17 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 11 uses
-  store i16 %10, ptr %11, align 8, !tbaa !128
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
-  %i.rg = load i16, ptr %12, align 2, !tbaa !123  ; 7 uses
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 12 uses
-  %14 = load i16, ptr %13, align 2, !tbaa !125    ; 2 uses
-  %.not189 = icmp ult i16 %i.rg, %14
-  %narrow190 = sub nuw i16 %i.rg, %14
-  %15 = lshr i16 %narrow190, 1
-  %16 = and i16 %15, 32766
-  %17 = select i1 %.not189, i16 0, i16 %16        ; 15 uses
+  %i.rf = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 13 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 11 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 11 uses
+  %8 = load i16, ptr %6, align 2, !tbaa !123      ; 5 uses
+  %9 = load <2 x i16>, ptr %i.re, align 8, !tbaa !85
+  %10 = freeze <2 x i16> %9                       ; 8 uses
+  %11 = load <2 x i16>, ptr %i.rf, align 4, !tbaa !85 ; 2 uses
+  %i.rg = load i16, ptr %i.rf, align 4, !tbaa !126
+  %12 = icmp ult <2 x i16> %10, %11
+  %13 = sub nuw <2 x i16> %10, %11
+  %14 = lshr <2 x i16> %13, splat (i16 1)
+  %15 = and <2 x i16> %14, splat (i16 32766)
+  %16 = select <2 x i1> %12, <2 x i16> zeroinitializer, <2 x i16> %15 ; 2 uses
+  %17 = extractelement <2 x i16> %16, i64 0       ; 17 uses
+  store i16 %17, ptr %5, align 8, !tbaa !128
   %i.rh = getelementptr inbounds nuw i8, ptr %0, i64 26 ; 15 uses
-  store i16 %17, ptr %i.rh, align 2, !tbaa !129
+  %18 = extractelement <2 x i16> %16, i64 1       ; 15 uses
+  store i16 %18, ptr %i.rh, align 2, !tbaa !129
   switch i32 %i.po, label %bb.ew [
     i32 0, label %bb.ft
     i32 4096, label %bb.ft
   ]
 
 bb.ew:                                            ; preds = %.thread375
-  switch i16 %i.rg, label %bb.gf [
+  switch i16 %8, label %bb.gf [
     i16 2944, label %bb.ex
     i16 4096, label %bb.ey
     i16 5120, label %bb.ey
@@ -282,16 +279,17 @@ bb.fd:                                            ; preds = %bb.fc
   %i.rn = getelementptr inbounds nuw i8, ptr %0, i64 188
   %i.ro = load i16, ptr %i.rn, align 4, !tbaa !145 ; 2 uses
   %i.rp = add i16 %i.ro, -1
-  %or.cond414.not = icmp ult i16 %i.rp, %6
+  %19 = extractelement <2 x i16> %10, i64 0
+  %or.cond414.not = icmp ult i16 %i.rp, %19
   br i1 %or.cond414.not, label %bb.fe, label %bb.gf
 
 bb.fe:                                            ; preds = %bb.fd
   %i.rq = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.rr = load i16, ptr %i.rq, align 8, !tbaa !146 ; 2 uses
-  store i16 %i.rr, ptr %11, align 8, !tbaa !128
+  store i16 %i.rr, ptr %5, align 8, !tbaa !128
   %i.rs = load i16, ptr %i.rj, align 2, !tbaa !147 ; 2 uses
   store i16 %i.rs, ptr %i.rh, align 2, !tbaa !129
-  store i16 %i.rl, ptr %13, align 2, !tbaa !125
+  store i16 %i.rl, ptr %7, align 2, !tbaa !125
   store i16 %i.ro, ptr %i.rf, align 4, !tbaa !126
   br label %bb.gf
 
@@ -303,13 +301,13 @@ bb.ff:                                            ; preds = %bb.ew
   ]
 
 bb.fg:                                            ; preds = %bb.ff
-  store i16 6, ptr %11, align 8, !tbaa !128
+  store i16 6, ptr %5, align 8, !tbaa !128
   store i16 0, ptr %i.rh, align 2, !tbaa !129
   %i.rt = getelementptr inbounds nuw i8, ptr %0, i64 268
   %i.ru = tail call i32 @strcasecmp(ptr noundef nonnull %i.rt, ptr noundef nonnull @.str.122) #20
   %.not201 = icmp eq i32 %i.ru, 0
   %. = select i1 %.not201, i16 6252, i16 6264
-  store i16 %., ptr %13, align 2, !tbaa !125
+  store i16 %., ptr %7, align 2, !tbaa !125
   store i16 4176, ptr %i.rf, align 4, !tbaa !126
   br label %bb.gf
 
@@ -329,21 +327,22 @@ bb.fj:                                            ; preds = %bb.fi
   %i.rz = getelementptr inbounds nuw i8, ptr %0, i64 188
   %i.sa = load i16, ptr %i.rz, align 4, !tbaa !145 ; 2 uses
   %i.sb = add i16 %i.sa, -1
-  %or.cond415.not = icmp ult i16 %i.sb, %6
+  %20 = extractelement <2 x i16> %10, i64 0
+  %or.cond415.not = icmp ult i16 %i.sb, %20
   br i1 %or.cond415.not, label %bb.fk, label %bb.gf
 
 bb.fk:                                            ; preds = %bb.fj
   %i.sc = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.sd = load i16, ptr %i.sc, align 8, !tbaa !146 ; 2 uses
-  store i16 %i.sd, ptr %11, align 8, !tbaa !128
+  store i16 %i.sd, ptr %5, align 8, !tbaa !128
   %i.se = load i16, ptr %i.rv, align 2, !tbaa !147 ; 2 uses
   store i16 %i.se, ptr %i.rh, align 2, !tbaa !129
-  store i16 %i.rx, ptr %13, align 2, !tbaa !125
+  store i16 %i.rx, ptr %7, align 2, !tbaa !125
   store i16 %i.sa, ptr %i.rf, align 4, !tbaa !126
   br label %bb.gf
 
 bb.fl:                                            ; preds = %bb.ew
-  store i16 0, ptr %11, align 8, !tbaa !128
+  store i16 0, ptr %5, align 8, !tbaa !128
   switch i16 %i.qo, label %bb.gf [
     i16 0, label %bb.fm
     i16 2, label %bb.fn
@@ -356,33 +355,35 @@ bb.fm:                                            ; preds = %bb.fl
 
 bb.fn:                                            ; preds = %bb.fl
   store i16 624, ptr %i.rh, align 2, !tbaa !129
-  store i16 5004, ptr %13, align 2, !tbaa !125
-  store i16 %6, ptr %i.rf, align 4, !tbaa !126
+  store i16 5004, ptr %7, align 2, !tbaa !125
+  %21 = extractelement <2 x i16> %10, i64 0
+  store i16 %21, ptr %i.rf, align 4, !tbaa !126
   br label %bb.gf
 
 bb.fo:                                            ; preds = %bb.fl
   store i16 624, ptr %i.rh, align 2, !tbaa !129
-  store i16 5004, ptr %13, align 2, !tbaa !125
+  store i16 5004, ptr %7, align 2, !tbaa !125
   br label %bb.gf
 
 bb.fp:                                            ; preds = %bb.ew, %bb.ew
   store i16 0, ptr %i.rh, align 2, !tbaa !129
-  store i16 0, ptr %11, align 8, !tbaa !128
+  store i16 0, ptr %5, align 8, !tbaa !128
   br label %bb.gf
 
 bb.fq:                                            ; preds = %bb.ew
   store i16 0, ptr %i.rh, align 2, !tbaa !129
-  store i16 0, ptr %11, align 8, !tbaa !128
-  store i16 8280, ptr %13, align 2, !tbaa !125
+  store i16 0, ptr %5, align 8, !tbaa !128
+  store i16 8280, ptr %7, align 2, !tbaa !125
   br label %bb.gf
 
 bb.fr:                                            ; preds = %bb.ew, %bb.ew
   store i16 0, ptr %i.rh, align 2, !tbaa !129
-  %i.sf = add nsw i16 %i.rg, -146
-  store i16 %i.sf, ptr %13, align 2, !tbaa !125
-  %i.sg = add i16 %6, -8
+  %i.sf = add nsw i16 %8, -146
+  store i16 %i.sf, ptr %7, align 2, !tbaa !125
+  %22 = extractelement <2 x i16> %10, i64 0
+  %i.sg = add i16 %22, -8
   store i16 %i.sg, ptr %i.rf, align 4, !tbaa !126
-  store i16 2, ptr %11, align 8, !tbaa !128
+  store i16 2, ptr %5, align 8, !tbaa !128
   %i.sh = getelementptr inbounds nuw i8, ptr %0, i64 381836
   %i.si = load i32, ptr %i.sh, align 4, !tbaa !127
   %i.sj = icmp eq i32 %i.si, 16
@@ -397,7 +398,7 @@ bb.ft:                                            ; preds = %.thread375, %.threa
   br i1 %.not179, label %bb.fu, label %bb.gf
 
 bb.fu:                                            ; preds = %bb.ft
-  switch i16 %i.rg, label %bb.ga [
+  switch i16 %8, label %bb.ga [
     i16 2304, label %bb.fv
     i16 3328, label %bb.fw
     i16 3664, label %bb.fy
@@ -405,13 +406,13 @@ bb.fu:                                            ; preds = %bb.ft
   ]
 
 bb.fv:                                            ; preds = %bb.fu
-  store i16 6, ptr %11, align 8, !tbaa !128
-  %i.sl = add i16 %7, -6
+  store i16 6, ptr %5, align 8, !tbaa !128
+  %i.sl = add i16 %i.rg, -6
   store i16 %i.sl, ptr %i.rf, align 4, !tbaa !126
   br label %bb.gf
 
 bb.fw:                                            ; preds = %bb.fu
-  store i16 3262, ptr %13, align 2, !tbaa !125
+  store i16 3262, ptr %7, align 2, !tbaa !125
   store i16 34, ptr %i.rh, align 2, !tbaa !129
   %i.sm = getelementptr inbounds nuw i8, ptr %0, i64 182
   %i.sn = load i16, ptr %i.sm, align 2, !tbaa !147
@@ -420,7 +421,7 @@ bb.fw:                                            ; preds = %bb.fu
 
 bb.fx:                                            ; preds = %bb.fw
   store i16 0, ptr %i.rh, align 2, !tbaa !129
-  store i16 3264, ptr %13, align 2, !tbaa !125
+  store i16 3264, ptr %7, align 2, !tbaa !125
   %i.sp = getelementptr inbounds nuw i8, ptr %0, i64 544
   store i32 370546198, ptr %i.sp, align 8, !tbaa !82
   br label %bb.gf
@@ -432,9 +433,10 @@ bb.fy:                                            ; preds = %bb.fu
 
 bb.fz:                                            ; preds = %bb.fu
   store i16 32, ptr %i.rh, align 2, !tbaa !129
-  store i16 8, ptr %11, align 8, !tbaa !128
-  store i16 5440, ptr %13, align 2, !tbaa !125
-  %i.sr = add i16 %6, -16
+  store i16 8, ptr %5, align 8, !tbaa !128
+  store i16 5440, ptr %7, align 2, !tbaa !125
+  %23 = extractelement <2 x i16> %10, i64 0
+  %i.sr = add i16 %23, -16
   store i16 %i.sr, ptr %i.rf, align 4, !tbaa !126
   %i.ss = getelementptr inbounds nuw i8, ptr %0, i64 768416
   store i64 ptrtoint (ptr @_ZN6LibRaw25unpacked_load_raw_FujiDBPEv to i64), ptr %i.ss, align 8, !tbaa !119
@@ -464,29 +466,30 @@ bb.gc:                                            ; preds = %bb.gb
   %i.ta = getelementptr inbounds nuw i8, ptr %0, i64 186
   %i.tb = load i16, ptr %i.ta, align 2, !tbaa !144 ; 2 uses
   %i.tc = add i16 %i.tb, -1
-  %or.cond362.not = icmp ult i16 %i.tc, %i.rg
+  %or.cond362.not = icmp ult i16 %i.tc, %8
   br i1 %or.cond362.not, label %bb.gd, label %bb.gf
 
 bb.gd:                                            ; preds = %bb.gc
   %i.td = getelementptr inbounds nuw i8, ptr %0, i64 188
   %i.te = load i16, ptr %i.td, align 4, !tbaa !145 ; 2 uses
   %i.tf = add i16 %i.te, -1
-  %or.cond416.not = icmp ult i16 %i.tf, %6
+  %24 = extractelement <2 x i16> %10, i64 0
+  %or.cond416.not = icmp ult i16 %i.tf, %24
   br i1 %or.cond416.not, label %bb.ge, label %bb.gf
 
 bb.ge:                                            ; preds = %bb.gd
   %i.tg = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.th = load i16, ptr %i.tg, align 8, !tbaa !146 ; 2 uses
-  store i16 %i.th, ptr %11, align 8, !tbaa !128
+  store i16 %i.th, ptr %5, align 8, !tbaa !128
   %i.ti = load i16, ptr %i.sz, align 2, !tbaa !147 ; 2 uses
   store i16 %i.ti, ptr %i.rh, align 2, !tbaa !129
-  store i16 %i.tb, ptr %13, align 2, !tbaa !125
+  store i16 %i.tb, ptr %7, align 2, !tbaa !125
   store i16 %i.te, ptr %i.rf, align 4, !tbaa !126
   br label %bb.gf
 
 bb.gf:                                            ; preds = %bb.ft, %bb.ga, %bb.gb, %bb.ge, %bb.gd, %bb.gc, %bb.fw, %bb.fx, %bb.fz, %bb.fy, %bb.fv, %bb.ex, %bb.ey, %bb.ez, %bb.fp, %bb.fq, %bb.fc, %bb.fd, %bb.fe, %bb.fb, %bb.fi, %bb.fj, %bb.fk, %bb.fh, %bb.fg, %bb.fo, %bb.fn, %bb.fm, %bb.fl, %bb.fr, %bb.fs, %bb.ew
-  %i.tj = phi i16 [ %17, %bb.ft ], [ %17, %bb.ga ], [ %17, %bb.gb ], [ %i.ti, %bb.ge ], [ %17, %bb.gd ], [ %17, %bb.gc ], [ 34, %bb.fw ], [ 0, %bb.fx ], [ 32, %bb.fz ], [ %17, %bb.fy ], [ %17, %bb.fv ], [ %17, %bb.ex ], [ 0, %bb.ey ], [ 4, %bb.ez ], [ 0, %bb.fp ], [ 0, %bb.fq ], [ %17, %bb.fc ], [ %17, %bb.fd ], [ %i.rs, %bb.fe ], [ 0, %bb.fb ], [ %17, %bb.fi ], [ %17, %bb.fj ], [ %i.se, %bb.fk ], [ 630, %bb.fh ], [ 0, %bb.fg ], [ 624, %bb.fo ], [ 624, %bb.fn ], [ 0, %bb.fm ], [ %17, %bb.fl ], [ 0, %bb.fr ], [ 0, %bb.fs ], [ %17, %bb.ew ]
-  %i.tk = phi i16 [ %10, %bb.ft ], [ %10, %bb.ga ], [ %10, %bb.gb ], [ %i.th, %bb.ge ], [ %10, %bb.gd ], [ %10, %bb.gc ], [ %10, %bb.fw ], [ %10, %bb.fx ], [ 8, %bb.fz ], [ %10, %bb.fy ], [ 6, %bb.fv ], [ %10, %bb.ex ], [ %10, %bb.ey ], [ %10, %bb.ez ], [ 0, %bb.fp ], [ 0, %bb.fq ], [ %10, %bb.fc ], [ %10, %bb.fd ], [ %i.rr, %bb.fe ], [ 6, %bb.fb ], [ %10, %bb.fi ], [ %10, %bb.fj ], [ %i.sd, %bb.fk ], [ 0, %bb.fh ], [ 6, %bb.fg ], [ 0, %bb.fo ], [ 0, %bb.fn ], [ 6, %bb.fm ], [ 0, %bb.fl ], [ 2, %bb.fr ], [ 2, %bb.fs ], [ %10, %bb.ew ]
+  %i.tj = phi i16 [ %18, %bb.ft ], [ %18, %bb.ga ], [ %18, %bb.gb ], [ %i.ti, %bb.ge ], [ %18, %bb.gd ], [ %18, %bb.gc ], [ 34, %bb.fw ], [ 0, %bb.fx ], [ 32, %bb.fz ], [ %18, %bb.fy ], [ %18, %bb.fv ], [ %18, %bb.ex ], [ 0, %bb.ey ], [ 4, %bb.ez ], [ 0, %bb.fp ], [ 0, %bb.fq ], [ %18, %bb.fc ], [ %18, %bb.fd ], [ %i.rs, %bb.fe ], [ 0, %bb.fb ], [ %18, %bb.fi ], [ %18, %bb.fj ], [ %i.se, %bb.fk ], [ 630, %bb.fh ], [ 0, %bb.fg ], [ 624, %bb.fo ], [ 624, %bb.fn ], [ 0, %bb.fm ], [ %18, %bb.fl ], [ 0, %bb.fr ], [ 0, %bb.fs ], [ %18, %bb.ew ]
+  %i.tk = phi i16 [ %17, %bb.ft ], [ %17, %bb.ga ], [ %17, %bb.gb ], [ %i.th, %bb.ge ], [ %17, %bb.gd ], [ %17, %bb.gc ], [ %17, %bb.fw ], [ %17, %bb.fx ], [ 8, %bb.fz ], [ %17, %bb.fy ], [ 6, %bb.fv ], [ %17, %bb.ex ], [ %17, %bb.ey ], [ %17, %bb.ez ], [ 0, %bb.fp ], [ 0, %bb.fq ], [ %17, %bb.fc ], [ %17, %bb.fd ], [ %i.rr, %bb.fe ], [ 6, %bb.fb ], [ %17, %bb.fi ], [ %17, %bb.fj ], [ %i.sd, %bb.fk ], [ 0, %bb.fh ], [ 6, %bb.fg ], [ 0, %bb.fo ], [ 0, %bb.fn ], [ 6, %bb.fm ], [ 0, %bb.fl ], [ 2, %bb.fr ], [ 2, %bb.fs ], [ %17, %bb.ew ]
   %i.tl = getelementptr inbounds nuw i8, ptr %0, i64 381828
   %i.tm = load i32, ptr %i.tl, align 4, !tbaa !139
   %.not208 = icmp eq i32 %i.tm, 0
@@ -496,8 +499,8 @@ bb.gg:                                            ; preds = %bb.gf
   %i.tn = getelementptr inbounds nuw i8, ptr %0, i64 528
   %i.to = load i32, ptr %i.tn, align 8, !tbaa !121
   %i.tp = trunc i32 %i.to to i16
-  %i.tq = mul i16 %i.rg, %i.tp
-  store i16 %i.tq, ptr %12, align 2, !tbaa !123
+  %i.tq = mul i16 %8, %i.tp
+  store i16 %i.tq, ptr %6, align 2, !tbaa !123
   br label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg, %bb.gf

@@ -205,45 +205,45 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.tc = fadd float %i.sz, -5.000000e+01
   %i.td = fdiv float %i.tc, 1.250000e+01          ; 2 uses
-  %i.te = tail call float @llvm.floor.f32(float %i.td)
-  %2 = fptosi float %i.te to i32                  ; 5 uses
-  %3 = tail call float @llvm.ceil.f32(float %i.td)
-  %4 = fptosi float %3 to i32                     ; 5 uses
-  %i.tf = icmp slt i32 %4, 7
+  %2 = tail call float @llvm.floor.f32(float %i.td)
+  %i.te = tail call float @llvm.ceil.f32(float %i.td)
+  %3 = insertelement <2 x float> poison, float %i.te, i64 0
+  %4 = insertelement <2 x float> %3, float %2, i64 1
+  %5 = fptosi <2 x float> %4 to <2 x i32>         ; 5 uses
+  %6 = extractelement <2 x i32> %5, i64 0         ; 3 uses
+  %i.tf = icmp slt i32 %6, 7
   br i1 %i.tf, label %bb.ao, label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
-  %i.tg = icmp eq i32 %2, %4
+  %7 = extractelement <2 x i32> %5, i64 1         ; 2 uses
+  %i.tg = icmp eq i32 %7, %6
   br i1 %i.tg, label %bb.ap, label %bb.at
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.th = sitofp i32 %2 to float
+  %i.th = sitofp i32 %7 to float
   %i.ti = fadd float %i.th, 1.000000e+00
   br label %_ZNK2OT3OS222map_wdth_to_widthclassEf.exit
 
 bb.aq:                                            ; preds = %bb.an
-  switch i32 %4, label %bb.as [
+  switch i32 %6, label %bb.as [
     i32 7, label %bb.at
     i32 8, label %bb.ar
   ]
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.tj = icmp eq i32 %2, 8
+  %8 = extractelement <2 x i32> %5, i64 1
+  %i.tj = icmp eq i32 %8, 8
   br i1 %i.tj, label %_ZNK2OT3OS222map_wdth_to_widthclassEf.exit, label %bb.at
 
 bb.as:                                            ; preds = %bb.aq
-  %5 = icmp eq i32 %2, 12
-  %i.tk = icmp eq i32 %4, 12
-  %or.cond.i = and i1 %5, %i.tk
-  br i1 %or.cond.i, label %_ZNK2OT3OS222map_wdth_to_widthclassEf.exit, label %bb.at
+  %.scalar = bitcast <2 x i32> %5 to i64
+  %i.tk = icmp eq i64 %.scalar, 51539607564
+  br i1 %i.tk, label %_ZNK2OT3OS222map_wdth_to_widthclassEf.exit, label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar, %bb.aq, %bb.ao
-  %.028.i = phi i32 [ %2, %bb.ao ], [ 6, %bb.ar ], [ 6, %bb.aq ], [ 8, %bb.as ]
-  %.027.i = phi i32 [ %4, %bb.ao ], [ 8, %bb.ar ], [ 8, %bb.aq ], [ 12, %bb.as ]
-  %.028.fr.i = freeze i32 %.028.i                 ; 2 uses
-  %6 = insertelement <2 x i32> poison, i32 %.027.i, i64 0
-  %7 = insertelement <2 x i32> %6, i32 %.028.fr.i, i64 1
-  %i.tl = sitofp <2 x i32> %7 to <2 x float>      ; 2 uses
+  %9 = phi <2 x i32> [ %5, %bb.ao ], [ <i32 8, i32 6>, %bb.ar ], [ <i32 8, i32 6>, %bb.aq ], [ <i32 12, i32 8>, %bb.as ]
+  %10 = freeze <2 x i32> %9                       ; 2 uses
+  %i.tl = sitofp <2 x i32> %10 to <2 x float>     ; 2 uses
   %i.tm = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.tl, <2 x float> splat (float 1.250000e+01), <2 x float> splat (float 5.000000e+01)) ; 2 uses
   %i.tn = extractelement <2 x float> %i.tm, i64 1 ; 2 uses
   %i.to = fsub float %i.sz, %i.tn
@@ -252,7 +252,8 @@ bb.at:                                            ; preds = %bb.as, %bb.ar, %bb.
   %i.tr = fdiv float %i.to, %i.tq
   %i.ts = extractelement <2 x float> %i.tl, i64 1
   %i.tt = fadd float %i.tr, %i.ts                 ; 2 uses
-  %i.tu = icmp slt i32 %.028.fr.i, 7
+  %11 = extractelement <2 x i32> %10, i64 1
+  %i.tu = icmp slt i32 %11, 7
   br i1 %i.tu, label %bb.au, label %_ZNK2OT3OS222map_wdth_to_widthclassEf.exit
 
 bb.au:                                            ; preds = %bb.at

@@ -204,38 +204,25 @@ bb.n:                                             ; preds = %bb.m, %.loopexit
 define noundef zeroext i1 @_RNvNtCs2vT3jxLudSK_3url4host10write_ipv6(ptr noalias nofree noundef readonly captures(none) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !guid !104 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 38 uses
-  %i.b = alloca [16 x i8], align 2                ; 12 uses
+  %i.b = alloca [16 x i8], align 16               ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %.sroa.09.0.copyload = load i16, ptr %0, align 1 ; 2 uses
-  %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %.sroa.410.0.copyload = load i16, ptr %.sroa.410.0..sroa_idx, align 1
-  %.sroa.410.0.copyload.fr = freeze i16 %.sroa.410.0.copyload ; 2 uses
-  %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %.sroa.511.0.copyload = load i16, ptr %.sroa.511.0..sroa_idx, align 1
-  %.sroa.511.0.copyload.fr = freeze i16 %.sroa.511.0.copyload ; 3 uses
-  %.sroa.612.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %.sroa.1016.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
-  %.sroa.1016.0.copyload = load i16, ptr %.sroa.1016.0..sroa_idx, align 1 ; 2 uses
-  %2 = tail call i16 @llvm.bswap.i16(i16 %.sroa.09.0.copyload)
-  %3 = tail call i16 @llvm.bswap.i16(i16 %.sroa.410.0.copyload.fr)
-  %4 = tail call i16 @llvm.bswap.i16(i16 %.sroa.511.0.copyload.fr)
-  %5 = tail call i16 @llvm.bswap.i16(i16 %.sroa.1016.0.copyload)
-  store i16 %2, ptr %i.b, align 2
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
-  store i16 %3, ptr %i.c, align 2
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
-  store i16 %4, ptr %i.d, align 2
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 6 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %8 = load <4 x i16>, ptr %.sroa.612.0..sroa_idx, align 1 ; 6 uses
-  %9 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %8)
-  store <4 x i16> %9, ptr %i.e, align 2
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 14 ; 2 uses
-  store i16 %5, ptr %10, align 2
+  %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %.sroa.612.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %.sroa.1016.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 6
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 10
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 14
+  %2 = load <8 x i16>, ptr %0, align 1
+  %3 = freeze <8 x i16> %2                        ; 8 uses
+  %.sroa.612.0.copyload = load i16, ptr %.sroa.410.0..sroa_idx, align 1 ; 2 uses
+  %.sroa.09.0.copyload = load i16, ptr %0, align 1
+  %4 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %3)
+  store <8 x i16> %4, ptr %i.b, align 16
   %.not.i = icmp eq i16 %.sroa.09.0.copyload, 0
-  %i.g = icmp eq i16 %.sroa.410.0.copyload.fr, 0  ; 2 uses
+  %5 = extractelement <8 x i16> %3, i64 1
+  %i.g = icmp eq i16 %5, 0                        ; 2 uses
   br i1 %.not.i, label %bb.b, label %.thread.i
 
 bb.b:                                             ; preds = %bb.a
@@ -247,11 +234,13 @@ bb.b:                                             ; preds = %bb.a
 
 .thread27.i:                                      ; preds = %bb.b, %.thread.i
   %.sroa.07.1.1.i = phi i64 [ %spec.select28.i, %.thread.i ], [ 0, %bb.b ] ; 5 uses
-  %i.h = icmp eq i16 %.sroa.511.0.copyload.fr, 0
+  %6 = extractelement <8 x i16> %3, i64 2
+  %i.h = icmp eq i16 %6, 0
   br i1 %i.h, label %bb.c, label %.thread45.thread
 
 .thread27.i.thread:                               ; preds = %bb.b
-  %i.i = icmp eq i16 %.sroa.511.0.copyload.fr, 0
+  %7 = extractelement <8 x i16> %3, i64 2
+  %i.i = icmp eq i16 %7, 0
   %spec.select = select i1 %i.i, i64 2, i64 -1
   br label %.thread45
 
@@ -264,16 +253,14 @@ bb.c:                                             ; preds = %.thread27.i
   %.sroa.07.1.2.i = phi i64 [ %spec.select, %.thread27.i.thread ], [ %spec.select54, %bb.c ] ; 5 uses
   %.sroa.03.2.2.i = phi i64 [ 1, %.thread27.i.thread ], [ -1, %bb.c ] ; 3 uses
   %.sroa.01.2.2.i = phi i64 [ 0, %.thread27.i.thread ], [ -1, %bb.c ] ; 3 uses
-  %11 = extractelement <4 x i16> %8, i64 0
-  %i.k = icmp eq i16 %11, 0
+  %i.k = icmp eq i16 %.sroa.612.0.copyload, 0
   br i1 %i.k, label %bb.f, label %bb.d
 
 .thread45.thread:                                 ; preds = %.thread27.i
   %i.l = icmp sgt i64 %.sroa.07.1.1.i, -1
   %i.m = sub nuw nsw i64 2, %.sroa.07.1.1.i
   %spec.select55 = select i1 %i.l, i64 %i.m, i64 -1
-  %12 = extractelement <4 x i16> %8, i64 0
-  %i.n = icmp eq i16 %12, 0
+  %i.n = icmp eq i16 %.sroa.612.0.copyload, 0
   %spec.select106 = select i1 %i.n, i64 3, i64 -1
   br label %.thread91
 
@@ -296,7 +283,7 @@ bb.f:                                             ; preds = %.thread45
   %.sroa.07.1.3.i = phi i64 [ %spec.select106, %.thread45.thread ], [ -1, %bb.d ], [ -1, %bb.e ], [ %spec.select107, %bb.f ] ; 5 uses
   %.sroa.03.2.3.i = phi i64 [ %spec.select55, %.thread45.thread ], [ %.sroa.03.2.2.i, %bb.d ], [ %i.p, %bb.e ], [ %.sroa.03.2.2.i, %bb.f ] ; 4 uses
   %.sroa.01.2.3.i = phi i64 [ %.sroa.07.1.1.i, %.thread45.thread ], [ %.sroa.01.2.2.i, %bb.d ], [ %spec.select20.3.i, %bb.e ], [ %.sroa.01.2.2.i, %bb.f ] ; 3 uses
-  %i.s = extractelement <4 x i16> %8, i64 1
+  %i.s = extractelement <8 x i16> %3, i64 4
   %i.t = icmp eq i16 %i.s, 0
   br i1 %i.t, label %bb.i, label %bb.g
 
@@ -320,7 +307,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %.sroa.07.1.4.i = phi i64 [ %spec.store.select.4.i, %bb.i ], [ -1, %bb.g ], [ -1, %bb.h ] ; 5 uses
   %.sroa.03.2.4.i = phi i64 [ %.sroa.03.2.3.i, %bb.i ], [ %.sroa.03.2.3.i, %bb.g ], [ %spec.select19.4.i, %bb.h ] ; 4 uses
   %.sroa.01.2.4.i = phi i64 [ %.sroa.01.2.3.i, %bb.i ], [ %.sroa.01.2.3.i, %bb.g ], [ %spec.select20.4.i, %bb.h ] ; 3 uses
-  %i.y = extractelement <4 x i16> %8, i64 2
+  %i.y = extractelement <8 x i16> %3, i64 5
   %i.z = icmp eq i16 %i.y, 0
   br i1 %i.z, label %bb.m, label %bb.k
 
@@ -344,7 +331,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %.sroa.07.1.5.i = phi i64 [ %spec.store.select.5.i, %bb.m ], [ -1, %bb.k ], [ -1, %bb.l ] ; 5 uses
   %.sroa.03.2.5.i = phi i64 [ %.sroa.03.2.4.i, %bb.m ], [ %.sroa.03.2.4.i, %bb.k ], [ %spec.select19.5.i, %bb.l ] ; 4 uses
   %.sroa.01.2.5.i = phi i64 [ %.sroa.01.2.4.i, %bb.m ], [ %.sroa.01.2.4.i, %bb.k ], [ %spec.select20.5.i, %bb.l ] ; 3 uses
-  %i.ae = extractelement <4 x i16> %8, i64 3
+  %i.ae = extractelement <8 x i16> %3, i64 6
   %i.af = icmp eq i16 %i.ae, 0
   br i1 %i.af, label %bb.q, label %bb.o
 
@@ -368,7 +355,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %.sroa.07.1.6.i = phi i64 [ %spec.store.select.6.i, %bb.q ], [ -1, %bb.o ], [ -1, %bb.p ] ; 5 uses
   %.sroa.03.2.6.i = phi i64 [ %.sroa.03.2.5.i, %bb.q ], [ %.sroa.03.2.5.i, %bb.o ], [ %spec.select19.6.i, %bb.p ] ; 4 uses
   %.sroa.01.2.6.i = phi i64 [ %.sroa.01.2.5.i, %bb.q ], [ %.sroa.01.2.5.i, %bb.o ], [ %spec.select20.6.i, %bb.p ] ; 3 uses
-  %i.ak = icmp eq i16 %.sroa.1016.0.copyload, 0
+  %8 = extractelement <8 x i16> %3, i64 7
+  %i.ak = icmp eq i16 %8, 0
   br i1 %i.ak, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -504,7 +492,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.1: ; preds = %bb
 
 bb.ae:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.c, ptr %i.a, align 8
+  store ptr %.sroa.511.0..sroa_idx, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.bq = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.br = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -522,7 +510,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.2: ; preds = %bb
 
 bb.ag:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.d, ptr %i.a, align 8
+  store ptr %.sroa.612.0..sroa_idx, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.bv = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.bw = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -540,7 +528,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.3: ; preds = %bb
 
 bb.ai:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.e, ptr %i.a, align 8
+  store ptr %.sroa.1016.0..sroa_idx, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.ca = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.cb = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -558,7 +546,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.4: ; preds = %bb
 
 bb.ak:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.f, ptr %i.a, align 8
+  store ptr %i.c, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.cf = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.cg = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -576,7 +564,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.5: ; preds = %bb
 
 bb.am:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %6, ptr %i.a, align 8
+  store ptr %i.d, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.ck = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.cl = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -594,7 +582,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.6: ; preds = %bb
 
 bb.ao:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %7, ptr %i.a, align 8
+  store ptr %i.e, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.cp = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.cq = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -612,7 +600,7 @@ _RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.7: ; preds = %bb
 
 bb.aq:                                            ; preds = %_RNvNtCs2vT3jxLudSK_3url4host21longest_zero_sequence.exit.split.7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %10, ptr %i.a, align 8
+  store ptr %i.f, ptr %i.a, align 8
   store ptr @_RNvXsm_NtNtCshzWfHUSfYae_4core3fmt3numtNtB7_8LowerHex3fmt, ptr %.sroa.420.0..sroa_idx, align 8
   %i.cu = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.cv = load ptr, ptr %i.aw, align 8, !nonnull !6, !align !16, !noundef !6
@@ -1015,9 +1003,6 @@ declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #10
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVecmE8grow_oneCs2vT3jxLudSK_3url(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #11
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.bswap.i16(i16) #10
-
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
 
@@ -1071,9 +1056,6 @@ declare i64 @llvm.smax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #10
