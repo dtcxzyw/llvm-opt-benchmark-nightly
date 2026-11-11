@@ -205,9 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = add i64 %i.c, %2                         ; 2 uses
   %i.i = icmp ugt i64 %i.h, 11
-  %i.j = sub i64 12, %i.h
-  %3 = tail call i64 @llvm.uadd.sat.i64(i64 %i.j, i64 1)
-  %i.k = tail call range(i64 4, 0) i64 @llvm.umax.i64(i64 range(i64 1, 0) %3, i64 8)
+  %i.j = sub i64 13, %i.h
+  %i.k = tail call range(i64 4, 0) i64 @llvm.umax.i64(i64 range(i64 1, 0) %i.j, i64 8)
   %..i = select i1 %i.i, i64 8, i64 %i.k          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsPYQCUnoTxQ_10collection(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %..i, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)

@@ -202,29 +202,26 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @vector_fmul_reverse_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) #4 {
 bb.a:
-  %4 = sext i32 %3 to i64                         ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 3 uses
   %i.a = getelementptr [4 x i8], ptr %2, i64 %4   ; 2 uses
   %i.b = getelementptr i8, ptr %i.a, i64 -4       ; 4 uses
   %i.c = icmp sgt i32 %3, 0
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %3 to i64      ; 7 uses
-  %min.iters.check = icmp ult i32 %3, 16
+  %wide.trip.count = zext nneg i32 %3 to i64      ; 4 uses
+  %min.iters.check = icmp ult i32 %3, 12
   br i1 %min.iters.check, label %.lr.ph.preheader24, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.d = shl nuw nsw i64 %wide.trip.count, 2      ; 2 uses
-  %5 = getelementptr i8, ptr %0, i64 %i.d         ; 2 uses
-  %i.e = getelementptr i8, ptr %1, i64 %i.d
-  %6 = sub nsw i64 %4, %wide.trip.count
-  %7 = shl nsw i64 %6, 2
-  %i.f = getelementptr i8, ptr %2, i64 %7
-  %bound0 = icmp ult ptr %0, %i.e
-  %bound1 = icmp ult ptr %1, %5
+  %i.e = getelementptr i8, ptr %0, i64 %i.d       ; 2 uses
+  %i.f = getelementptr i8, ptr %1, i64 %i.d
+  %bound0 = icmp ult ptr %0, %i.f
+  %bound1 = icmp ult ptr %1, %i.e
   %found.conflict = and i1 %bound0, %bound1
   %bound017 = icmp ult ptr %0, %i.a
-  %bound118 = icmp ult ptr %i.f, %5
+  %bound118 = icmp ult ptr %2, %i.e
   %found.conflict19 = and i1 %bound017, %bound118
   %conflict.rdx = or i1 %found.conflict, %found.conflict19
   br i1 %conflict.rdx, label %.lr.ph.preheader24, label %vector.ph
@@ -263,7 +260,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader24:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 6 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %xtraiter = and i64 %4, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
@@ -281,7 +278,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader24
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph.preheader24 ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
-  %i.y = add nsw i64 %wide.trip.count, -1
+  %i.y = add nsw i64 %4, -1
   %i.z = icmp eq i64 %indvars.iv.ph, %i.y
   br i1 %i.z, label %._crit_edge, label %.lr.ph
 

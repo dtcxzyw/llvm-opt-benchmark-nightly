@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %._crit_edge195
 bb.w:                                             ; preds = %.thread145
   %i.cv = getelementptr i8, ptr %0, i64 86848     ; 7 uses
   %notmask.i.i = shl nsw i32 -1, %5               ; 2 uses
-  %i.cw = and i32 %notmask.i.i, %3                ; 13 uses
+  %i.cw = and i32 %notmask.i.i, %3                ; 15 uses
   %i.cx = and i32 %notmask.i.i, %4                ; 7 uses
   %i.cy = icmp eq i32 %i.cw, 0
   %i.cz = icmp eq i32 %i.cx, 0
@@ -213,7 +213,7 @@ bb.w:                                             ; preds = %.thread145
   br i1 %or.cond.i, label %zywrle_analyze_16be.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.da = sub i32 %3, %i.cw                       ; 5 uses
+  %i.da = sub i32 %3, %i.cw                       ; 6 uses
   %i.db = sub i32 %4, %i.cx
   %i.dc = mul i32 %i.cw, %i.cx                    ; 2 uses
   %i.dd = sext i32 %i.dc to i64
@@ -233,7 +233,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.dk, label %.lr.ph321.i, label %.loopexit313.i
 
 .lr.ph321.i:                                      ; preds = %bb.y
-  %6 = sext i32 %i.da to i64
+  %6 = zext nneg i32 %i.da to i64
   %.idx427.i = shl nuw nsw i64 %6, 1
   %i.dl = icmp sgt i32 %i.da, 0
   br i1 %i.dl, label %.lr.ph.i.preheader.us, label %.loopexit313.i
@@ -276,8 +276,8 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %i.dz, label %.lr.ph334.i, label %.thread.i
 
 .lr.ph334.i:                                      ; preds = %bb.z
-  %7 = sext i32 %i.cw to i64                      ; 3 uses
-  %i.ea = sext i32 %i.da to i64                   ; 2 uses
+  %7 = zext nneg i32 %i.cw to i64
+  %i.ea = sext i32 %i.da to i64
   %.idx429.i = shl nuw nsw i64 %7, 1
   %i.eb = icmp sgt i32 %i.cw, 0
   br i1 %i.eb, label %.lr.ph327.i.preheader.us, label %._crit_edge335.i
@@ -308,10 +308,12 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %.not311.i, label %.thread.i, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge335.i
-  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %7
+  %8 = sext i32 %i.cw to i64                      ; 2 uses
+  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %8
   %i.ek = getelementptr inbounds [2 x i8], ptr %i.ej, i64 %i.du ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 %.idx428.i
-  %.idx431.i = shl nuw nsw i64 %i.ea, 1
+  %9 = zext nneg i32 %i.da to i64
+  %.idx431.i = shl nuw nsw i64 %9, 1
   %i.em = icmp sgt i32 %i.da, 0
   br i1 %i.em, label %.lr.ph341.i.preheader.us, label %.thread.i
 
@@ -332,22 +334,18 @@ bb.aa:                                            ; preds = %._crit_edge335.i
   br i1 %i.er, label %.lr.ph341.i.us, label %._crit_edge342.i.loopexit.us, !llvm.loop !56
 
 ._crit_edge342.i.loopexit.us:                     ; preds = %.lr.ph341.i.us
-  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %7 ; 2 uses
+  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %8 ; 2 uses
   %i.et = icmp ult ptr %i.es, %i.el
   br i1 %i.et, label %.lr.ph341.i.preheader.us, label %.thread.i, !llvm.loop !57
 
 .thread.i:                                        ; preds = %._crit_edge342.i.loopexit.us, %bb.aa, %bb.z, %._crit_edge335.i, %.loopexit313.i
   %i.eu = icmp sgt i32 %i.dc, 0                   ; 2 uses
-  %8 = sext i32 %i.cw to i64                      ; 2 uses
-  br i1 %i.eu, label %.lr.ph60.i.i, label %.thread.i.zywrle_rgbyuv_16be.exit.i_crit_edge
-
-.thread.i.zywrle_rgbyuv_16be.exit.i_crit_edge:    ; preds = %.thread.i
-  %.pre = shl nsw i64 %8, 2
-  br label %zywrle_rgbyuv_16be.exit.i
+  br i1 %i.eu, label %.lr.ph60.i.i, label %zywrle_rgbyuv_16be.exit.i
 
 .lr.ph60.i.i:                                     ; preds = %.thread.i
+  %10 = zext i32 %i.cw to i64
   %i.ev = sext i32 %i.da to i64
-  %.idx62.i.i = shl nsw i64 %8, 2                 ; 4 uses
+  %.idx62.i.i = shl nuw nsw i64 %10, 2            ; 3 uses
   %i.ew = icmp sgt i32 %i.cw, 0
   br i1 %i.ew, label %iter.check, label %._crit_edge.i.i
 
@@ -750,9 +748,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge.i.i:                                  ; preds = %.lr.ph60.i.i, %._crit_edge.i.i
   br label %._crit_edge.i.i
 
-zywrle_rgbyuv_16be.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i.zywrle_rgbyuv_16be.exit.i_crit_edge
-  %.idx434.i.pre-phi = phi i64 [ %.pre, %.thread.i.zywrle_rgbyuv_16be.exit.i_crit_edge ], [ %.idx62.i.i, %._crit_edge.i.loopexit.us.i ] ; 4 uses
+zywrle_rgbyuv_16be.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i
   tail call fastcc void @wavelet(ptr noundef nonnull %i.cv, i32 noundef %i.cw, i32 noundef %i.cx, i32 noundef range(i32 1, 256) %5)
+  %11 = sext i32 %i.cw to i64
+  %.idx434.i = shl nuw nsw i64 %11, 2             ; 4 uses
   %i.uy = icmp slt i32 %i.cw, 1                   ; 2 uses
   br label %bb.ab
 
@@ -779,7 +778,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph354.i.preheader.us:                         ; preds = %.lr.ph363.i, %._crit_edge355.i.loopexit.us
   %.0361.i.us = phi ptr [ %i.wc, %._crit_edge355.i.loopexit.us ], [ %i.vf, %.lr.ph363.i ] ; 2 uses
   %.1246359.i.us = phi ptr [ %i.vz, %._crit_edge355.i.loopexit.us ], [ %.0245416.i, %.lr.ph363.i ]
-  %i.vl = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i.pre-phi
+  %i.vl = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i
   br label %.lr.ph354.i.us
 
 .lr.ph354.i.us:                                   ; preds = %.lr.ph354.i.us, %.lr.ph354.i.preheader.us
@@ -818,7 +817,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph371.i.preheader.us:                         ; preds = %._crit_edge364.i, %._crit_edge372.i.loopexit.us
   %.2378.i.us = phi ptr [ %i.wx, %._crit_edge372.i.loopexit.us ], [ %i.we, %._crit_edge364.i ] ; 2 uses
   %.4249376.i.us = phi ptr [ %i.wu, %._crit_edge372.i.loopexit.us ], [ %i.vz, %._crit_edge364.i ]
-  %i.wg = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i.pre-phi
+  %i.wg = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i
   br label %.lr.ph371.i.us
 
 .lr.ph371.i.us:                                   ; preds = %.lr.ph371.i.us, %.lr.ph371.i.preheader.us
@@ -856,7 +855,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph388.i.preheader.us:                         ; preds = %._crit_edge381.i, %._crit_edge389.i.loopexit.us
   %.4395.i.us = phi ptr [ %i.xr, %._crit_edge389.i.loopexit.us ], [ %i.vc, %._crit_edge381.i ] ; 2 uses
   %.7252393.i.us = phi ptr [ %i.xo, %._crit_edge389.i.loopexit.us ], [ %i.wu, %._crit_edge381.i ]
-  %i.xa = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i.pre-phi
+  %i.xa = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i
   br label %.lr.ph388.i.us
 
 .lr.ph388.i.us:                                   ; preds = %.lr.ph388.i.us, %.lr.ph388.i.preheader.us
@@ -896,7 +895,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph413.i.us:                                   ; preds = %._crit_edge398.i, %._crit_edge406.i.loopexit.us
   %.6412.i.us = phi ptr [ %i.yk, %._crit_edge406.i.loopexit.us ], [ %i.cv, %._crit_edge398.i ] ; 2 uses
   %.10255410.i.us = phi ptr [ %i.yh, %._crit_edge406.i.loopexit.us ], [ %.us-phi182, %._crit_edge398.i ]
-  %i.xt = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i.pre-phi
+  %i.xt = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i
   br label %.lr.ph405.i.us
 
 .lr.ph405.i.us:                                   ; preds = %.lr.ph405.i.us, %.lr.ph413.i.us
@@ -1299,7 +1298,7 @@ bb.v:                                             ; preds = %._crit_edge195
 bb.w:                                             ; preds = %.thread145
   %i.cv = getelementptr i8, ptr %0, i64 86848     ; 7 uses
   %notmask.i.i = shl nsw i32 -1, %5               ; 2 uses
-  %i.cw = and i32 %notmask.i.i, %3                ; 13 uses
+  %i.cw = and i32 %notmask.i.i, %3                ; 15 uses
   %i.cx = and i32 %notmask.i.i, %4                ; 7 uses
   %i.cy = icmp eq i32 %i.cw, 0
   %i.cz = icmp eq i32 %i.cx, 0
@@ -1307,7 +1306,7 @@ bb.w:                                             ; preds = %.thread145
   br i1 %or.cond.i, label %zywrle_analyze_16le.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.da = sub i32 %3, %i.cw                       ; 5 uses
+  %i.da = sub i32 %3, %i.cw                       ; 6 uses
   %i.db = sub i32 %4, %i.cx
   %i.dc = mul i32 %i.cw, %i.cx                    ; 2 uses
   %i.dd = sext i32 %i.dc to i64
@@ -1327,7 +1326,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.dk, label %.lr.ph321.i, label %.loopexit313.i
 
 .lr.ph321.i:                                      ; preds = %bb.y
-  %6 = sext i32 %i.da to i64
+  %6 = zext nneg i32 %i.da to i64
   %.idx427.i = shl nuw nsw i64 %6, 1
   %i.dl = icmp sgt i32 %i.da, 0
   br i1 %i.dl, label %.lr.ph.i.preheader.us, label %.loopexit313.i
@@ -1370,8 +1369,8 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %i.dz, label %.lr.ph334.i, label %.thread.i
 
 .lr.ph334.i:                                      ; preds = %bb.z
-  %7 = sext i32 %i.cw to i64                      ; 3 uses
-  %i.ea = sext i32 %i.da to i64                   ; 2 uses
+  %7 = zext nneg i32 %i.cw to i64
+  %i.ea = sext i32 %i.da to i64
   %.idx429.i = shl nuw nsw i64 %7, 1
   %i.eb = icmp sgt i32 %i.cw, 0
   br i1 %i.eb, label %.lr.ph327.i.preheader.us, label %._crit_edge335.i
@@ -1402,10 +1401,12 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %.not311.i, label %.thread.i, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge335.i
-  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %7
+  %8 = sext i32 %i.cw to i64                      ; 2 uses
+  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %8
   %i.ek = getelementptr inbounds [2 x i8], ptr %i.ej, i64 %i.du ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 %.idx428.i
-  %.idx431.i = shl nuw nsw i64 %i.ea, 1
+  %9 = zext nneg i32 %i.da to i64
+  %.idx431.i = shl nuw nsw i64 %9, 1
   %i.em = icmp sgt i32 %i.da, 0
   br i1 %i.em, label %.lr.ph341.i.preheader.us, label %.thread.i
 
@@ -1426,22 +1427,18 @@ bb.aa:                                            ; preds = %._crit_edge335.i
   br i1 %i.er, label %.lr.ph341.i.us, label %._crit_edge342.i.loopexit.us, !llvm.loop !101
 
 ._crit_edge342.i.loopexit.us:                     ; preds = %.lr.ph341.i.us
-  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %7 ; 2 uses
+  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %8 ; 2 uses
   %i.et = icmp ult ptr %i.es, %i.el
   br i1 %i.et, label %.lr.ph341.i.preheader.us, label %.thread.i, !llvm.loop !102
 
 .thread.i:                                        ; preds = %._crit_edge342.i.loopexit.us, %bb.aa, %bb.z, %._crit_edge335.i, %.loopexit313.i
   %i.eu = icmp sgt i32 %i.dc, 0                   ; 2 uses
-  %8 = sext i32 %i.cw to i64                      ; 2 uses
-  br i1 %i.eu, label %.lr.ph60.i.i, label %.thread.i.zywrle_rgbyuv_16le.exit.i_crit_edge
-
-.thread.i.zywrle_rgbyuv_16le.exit.i_crit_edge:    ; preds = %.thread.i
-  %.pre = shl nsw i64 %8, 2
-  br label %zywrle_rgbyuv_16le.exit.i
+  br i1 %i.eu, label %.lr.ph60.i.i, label %zywrle_rgbyuv_16le.exit.i
 
 .lr.ph60.i.i:                                     ; preds = %.thread.i
+  %10 = zext i32 %i.cw to i64
   %i.ev = sext i32 %i.da to i64
-  %.idx62.i.i = shl nsw i64 %8, 2                 ; 4 uses
+  %.idx62.i.i = shl nuw nsw i64 %10, 2            ; 3 uses
   %i.ew = icmp sgt i32 %i.cw, 0
   br i1 %i.ew, label %iter.check, label %._crit_edge.i.i
 
@@ -1844,9 +1841,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge.i.i:                                  ; preds = %.lr.ph60.i.i, %._crit_edge.i.i
   br label %._crit_edge.i.i
 
-zywrle_rgbyuv_16le.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i.zywrle_rgbyuv_16le.exit.i_crit_edge
-  %.idx434.i.pre-phi = phi i64 [ %.pre, %.thread.i.zywrle_rgbyuv_16le.exit.i_crit_edge ], [ %.idx62.i.i, %._crit_edge.i.loopexit.us.i ] ; 4 uses
+zywrle_rgbyuv_16le.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i
   tail call fastcc void @wavelet(ptr noundef nonnull %i.cv, i32 noundef %i.cw, i32 noundef %i.cx, i32 noundef range(i32 1, 256) %5)
+  %11 = sext i32 %i.cw to i64
+  %.idx434.i = shl nuw nsw i64 %11, 2             ; 4 uses
   %i.uy = icmp slt i32 %i.cw, 1                   ; 2 uses
   br label %bb.ab
 
@@ -1873,7 +1871,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph354.i.preheader.us:                         ; preds = %.lr.ph363.i, %._crit_edge355.i.loopexit.us
   %.0361.i.us = phi ptr [ %i.wc, %._crit_edge355.i.loopexit.us ], [ %i.vf, %.lr.ph363.i ] ; 2 uses
   %.1246359.i.us = phi ptr [ %i.vz, %._crit_edge355.i.loopexit.us ], [ %.0245416.i, %.lr.ph363.i ]
-  %i.vl = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i.pre-phi
+  %i.vl = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i
   br label %.lr.ph354.i.us
 
 .lr.ph354.i.us:                                   ; preds = %.lr.ph354.i.us, %.lr.ph354.i.preheader.us
@@ -1912,7 +1910,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph371.i.preheader.us:                         ; preds = %._crit_edge364.i, %._crit_edge372.i.loopexit.us
   %.2378.i.us = phi ptr [ %i.wx, %._crit_edge372.i.loopexit.us ], [ %i.we, %._crit_edge364.i ] ; 2 uses
   %.4249376.i.us = phi ptr [ %i.wu, %._crit_edge372.i.loopexit.us ], [ %i.vz, %._crit_edge364.i ]
-  %i.wg = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i.pre-phi
+  %i.wg = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i
   br label %.lr.ph371.i.us
 
 .lr.ph371.i.us:                                   ; preds = %.lr.ph371.i.us, %.lr.ph371.i.preheader.us
@@ -1950,7 +1948,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph388.i.preheader.us:                         ; preds = %._crit_edge381.i, %._crit_edge389.i.loopexit.us
   %.4395.i.us = phi ptr [ %i.xr, %._crit_edge389.i.loopexit.us ], [ %i.vc, %._crit_edge381.i ] ; 2 uses
   %.7252393.i.us = phi ptr [ %i.xo, %._crit_edge389.i.loopexit.us ], [ %i.wu, %._crit_edge381.i ]
-  %i.xa = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i.pre-phi
+  %i.xa = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i
   br label %.lr.ph388.i.us
 
 .lr.ph388.i.us:                                   ; preds = %.lr.ph388.i.us, %.lr.ph388.i.preheader.us
@@ -1990,7 +1988,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph413.i.us:                                   ; preds = %._crit_edge398.i, %._crit_edge406.i.loopexit.us
   %.6412.i.us = phi ptr [ %i.yk, %._crit_edge406.i.loopexit.us ], [ %i.cv, %._crit_edge398.i ] ; 2 uses
   %.10255410.i.us = phi ptr [ %i.yh, %._crit_edge406.i.loopexit.us ], [ %.us-phi182, %._crit_edge398.i ]
-  %i.xt = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i.pre-phi
+  %i.xt = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i
   br label %.lr.ph405.i.us
 
 .lr.ph405.i.us:                                   ; preds = %.lr.ph405.i.us, %.lr.ph413.i.us
@@ -2393,7 +2391,7 @@ bb.v:                                             ; preds = %._crit_edge195
 bb.w:                                             ; preds = %.thread145
   %i.cv = getelementptr i8, ptr %0, i64 86848     ; 7 uses
   %notmask.i.i = shl nsw i32 -1, %5               ; 2 uses
-  %i.cw = and i32 %notmask.i.i, %3                ; 13 uses
+  %i.cw = and i32 %notmask.i.i, %3                ; 15 uses
   %i.cx = and i32 %notmask.i.i, %4                ; 7 uses
   %i.cy = icmp eq i32 %i.cw, 0
   %i.cz = icmp eq i32 %i.cx, 0
@@ -2401,7 +2399,7 @@ bb.w:                                             ; preds = %.thread145
   br i1 %or.cond.i, label %zywrle_analyze_15be.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.da = sub i32 %3, %i.cw                       ; 5 uses
+  %i.da = sub i32 %3, %i.cw                       ; 6 uses
   %i.db = sub i32 %4, %i.cx
   %i.dc = mul i32 %i.cw, %i.cx                    ; 2 uses
   %i.dd = sext i32 %i.dc to i64
@@ -2421,7 +2419,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.dk, label %.lr.ph321.i, label %.loopexit313.i
 
 .lr.ph321.i:                                      ; preds = %bb.y
-  %6 = sext i32 %i.da to i64
+  %6 = zext nneg i32 %i.da to i64
   %.idx427.i = shl nuw nsw i64 %6, 1
   %i.dl = icmp sgt i32 %i.da, 0
   br i1 %i.dl, label %.lr.ph.i.preheader.us, label %.loopexit313.i
@@ -2464,8 +2462,8 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %i.dz, label %.lr.ph334.i, label %.thread.i
 
 .lr.ph334.i:                                      ; preds = %bb.z
-  %7 = sext i32 %i.cw to i64                      ; 3 uses
-  %i.ea = sext i32 %i.da to i64                   ; 2 uses
+  %7 = zext nneg i32 %i.cw to i64
+  %i.ea = sext i32 %i.da to i64
   %.idx429.i = shl nuw nsw i64 %7, 1
   %i.eb = icmp sgt i32 %i.cw, 0
   br i1 %i.eb, label %.lr.ph327.i.preheader.us, label %._crit_edge335.i
@@ -2496,10 +2494,12 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %.not311.i, label %.thread.i, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge335.i
-  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %7
+  %8 = sext i32 %i.cw to i64                      ; 2 uses
+  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %8
   %i.ek = getelementptr inbounds [2 x i8], ptr %i.ej, i64 %i.du ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 %.idx428.i
-  %.idx431.i = shl nuw nsw i64 %i.ea, 1
+  %9 = zext nneg i32 %i.da to i64
+  %.idx431.i = shl nuw nsw i64 %9, 1
   %i.em = icmp sgt i32 %i.da, 0
   br i1 %i.em, label %.lr.ph341.i.preheader.us, label %.thread.i
 
@@ -2520,22 +2520,18 @@ bb.aa:                                            ; preds = %._crit_edge335.i
   br i1 %i.er, label %.lr.ph341.i.us, label %._crit_edge342.i.loopexit.us, !llvm.loop !140
 
 ._crit_edge342.i.loopexit.us:                     ; preds = %.lr.ph341.i.us
-  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %7 ; 2 uses
+  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %8 ; 2 uses
   %i.et = icmp ult ptr %i.es, %i.el
   br i1 %i.et, label %.lr.ph341.i.preheader.us, label %.thread.i, !llvm.loop !141
 
 .thread.i:                                        ; preds = %._crit_edge342.i.loopexit.us, %bb.aa, %bb.z, %._crit_edge335.i, %.loopexit313.i
   %i.eu = icmp sgt i32 %i.dc, 0                   ; 2 uses
-  %8 = sext i32 %i.cw to i64                      ; 2 uses
-  br i1 %i.eu, label %.lr.ph60.i.i, label %.thread.i.zywrle_rgbyuv_15be.exit.i_crit_edge
-
-.thread.i.zywrle_rgbyuv_15be.exit.i_crit_edge:    ; preds = %.thread.i
-  %.pre = shl nsw i64 %8, 2
-  br label %zywrle_rgbyuv_15be.exit.i
+  br i1 %i.eu, label %.lr.ph60.i.i, label %zywrle_rgbyuv_15be.exit.i
 
 .lr.ph60.i.i:                                     ; preds = %.thread.i
+  %10 = zext i32 %i.cw to i64
   %i.ev = sext i32 %i.da to i64
-  %.idx62.i.i = shl nsw i64 %8, 2                 ; 4 uses
+  %.idx62.i.i = shl nuw nsw i64 %10, 2            ; 3 uses
   %i.ew = icmp sgt i32 %i.cw, 0
   br i1 %i.ew, label %iter.check, label %._crit_edge.i.i
 
@@ -2938,9 +2934,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge.i.i:                                  ; preds = %.lr.ph60.i.i, %._crit_edge.i.i
   br label %._crit_edge.i.i
 
-zywrle_rgbyuv_15be.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i.zywrle_rgbyuv_15be.exit.i_crit_edge
-  %.idx434.i.pre-phi = phi i64 [ %.pre, %.thread.i.zywrle_rgbyuv_15be.exit.i_crit_edge ], [ %.idx62.i.i, %._crit_edge.i.loopexit.us.i ] ; 4 uses
+zywrle_rgbyuv_15be.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i
   tail call fastcc void @wavelet(ptr noundef nonnull %i.cv, i32 noundef %i.cw, i32 noundef %i.cx, i32 noundef range(i32 1, 256) %5)
+  %11 = sext i32 %i.cw to i64
+  %.idx434.i = shl nuw nsw i64 %11, 2             ; 4 uses
   %i.vb = icmp slt i32 %i.cw, 1                   ; 2 uses
   br label %bb.ab
 
@@ -2967,7 +2964,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph354.i.preheader.us:                         ; preds = %.lr.ph363.i, %._crit_edge355.i.loopexit.us
   %.0361.i.us = phi ptr [ %i.wg, %._crit_edge355.i.loopexit.us ], [ %i.vi, %.lr.ph363.i ] ; 2 uses
   %.1246359.i.us = phi ptr [ %i.wd, %._crit_edge355.i.loopexit.us ], [ %.0245416.i, %.lr.ph363.i ]
-  %i.vo = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i.pre-phi
+  %i.vo = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i
   br label %.lr.ph354.i.us
 
 .lr.ph354.i.us:                                   ; preds = %.lr.ph354.i.us, %.lr.ph354.i.preheader.us
@@ -3007,7 +3004,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph371.i.preheader.us:                         ; preds = %._crit_edge364.i, %._crit_edge372.i.loopexit.us
   %.2378.i.us = phi ptr [ %i.xc, %._crit_edge372.i.loopexit.us ], [ %i.wi, %._crit_edge364.i ] ; 2 uses
   %.4249376.i.us = phi ptr [ %i.wz, %._crit_edge372.i.loopexit.us ], [ %i.wd, %._crit_edge364.i ]
-  %i.wk = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i.pre-phi
+  %i.wk = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i
   br label %.lr.ph371.i.us
 
 .lr.ph371.i.us:                                   ; preds = %.lr.ph371.i.us, %.lr.ph371.i.preheader.us
@@ -3046,7 +3043,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph388.i.preheader.us:                         ; preds = %._crit_edge381.i, %._crit_edge389.i.loopexit.us
   %.4395.i.us = phi ptr [ %i.xx, %._crit_edge389.i.loopexit.us ], [ %i.vf, %._crit_edge381.i ] ; 2 uses
   %.7252393.i.us = phi ptr [ %i.xu, %._crit_edge389.i.loopexit.us ], [ %i.wz, %._crit_edge381.i ]
-  %i.xf = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i.pre-phi
+  %i.xf = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i
   br label %.lr.ph388.i.us
 
 .lr.ph388.i.us:                                   ; preds = %.lr.ph388.i.us, %.lr.ph388.i.preheader.us
@@ -3087,7 +3084,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph413.i.us:                                   ; preds = %._crit_edge398.i, %._crit_edge406.i.loopexit.us
   %.6412.i.us = phi ptr [ %i.yr, %._crit_edge406.i.loopexit.us ], [ %i.cv, %._crit_edge398.i ] ; 2 uses
   %.10255410.i.us = phi ptr [ %i.yo, %._crit_edge406.i.loopexit.us ], [ %.us-phi182, %._crit_edge398.i ]
-  %i.xz = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i.pre-phi
+  %i.xz = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i
   br label %.lr.ph405.i.us
 
 .lr.ph405.i.us:                                   ; preds = %.lr.ph405.i.us, %.lr.ph413.i.us
@@ -3490,7 +3487,7 @@ bb.v:                                             ; preds = %._crit_edge195
 bb.w:                                             ; preds = %.thread145
   %i.cv = getelementptr i8, ptr %0, i64 86848     ; 7 uses
   %notmask.i.i = shl nsw i32 -1, %5               ; 2 uses
-  %i.cw = and i32 %notmask.i.i, %3                ; 13 uses
+  %i.cw = and i32 %notmask.i.i, %3                ; 15 uses
   %i.cx = and i32 %notmask.i.i, %4                ; 7 uses
   %i.cy = icmp eq i32 %i.cw, 0
   %i.cz = icmp eq i32 %i.cx, 0
@@ -3498,7 +3495,7 @@ bb.w:                                             ; preds = %.thread145
   br i1 %or.cond.i, label %zywrle_analyze_15le.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.da = sub i32 %3, %i.cw                       ; 5 uses
+  %i.da = sub i32 %3, %i.cw                       ; 6 uses
   %i.db = sub i32 %4, %i.cx
   %i.dc = mul i32 %i.cw, %i.cx                    ; 2 uses
   %i.dd = sext i32 %i.dc to i64
@@ -3518,7 +3515,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.dk, label %.lr.ph321.i, label %.loopexit313.i
 
 .lr.ph321.i:                                      ; preds = %bb.y
-  %6 = sext i32 %i.da to i64
+  %6 = zext nneg i32 %i.da to i64
   %.idx427.i = shl nuw nsw i64 %6, 1
   %i.dl = icmp sgt i32 %i.da, 0
   br i1 %i.dl, label %.lr.ph.i.preheader.us, label %.loopexit313.i
@@ -3561,8 +3558,8 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %i.dz, label %.lr.ph334.i, label %.thread.i
 
 .lr.ph334.i:                                      ; preds = %bb.z
-  %7 = sext i32 %i.cw to i64                      ; 3 uses
-  %i.ea = sext i32 %i.da to i64                   ; 2 uses
+  %7 = zext nneg i32 %i.cw to i64
+  %i.ea = sext i32 %i.da to i64
   %.idx429.i = shl nuw nsw i64 %7, 1
   %i.eb = icmp sgt i32 %i.cw, 0
   br i1 %i.eb, label %.lr.ph327.i.preheader.us, label %._crit_edge335.i
@@ -3593,10 +3590,12 @@ bb.z:                                             ; preds = %.loopexit313.i
   br i1 %.not311.i, label %.thread.i, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge335.i
-  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %7
+  %8 = sext i32 %i.cw to i64                      ; 2 uses
+  %i.ej = getelementptr inbounds [2 x i8], ptr %2, i64 %8
   %i.ek = getelementptr inbounds [2 x i8], ptr %i.ej, i64 %i.du ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 %.idx428.i
-  %.idx431.i = shl nuw nsw i64 %i.ea, 1
+  %9 = zext nneg i32 %i.da to i64
+  %.idx431.i = shl nuw nsw i64 %9, 1
   %i.em = icmp sgt i32 %i.da, 0
   br i1 %i.em, label %.lr.ph341.i.preheader.us, label %.thread.i
 
@@ -3617,22 +3616,18 @@ bb.aa:                                            ; preds = %._crit_edge335.i
   br i1 %i.er, label %.lr.ph341.i.us, label %._crit_edge342.i.loopexit.us, !llvm.loop !179
 
 ._crit_edge342.i.loopexit.us:                     ; preds = %.lr.ph341.i.us
-  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %7 ; 2 uses
+  %i.es = getelementptr inbounds [2 x i8], ptr %i.ep, i64 %8 ; 2 uses
   %i.et = icmp ult ptr %i.es, %i.el
   br i1 %i.et, label %.lr.ph341.i.preheader.us, label %.thread.i, !llvm.loop !180
 
 .thread.i:                                        ; preds = %._crit_edge342.i.loopexit.us, %bb.aa, %bb.z, %._crit_edge335.i, %.loopexit313.i
   %i.eu = icmp sgt i32 %i.dc, 0                   ; 2 uses
-  %8 = sext i32 %i.cw to i64                      ; 2 uses
-  br i1 %i.eu, label %.lr.ph60.i.i, label %.thread.i.zywrle_rgbyuv_15le.exit.i_crit_edge
-
-.thread.i.zywrle_rgbyuv_15le.exit.i_crit_edge:    ; preds = %.thread.i
-  %.pre = shl nsw i64 %8, 2
-  br label %zywrle_rgbyuv_15le.exit.i
+  br i1 %i.eu, label %.lr.ph60.i.i, label %zywrle_rgbyuv_15le.exit.i
 
 .lr.ph60.i.i:                                     ; preds = %.thread.i
+  %10 = zext i32 %i.cw to i64
   %i.ev = sext i32 %i.da to i64
-  %.idx62.i.i = shl nsw i64 %8, 2                 ; 4 uses
+  %.idx62.i.i = shl nuw nsw i64 %10, 2            ; 3 uses
   %i.ew = icmp sgt i32 %i.cw, 0
   br i1 %i.ew, label %iter.check, label %._crit_edge.i.i
 
@@ -4035,9 +4030,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge.i.i:                                  ; preds = %.lr.ph60.i.i, %._crit_edge.i.i
   br label %._crit_edge.i.i
 
-zywrle_rgbyuv_15le.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i.zywrle_rgbyuv_15le.exit.i_crit_edge
-  %.idx434.i.pre-phi = phi i64 [ %.pre, %.thread.i.zywrle_rgbyuv_15le.exit.i_crit_edge ], [ %.idx62.i.i, %._crit_edge.i.loopexit.us.i ] ; 4 uses
+zywrle_rgbyuv_15le.exit.i:                        ; preds = %._crit_edge.i.loopexit.us.i, %.thread.i
   tail call fastcc void @wavelet(ptr noundef nonnull %i.cv, i32 noundef %i.cw, i32 noundef %i.cx, i32 noundef range(i32 1, 256) %5)
+  %11 = sext i32 %i.cw to i64
+  %.idx434.i = shl nuw nsw i64 %11, 2             ; 4 uses
   %i.vb = icmp slt i32 %i.cw, 1                   ; 2 uses
   br label %bb.ab
 
@@ -4064,7 +4060,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph354.i.preheader.us:                         ; preds = %.lr.ph363.i, %._crit_edge355.i.loopexit.us
   %.0361.i.us = phi ptr [ %i.wg, %._crit_edge355.i.loopexit.us ], [ %i.vi, %.lr.ph363.i ] ; 2 uses
   %.1246359.i.us = phi ptr [ %i.wd, %._crit_edge355.i.loopexit.us ], [ %.0245416.i, %.lr.ph363.i ]
-  %i.vo = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i.pre-phi
+  %i.vo = getelementptr inbounds nuw i8, ptr %.0361.i.us, i64 %.idx434.i
   br label %.lr.ph354.i.us
 
 .lr.ph354.i.us:                                   ; preds = %.lr.ph354.i.us, %.lr.ph354.i.preheader.us
@@ -4104,7 +4100,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph371.i.preheader.us:                         ; preds = %._crit_edge364.i, %._crit_edge372.i.loopexit.us
   %.2378.i.us = phi ptr [ %i.xc, %._crit_edge372.i.loopexit.us ], [ %i.wi, %._crit_edge364.i ] ; 2 uses
   %.4249376.i.us = phi ptr [ %i.wz, %._crit_edge372.i.loopexit.us ], [ %i.wd, %._crit_edge364.i ]
-  %i.wk = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i.pre-phi
+  %i.wk = getelementptr inbounds nuw i8, ptr %.2378.i.us, i64 %.idx434.i
   br label %.lr.ph371.i.us
 
 .lr.ph371.i.us:                                   ; preds = %.lr.ph371.i.us, %.lr.ph371.i.preheader.us
@@ -4143,7 +4139,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph388.i.preheader.us:                         ; preds = %._crit_edge381.i, %._crit_edge389.i.loopexit.us
   %.4395.i.us = phi ptr [ %i.xx, %._crit_edge389.i.loopexit.us ], [ %i.vf, %._crit_edge381.i ] ; 2 uses
   %.7252393.i.us = phi ptr [ %i.xu, %._crit_edge389.i.loopexit.us ], [ %i.wz, %._crit_edge381.i ]
-  %i.xf = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i.pre-phi
+  %i.xf = getelementptr inbounds nuw i8, ptr %.4395.i.us, i64 %.idx434.i
   br label %.lr.ph388.i.us
 
 .lr.ph388.i.us:                                   ; preds = %.lr.ph388.i.us, %.lr.ph388.i.preheader.us
@@ -4184,7 +4180,7 @@ bb.ab:                                            ; preds = %.loopexit312.i, %zy
 .lr.ph413.i.us:                                   ; preds = %._crit_edge398.i, %._crit_edge406.i.loopexit.us
   %.6412.i.us = phi ptr [ %i.yr, %._crit_edge406.i.loopexit.us ], [ %i.cv, %._crit_edge398.i ] ; 2 uses
   %.10255410.i.us = phi ptr [ %i.yo, %._crit_edge406.i.loopexit.us ], [ %.us-phi182, %._crit_edge398.i ]
-  %i.xz = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i.pre-phi
+  %i.xz = getelementptr inbounds nuw i8, ptr %.6412.i.us, i64 %.idx434.i
   br label %.lr.ph405.i.us
 
 .lr.ph405.i.us:                                   ; preds = %.lr.ph405.i.us, %.lr.ph413.i.us
@@ -4587,7 +4583,7 @@ bb.w:                                             ; preds = %.thread149
 define internal fastcc void @zywrle_analyze_32be(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 1, 256) %5, ptr nofree noundef captures(address) %6) unnamed_addr #6 {
 bb.a:
   %notmask.i = shl nsw i32 -1, %5                 ; 2 uses
-  %i.a = and i32 %notmask.i, %2                   ; 23 uses
+  %i.a = and i32 %notmask.i, %2                   ; 24 uses
   %i.b = and i32 %notmask.i, %3                   ; 7 uses
   %i.c = icmp eq i32 %i.a, 0
   %i.d = icmp eq i32 %i.b, 0
@@ -4615,10 +4611,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %.lr.ph309, label %.loopexit301
 
 .lr.ph309:                                        ; preds = %bb.c
-  %7 = sext i32 %i.e to i64
+  %7 = zext i32 %i.e to i64
   %i.p = sub i32 %4, %i.e
   %i.q = sext i32 %i.p to i64
-  %.idx415 = shl nsw i64 %7, 2                    ; 2 uses
+  %.idx415 = shl nuw nsw i64 %7, 2                ; 2 uses
   %i.r = icmp sgt i32 %i.e, 0
   br label %bb.d
 
@@ -4710,10 +4706,10 @@ bb.e:                                             ; preds = %.loopexit301
   br i1 %i.au, label %.lr.ph322, label %._crit_edge323.thread
 
 .lr.ph322:                                        ; preds = %bb.e
-  %8 = sext i32 %i.a to i64
+  %8 = zext i32 %i.a to i64
   %i.av = sub i32 %4, %i.a
   %i.aw = sext i32 %i.av to i64
-  %.idx417 = shl nsw i64 %8, 2                    ; 2 uses
+  %.idx417 = shl nuw nsw i64 %8, 2                ; 2 uses
   %i.ax = icmp sgt i32 %i.a, 0
   br label %bb.f
 
@@ -4804,10 +4800,10 @@ middle.block41:                                   ; preds = %vector.body34
   %i.by = getelementptr inbounds [4 x i8], ptr %1, i64 %i.bx
   %i.bz = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.ap ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.idx416
-  %9 = sext i32 %i.e to i64
+  %9 = zext i32 %i.e to i64
   %i.cb = sub i32 %4, %i.e
   %i.cc = sext i32 %i.cb to i64
-  %.idx419 = shl nsw i64 %9, 2                    ; 2 uses
+  %.idx419 = shl nuw nsw i64 %9, 2                ; 2 uses
   %i.cd = icmp sgt i32 %i.e, 0
   br label %bb.g
 
@@ -4884,10 +4880,10 @@ middle.block64:                                   ; preds = %vector.body57
 .thread:                                          ; preds = %._crit_edge330, %.thread465, %._crit_edge323.thread, %.loopexit301, %._crit_edge323
   %.8 = phi ptr [ %.2216, %.loopexit301 ], [ %i.bs, %._crit_edge323 ], [ %i.aq, %._crit_edge323.thread ], [ %i.bw, %.thread465 ], [ %i.cy, %._crit_edge330 ]
   %i.da = icmp sgt i32 %i.g, 0                    ; 2 uses
-  %10 = sext i32 %i.a to i64                      ; 5 uses
   br i1 %i.da, label %.lr.ph58.i, label %zywrle_rgbyuv_32be.exit
 
 .lr.ph58.i:                                       ; preds = %.thread
+  %10 = zext nneg i32 %i.a to i64
   %i.db = sub i32 %4, %i.a
   %i.dc = sext i32 %i.db to i64
   %.idx60.i = shl nuw nsw i64 %10, 2
@@ -4951,17 +4947,18 @@ middle.block64:                                   ; preds = %vector.body57
 zywrle_rgbyuv_32be.exit:                          ; preds = %._crit_edge.i.loopexit.us, %.thread
   tail call fastcc void @wavelet(ptr noundef %6, i32 noundef %i.a, i32 noundef %i.b, i32 noundef %5)
   %i.en = add nsw i32 %5, -1
+  %11 = sext i32 %i.a to i64                      ; 4 uses
   %i.eo = sext i32 %2 to i64                      ; 5 uses
   %i.ep = sub i32 %4, %2
   %i.eq = sext i32 %i.ep to i64                   ; 5 uses
   %i.er = icmp slt i32 %i.g, 1
-  %.idx422 = shl nsw i64 %10, 2
+  %.idx422 = shl nuw nsw i64 %11, 2
   %i.es = icmp sgt i32 %i.a, 0
-  %.idx424 = shl nsw i64 %10, 2
+  %.idx424 = shl nuw nsw i64 %11, 2
   %i.et = icmp sgt i32 %i.a, 0
-  %.idx426 = shl nsw i64 %10, 2
+  %.idx426 = shl nuw nsw i64 %11, 2
   %i.eu = icmp sgt i32 %i.a, 0
-  %.idx427 = shl nsw i64 %10, 2
+  %.idx427 = shl nuw nsw i64 %11, 2
   %i.ev = icmp sgt i32 %i.a, 0
   br label %bb.h
 
@@ -4990,7 +4987,7 @@ bb.i:                                             ; preds = %.lr.ph351, %._crit_
   %.0349 = phi ptr [ %i.fc, %.lr.ph351 ], [ %i.fz, %._crit_edge343 ] ; 3 uses
   %.10348 = phi ptr [ %.9406, %.lr.ph351 ], [ %.11.lcssa, %._crit_edge343 ] ; 2 uses
   %.1234347 = phi ptr [ %.0233404, %.lr.ph351 ], [ %.2235.lcssa, %._crit_edge343 ] ; 2 uses
-  %i.fi = getelementptr inbounds i8, ptr %.0349, i64 %.idx422
+  %i.fi = getelementptr inbounds nuw i8, ptr %.0349, i64 %.idx422
   br i1 %i.es, label %.lr.ph342, label %._crit_edge343
 
 .lr.ph342:                                        ; preds = %bb.i, %.lr.ph342
@@ -5042,7 +5039,7 @@ bb.j:                                             ; preds = %._crit_edge352, %._
   %.2366 = phi ptr [ %i.gb, %._crit_edge352 ], [ %i.gy, %._crit_edge360 ] ; 3 uses
   %.13365 = phi ptr [ %.11.lcssa, %._crit_edge352 ], [ %.14.lcssa, %._crit_edge360 ] ; 2 uses
   %.4237364 = phi ptr [ %.2235.lcssa, %._crit_edge352 ], [ %.5238.lcssa, %._crit_edge360 ] ; 2 uses
-  %i.gh = getelementptr inbounds i8, ptr %.2366, i64 %.idx424
+  %i.gh = getelementptr inbounds nuw i8, ptr %.2366, i64 %.idx424
   br i1 %i.et, label %.lr.ph359, label %._crit_edge360
 
 .lr.ph359:                                        ; preds = %bb.j, %.lr.ph359
@@ -5093,7 +5090,7 @@ bb.k:                                             ; preds = %._crit_edge369, %._
   %.4383 = phi ptr [ %i.ez, %._crit_edge369 ], [ %i.hw, %._crit_edge377 ] ; 3 uses
   %.16382 = phi ptr [ %.14.lcssa, %._crit_edge369 ], [ %.17.lcssa, %._crit_edge377 ] ; 2 uses
   %.7240381 = phi ptr [ %.5238.lcssa, %._crit_edge369 ], [ %.8241.lcssa, %._crit_edge377 ] ; 2 uses
-  %i.hf = getelementptr inbounds i8, ptr %.4383, i64 %.idx426
+  %i.hf = getelementptr inbounds nuw i8, ptr %.4383, i64 %.idx426
   br i1 %i.eu, label %.lr.ph376, label %._crit_edge377
 
 .lr.ph376:                                        ; preds = %bb.k, %.lr.ph376
@@ -5148,7 +5145,7 @@ bb.l:                                             ; preds = %.lr.ph401, %._crit_
   %.6400 = phi ptr [ %6, %.lr.ph401 ], [ %i.iu, %._crit_edge394 ] ; 3 uses
   %.19399 = phi ptr [ %.17.lcssa, %.lr.ph401 ], [ %.20.lcssa, %._crit_edge394 ] ; 2 uses
   %.10243398 = phi ptr [ %.8241.lcssa, %.lr.ph401 ], [ %.11244.lcssa, %._crit_edge394 ] ; 2 uses
-  %i.id = getelementptr inbounds i8, ptr %.6400, i64 %.idx427
+  %i.id = getelementptr inbounds nuw i8, ptr %.6400, i64 %.idx427
   br i1 %i.ev, label %.lr.ph393, label %._crit_edge394
 
 .lr.ph393:                                        ; preds = %bb.l, %.lr.ph393
@@ -5533,7 +5530,7 @@ bb.w:                                             ; preds = %.thread149
 define internal fastcc void @zywrle_analyze_32le(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 1, 256) %5, ptr nofree noundef captures(address) %6) unnamed_addr #6 {
 bb.a:
   %notmask.i = shl nsw i32 -1, %5                 ; 2 uses
-  %i.a = and i32 %notmask.i, %2                   ; 23 uses
+  %i.a = and i32 %notmask.i, %2                   ; 24 uses
   %i.b = and i32 %notmask.i, %3                   ; 7 uses
   %i.c = icmp eq i32 %i.a, 0
   %i.d = icmp eq i32 %i.b, 0
@@ -5561,10 +5558,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %.lr.ph309, label %.loopexit301
 
 .lr.ph309:                                        ; preds = %bb.c
-  %7 = sext i32 %i.e to i64
+  %7 = zext i32 %i.e to i64
   %i.p = sub i32 %4, %i.e
   %i.q = sext i32 %i.p to i64
-  %.idx415 = shl nsw i64 %7, 2                    ; 2 uses
+  %.idx415 = shl nuw nsw i64 %7, 2                ; 2 uses
   %i.r = icmp sgt i32 %i.e, 0
   br label %bb.d
 
@@ -5656,10 +5653,10 @@ bb.e:                                             ; preds = %.loopexit301
   br i1 %i.au, label %.lr.ph322, label %._crit_edge323.thread
 
 .lr.ph322:                                        ; preds = %bb.e
-  %8 = sext i32 %i.a to i64
+  %8 = zext i32 %i.a to i64
   %i.av = sub i32 %4, %i.a
   %i.aw = sext i32 %i.av to i64
-  %.idx417 = shl nsw i64 %8, 2                    ; 2 uses
+  %.idx417 = shl nuw nsw i64 %8, 2                ; 2 uses
   %i.ax = icmp sgt i32 %i.a, 0
   br label %bb.f
 
@@ -5750,10 +5747,10 @@ middle.block41:                                   ; preds = %vector.body34
   %i.by = getelementptr inbounds [4 x i8], ptr %1, i64 %i.bx
   %i.bz = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.ap ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.idx416
-  %9 = sext i32 %i.e to i64
+  %9 = zext i32 %i.e to i64
   %i.cb = sub i32 %4, %i.e
   %i.cc = sext i32 %i.cb to i64
-  %.idx419 = shl nsw i64 %9, 2                    ; 2 uses
+  %.idx419 = shl nuw nsw i64 %9, 2                ; 2 uses
   %i.cd = icmp sgt i32 %i.e, 0
   br label %bb.g
 
@@ -5830,10 +5827,10 @@ middle.block64:                                   ; preds = %vector.body57
 .thread:                                          ; preds = %._crit_edge330, %.thread465, %._crit_edge323.thread, %.loopexit301, %._crit_edge323
   %.8 = phi ptr [ %.2216, %.loopexit301 ], [ %i.bs, %._crit_edge323 ], [ %i.aq, %._crit_edge323.thread ], [ %i.bw, %.thread465 ], [ %i.cy, %._crit_edge330 ]
   %i.da = icmp sgt i32 %i.g, 0                    ; 2 uses
-  %10 = sext i32 %i.a to i64                      ; 5 uses
   br i1 %i.da, label %.lr.ph58.i, label %zywrle_rgbyuv_32le.exit
 
 .lr.ph58.i:                                       ; preds = %.thread
+  %10 = zext nneg i32 %i.a to i64
   %i.db = sub i32 %4, %i.a
   %i.dc = sext i32 %i.db to i64
   %.idx60.i = shl nuw nsw i64 %10, 2
@@ -5896,17 +5893,18 @@ middle.block64:                                   ; preds = %vector.body57
 zywrle_rgbyuv_32le.exit:                          ; preds = %._crit_edge.i.loopexit.us, %.thread
   tail call fastcc void @wavelet(ptr noundef %6, i32 noundef %i.a, i32 noundef %i.b, i32 noundef %5)
   %i.em = add nsw i32 %5, -1
+  %11 = sext i32 %i.a to i64                      ; 4 uses
   %i.en = sext i32 %2 to i64                      ; 5 uses
   %i.eo = sub i32 %4, %2
   %i.ep = sext i32 %i.eo to i64                   ; 5 uses
   %i.eq = icmp slt i32 %i.g, 1
-  %.idx422 = shl nsw i64 %10, 2
+  %.idx422 = shl nuw nsw i64 %11, 2
   %i.er = icmp sgt i32 %i.a, 0
-  %.idx424 = shl nsw i64 %10, 2
+  %.idx424 = shl nuw nsw i64 %11, 2
   %i.es = icmp sgt i32 %i.a, 0
-  %.idx426 = shl nsw i64 %10, 2
+  %.idx426 = shl nuw nsw i64 %11, 2
   %i.et = icmp sgt i32 %i.a, 0
-  %.idx427 = shl nsw i64 %10, 2
+  %.idx427 = shl nuw nsw i64 %11, 2
   %i.eu = icmp sgt i32 %i.a, 0
   br label %bb.h
 
@@ -5935,7 +5933,7 @@ bb.i:                                             ; preds = %.lr.ph351, %._crit_
   %.0349 = phi ptr [ %i.fb, %.lr.ph351 ], [ %i.fx, %._crit_edge343 ] ; 3 uses
   %.10348 = phi ptr [ %.9406, %.lr.ph351 ], [ %.11.lcssa, %._crit_edge343 ] ; 2 uses
   %.1234347 = phi ptr [ %.0233404, %.lr.ph351 ], [ %.2235.lcssa, %._crit_edge343 ] ; 2 uses
-  %i.fh = getelementptr inbounds i8, ptr %.0349, i64 %.idx422
+  %i.fh = getelementptr inbounds nuw i8, ptr %.0349, i64 %.idx422
   br i1 %i.er, label %.lr.ph342, label %._crit_edge343
 
 .lr.ph342:                                        ; preds = %bb.i, %.lr.ph342
@@ -5986,7 +5984,7 @@ bb.j:                                             ; preds = %._crit_edge352, %._
   %.2366 = phi ptr [ %i.fz, %._crit_edge352 ], [ %i.gv, %._crit_edge360 ] ; 3 uses
   %.13365 = phi ptr [ %.11.lcssa, %._crit_edge352 ], [ %.14.lcssa, %._crit_edge360 ] ; 2 uses
   %.4237364 = phi ptr [ %.2235.lcssa, %._crit_edge352 ], [ %.5238.lcssa, %._crit_edge360 ] ; 2 uses
-  %i.gf = getelementptr inbounds i8, ptr %.2366, i64 %.idx424
+  %i.gf = getelementptr inbounds nuw i8, ptr %.2366, i64 %.idx424
   br i1 %i.es, label %.lr.ph359, label %._crit_edge360
 
 .lr.ph359:                                        ; preds = %bb.j, %.lr.ph359
@@ -6036,7 +6034,7 @@ bb.k:                                             ; preds = %._crit_edge369, %._
   %.4383 = phi ptr [ %i.ey, %._crit_edge369 ], [ %i.hs, %._crit_edge377 ] ; 3 uses
   %.16382 = phi ptr [ %.14.lcssa, %._crit_edge369 ], [ %.17.lcssa, %._crit_edge377 ] ; 2 uses
   %.7240381 = phi ptr [ %.5238.lcssa, %._crit_edge369 ], [ %.8241.lcssa, %._crit_edge377 ] ; 2 uses
-  %i.hc = getelementptr inbounds i8, ptr %.4383, i64 %.idx426
+  %i.hc = getelementptr inbounds nuw i8, ptr %.4383, i64 %.idx426
   br i1 %i.et, label %.lr.ph376, label %._crit_edge377
 
 .lr.ph376:                                        ; preds = %bb.k, %.lr.ph376
@@ -6090,7 +6088,7 @@ bb.l:                                             ; preds = %.lr.ph401, %._crit_
   %.6400 = phi ptr [ %6, %.lr.ph401 ], [ %i.ip, %._crit_edge394 ] ; 3 uses
   %.19399 = phi ptr [ %.17.lcssa, %.lr.ph401 ], [ %.20.lcssa, %._crit_edge394 ] ; 2 uses
   %.10243398 = phi ptr [ %.8241.lcssa, %.lr.ph401 ], [ %.11244.lcssa, %._crit_edge394 ] ; 2 uses
-  %i.hz = getelementptr inbounds i8, ptr %.6400, i64 %.idx427
+  %i.hz = getelementptr inbounds nuw i8, ptr %.6400, i64 %.idx427
   br i1 %i.eu, label %.lr.ph393, label %._crit_edge394
 
 .lr.ph393:                                        ; preds = %bb.l, %.lr.ph393

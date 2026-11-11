@@ -202,9 +202,7 @@ _ZN4mlir9Operation13getOpOperandsEv.exit.i:       ; preds = %_ZN4mlir9Operation9
   %i.atw = add nuw nsw i64 %.sroa.0372.0479.i, 4294967291
   %i.atx = and i64 %i.atw, 4294967295
   %i.aty = sub nsw i64 0, %i.atx
-  %80 = add nuw nsw i64 %.sroa.0372.0479.i, 1
-  %81 = and i64 %80, 15
-  %82 = sub nsw i64 0, %81
+  %80 = xor i64 %.sroa.0372.0479.i, -1
   br label %_ZN4mlir9Operation9getResultEj.exit145.i
 
 ._crit_edge477.i:                                 ; preds = %bb.fw, %_ZN4mlir9Operation13getOpOperandsEv.exit.i, %_ZN4mlir9Operation9getResultEj.exit.i
@@ -607,7 +605,7 @@ _ZN4mlir9Operation9getResultEj.exit145.i:         ; preds = %bb.fw, %.lr.ph476.i
   %i.beq = getelementptr inbounds nuw i8, ptr %.0102474.i, i64 24
   %.sroa.0.0.copyload.i143.i = load ptr, ptr %i.beq, align 8, !tbaa !44
   %i.ber = load ptr, ptr %i.t, align 8, !tbaa !47 ; 2 uses
-  %i.bes = getelementptr inbounds [16 x i8], ptr %i.ber, i64 %82
+  %i.bes = getelementptr inbounds [16 x i8], ptr %i.ber, i64 %80
   %i.bet = getelementptr inbounds i8, ptr %i.ber, i64 -96
   %i.beu = getelementptr inbounds [24 x i8], ptr %i.bet, i64 %i.aty
   %.0.i.i144.i = select i1 %i.ati, ptr %i.bes, ptr %i.beu

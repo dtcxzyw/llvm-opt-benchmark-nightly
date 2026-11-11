@@ -205,8 +205,7 @@ bb.a:
   %.fr48 = freeze i32 %i.a                        ; 4 uses
   %i.b = add i32 %.fr48, -40
   %or.cond.i = icmp ult i32 %i.b, -39             ; 2 uses
-  %1 = add i32 %.fr48, -605
-  %i.c = icmp samesign ult i32 %1, -5
+  %i.c = icmp ult i32 %.fr48, 600
   %narrow.i.not = and i1 %or.cond.i, %i.c
   br i1 %or.cond.i, label %switch.early.test, label %.thread52
 

@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 define hidden noundef i64 @rb_ll2big(i64 noundef %0) local_unnamed_addr #0 !guid !357 {
 bb.a:
   %i.a = icmp sgt i64 %0, -1
-  %.0 = tail call i64 @llvm.abs.i64(i64 %0, i1 false) ; 6 uses
+  %.0 = tail call i64 @llvm.abs.i64(i64 %0, i1 false) ; 4 uses
   %i.b = load i64, ptr @rb_cInteger, align 8, !tbaa !94
   %i.c = tail call fastcc i64 @bignew_1(i64 noundef %i.b, i64 noundef 2, i32 noundef 1) ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 7 uses
@@ -218,8 +218,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %i.d, i64 16
   store i64 %.0, ptr %i.g, align 8
   %.not17.i = icmp ult i64 %.0, 4294967296
-  %1 = and i64 %.0, 4294967295
-  %.not17.1.i.not = icmp eq i64 %1, 0
+  %.not17.1.i.not = icmp eq i64 %0, 0
   %i.h = and i64 %i.e, -16744449
   %i.i = select i1 %.not17.1.i.not, i64 0, i64 32768
   %i.j = select i1 %.not17.i, i64 %i.i, i64 65536
@@ -232,8 +231,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !97
   store i64 %.0, ptr %i.m, align 4
   %.not17.i10 = icmp ult i64 %.0, 4294967296
-  %2 = and i64 %.0, 4294967295
-  %.not17.1.i11 = icmp ne i64 %2, 0
+  %.not17.1.i11 = icmp ne i64 %0, 0
   %spec.select.i12 = zext i1 %.not17.1.i11 to i64
   %.1.lcssa.i13 = select i1 %.not17.i10, i64 %spec.select.i12, i64 2
   %i.n = getelementptr i8, ptr %i.d, i64 16

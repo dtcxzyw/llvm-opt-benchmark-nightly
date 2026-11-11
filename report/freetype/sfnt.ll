@@ -205,8 +205,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = shl nuw nsw i64 %i.w, 7
-  %2 = and i8 %i.y, 127
-  %i.ab = zext nneg i8 %2 to i64
+  %i.ab = zext nneg i8 %i.y to i64
   %i.ac = or disjoint i64 %i.aa, %i.ab
   %i.ad = icmp sgt i8 %i.y, -1
   br i1 %i.ad, label %bb.m, label %.loopexit

@@ -204,28 +204,31 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ap = insertelement <2 x float> poison, float %i.ak, i64 0
   %i.aq = insertelement <2 x float> %i.ap, float %i.ao, i64 1
   %i.ar = fptosi <2 x float> %i.aq to <2 x i32>   ; 4 uses
-  %10 = extractelement <2 x i32> %i.ar, i64 1     ; 3 uses
-  %11 = extractelement <2 x i32> %i.ar, i64 0     ; 4 uses
-  %12 = icmp slt i32 %11, 1
-  %13 = icmp slt i32 %10, 1
-  %or.cond = select i1 %12, i1 true, i1 %13
+  %10 = icmp slt <2 x i32> %i.ar, splat (i32 1)   ; 2 uses
+  %11 = extractelement <2 x i1> %10, i64 0
+  %12 = extractelement <2 x i1> %10, i64 1
+  %or.cond = select i1 %11, i1 true, i1 %12
   br i1 %or.cond, label %bb.aa, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.as = load <2 x i32>, ptr %i.x, align 8       ; 2 uses
-  %i.at = sdiv <2 x i32> %i.as, %i.ar             ; 4 uses
-  %i.au = extractelement <2 x i32> %i.at, i64 1   ; 4 uses
-  %i.av = mul i32 %i.au, %10
-  %14 = mul <2 x i32> %i.at, %i.ar
-  %15 = sub nsw <2 x i32> %i.as, %14              ; 4 uses
-  %16 = sitofp <2 x i32> %15 to <2 x float>
-  %17 = insertelement <2 x float> poison, float %2, i64 0
-  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
-  %19 = fdiv <2 x float> %16, %18                 ; 2 uses
-  %20 = extractelement <2 x float> %19, i64 0
-  %i.aw = fptosi float %20 to i32                 ; 3 uses
-  %21 = extractelement <2 x float> %19, i64 1
-  %i.ax = fptosi float %21 to i32
+  %i.as = load <2 x i32>, ptr %i.x, align 8       ; 3 uses
+  %i.at = sdiv <2 x i32> %i.as, %i.ar             ; 2 uses
+  %13 = extractelement <2 x i32> %i.at, i64 0     ; 5 uses
+  %i.au = extractelement <2 x i32> %i.ar, i64 0   ; 4 uses
+  %i.av = mul nsw i32 %13, %i.au
+  %14 = extractelement <2 x i32> %i.as, i64 0
+  %15 = sub nsw i32 %14, %i.av                    ; 6 uses
+  %16 = extractelement <2 x i32> %i.at, i64 1     ; 4 uses
+  %17 = extractelement <2 x i32> %i.ar, i64 1     ; 2 uses
+  %18 = mul i32 %16, %17                          ; 2 uses
+  %19 = extractelement <2 x i32> %i.as, i64 1
+  %20 = sub nsw i32 %19, %18                      ; 3 uses
+  %21 = sitofp i32 %15 to float
+  %22 = fdiv float %21, %2
+  %i.aw = fptosi float %22 to i32                 ; 3 uses
+  %23 = uitofp nneg i32 %20 to float
+  %24 = fdiv float %23, %2
+  %i.ax = fptosi float %24 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #10
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %8, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false)
@@ -233,17 +236,15 @@ bb.p:                                             ; preds = %bb.o
   %i.az = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 6 uses
   store i32 %i.ay, ptr %i.az, align 4
   %i.ba = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 8 uses
-  store i32 %11, ptr %i.ba, align 4
+  store i32 %i.au, ptr %i.ba, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %9, i64 12 ; 4 uses
-  store i32 %10, ptr %i.bb, align 4
-  %.not92104 = icmp sgt i32 %i.au, 0
+  store i32 %17, ptr %i.bb, align 4
+  %.not92104 = icmp sgt i32 %16, 0
   br i1 %.not92104, label %.lr.ph106, label %.critedge95
 
 .lr.ph106:                                        ; preds = %bb.p
-  %22 = extractelement <2 x i32> %i.at, i64 0     ; 2 uses
-  %.not91102 = icmp sgt i32 %22, 0
-  %23 = extractelement <2 x i32> %15, i64 0       ; 3 uses
-  %i.bc = icmp sgt i32 %23, 0                     ; 2 uses
+  %.not91102 = icmp sgt i32 %13, 0
+  %i.bc = icmp sgt i32 %15, 0                     ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
   br i1 %.not91102, label %.lr.ph.us, label %.lr.ph106.split
 
@@ -264,19 +265,19 @@ bb.r:                                             ; preds = %bb.q
   %i.bi = add nsw i32 %i.bh, %i.bg
   store i32 %i.bi, ptr %9, align 4
   %i.bj = add nuw nsw i32 %.073103.us, 1          ; 2 uses
-  %exitcond117.not = icmp eq i32 %i.bj, %22
+  %exitcond117.not = icmp eq i32 %i.bj, %13
   br i1 %exitcond117.not, label %..critedge_crit_edge.us, label %bb.q, !llvm.loop !15
 
 bb.s:                                             ; preds = %..critedge_crit_edge.us
   store i32 %i.aw, ptr %i.bd, align 4
-  store i32 %23, ptr %i.ba, align 4
+  store i32 %15, ptr %i.ba, align 4
   %i.bk = call zeroext i1 @SDL_BlitSurfaceUncheckedScaled_REAL(ptr noundef nonnull %0, ptr noundef nonnull %8, ptr noundef nonnull %4, ptr noundef nonnull %9, i32 noundef %3)
   br i1 %i.bk, label %bb.t, label %.loopexit
 
 bb.t:                                             ; preds = %bb.s
   %i.bl = load i32, ptr %i.r, align 4
   store i32 %i.bl, ptr %i.bd, align 4
-  store i32 %11, ptr %i.ba, align 4
+  store i32 %i.au, ptr %i.ba, align 4
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %..critedge_crit_edge.us
@@ -285,7 +286,7 @@ bb.u:                                             ; preds = %bb.t, %..critedge_c
   %i.bo = add nsw i32 %i.bn, %i.bm
   store i32 %i.bo, ptr %i.az, align 4
   %i.bp = add nuw nsw i32 %.074105.us, 1          ; 2 uses
-  %exitcond118.not = icmp eq i32 %i.bp, %i.au
+  %exitcond118.not = icmp eq i32 %i.bp, %16
   br i1 %exitcond118.not, label %.critedge95, label %.lr.ph.us, !llvm.loop !16
 
 ..critedge_crit_edge.us:                          ; preds = %bb.r
@@ -299,42 +300,40 @@ bb.u:                                             ; preds = %bb.t, %..critedge_c
   %i.bq = load i32, ptr %7, align 8
   store i32 %i.bq, ptr %9, align 4
   store i32 %i.aw, ptr %i.bd, align 4
-  store i32 %23, ptr %i.ba, align 4
+  store i32 %15, ptr %i.ba, align 4
   %i.br = call zeroext i1 @SDL_BlitSurfaceUncheckedScaled_REAL(ptr noundef nonnull %0, ptr noundef nonnull %8, ptr noundef nonnull %4, ptr noundef nonnull %9, i32 noundef %3)
   br i1 %i.br, label %bb.v, label %.loopexit
 
 bb.v:                                             ; preds = %.critedge.us107
   %i.bs = load i32, ptr %i.r, align 4
   store i32 %i.bs, ptr %i.bd, align 4
-  store i32 %11, ptr %i.ba, align 4
+  store i32 %i.au, ptr %i.ba, align 4
   %i.bt = load i32, ptr %i.bb, align 4
   %i.bu = load i32, ptr %i.az, align 4
   %i.bv = add nsw i32 %i.bu, %i.bt
   store i32 %i.bv, ptr %i.az, align 4
   %i.bw = add nuw nsw i32 %.074105.us108, 1       ; 2 uses
-  %exitcond.not = icmp eq i32 %i.bw, %i.au
+  %exitcond.not = icmp eq i32 %i.bw, %16
   br i1 %exitcond.not, label %.critedge95, label %.critedge.us107, !llvm.loop !16
 
 .lr.ph106.split.split:                            ; preds = %.lr.ph106.split
-  %i.bx = add i32 %i.ay, %i.av
+  %i.bx = add i32 %i.ay, %18
   %i.by = load i32, ptr %7, align 8
   store i32 %i.by, ptr %9, align 4
   store i32 %i.bx, ptr %i.az, align 4
   br label %.critedge95
 
 .critedge95:                                      ; preds = %bb.v, %bb.u, %.lr.ph106.split.split, %bb.p
-  %24 = extractelement <2 x i32> %15, i64 1       ; 2 uses
-  %i.bz = icmp sgt i32 %24, 0
+  %i.bz = icmp sgt i32 %20, 0
   br i1 %i.bz, label %bb.w, label %bb.z
 
 bb.w:                                             ; preds = %.critedge95
   %i.ca = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 %i.ax, ptr %i.ca, align 4
-  store i32 %24, ptr %i.bb, align 4
+  store i32 %20, ptr %i.bb, align 4
   %i.cb = load i32, ptr %7, align 8
   store i32 %i.cb, ptr %9, align 4
-  %25 = extractelement <2 x i32> %i.at, i64 0     ; 2 uses
-  %.not93111 = icmp sgt i32 %25, 0
+  %.not93111 = icmp sgt i32 %13, 0
   br i1 %.not93111, label %.lr.ph, label %.critedge97
 
 .lr.ph:                                           ; preds = %bb.w, %bb.x
@@ -348,18 +347,17 @@ bb.x:                                             ; preds = %.lr.ph
   %i.cf = add nsw i32 %i.ce, %i.cd
   store i32 %i.cf, ptr %9, align 4
   %i.cg = add nuw nsw i32 %.0112, 1               ; 2 uses
-  %exitcond119.not = icmp eq i32 %i.cg, %25
+  %exitcond119.not = icmp eq i32 %i.cg, %13
   br i1 %exitcond119.not, label %.critedge97, label %.lr.ph, !llvm.loop !17
 
 .critedge97:                                      ; preds = %bb.x, %bb.w
-  %26 = extractelement <2 x i32> %15, i64 0       ; 2 uses
-  %i.ch = icmp sgt i32 %26, 0
+  %i.ch = icmp sgt i32 %15, 0
   br i1 %i.ch, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.critedge97
   %i.ci = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 %i.aw, ptr %i.ci, align 4
-  store i32 %26, ptr %i.ba, align 4
+  store i32 %15, ptr %i.ba, align 4
   %i.cj = call zeroext i1 @SDL_BlitSurfaceUncheckedScaled_REAL(ptr noundef nonnull %0, ptr noundef nonnull %8, ptr noundef nonnull %4, ptr noundef nonnull %9, i32 noundef %3)
   br i1 %i.cj, label %bb.z, label %.loopexit
 

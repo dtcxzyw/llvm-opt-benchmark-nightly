@@ -202,7 +202,6 @@ bb.a:
   %i.g = load i32, ptr @hf_openflow_v4_bucket_length, align 4
   %i.h = call ptr @proto_tree_add_item(ptr noundef %i.c, i32 noundef %i.g, ptr noundef %0, i32 noundef %3, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.i = add nsw i32 %3, 2
-  %spec.store.select = call i16 @llvm.umax.i16(i16 %i.d, i16 16)
   %i.j = load i32, ptr @hf_openflow_v4_bucket_weight, align 4
   %i.k = call ptr @proto_tree_add_item(ptr noundef %i.c, i32 noundef %i.j, ptr noundef %0, i32 noundef %i.i, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.l = add nsw i32 %3, 4
@@ -215,7 +214,7 @@ bb.a:
   %i.s = load i32, ptr @hf_openflow_v4_bucket_pad, align 4
   %i.t = call ptr @proto_tree_add_item(ptr noundef %i.c, i32 noundef %i.s, ptr noundef %0, i32 noundef %i.r, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.u = add nsw i32 %3, 16                       ; 2 uses
-  %i.v = zext i16 %spec.store.select to i32
+  %i.v = zext i16 %i.d to i32
   %i.w = add nsw i32 %3, %i.v
   %i.x = icmp ugt i16 %i.d, 16
   br i1 %i.x, label %.lr.ph, label %._crit_edge

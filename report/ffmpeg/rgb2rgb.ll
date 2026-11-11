@@ -204,10 +204,9 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @rgb16tobgr32(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
@@ -249,17 +248,16 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @rgb12to15(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1                       ; 2 uses
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64                      ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoaddr ptr %1 to i64
   %i.d = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %i.e = add i64 %.idx, %i.d
+  %i.e = add i64 %i.d, %.idx
   %i.f = add i64 %i.d, 2
   %i.g = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.f)
   %i.h = xor i64 %i.d, -1
@@ -348,16 +346,15 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @rgb16to24(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1                       ; 2 uses
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64                      ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.d = add i64 %.idx, %i.c
+  %i.d = add i64 %i.c, %.idx
   %i.e = add i64 %i.c, 2
   %i.f = tail call i64 @llvm.umax.i64(i64 %i.d, i64 %i.e)
   %i.g = xor i64 %i.c, -1
@@ -745,10 +742,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @rgb15tobgr32(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
@@ -790,16 +786,15 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @rgb15to24(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1                       ; 2 uses
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64                      ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.d = add i64 %.idx, %i.c
+  %i.d = add i64 %i.c, %.idx
   %i.e = add i64 %i.c, 2
   %i.f = tail call i64 @llvm.umax.i64(i64 %i.d, i64 %i.e)
   %i.g = xor i64 %i.c, -1
@@ -1202,16 +1197,15 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb15tobgr24_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1                       ; 2 uses
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64                      ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.d = add i64 %.idx, %i.c
+  %i.d = add i64 %i.c, %.idx
   %i.e = add i64 %i.c, 2
   %i.f = tail call i64 @llvm.umax.i64(i64 %i.d, i64 %i.e)
   %i.g = xor i64 %i.c, -1
@@ -1315,10 +1309,9 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb15to32_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
@@ -1360,16 +1353,15 @@ bb.a:
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb16tobgr24_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1                       ; 2 uses
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64                      ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.d = add i64 %.idx, %i.c
+  %i.d = add i64 %i.c, %.idx
   %i.e = add i64 %i.c, 2
   %i.f = tail call i64 @llvm.umax.i64(i64 %i.d, i64 %i.e)
   %i.g = xor i64 %i.c, -1
@@ -1473,10 +1465,9 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb16to32_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %3 = sdiv i32 %2, 2
-  %4 = sext i32 %3 to i64
-  %.idx = shl nsw i64 %4, 1
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %3 = and i32 %2, -2
+  %.idx = zext i32 %3 to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %2, 1
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
@@ -1879,7 +1870,7 @@ bb.a:
   %i.c = ashr i32 %i.b, 1                         ; 4 uses
   %i.d = zext i32 %4 to i64                       ; 14 uses
   %i.e = shl i32 %4, 1
-  %9 = sext i32 %i.e to i64                       ; 6 uses
+  %9 = zext i32 %i.e to i64                       ; 6 uses
   %i.f = icmp sgt i32 %4, 0                       ; 2 uses
   %i.g = sub nsw i32 0, %4
   %i.h = sext i32 %i.g to i64                     ; 10 uses
@@ -2282,13 +2273,13 @@ bb.a:
   %i.c = ashr i32 %i.b, 1                         ; 6 uses
   %i.d = zext i32 %4 to i64                       ; 14 uses
   %i.e = shl i32 %4, 1
-  %9 = sext i32 %i.e to i64                       ; 6 uses
+  %9 = zext i32 %i.e to i64                       ; 6 uses
   %i.f = icmp sgt i32 %4, 0                       ; 2 uses
   %i.g = sub nsw i32 0, %4
   %i.h = sext i32 %i.g to i64                     ; 10 uses
   %i.i = sext i32 %i.c to i64                     ; 4 uses
-  %i.j = shl nsw i32 %i.c, 2
-  %10 = sext i32 %i.j to i64                      ; 2 uses
+  %i.j = shl nuw nsw i32 %i.c, 2
+  %10 = zext nneg i32 %i.j to i64                 ; 2 uses
   %i.k = icmp sgt i32 %i.c, 0
   %i.l = sub nsw i32 0, %i.c
   %i.m = sext i32 %i.l to i64                     ; 10 uses
@@ -2691,7 +2682,7 @@ bb.a:
   %i.c = ashr i32 %i.b, 1                         ; 4 uses
   %i.d = zext i32 %4 to i64                       ; 14 uses
   %i.e = shl i32 %4, 1
-  %9 = sext i32 %i.e to i64                       ; 6 uses
+  %9 = zext i32 %i.e to i64                       ; 6 uses
   %i.f = icmp sgt i32 %4, 0                       ; 2 uses
   %i.g = sub nsw i32 0, %4
   %i.h = sext i32 %i.g to i64                     ; 10 uses
@@ -3094,13 +3085,13 @@ bb.a:
   %i.c = ashr i32 %i.b, 1                         ; 6 uses
   %i.d = zext i32 %4 to i64                       ; 14 uses
   %i.e = shl i32 %4, 1
-  %9 = sext i32 %i.e to i64                       ; 6 uses
+  %9 = zext i32 %i.e to i64                       ; 6 uses
   %i.f = icmp sgt i32 %4, 0                       ; 2 uses
   %i.g = sub nsw i32 0, %4
   %i.h = sext i32 %i.g to i64                     ; 10 uses
   %i.i = sext i32 %i.c to i64                     ; 4 uses
-  %i.j = shl nsw i32 %i.c, 2
-  %10 = sext i32 %i.j to i64                      ; 2 uses
+  %i.j = shl nuw nsw i32 %i.c, 2
+  %10 = zext nneg i32 %i.j to i64                 ; 2 uses
   %i.k = icmp sgt i32 %i.c, 0
   %i.l = sub nsw i32 0, %i.c
   %i.m = sext i32 %i.l to i64                     ; 10 uses

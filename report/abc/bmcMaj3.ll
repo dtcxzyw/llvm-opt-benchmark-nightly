@@ -205,7 +205,7 @@ Zyx_ManCollectFanins.exit.i:                      ; preds = %bb.k, %bb.j
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   %i.dy = load i32, ptr %i.dx, align 8, !tbaa !64 ; 3 uses
   %i.dz = icmp sgt i32 %i.dy, 0
-  %.val106.i.pre = load i32, ptr %i.bo, align 4, !tbaa !57 ; 11 uses
+  %.val106.i.pre = load i32, ptr %i.bo, align 4, !tbaa !57 ; 10 uses
   br i1 %i.dz, label %.lr.ph.i98, label %._crit_edge.i
 
 .lr.ph.i98:                                       ; preds = %Zyx_ManCollectFanins.exit.i
@@ -297,7 +297,7 @@ bb.n:                                             ; preds = %._crit_edge.i
   %i.fj = getelementptr i8, ptr %.val109.i, i64 8
   %.val109.val.i = load ptr, ptr %i.fj, align 8, !tbaa !21 ; 2 uses
   %.val109.val.i307 = ptrtoaddr ptr %.val109.val.i to i64
-  %9 = sext i32 %.val106.i.pre to i64             ; 2 uses
+  %9 = zext i32 %.val106.i.pre to i64             ; 7 uses
   %i.fk = mul nsw i64 %indvars.iv181.i, %9
   %i.fl = getelementptr inbounds [8 x i8], ptr %.val109.val.i, i64 %i.fk ; 4 uses
   %i.fm = load ptr, ptr %i.d, align 16, !tbaa !73 ; 5 uses
@@ -310,7 +310,6 @@ bb.n:                                             ; preds = %._crit_edge.i
   br i1 %i.fs, label %.lr.ph.preheader.i.i, label %Abc_TtMaj.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.n
-  %wide.trip.count.i.i = zext nneg i32 %.val106.i.pre to i64 ; 5 uses
   %min.iters.check309 = icmp ult i32 %.val106.i.pre, 8
   br i1 %min.iters.check309, label %.lr.ph.i114.i.preheader, label %vector.memcheck310
 
@@ -330,7 +329,7 @@ vector.memcheck310:                               ; preds = %.lr.ph.preheader.i.
   br i1 %conflict.rdx313, label %.lr.ph.i114.i.preheader, label %vector.ph314
 
 vector.ph314:                                     ; preds = %vector.memcheck310
-  %n.vec315 = and i64 %wide.trip.count.i.i, 2147483644 ; 3 uses
+  %n.vec315 = and i64 %9, 2147483644              ; 3 uses
   br label %vector.body316
 
 vector.body316:                                   ; preds = %vector.body316, %vector.ph314
@@ -364,12 +363,12 @@ vector.body316:                                   ; preds = %vector.body316, %ve
   br i1 %i.gq, label %middle.block325, label %vector.body316, !llvm.loop !205
 
 middle.block325:                                  ; preds = %vector.body316
-  %cmp.n326 = icmp eq i64 %n.vec315, %wide.trip.count.i.i
+  %cmp.n326 = icmp eq i64 %n.vec315, %9
   br i1 %cmp.n326, label %Abc_TtMaj.exit.i, label %.lr.ph.i114.i.preheader
 
 .lr.ph.i114.i.preheader:                          ; preds = %vector.memcheck310, %.lr.ph.preheader.i.i, %middle.block325
   %indvars.iv.i.i.ph = phi i64 [ 0, %vector.memcheck310 ], [ 0, %.lr.ph.preheader.i.i ], [ %n.vec315, %middle.block325 ] ; 7 uses
-  %xtraiter358 = and i64 %wide.trip.count.i.i, 1
+  %xtraiter358 = and i64 %9, 1
   %lcmp.mod359.not = icmp eq i64 %xtraiter358, 0
   br i1 %lcmp.mod359.not, label %.lr.ph.i114.i.prol.loopexit, label %.lr.ph.i114.i.prol
 
@@ -391,7 +390,7 @@ middle.block325:                                  ; preds = %vector.body316
 
 .lr.ph.i114.i.prol.loopexit:                      ; preds = %.lr.ph.i114.i.prol, %.lr.ph.i114.i.preheader
   %indvars.iv.i.i.unr = phi i64 [ %indvars.iv.i.i.ph, %.lr.ph.i114.i.preheader ], [ %indvars.iv.next.i.i.prol, %.lr.ph.i114.i.prol ]
-  %i.hc = add nsw i64 %wide.trip.count.i.i, -1
+  %i.hc = add nsw i64 %9, -1
   %i.hd = icmp eq i64 %indvars.iv.i.i.ph, %i.hc
   br i1 %i.hd, label %Abc_TtMaj.exit.i, label %.lr.ph.i114.i
 
@@ -423,7 +422,7 @@ middle.block325:                                  ; preds = %vector.body316
   %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.fl, i64 %indvars.iv.next.i.i
   store i64 %i.hy, ptr %i.hz, align 8, !tbaa !26
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
-  %exitcond.not.i115.i.1 = icmp eq i64 %indvars.iv.next.i.i.1, %wide.trip.count.i.i
+  %exitcond.not.i115.i.1 = icmp eq i64 %indvars.iv.next.i.i.1, %9
   br i1 %exitcond.not.i115.i.1, label %Abc_TtMaj.exit.i, label %.lr.ph.i114.i, !llvm.loop !206
 
 bb.o:                                             ; preds = %._crit_edge.i

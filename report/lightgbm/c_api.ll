@@ -205,10 +205,10 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i.i: ; preds = %.noexc8
 
 _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i:         ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i.i, %.noexc8.i.i.i
   %.0.i.i.i.i.i.ph.i.i.i = phi ptr [ %i.h, %.noexc8.i.i.i ], [ %i.k, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i.i ] ; 3 uses
-  %.pr.i.i.i = load i32, ptr %1, align 8, !tbaa !1711, !noalias !1712 ; 4 uses
+  %.pr.i.i.i = load i32, ptr %1, align 8, !tbaa !1711, !noalias !1712 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !1713, !noalias !1712
-  %3 = sext i32 %.pr.i.i.i to i64
+  %3 = zext i32 %.pr.i.i.i to i64                 ; 4 uses
   %i.n = sext i32 %i.a to i64
   %i.o = mul nsw i64 %3, %i.n
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.o ; 2 uses
@@ -216,12 +216,11 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i:         ; preds = %_ZSt6fill_nIPdmdET_
   br i1 %i.q, label %.lr.ph.preheader.i.i.i, label %_ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIfESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit
 
 .lr.ph.preheader.i.i.i:                           ; preds = %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i
-  %wide.trip.count.i.i.i = zext nneg i32 %.pr.i.i.i to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %.pr.i.i.i, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i
-  %n.vec = and i64 %wide.trip.count.i.i.i, 2147483644 ; 3 uses
+  %n.vec = and i64 %3, 2147483644                 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -241,7 +240,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !1704
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i.i
+  %cmp.n = icmp eq i64 %n.vec, %3
   br i1 %cmp.n, label %_ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIfESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph.preheader.i.i.i, %middle.block
@@ -256,7 +255,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv.i.i.i
   store double %i.aa, ptr %i.ab, align 8, !tbaa !126, !noalias !1712
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %3
   br i1 %exitcond.not.i.i.i, label %_ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIfESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit, label %.lr.ph.i.i.i, !llvm.loop !1705
 
 _ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIfESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i.i.i, %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i
@@ -525,10 +524,10 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i.i: ; preds = %.noexc8
 
 _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i:         ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i.i, %.noexc8.i.i.i
   %.0.i.i.i.i.i.ph.i.i.i = phi ptr [ %i.h, %.noexc8.i.i.i ], [ %i.k, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i.i ] ; 3 uses
-  %.pr.i.i.i = load i32, ptr %1, align 8, !tbaa !1747, !noalias !1748 ; 4 uses
+  %.pr.i.i.i = load i32, ptr %1, align 8, !tbaa !1747, !noalias !1748 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !1749, !noalias !1748
-  %3 = sext i32 %.pr.i.i.i to i64
+  %3 = zext i32 %.pr.i.i.i to i64                 ; 4 uses
   %i.n = sext i32 %i.a to i64
   %i.o = mul nsw i64 %3, %i.n
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.o ; 2 uses
@@ -536,12 +535,11 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i:         ; preds = %_ZSt6fill_nIPdmdET_
   br i1 %i.q, label %.lr.ph.preheader.i.i.i, label %_ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIdESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit
 
 .lr.ph.preheader.i.i.i:                           ; preds = %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i
-  %wide.trip.count.i.i.i = zext nneg i32 %.pr.i.i.i to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %.pr.i.i.i, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i
-  %n.vec = and i64 %wide.trip.count.i.i.i, 2147483644 ; 3 uses
+  %n.vec = and i64 %3, 2147483644                 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -559,7 +557,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.v, label %middle.block, label %vector.body, !llvm.loop !1740
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i.i
+  %cmp.n = icmp eq i64 %n.vec, %3
   br i1 %cmp.n, label %_ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIdESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph.preheader.i.i.i, %middle.block
@@ -573,7 +571,7 @@ middle.block:                                     ; preds = %vector.body
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv.i.i.i
   store double %i.x, ptr %i.y, align 8, !tbaa !126, !noalias !1748
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %3
   br i1 %exitcond.not.i.i.i, label %_ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIdESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit, label %.lr.ph.i.i.i, !llvm.loop !1741
 
 _ZSt10__invoke_rISt6vectorIdSaIdEERZ33RowFunctionFromDenseMatrix_helperIdESt8functionIFS2_iEEPKviiiEUliE_JiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i.i.i, %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i
