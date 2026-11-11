@@ -204,7 +204,6 @@ p4_ht_thread.exit.i:                              ; preds = %p4_should_swap_ts.e
 
 bb.an:                                            ; preds = %p4_ht_thread.exit.i
   %i.gv = and i64 %i.fr, 4093640703
-  %3 = or disjoint i64 %i.gv, 134217728
   %i.gw = and i64 %i.fr, 34359738368
   %.not33.i = icmp eq i64 %i.gw, 0
   %i.gx = and i32 %i.gu, -11
@@ -217,8 +216,8 @@ bb.an:                                            ; preds = %p4_ht_thread.exit.i
   %.1.i = select i1 %.not34.i, i32 %.0.i76, i32 %i.hb
   %i.hc = zext i32 %.1.i to i64
   %i.hd = shl nuw i64 %i.hc, 32
-  %i.he = or disjoint i64 %i.hd, %3
-  %i.hf = or i64 %i.he, -9223372036854775808
+  %i.he = or disjoint i64 %i.hd, %i.gv
+  %i.hf = or i64 %i.he, -9223372036720558080
   br label %bb.ao
 
 p4_ht_thread.exit.thread.i:                       ; preds = %p4_ht_thread.exit.i, %.thread.i

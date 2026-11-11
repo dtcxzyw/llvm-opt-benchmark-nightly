@@ -204,11 +204,10 @@ _ZN3lld4makeINS_4wasm15MergeInputChunkEJRKN4llvm6object11WasmSectionEPNS1_7ObjFi
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kg, i8 0, i64 16, i1 false)
   %i.ki = load i8, ptr %i.kh, align 8
   %i.kj = and i8 %i.ki, -32
-  %16 = or disjoint i8 %i.kj, 1
   %i.kk = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 12), align 4, !tbaa !330, !range !32, !noundef !170
   %i.kl = shl nuw nsw i8 %i.kk, 3
-  %i.km = or disjoint i8 %i.kl, %16
-  %i.kn = xor i8 %i.km, 8
+  %i.km = or disjoint i8 %i.kl, %i.kj
+  %i.kn = xor i8 %i.km, 9
   store i8 %i.kn, ptr %i.kh, align 8
   %i.ko = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 96
   %i.kp = getelementptr inbounds nuw i8, ptr %i.hp, i64 24
@@ -611,11 +610,10 @@ _ZN3lld4makeINS_4wasm15MergeInputChunkEJRKN4llvm6object11WasmSegmentEPNS1_7ObjFi
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.rw, i8 0, i64 16, i1 false)
   %i.ry = load i8, ptr %i.rx, align 8
   %i.rz = and i8 %i.ry, -32
-  %17 = or disjoint i8 %i.rz, 1
   %i.sa = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 12), align 4, !tbaa !330, !range !32, !noundef !170
   %i.sb = shl nuw nsw i8 %i.sa, 3
-  %i.sc = or disjoint i8 %i.sb, %17
-  %i.sd = xor i8 %i.sc, 8                         ; 2 uses
+  %i.sc = or disjoint i8 %i.sb, %i.rz
+  %i.sd = xor i8 %i.sc, 9                         ; 2 uses
   store i8 %i.sd, ptr %i.rx, align 8
   %i.se = getelementptr inbounds nuw i8, ptr %.0.i.i.i173, i64 96
   %i.sf = getelementptr inbounds nuw i8, ptr %.0109437, i64 56
@@ -1018,11 +1016,10 @@ _ZN4llvm24SpecificBumpPtrAllocatorIN3lld4wasm12InputSectionEE8AllocateEm.exit: ;
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, i8 0, i64 16, i1 false)
   %i.x = load i8, ptr %i.w, align 8
   %i.y = and i8 %i.x, -32
-  %3 = or disjoint i8 %i.y, 5
   %i.z = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 12), align 4, !tbaa !330, !range !32, !noundef !170
   %i.aa = shl nuw nsw i8 %i.z, 3
-  %i.ab = or disjoint i8 %i.aa, %3
-  %i.ac = xor i8 %i.ab, 8
+  %i.ab = or disjoint i8 %i.aa, %i.y
+  %i.ac = xor i8 %i.ab, 13
   store i8 %i.ac, ptr %i.w, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ad, i8 0, i64 32, i1 false)
@@ -1425,11 +1422,10 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   %i.j = load i8, ptr %i.i, align 8
   %i.k = and i8 %i.j, -32
-  %5 = or disjoint i8 %i.k, 3
   %i.l = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 12), align 4, !tbaa !330, !range !32, !noundef !170
   %i.m = shl nuw nsw i8 %i.l, 3
-  %i.n = or disjoint i8 %i.m, %5
-  %i.o = xor i8 %i.n, 8
+  %i.n = or disjoint i8 %i.m, %i.k
+  %i.o = xor i8 %i.n, 11
   store i8 %i.o, ptr %i.i, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.p, i8 0, i64 32, i1 false)

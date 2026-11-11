@@ -204,7 +204,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5276:   ; preds = %bb.bc
   %i.fx = load i32, ptr %i.fw, align 8, !tbaa !72
   %i.fy = zext i32 %i.fx to i64
   %i.fz = shl nuw i64 %i.fy, 32
-  %i.ga = or disjoint i64 %i.fz, 352321537
+  %i.ga = or disjoint i64 %i.fz, 352354305
   br label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5278
 
 bb.bd:                                            ; preds = %bb.bb
@@ -216,7 +216,7 @@ bb.be:                                            ; preds = %bb.bd
   br label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5278
 
 _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5278:   ; preds = %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5276, %bb.bc, %bb.bd, %bb.be
-  %.sroa.5.0.insert.ext.i529515162 = phi i64 [ 352321537, %bb.be ], [ 352321537, %bb.bd ], [ 352321537, %bb.bc ], [ %i.ga, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5276 ]
+  %.sroa.5.0.insert.ext.i529515162 = phi i64 [ 352354305, %bb.be ], [ 352354305, %bb.bd ], [ 352354305, %bb.bc ], [ %i.ga, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5276 ]
   %i.gb = load ptr, ptr %i.fl, align 8, !tbaa !74
   %i.gc = load i32, ptr %i.gb, align 4            ; 3 uses
   %i.gd = and i32 %i.gc, 15
@@ -328,8 +328,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5294:   ; preds = %bb.bn, %bb.bo
   %i.gy = tail call i8 @_ZN4Luau7CodeGen3X6413IrLoweringX645regOpENS0_4IrOpE(ptr noundef nonnull align 8 dereferenceable(2568) %0, i32 %.sroa.02781.0.copyload)
   %.sroa.3.0.insert.ext.i5297.tr = zext i8 %i.gy to i64
   %i.gz = shl nuw nsw i64 %.sroa.3.0.insert.ext.i5297.tr, 16
-  %.sroa.513601.0.extract.trunc = or disjoint i64 %i.gz, 32768
-  %.sroa.013600.0.insert.insert = or i64 %.sroa.5.0.insert.ext.i529515162, %.sroa.513601.0.extract.trunc
+  %.sroa.013600.0.insert.insert = or i64 %.sroa.5.0.insert.ext.i529515162, %i.gz
   %.sroa.313606.0.insert.ext = zext i8 %.sroa.02784.0.copyload to i64
   %.sroa.313606.0.insert.shift = shl nuw nsw i64 %.sroa.313606.0.insert.ext, 16
   %.sroa.213605.0.insert.insert = or disjoint i64 %.sroa.313606.0.insert.shift, 268468224
@@ -732,7 +731,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5529:   ; preds = %bb.hg
   %i.yt = load i32, ptr %i.ys, align 8, !tbaa !72
   %i.yu = zext i32 %i.yt to i64
   %i.yv = shl nuw i64 %i.yu, 32
-  %i.yw = or disjoint i64 %i.yv, 352321537
+  %i.yw = or disjoint i64 %i.yv, 352354305
   br label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5531
 
 bb.hh:                                            ; preds = %bb.hf
@@ -744,7 +743,7 @@ bb.hi:                                            ; preds = %bb.hh
   br label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5531
 
 _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5531:   ; preds = %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5529, %bb.hg, %bb.hh, %bb.hi
-  %.sroa.5.0.insert.ext.i554315167 = phi i64 [ 352321537, %bb.hi ], [ 352321537, %bb.hh ], [ 352321537, %bb.hg ], [ %i.yw, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5529 ]
+  %.sroa.5.0.insert.ext.i554315167 = phi i64 [ 352354305, %bb.hi ], [ 352354305, %bb.hh ], [ 352354305, %bb.hg ], [ %i.yw, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5529 ]
   %i.yx = load ptr, ptr %i.yh, align 8, !tbaa !74 ; 2 uses
   %i.yy = load i32, ptr %i.yx, align 4            ; 3 uses
   %i.yz = and i32 %i.yy, 15
@@ -827,8 +826,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5542:   ; preds = %bb.ho, %bb.hp
   %i.zr = tail call i8 @_ZN4Luau7CodeGen3X6413IrLoweringX645regOpENS0_4IrOpE(ptr noundef nonnull align 8 dereferenceable(2568) %0, i32 %.sroa.02621.0.copyload)
   %.sroa.3.0.insert.ext.i5545.tr = zext i8 %i.zr to i64
   %i.zs = shl nuw nsw i64 %.sroa.3.0.insert.ext.i5545.tr, 16
-  %.sroa.513341.0.extract.trunc = or disjoint i64 %i.zs, 32768
-  %.sroa.013340.0.insert.insert = or i64 %.sroa.5.0.insert.ext.i554315167, %.sroa.513341.0.extract.trunc
+  %.sroa.013340.0.insert.insert = or i64 %.sroa.5.0.insert.ext.i554315167, %i.zs
   %i.zt = load i32, ptr %i.yi, align 8, !tbaa !73
   %.not.i5550 = icmp ugt i32 %i.zt, 1
   br i1 %.not.i5550, label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit5551, label %bb.hq, !prof !234
@@ -1231,8 +1229,9 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8036:   ; preds = %bb.das, %bb.dat
   %.sroa.3.0.insert.shift.i8040 = shl nuw nsw i64 %.sroa.3.0.insert.ext.i8039, 16 ; 2 uses
   %.tr = zext i8 %i.isv to i64
   %.sroa.2.0.extract.trunc.i8044 = shl nuw nsw i64 %.tr, 35
-  %op.rdx = add nuw nsw i64 %.sroa.2.0.extract.trunc.i8044, 3951705489409
-  %op.rdx15258 = or disjoint i64 %op.rdx, %.sroa.3.0.insert.shift.i8040
+  %op.rdx = add nuw nsw i64 %.sroa.2.0.extract.trunc.i8044, 3951705456640
+  %.sroa.59372.0.extract.trunc = or disjoint i64 %op.rdx, %.sroa.3.0.insert.shift.i8040
+  %op.rdx15258 = or disjoint i64 %.sroa.59372.0.extract.trunc, 32769
   %.sroa.29376.0.insert.insert = or disjoint i64 %.sroa.3.0.insert.shift.i8040, 268468224
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643movENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %i.isl, i64 %.sroa.29376.0.insert.insert, i64 %op.rdx15258)
   br label %_ZN4Luau7CodeGen3X6413IrLoweringX6417jumpOrFallthroughERNS0_7IrBlockERKS3_.exit
