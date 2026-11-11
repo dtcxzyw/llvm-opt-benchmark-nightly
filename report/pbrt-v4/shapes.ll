@@ -205,13 +205,12 @@ vector.ph:                                        ; preds = %.lr.ph
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.ind40 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next43, %vector.body ] ; 2 uses
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.ind40 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next44, %vector.body ] ; 2 uses
+  %vec.ind41 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next43, %vector.body ] ; 2 uses
   %12 = uitofp nneg <4 x i32> %vec.ind40 to <4 x float>
   %13 = fdiv <4 x float> %12, %broadcast.splat
-  %14 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %15 = add <4 x i32> %14, splat (i32 1)
-  %i.v = uitofp nneg <4 x i32> %15 to <4 x float>
+  %i.v = uitofp nneg <4 x i32> %vec.ind41 to <4 x float>
   %i.w = fdiv <4 x float> %i.v, %broadcast.splat
   %wide.gep = getelementptr inbounds nuw [16 x i8], ptr %i.s, <4 x i64> %vec.ind ; 4 uses
   tail call void @llvm.masked.scatter.v4p0.v4p0(<4 x ptr> %broadcast.splat39, <4 x ptr> align 8 %wide.gep, <4 x i1> splat (i1 true)), !tbaa !180
@@ -225,7 +224,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i64> %i.y, ptr %i.z, align 8, !tbaa !111
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 4)
-  %vec.ind.next43 = add <4 x i32> %vec.ind40, splat (i32 4)
+  %vec.ind.next44 = add <4 x i32> %vec.ind40, splat (i32 4)
+  %vec.ind.next43 = add <4 x i32> %vec.ind41, splat (i32 4)
   %i.aa = icmp eq i64 %index.next, %n.vec
   br i1 %i.aa, label %_ZN4pstd3pmr21polymorphic_allocatorISt4byteE15allocate_objectIN4pbrt5CurveEEEPT_m.exit._crit_edge, label %vector.body, !llvm.loop !380
 
