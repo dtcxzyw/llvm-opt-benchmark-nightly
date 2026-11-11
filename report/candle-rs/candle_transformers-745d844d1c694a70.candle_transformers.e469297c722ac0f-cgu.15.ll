@@ -205,7 +205,7 @@ _RNvMs0_NtCsf3Ta7LF998c_4core3numl10rem_euclid.exit: ; preds = %bb.h
   %.sroa.01.0.i = call i32 @llvm.abs.i32(i32 %i.y, i1 false)
   %i.af = select i1 %i.ae, i32 %.sroa.01.0.i, i32 0
   %.sroa.0.0.i = add i32 %i.af, %i.ad             ; 2 uses
-  %5 = sext i32 %.sroa.0.0.i to i64               ; 2 uses
+  %5 = zext nneg i32 %.sroa.0.0.i to i64          ; 2 uses
   %i.ag = icmp eq i32 %.sroa.0.0.i, 0
   br i1 %i.ag, label %bb.k, label %bb.m
 

@@ -205,8 +205,8 @@ cliGetServerVersion.exit:                         ; preds = %bb.a, %bb.b, %bb.e,
   ret void
 }
 
-; Function Attrs: nounwind uwtable
-define internal fastcc range(i64 -2147483648, 2147483648) i64 @cliLegacyCountCommands(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 !guid !1593 {
+; Function Attrs: nofree nounwind memory(read) uwtable
+define internal fastcc range(i64 -2147483648, 2147483648) i64 @cliLegacyCountCommands(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #12 !guid !1593 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !1009
   %.not22 = icmp eq ptr %i.a, null

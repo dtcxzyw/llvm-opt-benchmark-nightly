@@ -73,9 +73,9 @@ define dso_local noundef i32 @_Z12luaopen_mathP9lua_State(ptr noundef %0) local_
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = tail call noundef i64 @_Z17lua_encodepointerP9lua_Statem(ptr noundef %0, i64 noundef %i.a)
-  %i.c = tail call i64 @time(ptr noundef null) #10
+  %i.c = tail call i64 @time(ptr noundef null) #9
   %i.d = xor i64 %i.c, %i.b
-  %i.e = tail call i64 @clock() #10
+  %i.e = tail call i64 @clock() #9
   %i.f = xor i64 %i.d, %i.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !20
@@ -235,13 +235,13 @@ bb.a:
 define internal noundef i32 @_ZL10math_frexpP9lua_State(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = tail call noundef double @_Z16luaL_checknumberP9lua_Statei(ptr noundef %0, i32 noundef 1)
-  %i.c = call double @frexp(double noundef %i.b, ptr noundef nonnull %i.a) #10
+  %i.c = call double @frexp(double noundef %i.b, ptr noundef nonnull %i.a) #9
   tail call void @_Z14lua_pushnumberP9lua_Stated(ptr noundef %0, double noundef %i.c)
   %i.d = load i32, ptr %i.a, align 4, !tbaa !23
   tail call void @_Z15lua_pushintegerP9lua_Statei(ptr noundef %0, i32 noundef %i.d)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 2
 }
 
@@ -250,7 +250,7 @@ define internal noundef i32 @_ZL10math_ldexpP9lua_State(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noundef double @_Z16luaL_checknumberP9lua_Statei(ptr noundef %0, i32 noundef 1)
   %i.b = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 2)
-  %i.c = tail call double @ldexp(double noundef %i.a, i32 noundef %i.b) #11
+  %i.c = tail call double @llvm.ldexp.f64.i32(double %i.a, i32 %i.b)
   tail call void @_Z14lua_pushnumberP9lua_Stated(ptr noundef %0, double noundef %i.c)
   ret i32 1
 }
@@ -423,7 +423,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = shl nuw i64 %i.y, 32
   %i.aa = or disjoint i64 %i.z, %i.x
   %i.ab = uitofp i64 %i.aa to double
-  %1 = tail call double @ldexp(double noundef %i.ab, i32 noundef -64) #11
+  %1 = fmul nnan double %i.ab, f0x3BF0000000000000
   tail call void @_Z14lua_pushnumberP9lua_Stated(ptr noundef nonnull %0, double noundef %1)
   br label %bb.l
 
@@ -433,7 +433,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.ad, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @.str.46) #12
+  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @.str.46) #10
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -461,7 +461,7 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str.46) #12
+  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str.46) #10
   unreachable
 
 bb.h:                                             ; preds = %bb.f
@@ -470,7 +470,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not34, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str.47) #12
+  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str.47) #10
   unreachable
 
 bb.j:                                             ; preds = %bb.h
@@ -493,7 +493,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.a
-  tail call void (ptr, ptr, ...) @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef nonnull %0, ptr noundef nonnull @.str.48) #12
+  tail call void (ptr, ptr, ...) @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef nonnull %0, ptr noundef nonnull @.str.48) #10
   unreachable
 
 bb.l:                                             ; preds = %bb.j, %bb.e, %bb.b
@@ -565,9 +565,9 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.d = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.a)
   %i.e = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 2, ptr noundef nonnull %i.b)
   %i.f = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 3, ptr noundef nonnull %i.c) ; 2 uses
@@ -576,7 +576,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.49) #12
+  call void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.49) #10
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -590,7 +590,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.j, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  call void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 2, ptr noundef nonnull @.str.49) #12
+  call void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 2, ptr noundef nonnull @.str.49) #10
   unreachable
 
 bb.f:                                             ; preds = %bb.c, %bb.d
@@ -604,7 +604,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.m, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.49) #12
+  call void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.49) #10
   unreachable
 
 bb.i:                                             ; preds = %bb.f, %bb.g
@@ -791,9 +791,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.fu = call noundef float @llvm.fmuladd.f32(float %i.ap, float %i.ft, float %i.fs)
   %i.fv = fpext float %i.fu to double
   call void @_Z14lua_pushnumberP9lua_Stated(ptr noundef %0, double noundef %i.fv)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 1
 }
 
@@ -807,7 +807,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.50) #12
+  tail call void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.50) #10
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -941,9 +941,6 @@ declare double @frexp(double noundef, ptr noundef captures(none)) local_unnamed_
 
 declare void @_Z15lua_pushintegerP9lua_Statei(ptr noundef, i32 noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare double @ldexp(double noundef, i32 noundef) local_unnamed_addr #7
-
 declare noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -966,10 +963,10 @@ declare { double, double } @llvm.modf.f64(double) #5
 declare double @llvm.pow.f64(double, double) #4
 
 ; Function Attrs: noreturn
-declare void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #8
+declare void @_Z14luaL_argerrorLP9lua_StateiPKc(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: noreturn
-declare void @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef, ptr noundef, ...) local_unnamed_addr #8
+declare void @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef, ptr noundef, ...) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sinh.f64(double) #5
@@ -989,7 +986,7 @@ declare double @llvm.tan.f64(double) #5
 declare noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: noreturn
-declare void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #8
+declare void @_Z15luaL_typeerrorLP9lua_StateiPKc(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.floor.f32(float) #4
@@ -1006,7 +1003,7 @@ declare double @llvm.fmuladd.f64(double, double, double) #4
 declare void @_Z15lua_pushbooleanP9lua_Statei(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal void @_GLOBAL__sub_I_lmathlib.cpp() #9 section ".text.startup" {
+define internal void @_GLOBAL__sub_I_lmathlib.cpp() #8 section ".text.startup" {
 bb.a:
   store i8 0, ptr @_ZN5FFlag21FixMathNoisePrecisionE, align 8, !tbaa !28
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag21FixMathNoisePrecisionE, i64 1), align 1, !tbaa !36
@@ -1020,6 +1017,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshr.i32(i32, i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.ldexp.f64.i32(double, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umulh.i32(i32, i32) #4
@@ -1037,12 +1037,10 @@ attributes #3 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nounwind }
-attributes #11 = { nounwind willreturn memory(none) }
-attributes #12 = { noreturn }
+attributes #7 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nounwind }
+attributes #10 = { noreturn }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

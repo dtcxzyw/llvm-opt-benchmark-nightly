@@ -32,36 +32,34 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.a
   %.not16 = icmp eq i32 %i.b, 0
   %i.f = uitofp nsz nneg i32 %i.c to float
-  %1 = tail call nsz float @ldexpf(float noundef %i.f, i32 noundef -149) #5 ; 2 uses
-  br i1 %.not16, label %bb.g, label %2
-
-2:                                                ; preds = %bb.d
-  %3 = fneg nsz float %1
+  %.v = select i1 %.not16, float 1.401300e-45, float -1.401300e-45
+  %1 = fmul nnan nsz float %.v, %i.f
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
   %i.g = and i32 %i.a, 255
   %.not17 = icmp eq i32 %i.b, 0
   %i.h = or disjoint i32 %i.c, 8388608
-  %i.i = uitofp nneg i32 %i.h to float
-  %i.j = add nsw i32 %i.g, -150
-  %4 = tail call nsz float @ldexpf(float noundef %i.i, i32 noundef %i.j) #5 ; 2 uses
-  br i1 %.not17, label %bb.g, label %bb.f
+  %i.i = uitofp nneg i32 %i.h to float            ; 2 uses
+  %i.j = add nsw i32 %i.g, -150                   ; 2 uses
+  br i1 %.not17, label %3, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = fneg nsz float %4
+  %i.k = fneg nsz float %i.i
+  %2 = tail call nsz float @llvm.ldexp.f32.i32(float %i.k, i32 %i.j)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.e, %bb.d, %bb.b, %bb.f, %2, %bb.c
-  %.0 = phi nsz float [ %i.e, %bb.c ], [ %1, %bb.d ], [ +qnan, %bb.b ], [ %3, %2 ], [ %i.k, %bb.f ], [ %4, %bb.e ]
+3:                                                ; preds = %bb.e
+  %4 = tail call nsz float @llvm.ldexp.f32.i32(float %i.i, i32 %i.j)
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.b, %bb.f, %3, %bb.d, %bb.c
+  %.0 = phi nsz float [ %i.e, %bb.c ], [ %4, %3 ], [ %1, %bb.d ], [ %2, %bb.f ], [ +qnan, %bb.b ]
   ret float %.0
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @ldexpf(float noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
@@ -94,9 +92,9 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.l
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 0, ptr %i.a, align 4, !tbaa !9
-  %i.k = call nsz float @frexpf(float noundef %0, ptr noundef nonnull %i.a) #6
+  %i.k = call nsz float @frexpf(float noundef %0, ptr noundef nonnull %i.a) #4
   %i.l = select nsz i1 %i.c, float f0x4B800000, float f0xCB800000
   %i.m = fmul nsz float %i.l, %i.k
   %i.n = tail call nsz noundef float @llvm.floor.f32(float %i.m)
@@ -131,7 +129,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g
   %.0 = phi i32 [ %i.v, %bb.g ], [ %i.x, %bb.i ], [ %i.ac, %bb.j ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.a, %bb.k, %bb.e, %bb.c
@@ -140,7 +138,7 @@ bb.l:                                             ; preds = %bb.a, %bb.k, %bb.e,
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare float @frexpf(float noundef, ptr noundef captures(none)) local_unnamed_addr #3
+declare float @frexpf(float noundef, ptr noundef captures(none)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef range(i32 1, 3) i32 @_Z25getFloatSerializationTypev() local_unnamed_addr #0 {
@@ -149,21 +147,22 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.copysign.f32(float, float) #4
+declare float @llvm.copysign.f32(float, float) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.floor.f32(float) #4
+declare float @llvm.floor.f32(float) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fabs.f32(float) #4
+declare float @llvm.ldexp.f32.i32(float, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fabs.f32(float) #3
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind willreturn memory(none) }
-attributes #6 = { nounwind }
+attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

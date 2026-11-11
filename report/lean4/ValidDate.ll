@@ -202,13 +202,12 @@ bb.h:                                             ; preds = %bb.g
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.n, i1 true)
   %i.t = select i1 %i.s, i64 %.p.i, i64 0
   %.0.i5 = add nsw i64 %i.t, %i.r                 ; 3 uses
-  %0 = icmp slt i64 %.0.i5, 2147483648
+  %0 = icmp ult i64 %.0.i5, 2147483648
   br i1 %0, label %bb.i, label %bb.j, !prof !11
 
 bb.i:                                             ; preds = %bb.h
-  %i.u = shl nsw i64 %.0.i5, 1
-  %1 = and i64 %i.u, 8589934590
-  %i.v = or disjoint i64 %1, 1
+  %i.u = shl nuw nsw i64 %.0.i5, 1
+  %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   br label %lean_int_emod.exit
 
@@ -575,13 +574,12 @@ bb.h:                                             ; preds = %bb.g
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.n, i1 true)
   %i.t = select i1 %i.s, i64 %.p.i, i64 0
   %.0.i5 = add nsw i64 %i.t, %i.r                 ; 3 uses
-  %0 = icmp slt i64 %.0.i5, 2147483648
+  %0 = icmp ult i64 %.0.i5, 2147483648
   br i1 %0, label %bb.i, label %bb.j, !prof !11
 
 bb.i:                                             ; preds = %bb.h
-  %i.u = shl nsw i64 %.0.i5, 1
-  %1 = and i64 %i.u, 8589934590
-  %i.v = or disjoint i64 %1, 1
+  %i.u = shl nuw nsw i64 %.0.i5, 1
+  %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   br label %lean_int_emod.exit
 
@@ -685,13 +683,12 @@ bb.h:                                             ; preds = %bb.g
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.n, i1 true)
   %i.t = select i1 %i.s, i64 %.p.i, i64 0
   %.0.i5 = add nsw i64 %i.t, %i.r                 ; 3 uses
-  %0 = icmp slt i64 %.0.i5, 2147483648
+  %0 = icmp ult i64 %.0.i5, 2147483648
   br i1 %0, label %bb.i, label %bb.j, !prof !11
 
 bb.i:                                             ; preds = %bb.h
-  %i.u = shl nsw i64 %.0.i5, 1
-  %1 = and i64 %i.u, 8589934590
-  %i.v = or disjoint i64 %1, 1
+  %i.u = shl nuw nsw i64 %.0.i5, 1
+  %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   br label %lean_int_emod.exit
 
@@ -1058,13 +1055,12 @@ bb.h:                                             ; preds = %bb.g
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.n, i1 true)
   %i.t = select i1 %i.s, i64 %.p.i, i64 0
   %.0.i5 = add nsw i64 %i.t, %i.r                 ; 3 uses
-  %0 = icmp slt i64 %.0.i5, 2147483648
+  %0 = icmp ult i64 %.0.i5, 2147483648
   br i1 %0, label %bb.i, label %bb.j, !prof !11
 
 bb.i:                                             ; preds = %bb.h
-  %i.u = shl nsw i64 %.0.i5, 1
-  %1 = and i64 %i.u, 8589934590
-  %i.v = or disjoint i64 %1, 1
+  %i.u = shl nuw nsw i64 %.0.i5, 1
+  %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   br label %lean_int_emod.exit
 
@@ -1148,13 +1144,12 @@ bb.h:                                             ; preds = %bb.g
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.n, i1 true)
   %i.t = select i1 %i.s, i64 %.p.i, i64 0
   %.0.i5 = add nsw i64 %i.t, %i.r                 ; 3 uses
-  %0 = icmp slt i64 %.0.i5, 2147483648
+  %0 = icmp ult i64 %.0.i5, 2147483648
   br i1 %0, label %bb.i, label %bb.j, !prof !11
 
 bb.i:                                             ; preds = %bb.h
-  %i.u = shl nsw i64 %.0.i5, 1
-  %1 = and i64 %i.u, 8589934590
-  %i.v = or disjoint i64 %1, 1
+  %i.u = shl nuw nsw i64 %.0.i5, 1
+  %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   br label %lean_int_emod.exit
 
@@ -1521,13 +1516,12 @@ bb.h:                                             ; preds = %bb.g
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.n, i1 true)
   %i.t = select i1 %i.s, i64 %.p.i, i64 0
   %.0.i5 = add nsw i64 %i.t, %i.r                 ; 3 uses
-  %0 = icmp slt i64 %.0.i5, 2147483648
+  %0 = icmp ult i64 %.0.i5, 2147483648
   br i1 %0, label %bb.i, label %bb.j, !prof !11
 
 bb.i:                                             ; preds = %bb.h
-  %i.u = shl nsw i64 %.0.i5, 1
-  %1 = and i64 %i.u, 8589934590
-  %i.v = or disjoint i64 %1, 1
+  %i.u = shl nuw nsw i64 %.0.i5, 1
+  %i.v = or disjoint i64 %i.u, 1
   %i.w = inttoptr i64 %i.v to ptr
   br label %lean_int_emod.exit
 

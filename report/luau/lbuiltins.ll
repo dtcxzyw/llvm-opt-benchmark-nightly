@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = load double, ptr %2, align 8, !tbaa !11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %i.h = call double @frexp(double noundef %i.g, ptr noundef nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
+  %i.h = call double @frexp(double noundef %i.g, ptr noundef nonnull %i.a) #18
   store double %i.h, ptr %1, align 8, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 3, ptr %i.i, align 4, !tbaa !10
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %bb.b
   store double %i.l, ptr %i.j, align 8, !tbaa !11
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28
   store i32 3, ptr %i.m, align 4, !tbaa !10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
@@ -247,7 +247,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = load double, ptr %2, align 8, !tbaa !11
   %i.j = load double, ptr %4, align 8, !tbaa !11
   %i.k = fptosi double %i.j to i32
-  %i.l = tail call double @ldexp(double noundef %i.i, i32 noundef %i.k) #20
+  %i.l = tail call double @llvm.ldexp.f64.i32(double %i.i, i32 %i.k)
   store double %i.l, ptr %1, align 8, !tbaa !11
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 3, ptr %i.m, align 4, !tbaa !10
@@ -650,7 +650,7 @@ bb.i:                                             ; preds = %bb.h
 define internal noundef range(i32 -1, 2) i32 @_ZL10luauF_charP9lua_StateP10lua_TValueS2_iS2_i(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) #6 {
 bb.a:
   %i.a = alloca [8 x i8], align 1                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.b = icmp slt i32 %5, 8
   %i.c = icmp slt i32 %3, 2
   %or.cond = and i1 %i.c, %i.b
@@ -729,7 +729,7 @@ bb.h:                                             ; preds = %bb.g
 
 .critedge:                                        ; preds = %.lr.ph, %bb.g, %bb.e, %bb.a, %bb.d, %bb.b, %.critedge42
   %.5 = phi i32 [ -1, %bb.a ], [ 1, %.critedge42 ], [ -1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.b ], [ -1, %bb.g ], [ -1, %.lr.ph ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   ret i32 %.5
 }
 
@@ -1132,7 +1132,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.e = load i32, ptr %i.d, align 4, !tbaa !10
   switch i32 %i.e, label %bb.d [
@@ -1157,7 +1157,7 @@ bb.d:                                             ; preds = %.sink.split, %bb.c,
   %.sink = phi i32 [ 0, %bb.b ], [ 0, %bb.c ], [ 3, %.sink.split ]
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 %.sink, ptr %i.j, align 4, !tbaa !10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.d
@@ -1227,7 +1227,7 @@ bb.h:                                             ; preds = %bb.b
   br i1 %.not36, label %bb.i, label %bb.m
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.w = load double, ptr %2, align 8, !tbaa !11
   %i.x = call noundef ptr @_Z12luai_num2strPcd(ptr noundef nonnull %i.a, double noundef %i.w)
   %i.y = ptrtoint ptr %i.x to i64
@@ -1237,7 +1237,7 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.ab, ptr %1, align 8, !tbaa !11
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 6, ptr %i.ac, align 4, !tbaa !10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %bb.m
 
 bb.j:                                             ; preds = %bb.b
@@ -1258,7 +1258,7 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   %i.al = load i64, ptr %2, align 8, !tbaa !11
   %i.am = call noundef ptr @_Z12luai_int2strPcl(ptr noundef nonnull %i.b, i64 noundef %i.al)
   %i.an = ptrtoint ptr %i.am to i64
@@ -1268,7 +1268,7 @@ bb.l:                                             ; preds = %bb.k
   store ptr %i.aq, ptr %1, align 8, !tbaa !11
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 6, ptr %i.ar, align 4, !tbaa !10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.a, %bb.b, %bb.k, %bb.h, %bb.l, %bb.j, %bb.i, %bb.g, %bb.c
@@ -1671,9 +1671,6 @@ declare double @llvm.floor.f64(double) #11
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare double @frexp(double noundef, ptr noundef captures(none)) local_unnamed_addr #13
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare double @ldexp(double noundef, i32 noundef) local_unnamed_addr #14
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.log10.f64(double) #11
 
@@ -1704,9 +1701,9 @@ declare double @llvm.tanh.f64(double) #12
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.tan.f64(double) #12
 
-declare hidden noundef ptr @_Z12luaS_newlstrP9lua_StatePKcm(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z12luaS_newlstrP9lua_StatePKcm(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #14
 
-declare hidden noundef ptr @_Z19luaT_objtypenamestrP9lua_StatePK10lua_TValue(ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z19luaT_objtypenamestrP9lua_StatePK10lua_TValue(ptr noundef, ptr noundef) local_unnamed_addr #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.trunc.f64(double) #11
@@ -1717,17 +1714,17 @@ declare double @llvm.round.f64(double) #11
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #10
 
-declare hidden noundef ptr @_Z8luaH_setP9lua_StateP8LuaTablePK10lua_TValue(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z8luaH_setP9lua_StateP8LuaTablePK10lua_TValue(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden void @_Z17luaC_barriertableP9lua_StateP8LuaTableP8GCObject(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden void @_Z17luaC_barriertableP9lua_StateP8LuaTableP8GCObject(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden noundef ptr @_Z8luaH_getP8LuaTablePK10lua_TValue(ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z8luaH_getP8LuaTablePK10lua_TValue(ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden noundef i32 @_Z16luaO_rawequalObjPK10lua_TValueS1_(ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden noundef i32 @_Z16luaO_rawequalObjPK10lua_TValueS1_(ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden noundef i32 @_Z9luaH_getnP8LuaTable(ptr noundef) local_unnamed_addr #15
+declare hidden noundef i32 @_Z9luaH_getnP8LuaTable(ptr noundef) local_unnamed_addr #14
 
-declare hidden noundef ptr @_Z11luaH_setnumP9lua_StateP8LuaTablei(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z11luaH_setnumP9lua_StateP8LuaTablei(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #14
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #12
@@ -1735,15 +1732,15 @@ declare i32 @llvm.ctlz.i32(i32, i1 immarg) #12
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #12
 
-declare hidden noundef ptr @_Z11luaH_getstrP8LuaTableP7TString(ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z11luaH_getstrP8LuaTableP7TString(ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden void @_Z13luaC_barrierfP9lua_StateP8GCObjectS2_(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden void @_Z13luaC_barrierfP9lua_StateP8GCObjectS2_(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden noundef i32 @_Z10luaO_str2dPKcPd(ptr noundef, ptr noundef) local_unnamed_addr #15
+declare hidden noundef i32 @_Z10luaO_str2dPKcPd(ptr noundef, ptr noundef) local_unnamed_addr #14
 
-declare hidden noundef ptr @_Z12luai_num2strPcd(ptr noundef, double noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z12luai_num2strPcd(ptr noundef, double noundef) local_unnamed_addr #14
 
-declare hidden noundef ptr @_Z12luai_int2strPcl(ptr noundef, i64 noundef) local_unnamed_addr #15
+declare hidden noundef ptr @_Z12luai_int2strPcl(ptr noundef, i64 noundef) local_unnamed_addr #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #11
@@ -1770,7 +1767,7 @@ declare i64 @llvm.cttz.i64(i64, i1 immarg) #12
 declare i64 @llvm.ctlz.i64(i64, i1 immarg) #12
 
 ; Function Attrs: nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal void @_GLOBAL__sub_I_lbuiltins.cpp() #16 section ".text.startup" {
+define internal void @_GLOBAL__sub_I_lbuiltins.cpp() #15 section ".text.startup" {
 bb.a:
   store i8 0, ptr @_ZN5FFlag20LuauMathRoundNegZeroE, align 8, !tbaa !47
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5FFlag20LuauMathRoundNegZeroE, i64 1), align 1, !tbaa !92
@@ -1786,7 +1783,7 @@ bb.a:
   store ptr @_ZL10luauF_asinP9lua_StateP10lua_TValueS2_iS2_i, ptr getelementptr inbounds nuw (i8, ptr @luauF_table, i64 32), align 16, !tbaa !97
   store ptr @_ZL11luauF_atan2P9lua_StateP10lua_TValueS2_iS2_i, ptr getelementptr inbounds nuw (i8, ptr @luauF_table, i64 40), align 8, !tbaa !97
   store ptr @_ZL10luauF_atanP9lua_StateP10lua_TValueS2_iS2_i, ptr getelementptr inbounds nuw (i8, ptr @luauF_table, i64 48), align 16, !tbaa !97
-  %i.b = tail call { i32, i32, i32, i32 } asm "  xchg$(q$|$)  $(%$|$)rbx,${1:q}\0A  cpuid\0A  xchg$(q$|$)  $(%$|$)rbx,${1:q}", "={ax},=r,={cx},={dx},0,~{dirflag},~{fpsr},~{flags}"(i32 1) #21, !srcloc !98
+  %i.b = tail call { i32, i32, i32, i32 } asm "  xchg$(q$|$)  $(%$|$)rbx,${1:q}\0A  cpuid\0A  xchg$(q$|$)  $(%$|$)rbx,${1:q}", "={ax},=r,={cx},={dx},0,~{dirflag},~{fpsr},~{flags}"(i32 1) #19, !srcloc !98
   %i.c = extractvalue { i32, i32, i32, i32 } %i.b, 2
   %i.d = and i32 %i.c, 524288
   %.not.i = icmp eq i32 %i.d, 0                   ; 3 uses
@@ -1989,6 +1986,9 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.ldexp.f64.i32(double, i32) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2010,10 +2010,10 @@ declare i64 @llvm.bswap.i64(i64) #11
 declare <2 x double> @llvm.copysign.v2f64(<2 x double>, <2 x double>) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #18
+declare void @llvm.assume(i1 noundef) #17
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -2029,14 +2029,12 @@ attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: r
 attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #16 = { nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #19 = { nounwind }
-attributes #20 = { nounwind willreturn memory(none) }
-attributes #21 = { nounwind memory(none) }
+attributes #14 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #15 = { nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #18 = { nounwind }
+attributes #19 = { nounwind memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

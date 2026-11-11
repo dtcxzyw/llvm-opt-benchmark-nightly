@@ -202,13 +202,12 @@ bb.d:                                             ; preds = %bb.c
   %.p = tail call i64 @llvm.abs.i64(i64 %i.f, i1 true)
   %i.l = select i1 %i.k, i64 %.p, i64 0
   %.0 = add nsw i64 %i.l, %i.j                    ; 3 uses
-  %2 = icmp slt i64 %.0, 2147483648
+  %2 = icmp ult i64 %.0, 2147483648
   br i1 %2, label %bb.e, label %bb.f, !prof !10
 
 bb.e:                                             ; preds = %bb.d
-  %i.m = shl nsw i64 %.0, 1
-  %3 = and i64 %i.m, 8589934590
-  %i.n = or disjoint i64 %3, 1
+  %i.m = shl nuw nsw i64 %.0, 1
+  %i.n = or disjoint i64 %i.m, 1
   %i.o = inttoptr i64 %i.n to ptr
   br label %lean_int64_to_int.exit
 

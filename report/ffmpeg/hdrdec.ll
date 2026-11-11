@@ -34,12 +34,12 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 14 uses
   %i.c = alloca [512 x i8], align 16              ; 22 uses
   %i.d = alloca float, align 4                    ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   store i32 0, ptr %i.a, align 4, !tbaa !17
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   store i32 0, ptr %i.b, align 4, !tbaa !17
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !25   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
@@ -50,8 +50,8 @@ bb.a:
   br i1 %or.cond.i, label %bytestream2_init.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, i32 noundef 141) #9
-  tail call void @abort() #10
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, i32 noundef 141) #8
+  tail call void @abort() #9
   unreachable
 
 bytestream2_init.exit:                            ; preds = %bb.a
@@ -172,14 +172,14 @@ bb.m:                                             ; preds = %bb.l, %bytestream2_
   br i1 %i.bo, label %bb.j, label %hdr_get_line.exit141, !llvm.loop !9
 
 hdr_get_line.exit141:                             ; preds = %bb.m
-  %i.bp = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.d) #9
+  %i.bp = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.d) #8
   %i.bq = icmp eq i32 %i.bp, 1
   br i1 %i.bq, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %hdr_get_line.exit141
   %i.br = load float, ptr %i.d, align 4, !tbaa !30
   %i.bs = fpext nsz float %i.br to double
-  %i.bt = call i64 @av_d2q(double noundef %i.bs, i32 noundef 4096) #11 ; 2 uses
+  %i.bt = call i64 @av_d2q(double noundef %i.bs, i32 noundef 4096) #10 ; 2 uses
   %.sroa.01.0.insert.insert.i = call i64 @llvm.fshl.i64(i64 %i.bt, i64 %i.bt, i64 32) ; 2 uses
   store i64 %.sroa.01.0.insert.insert.i, ptr %i.aw, align 4, !tbaa !17
   store i64 %.sroa.01.0.insert.insert.i, ptr %i.av, align 8, !tbaa !17
@@ -235,42 +235,42 @@ bb.t:                                             ; preds = %bb.s, %bytestream2_
   br i1 %i.cm, label %bb.q, label %hdr_get_line.exit152, !llvm.loop !9
 
 hdr_get_line.exit152:                             ; preds = %bb.t
-  %i.cn = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #9
+  %i.cn = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8
   %i.co = icmp eq i32 %i.cn, 2
   br i1 %i.co, label %bb.ab, label %bb.u
 
 bb.u:                                             ; preds = %hdr_get_line.exit152
-  %i.cp = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.6, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #9
+  %i.cp = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.6, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8
   %i.cq = icmp eq i32 %i.cp, 2
   br i1 %i.cq, label %bb.ab, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.cr = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.7, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #9
+  %i.cr = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.7, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8
   %i.cs = icmp eq i32 %i.cr, 2
   br i1 %i.cs, label %bb.ab, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.ct = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.8, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #9
+  %i.ct = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.8, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8
   %i.cu = icmp eq i32 %i.ct, 2
   br i1 %i.cu, label %bb.ab, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.cv = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.9, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9
+  %i.cv = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.9, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #8
   %i.cw = icmp eq i32 %i.cv, 2
   br i1 %i.cw, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cx = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.10, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9
+  %i.cx = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.10, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #8
   %i.cy = icmp eq i32 %i.cx, 2
   br i1 %i.cy, label %bb.ab, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.cz = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9
+  %i.cz = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #8
   %i.da = icmp eq i32 %i.cz, 2
   br i1 %i.da, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.db = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9 ; 0 uses
+  %i.db = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #8 ; 0 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.u, %bb.w, %bb.y, %bb.z, %bb.aa, %bb.x, %bb.v, %hdr_get_line.exit152
@@ -281,7 +281,7 @@ bb.ab:                                            ; preds = %bb.u, %bb.w, %bb.y,
 
 bb.ac:                                            ; preds = %bb.ab
   %i.df = load i32, ptr %i.a, align 4, !tbaa !17
-  %i.dg = call i32 @ff_set_dimensions(ptr noundef %0, i32 noundef %i.df, i32 noundef %i.dc) #9 ; 2 uses
+  %i.dg = call i32 @ff_set_dimensions(ptr noundef %0, i32 noundef %i.df, i32 noundef %i.dc) #8 ; 2 uses
   %i.dh = icmp slt i32 %i.dg, 0
   br i1 %i.dh, label %.loopexit, label %bb.ad
 
@@ -294,7 +294,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.dl, label %.loopexit.sink.split, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dm = call i32 @ff_thread_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #9 ; 2 uses
+  %i.dm = call i32 @ff_thread_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #8 ; 2 uses
   %i.dn = icmp slt i32 %i.dm, 0
   br i1 %i.dn, label %.loopexit, label %.preheader307
 
@@ -697,7 +697,7 @@ decompress.exit.thread:                           ; preds = %.thread.3, %decompr
 bb.cp:                                            ; preds = %.lr.ph325, %convert.exit213
   %indvars.iv359 = phi i64 [ 0, %.lr.ph325 ], [ %indvars.iv.next360, %convert.exit213 ] ; 5 uses
   %i.ru = shl nuw nsw i64 %indvars.iv359, 2
-  %i.rv = getelementptr inbounds nuw i8, ptr %i.rt, i64 %i.ru ; 3 uses
+  %i.rv = getelementptr inbounds nuw i8, ptr %i.rt, i64 %i.ru ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.rv, i64 3
   %.sroa.6.0.copyload = load i8, ptr %.sroa.6.0..sroa_idx, align 1 ; 2 uses
   %i.rw = icmp eq i8 %.sroa.6.0.copyload, 0
@@ -707,22 +707,24 @@ bb.cq:                                            ; preds = %bb.cp
   %i.rx = zext i8 %.sroa.6.0.copyload to i32
   %i.ry = add nsw i32 %i.rx, -128                 ; 3 uses
   %.sroa.0.0.copyload = load i8, ptr %i.rv, align 1
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.rv, i64 2
+  %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.rv, i64 1
+  %.sroa.4.0.copyload = load i8, ptr %.sroa.4.0..sroa_idx, align 1
   %i.rz = uitofp i8 %.sroa.0.0.copyload to float
   %i.sa = fmul nnan nsz float %i.rz, 3.906250e-03
-  %i.sb = call nsz float @ldexpf(float noundef %i.sa, i32 noundef range(i32 -128, 128) %i.ry) #11
-  %4 = load <2 x i8>, ptr %.sroa.4.0..sroa_idx, align 1
-  %5 = uitofp <2 x i8> %4 to <2 x float>
-  %6 = fmul nnan nsz <2 x float> %5, splat (float 3.906250e-03) ; 2 uses
-  %7 = extractelement <2 x float> %6, i64 1
-  %8 = call nsz float @ldexpf(float noundef %7, i32 noundef range(i32 -128, 128) %i.ry) #11
-  %9 = extractelement <2 x float> %6, i64 0
-  %i.sc = call nsz float @ldexpf(float noundef %9, i32 noundef range(i32 -128, 128) %i.ry) #11
+  %i.sb = call nsz float @llvm.ldexp.f32.i32(float %i.sa, i32 range(i32 -128, 128) %i.ry)
+  %4 = uitofp i8 %.sroa.5.0.copyload to float
+  %5 = fmul nnan nsz float %4, 3.906250e-03
+  %6 = call nsz float @llvm.ldexp.f32.i32(float %5, i32 range(i32 -128, 128) %i.ry)
+  %7 = uitofp i8 %.sroa.4.0.copyload to float
+  %8 = fmul nnan nsz float %7, 3.906250e-03
+  %i.sc = call nsz float @llvm.ldexp.f32.i32(float %8, i32 range(i32 -128, 128) %i.ry)
   br label %convert.exit213
 
 convert.exit213:                                  ; preds = %bb.cp, %bb.cq
   %.sink362 = phi float [ %i.sb, %bb.cq ], [ 0.000000e+00, %bb.cp ]
-  %.sink = phi float [ %8, %bb.cq ], [ 0.000000e+00, %bb.cp ]
+  %.sink = phi float [ %6, %bb.cq ], [ 0.000000e+00, %bb.cp ]
   %.0.i212 = phi nsz float [ %i.sc, %bb.cq ], [ 0.000000e+00, %bb.cp ]
   %i.sd = getelementptr inbounds nuw [4 x i8], ptr %i.dz, i64 %indvars.iv359
   store float %.sink362, ptr %i.sd, align 4, !tbaa !30
@@ -750,10 +752,10 @@ decompress.exit:                                  ; preds = %convert.exit213, %d
 
 .loopexit:                                        ; preds = %.lr.ph53.i184, %bb.aq, %.lr.ph53.i, %.loopexit.sink.split, %bb.ae, %bb.ac, %bb.ab, %bb.g
   %.3 = phi i32 [ %i.dm, %bb.ae ], [ -1094995529, %bb.g ], [ -1094995529, %bb.ab ], [ -1094995529, %bb.aq ], [ %i.dg, %bb.ac ], [ -1094995529, %.lr.ph53.i ], [ %i.si, %.loopexit.sink.split ], [ -1094995529, %.lr.ph53.i184 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.3
 }
 
@@ -781,11 +783,11 @@ declare void @abort() local_unnamed_addr #5
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @ldexpf(float noundef, i32 noundef) local_unnamed_addr #7
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.fshl.i64(i64, i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #8
+declare float @llvm.ldexp.f32.i32(float, i32) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -794,11 +796,10 @@ attributes #3 = { mustprogress nofree nosync nounwind willreturn memory(none) "n
 attributes #4 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { cold nofree noreturn nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nounwind }
-attributes #10 = { noreturn nounwind }
-attributes #11 = { nounwind willreturn memory(none) }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nounwind }
+attributes #9 = { noreturn nounwind }
+attributes #10 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
