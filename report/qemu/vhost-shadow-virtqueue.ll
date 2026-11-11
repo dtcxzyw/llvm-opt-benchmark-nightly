@@ -24,40 +24,45 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef zeroext i1 @vhost_svq_valid_features(i64 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %.1.3 = and i64 %0, -7516192769
-  %spec.select20.4 = or disjoint i64 %.1.3, 4294967296
-  %i.a = and i64 %0, 8589934592
-  %2 = xor i64 %i.a, 8589934592
-  %spec.select20.5 = or i64 %2, %spec.select20.4  ; 2 uses
-  %i.b = and i64 %0, 17179869184
+  %.1.3 = and i64 %0, -16106127361
+  %spec.select20.4 = or disjoint i64 %.1.3, 12884901888 ; 2 uses
+  %i.a = and i64 %0, 17179869184
+  %.not19.6 = icmp eq i64 %i.a, 0
+  %2 = and i64 %spec.select20.4, -20401094657
+  %spec.select32 = select i1 %.not19.6, i64 %spec.select20.4, i64 %2 ; 3 uses
+  %i.b = and i64 %spec.select32, 68719476736      ; 2 uses
   %.not19.6.a = icmp eq i64 %i.b, 0
-  %i.c = and i64 %spec.select20.5, -20401094657
-  %spec.select32.a = select i1 %.not19.6.a, i64 %spec.select20.5, i64 %i.c ; 3 uses
-  %i.d = and i64 %spec.select32.a, 68719476736    ; 2 uses
+  %i.c = and i64 %spec.select32, -71940702209
+  %spec.select32.a = select i1 %.not19.6.a, i64 %spec.select32, i64 %i.c ; 3 uses
+  %i.d = and i64 %spec.select32.a, 137438953472   ; 2 uses
   %.not19.8 = icmp eq i64 %i.d, 0
-  %i.e = and i64 %spec.select32.a, -71940702209
+  %i.e = and i64 %spec.select32.a, -140660178945
   %spec.select30 = select i1 %.not19.8, i64 %spec.select32.a, i64 %i.e ; 3 uses
-  %i.f = and i64 %spec.select30, 137438953472     ; 2 uses
+  %i.f = and i64 %spec.select30, 274877906944     ; 2 uses
   %.not19.9 = icmp eq i64 %i.f, 0
-  %i.g = and i64 %spec.select30, -140660178945
-  %.1.9 = select i1 %.not19.9, i64 %spec.select30, i64 %i.g ; 3 uses
+  %i.g = and i64 %spec.select30, -278099132417
+  %.1.9 = select i1 %.not19.9, i64 %spec.select30, i64 %i.g ; 4 uses
   %i.h = and i64 %.1.9, 4398046511104
   %.not19.14 = icmp eq i64 %i.h, 0
   br i1 %.not19.14, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = or disjoint i64 %i.f, %i.d
+  %i.i = or disjoint i64 %i.d, %i.b
   %i.j = icmp eq i64 %i.i, 0
   %i.k = and i64 %0, 33285996544
   %spec.select31 = icmp eq i64 %i.k, 12884901888
   %.118.9 = and i1 %i.j, %spec.select31
-  %i.l = and i64 %.1.9, 4123168604160
+  %3 = and i64 %.1.9, 549755813888
+  %4 = or disjoint i64 %3, %i.f
+  %5 = icmp eq i64 %4, 0
+  %i.l = and i64 %.1.9, 3298534883328
   %i.m = icmp eq i64 %i.l, 0
-  %.118.13 = select i1 %i.m, i1 %.118.9, i1 false
+  %6 = select i1 %i.m, i1 %5, i1 false
+  %.118.13 = select i1 %6, i1 %.118.9, i1 false
   br i1 %.118.13, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %.1.1428 = and i64 %.1.9, -8521215115265
+  %.1.1428 = and i64 %.1.9, -8246337208321
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str, i32 noundef 64, ptr noundef nonnull @__func__.vhost_svq_valid_features, ptr noundef nonnull @.str.1, i64 noundef %0, i64 noundef %.1.1428) #13
   br label %bb.c
 

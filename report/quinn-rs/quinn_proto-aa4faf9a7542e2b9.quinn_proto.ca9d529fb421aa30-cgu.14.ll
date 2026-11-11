@@ -205,14 +205,16 @@ _RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12Streams
     #dbg_value(i1 true, !19185, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19223)
     #dbg_value(i64 0, !19186, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19224)
     #dbg_value(i64 %.sroa.716.0..sroa_idx.val.1.pre, !19186, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19224)
-  %invariant.op138.1 = or disjoint i64 %i.x, 2, !dbg !19233
-    #dbg_value(i64 0, !19186, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19224)
     #dbg_value(ptr undef, !19197, !DIExpression(), !19203)
     #dbg_value(ptr undef, !19199, !DIExpression(), !19202)
     #dbg_value(ptr undef, !19189, !DIExpression(), !19196)
     #dbg_value(ptr undef, !19190, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !19225)
   %exitcond.1.not233 = icmp eq i64 %.sroa.716.0..sroa_idx.val.1.pre, 0, !dbg !19234
-  br i1 %exitcond.1.not233, label %.loopexit.1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1, !dbg !19195
+  br i1 %exitcond.1.not233, label %.loopexit.1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1.preheader, !dbg !19195
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1.preheader: ; preds = %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.preheader.1
+  %invariant.op276 = or disjoint i64 %i.x, 2, !dbg !19236
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1, !dbg !19236
 
 _RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.1: ; preds = %.noexc95.1
     #dbg_value(i64 %i.y, !19186, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19224)
@@ -223,34 +225,34 @@ _RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12Streams
   %exitcond.1.not = icmp eq i64 %i.y, %.sroa.716.0..sroa_idx.val.1.pre, !dbg !19234
   br i1 %exitcond.1.not, label %.loopexit.1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1, !dbg !19195
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1: ; preds = %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.preheader.1, %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.1
-  %.sroa.035.0.1234 = phi i64 [ %i.y, %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.1 ], [ 0, %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.preheader.1 ] ; 2 uses
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1.preheader, %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.1
+  %.sroa.035.0.1234 = phi i64 [ %i.y, %_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert.exit.1 ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1.preheader ] ; 2 uses
     #dbg_value(i64 %.sroa.035.0.1234, !19186, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19224)
     #dbg_value(i64 %.sroa.035.0.1234, !19200, !DIExpression(), !19226)
     #dbg_value(i64 %.sroa.035.0.1234, !19207, !DIExpression(), !19210)
     #dbg_value(i64 %.sroa.035.0.1234, !19212, !DIExpression(), !19215)
-  %i.y = add i64 %.sroa.035.0.1234, 1, !dbg !19236 ; 2 uses
+  %i.y = add i64 %.sroa.035.0.1234, 1, !dbg !19237 ; 2 uses
     #dbg_value(i64 %i.y, !19186, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19224)
     #dbg_value(i64 %.sroa.035.0.1234, !19187, !DIExpression(), !19227)
     #dbg_value(i64 %.sroa.035.0.1234, !19219, !DIExpression(), !19222)
     #dbg_value(i8 poison, !19218, !DIExpression(), !19222)
-  %i.z = shl i64 %.sroa.035.0.1234, 2, !dbg !19237
-  %.reass.1 = or disjoint i64 %i.z, %invariant.op138.1
-    #dbg_value(ptr %i.a, !7153, !DIExpression(), !19082)
-    #dbg_value(i1 true, !7155, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19082)
-    #dbg_value(!DIArgList(i64 %i.z, i1 %.sroa.040.0, i8 2), !7156, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19082)
-    #dbg_value(!DIArgList(i64 %i.z, i1 %.sroa.040.0, i8 2), !7160, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19084)
-    #dbg_value(!DIArgList(i64 %i.z, i1 %.sroa.040.0, i8 2), !7167, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19086)
-    #dbg_value(ptr null, !7165, !DIExpression(), !19084)
-    #dbg_value(i64 16, !7174, !DIExpression(), !19091)
-    #dbg_value(i1 false, !7157, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19092)
-    #dbg_value(ptr %i.a, !7188, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19093)
-    #dbg_value(ptr %i.a, !7183, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19094)
+  %i.z = shl i64 %.sroa.035.0.1234, 2, !dbg !19238
+  %.reass.1 = or disjoint i64 %i.z, %invariant.op276
+    #dbg_value(ptr %i.a, !7159, !DIExpression(), !19083)
+    #dbg_value(i1 true, !7160, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19083)
+    #dbg_value(!DIArgList(i64 %i.z, i1 %.sroa.040.0, i8 2), !7161, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19083)
+    #dbg_value(!DIArgList(i64 %i.z, i1 %.sroa.040.0, i8 2), !7165, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19085)
+    #dbg_value(!DIArgList(i64 %i.z, i1 %.sroa.040.0, i8 2), !7172, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19087)
+    #dbg_value(ptr null, !7170, !DIExpression(), !19085)
+    #dbg_value(i64 16, !7179, !DIExpression(), !19091)
+    #dbg_value(i1 false, !7162, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19092)
+    #dbg_value(ptr %i.a, !7156, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19093)
+    #dbg_value(ptr %i.a, !7188, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19094)
     #dbg_value(ptr %i.a, !7191, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19096)
     #dbg_value(ptr %i.a, !7196, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19098)
-  %i.aa = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !19238, !alias.scope !19229, !noundef !1871 ; 3 uses
-  %i.ab = icmp eq i64 %i.aa, 0, !dbg !19238
-  br i1 %i.ab, label %bb.b, label %bb.a, !dbg !19238
+  %i.aa = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !19236, !alias.scope !19229, !noundef !1871 ; 3 uses
+  %i.ab = icmp eq i64 %i.aa, 0, !dbg !19236
+  br i1 %i.ab, label %bb.b, label %bb.a, !dbg !19236
 
 bb.a:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1
   %i.ac = add nsw i64 %i.aa, -1, !dbg !19239      ; 3 uses
@@ -269,20 +271,20 @@ bb.a:                                             ; preds = %_RINvNtCskKLDkoKarT
   %i.ai = load i64, ptr %i.ah, align 8, !dbg !19247, !range !3835, !noundef !1871
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 8, !dbg !19247
   %i.ak = load ptr, ptr %i.aj, align 8, !dbg !19247, !noundef !1871
-    #dbg_value(i64 %i.ai, !7158, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
-    #dbg_value(i64 %i.ai, !7172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19086)
-    #dbg_value(ptr %i.ak, !7158, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
-    #dbg_value(ptr %i.ak, !7172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19086)
+    #dbg_value(i64 %i.ai, !7163, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
+    #dbg_value(i64 %i.ai, !7177, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19087)
+    #dbg_value(ptr %i.ak, !7163, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
+    #dbg_value(ptr %i.ak, !7177, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19087)
   br label %bb.b, !dbg !19248
 
 bb.b:                                             ; preds = %bb.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1
   %.sroa.3.0.i.1 = phi ptr [ %i.ak, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1 ], !dbg !19249
   %.sroa.02.0.i.1 = phi i64 [ %i.ai, %bb.a ], [ 2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.1 ], !dbg !19249
-    #dbg_value(i64 %.sroa.02.0.i.1, !7172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19086)
-    #dbg_value(i64 %.sroa.02.0.i.1, !7158, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
-    #dbg_value(ptr %.sroa.3.0.i.1, !7172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19086)
-    #dbg_value(ptr %.sroa.3.0.i.1, !7158, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
-    #dbg_value(ptr %i.a, !7171, !DIExpression(DW_OP_plus_uconst, 176, DW_OP_stack_value), !19111)
+    #dbg_value(i64 %.sroa.02.0.i.1, !7177, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19087)
+    #dbg_value(i64 %.sroa.02.0.i.1, !7163, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
+    #dbg_value(ptr %.sroa.3.0.i.1, !7177, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19087)
+    #dbg_value(ptr %.sroa.3.0.i.1, !7163, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
+    #dbg_value(ptr %i.a, !7176, !DIExpression(DW_OP_plus_uconst, 176, DW_OP_stack_value), !19111)
   %i.al = invoke { i64, ptr } @_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtBP_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertBP_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.e, i64 noundef %.reass.1, i64 noundef %.sroa.02.0.i.1, ptr %.sroa.3.0.i.1)
           to label %.noexc95.1 unwind label %.loopexit103.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !19250 ; 2 uses
 
@@ -319,22 +321,22 @@ _RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12Streams
     #dbg_value(i64 %.sroa.035.0.us232, !19200, !DIExpression(), !19226)
     #dbg_value(i64 %.sroa.035.0.us232, !19207, !DIExpression(), !19210)
     #dbg_value(i64 %.sroa.035.0.us232, !19212, !DIExpression(), !19215)
-  %i.an = add i64 %.sroa.035.0.us232, 1, !dbg !19236 ; 2 uses
+  %i.an = add i64 %.sroa.035.0.us232, 1, !dbg !19237 ; 2 uses
     #dbg_value(i64 %i.an, !19186, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19224)
     #dbg_value(i64 %.sroa.035.0.us232, !19187, !DIExpression(), !19227)
     #dbg_value(i64 %.sroa.035.0.us232, !19219, !DIExpression(), !19222)
     #dbg_value(i8 poison, !19218, !DIExpression(), !19222)
-  %i.ao = shl i64 %.sroa.035.0.us232, 2, !dbg !19237
+  %i.ao = shl i64 %.sroa.035.0.us232, 2, !dbg !19238
   %.reass.us = or disjoint i64 %i.ao, %invariant.op ; 2 uses
-    #dbg_value(ptr %i.a, !7153, !DIExpression(), !19082)
-    #dbg_value(i1 true, !7155, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19082)
-    #dbg_value(!DIArgList(i64 %i.ao, i1 %.sroa.040.0, i8 0), !7156, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19082)
-    #dbg_value(!DIArgList(i64 %i.ao, i1 %.sroa.040.0, i8 0), !7160, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19084)
-    #dbg_value(!DIArgList(i64 %i.ao, i1 %.sroa.040.0, i8 0), !7167, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19086)
-    #dbg_value(ptr null, !7165, !DIExpression(), !19084)
-    #dbg_value(i64 16, !7174, !DIExpression(), !19091)
-    #dbg_value(i1 true, !7157, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19092)
-    #dbg_value(ptr %i.a, !7164, !DIExpression(DW_OP_plus_uconst, 144, DW_OP_stack_value), !19112)
+    #dbg_value(ptr %i.a, !7159, !DIExpression(), !19083)
+    #dbg_value(i1 true, !7160, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19083)
+    #dbg_value(!DIArgList(i64 %i.ao, i1 %.sroa.040.0, i8 0), !7161, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19083)
+    #dbg_value(!DIArgList(i64 %i.ao, i1 %.sroa.040.0, i8 0), !7165, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19085)
+    #dbg_value(!DIArgList(i64 %i.ao, i1 %.sroa.040.0, i8 0), !7172, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_LLVM_arg, 1, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_or, DW_OP_stack_value), !19087)
+    #dbg_value(ptr null, !7170, !DIExpression(), !19085)
+    #dbg_value(i64 16, !7179, !DIExpression(), !19091)
+    #dbg_value(i1 true, !7162, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19092)
+    #dbg_value(ptr %i.a, !7169, !DIExpression(DW_OP_plus_uconst, 144, DW_OP_stack_value), !19112)
   %i.ap = invoke { i64, ptr } @_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtBP_10connection7streams4send4SendEENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertBP_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.d, i64 noundef %.reass.us, ptr noalias noundef align 8 null)
           to label %.noexc.us unwind label %.loopexit103.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !19255 ; 2 uses
 
@@ -402,13 +404,13 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtN
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.us, !dbg !19257
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.us: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEB1i_.exit.i.us, %bb.c, %.noexc.us
-    #dbg_value(ptr %i.a, !7188, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19093)
-    #dbg_value(ptr %i.a, !7183, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19094)
+    #dbg_value(ptr %i.a, !7156, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19093)
+    #dbg_value(ptr %i.a, !7188, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19094)
     #dbg_value(ptr %i.a, !7191, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19096)
     #dbg_value(ptr %i.a, !7196, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19098)
-  %i.aw = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !19238, !alias.scope !19229, !noundef !1871 ; 3 uses
-  %i.ax = icmp eq i64 %i.aw, 0, !dbg !19238
-  br i1 %i.ax, label %bb.g, label %bb.f, !dbg !19238
+  %i.aw = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !19236, !alias.scope !19229, !noundef !1871 ; 3 uses
+  %i.ax = icmp eq i64 %i.aw, 0, !dbg !19236
+  br i1 %i.ax, label %bb.g, label %bb.f, !dbg !19236
 
 bb.f:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.us
   %i.ay = add nsw i64 %i.aw, -1, !dbg !19239      ; 3 uses
@@ -427,20 +429,20 @@ bb.f:                                             ; preds = %_RINvNtCskKLDkoKarT
   %i.be = load i64, ptr %i.bd, align 8, !dbg !19247, !range !3835, !noundef !1871
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bd, i64 8, !dbg !19247
   %i.bg = load ptr, ptr %i.bf, align 8, !dbg !19247, !noundef !1871
-    #dbg_value(i64 %i.be, !7158, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
-    #dbg_value(i64 %i.be, !7172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19086)
-    #dbg_value(ptr %i.bg, !7158, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
-    #dbg_value(ptr %i.bg, !7172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19086)
+    #dbg_value(i64 %i.be, !7163, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
+    #dbg_value(i64 %i.be, !7177, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19087)
+    #dbg_value(ptr %i.bg, !7163, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
+    #dbg_value(ptr %i.bg, !7177, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19087)
   br label %bb.g, !dbg !19248
 
 bb.g:                                             ; preds = %bb.f, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.us
   %.sroa.3.0.i.us = phi ptr [ %i.bg, %bb.f ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.us ], !dbg !19249
   %.sroa.02.0.i.us = phi i64 [ %i.be, %bb.f ], [ 2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit.i.us ], !dbg !19249
-    #dbg_value(i64 %.sroa.02.0.i.us, !7172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19086)
-    #dbg_value(i64 %.sroa.02.0.i.us, !7158, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
-    #dbg_value(ptr %.sroa.3.0.i.us, !7172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19086)
-    #dbg_value(ptr %.sroa.3.0.i.us, !7158, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
-    #dbg_value(ptr %i.a, !7171, !DIExpression(DW_OP_plus_uconst, 176, DW_OP_stack_value), !19111)
+    #dbg_value(i64 %.sroa.02.0.i.us, !7177, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19087)
+    #dbg_value(i64 %.sroa.02.0.i.us, !7163, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
+    #dbg_value(ptr %.sroa.3.0.i.us, !7177, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19087)
+    #dbg_value(ptr %.sroa.3.0.i.us, !7163, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
+    #dbg_value(ptr %i.a, !7176, !DIExpression(DW_OP_plus_uconst, 176, DW_OP_stack_value), !19111)
   %i.bh = invoke { i64, ptr } @_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtBP_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertBP_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.e, i64 noundef %.reass.us, i64 noundef %.sroa.02.0.i.us, ptr %.sroa.3.0.i.us)
           to label %.noexc95.us unwind label %.loopexit103.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !19250 ; 2 uses
 
@@ -740,27 +742,27 @@ bb.a:
     #dbg_value(ptr poison, !19627, !DIExpression(), !19635)
     #dbg_value(ptr poison, !19637, !DIExpression(), !19639)
     #dbg_value(ptr poison, !19640, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !19649)
-    #dbg_value(ptr %0, !7153, !DIExpression(), !19650)
-    #dbg_value(i1 %1, !7155, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19650)
-    #dbg_value(i64 %2, !7156, !DIExpression(), !19650)
-    #dbg_value(i64 %2, !7160, !DIExpression(), !19652)
-    #dbg_value(i64 %2, !7167, !DIExpression(), !19654)
+    #dbg_value(ptr %0, !7159, !DIExpression(), !19650)
+    #dbg_value(i1 %1, !7160, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19650)
+    #dbg_value(i64 %2, !7161, !DIExpression(), !19650)
+    #dbg_value(i64 %2, !7165, !DIExpression(), !19652)
+    #dbg_value(i64 %2, !7172, !DIExpression(), !19654)
     #dbg_value(ptr poison, !19644, !DIExpression(), !19655)
     #dbg_value(i64 0, !19646, !DIExpression(), !19656)
-    #dbg_value(ptr null, !7165, !DIExpression(), !19652)
-    #dbg_value(i64 16, !7174, !DIExpression(), !19661)
+    #dbg_value(ptr null, !7170, !DIExpression(), !19652)
+    #dbg_value(i64 16, !7179, !DIExpression(), !19661)
     #dbg_value(i64 %2, !19662, !DIExpression(), !19665)
   %i.a = and i64 %2, 2, !dbg !19687
     #dbg_value(ptr undef, !19640, !DIExpression(), !19649)
     #dbg_value(i64 %i.a, !19645, !DIExpression(DW_OP_constu, 1, DW_OP_shr, DW_OP_stack_value), !19667)
   %i.b = icmp eq i64 %i.a, 0, !dbg !19688         ; 2 uses
-    #dbg_value(i1 %i.b, !7157, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19668)
+    #dbg_value(i1 %i.b, !7162, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19668)
   %.not = xor i1 %1, true, !dbg !19689
   %brmerge = or i1 %i.b, %.not, !dbg !19689
   br i1 %brmerge, label %bb.b, label %bb.c, !dbg !19689
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !7164, !DIExpression(DW_OP_plus_uconst, 144, DW_OP_stack_value), !19669)
+    #dbg_value(ptr %0, !7169, !DIExpression(DW_OP_plus_uconst, 144, DW_OP_stack_value), !19669)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144, !dbg !19690
   %i.d = tail call { i64, ptr } @_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtBP_10connection7streams4send4SendEENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertBP_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.c, i64 noundef %2, ptr noalias noundef align 8 null), !dbg !19691 ; 2 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0, !dbg !19691
@@ -771,8 +773,8 @@ bb.b:                                             ; preds = %bb.a
   ], !dbg !19692, !prof !7210
 
 bb.c:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEEB1I_.exit, %bb.a
-    #dbg_value(ptr %0, !7188, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19670)
-    #dbg_value(ptr %0, !7183, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19671)
+    #dbg_value(ptr %0, !7156, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19670)
+    #dbg_value(ptr %0, !7188, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19671)
     #dbg_value(ptr %0, !7191, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19673)
     #dbg_value(ptr %0, !7196, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !19675)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !19693 ; 2 uses
@@ -815,20 +817,20 @@ bb.f:                                             ; preds = %bb.c
   %i.r = load i64, ptr %i.q, align 8, !dbg !19706, !range !3835, !noundef !1871
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 8, !dbg !19706
   %i.t = load ptr, ptr %i.s, align 8, !dbg !19706, !noundef !1871
-    #dbg_value(i64 %i.r, !7158, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19685)
-    #dbg_value(i64 %i.r, !7172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19654)
-    #dbg_value(ptr %i.t, !7158, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19685)
-    #dbg_value(ptr %i.t, !7172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19654)
+    #dbg_value(i64 %i.r, !7163, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19685)
+    #dbg_value(i64 %i.r, !7177, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19654)
+    #dbg_value(ptr %i.t, !7163, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19685)
+    #dbg_value(ptr %i.t, !7177, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19654)
   br label %bb.g, !dbg !19707
 
 bb.g:                                             ; preds = %bb.c, %bb.f
   %.sroa.3.0 = phi ptr [ %i.t, %bb.f ], [ undef, %bb.c ], !dbg !19708
   %.sroa.02.0 = phi i64 [ %i.r, %bb.f ], [ 2, %bb.c ], !dbg !19708
-    #dbg_value(i64 %.sroa.02.0, !7172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19654)
-    #dbg_value(i64 %.sroa.02.0, !7158, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19685)
-    #dbg_value(ptr %.sroa.3.0, !7172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19654)
-    #dbg_value(ptr %.sroa.3.0, !7158, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19685)
-    #dbg_value(ptr %0, !7171, !DIExpression(DW_OP_plus_uconst, 176, DW_OP_stack_value), !19686)
+    #dbg_value(i64 %.sroa.02.0, !7177, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19654)
+    #dbg_value(i64 %.sroa.02.0, !7163, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19685)
+    #dbg_value(ptr %.sroa.3.0, !7177, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19654)
+    #dbg_value(ptr %.sroa.3.0, !7163, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19685)
+    #dbg_value(ptr %0, !7176, !DIExpression(DW_OP_plus_uconst, 176, DW_OP_stack_value), !19686)
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 176, !dbg !19709
   %i.v = tail call { i64, ptr } @_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtBP_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertBP_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.u, i64 noundef %2, i64 noundef %.sroa.02.0, ptr %.sroa.3.0), !dbg !19710 ; 2 uses
   %i.w = extractvalue { i64, ptr } %i.v, 0, !dbg !19710 ; 2 uses
@@ -1231,17 +1233,17 @@ begin_hunk_1_@llvm.umax.i32
 !1414 = distinct !DISubprogram(name: "replace<core::option::Option<alloc::boxed::Box<quinn_proto::connection::streams::send::Send, alloc::alloc::Global>>>", linkageName: "_RINvNtCskKLDkoKarTP_4core3mem7replaceINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send4SendEEEB1C_", scope: !1650, file: !6071, line: 961, type: !7129, scopeLine: 961, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3607, retainedNodes: !7130)
 !1415 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNCNvNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state18get_or_insert_send00Bb_", scope: !7112, file: !2875, line: 966, type: !7133, scopeLine: 966, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, retainedNodes: !7134)
 !1416 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "NonNull<quinn_proto::StreamId>", scope: !1964, file: !1530, size: 64, align: 64, flags: DIFlagPublic, elements: !7144, templateParams: !3773, identifier: "ad05d6d652ea0695ba7d4a10d3bbccc3")
-!1417 = distinct !DILexicalBlock(scope: !1418, file: !2875, line: 892, column: 13)
-!1418 = distinct !DILexicalBlock(scope: !1419, file: !2875, line: 885, column: 9)
-!1419 = distinct !DISubprogram(name: "insert", linkageName: "_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert", scope: !711, file: !2875, line: 884, type: !6744, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, declaration: !7154, retainedNodes: !7159)
-!1420 = distinct !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<alloc::boxed::Box<quinn_proto::connection::streams::send::Send, alloc::alloc::Global>>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtB14_10connection7streams4send4SendEENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !710, file: !6099, line: 1332, type: !7162, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !4257, declaration: !7163, retainedNodes: !7166)
-!1421 = distinct !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<quinn_proto::connection::streams::state::StreamRecv>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtB14_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !708, file: !6099, line: 1332, type: !7169, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !4250, declaration: !7170, retainedNodes: !7173)
-!1422 = distinct !DISubprogram(name: "capacity<alloc::alloc::Global>", linkageName: "_RNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner8capacityCshovLROGBtMy_11quinn_proto", scope: !32, file: !4317, line: 615, type: !6774, scopeLine: 615, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1969, declaration: !6775, retainedNodes: !7176)
-!1423 = distinct !DISubprogram(name: "capacity<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs0_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE8capacityBU_", scope: !621, file: !4317, line: 308, type: !6778, scopeLine: 308, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !6779, retainedNodes: !7178)
-!1424 = distinct !DISubprogram(name: "capacity<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE8capacityBM_", scope: !622, file: !4290, line: 1436, type: !7181, scopeLine: 1436, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7182, retainedNodes: !7184)
-!1425 = distinct !DISubprogram(name: "pop<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3popBM_", scope: !622, file: !4290, line: 2871, type: !7186, scopeLine: 2871, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7187, retainedNodes: !7189)
+!1417 = distinct !DISubprogram(name: "pop<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3popBM_", scope: !622, file: !4290, line: 2871, type: !7154, scopeLine: 2871, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7155, retainedNodes: !7157)
+!1418 = distinct !DILexicalBlock(scope: !1420, file: !2875, line: 892, column: 13)
+!1419 = distinct !DISubprogram(name: "insert", linkageName: "_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert", scope: !711, file: !2875, line: 884, type: !6744, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, declaration: !7158, retainedNodes: !7164)
+!1420 = distinct !DILexicalBlock(scope: !1419, file: !2875, line: 885, column: 9)
+!1421 = distinct !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<alloc::boxed::Box<quinn_proto::connection::streams::send::Send, alloc::alloc::Global>>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtB14_10connection7streams4send4SendEENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !710, file: !6099, line: 1332, type: !7167, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !4257, declaration: !7168, retainedNodes: !7171)
+!1422 = distinct !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<quinn_proto::connection::streams::state::StreamRecv>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtB14_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !708, file: !6099, line: 1332, type: !7174, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !4250, declaration: !7175, retainedNodes: !7178)
+!1423 = distinct !DISubprogram(name: "capacity<alloc::alloc::Global>", linkageName: "_RNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner8capacityCshovLROGBtMy_11quinn_proto", scope: !32, file: !4317, line: 615, type: !6774, scopeLine: 615, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1969, declaration: !6775, retainedNodes: !7181)
+!1424 = distinct !DISubprogram(name: "capacity<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs0_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE8capacityBU_", scope: !621, file: !4317, line: 308, type: !6778, scopeLine: 308, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !6779, retainedNodes: !7183)
+!1425 = distinct !DISubprogram(name: "capacity<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE8capacityBM_", scope: !622, file: !4290, line: 1436, type: !7186, scopeLine: 1436, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7187, retainedNodes: !7189)
 !1426 = distinct !DISubprogram(name: "as_ptr<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE6as_ptrBM_", scope: !622, file: !4290, line: 1965, type: !7193, scopeLine: 1965, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7194, retainedNodes: !7195)
-!1427 = distinct !DISubprogram(name: "len<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3lenBM_", scope: !622, file: !4290, line: 3099, type: !7181, scopeLine: 3099, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7197, retainedNodes: !7198)
+!1427 = distinct !DISubprogram(name: "len<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3lenBM_", scope: !622, file: !4290, line: 3099, type: !7186, scopeLine: 3099, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !3795, declaration: !7197, retainedNodes: !7198)
 !1428 = distinct !DISubprogram(name: "assert_unchecked", linkageName: "_RNvNtCskKLDkoKarTP_4core4hint16assert_unchecked", scope: !6869, file: !6868, line: 202, type: !6871, scopeLine: 202, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, retainedNodes: !7200)
 !1429 = distinct !DISubprogram(name: "non_null<alloc::alloc::Global, quinn_proto::connection::streams::state::StreamRecv>", linkageName: "_RINvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB6_11RawVecInner8non_nullNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvEB19_", scope: !32, file: !4317, line: 610, type: !6782, scopeLine: 610, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !6786, declaration: !6787)
 !1430 = distinct !DISubprogram(name: "ptr<alloc::alloc::Global, quinn_proto::connection::streams::state::StreamRecv>", linkageName: "_RINvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB6_11RawVecInner3ptrNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvEB14_", scope: !32, file: !4317, line: 605, type: !6789, scopeLine: 605, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !6786, declaration: !6790)
@@ -1644,50 +1646,50 @@ begin_hunk_2_@llvm.umax.i32
 !7150 = !{!7135, !7136}
 !7151 = !DISubroutineType(types: !7150)
 !7152 = !DISubprogram(name: "ptr<quinn_proto::StreamId, alloc::alloc::Global>", linkageName: "_RNvMs0_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCshovLROGBtMy_11quinn_proto8StreamIdE3ptrBO_", scope: !616, file: !4317, line: 295, type: !7151, scopeLine: 295, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3774)
-!7153 = !DILocalVariable(name: "self", arg: 1, scope: !1419, file: !2875, line: 884, type: !4202)
-!7154 = !DISubprogram(name: "insert", linkageName: "_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert", scope: !711, file: !2875, line: 884, type: !6744, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !1871)
-!7155 = !DILocalVariable(name: "remote", arg: 2, scope: !1419, file: !2875, line: 884, type: !2412)
-!7156 = !DILocalVariable(name: "id", arg: 3, scope: !1419, file: !2875, line: 884, type: !377)
-!7157 = !DILocalVariable(name: "bi", scope: !1418, file: !2875, line: 885, type: !2412, align: 8)
-!7158 = !DILocalVariable(name: "recv", scope: !1417, file: !2875, line: 892, type: !501, align: 64)
-!7159 = !{!7153, !7155, !7156, !7157, !7158}
-!7160 = !DILocalVariable(name: "k", arg: 2, scope: !1420, file: !6099, line: 1332, type: !377)
-!7161 = !{!580, !4258, !377, !523}
-!7162 = !DISubroutineType(types: !7161)
-!7163 = !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<alloc::boxed::Box<quinn_proto::connection::streams::send::Send, alloc::alloc::Global>>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtB14_10connection7streams4send4SendEENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !710, file: !6099, line: 1332, type: !7162, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !4257)
-!7164 = !DILocalVariable(name: "self", arg: 1, scope: !1420, file: !6099, line: 1332, type: !4258)
-!7165 = !DILocalVariable(name: "v", scope: !1420, file: !6099, line: 1332, type: !523, align: 64)
-!7166 = !{!7164, !7160, !7165}
-!7167 = !DILocalVariable(name: "k", arg: 2, scope: !1421, file: !6099, line: 1332, type: !377)
-!7168 = !{!585, !4260, !377, !501}
-!7169 = !DISubroutineType(types: !7168)
-!7170 = !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<quinn_proto::connection::streams::state::StreamRecv>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtB14_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !708, file: !6099, line: 1332, type: !7169, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !4250)
-!7171 = !DILocalVariable(name: "self", arg: 1, scope: !1421, file: !6099, line: 1332, type: !4260)
-!7172 = !DILocalVariable(name: "v", arg: 3, scope: !1421, file: !6099, line: 1332, type: !501)
-!7173 = !{!7171, !7167, !7172}
-!7174 = !DILocalVariable(name: "elem_size", scope: !1422, file: !4317, line: 615, type: !1855, align: 64)
-!7175 = !DILocalVariable(name: "self", arg: 1, scope: !1422, file: !4317, line: 615, type: !6772)
-!7176 = !{!7175, !7174}
-!7177 = !DILocalVariable(name: "self", arg: 1, scope: !1423, file: !4317, line: 308, type: !6776)
-!7178 = !{!7177}
-!7179 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&alloc::vec::Vec<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", baseType: !622, size: 64, align: 64, dwarfAddressSpace: 0)
-!7180 = !{!1855, !7179}
-!7181 = !DISubroutineType(types: !7180)
-!7182 = !DISubprogram(name: "capacity<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE8capacityBM_", scope: !622, file: !4290, line: 1436, type: !7181, scopeLine: 1436, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
-!7183 = !DILocalVariable(name: "self", arg: 1, scope: !1424, file: !4290, line: 1436, type: !3786)
-!7184 = !{!7183}
-!7185 = !{!501, !3786}
+!7153 = !{!501, !3786}
+!7154 = !DISubroutineType(types: !7153)
+!7155 = !DISubprogram(name: "pop<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3popBM_", scope: !622, file: !4290, line: 2871, type: !7154, scopeLine: 2871, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
+!7156 = !DILocalVariable(name: "self", arg: 1, scope: !1417, file: !4290, line: 2871, type: !3786)
+!7157 = !{!7156}
+!7158 = !DISubprogram(name: "insert", linkageName: "_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert", scope: !711, file: !2875, line: 884, type: !6744, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !1871)
+!7159 = !DILocalVariable(name: "self", arg: 1, scope: !1419, file: !2875, line: 884, type: !4202)
+!7160 = !DILocalVariable(name: "remote", arg: 2, scope: !1419, file: !2875, line: 884, type: !2412)
+!7161 = !DILocalVariable(name: "id", arg: 3, scope: !1419, file: !2875, line: 884, type: !377)
+!7162 = !DILocalVariable(name: "bi", scope: !1420, file: !2875, line: 885, type: !2412, align: 8)
+!7163 = !DILocalVariable(name: "recv", scope: !1418, file: !2875, line: 892, type: !501, align: 64)
+!7164 = !{!7159, !7160, !7161, !7162, !7163}
+!7165 = !DILocalVariable(name: "k", arg: 2, scope: !1421, file: !6099, line: 1332, type: !377)
+!7166 = !{!580, !4258, !377, !523}
+!7167 = !DISubroutineType(types: !7166)
+!7168 = !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<alloc::boxed::Box<quinn_proto::connection::streams::send::Send, alloc::alloc::Global>>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtNtB14_10connection7streams4send4SendEENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !710, file: !6099, line: 1332, type: !7167, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !4257)
+!7169 = !DILocalVariable(name: "self", arg: 1, scope: !1421, file: !6099, line: 1332, type: !4258)
+!7170 = !DILocalVariable(name: "v", scope: !1421, file: !6099, line: 1332, type: !523, align: 64)
+!7171 = !{!7169, !7165, !7170}
+!7172 = !DILocalVariable(name: "k", arg: 2, scope: !1422, file: !6099, line: 1332, type: !377)
+!7173 = !{!585, !4260, !377, !501}
+!7174 = !DISubroutineType(types: !7173)
+!7175 = !DISubprogram(name: "insert<quinn_proto::StreamId, core::option::Option<quinn_proto::connection::streams::state::StreamRecv>, rustc_hash::FxBuildHasher, alloc::alloc::Global>", linkageName: "_RNvMs2_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtCshovLROGBtMy_11quinn_proto8StreamIdINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtB14_10connection7streams5state10StreamRecvENtCs1fPtKw3lI00_10rustc_hash13FxBuildHasherE6insertB14_", scope: !708, file: !6099, line: 1332, type: !7174, scopeLine: 1332, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !4250)
+!7176 = !DILocalVariable(name: "self", arg: 1, scope: !1422, file: !6099, line: 1332, type: !4260)
+!7177 = !DILocalVariable(name: "v", arg: 3, scope: !1422, file: !6099, line: 1332, type: !501)
+!7178 = !{!7176, !7172, !7177}
+!7179 = !DILocalVariable(name: "elem_size", scope: !1423, file: !4317, line: 615, type: !1855, align: 64)
+!7180 = !DILocalVariable(name: "self", arg: 1, scope: !1423, file: !4317, line: 615, type: !6772)
+!7181 = !{!7180, !7179}
+!7182 = !DILocalVariable(name: "self", arg: 1, scope: !1424, file: !4317, line: 308, type: !6776)
+!7183 = !{!7182}
+!7184 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&alloc::vec::Vec<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", baseType: !622, size: 64, align: 64, dwarfAddressSpace: 0)
+!7185 = !{!1855, !7184}
 !7186 = !DISubroutineType(types: !7185)
-!7187 = !DISubprogram(name: "pop<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3popBM_", scope: !622, file: !4290, line: 2871, type: !7186, scopeLine: 2871, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
-!7188 = !DILocalVariable(name: "self", arg: 1, scope: !1425, file: !4290, line: 2871, type: !3786)
+!7187 = !DISubprogram(name: "capacity<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE8capacityBM_", scope: !622, file: !4290, line: 1436, type: !7186, scopeLine: 1436, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
+!7188 = !DILocalVariable(name: "self", arg: 1, scope: !1425, file: !4290, line: 1436, type: !3786)
 !7189 = !{!7188}
 !7191 = !DILocalVariable(name: "self", arg: 1, scope: !1426, file: !4290, line: 1965, type: !3786)
-!7192 = !{!6783, !7179}
+!7192 = !{!6783, !7184}
 !7193 = !DISubroutineType(types: !7192)
 !7194 = !DISubprogram(name: "as_ptr<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE6as_ptrBM_", scope: !622, file: !4290, line: 1965, type: !7193, scopeLine: 1965, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
 !7195 = !{!7191}
 !7196 = !DILocalVariable(name: "self", arg: 1, scope: !1427, file: !4290, line: 3099, type: !3786)
-!7197 = !DISubprogram(name: "len<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3lenBM_", scope: !622, file: !4290, line: 3099, type: !7181, scopeLine: 3099, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
+!7197 = !DISubprogram(name: "len<quinn_proto::connection::streams::state::StreamRecv, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvE3lenBM_", scope: !622, file: !4290, line: 3099, type: !7186, scopeLine: 3099, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3795)
 !7198 = !{!7196}
 !7199 = !DILocalVariable(name: "cond", arg: 1, scope: !1428, file: !6868, line: 202, type: !2412)
 !7200 = !{!7199}
@@ -2090,38 +2092,38 @@ begin_hunk_3_@llvm.umax.i32
 !19079 = distinct !DISubprogram(name: "unchecked_add", linkageName: "_RNvMs7_NtCskKLDkoKarTP_4core3numy13unchecked_add", scope: !6290, file: !4307, line: 1031, type: !6428, scopeLine: 1031, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, retainedNodes: !19213)
 !19080 = distinct !DISubprogram(name: "new", linkageName: "_RNvMs3_CshovLROGBtMy_11quinn_protoNtB5_8StreamId3new", scope: !377, file: !6429, line: 257, type: !6431, scopeLine: 257, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, declaration: !6432, retainedNodes: !19220)
 !19081 = distinct !DILocation(line: 188, column: 22, scope: !19068)
-!19082 = distinct !DILocation(line: 0, scope: !1419, inlinedAt: !19081)
-!19083 = distinct !DILocation(line: 888, column: 31, scope: !1418, inlinedAt: !19081)
-!19084 = distinct !DILocation(line: 0, scope: !1420, inlinedAt: !19083)
-!19085 = distinct !DILocation(line: 893, column: 31, scope: !1417, inlinedAt: !19081)
-!19086 = distinct !DILocation(line: 0, scope: !1421, inlinedAt: !19085)
-!19087 = distinct !DILocation(line: 892, column: 39, scope: !1418, inlinedAt: !19081)
-!19088 = distinct !DILocation(line: 2877, column: 62, scope: !1425, inlinedAt: !19087)
-!19089 = distinct !DILocation(line: 1437, column: 18, scope: !1424, inlinedAt: !19088)
-!19090 = distinct !DILocation(line: 309, column: 20, scope: !1423, inlinedAt: !19089)
-!19091 = distinct !DILocation(line: 0, scope: !1422, inlinedAt: !19090)
-!19092 = distinct !DILocation(line: 0, scope: !1418, inlinedAt: !19081)
-!19093 = distinct !DILocation(line: 2871, column: 16, scope: !1425, inlinedAt: !19087)
-!19094 = distinct !DILocation(line: 1436, column: 27, scope: !1424, inlinedAt: !19088)
-!19095 = distinct !DILocation(line: 2878, column: 37, scope: !1425, inlinedAt: !19087)
+!19082 = distinct !DILocation(line: 892, column: 39, scope: !1420, inlinedAt: !19081)
+!19083 = distinct !DILocation(line: 0, scope: !1419, inlinedAt: !19081)
+!19084 = distinct !DILocation(line: 888, column: 31, scope: !1420, inlinedAt: !19081)
+!19085 = distinct !DILocation(line: 0, scope: !1421, inlinedAt: !19084)
+!19086 = distinct !DILocation(line: 893, column: 31, scope: !1418, inlinedAt: !19081)
+!19087 = distinct !DILocation(line: 0, scope: !1422, inlinedAt: !19086)
+!19088 = distinct !DILocation(line: 2877, column: 62, scope: !1417, inlinedAt: !19082)
+!19089 = distinct !DILocation(line: 1437, column: 18, scope: !1425, inlinedAt: !19088)
+!19090 = distinct !DILocation(line: 309, column: 20, scope: !1424, inlinedAt: !19089)
+!19091 = distinct !DILocation(line: 0, scope: !1423, inlinedAt: !19090)
+!19092 = distinct !DILocation(line: 0, scope: !1420, inlinedAt: !19081)
+!19093 = distinct !DILocation(line: 2871, column: 16, scope: !1417, inlinedAt: !19082)
+!19094 = distinct !DILocation(line: 1436, column: 27, scope: !1425, inlinedAt: !19088)
+!19095 = distinct !DILocation(line: 2878, column: 37, scope: !1417, inlinedAt: !19082)
 !19096 = distinct !DILocation(line: 1965, column: 25, scope: !1426, inlinedAt: !19095)
-!19097 = distinct !DILocation(line: 2878, column: 55, scope: !1425, inlinedAt: !19087)
+!19097 = distinct !DILocation(line: 2878, column: 55, scope: !1417, inlinedAt: !19082)
 !19098 = distinct !DILocation(line: 3099, column: 22, scope: !1427, inlinedAt: !19097)
 !19099 = distinct !{!19099, i1 true, !"_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert"}
 !19100 = distinct !{!19100, !19099, !"_RNvMs_NtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5stateNtB4_12StreamsState6insert: argument 0"}
-!19101 = distinct !DILocation(line: 2877, column: 17, scope: !1425, inlinedAt: !19087)
+!19101 = distinct !DILocation(line: 2877, column: 17, scope: !1417, inlinedAt: !19082)
 !19102 = distinct !DILocation(line: 0, scope: !1428, inlinedAt: !19101)
 !19103 = distinct !DILocation(line: 1968, column: 18, scope: !1426, inlinedAt: !19095)
 !19104 = distinct !DILocation(line: 296, column: 20, scope: !1431, inlinedAt: !19103)
 !19105 = distinct !DILocation(line: 606, column: 14, scope: !1430, inlinedAt: !19104)
-!19106 = distinct !DILocation(line: 2878, column: 46, scope: !1425, inlinedAt: !19087)
+!19106 = distinct !DILocation(line: 2878, column: 46, scope: !1417, inlinedAt: !19082)
 !19107 = distinct !DILocation(line: 0, scope: !1432, inlinedAt: !19106)
-!19108 = distinct !DILocation(line: 2878, column: 22, scope: !1425, inlinedAt: !19087)
+!19108 = distinct !DILocation(line: 2878, column: 22, scope: !1417, inlinedAt: !19082)
 !19109 = distinct !DILocation(line: 0, scope: !1433, inlinedAt: !19108)
-!19110 = distinct !DILocation(line: 0, scope: !1417, inlinedAt: !19081)
-!19111 = distinct !DILocation(line: 1332, column: 19, scope: !1421, inlinedAt: !19085)
-!19112 = distinct !DILocation(line: 1332, column: 19, scope: !1420, inlinedAt: !19083)
-!19113 = distinct !DILocation(line: 888, column: 13, scope: !1418, inlinedAt: !19081)
+!19110 = distinct !DILocation(line: 0, scope: !1418, inlinedAt: !19081)
+!19111 = distinct !DILocation(line: 1332, column: 19, scope: !1422, inlinedAt: !19086)
+!19112 = distinct !DILocation(line: 1332, column: 19, scope: !1421, inlinedAt: !19084)
+!19113 = distinct !DILocation(line: 888, column: 13, scope: !1420, inlinedAt: !19081)
 !19114 = distinct !DILocation(line: 848, column: 1, scope: !581, inlinedAt: !19113)
 !19115 = distinct !DILocation(line: 0, scope: !591, inlinedAt: !19114)
 !19116 = distinct !DILocation(line: 848, column: 1, scope: !591, inlinedAt: !19114)
@@ -2156,7 +2158,7 @@ begin_hunk_3_@llvm.umax.i32
 !19145 = distinct !DILocation(line: 0, scope: !610, inlinedAt: !19144)
 !19146 = distinct !DILocation(line: 848, column: 1, scope: !595, inlinedAt: !19122)
 !19147 = distinct !DILocation(line: 0, scope: !596, inlinedAt: !19146)
-!19148 = distinct !DILocation(line: 888, column: 13, scope: !1418, inlinedAt: !19081)
+!19148 = distinct !DILocation(line: 888, column: 13, scope: !1420, inlinedAt: !19081)
 !19149 = distinct !DILocation(line: 0, scope: !581, inlinedAt: !19148)
 !19150 = distinct !DILocation(line: 848, column: 1, scope: !594, inlinedAt: !19120)
 !19151 = distinct !DILocation(line: 0, scope: !597, inlinedAt: !19150)
@@ -2178,7 +2180,7 @@ begin_hunk_3_@llvm.umax.i32
 !19167 = distinct !DILocation(line: 0, scope: !609, inlinedAt: !19166)
 !19168 = distinct !DILocation(line: 321, column: 22, scope: !609, inlinedAt: !19166)
 !19169 = distinct !DILocation(line: 0, scope: !610, inlinedAt: !19168)
-!19170 = distinct !DILocation(line: 893, column: 13, scope: !1417, inlinedAt: !19081)
+!19170 = distinct !DILocation(line: 893, column: 13, scope: !1418, inlinedAt: !19081)
 !19171 = distinct !DILocation(line: 848, column: 1, scope: !586, inlinedAt: !19170)
 !19172 = distinct !DILocation(line: 848, column: 1, scope: !588, inlinedAt: !19171)
 !19173 = distinct !DILocation(line: 0, scope: !587, inlinedAt: !19172)
@@ -2243,27 +2245,27 @@ begin_hunk_3_@llvm.umax.i32
 !19233 = !DILocation(line: 187, column: 13, scope: !19069)
 !19234 = !DILocation(line: 2192, column: 50, scope: !19074, inlinedAt: !19195)
 !19235 = !DILocation(line: 187, column: 25, scope: !19070)
-!19236 = !DILocation(line: 1043, column: 17, scope: !19079, inlinedAt: !19214)
-!19237 = !DILocation(line: 258, column: 14, scope: !19080, inlinedAt: !19221)
-!19238 = !DILocation(line: 2872, column: 12, scope: !1425, inlinedAt: !19087)
-!19239 = !DILocation(line: 2876, column: 17, scope: !1425, inlinedAt: !19087)
-!19240 = !DILocation(line: 616, column: 49, scope: !1422, inlinedAt: !19090)
-!19241 = !DILocation(line: 2877, column: 46, scope: !1425, inlinedAt: !19087)
+!19236 = !DILocation(line: 2872, column: 12, scope: !1417, inlinedAt: !19082)
+!19237 = !DILocation(line: 1043, column: 17, scope: !19079, inlinedAt: !19214)
+!19238 = !DILocation(line: 258, column: 14, scope: !19080, inlinedAt: !19221)
+!19239 = !DILocation(line: 2876, column: 17, scope: !1417, inlinedAt: !19082)
+!19240 = !DILocation(line: 616, column: 49, scope: !1423, inlinedAt: !19090)
+!19241 = !DILocation(line: 2877, column: 46, scope: !1417, inlinedAt: !19082)
 !19242 = !DILocation(line: 210, column: 9, scope: !1428, inlinedAt: !19101)
 !19243 = !DILocation(line: 611, column: 9, scope: !1429, inlinedAt: !19105)
 !19244 = !DILocation(line: 3105, column: 37, scope: !1427, inlinedAt: !19097)
 !19245 = !DILocation(line: 3105, column: 18, scope: !1427, inlinedAt: !19097)
 !19246 = !DILocation(line: 872, column: 18, scope: !1432, inlinedAt: !19106)
 !19247 = !DILocation(line: 1756, column: 9, scope: !1433, inlinedAt: !19108)
-!19248 = !DILocation(line: 2872, column: 9, scope: !1425, inlinedAt: !19087)
-!19249 = !DILocation(line: 0, scope: !1425, inlinedAt: !19087)
-!19250 = !DILocation(line: 1333, column: 19, scope: !1421, inlinedAt: !19085)
-!19251 = !DILocation(line: 893, column: 21, scope: !1417, inlinedAt: !19081)
+!19248 = !DILocation(line: 2872, column: 9, scope: !1417, inlinedAt: !19082)
+!19249 = !DILocation(line: 0, scope: !1417, inlinedAt: !19082)
+!19250 = !DILocation(line: 1333, column: 19, scope: !1422, inlinedAt: !19086)
+!19251 = !DILocation(line: 893, column: 21, scope: !1418, inlinedAt: !19081)
 !19252 = !DILocation(line: 192, column: 9, scope: !19072)
 !19253 = !DILocation(line: 193, column: 5, scope: !19073)
 !19254 = !DILocation(line: 193, column: 6, scope: !19073)
-!19255 = !DILocation(line: 1333, column: 19, scope: !1420, inlinedAt: !19083)
-!19256 = !DILocation(line: 888, column: 21, scope: !1418, inlinedAt: !19081)
+!19255 = !DILocation(line: 1333, column: 19, scope: !1421, inlinedAt: !19084)
+!19256 = !DILocation(line: 888, column: 21, scope: !1420, inlinedAt: !19081)
 !19257 = !DILocation(line: 848, column: 1, scope: !591, inlinedAt: !19114)
 !19258 = !DILocation(line: 848, column: 1, scope: !593, inlinedAt: !19118)
 !19259 = !DILocation(line: 848, column: 1, scope: !595, inlinedAt: !19122)
@@ -2279,7 +2281,7 @@ begin_hunk_3_@llvm.umax.i32
 !19269 = !DILocation(line: 848, column: 1, scope: !598, inlinedAt: !19156)
 !19270 = !DILocation(line: 175, column: 14, scope: !610, inlinedAt: !19168)
 !19271 = !DILocation(line: 848, column: 1, scope: !587, inlinedAt: !19172)
-!19272 = !DILocation(line: 0, scope: !1418, inlinedAt: !19081)
+!19272 = !DILocation(line: 0, scope: !1420, inlinedAt: !19081)
 !19273 = !DILocation(line: 144, column: 5, scope: !19073)
 !19274 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "Some", scope: !19277, file: !1530, size: 192, align: 64, flags: DIFlagPublic, elements: !19361, templateParams: !4001, identifier: "c730f5a3b809fa515fa76383e07b1981")
 !19275 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "None", scope: !19277, file: !1530, size: 192, align: 64, flags: DIFlagPublic, elements: !1871, templateParams: !4001, identifier: "73fd570c06c179e3ba26c815519430a4")
@@ -2632,7 +2634,7 @@ begin_hunk_3_@llvm.umax.i32
 !19622 = distinct !DILexicalBlock(scope: !19623, file: !6429, line: 206, column: 34)
 !19623 = distinct !DISubprogram(name: "eq", linkageName: "_RNvXso_CshovLROGBtMy_11quinn_protoNtB5_3DirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq", scope: !19641, file: !6429, line: 206, type: !19643, scopeLine: 206, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, retainedNodes: !19647)
 !19624 = distinct !DISubprogram(name: "dir", linkageName: "_RNvMs3_CshovLROGBtMy_11quinn_protoNtB5_8StreamId3dir", scope: !377, file: !6429, line: 269, type: !6535, scopeLine: 269, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !535, templateParams: !1871, declaration: !6536, retainedNodes: !19663)
-!19625 = distinct !DILocation(line: 888, column: 13, scope: !1418)
+!19625 = distinct !DILocation(line: 888, column: 13, scope: !1420)
 !19626 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&core::option::Option<core::option::Option<quinn_proto::connection::streams::state::StreamRecv>>", baseType: !585, size: 64, align: 64, dwarfAddressSpace: 0)
 !19627 = !DILocalVariable(name: "self", arg: 1, scope: !19619, file: !3455, line: 633, type: !19626)
 !19628 = !{!2412, !19626}
@@ -2640,7 +2642,7 @@ begin_hunk_3_@llvm.umax.i32
 !19630 = !DISubprogram(name: "is_some<core::option::Option<quinn_proto::connection::streams::state::StreamRecv>>", linkageName: "_RNvMNtCskKLDkoKarTP_4core6optionINtB2_6OptionIBv_NtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvEE7is_someBT_", scope: !585, file: !3455, line: 633, type: !19629, scopeLine: 633, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3623)
 !19631 = !{!19627}
 !19632 = !DILexicalBlockFile(scope: !19620, file: !3455, discriminator: 2)
-!19633 = !DILocation(line: 893, column: 48, scope: !1417)
+!19633 = !DILocation(line: 893, column: 48, scope: !1418)
 !19634 = !DILocation(line: 683, column: 15, scope: !19632, inlinedAt: !19633)
 !19635 = !DILocation(line: 633, column: 26, scope: !19619, inlinedAt: !19634)
 !19636 = !DISubprogram(name: "is_none<core::option::Option<quinn_proto::connection::streams::state::StreamRecv>>", linkageName: "_RNvMNtCskKLDkoKarTP_4core6optionINtB2_6OptionIBv_NtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams5state10StreamRecvEE7is_noneBT_", scope: !585, file: !3455, line: 682, type: !19629, scopeLine: 682, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !3623)
@@ -2658,68 +2660,68 @@ begin_hunk_3_@llvm.umax.i32
 !19648 = !DILocation(line: 885, column: 18, scope: !1419)
 !19649 = !DILocation(line: 206, column: 34, scope: !19623, inlinedAt: !19648)
 !19650 = !DILocation(line: 0, scope: !1419)
-!19651 = !DILocation(line: 888, column: 31, scope: !1418)
-!19652 = !DILocation(line: 0, scope: !1420, inlinedAt: !19651)
-!19653 = !DILocation(line: 893, column: 31, scope: !1417)
-!19654 = !DILocation(line: 0, scope: !1421, inlinedAt: !19653)
+!19651 = !DILocation(line: 888, column: 31, scope: !1420)
+!19652 = !DILocation(line: 0, scope: !1421, inlinedAt: !19651)
+!19653 = !DILocation(line: 893, column: 31, scope: !1418)
+!19654 = !DILocation(line: 0, scope: !1422, inlinedAt: !19653)
 !19655 = !DILocation(line: 0, scope: !19623, inlinedAt: !19648)
 !19656 = !DILocation(line: 0, scope: !19621, inlinedAt: !19648)
-!19657 = !DILocation(line: 892, column: 39, scope: !1418)
-!19658 = !DILocation(line: 2877, column: 62, scope: !1425, inlinedAt: !19657)
-!19659 = !DILocation(line: 1437, column: 18, scope: !1424, inlinedAt: !19658)
-!19660 = !DILocation(line: 309, column: 20, scope: !1423, inlinedAt: !19659)
-!19661 = !DILocation(line: 0, scope: !1422, inlinedAt: !19660)
+!19657 = !DILocation(line: 892, column: 39, scope: !1420)
+!19658 = !DILocation(line: 2877, column: 62, scope: !1417, inlinedAt: !19657)
+!19659 = !DILocation(line: 1437, column: 18, scope: !1425, inlinedAt: !19658)
+!19660 = !DILocation(line: 309, column: 20, scope: !1424, inlinedAt: !19659)
+!19661 = !DILocation(line: 0, scope: !1423, inlinedAt: !19660)
 !19662 = !DILocalVariable(name: "self", scope: !19624, file: !6429, line: 269, type: !377, align: 64)
 !19663 = !{!19662}
 !19664 = !DILocation(line: 885, column: 21, scope: !1419)
 !19665 = !DILocation(line: 0, scope: !19624, inlinedAt: !19664)
 !19667 = !DILocation(line: 0, scope: !19622, inlinedAt: !19648)
-!19668 = !DILocation(line: 0, scope: !1418)
-!19669 = !DILocation(line: 1332, column: 19, scope: !1420, inlinedAt: !19651)
-!19670 = !DILocation(line: 2871, column: 16, scope: !1425, inlinedAt: !19657)
-!19671 = !DILocation(line: 1436, column: 27, scope: !1424, inlinedAt: !19658)
-!19672 = !DILocation(line: 2878, column: 37, scope: !1425, inlinedAt: !19657)
+!19668 = !DILocation(line: 0, scope: !1420)
+!19669 = !DILocation(line: 1332, column: 19, scope: !1421, inlinedAt: !19651)
+!19670 = !DILocation(line: 2871, column: 16, scope: !1417, inlinedAt: !19657)
+!19671 = !DILocation(line: 1436, column: 27, scope: !1425, inlinedAt: !19658)
+!19672 = !DILocation(line: 2878, column: 37, scope: !1417, inlinedAt: !19657)
 !19673 = !DILocation(line: 1965, column: 25, scope: !1426, inlinedAt: !19672)
-!19674 = !DILocation(line: 2878, column: 55, scope: !1425, inlinedAt: !19657)
+!19674 = !DILocation(line: 2878, column: 55, scope: !1417, inlinedAt: !19657)
 !19675 = !DILocation(line: 3099, column: 22, scope: !1427, inlinedAt: !19674)
-!19676 = !DILocation(line: 2877, column: 17, scope: !1425, inlinedAt: !19657)
+!19676 = !DILocation(line: 2877, column: 17, scope: !1417, inlinedAt: !19657)
 !19677 = !DILocation(line: 0, scope: !1428, inlinedAt: !19676)
 !19678 = !DILocation(line: 1968, column: 18, scope: !1426, inlinedAt: !19672)
 !19679 = !DILocation(line: 296, column: 20, scope: !1431, inlinedAt: !19678)
 !19680 = !DILocation(line: 606, column: 14, scope: !1430, inlinedAt: !19679)
-!19681 = !DILocation(line: 2878, column: 46, scope: !1425, inlinedAt: !19657)
+!19681 = !DILocation(line: 2878, column: 46, scope: !1417, inlinedAt: !19657)
 !19682 = !DILocation(line: 0, scope: !1432, inlinedAt: !19681)
-!19683 = !DILocation(line: 2878, column: 22, scope: !1425, inlinedAt: !19657)
+!19683 = !DILocation(line: 2878, column: 22, scope: !1417, inlinedAt: !19657)
 !19684 = !DILocation(line: 0, scope: !1433, inlinedAt: !19683)
-!19685 = !DILocation(line: 0, scope: !1417)
-!19686 = !DILocation(line: 1332, column: 19, scope: !1421, inlinedAt: !19653)
+!19685 = !DILocation(line: 0, scope: !1418)
+!19686 = !DILocation(line: 1332, column: 19, scope: !1422, inlinedAt: !19653)
 !19687 = !DILocation(line: 270, column: 12, scope: !19624, inlinedAt: !19664)
 !19688 = !DILocation(line: 206, column: 34, scope: !19621, inlinedAt: !19648)
-!19689 = !DILocation(line: 887, column: 12, scope: !1418)
-!19690 = !DILocation(line: 1333, column: 9, scope: !1420, inlinedAt: !19651)
-!19691 = !DILocation(line: 1333, column: 19, scope: !1420, inlinedAt: !19651)
-!19692 = !DILocation(line: 888, column: 21, scope: !1418)
-!19693 = !DILocation(line: 2872, column: 12, scope: !1425, inlinedAt: !19657)
-!19694 = !DILocation(line: 888, column: 13, scope: !1418)
+!19689 = !DILocation(line: 887, column: 12, scope: !1420)
+!19690 = !DILocation(line: 1333, column: 9, scope: !1421, inlinedAt: !19651)
+!19691 = !DILocation(line: 1333, column: 19, scope: !1421, inlinedAt: !19651)
+!19692 = !DILocation(line: 888, column: 21, scope: !1420)
+!19693 = !DILocation(line: 2872, column: 12, scope: !1417, inlinedAt: !19657)
+!19694 = !DILocation(line: 888, column: 13, scope: !1420)
 !19695 = !DILocation(line: 848, column: 1, scope: !581, inlinedAt: !19625)
-!19696 = !DILocation(line: 891, column: 12, scope: !1418)
+!19696 = !DILocation(line: 891, column: 12, scope: !1420)
 !19697 = !DILocation(line: 895, column: 6, scope: !1419)
-!19698 = !DILocation(line: 2876, column: 17, scope: !1425, inlinedAt: !19657)
-!19699 = !DILocation(line: 616, column: 49, scope: !1422, inlinedAt: !19660)
-!19700 = !DILocation(line: 2877, column: 46, scope: !1425, inlinedAt: !19657)
+!19698 = !DILocation(line: 2876, column: 17, scope: !1417, inlinedAt: !19657)
+!19699 = !DILocation(line: 616, column: 49, scope: !1423, inlinedAt: !19660)
+!19700 = !DILocation(line: 2877, column: 46, scope: !1417, inlinedAt: !19657)
 !19701 = !DILocation(line: 210, column: 9, scope: !1428, inlinedAt: !19676)
 !19702 = !DILocation(line: 611, column: 9, scope: !1429, inlinedAt: !19680)
 !19703 = !DILocation(line: 3105, column: 37, scope: !1427, inlinedAt: !19674)
 !19704 = !DILocation(line: 3105, column: 18, scope: !1427, inlinedAt: !19674)
 !19705 = !DILocation(line: 872, column: 18, scope: !1432, inlinedAt: !19681)
 !19706 = !DILocation(line: 1756, column: 9, scope: !1433, inlinedAt: !19683)
-!19707 = !DILocation(line: 2872, column: 9, scope: !1425, inlinedAt: !19657)
-!19708 = !DILocation(line: 0, scope: !1425, inlinedAt: !19657)
-!19709 = !DILocation(line: 1333, column: 9, scope: !1421, inlinedAt: !19653)
-!19710 = !DILocation(line: 1333, column: 19, scope: !1421, inlinedAt: !19653)
+!19707 = !DILocation(line: 2872, column: 9, scope: !1417, inlinedAt: !19657)
+!19708 = !DILocation(line: 0, scope: !1417, inlinedAt: !19657)
+!19709 = !DILocation(line: 1333, column: 9, scope: !1422, inlinedAt: !19653)
+!19710 = !DILocation(line: 1333, column: 19, scope: !1422, inlinedAt: !19653)
 !19711 = !DILocation(line: 634, column: 18, scope: !19619, inlinedAt: !19634)
-!19712 = !DILocation(line: 893, column: 21, scope: !1417)
-!19713 = !DILocation(line: 893, column: 13, scope: !1417)
+!19712 = !DILocation(line: 893, column: 21, scope: !1418)
+!19713 = !DILocation(line: 893, column: 13, scope: !1418)
 !19714 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "Stream", scope: !3532, file: !1530, size: 448, align: 64, flags: DIFlagProtected, elements: !20217, templateParams: !1871, identifier: "94ee98a3f4326334bfb1d983d1e0133b")
 !19715 = distinct !DILexicalBlock(scope: !19718, file: !2875, line: 291, column: 13)
 !19716 = distinct !DILexicalBlock(scope: !19732, file: !2875, line: 281, column: 80)
