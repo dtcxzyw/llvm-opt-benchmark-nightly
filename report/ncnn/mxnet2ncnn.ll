@@ -202,11 +202,11 @@ _ZNSt6vectorIiSaIiEED2Ev.exit1667:                ; preds = %_ZNSt6vectorIiSaIiE
   %.pre3642 = load ptr, ptr %26, align 8, !tbaa !66 ; 2 uses
   %.pre3672 = ptrtoint ptr %.pre3641 to i64
   %.pre3673 = ptrtoint ptr %.pre3642 to i64
-  %98 = icmp eq ptr %.pre3641, %.pre3642
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #23
   %i.bdo = sub i64 %.pre3672, %.pre3673
   %i.bdp = sdiv exact i64 %i.bdo, 208
-  br i1 %98, label %_ZL26fuse_hardsigmoid_hardswishRSt6vectorI9MXNetNodeSaIS0_EERS_I10MXNetParamSaIS4_EERSt3mapImiSt4lessImESaISt4pairIKmiEEERSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_ISN_ESaISN_EERi.exit, label %.lr.ph.i1668
+  %.not205.i = icmp eq ptr %.pre3641, %.pre3642
+  br i1 %.not205.i, label %_ZL26fuse_hardsigmoid_hardswishRSt6vectorI9MXNetNodeSaIS0_EERS_I10MXNetParamSaIS4_EERSt3mapImiSt4lessImESaISt4pairIKmiEEERSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_ISN_ESaISN_EERi.exit, label %.lr.ph.i1668
 
 .lr.ph.i1668:                                     ; preds = %.loopexit3004
   %i.bdq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
@@ -609,7 +609,7 @@ bb.ng:                                            ; preds = %bb.ne, %bb.nf
   %i.bqg = getelementptr inbounds nuw i8, ptr %93, i64 8
   %i.bqh = getelementptr inbounds nuw i8, ptr %92, i64 16
   %i.bqi = getelementptr inbounds nuw i8, ptr %89, i64 8 ; 2 uses
-  %i.bqj = getelementptr inbounds nuw i8, ptr %90, i64 8
+  %i.bqj = getelementptr inbounds nuw i8, ptr %90, i64 8 ; 2 uses
   %i.bqk = getelementptr inbounds nuw i8, ptr %91, i64 8
   %i.bql = getelementptr inbounds nuw i8, ptr %88, i64 8
   %i.bqm = getelementptr inbounds nuw i8, ptr %84, i64 8
@@ -1012,18 +1012,19 @@ bb.ake:                                           ; preds = %bb.akd
   br label %bb.akf
 
 bb.akf:                                           ; preds = %bb.ake, %bb.akd, %bb.akc, %bb.aka
-  %i.dxp = getelementptr inbounds i8, ptr %i.dxi, i64 -4 ; 2 uses
-  %i.dxq = load ptr, ptr %i.bqk, align 8, !tbaa !40 ; 4 uses
+  %i.dxp = getelementptr inbounds i8, ptr %i.dxi, i64 -4 ; 3 uses
+  store ptr %i.dxp, ptr %i.bqj, align 8, !tbaa !40
+  %i.dxq = load ptr, ptr %i.bqk, align 8, !tbaa !40 ; 5 uses
   %i.dxr = load ptr, ptr %91, align 8, !tbaa !39  ; 9 uses
   %i.dxs = ptrtoint ptr %i.dxq to i64
   %i.dxt = ptrtoint ptr %i.dxr to i64
   %.not1251 = icmp eq ptr %i.dxq, %i.dxr
-  br i1 %.not1251, label %._crit_edge3351, label %bb.akg
+  br i1 %.not1251, label %bb.ako, label %bb.akg
 
 bb.akg:                                           ; preds = %bb.akf
   %i.dxu = getelementptr inbounds nuw i8, ptr %i.dxr, i64 4 ; 4 uses
   %.not.i.i2407 = icmp eq ptr %i.dxu, %i.dxq
-  br i1 %.not.i.i2407, label %bb.ako, label %bb.akh
+  br i1 %.not.i.i2407, label %98, label %bb.akh
 
 bb.akh:                                           ; preds = %bb.akg
   %i.dxv = ptrtoint ptr %i.dxu to i64
@@ -1033,15 +1034,19 @@ bb.akh:                                           ; preds = %bb.akg
 
 bb.aki:                                           ; preds = %bb.akh
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.dxr, ptr nonnull align 4 %i.dxu, i64 %i.dxw, i1 false)
-  br label %bb.ako
+  br label %98
 
 bb.akj:                                           ; preds = %bb.akh
   %i.dxy = icmp eq i64 %i.dxw, 4
-  br i1 %i.dxy, label %bb.akk, label %bb.ako
+  br i1 %i.dxy, label %bb.akk, label %98
 
 bb.akk:                                           ; preds = %bb.akj
   %i.dxz = load i32, ptr %i.dxu, align 4, !tbaa !34
   store i32 %i.dxz, ptr %i.dxr, align 4, !tbaa !34
+  br label %98
+
+98:                                               ; preds = %bb.akk, %bb.akj, %bb.aki, %bb.akg
+  %99 = getelementptr inbounds i8, ptr %i.dxq, i64 -4
   br label %bb.ako
 
 bb.akl:                                           ; preds = %bb.ajt
@@ -1062,18 +1067,18 @@ bb.akn:                                           ; preds = %bb.ajv
   %.not.i.i.i2418 = icmp eq ptr %i.dyd, null
   br i1 %.not.i.i.i2418, label %_ZNSt6vectorIiSaIiEED2Ev.exit2419, label %bb.aku
 
-bb.ako:                                           ; preds = %bb.akg, %bb.aki, %bb.akj, %bb.akk
-  %99 = getelementptr inbounds i8, ptr %i.dxq, i64 -4 ; 2 uses
-  %i.dye = icmp eq ptr %99, %i.dxr
+bb.ako:                                           ; preds = %98, %bb.akf
+  %100 = phi ptr [ %99, %98 ], [ %i.dxq, %bb.akf ] ; 2 uses
+  %i.dye = icmp eq ptr %100, %i.dxr
   br i1 %i.dye, label %._crit_edge3351, label %.lr.ph3350.preheader
 
 .lr.ph3350.preheader:                             ; preds = %bb.ako
-  %.pre3675 = ptrtoint ptr %99 to i64
+  %.pre3675 = ptrtoint ptr %100 to i64
   %i.dyf = sub i64 %.pre3675, %i.dxt
   %i.dyg = ashr exact i64 %i.dyf, 2
   br label %.lr.ph3350
 
-._crit_edge3351:                                  ; preds = %bb.akq, %bb.akf, %bb.ako
+._crit_edge3351:                                  ; preds = %bb.akq, %bb.ako
   %i.dyh = ptrtoint ptr %i.dxe to i64
   %i.dyi = sub i64 %i.dyh, %i.dwv
   %i.dyj = ashr exact i64 %i.dyi, 2               ; 2 uses

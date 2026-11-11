@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
           to label %bb.d unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = load ptr, ptr %i.c, align 8, !tbaa !70, !noalias !1317 ; 2 uses
-  %i.l = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.k = load ptr, ptr %i.c, align 8, !tbaa !70, !noalias !1317 ; 3 uses
+  %i.l = ptrtoint ptr %i.k to i64
   %i.m = and i64 %i.l, 3
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %_ZNKSt10filesystem7__cxx114path5beginEv.exit.thread, label %_ZNKSt10filesystem7__cxx114path5beginEv.exit
@@ -215,7 +215,8 @@ _ZNKSt10filesystem7__cxx114path5beginEv.exit:     ; preds = %bb.d
   %i.o = load i64, ptr %i.i, align 8, !tbaa !57, !noalias !1317
   %i.p = icmp eq i64 %i.o, 0                      ; 2 uses
   %i.q = zext i1 %i.p to i8
-  %i.r = and i64 %i.l, 3
+  %.pre-phi = ptrtoint ptr %i.k to i64
+  %i.r = and i64 %.pre-phi, 3
   %i.s = icmp eq i64 %i.r, 0
   br i1 %i.s, label %_ZNKSt10filesystem7__cxx114path3endEv.exit, label %_ZNKSt10filesystem7__cxx114path3endEv.exit.thread
 

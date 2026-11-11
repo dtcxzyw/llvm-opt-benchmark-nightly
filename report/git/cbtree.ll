@@ -116,14 +116,15 @@ bb.i:                                             ; preds = %.lr.ph
   %i.bc = sub nuw nsw i64 1, %i.ax
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bc
   store ptr %1, ptr %i.bd, align 8, !tbaa !23
-  %i.be = load ptr, ptr %0, align 8, !tbaa !23    ; 4 uses
-  %i.bf = ptrtoint ptr %i.be to i64               ; 2 uses
+  %i.be = load ptr, ptr %0, align 8, !tbaa !23    ; 5 uses
+  %i.bf = ptrtoint ptr %i.be to i64
   %i.bg = and i64 %i.bf, 1
   %.not7685 = icmp eq i64 %i.bg, 0
   br i1 %.not7685, label %._crit_edge, label %.lr.ph87.preheader
 
 .lr.ph87.preheader:                               ; preds = %bb.i
-  %i.bh = add nsw i64 %i.bf, -1
+  %3 = ptrtoint ptr %i.be to i64
+  %i.bh = add nsw i64 %3, -1
   %i.bi = inttoptr i64 %i.bh to ptr               ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !20
@@ -132,7 +133,8 @@ bb.i:                                             ; preds = %.lr.ph
   br i1 %i.bm, label %._crit_edge, label %.lr.ph117
 
 .lr.ph87:                                         ; preds = %._crit_edge98
-  %i.bn = add nsw i64 %i.cj, -1
+  %4 = ptrtoint ptr %i.ci to i64
+  %i.bn = add nsw i64 %4, -1
   %i.bo = inttoptr i64 %i.bn to ptr               ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bq = load i32, ptr %i.bp, align 8, !tbaa !20
@@ -161,8 +163,8 @@ bb.i:                                             ; preds = %.lr.ph
   %i.cf = add nuw nsw i64 %i.ce, 1
   %i.cg = lshr i64 %i.cf, 8
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %i.cg ; 4 uses
-  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !23 ; 4 uses
-  %i.cj = ptrtoint ptr %i.ci to i64               ; 2 uses
+  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !23 ; 5 uses
+  %i.cj = ptrtoint ptr %i.ci to i64
   %i.ck = and i64 %i.cj, 1
   %.not76 = icmp eq i64 %i.ck, 0
   br i1 %.not76, label %._crit_edge, label %.lr.ph87

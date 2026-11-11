@@ -204,8 +204,8 @@ lean_obj_tag.exit563:                             ; preds = %bb.gk, %bb.gl
   %.0.i561 = phi i32 [ %i.kk, %bb.gk ], [ %i.km, %bb.gl ]
   %i.kn = icmp eq i32 %.0.i561, 0
   %i.ko = getelementptr inbounds nuw i8, ptr %i.js, i64 8
-  %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !10 ; 12 uses
-  %i.kq = ptrtoint ptr %i.kp to i64               ; 2 uses
+  %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !10 ; 13 uses
+  %i.kq = ptrtoint ptr %i.kp to i64
   %i.kr = and i64 %i.kq, 1
   %.not.i446 = icmp eq i64 %i.kr, 0               ; 2 uses
   br i1 %i.kn, label %bb.gm, label %bb.gz
@@ -540,9 +540,10 @@ lean_alloc_ctor.exit593:                          ; preds = %bb.iq
   br label %lean_dec.exit354
 
 bb.is:                                            ; preds = %lean_dec_ref_known.exit589, %lean_inc.exit445, %bb.gw, %bb.gx, %bb.gy, %bb.hz, %bb.ia, %bb.ib
-  %.2285.ph = phi ptr [ %i.mi, %lean_dec_ref_known.exit589 ], [ inttoptr (i64 3 to ptr), %lean_inc.exit445 ], [ inttoptr (i64 3 to ptr), %bb.gw ], [ inttoptr (i64 3 to ptr), %bb.gx ], [ inttoptr (i64 3 to ptr), %bb.gy ], [ %i.mi, %bb.hz ], [ %i.mi, %bb.ia ], [ %i.mi, %bb.ib ]
-  %.2249.ph = phi ptr [ %i.lj, %lean_dec_ref_known.exit589 ], [ %i.kw, %lean_inc.exit445 ], [ %i.kw, %bb.gw ], [ %i.kw, %bb.gx ], [ %i.kw, %bb.gy ], [ %i.lj, %bb.hz ], [ %i.lj, %bb.ia ], [ %i.lj, %bb.ib ]
-  %i.ng = and i64 %i.kq, 1
+  %.2285.ph = phi ptr [ %i.mi, %bb.ib ], [ %i.mi, %bb.ia ], [ %i.mi, %bb.hz ], [ inttoptr (i64 3 to ptr), %bb.gy ], [ inttoptr (i64 3 to ptr), %bb.gx ], [ inttoptr (i64 3 to ptr), %bb.gw ], [ %i.mi, %lean_dec_ref_known.exit589 ], [ inttoptr (i64 3 to ptr), %lean_inc.exit445 ]
+  %.2249.ph = phi ptr [ %i.lj, %bb.ib ], [ %i.lj, %bb.ia ], [ %i.lj, %bb.hz ], [ %i.kw, %bb.gy ], [ %i.kw, %bb.gx ], [ %i.kw, %bb.gw ], [ %i.lj, %lean_dec_ref_known.exit589 ], [ %i.kw, %lean_inc.exit445 ]
+  %.pre-phi = ptrtoint ptr %i.kp to i64
+  %i.ng = and i64 %.pre-phi, 1
   %.not.i435 = icmp eq i64 %i.ng, 0
   br i1 %.not.i435, label %bb.it, label %lean_inc.exit
 

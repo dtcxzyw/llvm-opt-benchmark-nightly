@@ -202,34 +202,34 @@ declare ptr @Gia_ObjRecognizeMux(ptr noundef, ptr noundef, ptr noundef) local_un
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @Ssc_ManCollectSuper_rec(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = and i64 %i.a, 1
   %.not18 = icmp eq i64 %i.b, 0
   br i1 %.not18, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %.val1430 = load i64, ptr %1, align 4
+.lr.ph.preheader:                                 ; preds = %bb.a, %tailrecurse
+  %.tr1519 = phi ptr [ %6, %tailrecurse ], [ %1, %bb.a ] ; 8 uses
+  %.val1430 = load i64, ptr %.tr1519, align 4
   %i.c = and i64 %.val1430, 2684354559
   %narrow.i.not31 = icmp eq i64 %i.c, 2684354559
-  br i1 %narrow.i.not31, label %._crit_edge, label %.lr.ph33
+  br i1 %narrow.i.not31, label %.lr.ph33, label %.lr.ph
 
-.lr.ph:                                           ; preds = %tailrecurse
-  %3 = inttoptr i64 %i.bh to ptr                  ; 2 uses
-  %.val14 = load i64, ptr %3, align 4
-  %4 = and i64 %.val14, 2684354559
-  %narrow.i.not = icmp eq i64 %4, 2684354559
-  br i1 %narrow.i.not, label %._crit_edge, label %.lr.ph33
+.lr.ph:                                           ; preds = %.lr.ph.preheader
+  %3 = tail call i32 @Gia_ObjIsMuxType(ptr noundef nonnull %.tr1519) #9
+  %narrow.i.not = icmp eq i32 %3, 0
+  br i1 %narrow.i.not, label %tailrecurse, label %._crit_edge.loopexit.split.loop.exit
 
-.lr.ph33:                                         ; preds = %.lr.ph.preheader, %.lr.ph
-  %.tr151932 = phi ptr [ %3, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 5 uses
-  %5 = phi i64 [ %i.bh, %.lr.ph ], [ %i.a, %.lr.ph.preheader ]
-  %6 = tail call i32 @Gia_ObjIsMuxType(ptr noundef nonnull %.tr151932) #9
-  %.not13 = icmp eq i32 %6, 0
-  br i1 %.not13, label %tailrecurse, label %._crit_edge
+._crit_edge.loopexit.split.loop.exit:             ; preds = %.lr.ph
+  %4 = ptrtoint ptr %.tr1519 to i64
+  br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph33, %.lr.ph, %tailrecurse, %.lr.ph.preheader, %bb.a
-  %.lcssa17 = phi i64 [ %i.a, %bb.a ], [ %i.a, %.lr.ph.preheader ], [ %i.bh, %tailrecurse ], [ %5, %.lr.ph33 ], [ %i.bh, %.lr.ph ]
-  %.lcssa = phi i32 [ 1, %bb.a ], [ 0, %.lr.ph.preheader ], [ 1, %tailrecurse ], [ 0, %.lr.ph33 ], [ 0, %.lr.ph ]
+.lr.ph33:                                         ; preds = %.lr.ph.preheader
+  %5 = ptrtoint ptr %.tr1519 to i64
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %tailrecurse, %._crit_edge.loopexit.split.loop.exit, %.lr.ph33, %bb.a
+  %.lcssa17 = phi i64 [ %i.a, %bb.a ], [ %5, %.lr.ph33 ], [ %4, %._crit_edge.loopexit.split.loop.exit ], [ %i.bh, %tailrecurse ]
+  %.lcssa = phi i32 [ 1, %bb.a ], [ 0, %.lr.ph33 ], [ 0, %._crit_edge.loopexit.split.loop.exit ], [ 1, %tailrecurse ]
   %i.d = getelementptr i8, ptr %0, i64 32
   %.val = load ptr, ptr %i.d, align 8, !tbaa !44
   %i.e = and i64 %.lcssa17, -2
@@ -335,29 +335,30 @@ Vec_IntPush.exit.i:                               ; preds = %Vec_IntGrow.exit11.
   store i32 %i.k, ptr %i.ap, align 4, !tbaa !42
   br label %Vec_IntPushUnique.exit
 
-tailrecurse:                                      ; preds = %.lr.ph33
-  %i.aq = load i64, ptr %.tr151932, align 4       ; 2 uses
+tailrecurse:                                      ; preds = %.lr.ph
+  %i.aq = load i64, ptr %.tr1519, align 4         ; 2 uses
   %i.ar = and i64 %i.aq, 536870911
   %i.as = sub nsw i64 0, %i.ar
-  %i.at = getelementptr inbounds [12 x i8], ptr %.tr151932, i64 %i.as
+  %i.at = getelementptr inbounds [12 x i8], ptr %.tr1519, i64 %i.as
   %i.au = lshr i64 %i.aq, 29
   %i.av = and i64 %i.au, 1
   %i.aw = ptrtoint ptr %i.at to i64
   %i.ax = xor i64 %i.av, %i.aw
   %i.ay = inttoptr i64 %i.ax to ptr
   tail call fastcc void @Ssc_ManCollectSuper_rec(ptr noundef %0, ptr noundef %i.ay, ptr noundef %2)
-  %i.az = load i64, ptr %.tr151932, align 4       ; 2 uses
+  %i.az = load i64, ptr %.tr1519, align 4         ; 2 uses
   %i.ba = lshr i64 %i.az, 32
   %i.bb = and i64 %i.ba, 536870911
   %i.bc = sub nsw i64 0, %i.bb
-  %i.bd = getelementptr inbounds [12 x i8], ptr %.tr151932, i64 %i.bc
+  %i.bd = getelementptr inbounds [12 x i8], ptr %.tr1519, i64 %i.bc
   %i.be = lshr i64 %i.az, 61
   %i.bf = and i64 %i.be, 1
   %i.bg = ptrtoint ptr %i.bd to i64
-  %i.bh = xor i64 %i.bf, %i.bg                    ; 5 uses
+  %i.bh = xor i64 %i.bf, %i.bg                    ; 3 uses
+  %6 = inttoptr i64 %i.bh to ptr
   %i.bi = and i64 %i.bh, 1
   %.not = icmp eq i64 %i.bi, 0
-  br i1 %.not, label %.lr.ph, label %._crit_edge
+  br i1 %.not, label %.lr.ph.preheader, label %._crit_edge
 
 Vec_IntPushUnique.exit:                           ; preds = %bb.c, %Vec_IntPush.exit.i
   ret void

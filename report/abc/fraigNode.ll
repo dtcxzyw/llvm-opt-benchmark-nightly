@@ -204,8 +204,8 @@ bb.a:
   %i.a = load ptr, ptr %.in, align 8, !tbaa !67   ; 33 uses
   %i.b = ptrtoaddr ptr %i.a to i64                ; 24 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46   ; 2 uses
-  %i.e = ptrtoint ptr %i.d to i64                 ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46   ; 3 uses
+  %i.e = ptrtoint ptr %i.d to i64
   %i.f = and i64 %i.e, -2
   %i.g = inttoptr i64 %i.f to ptr
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -216,6 +216,7 @@ bb.a:
   %. = select i1 %.not, i64 112, i64 104          ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 %.
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.
+  %.pre-phi = ptrtoint ptr %i.d to i64            ; 2 uses
   %i.o = load ptr, ptr %i.m, align 8, !tbaa !67   ; 33 uses
   %i.p = ptrtoaddr ptr %i.o to i64                ; 8 uses
   %i.q = load ptr, ptr %i.n, align 8, !tbaa !67   ; 33 uses
@@ -223,12 +224,12 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.t = load i32, ptr %i.s, align 8
   %i.u = and i32 %i.t, 1                          ; 3 uses
-  %i.v = and i64 %i.e, 1
+  %i.v = and i64 %.pre-phi, 1
   %.not157 = icmp eq i64 %i.v, 0
   br i1 %.not157, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.w = and i64 %i.e, -2
+  %i.w = and i64 %.pre-phi, -2
   %i.x = inttoptr i64 %i.w to ptr
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   %i.z = load i32, ptr %i.y, align 8

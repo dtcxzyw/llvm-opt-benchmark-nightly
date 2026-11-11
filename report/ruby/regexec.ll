@@ -204,7 +204,7 @@ bb.a:
   %i.k = alloca [18 x i8], align 16               ; 6 uses
   %i.l = alloca ptr, align 8                      ; 6 uses
   %i.m = alloca ptr, align 8                      ; 206 uses
-  %i.n = alloca ptr, align 8                      ; 192 uses
+  %i.n = alloca ptr, align 8                      ; 194 uses
   %i.o = alloca ptr, align 8                      ; 302 uses
   %i.p = alloca ptr, align 8                      ; 95 uses
   %i.q = alloca [18 x i8], align 16               ; 3 uses
@@ -607,7 +607,7 @@ bb.zn:                                            ; preds = %.backedge
   %i.coc = load ptr, ptr %i.p, align 8, !tbaa !56
   %i.cod = load ptr, ptr %i.o, align 8, !tbaa !56 ; 2 uses
   %i.coe = ptrtoint ptr %i.coc to i64             ; 3 uses
-  %i.cof = ptrtoint ptr %i.cod to i64             ; 3 uses
+  %i.cof = ptrtoint ptr %i.cod to i64             ; 2 uses
   %i.cog = sub i64 %i.coe, %i.cof
   %i.coh = icmp slt i64 %i.cog, 48
   br i1 %i.coh, label %bb.zo, label %bb.aaa
@@ -672,12 +672,11 @@ stack_double.exit3094:                            ; preds = %bb.zr, %bb.zv
   %.2.i3091 = phi i64 [ %i.cos, %bb.zr ], [ %.050.i3090, %bb.zv ]
   %.1.i3092 = phi ptr [ %i.coq, %bb.zr ], [ %i.cpa, %bb.zv ] ; 3 uses
   %i.cpd = sub i64 %i.cof, %i.coj
-  %i.cpe = getelementptr i8, ptr %.1.i3092, i64 %i.cpd ; 3 uses
+  %i.cpe = getelementptr i8, ptr %.1.i3092, i64 %i.cpd ; 2 uses
   store ptr %i.cpe, ptr %i.o, align 8, !tbaa !56
   store ptr %.1.i3092, ptr %i.n, align 8, !tbaa !56
   %i.cpf = getelementptr [48 x i8], ptr %.1.i3092, i64 %.2.i3091
   store ptr %i.cpf, ptr %i.p, align 8, !tbaa !56
-  %.pre4600 = ptrtoint ptr %i.cpe to i64
   br label %bb.aaa
 
 .loopexit3595:                                    ; preds = %bb.zq, %bb.zu, %bb.zx, %bb.zw
@@ -700,8 +699,8 @@ bb.zz:                                            ; preds = %.loopexit3595, %bb.
   br label %.loopexit3614
 
 bb.aaa:                                           ; preds = %stack_double.exit3094, %bb.zn
-  %.pre-phi4601 = phi i64 [ %.pre4600, %stack_double.exit3094 ], [ %i.cof, %bb.zn ]
-  %6 = phi ptr [ %i.cpe, %stack_double.exit3094 ], [ %i.cod, %bb.zn ] ; 3 uses
+  %6 = phi ptr [ %i.cpe, %stack_double.exit3094 ], [ %i.cod, %bb.zn ] ; 4 uses
+  %.pre-phi4601 = ptrtoint ptr %6 to i64
   store i32 12288, ptr %6, align 8, !tbaa !137
   %i.cpl = load ptr, ptr %i.n, align 8, !tbaa !56
   %i.cpm = ptrtoint ptr %i.cpl to i64
@@ -1027,7 +1026,7 @@ bb.abk:                                           ; preds = %bb.aaw
 .thread3396:                                      ; preds = %bb.abg, %bb.aba, %bb.aaz
   %i.cuk = load ptr, ptr %i.p, align 8, !tbaa !56
   %i.cul = ptrtoint ptr %i.cuk to i64             ; 3 uses
-  %i.cum = ptrtoint ptr %i.csq to i64             ; 3 uses
+  %i.cum = ptrtoint ptr %i.csq to i64             ; 2 uses
   %i.cun = sub i64 %i.cul, %i.cum
   %i.cuo = icmp slt i64 %i.cun, 48
   br i1 %i.cuo, label %bb.abl, label %bb.abx
@@ -1091,12 +1090,11 @@ stack_double.exit3100:                            ; preds = %bb.abo, %bb.abs
   %.2.i3097 = phi i64 [ %i.cuy, %bb.abo ], [ %.050.i3096, %bb.abs ]
   %.1.i3098 = phi ptr [ %i.cuw, %bb.abo ], [ %i.cvg, %bb.abs ] ; 4 uses
   %i.cvj = sub i64 %i.cum, %i.cup
-  %i.cvk = getelementptr i8, ptr %.1.i3098, i64 %i.cvj ; 3 uses
+  %i.cvk = getelementptr i8, ptr %.1.i3098, i64 %i.cvj ; 2 uses
   store ptr %i.cvk, ptr %i.o, align 8, !tbaa !56
   store ptr %.1.i3098, ptr %i.n, align 8, !tbaa !56
   %i.cvl = getelementptr [48 x i8], ptr %.1.i3098, i64 %.2.i3097
   store ptr %i.cvl, ptr %i.p, align 8, !tbaa !56
-  %.pre4602 = ptrtoint ptr %i.cvk to i64
   br label %bb.abx
 
 .loopexit3593:                                    ; preds = %bb.abn, %bb.abr, %bb.abu, %bb.abt
@@ -1119,9 +1117,9 @@ bb.abw:                                           ; preds = %.loopexit3593, %bb.
   br label %.loopexit3614
 
 bb.abx:                                           ; preds = %stack_double.exit3100, %.thread3396
-  %.pre-phi4603 = phi i64 [ %.pre4602, %stack_double.exit3100 ], [ %i.cum, %.thread3396 ]
   %i.cvr = phi ptr [ %.1.i3098, %stack_double.exit3100 ], [ %i.csp, %.thread3396 ]
-  %i.cvs = phi ptr [ %i.cvk, %stack_double.exit3100 ], [ %i.csq, %.thread3396 ] ; 3 uses
+  %i.cvs = phi ptr [ %i.cvk, %stack_double.exit3100 ], [ %i.csq, %.thread3396 ] ; 4 uses
+  %.pre-phi4603 = ptrtoint ptr %i.cvs to i64
   store i32 20480, ptr %i.cvs, align 8, !tbaa !137
   %i.cvt = ptrtoint ptr %i.cvr to i64
   %i.cvu = sub i64 %.pre-phi4603, %i.cvt
@@ -1524,17 +1522,18 @@ bb.afh:                                           ; preds = %.backedge
   %i.dht = load i32, ptr %i.dhs, align 4, !tbaa !14
   %i.dhu = getelementptr i8, ptr %.25, i64 6      ; 3 uses
   %i.dhv = load ptr, ptr %i.p, align 8, !tbaa !56
-  %i.dhw = load ptr, ptr %i.o, align 8, !tbaa !56 ; 2 uses
+  %i.dhw = load ptr, ptr %i.o, align 8, !tbaa !56 ; 3 uses
   %i.dhx = ptrtoint ptr %i.dhv to i64             ; 3 uses
-  %i.dhy = ptrtoint ptr %i.dhw to i64             ; 3 uses
+  %i.dhy = ptrtoint ptr %i.dhw to i64             ; 2 uses
   %i.dhz = sub i64 %i.dhx, %i.dhy
   %i.dia = icmp slt i64 %i.dhz, 48
-  %7 = load ptr, ptr %i.n, align 8, !tbaa !56     ; 6 uses
-  %8 = ptrtoint ptr %7 to i64                     ; 3 uses
   br i1 %i.dia, label %bb.afi, label %.thread5164
 
 .thread5164:                                      ; preds = %bb.afh
-  %i.dib = sub i64 %i.dhy, %8
+  %.pre-phi45895167 = ptrtoint ptr %i.dhw to i64
+  %7 = load ptr, ptr %i.n, align 8, !tbaa !56     ; 2 uses
+  %8 = ptrtoint ptr %7 to i64
+  %i.dib = sub i64 %.pre-phi45895167, %8
   %i.dic = sdiv exact i64 %i.dib, 48
   %i.did = sext i16 %i.dhr to i64                 ; 2 uses
   %i.die = getelementptr [8 x i8], ptr %.02226, i64 %i.did
@@ -1542,9 +1541,11 @@ bb.afh:                                           ; preds = %.backedge
   br label %bb.agh
 
 bb.afi:                                           ; preds = %bb.afh
-  %i.dif = sub i64 %i.dhx, %8                     ; 3 uses
+  %9 = load ptr, ptr %i.n, align 8, !tbaa !56     ; 5 uses
+  %10 = ptrtoint ptr %9 to i64                    ; 2 uses
+  %i.dif = sub i64 %i.dhx, %10                    ; 3 uses
   %i.dig = sdiv exact i64 %i.dif, 48              ; 4 uses
-  %i.dih = icmp eq ptr %7, %i.bk                  ; 2 uses
+  %i.dih = icmp eq ptr %9, %i.bk                  ; 2 uses
   br i1 %i.dih, label %bb.afj, label %bb.afm
 
 bb.afj:                                           ; preds = %bb.afi
@@ -1559,7 +1560,7 @@ bb.afk:                                           ; preds = %bb.afj
   br i1 %i.dim, label %.loopexit3605, label %bb.afl
 
 bb.afl:                                           ; preds = %bb.afk
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.dil, ptr noundef nonnull align 1 %7, i64 noundef %i.dif, i1 noundef false) #21
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.dil, ptr noundef nonnull align 1 %9, i64 noundef %i.dif, i1 noundef false) #21
   %i.din = shl nsw i64 %i.dig, 1
   br label %bb.afu
 
@@ -1582,7 +1583,7 @@ bb.afo:                                           ; preds = %bb.afn
 bb.afp:                                           ; preds = %bb.afo, %bb.afn, %bb.afm
   %.050.i3130 = phi i64 [ %i.dip, %bb.afm ], [ %i.dip, %bb.afn ], [ %i.diq, %bb.afo ] ; 2 uses
   %i.diu = mul i64 %.050.i3130, 48
-  %i.div = call ptr @realloc(ptr noundef %7, i64 noundef %i.diu) #23 ; 2 uses
+  %i.div = call ptr @realloc(ptr noundef %9, i64 noundef %i.diu) #23 ; 2 uses
   %i.diw = icmp eq ptr %i.div, null
   br i1 %i.diw, label %bb.afq, label %bb.afu
 
@@ -1590,7 +1591,7 @@ bb.afq:                                           ; preds = %bb.afp
   br i1 %i.dih, label %.loopexit3605, label %bb.afr
 
 bb.afr:                                           ; preds = %bb.afq
-  store ptr %7, ptr %5, align 8, !tbaa !38
+  store ptr %9, ptr %5, align 8, !tbaa !38
   %i.dix = getelementptr i8, ptr %5, i64 8
   store i64 %i.dig, ptr %i.dix, align 8, !tbaa !57
   br label %.loopexit3605
@@ -1617,28 +1618,28 @@ bb.aft:                                           ; preds = %.loopexit3605, %bb.
 bb.afu:                                           ; preds = %bb.afp, %bb.afl
   %.2.i3131 = phi i64 [ %i.din, %bb.afl ], [ %.050.i3130, %bb.afp ]
   %.1.i3132 = phi ptr [ %i.dil, %bb.afl ], [ %i.div, %bb.afp ] ; 3 uses
-  %i.djd = sub i64 %i.dhy, %8                     ; 2 uses
+  %i.djd = sub i64 %i.dhy, %10                    ; 2 uses
   %i.dje = getelementptr i8, ptr %.1.i3132, i64 %i.djd ; 3 uses
   store ptr %i.dje, ptr %i.o, align 8, !tbaa !56
   store ptr %.1.i3132, ptr %i.n, align 8, !tbaa !56
   %.idx5152 = mul i64 %.2.i3131, 48               ; 2 uses
   %i.djf = getelementptr i8, ptr %.1.i3132, i64 %.idx5152 ; 2 uses
   store ptr %i.djf, ptr %i.p, align 8, !tbaa !56
-  %.pre4588 = ptrtoint ptr %i.dje to i64
-  %.pre4590 = ptrtoint ptr %i.djf to i64          ; 2 uses
+  %.pre4588 = ptrtoint ptr %i.djf to i64          ; 2 uses
   %gepdiff5153 = sub i64 %.idx5152, %i.djd
-  %9 = icmp slt i64 %gepdiff5153, 48
+  %11 = icmp slt i64 %gepdiff5153, 48
+  %.pre-phi4589 = ptrtoint ptr %i.dje to i64
   %i.djg = load ptr, ptr %i.n, align 8, !tbaa !56 ; 6 uses
   %i.djh = ptrtoint ptr %i.djg to i64             ; 2 uses
-  %i.dji = sub i64 %.pre4588, %i.djh              ; 2 uses
+  %i.dji = sub i64 %.pre-phi4589, %i.djh          ; 2 uses
   %i.djj = sdiv exact i64 %i.dji, 48
   %i.djk = sext i16 %i.dhr to i64                 ; 3 uses
   %i.djl = getelementptr [8 x i8], ptr %.02226, i64 %i.djk
   store i64 %i.djj, ptr %i.djl, align 8, !tbaa !28
-  br i1 %9, label %bb.afv, label %bb.agh
+  br i1 %11, label %bb.afv, label %bb.agh
 
 bb.afv:                                           ; preds = %bb.afu
-  %i.djm = sub i64 %.pre4590, %i.djh              ; 3 uses
+  %i.djm = sub i64 %.pre4588, %i.djh              ; 3 uses
   %i.djn = sdiv exact i64 %i.djm, 48              ; 4 uses
   %i.djo = icmp eq ptr %i.djg, %i.bk              ; 2 uses
   br i1 %i.djo, label %bb.afw, label %bb.afz
@@ -1710,7 +1711,7 @@ stack_double.exit3140:                            ; preds = %bb.afy, %bb.agc
 bb.agf:                                           ; preds = %.loopexit3606
   store ptr %i.dkh, ptr %5, align 8, !tbaa !38
   %i.dki = ptrtoint ptr %i.dkh to i64
-  %i.dkj = sub i64 %.pre4590, %i.dki
+  %i.dkj = sub i64 %.pre4588, %i.dki
   %i.dkk = sdiv exact i64 %i.dkj, 48
   %i.dkl = getelementptr i8, ptr %5, i64 8
   store i64 %i.dkk, ptr %i.dkl, align 8, !tbaa !57
@@ -2095,17 +2096,18 @@ bb.ahz:                                           ; preds = %.backedge
   %i.dqp = load i32, ptr %i.dqo, align 4, !tbaa !14
   %i.dqq = getelementptr i8, ptr %.25, i64 6      ; 4 uses
   %i.dqr = load ptr, ptr %i.p, align 8, !tbaa !56
-  %i.dqs = load ptr, ptr %i.o, align 8, !tbaa !56 ; 2 uses
+  %i.dqs = load ptr, ptr %i.o, align 8, !tbaa !56 ; 3 uses
   %i.dqt = ptrtoint ptr %i.dqr to i64             ; 3 uses
-  %i.dqu = ptrtoint ptr %i.dqs to i64             ; 3 uses
+  %i.dqu = ptrtoint ptr %i.dqs to i64             ; 2 uses
   %i.dqv = sub i64 %i.dqt, %i.dqu
   %i.dqw = icmp slt i64 %i.dqv, 48
-  %10 = load ptr, ptr %i.n, align 8, !tbaa !56    ; 6 uses
-  %11 = ptrtoint ptr %10 to i64                   ; 3 uses
   br i1 %i.dqw, label %bb.aia, label %.thread5168
 
 .thread5168:                                      ; preds = %bb.ahz
-  %i.dqx = sub i64 %i.dqu, %11
+  %.pre-phi45955171 = ptrtoint ptr %i.dqs to i64
+  %12 = load ptr, ptr %i.n, align 8, !tbaa !56    ; 2 uses
+  %13 = ptrtoint ptr %12 to i64
+  %i.dqx = sub i64 %.pre-phi45955171, %13
   %i.dqy = sdiv exact i64 %i.dqx, 48
   %i.dqz = sext i16 %i.dqn to i64                 ; 2 uses
   %i.dra = getelementptr [8 x i8], ptr %.02226, i64 %i.dqz
@@ -2113,9 +2115,11 @@ bb.ahz:                                           ; preds = %.backedge
   br label %bb.aiz
 
 bb.aia:                                           ; preds = %bb.ahz
-  %i.drb = sub i64 %i.dqt, %11                    ; 3 uses
+  %14 = load ptr, ptr %i.n, align 8, !tbaa !56    ; 5 uses
+  %15 = ptrtoint ptr %14 to i64                   ; 2 uses
+  %i.drb = sub i64 %i.dqt, %15                    ; 3 uses
   %i.drc = sdiv exact i64 %i.drb, 48              ; 4 uses
-  %i.drd = icmp eq ptr %10, %i.bk                 ; 2 uses
+  %i.drd = icmp eq ptr %14, %i.bk                 ; 2 uses
   br i1 %i.drd, label %bb.aib, label %bb.aie
 
 bb.aib:                                           ; preds = %bb.aia
@@ -2130,7 +2134,7 @@ bb.aic:                                           ; preds = %bb.aib
   br i1 %i.dri, label %.loopexit3602, label %bb.aid
 
 bb.aid:                                           ; preds = %bb.aic
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.drh, ptr noundef nonnull align 1 %10, i64 noundef %i.drb, i1 noundef false) #21
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.drh, ptr noundef nonnull align 1 %14, i64 noundef %i.drb, i1 noundef false) #21
   %i.drj = shl nsw i64 %i.drc, 1
   br label %bb.aim
 
@@ -2153,7 +2157,7 @@ bb.aig:                                           ; preds = %bb.aif
 bb.aih:                                           ; preds = %bb.aig, %bb.aif, %bb.aie
   %.050.i3156 = phi i64 [ %i.drl, %bb.aie ], [ %i.drl, %bb.aif ], [ %i.drm, %bb.aig ] ; 2 uses
   %i.drq = mul i64 %.050.i3156, 48
-  %i.drr = call ptr @realloc(ptr noundef %10, i64 noundef %i.drq) #23 ; 2 uses
+  %i.drr = call ptr @realloc(ptr noundef %14, i64 noundef %i.drq) #23 ; 2 uses
   %i.drs = icmp eq ptr %i.drr, null
   br i1 %i.drs, label %bb.aii, label %bb.aim
 
@@ -2161,7 +2165,7 @@ bb.aii:                                           ; preds = %bb.aih
   br i1 %i.drd, label %.loopexit3602, label %bb.aij
 
 bb.aij:                                           ; preds = %bb.aii
-  store ptr %10, ptr %5, align 8, !tbaa !38
+  store ptr %14, ptr %5, align 8, !tbaa !38
   %i.drt = getelementptr i8, ptr %5, i64 8
   store i64 %i.drc, ptr %i.drt, align 8, !tbaa !57
   br label %.loopexit3602
@@ -2188,28 +2192,28 @@ bb.ail:                                           ; preds = %.loopexit3602, %bb.
 bb.aim:                                           ; preds = %bb.aih, %bb.aid
   %.2.i3157 = phi i64 [ %i.drj, %bb.aid ], [ %.050.i3156, %bb.aih ]
   %.1.i3158 = phi ptr [ %i.drh, %bb.aid ], [ %i.drr, %bb.aih ] ; 3 uses
-  %i.drz = sub i64 %i.dqu, %11                    ; 2 uses
+  %i.drz = sub i64 %i.dqu, %15                    ; 2 uses
   %i.dsa = getelementptr i8, ptr %.1.i3158, i64 %i.drz ; 3 uses
   store ptr %i.dsa, ptr %i.o, align 8, !tbaa !56
   store ptr %.1.i3158, ptr %i.n, align 8, !tbaa !56
   %.idx = mul i64 %.2.i3157, 48                   ; 2 uses
   %i.dsb = getelementptr i8, ptr %.1.i3158, i64 %.idx ; 2 uses
   store ptr %i.dsb, ptr %i.p, align 8, !tbaa !56
-  %.pre4594 = ptrtoint ptr %i.dsa to i64
-  %.pre4596 = ptrtoint ptr %i.dsb to i64          ; 2 uses
+  %.pre4594 = ptrtoint ptr %i.dsb to i64          ; 2 uses
   %gepdiff = sub i64 %.idx, %i.drz
-  %12 = icmp slt i64 %gepdiff, 48
+  %16 = icmp slt i64 %gepdiff, 48
+  %.pre-phi4595 = ptrtoint ptr %i.dsa to i64
   %i.dsc = load ptr, ptr %i.n, align 8, !tbaa !56 ; 6 uses
   %i.dsd = ptrtoint ptr %i.dsc to i64             ; 2 uses
-  %i.dse = sub i64 %.pre4594, %i.dsd              ; 2 uses
+  %i.dse = sub i64 %.pre-phi4595, %i.dsd          ; 2 uses
   %i.dsf = sdiv exact i64 %i.dse, 48
   %i.dsg = sext i16 %i.dqn to i64                 ; 3 uses
   %i.dsh = getelementptr [8 x i8], ptr %.02226, i64 %i.dsg
   store i64 %i.dsf, ptr %i.dsh, align 8, !tbaa !28
-  br i1 %12, label %bb.ain, label %bb.aiz
+  br i1 %16, label %bb.ain, label %bb.aiz
 
 bb.ain:                                           ; preds = %bb.aim
-  %i.dsi = sub i64 %.pre4596, %i.dsd              ; 3 uses
+  %i.dsi = sub i64 %.pre4594, %i.dsd              ; 3 uses
   %i.dsj = sdiv exact i64 %i.dsi, 48              ; 4 uses
   %i.dsk = icmp eq ptr %i.dsc, %i.bk              ; 2 uses
   br i1 %i.dsk, label %bb.aio, label %bb.air
@@ -2281,7 +2285,7 @@ stack_double.exit3166:                            ; preds = %bb.aiq, %bb.aiu
 bb.aix:                                           ; preds = %.loopexit3603
   store ptr %i.dtd, ptr %5, align 8, !tbaa !38
   %i.dte = ptrtoint ptr %i.dtd to i64
-  %i.dtf = sub i64 %.pre4596, %i.dte
+  %i.dtf = sub i64 %.pre4594, %i.dte
   %i.dtg = sdiv exact i64 %i.dtf, 48
   %i.dth = getelementptr i8, ptr %5, i64 8
   store i64 %i.dtg, ptr %i.dth, align 8, !tbaa !57
@@ -2293,7 +2297,7 @@ bb.aiy:                                           ; preds = %.loopexit3603, %bb.
 
 bb.aiz:                                           ; preds = %.thread5168, %stack_double.exit3166, %bb.aim
   %i.dti = phi i64 [ %i.dsg, %stack_double.exit3166 ], [ %i.dsg, %bb.aim ], [ %i.dqz, %.thread5168 ]
-  %i.dtj = phi ptr [ %.1.i3164, %stack_double.exit3166 ], [ %i.dsc, %bb.aim ], [ %10, %.thread5168 ]
+  %i.dtj = phi ptr [ %.1.i3164, %stack_double.exit3166 ], [ %i.dsc, %bb.aim ], [ %12, %.thread5168 ]
   %i.dtk = phi ptr [ %i.dtb, %stack_double.exit3166 ], [ %i.dsa, %bb.aim ], [ %i.dqs, %.thread5168 ] ; 5 uses
   store i32 1792, ptr %i.dtk, align 8, !tbaa !137
   %i.dtl = icmp eq ptr %i.dtk, %i.dtj

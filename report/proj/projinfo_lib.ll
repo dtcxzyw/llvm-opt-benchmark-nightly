@@ -205,9 +205,9 @@ bb.up:                                            ; preds = %_ZNSt3setIN5osgeo4p
   %or.cond1943 = select i1 %i.bdb, i1 %i.bdd, i1 false
   %i.bde = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.bdf = load ptr, ptr %i.bde, align 8, !tbaa !62
-  %i.bdg = load ptr, ptr %9, align 8, !tbaa !60   ; 3 uses
+  %i.bdg = load ptr, ptr %9, align 8, !tbaa !60   ; 4 uses
   %i.bdh = ptrtoint ptr %i.bdf to i64             ; 2 uses
-  %i.bdi = ptrtoint ptr %i.bdg to i64             ; 2 uses
+  %i.bdi = ptrtoint ptr %i.bdg to i64
   %i.bdj = sub i64 %i.bdh, %i.bdi
   %i.bdk = icmp eq i64 %i.bdj, 64
   %or.cond3463 = select i1 %or.cond1943, i1 %i.bdk, i1 false
@@ -235,7 +235,8 @@ bb.ur:                                            ; preds = %.invoke3467.a, %.in
   br label %bb.zk
 
 ._crit_edge3069:                                  ; preds = %bb.up
-  %i.bdq = sub i64 %i.bdh, %i.bdi                 ; 2 uses
+  %.pre-phi3076 = ptrtoint ptr %i.bdg to i64
+  %i.bdq = sub i64 %i.bdh, %.pre-phi3076          ; 2 uses
   %i.bdr = icmp eq i64 %i.bdq, 32
   br i1 %i.bdr, label %bb.us, label %bb.ut
 

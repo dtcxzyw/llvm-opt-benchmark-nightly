@@ -81,12 +81,12 @@ define dso_local noundef range(i32 0, 3) i32 @_ZNK4gdcm8IODEntry12GetUsageTypeEv
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load i8, ptr %i.a, align 8               ; 2 uses
-  %i.c = trunc i8 %i.b to i1                      ; 3 uses
+  %i.c = trunc i8 %i.b to i1                      ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.e = load i64, ptr %i.d, align 8
   %i.f = lshr i8 %i.b, 1
   %i.g = zext nneg i8 %i.f to i64
-  %i.h = select i1 %i.c, i64 %i.e, i64 %i.g       ; 10 uses
+  %i.h = select i1 %i.c, i64 %i.e, i64 %i.g       ; 11 uses
   switch i64 %i.h, label %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread [
     i64 0, label %bb.b
     i64 1, label %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit
@@ -108,7 +108,7 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit: ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.l = load ptr, ptr %i.k, align 8
+  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 73
   %i.n = select i1 %i.c, ptr %i.l, ptr %i.m       ; 2 uses
   %lhsc = load i8, ptr %i.n, align 1
@@ -118,16 +118,22 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stri
 _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit
   %lhsc50 = load i8, ptr %i.n, align 1
   %i.p = icmp eq i8 %lhsc50, 85
-  br i1 %i.p, label %bb.m, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread
+  br i1 %i.p, label %bb.m, label %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread.thread
+
+_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread.thread: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 73
+  %2 = select i1 %i.c, ptr %i.l, ptr %1           ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 %i.h
+  br label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread
 
 _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread: ; preds = %bb.a
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.pre = load ptr, ptr %.phi.trans.insert, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 73
   %i.r = select i1 %i.c, ptr %.pre, ptr %i.q      ; 7 uses
-  %i.s = getelementptr i8, ptr %i.r, i64 %i.h     ; 4 uses
-  %i.t = ptrtoint ptr %i.s to i64                 ; 3 uses
-  %i.u = icmp slt i64 %i.h, 4                     ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.h ; 6 uses
+  %i.t = ptrtoint ptr %i.s to i64
+  %i.u = icmp slt i64 %i.h, 4
   br i1 %i.u, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread, %bb.f
@@ -161,13 +167,18 @@ _ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.
   %or.cond = select i1 %i.ag, i1 %i.aj, i1 false
   br i1 %or.cond, label %bb.m, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread
 
-_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread: ; preds = %.lr.ph.i.i.i, %bb.f, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i
+_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread: ; preds = %.lr.ph.i.i.i, %bb.f, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread.thread, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i
+  %4 = phi ptr [ %i.r, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i ], [ %2, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread.thread ], [ %i.r, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread ], [ %i.r, %bb.f ], [ %i.r, %.lr.ph.i.i.i ] ; 3 uses
+  %5 = phi ptr [ %i.s, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i ], [ %3, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread.thread ], [ %i.s, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread ], [ %i.s, %bb.f ], [ %i.s, %.lr.ph.i.i.i ] ; 3 uses
+  %6 = phi i1 [ false, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i ], [ true, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread.thread ], [ true, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10.thread ], [ false, %bb.f ], [ false, %.lr.ph.i.i.i ]
+  %7 = ptrtoint ptr %5 to i64                     ; 2 uses
+  %8 = ptrtoint ptr %4 to i64                     ; 2 uses
   %i.ak = icmp slt i64 %i.h, 3
   br i1 %i.ak, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread, label %.lr.ph.i.i.i11
 
 .lr.ph.i.i.i11:                                   ; preds = %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread, %bb.h
   %i.al = phi i64 [ %i.ba, %bb.h ], [ %i.h, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread ]
-  %.02529.i.i.i12 = phi ptr [ %i.ay, %bb.h ], [ %i.r, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread ]
+  %.02529.i.i.i12 = phi ptr [ %i.ay, %bb.h ], [ %4, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread ]
   %.reass.i.reass.i.reass.i14 = add nsw i64 %i.al, -2
   %i.am = tail call noundef ptr @memchr(ptr noundef nonnull dereferenceable(1) %.02529.i.i.i12, i32 noundef 67, i64 noundef %.reass.i.reass.i.reass.i14) #16 ; 6 uses
   %i.an = icmp eq ptr %i.am, null
@@ -189,25 +200,24 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i11
 bb.h:                                             ; preds = %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 2 uses
   %i.az = ptrtoint ptr %i.ay to i64
-  %i.ba = sub i64 %i.t, %i.az                     ; 2 uses
+  %i.ba = sub i64 %7, %i.az                       ; 2 uses
   %i.bb = icmp slt i64 %i.ba, 3
   br i1 %i.bb, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread, label %.lr.ph.i.i.i11, !llvm.loop !21
 
 _ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i18: ; preds = %bb.g
   %.pre20.i.i19 = ptrtoint ptr %i.am to i64
-  %i.bc = icmp ne ptr %i.am, %i.s
-  %1 = ptrtoint ptr %i.r to i64
-  %i.bd = sub i64 %.pre20.i.i19, %1
+  %i.bc = icmp ne ptr %i.am, %5
+  %i.bd = sub i64 %.pre20.i.i19, %8
   %i.be = icmp ult i64 %i.bd, %i.h
   %or.cond36 = select i1 %i.bc, i1 %i.be, i1 false
   br i1 %or.cond36, label %bb.m, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread
 
 _ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread: ; preds = %.lr.ph.i.i.i11, %bb.h, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit.thread, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i18
-  br i1 %i.u, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread, label %.lr.ph.i.i.i21
+  br i1 %6, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread, label %.lr.ph.i.i.i21
 
 .lr.ph.i.i.i21:                                   ; preds = %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread, %bb.j
   %i.bf = phi i64 [ %i.bo, %bb.j ], [ %i.h, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread ]
-  %.02529.i.i.i22 = phi ptr [ %i.bm, %bb.j ], [ %i.r, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread ]
+  %.02529.i.i.i22 = phi ptr [ %i.bm, %bb.j ], [ %4, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread ]
   %.reass.i.reass.i.reass.i24 = add nsw i64 %i.bf, -3
   %i.bg = tail call noundef ptr @memchr(ptr noundef nonnull dereferenceable(1) %.02529.i.i.i22, i32 noundef 67, i64 noundef %.reass.i.reass.i.reass.i24) #16 ; 5 uses
   %i.bh = icmp eq ptr %i.bg, null
@@ -223,20 +233,19 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i21
 bb.j:                                             ; preds = %bb.i
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 1 ; 2 uses
   %i.bn = ptrtoint ptr %i.bm to i64
-  %i.bo = sub i64 %i.t, %i.bn                     ; 2 uses
+  %i.bo = sub i64 %7, %i.bn                       ; 2 uses
   %i.bp = icmp slt i64 %i.bo, 4
   br i1 %i.bp, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread, label %.lr.ph.i.i.i21, !llvm.loop !21
 
 _ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i28: ; preds = %bb.i
   %.pre20.i.i29 = ptrtoint ptr %i.bg to i64
-  %i.bq = icmp ne ptr %i.bg, %i.s
-  %2 = ptrtoint ptr %i.r to i64
-  %i.br = sub i64 %.pre20.i.i29, %2
+  %i.bq = icmp ne ptr %i.bg, %5
+  %i.br = sub i64 %.pre20.i.i29, %8
   %i.bs = icmp ult i64 %i.br, %i.h
   %or.cond37 = select i1 %i.bq, i1 %i.bs, i1 false
   br i1 %or.cond37, label %bb.m, label %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread
 
-_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread: ; preds = %bb.j, %.lr.ph.i.i.i21, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit10, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i28, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread
+_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit30.thread: ; preds = %.lr.ph.i.i.i21, %bb.j, %_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findB8ne180100EPKcm.exit20.thread, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i28
   %i.bt = tail call ptr @__cxa_allocate_exception(i64 40) #16 ; 3 uses
   invoke void @_ZN4gdcm9ExceptionC2EPKcS2_jS2_(ptr noundef nonnull align 8 dereferenceable(40) %i.bt, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.1, i32 noundef 45, ptr noundef nonnull @.str.2)
           to label %bb.k unwind label %bb.l

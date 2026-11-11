@@ -206,7 +206,7 @@ bb.ae:                                            ; preds = %.peel.begin
   br i1 %.not19.peel, label %.loopexit104, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.bo = ptrtoint ptr %i.bn to i64               ; 6 uses
+  %i.bo = ptrtoint ptr %i.bn to i64               ; 5 uses
   %i.bp = and i64 %i.bo, 3                        ; 4 uses
   switch i64 %i.bp, label %default.unreachable [
     i64 2, label %bb.aj
@@ -314,8 +314,8 @@ bb.ar:                                            ; preds = %_RNvMs1_NtNtCs3oUPo
   ], !prof !19
 
 .peel.next.sink.split:                            ; preds = %bb.bj, %bb.ar
-  %.sink164.a = phi ptr [ %i.bn, %bb.ar ], [ %i.cy, %bb.bj ]
-  %.sink = phi i64 [ %i.bo, %bb.ar ], [ %i.cz, %bb.bj ]
+  %.sink164.a = phi ptr [ %i.bn, %bb.ar ], [ %i.cy, %bb.bj ] ; 2 uses
+  %.sink = ptrtoint ptr %.sink164.a to i64
   %i.cv = icmp ult ptr %.sink164.a, inttoptr (i64 188978561024 to ptr)
   %i.cw = and i64 %.sink, 1095216660480
   %i.cx = icmp ne i64 %i.cw, 1095216660480
@@ -348,7 +348,7 @@ bb.as:                                            ; preds = %.peel.next
   br i1 %.not19, label %.loopexit104, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.cz = ptrtoint ptr %i.cy to i64               ; 6 uses
+  %i.cz = ptrtoint ptr %i.cy to i64               ; 5 uses
   %i.da = and i64 %i.cz, 3                        ; 4 uses
   switch i64 %i.da, label %.unreachabledefault [
     i64 2, label %bb.au
@@ -477,7 +477,7 @@ bb.bg:                                            ; preds = %bb.ba
   br i1 %i.du, label %.loopexit142, label %bb.bb
 
 .loopexit142:                                     ; preds = %bb.bg, %bb.al
-  %.lcssa133 = phi ptr [ %i.bn, %bb.al ], [ %i.cy, %bb.bg ] ; 3 uses
+  %.lcssa133 = phi ptr [ %i.bn, %bb.al ], [ %i.cy, %bb.bg ] ; 4 uses
   %.lcssa122 = phi i64 [ %i.bp, %bb.al ], [ %i.da, %bb.bg ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   switch i64 %.lcssa122, label %default.unreachable [
@@ -488,8 +488,12 @@ bb.bg:                                            ; preds = %bb.ba
   ], !prof !19
 
 bb.bh:                                            ; preds = %.loopexit142
+  %.lcssa127 = ptrtoint ptr %.lcssa133 to i64
   %i.ei = icmp ult ptr %.lcssa133, inttoptr (i64 188978561024 to ptr)
+  %5 = and i64 %.lcssa127, 1095216660480
+  %6 = icmp ne i64 %5, 1095216660480
   call void @llvm.assume(i1 %i.ei)
+  call void @llvm.assume(i1 %6)
   br label %bb.bk
 
 bb.bi:                                            ; preds = %.loopexit142
