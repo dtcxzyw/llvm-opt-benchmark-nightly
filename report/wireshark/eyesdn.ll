@@ -204,8 +204,8 @@ esc_read.exit107:                                 ; preds = %esc_read.exit107.lo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   br label %esc_read_append_buffer.exit
 
-esc_read_append_buffer.exit:                      ; preds = %bb.aw, %bb.ay, %bb.av, %bb.b, %bb.d, %bb.a, %esc_read.exit107, %.critedge
-  %.1 = phi i1 [ false, %.critedge ], [ true, %esc_read.exit107 ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.d ], [ false, %bb.av ], [ false, %bb.ay ], [ false, %bb.aw ]
+esc_read_append_buffer.exit:                      ; preds = %bb.b, %bb.d, %bb.a, %esc_read.exit107, %bb.ay, %bb.aw, %bb.av, %.critedge
+  %.1 = phi i1 [ false, %.critedge ], [ false, %bb.aw ], [ true, %esc_read.exit107 ], [ false, %bb.av ], [ false, %bb.ay ], [ false, %bb.a ], [ false, %bb.d ], [ false, %bb.b ]
   ret i1 %.1
 }
 
