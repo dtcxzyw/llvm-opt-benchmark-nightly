@@ -82,8 +82,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.src.1 = private unnamed_addr constant [50 x i8] c"/usr/lib/llvm-24/lib/clang/24/include/emmintrin.h\00", align 1
 @74 = private unnamed_addr constant { i16, i16, [49 x i8] } { i16 -1, i16 0, [49 x i8] c"'const __m128i' (vector of 2 'long long' values)\00" }
 @75 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.1, i32 3451, i32 10 }, ptr @74, i8 4, i8 0 }
-@76 = private unnamed_addr constant { i16, i16, [43 x i8] } { i16 -1, i16 0, [43 x i8] c"'__m128i' (vector of 2 'long long' values)\00" }
-@77 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.1, i32 3905, i32 3 }, ptr @76, i8 4, i8 1 }
 
 ; Function Attrs: nounwind uwtable
 define hidden i32 @chorba_small_nondestructive_sse2(i32 noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !func_sanitize !20 {
@@ -486,7 +484,7 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu
 
 .lr.ph:                                           ; preds = %bb.cw, %_mm_load_si128.exit651
   %.0585744 = phi ptr [ %i.aaq, %_mm_load_si128.exit651 ], [ %i.zc, %bb.cw ] ; 8 uses
-  %.0586743 = phi ptr [ %i.aap, %_mm_load_si128.exit651 ], [ %i.a, %bb.cw ] ; 8 uses
+  %.0586743 = phi ptr [ %i.aap, %_mm_load_si128.exit651 ], [ %i.a, %bb.cw ] ; 7 uses
   %.0588742 = phi i64 [ %i.aau, %_mm_load_si128.exit651 ], [ %i.yz, %bb.cw ]
   %i.zn = getelementptr inbounds nuw i8, ptr %.0586743, i64 16 ; 3 uses
   %.not641 = icmp ugt ptr %.0586743, inttoptr (i64 -17 to ptr)
@@ -517,25 +515,15 @@ bb.da:                                            ; preds = %bb.cz, %bb.cy
   %i.zy = and i64 %i.zr, 15, !nosanitize !12
   %i.zz = icmp eq i64 %i.zy, 0, !nosanitize !12
   %i.aaa = and i1 %i.zt, %i.zz
-  br i1 %i.aaa, label %_mm_load_si128.exit654, label %3, !prof !13, !nosanitize !12
+  br i1 %i.aaa, label %_mm_store_si128.exit680, label %bb.db, !prof !13, !nosanitize !12
 
-3:                                                ; preds = %bb.da
+bb.db:                                            ; preds = %bb.da
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @75, i64 %i.zr) #7, !nosanitize !12
-  br label %_mm_load_si128.exit654, !nosanitize !12
-
-_mm_load_si128.exit654:                           ; preds = %bb.da, %3
-  %4 = load <2 x i64>, ptr %.0585744, align 16, !tbaa !22
-  %5 = ptrtoint ptr %.0586743 to i64, !nosanitize !12 ; 2 uses
-  %6 = and i64 %5, 15, !nosanitize !12
-  %7 = icmp eq i64 %6, 0, !nosanitize !12
-  br i1 %7, label %_mm_store_si128.exit680, label %bb.db, !prof !13, !nosanitize !12
-
-bb.db:                                            ; preds = %_mm_load_si128.exit654
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @77, i64 %5) #7, !nosanitize !12
   br label %_mm_store_si128.exit680, !nosanitize !12
 
-_mm_store_si128.exit680:                          ; preds = %_mm_load_si128.exit654, %bb.db
-  store <2 x i64> %4, ptr %.0586743, align 16, !tbaa !22
+_mm_store_si128.exit680:                          ; preds = %bb.db, %bb.da
+  %3 = load <2 x i64>, ptr %.0585744, align 16, !tbaa !22
+  store <2 x i64> %3, ptr %.0586743, align 16, !tbaa !22
   %i.aab = getelementptr inbounds nuw i8, ptr %.0586743, i64 32 ; 3 uses
   %.not642 = icmp ugt ptr %i.zn, inttoptr (i64 -17 to ptr)
   br i1 %.not642, label %bb.dc, label %bb.dd, !prof !21, !nosanitize !12
@@ -557,10 +545,10 @@ bb.de:                                            ; preds = %bb.dd
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @54, i64 %i.aaf, i64 %i.aag) #7, !nosanitize !12
   br label %_mm_load_si128.exit653, !nosanitize !12
 
-_mm_load_si128.exit653:                           ; preds = %bb.de, %bb.dd
+_mm_load_si128.exit653:                           ; preds = %bb.dd, %bb.de
   %i.aah = load <2 x i64>, ptr %i.zq, align 16, !tbaa !22
   store <2 x i64> %i.aah, ptr %i.zn, align 16, !tbaa !22
-  %i.aai = getelementptr inbounds nuw i8, ptr %.0586743, i64 48 ; 3 uses
+  %i.aai = getelementptr inbounds nuw i8, ptr %.0586743, i64 48 ; 2 uses
   %.not644 = icmp ugt ptr %i.aab, inttoptr (i64 -17 to ptr)
   br i1 %.not644, label %bb.df, label %bb.dg, !prof !21, !nosanitize !12
 
@@ -581,17 +569,15 @@ bb.dh:                                            ; preds = %bb.dg
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @56, i64 %i.aam, i64 %i.aan) #7, !nosanitize !12
   br label %_mm_load_si128.exit652, !nosanitize !12
 
-_mm_load_si128.exit652:                           ; preds = %bb.dh, %bb.dg
+_mm_load_si128.exit652:                           ; preds = %bb.dg, %bb.dh
   %i.aao = load <2 x i64>, ptr %i.aae, align 16, !tbaa !22
   store <2 x i64> %i.aao, ptr %i.aab, align 16, !tbaa !22
   %i.aap = getelementptr inbounds nuw i8, ptr %.0586743, i64 64 ; 2 uses
-  %.not646 = icmp ugt ptr %i.aai, inttoptr (i64 -17 to ptr)
+  %.not646 = icmp eq ptr %i.aai, inttoptr (i64 -16 to ptr)
   br i1 %.not646, label %bb.di, label %bb.dj, !prof !21, !nosanitize !12
 
 bb.di:                                            ; preds = %_mm_load_si128.exit652
-  %8 = ptrtoint ptr %i.aai to i64, !nosanitize !12 ; 2 uses
-  %9 = add i64 %8, 16, !nosanitize !12
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @57, i64 %8, i64 %9) #7, !nosanitize !12
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @57, i64 -16, i64 0) #7, !nosanitize !12
   br label %bb.dj, !nosanitize !12
 
 bb.dj:                                            ; preds = %bb.di, %_mm_load_si128.exit652
@@ -605,7 +591,7 @@ bb.dk:                                            ; preds = %bb.dj
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @58, i64 %i.aar, i64 %i.aas) #7, !nosanitize !12
   br label %_mm_load_si128.exit651, !nosanitize !12
 
-_mm_load_si128.exit651:                           ; preds = %bb.dk, %bb.dj
+_mm_load_si128.exit651:                           ; preds = %bb.dj, %bb.dk
   %i.aat = load <2 x i64>, ptr %i.aal, align 16, !tbaa !22
   store <2 x i64> %i.aat, ptr %i.aai, align 16, !tbaa !22
   %i.aau = add i64 %.0588742, -64                 ; 3 uses
@@ -622,7 +608,7 @@ _mm_load_si128.exit651:                           ; preds = %bb.dk, %bb.dj
 
 .lr.ph750:                                        ; preds = %.preheader740, %_mm_store_si128.exit
   %.1749 = phi ptr [ %i.abb, %_mm_store_si128.exit ], [ %.0585.lcssa, %.preheader740 ] ; 5 uses
-  %.1587748 = phi ptr [ %i.aay, %_mm_store_si128.exit ], [ %.0586.lcssa, %.preheader740 ] ; 5 uses
+  %.1587748 = phi ptr [ %i.aay, %_mm_store_si128.exit ], [ %.0586.lcssa, %.preheader740 ] ; 4 uses
   %.1589747 = phi i64 [ %i.abm, %_mm_store_si128.exit ], [ %.0588.lcssa, %.preheader740 ]
   %i.aay = getelementptr inbounds nuw i8, ptr %.1587748, i64 16 ; 2 uses
   %.not640 = icmp ugt ptr %.1587748, inttoptr (i64 -17 to ptr)
@@ -653,25 +639,15 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
   %i.abj = and i64 %i.abc, 15, !nosanitize !12
   %i.abk = icmp eq i64 %i.abj, 0, !nosanitize !12
   %i.abl = and i1 %i.abe, %i.abk
-  br i1 %i.abl, label %_mm_load_si128.exit, label %10, !prof !13, !nosanitize !12
+  br i1 %i.abl, label %_mm_store_si128.exit, label %bb.dp, !prof !13, !nosanitize !12
 
-10:                                               ; preds = %bb.do
+bb.dp:                                            ; preds = %bb.do
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @75, i64 %i.abc) #7, !nosanitize !12
-  br label %_mm_load_si128.exit, !nosanitize !12
-
-_mm_load_si128.exit:                              ; preds = %bb.do, %10
-  %11 = load <2 x i64>, ptr %.1749, align 16, !tbaa !22
-  %12 = ptrtoint ptr %.1587748 to i64, !nosanitize !12 ; 2 uses
-  %13 = and i64 %12, 15, !nosanitize !12
-  %14 = icmp eq i64 %13, 0, !nosanitize !12
-  br i1 %14, label %_mm_store_si128.exit, label %bb.dp, !prof !13, !nosanitize !12
-
-bb.dp:                                            ; preds = %_mm_load_si128.exit
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @77, i64 %12) #7, !nosanitize !12
   br label %_mm_store_si128.exit, !nosanitize !12
 
-_mm_store_si128.exit:                             ; preds = %_mm_load_si128.exit, %bb.dp
-  store <2 x i64> %11, ptr %.1587748, align 16, !tbaa !22
+_mm_store_si128.exit:                             ; preds = %bb.dp, %bb.do
+  %4 = load <2 x i64>, ptr %.1749, align 16, !tbaa !22
+  store <2 x i64> %4, ptr %.1587748, align 16, !tbaa !22
   %i.abm = add nsw i64 %.1589747, -16             ; 3 uses
   %i.abn = icmp ugt i64 %i.abm, 15
   br i1 %i.abn, label %.lr.ph750, label %.preheader, !llvm.loop !17

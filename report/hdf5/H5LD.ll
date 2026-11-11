@@ -204,17 +204,12 @@ bb.t:                                             ; preds = %bb.s
   %i.ca = icmp eq ptr %i.bz, null
   br i1 %i.ca, label %._crit_edge165.i, label %.preheader.i
 
-.preheaderthread-pre-split.i:                     ; preds = %._crit_edge160.i
-  %6 = getelementptr inbounds nuw i8, ptr %.096164.i, i64 %i.bg
-  %.pr.i = load ptr, ptr %i.bs, align 8, !tbaa !11
-  br label %.preheader.i
-
-.preheader.i:                                     ; preds = %.preheader.lr.ph.i, %.preheaderthread-pre-split.i
-  %7 = phi ptr [ %.pr.i, %.preheaderthread-pre-split.i ], [ %i.bz, %.preheader.lr.ph.i ] ; 2 uses
-  %8 = phi i64 [ %i.cn, %.preheaderthread-pre-split.i ], [ %i.bw, %.preheader.lr.ph.i ]
-  %.096164.i = phi ptr [ %6, %.preheaderthread-pre-split.i ], [ %i.bj, %.preheader.lr.ph.i ] ; 2 uses
-  %.097163.i = phi ptr [ %.1.lcssa.i, %.preheaderthread-pre-split.i ], [ %4, %.preheader.lr.ph.i ] ; 2 uses
-  %.1100162.i = phi i32 [ %i.co, %.preheaderthread-pre-split.i ], [ 0, %.preheader.lr.ph.i ]
+.preheader.i:                                     ; preds = %.preheader.lr.ph.i, %._crit_edge160.i
+  %6 = phi i64 [ %i.cn, %._crit_edge160.i ], [ %i.bw, %.preheader.lr.ph.i ]
+  %7 = phi ptr [ %8, %._crit_edge160.i ], [ %i.bz, %.preheader.lr.ph.i ] ; 2 uses
+  %.096164.i = phi ptr [ %9, %._crit_edge160.i ], [ %i.bj, %.preheader.lr.ph.i ] ; 2 uses
+  %.097163.i = phi ptr [ %.1.lcssa.i, %._crit_edge160.i ], [ %4, %.preheader.lr.ph.i ] ; 2 uses
+  %.1100162.i = phi i32 [ %i.co, %._crit_edge160.i ], [ 0, %.preheader.lr.ph.i ]
   %.not143156.i = icmp eq ptr %7, null
   br i1 %.not143156.i, label %._crit_edge160.i, label %.lr.ph159.i
 
@@ -239,16 +234,19 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not143.i, label %._crit_edge160.loopexit.i, label %.lr.ph159.i, !llvm.loop !35
 
 ._crit_edge160.loopexit.i:                        ; preds = %.lr.ph159.i
+  %.pre.i = load ptr, ptr %i.bs, align 8, !tbaa !11
   %.pre.i.a = load i64, ptr %i.a, align 8, !tbaa !37
   br label %._crit_edge160.i
 
 ._crit_edge160.i:                                 ; preds = %._crit_edge160.loopexit.i, %.preheader.i
-  %i.cn = phi i64 [ %8, %.preheader.i ], [ %.pre.i.a, %._crit_edge160.loopexit.i ] ; 2 uses
+  %i.cn = phi i64 [ %6, %.preheader.i ], [ %.pre.i.a, %._crit_edge160.loopexit.i ] ; 2 uses
+  %8 = phi ptr [ null, %.preheader.i ], [ %.pre.i, %._crit_edge160.loopexit.i ]
   %.1.lcssa.i = phi ptr [ %.097163.i, %.preheader.i ], [ %i.ck, %._crit_edge160.loopexit.i ]
+  %9 = getelementptr inbounds nuw i8, ptr %.096164.i, i64 %i.bg
   %i.co = add nuw nsw i32 %.1100162.i, 1          ; 2 uses
   %i.cp = trunc i64 %i.cn to i32
   %i.cq = icmp slt i32 %i.co, %i.cp
-  br i1 %i.cq, label %.preheaderthread-pre-split.i, label %._crit_edge165.i, !llvm.loop !36
+  br i1 %i.cq, label %.preheader.i, label %._crit_edge165.i, !llvm.loop !36
 
 ._crit_edge165.i:                                 ; preds = %._crit_edge160.i, %.preheader.lr.ph.i, %.preheader153.i
   call void @H5LD_clean_vector(ptr noundef nonnull %i.bs)
