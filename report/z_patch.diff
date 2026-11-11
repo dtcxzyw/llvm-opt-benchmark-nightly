@@ -1,0 +1,866 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index de012c1274fe4..73c9282dfd990 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -722,6 +722,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+   Instruction *foldPHIArgLoadIntoPHI(PHINode &PN);
+   Instruction *foldPHIArgZextsIntoPHI(PHINode &PN);
+   Instruction *foldPHIArgIntToPtrToPHI(PHINode &PN);
++  Instruction *foldPHIArgPtrToIntIntoExistingPHI(PHINode &PN);
+ 
+   /// If the phi is within a phi web, which is formed by the def-use chain
+   /// of phis and all the phis in the web are only used in the other phis.
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombinePHI.cpp b/llvm/lib/Transforms/InstCombine/InstCombinePHI.cpp
+index 1ad1c1b510d0b..383068fc0403f 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombinePHI.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombinePHI.cpp
+@@ -77,6 +77,28 @@ bool InstCombinerImpl::foldDeadPhiWeb(PHINode &PN) {
+   return true;
+ }
+ 
++/// Return a PHI other than \p PN in PN's block with type \p Ty and incoming
++/// value \p Vals[I] for PN's I-th incoming block, or nullptr if there is none.
++/// Return std::nullopt if the block has more than \p MaxNumPhis PHIs to search.
++static std::optional<PHINode *>
++findPHIWithIncomingValues(PHINode &PN, Type *Ty, ArrayRef<Value *> Vals,
++                          unsigned MaxNumPhis) {
++  unsigned NumPhis = 0;
++  for (PHINode &P : PN.getParent()->phis()) {
++    // FIXME: consider handling this in AggressiveInstCombine
++    if (NumPhis++ > MaxNumPhis)
++      return std::nullopt;
++    if (&P == &PN || P.getType() != Ty)
++      continue;
++    if (all_of(zip_equal(PN.blocks(), Vals), [&](auto BlockAndValue) {
++          auto [BB, V] = BlockAndValue;
++          return P.getIncomingValueForBlock(BB) == V;
++        }))
++      return &P;
++  }
++  return nullptr;
++}
++
+ // Replace Integer typed PHI PN if the PHI's value is used as a pointer value.
+ // If there is an existing pointer typed PHI that produces the same value as PN,
+ // replace PN and the IntToPtr operation with it. Otherwise, synthesize a new
+@@ -217,34 +239,16 @@ bool InstCombinerImpl::foldIntegerTypedPHI(PHINode &PN) {
+   }
+ 
+   // Now search for a matching PHI
+-  auto *BB = PN.getParent();
+-  assert(AvailablePtrVals.size() == PN.getNumIncomingValues() &&
+-         "Not enough available ptr typed incoming values");
+-  PHINode *MatchingPtrPHI = nullptr;
+-  unsigned NumPhis = 0;
+-  for (PHINode &PtrPHI : BB->phis()) {
+-    // FIXME: consider handling this in AggressiveInstCombine
+-    if (NumPhis++ > CLOpts.max_num_phis)
+-      return false;
+-    if (&PtrPHI == &PN || PtrPHI.getType() != IntToPtr->getType())
+-      continue;
+-    if (any_of(zip(PN.blocks(), AvailablePtrVals),
+-               [&](const auto &BlockAndValue) {
+-                 BasicBlock *BB = std::get<0>(BlockAndValue);
+-                 Value *V = std::get<1>(BlockAndValue);
+-                 return PtrPHI.getIncomingValueForBlock(BB) != V;
+-               }))
+-      continue;
+-    MatchingPtrPHI = &PtrPHI;
+-    break;
+-  }
++  std::optional<PHINode *> MatchingPtrPHI =
++      findPHIWithIncomingValues(PN, IntToPtr->getType(), AvailablePtrVals,
++                                CLOpts.max_num_phis);
++  if (!MatchingPtrPHI)
++    return false;
+ 
+-  if (MatchingPtrPHI) {
+-    assert(MatchingPtrPHI->getType() == IntToPtr->getType() &&
+-           "Phi's Type does not match with IntToPtr");
++  if (*MatchingPtrPHI) {
+     // Explicitly replace the inttoptr (rather than inserting a ptrtoint) here,
+     // to make sure another transform can't undo it in the meantime.
+-    replaceInstUsesWith(*IntToPtr, MatchingPtrPHI);
++    replaceInstUsesWith(*IntToPtr, *MatchingPtrPHI);
+     eraseInstFromFunction(*IntToPtr);
+     eraseInstFromFunction(PN);
+     return true;
+@@ -968,6 +972,49 @@ Instruction *InstCombinerImpl::foldPHIArgOpIntoPHI(PHINode &PN) {
+   return NewCI;
+ }
+ 
++/// If all incoming values of PN are the same ptrtoint/ptrtoaddr and PN's block
++/// already has a PHI merging the cast operands, replace PN with a cast of that
++/// PHI:
++///   %a.int = ptrtoint ptr %a to i64
++///   %b.int = ptrtoint ptr %b to i64
++///   %p = phi ptr [ %a, %bb0 ], [ %b, %bb1 ]
++///   %i = phi i64 [ %a.int, %bb0 ], [ %b.int, %bb1 ]
++/// -->
++///   %i = ptrtoint ptr %p to i64
++/// Unlike foldPHIArgOpIntoPHI this creates no new PHI, so the casts may have
++/// other users. Only ptrtoint/ptrtoaddr are handled:
++///  * ptr->int casts merely reinterpret an existing pointer, and SCEV handles
++///    ptrtoint of a pointer recurrence.
++///  * Integer casts (zext/sext) can carry induction variable information, and
++///    folding them pessimized C/C++ code.
++///  * inttoptr would lose provenance and runs counter to foldIntegerTypedPHI.
++Instruction *InstCombinerImpl::foldPHIArgPtrToIntIntoExistingPHI(PHINode &PN) {
++  if (!isa<PtrToIntInst, PtrToAddrInst>(PN.getIncomingValue(0)) ||
++      !PN.getParent()->hasInsertionPt())
++    return nullptr;
++  auto *FirstCI = cast<CastInst>(PN.getIncomingValue(0));
++  // The new cast is an additional dynamic cast of the pointer, which is not
++  // allowed for unstable pointer representations.
++  if (DL.mustNotIntroducePtrToInt(FirstCI->getSrcTy()))
++    return nullptr;
++  SmallVector<Value *> CastSrcs;
++  for (Value *V : PN.incoming_values()) {
++    auto *CI = dyn_cast<CastInst>(V);
++    if (!CI || !CI->isSameOperationAs(FirstCI))
++      return nullptr;
++    CastSrcs.push_back(CI->getOperand(0));
++  }
++
++  std::optional<PHINode *> SrcPN =
++      findPHIWithIncomingValues(PN, FirstCI->getSrcTy(), CastSrcs,
++                                CLOpts.max_num_phis);
++  if (!SrcPN || !*SrcPN)
++    return nullptr;
++  auto *NewCI = CastInst::Create(FirstCI->getOpcode(), *SrcPN, PN.getType());
++  PHIArgMergedDebugLoc(NewCI, PN);
++  return NewCI;
++}
++
+ /// Return true if this phi node is always equal to NonPhiInVal.
+ /// This happens with mutually cyclic phi nodes like:
+ ///   z = some value; x = phi (y, z); y = phi (x, z)
+@@ -1434,11 +1481,16 @@ Instruction *InstCombinerImpl::visitPHINode(PHINode &PN) {
+   if (foldDeadPhiWeb(PN))
+     return nullptr;
+ 
++  if (foldIntegerTypedPHI(PN))
++    return nullptr;
++
++  // Run after foldIntegerTypedPHI, which replaces an inttoptr user of PN with
++  // an existing pointer PHI directly.
++  if (Instruction *Result = foldPHIArgPtrToIntIntoExistingPHI(PN))
++    return Result;
++
+   // Optimization when the phi only has one use
+   if (PN.hasOneUse()) {
+-    if (foldIntegerTypedPHI(PN))
+-      return nullptr;
+-
+     // If this phi has a single use, and if that use just computes a value for
+     // the next iteration of a loop, delete the phi.  This occurs with unused
+     // induction variables, e.g. "for (int j = 0; ; ++j);".  Detecting this
+diff --git a/llvm/test/Transforms/InstCombine/phi-casts-of-existing-phi.ll b/llvm/test/Transforms/InstCombine/phi-casts-of-existing-phi.ll
+new file mode 100644
+index 0000000000000..40509d2cd8674
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/phi-casts-of-existing-phi.ll
+@@ -0,0 +1,587 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; The second RUN checks @inttoptr_user without the inttoptr(ptrtoint) fold.
++; RUN: opt -passes=instcombine -S %s | FileCheck %s
++; RUN: opt -passes=instcombine -disable-i2p-p2i-opt -S %s | FileCheck %s
++
++target datalayout = "ni:1"
++
++declare void @use(i64)
++declare void @use.i32(i32)
++declare void @use.ptr(ptr)
++declare void @may_throw()
++declare i32 @__gxx_personality_v0(...)
++declare i1 @cond()
++
++; %iv.int is ptrtoint of %iv on every edge; the casts have other users.
++define void @ptrtoint_twin_iv(ptr %start) {
++; CHECK-LABEL: define void @ptrtoint_twin_iv(
++; CHECK-SAME: ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_INT:%.*]] = ptrtoint ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_INT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_INT:%.*]] = ptrtoint ptr [[IV]] to i64
++; CHECK-NEXT:    [[OFF:%.*]] = sub i64 [[IV_INT]], [[START_INT]]
++; CHECK-NEXT:    call void @use(i64 [[OFF]])
++; CHECK-NEXT:    [[IV_NEXT]] = getelementptr inbounds nuw i8, ptr [[IV]], i64 8
++; CHECK-NEXT:    [[IV_NEXT_INT:%.*]] = ptrtoint ptr [[IV_NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_NEXT_INT]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.int = ptrtoint ptr %start to i64
++  call void @use(i64 %start.int)
++  br label %loop
++
++loop:
++  %iv = phi ptr [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.int = phi i64 [ %start.int, %entry ], [ %iv.next.int, %loop ]
++  %off = sub i64 %iv.int, %start.int
++  call void @use(i64 %off)
++  %iv.next = getelementptr inbounds i8, ptr %iv, i64 8
++  %iv.next.int = ptrtoint ptr %iv.next to i64
++  call void @use(i64 %iv.next.int)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: integer casts are not folded.
++define void @zext_not_folded(i32 %a, i32 %b) {
++; CHECK-LABEL: define void @zext_not_folded(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_EXT:%.*]] = zext i32 [[A]] to i64
++; CHECK-NEXT:    call void @use(i64 [[A_EXT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[X:%.*]] = phi i32 [ [[A]], %[[ENTRY]] ], [ [[B]], %[[LOOP]] ]
++; CHECK-NEXT:    [[X_EXT:%.*]] = phi i64 [ [[A_EXT]], %[[ENTRY]] ], [ [[B_EXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[X_EXT]])
++; CHECK-NEXT:    [[X_USE:%.*]] = add i32 [[X]], 1
++; CHECK-NEXT:    call void @use.i32(i32 [[X_USE]])
++; CHECK-NEXT:    [[B_EXT]] = zext i32 [[B]] to i64
++; CHECK-NEXT:    call void @use(i64 [[B_EXT]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.ext = zext i32 %a to i64
++  call void @use(i64 %a.ext)
++  br label %loop
++
++loop:
++  %x = phi i32 [ %a, %entry ], [ %b, %loop ]
++  %x.ext = phi i64 [ %a.ext, %entry ], [ %b.ext, %loop ]
++  call void @use(i64 %x.ext)
++  %x.use = add i32 %x, 1
++  call void @use.i32(i32 %x.use)
++  %b.ext = zext i32 %b to i64
++  call void @use(i64 %b.ext)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: the existing phi merges a different value on the backedge.
++define void @different_incoming(ptr %start, ptr %other) {
++; CHECK-LABEL: define void @different_incoming(
++; CHECK-SAME: ptr [[START:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_INT:%.*]] = ptrtoint ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_INT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[OTHER]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_INT:%.*]] = phi i64 [ [[START_INT]], %[[ENTRY]] ], [ [[IV_NEXT_INT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[IV_INT]])
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = getelementptr inbounds nuw i8, ptr [[IV]], i64 8
++; CHECK-NEXT:    [[IV_NEXT_INT]] = ptrtoint ptr [[IV_NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_NEXT_INT]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.int = ptrtoint ptr %start to i64
++  call void @use(i64 %start.int)
++  br label %loop
++
++loop:
++  %iv = phi ptr [ %start, %entry ], [ %other, %loop ]
++  %iv.int = phi i64 [ %start.int, %entry ], [ %iv.next.int, %loop ]
++  call void @use(i64 %iv.int)
++  %iv.next = getelementptr inbounds i8, ptr %iv, i64 8
++  %iv.next.int = ptrtoint ptr %iv.next to i64
++  call void @use(i64 %iv.next.int)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: different cast opcodes.
++define void @different_cast_opcodes(ptr %start) {
++; CHECK-LABEL: define void @different_cast_opcodes(
++; CHECK-SAME: ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_INT:%.*]] = ptrtoint ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_INT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_INT:%.*]] = phi i64 [ [[START_INT]], %[[ENTRY]] ], [ [[IV_NEXT_ADDR:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[IV_INT]])
++; CHECK-NEXT:    [[IV_NEXT]] = getelementptr i8, ptr [[IV]], i64 8
++; CHECK-NEXT:    [[IV_NEXT_ADDR]] = ptrtoaddr ptr [[IV_NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_NEXT_ADDR]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.int = ptrtoint ptr %start to i64
++  call void @use(i64 %start.int)
++  br label %loop
++
++loop:
++  %iv = phi ptr [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.int = phi i64 [ %start.int, %entry ], [ %iv.next.addr, %loop ]
++  call void @use(i64 %iv.int)
++  %iv.next = getelementptr i8, ptr %iv, i64 8
++  %iv.next.addr = ptrtoaddr ptr %iv.next to i64
++  call void @use(i64 %iv.next.addr)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: no phi of the cast operands exists; multi-use casts are not
++; pulled through a new phi.
++define void @no_existing_phi(ptr %start) {
++; CHECK-LABEL: define void @no_existing_phi(
++; CHECK-SAME: ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_INT:%.*]] = ptrtoint ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_INT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV_INT:%.*]] = phi i64 [ [[START_INT]], %[[ENTRY]] ], [ [[NEXT_INT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[IV_INT]])
++; CHECK-NEXT:    [[NEXT:%.*]] = getelementptr inbounds nuw i8, ptr [[START]], i64 8
++; CHECK-NEXT:    [[NEXT_INT]] = ptrtoint ptr [[NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[NEXT_INT]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.int = ptrtoint ptr %start to i64
++  call void @use(i64 %start.int)
++  br label %loop
++
++loop:
++  %iv.int = phi i64 [ %start.int, %entry ], [ %next.int, %loop ]
++  call void @use(i64 %iv.int)
++  %next = getelementptr inbounds i8, ptr %start, i64 8
++  %next.int = ptrtoint ptr %next to i64
++  call void @use(i64 %next.int)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: inttoptr is not folded.
++define void @inttoptr_not_folded(i1 %c, i64 %a, i64 %b) {
++; CHECK-LABEL: define void @inttoptr_not_folded(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[A:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_PTR:%.*]] = inttoptr i64 [[A]] to ptr
++; CHECK-NEXT:    call void @use.ptr(ptr [[A_PTR]])
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[JOIN:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[B_PTR:%.*]] = inttoptr i64 [[B]] to ptr
++; CHECK-NEXT:    call void @use.ptr(ptr [[B_PTR]])
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[X:%.*]] = phi i64 [ [[A]], %[[ENTRY]] ], [ [[B]], %[[THEN]] ]
++; CHECK-NEXT:    [[X_PTR:%.*]] = phi ptr [ [[A_PTR]], %[[ENTRY]] ], [ [[B_PTR]], %[[THEN]] ]
++; CHECK-NEXT:    call void @use.ptr(ptr [[X_PTR]])
++; CHECK-NEXT:    call void @use(i64 [[X]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.ptr = inttoptr i64 %a to ptr
++  call void @use.ptr(ptr %a.ptr)
++  br i1 %c, label %then, label %join
++
++then:
++  %b.ptr = inttoptr i64 %b to ptr
++  call void @use.ptr(ptr %b.ptr)
++  br label %join
++
++join:
++  %x = phi i64 [ %a, %entry ], [ %b, %then ]
++  %x.ptr = phi ptr [ %a.ptr, %entry ], [ %b.ptr, %then ]
++  call void @use.ptr(ptr %x.ptr)
++  call void @use(i64 %x)
++  ret void
++}
++
++; Same as @ptrtoint_twin_iv, with ptrtoaddr.
++define void @ptrtoaddr_twin_iv(ptr %start) {
++; CHECK-LABEL: define void @ptrtoaddr_twin_iv(
++; CHECK-SAME: ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_ADDR:%.*]] = ptrtoaddr ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_ADDR]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_ADDR:%.*]] = ptrtoaddr ptr [[IV]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_ADDR]])
++; CHECK-NEXT:    [[IV_NEXT]] = getelementptr i8, ptr [[IV]], i64 4
++; CHECK-NEXT:    [[IV_NEXT_ADDR:%.*]] = ptrtoaddr ptr [[IV_NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_NEXT_ADDR]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.addr = ptrtoaddr ptr %start to i64
++  call void @use(i64 %start.addr)
++  br label %loop
++
++loop:
++  %iv = phi ptr [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.addr = phi i64 [ %start.addr, %entry ], [ %iv.next.addr, %loop ]
++  call void @use(i64 %iv.addr)
++  %iv.next = getelementptr i8, ptr %iv, i64 4
++  %iv.next.addr = ptrtoaddr ptr %iv.next to i64
++  call void @use(i64 %iv.next.addr)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Duplicate switch edges, and the phis list their incoming blocks in different
++; orders.
++define void @switch_duplicate_edges(i32 %s, ptr %a, ptr %b) {
++; CHECK-LABEL: define void @switch_duplicate_edges(
++; CHECK-SAME: i32 [[S:%.*]], ptr [[A:%.*]], ptr [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_INT:%.*]] = ptrtoint ptr [[A]] to i64
++; CHECK-NEXT:    call void @use(i64 [[A_INT]])
++; CHECK-NEXT:    switch i32 [[S]], label %[[OTHER:.*]] [
++; CHECK-NEXT:      i32 0, label %[[JOIN:.*]]
++; CHECK-NEXT:      i32 1, label %[[JOIN]]
++; CHECK-NEXT:    ]
++; CHECK:       [[OTHER]]:
++; CHECK-NEXT:    [[B_INT:%.*]] = ptrtoint ptr [[B]] to i64
++; CHECK-NEXT:    call void @use(i64 [[B_INT]])
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[X:%.*]] = phi ptr [ [[B]], %[[OTHER]] ], [ [[A]], %[[ENTRY]] ], [ [[A]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[X_INT:%.*]] = ptrtoint ptr [[X]] to i64
++; CHECK-NEXT:    call void @use(i64 [[X_INT]])
++; CHECK-NEXT:    call void @use.ptr(ptr [[X]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.int = ptrtoint ptr %a to i64
++  call void @use(i64 %a.int)
++  switch i32 %s, label %other [
++  i32 0, label %join
++  i32 1, label %join
++  ]
++
++other:
++  %b.int = ptrtoint ptr %b to i64
++  call void @use(i64 %b.int)
++  br label %join
++
++join:
++  %x = phi ptr [ %b, %other ], [ %a, %entry ], [ %a, %entry ]
++  %x.int = phi i64 [ %a.int, %entry ], [ %a.int, %entry ], [ %b.int, %other ]
++  call void @use(i64 %x.int)
++  call void @use.ptr(ptr %x)
++  ret void
++}
++
++; The cast is inserted after the landingpad.
++define void @landingpad_block(ptr %a, ptr %b) personality ptr @__gxx_personality_v0 {
++; CHECK-LABEL: define void @landingpad_block(
++; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]]) personality ptr @__gxx_personality_v0 {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_INT:%.*]] = ptrtoint ptr [[A]] to i64
++; CHECK-NEXT:    call void @use(i64 [[A_INT]])
++; CHECK-NEXT:    invoke void @may_throw()
++; CHECK-NEXT:            to label %[[CONT:.*]] unwind label %[[LPAD:.*]]
++; CHECK:       [[CONT]]:
++; CHECK-NEXT:    [[B_INT:%.*]] = ptrtoint ptr [[B]] to i64
++; CHECK-NEXT:    call void @use(i64 [[B_INT]])
++; CHECK-NEXT:    invoke void @may_throw()
++; CHECK-NEXT:            to label %[[EXIT:.*]] unwind label %[[LPAD]]
++; CHECK:       [[LPAD]]:
++; CHECK-NEXT:    [[X:%.*]] = phi ptr [ [[A]], %[[ENTRY]] ], [ [[B]], %[[CONT]] ]
++; CHECK-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
++; CHECK-NEXT:            cleanup
++; CHECK-NEXT:    [[X_INT:%.*]] = ptrtoint ptr [[X]] to i64
++; CHECK-NEXT:    call void @use(i64 [[X_INT]])
++; CHECK-NEXT:    call void @use.ptr(ptr [[X]])
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.int = ptrtoint ptr %a to i64
++  call void @use(i64 %a.int)
++  invoke void @may_throw() to label %cont unwind label %lpad
++
++cont:
++  %b.int = ptrtoint ptr %b to i64
++  call void @use(i64 %b.int)
++  invoke void @may_throw() to label %exit unwind label %lpad
++
++lpad:
++  %x = phi ptr [ %a, %entry ], [ %b, %cont ]
++  %x.int = phi i64 [ %a.int, %entry ], [ %b.int, %cont ]
++  %lp = landingpad { ptr, i32 } cleanup
++  call void @use(i64 %x.int)
++  call void @use.ptr(ptr %x)
++  ret void
++
++exit:
++  ret void
++}
++
++; Negative: no insertion point in a catchswitch block.
++define void @catchswitch_block(ptr %a, ptr %b) personality ptr @__gxx_personality_v0 {
++; CHECK-LABEL: define void @catchswitch_block(
++; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]]) personality ptr @__gxx_personality_v0 {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_INT:%.*]] = ptrtoint ptr [[A]] to i64
++; CHECK-NEXT:    call void @use(i64 [[A_INT]])
++; CHECK-NEXT:    invoke void @may_throw()
++; CHECK-NEXT:            to label %[[CONT:.*]] unwind label %[[DISPATCH:.*]]
++; CHECK:       [[CONT]]:
++; CHECK-NEXT:    [[B_INT:%.*]] = ptrtoint ptr [[B]] to i64
++; CHECK-NEXT:    call void @use(i64 [[B_INT]])
++; CHECK-NEXT:    invoke void @may_throw()
++; CHECK-NEXT:            to label %[[EXIT:.*]] unwind label %[[DISPATCH]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[X:%.*]] = phi ptr [ [[A]], %[[ENTRY]] ], [ [[B]], %[[CONT]] ]
++; CHECK-NEXT:    [[X_INT:%.*]] = phi i64 [ [[A_INT]], %[[ENTRY]] ], [ [[B_INT]], %[[CONT]] ]
++; CHECK-NEXT:    [[CS:%.*]] = catchswitch within none [label %[[HANDLER:.*]]] unwind to caller
++; CHECK:       [[HANDLER]]:
++; CHECK-NEXT:    [[CP:%.*]] = catchpad within [[CS]] []
++; CHECK-NEXT:    call void @use(i64 [[X_INT]]) [ "funclet"(token [[CP]]) ]
++; CHECK-NEXT:    call void @use.ptr(ptr [[X]]) [ "funclet"(token [[CP]]) ]
++; CHECK-NEXT:    catchret from [[CP]] to label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.int = ptrtoint ptr %a to i64
++  call void @use(i64 %a.int)
++  invoke void @may_throw() to label %cont unwind label %dispatch
++
++cont:
++  %b.int = ptrtoint ptr %b to i64
++  call void @use(i64 %b.int)
++  invoke void @may_throw() to label %exit unwind label %dispatch
++
++dispatch:
++  %x = phi ptr [ %a, %entry ], [ %b, %cont ]
++  %x.int = phi i64 [ %a.int, %entry ], [ %b.int, %cont ]
++  %cs = catchswitch within none [label %handler] unwind to caller
++
++handler:
++  %cp = catchpad within %cs []
++  call void @use(i64 %x.int) [ "funclet"(token %cp) ]
++  call void @use.ptr(ptr %x) [ "funclet"(token %cp) ]
++  catchret from %cp to label %exit
++
++exit:
++  ret void
++}
++
++; The phi's only user is an inttoptr: foldIntegerTypedPHI is tried first and
++; replaces the inttoptr with %iv instead of forming inttoptr(ptrtoint %iv)
++; (which is not folded with -disable-i2p-p2i-opt).
++define void @inttoptr_user(ptr %start) {
++; CHECK-LABEL: define void @inttoptr_user(
++; CHECK-SAME: ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_INT:%.*]] = ptrtoint ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_INT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    store i8 0, ptr [[IV]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = getelementptr inbounds nuw i8, ptr [[IV]], i64 8
++; CHECK-NEXT:    [[IV_NEXT_INT:%.*]] = ptrtoint ptr [[IV_NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_NEXT_INT]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.int = ptrtoint ptr %start to i64
++  call void @use(i64 %start.int)
++  br label %loop
++
++loop:
++  %iv = phi ptr [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.int = phi i64 [ %start.int, %entry ], [ %iv.next.int, %loop ]
++  %p = inttoptr i64 %iv.int to ptr
++  store i8 0, ptr %p
++  %iv.next = getelementptr inbounds i8, ptr %iv, i64 8
++  %iv.next.int = ptrtoint ptr %iv.next to i64
++  call void @use(i64 %iv.next.int)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The inttoptr is to a different address space, so foldIntegerTypedPHI does
++; not apply and %iv.int is replaced with ptrtoint of %iv.
++define void @i2p_other_as(ptr %start) {
++; CHECK-LABEL: define void @i2p_other_as(
++; CHECK-SAME: ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START_INT:%.*]] = ptrtoint ptr [[START]] to i64
++; CHECK-NEXT:    call void @use(i64 [[START_INT]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_INT:%.*]] = ptrtoint ptr [[IV]] to i64
++; CHECK-NEXT:    [[P:%.*]] = inttoptr i64 [[IV_INT]] to ptr addrspace(3)
++; CHECK-NEXT:    store i8 0, ptr addrspace(3) [[P]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = getelementptr inbounds nuw i8, ptr [[IV]], i64 8
++; CHECK-NEXT:    [[IV_NEXT_INT:%.*]] = ptrtoint ptr [[IV_NEXT]] to i64
++; CHECK-NEXT:    call void @use(i64 [[IV_NEXT_INT]])
++; CHECK-NEXT:    [[C:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %start.int = ptrtoint ptr %start to i64
++  call void @use(i64 %start.int)
++  br label %loop
++
++loop:
++  %iv = phi ptr [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.int = phi i64 [ %start.int, %entry ], [ %iv.next.int, %loop ]
++  %p = inttoptr i64 %iv.int to ptr addrspace(3)
++  store i8 0, ptr addrspace(3) %p
++  %iv.next = getelementptr inbounds i8, ptr %iv, i64 8
++  %iv.next.int = ptrtoint ptr %iv.next to i64
++  call void @use(i64 %iv.next.int)
++  %c = call i1 @cond()
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: a new ptrtoint of an unstable pointer (ni:1) would be an extra
++; dynamic cast, which may observe a different value than %a.int/%b.int.
++define void @unstable_ptrtoint(i1 %c, ptr addrspace(1) %a, ptr addrspace(1) %b) {
++; CHECK-LABEL: define void @unstable_ptrtoint(
++; CHECK-SAME: i1 [[C:%.*]], ptr addrspace(1) [[A:%.*]], ptr addrspace(1) [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_INT:%.*]] = ptrtoint ptr addrspace(1) [[A]] to i64
++; CHECK-NEXT:    call void @use(i64 [[A_INT]])
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[JOIN:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[B_INT:%.*]] = ptrtoint ptr addrspace(1) [[B]] to i64
++; CHECK-NEXT:    call void @use(i64 [[B_INT]])
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[X_INT:%.*]] = phi i64 [ [[A_INT]], %[[ENTRY]] ], [ [[B_INT]], %[[THEN]] ]
++; CHECK-NEXT:    [[X:%.*]] = phi ptr addrspace(1) [ [[A]], %[[ENTRY]] ], [ [[B]], %[[THEN]] ]
++; CHECK-NEXT:    store i8 0, ptr addrspace(1) [[X]], align 1
++; CHECK-NEXT:    call void @use(i64 [[X_INT]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.int = ptrtoint ptr addrspace(1) %a to i64
++  call void @use(i64 %a.int)
++  br i1 %c, label %then, label %join
++
++then:
++  %b.int = ptrtoint ptr addrspace(1) %b to i64
++  call void @use(i64 %b.int)
++  br label %join
++
++join:
++  %x.int = phi i64 [ %a.int, %entry ], [ %b.int, %then ]
++  %x = phi ptr addrspace(1) [ %a, %entry ], [ %b, %then ]
++  store i8 0, ptr addrspace(1) %x, align 1
++  call void @use(i64 %x.int)
++  ret void
++}
++
++; Negative: same as @unstable_ptrtoint, with ptrtoaddr.
++define void @unstable_ptrtoaddr(i1 %c, ptr addrspace(1) %a, ptr addrspace(1) %b) {
++; CHECK-LABEL: define void @unstable_ptrtoaddr(
++; CHECK-SAME: i1 [[C:%.*]], ptr addrspace(1) [[A:%.*]], ptr addrspace(1) [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A_ADDR:%.*]] = ptrtoaddr ptr addrspace(1) [[A]] to i64
++; CHECK-NEXT:    call void @use(i64 [[A_ADDR]])
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[JOIN:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[B_ADDR:%.*]] = ptrtoaddr ptr addrspace(1) [[B]] to i64
++; CHECK-NEXT:    call void @use(i64 [[B_ADDR]])
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[X_ADDR:%.*]] = phi i64 [ [[A_ADDR]], %[[ENTRY]] ], [ [[B_ADDR]], %[[THEN]] ]
++; CHECK-NEXT:    [[X:%.*]] = phi ptr addrspace(1) [ [[A]], %[[ENTRY]] ], [ [[B]], %[[THEN]] ]
++; CHECK-NEXT:    store i8 0, ptr addrspace(1) [[X]], align 1
++; CHECK-NEXT:    call void @use(i64 [[X_ADDR]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a.addr = ptrtoaddr ptr addrspace(1) %a to i64
++  call void @use(i64 %a.addr)
++  br i1 %c, label %then, label %join
++
++then:
++  %b.addr = ptrtoaddr ptr addrspace(1) %b to i64
++  call void @use(i64 %b.addr)
++  br label %join
++
++join:
++  %x.addr = phi i64 [ %a.addr, %entry ], [ %b.addr, %then ]
++  %x = phi ptr addrspace(1) [ %a, %entry ], [ %b, %then ]
++  store i8 0, ptr addrspace(1) %x, align 1
++  call void @use(i64 %x.addr)
++  ret void
++}
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll b/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll
+index 06dd78217c4ae..69941f358980d 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll
+@@ -8,45 +8,33 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly
+ 
+ define void @redundant_int_iv(ptr %first) {
+ ; CHECK-LABEL: define void @redundant_int_iv(
+-; CHECK-SAME: ptr [[FIRST:%.*]]) local_unnamed_addr #[[ATTR1:[0-9]+]] {
++; CHECK-SAME: ptr [[FIRST:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[PTR_INT1:%.*]] = ptrtoint ptr [[FIRST]] to i64
+ ; CHECK-NEXT:    [[OFF2:%.*]] = add i64 [[PTR_INT1]], 1
+ ; CHECK-NEXT:    [[EC_OUTER3:%.*]] = icmp slt i64 [[OFF2]], 0
+ ; CHECK-NEXT:    br i1 [[EC_OUTER3]], label %[[INNER_PH:.*]], label %[[EXIT:.*]]
+ ; CHECK:       [[INNER_PH]]:
+-; CHECK-NEXT:    [[PTR_INT5:%.*]] = phi i64 [ [[PTR_INT:%.*]], %[[INNER_PH]] ], [ [[PTR_INT1]], %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[PTR_IV4:%.*]] = phi ptr [ [[LAST:%.*]], %[[INNER_PH]] ], [ [[FIRST]], %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[LAST]] = getelementptr i8, ptr [[PTR_IV4]], i64 7
+ ; CHECK-NEXT:    [[CUR_NEXT:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 1
+-; CHECK-NEXT:    [[CUR_INT:%.*]] = ptrtoint ptr [[CUR_NEXT]] to i64
+-; CHECK-NEXT:    [[LEN:%.*]] = sub i64 [[CUR_INT]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT]], ptr align 1 [[PTR_IV4]], i64 [[LEN]], i1 false)
++; CHECK-NEXT:    [[TMP0:%.*]] = load i8, ptr [[PTR_IV4]], align 1
++; CHECK-NEXT:    store i8 [[TMP0]], ptr [[CUR_NEXT]], align 1
+ ; CHECK-NEXT:    [[CUR_NEXT_1:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 2
+-; CHECK-NEXT:    [[CUR_INT_1:%.*]] = ptrtoint ptr [[CUR_NEXT_1]] to i64
+-; CHECK-NEXT:    [[LEN_1:%.*]] = sub i64 [[CUR_INT_1]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT_1]], ptr align 1 [[PTR_IV4]], i64 [[LEN_1]], i1 false)
++; CHECK-NEXT:    [[TMP1:%.*]] = load i16, ptr [[PTR_IV4]], align 1
++; CHECK-NEXT:    store i16 [[TMP1]], ptr [[CUR_NEXT_1]], align 1
+ ; CHECK-NEXT:    [[CUR_NEXT_2:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 3
+-; CHECK-NEXT:    [[CUR_INT_2:%.*]] = ptrtoint ptr [[CUR_NEXT_2]] to i64
+-; CHECK-NEXT:    [[LEN_2:%.*]] = sub i64 [[CUR_INT_2]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT_2]], ptr align 1 [[PTR_IV4]], i64 [[LEN_2]], i1 false)
++; CHECK-NEXT:    tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) [[CUR_NEXT_2]], ptr noundef nonnull align 1 dereferenceable(3) [[PTR_IV4]], i64 3, i1 false)
+ ; CHECK-NEXT:    [[CUR_NEXT_3:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 4
+-; CHECK-NEXT:    [[CUR_INT_3:%.*]] = ptrtoint ptr [[CUR_NEXT_3]] to i64
+-; CHECK-NEXT:    [[LEN_3:%.*]] = sub i64 [[CUR_INT_3]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT_3]], ptr align 1 [[PTR_IV4]], i64 [[LEN_3]], i1 false)
++; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[PTR_IV4]], align 1
++; CHECK-NEXT:    store i32 [[TMP2]], ptr [[CUR_NEXT_3]], align 1
+ ; CHECK-NEXT:    [[CUR_NEXT_4:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 5
+-; CHECK-NEXT:    [[CUR_INT_4:%.*]] = ptrtoint ptr [[CUR_NEXT_4]] to i64
+-; CHECK-NEXT:    [[LEN_4:%.*]] = sub i64 [[CUR_INT_4]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT_4]], ptr align 1 [[PTR_IV4]], i64 [[LEN_4]], i1 false)
++; CHECK-NEXT:    tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) [[CUR_NEXT_4]], ptr noundef nonnull align 1 dereferenceable(5) [[PTR_IV4]], i64 5, i1 false)
+ ; CHECK-NEXT:    [[CUR_NEXT_5:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 6
+-; CHECK-NEXT:    [[CUR_INT_5:%.*]] = ptrtoint ptr [[CUR_NEXT_5]] to i64
+-; CHECK-NEXT:    [[LEN_5:%.*]] = sub i64 [[CUR_INT_5]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT_5]], ptr align 1 [[PTR_IV4]], i64 [[LEN_5]], i1 false)
++; CHECK-NEXT:    tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) [[CUR_NEXT_5]], ptr noundef nonnull align 1 dereferenceable(6) [[PTR_IV4]], i64 6, i1 false)
+ ; CHECK-NEXT:    [[CUR_NEXT_6:%.*]] = getelementptr i8, ptr [[PTR_IV4]], i64 7
+-; CHECK-NEXT:    [[CUR_INT_6:%.*]] = ptrtoint ptr [[CUR_NEXT_6]] to i64
+-; CHECK-NEXT:    [[LEN_6:%.*]] = sub i64 [[CUR_INT_6]], [[PTR_INT5]]
+-; CHECK-NEXT:    tail call void @llvm.memmove.p0.p0.i64(ptr align 1 [[CUR_NEXT_6]], ptr align 1 [[PTR_IV4]], i64 [[LEN_6]], i1 false)
+-; CHECK-NEXT:    [[PTR_INT]] = ptrtoint ptr [[LAST]] to i64
++; CHECK-NEXT:    tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) [[CUR_NEXT_6]], ptr noundef nonnull align 1 dereferenceable(7) [[PTR_IV4]], i64 7, i1 false)
++; CHECK-NEXT:    [[PTR_INT:%.*]] = ptrtoint ptr [[LAST]] to i64
+ ; CHECK-NEXT:    [[OFF:%.*]] = add i64 [[PTR_INT]], 1
+ ; CHECK-NEXT:    [[EC_OUTER:%.*]] = icmp slt i64 [[OFF]], 0
+ ; CHECK-NEXT:    br i1 [[EC_OUTER]], label %[[INNER_PH]], label %[[EXIT]]
+@@ -86,7 +74,7 @@ exit:
+ 
+ define ptr @cancel_out_of_range(ptr %p) {
+ ; CHECK-LABEL: define noalias noundef ptr @cancel_out_of_range(
+-; CHECK-SAME: ptr [[P:%.*]]) local_unnamed_addr #[[ATTR2:[0-9]+]] {
++; CHECK-SAME: ptr [[P:%.*]]) local_unnamed_addr #[[ATTR1:[0-9]+]] {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    store ptr [[P]], ptr [[P]], align 8
+ ; CHECK-NEXT:    [[P1:%.*]] = ptrtoint ptr [[P]] to i64
+@@ -121,7 +109,7 @@ loop.dec:
+ 
+ define i64 @cse_two_guards(ptr %base, i64 %n, ptr %cmp) {
+ ; CHECK-LABEL: define i64 @cse_two_guards(
+-; CHECK-SAME: ptr [[BASE:%.*]], i64 [[N:%.*]], ptr nofree readonly captures(none) [[CMP:%.*]]) local_unnamed_addr #[[ATTR1]] {
++; CHECK-SAME: ptr [[BASE:%.*]], i64 [[N:%.*]], ptr nofree readonly captures(none) [[CMP:%.*]]) local_unnamed_addr #[[ATTR0]] {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[N_FR:%.*]] = freeze i64 [[N]]
+ ; CHECK-NEXT:    store ptr [[BASE]], ptr [[BASE]], align 8
+@@ -284,7 +272,7 @@ loop2.inc:
+ 
+ define i1 @iter_ne(ptr %it) {
+ ; CHECK-LABEL: define i1 @iter_ne(
+-; CHECK-SAME: ptr nofree readonly captures(none) [[IT:%.*]]) local_unnamed_addr #[[ATTR3:[0-9]+]] {
++; CHECK-SAME: ptr nofree readonly captures(none) [[IT:%.*]]) local_unnamed_addr #[[ATTR2:[0-9]+]] {
+ ; CHECK-NEXT:    [[CUR:%.*]] = load ptr, ptr [[IT]], align 8
+ ; CHECK-NEXT:    [[NE:%.*]] = icmp ne ptr [[CUR]], @end
+ ; CHECK-NEXT:    ret i1 [[NE]]
+@@ -296,7 +284,7 @@ define i1 @iter_ne(ptr %it) {
+ 
+ define ptr @iter_inc(ptr %it) {
+ ; CHECK-LABEL: define noalias noundef ptr @iter_inc(
+-; CHECK-SAME: ptr nofree captures(none) [[IT:%.*]]) local_unnamed_addr #[[ATTR4:[0-9]+]] {
++; CHECK-SAME: ptr nofree captures(none) [[IT:%.*]]) local_unnamed_addr #[[ATTR3:[0-9]+]] {
+ ; CHECK-NEXT:    [[CUR:%.*]] = load ptr, ptr [[IT]], align 8
+ ; CHECK-NEXT:    [[NEXT:%.*]] = getelementptr nusw nuw i8, ptr [[CUR]], i64 48
+ ; CHECK-NEXT:    store ptr [[NEXT]], ptr [[IT]], align 8
+@@ -310,7 +298,7 @@ define ptr @iter_inc(ptr %it) {
+ 
+ define i1 @lambda(ptr %lam, ptr %cmp) {
+ ; CHECK-LABEL: define i1 @lambda(
+-; CHECK-SAME: ptr nofree readonly captures(none) [[LAM:%.*]], ptr nofree readonly captures(none) [[CMP:%.*]]) local_unnamed_addr #[[ATTR3]] {
++; CHECK-SAME: ptr nofree readonly captures(none) [[LAM:%.*]], ptr nofree readonly captures(none) [[CMP:%.*]]) local_unnamed_addr #[[ATTR2]] {
+ ; CHECK-NEXT:    [[CMP_VAL:%.*]] = load i64, ptr [[CMP]], align 8
+ ; CHECK-NEXT:    [[CMP_F:%.*]] = uitofp i64 [[CMP_VAL]] to double
+ ; CHECK-NEXT:    [[LAM_VAL:%.*]] = load i64, ptr [[LAM]], align 8
+@@ -330,7 +318,7 @@ define i1 @lambda(ptr %lam, ptr %cmp) {
+ 
+ define ptr @gep_base_cancel(ptr %p, ptr %end, ptr noalias %a) {
+ ; CHECK-LABEL: define noundef ptr @gep_base_cancel(
+-; CHECK-SAME: ptr nofree readonly captures(address) [[P:%.*]], ptr nofree readnone captures(address) [[END:%.*]], ptr noalias nofree captures(address, ret: address, provenance) [[A:%.*]]) local_unnamed_addr #[[ATTR5:[0-9]+]] {
++; CHECK-SAME: ptr nofree readonly captures(address) [[P:%.*]], ptr nofree readnone captures(address) [[END:%.*]], ptr noalias nofree captures(address, ret: address, provenance) [[A:%.*]]) local_unnamed_addr #[[ATTR4:[0-9]+]] {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[IN_BOUNDS6:%.*]] = icmp ult ptr [[P]], [[END]]
+ ; CHECK-NEXT:    br i1 [[IN_BOUNDS6]], label %[[BODY_PREHEADER:.*]], label %[[COMMON_RET:.*]]
