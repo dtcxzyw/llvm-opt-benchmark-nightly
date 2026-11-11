@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.d = lshr i32 %0, 10
   %i.e = and i32 %i.d, 1020
-  %i.f = or i32 %i.e, %.1                         ; 3 uses
+  %i.f = or i32 %.1, %i.e                         ; 3 uses
   %i.g = and i32 %i.f, 128
   %.not40 = icmp eq i32 %i.g, 0
   %spec.select.v = select i1 %.not40, i32 2, i32 553646082
-  %spec.select = or i32 %i.f, %spec.select.v      ; 4 uses
+  %spec.select = or i32 %spec.select.v, %i.f      ; 4 uses
   %i.h = and i32 %i.f, 960
   %.not41 = icmp eq i32 %i.h, 0
   br i1 %.not41, label %bb.j, label %bb.e
@@ -612,7 +612,7 @@ bb.amw:                                           ; preds = %bb.amv, %bb.amu, %b
   %.not9224.i = icmp eq i32 %i.exq, 0
   %i.exr = and i32 %.0.i481487, -1073741824
   %i.exs = select i1 %.not9224.i, i32 0, i32 %i.exr
-  %.938478.i = or i32 %.928477.i, %i.exs          ; 3 uses
+  %.938478.i = or i32 %.928477.i, %i.exs          ; 4 uses
   %i.ext = icmp eq i8 %i.ja, 0
   br i1 %i.ext, label %bb.amx, label %bb.amz
 
@@ -723,9 +723,9 @@ bb.anl:                                           ; preds = %bb.ank, %bb.ank, %b
   %i.ezc = getelementptr inbounds nuw i8, ptr %i.ezb, i64 12
   %i.ezd = load i32, ptr %i.ezc, align 4, !tbaa !140 ; 2 uses
   %i.eze = icmp slt i32 %i.ezd, 0
-  %i.ezf = or i32 %.57706.i, 2176
-  %7 = select i1 %i.eze, i32 %i.ezf, i32 0
-  %.968481.i = or i32 %7, %.938478.i
+  %i.ezf = or i32 %.938478.i, %.57706.i
+  %7 = or i32 %i.ezf, 2176
+  %.968481.i = select i1 %i.eze, i32 %7, i32 %.938478.i
   %.not9239.i = icmp eq ptr %5, null
   %i.ezg = getelementptr inbounds nuw i8, ptr %.08506.i, i64 32
   %i.ezh = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -738,7 +738,7 @@ bb.anl:                                           ; preds = %bb.ank, %bb.ank, %b
   br label %bb.anm
 
 bb.anm:                                           ; preds = %zend_ssa_next_use.exit.i, %bb.anl
-  %.978482.i = phi i32 [ %.968481.i, %bb.anl ], [ %.988483.i, %zend_ssa_next_use.exit.i ] ; 22 uses
+  %.978482.i = phi i32 [ %.968481.i, %bb.anl ], [ %.988483.i, %zend_ssa_next_use.exit.i ] ; 23 uses
   %.08382.i = phi i32 [ %i.ezd, %bb.anl ], [ %.0.i.i, %zend_ssa_next_use.exit.i ] ; 3 uses
   %i.ezk = icmp sgt i32 %.08382.i, -1
   br i1 %i.ezk, label %bb.ann, label %.thread565
@@ -839,8 +839,8 @@ bb.anx:                                           ; preds = %bb.anw
 bb.any:                                           ; preds = %bb.anw
   %i.ezz = and i32 %.978482.i, 32768
   %.not9243.i = icmp eq i32 %i.ezz, 0
-  %.reass1546 = select i1 %.not9243.i, i32 %invariant.op1545, i32 0
-  %spec.select = or i32 %.978482.i, %.reass1546
+  %.reass1546.reass = or i32 %.978482.i, %invariant.op1545
+  %spec.select = select i1 %.not9243.i, i32 %.reass1546.reass, i32 %.978482.i
   br label %bb.aoa
 
 bb.anz:                                           ; preds = %bb.ant
@@ -1243,7 +1243,7 @@ bb.ais:                                           ; preds = %bb.air, %bb.aiq, %b
   %.not9224.i = icmp eq i32 %i.fyi, 0
   %i.fyj = and i32 %.0.i4043437, -1073741824
   %i.fyk = select i1 %.not9224.i, i32 0, i32 %i.fyj
-  %.938478.i = or i32 %.928477.i, %i.fyk          ; 3 uses
+  %.938478.i = or i32 %.928477.i, %i.fyk          ; 4 uses
   %i.fyl = icmp eq i8 %i.uu, 0
   br i1 %i.fyl, label %bb.ait, label %bb.aiv
 
@@ -1354,9 +1354,9 @@ bb.ajh:                                           ; preds = %bb.ajg, %bb.ajg, %b
   %i.fzu = getelementptr inbounds nuw i8, ptr %i.fzt, i64 12
   %i.fzv = load i32, ptr %i.fzu, align 4, !tbaa !140 ; 2 uses
   %i.fzw = icmp slt i32 %i.fzv, 0
-  %i.fzx = or i32 %.57706.i, 2176
-  %5 = select i1 %i.fzw, i32 %i.fzx, i32 0
-  %.968481.i = or i32 %5, %.938478.i
+  %i.fzx = or i32 %.938478.i, %.57706.i
+  %5 = or i32 %i.fzx, 2176
+  %.968481.i = select i1 %i.fzw, i32 %5, i32 %.938478.i
   %.idx = shl nuw nsw i64 %i.lb, 5
   %i.fzy = add nsw i64 %.idx, %.08506.i.idx
   %i.fzz = ashr exact i64 %i.fzy, 5
@@ -1368,7 +1368,7 @@ bb.ajh:                                           ; preds = %bb.ajg, %bb.ajg, %b
   br label %bb.aji
 
 bb.aji:                                           ; preds = %zend_ssa_next_use.exit.i, %bb.ajh
-  %.978482.i = phi i32 [ %.968481.i, %bb.ajh ], [ %.988483.i, %zend_ssa_next_use.exit.i ] ; 21 uses
+  %.978482.i = phi i32 [ %.968481.i, %bb.ajh ], [ %.988483.i, %zend_ssa_next_use.exit.i ] ; 22 uses
   %.08382.i = phi i32 [ %i.fzv, %bb.ajh ], [ %.0.i.i, %zend_ssa_next_use.exit.i ] ; 2 uses
   %i.gab = icmp sgt i32 %.08382.i, -1
   br i1 %i.gab, label %bb.ajj, label %.thread1432
@@ -1446,8 +1446,8 @@ bb.ajp:                                           ; preds = %bb.ajo
 bb.ajq:                                           ; preds = %bb.ajo
   %i.gah = and i32 %.978482.i, 32768
   %.not9243.i = icmp eq i32 %i.gah, 0
-  %.reass3918 = select i1 %.not9243.i, i32 %invariant.op3917, i32 0
-  %spec.select2247 = or i32 %.978482.i, %.reass3918
+  %.reass3918.reass = or i32 %.978482.i, %invariant.op3917
+  %spec.select2247 = select i1 %.not9243.i, i32 %.reass3918.reass, i32 %.978482.i
   br label %bb.ajs
 
 bb.ajr:                                           ; preds = %bb.ajl

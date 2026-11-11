@@ -205,13 +205,13 @@ bb.m:                                             ; preds = %.thread.i
   %i.dp = load i64, ptr %2, align 4
   %i.dq = and i64 %i.dp, 4286578688
   %i.dr = and i64 %i.di, 1048576
+  %4 = or disjoint i64 %i.dr, %i.dq
   %i.ds = and i32 %3, 4095
   %i.dt = zext nneg i32 %i.ds to i64
   %i.du = shl nuw i64 %i.dt, 52
-  %4 = or disjoint i64 %i.dr, %i.du
-  %i.dv = or disjoint i64 %i.dq, %4
-  %i.dw = or disjoint i64 %i.dv, %i.dg
-  %i.dx = or disjoint i64 %i.dw, %i.dm
+  %i.dv = or disjoint i64 %4, %i.du
+  %i.dw = or disjoint i64 %i.dv, %i.dm
+  %i.dx = or disjoint i64 %i.dw, %i.dg
   %i.dy = or disjoint i64 %i.dx, 6291456
   store i64 %i.dy, ptr %i.dh, align 4
   %i.dz = icmp ult i32 %3, 4096
@@ -614,13 +614,13 @@ bb.a:
   %i.aq = load i64, ptr %2, align 4
   %i.ar = and i64 %i.aq, 4286578688
   %i.as = and i64 %i.aj, 1048576
+  %4 = or disjoint i64 %i.as, %i.ar
   %i.at = and i32 %3, 4095
   %i.au = zext nneg i32 %i.at to i64
   %i.av = shl nuw i64 %i.au, 52
-  %4 = or disjoint i64 %i.as, %i.av
-  %i.aw = or disjoint i64 %i.ar, %4
-  %i.ax = or disjoint i64 %i.aw, %i.ai
-  %i.ay = or disjoint i64 %i.ax, %i.an
+  %i.aw = or disjoint i64 %4, %i.av
+  %i.ax = or disjoint i64 %i.aw, %i.an
+  %i.ay = or disjoint i64 %i.ax, %i.ai
   %i.az = or disjoint i64 %i.ay, 6291456
   store i64 %i.az, ptr %i.aa, align 4
   %i.ba = icmp ult i32 %3, 4096

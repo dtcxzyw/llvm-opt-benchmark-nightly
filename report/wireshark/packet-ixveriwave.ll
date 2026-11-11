@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
   %i.w = zext nneg i8 %i.v to i16
   %i.x = shl nuw nsw i16 %i.w, 10
   %i.y = and i16 %i.u, -1026
-  %i.z = or disjoint i16 %i.y, 1
-  %i.aa = or disjoint i16 %i.x, %i.z
+  %i.z = or disjoint i16 %i.y, %i.x
+  %i.aa = or disjoint i16 %i.z, 1
   store i16 %i.aa, ptr %i.t, align 4
   %i.ab = load i32, ptr @hf_radiotap_vht_group_id, align 4
   %i.ac = call ptr @proto_tree_add_item_ret_uint(ptr noundef %0, i32 noundef %i.ab, ptr noundef %1, i32 noundef %2, i32 noundef 3, i32 noundef -2147483648, ptr noundef nonnull %i.c) ; 0 uses
@@ -252,8 +252,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bd = zext nneg i8 %i.bc to i16
   %i.be = shl nuw nsw i16 %i.bd, 11
   %i.bf = and i16 %i.bb, -2051
-  %i.bg = or disjoint i16 %i.bf, 2
-  %i.bh = or disjoint i16 %i.be, %i.bg
+  %i.bg = or disjoint i16 %i.bf, %i.be
+  %i.bh = or disjoint i16 %i.bg, 2
   store i16 %i.bh, ptr %i.t, align 4
   %i.bi = add nuw nsw i32 %2, 3                   ; 11 uses
   %i.bj = load i32, ptr @hf_radiotap_vht_short_gi, align 4
@@ -263,8 +263,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bn = zext nneg i8 %i.bm to i16
   %i.bo = shl nuw nsw i16 %i.bn, 12
   %i.bp = and i16 %i.bl, -4101
-  %i.bq = or disjoint i16 %i.bp, 4
-  %i.br = or disjoint i16 %i.bo, %i.bq
+  %i.bq = or disjoint i16 %i.bp, %i.bo
+  %i.br = or disjoint i16 %i.bq, 4
   store i16 %i.br, ptr %i.t, align 4
   %i.bs = load i32, ptr @hf_radiotap_vht_short_gi_nsym_disambig, align 4
   %i.bt = call ptr @proto_tree_add_item_ret_boolean(ptr noundef %0, i32 noundef %i.bs, ptr noundef %1, i32 noundef %i.bi, i32 noundef 3, i32 noundef -2147483648, ptr noundef nonnull %i.g) ; 0 uses
@@ -273,8 +273,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bw = zext nneg i8 %i.bv to i16
   %i.bx = shl nuw nsw i16 %i.bw, 13
   %i.by = and i16 %i.bu, -8201
-  %i.bz = or disjoint i16 %i.by, 8
-  %i.ca = or disjoint i16 %i.bx, %i.bz
+  %i.bz = or disjoint i16 %i.by, %i.bx
+  %i.ca = or disjoint i16 %i.bz, 8
   store i16 %i.ca, ptr %i.t, align 4
   %i.cb = load i32, ptr %i.c, align 4             ; 2 uses
   %switch.selectcmp.case1 = icmp eq i32 %i.cb, 63
@@ -291,8 +291,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ci = zext nneg i8 %i.ch to i16
   %i.cj = shl nuw nsw i16 %i.ci, 14
   %i.ck = and i16 %i.cg, -16401
-  %i.cl = or disjoint i16 %i.ck, 16
-  %i.cm = or disjoint i16 %i.cj, %i.cl
+  %i.cl = or disjoint i16 %i.ck, %i.cj
+  %i.cm = or disjoint i16 %i.cl, 16
   store i16 %i.cm, ptr %i.t, align 4
   %i.cn = load i32, ptr %i.c, align 4
   switch i32 %i.cn, label %bb.g [
@@ -310,8 +310,8 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.cu = zext nneg i8 %i.ct to i16
   %i.cv = shl nuw i16 %i.cu, 15
   %i.cw = and i16 %i.cs, 32735
-  %i.cx = or disjoint i16 %i.cw, 32
-  %i.cy = or disjoint i16 %i.cv, %i.cx
+  %i.cx = or disjoint i16 %i.cw, %i.cv
+  %i.cy = or disjoint i16 %i.cx, 32
   store i16 %i.cy, ptr %i.t, align 4
   br label %bb.h
 

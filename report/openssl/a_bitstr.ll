@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.k
   %.2 = add nsw i64 %.1, %i.ba
   %i.bb = load i64, ptr %i.g, align 8, !tbaa !15
   %i.bc = and i64 %i.bb, -16
-  %3 = or i64 %i.bc, %.2
+  %3 = add nuw nsw i64 %.2, %i.bc
   %i.bd = or i64 %3, 8
   store i64 %i.bd, ptr %i.g, align 8, !tbaa !15
   br label %.critedge

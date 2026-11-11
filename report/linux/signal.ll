@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %.not6 = icmp eq i32 %i.n, 0
   br i1 %.not6, label %task_set_jobctl_pending.exit, label %task_sigpending.exit.i.i
 
-task_sigpending.exit.i.i:                         ; preds = %bb.b, %bb.c
+task_sigpending.exit.i.i:                         ; preds = %bb.c, %bb.b
   %.0 = phi i64 [ %i.k, %bb.b ], [ %i.e, %bb.c ]
   %i.o = load volatile i64, ptr %0, align 8
   %i.p = and i64 %i.o, 2

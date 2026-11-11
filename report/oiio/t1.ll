@@ -205,9 +205,9 @@ opj_mqc_raw_decode.exit23.i.us.i.i:               ; preds = %.sink.split.i21.i.u
   %i.jq = or i32 %i.jp, 32
   store i32 %i.jq, ptr %i.jo, align 4, !tbaa !6
   %i.jr = shl nuw nsw i32 %i.jl, 19
-  %2 = or disjoint i32 %i.jr, 16
-  %3 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
-  %i.js = or i32 %3, %2
+  %2 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
+  %3 = or i32 %i.jr, %2
+  %i.js = or i32 %3, 16
   store i32 %i.js, ptr %.1132.us.i.i, align 4, !tbaa !6
   %i.jt = getelementptr inbounds nuw i8, ptr %.1132.us.i.i, i64 4 ; 2 uses
   %i.ju = load i32, ptr %i.jt, align 4, !tbaa !6
@@ -221,9 +221,9 @@ bb.ay:                                            ; preds = %opj_mqc_raw_decode.
   %i.jy = sub nsw i64 0, %i.jx
   %i.jz = getelementptr inbounds [4 x i8], ptr %.1132.us.i.i, i64 %i.jy ; 4 uses
   %i.ka = shl nuw i32 %i.jl, 31
-  %4 = or disjoint i32 %i.ka, 65536
-  %5 = load i32, ptr %i.jz, align 4, !tbaa !6
-  %i.kb = or i32 %5, %4
+  %4 = load i32, ptr %i.jz, align 4, !tbaa !6
+  %5 = or i32 %i.ka, %4
+  %i.kb = or i32 %5, 65536
   store i32 %i.kb, ptr %i.jz, align 4, !tbaa !6
   %i.kc = getelementptr inbounds i8, ptr %i.jz, i64 -4 ; 2 uses
   %i.kd = load i32, ptr %i.kc, align 4, !tbaa !6
@@ -326,9 +326,9 @@ opj_mqc_raw_decode.exit23.i74.us.i.i:             ; preds = %.sink.split.i21.i77
   %i.lq = or i32 %i.lp, 256
   store i32 %i.lq, ptr %i.lo, align 4, !tbaa !6
   %i.lr = shl nuw nsw i32 %i.lm, 22
-  %6 = or disjoint i32 %i.lr, 128
-  %7 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
-  %i.ls = or i32 %7, %6
+  %6 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
+  %7 = or i32 %i.lr, %6
+  %i.ls = or i32 %7, 128
   %i.lt = getelementptr inbounds nuw i8, ptr %.1132.us.i.i, i64 4 ; 2 uses
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !6
   %i.lv = or i32 %i.lu, 64
@@ -426,9 +426,9 @@ opj_mqc_raw_decode.exit23.i87.us.i.i:             ; preds = %.sink.split.i21.i90
   %i.ne = or i32 %i.nd, 2048
   store i32 %i.ne, ptr %i.nc, align 4, !tbaa !6
   %i.nf = shl nuw nsw i32 %i.na, 25
-  %8 = or disjoint i32 %i.nf, 1024
-  %9 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
-  %i.ng = or i32 %9, %8
+  %8 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
+  %9 = or i32 %i.nf, %8
+  %i.ng = or i32 %9, 1024
   %i.nh = getelementptr inbounds nuw i8, ptr %.1132.us.i.i, i64 4 ; 2 uses
   %i.ni = load i32, ptr %i.nh, align 4, !tbaa !6
   %i.nj = or i32 %i.ni, 512
@@ -524,9 +524,9 @@ opj_mqc_raw_decode.exit23.i100.us.i.i:            ; preds = %.sink.split.i21.i10
   %i.ou = or i32 %i.ot, 16384
   store i32 %i.ou, ptr %i.os, align 4, !tbaa !6
   %i.ov = shl nuw nsw i32 %i.oo, 28
-  %10 = or disjoint i32 %i.ov, 8192
-  %11 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
-  %i.ow = or i32 %11, %10
+  %10 = load i32, ptr %.1132.us.i.i, align 4, !tbaa !6
+  %11 = or i32 %i.ov, %10
+  %i.ow = or i32 %11, 8192
   store i32 %i.ow, ptr %.1132.us.i.i, align 4, !tbaa !6
   %i.ox = getelementptr inbounds nuw i8, ptr %.1132.us.i.i, i64 4 ; 2 uses
   %i.oy = load i32, ptr %i.ox, align 4, !tbaa !6
@@ -535,9 +535,9 @@ opj_mqc_raw_decode.exit23.i100.us.i.i:            ; preds = %.sink.split.i21.i10
   %i.pa = zext i32 %i.or to i64
   %i.pb = getelementptr inbounds nuw [4 x i8], ptr %.1132.us.i.i, i64 %i.pa ; 4 uses
   %i.pc = shl nuw nsw i32 %i.oo, 18
-  %12 = or disjoint i32 %i.pc, 2
-  %13 = load i32, ptr %i.pb, align 4, !tbaa !6
-  %i.pd = or i32 %13, %12
+  %12 = load i32, ptr %i.pb, align 4, !tbaa !6
+  %13 = or i32 %i.pc, %12
+  %i.pd = or i32 %13, 2
   store i32 %i.pd, ptr %i.pb, align 4, !tbaa !6
   %i.pe = getelementptr inbounds i8, ptr %i.pb, i64 -4 ; 2 uses
   %i.pf = load i32, ptr %i.pe, align 4, !tbaa !6
@@ -711,9 +711,9 @@ bb.bz:                                            ; preds = %opj_mqc_raw_decode.
   %i.sc = sub nsw i64 0, %i.sb
   %i.sd = getelementptr inbounds [4 x i8], ptr %.2149.i.i, i64 %i.sc ; 4 uses
   %i.se = shl nuw i32 %i.rl, 31
-  %14 = or disjoint i32 %i.se, 65536
-  %15 = load i32, ptr %i.sd, align 4, !tbaa !6
-  %i.sf = or i32 %15, %14
+  %14 = load i32, ptr %i.sd, align 4, !tbaa !6
+  %15 = or i32 %i.se, %14
+  %i.sf = or i32 %15, 65536
   store i32 %i.sf, ptr %i.sd, align 4, !tbaa !6
   %i.sg = getelementptr inbounds i8, ptr %i.sd, i64 -4 ; 2 uses
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !6
@@ -733,9 +733,9 @@ bb.cb:                                            ; preds = %bb.ca
   %i.sn = zext i32 %i.ro to i64
   %i.so = getelementptr inbounds nuw [4 x i8], ptr %.2149.i.i, i64 %i.sn ; 4 uses
   %i.sp = shl nuw nsw i32 %i.rl, 18
-  %16 = or disjoint i32 %i.sp, 2
-  %17 = load i32, ptr %i.so, align 4, !tbaa !6
-  %i.sq = or i32 %17, %16
+  %16 = load i32, ptr %i.so, align 4, !tbaa !6
+  %17 = or i32 %i.sp, %16
+  %i.sq = or i32 %17, 2
   store i32 %i.sq, ptr %i.so, align 4, !tbaa !6
   %i.sr = getelementptr inbounds i8, ptr %i.so, i64 -4 ; 2 uses
   %i.ss = load i32, ptr %i.sr, align 4, !tbaa !6
@@ -1138,9 +1138,9 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   %i.tl = or i32 %i.tk, 32
   store i32 %i.tl, ptr %i.qh, align 4, !tbaa !6
   %i.tm = shl nuw nsw i32 %i.qz, 19
-  %2 = or disjoint i32 %i.tm, 16
-  %3 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
-  %i.tn = or i32 %3, %2                           ; 2 uses
+  %2 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
+  %3 = or i32 %i.tm, %2
+  %i.tn = or i32 %3, 16                           ; 2 uses
   store i32 %i.tn, ptr %.19241121.i.i, align 4, !tbaa !6
   %i.to = load i32, ptr %i.qj, align 4, !tbaa !6
   %i.tp = or i32 %i.to, 8
@@ -1482,9 +1482,9 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   %i.zs = or i32 %i.zr, 256
   store i32 %i.zs, ptr %i.wo, align 4, !tbaa !6
   %i.zt = shl nuw nsw i32 %i.xh, 22
-  %4 = or disjoint i32 %i.zt, 128
-  %5 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
-  %i.zu = or i32 %5, %4
+  %4 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
+  %5 = or i32 %i.zt, %4
+  %i.zu = or i32 %5, 128
   %i.zv = load i32, ptr %i.wq, align 4, !tbaa !6
   %i.zw = or i32 %i.zv, 64
   store i32 %i.zw, ptr %i.wq, align 4, !tbaa !6
@@ -1804,9 +1804,9 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
   %i.afl = or i32 %i.afk, 2048
   store i32 %i.afl, ptr %i.ach, align 4, !tbaa !6
   %i.afm = shl nuw nsw i32 %i.ada, 25
-  %6 = or disjoint i32 %i.afm, 1024
-  %7 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
-  %i.afn = or i32 %7, %6
+  %6 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
+  %7 = or i32 %i.afm, %6
+  %i.afn = or i32 %7, 1024
   %i.afo = load i32, ptr %i.acj, align 4, !tbaa !6
   %i.afp = or i32 %i.afo, 512
   store i32 %i.afp, ptr %i.acj, align 4, !tbaa !6
@@ -2128,9 +2128,9 @@ bb.eq:                                            ; preds = %bb.ep, %bb.eo
   %i.alg = or i32 %i.alf, 16384
   store i32 %i.alg, ptr %i.aia, align 4, !tbaa !6
   %i.alh = shl nuw nsw i32 %i.ait, 28
-  %8 = or disjoint i32 %i.alh, 8192
-  %9 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
-  %i.ali = or i32 %9, %8
+  %8 = load i32, ptr %.19241121.i.i, align 4, !tbaa !6
+  %9 = or i32 %i.alh, %8
+  %i.ali = or i32 %9, 8192
   store i32 %i.ali, ptr %.19241121.i.i, align 4, !tbaa !6
   %i.alj = load i32, ptr %i.aic, align 4, !tbaa !6
   %i.alk = or i32 %i.alj, 4096
@@ -2138,9 +2138,9 @@ bb.eq:                                            ; preds = %bb.ep, %bb.eo
   %i.all = zext i32 %i.ale to i64
   %i.alm = getelementptr inbounds nuw [4 x i8], ptr %.19241121.i.i, i64 %i.all ; 4 uses
   %i.aln = shl nuw nsw i32 %i.ait, 18
-  %10 = or disjoint i32 %i.aln, 2
-  %11 = load i32, ptr %i.alm, align 4, !tbaa !6
-  %i.alo = or i32 %11, %10
+  %10 = load i32, ptr %i.alm, align 4, !tbaa !6
+  %11 = or i32 %i.aln, %10
+  %i.alo = or i32 %11, 2
   store i32 %i.alo, ptr %i.alm, align 4, !tbaa !6
   %i.alp = getelementptr inbounds i8, ptr %i.alm, i64 -4 ; 2 uses
   %i.alq = load i32, ptr %i.alp, align 4, !tbaa !6
@@ -2543,9 +2543,9 @@ bb.gb:                                            ; preds = %bb.ga
   %i.ats = zext i32 %i.asr to i64
   %i.att = getelementptr inbounds nuw [4 x i8], ptr %.29251172.i.i, i64 %i.ats ; 4 uses
   %i.atu = shl nuw nsw i32 %i.aqg, 18
-  %12 = or disjoint i32 %i.atu, 2
-  %13 = load i32, ptr %i.att, align 4, !tbaa !6
-  %i.atv = or i32 %13, %12
+  %12 = load i32, ptr %i.att, align 4, !tbaa !6
+  %13 = or i32 %i.atu, %12
+  %i.atv = or i32 %13, 2
   store i32 %i.atv, ptr %i.att, align 4, !tbaa !6
   %i.atw = getelementptr inbounds i8, ptr %i.att, i64 -4 ; 2 uses
   %i.atx = load i32, ptr %i.atw, align 4, !tbaa !6
@@ -2948,9 +2948,9 @@ bb.lx:                                            ; preds = %bb.lw
   %i.bxq = zext i32 %i.bwp to i64
   %i.bxr = getelementptr inbounds nuw [4 x i8], ptr %.1449718.i.i, i64 %i.bxq ; 4 uses
   %i.bxs = shl nuw nsw i32 %i.bva, 18
-  %14 = or disjoint i32 %i.bxs, 2
-  %15 = load i32, ptr %i.bxr, align 4, !tbaa !6
-  %i.bxt = or i32 %15, %14
+  %14 = load i32, ptr %i.bxr, align 4, !tbaa !6
+  %15 = or i32 %i.bxs, %14
+  %i.bxt = or i32 %15, 2
   store i32 %i.bxt, ptr %i.bxr, align 4, !tbaa !6
   %i.bxu = getelementptr inbounds i8, ptr %i.bxr, i64 -4 ; 2 uses
   %i.bxv = load i32, ptr %i.bxu, align 4, !tbaa !6
@@ -3353,9 +3353,9 @@ bb.na:                                            ; preds = %bb.mz
   %i.cey = zext i32 %i.cdx to i64
   %i.cez = getelementptr inbounds nuw [4 x i8], ptr %.2769.i.i, i64 %i.cey ; 4 uses
   %i.cfa = shl nuw nsw i32 %i.cci, 18
-  %16 = or disjoint i32 %i.cfa, 2
-  %17 = load i32, ptr %i.cez, align 4, !tbaa !6
-  %i.cfb = or i32 %17, %16
+  %16 = load i32, ptr %i.cez, align 4, !tbaa !6
+  %17 = or i32 %i.cfa, %16
+  %i.cfb = or i32 %17, 2
   store i32 %i.cfb, ptr %i.cez, align 4, !tbaa !6
   %i.cfc = getelementptr inbounds i8, ptr %i.cez, i64 -4 ; 2 uses
   %i.cfd = load i32, ptr %i.cfc, align 4, !tbaa !6
@@ -3758,9 +3758,9 @@ bb.fg:                                            ; preds = %bb.ex
   store i32 %i.yr, ptr %i.vh, align 4, !tbaa !6
   %i.ys = getelementptr inbounds nuw i8, ptr %.1767963.i, i64 264 ; 2 uses
   %i.yt = shl i32 %i.yi, 18
-  %3 = or disjoint i32 %i.yt, 2
-  %4 = load i32, ptr %i.ys, align 4, !tbaa !6
-  %i.yu = or i32 %4, %3
+  %3 = load i32, ptr %i.ys, align 4, !tbaa !6
+  %4 = or i32 %i.yt, %3
+  %i.yu = or i32 %4, 2
   store i32 %i.yu, ptr %i.ys, align 4, !tbaa !6
   %i.yv = getelementptr inbounds nuw i8, ptr %.1767963.i, i64 260 ; 2 uses
   %i.yw = load i32, ptr %i.yv, align 4, !tbaa !6
@@ -4163,9 +4163,9 @@ bb.gy:                                            ; preds = %bb.gp
   store i32 %i.afk, ptr %i.acb, align 4, !tbaa !6
   %i.afl = getelementptr inbounds i8, ptr %.1772968.i, i64 -264 ; 2 uses
   %i.afm = shl i32 %i.afc, 31
-  %5 = or disjoint i32 %i.afm, 65536
-  %6 = load i32, ptr %i.afl, align 4, !tbaa !6
-  %i.afn = or i32 %6, %5
+  %5 = load i32, ptr %i.afl, align 4, !tbaa !6
+  %6 = or i32 %i.afm, %5
+  %i.afn = or i32 %6, 65536
   store i32 %i.afn, ptr %i.afl, align 4, !tbaa !6
   %i.afo = getelementptr inbounds i8, ptr %.1772968.i, i64 -268 ; 2 uses
   %i.afp = load i32, ptr %i.afo, align 4, !tbaa !6
@@ -4568,9 +4568,9 @@ bb.lo:                                            ; preds = %bb.lf
   store i32 %i.ayi, ptr %i.auy, align 4, !tbaa !6
   %i.ayj = getelementptr inbounds nuw i8, ptr %.1772968.i, i64 264 ; 2 uses
   %i.ayk = shl i32 %i.axz, 18
-  %7 = or disjoint i32 %i.ayk, 2
-  %8 = load i32, ptr %i.ayj, align 4, !tbaa !6
-  %i.ayl = or i32 %8, %7
+  %7 = load i32, ptr %i.ayj, align 4, !tbaa !6
+  %8 = or i32 %i.ayk, %7
+  %i.ayl = or i32 %8, 2
   store i32 %i.ayl, ptr %i.ayj, align 4, !tbaa !6
   %i.aym = getelementptr inbounds nuw i8, ptr %.1772968.i, i64 260 ; 2 uses
   %i.ayn = load i32, ptr %i.aym, align 4, !tbaa !6
@@ -4973,9 +4973,9 @@ bb.ry:                                            ; preds = %bb.rx, %bb.rw, %bb.
   %i.byx = zext i32 %i.byw to i64
   %i.byy = getelementptr inbounds nuw [4 x i8], ptr %.1782986.us.i, i64 %i.byx ; 4 uses
   %i.byz = shl i32 %i.byl, 18
-  %9 = or disjoint i32 %i.byz, 2
-  %10 = load i32, ptr %i.byy, align 4, !tbaa !6
-  %i.bza = or i32 %10, %9
+  %9 = load i32, ptr %i.byy, align 4, !tbaa !6
+  %10 = or i32 %i.byz, %9
+  %i.bza = or i32 %10, 2
   store i32 %i.bza, ptr %i.byy, align 4, !tbaa !6
   %i.bzb = getelementptr inbounds i8, ptr %i.byy, i64 -4 ; 2 uses
   %i.bzc = load i32, ptr %i.bzb, align 4, !tbaa !6
@@ -5378,9 +5378,9 @@ bb.tq:                                            ; preds = %bb.tp, %bb.to, %bb.
   %i.chg = sub nsw i64 0, %i.chf
   %i.chh = getelementptr inbounds [4 x i8], ptr %.1788992.us.i, i64 %i.chg ; 4 uses
   %i.chi = shl i32 %i.cgu, 31
-  %11 = or disjoint i32 %i.chi, 65536
-  %12 = load i32, ptr %i.chh, align 4, !tbaa !6
-  %i.chj = or i32 %12, %11
+  %11 = load i32, ptr %i.chh, align 4, !tbaa !6
+  %12 = or i32 %i.chi, %11
+  %i.chj = or i32 %12, 65536
   store i32 %i.chj, ptr %i.chh, align 4, !tbaa !6
   %i.chk = getelementptr inbounds i8, ptr %i.chh, i64 -4 ; 2 uses
   %i.chl = load i32, ptr %i.chk, align 4, !tbaa !6
@@ -5783,9 +5783,9 @@ bb.yg:                                            ; preds = %bb.yf, %bb.ye, %bb.
   %i.dah = zext i32 %i.dag to i64
   %i.dai = getelementptr inbounds nuw [4 x i8], ptr %.1788992.us.i, i64 %i.dah ; 4 uses
   %i.daj = shl i32 %i.czv, 18
-  %13 = or disjoint i32 %i.daj, 2
-  %14 = load i32, ptr %i.dai, align 4, !tbaa !6
-  %i.dak = or i32 %14, %13
+  %13 = load i32, ptr %i.dai, align 4, !tbaa !6
+  %14 = or i32 %i.daj, %13
+  %i.dak = or i32 %14, 2
   store i32 %i.dak, ptr %i.dai, align 4, !tbaa !6
   %i.dal = getelementptr inbounds i8, ptr %i.dai, i64 -4 ; 2 uses
   %i.dam = load i32, ptr %i.dal, align 4, !tbaa !6
@@ -6188,9 +6188,9 @@ bb.mg:                                            ; preds = %bb.lx
   %.10.ph.i = or i32 %.10.ph.in.i, 8192
   %i.bap = getelementptr inbounds nuw i8, ptr %.115902050.i, i64 264 ; 2 uses
   %i.baq = shl i32 %.sink2472.i, 18
-  %3 = or disjoint i32 %i.baq, 2
-  %4 = load i32, ptr %i.bap, align 4, !tbaa !6
-  %i.bar = or i32 %4, %3
+  %3 = load i32, ptr %i.bap, align 4, !tbaa !6
+  %4 = or i32 %i.baq, %3
+  %i.bar = or i32 %4, 2
   store i32 %i.bar, ptr %i.bap, align 4, !tbaa !6
   %i.bas = getelementptr inbounds nuw i8, ptr %.115902050.i, i64 260 ; 2 uses
   %i.bat = load i32, ptr %i.bas, align 4, !tbaa !6
@@ -6593,9 +6593,9 @@ bb.pg:                                            ; preds = %bb.ox
   store i32 %i.blk, ptr %i.bih, align 4, !tbaa !6
   %i.bll = getelementptr inbounds i8, ptr %.116032060.i, i64 -264 ; 2 uses
   %i.blm = shl i32 %i.bld, 31
-  %5 = or disjoint i32 %i.blm, 65536
-  %6 = load i32, ptr %i.bll, align 4, !tbaa !6
-  %i.bln = or i32 %6, %5
+  %5 = load i32, ptr %i.bll, align 4, !tbaa !6
+  %6 = or i32 %i.blm, %5
+  %i.bln = or i32 %6, 65536
   store i32 %i.bln, ptr %i.bll, align 4, !tbaa !6
   %i.blo = getelementptr inbounds i8, ptr %.116032060.i, i64 -268 ; 2 uses
   %i.blp = load i32, ptr %i.blo, align 4, !tbaa !6
@@ -6998,9 +6998,9 @@ bb.uz:                                            ; preds = %bb.uq
   store i32 %i.cjv, ptr %i.cgm, align 4, !tbaa !6
   %i.cjw = getelementptr inbounds i8, ptr %.116032060.i, i64 -264 ; 2 uses
   %i.cjx = shl i32 %i.cjn, 31
-  %7 = or disjoint i32 %i.cjx, 65536
-  %8 = load i32, ptr %i.cjw, align 4, !tbaa !6
-  %i.cjy = or i32 %8, %7
+  %7 = load i32, ptr %i.cjw, align 4, !tbaa !6
+  %8 = or i32 %i.cjx, %7
+  %i.cjy = or i32 %8, 65536
   store i32 %i.cjy, ptr %i.cjw, align 4, !tbaa !6
   %i.cjz = getelementptr inbounds i8, ptr %.116032060.i, i64 -268 ; 2 uses
   %i.cka = load i32, ptr %i.cjz, align 4, !tbaa !6
@@ -7403,9 +7403,9 @@ bb.zm:                                            ; preds = %bb.zd
   %.10.ph.i38 = or i32 %.10.ph.in.i37, 8192
   %i.dck = getelementptr inbounds nuw i8, ptr %.116032060.i, i64 264 ; 2 uses
   %i.dcl = shl i32 %.sink2484.i, 18
-  %9 = or disjoint i32 %i.dcl, 2
-  %10 = load i32, ptr %i.dck, align 4, !tbaa !6
-  %i.dcm = or i32 %10, %9
+  %9 = load i32, ptr %i.dck, align 4, !tbaa !6
+  %10 = or i32 %i.dcl, %9
+  %i.dcm = or i32 %10, 2
   store i32 %i.dcm, ptr %i.dck, align 4, !tbaa !6
   %i.dcn = getelementptr inbounds nuw i8, ptr %.116032060.i, i64 260 ; 2 uses
   %i.dco = load i32, ptr %i.dcn, align 4, !tbaa !6
@@ -7808,9 +7808,9 @@ bb.amu:                                           ; preds = %bb.amt, %bb.ams, %b
   %i.fev = zext i32 %i.feu to i64
   %i.few = getelementptr inbounds nuw [4 x i8], ptr %.116092077.us.i, i64 %i.fev ; 4 uses
   %i.fex = shl i32 %.sink2552.i, 18
-  %11 = or disjoint i32 %i.fex, 2
-  %12 = load i32, ptr %i.few, align 4, !tbaa !6
-  %i.fey = or i32 %12, %11
+  %11 = load i32, ptr %i.few, align 4, !tbaa !6
+  %12 = or i32 %i.fex, %11
+  %i.fey = or i32 %12, 2
   store i32 %i.fey, ptr %i.few, align 4, !tbaa !6
   %i.fez = getelementptr inbounds i8, ptr %i.few, i64 -4 ; 2 uses
   %i.ffa = load i32, ptr %i.fez, align 4, !tbaa !6
@@ -8213,9 +8213,9 @@ bb.aok:                                           ; preds = %bb.aoj, %bb.aoi, %b
   %i.fnf = sub nsw i64 0, %i.fne
   %i.fng = getelementptr inbounds [4 x i8], ptr %.116242089.us.i, i64 %i.fnf ; 4 uses
   %i.fnh = shl i32 %i.fmt, 31
-  %13 = or disjoint i32 %i.fnh, 65536
-  %14 = load i32, ptr %i.fng, align 4, !tbaa !6
-  %i.fni = or i32 %14, %13
+  %13 = load i32, ptr %i.fng, align 4, !tbaa !6
+  %14 = or i32 %i.fnh, %13
+  %i.fni = or i32 %14, 65536
   store i32 %i.fni, ptr %i.fng, align 4, !tbaa !6
   %i.fnj = getelementptr inbounds i8, ptr %i.fng, i64 -4 ; 2 uses
   %i.fnk = load i32, ptr %i.fnj, align 4, !tbaa !6
@@ -8618,9 +8618,9 @@ bb.avu:                                           ; preds = %bb.avt, %bb.avs, %b
   %i.gqa = sub nsw i64 0, %i.gpz
   %i.gqb = getelementptr inbounds [4 x i8], ptr %.116242089.us.i, i64 %i.gqa ; 4 uses
   %i.gqc = shl i32 %i.gpp, 31
-  %15 = or disjoint i32 %i.gqc, 65536
-  %16 = load i32, ptr %i.gqb, align 4, !tbaa !6
-  %i.gqd = or i32 %16, %15
+  %15 = load i32, ptr %i.gqb, align 4, !tbaa !6
+  %16 = or i32 %i.gqc, %15
+  %i.gqd = or i32 %16, 65536
   store i32 %i.gqd, ptr %i.gqb, align 4, !tbaa !6
   %i.gqe = getelementptr inbounds i8, ptr %i.gqb, i64 -4 ; 2 uses
   %i.gqf = load i32, ptr %i.gqe, align 4, !tbaa !6
@@ -9023,9 +9023,9 @@ bb.baa:                                           ; preds = %bb.azz, %bb.azy, %b
   %i.hio = zext i32 %i.hin to i64
   %i.hip = getelementptr inbounds nuw [4 x i8], ptr %.116242089.us.i, i64 %i.hio ; 4 uses
   %i.hiq = shl i32 %.sink2564.i, 18
-  %17 = or disjoint i32 %i.hiq, 2
-  %18 = load i32, ptr %i.hip, align 4, !tbaa !6
-  %i.hir = or i32 %18, %17
+  %17 = load i32, ptr %i.hip, align 4, !tbaa !6
+  %18 = or i32 %i.hiq, %17
+  %i.hir = or i32 %18, 2
   store i32 %i.hir, ptr %i.hip, align 4, !tbaa !6
   %i.his = getelementptr inbounds i8, ptr %i.hip, i64 -4 ; 2 uses
   %i.hit = load i32, ptr %i.his, align 4, !tbaa !6
@@ -9428,9 +9428,9 @@ bb.ao:                                            ; preds = %.loopexit
   %i.hi = sub nsw i64 0, %i.hh
   %i.hj = getelementptr inbounds [4 x i8], ptr %1, i64 %i.hi ; 4 uses
   %i.hk = shl i32 %i.gs, 31
-  %7 = or disjoint i32 %i.hk, 65536
-  %8 = load i32, ptr %i.hj, align 4, !tbaa !6
-  %i.hl = or i32 %8, %7
+  %7 = load i32, ptr %i.hj, align 4, !tbaa !6
+  %8 = or i32 %i.hk, %7
+  %i.hl = or i32 %8, 65536
   store i32 %i.hl, ptr %i.hj, align 4, !tbaa !6
   %i.hm = getelementptr inbounds i8, ptr %i.hj, i64 -4 ; 2 uses
   %i.hn = load i32, ptr %i.hm, align 4, !tbaa !6
@@ -9450,9 +9450,9 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ht = zext i32 %5 to i64
   %i.hu = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ht ; 4 uses
   %i.hv = shl i32 %i.gs, 18
-  %9 = or disjoint i32 %i.hv, 2
-  %10 = load i32, ptr %i.hu, align 4, !tbaa !6
-  %i.hw = or i32 %10, %9
+  %9 = load i32, ptr %i.hu, align 4, !tbaa !6
+  %10 = or i32 %i.hv, %9
+  %i.hw = or i32 %10, 2
   store i32 %i.hw, ptr %i.hu, align 4, !tbaa !6
   %i.hx = getelementptr inbounds i8, ptr %i.hu, i64 -4 ; 2 uses
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !6
@@ -9855,9 +9855,9 @@ bb.an:                                            ; preds = %.loopexit
   %i.hi = sub nsw i64 0, %i.hh
   %i.hj = getelementptr inbounds [4 x i8], ptr %1, i64 %i.hi ; 4 uses
   %i.hk = shl i32 %i.gp, 31
-  %6 = or disjoint i32 %i.hk, 65536
-  %7 = load i32, ptr %i.hj, align 4, !tbaa !6
-  %i.hl = or i32 %7, %6
+  %6 = load i32, ptr %i.hj, align 4, !tbaa !6
+  %7 = or i32 %i.hk, %6
+  %i.hl = or i32 %7, 65536
   store i32 %i.hl, ptr %i.hj, align 4, !tbaa !6
   %i.hm = getelementptr inbounds i8, ptr %i.hj, i64 -4 ; 2 uses
   %i.hn = load i32, ptr %i.hm, align 4, !tbaa !6
@@ -9880,9 +9880,9 @@ bb.ap:                                            ; preds = %bb.ao
   %i.hw = zext i32 %i.hv to i64
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.hw ; 4 uses
   %i.hy = shl i32 %i.gp, 18
-  %8 = or disjoint i32 %i.hy, 2
-  %9 = load i32, ptr %i.hx, align 4, !tbaa !6
-  %i.hz = or i32 %9, %8
+  %8 = load i32, ptr %i.hx, align 4, !tbaa !6
+  %9 = or i32 %i.hy, %8
+  %i.hz = or i32 %9, 2
   store i32 %i.hz, ptr %i.hx, align 4, !tbaa !6
   %i.ia = getelementptr inbounds i8, ptr %i.hx, i64 -4 ; 2 uses
   %i.ib = load i32, ptr %i.ia, align 4, !tbaa !6

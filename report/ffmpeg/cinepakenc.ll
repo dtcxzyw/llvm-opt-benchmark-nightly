@@ -205,9 +205,9 @@ bb.a:
   br label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %invariant.op = or disjoint i32 %.0182222, 1    ; 2 uses
-  %invariant.op337 = or disjoint i32 %.0182222, 1 ; 2 uses
   %7 = lshr exact i32 %.0182222, 1                ; 4 uses
+  %invariant.op337 = or disjoint i32 %.0182222, 1 ; 2 uses
+  %.reass338 = or disjoint i32 %.0182222, 1       ; 2 uses
   %i.af = or disjoint i32 %.0182222, 2            ; 5 uses
   %i.ag = lshr exact i32 %i.af, 1                 ; 4 uses
   %.reass.1 = or disjoint i32 %.0182222, 3        ; 2 uses
@@ -215,10 +215,10 @@ bb.a:
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.c
-  %i.ah = phi i32 [ %i.v, %.lr.ph.split.us.preheader ], [ %i.jy, %bb.c ]
-  %indvars.iv294 = phi i64 [ %i.z, %.lr.ph.split.us.preheader ], [ %indvars.iv.next295, %bb.c ] ; 2 uses
-  %.1177217.us = phi i32 [ %.0176224, %.lr.ph.split.us.preheader ], [ %.2178.us, %bb.c ] ; 3 uses
-  %.0184215.us = phi i32 [ 0, %.lr.ph.split.us.preheader ], [ %i.jz, %bb.c ] ; 9 uses
+  %i.ah = phi i32 [ %i.jy, %bb.c ], [ %i.v, %.lr.ph.split.us.preheader ]
+  %indvars.iv294 = phi i64 [ %indvars.iv.next295, %bb.c ], [ %i.z, %.lr.ph.split.us.preheader ] ; 2 uses
+  %.1177217.us = phi i32 [ %.2178.us, %bb.c ], [ %.0176224, %.lr.ph.split.us.preheader ] ; 3 uses
+  %.0184215.us = phi i32 [ %i.jz, %bb.c ], [ 0, %.lr.ph.split.us.preheader ] ; 9 uses
   br i1 %.not195, label %.preheader201.us, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.us
@@ -258,7 +258,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.bj = getelementptr i8, ptr %i.ap, i64 4
   store i32 %i.bi, ptr %i.bj, align 4, !tbaa !49
   %i.bk = load i32, ptr %3, align 4, !tbaa !49
-  %i.bl = mul nsw i32 %i.bk, %invariant.op
+  %i.bl = mul nsw i32 %i.bk, %invariant.op337
   %i.bm = add nsw i32 %i.bl, %.0184215.us
   %i.bn = sext i32 %i.bm to i64
   %i.bo = getelementptr inbounds i8, ptr %.pre315, i64 %i.bn
@@ -267,7 +267,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.br = getelementptr i8, ptr %i.ap, i64 8
   store i32 %i.bq, ptr %i.br, align 4, !tbaa !49
   %i.bs = load i32, ptr %3, align 4, !tbaa !49
-  %i.bt = mul nsw i32 %i.bs, %invariant.op
+  %i.bt = mul nsw i32 %i.bs, %invariant.op337
   %i.bu = add nsw i32 %i.bt, %i.ar
   %i.bv = sext i32 %i.bu to i64
   %i.bw = getelementptr inbounds i8, ptr %.pre315, i64 %i.bv
@@ -334,7 +334,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.dp = getelementptr i8, ptr %i.do, i64 4
   store i32 %i.dn, ptr %i.dp, align 4, !tbaa !49
   %i.dq = load i32, ptr %3, align 4, !tbaa !49
-  %i.dr = mul nsw i32 %i.dq, %invariant.op337
+  %i.dr = mul nsw i32 %i.dq, %.reass338
   %i.ds = add nsw i32 %i.dr, %i.as
   %i.dt = sext i32 %i.ds to i64
   %i.du = getelementptr inbounds i8, ptr %.pre315, i64 %i.dt
@@ -344,7 +344,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.dy = getelementptr i8, ptr %i.dx, i64 8
   store i32 %i.dw, ptr %i.dy, align 4, !tbaa !49
   %i.dz = load i32, ptr %3, align 4, !tbaa !49
-  %i.ea = mul nsw i32 %i.dz, %invariant.op337
+  %i.ea = mul nsw i32 %i.dz, %.reass338
   %i.eb = add nsw i32 %i.ea, %i.au
   %i.ec = sext i32 %i.eb to i64
   %i.ed = getelementptr inbounds i8, ptr %.pre315, i64 %i.ec
