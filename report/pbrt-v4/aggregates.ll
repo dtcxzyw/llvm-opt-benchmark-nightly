@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %.thread
   br i1 %i.le, label %.lr.ph.preheader.i, label %._crit_edge.i.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.t
-  %i.lf = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.u, i1 true)
+  %i.lf = tail call range(i64 5, 65) i64 @llvm.ctlz.i64(i64 %i.u, i1 true)
   %i.lg = shl nuw nsw i64 %i.lf, 1
   %i.lh = xor i64 %i.lg, 126
   br label %.lr.ph.i
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.g = lshr exact i64 %i.e, 5
-  %i.h = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.g, i1 true)
+  %i.h = tail call range(i64 5, 65) i64 @llvm.ctlz.i64(i64 %i.g, i1 true)
   %i.i = shl nuw nsw i64 %i.h, 1
   %i.j = xor i64 %i.i, 126
   br label %.lr.ph

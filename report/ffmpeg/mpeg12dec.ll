@@ -205,7 +205,7 @@ bb.gh:                                            ; preds = %bb.gg
   %i.asg = and i8 %i.asf, 64
   %.not57.i393 = icmp eq i8 %i.asg, 0
   %i.ash = icmp samesign uge i64 %spec.select.v.i, %i.akr
-  %or.cond61.i = or i1 %.not57.i393, %i.ash
+  %or.cond61.i = select i1 %.not57.i393, i1 true, i1 %i.ash
   br i1 %or.cond61.i, label %slice_end.exit, label %bb.gi
 
 bb.gi:                                            ; preds = %bb.gh

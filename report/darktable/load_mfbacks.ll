@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph.split
   br i1 %or.cond107.peel, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.im = mul i32 %i.ic, %i.ih
+  %i.im = mul nuw i32 %i.ic, %i.ih
   %i.in = add i32 %i.im, %i.if
   %i.io = zext i32 %i.in to i64
   %gep.peel = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.io
@@ -255,7 +255,7 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph.split
   br i1 %or.cond107.peel178, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %i.jp = mul i32 %i.jf, %i.jk
+  %i.jp = mul nuw i32 %i.jf, %i.jk
   %i.jq = add i32 %i.jp, %i.ji
   %i.jr = zext i32 %i.jq to i64
   %gep.peel177 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.jr
@@ -304,7 +304,7 @@ bb.ac:                                            ; preds = %bb.ab, %.lr.ph.spli
   br i1 %or.cond107.peel186, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.kr = mul i32 %i.kh, %i.km
+  %i.kr = mul nuw i32 %i.kh, %i.km
   %i.ks = add i32 %i.kr, %i.kk
   %i.kt = zext i32 %i.ks to i64
   %gep.peel185 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.kt
@@ -354,7 +354,7 @@ bb.ag:                                            ; preds = %bb.af, %.lr.ph.spli
   br i1 %or.cond107.peel194, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.lu = mul i32 %i.lk, %i.lp
+  %i.lu = mul nuw i32 %i.lk, %i.lp
   %i.lv = add i32 %i.lu, %i.ln
   %i.lw = zext i32 %i.lv to i64
   %gep.peel193 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.lw

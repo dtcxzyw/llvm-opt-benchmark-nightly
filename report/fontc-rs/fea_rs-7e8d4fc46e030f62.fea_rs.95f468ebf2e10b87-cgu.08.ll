@@ -202,7 +202,7 @@ select.unfold80:                                  ; preds = %._crit_edge.i.i60, 
   %i.dc = icmp ult i64 %i.db, 384307168202282326
   call void @llvm.assume(i1 %i.dc)
   %i.dd = icmp samesign ugt i64 %i.db, 65277
-  %i.de = trunc nuw i64 %i.db to i32
+  %i.de = trunc nuw nsw i64 %i.db to i32
   %i.df = shl nuw i32 %i.de, 16
   %i.dg = add i32 %i.df, 16908800
   %.sroa.028.0.insert.insert = select i1 %i.dd, i32 513, i32 %i.dg ; 2 uses

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !87
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !87
-  %13 = sitofp i32 %i.b to double
+  %13 = uitofp nneg i32 %i.b to double
   %i.i = fdiv double f0x401921FB54442D18, %13
   %i.j = fptrunc double %i.i to float
   %i.k = icmp sgt i32 %i.b, 0
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
-  %14 = sitofp i32 %i.d to double
+  %14 = uitofp nneg i32 %i.d to double
   %i.o = fdiv double f0x401921FB54442D18, %14
   %i.p = fptrunc double %i.o to float
   %i.q = icmp sgt i32 %i.d, 0

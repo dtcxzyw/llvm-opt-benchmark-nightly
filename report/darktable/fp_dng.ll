@@ -205,9 +205,9 @@ bb.aj:                                            ; preds = %_Z16DecodeDeltaByte
   br i1 %niter383.ncmp.7, label %_ZL13DecodeFPDeltaPhS_iii.exit.thread.loopexit.unr-lcssa, label %.lr.ph74.i, !llvm.loop !176
 
 bb.ak:                                            ; preds = %_Z16DecodeDeltaBytesPhii.exit.i
-  %i.mq = shl nsw i32 %i.kp, 1
-  %2 = sext i32 %i.mq to i64
-  %i.mr = getelementptr inbounds i8, ptr %i.gf, i64 %2 ; 5 uses
+  %i.mq = shl nuw nsw i32 %i.kp, 1
+  %2 = zext nneg i32 %i.mq to i64
+  %i.mr = getelementptr inbounds nuw i8, ptr %i.gf, i64 %2 ; 5 uses
   %i.ms = icmp sgt i32 %i.kp, 0
   br i1 %i.ms, label %.lr.ph.i.preheader, label %_ZL13DecodeFPDeltaPhS_iii.exit.thread192
 
@@ -281,9 +281,9 @@ bb.ak:                                            ; preds = %_Z16DecodeDeltaByte
   br i1 %niter377.ncmp.3, label %_ZL13DecodeFPDeltaPhS_iii.exit.thread192.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !177
 
 bb.al:                                            ; preds = %_Z16DecodeDeltaBytesPhii.exit.i
-  %i.oe = shl nsw i32 %i.kp, 1
-  %3 = sext i32 %i.oe to i64
-  %i.of = getelementptr inbounds i8, ptr %i.gf, i64 %3 ; 5 uses
+  %i.oe = shl nuw nsw i32 %i.kp, 1
+  %3 = zext nneg i32 %i.oe to i64
+  %i.of = getelementptr inbounds nuw i8, ptr %i.gf, i64 %3 ; 5 uses
   %i.og = mul nsw i32 %i.kp, 3
   %i.oh = sext i32 %i.og to i64
   %i.oi = getelementptr inbounds i8, ptr %i.gf, i64 %i.oh ; 5 uses

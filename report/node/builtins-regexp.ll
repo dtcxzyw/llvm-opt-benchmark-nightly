@@ -204,7 +204,7 @@ _ZN2v88internalL30Builtin_Impl_RegExpInputGetterENS0_16BuiltinArgumentsEPNS0_7Is
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal25Builtin_RegExpInputSetterEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !34 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -215,7 +215,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i14.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -618,7 +618,7 @@ bb.a:
   %9 = alloca %"class.v8::internal::String::FlatContent", align 8 ; 9 uses
   %10 = alloca %"class.v8::internal::PerThreadAssertScopeEmpty", align 1 ; 4 uses
   %11 = alloca %"class.v8::internal::String::FlatContent", align 8 ; 9 uses
-  %12 = sext i32 %0 to i64
+  %12 = zext nneg i32 %0 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -629,7 +629,7 @@ bb.a:
   store i32 %i.i, ptr %i.g, align 8
   %.not.i42.i = icmp sgt i32 %0, 5
   %i.j = ptrtoint ptr %1 to i64
-  %i.k = shl nsw i64 %12, 3
+  %i.k = shl nuw nsw i64 %12, 3
   %reass.sub = sub i64 %i.j, %i.k
   %i.l = add i64 %reass.sub, 48
   %i.m = inttoptr i64 %i.l to ptr

@@ -202,13 +202,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = icmp slt i32 %1, 128
-  %i.f = shl nsw i32 %1, 1
-  %i.g = and i32 %i.f, -128
-  %i.h = add nsw i32 %i.g, 128
+  %i.f = shl nuw nsw i32 %1, 1
+  %i.g = and i32 %i.f, 2147483520
+  %i.h = add nuw nsw i32 %i.g, 128
   %i.i = select i1 %i.e, i32 128, i32 %i.h        ; 2 uses
-  %3 = or disjoint i32 %i.i, 1
-  %4 = sext i32 %3 to i64
-  %5 = shl nsw i64 %4, 1
+  %3 = shl nuw i32 %i.i, 1
+  %4 = or disjoint i32 %3, 2
+  %5 = zext i32 %4 to i64
   %i.j = tail call ptr @uprv_realloc_78(ptr noundef %.pre, i64 noundef %5) #8 ; 3 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !13
   %i.k = icmp eq ptr %i.j, null

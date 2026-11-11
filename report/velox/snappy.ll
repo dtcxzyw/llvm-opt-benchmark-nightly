@@ -163,7 +163,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = load i8, ptr %i.t, align 1, !tbaa !25   ; 2 uses
-  %i.ab = zext i8 %i.aa to i32
+  %i.ab = zext nneg i8 %i.aa to i32
   %i.ac = shl nuw i32 %i.ab, 28
   %i.ad = or disjoint i32 %i.ac, %i.y
   %i.ae = icmp ult i8 %i.aa, 16
@@ -566,7 +566,7 @@ bb.af:                                            ; preds = %.split, %_ZN6snappy
   %i.ly = shl i64 %i.lu, 8
   %i.lz = add nuw i64 %i.lx, %i.ly
   %i.ma = trunc i64 %i.lz to i32
-  %i.mb = trunc i64 %i.lu to i32
+  %i.mb = trunc nuw nsw i64 %i.lu to i32
   %i.mc = lshr i32 %i.mb, 3
   %i.md = and i32 %i.mc, 224
   %i.me = add nsw i32 %i.md, -15
@@ -659,7 +659,7 @@ bb.ah:                                            ; preds = %._crit_edge.i164
   br i1 %i.nl, label %._crit_edge26.i, label %bb.aj
 
 ._crit_edge26.i:                                  ; preds = %bb.ah
-  %.pre.i = trunc i64 %i.mk to i32
+  %.pre.i = trunc nuw nsw i64 %i.mk to i32
   br label %bb.ai
 
 bb.ai:                                            ; preds = %._crit_edge26.i, %.thread.i165
@@ -1062,7 +1062,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = load i8, ptr %i.t, align 1, !tbaa !25   ; 2 uses
-  %i.ab = zext i8 %i.aa to i32
+  %i.ab = zext nneg i8 %i.aa to i32
   %i.ac = shl nuw i32 %i.ab, 28
   %i.ad = or disjoint i32 %i.ac, %i.y
   %i.ae = icmp ult i8 %i.aa, 16

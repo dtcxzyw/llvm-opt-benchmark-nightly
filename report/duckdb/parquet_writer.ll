@@ -204,7 +204,7 @@ bb.a:
 .preheader67.9:                                   ; preds = %.preheader67.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.i, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !354 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bt
   %.not50.9 = icmp slt i8 %i.bv, 0
@@ -607,7 +607,7 @@ bb.a:
 .preheader67.9:                                   ; preds = %.preheader67.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.i, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !354 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bt
   %.not50.9 = icmp slt i8 %i.bv, 0

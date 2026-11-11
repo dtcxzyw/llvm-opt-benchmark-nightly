@@ -153,13 +153,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define noundef range(i32 0, 2) i32 @FLAC__format_blocksize_is_subset(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define range(i32 0, 2) i32 @FLAC__format_blocksize_is_subset(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ult i32 %0, 16385
   %i.b = icmp ugt i32 %1, 48000
-  %i.c = icmp ult i32 %0, 4609
+  %i.c = icmp samesign ult i32 %0, 4609
   %or.cond.not = or i1 %i.c, %i.b
-  %narrow = and i1 %i.a, %or.cond.not
+  %narrow = select i1 %i.a, i1 %or.cond.not, i1 false
   %.0 = zext i1 %narrow to i32
   ret i32 %.0
 }

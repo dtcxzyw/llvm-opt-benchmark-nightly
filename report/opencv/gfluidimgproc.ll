@@ -205,12 +205,12 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.ao = load i32, ptr %i.ah, align 8, !tbaa !152 ; 3 uses
-  %16 = sitofp i32 %.024 to double
+  %16 = uitofp nneg i32 %.024 to double
   %i.ap = sitofp i32 %i.ao to double
   %i.aq = fdiv double %16, %i.ap
   %i.ar = fdiv double 1.000000e+00, %i.aq
   %i.as = load i32, ptr %.sroa.637.0..sroa_idx.i, align 4, !tbaa !153 ; 2 uses
-  %17 = sitofp i32 %.0 to double
+  %17 = uitofp nneg i32 %.0 to double
   %i.at = sitofp i32 %i.as to double
   %i.au = fdiv double %17, %i.at
   %i.av = fdiv double 1.000000e+00, %i.au
@@ -426,7 +426,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.el = sitofp i32 %.024 to double
-  %18 = sitofp i32 %.0 to double
+  %18 = uitofp nneg i32 %.0 to double
   %i.em = load <2 x i32>, ptr %i.eb, align 8, !tbaa !49
   %i.en = sitofp <2 x i32> %i.em to <2 x double>  ; 2 uses
   %i.eo = extractelement <2 x double> %i.en, i64 0

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph31, %._crit_e
 
 bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %i.e, align 8, !tbaa !89   ; 4 uses
-  %5 = sext i32 %i.y to i64
+  %5 = zext nneg i32 %i.y to i64
   %i.z = mul i64 %.01730, %5
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.z ; 2 uses
   %i.ab = icmp sgt i32 %i.y, 0

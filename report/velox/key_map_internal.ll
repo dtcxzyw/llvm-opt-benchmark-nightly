@@ -89,7 +89,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !36   ; 6 uses
   %i.c = icmp slt i32 %i.b, 6
   %i.d = icmp samesign ult i32 %i.b, 14
-  %6 = icmp slt i32 %i.b, 30
+  %6 = icmp samesign ult i32 %i.b, 30
   %i.e = select i1 %6, i32 32, i32 64
   %i.f = select i1 %i.d, i32 16, i32 %i.e
   %i.g = select i1 %i.c, i32 8, i32 %i.f
@@ -492,7 +492,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !36   ; 4 uses
   %i.c = icmp slt i32 %i.b, 6
   %i.d = icmp samesign ult i32 %i.b, 14
-  %5 = icmp slt i32 %i.b, 30
+  %5 = icmp samesign ult i32 %i.b, 30
   %i.e = select i1 %5, i32 40, i32 72
   %i.f = select i1 %i.d, i32 24, i32 %i.e
   %i.g = select i1 %i.c, i32 16, i32 %i.f         ; 2 uses
@@ -657,7 +657,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.f = load i32, ptr %i.d, align 4, !tbaa !36   ; 3 uses
-  %5 = icmp slt i32 %i.f, 30
+  %5 = icmp samesign ult i32 %i.f, 30
   %i.g = icmp samesign ult i32 %i.f, 14
   %i.h = icmp slt i32 %i.f, 6
   %i.i = select i1 %5, i64 40, i64 72
@@ -735,7 +735,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.f = load i32, ptr %i.d, align 4, !tbaa !36   ; 3 uses
-  %5 = icmp slt i32 %i.f, 30
+  %5 = icmp samesign ult i32 %i.f, 30
   %i.g = icmp samesign ult i32 %i.f, 14
   %i.h = icmp slt i32 %i.f, 6
   %i.i = select i1 %5, i64 40, i64 72
@@ -1138,7 +1138,7 @@ bb.o:                                             ; preds = %bb.j, %bb.u
   %i.en = load i32, ptr %i.at, align 4, !tbaa !36 ; 5 uses
   %i.eo = icmp slt i32 %i.en, 6
   %i.ep = icmp samesign ult i32 %i.en, 14
-  %11 = icmp slt i32 %i.en, 30
+  %11 = icmp samesign ult i32 %i.en, 30
   %i.eq = select i1 %11, i64 32, i64 64
   %i.er = select i1 %i.ep, i64 16, i64 %i.eq
   %i.es = select i1 %i.eo, i64 8, i64 %i.er       ; 2 uses
@@ -1424,7 +1424,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   %i.ao = load i32, ptr %i.l, align 4, !tbaa !36  ; 5 uses
   %i.ap = icmp slt i32 %i.ao, 6
   %i.aq = icmp samesign ult i32 %i.ao, 14
-  %15 = icmp slt i32 %i.ao, 30
+  %15 = icmp samesign ult i32 %i.ao, 30
   %i.ar = select i1 %15, i64 32, i64 64
   %i.as = select i1 %i.aq, i64 16, i64 %i.ar
   %i.at = select i1 %i.ap, i64 8, i64 %i.as       ; 2 uses
@@ -1523,7 +1523,7 @@ bb.f:                                             ; preds = %bb.e
   %i.dq = load i32, ptr %i.l, align 4, !tbaa !36  ; 4 uses
   %i.dr = icmp slt i32 %i.dq, 6                   ; 2 uses
   %i.ds = icmp samesign ult i32 %i.dq, 14         ; 2 uses
-  %16 = icmp slt i32 %i.dq, 30                    ; 2 uses
+  %16 = icmp samesign ult i32 %i.dq, 30           ; 2 uses
   %i.dt = select i1 %16, i64 40, i64 72
   %i.du = select i1 %i.ds, i64 24, i64 %i.dt
   %narrow.i = select i1 %i.dr, i64 16, i64 %i.du
@@ -1926,7 +1926,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !36 ; 4 uses
   %i.ad = icmp slt i32 %i.ac, 6
   %i.ae = icmp samesign ult i32 %i.ac, 14
-  %13 = icmp slt i32 %i.ac, 30
+  %13 = icmp samesign ult i32 %i.ac, 30
   %i.af = select i1 %13, i32 40, i32 72
   %i.ag = select i1 %i.ae, i32 24, i32 %i.af
   %i.ah = select i1 %i.ad, i32 16, i32 %i.ag      ; 2 uses
@@ -2255,7 +2255,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4, !tbaa !36   ; 12 uses
   %i.d = icmp slt i32 %i.c, 6                     ; 3 uses
   %i.e = icmp samesign ult i32 %i.c, 14           ; 3 uses
-  %8 = icmp slt i32 %i.c, 30                      ; 3 uses
+  %8 = icmp samesign ult i32 %i.c, 30             ; 3 uses
   %i.f = select i1 %8, i32 32, i32 64
   %i.g = select i1 %i.e, i32 16, i32 %i.f
   %i.h = select i1 %i.d, i32 8, i32 %i.g          ; 2 uses
@@ -2658,7 +2658,7 @@ bb.a:
   store i32 %4, ptr %i.c, align 4, !tbaa !36
   %i.d = icmp slt i32 %4, 6
   %i.e = icmp samesign ult i32 %4, 14
-  %12 = icmp slt i32 %4, 30
+  %12 = icmp samesign ult i32 %4, 30
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 0, ptr %i.f, align 8, !tbaa !45
   %i.g = select i1 %12, i64 40, i64 72

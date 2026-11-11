@@ -204,7 +204,7 @@ _RNvMNtCslpwiOMB70Kp_8protobuf18coded_input_streamNtB2_16CodedInputStream17read_
 .preheader.9:                                     ; preds = %.preheader.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.j, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !noalias !50, !noundef !4 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bs
   %i.bz = icmp sgt i8 %i.bv, -1
@@ -431,7 +431,7 @@ _RNvMNtCslpwiOMB70Kp_8protobuf18coded_input_streamNtB2_16CodedInputStream17read_
 .preheader.9:                                     ; preds = %.preheader.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.j, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !noalias !56, !noundef !4 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bs
   %i.bz = icmp sgt i8 %i.bv, -1
@@ -658,7 +658,7 @@ _RNvMNtCslpwiOMB70Kp_8protobuf18coded_input_streamNtB2_16CodedInputStream17read_
 .preheader.9:                                     ; preds = %.preheader.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.j, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !noalias !62, !noundef !4 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bs
   %i.bz = icmp sgt i8 %i.bv, -1
@@ -885,7 +885,7 @@ _RNvMNtCslpwiOMB70Kp_8protobuf18coded_input_streamNtB2_16CodedInputStream17read_
 .preheader.9:                                     ; preds = %.preheader.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.j, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !noalias !68, !noundef !4 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bs
   %i.bz = icmp sgt i8 %i.bv, -1
@@ -1112,7 +1112,7 @@ _RNvMNtCslpwiOMB70Kp_8protobuf18coded_input_streamNtB2_16CodedInputStream17read_
 .preheader.9:                                     ; preds = %.preheader.8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.j, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !noalias !74, !noundef !4 ; 2 uses
-  %i.bw = zext i8 %i.bv to i64
+  %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = shl i64 %i.bw, 63
   %i.by = or i64 %i.bx, %i.bs
   %i.bz = icmp sgt i8 %i.bv, -1

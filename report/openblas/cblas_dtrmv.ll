@@ -40,7 +40,7 @@ bb.a:
   %.1 = select i1 %.not95, i32 1, i32 %.0
   %i.h = icmp eq i32 %8, 0
   %spec.store.select = select i1 %i.h, i32 8, i32 -1
-  %i.i = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
+  %i.i = tail call i32 @llvm.umax.i32(i32 %4, i32 1)
   %i.j = icmp slt i32 %6, %i.i
   %spec.store.select5 = select i1 %i.j, i32 6, i32 %spec.store.select
   %i.k = icmp slt i32 %4, 0
@@ -74,7 +74,7 @@ bb.b:                                             ; preds = %bb.a
   %.4 = select i1 %.not, i32 1, i32 %.3
   %i.x = icmp eq i32 %8, 0
   %spec.store.select1 = select i1 %i.x, i32 8, i32 -1
-  %i.y = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
+  %i.y = tail call i32 @llvm.umax.i32(i32 %4, i32 1)
   %i.z = icmp slt i32 %6, %i.y
   %spec.store.select6 = select i1 %i.z, i32 6, i32 %spec.store.select1
   %i.aa = icmp slt i32 %4, 0
@@ -206,10 +206,10 @@ declare i32 @dtrmv_thread_TLU(i64 noundef, ptr noundef, i64 noundef, ptr noundef
 declare i32 @dtrmv_thread_TLN(i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
+declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #3
+declare i32 @llvm.umax.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

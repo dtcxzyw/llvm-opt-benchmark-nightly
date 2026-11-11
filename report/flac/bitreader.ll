@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = icmp ugt i32 %2, 32
-  %i.e = add i32 %2, -1
+  %i.e = add nsw i32 %2, -1
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nuw i64 1, %i.f
   %i.h = trunc i64 %i.g to i32
@@ -328,7 +328,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   %i.q = icmp ugt i32 %2, 64
-  %i.r = add i32 %2, -1
+  %i.r = add nsw i32 %2, -1
   %i.s = zext nneg i32 %i.r to i64
   %i.t = shl nuw i64 1, %i.s
   %i.u = select i1 %i.q, i64 0, i64 %i.t          ; 2 uses

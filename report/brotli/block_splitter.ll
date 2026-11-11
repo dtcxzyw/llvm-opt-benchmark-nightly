@@ -168,7 +168,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %exitcond.not.i63, label %CopyLiteralsToByteArray.exit, label %bb.c, !llvm.loop !17
 
 CopyLiteralsToByteArray.exit:                     ; preds = %bb.g
-  %.lhs.trunc.i = trunc i64 %.lcssa896 to i16
+  %.lhs.trunc.i = trunc nuw i64 %.lcssa896 to i16
   %i.ax = udiv i16 %.lhs.trunc.i, 544
   %narrow.i = add nuw nsw i16 %i.ax, 1
   %i.ay = zext nneg i16 %narrow.i to i64
@@ -571,7 +571,7 @@ vector.body749:                                   ; preds = %vector.body749, %ve
   br label %.thread668
 
 .unr-lcssa964:                                    ; preds = %.lr.ph, %.lr.ph.prol.loopexit
-  %.lhs.trunc.i66 = trunc i64 %2 to i16
+  %.lhs.trunc.i66 = trunc nuw nsw i64 %2 to i16
   %i.afp = udiv i16 %.lhs.trunc.i66, 530
   %narrow.i67 = add nuw nsw i16 %i.afp, 1
   %i.afq = zext nneg i16 %narrow.i67 to i64
@@ -974,7 +974,7 @@ bb.gf:                                            ; preds = %bb.ge, %bb.gd, %.lr
   br i1 %exitcond528.not, label %._crit_edge505, label %.lr.ph504, !llvm.loop !113
 
 ._crit_edge505:                                   ; preds = %bb.gf
-  %.lhs.trunc.i240 = trunc i64 %.1 to i16
+  %.lhs.trunc.i240 = trunc nuw nsw i64 %.1 to i16
   %i.bzf = udiv i16 %.lhs.trunc.i240, 544
   %narrow.i241 = add nuw nsw i16 %i.bzf, 1
   %i.bzg = zext nneg i16 %narrow.i241 to i64

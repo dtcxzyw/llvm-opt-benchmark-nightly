@@ -36,7 +36,7 @@ bb.a:
   %spec.store.select = select i1 %i.h, i32 11, i32 -1
   %i.i = icmp eq i32 %8, 0
   %spec.store.select2 = select i1 %i.i, i32 8, i32 %spec.store.select
-  %i.j = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %i.j = tail call i32 @llvm.umax.i32(i32 %2, i32 1)
   %i.k = icmp slt i32 %6, %i.j
   %spec.store.select3 = select i1 %i.k, i32 6, i32 %spec.store.select2
   %i.l = icmp slt i32 %3, 0
@@ -61,7 +61,7 @@ bb.b:                                             ; preds = %bb.a
   %storemerge = select i1 %i.s, i32 11, i32 -1
   %i.t = icmp eq i32 %8, 0
   %storemerge104 = select i1 %i.t, i32 8, i32 %storemerge
-  %i.u = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %i.u = tail call i32 @llvm.umax.i32(i32 %3, i32 1)
   %i.v = icmp slt i32 %6, %i.u
   %storemerge105 = select i1 %i.v, i32 6, i32 %storemerge104
   %i.w = icmp slt i32 %2, 0
@@ -261,7 +261,7 @@ declare i32 @dgemv_thread_n(i64 noundef, i64 noundef, double noundef, ptr nounde
 declare i32 @dgemv_thread_t(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #5
+declare i32 @llvm.umax.i32(i32, i32) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
