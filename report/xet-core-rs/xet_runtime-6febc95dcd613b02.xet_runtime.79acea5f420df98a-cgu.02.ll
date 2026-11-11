@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b, %.split.i
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !213
   store ptr %i.aa, ptr %i.k, align 8, !noalias !213
-  %i.ab = ptrtoint ptr %i.aa to i64               ; 12 uses
+  %i.ab = ptrtoint ptr %i.aa to i64               ; 3 uses
   %i.ac = and i64 %i.ab, 3
   switch i64 %i.ac, label %default.unreachable [
     i64 2, label %bb.e
@@ -386,15 +386,14 @@ bb.w:                                             ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !213
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !213
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !213
-  %.val.pre.i = load ptr, ptr %i.k, align 8, !noalias !213 ; 2 uses
-  %.pre.i = ptrtoint ptr %.val.pre.i to i64
+  %.val.pre.i = load ptr, ptr %i.k, align 8, !noalias !213
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.ah, %bb.af, %bb.ae, %bb.ab, %bb.aa, %bb.w, %bb.u, %bb.t, %bb.q, %bb.p
-  %.pre-phi.i = phi i64 [ %i.ab, %bb.ae ], [ %i.ab, %bb.ab ], [ %i.ab, %bb.aa ], [ %i.ab, %bb.t ], [ %i.ab, %bb.q ], [ %i.ab, %bb.p ], [ %i.ab, %bb.af ], [ %i.ab, %bb.ah ], [ %i.ab, %bb.u ], [ %.pre.i, %bb.w ] ; 2 uses
-  %.val.i = phi ptr [ %i.aa, %bb.ae ], [ %i.aa, %bb.ab ], [ %i.aa, %bb.aa ], [ %i.aa, %bb.t ], [ %i.aa, %bb.q ], [ %i.aa, %bb.p ], [ %i.aa, %bb.af ], [ %i.aa, %bb.ah ], [ %i.aa, %bb.u ], [ %.val.pre.i, %bb.w ] ; 2 uses
+  %.val.i = phi ptr [ %i.aa, %bb.ae ], [ %i.aa, %bb.ab ], [ %i.aa, %bb.aa ], [ %i.aa, %bb.t ], [ %i.aa, %bb.q ], [ %i.aa, %bb.p ], [ %i.aa, %bb.af ], [ %i.aa, %bb.ah ], [ %i.aa, %bb.u ], [ %.val.pre.i, %bb.w ] ; 3 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %.val.i to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !213
-  %i.bt = and i64 %.pre-phi.i, 3
+  %i.bt = and i64 %.pre-phi.i.pre-phi, 3
   switch i64 %i.bt, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsarFSTFZzLuM_11xet_runtime.exit.i
     i64 3, label %bb.y
@@ -404,7 +403,7 @@ bb.x:                                             ; preds = %bb.ah, %bb.af, %bb.
 
 bb.y:                                             ; preds = %bb.x
   %i.bu = icmp ult ptr %.val.i, inttoptr (i64 188978561024 to ptr)
-  %i.bv = and i64 %.pre-phi.i, 1095216660480
+  %i.bv = and i64 %.pre-phi.i.pre-phi, 1095216660480
   %i.bw = icmp ne i64 %i.bv, 1095216660480
   call void @llvm.assume(i1 %i.bu)
   call void @llvm.assume(i1 %i.bw)

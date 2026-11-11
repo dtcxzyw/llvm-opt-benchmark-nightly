@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.i
 ._crit_edge173:                                   ; preds = %zend_compile_expr.exit, %bb.k
   %.0130198 = phi ptr [ null, %bb.k ], [ %i.ah, %zend_compile_expr.exit ] ; 4 uses
   %i.aj = load ptr, ptr %i.g, align 8, !tbaa !87  ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 5 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %i.am = load i64, ptr %i.al, align 8, !tbaa !46 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.am ; 3 uses
@@ -215,7 +215,6 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not156174, label %._crit_edge180, label %switch.edge.lr.ph
 
 switch.edge.lr.ph:                                ; preds = %._crit_edge173
-  %4 = ptrtoint ptr %i.ak to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %switch.edge
@@ -243,8 +242,7 @@ zend_compile_expr.exit:                           ; preds = %bb.l
 
 switch.edge:                                      ; preds = %switch.edge.lr.ph, %bb.x
   %i.ax = phi ptr [ %i.ap, %switch.edge.lr.ph ], [ %i.cu, %bb.x ] ; 3 uses
-  %5 = phi i64 [ %4, %switch.edge.lr.ph ], [ %i.cs, %bb.x ]
-  %.2113179 = phi ptr [ %i.ak, %switch.edge.lr.ph ], [ %i.cr, %bb.x ] ; 2 uses
+  %.2113179 = phi ptr [ %i.ak, %switch.edge.lr.ph ], [ %i.cr, %bb.x ] ; 3 uses
   %.0116178 = phi ptr [ null, %switch.edge.lr.ph ], [ %.2118, %bb.x ]
   %.0120177 = phi i32 [ -1, %switch.edge.lr.ph ], [ %.4124, %bb.x ] ; 2 uses
   %.0125176 = phi i32 [ 0, %switch.edge.lr.ph ], [ %.2127, %bb.x ] ; 4 uses
@@ -259,10 +257,11 @@ switch.edge:                                      ; preds = %switch.edge.lr.ph, 
   br i1 %.not158, label %bb.o, label %zend_string_init.exit161
 
 zend_string_init.exit161:                         ; preds = %switch.edge
+  %4 = ptrtoint ptr %.2113179 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   store i8 1, ptr %2, align 8, !tbaa !203
   %i.bc = ptrtoint ptr %spec.select to i64
-  %i.bd = sub i64 %i.bc, %5                       ; 4 uses
+  %i.bd = sub i64 %i.bc, %4                       ; 4 uses
   %i.be = and i64 %i.bd, -8
   %i.bf = add i64 %i.be, 32
   %i.bg = call noalias ptr @_emalloc(i64 noundef %i.bf) #32 ; 6 uses
@@ -379,7 +378,7 @@ bb.x:                                             ; preds = %bb.o, %bb.w
   %.4124 = phi i32 [ %.3123, %bb.w ], [ %.2122, %bb.o ] ; 2 uses
   %.2118 = phi ptr [ %i.cp, %bb.w ], [ %.1117, %bb.o ] ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.ax, i64 2 ; 4 uses
-  %i.cs = ptrtoint ptr %i.cr to i64               ; 2 uses
+  %i.cs = ptrtoint ptr %i.cr to i64
   %i.ct = sub i64 %i.ao, %i.cs                    ; 2 uses
   %i.cu = call ptr @memchr(ptr noundef nonnull %i.cr, i32 noundef 37, i64 noundef %i.ct) #31 ; 2 uses
   %.not156 = icmp eq ptr %i.cu, null

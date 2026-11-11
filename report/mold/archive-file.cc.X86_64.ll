@@ -205,8 +205,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %5 = ptrtoint ptr %i.g to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.h = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 8 uses
@@ -220,12 +219,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread
-  %6 = phi i64 [ %5, %.lr.ph ], [ %i.do, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread ]
-  %.033.a = phi ptr [ %i.g, %.lr.ph ], [ %i.w, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread ]
-  %.sroa.5.031 = phi ptr [ null, %.lr.ph ], [ %.sroa.5.1, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread ] ; 4 uses
-  %i.r = sub i64 %i.h, %6
+  %.033 = phi ptr [ %i.g, %.lr.ph ], [ %i.w, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread ] ; 2 uses
+  %.033.a = phi ptr [ null, %.lr.ph ], [ %.sroa.5.1, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread ] ; 4 uses
+  %5 = ptrtoint ptr %.033 to i64
+  %i.r = sub i64 %i.h, %5
   %i.s = and i64 %i.r, 1
-  %spec.select = getelementptr inbounds nuw i8, ptr %.033.a, i64 %i.s ; 7 uses
+  %spec.select = getelementptr inbounds nuw i8, ptr %.033, i64 %i.s ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.t = getelementptr inbounds nuw i8, ptr %spec.select, i64 60 ; 3 uses
   store ptr %i.t, ptr %i.a, align 8, !tbaa !22
@@ -260,7 +259,7 @@ _ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit:   ; preds = %bb.c
 
 bb.d:                                             ; preds = %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
-  call fastcc void @_ZNK4mold12_GLOBAL__N_15ArHdr9read_nameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEERPh(ptr dead_on_unwind noalias writable align 8 %3, ptr noundef nonnull align 1 dereferenceable(60) %spec.select, ptr %.sroa.5.031, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
+  call fastcc void @_ZNK4mold12_GLOBAL__N_15ArHdr9read_nameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEERPh(ptr dead_on_unwind noalias writable align 8 %3, ptr noundef nonnull align 1 dereferenceable(60) %spec.select, ptr %.033.a, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
   %i.ap = load i64, ptr %i.i, align 8, !tbaa !24  ; 9 uses
   %.pre = load ptr, ptr %3, align 8, !tbaa !25    ; 5 uses
   switch i64 %i.ap, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit22.thread30 [
@@ -473,12 +472,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit25: ; preds = %_ZN
   br label %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread
 
 _ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit.thread: ; preds = %bb.c, %bb.b, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit25
-  %.sroa.5.1 = phi ptr [ %.sroa.5.031, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit25 ], [ %.sroa.5.031, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit ], [ %i.t, %bb.b ], [ %.sroa.5.031, %bb.c ]
+  %.sroa.5.1 = phi ptr [ %.033.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit25 ], [ %.033.a, %_ZNK4mold12_GLOBAL__N_15ArHdr9is_symtabEv.exit ], [ %i.t, %bb.b ], [ %.033.a, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.dl = load i64, ptr %i.d, align 8, !tbaa !21
   %i.dm = getelementptr inbounds i8, ptr %i.c, i64 %i.dl
   %i.dn = ptrtoint ptr %i.dm to i64
-  %i.do = ptrtoint ptr %i.w to i64                ; 2 uses
+  %i.do = ptrtoint ptr %i.w to i64
   %i.dp = sub i64 %i.dn, %i.do
   %i.dq = icmp sgt i64 %i.dp, 1
   br i1 %i.dq, label %bb.b, label %._crit_edge

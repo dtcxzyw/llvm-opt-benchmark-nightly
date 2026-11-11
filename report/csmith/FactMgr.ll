@@ -177,18 +177,17 @@ bb.b:                                             ; preds = %.lr.ph92, %_ZNSt6ve
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !22
   call void @_ZN4Fact26abstract_fact_for_var_initEPK8Variable(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.0") align 8 %3, ptr noundef nonnull align 8 dereferenceable(12) %i.o, ptr noundef %2)
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !24
-  %i.q = load ptr, ptr %3, align 8, !tbaa !25     ; 4 uses
-  %4 = ptrtoint ptr %i.q to i64
+  %i.q = load ptr, ptr %3, align 8, !tbaa !25     ; 3 uses
   %.not95 = icmp eq ptr %i.p, %i.q
   br i1 %.not95, label %._crit_edge88, label %.lr.ph87
 
 ._crit_edge88:                                    ; preds = %._crit_edge84, %bb.b
-  %.lcssa73 = phi ptr [ %i.q, %bb.b ], [ %i.df, %._crit_edge84 ] ; 2 uses
-  %.lcssa = phi i64 [ %4, %bb.b ], [ %i.dh, %._crit_edge84 ]
+  %.lcssa73 = phi ptr [ %i.q, %bb.b ], [ %i.df, %._crit_edge84 ] ; 3 uses
   %.not.i.i.i = icmp eq ptr %.lcssa73, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPK4FactSaIS2_EED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge88
+  %.lcssa = ptrtoint ptr %.lcssa73 to i64
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !26
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = sub i64 %i.s, %.lcssa
@@ -446,7 +445,7 @@ _ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit34: ; preds = %_ZNSt6vectorIPK4
   %i.de = load ptr, ptr %i.c, align 8, !tbaa !24
   %i.df = load ptr, ptr %3, align 8, !tbaa !25    ; 3 uses
   %i.dg = ptrtoint ptr %i.de to i64
-  %i.dh = ptrtoint ptr %i.df to i64               ; 2 uses
+  %i.dh = ptrtoint ptr %i.df to i64
   %i.di = sub i64 %i.dg, %i.dh
   %i.dj = ashr exact i64 %i.di, 3
   %i.dk = icmp ult i64 %i.dd, %i.dj
@@ -849,18 +848,17 @@ bb.b:                                             ; preds = %.lr.ph25, %_ZNSt6ve
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !22
   call void @_ZN4Fact26abstract_fact_for_var_initEPK8Variable(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.0") align 8 %2, ptr noundef nonnull align 8 dereferenceable(12) %i.i, ptr noundef %0)
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !24
-  %i.k = load ptr, ptr %2, align 8, !tbaa !25     ; 4 uses
-  %3 = ptrtoint ptr %i.k to i64
+  %i.k = load ptr, ptr %2, align 8, !tbaa !25     ; 3 uses
   %.not27 = icmp eq ptr %i.j, %i.k
   br i1 %.not27, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit, %bb.b
-  %.lcssa18 = phi ptr [ %i.k, %bb.b ], [ %i.bb, %_ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
-  %.lcssa = phi i64 [ %3, %bb.b ], [ %i.bd, %_ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit ]
+  %.lcssa18 = phi ptr [ %i.k, %bb.b ], [ %i.bb, %_ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit ] ; 3 uses
   %.not.i.i.i = icmp eq ptr %.lcssa18, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPK4FactSaIS2_EED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
+  %.lcssa = ptrtoint ptr %.lcssa18 to i64
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !26
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = sub i64 %i.m, %.lcssa
@@ -981,7 +979,7 @@ _ZNSt6vectorIPK4FactSaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6vectorIPK4Fa
   %i.ba = load ptr, ptr %i.c, align 8, !tbaa !24
   %i.bb = load ptr, ptr %2, align 8, !tbaa !25    ; 3 uses
   %i.bc = ptrtoint ptr %i.ba to i64
-  %i.bd = ptrtoint ptr %i.bb to i64               ; 2 uses
+  %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = sub i64 %i.bc, %i.bd
   %i.bf = ashr exact i64 %i.be, 3
   %i.bg = icmp ult i64 %i.az, %i.bf
@@ -1384,18 +1382,17 @@ bb.b:                                             ; preds = %.lr.ph26, %_ZNSt6ve
   %i.q = load ptr, ptr %i.p, align 8
   call void %i.q(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.0") align 8 %2, ptr noundef nonnull align 8 dereferenceable(12) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull %i.m, ptr noundef %i.n)
   %i.r = load ptr, ptr %i.e, align 8, !tbaa !24
-  %i.s = load ptr, ptr %2, align 8, !tbaa !25     ; 4 uses
-  %3 = ptrtoint ptr %i.s to i64
+  %i.s = load ptr, ptr %2, align 8, !tbaa !25     ; 3 uses
   %.not28 = icmp eq ptr %i.r, %i.s
   br i1 %.not28, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.b
-  %.lcssa20 = phi ptr [ %i.s, %bb.b ], [ %i.as, %bb.h ] ; 2 uses
-  %.lcssa = phi i64 [ %3, %bb.b ], [ %i.au, %bb.h ]
+  %.lcssa20 = phi ptr [ %i.s, %bb.b ], [ %i.as, %bb.h ] ; 3 uses
   %.not.i.i.i = icmp eq ptr %.lcssa20, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPK4FactSaIS2_EED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
+  %.lcssa = ptrtoint ptr %.lcssa20 to i64
   %i.t = load ptr, ptr %i.f, align 8, !tbaa !26
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = sub i64 %i.u, %.lcssa
@@ -1455,7 +1452,7 @@ bb.h:                                             ; preds = %bb.d, %bb.e
   %i.ar = load ptr, ptr %i.e, align 8, !tbaa !24
   %i.as = load ptr, ptr %2, align 8, !tbaa !25    ; 3 uses
   %i.at = ptrtoint ptr %i.ar to i64
-  %i.au = ptrtoint ptr %i.as to i64               ; 2 uses
+  %i.au = ptrtoint ptr %i.as to i64
   %i.av = sub i64 %i.at, %i.au
   %i.aw = ashr exact i64 %i.av, 3
   %i.ax = icmp ult i64 %i.aq, %i.aw

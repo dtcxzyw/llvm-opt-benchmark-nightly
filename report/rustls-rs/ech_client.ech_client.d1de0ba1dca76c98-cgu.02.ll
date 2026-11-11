@@ -202,11 +202,7 @@ bb.u:                                             ; preds = %.noexc143
 
 bb.v:                                             ; preds = %.noexc143
   %i.cs = invoke noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 42, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 30) #18
-          to label %.thread274 unwind label %bb.af ; 2 uses
-
-.thread274:                                       ; preds = %bb.v
-  %3 = ptrtoint ptr %i.cs to i64
-  br label %bb.z
+          to label %bb.z unwind label %bb.af
 
 bb.w:                                             ; preds = %bb.u
   %i.ct = load i64, ptr %i.v, align 8, !alias.scope !87, !noundef !6 ; 2 uses
@@ -230,14 +226,13 @@ bb.x:                                             ; preds = %.noexc145
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit161
 
 bb.y:                                             ; preds = %.noexc145
-  %4 = ptrtoint ptr %i.cy to i64                  ; 2 uses
   br i1 %i.cz, label %bb.z, label %bb.ae
 
-bb.z:                                             ; preds = %.thread274, %bb.y
-  %5 = phi i64 [ %3, %.thread274 ], [ %4, %bb.y ] ; 6 uses
-  %.sroa.5.0.i277 = phi ptr [ %i.cs, %.thread274 ], [ %i.cy, %bb.y ] ; 12 uses
+bb.z:                                             ; preds = %bb.v, %bb.y
+  %.sroa.5.0.i277 = phi ptr [ %i.cy, %bb.y ], [ %i.cs, %bb.v ] ; 13 uses
+  %3 = ptrtoint ptr %.sroa.5.0.i277 to i64        ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i277) ]
-  %i.db = and i64 %5, 3                           ; 3 uses
+  %i.db = and i64 %3, 3                           ; 3 uses
   switch i64 %i.db, label %default.unreachable [
     i64 2, label %bb.aa
     i64 3, label %bb.ab
@@ -250,7 +245,7 @@ bb.aa:                                            ; preds = %bb.z
           to label %.noexc149 unwind label %bb.ap
 
 .noexc149:                                        ; preds = %bb.aa
-  %i.dd = lshr i64 %5, 32
+  %i.dd = lshr i64 %3, 32
   %i.de = trunc nuw i64 %i.dd to i32
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
   %i.dg = load ptr, ptr %i.df, align 8, !nonnull !6, !noundef !6
@@ -258,7 +253,7 @@ bb.aa:                                            ; preds = %bb.z
           to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151 unwind label %bb.ap, !inline_history !58
 
 bb.ab:                                            ; preds = %bb.z
-  %i.di = lshr i64 %5, 32
+  %i.di = lshr i64 %3, 32
   %i.dj = icmp ult ptr %.sroa.5.0.i277, inttoptr (i64 188978561024 to ptr)
   %switch.idx.cast.i.i.i147 = trunc i64 %i.di to i8 ; 2 uses
   %i.dk = icmp ne i8 %switch.idx.cast.i.i.i147, -1
@@ -277,6 +272,7 @@ bb.ad:                                            ; preds = %bb.z
   br label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151
 
 bb.ae:                                            ; preds = %bb.y
+  %4 = ptrtoint ptr %i.cy to i64
   %.not699 = xor i1 %i.da, true
   %i.dp = add i64 %.sroa.033.0, %4
   %spec.select = zext i1 %.not699 to i8
@@ -305,7 +301,7 @@ bb.ah:                                            ; preds = %bb.ag
           to label %.noexc155 unwind label %bb.ap
 
 .noexc155:                                        ; preds = %bb.ah
-  %i.ds = lshr i64 %5, 32
+  %i.ds = lshr i64 %3, 32
   %i.dt = trunc nuw i64 %i.ds to i32
   %i.du = getelementptr inbounds nuw i8, ptr %i.dr, i64 8
   %i.dv = load ptr, ptr %i.du, align 8, !nonnull !6, !noundef !6
@@ -313,7 +309,7 @@ bb.ah:                                            ; preds = %bb.ag
           to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit157 unwind label %bb.ap, !inline_history !58
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.dx = lshr i64 %5, 32
+  %i.dx = lshr i64 %3, 32
   %i.dy = icmp ult ptr %.sroa.5.0.i277, inttoptr (i64 188978561024 to ptr)
   %switch.idx.cast.i.i.i153 = trunc i64 %i.dx to i8 ; 2 uses
   %i.dz = icmp ne i8 %switch.idx.cast.i.i.i153, -1
@@ -353,7 +349,7 @@ bb.am:                                            ; preds = %_RNvMs1_NtNtCsj6eKB
 
 bb.an:                                            ; preds = %bb.am
   %i.eg = icmp ult ptr %.sroa.5.0.i277, inttoptr (i64 188978561024 to ptr)
-  %i.eh = and i64 %5, 1095216660480
+  %i.eh = and i64 %3, 1095216660480
   %i.ei = icmp ne i64 %i.eh, 1095216660480
   call void @llvm.assume(i1 %i.eg)
   call void @llvm.assume(i1 %i.ei)

@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.k
   br i1 %.not184, label %bb.t, label %.preheader221
 
 .preheader221:                                    ; preds = %.preheader223
-  %i.be = ptrtoint ptr %.0154 to i64              ; 4 uses
+  %i.be = ptrtoint ptr %.0154 to i64              ; 2 uses
   %i.bf = ptrtoint ptr %.0150 to i64              ; 3 uses
   %i.bg = sub i64 %i.be, %i.bf
   %i.bh = tail call ptr @memchr(ptr noundef nonnull %.0150, i32 noundef 10, i64 noundef %i.bg) #20 ; 3 uses
@@ -259,11 +259,11 @@ bb.z:                                             ; preds = %bb.x, %bb.u
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !138
   %i.cg = icmp eq i8 %i.cf, 13
   %.neg182 = select i1 %i.cg, i64 -2, i64 -1
-  %i.ch = getelementptr inbounds i8, ptr %i.bo, i64 %.neg182
+  %i.ch = getelementptr inbounds i8, ptr %i.bo, i64 %.neg182 ; 3 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.critedge, %bb.z
-  %.2152 = phi ptr [ %i.bo, %bb.z ], [ %i.cs, %.critedge ] ; 7 uses
+  %.2152 = phi ptr [ %i.bo, %bb.z ], [ %i.cs, %.critedge ] ; 8 uses
   %i.ci = icmp ult ptr %.2152, %.0154
   br i1 %i.ci, label %bb.ab, label %bb.ac
 
@@ -275,31 +275,27 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.cl = getelementptr inbounds nuw i8, ptr %.2152, i64 1 ; 2 uses
   %i.cm = icmp ult ptr %i.cl, %.0154
-  br i1 %i.cm, label %bb.ad, label %.critedge2.loopexit
+  br i1 %i.cm, label %bb.ad, label %.critedge2
 
 bb.ad:                                            ; preds = %bb.ac
   %i.cn = load i8, ptr %.2152, align 1, !tbaa !138
   %i.co = icmp eq i8 %i.cn, 13
-  br i1 %i.co, label %bb.ae, label %.critedge2.loopexit
+  br i1 %i.co, label %bb.ae, label %.critedge2
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cp = load i8, ptr %i.cl, align 1, !tbaa !138
   %i.cq = icmp eq i8 %i.cp, 10
-  br i1 %i.cq, label %.critedge, label %.critedge2.loopexit
+  br i1 %i.cq, label %.critedge, label %.critedge2
 
 .critedge:                                        ; preds = %bb.ab, %bb.ae
   %i.cr = phi i64 [ 1, %bb.ab ], [ 2, %bb.ae ]
   %i.cs = getelementptr inbounds nuw i8, ptr %.2152, i64 %i.cr
   br label %bb.aa, !llvm.loop !224
 
-.critedge2.loopexit:                              ; preds = %bb.ad, %bb.ac, %bb.ae
-  %.pre = ptrtoint ptr %.2152 to i64
-  br label %.critedge2
-
-.critedge2:                                       ; preds = %bb.y, %.critedge2.loopexit, %.preheader221
-  %.pre-phi = phi i64 [ %i.be, %.preheader221 ], [ %.pre, %.critedge2.loopexit ], [ %i.be, %bb.y ] ; 2 uses
-  %.1155 = phi ptr [ %.0154, %.preheader221 ], [ %.2152, %.critedge2.loopexit ], [ %.0154, %bb.y ] ; 2 uses
-  %.0 = phi ptr [ null, %.preheader221 ], [ %i.ch, %.critedge2.loopexit ], [ null, %bb.y ] ; 2 uses
+.critedge2:                                       ; preds = %bb.y, %bb.ae, %bb.ac, %bb.ad, %.preheader221
+  %.1155 = phi ptr [ %.0154, %.preheader221 ], [ %.2152, %bb.ae ], [ %.2152, %bb.ad ], [ %.2152, %bb.ac ], [ %.0154, %bb.y ] ; 3 uses
+  %.0 = phi ptr [ null, %.preheader221 ], [ %i.ch, %bb.ae ], [ %i.ch, %bb.ad ], [ %i.ch, %bb.ac ], [ null, %bb.y ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.1155 to i64          ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cu = load i8, ptr %i.ct, align 8
   %i.cv = trunc i8 %i.cu to i1

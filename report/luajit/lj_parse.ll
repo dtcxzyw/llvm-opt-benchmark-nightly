@@ -205,7 +205,7 @@ lj_buf_more.exit58.i:                             ; preds = %bb.k, %bb.j
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %fs_fixup_ret.exit
   %i.df = phi ptr [ %.pre.i82, %._crit_edge.loopexit.i ], [ %i.ci, %fs_fixup_ret.exit ]
   %i.dg = phi ptr [ %i.de, %._crit_edge.loopexit.i ], [ %i.ci, %fs_fixup_ret.exit ] ; 3 uses
-  %i.dh = ptrtoint ptr %i.dg to i64               ; 2 uses
+  %i.dh = ptrtoint ptr %i.dg to i64
   %i.di = ptrtoint ptr %i.df to i64
   %i.dj = sub i64 %i.dh, %i.di
   %i.dk = and i64 %i.dj, 4294967295
@@ -299,19 +299,15 @@ bb.r:                                             ; preds = %lj_buf_more.exit.i,
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.l
-  %i.fh = phi ptr [ %i.dv, %bb.l ], [ %i.fg, %bb.r ] ; 3 uses
+  %i.fh = phi ptr [ %i.dv, %bb.l ], [ %i.fg, %bb.r ] ; 2 uses
   %.1.i = phi i32 [ %.05360.i, %bb.l ], [ %i.fa, %bb.r ]
   %i.fi = getelementptr inbounds nuw i8, ptr %.061.i, i64 24 ; 2 uses
   %i.fj = icmp ult ptr %i.fi, %i.do
-  br i1 %i.fj, label %bb.l, label %._crit_edge64.i.loopexit, !llvm.loop !143
+  br i1 %i.fj, label %bb.l, label %._crit_edge64.i, !llvm.loop !143
 
-._crit_edge64.i.loopexit:                         ; preds = %bb.s
-  %.pre = ptrtoint ptr %i.fh to i64
-  br label %._crit_edge64.i
-
-._crit_edge64.i:                                  ; preds = %._crit_edge64.i.loopexit, %._crit_edge.i
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge64.i.loopexit ], [ %i.dh, %._crit_edge.i ]
-  %2 = phi ptr [ %i.fh, %._crit_edge64.i.loopexit ], [ %i.dg, %._crit_edge.i ]
+._crit_edge64.i:                                  ; preds = %bb.s, %._crit_edge.i
+  %2 = phi ptr [ %i.dg, %._crit_edge.i ], [ %i.fh, %bb.s ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %2 to i64
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !169
   %i.fm = ptrtoint ptr %i.fl to i64

@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !22
   store ptr %.0130, ptr %i.m, align 8
   %i.ba = load i64, ptr @vmemmap_base, align 8
-  %i.bb = ptrtoint ptr %.0130 to i64              ; 2 uses
+  %i.bb = ptrtoint ptr %.0130 to i64
   %i.bc = sub i64 %i.bb, %i.ba
   %i.bd = shl i64 %i.bc, 6
   %i.be = load i64, ptr @page_offset_base, align 8
@@ -348,7 +348,7 @@ bb.ad:                                            ; preds = %folio_test_uptodate
   br label %bb.ae
 
 bb.ae:                                            ; preds = %folio_test_uptodate.exit157, %bb.ad, %bb.w
-  %.1 = phi ptr [ %i.cv, %folio_test_uptodate.exit157 ], [ %i.cv, %bb.ad ], [ %i.cl, %bb.w ] ; 7 uses
+  %.1 = phi ptr [ %i.cv, %folio_test_uptodate.exit157 ], [ %i.cv, %bb.ad ], [ %i.cl, %bb.w ] ; 6 uses
   %i.dg = icmp ugt ptr %.1, inttoptr (i64 -4096 to ptr)
   br i1 %i.dg, label %bb.af, label %bb.ag
 
@@ -365,12 +365,11 @@ bb.ag:                                            ; preds = %bb.ae
 
 folio_test_uptodate.exit161.thread:               ; preds = %bb.ag
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !22
-  %.pre = ptrtoint ptr %.1 to i64
   br label %bb.ah
 
 bb.ah:                                            ; preds = %folio_test_uptodate.exit161.thread, %bb.t
-  %.pre-phi = phi i64 [ %.pre, %folio_test_uptodate.exit161.thread ], [ %i.bb, %bb.t ]
-  %.2 = phi ptr [ %.1, %folio_test_uptodate.exit161.thread ], [ %.0130, %bb.t ] ; 3 uses
+  %.2 = phi ptr [ %.0130, %bb.t ], [ %.1, %folio_test_uptodate.exit161.thread ] ; 4 uses
+  %.pre-phi = ptrtoint ptr %.2 to i64
   store ptr %.2, ptr %2, align 8
   %i.dl = load i64, ptr @vmemmap_base, align 8
   %i.dm = sub i64 %.pre-phi, %i.dl

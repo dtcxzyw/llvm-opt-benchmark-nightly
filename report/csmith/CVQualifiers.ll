@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !31   ; 2 uses
   %i.f = load ptr, ptr %1, align 8, !tbaa !30     ; 2 uses
-  %i.g = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.h = ptrtoint ptr %i.f to i64                 ; 2 uses
+  %i.g = ptrtoint ptr %i.c to i64
+  %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
   %i.j = shl nsw i64 %i.i, 3
   %i.k = zext i32 %i.e to i64
@@ -240,8 +240,8 @@ _ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit: ; preds = %bb.c
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !30  ; 2 uses
   %.pre32 = load i32, ptr %i.d, align 8, !tbaa !31 ; 2 uses
   %.pre33 = load ptr, ptr %1, align 8, !tbaa !30  ; 2 uses
-  %.pre37 = ptrtoint ptr %.pre to i64             ; 2 uses
-  %.pre38 = ptrtoint ptr %.pre33 to i64           ; 2 uses
+  %.pre37 = ptrtoint ptr %.pre to i64
+  %.pre38 = ptrtoint ptr %.pre33 to i64
   %.pre40 = sub i64 %.pre37, %.pre38
   %.pre42 = shl nsw i64 %.pre40, 3
   %.pre44 = zext i32 %.pre32 to i64
@@ -273,20 +273,18 @@ _ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread: ; preds = %bb.c, %_ZNS
   store ptr %storemerge.i.i.i.i, ptr %i.aj, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.ai, ptr %.sroa.4.0..sroa_idx.i, align 8
-  %.pre34 = load ptr, ptr %1, align 8, !tbaa !30  ; 2 uses
-  %.pre35 = load ptr, ptr %i.b, align 8, !tbaa !30 ; 2 uses
+  %.pre34 = load ptr, ptr %1, align 8, !tbaa !30
+  %.pre35 = load ptr, ptr %i.b, align 8, !tbaa !30
   %.pre36 = load i32, ptr %i.d, align 8, !tbaa !31
-  %.pre48 = ptrtoint ptr %.pre35 to i64
-  %.pre50 = ptrtoint ptr %.pre34 to i64
   br label %_ZNSt6vectorIbSaIbEE13_M_initializeEm.exit
 
 _ZNSt6vectorIbSaIbEE13_M_initializeEm.exit:       ; preds = %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit, %bb.b
-  %.pre-phi51 = phi i64 [ %.pre50, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre38, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.h, %bb.b ]
-  %.pre-phi49 = phi i64 [ %.pre48, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre37, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.g, %bb.b ]
   %i.ak = phi ptr [ %i.aa, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ null, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.o, %bb.b ] ; 3 uses
   %i.al = phi i32 [ %.pre36, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre32, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.e, %bb.b ] ; 2 uses
-  %i.am = phi ptr [ %.pre35, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.c, %bb.b ]
-  %i.an = phi ptr [ %.pre34, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre33, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.f, %bb.b ] ; 2 uses
+  %i.am = phi ptr [ %.pre35, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.c, %bb.b ] ; 2 uses
+  %i.an = phi ptr [ %.pre34, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit.thread ], [ %.pre33, %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit ], [ %i.f, %bb.b ] ; 3 uses
+  %.pre-phi49 = ptrtoint ptr %i.am to i64
+  %.pre-phi51 = ptrtoint ptr %i.an to i64
   %i.ao = sub i64 %.pre-phi49, %.pre-phi51        ; 4 uses
   %i.ap = icmp sgt i64 %i.ao, 8
   br i1 %i.ap, label %bb.d, label %bb.e, !prof !33
@@ -689,7 +687,7 @@ _ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE10EnumObjec
 bb.b:                                             ; preds = %tailrecurse._crit_edge
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 10
   store i8 1, ptr %i.m, align 2, !tbaa !107
-  %i.n = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.lcssa) #22 ; 2 uses
+  %i.n = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.lcssa) #22 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %_ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE24reset_after_backward_posEv.exit, label %.lr.ph.i
@@ -730,7 +728,7 @@ _ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE24reset_aft
 bb.c:                                             ; preds = %.lr.ph
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 10
   store i8 1, ptr %i.ag, align 2, !tbaa !107
-  %i.ah = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %i.y) #22 ; 2 uses
+  %i.ah = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %i.y) #22 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.aj = icmp eq ptr %i.ah, %i.ai
   br i1 %i.aj, label %_ZN10EnumeratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE24reset_after_backward_posEv.exit7, label %.lr.ph.i5

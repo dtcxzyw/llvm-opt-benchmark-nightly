@@ -205,11 +205,7 @@ _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
 bb.j:                                             ; preds = %bb.b
   %i.dc = add i64 %3, -1                          ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.dc, 0
-  br i1 %.not.i.i.i, label %..loopexit_crit_edge.i, label %.preheader96
-
-..loopexit_crit_edge.i:                           ; preds = %bb.j
-  %.pre5.i = ptrtoint ptr %1 to i64
-  br label %.loopexit.i
+  br i1 %.not.i.i.i, label %.loopexit.i, label %.preheader96
 
 .preheader96:                                     ; preds = %bb.j, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i
   %i.dd = phi i64 [ %i.ds, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i ], [ 0, %bb.j ]
@@ -242,17 +238,17 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i.i, %bb.k, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i.i
   %i.dp = phi ptr [ %spec.select, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i.i ], [ %i.dh, %bb.k ], [ %i.dl, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i.i ] ; 3 uses
-  %i.dq = ptrtoint ptr %i.dp to i64               ; 2 uses
+  %i.dq = ptrtoint ptr %i.dp to i64
   %i.dr = sub i64 %i.dq, %i.df
   %i.ds = add i64 %i.dr, %i.dd                    ; 2 uses
   %i.dt = add i64 %.sroa.01.0.i.i.i.i, -1         ; 2 uses
   %i.du = icmp eq i64 %i.dt, 0
   br i1 %i.du, label %.loopexit.i, label %.preheader96
 
-.loopexit.i:                                      ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i, %..loopexit_crit_edge.i
-  %.sroa.1866.2 = phi i64 [ 0, %..loopexit_crit_edge.i ], [ %i.ds, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i ]
-  %.pre-phi.i = phi i64 [ %.pre5.i, %..loopexit_crit_edge.i ], [ %i.dq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i ]
-  %5 = phi ptr [ %1, %..loopexit_crit_edge.i ], [ %i.dp, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i ] ; 5 uses
+.loopexit.i:                                      ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i, %bb.j
+  %.sroa.1866.2 = phi i64 [ 0, %bb.j ], [ %i.ds, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i ]
+  %5 = phi ptr [ %1, %bb.j ], [ %i.dp, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i ] ; 6 uses
+  %.pre-phi.i = ptrtoint ptr %5 to i64
   %i.dv = icmp eq ptr %5, %i.c
   br i1 %i.dv, label %_RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipNtNtNtBc_3str4iter11CharIndicesEENtB6_8SpecTake13spec_for_eachNCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0EB2p_.exit, label %bb.l
 
@@ -322,11 +318,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 bb.o:                                             ; preds = %bb.m
   %i.es = add i64 %4, -1                          ; 2 uses
   %.not.i.i.i35 = icmp eq i64 %i.es, 0
-  br i1 %.not.i.i.i35, label %..loopexit_crit_edge.i51, label %.preheader
-
-..loopexit_crit_edge.i51:                         ; preds = %bb.o
-  %.pre5.i55 = ptrtoint ptr %1 to i64
-  br label %.loopexit.i41
+  br i1 %.not.i.i.i35, label %.loopexit.i41, label %.preheader
 
 .preheader:                                       ; preds = %bb.o, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50
   %i.et = phi i64 [ %i.fi, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50 ], [ 0, %bb.o ]
@@ -359,17 +351,17 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i.i49, %bb.p, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i.i39
   %i.ff = phi ptr [ %spec.select192, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i.i49 ], [ %i.ex, %bb.p ], [ %i.fb, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i.i39 ] ; 3 uses
-  %i.fg = ptrtoint ptr %i.ff to i64               ; 2 uses
+  %i.fg = ptrtoint ptr %i.ff to i64
   %i.fh = sub i64 %i.fg, %i.ev
   %i.fi = add i64 %i.fh, %i.et                    ; 2 uses
   %i.fj = add i64 %.sroa.01.0.i.i.i.i38, -1       ; 2 uses
   %i.fk = icmp eq i64 %i.fj, 0
   br i1 %i.fk, label %.loopexit.i41, label %.preheader
 
-.loopexit.i41:                                    ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50, %..loopexit_crit_edge.i51
-  %.sroa.18.2 = phi i64 [ 0, %..loopexit_crit_edge.i51 ], [ %i.fi, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50 ]
-  %.pre-phi.i42 = phi i64 [ %.pre5.i55, %..loopexit_crit_edge.i51 ], [ %i.fg, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50 ]
-  %6 = phi ptr [ %1, %..loopexit_crit_edge.i51 ], [ %i.ff, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50 ] ; 5 uses
+.loopexit.i41:                                    ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50, %bb.o
+  %.sroa.18.2 = phi i64 [ 0, %bb.o ], [ %i.fi, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50 ]
+  %6 = phi ptr [ %1, %bb.o ], [ %i.ff, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.i50 ] ; 6 uses
+  %.pre-phi.i42 = ptrtoint ptr %6 to i64
   %i.fl = icmp eq ptr %6, %i.c
   br i1 %i.fl, label %_RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipNtNtNtBc_3str4iter11CharIndicesEENtB6_8SpecTake13spec_for_eachNCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0EB2p_.exit, label %bb.q
 

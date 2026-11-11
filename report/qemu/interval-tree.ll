@@ -202,7 +202,7 @@ rb_next.exit.i:                                   ; preds = %.preheader17.i.i, %
 
 bb.d:                                             ; preds = %rb_next.exit.i, %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.o = load ptr, ptr %i.n, align 8              ; 16 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 15 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8              ; 5 uses
   %.not.i7.i = icmp eq ptr %i.q, null
@@ -291,7 +291,6 @@ bb.r:                                             ; preds = %bb.q
   %i.am = load i64, ptr %i.al, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   store i64 %i.am, ptr %i.an, align 8
-  %.pre.i.i = ptrtoint ptr %i.o to i64
   br label %interval_tree_propagate.exit.i.i
 
 .preheader7.i.i:                                  ; preds = %bb.q, %.preheader7.i.i
@@ -310,7 +309,7 @@ bb.s:                                             ; preds = %.preheader7.i.i
   store atomic ptr %i.o, ptr %i.aq monotonic, align 8
   %i.at = load atomic i64, ptr %i.o monotonic, align 8
   %i.au = and i64 %i.at, 1
-  %i.av = ptrtoint ptr %.0.i8.i to i64            ; 4 uses
+  %i.av = ptrtoint ptr %.0.i8.i to i64
   %i.aw = or i64 %i.au, %i.av
   store atomic i64 %i.aw, ptr %i.o monotonic, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -364,16 +363,16 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not.i95.i.i, label %interval_tree_propagate.exit.i.i, label %.lr.ph.i.i.i
 
 interval_tree_propagate.exit.i.i:                 ; preds = %bb.x, %bb.w, %bb.s, %bb.r
-  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %bb.r ], [ %i.av, %bb.s ], [ %i.av, %bb.w ], [ %i.av, %bb.x ]
-  %.180.i.i = phi ptr [ %i.o, %bb.r ], [ %.0.i8.i, %bb.s ], [ %.0.i8.i, %bb.w ], [ %.0.i8.i, %bb.x ] ; 7 uses
+  %.180.i.i = phi ptr [ %i.o, %bb.r ], [ %.0.i8.i, %bb.s ], [ %.0.i8.i, %bb.w ], [ %.0.i8.i, %bb.x ] ; 8 uses
   %.078.i.i = phi ptr [ %i.ak, %bb.r ], [ %i.ar, %bb.s ], [ %i.ar, %bb.w ], [ %i.ar, %bb.x ] ; 2 uses
   %.077.i.i = phi ptr [ %i.o, %bb.r ], [ %.079.i.i, %bb.s ], [ %.079.i.i, %bb.w ], [ %.079.i.i, %bb.x ] ; 2 uses
+  %.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %.180.i.i to i64
   %i.bq = load ptr, ptr %i.p, align 8             ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.180.i.i, i64 16
   store atomic ptr %i.bq, ptr %i.br monotonic, align 8
   %i.bs = load atomic i64, ptr %i.bq monotonic, align 8
   %i.bt = and i64 %i.bs, 1
-  %i.bu = or i64 %i.bt, %.pre-phi.i.i
+  %i.bu = or i64 %i.bt, %.pre-phi.i.pre-phi.i.pre-phi
   store atomic i64 %i.bu, ptr %i.bq monotonic, align 8
   %i.bv = load atomic i64, ptr %0 monotonic, align 8 ; 2 uses
   %i.bw = and i64 %i.bv, -2                       ; 2 uses

@@ -205,23 +205,22 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ab, label %bb.i, label %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i"
 
 "_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i": ; preds = %bb.h
-  %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 16, !noalias !46009 ; 2 uses
+  %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 16, !noalias !46009
   %.pre.i = ptrtoint ptr %.pre33.i.i.i to i64
   %.pre58.i = and i64 %.pre.i, 7
   %.pre60.i = sub nsw i64 0, %.pre58.i
-  %.pre62.i = ptrtoint ptr %.pre.i.i to i64
   br label %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.thread23.i.i"
 
 "_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.thread23.i.i": ; preds = %bb.j, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i"
-  %.pre-phi63.i = phi i64 [ %.pre62.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.aw, %bb.j ]
-  %.pre-phi61.i = phi i64 [ %.pre60.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.at, %bb.j ]
-  %i.ac = phi ptr [ %.phi.trans.insert32.i.i.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.ao, %bb.j ]
-  %i.ad = phi ptr [ %.pre33.i.i.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.ap, %bb.j ]
-  %2 = phi ptr [ %.pre.i.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.aq, %bb.j ]
-  %i.ae = getelementptr i8, ptr %i.ad, i64 %.pre-phi61.i ; 3 uses
+  %.pre-phi63.i = phi i64 [ %.pre60.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.at, %bb.j ]
+  %2 = phi ptr [ %.phi.trans.insert32.i.i.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.ao, %bb.j ]
+  %i.ac = phi ptr [ %.pre33.i.i.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.ap, %bb.j ]
+  %i.ad = phi ptr [ %.pre.i.i, %"_ZN7bumpalo13Bump$LT$_$GT$21try_alloc_layout_fast17h8aaefd67d0855e38E.exit.thread.i.i.i" ], [ %i.aq, %bb.j ] ; 2 uses
+  %.pre-phi63.i.pre-phi = ptrtoint ptr %i.ad to i64
+  %i.ae = getelementptr i8, ptr %i.ac, i64 %.pre-phi63.i ; 3 uses
   %i.af = ptrtoint ptr %i.ae to i64
-  %i.ag = sub i64 %i.af, %.pre-phi63.i
-  %i.ah = icmp ult ptr %i.ae, %2
+  %i.ag = sub i64 %i.af, %.pre-phi63.i.pre-phi
+  %i.ah = icmp ult ptr %i.ae, %i.ad
   %i.ai = icmp ugt i64 %i.f, %i.ag
   %or.cond.i22.i.i.i = or i1 %i.ah, %i.ai
   br i1 %or.cond.i22.i.i.i, label %bb.l, label %.thread.i.i.i
@@ -230,7 +229,7 @@ bb.h:                                             ; preds = %bb.g
   %i.aj = sub nsw i64 0, %i.f
   %i.ak = getelementptr i8, ptr %i.ae, i64 %i.aj  ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
-  store ptr %i.ak, ptr %i.ac, align 8, !noalias !46009
+  store ptr %i.ak, ptr %2, align 8, !noalias !46009
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.h
@@ -248,7 +247,7 @@ bb.j:                                             ; preds = %bb.i
   %i.at = sub nsw i64 0, %i.as                    ; 2 uses
   %i.au = getelementptr i8, ptr %i.ap, i64 %i.at  ; 3 uses
   %i.av = ptrtoint ptr %i.au to i64
-  %i.aw = ptrtoint ptr %i.aq to i64               ; 2 uses
+  %i.aw = ptrtoint ptr %i.aq to i64
   %i.ax = sub i64 %i.av, %i.aw
   %i.ay = icmp ult ptr %i.au, %i.aq
   %i.az = icmp ugt i64 %i.al, %i.ax

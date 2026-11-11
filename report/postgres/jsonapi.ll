@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 .thread488:                                       ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
-  %2 = ptrtoaddr ptr %i.n to i64
+  %i.n = load ptr, ptr %i.m, align 8
   br label %bb.aq
 
 bb.d:                                             ; preds = %bb.c
@@ -216,8 +215,7 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
-  %3 = ptrtoaddr ptr %i.s to i64
+  %i.s = load ptr, ptr %i.r, align 8
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -232,12 +230,10 @@ bb.e:                                             ; preds = %bb.d
   %.pre = load i8, ptr %i.j, align 8, !range !4
   %i.y = trunc nuw i8 %.pre to i1
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.aa = load ptr, ptr %i.z, align 8             ; 3 uses
-  %4 = ptrtoaddr ptr %i.aa to i64                 ; 2 uses
+  %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   br i1 %i.y, label %bb.f, label %bb.aq
 
 bb.f:                                             ; preds = %.thread, %bb.e
-  %5 = phi i64 [ %3, %.thread ], [ %4, %bb.e ]
   %i.ab = phi ptr [ %i.s, %.thread ], [ %i.aa, %bb.e ]
   %i.ac = phi ptr [ %i.r, %.thread ], [ %i.z, %bb.e ] ; 3 uses
   %i.ad = load ptr, ptr %i.g, align 8             ; 5 uses
@@ -640,18 +636,18 @@ bb.ap:                                            ; preds = %.thread394, %bb.ao,
   br label %.thread398
 
 bb.aq:                                            ; preds = %.thread488, %bb.f, %bb.e
-  %6 = phi i64 [ %5, %bb.f ], [ %4, %bb.e ], [ %2, %.thread488 ]
-  %i.ik = phi ptr [ %i.ab, %bb.f ], [ %i.aa, %bb.e ], [ %i.n, %.thread488 ] ; 8 uses
+  %i.ik = phi ptr [ %i.ab, %bb.f ], [ %i.aa, %bb.e ], [ %i.n, %.thread488 ] ; 9 uses
   %i.il = phi ptr [ %i.ac, %bb.f ], [ %i.z, %bb.e ], [ %i.m, %.thread488 ] ; 4 uses
   %i.im = phi i1 [ true, %bb.f ], [ false, %bb.e ], [ false, %.thread488 ]
   %i.in = icmp ult ptr %i.ik, %i.e
   br i1 %i.in, label %.lr.ph448, label %.thread517
 
 .lr.ph448:                                        ; preds = %bb.aq
+  %2 = ptrtoaddr ptr %i.ik to i64
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.iq = add i64 %i.d, %i.b
-  %i.ir = sub i64 %i.iq, %6
+  %i.ir = sub i64 %i.iq, %2
   %scevgep = getelementptr i8, ptr %i.ik, i64 %i.ir ; 3 uses
   br label %bb.ar
 

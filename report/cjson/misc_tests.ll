@@ -204,8 +204,8 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !49
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !53   ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c ; 6 uses
-  %.ptr = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c ; 5 uses
+  %.ptr = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 6 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !54
   %.not = icmp eq i8 %i.e, 34
   br i1 %.not, label %.preheader, label %.thread103
@@ -218,7 +218,6 @@ bb.a:
   br i1 %i.i, label %.lr.ph, label %.thread103
 
 .lr.ph:                                           ; preds = %.preheader, %bb.d
-  %.in = phi ptr [ %.ptr124, %bb.d ], [ %.ptr, %.preheader ]
   %.059117 = phi i64 [ %.160, %bb.d ], [ 0, %.preheader ] ; 3 uses
   %.063116.idx = phi i64 [ %.164.add, %bb.d ], [ 1, %.preheader ] ; 5 uses
   %.063116.ptr = getelementptr inbounds nuw i8, ptr %i.d, i64 %.063116.idx
@@ -241,15 +240,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph, %bb.c
   %.164.idx = phi i64 [ %.063116.add, %bb.c ], [ %.063116.idx, %.lr.ph ]
   %.160 = phi i64 [ %i.l, %bb.c ], [ %.059117, %.lr.ph ]
-  %.164.add = add nuw nsw i64 %.164.idx, 1        ; 3 uses
-  %.ptr124 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.164.add
+  %.164.add = add nuw nsw i64 %.164.idx, 1        ; 2 uses
   %i.m = add nuw nsw i64 %i.c, %.164.add
   %i.n = icmp ult i64 %i.m, %i.g
   br i1 %i.n, label %.lr.ph, label %.thread103
 
 bb.e:                                             ; preds = %.lr.ph
-  %2 = ptrtoint ptr %.in to i64                   ; 4 uses
-  %.063116.ptr.le = getelementptr inbounds nuw i8, ptr %i.d, i64 %.063116.idx
+  %.063116.ptr.le = getelementptr inbounds nuw i8, ptr %i.d, i64 %.063116.idx ; 2 uses
+  %2 = ptrtoint ptr %.063116.ptr.le to i64        ; 4 uses
   %i.o = ptrtoint ptr %i.d to i64
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !59

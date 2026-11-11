@@ -205,17 +205,13 @@ bb.a:
 
 bb.b:                                             ; preds = %.outer, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit188
   %.sroa.26.0 = phi i64 [ %.sroa.26.3246684708, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit188 ], [ %.sroa.26.0.ph, %.outer ] ; 3 uses
-  %.sroa.12.0 = phi ptr [ %.sroa.12.5249681710, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit188 ], [ %.sroa.12.0.ph, %.outer ] ; 8 uses
+  %.sroa.12.0 = phi ptr [ %.sroa.12.5249681710, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit188 ], [ %.sroa.12.0.ph, %.outer ] ; 7 uses
   %.sroa.9.0 = phi i64 [ %.sroa.3.0.i.i.i252678712, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit188 ], [ %.sroa.9.0.ph, %.outer ]
   %.sroa.0.0 = phi i64 [ %.sroa.0.0.i.i.i255675714, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit188 ], [ %.sroa.0.0.ph, %.outer ]
-  switch i64 %.sroa.0.0, label %._crit_edge [
+  switch i64 %.sroa.0.0, label %bb.e [
     i64 2, label %bb.c
     i64 0, label %.thread
   ]
-
-._crit_edge:                                      ; preds = %bb.b
-  %.pre645 = ptrtoint ptr %.sroa.12.0 to i64
-  br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   %i.z = ptrtoint ptr %.sroa.12.0 to i64
@@ -255,7 +251,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i, %bb.d, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i
   %.sroa.12.2 = phi ptr [ %i.af, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i ], [ %i.ab, %bb.d ], [ %spec.select, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i ] ; 2 uses
-  %i.aj = ptrtoint ptr %.sroa.12.2 to i64         ; 2 uses
+  %i.aj = ptrtoint ptr %.sroa.12.2 to i64
   %i.ak = sub i64 %.sroa.26.0, %i.z
   %i.al = add i64 %i.ak, %i.aj
   br label %bb.e
@@ -264,11 +260,11 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.am = trunc nuw i64 %.sroa.024.0.ph to i1
   br i1 %i.am, label %bb.cd, label %bb.ce
 
-bb.e:                                             ; preds = %._crit_edge, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i
-  %.pre-phi.a = phi i64 [ %.pre645, %._crit_edge ], [ %i.aj, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ]
-  %.sroa.26.1 = phi i64 [ %.sroa.26.0, %._crit_edge ], [ %i.al, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 15 uses
-  %.sroa.12.1 = phi ptr [ %.sroa.12.0, %._crit_edge ], [ %.sroa.12.2, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 5 uses
-  %.sroa.8.0 = phi i64 [ %.sroa.9.0, %._crit_edge ], [ %.sroa.26.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 17 uses
+bb.e:                                             ; preds = %bb.b, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i
+  %.pre-phi.a = phi i64 [ %i.al, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ], [ %.sroa.26.0, %bb.b ] ; 15 uses
+  %.sroa.12.1 = phi ptr [ %.sroa.12.2, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ], [ %.sroa.12.0, %bb.b ] ; 6 uses
+  %.sroa.8.0 = phi i64 [ %.sroa.26.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ], [ %.sroa.9.0, %bb.b ] ; 17 uses
+  %.pre-phi = ptrtoint ptr %.sroa.12.1 to i64
   %.not = icmp eq ptr %.sroa.12.1, %i.q           ; 2 uses
   br i1 %.not, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_jEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtB1j_3map3MapNtNtNtB5_3str4iter11CharIndicesNCNvMs5_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5modelNtB2X_3BPE10merge_word0EE4peek0EB33_.exit, label %bb.f
 
@@ -296,10 +292,10 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i, %bb.f, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i
   %.sroa.12.4 = phi ptr [ %i.ar, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i ], [ %i.an, %bb.f ], [ %spec.select1013, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i ] ; 3 uses
   %i.av = ptrtoint ptr %.sroa.12.4 to i64
-  %i.aw = sub i64 %.sroa.26.1, %.pre-phi.a
+  %i.aw = sub i64 %.pre-phi.a, %.pre-phi
   %i.ax = add i64 %i.aw, %i.av                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  %.not.i152 = icmp ugt i64 %.sroa.8.0, %.sroa.26.1
+  %.not.i152 = icmp ugt i64 %.sroa.8.0, %.pre-phi.a
   br i1 %.not.i152, label %.invoke, label %bb.g
 
 bb.g:                                             ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i
@@ -311,7 +307,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not5.i, label %bb.j, label %.split.i
 
 bb.i:                                             ; preds = %bb.j, %.split.i, %bb.g
-  %i.az = icmp eq i64 %.sroa.26.1, 0
+  %i.az = icmp eq i64 %.pre-phi.a, 0
   br i1 %i.az, label %bb.o, label %bb.k
 
 .split.i:                                         ; preds = %bb.h
@@ -325,15 +321,15 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.bd, label %bb.i, label %.invoke
 
 bb.k:                                             ; preds = %bb.i
-  %.not6.i = icmp ult i64 %.sroa.26.1, %3
+  %.not6.i = icmp ult i64 %.pre-phi.a, %3
   br i1 %.not6.i, label %bb.l, label %.split7.i
 
 .split7.i:                                        ; preds = %bb.k
-  %i.be = icmp eq i64 %.sroa.26.1, %3
+  %i.be = icmp eq i64 %.pre-phi.a, %3
   br i1 %i.be, label %bb.o, label %.invoke
 
 bb.l:                                             ; preds = %bb.k
-  %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.26.1
+  %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 %.pre-phi.a
   %i.bg = load i8, ptr %i.bf, align 1, !alias.scope !1402, !noundef !12
   %i.bh = icmp sgt i8 %i.bg, -65
   br i1 %i.bh, label %bb.o, label %.invoke
@@ -376,7 +372,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.i, %.split7.i, %bb.l
-  %.sroa.26.1.pn = phi i64 [ 0, %bb.i ], [ %.sroa.26.1, %bb.l ], [ %.sroa.26.1, %.split7.i ] ; 3 uses
+  %.sroa.26.1.pn = phi i64 [ 0, %bb.i ], [ %.pre-phi.a, %bb.l ], [ %.pre-phi.a, %.split7.i ] ; 3 uses
   %storemerge = sub nuw i64 %.sroa.26.1.pn, %.sroa.8.0 ; 3 uses
   %storemerge663 = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.8.0
   store ptr %storemerge663, ptr %i.r, align 8
@@ -387,7 +383,7 @@ bb.o:                                             ; preds = %bb.i, %.split7.i, %
   br i1 %.sroa.010.1.in, label %.thread717, label %bb.p
 
 .invoke:                                          ; preds = %.split.i156, %bb.n, %.split7.i, %.split.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i, %bb.j, %bb.l
-  %i.bn = phi i64 [ %.sroa.26.1, %.split7.i ], [ %.sroa.26.1, %bb.l ], [ %.sroa.26.1, %bb.j ], [ %.sroa.26.1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i ], [ %.sroa.26.1, %.split.i ], [ %3, %bb.n ], [ %3, %.split.i156 ]
+  %i.bn = phi i64 [ %.pre-phi.a, %.split7.i ], [ %.pre-phi.a, %bb.l ], [ %.pre-phi.a, %bb.j ], [ %.pre-phi.a, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i ], [ %.pre-phi.a, %.split.i ], [ %3, %bb.n ], [ %3, %.split.i156 ]
   %i.bo = phi ptr [ @111, %.split7.i ], [ @111, %bb.l ], [ @111, %bb.j ], [ @111, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i ], [ @111, %.split.i ], [ @112, %bb.n ], [ @112, %.split.i156 ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i64 noundef %.sroa.8.0, i64 noundef %i.bn, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bo) #28
           to label %.cont unwind label %.loopexit289.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -398,7 +394,7 @@ bb.o:                                             ; preds = %bb.i, %.split7.i, %
 bb.p:                                             ; preds = %.thread664, %bb.o
   %.pre640.pre643688 = phi ptr [ %.pre640.pre643673, %.thread664 ], [ %.pre640.pre643, %bb.o ] ; 2 uses
   %storemerge686 = phi i64 [ %storemerge670, %.thread664 ], [ %storemerge, %bb.o ] ; 2 uses
-  %.sroa.26.3246683 = phi i64 [ %.sroa.26.1, %.thread664 ], [ %i.ax, %bb.o ] ; 2 uses
+  %.sroa.26.3246683 = phi i64 [ %.pre-phi.a, %.thread664 ], [ %i.ax, %bb.o ] ; 2 uses
   %.sroa.12.5249680 = phi ptr [ %i.q, %.thread664 ], [ %.sroa.12.4, %bb.o ] ; 2 uses
   %.sroa.3.0.i.i.i252677 = phi i64 [ undef, %.thread664 ], [ %.sroa.26.1.pn, %bb.o ] ; 2 uses
   %.sroa.0.0.i.i.i255674 = phi i64 [ 0, %.thread664 ], [ 1, %bb.o ] ; 2 uses
@@ -554,7 +550,7 @@ bb.aa:                                            ; preds = %.thread699, %bb.q
   %.sroa.0.0.i.i.i255675715 = phi i64 [ 0, %.thread699 ], [ %.sroa.0.0.i.i.i255674, %bb.q ] ; 2 uses
   %.sroa.3.0.i.i.i252678713 = phi i64 [ undef, %.thread699 ], [ %.sroa.3.0.i.i.i252677, %bb.q ] ; 2 uses
   %.sroa.12.5249681711 = phi ptr [ %i.q, %.thread699 ], [ %.sroa.12.5249680, %bb.q ] ; 2 uses
-  %.sroa.26.3246684709 = phi i64 [ %.sroa.26.1, %.thread699 ], [ %.sroa.26.3246683, %bb.q ] ; 2 uses
+  %.sroa.26.3246684709 = phi i64 [ %.pre-phi.a, %.thread699 ], [ %.sroa.26.3246683, %bb.q ] ; 2 uses
   %storemerge687707 = phi i64 [ %storemerge695, %.thread699 ], [ %storemerge686, %bb.q ] ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.pre640716, i64 72 ; 2 uses
   %i.df = load i64, ptr %i.de, align 8, !range !23, !noundef !12

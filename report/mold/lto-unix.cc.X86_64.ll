@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %_ZNSt7__cxx1119basi
   %i.nm = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN4moldL11lto_objectsINS_6X86_64EEE, i64 8), align 8, !tbaa !474 ; 2 uses
   %i.nn = load ptr, ptr @_ZN4moldL11lto_objectsINS_6X86_64EEE, align 8, !tbaa !475 ; 3 uses
   %i.no = ptrtoint ptr %i.nm to i64               ; 2 uses
-  %i.np = ptrtoint ptr %i.nn to i64               ; 2 uses
+  %i.np = ptrtoint ptr %i.nn to i64
   %i.nq = sub i64 %i.no, %i.np                    ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.nm, %i.nn
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIPN4mold10ObjectFileINS0_6X86_64EEESaIS4_EEC2EmRKS5_.exit.i, label %bb.bn
@@ -220,17 +220,16 @@ bb.bo:                                            ; preds = %bb.bn
 
 _ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.bn
   %i.ns = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.nq) #28
-  %.pre = load ptr, ptr @_ZN4moldL11lto_objectsINS_6X86_64EEE, align 8, !tbaa !471 ; 2 uses
+  %.pre = load ptr, ptr @_ZN4moldL11lto_objectsINS_6X86_64EEE, align 8, !tbaa !471
   %.pre94 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN4moldL11lto_objectsINS_6X86_64EEE, i64 8), align 8, !tbaa !471
-  %.pre95 = ptrtoint ptr %.pre94 to i64
-  %.pre96 = ptrtoint ptr %.pre to i64
+  %.pre96 = ptrtoint ptr %.pre94 to i64
   br label %_ZNSt12_Vector_baseIPN4mold10ObjectFileINS0_6X86_64EEESaIS4_EEC2EmRKS5_.exit.i
 
 _ZNSt12_Vector_baseIPN4mold10ObjectFileINS0_6X86_64EEESaIS4_EEC2EmRKS5_.exit.i: ; preds = %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i, %bb.bm
-  %.pre-phi97 = phi i64 [ %.pre96, %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i ], [ %i.np, %bb.bm ]
-  %.pre-phi = phi i64 [ %.pre95, %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i ], [ %i.no, %bb.bm ]
-  %i.nt = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i ], [ %i.nn, %bb.bm ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre96, %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i ], [ %i.no, %bb.bm ]
+  %i.nt = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i ], [ %i.nn, %bb.bm ] ; 3 uses
   %i.nu = phi ptr [ %i.ns, %_ZNSt15__new_allocatorIPN4mold10ObjectFileINS0_6X86_64EEEE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.bm ] ; 5 uses
+  %.pre-phi97 = ptrtoint ptr %i.nt to i64
   store ptr %i.nu, ptr %0, align 8, !tbaa !475
   %i.nv = getelementptr inbounds nuw i8, ptr %i.nu, i64 %i.nq
   %i.nw = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -633,7 +632,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.r, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.s = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.s = ptrtoint ptr %1 to i64
   %i.t = sub i64 %i.m, %i.s
   %i.u = shl nsw i64 %i.t, 3
   %i.v = zext i32 %2 to i64                       ; 4 uses
@@ -716,7 +715,7 @@ bb.f:                                             ; preds = %_ZSt13copy_backward
   br i1 %.not26.i.i.i, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bf = shl nsw i64 -1, %i.v                    ; 2 uses
   br i1 %4, label %bb.h, label %bb.i
 
@@ -734,12 +733,11 @@ bb.i:                                             ; preds = %bb.g
 _ZSt14__fill_bvectorPmjjb.exit.i.i.i:             ; preds = %bb.i, %bb.h
   %storemerge.i.i.i.i = phi i64 [ %i.bk, %bb.i ], [ %i.bh, %bb.h ]
   store i64 %storemerge.i.i.i.i, ptr %1, align 8, !tbaa !207
-  %.pre = ptrtoint ptr %i.be to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZSt14__fill_bvectorPmjjb.exit.i.i.i, %bb.f
-  %.pre-phi = phi i64 [ %.pre, %_ZSt14__fill_bvectorPmjjb.exit.i.i.i ], [ %i.s, %bb.f ]
-  %.0.i.i.i = phi ptr [ %i.be, %_ZSt14__fill_bvectorPmjjb.exit.i.i.i ], [ %1, %bb.f ]
+  %.0.i.i.i = phi ptr [ %i.be, %_ZSt14__fill_bvectorPmjjb.exit.i.i.i ], [ %1, %bb.f ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.0.i.i.i to i64
   %i.bl = ptrtoint ptr %storemerge.i.i.i76 to i64
   %i.bm = sub i64 %i.bl, %.pre-phi
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i.i.i, i8 %.neg, i64 %i.bm, i1 false)

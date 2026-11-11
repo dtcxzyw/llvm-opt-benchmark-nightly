@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !205  ; 2 uses
   %i.g = load ptr, ptr %0, align 8, !tbaa !132    ; 3 uses
   %i.h = ptrtoint ptr %i.f to i64                 ; 2 uses
-  %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i                       ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.f, %i.g
   br i1 %.not.i.i.i.i, label %bb.d, label %bb.c
@@ -221,17 +221,16 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.c
   %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #33
-  %.pre = load ptr, ptr %0, align 8, !tbaa !207   ; 2 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !207
   %.pre12 = load ptr, ptr %i.e, align 8, !tbaa !207
-  %.pre13 = ptrtoint ptr %.pre12 to i64
-  %.pre14 = ptrtoint ptr %.pre to i64
+  %.pre14 = ptrtoint ptr %.pre12 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i, %bb.b
-  %.pre-phi15 = phi i64 [ %.pre14, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i ], [ %i.i, %bb.b ]
-  %.pre-phi = phi i64 [ %.pre13, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i ], [ %i.h, %bb.b ]
-  %i.m = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i ], [ %i.g, %bb.b ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre14, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i ], [ %i.h, %bb.b ]
+  %i.m = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i ], [ %i.g, %bb.b ] ; 3 uses
   %i.n = phi ptr [ %i.l, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.b ] ; 5 uses
+  %.pre-phi15 = ptrtoint ptr %i.m to i64
   store ptr %i.n, ptr %2, align 8, !tbaa !132
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.j

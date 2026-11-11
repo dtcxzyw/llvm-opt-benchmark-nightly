@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal void @stbir__encode_uint8_srgb(ptr nofree noundef writeonly captures(address) %0, i32 noundef %1, ptr noundef %2) #24 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = sext i32 %1 to i64                       ; 3 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
   %i.d = icmp sgt i32 %1, 15
@@ -379,25 +379,21 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %.1 = select i1 %i.do, ptr %i.f, ptr %i.dl
   br i1 %i.dn, label %bb.c, label %.loopexit
 
-.preheader.loopexit:                              ; preds = %stbir__linear_to_srgb_uchar.exit158
-  %.pre = ptrtoaddr ptr %.2144167 to i64
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.loopexit, %.preheader162
-  %.pn.lcssa173.pre-phi = phi i64 [ %.pre, %.preheader.loopexit ], [ %i.a, %.preheader162 ]
-  %.pn.lcssa = phi ptr [ %.2144167, %.preheader.loopexit ], [ %0, %.preheader162 ] ; 3 uses
-  %.2.lcssa = phi ptr [ %i.gs, %.preheader.loopexit ], [ %2, %.preheader162 ]
+.preheader:                                       ; preds = %stbir__linear_to_srgb_uchar.exit158, %.preheader162
+  %.pn.lcssa = phi ptr [ %0, %.preheader162 ], [ %.2144167, %stbir__linear_to_srgb_uchar.exit158 ] ; 4 uses
+  %.2.lcssa = phi ptr [ %2, %.preheader162 ], [ %i.gs, %stbir__linear_to_srgb_uchar.exit158 ]
   %i.dp = icmp ult ptr %.pn.lcssa, %i.c
   br i1 %i.dp, label %.lr.ph171.preheader, label %.loopexit
 
 .lr.ph171.preheader:                              ; preds = %.preheader
+  %.pn.lcssa173.pre-phi = ptrtoaddr ptr %.pn.lcssa to i64
   %i.dq = add i64 %i.a, %i.b
   %i.dr = sub i64 %i.dq, %.pn.lcssa173.pre-phi
   %scevgep = getelementptr i8, ptr %.pn.lcssa, i64 %i.dr
   br label %.lr.ph171
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %stbir__linear_to_srgb_uchar.exit158
-  %.2144167 = phi ptr [ %.2144, %stbir__linear_to_srgb_uchar.exit158 ], [ %.2144163, %.lr.ph.preheader ] ; 4 uses
+  %.2144167 = phi ptr [ %.2144, %stbir__linear_to_srgb_uchar.exit158 ], [ %.2144163, %.lr.ph.preheader ] ; 3 uses
   %.2166 = phi ptr [ %i.gs, %stbir__linear_to_srgb_uchar.exit158 ], [ %2, %.lr.ph.preheader ] ; 6 uses
   %.pn165 = phi ptr [ %.2144167, %stbir__linear_to_srgb_uchar.exit158 ], [ %0, %.lr.ph.preheader ] ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.2166) #52, !srcloc !365
@@ -526,7 +522,7 @@ stbir__linear_to_srgb_uchar.exit158:              ; preds = %stbir__linear_to_sr
   %i.gs = getelementptr inbounds nuw i8, ptr %.2166, i64 16 ; 2 uses
   %.2144 = getelementptr inbounds nuw i8, ptr %.2144167, i64 4 ; 2 uses
   %.not = icmp ugt ptr %.2144, %i.c
-  br i1 %.not, label %.preheader.loopexit, label %.lr.ph, !llvm.loop !362
+  br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !362
 
 .lr.ph171:                                        ; preds = %.lr.ph171.preheader, %stbir__linear_to_srgb_uchar.exit160
   %.3170 = phi ptr [ %i.hm, %stbir__linear_to_srgb_uchar.exit160 ], [ %.2.lcssa, %.lr.ph171.preheader ] ; 3 uses
@@ -929,7 +925,7 @@ stbir__float_to_half.exit64:                      ; preds = %bb.x, %bb.z, %bb.aa
 ; Function Attrs: nounwind uwtable
 define internal void @stbir__encode_uint8_linear_scaled(ptr nofree noundef writeonly captures(address) %0, i32 noundef %1, ptr noundef %2) #24 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = sext i32 %1 to i64                       ; 3 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
   %i.d = icmp sgt i32 %1, 7
@@ -980,25 +976,21 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %.1 = select i1 %i.ab, ptr %i.f, ptr %i.y
   br i1 %i.aa, label %bb.c, label %.loopexit
 
-.preheader.loopexit:                              ; preds = %.lr.ph
-  %.pre = ptrtoaddr ptr %.26177 to i64
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.loopexit, %.preheader72
-  %.pn.lcssa83.pre-phi = phi i64 [ %.pre, %.preheader.loopexit ], [ %i.a, %.preheader72 ]
-  %.pn.lcssa = phi ptr [ %.26177, %.preheader.loopexit ], [ %0, %.preheader72 ] ; 3 uses
-  %.2.lcssa = phi ptr [ %i.ap, %.preheader.loopexit ], [ %2, %.preheader72 ]
+.preheader:                                       ; preds = %.lr.ph, %.preheader72
+  %.pn.lcssa = phi ptr [ %0, %.preheader72 ], [ %.26177, %.lr.ph ] ; 4 uses
+  %.2.lcssa = phi ptr [ %2, %.preheader72 ], [ %i.ap, %.lr.ph ]
   %i.ac = icmp ult ptr %.pn.lcssa, %i.c
   br i1 %i.ac, label %.lr.ph81.preheader, label %.loopexit
 
 .lr.ph81.preheader:                               ; preds = %.preheader
+  %.pn.lcssa83.pre-phi = ptrtoaddr ptr %.pn.lcssa to i64
   %i.ad = add i64 %i.a, %i.b
   %i.ae = sub i64 %i.ad, %.pn.lcssa83.pre-phi
   %scevgep = getelementptr i8, ptr %.pn.lcssa, i64 %i.ae
   br label %.lr.ph81
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.26177 = phi ptr [ %.261, %.lr.ph ], [ %.26173, %.lr.ph.preheader ] ; 4 uses
+  %.26177 = phi ptr [ %.261, %.lr.ph ], [ %.26173, %.lr.ph.preheader ] ; 3 uses
   %.276 = phi ptr [ %i.ap, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 3 uses
   %.pn75 = phi ptr [ %.26177, %.lr.ph ], [ %0, %.lr.ph.preheader ]
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.276) #52, !srcloc !440
@@ -1016,7 +1008,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %.276, i64 16 ; 2 uses
   %.261 = getelementptr inbounds nuw i8, ptr %.26177, i64 4 ; 2 uses
   %.not = icmp ugt ptr %.261, %i.c
-  br i1 %.not, label %.preheader.loopexit, label %.lr.ph, !llvm.loop !437
+  br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !437
 
 .lr.ph81:                                         ; preds = %.lr.ph81.preheader, %.lr.ph81
   %.380 = phi ptr [ %i.ba, %.lr.ph81 ], [ %.2.lcssa, %.lr.ph81.preheader ] ; 3 uses
@@ -1044,7 +1036,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal void @stbir__encode_uint8_linear(ptr nofree noundef writeonly captures(address) %0, i32 noundef %1, ptr noundef %2) #24 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = sext i32 %1 to i64                       ; 3 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
   %i.d = icmp sgt i32 %1, 7
@@ -1093,25 +1085,21 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %.1 = select i1 %i.z, ptr %i.f, ptr %i.w
   br i1 %i.y, label %bb.c, label %.loopexit
 
-.preheader.loopexit:                              ; preds = %.lr.ph
-  %.pre = ptrtoaddr ptr %.26480 to i64
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.loopexit, %.preheader75
-  %.pn.lcssa86.pre-phi = phi i64 [ %.pre, %.preheader.loopexit ], [ %i.a, %.preheader75 ]
-  %.pn.lcssa = phi ptr [ %.26480, %.preheader.loopexit ], [ %0, %.preheader75 ] ; 3 uses
-  %.2.lcssa = phi ptr [ %i.am, %.preheader.loopexit ], [ %2, %.preheader75 ]
+.preheader:                                       ; preds = %.lr.ph, %.preheader75
+  %.pn.lcssa = phi ptr [ %0, %.preheader75 ], [ %.26480, %.lr.ph ] ; 4 uses
+  %.2.lcssa = phi ptr [ %2, %.preheader75 ], [ %i.am, %.lr.ph ]
   %i.aa = icmp ult ptr %.pn.lcssa, %i.c
   br i1 %i.aa, label %.lr.ph84.preheader, label %.loopexit
 
 .lr.ph84.preheader:                               ; preds = %.preheader
+  %.pn.lcssa86.pre-phi = ptrtoaddr ptr %.pn.lcssa to i64
   %i.ab = add i64 %i.a, %i.b
   %i.ac = sub i64 %i.ab, %.pn.lcssa86.pre-phi
   %scevgep = getelementptr i8, ptr %.pn.lcssa, i64 %i.ac
   br label %.lr.ph84
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.26480 = phi ptr [ %.264, %.lr.ph ], [ %.26476, %.lr.ph.preheader ] ; 4 uses
+  %.26480 = phi ptr [ %.264, %.lr.ph ], [ %.26476, %.lr.ph.preheader ] ; 3 uses
   %.279 = phi ptr [ %i.am, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 3 uses
   %.pn78 = phi ptr [ %.26480, %.lr.ph ], [ %0, %.lr.ph.preheader ]
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.279) #52, !srcloc !445
@@ -1128,7 +1116,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.am = getelementptr inbounds nuw i8, ptr %.279, i64 16 ; 2 uses
   %.264 = getelementptr inbounds nuw i8, ptr %.26480, i64 4 ; 2 uses
   %.not = icmp ugt ptr %.264, %i.c
-  br i1 %.not, label %.preheader.loopexit, label %.lr.ph, !llvm.loop !442
+  br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !442
 
 .lr.ph84:                                         ; preds = %.lr.ph84.preheader, %.lr.ph84
   %.383 = phi ptr [ %i.at, %.lr.ph84 ], [ %.2.lcssa, %.lr.ph84.preheader ] ; 3 uses

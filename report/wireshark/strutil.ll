@@ -89,12 +89,12 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nofree norecurse nosync nounwind null_pointer_is_valid sspstrong memory(argmem: readwrite) uwtable
 define i32 @get_token_len(ptr noundef %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #3 {
 bb.a:
-  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = icmp ult ptr %0, %1
   br i1 %i.b, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %3 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %i.a, %3
   %scevgep = getelementptr i8, ptr %0, i64 %i.c
   br label %.lr.ph
@@ -103,30 +103,25 @@ bb.a:
   %.020 = phi ptr [ %i.e, %bb.b ], [ %0, %.lr.ph.preheader ] ; 5 uses
   %i.d = load i8, ptr %.020, align 1
   switch i8 %i.d, label %bb.b [
-    i8 32, label %.critedge.loopexit
-    i8 13, label %.critedge.loopexit
-    i8 10, label %.critedge.loopexit
+    i8 32, label %.critedge
+    i8 13, label %.critedge
+    i8 10, label %.critedge
   ]
 
 bb.b:                                             ; preds = %.lr.ph
   %i.e = getelementptr i8, ptr %.020, i64 1       ; 2 uses
   %exitcond.not = icmp eq ptr %i.e, %1
-  br i1 %exitcond.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !7
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !7
 
-.critedge.loopexit:                               ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %bb.b
-  %.0.lcssa.ph = phi ptr [ %scevgep, %bb.b ], [ %.020, %.lr.ph ], [ %.020, %.lr.ph ], [ %.020, %.lr.ph ] ; 2 uses
-  %.pre = ptrtoaddr ptr %.0.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.0.lcssa32.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %3, %bb.a ]
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %0, %bb.a ] ; 5 uses
+.critedge:                                        ; preds = %bb.b, %.lr.ph, %.lr.ph, %.lr.ph, %bb.a
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %.020, %.lr.ph ], [ %.020, %.lr.ph ], [ %.020, %.lr.ph ], [ %scevgep, %bb.b ] ; 6 uses
   %i.f = icmp ult ptr %.0.lcssa, %1
   br i1 %i.f, label %.lr.ph28.preheader, label %.critedge2
 
 .lr.ph28.preheader:                               ; preds = %.critedge
+  %.0.lcssa32.pre-phi = ptrtoaddr ptr %.0.lcssa to i64
   %i.g = sub i64 %i.a, %.0.lcssa32.pre-phi
-  %scevgep33 = getelementptr i8, ptr %.0.lcssa, i64 %i.g ; 2 uses
+  %scevgep33 = getelementptr i8, ptr %.0.lcssa, i64 %i.g
   br label %.lr.ph28
 
 .lr.ph28:                                         ; preds = %.lr.ph28.preheader, %bb.c
@@ -137,7 +132,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph28
   %i.j = getelementptr i8, ptr %.127, i64 1       ; 2 uses
-  %exitcond34.not = icmp eq ptr %i.j, %scevgep33
+  %exitcond34.not = icmp eq ptr %i.j, %1
   br i1 %exitcond34.not, label %.critedge2, label %.lr.ph28, !llvm.loop !8
 
 .critedge2:                                       ; preds = %.lr.ph28, %bb.c, %.critedge

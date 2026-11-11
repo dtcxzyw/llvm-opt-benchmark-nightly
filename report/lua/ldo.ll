@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !30   ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !30
-  %i.k = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.k = ptrtoint ptr %i.h to i64
   %i.l = ptrtoint ptr %i.j to i64                 ; 2 uses
   %i.m = sub i64 %i.k, %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 5 uses
@@ -228,18 +228,17 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not41, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.y = load ptr, ptr %i.n, align 8, !tbaa !30   ; 4 uses
+  %i.y = load ptr, ptr %i.n, align 8, !tbaa !30   ; 3 uses
   %i.z = icmp ult ptr %i.h, %i.y
   br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.y, ptr %i.g, align 8, !tbaa !30
-  %.pre42 = ptrtoint ptr %i.y to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
-  %.pre-phi = phi i64 [ %.pre42, %bb.e ], [ %i.k, %bb.d ], [ %i.k, %bb.c ]
-  %6 = phi ptr [ %i.y, %bb.e ], [ %i.h, %bb.d ], [ %i.h, %bb.c ]
+  %6 = phi ptr [ %i.y, %bb.e ], [ %i.h, %bb.d ], [ %i.h, %bb.c ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %6 to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !30
   %i.ac = ptrtoint ptr %i.ab to i64
@@ -332,7 +331,7 @@ bb.d:                                             ; preds = %bb.c
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !30   ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !30
-  %i.ac = ptrtoint ptr %i.z to i64                ; 3 uses
+  %i.ac = ptrtoint ptr %i.z to i64
   %i.ad = ptrtoint ptr %i.ab to i64               ; 2 uses
   %i.ae = sub i64 %i.ac, %i.ad
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 5 uses
@@ -356,22 +355,21 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not41.i, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %i.aq = load ptr, ptr %i.af, align 8, !tbaa !30 ; 4 uses
+  %i.aq = load ptr, ptr %i.af, align 8, !tbaa !30 ; 3 uses
   %i.ar = icmp ult ptr %i.z, %i.aq
   br i1 %i.ar, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   store ptr %i.aq, ptr %i.y, align 8, !tbaa !30
-  %.pre42.i = ptrtoint ptr %i.aq to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
-  %.pre-phi.i = phi i64 [ %.pre42.i, %bb.f ], [ %i.ac, %bb.e ], [ %i.ac, %bb.d ]
-  %3 = phi ptr [ %i.aq, %bb.f ], [ %i.z, %bb.e ], [ %i.z, %bb.d ]
+  %3 = phi ptr [ %i.aq, %bb.f ], [ %i.z, %bb.e ], [ %i.z, %bb.d ] ; 2 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %3 to i64
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !30
   %i.au = ptrtoint ptr %i.at to i64
-  %i.av = sub i64 %i.au, %.pre-phi.i
+  %i.av = sub i64 %i.au, %.pre-phi.i.pre-phi
   %i.aw = icmp slt i64 %i.av, 336
   br i1 %i.aw, label %bb.h, label %bb.i, !prof !43
 
@@ -774,7 +772,7 @@ bb.g:                                             ; preds = %bb.f
   %i.al = load ptr, ptr %i.d, align 8, !tbaa !30  ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !30
-  %i.ao = ptrtoint ptr %i.al to i64               ; 3 uses
+  %i.ao = ptrtoint ptr %i.al to i64
   %i.ap = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.aq = sub i64 %i.ao, %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 5 uses
@@ -798,22 +796,21 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not41.i, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %i.bc = load ptr, ptr %i.ar, align 8, !tbaa !30 ; 4 uses
+  %i.bc = load ptr, ptr %i.ar, align 8, !tbaa !30 ; 3 uses
   %i.bd = icmp ult ptr %i.al, %i.bc
   br i1 %i.bd, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   store ptr %i.bc, ptr %i.d, align 8, !tbaa !30
-  %.pre42.i = ptrtoint ptr %i.bc to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.pre-phi.i = phi i64 [ %.pre42.i, %bb.i ], [ %i.ao, %bb.h ], [ %i.ao, %bb.g ]
-  %4 = phi ptr [ %i.bc, %bb.i ], [ %i.al, %bb.h ], [ %i.al, %bb.g ]
+  %4 = phi ptr [ %i.bc, %bb.i ], [ %i.al, %bb.h ], [ %i.al, %bb.g ] ; 2 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %4 to i64
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !30
   %i.bg = ptrtoint ptr %i.bf to i64
-  %i.bh = sub i64 %i.bg, %.pre-phi.i
+  %i.bh = sub i64 %i.bg, %.pre-phi.i.pre-phi
   %i.bi = icmp slt i64 %i.bh, 336
   br i1 %i.bi, label %bb.k, label %bb.l, !prof !43
 

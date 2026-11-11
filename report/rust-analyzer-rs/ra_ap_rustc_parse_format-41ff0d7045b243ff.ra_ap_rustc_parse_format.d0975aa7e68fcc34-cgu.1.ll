@@ -202,7 +202,7 @@ _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshUkd
   %i.bs = phi i64 [ %i.dp, %.noexc ], [ %i.at, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit ] ; 4 uses
   %i.bt = phi ptr [ %i.dq, %.noexc ], [ %.val6, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit ] ; 6 uses
   %i.bu = ptrtoint ptr %i.bt to i64
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 1 ; 4 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 1 ; 3 uses
   %i.bw = load i8, ptr %i.bt, align 1, !noalias !285, !noundef !6 ; 5 uses
   %i.bx = icmp sgt i8 %i.bw, -1
   br i1 %i.bx, label %.thread.i.i, label %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit12.i.i.i.i.i
@@ -223,7 +223,6 @@ _RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 .thread.i.i:                                      ; preds = %.lr.ph.i.i
   %i.ci = zext nneg i8 %i.bw to i32
-  %2 = ptrtoint ptr %i.bv to i64
   %i.cj = add i64 %i.bs, 1
   %i.ck = load i64, ptr %.val.i, align 8, !noalias !286, !noundef !6
   br label %bb.o
@@ -261,7 +260,7 @@ bb.l:                                             ; preds = %_RNvXs2J_NtNtCshzWf
   %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.ct, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit14.i.i.i.i.i ], [ %i.de, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit16.i.i.i.i.i ], [ %i.cg, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit12.i.i.i.i.i ] ; 7 uses
   %i.dg = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i, 1114112
   tail call void @llvm.assume(i1 %i.dg)
-  %i.dh = ptrtoint ptr %i.df to i64               ; 4 uses
+  %i.dh = ptrtoint ptr %i.df to i64
   %i.di = sub i64 %i.dh, %i.bu
   %i.dj = add i64 %i.di, %i.bs                    ; 3 uses
   %i.dk = load i64, ptr %.val.i, align 8, !noalias !286, !noundef !6 ; 3 uses
@@ -280,9 +279,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l, %.thread.i.i
   %i.do = phi i64 [ %i.dk, %bb.m ], [ %i.dk, %bb.n ], [ %i.dk, %bb.l ], [ %i.ck, %.thread.i.i ]
   %i.dp = phi i64 [ %i.dj, %bb.m ], [ %i.dj, %bb.n ], [ %i.dj, %bb.l ], [ %i.cj, %.thread.i.i ]
-  %3 = phi i64 [ %i.dh, %bb.m ], [ %i.dh, %bb.n ], [ %i.dh, %bb.l ], [ %2, %.thread.i.i ]
   %.sroa.4.0.i.ph.i.i25.i.i = phi i32 [ %.sroa.4.0.i.ph.i.i.i.i, %bb.m ], [ %.sroa.4.0.i.ph.i.i.i.i, %bb.n ], [ %.sroa.4.0.i.ph.i.i.i.i, %bb.l ], [ %i.ci, %.thread.i.i ]
-  %i.dq = phi ptr [ %i.df, %bb.m ], [ %i.df, %bb.n ], [ %i.df, %bb.l ], [ %i.bv, %.thread.i.i ] ; 2 uses
+  %i.dq = phi ptr [ %i.df, %bb.m ], [ %i.df, %bb.n ], [ %i.df, %bb.l ], [ %i.bv, %.thread.i.i ] ; 3 uses
   %.sroa.0.0.i3.i.i.i = phi i64 [ 2, %bb.m ], [ %..i.i.i.i, %bb.n ], [ 1, %bb.l ], [ 1, %.thread.i.i ]
   %i.dr = add i64 %i.do, %i.bs                    ; 2 uses
   %i.ds = add i64 %.sroa.0.0.i3.i.i.i, %i.dr
@@ -293,7 +291,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
   br i1 %i.dv, label %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecTINtNtNtCshzWfHUSfYae_4core3ops5range5RangejEjcEE7reserveCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit.i.i, label %.noexc
 
 _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecTINtNtNtCshzWfHUSfYae_4core3ops5range5RangejEjcEE7reserveCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit.i.i: ; preds = %bb.o
-  %i.dw = sub nuw i64 %i.bb, %3                   ; 2 uses
+  %2 = ptrtoint ptr %i.dq to i64
+  %i.dw = sub nuw i64 %i.bb, %2                   ; 2 uses
   %i.dx = lshr i64 %i.dw, 2
   %i.dy = and i64 %i.dw, 3
   %.not.i.i.i.i.i = icmp ne i64 %i.dy, 0

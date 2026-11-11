@@ -204,7 +204,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvNtCs3TE53SMfxyL_6fs_err5tokio11remo
 bb.p:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvNtCs3TE53SMfxyL_6fs_err5tokio11remove_fileRNtNtCsG258MDvU3F_3std4path4PathE0ECsl8OoimOLbh_6qdrant.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %i.s, ptr %i.f, align 8
-  %i.af = ptrtoint ptr %i.s to i64                ; 5 uses
+  %i.af = ptrtoint ptr %i.s to i64                ; 4 uses
   %i.ag = and i64 %i.af, 3                        ; 2 uses
   switch i64 %i.ag, label %default.unreachable50 [
     i64 2, label %bb.q
@@ -295,8 +295,8 @@ bb.ab:                                            ; preds = %bb.x, %bb.w, %bb.w,
   br label %common.ret.sink.split
 
 bb.ac:                                            ; preds = %bb.af, %bb.ai
-  %.pre-phi = phi i64 [ %i.af, %bb.af ], [ %.pre, %bb.ai ] ; 2 uses
-  %.val.i34 = phi ptr [ %i.s, %bb.af ], [ %.val.i34.pre, %bb.ai ] ; 2 uses
+  %.val.i34 = phi ptr [ %i.s, %bb.af ], [ %.val.i34.pre, %bb.ai ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %.val.i34 to i64       ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !54285)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !54285
   %i.bb = and i64 %.pre-phi, 3
@@ -373,8 +373,7 @@ bb.ai:                                            ; preds = %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %.val.i34.pre = load ptr, ptr %i.f, align 8, !alias.scope !54285 ; 2 uses
-  %.pre = ptrtoint ptr %.val.i34.pre to i64
+  %.val.i34.pre = load ptr, ptr %i.f, align 8, !alias.scope !54285
   br label %bb.ac
 
 bb.aj:                                            ; preds = %bb.ad, %bb.ac, %bb.ac, %bb.ae

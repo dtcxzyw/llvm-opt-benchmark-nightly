@@ -205,12 +205,11 @@ _ZNSt6vectorIN4LIEF2PE15ResourceVersionESaIS2_EED2Ev.exit: ; preds = %_ZSt8_Dest
   call void @_ZNK4LIEF2PE16ResourcesManager5iconsEv(ptr dead_on_unwind nonnull writable sret(%"class.LIEF::ref_iterator.150") align 8 %23, ptr noundef nonnull align 8 dereferenceable(40) %1)
   %i.dk = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 3 uses
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !184
-  %i.dm = load ptr, ptr %23, align 8, !tbaa !183  ; 3 uses
+  %i.dm = load ptr, ptr %23, align 8, !tbaa !183  ; 2 uses
   %.not192 = icmp eq ptr %i.dl, %i.dm
   br i1 %.not192, label %._crit_edge184, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph: ; preds = %_ZNSt6vectorIN4LIEF2PE15ResourceVersionESaIS2_EED2Ev.exit
-  %32 = ptrtoint ptr %i.dm to i64
   %i.dn = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %12, i64 16
   %i.dp = getelementptr inbounds nuw i8, ptr %25, i64 8
@@ -534,16 +533,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.peel210: ; pred
   br i1 %i.ib, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKSt10unique_ptrIN4LIEF2PE14ResourceDialogESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %._crit_edge186
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57
-  %33 = phi i64 [ %32, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph ], [ %i.jl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57 ]
-  %34 = phi ptr [ %i.dm, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph ], [ %i.jj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57 ] ; 2 uses
+  %32 = phi ptr [ %i.dm, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph ], [ %i.jj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57 ] ; 3 uses
   %storemerge183 = phi i64 [ 0, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN4LIEF2PE12ResourceIconESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.lr.ph ], [ %i.jh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57 ] ; 3 uses
+  %33 = ptrtoint ptr %32 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #25
   %.sroa.02.0.copyload.i = load ptr, ptr %i.dn, align 8, !tbaa !179
   %i.ic = ptrtoint ptr %.sroa.02.0.copyload.i to i64
   %i.id = sub i64 %i.ic, %33
-  %i.ie = getelementptr inbounds [56 x i8], ptr %34, i64 %storemerge183
-  %i.if = getelementptr inbounds i8, ptr %34, i64 %i.id
+  %i.ie = getelementptr inbounds [56 x i8], ptr %32, i64 %storemerge183
+  %i.if = getelementptr inbounds i8, ptr %32, i64 %i.id
   store ptr %i.if, ptr %i.dn, align 8, !tbaa !999
   call void @_ZN4LIEF9to_stringINS_2PE12ResourceIconEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %25, ptr noundef nonnull align 8 dereferenceable(56) %i.ie)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25, !noalias !1000
@@ -661,7 +660,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57: ; preds = %_ZN
   %i.ji = load ptr, ptr %i.dk, align 8, !tbaa !184
   %i.jj = load ptr, ptr %23, align 8, !tbaa !183  ; 2 uses
   %i.jk = ptrtoint ptr %i.ji to i64
-  %i.jl = ptrtoint ptr %i.jj to i64               ; 2 uses
+  %i.jl = ptrtoint ptr %i.jj to i64
   %i.jm = sub i64 %i.jk, %i.jl
   %i.jn = sdiv exact i64 %i.jm, 56
   %i.jo = icmp ult i64 %i.jh, %i.jn

@@ -205,8 +205,8 @@ bb.a:
   %4 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
   %5 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
   %6 = alloca %"class.pugi::xpath_node", align 8  ; 5 uses
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %1 to i64
+  %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %i.d = ashr exact i64 %i.c, 4                   ; 2 uses
   %i.e = icmp sgt i64 %i.d, 16
@@ -218,10 +218,10 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.j
   %i.g = phi i64 [ %i.d, %.lr.ph ], [ %i.ah, %bb.j ]
-  %7 = phi i64 [ %i.b, %.lr.ph ], [ %.pre-phi8, %bb.j ]
-  %8 = phi i64 [ %i.a, %.lr.ph ], [ %.pre-phi, %bb.j ]
   %.05 = phi ptr [ %0, %.lr.ph ], [ %.1, %bb.j ]  ; 12 uses
   %.0224 = phi ptr [ %1, %.lr.ph ], [ %.123, %bb.j ] ; 8 uses
+  %7 = ptrtoint ptr %.0224 to i64
+  %8 = ptrtoint ptr %.05 to i64
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [16 x i8], ptr %.05, i64 %i.h ; 3 uses
   %i.j = getelementptr inbounds i8, ptr %.0224, i64 -16 ; 2 uses
@@ -308,30 +308,26 @@ _ZN4pugi4impl12_GLOBAL__N_110partition3INS_10xpath_nodeENS1_25document_order_com
   %.025.lcssa16.i = phi ptr [ %.1.i25, %.preheader.i ], [ %.0224, %bb.b ], [ %.1.i25, %.lr.ph8.i ] ; 3 uses
   %.024.lcssa.i = phi ptr [ %.1.i25, %.preheader.i ], [ %.0224, %bb.b ], [ %i.aa, %.lr.ph8.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.ac = ptrtoint ptr %.024.lcssa.i to i64       ; 2 uses
-  %i.ad = sub i64 %i.ac, %7
-  %i.ae = ptrtoint ptr %.025.lcssa16.i to i64     ; 2 uses
-  %i.af = sub i64 %8, %i.ae
+  %i.ac = ptrtoint ptr %.024.lcssa.i to i64
+  %i.ad = sub i64 %i.ac, %8                       ; 2 uses
+  %i.ae = ptrtoint ptr %.025.lcssa16.i to i64
+  %i.af = sub i64 %7, %i.ae                       ; 2 uses
   %i.ag = icmp sgt i64 %i.ad, %i.af
   br i1 %i.ag, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZN4pugi4impl12_GLOBAL__N_110partition3INS_10xpath_nodeENS1_25document_order_comparatorEEEvPT_S6_S5_RKT0_PS6_SA_.exit
   tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_14sortIPNS_10xpath_nodeENS1_25document_order_comparatorEEEvT_S6_RKT0_(ptr noundef %.025.lcssa16.i, ptr noundef %.0224)
-  %.pre7 = ptrtoint ptr %.05 to i64
   br label %bb.j
 
 bb.i:                                             ; preds = %_ZN4pugi4impl12_GLOBAL__N_110partition3INS_10xpath_nodeENS1_25document_order_comparatorEEEvPT_S6_S5_RKT0_PS6_SA_.exit
   tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_14sortIPNS_10xpath_nodeENS1_25document_order_comparatorEEEvT_S6_RKT0_(ptr noundef nonnull %.05, ptr noundef %.024.lcssa.i)
-  %.pre = ptrtoint ptr %.0224 to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.pre-phi8 = phi i64 [ %i.ae, %bb.i ], [ %.pre7, %bb.h ] ; 2 uses
-  %.pre-phi = phi i64 [ %.pre, %bb.i ], [ %i.ac, %bb.h ] ; 2 uses
+  %.pre-phi = phi i64 [ %i.af, %bb.i ], [ %i.ad, %bb.h ]
   %.123 = phi ptr [ %.0224, %bb.i ], [ %.024.lcssa.i, %bb.h ] ; 2 uses
   %.1 = phi ptr [ %.025.lcssa16.i, %bb.i ], [ %.05, %bb.h ] ; 2 uses
-  %9 = sub i64 %.pre-phi, %.pre-phi8
-  %i.ah = ashr exact i64 %9, 4                    ; 2 uses
+  %i.ah = ashr exact i64 %.pre-phi, 4             ; 2 uses
   %i.ai = icmp sgt i64 %i.ah, 16
   br i1 %i.ai, label %bb.b, label %._crit_edge, !llvm.loop !639
 
@@ -734,8 +730,7 @@ bb.a:
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !270
   %.phi.trans.insert52 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.pre53 = load ptr, ptr %.phi.trans.insert52, align 8, !tbaa !271 ; 2 uses
-  %.pre54 = ptrtoint ptr %.pre53 to i64
+  %.pre53 = load ptr, ptr %.phi.trans.insert52, align 8, !tbaa !271
   br label %bb.s
 
 bb.b:                                             ; preds = %bb.a
@@ -743,7 +738,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !271  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !270  ; 2 uses
-  %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.g = ptrtoint ptr %i.d to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h                       ; 3 uses
   %i.j = icmp sgt i64 %i.i, 32
@@ -944,9 +939,9 @@ _ZN4pugi4impl12_GLOBAL__N_123xpath_allocator_captureD2Ev.exit: ; preds = %.noexc
   br label %bb.w
 
 bb.s:                                             ; preds = %._crit_edge51, %bb.b
-  %.pre-phi = phi i64 [ %.pre54, %._crit_edge51 ], [ %i.g, %bb.b ] ; 2 uses
-  %i.bv = phi ptr [ %.pre53, %._crit_edge51 ], [ %i.d, %bb.b ] ; 3 uses
+  %i.bv = phi ptr [ %.pre53, %._crit_edge51 ], [ %i.d, %bb.b ] ; 4 uses
   %i.bw = phi ptr [ %.pre, %._crit_edge51 ], [ %i.f, %bb.b ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %i.bv to i64           ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.by = ptrtoint ptr %i.bw to i64
   %i.bz = sub i64 %.pre-phi, %i.by

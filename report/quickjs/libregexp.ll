@@ -205,7 +205,7 @@ bb.by:                                            ; preds = %.thread1383.i, %bb.
   %.159611595.i = phi ptr [ %.14960.i, %.lr.ph1597.preheader.i ], [ %.19965.i, %bb.cc ] ; 2 uses
   %.2010041594.i = phi ptr [ %.191003.i, %.lr.ph1597.preheader.i ], [ %i.pf, %bb.cc ] ; 2 uses
   %i.np = shl nuw nsw i64 %indvars.iv1651.i, 1    ; 3 uses
-  %i.nq = ptrtoint ptr %.119321596.i to i64       ; 2 uses
+  %i.nq = ptrtoint ptr %.119321596.i to i64
   %i.nr = ptrtoint ptr %.2010041594.i to i64      ; 2 uses
   %i.ns = sub i64 %i.nq, %i.nr
   %i.nt = icmp slt i64 %i.ns, 9
@@ -226,17 +226,16 @@ bb.bz:                                            ; preds = %.lr.ph1597.i
   %i.ob = sub i64 %i.oa, %i.nv
   %i.oc = load ptr, ptr %i.r, align 8, !tbaa !59  ; 3 uses
   %i.od = load i64, ptr %i.s, align 8, !tbaa !60
-  %i.oe = getelementptr inbounds nuw [8 x i8], ptr %i.oc, i64 %i.od ; 2 uses
+  %i.oe = getelementptr inbounds nuw [8 x i8], ptr %i.oc, i64 %i.od
   %i.of = getelementptr inbounds nuw i8, ptr %i.oc, i64 %i.nw
   %i.og = getelementptr inbounds nuw i8, ptr %i.oc, i64 %i.ob
-  %.pre.i = ptrtoint ptr %i.oe to i64
   br label %bb.ca
 
 bb.ca:                                            ; preds = %.thread1388.i, %.lr.ph1597.i
-  %.pre-phi.i = phi i64 [ %.pre.i, %.thread1388.i ], [ %i.nq, %.lr.ph1597.i ]
   %.221006.i = phi ptr [ %i.of, %.thread1388.i ], [ %.2010041594.i, %.lr.ph1597.i ] ; 3 uses
   %.17963.i = phi ptr [ %i.og, %.thread1388.i ], [ %.159611595.i, %.lr.ph1597.i ] ; 2 uses
-  %.13934.i = phi ptr [ %i.oe, %.thread1388.i ], [ %.119321596.i, %.lr.ph1597.i ]
+  %.13934.i = phi ptr [ %i.oe, %.thread1388.i ], [ %.119321596.i, %.lr.ph1597.i ] ; 2 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %.13934.i to i64
   store i64 %i.np, ptr %.221006.i, align 8, !tbaa !21
   %i.oh = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.np ; 2 uses
   %i.oi = load ptr, ptr %i.oh, align 8, !tbaa !20
@@ -246,7 +245,7 @@ bb.ca:                                            ; preds = %.thread1388.i, %.lr
   store ptr null, ptr %i.oh, align 8, !tbaa !20
   %i.ol = or disjoint i64 %i.np, 1                ; 2 uses
   %i.om = ptrtoint ptr %i.ok to i64               ; 2 uses
-  %i.on = sub i64 %.pre-phi.i, %i.om
+  %i.on = sub i64 %.pre-phi.i.pre-phi, %i.om
   %i.oo = icmp slt i64 %i.on, 9
   br i1 %i.oo, label %bb.cb, label %bb.cc, !prof !42
 

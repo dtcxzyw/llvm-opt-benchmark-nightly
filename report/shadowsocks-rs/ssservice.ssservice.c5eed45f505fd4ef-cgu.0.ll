@@ -205,8 +205,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
   %i.c = call fastcc { i64, ptr } @_RNvXs4_NtNtCsdEV4Kvs1Ch8_6flate22gz4readINtB5_9GzDecoderRShENtNtNtCsgCecv3eZDcN_5alloc2io4read4Read4readCsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef align 8 dereferenceable(208) %0, ptr noalias nofree noundef nonnull %i.b, i64 noundef 32) #52 ; 2 uses
   %i.d = extractvalue { i64, ptr } %i.c, 0
-  %i.e = extractvalue { i64, ptr } %i.c, 1        ; 3 uses
-  %2 = ptrtoint ptr %i.e to i64                   ; 2 uses
+  %i.e = extractvalue { i64, ptr } %i.c, 1        ; 2 uses
   %i.f = trunc nuw i64 %i.d to i1
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
@@ -215,9 +214,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit
-  %3 = phi i64 [ %2, %.lr.ph ], [ %5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 4 uses
-  %4 = phi ptr [ %i.e, %.lr.ph ], [ %i.av, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 9 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  %2 = phi ptr [ %i.e, %.lr.ph ], [ %i.av, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 10 uses
+  %3 = ptrtoint ptr %2 to i64                     ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.h = and i64 %3, 3
   switch i64 %i.h, label %default.unreachable [
     i64 2, label %.split
@@ -239,20 +238,20 @@ default.unreachable:                              ; preds = %bb.b
   br i1 %i.n, label %.thread, label %.loopexit
 
 .split6:                                          ; preds = %bb.b
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.p = load i8, ptr %i.o, align 8, !range !291, !noundef !177
   %i.q = icmp eq i8 %i.p, 35
   br i1 %i.q, label %.thread, label %.loopexit
 
 .split5:                                          ; preds = %bb.b
-  %i.r = getelementptr i8, ptr %4, i64 31
+  %i.r = getelementptr i8, ptr %2, i64 31
   %i.s = load i8, ptr %i.r, align 8, !range !291, !noundef !177
   %i.t = icmp eq i8 %i.s, 35
   br i1 %i.t, label %bb.g, label %.loopexit
 
 _RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit: ; preds = %bb.b
   %i.u = lshr i64 %3, 32
-  %i.v = icmp ult ptr %4, inttoptr (i64 188978561024 to ptr) ; 2 uses
+  %i.v = icmp ult ptr %2, inttoptr (i64 188978561024 to ptr) ; 2 uses
   %switch.idx.cast.i.i.i = trunc i64 %i.u to i8
   %spec.select.i.i.i = select i1 %i.v, i8 %switch.idx.cast.i.i.i, i8 -1 ; 2 uses
   %i.w = icmp ne i8 %spec.select.i.i.i, -1
@@ -261,8 +260,8 @@ _RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
   br i1 %i.x, label %bb.f, label %.loopexit
 
 ._crit_edge:                                      ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit, %bb.a
-  %.lcssa10 = phi ptr [ %i.e, %bb.a ], [ %i.av, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 5 uses
+  %.lcssa10 = phi ptr [ %i.e, %bb.a ], [ %i.av, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa10 to i64         ; 5 uses
   %i.y = icmp ult ptr %.lcssa10, inttoptr (i64 33 to ptr)
   br i1 %i.y, label %bb.c, label %bb.e, !prof !200
 
@@ -307,7 +306,7 @@ bb.e:                                             ; preds = %._crit_edge
   unreachable
 
 .loopexit:                                        ; preds = %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split, %.split5, %.split6, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit
-  %i.an = phi ptr [ %.lcssa10, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit ], [ %4, %.split6 ], [ %4, %.split5 ], [ %4, %.split ], [ %4, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit ]
+  %i.an = phi ptr [ %.lcssa10, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit ], [ %2, %.split6 ], [ %2, %.split5 ], [ %2, %.split ], [ %2, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit ]
   %.sroa.0.0 = phi i64 [ 0, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit ], [ 1, %.split6 ], [ 1, %.split5 ], [ 1, %.split ], [ 1, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ao = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
@@ -327,7 +326,7 @@ bb.f:                                             ; preds = %_RNvMs1_NtNtCsf3Ta7
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit
 
 bb.g:                                             ; preds = %.split5
-  %i.as = getelementptr i8, ptr %4, i64 -1        ; 2 uses
+  %i.as = getelementptr i8, ptr %2, i64 -1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !40589
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as) ]
   store ptr %i.as, ptr %i.g, align 8, !alias.scope !40590, !noalias !40589
@@ -339,8 +338,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5erro
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !40589
   %i.at = call fastcc { i64, ptr } @_RNvXs4_NtNtCsdEV4Kvs1Ch8_6flate22gz4readINtB5_9GzDecoderRShENtNtNtCsgCecv3eZDcN_5alloc2io4read4Read4readCsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef align 8 dereferenceable(208) %0, ptr noalias nofree noundef nonnull %i.b, i64 noundef 32) #52 ; 2 uses
   %i.au = extractvalue { i64, ptr } %i.at, 0
-  %i.av = extractvalue { i64, ptr } %i.at, 1      ; 3 uses
-  %5 = ptrtoint ptr %i.av to i64                  ; 2 uses
+  %i.av = extractvalue { i64, ptr } %i.at, 1      ; 2 uses
   %i.aw = trunc nuw i64 %i.au to i1
   br i1 %i.aw, label %bb.b, label %._crit_edge
 }
@@ -355,8 +353,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.d = call fastcc { i64, ptr } @_RINvNtCsdEV4Kvs1Ch8_6flate23zio4readINtNtB4_9bufreader9BufReaderRShENtNtB4_3mem10DecompressECsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull %i.b, i64 noundef 32) #52 ; 2 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0
-  %i.f = extractvalue { i64, ptr } %i.d, 1        ; 3 uses
-  %2 = ptrtoint ptr %i.f to i64                   ; 2 uses
+  %i.f = extractvalue { i64, ptr } %i.d, 1        ; 2 uses
   %i.g = trunc nuw i64 %i.e to i1
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
@@ -365,9 +362,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit
-  %3 = phi i64 [ %2, %.lr.ph ], [ %5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 4 uses
-  %4 = phi ptr [ %i.f, %.lr.ph ], [ %i.aw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 9 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  %2 = phi ptr [ %i.f, %.lr.ph ], [ %i.aw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 10 uses
+  %3 = ptrtoint ptr %2 to i64                     ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.i = and i64 %3, 3
   switch i64 %i.i, label %default.unreachable [
     i64 2, label %.split
@@ -389,20 +386,20 @@ default.unreachable:                              ; preds = %bb.b
   br i1 %i.o, label %.thread, label %.loopexit
 
 .split6:                                          ; preds = %bb.b
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = load i8, ptr %i.p, align 8, !range !291, !noundef !177
   %i.r = icmp eq i8 %i.q, 35
   br i1 %i.r, label %.thread, label %.loopexit
 
 .split5:                                          ; preds = %bb.b
-  %i.s = getelementptr i8, ptr %4, i64 31
+  %i.s = getelementptr i8, ptr %2, i64 31
   %i.t = load i8, ptr %i.s, align 8, !range !291, !noundef !177
   %i.u = icmp eq i8 %i.t, 35
   br i1 %i.u, label %bb.g, label %.loopexit
 
 _RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit: ; preds = %bb.b
   %i.v = lshr i64 %3, 32
-  %i.w = icmp ult ptr %4, inttoptr (i64 188978561024 to ptr) ; 2 uses
+  %i.w = icmp ult ptr %2, inttoptr (i64 188978561024 to ptr) ; 2 uses
   %switch.idx.cast.i.i.i = trunc i64 %i.v to i8
   %spec.select.i.i.i = select i1 %i.w, i8 %switch.idx.cast.i.i.i, i8 -1 ; 2 uses
   %i.x = icmp ne i8 %spec.select.i.i.i, -1
@@ -411,8 +408,8 @@ _RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
   br i1 %i.y, label %bb.f, label %.loopexit
 
 ._crit_edge:                                      ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit, %bb.a
-  %.lcssa10 = phi ptr [ %i.f, %bb.a ], [ %i.aw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 5 uses
+  %.lcssa10 = phi ptr [ %i.f, %bb.a ], [ %i.aw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit ] ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa10 to i64         ; 5 uses
   %i.z = icmp ult ptr %.lcssa10, inttoptr (i64 33 to ptr)
   br i1 %i.z, label %bb.c, label %bb.e, !prof !200
 
@@ -457,7 +454,7 @@ bb.e:                                             ; preds = %._crit_edge
   unreachable
 
 .loopexit:                                        ; preds = %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split, %.split5, %.split6, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit
-  %i.ao = phi ptr [ %.lcssa10, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit ], [ %4, %.split6 ], [ %4, %.split5 ], [ %4, %.split ], [ %4, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit ]
+  %i.ao = phi ptr [ %.lcssa10, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit ], [ %2, %.split6 ], [ %2, %.split5 ], [ %2, %.split ], [ %2, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit ]
   %.sroa.0.0 = phi i64 [ 0, %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCsgZAIVb0XKpv_9ssservice.exit ], [ 1, %.split6 ], [ 1, %.split5 ], [ 1, %.split ], [ 1, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error14is_interrupted.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ap = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
@@ -477,7 +474,7 @@ bb.f:                                             ; preds = %_RNvMs1_NtNtCsf3Ta7
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsgZAIVb0XKpv_9ssservice.exit
 
 bb.g:                                             ; preds = %.split5
-  %i.at = getelementptr i8, ptr %4, i64 -1        ; 2 uses
+  %i.at = getelementptr i8, ptr %2, i64 -1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !40601
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   store ptr %i.at, ptr %i.h, align 8, !alias.scope !40602, !noalias !40601
@@ -489,8 +486,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5erro
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !40601
   %i.au = call fastcc { i64, ptr } @_RINvNtCsdEV4Kvs1Ch8_6flate23zio4readINtNtB4_9bufreader9BufReaderRShENtNtB4_3mem10DecompressECsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull %i.b, i64 noundef 32) #52 ; 2 uses
   %i.av = extractvalue { i64, ptr } %i.au, 0
-  %i.aw = extractvalue { i64, ptr } %i.au, 1      ; 3 uses
-  %5 = ptrtoint ptr %i.aw to i64                  ; 2 uses
+  %i.aw = extractvalue { i64, ptr } %i.au, 1      ; 2 uses
   %i.ax = trunc nuw i64 %i.av to i1
   br i1 %i.ax, label %bb.b, label %._crit_edge
 }

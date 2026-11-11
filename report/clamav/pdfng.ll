@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f, %bb.d
   br i1 %.not271, label %._crit_edge355, label %bb.i
 
 ._crit_edge355:                                   ; preds = %bb.h
-  %.pre356 = ptrtoint ptr %2 to i64               ; 2 uses
+  %.pre356 = ptrtoint ptr %2 to i64
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -245,15 +245,14 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.lcssa449, label %._crit_edge.thread, label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge
-  %i.ai = getelementptr inbounds nuw i8, ptr %.0232326.lcssa, i64 %i.w ; 2 uses
-  %.pre357 = ptrtoint ptr %i.ai to i64
+  %i.ai = getelementptr inbounds nuw i8, ptr %.0232326.lcssa, i64 %i.w
   br label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge355, %bb.j
-  %.pre-phi358 = phi i64 [ %.pre356, %._crit_edge355 ], [ %.pre357, %bb.j ] ; 3 uses
   %.pre-phi = phi i64 [ %.pre356, %._crit_edge355 ], [ %i.z, %bb.j ] ; 4 uses
-  %.1233 = phi ptr [ %2, %._crit_edge355 ], [ %i.ai, %bb.j ] ; 4 uses
-  %i.aj = sub i64 %.pre-phi358, %.pre-phi         ; 3 uses
+  %.1233 = phi ptr [ %2, %._crit_edge355 ], [ %i.ai, %bb.j ] ; 5 uses
+  %.pre-phi359 = ptrtoint ptr %.1233 to i64
+  %i.aj = sub i64 %.pre-phi359, %.pre-phi         ; 3 uses
   %i.ak = icmp ult i64 %i.aj, %3
   br i1 %i.ak, label %.lr.ph335, label %.critedge
 
@@ -280,16 +279,16 @@ bb.l:                                             ; preds = %.lr.ph457
 .lr.ph457:                                        ; preds = %.lr.ph335, %bb.l
   %.2234333456 = phi ptr [ %i.ax, %bb.l ], [ %.1233, %.lr.ph335 ]
   %i.ax = getelementptr inbounds nuw i8, ptr %.2234333456, i64 1 ; 4 uses
-  %i.ay = ptrtoint ptr %i.ax to i64               ; 2 uses
+  %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = sub i64 %i.ay, %.pre-phi                ; 2 uses
   %i.ba = icmp ult i64 %i.az, %3
   br i1 %i.ba, label %bb.l, label %._crit_edge.thread
 
 .critedge:                                        ; preds = %bb.l, %.lr.ph335, %bb.k
-  %.2234.lcssa = phi ptr [ %.1233, %bb.k ], [ %.1233, %.lr.ph335 ], [ %i.ax, %bb.l ] ; 6 uses
-  %.lcssa323 = phi i64 [ %.pre-phi358, %bb.k ], [ %.pre-phi358, %.lr.ph335 ], [ %i.ay, %bb.l ]
-  %.lcssa321 = phi i64 [ %i.aj, %bb.k ], [ %i.aj, %.lr.ph335 ], [ %i.az, %bb.l ]
-  %i.bb = icmp eq i64 %.lcssa321, %3
+  %.2234.lcssa = phi ptr [ %.1233, %bb.k ], [ %.1233, %.lr.ph335 ], [ %i.ax, %bb.l ] ; 7 uses
+  %.lcssa323 = phi i64 [ %i.aj, %bb.k ], [ %i.aj, %.lr.ph335 ], [ %i.az, %bb.l ]
+  %.lcssa323.pre-phi = ptrtoint ptr %.2234.lcssa to i64
+  %i.bb = icmp eq i64 %.lcssa323, %3
   br i1 %i.bb, label %._crit_edge.thread, label %bb.m
 
 bb.m:                                             ; preds = %.critedge
@@ -577,7 +576,7 @@ bb.av:                                            ; preds = %bb.m
 .preheader.preheader:                             ; preds = %bb.av
   %storemerge283461 = getelementptr inbounds nuw i8, ptr %.2234.lcssa, i64 1 ; 4 uses
   store ptr %storemerge283461, ptr %i.a, align 8, !tbaa !10
-  %i.et = ptrtoint ptr %storemerge283461 to i64   ; 3 uses
+  %i.et = ptrtoint ptr %storemerge283461 to i64
   %i.eu = sub i64 %i.et, %.pre-phi                ; 3 uses
   %i.ev = icmp ult i64 %i.eu, %3
   br i1 %i.ev, label %.lr.ph463, label %.critedge4
@@ -585,28 +584,27 @@ bb.av:                                            ; preds = %bb.m
 .preheader:                                       ; preds = %.lr.ph463
   %storemerge283 = getelementptr inbounds nuw i8, ptr %storemerge283462, i64 1 ; 4 uses
   store ptr %storemerge283, ptr %i.a, align 8, !tbaa !10
-  %i.ew = ptrtoint ptr %storemerge283 to i64      ; 3 uses
+  %i.ew = ptrtoint ptr %storemerge283 to i64
   %i.ex = sub i64 %i.ew, %.pre-phi                ; 3 uses
   %i.ey = icmp ult i64 %i.ex, %3
   br i1 %i.ey, label %.lr.ph463, label %.critedge4
 
 .lr.ph463:                                        ; preds = %.preheader.preheader, %.preheader
   %i.ez = phi i64 [ %i.ex, %.preheader ], [ %i.eu, %.preheader.preheader ]
-  %8 = phi i64 [ %i.ew, %.preheader ], [ %i.et, %.preheader.preheader ]
   %storemerge283462 = phi ptr [ %storemerge283, %.preheader ], [ %storemerge283461, %.preheader.preheader ] ; 3 uses
   %i.fa = load i8, ptr %storemerge283462, align 1, !tbaa !14
   %.not284 = icmp eq i8 %i.fa, 62
   br i1 %.not284, label %.critedge4, label %.preheader
 
 .critedge4:                                       ; preds = %.lr.ph463, %.preheader, %.preheader.preheader
-  %storemerge283.lcssa = phi ptr [ %storemerge283461, %.preheader.preheader ], [ %storemerge283462, %.lr.ph463 ], [ %storemerge283, %.preheader ]
-  %.lcssa434 = phi i64 [ %i.et, %.preheader.preheader ], [ %8, %.lr.ph463 ], [ %i.ew, %.preheader ]
+  %storemerge283.lcssa = phi ptr [ %storemerge283461, %.preheader.preheader ], [ %storemerge283462, %.lr.ph463 ], [ %storemerge283, %.preheader ] ; 2 uses
   %.lcssa = phi i64 [ %i.eu, %.preheader.preheader ], [ %i.ez, %.lr.ph463 ], [ %i.ex, %.preheader ]
   %i.fb = icmp eq i64 %.lcssa, %3
   br i1 %i.fb, label %._crit_edge.thread, label %bb.aw
 
 bb.aw:                                            ; preds = %.critedge4
-  %i.fc = sub i64 %.lcssa434, %.lcssa323          ; 4 uses
+  %.lcssa433 = ptrtoint ptr %storemerge283.lcssa to i64
+  %i.fc = sub i64 %.lcssa433, %.lcssa323.pre-phi  ; 4 uses
   %i.fd = add nsw i64 %i.fc, 1                    ; 2 uses
   %i.fe = call ptr @pdf_finalize_string(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %.2234.lcssa, i64 noundef %i.fd) ; 4 uses
   %.not285 = icmp eq ptr %i.fe, null

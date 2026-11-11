@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZNSt12_Vector_base
 
 .preheader:                                       ; preds = %_ZN5faiss15ScalarQuantizerD2Ev.exit
   %i.m = ptrtoint ptr %.sroa.14.2 to i64
-  %i.n = ptrtoint ptr %.sroa.083.3 to i64         ; 3 uses
+  %i.n = ptrtoint ptr %.sroa.083.3 to i64         ; 2 uses
   %i.o = sub i64 %i.m, %i.n
   %i.p = ashr exact i64 %i.o, 2                   ; 2 uses
   %i.q = icmp ugt i64 %i.p, 1
@@ -223,7 +223,7 @@ bb.d:                                             ; preds = %bb.c, %_ZN5faiss15S
   %.012.idx205 = phi i64 [ 0, %bb.c ], [ %.012.add, %_ZN5faiss15ScalarQuantizerD2Ev.exit ] ; 2 uses
   %.sroa.21.0204 = phi ptr [ %i.d, %bb.c ], [ %.sroa.21.3, %_ZN5faiss15ScalarQuantizerD2Ev.exit ] ; 4 uses
   %.sroa.14.0203 = phi ptr [ %i.c, %bb.c ], [ %.sroa.14.2, %_ZN5faiss15ScalarQuantizerD2Ev.exit ] ; 3 uses
-  %.sroa.083.0202 = phi ptr [ %i.c, %bb.c ], [ %.sroa.083.3, %_ZN5faiss15ScalarQuantizerD2Ev.exit ] ; 6 uses
+  %.sroa.083.0202 = phi ptr [ %i.c, %bb.c ], [ %.sroa.083.3, %_ZN5faiss15ScalarQuantizerD2Ev.exit ] ; 5 uses
   %.012.ptr = getelementptr inbounds nuw i8, ptr @__const._ZN42ScalarQuantizer_TQMSEAccuracyOrdering_Test8TestBodyEv.qtypes, i64 %.012.idx205
   %i.t = load i32, ptr %.012.ptr, align 4, !tbaa !54
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
@@ -626,17 +626,16 @@ _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.aw, %_ZNKSt14def
 ._crit_edge262:                                   ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit52, %bb.af
   %.pn28.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn28.pn.pn.pn.pn, %_ZNSt6vectorIhSaIhEED2Ev.exit52 ], [ %i.ce, %bb.af ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
-  %.pre = ptrtoint ptr %.sroa.083.0202 to i64
   br label %bb.ay
 
 bb.ay:                                            ; preds = %._crit_edge262, %.thread114
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge262 ], [ %i.n, %.thread114 ]
-  %.sroa.083.0168.a = phi ptr [ %.sroa.083.0202, %._crit_edge262 ], [ %.sroa.083.3, %.thread114 ]
-  %.sroa.21.0141 = phi ptr [ %.sroa.21.0204, %._crit_edge262 ], [ %.sroa.21.3, %.thread114 ]
-  %.pn28.pn.pn.pn.pn.pn.pn121 = phi { ptr, i32 } [ %.pn28.pn.pn.pn.pn.pn, %._crit_edge262 ], [ %.pn.pn.pn, %.thread114 ]
-  %i.do = ptrtoint ptr %.sroa.21.0141 to i64
+  %.sroa.083.0168 = phi ptr [ %.sroa.083.3, %.thread114 ], [ %.sroa.083.0202, %._crit_edge262 ] ; 2 uses
+  %.sroa.083.0168.a = phi ptr [ %.sroa.21.3, %.thread114 ], [ %.sroa.21.0204, %._crit_edge262 ]
+  %.pn28.pn.pn.pn.pn.pn.pn121 = phi { ptr, i32 } [ %.pn.pn.pn, %.thread114 ], [ %.pn28.pn.pn.pn.pn.pn, %._crit_edge262 ]
+  %.pre-phi = ptrtoint ptr %.sroa.083.0168 to i64
+  %i.do = ptrtoint ptr %.sroa.083.0168.a to i64
   %i.dp = sub i64 %i.do, %.pre-phi
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.083.0168.a, i64 noundef %i.dp) #26
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.083.0168, i64 noundef %i.dp) #26
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit68
 
 _ZNSt6vectorIfSaIfEED2Ev.exit68:                  ; preds = %.thread, %bb.ay

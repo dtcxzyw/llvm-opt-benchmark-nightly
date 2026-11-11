@@ -205,11 +205,10 @@ BIT_initDStream.exit.i:                           ; preds = %bb.e
 
 bb.n:                                             ; preds = %BIT_initDStream.exit.i
   %.idx.i.i = tail call i64 @llvm.smax.i64(i64 %1, i64 0)
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i ; 5 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 4 uses
   %.val.i = load i32, ptr %4, align 4             ; 2 uses
   %.sroa.3.0.extract.shift.i.i = lshr i32 %.val.i, 16 ; 4 uses
-  %6 = ptrtoint ptr %i.ba to i64                  ; 4 uses
   %i.bc = icmp sgt i64 %1, 7
   br i1 %i.bc, label %bb.o, label %bb.z
 
@@ -221,16 +220,14 @@ bb.n:                                             ; preds = %BIT_initDStream.exi
   %reass.sub.i = sub nsw i32 %i.be, %i.bg
   %i.bh = add nsw i32 %reass.sub.i, 41            ; 2 uses
   %.idx.i292.i = tail call i64 @llvm.smax.i64(i64 %1, i64 0)
-  %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i292.i ; 3 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i292.i ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %.val293.i = load i32, ptr %4, align 4          ; 2 uses
   %.sroa.3.0.extract.shift.i294.i = lshr i32 %.val293.i, 16 ; 2 uses
-  %7 = ptrtoint ptr %i.bi to i64                  ; 2 uses
   %i.bk = icmp sgt i64 %1, 7
   br i1 %i.bk, label %bb.o, label %BIT_reloadDStream.exit29.i
 
 bb.o:                                             ; preds = %.thread.i, %bb.n
-  %8 = phi i64 [ %7, %.thread.i ], [ %6, %bb.n ]  ; 6 uses
   %.sroa.3.0.extract.shift.i303.i = phi i32 [ %.sroa.3.0.extract.shift.i294.i, %.thread.i ], [ %.sroa.3.0.extract.shift.i.i, %bb.n ] ; 7 uses
   %.val302.i = phi i32 [ %.val293.i, %.thread.i ], [ %.val.i, %bb.n ]
   %i.bl = phi ptr [ %i.bj, %.thread.i ], [ %i.bb, %bb.n ] ; 6 uses
@@ -516,16 +513,16 @@ BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit: ; preds = %BIT_reloadDStr
   br label %BIT_reloadDStream.exit29.i
 
 BIT_reloadDStream.exit29.i:                       ; preds = %bb.y, %bb.w, %bb.t, %bb.r, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit, %bb.ac, %bb.ab, %bb.aa, %.thread.i
-  %9 = phi i64 [ %6, %bb.ab ], [ %6, %bb.aa ], [ %8, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %6, %bb.ac ], [ %7, %.thread.i ], [ %8, %bb.t ], [ %8, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %8, %bb.r ], [ %8, %bb.w ], [ %8, %bb.y ]
   %.sroa.3.0.extract.shift.i304.i = phi i32 [ %.sroa.3.0.extract.shift.i.i, %bb.ab ], [ %.sroa.3.0.extract.shift.i.i, %bb.aa ], [ %.sroa.3.0.extract.shift.i303.i, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %.sroa.3.0.extract.shift.i.i, %bb.ac ], [ %.sroa.3.0.extract.shift.i294.i, %.thread.i ], [ %.sroa.3.0.extract.shift.i303.i, %bb.t ], [ %.sroa.3.0.extract.shift.i303.i, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %.sroa.3.0.extract.shift.i303.i, %bb.r ], [ %.sroa.3.0.extract.shift.i303.i, %bb.w ], [ %.sroa.3.0.extract.shift.i303.i, %bb.y ] ; 2 uses
   %i.ie = phi ptr [ %i.bb, %bb.ab ], [ %i.bb, %bb.aa ], [ %i.bl, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %i.bb, %bb.ac ], [ %i.bj, %.thread.i ], [ %i.bl, %bb.t ], [ %i.bl, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %i.bl, %bb.r ], [ %i.bl, %bb.w ], [ %i.bl, %bb.y ] ; 3 uses
-  %i.if = phi ptr [ %i.ba, %bb.ab ], [ %i.ba, %bb.aa ], [ %i.bm, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %i.ba, %bb.ac ], [ %i.bi, %.thread.i ], [ %i.bm, %bb.t ], [ %i.bm, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %i.bm, %bb.r ], [ %i.bm, %bb.w ], [ %i.bm, %bb.y ] ; 2 uses
+  %i.if = phi ptr [ %i.ba, %bb.ab ], [ %i.ba, %bb.aa ], [ %i.bm, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %i.ba, %bb.ac ], [ %i.bi, %.thread.i ], [ %i.bm, %bb.t ], [ %i.bm, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %i.bm, %bb.r ], [ %i.bm, %bb.w ], [ %i.bm, %bb.y ] ; 3 uses
   %.sroa.0.0.i = phi i64 [ %.val.i.i, %bb.ab ], [ %.val.i61.i, %bb.aa ], [ %.sroa.0.5.i, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %.val30.i, %bb.ac ], [ %.sroa.0.9.i, %.thread.i ], [ %.sroa.0.5.i, %bb.t ], [ %.sroa.0.6.i, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %.sroa.0.4236.i, %bb.r ], [ %.sroa.0.6.i, %bb.y ], [ %.sroa.0.3219.i, %bb.w ] ; 3 uses
   %.sroa.31.0.i = phi i32 [ %i.ay, %bb.ab ], [ %i.hv, %bb.aa ], [ %.sroa.31.7.i, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %i.id, %bb.ac ], [ %i.bh, %.thread.i ], [ %i.eu, %bb.t ], [ %.sroa.31.8.i, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %.sroa.31.5237.i, %bb.r ], [ %i.hl, %bb.y ], [ %.sroa.31.4220.i, %bb.w ] ; 4 uses
   %.sroa.9790.0.i = phi ptr [ %.ptr190.i, %bb.ab ], [ %i.hu, %bb.aa ], [ %.sroa.9790.5.i.le, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %i.ib, %bb.ac ], [ %2, %.thread.i ], [ @BIT_reloadDStream.zeroFilled, %bb.t ], [ %.sroa.9790.6.i.le, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %2, %bb.r ], [ @BIT_reloadDStream.zeroFilled, %bb.y ], [ %2, %bb.w ] ; 2 uses
   %.4.i.i = phi ptr [ %0, %bb.ab ], [ %0, %bb.aa ], [ %.0.i239.i, %BIT_reloadDStream.exit29.i.loopexit.split.loop.exit ], [ %0, %bb.ac ], [ %0, %.thread.i ], [ %i.ey, %bb.t ], [ %.1.i5222.i, %BIT_reloadDStream.exit29.i.loopexit75.split.loop.exit ], [ %.0.i239.i, %bb.r ], [ %i.hp, %bb.y ], [ %.1.i5222.i, %bb.w ] ; 4 uses
+  %6 = ptrtoint ptr %i.if to i64
   %i.ig = ptrtoint ptr %.4.i.i to i64
-  %i.ih = sub i64 %9, %i.ig
+  %i.ih = sub i64 %6, %i.ig
   %i.ii = icmp ugt i64 %i.ih, 1
   br i1 %i.ii, label %.preheader202.i, label %.loopexit.i
 
@@ -928,11 +925,10 @@ BIT_initDStream.exit:                             ; preds = %bb.c
 bb.l:                                             ; preds = %BIT_initDStream.exit
   %.sroa.9790.9177.ptr.ptr.ptr = getelementptr inbounds i8, ptr %2, i64 %.add ; 3 uses
   %.idx.i = tail call i64 @llvm.smax.i64(i64 %1, i64 0)
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i ; 5 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 4 uses
   %.val = load i32, ptr %4, align 4               ; 2 uses
   %.sroa.3.0.extract.shift.i = lshr i32 %.val, 16 ; 4 uses
-  %5 = ptrtoint ptr %i.ay to i64                  ; 4 uses
   %i.ba = icmp sgt i64 %1, 7
   br i1 %i.ba, label %bb.m, label %bb.x
 
@@ -944,16 +940,14 @@ bb.l:                                             ; preds = %BIT_initDStream.exi
   %reass.sub = sub nsw i32 %i.bc, %i.be
   %i.bf = add nsw i32 %reass.sub, 41              ; 2 uses
   %.idx.i292 = tail call i64 @llvm.smax.i64(i64 %1, i64 0)
-  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i292 ; 3 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i292 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %.val293 = load i32, ptr %4, align 4            ; 2 uses
   %.sroa.3.0.extract.shift.i294 = lshr i32 %.val293, 16 ; 2 uses
-  %6 = ptrtoint ptr %i.bg to i64                  ; 2 uses
   %i.bi = icmp sgt i64 %1, 7
   br i1 %i.bi, label %bb.m, label %BIT_reloadDStream.exit29
 
 bb.m:                                             ; preds = %.thread, %bb.l
-  %7 = phi i64 [ %6, %.thread ], [ %5, %bb.l ]    ; 6 uses
   %.sroa.3.0.extract.shift.i303 = phi i32 [ %.sroa.3.0.extract.shift.i294, %.thread ], [ %.sroa.3.0.extract.shift.i, %bb.l ] ; 7 uses
   %.val302 = phi i32 [ %.val293, %.thread ], [ %.val, %bb.l ]
   %i.bj = phi ptr [ %i.bh, %.thread ], [ %i.az, %bb.l ] ; 6 uses
@@ -1247,16 +1241,16 @@ BIT_reloadDStream.exit29.loopexit334.split.loop.exit: ; preds = %BIT_reloadDStre
   br label %BIT_reloadDStream.exit29
 
 BIT_reloadDStream.exit29:                         ; preds = %bb.u, %bb.w, %bb.p, %bb.r, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit, %BIT_reloadDStream.exit29.loopexit.split.loop.exit, %.thread, %bb.z, %bb.aa, %bb.y
-  %8 = phi i64 [ %5, %bb.z ], [ %5, %bb.y ], [ %7, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %5, %bb.aa ], [ %6, %.thread ], [ %7, %bb.p ], [ %7, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %7, %bb.r ], [ %7, %bb.w ], [ %7, %bb.u ]
   %.sroa.3.0.extract.shift.i304 = phi i32 [ %.sroa.3.0.extract.shift.i, %bb.z ], [ %.sroa.3.0.extract.shift.i, %bb.y ], [ %.sroa.3.0.extract.shift.i303, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %.sroa.3.0.extract.shift.i, %bb.aa ], [ %.sroa.3.0.extract.shift.i294, %.thread ], [ %.sroa.3.0.extract.shift.i303, %bb.p ], [ %.sroa.3.0.extract.shift.i303, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %.sroa.3.0.extract.shift.i303, %bb.r ], [ %.sroa.3.0.extract.shift.i303, %bb.w ], [ %.sroa.3.0.extract.shift.i303, %bb.u ] ; 2 uses
   %i.ik = phi ptr [ %i.az, %bb.z ], [ %i.az, %bb.y ], [ %i.bj, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.az, %bb.aa ], [ %i.bh, %.thread ], [ %i.bj, %bb.p ], [ %i.bj, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %i.bj, %bb.r ], [ %i.bj, %bb.w ], [ %i.bj, %bb.u ] ; 3 uses
-  %i.il = phi ptr [ %i.ay, %bb.z ], [ %i.ay, %bb.y ], [ %i.bk, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.ay, %bb.aa ], [ %i.bg, %.thread ], [ %i.bk, %bb.p ], [ %i.bk, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %i.bk, %bb.r ], [ %i.bk, %bb.w ], [ %i.bk, %bb.u ] ; 2 uses
+  %i.il = phi ptr [ %i.ay, %bb.z ], [ %i.ay, %bb.y ], [ %i.bk, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.ay, %bb.aa ], [ %i.bg, %.thread ], [ %i.bk, %bb.p ], [ %i.bk, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %i.bk, %bb.r ], [ %i.bk, %bb.w ], [ %i.bk, %bb.u ] ; 3 uses
   %.sroa.0.0 = phi i64 [ %.val.i, %bb.z ], [ %.val.i61, %bb.y ], [ %.sroa.0.5, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %.val30, %bb.aa ], [ %.sroa.0.9, %.thread ], [ %.sroa.0.4236, %bb.p ], [ %.sroa.0.6, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %.sroa.0.5, %bb.r ], [ %.sroa.0.3219, %bb.u ], [ %.sroa.0.6, %bb.w ] ; 3 uses
   %.sroa.31.0 = phi i32 [ %i.aw, %bb.z ], [ %i.ib, %bb.y ], [ %.sroa.31.7, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.ij, %bb.aa ], [ %i.bf, %.thread ], [ %.sroa.31.5237, %bb.p ], [ %.sroa.31.8, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %i.fa, %bb.r ], [ %.sroa.31.4220, %bb.u ], [ %i.hr, %bb.w ] ; 4 uses
   %.sroa.9790.0 = phi ptr [ %.sroa.9790.9177.ptr.ptr.ptr, %bb.z ], [ %i.ia, %bb.y ], [ %.sroa.9790.5.le, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.ih, %bb.aa ], [ %2, %.thread ], [ %2, %bb.p ], [ %.sroa.9790.6.le, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ @BIT_reloadDStream.zeroFilled, %bb.r ], [ %2, %bb.u ], [ @BIT_reloadDStream.zeroFilled, %bb.w ] ; 2 uses
   %.4.i = phi ptr [ %0, %bb.z ], [ %0, %bb.y ], [ %.0.i239, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %0, %bb.aa ], [ %0, %.thread ], [ %.0.i239, %bb.p ], [ %.1.i5222, %BIT_reloadDStream.exit29.loopexit334.split.loop.exit ], [ %i.fe, %bb.r ], [ %.1.i5222, %bb.u ], [ %i.hv, %bb.w ] ; 4 uses
+  %5 = ptrtoint ptr %i.il to i64
   %i.im = ptrtoint ptr %.4.i to i64
-  %i.in = sub i64 %8, %i.im
+  %i.in = sub i64 %5, %i.im
   %i.io = icmp ugt i64 %i.in, 1
   br i1 %i.io, label %.preheader202, label %.loopexit
 

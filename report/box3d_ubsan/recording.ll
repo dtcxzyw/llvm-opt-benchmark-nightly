@@ -204,18 +204,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !63   ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !63   ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %bb.d, label %.b3RecTags.exit_crit_edge
-
-.b3RecTags.exit_crit_edge:                        ; preds = %bb.c
-  %.pre212 = ptrtoint ptr %i.h to i64, !nosanitize !10
-  br label %b3RecTags.exit
+  br i1 %i.i, label %bb.d, label %b3RecTags.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.j = tail call ptr @b3Alloc(i64 noundef 32) #13 ; 8 uses
   %i.k = icmp ne ptr %i.j, null, !nosanitize !10
-  %i.l = ptrtoint ptr %i.j to i64, !nosanitize !10 ; 3 uses
+  %i.l = ptrtoint ptr %i.j to i64, !nosanitize !10 ; 2 uses
   %i.m = and i64 %i.l, 7, !nosanitize !10
   %i.n = icmp eq i64 %i.m, 0, !nosanitize !10
   %i.o = and i1 %i.k, %i.n, !nosanitize !10
@@ -236,9 +232,9 @@ b3RecTagMap_init.exit.i:                          ; preds = %bb.d
   store ptr %i.j, ptr %i.g, align 8, !tbaa !63
   br label %b3RecTags.exit
 
-b3RecTags.exit:                                   ; preds = %.b3RecTags.exit_crit_edge, %b3RecTagMap_init.exit.i
-  %.pre-phi213 = phi i64 [ %.pre212, %.b3RecTags.exit_crit_edge ], [ %i.l, %b3RecTagMap_init.exit.i ] ; 2 uses
-  %5 = phi ptr [ %i.h, %.b3RecTags.exit_crit_edge ], [ %i.j, %b3RecTagMap_init.exit.i ] ; 5 uses
+b3RecTags.exit:                                   ; preds = %bb.c, %b3RecTagMap_init.exit.i
+  %5 = phi ptr [ %i.j, %b3RecTagMap_init.exit.i ], [ %i.h, %bb.c ] ; 6 uses
+  %.pre-phi213 = ptrtoint ptr %5 to i64           ; 2 uses
   %i.s = lshr i64 %1, 23
   %i.t = xor i64 %i.s, %1
   %i.u = mul i64 %i.t, 2388976653695081527        ; 3 uses

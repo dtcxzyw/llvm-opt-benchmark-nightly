@@ -202,9 +202,8 @@ bb.f:                                             ; preds = %_RINvMNtCshzWfHUSfY
 
 bb.g:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.ar = load ptr, ptr %i.aq, align 8, !noalias !166, !nonnull !6, !noundef !6 ; 2 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !noalias !166, !nonnull !6, !noundef !6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !166
-  %.pre.i.i = ptrtoint ptr %i.ar to i64
   br label %bb.aa
 
 bb.h:                                             ; preds = %bb.f
@@ -224,7 +223,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %.backedge.i.i.i
   %i.aw = extractvalue { i64, ptr } %i.av, 0
   %i.ax = extractvalue { i64, ptr } %i.av, 1      ; 11 uses
-  %i.ay = ptrtoint ptr %i.ax to i64               ; 7 uses
+  %i.ay = ptrtoint ptr %i.ax to i64               ; 6 uses
   %i.az = trunc nuw i64 %i.aw to i1
   br i1 %i.az, label %bb.j, label %bb.o
 
@@ -429,12 +428,12 @@ _RNvMs1_NtNtCs6B6HQbbxj7M_6notify4poll4dataNtB5_8PathData16get_content_hash.exit
   br label %_RNvMs1_NtNtCs6B6HQbbxj7M_6notify4poll4dataNtB5_8PathData3new.exit
 
 bb.aa:                                            ; preds = %bb.t, %bb.g
-  %.pre-phi.i.i = phi i64 [ %i.ay, %bb.t ], [ %.pre.i.i, %bb.g ] ; 2 uses
-  %.sroa.4.1.in.i.i.i = phi ptr [ %i.ax, %bb.t ], [ %i.ar, %bb.g ] ; 2 uses
+  %.sroa.4.1.in.i.i.i = phi ptr [ %i.ar, %bb.g ], [ %i.ax, %bb.t ] ; 3 uses
+  %.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %.sroa.4.1.in.i.i.i to i64 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !166
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !166
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !159
-  %i.ej = and i64 %.pre-phi.i.i, 3
+  %i.ej = and i64 %.pre-phi.i.pre-phi.i.pre-phi, 3
   switch i64 %i.ej, label %default.unreachable [
     i64 2, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultyNtNtNtB4_2io5error5ErrorEECs6B6HQbbxj7M_6notify.exit.i.i
     i64 3, label %bb.ab
@@ -444,7 +443,7 @@ bb.aa:                                            ; preds = %bb.t, %bb.g
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ek = icmp ult ptr %.sroa.4.1.in.i.i.i, inttoptr (i64 188978561024 to ptr)
-  %i.el = and i64 %.pre-phi.i.i, 1095216660480
+  %i.el = and i64 %.pre-phi.i.pre-phi.i.pre-phi, 1095216660480
   %i.em = icmp ne i64 %i.el, 1095216660480
   call void @llvm.assume(i1 %i.ek)
   call void @llvm.assume(i1 %i.em)

@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !110  ; 2 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !81     ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.h = sub i64 %i.f, %i.g                       ; 6 uses
   %i.i = trunc i64 %i.h to i32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 164
@@ -233,7 +233,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.aa, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i, label %_ZNSt6vectorIhSaIhEE7reserveEm.exit
 
 _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i: ; preds = %bb.b
-  %i.ab = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #23 ; 6 uses
+  %i.ab = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #23 ; 5 uses
   %i.ac = load ptr, ptr %0, align 8, !tbaa !81    ; 4 uses
   %i.ad = load ptr, ptr %i.c, align 8, !tbaa !110
   %i.ae = ptrtoint ptr %i.ad to i64
@@ -263,11 +263,9 @@ _ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i: ; preds = %bb.d, %_ZNSt6v
   store ptr %i.al, ptr %i.c, align 8, !tbaa !110
   %i.am = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.v
   store ptr %i.am, ptr %i.w, align 8, !tbaa !80
-  %.pre9 = ptrtoint ptr %i.ab to i64
   br label %_ZNSt6vectorIhSaIhEE7reserveEm.exit
 
 _ZNSt6vectorIhSaIhEE7reserveEm.exit:              ; preds = %bb.b, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i
-  %.pre-phi10 = phi i64 [ %i.g, %bb.b ], [ %.pre9, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i ] ; 3 uses
   %i.an = phi ptr [ %i.e, %bb.b ], [ %i.ab, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i ] ; 4 uses
   %i.ao = phi ptr [ %i.d, %bb.b ], [ %i.al, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -279,8 +277,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIhSaIhE
   %i.aq = sub nuw nsw i64 %i.q, %i.h
   call void @_ZNSt6vectorIhSaIhEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPhS1_EEmRKh(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %i.ao, i64 noundef %i.aq, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !60
-  %.pre7 = load ptr, ptr %0, align 8, !tbaa !60   ; 2 uses
-  %.pre13 = ptrtoint ptr %.pre7 to i64
+  %.pre7 = load ptr, ptr %0, align 8, !tbaa !60
   br label %_ZNSt6vectorIhSaIhEE6resizeEmRKh.exit
 
 bb.f:                                             ; preds = %_ZNSt6vectorIhSaIhEE7reserveEm.exit
@@ -297,9 +294,9 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt6vectorIhSaIhEE6resizeEmRKh.exit
 
 _ZNSt6vectorIhSaIhEE6resizeEmRKh.exit:            ; preds = %bb.e, %bb.f, %bb.g, %bb.h
-  %.pre-phi14 = phi i64 [ %.pre13, %bb.e ], [ %.pre-phi10, %bb.f ], [ %.pre-phi10, %bb.g ], [ %.pre-phi10, %bb.h ]
-  %i.at = phi ptr [ %.pre7, %bb.e ], [ %i.an, %bb.f ], [ %i.an, %bb.g ], [ %i.an, %bb.h ]
+  %i.at = phi ptr [ %.pre7, %bb.e ], [ %i.an, %bb.f ], [ %i.an, %bb.g ], [ %i.an, %bb.h ] ; 2 uses
   %i.au = phi ptr [ %.pre, %bb.e ], [ %i.ao, %bb.f ], [ %i.ao, %bb.g ], [ %i.as, %bb.h ]
+  %.pre-phi14 = ptrtoint ptr %i.at to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   %i.av = load ptr, ptr %i.k, align 8, !tbaa !100 ; 2 uses
   %i.aw = and i64 %i.t, 4294967292

@@ -204,9 +204,8 @@ bb.bd:                                            ; preds = %bb.as
 ._crit_edge267:                                   ; preds = %bb.bd
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.pre268 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !71
-  %.pre269 = load ptr, ptr %1, align 8, !tbaa !61 ; 2 uses
-  %.pre271 = ptrtoint ptr %.pre268 to i64
-  %.pre272 = ptrtoint ptr %.pre269 to i64
+  %.pre269 = load ptr, ptr %1, align 8, !tbaa !61
+  %.pre272 = ptrtoint ptr %.pre268 to i64
   br label %bb.bm
 
 ..thread224_crit_edge:                            ; preds = %bb.bd
@@ -218,7 +217,7 @@ bb.bd:                                            ; preds = %bb.as
   %i.ks = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.kt = load ptr, ptr %i.ks, align 8, !tbaa !71
   %i.ku = ptrtoint ptr %i.kt to i64               ; 2 uses
-  %i.kv = ptrtoint ptr %i.kr to i64               ; 2 uses
+  %i.kv = ptrtoint ptr %i.kr to i64
   %i.kw = sub i64 %i.ku, %i.kv
   %i.kx = icmp eq i64 %i.kw, 144
   br i1 %i.kx, label %bb.be, label %bb.bm
@@ -292,10 +291,10 @@ _ZN4ncnn3Mat7releaseEv.exit.i178:                 ; preds = %bb.bf, %bb.bk, %bb.
   br label %_ZN4ncnn3MataSERKS0_.exit191
 
 bb.bm:                                            ; preds = %._crit_edge267, %.thread224
-  %.pre-phi273.a = phi i64 [ %.pre272, %._crit_edge267 ], [ %i.kv, %.thread224 ]
-  %.pre-phi = phi i64 [ %.pre271, %._crit_edge267 ], [ %i.ku, %.thread224 ]
-  %7 = phi ptr [ %.pre269, %._crit_edge267 ], [ %i.kr, %.thread224 ] ; 8 uses
-  %i.ma = sub i64 %.pre-phi, %.pre-phi273.a
+  %.pre-phi273.a = phi i64 [ %.pre272, %._crit_edge267 ], [ %i.ku, %.thread224 ]
+  %7 = phi ptr [ %.pre269, %._crit_edge267 ], [ %i.kr, %.thread224 ] ; 9 uses
+  %.pre-phi273 = ptrtoint ptr %7 to i64
+  %i.ma = sub i64 %.pre-phi273.a, %.pre-phi273
   %i.mb = icmp eq i64 %i.ma, 216
   br i1 %i.mb, label %bb.bn, label %_ZNK4ncnn3Mat5emptyEv.exit216.thread
 
@@ -698,9 +697,8 @@ bb.bl:                                            ; preds = %bb.ba
 ._crit_edge537:                                   ; preds = %bb.bl
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.pre538 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !71
-  %.pre539 = load ptr, ptr %1, align 8, !tbaa !61 ; 2 uses
-  %.pre541 = ptrtoint ptr %.pre538 to i64
-  %.pre542 = ptrtoint ptr %.pre539 to i64
+  %.pre539 = load ptr, ptr %1, align 8, !tbaa !61
+  %.pre542 = ptrtoint ptr %.pre538 to i64
   br label %bb.bu
 
 ..thread388_crit_edge:                            ; preds = %bb.bl
@@ -712,7 +710,7 @@ bb.bl:                                            ; preds = %bb.ba
   %i.xe = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.xf = load ptr, ptr %i.xe, align 8, !tbaa !71
   %i.xg = ptrtoint ptr %i.xf to i64               ; 2 uses
-  %i.xh = ptrtoint ptr %i.xd to i64               ; 2 uses
+  %i.xh = ptrtoint ptr %i.xd to i64
   %i.xi = sub i64 %i.xg, %i.xh
   %i.xj = icmp eq i64 %i.xi, 144
   br i1 %i.xj, label %bb.bm, label %bb.bu
@@ -786,10 +784,10 @@ _ZN4ncnn3Mat7releaseEv.exit.i309:                 ; preds = %bb.bn, %bb.bs, %bb.
   br label %_ZN4ncnn3MataSERKS0_.exit322
 
 bb.bu:                                            ; preds = %._crit_edge537, %.thread388
-  %.pre-phi543.a = phi i64 [ %.pre542, %._crit_edge537 ], [ %i.xh, %.thread388 ]
-  %.pre-phi = phi i64 [ %.pre541, %._crit_edge537 ], [ %i.xg, %.thread388 ]
-  %10 = phi ptr [ %.pre539, %._crit_edge537 ], [ %i.xd, %.thread388 ] ; 8 uses
-  %i.ym = sub i64 %.pre-phi, %.pre-phi543.a
+  %.pre-phi543.a = phi i64 [ %.pre542, %._crit_edge537 ], [ %i.xg, %.thread388 ]
+  %10 = phi ptr [ %.pre539, %._crit_edge537 ], [ %i.xd, %.thread388 ] ; 9 uses
+  %.pre-phi543 = ptrtoint ptr %10 to i64
+  %i.ym = sub i64 %.pre-phi543.a, %.pre-phi543
   %i.yn = icmp eq i64 %i.ym, 216
   br i1 %i.yn, label %bb.bv, label %_ZNK4ncnn3Mat5emptyEv.exit347.thread
 

@@ -202,7 +202,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
   %i.f = ptrtoint ptr %i.c to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = icmp ugt i64 %2, %i.h
   br i1 %i.i, label %bb.b, label %bb.l
@@ -294,8 +294,7 @@ dynamic_mem_realloc.exit:                         ; preds = %bb.h, %bb.i, %bb.j
   br i1 %i.aw, label %dynamic_mem_realloc.exit._crit_edge, label %dynamic_mem_realloc.exit.thread
 
 dynamic_mem_realloc.exit._crit_edge:              ; preds = %dynamic_mem_realloc.exit
-  %.pre = load ptr, ptr %i.d, align 8             ; 2 uses
-  %.pre25 = ptrtoint ptr %.pre to i64
+  %.pre = load ptr, ptr %i.d, align 8
   br label %bb.k
 
 dynamic_mem_realloc.exit.thread:                  ; preds = %SDL_GetIOProperties_REAL.exit.i, %dynamic_mem_realloc.exit
@@ -303,16 +302,13 @@ dynamic_mem_realloc.exit.thread:                  ; preds = %SDL_GetIOProperties
   br label %bb.m
 
 bb.k:                                             ; preds = %dynamic_mem_realloc.exit._crit_edge, %bb.b
-  %.pre21.pre-phi = phi i64 [ %.pre25, %dynamic_mem_realloc.exit._crit_edge ], [ %i.g, %bb.b ]
   %i.ax = phi ptr [ %.pre, %dynamic_mem_realloc.exit._crit_edge ], [ %i.e, %bb.b ] ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 %2 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 %2
   store ptr %i.ay, ptr %i.b, align 8
-  %.pre20 = ptrtoint ptr %i.ay to i64
-  %.pre23 = sub i64 %.pre20, %.pre21.pre-phi
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.a
-  %.pre-phi24 = phi i64 [ %.pre23, %bb.k ], [ %i.h, %bb.a ]
+  %.pre-phi24 = phi i64 [ %2, %bb.k ], [ %i.h, %bb.a ]
   %i.az = phi ptr [ %i.ax, %bb.k ], [ %i.e, %bb.a ]
   %spec.select.i = tail call i64 @llvm.umin.i64(i64 %2, i64 %.pre-phi24) ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.az, ptr readonly align 1 %1, i64 %spec.select.i, i1 false)

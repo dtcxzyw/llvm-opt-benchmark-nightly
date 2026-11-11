@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZNK9__gnu_cxx5__op
 
 bb.e:                                             ; preds = %bb.b
   %i.r = icmp sgt i64 %.tr8292, %.tr8393
-  %i.s = ptrtoint ptr %.tr8090 to i64             ; 4 uses
+  %i.s = ptrtoint ptr %.tr8090 to i64             ; 3 uses
   br i1 %i.r, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.e
@@ -254,18 +254,14 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12I
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 64
   %i.an = xor i64 %i.ac, -1
   %i.ao = add nsw i64 %.016.i, %i.an
-  %.sroa.011.1.i = select i1 %i.al, ptr %i.am, ptr %.sroa.011.015.i ; 3 uses
+  %.sroa.011.1.i = select i1 %i.al, ptr %i.am, ptr %.sroa.011.015.i ; 2 uses
   %.1.i = select i1 %i.al, i64 %i.ao, i64 %i.ac   ; 2 uses
   %i.ap = icmp sgt i64 %.1.i, 0
-  br i1 %i.ap, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !14
+  br i1 %i.ap, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit, !llvm.loop !14
 
-_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS5_SaIS5_EEEEKS5_EEbT_RT0_.exit.i
-  %.pre = ptrtoint ptr %.sroa.011.1.i to i64
-  br label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit
-  %.pre-phi = phi i64 [ %.pre, %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.s, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit ]
-  %.sroa.011.0.lcssa.i = phi ptr [ %.sroa.011.1.i, %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr8090, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit ]
+_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS5_SaIS5_EEEEKS5_EEbT_RT0_.exit.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit
+  %.sroa.011.0.lcssa.i = phi ptr [ %.tr8090, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit ], [ %.sroa.011.1.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS5_SaIS5_EEEEKS5_EEbT_RT0_.exit.i ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.sroa.011.0.lcssa.i to i64
   %i.aq = sub i64 %.pre-phi, %i.s
   %i.ar = ashr exact i64 %i.aq, 6
   br label %tailrecurse
@@ -273,7 +269,7 @@ _ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFile
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49: ; preds = %bb.e
   %i.as = sdiv i64 %.tr8393, 2                    ; 2 uses
   %i.at = getelementptr inbounds [64 x i8], ptr %.tr8090, i64 %i.as ; 3 uses
-  %i.au = ptrtoint ptr %.tr89 to i64              ; 3 uses
+  %i.au = ptrtoint ptr %.tr89 to i64              ; 2 uses
   %i.av = sub i64 %i.s, %i.au
   %i.aw = ashr exact i64 %i.av, 6                 ; 2 uses
   %i.ax = icmp sgt i64 %i.aw, 0
@@ -317,18 +313,14 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__norm
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bd, i64 64
   %i.bn = xor i64 %i.bc, -1
   %i.bo = add nsw i64 %.016.i53, %i.bn
-  %.sroa.011.1.i61 = select i1 %i.bl, ptr %.sroa.011.015.i54, ptr %i.bm ; 3 uses
+  %.sroa.011.1.i61 = select i1 %i.bl, ptr %.sroa.011.015.i54, ptr %i.bm ; 2 uses
   %.1.i62 = select i1 %i.bl, i64 %i.bc, i64 %i.bo ; 2 uses
   %i.bp = icmp sgt i64 %.1.i62, 0
-  br i1 %i.bp, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i52, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !15
+  br i1 %i.bp, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i52, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit, !llvm.loop !15
 
-_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i
-  %.pre96 = ptrtoint ptr %.sroa.011.1.i61 to i64
-  br label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49
-  %.pre-phi97 = phi i64 [ %.pre96, %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.au, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49 ]
-  %.sroa.011.0.lcssa.i50 = phi ptr [ %.sroa.011.1.i61, %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr89, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49 ]
+_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49
+  %.sroa.011.0.lcssa.i50 = phi ptr [ %.tr89, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit49 ], [ %.sroa.011.1.i61, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i ] ; 2 uses
+  %.pre-phi97 = ptrtoint ptr %.sroa.011.0.lcssa.i50 to i64
   %i.bq = sub i64 %.pre-phi97, %i.au
   %i.br = ashr exact i64 %i.bq, 6
   br label %tailrecurse
@@ -731,7 +723,7 @@ bb.b:                                             ; preds = %.lr.ph, %tailrecurs
   %.tr91101 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.0, %tailrecurse ] ; 5 uses
   %.tr100 = phi ptr [ %0, %.lr.ph ], [ %i.bd, %tailrecurse ] ; 5 uses
   %i.b = icmp sgt i64 %.tr93102, %.tr94103
-  %i.c = ptrtoint ptr %.tr91101 to i64            ; 4 uses
+  %i.c = ptrtoint ptr %.tr91101 to i64            ; 3 uses
   br i1 %i.b, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.b
@@ -780,18 +772,14 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12I
   %i.w = getelementptr inbounds nuw i8, ptr %i.n, i64 64
   %i.x = xor i64 %i.m, -1
   %i.y = add nsw i64 %.016.i, %i.x
-  %.sroa.011.1.i = select i1 %i.v, ptr %i.w, ptr %.sroa.011.015.i ; 3 uses
+  %.sroa.011.1.i = select i1 %i.v, ptr %i.w, ptr %.sroa.011.015.i ; 2 uses
   %.1.i = select i1 %i.v, i64 %i.y, i64 %i.m      ; 2 uses
   %i.z = icmp sgt i64 %.1.i, 0
-  br i1 %i.z, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !14
+  br i1 %i.z, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit, !llvm.loop !14
 
-_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS5_SaIS5_EEEEKS5_EEbT_RT0_.exit.i
-  %.pre = ptrtoint ptr %.sroa.011.1.i to i64
-  br label %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit
-  %.pre-phi = phi i64 [ %.pre, %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.c, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit ]
-  %.sroa.011.0.lcssa.i = phi ptr [ %.sroa.011.1.i, %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr91101, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit ]
+_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Iter_less_valEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS5_SaIS5_EEEEKS5_EEbT_RT0_.exit.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit
+  %.sroa.011.0.lcssa.i = phi ptr [ %.tr91101, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit ], [ %.sroa.011.1.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS5_SaIS5_EEEEKS5_EEbT_RT0_.exit.i ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.sroa.011.0.lcssa.i to i64
   %i.aa = sub i64 %.pre-phi, %i.c
   %i.ab = ashr exact i64 %i.aa, 6
   br label %tailrecurse
@@ -799,7 +787,7 @@ _ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFile
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60: ; preds = %bb.b
   %i.ac = sdiv i64 %.tr94103, 2                   ; 2 uses
   %i.ad = getelementptr inbounds [64 x i8], ptr %.tr91101, i64 %i.ac ; 3 uses
-  %i.ae = ptrtoint ptr %.tr100 to i64             ; 3 uses
+  %i.ae = ptrtoint ptr %.tr100 to i64             ; 2 uses
   %i.af = sub i64 %i.c, %i.ae
   %i.ag = ashr exact i64 %i.af, 6                 ; 2 uses
   %i.ah = icmp sgt i64 %i.ag, 0
@@ -843,18 +831,14 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__norm
   %i.aw = getelementptr inbounds nuw i8, ptr %i.an, i64 64
   %i.ax = xor i64 %i.am, -1
   %i.ay = add nsw i64 %.016.i64, %i.ax
-  %.sroa.011.1.i72 = select i1 %i.av, ptr %.sroa.011.015.i65, ptr %i.aw ; 3 uses
+  %.sroa.011.1.i72 = select i1 %i.av, ptr %.sroa.011.015.i65, ptr %i.aw ; 2 uses
   %.1.i73 = select i1 %i.av, i64 %i.am, i64 %i.ay ; 2 uses
   %i.az = icmp sgt i64 %.1.i73, 0
-  br i1 %i.az, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i63, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !15
+  br i1 %i.az, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i63, label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit, !llvm.loop !15
 
-_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i
-  %.pre109 = ptrtoint ptr %.sroa.011.1.i72 to i64
-  br label %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60
-  %.pre-phi110 = phi i64 [ %.pre109, %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.ae, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60 ]
-  %.sroa.011.0.lcssa.i61 = phi ptr [ %.sroa.011.1.i72, %_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr100, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60 ]
+_ZSt13__upper_boundIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEES3_NS0_5__ops14_Val_less_iterEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60
+  %.sroa.011.0.lcssa.i61 = phi ptr [ %.tr100, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers12IncludedFileESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit60 ], [ %.sroa.011.1.i72, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIKN11flatbuffers12IncludedFileENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i ] ; 2 uses
+  %.pre-phi110 = ptrtoint ptr %.sroa.011.0.lcssa.i61 to i64
   %i.ba = sub i64 %.pre-phi110, %i.ae
   %i.bb = ashr exact i64 %i.ba, 6
   br label %tailrecurse

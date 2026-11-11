@@ -96,26 +96,22 @@ bb.k:                                             ; preds = %.preheader
   br i1 %i.aj, label %bb.u, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.5 = phi ptr [ %i.ab, %bb.k ], [ %.3, %bb.j ]  ; 3 uses
+  %.5 = phi ptr [ %i.ab, %bb.k ], [ %.3, %bb.j ]  ; 2 uses
   %i.ak = and i32 %i.l, 2
   %.not75 = icmp eq i32 %i.ak, 0
-  br i1 %.not75, label %._crit_edge, label %bb.m
-
-._crit_edge:                                      ; preds = %bb.l
-  %.pre = ptrtoint ptr %.5 to i64
-  br label %bb.n
+  br i1 %.not75, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.al = getelementptr inbounds nuw i8, ptr %.5, i64 2 ; 2 uses
   %i.am = ptrtoint ptr %i.b to i64
-  %i.an = ptrtoint ptr %i.al to i64               ; 2 uses
+  %i.an = ptrtoint ptr %i.al to i64
   %i.ao = sub i64 %i.am, %i.an
   %i.ap = icmp slt i64 %i.ao, 8
   br i1 %i.ap, label %bb.u, label %bb.n
 
-bb.n:                                             ; preds = %._crit_edge, %bb.m
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge ], [ %i.an, %bb.m ]
-  %.6 = phi ptr [ %.5, %._crit_edge ], [ %i.al, %bb.m ] ; 2 uses
+bb.n:                                             ; preds = %bb.l, %bb.m
+  %.6 = phi ptr [ %i.al, %bb.m ], [ %.5, %bb.l ]  ; 3 uses
+  %.pre-phi = ptrtoint ptr %.6 to i64
   %i.aq = getelementptr inbounds i8, ptr %i.b, i64 -8
   %i.ar = ptrtoint ptr %i.aq to i64
   %i.as = sub i64 %i.ar, %.pre-phi

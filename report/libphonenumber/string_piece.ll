@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.f = ptrtoint ptr %0 to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = ashr i64 %i.g, 2                         ; 2 uses
   %i.i = icmp sgt i64 %i.h, 0
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i.i:                                       ; preds = %bb.c
   %i.j = load i8, ptr %2, align 1, !tbaa !23      ; 4 uses
   %i.k = and i64 %i.g, -4
-  %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.k ; 2 uses
+  %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.k
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.h, %.lr.ph.i.i
@@ -245,16 +245,12 @@ bb.h:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %.02946.i.i, i64 4
   %i.x = add nsw i64 %.047.i.i, -1
   %i.y = icmp sgt i64 %.047.i.i, 1
-  br i1 %i.y, label %bb.d, label %._crit_edge.loopexit.i.i, !llvm.loop !40
+  br i1 %i.y, label %bb.d, label %._crit_edge.i.i, !llvm.loop !40
 
-._crit_edge.loopexit.i.i:                         ; preds = %bb.h
-  %.pre54.i.i = ptrtoint ptr %scevgep.i.i to i64
-  br label %._crit_edge.i.i
-
-._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.c
-  %.pre-phi.i.i = phi i64 [ %.pre54.i.i, %._crit_edge.loopexit.i.i ], [ %i.f, %bb.c ]
-  %.029.lcssa.i.i = phi ptr [ %scevgep.i.i, %._crit_edge.loopexit.i.i ], [ %0, %bb.c ] ; 5 uses
-  %i.z = sub i64 %i.e, %.pre-phi.i.i
+._crit_edge.i.i:                                  ; preds = %bb.h, %bb.c
+  %.029.lcssa.i.i = phi ptr [ %0, %bb.c ], [ %scevgep.i.i, %bb.h ] ; 6 uses
+  %.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %.029.lcssa.i.i to i64
+  %i.z = sub i64 %i.e, %.pre-phi.i.pre-phi.i.pre-phi
   switch i64 %i.z, label %bb.n [
     i64 3, label %bb.i
     i64 2, label %._crit_edge._crit_edge.i.i
@@ -302,7 +298,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 
 .loopexit:                                        ; preds = %.preheader, %bb.b
   %.037 = phi ptr [ %0, %bb.b ], [ %i.bv, %.preheader ] ; 4 uses
-  %i.al = ptrtoint ptr %.037 to i64               ; 2 uses
+  %i.al = ptrtoint ptr %.037 to i64
   %i.am = sub i64 %i.e, %i.al                     ; 2 uses
   %i.an = ashr i64 %i.am, 2                       ; 2 uses
   %i.ao = icmp sgt i64 %i.an, 0
@@ -311,7 +307,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 .lr.ph.i.i58:                                     ; preds = %.loopexit
   %i.ap = load i8, ptr %2, align 1, !tbaa !23     ; 4 uses
   %i.aq = and i64 %i.am, -4
-  %scevgep.i.i59 = getelementptr i8, ptr %.037, i64 %i.aq ; 2 uses
+  %scevgep.i.i59 = getelementptr i8, ptr %.037, i64 %i.aq
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.s, %.lr.ph.i.i58
@@ -343,16 +339,12 @@ bb.s:                                             ; preds = %bb.r
   %i.bc = getelementptr inbounds nuw i8, ptr %.02946.i.i61, i64 4
   %i.bd = add nsw i64 %.047.i.i60, -1
   %i.be = icmp sgt i64 %.047.i.i60, 1
-  br i1 %i.be, label %bb.o, label %._crit_edge.loopexit.i.i62, !llvm.loop !40
+  br i1 %i.be, label %bb.o, label %._crit_edge.i.i48, !llvm.loop !40
 
-._crit_edge.loopexit.i.i62:                       ; preds = %bb.s
-  %.pre54.i.i63 = ptrtoint ptr %scevgep.i.i59 to i64
-  br label %._crit_edge.i.i48
-
-._crit_edge.i.i48:                                ; preds = %._crit_edge.loopexit.i.i62, %.loopexit
-  %.pre-phi.i.i49 = phi i64 [ %.pre54.i.i63, %._crit_edge.loopexit.i.i62 ], [ %i.al, %.loopexit ]
-  %.029.lcssa.i.i50 = phi ptr [ %scevgep.i.i59, %._crit_edge.loopexit.i.i62 ], [ %.037, %.loopexit ] ; 5 uses
-  %i.bf = sub i64 %i.e, %.pre-phi.i.i49
+._crit_edge.i.i48:                                ; preds = %bb.s, %.loopexit
+  %.029.lcssa.i.i49 = phi ptr [ %.037, %.loopexit ], [ %scevgep.i.i59, %bb.s ] ; 6 uses
+  %.pre-phi.i.pre-phi.i50.pre-phi = ptrtoint ptr %.029.lcssa.i.i49 to i64
+  %i.bf = sub i64 %i.e, %.pre-phi.i.pre-phi.i50.pre-phi
   switch i64 %i.bf, label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit [
     i64 3, label %bb.t
     i64 2, label %._crit_edge._crit_edge.i.i55
@@ -368,18 +360,18 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.v
 
 bb.t:                                             ; preds = %._crit_edge.i.i48
-  %i.bg = load i8, ptr %.029.lcssa.i.i50, align 1, !tbaa !23
+  %i.bg = load i8, ptr %.029.lcssa.i.i49, align 1, !tbaa !23
   %i.bh = load i8, ptr %2, align 1, !tbaa !23     ; 2 uses
   %i.bi = icmp eq i8 %i.bg, %i.bh
   br i1 %i.bi, label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bj = getelementptr inbounds nuw i8, ptr %.029.lcssa.i.i50, i64 1
+  %i.bj = getelementptr inbounds nuw i8, ptr %.029.lcssa.i.i49, i64 1
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %._crit_edge._crit_edge.i.i55
   %i.bk = phi i8 [ %i.bh, %bb.u ], [ %.pre.i.i56, %._crit_edge._crit_edge.i.i55 ] ; 2 uses
-  %.1.i.i57 = phi ptr [ %i.bj, %bb.u ], [ %.029.lcssa.i.i50, %._crit_edge._crit_edge.i.i55 ] ; 3 uses
+  %.1.i.i57 = phi ptr [ %i.bj, %bb.u ], [ %.029.lcssa.i.i49, %._crit_edge._crit_edge.i.i55 ] ; 3 uses
   %i.bl = load i8, ptr %.1.i.i57, align 1, !tbaa !23
   %i.bm = icmp eq i8 %i.bl, %i.bk
   br i1 %i.bm, label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67, label %bb.w
@@ -390,7 +382,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %._crit_edge._crit_edge52.i.i51
   %i.bo = phi i8 [ %i.bk, %bb.w ], [ %.pre53.i.i52, %._crit_edge._crit_edge52.i.i51 ]
-  %.2.i.i53 = phi ptr [ %i.bn, %bb.w ], [ %.029.lcssa.i.i50, %._crit_edge._crit_edge52.i.i51 ] ; 2 uses
+  %.2.i.i53 = phi ptr [ %i.bn, %bb.w ], [ %.029.lcssa.i.i49, %._crit_edge._crit_edge52.i.i51 ] ; 2 uses
   %i.bp = load i8, ptr %.2.i.i53, align 1, !tbaa !23
   %i.bq = icmp eq i8 %i.bp, %i.bo
   br i1 %i.bq, label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67, label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit
@@ -408,7 +400,7 @@ _ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.
   br label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67
 
 _ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67: ; preds = %bb.o, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit121, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit123, %bb.t, %bb.v, %bb.x
-  %.028.i.i54 = phi ptr [ %.1.i.i57, %bb.v ], [ %.029.lcssa.i.i50, %bb.t ], [ %.2.i.i53, %bb.x ], [ %i.bt, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit123 ], [ %i.bs, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit121 ], [ %i.br, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit ], [ %.02946.i.i61, %bb.o ] ; 3 uses
+  %.028.i.i54 = phi ptr [ %.1.i.i57, %bb.v ], [ %.029.lcssa.i.i49, %bb.t ], [ %.2.i.i53, %bb.x ], [ %i.bt, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit123 ], [ %i.bs, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit121 ], [ %i.br, %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit67.loopexit.split.loop.exit ], [ %.02946.i.i61, %bb.o ] ; 3 uses
   %i.bu = icmp eq ptr %.028.i.i54, %1
   br i1 %i.bu, label %_ZSt9__find_ifIPKcN9__gnu_cxx5__ops17_Iter_equals_iterIS1_EEET_S6_S6_T0_.exit, label %bb.y
 
@@ -472,7 +464,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.d, label %.preheader42
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = ptrtoint ptr %i.a to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.a to i64
   %i.j = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr i64 %i.k, 2                         ; 3 uses
@@ -482,7 +474,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i.preheader.i:                             ; preds = %bb.d
   %i.n = load i8, ptr %i.g, align 1, !tbaa !23, !noalias !54 ; 4 uses
   %i.o = mul nsw i64 %i.l, -4
-  %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.o ; 2 uses
+  %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.o
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.h, %.lr.ph.i.preheader.i
@@ -514,16 +506,12 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.ac = add nsw i64 %.020.i.i, -1
   %i.ad = icmp sgt i64 %.020.i.i, 1
-  br i1 %i.ad, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !47
+  br i1 %i.ad, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !47
 
-._crit_edge.loopexit.i.i:                         ; preds = %bb.h
-  %.pre38.i.i = ptrtoint ptr %scevgep.i to i64
-  br label %._crit_edge.i.i
-
-._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.d
-  %.pre-phi.i.i = phi i64 [ %.pre38.i.i, %._crit_edge.loopexit.i.i ], [ %i.i, %bb.d ]
-  %5 = phi ptr [ %scevgep.i, %._crit_edge.loopexit.i.i ], [ %i.a, %bb.d ] ; 4 uses
-  %i.ae = sub i64 %.pre-phi.i.i, %i.j
+._crit_edge.i.i:                                  ; preds = %bb.h, %bb.d
+  %5 = phi ptr [ %i.a, %bb.d ], [ %scevgep.i, %bb.h ] ; 5 uses
+  %.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %5 to i64
+  %i.ae = sub i64 %.pre-phi.i.pre-phi.i.pre-phi, %i.j
   switch i64 %i.ae, label %.critedge [
     i64 3, label %bb.i
     i64 2, label %._crit_edge.i._crit_edge.i
@@ -578,7 +566,7 @@ _ZSt9__find_ifISt16reverse_iteratorIPKcEN9__gnu_cxx5__ops17_Iter_equals_iterIS3_
   %i.aw = phi ptr [ %.pre77, %bb.w ], [ %i.d, %bb.c ] ; 4 uses
   %i.ax = phi ptr [ %.pre, %bb.w ], [ %i.b, %bb.c ] ; 3 uses
   %i.ay = phi ptr [ %i.cs, %bb.w ], [ %i.a, %bb.c ] ; 4 uses
-  %i.az = ptrtoint ptr %i.ay to i64               ; 2 uses
+  %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = ptrtoint ptr %i.ax to i64               ; 2 uses
   %i.bb = sub i64 %i.az, %i.ba
   %i.bc = ashr i64 %i.bb, 2                       ; 3 uses
@@ -589,7 +577,7 @@ _ZSt9__find_ifISt16reverse_iteratorIPKcEN9__gnu_cxx5__ops17_Iter_equals_iterIS3_
   %i.be = getelementptr inbounds i8, ptr %i.aw, i64 -1
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !23, !noalias !55 ; 4 uses
   %i.bg = mul nsw i64 %i.bc, -4
-  %scevgep.i12 = getelementptr i8, ptr %i.ay, i64 %i.bg ; 2 uses
+  %scevgep.i12 = getelementptr i8, ptr %i.ay, i64 %i.bg
   br label %.lr.ph.i.i13
 
 .lr.ph.i.i13:                                     ; preds = %bb.o, %.lr.ph.i.preheader.i11
@@ -621,16 +609,12 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.bu = add nsw i64 %.020.i.i14, -1
   %i.bv = icmp sgt i64 %.020.i.i14, 1
-  br i1 %i.bv, label %.lr.ph.i.i13, label %._crit_edge.loopexit.i.i15, !llvm.loop !47
+  br i1 %i.bv, label %.lr.ph.i.i13, label %._crit_edge.i.i1, !llvm.loop !47
 
-._crit_edge.loopexit.i.i15:                       ; preds = %bb.o
-  %.pre38.i.i16 = ptrtoint ptr %scevgep.i12 to i64
-  br label %._crit_edge.i.i1
-
-._crit_edge.i.i1:                                 ; preds = %._crit_edge.loopexit.i.i15, %.preheader42
-  %.pre-phi.i.i2 = phi i64 [ %.pre38.i.i16, %._crit_edge.loopexit.i.i15 ], [ %i.az, %.preheader42 ]
-  %6 = phi ptr [ %scevgep.i12, %._crit_edge.loopexit.i.i15 ], [ %i.ay, %.preheader42 ] ; 4 uses
-  %i.bw = sub i64 %.pre-phi.i.i2, %i.ba
+._crit_edge.i.i1:                                 ; preds = %bb.o, %.preheader42
+  %6 = phi ptr [ %i.ay, %.preheader42 ], [ %scevgep.i12, %bb.o ] ; 5 uses
+  %.pre-phi.i.pre-phi.i2.pre-phi = ptrtoint ptr %6 to i64
+  %i.bw = sub i64 %.pre-phi.i.pre-phi.i2.pre-phi, %i.ba
   switch i64 %i.bw, label %_ZSt9__find_ifISt16reverse_iteratorIPKcEN9__gnu_cxx5__ops17_Iter_equals_iterIS3_EEET_S8_S8_T0_.exit20 [
     i64 3, label %bb.p
     i64 2, label %._crit_edge.i._crit_edge.i8

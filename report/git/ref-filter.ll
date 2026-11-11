@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.critedge.i
   %i.an = call i64 @parse_signed_buffer(ptr noundef nonnull %.154.i, i64 noundef %i.am) #24
   %i.ao = getelementptr inbounds nuw i8, ptr %.154.i, i64 %i.an ; 5 uses
   %i.ap = ptrtoint ptr %i.af to i64
-  %i.aq = ptrtoint ptr %i.ao to i64               ; 3 uses
+  %i.aq = ptrtoint ptr %i.ao to i64               ; 2 uses
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %.154.i, ptr noundef nonnull dereferenceable(1) @.str.183) #25 ; 2 uses
   %.not63.i = icmp eq ptr %i.as, null
@@ -219,15 +219,14 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.1.i = phi ptr [ %i.as, %bb.p ], [ %i.at, %bb.q ] ; 2 uses
   %i.au = icmp ult ptr %.1.i, %i.ao
-  %i.av = select i1 %i.au, ptr %.1.i, ptr %i.ao   ; 2 uses
-  %.pre.i = ptrtoint ptr %i.av to i64
+  %i.av = select i1 %i.au, ptr %.1.i, ptr %i.ao
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %.pre-phi.i = phi i64 [ %i.aq, %bb.q ], [ %.pre.i, %bb.r ]
-  %.2.i = phi ptr [ %i.ao, %bb.q ], [ %i.av, %bb.r ]
+  %.2.i = phi ptr [ %i.av, %bb.r ], [ %i.ao, %bb.q ] ; 2 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %.2.i to i64
   %i.aw = ptrtoint ptr %.154.i to i64
-  %i.ax = sub i64 %.pre-phi.i, %i.aw              ; 2 uses
+  %i.ax = sub i64 %.pre-phi.i.pre-phi, %i.aw      ; 2 uses
   %.not6567.i = icmp eq i64 %i.ax, 0
   br i1 %.not6567.i, label %.critedge2.i, label %.lr.ph.i
 

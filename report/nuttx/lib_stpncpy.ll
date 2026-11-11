@@ -14,7 +14,7 @@ declare dso_local ptr @memset(ptr noundef, i32 noundef, i64 noundef) #1
 ; Function Attrs: nofree norecurse noredzone nosync nounwind optsize memory(argmem: readwrite) uwtable
 define dso_local ptr @stpncpy(ptr nofree noundef writeonly captures(address, ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %2 ; 3 uses
   %.not14 = icmp samesign eq i64 %2, 0
   br i1 %.not14, label %.critedge, label %.lr.ph
@@ -25,33 +25,29 @@ bb.a:
   %i.c = load i8, ptr %.01115, align 1            ; 2 uses
   store i8 %i.c, ptr %.016, align 1
   %.not12 = icmp eq i8 %i.c, 0
-  br i1 %.not12, label %.critedge.loopexit, label %bb.b
+  br i1 %.not12, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.d = getelementptr inbounds nuw i8, ptr %.01115, i64 1
   %i.e = getelementptr inbounds nuw i8, ptr %.016, i64 1 ; 2 uses
   %.not = icmp eq ptr %i.e, %i.b
-  br i1 %.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !7
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !7
 
-.critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
-  %.0.lcssa.ph = phi ptr [ %.016, %.lr.ph ], [ %i.b, %bb.b ] ; 2 uses
-  %.pre = ptrtoaddr ptr %.0.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.0.lcssa22.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %i.a, %bb.a ]
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %0, %bb.a ] ; 3 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.a
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %.016, %.lr.ph ] ; 5 uses
   %.not1319 = icmp eq ptr %.0.lcssa, %i.b
   br i1 %.not1319, label %._crit_edge, label %.lr.ph21.preheader
 
 .lr.ph21.preheader:                               ; preds = %.critedge
+  %.0.lcssa22.pre-phi = ptrtoaddr ptr %.0.lcssa to i64
   %i.f = add i64 %2, %i.a
   %i.g = sub i64 %i.f, %.0.lcssa22.pre-phi
   tail call void @llvm.memset.p0.i64(ptr align 1 %.0.lcssa, i8 0, i64 %i.g, i1 false)
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph21.preheader, %.critedge
-  ret ptr %.0.lcssa
+._crit_edge:                                      ; preds = %bb.b, %.lr.ph21.preheader, %.critedge
+  %.0.lcssa26 = phi ptr [ %.0.lcssa, %.critedge ], [ %.0.lcssa, %.lr.ph21.preheader ], [ %i.b, %bb.b ]
+  ret ptr %.0.lcssa26
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)

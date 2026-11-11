@@ -167,7 +167,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.i ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8              ; 4 uses
   %.not2633 = icmp eq ptr %i.k, null
-  %i.l = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.l = ptrtoint ptr %i.k to i64
   br i1 %.not2633, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
@@ -209,26 +209,25 @@ bb.b:                                             ; preds = %bb.a
   %spec.store.select = select i1 %i.al, i32 0, i32 %i.ak ; 3 uses
   %i.am = zext i32 %spec.store.select to i64      ; 2 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.am
-  %i.ao = load ptr, ptr %i.an, align 8            ; 4 uses
+  %i.ao = load ptr, ptr %i.an, align 8            ; 3 uses
   %.not26 = icmp eq ptr %i.ao, null
   br i1 %.not26, label %.critedge, label %.lr.ph, !llvm.loop !0
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph
-  %2 = ptrtoint ptr %i.ao to i64
   %i.ap = icmp eq i32 %spec.store.select, %i.h
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph._crit_edge, %.lr.ph.preheader
-  %.sroa.0.0.copyload.lcssa = phi i64 [ %2, %.lr.ph._crit_edge ], [ %i.l, %.lr.ph.preheader ]
-  %.lcssa50 = phi ptr [ %i.ao, %.lr.ph._crit_edge ], [ %i.k, %.lr.ph.preheader ] ; 2 uses
+  %.lcssa50 = phi ptr [ %i.ao, %.lr.ph._crit_edge ], [ %i.k, %.lr.ph.preheader ] ; 3 uses
   %.lcssa = phi i64 [ %i.am, %.lr.ph._crit_edge ], [ %i.i, %.lr.ph.preheader ]
   %.02334.lcssa = phi i1 [ %i.ap, %.lr.ph._crit_edge ], [ true, %.lr.ph.preheader ]
   br i1 %.02334.lcssa, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %.sroa.0.0.copyload.le = ptrtoint ptr %.lcssa50 to i64
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.lcssa
   store i64 %i.l, ptr %i.aq, align 1
-  store i64 %.sroa.0.0.copyload.lcssa, ptr %i.j, align 8
+  store i64 %.sroa.0.0.copyload.le, ptr %i.j, align 8
   br label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph56, %bb.b, %bb.c, %bb.d, %bb.a

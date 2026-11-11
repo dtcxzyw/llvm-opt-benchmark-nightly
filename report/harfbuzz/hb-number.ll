@@ -152,12 +152,12 @@ bb.d:                                             ; preds = %._crit_edge.i, %.sp
 define hidden noundef zeroext i1 @_Z15hb_parse_doublePPKcS0_Pdb(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) %2, i1 noundef zeroext %3) local_unnamed_addr #1 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !10     ; 6 uses
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = icmp ult ptr %i.a, %1
   br i1 %i.c, label %.lr.ph.preheader.i, label %.critedge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
+  %4 = ptrtoaddr ptr %i.a to i64
   %i.d = sub i64 %i.b, %4
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.d
   br label %.lr.ph.i
@@ -165,7 +165,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
   %.078155.i = phi ptr [ %i.f, %bb.b ], [ %i.a, %.lr.ph.preheader.i ] ; 3 uses
   %i.e = load i8, ptr %.078155.i, align 1, !tbaa !11
-  switch i8 %i.e, label %.critedge.loopexit.i [
+  switch i8 %i.e, label %.critedge.i [
     i8 32, label %bb.b
     i8 13, label %bb.b
     i8 12, label %bb.b
@@ -177,20 +177,15 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i
   %i.f = getelementptr inbounds nuw i8, ptr %.078155.i, i64 1 ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.f, %1
-  br i1 %exitcond.not.i, label %.critedge.loopexit.i, label %.lr.ph.i, !llvm.loop !16
+  br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !16
 
-.critedge.loopexit.i:                             ; preds = %bb.b, %.lr.ph.i
-  %.078.lcssa.ph.i = phi ptr [ %scevgep.i, %bb.b ], [ %.078155.i, %.lr.ph.i ] ; 2 uses
-  %.pre.i = ptrtoaddr ptr %.078.lcssa.ph.i to i64
-  br label %.critedge.i
-
-.critedge.i:                                      ; preds = %.critedge.loopexit.i, %bb.a
-  %.078.lcssa158.pre-phi.i = phi i64 [ %.pre.i, %.critedge.loopexit.i ], [ %4, %bb.a ]
-  %.078.lcssa.i = phi ptr [ %.078.lcssa.ph.i, %.critedge.loopexit.i ], [ %i.a, %bb.a ] ; 4 uses
+.critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
+  %.078.lcssa.i = phi ptr [ %i.a, %bb.a ], [ %scevgep.i, %bb.b ], [ %.078155.i, %.lr.ph.i ] ; 5 uses
   %i.g = icmp eq ptr %.078.lcssa.i, %1
   br i1 %i.g, label %_ZL9strtod_rlPKcPS0_.exit, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %.critedge.i
+  %.078.lcssa158.pre-phi.i = ptrtoaddr ptr %.078.lcssa.i to i64
   %i.h = sub i64 %i.b, %.078.lcssa158.pre-phi.i
   %scevgep159.i = getelementptr i8, ptr %.078.lcssa.i, i64 %i.h
   br label %.preheader.i

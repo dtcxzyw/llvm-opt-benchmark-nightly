@@ -93,7 +93,7 @@ bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   %exitcond.not.i = icmp eq ptr %i.q, %i.f
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !109
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.b
+._crit_edge.i:                                    ; preds = %bb.b, %.lr.ph.i
   %.041.lcssa.ph.i = phi ptr [ %scevgep.i, %bb.b ], [ %.04150.i, %.lr.ph.i ] ; 5 uses
   %i.r = icmp ult ptr %.041.lcssa.ph.i, %i.f
   br i1 %i.r, label %.lr.ph56.preheader.i, label %_ZN12_GLOBAL__N_17readRowEPcS0_S0_i.exit
@@ -496,7 +496,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21   ; 3 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !25   ; 4 uses
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
+  %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp ult i64 %i.g, -24
   br i1 %i.h, label %bb.b, label %bb.c
@@ -504,8 +504,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 6)
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !21
-  %.pre33 = load ptr, ptr %i.a, align 8, !tbaa !25 ; 2 uses
-  %.pre36 = ptrtoint ptr %.pre33 to i64
+  %.pre33 = load ptr, ptr %i.a, align 8, !tbaa !25
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -519,9 +518,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit
 
 _ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %bb.b, %bb.c, %bb.d
-  %.pre-phi = phi i64 [ %.pre36, %bb.b ], [ %i.f, %bb.c ], [ %i.f, %bb.d ]
-  %i.k = phi ptr [ %.pre33, %bb.b ], [ %i.d, %bb.c ], [ %i.d, %bb.d ]
+  %i.k = phi ptr [ %.pre33, %bb.b ], [ %i.d, %bb.c ], [ %i.d, %bb.d ] ; 2 uses
   %i.l = phi ptr [ %.pre, %bb.b ], [ %i.c, %bb.c ], [ %i.j, %bb.d ]
+  %.pre-phi = ptrtoint ptr %i.k to i64
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = sub i64 %i.m, %.pre-phi
   %i.o = getelementptr i8, ptr %i.k, i64 %i.n     ; 6 uses

@@ -205,7 +205,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 %i.e ; 3 uses
-  %i.g = ptrtoint ptr %2 to i64                   ; 4 uses
+  %i.g = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.h = sub i64 %i.g, %i.d
   %i.i = getelementptr inbounds i8, ptr %i.b, i64 %i.h ; 2 uses
   %.not.i.i = icmp eq ptr %1, %2
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not11.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.l = ptrtoint ptr %i.k to i64
   %i.m = sub i64 %i.l, %i.g
   %i.n = ashr exact i64 %i.m, 3                   ; 2 uses
   %i.o = icmp sgt i64 %i.n, 0
@@ -250,13 +250,12 @@ _ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i.
   br i1 %i.x, label %.lr.ph.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i, !llvm.loop !26
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i: ; preds = %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i.i.i
-  %.pre.i.i = load ptr, ptr %i.j, align 8, !tbaa !159 ; 2 uses
-  %.pre13.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre.i.i = load ptr, ptr %i.j, align 8, !tbaa !159
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i: ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i, %bb.c, %bb.b
-  %.pre-phi14.i.i = phi i64 [ %i.l, %bb.c ], [ %.pre13.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i ], [ %i.g, %bb.b ]
-  %3 = phi ptr [ %i.k, %bb.c ], [ %.pre.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i ], [ %i.i, %bb.b ] ; 2 uses
+  %3 = phi ptr [ %i.k, %bb.c ], [ %.pre.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i ], [ %i.i, %bb.b ] ; 3 uses
+  %.pre-phi14.i.i = ptrtoint ptr %3 to i64
   %i.y = sub i64 %.pre-phi14.i.i, %i.g
   %i.z = getelementptr inbounds i8, ptr %i.f, i64 %i.y ; 3 uses
   %.not.i.i.i = icmp eq ptr %3, %i.z
@@ -638,23 +637,19 @@ _ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_
   br label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit
 
 _ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit: ; preds = %bb.f, %_ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i
-  %i.cg = phi ptr [ %i.au, %bb.f ], [ %i.bd, %_ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i ] ; 3 uses
+  %i.cg = phi ptr [ %i.au, %bb.f ], [ %i.bd, %_ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i ] ; 2 uses
   %i.ch = phi ptr [ %.pre, %bb.f ], [ %i.ce, %_ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #50
   store i64 0, ptr %i.a, align 8, !tbaa !123
   %.not45 = icmp eq ptr %i.ch, %i.cg
-  br i1 %.not45, label %._crit_edge44, label %.lr.ph43
+  br i1 %.not45, label %._crit_edge44, label %bb.h
 
-.lr.ph43:                                         ; preds = %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit
-  %1 = ptrtoint ptr %i.cg to i64
-  br label %bb.h
-
-bb.h:                                             ; preds = %.lr.ph43, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35
-  %i.ci = phi ptr [ %i.ch, %.lr.ph43 ], [ %i.dz, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ] ; 3 uses
-  %2 = phi i64 [ %1, %.lr.ph43 ], [ %i.ec, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ]
-  %3 = phi ptr [ %i.cg, %.lr.ph43 ], [ %i.ea, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ] ; 2 uses
-  %4 = phi i64 [ 0, %.lr.ph43 ], [ %i.dy, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ] ; 3 uses
-  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %4 ; 2 uses
+bb.h:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35
+  %i.ci = phi ptr [ %i.dz, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ], [ %i.ch, %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit ] ; 3 uses
+  %1 = phi ptr [ %i.ea, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ], [ %i.cg, %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit ] ; 3 uses
+  %2 = phi i64 [ %i.dy, %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35 ], [ 0, %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit ] ; 3 uses
+  %3 = ptrtoint ptr %1 to i64
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %2 ; 2 uses
   %i.ck = load ptr, ptr %i.cj, align 8            ; 6 uses
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !74
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 152
@@ -664,7 +659,7 @@ bb.h:                                             ; preds = %.lr.ph43, %_ZNSt10u
   br i1 %.not29, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.cp = add nuw i64 %4, 1
+  %i.cp = add nuw i64 %2, 1
   store i64 %i.cp, ptr %i.a, align 8, !tbaa !123
   br label %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35, !llvm.loop !559
 
@@ -675,10 +670,10 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.cr, label %bb.k, label %_ZNKSt14default_deleteIN4toml2v34nodeEEclEPS2_.exit.i34
 
 bb.k:                                             ; preds = %bb.j
-  %i.cs = add nuw i64 %4, 1                       ; 2 uses
+  %i.cs = add nuw i64 %2, 1                       ; 2 uses
   %i.ct = add i64 %i.cq, -1                       ; 2 uses
   %i.cu = ptrtoint ptr %i.ci to i64
-  %i.cv = sub i64 %i.cu, %2
+  %i.cv = sub i64 %i.cu, %3
   %i.cw = ashr exact i64 %i.cv, 3                 ; 5 uses
   %i.cx = add i64 %i.cw, %i.ct                    ; 4 uses
   %i.cy = icmp ugt i64 %i.cx, %i.cw
@@ -693,7 +688,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.cz, label %bb.n, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE6resizeEm.exit.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.da = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.cx ; 3 uses
+  %i.da = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.cx ; 3 uses
   %.not.i.i.i32 = icmp eq ptr %i.ci, %i.da
   br i1 %.not.i.i.i32, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE6resizeEm.exit.i, label %.lr.ph.i.i.i.i.i
 
@@ -772,7 +767,7 @@ _ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit35: ; preds = 
   %i.dz = load ptr, ptr %i.d, align 8, !tbaa !172 ; 2 uses
   %i.ea = load ptr, ptr %i.b, align 8, !tbaa !173 ; 2 uses
   %i.eb = ptrtoint ptr %i.dz to i64
-  %i.ec = ptrtoint ptr %i.ea to i64               ; 2 uses
+  %i.ec = ptrtoint ptr %i.ea to i64
   %i.ed = sub i64 %i.eb, %i.ec
   %i.ee = ashr exact i64 %i.ed, 3
   %i.ef = icmp ult i64 %i.dy, %i.ee
@@ -1175,7 +1170,7 @@ bb.s:                                             ; preds = %bb.e
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZN4toml2v34impl8is_asciiEPKcm(ptr nofree noundef nonnull readonly captures(address) %0, i64 noundef %1) local_unnamed_addr #21 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.c = and i64 %1, -16                          ; 2 uses
   %.not = icmp eq i64 %i.c, 0
@@ -1190,28 +1185,24 @@ bb.a:
   %i.f = icmp slt <16 x i8> %i.e, zeroinitializer
   %i.g = bitcast <16 x i1> %i.f to i16
   %.not32 = icmp eq i16 %i.g, 0
-  br i1 %.not32, label %._crit_edge._crit_edge, label %.critedge
-
-._crit_edge._crit_edge:                           ; preds = %._crit_edge
-  %.pre = ptrtoaddr ptr %i.j to i64
-  br label %bb.b
+  br i1 %.not32, label %bb.b, label %.critedge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.02634 = phi <2 x i64> [ %i.i, %.lr.ph ], [ zeroinitializer, %.lr.ph.preheader ]
   %.02733 = phi ptr [ %i.j, %.lr.ph ], [ %0, %.lr.ph.preheader ] ; 2 uses
   %i.h = load <2 x i64>, ptr %.02733, align 1, !tbaa !69
   %i.i = or <2 x i64> %i.h, %.02634               ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.02733, i64 16 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.02733, i64 16 ; 3 uses
   %i.k = icmp ult ptr %i.j, %i.d
   br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !28
 
-bb.b:                                             ; preds = %._crit_edge._crit_edge, %bb.a
-  %.22943.pre-phi = phi i64 [ %.pre, %._crit_edge._crit_edge ], [ %i.a, %bb.a ]
-  %.229 = phi ptr [ %i.j, %._crit_edge._crit_edge ], [ %0, %bb.a ] ; 3 uses
+bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %.229 = phi ptr [ %0, %bb.a ], [ %i.j, %._crit_edge ] ; 4 uses
   %i.l = icmp ult ptr %.229, %i.b
   br i1 %i.l, label %.lr.ph38.preheader, label %.critedge
 
 .lr.ph38.preheader:                               ; preds = %bb.b
+  %.22943.pre-phi = ptrtoaddr ptr %.229 to i64
   %i.m = add i64 %1, %i.a
   %i.n = sub i64 %i.m, %.22943.pre-phi
   %scevgep = getelementptr i8, ptr %.229, i64 %i.n
@@ -1614,7 +1605,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = load i64, ptr %i.l, align 8, !tbaa !125  ; 4 uses
   %i.n = trunc i64 %i.m to i8
   %i.o = lshr i8 %i.n, 5                          ; 4 uses
-  %i.p = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.p = ptrtoaddr ptr %2 to i64
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 %1 ; 5 uses
   %i.r = and i64 %1, -16                          ; 2 uses
   %.not.i161 = icmp eq i64 %i.r, 0
@@ -1629,24 +1620,19 @@ bb.c:                                             ; preds = %bb.a
   %i.u = icmp slt <16 x i8> %i.t, zeroinitializer
   %i.v = bitcast <16 x i1> %i.u to i16
   %.not32.i = icmp eq i16 %i.v, 0
-  br i1 %.not32.i, label %._crit_edge._crit_edge.i, label %.lr.ph.preheader
-
-._crit_edge._crit_edge.i:                         ; preds = %._crit_edge.i
-  %.pre.i = ptrtoaddr ptr %i.y to i64
-  br label %bb.d
+  br i1 %.not32.i, label %bb.d, label %.lr.ph.preheader
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %.02634.i = phi <2 x i64> [ %i.x, %.lr.ph.i ], [ zeroinitializer, %.lr.ph.preheader.i ]
   %.02733.i = phi ptr [ %i.y, %.lr.ph.i ], [ %2, %.lr.ph.preheader.i ] ; 2 uses
   %i.w = load <2 x i64>, ptr %.02733.i, align 1, !tbaa !69
   %i.x = or <2 x i64> %i.w, %.02634.i             ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %.02733.i, i64 16 ; 4 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.02733.i, i64 16 ; 3 uses
   %i.z = icmp ult ptr %i.y, %i.s
   br i1 %i.z, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !28
 
-bb.d:                                             ; preds = %._crit_edge._crit_edge.i, %bb.c
-  %.22943.pre-phi.i = phi i64 [ %.pre.i, %._crit_edge._crit_edge.i ], [ %i.p, %bb.c ]
-  %.229.i = phi ptr [ %i.y, %._crit_edge._crit_edge.i ], [ %2, %bb.c ] ; 3 uses
+bb.d:                                             ; preds = %._crit_edge.i, %bb.c
+  %.229.i = phi ptr [ %2, %bb.c ], [ %i.y, %._crit_edge.i ] ; 4 uses
   %i.aa = icmp ult ptr %.229.i, %i.q
   br i1 %i.aa, label %.lr.ph38.preheader.i, label %.lr.ph340.preheader
 
@@ -1654,6 +1640,7 @@ bb.d:                                             ; preds = %._crit_edge._crit_e
   br label %.lr.ph340
 
 .lr.ph38.preheader.i:                             ; preds = %bb.d
+  %.22943.pre-phi.i = ptrtoaddr ptr %.229.i to i64
   %i.ab = add i64 %1, %i.p
   %i.ac = sub i64 %i.ab, %.22943.pre-phi.i
   %scevgep.i = getelementptr i8, ptr %.229.i, i64 %i.ac
@@ -2056,7 +2043,7 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 _ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i: ; preds = %bb.c, %bb.c
-  %i.s = ptrtoaddr ptr %i.a to i64                ; 2 uses
+  %i.s = ptrtoaddr ptr %i.a to i64
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.m
   %i.u = and i64 %i.m, -16                        ; 2 uses
   %.not.i34.i = icmp eq i64 %i.u, 0
@@ -2071,28 +2058,24 @@ _ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i: ; preds = %
   %i.x = icmp slt <16 x i8> %i.w, zeroinitializer
   %i.y = bitcast <16 x i1> %i.x to i16
   %.not32.i.i = icmp eq i16 %i.y, 0
-  br i1 %.not32.i.i, label %._crit_edge._crit_edge.i.i, label %.lr.ph54.i
-
-._crit_edge._crit_edge.i.i:                       ; preds = %._crit_edge.i.i
-  %.pre.i.i = ptrtoaddr ptr %i.ab to i64
-  br label %bb.d
+  br i1 %.not32.i.i, label %bb.d, label %.lr.ph54.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.02634.i.i = phi <2 x i64> [ %i.aa, %.lr.ph.i.i ], [ zeroinitializer, %.lr.ph.preheader.i.i ]
   %.02733.i.i = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.a, %.lr.ph.preheader.i.i ] ; 2 uses
   %i.z = load <2 x i64>, ptr %.02733.i.i, align 16, !tbaa !69
   %i.aa = or <2 x i64> %i.z, %.02634.i.i          ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.02733.i.i, i64 16 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.02733.i.i, i64 16 ; 3 uses
   %i.ac = icmp ult ptr %i.ab, %i.v
   br i1 %i.ac, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !28
 
-bb.d:                                             ; preds = %._crit_edge._crit_edge.i.i, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i
-  %.22943.pre-phi.i.i = phi i64 [ %.pre.i.i, %._crit_edge._crit_edge.i.i ], [ %i.s, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i ]
-  %.229.i.i = phi ptr [ %i.ab, %._crit_edge._crit_edge.i.i ], [ %i.a, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i ] ; 3 uses
+bb.d:                                             ; preds = %._crit_edge.i.i, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i
+  %.229.i.i = phi ptr [ %i.a, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit26.thread.i ], [ %i.ab, %._crit_edge.i.i ] ; 4 uses
   %i.ad = icmp ult ptr %.229.i.i, %i.t
   br i1 %i.ad, label %.lr.ph38.preheader.i.i, label %.lr.ph.preheader.i
 
 .lr.ph38.preheader.i.i:                           ; preds = %bb.d
+  %.22943.pre-phi.i.i = ptrtoaddr ptr %.229.i.i to i64
   %i.ae = add i64 %i.m, %i.s
   %i.af = sub i64 %i.ae, %.22943.pre-phi.i.i
   %scevgep.i.i = getelementptr i8, ptr %.229.i.i, i64 %i.af
@@ -2495,7 +2478,7 @@ bb.n:                                             ; preds = %bb.d
   ]
 
 _ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i: ; preds = %bb.n, %bb.n
-  %i.bc = ptrtoaddr ptr %i.a to i64               ; 2 uses
+  %i.bc = ptrtoaddr ptr %i.a to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.t
   %i.be = and i64 %i.t, -16                       ; 2 uses
   %.not.i.i = icmp eq i64 %i.be, 0
@@ -2510,28 +2493,24 @@ _ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i: ; preds = %
   %i.bh = icmp slt <16 x i8> %i.bg, zeroinitializer
   %i.bi = bitcast <16 x i1> %i.bh to i16
   %.not32.i.i = icmp eq i16 %i.bi, 0
-  br i1 %.not32.i.i, label %._crit_edge._crit_edge.i.i, label %.critedge.i
-
-._crit_edge._crit_edge.i.i:                       ; preds = %._crit_edge.i.i
-  %.pre.i.i = ptrtoaddr ptr %i.bl to i64
-  br label %bb.o
+  br i1 %.not32.i.i, label %bb.o, label %.critedge.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.02634.i.i = phi <2 x i64> [ %i.bk, %.lr.ph.i.i ], [ zeroinitializer, %.lr.ph.preheader.i.i ]
   %.02733.i.i = phi ptr [ %i.bl, %.lr.ph.i.i ], [ %i.a, %.lr.ph.preheader.i.i ] ; 2 uses
   %i.bj = load <2 x i64>, ptr %.02733.i.i, align 16, !tbaa !69
   %i.bk = or <2 x i64> %i.bj, %.02634.i.i         ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.02733.i.i, i64 16 ; 4 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.02733.i.i, i64 16 ; 3 uses
   %i.bm = icmp ult ptr %i.bl, %i.bf
   br i1 %i.bm, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !28
 
-bb.o:                                             ; preds = %._crit_edge._crit_edge.i.i, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i
-  %.22943.pre-phi.i.i = phi i64 [ %.pre.i.i, %._crit_edge._crit_edge.i.i ], [ %i.bc, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i ]
-  %.229.i.i = phi ptr [ %i.bl, %._crit_edge._crit_edge.i.i ], [ %i.a, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i ] ; 3 uses
+bb.o:                                             ; preds = %._crit_edge.i.i, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i
+  %.229.i.i = phi ptr [ %i.a, %_ZNK4toml2v34impl12utf8_decoder16needs_more_inputEv.exit35.thread.i ], [ %i.bl, %._crit_edge.i.i ] ; 4 uses
   %i.bn = icmp ult ptr %.229.i.i, %i.bd
   br i1 %i.bn, label %.lr.ph38.preheader.i.i, label %.loopexit.i
 
 .lr.ph38.preheader.i.i:                           ; preds = %bb.o
+  %.22943.pre-phi.i.i = ptrtoaddr ptr %.229.i.i to i64
   %i.bo = add i64 %i.t, %i.bc
   %i.bp = sub i64 %i.bo, %.22943.pre-phi.i.i
   %scevgep.i.i = getelementptr i8, ptr %.229.i.i, i64 %i.bp

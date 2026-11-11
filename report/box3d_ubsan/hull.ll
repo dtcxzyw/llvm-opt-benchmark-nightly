@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = ptrtoint ptr %i.e to i64, !nosanitize !12 ; 3 uses
+  %i.f = ptrtoint ptr %i.e to i64, !nosanitize !12 ; 2 uses
   %i.g = and i64 %i.f, 7, !nosanitize !12
   %i.h = icmp eq i64 %i.g, 0, !nosanitize !12
   br i1 %i.h, label %bb.f, label %bb.e, !prof !13, !nosanitize !12
@@ -254,13 +254,12 @@ bb.j:                                             ; preds = %bb.i
   unreachable, !nosanitize !12
 
 bb.k:                                             ; preds = %bb.i
-  %i.ad = getelementptr inbounds [128 x i8], ptr %i.l, i64 %i.s ; 2 uses
-  %.pre187 = ptrtoint ptr %i.ad to i64, !nosanitize !12
+  %i.ad = getelementptr inbounds [128 x i8], ptr %i.l, i64 %i.s
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.f
-  %.pre-phi188 = phi i64 [ %.pre187, %bb.k ], [ %i.f, %bb.f ] ; 2 uses
-  %.0 = phi ptr [ %i.ad, %bb.k ], [ %i.e, %bb.f ] ; 20 uses
+  %.0 = phi ptr [ %i.ad, %bb.k ], [ %i.e, %bb.f ] ; 21 uses
+  %.pre-phi188 = ptrtoint ptr %.0 to i64          ; 2 uses
   %i.ae = icmp ne ptr %.0, null, !nosanitize !12
   %i.af = and i64 %.pre-phi188, 7, !nosanitize !12
   %i.ag = icmp eq i64 %i.af, 0, !nosanitize !12
@@ -641,7 +640,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = ptrtoint ptr %i.e to i64, !nosanitize !12 ; 3 uses
+  %i.f = ptrtoint ptr %i.e to i64, !nosanitize !12 ; 2 uses
   %i.g = and i64 %i.f, 7, !nosanitize !12
   %i.h = icmp eq i64 %i.g, 0, !nosanitize !12
   br i1 %i.h, label %bb.f, label %bb.e, !prof !13, !nosanitize !12
@@ -691,13 +690,12 @@ bb.j:                                             ; preds = %bb.i
   unreachable, !nosanitize !12
 
 bb.k:                                             ; preds = %bb.i
-  %i.ad = getelementptr inbounds [48 x i8], ptr %i.l, i64 %i.s ; 2 uses
-  %.pre10 = ptrtoint ptr %i.ad to i64, !nosanitize !12
+  %i.ad = getelementptr inbounds [48 x i8], ptr %i.l, i64 %i.s
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.f
-  %.pre-phi11 = phi i64 [ %.pre10, %bb.k ], [ %i.f, %bb.f ] ; 2 uses
-  %.0 = phi ptr [ %i.ad, %bb.k ], [ %i.e, %bb.f ] ; 3 uses
+  %.0 = phi ptr [ %i.ad, %bb.k ], [ %i.e, %bb.f ] ; 4 uses
+  %.pre-phi11 = ptrtoint ptr %.0 to i64           ; 2 uses
   %i.ae = icmp ne ptr %.0, null, !nosanitize !12
   %i.af = and i64 %.pre-phi11, 7, !nosanitize !12
   %i.ag = icmp eq i64 %i.af, 0, !nosanitize !12
@@ -1100,7 +1098,7 @@ bb.x:                                             ; preds = %.lr.ph1410
   %i.ff = load ptr, ptr %i.cg, align 8, !tbaa !51 ; 4 uses
   %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.ff, i64 %indvars.iv.i516 ; 2 uses
   %i.fh = shl nuw nsw i64 %indvars.iv.i516, 3     ; 2 uses
-  %i.fi = ptrtoint ptr %i.ff to i64, !nosanitize !12 ; 4 uses
+  %i.fi = ptrtoint ptr %i.ff to i64               ; 3 uses
   %i.fj = add i64 %i.fh, %i.fi, !nosanitize !12   ; 4 uses
   %i.fk = icmp ne ptr %i.ff, null, !nosanitize !12 ; 2 uses
   %i.fl = icmp eq i64 %i.fj, 0
@@ -1272,20 +1270,20 @@ bb.ak:                                            ; preds = %bb.aj, %b3QHList_Pu
 
 ._crit_edge.split.us.split.us.us.loopexit.i:      ; preds = %bb.ak
   %.pre.i = load ptr, ptr %i.cg, align 8, !tbaa !51 ; 2 uses
-  %.pre1146.i = ptrtoint ptr %.pre.i to i64, !nosanitize !12 ; 2 uses
+  %.pre1146.i = ptrtoint ptr %.pre.i to i64
   %.pre1147.i = add i64 %i.fh, %.pre1146.i, !nosanitize !12
   br label %._crit_edge.split.us.split.us.us.i
 
 ._crit_edge.split.us.split.us.us.i:               ; preds = %._crit_edge.split.us.split.us.us.loopexit.i, %bb.aa
   %.pre-phi1148.i = phi i64 [ %.pre1147.i, %._crit_edge.split.us.split.us.us.loopexit.i ], [ %i.fj, %bb.aa ] ; 3 uses
-  %.pre-phi.i = phi i64 [ %.pre1146.i, %._crit_edge.split.us.split.us.us.loopexit.i ], [ %i.fi, %bb.aa ] ; 2 uses
-  %2 = phi ptr [ %.pre.i, %._crit_edge.split.us.split.us.us.loopexit.i ], [ %i.ff, %bb.aa ] ; 2 uses
+  %2 = phi ptr [ %.pre.i, %._crit_edge.split.us.split.us.us.loopexit.i ], [ %i.ff, %bb.aa ] ; 3 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %2 to i64    ; 2 uses
   %i.iw = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i516 ; 2 uses
   %i.ix = icmp ne ptr %2, null, !nosanitize !12   ; 2 uses
   %i.iy = icmp eq i64 %.pre-phi1148.i, 0
   %i.iz = xor i1 %i.iy, %i.ix
-  %i.ja = icmp uge i64 %.pre-phi1148.i, %.pre-phi.i, !nosanitize !12
-  %i.jb = and i1 %i.ja, %i.iz, !nosanitize !12
+  %i.ja = icmp uge i64 %.pre-phi1148.i, %.pre-phi.i.pre-phi, !nosanitize !12
+  %i.jb = and i1 %i.iz, %i.ja, !nosanitize !12
   br i1 %i.jb, label %bb.al, label %.split800.us.i, !prof !13, !nosanitize !12
 
 bb.al:                                            ; preds = %._crit_edge.split.us.split.us.us.i
@@ -1353,7 +1351,7 @@ bb.al:                                            ; preds = %._crit_edge.split.u
   unreachable, !nosanitize !12
 
 .split800.us.i:                                   ; preds = %._crit_edge.split.us.split.us.us.i
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @515, i64 %.pre-phi.i, i64 %.pre-phi1148.i) #13, !nosanitize !12
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @515, i64 %.pre-phi.i.pre-phi, i64 %.pre-phi1148.i) #13, !nosanitize !12
   unreachable, !nosanitize !12
 
 .split804.us.i:                                   ; preds = %bb.al

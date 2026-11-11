@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.noexc195, %._ZN4co
   store i64 %.sroa.016.0.copyload, ptr %.sroa.414.0..sroa_idx, align 8
   %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 304
   store ptr %i.ar, ptr %.sroa.515.0..sroa_idx, align 8
-  %i.as = ptrtoint ptr %i.ar to i64               ; 2 uses
+  %i.as = ptrtoint ptr %i.ar to i64
   %i.at = icmp eq i64 %.sroa.016.0.copyload, 0
   %i.au = mul nuw i64 %.sroa.016.0.copyload, 280
   %.sroa.9.0..sroa_idx21 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -246,19 +246,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ba, label %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i, label %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i
 
 _ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i: ; preds = %bb.l
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 280 ; 4 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 280 ; 3 uses
   store ptr %i.bb, ptr %.sroa.3.0..sroa_idx, align 8, !alias.scope !9646
   %.sroa.0.0.copyload8.i = load i64, ptr %i.ay, align 8, !noalias !9647 ; 2 uses
   %.not6.i = icmp eq i64 %.sroa.0.0.copyload8.i, 21
-  br i1 %.not6.i, label %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i._ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i_crit_edge, label %"_ZN4core6option15Option$LT$T$GT$7or_else17ha18dcb3f35369ad6E.exit.thread127"
+  br i1 %.not6.i, label %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i, label %"_ZN4core6option15Option$LT$T$GT$7or_else17ha18dcb3f35369ad6E.exit.thread127"
 
-_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i._ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i_crit_edge: ; preds = %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i
-  %.pre = ptrtoint ptr %i.bb to i64
-  br label %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i
-
-_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i: ; preds = %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i._ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i_crit_edge, %bb.l
-  %.pre-phi = phi i64 [ %.pre, %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i._ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i_crit_edge ], [ %i.as, %bb.l ]
-  %7 = phi ptr [ %i.bb, %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i._ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i_crit_edge ], [ %i.ar, %bb.l ] ; 2 uses
+_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.thread.i: ; preds = %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i, %bb.l
+  %7 = phi ptr [ %i.ar, %bb.l ], [ %i.bb, %_ZN4core3ops8function6FnOnce9call_once17h69614988ff04f46bE.exit.i ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %7 to i64
   %i.bc = sub nuw i64 %i.as, %.pre-phi
   %i.bd = udiv exact i64 %i.bc, 280
   call fastcc void @"_ZN4core3ptr67drop_in_place$LT$$u5b$nickel_lang_parser..utils..FieldDecl$u5d$$GT$17h39a90620e29ce194E"(ptr noalias noundef nonnull align 8 %7, i64 noundef %i.bd), !noalias !9648

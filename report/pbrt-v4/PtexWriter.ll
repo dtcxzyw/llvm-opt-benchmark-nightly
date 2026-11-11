@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit: ; preds = %_ZN
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !136
   %i.aq = load ptr, ptr %i.n, align 8, !tbaa !137 ; 2 uses
   %i.ar = ptrtoint ptr %i.ap to i64
-  %i.as = ptrtoint ptr %i.aq to i64               ; 3 uses
+  %i.as = ptrtoint ptr %i.aq to i64               ; 2 uses
   %i.at = sub i64 %i.ar, %i.as
   %i.au = sdiv exact i64 %i.at, 48
   %i.av = icmp ult i64 %i.au, 20
@@ -217,7 +217,7 @@ _ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE11_M_allocateEm
   %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = sub i64 %i.ay, %i.as
   %i.ba = invoke noalias noundef nonnull dereferenceable(960) ptr @_Znwm(i64 noundef 960) #27
-          to label %.noexc39 unwind label %bb.ar  ; 6 uses
+          to label %.noexc39 unwind label %bb.ar  ; 5 uses
 
 .noexc39:                                         ; preds = %_ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE11_M_allocateEm.exit.i
   %i.bb = load ptr, ptr %i.n, align 8, !tbaa !137 ; 3 uses
@@ -274,13 +274,12 @@ _ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE13_M_deallocate
   store ptr %i.bw, ptr %i.aw, align 8, !tbaa !138
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ba, i64 960
   store ptr %i.bx, ptr %i.ao, align 8, !tbaa !136
-  %.pre72 = ptrtoint ptr %i.ba to i64
   br label %_ZNSt6vectorIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE7reserveEm.exit
 
 _ZNSt6vectorIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE7reserveEm.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit, %_ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE13_M_deallocateEPS3_m.exit.i
-  %.pre-phi = phi i64 [ %.pre72, %_ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ %i.as, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ]
-  %i.by = phi ptr [ %i.ba, %_ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ %i.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 2 uses
+  %i.by = phi ptr [ %i.ba, %_ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ %i.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 3 uses
   %i.bz = phi ptr [ %i.bw, %_ZNSt12_Vector_baseIN4Ptex4v2_414PtexMainWriter8LevelRecESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ %i.ax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 4 uses
+  %.pre-phi = ptrtoint ptr %i.by to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.cb = ptrtoint ptr %i.bz to i64
   %i.cc = sub i64 %i.cb, %.pre-phi

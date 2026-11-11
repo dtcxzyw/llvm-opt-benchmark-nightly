@@ -203,7 +203,7 @@ bb.a:
   %i.a = alloca [128 x i8], align 16              ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.b = load ptr, ptr %0, align 8, !tbaa !19     ; 5 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 3 uses
+  %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %1 ; 6 uses
   %i.e = load i8, ptr %i.b, align 1, !tbaa !16
   switch i8 %i.e, label %bb.d [
@@ -216,19 +216,18 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.066 = phi i1 [ true, %bb.b ], [ false, %bb.a ]
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !19
-  %.pre = ptrtoaddr ptr %i.f to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c
-  %.pre-phi = phi i64 [ %i.c, %bb.a ], [ %.pre, %bb.c ]
-  %i.g = phi ptr [ %i.b, %bb.a ], [ %i.f, %bb.c ] ; 4 uses
+  %i.g = phi ptr [ %i.b, %bb.a ], [ %i.f, %bb.c ] ; 5 uses
   %.167 = phi i1 [ false, %bb.a ], [ %.066, %bb.c ]
   %i.h = icmp ult ptr %i.g, %i.d
   br i1 %i.h, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
+  %.pre-phi = ptrtoaddr ptr %i.g to i64
   %i.i = add i64 %1, %i.c
   %i.j = sub i64 %i.i, %.pre-phi
   %scevgep = getelementptr i8, ptr %i.g, i64 %i.j ; 2 uses
@@ -443,7 +442,7 @@ bb.d:                                             ; preds = %bb.b
 define dso_local i64 @lexbor_conv_data_to_long(ptr nofree noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !19     ; 5 uses
-  %i.b = ptrtoaddr ptr %i.a to i64                ; 2 uses
+  %i.b = ptrtoaddr ptr %i.a to i64
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 %1
   %i.d = load i8, ptr %i.a, align 1, !tbaa !16
   switch i8 %i.d, label %bb.d [
@@ -456,18 +455,17 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.020 = phi i1 [ true, %bb.b ], [ false, %bb.a ]
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %.pre = ptrtoaddr ptr %i.e to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c
-  %.01935.pre-phi = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.c ]
   %.121 = phi i1 [ false, %bb.a ], [ %.020, %bb.c ]
-  %.019 = phi ptr [ %i.a, %bb.a ], [ %i.e, %bb.c ] ; 4 uses
+  %.019 = phi ptr [ %i.a, %bb.a ], [ %i.e, %bb.c ] ; 5 uses
   %i.f = icmp ult ptr %.019, %i.c
   br i1 %i.f, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.d
+  %.01935.pre-phi = ptrtoaddr ptr %.019 to i64
   %i.g = add i64 %1, %i.b
   %i.h = sub i64 %i.g, %.01935.pre-phi
   %scevgep = getelementptr i8, ptr %.019, i64 %i.h ; 2 uses

@@ -205,10 +205,10 @@ bb.uu:                                            ; preds = %_ZStlsISt11char_tra
 
 bb.uv:                                            ; preds = %bb.uu
   %i.czx = getelementptr inbounds nuw i8, ptr %i.czw, i64 8 ; 2 uses
-  %i.czy = load ptr, ptr %i.czx, align 8, !tbaa !181 ; 2 uses
+  %i.czy = load ptr, ptr %i.czx, align 8, !tbaa !181 ; 3 uses
   %i.czz = load ptr, ptr %i.czw, align 8, !tbaa !182 ; 3 uses
-  %i.daa = ptrtoint ptr %i.czy to i64             ; 2 uses
-  %i.dab = ptrtoint ptr %i.czz to i64             ; 2 uses
+  %i.daa = ptrtoint ptr %i.czy to i64
+  %i.dab = ptrtoint ptr %i.czz to i64
   %i.dac = sub i64 %i.daa, %i.dab                 ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.czy, %i.czz
   br i1 %.not.i.i.i.i, label %.noexc1848, label %bb.uw
@@ -229,19 +229,16 @@ _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.uw
           to label %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge unwind label %bb.vf
 
 _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge: ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i
-  %.pre = load ptr, ptr %i.czw, align 8, !tbaa !842 ; 3 uses
-  %.pre2395 = load ptr, ptr %i.czx, align 8, !tbaa !842 ; 2 uses
-  %.pre2396 = ptrtoint ptr %.pre2395 to i64
-  %.pre2397 = ptrtoint ptr %.pre to i64
-  %185 = icmp eq ptr %.pre2395, %.pre
+  %.pre = load ptr, ptr %i.czw, align 8, !tbaa !842
+  %.pre2395 = load ptr, ptr %i.czx, align 8, !tbaa !842
   br label %.noexc1848
 
 .noexc1848:                                       ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge, %bb.uv
-  %.pre-phi2398 = phi i64 [ %.pre2397, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ], [ %i.dab, %bb.uv ]
-  %.pre-phi = phi i64 [ %.pre2396, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ], [ %i.daa, %bb.uv ]
-  %.not22142307 = phi i1 [ %185, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ], [ true, %bb.uv ]
-  %186 = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ], [ %i.czz, %bb.uv ] ; 2 uses
-  %187 = phi ptr [ %i.dae, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ], [ null, %bb.uv ] ; 8 uses
+  %185 = phi ptr [ %i.czy, %bb.uv ], [ %.pre2395, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ] ; 2 uses
+  %186 = phi ptr [ %i.czz, %bb.uv ], [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ] ; 4 uses
+  %187 = phi ptr [ null, %bb.uv ], [ %i.dae, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc1848_crit_edge ] ; 8 uses
+  %.pre-phi = ptrtoint ptr %185 to i64
+  %.pre-phi2398 = ptrtoint ptr %186 to i64
   %i.daf = sub i64 %.pre-phi, %.pre-phi2398       ; 4 uses
   %i.dag = icmp sgt i64 %i.daf, 8
   br i1 %i.dag, label %bb.ux, label %bb.uy, !prof !183
@@ -273,6 +270,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i18
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1851: ; preds = %bb.va, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1849
   call void @llvm.lifetime.end.p0(ptr nonnull %183) #30
+  %.not22142307 = icmp eq ptr %185, %186
   br i1 %.not22142307, label %._crit_edge2310, label %.lr.ph2309
 
 ._crit_edge2310:                                  ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1862, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1851

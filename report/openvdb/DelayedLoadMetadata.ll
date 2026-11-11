@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.e
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !16   ; 2 uses
   %i.u = load ptr, ptr %i.q, align 8, !tbaa !14   ; 2 uses
   %i.v = ptrtoint ptr %i.t to i64
-  %i.w = ptrtoint ptr %i.u to i64                 ; 3 uses
+  %i.w = ptrtoint ptr %i.u to i64                 ; 2 uses
   %i.x = sub i64 %i.v, %i.w
   %i.y = icmp ult i64 %i.x, %i.p
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -213,7 +213,7 @@ _ZNSt12_Vector_baseIaSaIaEE11_M_allocateEm.exit.i: ; preds = %bb.g
   %i.ab = ptrtoint ptr %i.aa to i64
   %i.ac = sub i64 %i.ab, %i.w
   %i.ad = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.p) #26
-          to label %.noexc49 unwind label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit53 ; 6 uses
+          to label %.noexc49 unwind label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit53 ; 5 uses
 
 .noexc49:                                         ; preds = %_ZNSt12_Vector_baseIaSaIaEE11_M_allocateEm.exit.i
   %i.ae = load ptr, ptr %i.q, align 8, !tbaa !14  ; 4 uses
@@ -245,14 +245,13 @@ _ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i: ; preds = %bb.i, %_ZNSt6v
   store ptr %i.an, ptr %i.z, align 8, !tbaa !13
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.p ; 2 uses
   store ptr %i.ao, ptr %i.s, align 8, !tbaa !16
-  %.pre115 = ptrtoint ptr %i.ad to i64
   br label %_ZNSt6vectorIaSaIaEE7reserveEm.exit
 
 _ZNSt6vectorIaSaIaEE7reserveEm.exit:              ; preds = %bb.g, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i
-  %.pre-phi116 = phi i64 [ %.pre115, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i ], [ %i.w, %bb.g ] ; 4 uses
   %i.ap = phi ptr [ %i.ao, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i ], [ %i.t, %bb.g ] ; 3 uses
-  %i.aq = phi ptr [ %i.ad, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i ], [ %i.u, %bb.g ] ; 4 uses
+  %i.aq = phi ptr [ %i.ad, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i ], [ %i.u, %bb.g ] ; 5 uses
   %i.ar = phi ptr [ %i.an, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i ], [ %i.aa, %bb.g ] ; 2 uses
+  %.pre-phi116 = ptrtoint ptr %i.aq to i64
   %i.as = load i32, ptr %i.a, align 4, !tbaa !41
   %i.at = zext i32 %i.as to i64                   ; 7 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -267,11 +266,10 @@ bb.j:                                             ; preds = %_ZNSt6vectorIaSaIaE
           to label %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge unwind label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit53
 
 ._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge:    ; preds = %bb.j
-  %.pre94 = load ptr, ptr %i.q, align 8, !tbaa !14 ; 2 uses
+  %.pre94 = load ptr, ptr %i.q, align 8, !tbaa !14
   %.pre95 = load i32, ptr %i.a, align 4, !tbaa !41
   %.pre96 = load ptr, ptr %i.s, align 8, !tbaa !16
   %.pre117 = zext i32 %.pre95 to i64
-  %.pre119 = ptrtoint ptr %.pre94 to i64
   br label %_ZNSt6vectorIaSaIaEE6resizeEm.exit
 
 bb.k:                                             ; preds = %_ZNSt6vectorIaSaIaEE7reserveEm.exit
@@ -288,10 +286,10 @@ _ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.l
   br label %_ZNSt6vectorIaSaIaEE6resizeEm.exit
 
 _ZNSt6vectorIaSaIaEE6resizeEm.exit:               ; preds = %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge, %_ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i, %bb.l, %bb.k
-  %.pre-phi120 = phi i64 [ %.pre119, %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge ], [ %.pre-phi116, %_ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i ], [ %.pre-phi116, %bb.l ], [ %.pre-phi116, %bb.k ]
   %.pre-phi118 = phi i64 [ %.pre117, %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge ], [ %i.at, %_ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i ], [ %i.at, %bb.l ], [ %i.at, %bb.k ]
   %i.bb = phi ptr [ %.pre96, %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge ], [ %i.ap, %_ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ap, %bb.l ], [ %i.ap, %bb.k ]
-  %i.bc = phi ptr [ %.pre94, %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge ], [ %i.aq, %_ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i ], [ %i.aq, %bb.l ], [ %i.aq, %bb.k ]
+  %i.bc = phi ptr [ %.pre94, %._ZNSt6vectorIaSaIaEE6resizeEm.exit_crit_edge ], [ %i.aq, %_ZSt8_DestroyIPaaEvT_S1_RSaIT0_E.exit.i.i ], [ %i.aq, %bb.l ], [ %i.aq, %bb.k ] ; 2 uses
+  %.pre-phi120 = ptrtoint ptr %i.bc to i64
   %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = sub i64 %i.bd, %.pre-phi120
   invoke void @_ZN7openvdb5v13_011compression15bloscDecompressEPcmmPKc(ptr noundef %i.bc, i64 noundef %.pre-phi118, i64 noundef %i.be, ptr noundef nonnull %i.h)
@@ -394,7 +392,7 @@ bb.v:                                             ; preds = %bb.t
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !24 ; 2 uses
   %i.cp = load ptr, ptr %i.cl, align 8, !tbaa !23 ; 2 uses
   %i.cq = ptrtoint ptr %i.co to i64
-  %i.cr = ptrtoint ptr %i.cp to i64               ; 3 uses
+  %i.cr = ptrtoint ptr %i.cp to i64               ; 2 uses
   %i.cs = sub i64 %i.cq, %i.cr
   %i.ct = ashr exact i64 %i.cs, 3
   %i.cu = icmp ult i64 %i.ct, %i.ck
@@ -407,7 +405,7 @@ _ZNSt12_Vector_baseIlSaIlEE11_M_allocateEm.exit.i: ; preds = %bb.v
   %i.cy = sub i64 %i.cx, %i.cr
   %i.cz = shl nuw nsw i64 %i.ck, 3
   %i.da = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cz) #26
-          to label %.noexc59 unwind label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit67 ; 6 uses
+          to label %.noexc59 unwind label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit67 ; 5 uses
 
 .noexc59:                                         ; preds = %_ZNSt12_Vector_baseIlSaIlEE11_M_allocateEm.exit.i
   %i.db = load ptr, ptr %i.cl, align 8, !tbaa !23 ; 4 uses
@@ -439,14 +437,13 @@ _ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i: ; preds = %bb.x, %_ZNSt6v
   store ptr %i.dk, ptr %i.cv, align 8, !tbaa !22
   %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %i.ck ; 2 uses
   store ptr %i.dl, ptr %i.cn, align 8, !tbaa !24
-  %.pre107 = ptrtoint ptr %i.da to i64
   br label %_ZNSt6vectorIlSaIlEE7reserveEm.exit
 
 _ZNSt6vectorIlSaIlEE7reserveEm.exit:              ; preds = %bb.v, %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i
-  %.pre-phi108 = phi i64 [ %.pre107, %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i ], [ %i.cr, %bb.v ] ; 4 uses
   %i.dm = phi ptr [ %i.dl, %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i ], [ %i.co, %bb.v ] ; 3 uses
-  %i.dn = phi ptr [ %i.da, %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i ], [ %i.cp, %bb.v ] ; 4 uses
+  %i.dn = phi ptr [ %i.da, %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i ], [ %i.cp, %bb.v ] ; 5 uses
   %i.do = phi ptr [ %i.dk, %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i ], [ %i.cw, %bb.v ] ; 2 uses
+  %.pre-phi108 = ptrtoint ptr %i.dn to i64
   %i.dp = load i32, ptr %i.a, align 4, !tbaa !41
   %i.dq = zext i32 %i.dp to i64                   ; 7 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -462,11 +459,10 @@ bb.y:                                             ; preds = %_ZNSt6vectorIlSaIlE
           to label %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge unwind label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit67
 
 ._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge:    ; preds = %bb.y
-  %.pre103 = load ptr, ptr %i.cl, align 8, !tbaa !23 ; 2 uses
+  %.pre103 = load ptr, ptr %i.cl, align 8, !tbaa !23
   %.pre104 = load i32, ptr %i.a, align 4, !tbaa !41
   %.pre105 = load ptr, ptr %i.cn, align 8, !tbaa !24
   %.pre109 = zext i32 %.pre104 to i64
-  %.pre111 = ptrtoint ptr %.pre103 to i64
   br label %_ZNSt6vectorIlSaIlEE6resizeEm.exit
 
 bb.z:                                             ; preds = %_ZNSt6vectorIlSaIlEE7reserveEm.exit
@@ -483,10 +479,10 @@ _ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.aa
   br label %_ZNSt6vectorIlSaIlEE6resizeEm.exit
 
 _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i, %bb.aa, %bb.z
-  %.pre-phi112 = phi i64 [ %.pre111, %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge ], [ %.pre-phi108, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i ], [ %.pre-phi108, %bb.aa ], [ %.pre-phi108, %bb.z ]
   %.pre-phi110 = phi i64 [ %.pre109, %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge ], [ %i.dq, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i ], [ %i.dq, %bb.aa ], [ %i.dq, %bb.z ]
   %i.dz = phi ptr [ %.pre105, %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge ], [ %i.dm, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i ], [ %i.dm, %bb.aa ], [ %i.dm, %bb.z ]
-  %i.ea = phi ptr [ %.pre103, %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge ], [ %i.dn, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i ], [ %i.dn, %bb.aa ], [ %i.dn, %bb.z ]
+  %i.ea = phi ptr [ %.pre103, %._ZNSt6vectorIlSaIlEE6resizeEm.exit_crit_edge ], [ %i.dn, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i ], [ %i.dn, %bb.aa ], [ %i.dn, %bb.z ] ; 2 uses
+  %.pre-phi112 = ptrtoint ptr %i.ea to i64
   %i.eb = shl nuw nsw i64 %.pre-phi110, 3
   %i.ec = ptrtoint ptr %i.dz to i64
   %i.ed = sub i64 %i.ec, %.pre-phi112

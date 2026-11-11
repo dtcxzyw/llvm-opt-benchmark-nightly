@@ -205,7 +205,7 @@ _ZL18lodepng_chunk_initPPhP8ucvectormPKc.exit.thread: ; preds = %bb.d, %bb.a, %b
 define internal fastcc noundef range(i32 0, 123) i32 @_ZL16addUnknownChunksP8ucvectorPhm(ptr nofree noundef nonnull captures(none) %0, ptr noundef nonnull %1, i64 noundef %2) unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %1 to i64
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %_Z20lodepng_chunk_appendPPhPmPKh.exit.thread, label %.lr.ph
 
@@ -216,9 +216,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_Z18lodepng_chunk_nextPhS_.exit
-  %3 = phi i64 [ %i.b, %.lr.ph ], [ %i.cz, %_Z18lodepng_chunk_nextPhS_.exit ]
   %.01522 = phi ptr [ %1, %.lr.ph ], [ %.1.i, %_Z18lodepng_chunk_nextPhS_.exit ] ; 16 uses
-  %.0152244 = ptrtoaddr ptr %.01522 to i64
+  %3 = ptrtoint ptr %.01522 to i64                ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.01522, i64 4 ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !tbaa !35
   %i.h = and i8 %i.g, -33
@@ -302,7 +301,7 @@ iter.check:                                       ; preds = %bb.g
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.bc = add i64 %i.ao, %i.as
-  %i.bd = sub i64 %.0152244, %i.bc
+  %i.bd = sub i64 %3, %i.bc
   %diff.check = icmp ugt i64 %i.bd, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -445,7 +444,7 @@ bb.n:                                             ; preds = %bb.m
 
 _Z18lodepng_chunk_nextPhS_.exit:                  ; preds = %.loopexit, %bb.n, %._crit_edge.i
   %.1.i = phi ptr [ %spec.select.i, %._crit_edge.i ], [ %i.cl, %bb.n ], [ %i.d, %.loopexit ] ; 2 uses
-  %i.cz = ptrtoint ptr %.1.i to i64               ; 2 uses
+  %i.cz = ptrtoint ptr %.1.i to i64
   %i.da = sub i64 %i.cz, %i.b
   %i.db = icmp ult i64 %i.da, %2
   br i1 %i.db, label %bb.b, label %_Z20lodepng_chunk_appendPPhPmPKh.exit.thread, !llvm.loop !649
@@ -848,7 +847,7 @@ bb.e:                                             ; preds = %bb.d
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !216  ; 4 uses
   %i.j = load ptr, ptr %0, align 8, !tbaa !217    ; 3 uses
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = ptrtoint ptr %i.j to i64                 ; 2 uses
+  %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l                       ; 3 uses
   %i.n = icmp ugt i64 %i.d, %i.m
   br i1 %i.n, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i, label %bb.f
@@ -856,9 +855,8 @@ bb.e:                                             ; preds = %bb.d
 _ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i:      ; preds = %bb.e
   %i.o = sub nuw nsw i64 %i.d, %i.m
   tail call void @_ZNSt6vectorIhSaIhEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.o)
-  %.pre.i = load ptr, ptr %0, align 8, !tbaa !217 ; 2 uses
+  %.pre.i = load ptr, ptr %0, align 8, !tbaa !217
   %.pre11.i = load ptr, ptr %i.h, align 8, !tbaa !216
-  %.pre12.i = ptrtoint ptr %.pre.i to i64
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
@@ -880,11 +878,11 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit.i:             ; preds = %_ZSt8_DestroyIPhhEv
   br i1 %i.s, label %_ZN7lodepngL10load_file_ERSt6vectorIhSaIhEEP8_IO_FILE.exit, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i
-  %.pre-phi.i = phi i64 [ %.pre12.i, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i ], [ %i.l, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i ]
   %i.t = phi ptr [ %.pre11.i, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i ], [ %i.r, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i ]
-  %i.u = phi ptr [ %.pre.i, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i ], [ %i.j, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i ]
+  %i.u = phi ptr [ %.pre.i, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.thread.i ], [ %i.j, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i ] ; 2 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %i.u to i64
   %i.v = ptrtoint ptr %i.t to i64
-  %i.w = sub i64 %i.v, %.pre-phi.i
+  %i.w = sub i64 %i.v, %.pre-phi.i.pre-phi
   %i.x = tail call i64 @fread(ptr noundef nonnull %i.u, i64 noundef 1, i64 noundef %i.w, ptr noundef nonnull %i.b)
   %i.y = load ptr, ptr %i.h, align 8, !tbaa !216
   %i.z = load ptr, ptr %0, align 8, !tbaa !217

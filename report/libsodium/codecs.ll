@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %.043.lcssa = phi ptr [ %1, %bb.a ], [ %i.c, %bb.b ], [ %.043116, %.lr.ph ] ; 5 uses
-  %i.g = ptrtoint ptr %.043.lcssa to i64          ; 2 uses
+  %i.g = ptrtoint ptr %.043.lcssa to i64
   %i.h = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.i = sub i64 %i.g, %i.h                       ; 2 uses
   %i.j = tail call ptr @memchr(ptr noundef nonnull %1, i32 noundef 37, i64 noundef %i.i) #14 ; 4 uses
@@ -245,19 +245,19 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d,
   br i1 %exitcond174.not, label %._crit_edge, label %.lr.ph120, !llvm.loop !30
 
 ._crit_edge:                                      ; preds = %bb.e
-  %.pre193 = ptrtoint ptr %i.j to i64             ; 2 uses
+  %.pre193 = ptrtoint ptr %i.j to i64
   %.pre194 = sub i64 %.pre193, %i.h
   %i.t = tail call ptr @memchr(ptr noundef nonnull %1, i32 noundef 58, i64 noundef %.pre194) #14
   %.not251 = icmp eq ptr %i.t, null
   br i1 %.not251, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %.thread
-  %.pre-phi217222 = phi i64 [ %i.g, %.thread ], [ %.pre193, %._crit_edge ] ; 2 uses
-  %.1218221 = phi ptr [ %.043.lcssa, %.thread ], [ %i.j, %._crit_edge ] ; 6 uses
+  %.1217222 = phi ptr [ %.043.lcssa, %.thread ], [ %i.j, %._crit_edge ] ; 9 uses
+  %.pre-phi219220 = ptrtoint ptr %.1217222 to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 5 uses
-  %.not.i = icmp ult ptr %1, %.1218221
+  %.not.i = icmp ult ptr %1, %.1217222
   br i1 %.not.i, label %bb.g, label %parse_ipv6.exit
 
 bb.g:                                             ; preds = %bb.f
@@ -267,7 +267,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr i8, ptr %1, i64 1          ; 2 uses
-  %.not96.i = icmp ult ptr %i.x, %.1218221
+  %.not96.i = icmp ult ptr %i.x, %.1217222
   br i1 %.not96.i, label %bb.i, label %parse_ipv6.exit
 
 bb.i:                                             ; preds = %bb.h
@@ -286,14 +286,14 @@ bb.j:                                             ; preds = %bb.i
 
 .outer.i:                                         ; preds = %.outer.i.preheader, %bb.n
   %.083.ph.i = phi ptr [ %i.an, %bb.n ], [ %i.a, %.outer.i.preheader ] ; 13 uses
-  %.182.ph.i = phi ptr [ %.182.ph112155.i.lcssa, %bb.n ], [ %.182.ph.i.ph, %.outer.i.preheader ] ; 4 uses
+  %.182.ph.i = phi ptr [ %.178.ph114157.i.lcssa.a, %bb.n ], [ %.182.ph.i.ph, %.outer.i.preheader ] ; 4 uses
   %.180.ph.i = phi ptr [ %i.at, %bb.n ], [ %.180.ph.i.ph, %.outer.i.preheader ] ; 6 uses
-  %i.aa = icmp ult ptr %.180.ph.i, %.1218221
+  %i.aa = icmp ult ptr %.180.ph.i, %.1217222
   br i1 %i.aa, label %.lr.ph.i.preheader, label %.thread.i
 
 .lr.ph.i.preheader:                               ; preds = %.outer.i
-  %.180.ph.i176 = ptrtoaddr ptr %.180.ph.i to i64 ; 2 uses
-  %i.ab = sub i64 %.pre-phi217222, %.180.ph.i176
+  %.180.ph.i176 = ptrtoaddr ptr %.180.ph.i to i64
+  %i.ab = sub i64 %.pre-phi219220, %.180.ph.i176
   %i.ac = load i8, ptr %.180.ph.i, align 1        ; 2 uses
   switch i8 %i.ac, label %bb.l [
     i8 58, label %bb.k
@@ -305,26 +305,22 @@ bb.k:                                             ; preds = %.lr.ph.i.preheader
   br i1 %.not103.i.peel, label %.outer111.i.peel, label %parse_ipv6.exit
 
 .outer111.i.peel:                                 ; preds = %bb.k
-  %3 = getelementptr i8, ptr %.180.ph.i, i64 1    ; 4 uses
   %exitcond178.peel.not = icmp eq i64 %i.ab, 1
   br i1 %exitcond178.peel.not, label %.thread.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.outer111.i.peel
+  %3 = getelementptr i8, ptr %.180.ph.i, i64 1    ; 3 uses
   %.pre = load i8, ptr %3, align 1                ; 2 uses
-  switch i8 %.pre, label %.loopexit180 [
+  switch i8 %.pre, label %bb.l [
     i8 58, label %parse_ipv6.exit
     i8 46, label %.loopexit212.i
   ]
 
-.loopexit180:                                     ; preds = %.lr.ph.i
-  %.pre192 = ptrtoaddr ptr %3 to i64
-  br label %bb.l
-
-bb.l:                                             ; preds = %.loopexit180, %.lr.ph.i.preheader
-  %.178.ph114157.i.lcssa189.pre-phi = phi i64 [ %.pre192, %.loopexit180 ], [ %.180.ph.i176, %.lr.ph.i.preheader ]
-  %.178.ph114157.i.lcssa.a = phi ptr [ %3, %.loopexit180 ], [ %.180.ph.i, %.lr.ph.i.preheader ] ; 8 uses
-  %.182.ph112155.i.lcssa = phi ptr [ %.083.ph.i, %.loopexit180 ], [ %.182.ph.i, %.lr.ph.i.preheader ] ; 6 uses
-  %.lcssa = phi i8 [ %.pre, %.loopexit180 ], [ %i.ac, %.lr.ph.i.preheader ]
+bb.l:                                             ; preds = %.lr.ph.i, %.lr.ph.i.preheader
+  %.178.ph114157.i.lcssa = phi ptr [ %.180.ph.i, %.lr.ph.i.preheader ], [ %3, %.lr.ph.i ] ; 9 uses
+  %.178.ph114157.i.lcssa.a = phi ptr [ %.182.ph.i, %.lr.ph.i.preheader ], [ %.083.ph.i, %.lr.ph.i ] ; 6 uses
+  %.lcssa = phi i8 [ %i.ac, %.lr.ph.i.preheader ], [ %.pre, %.lr.ph.i ]
+  %.178.ph114157.i.lcssa189.pre-phi = ptrtoaddr ptr %.178.ph114157.i.lcssa to i64
   %i.ad = sext i8 %.lcssa to i32                  ; 2 uses
   %i.ae = add nsw i32 %i.ad, -48                  ; 2 uses
   %or.cond.i.peel.i = icmp ult i32 %i.ae, 10
@@ -339,12 +335,12 @@ bb.m:                                             ; preds = %bb.l
 
 ip_hex_digit.exit.peel.i.thread57:                ; preds = %bb.m, %bb.l
   %.0.i.peel.i59 = phi i32 [ %i.ag, %bb.m ], [ %i.ae, %bb.l ] ; 3 uses
-  %i.ai = getelementptr i8, ptr %.178.ph114157.i.lcssa.a, i64 1 ; 3 uses
-  %i.aj = icmp ult ptr %i.ai, %.1218221
+  %i.ai = getelementptr i8, ptr %.178.ph114157.i.lcssa, i64 1 ; 3 uses
+  %i.aj = icmp ult ptr %i.ai, %.1217222
   br i1 %i.aj, label %.peel.next.i.preheader, label %.outer111._crit_edge.i
 
 .peel.next.i.preheader:                           ; preds = %ip_hex_digit.exit.peel.i.thread57
-  %i.ak = sub i64 %.pre-phi217222, %.178.ph114157.i.lcssa189.pre-phi ; 3 uses
+  %i.ak = sub i64 %.pre-phi219220, %.178.ph114157.i.lcssa189.pre-phi
   %i.al = load i8, ptr %i.ai, align 1             ; 2 uses
   %i.am = sext i8 %i.al to i32                    ; 2 uses
   switch i8 %i.al, label %bb.p [
@@ -367,18 +363,18 @@ bb.n:                                             ; preds = %.loopexit.i
   %i.as = trunc i32 %.076145.i.lcssa to i8
   store i8 %i.as, ptr %i.ar, align 1
   %i.at = getelementptr i8, ptr %.180144.i.lcssa, i64 1 ; 2 uses
-  %.not104.i = icmp ult ptr %i.at, %.1218221
+  %.not104.i = icmp ult ptr %i.at, %.1217222
   br i1 %.not104.i, label %.outer.i, label %parse_ipv6.exit, !llvm.loop !31
 
 .loopexit212.i:                                   ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %.peel.next.i.preheader, %.peel.next.i.1, %.peel.next.i.2, %.peel.next.i.3
-  %.178.ph114157.i141 = phi ptr [ %.178.ph114157.i.lcssa.a, %.peel.next.i.preheader ], [ %.178.ph114157.i.lcssa.a, %.peel.next.i.3 ], [ %.178.ph114157.i.lcssa.a, %.peel.next.i.2 ], [ %.178.ph114157.i.lcssa.a, %.peel.next.i.1 ], [ %3, %.lr.ph.i ], [ %.180.ph.i, %.lr.ph.i.preheader ]
-  %.182.ph112155.i132 = phi ptr [ %.182.ph112155.i.lcssa, %.peel.next.i.preheader ], [ %.182.ph112155.i.lcssa, %.peel.next.i.3 ], [ %.182.ph112155.i.lcssa, %.peel.next.i.2 ], [ %.182.ph112155.i.lcssa, %.peel.next.i.1 ], [ %.083.ph.i, %.lr.ph.i ], [ %.182.ph.i, %.lr.ph.i.preheader ]
+  %.178.ph114157.i141 = phi ptr [ %.178.ph114157.i.lcssa, %.peel.next.i.preheader ], [ %.178.ph114157.i.lcssa, %.peel.next.i.3 ], [ %.178.ph114157.i.lcssa, %.peel.next.i.2 ], [ %.178.ph114157.i.lcssa, %.peel.next.i.1 ], [ %3, %.lr.ph.i ], [ %.180.ph.i, %.lr.ph.i.preheader ]
+  %.182.ph112155.i132 = phi ptr [ %.178.ph114157.i.lcssa.a, %.peel.next.i.preheader ], [ %.178.ph114157.i.lcssa.a, %.peel.next.i.3 ], [ %.178.ph114157.i.lcssa.a, %.peel.next.i.2 ], [ %.178.ph114157.i.lcssa.a, %.peel.next.i.1 ], [ %.083.ph.i, %.lr.ph.i ], [ %.182.ph.i, %.lr.ph.i.preheader ]
   %i.au = getelementptr i8, ptr %.083.ph.i, i64 4 ; 2 uses
   %i.av = icmp ugt ptr %i.au, %i.u
   br i1 %i.av, label %parse_ipv6.exit, label %bb.o
 
 bb.o:                                             ; preds = %.loopexit212.i
-  %i.aw = call fastcc i32 @parse_ipv4(ptr noundef nonnull %.178.ph114157.i141, ptr noundef nonnull readnone %.1218221, ptr noundef %.083.ph.i)
+  %i.aw = call fastcc i32 @parse_ipv4(ptr noundef nonnull %.178.ph114157.i141, ptr noundef nonnull readnone %.1217222, ptr noundef %.083.ph.i)
   %i.ax = icmp eq i32 %i.aw, 0
   br i1 %i.ax, label %parse_ipv6.exit, label %.thread.i
 
@@ -407,7 +403,7 @@ bb.r:                                             ; preds = %ip_hex_digit.exit.i
   br i1 %exitcond191.not, label %.outer111._crit_edge.i, label %.peel.next.i.1
 
 .peel.next.i.1:                                   ; preds = %bb.r
-  %i.bf = getelementptr i8, ptr %.178.ph114157.i.lcssa.a, i64 2 ; 2 uses
+  %i.bf = getelementptr i8, ptr %.178.ph114157.i.lcssa, i64 2 ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 1             ; 2 uses
   %i.bh = sext i8 %i.bg to i32                    ; 2 uses
   switch i8 %i.bg, label %bb.s [
@@ -436,11 +432,11 @@ ip_hex_digit.exit.i.1:                            ; preds = %bb.t, %bb.s
 bb.u:                                             ; preds = %ip_hex_digit.exit.i.1
   %i.bn = shl nsw i32 %i.be, 4
   %i.bo = or i32 %.0.i.i.1, %i.bn                 ; 3 uses
-  %exitcond191.not.1 = icmp eq i64 %i.ak, 3
+  %4 = getelementptr i8, ptr %.178.ph114157.i.lcssa, i64 3 ; 3 uses
+  %exitcond191.not.1 = icmp eq ptr %4, %.1217222
   br i1 %exitcond191.not.1, label %.outer111._crit_edge.i, label %.peel.next.i.2
 
 .peel.next.i.2:                                   ; preds = %bb.u
-  %4 = getelementptr i8, ptr %.178.ph114157.i.lcssa.a, i64 3 ; 2 uses
   %i.bp = load i8, ptr %4, align 1                ; 2 uses
   %i.bq = sext i8 %i.bp to i32                    ; 2 uses
   switch i8 %i.bp, label %bb.v [
@@ -469,11 +465,11 @@ ip_hex_digit.exit.i.2:                            ; preds = %bb.w, %bb.v
 bb.x:                                             ; preds = %ip_hex_digit.exit.i.2
   %i.bw = shl i32 %i.bo, 4
   %i.bx = or i32 %.0.i.i.2, %i.bw                 ; 2 uses
-  %exitcond191.not.2 = icmp eq i64 %i.ak, 4
+  %5 = getelementptr i8, ptr %.178.ph114157.i.lcssa, i64 4 ; 3 uses
+  %exitcond191.not.2 = icmp eq ptr %5, %.1217222
   br i1 %exitcond191.not.2, label %.outer111._crit_edge.i, label %.peel.next.i.3
 
 .peel.next.i.3:                                   ; preds = %bb.x
-  %5 = getelementptr i8, ptr %.178.ph114157.i.lcssa.a, i64 4 ; 2 uses
   %i.by = load i8, ptr %5, align 1                ; 2 uses
   switch i8 %i.by, label %ip_hex_digit.exit.i.3 [
     i8 58, label %.loopexit.i
@@ -502,7 +498,7 @@ bb.y:                                             ; preds = %.outer111._crit_edg
   br label %.thread.i
 
 .thread.i:                                        ; preds = %.outer.i, %.outer111.i.peel, %bb.y, %bb.o
-  %.182.ph112139.i = phi ptr [ %.182.ph112155.i.lcssa, %bb.y ], [ %.182.ph112155.i132, %bb.o ], [ %.182.ph.i, %.outer.i ], [ %.083.ph.i, %.outer111.i.peel ] ; 4 uses
+  %.182.ph112139.i = phi ptr [ %.178.ph114157.i.lcssa.a, %bb.y ], [ %.182.ph112155.i132, %bb.o ], [ %.182.ph.i, %.outer.i ], [ %.083.ph.i, %.outer111.i.peel ] ; 4 uses
   %.2.i = phi ptr [ %i.cb, %bb.y ], [ %i.au, %bb.o ], [ %.083.ph.i, %.outer111.i.peel ], [ %.083.ph.i, %.outer.i ] ; 2 uses
   %.not99.i = icmp eq ptr %.182.ph112139.i, null
   %.not101.i = icmp eq ptr %.2.i, %i.u            ; 2 uses

@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %thread-pre-split379
   %i.mo = getelementptr inbounds nuw i8, ptr %6, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.mo, i8 0, i64 24, i1 false)
   store ptr %i.b, ptr %6, align 8, !tbaa !23
-  %i.mp = ptrtoint ptr %.sroa.8.5.i to i64        ; 2 uses
+  %i.mp = ptrtoint ptr %.sroa.8.5.i to i64
   %.not4388.not.i.i.i = icmp eq i64 %i.ks, 0
   br i1 %.not4388.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i7.i.i
 
@@ -345,19 +345,15 @@ EFH_writeVarint.exit61.i.i.i:                     ; preds = %bb.av
   br label %EFH_encodeInputSizes_v21.exit.i.i
 
 bb.ax:                                            ; preds = %EFH_writeVarint.exit61.i.i.i, %EFH_writeVarint.exit61.thread.i.i.i, %bb.au
-  %.sroa.8.12.i = phi ptr [ %i.ol, %EFH_writeVarint.exit61.thread.i.i.i ], [ %.sroa.8.11.i, %EFH_writeVarint.exit61.i.i.i ], [ %.sroa.8.11.i, %bb.au ] ; 3 uses
+  %.sroa.8.12.i = phi ptr [ %i.ol, %EFH_writeVarint.exit61.thread.i.i.i ], [ %.sroa.8.11.i, %EFH_writeVarint.exit61.i.i.i ], [ %.sroa.8.11.i, %bb.au ] ; 2 uses
   %i.ot = add nuw i64 %.03891.i.i.i, 1            ; 2 uses
   %exitcond100.not.i.i.i = icmp eq i64 %i.ot, %i.ks
-  br i1 %exitcond100.not.i.i.i, label %._crit_edge.i.loopexit.i.i, label %bb.au, !llvm.loop !63
+  br i1 %exitcond100.not.i.i.i, label %._crit_edge.i.i.i, label %bb.au, !llvm.loop !63
 
-._crit_edge.i.loopexit.i.i:                       ; preds = %bb.ax
-  %.pre.i.i = ptrtoint ptr %.sroa.8.12.i to i64
-  br label %._crit_edge.i.i.i
-
-._crit_edge.i.i.i:                                ; preds = %._crit_edge.i.loopexit.i.i, %bb.aq
-  %.sroa.8.13.i = phi ptr [ %.sroa.8.5.i, %bb.aq ], [ %.sroa.8.12.i, %._crit_edge.i.loopexit.i.i ]
-  %.pre-phi.i.i = phi i64 [ %i.mp, %bb.aq ], [ %.pre.i.i, %._crit_edge.i.loopexit.i.i ]
-  %i.ou = sub i64 %.pre-phi.i.i, %i.mp
+._crit_edge.i.i.i:                                ; preds = %bb.ax, %bb.aq
+  %.sroa.8.13.i = phi ptr [ %.sroa.8.5.i, %bb.aq ], [ %.sroa.8.12.i, %bb.ax ] ; 2 uses
+  %.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %.sroa.8.13.i to i64
+  %i.ou = sub i64 %.pre-phi.i.pre-phi.i.pre-phi, %i.mp
   br label %EFH_encodeInputSizes_v21.exit.i.i
 
 EFH_encodeInputSizes_v21.exit.i.i:                ; preds = %._crit_edge.i.i.i, %.thread76.i.i.i, %.thread.i9.i.i

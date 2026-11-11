@@ -204,7 +204,7 @@ declare i64 @evbuffer_get_length(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @evhttp_str_is_chunked_(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = icmp eq ptr %1, null
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.022 = phi ptr [ %i.d, %bb.b ], [ %1, %bb.a ]  ; 4 uses
+  %.022 = phi ptr [ %i.d, %bb.b ], [ %1, %bb.a ]  ; 5 uses
   %.02239 = ptrtoaddr ptr %.022 to i64            ; 2 uses
   %i.e = icmp ult ptr %0, %.022
   br i1 %i.e, label %.lr.ph.preheader, label %.critedge
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge2
   %.02327 = phi ptr [ %i.h, %.critedge2 ], [ %0, %.lr.ph.preheader ] ; 3 uses
   %i.g = load i8, ptr %.02327, align 1
-  switch i8 %i.g, label %.critedge.loopexit [
+  switch i8 %i.g, label %.critedge [
     i8 32, label %.critedge2
     i8 9, label %.critedge2
   ]
@@ -235,22 +235,17 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .critedge2:                                       ; preds = %.lr.ph, %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %.02327, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.h, %.022
-  br i1 %exitcond.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !5
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !5
 
-.critedge.loopexit:                               ; preds = %.lr.ph, %.critedge2
-  %.023.lcssa.ph = phi ptr [ %scevgep, %.critedge2 ], [ %.02327, %.lr.ph ] ; 2 uses
-  %.pre = ptrtoaddr ptr %.023.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.c
-  %.023.lcssa40.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %i.a, %bb.c ]
-  %.023.lcssa = phi ptr [ %.023.lcssa.ph, %.critedge.loopexit ], [ %0, %bb.c ] ; 6 uses
+.critedge:                                        ; preds = %.critedge2, %.lr.ph, %bb.c
+  %.023.lcssa = phi ptr [ %0, %bb.c ], [ %.02327, %.lr.ph ], [ %scevgep, %.critedge2 ] ; 7 uses
   %i.i = icmp ult ptr %.023.lcssa, %.022
   br i1 %i.i, label %.lr.ph31.preheader, label %.critedge4
 
 .lr.ph31.preheader:                               ; preds = %.critedge
+  %.023.lcssa40.pre-phi = ptrtoaddr ptr %.023.lcssa to i64
   %i.j = sub i64 %.02239, %.023.lcssa40.pre-phi
-  %scevgep41 = getelementptr i8, ptr %.023.lcssa, i64 %i.j ; 2 uses
+  %scevgep41 = getelementptr i8, ptr %.023.lcssa, i64 %i.j
   br label %.lr.ph31
 
 .lr.ph31:                                         ; preds = %.lr.ph31.preheader, %bb.d
@@ -264,7 +259,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.lr.ph31
   %i.l = getelementptr inbounds nuw i8, ptr %.030, i64 1 ; 2 uses
-  %exitcond42.not = icmp eq ptr %i.l, %scevgep41
+  %exitcond42.not = icmp eq ptr %i.l, %.022
   br i1 %exitcond42.not, label %.critedge4, label %.lr.ph31, !llvm.loop !6
 
 .critedge4:                                       ; preds = %bb.d, %.lr.ph31, %.lr.ph31, %.lr.ph31, %.critedge
@@ -296,14 +291,14 @@ bb.a:
   br i1 %.not38, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %evhttp_str_is_chunked_.exit.thread
-  %i.b = phi ptr [ %i.q, %evhttp_str_is_chunked_.exit.thread ], [ %i.a, %bb.a ] ; 5 uses
+  %i.b = phi ptr [ %i.q, %evhttp_str_is_chunked_.exit.thread ], [ %i.a, %bb.a ] ; 6 uses
   %.039 = phi ptr [ %i.p, %evhttp_str_is_chunked_.exit.thread ], [ %0, %bb.a ] ; 5 uses
-  %1 = ptrtoaddr ptr %.039 to i64                 ; 2 uses
   %.02239.i = ptrtoaddr ptr %i.b to i64           ; 2 uses
   %i.c = icmp ult ptr %.039, %i.b
   br i1 %i.c, label %.lr.ph.preheader.i, label %.critedge.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph
+  %1 = ptrtoaddr ptr %.039 to i64
   %i.d = sub i64 %.02239.i, %1
   %scevgep.i = getelementptr i8, ptr %.039, i64 %i.d
   br label %.lr.ph.i
@@ -311,7 +306,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.critedge2.i, %.lr.ph.preheader.i
   %.02327.i = phi ptr [ %i.f, %.critedge2.i ], [ %.039, %.lr.ph.preheader.i ] ; 3 uses
   %i.e = load i8, ptr %.02327.i, align 1
-  switch i8 %i.e, label %.critedge.loopexit.i [
+  switch i8 %i.e, label %.critedge.i [
     i8 32, label %.critedge2.i
     i8 9, label %.critedge2.i
   ]
@@ -319,22 +314,17 @@ bb.a:
 .critedge2.i:                                     ; preds = %.lr.ph.i, %.lr.ph.i
   %i.f = getelementptr inbounds nuw i8, ptr %.02327.i, i64 1 ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.f, %i.b
-  br i1 %exitcond.not.i, label %.critedge.loopexit.i, label %.lr.ph.i, !llvm.loop !5
+  br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !5
 
-.critedge.loopexit.i:                             ; preds = %.critedge2.i, %.lr.ph.i
-  %.023.lcssa.ph.i = phi ptr [ %scevgep.i, %.critedge2.i ], [ %.02327.i, %.lr.ph.i ] ; 2 uses
-  %.pre.i = ptrtoaddr ptr %.023.lcssa.ph.i to i64
-  br label %.critedge.i
-
-.critedge.i:                                      ; preds = %.critedge.loopexit.i, %.lr.ph
-  %.023.lcssa40.pre-phi.i = phi i64 [ %.pre.i, %.critedge.loopexit.i ], [ %1, %.lr.ph ]
-  %.023.lcssa.i = phi ptr [ %.023.lcssa.ph.i, %.critedge.loopexit.i ], [ %.039, %.lr.ph ] ; 6 uses
+.critedge.i:                                      ; preds = %.critedge2.i, %.lr.ph.i, %.lr.ph
+  %.023.lcssa.i = phi ptr [ %.039, %.lr.ph ], [ %scevgep.i, %.critedge2.i ], [ %.02327.i, %.lr.ph.i ] ; 7 uses
   %i.g = icmp ult ptr %.023.lcssa.i, %i.b
   br i1 %i.g, label %.lr.ph31.preheader.i, label %.critedge4.i
 
 .lr.ph31.preheader.i:                             ; preds = %.critedge.i
+  %.023.lcssa40.pre-phi.i = ptrtoaddr ptr %.023.lcssa.i to i64
   %i.h = sub i64 %.02239.i, %.023.lcssa40.pre-phi.i
-  %scevgep41.i = getelementptr i8, ptr %.023.lcssa.i, i64 %i.h ; 2 uses
+  %scevgep41.i = getelementptr i8, ptr %.023.lcssa.i, i64 %i.h
   br label %.lr.ph31.i
 
 .lr.ph31.i:                                       ; preds = %bb.b, %.lr.ph31.preheader.i
@@ -348,7 +338,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph31.i
   %i.j = getelementptr inbounds nuw i8, ptr %.030.i, i64 1 ; 2 uses
-  %exitcond42.not.i = icmp eq ptr %i.j, %scevgep41.i
+  %exitcond42.not.i = icmp eq ptr %i.j, %i.b
   br i1 %exitcond42.not.i, label %.critedge4.i, label %.lr.ph31.i, !llvm.loop !6
 
 .critedge4.i:                                     ; preds = %bb.b, %.lr.ph31.i, %.lr.ph31.i, %.lr.ph31.i, %.critedge.i
