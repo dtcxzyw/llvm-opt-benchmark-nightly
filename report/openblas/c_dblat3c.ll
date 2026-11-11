@@ -204,14 +204,12 @@ vector.ph285:                                     ; preds = %.lr.ph197.preheader
 
 vector.body286:                                   ; preds = %vector.body286, %vector.ph285
   %index287 = phi i64 [ 0, %vector.ph285 ], [ %index.next291, %vector.body286 ] ; 2 uses
-  %vec.ind288 = phi <4 x i64> [ <i64 1, i64 2, i64 3, i64 4>, %vector.ph285 ], [ %vec.ind.next292, %vector.body286 ] ; 2 uses
-  %vec.ind289 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph285 ], [ %vec.ind.next293, %vector.body286 ] ; 3 uses
+  %vec.ind290 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph285 ], [ %vec.ind.next294, %vector.body286 ] ; 3 uses
+  %vec.ind289 = phi <4 x i32> [ <i32 2, i32 3, i32 4, i32 5>, %vector.ph285 ], [ %vec.ind.next293, %vector.body286 ] ; 2 uses
   %vec.ind290.a = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph285 ], [ %vec.ind.next294.a, %vector.body286 ] ; 2 uses
   %.neg296 = xor i64 %index287, -1
-  %0 = trunc <4 x i64> %vec.ind288 to <4 x i32>
-  %1 = add <4 x i32> %0, splat (i32 1)
-  %i.ja = mul nuw nsw <4 x i32> %1, %vec.ind289   ; 2 uses
-  %i.jb = mul nuw nsw <4 x i32> %i.ja, %vec.ind289
+  %i.ja = mul nuw nsw <4 x i32> %vec.ind289, %vec.ind290 ; 2 uses
+  %i.jb = mul nuw nsw <4 x i32> %i.ja, %vec.ind290
   %i.jc = lshr <4 x i32> %i.jb, splat (i32 1)
   %i.jd = add <4 x i32> %vec.ind290.a, splat (i32 -1)
   %i.je = mul nuw nsw <4 x i32> %i.ja, %i.jd
@@ -223,7 +221,7 @@ vector.body286:                                   ; preds = %vector.body286, %ve
   %reverse = sitofp <4 x i32> %i.ji to <4 x double>
   store <4 x double> %reverse, ptr %i.jh, align 8, !tbaa !14
   %index.next291 = add nuw i64 %index287, 4       ; 2 uses
-  %vec.ind.next292 = add nuw nsw <4 x i64> %vec.ind288, splat (i64 4)
+  %vec.ind.next294 = add <4 x i32> %vec.ind290, splat (i32 4)
   %vec.ind.next293 = add <4 x i32> %vec.ind289, splat (i32 4)
   %vec.ind.next294.a = add <4 x i32> %vec.ind290.a, splat (i32 4)
   %i.jj = icmp eq i64 %index.next291, %n.vec

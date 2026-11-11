@@ -205,16 +205,14 @@ bb.n:                                             ; preds = %bb.m
 
 vector.body:                                      ; preds = %vector.body, %.lr.ph
   %index = phi i64 [ 0, %.lr.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %.lr.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %1 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %2 = add <2 x i32> %1, splat (i32 1)
-  %i.bv = uitofp nneg <2 x i32> %2 to <2 x double>
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %.lr.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %i.bv = uitofp nneg <2 x i32> %vec.ind to <2 x double>
   %i.bw = fmul nnan nsz <2 x double> %i.bv, splat (double f0x400921FB54442D18)
   %i.bx = fdiv nsz <2 x double> %i.bw, %broadcast.splat
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %index
   store <2 x double> %i.bx, ptr %i.by, align 8, !tbaa !46
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %i.bz = icmp eq i64 %index.next, %wide.trip.count
   br i1 %i.bz, label %._crit_edge, label %vector.body, !llvm.loop !72
 

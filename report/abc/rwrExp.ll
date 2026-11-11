@@ -101,38 +101,35 @@ vector.ph:                                        ; preds = %.lr.ph
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.r, %vector.body ]
-  %vec.phi77 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.s, %vector.body ]
-  %vec.phi78 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.l, %vector.body ]
-  %vec.phi79 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.m, %vector.body ]
-  %vec.phi80 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.j, %vector.body ]
-  %vec.phi81 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.k, %vector.body ]
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.r, %vector.body ]
+  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.s, %vector.body ]
+  %vec.phi77 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.l, %vector.body ]
+  %vec.phi78 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.m, %vector.body ]
+  %vec.phi79 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.j, %vector.body ]
+  %vec.phi80 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.k, %vector.body ]
+  %0 = trunc i64 %index to i32
+  %1 = add i32 %0, 8
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %index ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %wide.load = load <4 x i32>, ptr %i.h, align 4, !tbaa !16 ; 3 uses
   %wide.load82 = load <4 x i32>, ptr %i.i, align 4, !tbaa !16 ; 3 uses
-  %i.j = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi80, <4 x i32> %wide.load) ; 2 uses
-  %i.k = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi81, <4 x i32> %wide.load82) ; 2 uses
-  %i.l = add <4 x i32> %wide.load, %vec.phi78     ; 2 uses
-  %i.m = add <4 x i32> %wide.load82, %vec.phi79   ; 2 uses
+  %i.j = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi79, <4 x i32> %wide.load) ; 2 uses
+  %i.k = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi80, <4 x i32> %wide.load82) ; 2 uses
+  %i.l = add <4 x i32> %wide.load, %vec.phi77     ; 2 uses
+  %i.m = add <4 x i32> %wide.load82, %vec.phi78   ; 2 uses
   %i.n = icmp sgt <4 x i32> %wide.load, zeroinitializer
   %i.o = icmp sgt <4 x i32> %wide.load82, zeroinitializer
   %i.p = zext <4 x i1> %i.n to <4 x i32>
   %i.q = zext <4 x i1> %i.o to <4 x i32>
-  %i.r = add <4 x i32> %vec.phi.a, %i.p           ; 2 uses
-  %i.s = add <4 x i32> %vec.phi77, %i.q           ; 2 uses
-  %0 = bitcast <4 x i64> %vec.ind to <8 x i32>
-  %1 = extractelement <8 x i32> %0, i64 6
-  %2 = add i32 %1, 5
+  %i.r = add <4 x i32> %vec.phi, %i.p             ; 2 uses
+  %i.s = add <4 x i32> %vec.phi.a, %i.q           ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
   %i.t = icmp eq i64 %index.next, %n.vec
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !30
 
 middle.block:                                     ; preds = %vector.body
-  store i32 %2, ptr %i.a, align 4, !tbaa !16
+  store i32 %1, ptr %i.a, align 4, !tbaa !16
   %bin.rdx = add <4 x i32> %i.s, %i.r
   %i.u = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %bin.rdx83 = add <4 x i32> %i.m, %i.l
