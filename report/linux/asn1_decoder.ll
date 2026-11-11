@@ -57,7 +57,7 @@ bb.a:
   %.0198431 = phi i8 [ %.0198.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 16 uses
   %.0200430 = phi i8 [ %.0200.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 2 uses
   %.0205429 = phi i64 [ %.0205.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 15 uses
-  %.0208428 = phi i64 [ %.0208.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 7 uses
+  %.0208428 = phi i64 [ %.0208.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 8 uses
   %.0219427 = phi i8 [ %.0219.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 3 uses
   %.0224426 = phi i64 [ %.0224.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 3 uses
   %.0273425 = phi i64 [ %.0273.be, %.backedge ], [ 0, %.lr.ph435.preheader ] ; 3 uses
@@ -149,7 +149,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.au, label %asn1_find_indefinite_length.exit.thread, label %bb.q, !prof !15
 
 bb.o:                                             ; preds = %bb.l
-  %i.av = zext i8 %i.ao to i32                    ; 3 uses
+  %i.av = zext i8 %i.ao to i32                    ; 4 uses
   %i.aw = add nsw i32 %i.av, -128
   %i.ax = icmp samesign ugt i8 %i.ao, -126
   %i.ay = zext nneg i32 %i.aw to i64
@@ -191,7 +191,7 @@ bb.o:                                             ; preds = %bb.l
   %i.bt = shl i64 %i.bo, 16
   %i.bu = shl nuw nsw i64 %i.bs, 8
   %i.bv = or disjoint i64 %i.bt, %i.bu
-  %i.bw = add i64 %.1209421, 4                    ; 3 uses
+  %i.bw = add i64 %.1209421, 4                    ; 2 uses
   %i.bx = getelementptr i8, ptr %2, i64 %.1209421
   %i.by = getelementptr i8, ptr %i.bx, i64 3
   %i.bz = load i8, ptr %i.by, align 1
@@ -217,7 +217,7 @@ bb.o:                                             ; preds = %bb.l
   %.1274420.epil = phi i64 [ %i.ch, %.lr.ph.epil ], [ %.1274420.epil.init, %.lr.ph.epil.preheader ]
   %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
   %i.cc = shl i64 %.1274420.epil, 8
-  %i.cd = add i64 %.1209421.epil, 1               ; 2 uses
+  %i.cd = add i64 %.1209421.epil, 1
   %i.ce = getelementptr i8, ptr %2, i64 %.1209421.epil
   %i.cf = load i8, ptr %i.ce, align 1
   %i.cg = zext i8 %i.cf to i64
@@ -227,10 +227,13 @@ bb.o:                                             ; preds = %bb.l
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.unr-lcssa
-  %.lcssa629.a = phi i64 [ %i.bw, %._crit_edge.unr-lcssa ], [ %i.cd, %.lr.ph.epil ] ; 2 uses
-  %.lcssa = phi i64 [ %i.cb, %._crit_edge.unr-lcssa ], [ %i.ch, %.lr.ph.epil ] ; 2 uses
-  %i.ci = sub i64 %.0183434, %.lcssa629.a
-  %.not381 = icmp ugt i64 %.lcssa, %i.ci
+  %.lcssa629.a = phi i64 [ %i.cb, %._crit_edge.unr-lcssa ], [ %i.ch, %.lr.ph.epil ] ; 2 uses
+  %4 = add i64 %.0208428, 3
+  %5 = add nsw i32 %i.av, -129
+  %6 = zext nneg i32 %5 to i64
+  %7 = add i64 %4, %6                             ; 2 uses
+  %i.ci = sub i64 %.0183434, %7
+  %.not381 = icmp ugt i64 %.lcssa629.a, %i.ci
   br i1 %.not381, label %asn1_find_indefinite_length.exit.thread, label %bb.q
 
 bb.p:                                             ; preds = %bb.k
@@ -240,9 +243,9 @@ bb.p:                                             ; preds = %bb.k
   br i1 %i.cl, label %asn1_find_indefinite_length.exit.thread, label %bb.q, !prof !15
 
 bb.q:                                             ; preds = %bb.p, %bb.n, %._crit_edge
-  %.3276 = phi i64 [ 128, %bb.n ], [ %.lcssa, %._crit_edge ], [ %i.cj, %bb.p ] ; 3 uses
+  %.3276 = phi i64 [ 128, %bb.n ], [ %.lcssa629.a, %._crit_edge ], [ %i.cj, %bb.p ] ; 3 uses
   %.2221 = phi i8 [ %i.as, %bb.n ], [ %i.al, %._crit_edge ], [ %i.al, %bb.p ] ; 3 uses
-  %.3211 = phi i64 [ %i.am, %bb.n ], [ %.lcssa629.a, %._crit_edge ], [ %i.am, %bb.p ] ; 6 uses
+  %.3211 = phi i64 [ %i.am, %bb.n ], [ %7, %._crit_edge ], [ %i.am, %bb.p ] ; 6 uses
   %.2202 = phi i8 [ 2, %bb.n ], [ %i.bb, %._crit_edge ], [ 2, %bb.p ] ; 3 uses
   %i.cm = zext nneg i8 %.2221 to i32              ; 2 uses
   %i.cn = and i32 %i.cm, 32
