@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/initdb?download=true
-inline.NumInlined: 60
-inline.NumDeleted: 37
+inline.NumInlined: 62
+inline.NumDeleted: 38
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumUnrolled: 5
 begin_hunk_0_@setup_locale_encoding:bb.a
@@ -204,18 +204,38 @@ get_encoding_id.exit:                             ; preds = %bb.ax
   br label %bb.az
 
 bb.az:                                            ; preds = %get_encoding_id.exit, %bb.av
-  %i.en = phi i32 [ %i.el, %get_encoding_id.exit ], [ %.pre14, %bb.av ]
+  %i.en = phi i32 [ %i.el, %get_encoding_id.exit ], [ %.pre14, %bb.av ] ; 3 uses
   %i.eo = load ptr, ptr @lc_ctype, align 8
-  %0 = call fastcc zeroext i1 @check_locale_encoding(ptr noundef %i.eo, i32 noundef %i.en)
-  br i1 %0, label %bb.ba, label %bb.bb
+  %0 = call i32 @pg_get_encoding_from_locale(ptr noundef %i.eo, i1 noundef zeroext true) #17 ; 3 uses
+  %1 = icmp eq i32 %0, %i.en
+  %2 = add i32 %0, 1
+  %3 = icmp ult i32 %2, 2
+  %or.cond3.i = or i1 %1, %3
+  %4 = icmp eq i32 %i.en, 0
+  %or.cond5.i = or i1 %4, %or.cond3.i
+  br i1 %or.cond5.i, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
   %i.ep = load ptr, ptr @lc_collate, align 8
-  %i.eq = load i32, ptr @encodingid, align 4
-  %1 = call fastcc zeroext i1 @check_locale_encoding(ptr noundef %i.ep, i32 noundef %i.eq)
-  br i1 %1, label %bb.bc, label %bb.bb
+  %i.eq = load i32, ptr @encodingid, align 4      ; 3 uses
+  %5 = call i32 @pg_get_encoding_from_locale(ptr noundef %i.ep, i1 noundef zeroext true) #17 ; 3 uses
+  %6 = icmp eq i32 %5, %i.eq
+  %7 = add i32 %5, 1
+  %8 = icmp ult i32 %7, 2
+  %or.cond3.i14 = or i1 %6, %8
+  %9 = icmp eq i32 %i.eq, 0
+  %or.cond5.i15 = or i1 %9, %or.cond3.i14
+  br i1 %or.cond5.i15, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az
+  %.sink28 = phi i32 [ %i.en, %bb.az ], [ %i.eq, %bb.ba ]
+  %.sink27 = phi i32 [ %0, %bb.az ], [ %5, %bb.ba ]
+  call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 0, ptr noundef nonnull @.str.168) #17
+  %10 = call ptr @pg_encoding_to_char_private(i32 noundef range(i32 0, -1) %.sink28) #17
+  %11 = call ptr @pg_encoding_to_char_private(i32 noundef %.sink27) #17
+  call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 1, ptr noundef nonnull @.str.169, ptr noundef %10, ptr noundef %11) #17
+  %12 = load ptr, ptr @progname, align 8
+  call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 2, ptr noundef nonnull @.str.170, ptr noundef %12) #17
   call void @exit(i32 noundef 1) #18
   unreachable
 
@@ -288,30 +308,6 @@ declare i32 @pg_get_encoding_from_locale(ptr noundef, i1 noundef zeroext) local_
 declare i32 @pg_valid_server_encoding_id_private(i32 noundef) local_unnamed_addr #4
 
 declare ptr @pg_encoding_to_char_private(i32 noundef) local_unnamed_addr #4
-
-; Function Attrs: nounwind uwtable
-define internal fastcc noundef zeroext i1 @check_locale_encoding(ptr noundef %0, i32 noundef range(i32 0, -1) %1) unnamed_addr #0 {
-  %3 = tail call i32 @pg_get_encoding_from_locale(ptr noundef %0, i1 noundef zeroext true) #17 ; 3 uses
-  %4 = icmp eq i32 %3, %1
-  %5 = add i32 %3, 1
-  %6 = icmp ult i32 %5, 2
-  %or.cond3 = or i1 %4, %6
-  %7 = icmp eq i32 %1, 0
-  %or.cond5 = or i1 %7, %or.cond3                 ; 2 uses
-  br i1 %or.cond5, label %12, label %8
-
-8:                                                ; preds = %2
-  tail call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 0, ptr noundef nonnull @.str.168) #17
-  %9 = tail call ptr @pg_encoding_to_char_private(i32 noundef %1) #17
-  %10 = tail call ptr @pg_encoding_to_char_private(i32 noundef %3) #17
-  tail call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 1, ptr noundef nonnull @.str.169, ptr noundef %9, ptr noundef %10) #17
-  %11 = load ptr, ptr @progname, align 8
-  tail call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 2, ptr noundef nonnull @.str.170, ptr noundef %11) #17
-  br label %12
-
-12:                                               ; preds = %2, %8
-  ret i1 %or.cond5
-}
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @setup_data_file_paths() local_unnamed_addr #0 {

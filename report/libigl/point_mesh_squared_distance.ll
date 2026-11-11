@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/point_mesh_squared_distance?download=true
-inline.NumInlined: 12093
-inline.NumDeleted: 4173
+inline.NumInlined: 12094
+inline.NumDeleted: 4174
 loop-unroll.NumCompletelyUnrolled: 36
 loop-unroll.NumRuntimeUnrolled: 21
 loop-unroll.NumUnrolled: 57
@@ -204,8 +204,6 @@ $_ZNK4CGAL10Lazy_rep_nINS_7Point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEE
 $_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_10Triangle_3IS5_EERKNS_7Point_3IS5_EERKS5_ = comdat any
 
 $_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_ = comdat any
-
-$_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE20is_inside_triangle_3ERKNS_7Point_3IS5_EERKNS_10Triangle_3IS5_EERKNS_8Vector_3IS5_EERS8_RKS5_ = comdat any
 
 $_ZN4CGAL19plane_from_pointsC3INS_11Interval_ntILb0EEEEEvRKT_S5_S5_S5_S5_S5_S5_S5_S5_RS3_S6_S6_S6_ = comdat any
 
@@ -609,16 +607,16 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_10Triangle_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind noalias writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4) local_unnamed_addr #28 comdat align 2 {
 bb.a:
+  %5 = alloca i8, align 1                         ; 7 uses
+  %6 = alloca %"class.CGAL::Point_3.217", align 16 ; 4 uses
   %.sroa.04.i.i = alloca [3 x %"class.CGAL::Interval_nt"], align 16 ; 6 uses
   %.sroa.04.i.i.i.i.i = alloca [3 x %"class.CGAL::Interval_nt"], align 16 ; 6 uses
-  %5 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
-  %6 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
+  %7 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
+  %8 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
   %.sroa.0.i68 = alloca [2 x %"class.CGAL::Point_3.217"], align 16 ; 5 uses
   %.sroa.0.i66 = alloca [2 x %"class.CGAL::Point_3.217"], align 16 ; 5 uses
   %.sroa.0.i62 = alloca [2 x %"class.CGAL::Point_3.217"], align 16 ; 5 uses
   %.sroa.0.i = alloca [2 x %"class.CGAL::Point_3.217"], align 16 ; 5 uses
-  %7 = alloca %"class.CGAL::Uncertain", align 2   ; 4 uses
-  %8 = alloca %"class.CGAL::Uncertain", align 2   ; 4 uses
   %9 = alloca %"class.CGAL::Uncertain", align 2   ; 4 uses
   %10 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
   %11 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
@@ -626,12 +624,14 @@ bb.a:
   %13 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
   %14 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
   %15 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
-  %16 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
-  %17 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
+  %16 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
+  %17 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
   %18 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
-  %19 = alloca %"class.CGAL::PlaneC3", align 16   ; 7 uses
-  %20 = alloca %"class.CGAL::Plane_3", align 16   ; 14 uses
-  %21 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
+  %19 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
+  %20 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
+  %21 = alloca %"class.CGAL::PlaneC3", align 16   ; 7 uses
+  %22 = alloca %"class.CGAL::Plane_3", align 16   ; 14 uses
+  %23 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
   %.sroa.0114 = alloca <2 x double>, align 16     ; 5 uses
   %.sroa.8116 = alloca <2 x double>, align 16     ; 5 uses
   %.sroa.14117 = alloca <2 x double>, align 16    ; 5 uses
@@ -641,50 +641,50 @@ bb.a:
   %.sroa.0 = alloca <2 x double>, align 16        ; 5 uses
   %.sroa.8 = alloca <2 x double>, align 16        ; 5 uses
   %.sroa.14 = alloca <2 x double>, align 16       ; 5 uses
-  %22 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
-  %23 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
-  %24 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
-  %25 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
-  %26 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
+  %24 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
+  %25 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
+  %26 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
   %27 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
-  %28 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
-  %29 = alloca %"class.CGAL::Point_3.217", align 16 ; 5 uses
-  %30 = alloca %"class.CGAL::Point_3.217", align 16 ; 4 uses
-  %31 = alloca %"class.CGAL::Vector_3.219", align 16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %20) #21
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 6 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %19) #21, !noalias !1225
-  call void @llvm.lifetime.start.p0(ptr nonnull %16) #21, !noalias !1226
-  call void @llvm.lifetime.start.p0(ptr nonnull %17) #21, !noalias !1226
+  %28 = alloca %"class.CGAL::Uncertain", align 2  ; 4 uses
+  %29 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
+  %30 = alloca %"class.CGAL::Segment_3", align 16 ; 4 uses
+  %31 = alloca %"class.CGAL::Point_3.217", align 16 ; 8 uses
+  %32 = alloca %"class.CGAL::Point_3.217", align 16 ; 10 uses
+  %33 = alloca %"class.CGAL::Vector_3.219", align 16 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %22) #21
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 9 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 9 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %21) #21, !noalias !1225
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #21, !noalias !1226
+  call void @llvm.lifetime.start.p0(ptr nonnull %19) #21, !noalias !1226
+  call void @llvm.lifetime.start.p0(ptr nonnull %20) #21, !noalias !1226
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 112 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 128 ; 3 uses
-  call void @_ZN4CGAL19plane_from_pointsC3INS_11Interval_ntILb0EEEEEvRKT_S5_S5_S5_S5_S5_S5_S5_S5_RS3_S6_S6_S6_(ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(16) %i.c, ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 16 dereferenceable(48) %i.a, ptr noundef nonnull align 16 dereferenceable(16) %i.e, ptr noundef nonnull align 16 dereferenceable(16) %i.f, ptr noundef nonnull align 16 dereferenceable(48) %i.b, ptr noundef nonnull align 16 dereferenceable(16) %i.g, ptr noundef nonnull align 16 dereferenceable(16) %i.h, ptr noundef nonnull align 16 dereferenceable(16) %19, ptr noundef nonnull align 16 dereferenceable(16) %16, ptr noundef nonnull align 16 dereferenceable(16) %17, ptr noundef nonnull align 16 dereferenceable(16) %18), !noalias !1225
-  %i.i = getelementptr inbounds nuw i8, ptr %19, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.i, ptr noundef nonnull align 16 dereferenceable(16) %16, i64 16, i1 false), !tbaa.struct !228, !noalias !1225
-  %i.j = getelementptr inbounds nuw i8, ptr %19, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.j, ptr noundef nonnull align 16 dereferenceable(16) %17, i64 16, i1 false), !tbaa.struct !228, !noalias !1225
-  %i.k = getelementptr inbounds nuw i8, ptr %19, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.k, ptr noundef nonnull align 16 dereferenceable(16) %18, i64 16, i1 false), !tbaa.struct !228, !noalias !1225
+  call void @_ZN4CGAL19plane_from_pointsC3INS_11Interval_ntILb0EEEEEvRKT_S5_S5_S5_S5_S5_S5_S5_S5_RS3_S6_S6_S6_(ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(16) %i.c, ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 16 dereferenceable(48) %i.a, ptr noundef nonnull align 16 dereferenceable(16) %i.e, ptr noundef nonnull align 16 dereferenceable(16) %i.f, ptr noundef nonnull align 16 dereferenceable(48) %i.b, ptr noundef nonnull align 16 dereferenceable(16) %i.g, ptr noundef nonnull align 16 dereferenceable(16) %i.h, ptr noundef nonnull align 16 dereferenceable(16) %21, ptr noundef nonnull align 16 dereferenceable(16) %18, ptr noundef nonnull align 16 dereferenceable(16) %19, ptr noundef nonnull align 16 dereferenceable(16) %20), !noalias !1225
+  %i.i = getelementptr inbounds nuw i8, ptr %21, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.i, ptr noundef nonnull align 16 dereferenceable(16) %18, i64 16, i1 false), !tbaa.struct !228, !noalias !1225
+  %i.j = getelementptr inbounds nuw i8, ptr %21, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.j, ptr noundef nonnull align 16 dereferenceable(16) %19, i64 16, i1 false), !tbaa.struct !228, !noalias !1225
+  %i.k = getelementptr inbounds nuw i8, ptr %21, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.k, ptr noundef nonnull align 16 dereferenceable(16) %20, i64 16, i1 false), !tbaa.struct !228, !noalias !1225
+  call void @llvm.lifetime.end.p0(ptr nonnull %20) #21, !noalias !1226
+  call void @llvm.lifetime.end.p0(ptr nonnull %19) #21, !noalias !1226
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #21, !noalias !1226
-  call void @llvm.lifetime.end.p0(ptr nonnull %17) #21, !noalias !1226
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #21, !noalias !1226
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %20, ptr noundef nonnull align 16 dereferenceable(64) %19, i64 64, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %19) #21, !noalias !1225
-  call void @llvm.lifetime.start.p0(ptr nonnull %21) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
-  %i.l = load double, ptr %20, align 16, !tbaa !126 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %22, ptr noundef nonnull align 16 dereferenceable(64) %21, i64 64, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %21) #21, !noalias !1225
+  call void @llvm.lifetime.start.p0(ptr nonnull %23) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
+  %i.l = load double, ptr %22, align 16, !tbaa !126 ; 2 uses
   %i.m = fneg double %i.l
   %i.n = fcmp olt double %i.l, 0.000000e+00
   br i1 %i.n, label %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit.i.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.o = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %22, i64 8
   %i.p = load double, ptr %i.o, align 8, !tbaa !126 ; 2 uses
   %i.q = fcmp olt double %i.p, 0.000000e+00
   br i1 %i.q, label %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit.i.i, label %bb.c
@@ -697,21 +697,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit.i.i: ; preds = %bb.c, %bb.b, %bb.a
   %.sroa.5.0.i.i.i.i.i = phi i16 [ %i.t, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ]
-  store i16 %.sroa.5.0.i.i.i.i.i, ptr %13, align 2
-  %i.u = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %13)
-  call void @llvm.lifetime.start.p0(ptr nonnull %14) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
+  store i16 %.sroa.5.0.i.i.i.i.i, ptr %15, align 2
+  %i.u = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %15)
+  call void @llvm.lifetime.start.p0(ptr nonnull %16) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %17) #21
   br i1 %i.u, label %bb.d, label %_ZNK4CGAL20CommonKernelFunctors15Is_degenerate_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Plane_3IS5_EE.exit
 
 bb.d:                                             ; preds = %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit.i.i
-  %i.v = getelementptr inbounds nuw i8, ptr %20, i64 16
+  %i.v = getelementptr inbounds nuw i8, ptr %22, i64 16
   %i.w = load double, ptr %i.v, align 16, !tbaa !126 ; 2 uses
   %i.x = fneg double %i.w
   %i.y = fcmp olt double %i.w, 0.000000e+00
   br i1 %i.y, label %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit2.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.z = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %i.z = getelementptr inbounds nuw i8, ptr %22, i64 24
   %i.aa = load double, ptr %i.z, align 8, !tbaa !126 ; 2 uses
   %i.ab = fcmp olt double %i.aa, 0.000000e+00
   br i1 %i.ab, label %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit2.i.i, label %bb.f
@@ -724,19 +724,19 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit2.i.i: ; preds = %bb.f, %bb.e, %bb.d
   %.sroa.5.0.i.i.i1.i.i = phi i16 [ %i.ae, %bb.f ], [ 0, %bb.d ], [ 0, %bb.e ]
-  store i16 %.sroa.5.0.i.i.i1.i.i, ptr %14, align 2
-  %i.af = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %14)
+  store i16 %.sroa.5.0.i.i.i1.i.i, ptr %16, align 2
+  %i.af = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %16)
   br i1 %i.af, label %bb.g, label %_ZNK4CGAL20CommonKernelFunctors15Is_degenerate_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Plane_3IS5_EE.exit
 
 bb.g:                                             ; preds = %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit2.i.i
-  %i.ag = getelementptr inbounds nuw i8, ptr %20, i64 32
+  %i.ag = getelementptr inbounds nuw i8, ptr %22, i64 32
   %i.ah = load double, ptr %i.ag, align 16, !tbaa !126 ; 2 uses
   %i.ai = fneg double %i.ah
   %i.aj = fcmp olt double %i.ah, 0.000000e+00
   br i1 %i.aj, label %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit4.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ak = getelementptr inbounds nuw i8, ptr %20, i64 40
+  %i.ak = getelementptr inbounds nuw i8, ptr %22, i64 40
   %i.al = load double, ptr %i.ak, align 8, !tbaa !126 ; 2 uses
   %i.am = fcmp olt double %i.al, 0.000000e+00
   br i1 %i.am, label %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit4.i.i, label %bb.i
@@ -749,19 +749,19 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit4.i.i: ; preds = %bb.i, %bb.h, %bb.g
   %.sroa.5.0.i.i.i3.i.i = phi i16 [ %i.ap, %bb.i ], [ 0, %bb.g ], [ 0, %bb.h ]
-  store i16 %.sroa.5.0.i.i.i3.i.i, ptr %15, align 2
-  %i.aq = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %15)
+  store i16 %.sroa.5.0.i.i.i3.i.i, ptr %17, align 2
+  %i.aq = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %17)
   %i.ar = select i1 %i.aq, i16 257, i16 0
   br label %_ZNK4CGAL20CommonKernelFunctors15Is_degenerate_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Plane_3IS5_EE.exit
 
 _ZNK4CGAL20CommonKernelFunctors15Is_degenerate_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Plane_3IS5_EE.exit: ; preds = %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit.i.i, %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit2.i.i, %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit4.i.i
   %.sroa.2.0.insert.ext.i.i = phi i16 [ 0, %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit2.i.i ], [ 0, %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit.i.i ], [ %i.ar, %_ZN4CGAL7is_zeroINS_11Interval_ntILb0EEEEENSt11conditionalIXsr3stdE9is_same_vINS_26Algebraic_structure_traitsIT_E7Is_zeroENS_12Null_functorEEENS_22Real_embeddable_traitsIS5_E7Is_zeroES7_E4type11result_typeERKS5_.exit4.i.i ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %17) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %16) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %14) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
-  store i16 %.sroa.2.0.insert.ext.i.i, ptr %21, align 2
-  %i.as = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %21)
-  call void @llvm.lifetime.end.p0(ptr nonnull %21) #21
+  store i16 %.sroa.2.0.insert.ext.i.i, ptr %23, align 2
+  %i.as = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %23)
+  call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
   br i1 %i.as, label %_ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit, label %bb.o
 
 _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20CommonKernelFunctors15Is_degenerate_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Plane_3IS5_EE.exit
@@ -849,7 +849,7 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   store <2 x double> %i.cp, ptr %.sroa.0, align 16, !alias.scope !1231
   store <2 x double> %i.cw, ptr %.sroa.8, align 16, !alias.scope !1231
   store <2 x double> %i.dd, ptr %.sroa.14, align 16, !tbaa !126, !alias.scope !1231
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #21
   %i.de = extractelement <2 x double> %i.az, i64 1 ; 2 uses
   %i.df = extractelement <2 x double> %i.bg, i64 0
   %i.dg = fneg double %i.df
@@ -874,11 +874,11 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %i.dz = fcmp ugt double %i.di, %i.dy
   %i.ea = select i1 %i.dz, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i = select i1 %i.dh, i16 257, i16 %i.ea
-  store i16 %.sroa.0.0.insert.insert.i.i, ptr %12, align 2
-  %i.eb = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %12) ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
+  store i16 %.sroa.0.0.insert.insert.i.i, ptr %14, align 2
+  %i.eb = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %14) ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #21
   %..i = select i1 %i.eb, ptr %.sroa.8116, ptr %.sroa.0114 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
   %i.ec = select i1 %i.eb, double %i.di, double %i.de
   %i.ed = fneg double %i.dj
   %i.ee = fcmp olt double %i.ec, %i.ed
@@ -887,9 +887,9 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %i.eh = fcmp ugt double %i.dk, %i.eg
   %i.ei = select i1 %i.eh, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i44 = select i1 %i.ee, i16 257, i16 %i.ei
-  store i16 %.sroa.0.0.insert.insert.i.i44, ptr %11, align 2
-  %i.ej = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %11) ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
+  store i16 %.sroa.0.0.insert.insert.i.i44, ptr %13, align 2
+  %i.ej = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %13) ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   %.sroa.14117.0..sroa.14117.val = load double, ptr %.sroa.14117, align 16
   %..i.val = load double, ptr %..i, align 16
   %.sroa.077.0.copyload = select i1 %i.ej, double %.sroa.14117.0..sroa.14117.val, double %..i.val
@@ -897,18 +897,18 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %..i45.sroa.sel.v.sroa.sel.v = select i1 %i.ej, ptr %.sroa.14117, ptr %..i.sroa.sel.v.sroa.sel.v
   %..i45.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %..i45.sroa.sel.v.sroa.sel.v, i64 8
   %.sroa.579.0.copyload = load double, ptr %..i45.sroa.sel.v.sroa.sel, align 8, !tbaa !126 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #21
   %i.ek = fneg double %i.dm
   %i.el = fcmp olt double %i.dl, %i.ek
   %i.em = fneg double %i.dn
   %i.en = fcmp ugt double %i.do, %i.em
   %i.eo = select i1 %i.en, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i47 = select i1 %i.el, i16 257, i16 %i.eo
-  store i16 %.sroa.0.0.insert.insert.i.i47, ptr %10, align 2
-  %i.ep = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %10) ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
+  store i16 %.sroa.0.0.insert.insert.i.i47, ptr %12, align 2
+  %i.ep = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %12) ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
   %..i48 = select i1 %i.ep, ptr %.sroa.8109, ptr %.sroa.0107 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
   %i.eq = select i1 %i.ep, double %i.do, double %i.dl
   %i.er = fneg double %i.dp
   %i.es = fcmp olt double %i.eq, %i.er
@@ -917,9 +917,9 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %i.ev = fcmp ugt double %i.dq, %i.eu
   %i.ew = select i1 %i.ev, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i50 = select i1 %i.es, i16 257, i16 %i.ew
-  store i16 %.sroa.0.0.insert.insert.i.i50, ptr %9, align 2
-  %i.ex = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %9) ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
+  store i16 %.sroa.0.0.insert.insert.i.i50, ptr %11, align 2
+  %i.ex = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %11) ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   %.sroa.14110.0..sroa.14110.val = load double, ptr %.sroa.14110, align 16
   %..i48.val = load double, ptr %..i48, align 16
   %.sroa.073.0.copyload = select i1 %i.ex, double %.sroa.14110.0..sroa.14110.val, double %..i48.val
@@ -927,18 +927,18 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %..i51.sroa.sel.v.sroa.sel.v = select i1 %i.ex, ptr %.sroa.14110, ptr %..i48.sroa.sel.v.sroa.sel.v
   %..i51.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %..i51.sroa.sel.v.sroa.sel.v, i64 8
   %.sroa.575.0.copyload = load double, ptr %..i51.sroa.sel.v.sroa.sel, align 8, !tbaa !126 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
   %i.ey = fneg double %i.ds
   %i.ez = fcmp olt double %i.dr, %i.ey
   %i.fa = fneg double %i.dt
   %i.fb = fcmp ugt double %i.du, %i.fa
   %i.fc = select i1 %i.fb, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i53 = select i1 %i.ez, i16 257, i16 %i.fc
-  store i16 %.sroa.0.0.insert.insert.i.i53, ptr %8, align 2
-  %i.fd = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %8) ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
+  store i16 %.sroa.0.0.insert.insert.i.i53, ptr %10, align 2
+  %i.fd = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %10) ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   %..i54 = select i1 %i.fd, ptr %.sroa.8, ptr %.sroa.0 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
   %i.fe = select i1 %i.fd, double %i.du, double %i.dr
   %i.ff = fneg double %i.dv
   %i.fg = fcmp olt double %i.fe, %i.ff
@@ -947,9 +947,9 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %i.fj = fcmp ugt double %i.dw, %i.fi
   %i.fk = select i1 %i.fj, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i56 = select i1 %i.fg, i16 257, i16 %i.fk
-  store i16 %.sroa.0.0.insert.insert.i.i56, ptr %7, align 2
-  %i.fl = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %7) ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
+  store i16 %.sroa.0.0.insert.insert.i.i56, ptr %9, align 2
+  %i.fl = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %9) ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
   %.sroa.14.0..sroa.14.val = load double, ptr %.sroa.14, align 16
   %..i54.val = load double, ptr %..i54, align 16
   %.sroa.070.0.copyload = select i1 %i.fl, double %.sroa.14.0..sroa.14.val, double %..i54.val
@@ -957,87 +957,87 @@ _ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit: ; preds = %_ZNK4CGAL20Commo
   %..i57.sroa.sel.v.sroa.sel.v = select i1 %i.fl, ptr %.sroa.14, ptr %..i54.sroa.sel.v.sroa.sel.v
   %..i57.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %..i57.sroa.sel.v.sroa.sel.v, i64 8
   %.sroa.5.0.copyload = load double, ptr %..i57.sroa.sel.v.sroa.sel, align 8, !tbaa !126 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %22) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %24) #21
   %i.fm = fneg double %.sroa.077.0.copyload       ; 2 uses
   %i.fn = fcmp olt double %.sroa.575.0.copyload, %i.fm
   %i.fo = fneg double %.sroa.073.0.copyload       ; 2 uses
   %i.fp = fcmp ugt double %.sroa.579.0.copyload, %i.fo
   %i.fq = select i1 %i.fp, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i59 = select i1 %i.fn, i16 257, i16 %i.fq
-  store i16 %.sroa.0.0.insert.insert.i.i59, ptr %22, align 2
-  %i.fr = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %22)
-  call void @llvm.lifetime.end.p0(ptr nonnull %22) #21
+  store i16 %.sroa.0.0.insert.insert.i.i59, ptr %24, align 2
+  %i.fr = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %24)
+  call void @llvm.lifetime.end.p0(ptr nonnull %24) #21
   %i.fs = fneg double %.sroa.070.0.copyload       ; 2 uses
   br i1 %i.fr, label %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit61, label %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65
 
 _ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit61:   ; preds = %_ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %23) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %25) #21
   %i.ft = fcmp olt double %.sroa.5.0.copyload, %i.fm
   %i.fu = fcmp ugt double %.sroa.579.0.copyload, %i.fs
   %i.fv = select i1 %i.fu, i16 256, i16 0
   %.sroa.0.0.insert.insert.i.i60 = select i1 %i.ft, i16 257, i16 %i.fv
-  store i16 %.sroa.0.0.insert.insert.i.i60, ptr %23, align 2
-  %i.fw = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %23)
-  call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
+  store i16 %.sroa.0.0.insert.insert.i.i60, ptr %25, align 2
+  %i.fw = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %25)
+  call void @llvm.lifetime.end.p0(ptr nonnull %25) #21
   br i1 %i.fw, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit61
-  call void @llvm.lifetime.start.p0(ptr nonnull %24) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %26) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.i, ptr noundef nonnull align 16 dereferenceable(48) %2, i64 48, i1 false), !noalias !1233
   %.sroa.0.48..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.48..sroa_idx.i, ptr noundef nonnull align 16 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !1233
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %24, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i, i64 96, i1 false), !tbaa.struct !1234
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %26, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i, i64 96, i1 false), !tbaa.struct !1234
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
-  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %24, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %24) #21
+  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %26, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %26) #21
   br label %bb.n
 
 bb.k:                                             ; preds = %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit61
-  call void @llvm.lifetime.start.p0(ptr nonnull %25) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %27) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i62)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.i62, ptr noundef nonnull align 16 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !1235
   %.sroa.0.48..sroa_idx.i63 = getelementptr inbounds nuw i8, ptr %.sroa.0.i62, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.48..sroa_idx.i63, ptr noundef nonnull align 16 dereferenceable(48) %i.b, i64 48, i1 false), !noalias !1235
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %25, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i62, i64 96, i1 false), !tbaa.struct !1234
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %27, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i62, i64 96, i1 false), !tbaa.struct !1234
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i62)
-  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %25, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %25) #21
-  br label %bb.n
-
-_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65:   ; preds = %_ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %26) #21
-  %i.fx = fcmp olt double %.sroa.5.0.copyload, %i.fo
-  %i.fy = fcmp ugt double %.sroa.575.0.copyload, %i.fs
-  %i.fz = select i1 %i.fy, i16 256, i16 0
-  %.sroa.0.0.insert.insert.i.i64 = select i1 %i.fx, i16 257, i16 %i.fz
-  store i16 %.sroa.0.0.insert.insert.i.i64, ptr %26, align 2
-  %i.ga = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %26)
-  call void @llvm.lifetime.end.p0(ptr nonnull %26) #21
-  br i1 %i.ga, label %bb.l, label %bb.m
-
-bb.l:                                             ; preds = %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65
-  call void @llvm.lifetime.start.p0(ptr nonnull %27) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i66)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.i66, ptr noundef nonnull align 16 dereferenceable(48) %2, i64 48, i1 false), !noalias !1236
-  %.sroa.0.48..sroa_idx.i67 = getelementptr inbounds nuw i8, ptr %.sroa.0.i66, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.48..sroa_idx.i67, ptr noundef nonnull align 16 dereferenceable(48) %i.b, i64 48, i1 false), !noalias !1236
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %27, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i66, i64 96, i1 false), !tbaa.struct !1234
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i66)
   call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %27, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #21
   br label %bb.n
 
-bb.m:                                             ; preds = %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65
+_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65:   ; preds = %_ZSt3maxIN4CGAL11Interval_ntILb0EEEERKT_S5_S5_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #21
+  %i.fx = fcmp olt double %.sroa.5.0.copyload, %i.fo
+  %i.fy = fcmp ugt double %.sroa.575.0.copyload, %i.fs
+  %i.fz = select i1 %i.fy, i16 256, i16 0
+  %.sroa.0.0.insert.insert.i.i64 = select i1 %i.fx, i16 257, i16 %i.fz
+  store i16 %.sroa.0.0.insert.insert.i.i64, ptr %28, align 2
+  %i.ga = call noundef zeroext i1 @_ZNK4CGAL9UncertainIbE12make_certainEv(ptr noundef nonnull align 1 dereferenceable(2) %28)
+  call void @llvm.lifetime.end.p0(ptr nonnull %28) #21
+  br i1 %i.ga, label %bb.l, label %bb.m
+
+bb.l:                                             ; preds = %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65
+  call void @llvm.lifetime.start.p0(ptr nonnull %29) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i66)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.i66, ptr noundef nonnull align 16 dereferenceable(48) %2, i64 48, i1 false), !noalias !1236
+  %.sroa.0.48..sroa_idx.i67 = getelementptr inbounds nuw i8, ptr %.sroa.0.i66, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.48..sroa_idx.i67, ptr noundef nonnull align 16 dereferenceable(48) %i.b, i64 48, i1 false), !noalias !1236
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %29, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i66, i64 96, i1 false), !tbaa.struct !1234
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i66)
+  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %29, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %29) #21
+  br label %bb.n
+
+bb.m:                                             ; preds = %_ZN4CGALgtERKNS_11Interval_ntILb0EEES3_.exit65
+  call void @llvm.lifetime.start.p0(ptr nonnull %30) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i68)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.i68, ptr noundef nonnull align 16 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !1237
   %.sroa.0.48..sroa_idx.i69 = getelementptr inbounds nuw i8, ptr %.sroa.0.i68, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0.48..sroa_idx.i69, ptr noundef nonnull align 16 dereferenceable(48) %i.b, i64 48, i1 false), !noalias !1237
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %28, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i68, i64 96, i1 false), !tbaa.struct !1234
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %30, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.0.i68, i64 96, i1 false), !tbaa.struct !1234
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i68)
-  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %28, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %28) #21
+  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_9Segment_3IS5_EERKNS_7Point_3IS5_EERKS5_(ptr dead_on_unwind writable sret(%"class.CGAL::Point_3.217") align 16 %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(96) %30, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %30) #21
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j
@@ -1053,44 +1053,70 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
   br label %bb.p
 
 bb.o:                                             ; preds = %_ZNK4CGAL20CommonKernelFunctors15Is_degenerate_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Plane_3IS5_EE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %29) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21, !noalias !1238
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #21, !noalias !1238
-  %i.gb = getelementptr inbounds nuw i8, ptr %20, i64 16 ; 2 uses
-  %i.gc = getelementptr inbounds nuw i8, ptr %20, i64 32 ; 2 uses
-  %i.gd = getelementptr inbounds nuw i8, ptr %20, i64 48
+  call void @llvm.lifetime.start.p0(ptr nonnull %31) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #21, !noalias !1238
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #21, !noalias !1238
+  %i.gb = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 2 uses
+  %i.gc = getelementptr inbounds nuw i8, ptr %22, i64 32 ; 2 uses
+  %i.gd = getelementptr inbounds nuw i8, ptr %22, i64 48
   %i.ge = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.gf = getelementptr inbounds nuw i8, ptr %3, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.04.i.i.i.i.i), !noalias !1238
-  call void @_ZN4CGAL18projection_planeC3INS_11Interval_ntILb0EEEEEvRKT_S5_S5_S5_S5_S5_S5_RS3_S6_S6_(ptr noundef nonnull align 16 dereferenceable(64) %20, ptr noundef nonnull align 16 dereferenceable(16) %i.gb, ptr noundef nonnull align 16 dereferenceable(16) %i.gc, ptr noundef nonnull align 16 dereferenceable(16) %i.gd, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 16 dereferenceable(16) %i.ge, ptr noundef nonnull align 16 dereferenceable(16) %i.gf, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %6), !noalias !1238
+  call void @_ZN4CGAL18projection_planeC3INS_11Interval_ntILb0EEEEEvRKT_S5_S5_S5_S5_S5_S5_RS3_S6_S6_(ptr noundef nonnull align 16 dereferenceable(64) %22, ptr noundef nonnull align 16 dereferenceable(16) %i.gb, ptr noundef nonnull align 16 dereferenceable(16) %i.gc, ptr noundef nonnull align 16 dereferenceable(16) %i.gd, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 16 dereferenceable(16) %i.ge, ptr noundef nonnull align 16 dereferenceable(16) %i.gf, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %8), !noalias !1238
   %.sroa.04.16..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.i.i.i.i.i, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.16..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !228, !noalias !1238
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.16..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !228, !noalias !1238
   %.sroa.04.32..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.i.i.i.i.i, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.32..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !228, !noalias !1238
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %29, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i.i.i.i, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.32..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !228, !noalias !1238
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i.i.i.i, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.04.i.i.i.i.i), !noalias !1238
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #21, !noalias !1238
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #21, !noalias !1238
-  call void @llvm.lifetime.start.p0(ptr nonnull %30) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %31) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #21, !noalias !1238
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #21, !noalias !1238
+  call void @llvm.lifetime.start.p0(ptr nonnull %32) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %33) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.04.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.i.i, ptr noundef nonnull align 16 dereferenceable(64) %20, i64 16, i1 false), !tbaa.struct !228, !noalias !1239
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.i.i, ptr noundef nonnull align 16 dereferenceable(64) %22, i64 16, i1 false), !tbaa.struct !228, !noalias !1239
   %.sroa.04.16..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.i.i, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.16..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(16) %i.gb, i64 16, i1 false), !tbaa.struct !228, !noalias !1239
   %.sroa.04.32..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.i.i, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.32..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(16) %i.gc, i64 16, i1 false), !tbaa.struct !228, !noalias !1239
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i, i64 48, i1 false), !tbaa.struct !405
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %33, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i, i64 48, i1 false), !tbaa.struct !405
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.04.i.i)
-  %32 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE20is_inside_triangle_3ERKNS_7Point_3IS5_EERKNS_10Triangle_3IS5_EERKNS_8Vector_3IS5_EERS8_RKS5_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(48) %29, ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(48) %30, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
+  store i8 0, ptr %5, align 1, !tbaa !229
+  %34 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE24is_inside_triangle_3_auxERKNS_8Vector_3IS5_EERKNS_7Point_3IS5_EESE_SE_RSC_RbRKS5_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(48) %33, ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(48) %i.a, ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(48) %32, ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  br i1 %34, label %43, label %35
+
+35:                                               ; preds = %bb.o
+  %36 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE24is_inside_triangle_3_auxERKNS_8Vector_3IS5_EERKNS_7Point_3IS5_EESE_SE_RSC_RbRKS5_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(48) %33, ptr noundef nonnull align 16 dereferenceable(48) %i.a, ptr noundef nonnull align 16 dereferenceable(48) %i.b, ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(48) %32, ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  br i1 %36, label %43, label %37
+
+37:                                               ; preds = %35
+  %38 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE24is_inside_triangle_3_auxERKNS_8Vector_3IS5_EERKNS_7Point_3IS5_EESE_SE_RSC_RbRKS5_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(48) %33, ptr noundef nonnull align 16 dereferenceable(48) %i.b, ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(48) %32, ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  br i1 %38, label %43, label %39
+
+39:                                               ; preds = %37
+  %40 = load i8, ptr %5, align 1, !tbaa !229, !range !74, !noundef !75
+  %41 = trunc nuw i8 %40 to i1
+  br i1 %41, label %42, label %43
+
+42:                                               ; preds = %39
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
+  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE15nearest_point_3ERKNS_7Point_3IS5_EESA_SA_SA_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.CGAL::Point_3.217") align 16 %6, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(48) %31, ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(48) %i.a, ptr noundef nonnull align 16 dereferenceable(48) %i.b, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %32, ptr noundef nonnull align 16 dereferenceable(48) %6, i64 48, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
+  br label %43
+
+43:                                               ; preds = %35, %37, %42, %bb.o, %39
+  %.sink = phi ptr [ %31, %39 ], [ %32, %bb.o ], [ %32, %42 ], [ %32, %37 ], [ %32, %35 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %33) #21
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %0, ptr noundef nonnull align 16 dereferenceable(48) %.sink, i64 48, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %32) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #21
-  %. = select i1 %32, ptr %29, ptr %30
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %0, ptr noundef nonnull align 16 dereferenceable(48) %., i64 48, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %30) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %29) #21
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.n
-  call void @llvm.lifetime.end.p0(ptr nonnull %20) #21
+bb.p:                                             ; preds = %43, %bb.n
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #21
   ret void
 }
 
@@ -1409,43 +1435,6 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   ret void
-}
-
-; Function Attrs: mustprogress uwtable
-define linkonce_odr dso_local noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE20is_inside_triangle_3ERKNS_7Point_3IS5_EERKNS_10Triangle_3IS5_EERKNS_8Vector_3IS5_EERS8_RKS5_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(48) %1, ptr noundef nonnull align 16 dereferenceable(144) %2, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 16 dereferenceable(48) %4, ptr noundef nonnull align 1 dereferenceable(1) %5) local_unnamed_addr #3 comdat align 2 {
-  %7 = alloca i8, align 1                         ; 7 uses
-  %8 = alloca %"class.CGAL::Point_3.217", align 16 ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  store i8 0, ptr %7, align 1, !tbaa !229
-  %11 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE24is_inside_triangle_3_auxERKNS_8Vector_3IS5_EERKNS_7Point_3IS5_EESE_SE_RSC_RbRKS5_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 16 dereferenceable(48) %2, ptr noundef nonnull align 16 dereferenceable(48) %9, ptr noundef nonnull align 16 dereferenceable(48) %1, ptr noundef nonnull align 16 dereferenceable(48) %4, ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %5)
-  br i1 %11, label %20, label %12
-
-12:                                               ; preds = %6
-  %13 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE24is_inside_triangle_3_auxERKNS_8Vector_3IS5_EERKNS_7Point_3IS5_EESE_SE_RSC_RbRKS5_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 16 dereferenceable(48) %9, ptr noundef nonnull align 16 dereferenceable(48) %10, ptr noundef nonnull align 16 dereferenceable(48) %1, ptr noundef nonnull align 16 dereferenceable(48) %4, ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %5)
-  br i1 %13, label %20, label %14
-
-14:                                               ; preds = %12
-  %15 = call noundef zeroext i1 @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE24is_inside_triangle_3_auxERKNS_8Vector_3IS5_EERKNS_7Point_3IS5_EESE_SE_RSC_RbRKS5_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(48) %3, ptr noundef nonnull align 16 dereferenceable(48) %10, ptr noundef nonnull align 16 dereferenceable(48) %2, ptr noundef nonnull align 16 dereferenceable(48) %1, ptr noundef nonnull align 16 dereferenceable(48) %4, ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %5)
-  br i1 %15, label %20, label %16
-
-16:                                               ; preds = %14
-  %17 = load i8, ptr %7, align 1, !tbaa !229, !range !74, !noundef !75
-  %18 = trunc nuw i8 %17 to i1
-  br i1 %18, label %19, label %20
-
-19:                                               ; preds = %16
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
-  call void @_ZN4CGAL20CommonKernelFunctors27Construct_projected_point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEE15nearest_point_3ERKNS_7Point_3IS5_EESA_SA_SA_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.CGAL::Point_3.217") align 16 %8, ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(48) %1, ptr noundef nonnull align 16 dereferenceable(48) %2, ptr noundef nonnull align 16 dereferenceable(48) %9, ptr noundef nonnull align 16 dereferenceable(48) %10, ptr noundef nonnull align 1 dereferenceable(1) %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %4, ptr noundef nonnull align 16 dereferenceable(48) %8, i64 48, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
-  br label %20
-
-20:                                               ; preds = %16, %6, %12, %14, %19
-  %.0 = phi i1 [ false, %6 ], [ false, %19 ], [ false, %14 ], [ false, %12 ], [ true, %16 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
-  ret i1 %.0
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/win_dump-x86?download=true
-inline.NumInlined: 27
-inline.NumDeleted: 19
+inline.NumInlined: 29
+inline.NumDeleted: 20
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0
@@ -59,50 +59,50 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef zeroext i1 @win_dump_available(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca ptr, align 8                        ; 5 uses
-  %2 = alloca i8, align 1                         ; 3 uses
+  %1 = alloca [5 x i8], align 1                   ; 6 uses
+  %2 = alloca ptr, align 8                        ; 7 uses
   %i.a = tail call ptr @object_resolve_path_type(ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, ptr noundef null) #7 ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %vmcoreinfo_find.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.7, i32 noundef 21, ptr noundef nonnull @__func__.VMCOREINFO) #7
-  br label %vmcoreinfo_find.exit
+  %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.7, i32 noundef 21, ptr noundef nonnull @__func__.VMCOREINFO) #7 ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
+  store ptr null, ptr %2, align 8
+  %3 = tail call zeroext i1 @migration_guest_ram_loading() #7
+  br i1 %3, label %bb.c, label %bb.d
 
-vmcoreinfo_find.exit:                             ; preds = %bb.a, %bb.b
-  %3 = phi ptr [ %i.b, %bb.b ], [ null, %bb.a ]   ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
-  store ptr null, ptr %1, align 8
+vmcoreinfo_find.exit:                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   %i.c = tail call zeroext i1 @migration_guest_ram_loading() #7
-  br i1 %i.c, label %bb.c, label %bb.d
+  br i1 %i.c, label %bb.c, label %bb.g
 
-bb.c:                                             ; preds = %vmcoreinfo_find.exit
+bb.c:                                             ; preds = %vmcoreinfo_find.exit, %bb.b
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef 416, ptr noundef nonnull @__func__.win_dump_available, ptr noundef nonnull @.str.1) #7
   br label %bb.l
 
-bb.d:                                             ; preds = %vmcoreinfo_find.exit
-  %.not = icmp eq ptr %3, null
+bb.d:                                             ; preds = %bb.b
+  %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 152
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %i.e = load i8, ptr %i.d, align 8, !range !7, !noundef !8
   %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 162
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 162
   %i.h = load i16, ptr %i.g, align 2
   %.not17 = icmp eq i16 %i.h, 1
   br i1 %.not17, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
+bb.g:                                             ; preds = %vmcoreinfo_find.exit, %bb.f, %bb.e, %bb.d
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef 423, ptr noundef nonnull @__func__.win_dump_available, ptr noundef nonnull @.str.2) #7
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.f
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 164
+  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 164
   %i.j = load i32, ptr %i.i, align 4              ; 2 uses
   switch i32 %i.j, label %bb.i [
     i32 8216, label %bb.j
@@ -115,24 +115,57 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h, %bb.h
   %i.k = zext nneg i32 %i.j to i64                ; 2 uses
-  %i.l = tail call noalias ptr @g_malloc(i64 noundef %i.k) #8 ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 168
+  %i.l = tail call noalias ptr @g_malloc(i64 noundef %i.k) #8 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 168
   %i.n = load i64, ptr %i.m, align 8
   tail call void @physical_memory_read(i64 noundef %i.n, ptr noundef %i.l, i64 noundef %i.k) #7
-  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  %4 = call fastcc zeroext i1 @check_header(ptr noundef nonnull %i.o, ptr noundef %2, ptr noundef %1)
-  br i1 %4, label %bb.l, label %bb.k
+  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 24 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %1, ptr noundef nonnull align 1 dereferenceable(5) @__const.check_header.Signature, i64 5, i1 false)
+  %4 = load i32, ptr %i.o, align 1
+  %5 = load i32, ptr %1, align 1
+  %6 = icmp ne i32 %4, %5
+  %7 = zext i1 %6 to i32
+  %.not.i18 = icmp eq i32 %7, 0
+  br i1 %.not.i18, label %9, label %8
 
-bb.k:                                             ; preds = %bb.j
-  %i.p = load ptr, ptr %1, align 8
+8:                                                ; preds = %bb.j
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %2, ptr noundef nonnull @.str, i32 noundef 184, ptr noundef nonnull @__func__.check_header, ptr noundef nonnull @.str.8, ptr noundef nonnull %1, ptr noundef nonnull %i.o) #7
+  br label %bb.k
+
+9:                                                ; preds = %bb.j
+  %10 = getelementptr inbounds nuw i8, ptr %i.l, i64 28 ; 3 uses
+  %11 = load i32, ptr %10, align 1
+  %12 = icmp ne i32 %11, 1347245380
+  %13 = zext i1 %12 to i32
+  %.not11.i = icmp eq i32 %13, 0
+  br i1 %.not11.i, label %check_header.exit.thread, label %14
+
+14:                                               ; preds = %9
+  %15 = load i32, ptr %10, align 1
+  %16 = icmp ne i32 %15, 875976004
+  %17 = zext i1 %16 to i32
+  %.not13.i = icmp eq i32 %17, 0
+  br i1 %.not13.i, label %check_header.exit.thread, label %18
+
+18:                                               ; preds = %14
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %2, ptr noundef nonnull @.str, i32 noundef 194, ptr noundef nonnull @__func__.check_header, ptr noundef nonnull @.str.11, ptr noundef nonnull %10) #7
+  br label %bb.k
+
+check_header.exit.thread:                         ; preds = %14, %9
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
+  br label %bb.l
+
+bb.k:                                             ; preds = %18, %8
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
+  %i.p = load ptr, ptr %2, align 8
   call void @error_propagate(ptr noundef %0, ptr noundef %i.p) #7
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i, %bb.g, %bb.c
-  %.019 = phi ptr [ null, %bb.c ], [ null, %bb.g ], [ null, %bb.i ], [ %i.l, %bb.j ], [ %i.l, %bb.k ]
-  %.0 = phi i1 [ false, %bb.c ], [ false, %bb.g ], [ false, %bb.i ], [ true, %bb.j ], [ false, %bb.k ]
+bb.l:                                             ; preds = %check_header.exit.thread, %bb.k, %bb.i, %bb.g, %bb.c
+  %.019 = phi ptr [ null, %bb.c ], [ null, %bb.g ], [ null, %bb.i ], [ %i.l, %check_header.exit.thread ], [ %i.l, %bb.k ]
+  %.0 = phi i1 [ false, %bb.c ], [ false, %bb.g ], [ false, %bb.i ], [ true, %check_header.exit.thread ], [ false, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
   call void @g_free(ptr noundef %.019) #7
   ret i1 %.0
 }
@@ -148,52 +181,6 @@ declare void @error_setg_internal(ptr noundef, ptr noundef, i32 noundef, ptr nou
 declare noalias ptr @g_malloc(i64 noundef) local_unnamed_addr #3
 
 declare void @physical_memory_read(i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #2
-
-; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc noundef zeroext i1 @check_header(ptr noundef %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr noundef nonnull %2) unnamed_addr #0 {
-  %4 = alloca [5 x i8], align 1                   ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %4, ptr noundef nonnull align 1 dereferenceable(5) @__const.check_header.Signature, i64 5, i1 false)
-  %5 = load i32, ptr %0, align 1
-  %6 = load i32, ptr %4, align 1
-  %7 = icmp ne i32 %5, %6
-  %8 = zext i1 %7 to i32
-  %.not = icmp eq i32 %8, 0
-  br i1 %.not, label %10, label %9
-
-9:                                                ; preds = %3
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %2, ptr noundef nonnull @.str, i32 noundef 184, ptr noundef nonnull @__func__.check_header, ptr noundef nonnull @.str.8, ptr noundef nonnull %4, ptr noundef nonnull %0) #7
-  br label %21
-
-10:                                               ; preds = %3
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %12 = load i32, ptr %11, align 1
-  %13 = icmp ne i32 %12, 1347245380
-  %14 = zext i1 %13 to i32
-  %.not11 = icmp eq i32 %14, 0
-  br i1 %.not11, label %20, label %15
-
-15:                                               ; preds = %10
-  %16 = load i32, ptr %11, align 1
-  %17 = icmp ne i32 %16, 875976004
-  %18 = zext i1 %17 to i32
-  %.not13 = icmp eq i32 %18, 0
-  br i1 %.not13, label %20, label %19
-
-19:                                               ; preds = %15
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %2, ptr noundef nonnull @.str, i32 noundef 194, ptr noundef nonnull @__func__.check_header, ptr noundef nonnull @.str.11, ptr noundef nonnull %11) #7
-  br label %21
-
-20:                                               ; preds = %15, %10
-  %storemerge = phi i8 [ 0, %10 ], [ 1, %15 ]
-  store i8 %storemerge, ptr %1, align 1
-  br label %21
-
-21:                                               ; preds = %20, %19, %9
-  %.0 = phi i1 [ false, %9 ], [ false, %19 ], [ true, %20 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  ret i1 %.0
-}
 
 declare void @error_propagate(ptr noundef, ptr noundef) local_unnamed_addr #2
 
@@ -215,23 +202,21 @@ bb.a:
   %2 = alloca %union.WinContext, align 16         ; 45 uses
   %i.j = alloca i32, align 4                      ; 5 uses
   %i.k = alloca i64, align 8                      ; 5 uses
-  %i.l = alloca ptr, align 8                      ; 13 uses
-  %i.m = alloca [5 x i8], align 1                 ; 11 uses
-  %i.n = alloca [4 x i8], align 4                 ; 13 uses
-  %3 = alloca ptr, align 8                        ; 19 uses
-  %4 = alloca i8, align 1                         ; 5 uses
+  %i.l = alloca ptr, align 8                      ; 11 uses
+  %i.m = alloca [5 x i8], align 1                 ; 10 uses
+  %i.n = alloca [4 x i8], align 4                 ; 12 uses
+  %3 = alloca [5 x i8], align 1                   ; 7 uses
+  %4 = alloca ptr, align 8                        ; 19 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.p = load ptr, ptr %i.o, align 8              ; 27 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 8 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 9 uses
   %i.r = load atomic ptr, ptr @cpus_queue monotonic, align 8
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !13
   %i.s = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.r, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #7
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 17072 ; 4 uses
   %i.u = load i64, ptr %i.t, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  store ptr null, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  store i8 1, ptr %4, align 1
+  store ptr null, ptr %4, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.w = load i64, ptr %i.v, align 8
   switch i64 %i.w, label %bb.b [
@@ -244,23 +229,48 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.bv
 
 bb.c:                                             ; preds = %bb.a, %bb.a
-  %5 = call fastcc zeroext i1 @check_header(ptr noundef nonnull %i.q, ptr noundef %4, ptr noundef %3)
-  br i1 %5, label %bb.e, label %bb.d
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %3, ptr noundef nonnull align 1 dereferenceable(5) @__const.check_header.Signature, i64 5, i1 false)
+  %5 = load i32, ptr %i.q, align 1
+  %6 = load i32, ptr %3, align 1
+  %7 = icmp ne i32 %5, %6
+  %8 = zext i1 %7 to i32
+  %.not.i = icmp eq i32 %8, 0
+  br i1 %.not.i, label %bb.d, label %9
+
+9:                                                ; preds = %bb.c
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 184, ptr noundef nonnull @__func__.check_header, ptr noundef nonnull @.str.8, ptr noundef nonnull %3, ptr noundef nonnull %i.q) #7
+  br label %18
 
 bb.d:                                             ; preds = %bb.c
-  %6 = load ptr, ptr %3, align 8
-  call void @error_propagate(ptr noundef %1, ptr noundef %6) #7
+  %10 = getelementptr inbounds nuw i8, ptr %i.p, i64 28 ; 3 uses
+  %11 = load i32, ptr %10, align 1
+  %12 = icmp ne i32 %11, 1347245380
+  %13 = zext i1 %12 to i32
+  %.not11.i.not = icmp eq i32 %13, 0              ; 3 uses
+  br i1 %.not11.i.not, label %bb.g, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %14 = load i32, ptr %10, align 1
+  %15 = icmp ne i32 %14, 875976004
+  %16 = zext i1 %15 to i32
+  %.not13.i = icmp eq i32 %16, 0
+  br i1 %.not13.i, label %bb.f, label %17
+
+17:                                               ; preds = %bb.e
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 194, ptr noundef nonnull @__func__.check_header, ptr noundef nonnull @.str.11, ptr noundef nonnull %10) #7
+  br label %18
+
+18:                                               ; preds = %17, %9
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  %19 = load ptr, ptr %4, align 8
+  call void @error_propagate(ptr noundef %1, ptr noundef %19) #7
   br label %bb.bv
 
-bb.e:                                             ; preds = %bb.c
-  %7 = load i8, ptr %4, align 1, !range !7, !noundef !8
-  %8 = trunc nuw i8 %7 to i1                      ; 23 uses
-  %9 = select i1 %8, i64 8192, i64 4096           ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.p, i64 40 ; 2 uses
-  br i1 %8, label %bb.f, label %bb.g
-
 bb.f:                                             ; preds = %bb.e
-  %i.x = load i64, ptr %10, align 1
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  %20 = getelementptr inbounds nuw i8, ptr %i.p, i64 40
+  %i.x = load i64, ptr %20, align 1
   store i64 %i.x, ptr %i.t, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.m, ptr noundef nonnull align 1 dereferenceable(5) @__const.check_kdbg.OwnerTag, i64 5, i1 false)
@@ -269,8 +279,10 @@ bb.f:                                             ; preds = %bb.e
   %i.z = load i64, ptr %i.y, align 1
   br label %bb.h
 
-bb.g:                                             ; preds = %bb.e
-  %i.aa = load i32, ptr %10, align 1
+bb.g:                                             ; preds = %bb.d
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  %21 = getelementptr inbounds nuw i8, ptr %i.p, i64 40
+  %i.aa = load i32, ptr %21, align 1
   %i.ab = zext i32 %i.aa to i64
   store i64 %i.ab, ptr %i.t, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #7
@@ -282,10 +294,11 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
+  %22 = phi i64 [ 8192, %bb.f ], [ 4096, %bb.g ]  ; 2 uses
   %i.af = phi i64 [ %i.z, %bb.f ], [ %i.ae, %bb.g ] ; 3 uses
   store i32 0, ptr %i.n, align 4, !annotation !14
   %i.ag = load atomic ptr, ptr @cpus_queue monotonic, align 8
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !15
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !15
   %i.ah = add i64 %i.af, 16
   %i.ai = call i32 @cpu_memory_rw_debug(ptr noundef %i.ag, i64 noundef %i.ah, ptr noundef nonnull %i.n, i64 noundef 4, i1 noundef zeroext false) #7
   %.not20.i = icmp eq i32 %i.ai, 0
@@ -299,10 +312,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.an = icmp ne i32 %i.al, %i.am
   %i.ao = zext i1 %i.an to i32
   %.not17.us30.i = icmp eq i32 %i.ao, 0           ; 2 uses
-  br i1 %8, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  br i1 %.not11.i.not, label %.lr.ph.split.i, label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  br i1 %.not17.us30.i, label %check_kdbg.exit.thread74, label %.lr.ph32.preheader.i
+  br i1 %.not17.us30.i, label %check_kdbg.exit.a, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %.lr.ph.split.us.i
   %i.ap = load i64, ptr %i.ak, align 1            ; 2 uses
@@ -319,7 +332,7 @@ bb.i:                                             ; preds = %.lr.ph32.preheader.
   %i.av = icmp ne i32 %i.at, %i.au
   %i.aw = zext i1 %i.av to i32
   %.not17.us.i = icmp eq i32 %i.aw, 0
-  br i1 %.not17.us.i, label %check_kdbg.exit.thread74, label %.split24.us.i
+  br i1 %.not17.us.i, label %check_kdbg.exit.a, label %.split24.us.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   br i1 %.not17.us30.i, label %check_kdbg.exit.thread, label %.lr.ph28.preheader.i
@@ -335,8 +348,8 @@ bb.i:                                             ; preds = %.lr.ph32.preheader.
   br i1 %.not.i.a, label %bb.j, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph28.preheader.i, %.lr.ph32.preheader.i, %bb.h
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 212, ptr noundef nonnull @__func__.check_kdbg, ptr noundef nonnull @.str.14) #7
-  br label %check_kdbg.exit.a
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 212, ptr noundef nonnull @__func__.check_kdbg, ptr noundef nonnull @.str.14) #7
+  br label %check_kdbg.exit.thread74
 
 bb.j:                                             ; preds = %.lr.ph28.preheader.i
   %i.bc = load i32, ptr %i.n, align 4
@@ -347,31 +360,21 @@ bb.j:                                             ; preds = %.lr.ph28.preheader.
   br i1 %.not17.i, label %check_kdbg.exit.thread, label %.split24.us.i
 
 .split24.us.i:                                    ; preds = %bb.j, %bb.i
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 230, ptr noundef nonnull @__func__.check_kdbg, ptr noundef nonnull @.str.15, ptr noundef nonnull %i.m, ptr noundef nonnull %i.n) #7
-  br label %check_kdbg.exit.a
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 230, ptr noundef nonnull @__func__.check_kdbg, ptr noundef nonnull @.str.15, ptr noundef nonnull %i.m, ptr noundef nonnull %i.n) #7
+  br label %check_kdbg.exit.thread74
 
-check_kdbg.exit.a:                                ; preds = %._crit_edge.i, %.split24.us.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #7
-  %11 = load ptr, ptr %3, align 8                 ; 2 uses
-  %.not54 = icmp eq ptr %11, null
-  br i1 %.not54, label %bb.l, label %bb.k
-
-check_kdbg.exit.thread74:                         ; preds = %.lr.ph.split.us.i, %bb.i
+check_kdbg.exit.a:                                ; preds = %bb.i, %.lr.ph.split.us.i
   %.us-phi.ph.i = phi i64 [ %i.af, %.lr.ph.split.us.i ], [ %i.ap, %bb.i ]
-  %12 = getelementptr inbounds nuw i8, ptr %i.p, i64 152
-  store i64 %.us-phi.ph.i, ptr %12, align 1
+  %23 = getelementptr inbounds nuw i8, ptr %i.p, i64 152
+  store i64 %.us-phi.ph.i, ptr %23, align 1
+  br label %check_kdbg.exit.thread74
+
+check_kdbg.exit.thread74:                         ; preds = %._crit_edge.i, %.split24.us.i, %check_kdbg.exit.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #7
-  %i.bg = load ptr, ptr %3, align 8               ; 2 uses
+  %i.bg = load ptr, ptr %4, align 8               ; 2 uses
   %.not5475 = icmp eq ptr %i.bg, null
-  br i1 %.not5475, label %.thread76, label %bb.k
-
-.thread76:                                        ; preds = %check_kdbg.exit.thread74
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #7
-  store ptr null, ptr %i.l, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %i.p, i64 4024
-  br label %bb.m
+  br i1 %.not5475, label %bb.l, label %bb.k
 
 check_kdbg.exit.thread:                           ; preds = %.lr.ph.split.i, %bb.j
   %.us-phi.i = phi i64 [ %i.af, %.lr.ph.split.i ], [ %i.ay, %bb.j ]
@@ -380,7 +383,7 @@ check_kdbg.exit.thread:                           ; preds = %.lr.ph.split.i, %bb
   store i32 %i.bh, ptr %i.bi, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #7
-  %i.bj = load ptr, ptr %3, align 8               ; 2 uses
+  %i.bj = load ptr, ptr %4, align 8               ; 2 uses
   %.not5472 = icmp eq ptr %i.bj, null
   br i1 %.not5472, label %.thread73, label %bb.k
 
@@ -390,24 +393,23 @@ check_kdbg.exit.thread:                           ; preds = %.lr.ph.split.i, %bb
   %i.bk = getelementptr inbounds nuw i8, ptr %i.p, i64 4024
   br label %bb.n
 
-bb.k:                                             ; preds = %check_kdbg.exit.thread74, %check_kdbg.exit.thread, %check_kdbg.exit.a
-  %14 = phi ptr [ %i.bj, %check_kdbg.exit.thread ], [ %11, %check_kdbg.exit.a ], [ %i.bg, %check_kdbg.exit.thread74 ]
-  call void @error_propagate(ptr noundef %1, ptr noundef nonnull %14) #7
+bb.k:                                             ; preds = %check_kdbg.exit.thread, %check_kdbg.exit.thread74
+  %24 = phi ptr [ %i.bj, %check_kdbg.exit.thread ], [ %i.bg, %check_kdbg.exit.thread74 ]
+  call void @error_propagate(ptr noundef %1, ptr noundef nonnull %24) #7
   br label %bb.bu
 
-bb.l:                                             ; preds = %check_kdbg.exit.a
+bb.l:                                             ; preds = %check_kdbg.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #7
   store ptr null, ptr %i.l, align 8
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.p, i64 4024 ; 2 uses
-  br i1 %8, label %bb.m, label %bb.n
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.p, i64 4024 ; 3 uses
+  br i1 %.not11.i.not, label %bb.n, label %bb.m
 
-bb.m:                                             ; preds = %.thread76, %bb.l
-  %15 = phi ptr [ %13, %.thread76 ], [ %i.bl, %bb.l ]
+bb.m:                                             ; preds = %bb.l
   %i.bm = getelementptr inbounds nuw i8, ptr %i.p, i64 168
   %i.bn = load i64, ptr %i.bm, align 1
   %i.bo = shl i64 %i.bn, 12
   %i.bp = add i64 %i.bo, 8192
-  store i64 %i.bp, ptr %15, align 1
+  store i64 %i.bp, ptr %i.bl, align 1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.p, i64 164
   store i32 0, ptr %i.bq, align 1
   %i.br = getelementptr inbounds nuw i8, ptr %i.p, i64 4020
@@ -419,7 +421,7 @@ bb.m:                                             ; preds = %.thread76, %bb.l
   br label %bb.o
 
 bb.n:                                             ; preds = %.thread73, %bb.l
-  %i.bv = phi ptr [ %i.bk, %.thread73 ], [ %i.bl, %bb.l ]
+  %i.bv = phi ptr [ %i.bk, %.thread73 ], [ %i.bl, %bb.l ] ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.p, i64 128
   %i.bx = load i32, ptr %i.bw, align 1
   %i.by = shl i32 %i.bx, 12
@@ -433,6 +435,8 @@ bb.n:                                             ; preds = %.thread73, %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
+  %25 = phi ptr [ %i.bl, %bb.m ], [ %i.bv, %bb.n ] ; 2 uses
+  %26 = phi i1 [ true, %bb.m ], [ false, %bb.n ]  ; 19 uses
   %i.ce = phi ptr [ %i.bs, %bb.m ], [ %i.ca, %bb.n ]
   %i.cf = phi i64 [ 8, %bb.m ], [ 4, %bb.n ]
   %.v.i.i = phi i64 [ 24, %bb.m ], [ 20, %bb.n ]
@@ -457,7 +461,7 @@ bb.p:                                             ; preds = %patch_mm_pfn_databa
 patch_mm_pfn_database.exit.thread.i:              ; preds = %bb.p, %patch_mm_pfn_database.exit.i, %bb.o
   %i.ck = load atomic ptr, ptr @cpus_queue monotonic, align 8
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !17
-  br i1 %8, label %bb.q, label %bb.r
+  br i1 %26, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %patch_mm_pfn_database.exit.thread.i
   %i.cl = getelementptr inbounds nuw i8, ptr %i.p, i64 152
@@ -493,13 +497,13 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s
   %i.cw = zext i32 %i.cv to i64
-  %i.cx = select i1 %8, i64 %i.cu, i64 %i.cw
+  %i.cx = select i1 %26, i64 %i.cu, i64 %i.cw
   %i.cy = load atomic ptr, ptr @cpus_queue monotonic, align 8
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !18
   %i.cz = getelementptr inbounds nuw i8, ptr %i.p, i64 80 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.p, i64 64 ; 2 uses
-  %i.db = select i1 %8, ptr %i.cz, ptr %i.da      ; 2 uses
-  %i.dc = select i1 %8, i64 40, i64 20
+  %i.db = select i1 %26, ptr %i.cz, ptr %i.da     ; 2 uses
+  %i.dc = select i1 %26, i64 40, i64 20
   %i.dd = call i32 @cpu_memory_rw_debug(ptr noundef %i.cy, i64 noundef %i.cx, ptr noundef nonnull %i.db, i64 noundef %i.dc, i1 noundef zeroext false) #7
   %.not19.i.i = icmp eq i32 %i.dd, 0
   br i1 %.not19.i.i, label %bb.w, label %bb.v
@@ -509,7 +513,7 @@ bb.v:                                             ; preds = %bb.u
   br label %patch_bugcheck_data.exit.i
 
 bb.w:                                             ; preds = %bb.u
-  br i1 %8, label %bb.x, label %bb.y
+  br i1 %26, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
   %i.de = load i32, ptr %i.cz, align 1
@@ -536,12 +540,12 @@ bb.aa:                                            ; preds = %patch_bugcheck_data
 
 patch_header.exit:                                ; preds = %patch_bugcheck_data.exit.i, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #7
-  %.in.v = select i1 %8, i64 76, i64 60
+  %.in.v = select i1 %26, i64 76, i64 60
   %.in = getelementptr inbounds nuw i8, ptr %i.p, i64 %.in.v
   %i.dh = load i32, ptr %.in, align 1
   %i.di = zext i32 %i.dh to i64
   %i.dj = call noalias ptr @g_malloc_n(i64 noundef %i.di, i64 noundef 1248) #9 ; 3 uses
-  br i1 %8, label %bb.ab, label %bb.ac
+  br i1 %26, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %patch_header.exit
   %i.dk = getelementptr inbounds nuw i8, ptr %i.p, i64 152
@@ -571,14 +575,14 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.du = load i64, ptr %i.h, align 8
   %i.dv = load i32, ptr %i.g, align 4
   %i.dw = zext i32 %i.dv to i64
-  %i.dx = select i1 %8, i64 %i.du, i64 %i.dw
+  %i.dx = select i1 %26, i64 %i.du, i64 %i.dw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #7
   %.not.i59 = icmp eq i32 %i.dt, 0
   br i1 %.not.i59, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 260, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.19) #7
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 260, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.19) #7
   br label %patch_and_save_context.exit
 
 bb.af:                                            ; preds = %bb.ad
@@ -590,7 +594,7 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %.not137.i, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 267, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.20) #7
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 267, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.20) #7
   br label %patch_and_save_context.exit
 
 bb.ah:                                            ; preds = %bb.af
@@ -600,10 +604,10 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %.not138162.i, label %patch_and_save_context.exit, label %.lr.ph.i60
 
 .lr.ph.i60:                                       ; preds = %bb.ah
-  %.in.v.i = select i1 %8, i64 52, i64 36
+  %.in.v.i = select i1 %26, i64 52, i64 36
   %.in.i = getelementptr inbounds nuw i8, ptr %i.q, i64 %.in.v.i
-  %..i145.i = select i1 %8, ptr %i.f, ptr %i.e
-  %..i146.i = select i1 %8, ptr %i.d, ptr %i.c
+  %..i145.i = select i1 %26, ptr %i.f, ptr %i.e
+  %..i146.i = select i1 %26, ptr %i.d, ptr %i.c
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 4
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 20
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 28
@@ -678,12 +682,12 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %.not140.i, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 289, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.22, i32 noundef %.0135163.i) #7
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 289, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.22, i32 noundef %.0135163.i) #7
   br label %.critedge.i
 
 bb.am:                                            ; preds = %bb.ak
   %i.em = zext i32 %i.el to i64
-  %i.en = select i1 %8, i64 %i.ek, i64 %i.em
+  %i.en = select i1 %26, i64 %i.ek, i64 %i.em
   %i.eo = load atomic ptr, ptr @cpus_queue monotonic, align 8
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !23
   %i.ep = load i16, ptr %i.i, align 2
@@ -697,21 +701,21 @@ bb.am:                                            ; preds = %bb.ak
   %i.et = load i64, ptr %i.d, align 8
   %i.eu = load i32, ptr %i.c, align 4
   %i.ev = zext i32 %i.eu to i64
-  %i.ew = select i1 %8, i64 %i.et, i64 %i.ev      ; 3 uses
+  %i.ew = select i1 %26, i64 %i.et, i64 %i.ev     ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   %.not141.i = icmp eq i32 %i.es, 0
   br i1 %.not141.i, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 297, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.23, i32 noundef %.0135163.i) #7
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 297, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.23, i32 noundef %.0135163.i) #7
   br label %.critedge.i
 
 bb.ao:                                            ; preds = %bb.am
   %i.ex = getelementptr inbounds [1248 x i8], ptr %i.dj, i64 %i.eg ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 1232
   store i64 %i.ew, ptr %i.ey, align 16
-  br i1 %8, label %bb.ap, label %bb.ar
+  br i1 %26, label %bb.ap, label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ec, i64 17440 ; 2 uses
@@ -892,7 +896,7 @@ bb.at:                                            ; preds = %cpu_compute_eflags.
   br i1 %.not142.i, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 379, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.24, i32 noundef %.0135163.i) #7
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 379, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.24, i32 noundef %.0135163.i) #7
   br label %.critedge.i
 
 bb.av:                                            ; preds = %bb.at
@@ -903,7 +907,7 @@ bb.av:                                            ; preds = %bb.at
   br i1 %.not143.i, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 385, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.25, i32 noundef %.0135163.i) #7
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 385, ptr noundef nonnull @__func__.patch_and_save_context, ptr noundef nonnull @.str.25, i32 noundef %.0135163.i) #7
   br label %.critedge.i
 
 bb.ax:                                            ; preds = %bb.av
@@ -921,7 +925,7 @@ bb.ax:                                            ; preds = %bb.av
 
 patch_and_save_context.exit:                      ; preds = %bb.ax, %bb.ae, %bb.ag, %bb.ah, %.critedge.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #7
-  %i.jj = load ptr, ptr %3, align 8               ; 2 uses
+  %i.jj = load ptr, ptr %4, align 8               ; 2 uses
   %.not55 = icmp eq ptr %i.jj, null
   br i1 %.not55, label %bb.az, label %bb.ay
 
@@ -930,15 +934,14 @@ bb.ay:                                            ; preds = %patch_and_save_cont
   br label %restore_context.exit
 
 bb.az:                                            ; preds = %patch_and_save_context.exit
-  %16 = getelementptr inbounds nuw i8, ptr %i.p, i64 4024 ; 2 uses
-  br i1 %8, label %bb.ba, label %bb.bb
+  br i1 %26, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
-  %i.jk = load i64, ptr %16, align 1
+  %i.jk = load i64, ptr %25, align 1
   br label %bb.bc
 
 bb.bb:                                            ; preds = %bb.az
-  %i.jl = load i32, ptr %16, align 1
+  %i.jl = load i32, ptr %25, align 1
   %i.jm = zext i32 %i.jl to i64
   br label %bb.bc
 
@@ -948,10 +951,10 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   store i64 %i.jn, ptr %i.jo, align 8
   %i.jp = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.jq = load i32, ptr %i.jp, align 8
-  %i.jr = call i64 @qemu_write_full(i32 noundef %i.jq, ptr noundef nonnull %i.q, i64 noundef %9) #7 ; 2 uses
+  %i.jr = call i64 @qemu_write_full(i32 noundef %i.jq, ptr noundef nonnull %i.q, i64 noundef %22) #7 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 3 uses
   store i64 %i.jr, ptr %i.js, align 8
-  %.not56 = icmp eq i64 %i.jr, %9
+  %.not56 = icmp eq i64 %i.jr, %22
   br i1 %.not56, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
@@ -963,7 +966,7 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   store ptr null, ptr %i.b, align 8
-  %.in.v.i62 = select i1 %8, i64 136, i64 100
+  %.in.v.i62 = select i1 %26, i64 136, i64 100
   %.in.i63 = getelementptr inbounds nuw i8, ptr %i.q, i64 %.in.v.i62 ; 2 uses
   %i.jv = load i32, ptr %.in.i63, align 1
   %.not28.i = icmp eq i32 %i.jv, 0
@@ -983,7 +986,7 @@ bb.bf:                                            ; preds = %write_run.exit.i
 bb.bg:                                            ; preds = %bb.bf, %.lr.ph.i64
   %.027.i = phi i32 [ 0, %.lr.ph.i64 ], [ %i.jy, %bb.bf ] ; 2 uses
   %i.kb = sext i32 %.027.i to i64                 ; 4 uses
-  br i1 %8, label %bb.bh, label %bb.bi
+  br i1 %26, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
   %i.kc = getelementptr inbounds [16 x i8], ptr %i.jx, i64 %i.kb
@@ -1064,12 +1067,12 @@ write_run.exit.i:                                 ; preds = %bb.bn, %bb.bm, %bb.
   br i1 %.not.i65, label %bb.bf, label %bb.bo
 
 bb.bo:                                            ; preds = %write_run.exit.i
-  call void @error_propagate(ptr noundef nonnull %3, ptr noundef nonnull %i.lh) #7
+  call void @error_propagate(ptr noundef nonnull %4, ptr noundef nonnull %i.lh) #7
   br label %write_runs.exit
 
 write_runs.exit:                                  ; preds = %bb.bf, %bb.be, %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
-  %i.li = load ptr, ptr %3, align 8               ; 2 uses
+  %i.li = load ptr, ptr %4, align 8               ; 2 uses
   %.not57 = icmp eq ptr %i.li, null
   br i1 %.not57, label %bb.bq, label %bb.bp
 
@@ -1078,14 +1081,14 @@ bb.bp:                                            ; preds = %write_runs.exit
   br label %bb.bq
 
 bb.bq:                                            ; preds = %write_runs.exit, %bb.bp, %bb.bd
-  %.in.v.i67 = select i1 %8, i64 52, i64 36
+  %.in.v.i67 = select i1 %26, i64 52, i64 36
   %.in.i68 = getelementptr inbounds nuw i8, ptr %i.q, i64 %.in.v.i67 ; 2 uses
   %i.lj = load i32, ptr %.in.i68, align 1
   %.not13.i.a = icmp eq i32 %i.lj, 0
   br i1 %.not13.i.a, label %restore_context.exit, label %.lr.ph.i69
 
 .lr.ph.i69:                                       ; preds = %bb.bq
-  %i.lk = select i1 %8, i64 1232, i64 720
+  %i.lk = select i1 %26, i64 1232, i64 720
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bt, %.lr.ph.i69
@@ -1118,9 +1121,8 @@ bb.bu:                                            ; preds = %restore_context.exi
   store i64 %i.u, ptr %i.t, align 8
   br label %bb.bv
 
-bb.bv:                                            ; preds = %bb.bu, %bb.d, %bb.b
+bb.bv:                                            ; preds = %bb.bu, %18, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   ret void
 }
 

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/worker?download=true
-inline.NumInlined: 283
-inline.NumDeleted: 99
+inline.NumInlined: 285
+inline.NumDeleted: 100
 begin_hunk_0_@maybe_advance_nonremovable_xid:bb.a
 bb.af:                                            ; preds = %bb.ad
   %i.dc = tail call zeroext i1 @HasSubscriptionTablesCached() #15, !inline_history !35
@@ -202,10 +202,23 @@ bb.ba:                                            ; preds = %tailrecurse.i
   br i1 %i.fq, label %bb.bb, label %bb.bf
 
 bb.bb:                                            ; preds = %bb.ba
-  %2 = tail call fastcc zeroext i1 @update_retention_status(i1 noundef zeroext false), !inline_history !29
-  br i1 %2, label %bb.bc, label %process_rdt_phase_transition.exit
+  %2 = tail call zeroext i1 @IsTransactionState() #15, !inline_history !29
+  br i1 %2, label %process_rdt_phase_transition.exit, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
+  tail call void @StartTransactionCommand() #15, !inline_history !29
+  %3 = tail call ptr @GetTransactionSnapshot() #15, !inline_history !29
+  tail call void @PushActiveSnapshot(ptr noundef %3) #15, !inline_history !29
+  %4 = load ptr, ptr @MySubscription, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = load i32, ptr %5, align 8
+  tail call void @UpdateDeadTupleRetentionStatus(i32 noundef %6, i1 noundef zeroext false) #15, !inline_history !29
+  tail call void @PopActiveSnapshot() #15, !inline_history !29
+  tail call void @CommitTransactionCommand() #15, !inline_history !29
+  tail call void @ApplyLauncherWakeup() #15, !inline_history !29
+  %7 = load ptr, ptr @MySubscription, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 52
+  store i8 0, ptr %8, align 4
   %i.fr = load ptr, ptr @MyLogicalRepWorker, align 8
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 64 ; 3 uses
   %i.ft = tail call i8 asm sideeffect "\09lock\09\09\09\0A\09xchgb\09$0,$1\09\0A", "=q,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.fs, i8 1, ptr nonnull elementtype(i8) %i.fs) #15, !inline_history !29, !srcloc !10
@@ -242,10 +255,23 @@ bb.bf:                                            ; preds = %bb.be, %SpinLockAcq
   br label %process_rdt_phase_transition.exit
 
 bb.bg:                                            ; preds = %tailrecurse.i
-  %3 = tail call fastcc zeroext i1 @update_retention_status(i1 noundef zeroext true), !inline_history !29
-  br i1 %3, label %bb.bh, label %process_rdt_phase_transition.exit
+  %9 = tail call zeroext i1 @IsTransactionState() #15, !inline_history !29
+  br i1 %9, label %process_rdt_phase_transition.exit, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
+  tail call void @StartTransactionCommand() #15, !inline_history !29
+  %10 = tail call ptr @GetTransactionSnapshot() #15, !inline_history !29
+  tail call void @PushActiveSnapshot(ptr noundef %10) #15, !inline_history !29
+  %11 = load ptr, ptr @MySubscription, align 8
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %13 = load i32, ptr %12, align 8
+  tail call void @UpdateDeadTupleRetentionStatus(i32 noundef %13, i1 noundef zeroext true) #15, !inline_history !29
+  tail call void @PopActiveSnapshot() #15, !inline_history !29
+  tail call void @CommitTransactionCommand() #15, !inline_history !29
+  tail call void @ApplyLauncherWakeup() #15, !inline_history !29
+  %14 = load ptr, ptr @MySubscription, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 52
+  store i8 1, ptr %15, align 4
   %i.ge = tail call zeroext i1 @errstart(i32 noundef 15, ptr noundef null) #15, !inline_history !29
   br i1 %i.ge, label %bb.bi, label %bb.bj
 
@@ -558,33 +584,6 @@ declare i64 @TimestampDifferenceMilliseconds(i64 noundef, i64 noundef) local_unn
 declare void @ApplyLauncherWakeup() local_unnamed_addr #1
 
 declare i64 @GetFlushRecPtr(ptr noundef) local_unnamed_addr #1
-
-; Function Attrs: nounwind uwtable
-define internal fastcc noundef zeroext i1 @update_retention_status(i1 noundef zeroext %0) unnamed_addr #0 {
-  %2 = tail call zeroext i1 @IsTransactionState() #15 ; 2 uses
-  br i1 %2, label %11, label %3
-
-3:                                                ; preds = %1
-  %4 = zext i1 %0 to i8
-  tail call void @StartTransactionCommand() #15
-  %5 = tail call ptr @GetTransactionSnapshot() #15
-  tail call void @PushActiveSnapshot(ptr noundef %5) #15
-  %6 = load ptr, ptr @MySubscription, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %8 = load i32, ptr %7, align 8
-  tail call void @UpdateDeadTupleRetentionStatus(i32 noundef %8, i1 noundef zeroext %0) #15
-  tail call void @PopActiveSnapshot() #15
-  tail call void @CommitTransactionCommand() #15
-  tail call void @ApplyLauncherWakeup() #15
-  %9 = load ptr, ptr @MySubscription, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 52
-  store i8 %4, ptr %10, align 4
-  br label %11
-
-11:                                               ; preds = %1, %3
-  %.0 = xor i1 %2, true
-  ret i1 %.0
-}
 
 declare void @UpdateDeadTupleRetentionStatus(i32 noundef, i1 noundef zeroext) local_unnamed_addr #1
 

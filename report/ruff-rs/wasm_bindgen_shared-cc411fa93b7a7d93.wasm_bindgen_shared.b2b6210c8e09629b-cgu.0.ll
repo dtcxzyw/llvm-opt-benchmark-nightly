@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/wasm_bindgen_shared-cc411fa93b7a7d93.wasm_bindgen_shared.b2b6210c8e09629b-cgu.0?download=true
-inline.NumInlined: 460
+inline.NumInlined: 459
 inline.NumDeleted: 45
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,21 +204,114 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.d, %bb.a
-  %i.c = load ptr, ptr %0, align 8
+  %i.c = load ptr, ptr %0, align 8                ; 3 uses
   %.not6 = icmp eq ptr %i.c, null
-  br i1 %.not6, label %bb.e, label %bb.f
+  br i1 %.not6, label %bb.e, label %1
 
 bb.d:                                             ; preds = %bb.b
   store i32 -3, ptr %i.a, align 8
   br label %bb.c
 
-bb.e:                                             ; preds = %bb.f, %bb.c, %bb.b
-  %.sroa.0.0 = phi i1 [ true, %bb.b ], [ false, %bb.c ], [ %1, %bb.f ]
+bb.e:                                             ; preds = %50, %thread-pre-split, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i, %1, %bb.c, %bb.b
+  %.sroa.0.0 = phi i1 [ true, %bb.b ], [ false, %bb.c ], [ false, %1 ], [ false, %thread-pre-split ], [ true, %50 ], [ false, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i ]
   ret i1 %.sroa.0.0
 
-bb.f:                                             ; preds = %bb.c
-  %1 = tail call noundef zeroext i1 @_RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5CharsNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBN_8adapters3map12map_try_foldcINtNtB9_6option6OptioncEuINtNtNtB9_3ops12control_flow11ControlFlowuENCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0NCINvNvBH_3all5checkB2a_NCNvB3k_14is_valid_ident0E0E0B2z_EB3m_(ptr nonnull align 8 %0, ptr nonnull poison)
-  br label %bb.e
+1:                                                ; preds = %bb.c
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %3 = load ptr, ptr %2, align 8                  ; 2 uses
+  %4 = icmp eq ptr %i.c, %3
+  br i1 %4, label %bb.e, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i
+
+thread-pre-split:                                 ; preds = %50
+  %.pr = load ptr, ptr %0, align 8                ; 2 uses
+  %5 = load ptr, ptr %2, align 8                  ; 2 uses
+  %6 = icmp eq ptr %.pr, %5
+  br i1 %6, label %bb.e, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i
+
+_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i: ; preds = %1, %thread-pre-split
+  %7 = phi ptr [ %5, %thread-pre-split ], [ %3, %1 ] ; 3 uses
+  %8 = phi ptr [ %.pr, %thread-pre-split ], [ %i.c, %1 ] ; 6 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 1 ; 3 uses
+  store ptr %9, ptr %0, align 8
+  %.not.i.i.i = icmp eq ptr %8, null
+  br i1 %.not.i.i.i, label %bb.e, label %10
+
+10:                                               ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i
+  %11 = load i8, ptr %8, align 1                  ; 5 uses
+  %12 = icmp sgt i8 %11, -1
+  br i1 %12, label %17, label %13
+
+13:                                               ; preds = %10
+  %14 = and i8 %11, 31
+  %15 = zext nneg i8 %14 to i32                   ; 3 uses
+  %16 = icmp eq ptr %9, %7
+  br i1 %16, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit15.thread.i.i.i, label %19
+
+17:                                               ; preds = %10
+  %18 = zext nneg i8 %11 to i32
+  br label %50
+
+19:                                               ; preds = %13
+  %20 = getelementptr inbounds nuw i8, ptr %8, i64 2 ; 3 uses
+  store ptr %20, ptr %0, align 8
+  %21 = load i8, ptr %9, align 1
+  %22 = shl nuw nsw i32 %15, 6
+  %23 = and i8 %21, 63
+  %24 = zext nneg i8 %23 to i32                   ; 2 uses
+  %25 = or disjoint i32 %22, %24
+  %26 = icmp samesign ugt i8 %11, -33
+  br i1 %26, label %27, label %50
+
+_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit15.thread.i.i.i: ; preds = %13
+  tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @1) #32
+  unreachable
+
+27:                                               ; preds = %19
+  %28 = icmp eq ptr %20, %7
+  br i1 %28, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit17.thread.i.i.i, label %29
+
+29:                                               ; preds = %27
+  %30 = getelementptr inbounds nuw i8, ptr %8, i64 3 ; 3 uses
+  store ptr %30, ptr %0, align 8
+  %31 = load i8, ptr %20, align 1
+  %32 = shl nuw nsw i32 %24, 6
+  %33 = and i8 %31, 63
+  %34 = zext nneg i8 %33 to i32
+  %35 = or disjoint i32 %32, %34                  ; 2 uses
+  %36 = shl nuw nsw i32 %15, 12
+  %37 = or disjoint i32 %35, %36
+  %38 = icmp samesign ugt i8 %11, -17
+  br i1 %38, label %39, label %50
+
+_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit17.thread.i.i.i: ; preds = %27
+  tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @2) #32
+  unreachable
+
+39:                                               ; preds = %29
+  %40 = icmp eq ptr %30, %7
+  br i1 %40, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit19.thread.i.i.i, label %bb.f
+
+bb.f:                                             ; preds = %39
+  %41 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  store ptr %41, ptr %0, align 8
+  %42 = load i8, ptr %30, align 1
+  %43 = shl nuw nsw i32 %15, 18
+  %44 = and i32 %43, 1835008
+  %45 = shl nuw nsw i32 %35, 6
+  %46 = and i8 %42, 63
+  %47 = zext nneg i8 %46 to i32
+  %48 = or disjoint i32 %45, %47
+  %49 = or disjoint i32 %48, %44
+  br label %50
+
+_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit19.thread.i.i.i: ; preds = %39
+  tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @3) #32
+  unreachable
+
+50:                                               ; preds = %bb.f, %29, %19, %17
+  %.sroa.0.0.i.i.ph.i = phi i32 [ %25, %19 ], [ %37, %29 ], [ %49, %bb.f ], [ %18, %17 ]
+  %51 = tail call zeroext i1 @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier14is_id_continue(i32 %.sroa.0.0.i.i.ph.i)
+  br i1 %51, label %thread-pre-split, label %bb.e
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -621,34 +714,11 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define noundef zeroext i1 @_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_(ptr nofree align 8 captures(none) %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !113 {
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %3 = load i32, ptr %2, align 8                  ; 2 uses
-  %.not.i = icmp eq i32 %3, -3
-  br i1 %.not.i, label %5, label %4
-
-4:                                                ; preds = %1
-  store i32 -2, ptr %2, align 8
-  %.not.i.i = icmp eq i32 %3, -1
-  br i1 %.not.i.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptioncEEINtNtB7_3map3MapNtNtNtBb_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB3K_3all5checkB1s_NCNvB2z_14is_valid_ident0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB2B_.exit, label %7
-
-5:                                                ; preds = %7, %1
-  %6 = load ptr, ptr %0, align 8
-  %.not6.i = icmp eq ptr %6, null
-  br i1 %.not6.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptioncEEINtNtB7_3map3MapNtNtNtBb_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB3K_3all5checkB1s_NCNvB2z_14is_valid_ident0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB2B_.exit, label %bb.a
-
-7:                                                ; preds = %4
-  store i32 -3, ptr %2, align 8
-  br label %5
-
-bb.a:                                             ; preds = %5
-  %8 = tail call noundef zeroext i1 @_RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5CharsNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBN_8adapters3map12map_try_foldcINtNtB9_6option6OptioncEuINtNtNtB9_3ops12control_flow11ControlFlowuENCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0NCINvNvBH_3all5checkB2a_NCNvB3k_14is_valid_ident0E0E0B2z_EB3m_(ptr nonnull align 8 %0, ptr nonnull poison)
-  %i.a = xor i1 %8, true
-  br label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptioncEEINtNtB7_3map3MapNtNtNtBb_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB3K_3all5checkB1s_NCNvB2z_14is_valid_ident0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB2B_.exit
-
-_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptioncEEINtNtB7_3map3MapNtNtNtBb_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB3K_3all5checkB1s_NCNvB2z_14is_valid_ident0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB2B_.exit: ; preds = %4, %5, %bb.a
-  %.sroa.0.0.i = phi i1 [ false, %4 ], [ true, %5 ], [ %i.a, %bb.a ]
-  ret i1 %.sroa.0.0.i
+define noundef zeroext i1 @_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_(ptr nofree align 8 captures(none) %0) unnamed_addr #1 !guid !113 {
+bb.a:
+  %1 = tail call zeroext i1 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptioncEEINtNtB7_3map3MapNtNtNtBb_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB3K_3all5checkB1s_NCNvB2z_14is_valid_ident0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB2B_(ptr align 8 %0)
+  %i.a = xor i1 %1, true
+  ret i1 %i.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
@@ -1051,114 +1121,13 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier14is_valid_ident(ptr %0, i64 %1) unnamed_addr #8 personality ptr @rust_eh_personality !guid !431 {
+define noundef zeroext i1 @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier14is_valid_ident(ptr %0, i64 %1) unnamed_addr #8 !guid !431 {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 4 uses
+  %i.a = alloca [24 x i8], align 8                ; 2 uses
   call fastcc void @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_chars(ptr noalias align 8 %i.a, ptr %0, i64 %1)
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %3 = load i32, ptr %2, align 8
-  switch i32 %3, label %6 [
-    i32 -3, label %4
-    i32 -1, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit
-  ]
-
-4:                                                ; preds = %bb.a, %6
-  %5 = load ptr, ptr %i.a, align 8                ; 3 uses
-  %.not6.i.i = icmp eq ptr %5, null
-  br i1 %.not6.i.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit, label %7
-
-6:                                                ; preds = %bb.a
-  store i32 -3, ptr %2, align 8
-  br label %4
-
-7:                                                ; preds = %4
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %9 = load ptr, ptr %8, align 8                  ; 5 uses
-  %10 = icmp eq ptr %5, %9
-  br i1 %10, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i.preheader
-
-_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i.preheader: ; preds = %7, %thread-pre-split
-  %11 = phi ptr [ %.pr2, %thread-pre-split ], [ %5, %7 ] ; 5 uses
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 3 uses
-  %13 = load i8, ptr %11, align 1                 ; 5 uses
-  %14 = icmp sgt i8 %13, -1
-  br i1 %14, label %19, label %15
-
-15:                                               ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i.preheader
-  %16 = and i8 %13, 31
-  %17 = zext nneg i8 %16 to i32                   ; 3 uses
-  %18 = icmp eq ptr %12, %9
-  br i1 %18, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit15.thread.i.i.i, label %21
-
-19:                                               ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i.preheader
-  %20 = zext nneg i8 %13 to i32
-  br label %thread-pre-split
-
-21:                                               ; preds = %15
-  %22 = getelementptr inbounds nuw i8, ptr %11, i64 2 ; 3 uses
-  %23 = load i8, ptr %12, align 1
-  %24 = shl nuw nsw i32 %17, 6
-  %25 = and i8 %23, 63
-  %26 = zext nneg i8 %25 to i32                   ; 2 uses
-  %27 = or disjoint i32 %24, %26
-  %28 = icmp samesign ugt i8 %13, -33
-  br i1 %28, label %29, label %thread-pre-split
-
-_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit15.thread.i.i.i: ; preds = %15
-  tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @1) #32
-  unreachable
-
-29:                                               ; preds = %21
-  %30 = icmp eq ptr %22, %9
-  br i1 %30, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit17.thread.i.i.i, label %31
-
-31:                                               ; preds = %29
-  %32 = getelementptr inbounds nuw i8, ptr %11, i64 3 ; 3 uses
-  %33 = load i8, ptr %22, align 1
-  %34 = shl nuw nsw i32 %26, 6
-  %35 = and i8 %33, 63
-  %36 = zext nneg i8 %35 to i32
-  %37 = or disjoint i32 %34, %36                  ; 2 uses
-  %38 = shl nuw nsw i32 %17, 12
-  %39 = or disjoint i32 %37, %38
-  %40 = icmp samesign ugt i8 %13, -17
-  br i1 %40, label %41, label %thread-pre-split
-
-_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit17.thread.i.i.i: ; preds = %29
-  tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @2) #32
-  unreachable
-
-41:                                               ; preds = %31
-  %42 = icmp eq ptr %32, %9
-  br i1 %42, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit19.thread.i.i.i, label %43
-
-43:                                               ; preds = %41
-  %44 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %45 = load i8, ptr %32, align 1
-  %46 = shl nuw nsw i32 %17, 18
-  %47 = and i32 %46, 1835008
-  %48 = shl nuw nsw i32 %37, 6
-  %49 = and i8 %45, 63
-  %50 = zext nneg i8 %49 to i32
-  %51 = or disjoint i32 %48, %50
-  %52 = or disjoint i32 %51, %47
-  br label %thread-pre-split
-
-_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit19.thread.i.i.i: ; preds = %41
-  tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @3) #32
-  unreachable
-
-thread-pre-split:                                 ; preds = %43, %31, %21, %19
-  %.pr2 = phi ptr [ %22, %21 ], [ %32, %31 ], [ %44, %43 ], [ %12, %19 ] ; 2 uses
-  %.sroa.0.0.i.i.ph.i = phi i32 [ %27, %21 ], [ %39, %31 ], [ %52, %43 ], [ %20, %19 ]
-  %53 = tail call zeroext i1 @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier14is_id_continue(i32 %.sroa.0.0.i.i.ph.i) ; 2 uses
-  %54 = icmp ne ptr %.pr2, %9
-  %or.cond.not = select i1 %53, i1 %54, i1 false
-  br i1 %or.cond.not, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i.preheader, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit
-
-_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit: ; preds = %thread-pre-split, %7, %bb.a, %4
-  %.sroa.0.0.i.i = phi i1 [ false, %bb.a ], [ true, %4 ], [ true, %7 ], [ %53, %thread-pre-split ]
-  ret i1 %.sroa.0.0.i.i
+  %2 = call zeroext i1 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptioncEEINtNtB7_3map3MapNtNtNtBb_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB3K_3all5checkB1s_NCNvB2z_14is_valid_ident0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB2B_(ptr nonnull align 8 %i.a)
+  %3 = xor i1 %2, true
+  ret i1 %3
 }
 
 ; Function Attrs: nonlazybind uwtable

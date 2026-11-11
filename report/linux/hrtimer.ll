@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/hrtimer?download=true
-inline.NumInlined: 224
-inline.NumDeleted: 105
+inline.NumInlined: 226
+inline.NumDeleted: 106
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@hrtimer_start_range_ns_common:bb.a
@@ -204,7 +204,7 @@ __hrtimer_reprogram.exit:                         ; preds = %hrtimer_rearm_event
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local noundef zeroext i1 @hrtimer_start_range_ns_user(ptr noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef %3) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 48         ; 4 uses
+  %i.a = getelementptr i8, ptr %0, i64 48         ; 8 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.e, %bb.a
@@ -231,20 +231,214 @@ bb.e:                                             ; preds = %bb.d, %bb.b
 lock_hrtimer_base.exit:                           ; preds = %bb.c
   %i.h = tail call fastcc i32 @hrtimer_start_range_ns_common(ptr noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef %3, ptr noundef %i.b) #18, !srcloc !80
   switch i32 %i.h, label %hrtimer_force_reprogram.exit [
-    i32 1, label %bb.f
-    i32 2, label %bb.h
+    i32 1, label %4
+    i32 2, label %57
   ]
 
-bb.f:                                             ; preds = %lock_hrtimer_base.exit
-  %4 = tail call fastcc zeroext i1 @hrtimer_check_user_timer(ptr noundef %0) #18, !srcloc !81
-  br i1 %4, label %bb.g, label %hrtimer_force_reprogram.exit
+4:                                                ; preds = %lock_hrtimer_base.exit
+  %5 = load ptr, ptr %i.a, align 8                ; 2 uses
+  %6 = load ptr, ptr %5, align 64
+  %7 = getelementptr i8, ptr %0, i64 64
+  %.val.i = load i64, ptr %7, align 8
+  %8 = getelementptr i8, ptr %5, i64 56
+  %9 = load i64, ptr %8, align 8
+  %10 = sub i64 %.val.i, %9                       ; 2 uses
+  %11 = getelementptr i8, ptr %6, i64 40
+  %12 = load i64, ptr %11, align 8
+  %.not.i14 = icmp slt i64 %10, %12
+  br i1 %.not.i14, label %13, label %bb.g
 
-bb.g:                                             ; preds = %bb.f
+13:                                               ; preds = %4
+  %14 = tail call i64 @ktime_get() #17
+  %15 = icmp sgt i64 %10, %14
+  br i1 %15, label %bb.g, label %16
+
+16:                                               ; preds = %13
+  %17 = load ptr, ptr %i.a, align 8               ; 5 uses
+  %18 = load ptr, ptr %17, align 64
+  %19 = getelementptr i8, ptr %0, i64 56          ; 2 uses
+  %20 = load i8, ptr %19, align 8, !range !14, !noundef !15
+  %21 = trunc nuw i8 %20 to i1
+  br i1 %21, label %22, label %__remove_hrtimer.exit.i
+
+22:                                               ; preds = %16
+  store volatile i8 0, ptr %19, align 8
+  %23 = getelementptr i8, ptr %0, i64 24
+  %24 = load ptr, ptr %23, align 8
+  %.not.i.i = icmp eq ptr %24, null
+  %25 = getelementptr i8, ptr %17, i64 40
+  %26 = tail call zeroext i1 @rb_erase_linked(ptr noundef %0, ptr noundef %25) #17
+  br i1 %26, label %35, label %27
+
+27:                                               ; preds = %22
+  %28 = getelementptr i8, ptr %17, i64 8
+  %29 = load i32, ptr %28, align 8
+  %30 = shl nuw i32 1, %29
+  %31 = xor i32 %30, -1
+  %32 = getelementptr i8, ptr %18, i64 8          ; 2 uses
+  %33 = load i32, ptr %32, align 8
+  %34 = and i32 %33, %31
+  store i32 %34, ptr %32, align 8
+  br label %35
+
+35:                                               ; preds = %27, %22
+  br i1 %.not.i.i, label %36, label %__remove_hrtimer.exit.i
+
+36:                                               ; preds = %35
+  %37 = getelementptr i8, ptr %17, i64 48
+  %38 = load ptr, ptr %37, align 16               ; 2 uses
+  %.not.i18.i.i = icmp eq ptr %38, null
+  br i1 %.not.i18.i.i, label %base_update_next_timer.exit.i.i, label %39
+
+39:                                               ; preds = %36
+  %40 = getelementptr i8, ptr %38, i64 40
+  %41 = load i64, ptr %40, align 8
+  br label %base_update_next_timer.exit.i.i
+
+base_update_next_timer.exit.i.i:                  ; preds = %39, %36
+  %42 = phi i64 [ %41, %39 ], [ 9223372036854775807, %36 ]
+  %43 = getelementptr i8, ptr %17, i64 24
+  store i64 %42, ptr %43, align 8
+  br label %__remove_hrtimer.exit.i
+
+__remove_hrtimer.exit.i:                          ; preds = %base_update_next_timer.exit.i.i, %35, %16
+  callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_start_expired, i64 8), i1 false) #19
+          to label %hrtimer_force_reprogram.exit [label %_test_bit.exit.i.i.i], !srcloc !16
+
+_test_bit.exit.i.i.i:                             ; preds = %__remove_hrtimer.exit.i
+  %44 = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !81
+  %45 = zext i32 %44 to i64
+  %46 = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @__cpu_online_mask, i64 range(i64 0, 4294967296) %45) #19, !srcloc !18 ; 2 uses
+  %47 = icmp ult i8 %46, 2
+  tail call void @llvm.assume(i1 %47)
+  %48 = trunc nuw i8 %46 to i1
+  br i1 %48, label %bb.f, label %hrtimer_force_reprogram.exit
+
+bb.f:                                             ; preds = %_test_bit.exit.i.i.i
+  %49 = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %49, ptr elementtype(i64) %49) #19, !srcloc !19
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !20
+  %50 = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_start_expired, i64 56), align 8 ; 2 uses
+  %.not.i.i.i = icmp eq ptr %50, null
+  br i1 %.not.i.i.i, label %55, label %51
+
+51:                                               ; preds = %bb.f
+  %52 = getelementptr i8, ptr %50, i64 8
+  %53 = load ptr, ptr %52, align 8
+  %54 = tail call i32 @__SCT__tp_func_hrtimer_start_expired(ptr noundef %53, ptr noundef %0) #17 ; 0 uses
+  br label %55
+
+55:                                               ; preds = %51, %bb.f
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !21
+  %56 = getelementptr i8, ptr %49, i64 8          ; 2 uses
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %56, ptr elementtype(i64) %56) #19, !srcloc !22
+  br label %hrtimer_force_reprogram.exit
+
+bb.g:                                             ; preds = %13, %4
   tail call fastcc void @hrtimer_reprogram(ptr noundef %0) #18
   br label %hrtimer_force_reprogram.exit
 
-bb.h:                                             ; preds = %lock_hrtimer_base.exit
-  %5 = tail call fastcc zeroext i1 @hrtimer_check_user_timer(ptr noundef %0) #18, !srcloc !82 ; 4 uses
+57:                                               ; preds = %lock_hrtimer_base.exit
+  %58 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %59 = load ptr, ptr %58, align 64
+  %60 = getelementptr i8, ptr %0, i64 64
+  %.val.i15 = load i64, ptr %60, align 8
+  %61 = getelementptr i8, ptr %58, i64 56
+  %62 = load i64, ptr %61, align 8
+  %63 = sub i64 %.val.i15, %62                    ; 2 uses
+  %64 = getelementptr i8, ptr %59, i64 40
+  %65 = load i64, ptr %64, align 8
+  %.not.i16 = icmp slt i64 %63, %65
+  br i1 %.not.i16, label %66, label %bb.h
+
+66:                                               ; preds = %57
+  %67 = tail call i64 @ktime_get() #17
+  %68 = icmp sgt i64 %63, %67
+  br i1 %68, label %bb.h, label %69
+
+69:                                               ; preds = %66
+  %70 = load ptr, ptr %i.a, align 8               ; 5 uses
+  %71 = load ptr, ptr %70, align 64
+  %72 = getelementptr i8, ptr %0, i64 56          ; 2 uses
+  %73 = load i8, ptr %72, align 8, !range !14, !noundef !15
+  %74 = trunc nuw i8 %73 to i1
+  br i1 %74, label %75, label %__remove_hrtimer.exit.i18
+
+75:                                               ; preds = %69
+  store volatile i8 0, ptr %72, align 8
+  %76 = getelementptr i8, ptr %0, i64 24
+  %77 = load ptr, ptr %76, align 8
+  %.not.i.i23 = icmp eq ptr %77, null
+  %78 = getelementptr i8, ptr %70, i64 40
+  %79 = tail call zeroext i1 @rb_erase_linked(ptr noundef %0, ptr noundef %78) #17
+  br i1 %79, label %88, label %80
+
+80:                                               ; preds = %75
+  %81 = getelementptr i8, ptr %70, i64 8
+  %82 = load i32, ptr %81, align 8
+  %83 = shl nuw i32 1, %82
+  %84 = xor i32 %83, -1
+  %85 = getelementptr i8, ptr %71, i64 8          ; 2 uses
+  %86 = load i32, ptr %85, align 8
+  %87 = and i32 %86, %84
+  store i32 %87, ptr %85, align 8
+  br label %88
+
+88:                                               ; preds = %80, %75
+  br i1 %.not.i.i23, label %89, label %__remove_hrtimer.exit.i18
+
+89:                                               ; preds = %88
+  %90 = getelementptr i8, ptr %70, i64 48
+  %91 = load ptr, ptr %90, align 16               ; 2 uses
+  %.not.i18.i.i24 = icmp eq ptr %91, null
+  br i1 %.not.i18.i.i24, label %base_update_next_timer.exit.i.i25, label %92
+
+92:                                               ; preds = %89
+  %93 = getelementptr i8, ptr %91, i64 40
+  %94 = load i64, ptr %93, align 8
+  br label %base_update_next_timer.exit.i.i25
+
+base_update_next_timer.exit.i.i25:                ; preds = %92, %89
+  %95 = phi i64 [ %94, %92 ], [ 9223372036854775807, %89 ]
+  %96 = getelementptr i8, ptr %70, i64 24
+  store i64 %95, ptr %96, align 8
+  br label %__remove_hrtimer.exit.i18
+
+__remove_hrtimer.exit.i18:                        ; preds = %base_update_next_timer.exit.i.i25, %88, %69
+  callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_start_expired, i64 8), i1 false) #19
+          to label %bb.h [label %_test_bit.exit.i.i.i19], !srcloc !16
+
+_test_bit.exit.i.i.i19:                           ; preds = %__remove_hrtimer.exit.i18
+  %97 = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !81
+  %98 = zext i32 %97 to i64
+  %99 = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @__cpu_online_mask, i64 range(i64 0, 4294967296) %98) #19, !srcloc !18 ; 2 uses
+  %100 = icmp ult i8 %99, 2
+  tail call void @llvm.assume(i1 %100)
+  %101 = trunc nuw i8 %99 to i1
+  br i1 %101, label %102, label %bb.h
+
+102:                                              ; preds = %_test_bit.exit.i.i.i19
+  %103 = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %103, ptr elementtype(i64) %103) #19, !srcloc !19
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !20
+  %104 = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_start_expired, i64 56), align 8 ; 2 uses
+  %.not.i.i.i20 = icmp eq ptr %104, null
+  br i1 %.not.i.i.i20, label %109, label %105
+
+105:                                              ; preds = %102
+  %106 = getelementptr i8, ptr %104, i64 8
+  %107 = load ptr, ptr %106, align 8
+  %108 = tail call i32 @__SCT__tp_func_hrtimer_start_expired(ptr noundef %107, ptr noundef %0) #17 ; 0 uses
+  br label %109
+
+109:                                              ; preds = %105, %102
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !21
+  %110 = getelementptr i8, ptr %103, i64 8        ; 2 uses
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %110, ptr elementtype(i64) %110) #19, !srcloc !22
+  br label %bb.h
+
+bb.h:                                             ; preds = %57, %66, %__remove_hrtimer.exit.i18, %_test_bit.exit.i.i.i19, %109
+  %.0.i17 = phi i1 [ true, %66 ], [ true, %57 ], [ false, %__remove_hrtimer.exit.i18 ], [ false, %109 ], [ false, %_test_bit.exit.i.i.i19 ] ; 4 uses
   %i.i = load ptr, ptr %i.a, align 8
   %i.j = load ptr, ptr %i.i, align 64             ; 4 uses
   %i.k = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.j) #18, !srcloc !31 ; 4 uses
@@ -303,118 +497,12 @@ hrtimer_rearm_event.exit.i.i:                     ; preds = %bb.n, %_test_bit.ex
   %i.ad = tail call i32 @tick_program_event(i64 noundef %i.k, i32 noundef 1) #17 ; 0 uses
   br label %hrtimer_force_reprogram.exit
 
-hrtimer_force_reprogram.exit:                     ; preds = %hrtimer_rearm_event.exit.i.i, %bb.j, %bb.i, %bb.h, %bb.f, %bb.g, %lock_hrtimer_base.exit
-  %.0.shrunk = phi i1 [ true, %lock_hrtimer_base.exit ], [ true, %bb.g ], [ false, %bb.f ], [ %5, %bb.h ], [ %5, %bb.i ], [ %5, %bb.j ], [ %5, %hrtimer_rearm_event.exit.i.i ]
+hrtimer_force_reprogram.exit:                     ; preds = %55, %_test_bit.exit.i.i.i, %__remove_hrtimer.exit.i, %hrtimer_rearm_event.exit.i.i, %bb.j, %bb.i, %bb.h, %bb.g, %lock_hrtimer_base.exit
+  %.0.shrunk = phi i1 [ true, %lock_hrtimer_base.exit ], [ true, %bb.g ], [ %.0.i17, %hrtimer_rearm_event.exit.i.i ], [ %.0.i17, %bb.h ], [ %.0.i17, %bb.i ], [ %.0.i17, %bb.j ], [ false, %__remove_hrtimer.exit.i ], [ false, %55 ], [ false, %_test_bit.exit.i.i.i ]
   %.val = load ptr, ptr %i.a, align 8
   %.val.val = load ptr, ptr %.val, align 64
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %.val.val, i64 noundef %i.d) #17
   ret i1 %.0.shrunk
-}
-
-; Function Attrs: fn_ret_thunk_extern inlinehint noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc noundef zeroext i1 @hrtimer_check_user_timer(ptr noundef %0) unnamed_addr #6 align 16 prefalign(16) {
-  %2 = getelementptr i8, ptr %0, i64 48           ; 2 uses
-  %3 = load ptr, ptr %2, align 8                  ; 2 uses
-  %4 = load ptr, ptr %3, align 64
-  %5 = getelementptr i8, ptr %0, i64 64
-  %.val = load i64, ptr %5, align 8
-  %6 = getelementptr i8, ptr %3, i64 56
-  %7 = load i64, ptr %6, align 8
-  %8 = sub i64 %.val, %7                          ; 2 uses
-  %9 = getelementptr i8, ptr %4, i64 40
-  %10 = load i64, ptr %9, align 8
-  %.not = icmp slt i64 %8, %10
-  br i1 %.not, label %11, label %trace_hrtimer_start_expired.exit
-
-11:                                               ; preds = %1
-  %12 = tail call i64 @ktime_get() #17
-  %13 = icmp sgt i64 %8, %12
-  br i1 %13, label %trace_hrtimer_start_expired.exit, label %14
-
-14:                                               ; preds = %11
-  %15 = load ptr, ptr %2, align 8                 ; 5 uses
-  %16 = load ptr, ptr %15, align 64
-  %17 = getelementptr i8, ptr %0, i64 56          ; 2 uses
-  %18 = load i8, ptr %17, align 8, !range !14, !noundef !15
-  %19 = trunc nuw i8 %18 to i1
-  br i1 %19, label %20, label %__remove_hrtimer.exit
-
-20:                                               ; preds = %14
-  store volatile i8 0, ptr %17, align 8
-  %21 = getelementptr i8, ptr %0, i64 24
-  %22 = load ptr, ptr %21, align 8
-  %.not.i = icmp eq ptr %22, null
-  %23 = getelementptr i8, ptr %15, i64 40
-  %24 = tail call zeroext i1 @rb_erase_linked(ptr noundef %0, ptr noundef %23) #17
-  br i1 %24, label %33, label %25
-
-25:                                               ; preds = %20
-  %26 = getelementptr i8, ptr %15, i64 8
-  %27 = load i32, ptr %26, align 8
-  %28 = shl nuw i32 1, %27
-  %29 = xor i32 %28, -1
-  %30 = getelementptr i8, ptr %16, i64 8          ; 2 uses
-  %31 = load i32, ptr %30, align 8
-  %32 = and i32 %31, %29
-  store i32 %32, ptr %30, align 8
-  br label %33
-
-33:                                               ; preds = %25, %20
-  br i1 %.not.i, label %34, label %__remove_hrtimer.exit
-
-34:                                               ; preds = %33
-  %35 = getelementptr i8, ptr %15, i64 48
-  %36 = load ptr, ptr %35, align 16               ; 2 uses
-  %.not.i18.i = icmp eq ptr %36, null
-  br i1 %.not.i18.i, label %base_update_next_timer.exit.i, label %37
-
-37:                                               ; preds = %34
-  %38 = getelementptr i8, ptr %36, i64 40
-  %39 = load i64, ptr %38, align 8
-  br label %base_update_next_timer.exit.i
-
-base_update_next_timer.exit.i:                    ; preds = %37, %34
-  %40 = phi i64 [ %39, %37 ], [ 9223372036854775807, %34 ]
-  %41 = getelementptr i8, ptr %15, i64 24
-  store i64 %40, ptr %41, align 8
-  br label %__remove_hrtimer.exit
-
-__remove_hrtimer.exit:                            ; preds = %14, %33, %base_update_next_timer.exit.i
-  callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_start_expired, i64 8), i1 false) #19
-          to label %trace_hrtimer_start_expired.exit [label %_test_bit.exit.i.i], !srcloc !16
-
-_test_bit.exit.i.i:                               ; preds = %__remove_hrtimer.exit
-  %42 = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !83
-  %43 = zext i32 %42 to i64
-  %44 = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @__cpu_online_mask, i64 range(i64 0, 4294967296) %43) #19, !srcloc !18 ; 2 uses
-  %45 = icmp ult i8 %44, 2
-  tail call void @llvm.assume(i1 %45)
-  %46 = trunc nuw i8 %44 to i1
-  br i1 %46, label %47, label %trace_hrtimer_start_expired.exit
-
-47:                                               ; preds = %_test_bit.exit.i.i
-  %48 = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %48, ptr elementtype(i64) %48) #19, !srcloc !19
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !20
-  %49 = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_start_expired, i64 56), align 8 ; 2 uses
-  %.not.i.i = icmp eq ptr %49, null
-  br i1 %.not.i.i, label %54, label %50
-
-50:                                               ; preds = %47
-  %51 = getelementptr i8, ptr %49, i64 8
-  %52 = load ptr, ptr %51, align 8
-  %53 = tail call i32 @__SCT__tp_func_hrtimer_start_expired(ptr noundef %52, ptr noundef %0) #17 ; 0 uses
-  br label %54
-
-54:                                               ; preds = %50, %47
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !21
-  %55 = getelementptr i8, ptr %48, i64 8          ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %55, ptr elementtype(i64) %55) #19, !srcloc !22
-  br label %trace_hrtimer_start_expired.exit
-
-trace_hrtimer_start_expired.exit:                 ; preds = %54, %_test_bit.exit.i.i, %__remove_hrtimer.exit, %11, %1
-  %.0 = phi i1 [ true, %11 ], [ true, %1 ], [ false, %__remove_hrtimer.exit ], [ false, %54 ], [ false, %_test_bit.exit.i.i ]
-  ret i1 %.0
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
@@ -578,7 +666,7 @@ bb.t:                                             ; preds = %bb.l, %base_update_
           to label %trace_hrtimer_cancel.exit [label %_test_bit.exit.i.i], !srcloc !16
 
 _test_bit.exit.i.i:                               ; preds = %bb.t
-  %i.bd = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !84
+  %i.bd = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !82
   %i.be = zext i32 %i.bd to i64
   %i.bf = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @__cpu_online_mask, i64 range(i64 0, 4294967296) %i.be) #19, !srcloc !18 ; 2 uses
   %i.bg = icmp ult i8 %i.bf, 2
@@ -818,7 +906,7 @@ lock_hrtimer_base.exit:                           ; preds = %bb.c
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i64 0, -9223372036854775808) i64 @hrtimer_get_next_event() local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !85
+  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !83
   %i.b = add i64 %i.a, ptrtoint (ptr @hrtimer_bases to i64)
   %i.c = inttoptr i64 %i.b to ptr                 ; 9 uses
   %i.d = tail call i64 @_raw_spin_lock_irqsave(ptr noundef %i.c) #17
@@ -953,7 +1041,7 @@ bb.h:                                             ; preds = %__hrtimer_get_next_
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i64 0, -9223372036854775808) i64 @hrtimer_next_event_without(ptr nofree noundef readnone captures(address) %0) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !87
+  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !85
   %i.b = add i64 %i.a, ptrtoint (ptr @hrtimer_bases to i64)
   %i.c = inttoptr i64 %i.b to ptr                 ; 7 uses
   %i.d = tail call i64 @_raw_spin_lock_irqsave(ptr noundef %i.c) #17
@@ -1024,7 +1112,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %i.af = and i32 %.055.i, %i.w                   ; 2 uses
   %i.ag = tail call i32 asm "bsfl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.af, i32 -1) #20, !srcloc !26 ; 2 uses
   %.not.i = icmp eq i32 %i.ag, -1
-  br i1 %.not.i, label %hrtimer_bases_next_event_without.exit.loopexit, label %.preheader.i, !llvm.loop !86
+  br i1 %.not.i, label %hrtimer_bases_next_event_without.exit.loopexit, label %.preheader.i, !llvm.loop !84
 
 hrtimer_bases_next_event_without.exit.loopexit:   ; preds = %bb.h
   %i.ah = tail call range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %.2.lcssa.i, i64 0)
@@ -1085,7 +1173,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.bd = and i32 %.055.i32, %i.au                ; 2 uses
   %i.be = tail call i32 asm "bsfl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.bd, i32 -1) #20, !srcloc !26 ; 2 uses
   %.not.i37 = icmp eq i32 %i.be, -1
-  br i1 %.not.i37, label %hrtimer_bases_next_event_without.exit42.loopexit, label %.preheader.i31, !llvm.loop !86
+  br i1 %.not.i37, label %hrtimer_bases_next_event_without.exit42.loopexit, label %.preheader.i31, !llvm.loop !84
 
 hrtimer_bases_next_event_without.exit42.loopexit: ; preds = %bb.m
   %i.bf = tail call range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %.2.lcssa.i35, i64 0)
@@ -1135,9 +1223,9 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
-  %i.e = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.5, ptr @.str.1, i32 1855, i32 2321, i64 16) #19, !srcloc !88
+  %i.e = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.5, ptr @.str.1, i32 1855, i32 2321, i64 16) #19, !srcloc !86
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.e, i32 noundef %0) #17
-  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !89
+  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !87
   %i.f = tail call i64 @ktime_get() #17
   br label %bb.g
 
@@ -1182,7 +1270,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %debug_setup.exit
 
 debug_setup.exit:                                 ; preds = %bb.a, %_test_bit.exit.i.i.i, %bb.d
-  tail call fastcc void @__hrtimer_setup(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) #18, !srcloc !90
+  tail call fastcc void @__hrtimer_setup(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) #18, !srcloc !88
   ret void
 }
 
@@ -1248,9 +1336,9 @@ hrtimer_clockid_to_base.exit:                     ; preds = %bb.a, %bb.b, %bb.c,
   br i1 %.not, label %bb.f, label %.critedge, !prof !28
 
 bb.f:                                             ; preds = %hrtimer_clockid_to_base.exit
-  tail call void asm sideeffect "793: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 793b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 793) #19, !srcloc !91
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 1902, i32 2307, i64 16) #19, !srcloc !92
-  tail call void asm sideeffect "794: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 794b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 794) #19, !srcloc !93
+  tail call void asm sideeffect "793: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 793b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 793) #19, !srcloc !89
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 1902, i32 2307, i64 16) #19, !srcloc !90
+  tail call void asm sideeffect "794: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 794b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 794) #19, !srcloc !91
   br label %.critedge
 
 .critedge:                                        ; preds = %hrtimer_clockid_to_base.exit, %bb.f
@@ -1296,14 +1384,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %debug_setup_on_stack.exit
 
 debug_setup_on_stack.exit:                        ; preds = %bb.a, %_test_bit.exit.i.i.i, %bb.d
-  tail call fastcc void @__hrtimer_setup(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) #18, !srcloc !94
+  tail call fastcc void @__hrtimer_setup(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) #18, !srcloc !92
   ret void
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local void @__hrtimer_rearm_deferred() local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !95
+  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !93
   %i.b = add i64 %i.a, ptrtoint (ptr @hrtimer_bases to i64)
   %i.c = inttoptr i64 %i.b to ptr                 ; 16 uses
   %i.d = getelementptr i8, ptr %i.c, i64 17       ; 2 uses
@@ -1333,7 +1421,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = load i64, ptr %i.l, align 8
   %i.t = getelementptr i8, ptr %i.c, i64 632
   store i64 %i.s, ptr %i.t, align 8
-  %i.u = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !96
+  %i.u = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !94
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
@@ -1542,7 +1630,7 @@ bb.h:                                             ; preds = %bb.g, %__hrtimer_ge
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local void @hrtimer_interrupt(ptr nofree noundef writeonly captures(none) %0) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !97
+  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !95
   %i.b = add i64 %i.a, ptrtoint (ptr @hrtimer_bases to i64)
   %i.c = inttoptr i64 %i.b to ptr                 ; 26 uses
   %i.d = getelementptr i8, ptr %i.c, i64 16
@@ -1551,8 +1639,8 @@ bb.a:
   br i1 %i.f, label %bb.c, label %bb.b, !prof !29
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "807: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 807b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 807) #19, !srcloc !98
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 2192, i32 0, i64 16) #19, !srcloc !99
+  tail call void asm sideeffect "807: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 807b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 807) #19, !srcloc !96
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 2192, i32 0, i64 16) #19, !srcloc !97
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -1605,7 +1693,7 @@ arch_static_branch.exit.i:                        ; preds = %bb.d
   br label %raise_timer_softirq.exit
 
 raise_timer_softirq.exit:                         ; preds = %arch_static_branch.exit.i, %bb.e, %bb.c
-  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.q, i64 noundef %i.l, i32 noundef 15) #18, !srcloc !100
+  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.q, i64 noundef %i.l, i32 noundef 15) #18, !srcloc !98
   %i.ae = tail call i64 @ktime_get_update_offsets_now(ptr noundef %i.p, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #17 ; 3 uses
   %i.af = load i64, ptr %i.m, align 8
   store i64 %i.af, ptr %i.s, align 8
@@ -1613,7 +1701,7 @@ raise_timer_softirq.exit:                         ; preds = %arch_static_branch.
   store i64 %i.ag, ptr %i.u, align 8
   %i.ah = load i64, ptr %i.o, align 8
   store i64 %i.ah, ptr %i.w, align 8
-  %i.ai = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !101 ; 2 uses
+  %i.ai = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !99 ; 2 uses
   store i8 0, ptr %i.ab, align 1
   %i.aj = icmp slt i64 %i.ai, %i.ae
   br i1 %i.aj, label %bb.f, label %.loopexit
@@ -1640,7 +1728,7 @@ arch_static_branch.exit.i.1:                      ; preds = %bb.g
   br label %raise_timer_softirq.exit.1
 
 raise_timer_softirq.exit.1:                       ; preds = %arch_static_branch.exit.i.1, %bb.h, %bb.f
-  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.ae, i64 noundef %i.l, i32 noundef 15) #18, !srcloc !100
+  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.ae, i64 noundef %i.l, i32 noundef 15) #18, !srcloc !98
   %i.am = tail call i64 @ktime_get_update_offsets_now(ptr noundef %i.p, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #17 ; 3 uses
   %i.an = load i64, ptr %i.m, align 8
   store i64 %i.an, ptr %i.s, align 8
@@ -1648,7 +1736,7 @@ raise_timer_softirq.exit.1:                       ; preds = %arch_static_branch.
   store i64 %i.ao, ptr %i.u, align 8
   %i.ap = load i64, ptr %i.o, align 8
   store i64 %i.ap, ptr %i.w, align 8
-  %i.aq = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !101 ; 2 uses
+  %i.aq = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !99 ; 2 uses
   store i8 0, ptr %i.ab, align 1
   %i.ar = icmp slt i64 %i.aq, %i.am
   br i1 %i.ar, label %bb.i, label %.loopexit
@@ -1675,7 +1763,7 @@ arch_static_branch.exit.i.2:                      ; preds = %bb.j
   br label %raise_timer_softirq.exit.2
 
 raise_timer_softirq.exit.2:                       ; preds = %arch_static_branch.exit.i.2, %bb.k, %bb.i
-  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.am, i64 noundef %i.l, i32 noundef 15) #18, !srcloc !100
+  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.am, i64 noundef %i.l, i32 noundef 15) #18, !srcloc !98
   %i.au = tail call i64 @ktime_get_update_offsets_now(ptr noundef %i.p, ptr noundef %i.m, ptr noundef %i.n, ptr noundef %i.o) #17 ; 2 uses
   %i.av = load i64, ptr %i.m, align 8
   store i64 %i.av, ptr %i.s, align 8
@@ -1683,7 +1771,7 @@ raise_timer_softirq.exit.2:                       ; preds = %arch_static_branch.
   store i64 %i.aw, ptr %i.u, align 8
   %i.ax = load i64, ptr %i.o, align 8
   store i64 %i.ax, ptr %i.w, align 8
-  %i.ay = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !101 ; 3 uses
+  %i.ay = tail call fastcc i64 @hrtimer_update_next_event(ptr noundef %i.c) #18, !srcloc !99 ; 3 uses
   store i8 0, ptr %i.ab, align 1
   %i.az = icmp slt i64 %i.ay, %i.au
   br i1 %i.az, label %bb.l, label %.loopexit
@@ -1711,7 +1799,7 @@ bb.l:                                             ; preds = %raise_timer_softirq
   %i.bl = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr @current_task) #20, !srcloc !32
   %i.bm = inttoptr i64 %i.bl to ptr
   %i.bn = getelementptr i8, ptr %i.bm, i64 1      ; 2 uses
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock orb ${1:b},$0", "=*m,iq,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i8) %i.bn, i32 16, ptr elementtype(i8) %i.bn) #19, !srcloc !102
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock orb ${1:b},$0", "=*m,iq,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i8) %i.bn, i32 16, ptr elementtype(i8) %i.bn) #19, !srcloc !100
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %i.c, i64 noundef %i.l) #17
   ret void
 }
@@ -1768,7 +1856,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.w = load i32, ptr %i.l, align 16
   %i.x = add i32 %i.w, 1
   store i32 %i.x, ptr %i.l, align 16
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !106
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !104
   %i.y = load i32, ptr %i.l, align 16
   %i.z = add i32 %i.y, 1
   store i32 %i.z, ptr %i.l, align 16
@@ -1822,7 +1910,7 @@ __remove_hrtimer.exit.i:                          ; preds = %base_update_next_ti
           to label %trace_hrtimer_expire_entry.exit.i [label %_test_bit.exit.i.i.i], !srcloc !16
 
 _test_bit.exit.i.i.i:                             ; preds = %__remove_hrtimer.exit.i
-  %i.at = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !107
+  %i.at = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !105
   %i.au = zext i32 %i.at to i64
   %i.av = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @__cpu_online_mask, i64 range(i64 0, 4294967296) %i.au) #19, !srcloc !18 ; 2 uses
   %i.aw = icmp ult i8 %i.av, 2
@@ -1851,12 +1939,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %trace_hrtimer_expire_entry.exit.i
 
 trace_hrtimer_expire_entry.exit.i:                ; preds = %bb.j, %_test_bit.exit.i.i.i, %__remove_hrtimer.exit.i
-  %i.be = tail call i32 %i.as(ptr noundef nonnull %i.t) #17, !inline_history !103
+  %i.be = tail call i32 %i.as(ptr noundef nonnull %i.t) #17, !inline_history !101
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_hrtimer_expire_exit, i64 8), i1 false) #19
           to label %trace_hrtimer_expire_exit.exit.i [label %_test_bit.exit.i.i25.i], !srcloc !16
 
 _test_bit.exit.i.i25.i:                           ; preds = %trace_hrtimer_expire_entry.exit.i
-  %i.bf = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !108
+  %i.bf = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #19, !srcloc !106
   %i.bg = zext i32 %i.bf to i64
   %i.bh = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @__cpu_online_mask, i64 range(i64 0, 4294967296) %i.bg) #19, !srcloc !18 ; 2 uses
   %i.bi = icmp ult i8 %i.bh, 2
@@ -1963,7 +2051,7 @@ enqueue_hrtimer.exit:                             ; preds = %bb.u, %bb.t, %bb.n,
   %i.cq = load i32, ptr %i.l, align 16
   %i.cr = add i32 %i.cq, 1
   store i32 %i.cr, ptr %i.l, align 16
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !106
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !104
   %i.cs = load i32, ptr %i.l, align 16
   %i.ct = add i32 %i.cs, 1
   store i32 %i.ct, ptr %i.l, align 16
@@ -1972,22 +2060,22 @@ enqueue_hrtimer.exit:                             ; preds = %bb.u, %bb.t, %bb.n,
   br i1 %.not.i, label %__run_hrtimer.exit, label %bb.v, !prof !29
 
 bb.v:                                             ; preds = %enqueue_hrtimer.exit
-  tail call void asm sideeffect "800: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 800b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 800) #19, !srcloc !109
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 2059, i32 2307, i64 16) #19, !srcloc !110
-  tail call void asm sideeffect "801: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 801b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 801) #19, !srcloc !111
+  tail call void asm sideeffect "800: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 800b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 800) #19, !srcloc !107
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 2059, i32 2307, i64 16) #19, !srcloc !108
+  tail call void asm sideeffect "801: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 801b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 801) #19, !srcloc !109
   br label %__run_hrtimer.exit
 
 __run_hrtimer.exit:                               ; preds = %enqueue_hrtimer.exit, %bb.v
   store ptr null, ptr %i.k, align 32
   %i.cv = load ptr, ptr %i.j, align 16            ; 2 uses
   %.not32 = icmp eq ptr %i.cv, null
-  br i1 %.not32, label %.critedge, label %.lr.ph, !llvm.loop !104
+  br i1 %.not32, label %.critedge, label %.lr.ph, !llvm.loop !102
 
 .critedge:                                        ; preds = %.lr.ph, %__run_hrtimer.exit, %.preheader
   %i.cw = and i32 %.02838, %i.p                   ; 2 uses
   %i.cx = tail call i32 asm "bsfl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.cw, i32 -1) #20, !srcloc !26 ; 2 uses
   %.not = icmp eq i32 %i.cx, -1
-  br i1 %.not, label %._crit_edge, label %.preheader, !llvm.loop !105
+  br i1 %.not, label %._crit_edge, label %.preheader, !llvm.loop !103
 }
 
 ; Function Attrs: noredzone null_pointer_is_valid
@@ -1996,7 +2084,7 @@ declare dso_local void @_raw_spin_unlock_irqrestore(ptr noundef, i64 noundef) lo
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local void @hrtimer_run_queues() local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !112
+  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !110
   %i.b = add i64 %i.a, ptrtoint (ptr @hrtimer_bases to i64)
   %i.c = inttoptr i64 %i.b to ptr                 ; 13 uses
   %i.d = getelementptr i8, ptr %i.c, i64 16
@@ -2013,7 +2101,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not17, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !113
+  %i.i = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !111
   %i.j = add i64 %i.i, ptrtoint (ptr @hrtimer_bases to i64)
   %i.k = inttoptr i64 %i.j to ptr                 ; 2 uses
   %i.l = tail call i32 @tick_init_highres() #17
@@ -2031,7 +2119,7 @@ bb.e:                                             ; preds = %bb.c
   store i8 1, ptr %i.p, align 16
   store i32 1, ptr @hrtimer_resolution, align 4
   tail call void @tick_setup_sched_timer(i1 noundef zeroext true) #17
-  tail call void @retrigger_next_event(ptr poison) #18, !srcloc !114
+  tail call void @retrigger_next_event(ptr poison) #18, !srcloc !112
   callbr void asm sideeffect "1:jmp ${2:l}\0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr @hrtimer_highres_enabled_key, i1 true) #19
           to label %hrtimer_switch_to_hres.exit [label %hrtimer_highres_enabled.exit.i.i], !srcloc !24
 
@@ -2077,7 +2165,7 @@ arch_static_branch.exit.i:                        ; preds = %bb.g
   br label %raise_timer_softirq.exit
 
 raise_timer_softirq.exit:                         ; preds = %arch_static_branch.exit.i, %bb.h, %bb.f
-  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.x, i64 noundef %i.s, i32 noundef 15) #18, !srcloc !115
+  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.x, i64 noundef %i.s, i32 noundef 15) #18, !srcloc !113
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %i.c, i64 noundef %i.s) #17
   br label %hrtimer_switch_to_hres.exit
 
@@ -2344,7 +2432,7 @@ arch_static_branch.exit27:                        ; preds = %bb.b, %bb.c
   %i.d = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr @current_task) #20, !srcloc !32
   %i.e = inttoptr i64 %i.d to ptr                 ; 6 uses
   %i.f = getelementptr i8, ptr %i.e, i64 24       ; 4 uses
-  %i.g = tail call i32 asm sideeffect "xchgl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.f, i32 8193, ptr elementtype(i32) %i.f) #19, !srcloc !117 ; 0 uses
+  %i.g = tail call i32 asm sideeffect "xchgl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.f, i32 8193, ptr elementtype(i32) %i.f) #19, !srcloc !115 ; 0 uses
   %.val7.i.i = load i64, ptr %i.a, align 8        ; 2 uses
   %.val.i.i = load i64, ptr %i.b, align 8
   %i.h = sub i64 %.val.i.i, %.val7.i.i
@@ -2399,7 +2487,7 @@ signal_pending.exit:                              ; preds = %test_tsk_thread_fla
   %i.r = load volatile i64, ptr %i.e, align 8
   %i.s = and i64 %i.r, 2
   %.not23 = icmp eq i64 %i.s, 0
-  br i1 %.not23, label %bb.b, label %.critedge, !llvm.loop !116
+  br i1 %.not23, label %bb.b, label %.critedge, !llvm.loop !114
 
 .critedge:                                        ; preds = %test_tsk_thread_flag.exit.i, %hrtimer_cancel.exit, %signal_pending.exit
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_sched_set_state_tp, i64 8), i1 false) #19
@@ -2493,7 +2581,7 @@ bb.a:
   store i64 %i.d, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 64
   store i64 %i.d, ptr %i.f, align 8
-  %i.g = call fastcc i32 @do_nanosleep(ptr noundef nonnull %1, i32 noundef 0) #18, !srcloc !118
+  %i.g = call fastcc i32 @do_nanosleep(ptr noundef nonnull %1, i32 noundef 0) #18, !srcloc !116
   %i.h = sext i32 %i.g to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   ret i64 %i.h
@@ -2506,7 +2594,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8
   %i.c = getelementptr i8, ptr %0, i64 104
   %i.d = load i64, ptr %i.c, align 8
-  %i.e = tail call fastcc i64 @__se_sys_nanosleep(i64 noundef %i.b, i64 noundef %i.d) #18, !srcloc !119
+  %i.e = tail call fastcc i64 @__se_sys_nanosleep(i64 noundef %i.b, i64 noundef %i.d) #18, !srcloc !117
   ret i64 %i.e
 }
 
@@ -2607,7 +2695,7 @@ bb.a:
   %i.d = getelementptr i8, ptr %0, i64 88
   %i.e = load i64, ptr %i.d, align 8
   %i.f = and i64 %i.e, 4294967295
-  %i.g = tail call fastcc i64 @__se_sys_nanosleep(i64 noundef %i.c, i64 noundef %i.f) #18, !srcloc !120
+  %i.g = tail call fastcc i64 @__se_sys_nanosleep(i64 noundef %i.c, i64 noundef %i.f) #18, !srcloc !118
   ret i64 %i.g
 }
 
@@ -2618,7 +2706,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8
   %i.c = getelementptr i8, ptr %0, i64 104
   %i.d = load i64, ptr %i.c, align 8
-  %i.e = tail call fastcc i64 @__se_sys_nanosleep_time32(i64 noundef %i.b, i64 noundef %i.d) #18, !srcloc !121
+  %i.e = tail call fastcc i64 @__se_sys_nanosleep_time32(i64 noundef %i.b, i64 noundef %i.d) #18, !srcloc !119
   ret i64 %i.e
 }
 
@@ -2719,7 +2807,7 @@ bb.a:
   %i.d = getelementptr i8, ptr %0, i64 88
   %i.e = load i64, ptr %i.d, align 8
   %i.f = and i64 %i.e, 4294967295
-  %i.g = tail call fastcc i64 @__se_sys_nanosleep_time32(i64 noundef %i.c, i64 noundef %i.f) #18, !srcloc !122
+  %i.g = tail call fastcc i64 @__se_sys_nanosleep_time32(i64 noundef %i.c, i64 noundef %i.f) #18, !srcloc !120
   ret i64 %i.g
 }
 
@@ -2827,7 +2915,7 @@ bb.b:                                             ; preds = %bb.a
 
 find_first_and_bit.exit:                          ; preds = %bb.a, %bb.b
   %i.f = phi i64 [ %i.e, %bb.b ], [ 64, %bb.a ]   ; 2 uses
-  %i.g = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !125
+  %i.g = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !123
   %i.h = add i64 %i.g, ptrtoint (ptr @hrtimer_bases to i64)
   %i.i = inttoptr i64 %i.h to ptr                 ; 4 uses
   %sext = shl i64 %i.f, 32
@@ -2879,8 +2967,8 @@ bb.e:                                             ; preds = %enqueue_hrtimer.exi
   br i1 %.not14.i, label %bb.f, label %bb.g, !prof !28
 
 bb.f:                                             ; preds = %bb.e
-  tail call void asm sideeffect "815: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 815b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 815) #19, !srcloc !126
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 2552, i32 0, i64 16) #19, !srcloc !127
+  tail call void asm sideeffect "815: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 815b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 815) #19, !srcloc !124
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str, ptr @.str.1, i32 2552, i32 0, i64 16) #19, !srcloc !125
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -2995,12 +3083,12 @@ bb.r:                                             ; preds = %bb.q
 enqueue_hrtimer.exit:                             ; preds = %bb.q, %bb.r
   %i.bw = load ptr, ptr %i.w, align 16            ; 2 uses
   %.not.i19 = icmp eq ptr %i.bw, null
-  br i1 %.not.i19, label %migrate_hrtimer_list.exit, label %bb.e, !llvm.loop !123
+  br i1 %.not.i19, label %migrate_hrtimer_list.exit, label %bb.e, !llvm.loop !121
 
 migrate_hrtimer_list.exit:                        ; preds = %enqueue_hrtimer.exit, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
-  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !124
+  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !122
 }
 
 ; Function Attrs: noredzone null_pointer_is_valid
@@ -3018,9 +3106,9 @@ declare dso_local void @_raw_spin_unlock(ptr noundef) local_unnamed_addr #5 sect
 ; Function Attrs: cold fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid optsize sspstrong
 define dso_local void @hrtimers_init() local_unnamed_addr #3 section ".init.text" align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #16, !srcloc !128
+  %i.a = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #16, !srcloc !126
   %i.b = tail call i32 @hrtimers_prepare_cpu(i32 noundef %i.a) #18 ; 0 uses
-  %i.c = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #16, !srcloc !129 ; 0 uses
+  %i.c = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @cpu_number) #16, !srcloc !127 ; 0 uses
   %i.d = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !51
   %i.e = add i64 %i.d, ptrtoint (ptr @hrtimer_bases to i64)
   %i.f = inttoptr i64 %i.e to ptr                 ; 9 uses
@@ -3052,7 +3140,7 @@ declare dso_local void @open_softirq(i32 noundef, ptr noundef) local_unnamed_add
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal void @hrtimer_run_softirq() #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !130
+  %i.a = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !128
   %i.b = add i64 %i.a, ptrtoint (ptr @hrtimer_bases to i64)
   %i.c = inttoptr i64 %i.b to ptr                 ; 15 uses
   %i.d = tail call i64 @_raw_spin_lock_irqsave(ptr noundef %i.c) #17 ; 2 uses
@@ -3070,7 +3158,7 @@ bb.a:
   %i.n = load i64, ptr %i.g, align 8
   %i.o = getelementptr i8, ptr %i.c, i64 632
   store i64 %i.n, ptr %i.o, align 8
-  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.i, i64 noundef %i.d, i32 noundef 240) #18, !srcloc !131
+  tail call fastcc void @__hrtimer_run_queues(ptr noundef %i.c, i64 noundef %i.i, i64 noundef %i.d, i32 noundef 240) #18, !srcloc !129
   %i.p = getelementptr i8, ptr %i.c, i64 20
   store i8 0, ptr %i.p, align 4
   %i.q = getelementptr i8, ptr %i.c, i64 8
@@ -3173,7 +3261,7 @@ define internal fastcc ptr @switch_hrtimer_base(ptr nofree noundef captures(addr
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %i.b = load i32, ptr %i.a, align 8
-  %i.c = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !132
+  %i.c = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !130
   %i.d = add i64 %i.c, ptrtoint (ptr @hrtimer_bases to i64)
   %i.e = inttoptr i64 %i.d to ptr                 ; 6 uses
   %i.f = getelementptr i8, ptr %i.e, i64 21       ; 3 uses
@@ -3576,56 +3664,54 @@ attributes #21 = { cold noredzone nounwind "no-builtin-wcslen" }
 !78 = !{i64 2159340356, i64 2159341405, i64 2159341438, i64 2159341473, i64 2159341489, i64 2159342416, i64 2159342474, i64 2159342523, i64 2159342333, i64 2159341548, i64 2159341580, i64 2159341663}
 !79 = !{i64 2159342824, i64 2159342700}
 !80 = !{i64 47252}
-!81 = !{i64 47352}
-!82 = !{i64 47479}
-!83 = !{i64 2159037746}
-!84 = !{i64 2159108439}
-!85 = !{i64 2159403857}
-!86 = distinct !{!86, !27}
-!87 = !{i64 2159406851}
-!88 = !{i64 2159419061, i64 2159419088, i64 2159419488, i64 2159419521, i64 2159419556, i64 2159419572, i64 2159420413, i64 2159420471, i64 2159420520, i64 2159420330, i64 2159419631, i64 2159419663}
-!89 = !{i64 2159413367}
-!90 = !{i64 57487}
-!91 = !{i64 2159425491, i64 2159425366}
-!92 = !{i64 2159426014, i64 2159427055, i64 2159427088, i64 2159427123, i64 2159427139, i64 2159428066, i64 2159428124, i64 2159428173, i64 2159427983, i64 2159427198, i64 2159427230, i64 2159427313}
-!93 = !{i64 2159428475, i64 2159428351}
-!94 = !{i64 58105}
-!95 = !{i64 2159465277}
-!96 = !{i64 64666}
-!97 = !{i64 2159468223}
-!98 = !{i64 2159469065, i64 2159468940}
-!99 = !{i64 2159469588, i64 2159470064, i64 2159470097, i64 2159470132, i64 2159470148, i64 2159470989, i64 2159471047, i64 2159471096, i64 2159470906, i64 2159470207, i64 2159470239}
-!100 = !{i64 66460}
-!101 = !{i64 66885}
-!102 = !{i64 2148541052, i64 2148541091, i64 2148541112, i64 2148541149, i64 2148541172, i64 2148541043}
-!103 = distinct !{null}
-!104 = distinct !{!104, !27}
-!105 = distinct !{!105, !27}
-!106 = !{i64 2151269011}
-!107 = !{i64 2159006283}
-!108 = !{i64 2159073231}
-!109 = !{i64 2159449248, i64 2159449123}
-!110 = !{i64 2159449771, i64 2159450831, i64 2159450864, i64 2159450899, i64 2159450915, i64 2159451842, i64 2159451900, i64 2159451949, i64 2159451759, i64 2159450974, i64 2159451006, i64 2159451089}
-!111 = !{i64 2159452251, i64 2159452127}
-!112 = !{i64 2159473819}
-!113 = !{i64 2159330007}
-!114 = !{i64 23046}
-!115 = !{i64 68277}
-!116 = distinct !{!116, !27}
-!117 = !{i64 2159490807}
-!118 = !{i64 72826}
-!119 = !{i64 2159499438}
-!120 = !{i64 2159501901}
-!121 = !{i64 2159516721}
-!122 = !{i64 2159519176}
-!123 = distinct !{!123, !27}
-!124 = distinct !{!124, !27}
-!125 = !{i64 2159533962}
-!126 = !{i64 2159530674, i64 2159530549}
-!127 = !{i64 2159531197, i64 2159531673, i64 2159531706, i64 2159531741, i64 2159531757, i64 2159532598, i64 2159532656, i64 2159532705, i64 2159532515, i64 2159531816, i64 2159531848}
-!128 = !{i64 2159538571}
-!129 = !{i64 2159542547}
-!130 = !{i64 2159457024}
-!131 = !{i64 63458}
-!132 = !{i64 2159300122}
+!81 = !{i64 2159037746}
+!82 = !{i64 2159108439}
+!83 = !{i64 2159403857}
+!84 = distinct !{!84, !27}
+!85 = !{i64 2159406851}
+!86 = !{i64 2159419061, i64 2159419088, i64 2159419488, i64 2159419521, i64 2159419556, i64 2159419572, i64 2159420413, i64 2159420471, i64 2159420520, i64 2159420330, i64 2159419631, i64 2159419663}
+!87 = !{i64 2159413367}
+!88 = !{i64 57487}
+!89 = !{i64 2159425491, i64 2159425366}
+!90 = !{i64 2159426014, i64 2159427055, i64 2159427088, i64 2159427123, i64 2159427139, i64 2159428066, i64 2159428124, i64 2159428173, i64 2159427983, i64 2159427198, i64 2159427230, i64 2159427313}
+!91 = !{i64 2159428475, i64 2159428351}
+!92 = !{i64 58105}
+!93 = !{i64 2159465277}
+!94 = !{i64 64666}
+!95 = !{i64 2159468223}
+!96 = !{i64 2159469065, i64 2159468940}
+!97 = !{i64 2159469588, i64 2159470064, i64 2159470097, i64 2159470132, i64 2159470148, i64 2159470989, i64 2159471047, i64 2159471096, i64 2159470906, i64 2159470207, i64 2159470239}
+!98 = !{i64 66460}
+!99 = !{i64 66885}
+!100 = !{i64 2148541052, i64 2148541091, i64 2148541112, i64 2148541149, i64 2148541172, i64 2148541043}
+!101 = distinct !{null}
+!102 = distinct !{!102, !27}
+!103 = distinct !{!103, !27}
+!104 = !{i64 2151269011}
+!105 = !{i64 2159006283}
+!106 = !{i64 2159073231}
+!107 = !{i64 2159449248, i64 2159449123}
+!108 = !{i64 2159449771, i64 2159450831, i64 2159450864, i64 2159450899, i64 2159450915, i64 2159451842, i64 2159451900, i64 2159451949, i64 2159451759, i64 2159450974, i64 2159451006, i64 2159451089}
+!109 = !{i64 2159452251, i64 2159452127}
+!110 = !{i64 2159473819}
+!111 = !{i64 2159330007}
+!112 = !{i64 23046}
+!113 = !{i64 68277}
+!114 = distinct !{!114, !27}
+!115 = !{i64 2159490807}
+!116 = !{i64 72826}
+!117 = !{i64 2159499438}
+!118 = !{i64 2159501901}
+!119 = !{i64 2159516721}
+!120 = !{i64 2159519176}
+!121 = distinct !{!121, !27}
+!122 = distinct !{!122, !27}
+!123 = !{i64 2159533962}
+!124 = !{i64 2159530674, i64 2159530549}
+!125 = !{i64 2159531197, i64 2159531673, i64 2159531706, i64 2159531741, i64 2159531757, i64 2159532598, i64 2159532656, i64 2159532705, i64 2159532515, i64 2159531816, i64 2159531848}
+!126 = !{i64 2159538571}
+!127 = !{i64 2159542547}
+!128 = !{i64 2159457024}
+!129 = !{i64 63458}
+!130 = !{i64 2159300122}
 end_hunk_1

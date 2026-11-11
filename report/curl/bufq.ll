@@ -202,21 +202,128 @@ prune_head.exit:                                  ; preds = %.lr.ph.i, %bb.o, %c
 
 ; Function Attrs: nounwind uwtable
 define i32 @Curl_bufq_pass(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef captures(none) initializes((0, 8)) %3) local_unnamed_addr #2 {
-bb.a:
-  %4 = alloca ptr, align 8                        ; 5 uses
   %5 = alloca i64, align 8                        ; 5 uses
-  %6 = alloca i64, align 8                        ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
   store i64 0, ptr %3, align 8, !tbaa !39
-  %7 = call zeroext i1 @Curl_bufq_peek(ptr noundef %0, ptr noundef nonnull %4, ptr noundef nonnull %5)
-  br i1 %7, label %.lr.ph.a, label %.loopexit
+  %6 = load ptr, ptr %0, align 8, !tbaa !34       ; 2 uses
+  %.not.i32 = icmp eq ptr %6, null
+  br i1 %.not.i32, label %.loopexit, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  %8 = load ptr, ptr %4, align 8, !tbaa !42
-  %9 = load i64, ptr %5, align 8, !tbaa !39
-  %i.a = call i32 %1(ptr noundef %2, ptr noundef %8, i64 noundef %9, ptr noundef nonnull %6) #10 ; 2 uses
+.lr.ph:                                           ; preds = %4
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  br label %13
+
+13:                                               ; preds = %.lr.ph, %bb.e
+  %14 = phi ptr [ %6, %.lr.ph ], [ %57, %bb.e ]   ; 4 uses
+  %15 = getelementptr i8, ptr %14, i64 16
+  %.val15.i = load i64, ptr %15, align 8, !tbaa !36 ; 2 uses
+  %16 = getelementptr i8, ptr %14, i64 24
+  %.val16.i = load i64, ptr %16, align 8, !tbaa !37 ; 2 uses
+  %.not18.i = icmp ult i64 %.val15.i, %.val16.i
+  br i1 %.not18.i, label %prune_head.exit.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %13, %52
+  %17 = phi ptr [ %53, %52 ], [ %14, %13 ]        ; 11 uses
+  %18 = getelementptr i8, ptr %17, i64 16         ; 2 uses
+  %.val.i.i = load i64, ptr %18, align 8, !tbaa !36 ; 2 uses
+  %19 = getelementptr i8, ptr %17, i64 24
+  %.val25.i.i = load i64, ptr %19, align 8, !tbaa !37 ; 2 uses
+  %.not26.i.i = icmp ult i64 %.val.i.i, %.val25.i.i
+  br i1 %.not26.i.i, label %prune_head.exit.i, label %20
+
+20:                                               ; preds = %.lr.ph.i.i
+  %21 = load ptr, ptr %17, align 8, !tbaa !22     ; 2 uses
+  store ptr %21, ptr %0, align 8, !tbaa !34
+  %22 = load ptr, ptr %7, align 8, !tbaa !32
+  %23 = icmp eq ptr %22, %17
+  br i1 %23, label %24, label %25
+
+24:                                               ; preds = %20
+  store ptr %21, ptr %7, align 8, !tbaa !32
+  br label %25
+
+25:                                               ; preds = %24, %20
+  %26 = load ptr, ptr %8, align 8, !tbaa !31      ; 5 uses
+  %.not23.i.i = icmp eq ptr %26, null
+  br i1 %.not23.i.i, label %39, label %27
+
+27:                                               ; preds = %25
+  %28 = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 3 uses
+  %29 = load i64, ptr %28, align 8, !tbaa !25
+  %30 = getelementptr inbounds nuw i8, ptr %26, i64 24
+  %31 = load i64, ptr %30, align 8, !tbaa !19
+  %.not.i.i.i = icmp ult i64 %29, %31
+  br i1 %.not.i.i.i, label %bb.a, label %32
+
+32:                                               ; preds = %27
+  %33 = load ptr, ptr @Curl_cfree, align 8, !tbaa !23
+  call void %33(ptr noundef nonnull %17) #10, !inline_history !50
+  br label %bufcp_put.exit.i.i
+
+bb.a:                                             ; preds = %27
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %18, i8 0, i64 16, i1 false)
+  %34 = load ptr, ptr %26, align 8, !tbaa !40
+  store ptr %34, ptr %17, align 8, !tbaa !22
+  store ptr %17, ptr %26, align 8, !tbaa !40
+  %35 = load i64, ptr %28, align 8, !tbaa !25
+  %36 = add i64 %35, 1
+  store i64 %36, ptr %28, align 8, !tbaa !25
+  br label %bufcp_put.exit.i.i
+
+bufcp_put.exit.i.i:                               ; preds = %bb.a, %32
+  %37 = load i64, ptr %9, align 8, !tbaa !33
+  %38 = add i64 %37, -1
+  store i64 %38, ptr %9, align 8, !tbaa !33
+  br label %52
+
+39:                                               ; preds = %25
+  %40 = load i64, ptr %9, align 8, !tbaa !33
+  %41 = load i64, ptr %10, align 8, !tbaa !29
+  %42 = icmp ugt i64 %40, %41
+  br i1 %42, label %46, label %43
+
+43:                                               ; preds = %39
+  %44 = load i32, ptr %11, align 8, !tbaa !30
+  %45 = and i32 %44, 2
+  %.not24.i.i = icmp eq i32 %45, 0
+  br i1 %.not24.i.i, label %50, label %46
+
+46:                                               ; preds = %43, %39
+  %47 = load ptr, ptr @Curl_cfree, align 8, !tbaa !23
+  call void %47(ptr noundef nonnull %17) #10, !inline_history !51
+  %48 = load i64, ptr %9, align 8, !tbaa !33
+  %49 = add i64 %48, -1
+  store i64 %49, ptr %9, align 8, !tbaa !33
+  br label %52
+
+50:                                               ; preds = %43
+  %51 = load ptr, ptr %12, align 8, !tbaa !35
+  store ptr %51, ptr %17, align 8, !tbaa !22
+  store ptr %17, ptr %12, align 8, !tbaa !35
+  br label %52
+
+52:                                               ; preds = %50, %46, %bufcp_put.exit.i.i
+  %53 = load ptr, ptr %0, align 8, !tbaa !34      ; 2 uses
+  %.not.i.i = icmp eq ptr %53, null
+  br i1 %.not.i.i, label %.loopexit, label %.lr.ph.i.i, !llvm.loop !5
+
+prune_head.exit.i:                                ; preds = %.lr.ph.i.i, %13
+  %.val14.i = phi i64 [ %.val16.i, %13 ], [ %.val25.i.i, %.lr.ph.i.i ] ; 2 uses
+  %.val.i = phi i64 [ %.val15.i, %13 ], [ %.val.i.i, %.lr.ph.i.i ] ; 3 uses
+  %.pr.i = phi ptr [ %14, %13 ], [ %17, %.lr.ph.i.i ]
+  %.not19.i = icmp ult i64 %.val.i, %.val14.i
+  br i1 %.not19.i, label %.lr.ph.a, label %.loopexit
+
+.lr.ph.a:                                         ; preds = %prune_head.exit.i
+  %54 = getelementptr inbounds nuw i8, ptr %.pr.i, i64 32
+  %55 = getelementptr inbounds nuw i8, ptr %54, i64 %.val.i
+  %56 = sub nuw i64 %.val14.i, %.val.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  %i.a = call i32 %1(ptr noundef %2, ptr noundef nonnull %55, i64 noundef %56, ptr noundef nonnull %5) #10 ; 2 uses
   switch i32 %i.a, label %.thread [
     i32 0, label %bb.c
     i32 81, label %bb.b
@@ -229,7 +336,7 @@ bb.b:                                             ; preds = %.lr.ph.a
   br label %.thread
 
 bb.c:                                             ; preds = %.lr.ph.a
-  %i.c = load i64, ptr %6, align 8, !tbaa !39     ; 3 uses
+  %i.c = load i64, ptr %5, align 8, !tbaa !39     ; 3 uses
   %.not15 = icmp eq i64 %i.c, 0
   %i.d = load i64, ptr %3, align 8, !tbaa !39     ; 2 uses
   br i1 %.not15, label %bb.d, label %bb.e
@@ -241,33 +348,31 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %.lr.ph.a, %bb.d, %bb.b
   %.3.ph = phi i32 [ %spec.select, %bb.b ], [ %spec.select18, %bb.d ], [ %i.a, %.lr.ph.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
   %i.e = add i64 %i.d, %i.c
   store i64 %i.e, ptr %3, align 8, !tbaa !39
-  call void @Curl_bufq_skip(ptr noundef %0, i64 noundef %i.c)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  %10 = call zeroext i1 @Curl_bufq_peek(ptr noundef %0, ptr noundef nonnull %4, ptr noundef nonnull %5)
-  br i1 %10, label %.lr.ph.a, label %.loopexit
-
-.loopexit:                                        ; preds = %bb.e, %bb.a, %.thread
-  %.4 = phi i32 [ %.3.ph, %.thread ], [ 0, %bb.a ], [ 0, %bb.e ]
+  call void @Curl_bufq_skip(ptr noundef nonnull %0, i64 noundef %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  %57 = load ptr, ptr %0, align 8, !tbaa !34      ; 2 uses
+  %.not.i = icmp eq ptr %57, null
+  br i1 %.not.i, label %.loopexit, label %13
+
+.loopexit:                                        ; preds = %prune_head.exit.i, %bb.e, %52, %4, %.thread
+  %.4 = phi i32 [ %.3.ph, %.thread ], [ 0, %4 ], [ 0, %52 ], [ 0, %bb.e ], [ 0, %prune_head.exit.i ]
   ret i32 %.4
 }
 
 ; Function Attrs: nounwind uwtable
 define i32 @Curl_bufq_write_pass(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr nofree noundef captures(none) initializes((0, 8)) %5) local_unnamed_addr #2 {
 bb.a:
-  %6 = alloca ptr, align 8                        ; 7 uses
-  %i.a = alloca i64, align 8                      ; 7 uses
-  %7 = alloca i64, align 8                        ; 7 uses
+  %i.a = alloca i64, align 8                      ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i64 0, ptr %5, align 8, !tbaa !39
   %.not79 = icmp eq i64 %2, 0
-  br i1 %.not79, label %.loopexit, label %.lr.ph
+  br i1 %.not79, label %Curl_bufq_write.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -282,22 +387,22 @@ bb.b:                                             ; preds = %.lr.ph, %chunk_appe
   %.02476 = phi i64 [ %2, %.lr.ph ], [ %i.ah, %chunk_append.exit.thread.i.thread.thread ] ; 2 uses
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !32   ; 3 uses
   %.not.i = icmp eq ptr %i.g, null
-  br i1 %.not.i, label %.lr.ph.i33.preheader, label %bb.c
+  br i1 %.not.i, label %Curl_bufq_is_full.exit.thread41, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.c, align 8, !tbaa !35
   %.not11.i = icmp eq ptr %i.h, null
-  br i1 %.not11.i, label %bb.d, label %.lr.ph.i33.preheader
+  br i1 %.not11.i, label %bb.d, label %Curl_bufq_is_full.exit.thread41
 
 bb.d:                                             ; preds = %bb.c
   %i.i = load i64, ptr %i.d, align 8, !tbaa !33   ; 2 uses
   %i.j = load i64, ptr %i.e, align 8, !tbaa !29   ; 2 uses
   %i.k = icmp ult i64 %i.i, %i.j
-  br i1 %i.k, label %.lr.ph.i33.preheader, label %bb.e
+  br i1 %i.k, label %Curl_bufq_is_full.exit.thread41, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.l = icmp ugt i64 %i.i, %i.j
-  br i1 %i.l, label %Curl_bufq_is_full.exit.thread41, label %Curl_bufq_is_full.exit
+  br i1 %i.l, label %.lr.ph.i.a, label %Curl_bufq_is_full.exit
 
 Curl_bufq_is_full.exit:                           ; preds = %bb.e
   %i.m = getelementptr i8, ptr %i.g, i64 8
@@ -305,78 +410,32 @@ Curl_bufq_is_full.exit:                           ; preds = %bb.e
   %i.n = getelementptr i8, ptr %i.g, i64 24
   %.val12.i = load i64, ptr %i.n, align 8, !tbaa !37
   %.not = icmp ult i64 %.val12.i, %.val.i
-  br i1 %.not, label %.lr.ph.i33.preheader, label %Curl_bufq_is_full.exit.thread41
+  br i1 %.not, label %Curl_bufq_is_full.exit.thread41, label %.lr.ph.i.a
 
-Curl_bufq_is_full.exit.thread41:                  ; preds = %bb.e, %Curl_bufq_is_full.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  %8 = call zeroext i1 @Curl_bufq_peek(ptr noundef nonnull %0, ptr noundef nonnull %6, ptr noundef nonnull %i.a)
-  br i1 %8, label %.lr.ph.i.a, label %Curl_bufq_is_full.exit.thread.sink.split
-
-.lr.ph.i.a:                                       ; preds = %Curl_bufq_is_full.exit.thread41, %15
-  %.0 = phi i64 [ %16, %15 ], [ 0, %Curl_bufq_is_full.exit.thread41 ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
-  %9 = load ptr, ptr %6, align 8, !tbaa !42
-  %10 = load i64, ptr %i.a, align 8, !tbaa !39
-  %i.o = call i32 %3(ptr noundef %4, ptr noundef %9, i64 noundef %10, ptr noundef nonnull %7) #10, !inline_history !51 ; 2 uses
-  switch i32 %i.o, label %Curl_bufq_pass.exit [
-    i32 0, label %12
-    i32 81, label %11
-  ]
-
-11:                                               ; preds = %.lr.ph.i.a
-  %.not17.i = icmp eq i64 %.0, 0
-  br i1 %.not17.i, label %Curl_bufq_pass.exit.thread49, label %Curl_bufq_pass.exit.thread46
-
-12:                                               ; preds = %.lr.ph.i.a
-  %13 = load i64, ptr %7, align 8, !tbaa !39      ; 3 uses
-  %.not15.i = icmp eq i64 %13, 0
-  br i1 %.not15.i, label %14, label %15
-
-14:                                               ; preds = %12
-  %.not16.i = icmp eq i64 %.0, 0
-  br i1 %.not16.i, label %Curl_bufq_pass.exit.thread49, label %Curl_bufq_pass.exit.thread46
-
-15:                                               ; preds = %12
-  %16 = add i64 %13, %.0
-  call void @Curl_bufq_skip(ptr noundef nonnull %0, i64 noundef %13)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  %17 = call zeroext i1 @Curl_bufq_peek(ptr noundef nonnull %0, ptr noundef nonnull %6, ptr noundef nonnull %i.a)
-  br i1 %17, label %.lr.ph.i.a, label %Curl_bufq_is_full.exit.thread.sink.split
-
-Curl_bufq_pass.exit.thread46:                     ; preds = %11, %14
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  br label %Curl_bufq_is_full.exit.thread.sink.split
-
-Curl_bufq_pass.exit.thread49:                     ; preds = %11, %14
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  br label %.loopexit
-
-Curl_bufq_pass.exit:                              ; preds = %.lr.ph.i.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  br label %Curl_bufq_write.exit.thread
-
-Curl_bufq_is_full.exit.thread.sink.split:         ; preds = %15, %Curl_bufq_is_full.exit.thread41, %Curl_bufq_pass.exit.thread46
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  br label %.lr.ph.i33.preheader
-
-.lr.ph.i33.preheader:                             ; preds = %Curl_bufq_is_full.exit.thread.sink.split, %bb.c, %bb.d, %bb.b, %Curl_bufq_is_full.exit
+Curl_bufq_is_full.exit.thread41:                  ; preds = %bb.c, %bb.d, %bb.b, %.lr.ph.i.a, %Curl_bufq_is_full.exit
   br label %.lr.ph.i33
 
-.lr.ph.i33:                                       ; preds = %.lr.ph.i33.preheader, %chunk_append.exit.i
-  %.1 = phi i64 [ %i.ac, %chunk_append.exit.i ], [ 0, %.lr.ph.i33.preheader ] ; 3 uses
-  %.01930.i = phi i64 [ %i.ae, %chunk_append.exit.i ], [ %.02476, %.lr.ph.i33.preheader ] ; 2 uses
-  %.02029.i = phi ptr [ %i.ad, %chunk_append.exit.i ], [ %.02377, %.lr.ph.i33.preheader ] ; 2 uses
-  %18 = call fastcc ptr @get_non_full_tail(ptr noundef %0) ; 4 uses
-  %.not.i34 = icmp eq ptr %18, null
+.lr.ph.i.a:                                       ; preds = %bb.e, %Curl_bufq_is_full.exit
+  %i.o = call i32 @Curl_bufq_pass(ptr noundef nonnull %0, ptr noundef %3, ptr noundef %4, ptr noundef nonnull %i.a) ; 2 uses
+  switch i32 %i.o, label %Curl_bufq_write.exit.thread [
+    i32 0, label %Curl_bufq_is_full.exit.thread41
+    i32 81, label %Curl_bufq_is_full.exit.thread.sink.split
+  ]
+
+Curl_bufq_is_full.exit.thread.sink.split:         ; preds = %.lr.ph.i.a
+  %.pre.pre = load i64, ptr %5, align 8, !tbaa !39
+  br label %.loopexit
+
+.lr.ph.i33:                                       ; preds = %Curl_bufq_is_full.exit.thread41, %chunk_append.exit.i
+  %.1 = phi i64 [ %i.ac, %chunk_append.exit.i ], [ 0, %Curl_bufq_is_full.exit.thread41 ] ; 5 uses
+  %.01930.i = phi i64 [ %i.ae, %chunk_append.exit.i ], [ %.02476, %Curl_bufq_is_full.exit.thread41 ] ; 2 uses
+  %.02029.i = phi ptr [ %i.ad, %chunk_append.exit.i ], [ %.02377, %Curl_bufq_is_full.exit.thread41 ] ; 2 uses
+  %6 = tail call fastcc ptr @get_non_full_tail(ptr noundef %0) ; 4 uses
+  %.not.i34 = icmp eq ptr %6, null
   br i1 %.not.i34, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %.lr.ph.i33
+  store i64 %.1, ptr %i.a, align 8
   %i.p = load i64, ptr %i.d, align 8, !tbaa !33
   %i.q = load i64, ptr %i.e, align 8, !tbaa !29
   %i.r = icmp ult i64 %i.p, %i.q
@@ -389,61 +448,68 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not23.i, label %chunk_append.exit.thread.i, label %Curl_bufq_write.exit.thread
 
 bb.h:                                             ; preds = %.lr.ph.i33
-  %i.u = getelementptr inbounds nuw i8, ptr %18, i64 24 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !37   ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %18, i64 8
+  %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.x = load i64, ptr %i.w, align 8, !tbaa !38   ; 2 uses
   %.not.i.i = icmp eq i64 %i.x, %i.v
-  br i1 %.not.i.i, label %chunk_append.exit.thread.i, label %chunk_append.exit.i
+  br i1 %.not.i.i, label %chunk_append.exit.thread.i.loopexit, label %chunk_append.exit.i
 
 chunk_append.exit.i:                              ; preds = %bb.h
   %i.y = sub i64 %i.x, %i.v
-  %i.z = getelementptr inbounds nuw i8, ptr %18, i64 32
+  %i.z = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.v
-  %19 = call i64 @llvm.umin.i64(i64 %i.y, i64 range(i64 1, 0) %.01930.i) ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr readonly align 1 %.02029.i, i64 %19, i1 false)
-  %i.ab = add i64 %19, %i.v
+  %7 = tail call i64 @llvm.umin.i64(i64 %i.y, i64 range(i64 1, 0) %.01930.i) ; 5 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr readonly align 1 %.02029.i, i64 %7, i1 false)
+  %i.ab = add i64 %7, %i.v
   store i64 %i.ab, ptr %i.u, align 8, !tbaa !37
-  %i.ac = add i64 %19, %.1                        ; 3 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %.02029.i, i64 %19
-  %i.ae = sub nuw i64 %.01930.i, %19              ; 2 uses
+  %i.ac = add i64 %.1, %7                         ; 4 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %.02029.i, i64 %7
+  %i.ae = sub nuw i64 %.01930.i, %7               ; 2 uses
   %.not34.i = icmp eq i64 %i.ae, 0
   br i1 %.not34.i, label %chunk_append.exit.thread.i.thread, label %.lr.ph.i33, !llvm.loop !2
 
-chunk_append.exit.thread.i:                       ; preds = %bb.h, %bb.g
+chunk_append.exit.thread.i.loopexit:              ; preds = %bb.h
+  store i64 %.1, ptr %i.a, align 8
+  br label %chunk_append.exit.thread.i
+
+chunk_append.exit.thread.i:                       ; preds = %chunk_append.exit.thread.i.loopexit, %bb.g
   %.not25.i = icmp eq i64 %.1, 0
+  %8 = load i64, ptr %5, align 8, !tbaa !39       ; 2 uses
   br i1 %.not25.i, label %Curl_bufq_write.exit, label %chunk_append.exit.thread.i.thread.thread
 
 Curl_bufq_write.exit:                             ; preds = %chunk_append.exit.thread.i
-  %20 = load i64, ptr %5, align 8, !tbaa !39
-  %.not30 = icmp eq i64 %20, 0
+  %.not30 = icmp eq i64 %8, 0
   %spec.select = select i1 %.not30, i32 81, i32 0
   br label %Curl_bufq_write.exit.thread
 
 chunk_append.exit.thread.i.thread:                ; preds = %chunk_append.exit.i
+  store i64 %i.ac, ptr %i.a, align 8
   %i.af = icmp eq i64 %i.ac, 0
+  %.pre.pre57 = load i64, ptr %5, align 8, !tbaa !39 ; 2 uses
   br i1 %i.af, label %.loopexit, label %chunk_append.exit.thread.i.thread.thread
 
 chunk_append.exit.thread.i.thread.thread:         ; preds = %chunk_append.exit.thread.i, %chunk_append.exit.thread.i.thread
+  %.pre.pre5771 = phi i64 [ %.pre.pre57, %chunk_append.exit.thread.i.thread ], [ %8, %chunk_append.exit.thread.i ]
   %.260102 = phi i64 [ %i.ac, %chunk_append.exit.thread.i.thread ], [ %.1, %chunk_append.exit.thread.i ] ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.02377, i64 %.260102
   %i.ah = sub i64 %.02476, %.260102               ; 2 uses
-  %21 = load i64, ptr %5, align 8, !tbaa !39
-  %i.ai = add i64 %21, %.260102
+  %i.ai = add i64 %.pre.pre5771, %.260102         ; 2 uses
   store i64 %i.ai, ptr %5, align 8, !tbaa !39
   %.not80 = icmp eq i64 %i.ah, 0
-  br i1 %.not80, label %.loopexit, label %bb.b, !llvm.loop !50
+  br i1 %.not80, label %.loopexit, label %bb.b, !llvm.loop !52
 
-.loopexit:                                        ; preds = %chunk_append.exit.thread.i.thread.thread, %chunk_append.exit.thread.i.thread, %bb.a, %Curl_bufq_pass.exit.thread49
-  %22 = phi i1 [ true, %Curl_bufq_pass.exit.thread49 ], [ false, %bb.a ], [ false, %chunk_append.exit.thread.i.thread.thread ], [ true, %chunk_append.exit.thread.i.thread ]
-  %23 = load i64, ptr %5, align 8, !tbaa !39
-  %.not32 = icmp eq i64 %23, 0
-  %i.aj = and i1 %22, %.not32
+.loopexit:                                        ; preds = %chunk_append.exit.thread.i.thread, %chunk_append.exit.thread.i.thread.thread, %Curl_bufq_is_full.exit.thread.sink.split
+  %.pre = phi i64 [ %.pre.pre, %Curl_bufq_is_full.exit.thread.sink.split ], [ %i.ai, %chunk_append.exit.thread.i.thread.thread ], [ %.pre.pre57, %chunk_append.exit.thread.i.thread ]
+  %.lcssa42.ph = phi i1 [ true, %Curl_bufq_is_full.exit.thread.sink.split ], [ false, %chunk_append.exit.thread.i.thread.thread ], [ true, %chunk_append.exit.thread.i.thread ]
+  %.not32 = icmp eq i64 %.pre, 0
+  %i.aj = and i1 %.lcssa42.ph, %.not32
   %i.ak = select i1 %i.aj, i32 81, i32 0
   br label %Curl_bufq_write.exit.thread
 
-Curl_bufq_write.exit.thread:                      ; preds = %bb.f, %bb.g, %Curl_bufq_pass.exit, %.loopexit, %Curl_bufq_write.exit
-  %.022 = phi i32 [ %spec.select, %Curl_bufq_write.exit ], [ %i.ak, %.loopexit ], [ %i.o, %Curl_bufq_pass.exit ], [ 27, %bb.g ], [ 27, %bb.f ]
+Curl_bufq_write.exit.thread:                      ; preds = %bb.f, %bb.g, %.lr.ph.i.a, %bb.a, %.loopexit, %Curl_bufq_write.exit
+  %.022 = phi i32 [ %spec.select, %Curl_bufq_write.exit ], [ %i.ak, %.loopexit ], [ 0, %bb.a ], [ 27, %bb.f ], [ 27, %bb.g ], [ %i.o, %.lr.ph.i.a ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.022
 }
 
@@ -480,7 +546,7 @@ bb.d:                                             ; preds = %bb.c
   %.not22.not.i = icmp eq i64 %1, 0
   %i.n = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %1)
   %.0.i = select i1 %.not22.not.i, i64 %i.k, i64 %i.n
-  %i.o = tail call i32 %2(ptr noundef %3, ptr noundef nonnull %i.m, i64 noundef %.0.i, ptr noundef nonnull %4) #10, !inline_history !52 ; 2 uses
+  %i.o = tail call i32 %2(ptr noundef %3, ptr noundef nonnull %i.m, i64 noundef %.0.i, ptr noundef nonnull %4) #10, !inline_history !53 ; 2 uses
   %.not23.i = icmp eq i32 %i.o, 0
   br i1 %.not23.i, label %bb.e, label %chunk_slurpn.exit
 
@@ -533,7 +599,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = sub i64 %i.m, %i.k
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.k
-  %i.q = call i32 %1(ptr noundef %2, ptr noundef nonnull %i.p, i64 noundef %i.n, ptr noundef nonnull %i.a) #10, !inline_history !53 ; 2 uses
+  %i.q = call i32 %1(ptr noundef %2, ptr noundef nonnull %i.p, i64 noundef %i.n, ptr noundef nonnull %i.a) #10, !inline_history !54 ; 2 uses
   %.not23.i.i.i = icmp eq i32 %i.q, 0
   br i1 %.not23.i.i.i, label %bb.d, label %.loopexit.i
 
@@ -658,8 +724,9 @@ attributes #10 = { nounwind }
 !47 = distinct !{!47, !24}
 !48 = distinct !{!48, !24}
 !49 = distinct !{!49, !24}
-!50 = distinct !{!50, !24}
-!51 = !{ptr @Curl_bufq_pass}
-!52 = distinct !{null}
-!53 = distinct !{null, ptr @Curl_bufq_sipn, null}
+!50 = distinct !{ptr @Curl_bufq_peek, null, null}
+!51 = distinct !{ptr @Curl_bufq_peek, null}
+!52 = distinct !{!52, !24}
+!53 = distinct !{null}
+!54 = distinct !{null, ptr @Curl_bufq_sipn, null}
 end_hunk_0

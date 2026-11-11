@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cmake/original/cmSetPropertyCommand?download=true
-inline.NumInlined: 1233
+inline.NumInlined: 1234
 inline.NumDeleted: 486
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumUnrolled: 6
@@ -204,17 +204,73 @@ bb.c:                                             ; preds = %bb.a, %_ZNSt7__cxx1
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef zeroext i1 @_ZN18SetPropertyCommand36HandleAndValidateTestDirectoryScopesER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERP10cmMakefile(ptr noundef nonnull align 8 dereferenceable(80) %0, i1 noundef zeroext %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %3) local_unnamed_addr #4 {
-bb.a:
-  %4 = tail call noundef zeroext i1 @_ZN18SetPropertyCommand34HandleTestDirectoryScopeValidationER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(80) %0, i1 noundef zeroext %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
-  br i1 %4, label %bb.b, label %bb.c
+define dso_local noundef zeroext i1 @_ZN18SetPropertyCommand36HandleAndValidateTestDirectoryScopesER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERP10cmMakefile(ptr noundef nonnull align 8 dereferenceable(80) %0, i1 noundef zeroext %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %3) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
+  %5 = alloca i64, align 8                        ; 5 uses
+  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %8 = load i64, ptr %7, align 8
+  %9 = icmp eq i64 %8, 0
+  %or.cond.i = select i1 %1, i1 %9, i1 false
+  br i1 %or.cond.i, label %.noexc.i.i, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
+.noexc.i.i:                                       ; preds = %4
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
+  %10 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 6 uses
+  store ptr %10, ptr %6, align 8, !tbaa !43
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
+  store i64 83, ptr %5, align 8, !tbaa !33
+  %11 = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef 0) ; 3 uses
+  store ptr %11, ptr %6, align 8, !tbaa !40
+  %12 = load i64, ptr %5, align 8, !tbaa !33      ; 3 uses
+  store i64 %12, ptr %10, align 8, !tbaa !42
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(83) %11, ptr noundef nonnull align 1 dereferenceable(83) @.str.7, i64 83, i1 false)
+  %13 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store i64 %12, ptr %13, align 8, !tbaa !41
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 %12
+  store i8 0, ptr %14, align 1, !tbaa !42
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(32) %6)
+          to label %_ZN17cmExecutionStatus8SetErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i unwind label %bb.a
+
+_ZN17cmExecutionStatus8SetErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i: ; preds = %.noexc.i.i
+  %16 = load ptr, ptr %6, align 8, !tbaa !40      ; 2 uses
+  %17 = icmp eq ptr %16, %10
+  br i1 %17, label %_ZN18SetPropertyCommand34HandleTestDirectoryScopeValidationER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %_ZN17cmExecutionStatus8SetErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
+  %18 = load i64, ptr %10, align 8, !tbaa !42
+  %19 = add i64 %18, 1
+  call void @_ZdlPvm(ptr noundef %16, i64 noundef %19) #23
+  br label %_ZN18SetPropertyCommand34HandleTestDirectoryScopeValidationER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+
+bb.a:                                             ; preds = %.noexc.i.i
+  %20 = landingpad { ptr, i32 }
+          cleanup
+  %21 = load ptr, ptr %6, align 8, !tbaa !40      ; 2 uses
+  %22 = icmp eq ptr %21, %10
+  br i1 %22, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit11.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i9.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i9.i: ; preds = %bb.a
+  %23 = load i64, ptr %10, align 8, !tbaa !42
+  %24 = add i64 %23, 1
+  call void @_ZdlPvm(ptr noundef %21, i64 noundef %24) #23
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit11.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit11.i: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i9.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
+  resume { ptr, i32 } %20
+
+_ZN18SetPropertyCommand34HandleTestDirectoryScopeValidationER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %_ZN17cmExecutionStatus8SetErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
+  br label %bb.c
+
+bb.b:                                             ; preds = %4
   %i.a = tail call noundef zeroext i1 @_ZN18SetPropertyCommand25HandleTestDirectoryScopesER17cmExecutionStatusRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERP10cmMakefile(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
-  %.0 = phi i1 [ %i.a, %bb.b ], [ false, %bb.a ]
+bb.c:                                             ; preds = %_ZN18SetPropertyCommand34HandleTestDirectoryScopeValidationER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.b
+  %.0 = phi i1 [ %i.a, %bb.b ], [ false, %_ZN18SetPropertyCommand34HandleTestDirectoryScopeValidationER17cmExecutionStatusbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
   ret i1 %.0
 }
 

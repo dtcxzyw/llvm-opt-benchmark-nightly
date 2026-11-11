@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/unsafe_libyaml-c83d027d29d4f62c.unsafe_libyaml.d8757c7f39422774-cgu.0?download=true
-inline.NumInlined: 729
+inline.NumInlined: 731
 inline.NumDeleted: 102
 loop-unroll.NumCompletelyUnrolled: 20
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,7 +205,7 @@ bb.cg:                                            ; preds = %_ZN14unsafe_libyaml
 
 .preheader.i.i.i:                                 ; preds = %bb.cg
   %.not2672.i.i.i = icmp eq i64 %i.li, 0
-  br i1 %.not2672.i.i.i, label %._crit_edge.thread.i.i.i.a, label %.lr.ph.i1.i.i
+  br i1 %.not2672.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i1.i.i
 
 .lr.ph.i1.i.i:                                    ; preds = %.preheader.i.i.i
   %i.lp = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 34 uses
@@ -219,7 +219,7 @@ bb.cg:                                            ; preds = %_ZN14unsafe_libyaml
 
 ._crit_edge.i4.i.i:                               ; preds = %bb.da
   %i.lw = trunc nuw i8 %.sroa.03.1.i2.i.i to i1
-  br i1 %i.lw, label %bb.ci, label %._crit_edge.thread.i.i.i.a
+  br i1 %i.lw, label %bb.ci, label %._crit_edge.thread.i.i.i
 
 bb.ch:                                            ; preds = %bb.da, %.lr.ph.i1.i.i
   %i.lx = phi ptr [ %i.ll, %.lr.ph.i1.i.i ], [ %i.ol, %bb.da ] ; 4 uses
@@ -235,13 +235,131 @@ bb.ch:                                            ; preds = %bb.da, %.lr.ph.i1.i
     i8 -30, label %bb.dd
   ]
 
-._crit_edge.thread.i.i.i.a:                       ; preds = %bb.ci, %._crit_edge.i4.i.i, %.preheader.i.i.i
-  %6 = tail call fastcc noundef zeroext i1 @_ZN14unsafe_libyaml7emitter28yaml_emitter_write_indicator17h4c6ead6ac3f390a8E(ptr noundef nonnull %0, ptr noundef nonnull @133, i1 noundef zeroext false, i1 noundef zeroext false, i1 noundef zeroext false)
-  br i1 %6, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i
+._crit_edge.thread.i.i.i:                         ; preds = %bb.ci, %._crit_edge.i4.i.i, %.preheader.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 13 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
+  br label %9
+
+9:                                                ; preds = %._crit_edge.thread.i.i.i.a, %._crit_edge.thread.i.i.i
+  %.sroa.6.0.i.i.i = phi ptr [ @133, %._crit_edge.thread.i.i.i ], [ %.sroa.6.5.i.i.i, %._crit_edge.thread.i.i.i.a ] ; 8 uses
+  %.not.i83.i.i = icmp eq ptr %.sroa.6.0.i.i.i, getelementptr inbounds nuw (i8, ptr @133, i64 1)
+  br i1 %.not.i83.i.i, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i, label %10
+
+10:                                               ; preds = %9
+  %11 = load ptr, ptr %6, align 8, !noundef !7
+  %12 = getelementptr i8, ptr %11, i64 5
+  %13 = load ptr, ptr %7, align 8, !noundef !7
+  %14 = icmp ult ptr %12, %13
+  br i1 %14, label %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i.i.i, label %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i.i.i
+
+_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i.i.i: ; preds = %10
+  %15 = tail call noundef zeroext i1 @_ZN14unsafe_libyaml6writer18yaml_emitter_flush17h22370d9652430099E(ptr noundef nonnull %0)
+  br i1 %15, label %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i.i.i, label %16
+
+_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i.i.i: ; preds = %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i.i.i, %10
+  br label %16
+
+16:                                               ; preds = %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i.i.i, %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i.i.i
+  %17 = phi ptr [ @15, %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i.i.i ]
+  %18 = load i8, ptr %17, align 1, !range !11, !noundef !7
+  %19 = trunc nuw i8 %18 to i1
+  br i1 %19, label %._crit_edge.thread.i.i.i.a, label %20
+
+20:                                               ; preds = %16
+  %21 = load i8, ptr %.sroa.6.0.i.i.i, align 1, !noundef !7 ; 8 uses
+  %22 = icmp sgt i8 %21, -1
+  br i1 %22, label %..sink.split.i_crit_edge.i96.i.i, label %23
+
+..sink.split.i_crit_edge.i96.i.i:                 ; preds = %20
+  %.pre19.i.i.i = load ptr, ptr %6, align 8
+  br label %.sink.split.i.i91.i.i
+
+23:                                               ; preds = %20
+  %24 = and i8 %21, -32
+  %25 = icmp eq i8 %24, -64
+  br i1 %25, label %..sink.split.sink.split.i_crit_edge.i95.i.i, label %43
+
+..sink.split.sink.split.i_crit_edge.i95.i.i:      ; preds = %23
+  %.pre18.i.i.i = load ptr, ptr %6, align 8
+  br label %.sink.split.sink.split.i.i89.i.i
+
+.sink.split.sink.split.sink.split.i.i87.i.i:      ; preds = %49, %..sink.split.sink.split.sink.split.i_crit_edge.i93.i.i
+  %26 = phi ptr [ %.pre.i94.i.i, %..sink.split.sink.split.sink.split.i_crit_edge.i93.i.i ], [ %52, %49 ]
+  %.sroa.6.2.i.i.i = phi ptr [ %.sroa.6.0.i.i.i, %..sink.split.sink.split.sink.split.i_crit_edge.i93.i.i ], [ %53, %49 ]
+  %.sink38.i.i88.i.i = phi i8 [ %21, %..sink.split.sink.split.sink.split.i_crit_edge.i93.i.i ], [ %54, %49 ]
+  store i8 %.sink38.i.i88.i.i, ptr %26, align 1
+  %27 = load ptr, ptr %6, align 8, !noundef !7
+  %28 = getelementptr i8, ptr %27, i64 1          ; 2 uses
+  store ptr %28, ptr %6, align 8
+  %29 = getelementptr i8, ptr %.sroa.6.2.i.i.i, i64 1 ; 2 uses
+  %30 = load i8, ptr %29, align 1, !noundef !7
+  br label %.sink.split.sink.split.i.i89.i.i
+
+.sink.split.sink.split.i.i89.i.i:                 ; preds = %.sink.split.sink.split.sink.split.i.i87.i.i, %..sink.split.sink.split.i_crit_edge.i95.i.i
+  %31 = phi ptr [ %.pre18.i.i.i, %..sink.split.sink.split.i_crit_edge.i95.i.i ], [ %28, %.sink.split.sink.split.sink.split.i.i87.i.i ]
+  %.sroa.6.3.i.i.i = phi ptr [ %.sroa.6.0.i.i.i, %..sink.split.sink.split.i_crit_edge.i95.i.i ], [ %29, %.sink.split.sink.split.sink.split.i.i87.i.i ]
+  %.sink31.i.i90.i.i = phi i8 [ %21, %..sink.split.sink.split.i_crit_edge.i95.i.i ], [ %30, %.sink.split.sink.split.sink.split.i.i87.i.i ]
+  store i8 %.sink31.i.i90.i.i, ptr %31, align 1
+  %32 = load ptr, ptr %6, align 8, !noundef !7
+  %33 = getelementptr i8, ptr %32, i64 1          ; 2 uses
+  store ptr %33, ptr %6, align 8
+  %34 = getelementptr i8, ptr %.sroa.6.3.i.i.i, i64 1 ; 2 uses
+  %35 = load i8, ptr %34, align 1, !noundef !7
+  br label %.sink.split.i.i91.i.i
+
+.sink.split.i.i91.i.i:                            ; preds = %.sink.split.sink.split.i.i89.i.i, %..sink.split.i_crit_edge.i96.i.i
+  %36 = phi ptr [ %.pre19.i.i.i, %..sink.split.i_crit_edge.i96.i.i ], [ %33, %.sink.split.sink.split.i.i89.i.i ]
+  %.sroa.6.4.i.i.i = phi ptr [ %.sroa.6.0.i.i.i, %..sink.split.i_crit_edge.i96.i.i ], [ %34, %.sink.split.sink.split.i.i89.i.i ]
+  %.sink.i.i92.i.i = phi i8 [ %21, %..sink.split.i_crit_edge.i96.i.i ], [ %35, %.sink.split.sink.split.i.i89.i.i ]
+  store i8 %.sink.i.i92.i.i, ptr %36, align 1
+  %37 = load ptr, ptr %6, align 8, !noundef !7
+  %38 = getelementptr i8, ptr %37, i64 1
+  store ptr %38, ptr %6, align 8
+  %39 = getelementptr i8, ptr %.sroa.6.4.i.i.i, i64 1
+  br label %40
+
+40:                                               ; preds = %46, %.sink.split.i.i91.i.i
+  %.sroa.6.1.i.i.i = phi ptr [ %39, %.sink.split.i.i91.i.i ], [ %.sroa.6.0.i.i.i, %46 ]
+  %41 = load i32, ptr %8, align 8, !noundef !7
+  %42 = add i32 %41, 1
+  store i32 %42, ptr %8, align 8
+  br label %._crit_edge.thread.i.i.i.a
+
+43:                                               ; preds = %23
+  %44 = and i8 %21, -16
+  %45 = icmp eq i8 %44, -32
+  br i1 %45, label %..sink.split.sink.split.sink.split.i_crit_edge.i93.i.i, label %46
+
+..sink.split.sink.split.sink.split.i_crit_edge.i93.i.i: ; preds = %43
+  %.pre.i94.i.i = load ptr, ptr %6, align 8
+  br label %.sink.split.sink.split.sink.split.i.i87.i.i
+
+46:                                               ; preds = %43
+  %47 = and i8 %21, -8
+  %48 = icmp eq i8 %47, -16
+  br i1 %48, label %49, label %40
+
+49:                                               ; preds = %46
+  %50 = load ptr, ptr %6, align 8, !noundef !7
+  store i8 %21, ptr %50, align 1
+  %51 = load ptr, ptr %6, align 8, !noundef !7
+  %52 = getelementptr i8, ptr %51, i64 1          ; 2 uses
+  store ptr %52, ptr %6, align 8
+  %53 = getelementptr i8, ptr %.sroa.6.0.i.i.i, i64 1 ; 2 uses
+  %54 = load i8, ptr %53, align 1, !noundef !7
+  br label %.sink.split.sink.split.sink.split.i.i87.i.i
+
+._crit_edge.thread.i.i.i.a:                       ; preds = %40, %16
+  %.9.i.i.i = phi ptr [ @14, %16 ], [ @15, %40 ]
+  %.sroa.6.5.i.i.i = phi ptr [ %.sroa.6.0.i.i.i, %16 ], [ %.sroa.6.1.i.i.i, %40 ]
+  %55 = load i8, ptr %.9.i.i.i, align 1, !range !11, !noundef !7
+  %56 = trunc nuw i8 %55 to i1
+  br i1 %56, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i, label %9
 
 bb.ci:                                            ; preds = %._crit_edge.i4.i.i
   %i.ma = tail call fastcc noundef zeroext i1 @_ZN14unsafe_libyaml7emitter25yaml_emitter_write_indent17h9c3b36b218c539e1E(ptr noundef nonnull %0)
-  br i1 %i.ma, label %._crit_edge.thread.i.i.i.a, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i
+  br i1 %i.ma, label %._crit_edge.thread.i.i.i, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i
 
 bb.cj:                                            ; preds = %bb.ch
   %or.cond.i8.i.i = select i1 %i.lk, i1 true, i1 %.sroa.02.074.i.i.i
@@ -644,7 +762,7 @@ bb.ea:                                            ; preds = %_ZN14unsafe_libyaml
 
 .preheader.i23.i.i:                               ; preds = %bb.ea
   %.not82264.i.i.i = icmp eq i64 %i.sa, 0
-  br i1 %.not82264.i.i.i, label %._crit_edge268.i.i.i.a, label %.lr.ph.i24.i.i
+  br i1 %.not82264.i.i.i, label %._crit_edge268.i.i.i, label %.lr.ph.i24.i.i
 
 .lr.ph.i24.i.i:                                   ; preds = %.preheader.i23.i.i
   %i.sf = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
@@ -653,17 +771,135 @@ bb.ea:                                            ; preds = %_ZN14unsafe_libyaml
   %i.si = getelementptr i8, ptr %i.sd, i64 -1
   %i.sj = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 85 uses
   %i.sk = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 21 uses
+  br label %103
+
+._crit_edge268.i.i.i:                             ; preds = %.loopexit.i.i.i, %.preheader.i23.i.i
+  %57 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 13 uses
+  %58 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %59 = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
+  br label %60
+
+60:                                               ; preds = %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i, %._crit_edge268.i.i.i
+  %.sroa.6.0.i99.i.i = phi ptr [ @132, %._crit_edge268.i.i.i ], [ %.sroa.6.5.i105.i.i, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i ] ; 8 uses
+  %.not.i100.i.i = icmp eq ptr %.sroa.6.0.i99.i.i, getelementptr inbounds nuw (i8, ptr @132, i64 1)
+  br i1 %.not.i100.i.i, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i, label %61
+
+61:                                               ; preds = %60
+  %62 = load ptr, ptr %57, align 8, !noundef !7
+  %63 = getelementptr i8, ptr %62, i64 5
+  %64 = load ptr, ptr %58, align 8, !noundef !7
+  %65 = icmp ult ptr %63, %64
+  br i1 %65, label %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i123.i.i, label %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i101.i.i
+
+_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i101.i.i: ; preds = %61
+  %66 = tail call noundef zeroext i1 @_ZN14unsafe_libyaml6writer18yaml_emitter_flush17h22370d9652430099E(ptr noundef nonnull %0)
+  br i1 %66, label %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i123.i.i, label %67
+
+_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i123.i.i: ; preds = %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i101.i.i, %61
+  br label %67
+
+67:                                               ; preds = %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i123.i.i, %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i101.i.i
+  %68 = phi ptr [ @15, %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.thread.i12.i123.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter5FLUSH17h1e31acfe2b5604c4E.exit.i10.i101.i.i ]
+  %69 = load i8, ptr %68, align 1, !range !11, !noundef !7
+  %70 = trunc nuw i8 %69 to i1
+  br i1 %70, label %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i, label %71
+
+71:                                               ; preds = %67
+  %72 = load i8, ptr %.sroa.6.0.i99.i.i, align 1, !noundef !7 ; 8 uses
+  %73 = icmp sgt i8 %72, -1
+  br i1 %73, label %..sink.split.i_crit_edge.i121.i.i, label %._crit_edge268.i.i.i.a
+
+..sink.split.i_crit_edge.i121.i.i:                ; preds = %71
+  %.pre19.i122.i.i = load ptr, ptr %57, align 8
+  br label %.sink.split.i.i114.i.i
+
+._crit_edge268.i.i.i.a:                           ; preds = %71
+  %74 = and i8 %72, -32
+  %75 = icmp eq i8 %74, -64
+  br i1 %75, label %..sink.split.sink.split.i_crit_edge.i119.i.i, label %92
+
+..sink.split.sink.split.i_crit_edge.i119.i.i:     ; preds = %._crit_edge268.i.i.i.a
+  %.pre18.i120.i.i = load ptr, ptr %57, align 8
   br label %bb.eb
 
-._crit_edge268.i.i.i.a:                           ; preds = %.loopexit.i.i.i, %.preheader.i23.i.i
-  %7 = tail call fastcc noundef zeroext i1 @_ZN14unsafe_libyaml7emitter28yaml_emitter_write_indicator17h4c6ead6ac3f390a8E(ptr noundef nonnull %0, ptr noundef nonnull @132, i1 noundef zeroext false, i1 noundef zeroext false, i1 noundef zeroext false)
-  br i1 %7, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
+.sink.split.sink.split.sink.split.i.i108.i.i:     ; preds = %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a, %..sink.split.sink.split.sink.split.i_crit_edge.i117.i.i
+  %76 = phi ptr [ %.pre.i118.i.i, %..sink.split.sink.split.sink.split.i_crit_edge.i117.i.i ], [ %i.sm, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a ]
+  %.sroa.6.2.i109.i.i = phi ptr [ %.sroa.6.0.i99.i.i, %..sink.split.sink.split.sink.split.i_crit_edge.i117.i.i ], [ %i.sn, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a ]
+  %.sink38.i.i110.i.i = phi i8 [ %72, %..sink.split.sink.split.sink.split.i_crit_edge.i117.i.i ], [ %100, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a ]
+  store i8 %.sink38.i.i110.i.i, ptr %76, align 1
+  %77 = load ptr, ptr %57, align 8, !noundef !7
+  %78 = getelementptr i8, ptr %77, i64 1          ; 2 uses
+  store ptr %78, ptr %57, align 8
+  %79 = getelementptr i8, ptr %.sroa.6.2.i109.i.i, i64 1 ; 2 uses
+  %80 = load i8, ptr %79, align 1, !noundef !7
+  br label %bb.eb
 
-bb.eb:                                            ; preds = %.loopexit.i.i.i, %.lr.ph.i24.i.i
+bb.eb:                                            ; preds = %.sink.split.sink.split.sink.split.i.i108.i.i, %..sink.split.sink.split.i_crit_edge.i119.i.i
+  %81 = phi ptr [ %.pre18.i120.i.i, %..sink.split.sink.split.i_crit_edge.i119.i.i ], [ %78, %.sink.split.sink.split.sink.split.i.i108.i.i ]
+  %.sroa.8.0265.i.i.i.a = phi ptr [ %.sroa.6.0.i99.i.i, %..sink.split.sink.split.i_crit_edge.i119.i.i ], [ %79, %.sink.split.sink.split.sink.split.i.i108.i.i ]
+  %.sink31.i.i113.i.i = phi i8 [ %72, %..sink.split.sink.split.i_crit_edge.i119.i.i ], [ %80, %.sink.split.sink.split.sink.split.i.i108.i.i ]
+  store i8 %.sink31.i.i113.i.i, ptr %81, align 1
+  %82 = load ptr, ptr %57, align 8, !noundef !7
+  %83 = getelementptr i8, ptr %82, i64 1          ; 2 uses
+  store ptr %83, ptr %57, align 8
+  %84 = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1 ; 2 uses
+  %i.sl = load i8, ptr %84, align 1, !noundef !7
+  br label %.sink.split.i.i114.i.i
+
+.sink.split.i.i114.i.i:                           ; preds = %bb.eb, %..sink.split.i_crit_edge.i121.i.i
+  %85 = phi ptr [ %.pre19.i122.i.i, %..sink.split.i_crit_edge.i121.i.i ], [ %83, %bb.eb ]
+  %.sroa.6.4.i115.i.i = phi ptr [ %.sroa.6.0.i99.i.i, %..sink.split.i_crit_edge.i121.i.i ], [ %84, %bb.eb ]
+  %.sink.i.i116.i.i = phi i8 [ %72, %..sink.split.i_crit_edge.i121.i.i ], [ %i.sl, %bb.eb ]
+  store i8 %.sink.i.i116.i.i, ptr %85, align 1
+  %86 = load ptr, ptr %57, align 8, !noundef !7
+  %87 = getelementptr i8, ptr %86, i64 1
+  store ptr %87, ptr %57, align 8
+  %88 = getelementptr i8, ptr %.sroa.6.4.i115.i.i, i64 1
+  br label %89
+
+89:                                               ; preds = %95, %.sink.split.i.i114.i.i
+  %.sroa.6.1.i102.i.i = phi ptr [ %88, %.sink.split.i.i114.i.i ], [ %.sroa.6.0.i99.i.i, %95 ]
+  %90 = load i32, ptr %59, align 8, !noundef !7
+  %91 = add i32 %90, 1
+  store i32 %91, ptr %59, align 8
+  br label %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i
+
+92:                                               ; preds = %._crit_edge268.i.i.i.a
+  %93 = and i8 %72, -16
+  %94 = icmp eq i8 %93, -32
+  br i1 %94, label %..sink.split.sink.split.sink.split.i_crit_edge.i117.i.i, label %95
+
+..sink.split.sink.split.sink.split.i_crit_edge.i117.i.i: ; preds = %92
+  %.pre.i118.i.i = load ptr, ptr %57, align 8
+  br label %.sink.split.sink.split.sink.split.i.i108.i.i
+
+95:                                               ; preds = %92
+  %96 = and i8 %72, -8
+  %97 = icmp eq i8 %96, -16
+  br i1 %97, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a, label %89
+
+_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a: ; preds = %95
+  %98 = load ptr, ptr %57, align 8, !noundef !7
+  store i8 %72, ptr %98, align 1
+  %99 = load ptr, ptr %57, align 8, !noundef !7
+  %i.sm = getelementptr i8, ptr %99, i64 1        ; 2 uses
+  store ptr %i.sm, ptr %57, align 8
+  %i.sn = getelementptr i8, ptr %.sroa.6.0.i99.i.i, i64 1 ; 2 uses
+  %100 = load i8, ptr %i.sn, align 1, !noundef !7
+  br label %.sink.split.sink.split.sink.split.i.i108.i.i
+
+_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i: ; preds = %89, %67
+  %.9.i104.i.i = phi ptr [ @14, %67 ], [ @15, %89 ]
+  %.sroa.6.5.i105.i.i = phi ptr [ %.sroa.6.0.i99.i.i, %67 ], [ %.sroa.6.1.i102.i.i, %89 ]
+  %101 = load i8, ptr %.9.i104.i.i, align 1, !range !11, !noundef !7
+  %102 = trunc nuw i8 %101 to i1
+  br i1 %102, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i, label %60
+
+103:                                              ; preds = %.loopexit.i.i.i, %.lr.ph.i24.i.i
   %.sroa.02.0267.i.i.i = phi i1 [ false, %.lr.ph.i24.i.i ], [ %.sroa.02.1.i29.i.i, %.loopexit.i.i.i ]
-  %.sroa.8.0265.i.i.i.a = phi ptr [ %i.ry, %.lr.ph.i24.i.i ], [ %.sroa.8.1.i.i.i, %.loopexit.i.i.i ] ; 34 uses
-  %i.sl = load i8, ptr %.sroa.8.0265.i.i.i.a, align 1, !noundef !7 ; 16 uses
-  switch i8 %i.sl, label %bb.ec [
+  %.sroa.8.0265.i.i.i = phi ptr [ %i.ry, %.lr.ph.i24.i.i ], [ %.sroa.8.1.i.i.i, %.loopexit.i.i.i ] ; 34 uses
+  %104 = load i8, ptr %.sroa.8.0265.i.i.i, align 1, !noundef !7 ; 16 uses
+  switch i8 %104, label %bb.ec [
     i8 10, label %bb.eg
     i8 -62, label %bb.ed
     i8 -19, label %.split233.i.i.i
@@ -671,30 +907,28 @@ bb.eb:                                            ; preds = %.loopexit.i.i.i, %.
     i8 -17, label %bb.ee
   ]
 
-_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a: ; preds = %._crit_edge268.i.i.i.a
-  %i.sm = getelementptr inbounds nuw i8, ptr %0, i64 276
-  store i8 0, ptr %i.sm, align 4
-  %i.sn = getelementptr inbounds nuw i8, ptr %0, i64 277
-  store i8 0, ptr %i.sn, align 1
+_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i: ; preds = %60
+  %105 = getelementptr inbounds nuw i8, ptr %0, i64 276
+  store i16 0, ptr %105, align 4
   br label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
 
-bb.ec:                                            ; preds = %bb.eb
-  %i.so = add i8 %i.sl, -32
+bb.ec:                                            ; preds = %103
+  %i.so = add i8 %104, -32
   %or.cond86.i.i.i = icmp ult i8 %i.so, 95
-  %i.sp = add i8 %i.sl, 61
+  %i.sp = add i8 %104, 61
   %or.cond87.i.i.i = icmp ult i8 %i.sp, 42
   %or.cond258.i.i.i = or i1 %or.cond86.i.i.i, %or.cond87.i.i.i
   br i1 %or.cond258.i.i.i, label %bb.eg, label %bb.ei
 
-bb.ed:                                            ; preds = %bb.eb
-  %i.sq = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+bb.ed:                                            ; preds = %103
+  %i.sq = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.sr = load i8, ptr %i.sq, align 1, !noundef !7
   %i.ss = and i8 %i.sr, -32
   %or.cond252.i.i.i = icmp eq i8 %i.ss, -96
   br i1 %or.cond252.i.i.i, label %bb.eg, label %.thread231.i.thread.i.i
 
-bb.ee:                                            ; preds = %bb.eb
-  %i.st = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+bb.ee:                                            ; preds = %103
+  %i.st = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.su = load i8, ptr %i.st, align 1, !noundef !7
   switch i8 %i.su, label %bb.eg [
     i8 -69, label %.split232.i.i.i
@@ -702,16 +936,16 @@ bb.ee:                                            ; preds = %bb.eb
   ]
 
 bb.ef:                                            ; preds = %bb.ei
-  %i.sv = icmp sgt i8 %i.sl, -1
+  %i.sv = icmp sgt i8 %104, -1
   br i1 %i.sv, label %.thread231.thread.i.i.i, label %.thread.i25.i.i
 
-.split233.i.i.i:                                  ; preds = %bb.eb
-  %i.sw = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+.split233.i.i.i:                                  ; preds = %103
+  %i.sw = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.sx = load i8, ptr %i.sw, align 1, !noundef !7
   %i.sy = icmp ult i8 %i.sx, -96
   br i1 %i.sy, label %.thread235.i.i.i, label %.thread.thread.i.thread.i.i
 
-bb.eg:                                            ; preds = %.split.i.i.i, %bb.eh, %.split232.i.i.i, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.eb
+bb.eg:                                            ; preds = %.split.i.i.i, %bb.eh, %.split232.i.i.i, %bb.ee, %bb.ed, %bb.ec, %103, %103
   %i.sz = load i8, ptr %i.sf, align 8, !range !11, !noundef !7
   %i.ta = trunc nuw i8 %i.sz to i1
   br i1 %i.ta, label %bb.ek, label %bb.ej
@@ -722,32 +956,32 @@ bb.eg:                                            ; preds = %.split.i.i.i, %bb.e
   br i1 %i.tc, label %.thread245.i.i.i, label %.thread.thread.i.thread.i.i
 
 .split232.i.i.i:                                  ; preds = %bb.ee
-  %i.td = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 2
+  %i.td = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 2
   %i.te = load i8, ptr %i.td, align 1, !noundef !7
   %.not254.i.i.i = icmp eq i8 %i.te, -65
   br i1 %.not254.i.i.i, label %.thread.thread.i.thread.i.i, label %bb.eg
 
 bb.eh:                                            ; preds = %bb.ee
-  %i.tf = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 2
+  %i.tf = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 2
   %i.tg = load i8, ptr %i.tf, align 1, !noundef !7
   %i.th = and i8 %i.tg, -2
   %switch.i.i.i = icmp eq i8 %i.th, -66
   br i1 %switch.i.i.i, label %.thread.thread.i.thread.i.i, label %bb.eg
 
 bb.ei:                                            ; preds = %bb.ec
-  %i.ti = icmp ugt i8 %i.sl, -17
+  %i.ti = icmp ugt i8 %104, -17
   br i1 %i.ti, label %.split.i.i.i, label %bb.ef
 
 .split.i.i.i:                                     ; preds = %bb.ei
-  %i.tj = icmp samesign ult i8 %i.sl, -11
+  %i.tj = icmp samesign ult i8 %104, -11
   br i1 %i.tj, label %bb.eg, label %.thread.i25.i.i
 
 bb.ej:                                            ; preds = %bb.eg
-  %i.tk = icmp sgt i8 %i.sl, -1
+  %i.tk = icmp sgt i8 %104, -1
   br i1 %i.tk, label %.thread234.i.i.i, label %.thread.i25.i.i
 
 bb.ek:                                            ; preds = %bb.eg
-  switch i8 %i.sl, label %.thread245.i.i.i [
+  switch i8 %104, label %.thread245.i.i.i [
     i8 -17, label %bb.el
     i8 13, label %.thread231.thread.i.i.i
     i8 10, label %.thread231.thread.i.i.i
@@ -759,19 +993,19 @@ bb.ek:                                            ; preds = %bb.eg
   ]
 
 bb.el:                                            ; preds = %bb.ek
-  %i.tl = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+  %i.tl = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.tm = load i8, ptr %i.tl, align 1, !noundef !7
   %i.tn = icmp eq i8 %i.tm, -69
   br i1 %i.tn, label %bb.em, label %.thread245.i.i.i
 
 bb.em:                                            ; preds = %bb.el
-  %i.to = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i.a, i64 2
+  %i.to = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i, i64 2
   %i.tp = load i8, ptr %i.to, align 1, !noundef !7
   %i.tq = icmp eq i8 %i.tp, -65
   br i1 %i.tq, label %.thread.thread.i.thread.i.i, label %.thread245.i.i.i
 
 .thread234.i.i.i:                                 ; preds = %bb.ej
-  switch i8 %i.sl, label %.thread245.i.i.i [
+  switch i8 %104, label %.thread245.i.i.i [
     i8 13, label %.thread231.thread.i.i.i
     i8 10, label %.thread231.thread.i.i.i
     i8 32, label %bb.hc
@@ -780,56 +1014,56 @@ bb.em:                                            ; preds = %bb.el
   ]
 
 bb.en:                                            ; preds = %bb.ek
-  %i.tr = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+  %i.tr = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.ts = load i8, ptr %i.tr, align 1, !noundef !7
   %i.tt = icmp eq i8 %i.ts, -123
   br i1 %i.tt, label %.thread231.i.thread.i.i, label %.thread245.i.i.i
 
 bb.eo:                                            ; preds = %bb.ek
-  %i.tu = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+  %i.tu = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.tv = load i8, ptr %i.tu, align 1, !noundef !7
   %i.tw = icmp eq i8 %i.tv, -128
   br i1 %i.tw, label %bb.ep, label %.thread245.i.i.i
 
 bb.ep:                                            ; preds = %bb.eo
-  %i.tx = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i.a, i64 2
+  %i.tx = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i, i64 2
   %i.ty = load i8, ptr %i.tx, align 1, !noundef !7
   %i.tz = and i8 %i.ty, -2
   %switch92.i.i = icmp eq i8 %i.tz, -88
   br i1 %switch92.i.i, label %.thread.thread.i.thread.i.i, label %.thread245.i.i.i
 
 .thread.i25.i.i:                                  ; preds = %bb.ej, %.split.i.i.i, %bb.ef
-  %i.ua = and i8 %i.sl, -32
+  %i.ua = and i8 %104, -32
   %i.ub = icmp eq i8 %i.ua, -64
   br i1 %i.ub, label %.thread231.i.thread.i.i, label %.thread.thread.i.i.i
 
 .thread.thread.i.i.i:                             ; preds = %.thread.i25.i.i
-  %i.uc = and i8 %i.sl, -16
+  %i.uc = and i8 %104, -16
   %i.ud = icmp eq i8 %i.uc, -32
   br i1 %i.ud, label %.thread.thread.i.thread.i.i, label %bb.eq
 
 .thread231.thread.i.i.i:                          ; preds = %.thread234.i.i.i, %.thread234.i.i.i, %.thread234.i.i.i, %.thread234.i.i.i, %bb.ek, %bb.ek, %bb.ek, %bb.ek, %bb.ef
-  %i.ue = zext nneg i8 %i.sl to i32
+  %i.ue = zext nneg i8 %104 to i32
   br label %._crit_edge.i26.i.i
 
 .thread231.i.thread.i.i:                          ; preds = %.thread.i25.i.i, %bb.en, %bb.ed
-  %i.uf = and i8 %i.sl, 31
+  %i.uf = and i8 %104, 31
   br label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i"
 
 .thread.thread.i.thread.i.i:                      ; preds = %.thread.thread.i.i.i, %bb.ep, %bb.em, %bb.eh, %.split232.i.i.i, %.thread235.i.i.i, %.split233.i.i.i
-  %i.ug = and i8 %i.sl, 15
+  %i.ug = and i8 %104, 15
   br label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i"
 
 bb.eq:                                            ; preds = %.thread.thread.i.i.i
-  %i.uh = and i8 %i.sl, -8
+  %i.uh = and i8 %104, -8
   %i.ui = icmp eq i8 %i.uh, -16
-  %i.uj = and i8 %i.sl, 7
+  %i.uj = and i8 %104, 7
   br i1 %i.ui, label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i", label %._crit_edge.i26.i.i
 
 ._crit_edge.i26.i.i:                              ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i", %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.1", %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.2", %bb.eq, %.thread231.thread.i.i.i
   %.pre-phi.i.i.i = phi i64 [ 0, %bb.eq ], [ 1, %.thread231.thread.i.i.i ], [ %.sroa.032.0248.i88.i.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.2" ], [ %.sroa.032.0248.i88.i.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.1" ], [ %.sroa.032.0248.i88.i.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i" ]
   %.sroa.021.0.lcssa.i.i.i = phi i32 [ 0, %bb.eq ], [ %i.ue, %.thread231.thread.i.i.i ], [ %i.vf, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i" ], [ %i.vl, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.1" ], [ %i.vr, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.2" ] ; 4 uses
-  %i.uk = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 %.pre-phi.i.i.i ; 16 uses
+  %i.uk = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 %.pre-phi.i.i.i ; 16 uses
   %i.ul = load ptr, ptr %i.sj, align 8, !noundef !7
   %i.um = getelementptr i8, ptr %i.ul, i64 5
   %i.un = load ptr, ptr %i.sk, align 8, !noundef !7
@@ -872,7 +1106,7 @@ _ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i: ; preds = %bb.
   %.sroa.032.0248.i88.i.i = phi i64 [ 2, %.thread231.i.thread.i.i ], [ 3, %.thread.thread.i.thread.i.i ], [ 4, %bb.eq ] ; 3 uses
   %i.uz = zext nneg i8 %.sroa.033.0.i.ph.sink.i.i to i32
   %i.va = shl nuw nsw i32 %i.uz, 6
-  %i.vb = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+  %i.vb = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.vc = load i8, ptr %i.vb, align 1, !noundef !7
   %i.vd = and i8 %i.vc, 63
   %i.ve = zext nneg i8 %i.vd to i32
@@ -881,7 +1115,7 @@ _ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i: ; preds = %bb.
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.1": ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i"
   %i.vg = shl nuw nsw i32 %i.vf, 6
-  %i.vh = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 2
+  %i.vh = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 2
   %i.vi = load i8, ptr %i.vh, align 1, !noundef !7
   %i.vj = and i8 %i.vi, 63
   %i.vk = zext nneg i8 %i.vj to i32
@@ -890,7 +1124,7 @@ _ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i: ; preds = %bb.
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.2": ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.i.i.1"
   %i.vm = shl nuw nsw i32 %i.vl, 6
-  %i.vn = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 3
+  %i.vn = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 3
   %i.vo = load i8, ptr %i.vn, align 1, !noundef !7
   %i.vp = and i8 %i.vo, 63
   %i.vq = zext nneg i8 %i.vp to i32
@@ -1293,7 +1527,7 @@ _ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit192.i.i.i: ; preds = %bb
   %.sroa.8.1.i.i.i = phi ptr [ %i.ajp, %bb.hy ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit120.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit124.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit128.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit132.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit136.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit140.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit144.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit148.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit152.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit156.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit160.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit164.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit168.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit172.i.i.i ], [ %i.uk, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i ], [ %.sroa.8.6.i.i.i, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i ], [ %.sroa.8.11.i.i.i, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i ], [ %i.uk, %bb.gy ] ; 2 uses
   %.sroa.02.1.i29.i.i = phi i1 [ true, %bb.hy ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit120.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit124.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit128.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit132.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit136.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit140.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit144.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit148.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit152.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit156.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit160.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit164.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit168.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit172.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i ], [ false, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i ], [ true, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i ], [ false, %bb.gy ]
   %.not82.i.i.i = icmp eq ptr %.sroa.8.1.i.i.i, %i.sd
-  br i1 %.not82.i.i.i, label %._crit_edge268.i.i.i.a, label %bb.eb
+  br i1 %.not82.i.i.i, label %._crit_edge268.i.i.i, label %103
 
 bb.hc:                                            ; preds = %.thread234.i.i.i, %bb.ek
   %or.cond.i31.i.i = or i1 %.sroa.02.0267.i.i.i, %i.sc
@@ -1320,7 +1554,7 @@ bb.hd:                                            ; preds = %_ZN14unsafe_libyaml
   br i1 %i.agk, label %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i, label %bb.he
 
 bb.he:                                            ; preds = %bb.hd
-  %i.agl = load i8, ptr %.sroa.8.0265.i.i.i.a, align 1, !noundef !7 ; 8 uses
+  %i.agl = load i8, ptr %.sroa.8.0265.i.i.i, align 1, !noundef !7 ; 8 uses
   %i.agm = icmp sgt i8 %i.agl, -1
   br i1 %i.agm, label %..sink.split.i_crit_edge.i42.i.i, label %bb.hf
 
@@ -1339,7 +1573,7 @@ bb.hf:                                            ; preds = %bb.he
 
 .sink.split.sink.split.sink.split.i.i34.i.i:      ; preds = %bb.hj, %..sink.split.sink.split.sink.split.i_crit_edge.i40.i.i
   %i.agp = phi ptr [ %.pre273.i.i.i, %..sink.split.sink.split.sink.split.i_crit_edge.i40.i.i ], [ %i.ahl, %bb.hj ]
-  %.sroa.8.3.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %..sink.split.sink.split.sink.split.i_crit_edge.i40.i.i ], [ %i.ahm, %bb.hj ]
+  %.sroa.8.3.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %..sink.split.sink.split.sink.split.i_crit_edge.i40.i.i ], [ %i.ahm, %bb.hj ]
   %.sink38.i.i35.i.i = phi i8 [ %i.agl, %..sink.split.sink.split.sink.split.i_crit_edge.i40.i.i ], [ %i.ahn, %bb.hj ]
   store i8 %.sink38.i.i35.i.i, ptr %i.agp, align 1
   %i.agq = load ptr, ptr %i.sj, align 8, !noundef !7
@@ -1351,7 +1585,7 @@ bb.hf:                                            ; preds = %bb.he
 
 .sink.split.sink.split.i.i36.i.i:                 ; preds = %.sink.split.sink.split.sink.split.i.i34.i.i, %..sink.split.sink.split.i_crit_edge.i41.i.i
   %i.agu = phi ptr [ %.pre274.i.i.i, %..sink.split.sink.split.i_crit_edge.i41.i.i ], [ %i.agr, %.sink.split.sink.split.sink.split.i.i34.i.i ]
-  %.sroa.8.4.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %..sink.split.sink.split.i_crit_edge.i41.i.i ], [ %i.ags, %.sink.split.sink.split.sink.split.i.i34.i.i ]
+  %.sroa.8.4.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %..sink.split.sink.split.i_crit_edge.i41.i.i ], [ %i.ags, %.sink.split.sink.split.sink.split.i.i34.i.i ]
   %.sink31.i.i37.i.i = phi i8 [ %i.agl, %..sink.split.sink.split.i_crit_edge.i41.i.i ], [ %i.agt, %.sink.split.sink.split.sink.split.i.i34.i.i ]
   store i8 %.sink31.i.i37.i.i, ptr %i.agu, align 1
   %i.agv = load ptr, ptr %i.sj, align 8, !noundef !7
@@ -1363,7 +1597,7 @@ bb.hf:                                            ; preds = %bb.he
 
 .sink.split.i.i38.i.i:                            ; preds = %.sink.split.sink.split.i.i36.i.i, %..sink.split.i_crit_edge.i42.i.i
   %i.agz = phi ptr [ %.pre275.i.i.i, %..sink.split.i_crit_edge.i42.i.i ], [ %i.agw, %.sink.split.sink.split.i.i36.i.i ]
-  %.sroa.8.5.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %..sink.split.i_crit_edge.i42.i.i ], [ %i.agx, %.sink.split.sink.split.i.i36.i.i ]
+  %.sroa.8.5.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %..sink.split.i_crit_edge.i42.i.i ], [ %i.agx, %.sink.split.sink.split.i.i36.i.i ]
   %.sink.i.i39.i.i = phi i8 [ %i.agl, %..sink.split.i_crit_edge.i42.i.i ], [ %i.agy, %.sink.split.sink.split.i.i36.i.i ]
   store i8 %.sink.i.i39.i.i, ptr %i.agz, align 1
   %i.aha = load ptr, ptr %i.sj, align 8, !noundef !7
@@ -1373,7 +1607,7 @@ bb.hf:                                            ; preds = %bb.he
   br label %bb.hg
 
 bb.hg:                                            ; preds = %bb.hi, %.sink.split.i.i38.i.i
-  %.sroa.8.2.i.i.i = phi ptr [ %i.ahc, %.sink.split.i.i38.i.i ], [ %.sroa.8.0265.i.i.i.a, %bb.hi ]
+  %.sroa.8.2.i.i.i = phi ptr [ %i.ahc, %.sink.split.i.i38.i.i ], [ %.sroa.8.0265.i.i.i, %bb.hi ]
   %i.ahd = load i32, ptr %i.sg, align 8, !noundef !7
   %i.ahe = add i32 %i.ahd, 1
   store i32 %i.ahe, ptr %i.sg, align 8
@@ -1399,13 +1633,13 @@ bb.hj:                                            ; preds = %bb.hi
   %i.ahk = load ptr, ptr %i.sj, align 8, !noundef !7
   %i.ahl = getelementptr i8, ptr %i.ahk, i64 1    ; 2 uses
   store ptr %i.ahl, ptr %i.sj, align 8
-  %i.ahm = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1 ; 2 uses
+  %i.ahm = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 1 ; 2 uses
   %i.ahn = load i8, ptr %i.ahm, align 1, !noundef !7
   br label %.sink.split.sink.split.sink.split.i.i34.i.i
 
 _ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i: ; preds = %bb.hg, %bb.hd
   %.109.i.i.i = phi ptr [ @14, %bb.hd ], [ @15, %bb.hg ]
-  %.sroa.8.6.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %bb.hd ], [ %.sroa.8.2.i.i.i, %bb.hg ]
+  %.sroa.8.6.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %bb.hd ], [ %.sroa.8.2.i.i.i, %bb.hg ]
   %i.aho = load i8, ptr %.109.i.i.i, align 1, !range !11, !noundef !7
   %i.ahp = trunc nuw i8 %i.aho to i1
   br i1 %i.ahp, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i, label %.loopexit.i.i.i
@@ -1431,7 +1665,7 @@ bb.hl:                                            ; preds = %_ZN14unsafe_libyaml
   br i1 %i.ahx, label %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i, label %bb.hm
 
 bb.hm:                                            ; preds = %bb.hl
-  %i.ahy = load i8, ptr %.sroa.8.0265.i.i.i.a, align 1, !noundef !7 ; 8 uses
+  %i.ahy = load i8, ptr %.sroa.8.0265.i.i.i, align 1, !noundef !7 ; 8 uses
   %i.ahz = icmp sgt i8 %i.ahy, -1
   br i1 %i.ahz, label %..sink.split.i202_crit_edge.i.i.i, label %bb.hn
 
@@ -1450,7 +1684,7 @@ bb.hn:                                            ; preds = %bb.hm
 
 .sink.split.sink.split.sink.split.i198.i.i.i:     ; preds = %bb.hr, %..sink.split.sink.split.sink.split.i198_crit_edge.i.i.i
   %i.aic = phi ptr [ %.pre.i32.i.i, %..sink.split.sink.split.sink.split.i198_crit_edge.i.i.i ], [ %i.aiy, %bb.hr ]
-  %.sroa.8.8.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %..sink.split.sink.split.sink.split.i198_crit_edge.i.i.i ], [ %i.aiz, %bb.hr ]
+  %.sroa.8.8.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %..sink.split.sink.split.sink.split.i198_crit_edge.i.i.i ], [ %i.aiz, %bb.hr ]
   %.sink38.i199.i.i.i = phi i8 [ %i.ahy, %..sink.split.sink.split.sink.split.i198_crit_edge.i.i.i ], [ %i.aja, %bb.hr ]
   store i8 %.sink38.i199.i.i.i, ptr %i.aic, align 1
   %i.aid = load ptr, ptr %i.sj, align 8, !noundef !7
@@ -1462,7 +1696,7 @@ bb.hn:                                            ; preds = %bb.hm
 
 .sink.split.sink.split.i200.i.i.i:                ; preds = %.sink.split.sink.split.sink.split.i198.i.i.i, %..sink.split.sink.split.i200_crit_edge.i.i.i
   %i.aih = phi ptr [ %.pre271.i.i.i, %..sink.split.sink.split.i200_crit_edge.i.i.i ], [ %i.aie, %.sink.split.sink.split.sink.split.i198.i.i.i ]
-  %.sroa.8.9.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %..sink.split.sink.split.i200_crit_edge.i.i.i ], [ %i.aif, %.sink.split.sink.split.sink.split.i198.i.i.i ]
+  %.sroa.8.9.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %..sink.split.sink.split.i200_crit_edge.i.i.i ], [ %i.aif, %.sink.split.sink.split.sink.split.i198.i.i.i ]
   %.sink31.i201.i.i.i = phi i8 [ %i.ahy, %..sink.split.sink.split.i200_crit_edge.i.i.i ], [ %i.aig, %.sink.split.sink.split.sink.split.i198.i.i.i ]
   store i8 %.sink31.i201.i.i.i, ptr %i.aih, align 1
   %i.aii = load ptr, ptr %i.sj, align 8, !noundef !7
@@ -1474,7 +1708,7 @@ bb.hn:                                            ; preds = %bb.hm
 
 .sink.split.i202.i.i.i:                           ; preds = %.sink.split.sink.split.i200.i.i.i, %..sink.split.i202_crit_edge.i.i.i
   %i.aim = phi ptr [ %.pre272.i.i.i, %..sink.split.i202_crit_edge.i.i.i ], [ %i.aij, %.sink.split.sink.split.i200.i.i.i ]
-  %.sroa.8.10.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %..sink.split.i202_crit_edge.i.i.i ], [ %i.aik, %.sink.split.sink.split.i200.i.i.i ]
+  %.sroa.8.10.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %..sink.split.i202_crit_edge.i.i.i ], [ %i.aik, %.sink.split.sink.split.i200.i.i.i ]
   %.sink.i203.i.i.i = phi i8 [ %i.ahy, %..sink.split.i202_crit_edge.i.i.i ], [ %i.ail, %.sink.split.sink.split.i200.i.i.i ]
   store i8 %.sink.i203.i.i.i, ptr %i.aim, align 1
   %i.ain = load ptr, ptr %i.sj, align 8, !noundef !7
@@ -1484,7 +1718,7 @@ bb.hn:                                            ; preds = %bb.hm
   br label %bb.ho
 
 bb.ho:                                            ; preds = %bb.hq, %.sink.split.i202.i.i.i
-  %.sroa.8.7.i.i.i = phi ptr [ %i.aip, %.sink.split.i202.i.i.i ], [ %.sroa.8.0265.i.i.i.a, %bb.hq ]
+  %.sroa.8.7.i.i.i = phi ptr [ %i.aip, %.sink.split.i202.i.i.i ], [ %.sroa.8.0265.i.i.i, %bb.hq ]
   %i.aiq = load i32, ptr %i.sg, align 8, !noundef !7
   %i.air = add i32 %i.aiq, 1
   store i32 %i.air, ptr %i.sg, align 8
@@ -1510,13 +1744,13 @@ bb.hr:                                            ; preds = %bb.hq
   %i.aix = load ptr, ptr %i.sj, align 8, !noundef !7
   %i.aiy = getelementptr i8, ptr %i.aix, i64 1    ; 2 uses
   store ptr %i.aiy, ptr %i.sj, align 8
-  %i.aiz = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 1 ; 2 uses
+  %i.aiz = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 1 ; 2 uses
   %i.aja = load i8, ptr %i.aiz, align 1, !noundef !7
   br label %.sink.split.sink.split.sink.split.i198.i.i.i
 
 _ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i: ; preds = %bb.ho, %bb.hl
   %.110.i.i.i = phi ptr [ @14, %bb.hl ], [ @15, %bb.ho ]
-  %.sroa.8.11.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i.a, %bb.hl ], [ %.sroa.8.7.i.i.i, %bb.ho ]
+  %.sroa.8.11.i.i.i = phi ptr [ %.sroa.8.0265.i.i.i, %bb.hl ], [ %.sroa.8.7.i.i.i, %bb.ho ]
   %i.ajb = load i8, ptr %.110.i.i.i, align 1, !range !11, !noundef !7
   %i.ajc = trunc nuw i8 %i.ajb to i1
   br i1 %i.ajc, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i, label %.loopexit.i.i.i
@@ -1525,9 +1759,9 @@ bb.hs:                                            ; preds = %bb.hc
   %i.ajd = load i32, ptr %i.sg, align 8, !noundef !7
   %i.aje = load i32, ptr %i.sh, align 4, !noundef !7
   %i.ajf = icmp sle i32 %i.ajd, %i.aje
-  %.not83.i.i.i = icmp eq ptr %.sroa.8.0265.i.i.i.a, %i.ry
+  %.not83.i.i.i = icmp eq ptr %.sroa.8.0265.i.i.i, %i.ry
   %or.cond111.i.i.i = or i1 %.not83.i.i.i, %i.ajf
-  %.not84.i.i.i = icmp eq ptr %.sroa.8.0265.i.i.i.a, %i.si
+  %.not84.i.i.i = icmp eq ptr %.sroa.8.0265.i.i.i, %i.si
   %or.cond113.i.i.i = or i1 %.not84.i.i.i, %or.cond111.i.i.i
   br i1 %or.cond113.i.i.i, label %bb.hk, label %bb.ht
 
@@ -1536,7 +1770,7 @@ bb.ht:                                            ; preds = %bb.hs
   br i1 %i.ajg, label %bb.hu, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
 
 bb.hu:                                            ; preds = %bb.ht
-  %i.ajh = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i.a, i64 1
+  %i.ajh = getelementptr inbounds nuw i8, ptr %.sroa.8.0265.i.i.i, i64 1
   %i.aji = load i8, ptr %i.ajh, align 1, !noundef !7
   %i.ajj = icmp eq i8 %i.aji, 32
   br i1 %i.ajj, label %bb.hv, label %bb.hw
@@ -1546,7 +1780,7 @@ bb.hv:                                            ; preds = %bb.hu
   br i1 %i.ajk, label %bb.hw, label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
 
 bb.hw:                                            ; preds = %bb.hv, %bb.hu
-  %i.ajl = load i8, ptr %.sroa.8.0265.i.i.i.a, align 1, !noundef !7 ; 4 uses
+  %i.ajl = load i8, ptr %.sroa.8.0265.i.i.i, align 1, !noundef !7 ; 4 uses
   %i.ajm = icmp sgt i8 %i.ajl, -1
   br i1 %i.ajm, label %bb.hy, label %bb.hx
 
@@ -1557,7 +1791,7 @@ bb.hx:                                            ; preds = %bb.hw
 
 bb.hy:                                            ; preds = %bb.ia, %bb.hz, %bb.hx, %bb.hw
   %.sroa.057.0.i.i.i = phi i64 [ 3, %bb.hz ], [ 1, %bb.hw ], [ 2, %bb.hx ], [ %.116.i.i.i, %bb.ia ]
-  %i.ajp = getelementptr i8, ptr %.sroa.8.0265.i.i.i.a, i64 %.sroa.057.0.i.i.i
+  %i.ajp = getelementptr i8, ptr %.sroa.8.0265.i.i.i, i64 %.sroa.057.0.i.i.i
   br label %.loopexit.i.i.i
 
 bb.hz:                                            ; preds = %bb.hx
@@ -1960,7 +2194,7 @@ bb.jm:                                            ; preds = %bb.jl
   br i1 %switch96.i.i, label %.loopexit.i75.i.i, label %.thread81.i.i.i
 
 .loopexit.i75.i.i:                                ; preds = %.preheader.i77.i.i, %.preheader.i77.i.i, %.preheader.i77.i.i, %_ZN14unsafe_libyaml7emitter9PUT_BREAK17haa214da670044091E.exit74.i.i.i, %bb.js, %.thread92.i.i.i, %bb.jm, %bb.jk, %bb.jj
-  %i.aph = call fastcc noundef zeroext i1 @_ZN14unsafe_libyaml7emitter11WRITE_BREAK17h4b685cba92997e93E(ptr noundef nonnull %0, ptr noundef %i.a)
+  %i.aph = call fastcc noundef zeroext i1 @_ZN14unsafe_libyaml7emitter11WRITE_BREAK17h4b685cba92997e93E(ptr noundef %0, ptr noundef %i.a)
   br i1 %i.aph, label %.loopexit._crit_edge.i.i.i, label %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.thread.i
 
 .loopexit._crit_edge.i.i.i:                       ; preds = %.loopexit.i75.i.i
@@ -2290,20 +2524,18 @@ _ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
 
-_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i: ; preds = %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit58.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i5.i.i, %bb.dn, %_ZN14unsafe_libyaml7emitter9PUT_BREAK17haa214da670044091E.exit.i6.i.i, %.thread.i.i.i, %bb.cu, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i10.i.i, %bb.ci, %._crit_edge.thread.i.i.i.a, %bb.cg
+_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i: ; preds = %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit58.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i5.i.i, %bb.dn, %_ZN14unsafe_libyaml7emitter9PUT_BREAK17haa214da670044091E.exit.i6.i.i, %.thread.i.i.i, %bb.cu, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i10.i.i, %._crit_edge.thread.i.i.i.a, %bb.ci, %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
 
-_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i: ; preds = %._crit_edge.thread.i.i.i.a
+_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i: ; preds = %9
   %i.atr = getelementptr inbounds nuw i8, ptr %0, i64 276
-  store i8 0, ptr %i.atr, align 4
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 277
-  store i8 0, ptr %8, align 1
+  store i16 0, ptr %i.atr, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i
 
-_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i: ; preds = %bb.hv, %bb.ht, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit188.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit184.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit180.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit172.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit168.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit164.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit160.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit156.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit152.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit148.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit144.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit140.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit136.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit132.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit128.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit124.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit120.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit192.i.i.i, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.i, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.thread.i, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.i, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.thread.i, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a, %._crit_edge268.i.i.i.a, %bb.ea, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.i, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.thread.i, %_ZN14unsafe_libyaml7emitter28yaml_emitter_increase_indent17hc5bad6e2612ad6a7E.exit.i
-  %i.ats = phi ptr [ @15, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i ], [ @14, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.thread.i ], [ @14, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.thread.i ], [ @14, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.thread.i ], [ @14, %_ZN14unsafe_libyaml7emitter28yaml_emitter_increase_indent17hc5bad6e2612ad6a7E.exit.i ], [ @14, %._crit_edge268.i.i.i.a ], [ @15, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i.a ], [ @14, %bb.ea ], [ @15, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit192.i.i.i ], [ @15, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.i ], [ @15, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit120.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit124.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit128.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit132.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit136.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit140.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit144.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit148.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit152.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit156.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit160.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit164.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit168.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit172.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit180.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit184.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit188.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i ], [ @14, %bb.ht ], [ @14, %bb.hv ]
+_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread.i: ; preds = %bb.hv, %bb.ht, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit188.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit184.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit180.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit172.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit168.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit164.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit160.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit156.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit152.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit148.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit144.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit140.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit136.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit132.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit128.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit124.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit120.i.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit192.i.i.i, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.i, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.thread.i, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.i, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.thread.i, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i, %bb.ea, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.i, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.thread.i, %_ZN14unsafe_libyaml7emitter28yaml_emitter_increase_indent17hc5bad6e2612ad6a7E.exit.i
+  %i.ats = phi ptr [ @15, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread13.i ], [ @14, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.thread.i ], [ @14, %_ZN14unsafe_libyaml7emitter31yaml_emitter_write_plain_scalar17h3d69bdb2be85e828E.exit.i.thread.i ], [ @14, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.thread.i ], [ @14, %_ZN14unsafe_libyaml7emitter28yaml_emitter_increase_indent17hc5bad6e2612ad6a7E.exit.i ], [ @15, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.thread10.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit192.i.i.i ], [ @14, %bb.ea ], [ @15, %_ZN14unsafe_libyaml7emitter27yaml_emitter_process_scalar17hc7297643a490550bE.exit.i ], [ @14, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i103.i.i ], [ @15, %_ZN14unsafe_libyaml7emitter32yaml_emitter_write_folded_scalar17haa43292056c0d62aE.exit.i.i ], [ @15, %_ZN14unsafe_libyaml7emitter33yaml_emitter_write_literal_scalar17h3d237f66bfdfcf4bE.exit.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit.i28.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit120.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit124.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit128.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit132.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit136.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit140.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit144.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit148.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit152.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit156.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit160.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit164.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit168.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit172.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit176.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit180.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit184.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter3PUT17h6ab7f77857862044E.exit188.i.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit.i33.i.i ], [ @14, %_ZN14unsafe_libyaml7emitter5WRITE17h9c79fc5dd2e55e11E.exit205.i.i.i ], [ @14, %bb.ht ], [ @14, %bb.hv ]
   %i.att = load i8, ptr %i.ats, align 1, !range !11, !noundef !7
   %i.atu = trunc nuw i8 %i.att to i1
   br i1 %i.atu, label %_ZN14unsafe_libyaml7emitter23yaml_emitter_emit_alias17he248688881d2d17fE.exit, label %bb.kr

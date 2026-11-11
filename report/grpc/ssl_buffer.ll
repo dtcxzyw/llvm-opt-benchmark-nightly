@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/ssl_buffer?download=true
-inline.NumInlined: 45
+inline.NumInlined: 46
 inline.NumDeleted: 17
 begin_hunk_0_@free
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #1
@@ -202,13 +202,85 @@ _ZN4bssl9SSLBuffer5ClearEv.exit.i:                ; preds = %bb.c, %bb.b
 _ZN4bssl9SSLBuffer15DiscardConsumedEv.exit:       ; preds = %bb.a, %_ZN4bssl9SSLBuffer5ClearEv.exit.i
   %i.i = tail call i32 @SSL_is_dtls(ptr noundef nonnull %0)
   %.not = icmp eq i32 %i.i, 0
-  %spec.select = select i1 %.not, i64 %1, i64 16717 ; 5 uses
-  %i.j = load ptr, ptr %i.a, align 8, !tbaa !62
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 80
-  %2 = tail call noundef zeroext i1 @_ZN4bssl9SSLBuffer9EnsureCapEmm(ptr noundef nonnull align 8 dereferenceable(19) %i.k, i64 noundef 13, i64 noundef %spec.select)
-  br i1 %2, label %bb.d, label %_ZN4bsslL28dtls_read_buffer_next_packetEP6ssl_st.exit
+  %spec.select = select i1 %.not, i64 %1, i64 16717 ; 9 uses
+  %i.j = load ptr, ptr %i.a, align 8, !tbaa !62   ; 6 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 80 ; 3 uses
+  %2 = icmp ugt i64 %spec.select, 65535
+  br i1 %2, label %3, label %4
 
-bb.d:                                             ; preds = %_ZN4bssl9SSLBuffer15DiscardConsumedEv.exit
+3:                                                ; preds = %_ZN4bssl9SSLBuffer15DiscardConsumedEv.exit
+  tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 68, ptr noundef nonnull @.str, i32 noundef 51)
+  br label %_ZN4bsslL28dtls_read_buffer_next_packetEP6ssl_st.exit
+
+4:                                                ; preds = %_ZN4bssl9SSLBuffer15DiscardConsumedEv.exit
+  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 92 ; 2 uses
+  %6 = load i16, ptr %5, align 4, !tbaa !16
+  %7 = zext i16 %6 to i64
+  %.not.i = icmp samesign ugt i64 %spec.select, %7
+  br i1 %.not.i, label %8, label %bb.d
+
+8:                                                ; preds = %4
+  %9 = icmp samesign ult i64 %spec.select, 6
+  br i1 %9, label %10, label %12
+
+10:                                               ; preds = %8
+  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 94
+  br label %21
+
+12:                                               ; preds = %8
+  %13 = add nuw nsw i64 %spec.select, 7
+  %14 = tail call noalias ptr @malloc(i64 noundef %13) #10 ; 3 uses
+  %15 = icmp eq ptr %14, null
+  br i1 %15, label %16, label %17
+
+16:                                               ; preds = %12
+  tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 65, ptr noundef nonnull @.str, i32 noundef 74)
+  br label %_ZN4bsslL28dtls_read_buffer_next_packetEP6ssl_st.exit
+
+17:                                               ; preds = %12
+  %18 = ptrtoint ptr %14 to i64
+  %19 = sub i64 3, %18
+  %20 = and i64 %19, 7
+  br label %21
+
+21:                                               ; preds = %17, %10
+  %.013.i = phi ptr [ %11, %10 ], [ %14, %17 ]    ; 2 uses
+  %.0.i = phi i64 [ 0, %10 ], [ %20, %17 ]        ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.j, i64 88 ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %i.j, i64 90
+  %24 = load i16, ptr %23, align 2, !tbaa !17     ; 2 uses
+  %25 = icmp eq i16 %24, 0
+  br i1 %25, label %_ZL15OPENSSL_memmovePvPKvm.exit.i, label %26
+
+26:                                               ; preds = %21
+  %27 = zext i16 %24 to i64
+  %28 = load ptr, ptr %i.k, align 8, !tbaa !15
+  %29 = load i16, ptr %22, align 8, !tbaa !18
+  %30 = zext i16 %29 to i64
+  %31 = getelementptr inbounds nuw i8, ptr %28, i64 %30
+  %32 = getelementptr inbounds nuw i8, ptr %.013.i, i64 %.0.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %32, ptr readonly align 1 %31, i64 range(i64 0, 65536) %27, i1 false)
+  br label %_ZL15OPENSSL_memmovePvPKvm.exit.i
+
+_ZL15OPENSSL_memmovePvPKvm.exit.i:                ; preds = %26, %21
+  %33 = load ptr, ptr %i.k, align 8, !tbaa !15    ; 2 uses
+  %34 = getelementptr inbounds nuw i8, ptr %i.j, i64 94
+  %.not18.i = icmp eq ptr %33, %34
+  br i1 %.not18.i, label %36, label %35
+
+35:                                               ; preds = %_ZL15OPENSSL_memmovePvPKvm.exit.i
+  tail call void @free(ptr noundef %33) #9
+  br label %36
+
+36:                                               ; preds = %35, %_ZL15OPENSSL_memmovePvPKvm.exit.i
+  store ptr %.013.i, ptr %i.k, align 8, !tbaa !15
+  %37 = trunc nuw nsw i64 %.0.i to i16
+  store i16 %37, ptr %22, align 8, !tbaa !18
+  %38 = trunc nuw i64 %spec.select to i16
+  store i16 %38, ptr %5, align 4, !tbaa !16
+  br label %bb.d
+
+bb.d:                                             ; preds = %4, %36
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !63
   %.not.i.a = icmp eq ptr %i.m, null
@@ -280,7 +352,7 @@ bb.m:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.o, i64 92 ; 2 uses
   %i.ar = load i16, ptr %i.aq, align 4, !tbaa !16
   %i.as = zext i16 %i.ar to i64
-  %i.at = icmp ugt i64 %spec.select, %i.as
+  %i.at = icmp samesign ugt i64 %spec.select, %i.as
   br i1 %i.at, label %bb.n, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.m
@@ -363,8 +435,8 @@ _ZN4bssl9SSLBuffer5ClearEv.exit.i16:              ; preds = %bb.u, %bb.t
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(19) %i.by, i8 0, i64 14, i1 false)
   br label %_ZN4bsslL28dtls_read_buffer_next_packetEP6ssl_st.exit
 
-_ZN4bsslL28dtls_read_buffer_next_packetEP6ssl_st.exit: ; preds = %bb.r, %_ZN4bssl9SSLBuffer5ClearEv.exit.i16, %bb.s, %_ZN4bssl9SSLBuffer8DidWriteEm.exit.i, %.preheader.i, %_ZN4bssl9SSLBuffer15DiscardConsumedEv.exit, %bb.e
-  %.013 = phi i32 [ -1, %bb.e ], [ -1, %_ZN4bssl9SSLBuffer15DiscardConsumedEv.exit ], [ %.0.ph, %_ZN4bssl9SSLBuffer5ClearEv.exit.i16 ], [ 1, %_ZN4bssl9SSLBuffer8DidWriteEm.exit.i ], [ 1, %.preheader.i ], [ %.0.ph, %bb.s ], [ 1, %bb.r ]
+_ZN4bsslL28dtls_read_buffer_next_packetEP6ssl_st.exit: ; preds = %bb.r, %_ZN4bssl9SSLBuffer5ClearEv.exit.i16, %bb.s, %_ZN4bssl9SSLBuffer8DidWriteEm.exit.i, %.preheader.i, %16, %3, %bb.e
+  %.013 = phi i32 [ -1, %bb.e ], [ -1, %16 ], [ %.0.ph, %_ZN4bssl9SSLBuffer5ClearEv.exit.i16 ], [ -1, %3 ], [ 1, %_ZN4bssl9SSLBuffer8DidWriteEm.exit.i ], [ 1, %.preheader.i ], [ %.0.ph, %bb.s ], [ 1, %bb.r ]
   ret i32 %.013
 }
 
