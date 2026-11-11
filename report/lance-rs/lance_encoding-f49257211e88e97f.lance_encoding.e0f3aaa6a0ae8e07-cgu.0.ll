@@ -205,7 +205,7 @@ _RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxNtNvXsf_NtB2_7convertIBv_DNtNtCscI6d9
 .preheader:                                       ; preds = %bb.j, %bb.ae
   %.sroa.0242.045 = phi i64 [ %i.am, %bb.ae ], [ 1, %bb.j ] ; 3 uses
   %.sroa.3206.044 = phi i64 [ %storemerge, %bb.ae ], [ %storemerge.peel, %bb.j ]
-  %i.am = add i64 %.sroa.0242.045, 1
+  %i.am = add nuw i64 %.sroa.0242.045, 1
   %i.an = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0242.045, i64 %i.v) ; 2 uses
   %i.ao = extractvalue { i64, i1 } %i.an, 0       ; 3 uses
   %i.ap = extractvalue { i64, i1 } %i.an, 1
