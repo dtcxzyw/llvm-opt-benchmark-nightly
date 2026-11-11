@@ -205,96 +205,42 @@ bb.a:
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define hidden void @_RINvXs1h_NtCsG258MDvU3F_3std4pathNtB7_4PathNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtCskCJvoiymbRN_5ahash13fallback_hash7AHasherECskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull readonly captures(none) %0, i64 noundef %1, ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %2) unnamed_addr #5 personality ptr @rust_eh_personality {
-.split:
-  switch i64 %1, label %.lr.ph.preheader.split.split [
+bb.a:
+  switch i64 %1, label %bb.b [
     i64 0, label %._crit_edge
     i64 1, label %._crit_edge.loopexit.peel.begin.thread
-    i64 2, label %.lr.ph.peel
   ]
 
-.lr.ph.preheader.split.split:                     ; preds = %.split
-  %3 = add i64 %1, -3
+bb.b:                                             ; preds = %bb.a
+  %i.a = add i64 %1, -2
   br label %.lr.ph
 
-.lr.ph.peel:                                      ; preds = %.split, %bb.m
-  %4 = phi i64 [ 0, %.split ], [ %.sroa.0.1, %bb.m ] ; 4 uses
-  %5 = phi i64 [ 0, %.split ], [ %.sroa.012.2, %bb.m ] ; 3 uses
-  %6 = phi i64 [ 0, %.split ], [ %i.z, %bb.m ]    ; 6 uses
-  %7 = add nuw i64 %6, 1                          ; 5 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 %6
-  %9 = load i8, ptr %8, align 1, !noundef !8
-  %10 = icmp eq i8 %9, 47
-  br i1 %10, label %11, label %._crit_edge.loopexit.peel.begin
-
-11:                                               ; preds = %.lr.ph.peel
-  %12 = icmp ugt i64 %6, %4
-  br i1 %12, label %13, label %18
-
-13:                                               ; preds = %11
-  %14 = sub nuw i64 %6, %4                        ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 %4
-  %16 = add i64 %14, %5                           ; 2 uses
-  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %16, i64 %16, i64 62)
-  tail call fastcc void @_RNvXs_NtCskCJvoiymbRN_5ahash13fallback_hashNtB4_7AHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef align 8 dereferenceable(32) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %15, i64 noundef %14) #37
-  br label %18
-
-18:                                               ; preds = %13, %11
-  %.sroa.012.3.peel51 = phi i64 [ %17, %13 ], [ %5, %11 ]
-  %19 = sub nuw i64 %1, %7
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 %7 ; 2 uses
-  %21 = icmp eq i64 %19, 1
-  %22 = load i8, ptr %20, align 1, !noundef !8
-  %23 = icmp eq i8 %22, 46                        ; 2 uses
-  br i1 %21, label %29, label %24
-
-24:                                               ; preds = %18
-  br i1 %23, label %25, label %bb.a
-
-25:                                               ; preds = %24
-  %26 = getelementptr inbounds nuw i8, ptr %20, i64 1
-  %27 = load i8, ptr %26, align 1, !noundef !8
-  %28 = icmp eq i8 %27, 47
-  br i1 %28, label %bb.b, label %bb.a
-
-29:                                               ; preds = %18
-  br i1 %23, label %bb.b, label %bb.a
-
-bb.a:                                             ; preds = %29, %25, %24
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.a, %29, %25
-  %.sroa.024.0.peel52 = phi i64 [ 1, %29 ], [ 0, %bb.a ], [ 1, %25 ]
-  %i.a = add i64 %.sroa.024.0.peel52, %7
-  br label %._crit_edge.loopexit.peel.begin
-
-._crit_edge.loopexit.peel.begin:                  ; preds = %.lr.ph.peel, %bb.b
-  %.sroa.012.2.peel = phi i64 [ %.sroa.012.3.peel51, %bb.b ], [ %5, %.lr.ph.peel ] ; 3 uses
-  %.sroa.0.1.peel = phi i64 [ %i.a, %bb.b ], [ %4, %.lr.ph.peel ] ; 4 uses
-  %i.b = add nuw i64 %6, 2                        ; 9 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %7
+._crit_edge.loopexit.peel.begin:                  ; preds = %bb.m
+  %i.b = add nuw i64 %.sroa.019.030, 2            ; 9 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.z
   %i.d = load i8, ptr %i.c, align 1, !noundef !8
   %i.e = icmp eq i8 %i.d, 47
   br i1 %i.e, label %bb.c, label %._crit_edge
 
-._crit_edge.loopexit.peel.begin.thread:           ; preds = %.split
+._crit_edge.loopexit.peel.begin.thread:           ; preds = %bb.a
   %i.f = load i8, ptr %0, align 1, !noundef !8
   %i.g = icmp eq i8 %i.f, 47
   br i1 %i.g, label %.thread48, label %._crit_edge
 
 bb.c:                                             ; preds = %._crit_edge.loopexit.peel.begin
-  %.not = icmp ult i64 %6, %.sroa.0.1.peel
+  %.not = icmp ult i64 %.sroa.019.030, %.sroa.0.1
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = sub nuw i64 %7, %.sroa.0.1.peel          ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.1.peel
-  %i.j = add i64 %i.h, %.sroa.012.2.peel          ; 2 uses
+  %i.h = sub nuw i64 %i.z, %.sroa.0.1             ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.1
+  %i.j = add i64 %i.h, %.sroa.012.2               ; 2 uses
   %i.k = tail call noundef i64 @llvm.fshl.i64(i64 %i.j, i64 %i.j, i64 62)
   tail call fastcc void @_RNvXs_NtCskCJvoiymbRN_5ahash13fallback_hashNtB4_7AHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef align 8 dereferenceable(32) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.i, i64 noundef %i.h) #37
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.sroa.012.3.peel = phi i64 [ %i.k, %bb.d ], [ %.sroa.012.2.peel, %bb.c ] ; 6 uses
+  %.sroa.012.3.peel = phi i64 [ %i.k, %bb.d ], [ %.sroa.012.2, %bb.c ] ; 6 uses
   %i.l = sub nuw i64 %1, %i.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.b ; 3 uses
   %i.n = icmp eq i64 %i.l, 1
@@ -332,17 +278,17 @@ bb.j:                                             ; preds = %.thread48, %bb.i, %
   %i.x = add i64 %.sroa.024.0.peel, %i.w
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.split, %._crit_edge.loopexit.peel.begin, %bb.j, %._crit_edge.loopexit.peel.begin.thread
-  %.sroa.012.0.lcssa = phi i64 [ %1, %.split ], [ %.sroa.012.3.peel44, %bb.j ], [ %.sroa.012.2.peel, %._crit_edge.loopexit.peel.begin ], [ 0, %._crit_edge.loopexit.peel.begin.thread ] ; 2 uses
-  %.sroa.0.0.lcssa = phi i64 [ %1, %.split ], [ %i.x, %bb.j ], [ %.sroa.0.1.peel, %._crit_edge.loopexit.peel.begin ], [ 0, %._crit_edge.loopexit.peel.begin.thread ] ; 3 uses
+._crit_edge:                                      ; preds = %bb.a, %._crit_edge.loopexit.peel.begin, %bb.j, %._crit_edge.loopexit.peel.begin.thread
+  %.sroa.012.0.lcssa = phi i64 [ %1, %bb.a ], [ %.sroa.012.3.peel44, %bb.j ], [ %.sroa.012.2, %._crit_edge.loopexit.peel.begin ], [ 0, %._crit_edge.loopexit.peel.begin.thread ] ; 2 uses
+  %.sroa.0.0.lcssa = phi i64 [ %1, %bb.a ], [ %i.x, %bb.j ], [ %.sroa.0.1, %._crit_edge.loopexit.peel.begin ], [ 0, %._crit_edge.loopexit.peel.begin.thread ] ; 3 uses
   %i.y = icmp ult i64 %.sroa.0.0.lcssa, %1
   br i1 %i.y, label %bb.l, label %bb.k
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader.split.split, %bb.m
-  %.sroa.0.032 = phi i64 [ %.sroa.0.1, %bb.m ], [ 0, %.lr.ph.preheader.split.split ] ; 4 uses
-  %.sroa.012.031 = phi i64 [ %.sroa.012.2, %bb.m ], [ 0, %.lr.ph.preheader.split.split ] ; 3 uses
-  %.sroa.019.030 = phi i64 [ %i.z, %bb.m ], [ 0, %.lr.ph.preheader.split.split ] ; 5 uses
-  %i.z = add nuw i64 %.sroa.019.030, 1            ; 5 uses
+.lr.ph:                                           ; preds = %bb.b, %bb.m
+  %.sroa.0.032 = phi i64 [ %.sroa.0.1, %bb.m ], [ 0, %bb.b ] ; 4 uses
+  %.sroa.012.031 = phi i64 [ %.sroa.012.2, %bb.m ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.019.030 = phi i64 [ %i.z, %bb.m ], [ 0, %bb.b ] ; 7 uses
+  %i.z = add nuw i64 %.sroa.019.030, 1            ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.019.030
   %i.ab = load i8, ptr %i.aa, align 1, !noundef !8
   %i.ac = icmp eq i8 %i.ab, 47
@@ -370,10 +316,10 @@ bb.l:                                             ; preds = %._crit_edge
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.s, %.lr.ph
-  %.sroa.012.2 = phi i64 [ %.sroa.012.3, %bb.s ], [ %.sroa.012.031, %.lr.ph ] ; 2 uses
-  %.sroa.0.1 = phi i64 [ %i.az, %bb.s ], [ %.sroa.0.032, %.lr.ph ] ; 2 uses
-  %exitcond.not = icmp eq i64 %.sroa.019.030, %3
-  br i1 %exitcond.not, label %.lr.ph.peel, label %.lr.ph, !llvm.loop !1683
+  %.sroa.012.2 = phi i64 [ %.sroa.012.3, %bb.s ], [ %.sroa.012.031, %.lr.ph ] ; 4 uses
+  %.sroa.0.1 = phi i64 [ %i.az, %bb.s ], [ %.sroa.0.032, %.lr.ph ] ; 5 uses
+  %exitcond.not = icmp eq i64 %.sroa.019.030, %i.a
+  br i1 %exitcond.not, label %._crit_edge.loopexit.peel.begin, label %.lr.ph, !llvm.loop !1683
 
 bb.n:                                             ; preds = %.lr.ph
   %i.ap = icmp ugt i64 %.sroa.019.030, %.sroa.0.032
@@ -776,7 +722,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !1682 = distinct !{!1682, !1681, !"_RNvXs_NtCskCJvoiymbRN_5ahash13fallback_hashNtB4_7AHasherNtNtCskKLDkoKarTP_4core4hash6Hasher11write_usize: argument 0"}
 !1683 = distinct !{!1683, !1685}
 !1684 = !{!1682}
-!1685 = !{!"llvm.loop.peeled.count", i32 2}
+!1685 = !{!"llvm.loop.peeled.count", i32 1}
 !1686 = distinct !{!1686, i1 true, !"_RINvXs1o_NtNtCs54qMqBN3zRt_10serde_core3ser5implsINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBQ_6string6StringENtB9_9Serialize9serializeQINtNtCskItKYAOUBlG_10serde_yaml3ser10SerializerQIBM_hEEECskeugdADtBsi_12pingora_core"}
 !1687 = distinct !{!1687, !1686, !"_RINvXs1o_NtNtCs54qMqBN3zRt_10serde_core3ser5implsINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBQ_6string6StringENtB9_9Serialize9serializeQINtNtCskItKYAOUBlG_10serde_yaml3ser10SerializerQIBM_hEEECskeugdADtBsi_12pingora_core: argument 0"}
 !1688 = distinct !{!1688, i1 true, !"_RINvYQINtNtCskItKYAOUBlG_10serde_yaml3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs54qMqBN3zRt_10serde_core3ser10Serializer11collect_seqRIBR_NtNtBV_6string6StringEECskeugdADtBsi_12pingora_core"}
