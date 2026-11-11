@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr %.val11.i.i.i.i.i.i.i.1, ptr %i.o, align 8, !noalias !100334, !captures !228
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 %.val12.i.i.i.i.i.i.i.1, ptr %i.p, align 8, !noalias !100335
-  %i.q = add nuw i64 %i.g, 2                      ; 2 uses
+  %i.q = add nuw nsw i64 %i.g, 2                  ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec14spec_from_iterINtB4_3VecRShEINtB2_12SpecFromIterBU_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtB1u_5slice4iter4IterNtNtNtB1u_2io8io_slice7IoSliceENCNvXs6_NtNtCsb28OZjLZAOu_6rustls4conn10connectionINtB3f_16ConnectionCommonNtNtNtB3h_6client11client_conn20ClientConnectionDataENtB3d_13PlaintextSink14write_vectored0EE9from_iterCsgZAIVb0XKpv_9ssservice.exit.unr-lcssa, label %.preheader.i.i.i.i
