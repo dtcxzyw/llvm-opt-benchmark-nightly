@@ -204,31 +204,30 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not30.i.i, label %iscleared.exit.thread.i.i, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ej = load ptr, ptr %.02637.i.i, align 8, !tbaa !37 ; 4 uses
+  %i.ej = load ptr, ptr %.02637.i.i, align 8, !tbaa !37 ; 3 uses
   %i.ek = icmp eq ptr %i.ej, null
   br i1 %i.ek, label %iscleared.exit.thread.i.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
-  %1 = load i8, ptr %i.el, align 8, !tbaa !36
-  %2 = and i8 %1, 15
-  %3 = icmp eq i8 %2, 4
-  %4 = getelementptr inbounds nuw i8, ptr %i.ej, i64 9
-  %5 = load i8, ptr %4, align 1, !tbaa !32
-  %.fr36.i.i = freeze i8 %5
-  %6 = and i8 %.fr36.i.i, 24
-  %.not.i32.i.i = icmp eq i8 %6, 0                ; 2 uses
-  br i1 %3, label %bb.ad, label %iscleared.exit.i.i
+  %1 = load <2 x i8>, ptr %i.el, align 8, !tbaa !37
+  %2 = freeze <2 x i8> %1
+  %3 = and <2 x i8> %2, <i8 15, i8 24>
+  %4 = icmp eq <2 x i8> %3, <i8 4, i8 0>          ; 3 uses
+  %5 = extractelement <2 x i1> %4, i64 0
+  br i1 %5, label %bb.ad, label %iscleared.exit.i.i
 
 bb.ad:                                            ; preds = %bb.ac
-  br i1 %.not.i32.i.i, label %iscleared.exit.thread.i.i, label %bb.ae
+  %6 = extractelement <2 x i1> %4, i64 1
+  br i1 %6, label %iscleared.exit.thread.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   tail call fastcc void @reallymarkobject(ptr noundef %0, ptr noundef nonnull %i.ej)
   br label %iscleared.exit.thread.i.i
 
 iscleared.exit.i.i:                               ; preds = %bb.ac
-  br i1 %.not.i32.i.i, label %iscleared.exit.thread.i.i, label %clearkey.exit.i24.i
+  %7 = extractelement <2 x i1> %4, i64 1
+  br i1 %7, label %iscleared.exit.thread.i.i, label %clearkey.exit.i24.i
 
 iscleared.exit.thread.i.i:                        ; preds = %iscleared.exit.i.i, %bb.ae, %bb.ad, %bb.ab, %bb.aa
   br label %clearkey.exit.i24.i

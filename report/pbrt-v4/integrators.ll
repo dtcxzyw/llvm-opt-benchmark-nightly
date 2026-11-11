@@ -205,25 +205,23 @@ bb.q:                                             ; preds = %_ZN4pstd8optionalIN
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 40
   %i.fs = load ptr, ptr %i.fr, align 8
   %i.ft = call { <2 x float>, <2 x float> } %i.fs(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(96) %19, ptr noundef nonnull align 4 dereferenceable(32) %14, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %20, ptr noundef nonnull align 64 dereferenceable(40) %4, ptr noundef %.) ; 2 uses
-  %i.fu = extractvalue { <2 x float>, <2 x float> } %i.ft, 0 ; 2 uses
+  %i.fu = extractvalue { <2 x float>, <2 x float> } %i.ft, 0
   %i.fv = extractvalue { <2 x float>, <2 x float> } %i.ft, 1
-  %.sroa.0.0.copyload4.i = load <2 x float>, ptr %i.fk, align 8 ; 2 uses
+  %.sroa.0.0.copyload4.i = load <2 x float>, ptr %i.fk, align 8
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %15, i64 104
   %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !47
-  %foldExtExtBinop = fmul <2 x float> %.sroa.0.0.copyload4.i, %i.fu ; 2 uses
-  %21 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %foldExtExtBinop76 = fmul <2 x float> %.sroa.0.0.copyload4.i, %i.fu
-  %foldExtExtBinop76.fr = freeze <2 x float> %foldExtExtBinop76 ; 2 uses
-  %22 = extractelement <2 x float> %foldExtExtBinop76.fr, i64 1
-  %.sroa.0.4.vec.insert.i = shufflevector <2 x float> %foldExtExtBinop, <2 x float> %foldExtExtBinop76.fr, <2 x i32> <i32 0, i32 3>
-  %23 = fmul <2 x float> %i.fv, %.sroa.8.0.copyload.i ; 3 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %17, align 8
-  store <2 x float> %23, ptr %i.ci, align 8, !tbaa !47
-  %or.cond.i = fcmp uno float %21, %22
-  %i.fw = extractelement <2 x float> %23, i64 0
+  %foldExtExtBinop76.fr = freeze <2 x float> %foldExtExtBinop76 ; 3 uses
+  %21 = fmul <2 x float> %i.fv, %.sroa.8.0.copyload.i ; 3 uses
+  store <2 x float> %foldExtExtBinop76.fr, ptr %17, align 8
+  store <2 x float> %21, ptr %i.ci, align 8, !tbaa !47
+  %shift = shufflevector <2 x float> %foldExtExtBinop76.fr, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %22 = fcmp uno <2 x float> %foldExtExtBinop76.fr, %shift
+  %or.cond.i = extractelement <2 x i1> %22, i64 0
+  %i.fw = extractelement <2 x float> %21, i64 0
   %i.fx = fcmp uno float %i.fw, 0.000000e+00
   %or.cond14.i = select i1 %or.cond.i, i1 true, i1 %i.fx
-  %i.fy = extractelement <2 x float> %23, i64 1
+  %i.fy = extractelement <2 x float> %21, i64 1
   %i.fz = fcmp uno float %i.fy, 0.000000e+00
   %or.cond17.i = select i1 %or.cond14.i, i1 true, i1 %i.fz
   br i1 %or.cond17.i, label %bb.r, label %bb.w

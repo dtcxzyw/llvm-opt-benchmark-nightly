@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %"class.v8::internal::LookupIterator", align 8 ; 4 uses
   %6 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 6 uses
   %7 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 5 uses
-  %8 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 8 uses
+  %8 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 7 uses
   %9 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 4 uses
   %i.a = load i64, ptr %1, align 8
   %i.b = add i64 %i.a, -1
@@ -326,10 +326,9 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph:                                           ; preds = %.preheader167
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 568
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.bd = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.be = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.be = getelementptr inbounds nuw i8, ptr %8, i64 16
   br label %bb.p
 
 .preheader:                                       ; preds = %bb.l
@@ -401,12 +400,12 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit68: ; preds = %bb
   store i64 %i.cd, ptr %.0.i67, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   store i8 0, ptr %8, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %10, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bc, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   call void @_ZN2v88internal11PropertyKeyC2INS0_6ObjectENS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS4_IS6_EEEEEPNS0_7IsolateES7_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %0, ptr nonnull %.0.i67)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %4, align 8
-  %i.cl = load i64, ptr %i.bc, align 8
+  %i.cl = load i64, ptr %i.bd, align 8
   call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %5, ptr noundef nonnull %0, ptr nonnull %1, ptr %.sroa.0.0.copyload.i.i.i, i64 noundef %i.cl, ptr nonnull %1, i32 noundef 1)
   %i.cm = call i16 @_ZN2v88internal10JSReceiver24GetOwnPropertyDescriptorEPNS0_14LookupIteratorEPNS0_18PropertyDescriptorE(ptr noundef nonnull %5, ptr noundef nonnull %8) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
@@ -421,13 +420,12 @@ _ZNKR2v85MaybeIbE8FromJustEv.exit:                ; preds = %_ZN2v88internal11Ha
 
 bb.r:                                             ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
-  %11 = load ptr, ptr %i.bd, align 8
-  %.not.i = icmp eq ptr %11, null
-  %12 = load ptr, ptr %i.be, align 8
-  %.fr = freeze ptr %12
-  %.not165 = icmp eq ptr %.fr, null
-  %or.cond = and i1 %.not.i, %.not165
-  %i.cp = select i1 %or.cond, ptr %7, ptr %6
+  %10 = load <2 x ptr>, ptr %i.be, align 8
+  %11 = freeze <2 x ptr> %10
+  %12 = icmp ne <2 x ptr> %11, splat (ptr null)
+  %13 = bitcast <2 x i1> %12 to i2
+  %.not165 = icmp eq i2 %13, 0
+  %i.cp = select i1 %.not165, ptr %7, ptr %6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef nonnull align 8 dereferenceable(40) %i.cp, i64 40, i1 false)
   %i.cq = call i16 @_ZN2v88internal10JSReceiver17DefineOwnPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_6ObjectEEEPNS0_18PropertyDescriptorENS_5MaybeINS0_11ShouldThrowEEE(ptr noundef nonnull %0, ptr nonnull %1, ptr nonnull %.0.i67, ptr noundef nonnull %9, i64 4294967297)
   %i.cr = trunc i16 %i.cq to i1

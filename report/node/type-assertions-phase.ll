@@ -205,7 +205,7 @@ define linkonce_odr hidden void @_ZN2v88internal8compiler10turboshaft19FloatOper
 bb.a:
   %4 = alloca %"class.std::vector.513", align 8   ; 7 uses
   %5 = alloca %"class.std::function.507", align 8 ; 6 uses
-  %6 = alloca %"struct.std::array.512", align 8   ; 7 uses
+  %6 = alloca %"struct.std::array.512", align 16  ; 6 uses
   %7 = alloca %"class.v8::internal::compiler::turboshaft::FloatType.451", align 8 ; 4 uses
   %8 = alloca %"class.v8::internal::compiler::turboshaft::FloatType.451", align 8 ; 8 uses
   %9 = alloca %"class.v8::internal::compiler::turboshaft::FloatType.451", align 8 ; 4 uses
@@ -512,20 +512,18 @@ bb.ah:                                            ; preds = %bb.ag
   %i.dm = insertelement <2 x double> poison, double %.0.i9.i85, i64 0
   %i.dn = insertelement <2 x double> %i.dm, double %.0.i4.i86, i64 1 ; 2 uses
   %i.do = fdiv <2 x double> %i.dl, %i.dn
-  %.fr182 = freeze <2 x double> %i.do             ; 2 uses
-  %10 = extractelement <2 x double> %.fr182, i64 0 ; 2 uses
-  store double %10, ptr %6, align 8
-  %i.dp = extractelement <2 x double> %.fr182, i64 1 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store double %i.dp, ptr %11, align 8
+  %.fr182 = freeze <2 x double> %i.do             ; 3 uses
+  %i.dp = extractelement <2 x double> %.fr182, i64 0
+  store <2 x double> %.fr182, ptr %6, align 16
   %i.dq = insertelement <2 x double> poison, double %.0.i4.i, i64 0
   %i.dr = shufflevector <2 x double> %i.dq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ds = fdiv <2 x double> %i.dr, %i.dn          ; 3 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.du = extractelement <2 x double> %i.ds, i64 0
   %i.dv = extractelement <2 x double> %i.ds, i64 1
-  store <2 x double> %i.ds, ptr %i.dt, align 8
-  %or.cond179 = fcmp uno double %10, %i.dp
+  store <2 x double> %i.ds, ptr %i.dt, align 16
+  %10 = extractelement <2 x double> %.fr182, i64 1
+  %or.cond179 = fcmp uno double %i.dp, %10
   %i.dw = fcmp uno double %i.du, 0.000000e+00
   %or.cond180 = select i1 %or.cond179, i1 true, i1 %i.dw
   %i.dx = fcmp uno double %i.dv, 0.000000e+00

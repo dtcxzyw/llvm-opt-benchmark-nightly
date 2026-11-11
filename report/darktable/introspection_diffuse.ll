@@ -204,7 +204,7 @@ build_mask.exit:                                  ; preds = %bb.o
   %.pre159 = sext i32 %.pre157 to i64
   %.pre161 = shl nsw i64 %.pre158, 2
   %.pre163 = mul i64 %.pre161, %.pre159           ; 2 uses
-  %i.de = load ptr, ptr %i.i, align 8, !tbaa !110 ; 7 uses
+  %i.de = load ptr, ptr %i.i, align 8, !tbaa !110 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !116)
   call void @llvm.experimental.noalias.scope.decl(metadata !117)
   call void @llvm.experimental.noalias.scope.decl(metadata !118)
@@ -218,7 +218,7 @@ build_mask.exit:                                  ; preds = %bb.o
 
 .lr.ph.i100:                                      ; preds = %.loopexit.i, %.lr.ph.preheader.i
   %indvar.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvar.next.i, %.loopexit.i ] ; 3 uses
-  %.03458.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.hf, %.loopexit.i ] ; 9 uses
+  %.03458.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.hf, %.loopexit.i ] ; 6 uses
   %i.dh = lshr exact i64 %.03458.i, 2
   %i.di = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.dh
   %i.dj = load i8, ptr %i.di, align 1, !tbaa !43, !alias.scope !118
@@ -276,52 +276,42 @@ gaussian_noise.exit.i:                            ; preds = %.lr.ph.i100
   %i.ez = xor i32 %i.ev, %i.eu
   %i.fa = call noundef i32 @llvm.fshl.i32(i32 %i.ew, i32 %i.ew, i32 11)
   %i.fb = shl i32 %i.ex, 9
-  %i.fc = xor i32 %i.ez, %i.ey                    ; 2 uses
-  %i.fd = xor i32 %i.ex, %i.fa                    ; 3 uses
-  %i.fe = xor i32 %i.fc, %i.ex                    ; 3 uses
-  %i.ff = xor i32 %i.fc, %i.fb
+  %6 = xor i32 %i.ez, %i.ey                       ; 2 uses
+  %i.fc = xor i32 %i.ex, %i.fa                    ; 3 uses
+  %i.fd = xor i32 %6, %i.ex                       ; 3 uses
+  %i.fe = xor i32 %i.fc, %i.ey                    ; 3 uses
+  %i.ff = xor i32 %6, %i.fb
+  %7 = call noundef i32 @llvm.fshl.i32(i32 %i.fc, i32 %i.fc, i32 11) ; 2 uses
   %i.fg = or i64 %i.dm, %i.dl
   %i.fh = and i64 %i.fg, 1
   %.not.i.i = icmp eq i64 %i.fh, 0                ; 4 uses
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.03458.i
-  %6 = load float, ptr %i.fi, align 16, !tbaa !20, !alias.scope !117 ; 2 uses
-  %i.fj = shl i32 %i.fe, 9
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %.03458.i
-  %8 = or disjoint i64 %.03458.i, 1               ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %8
-  %10 = load float, ptr %9, align 4, !tbaa !20, !alias.scope !117 ; 2 uses
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %8
-  %12 = or disjoint i64 %.03458.i, 2              ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %12
-  %14 = load float, ptr %13, align 8, !tbaa !20, !alias.scope !117 ; 2 uses
-  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %12
-  %15 = or disjoint i64 %.03458.i, 3              ; 2 uses
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %15
-  %17 = load float, ptr %16, align 4, !tbaa !20, !alias.scope !117 ; 2 uses
-  %i.fl = xor i32 %i.fd, %i.ey                    ; 3 uses
-  %i.fm = call noundef i32 @llvm.fshl.i32(i32 %i.fd, i32 %i.fd, i32 11) ; 2 uses
-  %18 = xor i32 %i.ff, %i.fl                      ; 2 uses
-  %i.fn = xor i32 %i.fe, %i.fm                    ; 3 uses
-  %i.fo = xor i32 %18, %i.fe                      ; 3 uses
-  %i.fp = xor i32 %i.fn, %i.fl                    ; 3 uses
-  %i.fq = xor i32 %18, %i.fj
-  %19 = call noundef i32 @llvm.fshl.i32(i32 %i.fn, i32 %i.fn, i32 11) ; 2 uses
-  %20 = add i32 %19, %i.fp
-  %i.fr = shl i32 %i.fo, 9
-  %i.fs = xor i32 %i.fq, %i.fp                    ; 2 uses
-  %i.ft = xor i32 %i.fo, %19                      ; 3 uses
-  %i.fu = xor i32 %i.fs, %i.fo                    ; 3 uses
-  %i.fv = xor i32 %i.ft, %i.fp                    ; 3 uses
+  %i.fj = shl i32 %i.fd, 9
+  %8 = xor i32 %i.ff, %i.fe                       ; 2 uses
+  %9 = xor i32 %i.fd, %7                          ; 3 uses
+  %10 = xor i32 %8, %i.fd                         ; 3 uses
+  %11 = xor i32 %8, %i.fj
+  %12 = shl i32 %10, 9
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %.03458.i
+  %13 = add i32 %i.fe, %7
+  %14 = load <4 x float>, ptr %i.fi, align 16, !tbaa !20, !alias.scope !117 ; 2 uses
+  %i.fl = xor i32 %9, %i.fe                       ; 3 uses
+  %i.fm = call noundef i32 @llvm.fshl.i32(i32 %9, i32 %9, i32 11) ; 2 uses
+  %15 = add i32 %i.fm, %i.fl
+  %i.fn = xor i32 %11, %i.fl                      ; 2 uses
+  %i.fo = xor i32 %10, %i.fm                      ; 3 uses
+  %i.fp = xor i32 %i.fn, %10                      ; 3 uses
+  %i.fq = xor i32 %i.fo, %i.fl                    ; 3 uses
+  %16 = xor i32 %i.fn, %12
+  %17 = call noundef i32 @llvm.fshl.i32(i32 %i.fo, i32 %i.fo, i32 11) ; 2 uses
+  %i.fr = shl i32 %i.fp, 9
+  %i.fs = xor i32 %16, %i.fq                      ; 2 uses
+  %i.ft = xor i32 %i.fp, %17                      ; 3 uses
+  %i.fu = xor i32 %i.fs, %i.fp                    ; 3 uses
+  %i.fv = xor i32 %i.ft, %i.fq                    ; 3 uses
   %i.fw = xor i32 %i.fs, %i.fr
   %i.fx = call noundef i32 @llvm.fshl.i32(i32 %i.ft, i32 %i.ft, i32 11) ; 2 uses
-  %21 = lshr i32 %20, 8
-  %22 = uitofp reassoc nsz arcp contract afn nneg i32 %21 to float
-  %23 = fmul reassoc nnan nsz arcp contract afn float %22, f0x34C90FDB
-  %sincos.i.i = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %23) ; 2 uses
-  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0
-  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1
-  %.sink.i.i = select i1 %.not.i.i, float %sin.i.i, float %cos.i.i
-  %i.fy = add i32 %i.fl, %i.fm
+  %i.fy = add i32 %i.fx, %i.fv
   %i.fz = shl i32 %i.fu, 9
   %i.ga = xor i32 %i.fw, %i.fv                    ; 2 uses
   %i.gb = xor i32 %i.fu, %i.fx                    ; 3 uses
@@ -332,88 +322,70 @@ gaussian_noise.exit.i:                            ; preds = %.lr.ph.i100
   %i.gg = shl i32 %i.gc, 9
   %i.gh = xor i32 %i.ge, %i.gd                    ; 2 uses
   %i.gi = xor i32 %i.gc, %i.gf                    ; 3 uses
-  %i.gj = xor i32 %i.gh, %i.gc                    ; 3 uses
+  %i.gj = xor i32 %i.gh, %i.gc                    ; 2 uses
   %i.gk = xor i32 %i.gi, %i.gd                    ; 3 uses
   %i.gl = xor i32 %i.gh, %i.gg
   %i.gm = call noundef i32 @llvm.fshl.i32(i32 %i.gi, i32 %i.gi, i32 11) ; 2 uses
-  %i.gn = add i32 %i.fv, %i.fx
-  %i.go = xor i32 %i.gl, %i.gk                    ; 2 uses
+  %i.gn = add i32 %i.gm, %i.gk
+  %i.go = xor i32 %i.gl, %i.gk
   %i.gp = xor i32 %i.gj, %i.gm                    ; 3 uses
-  %i.gq = xor i32 %i.go, %i.gj                    ; 2 uses
-  %i.gr = xor i32 %i.gp, %i.gk                    ; 3 uses
+  %i.gq = xor i32 %i.go, %i.gj
+  %i.gr = xor i32 %i.gp, %i.gk                    ; 2 uses
   %i.gs = call noundef i32 @llvm.fshl.i32(i32 %i.gp, i32 %i.gp, i32 11) ; 2 uses
   %i.gt = xor i32 %i.gq, %i.gs                    ; 3 uses
-  %i.gu = xor i32 %i.gt, %i.gr                    ; 2 uses
-  %i.gv = call noundef i32 @llvm.fshl.i32(i32 %i.gt, i32 %i.gt, i32 11) ; 2 uses
-  %24 = add i32 %i.gk, %i.gm
-  %i.gw = add i32 %i.gu, %i.gv
-  %i.gx = insertelement <4 x i32> poison, i32 %i.fy, i64 0
-  %i.gy = insertelement <4 x i32> %i.gx, i32 %i.gn, i64 1
-  %i.gz = insertelement <4 x i32> %i.gy, i32 %24, i64 2
+  %i.gu = xor i32 %i.gt, %i.gr
+  %i.gv = call noundef i32 @llvm.fshl.i32(i32 %i.gt, i32 %i.gt, i32 11)
+  %i.gw = add i32 %i.gv, %i.gu
+  %i.gx = insertelement <4 x i32> poison, i32 %15, i64 0
+  %i.gy = insertelement <4 x i32> %i.gx, i32 %i.fy, i64 1
+  %i.gz = insertelement <4 x i32> %i.gy, i32 %i.gn, i64 2
   %i.ha = insertelement <4 x i32> %i.gz, i32 %i.gw, i64 3
   %i.hb = lshr <4 x i32> %i.ha, splat (i32 8)
   %i.hc = uitofp reassoc nsz arcp contract afn nneg <4 x i32> %i.hb to <4 x float>
-  %i.hd = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.hc, splat (float f0x33800000)
-  %25 = call reassoc nnan nsz arcp contract afn <4 x float> @llvm.maxnum.v4f32(<4 x float> %i.hd, <4 x float> splat (float f0x00800000))
-  %26 = add i32 %i.gf, %i.gd
-  %27 = lshr i32 %26, 8
-  %28 = uitofp reassoc nsz arcp contract afn nneg i32 %27 to float
-  %29 = fmul reassoc nnan nsz arcp contract afn float %28, f0x34C90FDB
-  %sincos.i.1.i.a = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %29) ; 2 uses
+  %i.hd = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.hc, splat (float f0x34C90FDB) ; 4 uses
+  %18 = extractelement <4 x float> %i.hd, i64 0
+  %sincos.i.1.i.a = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %18) ; 2 uses
   %sin.i.1.i.a = extractvalue { float, float } %sincos.i.1.i.a, 0
   %cos.i.1.i.a = extractvalue { float, float } %sincos.i.1.i.a, 1
   %.sink.i.1.i.a = select i1 %.not.i.i, float %sin.i.1.i.a, float %cos.i.1.i.a
-  %30 = shl i32 %i.gj, 9
-  %31 = xor i32 %i.go, %30
-  %32 = add i32 %i.gs, %i.gr
-  %33 = xor i32 %31, %i.gr
-  %34 = xor i32 %33, %i.gq
-  %35 = lshr i32 %32, 8
-  %36 = uitofp reassoc nsz arcp contract afn nneg i32 %35 to float
-  %37 = fmul reassoc nnan nsz arcp contract afn float %36, f0x34C90FDB
-  %sincos.i.2.i.a = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %37) ; 2 uses
+  %19 = extractelement <4 x float> %i.hd, i64 1
+  %sincos.i.2.i.a = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %19) ; 2 uses
   %sin.i.2.i.a = extractvalue { float, float } %sincos.i.2.i.a, 0
   %cos.i.2.i.a = extractvalue { float, float } %sincos.i.2.i.a, 1
   %.sink.i.2.i.a = select i1 %.not.i.i, float %sin.i.2.i.a, float %cos.i.2.i.a
-  %38 = xor i32 %34, %i.gv                        ; 3 uses
-  %39 = xor i32 %38, %i.gu
-  %40 = call noundef i32 @llvm.fshl.i32(i32 %38, i32 %38, i32 11)
-  %i.he = add i32 %40, %39
-  %41 = lshr i32 %i.he, 8
-  %42 = uitofp reassoc nsz arcp contract afn nneg i32 %41 to float
-  %43 = fmul reassoc nnan nsz arcp contract afn float %42, f0x34C90FDB
-  %sincos.i.3.i.a = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %43) ; 2 uses
+  %i.he = add i32 %i.fq, %17
+  %20 = extractelement <4 x float> %i.hd, i64 2
+  %sincos.i.3.i.a = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %20) ; 2 uses
   %sin.i.3.i.a = extractvalue { float, float } %sincos.i.3.i.a, 0
   %cos.i.3.i.a = extractvalue { float, float } %sincos.i.3.i.a, 1
   %.sink.i.3.i.a = select i1 %.not.i.i, float %sin.i.3.i.a, float %cos.i.3.i.a
-  %44 = call fast <4 x float> @llvm.log.v4f32(<4 x float> %25)
-  %45 = fmul reassoc nnan nsz arcp contract afn <4 x float> %44, splat (float -2.000000e+00)
-  %46 = call reassoc nsz arcp contract afn <4 x float> @llvm.sqrt.v4f32(<4 x float> %45) ; 4 uses
-  %47 = extractelement <4 x float> %46, i64 0
-  %48 = fmul reassoc nsz arcp contract afn float %47, %6
-  %49 = fmul reassoc nsz arcp contract afn float %48, %.sink.i.i
-  %50 = fadd reassoc nsz arcp contract afn float %49, %6
-  %51 = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %50)
-  store float %51, ptr %7, align 4, !tbaa !20, !alias.scope !116
-  %52 = extractelement <4 x float> %46, i64 1
-  %53 = fmul reassoc nsz arcp contract afn float %52, %10
-  %54 = fmul reassoc nsz arcp contract afn float %53, %.sink.i.1.i.a
-  %55 = fadd reassoc nsz arcp contract afn float %54, %10
-  %56 = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %55)
-  store float %56, ptr %11, align 4, !tbaa !20, !alias.scope !116
-  %57 = extractelement <4 x float> %46, i64 2
-  %58 = fmul reassoc nsz arcp contract afn float %57, %14
-  %59 = fmul reassoc nsz arcp contract afn float %58, %.sink.i.2.i.a
-  %60 = fadd reassoc nsz arcp contract afn float %59, %14
-  %61 = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %60)
-  store float %61, ptr %i.fk, align 4, !tbaa !20, !alias.scope !116
-  %62 = extractelement <4 x float> %46, i64 3
-  %63 = fmul reassoc nsz arcp contract afn float %62, %17
-  %64 = fmul reassoc nsz arcp contract afn float %63, %.sink.i.3.i.a
-  %65 = fadd reassoc nsz arcp contract afn float %64, %17
-  %66 = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %65)
-  %67 = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %15
-  store float %66, ptr %67, align 4, !tbaa !20, !alias.scope !116
+  %21 = add i32 %i.gd, %i.gf
+  %22 = extractelement <4 x float> %i.hd, i64 3
+  %sincos.i.3.i = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %22) ; 2 uses
+  %sin.i.3.i = extractvalue { float, float } %sincos.i.3.i, 0
+  %cos.i.3.i = extractvalue { float, float } %sincos.i.3.i, 1
+  %.sink.i.3.i = select i1 %.not.i.i, float %sin.i.3.i, float %cos.i.3.i
+  %23 = add i32 %i.gr, %i.gs
+  %24 = insertelement <4 x i32> poison, i32 %13, i64 0
+  %25 = insertelement <4 x i32> %24, i32 %i.he, i64 1
+  %26 = insertelement <4 x i32> %25, i32 %21, i64 2
+  %27 = insertelement <4 x i32> %26, i32 %23, i64 3
+  %28 = lshr <4 x i32> %27, splat (i32 8)
+  %29 = uitofp reassoc nsz arcp contract afn nneg <4 x i32> %28 to <4 x float>
+  %30 = fmul reassoc nnan nsz arcp contract afn <4 x float> %29, splat (float f0x33800000)
+  %31 = call reassoc nnan nsz arcp contract afn <4 x float> @llvm.maxnum.v4f32(<4 x float> %30, <4 x float> splat (float f0x00800000))
+  %32 = call fast <4 x float> @llvm.log.v4f32(<4 x float> %31)
+  %33 = fmul reassoc nnan nsz arcp contract afn <4 x float> %32, splat (float -2.000000e+00)
+  %34 = call reassoc nsz arcp contract afn <4 x float> @llvm.sqrt.v4f32(<4 x float> %33)
+  %35 = fmul reassoc nsz arcp contract afn <4 x float> %34, %14
+  %36 = insertelement <4 x float> poison, float %.sink.i.1.i.a, i64 0
+  %37 = insertelement <4 x float> %36, float %.sink.i.2.i.a, i64 1
+  %38 = insertelement <4 x float> %37, float %.sink.i.3.i.a, i64 2
+  %39 = insertelement <4 x float> %38, float %.sink.i.3.i, i64 3
+  %40 = fmul reassoc nsz arcp contract afn <4 x float> %35, %39
+  %41 = fadd reassoc nsz arcp contract afn <4 x float> %40, %14
+  %42 = call reassoc nsz arcp contract afn <4 x float> @llvm.fabs.v4f32(<4 x float> %41)
+  store <4 x float> %42, ptr %i.fk, align 4, !tbaa !20, !alias.scope !116
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %gaussian_noise.exit.i, %.preheader.preheader.i
@@ -816,9 +788,6 @@ declare float @llvm.sqrt.f32(float) #8
 declare ptr @dt_alloc_aligned(i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fabs.f32(float) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.pow.f32(float, float) #8
 
 ; Function Attrs: nofree nounwind
@@ -908,13 +877,16 @@ declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #8
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.log.v4f32(<4 x float>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
