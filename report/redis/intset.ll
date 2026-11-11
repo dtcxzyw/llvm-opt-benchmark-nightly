@@ -51,7 +51,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = add i64 %1, -2147483648
   %or.cond.i = icmp ult i64 %i.b, -4294967296     ; 2 uses
-  %i.c = add i64 %1, -32768
+  %i.c = add nsw i64 %1, -32768
   %or.cond3.i = icmp ult i64 %i.c, -65536         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %.not = icmp eq ptr %2, null                    ; 2 uses
@@ -454,7 +454,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = add i64 %1, -2147483648
   %or.cond.i = icmp ult i64 %i.b, -4294967296
-  %i.c = add i64 %1, -32768
+  %i.c = add nsw i64 %1, -32768
   %or.cond3.i = icmp ult i64 %i.c, -65536
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %.not = icmp eq ptr %2, null                    ; 2 uses
@@ -550,7 +550,7 @@ define dso_local zeroext range(i8 0, 2) i8 @intsetFind(ptr nofree noundef readon
 bb.a:
   %i.a = add i64 %1, -2147483648
   %or.cond.i = icmp ult i64 %i.a, -4294967296
-  %i.b = add i64 %1, -32768
+  %i.b = add nsw i64 %1, -32768
   %or.cond3.i = icmp ult i64 %i.b, -65536
   %i.c = select i1 %or.cond3.i, i32 4, i32 2
   %i.d = select i1 %or.cond.i, i32 8, i32 %i.c

@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   %i.a = load i32, ptr %0, align 4, !tbaa !9      ; 9 uses
   %i.b = icmp slt i32 %i.a, 0
-  %6 = icmp sgt i32 %i.a, 1023
+  %6 = icmp samesign ugt i32 %i.a, 1023
   %..i = select i1 %6, i32 -71, i32 0
   %.0.i = select i1 %i.b, i32 -69, i32 %..i       ; 2 uses
   %.not = icmp eq i32 %.0.i, 0
@@ -377,7 +377,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   %i.a = load i32, ptr %0, align 4, !tbaa !9      ; 5 uses
   %i.b = icmp slt i32 %i.a, 0
-  %6 = icmp sgt i32 %i.a, 1023
+  %6 = icmp samesign ugt i32 %i.a, 1023
   %..i = select i1 %6, i32 -71, i32 0
   %.0.i = select i1 %i.b, i32 -69, i32 %..i       ; 2 uses
   %.not = icmp eq i32 %.0.i, 0

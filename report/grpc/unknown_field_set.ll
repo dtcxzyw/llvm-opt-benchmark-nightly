@@ -205,9 +205,9 @@ _ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEv.exit.i: ; pr
   %i.g = load i32, ptr %.pre, align 8, !tbaa !14
   %.fr.i = freeze i32 %i.g                        ; 2 uses
   %i.h = icmp sgt i32 %.fr.i, 0
-  %1 = sext i32 %.fr.i to i64
-  %i.i = shl nsw i64 %1, 4
-  %i.j = add nsw i64 %i.i, 16
+  %1 = zext nneg i32 %.fr.i to i64
+  %i.i = shl nuw nsw i64 %1, 4
+  %i.j = add nuw nsw i64 %i.i, 16
   %spec.select.i = select i1 %i.h, i64 %i.j, i64 0
   br label %.lr.ph.preheader
 

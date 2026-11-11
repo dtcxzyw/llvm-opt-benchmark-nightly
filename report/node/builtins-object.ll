@@ -202,7 +202,7 @@ _ZN2v88internalL31Builtin_Impl_ObjectLookupSetterENS0_16BuiltinArgumentsEPNS0_7I
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal20Builtin_ObjectFreezeEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !26 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -213,7 +213,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i10.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -509,7 +509,7 @@ _ZN2v88internalL36Builtin_Impl_ObjectPrototypeSetProtoENS0_16BuiltinArgumentsEPN
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal35Builtin_ObjectGetOwnPropertySymbolsEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !31 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -520,7 +520,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i23.i.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -593,7 +593,7 @@ _ZN2v88internalL40Builtin_Impl_ObjectGetOwnPropertySymbolsENS0_16BuiltinArgument
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal22Builtin_ObjectIsFrozenEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !32 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -604,7 +604,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i13.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -672,7 +672,7 @@ _ZN2v88internalL27Builtin_Impl_ObjectIsFrozenENS0_16BuiltinArgumentsEPNS0_7Isola
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal22Builtin_ObjectIsSealedEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !33 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -683,7 +683,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i13.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -752,7 +752,7 @@ _ZN2v88internalL27Builtin_Impl_ObjectIsSealedENS0_16BuiltinArgumentsEPNS0_7Isola
 define hidden noundef i64 @_ZN2v88internal39Builtin_ObjectGetOwnPropertyDescriptorsEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !35 {
 bb.a:
   %3 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 7 uses
-  %4 = sext i32 %0 to i64
+  %4 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 5 uses
@@ -763,7 +763,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i52.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %4, 3
+  %i.i = shl nuw nsw i64 %4, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -944,7 +944,7 @@ _ZN2v88internalL44Builtin_Impl_ObjectGetOwnPropertyDescriptorsENS0_16BuiltinArgu
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal18Builtin_ObjectSealEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !36 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -955,7 +955,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i10.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr

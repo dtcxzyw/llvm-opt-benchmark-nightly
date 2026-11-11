@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @rhash_u32_mem_swap(ptr nofree noundef captures(address) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = sext i32 %1 to i64
-  %.idx = shl nsw i64 %2, 2                       ; 2 uses
+  %2 = zext i32 %1 to i64
+  %.idx = shl nuw nsw i64 %2, 2                   ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %1, 0
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge

@@ -205,7 +205,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 4 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -355,7 +355,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 4 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -504,7 +504,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 4 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fsub nsz float 1.000000e+00, %4
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
@@ -655,7 +655,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 4 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fsub nsz float 1.000000e+00, %4
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
@@ -1058,7 +1058,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
   %i.f = fneg nsz float %4
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -1168,7 +1168,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
   %i.f = fneg nsz float %4
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -1276,7 +1276,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -1385,7 +1385,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -1788,7 +1788,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 7 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 108
@@ -2055,7 +2055,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 7 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 108
@@ -2338,7 +2338,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 5 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fsub nsz float 1.000000e+00, %4
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
@@ -2605,7 +2605,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 5 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fsub nsz float 1.000000e+00, %4
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
@@ -2888,7 +2888,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 7 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 108
@@ -3156,7 +3156,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 7 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 108
@@ -3446,7 +3446,7 @@ bb.a:
   %i.i = fptosi float %i.h to i32
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.k = load i32, ptr %i.j, align 8, !tbaa !61   ; 5 uses
-  %8 = sitofp nsz i32 %i.k to float
+  %8 = uitofp nneg i32 %i.k to float
   %i.l = fmul nsz float %i.g, %8
   %i.m = fptosi float %i.l to i32
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -3713,7 +3713,7 @@ bb.a:
   %i.i = fptosi float %i.h to i32
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.k = load i32, ptr %i.j, align 8, !tbaa !61   ; 5 uses
-  %8 = sitofp nsz i32 %i.k to float
+  %8 = uitofp nneg i32 %i.k to float
   %i.l = fmul nsz float %i.g, %8
   %i.m = fptosi float %i.l to i32
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -4116,7 +4116,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
   %i.f = fneg nsz float %4
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -4227,7 +4227,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
   %i.f = fneg nsz float %4
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -4336,7 +4336,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -4446,7 +4446,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -4849,7 +4849,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
   %i.f = fneg nsz float %4
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -4960,7 +4960,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
   %i.f = fneg nsz float %4
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.g = fmul nsz float %i.f, %8
   %i.h = fptosi float %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -5069,7 +5069,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
@@ -5179,7 +5179,7 @@ bb.a:
   %i.c = sub i32 %6, %5                           ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %8 = sitofp nsz i32 %i.e to float
+  %8 = uitofp nneg i32 %i.e to float
   %i.f = fmul nsz float %4, %8
   %i.g = fptosi float %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40

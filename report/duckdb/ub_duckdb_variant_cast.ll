@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bj = getelementptr inbounds nuw i8, ptr %.promoted, i64 10
   store ptr %i.bj, ptr %0, align 8, !tbaa !230
   %i.bk = load i8, ptr %i.bc, align 1, !tbaa !114 ; 2 uses
-  %i.bl = zext i8 %i.bk to i64
+  %i.bl = zext nneg i8 %i.bk to i64
   %i.bm = shl i64 %i.bl, 63
   %i.bn = or i64 %i.bm, %i.bh
   %i.bo = icmp sgt i8 %i.bk, -1

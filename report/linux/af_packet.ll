@@ -204,10 +204,10 @@ get_order.exit:                                   ; preds = %bb.p
   br i1 %brmerge.not.i, label %.lr.ph.i, label %alloc_pg_vec.exit, !prof !139
 
 .lr.ph.i:                                         ; preds = %get_order.exit
-  %i.bv = shl nuw i32 1, %i.bq
-  %6 = sext i32 %i.bv to i64
+  %i.bv = shl nuw nsw i32 1, %i.bq
+  %6 = zext nneg i32 %i.bv to i64
   %i.bw = icmp eq i32 %i.bq, 31
-  %i.bx = shl nsw i64 %6, 12
+  %i.bx = shl nuw nsw i64 %6, 12
   %.0.i.i25.i = select i1 %i.bw, i64 -1, i64 %i.bx
   br label %bb.q
 

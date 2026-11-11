@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.a
 
 .lr.ph292:                                        ; preds = %.preheader222
   %i.bq = icmp sgt i32 %i.bj, 1
-  %i.br = add i32 %i.bj, -2
+  %i.br = add nsw i32 %i.bj, -2
   %i.bs = zext nneg i32 %i.br to i64
   %i.bt = shl nuw nsw i64 %i.bs, 1
   br label %bb.e
@@ -334,7 +334,7 @@ bb.f:                                             ; preds = %bb.a
 
 .lr.ph276:                                        ; preds = %.preheader226
   %i.dq = icmp sgt i32 %i.dj, 1
-  %i.dr = add i32 %i.dj, -2
+  %i.dr = add nsw i32 %i.dj, -2
   %i.ds = zext nneg i32 %i.dr to i64
   %i.dt = shl nuw nsw i64 %i.ds, 2
   br label %bb.g
@@ -463,7 +463,7 @@ bb.h:                                             ; preds = %bb.a
 
 .lr.ph260:                                        ; preds = %.preheader230
   %i.fp = icmp sgt i32 %i.fh, 1
-  %i.fq = add i32 %i.fh, -2
+  %i.fq = add nsw i32 %i.fh, -2
   %i.fr = zext nneg i32 %i.fq to i64
   %i.fs = shl nuw nsw i64 %i.fr, 2
   br label %bb.i
@@ -589,7 +589,7 @@ bb.j:                                             ; preds = %bb.a
 
 .lr.ph244:                                        ; preds = %.preheader234
   %i.hj = icmp sgt i32 %i.hc, 1
-  %i.hk = add i32 %i.hc, -2
+  %i.hk = add nsw i32 %i.hc, -2
   %i.hl = zext nneg i32 %i.hk to i64
   %i.hm = shl nuw nsw i64 %i.hl, 3
   br label %bb.k

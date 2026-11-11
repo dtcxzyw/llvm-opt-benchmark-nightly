@@ -205,9 +205,11 @@ bb.a:
   %i.f = icmp sgt i32 %1, 1
   %i.g = sext i32 %i.e to i64
   %.idx65.i.a = shl nsw i64 %i.g, 3               ; 2 uses
-  %i.h = getelementptr inbounds i8, ptr %0, i64 %.idx65.i.a ; 3 uses
-  %3 = icmp slt i32 %i.e, 1                       ; 2 uses
-  %wide.trip.count73.i = zext i32 %i.e to i64     ; 3 uses
+  %i.h = getelementptr inbounds i8, ptr %0, i64 %.idx65.i.a
+  %3 = zext i32 %i.e to i64                       ; 4 uses
+  %.idx65.i = shl nuw nsw i64 %3, 3
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx65.i ; 2 uses
+  %5 = icmp slt i32 %i.e, 1                       ; 2 uses
   br i1 %i.f, label %.split.us, label %.split55.us
 
 .split.us:                                        ; preds = %bb.a
@@ -219,8 +221,8 @@ bb.a:
 .lr.ph.us.us.us.preheader:                        ; preds = %.split.us
   %i.k = add i64 %.idx65.i.a, %i.a
   %min.iters.check = icmp ult i32 %i.e, 4
-  %n.vec = and i64 %wide.trip.count73.i, 2147483644 ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count73.i
+  %n.vec = and i64 %3, 2147483644                 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %3
   br label %.lr.ph.us.us.us
 
 .lr.ph.us.us.us:                                  ; preds = %.lr.ph.us.us.us.backedge, %.lr.ph.us.us.us.preheader
@@ -365,7 +367,7 @@ scalar.ph106.epil.preheader:                      ; preds = %._crit_edge.us.i.us
   br i1 %i.bg, label %.preheader.us.i.us.us.us.us.us, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, !llvm.loop !2
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %3, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, label %.lr.ph.i.us.us.us.us.us
+  br i1 %5, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, label %.lr.ph.i.us.us.us.us.us
 
 .lr.ph.i.us.us.us.us.us:                          ; preds = %bb.d, %.lr.ph.i.us.us.us.us.us
   %.05462.i.us.us.us.us.us = phi ptr [ %i.bk, %.lr.ph.i.us.us.us.us.us ], [ %0, %bb.d ] ; 2 uses
@@ -374,7 +376,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bj = shufflevector <2 x i32> %i.bi, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.bj, ptr %i.bh, align 4, !tbaa !31
   %i.bk = getelementptr inbounds nuw i8, ptr %.05462.i.us.us.us.us.us, i64 16 ; 2 uses
-  %i.bl = icmp ult ptr %i.bk, %i.h
+  %i.bl = icmp ult ptr %i.bk, %4
   br i1 %i.bl, label %.lr.ph.i.us.us.us.us.us, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, !llvm.loop !3
 
 .lr.ph64.i.us.us.us.us.us:                        ; preds = %bb.b
@@ -446,7 +448,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.cu = or i64 %i.cr, %i.ct
   store i64 %i.cu, ptr %i.cm, align 8, !tbaa !34
   %indvars.iv.next71.i.us.us.us.us.us = add nuw nsw i64 %indvars.iv70.i.us.us.us.us.us, 1 ; 2 uses
-  %exitcond74.not.i.us.us.us.us.us = icmp eq i64 %indvars.iv.next71.i.us.us.us.us.us, %wide.trip.count73.i
+  %exitcond74.not.i.us.us.us.us.us = icmp eq i64 %indvars.iv.next71.i.us.us.us.us.us, %3
   br i1 %exitcond74.not.i.us.us.us.us.us, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, label %scalar.ph, !llvm.loop !55
 
 Abc_TtSwapAdjacent.exit.us.us.us.us.us:           ; preds = %._crit_edge.us.i.us.us.us.us.us, %.lr.ph.i.us.us.us.us.us, %scalar.ph, %middle.block, %bb.d, %.preheader.lr.ph.i.us.us.us.us.us, %.lr.ph.us.us.us
@@ -478,7 +480,7 @@ bb.e:                                             ; preds = %.lr.ph.us
   store i32 %i.cy, ptr %i.cv, align 4, !tbaa !31
   store i32 %i.cw, ptr %i.cx, align 4, !tbaa !31
   %i.cz = icmp ne i64 %indvars.iv, 5
-  %brmerge = or i1 %i.cz, %3
+  %brmerge = or i1 %i.cz, %5
   br i1 %brmerge, label %Abc_TtSwapAdjacent.exit.us50, label %.lr.ph.i.us47
 
 .lr.ph.i.us47:                                    ; preds = %bb.e, %.lr.ph.i.us47
@@ -488,7 +490,7 @@ bb.e:                                             ; preds = %.lr.ph.us
   %i.dc = shufflevector <2 x i32> %i.db, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.dc, ptr %i.da, align 4, !tbaa !31
   %i.dd = getelementptr inbounds nuw i8, ptr %.05462.i.us48, i64 16 ; 2 uses
-  %i.de = icmp ult ptr %i.dd, %i.h
+  %i.de = icmp ult ptr %i.dd, %4
   br i1 %i.de, label %.lr.ph.i.us47, label %Abc_TtSwapAdjacent.exit.us50, !llvm.loop !3
 
 Abc_TtSwapAdjacent.exit.us50:                     ; preds = %.lr.ph.i.us47, %bb.e, %.lr.ph.us
@@ -521,9 +523,11 @@ bb.a:
   %i.f = icmp sgt i32 %1, 1
   %i.g = sext i32 %i.e to i64
   %.idx65.i.a = shl nsw i64 %i.g, 3               ; 2 uses
-  %i.h = getelementptr inbounds i8, ptr %0, i64 %.idx65.i.a ; 3 uses
-  %3 = icmp slt i32 %i.e, 1                       ; 2 uses
-  %wide.trip.count73.i = zext i32 %i.e to i64     ; 3 uses
+  %i.h = getelementptr inbounds i8, ptr %0, i64 %.idx65.i.a
+  %3 = zext i32 %i.e to i64                       ; 4 uses
+  %.idx65.i = shl nuw nsw i64 %3, 3
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx65.i ; 2 uses
+  %5 = icmp slt i32 %i.e, 1                       ; 2 uses
   br i1 %i.f, label %.split.us, label %.split55.us
 
 .split.us:                                        ; preds = %bb.a
@@ -535,8 +539,8 @@ bb.a:
 .lr.ph.us.us.us.preheader:                        ; preds = %.split.us
   %i.k = add i64 %.idx65.i.a, %i.a
   %min.iters.check = icmp ult i32 %i.e, 4
-  %n.vec = and i64 %wide.trip.count73.i, 2147483644 ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count73.i
+  %n.vec = and i64 %3, 2147483644                 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %3
   br label %.lr.ph.us.us.us
 
 .lr.ph.us.us.us:                                  ; preds = %.lr.ph.us.us.us.backedge, %.lr.ph.us.us.us.preheader
@@ -681,7 +685,7 @@ scalar.ph106.epil.preheader:                      ; preds = %._crit_edge.us.i.us
   br i1 %i.bg, label %.preheader.us.i.us.us.us.us.us, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, !llvm.loop !2
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %3, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, label %.lr.ph.i.us.us.us.us.us
+  br i1 %5, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, label %.lr.ph.i.us.us.us.us.us
 
 .lr.ph.i.us.us.us.us.us:                          ; preds = %bb.d, %.lr.ph.i.us.us.us.us.us
   %.05462.i.us.us.us.us.us = phi ptr [ %i.bk, %.lr.ph.i.us.us.us.us.us ], [ %0, %bb.d ] ; 2 uses
@@ -690,7 +694,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bj = shufflevector <2 x i32> %i.bi, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.bj, ptr %i.bh, align 4, !tbaa !31
   %i.bk = getelementptr inbounds nuw i8, ptr %.05462.i.us.us.us.us.us, i64 16 ; 2 uses
-  %i.bl = icmp ult ptr %i.bk, %i.h
+  %i.bl = icmp ult ptr %i.bk, %4
   br i1 %i.bl, label %.lr.ph.i.us.us.us.us.us, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, !llvm.loop !3
 
 .lr.ph64.i.us.us.us.us.us:                        ; preds = %bb.b
@@ -762,7 +766,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.cu = or i64 %i.cr, %i.ct
   store i64 %i.cu, ptr %i.cm, align 8, !tbaa !34
   %indvars.iv.next71.i.us.us.us.us.us = add nuw nsw i64 %indvars.iv70.i.us.us.us.us.us, 1 ; 2 uses
-  %exitcond74.not.i.us.us.us.us.us = icmp eq i64 %indvars.iv.next71.i.us.us.us.us.us, %wide.trip.count73.i
+  %exitcond74.not.i.us.us.us.us.us = icmp eq i64 %indvars.iv.next71.i.us.us.us.us.us, %3
   br i1 %exitcond74.not.i.us.us.us.us.us, label %Abc_TtSwapAdjacent.exit.us.us.us.us.us, label %scalar.ph, !llvm.loop !64
 
 Abc_TtSwapAdjacent.exit.us.us.us.us.us:           ; preds = %._crit_edge.us.i.us.us.us.us.us, %.lr.ph.i.us.us.us.us.us, %scalar.ph, %middle.block, %bb.d, %.preheader.lr.ph.i.us.us.us.us.us, %.lr.ph.us.us.us
@@ -794,7 +798,7 @@ bb.e:                                             ; preds = %.lr.ph.us
   store i32 %i.cy, ptr %i.cv, align 4, !tbaa !31
   store i32 %i.cw, ptr %i.cx, align 4, !tbaa !31
   %i.cz = icmp ne i64 %indvars.iv, 5
-  %brmerge = or i1 %i.cz, %3
+  %brmerge = or i1 %i.cz, %5
   br i1 %brmerge, label %Abc_TtSwapAdjacent.exit.us50, label %.lr.ph.i.us47
 
 .lr.ph.i.us47:                                    ; preds = %bb.e, %.lr.ph.i.us47
@@ -804,7 +808,7 @@ bb.e:                                             ; preds = %.lr.ph.us
   %i.dc = shufflevector <2 x i32> %i.db, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.dc, ptr %i.da, align 4, !tbaa !31
   %i.dd = getelementptr inbounds nuw i8, ptr %.05462.i.us48, i64 16 ; 2 uses
-  %i.de = icmp ult ptr %i.dd, %i.h
+  %i.de = icmp ult ptr %i.dd, %4
   br i1 %i.de, label %.lr.ph.i.us47, label %Abc_TtSwapAdjacent.exit.us50, !llvm.loop !3
 
 Abc_TtSwapAdjacent.exit.us50:                     ; preds = %.lr.ph.i.us47, %bb.e, %.lr.ph.us

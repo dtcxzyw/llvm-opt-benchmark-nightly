@@ -204,8 +204,8 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not37, label %bb.y, label %bb.f
 
 bb.y:                                             ; preds = %.critedge.9
-  %i.cj = zext i8 %i.ch to i64
-  %i.ck = shl i64 %i.cj, 63
+  %i.cj = zext nneg i8 %i.ch to i64
+  %i.ck = shl nuw i64 %i.cj, 63
   %i.cl = or i64 %i.ck, %i.cd
   %.not10.9 = icmp sgt i8 %i.ch, -1
   br i1 %.not10.9, label %bb.z, label %bb.d

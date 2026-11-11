@@ -205,9 +205,9 @@ _ZNK6google8protobuf13RepeatedFieldIiE8CapacityEv.exit.i: ; preds = %_ZNK6google
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !40
   %.fr.i = freeze i32 %i.cg                       ; 2 uses
   %i.ch = icmp sgt i32 %.fr.i, 2
-  %2 = sext i32 %.fr.i to i64
-  %i.ci = shl nsw i64 %2, 2
-  %i.cj = add nsw i64 %i.ci, 8
+  %2 = zext nneg i32 %.fr.i to i64
+  %i.ci = shl nuw nsw i64 %2, 2
+  %i.cj = add nuw nsw i64 %i.ci, 8
   %spec.select.i = select i1 %i.ch, i64 %i.cj, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldIiE26SpaceUsedExcludingSelfLongEv.exit
 
@@ -325,9 +325,9 @@ _ZNK6google8protobuf13RepeatedFieldIlE8CapacityEv.exit.i: ; preds = %_ZNK6google
   %i.ej = load i32, ptr %i.ei, align 8, !tbaa !40
   %.fr.i100 = freeze i32 %i.ej                    ; 2 uses
   %i.ek = icmp sgt i32 %.fr.i100, 1
-  %3 = sext i32 %.fr.i100 to i64
-  %i.el = shl nsw i64 %3, 3
-  %i.em = add nsw i64 %i.el, 8
+  %3 = zext nneg i32 %.fr.i100 to i64
+  %i.el = shl nuw nsw i64 %3, 3
+  %i.em = add nuw nsw i64 %i.el, 8
   %spec.select.i101 = select i1 %i.ek, i64 %i.em, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldIlE26SpaceUsedExcludingSelfLongEv.exit
 
@@ -445,9 +445,9 @@ _ZNK6google8protobuf13RepeatedFieldIjE8CapacityEv.exit.i: ; preds = %_ZNK6google
   %i.gm = load i32, ptr %i.gl, align 8, !tbaa !40
   %.fr.i119 = freeze i32 %i.gm                    ; 2 uses
   %i.gn = icmp sgt i32 %.fr.i119, 2
-  %4 = sext i32 %.fr.i119 to i64
-  %i.go = shl nsw i64 %4, 2
-  %i.gp = add nsw i64 %i.go, 8
+  %4 = zext nneg i32 %.fr.i119 to i64
+  %i.go = shl nuw nsw i64 %4, 2
+  %i.gp = add nuw nsw i64 %i.go, 8
   %spec.select.i120 = select i1 %i.gn, i64 %i.gp, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldIjE26SpaceUsedExcludingSelfLongEv.exit
 
@@ -565,9 +565,9 @@ _ZNK6google8protobuf13RepeatedFieldImE8CapacityEv.exit.i: ; preds = %_ZNK6google
   %i.ip = load i32, ptr %i.io, align 8, !tbaa !40
   %.fr.i138 = freeze i32 %i.ip                    ; 2 uses
   %i.iq = icmp sgt i32 %.fr.i138, 1
-  %5 = sext i32 %.fr.i138 to i64
-  %i.ir = shl nsw i64 %5, 3
-  %i.is = add nsw i64 %i.ir, 8
+  %5 = zext nneg i32 %.fr.i138 to i64
+  %i.ir = shl nuw nsw i64 %5, 3
+  %i.is = add nuw nsw i64 %i.ir, 8
   %spec.select.i139 = select i1 %i.iq, i64 %i.is, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldImE26SpaceUsedExcludingSelfLongEv.exit
 
@@ -685,9 +685,9 @@ _ZNK6google8protobuf13RepeatedFieldIdE8CapacityEv.exit.i: ; preds = %_ZNK6google
   %i.ks = load i32, ptr %i.kr, align 8, !tbaa !40
   %.fr.i157 = freeze i32 %i.ks                    ; 2 uses
   %i.kt = icmp sgt i32 %.fr.i157, 1
-  %6 = sext i32 %.fr.i157 to i64
-  %i.ku = shl nsw i64 %6, 3
-  %i.kv = add nsw i64 %i.ku, 8
+  %6 = zext nneg i32 %.fr.i157 to i64
+  %i.ku = shl nuw nsw i64 %6, 3
+  %i.kv = add nuw nsw i64 %i.ku, 8
   %spec.select.i158 = select i1 %i.kt, i64 %i.kv, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldIdE26SpaceUsedExcludingSelfLongEv.exit
 
@@ -805,9 +805,9 @@ _ZNK6google8protobuf13RepeatedFieldIfE8CapacityEv.exit.i: ; preds = %_ZNK6google
   %i.mv = load i32, ptr %i.mu, align 8, !tbaa !40
   %.fr.i176 = freeze i32 %i.mv                    ; 2 uses
   %i.mw = icmp sgt i32 %.fr.i176, 2
-  %7 = sext i32 %.fr.i176 to i64
-  %i.mx = shl nsw i64 %7, 2
-  %i.my = add nsw i64 %i.mx, 8
+  %7 = zext nneg i32 %.fr.i176 to i64
+  %i.mx = shl nuw nsw i64 %7, 2
+  %i.my = add nuw nsw i64 %i.mx, 8
   %spec.select.i177 = select i1 %i.mw, i64 %i.my, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldIfE26SpaceUsedExcludingSelfLongEv.exit
 
@@ -1044,9 +1044,9 @@ _ZNK6google8protobuf13RepeatedFieldIiE8CapacityEv.exit.i216: ; preds = %_ZNK6goo
   %i.rb = load i32, ptr %i.ra, align 8, !tbaa !40
   %.fr.i217 = freeze i32 %i.rb                    ; 2 uses
   %i.rc = icmp sgt i32 %.fr.i217, 2
-  %8 = sext i32 %.fr.i217 to i64
-  %i.rd = shl nsw i64 %8, 2
-  %i.re = add nsw i64 %i.rd, 8
+  %8 = zext nneg i32 %.fr.i217 to i64
+  %i.rd = shl nuw nsw i64 %8, 2
+  %i.re = add nuw nsw i64 %i.rd, 8
   %spec.select.i218 = select i1 %i.rc, i64 %i.re, i64 0
   br label %_ZNK6google8protobuf13RepeatedFieldIiE26SpaceUsedExcludingSelfLongEv.exit219
 

@@ -205,7 +205,7 @@ _ZNK7AstNode5widthEv.exit:                        ; preds = %bb.a, %bb.b
   br i1 %.not120, label %._crit_edge.thread, label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %_ZNK7AstNode5widthEv.exit
-  %i.m = shl nuw i64 1, %i.h
+  %i.m = shl nuw nsw i64 1, %i.h
   %i.n = trunc i64 %i.m to i32
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 3 uses
   %.not124 = icmp samesign ugt i64 %i.h, 31

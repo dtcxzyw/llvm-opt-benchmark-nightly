@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
-  %i.d = shl nsw i32 %1, 1
+  %i.d = shl nuw nsw i32 %1, 1
   %i.e = icmp slt i32 %1, 4
   %i.f = add nsw i32 %i.d, -6
   %i.g = shl nuw i32 1, %i.f
@@ -608,20 +608,20 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1560 ; 4 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !26   ; 7 uses
   %i.q = icmp eq i32 %i.p, 0
-  %i.r = icmp ult i32 %i.p, 2
+  %i.r = icmp samesign ult i32 %i.p, 2
   %i.s = and i64 %i.n, 2
   %i.t = mul nuw nsw i64 %i.s, 5
   %i.u = select i1 %i.q, i64 0, i64 %i.t
   %.126.i = select i1 %i.r, i64 %i.u, i64 %i.n
-  %i.v = icmp ult i32 %i.p, 3
+  %i.v = icmp samesign ult i32 %i.p, 3
   %i.w = and i64 %.126.i, 14
   %i.x = mul nuw nsw i64 %i.w, 17
   %.227.i = select i1 %i.v, i64 %i.x, i64 %i.n
-  %i.y = icmp ult i32 %i.p, 4
+  %i.y = icmp samesign ult i32 %i.p, 4
   %i.z = and i64 %.227.i, 254
   %i.aa = mul nuw nsw i64 %i.z, 257
   %.328.i = select i1 %i.y, i64 %i.aa, i64 %i.n
-  %i.ab = icmp ult i32 %i.p, 5
+  %i.ab = icmp samesign ult i32 %i.p, 5
   %i.ac = and i64 %.328.i, 65534
   %i.ad = mul nuw nsw i64 %i.ac, 65537
   %.429.i = select i1 %i.ab, i64 %i.ad, i64 %i.n

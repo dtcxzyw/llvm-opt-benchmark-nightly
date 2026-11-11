@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph505, %._crit_
   %i.da = icmp sgt i32 %i.cx, 0
   %i.db = getelementptr inbounds nuw [224 x i8], ptr %.pre892, i64 %indvars.iv685
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !130
-  %1 = sext i32 %i.cx to i64
+  %1 = zext nneg i32 %i.cx to i64
   %wide.trip.count658 = zext nneg i32 %i.cv to i64
   %wide.trip.count653 = zext i32 %i.cx to i64     ; 2 uses
   %xtraiter927 = and i64 %wide.trip.count653, 1
@@ -233,7 +233,7 @@ bb.c:                                             ; preds = %.lr.ph505, %._crit_
   %i.dn = getelementptr inbounds nuw [224 x i8], ptr %.pre893, i64 %indvars.iv685
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 72
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !130
-  %2 = sext i32 %i.df to i64
+  %2 = zext nneg i32 %i.df to i64
   %wide.trip.count668 = zext nneg i32 %i.di to i64
   %wide.trip.count663 = zext i32 %i.df to i64     ; 2 uses
   %xtraiter933 = and i64 %wide.trip.count663, 1
@@ -245,8 +245,8 @@ bb.c:                                             ; preds = %.lr.ph505, %._crit_
 
 bb.d:                                             ; preds = %.lr.ph474, %._crit_edge470
   %indvars.iv655 = phi i64 [ 0, %.lr.ph474 ], [ %indvars.iv.next656, %._crit_edge470 ] ; 3 uses
-  %i.dr = mul nsw i64 %indvars.iv655, %1
-  %i.ds = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %i.dr ; 3 uses
+  %i.dr = mul nuw nsw i64 %indvars.iv655, %1
+  %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %i.dr ; 3 uses
   br i1 %i.da, label %.lr.ph469.preheader, label %._crit_edge470
 
 .lr.ph469.preheader:                              ; preds = %bb.d
@@ -315,7 +315,7 @@ bb.d:                                             ; preds = %.lr.ph474, %._crit_
   %i.eu = getelementptr inbounds nuw [224 x i8], ptr %i.et, i64 %indvars.iv685
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 144
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !130
-  %3 = sext i32 %i.el to i64
+  %3 = zext nneg i32 %i.el to i64
   %wide.trip.count678 = zext nneg i32 %i.eo to i64
   %wide.trip.count673 = zext i32 %i.el to i64     ; 2 uses
   %xtraiter939 = and i64 %wide.trip.count673, 1
@@ -327,8 +327,8 @@ bb.d:                                             ; preds = %.lr.ph474, %._crit_
 
 bb.e:                                             ; preds = %.lr.ph485, %._crit_edge481
   %indvars.iv665 = phi i64 [ 0, %.lr.ph485 ], [ %indvars.iv.next666, %._crit_edge481 ] ; 3 uses
-  %i.ey = mul nsw i64 %indvars.iv665, %2
-  %i.ez = getelementptr inbounds [4 x i8], ptr %i.dl, i64 %i.ey ; 3 uses
+  %i.ey = mul nuw nsw i64 %indvars.iv665, %2
+  %i.ez = getelementptr inbounds nuw [4 x i8], ptr %i.dl, i64 %i.ey ; 3 uses
   br i1 %i.dm, label %.lr.ph480.preheader, label %._crit_edge481
 
 .lr.ph480.preheader:                              ; preds = %bb.e
@@ -399,8 +399,8 @@ bb.e:                                             ; preds = %.lr.ph485, %._crit_
 
 bb.f:                                             ; preds = %.lr.ph496, %._crit_edge492
   %indvars.iv675 = phi i64 [ 0, %.lr.ph496 ], [ %indvars.iv.next676, %._crit_edge492 ] ; 3 uses
-  %i.fx = mul nsw i64 %indvars.iv675, %3
-  %i.fy = getelementptr inbounds [4 x i8], ptr %i.er, i64 %i.fx ; 3 uses
+  %i.fx = mul nuw nsw i64 %indvars.iv675, %3
+  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.er, i64 %i.fx ; 3 uses
   br i1 %i.es, label %.lr.ph491.preheader, label %._crit_edge492
 
 .lr.ph491.preheader:                              ; preds = %bb.f
@@ -803,7 +803,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.bi = getelementptr inbounds nuw i8, ptr %i.w, i64 368
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !175, !noalias !402
   %i.bk = icmp sgt i32 %i.au, 0
-  %4 = sext i32 %i.au to i64
+  %4 = zext nneg i32 %i.au to i64
   %wide.trip.count213 = zext nneg i32 %i.am to i64
   %factor.op.mul = mul i64 %i.bj, %4
   %wide.trip.count = zext i32 %i.au to i64        ; 2 uses
@@ -1206,7 +1206,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !175, !noalias !575
   %i.bk = icmp sgt i32 %i.au, 0
   %i.bl = sitofp i32 %i.au to double
-  %4 = sext i32 %i.au to i64
+  %4 = zext nneg i32 %i.au to i64
   %wide.trip.count222 = zext nneg i32 %i.am to i64
   %factor.op.mul = mul i64 %i.bj, %4
   %wide.trip.count = zext i32 %i.au to i64        ; 2 uses
@@ -1335,7 +1335,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.dq = load ptr, ptr %i.n, align 8, !tbaa !125
   %i.dr = getelementptr inbounds nuw [72 x i8], ptr %i.dq, i64 %indvars.iv244
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !130
-  %5 = sext i32 %i.dg to i64
+  %5 = zext nneg i32 %i.dg to i64
   %wide.trip.count232 = zext nneg i32 %i.dd to i64
   %factor.op.mul255 = mul i64 %i.dn, %5
   %wide.trip.count227 = zext i32 %i.dg to i64     ; 2 uses
@@ -1455,7 +1455,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.fu = load ptr, ptr %i.n, align 8, !tbaa !125
   %i.fv = getelementptr inbounds nuw [72 x i8], ptr %i.fu, i64 %indvars.iv244
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !130
-  %6 = sext i32 %i.fk to i64
+  %6 = zext nneg i32 %i.fk to i64
   %wide.trip.count242 = zext nneg i32 %i.fh to i64
   %factor.op.mul257 = mul i64 %i.fr, %6
   %wide.trip.count237 = zext i32 %i.fk to i64     ; 2 uses

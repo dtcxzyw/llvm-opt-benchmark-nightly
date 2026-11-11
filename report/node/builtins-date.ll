@@ -202,7 +202,7 @@ _ZN2v88internalL20Builtin_Impl_DateNowENS0_16BuiltinArgumentsEPNS0_7IsolateE.exi
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal17Builtin_DateParseEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !38 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -213,7 +213,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i11.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -616,7 +616,7 @@ define hidden noundef i64 @_ZN2v88internal27Builtin_DatePrototypeToJsonEiPmPNS0_
 bb.a:
   %3 = alloca [1 x %"class.v8::internal::DirectHandle.450"], align 8 ; 4 uses
   %4 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %5 = sext i32 %0 to i64
+  %5 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -627,7 +627,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i54.i = icmp sgt i32 %0, 4
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %5, 3
+  %i.i = shl nuw nsw i64 %5, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 40
   %i.k = inttoptr i64 %i.j to ptr
@@ -1030,7 +1030,7 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   %i.k = add i64 %i.g, 2147483648
   %or.cond.i.i.i = icmp ult i64 %i.k, 4294967296
-  %i.l = trunc i64 %i.g to i32
+  %i.l = trunc nsw i64 %i.g to i32
   %i.m = sitofp i32 %i.l to double
   %i.n = fcmp oeq double %i.h, %i.m
   %or.cond32 = select i1 %or.cond.i.i.i, i1 %i.n, i1 false

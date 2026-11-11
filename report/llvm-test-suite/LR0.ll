@@ -203,8 +203,8 @@ bb.e:                                             ; preds = %._crit_edge.i
   store i16 %i.af, ptr %i.ag, align 2, !tbaa !55
   %i.ah = load ptr, ptr @redset, align 8, !tbaa !37 ; 8 uses
   %i.ai = ptrtoaddr ptr %i.ah to i64              ; 4 uses
-  %0 = sext i32 %.1.i to i64
-  %.idx.i = shl nsw i64 %0, 1                     ; 2 uses
+  %0 = zext i32 %.1.i to i64
+  %.idx.i = shl nuw nsw i64 %0, 1                 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx.i
   %i.ak = icmp sgt i32 %.1.i, 0
   br i1 %i.ak, label %iter.check195, label %._crit_edge33.i
@@ -607,8 +607,8 @@ bb.s:                                             ; preds = %append_states.exit
   store i16 %i.jt, ptr %i.ju, align 2, !tbaa !66
   %i.jv = load ptr, ptr @shiftset, align 8, !tbaa !37 ; 8 uses
   %i.jw = ptrtoaddr ptr %i.jv to i64              ; 4 uses
-  %1 = sext i32 %i.js to i64
-  %.idx.i7 = shl nsw i64 %1, 1                    ; 2 uses
+  %1 = zext i32 %i.js to i64
+  %.idx.i7 = shl nuw nsw i64 %1, 1                ; 2 uses
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jv, i64 %.idx.i7
   %i.jy = icmp sgt i32 %i.js, 0
   br i1 %i.jy, label %iter.check, label %save_shifts.exit
@@ -797,8 +797,8 @@ bb.e:                                             ; preds = %._crit_edge
   store i16 %i.y, ptr %i.z, align 2, !tbaa !55
   %i.aa = load ptr, ptr @redset, align 8, !tbaa !37 ; 8 uses
   %i.ab = ptrtoaddr ptr %i.aa to i64              ; 4 uses
-  %0 = sext i32 %.1 to i64
-  %.idx = shl nsw i64 %0, 1                       ; 2 uses
+  %0 = zext i32 %.1 to i64
+  %.idx = shl nuw nsw i64 %0, 1                   ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx
   %i.ad = icmp sgt i32 %.1, 0
   br i1 %i.ad, label %iter.check, label %._crit_edge33
@@ -1073,8 +1073,8 @@ bb.a:
   store i16 %i.k, ptr %i.l, align 2, !tbaa !66
   %i.m = load ptr, ptr @shiftset, align 8, !tbaa !37 ; 8 uses
   %i.n = ptrtoaddr ptr %i.m to i64                ; 4 uses
-  %0 = sext i32 %i.j to i64
-  %.idx = shl nsw i64 %0, 1                       ; 2 uses
+  %0 = zext i32 %i.j to i64
+  %.idx = shl nuw nsw i64 %0, 1                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx
   %i.p = icmp sgt i32 %i.j, 0
   br i1 %i.p, label %iter.check, label %._crit_edge

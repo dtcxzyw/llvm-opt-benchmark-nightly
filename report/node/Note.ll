@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %_ZSteqIcSt11char_tr
 
 bb.w:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit116.thread163
   %.not.i.i.i.i.i.i121 = icmp sgt i32 %1, 256
-  %.not.i.i.i.i.i.i.i.i122 = icmp sgt i32 %1, 257
+  %.not.i.i.i.i.i.i.i.i122 = icmp samesign ugt i32 %1, 257
   %i.ce = select i1 %.not.i.i.i.i.i.i.i.i122, i64 20, i64 12
   %i.cf = getelementptr inbounds nuw i8, ptr @_ZN4LIEF3ELFL13GENERIC_TYPESE, i64 %i.ce
   %.0.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i121, ptr %i.cf, ptr getelementptr inbounds nuw (i8, ptr @_ZN4LIEF3ELFL13GENERIC_TYPESE, i64 4) ; 3 uses

@@ -206,7 +206,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i.i
   br i1 %exitcond46.not, label %Maj_ManFindFanin.exit.i, label %.lr.ph.i.i, !llvm.loop !1
 
 Maj_ManFindFanin.exit.i:                          ; preds = %bb.l
-  %.val55.i = load i32, ptr %i.s, align 4, !tbaa !41 ; 7 uses
+  %.val55.i = load i32, ptr %i.s, align 4, !tbaa !41 ; 6 uses
   %.val56.i = load ptr, ptr %i.t, align 8, !tbaa !48
   %i.da = getelementptr i8, ptr %.val56.i, i64 8  ; 3 uses
   %.val56.val.i = load ptr, ptr %i.da, align 8, !tbaa !46 ; 2 uses
@@ -274,14 +274,13 @@ Maj_ManFindFanin.exit.loopexit.2.i:               ; preds = %bb.r
   %i.dr = mul i32 %.1.i.2.i, %.val55.i
   %i.ds = sext i32 %i.dr to i64                   ; 2 uses
   %i.dt = getelementptr inbounds [8 x i8], ptr %.val56.val.2.pre.i, i64 %i.ds ; 4 uses
-  %9 = sext i32 %.val55.i to i64                  ; 2 uses
+  %9 = zext i32 %.val55.i to i64                  ; 7 uses
   %i.du = mul nsw i64 %indvars.iv84.i, %9
   %i.dv = getelementptr inbounds [8 x i8], ptr %.val56.val.2.pre.i, i64 %i.du ; 4 uses
   %i.dw = icmp sgt i32 %.val55.i, 0
   br i1 %i.dw, label %.lr.ph.preheader.i.i, label %Abc_TtMaj.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %Maj_ManFindFanin.exit.loopexit.2.i
-  %wide.trip.count.i.i = zext nneg i32 %.val55.i to i64 ; 5 uses
   %min.iters.check = icmp ult i32 %.val55.i, 10
   br i1 %min.iters.check, label %.lr.ph.i57.i.preheader, label %vector.memcheck
 
@@ -307,7 +306,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.
   br i1 %conflict.rdx75, label %.lr.ph.i57.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count.i.i, 2147483644 ; 3 uses
+  %n.vec = and i64 %9, 2147483644                 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -341,12 +340,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.fa, label %middle.block, label %vector.body, !llvm.loop !224
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i
+  %cmp.n = icmp eq i64 %n.vec, %9
   br i1 %cmp.n, label %Abc_TtMaj.exit.i, label %.lr.ph.i57.i.preheader
 
 .lr.ph.i57.i.preheader:                           ; preds = %vector.memcheck, %.lr.ph.preheader.i.i, %middle.block
   %indvars.iv.i58.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader.i.i ], [ %n.vec, %middle.block ] ; 7 uses
-  %xtraiter104 = and i64 %wide.trip.count.i.i, 1
+  %xtraiter104 = and i64 %9, 1
   %lcmp.mod105.not = icmp eq i64 %xtraiter104, 0
   br i1 %lcmp.mod105.not, label %.lr.ph.i57.i.prol.loopexit, label %.lr.ph.i57.i.prol
 
@@ -368,7 +367,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i57.i.prol.loopexit:                       ; preds = %.lr.ph.i57.i.prol, %.lr.ph.i57.i.preheader
   %indvars.iv.i58.i.unr = phi i64 [ %indvars.iv.i58.i.ph, %.lr.ph.i57.i.preheader ], [ %indvars.iv.next.i59.i.prol, %.lr.ph.i57.i.prol ]
-  %i.fm = add nsw i64 %wide.trip.count.i.i, -1
+  %i.fm = add nsw i64 %9, -1
   %i.fn = icmp eq i64 %indvars.iv.i58.i.ph, %i.fm
   br i1 %i.fn, label %Abc_TtMaj.exit.i, label %.lr.ph.i57.i
 
@@ -400,7 +399,7 @@ middle.block:                                     ; preds = %vector.body
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %indvars.iv.next.i59.i
   store i64 %i.gi, ptr %i.gj, align 8, !tbaa !51
   %indvars.iv.next.i59.i.1 = add nuw nsw i64 %indvars.iv.i58.i, 2 ; 2 uses
-  %exitcond.not.i.i.1 = icmp eq i64 %indvars.iv.next.i59.i.1, %wide.trip.count.i.i
+  %exitcond.not.i.i.1 = icmp eq i64 %indvars.iv.next.i59.i.1, %9
   br i1 %exitcond.not.i.i.1, label %Abc_TtMaj.exit.i, label %.lr.ph.i57.i, !llvm.loop !225
 
 Abc_TtMaj.exit.i:                                 ; preds = %.lr.ph.i57.i.prol.loopexit, %.lr.ph.i57.i, %middle.block, %Maj_ManFindFanin.exit.loopexit.2.i
@@ -803,20 +802,20 @@ bb.hu:                                            ; preds = %._crit_edge105.i253
   %i.bmb = icmp eq i32 %i.blu, 0
   %i.bmc = trunc i64 %.2.i256 to i1
   %i.bmd = select i1 %i.bmc, i64 3, i64 0
-  %i.bme = icmp ult i32 %i.blu, 2
+  %i.bme = icmp samesign ult i32 %i.blu, 2
   %i.bmf = and i64 %.2.i256, 3
   %i.bmg = select i1 %i.bmb, i64 %i.bmd, i64 %i.bmf
   %i.bmh = mul nuw nsw i64 %i.bmg, 5
   %.126.i.i = select i1 %i.bme, i64 %i.bmh, i64 %.2.i256
-  %i.bmi = icmp ult i32 %i.blu, 3
+  %i.bmi = icmp samesign ult i32 %i.blu, 3
   %i.bmj = and i64 %.126.i.i, 15
   %i.bmk = mul nuw nsw i64 %i.bmj, 17
   %.227.i.i = select i1 %i.bmi, i64 %i.bmk, i64 %.2.i256
-  %i.bml = icmp ult i32 %i.blu, 4
+  %i.bml = icmp samesign ult i32 %i.blu, 4
   %i.bmm = and i64 %.227.i.i, 255
   %i.bmn = mul nuw nsw i64 %i.bmm, 257
   %.328.i.i = select i1 %i.bml, i64 %i.bmn, i64 %.2.i256
-  %i.bmo = icmp ult i32 %i.blu, 5
+  %i.bmo = icmp samesign ult i32 %i.blu, 5
   %i.bmp = and i64 %.328.i.i, 65535
   %i.bmq = mul nuw nsw i64 %i.bmp, 65537
   %.429.i.i = select i1 %i.bmo, i64 %i.bmq, i64 %.2.i256
@@ -1219,20 +1218,20 @@ bb.c:                                             ; preds = %._crit_edge
   %i.db = icmp eq i32 %i.bb, 0
   %i.dc = trunc i64 %i.w to i1
   %i.dd = select i1 %i.dc, i64 3, i64 0
-  %i.de = icmp ult i32 %i.bb, 2
+  %i.de = icmp samesign ult i32 %i.bb, 2
   %i.df = and i64 %i.w, 3
   %i.dg = select i1 %i.db, i64 %i.dd, i64 %i.df
   %i.dh = mul nuw nsw i64 %i.dg, 5
   %.126.i = select i1 %i.de, i64 %i.dh, i64 %i.w
-  %i.di = icmp ult i32 %i.bb, 3
+  %i.di = icmp samesign ult i32 %i.bb, 3
   %i.dj = and i64 %.126.i, 15
   %i.dk = mul nuw nsw i64 %i.dj, 17
   %.227.i = select i1 %i.di, i64 %i.dk, i64 %i.w
-  %i.dl = icmp ult i32 %i.bb, 4
+  %i.dl = icmp samesign ult i32 %i.bb, 4
   %i.dm = and i64 %.227.i, 255
   %i.dn = mul nuw nsw i64 %i.dm, 257
   %.328.i = select i1 %i.dl, i64 %i.dn, i64 %i.w
-  %i.do = icmp ult i32 %i.bb, 5
+  %i.do = icmp samesign ult i32 %i.bb, 5
   %i.dp = and i64 %.328.i, 65535
   %i.dq = mul nuw nsw i64 %i.dp, 65537
   %.429.i = select i1 %i.do, i64 %i.dq, i64 %i.w

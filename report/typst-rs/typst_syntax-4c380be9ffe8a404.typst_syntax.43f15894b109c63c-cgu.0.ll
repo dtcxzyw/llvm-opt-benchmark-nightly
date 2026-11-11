@@ -205,7 +205,7 @@ select.unfold:                                    ; preds = %._crit_edge.i.i, %b
   %i.bg = icmp ult i64 %i.bf, 1152921504606846976
   call void @llvm.assume(i1 %i.bg)
   %i.bh = icmp samesign ugt i64 %i.bf, 65534
-  %i.bi = trunc nuw i64 %i.bf to i32
+  %i.bi = trunc nuw nsw i64 %i.bf to i32
   %i.bj = shl nuw i32 %i.bi, 16
   %i.bk = add i32 %i.bj, 66560
   %.sroa.012.0.insert.insert = select i1 %i.bh, i32 513, i32 %i.bk ; 3 uses
@@ -542,7 +542,7 @@ bb.k:                                             ; preds = %bb.f
   %i.u = icmp ult i64 %i.t, 1152921504606846976
   call void @llvm.assume(i1 %i.u)
   %i.v = icmp samesign ugt i64 %i.t, 65534
-  %i.w = trunc nuw i64 %i.t to i32
+  %i.w = trunc nuw nsw i64 %i.t to i32
   %i.x = shl nuw i32 %i.w, 16
   %i.y = add i32 %i.x, 66560
   %.sroa.08.0.insert.insert = select i1 %i.v, i32 513, i32 %i.y ; 3 uses

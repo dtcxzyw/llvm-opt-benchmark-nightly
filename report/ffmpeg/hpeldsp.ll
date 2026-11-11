@@ -205,11 +205,11 @@ put_pixels8_l2_8.exit:                            ; preds = %.lr.ph.i, %bb.a
 define internal void @put_pixels8_xy2_8_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3) #2 {
 bb.a:
   %i.a = icmp sgt i32 %3, 0
-  %i.b = add nsw i32 %3, 1
+  %i.b = add nuw nsw i32 %3, 1
   %i.c = sext i32 %i.b to i64
   %i.d = mul nsw i64 %2, %i.c
   %i.e = sub nsw i64 4, %i.d
-  %4 = sext i32 %3 to i64
+  %4 = zext nneg i32 %3 to i64
   %i.f = mul nsw i64 %2, %4
   %i.g = sub nsw i64 4, %i.f
   br i1 %i.a, label %.lr.ph.preheader, label %.split67
@@ -612,11 +612,11 @@ put_no_rnd_pixels8_l2_8.exit:                     ; preds = %.lr.ph.i, %bb.a
 define internal void @put_no_rnd_pixels8_xy2_8_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3) #2 {
 bb.a:
   %i.a = icmp sgt i32 %3, 0
-  %i.b = add nsw i32 %3, 1
+  %i.b = add nuw nsw i32 %3, 1
   %i.c = sext i32 %i.b to i64
   %i.d = mul nsw i64 %2, %i.c
   %i.e = sub nsw i64 4, %i.d
-  %4 = sext i32 %3 to i64
+  %4 = zext nneg i32 %3 to i64
   %i.f = mul nsw i64 %2, %4
   %i.g = sub nsw i64 4, %i.f
   br i1 %i.a, label %.lr.ph.preheader, label %.split67
@@ -1019,11 +1019,11 @@ avg_pixels8_l2_8.exit:                            ; preds = %.lr.ph.i, %bb.a
 define internal void @avg_pixels8_xy2_8_c(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3) #2 {
 bb.a:
   %i.a = icmp sgt i32 %3, 0
-  %i.b = add nsw i32 %3, 1
+  %i.b = add nuw nsw i32 %3, 1
   %i.c = sext i32 %i.b to i64
   %i.d = mul nsw i64 %2, %i.c
   %i.e = sub nsw i64 4, %i.d
-  %4 = sext i32 %3 to i64
+  %4 = zext nneg i32 %3 to i64
   %i.f = mul nsw i64 %2, %4
   %i.g = sub nsw i64 4, %i.f
   br i1 %i.a, label %.lr.ph.preheader, label %.split69
@@ -1426,11 +1426,11 @@ bb.a:
 define internal fastcc void @avg_no_rnd_pixels8_xy2_8_c(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3) unnamed_addr #2 {
 bb.a:
   %i.a = icmp sgt i32 %3, 0
-  %i.b = add nsw i32 %3, 1
+  %i.b = add nuw nsw i32 %3, 1
   %i.c = sext i32 %i.b to i64
   %i.d = mul nsw i64 %2, %i.c
   %i.e = sub nsw i64 4, %i.d
-  %4 = sext i32 %3 to i64
+  %4 = zext nneg i32 %3 to i64
   %i.f = mul nsw i64 %2, %4
   %i.g = sub nsw i64 4, %i.f
   br i1 %i.a, label %.lr.ph.preheader, label %.split69

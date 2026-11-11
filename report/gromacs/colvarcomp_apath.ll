@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79: ; preds = %_ZN
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 1144
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !107 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
-  %i.du = uitofp i64 %i.dt to double
+  %i.du = uitofp nneg i64 %i.dt to double
   %i.dv = fdiv double 1.000000e+00, %i.du
   %sqrt = call double @llvm.sqrt.f64(double %i.dv) ; 9 uses
   %i.dw = icmp ugt i64 %i.dt, 1152921504606846975
@@ -607,7 +607,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79: ; preds = %_ZN
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 1144
   %i.dv = load i64, ptr %i.du, align 8, !tbaa !107 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
-  %i.dw = uitofp i64 %i.dv to double
+  %i.dw = uitofp nneg i64 %i.dv to double
   %i.dx = fdiv double 1.000000e+00, %i.dw
   %sqrt = call double @llvm.sqrt.f64(double %i.dx) ; 9 uses
   %i.dy = icmp ugt i64 %i.dv, 1152921504606846975

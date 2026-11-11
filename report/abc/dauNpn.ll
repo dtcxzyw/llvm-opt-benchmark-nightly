@@ -205,7 +205,7 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   %i.j = select i1 %i.g, i32 1, i32 %i.i          ; 19 uses
   %i.k = sext i32 %i.j to i64
   %i.l = shl nsw i64 %i.k, 3                      ; 4 uses
-  %i.m = call noalias ptr @malloc(i64 noundef %i.l) #29 ; 44 uses
+  %i.m = call noalias ptr @malloc(i64 noundef %i.l) #29 ; 45 uses
   %i.n = ptrtoaddr ptr %i.m to i64                ; 3 uses
   %i.o = load i64, ptr %0, align 8, !tbaa !28
   %i.p = and i64 %i.o, 1
@@ -603,11 +603,12 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge
   %i.fc = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %wide.trip.count24.i89 = zext i32 %i.j to i64   ; 2 uses
   %i.fd = icmp sgt i32 %i.al, 0
-  %i.fe = getelementptr inbounds i8, ptr %i.m, i64 %i.l ; 2 uses
+  %i.fe = getelementptr inbounds i8, ptr %i.m, i64 %i.l
+  %.idx65.i = shl nuw nsw i64 %wide.trip.count24.i89, 3 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx65.i
   br i1 %i.fd, label %.lr.ph119.split.us.preheader, label %._crit_edge120
 
 .lr.ph119.split.us.preheader:                     ; preds = %.lr.ph119
-  %5 = shl nuw nsw i64 %wide.trip.count24.i89, 3
   %wide.trip.count132 = zext nneg i32 %i.al to i64
   %i.ff = add i64 %i.l, %i.n
   %min.iters.check214 = icmp ult i32 %i.j, 4
@@ -635,7 +636,7 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge
   %i.fr = mul i32 %i.fp, %i.fq
   %i.fs = sext i32 %i.fr to i64
   %i.ft = getelementptr [8 x i8], ptr %i.fn, i64 %i.fs
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.m, ptr noundef nonnull align 8 dereferenceable(1) %i.ft, i64 %5, i1 false), !tbaa !28
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.m, ptr noundef nonnull align 8 dereferenceable(1) %i.ft, i64 %.idx65.i, i1 false), !tbaa !28
   br label %Abc_TtCopy.exit94.us.preheader
 
 Abc_TtCopy.exit94.us.preheader:                   ; preds = %.lr.ph18.i90.us.preheader, %.lr.ph119.split.us
@@ -786,7 +787,7 @@ bb.l:                                             ; preds = %bb.j
   %i.hm = shufflevector <2 x i32> %i.hl, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.hm, ptr %i.hk, align 4, !tbaa !29
   %i.hn = getelementptr inbounds nuw i8, ptr %.05462.i.us, i64 16 ; 2 uses
-  %i.ho = icmp ult ptr %i.hn, %i.fe
+  %i.ho = icmp ult ptr %i.hn, %5
   br i1 %i.ho, label %.lr.ph.i104.us, label %Abc_TtSwapAdjacent.exit.us, !llvm.loop !10
 
 bb.m:                                             ; preds = %Abc_TtCopy.exit94.us
@@ -1033,7 +1034,7 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #15
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define noalias noundef ptr @Dau_CollectBoothFunctions(i32 noundef %0) local_unnamed_addr #6 {
 bb.a:
-  %i.a = add nsw i32 %0, 1                        ; 9 uses
+  %i.a = add nsw i32 %0, 1                        ; 5 uses
   %i.b = icmp slt i32 %0, 6                       ; 3 uses
   %i.c = add nsw i32 %0, -5                       ; 3 uses
   %i.d = shl nuw i32 1, %i.c
@@ -1145,10 +1146,10 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
 .lr.ph:                                           ; preds = %bb.a, %.preheader
   %i.ax = icmp slt i32 %0, 5
   %i.ay = icmp eq i32 %i.a, 0
-  %1 = icmp ult i32 %i.a, 2
-  %2 = icmp ult i32 %i.a, 3
-  %3 = icmp ult i32 %i.a, 4
-  %4 = icmp ult i32 %i.a, 5
+  %1 = icmp slt i32 %0, 1
+  %2 = icmp slt i32 %0, 2
+  %3 = icmp slt i32 %0, 3
+  %.not53 = icmp eq i32 %0, 4
   %i.az = icmp ult i32 %i.a, 6
   %i.ba = select i1 %i.b, i32 0, i32 %i.c
   %smax69 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1) ; 2 uses
@@ -1176,7 +1177,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %.328.i.us = select i1 %3, i64 %i.bl, i64 %i.bc
   %i.bm = and i64 %.328.i.us, 65535
   %i.bn = mul nuw nsw i64 %i.bm, 65537
-  %.429.i.us = select i1 %4, i64 %i.bn, i64 %i.bc
+  %.429.i.us = select i1 %.not53, i64 %i.bc, i64 %i.bn
   %i.bo = and i64 %.429.i.us, 4294967295
   %i.bp = mul nuw i64 %i.bo, 4294967297
   %.5.i.us = select i1 %i.az, i64 %i.bp, i64 %i.bc
@@ -1579,7 +1580,7 @@ bb.a:
   %i.f = tail call fastcc ptr @Vec_MemAllocForTTSimple(i32 noundef %1) ; 8 uses
   %i.g = sext i32 %i.e to i64
   %i.h = shl nsw i64 %i.g, 3                      ; 4 uses
-  %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #29 ; 29 uses
+  %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #29 ; 30 uses
   %i.j = ptrtoaddr ptr %i.i to i64                ; 3 uses
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.h) #29 ; 8 uses
   %i.l = icmp sgt i32 %i.e, 0                     ; 7 uses
@@ -1641,10 +1642,11 @@ middle.block:                                     ; preds = %vector.body
 .preheader.lr.ph:                                 ; preds = %Abc_TtCopy.exit100, %.preheader138
   %i.y = icmp sgt i32 %i.n, 0
   %wide.trip.count.i = zext i32 %i.e to i64       ; 4 uses
-  %i.z = getelementptr inbounds i8, ptr %i.i, i64 %i.h ; 3 uses
+  %i.z = getelementptr inbounds i8, ptr %i.i, i64 %i.h ; 2 uses
+  %.idx65.i = shl nuw nsw i64 %wide.trip.count.i, 3 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx65.i
   %.not91 = icmp eq i32 %2, 0
   %i.aa = icmp eq i32 %i.e, 1
-  %3 = shl nuw nsw i64 %wide.trip.count.i, 3
   %smax = tail call i32 @llvm.smax.i32(i32 %i.o, i32 1)
   %wide.trip.count168 = zext nneg i32 %smax to i64
   %wide.trip.count163 = zext nneg i32 %i.n to i64
@@ -1701,7 +1703,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %i.am, label %Abc_TtCopy.exit107, label %.lr.ph18.i103.preheader
 
 .lr.ph18.i103.preheader:                          ; preds = %bb.c
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.k, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %3, i1 false), !tbaa !28
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.k, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %.idx65.i, i1 false), !tbaa !28
   br label %Abc_TtCopy.exit107
 
 Abc_TtCopy.exit107:                               ; preds = %bb.b, %.lr.ph18.i103.preheader, %bb.c, %.lr.ph145
@@ -1814,7 +1816,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cs = shufflevector <2 x i32> %i.cr, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.cs, ptr %i.cq, align 4, !tbaa !29
   %i.ct = getelementptr inbounds nuw i8, ptr %.05462.i, i64 16 ; 2 uses
-  %i.cu = icmp ult ptr %i.ct, %i.z
+  %i.cu = icmp ult ptr %i.ct, %3
   br i1 %i.cu, label %.lr.ph.i111, label %Abc_TtSwapAdjacent.exit, !llvm.loop !10
 
 bb.g:                                             ; preds = %bb.e
@@ -2217,7 +2219,7 @@ Vec_IntAlloc.exit:                                ; preds = %Abc_Clock.exit, %bb
   %i.z = call ptr @Extra_GreyCodeSchedule(i32 noundef %1) #27 ; 3 uses
   %i.aa = sext i32 %i.w to i64
   %i.ab = shl nsw i64 %i.aa, 3                    ; 3 uses
-  %i.ac = call noalias ptr @malloc(i64 noundef %i.ab) #29 ; 43 uses
+  %i.ac = call noalias ptr @malloc(i64 noundef %i.ab) #29 ; 44 uses
   %i.ad = ptrtoaddr ptr %i.ac to i64              ; 3 uses
   %.val112 = load i32, ptr %i.j, align 4, !tbaa !43
   %i.ae = sdiv i32 %.val112, %i.w                 ; 2 uses
@@ -2233,12 +2235,13 @@ Vec_IntAlloc.exit:                                ; preds = %Abc_Clock.exit, %bb
   %wide.trip.count.i = zext i32 %i.w to i64       ; 7 uses
   %.not188 = icmp eq i32 %1, 31
   %i.al = icmp eq i32 %i.w, 1
-  %i.am = getelementptr inbounds i8, ptr %i.ac, i64 %i.ab ; 3 uses
+  %i.am = getelementptr inbounds i8, ptr %i.ac, i64 %i.ab ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %i.ao = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.s, i64 12
   %i.aq = icmp sgt i32 %i.x, 0
-  %i.ar = shl nuw nsw i64 %wide.trip.count.i, 3   ; 2 uses
+  %i.ar = shl nuw nsw i64 %wide.trip.count.i, 3   ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ar
   %.val110.pre = load i32, ptr %i.aj, align 4, !tbaa !55
   %wide.trip.count = zext nneg i32 %i.ag to i64
   %wide.trip.count197 = zext nneg i32 %i.x to i64
@@ -2641,7 +2644,7 @@ bb.k:                                             ; preds = %bb.j
   %i.iu = shufflevector <2 x i32> %i.it, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.iu, ptr %i.is, align 4, !tbaa !29
   %i.iv = getelementptr inbounds nuw i8, ptr %.05462.i, i64 16 ; 2 uses
-  %i.iw = icmp ult ptr %i.iv, %i.am
+  %i.iw = icmp ult ptr %i.iv, %6
   br i1 %i.iw, label %.lr.ph.i151, label %Abc_TtSwapAdjacent.exit, !llvm.loop !10
 
 bb.l:                                             ; preds = %bb.j

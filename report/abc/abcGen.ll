@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [100 x [2 x i8]], align 16        ; 10 uses
   %i.c = add nsw i32 %1, -1
   %i.d = mul nsw i32 %i.c, %1                     ; 2 uses
-  %2 = sdiv i32 %i.d, 2
+  %2 = lshr i32 %i.d, 1
   %i.e = icmp slt i32 %i.d, 12
   %i.f = add nsw i32 %2, -5
   %i.g = shl nuw i32 1, %i.f

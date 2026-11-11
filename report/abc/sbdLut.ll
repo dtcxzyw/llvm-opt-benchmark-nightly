@@ -205,20 +205,20 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.ac = icmp eq i32 %i.h, 0
   %i.ad = trunc i64 %i.ab to i1
   %i.ae = select i1 %i.ad, i64 3, i64 0
-  %i.af = icmp ult i32 %i.h, 2
+  %i.af = icmp samesign ult i32 %i.h, 2
   %i.ag = and i64 %i.ab, 3
   %i.ah = select i1 %i.ac, i64 %i.ae, i64 %i.ag
   %i.ai = mul nuw nsw i64 %i.ah, 5
   %.126.i = select i1 %i.af, i64 %i.ai, i64 %i.ab
-  %i.aj = icmp ult i32 %i.h, 3
+  %i.aj = icmp samesign ult i32 %i.h, 3
   %i.ak = and i64 %.126.i, 15
   %i.al = mul nuw nsw i64 %i.ak, 17
   %.227.i = select i1 %i.aj, i64 %i.al, i64 %i.ab
-  %i.am = icmp ult i32 %i.h, 4
+  %i.am = icmp samesign ult i32 %i.h, 4
   %i.an = and i64 %.227.i, 255
   %i.ao = mul nuw nsw i64 %i.an, 257
   %.328.i = select i1 %i.am, i64 %i.ao, i64 %i.ab
-  %i.ap = icmp ult i32 %i.h, 5
+  %i.ap = icmp samesign ult i32 %i.h, 5
   %i.aq = and i64 %.328.i, 65535
   %i.ar = mul nuw nsw i64 %i.aq, 65537
   %.429.i = select i1 %i.ap, i64 %i.ar, i64 %i.ab
@@ -326,7 +326,7 @@ Abc_Clock.exit:
   %i.j = call ptr @sat_solver_new() #14           ; 10 uses
   %i.k = getelementptr i8, ptr %7, i64 4          ; 3 uses
   %.val152 = load i32, ptr %i.k, align 4, !tbaa !50 ; 12 uses
-  %11 = sext i32 %8 to i64
+  %11 = zext i32 %8 to i64                        ; 4 uses
   %.idx.i = mul nuw nsw i64 %11, 56
   %i.l = getelementptr inbounds nuw i8, ptr %9, i64 %.idx.i
   %i.m = icmp sgt i32 %8, 0                       ; 2 uses
@@ -376,13 +376,12 @@ Sbd_ProblemCountParams.exit:                      ; preds = %.lr.ph.i, %Abc_Cloc
 
 .critedge.preheader220:                           ; preds = %.critedge.preheader
   %i.af = sext i32 %.val152 to i64
-  %wide.trip.count = zext nneg i32 %8 to i64      ; 3 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.a, i64 %i.af ; 2 uses
   %min.iters.check = icmp ult i32 %8, 8
   br i1 %min.iters.check, label %.critedge.preheader329, label %vector.ph
 
 vector.ph:                                        ; preds = %.critedge.preheader220
-  %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
+  %n.vec = and i64 %11, 2147483640                ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.z, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add <4 x i32> splat (i32 4), %broadcast.splat
@@ -403,7 +402,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !38
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %11
   br i1 %cmp.n, label %.preheader175, label %.critedge.preheader329
 
 .critedge.preheader329:                           ; preds = %.critedge.preheader220, %middle.block
@@ -458,7 +457,7 @@ scalar.ph282.preheader:                           ; preds = %.lr.ph181, %middle.
   %i.as = add i32 %i.z, %i.ar
   store i32 %i.as, ptr %gep, align 4, !tbaa !14
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
   br i1 %exitcond.not, label %.preheader175, label %.critedge, !llvm.loop !40
 
 .preheader174:                                    ; preds = %scalar.ph282, %middle.block294, %.preheader175

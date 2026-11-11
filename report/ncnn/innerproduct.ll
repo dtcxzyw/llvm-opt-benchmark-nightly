@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %.not35 = icmp eq i32 %i.ah, 0
   %i.ai = icmp sgt i32 %i.ag, 0
   %i.aj = load i32, ptr %i.ac, align 8, !tbaa !41
-  %7 = sext i32 %i.ag to i64
+  %7 = zext nneg i32 %i.ag to i64
   %i.ak = sext i32 %i.k to i64
   %i.al = add nsw i32 %i.j, 1
   %wide.trip.count66 = zext nneg i32 %i.y to i64
@@ -228,8 +228,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph53, %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %indvars.iv63 = phi i64 [ 0, %.lr.ph53 ], [ %indvars.iv.next64, %_ZL13activation_ssfiRKN4ncnn3MatE.exit ] ; 4 uses
-  %i.ao = mul nsw i64 %indvars.iv63, %7
-  %i.ap = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.ao ; 2 uses
+  %i.ao = mul nuw nsw i64 %indvars.iv63, %7
+  %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ao ; 2 uses
   br i1 %.not35, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -632,7 +632,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = load i32, ptr %i.ae, align 4, !tbaa !38
   %.not41 = icmp eq i32 %i.al, 0
   %i.am = load i32, ptr %i.ad, align 8, !tbaa !41
-  %7 = sext i32 %i.ai to i64
+  %7 = zext nneg i32 %i.ai to i64
   %i.an = sext i32 %i.k to i64
   %i.ao = add nsw i32 %i.j, 1
   %wide.trip.count71 = zext nneg i32 %i.y to i64
@@ -658,8 +658,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph58, %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %indvars.iv68 = phi i64 [ 0, %.lr.ph58 ], [ %indvars.iv.next69, %_ZL13activation_ssfiRKN4ncnn3MatE.exit ] ; 5 uses
-  %i.ar = mul nsw i64 %indvars.iv68, %7
-  %i.as = getelementptr inbounds i8, ptr %i.ah, i64 %i.ar ; 2 uses
+  %i.ar = mul nuw nsw i64 %indvars.iv68, %7
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ar ; 2 uses
   br i1 %i.aj, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.c

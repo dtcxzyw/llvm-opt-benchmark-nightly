@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !151 ; 5 uses
   %i.fl = icmp sgt i32 %i.fk, 0
   %i.fm = load ptr, ptr %i.fc, align 8, !tbaa !81
-  %10 = sext i32 %i.fk to i64
+  %10 = zext nneg i32 %i.fk to i64
   %wide.trip.count529 = zext nneg i32 %i.ff to i64
   %wide.trip.count524 = zext i32 %i.fk to i64     ; 2 uses
   %xtraiter669 = and i64 %wide.trip.count524, 1
@@ -234,8 +234,8 @@ bb.z:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.aa:                                            ; preds = %.lr.ph494, %._crit_edge491
   %indvars.iv526 = phi i64 [ 0, %.lr.ph494 ], [ %indvars.iv.next527, %._crit_edge491 ] ; 3 uses
-  %i.fs = mul nsw i64 %indvars.iv526, %10
-  %i.ft = getelementptr inbounds [4 x i8], ptr %i.fi, i64 %i.fs ; 3 uses
+  %i.fs = mul nuw nsw i64 %indvars.iv526, %10
+  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %i.fs ; 3 uses
   br i1 %i.fl, label %.lr.ph490.preheader, label %._crit_edge491
 
 .lr.ph490.preheader:                              ; preds = %bb.aa

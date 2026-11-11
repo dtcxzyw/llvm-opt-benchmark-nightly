@@ -202,7 +202,7 @@ _ZN2v88internalL46Builtin_Impl_NumberFormatPrototypeFormatNumberENS0_16BuiltinAr
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal40Builtin_NumberFormatInternalFormatNumberEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !127 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -248,7 +248,7 @@ _ZN2v88internal6HandleINS0_14JSNumberFormatEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.
   store i64 %i.p, ptr %.0.i.i18.i, align 8
   %.not.i20.i = icmp sgt i32 %0, 5
   %i.x = ptrtoint ptr %1 to i64
-  %i.y = shl nsw i64 %3, 3
+  %i.y = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.x, %i.y
   %i.z = add i64 %reass.sub, 48
   %i.aa = inttoptr i64 %i.z to ptr
@@ -651,7 +651,7 @@ _ZN2v88internalL42Builtin_Impl_DateTimeFormatPrototypeFormatENS0_16BuiltinArgume
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal36Builtin_DateTimeFormatInternalFormatEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !132 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -697,7 +697,7 @@ _ZN2v88internal6HandleINS0_16JSDateTimeFormatEEC2ENS0_6TaggedIS2_EEPNS0_7Isolate
   store i64 %i.p, ptr %.0.i.i18.i, align 8
   %.not.i20.i = icmp sgt i32 %0, 5
   %i.x = ptrtoint ptr %1 to i64
-  %i.y = shl nsw i64 %3, 3
+  %i.y = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.x, %i.y
   %i.z = add i64 %reass.sub, 48
   %i.aa = inttoptr i64 %i.z to ptr
@@ -728,7 +728,7 @@ _ZN2v88internalL41Builtin_Impl_DateTimeFormatInternalFormatENS0_16BuiltinArgumen
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal31Builtin_IntlGetCanonicalLocalesEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !133 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -739,7 +739,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i10.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -770,7 +770,7 @@ _ZN2v88internalL36Builtin_Impl_IntlGetCanonicalLocalesENS0_16BuiltinArgumentsEPN
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal29Builtin_IntlSupportedValuesOfEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !134 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -781,7 +781,7 @@ bb.a:
   store i32 %i.g, ptr %i.e, align 8
   %.not.i10.i = icmp sgt i32 %0, 5
   %i.h = ptrtoint ptr %1 to i64
-  %i.i = shl nsw i64 %3, 3
+  %i.i = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 48
   %i.k = inttoptr i64 %i.j to ptr
@@ -1184,7 +1184,7 @@ _ZN2v88internalL46Builtin_Impl_V8BreakIteratorPrototypeAdoptTextENS0_16BuiltinAr
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal40Builtin_V8BreakIteratorInternalAdoptTextEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 !guid !194 {
 bb.a:
-  %3 = sext i32 %0 to i64
+  %3 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -1230,7 +1230,7 @@ _ZN2v88internal6HandleINS0_17JSV8BreakIteratorEEC2ENS0_6TaggedIS2_EEPNS0_7Isolat
   store i64 %i.p, ptr %.0.i.i21.i, align 8
   %.not.i23.i = icmp sgt i32 %0, 5
   %i.x = ptrtoint ptr %1 to i64
-  %i.y = shl nsw i64 %3, 3
+  %i.y = shl nuw nsw i64 %3, 3
   %reass.sub = sub i64 %i.x, %i.y
   %i.z = add i64 %reass.sub, 48
   %i.aa = inttoptr i64 %i.z to ptr

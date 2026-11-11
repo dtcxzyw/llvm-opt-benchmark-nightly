@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %._crit_edge244
 
 .lr.ph.preheader.i:                               ; preds = %bb.h
   %i.as = udiv exact i64 %i.aj, 12
-  %i.at = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.as, i1 true)
+  %i.at = tail call range(i64 3, 65) i64 @llvm.ctlz.i64(i64 %i.as, i1 true)
   %i.au = shl nuw nsw i64 %i.at, 1
   %i.av = xor i64 %i.au, 126
   br label %.lr.ph.i

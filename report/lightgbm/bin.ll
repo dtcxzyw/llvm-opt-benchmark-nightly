@@ -205,7 +205,7 @@ bb.a:
 .lr.ph27.split.i:                                 ; preds = %._crit_edge.i, %.lr.ph27.split.preheader.i
   %i.j = phi i32 [ %i.g, %.lr.ph27.split.preheader.i ], [ %i.v, %._crit_edge.i ] ; 3 uses
   %indvars.iv31.i = phi i64 [ %i.i, %.lr.ph27.split.preheader.i ], [ %indvars.iv.next32.i, %._crit_edge.i ] ; 3 uses
-  %6 = sext i32 %i.j to i64
+  %6 = zext nneg i32 %i.j to i64
   %i.k = mul nsw i64 %indvars.iv31.i, %6
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.k
   %i.m = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv31.i
@@ -608,7 +608,7 @@ bb.a:
 .lr.ph27.split.i:                                 ; preds = %._crit_edge.i, %.lr.ph27.split.preheader.i
   %i.j = phi i32 [ %i.g, %.lr.ph27.split.preheader.i ], [ %i.v, %._crit_edge.i ] ; 3 uses
   %indvars.iv31.i = phi i64 [ %i.i, %.lr.ph27.split.preheader.i ], [ %indvars.iv.next32.i, %._crit_edge.i ] ; 3 uses
-  %6 = sext i32 %i.j to i64
+  %6 = zext nneg i32 %i.j to i64
   %i.k = mul nsw i64 %indvars.iv31.i, %6
   %i.l = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.k
   %i.m = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv31.i
@@ -1011,7 +1011,7 @@ bb.a:
 .lr.ph27.split.i:                                 ; preds = %._crit_edge.i, %.lr.ph27.split.preheader.i
   %i.j = phi i32 [ %i.g, %.lr.ph27.split.preheader.i ], [ %i.v, %._crit_edge.i ] ; 3 uses
   %indvars.iv31.i = phi i64 [ %i.i, %.lr.ph27.split.preheader.i ], [ %indvars.iv.next32.i, %._crit_edge.i ] ; 3 uses
-  %6 = sext i32 %i.j to i64
+  %6 = zext nneg i32 %i.j to i64
   %i.k = mul nsw i64 %indvars.iv31.i, %6
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.k
   %i.m = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv31.i
@@ -1414,7 +1414,7 @@ bb.a:
   %i.cr = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv80
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !51
   %i.ct = sext i32 %i.cs to i64                   ; 2 uses
-  %6 = sext i32 %i.cq to i64
+  %6 = zext nneg i32 %i.cq to i64
   %i.cu = mul nsw i64 %6, %i.ct
   %i.cv = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cu
   %i.cw = getelementptr inbounds [2 x i8], ptr %4, i64 %i.ct
@@ -1623,7 +1623,7 @@ bb.a:
   %i.cl = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv78
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !51
   %i.cn = sext i32 %i.cm to i64                   ; 2 uses
-  %6 = sext i32 %i.ck to i64
+  %6 = zext nneg i32 %i.ck to i64
   %i.co = mul nsw i64 %6, %i.cn
   %i.cp = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.co
   %i.cq = getelementptr inbounds [2 x i8], ptr %4, i64 %i.cn
@@ -2026,7 +2026,7 @@ bb.a:
   %i.cr = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv80
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !51
   %i.ct = sext i32 %i.cs to i64                   ; 2 uses
-  %6 = sext i32 %i.cq to i64
+  %6 = zext nneg i32 %i.cq to i64
   %i.cu = mul nsw i64 %6, %i.ct
   %i.cv = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.cu
   %i.cw = getelementptr inbounds [2 x i8], ptr %4, i64 %i.ct
@@ -2235,7 +2235,7 @@ bb.a:
   %i.cl = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv78
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !51
   %i.cn = sext i32 %i.cm to i64                   ; 2 uses
-  %6 = sext i32 %i.ck to i64
+  %6 = zext nneg i32 %i.ck to i64
   %i.co = mul nsw i64 %6, %i.cn
   %i.cp = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.co
   %i.cq = getelementptr inbounds [2 x i8], ptr %4, i64 %i.cn
@@ -2638,7 +2638,7 @@ bb.a:
   %i.cq = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv80
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !51
   %i.cs = sext i32 %i.cr to i64                   ; 2 uses
-  %6 = sext i32 %i.cp to i64
+  %6 = zext nneg i32 %i.cp to i64
   %i.ct = mul nsw i64 %6, %i.cs
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ct
   %i.cv = getelementptr inbounds [2 x i8], ptr %4, i64 %i.cs
@@ -2845,7 +2845,7 @@ bb.a:
   %i.ck = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv78
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !51
   %i.cm = sext i32 %i.cl to i64                   ; 2 uses
-  %6 = sext i32 %i.cj to i64
+  %6 = zext nneg i32 %i.cj to i64
   %i.cn = mul nsw i64 %6, %i.cm
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.cn
   %i.cp = getelementptr inbounds [2 x i8], ptr %4, i64 %i.cm

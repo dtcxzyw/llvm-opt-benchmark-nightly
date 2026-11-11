@@ -204,11 +204,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 4097
-  %2 = add nsw i32 %1, -4096
-  %i.d = zext i32 %2 to i64
-  %i.e = add nuw nsw i64 %i.d, 1023
+  %i.d = zext nneg i32 %1 to i64
+  %i.e = add nuw nsw i64 %i.d, 4398046508031
   %i.f = lshr i64 %i.e, 10
-  %i.g = trunc nuw nsw i64 %i.f to i32
+  %i.g = trunc i64 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 4096
   %.0.i.i = select i1 %i.c, i32 %1, i32 %i.h
   %i.i = shl nuw nsw i32 %.0.i.i, 3
@@ -331,11 +330,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 4097
-  %3 = add nsw i32 %1, -4096
-  %i.d = zext i32 %3 to i64
-  %i.e = add nuw nsw i64 %i.d, 1023
+  %i.d = zext nneg i32 %1 to i64
+  %i.e = add nuw nsw i64 %i.d, 4398046508031
   %i.f = lshr i64 %i.e, 10
-  %i.g = trunc nuw nsw i64 %i.f to i32
+  %i.g = trunc i64 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 4096
   %.0.i.i = select i1 %i.c, i32 %1, i32 %i.h
   %i.i = shl nuw nsw i32 %.0.i.i, 3
@@ -371,11 +369,10 @@ _ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE6createERNS0_7RuntimeEj.exi
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 4097
-  %3 = add nsw i32 %1, -4096
-  %i.d = zext i32 %3 to i64
-  %i.e = add nuw nsw i64 %i.d, 1023
+  %i.d = zext nneg i32 %1 to i64
+  %i.e = add nuw nsw i64 %i.d, 4398046508031
   %i.f = lshr i64 %i.e, 10
-  %i.g = trunc nuw nsw i64 %i.f to i32
+  %i.g = trunc i64 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 4096
   %.0.i.i.i = select i1 %i.c, i32 %1, i32 %i.h
   %i.i = shl nuw nsw i32 %.0.i.i.i, 3
@@ -778,11 +775,10 @@ _ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE6createERNS0_7RuntimeEj.exi
 
 bb.g:                                             ; preds = %_ZNK6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE4sizeERNS0_11PointerBaseE.exit33
   %i.bh = icmp samesign ult i32 %.sroa.speculated.i, 4097
-  %3 = add nsw i32 %.sroa.speculated.i, -4096
-  %i.bi = zext i32 %3 to i64
-  %i.bj = add nuw nsw i64 %i.bi, 1023
+  %i.bi = zext nneg i32 %.sroa.speculated.i to i64
+  %i.bj = add nuw nsw i64 %i.bi, 4398046508031
   %i.bk = lshr i64 %i.bj, 10
-  %i.bl = trunc nuw nsw i64 %i.bk to i32
+  %i.bl = trunc i64 %i.bk to i32
   %i.bm = add nuw nsw i32 %i.bl, 4096
   %.0.i.i.i = select i1 %i.bh, i32 %.sroa.speculated.i, i32 %i.bm
   %i.bn = shl nuw nsw i32 %.0.i.i.i, 3
@@ -1185,11 +1181,10 @@ _ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE6createERNS0_7RuntimeEj.exi
 
 bb.g:                                             ; preds = %_ZNK6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE4sizeERNS0_11PointerBaseE.exit30
   %i.bg = icmp samesign ult i32 %.sroa.speculated.i, 4097
-  %9 = add nsw i32 %.sroa.speculated.i, -4096
-  %i.bh = zext i32 %9 to i64
-  %i.bi = add nuw nsw i64 %i.bh, 1023
+  %i.bh = zext nneg i32 %.sroa.speculated.i to i64
+  %i.bi = add nuw nsw i64 %i.bh, 4398046508031
   %i.bj = lshr i64 %i.bi, 10
-  %i.bk = trunc nuw nsw i64 %i.bj to i32
+  %i.bk = trunc i64 %i.bj to i32
   %i.bl = add nuw nsw i32 %i.bk, 4096
   %.0.i.i.i.i = select i1 %i.bg, i32 %.sroa.speculated.i, i32 %i.bl
   %i.bm = shl nuw nsw i32 %.0.i.i.i.i, 3
@@ -1592,11 +1587,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 4097
-  %2 = add nsw i32 %1, -4096
-  %i.d = zext i32 %2 to i64
-  %i.e = add nuw nsw i64 %i.d, 1023
+  %i.d = zext nneg i32 %1 to i64
+  %i.e = add nuw nsw i64 %i.d, 4398046508031
   %i.f = lshr i64 %i.e, 10
-  %i.g = trunc nuw nsw i64 %i.f to i32
+  %i.g = trunc i64 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 4096
   %.0.i.i = select i1 %i.c, i32 %1, i32 %i.h
   %i.i = shl nuw nsw i32 %.0.i.i, 2
@@ -1719,11 +1713,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 4097
-  %3 = add nsw i32 %1, -4096
-  %i.d = zext i32 %3 to i64
-  %i.e = add nuw nsw i64 %i.d, 1023
+  %i.d = zext nneg i32 %1 to i64
+  %i.e = add nuw nsw i64 %i.d, 4398046508031
   %i.f = lshr i64 %i.e, 10
-  %i.g = trunc nuw nsw i64 %i.f to i32
+  %i.g = trunc i64 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 4096
   %.0.i.i = select i1 %i.c, i32 %1, i32 %i.h
   %i.i = shl nuw nsw i32 %.0.i.i, 2
@@ -1759,11 +1752,10 @@ _ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.e
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 4097
-  %3 = add nsw i32 %1, -4096
-  %i.d = zext i32 %3 to i64
-  %i.e = add nuw nsw i64 %i.d, 1023
+  %i.d = zext nneg i32 %1 to i64
+  %i.e = add nuw nsw i64 %i.d, 4398046508031
   %i.f = lshr i64 %i.e, 10
-  %i.g = trunc nuw nsw i64 %i.f to i32
+  %i.g = trunc i64 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 4096
   %.0.i.i.i = select i1 %i.c, i32 %1, i32 %i.h
   %i.i = shl nuw nsw i32 %.0.i.i.i, 2
@@ -2166,11 +2158,10 @@ _ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.e
 
 bb.g:                                             ; preds = %_ZNK6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE4sizeERNS0_11PointerBaseE.exit35
   %i.bq = icmp samesign ult i32 %.sroa.speculated.i, 4097
-  %3 = add nsw i32 %.sroa.speculated.i, -4096
-  %i.br = zext i32 %3 to i64
-  %i.bs = add nuw nsw i64 %i.br, 1023
+  %i.br = zext nneg i32 %.sroa.speculated.i to i64
+  %i.bs = add nuw nsw i64 %i.br, 4398046508031
   %i.bt = lshr i64 %i.bs, 10
-  %i.bu = trunc nuw nsw i64 %i.bt to i32
+  %i.bu = trunc i64 %i.bt to i32
   %i.bv = add nuw nsw i32 %i.bu, 4096
   %.0.i.i.i = select i1 %i.bq, i32 %.sroa.speculated.i, i32 %i.bv
   %i.bw = shl nuw nsw i32 %.0.i.i.i, 2
@@ -2573,11 +2564,10 @@ _ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.e
 
 bb.g:                                             ; preds = %_ZNK6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE4sizeERNS0_11PointerBaseE.exit32
   %i.bp = icmp samesign ult i32 %.sroa.speculated.i, 4097
-  %9 = add nsw i32 %.sroa.speculated.i, -4096
-  %i.bq = zext i32 %9 to i64
-  %i.br = add nuw nsw i64 %i.bq, 1023
+  %i.bq = zext nneg i32 %.sroa.speculated.i to i64
+  %i.br = add nuw nsw i64 %i.bq, 4398046508031
   %i.bs = lshr i64 %i.br, 10
-  %i.bt = trunc nuw nsw i64 %i.bs to i32
+  %i.bt = trunc i64 %i.bs to i32
   %i.bu = add nuw nsw i32 %i.bt, 4096
   %.0.i.i.i.i = select i1 %i.bp, i32 %.sroa.speculated.i, i32 %i.bu
   %i.bv = shl nuw nsw i32 %.0.i.i.i.i, 2

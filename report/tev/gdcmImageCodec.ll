@@ -205,8 +205,8 @@ _ZNK4gdcm11PixelFormat13GetBitsStoredEv.exit102.lr.ph: ; preds = %.preheader107
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 34
   %i.bv = load i16, ptr %i.bu, align 2, !tbaa !51 ; 2 uses
   %i.bw = icmp ult i16 %i.bv, %i.bl
-  %3 = zext i16 %i.bv to i32
-  %4 = xor i32 %3, -1
+  %3 = xor i16 %i.bv, -1
+  %4 = sext i16 %3 to i32
   %i.bx = add nsw i32 %4, %i.bo                   ; 2 uses
   br i1 %i.bw, label %_ZNK4gdcm11PixelFormat13GetBitsStoredEv.exit102.preheader, label %bb.af
 
@@ -266,8 +266,8 @@ _ZNK4gdcm11PixelFormat13GetBitsStoredEv.exit99.lr.ph: ; preds = %_ZNK4gdcm11Pixe
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 34
   %i.cq = load i16, ptr %i.cp, align 2, !tbaa !51 ; 2 uses
   %i.cr = icmp ult i16 %i.cq, %i.bl
-  %5 = zext i16 %i.cq to i32
-  %6 = xor i32 %5, -1
+  %5 = xor i16 %i.cq, -1
+  %6 = sext i16 %5 to i32
   %i.cs = add nsw i32 %6, %i.bo                   ; 2 uses
   br i1 %i.cr, label %_ZNK4gdcm11PixelFormat13GetBitsStoredEv.exit99.preheader, label %bb.ac
 

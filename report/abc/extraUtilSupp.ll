@@ -205,25 +205,23 @@ define i64 @Abc_SuppFindOne(ptr nofree noundef readonly captures(none) %0, i32 n
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 21 uses
   %i.b = getelementptr i8, ptr %0, i64 4
-  %.val17.i.i = load i32, ptr %i.b, align 4, !tbaa !17 ; 3 uses
+  %.val17.i.i = load i32, ptr %i.b, align 4, !tbaa !17 ; 2 uses
   %i.c = icmp sgt i32 %.val17.i.i, 0
   %i.d = zext i32 %1 to i64                       ; 7 uses
   %i.e = zext nneg i32 %.val17.i.i to i64         ; 2 uses
-  %.idx.i14 = shl nuw nsw i64 %i.e, 3
   %i.f = icmp sgt i32 %1, 1                       ; 2 uses
-  %2 = sext i32 %.val17.i.i to i64
-  %.idx.i = shl nuw nsw i64 %2, 3
   %i.g = shl nuw i64 1, %i.d                      ; 2 uses
   br i1 %i.c, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.a
+  %.idx.i14 = shl nuw nsw i64 %i.e, 3
   %i.h = getelementptr i8, ptr %0, i64 8
   %i.i = icmp sgt i32 %1, 0
-  %.val15.i.i.us = load ptr, ptr %i.h, align 8, !tbaa !19 ; 5 uses
-  br i1 %i.i, label %.lr.ph20.i.i.us.us.preheader, label %.thread.us.lr.ph
+  %.val15.i.i.us = load ptr, ptr %i.h, align 8, !tbaa !19 ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.val15.i.i.us, i64 %.idx.i14 ; 2 uses
+  br i1 %i.i, label %.lr.ph20.i.i.us.us.preheader, label %bb.e
 
 .lr.ph20.i.i.us.us.preheader:                     ; preds = %.split.us
-  %3 = getelementptr inbounds nuw i8, ptr %.val15.i.i.us, i64 %.idx.i
   %i.j = add nsw i64 %i.d, -1                     ; 2 uses
   %min.iters.check = icmp ult i32 %1, 4
   %n.vec = and i64 %i.d, 2147483644               ; 3 uses
@@ -400,19 +398,15 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bl = getelementptr inbounds nuw i8, ptr %.010.i.us.us, i64 8 ; 2 uses
-  %i.bm = icmp ult ptr %i.bl, %3
+  %i.bm = icmp ult ptr %i.bl, %2
   br i1 %i.bm, label %bb.b, label %Abc_SuppGenSelectVar.exit.loopexit.us.us, !llvm.loop !3
 
 Abc_SuppGenSelectVar.exit.loopexit.us.us:         ; preds = %bb.d
   %i.bn = or i64 %i.bh, %.08.us.us
   br label %.lr.ph20.i.i.us.us
 
-.thread.us.lr.ph:                                 ; preds = %.split.us
-  %4 = getelementptr inbounds nuw i8, ptr %.val15.i.i.us, i64 %.idx.i14
-  br label %bb.e
-
-bb.e:                                             ; preds = %bb.g, %.thread.us.lr.ph
-  %.010.i.us = phi ptr [ %.val15.i.i.us, %.thread.us.lr.ph ], [ %i.br, %bb.g ] ; 3 uses
+bb.e:                                             ; preds = %.split.us, %bb.g
+  %.010.i.us = phi ptr [ %i.br, %bb.g ], [ %.val15.i.i.us, %.split.us ] ; 3 uses
   %i.bo = load i64, ptr %.010.i.us, align 8, !tbaa !21 ; 2 uses
   %i.bp = and i64 %i.bo, 1
   %.not.i.us = icmp eq i64 %i.bp, 0
@@ -425,7 +419,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.br = getelementptr inbounds nuw i8, ptr %.010.i.us, i64 8 ; 2 uses
-  %i.bs = icmp ult ptr %i.br, %4
+  %i.bs = icmp ult ptr %i.br, %2
   br i1 %i.bs, label %bb.e, label %.split17.us, !llvm.loop !3
 
 .split:                                           ; preds = %bb.a

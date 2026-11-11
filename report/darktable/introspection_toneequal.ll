@@ -205,7 +205,7 @@ scalar.ph225:                                     ; preds = %scalar.ph225.prehea
 define internal fastcc void @fast_surface_blur(ptr noalias nofree noundef nonnull captures(none) %0, i64 noundef range(i64 -2147483648, 2147483648) %1, i64 noundef range(i64 -2147483648, 2147483648) %2, i32 noundef %3, float noundef %4, i32 noundef %5, i32 noundef range(i32 0, 2) %6, float noundef %7) unnamed_addr #14 {
 bb.a:
   %i.a = icmp slt i32 %3, 4
-  %8 = sitofp reassoc nsz arcp contract afn i32 %3 to float
+  %8 = uitofp nneg i32 %3 to float
   %i.b = fmul reassoc nnan nsz arcp contract afn float %8, 2.500000e-01
   %i.c = fptosi float %i.b to i32
   %i.d = select i1 %i.a, i32 1, i32 %i.c
@@ -409,7 +409,7 @@ interpolate_bilinear.exit:                        ; preds = %._crit_edge.i, %bb.
   %i.cy = fcmp reassoc nsz arcp contract afn oeq float %7, 1.000000e+00
   %.not31.i = icmp eq i64 %i.k, 0                 ; 3 uses
   %i.cz = shl i64 %i.k, 4                         ; 3 uses
-  %9 = sext i32 %i.d to i64                       ; 4 uses
+  %9 = zext nneg i32 %i.d to i64                  ; 4 uses
   %i.da = add nsw i32 %5, -1
   %min.iters.check91 = icmp ult i64 %i.k, 8
   %n.vec93 = and i64 %i.k, -8                     ; 3 uses

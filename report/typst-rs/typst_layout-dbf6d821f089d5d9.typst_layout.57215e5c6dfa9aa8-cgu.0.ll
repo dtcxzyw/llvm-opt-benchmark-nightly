@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.al = load i8, ptr %i.ae, align 1, !noalias !13441, !noundef !41 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.promoted.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 5 ; 2 uses
   store ptr %i.am, ptr %1, align 8, !alias.scope !13442, !noalias !13427
-  %i.an = zext i8 %i.al to i32
+  %i.an = zext nneg i8 %i.al to i32
   %i.ao = shl nuw i32 %i.an, 28
   %i.ap = or disjoint i32 %i.ao, %i.ai
   %or.cond35.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.al, 16
@@ -256,7 +256,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bf = load i8, ptr %i.ay, align 1, !noalias !13455, !noundef !41 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.promoted.i.i.i.i.i.i70.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 3 ; 2 uses
   store ptr %i.bg, ptr %1, align 8, !alias.scope !13456, !noalias !13450
-  %i.bh = zext i8 %i.bf to i16
+  %i.bh = zext nneg i8 %i.bf to i16
   %i.bi = shl nuw i16 %i.bh, 14
   %i.bj = or disjoint i16 %i.bi, %i.bc
   %or.cond30.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.bf, 4
@@ -307,7 +307,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bz = load i8, ptr %i.bs, align 1, !noalias !13469, !noundef !41 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.promoted.i.i.i.i.i.i73.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 3 ; 2 uses
   store ptr %i.ca, ptr %1, align 8, !alias.scope !13470, !noalias !13464
-  %i.cb = zext i8 %i.bz to i16
+  %i.cb = zext nneg i8 %i.bz to i16
   %i.cc = shl nuw i16 %i.cb, 14
   %i.cd = or disjoint i16 %i.cc, %i.bw
   %or.cond30.not.i.i.i.i.i.i74.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.bz, 4
@@ -390,7 +390,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.dj = load i8, ptr %i.dc, align 1, !noalias !13489, !noundef !41 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.promoted.i.i.i.i.i.i80.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 5 ; 2 uses
   store ptr %i.dk, ptr %1, align 8, !alias.scope !13490, !noalias !13478
-  %i.dl = zext i8 %i.dj to i32
+  %i.dl = zext nneg i8 %i.dj to i32
   %i.dm = shl nuw i32 %i.dl, 28
   %i.dn = or disjoint i32 %i.dm, %i.dg
   %or.cond35.not.i.i.i.i.i.i81.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.dj, 16
@@ -473,7 +473,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.et = load i8, ptr %i.em, align 1, !noalias !13509, !noundef !41 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %.promoted.i.i.i.i.i.i87.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 5 ; 2 uses
   store ptr %i.eu, ptr %1, align 8, !alias.scope !13510, !noalias !13498
-  %i.ev = zext i8 %i.et to i32
+  %i.ev = zext nneg i8 %i.et to i32
   %i.ew = shl nuw i32 %i.ev, 28
   %i.ex = or disjoint i32 %i.ew, %i.eq
   %or.cond35.not.i.i.i.i.i.i88.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.et, 16
@@ -559,7 +559,7 @@ bb.au:                                            ; preds = %bb.at
   %i.gd = load i8, ptr %i.fw, align 1, !noalias !13532, !noundef !41 ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %.promoted.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 5
   store ptr %i.ge, ptr %1, align 8, !alias.scope !13533, !noalias !13521
-  %i.gf = zext i8 %i.gd to i32
+  %i.gf = zext nneg i8 %i.gd to i32
   %i.gg = shl nuw i32 %i.gf, 28
   %i.gh = or disjoint i32 %i.gg, %i.ga
   %or.cond35.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.gd, 16

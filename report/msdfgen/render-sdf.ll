@@ -204,8 +204,8 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.e = load i32, ptr %i.d, align 4, !tbaa !16
   %i.f = mul nsw i32 %i.e, %i.c                   ; 2 uses
-  %1 = sext i32 %i.f to i64
-  %.idx = shl nsw i64 %1, 2                       ; 2 uses
+  %1 = zext i32 %i.f to i64
+  %.idx = shl nuw nsw i64 %1, 2                   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   %i.h = icmp sgt i32 %i.f, 0
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
@@ -292,8 +292,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !25
   %i.g = mul nsw i32 %i.d, %i.f                   ; 2 uses
-  %1 = sext i32 %i.g to i64
-  %.idx = shl nsw i64 %1, 2                       ; 2 uses
+  %1 = zext i32 %i.g to i64
+  %.idx = shl nuw nsw i64 %1, 2                   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   %i.i = icmp sgt i32 %i.g, 0
   br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
@@ -380,8 +380,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !36
   %i.g = mul nsw i32 %i.d, %i.f                   ; 2 uses
-  %1 = sext i32 %i.g to i64
-  %.idx = shl nsw i64 %1, 2                       ; 2 uses
+  %1 = zext i32 %i.g to i64
+  %.idx = shl nuw nsw i64 %1, 2                   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   %i.i = icmp sgt i32 %i.g, 0
   br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge

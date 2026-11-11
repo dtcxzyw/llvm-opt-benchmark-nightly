@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.a
   %i.ha = mul nsw i32 %i.gv, %i.gz
   %i.hb = sext i32 %i.ha to i64
   %i.hc = getelementptr inbounds [4 x i8], ptr %i.gy, i64 %i.hb ; 2 uses
-  %6 = sext i32 %i.gs to i64
+  %6 = zext nneg i32 %i.gs to i64
   %i.hd = sext i32 %i.b to i64
   %i.he = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 3 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %5, i64 2 ; 3 uses
@@ -607,7 +607,7 @@ bb.m:                                             ; preds = %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @VP8LConvertBGRAToRGB_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
-  %3 = sext i32 %1 to i64
+  %3 = zext nneg i32 %1 to i64
   %.idx = shl nuw nsw i64 %3, 2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %1, 0
@@ -639,7 +639,7 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @VP8LConvertBGRAToRGBA_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
-  %3 = sext i32 %1 to i64
+  %3 = zext nneg i32 %1 to i64
   %.idx = shl nuw nsw i64 %3, 2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %1, 0
@@ -675,8 +675,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @VP8LConvertBGRAToRGBA4444_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
-  %3 = sext i32 %1 to i64
-  %.idx = shl nsw i64 %3, 2                       ; 2 uses
+  %3 = zext i32 %1 to i64
+  %.idx = shl nuw nsw i64 %3, 2                   ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %1, 0
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
@@ -761,8 +761,8 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @VP8LConvertBGRAToRGB565_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
-  %3 = sext i32 %1 to i64
-  %.idx = shl nsw i64 %3, 2                       ; 2 uses
+  %3 = zext i32 %1 to i64
+  %.idx = shl nuw nsw i64 %3, 2                   ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %1, 0
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
@@ -851,7 +851,7 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @VP8LConvertBGRAToBGR_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
-  %3 = sext i32 %1 to i64
+  %3 = zext nneg i32 %1 to i64
   %.idx = shl nuw nsw i64 %3, 2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = icmp sgt i32 %1, 0
@@ -937,8 +937,8 @@ bb.g:                                             ; preds = %bb.a
 bb.h:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
-  %4 = sext i32 %1 to i64
-  %.idx.i42 = shl nsw i64 %4, 2                   ; 2 uses
+  %4 = zext i32 %1 to i64
+  %.idx.i42 = shl nuw nsw i64 %4, 2               ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i42
   %i.k = icmp sgt i32 %1, 0
   br i1 %i.k, label %.lr.ph.i.preheader, label %CopyOrSwap.exit
@@ -1001,8 +1001,8 @@ middle.block62:                                   ; preds = %vector.body55
 bb.i:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
-  %5 = sext i32 %1 to i64
-  %.idx.i43 = shl nsw i64 %5, 2                   ; 2 uses
+  %5 = zext i32 %1 to i64
+  %.idx.i43 = shl nuw nsw i64 %5, 2               ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i43
   %i.ah = icmp sgt i32 %1, 0
   br i1 %i.ah, label %.lr.ph.i44.preheader, label %CopyOrSwap.exit47

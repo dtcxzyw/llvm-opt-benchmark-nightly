@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !57   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 5 uses
   %wide.trip.count.i.i.i = zext nneg i32 %i.d to i64
-  %9 = sext i32 %i.r to i64
-  %.idx.i = shl nsw i64 %9, 1                     ; 2 uses
+  %9 = zext i32 %i.r to i64
+  %.idx.i = shl nuw nsw i64 %9, 1                 ; 2 uses
   %i.ab = icmp sgt i32 %i.r, 0
   br i1 %i.ab, label %.lr.ph.i.i.i.us.preheader, label %.loopexit
 
@@ -609,8 +609,8 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !57   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 5 uses
   %wide.trip.count.i.i.i = zext nneg i32 %i.d to i64
-  %9 = sext i32 %i.r to i64
-  %.idx.i = shl nsw i64 %9, 1                     ; 2 uses
+  %9 = zext i32 %i.r to i64
+  %.idx.i = shl nuw nsw i64 %9, 1                 ; 2 uses
   %i.ab = icmp sgt i32 %i.r, 0
   br i1 %i.ab, label %.lr.ph.i.i.i.us.preheader, label %.loopexit
 
@@ -1013,7 +1013,7 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
 
 .lr.ph:                                           ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %9 = sext i32 %i.r to i64
+  %9 = zext nneg i32 %i.r to i64
   %.idx.i = shl nuw nsw i64 %9, 3
   %i.y = icmp sgt i32 %i.r, 0
   br i1 %i.y, label %.lr.ph.split.us, label %.loopexit

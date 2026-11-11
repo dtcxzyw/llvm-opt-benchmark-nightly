@@ -205,11 +205,11 @@ bb.ay:                                            ; preds = %.thread
 bb.az:                                            ; preds = %bb.ay
   %i.hw = and i32 %i.hv, 31
   %i.hx = icmp eq i32 %i.hw, 0
-  %i.hy = load i32, ptr %i.o, align 8, !tbaa !85  ; 4 uses
+  %i.hy = load i32, ptr %i.o, align 8, !tbaa !85  ; 3 uses
+  %14 = zext nneg i32 %i.hy to i64                ; 2 uses
   br i1 %i.hx, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
-  %14 = zext nneg i32 %i.hy to i64
   %i.hz = getelementptr inbounds nuw i8, ptr %i.fg, i64 %14
   %i.ia = icmp sgt i32 %i.hy, 0
   br i1 %i.ia, label %.lr.ph271, label %.loopexit242
@@ -229,8 +229,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.ig, label %.lr.ph271, label %.loopexit242, !llvm.loop !141
 
 bb.bb:                                            ; preds = %bb.az
-  %15 = sext i32 %i.hy to i64
-  %.idx = shl nuw nsw i64 %15, 1
+  %.idx = shl nuw nsw i64 %14, 1
   %i.ih = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.idx
   %i.ii = icmp sgt i32 %i.hy, 0
   br i1 %i.ii, label %.lr.ph267, label %.loopexit242

@@ -122,7 +122,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not181.not, label %bb.m, label %pixel_set.exit208
 
 bb.m:                                             ; preds = %._crit_edge259
-  %i.ar = shl i32 %13, 2                          ; 22 uses
+  %i.ar = shl i32 %13, 2                          ; 21 uses
   %i.as = sub i32 0, %i.ar
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr [2 x i8], ptr %15, i64 %i.at ; 18 uses
@@ -525,7 +525,7 @@ vec.epilog.scalar.ph377:                          ; preds = %vec.epilog.iter.che
   br i1 %exitcond.not.i207, label %pixel_set.exit208, label %vec.epilog.scalar.ph377, !llvm.loop !26
 
 bb.w:                                             ; preds = %bb.t
-  %17 = sext i32 %i.ar to i64
+  %17 = zext i32 %i.ar to i64                     ; 6 uses
   %i.lo = sub nsw i64 0, %17
   %i.lp = getelementptr inbounds [2 x i8], ptr %i.au, i64 %i.lo ; 3 uses
   %i.lq = load i16, ptr %i.au, align 2, !tbaa !45 ; 3 uses
@@ -533,13 +533,12 @@ bb.w:                                             ; preds = %bb.t
   br i1 %i.lr, label %iter.check403, label %pixel_set.exit208
 
 iter.check403:                                    ; preds = %bb.w
-  %wide.trip.count.i210 = zext nneg i32 %i.ar to i64 ; 5 uses
   %min.iters.check393 = icmp ult i32 %i.ar, 16
   br i1 %min.iters.check393, label %vec.epilog.ph407, label %vector.ph394
 
 vector.ph394:                                     ; preds = %iter.check403
-  %i.ls = and i64 %wide.trip.count.i210, 12
-  %n.vec395 = and i64 %wide.trip.count.i210, 2147483632 ; 4 uses
+  %i.ls = and i64 %17, 12
+  %n.vec395 = and i64 %17, 2147483632             ; 4 uses
   %broadcast.splatinsert396 = insertelement <8 x i16> poison, i16 %i.lq, i64 0
   %broadcast.splat397 = shufflevector <8 x i16> %broadcast.splatinsert396, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body398
@@ -555,7 +554,7 @@ vector.body398:                                   ; preds = %vector.ph394, %vect
   br i1 %i.lv, label %middle.block401, label %vector.body398, !llvm.loop !27
 
 middle.block401:                                  ; preds = %vector.body398
-  %cmp.n402 = icmp eq i64 %n.vec395, %wide.trip.count.i210
+  %cmp.n402 = icmp eq i64 %n.vec395, %17
   br i1 %cmp.n402, label %pixel_set.exit208, label %vec.epilog.iter.check404
 
 vec.epilog.iter.check404:                         ; preds = %middle.block401
@@ -573,7 +572,7 @@ vec.epilog.vector.body412:                        ; preds = %vec.epilog.vector.b
   %i.lw = getelementptr inbounds nuw [2 x i8], ptr %i.lp, i64 %index413
   store <4 x i16> %broadcast.splat411, ptr %i.lw, align 2, !tbaa !45
   %index.next414 = add nuw i64 %index413, 4       ; 2 uses
-  %i.lx = icmp eq i64 %index.next414, %wide.trip.count.i210
+  %i.lx = icmp eq i64 %index.next414, %17
   br i1 %i.lx, label %pixel_set.exit208, label %vec.epilog.vector.body412, !llvm.loop !28
 
 vec.epilog.scalar.ph405:                          ; preds = %vec.epilog.iter.check404, %vec.epilog.scalar.ph405
@@ -581,7 +580,7 @@ vec.epilog.scalar.ph405:                          ; preds = %vec.epilog.iter.che
   %i.ly = getelementptr inbounds nuw [2 x i8], ptr %i.lp, i64 %indvars.iv.i211
   store i16 %i.lq, ptr %i.ly, align 2, !tbaa !45
   %indvars.iv.next.i212 = add nuw nsw i64 %indvars.iv.i211, 1 ; 2 uses
-  %exitcond.not.i213 = icmp eq i64 %indvars.iv.next.i212, %wide.trip.count.i210
+  %exitcond.not.i213 = icmp eq i64 %indvars.iv.next.i212, %17
   br i1 %exitcond.not.i213, label %pixel_set.exit208, label %vec.epilog.scalar.ph405, !llvm.loop !29
 
 pixel_set.exit208:                                ; preds = %vec.epilog.scalar.ph377, %vec.epilog.vector.body384, %vec.epilog.scalar.ph405, %vec.epilog.vector.body412, %middle.block373, %middle.block401, %bb.w, %bb.v, %pixel_set.exit, %._crit_edge248, %._crit_edge259

@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph106.us
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @FFT_inverse(i32 noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 !guid !25 {
 bb.a:
-  %2 = sdiv i32 %0, 2
+  %2 = lshr i32 %0, 1
   tail call fastcc void @FFT_transform_internal(i32 noundef %0, ptr noundef %1, i32 noundef 1)
-  %3 = sitofp i32 %2 to double
+  %3 = uitofp nneg i32 %2 to double
   %i.a = fdiv nnan double 1.000000e+00, %3        ; 2 uses
   %i.b = icmp sgt i32 %0, 0
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge

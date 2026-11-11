@@ -205,12 +205,12 @@ bb.a:
 
 .preheader113.i.preheader:                        ; preds = %.preheader113.lr.ph.i
   %i.i = shl nuw i64 %3, 4
-  %i.j = sub i64 %7, %i.b
+  %i.j = sub nuw nsw i64 %7, %i.b
   %i.k = shl i64 %i.j, 2
   %i.l = add i64 %3, -1
   %i.m = mul i64 %i.k, %i.l
   %i.n = shl nuw i64 %4, 6
-  %i.o = sub i64 %8, %i.d
+  %i.o = sub nuw nsw i64 %8, %i.d
   %i.p = shl i64 %i.o, 2
   %i.q = add i64 %4, -1
   %i.r = mul i64 %i.p, %i.q
