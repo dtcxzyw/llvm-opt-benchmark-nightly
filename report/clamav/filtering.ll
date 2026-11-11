@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/clamav/original/filtering?download=true
 inline.NumInlined: 22
 inline.NumDeleted: 8
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@filter_add_acpatt:bb.a
   %i.po = add i32 %i.pn, %.367112.us.i
   %i.pp = getelementptr inbounds nuw i8, ptr %i.jy, i64 %i.ph
@@ -204,9 +204,9 @@ bb.dn:                                            ; preds = %bb.dm
   %.not4701022 = icmp ugt i8 %i.si, %i.sl
   %i.sn = getelementptr inbounds nuw i8, ptr %i.rx, i64 11
   %i.so = getelementptr inbounds nuw i8, ptr %i.sa, i64 11
-  %i.sp = shl nuw i32 1, %i.ru                    ; 5 uses
+  %i.sp = shl nuw i32 1, %i.ru                    ; 8 uses
   %i.sq = trunc i32 %i.sp to i8
-  %i.sr = xor i8 %i.sq, -1                        ; 4 uses
+  %i.sr = xor i8 %i.sq, -1                        ; 7 uses
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sa, i64 10
   %i.st = getelementptr inbounds nuw i8, ptr %i.rx, i64 10 ; 2 uses
   br i1 %.not4701022, label %.lr.ph1030.split.us, label %.lr.ph1030.split
@@ -265,7 +265,7 @@ bb.du:                                            ; preds = %bb.ds
   br label %spec_ith_char.exit527
 
 spec_ith_char.exit527:                            ; preds = %bb.dp, %bb.du
-  %.0.i526 = phi i32 [ %i.ti, %bb.du ], [ %.14181028, %bb.dp ] ; 4 uses
+  %.0.i526 = phi i32 [ %i.ti, %bb.du ], [ %.14181028, %bb.dp ] ; 5 uses
   %.val = load ptr, ptr %i.sa, align 16, !tbaa !31 ; 4 uses
   %.not.i528 = icmp eq ptr %.val, null
   br i1 %.not.i528, label %spec_ith_char.exit530, label %bb.dv
@@ -300,28 +300,114 @@ bb.dz:                                            ; preds = %bb.dx
   br label %spec_ith_char.exit530
 
 spec_ith_char.exit530:                            ; preds = %spec_ith_char.exit527, %bb.dz
-  %.0.i529 = phi i32 [ %i.tu, %bb.dz ], [ %.14151023, %spec_ith_char.exit527 ] ; 4 uses
+  %.0.i529 = phi i32 [ %i.tu, %bb.dz ], [ %.14151023, %spec_ith_char.exit527 ] ; 5 uses
   %i.tv = load i8, ptr %i.sn, align 1, !tbaa !32
-  %.not471 = icmp ne i8 %i.tv, 0                  ; 4 uses
-  %i.tw = select i1 %.not471, i32 255, i32 %.0.i526 ; 3 uses
+  %.fr1357 = freeze i8 %i.tv
+  %.not471 = icmp ne i8 %.fr1357, 0               ; 4 uses
+  %i.tw = select i1 %.not471, i32 255, i32 %.0.i526 ; 4 uses
   %i.tx = load i8, ptr %i.so, align 1, !tbaa !32
   %.fr1078 = freeze i8 %i.tx
   %.not472 = icmp eq i8 %.fr1078, 0               ; 2 uses
-  %i.ty = select i1 %.not472, i32 %.0.i529, i32 255 ; 6 uses
-  %i.tz = select i1 %.not471, i32 0, i32 %.0.i526 ; 3 uses
+  %i.ty = select i1 %.not472, i32 %.0.i529, i32 255 ; 10 uses
+  %i.tz = select i1 %.not471, i32 0, i32 %.0.i526 ; 2 uses
   %.not4731007 = icmp ugt i32 %i.tz, %i.tw
-  br i1 %.not4731007, label %._crit_edge1012, label %.preheader574.lr.ph.a
+  br i1 %.not4731007, label %._crit_edge1012, label %.preheader574.lr.ph
 
-.preheader574.lr.ph.a:                            ; preds = %spec_ith_char.exit530
-  br i1 %.not472, label %.preheader574.preheader.a, label %.preheader574.us
+.preheader574.lr.ph:                              ; preds = %spec_ith_char.exit530
+  br i1 %.not472, label %.preheader574.preheader, label %.preheader574.us
 
-.preheader574.preheader.a:                        ; preds = %.preheader574.lr.ph.a
-  %i.ua = add nuw nsw i32 %.0.i529, 1             ; 3 uses
-  br label %.preheader574
+.preheader574.preheader:                          ; preds = %.preheader574.lr.ph
+  %4 = add nuw nsw i32 %.0.i529, 1                ; 5 uses
+  br i1 %.not471, label %.preheader574, label %.preheader574.us1269
 
-.preheader574.us:                                 ; preds = %.preheader574.lr.ph.a, %._crit_edge1000.us
-  %.03621011.us = phi i32 [ %.1363.lcssa.us, %._crit_edge1000.us ], [ 0, %.preheader574.lr.ph.a ] ; 3 uses
-  %.03641008.us = phi i32 [ %i.un, %._crit_edge1000.us ], [ %i.tz, %.preheader574.lr.ph.a ] ; 4 uses
+.preheader574.us1269:                             ; preds = %.preheader574.preheader, %._crit_edge1000.us1275
+  %.03621011.us1270 = phi i32 [ %.1363.lcssa.us1276, %._crit_edge1000.us1275 ], [ %.0.i529, %.preheader574.preheader ] ; 7 uses
+  %.03641008.us1271 = phi i32 [ %40, %._crit_edge1000.us1275 ], [ %.0.i526, %.preheader574.preheader ] ; 5 uses
+  %.not474997.us1272 = icmp ugt i32 %.03621011.us1270, %i.ty
+  br i1 %.not474997.us1272, label %._crit_edge1000.us1275, label %.lr.ph999.split.us.preheader
+
+.lr.ph999.split.us.preheader:                     ; preds = %.preheader574.us1269
+  %5 = add i32 %i.ty, %.03621011.us1270
+  %6 = and i32 %5, 1
+  %lcmp.mod1604.not.not = icmp eq i32 %6, 0
+  br i1 %lcmp.mod1604.not.not, label %.preheader574.lr.ph.a, label %.lr.ph999.split.us.prol.loopexit
+
+.preheader574.lr.ph.a:                            ; preds = %.lr.ph999.split.us.preheader
+  %7 = shl nuw nsw i32 %.03621011.us1270, 8
+  %8 = or i32 %7, %.03641008.us1271
+  %9 = and i32 %8, 65535
+  %10 = zext nneg i32 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 %10 ; 2 uses
+  %12 = load i8, ptr %11, align 1, !tbaa !8       ; 2 uses
+  %13 = zext i8 %12 to i32
+  %14 = and i32 %i.sp, %13
+  %.not.not.i.us.us.prol = icmp eq i32 %14, 0
+  br i1 %.not.not.i.us.us.prol, label %.preheader574.preheader.a, label %15
+
+15:                                               ; preds = %.preheader574.lr.ph.a
+  %16 = and i8 %12, %i.sr
+  store i8 %16, ptr %11, align 1, !tbaa !8
+  br label %.preheader574.preheader.a
+
+.preheader574.preheader.a:                        ; preds = %15, %.preheader574.lr.ph.a
+  %i.ua = add i32 %.03621011.us1270, 1
+  br label %.lr.ph999.split.us.prol.loopexit
+
+.lr.ph999.split.us.prol.loopexit:                 ; preds = %.preheader574.preheader.a, %.lr.ph999.split.us.preheader
+  %.1363998.us1002.us.unr = phi i32 [ %.03621011.us1270, %.lr.ph999.split.us.preheader ], [ %i.ua, %.preheader574.preheader.a ]
+  %17 = icmp eq i32 %i.ty, %.03621011.us1270
+  br i1 %17, label %._crit_edge1000.us1275, label %.lr.ph999.split.us
+
+.lr.ph999.split.us:                               ; preds = %.lr.ph999.split.us.prol.loopexit, %filter_set_atpos.exit.us1003.us.1
+  %.1363998.us1002.us = phi i32 [ %39, %filter_set_atpos.exit.us1003.us.1 ], [ %.1363998.us1002.us.unr, %.lr.ph999.split.us.prol.loopexit ] ; 3 uses
+  %18 = shl nuw nsw i32 %.1363998.us1002.us, 8
+  %19 = or i32 %18, %.03641008.us1271
+  %20 = and i32 %19, 65535
+  %21 = zext nneg i32 %20 to i64
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 %21 ; 2 uses
+  %23 = load i8, ptr %22, align 1, !tbaa !8       ; 2 uses
+  %24 = zext i8 %23 to i32
+  %25 = and i32 %i.sp, %24
+  %.not.not.i.us.us = icmp eq i32 %25, 0
+  br i1 %.not.not.i.us.us, label %filter_set_atpos.exit.us1003.us, label %26
+
+26:                                               ; preds = %.lr.ph999.split.us
+  %27 = and i8 %23, %i.sr
+  store i8 %27, ptr %22, align 1, !tbaa !8
+  br label %filter_set_atpos.exit.us1003.us
+
+filter_set_atpos.exit.us1003.us:                  ; preds = %26, %.lr.ph999.split.us
+  %28 = add i32 %.1363998.us1002.us, 1            ; 2 uses
+  %29 = shl nuw nsw i32 %28, 8
+  %30 = or i32 %29, %.03641008.us1271
+  %31 = and i32 %30, 65535
+  %32 = zext nneg i32 %31 to i64
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 %32 ; 2 uses
+  %34 = load i8, ptr %33, align 1, !tbaa !8       ; 2 uses
+  %35 = zext i8 %34 to i32
+  %36 = and i32 %i.sp, %35
+  %.not.not.i.us.us.1 = icmp eq i32 %36, 0
+  br i1 %.not.not.i.us.us.1, label %filter_set_atpos.exit.us1003.us.1, label %37
+
+37:                                               ; preds = %filter_set_atpos.exit.us1003.us
+  %38 = and i8 %34, %i.sr
+  store i8 %38, ptr %33, align 1, !tbaa !8
+  br label %filter_set_atpos.exit.us1003.us.1
+
+filter_set_atpos.exit.us1003.us.1:                ; preds = %37, %filter_set_atpos.exit.us1003.us
+  %39 = add i32 %.1363998.us1002.us, 2
+  %exitcond1268.us.not.1 = icmp eq i32 %28, %i.ty
+  br i1 %exitcond1268.us.not.1, label %._crit_edge1000.us1275, label %.lr.ph999.split.us
+
+._crit_edge1000.us1275:                           ; preds = %.lr.ph999.split.us.prol.loopexit, %filter_set_atpos.exit.us1003.us.1, %.preheader574.us1269
+  %.1363.lcssa.us1276 = phi i32 [ %.03621011.us1270, %.preheader574.us1269 ], [ %4, %filter_set_atpos.exit.us1003.us.1 ], [ %4, %.lr.ph999.split.us.prol.loopexit ]
+  %40 = add nuw nsw i32 %.03641008.us1271, 1
+  %.not473.us1277.not = icmp ult i32 %.03641008.us1271, %i.tw
+  br i1 %.not473.us1277.not, label %.preheader574.us1269, label %._crit_edge1012
+
+.preheader574.us:                                 ; preds = %.preheader574.lr.ph, %._crit_edge1000.us
+  %.03621011.us = phi i32 [ %.1363.lcssa.us, %._crit_edge1000.us ], [ 0, %.preheader574.lr.ph ] ; 3 uses
+  %.03641008.us = phi i32 [ %i.un, %._crit_edge1000.us ], [ %i.tz, %.preheader574.lr.ph ] ; 4 uses
   %.not474997.us = icmp ugt i32 %.03621011.us, %i.ty
   br i1 %.not474997.us, label %._crit_edge1000.us, label %.lr.ph999.us
 
@@ -363,16 +449,15 @@ filter_set_atpos.exit.us1017:                     ; preds = %bb.eb, %bb.ea, %.lr
   %.not473.us.not = icmp ult i32 %.03641008.us, %i.tw
   br i1 %.not473.us.not, label %.preheader574.us, label %._crit_edge1012
 
-.preheader574:                                    ; preds = %.preheader574.preheader.a, %._crit_edge1000
-  %.03621011 = phi i32 [ %.1363.lcssa, %._crit_edge1000 ], [ %.0.i529, %.preheader574.preheader.a ] ; 7 uses
-  %.03641008 = phi i32 [ %i.vw, %._crit_edge1000 ], [ %i.tz, %.preheader574.preheader.a ] ; 6 uses
+.preheader574:                                    ; preds = %.preheader574.preheader, %._crit_edge1000
+  %.03621011 = phi i32 [ %.1363.lcssa, %._crit_edge1000 ], [ %.0.i529, %.preheader574.preheader ] ; 7 uses
+  %.03641008 = phi i32 [ %i.vw, %._crit_edge1000 ], [ 0, %.preheader574.preheader ] ; 6 uses
   %.not474997 = icmp ugt i32 %.03621011, %i.ty
   br i1 %.not474997, label %._crit_edge1000, label %.lr.ph999
 
 .lr.ph999:                                        ; preds = %.preheader574
   %i.uo = icmp eq i32 %.03641008, %.0.i526
-  %or.cond499 = select i1 %.not471, i1 %i.uo, i1 false
-  br i1 %or.cond499, label %._crit_edge1000, label %.lr.ph999.split.preheader
+  br i1 %i.uo, label %._crit_edge1000, label %.lr.ph999.split.preheader
 
 .lr.ph999.split.preheader:                        ; preds = %.lr.ph999
   %i.up = add i32 %i.ty, %.03621011
@@ -448,12 +533,12 @@ filter_set_atpos.exit.us1003.1:                   ; preds = %bb.ee, %filter_set_
   br i1 %exitcond1268.not.1, label %._crit_edge1000, label %.lr.ph999.split
 
 ._crit_edge1000:                                  ; preds = %.lr.ph999.split.prol.loopexit, %filter_set_atpos.exit.us1003.1, %.lr.ph999, %.preheader574
-  %.1363.lcssa = phi i32 [ %.03621011, %.preheader574 ], [ %i.ua, %.lr.ph999 ], [ %i.ua, %filter_set_atpos.exit.us1003.1 ], [ %i.ua, %.lr.ph999.split.prol.loopexit ]
+  %.1363.lcssa = phi i32 [ %.03621011, %.preheader574 ], [ %4, %.lr.ph999 ], [ %4, %filter_set_atpos.exit.us1003.1 ], [ %4, %.lr.ph999.split.prol.loopexit ]
   %i.vw = add nuw nsw i32 %.03641008, 1
   %.not473.not = icmp ult i32 %.03641008, %i.tw
   br i1 %.not473.not, label %.preheader574, label %._crit_edge1012
 
-._crit_edge1012:                                  ; preds = %._crit_edge1000.us, %._crit_edge1000, %spec_ith_char.exit530
+._crit_edge1012:                                  ; preds = %._crit_edge1000.us, %._crit_edge1000.us1275, %._crit_edge1000, %spec_ith_char.exit530
   %i.vx = load i8, ptr %i.ss, align 2, !tbaa !35
   %i.vy = zext i8 %i.vx to i32
   %i.vz = add nuw nsw i32 %.14151023, %i.vy       ; 2 uses

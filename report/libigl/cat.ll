@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2761
 inline.NumDeleted: 1277
 loop-unroll.NumCompletelyUnrolled: 16
-loop-unroll.NumRuntimeUnrolled: 50
-loop-unroll.NumUnrolled: 66
+loop-unroll.NumRuntimeUnrolled: 52
+loop-unroll.NumUnrolled: 68
 begin_hunk_0_@_ZN3igl3catIdEEviRKN5Eigen12SparseMatrixIT_Li0EiEES6_RS4_:bb.a
   br i1 %i.bc, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94.epil.preheader, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94.preheader.new
 
@@ -205,19 +205,78 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   br label %.preheader171
 
 .preheader171:                                    ; preds = %.preheader171.loopexit310.unr-lcssa, %.lr.ph.epil, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94.epil.preheader, %.preheader171.loopexit.unr-lcssa, %.lr.ph.us.epil, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94.us.epil.preheader, %.preheader173
-  %i.eb = load i64, ptr %i.j, align 8, !tbaa !97  ; 2 uses
+  %i.eb = load i64, ptr %i.j, align 8, !tbaa !97  ; 9 uses
   %i.ec = icmp sgt i64 %i.eb, 0
   br i1 %i.ec, label %.lr.ph184, label %.loopexit170
 
 .lr.ph184:                                        ; preds = %.preheader171
   %i.ed = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !99
+  %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !99 ; 6 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !100 ; 2 uses
+  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !100 ; 4 uses
   %i.eh = icmp eq ptr %i.eg, null
   %i.ei = load ptr, ptr %5, align 8
-  %i.ej = getelementptr [4 x i8], ptr %i.ei, i64 %i.au
+  %i.ej = getelementptr [4 x i8], ptr %i.ei, i64 %i.au ; 6 uses
+  br i1 %i.eh, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader: ; preds = %.lr.ph184
+  %xtraiter321 = and i64 %i.eb, 1
+  %6 = icmp eq i64 %i.eb, 1
+  br i1 %6, label %bb.aa, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader.new
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader.new: ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader
+  %unroll_iter324 = and i64 %i.eb, 9223372036854775806
   br label %bb.x
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader: ; preds = %.lr.ph184
+  %xtraiter326 = and i64 %i.eb, 1
+  %7 = icmp eq i64 %i.eb, 1
+  br i1 %7, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader.new
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader.new: ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader
+  %unroll_iter329 = and i64 %i.eb, 9223372036854775806
+  br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us: ; preds = %24, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader.new
+  %indvars.iv235.us = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader.new ], [ %indvars.iv.next236.us.1, %24 ] ; 4 uses
+  %niter330 = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader.new ], [ %niter330.next.1, %24 ]
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv235.us ; 2 uses
+  %9 = load i32, ptr %8, align 4, !tbaa !103      ; 2 uses
+  %10 = getelementptr i8, ptr %8, i64 4
+  %11 = load i32, ptr %10, align 4, !tbaa !103    ; 2 uses
+  %12 = icmp sgt i32 %11, %9
+  br i1 %12, label %.lr.ph179.us, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.1
+
+.lr.ph179.us:                                     ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us
+  %13 = getelementptr [4 x i8], ptr %i.ej, i64 %indvars.iv235.us ; 2 uses
+  %.promoted181.us = load i32, ptr %13, align 4, !tbaa !103
+  %14 = add i32 %.promoted181.us, %11
+  %15 = sub i32 %14, %9
+  store i32 %15, ptr %13, align 4, !tbaa !103
+  br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.1
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.1: ; preds = %.lr.ph179.us, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us
+  %indvars.iv.next236.us = or disjoint i64 %indvars.iv235.us, 1 ; 2 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv.next236.us ; 2 uses
+  %17 = load i32, ptr %16, align 4, !tbaa !103    ; 2 uses
+  %18 = getelementptr i8, ptr %16, i64 4
+  %19 = load i32, ptr %18, align 4, !tbaa !103    ; 2 uses
+  %20 = icmp sgt i32 %19, %17
+  br i1 %20, label %.lr.ph179.us.1, label %24
+
+.lr.ph179.us.1:                                   ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.1
+  %21 = getelementptr [4 x i8], ptr %i.ej, i64 %indvars.iv.next236.us ; 2 uses
+  %.promoted181.us.1 = load i32, ptr %21, align 4, !tbaa !103
+  %22 = add i32 %.promoted181.us.1, %19
+  %23 = sub i32 %22, %17
+  store i32 %23, ptr %21, align 4, !tbaa !103
+  br label %24
+
+24:                                               ; preds = %.lr.ph179.us.1, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.1
+  %indvars.iv.next236.us.1 = add nuw nsw i64 %indvars.iv235.us, 2 ; 2 uses
+  %niter330.next.1 = add nuw nsw i64 %niter330, 2 ; 2 uses
+  %niter330.ncmp.1 = icmp eq i64 %niter330.next.1, %unroll_iter329
+  br i1 %niter330.ncmp.1, label %.loopexit170.loopexit312.unr-lcssa, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us, !llvm.loop !212
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94: ; preds = %bb.w, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94.preheader.new
   %indvars.iv = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94.preheader.new ], [ %indvars.iv.next.1, %bb.w ] ; 5 uses
@@ -262,46 +321,97 @@ bb.w:                                             ; preds = %.lr.ph.1, %_ZN5Eige
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader171.loopexit310.unr-lcssa, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit94, !llvm.loop !210
 
-bb.x:                                             ; preds = %.lr.ph184, %bb.aa
-  %indvars.iv235.a = phi i64 [ 0, %.lr.ph184 ], [ %indvars.iv.next236, %bb.aa ] ; 4 uses
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv235.a ; 2 uses
+bb.x:                                             ; preds = %40, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader.new
+  %indvars.iv235 = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader.new ], [ %indvars.iv.next236.1, %40 ] ; 5 uses
+  %indvars.iv235.a = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader.new ], [ %niter325.next.1, %40 ]
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %indvars.iv235
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !103 ; 2 uses
-  %6 = sext i32 %i.fd to i64                      ; 2 uses
-  br i1 %i.eh, label %bb.y, label %bb.z
+  %25 = icmp sgt i32 %i.fd, 0
+  br i1 %25, label %bb.y, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.1
 
 bb.y:                                             ; preds = %bb.x
-  %7 = getelementptr i8, ptr %i.fc, i64 4
-  %i.fe = load i32, ptr %7, align 4, !tbaa !103
-  %8 = sext i32 %i.fe to i64
-  br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96
+  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv235
+  %27 = load i32, ptr %26, align 4, !tbaa !103    ; 2 uses
+  %28 = add i32 %i.fd, %27
+  %29 = getelementptr [4 x i8], ptr %i.ej, i64 %indvars.iv235 ; 2 uses
+  %i.fe = load i32, ptr %29, align 4, !tbaa !103
+  %30 = add i32 %i.fe, %28
+  %31 = sub i32 %30, %27
+  store i32 %31, ptr %29, align 4, !tbaa !103
+  br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.1
 
-bb.z:                                             ; preds = %bb.x
-  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %indvars.iv235.a
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.1: ; preds = %bb.y, %bb.x
+  %indvars.iv.next236 = or disjoint i64 %indvars.iv235, 1 ; 3 uses
+  %32 = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %indvars.iv.next236
+  %33 = load i32, ptr %32, align 4, !tbaa !103    ; 2 uses
+  %34 = icmp sgt i32 %33, 0
+  br i1 %34, label %bb.z, label %40
+
+bb.z:                                             ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.1
+  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv.next236
+  %36 = load i32, ptr %35, align 4, !tbaa !103    ; 2 uses
+  %37 = add i32 %33, %36
+  %i.ff = getelementptr [4 x i8], ptr %i.ej, i64 %indvars.iv.next236 ; 2 uses
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !103
-  %9 = sext i32 %i.fg to i64
-  %10 = add nsw i64 %9, %6
-  br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96
+  %38 = add i32 %i.fg, %37
+  %39 = sub i32 %38, %36
+  store i32 %39, ptr %i.ff, align 4, !tbaa !103
+  br label %40
 
-_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96: ; preds = %bb.y, %bb.z
-  %.sink.i95 = phi i64 [ %8, %bb.y ], [ %10, %bb.z ] ; 2 uses
-  %i.fh = icmp sgt i64 %.sink.i95, %6
-  br i1 %i.fh, label %.lr.ph179, label %bb.aa
+40:                                               ; preds = %bb.z, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.1
+  %indvars.iv.next236.1 = add nuw nsw i64 %indvars.iv235, 2 ; 2 uses
+  %niter325.next.1 = add nuw nsw i64 %indvars.iv235.a, 2 ; 2 uses
+  %niter325.ncmp.1 = icmp eq i64 %niter325.next.1, %unroll_iter324
+  br i1 %niter325.ncmp.1, label %.loopexit170.loopexit313.unr-lcssa, label %bb.x, !llvm.loop !212
+
+.loopexit170.loopexit312.unr-lcssa:               ; preds = %24
+  %lcmp.mod327.not = icmp eq i64 %xtraiter326, 0
+  br i1 %lcmp.mod327.not, label %.loopexit170, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96: ; preds = %.loopexit170.loopexit312.unr-lcssa, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader
+  %.sink.i95 = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.us.preheader ], [ %indvars.iv.next236.us.1, %.loopexit170.loopexit312.unr-lcssa ] ; 2 uses
+  %lcmp.mod328 = trunc i64 %i.eb to i1
+  call void @llvm.assume(i1 %lcmp.mod328)
+  %41 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %.sink.i95 ; 2 uses
+  %42 = load i32, ptr %41, align 4, !tbaa !103    ; 2 uses
+  %43 = getelementptr i8, ptr %41, i64 4
+  %44 = load i32, ptr %43, align 4, !tbaa !103    ; 2 uses
+  %i.fh = icmp sgt i32 %44, %42
+  br i1 %i.fh, label %.lr.ph179, label %.loopexit170
 
 .lr.ph179:                                        ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96
-  %i.fi = getelementptr [4 x i8], ptr %i.ej, i64 %indvars.iv235.a ; 2 uses
+  %i.fi = getelementptr [4 x i8], ptr %i.ej, i64 %.sink.i95 ; 2 uses
   %.promoted181 = load i32, ptr %i.fi, align 4, !tbaa !103
-  %11 = trunc i64 %.sink.i95 to i32
-  %i.fj = add i32 %.promoted181, %11
-  %i.fk = sub i32 %i.fj, %i.fd
+  %i.fj = add i32 %.promoted181, %44
+  %i.fk = sub i32 %i.fj, %42
   store i32 %i.fk, ptr %i.fi, align 4, !tbaa !103
-  br label %bb.aa
+  br label %.loopexit170
 
-bb.aa:                                            ; preds = %.lr.ph179, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96
-  %indvars.iv.next236 = add nuw nsw i64 %indvars.iv235.a, 1 ; 2 uses
-  %exitcond238.not = icmp eq i64 %indvars.iv.next236, %i.eb
-  br i1 %exitcond238.not, label %.loopexit170, label %bb.x, !llvm.loop !212
+.loopexit170.loopexit313.unr-lcssa:               ; preds = %40
+  %lcmp.mod322.not = icmp eq i64 %xtraiter321, 0
+  br i1 %lcmp.mod322.not, label %.loopexit170, label %bb.aa
 
-.loopexit170:                                     ; preds = %bb.aa, %bb.v, %.preheader171, %.preheader169
+bb.aa:                                            ; preds = %.loopexit170.loopexit313.unr-lcssa, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader
+  %indvars.iv235.epil.init = phi i64 [ 0, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96.preheader ], [ %indvars.iv.next236.1, %.loopexit170.loopexit313.unr-lcssa ] ; 3 uses
+  %lcmp.mod323 = trunc i64 %i.eb to i1
+  call void @llvm.assume(i1 %lcmp.mod323)
+  %45 = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %indvars.iv235.epil.init
+  %46 = load i32, ptr %45, align 4, !tbaa !103    ; 2 uses
+  %47 = icmp sgt i32 %46, 0
+  br i1 %47, label %.lr.ph179.epil, label %.loopexit170
+
+.lr.ph179.epil:                                   ; preds = %bb.aa
+  %48 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv235.epil.init
+  %49 = load i32, ptr %48, align 4, !tbaa !103    ; 2 uses
+  %50 = add i32 %46, %49
+  %51 = getelementptr [4 x i8], ptr %i.ej, i64 %indvars.iv235.epil.init ; 2 uses
+  %.promoted181.epil = load i32, ptr %51, align 4, !tbaa !103
+  %52 = add i32 %.promoted181.epil, %50
+  %53 = sub i32 %52, %49
+  store i32 %53, ptr %51, align 4, !tbaa !103
+  br label %.loopexit170
+
+.loopexit170:                                     ; preds = %.loopexit170.loopexit313.unr-lcssa, %.lr.ph179.epil, %bb.aa, %.loopexit170.loopexit312.unr-lcssa, %.lr.ph179, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit96, %bb.v, %.preheader171, %.preheader169
   invoke void @_ZN5Eigen12SparseMatrixIdLi0EiE19reserveInnerVectorsINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKT_(ptr noundef nonnull align 8 dereferenceable(72) %3, ptr noundef nonnull align 8 dereferenceable(16) %5)
           to label %_ZN5Eigen12SparseMatrixIdLi0EiE7reserveINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKT_RKNS5_10value_typeE.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

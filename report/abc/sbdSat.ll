@@ -205,7 +205,11 @@ bb.n:                                             ; preds = %._crit_edge488, %._
 
 .preheader456.lr.ph:                              ; preds = %bb.n
   %i.bt = icmp sgt i32 %2, 0
-  br i1 %i.bt, label %.preheader456.us.preheader, label %.preheader454.lr.ph
+  br i1 %i.bt, label %.preheader456.us.preheader, label %.preheader454.lr.ph.thread
+
+.preheader454.lr.ph.thread:                       ; preds = %.preheader456.lr.ph
+  %8 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef 0) ; 0 uses
+  br label %._crit_edge575
 
 .preheader456.us.preheader:                       ; preds = %.preheader456.lr.ph
   %i.bu = add i32 %0, -1
@@ -386,7 +390,7 @@ Vec_IntFillTwo.exit.us:                           ; preds = %bb.ad, %bb.z
   br i1 %exitcond731.not, label %._crit_edge530.us, label %bb.y, !llvm.loop !90
 
 ._crit_edge530.us:                                ; preds = %.loopexit455.us, %.thread
-  %.val339.us883 = phi ptr [ %.val339.us882, %.thread ], [ %.val339.us885, %.loopexit455.us ] ; 3 uses
+  %.val339.us883 = phi ptr [ %.val339.us882, %.thread ], [ %.val339.us885, %.loopexit455.us ] ; 4 uses
   %.val340.us875 = phi ptr [ %.val340.us874, %.thread ], [ %.val340.us876, %.loopexit455.us ] ; 2 uses
   %.promoted516.us869 = phi ptr [ %.val340.us874, %.thread ], [ %.promoted516.us870, %.loopexit455.us ] ; 2 uses
   %.2283.lcssa.us = phi i32 [ %.1282535.us, %.thread ], [ %.3284.lcssa.us, %.loopexit455.us ] ; 3 uses
@@ -410,62 +414,48 @@ Vec_IntFillTwo.exit.us:                           ; preds = %bb.ad, %bb.z
   %exitcond741.not = icmp eq i64 %indvars.iv.next738, %wide.trip.count740
   br i1 %exitcond741.not, label %.preheader454.lr.ph, label %.preheader456.us, !llvm.loop !92
 
-.preheader454.lr.ph:                              ; preds = %._crit_edge537.us, %.preheader456.lr.ph
-  %.2283.lcssa.us.sink = phi i32 [ 0, %.preheader456.lr.ph ], [ %.2283.lcssa.us, %._crit_edge537.us ]
-  %8 = phi ptr [ %.promoted516.us872, %.preheader456.lr.ph ], [ %.val339.us883, %._crit_edge537.us ] ; 2 uses
-  %i.dj = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef %.2283.lcssa.us.sink) ; 0 uses
-  %9 = icmp sgt i32 %2, 0
-  %10 = sext i32 %2 to i64
-  %i.dk = sext i32 %0 to i64
+.preheader454.lr.ph:                              ; preds = %._crit_edge537.us
+  %i.dj = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef %.2283.lcssa.us) ; 0 uses
+  %9 = zext nneg i32 %2 to i64
   %wide.trip.count771 = zext nneg i32 %1 to i64
+  %i.dk = sext i32 %0 to i64
   %invariant.op962 = sub nsw i64 0, %i.dk
   %wide.trip.count763 = zext nneg i32 %2 to i64   ; 2 uses
   br label %.preheader454
 
-.preheader454:                                    ; preds = %.preheader454.lr.ph, %._crit_edge566
-  %.val338.us.us.us888 = phi ptr [ %8, %.preheader454.lr.ph ], [ %.val338.us.us.us889, %._crit_edge566 ] ; 3 uses
-  %i.dl = phi ptr [ %8, %.preheader454.lr.ph ], [ %15, %._crit_edge566 ] ; 3 uses
+.preheader454:                                    ; preds = %._crit_edge566, %.preheader454.lr.ph
+  %.val338.us.us.us888 = phi ptr [ %.val339.us883, %.preheader454.lr.ph ], [ %.val338.us.us.us.us889, %._crit_edge566 ] ; 2 uses
+  %i.dl = phi ptr [ %.val339.us883, %.preheader454.lr.ph ], [ %12, %._crit_edge566 ] ; 2 uses
   %indvars.iv768 = phi i64 [ 0, %.preheader454.lr.ph ], [ %indvars.iv.next769, %._crit_edge566 ] ; 3 uses
   %indvars.iv756 = phi i32 [ %0, %.preheader454.lr.ph ], [ %indvars.iv.next757, %._crit_edge566 ] ; 2 uses
-  %.4285574 = phi i32 [ 0, %.preheader454.lr.ph ], [ %.5.lcssa, %._crit_edge566 ] ; 3 uses
+  %.4285574 = phi i32 [ 0, %.preheader454.lr.ph ], [ %.5.lcssa.us, %._crit_edge566 ] ; 2 uses
   %i.dm = icmp sgt i64 %indvars.iv768, %invariant.op962
-  br i1 %i.dm, label %.preheader453.lr.ph, label %._crit_edge566
+  br i1 %i.dm, label %.preheader452.us.us.preheader, label %._crit_edge566
 
-.preheader453.lr.ph:                              ; preds = %.preheader454
-  %11 = getelementptr inbounds nuw [912 x i8], ptr %3, i64 %indvars.iv768 ; 2 uses
-  br i1 %9, label %.preheader453.us.preheader, label %._crit_edge566
+.preheader452.us.us.preheader:                    ; preds = %.preheader454
+  %10 = getelementptr inbounds nuw [912 x i8], ptr %3, i64 %indvars.iv768 ; 2 uses
+  %wide.trip.count766.us = zext i32 %indvars.iv756 to i64 ; 2 uses
+  br label %.preheader452.us.us.preheader.us
 
-.preheader453.us.preheader:                       ; preds = %.preheader453.lr.ph
-  %wide.trip.count766 = zext i32 %indvars.iv756 to i64 ; 2 uses
-  br label %.preheader452.us.us.preheader
-
-.preheader452.us.us.preheader:                    ; preds = %._crit_edge556.us, %.preheader453.us.preheader
-  %.val338.us.us.us890 = phi ptr [ %.val338.us.us.us888, %.preheader453.us.preheader ], [ %.val338.us.us.us893, %._crit_edge556.us ]
-  %12 = phi ptr [ %i.dl, %.preheader453.us.preheader ], [ %i.ei, %._crit_edge556.us ]
-  %indvars.iv751 = phi i64 [ 0, %.preheader453.us.preheader ], [ %indvars.iv.next752, %._crit_edge556.us ] ; 3 uses
-  %.5565.us = phi i32 [ %.4285574, %.preheader453.us.preheader ], [ %.us-phi553.us.us, %._crit_edge556.us ]
-  %13 = getelementptr inbounds nuw [24 x i8], ptr %11, i64 %indvars.iv751
-  br label %.preheader452.us.us
-
-.preheader452.us.us:                              ; preds = %.preheader452.us.us.preheader, %._crit_edge551.us.us
-  %.val338.us.us.us892 = phi ptr [ %.val338.us.us.us890, %.preheader452.us.us.preheader ], [ %.val338.us.us.us893, %._crit_edge551.us.us ] ; 2 uses
-  %i.dn = phi ptr [ %12, %.preheader452.us.us.preheader ], [ %i.ei, %._crit_edge551.us.us ] ; 2 uses
-  %indvars.iv760 = phi i64 [ 0, %.preheader452.us.us.preheader ], [ %indvars.iv.next761, %._crit_edge551.us.us ] ; 2 uses
-  %indvars.iv746.in = phi i32 [ %2, %.preheader452.us.us.preheader ], [ %indvars.iv746, %._crit_edge551.us.us ]
-  %indvars.iv742 = phi i64 [ 1, %.preheader452.us.us.preheader ], [ %indvars.iv.next743, %._crit_edge551.us.us ] ; 2 uses
-  %.6555.us.us = phi i32 [ %.5565.us, %.preheader452.us.us.preheader ], [ %.us-phi553.us.us, %._crit_edge551.us.us ] ; 2 uses
+.preheader452.us.us:                              ; preds = %.preheader452.us.us.preheader.us, %._crit_edge551.us.us
+  %.val338.us.us.us892 = phi ptr [ %.val338.us.us.us.us890, %.preheader452.us.us.preheader.us ], [ %.val338.us.us.us893, %._crit_edge551.us.us ] ; 2 uses
+  %i.dn = phi ptr [ %13, %.preheader452.us.us.preheader.us ], [ %i.ei, %._crit_edge551.us.us ] ; 2 uses
+  %indvars.iv760 = phi i64 [ 0, %.preheader452.us.us.preheader.us ], [ %indvars.iv.next761, %._crit_edge551.us.us ] ; 2 uses
+  %indvars.iv746.in = phi i32 [ %2, %.preheader452.us.us.preheader.us ], [ %indvars.iv746, %._crit_edge551.us.us ]
+  %indvars.iv742 = phi i64 [ 1, %.preheader452.us.us.preheader.us ], [ %indvars.iv.next743, %._crit_edge551.us.us ] ; 2 uses
+  %.6555.us.us = phi i32 [ %.5565.us.us, %.preheader452.us.us.preheader.us ], [ %.us-phi553.us.us, %._crit_edge551.us.us ] ; 2 uses
   %indvars.iv746 = add i32 %indvars.iv746.in, -1  ; 2 uses
   %indvars.iv.next761 = add nuw nsw i64 %indvars.iv760, 1 ; 3 uses
-  %14 = icmp slt i64 %indvars.iv.next761, %10
-  %i.do = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv760
-  br i1 %14, label %.preheader451.us.us.us, label %._crit_edge551.us.us
+  %11 = icmp samesign ult i64 %indvars.iv.next761, %9
+  %i.do = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %indvars.iv760
+  br i1 %11, label %.preheader451.us.us.us, label %._crit_edge551.us.us
 
 .preheader451.us.us.us:                           ; preds = %.preheader452.us.us, %._crit_edge547.us.us.us
   %.val338.us.us.us894 = phi ptr [ %.val338.us.us.us, %._crit_edge547.us.us.us ], [ %.val338.us.us.us892, %.preheader452.us.us ]
   %i.dp = phi ptr [ %.val338.us.us.us, %._crit_edge547.us.us.us ], [ %i.dn, %.preheader452.us.us ]
-  %indvars.iv753 = phi i64 [ %indvars.iv.next754, %._crit_edge547.us.us.us ], [ %indvars.iv751, %.preheader452.us.us ] ; 2 uses
+  %indvars.iv753 = phi i64 [ %indvars.iv.next754, %._crit_edge547.us.us.us ], [ %indvars.iv751.us, %.preheader452.us.us ] ; 2 uses
   %.7550.us.us.us = phi i32 [ %i.eh, %._crit_edge547.us.us.us ], [ %.6555.us.us, %.preheader452.us.us ]
-  %i.dq = getelementptr inbounds nuw [24 x i8], ptr %11, i64 %indvars.iv753
+  %i.dq = getelementptr inbounds nuw [24 x i8], ptr %10, i64 %indvars.iv753
   br label %bb.ae
 
 bb.ae:                                            ; preds = %Vec_IntFillTwo.exit375.us.us.us, %.preheader451.us.us.us
@@ -517,7 +507,7 @@ Vec_IntFillTwo.exit375.us.us.us:                  ; preds = %bb.ai, %bb.ae
 ._crit_edge547.us.us.us:                          ; preds = %Vec_IntFillTwo.exit375.us.us.us
   %i.eh = add i32 %indvars.iv746, %.7550.us.us.us ; 2 uses
   %indvars.iv.next754 = add nuw nsw i64 %indvars.iv753, 1 ; 2 uses
-  %exitcond759.not = icmp eq i64 %indvars.iv.next754, %wide.trip.count766
+  %exitcond759.not = icmp eq i64 %indvars.iv.next754, %wide.trip.count766.us
   br i1 %exitcond759.not, label %._crit_edge551.us.us, label %.preheader451.us.us.us, !llvm.loop !94
 
 ._crit_edge551.us.us:                             ; preds = %._crit_edge547.us.us.us, %.preheader452.us.us
@@ -529,21 +519,31 @@ Vec_IntFillTwo.exit375.us.us.us:                  ; preds = %bb.ai, %bb.ae
   br i1 %exitcond764.not, label %._crit_edge556.us, label %.preheader452.us.us, !llvm.loop !95
 
 ._crit_edge556.us:                                ; preds = %._crit_edge551.us.us
-  %indvars.iv.next752 = add nuw nsw i64 %indvars.iv751, 1 ; 2 uses
-  %exitcond767.not = icmp eq i64 %indvars.iv.next752, %wide.trip.count766
-  br i1 %exitcond767.not, label %._crit_edge566, label %.preheader452.us.us.preheader, !llvm.loop !96
+  %indvars.iv.next752 = add nuw nsw i64 %indvars.iv751.us, 1 ; 2 uses
+  %exitcond767.not = icmp eq i64 %indvars.iv.next752, %wide.trip.count766.us
+  br i1 %exitcond767.not, label %._crit_edge566, label %.preheader452.us.us.preheader.us, !llvm.loop !96
 
-._crit_edge566:                                   ; preds = %._crit_edge556.us, %.preheader453.lr.ph, %.preheader454
-  %.val338.us.us.us889 = phi ptr [ %.val338.us.us.us888, %.preheader454 ], [ %.val338.us.us.us888, %.preheader453.lr.ph ], [ %.val338.us.us.us893, %._crit_edge556.us ] ; 4 uses
-  %15 = phi ptr [ %i.dl, %.preheader454 ], [ %i.dl, %.preheader453.lr.ph ], [ %i.ei, %._crit_edge556.us ]
-  %.5.lcssa = phi i32 [ %.4285574, %.preheader454 ], [ %.4285574, %.preheader453.lr.ph ], [ %.us-phi553.us.us, %._crit_edge556.us ] ; 2 uses
+._crit_edge566:                                   ; preds = %._crit_edge556.us, %.preheader454
+  %.val338.us.us.us.us889 = phi ptr [ %.val338.us.us.us888, %.preheader454 ], [ %.val338.us.us.us893, %._crit_edge556.us ] ; 2 uses
+  %12 = phi ptr [ %i.dl, %.preheader454 ], [ %i.ei, %._crit_edge556.us ]
+  %.5.lcssa.us = phi i32 [ %.4285574, %.preheader454 ], [ %.us-phi553.us.us, %._crit_edge556.us ] ; 2 uses
   %indvars.iv.next769 = add nuw nsw i64 %indvars.iv768, 1 ; 2 uses
   %indvars.iv.next757 = add i32 %indvars.iv756, 1
   %exitcond772.not = icmp eq i64 %indvars.iv.next769, %wide.trip.count771
   br i1 %exitcond772.not, label %._crit_edge575, label %.preheader454, !llvm.loop !97
 
-._crit_edge575:                                   ; preds = %._crit_edge566
-  %i.ej = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i32 noundef %.5.lcssa) ; 0 uses
+.preheader452.us.us.preheader.us:                 ; preds = %._crit_edge556.us, %.preheader452.us.us.preheader
+  %.val338.us.us.us.us890 = phi ptr [ %.val338.us.us.us888, %.preheader452.us.us.preheader ], [ %.val338.us.us.us893, %._crit_edge556.us ]
+  %13 = phi ptr [ %i.dl, %.preheader452.us.us.preheader ], [ %i.ei, %._crit_edge556.us ]
+  %indvars.iv751.us = phi i64 [ 0, %.preheader452.us.us.preheader ], [ %indvars.iv.next752, %._crit_edge556.us ] ; 3 uses
+  %.5565.us.us = phi i32 [ %.4285574, %.preheader452.us.us.preheader ], [ %.us-phi553.us.us, %._crit_edge556.us ]
+  %14 = getelementptr inbounds nuw [24 x i8], ptr %10, i64 %indvars.iv751.us
+  br label %.preheader452.us.us
+
+._crit_edge575:                                   ; preds = %._crit_edge566, %.preheader454.lr.ph.thread
+  %15 = phi ptr [ %.promoted516.us872, %.preheader454.lr.ph.thread ], [ %.val338.us.us.us.us889, %._crit_edge566 ] ; 3 uses
+  %.4285.lcssa = phi i32 [ 0, %.preheader454.lr.ph.thread ], [ %.5.lcssa.us, %._crit_edge566 ]
+  %i.ej = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i32 noundef %.4285.lcssa) ; 0 uses
   %.not964 = icmp eq i32 %1, 1
   br i1 %.not964, label %._crit_edge608.thread, label %.preheader450.lr.ph
 
@@ -557,8 +557,8 @@ Vec_IntFillTwo.exit375.us.us.us:                  ; preds = %bb.ai, %bb.ae
   br label %.preheader450
 
 .preheader450:                                    ; preds = %.preheader450.lr.ph, %._crit_edge604
-  %i.em = phi ptr [ %.val338.us.us.us889, %.preheader450.lr.ph ], [ %i.hr, %._crit_edge604 ] ; 2 uses
-  %i.en = phi ptr [ %.val338.us.us.us889, %.preheader450.lr.ph ], [ %i.hs, %._crit_edge604 ] ; 2 uses
+  %i.em = phi ptr [ %15, %.preheader450.lr.ph ], [ %i.hr, %._crit_edge604 ] ; 2 uses
+  %i.en = phi ptr [ %15, %.preheader450.lr.ph ], [ %i.hs, %._crit_edge604 ] ; 2 uses
   %indvars.iv808 = phi i64 [ 1, %.preheader450.lr.ph ], [ %indvars.iv.next809, %._crit_edge604 ] ; 3 uses
   %indvars.iv782 = phi i32 [ %0, %.preheader450.lr.ph ], [ %indvars.iv.next783, %._crit_edge604 ] ; 2 uses
   %indvars.iv777 = phi i32 [ %i.el, %.preheader450.lr.ph ], [ %indvars.iv.next778, %._crit_edge604 ] ; 2 uses
@@ -961,7 +961,7 @@ bb.az:                                            ; preds = %._crit_edge627
   br i1 %exitcond830.not, label %.loopexit, label %.preheader446, !llvm.loop !105
 
 .loopexit:                                        ; preds = %bb.az, %._crit_edge608.thread, %._crit_edge608
-  %i.ju = phi ptr [ %.promoted616906, %._crit_edge608 ], [ %.val338.us.us.us889, %._crit_edge608.thread ], [ %.promoted616904, %bb.az ] ; 2 uses
+  %i.ju = phi ptr [ %.promoted616906, %._crit_edge608 ], [ %15, %._crit_edge608.thread ], [ %.promoted616904, %bb.az ] ; 2 uses
   %.18 = phi i32 [ 0, %._crit_edge608 ], [ 0, %._crit_edge608.thread ], [ %.16.lcssa, %bb.az ]
   %i.jv = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.5, i32 noundef %.18) ; 0 uses
   %i.jw = icmp sgt i32 %i.ar, 0

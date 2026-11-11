@@ -202,12 +202,12 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load i32, ptr %i.u, align 8, !tbaa !41, !noalias !76
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 52
   %i.x = load i32, ptr %i.w, align 4, !tbaa !77, !noalias !76
-  %i.y = load ptr, ptr %5, align 8, !tbaa !45, !noalias !76 ; 33 uses
+  %i.y = load ptr, ptr %5, align 8, !tbaa !45, !noalias !76 ; 37 uses
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !44, !noalias !76
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !42, !noalias !76 ; 4 uses
-  %factor.op.mul85 = mul i64 %i.aa, %i.ac         ; 33 uses
+  %factor.op.mul85 = mul i64 %i.aa, %i.ac         ; 37 uses
   %i.ad = sext i32 %i.t to i64                    ; 2 uses
   %i.ae = sext i32 %i.v to i64
   %i.af = mul nsw i64 %i.ae, %i.ad                ; 2 uses
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %bb.a
   %spec.select = select i1 %i.am, i64 %i.af, i64 %i.aj
   %i.an = trunc i64 %spec.select to i32
   %i.ao = mul i32 %i.x, %i.an                     ; 6 uses
-  %i.ap = icmp sgt i32 %i.ao, 0                   ; 6 uses
+  %i.ap = icmp sgt i32 %i.ao, 0                   ; 5 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 212
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !28 ; 2 uses
   %i.as = icmp sgt i32 %i.ar, 0
@@ -249,41 +249,76 @@ bb.b:                                             ; preds = %bb.a
   %i.bf = icmp sgt i32 %i.be, 0
   %i.bg = load i32, ptr %9, align 4, !tbaa !43
   %i.bh = sext i32 %i.bg to i64
-  br i1 %i.bf, label %.noexc.lr.ph.split.us.split.us.split.us.split.us, label %.noexc.us.us.us.preheader.a
+  br i1 %i.bf, label %.noexc.lr.ph.split.us.split.us.split.us.split.us, label %.noexc.us.us.us.preheader
 
-.noexc.us.us.us.preheader.a:                      ; preds = %.noexc.lr.ph.split.us.split.us.split.us
+.noexc.us.us.us.preheader:                        ; preds = %.noexc.lr.ph.split.us.split.us.split.us
   %10 = zext nneg i32 %i.ao to i64
-  %11 = shl nuw nsw i64 %10, 2                    ; 5 uses
-  %i.bi = sext i32 %i.k to i64                    ; 2 uses
+  %11 = shl nuw nsw i64 %10, 2                    ; 9 uses
   %12 = add nsw i32 %i.j, 1
+  br i1 %i.ap, label %.noexc.us.us.us.preheader.a, label %._crit_edge
+
+.noexc.us.us.us.preheader.a:                      ; preds = %.noexc.us.us.us.preheader
+  %i.bi = sext i32 %i.k to i64                    ; 2 uses
   %i.bj = add i32 %i.j, 1
   %i.bk = sub i32 %i.bj, %i.k
   %i.bl = sub i32 %i.j, %i.k
-  %xtraiter176.a = and i32 %i.bk, 3               ; 2 uses
+  %xtraiter176.a = and i32 %i.bk, 7               ; 2 uses
   %lcmp.mod177.not.a = icmp eq i32 %xtraiter176.a, 0
-  br i1 %lcmp.mod177.not.a, label %.noexc.us.us.us.prol.loopexit, label %.noexc.us.us.us.prol
+  br i1 %lcmp.mod177.not.a, label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol, label %.lr.ph.us.us.us.preheader.prol
 
-.noexc.us.us.us.prol:                             ; preds = %.noexc.us.us.us.preheader.a, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol
-  %indvars.iv123.prol = phi i64 [ %indvars.iv.next124.prol, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol ], [ %i.bi, %.noexc.us.us.us.preheader.a ] ; 2 uses
-  %prol.iter178 = phi i32 [ %prol.iter178.next, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol ], [ 0, %.noexc.us.us.us.preheader.a ]
-  br i1 %i.ap, label %.lr.ph.us.us.us.preheader.prol, label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol
-
-.lr.ph.us.us.us.preheader.prol:                   ; preds = %.noexc.us.us.us.prol
-  %.reass86.us.us.us.prol = mul i64 %factor.op.mul85, %indvars.iv123.prol
+.lr.ph.us.us.us.preheader.prol:                   ; preds = %.noexc.us.us.us.preheader.a, %.lr.ph.us.us.us.preheader.prol
+  %indvars.iv123.us.prol = phi i64 [ %indvars.iv.next124.us.prol, %.lr.ph.us.us.us.preheader.prol ], [ %i.bi, %.noexc.us.us.us.preheader.a ] ; 2 uses
+  %prol.iter181 = phi i32 [ %prol.iter181.next, %.lr.ph.us.us.us.preheader.prol ], [ 0, %.noexc.us.us.us.preheader.a ]
+  %.reass86.us.us.us.prol = mul i64 %factor.op.mul85, %indvars.iv123.us.prol
   %i.bm = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.prol
   call void @llvm.memset.p0.i64(ptr align 4 %i.bm, i8 0, i64 %11, i1 false), !tbaa !80
-  br label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol
+  %indvars.iv.next124.us.prol = add nsw i64 %indvars.iv123.us.prol, 1 ; 2 uses
+  %prol.iter181.next = add i32 %prol.iter181, 1   ; 2 uses
+  %prol.iter181.cmp.not = icmp eq i32 %prol.iter181.next, %xtraiter176.a
+  br i1 %prol.iter181.cmp.not, label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol, label %.lr.ph.us.us.us.preheader.prol, !llvm.loop !66
 
-_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol: ; preds = %.lr.ph.us.us.us.preheader.prol, %.noexc.us.us.us.prol
-  %indvars.iv.next124.prol = add nsw i64 %indvars.iv123.prol, 1 ; 2 uses
-  %prol.iter178.next = add i32 %prol.iter178, 1   ; 2 uses
-  %prol.iter178.cmp.not = icmp eq i32 %prol.iter178.next, %xtraiter176.a
-  br i1 %prol.iter178.cmp.not, label %.noexc.us.us.us.prol.loopexit, label %.noexc.us.us.us.prol, !llvm.loop !66
+_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol: ; preds = %.lr.ph.us.us.us.preheader.prol, %.noexc.us.us.us.preheader.a
+  %indvars.iv123.us.unr = phi i64 [ %i.bi, %.noexc.us.us.us.preheader.a ], [ %indvars.iv.next124.us.prol, %.lr.ph.us.us.us.preheader.prol ]
+  %13 = icmp ult i32 %i.bl, 7
+  br i1 %13, label %._crit_edge, label %.noexc.us.us.us.prol.loopexit
 
-.noexc.us.us.us.prol.loopexit:                    ; preds = %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol, %.noexc.us.us.us.preheader.a
-  %indvars.iv123.unr = phi i64 [ %i.bi, %.noexc.us.us.us.preheader.a ], [ %indvars.iv.next124.prol, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol ]
-  %13 = icmp ult i32 %i.bl, 3
-  br i1 %13, label %._crit_edge, label %.noexc.us.us.us
+.noexc.us.us.us.prol.loopexit:                    ; preds = %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol, %.noexc.us.us.us.prol.loopexit
+  %indvars.iv123.unr = phi i64 [ %indvars.iv.next124.us.7, %.noexc.us.us.us.prol.loopexit ], [ %indvars.iv123.us.unr, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol ] ; 9 uses
+  %.reass86.us.us.us.us129 = mul i64 %factor.op.mul85, %indvars.iv123.unr
+  %14 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129
+  call void @llvm.memset.p0.i64(ptr align 4 %14, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us = add nsw i64 %indvars.iv123.unr, 1
+  %.reass86.us.us.us.us129.1 = mul i64 %factor.op.mul85, %indvars.iv.next124.us
+  %15 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.1
+  call void @llvm.memset.p0.i64(ptr align 4 %15, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.1 = add nsw i64 %indvars.iv123.unr, 2
+  %.reass86.us.us.us.us129.2 = mul i64 %factor.op.mul85, %indvars.iv.next124.us.1
+  %16 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.2
+  call void @llvm.memset.p0.i64(ptr align 4 %16, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.2 = add nsw i64 %indvars.iv123.unr, 3
+  %.reass86.us.us.us.us129.3 = mul i64 %factor.op.mul85, %indvars.iv.next124.us.2
+  %17 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.3
+  call void @llvm.memset.p0.i64(ptr align 4 %17, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.3 = add nsw i64 %indvars.iv123.unr, 4
+  %.reass86.us.us.us.us129.4 = mul i64 %factor.op.mul85, %indvars.iv.next124.us.3
+  %18 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.4
+  call void @llvm.memset.p0.i64(ptr align 4 %18, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.4 = add nsw i64 %indvars.iv123.unr, 5
+  %.reass86.us.us.us.us129.5 = mul i64 %factor.op.mul85, %indvars.iv.next124.us.4
+  %19 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.5
+  call void @llvm.memset.p0.i64(ptr align 4 %19, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.5 = add nsw i64 %indvars.iv123.unr, 6
+  %.reass86.us.us.us.us129.6 = mul i64 %factor.op.mul85, %indvars.iv.next124.us.5
+  %20 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.6
+  call void @llvm.memset.p0.i64(ptr align 4 %20, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.6 = add nsw i64 %indvars.iv123.unr, 7
+  %.reass86.us.us.us.us129.7 = mul i64 %factor.op.mul85, %indvars.iv.next124.us.6
+  %21 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.us129.7
+  call void @llvm.memset.p0.i64(ptr align 4 %21, i8 0, i64 %11, i1 false), !tbaa !80
+  %indvars.iv.next124.us.7 = add nsw i64 %indvars.iv123.unr, 8 ; 2 uses
+  %lftr.wideiv126.us.7 = trunc i64 %indvars.iv.next124.us.7 to i32
+  %exitcond127.us.not.7 = icmp eq i32 %12, %lftr.wideiv126.us.7
+  br i1 %exitcond127.us.not.7, label %._crit_edge, label %.noexc.us.us.us.prol.loopexit
 
 .noexc.lr.ph.split.us.split.us.split.us.split.us: ; preds = %.noexc.lr.ph.split.us.split.us.split.us
   %i.bn = load i32, ptr %i.aw, align 8, !tbaa !31
@@ -306,8 +341,8 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol: ; preds = %.lr.ph.us.us.us.pre
   %lcmp.mod183 = icmp ne i32 %xtraiter179, 0
   br label %.noexc.us.us.us.us
 
-.noexc.us.us.us.us:                               ; preds = %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a, %.noexc.lr.ph.split.us.split.us.split.us.split.us
-  %indvars.iv139 = phi i64 [ %indvars.iv.next140, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a ], [ %i.bt, %.noexc.lr.ph.split.us.split.us.split.us.split.us ] ; 3 uses
+.noexc.us.us.us.us:                               ; preds = %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3, %.noexc.lr.ph.split.us.split.us.split.us.split.us
+  %indvars.iv139 = phi i64 [ %indvars.iv.next124.3, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3 ], [ %i.bt, %.noexc.lr.ph.split.us.split.us.split.us.split.us ] ; 3 uses
   %.reass159 = mul i64 %indvars.iv139, %factor.op.mul158
   %i.bx = getelementptr inbounds nuw i8, ptr %i.m, i64 %.reass159
   %.reass86.us.us.us.us = mul i64 %factor.op.mul85, %indvars.iv139
@@ -321,16 +356,16 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol: ; preds = %.lr.ph.us.us.us.pre
 .preheader52.us.us.us.us.us.us.preheader:         ; preds = %.lr.ph.us.us.us.us.preheader, %.noexc.us.us.us.us
   br label %.preheader52.us.us.us.us.us.us
 
-.preheader52.us.us.us.us.us.us:                   ; preds = %.preheader52.us.us.us.us.us.us.preheader, %._crit_edge.split.us.split.us.us.us.us.us.us.us.a
-  %indvars.iv134 = phi i64 [ %indvars.iv.next135, %._crit_edge.split.us.split.us.us.us.us.us.us.us.a ], [ 0, %.preheader52.us.us.us.us.us.us.preheader ] ; 2 uses
-  %.03975.us.us.us.us.us.us = phi ptr [ %.lcssa, %._crit_edge.split.us.split.us.us.us.us.us.us.us.a ], [ %i.bx, %.preheader52.us.us.us.us.us.us.preheader ]
+.preheader52.us.us.us.us.us.us:                   ; preds = %.preheader52.us.us.us.us.us.us.preheader, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a
+  %indvars.iv134 = phi i64 [ %indvars.iv.next140, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a ], [ 0, %.preheader52.us.us.us.us.us.us.preheader ] ; 2 uses
+  %.03975.us.us.us.us.us.us = phi ptr [ %.lcssa, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a ], [ %i.bx, %.preheader52.us.us.us.us.us.us.preheader ]
   %.reass = mul i64 %indvars.iv134, %factor.op.mul157
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 %.reass
   br label %.preheader.lr.ph.us.us.us.us.us.us.us.us
 
-.preheader.lr.ph.us.us.us.us.us.us.us.us:         ; preds = %._crit_edge63.split.us.us.us.us.us.us.us.us.us, %.preheader52.us.us.us.us.us.us
-  %indvars.iv130 = phi i64 [ %indvars.iv.next131, %._crit_edge63.split.us.us.us.us.us.us.us.us.us ], [ 0, %.preheader52.us.us.us.us.us.us ] ; 2 uses
-  %.14065.us.us.us.us.us.us.us.us = phi ptr [ %.lcssa, %._crit_edge63.split.us.us.us.us.us.us.us.us.us ], [ %.03975.us.us.us.us.us.us, %.preheader52.us.us.us.us.us.us ]
+.preheader.lr.ph.us.us.us.us.us.us.us.us:         ; preds = %._crit_edge.split.us.split.us.us.us.us.us.us.us.a, %.preheader52.us.us.us.us.us.us
+  %indvars.iv130 = phi i64 [ %indvars.iv.next135, %._crit_edge.split.us.split.us.us.us.us.us.us.us.a ], [ 0, %.preheader52.us.us.us.us.us.us ] ; 2 uses
+  %.14065.us.us.us.us.us.us.us.us = phi ptr [ %.lcssa, %._crit_edge.split.us.split.us.us.us.us.us.us.us.a ], [ %.03975.us.us.us.us.us.us, %.preheader52.us.us.us.us.us.us ]
   %i.ca = mul nsw i64 %indvars.iv130, %i.br
   %i.cb = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %i.ca
   br label %.preheader.us.us.us.us.us.us.us.us.us
@@ -403,51 +438,23 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %i.dd = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.bh
   %i.de = add nuw nsw i32 %.03562.us.us.us.us.us.us.us.us.us, 1 ; 2 uses
   %exitcond129.not = icmp eq i32 %i.de, %i.bc
-  br i1 %exitcond129.not, label %._crit_edge63.split.us.us.us.us.us.us.us.us.us, label %.preheader.us.us.us.us.us.us.us.us.us, !llvm.loop !69
+  br i1 %exitcond129.not, label %._crit_edge.split.us.split.us.us.us.us.us.us.us.a, label %.preheader.us.us.us.us.us.us.us.us.us, !llvm.loop !69
 
-._crit_edge63.split.us.us.us.us.us.us.us.us.us:   ; preds = %._crit_edge.us.us.us.us.us.us.us.us.us
-  %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
-  %exitcond133.not = icmp eq i64 %indvars.iv.next131, %wide.trip.count
-  br i1 %exitcond133.not, label %._crit_edge.split.us.split.us.us.us.us.us.us.us.a, label %.preheader.lr.ph.us.us.us.us.us.us.us.us, !llvm.loop !70
-
-._crit_edge.split.us.split.us.us.us.us.us.us.us.a: ; preds = %._crit_edge63.split.us.us.us.us.us.us.us.us.us
-  %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1 ; 2 uses
-  %exitcond138.not = icmp eq i64 %indvars.iv.next135, %wide.trip.count137
-  br i1 %exitcond138.not, label %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a, label %.preheader52.us.us.us.us.us.us, !llvm.loop !71
+._crit_edge.split.us.split.us.us.us.us.us.us.us.a: ; preds = %._crit_edge.us.us.us.us.us.us.us.us.us
+  %indvars.iv.next135 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
+  %exitcond138.not = icmp eq i64 %indvars.iv.next135, %wide.trip.count
+  br i1 %exitcond138.not, label %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a, label %.preheader.lr.ph.us.us.us.us.us.us.us.us, !llvm.loop !70
 
 _ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a: ; preds = %._crit_edge.split.us.split.us.us.us.us.us.us.us.a
-  %indvars.iv.next140 = add nsw i64 %indvars.iv139, 1 ; 2 uses
-  %lftr.wideiv142 = trunc i64 %indvars.iv.next140 to i32
-  %exitcond143.not = icmp eq i32 %i.bv, %lftr.wideiv142
-  br i1 %exitcond143.not, label %._crit_edge, label %.noexc.us.us.us.us
+  %indvars.iv.next140 = add nuw nsw i64 %indvars.iv134, 1 ; 2 uses
+  %exitcond143.not = icmp eq i64 %indvars.iv.next140, %wide.trip.count137
+  br i1 %exitcond143.not, label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3, label %.preheader52.us.us.us.us.us.us, !llvm.loop !71
 
-.noexc.us.us.us:                                  ; preds = %.noexc.us.us.us.prol.loopexit, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3
-  %indvars.iv123 = phi i64 [ %indvars.iv.next124.3, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3 ], [ %indvars.iv123.unr, %.noexc.us.us.us.prol.loopexit ] ; 5 uses
-  br i1 %i.ap, label %.lr.ph.us.us.us.preheader, label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3
-
-.lr.ph.us.us.us.preheader:                        ; preds = %.noexc.us.us.us
-  %.reass86.us.us.us = mul i64 %factor.op.mul85, %indvars.iv123
-  %14 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us
-  call void @llvm.memset.p0.i64(ptr align 4 %14, i8 0, i64 %11, i1 false), !tbaa !80
-  %indvars.iv.next124 = add nsw i64 %indvars.iv123, 1
-  %.reass86.us.us.us.1 = mul i64 %factor.op.mul85, %indvars.iv.next124
-  %15 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.1
-  call void @llvm.memset.p0.i64(ptr align 4 %15, i8 0, i64 %11, i1 false), !tbaa !80
-  %indvars.iv.next124.1 = add nsw i64 %indvars.iv123, 2
-  %.reass86.us.us.us.2 = mul i64 %factor.op.mul85, %indvars.iv.next124.1
-  %16 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.2
-  call void @llvm.memset.p0.i64(ptr align 4 %16, i8 0, i64 %11, i1 false), !tbaa !80
-  %indvars.iv.next124.2 = add nsw i64 %indvars.iv123, 3
-  %.reass86.us.us.us.3 = mul i64 %factor.op.mul85, %indvars.iv.next124.2
-  %17 = getelementptr i8, ptr %i.y, i64 %.reass86.us.us.us.3
-  call void @llvm.memset.p0.i64(ptr align 4 %17, i8 0, i64 %11, i1 false), !tbaa !80
-  br label %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3
-
-_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3:    ; preds = %.noexc.us.us.us, %.lr.ph.us.us.us.preheader
-  %indvars.iv.next124.3 = add nsw i64 %indvars.iv123, 4 ; 2 uses
+_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3:    ; preds = %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a
+  %indvars.iv.next124.3 = add nsw i64 %indvars.iv139, 1 ; 2 uses
   %lftr.wideiv126.3 = trunc i64 %indvars.iv.next124.3 to i32
-  %exitcond127.not.3 = icmp eq i32 %12, %lftr.wideiv126.3
-  br i1 %exitcond127.not.3, label %._crit_edge, label %.noexc.us.us.us
+  %exitcond127.not.3 = icmp eq i32 %i.bv, %lftr.wideiv126.3
+  br i1 %exitcond127.not.3, label %._crit_edge, label %.noexc.us.us.us.us
 
 .noexc.lr.ph.split.us.split.us.split:             ; preds = %.noexc.lr.ph.split.us.split.us
   br i1 %i.ap, label %.noexc.us.us.us97.preheader, label %._crit_edge
@@ -656,7 +663,7 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3:    ; preds = %.noexc.us.us.us, %.
   %exitcond.not.7 = icmp eq i32 %i.eq, %lftr.wideiv.7
   br i1 %exitcond.not.7, label %._crit_edge, label %.noexc
 
-._crit_edge:                                      ; preds = %.noexc.prol.loopexit, %.noexc, %.noexc.us.prol.loopexit, %.noexc.us, %.noexc.us.us.us97.prol.loopexit, %.noexc.us.us.us97, %.noexc.us.us.us.prol.loopexit, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split82.us.split.us.us.us.us.us.a, %.noexc.lr.ph.split.us.split.us.split, %.noexc.lr.ph.split.us.split, %.noexc.lr.ph.split, %bb.b
+._crit_edge:                                      ; preds = %.noexc.prol.loopexit, %.noexc, %.noexc.us.prol.loopexit, %.noexc.us, %.noexc.us.us.us97.prol.loopexit, %.noexc.us.us.us97, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.prol, %.noexc.us.us.us.prol.loopexit, %_ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.3, %.noexc.us.us.us.preheader, %.noexc.lr.ph.split.us.split.us.split, %.noexc.lr.ph.split.us.split, %.noexc.lr.ph.split, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6

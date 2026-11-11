@@ -205,34 +205,35 @@ bb.e:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %6 = icmp sgt i32 %1, 0
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 128
   %i.v = load i32, ptr %i.o, align 4, !tbaa !96   ; 3 uses
-  %i.w = icmp sgt i32 %i.v, 0
-  br i1 %i.w, label %.preheader.preheader, label %._crit_edge50
+  %6 = icmp sgt i32 %i.v, 0
+  %i.w = icmp sgt i32 %1, 0
+  %or.cond = and i1 %6, %i.w
+  br i1 %or.cond, label %.preheader.preheader, label %._crit_edge50
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %wide.trip.count = zext nneg i32 %1 to i64
   %wide.trip.count61 = zext nneg i32 %1 to i64
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %i.x = phi i32 [ %i.m, %.preheader.preheader ], [ %7, %._crit_edge ] ; 2 uses
-  %i.y = phi i32 [ %i.v, %.preheader.preheader ], [ %8, %._crit_edge ] ; 3 uses
-  %i.z = phi i32 [ %i.v, %.preheader.preheader ], [ %9, %._crit_edge ] ; 3 uses
+.preheader:                                       ; preds = %._crit_edge, %.preheader.preheader
+  %i.x = phi i32 [ %i.m, %.preheader.preheader ], [ %7, %._crit_edge ]
+  %i.y = phi i32 [ %i.v, %.preheader.preheader ], [ %8, %._crit_edge ] ; 2 uses
+  %i.z = phi i32 [ %i.v, %.preheader.preheader ], [ %9, %._crit_edge ] ; 2 uses
   %indvars.iv66 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next67, %._crit_edge ] ; 3 uses
   %i.aa = icmp sgt i32 %i.z, 0
   br i1 %i.aa, label %.lr.ph43, label %._crit_edge
 
 .lr.ph43:                                         ; preds = %.preheader
   %i.ab = load ptr, ptr %i.q, align 8, !tbaa !59  ; 2 uses
-  br i1 %6, label %.lr.ph.us, label %._crit_edge
+  br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph43, %..loopexit_crit_edge.us
-  %i.ac = phi i32 [ %i.bb, %..loopexit_crit_edge.us ], [ %i.y, %.lr.ph43 ] ; 2 uses
-  %indvars.iv63 = phi i64 [ %indvars.iv.next64, %..loopexit_crit_edge.us ], [ 0, %.lr.ph43 ] ; 4 uses
+  %i.ac = phi i32 [ %i.y, %.lr.ph43 ], [ %i.bb, %..loopexit_crit_edge.us ] ; 2 uses
+  %indvars.iv63 = phi i64 [ 0, %.lr.ph43 ], [ %indvars.iv.next64, %..loopexit_crit_edge.us ] ; 4 uses
   %i.ad = load i32, ptr %i.p, align 4, !tbaa !58
   %.fr = freeze i32 %i.ad
   %i.ae = icmp slt i32 %.fr, 2                    ; 2 uses
@@ -302,23 +303,23 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.split
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
   %i.bc = sext i32 %i.bb to i64
   %i.bd = icmp slt i64 %indvars.iv.next64, %i.bc
-  br i1 %i.bd, label %.lr.ph.us, label %._crit_edge.loopexit, !llvm.loop !515
+  br i1 %i.bd, label %.lr.ph.us, label %._crit_edge.loopexit.us, !llvm.loop !515
 
-._crit_edge50:                                    ; preds = %._crit_edge, %.preheader.lr.ph, %bb.e
-  ret void
-
-._crit_edge.loopexit:                             ; preds = %..loopexit_crit_edge.us
-  %.pre69 = load i32, ptr %i.l, align 8, !tbaa !95
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.lr.ph43, %._crit_edge.loopexit, %.preheader
-  %7 = phi i32 [ %i.x, %.preheader ], [ %.pre69, %._crit_edge.loopexit ], [ %i.x, %.lr.ph43 ] ; 2 uses
-  %8 = phi i32 [ %i.y, %.preheader ], [ %i.bb, %._crit_edge.loopexit ], [ %i.y, %.lr.ph43 ]
-  %9 = phi i32 [ %i.z, %.preheader ], [ %i.bb, %._crit_edge.loopexit ], [ %i.z, %.lr.ph43 ]
+._crit_edge:                                      ; preds = %._crit_edge.loopexit.us, %.preheader
+  %7 = phi i32 [ %.pre69, %._crit_edge.loopexit.us ], [ %i.x, %.preheader ] ; 2 uses
+  %8 = phi i32 [ %i.bb, %._crit_edge.loopexit.us ], [ %i.y, %.preheader ]
+  %9 = phi i32 [ %i.bb, %._crit_edge.loopexit.us ], [ %i.z, %.preheader ]
   %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1 ; 2 uses
   %i.be = sext i32 %7 to i64
   %i.bf = icmp slt i64 %indvars.iv.next67, %i.be
   br i1 %i.bf, label %.preheader, label %._crit_edge50, !llvm.loop !516
+
+._crit_edge.loopexit.us:                          ; preds = %..loopexit_crit_edge.us
+  %.pre69 = load i32, ptr %i.l, align 8, !tbaa !95
+  br label %._crit_edge
+
+._crit_edge50:                                    ; preds = %._crit_edge, %.preheader.lr.ph, %bb.e
+  ret void
 }
 
 declare noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSERKNS_7Scalar_IdEE(ptr noundef nonnull align 8 dereferenceable(208), ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #3

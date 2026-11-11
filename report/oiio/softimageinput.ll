@@ -205,7 +205,8 @@ bb.a:
   call void @_ZNK11OpenImageIO4v3_113softimage_pvt13ChannelPacket8channelsEv(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.25") align 8 %3, ptr noundef nonnull align 1 dereferenceable(4) %1)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.b = load i8, ptr %i.a, align 1, !tbaa !203
-  %i.c = lshr i8 %i.b, 3                          ; 2 uses
+  %.fr77 = freeze i8 %i.b
+  %i.c = lshr i8 %.fr77, 3                        ; 2 uses
   %i.d = zext nneg i8 %i.c to i64                 ; 5 uses
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.d, label %.preheader
@@ -218,16 +219,17 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %.not4457.not = icmp eq i8 %i.c, 0
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.j = load ptr, ptr %3, align 8, !tbaa !218
   %i.k = load ptr, ptr %i.g, align 8, !tbaa !218
-  %i.l = icmp eq ptr %i.j, %i.k
-  br i1 %i.l, label %.thread53, label %.lr.ph.split
+  %4 = icmp eq ptr %i.j, %i.k
+  %i.l = icmp eq i8 %i.c, 0
+  %or.cond = or i1 %4, %i.l
+  br i1 %or.cond, label %.thread53, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %._crit_edge63
-  %i.m = phi i16 [ %4, %._crit_edge63 ], [ %i.f, %.lr.ph ] ; 2 uses
+  %i.m = phi i16 [ %5, %._crit_edge63 ], [ %i.f, %.lr.ph ]
   %.03564 = phi i64 [ %i.ad, %._crit_edge63 ], [ 0, %.lr.ph ] ; 2 uses
   %i.n = load ptr, ptr %3, align 8, !tbaa !218    ; 2 uses
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !218  ; 2 uses
@@ -236,7 +238,7 @@ bb.a:
 
 .lr.ph62:                                         ; preds = %.lr.ph.split
   %i.p = mul nuw nsw i64 %.03564, %i.d
-  br i1 %.not4457.not, label %._crit_edge63, label %.lr.ph.us
+  br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph62, %._crit_edge.us
   %.sroa.046.060.us = phi ptr [ %i.ac, %._crit_edge.us ], [ %i.n, %.lr.ph62 ] ; 2 uses
@@ -274,10 +276,10 @@ bb.c:                                             ; preds = %.lr.ph.us, %bb.b
   %.pre = load i16, ptr %i.e, align 4, !tbaa !204
   br label %._crit_edge63
 
-._crit_edge63:                                    ; preds = %.lr.ph62, %._crit_edge63.loopexit66, %.lr.ph.split
-  %4 = phi i16 [ %.pre, %._crit_edge63.loopexit66 ], [ %i.m, %.lr.ph.split ], [ %i.m, %.lr.ph62 ] ; 2 uses
+._crit_edge63:                                    ; preds = %._crit_edge63.loopexit66, %.lr.ph.split
+  %5 = phi i16 [ %.pre, %._crit_edge63.loopexit66 ], [ %i.m, %.lr.ph.split ] ; 2 uses
   %i.ad = add nuw nsw i64 %.03564, 1              ; 2 uses
-  %i.ae = zext i16 %4 to i64
+  %i.ae = zext i16 %5 to i64
   %i.af = icmp samesign ult i64 %i.ad, %i.ae
   br i1 %i.af, label %.lr.ph.split, label %.thread53, !llvm.loop !448
 
@@ -607,7 +609,8 @@ bb.a:
   store i8 0, ptr %i.a, align 1, !tbaa !180
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.d = load i8, ptr %i.c, align 1, !tbaa !203
-  %i.e = lshr i8 %i.d, 3                          ; 4 uses
+  %.fr189 = freeze i8 %i.d
+  %i.e = lshr i8 %.fr189, 3                       ; 4 uses
   %i.f = zext nneg i8 %i.e to i64                 ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   call void @_ZNK11OpenImageIO4v3_113softimage_pvt13ChannelPacket8channelsEv(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.25") align 8 %3, ptr noundef nonnull align 1 dereferenceable(4) %1)
@@ -671,7 +674,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ac = load ptr, ptr %3, align 8, !tbaa !218
   %i.ad = load ptr, ptr %i.k, align 8, !tbaa !218
   %i.ae = icmp eq ptr %i.ac, %i.ad
-  br i1 %i.ae, label %.thread120, label %.lr.ph.split
+  %brmerge191 = or i1 %i.ae, %.not163
+  br i1 %brmerge191, label %.thread120, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %._crit_edge146
   %.082147 = phi i64 [ %i.av, %._crit_edge146 ], [ %.091148, %.lr.ph ] ; 2 uses
@@ -682,7 +686,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph145:                                        ; preds = %.lr.ph.split
   %i.ah = mul nuw nsw i64 %.082147, %i.f
-  br i1 %.not163, label %._crit_edge146, label %.lr.ph.us
+  br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph145, %._crit_edge141.us
   %.sroa.0113.0143.us = phi ptr [ %i.au, %._crit_edge141.us ], [ %i.af, %.lr.ph145 ] ; 2 uses
@@ -716,7 +720,7 @@ bb.h:                                             ; preds = %.lr.ph.us, %bb.g
   %.not123.us = icmp eq ptr %i.au, %i.ag
   br i1 %.not123.us, label %._crit_edge146, label %.lr.ph.us
 
-._crit_edge146:                                   ; preds = %._crit_edge141.us, %.lr.ph145, %.lr.ph.split
+._crit_edge146:                                   ; preds = %._crit_edge141.us, %.lr.ph.split
   %i.av = add nuw nsw i64 %.082147, 1             ; 2 uses
   %i.aw = icmp samesign ult i64 %i.av, %i.ab
   br i1 %i.aw, label %.lr.ph.split, label %.thread120, !llvm.loop !456
@@ -789,7 +793,7 @@ bb.n:                                             ; preds = %bb.m
   %i.cb = load ptr, ptr %i.k, align 8, !tbaa !194 ; 2 uses
   %i.cc = load ptr, ptr %3, align 8, !tbaa !195   ; 3 uses
   %.not165 = icmp eq ptr %i.cb, %i.cc
-  %brmerge = select i1 %.not165, i1 true, i1 %.not163
+  %brmerge = or i1 %.not165, %.not163
   br i1 %brmerge, label %._crit_edge136.split, label %.preheader124.preheader
 
 .preheader124.preheader:                          ; preds = %.preheader124.lr.ph
@@ -927,7 +931,7 @@ bb.q:                                             ; preds = %_ZN11OpenImageIO4v3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.thread120
 
-.thread120:                                       ; preds = %._crit_edge146, %bb.i, %.preheader125, %.lr.ph, %.critedge
+.thread120:                                       ; preds = %._crit_edge146, %.lr.ph, %bb.i, %.preheader125, %.critedge
   %.pn = phi i64 [ %.pre-phi173, %.critedge ], [ %i.aa, %.lr.ph ], [ %i.ay, %bb.i ], [ 0, %.preheader125 ], [ %i.aa, %._crit_edge146 ]
   %.293 = add nuw nsw i64 %.pn, %.091148          ; 2 uses
   %i.es = load i16, ptr %i.g, align 4, !tbaa !204

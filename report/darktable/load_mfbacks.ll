@@ -205,17 +205,17 @@ bb.ij:                                            ; preds = %.lr.ph747
   br i1 %.not785, label %._crit_edge766.split, label %.lr.ph765
 
 .lr.ph765:                                        ; preds = %.preheader451
-  %1 = zext i16 %i.bca to i32
   %i.bcb = load ptr, ptr %i.av, align 8, !tbaa !77
   %i.bcc = uitofp reassoc nsz arcp contract afn nneg i32 %.5330768 to float
   %factor.op.fmul = fmul reassoc nnan nsz arcp contract afn float %i.bcc, 2.000000e+00
+  %1 = zext i16 %i.bca to i32
   %i.bcd = load float, ptr %i.awx, align 4, !tbaa !81 ; 3 uses
   %i.bce = fsub reassoc nsz arcp contract afn float %i.bcd, %i.bcd
   %i.bcf = fmul reassoc nsz arcp contract afn float %i.bce, 0.000000e+00
   %i.bcg = fadd reassoc nsz arcp contract afn float %i.bcf, %i.bcd ; 3 uses
   br label %.split759.split.us
 
-.split759.split.us:                               ; preds = %.split759.split.us, %.lr.ph765
+.split759.split.us:                               ; preds = %.lr.ph765, %.split759.split.us
   %i.bch = phi float [ %.lcssa13511357, %.lr.ph765 ], [ %spec.select1360, %.split759.split.us ]
   %i.bci = phi i32 [ %1, %.lr.ph765 ], [ %i.bdk, %.split759.split.us ]
   %i.bcj = phi i16 [ %i.bca, %.lr.ph765 ], [ %i.bdj, %.split759.split.us ]
