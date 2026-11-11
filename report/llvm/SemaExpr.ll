@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaExpr?download=true
-inline.NumInlined: 75953
+inline.NumInlined: 75954
 inline.NumDeleted: 20715
 loop-unroll.NumCompletelyUnrolled: 23
 loop-unroll.NumRuntimeUnrolled: 15
@@ -205,26 +205,31 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN5c
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef zeroext i1 @_ZN5clang4Sema32CheckUnaryExprOrTypeTraitOperandEPNS_4ExprENS_20UnaryExprOrTypeTraitE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = alloca %"class.clang::Sema::SizelessTypeDiagnoser.3900", align 8 ; 7 uses
-  %4 = alloca %"class.clang::Sema::SizelessTypeDiagnoser.3900", align 8 ; 7 uses
-  %5 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 2 uses
-  %6 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
+  %3 = alloca %"class.clang::QualType", align 8   ; 5 uses
+  %4 = alloca %"class.clang::SourceRange", align 8 ; 5 uses
+  %5 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
+  %6 = alloca i8, align 1                         ; 4 uses
+  %7 = alloca %"class.clang::Sema::SizelessTypeDiagnoser.3900", align 8 ; 7 uses
+  %8 = alloca %"class.clang::Sema::SizelessTypeDiagnoser.3900", align 8 ; 7 uses
+  %9 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 2 uses
+  %10 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
-  %7 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
+  %11 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
-  %8 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
-  %9 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
+  %12 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
+  %13 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
-  %10 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
-  %11 = alloca %"class.clang::QualType", align 8  ; 5 uses
-  %12 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
-  %13 = alloca %"class.clang::QualType", align 8  ; 4 uses
-  %14 = alloca %"class.clang::QualType", align 8  ; 4 uses
-  %15 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
-  %16 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 2 uses
+  %14 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
+  %15 = alloca %"class.clang::QualType", align 8  ; 5 uses
+  %16 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
+  %17 = alloca %"class.clang::QualType", align 8  ; 4 uses
+  %18 = alloca %"class.clang::QualType", align 8  ; 4 uses
+  %19 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
+  %20 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i = load i64, ptr %i.e, align 8, !tbaa !788 ; 3 uses
+  %21 = icmp eq i32 %2, 0
   switch i32 %2, label %.critedge [
     i32 6, label %bb.b
     i32 4, label %bb.b
@@ -280,8 +285,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.af = tail call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %i.i) #31
-  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %5, ptr noundef nonnull align 8 dereferenceable(8) %i.ae, i32 %i.af, i32 noundef 7629) #30
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %5) #30
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %9, ptr noundef nonnull align 8 dereferenceable(8) %i.ae, i32 %i.af, i32 noundef 7629) #30
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %9) #30
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %bb.d, %bb.c, %bb.a, %bb.g, %bb.f
@@ -326,17 +331,17 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.aw, label %bb.m, label %.critedge10
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ay = call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %.1103148) #31
-  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %i.ax, i32 %i.ay, i32 noundef 5610) #30
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %10, ptr noundef nonnull align 8 dereferenceable(8) %i.ax, i32 %i.ay, i32 noundef 5610) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.az = call noundef ptr @_ZN5clang16getTraitSpellingENS_20UnaryExprOrTypeTraitE(i32 noundef %2) #31
   store ptr %i.az, ptr %i.a, align 8, !tbaa !1501
-  %i.ba = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsIPKcvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
+  %i.ba = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsIPKcvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %10, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %6) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #30
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %10) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #30
   br label %.critedge112
 
 .critedge10:                                      ; preds = %bb.k, %bb.l
@@ -353,20 +358,20 @@ bb.n:                                             ; preds = %.critedge10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   %i.bg = call noundef ptr @_ZN5clang16getTraitSpellingENS_20UnaryExprOrTypeTraitE(i32 noundef %2) #31
   store ptr %i.bg, ptr %i.b, align 8, !tbaa !1501
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
   %i.bh = call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %.1103148) #31
-  store i64 %i.bh, ptr %7, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
-  %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i64 %i.bh, ptr %11, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
+  %i.bi = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 5104, ptr %i.bi, align 8, !tbaa !1923
-  %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store ptr %7, ptr %i.bj, align 8, !tbaa !1924
-  %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.bj = getelementptr inbounds nuw i8, ptr %8, i64 16
+  store ptr %11, ptr %i.bj, align 8, !tbaa !1924
+  %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 24
   store ptr %i.b, ptr %i.bk, align 8, !tbaa !3514
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5clang4Sema21SizelessTypeDiagnoserIJPKcNS_11SourceRangeEEEE, i64 16), ptr %4, align 8, !tbaa !102
-  %i.bl = call noundef zeroext i1 @_ZN5clang4Sema19RequireCompleteTypeENS_14SourceLocationENS_8QualTypeENS0_16CompleteTypeKindERNS0_13TypeDiagnoserE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %i.bc, i64 %i.bf, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %4) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5clang4Sema21SizelessTypeDiagnoserIJPKcNS_11SourceRangeEEEE, i64 16), ptr %8, align 8, !tbaa !102
+  %i.bl = call noundef zeroext i1 @_ZN5clang4Sema19RequireCompleteTypeENS_14SourceLocationENS_8QualTypeENS0_16CompleteTypeKindERNS0_13TypeDiagnoserE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %i.bc, i64 %i.bf, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %8) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br i1 %i.bl, label %.critedge112, label %bb.p
 
@@ -374,20 +379,20 @@ bb.o:                                             ; preds = %.critedge10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
   %i.bm = call noundef ptr @_ZN5clang16getTraitSpellingENS_20UnaryExprOrTypeTraitE(i32 noundef %2) #31
   store ptr %i.bm, ptr %i.c, align 8, !tbaa !1501
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #30
   %i.bn = call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %.1103148) #31
-  store i64 %i.bn, ptr %8, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
-  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 %i.bn, ptr %12, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
+  %i.bo = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i32 5104, ptr %i.bo, align 8, !tbaa !1923
-  %i.bp = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %8, ptr %i.bp, align 8, !tbaa !1924
-  %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 16
+  store ptr %12, ptr %i.bp, align 8, !tbaa !1924
+  %i.bq = getelementptr inbounds nuw i8, ptr %7, i64 24
   store ptr %i.c, ptr %i.bq, align 8, !tbaa !3514
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5clang4Sema21SizelessTypeDiagnoserIJPKcNS_11SourceRangeEEEE, i64 16), ptr %3, align 8, !tbaa !102
-  %i.br = call noundef zeroext i1 @_ZN5clang4Sema23RequireCompleteExprTypeEPNS_4ExprENS0_16CompleteTypeKindERNS0_13TypeDiagnoserE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef nonnull %.1103148, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %3) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #30
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5clang4Sema21SizelessTypeDiagnoserIJPKcNS_11SourceRangeEEEE, i64 16), ptr %7, align 8, !tbaa !102
+  %i.br = call noundef zeroext i1 @_ZN5clang4Sema23RequireCompleteExprTypeEPNS_4ExprENS0_16CompleteTypeKindERNS0_13TypeDiagnoserE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef nonnull %.1103148, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %7) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
   br i1 %i.br, label %.critedge112, label %bb.p
 
@@ -403,48 +408,90 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.by = inttoptr i64 %i.bx to ptr
   %i.bz = load ptr, ptr %i.by, align 16, !tbaa !791
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
-  %i.cb = load i8, ptr %i.ca, align 16
+  %i.cb = load i8, ptr %i.ca, align 16            ; 2 uses
   %i.cc = add i8 %i.cb, -23
   %spec.select.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.cc, 2
   br i1 %spec.select.i.i.i.i.i.i.i.i.i, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #30
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ce = call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %.1103148) #31
-  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %9, ptr noundef nonnull align 8 dereferenceable(8) %i.cd, i32 %i.ce, i32 noundef 5103) #30
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %13, ptr noundef nonnull align 8 dereferenceable(8) %i.cd, i32 %i.ce, i32 noundef 5103) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #30
   %i.cf = call noundef ptr @_ZN5clang16getTraitSpellingENS_20UnaryExprOrTypeTraitE(i32 noundef %2) #31
   store ptr %i.cf, ptr %i.d, align 8, !tbaa !1501
-  %i.cg = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsIPKcvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %9, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
+  %i.cg = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsIPKcvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %13, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #30
   %i.ch = call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %.1103148) #31
-  store i64 %i.ch, ptr %10, align 8
-  %i.ci = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsINS_11SourceRangeEvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %i.cg, ptr noundef nonnull align 4 dereferenceable(8) %10) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #30
+  store i64 %i.ch, ptr %14, align 8
+  %i.ci = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsINS_11SourceRangeEvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %i.cg, ptr noundef nonnull align 4 dereferenceable(8) %14) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %9) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #30
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %13) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #30
   br label %.critedge112
 
 bb.r:                                             ; preds = %bb.p
   %i.cj = call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %.1103148) #31
   %i.ck = call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %.1103148) #31
-  %17 = call fastcc noundef zeroext i1 @_ZL32CheckObjCTraitOperandConstraintsRN5clang4SemaENS_8QualTypeENS_14SourceLocationENS_11SourceRangeENS_20UnaryExprOrTypeTraitE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i64 %.sroa.0.0.copyload.i119, i32 %i.cj, i64 %i.ck, i32 noundef %2)
-  br i1 %17, label %.critedge112, label %bb.s
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  store i64 %.sroa.0.0.copyload.i119, ptr %3, align 8
+  store i64 %i.ck, ptr %4, align 8
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 216
+  %23 = load ptr, ptr %22, align 8, !tbaa !786, !nonnull !97, !align !787
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 392
+  %25 = load i32, ptr %24, align 8, !tbaa !1927
+  switch i32 %25, label %26 [
+    i32 1, label %bb.s
+    i32 4, label %bb.s
+    i32 0, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i
+    i32 5, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i
+    i32 6, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i
+    i32 2, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i
+    i32 3, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i
+  ]
 
-bb.s:                                             ; preds = %bb.r
+26:                                               ; preds = %bb.r
+  unreachable
+
+_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i: ; preds = %bb.r, %bb.r, %bb.r, %bb.r, %bb.r
+  %27 = and i8 %i.cb, -2
+  %spec.select.i.i.i.i.i.i.i.i.i.i = icmp eq i8 %27, 32
+  br i1 %spec.select.i.i.i.i.i.i.i.i.i.i, label %_ZL32CheckObjCTraitOperandConstraintsRN5clang4SemaENS_8QualTypeENS_14SourceLocationENS_11SourceRangeENS_20UnaryExprOrTypeTraitE.exit, label %bb.s
+
+_ZL32CheckObjCTraitOperandConstraintsRN5clang4SemaENS_8QualTypeENS_14SourceLocationENS_11SourceRangeENS_20UnaryExprOrTypeTraitE.exit: ; preds = %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %5, ptr noundef nonnull align 8 dereferenceable(8) %28, i32 %i.cj, i32 noundef 5106) #30
+  %29 = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %5, ptr noundef nonnull align 8 dereferenceable(8) %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
+  %30 = zext i1 %21 to i8
+  store i8 %30, ptr %6, align 1, !tbaa !840
+  %31 = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsIbvEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %29, ptr noundef nonnull align 1 dereferenceable(1) %6)
+  %32 = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_11SourceRangeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %31, ptr noundef nonnull align 4 dereferenceable(8) %4) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #30
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %5) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  br label %.critedge112
+
+bb.s:                                             ; preds = %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.i, %bb.r, %bb.r
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   switch i32 %2, label %.critedge112 [
     i32 2, label %bb.t
     i32 0, label %bb.v
   ]
 
 bb.t:                                             ; preds = %bb.s
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %15) #30
   %i.cl = call noundef ptr @_ZN5clang4Expr12IgnoreParensEv(ptr noundef nonnull align 8 dereferenceable(16) %.1103148) #31
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
   %.sroa.0.0.copyload.i122 = load i64, ptr %i.cm, align 8, !tbaa !788 ; 2 uses
-  store i64 %.sroa.0.0.copyload.i122, ptr %11, align 8
+  store i64 %.sroa.0.0.copyload.i122, ptr %15, align 8
   %i.cn = and i64 %.sroa.0.0.copyload.i122, -16
   %i.co = inttoptr i64 %i.cn to ptr
   %i.cp = load ptr, ptr %i.co, align 16, !tbaa !791
@@ -460,18 +507,18 @@ bb.t:                                             ; preds = %bb.s
   br i1 %switch.i.i.i.i.i.i.i.i.i, label %.critedge114, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %16) #30
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cy = call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %.1103148) #31
-  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %12, ptr noundef nonnull align 8 dereferenceable(8) %i.cx, i32 %i.cy, i32 noundef 3585) #30
-  %i.cz = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %12, ptr noundef nonnull align 8 dereferenceable(8) %11) ; 0 uses
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %12) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #30
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %16, ptr noundef nonnull align 8 dereferenceable(8) %i.cx, i32 %i.cy, i32 noundef 3585) #30
+  %i.cz = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %16, ptr noundef nonnull align 8 dereferenceable(8) %15) ; 0 uses
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %16) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %16) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %15) #30
   br label %.critedge112
 
 .critedge114:                                     ; preds = %bb.t
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %15) #30
   br label %.critedge112
 
 bb.v:                                             ; preds = %bb.s
@@ -502,13 +549,13 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not109, label %bb.ab, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  call void @llvm.lifetime.start.p0(ptr nonnull %13) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %17) #30
   %i.dp = call i64 @_ZNK5clang11ParmVarDecl15getOriginalTypeEv(ptr noundef nonnull align 8 dereferenceable(104) %i.dk) #30 ; 2 uses
-  store i64 %i.dp, ptr %13, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %14) #30
+  store i64 %i.dp, ptr %17, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %18) #30
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dk, i64 48
   %.sroa.0.0.copyload.i126 = load i64, ptr %i.dq, align 8, !tbaa !788 ; 2 uses
-  store i64 %.sroa.0.0.copyload.i126, ptr %14, align 8
+  store i64 %.sroa.0.0.copyload.i126, ptr %18, align 8
   %i.dr = and i64 %.sroa.0.0.copyload.i126, -16
   %i.ds = inttoptr i64 %i.dr to ptr
   %i.dt = load ptr, ptr %i.ds, align 16, !tbaa !791
@@ -538,23 +585,23 @@ bb.y:                                             ; preds = %bb.x
   br i1 %switch.i.i.i.i.i.i.i.i.i131, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  call void @llvm.lifetime.start.p0(ptr nonnull %15) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %19) #30
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.em = call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %.1103148) #31
-  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %15, ptr noundef nonnull align 8 dereferenceable(8) %i.el, i32 %i.em, i32 noundef 7632) #30
-  %i.en = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %15, ptr noundef nonnull align 8 dereferenceable(8) %14)
-  %i.eo = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %i.en, ptr noundef nonnull align 8 dereferenceable(8) %13) ; 0 uses
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %15) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %15) #30
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %19, ptr noundef nonnull align 8 dereferenceable(8) %i.el, i32 %i.em, i32 noundef 7632) #30
+  %i.en = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %19, ptr noundef nonnull align 8 dereferenceable(8) %18)
+  %i.eo = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_8QualTypeEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %i.en, ptr noundef nonnull align 8 dereferenceable(8) %17) ; 0 uses
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %19) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %19) #30
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dk, i64 24
   %.sroa.0.0.copyload.i132 = load i32, ptr %i.ep, align 8, !tbaa !795
-  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %16, ptr noundef nonnull align 8 dereferenceable(8) %i.el, i32 %.sroa.0.0.copyload.i132, i32 noundef 108) #30
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %16) #30
+  call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %20, ptr noundef nonnull align 8 dereferenceable(8) %i.el, i32 %.sroa.0.0.copyload.i132, i32 noundef 108) #30
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %20) #30
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x
-  call void @llvm.lifetime.end.p0(ptr nonnull %14) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %13) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %18) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %17) #30
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.w, %bb.aa, %bb.v
@@ -579,8 +626,8 @@ bb.ac:                                            ; preds = %bb.ab
   call fastcc void @_ZL24warnOnSizeofOnArrayDecayRN5clang4SemaENS_14SourceLocationENS_8QualTypeEPKNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %.sroa.0.0.copyload.i136, i64 %.sroa.0.0.copyload.i137, ptr noundef %i.ey)
   br label %.critedge112
 
-.critedge112:                                     ; preds = %bb.b, %.critedge114, %bb.u, %bb.s, %bb.ac, %bb.ab, %bb.r, %bb.o, %bb.n, %bb.j, %bb.q, %bb.m, %bb.i, %bb.h
-  %.3 = phi i1 [ %i.ai, %bb.h ], [ %i.aj, %bb.i ], [ true, %bb.m ], [ false, %bb.j ], [ true, %bb.q ], [ true, %bb.o ], [ true, %bb.r ], [ true, %bb.u ], [ true, %bb.n ], [ false, %bb.s ], [ false, %.critedge114 ], [ false, %bb.ab ], [ false, %bb.ac ], [ true, %bb.b ]
+.critedge112:                                     ; preds = %bb.b, %.critedge114, %_ZL32CheckObjCTraitOperandConstraintsRN5clang4SemaENS_8QualTypeENS_14SourceLocationENS_11SourceRangeENS_20UnaryExprOrTypeTraitE.exit, %bb.u, %bb.s, %bb.ac, %bb.ab, %bb.o, %bb.n, %bb.j, %bb.q, %bb.m, %bb.i, %bb.h
+  %.3 = phi i1 [ %i.ai, %bb.h ], [ %i.aj, %bb.i ], [ true, %bb.m ], [ false, %bb.j ], [ true, %bb.q ], [ true, %bb.o ], [ true, %_ZL32CheckObjCTraitOperandConstraintsRN5clang4SemaENS_8QualTypeENS_14SourceLocationENS_11SourceRangeENS_20UnaryExprOrTypeTraitE.exit ], [ true, %bb.u ], [ true, %bb.n ], [ false, %bb.s ], [ false, %.critedge114 ], [ false, %bb.ab ], [ false, %bb.ac ], [ true, %bb.b ]
   ret i1 %.3
 }
 
@@ -707,7 +754,7 @@ bb.f:                                             ; preds = %bb.e
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !1116, !nonnull !97, !align !787
   call void @_ZNK5clang10ASTContext21getFunctionFeatureMapERN4llvm9StringMapIbNS1_15MallocAllocatorEEEPKNS_12FunctionDeclE(ptr noundef nonnull align 8 dereferenceable(23904) %i.af, ptr noundef nonnull align 8 dereferenceable(20) %7, ptr noundef nonnull %i.aa) #30
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 704
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !1925
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !1928
   %i.ai = call noundef zeroext i1 @_ZN5clang7SemaARM19checkSVETypeSupportENS_8QualTypeENS_14SourceLocationEPKNS_12FunctionDeclERKN4llvm9StringMapIbNS6_15MallocAllocatorEEE(ptr noundef nonnull align 8 dereferenceable(8) %i.ah, i64 %1, i32 %2, ptr noundef nonnull %i.aa, ptr noundef nonnull align 8 dereferenceable(20) %7) #30
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !1602
@@ -970,7 +1017,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !786, !nonnull !97, !align !787
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 392
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !1928
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !1927
   switch i32 %i.e, label %bb.b [
     i32 1, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.thread
     i32 4, label %_ZNK5clang11ObjCRuntime19allowsSizeofAlignofEv.exit.thread
@@ -1373,7 +1420,7 @@ _ZNK5clang4Type5getAsINS_21ObjCObjectPointerTypeEEEPKT_v.exit.thread405: ; preds
   store ptr %i.bd, ptr %i.a, align 8, !tbaa !1514
   %i.cy = load ptr, ptr %i.b, align 8, !tbaa !786, !nonnull !97, !align !787 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 392
-  %i.da = load i32, ptr %i.cz, align 8, !tbaa !1928
+  %i.da = load i32, ptr %i.cz, align 8, !tbaa !1927
   switch i32 %i.da, label %bb.n [
     i32 1, label %_ZNK5clang11LangOptions28isSubscriptPointerArithmeticEv.exit
     i32 4, label %_ZNK5clang11LangOptions28isSubscriptPointerArithmeticEv.exit
@@ -1430,7 +1477,7 @@ bb.r:                                             ; preds = %bb.q
   store i64 %.sroa.0.0.copyload.i271, ptr %6, align 8, !tbaa !788
   %i.do = load ptr, ptr %i.b, align 8, !tbaa !786, !nonnull !97, !align !787 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 392
-  %i.dq = load i32, ptr %i.dp, align 8, !tbaa !1928
+  %i.dq = load i32, ptr %i.dp, align 8, !tbaa !1927
   switch i32 %i.dq, label %bb.s [
     i32 1, label %_ZNK5clang11LangOptions28isSubscriptPointerArithmeticEv.exit273
     i32 4, label %_ZNK5clang11LangOptions28isSubscriptPointerArithmeticEv.exit273
@@ -1833,12 +1880,12 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az, %bb.ax
   %i.iu = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 2 uses
-  %i.iv = load ptr, ptr %i.iu, align 8, !tbaa !1925
+  %i.iv = load ptr, ptr %i.iu, align 8, !tbaa !1928
   %i.iw = tail call noundef zeroext i1 @_ZN5clang7SemaARM21areCompatibleSveTypesENS_8QualTypeES1_(ptr noundef nonnull align 8 dereferenceable(8) %i.iv, i64 %i.m, i64 %i.v) #30
   br i1 %i.iw, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.ix = load ptr, ptr %i.iu, align 8, !tbaa !1925
+  %i.ix = load ptr, ptr %i.iu, align 8, !tbaa !1928
   %i.iy = tail call noundef zeroext i1 @_ZN5clang7SemaARM24areLaxCompatibleSveTypesENS_8QualTypeES1_(ptr noundef nonnull align 8 dereferenceable(8) %i.ix, i64 %i.m, i64 %i.v) #30
   br i1 %i.iy, label %bb.bc, label %bb.bd
 
@@ -2241,7 +2288,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !786, !nonnull !97, !align !787 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 392
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !1928
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !1927
   switch i32 %i.d, label %bb.b [
     i32 1, label %bb.c
     i32 4, label %bb.c
@@ -2644,10 +2691,10 @@ begin_hunk_4_@llvm.fshl.i64
 !1922 = !{!"_ZTSN5clang4Sema18BoundTypeDiagnoserIJPKcNS_11SourceRangeEEEE", !1914, i64 0, !88, i64 8, !1921, i64 16}
 !1923 = !{!1922, !88, i64 8}
 !1924 = !{!1915, !1915, i64 0}
-!1925 = !{!198, !198, i64 0}
-!1926 = !{!"_ZTSN5clang11ObjCRuntime4KindE", !87, i64 0}
-!1927 = !{!"_ZTSN5clang11ObjCRuntimeE", !1926, i64 0, !143, i64 4}
-!1928 = !{!1927, !1926, i64 0}
+!1925 = !{!"_ZTSN5clang11ObjCRuntime4KindE", !87, i64 0}
+!1926 = !{!"_ZTSN5clang11ObjCRuntimeE", !1925, i64 0, !143, i64 4}
+!1927 = !{!1926, !1925, i64 0}
+!1928 = !{!198, !198, i64 0}
 !1929 = !{!"_ZTSN5clang8CastExprE", !1527, i64 0, !1584, i64 16}
 !1930 = !{!1929, !1584, i64 16}
 !1931 = !{!"p1 _ZTSN4llvm9StringRefE", !91, i64 0}

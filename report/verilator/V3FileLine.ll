@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/verilator/original/V3FileLine?download=true
-inline.NumInlined: 1804
+inline.NumInlined: 1805
 inline.NumDeleted: 617
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,8 +204,7 @@ declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #17
 define linkonce_odr dso_local void @_ZN8FileLineC2Ev(ptr noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.FileLineSingleton::MsgEnBitSet", align 8 ; 6 uses
-  %2 = alloca %class.V3ErrorCode, align 1         ; 5 uses
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = load atomic i8, ptr @_ZGVZN8FileLine9singletonEvE1s acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %bb.b, label %_ZN8FileLine9singletonEv.exit, !prof !47
@@ -242,22 +241,40 @@ _ZN8FileLine9singletonEv.exit:                    ; preds = %bb.a, %bb.b, %bb.d
 
 bb.f:                                             ; preds = %_ZN17FileLineSingleton11MsgEnBitSet3setENS0_6SubsetE11V3ErrorCodeb.exit.i, %_ZN8FileLine9singletonEv.exit
   %indvars.iv.i = phi i64 [ 0, %_ZN8FileLine9singletonEv.exit ], [ %indvars.iv.next.i, %_ZN17FileLineSingleton11MsgEnBitSet3setENS0_6SubsetE11V3ErrorCodeb.exit.i ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.g = trunc i64 %indvars.iv.i to i8
-  store i8 %i.g, ptr %2, align 1, !tbaa !91
-  %4 = call noundef zeroext i1 @_ZNK11V3ErrorCode11defaultsOffEv(ptr noundef nonnull align 1 dereferenceable(1) %2)
-  %i.h = lshr i64 %indvars.iv.i, 6
+  %i.h = lshr i64 %indvars.iv.i, 6                ; 2 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.h ; 3 uses
   %i.j = and i64 %indvars.iv.i, 63
-  %i.k = shl nuw i64 1, %i.j                      ; 2 uses
-  br i1 %4, label %bb.h, label %bb.g
+  %i.k = shl nuw i64 1, %i.j                      ; 3 uses
+  switch i8 %i.g, label %bb.g [
+    i8 68, label %bb.h
+    i8 7, label %bb.h
+    i8 26, label %bb.h
+    i8 33, label %bb.h
+    i8 48, label %bb.h
+    i8 50, label %bb.h
+    i8 56, label %bb.h
+    i8 62, label %bb.h
+    i8 71, label %bb.h
+    i8 73, label %bb.h
+    i8 94, label %bb.h
+    i8 96, label %bb.h
+    i8 100, label %bb.h
+    i8 118, label %bb.h
+    i8 121, label %bb.h
+    i8 -127, label %bb.h
+    i8 -126, label %bb.h
+    i8 -125, label %bb.h
+    i8 -124, label %bb.h
+    i8 -119, label %bb.h
+  ]
 
 bb.g:                                             ; preds = %bb.f
   %i.l = load i64, ptr %i.i, align 8, !tbaa !22
   %i.m = or i64 %i.l, %i.k
   br label %_ZN17FileLineSingleton11MsgEnBitSet3setENS0_6SubsetE11V3ErrorCodeb.exit.i
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f
   %i.n = xor i64 %i.k, -1
   %i.o = load i64, ptr %i.i, align 8, !tbaa !22
   %i.p = and i64 %i.o, %i.n
@@ -266,16 +283,11 @@ bb.h:                                             ; preds = %bb.f
 _ZN17FileLineSingleton11MsgEnBitSet3setENS0_6SubsetE11V3ErrorCodeb.exit.i: ; preds = %bb.h, %bb.g
   %storemerge.i.i.i = phi i64 [ %i.p, %bb.h ], [ %i.m, %bb.g ]
   store i64 %storemerge.i.i.i, ptr %i.i, align 8, !tbaa !22
-  %.sroa.0.0.copyload.i = load i8, ptr %2, align 1, !tbaa !92
-  %5 = zext i8 %.sroa.0.0.copyload.i to i64       ; 2 uses
-  %6 = lshr i64 %5, 6
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %6 ; 2 uses
-  %i.q = and i64 %5, 63
-  %8 = shl nuw i64 1, %i.q
-  %i.r = load i64, ptr %7, align 8, !tbaa !22
-  %i.s = or i64 %8, %i.r
-  store i64 %i.s, ptr %7, align 8, !tbaa !22
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
+  %i.q = and i64 %i.h, 3
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.q ; 2 uses
+  %i.r = load i64, ptr %3, align 8, !tbaa !22
+  %i.s = or i64 %i.r, %i.k
+  store i64 %i.s, ptr %3, align 8, !tbaa !22
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 146
   br i1 %exitcond.not.i, label %_ZN17FileLineSingleton17defaultMsgEnIndexEv.exit, label %bb.f, !llvm.loop !2
@@ -309,19 +321,19 @@ bb.l:                                             ; preds = %bb.j
   br label %common.resume
 
 _ZN8FileLine9singletonEv.exit3:                   ; preds = %_ZN17FileLineSingleton17defaultMsgEnIndexEv.exit, %bb.i, %bb.k
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
-  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 6 uses
-  store ptr %i.z, ptr %3, align 8, !tbaa !20, !alias.scope !564
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
+  store ptr %i.z, ptr %2, align 8, !tbaa !20, !alias.scope !564
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.z, ptr noundef nonnull align 1 dereferenceable(10) @.str.59, i64 10, i1 false)
-  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 10, ptr %i.aa, align 8, !tbaa !25, !alias.scope !564
-  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 26
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 26
   store i8 0, ptr %i.ab, align 2, !tbaa !15, !alias.scope !564
-  %i.ac = invoke noundef zeroext i16 @_ZN17FileLineSingleton12nameToNumberERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(336) @_ZZN8FileLine9singletonEvE1s, ptr noundef nonnull align 8 dereferenceable(32) %3)
+  %i.ac = invoke noundef zeroext i16 @_ZN17FileLineSingleton12nameToNumberERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(336) @_ZZN8FileLine9singletonEvE1s, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.m unwind label %bb.n
 
 bb.m:                                             ; preds = %_ZN8FileLine9singletonEv.exit3
-  %i.ad = load ptr, ptr %3, align 8, !tbaa !24    ; 2 uses
+  %i.ad = load ptr, ptr %2, align 8, !tbaa !24    ; 2 uses
   %i.ae = icmp eq ptr %i.ad, %i.z
   br i1 %i.ae, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -333,7 +345,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.m, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 2
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   store i16 %i.ac, ptr %i.ah, align 2, !tbaa !161
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %i.ai, align 4
@@ -354,7 +366,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.m,
 bb.n:                                             ; preds = %_ZN8FileLine9singletonEv.exit3
   %i.aq = landingpad { ptr, i32 }
           cleanup
-  %i.ar = load ptr, ptr %3, align 8, !tbaa !24    ; 2 uses
+  %i.ar = load ptr, ptr %2, align 8, !tbaa !24    ; 2 uses
   %i.as = icmp eq ptr %i.ar, %i.z
   br i1 %i.as, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4
 
@@ -365,7 +377,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4:
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6: ; preds = %bb.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   br label %common.resume
 }
 

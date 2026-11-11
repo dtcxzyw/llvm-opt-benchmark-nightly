@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/parser.tab?download=true
-inline.NumInlined: 22
-inline.NumDeleted: 12
+inline.NumInlined: 25
+inline.NumDeleted: 13
 begin_hunk_0_@yyparse:bb.a
   %.not273 = icmp sgt i64 %i.ae, %i.n
   br i1 %.not273, label %.thread378, label %.loopexit
@@ -202,10 +202,10 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
     i32 53, label %bb.cv
     i32 54, label %bb.cw
     i32 55, label %bb.cx
-    i32 56, label %bb.da
+    i32 56, label %sub_0
     i32 59, label %bb.dd
     i32 60, label %bb.df
-    i32 61, label %bb.dg
+    i32 61, label %40
     i32 66, label %bb.dj
     i32 67, label %bb.dm
     i32 71, label %bb.do
@@ -601,11 +601,42 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
 
 bb.ci:                                            ; preds = %bb.ao
   store ptr null, ptr @current_choice, align 8, !tbaa !31
-  %i.jj = load ptr, ptr %.3, align 8, !tbaa !13
-  %1 = call fastcc zeroext i1 @zconf_endtoken(ptr noundef %i.jj, ptr noundef nonnull @.str.27)
-  br i1 %1, label %bb.cj, label %xstrdup.exit
+  %i.jj = load ptr, ptr %.3, align 8, !tbaa !13   ; 3 uses
+  %1 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.jj, ptr noundef nonnull dereferenceable(7) @.str.27) #19
+  %.not.i = icmp eq i32 %1, 0
+  br i1 %.not.i, label %3, label %2
 
-bb.cj:                                            ; preds = %bb.ci
+2:                                                ; preds = %bb.ci
+  call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.167, ptr noundef nonnull %i.jj, ptr noundef nonnull @.str.27)
+  br label %zconf_endtoken.exit
+
+3:                                                ; preds = %bb.ci
+  %4 = load ptr, ptr @current_menu, align 8, !tbaa !31
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 112
+  %6 = load ptr, ptr %5, align 8, !tbaa !35
+  %7 = load ptr, ptr @cur_filename, align 8, !tbaa !17
+  %8 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %6, ptr noundef nonnull dereferenceable(1) %7) #19
+  %.not8.i = icmp eq i32 %8, 0
+  br i1 %.not8.i, label %bb.cj, label %9
+
+9:                                                ; preds = %3
+  call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.168, ptr noundef nonnull %i.jj, ptr noundef nonnull @.str.27)
+  %10 = load ptr, ptr @stderr, align 8, !tbaa !12
+  %11 = load ptr, ptr @current_menu, align 8, !tbaa !31 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 112
+  %13 = load ptr, ptr %12, align 8, !tbaa !35
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 120
+  %15 = load i32, ptr %14, align 8, !tbaa !36
+  %16 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %10, ptr noundef nonnull @.str.169, ptr noundef %13, i32 noundef %15, ptr noundef nonnull @.str.27) #17 ; 0 uses
+  br label %zconf_endtoken.exit
+
+zconf_endtoken.exit:                              ; preds = %2, %9
+  %17 = load i32, ptr @yynerrs, align 4, !tbaa !9
+  %18 = add nsw i32 %17, 1
+  store i32 %18, ptr @yynerrs, align 4, !tbaa !9
+  br label %xstrdup.exit
+
+bb.cj:                                            ; preds = %3
   call void @menu_end_menu() #15
   %i.jk = load i32, ptr @cdebug, align 4, !tbaa !9
   %i.jl = and i32 %i.jk, 2
@@ -719,10 +750,53 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx
   %i.kx = call ptr @menu_add_menu() #15
   br label %xstrdup.exit
 
-bb.da:                                            ; preds = %bb.ao
-  %i.ky = load ptr, ptr %.3, align 8, !tbaa !13
-  %2 = call fastcc zeroext i1 @zconf_endtoken(ptr noundef %i.ky, ptr noundef nonnull @.str.31)
-  br i1 %2, label %bb.db, label %xstrdup.exit
+sub_0:                                            ; preds = %bb.ao
+  %19 = load ptr, ptr %.3, align 8, !tbaa !13     ; 5 uses
+  %20 = load i8, ptr %19, align 1
+  %.not416 = icmp eq i8 %20, 105
+  br i1 %.not416, label %sub_1, label %.tail.thread
+
+sub_1:                                            ; preds = %sub_0
+  %21 = getelementptr inbounds nuw i8, ptr %19, i64 1
+  %22 = load i8, ptr %21, align 1
+  %.not417 = icmp eq i8 %22, 102
+  br i1 %.not417, label %.tail, label %.tail.thread
+
+.tail:                                            ; preds = %sub_1
+  %23 = getelementptr inbounds nuw i8, ptr %19, i64 2
+  %24 = load i8, ptr %23, align 1
+  %25 = icmp eq i8 %24, 0
+  br i1 %25, label %bb.da, label %.tail.thread
+
+.tail.thread:                                     ; preds = %sub_1, %sub_0, %.tail
+  call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.167, ptr noundef nonnull %19, ptr noundef nonnull @.str.31)
+  br label %zconf_endtoken.exit335
+
+bb.da:                                            ; preds = %.tail
+  %26 = load ptr, ptr @current_menu, align 8, !tbaa !31
+  %27 = getelementptr inbounds nuw i8, ptr %26, i64 112
+  %28 = load ptr, ptr %27, align 8, !tbaa !35
+  %i.ky = load ptr, ptr @cur_filename, align 8, !tbaa !17
+  %29 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %28, ptr noundef nonnull dereferenceable(1) %i.ky) #19
+  %.not8.i334 = icmp eq i32 %29, 0
+  br i1 %.not8.i334, label %bb.db, label %30
+
+30:                                               ; preds = %bb.da
+  call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.168, ptr noundef nonnull %19, ptr noundef nonnull @.str.31)
+  %31 = load ptr, ptr @stderr, align 8, !tbaa !12
+  %32 = load ptr, ptr @current_menu, align 8, !tbaa !31 ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %32, i64 112
+  %34 = load ptr, ptr %33, align 8, !tbaa !35
+  %35 = getelementptr inbounds nuw i8, ptr %32, i64 120
+  %36 = load i32, ptr %35, align 8, !tbaa !36
+  %37 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %31, ptr noundef nonnull @.str.169, ptr noundef %34, i32 noundef %36, ptr noundef nonnull @.str.31) #17 ; 0 uses
+  br label %zconf_endtoken.exit335
+
+zconf_endtoken.exit335:                           ; preds = %.tail.thread, %30
+  %38 = load i32, ptr @yynerrs, align 4, !tbaa !9
+  %39 = add nsw i32 %38, 1
+  store i32 %39, ptr @yynerrs, align 4, !tbaa !9
+  br label %xstrdup.exit
 
 bb.db:                                            ; preds = %bb.da
   call void @menu_end_menu() #15
@@ -757,10 +831,41 @@ bb.df:                                            ; preds = %bb.ao
   %i.lm = call ptr @menu_add_menu() #15
   br label %xstrdup.exit
 
-bb.dg:                                            ; preds = %bb.ao
-  %i.ln = load ptr, ptr %.3, align 8, !tbaa !13
-  %3 = call fastcc zeroext i1 @zconf_endtoken(ptr noundef %i.ln, ptr noundef nonnull @.str.34)
-  br i1 %3, label %bb.dh, label %xstrdup.exit
+40:                                               ; preds = %bb.ao
+  %41 = load ptr, ptr %.3, align 8, !tbaa !13     ; 3 uses
+  %42 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %41, ptr noundef nonnull dereferenceable(5) @.str.34) #19
+  %.not.i336 = icmp eq i32 %42, 0
+  br i1 %.not.i336, label %bb.dg, label %43
+
+43:                                               ; preds = %40
+  call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.167, ptr noundef nonnull %41, ptr noundef nonnull @.str.34)
+  br label %zconf_endtoken.exit340
+
+bb.dg:                                            ; preds = %40
+  %44 = load ptr, ptr @current_menu, align 8, !tbaa !31
+  %45 = getelementptr inbounds nuw i8, ptr %44, i64 112
+  %46 = load ptr, ptr %45, align 8, !tbaa !35
+  %i.ln = load ptr, ptr @cur_filename, align 8, !tbaa !17
+  %47 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %46, ptr noundef nonnull dereferenceable(1) %i.ln) #19
+  %.not8.i339 = icmp eq i32 %47, 0
+  br i1 %.not8.i339, label %bb.dh, label %48
+
+48:                                               ; preds = %bb.dg
+  call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.168, ptr noundef nonnull %41, ptr noundef nonnull @.str.34)
+  %49 = load ptr, ptr @stderr, align 8, !tbaa !12
+  %50 = load ptr, ptr @current_menu, align 8, !tbaa !31 ; 2 uses
+  %51 = getelementptr inbounds nuw i8, ptr %50, i64 112
+  %52 = load ptr, ptr %51, align 8, !tbaa !35
+  %53 = getelementptr inbounds nuw i8, ptr %50, i64 120
+  %54 = load i32, ptr %53, align 8, !tbaa !36
+  %55 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %49, ptr noundef nonnull @.str.169, ptr noundef %52, i32 noundef %54, ptr noundef nonnull @.str.34) #17 ; 0 uses
+  br label %zconf_endtoken.exit340
+
+zconf_endtoken.exit340:                           ; preds = %43, %48
+  %56 = load i32, ptr @yynerrs, align 4, !tbaa !9
+  %57 = add nsw i32 %56, 1
+  store i32 %57, ptr @yynerrs, align 4, !tbaa !9
+  br label %xstrdup.exit
 
 bb.dh:                                            ; preds = %bb.dg
   call void @menu_end_menu() #15
@@ -1048,8 +1153,8 @@ bb.ex:                                            ; preds = %bb.ew
   call void @exit(i32 noundef 1) #20
   unreachable
 
-xstrdup.exit:                                     ; preds = %bb.ew, %bb.cd, %bb.ce, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.cc, %bb.ch, %bb.cp, %bb.cq, %bb.cr, %bb.cs, %bb.ct, %bb.cu, %bb.cv, %bb.cw, %bb.cz, %bb.df, %bb.dl, %bb.dq, %bb.dv, %bb.dy, %bb.dz, %bb.ea, %bb.eb, %bb.ec, %bb.ed, %bb.ee, %bb.ef, %bb.eg, %bb.eh, %bb.ei, %bb.ej, %bb.ek, %bb.el, %bb.em, %bb.en, %bb.eo, %bb.ep, %bb.eq, %bb.er, %bb.es, %bb.et, %bb.eu, %bb.ev, %bb.au, %bb.at, %bb.bc, %bb.bb, %bb.be, %bb.bd, %bb.bj, %bb.bi, %bb.bl, %bb.bk, %bb.bn, %bb.bm, %bb.bp, %bb.bo, %bb.bt, %bb.bs, %bb.bv, %bb.bu, %bb.bx, %bb.bw, %bb.bz, %bb.by, %bb.cj, %bb.ck, %bb.ci, %bb.cm, %bb.cl, %bb.co, %bb.cn, %bb.db, %bb.dc, %bb.da, %bb.de, %bb.dd, %bb.dh, %bb.di, %bb.dg, %bb.dn, %bb.dm, %bb.dx, %bb.dw, %bb.ao
-  %.sroa.0.0 = phi ptr [ %i.co, %bb.ao ], [ %i.co, %bb.ap ], [ %i.co, %bb.aq ], [ %i.co, %bb.ar ], [ %i.co, %bb.as ], [ %i.co, %bb.at ], [ %i.co, %bb.au ], [ %i.co, %bb.bb ], [ %i.co, %bb.bc ], [ %i.co, %bb.bd ], [ %i.co, %bb.be ], [ %i.co, %bb.bi ], [ %i.co, %bb.bj ], [ %i.co, %bb.bk ], [ %i.co, %bb.bl ], [ %i.co, %bb.bm ], [ %i.co, %bb.bn ], [ %i.co, %bb.bo ], [ %i.co, %bb.bp ], [ %i.co, %bb.bs ], [ %i.co, %bb.bt ], [ %i.co, %bb.bu ], [ %i.co, %bb.bv ], [ %i.co, %bb.bw ], [ %i.co, %bb.bx ], [ %i.co, %bb.by ], [ %i.co, %bb.bz ], [ %i.co, %bb.cc ], [ %i.co, %bb.cd ], [ %i.co, %bb.ce ], [ %i.jh, %bb.ch ], [ %i.co, %bb.cj ], [ %i.co, %bb.ck ], [ %i.co, %bb.ci ], [ %i.co, %bb.cl ], [ %i.co, %bb.cm ], [ %i.co, %bb.cn ], [ %i.co, %bb.co ], [ %i.ki, %bb.cp ], [ %i.kj, %bb.cq ], [ %i.kk, %bb.cr ], [ %i.kl, %bb.cs ], [ %i.km, %bb.ct ], [ %i.kn, %bb.cu ], [ %i.ko, %bb.cv ], [ %i.kp, %bb.cw ], [ %i.kx, %bb.cz ], [ %i.co, %bb.db ], [ %i.co, %bb.dc ], [ %i.co, %bb.da ], [ %i.co, %bb.dd ], [ %i.co, %bb.de ], [ %i.lm, %bb.df ], [ %i.co, %bb.dh ], [ %i.co, %bb.di ], [ %i.co, %bb.dg ], [ %i.co, %bb.dl ], [ %i.co, %bb.dm ], [ %i.co, %bb.dn ], [ %i.co, %bb.dq ], [ %i.co, %bb.dv ], [ %i.co, %bb.dw ], [ %i.co, %bb.dx ], [ %i.co, %bb.dy ], [ %i.co, %bb.dz ], [ @.str.34, %bb.ea ], [ @.str.27, %bb.eb ], [ @.str.31, %bb.ec ], [ null, %bb.ed ], [ %i.nz, %bb.ee ], [ %i.ob, %bb.ef ], [ %i.of, %bb.eg ], [ %i.oj, %bb.eh ], [ %i.on, %bb.ei ], [ %i.or, %bb.ej ], [ %i.ov, %bb.ek ], [ %i.oz, %bb.el ], [ %i.pb, %bb.em ], [ %i.pd, %bb.en ], [ %i.ph, %bb.eo ], [ %i.pl, %bb.ep ], [ %i.pn, %bb.eq ], [ %i.pq, %bb.er ], [ %i.co, %bb.es ], [ %i.qa, %bb.et ], [ %i.qb, %bb.eu ], [ %i.qc, %bb.ev ], [ %i.qd, %bb.ew ]
+xstrdup.exit:                                     ; preds = %bb.ew, %zconf_endtoken.exit340, %zconf_endtoken.exit335, %zconf_endtoken.exit, %bb.cd, %bb.ce, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.cc, %bb.ch, %bb.cp, %bb.cq, %bb.cr, %bb.cs, %bb.ct, %bb.cu, %bb.cv, %bb.cw, %bb.cz, %bb.df, %bb.dl, %bb.dq, %bb.dv, %bb.dy, %bb.dz, %bb.ea, %bb.eb, %bb.ec, %bb.ed, %bb.ee, %bb.ef, %bb.eg, %bb.eh, %bb.ei, %bb.ej, %bb.ek, %bb.el, %bb.em, %bb.en, %bb.eo, %bb.ep, %bb.eq, %bb.er, %bb.es, %bb.et, %bb.eu, %bb.ev, %bb.au, %bb.at, %bb.bc, %bb.bb, %bb.be, %bb.bd, %bb.bj, %bb.bi, %bb.bl, %bb.bk, %bb.bn, %bb.bm, %bb.bp, %bb.bo, %bb.bt, %bb.bs, %bb.bv, %bb.bu, %bb.bx, %bb.bw, %bb.bz, %bb.by, %bb.cj, %bb.ck, %bb.cm, %bb.cl, %bb.co, %bb.cn, %bb.db, %bb.dc, %bb.de, %bb.dd, %bb.dh, %bb.di, %bb.dn, %bb.dm, %bb.dx, %bb.dw, %bb.ao
+  %.sroa.0.0 = phi ptr [ %i.co, %bb.ao ], [ %i.co, %bb.ap ], [ %i.co, %bb.aq ], [ %i.co, %bb.ar ], [ %i.co, %bb.as ], [ %i.co, %bb.at ], [ %i.co, %bb.au ], [ %i.co, %bb.bb ], [ %i.co, %bb.bc ], [ %i.co, %bb.bd ], [ %i.co, %bb.be ], [ %i.co, %bb.bi ], [ %i.co, %bb.bj ], [ %i.co, %bb.bk ], [ %i.co, %bb.bl ], [ %i.co, %bb.bm ], [ %i.co, %bb.bn ], [ %i.co, %bb.bo ], [ %i.co, %bb.bp ], [ %i.co, %bb.bs ], [ %i.co, %bb.bt ], [ %i.co, %bb.bu ], [ %i.co, %bb.bv ], [ %i.co, %bb.bw ], [ %i.co, %bb.bx ], [ %i.co, %bb.by ], [ %i.co, %bb.bz ], [ %i.co, %bb.cc ], [ %i.co, %bb.cd ], [ %i.co, %bb.ce ], [ %i.jh, %bb.ch ], [ %i.co, %bb.cj ], [ %i.co, %bb.ck ], [ %i.co, %zconf_endtoken.exit ], [ %i.co, %bb.cl ], [ %i.co, %bb.cm ], [ %i.co, %bb.cn ], [ %i.co, %bb.co ], [ %i.ki, %bb.cp ], [ %i.kj, %bb.cq ], [ %i.kk, %bb.cr ], [ %i.kl, %bb.cs ], [ %i.km, %bb.ct ], [ %i.kn, %bb.cu ], [ %i.ko, %bb.cv ], [ %i.kp, %bb.cw ], [ %i.kx, %bb.cz ], [ %i.co, %bb.db ], [ %i.co, %bb.dc ], [ %i.co, %zconf_endtoken.exit335 ], [ %i.co, %bb.dd ], [ %i.co, %bb.de ], [ %i.lm, %bb.df ], [ %i.co, %bb.dh ], [ %i.co, %bb.di ], [ %i.co, %zconf_endtoken.exit340 ], [ %i.co, %bb.dl ], [ %i.co, %bb.dm ], [ %i.co, %bb.dn ], [ %i.co, %bb.dq ], [ %i.co, %bb.dv ], [ %i.co, %bb.dw ], [ %i.co, %bb.dx ], [ %i.co, %bb.dy ], [ %i.co, %bb.dz ], [ @.str.34, %bb.ea ], [ @.str.27, %bb.eb ], [ @.str.31, %bb.ec ], [ null, %bb.ed ], [ %i.nz, %bb.ee ], [ %i.ob, %bb.ef ], [ %i.of, %bb.eg ], [ %i.oj, %bb.eh ], [ %i.on, %bb.ei ], [ %i.or, %bb.ej ], [ %i.ov, %bb.ek ], [ %i.oz, %bb.el ], [ %i.pb, %bb.em ], [ %i.pd, %bb.en ], [ %i.ph, %bb.eo ], [ %i.pl, %bb.ep ], [ %i.pn, %bb.eq ], [ %i.pq, %bb.er ], [ %i.co, %bb.es ], [ %i.qa, %bb.et ], [ %i.qb, %bb.eu ], [ %i.qc, %bb.ev ], [ %i.qd, %bb.ew ]
   %i.qe = load i32, ptr @yydebug, align 4, !tbaa !9
   %.not319 = icmp eq i32 %i.qe, 0
   br i1 %.not319, label %xstrdup.exit._crit_edge, label %bb.ey
@@ -1451,47 +1556,6 @@ declare ptr @expr_alloc_comp(i32 noundef, ptr noundef, ptr noundef) local_unname
 declare ptr @sym_lookup(ptr noundef, i32 noundef) local_unnamed_addr #6
 
 declare ptr @menu_add_menu() local_unnamed_addr #6
-
-; Function Attrs: nofree nounwind uwtable
-define internal fastcc noundef zeroext i1 @zconf_endtoken(ptr noundef %0, ptr noundef %1) unnamed_addr #7 {
-  %3 = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #19
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %5, label %4
-
-4:                                                ; preds = %2
-  tail call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.167, ptr noundef nonnull %0, ptr noundef nonnull %1)
-  br label %.sink.split
-
-5:                                                ; preds = %2
-  %6 = load ptr, ptr @current_menu, align 8, !tbaa !31
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 112
-  %8 = load ptr, ptr %7, align 8, !tbaa !35
-  %9 = load ptr, ptr @cur_filename, align 8, !tbaa !17
-  %10 = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %8, ptr noundef nonnull dereferenceable(1) %9) #19
-  %.not8 = icmp eq i32 %10, 0
-  br i1 %.not8, label %21, label %11
-
-11:                                               ; preds = %5
-  tail call void (ptr, ...) @zconf_error(ptr noundef nonnull @.str.168, ptr noundef nonnull %0, ptr noundef nonnull %1)
-  %12 = load ptr, ptr @stderr, align 8, !tbaa !12
-  %13 = load ptr, ptr @current_menu, align 8, !tbaa !31 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 112
-  %15 = load ptr, ptr %14, align 8, !tbaa !35
-  %16 = getelementptr inbounds nuw i8, ptr %13, i64 120
-  %17 = load i32, ptr %16, align 8, !tbaa !36
-  %18 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %12, ptr noundef nonnull @.str.169, ptr noundef %15, i32 noundef %17, ptr noundef nonnull %1) #17 ; 0 uses
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %4, %11
-  %19 = load i32, ptr @yynerrs, align 4, !tbaa !9
-  %20 = add nsw i32 %19, 1
-  store i32 %20, ptr @yynerrs, align 4, !tbaa !9
-  br label %21
-
-21:                                               ; preds = %.sink.split, %5
-  %.0 = phi i1 [ true, %5 ], [ false, %.sink.split ]
-  ret i1 %.0
-}
 
 declare void @menu_end_menu() local_unnamed_addr #6
 

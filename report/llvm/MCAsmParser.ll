@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MCAsmParser?download=true
-inline.NumInlined: 450
+inline.NumInlined: 451
 inline.NumDeleted: 243
 begin_hunk_0_@_ZN4llvm23SmallVectorTemplateBaseINS_11MCAsmParser14MCPendingErrorELb0EE9push_backERKS2_:bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %.016.i.i, i64 16 ; 2 uses
@@ -202,10 +202,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef zeroext i1 @_ZN4llvm11MCAsmParser9parseManyENS_12function_refIFbvEEEb(ptr noundef nonnull align 8 dereferenceable(243) %0, ptr nofree readonly captures(none) %1, i64 %2, i1 noundef zeroext %3) local_unnamed_addr #3 align 2 {
 bb.a:
-  %4 = alloca %"class.llvm::Twine", align 8       ; 6 uses
+  %4 = alloca %"struct.llvm::MCAsmParser::MCPendingError", align 8 ; 9 uses
   %5 = alloca %"class.llvm::Twine", align 8       ; 6 uses
   %6 = alloca %"class.llvm::Twine", align 8       ; 6 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %7 = alloca %"class.llvm::Twine", align 8       ; 7 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !17
   %i.c = load i32, ptr %i.b, align 8, !tbaa !53
   %i.d = icmp eq i32 %i.c, 9
@@ -216,38 +217,42 @@ _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.preheader
   br i1 %i.e, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.preheader
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.g = getelementptr inbounds nuw i8, ptr %6, i64 33
+  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %i.g = getelementptr inbounds nuw i8, ptr %7, i64 33
   br i1 %3, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !53
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !17   ; 2 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !53   ; 2 uses
   %i.j = icmp eq i32 %i.i, 9
   br i1 %i.j, label %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread, label %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.us
 
 _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.us: ; preds = %.lr.ph.split.us
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   store i8 1, ptr %i.g, align 1, !tbaa !56
-  store ptr @.str.3, ptr %6, align 8, !tbaa !47
+  store ptr @.str.3, ptr %7, align 8, !tbaa !47
   store i8 3, ptr %i.f, align 8, !tbaa !57
-  %7 = call noundef zeroext i1 @_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(243) %0, i32 noundef 26, ptr noundef nonnull align 8 dereferenceable(34) %6)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
-  br i1 %7, label %.loopexit, label %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us
+  %.not.i.us = icmp eq i32 %i.i, 26
+  br i1 %.not.i.us, label %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us, label %.split.us
 
 _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us: ; preds = %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.us
-  %8 = call noundef zeroext i1 %1(i64 noundef %2) #13, !inline_history !82
-  br i1 %8, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !83
+  %8 = load ptr, ptr %0, align 8, !tbaa !11
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 152
+  %10 = load ptr, ptr %9, align 8
+  %11 = tail call noundef nonnull align 8 dereferenceable(40) ptr %10(ptr noundef nonnull align 8 dereferenceable(243) %0) #13, !inline_history !84 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
+  %12 = tail call noundef zeroext i1 %1(i64 noundef %2) #13, !inline_history !82
+  br i1 %12, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !83
 
 _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.thread: ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
-  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
+  %i.k = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 33
   store i8 1, ptr %i.l, align 1, !tbaa !56
-  store ptr @.str.3, ptr %5, align 8, !tbaa !47
+  store ptr @.str.3, ptr %6, align 8, !tbaa !47
   store i8 3, ptr %i.k, align 8, !tbaa !57
-  %i.m = call noundef zeroext i1 @_ZN4llvm11MCAsmParser8parseEOLERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(243) %0, ptr noundef nonnull align 8 dereferenceable(34) %5) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
+  %i.m = call noundef zeroext i1 @_ZN4llvm11MCAsmParser8parseEOLERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(243) %0, ptr noundef nonnull align 8 dereferenceable(34) %6) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
   br label %.loopexit
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2
@@ -257,22 +262,62 @@ _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.thread: ;
   br i1 %i.p, label %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread, label %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2
 
 _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread: ; preds = %.lr.ph.split, %.lr.ph.split.us
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 33
   store i8 1, ptr %i.r, align 1, !tbaa !56
-  store ptr @.str.3, ptr %4, align 8, !tbaa !47
+  store ptr @.str.3, ptr %5, align 8, !tbaa !47
   store i8 3, ptr %i.q, align 8, !tbaa !57
-  %i.s = call noundef zeroext i1 @_ZN4llvm11MCAsmParser8parseEOLERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(243) %0, ptr noundef nonnull align 8 dereferenceable(34) %4) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  %i.s = call noundef zeroext i1 @_ZN4llvm11MCAsmParser8parseEOLERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(243) %0, ptr noundef nonnull align 8 dereferenceable(34) %5) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %.loopexit
 
 _ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2: ; preds = %.lr.ph.split
   %i.t = tail call noundef zeroext i1 %1(i64 noundef %2) #13, !inline_history !82
   br i1 %i.t, label %.loopexit, label %.lr.ph.split, !llvm.loop !83
 
-.loopexit:                                        ; preds = %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.us, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.preheader, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.thread
-  %.0 = phi i1 [ false, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread ], [ false, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.thread ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.preheader ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.us ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2 ]
+.split.us:                                        ; preds = %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.us
+  %13 = tail call ptr @_ZNK4llvm8AsmToken6getLocEv(ptr noundef nonnull align 8 dereferenceable(40) %i.h) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  store ptr %15, ptr %14, align 8, !tbaa !44
+  %16 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i64 0, ptr %16, align 8, !tbaa !58
+  %17 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store i64 64, ptr %17, align 8, !tbaa !59
+  %18 = getelementptr inbounds nuw i8, ptr %4, i64 96 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %18, i8 0, i64 16, i1 false)
+  store ptr %13, ptr %4, align 8, !tbaa !50
+  call void @_ZNK4llvm5Twine8toVectorERNS_15SmallVectorImplIcEE(ptr noundef nonnull align 8 dereferenceable(34) %7, ptr noundef nonnull align 8 dereferenceable(24) %14) #13
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 224
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %18, i8 0, i64 16, i1 false)
+  call void @_ZN4llvm23SmallVectorTemplateBaseINS_11MCAsmParser14MCPendingErrorELb0EE9push_backERKS2_(ptr noundef nonnull align 8 dereferenceable(16) %19, ptr noundef nonnull align 8 dereferenceable(112) %4)
+  %20 = load ptr, ptr %i.a, align 8, !tbaa !17
+  %21 = load i32, ptr %20, align 8, !tbaa !53
+  %22 = icmp eq i32 %21, 1
+  br i1 %22, label %23, label %25
+
+23:                                               ; preds = %.split.us
+  %24 = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN4llvm8AsmLexer3LexEv(ptr noundef nonnull align 8 dereferenceable(176) %i.a) ; 0 uses
+  br label %25
+
+25:                                               ; preds = %23, %.split.us
+  %26 = load ptr, ptr %14, align 8, !tbaa !44     ; 2 uses
+  %27 = icmp eq ptr %26, %15
+  br i1 %27, label %_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE.exit.thread, label %28
+
+28:                                               ; preds = %25
+  call void @free(ptr noundef %26) #13
+  br label %_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE.exit.thread
+
+_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE.exit.thread: ; preds = %25, %28
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.preheader, %_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE.exit.thread, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.thread
+  %.0 = phi i1 [ false, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2.thread ], [ false, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.thread ], [ true, %_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE.exit.thread ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.preheader ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit.us ], [ true, %_ZN4llvm11MCAsmParser18parseOptionalTokenENS_8AsmToken9TokenKindE.exit2 ]
   ret i1 %.0
 }
 
@@ -281,7 +326,7 @@ define dso_local noundef zeroext i1 @_ZN4llvm11MCAsmParser15parseExpressionERPKN
 bb.a:
   %2 = alloca %"class.llvm::SMLoc", align 8       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
-  store ptr null, ptr %2, align 8, !tbaa !84
+  store ptr null, ptr %2, align 8, !tbaa !85
   %i.a = load ptr, ptr %0, align 8, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 200
   %i.c = load ptr, ptr %i.b, align 8
@@ -355,7 +400,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !85, !nonnull !15, !align !86
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !86, !nonnull !15, !align !87
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !50
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -368,7 +413,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %.sroa.2.0.copyload, ptr %i.i, align 8, !tbaa !47
   %i.j = call noundef ptr @_ZN4llvm9MCContext11parseSymbolERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(2208) %i.f, ptr noundef nonnull align 8 dereferenceable(34) %3) #13
-  store ptr %i.j, ptr %1, align 8, !tbaa !88
+  store ptr %i.j, ptr %1, align 8, !tbaa !89
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   br label %bb.c
 
@@ -676,7 +721,7 @@ _ZN4llvm8AsmTokenaSEOS0_.exit.i.i.i.i.i:          ; preds = %bb.k, %bb.j, %.lr.p
   store i32 0, ptr %i.bz, align 8, !tbaa !49
   %i.cb = add nsw i64 %.010.i.i.i.i.i, -1
   %i.cc = icmp sgt i64 %.010.i.i.i.i.i, 1
-  br i1 %i.cc, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIPN4llvm8AsmTokenES2_ET0_T_S4_S3_.exit.loopexit, !llvm.loop !89
+  br i1 %i.cc, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIPN4llvm8AsmTokenES2_ET0_T_S4_S3_.exit.loopexit, !llvm.loop !90
 
 _ZSt13move_backwardIPN4llvm8AsmTokenES2_ET0_T_S4_S3_.exit.loopexit: ; preds = %_ZN4llvm8AsmTokenaSEOS0_.exit.i.i.i.i.i
   %.pre15 = load i32, ptr %i.b, align 8, !tbaa !42
@@ -759,7 +804,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 40 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 40
   %.not.i.i.i.i.i.i = icmp eq ptr %i.o, %i.h
-  br i1 %.not.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseINS_8AsmTokenELb0EE18uninitialized_moveIPS1_S4_EEvT_S5_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !90
+  br i1 %.not.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseINS_8AsmTokenELb0EE18uninitialized_moveIPS1_S4_EEvT_S5_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !91
 
 _ZN4llvm23SmallVectorTemplateBaseINS_8AsmTokenELb0EE18uninitialized_moveIPS1_S4_EEvT_S5_T0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !17  ; 3 uses
@@ -900,7 +945,7 @@ _ZSt10_ConstructIN4llvm11MCAsmParser14MCPendingErrorEJS2_EEvPT_DpOT0_.exit.i.i.i
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 112 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 112
   %.not.i.i.i.i.i.i = icmp eq ptr %i.t, %i.h
-  br i1 %.not.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseINS_11MCAsmParser14MCPendingErrorELb0EE18uninitialized_moveIPS2_S5_EEvT_S6_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !91
+  br i1 %.not.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseINS_11MCAsmParser14MCPendingErrorELb0EE18uninitialized_moveIPS2_S5_EEvT_S6_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !92
 
 _ZN4llvm23SmallVectorTemplateBaseINS_11MCAsmParser14MCPendingErrorELb0EE18uninitialized_moveIPS2_S5_EEvT_S6_T0_.exit.i: ; preds = %_ZSt10_ConstructIN4llvm11MCAsmParser14MCPendingErrorEJS2_EEvPT_DpOT0_.exit.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !17  ; 3 uses
@@ -1090,16 +1135,16 @@ declare void @_ZN4llvm15SmallVectorBaseImE8grow_podEPvmm(ptr noundef nonnull ali
 define internal void @_GLOBAL__sub_I_MCAsmParser.cpp() #12 section ".text.startup" {
 bb.a:
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZN4llvm23AsmMacroMaxNestingDepthE, i32 noundef 0, i32 noundef 0) #13
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 120), align 8, !tbaa !95
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 120), align 8, !tbaa !96
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 128), align 8, !tbaa !11
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, align 8, !tbaa !11
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 144), align 8, !tbaa !11
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZN4llvm23AsmMacroMaxNestingDepthE, ptr nonnull align 1 dereferenceable(28) @.str, i64 27) #13
-  store i32 20, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 120), align 8, !tbaa !95
+  store i32 20, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 120), align 8, !tbaa !96
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 140), align 4, !tbaa !68
-  store i32 20, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 136), align 8, !tbaa !96
+  store i32 20, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 136), align 8, !tbaa !97
   %i.a = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm23AsmMacroMaxNestingDepthE, i64 10), align 2
   %i.b = and i16 %i.a, -97
   %i.c = or disjoint i16 %i.b, 32
@@ -1216,17 +1261,18 @@ attributes #15 = { noreturn nounwind }
 !81 = !{!35, !13, i64 129}
 !82 = distinct !{null}
 !83 = distinct !{!83, !45}
-!84 = !{!31, !28, i64 0}
-!85 = !{!40, !19, i64 16}
-!86 = !{i64 8}
-!87 = !{!"p1 _ZTSN4llvm8MCSymbolE", !12, i64 0}
-!88 = !{!87, !87, i64 0}
-!89 = distinct !{!89, !45}
+!84 = !{ptr @_ZN4llvm11MCAsmParser10parseTokenENS_8AsmToken9TokenKindERKNS_5TwineE}
+!85 = !{!31, !28, i64 0}
+!86 = !{!40, !19, i64 16}
+!87 = !{i64 8}
+!88 = !{!"p1 _ZTSN4llvm8MCSymbolE", !12, i64 0}
+!89 = !{!88, !88, i64 0}
 !90 = distinct !{!90, !45}
 !91 = distinct !{!91, !45}
-!92 = !{!"_ZTSN4llvm2cl15OptionValueBaseIjLb0EEE", !67, i64 0}
-!93 = !{!"_ZTSN4llvm2cl11OptionValueIjEE", !92, i64 0}
-!94 = !{!"_ZTSN4llvm2cl11opt_storageIjLb0ELb0EEE", !7, i64 0, !93, i64 8}
-!95 = !{!94, !7, i64 0}
-!96 = !{!67, !7, i64 8}
+!92 = distinct !{!92, !45}
+!93 = !{!"_ZTSN4llvm2cl15OptionValueBaseIjLb0EEE", !67, i64 0}
+!94 = !{!"_ZTSN4llvm2cl11OptionValueIjEE", !93, i64 0}
+!95 = !{!"_ZTSN4llvm2cl11opt_storageIjLb0ELb0EEE", !7, i64 0, !94, i64 8}
+!96 = !{!95, !7, i64 0}
+!97 = !{!67, !7, i64 8}
 end_hunk_0

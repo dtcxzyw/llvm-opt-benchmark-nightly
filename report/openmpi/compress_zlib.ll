@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openmpi/original/compress_zlib?download=true
+inline.NumInlined: 2
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -125,8 +127,9 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m,
 ; Function Attrs: nounwind uwtable
 define internal noundef zeroext i1 @zlib_decompress(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, ptr noundef %2, i64 noundef %3) #0 {
 bb.a:
+  %4 = alloca %struct.z_stream_s, align 8         ; 11 uses
   store i64 0, ptr %1, align 8, !tbaa !12
-  %.0.copyload = load i32, ptr %2, align 1        ; 2 uses
+  %.0.copyload = load i32, ptr %2, align 1        ; 3 uses
   %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @pmix_pcompress_base_framework, i64 76), align 4, !tbaa !29 ; 3 uses
   %or.cond = icmp ult i32 %i.a, 64
   br i1 %or.cond, label %bb.b, label %bb.d
@@ -145,18 +148,51 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %4 = add i64 %3, 4294967292
   %5 = zext i32 %.0.copyload to i64               ; 2 uses
-  %6 = and i64 %4, 4294967295
-  %7 = tail call fastcc zeroext i1 @doit(ptr noundef %0, i64 noundef %5, ptr noundef nonnull %i.g, i64 noundef %6) ; 2 uses
-  br i1 %7, label %bb.e, label %bb.f
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
+  store ptr null, ptr %0, align 8, !tbaa !10
+  %calloc.i = tail call ptr @calloc(i64 1, i64 range(i64 0, 4294967296) %5) ; 4 uses
+  %6 = icmp eq ptr %calloc.i, null
+  br i1 %6, label %doit.exit.thread, label %7
 
-bb.e:                                             ; preds = %bb.d
+7:                                                ; preds = %bb.d
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %4, i8 0, i64 112, i1 false)
+  %8 = call i32 @inflateInit_(ptr noundef nonnull %4, ptr noundef nonnull @.str, i32 noundef 112) #8
+  %.not.i = icmp eq i32 %8, 0
+  br i1 %.not.i, label %9, label %doit.exit.thread.sink.split
+
+9:                                                ; preds = %7
+  %10 = trunc i64 %3 to i32
+  %11 = add i32 %10, -4
+  %12 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i32 %11, ptr %12, align 8, !tbaa !17
+  store ptr %i.g, ptr %4, align 8, !tbaa !16
+  %13 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  store i32 %.0.copyload, ptr %13, align 8, !tbaa !18
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store ptr %calloc.i, ptr %14, align 8, !tbaa !19
+  %15 = call i32 @inflate(ptr noundef nonnull %4, i32 noundef 4) #8
+  %16 = call i32 @inflateEnd(ptr noundef nonnull %4) #8 ; 0 uses
+  %17 = icmp eq i32 %15, 1
+  br i1 %17, label %bb.e, label %doit.exit.thread.sink.split
+
+doit.exit.thread.sink.split:                      ; preds = %9, %7
+  call void @free(ptr noundef nonnull %calloc.i) #8
+  br label %doit.exit.thread
+
+doit.exit.thread:                                 ; preds = %doit.exit.thread.sink.split, %bb.d
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  br label %bb.f
+
+bb.e:                                             ; preds = %9
+  store ptr %calloc.i, ptr %0, align 8, !tbaa !10
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   store i64 %5, ptr %1, align 8, !tbaa !12
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e
-  ret i1 %7
+bb.f:                                             ; preds = %doit.exit.thread, %bb.e
+  %.0.i16 = phi i1 [ false, %doit.exit.thread ], [ true, %bb.e ]
+  ret i1 %.0.i16
 }
 
 ; Function Attrs: nounwind uwtable
@@ -169,8 +205,9 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef zeroext i1 @decompress_string(ptr nofree noundef captures(none) initializes((0, 8)) %0, ptr noundef %1, i64 noundef %2) #0 {
+define internal noundef zeroext i1 @decompress_string(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
+  %3 = alloca %struct.z_stream_s, align 8         ; 11 uses
   %.0.copyload = load i32, ptr %1, align 1        ; 3 uses
   %i.a = icmp eq i32 %.0.copyload, -1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -180,22 +217,50 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = add nuw i32 %.0.copyload, 1
+  %i.b = add nuw i32 %.0.copyload, 1              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %3 = add i64 %2, 4294967292
   %4 = zext i32 %i.b to i64
-  %5 = and i64 %3, 4294967295
-  %6 = tail call fastcc zeroext i1 @doit(ptr noundef %0, i64 noundef %4, ptr noundef nonnull %i.c, i64 noundef %5)
-  br i1 %6, label %bb.d, label %bb.e
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  store ptr null, ptr %0, align 8, !tbaa !10
+  %calloc.i = tail call ptr @calloc(i64 1, i64 range(i64 0, 4294967296) %4) ; 5 uses
+  %5 = icmp eq ptr %calloc.i, null
+  br i1 %5, label %bb.e, label %6
 
-bb.d:                                             ; preds = %bb.c
-  %7 = load ptr, ptr %0, align 8, !tbaa !10
+6:                                                ; preds = %bb.c
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %3, i8 0, i64 112, i1 false)
+  %7 = call i32 @inflateInit_(ptr noundef nonnull %3, ptr noundef nonnull @.str, i32 noundef 112) #8
+  %.not.i = icmp eq i32 %7, 0
+  br i1 %.not.i, label %8, label %.sink.split
+
+8:                                                ; preds = %6
+  %9 = trunc i64 %2 to i32
+  %10 = add i32 %9, -4
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i32 %10, ptr %11, align 8, !tbaa !17
+  store ptr %i.c, ptr %3, align 8, !tbaa !16
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 32
+  store i32 %i.b, ptr %12, align 8, !tbaa !18
+  %13 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store ptr %calloc.i, ptr %13, align 8, !tbaa !19
+  %14 = call i32 @inflate(ptr noundef nonnull %3, i32 noundef 4) #8
+  %15 = call i32 @inflateEnd(ptr noundef nonnull %3) #8 ; 0 uses
+  %16 = icmp eq i32 %14, 1
+  br i1 %16, label %bb.d, label %.sink.split
+
+bb.d:                                             ; preds = %8
+  store ptr %calloc.i, ptr %0, align 8, !tbaa !10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   %i.d = zext i32 %.0.copyload to i64
-  %i.e = getelementptr inbounds nuw i8, ptr %7, i64 %i.d
+  %i.e = getelementptr inbounds nuw i8, ptr %calloc.i, i64 %i.d
   store i8 0, ptr %i.e, align 1, !tbaa !34
   br label %bb.f
 
-bb.e:                                             ; preds = %bb.c
+.sink.split:                                      ; preds = %8, %6
+  call void @free(ptr noundef nonnull %calloc.i) #8
+  br label %bb.e
+
+bb.e:                                             ; preds = %.sink.split, %bb.c
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   store ptr null, ptr %0, align 8, !tbaa !10
   br label %bb.f
 
@@ -234,54 +299,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #6
-
-; Function Attrs: nounwind uwtable
-define internal fastcc noundef zeroext i1 @doit(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, i64 noundef range(i64 0, 4294967296) %1, ptr noundef %2, i64 noundef range(i64 0, 4294967296) %3) unnamed_addr #0 {
-  %5 = alloca %struct.z_stream_s, align 8         ; 10 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  store ptr null, ptr %0, align 8, !tbaa !10
-  %calloc = tail call ptr @calloc(i64 1, i64 %1)  ; 5 uses
-  %6 = icmp eq ptr %calloc, null
-  br i1 %6, label %21, label %7
-
-7:                                                ; preds = %4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %5, i8 0, i64 112, i1 false)
-  %8 = call i32 @inflateInit_(ptr noundef nonnull %5, ptr noundef nonnull @.str, i32 noundef 112) #8
-  %.not = icmp eq i32 %8, 0
-  br i1 %.not, label %10, label %9
-
-9:                                                ; preds = %7
-  call void @free(ptr noundef nonnull %calloc) #8
-  br label %21
-
-10:                                               ; preds = %7
-  %11 = trunc nuw i64 %3 to i32
-  %12 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %11, ptr %12, align 8, !tbaa !17
-  store ptr %2, ptr %5, align 8, !tbaa !16
-  %13 = trunc nuw i64 %1 to i32
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  store i32 %13, ptr %14, align 8, !tbaa !18
-  %15 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  store ptr %calloc, ptr %15, align 8, !tbaa !19
-  %16 = call i32 @inflate(ptr noundef nonnull %5, i32 noundef 4) #8
-  %17 = call i32 @inflateEnd(ptr noundef nonnull %5) #8 ; 0 uses
-  %18 = icmp eq i32 %16, 1
-  br i1 %18, label %19, label %20
-
-19:                                               ; preds = %10
-  store ptr %calloc, ptr %0, align 8, !tbaa !10
-  br label %21
-
-20:                                               ; preds = %10
-  call void @free(ptr noundef nonnull %calloc) #8
-  br label %21
-
-21:                                               ; preds = %4, %20, %19, %9
-  %.0 = phi i1 [ false, %20 ], [ false, %9 ], [ true, %19 ], [ false, %4 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
-  ret i1 %.0
-}
 
 declare i32 @inflateInit_(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #3
 

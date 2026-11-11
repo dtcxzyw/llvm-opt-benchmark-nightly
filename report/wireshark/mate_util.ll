@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/mate_util?download=true
-inline.NumInlined: 29
+inline.NumInlined: 31
 inline.NumDeleted: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -113,7 +113,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.h, ptr %i.b, align 8
   %i.i = call i64 @strlen(ptr noundef %1) #17
   %i.j = icmp ugt i64 %i.i, 65535
-  br i1 %i.j, label %bb.e, label %bb.d, !prof !7
+  br i1 %i.j, label %bb.e, label %bb.d, !prof !8
 
 bb.d:                                             ; preds = %bb.c
   %i.k = call noalias ptr @g_strdup(ptr noundef %1)
@@ -516,7 +516,7 @@ bb.f:                                             ; preds = %bb.b
   %.019 = load ptr, ptr %i.v, align 8             ; 3 uses
   %i.w = load ptr, ptr %.019, align 8             ; 2 uses
   %.not = icmp eq ptr %i.w, null
-  br i1 %.not, label %.thread29, label %bb.b, !llvm.loop !8
+  br i1 %.not, label %.thread29, label %bb.b, !llvm.loop !0
 
 .thread29:                                        ; preds = %.thread34, %bb.c, %bb.f, %bb.a
   %.019.lcssa = phi ptr [ %.01936, %bb.a ], [ %.01938, %bb.f ], [ %.01938, %bb.c ], [ %.019, %.thread34 ] ; 2 uses
@@ -919,17 +919,17 @@ insert_avp_before_node.exit43:                    ; preds = %.lr.ph53, %insert_a
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden noundef ptr @new_avpl_from_avpl(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i1 noundef zeroext %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 8 uses
+  %i.a = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 7 uses
   %.not.i = icmp eq ptr %0, null
   %i.b = load ptr, ptr @avp_strings, align 8
   %.str.6..i = select i1 %.not.i, ptr @.str.6, ptr %0
   %i.c = tail call ptr @scs_subscribe(ptr noundef %i.b, ptr noundef nonnull %.str.6..i)
   store ptr %i.c, ptr %i.a, align 8
-  %i.d = getelementptr i8, ptr %i.a, i64 8
+  %i.d = getelementptr i8, ptr %i.a, i64 8        ; 3 uses
   store i32 0, ptr %i.d, align 8
   %i.e = getelementptr i8, ptr %i.a, i64 16       ; 3 uses
   store ptr null, ptr %i.e, align 8
-  %i.f = getelementptr i8, ptr %i.a, i64 24
+  %i.f = getelementptr i8, ptr %i.a, i64 24       ; 2 uses
   store ptr %i.e, ptr %i.f, align 8
   %i.g = getelementptr i8, ptr %i.a, i64 32
   store ptr %i.e, ptr %i.g, align 8
@@ -954,7 +954,7 @@ get_next_avp.exit.us:                             ; preds = %bb.b, %.split.us
   br i1 %.not.us, label %.split11.us, label %bb.c
 
 bb.c:                                             ; preds = %get_next_avp.exit.us
-  %i.m = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 5 uses
+  %i.m = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 6 uses
   %i.n = load ptr, ptr @avp_strings, align 8
   %i.o = load ptr, ptr %i.l, align 8
   %i.p = tail call ptr @scs_subscribe(ptr noundef %i.n, ptr noundef %i.o)
@@ -962,21 +962,109 @@ bb.c:                                             ; preds = %get_next_avp.exit.u
   %i.q = load ptr, ptr @avp_strings, align 8
   %i.r = getelementptr i8, ptr %i.l, i64 8
   %i.s = load ptr, ptr %i.r, align 8
-  %i.t = tail call ptr @scs_subscribe(ptr noundef %i.q, ptr noundef %i.s)
+  %i.t = tail call ptr @scs_subscribe(ptr noundef %i.q, ptr noundef %i.s) ; 3 uses
   %i.u = getelementptr i8, ptr %i.m, i64 8
   store ptr %i.t, ptr %i.u, align 8
   %i.v = getelementptr i8, ptr %i.l, i64 16
   %i.w = load i8, ptr %i.v, align 8
+  %.fr = freeze i8 %i.w                           ; 2 uses
   %i.x = getelementptr i8, ptr %i.m, i64 16
-  store i8 %i.w, ptr %i.x, align 8
-  %3 = tail call zeroext i1 @insert_avp(ptr noundef %i.a, ptr noundef %i.m)
-  br i1 %3, label %.split.us.backedge, label %bb.d
+  store i8 %.fr, ptr %i.x, align 8
+  %.01936.i.us = load ptr, ptr %i.f, align 8      ; 4 uses
+  %3 = load ptr, ptr %.01936.i.us, align 8        ; 3 uses
+  %.not37.i.us = icmp eq ptr %3, null
+  br i1 %.not37.i.us, label %insert_avp.exit.thread.us, label %.lr.ph.i.us
 
-bb.d:                                             ; preds = %bb.c
+.lr.ph.i.us:                                      ; preds = %bb.c
+  %4 = load ptr, ptr %i.m, align 8                ; 2 uses
+  %5 = icmp eq i8 %.fr, 61
+  br i1 %5, label %.lr.ph.i.split.us12, label %.lr.ph.i.split.us.us
+
+.lr.ph.i.split.us.us:                             ; preds = %.lr.ph.i.us, %.thread34.i.us.us
+  %6 = phi ptr [ %18, %.thread34.i.us.us ], [ %3, %.lr.ph.i.us ] ; 2 uses
+  %.01938.i.us.us = phi ptr [ %.019.i.us.us, %.thread34.i.us.us ], [ %.01936.i.us, %.lr.ph.i.us ] ; 3 uses
+  %7 = load ptr, ptr %6, align 8
+  %8 = tail call i32 @strcmp(ptr noundef %4, ptr noundef %7) #17 ; 2 uses
+  %9 = icmp eq i32 %8, 0
+  br i1 %9, label %12, label %10
+
+10:                                               ; preds = %.lr.ph.i.split.us.us
+  %11 = icmp slt i32 %8, 0
+  br i1 %11, label %insert_avp.exit.thread.us, label %.thread34.i.us.us
+
+12:                                               ; preds = %.lr.ph.i.split.us.us
+  %13 = getelementptr i8, ptr %6, i64 8
+  %14 = load ptr, ptr %13, align 8
+  %15 = tail call i32 @strcmp(ptr noundef %i.t, ptr noundef %14) #17
+  %16 = icmp slt i32 %15, 0
+  br i1 %16, label %insert_avp.exit.thread.us, label %.thread34.i.us.us
+
+.thread34.i.us.us:                                ; preds = %12, %10
+  %17 = getelementptr i8, ptr %.01938.i.us.us, i64 8
+  %.019.i.us.us = load ptr, ptr %17, align 8      ; 3 uses
+  %18 = load ptr, ptr %.019.i.us.us, align 8      ; 2 uses
+  %.not.i10.us.us = icmp eq ptr %18, null
+  br i1 %.not.i10.us.us, label %insert_avp.exit.thread.us, label %.lr.ph.i.split.us.us, !llvm.loop !0
+
+.lr.ph.i.split.us12:                              ; preds = %.lr.ph.i.us, %.thread34.i.us14
+  %19 = phi ptr [ %37, %.thread34.i.us14 ], [ %3, %.lr.ph.i.us ] ; 3 uses
+  %.01938.i.us13 = phi ptr [ %.019.i.us15, %.thread34.i.us14 ], [ %.01936.i.us, %.lr.ph.i.us ] ; 3 uses
+  %20 = load ptr, ptr %19, align 8
+  %21 = tail call i32 @strcmp(ptr noundef %4, ptr noundef %20) #17 ; 2 uses
+  %22 = icmp eq i32 %21, 0
+  br i1 %22, label %25, label %23
+
+23:                                               ; preds = %.lr.ph.i.split.us12
+  %24 = icmp slt i32 %21, 0
+  br i1 %24, label %insert_avp.exit.thread.us, label %.thread34.i.us14
+
+25:                                               ; preds = %.lr.ph.i.split.us12
+  %26 = getelementptr i8, ptr %19, i64 8
+  %27 = load ptr, ptr %26, align 8
+  %28 = tail call i32 @strcmp(ptr noundef %i.t, ptr noundef %27) #17 ; 2 uses
+  %29 = icmp slt i32 %28, 0
+  br i1 %29, label %insert_avp.exit.thread.us, label %30
+
+30:                                               ; preds = %25
+  %31 = icmp eq i32 %28, 0
+  br i1 %31, label %32, label %.thread34.i.us14
+
+32:                                               ; preds = %30
+  %33 = getelementptr i8, ptr %19, i64 16
+  %34 = load i8, ptr %33, align 8
+  %35 = icmp eq i8 %34, 61
+  br i1 %35, label %bb.d, label %.thread34.i.us14
+
+.thread34.i.us14:                                 ; preds = %32, %30, %23
+  %36 = getelementptr i8, ptr %.01938.i.us13, i64 8
+  %.019.i.us15 = load ptr, ptr %36, align 8       ; 3 uses
+  %37 = load ptr, ptr %.019.i.us15, align 8       ; 2 uses
+  %.not.i10.us16 = icmp eq ptr %37, null
+  br i1 %.not.i10.us16, label %insert_avp.exit.thread.us, label %.lr.ph.i.split.us12, !llvm.loop !0
+
+bb.d:                                             ; preds = %32
   tail call void @delete_avp(ptr noundef %i.m)
   br label %.split.us.backedge
 
-.split.us.backedge:                               ; preds = %bb.d, %bb.c
+insert_avp.exit.thread.us:                        ; preds = %.thread34.i.us.us, %12, %10, %.thread34.i.us14, %25, %23, %bb.c
+  %.019.lcssa.i.us = phi ptr [ %.01936.i.us, %bb.c ], [ %.019.i.us15, %.thread34.i.us14 ], [ %.01938.i.us13, %25 ], [ %.01938.i.us13, %23 ], [ %.01938.i.us.us, %10 ], [ %.019.i.us.us, %.thread34.i.us.us ], [ %.01938.i.us.us, %12 ] ; 2 uses
+  %38 = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 5 uses
+  store ptr %i.m, ptr %38, align 8
+  %39 = getelementptr i8, ptr %38, i64 8
+  store ptr %.019.lcssa.i.us, ptr %39, align 8
+  %40 = getelementptr i8, ptr %.019.lcssa.i.us, i64 16 ; 2 uses
+  %41 = load ptr, ptr %40, align 8                ; 2 uses
+  %42 = getelementptr i8, ptr %38, i64 16
+  store ptr %41, ptr %42, align 8
+  %43 = getelementptr i8, ptr %41, i64 8
+  store ptr %38, ptr %43, align 8
+  store ptr %38, ptr %40, align 8
+  %44 = load i32, ptr %i.d, align 8
+  %45 = add i32 %44, 1
+  store i32 %45, ptr %i.d, align 8
+  br label %.split.us.backedge
+
+.split.us.backedge:                               ; preds = %insert_avp.exit.thread.us, %bb.d
   br label %.split.us, !llvm.loop !16
 
 .split:                                           ; preds = %bb.a, %bb.f
@@ -1379,7 +1467,7 @@ bb.d:                                             ; preds = %.backedge.jt4
   br i1 %.not126.jt4, label %bb.n, label %.loopexit237
 
 bb.e:                                             ; preds = %.lr.ph485, %.backedge.jt2
-  %i.t = phi i8 [ %i.bk, %.lr.ph485 ], [ %i.ct, %.backedge.jt2 ] ; 2 uses
+  %i.t = phi i8 [ %i.bk, %.lr.ph485 ], [ %i.ct, %.backedge.jt2 ] ; 3 uses
   %i.u = phi i32 [ %i.bl, %.lr.ph485 ], [ %i.cs, %.backedge.jt2 ]
   %.0120.be.jt2484 = phi i32 [ 1, %.lr.ph485 ], [ %i.cp, %.backedge.jt2 ] ; 5 uses
   %spec.select229483 = phi i32 [ %spec.select229.ph499, %.lr.ph485 ], [ %spec.select.jt2, %.backedge.jt2 ] ; 2 uses
@@ -1395,7 +1483,7 @@ bb.f:                                             ; preds = %.backedge.jt0
 bb.g:                                             ; preds = %.lr.ph495, %.backedge.jt1.backedge
   %i.x = phi i8 [ %i.dj, %.lr.ph495 ], [ %i.bt, %.backedge.jt1.backedge ]
   %i.y = phi i32 [ %i.di, %.lr.ph495 ], [ %i.bs, %.backedge.jt1.backedge ]
-  %spec.select226494 = phi i32 [ %spec.select226.ph, %.lr.ph495 ], [ %spec.select.jt1, %.backedge.jt1.backedge ] ; 2 uses
+  %spec.select226494 = phi i32 [ %spec.select236.ph, %.lr.ph495 ], [ %spec.select.jt1, %.backedge.jt1.backedge ] ; 2 uses
   %i.z = tail call i32 @feof(ptr noundef nonnull %i.m) #15
   %.not126.jt1 = icmp eq i32 %i.z, 0
   br i1 %.not126.jt1, label %bb.r, label %.loopexit237
@@ -1559,7 +1647,7 @@ bb.p:                                             ; preds = %bb.o, %bb.o, %bb.o,
   store i8 0, ptr %i.q, align 1
   tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.h, ptr noundef @.str.16, ptr noundef %0, i32 noundef %spec.select225)
   %i.az = load ptr, ptr %i.h, align 8             ; 2 uses
-  %i.ba = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 22 uses
+  %i.ba = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 23 uses
   %.not.i132 = icmp eq ptr %i.az, null
   %i.bb = load ptr, ptr @avp_strings, align 8
   %.str.6..i = select i1 %.not.i132, ptr @.str.6, ptr %i.az
@@ -1580,6 +1668,8 @@ bb.p:                                             ; preds = %bb.o, %bb.o, %bb.o,
   br i1 %.not125.jt2482498, label %.backedge.jt2.outer..backedge.jt2.outer..loopexit.loopexit379_crit_edge_crit_edge, label %.lr.ph485.lr.ph, !llvm.loop !24
 
 .lr.ph485.lr.ph:                                  ; preds = %bb.p
+  %1 = getelementptr i8, ptr %i.ba, i64 24
+  %2 = getelementptr i8, ptr %i.ba, i64 8         ; 2 uses
   br label %.lr.ph485, !llvm.loop !24
 
 .lr.ph485:                                        ; preds = %.lr.ph485.lr.ph, %.backedge.jt2.outer
@@ -1803,7 +1893,11 @@ bb.x:                                             ; preds = %bb.w
   store i8 0, ptr %i.j, align 1
   %i.cj = tail call ptr @new_avp(ptr noundef %i.i, ptr noundef %i.j, i8 noundef signext 63) ; 2 uses
   %i.ck = tail call zeroext i1 @insert_avp(ptr noundef %i.ba, ptr noundef %i.cj)
-  br i1 %i.ck, label %.backedge.jt1.preheader, label %.backedge.jt1.preheader.sink.split
+  br i1 %i.ck, label %.backedge.jt1.preheader, label %3
+
+3:                                                ; preds = %bb.x
+  tail call void @delete_avp(ptr noundef %i.cj)
+  br label %.backedge.jt1.preheader
 
 bb.y:                                             ; preds = %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w
   %i.cl = zext nneg i32 %.0120.be.jt2484 to i64
@@ -1852,27 +1946,112 @@ bb.ad:                                            ; preds = %bb.ab
   %i.cz = zext nneg i32 %.0120.be.jt3489 to i64
   %i.da = getelementptr i8, ptr %i.j, i64 %i.cz
   store i8 0, ptr %i.da, align 1
-  %i.db = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 5 uses
+  %i.db = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 6 uses
   %i.dc = load ptr, ptr @avp_strings, align 8
   %i.dd = tail call ptr @scs_subscribe(ptr noundef %i.dc, ptr noundef %i.i)
   store ptr %i.dd, ptr %i.db, align 8
   %i.de = load ptr, ptr @avp_strings, align 8
-  %i.df = tail call ptr @scs_subscribe(ptr noundef %i.de, ptr noundef %i.j)
+  %i.df = tail call ptr @scs_subscribe(ptr noundef %i.de, ptr noundef %i.j) ; 3 uses
   %i.dg = getelementptr i8, ptr %i.db, i64 8
   store ptr %i.df, ptr %i.dg, align 8
   %i.dh = getelementptr i8, ptr %i.db, i64 16
   store i8 %i.t, ptr %i.dh, align 8
-  %1 = tail call zeroext i1 @insert_avp(ptr noundef %i.ba, ptr noundef %i.db)
-  br i1 %1, label %.backedge.jt1.preheader, label %.backedge.jt1.preheader.sink.split
+  %.01936.i = load ptr, ptr %1, align 8           ; 4 uses
+  %4 = load ptr, ptr %.01936.i, align 8           ; 3 uses
+  %.not37.i = icmp eq ptr %4, null
+  br i1 %.not37.i, label %.backedge.jt1.preheader.sink.split, label %.lr.ph.i
 
-.backedge.jt1.preheader.sink.split:               ; preds = %bb.x, %bb.ad
-  %.sink = phi ptr [ %i.db, %bb.ad ], [ %i.cj, %bb.x ]
-  %spec.select226.ph.ph = phi i32 [ %spec.select.jt3, %bb.ad ], [ %spec.select.jt2, %bb.x ]
-  tail call void @delete_avp(ptr noundef %.sink)
+.lr.ph.i:                                         ; preds = %bb.ad
+  %5 = load ptr, ptr %i.db, align 8               ; 2 uses
+  %6 = icmp eq i8 %i.t, 61
+  br i1 %6, label %.lr.ph.i.split, label %.lr.ph.i.split.us
+
+.lr.ph.i.split.us:                                ; preds = %.lr.ph.i, %.thread34.i.us
+  %7 = phi ptr [ %19, %.thread34.i.us ], [ %4, %.lr.ph.i ] ; 2 uses
+  %.01938.i.us = phi ptr [ %.019.i.us, %.thread34.i.us ], [ %.01936.i, %.lr.ph.i ] ; 3 uses
+  %8 = load ptr, ptr %7, align 8
+  %9 = tail call i32 @strcmp(ptr noundef %5, ptr noundef %8) #17 ; 2 uses
+  %10 = icmp eq i32 %9, 0
+  br i1 %10, label %13, label %11
+
+11:                                               ; preds = %.lr.ph.i.split.us
+  %12 = icmp slt i32 %9, 0
+  br i1 %12, label %.backedge.jt1.preheader.sink.split, label %.thread34.i.us
+
+13:                                               ; preds = %.lr.ph.i.split.us
+  %14 = getelementptr i8, ptr %7, i64 8
+  %15 = load ptr, ptr %14, align 8
+  %16 = tail call i32 @strcmp(ptr noundef %i.df, ptr noundef %15) #17
+  %17 = icmp slt i32 %16, 0
+  br i1 %17, label %.backedge.jt1.preheader.sink.split, label %.thread34.i.us
+
+.thread34.i.us:                                   ; preds = %13, %11
+  %18 = getelementptr i8, ptr %.01938.i.us, i64 8
+  %.019.i.us = load ptr, ptr %18, align 8         ; 3 uses
+  %19 = load ptr, ptr %.019.i.us, align 8         ; 2 uses
+  %.not.i133.us = icmp eq ptr %19, null
+  br i1 %.not.i133.us, label %.backedge.jt1.preheader.sink.split, label %.lr.ph.i.split.us, !llvm.loop !0
+
+.lr.ph.i.split:                                   ; preds = %.lr.ph.i, %.thread34.i
+  %20 = phi ptr [ %38, %.thread34.i ], [ %4, %.lr.ph.i ] ; 3 uses
+  %.01938.i = phi ptr [ %.019.i, %.thread34.i ], [ %.01936.i, %.lr.ph.i ] ; 3 uses
+  %21 = load ptr, ptr %20, align 8
+  %22 = tail call i32 @strcmp(ptr noundef %5, ptr noundef %21) #17 ; 2 uses
+  %23 = icmp eq i32 %22, 0
+  br i1 %23, label %24, label %35
+
+24:                                               ; preds = %.lr.ph.i.split
+  %25 = getelementptr i8, ptr %20, i64 8
+  %26 = load ptr, ptr %25, align 8
+  %27 = tail call i32 @strcmp(ptr noundef %i.df, ptr noundef %26) #17 ; 2 uses
+  %28 = icmp slt i32 %27, 0
+  br i1 %28, label %.backedge.jt1.preheader.sink.split, label %29
+
+29:                                               ; preds = %24
+  %30 = icmp eq i32 %27, 0
+  br i1 %30, label %31, label %.thread34.i
+
+31:                                               ; preds = %29
+  %32 = getelementptr i8, ptr %20, i64 16
+  %33 = load i8, ptr %32, align 8
+  %34 = icmp eq i8 %33, 61
+  br i1 %34, label %insert_avp.exit, label %.thread34.i
+
+35:                                               ; preds = %.lr.ph.i.split
+  %36 = icmp slt i32 %22, 0
+  br i1 %36, label %.backedge.jt1.preheader.sink.split, label %.thread34.i
+
+.thread34.i:                                      ; preds = %35, %31, %29
+  %37 = getelementptr i8, ptr %.01938.i, i64 8
+  %.019.i = load ptr, ptr %37, align 8            ; 3 uses
+  %38 = load ptr, ptr %.019.i, align 8            ; 2 uses
+  %.not.i133 = icmp eq ptr %38, null
+  br i1 %.not.i133, label %.backedge.jt1.preheader.sink.split, label %.lr.ph.i.split, !llvm.loop !0
+
+.backedge.jt1.preheader.sink.split:               ; preds = %.thread34.i.us, %13, %11, %.thread34.i, %35, %24, %bb.ad
+  %.019.lcssa.i = phi ptr [ %.01936.i, %bb.ad ], [ %.019.i, %.thread34.i ], [ %.01938.i, %24 ], [ %.01938.i, %35 ], [ %.01938.i.us, %11 ], [ %.019.i.us, %.thread34.i.us ], [ %.01938.i.us, %13 ] ; 2 uses
+  %39 = tail call noalias dereferenceable_or_null(40) ptr @g_slice_alloc(i64 noundef 40) #16 ; 5 uses
+  store ptr %i.db, ptr %39, align 8
+  %40 = getelementptr i8, ptr %39, i64 8
+  store ptr %.019.lcssa.i, ptr %40, align 8
+  %41 = getelementptr i8, ptr %.019.lcssa.i, i64 16 ; 2 uses
+  %42 = load ptr, ptr %41, align 8                ; 2 uses
+  %43 = getelementptr i8, ptr %39, i64 16
+  store ptr %42, ptr %43, align 8
+  %44 = getelementptr i8, ptr %42, i64 8
+  store ptr %39, ptr %44, align 8
+  store ptr %39, ptr %41, align 8
+  %45 = load i32, ptr %2, align 8
+  %46 = add i32 %45, 1
+  store i32 %46, ptr %2, align 8
   br label %.backedge.jt1.preheader
 
-.backedge.jt1.preheader:                          ; preds = %.backedge.jt1.preheader.sink.split, %bb.x, %bb.ad
-  %spec.select226.ph = phi i32 [ %spec.select.jt2, %bb.x ], [ %spec.select.jt3, %bb.ad ], [ %spec.select226.ph.ph, %.backedge.jt1.preheader.sink.split ]
+insert_avp.exit:                                  ; preds = %31
+  tail call void @delete_avp(ptr noundef %i.db)
+  br label %.backedge.jt1.preheader
+
+.backedge.jt1.preheader:                          ; preds = %bb.x, %3, %.backedge.jt1.preheader.sink.split, %insert_avp.exit
+  %spec.select236.ph = phi i32 [ %spec.select.jt2, %bb.x ], [ %spec.select.jt2, %3 ], [ %spec.select.jt3, %.backedge.jt1.preheader.sink.split ], [ %spec.select.jt3, %insert_avp.exit ]
   %i.di = tail call i32 @fgetc(ptr noundef nonnull %i.m) ; 2 uses
   %i.dj = trunc i32 %i.di to i8                   ; 2 uses
   %.not125.jt1493 = icmp eq i8 %i.dj, 0
@@ -2103,33 +2282,33 @@ attributes #16 = { allocsize(0) }
 attributes #17 = { nounwind willreturn memory(read) }
 attributes #18 = { nounwind willreturn memory(none) }
 
-!llvm.module.flags = !{!0, !1, !2, !3, !4}
-!llvm.ident = !{!5}
+!llvm.module.flags = !{!1, !2, !3, !4, !5}
+!llvm.ident = !{!6}
 
-!0 = !{i32 8, !"cf-protection-return", i32 1}
-!1 = !{i32 8, !"cf-protection-branch", i32 1}
-!2 = !{i32 4, !"probe-stack", !"inline-asm"}
-!3 = !{i32 8, !"PIC Level", i32 2}
-!4 = !{i32 7, !"uwtable", i32 2}
-!5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = !{!"llvm.loop.mustprogress"}
-!7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!8 = distinct !{!8, !6}
-!9 = distinct !{!9, !6}
-!10 = distinct !{!10, !6}
-!11 = distinct !{!11, !6}
-!12 = distinct !{!12, !6}
-!13 = distinct !{!13, !6}
-!14 = distinct !{!14, !6}
-!15 = distinct !{!15, !6}
-!16 = distinct !{!16, !6}
-!17 = distinct !{!17, !6}
-!18 = distinct !{!18, !6}
-!19 = distinct !{!19, !6}
-!20 = distinct !{!20, !6}
-!21 = distinct !{!21, !6}
-!22 = distinct !{!22, !6}
-!23 = distinct !{!23, !6}
-!24 = distinct !{!24, !6}
-!25 = distinct !{!25, !6}
+!0 = distinct !{!0, !7}
+!1 = !{i32 8, !"cf-protection-return", i32 1}
+!2 = !{i32 8, !"cf-protection-branch", i32 1}
+!3 = !{i32 4, !"probe-stack", !"inline-asm"}
+!4 = !{i32 8, !"PIC Level", i32 2}
+!5 = !{i32 7, !"uwtable", i32 2}
+!6 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
+!7 = !{!"llvm.loop.mustprogress"}
+!8 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!9 = distinct !{!9, !7}
+!10 = distinct !{!10, !7}
+!11 = distinct !{!11, !7}
+!12 = distinct !{!12, !7}
+!13 = distinct !{!13, !7}
+!14 = distinct !{!14, !7}
+!15 = distinct !{!15, !7}
+!16 = distinct !{!16, !7}
+!17 = distinct !{!17, !7}
+!18 = distinct !{!18, !7}
+!19 = distinct !{!19, !7}
+!20 = distinct !{!20, !7}
+!21 = distinct !{!21, !7}
+!22 = distinct !{!22, !7}
+!23 = distinct !{!23, !7}
+!24 = distinct !{!24, !7}
+!25 = distinct !{!25, !7}
 end_hunk_3
