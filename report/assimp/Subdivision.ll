@@ -205,9 +205,10 @@ bb.aq:                                            ; preds = %.lr.ph2814, %._crit
   br i1 %.not3070, label %._crit_edge2812, label %.lr.ph2811
 
 .lr.ph2811:                                       ; preds = %bb.aq
-  %i.ahx = getelementptr inbounds nuw i8, ptr %i.ahu, i64 208
+  %i.ahx = getelementptr inbounds nuw i8, ptr %i.ahu, i64 208 ; 2 uses
   %i.ahy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01962.03607, i64 %.03132813
   %i.ahz = getelementptr inbounds nuw i8, ptr %i.ahy, i64 4
+  %.pre3517 = load ptr, ptr %i.ahx, align 8
   br label %bb.ar
 
 ._crit_edge2812:                                  ; preds = %._crit_edge2808, %bb.aq
@@ -217,8 +218,8 @@ bb.aq:                                            ; preds = %.lr.ph2814, %._crit
 
 bb.ar:                                            ; preds = %.lr.ph2811, %._crit_edge2808
   %i.aib = phi i32 [ %i.ahw, %.lr.ph2811 ], [ %i.aig, %._crit_edge2808 ]
+  %14 = phi ptr [ %.pre3517, %.lr.ph2811 ], [ %15, %._crit_edge2808 ] ; 2 uses
   %indvars.iv3417 = phi i64 [ 0, %.lr.ph2811 ], [ %indvars.iv.next3418, %._crit_edge2808 ] ; 2 uses
-  %14 = load ptr, ptr %i.ahx, align 8
   %i.aic = getelementptr inbounds nuw [16 x i8], ptr %14, i64 %indvars.iv3417 ; 3 uses
   %i.aid = load i32, ptr %i.aic, align 8
   %.not3071 = icmp eq i32 %i.aid, 0
@@ -230,11 +231,13 @@ bb.ar:                                            ; preds = %.lr.ph2811, %._crit
   br label %bb.as
 
 ._crit_edge2808.loopexit:                         ; preds = %bb.as
+  %.pre3516 = load ptr, ptr %i.ahx, align 8
   %.pre3516.a = load i32, ptr %i.ahv, align 8
   br label %._crit_edge2808
 
 ._crit_edge2808:                                  ; preds = %._crit_edge2808.loopexit, %bb.ar
   %i.aig = phi i32 [ %.pre3516.a, %._crit_edge2808.loopexit ], [ %i.aib, %bb.ar ] ; 2 uses
+  %15 = phi ptr [ %.pre3516, %._crit_edge2808.loopexit ], [ %14, %bb.ar ]
   %indvars.iv.next3418 = add nuw nsw i64 %indvars.iv3417, 1 ; 2 uses
   %i.aih = zext i32 %i.aig to i64
   %i.aii = icmp samesign ult i64 %indvars.iv.next3418, %i.aih
@@ -407,9 +410,10 @@ bb.at:                                            ; preds = %.lr.ph2828, %._crit
   br i1 %.not3074, label %._crit_edge2826, label %.lr.ph2825
 
 .lr.ph2825:                                       ; preds = %bb.at
-  %i.akz = getelementptr inbounds nuw i8, ptr %i.akw, i64 208
+  %i.akz = getelementptr inbounds nuw i8, ptr %i.akw, i64 208 ; 2 uses
   %i.ala = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01962.03607, i64 %.03082827 ; 2 uses
   %i.alb = getelementptr inbounds nuw i8, ptr %i.ala, i64 4
+  %.pre3521 = load ptr, ptr %i.akz, align 8
   br label %bb.au
 
 ._crit_edge2826:                                  ; preds = %._crit_edge2822, %bb.at
@@ -419,9 +423,9 @@ bb.at:                                            ; preds = %.lr.ph2828, %._crit
 
 bb.au:                                            ; preds = %.lr.ph2825, %._crit_edge2822
   %i.ald = phi i32 [ %i.aky, %.lr.ph2825 ], [ %i.all, %._crit_edge2822 ]
+  %16 = phi ptr [ %.pre3521, %.lr.ph2825 ], [ %17, %._crit_edge2822 ] ; 2 uses
   %indvars.iv3425 = phi i64 [ 0, %.lr.ph2825 ], [ %indvars.iv.next3426, %._crit_edge2822 ] ; 3 uses
-  %15 = load ptr, ptr %i.akz, align 8
-  %i.ale = getelementptr inbounds nuw [16 x i8], ptr %15, i64 %indvars.iv3425 ; 3 uses
+  %i.ale = getelementptr inbounds nuw [16 x i8], ptr %16, i64 %indvars.iv3425 ; 3 uses
   %i.alf = load i32, ptr %i.ale, align 8
   %.not3075 = icmp eq i32 %i.alf, 0
   br i1 %.not3075, label %._crit_edge2822, label %.lr.ph2821
@@ -435,11 +439,13 @@ bb.au:                                            ; preds = %.lr.ph2825, %._crit
   br label %bb.av
 
 ._crit_edge2822.loopexit:                         ; preds = %bb.av
+  %.pre3520 = load ptr, ptr %i.akz, align 8
   %.pre3518 = load i32, ptr %i.akx, align 8
   br label %._crit_edge2822
 
 ._crit_edge2822:                                  ; preds = %._crit_edge2822.loopexit, %bb.au
   %i.all = phi i32 [ %.pre3518, %._crit_edge2822.loopexit ], [ %i.ald, %bb.au ] ; 2 uses
+  %17 = phi ptr [ %.pre3520, %._crit_edge2822.loopexit ], [ %16, %bb.au ]
   %indvars.iv.next3426 = add nuw nsw i64 %indvars.iv3425, 1 ; 2 uses
   %i.alm = zext i32 %i.all to i64
   %i.aln = icmp samesign ult i64 %indvars.iv.next3426, %i.alm

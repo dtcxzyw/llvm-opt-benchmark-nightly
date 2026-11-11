@@ -204,24 +204,25 @@ _ZSt4fillIPssEvT_S1_RKT0_.exit.i:                 ; preds = %.lr.ph.i.i.i.i77, %
 
 .lr.ph.i80:                                       ; preds = %_ZN2cv3Mat2atINS_7Point3_IiEEEERT_i.exit
   %i.gr = fptosi double %i.k to i32               ; 2 uses
-  %i.gs = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.gs = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.gu = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.gv = load ptr, ptr %i.gu, align 8
   %i.gw = getelementptr inbounds nuw i8, ptr %5, i64 128
   %i.gx = load i64, ptr %i.gw, align 8
   %i.gy = add nsw i32 %i.f, -2
+  %.pre131 = load i32, ptr %i.gs, align 8
   %broadcast.splatinsert182 = insertelement <4 x i32> poison, i32 %i.gr, i64 0
   %broadcast.splat183 = shufflevector <4 x i32> %broadcast.splatinsert182, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %bb.al
 
 bb.al:                                            ; preds = %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i, %.lr.ph.i80
+  %8 = phi i32 [ %.pre131, %.lr.ph.i80 ], [ %9, %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i ] ; 5 uses
   %.029.i81 = phi i32 [ 0, %.lr.ph.i80 ], [ %i.ic, %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i ] ; 2 uses
   %.01828.i82 = phi ptr [ %.0.i, %.lr.ph.i80 ], [ %i.ib, %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i ] ; 4 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %.01828.i82, i64 8
   %i.ha = load i32, ptr %i.gz, align 4, !tbaa !43 ; 3 uses
   %i.hb = icmp sgt i32 %i.ha, -1
-  %8 = load i32, ptr %i.gs, align 8
   %.not.i83 = icmp slt i32 %i.ha, %8
   %or.cond118 = select i1 %i.hb, i1 %.not.i83, i1 false
   br i1 %or.cond118, label %bb.am, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i
@@ -281,7 +282,7 @@ vector.body184:                                   ; preds = %vector.body184, %ve
 
 middle.block188:                                  ; preds = %vector.body184
   %cmp.n189 = icmp eq i64 %i.hu, %n.vec181
-  br i1 %cmp.n189, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i, label %.lr.ph.i.i.i.i90.preheader
+  br i1 %cmp.n189, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.loopexit, label %.lr.ph.i.i.i.i90.preheader
 
 .lr.ph.i.i.i.i90.preheader:                       ; preds = %.lr.ph.i.i.i.preheader.i89, %middle.block188
   %.06.i.i.i.i91.ph = phi ptr [ %i.ho, %.lr.ph.i.i.i.preheader.i89 ], [ %i.hw, %middle.block188 ]
@@ -292,9 +293,14 @@ middle.block188:                                  ; preds = %vector.body184
   store i32 %i.gr, ptr %.06.i.i.i.i91, align 4, !tbaa !41
   %i.ia = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i91, i64 4 ; 2 uses
   %.not.i.i.i.i92 = icmp eq ptr %i.ia, %i.hm
-  br i1 %.not.i.i.i.i92, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i, label %.lr.ph.i.i.i.i90, !llvm.loop !90
+  br i1 %.not.i.i.i.i92, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.loopexit, label %.lr.ph.i.i.i.i90, !llvm.loop !90
 
-_ZSt4fillIPiiEvT_S1_RKT0_.exit.i:                 ; preds = %.lr.ph.i.i.i.i90, %middle.block188, %bb.ao, %bb.an, %bb.am, %bb.al
+_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.loopexit:        ; preds = %.lr.ph.i.i.i.i90, %middle.block188
+  %.pre = load i32, ptr %i.gs, align 8
+  br label %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i
+
+_ZSt4fillIPiiEvT_S1_RKT0_.exit.i:                 ; preds = %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.loopexit, %bb.ao, %bb.an, %bb.am, %bb.al
+  %9 = phi i32 [ %.pre, %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.loopexit ], [ %8, %bb.ao ], [ %8, %bb.an ], [ %8, %bb.am ], [ %8, %bb.al ]
   %i.ib = getelementptr inbounds nuw i8, ptr %.01828.i82, i64 12
   %i.ic = add nuw nsw i32 %.029.i81, 1
   %exitcond.not.i84 = icmp eq i32 %.029.i81, %i.gy

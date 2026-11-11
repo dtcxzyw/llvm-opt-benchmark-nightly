@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.v, %.lr.ph219.i
   %.0134215.i = phi i32 [ -1, %.lr.ph219.i ], [ %.1135.i, %bb.v ] ; 2 uses
   %.0137214.i = phi i8 [ 0, %.lr.ph219.i ], [ %.1138.i, %bb.v ] ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.0130218.i, i64 1
-  %i.er = load i8, ptr %.0130218.i, align 1
+  %i.er = load i8, ptr %.0130218.i, align 4
   %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %indvars.iv227.i
   store i8 %i.er, ptr %i.es, align 1
   %i.et = getelementptr inbounds nuw i8, ptr %.0130218.i, i64 2
@@ -215,7 +215,7 @@ bb.t:                                             ; preds = %bb.v, %.lr.ph219.i
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 1
   store i8 %i.eu, ptr %i.ex, align 1
   %i.ey = getelementptr inbounds nuw i8, ptr %.0130218.i, i64 3
-  %i.ez = load i8, ptr %i.et, align 1
+  %i.ez = load i8, ptr %i.et, align 2
   %i.fa = load ptr, ptr %i.eo, align 8
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.fa, i64 %indvars.iv227.i
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 2
@@ -618,7 +618,7 @@ stbi__cleanup_jpeg.exit339.i:                     ; preds = %bb.gu, %bb.gn
   br label %bb.iy
 
 bb.gv:                                            ; preds = %bb.gm
-  %i.ana = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.ana = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.anb = load i32, ptr %i.ana, align 8
   %i.anc = icmp eq i32 %i.anb, %i.aly
   br i1 %i.anc, label %bb.gw, label %.preheader63.i.i
@@ -702,37 +702,40 @@ bb.gy:                                            ; preds = %.loopexit64.i.i
   %i.aou = getelementptr inbounds nuw i8, ptr %i.d, i64 18320
   %i.aov = shufflevector <4 x i32> %i.aor, <4 x i32> poison, <2 x i32> <i32 3, i32 1>
   %i.aow = sub <2 x i32> splat (i32 3), %i.aov    ; 2 uses
-  %i.aox = getelementptr inbounds nuw i8, ptr %i.d, i64 18300
-  %i.aoy = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.aox = getelementptr inbounds nuw i8, ptr %i.d, i64 18300 ; 2 uses
+  %i.aoy = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.aoz = extractelement <4 x i32> %i.aor, i64 2
   %i.apa = sub i32 3, %i.aoz
   %i.apb = sext i32 %i.apa to i64
   %i.apc = extractelement <4 x i32> %i.aor, i64 0
   %i.apd = sub i32 3, %i.apc
   %i.ape = sext i32 %i.apd to i64
+  %.pre81.i.i = load ptr, ptr %i.aoy, align 8
+  %.pre83.i.i = load i32, ptr %i.ana, align 8
+  %.pre85.i.i = load i32, ptr %i.aox, align 4
   %.pre80.i.i.a = load i32, ptr %i.aod, align 8
   %i.apf = extractelement <2 x i32> %i.aow, i64 0
   %i.apg = extractelement <2 x i32> %i.aow, i64 1
   br label %bb.gz
 
 bb.gz:                                            ; preds = %._crit_edge.i.i, %.lr.ph75.i.i
-  %i.aph = phi i32 [ %.pre80.i.i.a, %.lr.ph75.i.i ], [ %i.aqk, %._crit_edge.i.i ] ; 2 uses
-  %i.api = phi ptr [ %i.aod, %.lr.ph75.i.i ], [ %i.aql, %._crit_edge.i.i ]
+  %7 = phi i32 [ %.pre80.i.i.a, %.lr.ph75.i.i ], [ %10, %._crit_edge.i.i ] ; 2 uses
+  %8 = phi i32 [ %.pre85.i.i, %.lr.ph75.i.i ], [ %11, %._crit_edge.i.i ] ; 2 uses
+  %9 = phi ptr [ %i.aod, %.lr.ph75.i.i ], [ %12, %._crit_edge.i.i ]
+  %i.aph = phi i32 [ %.pre83.i.i, %.lr.ph75.i.i ], [ %i.aqk, %._crit_edge.i.i ] ; 2 uses
+  %i.api = phi ptr [ %.pre81.i.i, %.lr.ph75.i.i ], [ %i.aql, %._crit_edge.i.i ] ; 2 uses
   %.173.i.i = phi i32 [ 0, %.lr.ph75.i.i ], [ %i.aqm, %._crit_edge.i.i ] ; 4 uses
-  %i.apj = add i32 %i.aph, 1
+  %i.apj = add i32 %7, 1
   %.not78.i.i = icmp ult i32 %i.apj, 2
   br i1 %.not78.i.i, label %._crit_edge.i.i, label %.lr.ph72.preheader.i.i
 
 .lr.ph72.preheader.i.i:                           ; preds = %bb.gz
-  %7 = load ptr, ptr %i.aoy, align 8
-  %8 = load i32, ptr %i.ana, align 8
-  %i.apk = mul i32 %8, %.173.i.i
+  %i.apk = mul i32 %.173.i.i, %i.aph
   %i.apl = zext i32 %i.apk to i64
-  %i.apm = getelementptr inbounds nuw i8, ptr %7, i64 %i.apl
+  %i.apm = getelementptr inbounds nuw i8, ptr %i.api, i64 %i.apl
   %i.apn = load ptr, ptr %i.aou, align 8
-  %i.apo = mul i32 %.173.i.i, %i.apg
-  %9 = load i32, ptr %i.aox, align 4
-  %i.app = mul i32 %i.apo, %9
+  %i.apo = mul i32 %8, %i.apg
+  %i.app = mul i32 %i.apo, %.173.i.i
   %i.apq = zext i32 %i.app to i64
   %i.apr = getelementptr inbounds nuw i8, ptr %i.apn, i64 %i.apq
   %i.aps = load ptr, ptr %i.aos, align 8
@@ -762,13 +765,22 @@ bb.gz:                                            ; preds = %._crit_edge.i.i, %.
   %i.aqh = add i32 %i.aqg, 1
   %i.aqi = lshr i32 %i.aqh, 1
   %i.aqj = icmp samesign ult i32 %i.aqe, %i.aqi
-  br i1 %i.aqj, label %.lr.ph72.i.i, label %._crit_edge.i.i, !llvm.loop !70
+  br i1 %i.aqj, label %.lr.ph72.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !70
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph72.i.i, %bb.gz
-  %i.aqk = phi i32 [ %i.aph, %bb.gz ], [ %i.aqg, %.lr.ph72.i.i ]
-  %i.aql = phi ptr [ %i.api, %bb.gz ], [ %i.aqf, %.lr.ph72.i.i ] ; 3 uses
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph72.i.i
+  %.pre80.i.i = load ptr, ptr %i.aoy, align 8
+  %.pre82.i.i = load i32, ptr %i.ana, align 8
+  %.pre84.i.i = load i32, ptr %i.aox, align 4
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.gz
+  %10 = phi i32 [ %i.aqg, %._crit_edge.loopexit.i.i ], [ %7, %bb.gz ]
+  %11 = phi i32 [ %.pre84.i.i, %._crit_edge.loopexit.i.i ], [ %8, %bb.gz ]
+  %12 = phi ptr [ %i.aqf, %._crit_edge.loopexit.i.i ], [ %9, %bb.gz ] ; 3 uses
+  %i.aqk = phi i32 [ %.pre82.i.i, %._crit_edge.loopexit.i.i ], [ %i.aph, %bb.gz ]
+  %i.aql = phi ptr [ %.pre80.i.i, %._crit_edge.loopexit.i.i ], [ %i.api, %bb.gz ]
   %i.aqm = add nuw nsw i32 %.173.i.i, 1           ; 2 uses
-  %i.aqn = getelementptr inbounds nuw i8, ptr %i.aql, i64 4
+  %i.aqn = getelementptr inbounds nuw i8, ptr %12, i64 4
   %i.aqo = load i32, ptr %i.aqn, align 4
   %i.aqp = add i32 %i.aqo, 1
   %i.aqq = lshr i32 %i.aqp, 1
@@ -798,7 +810,7 @@ bb.ha:                                            ; preds = %bb.ha, %.lr.ph67.i.
   br i1 %i.ari, label %bb.ha, label %output_jpeg_nv12.exit.i, !llvm.loop !72
 
 output_jpeg_nv12.exit.i:                          ; preds = %bb.ha, %._crit_edge.i.i, %bb.gy, %.preheader.i.i
-  %i.arj = phi ptr [ %i.aql, %._crit_edge.i.i ], [ %i.aod, %bb.gy ], [ %i.aod, %.preheader.i.i ], [ %i.ard, %bb.ha ]
+  %i.arj = phi ptr [ %12, %._crit_edge.i.i ], [ %i.aod, %bb.gy ], [ %i.aod, %.preheader.i.i ], [ %i.ard, %bb.ha ]
   %i.ark = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.arl = load ptr, ptr %i.ark, align 8
   br label %.loopexit398.i
@@ -1201,18 +1213,18 @@ bb.j:                                             ; preds = %.preheader, %bb.j
   %.1200221 = phi ptr [ %i.a, %.preheader ], [ %i.hc, %bb.j ] ; 9 uses
   %.0201220 = phi ptr [ %0, %.preheader ], [ %i.hd, %bb.j ] ; 9 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.1200221, i64 8
-  %i.ds = load i32, ptr %i.dr, align 4            ; 2 uses
+  %i.ds = load i32, ptr %i.dr, align 8            ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %.1200221, i64 24
-  %i.du = load i32, ptr %i.dt, align 4            ; 2 uses
+  %i.du = load i32, ptr %i.dt, align 8            ; 2 uses
   %i.dv = add nsw i32 %i.du, %i.ds
   %i.dw = mul nsw i32 %i.dv, 2217                 ; 2 uses
   %i.dx = mul nsw i32 %i.du, -7567
   %i.dy = add nsw i32 %i.dw, %i.dx                ; 2 uses
   %i.dz = mul nsw i32 %i.ds, 3135
   %i.ea = add nsw i32 %i.dw, %i.dz                ; 2 uses
-  %i.eb = load i32, ptr %.1200221, align 4        ; 2 uses
+  %i.eb = load i32, ptr %.1200221, align 16       ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.1200221, i64 16
-  %i.ed = load i32, ptr %i.ec, align 4            ; 2 uses
+  %i.ed = load i32, ptr %i.ec, align 16           ; 2 uses
   %i.ee = add nsw i32 %i.ed, %i.eb
   %i.ef = shl nsw i32 %i.ee, 12                   ; 2 uses
   %i.eg = sub nsw i32 %i.eb, %i.ed

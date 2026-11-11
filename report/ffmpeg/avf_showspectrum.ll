@@ -205,13 +205,9 @@ bb.k:                                             ; preds = %.lr.ph326, %bb.k
   store i32 %i.kt, ptr %i.ku, align 8, !tbaa !52
   br label %bb.m
 
-.preheader317.splitthread-pre-split:              ; preds = %._crit_edge
-  %.pr = load i32, ptr %i.m, align 4, !tbaa !84
-  br label %.preheader317.split
-
-.preheader317.split:                              ; preds = %.preheader317.splitthread-pre-split, %.preheader317.split.preheader
-  %i.kv = phi i32 [ %.pr, %.preheader317.splitthread-pre-split ], [ %i.jl, %.preheader317.split.preheader ] ; 2 uses
-  %indvars.iv382 = phi i64 [ %indvars.iv.next383, %.preheader317.splitthread-pre-split ], [ 0, %.preheader317.split.preheader ] ; 3 uses
+.preheader317.split:                              ; preds = %.preheader317.split.preheader, %._crit_edge
+  %i.kv = phi i32 [ %i.jl, %.preheader317.split.preheader ], [ %2, %._crit_edge ] ; 3 uses
+  %indvars.iv382 = phi i64 [ 0, %.preheader317.split.preheader ], [ %indvars.iv.next383, %._crit_edge ] ; 3 uses
   %i.kw = icmp sgt i32 %i.kv, 1
   br i1 %i.kw, label %.lr.ph, label %._crit_edge
 
@@ -243,12 +239,17 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.lq = sext i32 %i.lp to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.li, ptr align 1 %i.lo, i64 %i.lq, i1 false)
   %i.lr = icmp samesign ugt i32 %.6.in323, 2
-  br i1 %i.lr, label %bb.l, label %._crit_edge, !llvm.loop !291
+  br i1 %i.lr, label %bb.l, label %._crit_edge.loopexit, !llvm.loop !291
 
-._crit_edge:                                      ; preds = %bb.l, %.preheader317.split
+._crit_edge.loopexit:                             ; preds = %bb.l
+  %.pre = load i32, ptr %i.m, align 4, !tbaa !84
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader317.split
+  %2 = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.kv, %.preheader317.split ]
   %indvars.iv.next383 = add nuw nsw i64 %indvars.iv382, 1 ; 2 uses
   %exitcond386.not = icmp eq i64 %indvars.iv.next383, %wide.trip.count385
-  br i1 %exitcond386.not, label %.split.us, label %.preheader317.splitthread-pre-split, !llvm.loop !292
+  br i1 %exitcond386.not, label %.split.us, label %.preheader317.split, !llvm.loop !292
 
 .split.us:                                        ; preds = %._crit_edge, %.preheader317
   %i.ls = getelementptr inbounds nuw i8, ptr %i.g, i64 112

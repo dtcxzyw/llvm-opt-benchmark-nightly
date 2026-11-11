@@ -204,7 +204,7 @@ define dso_local void @deinit_bloom_filters() local_unnamed_addr #8 {
 bb.a:
   %i.a = load i32, ptr @bloom_filters.2, align 8, !tbaa !37 ; 2 uses
   %.not5.i = icmp eq i32 %i.a, 0
-  %.pre5 = load ptr, ptr @bloom_filters.3, align 8, !tbaa !38 ; 3 uses
+  %.pre5 = load ptr, ptr @bloom_filters.3, align 8, !tbaa !38 ; 4 uses
   br i1 %.not5.i, label %deep_clear_bloom_filter_slab.exit, label %.lr.ph3.preheader.i
 
 .lr.ph3.preheader.i:                              ; preds = %bb.a
@@ -213,24 +213,31 @@ bb.a:
   br label %.lr.ph3.i
 
 .lr.ph3.i:                                        ; preds = %.loopexit.i, %.lr.ph3.preheader.i
-  %.pre10.i = phi ptr [ %.pre5, %.lr.ph3.preheader.i ], [ %.pre1014.i, %.loopexit.i ] ; 3 uses
-  %0 = phi ptr [ %.pre5, %.lr.ph3.preheader.i ], [ %2, %.loopexit.i ] ; 2 uses
-  %i.b = phi i32 [ %i.a, %.lr.ph3.preheader.i ], [ %3, %.loopexit.i ]
-  %i.c = phi i32 [ %.pre.i.a, %.lr.ph3.preheader.i ], [ %4, %.loopexit.i ] ; 2 uses
-  %1 = phi i32 [ %.pre.i.a, %.lr.ph3.preheader.i ], [ %5, %.loopexit.i ] ; 2 uses
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph3.preheader.i ], [ %indvars.iv.next.i, %.loopexit.i ] ; 3 uses
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.i
+  %.pre10.i = phi ptr [ %.pre5, %.lr.ph3.preheader.i ], [ %.pre1215.i, %.loopexit.i ] ; 4 uses
+  %0 = phi i32 [ %i.a, %.lr.ph3.preheader.i ], [ %6, %.loopexit.i ] ; 2 uses
+  %i.b = phi i32 [ %.pre.i.a, %.lr.ph3.preheader.i ], [ %7, %.loopexit.i ] ; 3 uses
+  %1 = phi ptr [ %.pre5, %.lr.ph3.preheader.i ], [ %8, %.loopexit.i ] ; 4 uses
+  %i.c = phi i32 [ %.pre.i.a, %.lr.ph3.preheader.i ], [ %9, %.loopexit.i ] ; 3 uses
+  %2 = phi ptr [ %.pre5, %.lr.ph3.preheader.i ], [ %10, %.loopexit.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph3.preheader.i ], [ %indvars.iv.next.i, %.loopexit.i ] ; 4 uses
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !40
   %.not.i = icmp ne ptr %i.e, null
-  %i.f = icmp ne i32 %1, 0
+  %i.f = icmp ne i32 %i.c, 0
   %or.cond.i = select i1 %.not.i, i1 %i.f, i1 false
-  br i1 %or.cond.i, label %.lr.ph.split.i, label %.loopexit.i
+  br i1 %or.cond.i, label %.lr.ph.i, label %.loopexit.i
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph3.i, %free_one_bloom_filter.exit.i
-  %.pre1016.i = phi ptr [ %.pre1015.i, %free_one_bloom_filter.exit.i ], [ %.pre10.i, %.lr.ph3.i ]
-  %i.g = phi i32 [ %i.p, %free_one_bloom_filter.exit.i ], [ %i.c, %.lr.ph3.i ]
-  %i.h = phi ptr [ %i.q, %free_one_bloom_filter.exit.i ], [ %.pre10.i, %.lr.ph3.i ] ; 2 uses
-  %.01.i = phi i32 [ %i.r, %free_one_bloom_filter.exit.i ], [ 0, %.lr.ph3.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph3.i
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.i
+  %4 = load ptr, ptr %3, align 8, !tbaa !40
+  %5 = icmp eq ptr %4, null
+  br i1 %5, label %.loopexit.i, label %.lr.ph.split.i
+
+.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %free_one_bloom_filter.exit.i
+  %.pre1016.i = phi ptr [ %.pre1015.i, %free_one_bloom_filter.exit.i ], [ %.pre10.i, %.lr.ph.i ]
+  %i.g = phi i32 [ %i.p, %free_one_bloom_filter.exit.i ], [ %i.b, %.lr.ph.i ]
+  %i.h = phi ptr [ %i.q, %free_one_bloom_filter.exit.i ], [ %.pre10.i, %.lr.ph.i ] ; 2 uses
+  %.01.i = phi i32 [ %i.r, %free_one_bloom_filter.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.i
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !40   ; 2 uses
   %.not.i.i = icmp eq ptr %i.j, null
@@ -252,7 +259,7 @@ bb.b:                                             ; preds = %.lr.ph.split.i
 free_one_bloom_filter.exit.i:                     ; preds = %bb.b, %.lr.ph.split.i
   %.pre1015.i = phi ptr [ %.pre1016.i, %.lr.ph.split.i ], [ %.pre9.i, %bb.b ] ; 2 uses
   %i.p = phi i32 [ %i.g, %.lr.ph.split.i ], [ %.pre11.i, %bb.b ] ; 4 uses
-  %i.q = phi ptr [ %i.h, %.lr.ph.split.i ], [ %.pre9.i, %bb.b ] ; 2 uses
+  %i.q = phi ptr [ %i.h, %.lr.ph.split.i ], [ %.pre9.i, %bb.b ] ; 3 uses
   %i.r = add nuw i32 %.01.i, 1                    ; 2 uses
   %i.s = icmp ult i32 %i.r, %i.p
   br i1 %i.s, label %.lr.ph.split.i, label %.loopexit.loopexit6.i, !llvm.loop !59
@@ -261,19 +268,20 @@ free_one_bloom_filter.exit.i:                     ; preds = %bb.b, %.lr.ph.split
   %.pre12.i = load i32, ptr @bloom_filters.2, align 8, !tbaa !37
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.loopexit.loopexit6.i, %.lr.ph3.i
-  %.pre1014.i = phi ptr [ %.pre1015.i, %.loopexit.loopexit6.i ], [ %.pre10.i, %.lr.ph3.i ] ; 2 uses
-  %2 = phi ptr [ %i.q, %.loopexit.loopexit6.i ], [ %0, %.lr.ph3.i ]
-  %3 = phi i32 [ %.pre12.i, %.loopexit.loopexit6.i ], [ %i.b, %.lr.ph3.i ] ; 3 uses
-  %4 = phi i32 [ %i.p, %.loopexit.loopexit6.i ], [ %i.c, %.lr.ph3.i ]
-  %5 = phi i32 [ %i.p, %.loopexit.loopexit6.i ], [ %1, %.lr.ph3.i ]
+.loopexit.i:                                      ; preds = %.loopexit.loopexit6.i, %.lr.ph.i, %.lr.ph3.i
+  %.pre1215.i = phi ptr [ %.pre1015.i, %.loopexit.loopexit6.i ], [ %.pre10.i, %.lr.ph3.i ], [ %.pre10.i, %.lr.ph.i ] ; 2 uses
+  %6 = phi i32 [ %.pre12.i, %.loopexit.loopexit6.i ], [ %0, %.lr.ph3.i ], [ %0, %.lr.ph.i ] ; 3 uses
+  %7 = phi i32 [ %i.p, %.loopexit.loopexit6.i ], [ %i.b, %.lr.ph3.i ], [ %i.b, %.lr.ph.i ]
+  %8 = phi ptr [ %i.q, %.loopexit.loopexit6.i ], [ %1, %.lr.ph3.i ], [ %1, %.lr.ph.i ]
+  %9 = phi i32 [ %i.p, %.loopexit.loopexit6.i ], [ %i.c, %.lr.ph3.i ], [ %i.c, %.lr.ph.i ]
+  %10 = phi ptr [ %i.q, %.loopexit.loopexit6.i ], [ %2, %.lr.ph3.i ], [ %1, %.lr.ph.i ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.t = zext i32 %3 to i64
+  %i.t = zext i32 %6 to i64
   %i.u = icmp samesign ult i64 %indvars.iv.next.i, %i.t
   br i1 %i.u, label %.lr.ph3.i, label %._crit_edge.i, !llvm.loop !60
 
 ._crit_edge.i:                                    ; preds = %.loopexit.i
-  %i.v = icmp eq i32 %3, 0
+  %i.v = icmp eq i32 %6, 0
   br i1 %i.v, label %deep_clear_bloom_filter_slab.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %._crit_edge.i
@@ -296,7 +304,7 @@ deep_clear_bloom_filter_slab.exit.loopexit:       ; preds = %.lr.ph.i.i
   br label %deep_clear_bloom_filter_slab.exit
 
 deep_clear_bloom_filter_slab.exit:                ; preds = %deep_clear_bloom_filter_slab.exit.loopexit, %bb.a, %._crit_edge.i
-  %i.ac = phi ptr [ %.pre, %deep_clear_bloom_filter_slab.exit.loopexit ], [ %.pre5, %bb.a ], [ %.pre1014.i, %._crit_edge.i ]
+  %i.ac = phi ptr [ %.pre, %deep_clear_bloom_filter_slab.exit.loopexit ], [ %.pre5, %bb.a ], [ %.pre1215.i, %._crit_edge.i ]
   store i32 0, ptr @bloom_filters.2, align 8, !tbaa !37
   tail call void @free(ptr noundef %i.ac) #16
   store ptr null, ptr @bloom_filters.3, align 8, !tbaa !38

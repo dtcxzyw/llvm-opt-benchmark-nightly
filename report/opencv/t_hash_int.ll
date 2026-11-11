@@ -202,12 +202,13 @@ bb.a:
   br i1 %.not33, label %._crit_edge32, label %.lr.ph31
 
 .lr.ph31:                                         ; preds = %bb.a
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %.pre35 = load ptr, ptr %i.j, align 8, !tbaa !17
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph31, %._crit_edge28
+  %3 = phi ptr [ %.pre35, %.lr.ph31 ], [ %4, %._crit_edge28 ]
   %.01929 = phi i64 [ 0, %.lr.ph31 ], [ %i.x, %._crit_edge28 ] ; 3 uses
-  %3 = load ptr, ptr %i.j, align 8, !tbaa !17
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.01929
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !21   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
@@ -227,7 +228,7 @@ bb.b:                                             ; preds = %.lr.ph31, %._crit_e
   %.lcssa = phi i64 [ 0, %bb.b ], [ %i.n, %.lr.ph ]
   store i64 %.lcssa, ptr %i.d, align 8
   %i.q = call i64 @fwrite(ptr noundef nonnull %i.d, i64 noundef 8, i64 noundef 1, ptr noundef %2) ; 0 uses
-  %i.r = load ptr, ptr %i.j, align 8, !tbaa !17
+  %i.r = load ptr, ptr %i.j, align 8, !tbaa !17   ; 2 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.01929
   %.123 = load ptr, ptr %i.s, align 8, !tbaa !21  ; 2 uses
   %.not2024 = icmp eq ptr %.123, null
@@ -241,9 +242,14 @@ bb.b:                                             ; preds = %.lr.ph31, %._crit_e
   %i.w = getelementptr inbounds nuw i8, ptr %.125, i64 16
   %.1 = load ptr, ptr %i.w, align 8, !tbaa !21    ; 2 uses
   %.not20 = icmp eq ptr %.1, null
-  br i1 %.not20, label %._crit_edge28, label %.lr.ph27, !llvm.loop !35
+  br i1 %.not20, label %._crit_edge28.loopexit, label %.lr.ph27, !llvm.loop !35
 
-._crit_edge28:                                    ; preds = %.lr.ph27, %._crit_edge
+._crit_edge28.loopexit:                           ; preds = %.lr.ph27
+  %.pre = load ptr, ptr %i.j, align 8, !tbaa !17
+  br label %._crit_edge28
+
+._crit_edge28:                                    ; preds = %._crit_edge28.loopexit, %._crit_edge
+  %4 = phi ptr [ %.pre, %._crit_edge28.loopexit ], [ %i.r, %._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   %i.x = add nuw i64 %.01929, 1                   ; 2 uses
   %i.y = load i64, ptr %0, align 8, !tbaa !18

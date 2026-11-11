@@ -204,23 +204,27 @@ bb.a:
   br i1 %.not, label %._crit_edge30, label %.lr.ph29
 
 .lr.ph29:                                         ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i64, ptr %i.c, align 8, !tbaa !13
   %.not31 = icmp eq i64 %i.e, 0
-  br i1 %.not31, label %._crit_edge30, label %.lr.ph29.split
+  br i1 %.not31, label %._crit_edge30, label %.lr.ph29.split.preheader
+
+.lr.ph29.split.preheader:                         ; preds = %.lr.ph29
+  %.pre34 = load i64, ptr %i.a, align 8, !tbaa !14
+  br label %.lr.ph29.split
 
 ._crit_edge30:                                    ; preds = %._crit_edge, %.lr.ph29, %bb.a
   ret void
 
-.lr.ph29.split:                                   ; preds = %.lr.ph29, %._crit_edge
-  %i.f = phi i64 [ %i.l, %._crit_edge ], [ 1, %.lr.ph29 ]
-  %.027.a = phi i64 [ %i.m, %._crit_edge ], [ 0, %.lr.ph29 ] ; 3 uses
-  %5 = add i64 %.027.a, %2                        ; 2 uses
-  %6 = load i64, ptr %i.a, align 8, !tbaa !14
-  %i.g = urem i64 %5, %6                          ; 2 uses
+.lr.ph29.split:                                   ; preds = %.lr.ph29.split.preheader, %._crit_edge
+  %i.f = phi i64 [ %6, %._crit_edge ], [ 1, %.lr.ph29.split.preheader ]
+  %.027.a = phi i64 [ %i.l, %._crit_edge ], [ %.pre34, %.lr.ph29.split.preheader ] ; 2 uses
+  %.027 = phi i64 [ %i.m, %._crit_edge ], [ 0, %.lr.ph29.split.preheader ] ; 3 uses
+  %5 = add i64 %.027, %2                          ; 2 uses
+  %i.g = urem i64 %5, %.027.a                     ; 2 uses
   %.not32 = icmp eq i64 %i.f, 0
   br i1 %.not32, label %._crit_edge, label %.lr.ph
 
@@ -231,9 +235,14 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %i.j
   br label %bb.b
 
-._crit_edge:                                      ; preds = %bb.b, %.lr.ph29.split
-  %i.l = phi i64 [ 0, %.lr.ph29.split ], [ %i.aa, %bb.b ]
-  %i.m = add nuw i64 %.027.a, 1                   ; 2 uses
+._crit_edge.loopexit:                             ; preds = %bb.b
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !14
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph29.split
+  %6 = phi i64 [ %i.aa, %._crit_edge.loopexit ], [ 0, %.lr.ph29.split ]
+  %i.l = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %.027.a, %.lr.ph29.split ]
+  %i.m = add nuw i64 %.027, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.m, %3
   br i1 %exitcond.not, label %._crit_edge30, label %.lr.ph29.split, !llvm.loop !33
 
@@ -246,7 +255,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.r = load i64, ptr %i.b, align 8, !tbaa !12   ; 2 uses
   %i.s = sub i64 %i.r, %i.o
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.n) ; 2 uses
-  %i.t = mul i64 %i.r, %.027.a
+  %i.t = mul i64 %i.r, %.027
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 %i.t
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.o
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.q
@@ -256,7 +265,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.z = add nuw i64 %.02426, 1                   ; 2 uses
   %i.aa = load i64, ptr %i.c, align 8, !tbaa !13  ; 2 uses
   %i.ab = icmp ult i64 %i.z, %i.aa
-  br i1 %i.ab, label %bb.b, label %._crit_edge, !llvm.loop !34
+  br i1 %i.ab, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !34
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable

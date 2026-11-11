@@ -204,12 +204,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %bb.a
   %i.s = load i32, ptr @kwsysProcesses.0, align 8, !tbaa !133 ; 2 uses
   %i.t = icmp sgt i32 %i.s, 0
-  br i1 %i.t, label %.lr.ph36, label %.preheader31.preheader
+  br i1 %i.t, label %.lr.ph36.preheader, label %.preheader31.preheader
 
-.lr.ph36:                                         ; preds = %bb.b, %.loopexit33
-  %i.u = phi i32 [ %i.at, %.loopexit33 ], [ %i.s, %bb.b ] ; 5 uses
-  %indvars.iv40 = phi i64 [ %indvars.iv.next41, %.loopexit33 ], [ 0, %bb.b ] ; 2 uses
-  %5 = load ptr, ptr @kwsysProcesses.2, align 8, !tbaa !134
+.lr.ph36.preheader:                               ; preds = %bb.b
+  %.pre46 = load ptr, ptr @kwsysProcesses.2, align 8, !tbaa !134
+  br label %.lr.ph36
+
+.lr.ph36:                                         ; preds = %.lr.ph36.preheader, %.loopexit33
+  %i.u = phi i32 [ %i.s, %.lr.ph36.preheader ], [ %i.at, %.loopexit33 ] ; 5 uses
+  %5 = phi ptr [ %.pre46, %.lr.ph36.preheader ], [ %6, %.loopexit33 ] ; 6 uses
+  %indvars.iv40 = phi i64 [ 0, %.lr.ph36.preheader ], [ %indvars.iv.next41, %.loopexit33 ] ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !61   ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1112
@@ -265,11 +269,13 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   br i1 %i.as, label %.lr.ph, label %.loopexit33.loopexit, !llvm.loop !128
 
 .loopexit33.loopexit:                             ; preds = %bb.g
+  %.pre = load ptr, ptr @kwsysProcesses.2, align 8, !tbaa !134
   %.pre.a = load i32, ptr @kwsysProcesses.0, align 8, !tbaa !133
   br label %.loopexit33
 
 .loopexit33:                                      ; preds = %.loopexit33.loopexit, %.preheader32, %bb.e, %bb.d, %bb.c, %.lr.ph36
   %i.at = phi i32 [ %.pre.a, %.loopexit33.loopexit ], [ %i.u, %.preheader32 ], [ %i.u, %bb.e ], [ %i.u, %bb.d ], [ %i.u, %bb.c ], [ %i.u, %.lr.ph36 ] ; 2 uses
+  %6 = phi ptr [ %.pre, %.loopexit33.loopexit ], [ %5, %.preheader32 ], [ %5, %bb.e ], [ %5, %bb.d ], [ %5, %bb.c ], [ %5, %.lr.ph36 ]
   %indvars.iv.next41 = add nuw nsw i64 %indvars.iv40, 1 ; 2 uses
   %i.au = sext i32 %i.at to i64
   %i.av = icmp slt i64 %indvars.iv.next41, %i.au

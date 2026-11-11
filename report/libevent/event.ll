@@ -169,12 +169,13 @@ bb.f:                                             ; preds = %event_mm_malloc_.ex
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.w = load i32, ptr %i.v, align 8              ; 2 uses
   %.not110 = icmp eq i32 %i.w, 0
+  %.pre123 = load ptr, ptr %0, align 8            ; 2 uses
   br i1 %.not110, label %._crit_edge99, label %.lr.ph98
 
 .lr.ph98:                                         ; preds = %bb.f, %._crit_edge
   %i.x = phi i32 [ %i.aj, %._crit_edge ], [ %i.w, %bb.f ]
+  %2 = phi ptr [ %3, %._crit_edge ], [ %.pre123, %bb.f ] ; 2 uses
   %indvars.iv115 = phi i64 [ %indvars.iv.next116, %._crit_edge ], [ 0, %bb.f ] ; 2 uses
-  %2 = load ptr, ptr %0, align 8
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv115
   %i.z = load ptr, ptr %i.y, align 8              ; 2 uses
   %.not8694 = icmp eq ptr %i.z, null
@@ -198,19 +199,21 @@ bb.f:                                             ; preds = %event_mm_malloc_.ex
   br i1 %.not86, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !22
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load ptr, ptr %0, align 8
   %.pre.a = load i32, ptr %i.v, align 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph98
   %i.aj = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.x, %.lr.ph98 ] ; 2 uses
+  %3 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %2, %.lr.ph98 ] ; 2 uses
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
   %i.ak = zext i32 %i.aj to i64
   %i.al = icmp samesign ult i64 %indvars.iv.next116, %i.ak
   br i1 %i.al, label %.lr.ph98, label %._crit_edge99, !llvm.loop !23
 
 ._crit_edge99:                                    ; preds = %._crit_edge, %bb.f
-  %3 = load ptr, ptr %0, align 8                  ; 3 uses
-  %.not85 = icmp eq ptr %3, null
+  %4 = phi ptr [ %.pre123, %bb.f ], [ %3, %._crit_edge ] ; 3 uses
+  %.not85 = icmp eq ptr %4, null
   br i1 %.not85, label %event_mm_free_.exit, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge99
@@ -219,11 +222,11 @@ bb.g:                                             ; preds = %._crit_edge99
   br i1 %.not.i87, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void %i.am(ptr noundef nonnull %3) #25, !inline_history !17
+  tail call void %i.am(ptr noundef nonnull %4) #25, !inline_history !17
   br label %event_mm_free_.exit
 
 bb.i:                                             ; preds = %bb.g
-  tail call void @free(ptr noundef nonnull %3) #25
+  tail call void @free(ptr noundef nonnull %4) #25
   br label %event_mm_free_.exit
 
 event_mm_malloc_.exit.thread:                     ; preds = %event_mm_malloc_.exit

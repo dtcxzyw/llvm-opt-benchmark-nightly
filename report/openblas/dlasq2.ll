@@ -203,9 +203,10 @@ bb.bt:                                            ; preds = %bb.bj, %bb.bk, %._c
   %i.up = shl i32 %i.uo, 2
   %i.uq = sext i32 %i.up to i64
   %i.ur = getelementptr [8 x i8], ptr %i.u, i64 %i.uq
-  %i.us = getelementptr i8, ptr %i.ur, i64 -24    ; 2 uses
+  %i.us = getelementptr i8, ptr %i.ur, i64 -24    ; 3 uses
   %.not599.not715 = icmp slt i32 %i.uo, %i.un
   %i.ut = sext i32 %i.uo to i64                   ; 4 uses
+  %.pre808 = load double, ptr %i.us, align 8, !tbaa !35
   %wide.trip.count = sext i32 %i.un to i64        ; 3 uses
   %i.uu = sub nsw i64 %wide.trip.count, %i.ut
   %xtraiter987 = and i64 %i.uu, 1
@@ -223,10 +224,10 @@ bb.bt:                                            ; preds = %bb.bj, %bb.bk, %._c
   br label %bb.bu
 
 bb.bu:                                            ; preds = %.critedge, %._crit_edge708
-  %i.ve = phi double [ %.promoted722, %._crit_edge708 ], [ %i.xi, %.critedge ] ; 4 uses
+  %i.ve = phi double [ %.pre808, %._crit_edge708 ], [ %4, %.critedge ] ; 3 uses
+  %3 = phi double [ %.promoted722, %._crit_edge708 ], [ %i.xi, %.critedge ] ; 4 uses
   %.0540 = phi i32 [ %i.uo, %._crit_edge708 ], [ %.1541.lcssa, %.critedge ] ; 3 uses
-  %3 = load double, ptr %i.us, align 8, !tbaa !35 ; 3 uses
-  %i.vf = fadd double %3, %i.ve
+  %i.vf = fadd double %i.ve, %3                   ; 2 uses
   store double %i.vf, ptr %i.us, align 8, !tbaa !35
   br i1 %.not599.not715, label %.lr.ph719.preheader, label %._crit_edge720
 
@@ -236,11 +237,11 @@ bb.bu:                                            ; preds = %.critedge, %._crit_
 .lr.ph719.prol:                                   ; preds = %.lr.ph719.preheader
   %i.vg = load double, ptr %i.uz, align 8, !tbaa !35 ; 2 uses
   %i.vh = load double, ptr %i.va, align 8, !tbaa !35
-  %i.vi = fdiv double %3, %i.vh
+  %i.vi = fdiv double %i.ve, %i.vh
   %i.vj = fmul double %i.vg, %i.vi                ; 2 uses
   store double %i.vj, ptr %i.uz, align 8, !tbaa !35
   %i.vk = load double, ptr %i.vb, align 8, !tbaa !35 ; 2 uses
-  %i.vl = fadd double %i.ve, %i.vk
+  %i.vl = fadd double %3, %i.vk
   %i.vm = fadd double %i.vg, %i.vl
   %i.vn = fsub double %i.vm, %i.vj
   store double %i.vn, ptr %i.vb, align 8, !tbaa !35
@@ -248,8 +249,8 @@ bb.bu:                                            ; preds = %.critedge, %._crit_
 
 .lr.ph719.prol.loopexit:                          ; preds = %.lr.ph719.prol, %.lr.ph719.preheader
   %indvars.iv778.unr = phi i64 [ %i.ut, %.lr.ph719.preheader ], [ %indvars.iv.next779.prol, %.lr.ph719.prol ]
-  %.0542717.unr = phi double [ %3, %.lr.ph719.preheader ], [ %i.vk, %.lr.ph719.prol ]
-  br i1 %i.vd, label %._crit_edge720, label %.lr.ph719
+  %.0542717.unr = phi double [ %i.ve, %.lr.ph719.preheader ], [ %i.vk, %.lr.ph719.prol ]
+  br i1 %i.vd, label %._crit_edge720.loopexit, label %.lr.ph719
 
 .lr.ph719:                                        ; preds = %.lr.ph719.prol.loopexit, %.lr.ph719
   %indvars.iv778 = phi i64 [ %indvars.iv.next779.1, %.lr.ph719 ], [ %indvars.iv778.unr, %.lr.ph719.prol.loopexit ] ; 2 uses
@@ -268,7 +269,7 @@ bb.bu:                                            ; preds = %.critedge, %._crit_
   store double %i.vy, ptr %i.vt, align 8, !tbaa !35
   %i.vz = getelementptr i8, ptr %i.vs, i64 -24    ; 2 uses
   %i.wa = load double, ptr %i.vz, align 8, !tbaa !35 ; 2 uses
-  %i.wb = fadd double %i.ve, %i.wa
+  %i.wb = fadd double %3, %i.wa
   %i.wc = fadd double %i.vu, %i.wb
   %i.wd = fsub double %i.wc, %i.vy
   store double %i.wd, ptr %i.vz, align 8, !tbaa !35
@@ -286,14 +287,19 @@ bb.bu:                                            ; preds = %.critedge, %._crit_
   store double %i.wn, ptr %i.wi, align 8, !tbaa !35
   %i.wo = getelementptr i8, ptr %i.wh, i64 -24    ; 2 uses
   %i.wp = load double, ptr %i.wo, align 8, !tbaa !35 ; 2 uses
-  %i.wq = fadd double %i.ve, %i.wp
+  %i.wq = fadd double %3, %i.wp
   %i.wr = fadd double %i.wj, %i.wq
   %i.ws = fsub double %i.wr, %i.wn
   store double %i.ws, ptr %i.wo, align 8, !tbaa !35
   %exitcond781.not.1 = icmp eq i64 %indvars.iv.next779.1, %wide.trip.count
-  br i1 %exitcond781.not.1, label %._crit_edge720, label %.lr.ph719, !llvm.loop !23
+  br i1 %exitcond781.not.1, label %._crit_edge720.loopexit, label %.lr.ph719, !llvm.loop !23
 
-._crit_edge720:                                   ; preds = %.lr.ph719.prol.loopexit, %.lr.ph719, %bb.bu
+._crit_edge720.loopexit:                          ; preds = %.lr.ph719, %.lr.ph719.prol.loopexit
+  %.pre807 = load double, ptr %i.us, align 8, !tbaa !35
+  br label %._crit_edge720
+
+._crit_edge720:                                   ; preds = %._crit_edge720.loopexit, %bb.bu
+  %4 = phi double [ %.pre807, %._crit_edge720.loopexit ], [ %i.vf, %bb.bu ]
   %i.wt = icmp sgt i32 %.0540, 1
   br i1 %i.wt, label %.preheader612.preheader, label %bb.bw
 

@@ -205,7 +205,7 @@ bb.a:
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.aj = alloca ptr, align 8                     ; 5 uses
-  %i.ak = alloca i32, align 4                     ; 5 uses
+  %i.ak = alloca i32, align 4                     ; 6 uses
   %i.al = alloca ptr, align 8                     ; 6 uses
   %13 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 9 uses
   %14 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
@@ -608,7 +608,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt10filesystem7__cxx114pathD2Ev.exit.i251:     ; preds = %_ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i.i249, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i250
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
   %.not.i252 = icmp eq i32 %i.adz, %i.px
-  br i1 %.not.i252, label %.lr.ph38.i, label %bb.ft
+  br i1 %.not.i252, label %.lr.ph38.preheader.i, label %bb.ft
+
+.lr.ph38.preheader.i:                             ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit.i251
+  %.pre44.i = load i32, ptr %i.ak, align 4, !tbaa !12
+  br label %.lr.ph38.i
 
 bb.ft:                                            ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit.i251
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
@@ -637,21 +641,21 @@ bb.fw:                                            ; preds = %.noexc263
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25
   br label %bb.gd
 
-.lr.ph38.i:                                       ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit.i251, %._crit_edge.i255
-  %indvars.iv41.i = phi i64 [ %indvars.iv.next42.i, %._crit_edge.i255 ], [ 0, %_ZNSt10filesystem7__cxx114pathD2Ev.exit.i251 ] ; 4 uses
-  %44 = getelementptr inbounds nuw [152 x i8], ptr %i.pz, i64 %indvars.iv41.i ; 4 uses
-  %45 = load i32, ptr %44, align 8, !tbaa !85     ; 3 uses
-  %i.aek = load i32, ptr %i.ak, align 4, !tbaa !12
-  %.not33.i = icmp eq i32 %45, %i.aek
+.lr.ph38.i:                                       ; preds = %._crit_edge.i255, %.lr.ph38.preheader.i
+  %44 = phi i32 [ %.pre44.i, %.lr.ph38.preheader.i ], [ %46, %._crit_edge.i255 ] ; 4 uses
+  %indvars.iv41.i = phi i64 [ 0, %.lr.ph38.preheader.i ], [ %indvars.iv.next42.i, %._crit_edge.i255 ] ; 4 uses
+  %45 = getelementptr inbounds nuw [152 x i8], ptr %i.pz, i64 %indvars.iv41.i ; 4 uses
+  %i.aek = load i32, ptr %45, align 8, !tbaa !85
+  %.not33.i = icmp eq i32 %i.aek, %44
   br i1 %.not33.i, label %.preheader.i254, label %bb.fx
 
 .preheader.i254:                                  ; preds = %.lr.ph38.i
-  %i.ael = icmp sgt i32 %45, 0
+  %i.ael = icmp sgt i32 %44, 0
   br i1 %i.ael, label %.lr.ph.i257, label %._crit_edge.i255
 
 .lr.ph.i257:                                      ; preds = %.preheader.i254
-  %i.aem = getelementptr inbounds nuw i8, ptr %44, i64 96
-  %i.aen = getelementptr inbounds nuw i8, ptr %44, i64 72 ; 2 uses
+  %i.aem = getelementptr inbounds nuw i8, ptr %45, i64 96
+  %i.aen = getelementptr inbounds nuw i8, ptr %45, i64 72 ; 2 uses
   %.pre44.i.a = load ptr, ptr %i.al, align 8, !tbaa !99
   %.pre46.i = load ptr, ptr %i.aen, align 8, !tbaa !103
   %i.aeo = trunc nuw nsw i64 %indvars.iv41.i to i32
@@ -677,7 +681,7 @@ bb.fz:                                            ; preds = %.noexc264
   br label %bb.gd
 
 bb.ga:                                            ; preds = %bb.gc, %.lr.ph.i257
-  %i.aeq = phi i32 [ %45, %.lr.ph.i257 ], [ %i.afh, %bb.gc ]
+  %i.aeq = phi i32 [ %44, %.lr.ph.i257 ], [ %i.afh, %bb.gc ]
   %i.aer = phi ptr [ %.pre46.i, %.lr.ph.i257 ], [ %i.afi, %bb.gc ] ; 2 uses
   %i.aes = phi ptr [ %.pre44.i.a, %.lr.ph.i257 ], [ %i.afj, %bb.gc ] ; 2 uses
   %indvars.iv.i258 = phi i64 [ 0, %.lr.ph.i257 ], [ %indvars.iv.next.i260, %bb.gc ] ; 4 uses
@@ -701,7 +705,7 @@ bb.gb:                                            ; preds = %bb.ga
   %i.afg = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.afe, ptr noundef nonnull @.str.345, double noundef %i.afc, i32 noundef %i.aeo, i32 noundef %i.aff) #35 ; 0 uses
   %.pre.i259 = load ptr, ptr %i.al, align 8, !tbaa !99
   %.pre45.i = load ptr, ptr %i.aen, align 8, !tbaa !103
-  %.pre47.i = load i32, ptr %44, align 8, !tbaa !85
+  %.pre47.i = load i32, ptr %45, align 8, !tbaa !85
   br label %bb.gc
 
 bb.gc:                                            ; preds = %bb.gb, %bb.ga
@@ -711,9 +715,14 @@ bb.gc:                                            ; preds = %bb.gb, %bb.ga
   %indvars.iv.next.i260 = add nuw nsw i64 %indvars.iv.i258, 1 ; 2 uses
   %i.afk = sext i32 %i.afh to i64
   %i.afl = icmp slt i64 %indvars.iv.next.i260, %i.afk
-  br i1 %i.afl, label %bb.ga, label %._crit_edge.i255, !llvm.loop !176
+  br i1 %i.afl, label %bb.ga, label %._crit_edge.loopexit.i260, !llvm.loop !176
 
-._crit_edge.i255:                                 ; preds = %bb.gc, %.preheader.i254
+._crit_edge.loopexit.i260:                        ; preds = %bb.gc
+  %.pre.i261 = load i32, ptr %i.ak, align 4, !tbaa !12
+  br label %._crit_edge.i255
+
+._crit_edge.i255:                                 ; preds = %._crit_edge.loopexit.i260, %.preheader.i254
+  %46 = phi i32 [ %.pre.i261, %._crit_edge.loopexit.i260 ], [ %44, %.preheader.i254 ]
   %indvars.iv.next42.i = add nuw nsw i64 %indvars.iv41.i, 1 ; 2 uses
   %exitcond.not.i256 = icmp eq i64 %indvars.iv.next42.i, %wide.trip.count23.i
   br i1 %exitcond.not.i256, label %_ZL34readIntegratedAutocorrelationTimesP16t_UmbrellaWindowiPKc.exit, label %.lr.ph38.i, !llvm.loop !177

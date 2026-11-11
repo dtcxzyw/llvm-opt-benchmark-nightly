@@ -76,7 +76,7 @@ bb.f:                                             ; preds = %bb.d
 .lr.ph969:                                        ; preds = %bb.f
   %i.y = sub nsw i32 %i.k, %2                     ; 3 uses
   %i.z = icmp slt i32 %2, %i.y
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.ad = sext i32 %2 to i64                      ; 3 uses
@@ -250,6 +250,7 @@ bb.u:                                             ; preds = %bb.i, %bb.t
 .lr.ph964:                                        ; preds = %bb.y, %.preheader935
   %.1616.lcssa = phi i8 [ %.0615966, %.preheader935 ], [ %.2617, %bb.y ]
   %i.cu = mul nsw i64 %indvars.iv1077, %i.ae
+  %.pre1192 = load ptr, ptr %i.aa, align 8, !tbaa !73
   br label %bb.z
 
 .lr.ph957:                                        ; preds = %.lr.ph957.preheader, %bb.y
@@ -292,8 +293,8 @@ bb.y:                                             ; preds = %bb.v, %bb.x
   br i1 %exitcond1068.not, label %.lr.ph964, label %.lr.ph957
 
 bb.z:                                             ; preds = %.lr.ph964, %.critedge
+  %5 = phi ptr [ %.pre1192, %.lr.ph964 ], [ %6, %.critedge ] ; 2 uses
   %indvars.iv1072 = phi i64 [ %i.ad, %.lr.ph964 ], [ %indvars.iv.next1073, %.critedge ] ; 2 uses
-  %5 = load ptr, ptr %i.aa, align 8, !tbaa !73
   %i.dh = getelementptr [4 x i8], ptr %5, i64 %indvars.iv1072
   %i.di = getelementptr [4 x i8], ptr %i.dh, i64 %i.cu
   %i.dj = load i32, ptr %i.di, align 4            ; 3 uses
@@ -309,7 +310,12 @@ bb.z:                                             ; preds = %.lr.ph964, %.crited
   %i.dp = zext nneg i32 %i.dm to i64
   br label %.lr.ph961
 
-.critedge:                                        ; preds = %bb.ab, %bb.z
+.critedge.loopexit:                               ; preds = %bb.ab
+  %.pre1191 = load ptr, ptr %i.aa, align 8, !tbaa !73
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %bb.z
+  %6 = phi ptr [ %.pre1191, %.critedge.loopexit ], [ %5, %bb.z ]
   %indvars.iv.next1073 = add nsw i64 %indvars.iv1072, 1 ; 2 uses
   %exitcond1076.not = icmp eq i64 %indvars.iv.next1073, %wide.trip.count1075
   br i1 %exitcond1076.not, label %.critedge._crit_edge, label %bb.z
@@ -332,7 +338,7 @@ bb.aa:                                            ; preds = %.lr.ph961
 bb.ab:                                            ; preds = %.lr.ph961, %bb.aa
   %indvars.iv.next1070 = add nuw nsw i64 %indvars.iv1069, 1 ; 2 uses
   %i.dw = icmp samesign ult i64 %indvars.iv.next1070, %i.dp
-  br i1 %i.dw, label %.lr.ph961, label %.critedge
+  br i1 %i.dw, label %.lr.ph961, label %.critedge.loopexit
 
 .critedge._crit_edge:                             ; preds = %.critedge, %bb.g
   %.1616.lcssa1303 = phi i8 [ %.0615966, %bb.g ], [ %.1616.lcssa, %.critedge ] ; 2 uses

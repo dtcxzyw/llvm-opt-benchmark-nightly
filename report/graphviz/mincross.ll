@@ -204,6 +204,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ic = sext i32 %.2.i to i64
   %i.id = sext i32 %.026.i to i64
   %sext.i = sext i32 %.027.i to i64
+  %.pre83.i = load ptr, ptr @TI_list, align 8, !tbaa !76
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.hg, i64 264
   %.pre.i.a = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !39
   br label %bb.x
@@ -211,8 +212,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 bb.x:                                             ; preds = %reorder.exit.i, %.lr.ph.i90
   %.pre86.i = phi ptr [ %.pre.i.a, %.lr.ph.i90 ], [ %.pre8690115.i, %reorder.exit.i ] ; 2 uses
   %.val3284.i = phi ptr [ %i.hg, %.lr.ph.i90 ], [ %.val32116.i, %reorder.exit.i ]
+  %2 = phi ptr [ %.pre83.i, %.lr.ph.i90 ], [ %3, %reorder.exit.i ] ; 11 uses
   %indvars.iv.i91 = phi i64 [ %i.ic, %.lr.ph.i90 ], [ %indvars.iv.next.i92, %reorder.exit.i ] ; 6 uses
-  %2 = load ptr, ptr @TI_list, align 8, !tbaa !76 ; 10 uses
   %i.ie = getelementptr inbounds [88 x i8], ptr %.pre86.i, i64 %indvars.iv.i91 ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !43 ; 2 uses
@@ -226,6 +227,7 @@ bb.x:                                             ; preds = %reorder.exit.i, %.l
 
 .preheader.i.i:                                   ; preds = %.loopexit.thread.i.i
   %i.ik = icmp sgt i32 %i.mk, 0
+  %.pre.i = load ptr, ptr @TI_list, align 8, !tbaa !76 ; 4 uses
   br i1 %i.ik, label %.lr.ph107.preheader.i.i, label %reorder.exit.i
 
 .lr.ph107.preheader.i.i:                          ; preds = %.preheader.i.i
@@ -628,6 +630,7 @@ bb.bh:                                            ; preds = %bb.bg
   br label %reorder.exit.i
 
 reorder.exit.i:                                   ; preds = %bb.bh, %bb.bg, %._crit_edge.i.i, %.preheader.i.i, %bb.x
+  %3 = phi ptr [ %.pre.i, %bb.bh ], [ %.pre.i, %.preheader.i.i ], [ %.pre.i, %._crit_edge.i.i ], [ %.pre.i, %bb.bg ], [ %2, %bb.x ]
   %.val32116.i = phi ptr [ %i.mg, %bb.bh ], [ %i.mg, %.preheader.i.i ], [ %i.mg, %._crit_edge.i.i ], [ %i.mg, %bb.bg ], [ %.val3284.i, %bb.x ] ; 2 uses
   %.pre8690115.i = phi ptr [ %i.mi, %bb.bh ], [ %i.mi, %.preheader.i.i ], [ %i.mi, %._crit_edge.i.i ], [ %i.mi, %bb.bg ], [ %.pre86.i, %bb.x ]
   %indvars.iv.next.i92 = add nsw i64 %indvars.iv.i91, %i.id

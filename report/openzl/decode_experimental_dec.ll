@@ -169,7 +169,7 @@ bb.a:
   %6 = alloca %struct.ZL_ErrorContext, align 8    ; 14 uses
   %7 = alloca %struct.ZL_ReadCursor, align 8      ; 9 uses
   %8 = alloca %struct.ZS_window, align 8          ; 10 uses
-  %9 = alloca %struct.ZS_RolzDTable2, align 8     ; 17 uses
+  %9 = alloca %struct.ZS_RolzDTable2, align 8     ; 16 uses
   %10 = alloca %struct.ZS_Lits, align 8           ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -394,6 +394,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cz = call i32 @ZS_window_update(ptr noundef nonnull %8, ptr noundef %1, i64 noundef %2) #11 ; 0 uses
   %.not764 = icmp eq i32 %.val.i352, 0
+  %.pre = load i32, ptr %9, align 8, !tbaa !90    ; 7 uses
   br i1 %.not764, label %.critedge, label %.lr.ph715
 
 .lr.ph715:                                        ; preds = %bb.w
@@ -408,6 +409,10 @@ bb.w:                                             ; preds = %bb.v
   %.sroa.19.12..sroa_idx392 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
   %.sroa.23.12..sroa_idx396 = getelementptr inbounds nuw i8, ptr %5, i64 20 ; 6 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %8, i64 28
+  %11 = zext i32 %.pre to i64                     ; 7 uses
+  %12 = sub nsw i64 0, %11
+  %13 = sub nsw i64 0, %11
+  %14 = sub nsw i64 0, %11                        ; 2 uses
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph715, %bb.ba
@@ -415,9 +420,7 @@ bb.x:                                             ; preds = %.lr.ph715, %bb.ba
   %.0239711 = phi i64 [ 0, %.lr.ph715 ], [ %i.ls, %bb.ba ] ; 6 uses
   %i.di = ptrtoint ptr %.0237712 to i64           ; 2 uses
   %i.dj = sub i64 %i.di, %i.bk
-  %11 = load i32, ptr %9, align 8, !tbaa !90      ; 6 uses
-  %12 = zext i32 %11 to i64                       ; 7 uses
-  %i.dk = icmp slt i64 %i.dj, %12
+  %i.dk = icmp slt i64 %i.dj, %11
   br i1 %i.dk, label %bb.y, label %.critedge
 
 bb.y:                                             ; preds = %bb.x
@@ -492,14 +495,13 @@ bb.af:                                            ; preds = %bb.aa
 .critedge158.i:                                   ; preds = %bb.ae, %bb.ad, %bb.af
   %i.eq = add i64 %i.dw, %.sroa.051.0.insert.ext
   store i64 %i.eq, ptr %i.ct, align 8, !tbaa !89
-  %i.er = call i64 @llvm.umin.i64(i64 %12, i64 %.sroa.051.0.insert.ext)
+  %i.er = call i64 @llvm.umin.i64(i64 %11, i64 %.sroa.051.0.insert.ext)
   %i.es = getelementptr inbounds nuw i8, ptr %.0237712, i64 %i.er ; 2 uses
-  %i.et = icmp ult i32 %11, %i.dm
+  %i.et = icmp ult i32 %.pre, %i.dm
   br i1 %i.et, label %.lr.ph707, label %._crit_edge
 
 .lr.ph707:                                        ; preds = %.critedge158.i
   %i.eu = load i32, ptr %i.db, align 4, !tbaa !91
-  %13 = sub nsw i64 0, %12
   %i.ev = load ptr, ptr %i.dc, align 8, !tbaa !93
   %i.ew = ptrtoint ptr %i.ev to i64
   %.val335 = load i32, ptr %i.dd, align 8, !tbaa !38 ; 2 uses
@@ -521,9 +523,9 @@ bb.af:                                            ; preds = %bb.aa
 
 bb.ag:                                            ; preds = %.lr.ph707, %bb.ag
   %.0136.i706 = phi ptr [ %i.es, %.lr.ph707 ], [ %i.fr, %bb.ag ] ; 3 uses
-  %.0140.i705 = phi i64 [ %12, %.lr.ph707 ], [ %i.fq, %bb.ag ]
-  %i.ey = getelementptr inbounds i8, ptr %.0136.i706, i64 %13
-  %i.ez = call fastcc i64 @ZL_hashPtr(ptr noundef %i.ey, i32 noundef %i.eu, i32 noundef %11)
+  %.0140.i705 = phi i64 [ %11, %.lr.ph707 ], [ %i.fq, %bb.ag ]
+  %i.ey = getelementptr inbounds i8, ptr %.0136.i706, i64 %12
+  %i.ez = call fastcc i64 @ZL_hashPtr(ptr noundef %i.ey, i32 noundef %i.eu, i32 noundef %.pre)
   %i.fa = trunc i64 %i.ez to i32
   %i.fb = ptrtoint ptr %.0136.i706 to i64
   %i.fc = sub i64 %i.fb, %i.ew
@@ -567,9 +569,8 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %._crit_edge
   %i.ga = load i32, ptr %i.db, align 4, !tbaa !91
-  %14 = sub nsw i64 0, %12
-  %i.gb = getelementptr inbounds i8, ptr %.0136.i.lcssa, i64 %14
-  %i.gc = call fastcc i64 @ZL_hashPtr(ptr noundef %i.gb, i32 noundef %i.ga, i32 noundef %11)
+  %i.gb = getelementptr inbounds i8, ptr %.0136.i.lcssa, i64 %13
+  %i.gc = call fastcc i64 @ZL_hashPtr(ptr noundef %i.gb, i32 noundef %i.ga, i32 noundef %.pre)
   %i.gd = trunc i64 %i.gc to i32                  ; 2 uses
   %i.ge = call fastcc i64 @ZS_RolzDTable2_get(ptr noundef nonnull %9, i32 noundef %i.gd, i32 noundef %i.do, i32 noundef %i.dq) ; 3 uses
   %.sroa.0.0.extract.trunc.i = trunc i64 %i.ge to i32
@@ -844,14 +845,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.ax:                                            ; preds = %._crit_edge710
   %i.jw = ptrtoint ptr %.0136.i.lcssa to i64      ; 2 uses
   %i.jx = sub i64 %i.jw, %i.bk
-  %.not157.i = icmp slt i64 %i.jx, %12
+  %.not157.i = icmp slt i64 %i.jx, %11
   br i1 %.not157.i, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.jy = load i32, ptr %i.db, align 4, !tbaa !91 ; 2 uses
-  %15 = sub nsw i64 0, %12                        ; 2 uses
-  %i.jz = getelementptr inbounds i8, ptr %.0136.i.lcssa, i64 %15
-  %i.ka = call fastcc i64 @ZL_hashPtr(ptr noundef %i.jz, i32 noundef %i.jy, i32 noundef %11)
+  %i.jz = getelementptr inbounds i8, ptr %.0136.i.lcssa, i64 %14
+  %i.ka = call fastcc i64 @ZL_hashPtr(ptr noundef %i.jz, i32 noundef %i.jy, i32 noundef %.pre)
   %i.kb = trunc i64 %i.ka to i32
   %i.kc = load ptr, ptr %i.dc, align 8, !tbaa !93
   %i.kd = ptrtoint ptr %i.kc to i64
@@ -879,8 +879,8 @@ bb.ay:                                            ; preds = %bb.ax
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kr, i64 6
   store i8 %i.kt, ptr %i.ku, align 2, !tbaa !44
   %i.kv = getelementptr inbounds nuw i8, ptr %.0136.i.lcssa, i64 1
-  %i.kw = getelementptr inbounds i8, ptr %i.kv, i64 %15
-  %i.kx = call fastcc i64 @ZL_hashPtr(ptr noundef nonnull %i.kw, i32 noundef %i.jy, i32 noundef %11)
+  %i.kw = getelementptr inbounds i8, ptr %i.kv, i64 %14
+  %i.kx = call fastcc i64 @ZL_hashPtr(ptr noundef nonnull %i.kw, i32 noundef %i.jy, i32 noundef %.pre)
   %i.ky = trunc i64 %i.kx to i32
   %i.kz = add i32 %i.kf, 1
   %i.la = add i32 %.0138.i, -1
@@ -921,8 +921,7 @@ bb.ba:                                            ; preds = %ZS_execExperimental
 .critedge:                                        ; preds = %bb.x, %bb.ba, %bb.w
   %.0239.lcssa = phi i64 [ 0, %bb.w ], [ %i.ca, %bb.ba ], [ %.0239711, %bb.x ] ; 3 uses
   %.0237.lcssa = phi ptr [ %1, %bb.w ], [ %i.lr, %bb.ba ], [ %.0237712, %bb.x ] ; 6 uses
-  %16 = load i32, ptr %9, align 8, !tbaa !90
-  %i.lt = icmp eq i32 %16, 2
+  %i.lt = icmp eq i32 %.pre, 2
   %i.lu = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.lv = load i32, ptr %i.lu, align 4
   %i.lw = icmp eq i32 %i.lv, 12

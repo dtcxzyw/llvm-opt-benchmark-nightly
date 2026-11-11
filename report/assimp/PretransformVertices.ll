@@ -205,16 +205,17 @@ bb.co:                                            ; preds = %.lr.ph702, %bb.co
   %i.aax = fcmp olt float %i.aaw, %i.aav
   %i.aay = select i1 %i.aax, float %i.aav, float %i.aaw
   %i.aaz = fmul float %i.aay, 5.000000e-01
-  %i.aba = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.aba = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.abb = fdiv float 1.000000e+00, %i.aaz        ; 2 uses
+  %.pre870 = load ptr, ptr %i.aba, align 8
   %i.abc = insertelement <2 x float> poison, float %i.abb, i64 0
   %i.abd = shufflevector <2 x float> %i.abc, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.cp
 
 bb.cp:                                            ; preds = %.lr.ph725, %._crit_edge722
   %i.abe = phi i32 [ %i.zs, %.lr.ph725 ], [ %i.abk, %._crit_edge722 ]
+  %5 = phi ptr [ %.pre870, %.lr.ph725 ], [ %6, %._crit_edge722 ] ; 2 uses
   %indvars.iv846 = phi i64 [ 0, %.lr.ph725 ], [ %indvars.iv.next847, %._crit_edge722 ] ; 2 uses
-  %5 = load ptr, ptr %i.aba, align 8
   %i.abf = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv846
   %i.abg = load ptr, ptr %i.abf, align 8          ; 2 uses
   %i.abh = getelementptr inbounds nuw i8, ptr %i.abg, i64 4 ; 2 uses
@@ -227,11 +228,13 @@ bb.cp:                                            ; preds = %.lr.ph725, %._crit_
   br label %bb.cq
 
 ._crit_edge722.loopexit:                          ; preds = %bb.cq
+  %.pre869 = load ptr, ptr %i.aba, align 8
   %.pre869.a = load i32, ptr %i.i, align 8
   br label %._crit_edge722
 
 ._crit_edge722:                                   ; preds = %._crit_edge722.loopexit, %bb.cp
   %i.abk = phi i32 [ %.pre869.a, %._crit_edge722.loopexit ], [ %i.abe, %bb.cp ] ; 2 uses
+  %6 = phi ptr [ %.pre869, %._crit_edge722.loopexit ], [ %5, %bb.cp ]
   %indvars.iv.next847 = add nuw nsw i64 %indvars.iv846, 1 ; 2 uses
   %i.abl = zext i32 %i.abk to i64
   %i.abm = icmp samesign ult i64 %indvars.iv.next847, %i.abl
@@ -634,7 +637,7 @@ begin_hunk_1_@_ZNSt7__cxx114listIjSaIjEE4sortEv:bb.a
 
 .lr.ph:                                           ; preds = %.preheader47, %_ZNSt8__detail13_Scratch_list5mergeINS0_8_Ptr_cmpISt14_List_iteratorIjEvEEEEvRNS_15_List_node_baseET_.exit
   %.02550 = phi ptr [ %i.ce, %_ZNSt8__detail13_Scratch_list5mergeINS0_8_Ptr_cmpISt14_List_iteratorIjEvEEEEvRNS_15_List_node_baseET_.exit ], [ %2, %.preheader47 ] ; 7 uses
-  %i.br = load ptr, ptr %.02550, align 8          ; 2 uses
+  %i.br = load ptr, ptr %.02550, align 16         ; 2 uses
   %i.bs = icmp eq ptr %i.br, %.02550
   br i1 %i.bs, label %.critedge, label %bb.c
 
@@ -701,7 +704,7 @@ _ZNSt8__detail13_Scratch_list5mergeINS0_8_Ptr_cmpISt14_List_iteratorIjEvEEEEvRNS
 .lr.ph62:                                         ; preds = %.preheader, %_ZNSt8__detail13_Scratch_list5mergeINS0_8_Ptr_cmpISt14_List_iteratorIjEvEEEEvRNS_15_List_node_baseET_.exit42
   %.12661 = phi ptr [ %.126, %_ZNSt8__detail13_Scratch_list5mergeINS0_8_Ptr_cmpISt14_List_iteratorIjEvEEEEvRNS_15_List_node_baseET_.exit42 ], [ %.ptr.1, %.preheader ] ; 6 uses
   %.pn60 = phi ptr [ %.12661, %_ZNSt8__detail13_Scratch_list5mergeINS0_8_Ptr_cmpISt14_List_iteratorIjEvEEEEvRNS_15_List_node_baseET_.exit42 ], [ %2, %.preheader ] ; 4 uses
-  %i.ch = load ptr, ptr %.12661, align 8          ; 2 uses
+  %i.ch = load ptr, ptr %.12661, align 16         ; 2 uses
   %i.ci = load ptr, ptr %.pn60, align 8           ; 3 uses
   %i.cj = icmp ne ptr %i.ch, %.12661
   %i.ck = icmp ne ptr %i.ci, %.pn60               ; 2 uses

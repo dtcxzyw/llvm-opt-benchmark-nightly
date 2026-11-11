@@ -205,34 +205,39 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph60:                                         ; preds = %bb.b
   %i.l = sext i32 %i.k to i64
   %i.m = add nsw i32 %i.j, 1
+  %.pre88 = load i32, ptr %2, align 4, !tbaa !150
+  %.pre90 = load ptr, ptr %4, align 8, !tbaa !144
   %.pre.a = load ptr, ptr %5, align 8, !tbaa !140
   %.pre88.a = load i32, ptr %.pre.a, align 8, !tbaa !145
+  %.pre94 = load ptr, ptr %3, align 8, !tbaa !142 ; 2 uses
   br label %bb.c
 
 .loopexit:                                        ; preds = %bb.h, %._crit_edge
+  %7 = phi ptr [ %14, %._crit_edge ], [ %13, %bb.h ]
   %exitcond75.not = icmp eq i32 %i.m, %i.p
   br i1 %exitcond75.not, label %._crit_edge61, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph60, %.loopexit
-  %i.n = phi i32 [ %.pre88.a, %.lr.ph60 ], [ %i.ao, %.loopexit ] ; 2 uses
+  %8 = phi ptr [ %.pre94, %.lr.ph60 ], [ %13, %.loopexit ]
+  %9 = phi ptr [ %.pre94, %.lr.ph60 ], [ %7, %.loopexit ] ; 2 uses
+  %i.n = phi i32 [ %.pre88.a, %.lr.ph60 ], [ %15, %.loopexit ] ; 2 uses
+  %10 = phi ptr [ %.pre90, %.lr.ph60 ], [ %16, %.loopexit ] ; 3 uses
+  %11 = phi i32 [ %.pre88, %.lr.ph60 ], [ %i.ao, %.loopexit ] ; 2 uses
   %indvars.iv72 = phi i64 [ %i.l, %.lr.ph60 ], [ %indvars.iv.next73, %.loopexit ] ; 4 uses
-  %7 = load ptr, ptr %3, align 8, !tbaa !142
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 640
-  %9 = load i32, ptr %8, align 8, !tbaa !183
-  %i.o = load i32, ptr %2, align 4, !tbaa !150
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 640
+  %i.o = load i32, ptr %12, align 8, !tbaa !183
   %indvars.iv.next73 = add nsw i64 %indvars.iv72, 1 ; 3 uses
   %i.p = trunc i64 %indvars.iv.next73 to i32
   %i.q = trunc i64 %indvars.iv72 to i32
   %i.r = insertelement <2 x i32> poison, i32 %i.q, i64 0
   %i.s = trunc i64 %indvars.iv.next73 to i32
   %i.t = insertelement <2 x i32> %i.r, i32 %i.s, i64 1
-  %i.u = insertelement <2 x i32> poison, i32 %9, i64 0
+  %i.u = insertelement <2 x i32> poison, i32 %i.o, i64 0
   %i.v = shufflevector <2 x i32> %i.u, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.w = mul nsw <2 x i32> %i.v, %i.t
-  %i.x = insertelement <2 x i32> poison, i32 %i.o, i64 0
+  %i.x = insertelement <2 x i32> poison, i32 %11, i64 0
   %i.y = shufflevector <2 x i32> %i.x, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.z = sdiv <2 x i32> %i.w, %i.y                ; 2 uses
-  %10 = load ptr, ptr %4, align 8, !tbaa !144     ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %10, i64 64
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !156
   %i.ac = getelementptr inbounds [8 x i8], ptr %i.ab, i64 %indvars.iv72
@@ -253,10 +258,20 @@ bb.c:                                             ; preds = %.lr.ph60, %.loopexi
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !145 ; 2 uses
   %i.am = sext i32 %i.al to i64
   %i.an = icmp slt i64 %indvars.iv.next, %i.am
-  br i1 %i.an, label %.lr.ph, label %._crit_edge, !llvm.loop !406
+  br i1 %i.an, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !406
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.c
-  %i.ao = phi i32 [ %i.n, %bb.c ], [ %i.al, %.lr.ph ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i32, ptr %2, align 4, !tbaa !150
+  %.pre89 = load ptr, ptr %4, align 8, !tbaa !144
+  %.pre93 = load ptr, ptr %3, align 8, !tbaa !142 ; 2 uses
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %13 = phi ptr [ %.pre93, %._crit_edge.loopexit ], [ %8, %bb.c ] ; 9 uses
+  %14 = phi ptr [ %.pre93, %._crit_edge.loopexit ], [ %9, %bb.c ]
+  %15 = phi i32 [ %i.al, %._crit_edge.loopexit ], [ %i.n, %bb.c ]
+  %16 = phi ptr [ %.pre89, %._crit_edge.loopexit ], [ %10, %bb.c ]
+  %i.ao = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %11, %bb.c ]
   store float 0.000000e+00, ptr %i.ah, align 4, !tbaa !146
   %i.ap = extractelement <2 x i32> %i.z, i64 0    ; 2 uses
   %i.aq = extractelement <2 x i32> %i.z, i64 1    ; 2 uses
@@ -264,20 +279,19 @@ bb.c:                                             ; preds = %.lr.ph60, %.loopexi
   br i1 %i.ar, label %.lr.ph56, label %.loopexit
 
 .lr.ph56:                                         ; preds = %._crit_edge
-  %11 = load ptr, ptr %3, align 8, !tbaa !142     ; 7 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %11, i64 448
+  %i.as = getelementptr inbounds nuw i8, ptr %13, i64 448
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !184 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %11, i64 456
+  %i.au = getelementptr inbounds nuw i8, ptr %13, i64 456
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !184
   %i.aw = icmp eq ptr %i.at, %i.av
-  %i.ax = getelementptr inbounds nuw i8, ptr %11, i64 96
+  %i.ax = getelementptr inbounds nuw i8, ptr %13, i64 96
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !185
-  %i.az = getelementptr inbounds nuw i8, ptr %11, i64 28
+  %i.az = getelementptr inbounds nuw i8, ptr %13, i64 28
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !211
   %.not49 = icmp eq i32 %i.ba, 0
-  %i.bb = getelementptr inbounds nuw i8, ptr %11, i64 352
-  %i.bc = getelementptr inbounds nuw i8, ptr %11, i64 72
-  %i.bd = getelementptr inbounds nuw i8, ptr %11, i64 48
+  %i.bb = getelementptr inbounds nuw i8, ptr %13, i64 352
+  %i.bc = getelementptr inbounds nuw i8, ptr %13, i64 72
+  %i.bd = getelementptr inbounds nuw i8, ptr %13, i64 48
   %i.be = sext i32 %i.ap to i64
   %wide.trip.count = sext i32 %i.aq to i64
   br label %bb.d

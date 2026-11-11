@@ -205,14 +205,15 @@ _ZN22hb_serialize_context_t13allocate_sizeIN3CFF8Charset0EEEPT_mb.exit: ; preds 
   br i1 %.not130, label %.loopexit, label %.lr.ph128
 
 .lr.ph128:                                        ; preds = %.preheader
-  %i.af = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.af = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %.pre140 = load ptr, ptr %i.af, align 8, !tbaa !173
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph128, %._crit_edge124
   %i.ag = phi i32 [ %i.ae, %.lr.ph128 ], [ %i.bw, %._crit_edge124 ]
+  %5 = phi ptr [ %.pre140, %.lr.ph128 ], [ %6, %._crit_edge124 ] ; 2 uses
   %indvars.iv137 = phi i64 [ 0, %.lr.ph128 ], [ %indvars.iv.next138, %._crit_edge124 ] ; 2 uses
   %.067126 = phi i32 [ 0, %.lr.ph128 ], [ %.168.lcssa, %._crit_edge124 ] ; 10 uses
-  %5 = load ptr, ptr %i.af, align 8, !tbaa !173
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv137 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !175 ; 8 uses
@@ -333,11 +334,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bv, label %._crit_edge124.loopexit, label %.lr.ph123
 
 ._crit_edge124.loopexit:                          ; preds = %.lr.ph123.prol.loopexit, %.lr.ph123, %vec.epilog.middle.block, %middle.block
+  %.pre = load ptr, ptr %i.af, align 8, !tbaa !173
   %.pre.a = load i32, ptr %i.ad, align 4, !tbaa !172
   br label %._crit_edge124
 
 ._crit_edge124:                                   ; preds = %._crit_edge124.loopexit, %bb.i
   %i.bw = phi i32 [ %i.ag, %bb.i ], [ %.pre.a, %._crit_edge124.loopexit ] ; 2 uses
+  %6 = phi ptr [ %5, %bb.i ], [ %.pre, %._crit_edge124.loopexit ]
   %.168.lcssa = phi i32 [ %.067126, %bb.i ], [ %i.an, %._crit_edge124.loopexit ]
   %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1 ; 2 uses
   %i.bx = zext i32 %i.bw to i64

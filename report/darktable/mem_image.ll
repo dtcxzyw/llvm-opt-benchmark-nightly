@@ -204,21 +204,17 @@ begin_hunk_0_@_ZN6LibRaw14copy_mem_imageEPvii:bb.a
   %i.ok = add i32 %i.oh, %i.oj
   br label %.loopexit102
 
-.lr.ph124.splitthread-pre-split:                  ; preds = %._crit_edge
-  %.pr262 = load i32, ptr %i.cr, align 4, !tbaa !89
-  br label %.lr.ph124.split
-
-.lr.ph124.split:                                  ; preds = %.lr.ph124.splitthread-pre-split, %.lr.ph124.split.preheader
-  %4 = phi i32 [ %.pr262, %.lr.ph124.splitthread-pre-split ], [ %i.od, %.lr.ph124.split.preheader ] ; 3 uses
-  %5 = phi i16 [ %i.si, %.lr.ph124.splitthread-pre-split ], [ %i.lc, %.lr.ph124.split.preheader ]
-  %indvars.iv218 = phi i64 [ %indvars.iv.next219, %.lr.ph124.splitthread-pre-split ], [ %i.of, %.lr.ph124.split.preheader ] ; 10 uses
-  %.063122 = phi i32 [ %i.sj, %.lr.ph124.splitthread-pre-split ], [ 0, %.lr.ph124.split.preheader ]
-  %.076121 = phi ptr [ %.177.lcssa, %.lr.ph124.splitthread-pre-split ], [ %i.la, %.lr.ph124.split.preheader ] ; 3 uses
-  %i.ol = icmp sgt i32 %4, 0
+.lr.ph124.split:                                  ; preds = %.lr.ph124.split.preheader, %._crit_edge
+  %4 = phi i16 [ %i.lc, %.lr.ph124.split.preheader ], [ %i.si, %._crit_edge ]
+  %5 = phi i32 [ %i.od, %.lr.ph124.split.preheader ], [ %6, %._crit_edge ] ; 4 uses
+  %indvars.iv218 = phi i64 [ %i.of, %.lr.ph124.split.preheader ], [ %indvars.iv.next219, %._crit_edge ] ; 10 uses
+  %.063122 = phi i32 [ 0, %.lr.ph124.split.preheader ], [ %i.sj, %._crit_edge ]
+  %.076121 = phi ptr [ %i.la, %.lr.ph124.split.preheader ], [ %.177.lcssa, %._crit_edge ] ; 3 uses
+  %i.ol = icmp sgt i32 %5, 0
   br i1 %i.ol, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph124.split
-  %i.om = zext nneg i32 %4 to i64                 ; 3 uses
+  %i.om = zext nneg i32 %5 to i64                 ; 3 uses
   %xtraiter299 = and i64 %i.om, 7                 ; 2 uses
   %lcmp.mod300.not = icmp eq i64 %xtraiter299, 0
   br i1 %lcmp.mod300.not, label %.prol.loopexit298, label %.prol.preheader297
@@ -247,7 +243,7 @@ begin_hunk_0_@_ZN6LibRaw14copy_mem_imageEPvii:bb.a
   %indvars.iv215.unr = phi i64 [ %i.om, %.lr.ph ], [ %indvars.iv.next216.prol, %.prol.preheader297 ]
   %.177118.unr = phi ptr [ %.076121, %.lr.ph ], [ %i.ow, %.prol.preheader297 ]
   %.lcssa287.unr = phi ptr [ poison, %.lr.ph ], [ %i.ow, %.prol.preheader297 ]
-  %i.ox = icmp ult i32 %4, 8
+  %i.ox = icmp ult i32 %5, 8
   br i1 %i.ox, label %._crit_edge.loopexit, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit298, %.lr.ph.new
@@ -354,17 +350,19 @@ begin_hunk_0_@_ZN6LibRaw14copy_mem_imageEPvii:bb.a
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph.new, %.prol.loopexit298
   %.lcssa287 = phi ptr [ %.lcssa287.unr, %.prol.loopexit298 ], [ %i.sg, %.lr.ph.new ]
+  %.pre242 = load i32, ptr %i.cr, align 4, !tbaa !89
   %.pre242.a = load i16, ptr %i.ca, align 2, !tbaa !82
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph124.split
-  %i.si = phi i16 [ %5, %.lr.ph124.split ], [ %.pre242.a, %._crit_edge.loopexit ] ; 2 uses
+  %i.si = phi i16 [ %4, %.lr.ph124.split ], [ %.pre242.a, %._crit_edge.loopexit ] ; 2 uses
+  %6 = phi i32 [ %5, %.lr.ph124.split ], [ %.pre242, %._crit_edge.loopexit ]
   %.177.lcssa = phi ptr [ %.076121, %.lr.ph124.split ], [ %.lcssa287, %._crit_edge.loopexit ]
   %i.sj = add nuw nsw i32 %.063122, 1             ; 2 uses
   %indvars.iv.next219 = add nsw i64 %indvars.iv218, %i.hj ; 2 uses
   %i.sk = zext i16 %i.si to i32
   %i.sl = icmp samesign ult i32 %i.sj, %i.sk
-  br i1 %i.sl, label %.lr.ph124.splitthread-pre-split, label %.loopexit102.loopexit, !llvm.loop !111
+  br i1 %i.sl, label %.lr.ph124.split, label %.loopexit102.loopexit, !llvm.loop !111
 
 .loopexit102.loopexit:                            ; preds = %._crit_edge
   %i.sm = trunc nsw i64 %indvars.iv.next219 to i32

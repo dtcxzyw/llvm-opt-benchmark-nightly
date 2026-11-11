@@ -205,19 +205,23 @@ bb.t:                                             ; preds = %bb.a
 
 bb.u:                                             ; preds = %bb.t
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 808
-  %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !48 ; 3 uses
+  %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !48 ; 4 uses
   call void @_Z21get_commbuffer_countsP16AtomDistributionPN3gmx8ArrayRefIKiEES5_(ptr noundef nonnull %i.ck, ptr noundef nonnull %3, ptr noundef nonnull %4)
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 144
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !481
   %i.cn = load i32, ptr %i.a, align 8, !tbaa !144 ; 2 uses
   %i.co = icmp sgt i32 %i.cn, 0
-  br i1 %i.co, label %.lr.ph38.i, label %.loopexit.i3
+  br i1 %i.co, label %.lr.ph38.preheader.i, label %.loopexit.i3
 
-.lr.ph38.i:                                       ; preds = %bb.u, %._crit_edge.i12
-  %i.cp = phi i32 [ %i.cu, %._crit_edge.i12 ], [ %i.cn, %bb.u ]
-  %indvars.iv40.i = phi i64 [ %indvars.iv.next41.i, %._crit_edge.i12 ], [ 0, %bb.u ] ; 2 uses
-  %.036.i = phi i32 [ %.1.lcssa.i, %._crit_edge.i12 ], [ 0, %bb.u ] ; 2 uses
-  %5 = load ptr, ptr %i.ck, align 8, !tbaa !147
+.lr.ph38.preheader.i:                             ; preds = %bb.u
+  %.pre43.i = load ptr, ptr %i.ck, align 8, !tbaa !147
+  br label %.lr.ph38.i
+
+.lr.ph38.i:                                       ; preds = %._crit_edge.i12, %.lr.ph38.preheader.i
+  %i.cp = phi i32 [ %i.cn, %.lr.ph38.preheader.i ], [ %i.cu, %._crit_edge.i12 ]
+  %5 = phi ptr [ %.pre43.i, %.lr.ph38.preheader.i ], [ %6, %._crit_edge.i12 ] ; 2 uses
+  %indvars.iv40.i = phi i64 [ 0, %.lr.ph38.preheader.i ], [ %indvars.iv.next41.i, %._crit_edge.i12 ] ; 2 uses
+  %.036.i = phi i32 [ 0, %.lr.ph38.preheader.i ], [ %.1.lcssa.i, %._crit_edge.i12 ] ; 2 uses
   %i.cq = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %indvars.iv40.i ; 2 uses
   %.sroa.0.0.copyload.i.i5 = load ptr, ptr %i.cq, align 8 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
@@ -231,11 +235,13 @@ bb.u:                                             ; preds = %bb.t
 
 ._crit_edge.loopexit.i10:                         ; preds = %.lr.ph.i6
   %i.ct = trunc nsw i64 %indvars.iv.next.i8 to i32
+  %.pre.i11 = load ptr, ptr %i.ck, align 8, !tbaa !147
   %.pre.i11.a = load i32, ptr %i.a, align 8, !tbaa !144
   br label %._crit_edge.i12
 
 ._crit_edge.i12:                                  ; preds = %._crit_edge.loopexit.i10, %.lr.ph38.i
   %i.cu = phi i32 [ %i.cp, %.lr.ph38.i ], [ %.pre.i11.a, %._crit_edge.loopexit.i10 ] ; 2 uses
+  %6 = phi ptr [ %5, %.lr.ph38.i ], [ %.pre.i11, %._crit_edge.loopexit.i10 ]
   %.1.lcssa.i = phi i32 [ %.036.i, %.lr.ph38.i ], [ %i.ct, %._crit_edge.loopexit.i10 ]
   %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv40.i, 1 ; 2 uses
   %i.cv = sext i32 %i.cu to i64

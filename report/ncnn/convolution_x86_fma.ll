@@ -205,6 +205,7 @@ begin_hunk_0_@_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.omp_outli
 
 .lr.ph358.preheader:                              ; preds = %.preheader268
   %.pre436 = load i32, ptr %6, align 4, !tbaa !81
+  %.pre441 = load ptr, ptr %5, align 8, !tbaa !37
   %i.ee = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   br label %.lr.ph358
 
@@ -425,18 +426,19 @@ begin_hunk_0_@_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.omp_outli
   br i1 %i.jd, label %.lr.ph389.preheader, label %._crit_edge390
 
 .lr.ph389.preheader:                              ; preds = %.preheader
+  %.pre438 = load ptr, ptr %5, align 8, !tbaa !37
   %.pre437.a = load i32, ptr %6, align 4, !tbaa !81
   %i.je = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   br label %.lr.ph389
 
 .lr.ph358:                                        ; preds = %.lr.ph358.preheader, %._crit_edge354
+  %7 = phi ptr [ %8, %._crit_edge354 ], [ %.pre441, %.lr.ph358.preheader ] ; 2 uses
   %i.jf = phi i32 [ %i.kg, %._crit_edge354 ], [ %i.dz, %.lr.ph358.preheader ]
   %i.jg = phi i32 [ %i.kh, %._crit_edge354 ], [ %i.ea, %.lr.ph358.preheader ]
   %i.jh = phi i32 [ %i.ki, %._crit_edge354 ], [ %i.eb, %.lr.ph358.preheader ] ; 2 uses
   %i.ji = phi i32 [ %i.kj, %._crit_edge354 ], [ %.pre436, %.lr.ph358.preheader ] ; 2 uses
   %.8357 = phi ptr [ %.11.lcssa, %._crit_edge354 ], [ %.4.lcssa, %.lr.ph358.preheader ] ; 2 uses
   %.2243356 = phi i32 [ %i.nb, %._crit_edge354 ], [ %.1242.lcssa, %.lr.ph358.preheader ] ; 3 uses
-  %7 = load ptr, ptr %5, align 8, !tbaa !37
   %i.jj = mul nsw i32 %i.jh, %i.ee
   %i.jk = add nsw i32 %i.jj, %.2243356            ; 2 uses
   %i.jl = shl nsw i32 %i.jk, 3
@@ -471,6 +473,7 @@ begin_hunk_0_@_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.omp_outli
   br i1 %i.kf, label %.lr.ph334, label %._crit_edge335.loopexit, !llvm.loop !1856
 
 ._crit_edge335.loopexit:                          ; preds = %.lr.ph334
+  %.pre440 = load ptr, ptr %5, align 8, !tbaa !37
   %.pre461 = mul nsw i32 %i.jv, %i.ee
   %.pre463 = add nsw i32 %.pre461, %.2243356      ; 2 uses
   %.pre465 = shl nsw i32 %.pre463, 3
@@ -480,6 +483,7 @@ begin_hunk_0_@_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.omp_outli
 ._crit_edge335:                                   ; preds = %._crit_edge335.loopexit, %.lr.ph358
   %.pre-phi468.a = phi i64 [ %.pre467, %._crit_edge335.loopexit ], [ %i.jm, %.lr.ph358 ]
   %.pre-phi464 = phi i32 [ %.pre463, %._crit_edge335.loopexit ], [ %i.jk, %.lr.ph358 ] ; 2 uses
+  %8 = phi ptr [ %.pre440, %._crit_edge335.loopexit ], [ %7, %.lr.ph358 ]
   %i.kg = phi i32 [ %i.jv, %._crit_edge335.loopexit ], [ %i.jf, %.lr.ph358 ] ; 2 uses
   %i.kh = phi i32 [ %i.jv, %._crit_edge335.loopexit ], [ %i.jg, %.lr.ph358 ] ; 2 uses
   %i.ki = phi i32 [ %i.jv, %._crit_edge335.loopexit ], [ %i.jh, %.lr.ph358 ] ; 4 uses
@@ -625,15 +629,15 @@ bb.d:                                             ; preds = %.lr.ph344, %bb.d
 .lr.ph389:                                        ; preds = %.lr.ph389.preheader, %._crit_edge385
   %i.ne = phi i32 [ %i.nz, %._crit_edge385 ], [ %i.jb, %.lr.ph389.preheader ]
   %i.nf = phi i32 [ %i.ob, %._crit_edge385 ], [ %.pre437.a, %.lr.ph389.preheader ] ; 2 uses
+  %9 = phi ptr [ %10, %._crit_edge385 ], [ %.pre438, %.lr.ph389.preheader ] ; 2 uses
   %i.ng = phi i32 [ %i.nz, %._crit_edge385 ], [ %i.jc, %.lr.ph389.preheader ] ; 2 uses
   %.12388 = phi ptr [ %.15.lcssa, %._crit_edge385 ], [ %.8.lcssa, %.lr.ph389.preheader ] ; 2 uses
   %.3244387 = phi i32 [ %i.qk, %._crit_edge385 ], [ %.2243.lcssa, %.lr.ph389.preheader ] ; 3 uses
-  %8 = load ptr, ptr %5, align 8, !tbaa !37
   %i.nh = mul nsw i32 %i.ng, %i.je
   %i.ni = add nsw i32 %i.nh, %.3244387            ; 2 uses
   %i.nj = shl nsw i32 %i.ni, 3
   %i.nk = sext i32 %i.nj to i64                   ; 2 uses
-  %i.nl = getelementptr inbounds [2 x i8], ptr %8, i64 %i.nk ; 2 uses
+  %i.nl = getelementptr inbounds [2 x i8], ptr %9, i64 %i.nk ; 2 uses
   %i.nm = icmp sgt i32 %i.nf, 7
   br i1 %i.nm, label %.lr.ph365, label %._crit_edge366
 
@@ -657,6 +661,7 @@ bb.d:                                             ; preds = %.lr.ph344, %bb.d
   br i1 %i.ny, label %.lr.ph365, label %._crit_edge366.loopexit, !llvm.loop !1861
 
 ._crit_edge366.loopexit:                          ; preds = %.lr.ph365
+  %.pre437 = load ptr, ptr %5, align 8, !tbaa !37
   %.pre469 = mul nsw i32 %i.no, %i.je
   %.pre471 = add nsw i32 %.pre469, %.3244387      ; 2 uses
   %.pre473 = shl nsw i32 %.pre471, 3
@@ -669,6 +674,7 @@ bb.d:                                             ; preds = %.lr.ph344, %bb.d
   %i.nz = phi i32 [ %i.no, %._crit_edge366.loopexit ], [ %i.ne, %.lr.ph389 ] ; 5 uses
   %i.oa = phi i32 [ %i.no, %._crit_edge366.loopexit ], [ %i.ng, %.lr.ph389 ] ; 2 uses
   %i.ob = phi i32 [ %i.nx, %._crit_edge366.loopexit ], [ %i.nf, %.lr.ph389 ] ; 7 uses
+  %10 = phi ptr [ %.pre437, %._crit_edge366.loopexit ], [ %9, %.lr.ph389 ]
   %.13.lcssa = phi ptr [ %i.nu, %._crit_edge366.loopexit ], [ %.12388, %.lr.ph389 ] ; 2 uses
   %.0229.lcssa = phi ptr [ %i.nt, %._crit_edge366.loopexit ], [ %i.nl, %.lr.ph389 ]
   %.0228.lcssa = phi i32 [ %i.nv, %._crit_edge366.loopexit ], [ 0, %.lr.ph389 ] ; 3 uses

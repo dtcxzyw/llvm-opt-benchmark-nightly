@@ -204,7 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %1, align 8, !tbaa !54     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 0, ptr %i.a, align 4, !tbaa !32
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 6 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.p, label %bb.b
 
@@ -351,15 +351,15 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not104, label %.preheader.preheader, label %bb.p
 
 .preheader.preheader:                             ; preds = %bb.o
+  %.pre112 = load i32, ptr %i.c, align 8, !tbaa !128 ; 3 uses
   %i.ca = and i32 %i.bm, 8
   %lcmp.mod.not = icmp eq i32 %i.ca, 0
   br i1 %lcmp.mod.not, label %.preheader.prol.loopexit, label %.preheader.prol
 
 .preheader.prol:                                  ; preds = %.preheader.preheader
-  %4 = load i32, ptr %i.c, align 8, !tbaa !128    ; 2 uses
-  %i.cb = zext i32 %4 to i64
+  %i.cb = zext i32 %.pre112 to i64
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.cb
-  %.not111.prol = icmp eq i32 %4, 0
+  %.not111.prol = icmp eq i32 %.pre112, 0
   br i1 %.not111.prol, label %._crit_edge.prol, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.preheader.prol, %.lr.ph.prol
@@ -372,15 +372,21 @@ bb.o:                                             ; preds = %bb.n
   %i.cg = sext i32 %i.cf to i64
   %i.ch = getelementptr inbounds i8, ptr %.085107.prol, i64 %i.cg
   %i.ci = icmp ult ptr %i.ce, %i.cc
-  br i1 %i.ci, label %.lr.ph.prol, label %._crit_edge.prol, !llvm.loop !122
+  br i1 %i.ci, label %.lr.ph.prol, label %._crit_edge.loopexit.prol, !llvm.loop !122
 
-._crit_edge.prol:                                 ; preds = %.lr.ph.prol, %.preheader.prol
-  %.1.lcssa.prol = phi ptr [ %i.bg, %.preheader.prol ], [ %i.ce, %.lr.ph.prol ]
+._crit_edge.loopexit.prol:                        ; preds = %.lr.ph.prol
+  %.pre.prol = load i32, ptr %i.c, align 8, !tbaa !128
+  br label %._crit_edge.prol
+
+._crit_edge.prol:                                 ; preds = %._crit_edge.loopexit.prol, %.preheader.prol
+  %4 = phi i32 [ 0, %.preheader.prol ], [ %.pre.prol, %._crit_edge.loopexit.prol ]
+  %.1.lcssa.prol = phi ptr [ %i.bg, %.preheader.prol ], [ %i.ce, %._crit_edge.loopexit.prol ]
   %i.cj = add nsw i32 %i.bn, -1
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bx, i64 1
   br label %.preheader.prol.loopexit
 
 .preheader.prol.loopexit:                         ; preds = %._crit_edge.prol, %.preheader.preheader
+  %.unr = phi i32 [ %.pre112, %.preheader.preheader ], [ %4, %._crit_edge.prol ]
   %.086110.unr = phi ptr [ %i.bx, %.preheader.preheader ], [ %i.ck, %._crit_edge.prol ]
   %.087109.unr = phi i32 [ %i.bn, %.preheader.preheader ], [ %i.cj, %._crit_edge.prol ]
   %.089108.unr = phi ptr [ %i.bg, %.preheader.preheader ], [ %.1.lcssa.prol, %._crit_edge.prol ]
@@ -388,10 +394,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.cl, label %.unr-lcssa, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.prol.loopexit, %._crit_edge.1
+  %5 = phi i32 [ %7, %._crit_edge.1 ], [ %.unr, %.preheader.prol.loopexit ] ; 2 uses
   %.086110 = phi ptr [ %i.de, %._crit_edge.1 ], [ %.086110.unr, %.preheader.prol.loopexit ] ; 3 uses
   %.087109 = phi i32 [ %i.dd, %._crit_edge.1 ], [ %.087109.unr, %.preheader.prol.loopexit ]
   %.089108 = phi ptr [ %.1.lcssa.1, %._crit_edge.1 ], [ %.089108.unr, %.preheader.prol.loopexit ] ; 3 uses
-  %5 = load i32, ptr %i.c, align 8, !tbaa !128    ; 2 uses
   %i.cm = zext i32 %5 to i64
   %i.cn = getelementptr inbounds nuw i8, ptr %.089108, i64 %i.cm
   %.not111 = icmp eq i32 %5, 0
@@ -407,11 +413,15 @@ bb.o:                                             ; preds = %bb.n
   %i.cr = sext i32 %i.cq to i64
   %i.cs = getelementptr inbounds i8, ptr %.085107, i64 %i.cr
   %i.ct = icmp ult ptr %i.cp, %i.cn
-  br i1 %i.ct, label %.lr.ph, label %._crit_edge, !llvm.loop !122
+  br i1 %i.ct, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !122
 
-._crit_edge:                                      ; preds = %.lr.ph, %.preheader
-  %.1.lcssa = phi ptr [ %.089108, %.preheader ], [ %i.cp, %.lr.ph ] ; 3 uses
-  %6 = load i32, ptr %i.c, align 8, !tbaa !128    ; 2 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i32, ptr %i.c, align 8, !tbaa !128
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
+  %6 = phi i32 [ 0, %.preheader ], [ %.pre, %._crit_edge.loopexit ] ; 2 uses
+  %.1.lcssa = phi ptr [ %.089108, %.preheader ], [ %i.cp, %._crit_edge.loopexit ] ; 3 uses
   %i.cu = zext i32 %6 to i64
   %i.cv = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 %i.cu
   %.not111.1 = icmp eq i32 %6, 0
@@ -431,10 +441,15 @@ bb.o:                                             ; preds = %bb.n
   %i.da = sext i32 %i.cz to i64
   %i.db = getelementptr inbounds i8, ptr %.085107.1, i64 %i.da
   %i.dc = icmp ult ptr %i.cy, %i.cv
-  br i1 %i.dc, label %.lr.ph.1, label %._crit_edge.1, !llvm.loop !122
+  br i1 %i.dc, label %.lr.ph.1, label %._crit_edge.loopexit.1, !llvm.loop !122
 
-._crit_edge.1:                                    ; preds = %.lr.ph.1, %._crit_edge
-  %.1.lcssa.1 = phi ptr [ %.1.lcssa, %._crit_edge ], [ %i.cy, %.lr.ph.1 ]
+._crit_edge.loopexit.1:                           ; preds = %.lr.ph.1
+  %.pre.1 = load i32, ptr %i.c, align 8, !tbaa !128
+  br label %._crit_edge.1
+
+._crit_edge.1:                                    ; preds = %._crit_edge.loopexit.1, %._crit_edge
+  %7 = phi i32 [ 0, %._crit_edge ], [ %.pre.1, %._crit_edge.loopexit.1 ]
+  %.1.lcssa.1 = phi ptr [ %.1.lcssa, %._crit_edge ], [ %i.cy, %._crit_edge.loopexit.1 ]
   %i.dd = add nsw i32 %.087109, -2                ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.086110, i64 2
   %.not105.1 = icmp eq i32 %i.dd, 0

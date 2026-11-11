@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %3 = alloca %"class.absl::lts_20260526::log_internal::LogMessageFatal", align 8 ; 6 uses
   %4 = alloca %"class.absl::lts_20260526::log_internal::LogMessageFatal", align 8 ; 6 uses
-  %5 = alloca %"class.std::vector", align 8       ; 18 uses
+  %5 = alloca %"class.std::vector", align 8       ; 19 uses
   %6 = alloca %"class.std::vector.3", align 8     ; 20 uses
   %7 = alloca %"class.std::map", align 8          ; 28 uses
   %8 = alloca %"class.absl::lts_20260526::synchronization_internal::GraphCycles", align 8 ; 26 uses
@@ -607,14 +607,15 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit965:       ; preds = %_ZNSt6vectorIiSaIiE
 
 .preheader.preheader:                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit965
   %i.atl = trunc i64 %indvars.iv.next1372 to i32
+  %.pre1384 = load ptr, ptr %5, align 8, !tbaa !168
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %72 = phi ptr [ %73, %._crit_edge ], [ %.pre1384, %.preheader.preheader ] ; 5 uses
   %.01371298 = phi i32 [ %i.bcp, %._crit_edge ], [ 0, %.preheader.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x) #25
   %i.atm = load ptr, ptr %i.au, align 8, !tbaa !167 ; 3 uses
-  %72 = load ptr, ptr %5, align 8, !tbaa !168     ; 3 uses
   %i.atn = ptrtoint ptr %i.atm to i64
   %i.ato = ptrtoint ptr %72 to i64
   %i.atp = sub i64 %i.atn, %i.ato                 ; 2 uses
@@ -1017,9 +1018,14 @@ _ZNSt8_Rb_treeIiSt4pairIKiN4absl12lts_2026052624synchronization_internal7GraphId
   %i.bbw = add i64 %i.bbv, -1
   store i64 %i.bbw, ptr %i.ad, align 8, !tbaa !42
   %.not.i3.i = icmp eq ptr %i.bbt, %.sroa.3.0.i.i
-  br i1 %.not.i3.i, label %_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000, label %.lr.ph.i2.i, !llvm.loop !6
+  br i1 %.not.i3.i, label %_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000.loopexit, label %.lr.ph.i2.i, !llvm.loop !6
 
-_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000: ; preds = %.lr.ph.i2.i, %.critedge.i.i, %_ZNSt8_Rb_treeIiSt4pairIKiN4absl12lts_2026052624synchronization_internal7GraphIdEESt10_Select1stIS6_ESt4lessIiESaIS6_EE5clearEv.exit.i.i
+_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000.loopexit: ; preds = %.lr.ph.i2.i
+  %.pre1383 = load ptr, ptr %5, align 8, !tbaa !168
+  br label %_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000
+
+_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000: ; preds = %_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000.loopexit, %.critedge.i.i, %_ZNSt8_Rb_treeIiSt4pairIKiN4absl12lts_2026052624synchronization_internal7GraphIdEESt10_Select1stIS6_ESt4lessIiESaIS6_EE5clearEv.exit.i.i
+  %73 = phi ptr [ %.pre1383, %_ZNSt3mapIiN4absl12lts_2026052624synchronization_internal7GraphIdESt4lessIiESaISt4pairIKiS3_EEE5eraseERS7_.exit1000.loopexit ], [ %72, %.critedge.i.i ], [ %72, %_ZNSt8_Rb_treeIiSt4pairIKiN4absl12lts_2026052624synchronization_internal7GraphIdEESt10_Select1stIS6_ESt4lessIiESaIS6_EE5clearEv.exit.i.i ]
   %i.bbx = load ptr, ptr %6, align 8, !tbaa !76   ; 3 uses
   %i.bby = ptrtoint ptr %i.bbx to i64
   %.promoted1292 = load ptr, ptr %i.bm, align 8, !tbaa !77 ; 3 uses

@@ -204,39 +204,48 @@ bb.a:
   br i1 %i.c, label %.lr.ph12, label %._crit_edge13
 
 .lr.ph12:                                         ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !117  ; 2 uses
   %i.g = icmp sgt i32 %i.f, 0
-  br i1 %i.g, label %.lr.ph12.split, label %._crit_edge13
+  br i1 %i.g, label %.lr.ph12.split.preheader, label %._crit_edge13
+
+.lr.ph12.split.preheader:                         ; preds = %.lr.ph12
+  %.pre15 = load ptr, ptr %0, align 8, !tbaa !18
+  %.pre17 = load i32, ptr %i.d, align 8, !tbaa !16
+  br label %.lr.ph12.split
 
 ._crit_edge13:                                    ; preds = %._crit_edge, %.lr.ph12, %bb.a
   ret void
 
-.lr.ph12.split:                                   ; preds = %.lr.ph12, %._crit_edge
-  %i.h = phi i32 [ %i.n, %._crit_edge ], [ %i.b, %.lr.ph12 ]
-  %i.i = phi i32 [ %i.o, %._crit_edge ], [ %i.f, %.lr.ph12 ] ; 2 uses
-  %.0710 = phi i32 [ %i.p, %._crit_edge ], [ 0, %.lr.ph12 ] ; 2 uses
-  %i.j = icmp sgt i32 %i.i, 0
+.lr.ph12.split:                                   ; preds = %.lr.ph12.split.preheader, %._crit_edge
+  %1 = phi i32 [ %3, %._crit_edge ], [ %i.b, %.lr.ph12.split.preheader ]
+  %i.h = phi i32 [ %i.n, %._crit_edge ], [ %i.f, %.lr.ph12.split.preheader ] ; 2 uses
+  %i.i = phi i32 [ %i.o, %._crit_edge ], [ %.pre17, %.lr.ph12.split.preheader ] ; 2 uses
+  %2 = phi ptr [ %4, %._crit_edge ], [ %.pre15, %.lr.ph12.split.preheader ] ; 2 uses
+  %.0710 = phi i32 [ %i.p, %._crit_edge ], [ 0, %.lr.ph12.split.preheader ] ; 2 uses
+  %i.j = icmp sgt i32 %i.h, 0
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph12.split
-  %1 = load ptr, ptr %0, align 8, !tbaa !18
-  %2 = load i32, ptr %i.d, align 8, !tbaa !16
-  %i.k = mul nsw i32 %2, %.0710
+  %i.k = mul nsw i32 %i.i, %.0710
   %i.l = sext i32 %i.k to i64
-  %i.m = getelementptr inbounds i8, ptr %1, i64 %i.l
+  %i.m = getelementptr inbounds i8, ptr %2, i64 %i.l
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load ptr, ptr %0, align 8, !tbaa !18
+  %.pre16 = load i32, ptr %i.d, align 8, !tbaa !16
   %.pre.a = load i32, ptr %i.a, align 4, !tbaa !118
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph12.split
-  %i.n = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.h, %.lr.ph12.split ] ; 2 uses
-  %i.o = phi i32 [ %i.v, %._crit_edge.loopexit ], [ %i.i, %.lr.ph12.split ]
+  %3 = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %1, %.lr.ph12.split ] ; 2 uses
+  %i.n = phi i32 [ %i.v, %._crit_edge.loopexit ], [ %i.h, %.lr.ph12.split ]
+  %i.o = phi i32 [ %.pre16, %._crit_edge.loopexit ], [ %i.i, %.lr.ph12.split ]
+  %4 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %2, %.lr.ph12.split ]
   %i.p = add nuw nsw i32 %.0710, 1                ; 2 uses
-  %i.q = icmp slt i32 %i.p, %i.n
+  %i.q = icmp slt i32 %i.p, %3
   br i1 %i.q, label %.lr.ph12.split, label %._crit_edge13, !llvm.loop !274
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

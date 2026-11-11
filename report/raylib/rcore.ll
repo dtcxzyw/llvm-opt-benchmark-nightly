@@ -205,8 +205,8 @@ sdefl_put.exit162.i:                              ; preds = %.lr.ph.i160.i, %sde
   br label %.lr.ph232.i
 
 .lr.ph230.i:                                      ; preds = %sdefl_put.exit174.i, %.lr.ph230.preheader.i
-  %5 = phi i32 [ %i.zf, %.lr.ph230.preheader.i ], [ %6, %sdefl_put.exit174.i ]
   %.13 = phi ptr [ %.12, %.lr.ph230.preheader.i ], [ %.14, %sdefl_put.exit174.i ] ; 2 uses
+  %5 = phi i32 [ %i.zf, %.lr.ph230.preheader.i ], [ %6, %sdefl_put.exit174.i ]
   %i.zi = phi i32 [ %i.zg, %.lr.ph230.preheader.i ], [ %i.aab, %sdefl_put.exit174.i ] ; 3 uses
   %indvars.iv248.i = phi i64 [ 0, %.lr.ph230.preheader.i ], [ %indvars.iv.next249.i, %sdefl_put.exit174.i ] ; 2 uses
   %i.zj = getelementptr inbounds nuw i8, ptr @sdefl_flush.perm, i64 %indvars.iv248.i
@@ -239,8 +239,8 @@ sdefl_put.exit162.i:                              ; preds = %.lr.ph.i160.i, %sde
   br i1 %i.aaa, label %.lr.ph.i172.i, label %sdefl_put.exit174.i
 
 sdefl_put.exit174.i:                              ; preds = %.lr.ph.i172.i, %.lr.ph230.i
-  %6 = phi i32 [ %i.zq, %.lr.ph230.i ], [ %i.zw, %.lr.ph.i172.i ] ; 3 uses
   %.14 = phi ptr [ %.13, %.lr.ph230.i ], [ %i.zz, %.lr.ph.i172.i ] ; 3 uses
+  %6 = phi i32 [ %i.zq, %.lr.ph230.i ], [ %i.zw, %.lr.ph.i172.i ] ; 3 uses
   %i.aab = phi i32 [ %i.zr, %.lr.ph230.i ], [ %i.zy, %.lr.ph.i172.i ] ; 3 uses
   %indvars.iv.next249.i = add nuw nsw i64 %indvars.iv248.i, 1 ; 2 uses
   %exitcond252.not.i = icmp eq i64 %indvars.iv.next249.i, %wide.trip.count251.i
@@ -386,7 +386,7 @@ sdefl_put.exit186.i:                              ; preds = %.lr.ph.i190.i, %.lr
   %i.acr = phi i32 [ %i.aid, %sdefl_match.exit.i ], [ %i.aad, %.preheader214.i ] ; 4 uses
   %indvars.iv258.i = phi i64 [ %indvars.iv.next259.i, %sdefl_match.exit.i ], [ 0, %.preheader214.i ] ; 2 uses
   %i.acs = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv258.i ; 4 uses
-  %i.act = load i32, ptr %i.acs, align 4          ; 4 uses
+  %i.act = load i32, ptr %i.acs, align 4          ; 5 uses
   %i.acu = icmp sgt i32 %i.act, -1
   br i1 %i.acu, label %.preheader.i, label %bb.db
 
@@ -397,13 +397,13 @@ sdefl_put.exit186.i:                              ; preds = %.lr.ph.i190.i, %.lr
   br i1 %i.acx, label %.lr.ph234.i, label %sdefl_match.exit.i
 
 .lr.ph234.i:                                      ; preds = %.preheader.i, %sdefl_put.exit204.i
-  %i.acy = phi i32 [ %i.adx, %sdefl_put.exit204.i ], [ %i.acq, %.preheader.i ]
+  %i.acy = phi i32 [ %7, %sdefl_put.exit204.i ], [ %i.act, %.preheader.i ] ; 2 uses
   %.27 = phi ptr [ %.28, %sdefl_put.exit204.i ], [ %.18, %.preheader.i ] ; 2 uses
   %i.acz = phi i32 [ %i.ady, %sdefl_put.exit204.i ], [ %i.acw, %.preheader.i ]
-  %i.ada = phi i32 [ %i.adz, %sdefl_put.exit204.i ], [ %i.acr, %.preheader.i ] ; 2 uses
-  %.0118233.i.a = phi i32 [ %i.aea, %sdefl_put.exit204.i ], [ 0, %.preheader.i ] ; 2 uses
-  %7 = load i32, ptr %i.acs, align 4
-  %i.adb = add nsw i32 %7, %.0118233.i.a
+  %i.ada = phi i32 [ %i.adx, %sdefl_put.exit204.i ], [ %i.acq, %.preheader.i ]
+  %.0118233.i.a = phi i32 [ %i.adz, %sdefl_put.exit204.i ], [ %i.acr, %.preheader.i ] ; 2 uses
+  %.0118233.i = phi i32 [ %i.aea, %sdefl_put.exit204.i ], [ 0, %.preheader.i ] ; 2 uses
+  %i.adb = add nsw i32 %i.acy, %.0118233.i
   %i.adc = sext i32 %i.adb to i64
   %i.add = getelementptr inbounds i8, ptr %2, i64 %i.adc
   %i.ade = load i8, ptr %i.add, align 1
@@ -413,10 +413,10 @@ sdefl_put.exit186.i:                              ; preds = %.lr.ph.i190.i, %.lr
   %i.adi = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.adf
   %i.adj = load i8, ptr %i.adi, align 1
   %i.adk = zext i8 %i.adj to i32
-  %i.adl = shl i32 %i.adh, %i.ada
-  %i.adm = or i32 %i.acy, %i.adl                  ; 3 uses
+  %i.adl = shl i32 %i.adh, %.0118233.i.a
+  %i.adm = or i32 %i.adl, %i.ada                  ; 3 uses
   store i32 %i.adm, ptr %0, align 4
-  %i.adn = add nsw i32 %i.ada, %i.adk             ; 3 uses
+  %i.adn = add nsw i32 %.0118233.i.a, %i.adk      ; 3 uses
   store i32 %i.adn, ptr %i.dp, align 4
   %i.ado = icmp sgt i32 %i.adn, 7
   br i1 %i.ado, label %.lr.ph.i202.i, label %sdefl_put.exit204.i
@@ -438,14 +438,16 @@ sdefl_put.exit186.i:                              ; preds = %.lr.ph.i190.i, %.lr
 
 sdefl_put.exit204.loopexit.i:                     ; preds = %.lr.ph.i202.i
   %.pre266.i = load i32, ptr %i.acv, align 4
+  %.pre354 = load i32, ptr %i.acs, align 4
   br label %sdefl_put.exit204.i
 
 sdefl_put.exit204.i:                              ; preds = %sdefl_put.exit204.loopexit.i, %.lr.ph234.i
+  %7 = phi i32 [ %.pre354, %sdefl_put.exit204.loopexit.i ], [ %i.acy, %.lr.ph234.i ]
   %i.adx = phi i32 [ %i.ads, %sdefl_put.exit204.loopexit.i ], [ %i.adm, %.lr.ph234.i ] ; 2 uses
   %.28 = phi ptr [ %i.adv, %sdefl_put.exit204.loopexit.i ], [ %.27, %.lr.ph234.i ] ; 2 uses
   %i.ady = phi i32 [ %.pre266.i, %sdefl_put.exit204.loopexit.i ], [ %i.acz, %.lr.ph234.i ] ; 2 uses
   %i.adz = phi i32 [ %i.adu, %sdefl_put.exit204.loopexit.i ], [ %i.adn, %.lr.ph234.i ] ; 2 uses
-  %i.aea = add nuw nsw i32 %.0118233.i.a, 1       ; 2 uses
+  %i.aea = add nuw nsw i32 %.0118233.i, 1         ; 2 uses
   %i.aeb = icmp slt i32 %i.aea, %i.ady
   br i1 %i.aeb, label %.lr.ph234.i, label %sdefl_match.exit.i
 

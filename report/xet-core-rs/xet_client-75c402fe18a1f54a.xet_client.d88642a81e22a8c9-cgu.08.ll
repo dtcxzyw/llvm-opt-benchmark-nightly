@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph.i
   call void @llvm.assume(i1 %i.ah)
   %i.ai = load ptr, ptr %i.ad, align 8, !alias.scope !1850, !noalias !1848, !nonnull !10, !noundef !10 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ag
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.aj, ptr noundef nonnull readonly align 1 dereferenceable(32) %.sroa.0.059.i, i64 32, i1 false), !noalias !1849
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.aj, ptr noundef nonnull readonly align 8 dereferenceable(32) %.sroa.0.059.i, i64 32, i1 false), !noalias !1849
   %i.ak = add nuw i64 %i.ag, 32                   ; 2 uses
   store i64 %i.ak, ptr %i.ae, align 8, !alias.scope !1850, !noalias !1848
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.059.i, i64 48 ; 2 uses

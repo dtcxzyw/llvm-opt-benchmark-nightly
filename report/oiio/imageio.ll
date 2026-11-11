@@ -205,10 +205,10 @@ _ZNK11OpenImageIO4v3_110image_spanIKSt4byteLm4EE22is_contiguous_scanlineEv.exit.
 
 .preheader131.lr.ph:                              ; preds = %.preheader132
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.du = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.du = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.dw = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
@@ -611,6 +611,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %.not160, label %._crit_edge139, label %.lr.ph138.preheader
 
 .lr.ph138.preheader:                              ; preds = %.lr.ph141.split
+  %.pre186 = load i64, ptr %i.dr, align 8, !tbaa !275
+  %.pre188 = load i64, ptr %i.du, align 8, !tbaa !275
   %.pre.a = load i32, ptr %i.dy, align 8, !tbaa !50
   br label %.lr.ph138
 
@@ -629,25 +631,29 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 .lr.ph138:                                        ; preds = %.lr.ph138.preheader, %._crit_edge
   %i.od = phi i32 [ %i.nh, %.lr.ph138.preheader ], [ %i.oj, %._crit_edge ]
   %i.oe = phi i32 [ %.pre.a, %.lr.ph138.preheader ], [ %i.ok, %._crit_edge ] ; 2 uses
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph138.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
-  %2 = load i64, ptr %i.dr, align 8, !tbaa !275
-  %3 = mul nsw i64 %2, %indvars.iv.a
+  %indvars.iv.a = phi i64 [ %.pre188, %.lr.ph138.preheader ], [ %5, %._crit_edge ] ; 2 uses
+  %2 = phi i64 [ %.pre186, %.lr.ph138.preheader ], [ %6, %._crit_edge ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph138.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
+  %3 = mul nsw i64 %2, %indvars.iv
   %4 = getelementptr inbounds i8, ptr %i.nq, i64 %3
-  %5 = load i64, ptr %i.du, align 8, !tbaa !275
-  %i.of = mul nsw i64 %5, %indvars.iv.a
+  %i.of = mul nsw i64 %indvars.iv.a, %indvars.iv
   %i.og = getelementptr inbounds i8, ptr %i.nx, i64 %i.of
   %i.oh = zext i32 %i.oe to i64
-  %i.oi = icmp samesign ult i64 %indvars.iv.a, %i.oh
+  %i.oi = icmp samesign ult i64 %indvars.iv, %i.oh
   br i1 %i.oi, label %.lr.ph, label %._crit_edge
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i64, ptr %i.dr, align 8, !tbaa !275
+  %.pre187 = load i64, ptr %i.du, align 8, !tbaa !275
   %.pre186.a = load i32, ptr %i.dx, align 4, !tbaa !50
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph138
   %i.oj = phi i32 [ %.pre186.a, %._crit_edge.loopexit ], [ %i.od, %.lr.ph138 ] ; 4 uses
   %i.ok = phi i32 [ %i.ov, %._crit_edge.loopexit ], [ %i.oe, %.lr.ph138 ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %5 = phi i64 [ %.pre187, %._crit_edge.loopexit ], [ %indvars.iv.a, %.lr.ph138 ]
+  %6 = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %2, %.lr.ph138 ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ol = zext i32 %i.oj to i64
   %i.om = icmp samesign ult i64 %indvars.iv.next, %i.ol
   br i1 %i.om, label %.lr.ph138, label %._crit_edge139.loopexit, !llvm.loop !648
@@ -665,7 +671,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ou = add i32 %.0135, 1
   %i.ov = load i32, ptr %i.dy, align 8, !tbaa !50 ; 2 uses
   %i.ow = zext i32 %i.ov to i64
-  %i.ox = icmp samesign ult i64 %indvars.iv.a, %i.ow
+  %i.ox = icmp samesign ult i64 %indvars.iv, %i.ow
   br i1 %i.ox, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !649
 
 _ZN11OpenImageIO4v3_118aligned_copy_imageIjEEvRKNS0_10image_spanISt4byteLm4EEERKNS2_IKS3_Lm4EEE.exit: ; preds = %._crit_edge142, %._crit_edge150, %._crit_edge50.i123, %._crit_edge50.i, %._crit_edge155, %.lr.ph152, %.preheader131.lr.ph, %.preheader.lr.ph, %.preheader132, %.preheader129, %bb.g, %.lr.ph.i110, %bb.l, %.lr.ph.i, %bb.j, %bb.e
