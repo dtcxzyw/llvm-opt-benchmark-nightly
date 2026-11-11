@@ -204,11 +204,11 @@ bb.af:                                            ; preds = %bb.ae
   store i8 %i.an, ptr %i.ao, align 8
   %i.ap = zext nneg i32 %.0.lcssa to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr @_ZL6PRIMES, i64 %i.ap
-  %i.ar = load i32, ptr %i.aq, align 4            ; 3 uses
+  %i.ar = load i32, ptr %i.aq, align 4            ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 52
   store i32 %i.ar, ptr %i.as, align 4
   %i.at = sext i32 %i.ar to i64
-  %i.au = mul nsw i64 %i.at, 24                   ; 2 uses
+  %i.au = mul nsw i64 %i.at, 24
   %i.av = tail call noalias ptr @uprv_malloc_78(i64 noundef %i.au) #12 ; 4 uses
   store ptr %i.av, ptr %i.ae, align 8
   %i.aw = icmp eq ptr %i.av, null
@@ -219,7 +219,9 @@ bb.ag:                                            ; preds = %bb.af
   br label %_ZL11_uhash_initP10UHashtablePFi8UElementEPFaS1_S1_ES5_iP10UErrorCode.exit.thread.i
 
 .lr.ph.i.i.preheader.i:                           ; preds = %bb.af
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.au
+  %5 = zext nneg i32 %i.ar to i64
+  %.idx.i.i.i = mul nuw nsw i64 %5, 24
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 %.idx.i.i.i
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.preheader.i
@@ -307,7 +309,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.o = load i32, ptr %i.l, align 4              ; 3 uses
-  %5 = sext i32 %i.o to i64
+  %5 = zext nneg i32 %i.o to i64
   %.idx.i.i = mul nuw nsw i64 %5, 24
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx.i.i
   %i.q = icmp sgt i32 %i.o, 0
@@ -503,7 +505,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.aw = load i32, ptr %i.ar, align 4            ; 3 uses
-  %6 = sext i32 %i.aw to i64
+  %6 = zext nneg i32 %i.aw to i64
   %.idx.i.i = mul nuw nsw i64 %6, 24
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx.i.i
   %i.ay = icmp sgt i32 %i.aw, 0
@@ -827,7 +829,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ac = load i32, ptr %i.b, align 4             ; 3 uses
-  %2 = sext i32 %i.ac to i64
+  %2 = zext nneg i32 %i.ac to i64
   %.idx.i = mul nuw nsw i64 %2, 24
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx.i
   %i.ae = icmp sgt i32 %i.ac, 0

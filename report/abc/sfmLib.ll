@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca [9 x ptr], align 16               ; 6 uses
   %i.e = alloca [8 x i32], align 16               ; 18 uses
   %i.f = alloca [9 x i32], align 16               ; 5 uses
-  %i.g = alloca [4 x i64], align 16               ; 30 uses
+  %i.g = alloca [4 x i64], align 16               ; 32 uses
   %i.h = ptrtoaddr ptr %i.g to i64                ; 6 uses
   %i.i = alloca [1000 x i8], align 16             ; 4 uses
   %i.j = alloca i64, align 8                      ; 4 uses
@@ -457,7 +457,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge2
 bb.l:                                             ; preds = %.lr.ph262, %Abc_TtSwapAdjacent.exit
   %indvars.iv308 = phi i64 [ 0, %.lr.ph262 ], [ %indvars.iv.next309, %Abc_TtSwapAdjacent.exit ] ; 2 uses
   call void @Sfm_LibPrepareAdd(ptr noundef nonnull %i.p, ptr noundef nonnull %i.g, ptr noundef nonnull %i.e, i32 noundef %i.bo, ptr noundef nonnull %.1135264, ptr noundef null, i32 noundef -1)
-  %i.cs = load i32, ptr %i.bl, align 4, !tbaa !56 ; 6 uses
+  %i.cs = load i32, ptr %i.bl, align 4, !tbaa !56 ; 7 uses
   %i.ct = load ptr, ptr %i.cr, align 8, !tbaa !158
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %indvars.iv308
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !26 ; 7 uses
@@ -546,12 +546,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.n:                                             ; preds = %bb.l
   %i.eh = icmp eq i32 %i.cv, 5
-  %7 = sext i32 %i.cs to i64
-  %.idx65.i = shl nsw i64 %7, 3                   ; 2 uses
-  %8 = getelementptr inbounds i8, ptr %i.g, i64 %.idx65.i ; 2 uses
   br i1 %i.eh, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
+  %7 = zext nneg i32 %i.cs to i64
+  %.idx65.i = shl nuw nsw i64 %7, 3
+  %8 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx65.i
   %i.ei = icmp sgt i32 %i.cs, 0
   br i1 %i.ei, label %.lr.ph.i, label %Abc_TtSwapAdjacent.exit
 
@@ -566,6 +566,9 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.en, label %.lr.ph.i, label %Abc_TtSwapAdjacent.exit, !llvm.loop !130
 
 bb.p:                                             ; preds = %bb.n
+  %9 = sext i32 %i.cs to i64
+  %.idx.i = shl nsw i64 %9, 3                     ; 2 uses
+  %10 = getelementptr inbounds i8, ptr %i.g, i64 %.idx.i
   %i.eo = icmp samesign ult i32 %i.cv, 7
   %i.ep = add nsw i32 %i.cv, -6
   %i.eq = shl nuw i32 1, %i.ep
@@ -589,7 +592,7 @@ bb.p:                                             ; preds = %bb.n
   %scevgep = getelementptr i8, ptr %i.g, i64 %i.fa
   %i.fc = shl nuw nsw i64 %i.ex, 4
   %umax = call i64 @llvm.umax.i64(i64 %i.ez, i64 1)
-  %i.fd = add i64 %.idx65.i, %i.h
+  %i.fd = add i64 %.idx.i, %i.h
   %i.fe = add i64 %i.ez, %i.h
   %umax388 = call i64 @llvm.umax.i64(i64 %i.fd, i64 %i.fe)
   %i.ff = sub i64 %umax388, %i.h                  ; 2 uses
@@ -688,7 +691,7 @@ scalar.ph390.epil.preheader:                      ; preds = %._crit_edge.us.i.lo
 
 ._crit_edge.us.i:                                 ; preds = %vector.body394, %scalar.ph390.epil.preheader, %._crit_edge.us.i.loopexit.unr-lcssa
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i, i64 %i.ev ; 2 uses
-  %i.gb = icmp ult ptr %i.ga, %8
+  %i.gb = icmp ult ptr %i.ga, %10
   br i1 %i.gb, label %.preheader.us.i, label %Abc_TtSwapAdjacent.exit, !llvm.loop !136
 
 Abc_TtSwapAdjacent.exit:                          ; preds = %._crit_edge.us.i, %.lr.ph.i, %scalar.ph, %middle.block, %bb.m, %bb.o, %bb.p, %.preheader.lr.ph.i
@@ -1091,7 +1094,7 @@ Abc_TtCopy.exit:                                  ; preds = %Sfm_LibTruth8Two.ex
 .lr.ph273.split:                                  ; preds = %.lr.ph273.split.preheader, %Abc_TtSwapAdjacent.exit196
   %indvars.iv318 = phi i64 [ 0, %.lr.ph273.split.preheader ], [ %indvars.iv.next319, %Abc_TtSwapAdjacent.exit196 ] ; 2 uses
   call void @Sfm_LibPrepareAdd(ptr noundef nonnull %i.p, ptr noundef nonnull %i.g, ptr noundef nonnull %i.e, i32 noundef %i.hg, ptr noundef nonnull %.2136282, ptr noundef nonnull %.0133278, i32 noundef %i.ov)
-  %i.ox = load i32, ptr %i.gm, align 4, !tbaa !56 ; 6 uses
+  %i.ox = load i32, ptr %i.gm, align 4, !tbaa !56 ; 7 uses
   %i.oy = load ptr, ptr %i.ou, align 8, !tbaa !158
   %i.oz = getelementptr inbounds nuw [4 x i8], ptr %i.oy, i64 %indvars.iv318
   %i.pa = load i32, ptr %i.oz, align 4, !tbaa !26 ; 7 uses
@@ -1180,12 +1183,12 @@ scalar.ph404:                                     ; preds = %scalar.ph404.prehea
 
 bb.bp:                                            ; preds = %.lr.ph273.split
   %i.qm = icmp eq i32 %i.pa, 5
-  %9 = sext i32 %i.ox to i64
-  %.idx65.i176 = shl nsw i64 %9, 3                ; 2 uses
-  %10 = getelementptr inbounds i8, ptr %i.g, i64 %.idx65.i176 ; 2 uses
   br i1 %i.qm, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %bb.bp
+  %11 = zext nneg i32 %i.ox to i64
+  %.idx65.i189 = shl nuw nsw i64 %11, 3
+  %12 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx65.i189
   %i.qn = icmp sgt i32 %i.ox, 0
   br i1 %i.qn, label %.lr.ph.i189, label %Abc_TtSwapAdjacent.exit196
 
@@ -1196,10 +1199,13 @@ bb.bq:                                            ; preds = %bb.bp
   %i.qq = shufflevector <2 x i32> %i.qp, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.qq, ptr %i.qo, align 4, !tbaa !26
   %i.qr = getelementptr inbounds nuw i8, ptr %.05462.i190, i64 16 ; 2 uses
-  %i.qs = icmp ult ptr %i.qr, %10
+  %i.qs = icmp ult ptr %i.qr, %12
   br i1 %i.qs, label %.lr.ph.i189, label %Abc_TtSwapAdjacent.exit196, !llvm.loop !130
 
 bb.br:                                            ; preds = %bb.bp
+  %13 = sext i32 %i.ox to i64
+  %.idx.i176 = shl nsw i64 %13, 3                 ; 2 uses
+  %14 = getelementptr inbounds i8, ptr %i.g, i64 %.idx.i176
   %i.qt = icmp samesign ult i32 %i.pa, 7
   %i.qu = add nsw i32 %i.pa, -6
   %i.qv = shl nuw i32 1, %i.qu
@@ -1223,7 +1229,7 @@ bb.br:                                            ; preds = %bb.bp
   %scevgep436 = getelementptr i8, ptr %i.g, i64 %i.rf
   %i.rh = shl nuw nsw i64 %i.rc, 4
   %umax437 = call i64 @llvm.umax.i64(i64 %i.re, i64 1)
-  %i.ri = add i64 %.idx65.i176, %i.h
+  %i.ri = add i64 %.idx.i176, %i.h
   %i.rj = add i64 %i.re, %i.h
   %umax438 = call i64 @llvm.umax.i64(i64 %i.ri, i64 %i.rj)
   %i.rk = sub i64 %umax438, %i.h                  ; 2 uses
@@ -1322,7 +1328,7 @@ scalar.ph441.epil.preheader:                      ; preds = %._crit_edge.us.i188
 
 ._crit_edge.us.i188:                              ; preds = %vector.body450, %scalar.ph441.epil.preheader, %._crit_edge.us.i188.loopexit.unr-lcssa
   %i.sf = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i180, i64 %i.ra ; 2 uses
-  %i.sg = icmp ult ptr %i.sf, %10
+  %i.sg = icmp ult ptr %i.sf, %14
   br i1 %i.sg, label %.preheader.us.i179, label %Abc_TtSwapAdjacent.exit196, !llvm.loop !136
 
 Abc_TtSwapAdjacent.exit196:                       ; preds = %._crit_edge.us.i188, %.lr.ph.i189, %scalar.ph404, %middle.block421, %bb.bo, %bb.bq, %bb.br, %.preheader.lr.ph.i177

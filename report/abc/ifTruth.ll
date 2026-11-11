@@ -23,9 +23,11 @@ bb.a:
   %i.b = icmp sgt i32 %1, 1
   %i.c = sext i32 %3 to i64
   %.idx65.i.a = shl nsw i64 %i.c, 3               ; 2 uses
-  %i.d = getelementptr inbounds i8, ptr %0, i64 %.idx65.i.a ; 2 uses
+  %i.d = getelementptr inbounds i8, ptr %0, i64 %.idx65.i.a
   %i.e = icmp sgt i32 %3, 0                       ; 3 uses
-  %wide.trip.count73.i = zext i32 %3 to i64       ; 3 uses
+  %wide.trip.count73.i = zext i32 %3 to i64       ; 4 uses
+  %.idx65.i = shl nuw nsw i64 %wide.trip.count73.i, 3
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx65.i
   br i1 %i.b, label %.split.us, label %.split48.us
 
 .split.us:                                        ; preds = %bb.a
@@ -293,7 +295,7 @@ bb.i:                                             ; preds = %bb.g
   %i.cg = shufflevector <2 x i32> %i.cf, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.cg, ptr %i.ce, align 4, !tbaa !14
   %i.ch = getelementptr inbounds nuw i8, ptr %.05462.i.us, i64 16 ; 2 uses
-  %i.ci = icmp ult ptr %i.ch, %i.d
+  %i.ci = icmp ult ptr %i.ch, %6
   br i1 %i.ci, label %.lr.ph.i.us, label %Abc_TtSwapAdjacent.exit.us43, !llvm.loop !79
 
 bb.j:                                             ; preds = %bb.f

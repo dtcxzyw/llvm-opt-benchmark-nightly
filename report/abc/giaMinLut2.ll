@@ -205,7 +205,7 @@ bb.a:
   %i.t = select i1 %i.m, i32 0, i32 %i.n          ; 3 uses
   %i.u = icmp slt i32 %1, 5
   %i.v = sext i32 %i.p to i64
-  %.idx65.i.a = shl nsw i64 %i.v, 3               ; 3 uses
+  %.idx65.i.a = shl nsw i64 %i.v, 3               ; 2 uses
   %i.w = icmp samesign ult i32 %1, 7
   %i.x = add nsw i32 %1, -6
   %i.y = shl nuw i32 1, %i.x
@@ -215,8 +215,10 @@ bb.a:
   %i.ac = shl i32 %i.z, 2                         ; 2 uses
   %i.ad = sext i32 %i.ac to i64                   ; 3 uses
   %i.ae = shl i32 %i.z, 1
-  %i.af = zext i32 %i.z to i64                    ; 6 uses
-  %i.ag = zext i32 %i.ae to i64                   ; 2 uses
+  %2 = zext i32 %i.z to i64                       ; 6 uses
+  %i.af = zext i32 %i.ae to i64                   ; 2 uses
+  %i.ag = zext i32 %i.p to i64                    ; 2 uses
+  %.idx65.i = shl nuw nsw i64 %i.ag, 3
   %i.ah = icmp sgt i32 %i.p, 0                    ; 2 uses
   %i.ai = shl nuw nsw i32 1, %1
   %i.aj = getelementptr inbounds [24 x i8], ptr @s_PMasks, i64 %i.f ; 3 uses
@@ -233,8 +235,7 @@ bb.a:
   %i.ao = load i64, ptr %i.ak, align 8, !tbaa !26 ; 4 uses
   %i.ap = load i64, ptr %i.am, align 8, !tbaa !26 ; 4 uses
   %min.iters.check101 = icmp ult i32 %i.p, 4
-  %2 = and i32 %i.p, 2147483644
-  %n.vec103 = zext nneg i32 %2 to i64
+  %n.vec103 = and i64 %i.ag, 2147483644
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.an, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert104 = insertelement <2 x i64> poison, i64 %i.ao, i64 0
@@ -335,7 +336,7 @@ Abc_TtSwapAdjacent.exit.loopexit.us:              ; preds = %vector.body110, %sc
   %i.cm = shl i32 %.05864.us65, %i.t
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.cn ; 2 uses
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 %.idx65.i.a
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 %.idx65.i
   br label %.lr.ph.i.us
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.i.us, %.lr.ph.i.preheader.us
@@ -360,10 +361,10 @@ Abc_TtSwapAdjacent.exit.loopexit62.us:            ; preds = %.lr.ph.i.us
 
 .preheader.lr.ph.i.preheader:                     ; preds = %.lr.ph.split.split
   %i.cy = shl nsw i64 %i.ad, 3                    ; 2 uses
-  %i.cz = shl nuw nsw i64 %i.ag, 3                ; 2 uses
-  %i.da = shl nuw nsw i64 %i.af, 3                ; 2 uses
+  %i.cz = shl nuw nsw i64 %i.af, 3                ; 2 uses
+  %i.da = shl nuw nsw i64 %2, 3                   ; 2 uses
   %scevgep = getelementptr i8, ptr %i.r, i64 %i.cz
-  %i.db = shl nuw nsw i64 %i.af, 4
+  %i.db = shl nuw nsw i64 %2, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.cy, i64 1)
   %i.dc = add i64 %.idx65.i.a, %i.s
   %i.dd = add i64 %i.cy, %i.s
@@ -373,10 +374,10 @@ Abc_TtSwapAdjacent.exit.loopexit62.us:            ; preds = %.lr.ph.i.us
   %invariant.gep129 = getelementptr i8, ptr %i.r, i64 %i.da
   %invariant.gep131 = getelementptr i8, ptr %invariant.gep129, i64 %i.cz
   %stride.check = icmp slt i32 %i.ac, 0
-  %n.vec = and i64 %i.af, 2147483644
-  %xtraiter = and i64 %i.af, 1
+  %n.vec = and i64 %2, 2147483644
+  %xtraiter = and i64 %2, 1
   %i.de = icmp eq i32 %i.z, 1
-  %unroll_iter = and i64 %i.af, 2147483646
+  %unroll_iter = and i64 %2, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod122 = trunc i32 %i.z to i1
   br label %.preheader.lr.ph.i
@@ -407,8 +408,8 @@ Abc_TtSwapAdjacent.exit.loopexit62.us:            ; preds = %.lr.ph.i.us
 
 .preheader.us.i:                                  ; preds = %._crit_edge.us.i, %.preheader.lr.ph.i
   %.061.us.i = phi ptr [ %i.eg, %._crit_edge.us.i ], [ %i.di, %.preheader.lr.ph.i ] ; 3 uses
-  %invariant.gep.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i, i64 %i.af ; 4 uses
-  %invariant.gep80.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i, i64 %i.ag ; 4 uses
+  %invariant.gep.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i, i64 %2 ; 4 uses
+  %invariant.gep80.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i, i64 %i.af ; 4 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader.us.i

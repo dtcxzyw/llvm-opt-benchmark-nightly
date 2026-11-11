@@ -205,7 +205,7 @@ define internal fastcc i64 @Abc_TtDeriveBiDecOne(ptr nofree noundef nonnull read
 bb.a:
   %i.a = alloca [64 x i64], align 16              ; 9 uses
   %i.b = alloca [64 x i64], align 16              ; 9 uses
-  %i.c = alloca [64 x i64], align 16              ; 26 uses
+  %i.c = alloca [64 x i64], align 16              ; 27 uses
   %i.d = ptrtoaddr ptr %i.c to i64                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #29
   %i.e = icmp samesign ult i32 %1, 7
@@ -608,8 +608,10 @@ bb.f:                                             ; preds = %.lr.ph.split, %Abc_
 .lr.ph61.i:                                       ; preds = %bb.f, %._crit_edge.loopexit
   %i.ei = sext i32 %.fr83.i to i64
   %.idx65.i.i.a = shl nsw i64 %i.ei, 3
-  %i.ej = getelementptr inbounds i8, ptr %i.c, i64 %.idx65.i.i.a ; 2 uses
-  %wide.trip.count73.i.i = zext nneg i32 %.fr83.i to i64
+  %i.ej = getelementptr inbounds i8, ptr %i.c, i64 %.idx65.i.i.a
+  %wide.trip.count73.i.i = zext nneg i32 %.fr83.i to i64 ; 2 uses
+  %.idx65.i.i = shl nuw nsw i64 %wide.trip.count73.i.i, 3
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx65.i.i
   br i1 %i.i, label %.lr.ph61.split.us.split.us.preheader.i, label %Abc_TtShrink.exit
 
 .lr.ph61.split.us.split.us.preheader.i:           ; preds = %.lr.ph61.i
@@ -774,7 +776,7 @@ scalar.ph135.epil.preheader:                      ; preds = %._crit_edge.us.i.us
   %i.gi = shufflevector <2 x i32> %i.gh, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.gi, ptr %i.gg, align 4, !tbaa !19
   %i.gj = getelementptr inbounds nuw i8, ptr %.05462.i.us.us.us.us.i, i64 16 ; 2 uses
-  %i.gk = icmp ult ptr %i.gj, %i.ej
+  %i.gk = icmp ult ptr %i.gj, %3
   br i1 %i.gk, label %.lr.ph.i.us.us.us.us.i, label %Abc_TtSwapAdjacent.exit.us.us.us.us.i, !llvm.loop !500
 
 .lr.ph64.i.us.us.us.us.i:                         ; preds = %.lr.ph.us.us.i

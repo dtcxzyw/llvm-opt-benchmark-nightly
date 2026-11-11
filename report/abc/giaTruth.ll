@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %Vec_WecPushLevel.ex
   br label %bb.cl
 
 bb.ax:                                            ; preds = %bb.al
-  %i.fr = call ptr @Gia_ObjComputeTruthTableCut(ptr noundef nonnull %0, ptr noundef nonnull %i.ds, ptr noundef nonnull %i.i) ; 16 uses
+  %i.fr = call ptr @Gia_ObjComputeTruthTableCut(ptr noundef nonnull %0, ptr noundef nonnull %i.ds, ptr noundef nonnull %i.i) ; 17 uses
   %i.fs = ptrtoaddr ptr %i.fr to i64              ; 3 uses
   %.val100 = load i32, ptr %i.j, align 4, !tbaa !42 ; 10 uses
   %i.ft = icmp sgt i32 %.val100, 0
@@ -402,9 +402,11 @@ bb.bc:                                            ; preds = %._crit_edge.i
   %i.id = select i1 %i.fu, i32 1, i32 %.fr.i.i    ; 4 uses
   %i.ie = sext i32 %i.id to i64
   %.idx65.i.i.i.a = shl nsw i64 %i.ie, 3          ; 2 uses
-  %i.if = getelementptr inbounds i8, ptr %i.fr, i64 %.idx65.i.i.i.a ; 2 uses
+  %i.if = getelementptr inbounds i8, ptr %i.fr, i64 %.idx65.i.i.i.a
   %i.ig = icmp sgt i32 %i.id, 0
-  %wide.trip.count73.i.i.i = zext i32 %i.id to i64 ; 3 uses
+  %wide.trip.count73.i.i.i = zext i32 %i.id to i64 ; 4 uses
+  %.idx65.i.i.i = shl nuw nsw i64 %wide.trip.count73.i.i.i, 3
+  %3 = getelementptr inbounds nuw i8, ptr %i.fr, i64 %.idx65.i.i.i
   br i1 %i.ig, label %.lr.ph61.split.us.split.us.preheader.i.i, label %Abc_TtMinimumBase.exit
 
 .lr.ph61.split.us.split.us.preheader.i.i:         ; preds = %.lr.ph61.i.i
@@ -569,7 +571,7 @@ scalar.ph362.epil.preheader:                      ; preds = %._crit_edge.us.i.us
   %i.kf = shufflevector <2 x i32> %i.ke, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.kf, ptr %i.kd, align 4, !tbaa !39
   %i.kg = getelementptr inbounds nuw i8, ptr %.05462.i.us.us.us.us.i.i, i64 16 ; 2 uses
-  %i.kh = icmp ult ptr %i.kg, %i.if
+  %i.kh = icmp ult ptr %i.kg, %3
   br i1 %i.kh, label %.lr.ph.i.us.us.us.us.i.i, label %Abc_TtSwapAdjacent.exit.us.us.us.us.i.i, !llvm.loop !157
 
 .lr.ph64.i.us.us.us.us.i.i:                       ; preds = %.lr.ph.us.us.i.i

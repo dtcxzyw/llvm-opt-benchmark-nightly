@@ -204,8 +204,8 @@ bb.ma:                                            ; preds = %_PyThreadState_HasS
   br i1 %i.bcp, label %_PyThreadState_HasStackSpace.exit10639.thread, label %bb.mb
 
 bb.mb:                                            ; preds = %bb.ma
-  %i.bcq = sub i32 0, %.09034
-  %i.bcr = sext i32 %i.bcq to i64                 ; 2 uses
+  %i.bcq = sub nsw i32 0, %.09034
+  %i.bcr = sext i32 %i.bcq to i64
   %i.bcs = getelementptr [8 x i8], ptr %.4.val10287, i64 %i.bcr ; 6 uses
   %i.bct = call fastcc ptr @_PyFrame_PushUnchecked(ptr noundef nonnull %0, i64 %.sroa.0.0.i10651, i32 noundef %i.bca, ptr noundef nonnull %.4) ; 6 uses
   %i.bcu = ptrtoaddr ptr %i.bct to i64
@@ -222,11 +222,12 @@ bb.mb:                                            ; preds = %bb.ma
   br i1 %min.iters.check, label %.lr.ph12255.preheader14981, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph12255.preheader
-  %7 = select i1 %i.bcb, i64 8, i64 0
-  %i.bcz = shl nsw i64 %i.bcr, 3
-  %i.bda = add i64 %7, %i.bcu
-  %i.bdb = add i64 %i.bcz, %.4.val1028714961
-  %i.bdc = sub i64 %i.bda, %i.bdb
+  %7 = zext nneg i32 %.09034 to i64
+  %i.bcz = shl nuw nsw i64 %7, 3
+  %8 = select i1 %i.bcb, i64 8, i64 0
+  %i.bda = add i64 %i.bcz, %i.bcu
+  %i.bdb = add i64 %i.bda, %8
+  %i.bdc = sub i64 %i.bdb, %.4.val1028714961
   %i.bdd = add i64 %i.bdc, 79
   %diff.check = icmp ult i64 %i.bdd, 31
   br i1 %diff.check, label %.lr.ph12255.preheader14981, label %vector.ph
@@ -629,8 +630,8 @@ bb.vt:                                            ; preds = %_PyThreadState_HasS
   br i1 %i.dcn, label %_PyThreadState_HasStackSpace.exit10639.thread, label %bb.vu
 
 bb.vu:                                            ; preds = %bb.vt
-  %i.dco = sub i32 0, %.09034
-  %i.dcp = sext i32 %i.dco to i64                 ; 2 uses
+  %i.dco = sub nsw i32 0, %.09034
+  %i.dcp = sext i32 %i.dco to i64
   %i.dcq = getelementptr [8 x i8], ptr %.4.val1006111641, i64 %i.dcp ; 6 uses
   %i.dcr = getelementptr [8 x i8], ptr %i.dcc, i64 %i.dcf
   store ptr %i.dcr, ptr %i.map, align 8, !tbaa !293
@@ -710,11 +711,12 @@ _PyFrame_PushUnchecked.exit10826:                 ; preds = %.lr.ph.i.i10823, %_
   br i1 %min.iters.check14968, label %.lr.ph12251.preheader14982, label %vector.memcheck14969
 
 vector.memcheck14969:                             ; preds = %.lr.ph12251.preheader
-  %8 = select i1 %i.dbz, i64 8, i64 0
-  %i.ddy = shl nsw i64 %i.dcp, 3
-  %i.ddz = add i64 %8, %i.dci
-  %i.dea = add i64 %i.ddy, %.4.val100611164114966
-  %i.deb = sub i64 %i.ddz, %i.dea
+  %9 = zext nneg i32 %.09034 to i64
+  %i.ddy = shl nuw nsw i64 %9, 3
+  %10 = select i1 %i.dbz, i64 8, i64 0
+  %i.ddz = add i64 %i.ddy, %i.dci
+  %i.dea = add i64 %i.ddz, %10
+  %i.deb = sub i64 %i.dea, %.4.val100611164114966
   %i.dec = add i64 %i.deb, 79
   %diff.check14970 = icmp ult i64 %i.dec, 31
   br i1 %diff.check14970, label %.lr.ph12251.preheader14982, label %vector.ph14971
@@ -1117,7 +1119,7 @@ PyStackRef_AsPyObjectSteal.exit11077:             ; preds = %bb.aqt, %bb.aqs, %b
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader11705
   %.4.val1006111641 = phi ptr [ %.65.ph, %.preheader11705 ], [ %.4.val1006111641.be, %.backedge.backedge ] ; 741 uses
   %.32 = phi ptr [ %.32.ph, %.preheader11705 ], [ %.32.be, %.backedge.backedge ] ; 635 uses
-  %.09034 = phi i32 [ %.09034.ph, %.preheader11705 ], [ %.09034.be, %.backedge.backedge ] ; 282 uses
+  %.09034 = phi i32 [ %.09034.ph, %.preheader11705 ], [ %.09034.be, %.backedge.backedge ] ; 284 uses
   %.4 = phi ptr [ %.4.ph, %.preheader11705 ], [ %.4.be, %.backedge.backedge ] ; 971 uses
   %.pn.pn = phi i64 [ %.pn, %.preheader11705 ], [ %.pn.pn.be, %.backedge.backedge ]
   %.4.val100611164114966 = ptrtoaddr ptr %.4.val1006111641 to i64

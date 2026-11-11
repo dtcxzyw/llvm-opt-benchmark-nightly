@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #15
-  %i.aj = load i64, ptr %.sroa.069.0.ptr.ptr117, align 8, !tbaa !25 ; 2 uses
+  %i.aj = load i64, ptr %.sroa.069.0.ptr.ptr117, align 8, !tbaa !25 ; 3 uses
   %i.ak = trunc i64 %i.aj to i8                   ; 7 uses
   %i.al = load i64, ptr %.sroa.063.0.ptr115, align 8, !tbaa !25 ; 2 uses
   %i.am = trunc i64 %i.al to i8                   ; 13 uses
@@ -225,11 +225,11 @@ _ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit.thread.i: ; preds = %bb.h
   br label %_ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit11.thread.i
 
 _ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit.i: ; preds = %bb.h
+  %13 = and i64 %i.aj, 255
   %.not5.i5.i.i = icmp ult i8 %i.ak, 64
-  %13 = and i64 %i.aj, 63
   %i.at = sub nuw nsw i64 64, %13
   %i.au = lshr i64 -1, %i.at
-  %i.av = xor i64 %i.au, -1                       ; 4 uses
+  %i.av = xor i64 %i.au, -1
   %i.aw = select i1 %.not5.i5.i.i, i64 %i.av, i64 0
   %i.ax = and i64 %i.aq, %i.aw                    ; 3 uses
   %.not.i.not.i.i = icmp ult i8 %i.am, 64
@@ -250,7 +250,11 @@ _ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit11.thread.i: ; preds = %_ZN
 
 _ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit11.i: ; preds = %_ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit.i
   %.not5.i5.i10.i = icmp sgt i8 %i.ak, -1
-  %i.bc = select i1 %.not5.i5.i10.i, i64 %i.av, i64 0
+  %14 = and i64 %i.aj, 63
+  %15 = sub nuw nsw i64 64, %14
+  %16 = lshr i64 -1, %15
+  %17 = xor i64 %16, -1                           ; 3 uses
+  %i.bc = select i1 %.not5.i5.i10.i, i64 %17, i64 0
   %i.bd = and i64 %i.az, %i.bc                    ; 2 uses
   %.not.i.not.i12.i = icmp sgt i8 %i.am, -1
   %.not5.i.i13.i = icmp samesign ult i8 %i.am, -65
@@ -271,14 +275,14 @@ _ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit17.thread.i: ; preds = %_ZN
 
 _ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit17.i: ; preds = %_ZN4absl12lts_202605267CharSet12RangeForWordEccm.exit11.i
   %.not5.i5.i16.i = icmp samesign ult i8 %i.ak, -64
-  %i.bi = select i1 %.not5.i5.i16.i, i64 %i.av, i64 0
+  %i.bi = select i1 %.not5.i5.i16.i, i64 %17, i64 0
   %i.bj = and i64 %i.bf, %i.bi
   %.not.i.not.i18.i = icmp ult i8 %i.am, -64
   %.not5.i.i19.not.i = icmp eq i8 %i.am, -1
   %i.bk = select i1 %.not5.i.i19.not.i, i64 -1, i64 %i.ap
   %i.bl = select i1 %.not.i.not.i18.i, i64 0, i64 %i.bk
   %.not.i4.i21.i = icmp samesign ugt i8 %i.ak, -64
-  %i.bm = select i1 %.not.i4.i21.i, i64 %i.av, i64 -1
+  %i.bm = select i1 %.not.i4.i21.i, i64 %17, i64 -1
   %spec.select = and i64 %i.bl, %i.bm
   br label %bb.i
 

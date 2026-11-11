@@ -204,9 +204,9 @@ vector.body778:                                   ; preds = %vector.body778, %ve
   br i1 %exitcond.not.i200.7, label %cpyr1.exit201, label %.lr.ph.i197, !llvm.loop !197
 
 cpyr1.exit201:                                    ; preds = %.lr.ph.i197, %.lr.ph.i197.prol.loopexit
-  %i.fj = add i32 %i.g, -1                        ; 2 uses
-  %3 = sext i32 %i.fj to i64                      ; 3 uses
-  %i.fk = getelementptr inbounds [16 x i8], ptr %1, i64 %3
+  %i.fj = add i32 %i.g, -1                        ; 3 uses
+  %3 = zext i32 %i.fj to i64                      ; 2 uses
+  %i.fk = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %3
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 8 ; 9 uses
   %i.fm = mul nsw i32 %i.i, %i.fj
   %i.fn = sext i32 %i.fm to i64
@@ -221,21 +221,22 @@ cpyr1.exit201:                                    ; preds = %.lr.ph.i197, %.lr.p
   %i.ft = sub nsw i32 0, %i.i
   %i.fu = sext i32 %i.ft to i64                   ; 6 uses
   %wide.trip.count.i203 = zext i32 %i.fs to i64   ; 7 uses
-  %min.iters.check793 = icmp ugt i32 %i.fs, 17
+  %min.iters.check793 = icmp ugt i32 %i.fs, 19
   %ident.check784.not = icmp eq i32 %i.i, 1
   %or.cond830 = select i1 %min.iters.check793, i1 %ident.check784.not, i1 false
   br i1 %or.cond830, label %vector.memcheck794, label %.lr.ph.i204.preheader
 
 vector.memcheck794:                               ; preds = %.lr.ph.preheader.i202
-  %i.fv = shl nsw i64 %3, 3
+  %4 = sext i32 %i.fj to i64
+  %i.fv = shl nsw i64 %4, 3
   %i.fw = shl nuw nsw i64 %wide.trip.count.i203, 3
   %i.fx = add nsw i64 %i.fv, 8                    ; 2 uses
   %i.fy = sub nsw i64 %i.fx, %i.fw
   %i.fz = getelementptr i8, ptr %i.m, i64 %i.fy
   %i.ga = getelementptr i8, ptr %i.m, i64 %i.fx
-  %i.gb = shl nsw i64 %3, 4                       ; 2 uses
+  %i.gb = shl nuw nsw i64 %3, 4                   ; 2 uses
   %i.gc = shl nuw nsw i64 %wide.trip.count.i203, 4
-  %i.gd = add nsw i64 %i.gb, 24
+  %i.gd = add nuw nsw i64 %i.gb, 24
   %i.ge = sub nsw i64 %i.gd, %i.gc
   %i.gf = getelementptr i8, ptr %1, i64 %i.ge
   %i.gg = getelementptr i8, ptr %1, i64 %i.gb

@@ -205,11 +205,12 @@ bb.w:                                             ; preds = %_ZSteqIcSt11char_tr
 
 bb.x:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit109.thread155
   %i.cx = icmp sgt i32 %1, 256
-  %4 = icmp sgt i32 %1, 257                       ; 2 uses
+  %4 = icmp samesign ugt i32 %1, 257
   %i.cy = select i1 %4, i64 16, i64 8
   %.0.i.i.i.i.i.i.idx = select i1 %i.cx, i64 %i.cy, i64 0
   %.0.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr @_ZN4LIEF3ELFL13GENERIC_TYPESE, i64 %.0.i.i.i.i.i.i.idx ; 2 uses
-  br i1 %4, label %.critedge, label %bb.y
+  %.not.i.i117 = icmp sgt i32 %1, 257
+  br i1 %.not.i.i117, label %.critedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.cz = load i32, ptr %.0.i.i.i.i.i.i, align 4, !tbaa !86
