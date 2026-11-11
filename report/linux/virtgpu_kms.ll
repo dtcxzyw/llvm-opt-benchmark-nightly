@@ -202,21 +202,22 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.al, %bb.aj
-  %.0151 = phi i64 [ 5000, %bb.aj ], [ %spec.store.select9, %bb.al ]
+  %.0151 = phi i64 [ 5000, %bb.aj ], [ %spec.store.select9, %bb.al ] ; 2 uses
   %i.fq = call i64 @prepare_to_wait_event(ptr noundef %i.s, ptr noundef nonnull %3, i32 noundef 2) #9 ; 0 uses
   %i.fr = load i8, ptr %i.fn, align 4, !range !11, !noundef !12
   %i.fs = trunc nuw i8 %i.fr to i1
-  br i1 %i.fs, label %bb.al, label %select.unfold
+  %.not168 = icmp ne i64 %.0151, 0
+  %spec.select.not = select i1 %i.fs, i1 %.not168, i1 false
+  br i1 %spec.select.not, label %bb.al, label %select.unfold
 
 bb.al:                                            ; preds = %bb.ak
   %i.ft = call i64 @schedule_timeout(i64 noundef %.0151) #9 ; 2 uses
   %i.fu = load i8, ptr %i.fn, align 4, !range !11, !noundef !12
   %i.fv = trunc nuw i8 %i.fu to i1                ; 2 uses
-  %i.fw = icmp ne i64 %i.ft, 0
+  %i.fw = icmp ne i64 %i.ft, 0                    ; 2 uses
   %or.cond7 = select i1 %i.fv, i1 true, i1 %i.fw
-  %spec.store.select9 = select i1 %or.cond7, i64 %i.ft, i64 1 ; 2 uses
-  %.not169 = icmp ne i64 %spec.store.select9, 0
-  %spec.select170.not = select i1 %i.fv, i1 %.not169, i1 false
+  %spec.store.select9 = select i1 %or.cond7, i64 %i.ft, i64 1
+  %spec.select170.not = select i1 %i.fv, i1 %i.fw, i1 false
   br i1 %spec.select170.not, label %bb.ak, label %select.unfold
 
 select.unfold:                                    ; preds = %bb.al, %bb.ak
@@ -328,21 +329,22 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
-  %.050 = phi i64 [ 5000, %bb.f ], [ %spec.store.select9, %bb.h ]
+  %.050 = phi i64 [ 5000, %bb.f ], [ %spec.store.select9, %bb.h ] ; 2 uses
   %i.x = call i64 @prepare_to_wait_event(ptr noundef %i.w, ptr noundef nonnull %1, i32 noundef 2) #9 ; 0 uses
   %i.y = load i8, ptr %i.t, align 4, !range !11, !noundef !12
   %i.z = trunc nuw i8 %i.y to i1
-  br i1 %i.z, label %bb.h, label %select.unfold
+  %.not53 = icmp ne i64 %.050, 0
+  %spec.select.not = select i1 %i.z, i1 %.not53, i1 false
+  br i1 %spec.select.not, label %bb.h, label %select.unfold
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = call i64 @schedule_timeout(i64 noundef %.050) #9 ; 2 uses
   %i.ab = load i8, ptr %i.t, align 4, !range !11, !noundef !12
   %i.ac = trunc nuw i8 %i.ab to i1                ; 2 uses
-  %i.ad = icmp ne i64 %i.aa, 0
+  %i.ad = icmp ne i64 %i.aa, 0                    ; 2 uses
   %or.cond7 = select i1 %i.ac, i1 true, i1 %i.ad
-  %spec.store.select9 = select i1 %or.cond7, i64 %i.aa, i64 1 ; 2 uses
-  %.not54 = icmp ne i64 %spec.store.select9, 0
-  %spec.select55.not = select i1 %i.ac, i1 %.not54, i1 false
+  %spec.store.select9 = select i1 %or.cond7, i64 %i.aa, i64 1
+  %spec.select55.not = select i1 %i.ac, i1 %i.ad, i1 false
   br i1 %spec.select55.not, label %bb.g, label %select.unfold
 
 select.unfold:                                    ; preds = %bb.h, %bb.g
@@ -482,24 +484,27 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.s = load ptr, ptr %i.h, align 8
   %i.t = getelementptr [12 x i8], ptr %i.s, i64 %indvars.iv
   %i.u = load i32, ptr %i.t, align 4
-  %.not86 = icmp eq i32 %i.u, 0
-  br i1 %.not86, label %bb.f, label %bb.g
+  %.not86 = icmp eq i32 %i.u, 0                   ; 2 uses
+  %3 = icmp ne i64 %.080, 0                       ; 2 uses
+  %or.cond4 = select i1 %.not86, i1 true, i1 %3
+  %spec.store.select10 = select i1 %or.cond4, i64 %.080, i64 1 ; 2 uses
+  %spec.select.not = select i1 %.not86, i1 %3, i1 false
+  br i1 %spec.select.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.v = call i64 @schedule_timeout(i64 noundef %.080) #9 ; 2 uses
+  %i.v = call i64 @schedule_timeout(i64 noundef %spec.store.select10) #9 ; 2 uses
   %i.w = load ptr, ptr %i.h, align 8
   %i.x = getelementptr [12 x i8], ptr %i.w, i64 %indvars.iv
   %i.y = load i32, ptr %i.x, align 4
   %.not88 = icmp eq i32 %i.y, 0                   ; 2 uses
-  %i.z = icmp ne i64 %i.v, 0
+  %i.z = icmp ne i64 %i.v, 0                      ; 2 uses
   %or.cond7 = select i1 %.not88, i1 true, i1 %i.z
-  %spec.store.select11 = select i1 %or.cond7, i64 %i.v, i64 1 ; 3 uses
-  %.not89 = icmp ne i64 %spec.store.select11, 0
-  %spec.select91.not = select i1 %.not88, i1 %.not89, i1 false
+  %spec.store.select11 = select i1 %or.cond7, i64 %i.v, i64 1 ; 2 uses
+  %spec.select91.not = select i1 %.not88, i1 %i.z, i1 false
   br i1 %spec.select91.not, label %bb.e, label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %.181.ph = phi i64 [ %.080, %bb.e ], [ %spec.store.select11, %bb.f ]
+  %.181.ph = phi i64 [ %spec.store.select10, %bb.e ], [ %spec.store.select11, %bb.f ]
   call void @finish_wait(ptr noundef %i.j, ptr noundef nonnull %2) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   %i.aa = and i64 %.181.ph, 4294967295

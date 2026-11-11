@@ -202,11 +202,11 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %i.h, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq i32 %i.i, 2
   %i.j = sitofp i32 %1 to double
-  %i.k = fsub double %i.g, %i.j
-  %.0.i = select i1 %.not.i, double %i.g, double %i.k ; 2 uses
+  %i.k = fsub double %i.g, %i.j                   ; 2 uses
+  %.0.i = select i1 %.not.i, double %i.g, double %i.k
   %i.l = icmp eq i32 %i.i, 0
   %i.m = sitofp i32 %2 to double
-  %i.n = fsub double %.0.i, %i.m
+  %i.n = fsub double %i.k, %i.m
   %.1.i = select i1 %i.l, double %i.n, double %.0.i
   store double %.1.i, ptr %3, align 8, !tbaa !29
   br label %bb.d
@@ -223,11 +223,11 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !35   ; 2 uses
   %.not = icmp eq i32 %i.b, 2
   %i.c = sitofp i32 %2 to double
-  %i.d = fsub double %1, %i.c
-  %.0 = select i1 %.not, double %1, double %i.d   ; 2 uses
+  %i.d = fsub double %1, %i.c                     ; 2 uses
+  %.0 = select i1 %.not, double %1, double %i.d
   %i.e = icmp eq i32 %i.b, 0
   %i.f = sitofp i32 %3 to double
-  %i.g = fsub double %.0, %i.f
+  %i.g = fsub double %i.d, %i.f
   %.1 = select i1 %i.e, double %i.g, double %.0
   ret double %.1
 }
@@ -255,11 +255,11 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load i32, ptr %i.k, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq i32 %i.l, 2
   %i.m = sitofp i32 %1 to double
-  %i.n = fsub double %i.j, %i.m
-  %.0.i = select i1 %.not.i, double %i.j, double %i.n ; 2 uses
+  %i.n = fsub double %i.j, %i.m                   ; 2 uses
+  %.0.i = select i1 %.not.i, double %i.j, double %i.n
   %i.o = icmp eq i32 %i.l, 0
   %i.p = sitofp i32 %2 to double
-  %i.q = fsub double %.0.i, %i.p
+  %i.q = fsub double %i.n, %i.p
   %.1.i = select i1 %i.o, double %i.q, double %.0.i
   store double %.1.i, ptr %3, align 8, !tbaa !29
   br label %bb.d
@@ -285,7 +285,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !35
   %.fr78 = freeze i32 %i.g                        ; 2 uses
   %.not.i = icmp eq i32 %.fr78, 2
-  %i.h = sitofp i32 %2 to double                  ; 5 uses
+  %i.h = sitofp i32 %2 to double                  ; 6 uses
   %i.i = icmp eq i32 %.fr78, 0                    ; 2 uses
   %i.j = sitofp i32 %3 to double                  ; 4 uses
   %.not = icmp eq i8 %4, 0                        ; 3 uses
@@ -306,7 +306,8 @@ bb.a:
   br i1 %i.n, label %.thread, label %.lr.ph70.split.preheader
 
 .lr.ph70.split.preheader:                         ; preds = %.lr.ph.split.us.split.us
-  %i.o = fsub double %i.m, %i.j
+  %6 = fsub double %i.m, %i.h
+  %i.o = fsub double %6, %i.j
   %.1.i.us.us67 = select i1 %i.i, double %i.o, double %i.m
   store double %.1.i.us.us67, ptr %5, align 8, !tbaa !29
   %.not171 = icmp eq i32 %.01520, 0

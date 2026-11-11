@@ -202,14 +202,13 @@ bb.e:                                             ; preds = %bb.d
   br label %.thread162
 
 .thread162:                                       ; preds = %.lr.ph171, %bb.e, %bb.d
-  %spec.select = phi i32 [ 10, %bb.d ], [ 10, %bb.e ], [ 5, %.lr.ph171 ] ; 2 uses
+  %spec.select = phi i32 [ 10, %bb.d ], [ 10, %bb.e ], [ 5, %.lr.ph171 ]
   %or.cond7 = phi i1 [ %i.x, %bb.d ], [ %i.x, %bb.e ], [ false, %.lr.ph171 ]
   %i.ad = phi i1 [ true, %bb.d ], [ false, %bb.e ], [ false, %.lr.ph171 ] ; 4 uses
   %i.ae = phi i32 [ 1, %bb.d ], [ %i.ac, %bb.e ], [ 1, %.lr.ph171 ]
   %.not160.not = xor i1 %.not160, true
   %or.cond = and i1 %.not160, %i.ad
-  %4 = add nuw nsw i32 %spec.select, 4
-  %.1 = select i1 %or.cond, i32 %4, i32 %spec.select
+  %.1 = select i1 %or.cond, i32 14, i32 %spec.select
   %or.cond4 = or i1 %i.ad, %.not160.not
   %i.af = select i1 %or.cond4, i32 0, i32 %i.ae
   %.2 = add nuw nsw i32 %.1, %i.af                ; 2 uses

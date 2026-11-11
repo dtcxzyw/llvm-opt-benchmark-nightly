@@ -202,12 +202,10 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZN4llvm2gi16MatchTableRecordC2ESt8optionalIjENS_9StringRefEjj.exit
 
 _ZN4llvm2gi16MatchTableRecordC2ESt8optionalIjENS_9StringRefEjj.exit: ; preds = %._crit_edge.i.i.i.i.i, %bb.e, %bb.f
-  %4 = icmp sgt i32 %3, 0
-  %spec.select = select i1 %4, i32 32, i32 0
-  %5 = lshr i32 %3, 25
-  %6 = and i32 %5, 64
-  %.1 = or disjoint i32 %6, %spec.select
-  %7 = or disjoint i32 %.1, 2
+  %4 = icmp slt i32 %3, 0
+  %.not = icmp eq i32 %3, 0
+  %5 = select i1 %.not, i32 2, i32 34
+  %6 = select i1 %4, i32 66, i32 %5
   %i.k = load i64, ptr %i.a, align 8, !tbaa !22   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.k, ptr %i.l, align 8, !tbaa !20
@@ -218,7 +216,7 @@ _ZN4llvm2gi16MatchTableRecordC2ESt8optionalIjENS_9StringRefEjj.exit: ; preds = %
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 1, ptr %i.o, align 8, !tbaa !30
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store i32 %7, ptr %i.p, align 4, !tbaa !31
+  store i32 %6, ptr %i.p, align 4, !tbaa !31
   ret void
 }
 

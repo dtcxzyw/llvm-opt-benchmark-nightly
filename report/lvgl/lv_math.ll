@@ -204,7 +204,9 @@ bb.e:                                             ; preds = %bb.d
   %i.l = icmp samesign ult i32 %i.i, 42
   %.145 = select i1 %i.l, i32 2, i32 %spec.select62
   %i.m = icmp samesign ult i32 %i.i, 38
+  %.246 = select i1 %i.m, i32 3, i32 %.145
   %i.n = icmp samesign ult i32 %i.i, 33
+  %spec.select66 = select i1 %i.n, i32 4, i32 %.246
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -213,18 +215,14 @@ bb.f:                                             ; preds = %bb.d
   %i.p = icmp samesign ugt i32 %i.i, 5
   %.4 = select i1 %i.p, i32 2, i32 %spec.select63
   %i.q = icmp samesign ugt i32 %i.i, 9
+  %.5 = select i1 %i.q, i32 3, i32 %.4
   %i.r = icmp samesign ugt i32 %i.i, 14
+  %spec.select67 = select i1 %i.r, i32 4, i32 %.5
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.sink70 = phi i1 [ %i.r, %bb.f ], [ %i.n, %bb.e ]
-  %.sink69.in = phi i1 [ %i.q, %bb.f ], [ %i.m, %bb.e ]
-  %.4.sink = phi i32 [ %.4, %bb.f ], [ %.145, %bb.e ]
-  %.sink69 = zext i1 %.sink69.in to i32
-  %2 = zext i1 %.sink70 to i32
-  %.5 = add nuw nsw i32 %2, %.sink69
-  %spec.select67 = add nuw nsw i32 %.5, %.4.sink
-  %i.s = add i32 %spec.select67, %.0              ; 2 uses
+  %.4.sink = phi i32 [ %spec.select66, %bb.e ], [ %spec.select67, %bb.f ]
+  %i.s = add i32 %.4.sink, %.0                    ; 2 uses
   %i.t = and i32 %.249, 16
   %.not = icmp eq i32 %i.t, 0
   %i.u = sub i32 90, %i.s

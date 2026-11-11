@@ -206,12 +206,10 @@ _RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser14block_at_index.exit: ; preds =
   %i.bg = load i64, ptr %i.bf, align 8, !noundef !9 ; 6 uses
   %i.bh = icmp ult i64 %i.bg, 230584300921369396
   call void @llvm.assume(i1 %i.bh)
-  %.not.i.not = icmp eq i64 %i.bg, 0
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.bj = load ptr, ptr %i.bi, align 8, !nonnull !9
   %i.bk = getelementptr [40 x i8], ptr %i.bj, i64 %i.bg ; 3 uses
-  %i.bl = getelementptr i8, ptr %i.bk, i64 -40    ; 2 uses
-  %.sroa.0.0.i32 = select i1 %.not.i.not, ptr null, ptr %i.bl ; 2 uses
+  %i.bl = getelementptr i8, ptr %i.bk, i64 -40    ; 3 uses
   switch i8 %.sroa.5.0.i.ph, label %default.unreachable [
     i8 0, label %.preheader
     i8 1, label %.thread
@@ -219,8 +217,10 @@ _RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser14block_at_index.exit: ; preds =
   ]
 
 .preheader:                                       ; preds = %_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser14block_at_index.exit
-  %.not2693.a = icmp eq ptr %.sroa.0.0.i32, null
-  br i1 %.not2693.a, label %.thread, label %.lr.ph
+  %.not.i.not = icmp eq i64 %i.bg, 0
+  %.not2693.a = icmp eq ptr %i.bl, null
+  %.not2693 = select i1 %.not.i.not, i1 true, i1 %.not2693.a
+  br i1 %.not2693, label %.thread, label %.lr.ph
 
 bb.w:                                             ; preds = %bb.u
   %i.bm = icmp eq i8 %.sroa.5.0.i.ph, 0
@@ -250,7 +250,7 @@ _RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser14block_at_index.exit35: ; preds
 
 bb.x:                                             ; preds = %_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser14block_at_index.exit
   %i.bt = icmp samesign ult i64 %i.bg, 2
-  %.not27 = icmp eq ptr %.sroa.0.0.i32, null
+  %.not27 = icmp eq ptr %i.bl, null
   %or.cond = select i1 %i.bt, i1 true, i1 %.not27
   br i1 %or.cond, label %.thread, label %.thread69
 

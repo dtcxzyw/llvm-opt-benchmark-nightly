@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph83, %bb.ae
-  %.02082 = phi i32 [ 10, %.lr.ph83 ], [ %.222, %bb.ae ] ; 3 uses
+  %.02082 = phi i32 [ 10, %.lr.ph83 ], [ %.222, %bb.ae ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
   invoke void @_ZNK2cv3Mat5cloneEv(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %7, ptr noundef nonnull align 8 dereferenceable(208) %2)
           to label %bb.w unwind label %bb.y
@@ -299,11 +299,11 @@ bb.ae:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.bz = shl i32 %i.by, 24                       ; 2 uses
   %i.ca = icmp eq i32 %i.bz, 1677721600
   %i.cb = add nsw i32 %.02082, 10
-  %spec.select = select i1 %i.ca, i32 %i.cb, i32 %.02082 ; 3 uses
+  %spec.select = select i1 %i.ca, i32 %i.cb, i32 %.02082
   %i.cc = icmp eq i32 %i.bz, 1627389952
-  %i.cd = icmp sgt i32 %spec.select, 10
+  %i.cd = icmp sgt i32 %.02082, 10
   %or.cond = select i1 %i.cc, i1 %i.cd, i1 false
-  %i.ce = add nsw i32 %spec.select, -10
+  %i.ce = add nsw i32 %.02082, -10
   %.222 = select i1 %or.cond, i32 %i.ce, i32 %spec.select
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10

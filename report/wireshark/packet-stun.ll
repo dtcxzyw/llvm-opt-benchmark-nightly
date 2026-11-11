@@ -202,8 +202,8 @@ bb.bj:                                            ; preds = %.lr.ph949, %bb.ft
   %i.id = add nuw nsw i32 %.1841947, 2            ; 3 uses
   %i.ie = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.id) ; 45 uses
   %i.if = add i16 %i.ie, 3
-  %i.ig = and i16 %i.if, -4                       ; 2 uses
-  %.0843 = select i1 %i.ho, i16 %i.ig, i16 %i.ie  ; 4 uses
+  %i.ig = and i16 %i.if, -4                       ; 3 uses
+  %.0843 = select i1 %i.ho, i16 %i.ig, i16 %i.ie  ; 3 uses
   %i.ih = and i16 %i.ic, -2
   %or.cond10 = icmp eq i16 %i.ih, 20
   %or.cond893 = select i1 %i.hx, i1 %or.cond10, i1 false
@@ -606,7 +606,7 @@ bb.fr:                                            ; preds = %bb.fq
 
 .thread:                                          ; preds = %.lr.ph946, %.preheader, %bb.cc, %bb.cb, %bb.ca, %.thread927, %bb.en, %bb.ep, %bb.eo, %bb.bx, %bb.by, %bb.bz, %bb.ce, %bb.cd, %bb.fq, %bb.fr, %bb.ez, %bb.ex, %bb.ev, %bb.et, %bb.er, %bb.eq, %bb.el, %bb.ej, %bb.eh, %bb.ed, %bb.ea, %bb.dy, %bb.dw, %bb.du, %bb.dt, %bb.ds, %.thread1007, %proto_item_set_generated.exit914, %bb.di, %bb.dh, %bb.dg, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.ck, %bb.cj, %bb.br, %bb.bt, %bb.bv, %bb.bs, %bb.bu, %bb.bq, %bb.bp, %bb.bo, %bb.fp, %bb.fo, %bb.fn, %bb.fm, %bb.fl, %bb.fk, %bb.fj, %bb.fi, %bb.fh, %bb.fg, %bb.ff, %bb.fe, %bb.fd, %bb.fc, %bb.fb, %bb.fa, %bb.ey, %bb.ew, %bb.eu, %bb.es, %bb.em, %bb.ek, %bb.ei, %bb.eg, %bb.ef, %bb.ee, %bb.ec, %bb.eb, %bb.dz, %bb.dx, %bb.dv, %.thread924, %bb.cs, %bb.cr, %bb.cq, %bb.cl, %bb.ch, %bb.bw
   %.2 = phi i1 [ %.0831948, %bb.fr ], [ %.0831948, %bb.fq ], [ %.0831948, %bb.bo ], [ %.0831948, %bb.bp ], [ %.0831948, %bb.bq ], [ %.0831948, %bb.br ], [ %.0831948, %bb.bs ], [ %.0831948, %bb.bt ], [ %.0831948, %bb.bu ], [ %.0831948, %bb.bv ], [ %.0831948, %bb.bw ], [ %.0831948, %bb.fp ], [ %.0831948, %bb.ch ], [ %.0831948, %bb.cj ], [ %.1832, %.thread927 ], [ %.0831948, %bb.ck ], [ %.0831948, %bb.cl ], [ %.0831948, %bb.cm ], [ %.0831948, %bb.cn ], [ %.0831948, %bb.co ], [ %.0831948, %bb.cp ], [ %.0831948, %bb.cq ], [ %.0831948, %bb.cc ], [ %.0831948, %bb.cr ], [ %.0831948, %bb.cs ], [ %.0831948, %.thread924 ], [ %.1832, %bb.dg ], [ %.1832, %bb.dh ], [ %.1832, %bb.di ], [ %.1832, %proto_item_set_generated.exit914 ], [ %.1832, %.thread1007 ], [ %.1832, %bb.ds ], [ %.0831948, %bb.dt ], [ %.0831948, %bb.du ], [ %.0831948, %bb.dv ], [ %.0831948, %bb.dw ], [ true, %bb.dx ], [ %.0831948, %bb.dy ], [ true, %bb.dz ], [ %.0831948, %bb.ea ], [ %.0831948, %bb.eb ], [ %.0831948, %bb.ec ], [ %.0831948, %bb.ed ], [ %.0831948, %bb.ee ], [ %.0831948, %bb.ef ], [ %.0831948, %bb.eg ], [ %.0831948, %bb.eh ], [ %.0831948, %bb.ei ], [ %.0831948, %bb.ej ], [ %.0831948, %bb.ek ], [ %.0831948, %bb.el ], [ %.0831948, %bb.em ], [ %.0831948, %bb.bx ], [ %.0831948, %bb.eq ], [ %.0831948, %bb.er ], [ true, %bb.es ], [ %.0831948, %bb.et ], [ true, %bb.eu ], [ %.0831948, %bb.ev ], [ %.0831948, %bb.ew ], [ %.0831948, %bb.ex ], [ true, %bb.ey ], [ %.0831948, %bb.ez ], [ true, %bb.fa ], [ %.0831948, %bb.fb ], [ %.0831948, %bb.fc ], [ %.0831948, %bb.fd ], [ %.0831948, %bb.fe ], [ %.0831948, %bb.ff ], [ %.0831948, %bb.fg ], [ %.0831948, %bb.fh ], [ %.0831948, %bb.fi ], [ %.0831948, %bb.fj ], [ %.0831948, %bb.fk ], [ %.0831948, %bb.fl ], [ %.0831948, %bb.fm ], [ %.0831948, %bb.fn ], [ true, %bb.fo ], [ %.0831948, %bb.cd ], [ %.0831948, %bb.ce ], [ %.0831948, %bb.bz ], [ %.0831948, %bb.by ], [ true, %bb.eo ], [ true, %bb.ep ], [ true, %bb.en ], [ %.0831948, %bb.ca ], [ %.0831948, %bb.cb ], [ %.0831948, %.preheader ], [ %.0831948, %.lr.ph946 ] ; 2 uses
-  %i.xy = icmp ult i16 %i.ie, %.0843
+  %i.xy = icmp ult i16 %i.ie, %i.ig
   %or.cond894 = select i1 %i.ho, i1 %i.xy, i1 false
   br i1 %or.cond894, label %bb.fs, label %bb.ft
 

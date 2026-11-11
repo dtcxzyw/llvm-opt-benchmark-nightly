@@ -23,13 +23,15 @@ bb.a:
   br i1 %i.a, label %.preheader, label %.thread
 
 .preheader:                                       ; preds = %bb.a, %bb.b
-  %i.b = load atomic volatile i32, ptr @g_tempbuffer monotonic, align 4 ; 3 uses
-  %i.c = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.b, i1 false) ; 3 uses
+  %i.b = load atomic volatile i32, ptr @g_tempbuffer monotonic, align 4 ; 4 uses
+  %i.c = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.b, i1 false) ; 2 uses
   %i.d = icmp samesign ugt i32 %i.c, 1
   br i1 %i.d, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %.preheader
-  %i.e = shl nuw nsw i32 1, %i.c
+  %1 = icmp eq i32 %i.b, 0
+  %2 = select i1 %1, i32 -1, i32 %i.c             ; 2 uses
+  %i.e = shl nuw nsw i32 1, %2
   %i.f = xor i32 %i.e, -1
   %i.g = and i32 %i.b, %i.f
   %i.h = cmpxchg volatile ptr @g_tempbuffer, i32 %i.b, i32 %i.g acq_rel monotonic, align 4
@@ -37,7 +39,7 @@ bb.b:                                             ; preds = %.preheader
   br i1 %i.i, label %.thread20, label %.preheader
 
 .thread20:                                        ; preds = %bb.b
-  %i.j = zext nneg i32 %i.c to i64
+  %i.j = zext nneg i32 %2 to i64
   %i.k = getelementptr inbounds nuw [256 x i8], ptr getelementptr inbounds nuw (i8, ptr @g_tempbuffer, i64 4), i64 %i.j
   br label %bb.c
 

@@ -204,22 +204,25 @@ bb.f:                                             ; preds = %bb.g, %bb.e
   %.083 = phi i64 [ 1000, %bb.e ], [ %spec.store.select9, %bb.g ] ; 2 uses
   %i.aa = call i64 @prepare_to_wait_event(ptr noundef %i.z, ptr noundef nonnull %1, i32 noundef 2) #10 ; 0 uses
   %i.ab = call i64 @drm_vblank_count(ptr noundef %i.a, i32 noundef %.val) #12
-  %.not88 = icmp eq i64 %i.w, %i.ab
-  br i1 %.not88, label %bb.g, label %select.unfold
+  %.not88 = icmp eq i64 %i.w, %i.ab               ; 2 uses
+  %2 = icmp ne i64 %.083, 0                       ; 2 uses
+  %or.cond4 = select i1 %.not88, i1 true, i1 %2
+  %spec.store.select8 = select i1 %or.cond4, i64 %.083, i64 1 ; 2 uses
+  %spec.select93.not = select i1 %.not88, i1 %2, i1 false
+  br i1 %spec.select93.not, label %bb.g, label %select.unfold
 
 bb.g:                                             ; preds = %bb.f
-  %i.ac = call i64 @schedule_timeout(i64 noundef %.083) #10 ; 2 uses
+  %i.ac = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #10 ; 2 uses
   %i.ad = call i64 @drm_vblank_count(ptr noundef %i.a, i32 noundef %.val) #12
   %.not90 = icmp eq i64 %i.w, %i.ad               ; 2 uses
-  %i.ae = icmp ne i64 %i.ac, 0
+  %i.ae = icmp ne i64 %i.ac, 0                    ; 2 uses
   %or.cond7 = select i1 %.not90, i1 true, i1 %i.ae
-  %spec.store.select9 = select i1 %or.cond7, i64 %i.ac, i64 1 ; 3 uses
-  %.not91 = icmp ne i64 %spec.store.select9, 0
-  %spec.select94.not = select i1 %.not90, i1 %.not91, i1 false
+  %spec.store.select9 = select i1 %or.cond7, i64 %i.ac, i64 1 ; 2 uses
+  %spec.select94.not = select i1 %.not90, i1 %i.ae, i1 false
   br i1 %spec.select94.not, label %bb.f, label %select.unfold
 
 select.unfold:                                    ; preds = %bb.g, %bb.f
-  %.1.ph = phi i64 [ %.083, %bb.f ], [ %spec.store.select9, %bb.g ]
+  %.1.ph = phi i64 [ %spec.store.select8, %bb.f ], [ %spec.store.select9, %bb.g ]
   call void @finish_wait(ptr noundef %i.z, ptr noundef nonnull %1) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   %i.af = and i64 %.1.ph, 4294967295
@@ -622,19 +625,27 @@ bb.ac:                                            ; preds = %bb.ag, %bb.ab
   %i.bx = call i64 @drm_vblank_count(ptr noundef %0, i32 noundef %.1144) #12
   %i.by = sub i64 %i.bx, %.1137
   %i.bz = icmp ult i64 %i.by, 8388609
-  br i1 %i.bz, label %select.unfold, label %bb.ad
+  br i1 %i.bz, label %.thread185, label %bb.ad
+
+.thread185:                                       ; preds = %bb.ac
+  %spec.store.select8187 = call i64 @llvm.umax.i64(i64 %.0138, i64 1)
+  br label %select.unfold
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ca = load volatile i8, ptr %i.bs, align 8, !range !22, !noundef !23
-  %i.cb = trunc nuw i8 %i.ca to i1
-  br i1 %i.cb, label %bb.ae, label %select.unfold
+  %i.cb = trunc nuw i8 %i.ca to i1                ; 2 uses
+  %4 = icmp ne i64 %.0138, 0                      ; 2 uses
+  %or.cond4.not.not = select i1 %i.cb, i1 true, i1 %4
+  %spec.store.select8 = select i1 %or.cond4.not.not, i64 %.0138, i64 1 ; 2 uses
+  %spec.select167.not = select i1 %i.cb, i1 %4, i1 false
+  br i1 %spec.select167.not, label %bb.ae, label %select.unfold
 
 bb.ae:                                            ; preds = %bb.ad
   %.not163 = icmp eq i64 %i.bw, 0
   br i1 %.not163, label %bb.af, label %.thread
 
 bb.af:                                            ; preds = %bb.ae
-  %i.cc = call i64 @schedule_timeout(i64 noundef %.0138) #10 ; 3 uses
+  %i.cc = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #10 ; 3 uses
   %i.cd = call i64 @drm_vblank_count(ptr noundef %0, i32 noundef %.1144) #12
   %i.ce = sub i64 %i.cd, %.1137
   %i.cf = icmp ult i64 %i.ce, 8388609
@@ -647,15 +658,14 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %i.cg = load volatile i8, ptr %i.bs, align 8, !range !22, !noundef !23
   %i.ch = trunc nuw i8 %i.cg to i1                ; 2 uses
-  %i.ci = icmp ne i64 %i.cc, 0
+  %i.ci = icmp ne i64 %i.cc, 0                    ; 2 uses
   %or.cond7.not.not = select i1 %i.ch, i1 true, i1 %i.ci
-  %spec.store.select9 = select i1 %or.cond7.not.not, i64 %i.cc, i64 1 ; 3 uses
-  %.not165 = icmp ne i64 %spec.store.select9, 0
-  %spec.select168.not = select i1 %i.ch, i1 %.not165, i1 false
+  %spec.store.select9 = select i1 %or.cond7.not.not, i64 %i.cc, i64 1 ; 2 uses
+  %spec.select168.not = select i1 %i.ch, i1 %i.ci, i1 false
   br i1 %spec.select168.not, label %bb.ac, label %select.unfold
 
-select.unfold:                                    ; preds = %bb.ag, %bb.ad, %bb.ac, %.thread205
-  %.1139.ph = phi i64 [ %spec.store.select9207, %.thread205 ], [ %.0138, %bb.ac ], [ %spec.store.select9, %bb.ag ], [ %.0138, %bb.ad ]
+select.unfold:                                    ; preds = %bb.ag, %bb.ad, %.thread205, %.thread185
+  %.1139.ph = phi i64 [ %spec.store.select9207, %.thread205 ], [ %spec.store.select8187, %.thread185 ], [ %spec.store.select9, %bb.ag ], [ %spec.store.select8, %bb.ad ]
   call void @finish_wait(ptr noundef %i.bv, ptr noundef nonnull %3) #10
   br label %.thread
 

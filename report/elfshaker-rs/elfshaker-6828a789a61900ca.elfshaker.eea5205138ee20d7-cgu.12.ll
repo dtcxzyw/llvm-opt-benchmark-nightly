@@ -202,10 +202,10 @@ bb.h:                                             ; preds = %bb.g
   %i.be = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.bf = load i64, ptr %i.be, align 8, !range !15, !noalias !673, !noundef !5 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %i.bh = load i64, ptr %i.bg, align 8, !noalias !673
+  %i.bh = load i64, ptr %i.bg, align 8, !noalias !673 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !673
   %i.bi = trunc nuw i64 %i.bf to i1               ; 2 uses
-  %.sroa.46.0.i.i.i.i.i.i = select i1 %i.bi, i64 %i.bh, i64 undef ; 2 uses
+  %.sroa.46.0.i.i.i.i.i.i = select i1 %i.bi, i64 %i.bh, i64 undef
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !671
   store i64 %i.bf, ptr %i.w, align 8, !noalias !671
   %i.bj = getelementptr inbounds nuw i8, ptr %i.w, i64 8
@@ -214,7 +214,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bk = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store i64 %i.bd, ptr %i.bk, align 8, !noalias !671
   store i64 1, ptr %i.v, align 8, !noalias !671
-  %i.bl = icmp eq i64 %.sroa.46.0.i.i.i.i.i.i, %i.bd
+  %i.bl = icmp eq i64 %i.bh, %i.bd
   %or.cond.i.i.i.i.i = select i1 %i.bi, i1 %i.bl, i1 false, !prof !674
   br i1 %or.cond.i.i.i.i.i, label %bb.i, label %.invoke.i.i.i.i.i, !prof !674
 

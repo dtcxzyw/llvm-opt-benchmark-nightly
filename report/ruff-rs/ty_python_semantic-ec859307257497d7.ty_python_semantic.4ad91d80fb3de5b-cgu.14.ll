@@ -205,10 +205,10 @@ bb.ay:                                            ; preds = %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11615
   call void @_RNvMsg_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_5TupleNtB7_4TypeNtB5_15VariableSegmentE3lenB9_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ep)
   %i.eq = load i64, ptr %i.a, align 8, !range !185, !noalias !11615, !noundef !161
-  %9 = trunc nuw i64 %i.eq to i1
   %i.er = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.es = load i64, ptr %i.er, align 8, !noalias !11615 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !11615
+  %9 = trunc nuw i64 %i.eq to i1
   %i.et = icmp slt i64 %i.es, 0
   %or.cond122.not = select i1 %9, i1 true, i1 %i.et
   br i1 %or.cond122.not, label %bb.az, label %bb.ba

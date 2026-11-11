@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/mdtest-6d13eae5d4aac296.mdtest.f417265bba566f7e-cgu.00?download=true
 inline.NumInlined: 730
 inline.NumDeleted: 60
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers18diff_deadline_implINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB14_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB20_B20_INtNtB4_7compact7CompactB20_B20_IB2A_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest:bb.a
           to label %.body unwind label %bb.h
 
@@ -202,10 +204,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.bm, label %bb.ai, label %bb.aj
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.o
-  %.sroa.0229.0523 = phi i64 [ %spec.select315, %bb.o ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 3 uses
-  %i.bo = icmp eq i64 %.sroa.0229.0523, 4         ; 3 uses
+  %.sroa.0229.0523 = phi i64 [ %spec.select315, %bb.o ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 4 uses
+  %i.bo = icmp eq i64 %.sroa.0229.0523, 4         ; 2 uses
   %i.bp = add nuw nsw i64 %.sroa.0229.0523, 1
-  %spec.select315 = select i1 %i.bo, i64 4, i64 %i.bp ; 3 uses
+  %spec.select315 = select i1 %i.bo, i64 4, i64 %i.bp ; 2 uses
   %i.bq = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !279
   br i1 %i.bq, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQIB1G_QINtNtB4_7compact7CompactIB18_mEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.n
 
@@ -214,9 +216,8 @@ bb.n:                                             ; preds = %.lr.ph.split.split
   br i1 %.not647, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30
-  %.not.i59 = icmp ugt i64 %spec.select315, 4
-  %or.cond319 = select i1 %i.bo, i1 true, i1 %.not.i59
-  br i1 %or.cond319, label %.loopexit, label %.lr.ph.split.split
+  %.not.i59 = icmp ugt i64 %.sroa.0229.0523, 3
+  br i1 %.not.i59, label %.loopexit, label %.lr.ph.split.split
 
 bb.p:                                             ; preds = %bb.n
   br i1 %i.bb, label %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit31, label %.split.loopexit1078
@@ -327,10 +328,10 @@ bb.v:                                             ; preds = %_RNvXs3_NtNtCsiqiOk
   br i1 %i.bf, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
-  %.sroa.0229.0523.us = phi i64 [ %spec.select315.us, %bb.y ], [ %.sroa.0229.0.ph635, %.lr.ph ] ; 5 uses
-  %i.ce = icmp eq i64 %.sroa.0229.0523.us, 4      ; 3 uses
+  %.sroa.0229.0523.us = phi i64 [ %spec.select315.us, %bb.y ], [ %.sroa.0229.0.ph635, %.lr.ph ] ; 6 uses
+  %i.ce = icmp eq i64 %.sroa.0229.0523.us, 4      ; 2 uses
   %i.cf = add nuw nsw i64 %.sroa.0229.0523.us, 1
-  %spec.select315.us = select i1 %i.ce, i64 4, i64 %i.cf ; 3 uses
+  %spec.select315.us = select i1 %i.ce, i64 4, i64 %i.cf ; 2 uses
   %i.cg = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !279
   br i1 %i.cg, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQIB1G_QINtNtB4_7compact7CompactIB18_mEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.w
 
@@ -356,25 +357,23 @@ _RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtN
   br i1 %.not316.us, label %.split537.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30.us, %bb.w
-  %.not.i59.us = icmp ugt i64 %spec.select315.us, 4
-  %or.cond319.us = select i1 %i.ce, i1 true, i1 %.not.i59.us
-  br i1 %or.cond319.us, label %.loopexit, label %.lr.ph.split.us
+  %.not.i59.us = icmp ugt i64 %.sroa.0229.0523.us, 3
+  br i1 %.not.i59.us, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not.i.fr, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.z
-  %.sroa.0229.0523.us553 = phi i64 [ %spec.select315.us554, %bb.z ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 2 uses
+  %.sroa.0229.0523.us553 = phi i64 [ %spec.select315.us554, %bb.z ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 3 uses
   %i.cl = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !279
   br i1 %i.cl, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQIB1G_QINtNtB4_7compact7CompactIB18_mEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cm = icmp eq i64 %.sroa.0229.0523.us553, 4   ; 2 uses
+  %i.cm = icmp eq i64 %.sroa.0229.0523.us553, 4
   %i.cn = add nuw nsw i64 %.sroa.0229.0523.us553, 1
-  %spec.select315.us554 = select i1 %i.cm, i64 4, i64 %i.cn ; 2 uses
-  %.not.i59.us556 = icmp ugt i64 %spec.select315.us554, 4
-  %or.cond319.us557 = select i1 %i.cm, i1 true, i1 %.not.i59.us556
-  br i1 %or.cond319.us557, label %.loopexit, label %.lr.ph.split.split.us
+  %spec.select315.us554 = select i1 %i.cm, i64 4, i64 %i.cn
+  %.not.i59.us556 = icmp ugt i64 %.sroa.0229.0523.us553, 3
+  br i1 %.not.i59.us556, label %.loopexit, label %.lr.ph.split.split.us
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.co = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -777,10 +776,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.bm, label %bb.ai, label %bb.aj
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.o
-  %.sroa.0229.0523 = phi i64 [ %spec.select315, %bb.o ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 3 uses
-  %i.bo = icmp eq i64 %.sroa.0229.0523, 4         ; 3 uses
+  %.sroa.0229.0523 = phi i64 [ %spec.select315, %bb.o ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 4 uses
+  %i.bo = icmp eq i64 %.sroa.0229.0523, 4         ; 2 uses
   %i.bp = add nuw nsw i64 %.sroa.0229.0523, 1
-  %spec.select315 = select i1 %i.bo, i64 4, i64 %i.bp ; 3 uses
+  %spec.select315 = select i1 %i.bo, i64 4, i64 %i.bp ; 2 uses
   %i.bq = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !603
   br i1 %i.bq, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQIB1G_QINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.n
 
@@ -789,9 +788,8 @@ bb.n:                                             ; preds = %.lr.ph.split.split
   br i1 %.not647, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30
-  %.not.i59 = icmp ugt i64 %spec.select315, 4
-  %or.cond319 = select i1 %i.bo, i1 true, i1 %.not.i59
-  br i1 %or.cond319, label %.loopexit, label %.lr.ph.split.split
+  %.not.i59 = icmp ugt i64 %.sroa.0229.0523, 3
+  br i1 %.not.i59, label %.loopexit, label %.lr.ph.split.split
 
 bb.p:                                             ; preds = %bb.n
   br i1 %i.bb, label %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit31, label %.split.loopexit1078
@@ -902,10 +900,10 @@ bb.v:                                             ; preds = %_RNvXs3_NtNtCsiqiOk
   br i1 %i.bf, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
-  %.sroa.0229.0523.us = phi i64 [ %spec.select315.us, %bb.y ], [ %.sroa.0229.0.ph635, %.lr.ph ] ; 5 uses
-  %i.ce = icmp eq i64 %.sroa.0229.0523.us, 4      ; 3 uses
+  %.sroa.0229.0523.us = phi i64 [ %spec.select315.us, %bb.y ], [ %.sroa.0229.0.ph635, %.lr.ph ] ; 6 uses
+  %i.ce = icmp eq i64 %.sroa.0229.0523.us, 4      ; 2 uses
   %i.cf = add nuw nsw i64 %.sroa.0229.0523.us, 1
-  %spec.select315.us = select i1 %i.ce, i64 4, i64 %i.cf ; 3 uses
+  %spec.select315.us = select i1 %i.ce, i64 4, i64 %i.cf ; 2 uses
   %i.cg = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !603
   br i1 %i.cg, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQIB1G_QINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.w
 
@@ -931,25 +929,23 @@ _RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtN
   br i1 %.not316.us, label %.split537.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30.us, %bb.w
-  %.not.i59.us = icmp ugt i64 %spec.select315.us, 4
-  %or.cond319.us = select i1 %i.ce, i1 true, i1 %.not.i59.us
-  br i1 %or.cond319.us, label %.loopexit, label %.lr.ph.split.us
+  %.not.i59.us = icmp ugt i64 %.sroa.0229.0523.us, 3
+  br i1 %.not.i59.us, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not.i.fr, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.z
-  %.sroa.0229.0523.us553 = phi i64 [ %spec.select315.us554, %bb.z ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 2 uses
+  %.sroa.0229.0523.us553 = phi i64 [ %spec.select315.us554, %bb.z ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 3 uses
   %i.cl = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !603
   br i1 %i.cl, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQIB1G_QINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2B_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cm = icmp eq i64 %.sroa.0229.0523.us553, 4   ; 2 uses
+  %i.cm = icmp eq i64 %.sroa.0229.0523.us553, 4
   %i.cn = add nuw nsw i64 %.sroa.0229.0523.us553, 1
-  %spec.select315.us554 = select i1 %i.cm, i64 4, i64 %i.cn ; 2 uses
-  %.not.i59.us556 = icmp ugt i64 %spec.select315.us554, 4
-  %or.cond319.us557 = select i1 %i.cm, i1 true, i1 %.not.i59.us556
-  br i1 %or.cond319.us557, label %.loopexit, label %.lr.ph.split.split.us
+  %spec.select315.us554 = select i1 %i.cm, i64 4, i64 %i.cn
+  %.not.i59.us556 = icmp ugt i64 %.sroa.0229.0523.us553, 3
+  br i1 %.not.i59.us556, label %.loopexit, label %.lr.ph.split.split.us
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.co = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -1352,10 +1348,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.bl, label %bb.ai, label %bb.aj
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.o
-  %.sroa.0222.0516 = phi i64 [ %spec.select308, %bb.o ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 3 uses
-  %i.bn = icmp eq i64 %.sroa.0222.0516, 4         ; 3 uses
+  %.sroa.0222.0516 = phi i64 [ %spec.select308, %bb.o ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 4 uses
+  %i.bn = icmp eq i64 %.sroa.0222.0516, 4         ; 2 uses
   %i.bo = add nuw nsw i64 %.sroa.0222.0516, 1
-  %spec.select308 = select i1 %i.bn, i64 4, i64 %i.bo ; 3 uses
+  %spec.select308 = select i1 %i.bn, i64 4, i64 %i.bo ; 2 uses
   %i.bp = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !843
   br i1 %i.bp, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactIB18_mEB2v_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.n
 
@@ -1364,9 +1360,8 @@ bb.n:                                             ; preds = %.lr.ph.split.split
   br i1 %.not640, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30
-  %.not.i59 = icmp ugt i64 %spec.select308, 4
-  %or.cond312 = select i1 %i.bn, i1 true, i1 %.not.i59
-  br i1 %or.cond312, label %.loopexit, label %.lr.ph.split.split
+  %.not.i59 = icmp ugt i64 %.sroa.0222.0516, 3
+  br i1 %.not.i59, label %.loopexit, label %.lr.ph.split.split
 
 bb.p:                                             ; preds = %bb.n
   br i1 %i.ba, label %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit31, label %.split.loopexit1085
@@ -1477,10 +1472,10 @@ bb.v:                                             ; preds = %_RNvXs3_NtNtCsiqiOk
   br i1 %i.be, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
-  %.sroa.0222.0516.us = phi i64 [ %spec.select308.us, %bb.y ], [ %.sroa.0222.0.ph628, %.lr.ph ] ; 5 uses
-  %i.cd = icmp eq i64 %.sroa.0222.0516.us, 4      ; 3 uses
+  %.sroa.0222.0516.us = phi i64 [ %spec.select308.us, %bb.y ], [ %.sroa.0222.0.ph628, %.lr.ph ] ; 6 uses
+  %i.cd = icmp eq i64 %.sroa.0222.0516.us, 4      ; 2 uses
   %i.ce = add nuw nsw i64 %.sroa.0222.0516.us, 1
-  %spec.select308.us = select i1 %i.cd, i64 4, i64 %i.ce ; 3 uses
+  %spec.select308.us = select i1 %i.cd, i64 4, i64 %i.ce ; 2 uses
   %i.cf = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !843
   br i1 %i.cf, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactIB18_mEB2v_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.w
 
@@ -1506,25 +1501,23 @@ _RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtN
   br i1 %.not309.us, label %.split530.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30.us, %bb.w
-  %.not.i59.us = icmp ugt i64 %spec.select308.us, 4
-  %or.cond312.us = select i1 %i.cd, i1 true, i1 %.not.i59.us
-  br i1 %or.cond312.us, label %.loopexit, label %.lr.ph.split.us
+  %.not.i59.us = icmp ugt i64 %.sroa.0222.0516.us, 3
+  br i1 %.not.i59.us, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not.i.fr, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.z
-  %.sroa.0222.0516.us546 = phi i64 [ %spec.select308.us547, %bb.z ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 2 uses
+  %.sroa.0222.0516.us546 = phi i64 [ %spec.select308.us547, %bb.z ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 3 uses
   %i.ck = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !843
   br i1 %i.ck, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactIB18_mEB2v_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cl = icmp eq i64 %.sroa.0222.0516.us546, 4   ; 2 uses
+  %i.cl = icmp eq i64 %.sroa.0222.0516.us546, 4
   %i.cm = add nuw nsw i64 %.sroa.0222.0516.us546, 1
-  %spec.select308.us547 = select i1 %i.cl, i64 4, i64 %i.cm ; 2 uses
-  %.not.i59.us549 = icmp ugt i64 %spec.select308.us547, 4
-  %or.cond312.us550 = select i1 %i.cl, i1 true, i1 %.not.i59.us549
-  br i1 %or.cond312.us550, label %.loopexit, label %.lr.ph.split.split.us
+  %spec.select308.us547 = select i1 %i.cl, i64 4, i64 %i.cm
+  %.not.i59.us549 = icmp ugt i64 %.sroa.0222.0516.us546, 3
+  br i1 %.not.i59.us549, label %.loopexit, label %.lr.ph.split.split.us
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.cn = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -1927,10 +1920,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.bl, label %bb.ai, label %bb.aj
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.o
-  %.sroa.0222.0516 = phi i64 [ %spec.select308, %bb.o ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 3 uses
-  %i.bn = icmp eq i64 %.sroa.0222.0516, 4         ; 3 uses
+  %.sroa.0222.0516 = phi i64 [ %spec.select308, %bb.o ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 4 uses
+  %i.bn = icmp eq i64 %.sroa.0222.0516, 4         ; 2 uses
   %i.bo = add nuw nsw i64 %.sroa.0222.0516, 1
-  %spec.select308 = select i1 %i.bn, i64 4, i64 %i.bo ; 3 uses
+  %spec.select308 = select i1 %i.bn, i64 4, i64 %i.bo ; 2 uses
   %i.bp = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1037
   br i1 %i.bp, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2v_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.n
 
@@ -1939,9 +1932,8 @@ bb.n:                                             ; preds = %.lr.ph.split.split
   br i1 %.not640, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30
-  %.not.i59 = icmp ugt i64 %spec.select308, 4
-  %or.cond312 = select i1 %i.bn, i1 true, i1 %.not.i59
-  br i1 %or.cond312, label %.loopexit, label %.lr.ph.split.split
+  %.not.i59 = icmp ugt i64 %.sroa.0222.0516, 3
+  br i1 %.not.i59, label %.loopexit, label %.lr.ph.split.split
 
 bb.p:                                             ; preds = %bb.n
   br i1 %i.ba, label %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit31, label %.split.loopexit1085
@@ -2052,10 +2044,10 @@ bb.v:                                             ; preds = %_RNvXs3_NtNtCsiqiOk
   br i1 %i.be, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
-  %.sroa.0222.0516.us = phi i64 [ %spec.select308.us, %bb.y ], [ %.sroa.0222.0.ph628, %.lr.ph ] ; 5 uses
-  %i.cd = icmp eq i64 %.sroa.0222.0516.us, 4      ; 3 uses
+  %.sroa.0222.0516.us = phi i64 [ %spec.select308.us, %bb.y ], [ %.sroa.0222.0.ph628, %.lr.ph ] ; 6 uses
+  %i.cd = icmp eq i64 %.sroa.0222.0516.us, 4      ; 2 uses
   %i.ce = add nuw nsw i64 %.sroa.0222.0516.us, 1
-  %spec.select308.us = select i1 %i.cd, i64 4, i64 %i.ce ; 3 uses
+  %spec.select308.us = select i1 %i.cd, i64 4, i64 %i.ce ; 2 uses
   %i.cf = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1037
   br i1 %i.cf, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2v_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.w
 
@@ -2081,25 +2073,23 @@ _RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtN
   br i1 %.not309.us, label %.split530.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupjEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30.us, %bb.w
-  %.not.i59.us = icmp ugt i64 %spec.select308.us, 4
-  %or.cond312.us = select i1 %i.cd, i1 true, i1 %.not.i59.us
-  br i1 %or.cond312.us, label %.loopexit, label %.lr.ph.split.us
+  %.not.i59.us = icmp ugt i64 %.sroa.0222.0516.us, 3
+  br i1 %.not.i59.us, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not.i.fr, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.z
-  %.sroa.0222.0516.us546 = phi i64 [ %spec.select308.us547, %bb.z ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 2 uses
+  %.sroa.0222.0516.us546 = phi i64 [ %spec.select308.us547, %bb.z ], [ %.sroa.0222.0.ph628, %.lr.ph.split ] ; 3 uses
   %i.ck = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1037
   br i1 %i.ck, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupjEB17_INtNtB4_4hook12NoFinishHookQINtNtB4_7compact7CompactINtNtB6_4text12TextDiffSideeEB2v_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cl = icmp eq i64 %.sroa.0222.0516.us546, 4   ; 2 uses
+  %i.cl = icmp eq i64 %.sroa.0222.0516.us546, 4
   %i.cm = add nuw nsw i64 %.sroa.0222.0516.us546, 1
-  %spec.select308.us547 = select i1 %i.cl, i64 4, i64 %i.cm ; 2 uses
-  %.not.i59.us549 = icmp ugt i64 %spec.select308.us547, 4
-  %or.cond312.us550 = select i1 %i.cl, i1 true, i1 %.not.i59.us549
-  br i1 %or.cond312.us550, label %.loopexit, label %.lr.ph.split.split.us
+  %spec.select308.us547 = select i1 %i.cl, i64 4, i64 %i.cm
+  %.not.i59.us549 = icmp ugt i64 %.sroa.0222.0516.us546, 3
+  br i1 %.not.i59.us549, label %.loopexit, label %.lr.ph.split.split.us
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.cn = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -2502,10 +2492,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.bm, label %bb.ai, label %bb.aj
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.o
-  %.sroa.0229.0523 = phi i64 [ %spec.select315, %bb.o ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 3 uses
-  %i.bo = icmp eq i64 %.sroa.0229.0523, 4         ; 3 uses
+  %.sroa.0229.0523 = phi i64 [ %spec.select315, %bb.o ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 4 uses
+  %i.bo = icmp eq i64 %.sroa.0229.0523, 4         ; 2 uses
   %i.bp = add nuw nsw i64 %.sroa.0229.0523, 1
-  %spec.select315 = select i1 %i.bo, i64 4, i64 %i.bp ; 3 uses
+  %spec.select315 = select i1 %i.bo, i64 4, i64 %i.bp ; 2 uses
   %i.bq = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1313
   br i1 %i.bq, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupmEB17_INtNtB4_4hook12NoFinishHookQQINtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.n
 
@@ -2514,9 +2504,8 @@ bb.n:                                             ; preds = %.lr.ph.split.split
   br i1 %.not647, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30
-  %.not.i59 = icmp ugt i64 %spec.select315, 4
-  %or.cond319 = select i1 %i.bo, i1 true, i1 %.not.i59
-  br i1 %or.cond319, label %.loopexit, label %.lr.ph.split.split
+  %.not.i59 = icmp ugt i64 %.sroa.0229.0523, 3
+  br i1 %.not.i59, label %.loopexit, label %.lr.ph.split.split
 
 bb.p:                                             ; preds = %bb.n
   br i1 %i.bb, label %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit31, label %.split.loopexit1078
@@ -2627,10 +2616,10 @@ bb.v:                                             ; preds = %_RNvXs3_NtNtCsiqiOk
   br i1 %i.bf, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
-  %.sroa.0229.0523.us = phi i64 [ %spec.select315.us, %bb.y ], [ %.sroa.0229.0.ph635, %.lr.ph ] ; 5 uses
-  %i.ce = icmp eq i64 %.sroa.0229.0523.us, 4      ; 3 uses
+  %.sroa.0229.0523.us = phi i64 [ %spec.select315.us, %bb.y ], [ %.sroa.0229.0.ph635, %.lr.ph ] ; 6 uses
+  %i.ce = icmp eq i64 %.sroa.0229.0523.us, 4      ; 2 uses
   %i.cf = add nuw nsw i64 %.sroa.0229.0523.us, 1
-  %spec.select315.us = select i1 %i.ce, i64 4, i64 %i.cf ; 3 uses
+  %spec.select315.us = select i1 %i.ce, i64 4, i64 %i.cf ; 2 uses
   %i.cg = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1313
   br i1 %i.cg, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupmEB17_INtNtB4_4hook12NoFinishHookQQINtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.w
 
@@ -2656,25 +2645,23 @@ _RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtN
   br i1 %.not316.us, label %.split537.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30.us, %bb.w
-  %.not.i59.us = icmp ugt i64 %spec.select315.us, 4
-  %or.cond319.us = select i1 %i.ce, i1 true, i1 %.not.i59.us
-  br i1 %or.cond319.us, label %.loopexit, label %.lr.ph.split.us
+  %.not.i59.us = icmp ugt i64 %.sroa.0229.0523.us, 3
+  br i1 %.not.i59.us, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not.i.fr, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.z
-  %.sroa.0229.0523.us553 = phi i64 [ %spec.select315.us554, %bb.z ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 2 uses
+  %.sroa.0229.0523.us553 = phi i64 [ %spec.select315.us554, %bb.z ], [ %.sroa.0229.0.ph635, %.lr.ph.split ] ; 3 uses
   %i.cl = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1313
   br i1 %i.cl, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupmEB17_INtNtB4_4hook12NoFinishHookQQINtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cm = icmp eq i64 %.sroa.0229.0523.us553, 4   ; 2 uses
+  %i.cm = icmp eq i64 %.sroa.0229.0523.us553, 4
   %i.cn = add nuw nsw i64 %.sroa.0229.0523.us553, 1
-  %spec.select315.us554 = select i1 %i.cm, i64 4, i64 %i.cn ; 2 uses
-  %.not.i59.us556 = icmp ugt i64 %spec.select315.us554, 4
-  %or.cond319.us557 = select i1 %i.cm, i1 true, i1 %.not.i59.us556
-  br i1 %or.cond319.us557, label %.loopexit, label %.lr.ph.split.split.us
+  %spec.select315.us554 = select i1 %i.cm, i64 4, i64 %i.cn
+  %.not.i59.us556 = icmp ugt i64 %.sroa.0229.0523.us553, 3
+  br i1 %.not.i59.us556, label %.loopexit, label %.lr.ph.split.split.us
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.co = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -3077,10 +3064,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.bn, label %bb.ai, label %bb.aj
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.o
-  %.sroa.0220.0514 = phi i64 [ %spec.select306, %bb.o ], [ %.sroa.0220.0.ph626, %.lr.ph.split ] ; 3 uses
-  %i.bp = icmp eq i64 %.sroa.0220.0514, 4         ; 3 uses
+  %.sroa.0220.0514 = phi i64 [ %spec.select306, %bb.o ], [ %.sroa.0220.0.ph626, %.lr.ph.split ] ; 4 uses
+  %i.bp = icmp eq i64 %.sroa.0220.0514, 4         ; 2 uses
   %i.bq = add nuw nsw i64 %.sroa.0220.0514, 1
-  %spec.select306 = select i1 %i.bp, i64 4, i64 %i.bq ; 3 uses
+  %spec.select306 = select i1 %i.bp, i64 4, i64 %i.bq ; 2 uses
   %i.br = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1500
   br i1 %i.br, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupmEB17_INtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEECskXhPDodhyTq_6mdtest.exit, label %bb.n
 
@@ -3089,9 +3076,8 @@ bb.n:                                             ; preds = %.lr.ph.split.split
   br i1 %.not638, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30
-  %.not.i57 = icmp ugt i64 %spec.select306, 4
-  %or.cond310 = select i1 %i.bp, i1 true, i1 %.not.i57
-  br i1 %or.cond310, label %.loopexit, label %.lr.ph.split.split
+  %.not.i57 = icmp ugt i64 %.sroa.0220.0514, 3
+  br i1 %.not.i57, label %.loopexit, label %.lr.ph.split.split
 
 bb.p:                                             ; preds = %bb.n
   br i1 %i.bc, label %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit31, label %.split.loopexit1081
@@ -3202,10 +3188,10 @@ bb.v:                                             ; preds = %_RNvXs3_NtNtCsiqiOk
   br i1 %i.bg, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
-  %.sroa.0220.0514.us = phi i64 [ %spec.select306.us, %bb.y ], [ %.sroa.0220.0.ph626, %.lr.ph ] ; 5 uses
-  %i.cf = icmp eq i64 %.sroa.0220.0514.us, 4      ; 3 uses
+  %.sroa.0220.0514.us = phi i64 [ %spec.select306.us, %bb.y ], [ %.sroa.0220.0.ph626, %.lr.ph ] ; 6 uses
+  %i.cf = icmp eq i64 %.sroa.0220.0514.us, 4      ; 2 uses
   %i.cg = add nuw nsw i64 %.sroa.0220.0514.us, 1
-  %spec.select306.us = select i1 %i.cf, i64 4, i64 %i.cg ; 3 uses
+  %spec.select306.us = select i1 %i.cf, i64 4, i64 %i.cg ; 2 uses
   %i.ch = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1500
   br i1 %i.ch, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupmEB17_INtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEECskXhPDodhyTq_6mdtest.exit, label %bb.w
 
@@ -3231,25 +3217,23 @@ _RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtN
   br i1 %.not307.us, label %.split528.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %_RNvXs3_NtNtCsiqiOkcJdymw_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit30.us, %bb.w
-  %.not.i57.us = icmp ugt i64 %spec.select306.us, 4
-  %or.cond310.us = select i1 %i.cf, i1 true, i1 %.not.i57.us
-  br i1 %or.cond310.us, label %.loopexit, label %.lr.ph.split.us
+  %.not.i57.us = icmp ugt i64 %.sroa.0220.0514.us, 3
+  br i1 %.not.i57.us, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not.i.fr, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.z
-  %.sroa.0220.0514.us544 = phi i64 [ %spec.select306.us545, %bb.z ], [ %.sroa.0220.0.ph626, %.lr.ph.split ] ; 2 uses
+  %.sroa.0220.0514.us544 = phi i64 [ %spec.select306.us545, %bb.z ], [ %.sroa.0220.0.ph626, %.lr.ph.split ] ; 3 uses
   %i.cm = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1500
   br i1 %i.cm, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB4_5utils12OffsetLookupmEB17_INtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEECskXhPDodhyTq_6mdtest.exit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cn = icmp eq i64 %.sroa.0220.0514.us544, 4   ; 2 uses
+  %i.cn = icmp eq i64 %.sroa.0220.0514.us544, 4
   %i.co = add nuw nsw i64 %.sroa.0220.0514.us544, 1
-  %spec.select306.us545 = select i1 %i.cn, i64 4, i64 %i.co ; 2 uses
-  %.not.i57.us547 = icmp ugt i64 %spec.select306.us545, 4
-  %or.cond310.us548 = select i1 %i.cn, i1 true, i1 %.not.i57.us547
-  br i1 %or.cond310.us548, label %.loopexit, label %.lr.ph.split.split.us
+  %spec.select306.us545 = select i1 %i.cn, i64 4, i64 %i.co
+  %.not.i57.us547 = icmp ugt i64 %.sroa.0220.0514.us544, 3
+  br i1 %.not.i57.us547, label %.loopexit, label %.lr.ph.split.split.us
 
 bb.aa:                                            ; preds = %._crit_edge
   %i.cp = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -3652,19 +3636,18 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.023.1.i.ph.lcssa444 = phi i64 [ %.sroa.023.1.i.ph481, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ], [ %.sroa.023.2.i, %.outer ] ; 2 uses
   %.sroa.9.2.i.ph.lcssa441 = phi i64 [ %.sroa.9.2.i.ph482, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ], [ %.sroa.9.3.i, %.outer ] ; 2 uses
   %.sroa.12.2.i.ph.lcssa438 = phi i64 [ %.sroa.12.2.i.ph483, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ], [ %.sroa.12.3.i, %.outer ] ; 2 uses
-  %.not.i50 = icmp ugt i64 %spec.select340, 4
-  %or.cond345 = select i1 %i.ao, i1 true, i1 %.not.i50
-  br i1 %or.cond345, label %bb.m, label %bb.l
+  %.not.i50 = icmp ugt i64 %.sroa.0253.0484, 3
+  br i1 %.not.i50, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.loopexit
   %.sroa.12.0.i488 = phi i64 [ undef, %bb.k ], [ %.sroa.12.2.i.ph.lcssa438, %.loopexit ]
   %.sroa.9.0.i487 = phi i64 [ undef, %bb.k ], [ %.sroa.9.2.i.ph.lcssa441, %.loopexit ]
   %.sroa.023.0.i486 = phi i64 [ 0, %bb.k ], [ %.sroa.023.1.i.ph.lcssa444, %.loopexit ]
   %.sroa.525.0.i485 = phi i64 [ undef, %bb.k ], [ %.sroa.525.2.i.ph.lcssa447, %.loopexit ]
-  %.sroa.0253.0484 = phi i64 [ 0, %bb.k ], [ %spec.select340, %.loopexit ] ; 12 uses
-  %i.ao = icmp eq i64 %.sroa.0253.0484, 4         ; 2 uses
+  %.sroa.0253.0484 = phi i64 [ 0, %bb.k ], [ %spec.select340, %.loopexit ] ; 13 uses
+  %i.ao = icmp eq i64 %.sroa.0253.0484, 4
   %i.ap = add nuw nsw i64 %.sroa.0253.0484, 1
-  %spec.select340 = select i1 %i.ao, i64 4, i64 %i.ap ; 2 uses
+  %spec.select340 = select i1 %i.ao, i64 4, i64 %i.ap
   %i.aq = icmp eq i64 %.sroa.0253.0484, 0
   %i.ar = add i64 %.sroa.0253.0484, %.sroa.0.0    ; 3 uses
   %i.as = sub i64 %i.l, %i.ar
@@ -3683,10 +3666,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.au, label %bb.af, label %bb.ag
 
 bb.n:                                             ; preds = %.lr.ph, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread
-  %.sroa.0254.0465 = phi i64 [ %.sroa.0254.0.ph479, %.lr.ph ], [ %spec.select342, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ] ; 11 uses
-  %i.aw = icmp eq i64 %.sroa.0254.0465, 4         ; 3 uses
+  %.sroa.0254.0465 = phi i64 [ %.sroa.0254.0.ph479, %.lr.ph ], [ %spec.select342, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ] ; 13 uses
+  %i.aw = icmp eq i64 %.sroa.0254.0465, 4
   %i.ax = add nuw nsw i64 %.sroa.0254.0465, 1
-  %spec.select342 = select i1 %i.aw, i64 4, i64 %i.ax ; 4 uses
+  %spec.select342 = select i1 %i.aw, i64 4, i64 %i.ax ; 2 uses
   %i.ay = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !1788
   br i1 %i.ay, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB6_4text12TextDiffSideeEB17_INtNtB4_4hook12NoFinishHookQQINtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEEECskXhPDodhyTq_6mdtest.exit, label %bb.o
 
@@ -3700,9 +3683,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.aq, label %bb.r, label %bb.q
 
 _RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread: ; preds = %bb.s, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit, %bb.r, %bb.q, %bb.o
-  %.not.i52 = icmp ugt i64 %spec.select342, 4
-  %or.cond346 = select i1 %i.aw, i1 true, i1 %.not.i52
-  br i1 %or.cond346, label %.loopexit, label %bb.n
+  %.not.i52 = icmp ugt i64 %.sroa.0254.0465, 3
+  br i1 %.not.i52, label %.loopexit, label %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %brmerge.i.not = and i1 %.not.i, %i.az
@@ -3776,9 +3758,8 @@ _RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit59.threa
   %.sroa.023.2.i = phi i64 [ 1, %bb.ae ], [ %.sroa.023.1.i.ph481, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit59.thread ], [ %.sroa.023.1.i.ph481, %bb.t ] ; 2 uses
   %.sroa.9.3.i = phi i64 [ %.sroa.9.4.i, %bb.ae ], [ %.sroa.9.2.i.ph482, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit59.thread ], [ %.sroa.9.2.i.ph482, %bb.t ] ; 2 uses
   %.sroa.12.3.i = phi i64 [ %.sroa.12.4.i, %bb.ae ], [ %.sroa.12.2.i.ph483, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit59.thread ], [ %.sroa.12.2.i.ph483, %bb.t ] ; 2 uses
-  %.not.i52463 = icmp ugt i64 %spec.select342, 4
-  %or.cond346464 = select i1 %i.aw, i1 true, i1 %.not.i52463
-  br i1 %or.cond346464, label %.loopexit, label %.lr.ph
+  %.not.i52463 = icmp ugt i64 %.sroa.0254.0465, 3
+  br i1 %.not.i52463, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l, %.outer
   %.sroa.12.2.i.ph483 = phi i64 [ %.sroa.12.0.i488, %bb.l ], [ %.sroa.12.3.i, %.outer ] ; 7 uses
@@ -4181,19 +4162,18 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.023.1.i.ph.lcssa435 = phi i64 [ %.sroa.023.1.i.ph472, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ], [ %.sroa.023.2.i, %.outer ] ; 2 uses
   %.sroa.9.2.i.ph.lcssa432 = phi i64 [ %.sroa.9.2.i.ph473, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ], [ %.sroa.9.3.i, %.outer ] ; 2 uses
   %.sroa.12.2.i.ph.lcssa429 = phi i64 [ %.sroa.12.2.i.ph474, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ], [ %.sroa.12.3.i, %.outer ] ; 2 uses
-  %.not.i48 = icmp ugt i64 %spec.select331, 4
-  %or.cond336 = select i1 %i.ap, i1 true, i1 %.not.i48
-  br i1 %or.cond336, label %bb.m, label %bb.l
+  %.not.i48 = icmp ugt i64 %.sroa.0244.0475, 3
+  br i1 %.not.i48, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.loopexit
   %.sroa.12.0.i479 = phi i64 [ undef, %bb.k ], [ %.sroa.12.2.i.ph.lcssa429, %.loopexit ]
   %.sroa.9.0.i478 = phi i64 [ undef, %bb.k ], [ %.sroa.9.2.i.ph.lcssa432, %.loopexit ]
   %.sroa.023.0.i477 = phi i64 [ 0, %bb.k ], [ %.sroa.023.1.i.ph.lcssa435, %.loopexit ]
   %.sroa.525.0.i476 = phi i64 [ undef, %bb.k ], [ %.sroa.525.2.i.ph.lcssa438, %.loopexit ]
-  %.sroa.0244.0475 = phi i64 [ 0, %bb.k ], [ %spec.select331, %.loopexit ] ; 12 uses
-  %i.ap = icmp eq i64 %.sroa.0244.0475, 4         ; 2 uses
+  %.sroa.0244.0475 = phi i64 [ 0, %bb.k ], [ %spec.select331, %.loopexit ] ; 13 uses
+  %i.ap = icmp eq i64 %.sroa.0244.0475, 4
   %i.aq = add nuw nsw i64 %.sroa.0244.0475, 1
-  %spec.select331 = select i1 %i.ap, i64 4, i64 %i.aq ; 2 uses
+  %spec.select331 = select i1 %i.ap, i64 4, i64 %i.aq
   %i.ar = icmp eq i64 %.sroa.0244.0475, 0
   %i.as = add i64 %.sroa.0244.0475, %.sroa.0.0    ; 3 uses
   %i.at = sub i64 %i.l, %i.as
@@ -4213,10 +4193,10 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %i.av, label %bb.af, label %bb.ag
 
 bb.n:                                             ; preds = %.lr.ph, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread
-  %.sroa.0245.0456 = phi i64 [ %.sroa.0245.0.ph470, %.lr.ph ], [ %spec.select333, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ] ; 11 uses
-  %i.ax = icmp eq i64 %.sroa.0245.0456, 4         ; 3 uses
+  %.sroa.0245.0456 = phi i64 [ %.sroa.0245.0.ph470, %.lr.ph ], [ %spec.select333, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread ] ; 13 uses
+  %i.ax = icmp eq i64 %.sroa.0245.0456, 4
   %i.ay = add nuw nsw i64 %.sroa.0245.0456, 1
-  %spec.select333 = select i1 %i.ax, i64 4, i64 %i.ay ; 4 uses
+  %spec.select333 = select i1 %i.ax, i64 4, i64 %i.ay ; 2 uses
   %i.az = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2017
   br i1 %i.az, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtB6_4text12TextDiffSideeEB17_INtNtB4_7compact7CompactB17_B17_INtNtB4_7replace7ReplaceNtNtB4_7capture7CaptureEEECskXhPDodhyTq_6mdtest.exit, label %bb.o
 
@@ -4230,9 +4210,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ar, label %bb.r, label %bb.q
 
 _RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread: ; preds = %bb.s, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit, %bb.r, %bb.q, %bb.o
-  %.not.i50 = icmp ugt i64 %spec.select333, 4
-  %or.cond337 = select i1 %i.ax, i1 true, i1 %.not.i50
-  br i1 %or.cond337, label %.loopexit, label %bb.n
+  %.not.i50 = icmp ugt i64 %.sroa.0245.0456, 3
+  br i1 %.not.i50, label %.loopexit, label %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %brmerge.i.not = and i1 %.not.i, %i.ba
@@ -4306,9 +4285,8 @@ _RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit57.threa
   %.sroa.023.2.i = phi i64 [ 1, %bb.ae ], [ %.sroa.023.1.i.ph472, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit57.thread ], [ %.sroa.023.1.i.ph472, %bb.t ] ; 2 uses
   %.sroa.9.3.i = phi i64 [ %.sroa.9.4.i, %bb.ae ], [ %.sroa.9.2.i.ph473, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit57.thread ], [ %.sroa.9.2.i.ph473, %bb.t ] ; 2 uses
   %.sroa.12.3.i = phi i64 [ %.sroa.12.4.i, %bb.ae ], [ %.sroa.12.2.i.ph474, %_RNvYeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit57.thread ], [ %.sroa.12.2.i.ph474, %bb.t ] ; 2 uses
-  %.not.i50454 = icmp ugt i64 %spec.select333, 4
-  %or.cond337455 = select i1 %i.ax, i1 true, i1 %.not.i50454
-  br i1 %or.cond337455, label %.loopexit, label %.lr.ph
+  %.not.i50454 = icmp ugt i64 %.sroa.0245.0456, 3
+  br i1 %.not.i50454, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l, %.outer
   %.sroa.12.2.i.ph474 = phi i64 [ %.sroa.12.0.i479, %bb.l ], [ %.sroa.12.3.i, %.outer ] ; 7 uses
@@ -4711,8 +4689,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.b
 
 bb.d:                                             ; preds = %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, %bb.b
-  %.sroa.0235.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0235.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 40 uses
-  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 39 uses
+  %.sroa.0235.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0235.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 48 uses
+  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 47 uses
   %i.w = icmp ult i64 %.sroa.0.0, %i.k            ; 2 uses
   %i.x = icmp ult i64 %.sroa.0235.0, %i.l         ; 3 uses
   %or.cond307 = select i1 %i.w, i1 %i.x, i1 false
@@ -4750,14 +4728,13 @@ bb.j:                                             ; preds = %bb.i
   %i.af = icmp ule i64 %i.y, %i.z                 ; 2 uses
   br label %bb.k
 
-.loopexit:                                        ; preds = %bb.ac, %bb.ab, %.outer, %bb.z
-  %.sroa.525.2.i.ph.lcssa602 = phi i64 [ %.sroa.525.3.i, %.outer ], [ %.sroa.525.0.i879, %bb.ab ], [ %.sroa.525.2.i.ph873, %bb.z ], [ %.sroa.525.0.i879, %bb.ac ] ; 2 uses
-  %.sroa.023.1.i.ph.lcssa591 = phi i64 [ %.sroa.023.2.i, %.outer ], [ %.sroa.023.0.i880, %bb.ab ], [ %.sroa.023.1.i.ph874, %bb.z ], [ %.sroa.023.0.i880, %bb.ac ] ; 2 uses
-  %.sroa.9.2.i.ph.lcssa580 = phi i64 [ %.sroa.9.3.i, %.outer ], [ %.sroa.9.0.i881, %bb.ab ], [ %.sroa.9.2.i.ph875, %bb.z ], [ %.sroa.9.0.i881, %bb.ac ] ; 2 uses
-  %.sroa.12.2.i.ph.lcssa569 = phi i64 [ %.sroa.12.3.i, %.outer ], [ %.sroa.12.0.i882, %bb.ab ], [ %.sroa.12.2.i.ph876, %bb.z ], [ %.sroa.12.0.i882, %bb.ac ] ; 2 uses
-  %.not.i76 = icmp ugt i64 %spec.select308, 4
-  %or.cond313 = select i1 %i.ag, i1 true, i1 %.not.i76
-  br i1 %or.cond313, label %bb.l, label %bb.k
+.loopexit:                                        ; preds = %.outer, %bb.z, %bb.ac, %bb.ab
+  %.sroa.525.2.i.ph.lcssa602 = phi i64 [ %.sroa.525.2.i.ph873, %bb.z ], [ %.sroa.525.0.i879, %bb.ab ], [ %.sroa.525.0.i879, %bb.ac ], [ %.sroa.525.3.i, %.outer ] ; 2 uses
+  %.sroa.023.1.i.ph.lcssa591 = phi i64 [ %.sroa.023.1.i.ph874, %bb.z ], [ %.sroa.023.0.i880, %bb.ab ], [ %.sroa.023.0.i880, %bb.ac ], [ %.sroa.023.2.i, %.outer ] ; 2 uses
+  %.sroa.9.2.i.ph.lcssa580 = phi i64 [ %.sroa.9.2.i.ph875, %bb.z ], [ %.sroa.9.0.i881, %bb.ab ], [ %.sroa.9.0.i881, %bb.ac ], [ %.sroa.9.3.i, %.outer ] ; 2 uses
+  %.sroa.12.2.i.ph.lcssa569 = phi i64 [ %.sroa.12.2.i.ph876, %bb.z ], [ %.sroa.12.0.i882, %bb.ab ], [ %.sroa.12.0.i882, %bb.ac ], [ %.sroa.12.3.i, %.outer ] ; 2 uses
+  %.not.i76 = icmp ugt i64 %i.ah, 4
+  br i1 %.not.i76, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.loopexit
   %.sroa.12.0.i882 = phi i64 [ undef, %bb.j ], [ %.sroa.12.2.i.ph.lcssa569, %.loopexit ] ; 3 uses
@@ -4765,9 +4742,9 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
   %.sroa.023.0.i880 = phi i64 [ 0, %bb.j ], [ %.sroa.023.1.i.ph.lcssa591, %.loopexit ] ; 3 uses
   %.sroa.525.0.i879 = phi i64 [ undef, %bb.j ], [ %.sroa.525.2.i.ph.lcssa602, %.loopexit ] ; 3 uses
   %.sroa.0269.0878 = phi i64 [ 0, %bb.j ], [ %spec.select308, %.loopexit ] ; 12 uses
-  %i.ag = icmp eq i64 %.sroa.0269.0878, 4         ; 2 uses
-  %i.ah = add nuw nsw i64 %.sroa.0269.0878, 1
-  %spec.select308 = select i1 %i.ag, i64 4, i64 %i.ah ; 2 uses
+  %i.ag = icmp eq i64 %.sroa.0269.0878, 4
+  %i.ah = add i64 %.sroa.0269.0878, 1             ; 2 uses
+  %spec.select308 = select i1 %i.ag, i64 4, i64 %i.ah
   %i.ai = icmp eq i64 %.sroa.0269.0878, 0         ; 2 uses
   %i.aj = add i64 %.sroa.0269.0878, %.sroa.0.0    ; 6 uses
   %i.ak = icmp ult i64 %i.aj, %.val49
@@ -4775,7 +4752,7 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
   %i.am = getelementptr i8, ptr %i.al, i64 8
   %.fr = freeze i1 %i.ak
   %i.an = sub i64 %i.k, %i.aj
-  br i1 %.fr, label %.lr.ph.preheader, label %.lr.ph.split.a
+  br i1 %.fr, label %.lr.ph.preheader, label %.lr.ph.split
 
 .lr.ph.preheader:                                 ; preds = %bb.k
   %i.ao = call i64 @llvm.usub.sat.i64(i64 %.val49, i64 %i.aj)
@@ -4793,8 +4770,8 @@ bb.l:                                             ; preds = %.loopexit
   %i.ar = icmp eq i64 %.sroa.9.1.i, 0             ; 2 uses
   br i1 %i.aq, label %bb.al, label %bb.am
 
-.split820:                                        ; preds = %.lr.ph.split.split.split.preheader.a, %bb.aa
-  %.us-phi825 = phi i64 [ %.sroa.0271.0660.us813, %bb.aa ], [ 0, %.lr.ph.split.split.split.preheader.a ]
+.split820:                                        ; preds = %.lr.ph.split.split.split.preheader, %.lr.ph.split.a
+  %.us-phi825 = phi i64 [ 1, %.lr.ph.split.a ], [ 0, %.lr.ph.split.split.split.preheader ]
   %i.as = add i64 %.us-phi825, %.sroa.0235.0      ; 2 uses
   %i.at = icmp ult i64 %i.as, %.val51
   br i1 %i.at, label %_RNvXsc_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtBH_12OffsetLookupmEEEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit, label %.split
@@ -4899,9 +4876,8 @@ bb.s:                                             ; preds = %_RNvYINtNtNtCsiqiOk
   %.sroa.023.2.i = phi i64 [ 1, %bb.ak ], [ %.sroa.023.1.i.ph874, %._crit_edge ], [ %.sroa.023.1.i.ph874, %.split678.us ] ; 2 uses
   %.sroa.9.3.i = phi i64 [ %.sroa.9.4.i, %bb.ak ], [ %.sroa.9.2.i.ph875, %._crit_edge ], [ %.sroa.9.2.i.ph875, %.split678.us ] ; 2 uses
   %.sroa.12.3.i = phi i64 [ %.sroa.12.4.i, %bb.ak ], [ %.sroa.12.2.i.ph876, %._crit_edge ], [ %.sroa.12.2.i.ph876, %.split678.us ] ; 2 uses
-  %.not.i78658 = icmp ugt i64 %spec.select309.us, 4
-  %or.cond314659 = select i1 %i.bv, i1 true, i1 %.not.i78658
-  br i1 %or.cond314659, label %.loopexit, label %.lr.ph
+  %.not.i78658 = icmp ugt i64 %.sroa.0271.0660.us, 3
+  br i1 %.not.i78658, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.outer
   %.sroa.12.2.i.ph876 = phi i64 [ %.sroa.12.3.i, %.outer ], [ %.sroa.12.0.i882, %.lr.ph.preheader ] ; 7 uses
@@ -4912,10 +4888,10 @@ bb.s:                                             ; preds = %_RNvYINtNtNtCsiqiOk
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.z, %.lr.ph
-  %.sroa.0271.0660.us = phi i64 [ %.sroa.0271.0.ph872, %.lr.ph ], [ %spec.select309.us, %bb.z ] ; 11 uses
-  %i.bv = icmp eq i64 %.sroa.0271.0660.us, 4      ; 3 uses
+  %.sroa.0271.0660.us = phi i64 [ %.sroa.0271.0.ph872, %.lr.ph ], [ %spec.select309.us, %bb.z ] ; 13 uses
+  %i.bv = icmp eq i64 %.sroa.0271.0660.us, 4
   %i.bw = add nuw nsw i64 %.sroa.0271.0660.us, 1
-  %spec.select309.us = select i1 %i.bv, i64 4, i64 %i.bw ; 4 uses
+  %spec.select309.us = select i1 %i.bv, i64 4, i64 %i.bw ; 2 uses
   %i.bx = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
   br i1 %i.bx, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.u
 
@@ -4981,9 +4957,8 @@ _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtB5_12OffsetLo
   br i1 %.not311.us, label %.split678.us, label %bb.z
 
 bb.z:                                             ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtB5_12OffsetLookupmEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.us, %bb.x, %bb.w, %bb.u
-  %.not.i78.us = icmp ugt i64 %spec.select309.us, 4
-  %or.cond314.us = select i1 %i.bv, i1 true, i1 %.not.i78.us
-  br i1 %or.cond314.us, label %.loopexit, label %bb.t
+  %.not.i78.us = icmp ugt i64 %.sroa.0271.0660.us, 3
+  br i1 %.not.i78.us, label %.loopexit, label %bb.t
 
 .split670.us:                                     ; preds = %_RNvXsc_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtBH_12OffsetLookupmEEEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit.us
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.cg, i64 noundef %i.ci, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @84) #14, !noalias !2219
@@ -5005,46 +4980,56 @@ bb.z:                                             ; preds = %_RNvYINtNtNtCsiqiOk
   %invariant.gep = getelementptr [16 x i8], ptr %.val50, i64 %i.ca
   br label %.lr.ph869
 
-.lr.ph.split.a:                                   ; preds = %bb.k
-  br i1 %i.ai, label %.lr.ph.split.split.us, label %.lr.ph.split.split.a
+.lr.ph.split:                                     ; preds = %bb.k
+  %11 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207 ; 3 uses
+  br i1 %i.ai, label %.lr.ph.split.split.us.preheader, label %.lr.ph.split.split
 
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.a, %bb.ab
-  %.sroa.0271.0660.us813 = phi i64 [ %spec.select309.us814, %bb.ab ], [ 0, %.lr.ph.split.a ] ; 4 uses
-  %11 = icmp eq i64 %.sroa.0271.0660.us813, 4     ; 2 uses
-  %12 = add nuw nsw i64 %.sroa.0271.0660.us813, 1
-  %spec.select309.us814 = select i1 %11, i64 4, i64 %12 ; 2 uses
+.lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split
+  br i1 %11, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.us.1
+
+.lr.ph.split.split.us.1:                          ; preds = %.lr.ph.split.split.us.preheader
+  %12 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
+  br i1 %12, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.a
+
+.lr.ph.split.a:                                   ; preds = %.lr.ph.split.split.us.1
+  br i1 %i.af, label %.split820, label %.lr.ph.split.split.us
+
+.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.a
   %i.cy = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
   br i1 %i.cy, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph.split.split.us
-  %or.cond2.i.us815 = icmp ne i64 %.sroa.0271.0660.us813, 0
-  %or.cond884 = and i1 %or.cond2.i.us815, %i.af
-  br i1 %or.cond884, label %.split820, label %bb.ab
+  %13 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
+  br i1 %13, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %.not.i78.us817 = icmp ugt i64 %spec.select309.us814, 4
-  %or.cond314.us818 = select i1 %11, i1 true, i1 %.not.i78.us817
-  br i1 %or.cond314.us818, label %.loopexit, label %.lr.ph.split.split.us
+  %14 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
+  br i1 %14, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.loopexit
 
-.lr.ph.split.split.a:                             ; preds = %.lr.ph.split.a
-  br i1 %.not.i.fr, label %.lr.ph.split.split.split.preheader.a, label %.lr.ph.split.split.split.us
+.lr.ph.split.split:                               ; preds = %.lr.ph.split
+  br i1 %.not.i.fr, label %.lr.ph.split.split.split.preheader, label %.lr.ph.split.split.split.us.preheader
+
+.lr.ph.split.split.split.us.preheader:            ; preds = %.lr.ph.split.split
+  br i1 %11, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.a
+
+.lr.ph.split.split.split.preheader:               ; preds = %.lr.ph.split.split
+  br i1 %11, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.split820
+
+.lr.ph.split.split.a:                             ; preds = %.lr.ph.split.split.split.us.preheader
+  %15 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
+  br i1 %15, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.split.preheader.a
 
 .lr.ph.split.split.split.preheader.a:             ; preds = %.lr.ph.split.split.a
   %i.cz = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
-  br i1 %i.cz, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.split820
+  br i1 %i.cz, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.split.us
 
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split.a, %bb.ac
-  %.sroa.0271.0660.us854 = phi i64 [ %spec.select309.us855, %bb.ac ], [ 0, %.lr.ph.split.split.a ] ; 2 uses
+.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split.split.preheader.a
   %i.da = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
   br i1 %i.da, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph.split.split.split.us
-  %13 = icmp eq i64 %.sroa.0271.0660.us854, 4     ; 2 uses
-  %14 = add nuw nsw i64 %.sroa.0271.0660.us854, 1
-  %spec.select309.us855 = select i1 %13, i64 4, i64 %14 ; 2 uses
-  %.not.i78.us858 = icmp ugt i64 %spec.select309.us855, 4
-  %or.cond314.us859 = select i1 %13, i1 true, i1 %.not.i78.us858
-  br i1 %or.cond314.us859, label %.loopexit, label %.lr.ph.split.split.split.us
+  %16 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2207
+  br i1 %16, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.loopexit
 
 bb.ad:                                            ; preds = %._crit_edge
   %i.db = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -5130,9 +5115,9 @@ bb.aq:                                            ; preds = %bb.am
   call void @_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7replaceINtB5_7ReplaceINtNtB7_8patience8PatienceINtNtB7_5utils12OffsetLookupmEB1t_INtNtB7_7compact7CompactB1t_B1t_IBQ_NtNtB7_7capture7CaptureEEEENtNtB7_4hook8DiffHook7replaceCskXhPDodhyTq_6mdtest(ptr noalias noundef nonnull align 8 dereferenceable(208) %0, i64 noundef %.sroa.0.0, i64 noundef %.sroa.525.1.i, i64 noundef %.sroa.0235.0, i64 noundef %.sroa.9.1.i), !noalias !2222
   br label %bb.an
 
-_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit: ; preds = %.lr.ph.split.split.split.us, %.lr.ph.split.split.us, %bb.t, %bb.m, %.lr.ph.split.split.split.preheader.a, %bb.f, %bb.i, %bb.l, %bb.an
-  %.sroa.0235.2 = phi i64 [ %.sroa.0235.0, %bb.f ], [ %.sroa.0235.0, %bb.i ], [ %.sroa.0235.0, %bb.l ], [ %i.dq, %bb.an ], [ %.sroa.0235.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0235.0, %bb.m ], [ %.sroa.0235.0, %bb.t ], [ %.sroa.0235.0, %.lr.ph.split.split.us ], [ %.sroa.0235.0, %.lr.ph.split.split.split.us ] ; 2 uses
-  %.sroa.0.2 = phi i64 [ %.sroa.0.0, %bb.f ], [ %.sroa.0.0, %bb.i ], [ %.sroa.0.0, %bb.l ], [ %i.dp, %bb.an ], [ %.sroa.0.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0.0, %bb.m ], [ %.sroa.0.0, %bb.t ], [ %.sroa.0.0, %.lr.ph.split.split.us ], [ %.sroa.0.0, %.lr.ph.split.split.split.us ] ; 2 uses
+_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit: ; preds = %.lr.ph.split.split.split.us.preheader, %.lr.ph.split.split.a, %.lr.ph.split.split.split.preheader.a, %.lr.ph.split.split.split.us, %bb.ac, %.lr.ph.split.split.us.preheader, %.lr.ph.split.split.us.1, %.lr.ph.split.split.us, %bb.aa, %bb.ab, %bb.t, %bb.m, %.lr.ph.split.split.split.preheader, %bb.f, %bb.i, %bb.l, %bb.an
+  %.sroa.0235.2 = phi i64 [ %.sroa.0235.0, %bb.f ], [ %.sroa.0235.0, %bb.i ], [ %.sroa.0235.0, %bb.l ], [ %i.dq, %bb.an ], [ %.sroa.0235.0, %.lr.ph.split.split.split.preheader ], [ %.sroa.0235.0, %bb.m ], [ %.sroa.0235.0, %bb.t ], [ %.sroa.0235.0, %bb.ab ], [ %.sroa.0235.0, %bb.aa ], [ %.sroa.0235.0, %.lr.ph.split.split.us ], [ %.sroa.0235.0, %.lr.ph.split.split.us.1 ], [ %.sroa.0235.0, %.lr.ph.split.split.us.preheader ], [ %.sroa.0235.0, %bb.ac ], [ %.sroa.0235.0, %.lr.ph.split.split.split.us ], [ %.sroa.0235.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0235.0, %.lr.ph.split.split.a ], [ %.sroa.0235.0, %.lr.ph.split.split.split.us.preheader ] ; 2 uses
+  %.sroa.0.2 = phi i64 [ %.sroa.0.0, %bb.f ], [ %.sroa.0.0, %bb.i ], [ %.sroa.0.0, %bb.l ], [ %i.dp, %bb.an ], [ %.sroa.0.0, %.lr.ph.split.split.split.preheader ], [ %.sroa.0.0, %bb.m ], [ %.sroa.0.0, %bb.t ], [ %.sroa.0.0, %bb.ab ], [ %.sroa.0.0, %bb.aa ], [ %.sroa.0.0, %.lr.ph.split.split.us ], [ %.sroa.0.0, %.lr.ph.split.split.us.1 ], [ %.sroa.0.0, %.lr.ph.split.split.us.preheader ], [ %.sroa.0.0, %bb.ac ], [ %.sroa.0.0, %.lr.ph.split.split.split.us ], [ %.sroa.0.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0.0, %.lr.ph.split.split.a ], [ %.sroa.0.0, %.lr.ph.split.split.split.us.preheader ] ; 2 uses
   %i.dr = icmp eq i64 %.sroa.0.2, %.sroa.0.0
   %i.ds = icmp eq i64 %.sroa.0235.2, %.sroa.0235.0
   %or.cond = select i1 %i.dr, i1 %i.ds, i1 false
@@ -5535,8 +5520,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.b
 
 bb.d:                                             ; preds = %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, %bb.b
-  %.sroa.0242.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0242.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 41 uses
-  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 40 uses
+  %.sroa.0242.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0242.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 49 uses
+  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit ] ; 48 uses
   %i.w = icmp ult i64 %.sroa.0.0, %i.k            ; 2 uses
   %i.x = icmp ult i64 %.sroa.0242.0, %i.l         ; 3 uses
   %or.cond316 = select i1 %i.w, i1 %i.x, i1 false
@@ -5574,14 +5559,13 @@ bb.j:                                             ; preds = %bb.i
   %i.af = icmp ule i64 %i.y, %i.z                 ; 2 uses
   br label %bb.k
 
-.loopexit:                                        ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a, %.outer, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us
-  %.sroa.525.2.i.ph.lcssa521 = phi i64 [ %.sroa.525.3.i, %.outer ], [ %.sroa.525.0.i729, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.525.2.i.ph723, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.525.0.i729, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ] ; 2 uses
-  %.sroa.023.1.i.ph.lcssa514 = phi i64 [ %.sroa.023.2.i, %.outer ], [ %.sroa.023.0.i730, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.023.1.i.ph724, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.023.0.i730, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ] ; 2 uses
-  %.sroa.9.2.i.ph.lcssa507 = phi i64 [ %.sroa.9.3.i, %.outer ], [ %.sroa.9.0.i731, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.9.2.i.ph725, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.9.0.i731, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ] ; 2 uses
-  %.sroa.12.2.i.ph.lcssa500 = phi i64 [ %.sroa.12.3.i, %.outer ], [ %.sroa.12.0.i732, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.12.2.i.ph726, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.12.0.i732, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ] ; 2 uses
-  %.not.i76 = icmp ugt i64 %spec.select317, 4
-  %or.cond322 = select i1 %i.ag, i1 true, i1 %.not.i76
-  br i1 %or.cond322, label %bb.l, label %bb.k
+.loopexit:                                        ; preds = %.outer, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a
+  %.sroa.525.2.i.ph.lcssa521 = phi i64 [ %.sroa.525.2.i.ph723, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.525.0.i729, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.525.0.i729, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ %.sroa.525.3.i, %.outer ] ; 2 uses
+  %.sroa.023.1.i.ph.lcssa514 = phi i64 [ %.sroa.023.1.i.ph724, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.023.0.i730, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.023.0.i730, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ %.sroa.023.2.i, %.outer ] ; 2 uses
+  %.sroa.9.2.i.ph.lcssa507 = phi i64 [ %.sroa.9.2.i.ph725, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.9.0.i731, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.9.0.i731, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ %.sroa.9.3.i, %.outer ] ; 2 uses
+  %.sroa.12.2.i.ph.lcssa500 = phi i64 [ %.sroa.12.2.i.ph726, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ], [ %.sroa.12.0.i732, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.12.0.i732, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ %.sroa.12.3.i, %.outer ] ; 2 uses
+  %.not.i76 = icmp ugt i64 %i.ah, 4
+  br i1 %.not.i76, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.loopexit
   %.sroa.12.0.i732 = phi i64 [ undef, %bb.j ], [ %.sroa.12.2.i.ph.lcssa500, %.loopexit ] ; 3 uses
@@ -5589,9 +5573,9 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
   %.sroa.023.0.i730 = phi i64 [ 0, %bb.j ], [ %.sroa.023.1.i.ph.lcssa514, %.loopexit ] ; 3 uses
   %.sroa.525.0.i729 = phi i64 [ undef, %bb.j ], [ %.sroa.525.2.i.ph.lcssa521, %.loopexit ] ; 3 uses
   %.sroa.0276.0728 = phi i64 [ 0, %bb.j ], [ %spec.select317, %.loopexit ] ; 12 uses
-  %i.ag = icmp eq i64 %.sroa.0276.0728, 4         ; 2 uses
-  %i.ah = add nuw nsw i64 %.sroa.0276.0728, 1
-  %spec.select317 = select i1 %i.ag, i64 4, i64 %i.ah ; 2 uses
+  %i.ag = icmp eq i64 %.sroa.0276.0728, 4
+  %i.ah = add i64 %.sroa.0276.0728, 1             ; 2 uses
+  %spec.select317 = select i1 %i.ag, i64 4, i64 %i.ah
   %i.ai = icmp eq i64 %.sroa.0276.0728, 0         ; 2 uses
   %i.aj = add i64 %.sroa.0276.0728, %.sroa.0.0    ; 6 uses
   %i.ak = icmp ult i64 %i.aj, %.val49
@@ -5599,7 +5583,7 @@ bb.k:                                             ; preds = %bb.j, %.loopexit
   %i.am = getelementptr i8, ptr %i.al, i64 8
   %.fr = freeze i1 %i.ak
   %i.an = sub i64 %i.k, %i.aj
-  br i1 %.fr, label %.lr.ph.preheader, label %.lr.ph.split.a
+  br i1 %.fr, label %.lr.ph.preheader, label %.lr.ph.split
 
 .lr.ph.preheader:                                 ; preds = %bb.k
   %i.ao = call i64 @llvm.usub.sat.i64(i64 %.val49, i64 %i.aj)
@@ -5617,8 +5601,8 @@ bb.l:                                             ; preds = %.loopexit
   %i.ar = icmp eq i64 %.sroa.9.1.i, 0             ; 2 uses
   br i1 %i.aq, label %bb.ag, label %bb.ah
 
-.split672:                                        ; preds = %.lr.ph.split.split.split.preheader.a, %bb.x
-  %.us-phi677 = phi i64 [ %.sroa.0278.0559.us664, %bb.x ], [ 0, %.lr.ph.split.split.split.preheader.a ]
+.split672:                                        ; preds = %.lr.ph.split.split.split.preheader, %.lr.ph.split.a
+  %.us-phi677 = phi i64 [ 1, %.lr.ph.split.a ], [ 0, %.lr.ph.split.split.split.preheader ]
   %i.as = add i64 %.us-phi677, %.sroa.0242.0      ; 2 uses
   %i.at = icmp ult i64 %i.as, %.val51
   br i1 %i.at, label %_RNvXsc_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtBL_4text12TextDiffSideeEEEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit, label %.split
@@ -5699,9 +5683,8 @@ _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12T
   %.sroa.023.2.i = phi i64 [ 1, %bb.af ], [ %.sroa.023.1.i.ph724, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit88.thread ], [ %.sroa.023.1.i.ph724, %.split569.us ] ; 2 uses
   %.sroa.9.3.i = phi i64 [ %.sroa.9.4.i, %bb.af ], [ %.sroa.9.2.i.ph725, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit88.thread ], [ %.sroa.9.2.i.ph725, %.split569.us ] ; 2 uses
   %.sroa.12.3.i = phi i64 [ %.sroa.12.4.i, %bb.af ], [ %.sroa.12.2.i.ph726, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit88.thread ], [ %.sroa.12.2.i.ph726, %.split569.us ] ; 2 uses
-  %.not.i78557 = icmp ugt i64 %spec.select318.us, 4
-  %or.cond323558 = select i1 %i.bm, i1 true, i1 %.not.i78557
-  br i1 %or.cond323558, label %.loopexit, label %.lr.ph
+  %.not.i78557 = icmp ugt i64 %.sroa.0278.0559.us, 3
+  br i1 %.not.i78557, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.outer
   %.sroa.12.2.i.ph726 = phi i64 [ %.sroa.12.3.i, %.outer ], [ %.sroa.12.0.i732, %.lr.ph.preheader ] ; 7 uses
@@ -5712,10 +5695,10 @@ _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12T
   br label %bb.r
 
 bb.r:                                             ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us, %.lr.ph
-  %.sroa.0278.0559.us = phi i64 [ %.sroa.0278.0.ph722, %.lr.ph ], [ %spec.select318.us, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ] ; 11 uses
-  %i.bm = icmp eq i64 %.sroa.0278.0559.us, 4      ; 3 uses
+  %.sroa.0278.0559.us = phi i64 [ %.sroa.0278.0.ph722, %.lr.ph ], [ %spec.select318.us, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us ] ; 13 uses
+  %i.bm = icmp eq i64 %.sroa.0278.0559.us, 4
   %i.bn = add nuw nsw i64 %.sroa.0278.0559.us, 1
-  %spec.select318.us = select i1 %i.bm, i64 4, i64 %i.bn ; 4 uses
+  %spec.select318.us = select i1 %i.bm, i64 4, i64 %i.bn ; 2 uses
   %i.bo = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
   br i1 %i.bo, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.s
 
@@ -5764,9 +5747,8 @@ _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12T
   br i1 %.not320.us, label %.split569.us, label %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us
 
 _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us: ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.us, %_RNvXsc_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtBL_4text12TextDiffSideeEEEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCskXhPDodhyTq_6mdtest.exit.us, %bb.v, %bb.u, %bb.s
-  %.not.i78.us = icmp ugt i64 %spec.select318.us, 4
-  %or.cond323.us = select i1 %i.bm, i1 true, i1 %.not.i78.us
-  br i1 %or.cond323.us, label %.loopexit, label %bb.r
+  %.not.i78.us = icmp ugt i64 %.sroa.0278.0559.us, 3
+  br i1 %.not.i78.us, label %.loopexit, label %bb.r
 
 .split569.us:                                     ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.us
   %i.cc = sub i64 %i.l, %i.br
@@ -5778,46 +5760,56 @@ _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12T
   %i.cd = call i64 @llvm.usub.sat.i64(i64 %.val51, i64 %i.br)
   br label %.lr.ph718
 
-.lr.ph.split.a:                                   ; preds = %bb.k
-  br i1 %i.ai, label %.lr.ph.split.split.us, label %.lr.ph.split.split.a
+.lr.ph.split:                                     ; preds = %bb.k
+  %11 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418 ; 3 uses
+  br i1 %i.ai, label %.lr.ph.split.split.us.preheader, label %.lr.ph.split.split
 
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.a, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a
-  %.sroa.0278.0559.us664 = phi i64 [ %spec.select318.us665, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ 0, %.lr.ph.split.a ] ; 4 uses
-  %11 = icmp eq i64 %.sroa.0278.0559.us664, 4     ; 2 uses
-  %12 = add nuw nsw i64 %.sroa.0278.0559.us664, 1
-  %spec.select318.us665 = select i1 %11, i64 4, i64 %12 ; 2 uses
+.lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split
+  br i1 %11, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668
+
+_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668: ; preds = %.lr.ph.split.split.us.preheader
+  %12 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
+  br i1 %12, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.a
+
+.lr.ph.split.a:                                   ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668
+  br i1 %i.af, label %.split672, label %.lr.ph.split.split.us
+
+.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.a
   %i.ce = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
   br i1 %i.ce, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph.split.split.us
-  %or.cond2.i.us666 = icmp ne i64 %.sroa.0278.0559.us664, 0
-  %or.cond734 = and i1 %or.cond2.i.us666, %i.af
-  br i1 %or.cond734, label %.split672, label %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a
+  %13 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
+  br i1 %13, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a
 
 _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a: ; preds = %bb.x
-  %.not.i78.us669 = icmp ugt i64 %spec.select318.us665, 4
-  %or.cond323.us670 = select i1 %11, i1 true, i1 %.not.i78.us669
-  br i1 %or.cond323.us670, label %.loopexit, label %.lr.ph.split.split.us
+  %14 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
+  br i1 %14, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.loopexit
 
-.lr.ph.split.split.a:                             ; preds = %.lr.ph.split.a
-  br i1 %.not.i.fr, label %.lr.ph.split.split.split.preheader.a, label %.lr.ph.split.split.split.us
+.lr.ph.split.split:                               ; preds = %.lr.ph.split
+  br i1 %.not.i.fr, label %.lr.ph.split.split.split.preheader, label %.lr.ph.split.split.split.us.preheader
+
+.lr.ph.split.split.split.us.preheader:            ; preds = %.lr.ph.split.split
+  br i1 %11, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.a
+
+.lr.ph.split.split.split.preheader:               ; preds = %.lr.ph.split.split
+  br i1 %11, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.split672
+
+.lr.ph.split.split.a:                             ; preds = %.lr.ph.split.split.split.us.preheader
+  %15 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
+  br i1 %15, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.split.preheader.a
 
 .lr.ph.split.split.split.preheader.a:             ; preds = %.lr.ph.split.split.a
   %i.cf = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
-  br i1 %i.cf, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.split672
+  br i1 %i.cf, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.lr.ph.split.split.split.us
 
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split.a, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706
-  %.sroa.0278.0559.us702 = phi i64 [ %spec.select318.us703, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ 0, %.lr.ph.split.split.a ] ; 2 uses
+.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split.split.preheader.a
   %i.cg = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
   br i1 %i.cg, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706
 
 _RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706: ; preds = %.lr.ph.split.split.split.us
-  %13 = icmp eq i64 %.sroa.0278.0559.us702, 4     ; 2 uses
-  %14 = add nuw nsw i64 %.sroa.0278.0559.us702, 1
-  %spec.select318.us703 = select i1 %13, i64 4, i64 %14 ; 2 uses
-  %.not.i78.us707 = icmp ugt i64 %spec.select318.us703, 4
-  %or.cond323.us708 = select i1 %13, i1 true, i1 %.not.i78.us707
-  br i1 %or.cond323.us708, label %.loopexit, label %.lr.ph.split.split.split.us
+  %16 = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2418
+  br i1 %16, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit, label %.loopexit
 
 bb.y:                                             ; preds = %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit88.thread
   %i.ch = icmp ugt i64 %.sroa.01.0.i.lcssa, 767
@@ -5903,9 +5895,9 @@ bb.al:                                            ; preds = %bb.ah
   call void @_RNvXs1_NtNtCsiqiOkcJdymw_7similar10algorithms7replaceINtB5_7ReplaceINtNtB7_8patience8PatienceINtNtB9_4text12TextDiffSideeEB1t_INtNtB7_7compact7CompactB1t_B1t_IBQ_NtNtB7_7capture7CaptureEEEENtNtB7_4hook8DiffHook7replaceCskXhPDodhyTq_6mdtest(ptr noalias noundef nonnull align 8 dereferenceable(208) %0, i64 noundef %.sroa.0.0, i64 noundef %.sroa.525.1.i, i64 noundef %.sroa.0242.0, i64 noundef %.sroa.9.1.i), !noalias !2427
   br label %bb.ai
 
-_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit: ; preds = %.lr.ph.split.split.split.us, %.lr.ph.split.split.us, %bb.r, %bb.m, %.lr.ph.split.split.split.preheader.a, %bb.f, %bb.i, %bb.l, %bb.ai
-  %.sroa.0242.2 = phi i64 [ %.sroa.0242.0, %bb.f ], [ %.sroa.0242.0, %bb.i ], [ %.sroa.0242.0, %bb.l ], [ %i.cw, %bb.ai ], [ %.sroa.0242.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0242.0, %bb.m ], [ %.sroa.0242.0, %bb.r ], [ %.sroa.0242.0, %.lr.ph.split.split.us ], [ %.sroa.0242.0, %.lr.ph.split.split.split.us ] ; 2 uses
-  %.sroa.0.2 = phi i64 [ %.sroa.0.0, %bb.f ], [ %.sroa.0.0, %bb.i ], [ %.sroa.0.0, %bb.l ], [ %i.cv, %bb.ai ], [ %.sroa.0.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0.0, %bb.m ], [ %.sroa.0.0, %bb.r ], [ %.sroa.0.0, %.lr.ph.split.split.us ], [ %.sroa.0.0, %.lr.ph.split.split.split.us ] ; 2 uses
+_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECskXhPDodhyTq_6mdtest.exit: ; preds = %.lr.ph.split.split.split.us.preheader, %.lr.ph.split.split.a, %.lr.ph.split.split.split.preheader.a, %.lr.ph.split.split.split.us, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706, %.lr.ph.split.split.us.preheader, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668, %.lr.ph.split.split.us, %bb.x, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a, %bb.r, %bb.m, %.lr.ph.split.split.split.preheader, %bb.f, %bb.i, %bb.l, %bb.ai
+  %.sroa.0242.2 = phi i64 [ %.sroa.0242.0, %bb.f ], [ %.sroa.0242.0, %bb.i ], [ %.sroa.0242.0, %bb.l ], [ %i.cw, %bb.ai ], [ %.sroa.0242.0, %.lr.ph.split.split.split.preheader ], [ %.sroa.0242.0, %bb.m ], [ %.sroa.0242.0, %bb.r ], [ %.sroa.0242.0, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.0242.0, %bb.x ], [ %.sroa.0242.0, %.lr.ph.split.split.us ], [ %.sroa.0242.0, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668 ], [ %.sroa.0242.0, %.lr.ph.split.split.us.preheader ], [ %.sroa.0242.0, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ %.sroa.0242.0, %.lr.ph.split.split.split.us ], [ %.sroa.0242.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0242.0, %.lr.ph.split.split.a ], [ %.sroa.0242.0, %.lr.ph.split.split.split.us.preheader ] ; 2 uses
+  %.sroa.0.2 = phi i64 [ %.sroa.0.0, %bb.f ], [ %.sroa.0.0, %bb.i ], [ %.sroa.0.0, %bb.l ], [ %i.cv, %bb.ai ], [ %.sroa.0.0, %.lr.ph.split.split.split.preheader ], [ %.sroa.0.0, %bb.m ], [ %.sroa.0.0, %bb.r ], [ %.sroa.0.0, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668.a ], [ %.sroa.0.0, %bb.x ], [ %.sroa.0.0, %.lr.ph.split.split.us ], [ %.sroa.0.0, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us668 ], [ %.sroa.0.0, %.lr.ph.split.split.us.preheader ], [ %.sroa.0.0, %_RNvYINtNtNtCsiqiOkcJdymw_7similar10algorithms5utils10UniqueItemINtNtB9_4text12TextDiffSideeEENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neCskXhPDodhyTq_6mdtest.exit.thread.us706 ], [ %.sroa.0.0, %.lr.ph.split.split.split.us ], [ %.sroa.0.0, %.lr.ph.split.split.split.preheader.a ], [ %.sroa.0.0, %.lr.ph.split.split.a ], [ %.sroa.0.0, %.lr.ph.split.split.split.us.preheader ] ; 2 uses
   %i.cx = icmp eq i64 %.sroa.0.2, %.sroa.0.0
   %i.cy = icmp eq i64 %.sroa.0242.2, %.sroa.0242.0
   %or.cond = select i1 %i.cx, i1 %i.cy, i1 false

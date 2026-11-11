@@ -206,7 +206,7 @@ bb.i:                                             ; preds = %bb.g
   %i.db = trunc nuw i8 %i.da to i1                ; 4 uses
   %i.dc = lshr i64 %i.cy, 1
   %..i.i = call i64 @llvm.umax.i64(i64 %i.dc, i64 4)
-  %..i137.i = call i64 @llvm.umin.i64(i64 %..i.i, i64 %i.cy) ; 3 uses
+  %..i137.i = call i64 @llvm.umin.i64(i64 %..i.i, i64 %i.cy) ; 4 uses
   %.fr.i = freeze { i64, i1 } { i64 poison, i1 false }
   %i.dd = extractvalue { i64, i1 } %.fr.i, 1      ; 2 uses
   %.sroa.6.0..sroa_idx.i54 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
@@ -405,14 +405,14 @@ bb.r:                                             ; preds = %.lr.ph.i.i
   br i1 %or.cond.i, label %.thread, label %_RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i
 
 _RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i: ; preds = %.loopexit278, %.loopexit278.thread
-  %spec.select1027 = phi i64 [ %spec.select1026, %.loopexit278.thread ], [ %spec.select, %.loopexit278 ] ; 5 uses
+  %spec.select1027 = phi i64 [ %spec.select1026, %.loopexit278.thread ], [ %spec.select, %.loopexit278 ] ; 4 uses
   %i.ez = urem i64 %i.cf, %.sroa.4.0596
   %.not.i.i52 = icmp ne i64 %i.ez, 0
   %i.fa = udiv i64 %i.cf, %.sroa.4.0596
   %..i138.i = zext i1 %.not.i.i52 to i64
   %i.fb = add nuw nsw i64 %i.fa, %..i138.i
   %.sroa.0.0.i207.fr794.i = freeze i64 %i.fb      ; 6 uses
-  %i.fc = icmp ule i64 %.sroa.0.0.i207.fr794.i, %spec.select1027
+  %i.fc = icmp samesign ule i64 %.sroa.0.0.i207.fr794.i, %..i137.i
   %or.cond4.not.i = select i1 %i.db, i1 true, i1 %i.fc
   br i1 %or.cond4.not.i, label %.outer.split.i.split.us.preheader.sink.split, label %bb.s
 
@@ -754,7 +754,7 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   %.sroa.0.0.ph.i89294.i.i = phi i64 [ %i.jf, %.outer.i84.i.i ], [ 0, %bb.ar ] ; 2 uses
   %.sroa.013.0.ph.i88293.i.i = phi i64 [ %i.jg, %.outer.i84.i.i ], [ %i.in, %bb.ar ] ; 6 uses
   %.sroa.036.0.ph.i86292.i.i = phi i64 [ %spec.select49.lcssa.i107.i.i, %.outer.i84.i.i ], [ %i.in, %bb.ar ]
-  %.sroa.7.0.ph.i85291.i.i = phi i32 [ %spec.select.lcssa.i106.i.i, %.outer.i84.i.i ], [ 32, %bb.ar ] ; 3 uses
+  %.sroa.7.0.ph.i85291.i.i = phi i32 [ %spec.select.mux.i111.i.i, %.outer.i84.i.i ], [ 32, %bb.ar ] ; 3 uses
   %i.iq = invoke { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %.sroa.7.0.ph.i85291.i.i)
           to label %.noexc115.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexi1804, !noalias !2766 ; 2 uses
 
@@ -797,8 +797,9 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   br i1 %i.iz, label %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i113.i.i, label %bb.as
 
 bb.as:                                            ; preds = %.loopexit.i104.i.i
-  %i.ja = icmp eq i64 %i.iy, %.sroa.013.0.ph.i88293.i.i ; 2 uses
+  %i.ja = icmp eq i64 %i.iy, %.sroa.013.0.ph.i88293.i.i ; 3 uses
   %brmerge.not.i110.i.i = select i1 %i.ja, i1 %.not8.i.lcssa.i105.i.i, i1 false
+  %spec.select.mux.i111.i.i = select i1 %i.ja, i32 -1, i32 %spec.select.lcssa.i106.i.i
   br i1 %brmerge.not.i110.i.i, label %bb.at, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i112.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i112.i.i: ; preds = %bb.as
@@ -896,7 +897,7 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   %.sroa.0.0.ph.i48300.i.i = phi i64 [ %i.ki, %.outer.i43.i.i ], [ 0, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i51.preheader.i.i ] ; 2 uses
   %.sroa.013.0.ph.i47299.i.i = phi i64 [ %i.kj, %.outer.i43.i.i ], [ %i.jm, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i51.preheader.i.i ] ; 6 uses
   %.sroa.036.0.ph.i45298.i.i = phi i64 [ %spec.select49.lcssa.i66.i.i, %.outer.i43.i.i ], [ %i.js, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i51.preheader.i.i ]
-  %.sroa.7.0.ph.i44297.i.i = phi i32 [ %spec.select.lcssa.i65.i.i, %.outer.i43.i.i ], [ 32, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i51.preheader.i.i ] ; 3 uses
+  %.sroa.7.0.ph.i44297.i.i = phi i32 [ %spec.select.mux.i70.i.i, %.outer.i43.i.i ], [ 32, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.peel.i51.preheader.i.i ] ; 3 uses
   %i.jt = invoke { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %.sroa.7.0.ph.i44297.i.i)
           to label %.noexc74.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexi1804, !noalias !2766 ; 2 uses
 
@@ -939,8 +940,9 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   br i1 %i.kc, label %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i72.i.i, label %bb.az
 
 bb.az:                                            ; preds = %.loopexit.i63.i.i
-  %i.kd = icmp eq i64 %i.kb, %.sroa.013.0.ph.i47299.i.i ; 2 uses
+  %i.kd = icmp eq i64 %i.kb, %.sroa.013.0.ph.i47299.i.i ; 3 uses
   %brmerge.not.i69.i.i = select i1 %i.kd, i1 %.not8.i.lcssa.i64.i.i, i1 false
+  %spec.select.mux.i70.i.i = select i1 %i.kd, i32 -1, i32 %spec.select.lcssa.i65.i.i
   br i1 %brmerge.not.i69.i.i, label %bb.ba, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i71.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i71.i.i: ; preds = %bb.az
@@ -1060,7 +1062,7 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   %.sroa.0.0.ph.i306.i.i = phi i64 [ %i.lw, %.outer.i.i.i ], [ 0, %bb.bj ] ; 2 uses
   %.sroa.013.0.ph.i305.i.i = phi i64 [ %i.lx, %.outer.i.i.i ], [ %i.lg, %bb.bj ] ; 6 uses
   %.sroa.036.0.ph.i304.i.i = phi i64 [ %spec.select49.lcssa.i.i.i, %.outer.i.i.i ], [ %i.lg, %bb.bj ]
-  %.sroa.7.0.ph.i303.i.i = phi i32 [ %spec.select.lcssa.i.i.i, %.outer.i.i.i ], [ 32, %bb.bj ] ; 3 uses
+  %.sroa.7.0.ph.i303.i.i = phi i32 [ %spec.select.mux.i.i.i, %.outer.i.i.i ], [ 32, %bb.bj ] ; 3 uses
   %i.lh = invoke { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %.sroa.7.0.ph.i303.i.i)
           to label %.noexc34.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexi1804, !noalias !2766 ; 2 uses
 
@@ -1103,8 +1105,9 @@ _RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_
   br i1 %i.lq, label %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i.i.i, label %bb.bk
 
 bb.bk:                                            ; preds = %.loopexit.i32.i.i
-  %i.lr = icmp eq i64 %i.lp, %.sroa.013.0.ph.i305.i.i ; 2 uses
+  %i.lr = icmp eq i64 %i.lp, %.sroa.013.0.ph.i305.i.i ; 3 uses
   %brmerge.not.i.i.i = select i1 %i.lr, i1 %.not8.i.lcssa.i.i.i, i1 false
+  %spec.select.mux.i.i.i = select i1 %i.lr, i32 -1, i32 %spec.select.lcssa.i.i.i
   br i1 %brmerge.not.i.i.i, label %bb.bl, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableINtNtNtB1l_7sources8repeat_n7RepeatNcEE4peek0ECs8frGy5WneL6_4fish.exit.i.i.i: ; preds = %bb.bk

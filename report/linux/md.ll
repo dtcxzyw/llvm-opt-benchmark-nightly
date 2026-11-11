@@ -205,11 +205,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.v = call zeroext i1 @kthread_should_park() #29 ; 2 uses
-  %i.w = icmp eq i64 %.066, 0
+  %i.w = icmp eq i64 %.066, 0                     ; 2 uses
   %or.cond12.not = select i1 %i.v, i1 %i.w, i1 false
-  %spec.store.select20 = select i1 %or.cond12.not, i64 1, i64 %.066 ; 2 uses
-  %.not70 = icmp eq i64 %spec.store.select20, 0
-  %spec.select74 = select i1 %i.v, i1 true, i1 %.not70
+  %spec.store.select20 = select i1 %or.cond12.not, i64 1, i64 %.066
+  %spec.select74 = select i1 %i.v, i1 true, i1 %i.w
   br i1 %spec.select74, label %.thread82, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -229,11 +228,10 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ab = call zeroext i1 @kthread_should_park() #29 ; 2 uses
-  %i.ac = icmp eq i64 %i.x, 0
+  %i.ac = icmp eq i64 %i.x, 0                     ; 2 uses
   %or.cond19.not = select i1 %i.ab, i1 %i.ac, i1 false
-  %spec.store.select21 = select i1 %or.cond19.not, i64 1, i64 %i.x ; 2 uses
-  %.not73 = icmp eq i64 %spec.store.select21, 0
-  %spec.select75 = select i1 %i.ab, i1 true, i1 %.not73
+  %spec.store.select21 = select i1 %or.cond19.not, i64 1, i64 %i.x
+  %spec.select75 = select i1 %i.ab, i1 true, i1 %i.ac
   br i1 %spec.select75, label %.thread82, label %bb.f
 
 .thread82:                                        ; preds = %bb.j, %bb.k, %bb.l, %bb.f, %bb.g, %bb.h

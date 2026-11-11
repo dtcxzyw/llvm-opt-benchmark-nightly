@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %bb.au
   %i.ht = load i32, ptr %i.c, align 4             ; 2 uses
   %i.hu = icmp eq i32 %i.ht, 0                    ; 3 uses
   %or.cond19 = select i1 %i.hs, i1 %i.hu, i1 false ; 2 uses
-  %i.hv = icmp eq i32 %.2167, 0
+  %i.hv = icmp eq i32 %.2167, 0                   ; 2 uses
   %or.cond21 = select i1 %or.cond19, i1 %i.hv, i1 false
   %i.hw = load i8, ptr %i.p, align 1
   %i.hx = sext i8 %i.hw to i32
@@ -229,7 +229,7 @@ bb.ay:                                            ; preds = %bb.av
 
 bb.az:                                            ; preds = %bb.ax, %bb.ay
   %.0137 = phi i32 [ %i.ia, %bb.ax ], [ %i.id, %bb.ay ]
-  %i.ie = icmp ne i32 %.3168, 0                   ; 3 uses
+  %i.ie = icmp ne i32 %.3168, 0                   ; 2 uses
   %or.cond25 = select i1 %or.cond19, i1 %i.ie, i1 false
   br i1 %or.cond25, label %bb.ba, label %bb.bd
 
@@ -251,8 +251,9 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.az
   %i.ij = select i1 %i.hs, i1 true, i1 %i.hu
-  %i.ik = select i1 %i.ij, i1 true, i1 %i.ie
-  br i1 %i.ik, label %bb.bh, label %bb.be
+  %or.cond27 = xor i1 %i.ij, true
+  %i.ik = select i1 %or.cond27, i1 %i.hv, i1 false
+  br i1 %i.ik, label %bb.be, label %bb.bh
 
 bb.be:                                            ; preds = %bb.bd
   %i.il = call noundef ptr @_ZN6icu_787UMemorynwEm(i64 noundef 40) #18 ; 4 uses

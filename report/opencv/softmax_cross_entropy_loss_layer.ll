@@ -204,9 +204,9 @@ bb.dy:                                            ; preds = %bb.dw, %bb.dx
   %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 164
   %i.kc = load float, ptr %i.kb, align 4, !tbaa !66 ; 2 uses
   %i.kd = fcmp olt float %i.kc, 1.000000e+00
-  %i.ke = select i1 %i.kd, float %i.kc, float 1.000000e+00 ; 2 uses
+  %i.ke = select i1 %i.kd, float %i.kc, float 1.000000e+00 ; 4 uses
   %i.kf = fcmp ule float %i.ke, 0.000000e+00      ; 2 uses
-  %.sroa.speculated352 = select i1 %i.kf, float 0.000000e+00, float %i.ke ; 6 uses
+  %.sroa.speculated352 = select i1 %i.kf, float 0.000000e+00, float %i.ke ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #24
   %i.kg = load i32, ptr %i.b, align 4, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #24
@@ -490,13 +490,13 @@ bb.fi:                                            ; preds = %bb.fh
   %i.mx = load i8, ptr %i.mw, align 8, !tbaa !50, !range !90, !noundef !91
   %i.my = trunc nuw i8 %i.mx to i1
   %or.cond.not = select i1 %i.my, i1 true, i1 %i.kf ; 2 uses
-  %i.mz = fsub float 1.000000e+00, %.sroa.speculated352
+  %i.mz = fsub float 1.000000e+00, %i.ke
   %i.na = select i1 %or.cond.not, float 1.000000e+00, float %i.mz
   store float %i.na, ptr %i.k, align 4, !tbaa !66
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #24
   %i.nb = load i32, ptr %i.a, align 4             ; 4 uses
   %i.nc = sitofp i32 %i.nb to float
-  %i.nd = fdiv float %.sroa.speculated352, %i.nc
+  %i.nd = fdiv float %i.ke, %i.nc
   %i.ne = select i1 %or.cond.not, float 0.000000e+00, float %i.nd
   store float %i.ne, ptr %i.l, align 4, !tbaa !66
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #24

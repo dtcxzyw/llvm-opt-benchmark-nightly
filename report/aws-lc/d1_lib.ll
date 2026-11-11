@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.0.0.fr.i = freeze i64 %.sroa.0.0.i
   %.sroa.10.0.v.i = select i1 %.not21.i, i32 %i.u, i32 %i.s
   %.sroa.10.0.i = sub i32 %.sroa.10.0.v.i, %i.r
-  %2 = icmp eq i64 %.sroa.0.0.fr.i, 0
-  %3 = icmp ult i32 %.sroa.10.0.i, 15000
-  %.not10 = select i1 %2, i1 %3, i1 false
+  %2 = icmp ult i32 %.sroa.10.0.i, 15000
+  %3 = icmp eq i64 %.sroa.0.0.fr.i, 0
+  %.not10 = select i1 %3, i1 %2, i1 false
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %.thread.i
@@ -445,9 +445,9 @@ _ZN4bssl22dtls1_is_timer_expiredEP6ssl_st.exit:   ; preds = %bb.g
   %.sroa.0.0.fr.i.i = freeze i64 %.sroa.0.0.i.i
   %.sroa.10.0.v.i.i = select i1 %.not21.i.i, i32 %i.v, i32 %i.t
   %.sroa.10.0.i.i = sub i32 %.sroa.10.0.v.i.i, %i.s
-  %2 = icmp eq i64 %.sroa.0.0.fr.i.i, 0
-  %3 = icmp ult i32 %.sroa.10.0.i.i, 15000
-  %.not10.i = select i1 %2, i1 %3, i1 false
+  %2 = icmp ult i32 %.sroa.10.0.i.i, 15000
+  %3 = icmp eq i64 %.sroa.0.0.fr.i.i, 0
+  %.not10.i = select i1 %3, i1 %2, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
   br i1 %.not10.i, label %bb.h, label %_ZN4bssl22dtls1_is_timer_expiredEP6ssl_st.exit.thread
 

@@ -205,33 +205,31 @@ nsvg__parseCoordinate.exit218.i:                  ; preds = %bb.dt, %bb.ds, %bb.
   %i.zw = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i75
   %i.zx = load ptr, ptr %i.zw, align 8, !tbaa !20 ; 2 uses
   %.not.i76 = icmp eq ptr %i.zx, null
-  br i1 %.not.i76, label %._crit_edge.i77, label %bb.br, !llvm.loop !179
+  br i1 %.not.i76, label %._crit_edge.i77.loopexit, label %bb.br, !llvm.loop !179
 
-._crit_edge.i77:                                  ; preds = %.tail235.thread.i, %nsvg__pushAttr.exit71
-  %.0180.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2182.i, %.tail235.thread.i ] ; 10 uses
-  %.0177.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2179.i, %.tail235.thread.i ] ; 11 uses
-  %.0174.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2176.i, %.tail235.thread.i ] ; 4 uses
-  %.0171.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2173.i, %.tail235.thread.i ] ; 4 uses
-  %.0167.lcssa.i = phi float [ -1.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2169.i, %.tail235.thread.i ] ; 3 uses
-  %.0166.lcssa.i = phi float [ -1.000000e+00, %nsvg__pushAttr.exit71 ], [ %.1.i74, %.tail235.thread.i ] ; 4 uses
-  %3 = fcmp olt float %.0167.lcssa.i, 0.000000e+00
-  %4 = fcmp ogt float %.0166.lcssa.i, 0.000000e+00
-  %or.cond.i = select i1 %3, i1 %4, i1 false
-  %.3170.i = select i1 %or.cond.i, float %.0166.lcssa.i, float %.0167.lcssa.i ; 3 uses
-  %5 = fcmp olt float %.0166.lcssa.i, 0.000000e+00
-  %6 = fcmp ogt float %.3170.i, 0.000000e+00
-  %or.cond3.i = select i1 %5, i1 %6, i1 false
-  %.2.i78 = select i1 %or.cond3.i, float %.0167.lcssa.i, float %.0166.lcssa.i ; 2 uses
-  %7 = fcmp olt float %.3170.i, 0.000000e+00
-  %spec.store.select.i = select i1 %7, float 0.000000e+00, float %.3170.i ; 2 uses
-  %8 = fcmp olt float %.2.i78, 0.000000e+00
-  %spec.store.select8.i = select i1 %8, float 0.000000e+00, float %.2.i78 ; 2 uses
-  %9 = fmul float %.0174.lcssa.i, 5.000000e-01    ; 2 uses
-  %10 = fcmp ogt float %spec.store.select.i, %9
-  %.4.i79 = select i1 %10, float %9, float %spec.store.select.i ; 5 uses
-  %11 = fmul float %.0171.lcssa.i, 5.000000e-01   ; 2 uses
-  %12 = fcmp ogt float %spec.store.select8.i, %11
-  %.3.i80 = select i1 %12, float %11, float %spec.store.select8.i ; 5 uses
+._crit_edge.i77.loopexit:                         ; preds = %.tail235.thread.i
+  %3 = insertelement <2 x float> poison, float %.1.i74, i64 0
+  %4 = insertelement <2 x float> %3, float %.2169.i, i64 1
+  br label %._crit_edge.i77
+
+._crit_edge.i77:                                  ; preds = %._crit_edge.i77.loopexit, %nsvg__pushAttr.exit71
+  %.0180.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2182.i, %._crit_edge.i77.loopexit ] ; 10 uses
+  %.0177.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2179.i, %._crit_edge.i77.loopexit ] ; 11 uses
+  %.0174.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2176.i, %._crit_edge.i77.loopexit ] ; 4 uses
+  %.0171.lcssa.i = phi float [ 0.000000e+00, %nsvg__pushAttr.exit71 ], [ %.2173.i, %._crit_edge.i77.loopexit ] ; 4 uses
+  %5 = phi <2 x float> [ splat (float -1.000000e+00), %nsvg__pushAttr.exit71 ], [ %4, %._crit_edge.i77.loopexit ] ; 3 uses
+  %6 = fcmp olt <2 x float> %5, zeroinitializer
+  %7 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %8 = fcmp ogt <2 x float> %7, zeroinitializer
+  %9 = insertelement <2 x float> poison, float %.0171.lcssa.i, i64 0
+  %10 = insertelement <2 x float> %9, float %.0174.lcssa.i, i64 1
+  %11 = fmul <2 x float> %10, splat (float 5.000000e-01) ; 2 uses
+  %12 = select <2 x i1> %6, <2 x i1> %8, <2 x i1> zeroinitializer
+  %13 = select <2 x i1> %12, <2 x float> %7, <2 x float> %5 ; 2 uses
+  %14 = fcmp olt <2 x float> %13, zeroinitializer
+  %15 = select <2 x i1> %14, <2 x float> zeroinitializer, <2 x float> %13 ; 2 uses
+  %16 = fcmp ogt <2 x float> %15, %11
+  %17 = select <2 x i1> %16, <2 x float> %11, <2 x float> %15 ; 4 uses
   %i.zy = fcmp une float %.0174.lcssa.i, 0.000000e+00
   %i.zz = fcmp une float %.0171.lcssa.i, 0.000000e+00
   %or.cond5.i = select i1 %i.zy, i1 %i.zz, i1 false
@@ -240,8 +238,10 @@ nsvg__parseCoordinate.exit218.i:                  ; preds = %bb.dt, %bb.ds, %bb.
 bb.du:                                            ; preds = %._crit_edge.i77
   %i.aaa = getelementptr inbounds nuw i8, ptr %0, i64 39952 ; 5 uses
   store i32 0, ptr %i.aaa, align 8, !tbaa !82
-  %i.aab = fcmp olt float %.4.i79, f0x3727C5AC
-  %i.aac = fcmp olt float %.3.i80, f0x38D1B717
+  %18 = extractelement <2 x float> %17, i64 1     ; 3 uses
+  %i.aab = fcmp olt float %18, f0x3727C5AC
+  %19 = extractelement <2 x float> %17, i64 0     ; 3 uses
+  %i.aac = fcmp olt float %19, f0x38D1B717
   %or.cond7.i81 = select i1 %i.aab, i1 true, i1 %i.aac
   br i1 %or.cond7.i81, label %bb.dv, label %bb.dy
 
@@ -297,7 +297,7 @@ nsvg__moveTo.exit.i88:                            ; preds = %bb.dx, %bb.dw
   br label %bb.eb
 
 bb.dy:                                            ; preds = %bb.du
-  %i.aav = fadd float %.0180.lcssa.i, %.4.i79     ; 3 uses
+  %i.aav = fadd float %.0180.lcssa.i, %18         ; 3 uses
   %i.aaw = getelementptr inbounds nuw i8, ptr %0, i64 39956 ; 2 uses
   %i.aax = load i32, ptr %i.aaw, align 4, !tbaa !83 ; 3 uses
   %.not.i.i219.i = icmp sgt i32 %i.aax, 0
@@ -342,22 +342,18 @@ bb.ea:                                            ; preds = %._crit_edge18.i.i22
 
 nsvg__moveTo.exit228.i:                           ; preds = %bb.ea, %bb.dz
   %i.abm = fadd float %.0180.lcssa.i, %.0174.lcssa.i ; 6 uses
-  %i.abn = fsub float %i.abm, %.4.i79             ; 2 uses
+  %i.abn = fsub float %i.abm, %18                 ; 2 uses
   tail call fastcc void @nsvg__lineTo(ptr noundef nonnull %0, float noundef %i.abn, float noundef %.0177.lcssa.i)
-  %13 = fneg float %.4.i79
-  %i.abo = fadd float %.0177.lcssa.i, %.3.i80     ; 2 uses
+  %20 = fneg <2 x float> %17
+  %i.abo = fadd float %.0177.lcssa.i, %19         ; 2 uses
   %i.abp = fadd float %.0177.lcssa.i, %.0171.lcssa.i ; 6 uses
-  %i.abq = fsub float %i.abp, %.3.i80             ; 2 uses
-  %14 = fneg float %.3.i80
-  %15 = insertelement <4 x float> poison, float %13, i64 0
-  %16 = insertelement <4 x float> %15, float %.3.i80, i64 1
-  %17 = insertelement <4 x float> %16, float %14, i64 2
-  %18 = insertelement <4 x float> %17, float %.4.i79, i64 3
+  %i.abq = fsub float %i.abp, %19                 ; 2 uses
+  %21 = shufflevector <2 x float> %20, <2 x float> %17, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
   %i.abr = insertelement <4 x float> poison, float %i.abm, i64 0
   %i.abs = insertelement <4 x float> %i.abr, float %.0177.lcssa.i, i64 1
   %i.abt = insertelement <4 x float> %i.abs, float %i.abp, i64 2
   %i.abu = insertelement <4 x float> %i.abt, float %.0180.lcssa.i, i64 3
-  %i.abv = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %18, <4 x float> splat (float f0x3EE53AEE), <4 x float> %i.abu) ; 4 uses
+  %i.abv = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %21, <4 x float> splat (float f0x3EE53AEE), <4 x float> %i.abu) ; 4 uses
   %i.abw = extractelement <4 x float> %i.abv, i64 0 ; 2 uses
   %i.abx = extractelement <4 x float> %i.abv, i64 1 ; 2 uses
   tail call fastcc void @nsvg__cubicBezTo(ptr noundef nonnull %0, float noundef %i.abw, float noundef %.0177.lcssa.i, float noundef %i.abm, float noundef %i.abx, float noundef %i.abm, float noundef %i.abo)

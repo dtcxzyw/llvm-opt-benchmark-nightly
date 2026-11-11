@@ -206,13 +206,12 @@ _ZNK4mlir5Value13getDefiningOpINS_6vector14DeinterleaveOpEEET_v.exit15: ; preds 
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i12 = load ptr, ptr %i.m, align 8, !tbaa !109
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i12, i64 16
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !110
-  %i.p = icmp ne ptr %i.o, @_ZN4mlir6detail14TypeIDResolverINS_6vector14DeinterleaveOpEvE2idE ; 2 uses
-  %spec.select.i.i.i.i13 = select i1 %i.p, ptr null, ptr %i.l
+  %i.p = icmp ne ptr %i.o, @_ZN4mlir6detail14TypeIDResolverINS_6vector14DeinterleaveOpEvE2idE
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   %i.q = icmp eq ptr %.sroa.0.0.i.i.i, null
   %or.cond.not54 = select i1 %i.q, i1 true, i1 %i.p
-  %i.r = icmp ne ptr %.sroa.0.0.i.i.i, %spec.select.i.i.i.i13
-  %or.cond51 = select i1 %or.cond.not54, i1 true, i1 %i.r
+  %i.r = icmp ne ptr %.sroa.0.0.i.i.i, %i.l
+  %or.cond51 = or i1 %i.r, %or.cond.not54
   br i1 %or.cond51, label %.thread, label %bb.c
 
 _ZNK4mlir5Value13getDefiningOpINS_6vector14DeinterleaveOpEEET_v.exit15.thread: ; preds = %_ZNK4mlir5Value13getDefiningOpINS_6vector14DeinterleaveOpEEET_v.exit

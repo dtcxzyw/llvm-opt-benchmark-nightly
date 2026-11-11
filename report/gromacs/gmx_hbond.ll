@@ -206,16 +206,16 @@ bb.bs:                                            ; preds = %.lr.ph1312, %._crit
   %i.zm = add nsw i32 %i.zi, -1
   %i.zn = icmp eq i32 %i.zk, %i.zm
   %i.zo = select i1 %i.zl, i1 true, i1 %i.zn
-  %45 = icmp ne i32 %i.zh, 1                      ; 2 uses
   %or.cond.i = and i1 %i.bp, %i.zo                ; 3 uses
-  %i.zp = select i1 %or.cond.i, i32 0, i32 %i.xf
-  %46 = select i1 %45, i32 %i.zp, i32 %i.xg       ; 2 uses
-  %.not241129513781379 = icmp sle i32 %i.zh, %46
-  %47 = select i1 %45, i1 %or.cond.i, i1 false
-  %.not2411295 = select i1 %47, i1 %.not241129513781379, i1 false
+  %i.zp = select i1 %or.cond.i, i32 0, i32 %i.xf  ; 2 uses
+  %45 = icmp ne i32 %i.zh, 1                      ; 2 uses
+  %.not241129513781379 = icmp sle i32 %i.zh, %i.zp
+  %46 = and i1 %or.cond.i, %.not241129513781379
+  %.not2411295 = select i1 %45, i1 %46, i1 false
   br i1 %.not2411295, label %._crit_edge1302, label %.lr.ph1301
 
 .lr.ph1301:                                       ; preds = %bb.bs
+  %47 = select i1 %45, i32 %i.zp, i32 %i.xg
   %i.zq = add nsw i32 %i.zh, -1
   %i.zr = sext i32 %i.zk to i64
   br label %bb.bt
@@ -225,7 +225,7 @@ bb.bt:                                            ; preds = %.lr.ph1301, %._crit
   %i.zt = phi i32 [ %i.zg, %.lr.ph1301 ], [ %i.bec, %._crit_edge1291 ]
   %i.zu = phi i32 [ %i.zq, %.lr.ph1301 ], [ %i.bef, %._crit_edge1291 ]
   %i.zv = phi i32 [ %i.zh, %.lr.ph1301 ], [ %i.bec, %._crit_edge1291 ] ; 2 uses
-  %.02191299 = phi i32 [ %46, %.lr.ph1301 ], [ %i.bed, %._crit_edge1291 ] ; 3 uses
+  %.02191299 = phi i32 [ %47, %.lr.ph1301 ], [ %i.bed, %._crit_edge1291 ] ; 3 uses
   %.sroa.0.81298 = phi i32 [ %.sroa.0.71309, %.lr.ph1301 ], [ %.sroa.0.9.lcssa, %._crit_edge1291 ] ; 2 uses
   %.sroa.0392.81297 = phi float [ %.sroa.0392.71308, %.lr.ph1301 ], [ %.sroa.0392.9.lcssa, %._crit_edge1291 ] ; 2 uses
   %.sroa.0390.81296 = phi float [ %.sroa.0390.71307, %.lr.ph1301 ], [ %.sroa.0390.9.lcssa, %._crit_edge1291 ] ; 2 uses

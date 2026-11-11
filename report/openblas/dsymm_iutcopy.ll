@@ -202,11 +202,11 @@ bb.ae:                                            ; preds = %bb.ad
   %i.jz = icmp sgt i64 %i.jy, 0
   %i.ka = getelementptr inbounds [8 x i8], ptr %2, i64 %5 ; 4 uses
   %i.kb = mul nsw i64 %.1640, %3
-  %i.kc = getelementptr inbounds [8 x i8], ptr %i.ka, i64 %i.kb
+  %i.kc = getelementptr inbounds [8 x i8], ptr %i.ka, i64 %i.kb ; 2 uses
   %i.kd = getelementptr inbounds [8 x i8], ptr %2, i64 %.1640 ; 4 uses
   %i.ke = mul nsw i64 %5, %3                      ; 4 uses
-  %i.kf = getelementptr inbounds [8 x i8], ptr %i.kd, i64 %i.ke
-  %.6613 = select i1 %i.jz, ptr %i.kc, ptr %i.kf  ; 4 uses
+  %i.kf = getelementptr inbounds [8 x i8], ptr %i.kd, i64 %i.ke ; 2 uses
+  %.6613 = select i1 %i.jz, ptr %i.kc, ptr %i.kf  ; 2 uses
   %i.kg = icmp sgt i64 %i.jy, -1
   br i1 %i.kg, label %.thread1043, label %bb.af
 
@@ -266,8 +266,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.lb = load double, ptr %.65951052, align 8, !tbaa !17
   %i.lc = load double, ptr %.6, align 8, !tbaa !17
   %i.ld = icmp sgt i64 %i.jy, 0
-  %i.le = getelementptr inbounds nuw i8, ptr %.6613, i64 8
-  %i.lf = getelementptr inbounds [8 x i8], ptr %.6613, i64 %3
+  %i.le = getelementptr inbounds nuw i8, ptr %i.kc, i64 8
+  %i.lf = getelementptr inbounds [8 x i8], ptr %i.kf, i64 %3
   %.8615.prol = select i1 %i.ld, ptr %i.le, ptr %i.lf
   %i.lg = getelementptr inbounds nuw i8, ptr %.660410451050, i64 8
   %i.lh = getelementptr inbounds [8 x i8], ptr %.660410451050, i64 %3
@@ -306,10 +306,10 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %i.lv, label %._crit_edge1105, label %.lr.ph1104
 
 .lr.ph1104:                                       ; preds = %.lr.ph1104.prol.loopexit, %.lr.ph1104
-  %.71102 = phi ptr [ %.8.1, %.lr.ph1104 ], [ %.71102.unr, %.lr.ph1104.prol.loopexit ] ; 3 uses
-  %.75961101 = phi ptr [ %.8597.1, %.lr.ph1104 ], [ %.75961101.unr, %.lr.ph1104.prol.loopexit ] ; 3 uses
-  %.76051100 = phi ptr [ %.8606.1, %.lr.ph1104 ], [ %.76051100.unr, %.lr.ph1104.prol.loopexit ] ; 3 uses
-  %.76141099 = phi ptr [ %.8615.1, %.lr.ph1104 ], [ %.76141099.unr, %.lr.ph1104.prol.loopexit ] ; 3 uses
+  %.71102 = phi ptr [ %.8.1, %.lr.ph1104 ], [ %.71102.unr, %.lr.ph1104.prol.loopexit ] ; 4 uses
+  %.75961101 = phi ptr [ %.8597.1, %.lr.ph1104 ], [ %.75961101.unr, %.lr.ph1104.prol.loopexit ] ; 4 uses
+  %.76051100 = phi ptr [ %.8606.1, %.lr.ph1104 ], [ %.76051100.unr, %.lr.ph1104.prol.loopexit ] ; 4 uses
+  %.76141099 = phi ptr [ %.8615.1, %.lr.ph1104 ], [ %.76141099.unr, %.lr.ph1104.prol.loopexit ] ; 4 uses
   %.26211098 = phi i64 [ %i.nk, %.lr.ph1104 ], [ %.26211098.unr, %.lr.ph1104.prol.loopexit ] ; 9 uses
   %.26271097 = phi i64 [ %i.nl, %.lr.ph1104 ], [ %.26271097.unr, %.lr.ph1104.prol.loopexit ] ; 2 uses
   %.46341096 = phi ptr [ %i.nj, %.lr.ph1104 ], [ %.46341096.unr, %.lr.ph1104.prol.loopexit ] ; 9 uses
@@ -320,19 +320,19 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.ma = icmp sgt i64 %.26211098, 0
   %i.mb = getelementptr inbounds nuw i8, ptr %.76141099, i64 8
   %i.mc = getelementptr inbounds [8 x i8], ptr %.76141099, i64 %3
-  %.8615 = select i1 %i.ma, ptr %i.mb, ptr %i.mc  ; 3 uses
+  %.8615 = select i1 %i.ma, ptr %i.mb, ptr %i.mc  ; 2 uses
   %i.md = getelementptr inbounds nuw i8, ptr %.76051100, i64 8
   %i.me = getelementptr inbounds [8 x i8], ptr %.76051100, i64 %3
   %i.mf = icmp slt i64 %.26211098, 0
-  %.8606 = select i1 %i.mf, ptr %i.me, ptr %i.md  ; 3 uses
+  %.8606 = select i1 %i.mf, ptr %i.me, ptr %i.md  ; 2 uses
   %i.mg = icmp sgt i64 %.26211098, -2
   %i.mh = getelementptr inbounds nuw i8, ptr %.75961101, i64 8
   %i.mi = getelementptr inbounds [8 x i8], ptr %.75961101, i64 %3
-  %.8597 = select i1 %i.mg, ptr %i.mh, ptr %i.mi  ; 3 uses
+  %.8597 = select i1 %i.mg, ptr %i.mh, ptr %i.mi  ; 2 uses
   %i.mj = icmp sgt i64 %.26211098, -3
   %i.mk = getelementptr inbounds nuw i8, ptr %.71102, i64 8
   %i.ml = getelementptr inbounds [8 x i8], ptr %.71102, i64 %3
-  %.8 = select i1 %i.mj, ptr %i.mk, ptr %i.ml     ; 3 uses
+  %.8 = select i1 %i.mj, ptr %i.mk, ptr %i.ml     ; 2 uses
   store double %i.lw, ptr %.46341096, align 8, !tbaa !17
   %i.mm = getelementptr inbounds nuw i8, ptr %.46341096, i64 8
   store double %i.lx, ptr %i.mm, align 8, !tbaa !17
@@ -346,19 +346,19 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.ms = load double, ptr %.8597, align 8, !tbaa !17
   %i.mt = load double, ptr %.8, align 8, !tbaa !17
   %i.mu = icmp sgt i64 %.26211098, 1
-  %i.mv = getelementptr inbounds nuw i8, ptr %.8615, i64 8
+  %i.mv = getelementptr inbounds nuw i8, ptr %.76141099, i64 16
   %i.mw = getelementptr inbounds [8 x i8], ptr %.8615, i64 %3
   %.8615.1 = select i1 %i.mu, ptr %i.mv, ptr %i.mw
-  %i.mx = getelementptr inbounds nuw i8, ptr %.8606, i64 8
+  %i.mx = getelementptr inbounds nuw i8, ptr %.76051100, i64 16
   %i.my = getelementptr inbounds [8 x i8], ptr %.8606, i64 %3
   %i.mz = icmp slt i64 %.26211098, 1
   %.8606.1 = select i1 %i.mz, ptr %i.my, ptr %i.mx
-  %i.na = getelementptr inbounds nuw i8, ptr %.8597, i64 8
+  %i.na = getelementptr inbounds nuw i8, ptr %.75961101, i64 16
   %i.nb = getelementptr inbounds [8 x i8], ptr %.8597, i64 %3
   %i.nc = icmp slt i64 %.26211098, 0
   %.8597.1 = select i1 %i.nc, ptr %i.nb, ptr %i.na
   %i.nd = icmp sgt i64 %.26211098, -2
-  %i.ne = getelementptr inbounds nuw i8, ptr %.8, i64 8
+  %i.ne = getelementptr inbounds nuw i8, ptr %.71102, i64 16
   %i.nf = getelementptr inbounds [8 x i8], ptr %.8, i64 %3
   %.8.1 = select i1 %i.nd, ptr %i.ne, ptr %i.nf
   store double %i.mq, ptr %i.mp, align 8, !tbaa !17
@@ -449,8 +449,8 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.oq, label %._crit_edge1114, label %.lr.ph1113
 
 .lr.ph1113:                                       ; preds = %.lr.ph1113.prol.loopexit, %.lr.ph1113
-  %.101111 = phi ptr [ %.11.3, %.lr.ph1113 ], [ %.101111.unr, %.lr.ph1113.prol.loopexit ] ; 3 uses
-  %.106171110 = phi ptr [ %.11618.3, %.lr.ph1113 ], [ %.106171110.unr, %.lr.ph1113.prol.loopexit ] ; 3 uses
+  %.101111 = phi ptr [ %.11.3, %.lr.ph1113 ], [ %.101111.unr, %.lr.ph1113.prol.loopexit ] ; 6 uses
+  %.106171110 = phi ptr [ %.11618.3, %.lr.ph1113 ], [ %.106171110.unr, %.lr.ph1113.prol.loopexit ] ; 6 uses
   %.36221109 = phi i64 [ %i.qf, %.lr.ph1113 ], [ %.36221109.unr, %.lr.ph1113.prol.loopexit ] ; 9 uses
   %.36281108 = phi i64 [ %i.qg, %.lr.ph1113 ], [ %.36281108.unr, %.lr.ph1113.prol.loopexit ] ; 2 uses
   %.66361107 = phi ptr [ %i.qe, %.lr.ph1113 ], [ %.66361107.unr, %.lr.ph1113.prol.loopexit ] ; 9 uses
@@ -459,11 +459,11 @@ bb.al:                                            ; preds = %bb.ak
   %i.ot = icmp sgt i64 %.36221109, 0
   %i.ou = getelementptr inbounds nuw i8, ptr %.106171110, i64 8
   %i.ov = getelementptr inbounds [8 x i8], ptr %.106171110, i64 %3
-  %.11618 = select i1 %i.ot, ptr %i.ou, ptr %i.ov ; 3 uses
+  %.11618 = select i1 %i.ot, ptr %i.ou, ptr %i.ov ; 2 uses
   %i.ow = getelementptr inbounds nuw i8, ptr %.101111, i64 8
   %i.ox = getelementptr inbounds [8 x i8], ptr %.101111, i64 %3
   %i.oy = icmp slt i64 %.36221109, 0
-  %.11 = select i1 %i.oy, ptr %i.ox, ptr %i.ow    ; 3 uses
+  %.11 = select i1 %i.oy, ptr %i.ox, ptr %i.ow    ; 2 uses
   store double %i.or, ptr %.66361107, align 8, !tbaa !17
   %i.oz = getelementptr inbounds nuw i8, ptr %.66361107, i64 8
   store double %i.os, ptr %i.oz, align 8, !tbaa !17
@@ -471,13 +471,13 @@ bb.al:                                            ; preds = %bb.ak
   %i.pb = load double, ptr %.11618, align 8, !tbaa !17
   %i.pc = load double, ptr %.11, align 8, !tbaa !17
   %i.pd = icmp sgt i64 %.36221109, 1
-  %i.pe = getelementptr inbounds nuw i8, ptr %.11618, i64 8
+  %i.pe = getelementptr inbounds nuw i8, ptr %.106171110, i64 16
   %i.pf = getelementptr inbounds [8 x i8], ptr %.11618, i64 %3
-  %.11618.1 = select i1 %i.pd, ptr %i.pe, ptr %i.pf ; 3 uses
-  %i.pg = getelementptr inbounds nuw i8, ptr %.11, i64 8
+  %.11618.1 = select i1 %i.pd, ptr %i.pe, ptr %i.pf ; 2 uses
+  %i.pg = getelementptr inbounds nuw i8, ptr %.101111, i64 16
   %i.ph = getelementptr inbounds [8 x i8], ptr %.11, i64 %3
   %i.pi = icmp slt i64 %.36221109, 1
-  %.11.1 = select i1 %i.pi, ptr %i.ph, ptr %i.pg  ; 3 uses
+  %.11.1 = select i1 %i.pi, ptr %i.ph, ptr %i.pg  ; 2 uses
   store double %i.pb, ptr %i.pa, align 8, !tbaa !17
   %i.pj = getelementptr inbounds nuw i8, ptr %.66361107, i64 24
   store double %i.pc, ptr %i.pj, align 8, !tbaa !17
@@ -485,13 +485,13 @@ bb.al:                                            ; preds = %bb.ak
   %i.pl = load double, ptr %.11618.1, align 8, !tbaa !17
   %i.pm = load double, ptr %.11.1, align 8, !tbaa !17
   %i.pn = icmp sgt i64 %.36221109, 2
-  %i.po = getelementptr inbounds nuw i8, ptr %.11618.1, i64 8
+  %i.po = getelementptr inbounds nuw i8, ptr %.106171110, i64 24
   %i.pp = getelementptr inbounds [8 x i8], ptr %.11618.1, i64 %3
-  %.11618.2 = select i1 %i.pn, ptr %i.po, ptr %i.pp ; 3 uses
-  %i.pq = getelementptr inbounds nuw i8, ptr %.11.1, i64 8
+  %.11618.2 = select i1 %i.pn, ptr %i.po, ptr %i.pp ; 2 uses
+  %i.pq = getelementptr inbounds nuw i8, ptr %.101111, i64 24
   %i.pr = getelementptr inbounds [8 x i8], ptr %.11.1, i64 %3
   %i.ps = icmp slt i64 %.36221109, 2
-  %.11.2 = select i1 %i.ps, ptr %i.pr, ptr %i.pq  ; 3 uses
+  %.11.2 = select i1 %i.ps, ptr %i.pr, ptr %i.pq  ; 2 uses
   store double %i.pl, ptr %i.pk, align 8, !tbaa !17
   %i.pt = getelementptr inbounds nuw i8, ptr %.66361107, i64 40
   store double %i.pm, ptr %i.pt, align 8, !tbaa !17
@@ -499,10 +499,10 @@ bb.al:                                            ; preds = %bb.ak
   %i.pv = load double, ptr %.11618.2, align 8, !tbaa !17
   %i.pw = load double, ptr %.11.2, align 8, !tbaa !17
   %i.px = icmp sgt i64 %.36221109, 3
-  %i.py = getelementptr inbounds nuw i8, ptr %.11618.2, i64 8
+  %i.py = getelementptr inbounds nuw i8, ptr %.106171110, i64 32
   %i.pz = getelementptr inbounds [8 x i8], ptr %.11618.2, i64 %3
   %.11618.3 = select i1 %i.px, ptr %i.py, ptr %i.pz
-  %i.qa = getelementptr inbounds nuw i8, ptr %.11.2, i64 8
+  %i.qa = getelementptr inbounds nuw i8, ptr %.101111, i64 32
   %i.qb = getelementptr inbounds [8 x i8], ptr %.11.2, i64 %3
   %i.qc = icmp slt i64 %.36221109, 3
   %.11.3 = select i1 %i.qc, ptr %i.qb, ptr %i.qa
@@ -570,7 +570,7 @@ bb.am:                                            ; preds = %._crit_edge1114, %b
   br i1 %i.qz, label %.loopexit, label %.lr.ph1121
 
 .lr.ph1121:                                       ; preds = %.lr.ph1121.prol.loopexit, %.lr.ph1121
-  %.131119 = phi ptr [ %.14.7, %.lr.ph1121 ], [ %.131119.unr, %.lr.ph1121.prol.loopexit ] ; 3 uses
+  %.131119 = phi ptr [ %.14.7, %.lr.ph1121 ], [ %.131119.unr, %.lr.ph1121.prol.loopexit ] ; 10 uses
   %.46231118 = phi i64 [ %i.so, %.lr.ph1121 ], [ %.46231118.unr, %.lr.ph1121.prol.loopexit ] ; 9 uses
   %.46291117 = phi i64 [ %i.sp, %.lr.ph1121 ], [ %.46291117.unr, %.lr.ph1121.prol.loopexit ] ; 2 uses
   %.86381116 = phi ptr [ %i.sn, %.lr.ph1121 ], [ %.86381116.unr, %.lr.ph1121.prol.loopexit ] ; 9 uses
@@ -578,54 +578,54 @@ bb.am:                                            ; preds = %._crit_edge1114, %b
   %i.rb = icmp sgt i64 %.46231118, 0
   %i.rc = getelementptr inbounds nuw i8, ptr %.131119, i64 8
   %i.rd = getelementptr inbounds [8 x i8], ptr %.131119, i64 %3
-  %.14 = select i1 %i.rb, ptr %i.rc, ptr %i.rd    ; 3 uses
+  %.14 = select i1 %i.rb, ptr %i.rc, ptr %i.rd    ; 2 uses
   store double %i.ra, ptr %.86381116, align 8, !tbaa !17
   %i.re = getelementptr inbounds nuw i8, ptr %.86381116, i64 8
   %i.rf = load double, ptr %.14, align 8, !tbaa !17
   %i.rg = icmp sgt i64 %.46231118, 1
-  %i.rh = getelementptr inbounds nuw i8, ptr %.14, i64 8
+  %i.rh = getelementptr inbounds nuw i8, ptr %.131119, i64 16
   %i.ri = getelementptr inbounds [8 x i8], ptr %.14, i64 %3
-  %.14.1 = select i1 %i.rg, ptr %i.rh, ptr %i.ri  ; 3 uses
+  %.14.1 = select i1 %i.rg, ptr %i.rh, ptr %i.ri  ; 2 uses
   store double %i.rf, ptr %i.re, align 8, !tbaa !17
   %i.rj = getelementptr inbounds nuw i8, ptr %.86381116, i64 16
   %i.rk = load double, ptr %.14.1, align 8, !tbaa !17
   %i.rl = icmp sgt i64 %.46231118, 2
-  %i.rm = getelementptr inbounds nuw i8, ptr %.14.1, i64 8
+  %i.rm = getelementptr inbounds nuw i8, ptr %.131119, i64 24
   %i.rn = getelementptr inbounds [8 x i8], ptr %.14.1, i64 %3
-  %.14.2 = select i1 %i.rl, ptr %i.rm, ptr %i.rn  ; 3 uses
+  %.14.2 = select i1 %i.rl, ptr %i.rm, ptr %i.rn  ; 2 uses
   store double %i.rk, ptr %i.rj, align 8, !tbaa !17
   %i.ro = getelementptr inbounds nuw i8, ptr %.86381116, i64 24
   %i.rp = load double, ptr %.14.2, align 8, !tbaa !17
   %i.rq = icmp sgt i64 %.46231118, 3
-  %i.rr = getelementptr inbounds nuw i8, ptr %.14.2, i64 8
+  %i.rr = getelementptr inbounds nuw i8, ptr %.131119, i64 32
   %i.rs = getelementptr inbounds [8 x i8], ptr %.14.2, i64 %3
-  %.14.3 = select i1 %i.rq, ptr %i.rr, ptr %i.rs  ; 3 uses
+  %.14.3 = select i1 %i.rq, ptr %i.rr, ptr %i.rs  ; 2 uses
   store double %i.rp, ptr %i.ro, align 8, !tbaa !17
   %i.rt = getelementptr inbounds nuw i8, ptr %.86381116, i64 32
   %i.ru = load double, ptr %.14.3, align 8, !tbaa !17
   %i.rv = icmp sgt i64 %.46231118, 4
-  %i.rw = getelementptr inbounds nuw i8, ptr %.14.3, i64 8
+  %i.rw = getelementptr inbounds nuw i8, ptr %.131119, i64 40
   %i.rx = getelementptr inbounds [8 x i8], ptr %.14.3, i64 %3
-  %.14.4 = select i1 %i.rv, ptr %i.rw, ptr %i.rx  ; 3 uses
+  %.14.4 = select i1 %i.rv, ptr %i.rw, ptr %i.rx  ; 2 uses
   store double %i.ru, ptr %i.rt, align 8, !tbaa !17
   %i.ry = getelementptr inbounds nuw i8, ptr %.86381116, i64 40
   %i.rz = load double, ptr %.14.4, align 8, !tbaa !17
   %i.sa = icmp sgt i64 %.46231118, 5
-  %i.sb = getelementptr inbounds nuw i8, ptr %.14.4, i64 8
+  %i.sb = getelementptr inbounds nuw i8, ptr %.131119, i64 48
   %i.sc = getelementptr inbounds [8 x i8], ptr %.14.4, i64 %3
-  %.14.5 = select i1 %i.sa, ptr %i.sb, ptr %i.sc  ; 3 uses
+  %.14.5 = select i1 %i.sa, ptr %i.sb, ptr %i.sc  ; 2 uses
   store double %i.rz, ptr %i.ry, align 8, !tbaa !17
   %i.sd = getelementptr inbounds nuw i8, ptr %.86381116, i64 48
   %i.se = load double, ptr %.14.5, align 8, !tbaa !17
   %i.sf = icmp sgt i64 %.46231118, 6
-  %i.sg = getelementptr inbounds nuw i8, ptr %.14.5, i64 8
+  %i.sg = getelementptr inbounds nuw i8, ptr %.131119, i64 56
   %i.sh = getelementptr inbounds [8 x i8], ptr %.14.5, i64 %3
-  %.14.6 = select i1 %i.sf, ptr %i.sg, ptr %i.sh  ; 3 uses
+  %.14.6 = select i1 %i.sf, ptr %i.sg, ptr %i.sh  ; 2 uses
   store double %i.se, ptr %i.sd, align 8, !tbaa !17
   %i.si = getelementptr inbounds nuw i8, ptr %.86381116, i64 56
   %i.sj = load double, ptr %.14.6, align 8, !tbaa !17
   %i.sk = icmp sgt i64 %.46231118, 7
-  %i.sl = getelementptr inbounds nuw i8, ptr %.14.6, i64 8
+  %i.sl = getelementptr inbounds nuw i8, ptr %.131119, i64 64
   %i.sm = getelementptr inbounds [8 x i8], ptr %.14.6, i64 %3
   %.14.7 = select i1 %i.sk, ptr %i.sl, ptr %i.sm
   store double %i.sj, ptr %i.si, align 8, !tbaa !17

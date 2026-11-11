@@ -204,16 +204,15 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n, %bb.o
   %i.bf = phi i64 [ %i.be, %bb.o ], [ %i.bb, %bb.n ] ; 2 uses
-  %i.bg = icmp eq i64 %i.bf, -1
+  %i.bg = icmp eq i64 %i.bf, -1                   ; 2 uses
   %or.cond = select i1 %i.bc, i1 %i.bg, i1 false
-  %spec.store.select4 = select i1 %or.cond, i64 0, i64 %i.bf ; 4 uses
+  %spec.store.select4 = select i1 %or.cond, i64 0, i64 %i.bf ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0137.0147, i64 32 ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0137.0147, i64 40 ; 2 uses
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !190 ; 5 uses
-  %.not.i.i67.not = icmp eq i64 %i.bj, 0          ; 2 uses
-  %i.bk = icmp eq i64 %spec.store.select4, -1
-  %or.cond3.not = select i1 %i.bc, i1 true, i1 %i.bk
-  %or.cond66 = select i1 %.not.i.i67.not, i1 %or.cond3.not, i1 false
+  %i.bk = icmp eq i64 %i.bj, 0                    ; 2 uses
+  %or.cond3.not = select i1 %i.bc, i1 true, i1 %i.bg
+  %or.cond66 = select i1 %i.bk, i1 %or.cond3.not, i1 false
   br i1 %or.cond66, label %bb.af, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -231,7 +230,7 @@ bb.q:                                             ; preds = %bb.p
   store i64 0, ptr %i.l, align 8, !tbaa !190
   store i64 20, ptr %i.m, align 8, !tbaa !191
   %i.bt = icmp eq ptr %7, %i.bh
-  %or.cond.i.i = or i1 %i.bt, %.not.i.i67.not
+  %or.cond.i.i = or i1 %i.bt, %i.bk
   br i1 %or.cond.i.i, label %_ZN12lldb_private4UUIDC2ERKS0_.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q

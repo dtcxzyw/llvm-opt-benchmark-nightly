@@ -204,33 +204,36 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.r, %bb.m
-  %.040 = phi i64 [ 5, %bb.m ], [ %spec.store.select9, %bb.r ]
+  %.040 = phi i64 [ 5, %bb.m ], [ %spec.store.select9, %bb.r ] ; 2 uses
   %i.q = call i64 @prepare_to_wait_event(ptr noundef @kprobe_optimizer_wait, ptr noundef nonnull %2, i32 noundef 1) #20
   %i.r = load volatile i32, ptr @optimizer_state, align 4
   %i.s = icmp eq i32 %i.r, 2
   br i1 %i.s, label %.thread58, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.t = call zeroext i1 @kthread_should_stop() #20
-  br i1 %i.t, label %.thread58, label %bb.p
+  %i.t = call zeroext i1 @kthread_should_stop() #20 ; 2 uses
+  %3 = icmp eq i64 %.040, 0                       ; 2 uses
+  %or.cond4.not = select i1 %i.t, i1 %3, i1 false
+  %spec.store.select8 = select i1 %or.cond4.not, i64 1, i64 %.040
+  %spec.select = select i1 %i.t, i1 true, i1 %3
+  br i1 %spec.select, label %.thread58, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %.not49 = icmp eq i64 %i.q, 0
   br i1 %.not49, label %bb.q, label %.thread68
 
 bb.q:                                             ; preds = %bb.p
-  %i.u = call i64 @schedule_timeout(i64 noundef %.040) #20 ; 2 uses
+  %i.u = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #20 ; 2 uses
   %i.v = load volatile i32, ptr @optimizer_state, align 4
   %i.w = icmp eq i32 %i.v, 2
   br i1 %i.w, label %.thread58, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.x = call zeroext i1 @kthread_should_stop() #20 ; 2 uses
-  %i.y = icmp eq i64 %i.u, 0
+  %i.y = icmp eq i64 %i.u, 0                      ; 2 uses
   %or.cond7.not = select i1 %i.x, i1 %i.y, i1 false
-  %spec.store.select9 = select i1 %or.cond7.not, i64 1, i64 %i.u ; 2 uses
-  %.not51 = icmp eq i64 %spec.store.select9, 0
-  %spec.select52 = select i1 %i.x, i1 true, i1 %.not51
+  %spec.store.select9 = select i1 %or.cond7.not, i64 1, i64 %i.u
+  %spec.select52 = select i1 %i.x, i1 true, i1 %i.y
   br i1 %spec.select52, label %.thread58, label %bb.n
 
 .thread58:                                        ; preds = %bb.q, %bb.r, %bb.n, %bb.o

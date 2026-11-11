@@ -204,21 +204,21 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %i.e, %bb.b ], [ %i.f, %bb.c ], [ %i.g, %bb.d ], [ %i.h, %bb.e ] ; 2 uses
+  %.0 = phi i32 [ 0, %bb.a ], [ %i.e, %bb.b ], [ %i.f, %bb.c ], [ %i.g, %bb.d ], [ %i.h, %bb.e ] ; 4 uses
   %i.i = icmp eq i32 %0, -2147483647
   %i.j = icmp eq i32 %2, 1                        ; 3 uses
   %or.cond = and i1 %i.i, %i.j
   %i.k = and i32 %.0, -5
-  %spec.select = select i1 %or.cond, i32 %i.k, i32 %.0 ; 2 uses
+  %spec.select = select i1 %or.cond, i32 %i.k, i32 %.0
   %i.l = icmp eq i32 %0, 1
   %or.cond3 = and i1 %i.l, %i.j
-  %i.m = and i32 %spec.select, -33
-  %.2 = select i1 %or.cond3, i32 %i.m, i32 %spec.select ; 2 uses
+  %i.m = and i32 %.0, -33
+  %.2 = select i1 %or.cond3, i32 %i.m, i32 %spec.select
   %i.n = icmp eq i32 %0, 7
   %i.o = icmp eq i32 %1, 0
   %or.cond5 = and i1 %i.n, %i.o
   %or.cond7 = and i1 %or.cond5, %i.j
-  %i.p = and i32 %.2, -65537
+  %i.p = and i32 %.0, -65537
   %.3 = select i1 %or.cond7, i32 %i.p, i32 %.2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11

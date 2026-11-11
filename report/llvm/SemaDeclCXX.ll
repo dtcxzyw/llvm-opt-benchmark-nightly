@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN5clang13CXXMethodDecl9getParentEv.exit
 
 _ZN5clang13CXXMethodDecl9getParentEv.exit:        ; preds = %bb.d, %bb.e
-  %.0.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.v, %bb.e ] ; 3 uses
-  %i.w = icmp eq ptr %.0.i.i.i, null              ; 2 uses
+  %.0.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.v, %bb.e ] ; 4 uses
+  %i.w = icmp eq ptr %.0.i.i.i, null
   %i.x = getelementptr inbounds i8, ptr %.0.i.i.i, i64 -64 ; 3 uses
-  %i.y = select i1 %i.w, ptr null, ptr %i.x       ; 3 uses
+  %i.y = select i1 %i.w, ptr null, ptr %i.x       ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.z, align 8, !tbaa !1284
   %i.aa = icmp ne i64 %.sroa.0.0.copyload.i.i.i, 0
@@ -611,9 +611,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.fj = getelementptr inbounds nuw i8, ptr %14, i64 120
   %i.fk = getelementptr inbounds nuw i8, ptr %14, i64 152
   %i.fl = load i32, ptr %i.fk, align 8, !tbaa !1633
-  %31 = getelementptr inbounds nuw i8, ptr %i.y, i64 64
-  %spec.select = select i1 %i.w, ptr null, ptr %31
-  call void @_ZN5clang4Sema11CorrectTypoERKNS_19DeclarationNameInfoENS0_14LookupNameKindEPNS_5ScopeEPNS_12CXXScopeSpecERNS_27CorrectionCandidateCallbackENS_15CorrectTypoKindEPNS_11DeclContextEbPKNS_21ObjCObjectPointerTypeEb(ptr dead_on_unwind nonnull writable sret(%"class.clang::TypoCorrection") align 8 %21, ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.fj, i32 noundef %i.fl, ptr noundef %2, ptr noundef nonnull %3, ptr noundef nonnull align 8 dereferenceable(32) %20, i32 noundef 1, ptr noundef %spec.select, i1 noundef zeroext false, ptr noundef null, i1 noundef zeroext true) #26
+  call void @_ZN5clang4Sema11CorrectTypoERKNS_19DeclarationNameInfoENS0_14LookupNameKindEPNS_5ScopeEPNS_12CXXScopeSpecERNS_27CorrectionCandidateCallbackENS_15CorrectTypoKindEPNS_11DeclContextEbPKNS_21ObjCObjectPointerTypeEb(ptr dead_on_unwind nonnull writable sret(%"class.clang::TypoCorrection") align 8 %21, ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.fj, i32 noundef %i.fl, ptr noundef %2, ptr noundef nonnull %3, ptr noundef nonnull align 8 dereferenceable(32) %20, i32 noundef 1, ptr noundef %.0.i.i.i, i1 noundef zeroext false, ptr noundef null, i1 noundef zeroext true) #26
   %i.fm = call noundef nonnull align 8 dereferenceable(88) ptr @_ZN5clang14TypoCorrectionaSEOS0_(ptr noundef nonnull align 8 dereferenceable(88) %19, ptr noundef nonnull align 8 dereferenceable(88) %21)
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !1477
   %.not354 = icmp eq i64 %i.fn, 0

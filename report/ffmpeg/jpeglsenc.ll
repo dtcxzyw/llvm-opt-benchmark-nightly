@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %ls_encode_run.exit.
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
-  %i.fm = phi i32 [ %i.fi, %bb.al ], [ %i.fl, %bb.am ] ; 5 uses
+  %i.fm = phi i32 [ %i.fi, %bb.al ], [ %i.fl, %bb.am ] ; 6 uses
   %i.fn = sub nsw i32 %.0238365, %i.fm
   %i.fo = tail call i32 @llvm.abs.i32(i32 %i.fn, i1 true)
   %i.fp = load i32, ptr %i.i, align 4, !tbaa !43  ; 4 uses
@@ -245,13 +245,13 @@ bb.ap:                                            ; preds = %.thread417, %bb.ao
   %.neg267.sink = add i32 %.0232422, %.neg267.sink.p
   %i.gh = sdiv i32 %.neg267.sink, %i.gf           ; 4 uses
   %i.gi = mul nsw i32 %i.gf, %i.gh
+  %9 = add nsw i32 %i.gi, %i.fr
   %i.gj = mul nsw i32 %i.gf, %i.gh
-  %i.gk = sub i32 0, %i.gj
-  %.sink430.p = select i1 %or.cond272.not, i32 %i.gi, i32 %i.gk
-  %.sink430 = add i32 %i.fr, %.sink430.p          ; 2 uses
+  %i.gk = sub nsw i32 %i.fm, %i.gj
+  %.sink430.p = select i1 %or.cond272.not, i32 %9, i32 %i.gk ; 2 uses
   %i.gl = load i32, ptr %i.q, align 4, !tbaa !52
-  %i.gm = icmp slt i32 %.sink430, 0
-  %..i285 = tail call i32 @llvm.smin.i32(i32 %.sink430, i32 %i.gl)
+  %i.gm = icmp slt i32 %.sink430.p, 0
+  %..i285 = tail call i32 @llvm.smin.i32(i32 %.sink430.p, i32 %i.gl)
   %.0.i286 = select i1 %i.gm, i32 0, i32 %..i285  ; 2 uses
   %.pre380 = sext i32 %.1245.lcssa to i64         ; 2 uses
   br i1 %i.a, label %._crit_edge374, label %._crit_edge

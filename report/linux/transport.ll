@@ -202,27 +202,30 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.h, %bb.e
-  %.098 = phi i64 [ 6000, %bb.e ], [ %spec.store.select29, %bb.h ]
+  %.098 = phi i64 [ 6000, %bb.e ], [ %spec.store.select29, %bb.h ] ; 2 uses
   %i.am = call i64 @prepare_to_wait_event(ptr noundef %i.al, ptr noundef nonnull %5, i32 noundef 1) #8
   %i.an = load volatile i64, ptr %i.a, align 8
   %.in103.in = and i64 %i.an, 8
-  %.in103.not = icmp eq i64 %.in103.in, 0
-  br i1 %.in103.not, label %bb.g, label %select.unfold
+  %.in103 = icmp ne i64 %.in103.in, 0             ; 2 uses
+  %.in103.not = icmp eq i64 %.098, 0              ; 2 uses
+  %or.cond16.not = select i1 %.in103, i1 %.in103.not, i1 false
+  %spec.store.select28 = select i1 %or.cond16.not, i64 1, i64 %.098
+  %spec.select = select i1 %.in103, i1 true, i1 %.in103.not
+  br i1 %spec.select, label %select.unfold, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %.not104 = icmp eq i64 %i.am, 0
   br i1 %.not104, label %bb.h, label %.thread117
 
 bb.h:                                             ; preds = %bb.g
-  %i.ao = call i64 @schedule_timeout(i64 noundef %.098) #8 ; 2 uses
+  %i.ao = call i64 @schedule_timeout(i64 noundef %spec.store.select28) #8 ; 2 uses
   %i.ap = load volatile i64, ptr %i.a, align 8
   %.in105.in = and i64 %i.ap, 8
   %.in105 = icmp ne i64 %.in105.in, 0             ; 2 uses
-  %i.aq = icmp eq i64 %i.ao, 0
+  %i.aq = icmp eq i64 %i.ao, 0                    ; 2 uses
   %or.cond23.not = select i1 %.in105, i1 %i.aq, i1 false
-  %spec.store.select29 = select i1 %or.cond23.not, i64 1, i64 %i.ao ; 2 uses
-  %.not107 = icmp eq i64 %spec.store.select29, 0
-  %spec.select108 = select i1 %.in105, i1 true, i1 %.not107
+  %spec.store.select29 = select i1 %or.cond23.not, i64 1, i64 %i.ao
+  %spec.select108 = select i1 %.in105, i1 true, i1 %i.aq
   br i1 %spec.select108, label %select.unfold, label %bb.f
 
 select.unfold:                                    ; preds = %bb.h, %bb.f

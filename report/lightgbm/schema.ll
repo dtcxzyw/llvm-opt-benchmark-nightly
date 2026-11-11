@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.e
   %i.o = icmp sgt i64 %i.n, 0                     ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !25
-  %i.r = icmp ne ptr %i.q, null                   ; 4 uses
-  %or.cond = select i1 %i.o, i1 %i.r, i1 false    ; 2 uses
+  %i.r = icmp ne ptr %i.q, null                   ; 5 uses
+  %or.cond = select i1 %i.o, i1 %i.r, i1 false
   br i1 %or.cond, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -609,7 +609,7 @@ ArrowToStringLogChars.exit69:                     ; preds = %._crit_edge, %bb.ba
   br i1 %brmerge181, label %.sink.split, label %bb.bh
 
 .sink.split:                                      ; preds = %ArrowToStringLogChars.exit69
-  %.str.35.mux = select i1 %or.cond, ptr @.str.35, ptr @.str.36
+  %.str.35.mux = select i1 %i.r, ptr @.str.35, ptr @.str.36
   %.str.35.mux.mux = select i1 %i.o, ptr %.str.35.mux, ptr @.str.34
   %i.du = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %.5152, i64 noundef %.5146, ptr noundef nonnull %.str.35.mux.mux) #17
   %i.dv = sext i32 %i.du to i64

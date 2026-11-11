@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_RINvMNtCs4NRVxsYgn
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types17IdentifierPatternENCNCNvMs0_NtNtNtB2a_5rules5isort10categorizeNtB3j_12KnownModules3new00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2a_.exit65.i.i.i: ; preds = %bb.m, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types17IdentifierPatternENCNCNvMs0_NtNtNtB2a_5rules5isort10categorizeNtB3j_12KnownModules3new00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2a_.exit.i.i.i
   %.sroa.8.0.i.i.i = phi i64 [ %i.ah, %bb.m ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types17IdentifierPatternENCNCNvMs0_NtNtNtB2a_5rules5isort10categorizeNtB3j_12KnownModules3new00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2a_.exit.i.i.i ]
-  %i.ai = add nuw nsw i64 %.sroa.8.0.i.i.i, %.sroa.7.0.i.i.i ; 2 uses
+  %i.ai = add nuw nsw i64 %.sroa.8.0.i.i.i, %.sroa.7.0.i.i.i ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.ak = load i64, ptr %i.aj, align 8, !range !52, !alias.scope !19236, !noundef !29
   %.not56.i.i.i = icmp eq i64 %i.ak, -1
@@ -213,7 +213,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %.val.i.i.i = load i64, ptr %i.al, align 8, !alias.scope !19236
   %i.am = icmp eq i64 %.val.i.i.i, 0
   %or.cond.i.i.i = select i1 %.not56.i.i.i, i1 true, i1 %i.am ; 3 uses
-  %spec.select.i = select i1 %or.cond.i.i.i, i64 %i.ai, i64 undef ; 2 uses
+  %spec.select.i = select i1 %or.cond.i.i.i, i64 %i.ai, i64 undef
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 184
   %.val.i = load ptr, ptr %i.an, align 8, !alias.scope !19233, !nonnull !29, !noundef !29
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 200
@@ -224,7 +224,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %i.as = udiv exact i64 %i.ar, 24                ; 2 uses
   %i.at = add nuw nsw i64 %i.as, %i.ai
   %i.au = add i64 %i.as, %spec.select.i           ; 2 uses
-  %i.av = icmp uge i64 %i.au, %spec.select.i
+  %i.av = icmp uge i64 %i.au, %i.ai
   %.sroa.46.0.i = select i1 %or.cond.i.i.i, i64 %i.au, i64 undef
   %narrow.i = select i1 %or.cond.i.i.i, i1 %i.av, i1 false
   %.sroa.05.0.i = zext i1 %narrow.i to i64
@@ -383,7 +383,7 @@ bb.y:                                             ; preds = %_RINvMNtCs4NRVxsYgn
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types17IdentifierPatternENCNCNvMs0_NtNtNtB2a_5rules5isort10categorizeNtB3j_12KnownModules3new00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2a_.exit65.i.i.i24: ; preds = %bb.y, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types17IdentifierPatternENCNCNvMs0_NtNtNtB2a_5rules5isort10categorizeNtB3j_12KnownModules3new00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2a_.exit.i.i.i19
   %.sroa.8.0.i.i.i25 = phi i64 [ %i.cx, %bb.y ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types17IdentifierPatternENCNCNvMs0_NtNtNtB2a_5rules5isort10categorizeNtB3j_12KnownModules3new00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2a_.exit.i.i.i19 ]
-  %i.cy = add nuw nsw i64 %.sroa.8.0.i.i.i25, %.sroa.7.0.i.i.i20 ; 2 uses
+  %i.cy = add nuw nsw i64 %.sroa.8.0.i.i.i25, %.sroa.7.0.i.i.i20 ; 3 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.da = load i64, ptr %i.cz, align 8, !range !52, !alias.scope !19250, !noundef !29
   %.not56.i.i.i26 = icmp eq i64 %i.da, -1
@@ -391,7 +391,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %.val.i.i.i27 = load i64, ptr %i.db, align 8, !alias.scope !19250
   %i.dc = icmp eq i64 %.val.i.i.i27, 0
   %or.cond.i.i.i28 = select i1 %.not56.i.i.i26, i1 true, i1 %i.dc ; 3 uses
-  %spec.select.i29 = select i1 %or.cond.i.i.i28, i64 %i.cy, i64 undef ; 2 uses
+  %spec.select.i29 = select i1 %or.cond.i.i.i28, i64 %i.cy, i64 undef
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 184
   %.val.i30 = load ptr, ptr %i.dd, align 8, !alias.scope !19247, !nonnull !29, !noundef !29
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 200
@@ -402,7 +402,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %i.di = udiv exact i64 %i.dh, 24                ; 2 uses
   %i.dj = add nuw nsw i64 %i.di, %i.cy
   %i.dk = add i64 %i.di, %spec.select.i29         ; 2 uses
-  %i.dl = icmp uge i64 %i.dk, %spec.select.i29
+  %i.dl = icmp uge i64 %i.dk, %i.cy
   %.sroa.46.0.i32 = select i1 %or.cond.i.i.i28, i64 %i.dk, i64 undef
   %narrow.i33 = select i1 %or.cond.i.i.i28, i1 %i.dl, i1 false
   %.sroa.05.0.i34 = zext i1 %narrow.i33 to i64
@@ -805,9 +805,9 @@ bb.i:                                             ; preds = %_RINvMNtCs4NRVxsYgn
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic5model3all13DunderAllNameEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECsEhZmuQNqkz_11ruff_linter.exit65.i.i: ; preds = %bb.i, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic5model3all13DunderAllNameEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i
   %.sroa.8.0.i.i = phi i64 [ %i.v, %bb.i ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic5model3all13DunderAllNameEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i ]
-  %i.w = add nuw nsw i64 %.sroa.8.0.i.i, %.sroa.7.0.i.i ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.8.0.i.i, %.sroa.7.0.i.i ; 3 uses
   %switch.i.i = icmp ugt i64 %i.b, -3             ; 2 uses
-  %spec.select = select i1 %switch.i.i, i64 %i.w, i64 undef ; 2 uses
+  %spec.select = select i1 %switch.i.i, i64 %i.w, i64 undef
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB4_6CopiedINtNtNtBa_5slice4iter4IterNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic5model3all13DunderAllNameEENtNtNtB8_6traits8iterator8Iterator9size_hintCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c)
   %i.x = load i64, ptr %i.a, align 8, !noundef !29
@@ -820,7 +820,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9i
   %i.ad = trunc nuw i64 %i.z to i1
   %or.cond = and i1 %switch.i.i, %i.ad            ; 2 uses
   %i.ae = add i64 %i.ab, %spec.select             ; 2 uses
-  %i.af = icmp uge i64 %i.ae, %spec.select
+  %i.af = icmp uge i64 %i.ae, %i.w
   %.sroa.46.0 = select i1 %or.cond, i64 %i.ae, i64 undef
   %narrow = select i1 %or.cond, i1 %i.af, i1 false
   %.sroa.05.0 = zext i1 %narrow to i64

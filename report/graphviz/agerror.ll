@@ -202,16 +202,16 @@ bb.s:                                             ; preds = %bb.q, %bb.o
   %i.aq = phi i8 [ %i.ah, %bb.o ], [ %.pre.i, %bb.q ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
-  %.not.i.i.i = icmp eq i8 %i.aq, -1              ; 2 uses
-  %.0.i.i.i = select i1 %.not.i.i.i, i64 %i.ap, i64 %.pre-phi.i
+  %.not.i.i.i = icmp eq i8 %i.aq, -1
+  %5 = getelementptr inbounds nuw i8, ptr @last, i64 %.pre-phi.i
   %i.ar = load ptr, ptr @last, align 8
-  %.v.i.i = select i1 %.not.i.i.i, ptr %i.ar, ptr @last
-  %5 = getelementptr inbounds nuw i8, ptr %.v.i.i, i64 %.0.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ap
+  %7 = select i1 %.not.i.i.i, ptr %6, ptr %5
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
   %.13.i = phi i1 [ false, %bb.s ], [ true, %bb.r ]
-  %i.as = phi ptr [ %5, %bb.s ], [ %i.a, %bb.r ]
+  %i.as = phi ptr [ %7, %bb.s ], [ %i.a, %bb.r ]
   %i.at = call i32 @vsnprintf(ptr noundef %i.as, i64 noundef %i.ag, ptr noundef readonly %1, ptr noundef nonnull %2) #18 ; 4 uses
   %i.au = icmp sgt i32 %i.at, 0
   br i1 %i.au, label %bb.u, label %bb.z

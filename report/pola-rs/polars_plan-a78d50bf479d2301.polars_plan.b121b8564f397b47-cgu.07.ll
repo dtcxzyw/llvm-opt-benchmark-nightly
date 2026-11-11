@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %.lr.ph.i.i49.i.i
   br i1 %.not53.i.i53.i.i, label %_RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix.exit.i30.i.i, label %.lr.ph.i.i49.i.i, !dbg !3470
 
 _RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix.exit.i30.i.i: ; preds = %bb.s, %.preheader56.i.i41.i.i.preheader, %.preheader56.i.i41.i.i, %bb.t, %.lr.ph.i.i49.i.i, %.preheader.i.i47.i.i, %bb.q, %bb.q, %bb.p
-  %.sroa.102.0.i31.i.i = phi i64 [ undef, %bb.q ], [ 0, %.preheader.i.i47.i.i ], [ undef, %bb.p ], [ undef, %bb.q ], [ undef, %.lr.ph.i.i49.i.i ], [ %i.ct, %bb.t ], [ undef, %bb.s ], [ undef, %.preheader56.i.i41.i.i.preheader ], [ %i.cj, %.preheader56.i.i41.i.i ], !dbg !3489
+  %.sroa.102.0.i31.i.i = phi i64 [ undef, %bb.q ], [ 0, %.preheader.i.i47.i.i ], [ undef, %bb.p ], [ undef, %bb.q ], [ undef, %.lr.ph.i.i49.i.i ], [ %i.ct, %bb.t ], [ undef, %bb.s ], [ undef, %.preheader56.i.i41.i.i.preheader ], [ %i.cj, %.preheader56.i.i41.i.i ], !dbg !3489 ; 2 uses
   %.sink.i.i32.i.i = phi i1 [ true, %bb.q ], [ false, %.preheader.i.i47.i.i ], [ true, %bb.p ], [ true, %bb.q ], [ %i.co, %bb.t ], [ %i.co, %.lr.ph.i.i49.i.i ], [ true, %bb.s ], [ true, %.preheader56.i.i41.i.i.preheader ], [ false, %.preheader56.i.i41.i.i ] ; 2 uses
   invoke void @_RNvXso_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d)
           to label %_RNCNvMs2_Cs4BcJZGCY6Ba_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0CsfcROwRM8ZtH_11polars_plan.exit.i.i unwind label %bb.u, !dbg !3490, !noalias !3326
@@ -226,10 +226,10 @@ _RNCNvMs2_Cs4BcJZGCY6Ba_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_
           to label %.noexc67.i unwind label %bb.ab, !dbg !3492, !noalias !3326
 
 .noexc67.i:                                       ; preds = %_RNCNvMs2_Cs4BcJZGCY6Ba_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0CsfcROwRM8ZtH_11polars_plan.exit.i.i
-  %.sroa.3.0.i36.i.i = select i1 %.sink.i.i32.i.i, i64 undef, i64 %.sroa.102.0.i31.i.i, !dbg !3493 ; 2 uses
+  %.sroa.3.0.i36.i.i = select i1 %.sink.i.i32.i.i, i64 undef, i64 %.sroa.102.0.i31.i.i, !dbg !3493
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !3494, !noalias !3325
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.715.i.i), !dbg !3495
-  %i.cw = icmp eq i64 %.sroa.3.0.i36.i.i, 0
+  %i.cw = icmp eq i64 %.sroa.102.0.i31.i.i, 0
   %or.cond.not.i.i = select i1 %.sink.i.i32.i.i, i1 true, i1 %i.cw, !dbg !3496
   br i1 %or.cond.not.i.i, label %bb.x, label %bb.y, !dbg !3496
 
@@ -632,8 +632,8 @@ bb.bd:                                            ; preds = %bb.bb
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.652, i64 72, i1 false), !dbg !151555
   store i64 %i.fw, ptr %i.ad, align 8, !dbg !151820
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.652), !dbg !151817
-  %..sroa.037.0 = select i1 %.sroa.039.1, i64 -1, i64 %.sroa.037.0, !dbg !151821
-  %.sroa.057.0 = select i1 %.sroa.017.0, i64 %.sroa.029.1, i64 %..sroa.037.0, !dbg !151821 ; 2 uses
+  %..sroa.037.0 = select i1 %.sroa.039.1, i64 -1, i64 %.sroa.037.0, !dbg !151821 ; 2 uses
+  %.sroa.057.0 = select i1 %.sroa.017.0, i64 %.sroa.029.1, i64 %..sroa.037.0, !dbg !151821
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !dbg !151822
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !dbg !151559
   %i.fz = invoke noundef nonnull ptr @_RNvMs5_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragehE5emptyCsfcROwRM8ZtH_11polars_plan()
@@ -779,7 +779,7 @@ bb.bq:                                            ; preds = %bb.bo
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEECsfcROwRM8ZtH_11polars_plan.exit239 unwind label %.loopexit, !dbg !151865
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEECsfcROwRM8ZtH_11polars_plan.exit239: ; preds = %bb.bq
-  %i.hj = icmp eq i64 %i.ge, %.sroa.057.0
+  %i.hj = icmp eq i64 %i.ge, %..sroa.037.0
   %or.cond5 = select i1 %.not.i226.not, i1 %i.hj, i1 false, !dbg !151866 ; 2 uses
   %not.or.cond5 = xor i1 %or.cond5, true, !dbg !151866
   %i.hk = zext i1 %not.or.cond5 to i64, !dbg !151866

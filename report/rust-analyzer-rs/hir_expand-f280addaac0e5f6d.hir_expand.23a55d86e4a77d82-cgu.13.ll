@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = zext i8 %i.f to i64
   %.sroa.8.0.i.i31.i.i = select i1 %i.e, i64 %i.g, i64 0
   %i.h = add nuw nsw i64 %.sroa.8.0.i.i31.i.i, %.sroa.7.0.i.i28.i.i ; 3 uses
-  %i.i = icmp ne i32 %.sroa.3050.0.copyload52, 1  ; 3 uses
+  %i.i = icmp ne i32 %.sroa.3050.0.copyload52, 1  ; 2 uses
   br i1 %.not7.i.i, label %bb.e, label %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6option8IntoIterNtNtBb_4char11EscapeDebugEENtNtNtB9_6traits8iterator8Iterator9size_hintCs33K2ylI4knu_10hir_expand.exit.i.i
 
 bb.c:                                             ; preds = %bb.a
@@ -227,7 +227,6 @@ bb.d:                                             ; preds = %bb.c
   br label %_RNvXs21_NtNtCshzWfHUSfYae_4core3str4iterNtB6_11EscapeDebugNtNtNtNtBa_4iter6traits8iterator8Iterator9size_hint.exit
 
 _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6option8IntoIterNtNtBb_4char11EscapeDebugEENtNtNtB9_6traits8iterator8Iterator9size_hintCs33K2ylI4knu_10hir_expand.exit.i.i: ; preds = %bb.b
-  %spec.select.i.i = select i1 %i.i, i64 %i.h, i64 undef
   %i.r = trunc nuw i32 %.sroa.8.0.copyload6 to i1
   %i.s = sub i8 %.sroa.11.0.copyload12, %.sroa.98.0.copyload10
   %i.t = zext i8 %i.s to i64
@@ -243,7 +242,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6op
   %.sroa.636.0.i.i = select i1 %or.cond.i.i23.i.i, i64 %i.x, i64 undef
   %i.z = add nuw nsw i64 %i.h, %i.x
   %or.cond.i.i = select i1 %i.i, i1 %or.cond.i.i23.i.i, i1 false
-  %i.aa = add i64 %spec.select.i.i, %.sroa.636.0.i.i
+  %i.aa = add i64 %i.h, %.sroa.636.0.i.i
   %.sroa.46.0.i.i = select i1 %or.cond.i.i, i64 %i.aa, i64 undef
   br label %_RNvXs21_NtNtCshzWfHUSfYae_4core3str4iterNtB6_11EscapeDebugNtNtNtNtBa_4iter6traits8iterator8Iterator9size_hint.exit
 

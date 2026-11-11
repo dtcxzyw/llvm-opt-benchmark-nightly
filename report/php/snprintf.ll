@@ -204,9 +204,9 @@ bb.a:
   %i.d = alloca i8, align 1                       ; 5 uses
   %i.e = icmp eq i64 %1, 0                        ; 3 uses
   %i.f = getelementptr i8, ptr %0, i64 %1
-  %i.g = getelementptr i8, ptr %i.f, i64 -1
+  %i.g = getelementptr i8, ptr %i.f, i64 -1       ; 2 uses
   %.sroa.6.0 = select i1 %i.e, ptr inttoptr (i64 -1 to ptr), ptr %0
-  %.sroa.0.0 = select i1 %i.e, ptr inttoptr (i64 -1 to ptr), ptr %i.g ; 10 uses
+  %.sroa.0.0 = select i1 %i.e, ptr inttoptr (i64 -1 to ptr), ptr %i.g ; 9 uses
   %i.h = ptrtoaddr ptr %i.b to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
@@ -609,7 +609,7 @@ format_converter.exit:                            ; preds = %bb.ac, %bb.ad, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
-  %.not8 = icmp ugt ptr %.0309.ph.i, %.sroa.0.0
+  %.not8 = icmp ugt ptr %.0309.ph.i, %i.g
   %or.cond = select i1 %i.e, i1 true, i1 %.not8
   br i1 %or.cond, label %bb.hf, label %bb.he
 

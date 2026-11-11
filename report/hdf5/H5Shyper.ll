@@ -205,29 +205,35 @@ bb.ao:                                            ; preds = %._crit_edge
 
 .lr.ph363:                                        ; preds = %bb.ao, %bb.ap
   %.0261361 = phi i32 [ %i.om, %bb.ap ], [ %i.kw, %bb.ao ] ; 4 uses
+  %.1294360 = phi i8 [ %spec.select329, %bb.ap ], [ 0, %bb.ao ] ; 3 uses
   %i.of = zext nneg i32 %.0261361 to i64          ; 2 uses
   %i.og = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.of ; 3 uses
   %i.oh = load i64, ptr %i.og, align 8, !tbaa !18
   %i.oi = add i64 %i.oh, -1                       ; 2 uses
   store i64 %i.oi, ptr %i.og, align 8, !tbaa !18
   %.not318 = icmp eq i64 %i.oi, 0
-  br i1 %.not318, label %bb.ap, label %._crit_edge364
+  br i1 %.not318, label %bb.ap, label %._crit_edge364.loopexit.split.loop.exit462
 
 bb.ap:                                            ; preds = %.lr.ph363
+  %3 = icmp eq i32 %.0261361, 0
+  %spec.select329 = select i1 %3, i8 1, i8 %.1294360 ; 2 uses
   %i.oj = getelementptr inbounds nuw [32 x i8], ptr %i.x, i64 %i.of
   %i.ok = getelementptr inbounds nuw i8, ptr %i.oj, i64 16
   %i.ol = load i64, ptr %i.ok, align 8, !tbaa !42
   store i64 %i.ol, ptr %i.og, align 8, !tbaa !18
   %i.om = add nsw i32 %.0261361, -1
   %i.on = icmp sgt i32 %.0261361, 0
-  br i1 %i.on, label %.lr.ph363, label %._crit_edge364.loopexit.split.loop.exit462, !llvm.loop !99
+  %4 = icmp eq i8 %.1294360, 0
+  %5 = select i1 %i.on, i1 %4, i1 false
+  br i1 %5, label %.lr.ph363, label %._crit_edge364.loopexit.split.loop.exit462, !llvm.loop !99
 
-._crit_edge364.loopexit.split.loop.exit462:       ; preds = %bb.ap
-  %3 = icmp ne i32 %.0261361, 0
+._crit_edge364.loopexit.split.loop.exit462:       ; preds = %.lr.ph363, %bb.ap
+  %.1294.lcssa.ph = phi i8 [ %spec.select329, %bb.ap ], [ %.1294360, %.lr.ph363 ]
+  %6 = icmp eq i8 %.1294.lcssa.ph, 0
   br label %._crit_edge364
 
-._crit_edge364:                                   ; preds = %.lr.ph363, %._crit_edge364.loopexit.split.loop.exit462, %bb.ao
-  %.1294.lcssa = phi i1 [ true, %bb.ao ], [ %3, %._crit_edge364.loopexit.split.loop.exit462 ], [ true, %.lr.ph363 ]
+._crit_edge364:                                   ; preds = %._crit_edge364.loopexit.split.loop.exit462, %bb.ao
+  %.1294.lcssa = phi i1 [ true, %bb.ao ], [ %6, %._crit_edge364.loopexit.split.loop.exit462 ]
   br i1 %i.kz, label %.epil.preheader497, label %._crit_edge364.new
 
 ._crit_edge364.new:                               ; preds = %._crit_edge364, %._crit_edge364.new
@@ -630,26 +636,38 @@ bb.af:                                            ; preds = %._crit_edge.i
   br i1 %i.dx, label %.loopexit93.i, label %.lr.ph115.i
 
 .lr.ph115.i:                                      ; preds = %bb.af, %bb.ag
-  %.0113.i = phi i32 [ %i.gb, %bb.ag ], [ %i.dw, %bb.af ] ; 3 uses
+  %.0113.i = phi i32 [ %i.gb, %bb.ag ], [ %i.dw, %bb.af ] ; 4 uses
+  %.181112.i = phi i8 [ %spec.select.i, %bb.ag ], [ 0, %bb.af ] ; 2 uses
   %i.fu = zext nneg i32 %.0113.i to i64           ; 2 uses
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.fu ; 3 uses
   %i.fw = load i64, ptr %i.fv, align 8, !tbaa !18
   %i.fx = add i64 %i.fw, -1                       ; 2 uses
   store i64 %i.fx, ptr %i.fv, align 8, !tbaa !18
   %.not92.i = icmp eq i64 %i.fx, 0
-  br i1 %.not92.i, label %bb.ag, label %.loopexit93.i
+  br i1 %.not92.i, label %bb.ag, label %.loopexit93.loopexit.i
 
 bb.ag:                                            ; preds = %.lr.ph115.i
   %i.fy = getelementptr inbounds nuw [32 x i8], ptr %.082.i, i64 %i.fu
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
   %i.ga = load i64, ptr %i.fz, align 8, !tbaa !42
   store i64 %i.ga, ptr %i.fv, align 8, !tbaa !18
+  %6 = icmp eq i32 %.0113.i, 0
+  %spec.select.i = select i1 %6, i8 1, i8 %.181112.i ; 2 uses
   %i.gb = add nsw i32 %.0113.i, -1
   %i.gc = icmp slt i32 %.0113.i, 1
-  br i1 %i.gc, label %._crit_edge131.i, label %.lr.ph115.i, !llvm.loop !158
+  %7 = trunc nuw i8 %.181112.i to i1
+  %.not91.i = select i1 %i.gc, i1 true, i1 %7
+  br i1 %.not91.i, label %.loopexit93.loopexit.i, label %.lr.ph115.i, !llvm.loop !158
 
-.loopexit93.i:                                    ; preds = %.lr.ph115.i, %bb.af, %._crit_edge.i
-  br i1 %.not136.i, label %.loopexit.i, label %.lr.ph120.i
+.loopexit93.loopexit.i:                           ; preds = %bb.ag, %.lr.ph115.i
+  %.3.ph.i = phi i8 [ %spec.select.i, %bb.ag ], [ 0, %.lr.ph115.i ]
+  %8 = trunc nuw i8 %.3.ph.i to i1
+  br label %.loopexit93.i
+
+.loopexit93.i:                                    ; preds = %.loopexit93.loopexit.i, %bb.af, %._crit_edge.i
+  %.3.i = phi i1 [ false, %._crit_edge.i ], [ false, %bb.af ], [ %8, %.loopexit93.loopexit.i ] ; 2 uses
+  %brmerge.i = or i1 %.not136.i, %.3.i
+  br i1 %brmerge.i, label %.loopexit.i, label %.lr.ph120.i
 
 .lr.ph120.i:                                      ; preds = %.loopexit93.i, %.lr.ph120.i
   %indvars.iv144.i = phi i64 [ %indvars.iv.next145.i, %.lr.ph120.i ], [ 0, %.loopexit93.i ] ; 5 uses
@@ -678,9 +696,10 @@ bb.ag:                                            ; preds = %.lr.ph115.i
 
 .loopexit.i:                                      ; preds = %.lr.ph120.i, %.loopexit93.i
   %i.gu = icmp eq i64 %.lcssa100.i, 0
-  br i1 %i.gu, label %._crit_edge131.i, label %bb.aa, !llvm.loop !160
+  %.not88.i = select i1 %.3.i, i1 true, i1 %i.gu
+  br i1 %.not88.i, label %._crit_edge131.i, label %bb.aa, !llvm.loop !160
 
-._crit_edge131.i:                                 ; preds = %.loopexit.i, %bb.ag
+._crit_edge131.i:                                 ; preds = %.loopexit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14

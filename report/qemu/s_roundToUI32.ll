@@ -36,7 +36,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
   br i1 %.not37, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %bb.f
-  %i.e = lshr i64 %i.d, 12                        ; 2 uses
+  %i.e = lshr i64 %i.d, 12                        ; 3 uses
   %i.f = icmp eq i64 %i.c, 2048
   %i.g = icmp eq i8 %2, 0
   %or.cond5 = and i1 %i.f, %i.g
@@ -52,8 +52,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.j = icmp eq i8 %2, 6
-  %4 = zext i1 %i.j to i64
-  %spec.select40 = or i64 %spec.select39, %4      ; 2 uses
+  %4 = or i64 %i.e, 1
+  %spec.select40 = select i1 %i.j, i64 %4, i64 %spec.select39 ; 2 uses
   br i1 %3, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i

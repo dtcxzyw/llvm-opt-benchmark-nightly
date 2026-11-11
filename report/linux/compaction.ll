@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %kcompactd_work_requ
   br label %bb.h
 
 bb.h:                                             ; preds = %kcompactd_work_requested.exit73, %bb.g
-  %.059 = phi i64 [ %spec.select, %bb.g ], [ %spec.store.select9, %kcompactd_work_requested.exit73 ]
+  %.059 = phi i64 [ %spec.select, %bb.g ], [ %spec.store.select9, %kcompactd_work_requested.exit73 ] ; 2 uses
   %i.as = call i64 @prepare_to_wait_event(ptr noundef %i.o, ptr noundef nonnull %2, i32 noundef 8193) #12
   %i.at = load i32, ptr %i.g, align 4
   %i.au = icmp sgt i32 %i.at, 0
@@ -217,15 +217,19 @@ bb.i:                                             ; preds = %bb.h
 
 kcompactd_work_requested.exit72:                  ; preds = %bb.i
   %i.aw = load i8, ptr %i.n, align 8, !range !29, !noundef !30
-  %i.ax = trunc nuw i8 %i.aw to i1
-  br i1 %i.ax, label %.critedge.sink.split.sink.split, label %bb.j
+  %i.ax = trunc nuw i8 %i.aw to i1                ; 2 uses
+  %3 = icmp eq i64 %.059, 0                       ; 2 uses
+  %or.cond4.not = select i1 %i.ax, i1 %3, i1 false
+  %spec.store.select8 = select i1 %or.cond4.not, i64 1, i64 %.059 ; 2 uses
+  %spec.select69 = select i1 %i.ax, i1 true, i1 %3
+  br i1 %spec.select69, label %select.unfold, label %bb.j
 
 bb.j:                                             ; preds = %kcompactd_work_requested.exit72
   %.not64 = icmp eq i64 %i.as, 0
   br i1 %.not64, label %bb.k, label %.critedge.sink.split
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = call i64 @schedule_timeout(i64 noundef %.059) #12 ; 2 uses
+  %i.ay = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #12 ; 2 uses
   %i.az = load i32, ptr %i.g, align 4
   %i.ba = icmp sgt i32 %i.az, 0
   br i1 %i.ba, label %.critedge.sink.split.sink.split, label %bb.l
@@ -237,20 +241,20 @@ bb.l:                                             ; preds = %bb.k
 kcompactd_work_requested.exit73:                  ; preds = %bb.l
   %i.bc = load i8, ptr %i.n, align 8, !range !29, !noundef !30
   %i.bd = trunc nuw i8 %i.bc to i1                ; 2 uses
-  %i.be = icmp eq i64 %i.ay, 0
+  %i.be = icmp eq i64 %i.ay, 0                    ; 2 uses
   %or.cond7.not = select i1 %i.bd, i1 %i.be, i1 false
-  %spec.store.select9 = select i1 %or.cond7.not, i64 1, i64 %i.ay ; 3 uses
-  %.not66 = icmp eq i64 %spec.store.select9, 0
-  %spec.select70 = select i1 %i.bd, i1 true, i1 %.not66
+  %spec.store.select9 = select i1 %or.cond7.not, i64 1, i64 %i.ay ; 2 uses
+  %spec.select70 = select i1 %i.bd, i1 true, i1 %i.be
   br i1 %spec.select70, label %select.unfold, label %bb.h
 
-select.unfold:                                    ; preds = %kcompactd_work_requested.exit73
+select.unfold:                                    ; preds = %kcompactd_work_requested.exit73, %kcompactd_work_requested.exit72
+  %.160.ph = phi i64 [ %spec.store.select8, %kcompactd_work_requested.exit72 ], [ %spec.store.select9, %kcompactd_work_requested.exit73 ]
   call void @finish_wait(ptr noundef %i.o, ptr noundef nonnull %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
-  %i.bf = icmp eq i64 %spec.store.select9, 0
+  %i.bf = icmp eq i64 %.160.ph, 0
   br i1 %i.bf, label %bb.ar, label %.critedge
 
-.critedge.sink.split.sink.split:                  ; preds = %bb.l, %bb.k, %bb.i, %bb.h, %kcompactd_work_requested.exit72
+.critedge.sink.split.sink.split:                  ; preds = %bb.l, %bb.k, %bb.i, %bb.h
   call void @finish_wait(ptr noundef %i.o, ptr noundef nonnull %2) #12
   br label %.critedge.sink.split
 

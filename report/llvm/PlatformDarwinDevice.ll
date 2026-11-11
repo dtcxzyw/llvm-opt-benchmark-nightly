@@ -204,20 +204,18 @@ bb.p:                                             ; preds = %bb.o
   %i.do = load ptr, ptr %i.c, align 8, !tbaa !21
   %i.dp = getelementptr inbounds nuw [48 x i8], ptr %i.do, i64 %indvars.iv149 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 32
-  %i.dr = load i64, ptr %i.dq, align 4            ; 5 uses
+  %i.dr = load i64, ptr %i.dq, align 4            ; 4 uses
   %i.ds = trunc i64 %i.dr to i32
   %i.dt = icmp eq i32 %i.ds, %i.cj
   br i1 %i.dt, label %bb.q, label %.critedge
 
 bb.q:                                             ; preds = %bb.p
-  %.not.i46 = icmp slt i64 %i.dr, 0
   %i.du = lshr i64 %i.dr, 32
   %i.dv = trunc nuw i64 %i.du to i32
   %i.dw = and i32 %i.dv, 2147483647
-  %.sroa.063.0.extract.trunc = select i1 %.not.i46, i32 %i.dw, i32 0
   %.unshifted = xor i64 %i.dr, %i.cc
   %i.dx = icmp sgt i64 %.unshifted, -1
-  %i.dy = icmp eq i32 %.sroa.063.0.extract.trunc, %.sroa.062.0.extract.trunc
+  %i.dy = icmp eq i32 %i.dw, %.sroa.062.0.extract.trunc
   %i.dz = icmp sgt i64 %i.dr, -1
   %i.ea = select i1 %i.dz, i1 true, i1 %i.dy
   %i.eb = select i1 %i.dx, i1 %i.ea, i1 false

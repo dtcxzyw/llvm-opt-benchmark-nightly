@@ -205,10 +205,10 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.q, %bb.r
-  %.0128 = phi i32 [ %i.cx, %bb.r ], [ %3, %bb.q ], [ %3, %bb.q ] ; 2 uses
+  %.0128 = phi i32 [ %i.cx, %bb.r ], [ %3, %bb.q ], [ %3, %bb.q ] ; 3 uses
   %i.cy = or i32 %.0128, 268435456
-  %spec.select147 = select i1 %i.cw, i32 %i.cy, i32 %.0128 ; 2 uses
-  %i.cz = or i32 %spec.select147, 1342177280
+  %spec.select147 = select i1 %i.cw, i32 %i.cy, i32 %.0128
+  %i.cz = or i32 %.0128, 1342177280
   %.2 = select i1 %i.cr, i32 %i.cz, i32 %spec.select147
   br label %bb.v
 

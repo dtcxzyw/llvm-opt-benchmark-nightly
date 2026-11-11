@@ -91,7 +91,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.o
   %.059133 = phi ptr [ null, %.lr.ph ], [ %.4.ph, %bb.o ] ; 5 uses
   %.064132 = phi i8 [ 0, %.lr.ph ], [ %.266.ph, %bb.o ] ; 3 uses
   %.068131 = phi i32 [ 8, %.lr.ph ], [ %.270.ph, %bb.o ] ; 2 uses
-  %.072130 = phi i32 [ 0, %.lr.ph ], [ %.274.ph, %bb.o ] ; 4 uses
+  %.072130 = phi i32 [ 0, %.lr.ph ], [ %.274.ph, %bb.o ] ; 5 uses
   %.076129 = phi ptr [ null, %.lr.ph ], [ %.480.ph, %bb.o ] ; 5 uses
   %i.s = getelementptr inbounds nuw [56 x i8], ptr %i.r, i64 %indvars.iv
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 40
@@ -128,10 +128,11 @@ bb.k:                                             ; preds = %bb.i, %bb.i, %bb.i,
   %i.ad = getelementptr inbounds nuw i8, ptr %i.u, i64 1345
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !46  ; 2 uses
   %i.af = icmp eq i8 %i.ae, 0
-  %spec.store.select = select i1 %i.af, i32 2, i32 %.072130 ; 2 uses
+  %spec.store.select = select i1 %i.af, i32 2, i32 %.072130
   %i.ag = icmp eq i8 %i.ae, 1
-  %3 = tail call i32 @llvm.smax.i32(i32 %spec.store.select, i32 1)
-  %spec.store.select5 = select i1 %i.ag, i32 %3, i32 %spec.store.select ; 3 uses
+  %3 = icmp slt i32 %.072130, 1
+  %or.cond4 = select i1 %i.ag, i1 %3, i1 false
+  %spec.store.select5 = select i1 %or.cond4, i32 1, i32 %spec.store.select ; 3 uses
   %.not88 = icmp eq ptr %.059133, null
   br i1 %.not88, label %bb.l, label %bb.o
 
@@ -201,9 +202,6 @@ declare void @ff_cbs_delete_unit(ptr noundef, i32 noundef) local_unnamed_addr #1
 declare void @av_log(ptr noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #1
 
 declare i32 @ff_cbs_insert_unit_content(ptr noundef, i32 noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #2

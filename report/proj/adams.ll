@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %.thread, %bb.o, %bb
   %i.fa = fneg <2 x double> %i.ew
   %i.fb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ef, <2 x double> %i.ez, <2 x double> %i.fa)
   %i.fc = fadd <2 x double> %i.fb, splat (double f0x3FF188B1F952BB44)
-  %i.fd = fmul <2 x double> %i.ec, %i.fc          ; 7 uses
+  %i.fd = fmul <2 x double> %i.ec, %i.fc          ; 8 uses
   %i.fe = load i32, ptr %i.b, align 8, !tbaa !46
   switch i32 %i.fe, label %.thread227 [
     i32 1, label %bb.q
@@ -240,9 +240,9 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %i.fr = fsub <2 x double> <double f0x400DAA4A35759E4B, double f0xC00DAA4A35759E4B>, %i.fd
   %i.fs = insertelement <2 x i1> poison, i1 %i.fk, i64 0
   %i.ft = insertelement <2 x i1> %i.fs, i1 %or.cond, i64 1
-  %i.fu = select <2 x i1> %i.ft, <2 x double> %i.fr, <2 x double> %i.fd ; 2 uses
+  %i.fu = select <2 x i1> %i.ft, <2 x double> %i.fr, <2 x double> %i.fd
   %i.fv = and <2 x i1> %i.fp, %i.fq
-  %i.fw = fsub <2 x double> <double f0xC00DAA4A35759E4B, double f0x400DAA4A35759E4B>, %i.fu
+  %i.fw = fsub <2 x double> <double f0xC00DAA4A35759E4B, double f0x400DAA4A35759E4B>, %i.fd
   %i.fx = select <2 x i1> %i.fv, <2 x double> %i.fw, <2 x double> %i.fu ; 3 uses
   %i.fy = fcmp ult double %0, f0x4002D97C7F3321D2
   br i1 %i.fy, label %bb.v, label %bb.u

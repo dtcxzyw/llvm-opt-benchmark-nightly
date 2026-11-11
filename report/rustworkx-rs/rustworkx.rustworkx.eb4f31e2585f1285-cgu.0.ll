@@ -205,7 +205,7 @@ _RINvXs_NtNtCs87CvPiUlf0m_5alloc3vec14spec_from_elemdNtB5_12SpecFromElem9from_el
   %.sink.i2 = phi ptr [ %i.ac, %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskcxRuJ53GpR_9rustworkx.exit9.i ], [ %i.q, %._crit_edge.thread.i.i ], [ %i.q, %._crit_edge.i.i ] ; 3 uses
   %i.ad = icmp ne i64 %1, 0                       ; 2 uses
   %or.cond.not.i.i.i = and i1 %i.ad, %.not.i.i.1.i
-  %spec.select.i.i.i = select i1 %i.ad, i64 %2, i64 0 ; 3 uses
+  %spec.select.i.i.i = select i1 %i.ad, i64 %2, i64 0 ; 2 uses
   %spec.select1.i.i.i = zext i1 %or.cond.not.i.i.i to i64
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i2) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !386)
@@ -214,7 +214,7 @@ _RINvXs_NtNtCs87CvPiUlf0m_5alloc3vec14spec_from_elemdNtB5_12SpecFromElem9from_el
   %i.af = icmp ugt i64 %1, 1
   %or.cond.i.i.i.i.i = and i1 %i.af, %i.ae
   %.neg.i.i.i = sub i64 1, %1
-  %.neg1.i.i.i = mul i64 %spec.select.i.i.i, %.neg.i.i.i
+  %.neg1.i.i.i = mul i64 %2, %.neg.i.i.i
   %.neg2.i.i.i = select i1 %or.cond.i.i.i.i.i, i64 %.neg1.i.i.i, i64 0
   %i.ag = icmp samesign ult i64 %i.e, 1152921504606846976
   tail call void @llvm.assume(i1 %i.ag)
@@ -617,10 +617,10 @@ bb.aa:                                            ; preds = %bb.y
   %i.lp = udiv i16 %.lhs.trunc.i.i, 48
   %.zext.i.i = zext nneg i16 %i.lp to i64         ; 4 uses
   %i.lq = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.lr = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.lq, i1 true, i1 %i.lr ; 2 uses
+  %i.lr = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.lq, i1 true, i1 %i.lr
   %i.ls = add nsw i64 %.zext.i.i, -128            ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.ls, i64 %.zext.i.i
+  %.sroa.060.0.i.i = select i1 %i.lr, i64 %i.ls, i64 %.zext.i.i
   %.sroa.060.0.mux.i.i = select i1 %i.lq, i64 %i.ls, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.lq, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.z, label %bb.ab
@@ -1023,10 +1023,10 @@ bb.aa:                                            ; preds = %bb.y
   %i.md = udiv i16 %.lhs.trunc.i.i, 48
   %.zext.i.i = zext nneg i16 %i.md to i64         ; 4 uses
   %i.me = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.mf = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.me, i1 true, i1 %i.mf ; 2 uses
+  %i.mf = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.me, i1 true, i1 %i.mf
   %i.mg = add nsw i64 %.zext.i.i, -128            ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.mg, i64 %.zext.i.i
+  %.sroa.060.0.i.i = select i1 %i.mf, i64 %i.mg, i64 %.zext.i.i
   %.sroa.060.0.mux.i.i = select i1 %i.me, i64 %i.mg, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.me, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.z, label %bb.ab
@@ -1429,10 +1429,10 @@ bb.v:                                             ; preds = %bb.x, %bb.w, %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.eq = lshr i64 %i.em, 4                       ; 3 uses
   %i.er = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.es = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.er, i1 true, i1 %i.es ; 2 uses
+  %i.es = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.er, i1 true, i1 %i.es
   %i.et = add nsw i64 %i.eq, -128                 ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.et, i64 %i.eq
+  %.sroa.060.0.i.i = select i1 %i.es, i64 %i.et, i64 %i.eq
   %.sroa.060.0.mux.i.i = select i1 %i.er, i64 %i.et, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.er, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.v, label %bb.x
@@ -1835,10 +1835,10 @@ bb.v:                                             ; preds = %bb.x, %bb.w, %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.dm = lshr i64 %i.di, 5                       ; 3 uses
   %i.dn = icmp ult ptr %.sroa.018.0.i.i, %.sroa.068.0.i.i ; 3 uses
-  %i.do = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i
-  %or.cond.i.i = select i1 %i.dn, i1 true, i1 %i.do ; 2 uses
+  %i.do = icmp ult ptr %.sroa.046.0.i.i, %.sroa.084.0.i.i ; 2 uses
+  %or.cond.i.i = select i1 %i.dn, i1 true, i1 %i.do
   %i.dp = add nsw i64 %i.dm, -128                 ; 2 uses
-  %.sroa.060.0.i.i = select i1 %or.cond.i.i, i64 %i.dp, i64 %i.dm
+  %.sroa.060.0.i.i = select i1 %i.do, i64 %i.dp, i64 %i.dm
   %.sroa.060.0.mux.i.i = select i1 %i.dn, i64 %i.dp, i64 %.sroa.044.0.i.i
   %.sroa.015.0.mux.i.i = select i1 %i.dn, i64 %.sroa.015.0.i.i, i64 %.sroa.060.0.i.i
   br i1 %or.cond.i.i, label %bb.v, label %bb.x
@@ -2241,7 +2241,6 @@ _RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraph
   %or.cond.not = select i1 %i.ad, i1 %i.ae, i1 false
   %i.af = add i64 %5, -2
   %.sroa.012.0 = select i1 %or.cond.not, i64 %i.af, i64 0 ; 4 uses
-  %8 = trunc nuw i64 %6 to i1                     ; 2 uses
   %i.ag = load ptr, ptr %3, align 8, !noundef !56
   %.not = icmp eq ptr %i.ag, null
   br i1 %.not, label %bb.h, label %bb.d
@@ -2559,6 +2558,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs3sCKvcUjPpt_9hashbrown3set7HashSe
 
 bb.x:                                             ; preds = %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_NtB9_10UndirectedE8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i131, %_RNvNtCs87CvPiUlf0m_5alloc5boxed14box_new_uninit.exit.i113
   %i.ds = phi <2 x i32> [ %i.bq, %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_NtB9_10UndirectedE8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i131 ], [ splat (i32 -1), %_RNvNtCs87CvPiUlf0m_5alloc5boxed14box_new_uninit.exit.i113 ]
+  %8 = trunc nuw i64 %6 to i1
   %.sroa.02.0.i117.v = select i1 %8, i64 %7, i64 %.val.i.i112
   %.sroa.02.0.i117 = add i64 %.sroa.02.0.i117.v, -1
   %i.dt = add i64 %.sroa.012.0, 1
@@ -2871,7 +2871,8 @@ bb.ao:                                            ; preds = %bb.d
 
 bb.ap:                                            ; preds = %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_NtB9_10UndirectedE8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i, %bb.g
   %i.gc = phi <2 x i32> [ %i.at, %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_NtB9_10UndirectedE8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i ], [ splat (i32 -1), %bb.g ]
-  %.sroa.02.0.i = select i1 %8, i64 %7, i64 %.val.i.i
+  %9 = trunc nuw i64 %6 to i1
+  %.sroa.02.0.i = select i1 %9, i64 %7, i64 %.val.i.i
   %i.gd = add i64 %.sroa.012.0, 2
   store ptr %i.ao, ptr %i.ak, align 8, !noalias !103233
   %.sroa.4.0..sroa.013.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -3274,7 +3275,6 @@ _RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraph
   %or.cond.not = select i1 %i.ad, i1 %i.ae, i1 false
   %i.af = add i64 %5, -2
   %.sroa.012.0 = select i1 %or.cond.not, i64 %i.af, i64 0 ; 4 uses
-  %8 = trunc nuw i64 %6 to i1                     ; 2 uses
   %i.ag = load ptr, ptr %3, align 8, !noundef !56
   %.not = icmp eq ptr %i.ag, null
   br i1 %.not, label %bb.h, label %bb.d
@@ -3542,6 +3542,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs3sCKvcUjPpt_9hashbrown3set7HashSe
 
 bb.s:                                             ; preds = %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_E8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i130, %_RNvNtCs87CvPiUlf0m_5alloc5boxed14box_new_uninit.exit.i113
   %.sroa.0.0.i.i.i.i115 = phi i32 [ %.sroa.0.0.copyload.i.i.i.i131, %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_E8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i130 ], [ -1, %_RNvNtCs87CvPiUlf0m_5alloc5boxed14box_new_uninit.exit.i113 ]
+  %8 = trunc nuw i64 %6 to i1
   %.sroa.02.0.i116.v = select i1 %8, i64 %7, i64 %.val.i.i112
   %.sroa.02.0.i116 = add i64 %.sroa.02.0.i116.v, -1
   %i.cx = add i64 %.sroa.012.0, 1
@@ -3856,7 +3857,8 @@ bb.aj:                                            ; preds = %bb.d
 
 bb.ak:                                            ; preds = %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_E8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i, %bb.g
   %.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.0.0.copyload.i.i.i.i, %_RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_E8get_nodeCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i ], [ -1, %bb.g ]
-  %.sroa.02.0.i = select i1 %8, i64 %7, i64 %.val.i.i
+  %9 = trunc nuw i64 %6 to i1
+  %.sroa.02.0.i = select i1 %9, i64 %7, i64 %.val.i.i
   %i.fg = add i64 %.sroa.012.0, 2
   store ptr %i.ao, ptr %i.ak, align 8, !noalias !103763
   %.sroa.4.0..sroa.013.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -4259,9 +4261,7 @@ select.unfold:                                    ; preds = %bb.b, %bb.a
           to label %_RINvMNtCslwFuT2d6ECx_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs87CvPiUlf0m_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECskcxRuJ53GpR_9rustworkx.exit unwind label %bb.c
 
 _RNvMs3_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_E8get_nodeCskcxRuJ53GpR_9rustworkx.exit: ; preds = %bb.b
-  %8 = trunc nuw i64 %3 to i1                     ; 3 uses
-  %i.aq = trunc i64 %4 to i32
-  %.sroa.4.0 = select i1 %8, i32 %i.aq, i32 undef ; 2 uses
+  %i.aq = trunc i64 %4 to i32                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.as = load i64, ptr %i.ar, align 8, !noundef !56
@@ -4664,6 +4664,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs87CvPiUlf0m
   %i.dg = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.di = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 4 uses
+  %8 = trunc nuw i64 %3 to i1
   %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dk = load ptr, ptr %i.dj, align 8, !alias.scope !119852, !nonnull !56
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -4702,7 +4703,7 @@ _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSe
   br i1 %i.ed, label %.backedge305.i, label %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i
 
 _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i: ; preds = %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.i, %bb.ad
-  %i.ee = icmp eq i32 %.sroa.4.0, %i.dv
+  %i.ee = icmp eq i32 %i.dv, %i.aq
   %or.cond.i = select i1 %8, i1 %i.ee, i1 false
   br i1 %or.cond.i, label %._crit_edge361.i, label %bb.ae
 
@@ -5105,6 +5106,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs87CvPiUlf0m
   %i.sz = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.ta = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.tb = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 4 uses
+  %9 = trunc nuw i64 %3 to i1
   %i.tc = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.td = load ptr, ptr %i.tc, align 8, !alias.scope !119955, !nonnull !56 ; 2 uses
   %i.te = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -5143,8 +5145,8 @@ _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSe
   br i1 %i.tw, label %.backedge310.i, label %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i145
 
 _RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.thread.i145: ; preds = %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.i202, %bb.cv
-  %i.tx = icmp eq i32 %.sroa.4.0, %i.to
-  %or.cond.i146 = select i1 %8, i1 %i.tx, i1 false
+  %i.tx = icmp eq i32 %i.to, %i.aq
+  %or.cond.i146 = select i1 %9, i1 %i.tx, i1 false
   br i1 %or.cond.i146, label %._crit_edge.i135, label %bb.cw
 
 .backedge310.i:                                   ; preds = %bb.df, %_RNvXs2_NtCs68Jln09rRqb_8petgraph5visitNtCsiCakYNGl26C_11fixedbitset11FixedBitSetINtB5_8VisitMapNtNtB7_10graph_impl9NodeIndexE10is_visitedCskcxRuJ53GpR_9rustworkx.exit.i202

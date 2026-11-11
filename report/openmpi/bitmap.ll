@@ -204,17 +204,17 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.n = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.i, i1 true)
-  %i.o = trunc nuw nsw i64 %i.n to i32
-  %2 = add nuw nsw i32 %i.o, 1
-  %i.p = select i1 %i.l, i32 0, i32 %2            ; 2 uses
+  %i.o = trunc nuw nsw i64 %i.n to i32            ; 2 uses
+  %.neg101 = xor i32 %i.o, -1
+  %i.p = select i1 %i.l, i32 0, i32 %.neg101
   %i.q = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.k, i1 true)
-  %i.r = trunc nuw nsw i64 %i.q to i32
+  %i.r = trunc nuw nsw i64 %i.q to i32            ; 2 uses
   %i.s = add nuw nsw i32 %i.r, 1
-  %i.t = select i1 %i.m, i32 0, i32 %i.s          ; 2 uses
+  %i.t = select i1 %i.m, i32 0, i32 %i.s
   %i.u = select i1 %i.l, i1 true, i1 %i.m
-  %i.v = sub nsw i32 %i.p, %i.t
-  %3 = sub nsw i32 %i.t, %i.p
-  %.162 = select i1 %i.u, i32 %3, i32 %i.v
+  %i.v = sub nsw i32 %i.o, %i.r
+  %2 = add nsw i32 %i.p, %i.t
+  %.162 = select i1 %i.u, i32 %2, i32 %i.v
   br label %.loopexit87
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a

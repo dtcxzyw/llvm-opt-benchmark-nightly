@@ -205,26 +205,29 @@ bb.k:                                             ; preds = %bb.l, %bb.j
   %i.aw = getelementptr i8, ptr %i.av, i64 48
   %i.ax = load i64, ptr %i.aw, align 8
   %i.ay = call i64 @drm_crtc_vblank_count(ptr noundef nonnull %i.ai) #9
-  %.not95 = icmp eq i64 %i.ax, %i.ay
-  br i1 %.not95, label %bb.l, label %select.unfold
+  %.not95 = icmp eq i64 %i.ax, %i.ay              ; 2 uses
+  %3 = icmp ne i64 %.088, 0                       ; 2 uses
+  %or.cond4 = select i1 %.not95, i1 true, i1 %3
+  %spec.store.select8 = select i1 %or.cond4, i64 %.088, i64 1 ; 2 uses
+  %spec.select.not = select i1 %.not95, i1 %3, i1 false
+  br i1 %spec.select.not, label %bb.l, label %select.unfold
 
 bb.l:                                             ; preds = %bb.k
-  %i.az = call i64 @schedule_timeout(i64 noundef %.088) #9 ; 2 uses
+  %i.az = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #9 ; 2 uses
   %i.ba = load ptr, ptr %i.k, align 8
   %i.bb = getelementptr [56 x i8], ptr %i.ba, i64 %indvars.iv114
   %i.bc = getelementptr i8, ptr %i.bb, i64 48
   %i.bd = load i64, ptr %i.bc, align 8
   %i.be = call i64 @drm_crtc_vblank_count(ptr noundef nonnull %i.ai) #9
   %.not97 = icmp eq i64 %i.bd, %i.be              ; 2 uses
-  %i.bf = icmp ne i64 %i.az, 0
+  %i.bf = icmp ne i64 %i.az, 0                    ; 2 uses
   %or.cond7 = select i1 %.not97, i1 true, i1 %i.bf
-  %spec.store.select9 = select i1 %or.cond7, i64 %i.az, i64 1 ; 3 uses
-  %.not98 = icmp ne i64 %spec.store.select9, 0
-  %spec.select102.not = select i1 %.not97, i1 %.not98, i1 false
+  %spec.store.select9 = select i1 %or.cond7, i64 %i.az, i64 1 ; 2 uses
+  %spec.select102.not = select i1 %.not97, i1 %i.bf, i1 false
   br i1 %spec.select102.not, label %bb.k, label %select.unfold
 
 select.unfold:                                    ; preds = %bb.l, %bb.k
-  %.189.ph = phi i64 [ %.088, %bb.k ], [ %spec.store.select9, %bb.l ]
+  %.189.ph = phi i64 [ %spec.store.select8, %bb.k ], [ %spec.store.select9, %bb.l ]
   call void @finish_wait(ptr noundef %i.aj, ptr noundef nonnull %2) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   %i.bg = and i64 %.189.ph, 4294967295

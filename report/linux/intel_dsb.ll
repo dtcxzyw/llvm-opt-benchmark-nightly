@@ -202,10 +202,9 @@ dsb_chicken.exit.i:                               ; preds = %pre_commit_is_vrr_a
   %i.bo = getelementptr i8, ptr %i.d, i64 1168
   %.val.i = load i16, ptr %i.bo, align 8          ; 2 uses
   %i.bp = icmp ugt i16 %.val.i, 13                ; 2 uses
-  %spec.select.i87.i = select i1 %i.bp, i32 30, i32 14 ; 2 uses
+  %spec.select.i87.i = select i1 %i.bp, i32 30, i32 14
   %i.bq = icmp ugt i16 %.val.i, 29
-  %4 = or disjoint i32 %spec.select.i87.i, 32
-  %.1.i.i = select i1 %i.bq, i32 %4, i32 %spec.select.i87.i
+  %.1.i.i = select i1 %i.bq, i32 62, i32 %spec.select.i87.i
   %i.br = select i1 %i.bp, i32 2031617, i32 983041
   %i.bs = or disjoint i32 %.1.i.i, %i.br
   tail call void @intel_dsb_reg_write(ptr noundef %1, i32 %i.bn, i32 noundef %i.bs) #10
@@ -608,10 +607,9 @@ intel_de_write_fw.exit48:                         ; preds = %trace_i915_reg_rw.e
   %i.cu = getelementptr i8, ptr %i.e, i64 1168
   %.val = load i16, ptr %i.cu, align 8            ; 2 uses
   %i.cv = icmp ugt i16 %.val, 13                  ; 2 uses
-  %spec.select.i = select i1 %i.cv, i32 30, i32 14 ; 2 uses
+  %spec.select.i = select i1 %i.cv, i32 30, i32 14
   %i.cw = icmp ugt i16 %.val, 29
-  %1 = or disjoint i32 %spec.select.i, 32
-  %.1.i = select i1 %i.cw, i32 %1, i32 %spec.select.i
+  %.1.i = select i1 %i.cw, i32 62, i32 %spec.select.i
   %i.cx = select i1 %i.cv, i32 2031617, i32 983041
   %i.cy = or disjoint i32 %i.cx, %.1.i            ; 2 uses
   %i.cz = zext nneg i32 %i.cy to i64
@@ -1014,12 +1012,10 @@ intel_de_write_fw.exit95:                         ; preds = %trace_i915_reg_rw.e
   %i.jj = getelementptr i8, ptr %i.e, i64 1168
   %.val = load i16, ptr %i.jj, align 8            ; 2 uses
   %i.jk = icmp ugt i16 %.val, 13
-  %spec.select.i = select i1 %i.jk, i32 30, i32 14 ; 2 uses
   %i.jl = icmp ugt i16 %.val, 29
-  %1 = or disjoint i32 %spec.select.i, 32
-  %.1.i = select i1 %i.jl, i32 %1, i32 %spec.select.i
-  %2 = or disjoint i32 %.1.i, 1                   ; 2 uses
-  %i.jm = zext nneg i32 %2 to i64
+  %.1.i = select i1 %i.jk, i32 31, i32 15
+  %1 = select i1 %i.jl, i32 63, i32 %.1.i         ; 2 uses
+  %i.jm = zext nneg i32 %1 to i64
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_i915_reg_rw, i64 8), i1 false) #11
           to label %trace_i915_reg_rw.exit.i97 [label %arch_test_bit.exit.i.i.i96], !srcloc !25
 
@@ -1069,7 +1065,7 @@ intel_de_write_fw.exit103:                        ; preds = %trace_i915_reg_rw.e
   %i.kd = load ptr, ptr %i.jy, align 8
   %i.ke = zext i32 %.0.i.i99 to i64
   %i.kf = getelementptr i8, ptr %i.kd, i64 %i.ke
-  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %2, ptr elementtype(i32) %i.kf) #11, !srcloc !32
+  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %1, ptr elementtype(i32) %i.kf) #11, !srcloc !32
   ret void
 }
 
@@ -1461,10 +1457,9 @@ bb.m:                                             ; preds = %bb.l, %intel_de_wri
   %i.bc = getelementptr i8, ptr %0, i64 1168
   %.val = load i16, ptr %i.bc, align 8            ; 2 uses
   %i.bd = icmp ugt i16 %.val, 13
-  %spec.select.i = select i1 %i.bd, i32 30, i32 14 ; 2 uses
+  %spec.select.i = select i1 %i.bd, i32 30, i32 14
   %i.be = icmp ugt i16 %.val, 29
-  %3 = or disjoint i32 %spec.select.i, 32
-  %.1.i = select i1 %i.be, i32 %3, i32 %spec.select.i
+  %.1.i = select i1 %i.be, i32 62, i32 %spec.select.i
   %i.bf = and i32 %.1.i, %i.o                     ; 2 uses
   %i.bg = and i32 %i.bf, 16
   %.not45 = icmp eq i32 %i.bg, 0

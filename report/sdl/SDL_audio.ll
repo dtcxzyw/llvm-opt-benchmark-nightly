@@ -205,8 +205,8 @@ bb.a:
   %i.b = icmp eq i32 %0, -1
   %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
   tail call void @SDL_LockRWLockForReading_REAL(ptr noundef %i.c) #11
-  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 168), align 8
-  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 172), align 4
+  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 168), align 8 ; 2 uses
+  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 172), align 4 ; 2 uses
   %spec.select34 = select i1 %.not33, i32 %i.e, i32 %0
   %.12035 = select i1 %i.b, i32 %i.d, i32 %spec.select34 ; 3 uses
   %i.f = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
@@ -218,8 +218,9 @@ bb.a:
   br i1 %.not33, label %.lr.ph.split.us.split, label %.lr.ph.split.split
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph, %bb.c
-  %.12036.us.a = phi i32 [ %i.n, %bb.c ], [ %.12035, %.lr.ph ] ; 2 uses
-  %i.h = tail call fastcc ptr @ObtainPhysicalAudioDevice(i32 noundef %.12036.us.a) ; 3 uses
+  %.12036.us = phi i32 [ %i.n, %bb.c ], [ %.12035, %.lr.ph ]
+  %.12036.us.a = phi i32 [ %i.n, %bb.c ], [ %i.e, %.lr.ph ]
+  %i.h = tail call fastcc ptr @ObtainPhysicalAudioDevice(i32 noundef %.12036.us) ; 3 uses
   %.not.us = icmp eq ptr %i.h, null
   br i1 %.not.us, label %.thread30, label %bb.b
 
@@ -236,7 +237,7 @@ bb.c:                                             ; preds = %bb.b
   tail call fastcc void @ReleaseAudioDevice(ptr noundef nonnull %i.h)
   %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
   tail call void @SDL_LockRWLockForReading_REAL(ptr noundef %i.m) #11
-  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 172), align 4 ; 2 uses
+  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 172), align 4 ; 3 uses
   %i.o = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
   tail call void @SDL_UnlockRWLock_REAL(ptr noundef %i.o) #11
   %i.p = icmp eq i32 %i.n, 0
@@ -251,8 +252,9 @@ bb.d:                                             ; preds = %bb.a
   br label %.thread30
 
 .lr.ph.split.split:                               ; preds = %.lr.ph, %bb.f
-  %.12036.a = phi i32 [ %i.y, %bb.f ], [ %.12035, %.lr.ph ] ; 2 uses
-  %i.s = tail call fastcc ptr @ObtainPhysicalAudioDevice(i32 noundef %.12036.a) ; 3 uses
+  %.12036 = phi i32 [ %i.y, %bb.f ], [ %.12035, %.lr.ph ]
+  %.12036.a = phi i32 [ %i.y, %bb.f ], [ %i.d, %.lr.ph ]
+  %i.s = tail call fastcc ptr @ObtainPhysicalAudioDevice(i32 noundef %.12036) ; 3 uses
   %.not = icmp eq ptr %i.s, null
   br i1 %.not, label %.thread30, label %bb.e
 
@@ -269,7 +271,7 @@ bb.f:                                             ; preds = %bb.e
   tail call fastcc void @ReleaseAudioDevice(ptr noundef nonnull %i.s)
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
   tail call void @SDL_LockRWLockForReading_REAL(ptr noundef %i.x) #11
-  %i.y = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 168), align 8 ; 2 uses
+  %i.y = load i32, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 168), align 8 ; 3 uses
   %i.z = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
   tail call void @SDL_UnlockRWLock_REAL(ptr noundef %i.z) #11
   %i.aa = icmp eq i32 %i.y, 0

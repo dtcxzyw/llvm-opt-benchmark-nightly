@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.869.0.i.i19.i = select i1 %.not.i.i17.i, i64 0, i64 %i.y
   %i.z = add i64 %.sroa.8.0.i.i16.i, %.sroa.7.0.i.i13.i ; 3 uses
   %.not72.i.i20.i = icmp uge i64 %i.z, %.sroa.7.0.i.i13.i ; 3 uses
-  %i.aa = add i64 %.sroa.869.0.i.i19.i, %i.z      ; 2 uses
+  %i.aa = add i64 %.sroa.869.0.i.i19.i, %i.z      ; 3 uses
   %i.ab = icmp uge i64 %i.aa, %i.z
   %or.cond.not.i.i21.i = select i1 %.not72.i.i20.i, i1 %i.ab, i1 false, !prof !15359 ; 2 uses
-  %.sroa.8.3.i.i22.i = select i1 %.not72.i.i20.i, i64 %i.aa, i64 undef, !prof !15359 ; 3 uses
+  %.sroa.8.3.i.i22.i = select i1 %.not72.i.i20.i, i64 %i.aa, i64 undef, !prof !15359 ; 2 uses
   br i1 %.not7.i, label %bb.e, label %.split
 
 bb.c:                                             ; preds = %bb.a
@@ -223,7 +223,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ae = icmp ne i64 %i.h, 2
   %i.af = zext i1 %i.ae to i64
   %i.ag = add i64 %.sroa.8.3.i.i22.i, %i.af       ; 2 uses
-  %i.ah = icmp uge i64 %i.ag, %.sroa.8.3.i.i22.i
+  %i.ah = icmp uge i64 %i.ag, %i.aa
   %.sroa.46.0.i = select i1 %.not72.i.i20.i, i64 %i.ag, i64 undef, !prof !15359
   %narrow.i = select i1 %or.cond.not.i.i21.i, i1 %i.ah, i1 false
   br i1 %narrow.i, label %.thread10, label %bb.g, !prof !15360
@@ -309,10 +309,10 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.869.0.i.i19.i.i.i = select i1 %.not.i.i17.i.i.i, i64 0, i64 %i.bl
   %i.bm = add i64 %.sroa.8.0.i.i16.i.i.i, %.sroa.7.0.i.i13.i.i.i ; 3 uses
   %.not72.i.i20.i.i.i = icmp uge i64 %i.bm, %.sroa.7.0.i.i13.i.i.i ; 3 uses
-  %i.bn = add i64 %.sroa.869.0.i.i19.i.i.i, %i.bm ; 2 uses
+  %i.bn = add i64 %.sroa.869.0.i.i19.i.i.i, %i.bm ; 3 uses
   %i.bo = icmp uge i64 %i.bn, %i.bm
   %or.cond.not.i.i21.i.i.i = select i1 %.not72.i.i20.i.i.i, i1 %i.bo, i1 false, !prof !15359 ; 2 uses
-  %.sroa.8.3.i.i22.i.i.i = select i1 %.not72.i.i20.i.i.i, i64 %i.bn, i64 undef, !prof !15359 ; 3 uses
+  %.sroa.8.3.i.i22.i.i.i = select i1 %.not72.i.i20.i.i.i, i64 %i.bn, i64 undef, !prof !15359 ; 2 uses
   br i1 %.not7.i.i.i, label %bb.l, label %.split.i.i
 
 bb.j:                                             ; preds = %bb.h
@@ -327,7 +327,7 @@ bb.k:                                             ; preds = %bb.j
   %i.br = icmp ne i64 %i.au, 2
   %i.bs = zext i1 %i.br to i64
   %i.bt = add i64 %.sroa.8.3.i.i22.i.i.i, %i.bs   ; 2 uses
-  %i.bu = icmp uge i64 %i.bt, %.sroa.8.3.i.i22.i.i.i
+  %i.bu = icmp uge i64 %i.bt, %i.bn
   %.sroa.46.0.i.i.i = select i1 %.not72.i.i20.i.i.i, i64 %i.bt, i64 undef, !prof !15359
   %narrow.i.i.i = select i1 %or.cond.not.i.i21.i.i.i, i1 %i.bu, i1 false
   br i1 %narrow.i.i.i, label %.thread13.i.i, label %bb.n, !prof !15360

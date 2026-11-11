@@ -204,11 +204,10 @@ arch_test_bit.exit.i58:                           ; preds = %nfs4_slot_get_seqid
 nfs4_slot_seqid_in_use.exit67:                    ; preds = %arch_test_bit.exit.i58, %bb.f, %.split18.us.i.i.i.i66, %nfs4_lookup_slot.exit.i.i55, %nfs4_slot_get_seqid.exit.i56
   %.0.i57 = phi i1 [ false, %bb.f ], [ false, %nfs4_lookup_slot.exit.i.i55 ], [ %i.bf, %arch_test_bit.exit.i58 ], [ false, %nfs4_slot_get_seqid.exit.i56 ], [ false, %.split18.us.i.i.i.i66 ] ; 3 uses
   call void @_raw_spin_unlock(ptr noundef %i.b) #8
-  %i.bg = icmp ne i64 %.045, 0
+  %i.bg = icmp ne i64 %.045, 0                    ; 2 uses
   %or.cond4 = or i1 %.0.i57, %i.bg
-  %spec.store.select8 = select i1 %or.cond4, i64 %.045, i64 1 ; 3 uses
-  %.not46 = icmp ne i64 %spec.store.select8, 0
-  %brmerge92.not = and i1 %.0.i57, %.not46
+  %spec.store.select8 = select i1 %or.cond4, i64 %.045, i64 1 ; 2 uses
+  %brmerge92.not = and i1 %.0.i57, %i.bg
   br i1 %brmerge92.not, label %bb.i, label %.thread85.split.loop.exit
 
 bb.i:                                             ; preds = %nfs4_slot_seqid_in_use.exit67

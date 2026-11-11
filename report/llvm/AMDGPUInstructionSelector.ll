@@ -204,10 +204,9 @@ bb.a:
   %i.h = icmp eq i32 %i.g, 1
   %spec.select = select i1 %i.h, i64 9, i64 8
   %i.i = icmp eq i32 %i.g, 2
-  %.1 = select i1 %i.i, i64 10, i64 %spec.select  ; 2 uses
+  %.1 = select i1 %i.i, i64 10, i64 %spec.select
   %i.j = icmp eq i32 %i.g, 3
-  %5 = xor i64 %.1, 3
-  %.2 = select i1 %i.j, i64 %5, i64 %.1
+  %.2 = select i1 %i.j, i64 11, i64 %.1
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !525
   %i.m = load ptr, ptr %1, align 8, !tbaa !526

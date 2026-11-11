@@ -205,12 +205,11 @@ bb.bl:                                            ; preds = %bb.bk
 bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.jd = load ptr, ptr @N_penwidth, align 8, !tbaa !56
   %i.je = call double @late_double(ptr noundef nonnull %0, ptr noundef %i.jd, double noundef 1.000000e+00, double noundef 0.000000e+00) #26 ; 3 uses
-  %2 = icmp ne i32 %i.ba, 0                       ; 2 uses
-  %spec.store.select = select i1 %2, i64 %i.bb, i64 1
+  %.not678 = icmp eq i32 %i.ba, 0
   %i.jf = fcmp ogt double %i.je, 0.000000e+00
-  %or.cond10 = select i1 %2, i1 %i.jf, i1 false
-  %3 = zext i1 %or.cond10 to i64
-  %spec.select = add nsw i64 %spec.store.select, %3 ; 8 uses
+  %2 = zext i1 %i.jf to i64
+  %spec.store.select = add nsw i64 %i.bb, %2
+  %spec.select = select i1 %.not678, i64 1, i64 %spec.store.select ; 8 uses
   %i.jg = icmp ult i64 %.1510, 3
   br i1 %i.jg, label %bb.bn, label %bb.bv
 
@@ -613,15 +612,15 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ac = tail call i32 @late_int(ptr noundef nonnull %0, ptr noundef %i.aa, i32 noundef %i.ab, i32 noundef 0) #26 ; 4 uses
   %i.ad = sext i32 %i.ac to i64                   ; 4 uses
   %i.ae = icmp ne i32 %i.ac, 0                    ; 2 uses
-  %. = select i1 %i.ae, i64 %i.ad, i64 1
   %i.af = load ptr, ptr @N_penwidth, align 8, !tbaa !56
   %i.ag = tail call double @late_double(ptr noundef nonnull %0, ptr noundef %i.af, double noundef 1.000000e+00, double noundef 0.000000e+00) #26 ; 2 uses
-  %i.ah = fcmp ogt double %i.ag, 0.000000e+00
-  %or.cond = select i1 %i.ae, i1 %i.ah, i1 false  ; 2 uses
-  %i.ai = zext i1 %or.cond to i64
-  %.199.a = add nsw i64 %., %i.ai                 ; 4 uses
-  %i.aj = shl nsw i64 %.199.a, 1                  ; 3 uses
-  %.not.i108 = icmp eq i64 %.199.a, 0
+  %i.ah = fcmp ogt double %i.ag, 0.000000e+00     ; 2 uses
+  %or.cond = select i1 %i.ae, i1 %i.ah, i1 false
+  %i.ai = zext i1 %i.ah to i64
+  %.199.a = add nsw i64 %i.ad, %i.ai
+  %.199 = select i1 %i.ae, i64 %.199.a, i64 1     ; 4 uses
+  %i.aj = shl nsw i64 %.199, 1                    ; 3 uses
+  %.not.i108 = icmp eq i64 %.199, 0
   br i1 %.not.i108, label %.thread.i, label %bb.f
 
 .thread.i:                                        ; preds = %bb.e
@@ -645,7 +644,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.ap = load ptr, ptr @stderr, align 8, !tbaa !15
-  %i.aq = shl nuw nsw i64 %.199.a, 5
+  %i.aq = shl nuw nsw i64 %.199, 5
   %i.ar = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ap, ptr noundef nonnull @.str.6, i64 noundef %i.aq) #28 ; 0 uses
   tail call fastcc void @graphviz_exit() #29
   unreachable
@@ -729,7 +728,7 @@ bb.k:                                             ; preds = %gv_calloc.exit, %bb
   %.sroa.15.1 = phi double [ %i.bu, %bb.j ], [ %i.at, %gv_calloc.exit ]
   %.sroa.0.1 = phi double [ %i.bs, %bb.j ], [ %i.at, %gv_calloc.exit ] ; 2 uses
   %.1 = phi i64 [ %.lcssa, %bb.j ], [ 2, %gv_calloc.exit ]
-  %i.bv = icmp ugt i64 %.199.a, %i.ad
+  %i.bv = icmp ugt i64 %.199, %i.ad
   %or.cond105 = and i1 %or.cond, %i.bv
   br i1 %or.cond105, label %bb.l, label %bb.m
 
