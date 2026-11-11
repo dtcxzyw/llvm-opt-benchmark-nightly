@@ -202,13 +202,12 @@ bb.s:                                             ; preds = %bb.r
   %.p.i = tail call i64 @llvm.abs.i64(i64 %i.ap, i1 true)
   %i.av = select i1 %i.au, i64 %.p.i, i64 0
   %.0.i45 = add nsw i64 %i.av, %i.at              ; 3 uses
-  %2 = icmp slt i64 %.0.i45, 2147483648
+  %2 = icmp ult i64 %.0.i45, 2147483648
   br i1 %2, label %bb.t, label %bb.u, !prof !11
 
 bb.t:                                             ; preds = %bb.s
-  %i.aw = shl nsw i64 %.0.i45, 1
-  %3 = and i64 %i.aw, 8589934590
-  %i.ax = or disjoint i64 %3, 1
+  %i.aw = shl nuw nsw i64 %.0.i45, 1
+  %i.ax = or disjoint i64 %i.aw, 1
   %i.ay = inttoptr i64 %i.ax to ptr
   br label %lean_dec.exit27
 
@@ -323,13 +322,12 @@ bb.aj:                                            ; preds = %bb.ai
   %.p.i54 = tail call i64 @llvm.abs.i64(i64 %i.cf, i1 true)
   %i.cl = select i1 %i.ck, i64 %.p.i54, i64 0
   %.0.i55 = add nsw i64 %i.cl, %i.cj              ; 3 uses
-  %4 = icmp slt i64 %.0.i55, 2147483648
-  br i1 %4, label %bb.ak, label %bb.al, !prof !11
+  %3 = icmp ult i64 %.0.i55, 2147483648
+  br i1 %3, label %bb.ak, label %bb.al, !prof !11
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.cm = shl nsw i64 %.0.i55, 1
-  %5 = and i64 %i.cm, 8589934590
-  %i.cn = or disjoint i64 %5, 1
+  %i.cm = shl nuw nsw i64 %.0.i55, 1
+  %i.cn = or disjoint i64 %i.cm, 1
   %i.co = inttoptr i64 %i.cn to ptr
   br label %lean_dec.exit23
 
