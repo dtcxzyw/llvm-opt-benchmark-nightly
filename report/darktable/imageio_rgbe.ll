@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/imageio_rgbe?download=true
-inline.NumInlined: 20
+inline.NumInlined: 22
 inline.NumDeleted: 5
 loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 1
@@ -29,7 +29,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 18 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.e = icmp ne ptr %3, null                     ; 3 uses
   br i1 %i.e, label %bb.b, label %bb.c
 
@@ -49,10 +49,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call ptr @__errno_location() #14
+  %i.k = tail call ptr @__errno_location() #13
   %i.l = load i32, ptr %i.k, align 4, !tbaa !14
-  %i.m = call ptr @strerror(i32 noundef %i.l) #13
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.m) #13
+  %i.m = call ptr @strerror(i32 noundef %i.l) #12
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.m) #12
   br label %bb.bk
 
 bb.e:                                             ; preds = %bb.c
@@ -76,7 +76,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.x, label %bb.ak, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.y = tail call ptr @__ctype_b_loc() #14       ; 15 uses
+  %i.y = tail call ptr @__ctype_b_loc() #13       ; 15 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !21
   %i.aa = sext i8 %i.w to i64
   %i.ab = getelementptr inbounds [2 x i8], ptr %i.z, i64 %i.aa
@@ -342,10 +342,10 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
   br label %.critedge.split.preheader
 
 bb.al:                                            ; preds = %bb.ak
-  %i.ff = tail call ptr @__errno_location() #14
+  %i.ff = tail call ptr @__errno_location() #13
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !14
-  %i.fh = call ptr @strerror(i32 noundef %i.fg) #13
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.fh) #13
+  %i.fh = call ptr @strerror(i32 noundef %i.fg) #12
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.fh) #12
   br label %bb.bk
 
 .critedge:                                        ; preds = %bb.e
@@ -416,7 +416,7 @@ bb.am:                                            ; preds = %.critedge.split
   br i1 %.not142, label %.critedge127, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.gn = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #15 ; 3 uses
+  %i.gn = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #14 ; 3 uses
   %i.go = icmp ugt i64 %i.gn, 5
   br i1 %i.go, label %bb.ao, label %.critedge127
 
@@ -434,8 +434,8 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.not131, label %bb.ap, label %.critedge123
 
 bb.ap:                                            ; preds = %bb.ao
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  %i.gy = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef nonnull %i.fl, ptr noundef nonnull %i.b) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
+  %i.gy = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef nonnull %i.fl, ptr noundef nonnull %i.b) #12
   %i.gz = load ptr, ptr %i.b, align 8, !tbaa !23
   %.not117 = icmp eq ptr %i.fl, %i.gz
   br i1 %.not117, label %bb.ar, label %bb.aq
@@ -449,7 +449,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   br label %.critedge127
 
 .critedge123:                                     ; preds = %bb.ao
@@ -470,8 +470,8 @@ bb.as:                                            ; preds = %.critedge123
   br i1 %.not132, label %bb.at, label %.critedge125
 
 bb.at:                                            ; preds = %bb.as
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
-  %i.hn = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef nonnull %i.fm, ptr noundef nonnull %i.c) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
+  %i.hn = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef nonnull %i.fm, ptr noundef nonnull %i.c) #12
   %i.ho = load ptr, ptr %i.c, align 8, !tbaa !23
   %.not116 = icmp eq ptr %i.fm, %i.ho
   br i1 %.not116, label %bb.av, label %bb.au
@@ -485,7 +485,7 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   br label %.critedge127
 
 .critedge125:                                     ; preds = %bb.as
@@ -506,57 +506,57 @@ bb.aw:                                            ; preds = %.critedge125
   br i1 %.not134, label %bb.ax, label %.critedge127
 
 bb.ax:                                            ; preds = %bb.aw
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #13
-  %i.ib = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef nonnull %i.fn, ptr noundef nonnull %i.d) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
+  %i.ib = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef nonnull %i.fn, ptr noundef nonnull %i.d) #12
   %i.ic = fptrunc reassoc nsz arcp contract afn double %i.ib to float
   %i.id = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.ie = icmp eq ptr %i.fn, %i.id
   br i1 %i.ie, label %.loopexit, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.if = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.id, ptr noundef nonnull %i.d) #13
+  %i.if = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.id, ptr noundef nonnull %i.d) #12
   %i.ig = fptrunc reassoc nsz arcp contract afn double %i.if to float
   %i.ih = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.ii = icmp eq ptr %i.id, %i.ih
   br i1 %i.ii, label %.loopexit, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ij = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.ih, ptr noundef nonnull %i.d) #13
+  %i.ij = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.ih, ptr noundef nonnull %i.d) #12
   %i.ik = fptrunc reassoc nsz arcp contract afn double %i.ij to float
   %i.il = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.im = icmp eq ptr %i.ih, %i.il
   br i1 %i.im, label %.loopexit, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.in = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.il, ptr noundef nonnull %i.d) #13
+  %i.in = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.il, ptr noundef nonnull %i.d) #12
   %i.io = fptrunc reassoc nsz arcp contract afn double %i.in to float
   %i.ip = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.iq = icmp eq ptr %i.il, %i.ip
   br i1 %i.iq, label %.loopexit, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.ir = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.ip, ptr noundef nonnull %i.d) #13
+  %i.ir = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.ip, ptr noundef nonnull %i.d) #12
   %i.is = fptrunc reassoc nsz arcp contract afn double %i.ir to float
   %i.it = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.iu = icmp eq ptr %i.ip, %i.it
   br i1 %i.iu, label %.loopexit, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.iv = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.it, ptr noundef nonnull %i.d) #13
+  %i.iv = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.it, ptr noundef nonnull %i.d) #12
   %i.iw = fptrunc reassoc nsz arcp contract afn double %i.iv to float
   %i.ix = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.iy = icmp eq ptr %i.it, %i.ix
   br i1 %i.iy, label %.loopexit, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.iz = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.ix, ptr noundef nonnull %i.d) #13
+  %i.iz = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.ix, ptr noundef nonnull %i.d) #12
   %i.ja = fptrunc reassoc nsz arcp contract afn double %i.iz to float
   %i.jb = load ptr, ptr %i.d, align 8, !tbaa !23  ; 3 uses
   %i.jc = icmp eq ptr %i.ix, %i.jb
   br i1 %i.jc, label %.loopexit, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.jd = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.jb, ptr noundef nonnull %i.d) #13
+  %i.jd = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.jb, ptr noundef nonnull %i.d) #12
   %i.je = load ptr, ptr %i.d, align 8, !tbaa !23
   %i.jf = icmp eq ptr %i.jb, %i.je
   br i1 %i.jf, label %.loopexit, label %.critedge129
@@ -574,7 +574,7 @@ bb.be:                                            ; preds = %bb.bd
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %.critedge129
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   br label %.critedge127
 
 .critedge127:                                     ; preds = %bb.an, %.critedge123, %.critedge125, %bb.am, %bb.ar, %bb.aw, %.loopexit, %bb.av
@@ -584,10 +584,10 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %i.ji, label %.split140.us, label %.critedge.split
 
 .split140.us:                                     ; preds = %.critedge127.us, %.critedge127
-  %i.jj = tail call ptr @__errno_location() #14
+  %i.jj = tail call ptr @__errno_location() #13
   %i.jk = load i32, ptr %i.jj, align 4, !tbaa !14
-  %i.jl = call ptr @strerror(i32 noundef %i.jk) #13
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.jl) #13
+  %i.jl = call ptr @strerror(i32 noundef %i.jk) #12
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.jl) #12
   br label %bb.bk
 
 .split.us:                                        ; preds = %.critedge.split.us, %.critedge.split.us, %.critedge.split, %.critedge.split
@@ -596,7 +596,7 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %.not118, label %bb.bf, label %.preheader
 
 bb.bf:                                            ; preds = %.split.us
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.4) #13
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.4) #12
   br label %bb.bk
 
 .preheader:                                       ; preds = %.split.us, %bb.bg
@@ -610,24 +610,24 @@ bb.bg:                                            ; preds = %.preheader
   br i1 %i.jn, label %bb.bh, label %.preheader
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.jo = tail call ptr @__errno_location() #14
+  %i.jo = tail call ptr @__errno_location() #13
   %i.jp = load i32, ptr %i.jo, align 4, !tbaa !14
-  %i.jq = call ptr @strerror(i32 noundef %i.jp) #13
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.jq) #13
+  %i.jq = call ptr @strerror(i32 noundef %i.jp) #12
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.jq) #12
   br label %bb.bk
 
 bb.bi:                                            ; preds = %.preheader
-  %i.jr = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.6, ptr noundef %2, ptr noundef %1) #13
+  %i.jr = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.6, ptr noundef %2, ptr noundef %1) #12
   %i.js = icmp slt i32 %i.jr, 2
   br i1 %i.js, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.7) #13
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.7) #12
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.al, %.split140.us, %bb.bf, %bb.bh, %bb.bj, %bb.bi, %bb.d
   %.2 = phi i32 [ -1, %bb.d ], [ -1, %bb.al ], [ -1, %bb.bh ], [ -1, %bb.bj ], [ -1, %.split140.us ], [ -1, %bb.bf ], [ 0, %bb.bi ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %.2
 }
 
@@ -658,7 +658,7 @@ declare noundef i32 @__isoc99_sscanf(ptr noundef readonly captures(none), ptr no
 define range(i32 -1, 1) i32 @RGBE_ReadPixels(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i8], align 2                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.b = icmp sgt i32 %2, 0
   br i1 %i.b, label %.lr.ph, label %.loopexit
 
@@ -676,10 +676,10 @@ bb.b:                                             ; preds = %.lr.ph, %rgbe2float
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = tail call ptr @__errno_location() #14
+  %i.h = tail call ptr @__errno_location() #13
   %i.i = load i32, ptr %i.h, align 4, !tbaa !14
-  %i.j = tail call ptr @strerror(i32 noundef %i.i) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.j) #13
+  %i.j = tail call ptr @strerror(i32 noundef %i.i) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.j) #12
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.b
@@ -691,7 +691,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.m = zext i8 %i.l to i32
   %i.n = add nsw i32 %i.m, -136
-  %i.o = tail call reassoc nsz arcp contract afn float @ldexpf(float noundef 1.000000e+00, i32 noundef %i.n) #14 ; 2 uses
+  %i.o = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 %i.n) ; 2 uses
   %i.p = load <2 x i8>, ptr %i.a, align 2, !tbaa !12
   %i.q = uitofp <2 x i8> %i.p to <2 x float>
   %i.r = insertelement <2 x float> poison, float %i.o, i64 0
@@ -713,7 +713,7 @@ rgbe2float.exit:                                  ; preds = %bb.d, %bb.e
 
 .loopexit:                                        ; preds = %rgbe2float.exit, %bb.a, %bb.c
   %.07 = phi i32 [ -1, %bb.c ], [ 0, %bb.a ], [ 0, %rgbe2float.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %.07
 }
 
@@ -723,10 +723,12 @@ declare noundef i64 @fread(ptr noundef writeonly captures(none), i64 noundef, i6
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @RGBE_ReadPixels_RLE(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
+  %4 = alloca [4 x i8], align 2                   ; 6 uses
+  %5 = alloca [4 x i8], align 2                   ; 6 uses
   %i.a = alloca [4 x i8], align 1                 ; 8 uses
   %i.b = alloca [2 x i8], align 1                 ; 11 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.c = add i32 %2, -32768
   %or.cond = icmp ult i32 %i.c, -32760
   br i1 %or.cond, label %bb.b, label %.preheader114
@@ -754,8 +756,63 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = mul nsw i32 %3, %2
-  %4 = tail call i32 @RGBE_ReadPixels(ptr noundef %0, ptr noundef %1, i32 noundef %i.s)
+  %i.s = mul nsw i32 %3, %2                       ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
+  %6 = icmp sgt i32 %i.s, 0
+  br i1 %6, label %.lr.ph.i, label %RGBE_ReadPixels.exit
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 3
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 2
+  br label %9
+
+9:                                                ; preds = %rgbe2float.exit.i, %.lr.ph.i
+  %.in.i = phi i32 [ %i.s, %.lr.ph.i ], [ %10, %rgbe2float.exit.i ] ; 2 uses
+  %.068.i = phi ptr [ %1, %.lr.ph.i ], [ %33, %rgbe2float.exit.i ] ; 3 uses
+  %10 = add nsw i32 %.in.i, -1
+  %11 = call i64 @fread(ptr noundef nonnull %5, i64 noundef 4, i64 noundef 1, ptr noundef %0)
+  %12 = icmp eq i64 %11, 0
+  br i1 %12, label %13, label %17
+
+13:                                               ; preds = %9
+  %14 = tail call ptr @__errno_location() #13
+  %15 = load i32, ptr %14, align 4, !tbaa !14
+  %16 = tail call ptr @strerror(i32 noundef %15) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %16) #12
+  br label %RGBE_ReadPixels.exit
+
+17:                                               ; preds = %9
+  %18 = getelementptr inbounds nuw i8, ptr %.068.i, i64 8
+  %19 = load i8, ptr %7, align 1, !tbaa !12       ; 2 uses
+  %.not.i.i = icmp eq i8 %19, 0
+  br i1 %.not.i.i, label %rgbe2float.exit.i, label %20
+
+20:                                               ; preds = %17
+  %21 = zext i8 %19 to i32
+  %22 = add nsw i32 %21, -136
+  %23 = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 %22) ; 2 uses
+  %24 = load <2 x i8>, ptr %5, align 2, !tbaa !12
+  %25 = uitofp <2 x i8> %24 to <2 x float>
+  %26 = insertelement <2 x float> poison, float %23, i64 0
+  %27 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
+  %28 = fmul reassoc nsz arcp contract afn <2 x float> %27, %25
+  %29 = load i8, ptr %8, align 2, !tbaa !12
+  %30 = uitofp i8 %29 to float
+  %31 = fmul reassoc nsz arcp contract afn float %23, %30
+  br label %rgbe2float.exit.i
+
+rgbe2float.exit.i:                                ; preds = %20, %17
+  %.sink10.i = phi float [ %31, %20 ], [ 0.000000e+00, %17 ]
+  %32 = phi <2 x float> [ %28, %20 ], [ zeroinitializer, %17 ]
+  store float %.sink10.i, ptr %18, align 4, !tbaa !13
+  store <2 x float> %32, ptr %.068.i, align 4, !tbaa !13
+  %33 = getelementptr inbounds nuw i8, ptr %.068.i, i64 12
+  %34 = icmp samesign ugt i32 %.in.i, 1
+  br i1 %34, label %9, label %RGBE_ReadPixels.exit
+
+RGBE_ReadPixels.exit:                             ; preds = %rgbe2float.exit.i, %bb.b, %13
+  %.07.i = phi i32 [ -1, %13 ], [ 0, %bb.b ], [ 0, %rgbe2float.exit.i ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %.critedge109
 
 bb.c:                                             ; preds = %.lr.ph174, %.critedge._crit_edge
@@ -767,11 +824,11 @@ bb.c:                                             ; preds = %.lr.ph174, %.crited
   br i1 %i.u, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @free(ptr noundef %.086173) #13
-  %i.v = tail call ptr @__errno_location() #14
+  tail call void @free(ptr noundef %.086173) #12
+  %i.v = tail call ptr @__errno_location() #13
   %i.w = load i32, ptr %i.v, align 4, !tbaa !14
-  %i.x = tail call ptr @strerror(i32 noundef %i.w) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.x) #13
+  %i.x = tail call ptr @strerror(i32 noundef %i.w) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.x) #12
   br label %.critedge109
 
 bb.e:                                             ; preds = %bb.c
@@ -796,7 +853,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.af = zext i8 %i.ae to i32
   %i.ag = add nsw i32 %i.af, -136
-  %i.ah = tail call reassoc nsz arcp contract afn float @ldexpf(float noundef 1.000000e+00, i32 noundef %i.ag) #14 ; 2 uses
+  %i.ah = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 %i.ag) ; 2 uses
   %i.ai = uitofp i8 %i.y to float
   %i.aj = fmul reassoc nsz arcp contract afn float %i.ah, %i.ai
   store float %i.aj, ptr %.093171, align 4, !tbaa !13
@@ -814,11 +871,64 @@ bb.i:                                             ; preds = %bb.g
 rgbe2float.exit:                                  ; preds = %bb.h, %bb.i
   %i.ap = phi <2 x float> [ zeroinitializer, %bb.i ], [ %i.ao, %bb.h ]
   store <2 x float> %i.ap, ptr %i.ad, align 4, !tbaa !13
-  %5 = getelementptr inbounds nuw i8, ptr %.093171, i64 12
-  tail call void @free(ptr noundef %.086173) #13
-  %i.aq = mul nuw nsw i32 %.088172, %2
-  %6 = add nsw i32 %i.aq, -1
-  %7 = tail call i32 @RGBE_ReadPixels(ptr noundef %0, ptr noundef nonnull %5, i32 noundef %6)
+  tail call void @free(ptr noundef %.086173) #12
+  %i.aq = mul nuw nsw i32 %.088172, %2            ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
+  %35 = icmp sgt i32 %i.aq, 1
+  br i1 %35, label %.lr.ph.i111, label %RGBE_ReadPixels.exit119
+
+.lr.ph.i111:                                      ; preds = %rgbe2float.exit
+  %36 = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %37 = getelementptr inbounds nuw i8, ptr %4, i64 2
+  br label %38
+
+38:                                               ; preds = %rgbe2float.exit.i115, %.lr.ph.i111
+  %.in.i112.in = phi i32 [ %i.aq, %.lr.ph.i111 ], [ %.in.i112, %rgbe2float.exit.i115 ] ; 2 uses
+  %.093.pn = phi ptr [ %.093171, %.lr.ph.i111 ], [ %.068.i113, %rgbe2float.exit.i115 ] ; 2 uses
+  %.068.i113 = getelementptr inbounds nuw i8, ptr %.093.pn, i64 12 ; 2 uses
+  %.in.i112 = add nsw i32 %.in.i112.in, -1
+  %39 = call i64 @fread(ptr noundef nonnull %4, i64 noundef 4, i64 noundef 1, ptr noundef %0)
+  %40 = icmp eq i64 %39, 0
+  br i1 %40, label %41, label %45
+
+41:                                               ; preds = %38
+  %42 = tail call ptr @__errno_location() #13
+  %43 = load i32, ptr %42, align 4, !tbaa !14
+  %44 = tail call ptr @strerror(i32 noundef %43) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %44) #12
+  br label %RGBE_ReadPixels.exit119
+
+45:                                               ; preds = %38
+  %46 = getelementptr inbounds nuw i8, ptr %.093.pn, i64 20
+  %47 = load i8, ptr %36, align 1, !tbaa !12      ; 2 uses
+  %.not.i.i114 = icmp eq i8 %47, 0
+  br i1 %.not.i.i114, label %rgbe2float.exit.i115, label %48
+
+48:                                               ; preds = %45
+  %49 = zext i8 %47 to i32
+  %50 = add nsw i32 %49, -136
+  %51 = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 %50) ; 2 uses
+  %52 = load <2 x i8>, ptr %4, align 2, !tbaa !12
+  %53 = uitofp <2 x i8> %52 to <2 x float>
+  %54 = insertelement <2 x float> poison, float %51, i64 0
+  %55 = shufflevector <2 x float> %54, <2 x float> poison, <2 x i32> zeroinitializer
+  %56 = fmul reassoc nsz arcp contract afn <2 x float> %55, %53
+  %57 = load i8, ptr %37, align 2, !tbaa !12
+  %58 = uitofp i8 %57 to float
+  %59 = fmul reassoc nsz arcp contract afn float %51, %58
+  br label %rgbe2float.exit.i115
+
+rgbe2float.exit.i115:                             ; preds = %48, %45
+  %.sink10.i116 = phi float [ %59, %48 ], [ 0.000000e+00, %45 ]
+  %60 = phi <2 x float> [ %56, %48 ], [ zeroinitializer, %45 ]
+  store float %.sink10.i116, ptr %46, align 4, !tbaa !13
+  store <2 x float> %60, ptr %.068.i113, align 4, !tbaa !13
+  %61 = icmp samesign ugt i32 %.in.i112.in, 2
+  br i1 %61, label %38, label %RGBE_ReadPixels.exit119
+
+RGBE_ReadPixels.exit119:                          ; preds = %rgbe2float.exit.i115, %rgbe2float.exit, %41
+  %.07.i110 = phi i32 [ -1, %41 ], [ 0, %rgbe2float.exit ], [ 0, %rgbe2float.exit.i115 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %.critedge109
 
 bb.j:                                             ; preds = %bb.f
@@ -831,8 +941,8 @@ bb.j:                                             ; preds = %bb.f
   br i1 %.not101, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @free(ptr noundef %.086173) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.8) #13
+  tail call void @free(ptr noundef %.086173) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.8) #12
   br label %.critedge109
 
 bb.l:                                             ; preds = %bb.j
@@ -840,7 +950,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.aw, label %bb.m, label %.preheader113.preheader
 
 bb.m:                                             ; preds = %bb.l
-  %i.ax = tail call noalias ptr @malloc(i64 noundef %i.i) #16 ; 2 uses
+  %i.ax = tail call noalias ptr @malloc(i64 noundef %i.i) #15 ; 2 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %bb.n, label %.preheader113.preheader
 
@@ -850,7 +960,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not263, label %.loopexit112, label %.lr.ph163
 
 bb.n:                                             ; preds = %bb.m
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.15, ptr noundef nonnull @.str.9) #13
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.15, ptr noundef nonnull @.str.9) #12
   br label %.critedge109
 
 .loopexit112:                                     ; preds = %.loopexit, %.preheader113.preheader
@@ -1170,11 +1280,11 @@ bb.aj:                                            ; preds = %.lr.ph163, %.loopex
   br i1 %i.er, label %.loopexit215, label %bb.ak
 
 .loopexit215:                                     ; preds = %bb.aj, %bb.o, %bb.v, %bb.ac
-  tail call void @free(ptr noundef nonnull %.187265) #13
-  %i.es = tail call ptr @__errno_location() #14
+  tail call void @free(ptr noundef nonnull %.187265) #12
+  %i.es = tail call ptr @__errno_location() #13
   %i.et = load i32, ptr %i.es, align 4, !tbaa !14
-  %i.eu = tail call ptr @strerror(i32 noundef %i.et) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.eu) #13
+  %i.eu = tail call ptr @strerror(i32 noundef %i.et) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.eu) #12
   br label %.critedge109
 
 bb.ak:                                            ; preds = %bb.aj
@@ -1223,8 +1333,8 @@ vec.epilog.middle.block593:                       ; preds = %vec.epilog.vector.b
   br label %.lr.ph
 
 .loopexit218:                                     ; preds = %bb.al, %bb.u, %bb.ab, %bb.ai
-  tail call void @free(ptr noundef nonnull %.187265) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.10) #13
+  tail call void @free(ptr noundef nonnull %.187265) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.10) #12
   br label %.critedge109
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -1244,8 +1354,8 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %or.cond107, label %.loopexit216, label %bb.an
 
 .loopexit216:                                     ; preds = %bb.am, %bb.q, %bb.x, %bb.ae
-  tail call void @free(ptr noundef nonnull %.187265) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.10) #13
+  tail call void @free(ptr noundef nonnull %.187265) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.10) #12
   br label %.critedge109
 
 bb.an:                                            ; preds = %bb.am
@@ -1263,11 +1373,11 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.fs, label %.loopexit217, label %bb.ap
 
 .loopexit217:                                     ; preds = %bb.ao, %bb.s, %bb.z, %bb.ag
-  tail call void @free(ptr noundef nonnull %.187265) #13
-  %i.ft = tail call ptr @__errno_location() #14
+  tail call void @free(ptr noundef nonnull %.187265) #12
+  %i.ft = tail call ptr @__errno_location() #13
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !14
-  %i.fv = tail call ptr @strerror(i32 noundef %i.fu) #13
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.fv) #13
+  %i.fv = tail call ptr @strerror(i32 noundef %i.fu) #12
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef %i.fv) #12
   br label %.critedge109
 
 bb.ap:                                            ; preds = %bb.ao
@@ -1306,7 +1416,7 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %.lr.ph169
   %i.gg = zext i8 %i.ge to i32
   %i.gh = add nsw i32 %i.gg, -136
-  %i.gi = tail call reassoc nsz arcp contract afn float @ldexpf(float noundef 1.000000e+00, i32 noundef %i.gh) #14 ; 2 uses
+  %i.gi = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 %i.gh) ; 2 uses
   %i.gj = uitofp i8 %i.gb to float
   %i.gk = fmul reassoc nsz arcp contract afn float %i.gi, %i.gj
   store float %i.gk, ptr %.194167, align 4, !tbaa !13
@@ -1331,13 +1441,13 @@ rgbe2float.exit111:                               ; preds = %bb.aq, %bb.ar
 
 ._crit_edge:                                      ; preds = %.critedge._crit_edge, %.preheader114
   %.086.lcssa = phi ptr [ null, %.preheader114 ], [ %.187265, %.critedge._crit_edge ]
-  tail call void @free(ptr noundef %.086.lcssa) #13
+  tail call void @free(ptr noundef %.086.lcssa) #12
   br label %.critedge109
 
-.critedge109:                                     ; preds = %.loopexit215, %.loopexit218, %.loopexit216, %.loopexit217, %._crit_edge, %bb.n, %bb.k, %rgbe2float.exit, %bb.d, %bb.b
-  %.292 = phi i32 [ %4, %bb.b ], [ -1, %bb.d ], [ %7, %rgbe2float.exit ], [ -1, %bb.k ], [ -1, %bb.n ], [ -1, %.loopexit215 ], [ 0, %._crit_edge ], [ -1, %.loopexit217 ], [ -1, %.loopexit216 ], [ -1, %.loopexit218 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+.critedge109:                                     ; preds = %.loopexit215, %.loopexit218, %.loopexit216, %.loopexit217, %._crit_edge, %bb.n, %bb.k, %RGBE_ReadPixels.exit119, %bb.d, %RGBE_ReadPixels.exit
+  %.292 = phi i32 [ %.07.i, %RGBE_ReadPixels.exit ], [ -1, %bb.d ], [ %.07.i110, %RGBE_ReadPixels.exit119 ], [ -1, %bb.k ], [ -1, %bb.n ], [ -1, %.loopexit215 ], [ 0, %._crit_edge ], [ -1, %.loopexit217 ], [ -1, %.loopexit216 ], [ -1, %.loopexit218 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %.292
 }
 
@@ -1357,7 +1467,7 @@ bb.a:
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1380 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1384 ; 3 uses
   %i.e = call i32 @RGBE_ReadHeader(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %3)
@@ -1375,7 +1485,7 @@ bb.d:                                             ; preds = %bb.b
   %i.j = sext i32 %i.i to i64
   %i.k = mul nsw i64 %i.j, %i.h                   ; 6 uses
   %i.l = mul i64 %i.k, 12
-  %i.m = call ptr @dt_alloc_aligned(i64 noundef %i.l) #13 ; 8 uses
+  %i.m = call ptr @dt_alloc_aligned(i64 noundef %i.l) #12 ; 8 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 64) ]
   %.not59 = icmp eq ptr %i.m, null
   br i1 %.not59, label %bb.e, label %bb.f
@@ -1392,7 +1502,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not60, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @free(ptr noundef nonnull %i.m) #13
+  call void @free(ptr noundef nonnull %i.m) #12
   %i.r = call i32 @fclose(ptr noundef nonnull %i.b) ; 0 uses
   br label %bb.i
 
@@ -1402,7 +1512,7 @@ bb.h:                                             ; preds = %bb.f
   store i32 4, ptr %i.t, align 16, !tbaa !51
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1492
   store i32 1, ptr %i.u, align 4, !tbaa !52
-  %i.v = call ptr @dt_mipmap_cache_alloc(ptr noundef %2, ptr noundef nonnull %0) #13 ; 4 uses
+  %i.v = call ptr @dt_mipmap_cache_alloc(ptr noundef %2, ptr noundef nonnull %0) #12 ; 4 uses
   %.not61 = icmp eq ptr %i.v, null
   br i1 %.not61, label %bb.i, label %.preheader77
 
@@ -1445,7 +1555,7 @@ bb.h:                                             ; preds = %bb.f
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.preheader77
-  call void @free(ptr noundef nonnull %i.m) #13
+  call void @free(ptr noundef nonnull %i.m) #12
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 28
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 36
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 44
@@ -1456,7 +1566,7 @@ bb.h:                                             ; preds = %bb.f
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 56
   %.val69 = load float, ptr %i.ao, align 4, !tbaa !13 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %.val64 = load float, ptr %i.ai, align 4, !tbaa !13
   %i.ap = load <2 x float>, ptr %i.al, align 4, !tbaa !13 ; 3 uses
   %i.aq = load <4 x float>, ptr %i.am, align 4, !tbaa !13 ; 5 uses
@@ -1517,7 +1627,7 @@ bb.h:                                             ; preds = %bb.f
   %i.cp = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store float %i.co, ptr %i.cp, align 16, !tbaa !13
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 1616
-  %i.cr = call i32 @mat3inv(ptr noundef nonnull %i.cq, ptr noundef nonnull %i.a) #13 ; 0 uses
+  %i.cr = call i32 @mat3inv(ptr noundef nonnull %i.cq, ptr noundef nonnull %i.a) #12 ; 0 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 1600
   store i32 2, ptr %i.cs, align 16, !tbaa !55
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 1496
@@ -1529,7 +1639,7 @@ bb.h:                                             ; preds = %bb.f
   store i32 %i.cx, ptr %i.cu, align 4, !tbaa !57
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 1480
   store i32 6, ptr %i.cy, align 8, !tbaa !58
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.i
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1573,7 +1683,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e, %bb.g, %bb.h, %._crit_edge, %bb.c
   %.2 = phi i32 [ 2, %bb.c ], [ 6, %bb.g ], [ 2, %bb.e ], [ 0, %._crit_edge ], [ 8, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %bb.i
@@ -1605,13 +1715,13 @@ declare ptr @strerror(i32 noundef) local_unnamed_addr #10
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
 declare ptr @__errno_location() local_unnamed_addr #3
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @ldexpf(float noundef, i32 noundef) local_unnamed_addr #11
-
 declare ptr @dt_alloc_aligned(i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #12
+declare void @llvm.assume(i1 noundef) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.ldexp.f32.i32(float, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.minnum.v2f32(<2 x float>, <2 x float>) #9
@@ -1630,12 +1740,11 @@ attributes #7 = { mustprogress nofree nounwind willreturn allockind("alloc,unini
 attributes #8 = { nounwind uwtable "min-legal-vector-width"="128" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #10 = { nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
-attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #13 = { nounwind }
-attributes #14 = { nounwind willreturn memory(none) }
-attributes #15 = { nounwind willreturn memory(read) }
-attributes #16 = { nounwind allocsize(0) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #12 = { nounwind }
+attributes #13 = { nounwind willreturn memory(none) }
+attributes #14 = { nounwind willreturn memory(read) }
+attributes #15 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

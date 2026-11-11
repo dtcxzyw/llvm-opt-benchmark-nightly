@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = ptrtoaddr ptr %i.c to i64
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   %i.e = sub i64 %i.a, %i.d
   %scevgep = getelementptr i8, ptr %i.c, i64 %i.e
   br label %bb.e
@@ -228,7 +228,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.n = sub i64 %i.l, %i.m
   store ptr %i.k, ptr %1, align 8
   %i.o = call fastcc i32 @StepUTF8(ptr noundef nonnull %i.b, i64 noundef %i.n)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %bb.b, %bb.f
@@ -239,7 +239,7 @@ bb.g:                                             ; preds = %bb.a, %bb.b, %bb.f
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i32 @SDL_memcmp_REAL(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i32 @memcmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #23
+  %i.a = tail call i32 @memcmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #24
   ret i32 %i.a
 }
 
@@ -249,7 +249,7 @@ declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i64 @SDL_strlen_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #23
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #24
   ret i64 %i.a
 }
 
@@ -259,7 +259,7 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i64 @SDL_strnlen_REAL(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @strnlen(ptr noundef %0, i64 noundef %1) #23
+  %i.a = tail call i64 @strnlen(ptr noundef %0, i64 noundef %1) #24
   ret i64 %i.a
 }
 
@@ -269,7 +269,7 @@ declare i64 @strnlen(ptr noundef captures(none), i64 noundef) local_unnamed_addr
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i64 @SDL_wcslen_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #23
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull dereferenceable(4) %0) #24
   ret i64 %i.a
 }
 
@@ -279,7 +279,7 @@ declare i64 @wcslen(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define hidden i64 @SDL_wcsnlen_REAL(ptr nofree noundef readonly %0, i64 noundef %1) local_unnamed_addr #6 {
 bb.a:
-  %i.a = tail call i64 @wcsnlen(ptr noundef %0, i64 noundef %1) #23
+  %i.a = tail call i64 @wcsnlen(ptr noundef %0, i64 noundef %1) #24
   ret i64 %i.a
 }
 
@@ -289,7 +289,7 @@ declare i64 @wcsnlen(ptr noundef, i64 noundef) local_unnamed_addr #7
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_wcslcpy_REAL(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @wcslcpy(ptr noundef %0, ptr noundef %1, i64 noundef %2) #22
+  %i.a = tail call i64 @wcslcpy(ptr noundef %0, ptr noundef %1, i64 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -299,7 +299,7 @@ declare i64 @wcslcpy(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_wcslcat_REAL(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @wcslcat(ptr noundef %0, ptr noundef %1, i64 noundef %2) #22
+  %i.a = tail call i64 @wcslcat(ptr noundef %0, ptr noundef %1, i64 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -309,10 +309,10 @@ declare i64 @wcslcat(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define hidden noalias ptr @SDL_wcsdup_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #23
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %0) #24
   %i.b = shl i64 %i.a, 2
   %i.c = add i64 %i.b, 4                          ; 2 uses
-  %i.d = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.c) #22 ; 3 uses
+  %i.d = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.c) #23 ; 3 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -332,7 +332,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nofree nounwind memory(read) uwtable
 define hidden noundef ptr @SDL_wcsnstr_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly %1, i64 noundef %2) local_unnamed_addr #11 {
 bb.a:
-  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %1) #23 ; 4 uses
+  %i.a = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %1) #24 ; 4 uses
   %i.b = icmp eq i64 %i.a, 0
   br i1 %i.b, label %.critedge, label %.preheader
 
@@ -348,7 +348,7 @@ bb.a:
   br i1 %.not17, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.d = tail call i32 @wcsncmp(ptr noundef nonnull readonly %.01519, ptr noundef nonnull readonly %1, i64 noundef %i.a) #23
+  %i.d = tail call i32 @wcsncmp(ptr noundef nonnull readonly %.01519, ptr noundef nonnull readonly %1, i64 noundef %i.a) #24
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %.critedge, label %bb.c
 
@@ -366,14 +366,14 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define hidden i32 @SDL_wcsncmp_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly %1, i64 noundef %2) local_unnamed_addr #6 {
 bb.a:
-  %i.a = tail call i32 @wcsncmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #23
+  %i.a = tail call i32 @wcsncmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #24
   ret i32 %i.a
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define hidden ptr @SDL_wcsstr_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly %1) local_unnamed_addr #6 {
 bb.a:
-  %i.a = tail call ptr @wcsstr(ptr noundef %0, ptr noundef %1) #23
+  %i.a = tail call ptr @wcsstr(ptr noundef %0, ptr noundef %1) #24
   ret ptr %i.a
 }
 
@@ -383,7 +383,7 @@ declare ptr @wcsstr(ptr noundef, ptr noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
 define hidden i32 @SDL_wcscmp_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly %1) local_unnamed_addr #6 {
 bb.a:
-  %i.a = tail call i32 @wcscmp(ptr noundef %0, ptr noundef %1) #23
+  %i.a = tail call i32 @wcscmp(ptr noundef %0, ptr noundef %1) #24
   ret i32 %i.a
 }
 
@@ -398,8 +398,8 @@ define hidden range(i32 -1, 2) i32 @SDL_wcscasecmp_REAL(ptr nofree noundef reado
 bb.a:
   %i.a = alloca [3 x i32], align 4                ; 5 uses
   %i.b = alloca [3 x i32], align 4                ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.h, %bb.a
@@ -472,8 +472,8 @@ bb.h:                                             ; preds = %bb.g
 
 .thread:                                          ; preds = %bb.f, %bb.g, %bb.h
   %.2 = phi i32 [ 0, %bb.h ], [ -1, %bb.f ], [ 1, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret i32 %.2
 }
 
@@ -482,8 +482,8 @@ define hidden range(i32 -1, 2) i32 @SDL_wcsncasecmp_REAL(ptr noundef %0, ptr nou
 bb.a:
   %i.a = alloca [3 x i32], align 4                ; 5 uses
   %i.b = alloca [3 x i32], align 4                ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.n, %bb.a
@@ -592,15 +592,15 @@ bb.n:                                             ; preds = %bb.m
 
 .thread:                                          ; preds = %bb.l, %bb.m, %bb.n
   %.2 = phi i32 [ 0, %bb.n ], [ -1, %bb.l ], [ 1, %bb.m ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret i32 %.2
 }
 
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_wcstol_REAL(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @__isoc23_wcstol(ptr noundef %0, ptr noundef %1, i32 noundef %2) #22
+  %i.a = tail call i64 @__isoc23_wcstol(ptr noundef %0, ptr noundef %1, i32 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -610,7 +610,7 @@ declare i64 @__isoc23_wcstol(ptr noundef, ptr noundef, i32 noundef) local_unname
 ; Function Attrs: nofree nounwind uwtable
 define hidden i64 @SDL_strlcpy_REAL(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #13 {
 bb.a:
-  %i.a = tail call i64 @strlcpy(ptr noundef %0, ptr noundef nonnull dereferenceable(1) %1, i64 noundef %2) #22
+  %i.a = tail call i64 @strlcpy(ptr noundef %0, ptr noundef nonnull dereferenceable(1) %1, i64 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -624,7 +624,7 @@ bb.a:
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23
+  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24
   %i.b = add i64 %2, -1
   %i.c = tail call i64 @llvm.umin.i64(i64 %i.a, i64 %i.b) ; 6 uses
   %.not40 = icmp eq i64 %i.c, 0
@@ -739,7 +739,7 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define hidden i64 @SDL_strlcat_REAL(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #13 {
 bb.a:
-  %i.a = tail call i64 @strlcat(ptr noundef %0, ptr noundef %1, i64 noundef %2) #22
+  %i.a = tail call i64 @strlcat(ptr noundef %0, ptr noundef %1, i64 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -749,9 +749,9 @@ declare i64 @strlcat(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define hidden noalias ptr @SDL_strdup_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #23
+  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #24
   %i.b = add i64 %i.a, 1                          ; 2 uses
-  %i.c = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.b) #22 ; 3 uses
+  %i.c = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.b) #23 ; 3 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -766,9 +766,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define hidden noalias ptr @SDL_strndup_REAL(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @strnlen(ptr noundef readonly %0, i64 noundef %1) #23 ; 3 uses
+  %i.a = tail call i64 @strnlen(ptr noundef readonly %0, i64 noundef %1) #24 ; 3 uses
   %i.b = add i64 %i.a, 1
-  %i.c = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.b) #22 ; 4 uses
+  %i.c = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.b) #23 ; 4 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -785,7 +785,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden noundef ptr @SDL_strrev_REAL(ptr nofree noundef returned captures(ret: address, provenance) %0) local_unnamed_addr #15 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #23 ; 3 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #24 ; 3 uses
   %i.b = lshr i64 %i.a, 1                         ; 4 uses
   %.not13 = icmp eq i64 %i.b, 0
   br i1 %.not13, label %._crit_edge, label %.lr.ph.preheader
@@ -866,7 +866,7 @@ bb.a:
   %i.b = phi i8 [ %i.g, %.lr.ph ], [ %i.a, %bb.a ]
   %.08 = phi ptr [ %i.f, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
   %i.c = zext i8 %i.b to i32
-  %i.d = tail call i32 @SDL_toupper_REAL(i32 noundef %i.c) #22
+  %i.d = tail call i32 @SDL_toupper_REAL(i32 noundef %i.c) #23
   %i.e = trunc i32 %i.d to i8
   store i8 %i.e, ptr %.08, align 1
   %i.f = getelementptr inbounds nuw i8, ptr %.08, i64 1 ; 2 uses
@@ -891,7 +891,7 @@ bb.a:
   %i.b = phi i8 [ %i.g, %.lr.ph ], [ %i.a, %bb.a ]
   %.08 = phi ptr [ %i.f, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
   %i.c = zext i8 %i.b to i32
-  %i.d = tail call i32 @SDL_tolower_REAL(i32 noundef %i.c) #22
+  %i.d = tail call i32 @SDL_tolower_REAL(i32 noundef %i.c) #23
   %i.e = trunc i32 %i.d to i8
   store i8 %i.e, ptr %.08, align 1
   %i.f = getelementptr inbounds nuw i8, ptr %.08, i64 1 ; 2 uses
@@ -908,7 +908,7 @@ declare i32 @SDL_tolower_REAL(i32 noundef) local_unnamed_addr #10
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @SDL_strchr_REAL(ptr nofree noundef readonly %0, i32 noundef %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %0, i32 noundef %1) #23
+  %i.a = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %0, i32 noundef %1) #24
   ret ptr %i.a
 }
 
@@ -918,7 +918,7 @@ declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #5
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @SDL_strrchr_REAL(ptr nofree noundef readonly %0, i32 noundef %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call ptr @strrchr(ptr noundef nonnull dereferenceable(1) %0, i32 noundef %1) #23
+  %i.a = tail call ptr @strrchr(ptr noundef nonnull dereferenceable(1) %0, i32 noundef %1) #24
   ret ptr %i.a
 }
 
@@ -928,7 +928,7 @@ declare ptr @strrchr(ptr noundef, i32 noundef) local_unnamed_addr #5
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define hidden noundef ptr @SDL_strnstr_REAL(ptr nofree noundef readonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #16 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 4 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 4 uses
   %i.b = icmp eq i64 %i.a, 0
   br i1 %i.b, label %.critedge, label %.preheader
 
@@ -944,7 +944,7 @@ bb.a:
   br i1 %.not15, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.d = tail call i32 @strncmp(ptr noundef nonnull readonly %.01317, ptr noundef nonnull readonly %1, i64 noundef %i.a) #23
+  %i.d = tail call i32 @strncmp(ptr noundef nonnull readonly %.01317, ptr noundef nonnull readonly %1, i64 noundef %i.a) #24
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %.critedge, label %bb.c
 
@@ -962,14 +962,14 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i32 @SDL_strncmp_REAL(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i32 @strncmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #23
+  %i.a = tail call i32 @strncmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #24
   ret i32 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @SDL_strstr_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call ptr @strstr(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #23
+  %i.a = tail call ptr @strstr(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #24
   ret ptr %i.a
 }
 
@@ -981,7 +981,7 @@ define hidden noundef ptr @SDL_strcasestr_REAL(ptr noundef %0, ptr nofree nounde
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   store ptr %0, ptr %i.a, align 8
-  %i.b = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23
+  %i.b = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -1009,8 +1009,8 @@ bb.a:
   %i.d = alloca [3 x i32], align 4                ; 5 uses
   store ptr %0, ptr %i.a, align 8
   store ptr %1, ptr %i.b, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.j, %bb.a
@@ -1087,8 +1087,8 @@ bb.j:                                             ; preds = %bb.i
 
 .thread:                                          ; preds = %bb.h, %bb.i, %bb.j
   %.2 = phi i32 [ 0, %bb.j ], [ -1, %bb.h ], [ 1, %bb.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #23
   ret i32 %.2
 }
 
@@ -1123,7 +1123,7 @@ bb.c:                                             ; preds = %bb.a
 .loopexit.i:                                      ; preds = %bb.b, %bb.c
   %.1.i = phi ptr [ %i.h, %bb.c ], [ %i.f, %bb.b ]
   store i8 0, ptr %.1.i, align 1
-  %i.i = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 3 uses
+  %i.i = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 3 uses
   %i.j = lshr i64 %i.i, 1                         ; 4 uses
   %.not13.i.i = icmp eq i64 %i.j, 0
   br i1 %.not13.i.i, label %SDL_ultoa_REAL.exit, label %.lr.ph.preheader.i.i
@@ -1223,7 +1223,7 @@ bb.c:                                             ; preds = %bb.a
 .loopexit:                                        ; preds = %bb.b, %bb.c
   %.1 = phi ptr [ %i.g, %bb.c ], [ %i.e, %bb.b ]
   store i8 0, ptr %.1, align 1
-  %i.h = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 3 uses
+  %i.h = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 3 uses
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
   %.not13.i = icmp eq i64 %i.i, 0
   br i1 %.not13.i, label %SDL_strrev_REAL.exit, label %.lr.ph.preheader.i
@@ -1321,7 +1321,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader.i
 
 .loopexit.i.i:                                    ; preds = %bb.b
   store i8 0, ptr %i.i, align 1
-  %i.k = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.c) #23 ; 3 uses
+  %i.k = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.c) #24 ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 4 uses
   %.not13.i.i.i = icmp eq i64 %i.l, 0
   br i1 %.not13.i.i.i, label %SDL_ltoa_REAL.exit, label %.lr.ph.preheader.i.i.i
@@ -1415,7 +1415,7 @@ bb.e:                                             ; preds = %bb.c
 .loopexit.i14.i:                                  ; preds = %bb.d, %bb.e
   %.1.i15.i = phi ptr [ %i.al, %bb.e ], [ %i.aj, %bb.d ]
   store i8 0, ptr %.1.i15.i, align 1
-  %i.am = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 3 uses
+  %i.am = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 3 uses
   %i.an = lshr i64 %i.am, 1                       ; 4 uses
   %.not13.i.i16.i = icmp eq i64 %i.an, 0
   br i1 %.not13.i.i16.i, label %SDL_ltoa_REAL.exit, label %.lr.ph.preheader.i.i17.i
@@ -1512,7 +1512,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader.i
 
 .loopexit.i:                                      ; preds = %bb.b
   store i8 0, ptr %i.h, align 1
-  %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.b) #23 ; 3 uses
+  %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.b) #24 ; 3 uses
   %i.k = lshr i64 %i.j, 1                         ; 4 uses
   %.not13.i.i = icmp eq i64 %i.k, 0
   br i1 %.not13.i.i, label %SDL_ultoa_REAL.exit, label %.lr.ph.preheader.i.i
@@ -1606,7 +1606,7 @@ bb.e:                                             ; preds = %bb.c
 .loopexit.i14:                                    ; preds = %bb.d, %bb.e
   %.1.i15 = phi ptr [ %i.ak, %bb.e ], [ %i.ai, %bb.d ]
   store i8 0, ptr %.1.i15, align 1
-  %i.al = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 3 uses
+  %i.al = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 3 uses
   %i.am = lshr i64 %i.al, 1                       ; 4 uses
   %.not13.i.i16 = icmp eq i64 %i.am, 0
   br i1 %.not13.i.i16, label %SDL_ultoa_REAL.exit, label %.lr.ph.preheader.i.i17
@@ -1703,7 +1703,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader.i
 
 .loopexit.i:                                      ; preds = %bb.b
   store i8 0, ptr %i.h, align 1
-  %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.b) #23 ; 3 uses
+  %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.b) #24 ; 3 uses
   %i.k = lshr i64 %i.j, 1                         ; 4 uses
   %.not13.i.i = icmp eq i64 %i.k, 0
   br i1 %.not13.i.i, label %SDL_ulltoa_REAL.exit, label %.lr.ph.preheader.i.i
@@ -1797,7 +1797,7 @@ bb.e:                                             ; preds = %bb.c
 .loopexit.i14:                                    ; preds = %bb.d, %bb.e
   %.1.i15 = phi ptr [ %i.ak, %bb.e ], [ %i.ai, %bb.d ]
   store i8 0, ptr %.1.i15, align 1
-  %i.al = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 3 uses
+  %i.al = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 3 uses
   %i.am = lshr i64 %i.al, 1                       ; 4 uses
   %.not13.i.i16 = icmp eq i64 %i.am, 0
   br i1 %.not13.i.i16, label %SDL_ulltoa_REAL.exit, label %.lr.ph.preheader.i.i17
@@ -1897,7 +1897,7 @@ bb.c:                                             ; preds = %bb.a
 .loopexit:                                        ; preds = %bb.b, %bb.c
   %.1 = phi ptr [ %i.g, %bb.c ], [ %i.e, %bb.b ]
   store i8 0, ptr %.1, align 1
-  %i.h = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #23 ; 3 uses
+  %i.h = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #24 ; 3 uses
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
   %.not13.i = icmp eq i64 %i.i, 0
   br i1 %.not13.i, label %SDL_strrev_REAL.exit, label %.lr.ph.preheader.i
@@ -1967,25 +1967,25 @@ SDL_strrev_REAL.exit:                             ; preds = %.lr.ph.i.prol.loope
   ret ptr %1
 }
 
-; Function Attrs: nounwind uwtable
-define hidden i32 @SDL_atoi_REAL(ptr noundef %0) local_unnamed_addr #8 {
+; Function Attrs: nofree nounwind memory(read) uwtable
+define hidden i32 @SDL_atoi_REAL(ptr noundef %0) local_unnamed_addr #11 {
 bb.a:
-  %i.a = tail call i64 @__isoc23_strtol(ptr noundef nonnull %0, ptr noundef null, i32 noundef 10) #22, !inline_history !31
+  %i.a = tail call i64 @__isoc23_strtol(ptr noundef nonnull %0, ptr noundef null, i32 noundef 10) #23, !inline_history !31
   %i.b = trunc i64 %i.a to i32
   ret i32 %i.b
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
 define hidden double @SDL_atof_REAL(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #17 {
 bb.a:
-  %i.a = tail call double @strtod(ptr noundef nonnull captures(none) %0, ptr noundef null) #22, !inline_history !32
+  %i.a = tail call double @strtod(ptr noundef nonnull captures(none) %0, ptr noundef null) #23, !inline_history !32
   ret double %i.a
 }
 
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_strtol_REAL(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @__isoc23_strtol(ptr noundef %0, ptr noundef %1, i32 noundef %2) #22
+  %i.a = tail call i64 @__isoc23_strtol(ptr noundef %0, ptr noundef %1, i32 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -1995,7 +1995,7 @@ declare i64 @__isoc23_strtol(ptr noundef, ptr noundef, i32 noundef) local_unname
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_strtoul_REAL(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @__isoc23_strtoul(ptr noundef %0, ptr noundef %1, i32 noundef %2) #22
+  %i.a = tail call i64 @__isoc23_strtoul(ptr noundef %0, ptr noundef %1, i32 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -2005,7 +2005,7 @@ declare i64 @__isoc23_strtoul(ptr noundef, ptr noundef, i32 noundef) local_unnam
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_strtoll_REAL(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @__isoc23_strtoll(ptr noundef %0, ptr noundef %1, i32 noundef %2) #22
+  %i.a = tail call i64 @__isoc23_strtoll(ptr noundef %0, ptr noundef %1, i32 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -2015,7 +2015,7 @@ declare i64 @__isoc23_strtoll(ptr noundef, ptr noundef, i32 noundef) local_unnam
 ; Function Attrs: nounwind uwtable
 define hidden i64 @SDL_strtoull_REAL(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i64 @__isoc23_strtoull(ptr noundef %0, ptr noundef %1, i32 noundef %2) #22
+  %i.a = tail call i64 @__isoc23_strtoull(ptr noundef %0, ptr noundef %1, i32 noundef %2) #23
   ret i64 %i.a
 }
 
@@ -2023,19 +2023,19 @@ bb.a:
 declare i64 @__isoc23_strtoull(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn uwtable
-define hidden double @SDL_strtod_REAL(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #17 {
+define hidden double @SDL_strtod_REAL(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #18 {
 bb.a:
-  %i.a = tail call double @strtod(ptr noundef %0, ptr noundef %1) #22
+  %i.a = tail call double @strtod(ptr noundef %0, ptr noundef %1) #23
   ret double %i.a
 }
 
 ; Function Attrs: mustprogress nocallback nofree nounwind willreturn
-declare double @strtod(ptr noundef readonly, ptr noundef captures(none)) local_unnamed_addr #18
+declare double @strtod(ptr noundef readonly, ptr noundef captures(none)) local_unnamed_addr #19
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden i32 @SDL_strcmp_REAL(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #23
+  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #24
   ret i32 %i.a
 }
 
@@ -2054,8 +2054,8 @@ bb.a:
   %i.d = alloca [3 x i32], align 4                ; 5 uses
   store ptr %0, ptr %i.a, align 8
   store ptr %1, ptr %i.b, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.j, %bb.a
@@ -2114,8 +2114,8 @@ bb.j:                                             ; preds = %bb.i
 
 .thread:                                          ; preds = %bb.h, %bb.i, %bb.j
   %.2 = phi i32 [ 0, %bb.j ], [ -1, %bb.h ], [ 1, %bb.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #23
   ret i32 %.2
 }
 
@@ -2123,26 +2123,26 @@ bb.j:                                             ; preds = %bb.i
 define hidden i32 @SDL_sscanf_REAL(ptr noundef %0, ptr noundef %1, ...) local_unnamed_addr #8 {
 bb.a:
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   call void @llvm.va_start.p0(ptr nonnull %2)
-  %i.a = call i32 @__isoc23_vsscanf(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2) #22
+  %i.a = call i32 @__isoc23_vsscanf(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2) #23
   call void @llvm.va_end.p0(ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
   ret i32 %i.a
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn
-declare void @llvm.va_start.p0(ptr) #19
+declare void @llvm.va_start.p0(ptr) #20
 
 ; Function Attrs: nounwind uwtable
 define hidden i32 @SDL_vsscanf_REAL(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %i.a = tail call i32 @__isoc23_vsscanf(ptr noundef %0, ptr noundef %1, ptr noundef %2) #22
+  %i.a = tail call i32 @__isoc23_vsscanf(ptr noundef %0, ptr noundef %1, ptr noundef %2) #23
   ret i32 %i.a
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn
-declare void @llvm.va_end.p0(ptr) #19
+declare void @llvm.va_end.p0(ptr) #20
 
 ; Function Attrs: nounwind
 declare i32 @__isoc23_vsscanf(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #9
@@ -2151,13 +2151,13 @@ declare i32 @__isoc23_vsscanf(ptr noundef, ptr noundef, ptr noundef) local_unnam
 define hidden noundef i32 @SDL_snprintf_REAL(ptr nofree noundef captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, ...) local_unnamed_addr #13 {
 bb.a:
   %3 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   call void @llvm.va_start.p0(ptr nonnull %3)
   %.not.i = icmp eq ptr %2, null
   %spec.store.select.i = select i1 %.not.i, ptr @.str, ptr %2
-  %i.a = call noundef i32 @vsnprintf(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull %3) #22
+  %i.a = call noundef i32 @vsnprintf(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull %3) #23
   call void @llvm.va_end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   ret i32 %i.a
 }
 
@@ -2166,7 +2166,7 @@ define hidden noundef i32 @SDL_vsnprintf_REAL(ptr nofree noundef captures(none) 
 bb.a:
   %.not = icmp eq ptr %2, null
   %spec.store.select = select i1 %.not, ptr @.str, ptr %2
-  %i.a = tail call i32 @vsnprintf(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %spec.store.select, ptr noundef %3) #22
+  %i.a = tail call i32 @vsnprintf(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %spec.store.select, ptr noundef %3) #23
   ret i32 %i.a
 }
 
@@ -2174,11 +2174,11 @@ bb.a:
 define hidden i32 @SDL_swprintf_REAL(ptr noundef %0, i64 noundef %1, ptr noundef %2, ...) local_unnamed_addr #8 {
 bb.a:
   %3 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   call void @llvm.va_start.p0(ptr nonnull %3)
   %i.a = call i32 @SDL_vswprintf_REAL(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef nonnull %3)
   call void @llvm.va_end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   ret i32 %i.a
 }
 
@@ -2199,27 +2199,27 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not55, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %2) #23
+  %i.b = tail call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %2) #24
   %i.c = shl i64 %i.b, 2
   %i.d = add i64 %i.c, 4
-  %i.e = tail call ptr @SDL_iconv_string_REAL(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull %2, i64 noundef %i.d) #22 ; 2 uses
+  %i.e = tail call ptr @SDL_iconv_string_REAL(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull %2, i64 noundef %i.d) #23 ; 2 uses
   %.not56 = icmp eq ptr %i.e, null
   br i1 %.not56, label %bb.r, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.044 = phi ptr [ %i.e, %bb.d ], [ null, %bb.c ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @llvm.va_copy.p0(ptr nonnull %4, ptr %3)
   %.not.i = icmp eq ptr %.044, null
   %spec.store.select.i = select i1 %.not.i, ptr @.str, ptr %.044 ; 2 uses
-  %i.f = call noundef i32 @vsnprintf(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull %4) #22 ; 5 uses
+  %i.f = call noundef i32 @vsnprintf(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull %4) #23 ; 5 uses
   call void @llvm.va_end.p0(ptr nonnull %4)
   %i.g = icmp slt i32 %i.f, 0
   br i1 %i.g, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @SDL_free_REAL(ptr noundef %.044) #22
+  call void @SDL_free_REAL(ptr noundef %.044) #23
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
@@ -2237,23 +2237,23 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %i.k = call noalias ptr @SDL_malloc_REAL(i64 noundef %.pre65) #22 ; 2 uses
+  %i.k = call noalias ptr @SDL_malloc_REAL(i64 noundef %.pre65) #23 ; 2 uses
   %.not57 = icmp eq ptr %i.k, null
   br i1 %.not57, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @SDL_free_REAL(ptr noundef %.044) #22
+  call void @SDL_free_REAL(ptr noundef %.044) #23
   br label %bb.q
 
 bb.k:                                             ; preds = %.thread, %bb.i
   %i.l = phi ptr [ %i.j, %.thread ], [ %i.k, %bb.i ] ; 3 uses
-  %i.m = call noundef i32 @vsnprintf(ptr noundef nonnull %i.l, i64 noundef %.pre65, ptr noundef nonnull %spec.store.select.i, ptr noundef %3) #22
+  %i.m = call noundef i32 @vsnprintf(ptr noundef nonnull %i.l, i64 noundef %.pre65, ptr noundef nonnull %spec.store.select.i, ptr noundef %3) #23
   %.not58 = icmp sgt i32 %i.m, %i.f
   br i1 %.not58, label %.thread63, label %._crit_edge
 
 .thread63:                                        ; preds = %bb.k
-  call void @SDL_free_REAL(ptr noundef %.044) #22
-  %i.n = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.3) #22
+  call void @SDL_free_REAL(ptr noundef %.044) #23
+  %i.n = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.3) #23
   %i.o = zext i1 %i.n to i32
   br label %bb.q
 
@@ -2261,8 +2261,8 @@ bb.k:                                             ; preds = %.thread, %bb.i
   %.042 = phi i1 [ %i.i, %bb.k ], [ false, %bb.g ]
   %.041 = phi ptr [ %i.l, %bb.k ], [ null, %bb.g ] ; 2 uses
   %.040 = phi ptr [ %i.l, %bb.k ], [ %i.a, %bb.g ]
-  call void @SDL_free_REAL(ptr noundef %.044) #22
-  %i.p = call ptr @SDL_iconv_string_REAL(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.1, ptr noundef nonnull %.040, i64 noundef %.pre65) #22 ; 4 uses
+  call void @SDL_free_REAL(ptr noundef %.044) #23
+  %i.p = call ptr @SDL_iconv_string_REAL(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.1, ptr noundef nonnull %.040, i64 noundef %.pre65) #23 ; 4 uses
   %.not59 = icmp eq ptr %i.p, null
   br i1 %.not59, label %bb.o, label %bb.l
 
@@ -2270,13 +2270,13 @@ bb.l:                                             ; preds = %._crit_edge
   br i1 %.not, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.q = call i64 @wcslcpy(ptr noundef nonnull %0, ptr noundef nonnull %i.p, i64 noundef %1) #22 ; 0 uses
+  %i.q = call i64 @wcslcpy(ptr noundef nonnull %0, ptr noundef nonnull %i.p, i64 noundef %1) #23 ; 0 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.r = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.p) #23
+  %i.r = call i64 @wcslen(ptr noundef nonnull readonly dereferenceable(4) %i.p) #24
   %i.s = trunc i64 %i.r to i32
-  call void @SDL_free_REAL(ptr noundef nonnull %i.p) #22
+  call void @SDL_free_REAL(ptr noundef nonnull %i.p) #23
   br label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge, %bb.n
@@ -2286,13 +2286,13 @@ bb.o:                                             ; preds = %._crit_edge, %bb.n
   br i1 %or.cond, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  call void @SDL_free_REAL(ptr noundef nonnull %.041) #22
+  call void @SDL_free_REAL(ptr noundef nonnull %.041) #23
   br label %bb.q
 
 bb.q:                                             ; preds = %.thread63, %bb.j, %bb.p, %bb.o, %bb.f
   %.2 = phi i32 [ -1, %bb.f ], [ -1, %bb.j ], [ %i.o, %.thread63 ], [ %.0, %bb.p ], [ %.0, %bb.o ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.d, %bb.q
@@ -2306,7 +2306,7 @@ declare noundef i32 @vsnprintf(ptr noundef captures(none), i64 noundef, ptr noun
 declare ptr @SDL_iconv_string_REAL(ptr noundef, ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn
-declare void @llvm.va_copy.p0(ptr, ptr) #19
+declare void @llvm.va_copy.p0(ptr, ptr) #20
 
 declare void @SDL_free_REAL(ptr noundef) local_unnamed_addr #10
 
@@ -2317,11 +2317,11 @@ define hidden range(i32 -2147483648, 2147483647) i32 @SDL_asprintf_REAL(ptr nofr
 bb.a:
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
   %3 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   call void @llvm.va_start.p0(ptr nonnull %3)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   store ptr null, ptr %0, align 8
-  %i.a = call noalias ptr @SDL_malloc_REAL(i64 noundef 100) #22 ; 2 uses
+  %i.a = call noalias ptr @SDL_malloc_REAL(i64 noundef 100) #23 ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %SDL_vasprintf_REAL.exit, label %.preheader.i
 
@@ -2335,13 +2335,13 @@ bb.b:                                             ; preds = %bb.f, %.preheader.i
   %.0.i = phi ptr [ %i.h, %bb.f ], [ %i.a, %.preheader.i ] ; 5 uses
   call void @llvm.va_copy.p0(ptr nonnull %2, ptr nonnull %3)
   %i.b = zext nneg i32 %.021.i to i64
-  %i.c = call noundef i32 @vsnprintf(ptr noundef nonnull %.0.i, i64 noundef %i.b, ptr noundef nonnull %spec.store.select.i.i, ptr noundef nonnull %2) #22 ; 5 uses
+  %i.c = call noundef i32 @vsnprintf(ptr noundef nonnull %.0.i, i64 noundef %i.b, ptr noundef nonnull %spec.store.select.i.i, ptr noundef nonnull %2) #23 ; 5 uses
   call void @llvm.va_end.p0(ptr nonnull %2)
   %i.d = icmp slt i32 %i.c, 0
   br i1 %i.d, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  call void @SDL_free_REAL(ptr noundef nonnull %.0.i) #22
+  call void @SDL_free_REAL(ptr noundef nonnull %.0.i) #23
   br label %SDL_vasprintf_REAL.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -2355,19 +2355,19 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.f = add nuw nsw i32 %i.c, 1                  ; 2 uses
   %i.g = zext nneg i32 %i.f to i64
-  %i.h = call ptr @SDL_realloc_REAL(ptr noundef nonnull %.0.i, i64 noundef %i.g) #24 ; 2 uses
+  %i.h = call ptr @SDL_realloc_REAL(ptr noundef nonnull %.0.i, i64 noundef %i.g) #25 ; 2 uses
   %.not26.i = icmp eq ptr %i.h, null
   br i1 %.not26.i, label %bb.g, label %bb.b
 
 bb.g:                                             ; preds = %bb.f
-  call void @SDL_free_REAL(ptr noundef nonnull %.0.i) #22
+  call void @SDL_free_REAL(ptr noundef nonnull %.0.i) #23
   br label %SDL_vasprintf_REAL.exit
 
 SDL_vasprintf_REAL.exit:                          ; preds = %bb.a, %bb.c, %bb.e, %bb.g
   %.022.i = phi i32 [ %i.c, %bb.c ], [ %i.c, %bb.e ], [ -1, %bb.g ], [ -1, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
   call void @llvm.va_end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   ret i32 %.022.i
 }
 
@@ -2375,9 +2375,9 @@ SDL_vasprintf_REAL.exit:                          ; preds = %bb.a, %bb.c, %bb.e,
 define hidden range(i32 -2147483648, 2147483647) i32 @SDL_vasprintf_REAL(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr noundef %2) local_unnamed_addr #8 {
 bb.a:
   %3 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   store ptr null, ptr %0, align 8
-  %i.a = tail call noalias ptr @SDL_malloc_REAL(i64 noundef 100) #22 ; 2 uses
+  %i.a = tail call noalias ptr @SDL_malloc_REAL(i64 noundef 100) #23 ; 2 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.h, label %.preheader
 
@@ -2391,13 +2391,13 @@ bb.b:                                             ; preds = %.preheader, %bb.f
   %.0 = phi ptr [ %i.h, %bb.f ], [ %i.a, %.preheader ] ; 5 uses
   call void @llvm.va_copy.p0(ptr nonnull %3, ptr %2)
   %i.b = zext nneg i32 %.021 to i64
-  %i.c = call noundef i32 @vsnprintf(ptr noundef nonnull %.0, i64 noundef %i.b, ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull %3) #22 ; 5 uses
+  %i.c = call noundef i32 @vsnprintf(ptr noundef nonnull %.0, i64 noundef %i.b, ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull %3) #23 ; 5 uses
   call void @llvm.va_end.p0(ptr nonnull %3)
   %i.d = icmp slt i32 %i.c, 0
   br i1 %i.d, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  call void @SDL_free_REAL(ptr noundef nonnull %.0) #22
+  call void @SDL_free_REAL(ptr noundef nonnull %.0) #23
   br label %bb.h
 
 bb.d:                                             ; preds = %bb.b
@@ -2411,27 +2411,27 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.f = add nuw nsw i32 %i.c, 1                  ; 2 uses
   %i.g = zext nneg i32 %i.f to i64
-  %i.h = call ptr @SDL_realloc_REAL(ptr noundef nonnull %.0, i64 noundef %i.g) #24 ; 2 uses
+  %i.h = call ptr @SDL_realloc_REAL(ptr noundef nonnull %.0, i64 noundef %i.g) #25 ; 2 uses
   %.not26 = icmp eq ptr %i.h, null
   br i1 %.not26, label %bb.g, label %bb.b
 
 bb.g:                                             ; preds = %bb.f
-  call void @SDL_free_REAL(ptr noundef nonnull %.0) #22
+  call void @SDL_free_REAL(ptr noundef nonnull %.0) #23
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %bb.g, %bb.e, %bb.c
   %.022 = phi i32 [ %i.c, %bb.c ], [ %i.c, %bb.e ], [ -1, %bb.g ], [ -1, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   ret i32 %.022
 }
 
 ; Function Attrs: allocsize(1)
-declare ptr @SDL_realloc_REAL(ptr noundef, i64 noundef) local_unnamed_addr #20
+declare ptr @SDL_realloc_REAL(ptr noundef, i64 noundef) local_unnamed_addr #21
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @SDL_strpbrk_REAL(ptr nofree noundef readonly %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call ptr @strpbrk(ptr noundef %0, ptr noundef %1) #23
+  %i.a = tail call ptr @strpbrk(ptr noundef %0, ptr noundef %1) #24
   ret ptr %i.a
 }
 
@@ -2439,10 +2439,10 @@ bb.a:
 declare ptr @strpbrk(ptr noundef, ptr noundef captures(none)) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #21
+declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umax.i8(i8, i8) #21
+declare i8 @llvm.umax.i8(i8, i8) #22
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -2461,14 +2461,15 @@ attributes #13 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trap
 attributes #14 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { mustprogress nofree norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #18 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #19 = { nocallback nofree nosync nounwind willreturn }
-attributes #20 = { allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #21 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #22 = { nounwind }
-attributes #23 = { nounwind willreturn memory(read) }
-attributes #24 = { nounwind allocsize(1) }
+attributes #17 = { mustprogress nofree norecurse nounwind willreturn memory(read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #18 = { mustprogress nofree norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #19 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #20 = { nocallback nofree nosync nounwind willreturn }
+attributes #21 = { allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #23 = { nounwind }
+attributes #24 = { nounwind willreturn memory(read) }
+attributes #25 = { nounwind allocsize(1) }
 
 !llvm.module.flags = !{!3, !4}
 !llvm.ident = !{!5}

@@ -3,15 +3,19 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-; Function Attrs: mustprogress nocallback nofree noredzone nosync nounwind optsize willreturn memory(none) uwtable
+; Function Attrs: mustprogress nocallback nofree norecurse noredzone nosync nounwind optsize willreturn memory(none) uwtable
 define dso_local x86_fp80 @ldexpl(x86_fp80 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %ldexpl = tail call x86_fp80 @ldexpl(x86_fp80 1.000000e+00, i32 %1)
+  %ldexpl = tail call nnan x86_fp80 @llvm.ldexp.f80.i32(x86_fp80 1.000000e+00, i32 %1)
   %i.a = fmul x86_fp80 %0, %ldexpl
   ret x86_fp80 %i.a
 }
 
-attributes #0 = { mustprogress nocallback nofree noredzone nosync nounwind optsize willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare x86_fp80 @llvm.ldexp.f80.i32(x86_fp80, i32) #1
+
+attributes #0 = { mustprogress nocallback nofree norecurse noredzone nosync nounwind optsize willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6}
 !llvm.ident = !{!7}
