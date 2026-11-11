@@ -205,7 +205,7 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %_ZNSt6vectorIhSaIhE
   %i.aa = phi ptr [ %i.s, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.pre, %bb.d ], [ %i.e, %bb.b ] ; 5 uses
   %i.ab = phi ptr [ %i.v, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %i.m, %bb.d ], [ %i.d, %bb.b ] ; 4 uses
   %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
-  %i.ad = ptrtoint ptr %i.aa to i64               ; 5 uses
+  %i.ad = ptrtoint ptr %i.aa to i64               ; 2 uses
   %i.ae = sub i64 %i.ac, %i.ad                    ; 9 uses
   %i.af = shl i64 %1, 1                           ; 4 uses
   %i.ag = add i64 %i.ae, %i.af                    ; 3 uses
@@ -215,8 +215,7 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %_ZNSt6vectorIhSaIhE
 bb.i:                                             ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
   tail call void @_ZNSt6vectorIhSaIhEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %i.af)
   %.pre29 = load ptr, ptr %i.c, align 8, !tbaa !159
-  %.pre30 = load ptr, ptr %2, align 8, !tbaa !121 ; 2 uses
-  %.pre31 = ptrtoint ptr %.pre30 to i64
+  %.pre30 = load ptr, ptr %2, align 8, !tbaa !121
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
 
 bb.j:                                             ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
@@ -233,10 +232,9 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
 
 _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.i, %bb.j, %bb.k, %bb.l
-  %.pre-phi = phi i64 [ %.pre31, %bb.i ], [ %i.ad, %bb.j ], [ %i.ad, %bb.k ], [ %i.ad, %bb.l ]
   %i.ak = phi ptr [ %.pre30, %bb.i ], [ %i.aa, %bb.j ], [ %i.aa, %bb.k ], [ %i.aa, %bb.l ] ; 2 uses
   %i.al = phi ptr [ %.pre29, %bb.i ], [ %i.ab, %bb.j ], [ %i.ab, %bb.k ], [ %i.aj, %bb.l ]
-  %3 = ptrtoaddr ptr %i.ak to i64
+  %.pre-phi = ptrtoint ptr %i.ak to i64           ; 2 uses
   %i.am = ptrtoint ptr %i.al to i64
   %i.an = sub i64 %i.am, %.pre-phi                ; 2 uses
   %.not.i.i21 = icmp ult i64 %i.ae, %i.an
@@ -256,7 +254,7 @@ iter.check:                                       ; preds = %_ZNSt6vectorIhSaIhE
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.at = add i64 %3, %i.ac
+  %i.at = add i64 %.pre-phi, %i.ac
   %i.au = add i64 %i.ad, %i.a
   %i.av = sub i64 %i.au, %i.at
   %diff.check = icmp ugt i64 %i.av, -32

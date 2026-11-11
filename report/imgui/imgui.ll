@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr [4 x i8], ptr %i.j, i64 %i.l
   %i.n = getelementptr i8, ptr %i.m, i64 -4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !237  ; 2 uses
-  %i.p = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.p = ptrtoint ptr %0 to i64
   %i.q = xor i32 %i.o, -1                         ; 2 uses
   %i.r = load i8, ptr %0, align 1, !tbaa !82      ; 2 uses
   %.not4050.i.i = icmp eq i8 %i.r, 0
@@ -502,7 +502,7 @@ _ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit: ; preds = %bb.q, %bb.p, %bb.r,
   %.015.i.i32 = phi ptr [ %i.fa, %.critedge2.i.i34 ], [ %0, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ] ; 5 uses
   %i.ex = load i8, ptr %.015.i.i32, align 1, !tbaa !82
   switch i8 %i.ex, label %.critedge2.i.i34 [
-    i8 0, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit
+    i8 0, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28
     i8 35, label %bb.w
   ]
 
@@ -510,21 +510,16 @@ bb.w:                                             ; preds = %.lr.ph.i.i31
   %i.ey = getelementptr inbounds nuw i8, ptr %.015.i.i32, i64 1
   %i.ez = load i8, ptr %i.ey, align 1, !tbaa !82
   %.not14.i.i33 = icmp eq i8 %i.ez, 35
-  br i1 %.not14.i.i33, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit, label %.critedge2.i.i34
+  br i1 %.not14.i.i33, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28, label %.critedge2.i.i34
 
 .critedge2.i.i34:                                 ; preds = %bb.w, %.lr.ph.i.i31
   %i.fa = getelementptr inbounds nuw i8, ptr %.015.i.i32, i64 1 ; 2 uses
   %exitcond.not.i.i35 = icmp eq ptr %i.fa, inttoptr (i64 -1 to ptr)
-  br i1 %exitcond.not.i.i35, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit, label %.lr.ph.i.i31, !llvm.loop !19
+  br i1 %exitcond.not.i.i35, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28, label %.lr.ph.i.i31, !llvm.loop !19
 
-_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit: ; preds = %.lr.ph.i.i31, %bb.w, %.critedge2.i.i34
-  %.0.lcssa.i.i.ph = phi ptr [ %.015.i.i32, %bb.w ], [ inttoptr (i64 -1 to ptr), %.critedge2.i.i34 ], [ %.015.i.i32, %.lr.ph.i.i31 ] ; 2 uses
-  %.pre42 = ptrtoint ptr %.0.lcssa.i.i.ph to i64
-  br label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28
-
-_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28:   ; preds = %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit
-  %.pre-phi = phi i64 [ %.pre42, %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit ], [ %i.p, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ]
-  %.0.lcssa.i.i = phi ptr [ %.0.lcssa.i.i.ph, %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit ], [ inttoptr (i64 -1 to ptr), %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ] ; 2 uses
+_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28:   ; preds = %.critedge2.i.i34, %bb.w, %.lr.ph.i.i31, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit
+  %.0.lcssa.i.i = phi ptr [ inttoptr (i64 -1 to ptr), %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ], [ %.015.i.i32, %.lr.ph.i.i31 ], [ inttoptr (i64 -1 to ptr), %.critedge2.i.i34 ], [ %.015.i.i32, %bb.w ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %.0.lcssa.i.i to i64
   %i.fb = sub i64 %.pre-phi, %i.p
   %i.fc = and i64 %i.fb, 4294967295
   %i.fd = icmp eq i64 %i.fc, 0
@@ -536,14 +531,14 @@ bb.x:                                             ; preds = %_ZN5ImGui19FindRend
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !289
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 712
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !408
-  call void @_ZN5ImGui19RenderTextClippedExEP10ImDrawListRK6ImVec2S4_PKcS6_PS3_S4_PK6ImRect(ptr noundef %i.fi, ptr noundef nonnull readonly align 4 dereferenceable(8) %4, ptr noundef nonnull readonly align 4 dereferenceable(8) %i.bx, ptr noundef nonnull %0, ptr noundef %.0.lcssa.i.i, ptr noundef nonnull readonly %2, ptr noundef nonnull readonly align 4 dereferenceable(8) %i.ew, ptr noundef nonnull readonly %4)
+  call void @_ZN5ImGui19RenderTextClippedExEP10ImDrawListRK6ImVec2S4_PKcS6_PS3_S4_PK6ImRect(ptr noundef %i.fi, ptr noundef nonnull readonly align 4 dereferenceable(8) %4, ptr noundef nonnull readonly align 4 dereferenceable(8) %i.bx, ptr noundef nonnull %0, ptr noundef nonnull %.0.lcssa.i.i, ptr noundef nonnull readonly %2, ptr noundef nonnull readonly align 4 dereferenceable(8) %i.ew, ptr noundef nonnull readonly %4)
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fe, i64 10264
   %i.fk = load i8, ptr %i.fj, align 8, !tbaa !368, !range !100, !noundef !236
   %i.fl = trunc nuw i8 %i.fk to i1
   br i1 %i.fl, label %bb.y, label %_ZN5ImGui17RenderTextClippedERK6ImVec2S2_PKcS4_PS1_S2_PK6ImRect.exit
 
 bb.y:                                             ; preds = %bb.x
-  call void @_ZN5ImGui15LogRenderedTextEPK6ImVec2PKcS4_(ptr noundef nonnull readonly align 4 dereferenceable(8) %4, ptr noundef nonnull %0, ptr noundef %.0.lcssa.i.i)
+  call void @_ZN5ImGui15LogRenderedTextEPK6ImVec2PKcS4_(ptr noundef nonnull readonly align 4 dereferenceable(8) %4, ptr noundef nonnull %0, ptr noundef nonnull %.0.lcssa.i.i)
   br label %_ZN5ImGui17RenderTextClippedERK6ImVec2S2_PKcS4_PS1_S2_PK6ImRect.exit
 
 _ZN5ImGui17RenderTextClippedERK6ImVec2S2_PKcS4_PS1_S2_PK6ImRect.exit: ; preds = %bb.y, %bb.x, %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28, %_ZN5ImGui12CalcTextSizeEPKcS1_bf.exit

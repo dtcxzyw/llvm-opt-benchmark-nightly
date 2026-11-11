@@ -202,11 +202,11 @@ bb.aj:                                            ; preds = %bb.ai
 
 .critedge155.i:                                   ; preds = %.lr.ph191.i, %bb.aj
   %.promoted190197.i = phi ptr [ %i.ct, %bb.aj ], [ %.promoted190194.i, %.lr.ph191.i ] ; 5 uses
-  %.promoted190197207.i = ptrtoaddr ptr %.promoted190197.i to i64 ; 2 uses
   %i.cv = icmp ult ptr %.promoted190197.i, %i.h
   br i1 %i.cv, label %.lr.ph.preheader.i, label %.critedge.i136
 
 .lr.ph.preheader.i:                               ; preds = %.critedge155.i
+  %.promoted190197207.i = ptrtoaddr ptr %.promoted190197.i to i64
   %scevgep.i = getelementptr i8, ptr %.promoted190197.i, i64 %i.br
   %i.cw = sub i64 0, %.promoted190197207.i
   %scevgep208.i = getelementptr i8, ptr %scevgep.i, i64 %i.cw ; 2 uses
@@ -220,22 +220,17 @@ bb.aj:                                            ; preds = %bb.ai
   %i.cz = add i8 %i.cy, -91
   %i.da = icmp ult i8 %i.cz, -26
   %or.cond181.i = and i1 %.not123.i, %i.da
-  br i1 %or.cond181.i, label %bb.ak, label %.critedge.loopexit.i
+  br i1 %or.cond181.i, label %bb.ak, label %.critedge.i136
 
 bb.ak:                                            ; preds = %.lr.ph.i
   %i.db = getelementptr inbounds nuw i8, ptr %.promoted190196.i, i64 1 ; 3 uses
   store ptr %i.db, ptr %i.b, align 8, !tbaa !19
   %exitcond.not.i = icmp eq ptr %i.db, %scevgep208.i
-  br i1 %exitcond.not.i, label %.critedge.loopexit.i, label %.lr.ph.i, !llvm.loop !24
+  br i1 %exitcond.not.i, label %.critedge.i136, label %.lr.ph.i, !llvm.loop !24
 
-.critedge.loopexit.i:                             ; preds = %bb.ak, %.lr.ph.i
-  %.promoted190195.ph.i = phi ptr [ %scevgep208.i, %bb.ak ], [ %.promoted190196.i, %.lr.ph.i ] ; 2 uses
-  %.pre215.i = ptrtoaddr ptr %.promoted190195.ph.i to i64
-  br label %.critedge.i136
-
-.critedge.i136:                                   ; preds = %.critedge.loopexit.i, %.critedge155.i
-  %.promoted190195210.pre-phi.i = phi i64 [ %.pre215.i, %.critedge.loopexit.i ], [ %.promoted190197207.i, %.critedge155.i ]
-  %.promoted190195.i = phi ptr [ %.promoted190195.ph.i, %.critedge.loopexit.i ], [ %.promoted190197.i, %.critedge155.i ] ; 7 uses
+.critedge.i136:                                   ; preds = %bb.ak, %.lr.ph.i, %.critedge155.i
+  %.promoted190195.i = phi ptr [ %.promoted190197.i, %.critedge155.i ], [ %scevgep208.i, %bb.ak ], [ %.promoted190196.i, %.lr.ph.i ] ; 8 uses
+  %.promoted190195210.pre-phi.i = ptrtoaddr ptr %.promoted190195.i to i64
   %i.dc = icmp ugt ptr %.promoted190195.i, %i.cu
   br i1 %i.dc, label %.critedge7.i, label %bb.al
 

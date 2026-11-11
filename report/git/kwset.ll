@@ -204,12 +204,12 @@ bb.ak:                                            ; preds = %.lr.ph242.i
   %i.oa = getelementptr inbounds nuw i8, ptr %0, i64 108
   %i.ob = load i32, ptr %i.oa, align 4, !tbaa !30
   %i.oc = sext i32 %i.ob to i64                   ; 6 uses
-  %i.od = ptrtoint ptr %.4145.ph.i to i64         ; 4 uses
+  %i.od = ptrtoint ptr %.4145.ph.i to i64         ; 2 uses
   %i.oe = sub i64 %.pre-phi.i, %i.od
   %i.of = icmp sgt i64 %i.oe, %i.oc
   %i.og = getelementptr inbounds i8, ptr %.4145.ph.i, i64 %i.oc
   %spec.select206342.i = select i1 %i.of, ptr %i.og, ptr %i.jh ; 3 uses
-  %i.oh = ptrtoint ptr %spec.select206342.i to i64 ; 3 uses
+  %i.oh = ptrtoint ptr %spec.select206342.i to i64
   %i.oi = ptrtoint ptr %.3130.ph.i to i64
   %i.oj = sub i64 %i.oh, %i.oi
   %.not187283328343.i = icmp slt i64 %i.oj, 1
@@ -220,18 +220,17 @@ bb.ak:                                            ; preds = %.lr.ph242.i
   br i1 %.not193.i, label %.lr.ph285.lr.ph.us.i, label %.lr.ph285.lr.ph.i
 
 .lr.ph285.lr.ph.us.i:                             ; preds = %.lr.ph285.lr.ph.lr.ph.i, %.loopexit.split.us.us.i
-  %4 = phi i64 [ %i.pr, %.loopexit.split.us.us.i ], [ %i.oh, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
   %spec.select206347.us.i = phi ptr [ %spec.select206.us.i, %.loopexit.split.us.us.i ], [ %spec.select206342.i, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
-  %5 = phi i64 [ %i.pn, %.loopexit.split.us.us.i ], [ %i.od, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
-  %.3130346.us.i.a = phi ptr [ %i.om, %.loopexit.split.us.us.i ], [ %.3130.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
-  %.4145345.us.i = phi ptr [ %.2139220.us.us.i, %.loopexit.split.us.us.i ], [ %.4145.ph.i, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
-  %.4156344.us.i = phi ptr [ %.7222.us.us.i, %.loopexit.split.us.us.i ], [ %.4156.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
+  %.3130346.us.i = phi ptr [ %i.om, %.loopexit.split.us.us.i ], [ %.3130.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
+  %.3130346.us.i.a = phi ptr [ %.2139220.us.us.i, %.loopexit.split.us.us.i ], [ %.4145.ph.i, %.lr.ph285.lr.ph.lr.ph.i ] ; 4 uses
+  %.4145345.us.i = phi ptr [ %.7222.us.us.i, %.loopexit.split.us.us.i ], [ %.4156.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
+  %4 = ptrtoint ptr %spec.select206347.us.i to i64 ; 3 uses
   br label %.lr.ph285.us.us.i
 
 .lr.ph285.us.us.i:                                ; preds = %.outer.us.us.i, %.lr.ph285.lr.ph.us.i
   %i.ok = phi i64 [ 1, %.lr.ph285.lr.ph.us.i ], [ %i.pm, %.outer.us.us.i ]
-  %.4.ph330.us.us.i = phi ptr [ %.3130346.us.i.a, %.lr.ph285.lr.ph.us.i ], [ %i.om, %.outer.us.us.i ]
-  %.5.ph329.us.us.i = phi ptr [ %.4156344.us.i, %.lr.ph285.lr.ph.us.i ], [ %.7222.us.us.i, %.outer.us.us.i ] ; 2 uses
+  %.4.ph330.us.us.i = phi ptr [ %.3130346.us.i, %.lr.ph285.lr.ph.us.i ], [ %i.om, %.outer.us.us.i ]
+  %.5.ph329.us.us.i = phi ptr [ %.4145345.us.i, %.lr.ph285.lr.ph.us.i ], [ %.7222.us.us.i, %.outer.us.us.i ] ; 2 uses
   br label %bb.al
 
 bb.al:                                            ; preds = %.backedge.us.us.i, %.lr.ph285.us.us.i
@@ -258,13 +257,13 @@ bb.am:                                            ; preds = %bb.al
   %i.ov = ptrtoint ptr %i.om to i64
   %i.ow = sub i64 %4, %i.ov
   %.not187.us.us.i = icmp slt i64 %i.ow, %.3134.be.us.us.i
-  br i1 %.not187.us.us.i, label %.outer._crit_edge.i, label %bb.al, !llvm.loop !76
+  br i1 %.not187.us.us.i, label %.outer._crit_edge.loopexit.i, label %bb.al, !llvm.loop !76
 
 bb.an:                                            ; preds = %bb.am
   %i.ox = getelementptr inbounds i8, ptr %i.om, i64 -1 ; 4 uses
   %i.oy = load i32, ptr %i.ou, align 8, !tbaa !28
   %.not191.us.us.i = icmp eq i32 %i.oy, 0
-  %.not192.us.us.i = icmp ugt ptr %i.ox, %.4145345.us.i
+  %.not192.us.us.i = icmp ugt ptr %i.ox, %.3130346.us.i.a
   %or.cond207.us.us.i = or i1 %.not192.us.us.i, %.not191.us.us.i ; 2 uses
   %.6.us.us.i = select i1 %or.cond207.us.us.i, ptr %.5.ph329.us.us.i, ptr %i.ou ; 2 uses
   %.1138.us.us.i = select i1 %or.cond207.us.us.i, ptr null, ptr %i.ox ; 2 uses
@@ -303,7 +302,7 @@ bb.ao:                                            ; preds = %.lr.ph295.us.us.us.
   %i.ph = load ptr, ptr %i.pg, align 8, !tbaa !40 ; 4 uses
   %i.pi = load i32, ptr %i.ph, align 8, !tbaa !28
   %.not199.us.us.us.i = icmp eq i32 %i.pi, 0
-  %.not200.us.us.us.i = icmp ugt ptr %i.pa, %.4145345.us.i
+  %.not200.us.us.us.i = icmp ugt ptr %i.pa, %.3130346.us.i.a
   %or.cond209.us.us.us.i = or i1 %.not200.us.us.us.i, %.not199.us.us.us.i ; 2 uses
   %.8.us.us.us.i = select i1 %or.cond209.us.us.us.i, ptr %.7312.us.us.us.i, ptr %i.ph ; 2 uses
   %.3140.us.us.us.i = select i1 %or.cond209.us.us.us.i, ptr %.2139314.us.us.us.i, ptr %i.pa ; 2 uses
@@ -325,47 +324,44 @@ bb.ao:                                            ; preds = %.lr.ph295.us.us.us.
   %i.pl = sub i64 %4, %i.pk
   %i.pm = sext i32 %spec.store.select.us.us.i to i64 ; 2 uses
   %.not187283.us.us.i = icmp slt i64 %i.pl, %i.pm
-  br i1 %.not187283.us.us.i, label %.outer._crit_edge.i, label %.lr.ph285.us.us.i, !llvm.loop !76
+  br i1 %.not187283.us.us.i, label %.outer._crit_edge.loopexit472.i, label %.lr.ph285.us.us.i, !llvm.loop !76
 
 .loopexit.split.us.us.i:                          ; preds = %.critedge208.us.us.i
-  %6 = ptrtoint ptr %spec.select206347.us.i to i64
-  %i.pn = ptrtoint ptr %.2139220.us.us.i to i64   ; 3 uses
-  %i.po = sub i64 %6, %i.pn
+  %i.pn = ptrtoint ptr %.2139220.us.us.i to i64   ; 2 uses
+  %i.po = sub i64 %4, %i.pn
   %i.pp = icmp sgt i64 %i.po, %i.oc
   %i.pq = getelementptr inbounds i8, ptr %.2139220.us.us.i, i64 %i.oc
   %spec.select206.us.i = select i1 %i.pp, ptr %i.pq, ptr %spec.select206347.us.i ; 2 uses
-  %i.pr = ptrtoint ptr %spec.select206.us.i to i64 ; 2 uses
+  %i.pr = ptrtoint ptr %spec.select206.us.i to i64
   %i.ps = ptrtoint ptr %i.om to i64
   %i.pt = sub i64 %i.pr, %i.ps
   %.not187283328.us.i = icmp slt i64 %i.pt, 1
   br i1 %.not187283328.us.i, label %.outer._crit_edge.i, label %.lr.ph285.lr.ph.us.i
 
 .loopexit.split.i:                                ; preds = %.critedge208.i
-  %7 = ptrtoint ptr %spec.select206347.i to i64
-  %i.pu = ptrtoint ptr %.2139220.i to i64         ; 3 uses
-  %i.pv = sub i64 %7, %i.pu
+  %i.pu = ptrtoint ptr %.2139220.i to i64         ; 2 uses
+  %i.pv = sub i64 %5, %i.pu
   %i.pw = icmp sgt i64 %i.pv, %i.oc
   %i.px = getelementptr inbounds i8, ptr %.2139220.i, i64 %i.oc
   %spec.select206.i = select i1 %i.pw, ptr %i.px, ptr %spec.select206347.i ; 2 uses
-  %i.py = ptrtoint ptr %spec.select206.i to i64   ; 2 uses
+  %i.py = ptrtoint ptr %spec.select206.i to i64
   %i.pz = ptrtoint ptr %i.qd to i64
   %i.qa = sub i64 %i.py, %i.pz
   %.not187283328.i = icmp slt i64 %i.qa, 1
   br i1 %.not187283328.i, label %.outer._crit_edge.i, label %.lr.ph285.lr.ph.i
 
 .lr.ph285.lr.ph.i:                                ; preds = %.lr.ph285.lr.ph.lr.ph.i, %.loopexit.split.i
-  %8 = phi i64 [ %i.py, %.loopexit.split.i ], [ %i.oh, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
   %spec.select206347.i = phi ptr [ %spec.select206.i, %.loopexit.split.i ], [ %spec.select206342.i, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
-  %9 = phi i64 [ %i.pu, %.loopexit.split.i ], [ %i.od, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
-  %.3130346.i.a = phi ptr [ %i.qd, %.loopexit.split.i ], [ %.3130.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
-  %.4145345.i = phi ptr [ %.2139220.i, %.loopexit.split.i ], [ %.4145.ph.i, %.lr.ph285.lr.ph.lr.ph.i ] ; 2 uses
-  %.4156344.i = phi ptr [ %.7222.i, %.loopexit.split.i ], [ %.4156.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
+  %.3130346.i = phi ptr [ %i.qd, %.loopexit.split.i ], [ %.3130.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
+  %.3130346.i.a = phi ptr [ %.2139220.i, %.loopexit.split.i ], [ %.4145.ph.i, %.lr.ph285.lr.ph.lr.ph.i ] ; 4 uses
+  %.4145345.i = phi ptr [ %.7222.i, %.loopexit.split.i ], [ %.4156.ph.i, %.lr.ph285.lr.ph.lr.ph.i ]
+  %5 = ptrtoint ptr %spec.select206347.i to i64   ; 3 uses
   br label %.lr.ph285.i
 
 .lr.ph285.i:                                      ; preds = %.outer.i, %.lr.ph285.lr.ph.i
   %i.qb = phi i64 [ 1, %.lr.ph285.lr.ph.i ], [ %i.rg, %.outer.i ]
-  %.4.ph330.i = phi ptr [ %.3130346.i.a, %.lr.ph285.lr.ph.i ], [ %i.qd, %.outer.i ]
-  %.5.ph329.i = phi ptr [ %.4156344.i, %.lr.ph285.lr.ph.i ], [ %.7222.i, %.outer.i ] ; 2 uses
+  %.4.ph330.i = phi ptr [ %.3130346.i, %.lr.ph285.lr.ph.i ], [ %i.qd, %.outer.i ]
+  %.5.ph329.i = phi ptr [ %.4145345.i, %.lr.ph285.lr.ph.i ], [ %.7222.i, %.outer.i ] ; 2 uses
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.backedge.i24, %.lr.ph285.i
@@ -384,9 +380,9 @@ bb.ap:                                            ; preds = %.backedge.i24, %.lr
 .backedge.i24:                                    ; preds = %bb.aq, %bb.ap
   %.3134.be.i = phi i64 [ 1, %bb.aq ], [ %i.qj, %bb.ap ] ; 2 uses
   %i.qk = ptrtoint ptr %i.qd to i64
-  %i.ql = sub i64 %8, %i.qk
+  %i.ql = sub i64 %5, %i.qk
   %.not187.i = icmp slt i64 %i.ql, %.3134.be.i
-  br i1 %.not187.i, label %.outer._crit_edge.i, label %bb.ap, !llvm.loop !76
+  br i1 %.not187.i, label %.outer._crit_edge.loopexit474.i, label %bb.ap, !llvm.loop !76
 
 bb.aq:                                            ; preds = %bb.ap
   %i.qm = getelementptr inbounds nuw [8 x i8], ptr %i.jd, i64 %i.qg
@@ -398,7 +394,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.qo = getelementptr inbounds i8, ptr %i.qd, i64 -1 ; 4 uses
   %i.qp = load i32, ptr %i.qn, align 8, !tbaa !28
   %.not191.i = icmp eq i32 %i.qp, 0
-  %.not192.i = icmp ugt ptr %i.qo, %.4145345.i
+  %.not192.i = icmp ugt ptr %i.qo, %.3130346.i.a
   %or.cond207.i = or i1 %.not192.i, %.not191.i    ; 2 uses
   %.6.i = select i1 %or.cond207.i, ptr %.5.ph329.i, ptr %i.qn ; 2 uses
   %.1138.i = select i1 %or.cond207.i, ptr null, ptr %i.qo ; 2 uses
@@ -440,7 +436,7 @@ bb.as:                                            ; preds = %.lr.ph295.i
   %i.rb = load ptr, ptr %i.ra, align 8, !tbaa !40 ; 4 uses
   %i.rc = load i32, ptr %i.rb, align 8, !tbaa !28
   %.not199.i = icmp eq i32 %i.rc, 0
-  %.not200.i = icmp ugt ptr %i.qr, %.4145345.i
+  %.not200.i = icmp ugt ptr %i.qr, %.3130346.i.a
   %or.cond209.i = or i1 %.not200.i, %.not199.i    ; 2 uses
   %.8.i = select i1 %or.cond209.i, ptr %.7312.i, ptr %i.rb ; 2 uses
   %.3140.i = select i1 %or.cond209.i, ptr %.2139314.i, ptr %i.qr ; 2 uses
@@ -459,14 +455,30 @@ bb.as:                                            ; preds = %.lr.ph295.i
   %.4135218.i = load i32, ptr %.4135.in.le307.i, align 4, !tbaa !43
   %spec.store.select.i = tail call i32 @llvm.umax.i32(i32 %.4135218.i, i32 1)
   %i.re = ptrtoint ptr %i.qd to i64
-  %i.rf = sub i64 %8, %i.re
+  %i.rf = sub i64 %5, %i.re
   %i.rg = sext i32 %spec.store.select.i to i64    ; 2 uses
   %.not187283.i = icmp slt i64 %i.rf, %i.rg
-  br i1 %.not187283.i, label %.outer._crit_edge.i, label %.lr.ph285.i, !llvm.loop !76
+  br i1 %.not187283.i, label %.outer._crit_edge.loopexit475.i, label %.lr.ph285.i, !llvm.loop !76
 
-.outer._crit_edge.i:                              ; preds = %.loopexit.split.i, %.outer.i, %.backedge.i24, %.loopexit.split.us.us.i, %.outer.us.us.i, %.backedge.us.us.i, %.preheader.i23
-  %.lcssa224.i = phi i64 [ %5, %.backedge.us.us.i ], [ %5, %.outer.us.us.i ], [ %i.od, %.preheader.i23 ], [ %9, %.backedge.i24 ], [ %i.pn, %.loopexit.split.us.us.i ], [ %9, %.outer.i ], [ %i.pu, %.loopexit.split.i ] ; 2 uses
-  %.5.ph.lcssa223.i = phi ptr [ %.5.ph329.us.us.i, %.backedge.us.us.i ], [ %.7222.us.us.i, %.outer.us.us.i ], [ %.4156.ph.i, %.preheader.i23 ], [ %.5.ph329.i, %.backedge.i24 ], [ %.7222.us.us.i, %.loopexit.split.us.us.i ], [ %.7222.i, %.outer.i ], [ %.7222.i, %.loopexit.split.i ] ; 2 uses
+.outer._crit_edge.loopexit.i:                     ; preds = %.backedge.us.us.i
+  %6 = ptrtoint ptr %.3130346.us.i.a to i64
+  br label %.outer._crit_edge.i
+
+.outer._crit_edge.loopexit472.i:                  ; preds = %.outer.us.us.i
+  %7 = ptrtoint ptr %.3130346.us.i.a to i64
+  br label %.outer._crit_edge.i
+
+.outer._crit_edge.loopexit474.i:                  ; preds = %.backedge.i24
+  %8 = ptrtoint ptr %.3130346.i.a to i64
+  br label %.outer._crit_edge.i
+
+.outer._crit_edge.loopexit475.i:                  ; preds = %.outer.i
+  %9 = ptrtoint ptr %.3130346.i.a to i64
+  br label %.outer._crit_edge.i
+
+.outer._crit_edge.i:                              ; preds = %.loopexit.split.i, %.loopexit.split.us.us.i, %.outer._crit_edge.loopexit475.i, %.outer._crit_edge.loopexit474.i, %.outer._crit_edge.loopexit472.i, %.outer._crit_edge.loopexit.i, %.preheader.i23
+  %.lcssa224.i = phi i64 [ %7, %.outer._crit_edge.loopexit472.i ], [ %i.pn, %.loopexit.split.us.us.i ], [ %i.od, %.preheader.i23 ], [ %9, %.outer._crit_edge.loopexit475.i ], [ %8, %.outer._crit_edge.loopexit474.i ], [ %6, %.outer._crit_edge.loopexit.i ], [ %i.pu, %.loopexit.split.i ] ; 2 uses
+  %.5.ph.lcssa223.i = phi ptr [ %.7222.us.us.i, %.outer._crit_edge.loopexit472.i ], [ %.7222.us.us.i, %.loopexit.split.us.us.i ], [ %.4156.ph.i, %.preheader.i23 ], [ %.7222.i, %.outer._crit_edge.loopexit475.i ], [ %.5.ph329.i, %.outer._crit_edge.loopexit474.i ], [ %.5.ph329.us.us.i, %.outer._crit_edge.loopexit.i ], [ %.7222.i, %.loopexit.split.i ] ; 2 uses
   %.not188.i = icmp eq ptr %3, null
   br i1 %.not188.i, label %.outer._crit_edge._crit_edge.i, label %bb.at
 

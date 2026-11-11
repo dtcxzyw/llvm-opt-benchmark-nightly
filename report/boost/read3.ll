@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !1728 ; 7 uses
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !1727 ; 6 uses
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = ptrtoint ptr %i.j to i64                 ; 3 uses
+  %i.l = ptrtoint ptr %i.j to i64                 ; 2 uses
   %i.m = sub i64 %i.k, %i.l                       ; 3 uses
   %i.n = ashr exact i64 %i.m, 4                   ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -245,7 +245,7 @@ _ZNKSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chro
   %i.aa = load ptr, ptr %i.y, align 8, !tbaa !1312
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8
-  %i.ad = tail call noundef ptr %i.ac(ptr noundef nonnull align 8 dereferenceable(8) %i.y, i64 noundef %i.z, i64 noundef 8), !inline_history !9662 ; 7 uses
+  %i.ad = tail call noundef ptr %i.ac(ptr noundef nonnull align 8 dereferenceable(8) %i.y, i64 noundef %i.z, i64 noundef 8), !inline_history !9662 ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.m ; 2 uses
   store i64 %i.p, ptr %i.ae, align 8, !tbaa !1318
   %.sroa.5.0..sroa_idx22 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
@@ -284,13 +284,12 @@ _ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chron
   store ptr %i.ah, ptr %i.h, align 8, !tbaa !1728
   %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %i.x
   store ptr %i.ap, ptr %i.q, align 8, !tbaa !1731
-  %.pre = ptrtoint ptr %i.ad to i64
   br label %_ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE9push_backERKSF_.exit
 
 _ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE9push_backERKSF_.exit: ; preds = %bb.d, %_ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE17_M_realloc_insertIJRKSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i
-  %.pre-phi = phi i64 [ %i.l, %bb.d ], [ %.pre, %_ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE17_M_realloc_insertIJRKSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i ]
-  %.pre.i = phi ptr [ %i.j, %bb.d ], [ %i.ad, %_ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE17_M_realloc_insertIJRKSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i ]
+  %.pre.i = phi ptr [ %i.j, %bb.d ], [ %i.ad, %_ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE17_M_realloc_insertIJRKSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i ] ; 2 uses
   %i.aq = phi ptr [ %i.s, %bb.d ], [ %i.ah, %_ZNSt6vectorIN5boost4asio6detail11timer_queueINS2_18chrono_time_traitsINSt6chrono3_V212steady_clockENS1_11wait_traitsIS7_EEEENS1_17execution_context9allocatorIvEEE10heap_entryENSC_ISF_EEE17_M_realloc_insertIJRKSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i ]
+  %.pre-phi = ptrtoint ptr %.pre.i to i64
   %i.ar = ptrtoint ptr %i.aq to i64
   %i.as = sub i64 %i.ar, %.pre-phi
   %i.at = ashr exact i64 %i.as, 4

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !1317)
   %i.v = call fastcc noundef ptr @_RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE4dumpCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(224) %0), !noalias !1318 ; 2 uses
   %.not1525.i.i = icmp eq ptr %i.v, null
-  br i1 %.not1525.i.i, label %.lr.ph.split.i.i, label %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19
+  br i1 %.not1525.i.i, label %.lr.ph.split.i.i, label %bb.s
 
 .lr.ph.split.i.i:                                 ; preds = %bb.b, %bb.d
   %.val18.i.i = load i64, ptr %i.n, align 8, !alias.scope !1319, !noundef !7 ; 2 uses
@@ -227,22 +227,17 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1320
   %i.aa = call fastcc noundef ptr @_RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE4dumpCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(224) %0), !noalias !1321 ; 2 uses
   %.not15.i.i = icmp eq ptr %i.aa, null
-  br i1 %.not15.i.i, label %.lr.ph.split.i.i, label %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19
+  br i1 %.not15.i.i, label %.lr.ph.split.i.i, label %bb.s
 
 _RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE17write_with_statusCskeugdADtBsi_12pingora_core.exit.thread19.i: ; preds = %.lr.ph.split.i.i
   %i.ab = call noundef nonnull ptr @_RINvMNtNtCsexYYUdYSQU6_5alloc2io5errorNtNtNtCskKLDkoKarTP_4core2io5error5Error3newReECsG258MDvU3F_3std(i8 noundef 20, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @120, i64 noundef 22) #22, !noalias !1321
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1320
-  br label %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19
+  br label %bb.s
 
 bb.e:                                             ; preds = %bb.a
   %i.ac = call noundef ptr @_RINvMs_NtCs87coOwG4J0B_6flate22gzNtB5_14GzHeaderParser5parseRShECskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.j, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e) ; 9 uses
   %.not.i = icmp eq ptr %i.ac, null
   br i1 %.not.i, label %bb.m, label %bb.h
-
-_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19: ; preds = %bb.d, %bb.b, %_RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE17write_with_statusCskeugdADtBsi_12pingora_core.exit.thread19.i
-  %.sroa.0.01418.in.i = phi ptr [ %i.ab, %_RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE17write_with_statusCskeugdADtBsi_12pingora_core.exit.thread19.i ], [ %i.v, %bb.b ], [ %i.aa, %bb.d ] ; 2 uses
-  %.sroa.0.01418.i = ptrtoint ptr %.sroa.0.01418.in.i to i64
-  br label %bb.s
 
 bb.f:                                             ; preds = %bb.c
   %i.ad = sub i64 %.val.i.i, %.val18.i.i          ; 6 uses
@@ -279,7 +274,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCskeugdADtBsi_12pi
 bb.h:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1315
   store ptr %i.ac, ptr %i.d, align 8, !noalias !1315
-  %i.ar = ptrtoint ptr %i.ac to i64               ; 5 uses
+  %i.ar = ptrtoint ptr %i.ac to i64               ; 4 uses
   %i.as = and i64 %i.ar, 3                        ; 2 uses
   switch i64 %i.as, label %default.unreachable [
     i64 2, label %bb.i
@@ -384,14 +379,13 @@ common.resume:                                    ; preds = %bb.ac, %bb.n
   store i64 0, ptr %i.f, align 8
   br label %bb.y
 
-bb.s:                                             ; preds = %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread24, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19
-  %storemerge = phi ptr [ %i.ac, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread24 ], [ %.sroa.0.01418.in.i, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19 ] ; 11 uses
-  %.sroa.7.0.i22 = phi i64 [ %i.ar, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread24 ], [ %.sroa.0.01418.i, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread19 ] ; 4 uses
+bb.s:                                             ; preds = %bb.d, %_RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE17write_with_statusCskeugdADtBsi_12pingora_core.exit.thread19.i, %bb.b, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread24
+  %.sink = phi ptr [ %i.ac, %_RNvXs3_NtNtCs87coOwG4J0B_6flate22gz5writeINtB5_9GzDecoderINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCskKLDkoKarTP_4core2io5write5Write5writeCskeugdADtBsi_12pingora_core.exit.thread24 ], [ %i.ab, %_RNvMs2_NtCs87coOwG4J0B_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB7_3mem10DecompressE17write_with_statusCskeugdADtBsi_12pingora_core.exit.thread19.i ], [ %i.v, %bb.b ], [ %i.aa, %bb.d ] ; 11 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   store i64 1, ptr %i.f, align 8
-  store ptr %storemerge, ptr %i.k, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %storemerge) ]
-  %i.bp = and i64 %.sroa.7.0.i22, 3
+  store ptr %.sink, ptr %i.k, align 8
+  %.sroa.7.0.i22.pre-phi = ptrtoint ptr %.sink to i64 ; 4 uses
+  %i.bp = and i64 %.sroa.7.0.i22.pre-phi, 3
   switch i64 %i.bp, label %default.unreachable [
     i64 2, label %bb.t
     i64 3, label %.split41
@@ -404,7 +398,7 @@ bb.t:                                             ; preds = %bb.s
           to label %.noexc unwind label %bb.ac
 
 .noexc:                                           ; preds = %bb.t
-  %i.br = lshr i64 %.sroa.7.0.i22, 32
+  %i.br = lshr i64 %.sroa.7.0.i22.pre-phi, 32
   %i.bs = trunc nuw i64 %i.br to i32
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   %i.bu = load ptr, ptr %i.bt, align 8, !nonnull !7, !noundef !7
@@ -412,8 +406,8 @@ bb.t:                                             ; preds = %bb.s
           to label %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit unwind label %bb.ac, !inline_history !1
 
 .split41:                                         ; preds = %bb.s
-  %i.bw = lshr i64 %.sroa.7.0.i22, 32
-  %i.bx = icmp ult ptr %storemerge, inttoptr (i64 188978561024 to ptr)
+  %i.bw = lshr i64 %.sroa.7.0.i22.pre-phi, 32
+  %i.bx = icmp ult ptr %.sink, inttoptr (i64 188978561024 to ptr)
   %switch.idx.cast.i.i.i = trunc i64 %i.bw to i8
   %spec.select.i.i.i = select i1 %i.bx, i8 %switch.idx.cast.i.i.i, i8 -1 ; 2 uses
   %i.by = icmp ne i8 %spec.select.i.i.i, -1
@@ -422,13 +416,13 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bz, label %bb.z, label %bb.w
 
 .split42:                                         ; preds = %bb.s
-  %i.ca = getelementptr inbounds nuw i8, ptr %storemerge, i64 16
+  %i.ca = getelementptr inbounds nuw i8, ptr %.sink, i64 16
   %i.cb = load i8, ptr %i.ca, align 8, !range !13, !noundef !7
   %i.cc = icmp eq i8 %i.cb, 35
   br i1 %i.cc, label %.thread.thread, label %bb.w
 
 .split:                                           ; preds = %bb.s
-  %i.cd = getelementptr i8, ptr %storemerge, i64 31
+  %i.cd = getelementptr i8, ptr %.sink, i64 31
   %i.ce = load i8, ptr %i.cd, align 8, !range !13, !noundef !7
   %i.cf = icmp eq i8 %i.ce, 35
   br i1 %i.cf, label %bb.aa, label %bb.w
@@ -444,7 +438,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.ch, label %bb.x, label %bb.y, !prof !1326
 
 bb.w:                                             ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split, %.split41, %.split42, %bb.u
-  %.sroa.07.0 = phi ptr [ @179, %bb.u ], [ %storemerge, %.split42 ], [ %storemerge, %.split41 ], [ %storemerge, %.split ], [ %storemerge, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit ]
+  %.sroa.07.0 = phi ptr [ @179, %bb.u ], [ %.sink, %.split42 ], [ %.sink, %.split41 ], [ %.sink, %.split ], [ %.sink, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.loopexit
 
@@ -471,8 +465,8 @@ _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
 
 bb.z:                                             ; preds = %.split41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1327
-  %i.cl = icmp ult ptr %storemerge, inttoptr (i64 188978561024 to ptr)
-  %i.cm = and i64 %.sroa.7.0.i22, 1095216660480
+  %i.cl = icmp ult ptr %.sink, inttoptr (i64 188978561024 to ptr)
+  %i.cm = and i64 %.sroa.7.0.i22.pre-phi, 1095216660480
   %i.cn = icmp ne i64 %i.cm, 1095216660480
   call void @llvm.assume(i1 %i.cl)
   call void @llvm.assume(i1 %i.cn)
@@ -480,7 +474,7 @@ bb.z:                                             ; preds = %.split41
 
 bb.aa:                                            ; preds = %.split
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1327
-  %i.co = getelementptr i8, ptr %storemerge, i64 -1 ; 2 uses
+  %i.co = getelementptr i8, ptr %.sink, i64 -1    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.co) ]
   store ptr %i.co, ptr %i.p, align 8, !alias.scope !1328, !noalias !1327
   store i8 3, ptr %i.a, align 8, !alias.scope !1328, !noalias !1327

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
 bb.f:                                             ; preds = %._crit_edge
   tail call void @llvm.memset.p0.i64(ptr align 1 %4, i8 0, i64 %i.i, i1 false)
   %.not206265 = icmp eq i64 %i.i, 0               ; 2 uses
-  %i.ae = ptrtoint ptr %0 to i64                  ; 2 uses
+  %i.ae = ptrtoint ptr %0 to i64
   %i.af = and i64 %.0203261, 1
   %lcmp.mod.not.not = icmp eq i64 %i.af, 0
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0203261
@@ -246,7 +246,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.1197.lcssa.unr = phi ptr [ poison, %.lr.ph269.preheader ], [ %i.aj, %bb.j ], [ %0, %.lr.ph269.prol ]
   %.0195267.unr = phi i64 [ %i.i, %.lr.ph269.preheader ], [ %.0203261, %bb.j ], [ %.0203261, %.lr.ph269.prol ]
   %.0196266.unr = phi ptr [ %0, %.lr.ph269.preheader ], [ %i.aj, %bb.j ], [ %0, %.lr.ph269.prol ]
-  br i1 %i.ak, label %._crit_edge270.loopexit, label %.lr.ph269
+  br i1 %i.ak, label %._crit_edge270, label %.lr.ph269
 
 .lr.ph269:                                        ; preds = %.lr.ph269.prol.loopexit, %bb.q
   %.0195267 = phi i64 [ %i.as, %bb.q ], [ %.0195267.unr, %.lr.ph269.prol.loopexit ] ; 2 uses
@@ -304,16 +304,11 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 bb.q:                                             ; preds = %bb.p, %.lr.ph269.1
   %.1197.1 = phi ptr [ %i.ax, %bb.p ], [ %.1197, %.lr.ph269.1 ] ; 2 uses
   %.not206.1 = icmp eq i64 %i.as, 0
-  br i1 %.not206.1, label %._crit_edge270.loopexit, label %.lr.ph269, !llvm.loop !106
+  br i1 %.not206.1, label %._crit_edge270, label %.lr.ph269, !llvm.loop !106
 
-._crit_edge270.loopexit:                          ; preds = %bb.q, %.lr.ph269.prol.loopexit
-  %.1197.lcssa = phi ptr [ %.1197.lcssa.unr, %.lr.ph269.prol.loopexit ], [ %.1197.1, %bb.q ] ; 2 uses
-  %.pre321 = ptrtoint ptr %.1197.lcssa to i64
-  br label %._crit_edge270
-
-._crit_edge270:                                   ; preds = %._crit_edge270.loopexit, %bb.g
-  %.pre-phi = phi i64 [ %.pre321, %._crit_edge270.loopexit ], [ %i.ae, %bb.g ]
-  %.0196.lcssa = phi ptr [ %.1197.lcssa, %._crit_edge270.loopexit ], [ %0, %bb.g ] ; 2 uses
+._crit_edge270:                                   ; preds = %.lr.ph269.prol.loopexit, %bb.q, %bb.g
+  %.0196.lcssa = phi ptr [ %0, %bb.g ], [ %.1197.lcssa.unr, %.lr.ph269.prol.loopexit ], [ %.1197.1, %bb.q ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %.0196.lcssa to i64
   %i.ay = sub i64 %.pre-phi, %i.ae                ; 2 uses
   %i.az = lshr exact i64 %i.ay, 3
   %i.ba = trunc i64 %i.az to i32                  ; 4 uses

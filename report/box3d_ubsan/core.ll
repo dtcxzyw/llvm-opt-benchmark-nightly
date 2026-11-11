@@ -202,7 +202,7 @@ bb.ba:                                            ; preds = %rapid_mum.exit53
   unreachable, !nosanitize !15
 
 bb.bb:                                            ; preds = %rapid_mum.exit53
-  %i.fw = getelementptr inbounds nuw i8, ptr %.0120.i, i64 112 ; 4 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %.0120.i, i64 112 ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %.0120.i, i64 104
   %i.fy = load i64, ptr %i.fx, align 1
   %i.fz = xor i64 %i.fy, %.0.i
@@ -225,11 +225,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.gn = xor i64 %i.gm, %i.fh
   %i.go = xor i64 %i.gn, %i.gg                    ; 2 uses
   %i.gp = icmp samesign ugt i64 %.0119.i, 128
-  br i1 %i.gp, label %rapid_read64.exit35, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.bc
-  %.pre = ptrtoint ptr %i.fw to i64, !nosanitize !15
-  br label %bb.ca
+  br i1 %i.gp, label %rapid_read64.exit35, label %bb.ca
 
 bb.bd:                                            ; preds = %bb.w
   %.not.i34 = icmp eq ptr %0, null, !nosanitize !15
@@ -244,7 +240,7 @@ rapid_read64.exit35:                              ; preds = %bb.bc, %bb.bd
   %.1121.i6069 = phi ptr [ %0, %bb.bd ], [ %i.fw, %bb.bc ]
   %.1.i6268 = phi i64 [ %i.b, %bb.bd ], [ %i.gh, %bb.bc ] ; 11 uses
   %.1121.i6069.fr = freeze ptr %.1121.i6069       ; 29 uses
-  %i.gq = ptrtoint ptr %.1121.i6069.fr to i64, !nosanitize !15 ; 29 uses
+  %i.gq = ptrtoint ptr %.1121.i6069.fr to i64, !nosanitize !15 ; 23 uses
   %i.gr = add i64 %i.gq, -1
   %or.cond162.i = icmp ult i64 %i.gr, -9
   br i1 %or.cond162.i, label %rapid_mum.exit41, label %bb.bf, !prof !38
@@ -458,20 +454,20 @@ rapid_mum.exit46:                                 ; preds = %bb.by
   %i.le = trunc i128 %i.ld to i64
   br label %bb.ca
 
-bb.ca:                                            ; preds = %._crit_edge, %rapid_mum.exit46, %rapid_mum.exit45, %rapid_mum.exit44, %rapid_mum.exit43, %rapid_mum.exit42, %rapid_mum.exit41
-  %.pre-phi.a = phi i64 [ %.pre, %._crit_edge ], [ %i.gq, %rapid_mum.exit46 ], [ %i.gq, %rapid_mum.exit45 ], [ %i.gq, %rapid_mum.exit44 ], [ %i.gq, %rapid_mum.exit43 ], [ %i.gq, %rapid_mum.exit42 ], [ %i.gq, %rapid_mum.exit41 ] ; 3 uses
-  %.1.i61 = phi i64 [ %i.gh, %._crit_edge ], [ %.1.i6268, %rapid_mum.exit46 ], [ %.1.i6268, %rapid_mum.exit45 ], [ %.1.i6268, %rapid_mum.exit44 ], [ %.1.i6268, %rapid_mum.exit43 ], [ %.1.i6268, %rapid_mum.exit42 ], [ %.1.i6268, %rapid_mum.exit41 ] ; 4 uses
-  %.1121.i59 = phi ptr [ %i.fw, %._crit_edge ], [ %.1121.i6069.fr, %rapid_mum.exit46 ], [ %.1121.i6069.fr, %rapid_mum.exit45 ], [ %.1121.i6069.fr, %rapid_mum.exit44 ], [ %.1121.i6069.fr, %rapid_mum.exit43 ], [ %.1121.i6069.fr, %rapid_mum.exit42 ], [ %.1121.i6069.fr, %rapid_mum.exit41 ]
-  %.2124.i = phi i64 [ %i.go, %._crit_edge ], [ %i.le, %rapid_mum.exit46 ], [ %i.kj, %rapid_mum.exit45 ], [ %i.jo, %rapid_mum.exit44 ], [ %i.it, %rapid_mum.exit43 ], [ %i.hy, %rapid_mum.exit42 ], [ %i.hd, %rapid_mum.exit41 ]
-  %i.lf = getelementptr inbounds nuw i8, ptr %.1121.i59, i64 %.1.i61 ; 5 uses
-  %i.lg = add i64 %.1.i61, %.pre-phi.a, !nosanitize !15 ; 3 uses
+bb.ca:                                            ; preds = %bb.bc, %rapid_mum.exit46, %rapid_mum.exit45, %rapid_mum.exit44, %rapid_mum.exit43, %rapid_mum.exit42, %rapid_mum.exit41
+  %.pre-phi.a = phi i64 [ %.1.i6268, %rapid_mum.exit46 ], [ %.1.i6268, %rapid_mum.exit45 ], [ %.1.i6268, %rapid_mum.exit44 ], [ %.1.i6268, %rapid_mum.exit43 ], [ %.1.i6268, %rapid_mum.exit42 ], [ %.1.i6268, %rapid_mum.exit41 ], [ %i.gh, %bb.bc ] ; 4 uses
+  %.1121.i59 = phi ptr [ %.1121.i6069.fr, %rapid_mum.exit46 ], [ %.1121.i6069.fr, %rapid_mum.exit45 ], [ %.1121.i6069.fr, %rapid_mum.exit44 ], [ %.1121.i6069.fr, %rapid_mum.exit43 ], [ %.1121.i6069.fr, %rapid_mum.exit42 ], [ %.1121.i6069.fr, %rapid_mum.exit41 ], [ %i.fw, %bb.bc ] ; 2 uses
+  %.2124.i = phi i64 [ %i.le, %rapid_mum.exit46 ], [ %i.kj, %rapid_mum.exit45 ], [ %i.jo, %rapid_mum.exit44 ], [ %i.it, %rapid_mum.exit43 ], [ %i.hy, %rapid_mum.exit42 ], [ %i.hd, %rapid_mum.exit41 ], [ %i.go, %bb.bc ]
+  %.pre-phi = ptrtoint ptr %.1121.i59 to i64      ; 3 uses
+  %i.lf = getelementptr inbounds nuw i8, ptr %.1121.i59, i64 %.pre-phi.a ; 5 uses
+  %i.lg = add i64 %.pre-phi.a, %.pre-phi, !nosanitize !15 ; 3 uses
   %i.lh = icmp ne i64 %i.lg, 0
-  %i.li = icmp uge i64 %i.lg, %.pre-phi.a, !nosanitize !15
+  %i.li = icmp uge i64 %i.lg, %.pre-phi, !nosanitize !15
   %i.lj = and i1 %i.lh, %i.li, !nosanitize !15
   br i1 %i.lj, label %bb.cc, label %bb.cb, !prof !16, !nosanitize !15
 
 bb.cb:                                            ; preds = %bb.ca
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @56, i64 %.pre-phi.a, i64 %i.lg) #16, !nosanitize !15
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @56, i64 %.pre-phi, i64 %i.lg) #16, !nosanitize !15
   unreachable, !nosanitize !15
 
 bb.cc:                                            ; preds = %bb.ca
@@ -500,7 +496,7 @@ bb.cf:                                            ; preds = %bb.ce
 bb.cg:                                            ; preds = %bb.ce
   %i.lt = getelementptr inbounds i8, ptr %i.lf, i64 -16
   %i.lu = load i64, ptr %i.lt, align 1
-  %i.lv = xor i64 %i.lu, %.1.i61
+  %i.lv = xor i64 %i.lu, %.pre-phi.a
   %i.lw = getelementptr inbounds i8, ptr %i.lf, i64 -8
   %i.lx = load i64, ptr %i.lw, align 1
   br label %rapid_mum.exit54
@@ -509,7 +505,7 @@ rapid_mum.exit54:                                 ; preds = %bb.cg, %bb.v, %rapi
   %.0610 = phi i64 [ %i.u, %rapid_read64.exit ], [ %i.ae, %rapid_read32.exit ], [ %i.au, %bb.v ], [ %i.lv, %bb.cg ]
   %.0609 = phi i64 [ %i.v, %rapid_read64.exit ], [ %i.ag, %rapid_read32.exit ], [ %i.aw, %bb.v ], [ %i.lx, %bb.cg ]
   %.3.i = phi i64 [ %i.e, %rapid_read64.exit ], [ %i.e, %rapid_read32.exit ], [ 4766890152743124950, %bb.v ], [ %.2124.i, %bb.cg ]
-  %.2.i = phi i64 [ %i.b, %rapid_read64.exit ], [ %i.b, %rapid_read32.exit ], [ %i.b, %bb.v ], [ %.1.i61, %bb.cg ]
+  %.2.i = phi i64 [ %i.b, %rapid_read64.exit ], [ %i.b, %rapid_read32.exit ], [ %i.b, %bb.v ], [ %.pre-phi.a, %bb.cg ]
   %.not158.i = icmp ult i64 add (i64 ptrtoint (ptr @rapid_secret to i64), i64 56), ptrtoint (ptr @rapid_secret to i64), !nosanitize !15
   br i1 %.not158.i, label %bb.ch, label %rapidhash_internal.exit, !prof !18, !nosanitize !15
 

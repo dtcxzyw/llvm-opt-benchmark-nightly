@@ -205,12 +205,12 @@ bb.d:                                             ; preds = %._crit_edge.i, %.sp
 define hidden noundef zeroext i1 @_Z15hb_parse_doublePPKcS0_Pdb(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) %2, i1 noundef zeroext %3) local_unnamed_addr #23 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !629    ; 6 uses
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = icmp ult ptr %i.a, %1
   br i1 %i.c, label %.lr.ph.preheader.i, label %.critedge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
+  %4 = ptrtoaddr ptr %i.a to i64
   %i.d = sub i64 %i.b, %4
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.d
   br label %.lr.ph.i
@@ -218,7 +218,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
   %.078155.i = phi ptr [ %i.f, %bb.b ], [ %i.a, %.lr.ph.preheader.i ] ; 3 uses
   %i.e = load i8, ptr %.078155.i, align 1, !tbaa !278
-  switch i8 %i.e, label %.critedge.loopexit.i [
+  switch i8 %i.e, label %.critedge.i [
     i8 32, label %bb.b
     i8 13, label %bb.b
     i8 12, label %bb.b
@@ -230,20 +230,15 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i
   %i.f = getelementptr inbounds nuw i8, ptr %.078155.i, i64 1 ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.f, %1
-  br i1 %exitcond.not.i, label %.critedge.loopexit.i, label %.lr.ph.i, !llvm.loop !2616
+  br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !2616
 
-.critedge.loopexit.i:                             ; preds = %bb.b, %.lr.ph.i
-  %.078.lcssa.ph.i = phi ptr [ %scevgep.i, %bb.b ], [ %.078155.i, %.lr.ph.i ] ; 2 uses
-  %.pre.i = ptrtoaddr ptr %.078.lcssa.ph.i to i64
-  br label %.critedge.i
-
-.critedge.i:                                      ; preds = %.critedge.loopexit.i, %bb.a
-  %.078.lcssa158.pre-phi.i = phi i64 [ %.pre.i, %.critedge.loopexit.i ], [ %4, %bb.a ]
-  %.078.lcssa.i = phi ptr [ %.078.lcssa.ph.i, %.critedge.loopexit.i ], [ %i.a, %bb.a ] ; 4 uses
+.critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
+  %.078.lcssa.i = phi ptr [ %i.a, %bb.a ], [ %scevgep.i, %bb.b ], [ %.078155.i, %.lr.ph.i ] ; 5 uses
   %i.g = icmp eq ptr %.078.lcssa.i, %1
   br i1 %i.g, label %_ZL9strtod_rlPKcPS0_.exit, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %.critedge.i
+  %.078.lcssa158.pre-phi.i = ptrtoaddr ptr %.078.lcssa.i to i64
   %i.h = sub i64 %i.b, %.078.lcssa158.pre-phi.i
   %scevgep159.i = getelementptr i8, ptr %.078.lcssa.i, i64 %i.h
   br label %.preheader.i
@@ -646,7 +641,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZL18hb_ot_name_get_utfI9hb_utf8_tEjP9hb_face_tjPK18hb_language_impl_tPjPNT_11codepoint_tE.exit
 
 bb.j:                                             ; preds = %bb.h
-  %i.as = ptrtoaddr ptr %i.ap to i64              ; 4 uses
+  %i.as = ptrtoaddr ptr %i.ap to i64
   %i.at = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.sroa.3.8.insert.ext.i.i.i.i ; 2 uses
   %.not.i.i = icmp eq ptr %3, null
   br i1 %.not.i.i, label %bb.r, label %bb.k
@@ -691,7 +686,7 @@ bb.n:                                             ; preds = %.lr.ph.i.i
 
 bb.o:                                             ; preds = %bb.n
   %i.bl = icmp sgt i64 %i.bk, 1
-  br i1 %i.bl, label %bb.p, label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i
+  br i1 %i.bl, label %bb.p, label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i
 
 bb.p:                                             ; preds = %bb.o
   %i.bm = lshr i8 %i.bc, 6
@@ -706,7 +701,7 @@ bb.p:                                             ; preds = %bb.o
 
 .thread39.i.i.i:                                  ; preds = %bb.n
   %i.bs = icmp sgt i64 %i.bk, 2
-  br i1 %i.bs, label %bb.q, label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i
+  br i1 %i.bs, label %bb.q, label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i
 
 bb.q:                                             ; preds = %.thread39.i.i.i
   %i.bt = getelementptr inbounds nuw i8, ptr %.03350.i.i, i64 1
@@ -722,18 +717,11 @@ _ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i:             ; preds = %bb.q, %bb.p, %bb.m
   %i.bw = icmp ult ptr %i.bf, %i.at
   %i.bx = icmp ult ptr %.032.i.i.i, %i.ax
   %i.by = select i1 %i.bw, i1 %i.bx, i1 false
-  br i1 %i.by, label %.lr.ph.i.i, label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i
+  br i1 %i.by, label %.lr.ph.i.i, label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i
 
-_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i: ; preds = %_ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i, %.thread39.i.i.i, %bb.o
-  %.034.lcssa.ph.i.i = phi ptr [ %i.bf, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i ], [ %.03449.i.i, %bb.o ], [ %.03449.i.i, %.thread39.i.i.i ] ; 2 uses
-  %.033.lcssa.ph.i.i = phi ptr [ %.032.i.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i ], [ %.03350.i.i, %bb.o ], [ %.03350.i.i, %.thread39.i.i.i ]
-  %.pre61.i.i = ptrtoaddr ptr %.034.lcssa.ph.i.i to i64
-  br label %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i
-
-_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i:      ; preds = %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i, %bb.l
-  %.pre.pre-phi.i.i = phi i64 [ %.pre61.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i ], [ %i.as, %bb.l ]
-  %.034.lcssa.i.i = phi ptr [ %.034.lcssa.ph.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i ], [ %i.ap, %bb.l ]
-  %.033.lcssa.i.i = phi ptr [ %.033.lcssa.ph.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.loopexit.i.i ], [ %4, %bb.l ] ; 3 uses
+_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i:      ; preds = %_ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i, %.thread39.i.i.i, %bb.o, %bb.l
+  %.034.lcssa.i.i = phi ptr [ %i.ap, %bb.l ], [ %.03449.i.i, %.thread39.i.i.i ], [ %.03449.i.i, %bb.o ], [ %i.bf, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i ]
+  %.033.lcssa.i.i = phi ptr [ %4, %bb.l ], [ %.03350.i.i, %.thread39.i.i.i ], [ %.03350.i.i, %bb.o ], [ %.032.i.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.i.i ] ; 3 uses
   %i.bz = ptrtoint ptr %.033.lcssa.i.i to i64
   %i.ca = ptrtoint ptr %4 to i64
   %i.cb = sub i64 %i.bz, %i.ca
@@ -743,8 +731,7 @@ _ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i:      ; preds = %_ZN9hb_utf8_t6encod
   br label %bb.r
 
 bb.r:                                             ; preds = %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i, %bb.k, %bb.j
-  %.33760.pre-phi.i.i = phi i64 [ %.pre.pre-phi.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i ], [ %i.as, %bb.k ], [ %i.as, %bb.j ]
-  %.337.i.i = phi ptr [ %.034.lcssa.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i ], [ %i.ap, %bb.k ], [ %i.ap, %bb.j ] ; 5 uses
+  %.337.i.i = phi ptr [ %.034.lcssa.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i ], [ %i.ap, %bb.k ], [ %i.ap, %bb.j ] ; 6 uses
   %.3.i.i = phi ptr [ %.033.lcssa.i.i, %_ZN9hb_utf8_t6encodeEPhPKhj.exit.thread.i.i ], [ %4, %bb.k ], [ %4, %bb.j ]
   %i.cd = ptrtoint ptr %.3.i.i to i64
   %i.ce = ptrtoint ptr %4 to i64
@@ -754,6 +741,7 @@ bb.r:                                             ; preds = %_ZN9hb_utf8_t6encod
   br i1 %i.ch, label %_ZN9hb_utf8_t10encode_lenEj.exit.preheader.i.i, label %_ZL18hb_ot_name_get_utfI9hb_utf8_tEjP9hb_face_tjPK18hb_language_impl_tPjPNT_11codepoint_tE.exit
 
 _ZN9hb_utf8_t10encode_lenEj.exit.preheader.i.i:   ; preds = %bb.r
+  %.33760.pre-phi.i.i = ptrtoaddr ptr %.337.i.i to i64
   %i.ci = add i64 %.sroa.3.8.insert.ext.i.i.i.i, %i.as
   %i.cj = sub i64 %i.ci, %.33760.pre-phi.i.i      ; 4 uses
   %scevgep.i.i = getelementptr i8, ptr %.337.i.i, i64 %i.cj
@@ -939,7 +927,6 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZL18hb_ot_name_get_utfI13hb_utf16_xe_tItEEjP9hb_face_tjPK18hb_language_impl_tPjPNT_11codepoint_tE.exit
 
 bb.j:                                             ; preds = %bb.h
-  %5 = ptrtoaddr ptr %i.ap to i64                 ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.sroa.3.8.insert.ext.i.i.i.i ; 2 uses
   %.not.i.i = icmp eq ptr %3, null
   br i1 %.not.i.i, label %_ZN2OT22hb_ot_name_convert_utfI10hb_ascii_t13hb_utf16_xe_tItEEEj10hb_array_tIKcEPjPNT0_11codepoint_tE.exit.i, label %bb.k
@@ -965,7 +952,7 @@ _ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i:     ; preds = %bb.l, %_ZN13hb_utf1
   %.03447.i.i = phi ptr [ %i.bc, %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i ], [ %i.ap, %bb.l ] ; 2 uses
   %i.ba = load i8, ptr %.03447.i.i, align 1, !tbaa !278 ; 2 uses
   %i.bb = icmp slt i8 %i.ba, 0
-  %i.bc = getelementptr inbounds nuw i8, ptr %.03447.i.i, i64 1 ; 4 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %.03447.i.i, i64 1 ; 3 uses
   %i.bd = zext i8 %i.ba to i16
   %i.be = select i1 %i.bb, i16 -3, i16 %i.bd
   %i.bf = getelementptr inbounds nuw i8, ptr %.03348.i.i, i64 2 ; 3 uses
@@ -973,16 +960,11 @@ _ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i:     ; preds = %bb.l, %_ZN13hb_utf1
   %i.bg = icmp ult ptr %i.bc, %i.as
   %i.bh = icmp ult ptr %i.bf, %i.aw
   %i.bi = select i1 %i.bg, i1 %i.bh, i1 false
-  br i1 %i.bi, label %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i, label %._crit_edge.loopexit.i.i
+  br i1 %i.bi, label %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i, label %._crit_edge.i.i
 
-._crit_edge.loopexit.i.i:                         ; preds = %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i
-  %.pre58.i.i = ptrtoaddr ptr %i.bc to i64
-  br label %._crit_edge.i.i
-
-._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.l
-  %.pre.pre-phi.i.i = phi i64 [ %.pre58.i.i, %._crit_edge.loopexit.i.i ], [ %5, %bb.l ]
-  %.034.lcssa.i.i = phi ptr [ %i.bc, %._crit_edge.loopexit.i.i ], [ %i.ap, %bb.l ]
-  %.033.lcssa.i.i = phi ptr [ %i.bf, %._crit_edge.loopexit.i.i ], [ %4, %bb.l ] ; 3 uses
+._crit_edge.i.i:                                  ; preds = %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i, %bb.l
+  %.034.lcssa.i.i = phi ptr [ %i.ap, %bb.l ], [ %i.bc, %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i ]
+  %.033.lcssa.i.i = phi ptr [ %4, %bb.l ], [ %i.bf, %_ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i ] ; 3 uses
   %i.bj = ptrtoint ptr %.033.lcssa.i.i to i64
   %i.bk = ptrtoint ptr %4 to i64
   %i.bl = sub i64 %i.bj, %i.bk
@@ -993,15 +975,16 @@ _ZN13hb_utf16_xe_tItE6encodeEPtPKtj.exit.i.i:     ; preds = %bb.l, %_ZN13hb_utf1
   br label %_ZN2OT22hb_ot_name_convert_utfI10hb_ascii_t13hb_utf16_xe_tItEEEj10hb_array_tIKcEPjPNT0_11codepoint_tE.exit.i
 
 _ZN2OT22hb_ot_name_convert_utfI10hb_ascii_t13hb_utf16_xe_tItEEEj10hb_array_tIKcEPjPNT0_11codepoint_tE.exit.i: ; preds = %._crit_edge.i.i, %bb.k, %bb.j
-  %.33757.pre-phi.i.i = phi i64 [ %.pre.pre-phi.i.i, %._crit_edge.i.i ], [ %5, %bb.k ], [ %5, %bb.j ]
-  %.337.i.i = phi ptr [ %.034.lcssa.i.i, %._crit_edge.i.i ], [ %i.ap, %bb.k ], [ %i.ap, %bb.j ]
+  %.337.i.i = phi ptr [ %.034.lcssa.i.i, %._crit_edge.i.i ], [ %i.ap, %bb.k ], [ %i.ap, %bb.j ] ; 2 uses
   %.3.i.i = phi ptr [ %.033.lcssa.i.i, %._crit_edge.i.i ], [ %4, %bb.k ], [ %4, %bb.j ]
+  %5 = ptrtoaddr ptr %i.ap to i64
   %i.bo = ptrtoint ptr %.3.i.i to i64
   %i.bp = ptrtoint ptr %4 to i64
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = lshr i64 %i.bq, 1
   %i.bs = trunc i64 %i.br to i32
   %i.bt = icmp ult ptr %.337.i.i, %i.as
+  %.33757.pre-phi.i.i = ptrtoaddr ptr %.337.i.i to i64
   %i.bu = trunc i64 %5 to i32
   %i.bv = add i32 %.sroa.speculated.i.i.i.i, %i.bu
   %i.bw = trunc i64 %.33757.pre-phi.i.i to i32
@@ -1267,7 +1250,6 @@ _ZN13hb_utf16_xe_tIN2OT7NumTypeILb1EtLj2EEEE4nextEPKS2_S5_Pjj.exit47.i.i: ; pred
   br i1 %i.cy, label %.lr.ph59.i.i, label %_ZL18hb_ot_name_get_utfI13hb_utf32_xe_tIjLb1EEEjP9hb_face_tjPK18hb_language_impl_tPjPNT_11codepoint_tE.exit, !llvm.loop !2747
 
 bb.r:                                             ; preds = %bb.h
-  %5 = ptrtoaddr ptr %i.ap to i64                 ; 4 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.sroa.3.8.insert.ext.i.i.i.i ; 2 uses
   %.not.i31.i = icmp eq ptr %3, null
   br i1 %.not.i31.i, label %_ZN2OT22hb_ot_name_convert_utfI10hb_ascii_t13hb_utf32_xe_tIjLb1EEEEj10hb_array_tIKcEPjPNT0_11codepoint_tE.exit.i, label %bb.s
@@ -1291,7 +1273,7 @@ bb.t:                                             ; preds = %bb.s
 _ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i: ; preds = %bb.t, %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i
   %.03348.i.i = phi ptr [ %i.dl, %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i ], [ %4, %bb.t ] ; 2 uses
   %.03447.i.i = phi ptr [ %i.dh, %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i ], [ %i.ap, %bb.t ] ; 2 uses
-  %i.dh = getelementptr inbounds nuw i8, ptr %.03447.i.i, i64 1 ; 4 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %.03447.i.i, i64 1 ; 3 uses
   %i.di = load i8, ptr %.03447.i.i, align 1, !tbaa !278 ; 2 uses
   %i.dj = icmp slt i8 %i.di, 0
   %i.dk = zext i8 %i.di to i32
@@ -1301,16 +1283,11 @@ _ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i: ; preds = %bb.t, %_ZN13hb_ut
   %i.dm = icmp ult ptr %i.dh, %i.cz
   %i.dn = icmp ult ptr %i.dl, %i.dd
   %i.do = select i1 %i.dm, i1 %i.dn, i1 false
-  br i1 %i.do, label %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i, label %._crit_edge.loopexit.i.i
+  br i1 %i.do, label %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i, label %._crit_edge.i34.i
 
-._crit_edge.loopexit.i.i:                         ; preds = %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i
-  %.pre59.i.i = ptrtoaddr ptr %i.dh to i64
-  br label %._crit_edge.i34.i
-
-._crit_edge.i34.i:                                ; preds = %._crit_edge.loopexit.i.i, %bb.t
-  %.pre.pre-phi.i.i = phi i64 [ %.pre59.i.i, %._crit_edge.loopexit.i.i ], [ %5, %bb.t ]
-  %.034.lcssa.i35.i = phi ptr [ %i.dh, %._crit_edge.loopexit.i.i ], [ %i.ap, %bb.t ]
-  %.033.lcssa.i36.i = phi ptr [ %i.dl, %._crit_edge.loopexit.i.i ], [ %4, %bb.t ] ; 3 uses
+._crit_edge.i34.i:                                ; preds = %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i, %bb.t
+  %.034.lcssa.i35.i = phi ptr [ %i.ap, %bb.t ], [ %i.dh, %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i ]
+  %.033.lcssa.i36.i = phi ptr [ %4, %bb.t ], [ %i.dl, %_ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i ] ; 3 uses
   %i.dp = ptrtoint ptr %.033.lcssa.i36.i to i64
   %i.dq = ptrtoint ptr %4 to i64
   %i.dr = sub i64 %i.dp, %i.dq
@@ -1321,15 +1298,16 @@ _ZN13hb_utf32_xe_tIjLb1EE6encodeEPjPKjj.exit.i40.i: ; preds = %bb.t, %_ZN13hb_ut
   br label %_ZN2OT22hb_ot_name_convert_utfI10hb_ascii_t13hb_utf32_xe_tIjLb1EEEEj10hb_array_tIKcEPjPNT0_11codepoint_tE.exit.i
 
 _ZN2OT22hb_ot_name_convert_utfI10hb_ascii_t13hb_utf32_xe_tIjLb1EEEEj10hb_array_tIKcEPjPNT0_11codepoint_tE.exit.i: ; preds = %._crit_edge.i34.i, %bb.s, %bb.r
-  %.33758.pre-phi.i.i = phi i64 [ %.pre.pre-phi.i.i, %._crit_edge.i34.i ], [ %5, %bb.s ], [ %5, %bb.r ]
-  %.337.i37.i = phi ptr [ %.034.lcssa.i35.i, %._crit_edge.i34.i ], [ %i.ap, %bb.s ], [ %i.ap, %bb.r ]
+  %.337.i37.i = phi ptr [ %.034.lcssa.i35.i, %._crit_edge.i34.i ], [ %i.ap, %bb.s ], [ %i.ap, %bb.r ] ; 2 uses
   %.3.i38.i = phi ptr [ %.033.lcssa.i36.i, %._crit_edge.i34.i ], [ %4, %bb.s ], [ %4, %bb.r ]
+  %5 = ptrtoaddr ptr %i.ap to i64
   %i.du = ptrtoint ptr %.3.i38.i to i64
   %i.dv = ptrtoint ptr %4 to i64
   %i.dw = sub i64 %i.du, %i.dv
   %i.dx = lshr i64 %i.dw, 2
   %i.dy = trunc i64 %i.dx to i32
   %i.dz = icmp ult ptr %.337.i37.i, %i.cz
+  %.33758.pre-phi.i.i = ptrtoaddr ptr %.337.i37.i to i64
   %i.ea = trunc i64 %5 to i32
   %i.eb = add i32 %.sroa.speculated.i.i.i.i, %i.ea
   %i.ec = trunc i64 %.33758.pre-phi.i.i to i32
@@ -1732,7 +1710,7 @@ bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 10 uses
   %i.b = alloca [4 x i8], align 4                 ; 9 uses
   %i.c = ptrtoint ptr %1 to i64                   ; 13 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.d = ptrtoint ptr %0 to i64
   %i.e = sub i64 %i.c, %i.d                       ; 3 uses
   %i.f = icmp sgt i64 %i.e, 6
   br i1 %i.f, label %bb.b, label %bb.m
@@ -2135,13 +2113,12 @@ bb.iw:                                            ; preds = %bb.iv
   %i.adk = and i8 %i.adj, -33
   %i.adl = add i8 %i.adk, -65
   %i.adm = icmp ult i8 %i.adl, 26
-  %spec.select = select i1 %i.adm, ptr %i.ada, ptr %0 ; 2 uses
-  %.pre = ptrtoint ptr %spec.select to i64
+  %spec.select = select i1 %i.adm, ptr %i.ada, ptr %0
   br label %bb.ix
 
 bb.ix:                                            ; preds = %bb.iw, %bb.iv, %sub_11555.i.thread
-  %.pre-phi = phi i64 [ %.pre, %bb.iw ], [ %i.d, %bb.iv ], [ %i.d, %sub_11555.i.thread ] ; 2 uses
-  %.181 = phi ptr [ %spec.select, %bb.iw ], [ %0, %bb.iv ], [ %0, %sub_11555.i.thread ] ; 11 uses
+  %.181 = phi ptr [ %0, %sub_11555.i.thread ], [ %0, %bb.iv ], [ %spec.select, %bb.iw ] ; 12 uses
+  %.pre-phi = ptrtoint ptr %.181 to i64           ; 2 uses
   %i.adn = tail call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %.181, i32 noundef 45) #64 ; 2 uses
   %.not90 = icmp eq ptr %i.adn, null
   %i.ado = ptrtoint ptr %i.adn to i64

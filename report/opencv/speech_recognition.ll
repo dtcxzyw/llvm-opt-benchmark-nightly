@@ -204,27 +204,29 @@ bb.r:                                             ; preds = %bb.q
   %i.ej = sdiv exact i64 %i.ei, 24                ; 7 uses
   %.not237 = icmp eq ptr %i.ee, %i.ef
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
-  %.pre272 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !31 ; 2 uses
-  %.pre273 = load ptr, ptr %i.ef, align 8, !tbaa !29 ; 2 uses
-  %.pre279 = ptrtoint ptr %.pre272 to i64         ; 3 uses
-  %.pre281 = ptrtoint ptr %.pre273 to i64         ; 3 uses
-  %12 = icmp eq ptr %.pre272, %.pre273            ; 2 uses
+  %.pre272 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !31 ; 6 uses
+  %.pre273 = load ptr, ptr %i.ef, align 8, !tbaa !29 ; 6 uses
   br i1 %.not237, label %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread, label %.preheader167.lr.ph
 
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread: ; preds = %.preheader168
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
-  %i.ek = sub i64 %.pre279, %.pre281
+  %.pre-phi280339 = ptrtoint ptr %.pre272 to i64
+  %.pre-phi282340 = ptrtoint ptr %.pre273 to i64
+  %i.ek = sub i64 %.pre-phi280339, %.pre-phi282340
   %i.el = ashr exact i64 %i.ek, 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   br label %bb.w
 
 .preheader167.lr.ph:                              ; preds = %.preheader168
+  %.not238 = icmp eq ptr %.pre272, %.pre273
   %i.em = load ptr, ptr %5, align 8               ; 3 uses
-  br i1 %12, label %._crit_edge216.split.thread346, label %.preheader167.preheader
+  br i1 %.not238, label %._crit_edge216.split.thread346, label %.preheader167.preheader
 
 .preheader167.preheader:                          ; preds = %.preheader167.lr.ph
-  %i.en = sub i64 %.pre279, %.pre281              ; 2 uses
+  %12 = ptrtoint ptr %.pre272 to i64
+  %13 = ptrtoint ptr %.pre273 to i64
+  %i.en = sub i64 %12, %13                        ; 2 uses
   %i.eo = ashr exact i64 %i.en, 3                 ; 6 uses
   %i.ep = shl nsw i64 %i.ej, 3
   %scevgep = getelementptr i8, ptr %i.em, i64 %i.ep
@@ -315,11 +317,14 @@ bb.s:                                             ; preds = %._crit_edge216.spli
   unreachable
 
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %._crit_edge216.split
-  %i.fj = sub i64 %.pre279, %.pre281
+  %.pre-phi280 = ptrtoint ptr %.pre272 to i64
+  %.pre-phi282 = ptrtoint ptr %.pre273 to i64
+  %i.fj = sub i64 %.pre-phi280, %.pre-phi282
   %i.fk = ashr exact i64 %i.fj, 3
   br label %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread350
 
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread350: ; preds = %._crit_edge216.split.thread346, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
+  %14 = phi ptr [ %.pre273, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i ], [ %.pre272, %._crit_edge216.split.thread346 ] ; 2 uses
   %i.fl = phi i64 [ %i.fk, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i ], [ 0, %._crit_edge216.split.thread346 ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   %i.fm = shl nuw nsw i64 %i.ej, 3
@@ -393,6 +398,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond259.not.3, label %._crit_edge214, label %scalar.ph, !llvm.loop !174
 
 bb.w:                                             ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc109, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread
+  %15 = phi ptr [ %.pre273, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread ], [ %14, %.noexc109 ], [ %14, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
   %i.gs = phi i64 [ %i.el, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread ], [ %i.fl, %.noexc109 ], [ %i.fl, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 6 uses
   %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.thread ], [ %i.fq, %.noexc109 ], [ %i.ft, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
   %i.gt = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -408,7 +414,8 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 _ZNSt6vectorIS_IdSaIdEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %bb.w
-  br i1 %12, label %_ZNSt12_Vector_baseISt6vectorIdSaIdEESaIS2_EEC2EmRKS3_.exit.i, label %_ZNSt15__new_allocatorISt6vectorIdSaIdEEE8allocateEmPKv.exit.i.i.i.i
+  %.not.i.i.i.i110 = icmp eq ptr %.pre272, %15
+  br i1 %.not.i.i.i.i110, label %_ZNSt12_Vector_baseISt6vectorIdSaIdEESaIS2_EEC2EmRKS3_.exit.i, label %_ZNSt15__new_allocatorISt6vectorIdSaIdEEE8allocateEmPKv.exit.i.i.i.i
 
 _ZNSt15__new_allocatorISt6vectorIdSaIdEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %_ZNSt6vectorIS_IdSaIdEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
   %i.gv = mul nuw nsw i64 %i.gs, 24

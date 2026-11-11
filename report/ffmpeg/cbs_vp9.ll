@@ -205,8 +205,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !28
   %.not = icmp eq i32 %i.b, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !81 ; 2 uses
-  %.pre42 = ptrtoint ptr %.pre to i64             ; 2 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !81 ; 3 uses
   br i1 %.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.a
@@ -217,8 +216,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !84
+  %6 = ptrtoint ptr %.pre to i64
   %i.e = ptrtoint ptr %i.d to i64
-  %i.f = sub i64 %.pre42, %i.e
+  %i.f = sub i64 %6, %i.e
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !80   ; 2 uses
   %.tr.i = trunc i64 %i.f to i32
@@ -228,13 +228,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %i.k = phi i32 [ %.pre41, %._crit_edge ], [ %i.h, %bb.b ] ; 6 uses
-  %.0 = phi i32 [ undef, %._crit_edge ], [ %i.j, %bb.b ] ; 2 uses
+  %i.k = phi i32 [ %i.h, %bb.b ], [ %.pre41, %._crit_edge ] ; 6 uses
+  %.0 = phi i32 [ %i.j, %bb.b ], [ undef, %._crit_edge ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.pre to i64
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !82
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.o = ptrtoint ptr %i.m to i64
-  %i.p = sub i64 %i.o, %.pre42                    ; 2 uses
+  %i.p = sub i64 %i.o, %.pre-phi                  ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %.tr.i30 = trunc i64 %i.p to i32
   %i.r = shl i32 %.tr.i30, 3

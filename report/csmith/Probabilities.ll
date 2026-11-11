@@ -202,7 +202,7 @@ _ZN13GroupProbElem14get_all_valuesERSt6vectorIP14SingleProbElemSaIS2_EE.exit: ; 
   %.sroa.10.1 = phi ptr [ null, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17 ], [ %.sroa.10.0, %_ZNSt6vectorIP14SingleProbElemSaIS1_EE9push_backERKS1_.exit.i ] ; 2 uses
   %.sroa.15.3 = phi ptr [ null, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17 ], [ %.sroa.15.2, %_ZNSt6vectorIP14SingleProbElemSaIS1_EE9push_backERKS1_.exit.i ] ; 5 uses
   %i.be = ptrtoint ptr %.sroa.10.1 to i64
-  %i.bf = ptrtoint ptr %.sroa.0.3 to i64          ; 3 uses
+  %i.bf = ptrtoint ptr %.sroa.0.3 to i64          ; 2 uses
   %i.bg = sub i64 %i.be, %i.bf
   %i.bh = ashr exact i64 %i.bg, 3
   %i.bi = add nsw i64 %i.bh, -1                   ; 2 uses
@@ -272,24 +272,20 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %.sroa.0.0.ph = phi ptr [ %.sroa.0.1, %.loopexit ], [ %.sroa.0.0.ph.ph, %.loopexit.split-lp ] ; 3 uses
+  %.sroa.0.0.ph = phi ptr [ %.sroa.0.1, %.loopexit ], [ %.sroa.0.0.ph.ph, %.loopexit.split-lp ] ; 2 uses
   %.sroa.15.0.ph = phi ptr [ %.sroa.15.1, %.loopexit ], [ %.sroa.15.0.ph.ph, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
   %.not.i.i.i = icmp eq ptr %.sroa.0.0.ph, null
-  br i1 %.not.i.i.i, label %_ZNSt6vectorIP14SingleProbElemSaIS1_EED2Ev.exit, label %._crit_edge55
+  br i1 %.not.i.i.i, label %_ZNSt6vectorIP14SingleProbElemSaIS1_EED2Ev.exit, label %bb.p
 
-._crit_edge55:                                    ; preds = %bb.o
-  %.pre = ptrtoint ptr %.sroa.0.0.ph to i64
-  br label %bb.p
-
-bb.p:                                             ; preds = %._crit_edge55, %.thread
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge55 ], [ %i.bf, %.thread ]
-  %lpad.phi43 = phi { ptr, i32 } [ %lpad.phi, %._crit_edge55 ], [ %lpad.thr_comm, %.thread ]
-  %.sroa.15.042.a = phi ptr [ %.sroa.15.0.ph, %._crit_edge55 ], [ %.sroa.15.3, %.thread ]
-  %.sroa.0.041 = phi ptr [ %.sroa.0.0.ph, %._crit_edge55 ], [ %.sroa.0.3, %.thread ]
-  %i.cc = ptrtoint ptr %.sroa.15.042.a to i64
+bb.p:                                             ; preds = %bb.o, %.thread
+  %lpad.phi43 = phi { ptr, i32 } [ %lpad.thr_comm, %.thread ], [ %lpad.phi, %bb.o ]
+  %.sroa.15.042 = phi ptr [ %.sroa.15.3, %.thread ], [ %.sroa.15.0.ph, %bb.o ]
+  %.sroa.15.042.a = phi ptr [ %.sroa.0.3, %.thread ], [ %.sroa.0.0.ph, %bb.o ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.sroa.15.042.a to i64
+  %i.cc = ptrtoint ptr %.sroa.15.042 to i64
   %i.cd = sub i64 %i.cc, %.pre-phi
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.041, i64 noundef %i.cd) #25
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.15.042.a, i64 noundef %i.cd) #25
   br label %_ZNSt6vectorIP14SingleProbElemSaIS1_EED2Ev.exit
 
 _ZNSt6vectorIP14SingleProbElemSaIS1_EED2Ev.exit:  ; preds = %bb.o, %bb.p

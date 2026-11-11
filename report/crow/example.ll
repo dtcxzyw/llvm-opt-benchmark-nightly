@@ -205,7 +205,7 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(
 define linkonce_odr dso_local ptr @_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops10_Iter_predIZN4crow21sanitize_header_valueERS8_EUlcE_EEET_SG_SG_T0_St26random_access_iterator_tag(ptr %0, ptr %1) local_unnamed_addr #1 comdat {
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = ashr i64 %i.c, 2                         ; 2 uses
   %i.e = icmp sgt i64 %i.d, 0
@@ -213,7 +213,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.f = and i64 %i.c, -4
-  %scevgep = getelementptr i8, ptr %0, i64 %i.f   ; 2 uses
+  %scevgep = getelementptr i8, ptr %0, i64 %i.f
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
@@ -253,15 +253,11 @@ bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.025.044, i64 4
   %i.o = add nsw i64 %.045, -1
   %i.p = icmp sgt i64 %.045, 1
-  br i1 %i.p, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !1377
+  br i1 %i.p, label %.lr.ph, label %._crit_edge, !llvm.loop !1377
 
-._crit_edge.loopexit:                             ; preds = %bb.e
-  %.pre = ptrtoint ptr %scevgep to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.b, %bb.a ]
-  %.sroa.025.0.lcssa = phi ptr [ %scevgep, %._crit_edge.loopexit ], [ %0, %bb.a ] ; 6 uses
+._crit_edge:                                      ; preds = %bb.e, %bb.a
+  %.sroa.025.0.lcssa = phi ptr [ %0, %bb.a ], [ %scevgep, %bb.e ] ; 7 uses
+  %.pre-phi = ptrtoint ptr %.sroa.025.0.lcssa to i64
   %i.q = sub i64 %i.a, %.pre-phi
   switch i64 %i.q, label %.loopexit [
     i64 3, label %bb.f
@@ -664,7 +660,7 @@ bb.l:                                             ; preds = %bb.k
   %i.as = load ptr, ptr %2, align 8, !tbaa !119   ; 7 uses
   %i.at = load ptr, ptr %i.al, align 8, !tbaa !119 ; 6 uses
   %i.au = ptrtoint ptr %i.at to i64               ; 2 uses
-  %i.av = ptrtoint ptr %i.as to i64               ; 2 uses
+  %i.av = ptrtoint ptr %i.as to i64
   %i.aw = sub i64 %i.au, %i.av                    ; 10 uses
   %i.ax = ashr i64 %i.aw, 2                       ; 2 uses
   %i.ay = icmp sgt i64 %i.ax, 0
@@ -672,7 +668,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.l
   %i.az = and i64 %i.aw, -4
-  %scevgep.i.i.i.i = getelementptr i8, ptr %i.as, i64 %i.az ; 2 uses
+  %scevgep.i.i.i.i = getelementptr i8, ptr %i.as, i64 %i.az
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.q, %.lr.ph.i.i.i.i
@@ -704,16 +700,12 @@ bb.q:                                             ; preds = %bb.p
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i, i64 4
   %i.bm = add nsw i64 %.052.i.i.i.i, -1
   %i.bn = icmp sgt i64 %.052.i.i.i.i, 1
-  br i1 %i.bn, label %bb.m, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !2030
+  br i1 %i.bn, label %bb.m, label %._crit_edge.i.i.i.i, !llvm.loop !2030
 
-._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.q
-  %.pre59.i.i.i.i = ptrtoint ptr %scevgep.i.i.i.i to i64
-  br label %._crit_edge.i.i.i.i
-
-._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.loopexit.i.i.i.i, %bb.l
-  %.pre-phi.i.i.i.i = phi i64 [ %.pre59.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.av, %bb.l ]
-  %.sroa.032.0.lcssa.i.i.i.i = phi ptr [ %scevgep.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.as, %bb.l ] ; 5 uses
-  %i.bo = sub i64 %i.au, %.pre-phi.i.i.i.i
+._crit_edge.i.i.i.i:                              ; preds = %bb.q, %bb.l
+  %.sroa.032.0.lcssa.i.i.i.i = phi ptr [ %i.as, %bb.l ], [ %scevgep.i.i.i.i, %bb.q ] ; 6 uses
+  %.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %.sroa.032.0.lcssa.i.i.i.i to i64
+  %i.bo = sub i64 %i.au, %.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi
   switch i64 %i.bo, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPN4crow10HTTPMethodESt6vectorIS3_SaIS3_EEEES3_ET_S9_S9_RKT0_.exit.thread.i [
     i64 3, label %bb.r
     i64 2, label %._crit_edge._crit_edge.i.i.i.i
@@ -1116,7 +1108,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !952  ; 7 uses
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !944  ; 6 uses
   %i.j = ptrtoint ptr %i.h to i64
-  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = ashr exact i64 %i.l, 4                   ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1152,7 +1144,7 @@ _ZNKSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V2
   %.not.i.i.i = icmp ne i64 %i.w, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.x = shl nuw nsw i64 %i.w, 4
-  %i.y = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #43 ; 7 uses
+  %i.y = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #43 ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.l ; 2 uses
   store i64 %i.o, ptr %i.z, align 8, !tbaa !111
   %.sroa.5.0..sroa_idx22 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -1184,13 +1176,12 @@ _ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V21
   store ptr %i.ac, ptr %i.g, align 8, !tbaa !952
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %i.w
   store ptr %i.ad, ptr %i.p, align 8, !tbaa !945
-  %.pre = ptrtoint ptr %i.y to i64
   br label %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE9push_backERKSB_.exit
 
 _ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE9push_backERKSB_.exit: ; preds = %bb.d, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i
-  %.pre-phi = phi i64 [ %i.k, %bb.d ], [ %.pre, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ]
-  %i.ae = phi ptr [ %i.i, %bb.d ], [ %i.y, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ]
+  %i.ae = phi ptr [ %i.i, %bb.d ], [ %i.y, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ] ; 2 uses
   %i.af = phi ptr [ %i.r, %bb.d ], [ %i.ac, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ]
+  %.pre-phi = ptrtoint ptr %i.ae to i64
   %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = sub i64 %i.ag, %.pre-phi
   %i.ai = ashr exact i64 %i.ah, 4
@@ -1593,7 +1584,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !383  ; 7 uses
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !386  ; 6 uses
   %i.j = ptrtoint ptr %i.h to i64
-  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = ashr exact i64 %i.l, 4                   ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1629,7 +1620,7 @@ _ZNKSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V2
   %.not.i.i.i = icmp ne i64 %i.w, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.x = shl nuw nsw i64 %i.w, 4
-  %i.y = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #43 ; 7 uses
+  %i.y = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #43 ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.l ; 2 uses
   store i64 %i.o, ptr %i.z, align 8, !tbaa !111
   %.sroa.5.0..sroa_idx22 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -1661,13 +1652,12 @@ _ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V21
   store ptr %i.ac, ptr %i.g, align 8, !tbaa !383
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %i.w
   store ptr %i.ad, ptr %i.p, align 8, !tbaa !838
-  %.pre = ptrtoint ptr %i.y to i64
   br label %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE9push_backERKSB_.exit
 
 _ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE9push_backERKSB_.exit: ; preds = %bb.d, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i
-  %.pre-phi = phi i64 [ %i.k, %bb.d ], [ %.pre, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ]
-  %i.ae = phi ptr [ %i.i, %bb.d ], [ %i.y, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ]
+  %i.ae = phi ptr [ %i.i, %bb.d ], [ %i.y, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ] ; 2 uses
   %i.af = phi ptr [ %i.r, %bb.d ], [ %i.ac, %_ZNSt6vectorIN4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212system_clockENS0_11wait_traitsIS6_EEEEE10heap_entryESaISB_EE17_M_realloc_insertIJRKSB_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i ]
+  %.pre-phi = ptrtoint ptr %i.ae to i64
   %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = sub i64 %i.ag, %.pre-phi
   %i.ai = ashr exact i64 %i.ah, 4
@@ -2070,7 +2060,7 @@ bb.j:                                             ; preds = %bb.i
   %.11035.ph1362.us = phi ptr [ %.010344730, %.outer1361.us.preheader ], [ %i.cb, %.outer1361.us.backedge ] ; 93 uses
   %.21022.ph1363.us = phi ptr [ %.110214767, %.outer1361.us.preheader ], [ %.us-phi3506.us, %.outer1361.us.backedge ] ; 46 uses
   %.11007.ph1364.us = phi ptr [ %.010064840, %.outer1361.us.preheader ], [ null, %.outer1361.us.backedge ] ; 89 uses
-  %i.au = ptrtoint ptr %.11035.ph1362.us to i64   ; 5 uses
+  %i.au = ptrtoint ptr %.11035.ph1362.us to i64   ; 3 uses
   switch i8 %i.at, label %.outer1366.us.us [
     i8 32, label %.outer1361.split.us.split.us.us
     i8 9, label %.outer1361.split.us.split.us.us
@@ -2308,7 +2298,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.11035.ph1362 = phi ptr [ %.11035.ph6777, %.outer1361.preheader ], [ %i.agg, %.outer1361.backedge ] ; 93 uses
   %.21022.ph1363 = phi ptr [ %.21022.ph6778, %.outer1361.preheader ], [ %.us-phi2894, %.outer1361.backedge ] ; 46 uses
   %.11007.ph1364 = phi ptr [ %.11007.ph6779, %.outer1361.preheader ], [ null, %.outer1361.backedge ] ; 89 uses
-  %i.cn = ptrtoint ptr %.11035.ph1362 to i64      ; 5 uses
+  %i.cn = ptrtoint ptr %.11035.ph1362 to i64      ; 3 uses
   switch i8 %.01044.ph6745, label %.outer1366 [
     i8 32, label %.outer1361.split.split.us
     i8 9, label %.outer1361.split.split.us
@@ -2711,11 +2701,11 @@ bb.mh:                                            ; preds = %bb.mf
 
 .split2496.us.split.us:                           ; preds = %bb.k, %bb.v, %bb.l, %bb.aa
   %.21001.ph.ph6741 = phi i32 [ %.21001.ph.ph6705, %bb.v ], [ %.11000, %bb.l ], [ %.21001.ph.ph6705, %bb.aa ], [ %.11000, %bb.k ] ; 2 uses
-  %.pre-phi = phi i64 [ %i.cn, %bb.v ], [ %i.au, %bb.l ], [ %i.cn, %bb.aa ], [ %i.au, %bb.k ]
-  %.us-phi2498 = phi ptr [ %.11035.ph1362, %bb.v ], [ %.11035.ph1362.us, %bb.l ], [ %.11035.ph1362, %bb.aa ], [ %.11035.ph1362.us, %bb.k ] ; 2 uses
+  %.us-phi2498 = phi ptr [ %.11035.ph1362, %bb.v ], [ %.11035.ph1362.us, %bb.l ], [ %.11035.ph1362, %bb.aa ], [ %.11035.ph1362.us, %bb.k ] ; 3 uses
   %.us-phi2499 = phi ptr [ %.11007.ph1364, %bb.v ], [ %.11007.ph1364.us, %bb.l ], [ %.11007.ph1364, %bb.aa ], [ %.11007.ph1364.us, %bb.k ] ; 2 uses
   %.us-phi2500 = phi ptr [ %.21022.ph1363, %bb.v ], [ %.21022.ph1367.us.us, %bb.l ], [ %.21022.ph1367, %bb.aa ], [ %.21022.ph1363.us, %bb.k ] ; 2 uses
   %.us-phi2501 = phi i32 [ %i.co, %bb.v ], [ %i.be, %bb.l ], [ %i.cy, %bb.aa ], [ %i.av, %bb.k ]
+  %.pre-phi = ptrtoint ptr %.us-phi2498 to i64
   %i.ait = load i64, ptr %i.v, align 8, !tbaa !2576 ; 3 uses
   %i.aiu = sub i64 %i.w, %.pre-phi                ; 2 uses
   %.1274 = tail call i64 @llvm.umin.i64(i64 %i.ait, i64 %i.aiu) ; 2 uses

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.f, %bb.b
   %.sroa.22.1 = phi i64 [ %.sroa.22.0, %bb.b ], [ %i.as, %bb.f ] ; 4 uses
-  %.sroa.0.1 = phi ptr [ %.sroa.0.0, %bb.b ], [ %.sroa.0.4, %bb.f ] ; 10 uses
+  %.sroa.0.1 = phi ptr [ %.sroa.0.0, %bb.b ], [ %.sroa.0.4, %bb.f ] ; 8 uses
   %.sroa.7.0 = phi i32 [ %.sroa.31.0, %bb.b ], [ %.sroa.4.0.i.ph.i, %bb.f ] ; 6 uses
   %.sroa.01.0 = phi i64 [ %.sroa.29.0, %bb.b ], [ %.sroa.22.0, %bb.f ] ; 10 uses
   switch i32 %.sroa.7.0, label %switch.edge [
@@ -238,7 +238,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l, %switc
   %i.az = add i64 %.sroa.08.0, %.sroa.01.0        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.1) ]
   %i.ba = icmp eq ptr %.sroa.0.1, %i.d
-  br i1 %i.ba, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread, label %.lr.ph.split.preheader
+  br i1 %i.ba, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread, label %.lr.ph.split
 
 .thread136:                                       ; preds = %bb.j, %bb.j
   %i.bb = icmp samesign ult i32 %.sroa.7.0, 1114112
@@ -246,21 +246,13 @@ bb.m:                                             ; preds = %bb.k, %bb.l, %switc
   %i.bc = add i64 %.sroa.01.0, 1                  ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.1) ]
   %i.bd = icmp eq ptr %.sroa.0.1, %i.d
-  br i1 %i.bd, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread, label %.lr.ph.split.us.preheader
+  br i1 %i.bd, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread, label %.lr.ph.split.us
 
-.lr.ph.split.preheader:                           ; preds = %bb.m
-  %3 = ptrtoint ptr %.sroa.0.1 to i64
-  br label %.lr.ph.split
-
-.lr.ph.split.us.preheader:                        ; preds = %.thread136
-  %4 = ptrtoint ptr %.sroa.0.1 to i64
-  br label %.lr.ph.split.us
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %switch.edge27.thr_comm.us
-  %i.be = phi i64 [ %i.co, %switch.edge27.thr_comm.us ], [ %4, %.lr.ph.split.us.preheader ]
-  %.sroa.05.071.us = phi i64 [ %i.cr, %switch.edge27.thr_comm.us ], [ %i.bc, %.lr.ph.split.us.preheader ] ; 2 uses
-  %.sroa.0.270.us = phi ptr [ %.sroa.0.6.us, %switch.edge27.thr_comm.us ], [ %.sroa.0.1, %.lr.ph.split.us.preheader ] ; 5 uses
-  %.sroa.22.269.us = phi i64 [ %i.cq, %switch.edge27.thr_comm.us ], [ %.sroa.22.1, %.lr.ph.split.us.preheader ] ; 2 uses
+.lr.ph.split.us:                                  ; preds = %.thread136, %switch.edge27.thr_comm.us
+  %i.be = phi i64 [ %i.cr, %switch.edge27.thr_comm.us ], [ %i.bc, %.thread136 ] ; 2 uses
+  %.sroa.0.270.us = phi ptr [ %.sroa.0.6.us, %switch.edge27.thr_comm.us ], [ %.sroa.0.1, %.thread136 ] ; 6 uses
+  %.sroa.22.269.us = phi i64 [ %i.cq, %switch.edge27.thr_comm.us ], [ %.sroa.22.1, %.thread136 ] ; 2 uses
+  %3 = ptrtoint ptr %.sroa.0.270.us to i64
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.0.270.us, i64 1 ; 3 uses
   %i.bg = load i8, ptr %.sroa.0.270.us, align 1, !noalias !214, !noundef !4 ; 5 uses
   %i.bh = icmp sgt i8 %i.bg, -1
@@ -317,8 +309,8 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCN
   %.sroa.4.0.i.ph.i.i.i.us = phi i32 [ %i.cm, %bb.n ], [ %i.cl, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiqiOkcJdymw_7similar.exit16.i.i.i.i.us ], [ %i.ca, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiqiOkcJdymw_7similar.exit14.i.i.i.i.us ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiqiOkcJdymw_7similar.exit12.i.i.i.i.us ] ; 3 uses
   %i.cn = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.us, 1114112
   call void @llvm.assume(i1 %i.cn)
-  %i.co = ptrtoint ptr %.sroa.0.6.us to i64       ; 2 uses
-  %i.cp = sub i64 %i.co, %i.be
+  %i.co = ptrtoint ptr %.sroa.0.6.us to i64
+  %i.cp = sub i64 %i.co, %3
   %i.cq = add i64 %i.cp, %.sroa.22.269.us         ; 3 uses
   switch i32 %.sroa.4.0.i.ph.i.i.i.us, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread [
     i32 10, label %switch.edge27.thr_comm.us
@@ -326,15 +318,15 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCN
   ]
 
 switch.edge27.thr_comm.us:                        ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us
-  %i.cr = add i64 %.sroa.05.071.us, 1             ; 2 uses
+  %i.cr = add i64 %i.be, 1                        ; 2 uses
   %i.cs = icmp eq ptr %.sroa.0.6.us, %i.d
   br i1 %i.cs, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread, label %.lr.ph.split.us
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.thread
-  %i.ct = phi i64 [ %i.ed, %.thread ], [ %3, %.lr.ph.split.preheader ]
-  %.sroa.05.071 = phi i64 [ %i.et, %.thread ], [ %i.az, %.lr.ph.split.preheader ] ; 3 uses
-  %.sroa.0.270 = phi ptr [ %.sroa.0.6, %.thread ], [ %.sroa.0.1, %.lr.ph.split.preheader ] ; 5 uses
-  %.sroa.22.269 = phi i64 [ %i.ef, %.thread ], [ %.sroa.22.1, %.lr.ph.split.preheader ] ; 3 uses
+.lr.ph.split:                                     ; preds = %bb.m, %.thread
+  %i.ct = phi i64 [ %i.et, %.thread ], [ %i.az, %bb.m ] ; 3 uses
+  %.sroa.0.270 = phi ptr [ %.sroa.0.6, %.thread ], [ %.sroa.0.1, %bb.m ] ; 6 uses
+  %.sroa.22.269 = phi i64 [ %i.ef, %.thread ], [ %.sroa.22.1, %bb.m ] ; 3 uses
+  %4 = ptrtoint ptr %.sroa.0.270 to i64
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0.270, i64 1 ; 3 uses
   %i.cv = load i8, ptr %.sroa.0.270, align 1, !noalias !214, !noundef !4 ; 5 uses
   %i.cw = icmp sgt i8 %i.cv, -1
@@ -391,8 +383,8 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCN
   %.sroa.4.0.i.ph.i.i.i = phi i32 [ %i.dh, %bb.o ], [ %i.eb, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiqiOkcJdymw_7similar.exit16.i.i.i.i ], [ %i.dq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiqiOkcJdymw_7similar.exit14.i.i.i.i ], [ %i.df, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiqiOkcJdymw_7similar.exit12.i.i.i.i ] ; 7 uses
   %i.ec = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i, 1114112
   call void @llvm.assume(i1 %i.ec)
-  %i.ed = ptrtoint ptr %.sroa.0.6 to i64          ; 2 uses
-  %i.ee = sub i64 %i.ed, %i.ct
+  %i.ed = ptrtoint ptr %.sroa.0.6 to i64
+  %i.ee = sub i64 %i.ed, %4
   %i.ef = add i64 %i.ee, %.sroa.22.269            ; 4 uses
   switch i32 %.sroa.4.0.i.ph.i.i.i, label %switch.edge27 [
     i32 10, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread
@@ -400,7 +392,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCN
   ]
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread: ; preds = %switch.edge27.thr_comm.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit, %.thread, %.thread136, %bb.m
-  %.sroa.05.0.lcssa = phi i64 [ %i.az, %bb.m ], [ %i.bc, %.thread136 ], [ %.sroa.05.071, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %.sroa.05.071, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %i.et, %.thread ], [ %i.cr, %switch.edge27.thr_comm.us ], [ %.sroa.05.071.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us ] ; 7 uses
+  %.sroa.05.0.lcssa = phi i64 [ %i.az, %bb.m ], [ %i.bc, %.thread136 ], [ %i.ct, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %i.ct, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %i.et, %.thread ], [ %i.cr, %switch.edge27.thr_comm.us ], [ %i.be, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us ] ; 7 uses
   %.sroa.0.0.i.i.i57 = phi i64 [ undef, %bb.m ], [ undef, %.thread136 ], [ %.sroa.22.269, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %.sroa.22.269, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ undef, %.thread ], [ undef, %switch.edge27.thr_comm.us ], [ %.sroa.22.269.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us ]
   %.sroa.3.0.i.i.i56 = phi i32 [ -1, %bb.m ], [ -1, %.thread136 ], [ %.sroa.4.0.i.ph.i.i.i, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %.sroa.4.0.i.ph.i.i.i, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ -1, %.thread ], [ -1, %switch.edge27.thr_comm.us ], [ %.sroa.4.0.i.ph.i.i.i.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us ]
   %.sroa.0.755 = phi ptr [ %.sroa.0.1, %bb.m ], [ %.sroa.0.1, %.thread136 ], [ %.sroa.0.6, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %.sroa.0.6, %.thread ], [ %.sroa.0.6, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit ], [ %.sroa.0.6.us, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.us ], [ %.sroa.0.6.us, %switch.edge27.thr_comm.us ]
@@ -459,7 +451,7 @@ bb.w:                                             ; preds = %bb.v
 
 .thread:                                          ; preds = %bb.v, %bb.w, %switch.edge27
   %.sroa.011.0 = phi i64 [ 2, %bb.v ], [ %.28, %bb.w ], [ 1, %switch.edge27 ]
-  %i.et = add i64 %.sroa.011.0, %.sroa.05.071     ; 2 uses
+  %i.et = add i64 %.sroa.011.0, %i.ct             ; 2 uses
   %i.eu = icmp eq ptr %.sroa.0.6, %i.d
   br i1 %i.eu, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TjcEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableNtNtNtB5_3str4iter11CharIndicesE4peek0ECsiqiOkcJdymw_7similar.exit.thread, label %.lr.ph.split
 

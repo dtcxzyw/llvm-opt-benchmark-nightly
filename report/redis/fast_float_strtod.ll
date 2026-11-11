@@ -205,7 +205,7 @@ bb.a:
   store i64 0, ptr %3, align 8, !tbaa !27
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !75   ; 4 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
+  %i.c = ptrtoaddr ptr %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.e = load i64, ptr %i.d, align 8, !tbaa !76   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.e ; 9 uses
@@ -217,27 +217,22 @@ bb.a:
   %.9311 = phi ptr [ %i.i, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
   %.0.copyload.i69 = load i64, ptr %.9311, align 1
   %.not.i70 = icmp eq i64 %.0.copyload.i69, 3472328296227680304
-  br i1 %.not.i70, label %bb.b, label %._crit_edge.loopexit
+  br i1 %.not.i70, label %bb.b, label %._crit_edge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.9311, i64 8 ; 3 uses
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %i.g, %i.j
   %i.l = icmp sgt i64 %i.k, 7
-  br i1 %i.l, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !65
+  br i1 %i.l, label %.lr.ph, label %._crit_edge, !llvm.loop !65
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.b
-  %.9.lcssa.ph = phi ptr [ %i.i, %bb.b ], [ %.9311, %.lr.ph ] ; 2 uses
-  %.pre450 = ptrtoaddr ptr %.9.lcssa.ph to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.9.lcssa440.pre-phi = phi i64 [ %.pre450, %._crit_edge.loopexit ], [ %i.c, %bb.a ]
-  %.9.lcssa = phi ptr [ %.9.lcssa.ph, %._crit_edge.loopexit ], [ %i.b, %bb.a ] ; 3 uses
+._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %bb.a
+  %.9.lcssa = phi ptr [ %i.b, %bb.a ], [ %.9311, %.lr.ph ], [ %i.i, %bb.b ] ; 4 uses
   %.not8.i67316 = icmp eq ptr %.9.lcssa, %i.f
   br i1 %.not8.i67316, label %._crit_edge350, label %.lr.ph319.preheader
 
 .lr.ph319.preheader:                              ; preds = %._crit_edge
+  %.9.lcssa440.pre-phi = ptrtoaddr ptr %.9.lcssa to i64
   %i.m = add i64 %i.e, %i.c
   %i.n = sub i64 %i.m, %.9.lcssa440.pre-phi
   %scevgep = getelementptr i8, ptr %.9.lcssa, i64 %i.n
@@ -640,7 +635,7 @@ _ZN10fast_float6bigint3addEm.exit129:             ; preds = %.lr.ph559, %_ZN10fa
 ._crit_edge350:                                   ; preds = %_ZN10fast_float6bigint3addEm.exit129, %._crit_edge, %_ZN10fast_float10skip_zerosIcEEvRPKT_S3_.exit71
   %i.ii = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !78 ; 6 uses
-  %i.ik = ptrtoaddr ptr %i.ij to i64              ; 2 uses
+  %i.ik = ptrtoaddr ptr %i.ij to i64
   %.not59 = icmp eq ptr %i.ij, null
   br i1 %.not59, label %_ZN10fast_float12is_truncatedIcEEbPKT_S3_.exit, label %bb.q
 
@@ -661,27 +656,22 @@ bb.q:                                             ; preds = %._crit_edge350
   %.7367 = phi ptr [ %i.is, %bb.r ], [ %i.ij, %.preheader289 ] ; 3 uses
   %.0.copyload.i = load i64, ptr %.7367, align 1
   %.not.i = icmp eq i64 %.0.copyload.i, 3472328296227680304
-  br i1 %.not.i, label %bb.r, label %._crit_edge369.loopexit
+  br i1 %.not.i, label %bb.r, label %._crit_edge369
 
 bb.r:                                             ; preds = %.lr.ph368
   %i.is = getelementptr inbounds nuw i8, ptr %.7367, i64 8 ; 3 uses
   %i.it = ptrtoint ptr %i.is to i64
   %i.iu = sub i64 %i.iq, %i.it
   %i.iv = icmp sgt i64 %i.iu, 7
-  br i1 %i.iv, label %.lr.ph368, label %._crit_edge369.loopexit, !llvm.loop !65
+  br i1 %i.iv, label %.lr.ph368, label %._crit_edge369, !llvm.loop !65
 
-._crit_edge369.loopexit:                          ; preds = %.lr.ph368, %bb.r
-  %.7.lcssa.ph = phi ptr [ %i.is, %bb.r ], [ %.7367, %.lr.ph368 ] ; 2 uses
-  %.pre451 = ptrtoaddr ptr %.7.lcssa.ph to i64
-  br label %._crit_edge369
-
-._crit_edge369:                                   ; preds = %._crit_edge369.loopexit, %.preheader289
-  %.7.lcssa441.pre-phi = phi i64 [ %.pre451, %._crit_edge369.loopexit ], [ %i.ik, %.preheader289 ]
-  %.7.lcssa = phi ptr [ %.7.lcssa.ph, %._crit_edge369.loopexit ], [ %i.ij, %.preheader289 ] ; 3 uses
+._crit_edge369:                                   ; preds = %bb.r, %.lr.ph368, %.preheader289
+  %.7.lcssa = phi ptr [ %i.ij, %.preheader289 ], [ %.7367, %.lr.ph368 ], [ %i.is, %bb.r ] ; 4 uses
   %.not8.i373 = icmp eq ptr %.7.lcssa, %i.in
   br i1 %.not8.i373, label %_ZN10fast_float12is_truncatedIcEEbPKT_S3_.exit, label %.lr.ph376.preheader
 
 .lr.ph376.preheader:                              ; preds = %._crit_edge369
+  %.7.lcssa441.pre-phi = ptrtoaddr ptr %.7.lcssa to i64
   %i.iw = add i64 %i.im, %i.ik
   %i.ix = sub i64 %i.iw, %.7.lcssa441.pre-phi
   %scevgep442 = getelementptr i8, ptr %.7.lcssa, i64 %i.ix

@@ -205,21 +205,23 @@ bb.fq:                                            ; preds = %.lr.ph1253, %_ZN2cv
   br i1 %exitcond1724.not, label %._crit_edge1254, label %.lr.ph1253, !llvm.loop !155
 
 ._crit_edge1254:                                  ; preds = %bb.fq
-  %.pre1725 = load ptr, ptr %i.xv, align 8, !tbaa !50 ; 6 uses
-  %.pre1726 = load ptr, ptr %3, align 8, !tbaa !51 ; 6 uses
-  %.pre1730 = ptrtoint ptr %.pre1725 to i64       ; 2 uses
-  %.pre1731 = ptrtoint ptr %.pre1726 to i64       ; 2 uses
+  %.pre1725 = load ptr, ptr %i.xv, align 8, !tbaa !50 ; 7 uses
+  %.pre1726 = load ptr, ptr %3, align 8, !tbaa !51 ; 7 uses
+  %.pre1730 = ptrtoint ptr %.pre1725 to i64
+  %.pre1731 = ptrtoint ptr %.pre1726 to i64
   %.pre1733 = sub i64 %.pre1730, %.pre1731        ; 2 uses
   %.pre1735 = ashr exact i64 %.pre1733, 4         ; 7 uses
+  %.pre-phi1732 = ptrtoint ptr %.pre1726 to i64
   %i.zi = icmp ugt i64 %.1, %.pre1735
   br i1 %i.zi, label %bb.fr, label %._crit_edge1254.thread
 
 bb.fr:                                            ; preds = %._crit_edge1254
+  %.pre-phi = ptrtoint ptr %.pre1725 to i64
   %i.zj = sub nuw i64 %.1, %.pre1735              ; 6 uses
   %i.zk = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.zl = load ptr, ptr %i.zk, align 8, !tbaa !105
   %i.zm = ptrtoint ptr %i.zl to i64
-  %i.zn = sub i64 %i.zm, %.pre1730
+  %i.zn = sub i64 %i.zm, %.pre-phi
   %i.zo = ashr exact i64 %i.zn, 4                 ; 2 uses
   %i.zp = icmp ult i64 %.pre1735, 576460752303423488
   call void @llvm.assume(i1 %i.zp)
@@ -285,7 +287,7 @@ _ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE11_S_relocateEPS5
 bb.ft:                                            ; preds = %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i
   %i.aaf = load ptr, ptr %i.zk, align 8, !tbaa !105
   %i.aag = ptrtoint ptr %i.aaf to i64
-  %i.aah = sub i64 %i.aag, %.pre1731
+  %i.aah = sub i64 %i.aag, %.pre-phi1732
   call void @_ZdlPvm(ptr noundef nonnull %.pre1726, i64 noundef %i.aah) #22
   br label %_ZNSt12_Vector_baseIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE13_M_deallocateEPS5_m.exit37.i
 
@@ -688,14 +690,16 @@ _ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE9push_backERKS5_.
   br i1 %.not.i.i.i110, label %_ZNSt6vectorIiSaIiEED2Ev.exit111, label %bb.bo
 
 ._crit_edge167:                                   ; preds = %bb.bf
+  %.lcssa148.pre-phi = ptrtoint ptr %i.hs to i64
   %i.er = icmp ugt i64 %.1, %i.hy
   br i1 %i.er, label %bb.ai, label %._crit_edge167.thread
 
 bb.ai:                                            ; preds = %._crit_edge167
+  %.lcssa149 = ptrtoint ptr %i.ht to i64
   %i.es = sub nuw i64 %.1, %i.hy                  ; 6 uses
   %i.et = load ptr, ptr %i.x, align 8, !tbaa !105
   %i.eu = ptrtoint ptr %i.et to i64
-  %i.ev = sub i64 %i.eu, %i.hv
+  %i.ev = sub i64 %i.eu, %.lcssa149
   %i.ew = ashr exact i64 %i.ev, 4                 ; 2 uses
   %i.ex = icmp ult i64 %i.hy, 576460752303423488
   call void @llvm.assume(i1 %i.ex)
@@ -760,7 +764,7 @@ _ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE11_S_relocateEPS5
 bb.al:                                            ; preds = %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i118
   %i.fm = load ptr, ptr %i.x, align 8, !tbaa !105
   %i.fn = ptrtoint ptr %i.fm to i64
-  %i.fo = sub i64 %i.fn, %i.hw
+  %i.fo = sub i64 %i.fn, %.lcssa148.pre-phi
   call void @_ZdlPvm(ptr noundef nonnull %i.hs, i64 noundef %i.fo) #22
   br label %_ZNSt12_Vector_baseIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE13_M_deallocateEPS5_m.exit37.i
 
@@ -950,12 +954,12 @@ _ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105: ; preds = %_ZNSt16_S
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph166, %_ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105
-  %i.hs = phi ptr [ %i.gl, %.lr.ph166 ], [ %.pre188, %_ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105 ] ; 7 uses
-  %i.ht = phi ptr [ %i.gm, %.lr.ph166 ], [ %.pre187, %_ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105 ] ; 7 uses
+  %i.hs = phi ptr [ %i.gl, %.lr.ph166 ], [ %.pre188, %_ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105 ] ; 8 uses
+  %i.ht = phi ptr [ %i.gm, %.lr.ph166 ], [ %.pre187, %_ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105 ] ; 8 uses
   %.1 = phi i64 [ %.057164, %.lr.ph166 ], [ %i.hr, %_ZN2cv3PtrINS_3dnn14dnn5_v202606055LayerEEaSERKS4_.exit105 ] ; 4 uses
   %i.hu = add nuw i64 %.0165, 1                   ; 2 uses
-  %i.hv = ptrtoint ptr %i.ht to i64               ; 2 uses
-  %i.hw = ptrtoint ptr %i.hs to i64               ; 2 uses
+  %i.hv = ptrtoint ptr %i.ht to i64
+  %i.hw = ptrtoint ptr %i.hs to i64
   %i.hx = sub i64 %i.hv, %i.hw                    ; 2 uses
   %i.hy = ashr exact i64 %i.hx, 4                 ; 8 uses
   %i.hz = icmp ult i64 %i.hu, %i.hy

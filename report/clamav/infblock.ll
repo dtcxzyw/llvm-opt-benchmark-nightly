@@ -204,23 +204,22 @@ bb.as:                                            ; preds = %.thread
   %i.in = ptrtoint ptr %i.ij to i64
   %i.io = xor i64 %i.in, -1
   %i.ip = add i64 %i.im, %i.io
-  %.pre1725 = load ptr, ptr %i.aj, align 8, !tbaa !18 ; 2 uses
-  %.pre1727 = ptrtoint ptr %.pre1725 to i64
+  %.pre1725 = load ptr, ptr %i.aj, align 8, !tbaa !18
   br label %bb.au
 
 bb.at:                                            ; preds = %.thread
   %i.iq = load ptr, ptr %i.aj, align 8, !tbaa !18 ; 2 uses
-  %i.ir = ptrtoint ptr %i.iq to i64               ; 2 uses
+  %i.ir = ptrtoint ptr %i.iq to i64
   %i.is = ptrtoint ptr %i.ij to i64
   %i.it = sub i64 %i.ir, %i.is
   %.pre1726 = ptrtoint ptr %i.ik to i64
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
-  %.pre-phi1728 = phi i64 [ %i.ir, %bb.at ], [ %.pre1727, %bb.as ]
   %.pre-phi = phi i64 [ %.pre1726, %bb.at ], [ %i.im, %bb.as ]
-  %i.iu = phi ptr [ %i.iq, %bb.at ], [ %.pre1725, %bb.as ]
+  %i.iu = phi ptr [ %i.iq, %bb.at ], [ %.pre1725, %bb.as ] ; 2 uses
   %i.iv = phi i64 [ %i.it, %bb.at ], [ %i.ip, %bb.as ]
+  %.pre-phi1728 = ptrtoint ptr %i.iu to i64
   %i.iw = icmp ne ptr %i.ij, %i.iu
   %.not800 = icmp eq ptr %i.ik, %i.ak
   %or.cond1505 = select i1 %i.iw, i1 true, i1 %.not800 ; 2 uses

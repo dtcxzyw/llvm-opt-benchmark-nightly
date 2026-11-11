@@ -205,7 +205,7 @@ vm_call_opt_send.exit:                            ; preds = %vm_call_opt_send0.e
 define internal fastcc i32 @vm_callee_setup_arg(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %5) unnamed_addr #11 !guid !1519 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !581
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !579  ; 22 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !579  ; 23 uses
   %i.c = getelementptr i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !587  ; 17 uses
   %i.e = getelementptr i8, ptr %2, i64 16         ; 4 uses
@@ -254,7 +254,7 @@ bb.f:                                             ; preds = %vm_ci_flag.exit
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.b, %bb.a, %bb.f, %vm_ci_flag.exit
-  %i.w = ptrtoint ptr %i.b to i64                 ; 18 uses
+  %i.w = ptrtoint ptr %i.b to i64                 ; 17 uses
   %.not.i.i184 = trunc i64 %i.w to i1             ; 8 uses
   br i1 %.not.i.i184, label %bb.g, label %bb.h
 
@@ -657,7 +657,7 @@ vm_ci_flag.exit258.thread:                        ; preds = %bb.ah
   %.pre389 = load i64, ptr %.phi.trans.insert388, align 8, !tbaa !535
   %i.gy = and i64 %.pre389, 8192
   %i.gz = icmp eq i64 %i.gy, 0
-  br i1 %i.gz, label %vm_ci_markable.exit.thread415, label %bb.aj
+  br i1 %i.gz, label %vm_ci_markable.exit.thread.a, label %bb.aj
 
 bb.ai:                                            ; preds = %vm_ci_flag.exit258
   %i.ha = trunc i64 %i.w to i32
@@ -738,29 +738,29 @@ bb.ao:                                            ; preds = %vm_ci_argc.exit263,
 .thread342:                                       ; preds = %bb.ao
   %.pre390 = ptrtoint ptr %.1152 to i64           ; 3 uses
   %.not.i.i276 = trunc i64 %.pre390 to i1
-  br i1 %.not.i.i276, label %vm_ci_markable.exit.thread.a, label %vm_ci_markable.exit.a
+  br i1 %.not.i.i276, label %vm_ci_markable.exit.a, label %vm_ci_markable.exit.thread415
 
-vm_ci_markable.exit.thread.a:                     ; preds = %.thread342
-  %6 = add i32 %4, -1
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr [8 x i8], ptr %3, i64 %7
-  store i64 %.pre390, ptr %8, align 8, !tbaa !389
-  br i1 %.not167322, label %bb.ar, label %CC_SET_FASTPATH.exit243, !prof !651
+vm_ci_markable.exit.thread.a:                     ; preds = %vm_ci_flag.exit258.thread
+  %6 = load i64, ptr %i.b, align 8, !tbaa !453
+  %7 = and i64 %6, 65536
+  %.not5.i419 = icmp eq i64 %7, 0
+  br i1 %.not5.i419, label %.sink.split, label %vm_ci_markable.exit.thread353
 
 vm_ci_markable.exit.a:                            ; preds = %.thread342
-  %9 = load i64, ptr %.1152, align 8, !tbaa !453
-  %10 = and i64 %9, 65536
-  %.not5.i = icmp eq i64 %10, 0
-  br i1 %.not5.i, label %bb.aq, label %vm_ci_markable.exit.thread353
+  %8 = add i32 %4, -1
+  %9 = sext i32 %8 to i64
+  %10 = getelementptr [8 x i8], ptr %3, i64 %9
+  store i64 %.pre390, ptr %10, align 8, !tbaa !389
+  br i1 %.not167322, label %bb.ar, label %CC_SET_FASTPATH.exit243, !prof !651
 
-vm_ci_markable.exit.thread415:                    ; preds = %vm_ci_flag.exit258.thread
-  %i.ig = load i64, ptr %i.b, align 8, !tbaa !453
+vm_ci_markable.exit.thread415:                    ; preds = %.thread342
+  %i.ig = load i64, ptr %.1152, align 8, !tbaa !453
   %i.ih = and i64 %i.ig, 65536
   %.not5.i419.a = icmp eq i64 %i.ih, 0
-  br i1 %.not5.i419.a, label %.sink.split, label %vm_ci_markable.exit.thread353
+  br i1 %.not5.i419.a, label %bb.aq, label %vm_ci_markable.exit.thread353
 
-vm_ci_markable.exit.thread353:                    ; preds = %vm_ci_markable.exit.thread415, %bb.ao, %vm_ci_markable.exit.a
-  %.1152349357 = phi ptr [ %.1152, %vm_ci_markable.exit.a ], [ null, %bb.ao ], [ %i.b, %vm_ci_markable.exit.thread415 ] ; 5 uses
+vm_ci_markable.exit.thread353:                    ; preds = %vm_ci_markable.exit.thread.a, %bb.ao, %vm_ci_markable.exit.thread415
+  %.1152349357 = phi ptr [ %.1152, %vm_ci_markable.exit.thread415 ], [ null, %bb.ao ], [ %i.b, %vm_ci_markable.exit.thread.a ] ; 5 uses
   %i.ii = ptrtoint ptr %.1152349357 to i64        ; 3 uses
   %.not.i.i278 = trunc i64 %i.ii to i1
   br i1 %.not.i.i278, label %vm_ci_argc.exit286.thread, label %bb.ap
@@ -799,21 +799,22 @@ bb.ap:                                            ; preds = %vm_ci_markable.exit
   store i64 %i.iz, ptr %i.jc, align 8, !tbaa !389
   br label %CC_SET_FASTPATH.exit243
 
-bb.aq:                                            ; preds = %vm_ci_markable.exit.a
+bb.aq:                                            ; preds = %vm_ci_markable.exit.thread415
   %i.jd = add i32 %4, -1
   %i.je = sext i32 %i.jd to i64
   %i.jf = getelementptr [8 x i8], ptr %3, i64 %i.je
   store i64 %.pre390, ptr %i.jf, align 8, !tbaa !389
   br i1 %.not167322, label %bb.ar, label %CC_SET_FASTPATH.exit243, !prof !651
 
-.sink.split:                                      ; preds = %vm_ci_markable.exit.thread415
+.sink.split:                                      ; preds = %vm_ci_markable.exit.thread.a
+  %.pre-phi406 = ptrtoint ptr %i.b to i64
   %i.jg = add i32 %4, -1
   %i.jh = sext i32 %i.jg to i64
   %i.ji = getelementptr [8 x i8], ptr %3, i64 %i.jh
-  store i64 %i.w, ptr %i.ji, align 8, !tbaa !389
+  store i64 %.pre-phi406, ptr %i.ji, align 8, !tbaa !389
   br label %bb.ar
 
-bb.ar:                                            ; preds = %.sink.split, %vm_ci_markable.exit.thread.a, %bb.aq
+bb.ar:                                            ; preds = %.sink.split, %vm_ci_markable.exit.a, %bb.aq
   %i.jj = getelementptr i8, ptr %i.d, i64 24
   store ptr @vm_call_iseq_forwardable, ptr %i.jj, align 8, !tbaa !538
   br label %CC_SET_FASTPATH.exit243
@@ -822,8 +823,8 @@ bb.ar:                                            ; preds = %.sink.split, %vm_ci
   %i.jk = tail call fastcc i32 @setup_parameters_complex(ptr noundef %0, ptr noundef nonnull %2, ptr noundef nonnull %1, ptr noundef %i.b, ptr noundef %3, i32 noundef 0)
   br label %CC_SET_FASTPATH.exit243
 
-CC_SET_FASTPATH.exit243:                          ; preds = %vm_ci_flag.exit.thread.i245, %vm_ci_flag.exit.i252, %ruby_nonempty_memcpy.exit, %vm_ci_flag.exit.thread.i, %vm_ci_flag.exit.i, %bb.ar, %bb.aq, %.thread373, %vm_ci_markable.exit.thread.a, %vm_call_cacheable.exit254.thread316, %vm_call_cacheable.exit254, %vm_call_cacheable.exit242.thread315, %vm_call_cacheable.exit242, %bb.ae, %vm_call_iseq_optimizable_p.exit, %vm_call_iseq_setup_func.exit, %bb.n, %.critedge177.thread, %._crit_edge
-  %.3 = phi i32 [ 0, %vm_call_iseq_optimizable_p.exit ], [ %i.dw, %._crit_edge ], [ 0, %vm_call_cacheable.exit254.thread316 ], [ %i.jk, %.critedge177.thread ], [ 0, %bb.n ], [ 0, %vm_call_iseq_setup_func.exit ], [ 0, %bb.ae ], [ 0, %vm_call_cacheable.exit242.thread315 ], [ 0, %bb.ar ], [ 0, %vm_ci_flag.exit.thread.i ], [ 0, %vm_call_cacheable.exit242 ], [ 0, %ruby_nonempty_memcpy.exit ], [ 0, %vm_call_cacheable.exit254 ], [ 0, %vm_ci_markable.exit.thread.a ], [ 0, %.thread373 ], [ 0, %bb.aq ], [ 0, %vm_ci_flag.exit.i ], [ 0, %vm_ci_flag.exit.thread.i245 ], [ 0, %vm_ci_flag.exit.i252 ]
+CC_SET_FASTPATH.exit243:                          ; preds = %vm_ci_flag.exit.thread.i245, %vm_ci_flag.exit.i252, %ruby_nonempty_memcpy.exit, %vm_ci_flag.exit.thread.i, %vm_ci_flag.exit.i, %bb.ar, %bb.aq, %.thread373, %vm_ci_markable.exit.a, %vm_call_cacheable.exit254.thread316, %vm_call_cacheable.exit254, %vm_call_cacheable.exit242.thread315, %vm_call_cacheable.exit242, %bb.ae, %vm_call_iseq_optimizable_p.exit, %vm_call_iseq_setup_func.exit, %bb.n, %.critedge177.thread, %._crit_edge
+  %.3 = phi i32 [ 0, %vm_call_iseq_optimizable_p.exit ], [ %i.dw, %._crit_edge ], [ 0, %vm_call_cacheable.exit254.thread316 ], [ %i.jk, %.critedge177.thread ], [ 0, %bb.n ], [ 0, %vm_call_iseq_setup_func.exit ], [ 0, %bb.ae ], [ 0, %vm_call_cacheable.exit242.thread315 ], [ 0, %bb.ar ], [ 0, %vm_ci_flag.exit.thread.i ], [ 0, %vm_call_cacheable.exit242 ], [ 0, %ruby_nonempty_memcpy.exit ], [ 0, %vm_call_cacheable.exit254 ], [ 0, %vm_ci_markable.exit.a ], [ 0, %.thread373 ], [ 0, %bb.aq ], [ 0, %vm_ci_flag.exit.i ], [ 0, %vm_ci_flag.exit.thread.i245 ], [ 0, %vm_ci_flag.exit.i252 ]
   ret i32 %.3
 }
 

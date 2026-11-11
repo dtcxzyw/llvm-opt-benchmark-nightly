@@ -205,8 +205,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %.not.i.i, label %._crit_edge.i.i, label %bb.r
 
 ._crit_edge.i.i:                                  ; preds = %bb.q
-  %.pre.i.i = load ptr, ptr %i.a, align 8, !tbaa !14 ; 2 uses
-  %.pre22.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre.i.i = load ptr, ptr %i.a, align 8, !tbaa !14
   br label %SplitBlock.exit.i
 
 bb.r:                                             ; preds = %bb.q
@@ -226,21 +225,21 @@ bb.r:                                             ; preds = %bb.q
   store i32 %i.fn, ptr %i.fi, align 4, !tbaa !45
   %i.fo = load ptr, ptr %i.a, align 8, !tbaa !14  ; 2 uses
   %i.fp = ptrtoint ptr %i.fi to i64
-  %i.fq = ptrtoint ptr %i.fo to i64               ; 2 uses
+  %i.fq = ptrtoint ptr %i.fo to i64
   %i.fr = sub i64 %i.fp, %i.fq
   %i.fs = trunc i64 %i.fr to i32
   store i32 %i.fs, ptr %i.fm, align 4, !tbaa !45
   br label %SplitBlock.exit.i
 
 SplitBlock.exit.i:                                ; preds = %bb.r, %._crit_edge.i.i
-  %i.ft = phi ptr [ %.pre.i.i, %._crit_edge.i.i ], [ %i.fo, %bb.r ]
-  %.pre-phi23.i.i.a = phi i64 [ %.pre22.i.i, %._crit_edge.i.i ], [ %i.fq, %bb.r ]
-  %.pre-phi.i.i = phi i64 [ %i.ex, %._crit_edge.i.i ], [ %i.fc, %bb.r ]
-  %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %.pre-phi.i.i ; 2 uses
+  %i.ft = phi ptr [ %.pre.i.i, %._crit_edge.i.i ], [ %i.fo, %bb.r ] ; 2 uses
+  %.pre-phi23.i.i.a = phi i64 [ %i.ex, %._crit_edge.i.i ], [ %i.fc, %bb.r ]
+  %.pre-phi23.i.i = ptrtoint ptr %i.ft to i64
+  %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %.pre-phi23.i.i.a ; 2 uses
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !45
   store i32 %i.fv, ptr %i.es, align 4, !tbaa !45
   %i.fw = ptrtoint ptr %i.es to i64
-  %i.fx = sub i64 %i.fw, %.pre-phi23.i.i.a
+  %i.fx = sub i64 %i.fw, %.pre-phi23.i.i
   %i.fy = trunc i64 %i.fx to i32
   store i32 %i.fy, ptr %i.fu, align 4, !tbaa !45
   br label %ShrinkUnits.exit

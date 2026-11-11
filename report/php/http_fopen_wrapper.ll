@@ -202,7 +202,7 @@ bb.fr:                                            ; preds = %bb.fq, %bb.fp
 
 bb.fs:                                            ; preds = %bb.fr
   %i.us = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.ud, ptr noundef nonnull dereferenceable(1) @.str.38) #19 ; 9 uses
-  %i.ut = ptrtoaddr ptr %i.us to i64              ; 2 uses
+  %i.ut = ptrtoaddr ptr %i.us to i64
   %.not853 = icmp eq ptr %i.us, null
   br i1 %.not853, label %.thread51, label %bb.ft
 
@@ -219,7 +219,7 @@ bb.fu:                                            ; preds = %bb.ft
 bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %i.uy = getelementptr inbounds nuw i8, ptr %i.us, i64 20
   %i.uz = icmp ugt ptr %i.us, %i.ud
-  br i1 %i.uz, label %.lr.ph155.preheader, label %.critedge
+  br i1 %i.uz, label %.lr.ph155.preheader, label %.critedge.loopexit
 
 .lr.ph155.preheader:                              ; preds = %bb.fv
   %i.va = add i64 %.2738195, 24
@@ -240,18 +240,13 @@ bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %i.ve = icmp ugt ptr %i.vc, %i.ud
   br i1 %i.ve, label %.lr.ph155, label %.critedge.loopexit, !llvm.loop !46
 
-.critedge.loopexit:                               ; preds = %.lr.ph155, %.critedge28
-  %.0681.lcssa.ph = phi ptr [ %scevgep, %.critedge28 ], [ %.0681153, %.lr.ph155 ] ; 2 uses
-  %.pre346 = ptrtoaddr ptr %.0681.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.fv
-  %.0681.lcssa196.pre-phi = phi i64 [ %.pre346, %.critedge.loopexit ], [ %i.ut, %bb.fv ]
-  %.0681.lcssa = phi ptr [ %.0681.lcssa.ph, %.critedge.loopexit ], [ %i.us, %bb.fv ] ; 6 uses
+.critedge.loopexit:                               ; preds = %.critedge28, %.lr.ph155, %bb.fv
+  %.0681.lcssa = phi ptr [ %i.us, %bb.fv ], [ %.0681153, %.lr.ph155 ], [ %scevgep, %.critedge28 ] ; 7 uses
+  %.pre346 = ptrtoaddr ptr %.0681.lcssa to i64
   br label %bb.fw
 
-bb.fw:                                            ; preds = %bb.fx, %.critedge
-  %.0679 = phi ptr [ %i.uy, %.critedge ], [ %i.vg, %bb.fx ] ; 3 uses
+bb.fw:                                            ; preds = %bb.fx, %.critedge.loopexit
+  %.0679 = phi ptr [ %i.uy, %.critedge.loopexit ], [ %i.vg, %bb.fx ] ; 3 uses
   %i.vf = load i8, ptr %.0679, align 1, !tbaa !13 ; 2 uses
   switch i8 %i.vf, label %bb.fx [
     i8 0, label %.critedge30.preheader
@@ -290,7 +285,7 @@ bb.fy:                                            ; preds = %.critedge30
 
 .lr.ph159.preheader:                              ; preds = %.preheader127
   %i.vl = add i64 %.2738195, 24
-  %i.vm = sub i64 %i.vl, %.0681.lcssa196.pre-phi
+  %i.vm = sub i64 %i.vl, %.pre346
   %scevgep197 = getelementptr i8, ptr %.0681.lcssa, i64 %i.vm
   br label %.lr.ph159
 

@@ -205,19 +205,18 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.aq, label %bb.m, label %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
 
 ._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i: ; preds = %bb.l
-  %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3424 ; 2 uses
-  %.pre7.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3424
   br label %_RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i
 
 _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i: ; preds = %bb.m, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
-  %.pre-phi8.i.i = phi i64 [ %.pre7.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bi, %bb.m ]
-  %4 = phi ptr [ %.pre.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bc, %bb.m ]
+  %4 = phi ptr [ %.pre.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bc, %bb.m ] ; 2 uses
+  %.pre-phi8.i.pre-phi.i.pre-phi = ptrtoint ptr %4 to i64
   %i.ar = ptrtoint ptr %.pre31.i.i.i to i64
   %i.as = and i64 %i.ar, 15
   %i.at = sub nsw i64 0, %i.as
   %i.au = getelementptr i8, ptr %.pre31.i.i.i, i64 %i.at ; 3 uses
   %i.av = ptrtoint ptr %i.au to i64
-  %i.aw = sub i64 %i.av, %.pre-phi8.i.i
+  %i.aw = sub i64 %i.av, %.pre-phi8.i.pre-phi.i.pre-phi
   %i.ax = icmp ult ptr %i.au, %4
   %i.ay = icmp ugt i64 %i.f, %i.aw
   %or.cond.i23.i.i.i = select i1 %i.ax, i1 true, i1 %i.ay
@@ -238,7 +237,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bf = sub nsw i64 0, %i.be
   %i.bg = getelementptr i8, ptr %.pre31.i.i.i, i64 %i.bf ; 3 uses
   %i.bh = ptrtoint ptr %i.bg to i64
-  %i.bi = ptrtoint ptr %i.bc to i64               ; 2 uses
+  %i.bi = ptrtoint ptr %i.bc to i64
   %i.bj = sub i64 %i.bh, %i.bi
   %i.bk = icmp ult ptr %i.bg, %i.bc
   %i.bl = icmp ugt i64 %i.bb, %i.bj
@@ -410,19 +409,18 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.aq, label %bb.m, label %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
 
 ._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i: ; preds = %bb.l
-  %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3427 ; 2 uses
-  %.pre7.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3427
   br label %_RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i
 
 _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i: ; preds = %bb.m, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
-  %.pre-phi8.i.i = phi i64 [ %.pre7.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bi, %bb.m ]
-  %4 = phi ptr [ %.pre.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bc, %bb.m ]
+  %4 = phi ptr [ %.pre.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bc, %bb.m ] ; 2 uses
+  %.pre-phi8.i.pre-phi.i.pre-phi = ptrtoint ptr %4 to i64
   %i.ar = ptrtoint ptr %.pre31.i.i.i to i64
   %i.as = and i64 %i.ar, 7
   %i.at = sub nsw i64 0, %i.as
   %i.au = getelementptr i8, ptr %.pre31.i.i.i, i64 %i.at ; 3 uses
   %i.av = ptrtoint ptr %i.au to i64
-  %i.aw = sub i64 %i.av, %.pre-phi8.i.i
+  %i.aw = sub i64 %i.av, %.pre-phi8.i.pre-phi.i.pre-phi
   %i.ax = icmp ult ptr %i.au, %4
   %i.ay = icmp ugt i64 %i.f, %i.aw
   %or.cond.i23.i.i.i = select i1 %i.ax, i1 true, i1 %i.ay
@@ -443,7 +441,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bf = sub nsw i64 0, %i.be
   %i.bg = getelementptr i8, ptr %.pre31.i.i.i, i64 %i.bf ; 3 uses
   %i.bh = ptrtoint ptr %i.bg to i64
-  %i.bi = ptrtoint ptr %i.bc to i64               ; 2 uses
+  %i.bi = ptrtoint ptr %i.bc to i64
   %i.bj = sub i64 %i.bh, %i.bi
   %i.bk = icmp ult ptr %i.bg, %i.bc
   %i.bl = icmp ugt i64 %i.bb, %i.bj

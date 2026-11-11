@@ -205,7 +205,7 @@ _ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i: ; preds = %.lr.ph.
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !71 ; 2 uses
   %i.af = ptrtoint ptr %.pre4.i.i.i to i64
-  %i.ag = ptrtoint ptr %i.ae to i64               ; 2 uses
+  %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
   %i.ai = and i64 %i.ah, 4294967292
   %i.aj = icmp eq i64 %i.ai, 0
@@ -214,14 +214,13 @@ _ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i: ; preds = %.lr.ph.
 bb.f:                                             ; preds = %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i
   tail call void @_ZN11flatbuffers15vector_downwardIjE10reallocateEm(ptr noundef nonnull align 8 dereferenceable(128) %0, i64 noundef 4)
   %.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
-  %.pre = load ptr, ptr %i.ad, align 8, !tbaa !71 ; 2 uses
-  %.pre7 = ptrtoint ptr %.pre to i64
+  %.pre = load ptr, ptr %i.ad, align 8, !tbaa !71
   br label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE11PushElementIjjEET0_T_.exit
 
 _ZN11flatbuffers21FlatBufferBuilderImplILb0EE11PushElementIjjEET0_T_.exit: ; preds = %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i, %bb.f
-  %.pre-phi = phi i64 [ %i.ag, %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i ], [ %.pre7, %bb.f ]
-  %i.ak = phi ptr [ %i.ae, %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i ], [ %.pre, %bb.f ]
+  %i.ak = phi ptr [ %i.ae, %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i ], [ %.pre, %bb.f ] ; 2 uses
   %i.al = phi ptr [ %.pre4.i.i.i, %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i ], [ %.pre.i.i.i, %bb.f ]
+  %.pre-phi = ptrtoint ptr %i.ak to i64
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -4 ; 3 uses
   store ptr %i.am, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.an = load i32, ptr %i.h, align 8, !tbaa !65

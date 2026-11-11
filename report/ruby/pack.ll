@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %.thread1177
 
 bb.ab:                                            ; preds = %bb.u
-  %i.ci = ptrtoint ptr %.09101673 to i64          ; 3 uses
+  %i.ci = ptrtoint ptr %.09101673 to i64          ; 2 uses
   %i.cj = sub i64 %i.an, %i.ci
   %spec.select1072 = call i64 @llvm.smin.i64(i64 %.0876, i64 %i.cj)
   %i.ck = getelementptr i8, ptr %.09101673, i64 %spec.select1072 ; 4 uses
@@ -216,21 +216,16 @@ bb.ab:                                            ; preds = %bb.u
   %.08501655 = phi ptr [ %i.cn, %bb.ac ], [ %.09101673, %bb.ab ] ; 3 uses
   %i.cm = load i8, ptr %.08501655, align 1, !tbaa !56
   %.not1066 = icmp eq i8 %i.cm, 0
-  br i1 %.not1066, label %.critedge.loopexit, label %bb.ac
+  br i1 %.not1066, label %.critedge, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph1657
   %i.cn = getelementptr i8, ptr %.08501655, i64 1 ; 2 uses
   %exitcond1862.not = icmp eq ptr %i.cn, %i.ck
-  br i1 %exitcond1862.not, label %.critedge.loopexit, label %.lr.ph1657, !llvm.loop !105
+  br i1 %exitcond1862.not, label %.critedge, label %.lr.ph1657, !llvm.loop !105
 
-.critedge.loopexit:                               ; preds = %.lr.ph1657, %bb.ac
-  %.0850.lcssa.ph = phi ptr [ %i.ck, %bb.ac ], [ %.08501655, %.lr.ph1657 ] ; 2 uses
-  %.pre1871 = ptrtoint ptr %.0850.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.ab
-  %.pre-phi = phi i64 [ %.pre1871, %.critedge.loopexit ], [ %i.ci, %bb.ab ]
-  %.0850.lcssa = phi ptr [ %.0850.lcssa.ph, %.critedge.loopexit ], [ %.09101673, %bb.ab ] ; 2 uses
+.critedge:                                        ; preds = %bb.ac, %.lr.ph1657, %bb.ab
+  %.0850.lcssa = phi ptr [ %.09101673, %bb.ab ], [ %.08501655, %.lr.ph1657 ], [ %i.ck, %bb.ac ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %.0850.lcssa to i64
   %i.co = sub i64 %.pre-phi, %i.ci
   %i.cp = call i64 @rb_str_new(ptr noundef %.09101673, i64 noundef %i.co) #12 ; 3 uses
   br i1 %i.ao, label %bb.ad, label %bb.ae

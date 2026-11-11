@@ -202,7 +202,7 @@ CHUNKCOPY_SAFE.exit272:                           ; preds = %bb.gt, %bb.gs, %bb.
   %i.pa = zext nneg i32 %i.mb to i64              ; 4 uses
   %i.pb = sub nsw i64 0, %i.pa                    ; 2 uses
   %i.pc = getelementptr inbounds i8, ptr %.0.i271, i64 %i.pb ; 2 uses
-  %i.pd = ptrtoint ptr %.0.i271 to i64, !nosanitize !12 ; 4 uses
+  %i.pd = ptrtoint ptr %.0.i271 to i64, !nosanitize !12 ; 3 uses
   %.not519 = icmp eq ptr %.0.i271, null
   %i.pe = icmp ugt i64 %i.pd, %i.pa
   br i1 %i.pe, label %bb.gv, label %bb.gu, !prof !14, !nosanitize !12
@@ -244,7 +244,7 @@ bb.gx:                                            ; preds = %loadchunk.exit.thre
 storechunk.exit.i:                                ; preds = %loadchunk.exit.thread.i, %bb.gx
   store <4 x i64> %i.pl, ptr %.0.i273327, align 1, !tbaa !15
   %i.pm = zext nneg i32 %i.pj to i64              ; 3 uses
-  %i.pn = getelementptr inbounds nuw i8, ptr %.0.i273327, i64 %i.pm ; 3 uses
+  %i.pn = getelementptr inbounds nuw i8, ptr %.0.i273327, i64 %i.pm ; 2 uses
   %i.po = add i64 %.pre395, %i.pm, !nosanitize !12 ; 2 uses
   %.not.i = icmp ult i64 %i.po, %.pre395, !nosanitize !12
   br i1 %.not.i, label %bb.gy, label %bb.gz, !prof !13, !nosanitize !12
@@ -274,20 +274,19 @@ bb.hb:                                            ; preds = %bb.gz, %bb.ha
 chunkunroll_avx512.exit.loopexit:                 ; preds = %bb.hb
   %.pre = zext nneg i32 %i.pt to i64              ; 2 uses
   %.pre389 = sub nsw i64 0, %.pre
-  %.pre391 = ptrtoint ptr %i.pn to i64, !nosanitize !12
   %i.pw = icmp eq i32 %i.pt, 0
   br label %chunkunroll_avx512.exit
 
 chunkunroll_avx512.exit:                          ; preds = %chunkunroll_avx512.exit.loopexit, %bb.gv
-  %.pre-phi392 = phi i64 [ %.pre391, %chunkunroll_avx512.exit.loopexit ], [ %i.pd, %bb.gv ] ; 8 uses
   %.pre-phi390 = phi i64 [ %.pre389, %chunkunroll_avx512.exit.loopexit ], [ %i.pb, %bb.gv ]
   %.pre-phi388 = phi i64 [ %.pre, %chunkunroll_avx512.exit.loopexit ], [ %i.pa, %bb.gv ] ; 3 uses
   %.lcssa325 = phi i32 [ %i.pq, %chunkunroll_avx512.exit.loopexit ], [ %i.ol, %bb.gv ]
   %.lcssa323 = phi i1 [ %i.pw, %chunkunroll_avx512.exit.loopexit ], [ false, %bb.gv ]
-  %.0.i273.lcssa = phi ptr [ %i.pn, %chunkunroll_avx512.exit.loopexit ], [ %.0.i271, %bb.gv ] ; 4 uses
+  %.0.i273.lcssa = phi ptr [ %i.pn, %chunkunroll_avx512.exit.loopexit ], [ %.0.i271, %bb.gv ] ; 5 uses
+  %.pre-phi392 = ptrtoint ptr %.0.i273.lcssa to i64 ; 8 uses
   %i.px = getelementptr inbounds i8, ptr %.0.i273.lcssa, i64 %.pre-phi390
   %i.py = icmp ne ptr %.0.i273.lcssa, null, !nosanitize !12 ; 2 uses
-  %i.pz = icmp eq i64 %.pre-phi392, %.pre-phi388
+  %i.pz = icmp eq i64 %.pre-phi388, %.pre-phi392
   %i.qa = xor i1 %i.py, %i.pz
   %i.qb = icmp ule i64 %.pre-phi388, %.pre-phi392
   %i.qc = and i1 %i.qb, %i.qa, !nosanitize !12
@@ -304,7 +303,7 @@ bb.hd:                                            ; preds = %bb.hc, %chunkunroll
 
 bb.he:                                            ; preds = %bb.hd
   %i.qf = getelementptr inbounds nuw i8, ptr %.0.i273.lcssa, i64 %i.qe ; 2 uses
-  %i.qg = add i64 %.pre-phi392, %i.qe, !nosanitize !12 ; 3 uses
+  %i.qg = add i64 %i.qe, %.pre-phi392, !nosanitize !12 ; 3 uses
   %i.qh = icmp eq i64 %i.qg, 0
   %i.qi = xor i1 %i.py, %i.qh
   %i.qj = icmp uge i64 %i.qg, %.pre-phi392, !nosanitize !12

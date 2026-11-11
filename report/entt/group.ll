@@ -205,7 +205,7 @@ _ZN4entt16basic_sparse_setINS_6entityESaIS1_EE15assure_at_leastES1_.exit: ; pred
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !362 ; 7 uses
   %i.ad = load ptr, ptr %i.aa, align 8, !tbaa !363 ; 11 uses
   %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = ptrtoint ptr %i.ad to i64               ; 3 uses
+  %i.af = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ag = sub i64 %i.ae, %i.af                    ; 11 uses
   %i.ah = ashr exact i64 %i.ag, 2                 ; 8 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -342,7 +342,7 @@ _ZNKSt6vectorIN4entt6entityESaIS1_EE12_M_check_lenEmPKc.exit.i.i13: ; preds = %b
   %.not.i.i.i15 = icmp ne i64 %i.cc, 0
   call void @llvm.assume(i1 %.not.i.i.i15)
   %i.cd = shl nuw nsw i64 %i.cc, 2
-  %i.ce = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cd) #31 ; 6 uses
+  %i.ce = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cd) #31 ; 5 uses
   %i.cf = getelementptr inbounds i8, ptr %i.ce, i64 %i.ag ; 2 uses
   store i32 %1, ptr %i.cf, align 4, !tbaa !350
   %i.cg = icmp sgt i64 %i.ag, 0
@@ -368,14 +368,13 @@ _ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__
   store ptr %i.ch, ptr %i.ab, align 8, !tbaa !362
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %i.cc
   store ptr %i.ci, ptr %i.bv, align 8, !tbaa !604
-  %.pre32 = ptrtoint ptr %i.ce to i64
   br label %_ZNSt6vectorIN4entt6entityESaIS1_EE9push_backERKS1_.exit19
 
 _ZNSt6vectorIN4entt6entityESaIS1_EE9push_backERKS1_.exit19: ; preds = %bb.m, %_ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i18
-  %.pre-phi33 = phi i64 [ %i.af, %bb.m ], [ %.pre32, %_ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i18 ]
   %.pre28 = phi ptr [ %i.w, %bb.m ], [ %.pre28.pre, %_ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i18 ]
-  %i.cj = phi ptr [ %i.ad, %bb.m ], [ %i.ce, %_ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i18 ]
+  %i.cj = phi ptr [ %i.ad, %bb.m ], [ %i.ce, %_ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i18 ] ; 2 uses
   %i.ck = phi ptr [ %i.bx, %bb.m ], [ %i.ch, %_ZNSt6vectorIN4entt6entityESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i18 ]
+  %.pre-phi33 = ptrtoint ptr %i.cj to i64
   %i.cl = ptrtoint ptr %i.ck to i64
   %i.cm = sub i64 %i.cl, %.pre-phi33
   %i.cn = trunc i64 %i.cm to i32

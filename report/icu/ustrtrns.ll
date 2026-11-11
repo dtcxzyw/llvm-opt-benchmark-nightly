@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.t, %bb.j
   %i.ag = ptrtoint ptr %.2 to i64
   %i.ah = sub i64 %i.ae, %i.ag
   %i.ai = trunc i64 %i.ah to i32                  ; 4 uses
-  %i.aj = ptrtoint ptr %.2155 to i64              ; 3 uses
+  %i.aj = ptrtoint ptr %.2155 to i64              ; 2 uses
   %i.ak = sub i64 %i.af, %i.aj
   %i.al = lshr exact i64 %i.ak, 1
   %i.am = trunc i64 %i.al to i32                  ; 5 uses
@@ -226,7 +226,7 @@ bb.l:                                             ; preds = %bb.k
   %i.as = load i16, ptr %.3156193, align 2, !tbaa !12 ; 2 uses
   %i.at = add i16 %i.as, -1
   %or.cond21 = icmp ult i16 %i.at, 127
-  br i1 %or.cond21, label %bb.m, label %.critedge13.loopexit
+  br i1 %or.cond21, label %bb.m, label %.critedge13
 
 bb.m:                                             ; preds = %.lr.ph195
   %i.au = trunc nuw nsw i16 %i.as to i8
@@ -234,18 +234,12 @@ bb.m:                                             ; preds = %.lr.ph195
   store i8 %i.au, ptr %.3194, align 1, !tbaa !14
   %i.aw = getelementptr inbounds nuw i8, ptr %.3156193, i64 2 ; 3 uses
   %i.ax = icmp ult ptr %i.aw, %i.ad
-  br i1 %i.ax, label %.lr.ph195, label %.critedge13.loopexit, !llvm.loop !41
+  br i1 %i.ax, label %.lr.ph195, label %.critedge13, !llvm.loop !41
 
-.critedge13.loopexit:                             ; preds = %.lr.ph195, %bb.m
-  %.3156.lcssa.ph = phi ptr [ %i.aw, %bb.m ], [ %.3156193, %.lr.ph195 ] ; 2 uses
-  %.3.lcssa.ph = phi ptr [ %i.av, %bb.m ], [ %.3194, %.lr.ph195 ]
-  %.pre = ptrtoint ptr %.3156.lcssa.ph to i64
-  br label %.critedge13
-
-.critedge13:                                      ; preds = %.critedge13.loopexit, %.preheader183
-  %.pre-phi = phi i64 [ %.pre, %.critedge13.loopexit ], [ %i.aj, %.preheader183 ]
-  %.3156.lcssa = phi ptr [ %.3156.lcssa.ph, %.critedge13.loopexit ], [ %.2155, %.preheader183 ]
-  %.3.lcssa = phi ptr [ %.3.lcssa.ph, %.critedge13.loopexit ], [ %.2, %.preheader183 ]
+.critedge13:                                      ; preds = %bb.m, %.lr.ph195, %.preheader183
+  %.3156.lcssa = phi ptr [ %.2155, %.preheader183 ], [ %.3156193, %.lr.ph195 ], [ %i.aw, %bb.m ] ; 2 uses
+  %.3.lcssa = phi ptr [ %.2, %.preheader183 ], [ %.3194, %.lr.ph195 ], [ %i.av, %bb.m ]
+  %.pre-phi = ptrtoint ptr %.3156.lcssa to i64
   %i.ay = sub i64 %.pre-phi, %i.aj
   %i.az = lshr exact i64 %i.ay, 1
   %i.ba = trunc i64 %i.az to i32                  ; 2 uses

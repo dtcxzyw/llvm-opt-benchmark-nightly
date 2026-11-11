@@ -205,14 +205,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !dbg !31011
   %i.b = call { i64, ptr } @_RNvXs8_NtNtCs9VoZUfg37wD_6flate22gz7bufreadINtB5_14MultiGzDecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceENtNtCsh8eZTKRCwoO_3std2io4Read4readCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(320) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31012 ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0, !dbg !31012
-  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31012 ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64, !dbg !31012      ; 2 uses
+  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31012 ; 2 uses
   %i.e = trunc nuw i64 %i.c to i1, !dbg !31013
   br i1 %i.e, label %.lr.ph, label %._crit_edge, !dbg !31013
 
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit
-  %3 = phi i64 [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %2, %bb.a ] ; 3 uses
-  %4 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 10 uses
+  %2 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 11 uses
+  %3 = ptrtoint ptr %2 to i64, !dbg !31012        ; 3 uses
   %i.f = and i64 %3, 3, !dbg !31014
   switch i64 %i.f, label %default.unreachable [
     i64 2, label %.split
@@ -225,8 +224,8 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, %bb.a
-  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31012 ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31012 ; 4 uses
+  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31012 ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa35 to i64, !dbg !31012 ; 4 uses
   %i.g = icmp ult ptr %.lcssa35, inttoptr (i64 33 to ptr)
   br i1 %i.g, label %.noexc, label %bb.b, !dbg !31016, !prof !3864
 
@@ -258,7 +257,7 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br label %.loopexit, !dbg !31028
 
 .loopexit:                                        ; preds = %bb.e, %.split, %.split30, %.split31, %bb.d
-  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %4, %.split31 ], [ %4, %.split30 ], [ %4, %.split ], [ %4, %bb.e ]
+  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %2, %.split31 ], [ %2, %.split30 ], [ %2, %.split ], [ %2, %bb.e ]
   %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 1, %.split31 ], [ 1, %.split30 ], [ 1, %.split ], [ 1, %bb.e ], !dbg !31029
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !31030
   %i.q = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0, !dbg !31031
@@ -271,32 +270,31 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br i1 %i.s, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31033
 
 .split31:                                         ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !31034
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !31034
   %i.u = load i8, ptr %i.t, align 8, !dbg !31034, !range !4141, !noundef !3674
   %i.v = icmp eq i8 %i.u, 35, !dbg !31035
   br i1 %i.v, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31033
 
 .split30:                                         ; preds = %.lr.ph
-  %i.w = getelementptr i8, ptr %4, i64 15, !dbg !31036
+  %i.w = getelementptr i8, ptr %2, i64 15, !dbg !31036
   %i.x = load i8, ptr %i.w, align 8, !dbg !31036, !range !4141, !noundef !3674
   %i.y = icmp eq i8 %i.x, 35, !dbg !31037
   br i1 %i.y, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31033
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.z = icmp ult ptr %4, inttoptr (i64 180388626432 to ptr), !dbg !31038
+  %i.z = icmp ult ptr %2, inttoptr (i64 180388626432 to ptr), !dbg !31038
   call void @llvm.assume(i1 %i.z), !dbg !31039
   %.mask = and i64 %3, -4294967296, !dbg !31040
   %i.aa = icmp eq i64 %.mask, 150323855360, !dbg !31040
   br i1 %i.aa, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31033
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %.split31, %.split30, %.split, %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %4), !dbg !31041
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %2), !dbg !31041
   %i.ab = call { i64, ptr } @_RNvXs8_NtNtCs9VoZUfg37wD_6flate22gz7bufreadINtB5_14MultiGzDecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceENtNtCsh8eZTKRCwoO_3std2io4Read4readCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(320) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31012 ; 2 uses
   %i.ac = extractvalue { i64, ptr } %i.ab, 0, !dbg !31012
-  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31012 ; 3 uses
-  %5 = ptrtoint ptr %i.ad to i64, !dbg !31012     ; 2 uses
+  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31012 ; 2 uses
   %i.ae = trunc nuw i64 %i.ac to i1, !dbg !31013
   br i1 %i.ae, label %.lr.ph, label %._crit_edge, !dbg !31013
 }
@@ -309,14 +307,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !dbg !31097
   %i.b = call { i64, ptr } @_RNvXs4_NtNtCs9VoZUfg37wD_6flate24zlib7bufreadINtB5_11ZlibDecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceENtNtCsh8eZTKRCwoO_3std2io4Read4readCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(192) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31098 ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0, !dbg !31098
-  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31098 ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64, !dbg !31098      ; 2 uses
+  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31098 ; 2 uses
   %i.e = trunc nuw i64 %i.c to i1, !dbg !31099
   br i1 %i.e, label %.lr.ph, label %._crit_edge, !dbg !31099
 
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit
-  %3 = phi i64 [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %2, %bb.a ] ; 3 uses
-  %4 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 10 uses
+  %2 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 11 uses
+  %3 = ptrtoint ptr %2 to i64, !dbg !31098        ; 3 uses
   %i.f = and i64 %3, 3, !dbg !31100
   switch i64 %i.f, label %default.unreachable [
     i64 2, label %.split
@@ -329,8 +326,8 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, %bb.a
-  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31098 ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31098 ; 4 uses
+  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31098 ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa35 to i64, !dbg !31098 ; 4 uses
   %i.g = icmp ult ptr %.lcssa35, inttoptr (i64 33 to ptr)
   br i1 %i.g, label %.noexc, label %bb.b, !dbg !31102, !prof !3864
 
@@ -362,7 +359,7 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br label %.loopexit, !dbg !31114
 
 .loopexit:                                        ; preds = %bb.e, %.split, %.split30, %.split31, %bb.d
-  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %4, %.split31 ], [ %4, %.split30 ], [ %4, %.split ], [ %4, %bb.e ]
+  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %2, %.split31 ], [ %2, %.split30 ], [ %2, %.split ], [ %2, %bb.e ]
   %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 1, %.split31 ], [ 1, %.split30 ], [ 1, %.split ], [ 1, %bb.e ], !dbg !31115
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !31116
   %i.q = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0, !dbg !31117
@@ -375,32 +372,31 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br i1 %i.s, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31119
 
 .split31:                                         ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !31120
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !31120
   %i.u = load i8, ptr %i.t, align 8, !dbg !31120, !range !4141, !noundef !3674
   %i.v = icmp eq i8 %i.u, 35, !dbg !31121
   br i1 %i.v, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31119
 
 .split30:                                         ; preds = %.lr.ph
-  %i.w = getelementptr i8, ptr %4, i64 15, !dbg !31122
+  %i.w = getelementptr i8, ptr %2, i64 15, !dbg !31122
   %i.x = load i8, ptr %i.w, align 8, !dbg !31122, !range !4141, !noundef !3674
   %i.y = icmp eq i8 %i.x, 35, !dbg !31123
   br i1 %i.y, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31119
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.z = icmp ult ptr %4, inttoptr (i64 180388626432 to ptr), !dbg !31124
+  %i.z = icmp ult ptr %2, inttoptr (i64 180388626432 to ptr), !dbg !31124
   call void @llvm.assume(i1 %i.z), !dbg !31125
   %.mask = and i64 %3, -4294967296, !dbg !31126
   %i.aa = icmp eq i64 %.mask, 150323855360, !dbg !31126
   br i1 %i.aa, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31119
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %.split31, %.split30, %.split, %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %4), !dbg !31127
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %2), !dbg !31127
   %i.ab = call { i64, ptr } @_RNvXs4_NtNtCs9VoZUfg37wD_6flate24zlib7bufreadINtB5_11ZlibDecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceENtNtCsh8eZTKRCwoO_3std2io4Read4readCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(192) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31098 ; 2 uses
   %i.ac = extractvalue { i64, ptr } %i.ab, 0, !dbg !31098
-  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31098 ; 3 uses
-  %5 = ptrtoint ptr %i.ad to i64, !dbg !31098     ; 2 uses
+  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31098 ; 2 uses
   %i.ae = trunc nuw i64 %i.ac to i1, !dbg !31099
   br i1 %i.ae, label %.lr.ph, label %._crit_edge, !dbg !31099
 }
@@ -413,14 +409,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !dbg !31183
   %i.b = call { i64, ptr } @_RNvXs1_NtNtCsi0YuHEPkLKL_4zstd6stream4readINtB5_7DecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceENtNtCsh8eZTKRCwoO_3std2io4Read4readCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(72) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31184 ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0, !dbg !31184
-  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31184 ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64, !dbg !31184      ; 2 uses
+  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31184 ; 2 uses
   %i.e = trunc nuw i64 %i.c to i1, !dbg !31185
   br i1 %i.e, label %.lr.ph, label %._crit_edge, !dbg !31185
 
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit
-  %3 = phi i64 [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %2, %bb.a ] ; 3 uses
-  %4 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 10 uses
+  %2 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 11 uses
+  %3 = ptrtoint ptr %2 to i64, !dbg !31184        ; 3 uses
   %i.f = and i64 %3, 3, !dbg !31186
   switch i64 %i.f, label %default.unreachable [
     i64 2, label %.split
@@ -433,8 +428,8 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, %bb.a
-  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31184 ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31184 ; 4 uses
+  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31184 ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa35 to i64, !dbg !31184 ; 4 uses
   %i.g = icmp ult ptr %.lcssa35, inttoptr (i64 33 to ptr)
   br i1 %i.g, label %.noexc, label %bb.b, !dbg !31188, !prof !3864
 
@@ -466,7 +461,7 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br label %.loopexit, !dbg !31200
 
 .loopexit:                                        ; preds = %bb.e, %.split, %.split30, %.split31, %bb.d
-  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %4, %.split31 ], [ %4, %.split30 ], [ %4, %.split ], [ %4, %bb.e ]
+  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %2, %.split31 ], [ %2, %.split30 ], [ %2, %.split ], [ %2, %bb.e ]
   %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 1, %.split31 ], [ 1, %.split30 ], [ 1, %.split ], [ 1, %bb.e ], !dbg !31201
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !31202
   %i.q = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0, !dbg !31203
@@ -479,32 +474,31 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br i1 %i.s, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31205
 
 .split31:                                         ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !31206
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !31206
   %i.u = load i8, ptr %i.t, align 8, !dbg !31206, !range !4141, !noundef !3674
   %i.v = icmp eq i8 %i.u, 35, !dbg !31207
   br i1 %i.v, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31205
 
 .split30:                                         ; preds = %.lr.ph
-  %i.w = getelementptr i8, ptr %4, i64 15, !dbg !31208
+  %i.w = getelementptr i8, ptr %2, i64 15, !dbg !31208
   %i.x = load i8, ptr %i.w, align 8, !dbg !31208, !range !4141, !noundef !3674
   %i.y = icmp eq i8 %i.x, 35, !dbg !31209
   br i1 %i.y, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31205
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.z = icmp ult ptr %4, inttoptr (i64 180388626432 to ptr), !dbg !31210
+  %i.z = icmp ult ptr %2, inttoptr (i64 180388626432 to ptr), !dbg !31210
   call void @llvm.assume(i1 %i.z), !dbg !31211
   %.mask = and i64 %3, -4294967296, !dbg !31212
   %i.aa = icmp eq i64 %.mask, 150323855360, !dbg !31212
   br i1 %i.aa, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31205
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %.split31, %.split30, %.split, %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %4), !dbg !31213
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %2), !dbg !31213
   %i.ab = call { i64, ptr } @_RNvXs1_NtNtCsi0YuHEPkLKL_4zstd6stream4readINtB5_7DecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceENtNtCsh8eZTKRCwoO_3std2io4Read4readCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(72) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31184 ; 2 uses
   %i.ac = extractvalue { i64, ptr } %i.ab, 0, !dbg !31184
-  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31184 ; 3 uses
-  %5 = ptrtoint ptr %i.ad to i64, !dbg !31184     ; 2 uses
+  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31184 ; 2 uses
   %i.ae = trunc nuw i64 %i.ac to i1, !dbg !31185
   br i1 %i.ae, label %.lr.ph, label %._crit_edge, !dbg !31185
 }
@@ -517,14 +511,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !dbg !31269
   %i.b = call { i64, ptr } @_RNvXs1_NtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_readerNtB5_12ReaderSourceNtNtCsh8eZTKRCwoO_3std2io4Read4read(ptr noalias noundef nonnull align 8 dereferenceable(48) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31270 ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0, !dbg !31270
-  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31270 ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64, !dbg !31270      ; 2 uses
+  %i.d = extractvalue { i64, ptr } %i.b, 1, !dbg !31270 ; 2 uses
   %i.e = trunc nuw i64 %i.c to i1, !dbg !31271
   br i1 %i.e, label %.lr.ph, label %._crit_edge, !dbg !31271
 
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit
-  %3 = phi i64 [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %2, %bb.a ] ; 3 uses
-  %4 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 10 uses
+  %2 = phi ptr [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], [ %i.d, %bb.a ] ; 11 uses
+  %3 = ptrtoint ptr %2 to i64, !dbg !31270        ; 3 uses
   %i.f = and i64 %3, 3, !dbg !31272
   switch i64 %i.f, label %default.unreachable [
     i64 2, label %.split
@@ -537,8 +530,8 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, %bb.a
-  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31270 ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31270 ; 4 uses
+  %.lcssa35 = phi ptr [ %i.d, %bb.a ], [ %i.ad, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit ], !dbg !31270 ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa35 to i64, !dbg !31270 ; 4 uses
   %i.g = icmp ult ptr %.lcssa35, inttoptr (i64 33 to ptr)
   br i1 %i.g, label %.noexc, label %bb.b, !dbg !31274, !prof !3864
 
@@ -570,7 +563,7 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br label %.loopexit, !dbg !31286
 
 .loopexit:                                        ; preds = %bb.e, %.split, %.split30, %.split31, %bb.d
-  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %4, %.split31 ], [ %4, %.split30 ], [ %4, %.split ], [ %4, %bb.e ]
+  %i.p = phi ptr [ %.lcssa35, %bb.d ], [ %2, %.split31 ], [ %2, %.split30 ], [ %2, %.split ], [ %2, %bb.e ]
   %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 1, %.split31 ], [ 1, %.split30 ], [ 1, %.split ], [ 1, %bb.e ], !dbg !31287
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !31288
   %i.q = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0, !dbg !31289
@@ -583,32 +576,31 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br i1 %i.s, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31291
 
 .split31:                                         ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !31292
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !31292
   %i.u = load i8, ptr %i.t, align 8, !dbg !31292, !range !4141, !noundef !3674
   %i.v = icmp eq i8 %i.u, 35, !dbg !31293
   br i1 %i.v, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31291
 
 .split30:                                         ; preds = %.lr.ph
-  %i.w = getelementptr i8, ptr %4, i64 15, !dbg !31294
+  %i.w = getelementptr i8, ptr %2, i64 15, !dbg !31294
   %i.x = load i8, ptr %i.w, align 8, !dbg !31294, !range !4141, !noundef !3674
   %i.y = icmp eq i8 %i.x, 35, !dbg !31295
   br i1 %i.y, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31291
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.z = icmp ult ptr %4, inttoptr (i64 180388626432 to ptr), !dbg !31296
+  %i.z = icmp ult ptr %2, inttoptr (i64 180388626432 to ptr), !dbg !31296
   call void @llvm.assume(i1 %i.z), !dbg !31297
   %.mask = and i64 %3, -4294967296, !dbg !31298
   %i.aa = icmp eq i64 %.mask, 150323855360, !dbg !31298
   br i1 %i.aa, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit, label %.loopexit, !dbg !31291
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultjNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %.split31, %.split30, %.split, %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %4), !dbg !31299
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsfcROwRM8ZtH_11polars_plan(ptr nonnull %2), !dbg !31299
   %i.ab = call { i64, ptr } @_RNvXs1_NtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_readerNtB5_12ReaderSourceNtNtCsh8eZTKRCwoO_3std2io4Read4read(ptr noalias noundef nonnull align 8 dereferenceable(48) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32), !dbg !31270 ; 2 uses
   %i.ac = extractvalue { i64, ptr } %i.ab, 0, !dbg !31270
-  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31270 ; 3 uses
-  %5 = ptrtoint ptr %i.ad to i64, !dbg !31270     ; 2 uses
+  %i.ad = extractvalue { i64, ptr } %i.ab, 1, !dbg !31270 ; 2 uses
   %i.ae = trunc nuw i64 %i.ac to i1, !dbg !31271
   br i1 %i.ae, label %.lr.ph, label %._crit_edge, !dbg !31271
 }

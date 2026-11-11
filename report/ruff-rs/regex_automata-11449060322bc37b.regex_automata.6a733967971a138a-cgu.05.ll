@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !1310 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1310
-  %i.v = ptrtoint ptr %i.u to i64                 ; 3 uses
+  %i.v = ptrtoint ptr %i.u to i64                 ; 2 uses
   %i.w = trunc nuw i64 %i.r to i1
   br i1 %i.w, label %bb.e, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread77
 
@@ -223,7 +223,7 @@ _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.ex
   %.pr = load i64, ptr %i.h, align 8              ; 2 uses
   %i.x = icmp eq i64 %.pr, 2
   %.phi.trans.insert89 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.pre90 = load ptr, ptr %.phi.trans.insert89, align 8 ; 3 uses
+  %.pre90 = load ptr, ptr %.phi.trans.insert89, align 8 ; 2 uses
   br i1 %i.x, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit._crit_edge, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit._crit_edge: ; preds = %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread67
@@ -238,20 +238,16 @@ _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.ex
   %.sroa.540.0.copyload = load i64, ptr %.sroa.540.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   %i.aa = trunc nuw i64 %.pr to i1
-  br i1 %i.aa, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread._crit_edge, label %bb.g
+  br i1 %i.aa, label %bb.f, label %bb.g
 
-_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread._crit_edge: ; preds = %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread
-  %.pre91 = ptrtoint ptr %.pre90 to i64
-  br label %bb.f
-
-bb.f:                                             ; preds = %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread._crit_edge, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread
-  %.pre-phi.a = phi i64 [ %.pre91, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread._crit_edge ], [ %i.v, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread ] ; 10 uses
-  %.sroa.4.16.extract.trunc76.in = phi i64 [ %.sroa.540.0.copyload, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread._crit_edge ], [ %.sroa.5.0.copyload.i, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread ]
-  %.in = phi ptr [ %.pre90, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread._crit_edge ], [ %i.u, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread ]
-  %.sroa.4.16.extract.trunc76 = trunc i64 %.sroa.4.16.extract.trunc76.in to i32 ; 3 uses
+bb.f:                                             ; preds = %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread
+  %.pre-phi.a = phi i64 [ %.sroa.5.0.copyload.i, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread ], [ %.sroa.540.0.copyload, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread ]
+  %.in = phi ptr [ %i.u, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread ], [ %.pre90, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.in to i64            ; 10 uses
+  %.sroa.4.16.extract.trunc76 = trunc i64 %.pre-phi.a to i32 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ac = load i64, ptr %i.ab, align 8, !noundef !6 ; 6 uses
-  %i.ad = icmp eq i64 %i.ac, %.pre-phi.a
+  %i.ad = icmp eq i64 %i.ac, %.pre-phi
   br i1 %i.ad, label %bb.i, label %bb.h
 
 bb.g:                                             ; preds = %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread.thread77, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit._crit_edge
@@ -267,9 +263,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.f
   store i64 1, ptr %0, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.pre-phi.a, ptr %.sroa.411.0..sroa_idx, align 8
+  store i64 %.pre-phi, ptr %.sroa.411.0..sroa_idx, align 8
   %.sroa.411.sroa.4.0..sroa.411.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.pre-phi.a, ptr %.sroa.411.sroa.4.0..sroa.411.0..sroa_idx.sroa_idx, align 8
+  store i64 %.pre-phi, ptr %.sroa.411.sroa.4.0..sroa.411.0..sroa_idx.sroa_idx, align 8
   %.sroa.411.sroa.5.0..sroa.411.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %.sroa.4.16.extract.trunc76, ptr %.sroa.411.sroa.5.0..sroa.411.0..sroa_idx.sroa_idx, align 8
   br label %bb.v
@@ -293,9 +289,9 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1312
   store i64 %i.ac, ptr %i.d, align 8, !noalias !1312
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i64 %.pre-phi.a, ptr %i.am, align 8, !noalias !1312
-  %.not.i = icmp ult i64 %.sroa.460.0.copyload, %.pre-phi.a
-  %i.an = add i64 %.pre-phi.a, 1
+  store i64 %.pre-phi, ptr %i.am, align 8, !noalias !1312
+  %.not.i = icmp ult i64 %.sroa.460.0.copyload, %.pre-phi
+  %i.an = add i64 %.pre-phi, 1
   %.not8.i = icmp ugt i64 %i.ac, %i.an
   %or.cond.i = or i1 %.not8.i, %.not.i
   br i1 %or.cond.i, label %bb.l, label %_RINvMNtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB3_5Input8set_spanINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEB7_.exit, !prof !7
@@ -324,7 +320,7 @@ _RINvMNtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB3_5Input8set_spanINtNtNtC
   %.sroa.418.sroa.3.0..sroa.418.0..sroa_idx19.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store i64 %i.ac, ptr %.sroa.418.sroa.3.0..sroa.418.0..sroa_idx19.sroa_idx, align 8
   %.sroa.418.sroa.4.0..sroa.418.0..sroa_idx19.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  store i64 %.pre-phi.a, ptr %.sroa.418.sroa.4.0..sroa.418.0..sroa_idx19.sroa_idx, align 8
+  store i64 %.pre-phi, ptr %.sroa.418.sroa.4.0..sroa.418.0..sroa_idx19.sroa_idx, align 8
   %.sroa.420.0..sroa_idx21 = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   store i8 0, ptr %.sroa.420.0..sroa_idx21, align 8
   %.sroa.5.0..sroa_idx23 = getelementptr inbounds nuw i8, ptr %i.g, i64 41
@@ -388,7 +384,7 @@ _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_rev.ex
   br i1 %i.be, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_rev.exit._crit_edge, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_rev.exit.thread
 
 bb.q:                                             ; preds = %bb.h, %bb.j
-  %.not.i51 = icmp ugt i64 %i.ac, %.pre-phi.a
+  %.not.i51 = icmp ugt i64 %i.ac, %.pre-phi
   br i1 %.not.i51, label %bb.r, label %_RINvMsb_NtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB6_5Match3newINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEBa_.exit, !prof !21
 
 bb.r:                                             ; preds = %bb.q
@@ -400,7 +396,7 @@ _RINvMsb_NtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB6_5Match3newINtNtNtCs4
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.ac, ptr %.sroa.413.0..sroa_idx, align 8
   %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.pre-phi.a, ptr %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx, align 8
+  store i64 %.pre-phi, ptr %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx, align 8
   %.sroa.413.sroa.5.0..sroa.413.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %.sroa.4.16.extract.trunc76, ptr %.sroa.413.sroa.5.0..sroa.413.0..sroa_idx.sroa_idx, align 8
   br label %bb.v
@@ -434,7 +430,7 @@ _RINvMsb_NtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB6_5Match3newINtNtNtCs4
   %.sroa.437.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bi, ptr %.sroa.437.0..sroa_idx, align 8
   %.sroa.437.sroa.4.0..sroa.437.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.pre-phi.a, ptr %.sroa.437.sroa.4.0..sroa.437.0..sroa_idx.sroa_idx, align 8
+  store i64 %.pre-phi, ptr %.sroa.437.sroa.4.0..sroa.437.0..sroa_idx.sroa_idx, align 8
   %.sroa.437.sroa.5.0..sroa.437.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %.sroa.4.16.extract.trunc76, ptr %.sroa.437.sroa.5.0..sroa.437.0..sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -837,7 +833,7 @@ bb.m:                                             ; preds = %_RINvMNtNtCs98D8VPW
   %.sroa.5.0..sroa_idx.i47 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.5.0.copyload.i48 = load i64, ptr %.sroa.5.0..sroa_idx.i47, align 8, !noalias !1441 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1441
-  %i.ba = ptrtoint ptr %i.az to i64               ; 3 uses
+  %i.ba = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bb = trunc nuw i64 %i.aw to i1
   br i1 %i.bb, label %bb.n, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread78
 
@@ -858,7 +854,7 @@ _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc
   %.pr69 = load i64, ptr %i.i, align 8            ; 2 uses
   %i.bc = icmp eq i64 %.pr69, 2
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8 ; 3 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8 ; 2 uses
   br i1 %i.bc, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit._crit_edge, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread
 
 bb.o:                                             ; preds = %bb.i
@@ -893,17 +889,13 @@ _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc
   %.sroa.543.0.copyload = load i64, ptr %.sroa.543.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %i.bf = trunc nuw i64 %.pr69 to i1
-  br i1 %i.bf, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread._crit_edge, label %bb.r, !prof !23
+  br i1 %i.bf, label %bb.q, label %bb.r, !prof !23
 
-_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread._crit_edge: ; preds = %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread
-  %.pre87 = ptrtoint ptr %.pre to i64
-  br label %bb.q
-
-bb.q:                                             ; preds = %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread._crit_edge, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread
-  %.pre-phi.a = phi i64 [ %.pre87, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread._crit_edge ], [ %i.ba, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread ]
-  %.sroa.543.0.copyload77 = phi i64 [ %.sroa.543.0.copyload, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread._crit_edge ], [ %.sroa.5.0.copyload.i48, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread ]
-  %.sroa.442.0.copyload76 = phi ptr [ %.pre, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread._crit_edge ], [ %i.az, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread ]
-  %.sroa.434.16.extract.trunc = trunc i64 %.sroa.543.0.copyload77 to i32 ; 2 uses
+bb.q:                                             ; preds = %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread
+  %.pre-phi.a = phi i64 [ %.sroa.5.0.copyload.i48, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread ], [ %.sroa.543.0.copyload, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread ]
+  %.sroa.442.0.copyload76 = phi ptr [ %i.az, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread.thread ], [ %.pre, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.sroa.442.0.copyload76 to i64
+  %.sroa.434.16.extract.trunc = trunc i64 %.pre-phi.a to i32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i32 %.sroa.434.16.extract.trunc, ptr %i.h, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -932,7 +924,7 @@ bb.u:                                             ; preds = %bb.t
 _RINvMsb_NtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB6_5Match3newINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEBa_.exit54: ; preds = %bb.t
   store i64 1, ptr %0, align 8
   %.sroa.437.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.pre-phi.a, ptr %.sroa.437.0..sroa_idx, align 8
+  store i64 %.pre-phi, ptr %.sroa.437.0..sroa_idx, align 8
   %.sroa.437.sroa.4.0..sroa.437.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.ac, ptr %.sroa.437.sroa.4.0..sroa.437.0..sroa_idx.sroa_idx, align 8
   %.sroa.437.sroa.5.0..sroa.437.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

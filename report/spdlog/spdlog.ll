@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !79
   %i.i = load ptr, ptr %0, align 8, !tbaa !75     ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
-  %i.k = ptrtoint ptr %i.i to i64                 ; 4 uses
+  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
   %i.l = sub i64 %i.j, %i.k
   %i.m = icmp ugt i64 %i.f, %i.l
   br i1 %i.m, label %bb.c, label %bb.f
@@ -452,24 +452,23 @@ _ZN6spdlog7details14log_msg_bufferaSERKS1_.exit.i.i.i.i.i: ; preds = %._crit_edg
   %i.cr = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i, i64 80
   store ptr %i.cq, ptr %i.cr, align 8, !tbaa !55
   %i.cs = getelementptr inbounds nuw i8, ptr %.0910.i.i.i.i.i, i64 384
-  %i.ct = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i, i64 384 ; 3 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i, i64 384 ; 2 uses
   %i.cu = add nsw i64 %.012.i.i.i.i.i, -1
   %i.cv = icmp sgt i64 %.012.i.i.i.i.i, 1
   br i1 %i.cv, label %.lr.ph.i.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit, !llvm.loop !814
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit: ; preds = %_ZN6spdlog7details14log_msg_bufferaSERKS1_.exit.i.i.i.i.i
   %.pre = load ptr, ptr %i.y, align 8, !tbaa !78
-  %.pre64 = ptrtoint ptr %i.ct to i64
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit: ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit, %bb.g
-  %.pre-phi65 = phi i64 [ %.pre64, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit ], [ %i.k, %bb.g ]
-  %i.cw = phi ptr [ %.pre, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit ], [ %i.z, %bb.g ] ; 2 uses
-  %.08.lcssa.i.i.i.i.i = phi ptr [ %i.ct, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit ], [ %i.i, %bb.g ]
+  %i.cw = phi ptr [ %i.z, %bb.g ], [ %.pre, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit ] ; 2 uses
+  %.08.lcssa.i.i.i.i.i = phi ptr [ %i.i, %bb.g ], [ %i.ct, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit.loopexit ] ; 2 uses
   %.not4.i.i25 = icmp eq ptr %.08.lcssa.i.i.i.i.i, %i.cw
   br i1 %.not4.i.i25, label %_ZSt8_DestroyIN9__gnu_cxx17__normal_iteratorIPN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit, label %.lr.ph.i.i26.preheader
 
 .lr.ph.i.i26.preheader:                           ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6spdlog7details14log_msg_bufferESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit
+  %.pre-phi65 = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64
   %i.cx = sub i64 %.pre-phi65, %i.k
   %i.cy = getelementptr inbounds i8, ptr %i.i, i64 %i.cx
   br label %.lr.ph.i.i26

@@ -204,7 +204,7 @@ _ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseS
 .lr.ph.i6.i12.i3.i.i45.i.i.i:                     ; preds = %.lr.ph516.i.i.i, %.critedge2.i8.i14.i6.i.i48.i.i.i
   %.sroa.0.3.i4.i.i46.i.i.i = phi ptr [ %i.xu, %.critedge2.i8.i14.i6.i.i48.i.i.i ], [ %i.xo, %.lr.ph516.i.i.i ] ; 2 uses
   %i.xt = load ptr, ptr %.sroa.0.3.i4.i.i46.i.i.i, align 8, !tbaa !91 ; 2 uses
-  %magicptr.i7.i13.i5.i.i47.i.i.i = ptrtoint ptr %i.xt to i64 ; 2 uses
+  %magicptr.i7.i13.i5.i.i47.i.i.i = ptrtoint ptr %i.xt to i64
   switch i64 %magicptr.i7.i13.i5.i.i47.i.i.i, label %_ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit.i.i.i [
     i64 -8, label %.critedge2.i8.i14.i6.i.i48.i.i.i
     i64 -16, label %.critedge2.i8.i14.i6.i.i48.i.i.i
@@ -216,14 +216,13 @@ _ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseS
   br i1 %.not.i9.i15.i7.i.i49.i.i.i, label %.critedge2.i8.i14.i6.i.i48._ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit_crit_edge.i.i.i, label %.lr.ph.i6.i12.i3.i.i45.i.i.i, !llvm.loop !223
 
 .critedge2.i8.i14.i6.i.i48._ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit_crit_edge.i.i.i: ; preds = %.critedge2.i8.i14.i6.i.i48.i.i.i
-  %.pre588.i.i.i = load ptr, ptr %i.xr, align 8, !tbaa !91 ; 2 uses
-  %.pre597.i.i.i = ptrtoint ptr %.pre588.i.i.i to i64
+  %.pre588.i.i.i = load ptr, ptr %i.xr, align 8, !tbaa !91
   br label %_ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit.i.i.i, !llvm.loop !223
 
 _ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit.i.i.i: ; preds = %.lr.ph.i6.i12.i3.i.i45.i.i.i, %.critedge2.i8.i14.i6.i.i48._ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit_crit_edge.i.i.i
-  %.pre-phi.i.i.i = phi i64 [ %.pre597.i.i.i, %.critedge2.i8.i14.i6.i.i48._ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit_crit_edge.i.i.i ], [ %magicptr.i7.i13.i5.i.i47.i.i.i, %.lr.ph.i6.i12.i3.i.i45.i.i.i ]
-  %22 = phi ptr [ %.pre588.i.i.i, %.critedge2.i8.i14.i6.i.i48._ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit_crit_edge.i.i.i ], [ %i.xt, %.lr.ph.i6.i12.i3.i.i45.i.i.i ] ; 4 uses
-  %i.xv = trunc i64 %.pre-phi.i.i.i to i32        ; 2 uses
+  %22 = phi ptr [ %.pre588.i.i.i, %.critedge2.i8.i14.i6.i.i48._ZN4llvh6detail12DenseSetImplIPN6hermes10BasicBlockENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit_crit_edge.i.i.i ], [ %i.xt, %.lr.ph.i6.i12.i3.i.i45.i.i.i ] ; 5 uses
+  %.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %22 to i64
+  %i.xv = trunc i64 %.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi to i32 ; 2 uses
   %i.xw = lshr i32 %i.xv, 4
   %i.xx = lshr i32 %i.xv, 9
   %i.xy = xor i32 %i.xw, %i.xx

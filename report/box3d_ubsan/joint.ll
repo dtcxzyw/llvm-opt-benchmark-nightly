@@ -202,7 +202,7 @@ bb.bl:                                            ; preds = %bb.bj
   %i.gu = load i32, ptr %i.gq, align 8, !tbaa !245
   store i32 %i.gu, ptr %i.cr, align 8, !tbaa !102
   %i.gv = getelementptr inbounds nuw i8, ptr %i.ga, i64 132
-  %i.gw = tail call fastcc ptr @b3EmplaceHelper(ptr noundef nonnull %i.gm, ptr noundef nonnull %i.gq, ptr noundef nonnull %i.gv) ; 7 uses
+  %i.gw = tail call fastcc ptr @b3EmplaceHelper(ptr noundef nonnull %i.gm, ptr noundef nonnull %i.gq, ptr noundef nonnull %i.gv) ; 6 uses
   %.not214 = icmp eq ptr %i.gw, null, !nosanitize !33
   br i1 %.not214, label %bb.bm, label %bb.bn, !prof !34, !nosanitize !33
 
@@ -212,7 +212,6 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bl
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(444) %i.gw, i8 0, i64 444, i1 false)
-  %3 = ptrtoint ptr %i.gw to i64, !nosanitize !33
   store i32 %i.ag, ptr %i.gw, align 4, !tbaa !126
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 4
   store i32 %i.p, ptr %i.gx, align 4, !tbaa !144
@@ -253,7 +252,7 @@ bb.bs:                                            ; preds = %bb.bq
   %i.hm = load i32, ptr %i.hl, align 8, !tbaa !245
   store i32 %i.hm, ptr %i.cr, align 8, !tbaa !102
   %i.hn = getelementptr inbounds nuw i8, ptr %i.he, i64 44
-  %i.ho = tail call fastcc ptr @b3EmplaceHelper(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.hl, ptr noundef nonnull %i.hn) ; 7 uses
+  %i.ho = tail call fastcc ptr @b3EmplaceHelper(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.hl, ptr noundef nonnull %i.hn) ; 6 uses
   %.not213 = icmp eq ptr %i.ho, null, !nosanitize !33
   br i1 %.not213, label %bb.bt, label %bb.bu, !prof !34, !nosanitize !33
 
@@ -263,7 +262,6 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bs
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(444) %i.ho, i8 0, i64 444, i1 false)
-  %4 = ptrtoint ptr %i.ho to i64, !nosanitize !33
   store i32 %i.ag, ptr %i.ho, align 4, !tbaa !126
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 4
   store i32 %i.p, ptr %i.hp, align 4, !tbaa !144
@@ -289,7 +287,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   store i32 2, ptr %i.cp, align 8, !tbaa !91
   %i.hu = tail call ptr @b3CreateJointInGraph(ptr noundef nonnull %0, ptr noundef nonnull %i.bv) #11 ; 6 uses
   %i.hv = icmp ne ptr %i.hu, null, !nosanitize !33
-  %i.hw = ptrtoint ptr %i.hu to i64, !nosanitize !33 ; 3 uses
+  %i.hw = ptrtoint ptr %i.hu to i64, !nosanitize !33 ; 2 uses
   %i.hx = and i64 %i.hw, 3, !nosanitize !33
   %i.hy = icmp eq i64 %i.hx, 0, !nosanitize !33
   %i.hz = and i1 %i.hv, %i.hy, !nosanitize !33
@@ -346,7 +344,7 @@ bb.cf:                                            ; preds = %bb.cd
   %i.iw = load i32, ptr %i.iv, align 8, !tbaa !245
   store i32 %i.iw, ptr %i.cr, align 8, !tbaa !102
   %i.ix = getelementptr inbounds nuw i8, ptr %i.if, i64 44
-  %i.iy = tail call fastcc ptr @b3EmplaceHelper(ptr noundef nonnull %i.iu, ptr noundef nonnull %i.iv, ptr noundef nonnull %i.ix) ; 7 uses
+  %i.iy = tail call fastcc ptr @b3EmplaceHelper(ptr noundef nonnull %i.iu, ptr noundef nonnull %i.iv, ptr noundef nonnull %i.ix) ; 6 uses
   %.not211 = icmp eq ptr %i.iy, null, !nosanitize !33
   br i1 %.not211, label %bb.cg, label %bb.ch, !prof !34, !nosanitize !33
 
@@ -356,7 +354,6 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cf
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(444) %i.iy, i8 0, i64 444, i1 false)
-  %5 = ptrtoint ptr %i.iy to i64, !nosanitize !33
   store i32 %i.ag, ptr %i.iy, align 4, !tbaa !126
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 4
   store i32 %i.p, ptr %i.iz, align 4, !tbaa !144
@@ -426,13 +423,12 @@ bb.cn:                                            ; preds = %bb.cm
   unreachable, !nosanitize !33
 
 bb.co:                                            ; preds = %bb.cm
-  %i.kl = getelementptr inbounds [444 x i8], ptr %i.jy, i64 %i.ka ; 2 uses
-  %.pre218 = ptrtoint ptr %i.kl to i64, !nosanitize !33
+  %i.kl = getelementptr inbounds [444 x i8], ptr %i.jy, i64 %i.ka
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.ch, %bb.co, %bb.bu, %bb.ca, %bb.bn
-  %.pre-phi219 = phi i64 [ %5, %bb.ch ], [ %.pre218, %bb.co ], [ %4, %bb.bu ], [ %i.hw, %bb.ca ], [ %3, %bb.bn ] ; 2 uses
-  %.1 = phi ptr [ %i.iy, %bb.ch ], [ %i.kl, %bb.co ], [ %i.ho, %bb.bu ], [ %i.hu, %bb.ca ], [ %i.gw, %bb.bn ] ; 9 uses
+  %.1 = phi ptr [ %i.iy, %bb.ch ], [ %i.kl, %bb.co ], [ %i.ho, %bb.bu ], [ %i.hu, %bb.ca ], [ %i.gw, %bb.bn ] ; 10 uses
+  %.pre-phi219 = ptrtoint ptr %.1 to i64          ; 2 uses
   %i.km = icmp ne ptr %.1, null, !nosanitize !33
   %i.kn = and i64 %.pre-phi219, 3, !nosanitize !33
   %i.ko = icmp eq i64 %i.kn, 0, !nosanitize !33
@@ -835,7 +831,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.pre.i.us.us = load ptr, ptr %i.dz, align 8, !tbaa !336 ; 2 uses
   %.pre29.i.us.us = zext nneg i32 %i.ec to i64    ; 2 uses
   %.pre31.i.us.us = shl nuw nsw i64 %.pre29.i.us.us, 3
-  %.pre33.i.us.us = ptrtoint ptr %.pre.i.us.us to i64, !nosanitize !33 ; 2 uses
+  %.pre33.i.us.us = ptrtoint ptr %.pre.i.us.us to i64
   %.pre35.i.us.us = add i64 %.pre31.i.us.us, %.pre33.i.us.us, !nosanitize !33
   br label %.thread.i.us.us
 
@@ -844,7 +840,7 @@ bb.af:                                            ; preds = %bb.ad
   %i.eh = zext nneg i32 %i.ec to i64              ; 3 uses
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.eg, i64 %i.eh ; 2 uses
   %i.ej = shl nuw nsw i64 %i.eh, 3
-  %i.ek = ptrtoint ptr %i.eg to i64, !nosanitize !33 ; 4 uses
+  %i.ek = ptrtoint ptr %i.eg to i64               ; 3 uses
   %i.el = add i64 %i.ej, %i.ek, !nosanitize !33   ; 4 uses
   %i.em = icmp ne ptr %i.eg, null, !nosanitize !33 ; 2 uses
   %i.en = icmp eq i64 %i.el, 0
@@ -871,14 +867,14 @@ b3GetBit.exit.i.us.us:                            ; preds = %bb.ag
 
 .thread.i.us.us:                                  ; preds = %b3GetBit.exit.i.us.us, %bb.ae
   %.pre-phi36.i.us.us = phi i64 [ %i.el, %b3GetBit.exit.i.us.us ], [ %.pre35.i.us.us, %bb.ae ] ; 3 uses
-  %.pre-phi34.i.us.us = phi i64 [ %i.ek, %b3GetBit.exit.i.us.us ], [ %.pre33.i.us.us, %bb.ae ] ; 2 uses
   %.pre-phi.i.us.us = phi i64 [ %i.eh, %b3GetBit.exit.i.us.us ], [ %.pre29.i.us.us, %bb.ae ]
-  %i.fa = phi ptr [ %i.eg, %b3GetBit.exit.i.us.us ], [ %.pre.i.us.us, %bb.ae ] ; 2 uses
+  %i.fa = phi ptr [ %i.eg, %b3GetBit.exit.i.us.us ], [ %.pre.i.us.us, %bb.ae ] ; 3 uses
+  %.pre-phi34.i.us.us.pre-phi = ptrtoint ptr %i.fa to i64 ; 2 uses
   %i.fb = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %.pre-phi.i.us.us ; 3 uses
   %i.fc = icmp ne ptr %i.fa, null, !nosanitize !33 ; 2 uses
   %i.fd = icmp eq i64 %.pre-phi36.i.us.us, 0
   %i.fe = xor i1 %i.fd, %i.fc
-  %i.ff = icmp uge i64 %.pre-phi36.i.us.us, %.pre-phi34.i.us.us, !nosanitize !33
+  %i.ff = icmp uge i64 %.pre-phi36.i.us.us, %.pre-phi34.i.us.us.pre-phi, !nosanitize !33
   %i.fg = and i1 %i.ff, %i.fe, !nosanitize !33
   br i1 %i.fg, label %bb.ah, label %.split380.us, !prof !35, !nosanitize !33
 
@@ -984,7 +980,7 @@ b3BufferMove.exit.us.us:                          ; preds = %bb.ao, %b3GetBit.ex
   unreachable, !nosanitize !33
 
 .split380.us:                                     ; preds = %.thread.i.us.us
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @295, i64 %.pre-phi34.i.us.us, i64 %.pre-phi36.i.us.us) #12, !nosanitize !33
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @295, i64 %.pre-phi34.i.us.us.pre-phi, i64 %.pre-phi36.i.us.us) #12, !nosanitize !33
   unreachable, !nosanitize !33
 
 .split384.us:                                     ; preds = %bb.ah

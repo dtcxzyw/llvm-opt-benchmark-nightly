@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @png_read_filter_row_paeth_multibyte_pixel(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(address) %1, ptr nofree noundef readonly captures(none) %2) #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 9 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 19
   %i.c = load i8, ptr %i.b, align 1, !tbaa !53
   %i.d = zext i8 %i.c to i64
@@ -266,7 +266,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.j, %n.vec
-  br i1 %cmp.n, label %._crit_edge.loopexit, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.q, 0
@@ -293,7 +293,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n82 = icmp eq i64 %i.j, %n.vec75
-  br i1 %cmp.n82, label %._crit_edge.loopexit, label %.lr.ph.preheader
+  br i1 %cmp.n82, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.04656.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck ], [ %i.r, %vec.epilog.iter.check ], [ %i.y, %vec.epilog.middle.block ]
@@ -310,18 +310,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ag = getelementptr inbounds nuw i8, ptr %.04656, i64 1 ; 3 uses
   store i8 %i.af, ptr %.04656, align 1, !tbaa !8
   %i.ah = icmp ult ptr %i.ag, %i.g
-  br i1 %i.ah, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !313
+  br i1 %i.ah, label %.lr.ph, label %._crit_edge, !llvm.loop !313
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
-  %.lcssa67 = phi ptr [ %i.z, %vec.epilog.middle.block ], [ %i.s, %middle.block ], [ %i.ad, %.lr.ph ]
-  %.lcssa = phi ptr [ %i.y, %vec.epilog.middle.block ], [ %i.r, %middle.block ], [ %i.ag, %.lr.ph ] ; 2 uses
-  %.pre = ptrtoaddr ptr %.lcssa to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.046.lcssa64.pre-phi = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %bb.a ] ; 2 uses
-  %.048.lcssa = phi ptr [ %.lcssa67, %._crit_edge.loopexit ], [ %2, %bb.a ] ; 10 uses
-  %.046.lcssa = phi ptr [ %.lcssa, %._crit_edge.loopexit ], [ %1, %bb.a ] ; 13 uses
+._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.a
+  %.048.lcssa = phi ptr [ %2, %bb.a ], [ %i.z, %vec.epilog.middle.block ], [ %i.s, %middle.block ], [ %i.ad, %.lr.ph ] ; 10 uses
+  %.046.lcssa = phi ptr [ %1, %bb.a ], [ %i.y, %vec.epilog.middle.block ], [ %i.r, %middle.block ], [ %i.ag, %.lr.ph ] ; 14 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !54 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 %i.aj
@@ -329,6 +322,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.al, label %iter.check127, label %._crit_edge62
 
 iter.check127:                                    ; preds = %._crit_edge
+  %.046.lcssa64.pre-phi = ptrtoaddr ptr %.046.lcssa to i64 ; 2 uses
   %i.am = sub nsw i64 0, %i.f                     ; 8 uses
   %i.an = add i64 %i.aj, %i.a
   %i.ao = sub i64 %i.an, %.046.lcssa64.pre-phi    ; 9 uses
@@ -340,7 +334,7 @@ vector.memcheck101:                               ; preds = %iter.check127
   %i.ap = getelementptr i8, ptr %.048.lcssa, i64 %i.ao
   %i.aq = getelementptr i8, ptr %.048.lcssa, i64 %i.am
   %i.ar = add i64 %i.aj, %i.a
-  %i.as = add i64 %.046.lcssa64.pre-phi, %i.f
+  %i.as = add i64 %i.f, %.046.lcssa64.pre-phi
   %i.at = sub i64 %i.ar, %i.as                    ; 2 uses
   %i.au = getelementptr i8, ptr %.048.lcssa, i64 %i.at
   %i.av = getelementptr i8, ptr %.046.lcssa, i64 %i.am

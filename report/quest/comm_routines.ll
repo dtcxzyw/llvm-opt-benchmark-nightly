@@ -202,7 +202,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 2 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !27     ; 3 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.b, %i.c
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
@@ -217,17 +217,16 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #8
-  %.pre = load ptr, ptr %1, align 8, !tbaa !29    ; 2 uses
+  %.pre = load ptr, ptr %1, align 8, !tbaa !29
   %.pre42 = load ptr, ptr %i.a, align 8, !tbaa !29
-  %.pre47 = ptrtoint ptr %.pre42 to i64
-  %.pre48 = ptrtoint ptr %.pre to i64
+  %.pre48 = ptrtoint ptr %.pre42 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i, %bb.a
-  %.pre-phi49 = phi i64 [ %.pre48, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ]
-  %.pre-phi = phi i64 [ %.pre47, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i ], [ %i.d, %bb.a ]
-  %i.i = phi ptr [ %.pre, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre48, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i ], [ %i.d, %bb.a ]
+  %i.i = phi ptr [ %.pre, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 3 uses
   %i.j = phi ptr [ %i.h, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
+  %.pre-phi49 = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %.pre-phi, %.pre-phi49           ; 3 uses
   %i.l = icmp sgt i64 %i.k, 8
   br i1 %i.l, label %bb.d, label %bb.e, !prof !30
@@ -250,7 +249,7 @@ _ZNSt6vectorIxSaIxEEC2ERKS1_.exit:                ; preds = %bb.d, %bb.e, %bb.f
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !26   ; 2 uses
   %i.q = load ptr, ptr %2, align 8, !tbaa !27     ; 3 uses
   %i.r = ptrtoint ptr %i.p to i64                 ; 2 uses
-  %i.s = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 4 uses
   %.not.i.i.i.i8 = icmp eq ptr %i.p, %i.q
   br i1 %.not.i.i.i.i8, label %.noexc11, label %bb.g
@@ -271,17 +270,16 @@ _ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9: ; preds = %bb.g
           to label %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge unwind label %bb.r
 
 _ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge: ; preds = %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9
-  %.pre43 = load ptr, ptr %2, align 8, !tbaa !29  ; 2 uses
+  %.pre43 = load ptr, ptr %2, align 8, !tbaa !29
   %.pre44 = load ptr, ptr %i.o, align 8, !tbaa !29
-  %.pre50 = ptrtoint ptr %.pre44 to i64
-  %.pre52 = ptrtoint ptr %.pre43 to i64
+  %.pre52 = ptrtoint ptr %.pre44 to i64
   br label %.noexc11
 
 .noexc11:                                         ; preds = %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit
-  %.pre-phi53 = phi i64 [ %.pre52, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge ], [ %i.s, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit ]
-  %.pre-phi51 = phi i64 [ %.pre50, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge ], [ %i.r, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit ]
-  %i.w = phi ptr [ %.pre43, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge ], [ %i.q, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit ] ; 2 uses
+  %.pre-phi51 = phi i64 [ %.pre52, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge ], [ %i.r, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit ]
+  %i.w = phi ptr [ %.pre43, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge ], [ %i.q, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit ] ; 3 uses
   %i.x = phi ptr [ %i.v, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i9..noexc11_crit_edge ], [ null, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit ] ; 6 uses
+  %.pre-phi53 = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %.pre-phi51, %.pre-phi53         ; 3 uses
   %i.z = icmp sgt i64 %i.y, 8
   br i1 %i.z, label %bb.h, label %bb.i, !prof !30
@@ -304,7 +302,7 @@ _ZNSt6vectorIxSaIxEEC2ERKS1_.exit12:              ; preds = %bb.j, %bb.i, %bb.h
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !26 ; 2 uses
   %i.ae = load ptr, ptr %3, align 8, !tbaa !27    ; 3 uses
   %i.af = ptrtoint ptr %i.ad to i64               ; 2 uses
-  %i.ag = ptrtoint ptr %i.ae to i64               ; 2 uses
+  %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag                    ; 4 uses
   %.not.i.i.i.i13 = icmp eq ptr %i.ad, %i.ae
   br i1 %.not.i.i.i.i13, label %.noexc17, label %bb.k
@@ -325,17 +323,16 @@ _ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14: ; preds = %bb.k
           to label %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge unwind label %bb.s
 
 _ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge: ; preds = %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14
-  %.pre45 = load ptr, ptr %3, align 8, !tbaa !29  ; 2 uses
+  %.pre45 = load ptr, ptr %3, align 8, !tbaa !29
   %.pre46 = load ptr, ptr %i.ac, align 8, !tbaa !29
-  %.pre54 = ptrtoint ptr %.pre46 to i64
-  %.pre56 = ptrtoint ptr %.pre45 to i64
+  %.pre56 = ptrtoint ptr %.pre46 to i64
   br label %.noexc17
 
 .noexc17:                                         ; preds = %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12
-  %.pre-phi57 = phi i64 [ %.pre56, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge ], [ %i.ag, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12 ]
-  %.pre-phi55 = phi i64 [ %.pre54, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge ], [ %i.af, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12 ]
-  %i.ak = phi ptr [ %.pre45, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge ], [ %i.ae, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12 ] ; 2 uses
+  %.pre-phi55 = phi i64 [ %.pre56, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge ], [ %i.af, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12 ]
+  %i.ak = phi ptr [ %.pre45, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge ], [ %i.ae, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12 ] ; 3 uses
   %i.al = phi ptr [ %i.aj, %_ZNSt15__new_allocatorIxE8allocateEmPKv.exit.i.i.i.i14..noexc17_crit_edge ], [ null, %_ZNSt6vectorIxSaIxEEC2ERKS1_.exit12 ] ; 6 uses
+  %.pre-phi57 = ptrtoint ptr %i.ak to i64
   %i.am = sub i64 %.pre-phi55, %.pre-phi57        ; 3 uses
   %i.an = icmp sgt i64 %i.am, 8
   br i1 %i.an, label %bb.l, label %bb.m, !prof !30

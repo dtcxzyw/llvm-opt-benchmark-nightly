@@ -24,8 +24,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef double @_ZNK17double_conversion23StringToDoubleConverter12StringToIeeeIPKcEEdT_ibPi(ptr noundef nonnull align 8 dereferenceable(42) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, ptr noundef %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 9 uses
-  %i.b = alloca ptr, align 8                      ; 36 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 8 uses
+  %i.b = alloca ptr, align 8                      ; 35 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca [782 x i8], align 16              ; 11 uses
   %i.e = alloca i8, align 1                       ; 3 uses
@@ -75,7 +75,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i._crit_edge.thread:                       ; preds = %.lr.ph.i.preheader
   store ptr %1, ptr %i.b, align 8
-  br label %.lr.ph.i._crit_edge._crit_edge
+  br label %._crit_edge547
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %.lr.ph
   %i.x = phi ptr [ %i.w, %.lr.ph.i.lr.ph ], [ %i.ab, %.lr.ph ] ; 4 uses
@@ -100,32 +100,25 @@ _ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit: ; preds = %.lr.ph.
 
 .lr.ph.i._crit_edge:                              ; preds = %.lr.ph.i
   store ptr %i.x, ptr %i.b, align 8
-  br i1 %.not212.not, label %bb.d, label %.lr.ph.i._crit_edge._crit_edge
-
-.lr.ph.i._crit_edge._crit_edge:                   ; preds = %.lr.ph.i._crit_edge.thread, %.lr.ph.i._crit_edge
-  %.lcssa431604 = phi ptr [ %1, %.lr.ph.i._crit_edge.thread ], [ %i.x, %.lr.ph.i._crit_edge ] ; 2 uses
-  %5 = phi i8 [ %.pre, %.lr.ph.i._crit_edge.thread ], [ %i.y, %.lr.ph.i._crit_edge ]
-  %.pre559 = ptrtoaddr ptr %.lcssa431604 to i64
-  br label %._crit_edge547
+  br i1 %.not212.not, label %bb.d, label %._crit_edge547
 
 bb.d:                                             ; preds = %.lr.ph.i._crit_edge
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.af = load double, ptr %i.ae, align 8, !tbaa !25
   br label %.thread
 
-._crit_edge547:                                   ; preds = %bb.c, %.lr.ph.i._crit_edge._crit_edge
-  %.pre-phi = phi i64 [ %.pre559, %.lr.ph.i._crit_edge._crit_edge ], [ %i.a, %bb.c ]
-  %6 = phi i8 [ %5, %.lr.ph.i._crit_edge._crit_edge ], [ %.pre, %bb.c ] ; 2 uses
-  %7 = phi ptr [ %.lcssa431604, %.lr.ph.i._crit_edge._crit_edge ], [ %1, %bb.c ] ; 4 uses
-  switch i8 %6, label %bb.j [
+._crit_edge547:                                   ; preds = %bb.c, %.lr.ph.i._crit_edge, %.lr.ph.i._crit_edge.thread
+  %5 = phi i8 [ %i.y, %.lr.ph.i._crit_edge ], [ %.pre, %.lr.ph.i._crit_edge.thread ], [ %.pre, %bb.c ] ; 2 uses
+  %6 = phi ptr [ %i.x, %.lr.ph.i._crit_edge ], [ %1, %.lr.ph.i._crit_edge.thread ], [ %1, %bb.c ] ; 5 uses
+  %.pre-phi = ptrtoaddr ptr %6 to i64
+  switch i8 %5, label %bb.j [
     i8 43, label %bb.e
     i8 45, label %bb.e
   ]
 
 bb.e:                                             ; preds = %._crit_edge547, %._crit_edge547
-  %i.ag = icmp eq i8 %6, 45
-  %.ptr408 = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
-  store ptr %.ptr408, ptr %i.b, align 8, !tbaa !16
+  %i.ag = icmp eq i8 %5, 45
+  %.ptr408 = getelementptr inbounds nuw i8, ptr %6, i64 1
   %.not6.not.i238 = icmp eq ptr %.ptr408, %i.h
   br i1 %.not6.not.i238, label %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit244, label %.lr.ph.i239.preheader
 
@@ -136,7 +129,7 @@ bb.e:                                             ; preds = %._crit_edge547, %._
 
 .lr.ph.i239:                                      ; preds = %.lr.ph.i239.preheader, %bb.f
   %.0338.idx = phi i64 [ %.0338.add, %bb.f ], [ 1, %.lr.ph.i239.preheader ] ; 4 uses
-  %.0338.ptr = getelementptr inbounds nuw i8, ptr %7, i64 %.0338.idx
+  %.0338.ptr = getelementptr inbounds nuw i8, ptr %6, i64 %.0338.idx
   %i.aj = load i8, ptr %.0338.ptr, align 1, !tbaa !23
   %i.ak = sext i8 %i.aj to i32
   %i.al = tail call fastcc noundef zeroext i1 @_ZN17double_conversionL12isWhitespaceEi(i32 noundef %i.ak)
@@ -163,12 +156,12 @@ bb.h:                                             ; preds = %bb.g
   br label %.thread
 
 bb.i:                                             ; preds = %bb.g
-  %.0338.ptr.le = getelementptr inbounds nuw i8, ptr %7, i64 %.0338.idx ; 2 uses
+  %.0338.ptr.le = getelementptr inbounds nuw i8, ptr %6, i64 %.0338.idx ; 2 uses
   store ptr %.0338.ptr.le, ptr %i.b, align 8, !tbaa !16
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge547
-  %i.aq = phi ptr [ %.0338.ptr.le, %bb.i ], [ %7, %._crit_edge547 ] ; 2 uses
+  %i.aq = phi ptr [ %.0338.ptr.le, %bb.i ], [ %6, %._crit_edge547 ] ; 2 uses
   %.0180 = phi i1 [ %i.ag, %bb.i ], [ false, %._crit_edge547 ] ; 8 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !26 ; 2 uses

@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge, label %bb.c
 
 ._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge: ; preds = %bb.b
-  %.pre11 = ptrtoint ptr %2 to i64                ; 2 uses
+  %.pre11 = ptrtoint ptr %2 to i64
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp sgt i64 %i.g, 0
@@ -317,14 +317,13 @@ _ZN4mold4Glob14LiteralPatternaSEOS1_.exit.i.i.i.i.i: ; preds = %bb.i, %bb.h, %_Z
   br i1 %i.ao, label %.lr.ph.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit, !llvm.loop !332
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit: ; preds = %_ZN4mold4Glob14LiteralPatternaSEOS1_.exit.i.i.i.i.i
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !87  ; 2 uses
-  %.pre12 = ptrtoint ptr %.pre to i64
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !87
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit, %bb.c
-  %.pre-phi13 = phi i64 [ %.pre11, %._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge ], [ %.pre12, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit ], [ %i.e, %bb.c ]
   %.pre-phi = phi i64 [ %.pre11, %._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge ], [ %i.f, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit ], [ %i.f, %bb.c ]
-  %i.ap = phi ptr [ %2, %._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge ], [ %.pre, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit ], [ %i.c, %bb.c ] ; 2 uses
+  %i.ap = phi ptr [ %2, %._ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit_crit_edge ], [ %.pre, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold4Glob14LiteralPatternESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.loopexit ], [ %i.c, %bb.c ] ; 3 uses
+  %.pre-phi13 = ptrtoint ptr %i.ap to i64
   %i.aq = sub i64 %.pre-phi13, %.pre-phi
   %i.ar = getelementptr inbounds i8, ptr %1, i64 %i.aq ; 3 uses
   %.not.i = icmp eq ptr %i.ap, %i.ar

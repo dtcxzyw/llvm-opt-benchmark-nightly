@@ -39,7 +39,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !14   ; 2 uses
   %i.l = icmp ult i64 %i.k, 65
-  %i.m = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.m = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
@@ -59,10 +59,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.v = load i64, ptr %3, align 8, !tbaa !17
-  %i.w = getelementptr inbounds i8, ptr %1, i64 %i.v ; 2 uses
+  %i.w = getelementptr inbounds i8, ptr %1, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.y = load i64, ptr %i.x, align 8, !tbaa !18
-  %.pre241.i = ptrtoaddr ptr %i.w to i64
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -70,9 +69,9 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.0137229.pre-phi.i = phi i64 [ %i.m, %bb.g ], [ %.pre241.i, %bb.f ]
-  %.0137.i = phi ptr [ %1, %bb.g ], [ %i.w, %bb.f ] ; 7 uses
-  %.pn.i = phi i64 [ %i.z, %bb.g ], [ %i.y, %bb.f ] ; 2 uses
+  %.0137.i = phi ptr [ %i.w, %bb.f ], [ %1, %bb.g ] ; 8 uses
+  %.pn.i = phi i64 [ %i.y, %bb.f ], [ %i.z, %bb.g ] ; 2 uses
+  %.0137229.pre-phi.i.pre-phi = ptrtoaddr ptr %.0137.i to i64
   %.0.i = getelementptr inbounds i8, ptr %1, i64 %.pn.i ; 9 uses
   %i.aa = icmp ult ptr %.0.i, %.0137.i
   br i1 %i.aa, label %smatcher.exit, label %bb.i
@@ -91,9 +90,9 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = load i8, ptr %i.ac, align 1, !tbaa !19
   %i.af = ptrtoint ptr %.0.i to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  %7 = sub i64 %i.m, %.0137229.pre-phi.i
-  %8 = getelementptr i8, ptr %.0137.i, i64 %7
-  %scevgep.i = getelementptr i8, ptr %8, i64 %.pn.i ; 2 uses
+  %7 = add i64 %.pn.i, %i.m
+  %8 = sub i64 %7, %.0137229.pre-phi.i.pre-phi
+  %scevgep.i = getelementptr i8, ptr %.0137.i, i64 %8 ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.m, %.lr.ph.i
@@ -496,10 +495,9 @@ bb.bp:                                            ; preds = %bb.d
 
 bb.bq:                                            ; preds = %bb.bp
   %i.ha = load i64, ptr %3, align 8, !tbaa !17
-  %i.hb = getelementptr inbounds i8, ptr %1, i64 %i.ha ; 2 uses
+  %i.hb = getelementptr inbounds i8, ptr %1, i64 %i.ha
   %i.hc = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.hd = load i64, ptr %i.hc, align 8, !tbaa !18
-  %.pre260.i = ptrtoaddr ptr %i.hb to i64
   br label %bb.bs
 
 bb.br:                                            ; preds = %bb.bp
@@ -507,9 +505,9 @@ bb.br:                                            ; preds = %bb.bp
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.0158249.pre-phi.i = phi i64 [ %i.m, %bb.br ], [ %.pre260.i, %bb.bq ]
-  %.0158.i = phi ptr [ %1, %bb.br ], [ %i.hb, %bb.bq ] ; 7 uses
-  %.pn.i21 = phi i64 [ %i.he, %bb.br ], [ %i.hd, %bb.bq ] ; 2 uses
+  %.0158.i = phi ptr [ %i.hb, %bb.bq ], [ %1, %bb.br ] ; 8 uses
+  %.pn.i21 = phi i64 [ %i.hd, %bb.bq ], [ %i.he, %bb.br ] ; 2 uses
+  %.0158249.pre-phi.i.pre-phi = ptrtoaddr ptr %.0158.i to i64
   %.0.i22 = getelementptr inbounds i8, ptr %1, i64 %.pn.i21 ; 9 uses
   %i.hf = icmp ult ptr %.0.i22, %.0158.i
   br i1 %i.hf, label %lmatcher.exit, label %bb.bt
@@ -528,9 +526,9 @@ bb.bt:                                            ; preds = %bb.bs
   %i.hj = load i8, ptr %i.hh, align 1, !tbaa !19
   %i.hk = ptrtoint ptr %.0.i22 to i64
   %i.hl = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  %9 = sub i64 %i.m, %.0158249.pre-phi.i
-  %10 = getelementptr i8, ptr %.0158.i, i64 %9
-  %scevgep.i56 = getelementptr i8, ptr %10, i64 %.pn.i21 ; 2 uses
+  %9 = add i64 %.pn.i21, %i.m
+  %10 = sub i64 %9, %.0158249.pre-phi.i.pre-phi
+  %scevgep.i56 = getelementptr i8, ptr %.0158.i, i64 %10 ; 2 uses
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bx, %.lr.ph.i55

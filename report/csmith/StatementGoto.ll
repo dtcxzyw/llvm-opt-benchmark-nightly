@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.n, %.thread190
   br i1 %.not251, label %_ZNSt6vectorIPK9StatementSaIS2_EED2Ev.exit, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPK9StatementSaIS2_EE9push_backERKS2_.exit
-  %i.aw = ptrtoint ptr %.sroa.0177.1 to i64       ; 3 uses
+  %i.aw = ptrtoint ptr %.sroa.0177.1 to i64       ; 2 uses
   %.not117 = icmp eq ptr %.sroa.11.1, %.sroa.0177.1
   br i1 %.not117, label %.thread195, label %bb.x
 
@@ -605,23 +605,19 @@ _ZNSt6vectorIPK9StatementSaIS2_EED2Ev.exit:       ; preds = %bb.o, %.thread195, 
 
 bb.cy:                                            ; preds = %.loopexit209, %.loopexit.split-lp210, %_ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit166
   %.sroa.16.0233 = phi ptr [ %.sroa.16.1, %_ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit166 ], [ %.sroa.16.0244, %.loopexit209 ], [ %.sroa.16.0235, %.loopexit.split-lp210 ]
-  %.sroa.0177.0221 = phi ptr [ %.sroa.0177.1, %_ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit166 ], [ %.sroa.0177.0245, %.loopexit209 ], [ %.sroa.0177.0223, %.loopexit.split-lp210 ] ; 3 uses
+  %.sroa.0177.0221 = phi ptr [ %.sroa.0177.1, %_ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit166 ], [ %.sroa.0177.0245, %.loopexit209 ], [ %.sroa.0177.0223, %.loopexit.split-lp210 ] ; 2 uses
   %.pn129 = phi { ptr, i32 } [ %.pn123, %_ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit166 ], [ %lpad.loopexit211, %.loopexit209 ], [ %lpad.loopexit.split-lp212, %.loopexit.split-lp210 ] ; 2 uses
   %.not.i.i.i168 = icmp eq ptr %.sroa.0177.0221, null
-  br i1 %.not.i.i.i168, label %_ZNSt6vectorIPK9StatementSaIS2_EED2Ev.exit169, label %._crit_edge260
+  br i1 %.not.i.i.i168, label %_ZNSt6vectorIPK9StatementSaIS2_EED2Ev.exit169, label %bb.cz
 
-._crit_edge260:                                   ; preds = %bb.cy
-  %.pre = ptrtoint ptr %.sroa.0177.0221 to i64
-  br label %bb.cz
-
-bb.cz:                                            ; preds = %._crit_edge260, %.thread198
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge260 ], [ %i.aw, %.thread198 ]
-  %.sroa.16.0232.a = phi ptr [ %.sroa.16.0233, %._crit_edge260 ], [ %.sroa.16.1, %.thread198 ]
-  %.sroa.0177.0229 = phi ptr [ %.sroa.0177.0221, %._crit_edge260 ], [ %.sroa.0177.1, %.thread198 ]
-  %.pn129201 = phi { ptr, i32 } [ %.pn129, %._crit_edge260 ], [ %i.ei, %.thread198 ]
-  %i.jc = ptrtoint ptr %.sroa.16.0232.a to i64
+bb.cz:                                            ; preds = %bb.cy, %.thread198
+  %.sroa.16.0232 = phi ptr [ %.sroa.16.1, %.thread198 ], [ %.sroa.16.0233, %bb.cy ]
+  %.sroa.16.0232.a = phi ptr [ %.sroa.0177.1, %.thread198 ], [ %.sroa.0177.0221, %bb.cy ] ; 2 uses
+  %.pn129201 = phi { ptr, i32 } [ %i.ei, %.thread198 ], [ %.pn129, %bb.cy ]
+  %.pre-phi = ptrtoint ptr %.sroa.16.0232.a to i64
+  %i.jc = ptrtoint ptr %.sroa.16.0232 to i64
   %i.jd = sub i64 %i.jc, %.pre-phi
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0177.0229, i64 noundef %i.jd) #20
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.16.0232.a, i64 noundef %i.jd) #20
   br label %_ZNSt6vectorIPK9StatementSaIS2_EED2Ev.exit169
 
 _ZNSt6vectorIPK9StatementSaIS2_EED2Ev.exit169:    ; preds = %bb.cy, %bb.cz

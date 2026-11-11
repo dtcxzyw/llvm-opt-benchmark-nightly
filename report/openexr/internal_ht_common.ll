@@ -205,7 +205,7 @@ _ZN12MemoryReader11pull_uint16Ev.exit18:          ; preds = %bb.o
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !11 ; 4 uses
   %i.bb = load ptr, ptr %2, align 8, !tbaa !12    ; 5 uses
   %i.bc = ptrtoint ptr %i.ba to i64
-  %i.bd = ptrtoint ptr %i.bb to i64               ; 4 uses
+  %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = sub i64 %i.bc, %i.bd
   %i.bf = ashr exact i64 %i.be, 4                 ; 3 uses
   %i.bg = icmp ugt i64 %i.ay, %i.bf
@@ -215,8 +215,7 @@ bb.s:                                             ; preds = %_ZN12MemoryReader11
   %i.bh = sub nuw nsw i64 %i.ay, %i.bf
   tail call void @_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %i.bh)
   %.pre = load ptr, ptr %i.az, align 8, !tbaa !11
-  %.pre31 = load ptr, ptr %2, align 8, !tbaa !12  ; 2 uses
-  %.pre32 = ptrtoint ptr %.pre31 to i64
+  %.pre31 = load ptr, ptr %2, align 8, !tbaa !12
   br label %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit
 
 bb.t:                                             ; preds = %_ZN12MemoryReader11pull_uint16Ev.exit18
@@ -233,17 +232,16 @@ _ZSt8_DestroyIP21CodestreamChannelInfoS0_EvT_S2_RSaIT0_E.exit.i.i: ; preds = %bb
   br label %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit
 
 _ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit: ; preds = %bb.s, %bb.t, %bb.u, %_ZSt8_DestroyIP21CodestreamChannelInfoS0_EvT_S2_RSaIT0_E.exit.i.i
-  %.pre-phi = phi i64 [ %.pre32, %bb.s ], [ %i.bd, %bb.t ], [ %i.bd, %bb.u ], [ %i.bd, %_ZSt8_DestroyIP21CodestreamChannelInfoS0_EvT_S2_RSaIT0_E.exit.i.i ]
-  %i.bk = phi ptr [ %.pre31, %bb.s ], [ %i.bb, %bb.t ], [ %i.bb, %bb.u ], [ %i.bb, %_ZSt8_DestroyIP21CodestreamChannelInfoS0_EvT_S2_RSaIT0_E.exit.i.i ] ; 2 uses
+  %i.bk = phi ptr [ %.pre31, %bb.s ], [ %i.bb, %bb.t ], [ %i.bb, %bb.u ], [ %i.bb, %_ZSt8_DestroyIP21CodestreamChannelInfoS0_EvT_S2_RSaIT0_E.exit.i.i ] ; 3 uses
   %i.bl = phi ptr [ %.pre, %bb.s ], [ %i.ba, %bb.t ], [ %i.ba, %bb.u ], [ %i.bj, %_ZSt8_DestroyIP21CodestreamChannelInfoS0_EvT_S2_RSaIT0_E.exit.i.i ] ; 2 uses
   %.not30 = icmp eq ptr %i.bl, %i.bk
   br i1 %.not30, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit
   %i.bm = ptrtoint ptr %i.bl to i64
+  %.pre-phi = ptrtoint ptr %i.bk to i64
   %3 = sub i64 %i.bm, %.pre-phi
   %4 = ashr exact i64 %3, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 1)
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit, %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit
@@ -283,7 +281,7 @@ _ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit: ; preds = %.lr.ph
   %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.bk, i64 %.029
   store i32 %i.bz, ptr %i.ca, align 8, !tbaa !16
   %i.cb = add nuw nsw i64 %.029, 1                ; 2 uses
-  %exitcond.not = icmp eq i64 %i.cb, %umax
+  %exitcond.not = icmp eq i64 %i.cb, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
 }
 

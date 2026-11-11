@@ -202,9 +202,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214, label %bb.d
 
 _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214: ; preds = %._crit_edge, %bb.a
-  %.sroa.071.0.lcssa193 = phi ptr [ %.sroa.071.1, %._crit_edge ], [ null, %bb.a ] ; 2 uses
+  %.sroa.071.0.lcssa193 = phi ptr [ %.sroa.071.1, %._crit_edge ], [ null, %bb.a ]
   %.sroa.18.0.lcssa186 = phi ptr [ %.sroa.18.1, %._crit_edge ], [ null, %bb.a ]
-  %.pre156 = ptrtoint ptr %.sroa.071.0.lcssa193 to i64
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.w, ptr %0, align 8, !tbaa !27
   store i8 123, ptr %i.w, align 8, !tbaa !30
@@ -216,7 +215,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traits
 
 bb.d:                                             ; preds = %._crit_edge
   %i.z = ptrtoint ptr %.sroa.12.1 to i64
-  %i.aa = ptrtoint ptr %.sroa.071.1 to i64        ; 3 uses
+  %i.aa = ptrtoint ptr %.sroa.071.1 to i64
   %i.ab = sub i64 %i.z, %i.aa                     ; 3 uses
   %i.ac = ashr exact i64 %i.ab, 4                 ; 2 uses
   %i.ad = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ac, i1 true)
@@ -470,9 +469,9 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
 
 ._crit_edge127:                                   ; preds = %bb.z, %bb.r, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214
   %i.cv = phi ptr [ %i.w, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214 ], [ %i.bz, %bb.r ], [ %i.bz, %bb.z ]
-  %.pre-phi157213 = phi i64 [ %.pre156, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214 ], [ %i.aa, %bb.r ], [ %i.aa, %bb.z ]
   %.sroa.18.0.lcssa185210 = phi ptr [ %.sroa.18.0.lcssa186, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214 ], [ %.sroa.18.1, %bb.r ], [ %.sroa.18.1, %bb.z ] ; 2 uses
-  %.sroa.071.0.lcssa192208 = phi ptr [ %.sroa.071.0.lcssa193, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214 ], [ %.sroa.071.1, %bb.r ], [ %.sroa.071.1, %bb.z ] ; 3 uses
+  %.sroa.071.0.lcssa192208 = phi ptr [ %.sroa.071.0.lcssa193, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt17basic_string_viewIcSt11char_traitsIcEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.thread214 ], [ %.sroa.071.1, %bb.r ], [ %.sroa.071.1, %bb.z ] ; 4 uses
+  %.pre-phi157213 = ptrtoint ptr %.sroa.071.0.lcssa192208 to i64
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 1, ptr nonnull @.str.7)
           to label %bb.aa unwind label %.loopexit.split-lp.loopexit.split-lp
 

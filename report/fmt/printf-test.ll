@@ -205,7 +205,7 @@ _ZZN3fmt3v126detail7vprintfIcNS0_20basic_printf_contextIcEEEEvRNS1_6bufferIT_EEN
   store i32 %.sroa.5.013.i176, ptr %.sroa.5.0..sroa_idx.i178, align 16, !tbaa !158, !alias.scope !17982
   %i.hn = load i32, ptr %i.h, align 4, !tbaa !154 ; 2 uses
   %i.ho = icmp sgt i32 %i.hn, -1
-  %i.hp = trunc i128 %.sroa.0.014.i177 to i64     ; 5 uses
+  %i.hp = trunc i128 %.sroa.0.014.i177 to i64     ; 4 uses
   %i.hq = inttoptr i64 %i.hp to ptr               ; 5 uses
   %i.hr = trunc i128 %.sroa.0.014.i177 to i8      ; 3 uses
   %i.hs = trunc i128 %.sroa.0.014.i177 to i32     ; 3 uses
@@ -237,7 +237,7 @@ _ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail11get_cstringIcEEEEDTclfp_Li0EEEOT_.exit
   %i.ic = and i64 %i.hy, 2147483644
-  %scevgep.i.i.i = getelementptr i8, ptr %i.hq, i64 %i.ic ; 2 uses
+  %scevgep.i.i.i = getelementptr i8, ptr %i.hq, i64 %i.ic
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cw, %.lr.ph.i.i.i
@@ -269,16 +269,12 @@ bb.cw:                                            ; preds = %bb.cv
   %i.io = getelementptr inbounds nuw i8, ptr %.02946.i.i.i, i64 4
   %i.ip = add nsw i64 %.047.i.i.i, -1
   %i.iq = icmp sgt i64 %.047.i.i.i, 1
-  br i1 %i.iq, label %bb.cs, label %._crit_edge.loopexit.i.i.i, !llvm.loop !17972
+  br i1 %i.iq, label %bb.cs, label %._crit_edge.i.i.i, !llvm.loop !17972
 
-._crit_edge.loopexit.i.i.i:                       ; preds = %bb.cw
-  %.pre54.i.i.i = ptrtoint ptr %scevgep.i.i.i to i64
-  br label %._crit_edge.i.i.i
-
-._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %_ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail11get_cstringIcEEEEDTclfp_Li0EEEOT_.exit
-  %.pre-phi.i.i.i = phi i64 [ %.pre54.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.hp, %_ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail11get_cstringIcEEEEDTclfp_Li0EEEOT_.exit ]
-  %.029.lcssa.i.i.i = phi ptr [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.hq, %_ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail11get_cstringIcEEEEDTclfp_Li0EEEOT_.exit ] ; 5 uses
-  %i.ir = sub i64 %i.ia, %.pre-phi.i.i.i
+._crit_edge.i.i.i:                                ; preds = %bb.cw, %_ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail11get_cstringIcEEEEDTclfp_Li0EEEOT_.exit
+  %.029.lcssa.i.i.i = phi ptr [ %i.hq, %_ZNK3fmt3v1216basic_format_argINS0_20basic_printf_contextIcEEE5visitINS0_6detail11get_cstringIcEEEEDTclfp_Li0EEEOT_.exit ], [ %scevgep.i.i.i, %bb.cw ] ; 6 uses
+  %.pre-phi.i.pre-phi.i.pre-phi.i = ptrtoint ptr %.029.lcssa.i.i.i to i64
+  %i.ir = sub i64 %i.ia, %.pre-phi.i.pre-phi.i.pre-phi.i
   switch i64 %i.ir, label %bb.da [
     i64 3, label %bb.cx
     i64 2, label %._crit_edge._crit_edge.i.i.i

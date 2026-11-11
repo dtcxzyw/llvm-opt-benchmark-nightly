@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.noexc27
 
 bb.m:                                             ; preds = %bb.i
   %i.ar = load ptr, ptr %i.e, align 8, !tbaa !300 ; 4 uses
-  %i.as = ptrtoint ptr %i.ar to i64               ; 2 uses
+  %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %i.ag                    ; 2 uses
   %i.au = icmp ugt i64 %i.ac, %i.at
   br i1 %i.au, label %bb.n, label %bb.q
@@ -215,17 +215,16 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.memset.p0.i64(ptr align 1 %i.ae, i8 0, i64 %i.at, i1 false)
-  %.pre14.i = load ptr, ptr %i.e, align 8, !tbaa !300 ; 2 uses
+  %.pre14.i = load ptr, ptr %i.e, align 8, !tbaa !300
   %.pre15.i = load ptr, ptr %2, align 8, !tbaa !85
-  %.pre16.i = ptrtoint ptr %.pre14.i to i64
   %.pre17.i = ptrtoint ptr %.pre15.i to i64
   br label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEcEvT_S7_RKT0_.exit.i
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEcEvT_S7_RKT0_.exit.i: ; preds = %bb.o, %bb.n
   %.pre-phi18.i = phi i64 [ %i.ag, %bb.n ], [ %.pre17.i, %bb.o ]
-  %.pre-phi.i = phi i64 [ %i.as, %bb.n ], [ %.pre16.i, %bb.o ]
-  %4 = phi ptr [ %i.ar, %bb.n ], [ %.pre14.i, %bb.o ] ; 3 uses
-  %.neg.i = sub i64 %.pre-phi18.i, %.pre-phi.i
+  %4 = phi ptr [ %i.ar, %bb.n ], [ %.pre14.i, %bb.o ] ; 4 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %4 to i64
+  %.neg.i = sub i64 %.pre-phi18.i, %.pre-phi.i.pre-phi
   %i.av = add i64 %.neg.i, %i.ac                  ; 3 uses
   %i.aw = icmp eq i64 %i.av, 0
   br i1 %i.aw, label %_ZSt24__uninitialized_fill_n_aIPcmccET_S1_T0_RKT1_RSaIT2_E.exit.i, label %bb.p

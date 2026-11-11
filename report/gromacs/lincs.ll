@@ -205,7 +205,7 @@ bb.et:                                            ; preds = %bb.es
   %i.ana = load ptr, ptr %i.amz, align 8, !tbaa !132 ; 4 uses
   %i.anb = load ptr, ptr %i.amx, align 8, !tbaa !113 ; 5 uses
   %i.anc = ptrtoint ptr %i.ana to i64
-  %i.and = ptrtoint ptr %i.anb to i64             ; 4 uses
+  %i.and = ptrtoint ptr %i.anb to i64
   %i.ane = sub i64 %i.anc, %i.and
   %i.anf = ashr exact i64 %i.ane, 4               ; 3 uses
   %i.ang = icmp ult i64 %i.anf, %i.amy
@@ -217,9 +217,8 @@ bb.eu:                                            ; preds = %bb.et
           to label %.noexc238 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc238:                                        ; preds = %bb.eu
-  %.pre.i = load ptr, ptr %i.amx, align 8, !tbaa !113 ; 2 uses
+  %.pre.i = load ptr, ptr %i.amx, align 8, !tbaa !113
   %.pre127.i = load ptr, ptr %i.amz, align 8, !tbaa !132
-  %.pre128.i = ptrtoint ptr %.pre.i to i64
   br label %_ZNSt6vectorISt5arrayImLm2EESaIS1_EE6resizeEm.exit.i
 
 bb.ev:                                            ; preds = %bb.et
@@ -236,22 +235,25 @@ _ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %bb.ew
   br label %_ZNSt6vectorISt5arrayImLm2EESaIS1_EE6resizeEm.exit.i
 
 _ZNSt6vectorISt5arrayImLm2EESaIS1_EE6resizeEm.exit.i: ; preds = %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i, %bb.ew, %bb.ev, %.noexc238
-  %.pre-phi.i = phi i64 [ %.pre128.i, %.noexc238 ], [ %i.and, %bb.ev ], [ %i.and, %bb.ew ], [ %i.and, %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i ]
   %i.ank = phi ptr [ %.pre127.i, %.noexc238 ], [ %i.ana, %bb.ev ], [ %i.ana, %bb.ew ], [ %i.anj, %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i ] ; 2 uses
-  %i.anl = phi ptr [ %.pre.i, %.noexc238 ], [ %i.anb, %bb.ev ], [ %i.anb, %bb.ew ], [ %i.anb, %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i ] ; 4 uses
+  %i.anl = phi ptr [ %.pre.i, %.noexc238 ], [ %i.anb, %bb.ev ], [ %i.anb, %bb.ew ], [ %i.anb, %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i ] ; 5 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %i.anl to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
   store ptr %i.anl, ptr %8, align 8, !tbaa !349
   %i.anm = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  %i.ann = ptrtoint ptr %i.ank to i64
-  %i.ano = sub i64 %i.ann, %.pre-phi.i            ; 2 uses
+  %i.ann = ptrtoint ptr %i.ank to i64             ; 2 uses
+  %i.ano = sub i64 %i.ann, %.pre-phi.i.pre-phi
   %i.anp = getelementptr inbounds nuw i8, ptr %i.anl, i64 %i.ano
   store ptr %i.anp, ptr %i.anm, align 8, !tbaa !349
   %.not7782.i = icmp eq ptr %i.anl, %i.ank
   br i1 %.not7782.i, label %._crit_edge.i234, label %.lr.ph.preheader.i233
 
 .lr.ph.preheader.i233:                            ; preds = %_ZNSt6vectorISt5arrayImLm2EESaIS1_EE6resizeEm.exit.i
-  %i.anq = and i64 %i.ano, -16
-  call void @llvm.memset.p0.i64(ptr align 8 %i.anl, i8 0, i64 %i.anq, i1 false)
+  %11 = add i64 %i.ann, -16
+  %12 = sub i64 %11, %.pre-phi.i.pre-phi
+  %i.anq = and i64 %12, -16
+  %13 = add i64 %i.anq, 16
+  call void @llvm.memset.p0.i64(ptr align 8 %i.anl, i8 0, i64 %13, i1 false)
   br label %._crit_edge.i234
 
 ._crit_edge.i234:                                 ; preds = %.lr.ph.preheader.i233, %_ZNSt6vectorISt5arrayImLm2EESaIS1_EE6resizeEm.exit.i
@@ -654,7 +656,7 @@ _ZN3gmx6detail17computePaddedSizeINS_11BasicVectorIfEEEEll.exit: ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !136  ; 4 uses
   %i.h = load ptr, ptr %0, align 8, !tbaa !112    ; 5 uses
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
+  %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = sdiv exact i64 %i.k, 12                  ; 3 uses
   %i.m = icmp ugt i64 %1, %i.l
@@ -664,8 +666,7 @@ bb.c:                                             ; preds = %_ZN3gmx6detail17com
   %i.n = sub nuw i64 %1, %i.l
   tail call void @_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_23AlignedAllocationPolicyEEEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.n)
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !350
-  %.pre5 = load ptr, ptr %0, align 8, !tbaa !112  ; 2 uses
-  %.pre6 = ptrtoint ptr %.pre5 to i64
+  %.pre5 = load ptr, ptr %0, align 8, !tbaa !112
   br label %_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_23AlignedAllocationPolicyEEEE6resizeEm.exit
 
 bb.d:                                             ; preds = %_ZN3gmx6detail17computePaddedSizeINS_11BasicVectorIfEEEEll.exit
@@ -682,9 +683,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_23AlignedAllocationPolicyEEEE6resizeEm.exit
 
 _ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_23AlignedAllocationPolicyEEEE6resizeEm.exit: ; preds = %bb.c, %bb.d, %bb.e, %bb.f
-  %.pre-phi = phi i64 [ %.pre6, %bb.c ], [ %i.j, %bb.d ], [ %i.j, %bb.e ], [ %i.j, %bb.f ]
-  %i.q = phi ptr [ %.pre5, %bb.c ], [ %i.h, %bb.d ], [ %i.h, %bb.e ], [ %i.h, %bb.f ]
+  %i.q = phi ptr [ %.pre5, %bb.c ], [ %i.h, %bb.d ], [ %i.h, %bb.e ], [ %i.h, %bb.f ] ; 2 uses
   %i.r = phi ptr [ %.pre, %bb.c ], [ %i.g, %bb.d ], [ %i.g, %bb.e ], [ %i.p, %bb.f ]
+  %.pre-phi = ptrtoint ptr %i.q to i64
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = sub i64 %i.s, %.pre-phi                  ; 2 uses
   %.neg.i = sdiv exact i64 %i.t, -12

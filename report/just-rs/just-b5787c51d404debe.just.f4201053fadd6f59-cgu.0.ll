@@ -205,13 +205,12 @@ bb.a:
   store i64 %i.j, ptr %i.e, align 8, !noalias !102259
   store ptr %i.k, ptr %i.g, align 8, !noalias !102259
   %i.l = trunc nuw i64 %i.j to i1
-  %2 = ptrtoint ptr %i.k to i64                   ; 2 uses
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.f
-  %3 = phi i64 [ %5, %bb.f ], [ %2, %bb.a ]       ; 4 uses
-  %4 = phi ptr [ %i.ai, %bb.f ], [ %i.k, %bb.a ]  ; 9 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  %2 = phi ptr [ %i.ai, %bb.f ], [ %i.k, %bb.a ]  ; 10 uses
+  %3 = ptrtoint ptr %2 to i64                     ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.m = and i64 %3, 3
   switch i64 %i.m, label %default.unreachable [
     i64 2, label %bb.b
@@ -237,7 +236,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .split25.i:                                       ; preds = %.lr.ph
   %i.t = lshr i64 %3, 32
-  %i.u = icmp ult ptr %4, inttoptr (i64 188978561024 to ptr) ; 2 uses
+  %i.u = icmp ult ptr %2, inttoptr (i64 188978561024 to ptr) ; 2 uses
   %switch.idx.cast.i.i.i.i = trunc i64 %i.t to i8
   %spec.select.i.i.i.i = select i1 %i.u, i8 %switch.idx.cast.i.i.i.i, i8 -1 ; 2 uses
   %i.v = icmp ne i8 %spec.select.i.i.i.i, -1
@@ -246,19 +245,20 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.w, label %bb.d, label %.loopexit
 
 .split26.i:                                       ; preds = %.lr.ph
-  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.x = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.y = load i8, ptr %i.x, align 8, !range !71, !noundef !28
   %i.z = icmp eq i8 %i.y, 35
   br i1 %i.z, label %.thread.thread.i, label %.loopexit
 
 .split.i:                                         ; preds = %.lr.ph
-  %i.aa = getelementptr i8, ptr %4, i64 31
+  %i.aa = getelementptr i8, ptr %2, i64 31
   %i.ab = load i8, ptr %i.aa, align 8, !range !71, !noundef !28
   %i.ac = icmp eq i8 %i.ab, 35
   br i1 %i.ac, label %bb.e, label %.loopexit
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %bb.f ]  ; 2 uses
+  %.lcssa.in = phi ptr [ %i.k, %bb.a ], [ %i.ai, %bb.f ]
+  %.lcssa = ptrtoint ptr %.lcssa.in to i64        ; 2 uses
   switch i64 %.lcssa, label %bb.c [
     i64 0, label %.loopexit
     i64 1, label %bb.j
@@ -284,7 +284,7 @@ bb.d:                                             ; preds = %.split25.i
   br label %bb.f
 
 bb.e:                                             ; preds = %.split.i
-  %i.af = getelementptr i8, ptr %4, i64 -1        ; 2 uses
+  %i.af = getelementptr i8, ptr %2, i64 -1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !102260
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   store ptr %i.af, ptr %i.h, align 8, !alias.scope !102261, !noalias !102260
@@ -302,7 +302,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %.thre
   store i64 %i.ah, ptr %i.e, align 8, !noalias !102259
   store ptr %i.ai, ptr %i.g, align 8, !noalias !102259
   %i.aj = trunc nuw i64 %i.ah to i1
-  %5 = ptrtoint ptr %i.ai to i64                  ; 2 uses
   br i1 %i.aj, label %.lr.ph, label %._crit_edge
 
 bb.g:                                             ; preds = %.noexc.i, %bb.b
@@ -321,7 +320,7 @@ bb.i:                                             ; preds = %bb.g
   unreachable
 
 .loopexit:                                        ; preds = %.split26.i, %.split25.i, %.split.i, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %._crit_edge
-  %.sroa.09.0.i.ph = phi ptr [ @199, %._crit_edge ], [ %4, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %4, %.split.i ], [ %4, %.split25.i ], [ %4, %.split26.i ]
+  %.sroa.09.0.i.ph = phi ptr [ @199, %._crit_edge ], [ %2, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %2, %.split.i ], [ %2, %.split25.i ], [ %2, %.split26.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !102259
   br label %bb.k
 

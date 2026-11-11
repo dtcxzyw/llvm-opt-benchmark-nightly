@@ -204,9 +204,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #26
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !65 ; 2 uses
-  %i.an = load ptr, ptr %1, align 8, !tbaa !63    ; 3 uses
+  %i.an = load ptr, ptr %1, align 8, !tbaa !63    ; 4 uses
   %i.ao = ptrtoint ptr %i.am to i64               ; 2 uses
-  %i.ap = ptrtoint ptr %i.an to i64               ; 4 uses
+  %i.ap = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.aq = sub i64 %i.ao, %i.ap                    ; 3 uses
   %i.ar = icmp ugt i64 %i.aq, 9223372036854775804
   br i1 %i.ar, label %bb.e, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
@@ -234,9 +234,9 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %bb.f
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.as, i8 0, i64 %i.aw, i1 false), !tbaa !66
   %i.ax = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.aq
   %.pre = load ptr, ptr %i.al, align 8, !tbaa !65 ; 2 uses
-  %.pre234 = load ptr, ptr %1, align 8, !tbaa !63 ; 3 uses
+  %.pre234 = load ptr, ptr %1, align 8, !tbaa !63 ; 4 uses
   %.pre237 = ptrtoint ptr %.pre to i64
-  %.pre238 = ptrtoint ptr %.pre234 to i64         ; 3 uses
+  %.pre238 = ptrtoint ptr %.pre234 to i64
   %.pre240 = sub i64 %.pre237, %.pre238           ; 3 uses
   %i.ay = icmp eq ptr %.pre, %.pre234
   %i.az = ptrtoint ptr %i.ax to i64               ; 3 uses
@@ -258,20 +258,19 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.g
           to label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge unwind label %_ZNSt6vectorIiSaIiEED2Ev.exit190.thread
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge: ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i
-  %.pre235 = load ptr, ptr %1, align 8, !tbaa !186 ; 2 uses
+  %.pre235 = load ptr, ptr %1, align 8, !tbaa !186
   %.pre236 = load ptr, ptr %i.al, align 8, !tbaa !186
-  %.pre242 = ptrtoint ptr %.pre236 to i64
-  %.pre244 = ptrtoint ptr %.pre235 to i64
   br label %.noexc73
 
 .noexc73:                                         ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit
   %.sroa.0214.0312 = phi ptr [ %i.as, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %i.as, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 9 uses
   %.sroa.13220.0310 = phi i64 [ %i.az, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %i.az, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ 0, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.pre-phi241308 = phi i64 [ %.pre240, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ 0, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
-  %.pre-phi245 = phi i64 [ %.pre244, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %.pre238, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ %i.ap, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
-  %.pre-phi243 = phi i64 [ %.pre242, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %.pre238, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ %i.ap, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
-  %i.bc = phi ptr [ %.pre235, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %.pre234, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ %i.an, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.pre-phi243.in = phi ptr [ %.pre236, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %.pre234, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ %i.an, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %i.bc = phi ptr [ %.pre235, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ %.pre234, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ %i.an, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 4 uses
   %i.bd = phi ptr [ %i.bb, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc73_crit_edge ], [ null, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 10 uses
+  %.pre-phi243 = ptrtoint ptr %.pre-phi243.in to i64 ; 2 uses
+  %.pre-phi245 = ptrtoint ptr %i.bc to i64        ; 2 uses
   %i.be = sub i64 %.pre-phi243, %.pre-phi245      ; 10 uses
   %i.bf = icmp sgt i64 %i.be, 4
   br i1 %i.bf, label %bb.h, label %bb.i, !prof !187
@@ -291,7 +290,7 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.thread: ; preds = %bb.i
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bi = icmp ugt i64 %i.be, 9223372036854775804
-  br i1 %i.bi, label %bb.k, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.a
+  br i1 %i.bi, label %bb.k, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.50) #30
@@ -300,7 +299,12 @@ bb.k:                                             ; preds = %bb.j
 .noexc81:                                         ; preds = %bb.k
   unreachable
 
-_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.a: ; preds = %bb.j, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.thread
+_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74: ; preds = %bb.j
+  %.not.i.i.i.i75 = icmp ne ptr %.pre-phi243.in, %i.bc
+  call void @llvm.assume(i1 %.not.i.i.i.i75)
+  br label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.a
+
+_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.a: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i74.thread
   %i.bj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.be) #27
           to label %.noexc82 unwind label %bb.y   ; 10 uses
 

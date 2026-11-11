@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.b
   %i.k = icmp sgt i64 %.tr6878, %.tr6979
-  %i.l = ptrtoint ptr %.tr6676 to i64             ; 4 uses
+  %i.l = ptrtoint ptr %.tr6676 to i64             ; 3 uses
   br i1 %i.k, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44
 
 _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.e
@@ -227,18 +227,14 @@ _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.ex
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.x = xor i64 %i.r, -1
   %i.y = add nsw i64 %.017.i, %i.x
-  %.112.i = select i1 %i.v, ptr %i.w, ptr %.01116.i ; 3 uses
+  %.112.i = select i1 %i.v, ptr %i.w, ptr %.01116.i ; 2 uses
   %.1.i = select i1 %i.v, i64 %i.y, i64 %i.r      ; 2 uses
   %i.z = icmp sgt i64 %.1.i, 0
-  br i1 %i.z, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !6
+  br i1 %i.z, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit, !llvm.loop !6
 
-_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i
-  %.pre = ptrtoint ptr %.112.i to i64
-  br label %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit
-  %.pre-phi = phi i64 [ %.pre, %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.l, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit ]
-  %.011.lcssa.i = phi ptr [ %.112.i, %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr6676, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit ]
+_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit
+  %.011.lcssa.i = phi ptr [ %.tr6676, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit ], [ %.112.i, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.011.lcssa.i to i64
   %i.aa = sub i64 %.pre-phi, %i.l
   %i.ab = ashr exact i64 %i.aa, 3
   br label %tailrecurse
@@ -246,7 +242,7 @@ _ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valI
 _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44: ; preds = %bb.e
   %i.ac = sdiv i64 %.tr6979, 2                    ; 2 uses
   %i.ad = getelementptr inbounds [8 x i8], ptr %.tr6676, i64 %i.ac ; 2 uses
-  %i.ae = ptrtoint ptr %.tr74 to i64              ; 3 uses
+  %i.ae = ptrtoint ptr %.tr74 to i64              ; 2 uses
   %i.af = sub i64 %i.l, %i.ae
   %i.ag = ashr exact i64 %i.af, 3                 ; 2 uses
   %i.ah = icmp sgt i64 %i.ag, 0
@@ -263,18 +259,14 @@ _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.ex
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.ao = xor i64 %i.ai, -1
   %i.ap = add nsw i64 %.017.i47, %i.ao
-  %.112.i51 = select i1 %i.am, ptr %.01116.i48, ptr %i.an ; 3 uses
+  %.112.i51 = select i1 %i.am, ptr %.01116.i48, ptr %i.an ; 2 uses
   %.1.i52 = select i1 %i.am, i64 %i.ai, i64 %i.ap ; 2 uses
   %i.aq = icmp sgt i64 %.1.i52, 0
-  br i1 %i.aq, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i46, label %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !8
+  br i1 %i.aq, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i46, label %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit, !llvm.loop !8
 
-_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i46
-  %.pre82 = ptrtoint ptr %.112.i51 to i64
-  br label %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44
-  %.pre-phi83 = phi i64 [ %.pre82, %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.ae, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44 ]
-  %.011.lcssa.i45 = phi ptr [ %.112.i51, %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr74, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44 ]
+_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i46, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44
+  %.011.lcssa.i45 = phi ptr [ %.tr74, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit44 ], [ %.112.i51, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i46 ] ; 2 uses
+  %.pre-phi83 = ptrtoint ptr %.011.lcssa.i45 to i64
   %i.ar = sub i64 %.pre-phi83, %i.ae
   %i.as = ashr exact i64 %i.ar, 3
   br label %tailrecurse
@@ -324,7 +316,7 @@ bb.b:                                             ; preds = %.lr.ph, %tailrecurs
   %.tr8092 = phi ptr [ %1, %.lr.ph ], [ %.076, %tailrecurse ] ; 5 uses
   %.tr90 = phi ptr [ %0, %.lr.ph ], [ %i.am, %tailrecurse ] ; 5 uses
   %i.c = icmp sgt i64 %.tr8294, %.tr8395
-  %i.d = ptrtoint ptr %.tr8092 to i64             ; 4 uses
+  %i.d = ptrtoint ptr %.tr8092 to i64             ; 3 uses
   br i1 %i.c, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58
 
 _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.b
@@ -346,18 +338,14 @@ _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.ex
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.p = xor i64 %i.j, -1
   %i.q = add nsw i64 %.017.i, %i.p
-  %.112.i = select i1 %i.n, ptr %i.o, ptr %.01116.i ; 3 uses
+  %.112.i = select i1 %i.n, ptr %i.o, ptr %.01116.i ; 2 uses
   %.1.i = select i1 %i.n, i64 %i.q, i64 %i.j      ; 2 uses
   %i.r = icmp sgt i64 %.1.i, 0
-  br i1 %i.r, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !6
+  br i1 %i.r, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit, !llvm.loop !6
 
-_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i
-  %.pre = ptrtoint ptr %.112.i to i64
-  br label %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit
-  %.pre-phi = phi i64 [ %.pre, %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.d, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit ]
-  %.011.lcssa.i = phi ptr [ %.112.i, %_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr8092, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit ]
+_ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit
+  %.011.lcssa.i = phi ptr [ %.tr8092, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit ], [ %.112.i, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.011.lcssa.i to i64
   %i.s = sub i64 %.pre-phi, %i.d
   %i.t = ashr exact i64 %i.s, 3
   br label %tailrecurse
@@ -365,7 +353,7 @@ _ZSt13__lower_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Iter_comp_valI
 _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58: ; preds = %bb.b
   %i.u = sdiv i64 %.tr8395, 2                     ; 2 uses
   %i.v = getelementptr inbounds [8 x i8], ptr %.tr8092, i64 %i.u ; 2 uses
-  %i.w = ptrtoint ptr %.tr90 to i64               ; 3 uses
+  %i.w = ptrtoint ptr %.tr90 to i64               ; 2 uses
   %i.x = sub i64 %i.d, %i.w
   %i.y = ashr exact i64 %i.x, 3                   ; 2 uses
   %i.z = icmp sgt i64 %i.y, 0
@@ -382,18 +370,14 @@ _ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.ex
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.ag = xor i64 %i.aa, -1
   %i.ah = add nsw i64 %.017.i61, %i.ag
-  %.112.i65 = select i1 %i.ae, ptr %.01116.i62, ptr %i.af ; 3 uses
+  %.112.i65 = select i1 %i.ae, ptr %.01116.i62, ptr %i.af ; 2 uses
   %.1.i66 = select i1 %i.ae, i64 %i.aa, i64 %i.ah ; 2 uses
   %i.ai = icmp sgt i64 %.1.i66, 0
-  br i1 %i.ai, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i60, label %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, !llvm.loop !8
+  br i1 %i.ai, label %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i60, label %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit, !llvm.loop !8
 
-_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i60
-  %.pre101 = ptrtoint ptr %.112.i65 to i64
-  br label %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit
-
-_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58
-  %.pre-phi102 = phi i64 [ %.pre101, %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %i.w, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58 ]
-  %.011.lcssa.i59 = phi ptr [ %.112.i65, %_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit.loopexit ], [ %.tr90, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58 ]
+_ZSt13__upper_boundIPPN3ozz7options6OptionES3_N9__gnu_cxx5__ops14_Val_comp_iterIPFbS3_S3_EEEET_SB_SB_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i60, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58
+  %.011.lcssa.i59 = phi ptr [ %.tr90, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit58 ], [ %.112.i65, %_ZSt9__advanceIPPN3ozz7options6OptionElEvRT_T0_St26random_access_iterator_tag.exit.i60 ] ; 2 uses
+  %.pre-phi102 = ptrtoint ptr %.011.lcssa.i59 to i64
   %i.aj = sub i64 %.pre-phi102, %i.w
   %i.ak = ashr exact i64 %i.aj, 3
   br label %tailrecurse

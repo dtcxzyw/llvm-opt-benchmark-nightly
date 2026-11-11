@@ -204,14 +204,14 @@ bb.a:
   %.sroa.13.093 = phi i64 [ %.sroa.13.1, %.critedge33.loopexit ], [ %1, %bb.a ] ; 12 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.057.095, i64 %.sroa.13.093 ; 2 uses
   %i.d = ptrtoint ptr %i.c to i64
-  %i.e = ptrtoint ptr %.sroa.057.095 to i64       ; 2 uses
+  %i.e = ptrtoint ptr %.sroa.057.095 to i64
   %i.f = ashr i64 %.sroa.13.093, 2                ; 2 uses
   %i.g = icmp sgt i64 %i.f, 0
   br i1 %i.g, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.critedge33.preheader
   %i.h = and i64 %.sroa.13.093, -4
-  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.057.095, i64 %i.h ; 2 uses
+  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.057.095, i64 %i.h
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i.i.i
@@ -243,16 +243,12 @@ bb.f:                                             ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %.02946.i.i.i, i64 4
   %i.u = add nsw i64 %.047.i.i.i, -1
   %i.v = icmp sgt i64 %.047.i.i.i, 1
-  br i1 %i.v, label %bb.b, label %._crit_edge.loopexit.i.i.i, !llvm.loop !218
+  br i1 %i.v, label %bb.b, label %._crit_edge.i.i.i, !llvm.loop !218
 
-._crit_edge.loopexit.i.i.i:                       ; preds = %bb.f
-  %.pre54.i.i.i = ptrtoint ptr %scevgep.i.i.i to i64
-  br label %._crit_edge.i.i.i
-
-._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %.critedge33.preheader
-  %.pre-phi.i.i.i = phi i64 [ %.pre54.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.e, %.critedge33.preheader ]
-  %.029.lcssa.i.i.i = phi ptr [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.sroa.057.095, %.critedge33.preheader ] ; 5 uses
-  %i.w = sub i64 %i.d, %.pre-phi.i.i.i
+._crit_edge.i.i.i:                                ; preds = %bb.f, %.critedge33.preheader
+  %.029.lcssa.i.i.i = phi ptr [ %.sroa.057.095, %.critedge33.preheader ], [ %scevgep.i.i.i, %bb.f ] ; 6 uses
+  %.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %.029.lcssa.i.i.i to i64
+  %i.w = sub i64 %i.d, %.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi
   switch i64 %i.w, label %_ZSt4findIPKhcET_S2_S2_RKT0_.exit.thread [
     i64 3, label %bb.g
     i64 2, label %._crit_edge._crit_edge.i.i.i

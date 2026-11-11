@@ -206,7 +206,7 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCsc4241E
   br label %bb.dn
 
 bb.dn:                                            ; preds = %bb.dv, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCsc4241EHy6Do_9typst_kit.exit.i
-  %i.kj = phi ptr [ %i.bs, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCsc4241EHy6Do_9typst_kit.exit.i ], [ %i.ol, %bb.dv ] ; 2 uses
+  %i.kj = phi ptr [ %i.bs, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCsc4241EHy6Do_9typst_kit.exit.i ], [ %i.ol, %bb.dv ] ; 3 uses
   %i.kk = phi i64 [ %i.bu, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCsc4241EHy6Do_9typst_kit.exit.i ], [ %i.on, %bb.dv ]
   %i.kl = phi <2 x ptr> [ %i.ki, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCsc4241EHy6Do_9typst_kit.exit.i ], [ %i.ku, %bb.dv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !5610
@@ -218,8 +218,12 @@ bb.dn:                                            ; preds = %bb.dv, %_RNvMNtCs3o
   ], !prof !30
 
 bb.do:                                            ; preds = %bb.dn
+  %6 = ptrtoint ptr %i.kj to i64
   %i.km = icmp ult ptr %i.kj, inttoptr (i64 188978561024 to ptr)
+  %7 = and i64 %6, 1095216660480
+  %8 = icmp ne i64 %7, 1095216660480
   call void @llvm.assume(i1 %i.km)
+  call void @llvm.assume(i1 %8)
   br label %bb.dw
 
 bb.dp:                                            ; preds = %bb.dn

@@ -202,16 +202,16 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; pred
 
 .noexc4.i.i.i.i.i.i.i.i:                          ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.pre.i.i.i.i.i.i.i.i = load ptr, ptr %3, align 8, !tbaa !25, !noalias !117 ; 3 uses
-  %.pre13.i.i.i.i.i.i.i.i = ptrtoint ptr %.pre.i.i.i.i.i.i.i.i to i64
   %.pre11.i.i.i.i.i.i.i.i = load ptr, ptr %i.d, align 8, !tbaa !25, !noalias !117
-  %.pre12.i.i.i.i.i.i.i.i.a = ptrtoint ptr %.pre11.i.i.i.i.i.i.i.i to i64
+  %.pre12.i.i.i.i.i.i.i.i = ptrtoint ptr %.pre11.i.i.i.i.i.i.i.i to i64
+  %.pre12.i.i.i.i.i.i.i.i.a = ptrtoint ptr %.pre.i.i.i.i.i.i.i.i to i64
   store ptr %i.f, ptr %i.e, align 8, !tbaa !59, !noalias !117
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   store ptr %i.f, ptr %i.g, align 8, !tbaa !61, !noalias !117
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store ptr %i.h, ptr %i.i, align 8, !tbaa !60, !noalias !117
-  %i.j = sub i64 %.pre12.i.i.i.i.i.i.i.i.a, %.pre13.i.i.i.i.i.i.i.i ; 4 uses
+  %i.j = sub i64 %.pre12.i.i.i.i.i.i.i.i, %.pre12.i.i.i.i.i.i.i.i.a ; 4 uses
   %i.k = icmp sgt i64 %i.j, 4
   br i1 %i.k, label %bb.b, label %bb.c, !prof !62
 
@@ -614,7 +614,7 @@ _ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvE
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !61   ; 2 uses
   %i.o = load ptr, ptr %i.k, align 8, !tbaa !59   ; 3 uses
   %i.p = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q                       ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.n, %i.o
@@ -636,24 +636,23 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i: ; preds = %b
           to label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i unwind label %_ZNSt10unique_ptrIN3pro2v46detail11inplace_ptrISt6vectorIiSaIiEEEEZNS2_8allocateIS7_SaIvEJRKSt10in_place_tRKS6_EEEPT_RKT0_DpOT1_EUlPS7_E_ED2Ev.exit6.i.i.i.i.i
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i: ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i
-  %.pre.i.i.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !25 ; 2 uses
+  %.pre.i.i.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !25
   %.pre11.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !25
-  %.pre12.i.i.i.i.i = ptrtoint ptr %.pre11.i.i.i.i.i to i64
-  %.pre13.i.i.i.i.i = ptrtoint ptr %.pre.i.i.i.i.i to i64
+  %.pre13.i.i.i.i.i = ptrtoint ptr %.pre11.i.i.i.i.i to i64
   br label %.noexc4.i.i.i.i.i
 
 .noexc4.i.i.i.i.i:                                ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit
-  %.pre-phi14.i.i.i.i.i = phi i64 [ %.pre13.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.q, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ]
-  %.pre-phi.i.i.i.i.i = phi i64 [ %.pre12.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.p, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ]
-  %i.u = phi ptr [ %.pre.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.o, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ] ; 2 uses
+  %.pre-phi.i.i.i.i.i = phi i64 [ %.pre13.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.p, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ]
+  %i.u = phi ptr [ %.pre.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.o, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ] ; 3 uses
   %i.v = phi ptr [ %i.t, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ null, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ] ; 6 uses
+  %.pre-phi14.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %i.u to i64
   store ptr %i.v, ptr %i.l, align 8, !tbaa !59
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   store ptr %i.v, ptr %i.w, align 8, !tbaa !61
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.r
   %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store ptr %i.x, ptr %i.y, align 8, !tbaa !60
-  %i.z = sub i64 %.pre-phi.i.i.i.i.i, %.pre-phi14.i.i.i.i.i ; 4 uses
+  %i.z = sub i64 %.pre-phi.i.i.i.i.i, %.pre-phi14.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi ; 4 uses
   %i.aa = icmp sgt i64 %i.z, 4
   br i1 %i.aa, label %bb.e, label %bb.f, !prof !62
 
@@ -719,7 +718,7 @@ _ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvE
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !61   ; 2 uses
   %i.o = load ptr, ptr %i.k, align 8, !tbaa !59   ; 3 uses
   %i.p = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q                       ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.n, %i.o
@@ -741,24 +740,23 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i: ; preds = %b
           to label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i unwind label %_ZNSt10unique_ptrIN3pro2v46detail11inplace_ptrISt6vectorIiSaIiEEEEZNS2_8allocateIS7_SaIvEJRKSt10in_place_tRKS6_EEEPT_RKT0_DpOT1_EUlPS7_E_ED2Ev.exit6.i.i.i.i.i
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i: ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i
-  %.pre.i.i.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !25 ; 2 uses
+  %.pre.i.i.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !25
   %.pre11.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !25
-  %.pre12.i.i.i.i.i = ptrtoint ptr %.pre11.i.i.i.i.i to i64
-  %.pre13.i.i.i.i.i = ptrtoint ptr %.pre.i.i.i.i.i to i64
+  %.pre13.i.i.i.i.i = ptrtoint ptr %.pre11.i.i.i.i.i to i64
   br label %.noexc4.i.i.i.i.i
 
 .noexc4.i.i.i.i.i:                                ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit
-  %.pre-phi14.i.i.i.i.i = phi i64 [ %.pre13.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.q, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ]
-  %.pre-phi.i.i.i.i.i = phi i64 [ %.pre12.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.p, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ]
-  %i.u = phi ptr [ %.pre.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.o, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ] ; 2 uses
+  %.pre-phi.i.i.i.i.i = phi i64 [ %.pre13.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.p, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ]
+  %i.u = phi ptr [ %.pre.i.i.i.i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ %i.o, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ] ; 3 uses
   %i.v = phi ptr [ %i.t, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i..noexc4_crit_edge.i.i.i.i.i ], [ null, %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit ] ; 6 uses
+  %.pre-phi14.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %i.u to i64
   store ptr %i.v, ptr %i.l, align 8, !tbaa !59
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   store ptr %i.v, ptr %i.w, align 8, !tbaa !61
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.r
   %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store ptr %i.x, ptr %i.y, align 8, !tbaa !60
-  %i.z = sub i64 %.pre-phi.i.i.i.i.i, %.pre-phi14.i.i.i.i.i ; 4 uses
+  %i.z = sub i64 %.pre-phi.i.i.i.i.i, %.pre-phi14.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi.i.pre-phi ; 4 uses
   %i.aa = icmp sgt i64 %i.z, 4
   br i1 %i.aa, label %bb.e, label %bb.f, !prof !62
 

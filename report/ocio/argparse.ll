@@ -204,18 +204,17 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !55   ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !56   ; 4 uses
-  %1 = ptrtoint ptr %i.d to i64
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !56   ; 3 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
-  %.lcssa9 = phi ptr [ %i.d, %bb.a ], [ %i.aa, %bb.d ] ; 2 uses
-  %.lcssa = phi i64 [ %1, %bb.a ], [ %i.af, %bb.d ]
+  %.lcssa9 = phi ptr [ %i.d, %bb.a ], [ %i.aa, %bb.d ] ; 3 uses
   %.not.i.i.i = icmp eq ptr %.lcssa9, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIP9ArgOptionSaIS1_EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
+  %.lcssa = ptrtoint ptr %.lcssa9 to i64
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !57
   %i.g = ptrtoint ptr %i.f to i64
@@ -275,7 +274,7 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   %i.ac = add i32 %.010, 1                        ; 2 uses
   %i.ad = zext i32 %i.ac to i64                   ; 2 uses
   %i.ae = ptrtoint ptr %i.ab to i64
-  %i.af = ptrtoint ptr %i.aa to i64               ; 2 uses
+  %i.af = ptrtoint ptr %i.aa to i64
   %i.ag = sub i64 %i.ae, %i.af
   %i.ah = ashr exact i64 %i.ag, 3
   %i.ai = icmp ugt i64 %i.ah, %i.ad

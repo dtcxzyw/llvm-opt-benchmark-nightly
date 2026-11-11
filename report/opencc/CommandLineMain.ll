@@ -205,7 +205,7 @@ _ZN9rapidjson12PrettyWriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocat
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dy, i64 24 ; 3 uses
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !130 ; 2 uses
   %i.ed = ptrtoint ptr %i.ea to i64
-  %i.ee = ptrtoint ptr %i.ec to i64               ; 2 uses
+  %i.ee = ptrtoint ptr %i.ec to i64
   %i.ef = sub i64 %i.ed, %i.ee
   %i.eg = icmp slt i64 %i.ef, 20
   br i1 %i.eg, label %bb.t, label %bb.u, !prof !92
@@ -215,19 +215,18 @@ bb.t:                                             ; preds = %.noexc76.a
           to label %.noexc77.a unwind label %bb.ag
 
 .noexc77.a:                                       ; preds = %bb.t
-  %.pre.i.i.i74 = load ptr, ptr %i.eb, align 8, !tbaa !130 ; 2 uses
-  %.pre.i.i75 = ptrtoint ptr %.pre.i.i.i74 to i64
+  %.pre.i.i.i74 = load ptr, ptr %i.eb, align 8, !tbaa !130
   br label %bb.u
 
 bb.u:                                             ; preds = %.noexc77.a, %.noexc76.a
-  %.pre-phi.i.i = phi i64 [ %i.ee, %.noexc76.a ], [ %.pre.i.i75, %.noexc77.a ]
-  %2 = phi ptr [ %i.ec, %.noexc76.a ], [ %.pre.i.i.i74, %.noexc77.a ] ; 2 uses
+  %2 = phi ptr [ %i.ec, %.noexc76.a ], [ %.pre.i.i.i74, %.noexc77.a ] ; 3 uses
+  %.pre-phi.i.pre-phi.i.pre-phi = ptrtoint ptr %2 to i64
   %i.eh = getelementptr inbounds nuw i8, ptr %2, i64 20
   store ptr %i.eh, ptr %i.eb, align 8, !tbaa !130
   %i.ei = call noundef ptr @_ZN9rapidjson8internal6u64toaEmPc(i64 noundef %i.dx, ptr noundef %2)
   %i.ej = load ptr, ptr %1, align 8, !tbaa !121
   %i.ek = ptrtoint ptr %i.ei to i64
-  %.neg.neg.i.i = sub i64 %i.ek, %.pre-phi.i.i
+  %.neg.neg.i.i = sub i64 %i.ek, %.pre-phi.i.pre-phi.i.pre-phi
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 24 ; 2 uses
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !130
   %i.en = getelementptr i8, ptr %i.em, i64 %.neg.neg.i.i
@@ -252,7 +251,7 @@ _ZN9rapidjson12PrettyWriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocat
   %i.eu = getelementptr inbounds nuw i8, ptr %i.er, i64 24 ; 3 uses
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !130 ; 2 uses
   %i.ew = ptrtoint ptr %i.et to i64
-  %i.ex = ptrtoint ptr %i.ev to i64               ; 2 uses
+  %i.ex = ptrtoint ptr %i.ev to i64
   %i.ey = sub i64 %i.ew, %i.ex
   %i.ez = icmp slt i64 %i.ey, 20
   br i1 %i.ez, label %bb.v, label %bb.w, !prof !92
@@ -262,19 +261,18 @@ bb.v:                                             ; preds = %.noexc85
           to label %.noexc86 unwind label %bb.ag
 
 .noexc86:                                         ; preds = %bb.v
-  %.pre.i.i.i83 = load ptr, ptr %i.eu, align 8, !tbaa !130 ; 2 uses
-  %.pre.i.i84 = ptrtoint ptr %.pre.i.i.i83 to i64
+  %.pre.i.i.i83 = load ptr, ptr %i.eu, align 8, !tbaa !130
   br label %bb.w
 
 bb.w:                                             ; preds = %.noexc86, %.noexc85
-  %.pre-phi.i.i81 = phi i64 [ %i.ex, %.noexc85 ], [ %.pre.i.i84, %.noexc86 ]
-  %3 = phi ptr [ %i.ev, %.noexc85 ], [ %.pre.i.i.i83, %.noexc86 ] ; 2 uses
+  %3 = phi ptr [ %i.ev, %.noexc85 ], [ %.pre.i.i.i83, %.noexc86 ] ; 3 uses
+  %.pre-phi.i.pre-phi.i80.pre-phi = ptrtoint ptr %3 to i64
   %i.fa = getelementptr inbounds nuw i8, ptr %3, i64 20
   store ptr %i.fa, ptr %i.eu, align 8, !tbaa !130
   %i.fb = call noundef ptr @_ZN9rapidjson8internal6u64toaEmPc(i64 noundef %i.eq, ptr noundef %3)
   %i.fc = load ptr, ptr %1, align 8, !tbaa !121   ; 4 uses
   %i.fd = ptrtoint ptr %i.fb to i64
-  %.neg.neg.i.i82 = sub i64 %i.fd, %.pre-phi.i.i81
+  %.neg.neg.i.i82 = sub i64 %i.fd, %.pre-phi.i.pre-phi.i80.pre-phi
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 24 ; 5 uses
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !130
   %i.fg = getelementptr i8, ptr %i.ff, i64 %.neg.neg.i.i82
@@ -677,26 +675,25 @@ _ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 24 ; 3 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !130 ; 2 uses
   %i.ap = ptrtoint ptr %i.am to i64
-  %i.aq = ptrtoint ptr %i.ao to i64               ; 2 uses
+  %i.aq = ptrtoint ptr %i.ao to i64
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = icmp slt i64 %i.ar, 20
   br i1 %i.as, label %bb.j, label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteUint64Em.exit, !prof !92
 
 bb.j:                                             ; preds = %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit
   tail call void @_ZN9rapidjson8internal5StackINS_12CrtAllocatorEE6ExpandIcEEvm(ptr noundef nonnull align 8 dereferenceable(48) %i.ak, i64 noundef 20)
-  %.pre.i.i1 = load ptr, ptr %i.an, align 8, !tbaa !130 ; 2 uses
-  %.pre.i = ptrtoint ptr %.pre.i.i1 to i64
+  %.pre.i.i1 = load ptr, ptr %i.an, align 8, !tbaa !130
   br label %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteUint64Em.exit
 
 _ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE11WriteUint64Em.exit: ; preds = %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit, %bb.j
-  %.pre-phi.i = phi i64 [ %i.aq, %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit ], [ %.pre.i, %bb.j ]
-  %2 = phi ptr [ %i.ao, %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit ], [ %.pre.i.i1, %bb.j ] ; 2 uses
+  %2 = phi ptr [ %i.ao, %_ZN9rapidjson6WriterINS_19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEEES3_S3_S4_Lj0EE6PrefixENS_4TypeE.exit ], [ %.pre.i.i1, %bb.j ] ; 3 uses
+  %.pre-phi.i.pre-phi = ptrtoint ptr %2 to i64
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 20
   store ptr %i.at, ptr %i.an, align 8, !tbaa !130
   %i.au = tail call noundef ptr @_ZN9rapidjson8internal6u64toaEmPc(i64 noundef %1, ptr noundef %2)
   %i.av = load ptr, ptr %0, align 8, !tbaa !121
   %i.aw = ptrtoint ptr %i.au to i64
-  %.neg.neg.i = sub i64 %i.aw, %.pre-phi.i
+  %.neg.neg.i = sub i64 %i.aw, %.pre-phi.i.pre-phi
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 24 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !130
   %i.az = getelementptr i8, ptr %i.ay, i64 %.neg.neg.i

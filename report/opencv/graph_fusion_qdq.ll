@@ -204,21 +204,23 @@ bb.ats:                                           ; preds = %.lr.ph6201, %_ZN2cv
   br i1 %exitcond7903.not, label %._crit_edge6202, label %.lr.ph6201, !llvm.loop !254
 
 ._crit_edge6202:                                  ; preds = %bb.ats
-  %.pre7944 = load ptr, ptr %i.hn, align 8, !tbaa !29 ; 6 uses
-  %.pre7945 = load ptr, ptr %12, align 8, !tbaa !30 ; 6 uses
-  %.pre7949 = ptrtoint ptr %.pre7944 to i64       ; 2 uses
-  %.pre7950 = ptrtoint ptr %.pre7945 to i64       ; 2 uses
+  %.pre7944 = load ptr, ptr %i.hn, align 8, !tbaa !29 ; 7 uses
+  %.pre7945 = load ptr, ptr %12, align 8, !tbaa !30 ; 7 uses
+  %.pre7949 = ptrtoint ptr %.pre7944 to i64
+  %.pre7950 = ptrtoint ptr %.pre7945 to i64
   %.pre7952 = sub i64 %.pre7949, %.pre7950        ; 2 uses
   %.pre7954 = ashr exact i64 %.pre7952, 4         ; 7 uses
+  %.pre-phi7951 = ptrtoint ptr %.pre7945 to i64
   %i.fqw = icmp ugt i64 %.1, %.pre7954
   br i1 %i.fqw, label %bb.att, label %._crit_edge6202.thread
 
 bb.att:                                           ; preds = %._crit_edge6202
+  %.pre-phi = ptrtoint ptr %.pre7944 to i64
   %i.fqx = sub nuw i64 %.1, %.pre7954             ; 6 uses
   %i.fqy = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   %i.fqz = load ptr, ptr %i.fqy, align 8, !tbaa !155
   %i.fra = ptrtoint ptr %i.fqz to i64
-  %i.frb = sub i64 %i.fra, %.pre7949
+  %i.frb = sub i64 %i.fra, %.pre-phi
   %i.frc = ashr exact i64 %i.frb, 4               ; 2 uses
   %i.frd = icmp ult i64 %.pre7954, 576460752303423488
   call void @llvm.assume(i1 %i.frd)
@@ -283,7 +285,7 @@ _ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE11_S_relocateEPS5
 bb.atw:                                           ; preds = %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i
   %i.frs = load ptr, ptr %i.fqy, align 8, !tbaa !155
   %i.frt = ptrtoint ptr %i.frs to i64
-  %i.fru = sub i64 %i.frt, %.pre7950
+  %i.fru = sub i64 %i.frt, %.pre-phi7951
   call void @_ZdlPvm(ptr noundef nonnull %.pre7945, i64 noundef %i.fru) #24
   br label %_ZNSt12_Vector_baseIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE13_M_deallocateEPS5_m.exit37.i
 

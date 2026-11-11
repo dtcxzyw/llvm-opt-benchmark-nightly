@@ -49,7 +49,7 @@ define internal i32 @cinaudio_decode_frame(ptr noundef %0, ptr noundef initializ
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !36   ; 5 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
+  %i.c = ptrtoaddr ptr %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !28   ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
@@ -76,21 +76,20 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.e, align 4, !tbaa !39
   %i.s = load i16, ptr %i.b, align 1, !tbaa !30   ; 2 uses
   %i.t = sext i16 %i.s to i32
-  %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 2
   store i16 %i.s, ptr %i.o, align 2, !tbaa !48
-  %.pre = ptrtoaddr ptr %i.u to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.03138.pre-phi = phi i64 [ %.pre, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
-  %.031 = phi ptr [ %i.u, %bb.c ], [ %i.b, %bb.b ] ; 5 uses
+  %.031 = phi ptr [ %i.u, %bb.c ], [ %i.b, %bb.b ] ; 6 uses
   %.029 = phi ptr [ %i.v, %bb.c ], [ %i.o, %bb.b ] ; 3 uses
   %.0 = phi i32 [ %i.t, %bb.c ], [ %i.q, %bb.b ]  ; 3 uses
   %i.w = icmp ult ptr %.031, %i.i
   br i1 %i.w, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
+  %.03138.pre-phi = ptrtoaddr ptr %.031 to i64    ; 2 uses
   %i.x = add i64 %i.c, %i.h                       ; 2 uses
   %i.y = sub i64 %i.x, %.03138.pre-phi            ; 2 uses
   %scevgep = getelementptr i8, ptr %.031, i64 %i.y

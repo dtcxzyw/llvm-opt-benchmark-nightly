@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZN5boost6bimaps17c
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !507 ; 2 uses
   %i.af = load ptr, ptr %2, align 8, !tbaa !506   ; 3 uses
   %i.ag = ptrtoint ptr %i.ae to i64               ; 2 uses
-  %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
+  %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = sub i64 %i.ag, %i.ah                    ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ae, %i.af
   br i1 %.not.i.i.i.i.i.i.i, label %bb.f, label %bb.e
@@ -220,17 +220,16 @@ bb.e:                                             ; preds = %.critedge
 
 _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.e
   %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ai) #47
-  %.pre = load ptr, ptr %2, align 8, !tbaa !186   ; 2 uses
+  %.pre = load ptr, ptr %2, align 8, !tbaa !186
   %.pre17 = load ptr, ptr %i.ad, align 8, !tbaa !186
-  %.pre18 = ptrtoint ptr %.pre17 to i64
-  %.pre19 = ptrtoint ptr %.pre to i64
+  %.pre19 = ptrtoint ptr %.pre17 to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i, %.critedge
-  %.pre-phi20 = phi i64 [ %.pre19, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i ], [ %i.ah, %.critedge ]
-  %.pre-phi = phi i64 [ %.pre18, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i ], [ %i.ag, %.critedge ]
-  %i.al = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i ], [ %i.af, %.critedge ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre19, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i ], [ %i.ag, %.critedge ]
+  %i.al = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i ], [ %i.af, %.critedge ] ; 3 uses
   %i.am = phi ptr [ %i.ak, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i ], [ null, %.critedge ] ; 5 uses
+  %.pre-phi20 = ptrtoint ptr %i.al to i64
   store ptr %i.am, ptr %i.ac, align 8, !tbaa !506
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ai
@@ -633,7 +632,7 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !507  ; 2 uses
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !506  ; 3 uses
   %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %i.h = ptrtoint ptr %i.f to i64                 ; 2 uses
+  %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h                       ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.e, %i.f
@@ -655,17 +654,16 @@ _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i: ; preds = %bb.b
           to label %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge unwind label %bb.f
 
 _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge: ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !186 ; 2 uses
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !186
   %.pre9 = load ptr, ptr %i.d, align 8, !tbaa !186
-  %.pre10 = ptrtoint ptr %.pre9 to i64
-  %.pre11 = ptrtoint ptr %.pre to i64
+  %.pre11 = ptrtoint ptr %.pre9 to i64
   br label %.noexc8
 
 .noexc8:                                          ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge, %bb.a
-  %.pre-phi12 = phi i64 [ %.pre11, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge ], [ %i.h, %bb.a ]
-  %.pre-phi = phi i64 [ %.pre10, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge ], [ %i.g, %bb.a ]
-  %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge ], [ %i.f, %bb.a ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre11, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge ], [ %i.g, %bb.a ]
+  %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge ], [ %i.f, %bb.a ] ; 3 uses
   %i.m = phi ptr [ %i.k, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc8_crit_edge ], [ null, %bb.a ] ; 6 uses
+  %.pre-phi12 = ptrtoint ptr %i.l to i64
   store ptr %i.m, ptr %i.c, align 8, !tbaa !506
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   store ptr %i.m, ptr %i.n, align 8, !tbaa !507
@@ -1068,7 +1066,7 @@ bb.a:                                             ; preds = %.preheader.split.pr
   %i.k = phi ptr [ %i.h, %.preheader.split.preheader.1.thread ], [ null, %.preheader ] ; 5 uses
   %i.l = phi ptr [ %i.g, %.preheader.split.preheader.1.thread ], [ null, %.preheader ] ; 7 uses
   %i.m = ptrtoint ptr %i.k to i64
-  %i.n = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n                       ; 4 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775792
   br i1 %i.p, label %.loopexit34, label %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1
@@ -1144,7 +1142,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorIN4CGAL
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit.1.thread
   %i.aj = ptrtoint ptr %i.ag to i64
-  %i.ak = ptrtoint ptr %i.ah to i64               ; 3 uses
+  %i.ak = ptrtoint ptr %i.ah to i64
   %i.al = sub i64 %i.aj, %i.ak                    ; 4 uses
   %i.am = icmp eq i64 %i.al, 9223372036854775792
   br i1 %i.am, label %.loopexit34, label %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1.1
@@ -1213,7 +1211,7 @@ bb.e:                                             ; preds = %.preheader.split.pr
 
 bb.f:                                             ; preds = %.preheader.split.preheader.2
   %i.bg = ptrtoint ptr %i.bd to i64
-  %i.bh = ptrtoint ptr %i.bc to i64               ; 3 uses
+  %i.bh = ptrtoint ptr %i.bc to i64
   %i.bi = sub i64 %i.bg, %i.bh                    ; 4 uses
   %i.bj = icmp eq i64 %i.bi, 9223372036854775792
   br i1 %i.bj, label %.loopexit34, label %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.2
@@ -1269,8 +1267,7 @@ _ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS
   ret void
 
 .loopexit34:                                      ; preds = %bb.f, %.preheader.split.preheader.1.thread.thread, %bb.d, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit.thread, %.thread
-  %.lcssa25 = phi ptr [ %i.cb, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit.thread ], [ %i.ah, %bb.d ], [ %i.ct, %.thread ], [ %i.l, %.preheader.split.preheader.1.thread.thread ], [ %i.bc, %bb.f ]
-  %.lcssa23 = phi i64 [ %i.cd, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit.thread ], [ %i.ak, %bb.d ], [ %i.cw, %.thread ], [ %i.n, %.preheader.split.preheader.1.thread.thread ], [ %i.bh, %bb.f ]
+  %.lcssa25 = phi ptr [ %i.cb, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit.thread ], [ %i.ah, %bb.d ], [ %i.ct, %.thread ], [ %i.l, %.preheader.split.preheader.1.thread.thread ], [ %i.bc, %bb.f ] ; 2 uses
   %.lcssa21 = phi ptr [ %i.ca, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit.thread ], [ %i.ag, %bb.d ], [ %i.cu, %.thread ], [ %i.k, %.preheader.split.preheader.1.thread.thread ], [ %i.bd, %bb.f ]
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.34) #46
           to label %.noexc unwind label %.loopexit.split-lp
@@ -1292,27 +1289,34 @@ _ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerIN
 
 .loopexit.loopexit.split-lp.loopexit:             ; preds = %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1.1, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1
   %.lcssa26.ph35.ph = phi ptr [ %i.l, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1 ], [ %i.ah, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1.1 ]
-  %.lcssa24.ph36.ph = phi i64 [ %i.n, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1 ], [ %i.ak, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1.1 ]
   %.lcssa22.ph37.ph = phi ptr [ %i.k, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1 ], [ %i.ag, %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.1.1 ]
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  br label %.loopexit
+  br label %.loopexit.loopexit.split-lp
 
 .loopexit.loopexit.split-lp.loopexit.split-lp:    ; preds = %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.2
   %lpad.loopexit.split-lp48 = landingpad { ptr, i32 }
           cleanup
+  br label %.loopexit.loopexit.split-lp
+
+.loopexit.loopexit.split-lp:                      ; preds = %.loopexit.loopexit.split-lp.loopexit.split-lp, %.loopexit.loopexit.split-lp.loopexit
+  %.lcssa26.ph35 = phi ptr [ %.lcssa26.ph35.ph, %.loopexit.loopexit.split-lp.loopexit ], [ %i.bc, %.loopexit.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
+  %.lcssa22.ph37 = phi ptr [ %.lcssa22.ph37.ph, %.loopexit.loopexit.split-lp.loopexit ], [ %i.bd, %.loopexit.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi49 = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp48, %.loopexit.loopexit.split-lp.loopexit.split-lp ]
+  %.lcssa24.ph36 = ptrtoint ptr %.lcssa26.ph35 to i64
   br label %.loopexit
 
 .loopexit.split-lp:                               ; preds = %.loopexit34
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
+  %.lcssa23 = ptrtoint ptr %.lcssa25 to i64
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.loopexit.loopexit.split-lp.loopexit.split-lp, %.loopexit.loopexit.split-lp.loopexit, %.loopexit.split-lp
-  %1 = phi ptr [ %.lcssa25, %.loopexit.split-lp ], [ %.lcssa26.ph, %.loopexit.loopexit ], [ %.lcssa26.ph35.ph, %.loopexit.loopexit.split-lp.loopexit ], [ %i.bc, %.loopexit.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
-  %2 = phi i64 [ %.lcssa23, %.loopexit.split-lp ], [ %.lcssa24.ph, %.loopexit.loopexit ], [ %.lcssa24.ph36.ph, %.loopexit.loopexit.split-lp.loopexit ], [ %i.bh, %.loopexit.loopexit.split-lp.loopexit.split-lp ]
-  %3 = phi ptr [ %.lcssa21, %.loopexit.split-lp ], [ %.lcssa22.ph, %.loopexit.loopexit ], [ %.lcssa22.ph37.ph, %.loopexit.loopexit.split-lp.loopexit ], [ %i.bd, %.loopexit.loopexit.split-lp.loopexit.split-lp ]
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit38, %.loopexit.loopexit ], [ %lpad.loopexit, %.loopexit.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp48, %.loopexit.loopexit.split-lp.loopexit.split-lp ]
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.loopexit.loopexit.split-lp, %.loopexit.split-lp
+  %1 = phi ptr [ %.lcssa25, %.loopexit.split-lp ], [ %.lcssa26.ph, %.loopexit.loopexit ], [ %.lcssa26.ph35, %.loopexit.loopexit.split-lp ] ; 2 uses
+  %2 = phi i64 [ %.lcssa23, %.loopexit.split-lp ], [ %.lcssa24.ph, %.loopexit.loopexit ], [ %.lcssa24.ph36, %.loopexit.loopexit.split-lp ]
+  %3 = phi ptr [ %.lcssa21, %.loopexit.split-lp ], [ %.lcssa22.ph, %.loopexit.loopexit ], [ %.lcssa22.ph37, %.loopexit.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit38, %.loopexit.loopexit ], [ %lpad.phi49, %.loopexit.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %1, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EED2Ev.exit, label %bb.h
 
@@ -1340,7 +1344,7 @@ _ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS
   %i.ca = phi ptr [ %i.bz, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit ], [ null, %.preheader ] ; 5 uses
   %i.cb = phi ptr [ %i.bw, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit ], [ null, %.preheader ] ; 7 uses
   %i.cc = ptrtoint ptr %i.ca to i64
-  %i.cd = ptrtoint ptr %i.cb to i64               ; 3 uses
+  %i.cd = ptrtoint ptr %i.cb to i64               ; 2 uses
   %i.ce = sub i64 %i.cc, %i.cd                    ; 4 uses
   %i.cf = icmp eq i64 %i.ce, 9223372036854775792
   br i1 %i.cf, label %.loopexit34, label %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.160
@@ -1409,7 +1413,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ct = phi ptr [ %i.cm, %bb.j ], [ %i.bw, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit ] ; 6 uses
   %i.cu = phi ptr [ %i.cr, %bb.j ], [ %i.bz, %_ZNSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE9push_backEOSZ_.exit ] ; 5 uses
   %i.cv = ptrtoint ptr %i.cu to i64
-  %i.cw = ptrtoint ptr %i.ct to i64               ; 3 uses
+  %i.cw = ptrtoint ptr %i.ct to i64               ; 2 uses
   %i.cx = sub i64 %i.cv, %i.cw                    ; 4 uses
   %i.cy = icmp eq i64 %i.cx, 9223372036854775792
   br i1 %i.cy, label %.loopexit34, label %_ZNKSt6vectorIN4CGAL6TripleINS0_8internal11CC_iteratorINS0_17Compact_containerINS0_52Delaunay_triangulation_cell_base_with_circumcenter_3INS0_28Robust_circumcenter_traits_3INS0_5EpickEEENS0_24Surface_mesh_cell_base_3IS8_NS0_34Delaunay_triangulation_cell_base_3IS8_NS0_25Triangulation_cell_base_3IS8_NS0_28Triangulation_ds_cell_base_3INS0_30Triangulation_data_structure_3INS0_26Surface_mesh_vertex_base_3IS8_NS0_27Triangulation_vertex_base_3IS8_NS0_30Triangulation_ds_vertex_base_3IvEEEEEENS5_IS8_NS9_IS8_NSA_IS8_NSB_IS8_NSC_IvEEEEEEEEEENS0_14Sequential_tagEEEEEEEEEEEEENS0_7DefaultESW_SW_EELb0EEEiiEESaISZ_EE12_M_check_lenEmPKc.exit.i.i.i.282

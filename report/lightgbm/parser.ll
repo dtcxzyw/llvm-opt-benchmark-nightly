@@ -204,13 +204,9 @@ bb.f:                                             ; preds = %bb.e
 .loopexit:                                        ; preds = %.lr.ph, %bb.f, %bb.d
   %i.ac = phi i8 [ %i.m, %bb.d ], [ %i.s, %bb.f ], [ %i.z, %.lr.ph ] ; 2 uses
   %.1110.i = phi i64 [ 0, %bb.d ], [ %i.r, %bb.f ], [ %i.y, %.lr.ph ] ; 2 uses
-  %.2100.i = phi ptr [ %i.l, %bb.d ], [ %.199.i32, %bb.f ], [ %.199.i, %.lr.ph ] ; 4 uses
+  %.2100.i = phi ptr [ %i.l, %bb.d ], [ %.199.i32, %bb.f ], [ %.199.i, %.lr.ph ] ; 3 uses
   %i.ad = icmp eq i8 %i.ac, 46
-  br i1 %i.ad, label %bb.g, label %.loopexit._crit_edge
-
-.loopexit._crit_edge:                             ; preds = %.loopexit
-  %.pre53 = ptrtoint ptr %.2100.i to i64
-  br label %bb.i
+  br i1 %i.ad, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %.loopexit
   %i.ae = getelementptr inbounds nuw i8, ptr %.2100.i, i64 1 ; 2 uses
@@ -247,16 +243,16 @@ bb.h:                                             ; preds = %bb.g
   %.2111.i.lcssa = phi i64 [ %i.al, %bb.h ], [ %i.at, %.lr.ph39 ]
   %.3101.i.lcssa = phi ptr [ %i.ai, %bb.h ], [ %i.aq, %.lr.ph39 ] ; 2 uses
   %i.ay = ptrtoint ptr %i.ae to i64
-  %i.az = ptrtoint ptr %.3101.i.lcssa to i64      ; 2 uses
+  %i.az = ptrtoint ptr %.3101.i.lcssa to i64
   %i.ba = sub i64 %i.ay, %i.az
   br label %bb.i
 
-bb.i:                                             ; preds = %.loopexit._crit_edge, %._crit_edge
-  %.pre-phi54 = phi i64 [ %.pre53, %.loopexit._crit_edge ], [ %i.az, %._crit_edge ]
-  %i.bb = phi i8 [ %i.ac, %.loopexit._crit_edge ], [ %i.ax, %._crit_edge ]
-  %.3112.i = phi i64 [ %.1110.i, %.loopexit._crit_edge ], [ %.2111.i.lcssa, %._crit_edge ] ; 5 uses
-  %.0106.i = phi i64 [ 0, %.loopexit._crit_edge ], [ %i.ba, %._crit_edge ] ; 2 uses
-  %.4102.i = phi ptr [ %.2100.i, %.loopexit._crit_edge ], [ %.3101.i.lcssa, %._crit_edge ] ; 3 uses
+bb.i:                                             ; preds = %.loopexit, %._crit_edge
+  %i.bb = phi i8 [ %i.ax, %._crit_edge ], [ %i.ac, %.loopexit ]
+  %.3112.i = phi i64 [ %.2111.i.lcssa, %._crit_edge ], [ %.1110.i, %.loopexit ] ; 5 uses
+  %.0106.i = phi i64 [ %i.ba, %._crit_edge ], [ 0, %.loopexit ] ; 2 uses
+  %.4102.i = phi ptr [ %.3101.i.lcssa, %._crit_edge ], [ %.2100.i, %.loopexit ] ; 4 uses
+  %.pre-phi54 = ptrtoint ptr %.4102.i to i64
   %i.bc = ptrtoint ptr %.098.i to i64             ; 2 uses
   %i.bd = xor i64 %i.bc, -1
   %i.be = add i64 %.pre-phi54, %i.bd

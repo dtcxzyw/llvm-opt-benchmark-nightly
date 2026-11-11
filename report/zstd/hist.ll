@@ -204,7 +204,7 @@ HIST_count_simple.exit:                           ; preds = %bb.c, %HIST_count_s
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc range(i64 -48, 4294967296) i64 @HIST_count_parallel_wksp(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, i32 noundef range(i32 0, 2) %4, ptr nofree noundef captures(none) %5) unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 2 uses
   %i.c = load i32, ptr %1, align 4, !tbaa !11
   %i.d = add i32 %i.c, 1
@@ -232,17 +232,13 @@ bb.c:                                             ; preds = %bb.a
   %.val108 = load i32, ptr %2, align 1, !tbaa !11
   br label %.lr.ph
 
-.preheader111.loopexit:                           ; preds = %.lr.ph
-  %.pre = ptrtoaddr ptr %i.bq to i64
-  br label %.preheader111
-
-.preheader111:                                    ; preds = %.preheader111.loopexit, %bb.c
-  %.pn.lcssa120.pre-phi = phi i64 [ %.pre, %.preheader111.loopexit ], [ %i.a, %bb.c ] ; 2 uses
-  %.pn.lcssa = phi ptr [ %i.bq, %.preheader111.loopexit ], [ %2, %bb.c ] ; 4 uses
+.preheader111:                                    ; preds = %.lr.ph, %bb.c
+  %.pn.lcssa = phi ptr [ %2, %bb.c ], [ %i.bq, %.lr.ph ] ; 5 uses
   %i.l = icmp ult ptr %.pn.lcssa, %i.b
   br i1 %i.l, label %.lr.ph117.preheader, label %vector.body.preheader
 
 .lr.ph117.preheader:                              ; preds = %.preheader111
+  %.pn.lcssa120.pre-phi = ptrtoaddr ptr %.pn.lcssa to i64 ; 2 uses
   %i.m = add i64 %3, %i.a                         ; 2 uses
   %i.n = sub i64 %i.m, %.pn.lcssa120.pre-phi      ; 2 uses
   %scevgep = getelementptr i8, ptr %.pn.lcssa, i64 %i.n
@@ -331,7 +327,7 @@ bb.c:                                             ; preds = %bb.a
   %i.bp = add i32 %i.bo, 1
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !11
   %.val106 = load i32, ptr %i.at, align 1, !tbaa !11 ; 4 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %.pn113, i64 16 ; 4 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.pn113, i64 16 ; 3 uses
   %i.br = and i32 %.val107, 255
   %i.bs = zext nneg i32 %i.br to i64
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.bs ; 2 uses
@@ -387,7 +383,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 %i.di, ptr %i.dg, align 4, !tbaa !11
   %.0100 = getelementptr inbounds nuw i8, ptr %.pn113, i64 20 ; 2 uses
   %i.dj = icmp ult ptr %.0100, %i.j
-  br i1 %i.dj, label %.lr.ph, label %.preheader111.loopexit, !llvm.loop !21
+  br i1 %i.dj, label %.lr.ph, label %.preheader111, !llvm.loop !21
 
 vector.body:                                      ; preds = %vector.body.preheader, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.body.preheader ] ; 5 uses

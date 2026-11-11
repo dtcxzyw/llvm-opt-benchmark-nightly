@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZN13duckdb_snappy1
   %i.ah = zext nneg i32 %i.ag to i64              ; 4 uses
   %i.ai = load ptr, ptr %i.e, align 8, !tbaa !47
   %i.aj = ptrtoint ptr %i.ai to i64
-  %i.ak = ptrtoint ptr %i.ac to i64               ; 2 uses
+  %i.ak = ptrtoint ptr %i.ac to i64
   %i.al = sub i64 %i.aj, %i.ak
   %i.am = call noundef zeroext i1 @_ZN13duckdb_snappy17SnappyIOVecWriter13TryFastAppendEPKcmmPPc(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull %i.ac, i64 noundef %i.al, i64 noundef %i.ah, ptr noundef nonnull %i.a)
   br i1 %i.am, label %bb.f, label %bb.g
@@ -236,14 +236,13 @@ bb.h:                                             ; preds = %bb.g
   %i.ax = and i32 %.0.copyload.i, %i.aw
   %i.ay = add i32 %i.ax, 1
   %i.az = zext i32 %i.ay to i64
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ar ; 2 uses
-  %.pre170 = ptrtoint ptr %i.ba to i64
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ar
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.pre-phi = phi i64 [ %.pre170, %bb.h ], [ %i.ak, %bb.g ]
   %.092 = phi i64 [ %i.az, %bb.h ], [ %i.ah, %bb.g ] ; 3 uses
-  %.6 = phi ptr [ %i.ba, %bb.h ], [ %i.ac, %bb.g ] ; 2 uses
+  %.6 = phi ptr [ %i.ba, %bb.h ], [ %i.ac, %bb.g ] ; 3 uses
+  %.pre-phi = ptrtoint ptr %.6 to i64
   %i.bb = load ptr, ptr %i.e, align 8, !tbaa !47
   %i.bc = ptrtoint ptr %i.bb to i64
   %i.bd = sub i64 %i.bc, %.pre-phi                ; 2 uses

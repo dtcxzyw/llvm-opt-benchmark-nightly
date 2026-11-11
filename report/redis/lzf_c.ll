@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @lzf_compress(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 !guid !15 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = alloca [65536 x ptr], align 16           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 3 uses
@@ -314,7 +314,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.ez = zext i32 %i.ey to i64
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.ez ; 7 uses
   %.not261 = icmp ult ptr %i.fa, %i.h
-  br i1 %.not261, label %bb.ac, label %.thread.thread297.loopexit, !prof !22
+  br i1 %.not261, label %bb.ac, label %.thread.thread297, !prof !22
 
 bb.ac:                                            ; preds = %bb.ab
   %i.fb = getelementptr inbounds i8, ptr %i.fa, i64 -2 ; 2 uses
@@ -375,20 +375,13 @@ bb.af:                                            ; preds = %bb.ae
   %.3205 = phi i32 [ %i.fw, %bb.ac ], [ %i.v, %bb.ae ], [ %i.v, %bb.af ]
   %.3 = phi i32 [ 0, %bb.ac ], [ %i.gb, %bb.ae ], [ 0, %bb.af ] ; 2 uses
   %i.gj = icmp ult ptr %.3216, %i.h
-  br i1 %i.gj, label %bb.c, label %.thread.thread297.loopexit
+  br i1 %i.gj, label %bb.c, label %.thread.thread297
 
-.thread.thread297.loopexit:                       ; preds = %bb.ab, %.thread
-  %.4217.ph = phi ptr [ %.3216, %.thread ], [ %i.fa, %bb.ab ] ; 2 uses
-  %.5211.ph = phi ptr [ %.4210, %.thread ], [ %i.ex, %bb.ab ]
-  %.4.ph = phi i32 [ %.3, %.thread ], [ 0, %bb.ab ]
-  %.pre = ptrtoaddr ptr %.4217.ph to i64
-  br label %.thread.thread297
-
-.thread.thread297:                                ; preds = %.thread.thread297.loopexit, %bb.b
-  %.4217319.pre-phi = phi i64 [ %.pre, %.thread.thread297.loopexit ], [ %i.a, %bb.b ] ; 2 uses
-  %.4217 = phi ptr [ %.4217.ph, %.thread.thread297.loopexit ], [ %0, %bb.b ] ; 5 uses
-  %.5211 = phi ptr [ %.5211.ph, %.thread.thread297.loopexit ], [ %i.g, %bb.b ] ; 7 uses
-  %.4 = phi i32 [ %.4.ph, %.thread.thread297.loopexit ], [ 0, %bb.b ] ; 4 uses
+.thread.thread297:                                ; preds = %.thread, %bb.ab, %bb.b
+  %.4217 = phi ptr [ %0, %bb.b ], [ %i.fa, %bb.ab ], [ %.3216, %.thread ] ; 6 uses
+  %.5211 = phi ptr [ %i.g, %bb.b ], [ %i.ex, %bb.ab ], [ %.4210, %.thread ] ; 7 uses
+  %.4 = phi i32 [ 0, %bb.b ], [ 0, %bb.ab ], [ %.3, %.thread ] ; 4 uses
+  %.4217319.pre-phi = ptrtoaddr ptr %.4217 to i64 ; 2 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %.5211, i64 3
   %i.gl = icmp ugt ptr %i.gk, %i.d
   br i1 %i.gl, label %.thread286, label %.preheader

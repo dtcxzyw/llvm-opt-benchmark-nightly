@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.t = tail call ptr @ompi_proc_for_name(i64 %.sroa.0.0.insert.insert.i.i.i.i) #22 ; 5 uses
   %i.u = load ptr, ptr %i.e, align 8, !tbaa !56
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv
-  %i.w = ptrtoint ptr %i.t to i64                 ; 2 uses
+  %i.w = ptrtoint ptr %i.t to i64
   %i.x = cmpxchg volatile ptr %i.v, i64 %i.o, i64 %i.w acquire monotonic, align 8
   %i.y = extractvalue { i64, i1 } %i.x, 1
   br i1 %i.y, label %bb.e, label %ompi_group_peer_lookup.exit
@@ -227,22 +227,18 @@ ompi_group_peer_lookup.exit.thread:               ; preds = %bb.e
   br label %bb.h
 
 ompi_group_peer_lookup.exit:                      ; preds = %bb.b, %bb.f, %bb.d, %bb.c
-  %.027 = phi ptr [ %i.t, %bb.f ], [ %i.n, %bb.c ], [ %i.t, %bb.d ], [ %i.n, %bb.b ] ; 3 uses
+  %.027 = phi ptr [ %i.t, %bb.f ], [ %i.n, %bb.c ], [ %i.t, %bb.d ], [ %i.n, %bb.b ] ; 2 uses
   %i.ag = icmp eq ptr %.027, null
-  br i1 %i.ag, label %bb.g, label %ompi_group_peer_lookup.exit._crit_edge
-
-ompi_group_peer_lookup.exit._crit_edge:           ; preds = %ompi_group_peer_lookup.exit
-  %.pre = ptrtoint ptr %.027 to i64
-  br label %bb.h
+  br i1 %i.ag, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %ompi_group_peer_lookup.exit
   %i.ah = tail call ptr @opal_strerror(i32 noundef -13) #22
   tail call void (i32, ptr, ...) @opal_output(i32 noundef 0, ptr noundef nonnull @.str.5, ptr noundef %i.ah, ptr noundef nonnull @.str.6, i32 noundef 593) #22
   br label %.loopexit
 
-bb.h:                                             ; preds = %ompi_group_peer_lookup.exit._crit_edge, %ompi_group_peer_lookup.exit.thread
-  %.pre-phi = phi i64 [ %.pre, %ompi_group_peer_lookup.exit._crit_edge ], [ %i.w, %ompi_group_peer_lookup.exit.thread ] ; 3 uses
-  %.02734 = phi ptr [ %.027, %ompi_group_peer_lookup.exit._crit_edge ], [ %i.t, %ompi_group_peer_lookup.exit.thread ]
+bb.h:                                             ; preds = %ompi_group_peer_lookup.exit, %ompi_group_peer_lookup.exit.thread
+  %.02734 = phi ptr [ %i.t, %ompi_group_peer_lookup.exit.thread ], [ %.027, %ompi_group_peer_lookup.exit ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %.02734 to i64         ; 3 uses
   %i.ai = trunc i64 %.pre-phi to i1
   br i1 %i.ai, label %bb.i, label %bb.j
 

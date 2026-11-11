@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !4, !noundef !4
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.016.0 ; 21 uses
   %i.n = load ptr, ptr %i.m, align 8, !nonnull !4, !noundef !4 ; 9 uses
-  %i.o = ptrtoint ptr %i.n to i64                 ; 8 uses
+  %i.o = ptrtoint ptr %i.n to i64                 ; 7 uses
   %i.p = icmp eq ptr %i.n, inttoptr (i64 15 to ptr)
   br i1 %i.p, label %_RNvMNtNtCsa2F6HLACPlS_11markup5ever4util12smallcharsetNtB2_12SmallCharSet20nonmember_prefix_len.exit.thread, label %bb.e
 
@@ -339,7 +339,7 @@ _RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.ex
   %i.bg = add nuw i64 %i.bc, 1
   store i64 %i.bg, ptr %i.bb, align 8, !noalias !122
   %i.bh = load ptr, ptr %i.m, align 8, !noalias !123, !nonnull !4, !noundef !4 ; 3 uses
-  %i.bi = ptrtoint ptr %i.bh to i64               ; 2 uses
+  %i.bi = ptrtoint ptr %i.bh to i64
   %i.bj = and i64 %i.bi, 1
   %i.bk = sub nsw i64 0, %i.bj
   %i.bl = getelementptr i8, ptr %i.bh, i64 %i.bk  ; 3 uses
@@ -425,10 +425,10 @@ bb.ab:                                            ; preds = %bb.z, %bb.q
   br label %bb.ap
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E17unsafe_subtendrilCsa2F6HLACPlS_11markup5ever.exit: ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i, %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i
-  %.pre-phi = phi i64 [ %i.o, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i ], [ %i.bi, %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i ] ; 6 uses
-  %i.cm = phi ptr [ %i.n, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i ], [ %i.bh, %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i ] ; 8 uses
+  %i.cm = phi ptr [ %i.n, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i ], [ %i.bh, %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i ] ; 9 uses
   %.sroa.563.0 = phi i64 [ %.sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload.i.i, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i ], [ %.sroa.02.0.insert.insert.i, %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i ] ; 2 uses
   %.sroa.062.0 = phi ptr [ %i.cc, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i ], [ %i.bq, %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i ] ; 2 uses
+  %.pre-phi = ptrtoint ptr %i.cm to i64           ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
   %i.cn = icmp eq ptr %i.cm, inttoptr (i64 15 to ptr)
   br i1 %i.cn, label %.thread.i, label %bb.ac

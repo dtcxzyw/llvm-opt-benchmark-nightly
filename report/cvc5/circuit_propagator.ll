@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %_ZN4cvc58internal12
   br label %bb.dy
 
 bb.aa:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit58, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
-  %.sroa.0179.0 = phi ptr [ %i.bi, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit58 ], [ null, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ] ; 6 uses
+  %.sroa.0179.0 = phi ptr [ %i.bi, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit58 ], [ null, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ] ; 5 uses
   %.sroa.12.0 = phi ptr [ %i.bk, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit58 ], [ null, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ] ; 4 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
@@ -267,7 +267,6 @@ bb.ag:                                            ; preds = %bb.af
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit63: ; preds = %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb1EEESt6vectorIS3_SaIS3_EESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S6_EEEixEOS3_.exit, %bb.ae, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
-  %12 = ptrtoint ptr %.sroa.0179.0 to i64
   %.not = icmp eq ptr %.sroa.12.0, %.sroa.0179.0
   br i1 %.not, label %._crit_edge, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit79.lr.ph
 
@@ -280,13 +279,13 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit79.lr.ph: ; preds = %_ZN4cvc58int
   br label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit79
 
 ._crit_edge:                                      ; preds = %.loopexit212, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit63
-  %.sroa.0179.1.lcssa = phi ptr [ %.sroa.0179.0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit63 ], [ %.sroa.0179.6, %.loopexit212 ] ; 2 uses
+  %.sroa.0179.1.lcssa = phi ptr [ %.sroa.0179.0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit63 ], [ %.sroa.0179.6, %.loopexit212 ] ; 3 uses
   %.sroa.19.1.lcssa = phi ptr [ %.sroa.0179.0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit63 ], [ %.sroa.19.6, %.loopexit212 ]
-  %.lcssa296 = phi i64 [ %12, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit63 ], [ %i.ri, %.loopexit212 ]
   %.not.i.i.i64 = icmp eq ptr %.sroa.0179.1.lcssa, null
   br i1 %.not.i.i.i64, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EED2Ev.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %._crit_edge
+  %.lcssa296 = ptrtoint ptr %.sroa.0179.1.lcssa to i64
   %i.dq = ptrtoint ptr %.sroa.19.1.lcssa to i64
   %i.dr = sub i64 %i.dq, %.lcssa296
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0179.1.lcssa, i64 noundef %i.dr) #25
@@ -689,7 +688,7 @@ bb.dw:                                            ; preds = %_ZN4cvc58internal12
   %i.rf = add i32 %.09363, 1                      ; 2 uses
   %i.rg = zext i32 %i.rf to i64                   ; 2 uses
   %i.rh = ptrtoint ptr %.sroa.12.4 to i64
-  %i.ri = ptrtoint ptr %.sroa.0179.6 to i64       ; 2 uses
+  %i.ri = ptrtoint ptr %.sroa.0179.6 to i64
   %i.rj = sub i64 %i.rh, %i.ri
   %i.rk = ashr exact i64 %i.rj, 3
   %i.rl = icmp ugt i64 %i.rk, %i.rg

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.m, label %bb.x, label %.preheader
 
 .preheader:                                       ; preds = %bb.i
-  %i.n = ptrtoint ptr %i.l to i64                 ; 4 uses
+  %i.n = ptrtoint ptr %i.l to i64                 ; 2 uses
   %.neg = add i64 %.1.3, %i.n                     ; 3 uses
   br i1 %.not36, label %bb.k, label %bb.j
 
@@ -223,14 +223,13 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not35.1, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.r = getelementptr inbounds nuw i8, ptr %.2, i64 1 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.2, i64 1
   store i8 95, ptr %.2, align 1, !tbaa !36
-  %.pre52 = ptrtoint ptr %i.r to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.pre-phi53 = phi i64 [ %.pre52, %bb.m ], [ %i.n, %bb.l ]
-  %.131.1 = phi ptr [ %i.r, %bb.m ], [ %i.l, %bb.l ]
+  %.131.1 = phi ptr [ %i.r, %bb.m ], [ %i.l, %bb.l ] ; 2 uses
+  %.pre-phi53 = ptrtoint ptr %.131.1 to i64
   %i.s = sub i64 %.neg, %.pre-phi53
   %i.t = tail call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull %1, i64 noundef %i.s) #22 ; 0 uses
   %i.u = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #24
@@ -246,14 +245,13 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not35.2, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.w = getelementptr inbounds nuw i8, ptr %.2.1, i64 1 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.2.1, i64 1
   store i8 95, ptr %.2.1, align 1, !tbaa !36
-  %.pre50 = ptrtoint ptr %i.w to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %.pre-phi51 = phi i64 [ %.pre50, %bb.q ], [ %i.n, %bb.p ]
-  %.131.2 = phi ptr [ %i.w, %bb.q ], [ %i.l, %bb.p ]
+  %.131.2 = phi ptr [ %i.w, %bb.q ], [ %i.l, %bb.p ] ; 2 uses
+  %.pre-phi51 = ptrtoint ptr %.131.2 to i64
   %i.x = sub i64 %.neg, %.pre-phi51
   %i.y = tail call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull %2, i64 noundef %i.x) #22 ; 0 uses
   %i.z = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #24

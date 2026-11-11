@@ -205,14 +205,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   %i.b = call { i64, ptr } @_RNvXsd_NtCs2AWtUsOyxgP_3std2ioINtNtNtCs4NRVxsYgnAr_4core2io4util4TakeINtNtNtCs3tYbhKVn990_6flate22gz4read14MultiGzDecoderRShEENtB5_4Read4readCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(336) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32) ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0
-  %i.d = extractvalue { i64, ptr } %i.b, 1        ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64                   ; 2 uses
+  %i.d = extractvalue { i64, ptr } %i.b, 1        ; 2 uses
   %i.e = trunc nuw i64 %i.c to i1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit
-  %3 = phi i64 [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %2, %bb.a ] ; 3 uses
-  %4 = phi ptr [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.d, %bb.a ] ; 10 uses
+  %2 = phi ptr [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.d, %bb.a ] ; 11 uses
+  %3 = ptrtoint ptr %2 to i64                     ; 3 uses
   %i.f = and i64 %3, 3
   switch i64 %i.f, label %default.unreachable [
     i64 2, label %.split
@@ -225,8 +224,8 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, %bb.a
-  %.lcssa34 = phi ptr [ %i.d, %bb.a ], [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ] ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ] ; 4 uses
+  %.lcssa34 = phi ptr [ %i.d, %bb.a ], [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ] ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa34 to i64         ; 4 uses
   %i.g = icmp ult ptr %.lcssa34, inttoptr (i64 33 to ptr)
   br i1 %i.g, label %.noexc, label %bb.b, !prof !14
 
@@ -258,7 +257,7 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %.split, %.split30, %.split31, %bb.d
-  %i.p = phi ptr [ %.lcssa34, %bb.d ], [ %4, %.split31 ], [ %4, %.split30 ], [ %4, %.split ], [ %4, %bb.e ]
+  %i.p = phi ptr [ %.lcssa34, %bb.d ], [ %2, %.split31 ], [ %2, %.split30 ], [ %2, %.split ], [ %2, %bb.e ]
   %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 1, %.split31 ], [ 1, %.split30 ], [ 1, %.split ], [ 1, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.q = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
@@ -271,21 +270,21 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br i1 %i.s, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 .split31:                                         ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.u = load i8, ptr %i.t, align 8, !range !18, !noundef !8
   %i.v = icmp eq i8 %i.u, 35
   br i1 %i.v, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 .split30:                                         ; preds = %.lr.ph
-  %i.w = getelementptr i8, ptr %4, i64 15
+  %i.w = getelementptr i8, ptr %2, i64 15
   %i.x = load i8, ptr %i.w, align 8, !range !18, !noundef !8
   %i.y = icmp eq i8 %i.x, 35
   br i1 %i.y, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
   %i.z = lshr i64 %3, 32
-  %i.aa = icmp ult ptr %4, inttoptr (i64 180388626432 to ptr)
+  %i.aa = icmp ult ptr %2, inttoptr (i64 180388626432 to ptr)
   %switch.idx.cast.i.i = trunc i64 %i.z to i8
   %spec.select.i.i = select i1 %i.aa, i8 %switch.idx.cast.i.i, i8 -1 ; 2 uses
   %i.ab = icmp ne i8 %spec.select.i.i, -1
@@ -294,12 +293,11 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %i.ac, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit: ; preds = %.split31, %.split30, %.split, %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsbakdBCgU4AF_16influxdb3_server(ptr nonnull %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsbakdBCgU4AF_16influxdb3_server(ptr nonnull %2)
   %i.ad = call { i64, ptr } @_RNvXsd_NtCs2AWtUsOyxgP_3std2ioINtNtNtCs4NRVxsYgnAr_4core2io4util4TakeINtNtNtCs3tYbhKVn990_6flate22gz4read14MultiGzDecoderRShEENtB5_4Read4readCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(336) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32) ; 2 uses
   %i.ae = extractvalue { i64, ptr } %i.ad, 0
-  %i.af = extractvalue { i64, ptr } %i.ad, 1      ; 3 uses
-  %5 = ptrtoint ptr %i.af to i64                  ; 2 uses
+  %i.af = extractvalue { i64, ptr } %i.ad, 1      ; 2 uses
   %i.ag = trunc nuw i64 %i.ae to i1
   br i1 %i.ag, label %.lr.ph, label %._crit_edge
 }
@@ -312,14 +310,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   %i.b = call { i64, ptr } @_RNvXsd_NtCs2AWtUsOyxgP_3std2ioINtNtNtCs4NRVxsYgnAr_4core2io4util4TakeNtNtB7_2fs4FileENtB5_4Read4readCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32) ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0
-  %i.d = extractvalue { i64, ptr } %i.b, 1        ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64                   ; 2 uses
+  %i.d = extractvalue { i64, ptr } %i.b, 1        ; 2 uses
   %i.e = trunc nuw i64 %i.c to i1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit
-  %3 = phi i64 [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %2, %bb.a ] ; 3 uses
-  %4 = phi ptr [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.d, %bb.a ] ; 10 uses
+  %2 = phi ptr [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.d, %bb.a ] ; 11 uses
+  %3 = ptrtoint ptr %2 to i64                     ; 3 uses
   %i.f = and i64 %3, 3
   switch i64 %i.f, label %default.unreachable [
     i64 2, label %.split
@@ -332,8 +329,8 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, %bb.a
-  %.lcssa34 = phi ptr [ %i.d, %bb.a ], [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ] ; 3 uses
-  %.lcssa = phi i64 [ %2, %bb.a ], [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ] ; 4 uses
+  %.lcssa34 = phi ptr [ %i.d, %bb.a ], [ %i.af, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit ] ; 4 uses
+  %.lcssa = ptrtoint ptr %.lcssa34 to i64         ; 4 uses
   %i.g = icmp ult ptr %.lcssa34, inttoptr (i64 33 to ptr)
   br i1 %i.g, label %.noexc, label %bb.b, !prof !14
 
@@ -365,7 +362,7 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %.split, %.split30, %.split31, %bb.d
-  %i.p = phi ptr [ %.lcssa34, %bb.d ], [ %4, %.split31 ], [ %4, %.split30 ], [ %4, %.split ], [ %4, %bb.e ]
+  %i.p = phi ptr [ %.lcssa34, %bb.d ], [ %2, %.split31 ], [ %2, %.split30 ], [ %2, %.split ], [ %2, %bb.e ]
   %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 1, %.split31 ], [ 1, %.split30 ], [ 1, %.split ], [ 1, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.q = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
@@ -378,21 +375,21 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   br i1 %i.s, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 .split31:                                         ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.u = load i8, ptr %i.t, align 8, !range !18, !noundef !8
   %i.v = icmp eq i8 %i.u, 35
   br i1 %i.v, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 .split30:                                         ; preds = %.lr.ph
-  %i.w = getelementptr i8, ptr %4, i64 15
+  %i.w = getelementptr i8, ptr %2, i64 15
   %i.x = load i8, ptr %i.w, align 8, !range !18, !noundef !8
   %i.y = icmp eq i8 %i.x, 35
   br i1 %i.y, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
   %i.z = lshr i64 %3, 32
-  %i.aa = icmp ult ptr %4, inttoptr (i64 180388626432 to ptr)
+  %i.aa = icmp ult ptr %2, inttoptr (i64 180388626432 to ptr)
   %switch.idx.cast.i.i = trunc i64 %i.z to i8
   %spec.select.i.i = select i1 %i.aa, i8 %switch.idx.cast.i.i, i8 -1 ; 2 uses
   %i.ab = icmp ne i8 %spec.select.i.i, -1
@@ -401,12 +398,11 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %i.ac, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit, label %.loopexit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsbakdBCgU4AF_16influxdb3_server.exit: ; preds = %.split31, %.split30, %.split, %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsbakdBCgU4AF_16influxdb3_server(ptr nonnull %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsbakdBCgU4AF_16influxdb3_server(ptr nonnull %2)
   %i.ad = call { i64, ptr } @_RNvXsd_NtCs2AWtUsOyxgP_3std2ioINtNtNtCs4NRVxsYgnAr_4core2io4util4TakeNtNtB7_2fs4FileENtB5_4Read4readCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef nonnull %i.a, i64 noundef 32) ; 2 uses
   %i.ae = extractvalue { i64, ptr } %i.ad, 0
-  %i.af = extractvalue { i64, ptr } %i.ad, 1      ; 3 uses
-  %5 = ptrtoint ptr %i.af to i64                  ; 2 uses
+  %i.af = extractvalue { i64, ptr } %i.ad, 1      ; 2 uses
   %i.ag = trunc nuw i64 %i.ae to i1
   br i1 %i.ag, label %.lr.ph, label %._crit_edge
 }

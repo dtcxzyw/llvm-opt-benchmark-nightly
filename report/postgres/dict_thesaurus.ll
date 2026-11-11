@@ -204,7 +204,6 @@ bb.at:                                            ; preds = %bb.as
   %i.iz = zext nneg i32 %.0129.lcssa.i to i64
   call void @pg_qsort(ptr noundef %.084.lcssa.i, i64 noundef %i.iz, i64 noundef 16, ptr noundef nonnull @cmpTheLexeme) #9
   %i.ja = load ptr, ptr %i.iv, align 8            ; 5 uses
-  %3 = ptrtoint ptr %i.ja to i64                  ; 2 uses
   %i.jb = load i32, ptr %i.ej, align 8
   %i.jc = icmp sgt i32 %i.jb, 1
   br i1 %i.jc, label %.lr.ph196.preheader.i, label %._crit_edge197.i
@@ -296,23 +295,20 @@ bb.bc:                                            ; preds = %cmpLexeme.exit.thre
   %.083.i = getelementptr inbounds nuw i8, ptr %.083194.i, i64 16 ; 2 uses
   %i.ke = load ptr, ptr %i.iv, align 8            ; 2 uses
   %i.kf = ptrtoint ptr %.083.i to i64
-  %i.kg = ptrtoint ptr %i.ke to i64               ; 2 uses
+  %i.kg = ptrtoint ptr %i.ke to i64
   %i.kh = sub i64 %i.kf, %i.kg
   %i.ki = ashr exact i64 %i.kh, 4
   %i.kj = load i32, ptr %i.ej, align 8
   %i.kk = sext i32 %i.kj to i64
   %i.kl = icmp slt i64 %i.ki, %i.kk
-  br i1 %i.kl, label %.lr.ph196.i, label %._crit_edge197.loopexit.i, !llvm.loop !16
+  br i1 %i.kl, label %.lr.ph196.i, label %._crit_edge197.i, !llvm.loop !16
 
-._crit_edge197.loopexit.i:                        ; preds = %bb.bc
-  %.pre208.i = ptrtoint ptr %.5.i to i64
-  br label %._crit_edge197.i
-
-._crit_edge197.i:                                 ; preds = %._crit_edge197.loopexit.i, %bb.at
-  %.pre-phi.i = phi i64 [ %.pre208.i, %._crit_edge197.loopexit.i ], [ %3, %bb.at ]
-  %.lcssa137.i = phi ptr [ %i.ke, %._crit_edge197.loopexit.i ], [ %i.ja, %bb.at ]
-  %.lcssa.i = phi i64 [ %i.kg, %._crit_edge197.loopexit.i ], [ %3, %bb.at ]
-  %i.km = sub i64 %.pre-phi.i, %.lcssa.i
+._crit_edge197.i:                                 ; preds = %bb.bc, %bb.at
+  %.pre-phi.in.i = phi ptr [ %i.ja, %bb.at ], [ %.5.i, %bb.bc ]
+  %.lcssa137.i = phi ptr [ %i.ja, %bb.at ], [ %i.ke, %bb.bc ] ; 2 uses
+  %.lcssa.pre-phi.i.pre-phi = ptrtoint ptr %.lcssa137.i to i64
+  %.pre-phi.i = ptrtoint ptr %.pre-phi.in.i to i64
+  %i.km = sub i64 %.pre-phi.i, %.lcssa.pre-phi.i.pre-phi
   %i.kn = lshr exact i64 %i.km, 4
   %i.ko = trunc i64 %i.kn to i32
   %i.kp = add i32 %i.ko, 1                        ; 2 uses

@@ -204,12 +204,12 @@ bb.bc:                                            ; preds = %bb.bb
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.ba, %bb.bc, %bb.aw
-  %i.hf = phi ptr [ %i.ga, %bb.aw ], [ %.pre311, %bb.bc ], [ %i.ga, %bb.ba ] ; 9 uses
-  %i.hg = phi ptr [ %i.gb, %bb.aw ], [ %.pre, %bb.bc ], [ %i.gb, %bb.ba ] ; 7 uses
+  %i.hf = phi ptr [ %i.ga, %bb.aw ], [ %.pre311, %bb.bc ], [ %i.ga, %bb.ba ] ; 10 uses
+  %i.hg = phi ptr [ %i.gb, %bb.aw ], [ %.pre, %bb.bc ], [ %i.gb, %bb.ba ] ; 8 uses
   %.159 = phi i64 [ %.058291, %bb.aw ], [ %i.he, %bb.bc ], [ %.058291, %bb.ba ] ; 4 uses
   %i.hh = add nuw i64 %.060290, 1                 ; 2 uses
-  %i.hi = ptrtoint ptr %i.hg to i64               ; 3 uses
-  %i.hj = ptrtoint ptr %i.hf to i64               ; 4 uses
+  %i.hi = ptrtoint ptr %i.hg to i64               ; 2 uses
+  %i.hj = ptrtoint ptr %i.hf to i64               ; 3 uses
   %i.hk = sub i64 %i.hi, %i.hj                    ; 2 uses
   %i.hl = ashr exact i64 %i.hk, 3                 ; 8 uses
   %i.hm = icmp ult i64 %i.hh, %i.hl
@@ -223,14 +223,16 @@ bb.be:                                            ; preds = %bb.bb
   br label %.loopexit.split-lp
 
 ._crit_edge:                                      ; preds = %bb.bd
+  %.lcssa269.pre-phi = ptrtoint ptr %i.hf to i64
   %i.ho = icmp ugt i64 %.159, %i.hl
   br i1 %i.ho, label %bb.bf, label %._crit_edge.thread
 
 bb.bf:                                            ; preds = %._crit_edge
+  %.lcssa271 = ptrtoint ptr %i.hg to i64
   %i.hp = sub nuw i64 %.159, %i.hl                ; 6 uses
   %i.hq = load ptr, ptr %i.dr, align 8, !tbaa !82
   %i.hr = ptrtoint ptr %i.hq to i64
-  %i.hs = sub i64 %i.hr, %i.hi
+  %i.hs = sub i64 %i.hr, %.lcssa271
   %i.ht = ashr exact i64 %i.hs, 3                 ; 2 uses
   %i.hu = icmp ult i64 %i.hl, 1152921504606846976
   call void @llvm.assume(i1 %i.hu)
@@ -337,7 +339,7 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.i: ; preds
 bb.bi:                                            ; preds = %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.i
   %i.iv = load ptr, ptr %i.dr, align 8, !tbaa !82
   %i.iw = ptrtoint ptr %i.iv to i64
-  %i.ix = sub i64 %i.iw, %i.hj
+  %i.ix = sub i64 %i.iw, %.lcssa269.pre-phi
   call void @_ZdlPvm(ptr noundef nonnull %i.hf, i64 noundef %i.ix) #15
   br label %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i
 
