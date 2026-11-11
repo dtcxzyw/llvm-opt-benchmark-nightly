@@ -39,7 +39,7 @@ bb.a:
   %i.j = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #6
   %i.k = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str.1) #6
   %i.l = tail call i32 @lsame_(ptr noundef %2, ptr noundef nonnull @.str.1) #6
-  %.not.not.not = icmp eq i32 %i.j, 0             ; 19 uses
+  %.not.not.not = icmp eq i32 %i.j, 0             ; 15 uses
   br i1 %.not.not.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -212,15 +212,15 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.bo = fcmp oge double %i.bn, 0.000000e+00
   %i.bp = fneg double %i.bn
   %i.bq = select i1 %i.bo, double %i.bn, double %i.bp ; 11 uses
-  %i.br = load i32, ptr %4, align 4, !tbaa !20    ; 5 uses
+  %i.br = load i32, ptr %4, align 4, !tbaa !20    ; 12 uses
   %i.bs = load double, ptr %i.e, align 8, !tbaa !22 ; 3 uses
   %i.bt = fcmp une double %i.bs, 1.000000e+00     ; 2 uses
   br i1 %.not539, label %bb.y, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %. = select i1 %.not.not.not, i32 1, i32 -1     ; 10 uses
-  %.565 = select i1 %.not.not.not, i32 %i.br, i32 1 ; 13 uses
-  %.566 = select i1 %.not.not.not, i32 1, i32 %i.br ; 14 uses
+  %.565 = select i1 %.not.not.not, i32 %i.br, i32 1 ; 7 uses
+  %.566 = select i1 %.not.not.not, i32 1, i32 %i.br ; 10 uses
   br i1 %i.bt, label %.loopexit588, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -231,25 +231,22 @@ bb.v:                                             ; preds = %bb.u
   %i.bv = select i1 %i.bu, double %i.bq, double %i.aa
   %i.bw = fdiv double 1.000000e+00, %i.bv         ; 3 uses
   store i32 %., ptr %i.b, align 4, !tbaa !20
-  %10 = icmp sge i32 %.566, %.565
-  %11 = icmp sle i32 %.566, %.565
-  %.in555602 = select i1 %.not.not.not, i1 %11, i1 %10
+  %.in555602 = icmp sgt i32 %i.br, 0
   br i1 %.in555602, label %.lr.ph609.preheader, label %.loopexit588
 
 .lr.ph609.preheader:                              ; preds = %bb.v
-  %i.bx = add nsw i32 %.566, 1
-  %i.by = mul nsw i32 %i.bx, %.566
-  %12 = sdiv i32 %i.by, 2
-  %13 = sext i32 %.566 to i64
+  %i.bx = add nuw nsw i32 %.566, 1
+  %i.by = mul nuw nsw i32 %i.bx, %.566
+  %10 = lshr i32 %i.by, 1
+  %11 = zext nneg i32 %.566 to i64
   %i.bz = sext i32 %. to i64
-  %14 = sext i32 %.565 to i64                     ; 2 uses
-  %i.ca = zext i32 %i.br to i64
+  %i.ca = zext nneg i32 %i.br to i64              ; 2 uses
   br label %.lr.ph609
 
 .lr.ph609:                                        ; preds = %.lr.ph609.preheader, %bb.w
   %indvars.iv692 = phi i64 [ %i.ca, %.lr.ph609.preheader ], [ %indvars.iv.next693, %bb.w ] ; 2 uses
-  %indvars.iv690 = phi i64 [ %13, %.lr.ph609.preheader ], [ %indvars.iv.next691, %bb.w ] ; 2 uses
-  %.2460607 = phi i32 [ %12, %.lr.ph609.preheader ], [ %i.cv, %bb.w ] ; 2 uses
+  %indvars.iv690 = phi i64 [ %11, %.lr.ph609.preheader ], [ %indvars.iv.next691, %bb.w ] ; 2 uses
+  %.2460607 = phi i32 [ %10, %.lr.ph609.preheader ], [ %i.cv, %bb.w ] ; 2 uses
   %.0480605 = phi double [ %i.bw, %.lr.ph609.preheader ], [ %.1481, %bb.w ] ; 4 uses
   %.0500604 = phi double [ %i.bw, %.lr.ph609.preheader ], [ %i.cm, %bb.w ] ; 3 uses
   %i.cb = fcmp ugt double %.0480605, %i.aa
@@ -278,11 +275,11 @@ bb.w:                                             ; preds = %.lr.ph609
   %i.ct = trunc i64 %indvars.iv692 to i32
   %i.cu = mul i32 %., %i.ct
   %i.cv = add nsw i32 %.2460607, %i.cu
-  %indvars.iv.next693 = add i64 %indvars.iv692, -1
+  %indvars.iv.next693 = add nsw i64 %indvars.iv692, -1
   %indvars.iv.next691 = add nsw i64 %indvars.iv690, %i.bz ; 3 uses
-  %15 = icmp sge i64 %indvars.iv.next691, %14
-  %i.cw = icmp sle i64 %indvars.iv.next691, %14
-  %.in555 = select i1 %.not.not.not, i1 %i.cw, i1 %15
+  %12 = icmp sgt i64 %indvars.iv.next691, 0
+  %i.cw = icmp sle i64 %indvars.iv.next691, %i.ca
+  %.in555 = select i1 %.not.not.not, i1 %i.cw, i1 %12
   br i1 %.in555, label %.lr.ph609, label %.loopexit588, !llvm.loop !10
 
 bb.x:                                             ; preds = %bb.u
@@ -293,21 +290,19 @@ bb.x:                                             ; preds = %bb.u
   %i.da = fcmp oge double %i.cz, 1.000000e+00
   %i.db = select i1 %i.da, double 1.000000e+00, double %i.cz ; 3 uses
   store i32 %.565, ptr %i.b, align 4, !tbaa !20
-  %16 = icmp sge i32 %.566, %.565
-  %17 = icmp sle i32 %.566, %.565
-  %.in554612 = select i1 %.not.not.not, i1 %17, i1 %16
+  %.in554612 = icmp sgt i32 %i.br, 0
   %i.dc = fcmp ugt double %i.db, %i.aa
   %or.cond613 = select i1 %.in554612, i1 %i.dc, i1 false
   br i1 %or.cond613, label %.lr.ph617.preheader, label %.loopexit588
 
 .lr.ph617.preheader:                              ; preds = %bb.x
-  %18 = sext i32 %.566 to i64
+  %13 = zext nneg i32 %.566 to i64
   %i.dd = sext i32 %. to i64
-  %19 = sext i32 %.565 to i64                     ; 2 uses
+  %14 = zext nneg i32 %i.br to i64
   br label %.lr.ph617
 
 .lr.ph617:                                        ; preds = %.lr.ph617.preheader, %.lr.ph617
-  %indvars.iv697 = phi i64 [ %18, %.lr.ph617.preheader ], [ %indvars.iv.next698, %.lr.ph617 ] ; 2 uses
+  %indvars.iv697 = phi i64 [ %13, %.lr.ph617.preheader ], [ %indvars.iv.next698, %.lr.ph617 ] ; 2 uses
   %.2482614 = phi double [ %i.db, %.lr.ph617.preheader ], [ %i.di, %.lr.ph617 ]
   %i.de = getelementptr inbounds [8 x i8], ptr %i.g, i64 %indvars.iv697
   %i.df = load double, ptr %i.de, align 8, !tbaa !22
@@ -315,17 +310,17 @@ bb.x:                                             ; preds = %bb.u
   %i.dh = fdiv double 1.000000e+00, %i.dg
   %i.di = fmul double %.2482614, %i.dh            ; 3 uses
   %indvars.iv.next698 = add nsw i64 %indvars.iv697, %i.dd ; 3 uses
-  %20 = icmp sge i64 %indvars.iv.next698, %19
-  %i.dj = icmp sle i64 %indvars.iv.next698, %19
-  %.in554 = select i1 %.not.not.not, i1 %i.dj, i1 %20
+  %15 = icmp sgt i64 %indvars.iv.next698, 0
+  %i.dj = icmp sle i64 %indvars.iv.next698, %14
+  %.in554 = select i1 %.not.not.not, i1 %i.dj, i1 %15
   %i.dk = fcmp ugt double %i.di, %i.aa
   %or.cond = select i1 %.in554, i1 %i.dk, i1 false
   br i1 %or.cond, label %.lr.ph617, label %.loopexit588, !llvm.loop !11
 
 bb.y:                                             ; preds = %bb.s
   %.567 = select i1 %.not.not.not, i32 -1, i32 1  ; 9 uses
-  %.568 = select i1 %.not.not.not, i32 1, i32 %i.br ; 13 uses
-  %.569 = select i1 %.not.not.not, i32 %i.br, i32 1 ; 13 uses
+  %.568 = select i1 %.not.not.not, i32 1, i32 %i.br ; 7 uses
+  %.569 = select i1 %.not.not.not, i32 %i.br, i32 1 ; 9 uses
   br i1 %i.bt, label %.loopexit588, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -337,24 +332,22 @@ bb.aa:                                            ; preds = %bb.z
   %i.dn = fdiv double 1.000000e+00, %i.dm         ; 4 uses
   store i32 %.568, ptr %i.a, align 4, !tbaa !20
   store i32 %.567, ptr %i.b, align 4, !tbaa !20
-  %21 = icmp sge i32 %.569, %.568
-  %22 = icmp sle i32 %.569, %.568
-  %.in552619 = select i1 %.not.not.not, i1 %21, i1 %22
+  %.in552619 = icmp sgt i32 %i.br, 0
   br i1 %.in552619, label %.lr.ph626.preheader, label %._crit_edge627
 
 .lr.ph626.preheader:                              ; preds = %bb.aa
-  %i.do = add nsw i32 %.569, 1
-  %i.dp = mul nsw i32 %i.do, %.569
-  %23 = sdiv i32 %i.dp, 2
-  %24 = sext i32 %.569 to i64
+  %i.do = add nuw nsw i32 %.569, 1
+  %i.dp = mul nuw nsw i32 %i.do, %.569
+  %16 = lshr i32 %i.dp, 1
+  %17 = zext nneg i32 %.569 to i64
   %i.dq = sext i32 %.567 to i64
-  %25 = sext i32 %.568 to i64                     ; 2 uses
+  %18 = zext nneg i32 %i.br to i64
   br label %.lr.ph626
 
 .lr.ph626:                                        ; preds = %.lr.ph626.preheader, %bb.ab
   %indvars.iv702 = phi i64 [ 1, %.lr.ph626.preheader ], [ %indvars.iv.next703, %bb.ab ]
-  %indvars.iv700 = phi i64 [ %24, %.lr.ph626.preheader ], [ %indvars.iv.next701, %bb.ab ] ; 2 uses
-  %.3624 = phi i32 [ %23, %.lr.ph626.preheader ], [ %i.ej, %bb.ab ] ; 2 uses
+  %indvars.iv700 = phi i64 [ %17, %.lr.ph626.preheader ], [ %indvars.iv.next701, %bb.ab ] ; 2 uses
+  %.3624 = phi i32 [ %16, %.lr.ph626.preheader ], [ %i.ej, %bb.ab ] ; 2 uses
   %.3483622 = phi double [ %i.dn, %.lr.ph626.preheader ], [ %i.dx, %bb.ab ] ; 4 uses
   %.1501621 = phi double [ %i.dn, %.lr.ph626.preheader ], [ %.2502, %bb.ab ] ; 3 uses
   %i.dr = fcmp ugt double %.3483622, %i.aa
@@ -383,9 +376,9 @@ bb.ab:                                            ; preds = %.lr.ph626
   %i.ei = mul i32 %.567, %i.eh
   %i.ej = add nsw i32 %.3624, %i.ei
   %indvars.iv.next701 = add nsw i64 %indvars.iv700, %i.dq ; 3 uses
-  %26 = icmp sge i64 %indvars.iv.next701, %25
-  %i.ek = icmp sle i64 %indvars.iv.next701, %25
-  %.in552 = select i1 %.not.not.not, i1 %26, i1 %i.ek
+  %19 = icmp sgt i64 %indvars.iv.next701, 0
+  %i.ek = icmp sle i64 %indvars.iv.next701, %18
+  %.in552 = select i1 %.not.not.not, i1 %19, i1 %i.ek
   br i1 %.in552, label %.lr.ph626, label %._crit_edge627, !llvm.loop !12
 
 ._crit_edge627:                                   ; preds = %bb.ab, %bb.aa
@@ -403,30 +396,28 @@ bb.ac:                                            ; preds = %bb.z
   %i.eq = fcmp oge double %i.ep, 1.000000e+00
   %i.er = select i1 %i.eq, double 1.000000e+00, double %i.ep ; 3 uses
   store i32 %.568, ptr %i.b, align 4, !tbaa !20
-  %27 = icmp sge i32 %.569, %.568
-  %28 = icmp sle i32 %.569, %.568
-  %.in630 = select i1 %.not.not.not, i1 %27, i1 %28
+  %.in630 = icmp sgt i32 %i.br, 0
   %i.es = fcmp ugt double %i.er, %i.aa
   %or.cond570631 = select i1 %.in630, i1 %i.es, i1 false
   br i1 %or.cond570631, label %.lr.ph635.preheader, label %.loopexit588
 
 .lr.ph635.preheader:                              ; preds = %bb.ac
-  %29 = sext i32 %.569 to i64
+  %20 = zext nneg i32 %.569 to i64
   %i.et = sext i32 %.567 to i64
-  %30 = sext i32 %.568 to i64                     ; 2 uses
+  %21 = zext nneg i32 %i.br to i64
   br label %.lr.ph635
 
 .lr.ph635:                                        ; preds = %.lr.ph635.preheader, %.lr.ph635
-  %indvars.iv707 = phi i64 [ %29, %.lr.ph635.preheader ], [ %indvars.iv.next708, %.lr.ph635 ] ; 2 uses
+  %indvars.iv707 = phi i64 [ %20, %.lr.ph635.preheader ], [ %indvars.iv.next708, %.lr.ph635 ] ; 2 uses
   %.4484632 = phi double [ %i.er, %.lr.ph635.preheader ], [ %i.ex, %.lr.ph635 ]
   %i.eu = getelementptr inbounds [8 x i8], ptr %i.g, i64 %indvars.iv707
   %i.ev = load double, ptr %i.eu, align 8, !tbaa !22
   %i.ew = fadd double %i.ev, 1.000000e+00
   %i.ex = fdiv double %.4484632, %i.ew            ; 3 uses
   %indvars.iv.next708 = add nsw i64 %indvars.iv707, %i.et ; 3 uses
-  %31 = icmp sge i64 %indvars.iv.next708, %30
-  %i.ey = icmp sle i64 %indvars.iv.next708, %30
-  %.in = select i1 %.not.not.not, i1 %31, i1 %i.ey
+  %22 = icmp sgt i64 %indvars.iv.next708, 0
+  %i.ey = icmp sle i64 %indvars.iv.next708, %21
+  %.in = select i1 %.not.not.not, i1 %22, i1 %i.ey
   %i.ez = fcmp ugt double %i.ex, %i.aa
   %or.cond570 = select i1 %.in, i1 %i.ez, i1 false
   br i1 %or.cond570, label %.lr.ph635, label %.loopexit588, !llvm.loop !13

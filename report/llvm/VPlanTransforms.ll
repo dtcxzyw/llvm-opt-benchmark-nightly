@@ -205,11 +205,10 @@ bb.gt:                                            ; preds = %bb.gr
   br i1 %i.aif, label %bb.gu, label %.critedge26.i
 
 bb.gu:                                            ; preds = %bb.gt
-  %i.aig = load ptr, ptr %i.i, align 8, !tbaa !157 ; 2 uses
-  %i.aih = icmp eq ptr %i.aig, null               ; 2 uses
+  %i.aig = load ptr, ptr %i.i, align 8, !tbaa !157 ; 4 uses
+  %i.aih = icmp eq ptr %i.aig, null
   %i.aii = getelementptr inbounds i8, ptr %i.aig, i64 -96
-  %i.aij = select i1 %i.aih, ptr null, ptr %i.aii ; 5 uses
-  %110 = getelementptr inbounds nuw i8, ptr %i.aij, i64 96
+  %i.aij = select i1 %i.aih, ptr null, ptr %i.aii ; 4 uses
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aij, i64 112 ; 2 uses
   %i.ail = load ptr, ptr %i.aik, align 8, !tbaa !75 ; 2 uses
   %i.aim = getelementptr inbounds nuw i8, ptr %i.aij, i64 120 ; 2 uses
@@ -217,8 +216,7 @@ bb.gu:                                            ; preds = %bb.gt
   %i.aio = zext i32 %i.ain to i64
   %i.aip = getelementptr inbounds nuw [8 x i8], ptr %i.ail, i64 %i.aio ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #25
-  %spec.select22.i = select i1 %i.aih, ptr null, ptr %110 ; 2 uses
-  %i.aiq = ptrtoint ptr %spec.select22.i to i64   ; 4 uses
+  %i.aiq = ptrtoint ptr %i.aig to i64             ; 4 uses
   store i64 %i.aiq, ptr %65, align 8, !alias.scope !1339
   store i64 %i.aiq, ptr %i.es, align 8
   store i64 %i.aiq, ptr %.sroa.4460.0..sroa_idx.i, align 8
@@ -299,7 +297,7 @@ bb.gx:                                            ; preds = %.lr.ph.i
 
 bb.gy:                                            ; preds = %.lr.ph.i
   %i.aju = getelementptr inbounds nuw i8, ptr %i.ajm, i64 64
-  call void @_ZN4llvm7VPValue18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(48) %i.aju, ptr noundef %spec.select22.i) #25
+  call void @_ZN4llvm7VPValue18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(48) %i.aju, ptr noundef %i.aig) #25
   br label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gy, %bb.gx

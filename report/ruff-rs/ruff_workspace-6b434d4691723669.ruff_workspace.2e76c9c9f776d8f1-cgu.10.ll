@@ -204,9 +204,9 @@ bb.t:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11)
   call void @llvm.experimental.noalias.scope.decl(metadata !2605)
   call void @llvm.experimental.noalias.scope.decl(metadata !2606)
-  %i.aw = load i64, ptr %i.d, align 8, !range !11, !alias.scope !2606, !noundef !6 ; 4 uses
+  %i.aw = load i64, ptr %i.d, align 8, !range !11, !alias.scope !2606, !noundef !6 ; 3 uses
   %.not.i = icmp eq i64 %i.aw, -3
-  %i.ax = load i64, ptr %i.ab, align 8, !range !11, !alias.scope !2606, !noundef !6 ; 4 uses
+  %i.ax = load i64, ptr %i.ab, align 8, !range !11, !alias.scope !2606, !noundef !6 ; 3 uses
   %.not8.i = icmp eq i64 %i.ax, -3                ; 2 uses
   br i1 %.not.i, label %bb.v, label %bb.u
 
@@ -284,8 +284,6 @@ bb.ab:                                            ; preds = %_RINvMNtCs4NRVxsYgn
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit65.i.i19.i: ; preds = %bb.ab, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i14.i
   %.sroa.8.0.i.i20.i = phi i64 [ %i.bs, %bb.ab ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i14.i ]
   %i.bt = add nuw nsw i64 %.sroa.8.0.i.i20.i, %.sroa.7.0.i.i15.i ; 2 uses
-  %switch.i.i21.i = icmp ugt i64 %i.aw, -3
-  %spec.select.i = select i1 %switch.i.i21.i, i64 %i.bt, i64 undef
   %i.bu = load ptr, ptr %i.ai, align 8, !alias.scope !2613, !noundef !6
   %.not.i.i24.i = icmp eq ptr %i.bu, null
   br i1 %.not.i.i24.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i27.i, label %bb.ac
@@ -317,12 +315,10 @@ bb.ad:                                            ; preds = %_RINvMNtCs4NRVxsYgn
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit65.i.i32.i: ; preds = %bb.ad, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i27.i
   %.sroa.8.0.i.i33.i = phi i64 [ %i.cd, %bb.ad ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i27.i ]
   %i.ce = add nuw nsw i64 %.sroa.8.0.i.i33.i, %.sroa.7.0.i.i28.i ; 2 uses
-  %switch.i.i34.i = icmp ugt i64 %i.ax, -3
-  %spec.select54.i = select i1 %switch.i.i34.i, i64 %i.ce, i64 undef
   %i.cf = add nuw nsw i64 %i.ce, %i.bt
   %i.cg = and i64 %i.ax, %i.aw
   %or.cond.i = icmp ugt i64 %i.cg, -3
-  %i.ch = add i64 %spec.select54.i, %spec.select.i
+  %i.ch = add nuw nsw i64 %i.ce, %i.bt
   %.sroa.46.0.i = select i1 %or.cond.i, i64 %i.ch, i64 undef
   br label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEEEBZ_ENtNtNtB8_6traits8iterator8Iterator9size_hintCs3ZkgueCtkyH_14ruff_workspace.exit
 
@@ -725,9 +721,9 @@ bb.l:                                             ; preds = %_RINvMNtCs4NRVxsYgn
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit65.i.i19: ; preds = %bb.l, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i14
   %.sroa.8.0.i.i20 = phi i64 [ %i.am, %bb.l ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsEhZmuQNqkz_11ruff_linter13rule_selector22UnresolvedRuleSelectorEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECs3ZkgueCtkyH_14ruff_workspace.exit.i.i14 ]
-  %i.an = add nuw nsw i64 %.sroa.8.0.i.i20, %.sroa.7.0.i.i15 ; 2 uses
+  %i.an = add nuw nsw i64 %.sroa.8.0.i.i20, %.sroa.7.0.i.i15 ; 3 uses
   %switch.i.i21 = icmp ugt i64 %i.a, -3
-  %spec.select = select i1 %switch.i.i21, i64 %i.an, i64 undef ; 2 uses
+  %spec.select = select i1 %switch.i.i21, i64 %i.an, i64 undef
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.ap = load ptr, ptr %i.ao, align 8, !alias.scope !3565, !noundef !6
   %.not.i.i24 = icmp eq ptr %i.ap, null
@@ -771,7 +767,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtCscdodAO9FK5_5alloc3vec9i
   %i.bg = and i64 %i.c, %i.a
   %or.cond = icmp ugt i64 %i.bg, -3               ; 2 uses
   %i.bh = add i64 %spec.select54, %spec.select    ; 2 uses
-  %i.bi = icmp uge i64 %i.bh, %spec.select
+  %i.bi = icmp uge i64 %i.bh, %i.an
   %.sroa.46.0 = select i1 %or.cond, i64 %i.bh, i64 undef
   %narrow = select i1 %or.cond, i1 %i.bi, i1 false
   %.sroa.05.0 = zext i1 %narrow to i64

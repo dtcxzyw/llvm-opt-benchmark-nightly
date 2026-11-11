@@ -205,13 +205,12 @@ bb.h:                                             ; preds = %nk_panel_layout.exi
   %i.aw = fsub float 1.000000e+00, %.0.lcssa      ; 2 uses
   %i.ax = fcmp ogt float %i.aw, 1.000000e+00
   %i.ay = select i1 %i.ax, float 1.000000e+00, float %i.aw ; 2 uses
-  %i.az = fcmp ogt float %i.ay, 0.000000e+00      ; 2 uses
-  %5 = select i1 %i.az, float %i.ay, float 0.000000e+00
+  %i.az = fcmp ogt float %i.ay, 0.000000e+00
   store i32 3, ptr %i.ac, align 8, !tbaa !545
   %i.ba = icmp ne i32 %.038.lcssa, 0
   %or.cond = select i1 %i.az, i1 %i.ba, i1 false
   %i.bb = uitofp nneg i32 %.038.lcssa to float
-  %i.bc = fdiv float %5, %i.bb
+  %i.bc = fdiv float %i.ay, %i.bb
   %i.bd = select i1 %or.cond, float %i.bc, float 0.000000e+00
   br label %bb.j
 

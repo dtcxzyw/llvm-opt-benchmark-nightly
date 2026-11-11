@@ -204,12 +204,10 @@ Ivy_DecSetVar.exit:                               ; preds = %bb.cq, %bb.cr, %bb.
   %.sroa.0.1.lcssa = phi i32 [ %i.jg, %bb.cp ], [ %.sroa.0.3, %Ivy_DecSetVar.exit ] ; 10 uses
   %.0.lcssa = phi i32 [ %.092, %bb.cp ], [ %.0.i110, %Ivy_DecSetVar.exit ] ; 2 uses
   %i.kt = and i32 %.sroa.0.1.lcssa, 15
-  %i.ku = icmp eq i32 %i.kt, 4                    ; 4 uses
+  %i.ku = icmp eq i32 %i.kt, 4                    ; 3 uses
   %i.kv = lshr i32 %.sroa.0.1.lcssa, 5
   %.lobit = and i32 %i.kv, 1
-  %2 = xor i32 %.078, %.lobit
-  %i.kw = xor i32 %2, 1                           ; 2 uses
-  %.179 = select i1 %i.ku, i32 %i.kw, i32 %.078
+  %i.kw = xor i32 %.lobit, %.078                  ; 2 uses
   br i1 %i.jb, label %bb.cw, label %bb.de
 
 bb.cw:                                            ; preds = %._crit_edge
@@ -218,12 +216,12 @@ bb.cw:                                            ; preds = %._crit_edge
   br i1 %i.ky, label %Ivy_TruthRecognizeMuxMaj.exit, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
-  %.not = trunc i32 %i.kx to i1
-  %or.cond100.not = and i1 %i.ku, %.not
+  %2 = and i32 %i.kx, 1
   %i.kz = and i32 %i.kx, -2
   %.080 = select i1 %i.ku, i32 %i.kz, i32 %i.kx   ; 6 uses
-  %3 = zext i1 %or.cond100.not to i32
-  %.2.a = xor i32 %.179, %3                       ; 6 uses
+  %3 = xor i32 %2, %i.kw
+  %.2.a = xor i32 %3, 1
+  %.2 = select i1 %i.ku, i32 %.2.a, i32 %.078     ; 6 uses
   switch i32 %.081, label %default.unreachable [
     i32 0, label %bb.cy
     i32 1, label %bb.cz
@@ -280,7 +278,8 @@ bb.de:                                            ; preds = %._crit_edge
 bb.df:                                            ; preds = %bb.de
   %i.lx = icmp eq i32 %.0.lcssa, 0
   %i.ly = zext i1 %i.lx to i32
-  %i.lz = xor i32 %i.kw, %i.ly
+  %4 = xor i32 %i.kw, %i.ly
+  %i.lz = xor i32 %4, 1
   br label %Ivy_DecSetVar.exit113
 
 default.unreachable:                              ; preds = %bb.cx
@@ -288,7 +287,7 @@ default.unreachable:                              ; preds = %bb.cx
 
 Ivy_DecSetVar.exit113:                            ; preds = %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.de, %bb.df
   %.sroa.0.2 = phi i32 [ %.sroa.0.1.lcssa, %bb.de ], [ %.sroa.0.1.lcssa, %bb.df ], [ %i.ld, %bb.cy ], [ %i.lw, %bb.dd ], [ %i.lt, %bb.dc ], [ %i.lp, %bb.db ], [ %i.ll, %bb.da ], [ %i.lh, %bb.cz ]
-  %.3 = phi i32 [ %.078, %bb.de ], [ %i.lz, %bb.df ], [ %.2.a, %bb.cy ], [ %.2.a, %bb.dd ], [ %.2.a, %bb.dc ], [ %.2.a, %bb.db ], [ %.2.a, %bb.da ], [ %.2.a, %bb.cz ]
+  %.3 = phi i32 [ %.078, %bb.de ], [ %i.lz, %bb.df ], [ %.2, %bb.cy ], [ %.2, %bb.dd ], [ %.2, %bb.dc ], [ %.2, %bb.db ], [ %.2, %bb.da ], [ %.2, %bb.cz ]
   %i.ma = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !11 ; 7 uses
   %i.mc = load i32, ptr %1, align 8, !tbaa !12

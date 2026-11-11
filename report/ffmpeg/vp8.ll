@@ -204,7 +204,7 @@ declare void @ff_vp8dsp_init(ptr noundef) local_unnamed_addr #3
 define internal range(i32 -1094995529, 1) i32 @vp8_decode_mb_row_no_filter(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, i32 noundef %2, i32 noundef %3) #1 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca [4 x i8], align 4                 ; 8 uses
+  %i.b = alloca [4 x i8], align 4                 ; 7 uses
   %i.c = alloca [40 x i8], align 4                ; 18 uses
   %4 = alloca [4 x %struct.VP8mv], align 16       ; 12 uses
   %i.d = alloca [4 x i8], align 4                 ; 13 uses
@@ -607,14 +607,14 @@ bb.jk:                                            ; preds = %.preheader, %.peel.
   %.0183.i534 = phi ptr [ %i.dns, %.peel.next ], [ %i.jw, %.preheader ] ; 30 uses
   %i.dgt = getelementptr inbounds nuw i8, ptr %.0183.i534, i64 4
   %i.dgu = sub i64 0, %i.dgs
-  %i.dgv = getelementptr inbounds i8, ptr %i.dgt, i64 %i.dgu ; 2 uses
+  %i.dgv = getelementptr inbounds i8, ptr %i.dgt, i64 %i.dgu ; 3 uses
   %i.dgw = icmp eq i64 %indvars.iv644, 0
   %i.dgx = icmp ne i64 %indvars.iv644, %i.it      ; 16 uses
   %i.dgy = select i1 %i.dgx, i32 9, i32 14        ; 4 uses
   %i.dgz = select i1 %i.dgx, i32 10, i32 13
   %i.dha = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %indvars.iv644 ; 4 uses
   %i.dhb = getelementptr inbounds nuw [128 x i8], ptr %i.i, i64 %indvars.iv644 ; 4 uses
-  %or.cond5.i9 = and i1 %i.bm, %i.dgw             ; 4 uses
+  %or.cond5.i9 = and i1 %i.bm, %i.dgw             ; 3 uses
   %i.dhc = load i64, ptr %i.ah, align 8, !tbaa !118 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %.1.i11 = select i1 %or.cond5.i9, ptr %i.b, ptr %i.dgv ; 2 uses
@@ -765,8 +765,7 @@ bb.jx:                                            ; preds = %bb.jw
   br label %bb.jy
 
 bb.jy:                                            ; preds = %.sink.split1128, %bb.jw
-  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %or.cond5.i9, ptr %i.b, ptr %i.dgv ; 2 uses
-  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 4
+  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.dgv, i64 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   %i.dix = load i64, ptr %i.ah, align 8, !tbaa !118 ; 4 uses
   %i.diy = getelementptr i8, ptr %.0183.i534, i64 4 ; 6 uses
@@ -870,7 +869,7 @@ bb.kf:                                            ; preds = %bb.ke
   br label %bb.kg
 
 bb.kg:                                            ; preds = %.sink.split1128.1, %bb.ke
-  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.sroa.gep = getelementptr inbounds nuw i8, ptr %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 8
+  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.sroa.gep = getelementptr inbounds nuw i8, ptr %i.dgv, i64 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   %i.dkm = load i64, ptr %i.ah, align 8, !tbaa !118 ; 4 uses
   %i.dkn = getelementptr i8, ptr %.0183.i534, i64 8 ; 6 uses
@@ -1273,7 +1272,7 @@ declare void @ff_vp7dsp_init(ptr noundef) local_unnamed_addr #3
 define internal range(i32 -1094995529, 1) i32 @vp7_decode_mb_row_no_filter(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, i32 noundef %2, i32 noundef %3) #1 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca [4 x i8], align 4                 ; 8 uses
+  %i.b = alloca [4 x i8], align 4                 ; 7 uses
   %i.c = alloca [40 x i8], align 4                ; 18 uses
   %.sroa.0714 = alloca i8, align 1                ; 7 uses
   %.sroa.7715 = alloca i8, align 1                ; 6 uses
@@ -1676,14 +1675,14 @@ bb.io:                                            ; preds = %.preheader, %.peel.
   %.0183.i551 = phi ptr [ %i.dfn, %.peel.next ], [ %i.jn, %.preheader ] ; 30 uses
   %i.cyo = getelementptr inbounds nuw i8, ptr %.0183.i551, i64 4
   %i.cyp = sub i64 0, %i.cyn
-  %i.cyq = getelementptr inbounds i8, ptr %i.cyo, i64 %i.cyp ; 2 uses
+  %i.cyq = getelementptr inbounds i8, ptr %i.cyo, i64 %i.cyp ; 3 uses
   %i.cyr = icmp eq i64 %indvars.iv674, 0
   %i.cys = icmp ne i64 %indvars.iv674, %i.ik      ; 16 uses
   %i.cyt = select i1 %i.cys, i32 9, i32 14        ; 4 uses
   %i.cyu = select i1 %i.cys, i32 10, i32 11
   %i.cyv = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %indvars.iv674 ; 4 uses
   %i.cyw = getelementptr inbounds nuw [128 x i8], ptr %i.h, i64 %indvars.iv674 ; 4 uses
-  %or.cond5.i9 = and i1 %i.bl, %i.cyr             ; 4 uses
+  %or.cond5.i9 = and i1 %i.bl, %i.cyr             ; 3 uses
   %i.cyx = load i64, ptr %i.ag, align 8, !tbaa !118 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %.1.i11 = select i1 %or.cond5.i9, ptr %i.b, ptr %i.cyq ; 2 uses
@@ -1834,8 +1833,7 @@ bb.jb:                                            ; preds = %bb.ja
   br label %bb.jc
 
 bb.jc:                                            ; preds = %.sink.split1138, %bb.ja
-  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %or.cond5.i9, ptr %i.b, ptr %i.cyq ; 2 uses
-  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 4
+  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.cyq, i64 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   %i.das = load i64, ptr %i.ag, align 8, !tbaa !118 ; 4 uses
   %i.dat = getelementptr i8, ptr %.0183.i551, i64 4 ; 6 uses
@@ -1939,7 +1937,7 @@ bb.jj:                                            ; preds = %bb.ji
   br label %bb.jk
 
 bb.jk:                                            ; preds = %.sink.split1138.1, %bb.ji
-  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.sroa.gep = getelementptr inbounds nuw i8, ptr %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 8
+  %.1.i11.sroa.sel.v.sroa.sel.v.sroa.sel.sroa.gep = getelementptr inbounds nuw i8, ptr %i.cyq, i64 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   %i.dch = load i64, ptr %i.ag, align 8, !tbaa !118 ; 4 uses
   %i.dci = getelementptr i8, ptr %.0183.i551, i64 8 ; 6 uses

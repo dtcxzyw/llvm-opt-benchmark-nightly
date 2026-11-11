@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %.critedge
   br label %jpeg2000_read_main_headers.exit
 
 bb.bm:                                            ; preds = %bb.hs, %.lr.ph.i72
-  %i.nu = phi ptr [ %i.lx, %.lr.ph.i72 ], [ %i.anw, %bb.hs ] ; 47 uses
+  %i.nu = phi ptr [ %i.lx, %.lr.ph.i72 ], [ %i.anw, %bb.hs ] ; 35 uses
   %i.nv = phi i64 [ %.pre-phi, %.lr.ph.i72 ], [ %i.anx, %bb.hs ]
   %i.nw = phi ptr [ %i.ml, %.lr.ph.i72 ], [ %i.anv, %bb.hs ] ; 18 uses
   %.0166445.i = phi i8 [ 0, %.lr.ph.i72 ], [ %.3.i75, %bb.hs ] ; 43 uses
@@ -608,58 +608,54 @@ bytestream2_get_byte.exit.us.i.i.preheader.new:   ; preds = %bytestream2_get_byt
   br label %bytestream2_get_byte.exit.us.i.i
 
 .lr.ph.split.us.split.us.i.i:                     ; preds = %.lr.ph.split.us.split.us.i.i, %.lr.ph.split.us.split.us.i.i.preheader.new
-  %i.afl = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us.i.i.preheader.new ], [ %storemerge51.i.i.1, %.lr.ph.split.us.split.us.i.i ] ; 2 uses
+  %i.afl = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us.i.i.preheader.new ], [ %storemerge51.i.i.1, %.lr.ph.split.us.split.us.i.i ] ; 3 uses
   %niter850 = phi i32 [ 0, %.lr.ph.split.us.split.us.i.i.preheader.new ], [ %niter850.next.1, %.lr.ph.split.us.split.us.i.i ]
   %i.afm = ptrtoint ptr %i.afl to i64
   %i.afn = sub i64 %i.rm, %i.afm
-  %i.afo = icmp slt i64 %i.afn, 2                 ; 2 uses
-  %i.afp = getelementptr inbounds nuw i8, ptr %i.afl, i64 2 ; 2 uses
+  %i.afo = icmp slt i64 %i.afn, 2
+  %i.afp = getelementptr inbounds nuw i8, ptr %i.afl, i64 2
   %.pre.i263.i = ptrtoint ptr %i.afp to i64
-  %storemerge50.i.i = select i1 %i.afo, ptr %i.nu, ptr %i.afp
   %i.afq = sub i64 %i.rm, %.pre.i263.i
   %i.afr = icmp slt i64 %i.afq, 2
   %i.afs = select i1 %i.afo, i1 true, i1 %i.afr
-  %i.aft = getelementptr inbounds nuw i8, ptr %storemerge50.i.i, i64 2
-  %storemerge51.i.i = select i1 %i.afs, ptr %i.nu, ptr %i.aft ; 2 uses
+  %i.aft = getelementptr inbounds nuw i8, ptr %i.afl, i64 4
+  %storemerge51.i.i = select i1 %i.afs, ptr %i.nu, ptr %i.aft ; 3 uses
   %i.afu = ptrtoint ptr %storemerge51.i.i to i64
   %i.afv = sub i64 %i.rm, %i.afu
-  %i.afw = icmp slt i64 %i.afv, 2                 ; 2 uses
-  %i.afx = getelementptr inbounds nuw i8, ptr %storemerge51.i.i, i64 2 ; 2 uses
+  %i.afw = icmp slt i64 %i.afv, 2
+  %i.afx = getelementptr inbounds nuw i8, ptr %storemerge51.i.i, i64 2
   %.pre.i263.i.1 = ptrtoint ptr %i.afx to i64
-  %storemerge50.i.i.1 = select i1 %i.afw, ptr %i.nu, ptr %i.afx
   %i.afy = sub i64 %i.rm, %.pre.i263.i.1
   %i.afz = icmp slt i64 %i.afy, 2
   %i.aga = select i1 %i.afw, i1 true, i1 %i.afz
-  %i.agb = getelementptr inbounds nuw i8, ptr %storemerge50.i.i.1, i64 2
+  %i.agb = getelementptr inbounds nuw i8, ptr %storemerge51.i.i, i64 4
   %storemerge51.i.i.1 = select i1 %i.aga, ptr %i.nu, ptr %i.agb ; 3 uses
   %niter850.next.1 = add i32 %niter850, 2         ; 2 uses
   %niter850.ncmp.1 = icmp eq i32 %niter850.next.1, %unroll_iter849
   br i1 %niter850.ncmp.1, label %.loopexit.loopexit87.i.i.unr-lcssa, label %.lr.ph.split.us.split.us.i.i, !llvm.loop !138
 
 .lr.ph.split.us.split.us39.i.i:                   ; preds = %.lr.ph.split.us.split.us39.i.i, %.lr.ph.split.us.split.us39.i.i.preheader.new
-  %i.agc = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us39.i.i.preheader.new ], [ %storemerge49.i.i.1, %.lr.ph.split.us.split.us39.i.i ] ; 2 uses
+  %i.agc = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us39.i.i.preheader.new ], [ %storemerge49.i.i.1, %.lr.ph.split.us.split.us39.i.i ] ; 3 uses
   %niter841 = phi i32 [ 0, %.lr.ph.split.us.split.us39.i.i.preheader.new ], [ %niter841.next.1, %.lr.ph.split.us.split.us39.i.i ]
   %i.agd = ptrtoint ptr %i.agc to i64
   %i.age = sub i64 %i.rm, %i.agd
-  %i.agf = icmp slt i64 %i.age, 1                 ; 2 uses
-  %i.agg = getelementptr inbounds nuw i8, ptr %i.agc, i64 1 ; 2 uses
+  %i.agf = icmp slt i64 %i.age, 1
+  %i.agg = getelementptr inbounds nuw i8, ptr %i.agc, i64 1
   %.pre80.i.i = ptrtoint ptr %i.agg to i64
-  %7 = select i1 %i.agf, ptr %i.nu, ptr %i.agg
   %i.agh = sub i64 %i.rm, %.pre80.i.i
   %i.agi = icmp slt i64 %i.agh, 2
   %i.agj = select i1 %i.agf, i1 true, i1 %i.agi
-  %i.agk = getelementptr inbounds nuw i8, ptr %7, i64 2
-  %storemerge49.i.i = select i1 %i.agj, ptr %i.nu, ptr %i.agk ; 2 uses
+  %i.agk = getelementptr inbounds nuw i8, ptr %i.agc, i64 3
+  %storemerge49.i.i = select i1 %i.agj, ptr %i.nu, ptr %i.agk ; 3 uses
   %i.agl = ptrtoint ptr %storemerge49.i.i to i64
   %i.agm = sub i64 %i.rm, %i.agl
-  %i.agn = icmp slt i64 %i.agm, 1                 ; 2 uses
-  %i.ago = getelementptr inbounds nuw i8, ptr %storemerge49.i.i, i64 1 ; 2 uses
+  %i.agn = icmp slt i64 %i.agm, 1
+  %i.ago = getelementptr inbounds nuw i8, ptr %storemerge49.i.i, i64 1
   %.pre80.i.i.1 = ptrtoint ptr %i.ago to i64
-  %8 = select i1 %i.agn, ptr %i.nu, ptr %i.ago
   %i.agp = sub i64 %i.rm, %.pre80.i.i.1
   %i.agq = icmp slt i64 %i.agp, 2
   %i.agr = select i1 %i.agn, i1 true, i1 %i.agq
-  %i.ags = getelementptr inbounds nuw i8, ptr %8, i64 2
+  %i.ags = getelementptr inbounds nuw i8, ptr %storemerge49.i.i, i64 3
   %storemerge49.i.i.1 = select i1 %i.agr, ptr %i.nu, ptr %i.ags ; 3 uses
   %niter841.next.1 = add i32 %niter841, 2         ; 2 uses
   %niter841.ncmp.1 = icmp eq i32 %niter841.next.1, %unroll_iter840
@@ -726,58 +722,54 @@ bytestream2_get_byte.exit.i262.i.preheader.new:   ; preds = %bytestream2_get_byt
   br label %bytestream2_get_byte.exit.i262.i
 
 .lr.ph.split.split.us.i.i:                        ; preds = %.lr.ph.split.split.us.i.i, %.lr.ph.split.split.us.i.i.preheader.new
-  %i.ahn = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us.i.i.preheader.new ], [ %i.aif, %.lr.ph.split.split.us.i.i ] ; 2 uses
+  %i.ahn = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us.i.i.preheader.new ], [ %i.aif, %.lr.ph.split.split.us.i.i ] ; 3 uses
   %niter824 = phi i32 [ 0, %.lr.ph.split.split.us.i.i.preheader.new ], [ %niter824.next.1, %.lr.ph.split.split.us.i.i ]
   %i.aho = ptrtoint ptr %i.ahn to i64
   %i.ahp = sub i64 %i.rm, %i.aho
-  %i.ahq = icmp slt i64 %i.ahp, 2                 ; 2 uses
-  %i.ahr = getelementptr inbounds nuw i8, ptr %i.ahn, i64 2 ; 2 uses
+  %i.ahq = icmp slt i64 %i.ahp, 2
+  %i.ahr = getelementptr inbounds nuw i8, ptr %i.ahn, i64 2
   %.pre82.i.i = ptrtoint ptr %i.ahr to i64
-  %9 = select i1 %i.ahq, ptr %i.nu, ptr %i.ahr
   %i.ahs = sub i64 %i.rm, %.pre82.i.i
   %i.aht = icmp slt i64 %i.ahs, 4
   %i.ahu = select i1 %i.ahq, i1 true, i1 %i.aht
-  %i.ahv = getelementptr inbounds nuw i8, ptr %9, i64 4
-  %i.ahw = select i1 %i.ahu, ptr %i.nu, ptr %i.ahv ; 2 uses
+  %i.ahv = getelementptr inbounds nuw i8, ptr %i.ahn, i64 6
+  %i.ahw = select i1 %i.ahu, ptr %i.nu, ptr %i.ahv ; 3 uses
   %i.ahx = ptrtoint ptr %i.ahw to i64
   %i.ahy = sub i64 %i.rm, %i.ahx
-  %i.ahz = icmp slt i64 %i.ahy, 2                 ; 2 uses
-  %i.aia = getelementptr inbounds nuw i8, ptr %i.ahw, i64 2 ; 2 uses
+  %i.ahz = icmp slt i64 %i.ahy, 2
+  %i.aia = getelementptr inbounds nuw i8, ptr %i.ahw, i64 2
   %.pre82.i.i.1 = ptrtoint ptr %i.aia to i64
-  %10 = select i1 %i.ahz, ptr %i.nu, ptr %i.aia
   %i.aib = sub i64 %i.rm, %.pre82.i.i.1
   %i.aic = icmp slt i64 %i.aib, 4
   %i.aid = select i1 %i.ahz, i1 true, i1 %i.aic
-  %i.aie = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %i.aie = getelementptr inbounds nuw i8, ptr %i.ahw, i64 6
   %i.aif = select i1 %i.aid, ptr %i.nu, ptr %i.aie ; 3 uses
   %niter824.next.1 = add i32 %niter824, 2         ; 2 uses
   %niter824.ncmp.1 = icmp eq i32 %niter824.next.1, %unroll_iter823
   br i1 %niter824.ncmp.1, label %.loopexit.loopexit90.i.i.unr-lcssa, label %.lr.ph.split.split.us.i.i, !llvm.loop !138
 
 .lr.ph.split.split.us34.i.i:                      ; preds = %.lr.ph.split.split.us34.i.i, %.lr.ph.split.split.us34.i.i.preheader.new
-  %i.aig = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us34.i.i.preheader.new ], [ %i.aiy, %.lr.ph.split.split.us34.i.i ] ; 2 uses
+  %i.aig = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us34.i.i.preheader.new ], [ %i.aiy, %.lr.ph.split.split.us34.i.i ] ; 3 uses
   %niter816 = phi i32 [ 0, %.lr.ph.split.split.us34.i.i.preheader.new ], [ %niter816.next.1, %.lr.ph.split.split.us34.i.i ]
   %i.aih = ptrtoint ptr %i.aig to i64
   %i.aii = sub i64 %i.rm, %i.aih
-  %i.aij = icmp slt i64 %i.aii, 1                 ; 2 uses
-  %i.aik = getelementptr inbounds nuw i8, ptr %i.aig, i64 1 ; 2 uses
+  %i.aij = icmp slt i64 %i.aii, 1
+  %i.aik = getelementptr inbounds nuw i8, ptr %i.aig, i64 1
   %.pre84.i.i = ptrtoint ptr %i.aik to i64
-  %11 = select i1 %i.aij, ptr %i.nu, ptr %i.aik
   %i.ail = sub i64 %i.rm, %.pre84.i.i
   %i.aim = icmp slt i64 %i.ail, 4
   %i.ain = select i1 %i.aij, i1 true, i1 %i.aim
-  %i.aio = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.aip = select i1 %i.ain, ptr %i.nu, ptr %i.aio ; 2 uses
+  %i.aio = getelementptr inbounds nuw i8, ptr %i.aig, i64 5
+  %i.aip = select i1 %i.ain, ptr %i.nu, ptr %i.aio ; 3 uses
   %i.aiq = ptrtoint ptr %i.aip to i64
   %i.air = sub i64 %i.rm, %i.aiq
-  %i.ais = icmp slt i64 %i.air, 1                 ; 2 uses
-  %i.ait = getelementptr inbounds nuw i8, ptr %i.aip, i64 1 ; 2 uses
+  %i.ais = icmp slt i64 %i.air, 1
+  %i.ait = getelementptr inbounds nuw i8, ptr %i.aip, i64 1
   %.pre84.i.i.1 = ptrtoint ptr %i.ait to i64
-  %12 = select i1 %i.ais, ptr %i.nu, ptr %i.ait
   %i.aiu = sub i64 %i.rm, %.pre84.i.i.1
   %i.aiv = icmp slt i64 %i.aiu, 4
   %i.aiw = select i1 %i.ais, i1 true, i1 %i.aiv
-  %i.aix = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.aix = getelementptr inbounds nuw i8, ptr %i.aip, i64 5
   %i.aiy = select i1 %i.aiw, ptr %i.nu, ptr %i.aix ; 3 uses
   %niter816.next.1 = add i32 %niter816, 2         ; 2 uses
   %niter816.ncmp.1 = icmp eq i32 %niter816.next.1, %unroll_iter815
@@ -842,19 +834,18 @@ bytestream2_get_byte.exit.us.i.i.epil:            ; preds = %bytestream2_get_byt
   br i1 %lcmp.mod846.not, label %.loopexit.loopexit87.i.i, label %.lr.ph.split.us.split.us.i.i.epil.preheader
 
 .lr.ph.split.us.split.us.i.i.epil.preheader:      ; preds = %.loopexit.loopexit87.i.i.unr-lcssa, %.lr.ph.split.us.split.us.i.i.preheader
-  %.epil.init845 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us.i.i.preheader ], [ %storemerge51.i.i.1, %.loopexit.loopexit87.i.i.unr-lcssa ] ; 2 uses
+  %.epil.init845 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us.i.i.preheader ], [ %storemerge51.i.i.1, %.loopexit.loopexit87.i.i.unr-lcssa ] ; 3 uses
   %lcmp.mod848 = trunc i32 %i.aff to i1
   tail call void @llvm.assume(i1 %lcmp.mod848)
   %i.ajv = ptrtoint ptr %.epil.init845 to i64
   %i.ajw = sub i64 %i.rm, %i.ajv
-  %i.ajx = icmp slt i64 %i.ajw, 2                 ; 2 uses
-  %i.ajy = getelementptr inbounds nuw i8, ptr %.epil.init845, i64 2 ; 2 uses
+  %i.ajx = icmp slt i64 %i.ajw, 2
+  %i.ajy = getelementptr inbounds nuw i8, ptr %.epil.init845, i64 2
   %.pre.i263.i.epil = ptrtoint ptr %i.ajy to i64
-  %storemerge50.i.i.epil = select i1 %i.ajx, ptr %i.nu, ptr %i.ajy
   %i.ajz = sub i64 %i.rm, %.pre.i263.i.epil
   %i.aka = icmp slt i64 %i.ajz, 2
   %i.akb = select i1 %i.ajx, i1 true, i1 %i.aka
-  %i.akc = getelementptr inbounds nuw i8, ptr %storemerge50.i.i.epil, i64 2
+  %i.akc = getelementptr inbounds nuw i8, ptr %.epil.init845, i64 4
   %storemerge51.i.i.epil = select i1 %i.akb, ptr %i.nu, ptr %i.akc
   br label %.loopexit.loopexit87.i.i
 
@@ -868,19 +859,18 @@ bytestream2_get_byte.exit.us.i.i.epil:            ; preds = %bytestream2_get_byt
   br i1 %lcmp.mod837.not, label %.loopexit.loopexit88.i.i, label %.lr.ph.split.us.split.us39.i.i.epil.preheader
 
 .lr.ph.split.us.split.us39.i.i.epil.preheader:    ; preds = %.loopexit.loopexit88.i.i.unr-lcssa, %.lr.ph.split.us.split.us39.i.i.preheader
-  %.epil.init836 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us39.i.i.preheader ], [ %storemerge49.i.i.1, %.loopexit.loopexit88.i.i.unr-lcssa ] ; 2 uses
+  %.epil.init836 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.us.split.us39.i.i.preheader ], [ %storemerge49.i.i.1, %.loopexit.loopexit88.i.i.unr-lcssa ] ; 3 uses
   %lcmp.mod839 = trunc i32 %i.aff to i1
   tail call void @llvm.assume(i1 %lcmp.mod839)
   %i.akd = ptrtoint ptr %.epil.init836 to i64
   %i.ake = sub i64 %i.rm, %i.akd
-  %i.akf = icmp slt i64 %i.ake, 1                 ; 2 uses
-  %i.akg = getelementptr inbounds nuw i8, ptr %.epil.init836, i64 1 ; 2 uses
+  %i.akf = icmp slt i64 %i.ake, 1
+  %i.akg = getelementptr inbounds nuw i8, ptr %.epil.init836, i64 1
   %.pre80.i.i.epil = ptrtoint ptr %i.akg to i64
-  %13 = select i1 %i.akf, ptr %i.nu, ptr %i.akg
   %i.akh = sub i64 %i.rm, %.pre80.i.i.epil
   %i.aki = icmp slt i64 %i.akh, 2
   %i.akj = select i1 %i.akf, i1 true, i1 %i.aki
-  %i.akk = getelementptr inbounds nuw i8, ptr %13, i64 2
+  %i.akk = getelementptr inbounds nuw i8, ptr %.epil.init836, i64 3
   %storemerge49.i.i.epil = select i1 %i.akj, ptr %i.nu, ptr %i.akk
   br label %.loopexit.loopexit88.i.i
 
@@ -921,19 +911,18 @@ bytestream2_get_byte.exit.i262.i.epil:            ; preds = %bytestream2_get_byt
   br i1 %lcmp.mod820.not, label %.loopexit.loopexit90.i.i, label %.lr.ph.split.split.us.i.i.epil.preheader
 
 .lr.ph.split.split.us.i.i.epil.preheader:         ; preds = %.loopexit.loopexit90.i.i.unr-lcssa, %.lr.ph.split.split.us.i.i.preheader
-  %.epil.init819 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us.i.i.preheader ], [ %i.aif, %.loopexit.loopexit90.i.i.unr-lcssa ] ; 2 uses
+  %.epil.init819 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us.i.i.preheader ], [ %i.aif, %.loopexit.loopexit90.i.i.unr-lcssa ] ; 3 uses
   %lcmp.mod822 = trunc i32 %i.aff to i1
   tail call void @llvm.assume(i1 %lcmp.mod822)
   %i.akq = ptrtoint ptr %.epil.init819 to i64
   %i.akr = sub i64 %i.rm, %i.akq
-  %i.aks = icmp slt i64 %i.akr, 2                 ; 2 uses
-  %i.akt = getelementptr inbounds nuw i8, ptr %.epil.init819, i64 2 ; 2 uses
+  %i.aks = icmp slt i64 %i.akr, 2
+  %i.akt = getelementptr inbounds nuw i8, ptr %.epil.init819, i64 2
   %.pre82.i.i.epil = ptrtoint ptr %i.akt to i64
-  %14 = select i1 %i.aks, ptr %i.nu, ptr %i.akt
   %i.aku = sub i64 %i.rm, %.pre82.i.i.epil
   %i.akv = icmp slt i64 %i.aku, 4
   %i.akw = select i1 %i.aks, i1 true, i1 %i.akv
-  %i.akx = getelementptr inbounds nuw i8, ptr %14, i64 4
+  %i.akx = getelementptr inbounds nuw i8, ptr %.epil.init819, i64 6
   %i.aky = select i1 %i.akw, ptr %i.nu, ptr %i.akx
   br label %.loopexit.loopexit90.i.i
 
@@ -947,19 +936,18 @@ bytestream2_get_byte.exit.i262.i.epil:            ; preds = %bytestream2_get_byt
   br i1 %lcmp.mod812.not, label %.loopexit.loopexit91.i.i, label %.lr.ph.split.split.us34.i.i.epil.preheader
 
 .lr.ph.split.split.us34.i.i.epil.preheader:       ; preds = %.loopexit.loopexit91.i.i.unr-lcssa, %.lr.ph.split.split.us34.i.i.preheader
-  %.epil.init811 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us34.i.i.preheader ], [ %i.aiy, %.loopexit.loopexit91.i.i.unr-lcssa ] ; 2 uses
+  %.epil.init811 = phi ptr [ %.promoted38.i.i, %.lr.ph.split.split.us34.i.i.preheader ], [ %i.aiy, %.loopexit.loopexit91.i.i.unr-lcssa ] ; 3 uses
   %lcmp.mod814 = trunc i32 %i.aff to i1
   tail call void @llvm.assume(i1 %lcmp.mod814)
   %i.akz = ptrtoint ptr %.epil.init811 to i64
   %i.ala = sub i64 %i.rm, %i.akz
-  %i.alb = icmp slt i64 %i.ala, 1                 ; 2 uses
-  %i.alc = getelementptr inbounds nuw i8, ptr %.epil.init811, i64 1 ; 2 uses
+  %i.alb = icmp slt i64 %i.ala, 1
+  %i.alc = getelementptr inbounds nuw i8, ptr %.epil.init811, i64 1
   %.pre84.i.i.epil = ptrtoint ptr %i.alc to i64
-  %15 = select i1 %i.alb, ptr %i.nu, ptr %i.alc
   %i.ald = sub i64 %i.rm, %.pre84.i.i.epil
   %i.ale = icmp slt i64 %i.ald, 4
   %i.alf = select i1 %i.alb, i1 true, i1 %i.ale
-  %i.alg = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %i.alg = getelementptr inbounds nuw i8, ptr %.epil.init811, i64 5
   %i.alh = select i1 %i.alf, ptr %i.nu, ptr %i.alg
   br label %.loopexit.loopexit91.i.i
 

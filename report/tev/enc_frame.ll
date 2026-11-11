@@ -205,12 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %spec.store.select = select i1 %i.i, i32 4, i32 3
   %spec.select = select i1 %i.i, i32 4, i32 3
   %i.j = fcmp ogt float %i.h, 5.500000e+00        ; 2 uses
-  %4 = zext i1 %i.j to i32
-  %5 = add nuw nsw i32 %spec.select, %4
+  %4 = select i1 %i.j, i32 5, i32 %spec.select
   %i.k = fcmp ogt float %i.h, 9.500000e+00
-  %6 = zext i1 %i.k to i32
-  %7 = add nuw nsw i32 %5, %6                     ; 2 uses
-  %spec.select56 = select i1 %i.j, i32 %7, i32 %spec.store.select
+  %5 = select i1 %i.k, i32 6, i32 %4              ; 2 uses
+  %spec.select56 = select i1 %i.j, i32 %5, i32 %spec.store.select
   store i32 %spec.select56, ptr %i.f, align 4, !tbaa !460
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.m = load i32, ptr %i.l, align 4, !tbaa !89
@@ -448,7 +446,7 @@ _ZNK3jxl12_GLOBAL__N_133PixelStatsForChromacityAdjustment26HowMuchIsXChannelPixe
   %.sroa.6.039 = phi double [ %i.en, %bb.h ], [ %i.en, %bb.g ], [ %.sroa.6.04054, %.thread49 ] ; 3 uses
   %.sroa.9.037 = phi i1 [ %i.ej, %bb.h ], [ %i.ej, %bb.g ], [ %.sroa.9.03855, %.thread49 ] ; 3 uses
   %.0.i = phi i32 [ 4, %bb.h ], [ 5, %bb.g ], [ %i.er, %.thread49 ]
-  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %7, i32 %.0.i)
+  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %5, i32 %.0.i)
   store i32 %.sroa.speculated, ptr %i.f, align 4, !tbaa !460
   %i.es = fcmp ogt double %.sroa.6.039, 3.800000e-01
   br i1 %i.es, label %bb.i, label %bb.j

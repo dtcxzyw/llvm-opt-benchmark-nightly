@@ -204,7 +204,7 @@ bb.a:
   %i.a = load i32, ptr %0, align 8
   %i.b = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef null, ptr noundef @.str.251, i32 noundef %i.a) ; 2 uses
   store ptr %i.b, ptr %1, align 8
-  %i.c = tail call i64 @strlen(ptr noundef %i.b) #10
+  %i.c = tail call i64 @strlen(ptr noundef %i.b) #9
   %i.d = trunc i64 %i.c to i32
   store i32 %i.d, ptr %2, align 4
   ret void
@@ -218,7 +218,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = zext i32 %2 to i64
-  %i.b = tail call ptr @g_memdup2(ptr noundef %1, i64 noundef %i.a) #11
+  %i.b = tail call ptr @g_memdup2(ptr noundef %1, i64 noundef %i.a) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -244,11 +244,11 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8
   %i.e = zext i32 %i.d to i64
-  %i.f = tail call ptr @g_memdup2(ptr noundef nonnull %i.b, i64 noundef %i.e) #11
+  %i.f = tail call ptr @g_memdup2(ptr noundef nonnull %i.b, i64 noundef %i.e) #10
   br label %g_strdup_inline.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = tail call noalias dereferenceable_or_null(1) ptr @g_malloc(i64 noundef 1) #12 ; 2 uses
+  %i.g = tail call noalias dereferenceable_or_null(1) ptr @g_malloc(i64 noundef 1) #11 ; 2 uses
   store i8 0, ptr %i.g, align 1
   br label %g_strdup_inline.exit
 
@@ -300,7 +300,7 @@ bb.a:
   %i.d = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.c, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
   %i.e = load i32, ptr @ett_c1222, align 4
   %i.f = tail call ptr @proto_item_add_subtree(ptr noundef %i.d, i32 noundef %i.e)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   call void @asn1_ctx_init(ptr noundef nonnull %4, i32 noundef 0, i1 noundef zeroext true, ptr noundef %1)
   %i.g = load i32, ptr @hf_c1222_MESSAGE_PDU, align 4
   store i32 0, ptr @aSO_context_len, align 4
@@ -326,7 +326,7 @@ bb.a:
   store i32 0, ptr @iv_element_len, align 4
   store ptr null, ptr @iv_element, align 8
   %i.h = call i32 @dissect_ber_tagged_type(i1 noundef zeroext false, ptr noundef nonnull %4, ptr noundef %i.f, ptr noundef %0, i32 noundef 0, i32 noundef %i.g, i8 noundef signext 1, i32 noundef 0, i1 noundef zeroext true, ptr noundef @dissect_c1222_MESSAGE_U)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   ret i32 %i.h
 }
 
@@ -337,7 +337,7 @@ declare ptr @prefs_register_protocol(i32 noundef, ptr noundef) local_unnamed_add
 define hidden void @proto_reg_handoff_c1222() #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store ptr null, ptr %i.a, align 8
   %.b = load i1, ptr @proto_reg_handoff_c1222.initialized, align 1
   br i1 %.b, label %bb.c, label %bb.b
@@ -371,12 +371,12 @@ bb.f:                                             ; preds = %bb.e
   %i.h = load ptr, ptr @c1222_baseoid, align 8
   %i.i = load i32, ptr @c1222_baseoid_len, align 4
   %i.j = zext i32 %i.i to i64                     ; 2 uses
-  %i.k = call ptr @wmem_realloc(ptr noundef %i.g, ptr noundef %i.h, i64 noundef %i.j) #14 ; 2 uses
+  %i.k = call ptr @wmem_realloc(ptr noundef %i.g, ptr noundef %i.h, i64 noundef %i.j) #13 ; 2 uses
   store ptr %i.k, ptr @c1222_baseoid, align 8
   %i.l = load ptr, ptr %i.a, align 8
   %i.m = load i32, ptr @c1222_baseoid_len, align 4
   %i.n = zext i32 %i.m to i64
-  %i.o = call ptr @__memcpy_chk(ptr noundef %i.k, ptr noundef %i.l, i64 noundef %i.n, i64 noundef %i.j) #13, !alias.scope !12 ; 0 uses
+  %i.o = call ptr @__memcpy_chk(ptr noundef %i.k, ptr noundef %i.l, i64 noundef %i.n, i64 noundef %i.j) #12, !alias.scope !12 ; 0 uses
   %i.p = load ptr, ptr %i.a, align 8
   call void @wmem_free(ptr noundef null, ptr noundef %i.p)
   br label %bb.i
@@ -395,7 +395,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret void
 }
 
@@ -420,7 +420,7 @@ bb.a:
   %i.e = getelementptr i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = zext i32 %i.c to i64
-  %i.h = tail call ptr @g_memdup2(ptr noundef %i.f, i64 noundef %i.g) #11
+  %i.h = tail call ptr @g_memdup2(ptr noundef %i.f, i64 noundef %i.g) #10
   %i.i = getelementptr i8, ptr %0, i64 8
   store ptr %i.h, ptr %i.i, align 8
   ret ptr %0
@@ -434,8 +434,8 @@ bb.a:
   br i1 %i.b, label %g_strdup_inline.exit7, label %bb.b
 
 g_strdup_inline.exit7:                            ; preds = %bb.a
-  %i.c = tail call noalias dereferenceable_or_null(42) ptr @g_malloc(i64 noundef 42) #12 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(42) %i.c, ptr noundef nonnull align 1 dereferenceable(42) @.str.292, i64 noundef 42, i1 noundef false) #13
+  %i.c = tail call noalias dereferenceable_or_null(42) ptr @g_malloc(i64 noundef 42) #11 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(42) %i.c, ptr noundef nonnull align 1 dereferenceable(42) @.str.292, i64 noundef 42, i1 noundef false) #12
   br label %.sink.split
 
 bb.b:                                             ; preds = %bb.a
@@ -445,8 +445,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %g_strdup_inline.exit
 
 g_strdup_inline.exit:                             ; preds = %bb.b
-  %i.f = tail call noalias dereferenceable_or_null(35) ptr @g_malloc(i64 noundef 35) #12 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(35) %i.f, ptr noundef nonnull align 1 dereferenceable(35) @.str.293, i64 noundef 35, i1 noundef false) #13
+  %i.f = tail call noalias dereferenceable_or_null(35) ptr @g_malloc(i64 noundef 35) #11 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(35) %i.f, ptr noundef nonnull align 1 dereferenceable(35) @.str.293, i64 noundef 35, i1 noundef false) #12
   br label %.sink.split
 
 .sink.split:                                      ; preds = %g_strdup_inline.exit7, %g_strdup_inline.exit
@@ -518,15 +518,15 @@ define internal i32 @get_c1222_message_len(ptr noundef %0, ptr noundef %1, i32 n
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i8, align 1                       ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.c = add i32 %2, 1
   %i.d = call i32 @dissect_ber_length(ptr noundef %0, ptr noundef null, ptr noundef %1, i32 noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b)
   %i.e = load i32, ptr %i.a, align 4
   %i.f = sub i32 %i.d, %2
   %i.g = add i32 %i.f, %i.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %i.g
 }
 
@@ -599,7 +599,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr i8, ptr %i.h, i64 416
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = zext i32 %i.f to i64                     ; 2 uses
-  %i.l = tail call noalias ptr @wmem_alloc(ptr noundef %i.j, i64 noundef %i.k) #11 ; 5 uses
+  %i.l = tail call noalias ptr @wmem_alloc(ptr noundef %i.j, i64 noundef %i.k) #10 ; 5 uses
   store ptr %i.l, ptr @called_AP_title, align 8
   %i.m = load i32, ptr @called_AP_title_len, align 4 ; 2 uses
   store i32 %i.m, ptr @called_AP_title_allocated, align 4
@@ -621,7 +621,7 @@ bb.c:                                             ; preds = %bb.b
   %i.v = select i1 %i.u, i64 0, i64 %i.t          ; 2 uses
   %i.w = icmp ne i64 %i.v, -1
   tail call void @llvm.assume(i1 %i.w)
-  %i.x = tail call ptr @__memcpy_chk(ptr noundef %i.r, ptr noundef nonnull %i.q, i64 noundef %i.s, i64 noundef %i.v) #13, !alias.scope !16 ; 0 uses
+  %i.x = tail call ptr @__memcpy_chk(ptr noundef %i.r, ptr noundef nonnull %i.q, i64 noundef %i.s, i64 noundef %i.v) #12, !alias.scope !16 ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -687,7 +687,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr i8, ptr %i.h, i64 416
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = zext i32 %i.f to i64                     ; 2 uses
-  %i.l = tail call noalias ptr @wmem_alloc(ptr noundef %i.j, i64 noundef %i.k) #11 ; 5 uses
+  %i.l = tail call noalias ptr @wmem_alloc(ptr noundef %i.j, i64 noundef %i.k) #10 ; 5 uses
   store ptr %i.l, ptr @calling_AP_title, align 8
   %i.m = load i32, ptr @calling_AP_title_len, align 4 ; 2 uses
   store i32 %i.m, ptr @calling_AP_title_allocated, align 4
@@ -709,7 +709,7 @@ bb.c:                                             ; preds = %bb.b
   %i.v = select i1 %i.u, i64 0, i64 %i.t          ; 2 uses
   %i.w = icmp ne i64 %i.v, -1
   tail call void @llvm.assume(i1 %i.w)
-  %i.x = tail call ptr @__memcpy_chk(ptr noundef %i.r, ptr noundef nonnull %i.q, i64 noundef %i.s, i64 noundef %i.v) #13, !alias.scope !20 ; 0 uses
+  %i.x = tail call ptr @__memcpy_chk(ptr noundef %i.r, ptr noundef nonnull %i.q, i64 noundef %i.s, i64 noundef %i.v) #12, !alias.scope !20 ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -818,11 +818,11 @@ bb.a:
   %i.g = alloca i8, align 1                       ; 4 uses
   %i.h = alloca i32, align 4                      ; 6 uses
   %i.i = alloca i32, align 4                      ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #12
   %i.j = getelementptr i8, ptr %3, i64 16         ; 6 uses
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = call i32 @dissect_ber_identifier(ptr noundef %i.k, ptr noundef %4, ptr noundef %1, i32 noundef %2, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.h)
@@ -862,8 +862,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ak = call ptr @proto_item_add_subtree(ptr noundef %i.ai, i32 noundef %i.aj) ; 13 uses
   %i.al = load i32, ptr %i.i, align 4
   %i.am = load ptr, ptr %i.j, align 8             ; 27 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   %i.an = icmp eq ptr %1, null
   %i.ao = icmp eq i32 %i.al, 0
   %or.cond.i = and i1 %i.an, %i.ao
@@ -1041,9 +1041,9 @@ bb.ac:                                            ; preds = %bb.ab
   %i.dc = call ptr @proto_tree_add_item(ptr noundef %i.ak, i32 noundef %i.da, ptr noundef %.096.ph.i, i32 noundef %i.cu, i32 noundef %i.db, i32 noundef 0)
   %i.dd = load i32, ptr @ett_c1222_cmd, align 4
   %i.de = call ptr @proto_item_add_subtree(ptr noundef %i.dc, i32 noundef %i.dd) ; 58 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store ptr null, ptr %i.a, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store ptr null, ptr %i.b, align 8
   %i.df = and i32 %i.cz, 240
   %i.dg = icmp eq i32 %i.df, 96                   ; 2 uses
@@ -1446,8 +1446,8 @@ bb.bx:                                            ; preds = %bb.bw
 
 parse_c1222_detailed.exit.i:                      ; preds = %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bs, %bb.br, %bb.bp, %bb.bo, %bb.bm, %bb.bl, %c1222_cksum.exit387.i.i, %bb.bh, %bb.bg, %bb.bf, %bb.av, %bb.au, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.ak, %bb.aj, %bb.ai, %bb.af, %bb.ae
   %.4.i = phi i32 [ %i.dn, %bb.bw ], [ %i.dn, %bb.bx ], [ %i.dz, %bb.ae ], [ %i.dn, %bb.af ], [ %i.es, %bb.ai ], [ %i.ek, %bb.aj ], [ %i.dn, %bb.ak ], [ %i.dn, %bb.ap ], [ %i.fg, %bb.ao ], [ %i.fm, %bb.an ], [ %i.gf, %bb.ar ], [ %i.dn, %bb.as ], [ %i.gy, %bb.au ], [ %i.dn, %bb.av ], [ %i.kb, %bb.bf ], [ %i.hv, %bb.bg ], [ %i.dn, %bb.bh ], [ %i.lv, %c1222_cksum.exit387.i.i ], [ %i.kx, %bb.bl ], [ %i.dn, %bb.bm ], [ %i.dn, %bb.bp ], [ %i.me, %bb.bo ], [ %i.mw, %bb.br ], [ %i.dn, %bb.bs ], [ %i.oc, %bb.bu ], [ %i.dn, %bb.bv ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.on = load i32, ptr %i.c, align 4
   %i.oo = add i32 %i.on, %.4.i                    ; 3 uses
   %i.op = call i32 @tvb_captured_length_remaining(ptr noundef %.096.ph.i, i32 noundef %i.oo)
@@ -1518,19 +1518,19 @@ bb.cf:                                            ; preds = %bb.bz
   br label %dissect_epsem.exit
 
 dissect_epsem.exit:                               ; preds = %bb.d, %bb.f, %bb.j, %ber_len_ok.exit.i, %bb.by, %._crit_edge.i, %proto_item_set_generated.exit.i, %bb.cd, %bb.ce, %bb.cf
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   %i.pn = load i32, ptr %i.i, align 4
   %i.po = add i32 %i.pn, %i.ad
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.b, %dissect_epsem.exit, %bb.a
   %.0 = phi i32 [ %i.po, %dissect_epsem.exit ], [ %i.ad, %bb.b ], [ %i.n, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   ret i32 %.0
 }
 
@@ -1721,8 +1721,8 @@ define internal fastcc zeroext i1 @decrypt_packet(ptr noundef %0, i32 noundef %1
 bb.a:
   %i.a = alloca [300 x i8], align 16              ; 6 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.c = icmp ult i32 %1, 4
   br i1 %i.c, label %canonify_unencrypted_header.exit.thread, label %bb.b
 
@@ -1746,7 +1746,7 @@ bb.e:                                             ; preds = %bb.q, %bb.d
   %.03035.i = phi ptr [ @canonifyTable, %bb.d ], [ %i.bd, %bb.q ] ; 8 uses
   %i.h = getelementptr i8, ptr %.03035.i, i64 16
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = load i32, ptr %i.i, align 4              ; 6 uses
+  %i.j = load i32, ptr %i.i, align 4              ; 12 uses
   %i.k = getelementptr i8, ptr %.03035.i, i64 24
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = load i32, ptr %i.l, align 4
@@ -1777,16 +1777,17 @@ bb.h:                                             ; preds = %.thread.i
   store i8 %i.v, ptr %i.y, align 1
   %i.z = zext nneg i32 %i.w to i64
   %i.aa = getelementptr i8, ptr %i.a, i64 %i.z    ; 3 uses
-  %3 = insertelement <4 x i32> poison, i32 %i.j, i64 0
-  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer
-  %5 = icmp ugt <4 x i32> %4, <i32 255, i32 65535, i32 16777215, i32 127>
-  %6 = select <4 x i1> %5, <4 x i32> <i32 1, i32 1, i32 1, i32 2>, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %7 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %6) ; 5 uses
-  %i.ab = icmp samesign ugt i32 %7, 4
+  %3 = icmp samesign ugt i32 %i.j, 127
+  %spec.select.i.i.i = select i1 %3, i32 2, i32 1
+  %4 = icmp samesign ugt i32 %i.j, 255
+  %.1.i.i.i = select i1 %4, i32 3, i32 %spec.select.i.i.i
+  %5 = icmp samesign ugt i32 %i.j, 65535
+  %.2.i.i.i = select i1 %5, i32 4, i32 %.1.i.i.i  ; 4 uses
+  %i.ab = icmp ugt i32 %i.j, 16777215
   br i1 %i.ab, label %encode_ber_len.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ac = icmp eq i32 %7, 1
+  %i.ac = icmp eq i32 %.2.i.i.i, 1
   br i1 %i.ac, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -1796,7 +1797,7 @@ bb.j:                                             ; preds = %bb.i
   br label %encode_ber_len.exit.i
 
 bb.k:                                             ; preds = %bb.i
-  %i.af = add nsw i32 %7, -1                      ; 2 uses
+  %i.af = add nsw i32 %.2.i.i.i, -1               ; 2 uses
   %i.ag = trunc nuw nsw i32 %i.af to i8
   %i.ah = or i8 %i.ag, -128
   store i8 %i.ah, ptr %i.aa, align 1
@@ -1819,7 +1820,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not.i.i, label %encode_ber_len.exit.i, label %.lr.ph.i.i, !llvm.loop !23
 
 encode_ber_len.exit.i:                            ; preds = %.lr.ph.i.i, %bb.k, %bb.j, %bb.h
-  %.0.i.i = phi i32 [ 0, %bb.h ], [ 1, %bb.j ], [ %7, %bb.k ], [ %7, %.lr.ph.i.i ]
+  %.0.i.i = phi i32 [ 0, %bb.h ], [ 1, %bb.j ], [ %.2.i.i.i, %bb.k ], [ %.2.i.i.i, %.lr.ph.i.i ]
   %i.an = add nuw nsw i32 %.0.i.i, %i.w
   br label %bb.l
 
@@ -1831,17 +1832,18 @@ bb.l:                                             ; preds = %encode_ber_len.exit
   br i1 %i.aq, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %8 = insertelement <4 x i32> poison, i32 %i.j, i64 0
-  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> zeroinitializer
-  %10 = icmp ugt <4 x i32> %9, <i32 255, i32 65535, i32 16777215, i32 127>
-  %11 = select <4 x i1> %10, <4 x i32> <i32 1, i32 1, i32 1, i32 2>, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %12 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %11)
-  %13 = shl nuw nsw i32 %12, 1
-  %14 = add nuw nsw i32 %13, 3
+  %6 = icmp samesign ugt i32 %i.j, 127
+  %7 = icmp samesign ugt i32 %i.j, 255
+  %8 = icmp samesign ugt i32 %i.j, 65535
+  %9 = icmp ugt i32 %i.j, 16777215
+  %10 = select i1 %6, i32 7, i32 5
+  %11 = select i1 %7, i32 9, i32 %10
+  %12 = select i1 %8, i32 11, i32 %11
+  %13 = select i1 %9, i32 13, i32 %12
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.0.i = phi i32 [ %14, %bb.m ], [ %i.j, %bb.l ] ; 3 uses
+  %.0.i = phi i32 [ %13, %bb.m ], [ %i.j, %bb.l ] ; 3 uses
   %i.ar = add i32 %.0.i, %.1                      ; 3 uses
   %i.as = icmp ugt i32 %i.ar, 300
   %i.at = icmp ult i32 %i.m, %.0.i
@@ -1858,7 +1860,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ba = select i1 %i.az, i64 0, i64 %i.ay       ; 2 uses
   %i.bb = icmp ne i64 %i.ba, -1
   call void @llvm.assume(i1 %i.bb)
-  %i.bc = call ptr @__memcpy_chk(ptr noundef %i.av, ptr noundef %i.aw, i64 noundef %i.ax, i64 noundef %i.ba) #13, !alias.scope !29 ; 0 uses
+  %i.bc = call ptr @__memcpy_chk(ptr noundef %i.av, ptr noundef %i.aw, i64 noundef %i.ax, i64 noundef %i.ba) #12, !alias.scope !29 ; 0 uses
   br i1 %i.t, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -1906,7 +1908,7 @@ bb.t:                                             ; preds = %bb.s, %.lr.ph.i
 bb.u:                                             ; preds = %bb.t
   %i.bm = getelementptr i8, ptr %i.bj, i64 8
   %i.bn = load ptr, ptr %i.bm, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef align 1 dereferenceable(16) %i.bn, i64 noundef 16, i1 noundef false) #13
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef align 1 dereferenceable(16) %i.bn, i64 noundef 16, i1 noundef false) #12
   %i.bo = add i32 %1, -4                          ; 2 uses
   %i.bp = zext i32 %i.bo to i64
   %i.bq = getelementptr i8, ptr %0, i64 %i.bp
@@ -1916,8 +1918,8 @@ bb.u:                                             ; preds = %bb.t
 
 canonify_unencrypted_header.exit.thread:          ; preds = %bb.f, %bb.n, %bb.s, %.preheader.i, %bb.r, %bb.u, %canonify_unencrypted_header.exit, %bb.a
   %.011 = phi i1 [ false, %bb.a ], [ false, %.preheader.i ], [ false, %canonify_unencrypted_header.exit ], [ %i.bs, %bb.u ], [ false, %bb.s ], [ false, %bb.r ], [ false, %bb.n ], [ false, %bb.f ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i1 %.011
 }
 
@@ -1981,9 +1983,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #9
-
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1993,12 +1992,11 @@ attributes #5 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "
 attributes #6 = { null_pointer_is_valid allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind null_pointer_is_valid memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind willreturn memory(read) }
-attributes #11 = { allocsize(1) }
-attributes #12 = { allocsize(0) }
-attributes #13 = { nounwind }
-attributes #14 = { allocsize(2) }
+attributes #9 = { nounwind willreturn memory(read) }
+attributes #10 = { allocsize(1) }
+attributes #11 = { allocsize(0) }
+attributes #12 = { nounwind }
+attributes #13 = { allocsize(2) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

@@ -204,7 +204,7 @@ vc1_i_pred_dc.exit.i:                             ; preds = %bb.z, %bb.y, %bb.x
   %i.oa = tail call i32 @llvm.abs.i32(i32 %i.nz, i1 true)
   %i.ob = sub nsw i32 %.2.i.i, %.054.i.i
   %i.oc = tail call i32 @llvm.abs.i32(i32 %i.ob, i1 true)
-  %.not.i.not.i = icmp samesign ugt i32 %i.oa, %i.oc ; 8 uses
+  %.not.i.not.i = icmp samesign ugt i32 %i.oa, %i.oc ; 7 uses
   %.258..054.i.i = select i1 %.not.i.not.i, i32 %.258.i.i, i32 %.054.i.i
   %i.od = add nsw i32 %.258..054.i.i, %.2135.i    ; 2 uses
   %i.oe = trunc i32 %i.od to i16
@@ -214,12 +214,11 @@ vc1_i_pred_dc.exit.i:                             ; preds = %bb.z, %bb.y, %bb.x
   store i16 %i.og, ptr %i.ib, align 2, !tbaa !85
   %i.oh = load ptr, ptr %i.bi, align 8, !tbaa !108
   %i.oi = getelementptr inbounds [32 x i8], ptr %i.oh, i64 %i.mm ; 18 uses
-  %i.oj = getelementptr inbounds i8, ptr %i.oi, i64 -32 ; 3 uses
+  %i.oj = getelementptr inbounds i8, ptr %i.oi, i64 -32 ; 2 uses
   %i.ok = shl nsw i32 %i.mj, 4
   %i.ol = sext i32 %i.ok to i64
   %i.om = sub nsw i64 0, %i.ol
-  %i.on = getelementptr inbounds [2 x i8], ptr %i.oi, i64 %i.om
-  %.0137.i = select i1 %.not.i.not.i, ptr %i.on, ptr %i.oj ; 2 uses
+  %i.on = getelementptr inbounds [2 x i8], ptr %i.oi, i64 %i.om ; 2 uses
   %i.oo = shl nuw nsw i32 %i.mg, 1
   %i.op = load i8, ptr %i.bj, align 4, !tbaa !45
   %i.oq = zext i8 %i.op to i32
@@ -271,7 +270,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not163.i, label %.loopexit187.i, label %.loopexit187.loopexit.i
 
 .loopexit187.loopexit.i:                          ; preds = %.thread178.i
-  %i.pi = getelementptr inbounds nuw i8, ptr %.0137.i, i64 16
+  %i.pi = getelementptr inbounds nuw i8, ptr %i.on, i64 16
   %.1138.i = select i1 %.not.i.not.i, ptr %i.pi, ptr %i.oj ; 7 uses
   %.0125.in.v.i = select i1 %.not.i.not.i, i64 6384, i64 6380
   %.0125.in.i = getelementptr inbounds nuw i8, ptr %0, i64 %.0125.in.v.i
@@ -466,7 +465,7 @@ bb.ah:                                            ; preds = %vc1_i_pred_dc.exit.
   br i1 %.not156.i, label %vc1_decode_i_block.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.um = getelementptr inbounds nuw i8, ptr %.0137.i, i64 16
+  %i.um = getelementptr inbounds nuw i8, ptr %i.on, i64 16
   %.2139.i = select i1 %.not.i.not.i, ptr %i.um, ptr %i.oj ; 14 uses
   %.0136.idx.i = select i1 %.not.i.not.i, i64 16, i64 0
   %.0136.i = getelementptr inbounds nuw i8, ptr %i.oi, i64 %.0136.idx.i

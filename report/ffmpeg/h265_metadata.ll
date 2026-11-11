@@ -160,7 +160,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.k
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 2 uses
   %.065157 = phi i8 [ 0, %.lr.ph ], [ %.2, %bb.k ] ; 2 uses
   %.067156 = phi i32 [ 8, %.lr.ph ], [ %.269, %bb.k ] ; 2 uses
-  %.070155 = phi i32 [ 0, %.lr.ph ], [ %.272, %bb.k ] ; 3 uses
+  %.070155 = phi i32 [ 0, %.lr.ph ], [ %.272, %bb.k ] ; 4 uses
   %i.y = getelementptr inbounds nuw [56 x i8], ptr %i.x, i64 %indvars.iv ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 40
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !35  ; 4 uses
@@ -183,10 +183,11 @@ bb.j:                                             ; preds = %bb.i
   %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 18
   %i.ak = load i8, ptr %i.aj, align 2, !tbaa !42  ; 2 uses
   %i.al = icmp eq i8 %i.ak, 0
-  %spec.store.select = select i1 %i.al, i32 2, i32 %.070155 ; 2 uses
+  %spec.store.select = select i1 %i.al, i32 2, i32 %.070155
   %i.am = icmp eq i8 %i.ak, 1
-  %3 = tail call i32 @llvm.smax.i32(i32 %spec.store.select, i32 1)
-  %spec.store.select4 = select i1 %i.am, i32 %3, i32 %spec.store.select
+  %3 = icmp slt i32 %.070155, 1
+  %or.cond3 = select i1 %i.am, i1 %3, i1 false
+  %spec.store.select4 = select i1 %or.cond3, i32 1, i32 %spec.store.select
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
@@ -589,20 +590,17 @@ declare ptr @ff_h265_guess_level(ptr noundef, i64 noundef, i32 noundef, i32 noun
 
 declare i32 @av_reduce(ptr noundef, ptr noundef, i64 noundef, i64 noundef, i64 noundef) local_unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.cttz.i32(i32, i1 immarg) #4
+declare i32 @llvm.cttz.i32(i32, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #3
+declare i32 @llvm.smin.i32(i32, i32) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}

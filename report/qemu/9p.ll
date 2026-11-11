@@ -204,13 +204,11 @@ bb.l:                                             ; preds = %.thread89
   %i.ch = icmp eq i32 %i.cg, 16384
   %spec.select.i = select i1 %i.ch, i32 -2147483648, i32 0
   %i.ci = icmp eq i32 %i.cg, 40960
-  %.1.i = select i1 %i.ci, i32 33554432, i32 %spec.select.i ; 2 uses
+  %.1.i = select i1 %i.ci, i32 33554432, i32 %spec.select.i
   %i.cj = icmp eq i32 %i.cg, 49152
-  %4 = or disjoint i32 %.1.i, 1048576
-  %.2.i = select i1 %i.cj, i32 %4, i32 %.1.i      ; 3 uses
+  %.2.i = select i1 %i.cj, i32 1048576, i32 %.1.i ; 2 uses
   %i.ck = icmp eq i32 %i.cg, 4096
-  %5 = or disjoint i32 %.2.i, 2097152
-  %.3.i = select i1 %i.ck, i32 %5, i32 %.2.i
+  %.3.i = select i1 %i.ck, i32 2097152, i32 %.2.i
   %trunc.i = trunc nuw i32 %i.cg to i16
   switch i16 %trunc.i, label %stat_to_v9mode.exit [
     i16 24576, label %bb.m
@@ -613,19 +611,19 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %3, i64 24         ; 2 uses
   %.val54 = load i32, ptr %i.d, align 8           ; 4 uses
-  %i.e = and i32 %.val54, 511                     ; 2 uses
+  %i.e = and i32 %.val54, 511                     ; 5 uses
   %i.f = and i32 %.val54, 61440                   ; 5 uses
   %i.g = icmp eq i32 %i.f, 16384
   %i.h = or disjoint i32 %i.e, -2147483648
-  %spec.select.i = select i1 %i.g, i32 %i.h, i32 %i.e ; 2 uses
+  %spec.select.i = select i1 %i.g, i32 %i.h, i32 %i.e
   %i.i = icmp eq i32 %i.f, 40960
-  %i.j = or disjoint i32 %spec.select.i, 33554432
-  %.1.i = select i1 %i.i, i32 %i.j, i32 %spec.select.i ; 2 uses
+  %i.j = or disjoint i32 %i.e, 33554432
+  %.1.i = select i1 %i.i, i32 %i.j, i32 %spec.select.i
   %i.k = icmp eq i32 %i.f, 49152
-  %i.l = or disjoint i32 %.1.i, 1048576
-  %.2.i = select i1 %i.k, i32 %i.l, i32 %.1.i     ; 3 uses
+  %i.l = or disjoint i32 %i.e, 1048576
+  %.2.i = select i1 %i.k, i32 %i.l, i32 %.1.i     ; 2 uses
   %i.m = icmp eq i32 %i.f, 4096
-  %i.n = or i32 %.2.i, 2097152
+  %i.n = or disjoint i32 %i.e, 2097152
   %.3.i = select i1 %i.m, i32 %i.n, i32 %.2.i
   %trunc.i = trunc nuw i32 %i.f to i16
   switch i16 %trunc.i, label %stat_to_v9mode.exit [
@@ -634,7 +632,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b
-  %i.o = or i32 %.2.i, 8388608
+  %i.o = or disjoint i32 %.2.i, 8388608
   br label %stat_to_v9mode.exit
 
 stat_to_v9mode.exit:                              ; preds = %bb.b, %bb.c

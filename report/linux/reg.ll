@@ -205,13 +205,11 @@ bb.bp:                                            ; preds = %reg_get_max_bandwid
 
 bb.bq:                                            ; preds = %bb.bp
   %i.se = icmp ult i32 %.034.i, 16000
-  %spec.select.i = select i1 %i.se, i32 1073741824, i32 0 ; 2 uses
+  %spec.select.i = select i1 %i.se, i32 1073741824, i32 0
   %i.sf = icmp ult i32 %.034.i, 8000
-  %4 = or disjoint i32 %spec.select.i, 536870912
-  %.1.i = select i1 %i.sf, i32 %4, i32 %spec.select.i ; 2 uses
+  %.1.i = select i1 %i.sf, i32 1610612736, i32 %spec.select.i
   %i.sg = icmp ult i32 %.034.i, 4000
-  %5 = or disjoint i32 %.1.i, 268435456
-  %.2.i = select i1 %i.sg, i32 %5, i32 %.1.i
+  %.2.i = select i1 %i.sg, i32 1879048192, i32 %.1.i
   br label %reg_rule_to_chan_bw_flags.exit
 
 bb.br:                                            ; preds = %bb.bp
@@ -614,13 +612,11 @@ bb.f:                                             ; preds = %reg_get_max_bandwid
 
 bb.g:                                             ; preds = %bb.f
   %i.at = icmp ult i32 %.034, 16000
-  %spec.select = select i1 %i.at, i32 1073741824, i32 0 ; 2 uses
+  %spec.select = select i1 %i.at, i32 1073741824, i32 0
   %i.au = icmp ult i32 %.034, 8000
-  %3 = or disjoint i32 %spec.select, 536870912
-  %.1 = select i1 %i.au, i32 %3, i32 %spec.select ; 2 uses
+  %.1 = select i1 %i.au, i32 1610612736, i32 %spec.select
   %i.av = icmp ult i32 %.034, 4000
-  %4 = or disjoint i32 %.1, 268435456
-  %.2 = select i1 %i.av, i32 %4, i32 %.1
+  %.2 = select i1 %i.av, i32 1879048192, i32 %.1
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f

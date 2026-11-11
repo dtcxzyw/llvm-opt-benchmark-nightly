@@ -205,29 +205,28 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %exitcond137.not.i, label %generate_sched_domains.exit, label %.lr.ph119.split.split.i, !llvm.loop !57
 
 generate_sched_domains.exit:                      ; preds = %bb.p, %bb.m, %.lr.ph119.split.us.split.i, %.lr.ph119.split.us.split.us.i, %_kmalloc_noprof.exit90.i, %.loopexit107.i, %_kmalloc_noprof.exit.i
-  %.4.i = phi i32 [ 0, %_kmalloc_noprof.exit90.i ], [ %.3.i, %.loopexit107.i ], [ %.3.i, %bb.m ], [ %.3.i, %_kmalloc_noprof.exit.i ], [ %.3.i, %.lr.ph119.split.us.split.i ], [ %.3.i, %.lr.ph119.split.us.split.us.i ], [ %.3.i, %bb.p ] ; 4 uses
+  %.4.i = phi i32 [ 0, %_kmalloc_noprof.exit90.i ], [ %.3.i, %.loopexit107.i ], [ %.3.i, %bb.m ], [ %.3.i, %_kmalloc_noprof.exit.i ], [ %.3.i, %.lr.ph119.split.us.split.i ], [ %.3.i, %.lr.ph119.split.us.split.us.i ], [ %.3.i, %bb.p ] ; 5 uses
   %.071.i = phi ptr [ null, %_kmalloc_noprof.exit90.i ], [ null, %.loopexit107.i ], [ null, %bb.m ], [ %.1.i.fr.i, %_kmalloc_noprof.exit.i ], [ %.1.i.fr.i, %.lr.ph119.split.us.split.i ], [ null, %.lr.ph119.split.us.split.us.i ], [ %.1.i.fr.i, %bb.p ] ; 2 uses
   %.070.i = phi ptr [ null, %_kmalloc_noprof.exit90.i ], [ null, %.loopexit107.i ], [ %i.ai, %bb.m ], [ %i.ai, %_kmalloc_noprof.exit.i ], [ %i.ai, %.lr.ph119.split.us.split.i ], [ %i.ai, %.lr.ph119.split.us.split.us.i ], [ %i.ai, %bb.p ]
   %.1.i = phi ptr [ null, %_kmalloc_noprof.exit90.i ], [ %.065.i, %.loopexit107.i ], [ %.065.i, %bb.m ], [ %.065.i, %_kmalloc_noprof.exit.i ], [ null, %.lr.ph119.split.us.split.i ], [ null, %.lr.ph119.split.us.split.us.i ], [ %.065.i, %bb.p ]
   %.070.i.fr = freeze ptr %.070.i                 ; 8 uses
   tail call void @kfree(ptr noundef %.1.i) #21
   %i.bu = icmp ne ptr %.070.i.fr, null            ; 2 uses
-  %spec.select.i = select i1 %i.bu, i32 %.4.i, i32 1 ; 2 uses
-  %i.bv = icmp sgt i32 %spec.select.i, 0
+  %spec.select.i = select i1 %i.bu, i32 %.4.i, i32 1
+  %i.bv = icmp sgt i32 %.4.i, 0
   %i.bw = and i1 %i.bu, %i.bv
   br i1 %i.bw, label %.critedge.preheader, label %._crit_edge
 
 .critedge.preheader:                              ; preds = %generate_sched_domains.exit
   %i.bx = load i64, ptr @__cpu_active_mask, align 8
   %i.by = xor i64 %i.bx, -1                       ; 5 uses
-  %wide.trip.count = zext i32 %.4.i to i64        ; 2 uses
+  %wide.trip.count = zext nneg i32 %.4.i to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %0 = add i32 %.4.i, -1
-  %i.bz = icmp ult i32 %0, 3
+  %i.bz = icmp ult i32 %.4.i, 4
   br i1 %i.bz, label %.critedge.epil.preheader, label %.critedge.preheader.new
 
 .critedge.preheader.new:                          ; preds = %.critedge.preheader
-  %unroll_iter = and i64 %wide.trip.count, 4294967292
+  %unroll_iter = and i64 %wide.trip.count, 2147483644
   br label %.critedge
 
 .critedge.1:                                      ; preds = %.critedge

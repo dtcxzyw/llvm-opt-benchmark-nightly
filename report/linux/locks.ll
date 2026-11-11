@@ -202,11 +202,10 @@ lease_dispose_list.exit:                          ; preds = %.lr.ph.i, %percpu_u
   %i.fz = call i32 @__SCT__might_resched() #15    ; 0 uses
   %i.ga = load volatile ptr, ptr %i.y, align 8
   %i.gb = icmp ne ptr %i.ga, %i.y                 ; 2 uses
-  %i.gc = icmp ne i64 %.1126, 0
+  %i.gc = icmp ne i64 %.1126, 0                   ; 2 uses
   %or.cond = select i1 %i.gb, i1 true, i1 %i.gc
-  %spec.store.select = select i1 %or.cond, i64 %.1126, i64 1 ; 2 uses
-  %.not = icmp ne i64 %spec.store.select, 0
-  %spec.select158.not = select i1 %i.gb, i1 %.not, i1 false
+  %spec.store.select = select i1 %or.cond, i64 %.1126, i64 1
+  %spec.select158.not = select i1 %i.gb, i1 %i.gc, i1 false
   br i1 %spec.select158.not, label %bb.ba, label %bb.be
 
 bb.ba:                                            ; preds = %lease_dispose_list.exit
@@ -220,11 +219,10 @@ bb.bb:                                            ; preds = %bb.bd, %bb.ba
   %i.gd = call i64 @prepare_to_wait_event(ptr noundef %i.aa, ptr noundef nonnull %3, i32 noundef 1) #15 ; 2 uses
   %i.ge = load volatile ptr, ptr %i.y, align 8
   %i.gf = icmp ne ptr %i.ge, %i.y                 ; 2 uses
-  %i.gg = icmp ne i64 %.0122, 0
+  %i.gg = icmp ne i64 %.0122, 0                   ; 2 uses
   %or.cond4 = select i1 %i.gf, i1 true, i1 %i.gg
-  %spec.store.select8 = select i1 %or.cond4, i64 %.0122, i64 1 ; 3 uses
-  %.not151 = icmp ne i64 %spec.store.select8, 0
-  %spec.select159.not = select i1 %i.gf, i1 %.not151, i1 false
+  %spec.store.select8 = select i1 %or.cond4, i64 %.0122, i64 1 ; 2 uses
+  %spec.select159.not = select i1 %i.gf, i1 %i.gg, i1 false
   br i1 %spec.select159.not, label %bb.bc, label %select.unfold
 
 bb.bc:                                            ; preds = %bb.bb
@@ -235,11 +233,10 @@ bb.bd:                                            ; preds = %bb.bc
   %i.gh = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #15 ; 2 uses
   %i.gi = load volatile ptr, ptr %i.y, align 8
   %i.gj = icmp ne ptr %i.gi, %i.y                 ; 2 uses
-  %i.gk = icmp ne i64 %i.gh, 0
+  %i.gk = icmp ne i64 %i.gh, 0                    ; 2 uses
   %or.cond7 = select i1 %i.gj, i1 true, i1 %i.gk
-  %spec.store.select9 = select i1 %or.cond7, i64 %i.gh, i64 1 ; 3 uses
-  %.not154 = icmp ne i64 %spec.store.select9, 0
-  %spec.select160.not = select i1 %i.gj, i1 %.not154, i1 false
+  %spec.store.select9 = select i1 %or.cond7, i64 %i.gh, i64 1 ; 2 uses
+  %spec.select160.not = select i1 %i.gj, i1 %i.gk, i1 false
   br i1 %spec.select160.not, label %bb.bb, label %select.unfold
 
 select.unfold:                                    ; preds = %bb.bd, %bb.bb

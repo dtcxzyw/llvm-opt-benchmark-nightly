@@ -202,11 +202,10 @@ bb.f:                                             ; preds = %bb.e
   %i.bh = zext i32 %i.bg to i64
   %i.bi = add nuw nsw i64 %i.am, %i.bh
   %i.bj = tail call zeroext i1 @memory_region_snapshot_get_dirty(ptr noundef nonnull %i.bc, ptr noundef %i.bd, i64 noundef %i.bi, i64 noundef %i.z) #9 ; 2 uses
-  %i.bk = icmp slt i32 %.042, 0
+  %i.bk = icmp slt i32 %.042, 0                   ; 2 uses
   %or.cond = select i1 %i.bj, i1 %i.bk, i1 false
-  %spec.select = select i1 %or.cond, i32 %i.bf, i32 %.042 ; 7 uses
-  %2 = icmp slt i32 %spec.select, 0
-  %or.cond3.not = select i1 %i.bj, i1 true, i1 %2
+  %spec.select = select i1 %or.cond, i32 %i.bf, i32 %.042 ; 6 uses
+  %or.cond3.not = select i1 %i.bj, i1 true, i1 %i.bk
   br i1 %or.cond3.not, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %.backedge

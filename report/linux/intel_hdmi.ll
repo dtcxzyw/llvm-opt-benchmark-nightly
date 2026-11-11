@@ -204,10 +204,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.v = getelementptr i8, ptr %i.c, i64 1168
   %i.w = load i16, ptr %i.v, align 8              ; 2 uses
   %i.x = icmp ugt i16 %i.w, 9
-  %spec.select = select i1 %i.x, i32 269553937, i32 1118481 ; 2 uses
+  %spec.select = select i1 %i.x, i32 269553937, i32 1118481
   %i.y = icmp ugt i16 %i.w, 12
-  %2 = or disjoint i32 %spec.select, 8388608
-  %.1 = select i1 %i.y, i32 %2, i32 %spec.select
+  %.1 = select i1 %i.y, i32 277942545, i32 %spec.select
   %i.z = and i32 %.1, %i.u
   ret i32 %i.z
 }

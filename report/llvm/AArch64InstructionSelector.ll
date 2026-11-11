@@ -204,23 +204,20 @@ _ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21
   br label %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread37.i
 
 _ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread37.i: ; preds = %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread.i, %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.i, %bb.f, %bb.e
-  %.sroa.3.1.i = phi i64 [ %i.ad, %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread.i ], [ %.sroa.3.0.i, %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.i ], [ %.sroa.3.0.i, %bb.e ], [ %.sroa.3.0.i, %bb.f ] ; 3 uses
+  %.sroa.3.1.i = phi i64 [ %i.ad, %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread.i ], [ %.sroa.3.0.i, %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.i ], [ %.sroa.3.0.i, %bb.e ], [ %.sroa.3.0.i, %bb.f ] ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !417 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 224
   %i.ah = load i8, ptr %i.ag, align 8, !tbaa !862, !range !237, !noundef !238
   %i.ai = trunc nuw i8 %i.ah to i1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 225
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !863, !range !237, !noundef !238 ; 4 uses
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !863, !range !237, !noundef !238 ; 3 uses
   br i1 %i.ai, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread37.i
   %i.al = trunc nuw i8 %i.ak to i1
-  %2 = or i64 %.sroa.3.1.i, 1048576
-  %spec.select.i = select i1 %i.al, i64 %.sroa.3.1.i, i64 %2
-  %3 = zext nneg i8 %i.ak to i64
-  %4 = shl nuw nsw i64 %3, 31
-  %spec.select52.i = or i64 %spec.select.i, %4
+  %spec.select.i = select i1 %i.al, i64 2147483648, i64 1048576
+  %spec.select52.i = or i64 %spec.select.i, %.sroa.3.1.i
   br label %bb.i
 
 bb.h:                                             ; preds = %_ZNK4llvm20GIMatchTableExecutor16shouldOptForSizeEPKNS_15MachineFunctionE.exit21.thread37.i

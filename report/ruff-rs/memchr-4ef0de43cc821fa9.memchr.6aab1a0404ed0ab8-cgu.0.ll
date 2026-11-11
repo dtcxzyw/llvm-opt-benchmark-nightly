@@ -204,12 +204,11 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
   %i.g = load i64, ptr %i.f, align 8              ; 3 uses
-  %i.h = icmp ult i64 %i.e, %i.g                  ; 2 uses
-  %i.i = sub nuw i64 %i.e, %i.g
-  %.sroa.3.0.i.i = select i1 %i.h, i64 undef, i64 %i.i ; 2 uses
+  %i.h = icmp ult i64 %i.e, %i.g
+  %i.i = sub nuw i64 %i.e, %i.g                   ; 2 uses
   %.not.i7 = icmp eq ptr %i.c, null
   %.not.i = select i1 %i.h, i1 true, i1 %.not.i7
-  %i.j = icmp ult i64 %.sroa.3.0.i.i, %.val6
+  %i.j = icmp ult i64 %i.i, %.val6
   %or.cond = select i1 %.not.i, i1 true, i1 %i.j
   br i1 %or.cond, label %_RNvMNtNtCs99Nb5C8iXR4_6memchr6memmem8searcherNtB2_8Searcher4find.exit.thread, label %_RNvMNtNtCs99Nb5C8iXR4_6memchr6memmem8searcherNtB2_8Searcher4find.exit
 
@@ -220,7 +219,7 @@ _RNvMNtNtCs99Nb5C8iXR4_6memchr6memmem8searcherNtB2_8Searcher4find.exit: ; preds 
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call { i64, i64 } %i.o(ptr nonnull align 32 %0, ptr nonnull align 4 %i.m, ptr nonnull %i.k, i64 %.sroa.3.0.i.i, ptr %.val, i64 %.val6), !inline_history !123 ; 2 uses
+  %i.p = tail call { i64, i64 } %i.o(ptr nonnull align 32 %0, ptr nonnull align 4 %i.m, ptr nonnull %i.k, i64 %i.i, ptr %.val, i64 %.val6), !inline_history !123 ; 2 uses
   %i.q = extractvalue { i64, i64 } %i.p, 0
   %i.r = trunc i64 %i.q to i1
   br i1 %i.r, label %bb.b, label %_RNvMNtNtCs99Nb5C8iXR4_6memchr6memmem8searcherNtB2_8Searcher4find.exit.thread

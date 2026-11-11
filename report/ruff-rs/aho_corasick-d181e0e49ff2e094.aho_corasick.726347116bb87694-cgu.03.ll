@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i146.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder22finish_build_one_starts_0EB4_.exit, label %.lr.ph150.preheader.i
 
 .lr.ph150.preheader.i:                            ; preds = %.preheader.i
-  %i.bq = icmp eq i64 %i.fw, 255                  ; 3 uses
-  %i.br = add nsw i64 %.sroa.08.1.lcssa.i, 2
+  %i.bq = icmp eq i64 %i.fw, 255
+  %i.br = add nsw i64 %.sroa.08.1.lcssa.fr.i, 2
   %spec.select58.peel.i = select i1 %i.bq, i64 255, i64 %i.br ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.fw
   %i.bt = load i8, ptr %i.bs, align 1, !alias.scope !95, !noundef !4 ; 2 uses
@@ -213,8 +213,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %.lr.ph150.preheader.i, %.lr.ph150.preheader.thread.i
   %i.bu = phi i8 [ %i.bf, %.lr.ph150.preheader.thread.i ], [ %i.bt, %.lr.ph150.preheader.i ] ; 2 uses
   %spec.select58.peel223.i = phi i64 [ 1, %.lr.ph150.preheader.thread.i ], [ %spec.select58.peel.i, %.lr.ph150.preheader.i ]
-  %3 = phi i1 [ false, %.lr.ph150.preheader.thread.i ], [ %i.bq, %.lr.ph150.preheader.i ]
-  %.sroa.08.0.lcssa215222.i = phi i64 [ 0, %.lr.ph150.preheader.thread.i ], [ %i.fw, %.lr.ph150.preheader.i ] ; 2 uses
+  %.sroa.08.0.lcssa215222.i = phi i64 [ 0, %.lr.ph150.preheader.thread.i ], [ %i.fw, %.lr.ph150.preheader.i ] ; 3 uses
   %i.bv = trunc nuw i64 %.sroa.08.0.lcssa215222.i to i8 ; 2 uses
   br i1 %0, label %_RNvXs0_NtNtCs9OSMwK5JXHk_12aho_corasick3nfa13noncontiguousNtB5_3NFANtNtB9_9automaton9Automaton10next_state.exit.i36, label %bb.g
 
@@ -335,12 +334,11 @@ _RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_star
   br label %bb.s
 
 bb.s:                                             ; preds = %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit47, %.lr.ph150.preheader.i
-  %spec.select58.peel224.i = phi i64 [ %spec.select58.peel223.i, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit47 ], [ %spec.select58.peel.i, %.lr.ph150.preheader.i ] ; 2 uses
-  %4 = phi i1 [ %3, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit47 ], [ %i.bq, %.lr.ph150.preheader.i ]
+  %spec.select58.peel224.i = phi i64 [ %spec.select58.peel223.i, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit47 ], [ %spec.select58.peel.i, %.lr.ph150.preheader.i ]
+  %.sroa.08.0.lcssa215221227.i = phi i64 [ %.sroa.08.0.lcssa215222.i, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit47 ], [ %i.fw, %.lr.ph150.preheader.i ]
   %.sroa.9.2.peel.i = phi i8 [ %i.bu, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit47 ], [ %.sroa.9.4.i, %.lr.ph150.preheader.i ]
-  %.not.i.peel.i = icmp samesign ugt i64 %spec.select58.peel224.i, 255
-  %or.cond59.peel.i = select i1 %4, i1 true, i1 %.not.i.peel.i
-  br i1 %or.cond59.peel.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder22finish_build_one_starts_0EB4_.exit, label %.lr.ph150.i.preheader
+  %.not.i.peel.i = icmp eq i64 %.sroa.08.0.lcssa215221227.i, 255
+  br i1 %.not.i.peel.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder22finish_build_one_starts_0EB4_.exit, label %.lr.ph150.i.preheader
 
 .lr.ph150.i.preheader:                            ; preds = %bb.s
   %i.dh = getelementptr inbounds nuw i8, ptr %i.w, i64 12
@@ -360,10 +358,10 @@ bb.t:                                             ; preds = %bb.az, %.lr.ph142.i
 
 .lr.ph150.i:                                      ; preds = %.lr.ph150.i.preheader, %bb.ah
   %.sroa.9.1148.i = phi i8 [ %.sroa.9.2.i, %bb.ah ], [ %.sroa.9.2.peel.i, %.lr.ph150.i.preheader ] ; 2 uses
-  %.sroa.0.049147.i = phi i64 [ %spec.select58.i, %bb.ah ], [ %spec.select58.peel224.i, %.lr.ph150.i.preheader ] ; 5 uses
-  %i.dn = icmp eq i64 %.sroa.0.049147.i, 255      ; 2 uses
+  %.sroa.0.049147.i = phi i64 [ %spec.select58.i, %bb.ah ], [ %spec.select58.peel224.i, %.lr.ph150.i.preheader ] ; 6 uses
+  %i.dn = icmp eq i64 %.sroa.0.049147.i, 255
   %i.do = add nuw nsw i64 %.sroa.0.049147.i, 1
-  %spec.select58.i = select i1 %i.dn, i64 255, i64 %i.do ; 2 uses
+  %spec.select58.i = select i1 %i.dn, i64 255, i64 %i.do
   %i.dp = getelementptr inbounds nuw i8, ptr %i.k, i64 %.sroa.0.049147.i
   %i.dq = load i8, ptr %i.dp, align 1, !alias.scope !95, !noundef !4 ; 3 uses
   %.not45.i = icmp eq i8 %.sroa.9.1148.i, %i.dq
@@ -487,9 +485,8 @@ _RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_star
 
 bb.ah:                                            ; preds = %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit28, %.lr.ph150.i
   %.sroa.9.2.i = phi i8 [ %i.dq, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder22finish_build_one_starts_0B9_.exit28 ], [ %.sroa.9.1148.i, %.lr.ph150.i ]
-  %.not.i.i = icmp ugt i64 %spec.select58.i, 255
-  %or.cond59.i = select i1 %i.dn, i1 true, i1 %.not.i.i
-  br i1 %or.cond59.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder22finish_build_one_starts_0EB4_.exit, label %.lr.ph150.i, !llvm.loop !76
+  %.not.i.i = icmp ugt i64 %.sroa.0.049147.i, 254
+  br i1 %.not.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder22finish_build_one_starts_0EB4_.exit, label %.lr.ph150.i, !llvm.loop !76
 
 bb.ai:                                            ; preds = %bb.t
   %i.ez = getelementptr inbounds nuw [9 x i8], ptr %i.o, i64 %i.dl ; 3 uses
@@ -571,12 +568,13 @@ bb.al:                                            ; preds = %bb.t
   br i1 %or.cond47.i, label %bb.bl, label %bb.ba
 
 ._crit_edge.i:                                    ; preds = %bb.bl, %bb.ak, %bb.aj, %bb.ai
-  %.sroa.08.1.lcssa.i = phi i64 [ %.sroa.08.0138.i, %bb.ai ], [ %i.fa, %bb.aj ], [ %i.fa, %bb.ak ], [ %i.fa, %bb.bl ] ; 2 uses
+  %.sroa.08.1.lcssa.i = phi i64 [ %.sroa.08.0138.i, %bb.ai ], [ %i.fa, %bb.aj ], [ %i.fa, %bb.ak ], [ %i.fa, %bb.bl ]
   %.sroa.9.3.lcssa.i = phi i8 [ %.sroa.9.0139.i, %bb.ai ], [ %.sroa.9.5.i.us.peel, %bb.aj ], [ %.sroa.9.5.i.us, %bb.ak ], [ %.sroa.9.5.i, %bb.bl ] ; 2 uses
   %.sroa.0.3.lcssa.i = phi i1 [ %.sroa.0.0140.i, %bb.ai ], [ true, %bb.aj ], [ true, %bb.ak ], [ true, %bb.bl ]
+  %.sroa.08.1.lcssa.fr.i = freeze i64 %.sroa.08.1.lcssa.i ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.fa
   %i.fv = load i8, ptr %i.fu, align 1, !alias.scope !95, !noundef !4 ; 3 uses
-  %i.fw = add i64 %.sroa.08.1.lcssa.i, 1          ; 5 uses
+  %i.fw = add i64 %.sroa.08.1.lcssa.fr.i, 1       ; 6 uses
   %.not.i = icmp eq i8 %.sroa.9.3.lcssa.i, %i.fv
   %or.cond46.i = select i1 %.sroa.0.3.lcssa.i, i1 %.not.i, i1 false
   br i1 %or.cond46.i, label %bb.az, label %bb.am
@@ -979,7 +977,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %.not.i146.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss0_0EB4_.exit.i, label %.lr.ph150.preheader.i.i
 
 .lr.ph150.preheader.i.i:                          ; preds = %.preheader.i.i
-  %i.jb = icmp eq i64 %i.jx, 255                  ; 3 uses
+  %i.jb = icmp eq i64 %i.jx, 255
   %i.jc = add nsw i64 %.sroa.08.1.lcssa.i.i, 2
   %spec.select58.peel.i.i = select i1 %i.jb, i64 255, i64 %i.jc ; 2 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.jx
@@ -990,19 +988,17 @@ bb.cp:                                            ; preds = %bb.co
 bb.cq:                                            ; preds = %.lr.ph150.preheader.i.i, %.lr.ph150.preheader.thread.i.i
   %i.jf = phi i8 [ %i.iz, %.lr.ph150.preheader.thread.i.i ], [ %i.je, %.lr.ph150.preheader.i.i ] ; 2 uses
   %spec.select58.peel223.i.i = phi i64 [ 1, %.lr.ph150.preheader.thread.i.i ], [ %spec.select58.peel.i.i, %.lr.ph150.preheader.i.i ]
-  %3 = phi i1 [ false, %.lr.ph150.preheader.thread.i.i ], [ %i.jb, %.lr.ph150.preheader.i.i ]
-  %.sroa.08.0.lcssa215222.i.i = phi i64 [ 0, %.lr.ph150.preheader.thread.i.i ], [ %i.jx, %.lr.ph150.preheader.i.i ]
+  %.sroa.08.0.lcssa215222.i.i = phi i64 [ 0, %.lr.ph150.preheader.thread.i.i ], [ %i.jx, %.lr.ph150.preheader.i.i ] ; 2 uses
   %i.jg = trunc nuw i64 %.sroa.08.0.lcssa215222.i.i to i8
   invoke fastcc void @_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss0_0B9_(ptr noalias noundef nonnull readonly align 8 dereferenceable(40) %i.b, i8 noundef %i.jg, i8 noundef %i.jf, i32 noundef 1)
           to label %.noexc99.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc99.i:                                       ; preds = %bb.cq, %.lr.ph150.preheader.i.i
-  %spec.select58.peel224.i.i = phi i64 [ %spec.select58.peel.i.i, %.lr.ph150.preheader.i.i ], [ %spec.select58.peel223.i.i, %bb.cq ] ; 2 uses
-  %4 = phi i1 [ %i.jb, %.lr.ph150.preheader.i.i ], [ %3, %bb.cq ]
+  %spec.select58.peel224.i.i = phi i64 [ %spec.select58.peel.i.i, %.lr.ph150.preheader.i.i ], [ %spec.select58.peel223.i.i, %bb.cq ]
+  %.sroa.08.0.lcssa215221227.i.i = phi i64 [ %i.jx, %.lr.ph150.preheader.i.i ], [ %.sroa.08.0.lcssa215222.i.i, %bb.cq ]
   %.sroa.9.2.peel.i.i = phi i8 [ %.sroa.9.4.i.i, %.lr.ph150.preheader.i.i ], [ %i.jf, %bb.cq ]
-  %.not.i.peel.i.i = icmp samesign ugt i64 %spec.select58.peel224.i.i, 255
-  %or.cond59.peel.i.i = select i1 %4, i1 true, i1 %.not.i.peel.i.i
-  br i1 %or.cond59.peel.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss0_0EB4_.exit.i, label %.lr.ph150.i.i
+  %.not.i.peel.i.i = icmp eq i64 %.sroa.08.0.lcssa215221227.i.i, 255
+  br i1 %.not.i.peel.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss0_0EB4_.exit.i, label %.lr.ph150.i.i
 
 bb.cr:                                            ; preds = %.noexc102.i, %.lr.ph142.i.i
   %.sroa.0.0140.i.i = phi i1 [ false, %.lr.ph142.i.i ], [ true, %.noexc102.i ] ; 2 uses
@@ -1015,10 +1011,10 @@ bb.cr:                                            ; preds = %.noexc102.i, %.lr.p
 
 .lr.ph150.i.i:                                    ; preds = %.noexc99.i, %.noexc100.i
   %.sroa.9.1148.i.i = phi i8 [ %.sroa.9.2.i.i, %.noexc100.i ], [ %.sroa.9.2.peel.i.i, %.noexc99.i ] ; 2 uses
-  %.sroa.0.049147.i.i = phi i64 [ %spec.select58.i.i, %.noexc100.i ], [ %spec.select58.peel224.i.i, %.noexc99.i ] ; 4 uses
-  %i.jj = icmp eq i64 %.sroa.0.049147.i.i, 255    ; 2 uses
+  %.sroa.0.049147.i.i = phi i64 [ %spec.select58.i.i, %.noexc100.i ], [ %spec.select58.peel224.i.i, %.noexc99.i ] ; 5 uses
+  %i.jj = icmp eq i64 %.sroa.0.049147.i.i, 255
   %i.jk = add nuw nsw i64 %.sroa.0.049147.i.i, 1
-  %spec.select58.i.i = select i1 %i.jj, i64 255, i64 %i.jk ; 2 uses
+  %spec.select58.i.i = select i1 %i.jj, i64 255, i64 %i.jk
   %i.jl = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.sroa.0.049147.i.i
   %i.jm = load i8, ptr %i.jl, align 1, !alias.scope !172, !noundef !4 ; 3 uses
   %.not45.i.i = icmp eq i8 %.sroa.9.1148.i.i, %i.jm
@@ -1031,18 +1027,18 @@ bb.cs:                                            ; preds = %.lr.ph150.i.i
 
 .noexc100.i:                                      ; preds = %bb.cs, %.lr.ph150.i.i
   %.sroa.9.2.i.i = phi i8 [ %.sroa.9.1148.i.i, %.lr.ph150.i.i ], [ %i.jm, %bb.cs ]
-  %.not.i.i.i = icmp ugt i64 %spec.select58.i.i, 255
-  %or.cond59.i.i = select i1 %i.jj, i1 true, i1 %.not.i.i.i
-  br i1 %or.cond59.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss0_0EB4_.exit.i, label %.lr.ph150.i.i, !llvm.loop !143
+  %.not.i.i.i = icmp ugt i64 %.sroa.0.049147.i.i, 254
+  br i1 %.not.i.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss0_0EB4_.exit.i, label %.lr.ph150.i.i, !llvm.loop !143
 
 bb.ct:                                            ; preds = %bb.cr
   %i.jo = getelementptr inbounds nuw [9 x i8], ptr %i.ek, i64 %i.jh ; 3 uses
-  %.sroa.030.0.copyload.i.i = load i8, ptr %i.jo, align 1, !noalias !171 ; 2 uses
+  %.sroa.030.0.copyload.i.i = load i8, ptr %i.jo, align 1, !noalias !171
+  %.sroa.030.0.copyload.i.fr.i = freeze i8 %.sroa.030.0.copyload.i.i ; 2 uses
   %.sroa.431.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.jo, i64 1
   %.sroa.431.0.copyload.i.i = load i32, ptr %.sroa.431.0..sroa_idx.i.i, align 1, !noalias !171
   %.sroa.532.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.jo, i64 5
   %.sroa.532.0.copyload.i.i = load i32, ptr %.sroa.532.0..sroa_idx.i.i, align 1, !noalias !171 ; 2 uses
-  %i.jp = zext i8 %.sroa.030.0.copyload.i.i to i64 ; 4 uses
+  %i.jp = zext i8 %.sroa.030.0.copyload.i.fr.i to i64 ; 4 uses
   %i.jq = icmp ult i64 %.sroa.08.0138.i.i, %i.jp
   br i1 %i.jq, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1064,13 +1060,13 @@ bb.ct:                                            ; preds = %bb.cr
   %.sroa.0.3.lcssa.i.i = phi i1 [ %.sroa.0.0140.i.i, %bb.ct ], [ true, %bb.de ]
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.jp
   %i.jw = load i8, ptr %i.jv, align 1, !alias.scope !172, !noundef !4 ; 3 uses
-  %i.jx = add i64 %.sroa.08.1.lcssa.i.i, 1        ; 5 uses
+  %i.jx = add i64 %.sroa.08.1.lcssa.i.i, 1        ; 6 uses
   %.not.i.i = icmp eq i8 %.sroa.9.3.lcssa.i.i, %i.jw
   %or.cond46.i.i = select i1 %.sroa.0.3.lcssa.i.i, i1 %.not.i.i, i1 false
   br i1 %or.cond46.i.i, label %.noexc102.i, label %bb.cu
 
 bb.cu:                                            ; preds = %._crit_edge.i.i
-  invoke fastcc void @_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss0_0B9_(ptr noalias noundef nonnull readonly align 8 dereferenceable(40) %i.b, i8 noundef %.sroa.030.0.copyload.i.i, i8 noundef %i.jw, i32 noundef %.sroa.431.0.copyload.i.i)
+  invoke fastcc void @_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss0_0B9_(ptr noalias noundef nonnull readonly align 8 dereferenceable(40) %i.b, i8 noundef %.sroa.030.0.copyload.i.fr.i, i8 noundef %i.jw, i32 noundef %.sroa.431.0.copyload.i.i)
           to label %.noexc102.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc102.i:                                      ; preds = %bb.cu, %._crit_edge.i.i
@@ -1273,8 +1269,8 @@ bb.do:                                            ; preds = %._crit_edge401.i
   br i1 %.not.i113.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss_0EB4_.exit.i, label %.lr.ph117.i.i
 
 .lr.ph117.i.i:                                    ; preds = %.preheader.i125.i
-  %i.mp = icmp eq i64 %i.ob, 255                  ; 3 uses
-  %i.mq = add nsw i64 %.sroa.08.1.lcssa.i119.i, 2
+  %i.mp = icmp eq i64 %i.ob, 255
+  %i.mq = add nsw i64 %.sroa.08.1.lcssa.fr.i116.i, 2
   %spec.select.peel.i.i = select i1 %i.mp, i64 255, i64 %i.mq ; 2 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.ob
   %i.ms = load i8, ptr %i.mr, align 1, !alias.scope !184, !noundef !4 ; 2 uses
@@ -1285,7 +1281,7 @@ bb.dp:                                            ; preds = %.lr.ph117.i.i, %.lr
   %i.mt = phi i64 [ %.pre.i, %.lr.ph117.i.thread.i ], [ %i.mn, %.lr.ph117.i.i ] ; 3 uses
   %i.mu = phi i8 [ %i.mm, %.lr.ph117.i.thread.i ], [ %i.ms, %.lr.ph117.i.i ] ; 2 uses
   %spec.select.peel.i7.i = phi i64 [ 1, %.lr.ph117.i.thread.i ], [ %spec.select.peel.i.i, %.lr.ph117.i.i ]
-  %5 = phi i1 [ false, %.lr.ph117.i.thread.i ], [ %i.mp, %.lr.ph117.i.i ]
+  %.sroa.08.0.lcssa168174179.i.i = phi i64 [ 0, %.lr.ph117.i.thread.i ], [ %i.ob, %.lr.ph117.i.i ]
   %i.mv = zext i8 %i.mu to i64
   %i.mw = add nuw nsw i64 %i.mv, %i.ml            ; 3 uses
   %i.mx = icmp ult i64 %i.mw, %i.mt
@@ -1300,12 +1296,11 @@ _RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_sta
 bb.dq:                                            ; preds = %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i, %.lr.ph117.i.i
   %i.na = phi ptr [ %i.my, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %i.mo, %.lr.ph117.i.i ]
   %i.nb = phi i64 [ %i.mt, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %i.mn, %.lr.ph117.i.i ] ; 2 uses
-  %spec.select.peel.i8.i = phi i64 [ %spec.select.peel.i7.i, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %spec.select.peel.i.i, %.lr.ph117.i.i ] ; 2 uses
-  %6 = phi i1 [ %5, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %i.mp, %.lr.ph117.i.i ]
+  %spec.select.peel.i8.i = phi i64 [ %spec.select.peel.i7.i, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %spec.select.peel.i.i, %.lr.ph117.i.i ]
+  %.sroa.08.0.lcssa168174180.i.i = phi i64 [ %.sroa.08.0.lcssa168174179.i.i, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %i.ob, %.lr.ph117.i.i ]
   %.sroa.9.2.peel.i108.i = phi i8 [ %i.mu, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.peel.i.i ], [ %.sroa.9.4.i124.i, %.lr.ph117.i.i ]
-  %.not.i.peel.i109.i = icmp samesign ugt i64 %spec.select.peel.i8.i, 255
-  %or.cond65.peel.i.i = select i1 %6, i1 true, i1 %.not.i.peel.i109.i
-  br i1 %or.cond65.peel.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss_0EB4_.exit.i, label %.peel.next.i.i
+  %.not.i.peel.i123.i = icmp eq i64 %.sroa.08.0.lcssa168174180.i.i, 255
+  br i1 %.not.i.peel.i123.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss_0EB4_.exit.i, label %.peel.next.i.i
 
 bb.dr:                                            ; preds = %bb.dy, %.lr.ph109.i.i
   %.sroa.0.0107.i.i = phi i1 [ false, %.lr.ph109.i.i ], [ true, %bb.dy ] ; 2 uses
@@ -1318,10 +1313,10 @@ bb.dr:                                            ; preds = %bb.dy, %.lr.ph109.i
 
 .peel.next.i.i:                                   ; preds = %bb.dq, %bb.dt
   %.sroa.9.1115.i.i = phi i8 [ %.sroa.9.2.i111.i, %bb.dt ], [ %.sroa.9.2.peel.i108.i, %bb.dq ] ; 2 uses
-  %.sroa.056.0114.i.i = phi i64 [ %spec.select.i.i, %bb.dt ], [ %spec.select.peel.i8.i, %bb.dq ] ; 3 uses
-  %i.ne = icmp eq i64 %.sroa.056.0114.i.i, 255    ; 2 uses
+  %.sroa.056.0114.i.i = phi i64 [ %spec.select.i.i, %bb.dt ], [ %spec.select.peel.i8.i, %bb.dq ] ; 4 uses
+  %i.ne = icmp eq i64 %.sroa.056.0114.i.i, 255
   %i.nf = add nuw nsw i64 %.sroa.056.0114.i.i, 1
-  %spec.select.i.i = select i1 %i.ne, i64 255, i64 %i.nf ; 2 uses
+  %spec.select.i.i = select i1 %i.ne, i64 255, i64 %i.nf
   %i.ng = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.sroa.056.0114.i.i
   %i.nh = load i8, ptr %i.ng, align 1, !alias.scope !184, !noundef !4 ; 3 uses
   %.not45.i110.i = icmp eq i8 %.sroa.9.1115.i.i, %i.nh
@@ -1340,9 +1335,8 @@ _RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_sta
 
 bb.dt:                                            ; preds = %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.i.i, %.peel.next.i.i
   %.sroa.9.2.i111.i = phi i8 [ %i.nh, %_RNCNvMs3_NtCs9OSMwK5JXHk_12aho_corasick3dfaNtB7_7Builder24finish_build_both_startss_0B9_.exit.i.i ], [ %.sroa.9.1115.i.i, %.peel.next.i.i ]
-  %.not.i.i112.i = icmp ugt i64 %spec.select.i.i, 255
-  %or.cond65.i.i = select i1 %i.ne, i1 true, i1 %.not.i.i112.i
-  br i1 %or.cond65.i.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss_0EB4_.exit.i, label %.peel.next.i.i, !llvm.loop !157
+  %.not.i.i112.i = icmp ugt i64 %.sroa.056.0114.i.i, 254
+  br i1 %.not.i.i112.i, label %_RINvNtCs9OSMwK5JXHk_12aho_corasick3dfa11sparse_iterNCNvMs3_B2_NtB2_7Builder24finish_build_both_startss_0EB4_.exit.i, label %.peel.next.i.i, !llvm.loop !157
 
 bb.du:                                            ; preds = %bb.dr
   %i.nm = getelementptr inbounds nuw [9 x i8], ptr %i.ek, i64 %i.nc ; 3 uses
@@ -1389,12 +1383,13 @@ bb.dw:                                            ; preds = %_RNCNvMs3_NtCs9OSMw
   br i1 %.not44.i127.i, label %bb.ea, label %bb.dz
 
 ._crit_edge.i118.i:                               ; preds = %bb.ea, %bb.dw, %bb.du
-  %.sroa.08.1.lcssa.i119.i = phi i64 [ %.sroa.08.0105.i.i, %bb.du ], [ %i.nn, %bb.dw ], [ %i.nn, %bb.ea ] ; 2 uses
+  %.sroa.08.1.lcssa.i119.i = phi i64 [ %.sroa.08.0105.i.i, %bb.du ], [ %i.nn, %bb.dw ], [ %i.nn, %bb.ea ]
   %.sroa.9.3.lcssa.i120.i = phi i8 [ %.sroa.9.0106.i.i, %bb.du ], [ %.sroa.9.5.peel.i.i, %bb.dw ], [ %.sroa.9.5.i128.i, %bb.ea ] ; 2 uses
   %.sroa.0.3.lcssa.i121.i = phi i1 [ %.sroa.0.0107.i.i, %bb.du ], [ true, %bb.dw ], [ true, %bb.ea ]
+  %.sroa.08.1.lcssa.fr.i116.i = freeze i64 %.sroa.08.1.lcssa.i119.i ; 2 uses
   %i.nz = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.nn
   %i.oa = load i8, ptr %i.nz, align 1, !alias.scope !184, !noundef !4 ; 3 uses
-  %i.ob = add i64 %.sroa.08.1.lcssa.i119.i, 1     ; 4 uses
+  %i.ob = add i64 %.sroa.08.1.lcssa.fr.i116.i, 1  ; 6 uses
   %.not.i122.i = icmp eq i8 %.sroa.9.3.lcssa.i120.i, %i.oa
   %or.cond46.i123.i = select i1 %.sroa.0.3.lcssa.i121.i, i1 %.not.i122.i, i1 false
   br i1 %or.cond46.i123.i, label %bb.dy, label %bb.dx

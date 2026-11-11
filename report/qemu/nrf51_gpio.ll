@@ -204,7 +204,7 @@ bb.a:
   br label %extract32.exit66
 
 extract32.exit66:                                 ; preds = %bb.a, %update_output_irq.exit
-  %.073 = phi i8 [ 0, %bb.a ], [ %.381, %update_output_irq.exit ] ; 7 uses
+  %.073 = phi i8 [ 0, %bb.a ], [ %.381, %update_output_irq.exit ] ; 8 uses
   %.05672 = phi i64 [ 0, %bb.a ], [ %i.cn, %update_output_irq.exit ] ; 6 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.05672 ; 2 uses
   %i.i = load i32, ptr %i.h, align 4              ; 6 uses
@@ -301,11 +301,10 @@ bb.h:                                             ; preds = %bb.e
   %i.ap = and i32 %i.ao, 3                        ; 2 uses
   %i.aq = icmp eq i32 %i.ap, 2
   %i.ar = select i1 %i.aq, i1 %i.x, i1 false
-  %1 = icmp ne i32 %i.ap, 3
-  %.not70 = select i1 %1, i1 true, i1 %i.x
-  %2 = xor i1 %i.ar, true
-  %3 = select i1 %.not70, i1 %2, i1 false
-  %spec.select62 = select i1 %3, i8 %.073, i8 1   ; 2 uses
+  %.1 = select i1 %i.ar, i8 1, i8 %.073
+  %1 = icmp eq i32 %i.ap, 3
+  %spec.select61 = select i1 %i.x, i8 %.073, i8 1
+  %spec.select62 = select i1 %1, i8 %spec.select61, i8 %.1 ; 2 uses
   %i.as = trunc i32 %i.r to i1                    ; 2 uses
   %i.at = and i32 %i.r, 1                         ; 2 uses
   br i1 %cond.fr89, label %bb.k, label %bb.l

@@ -202,7 +202,7 @@ declare dso_local void @up_write(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i32 -22, 1) i32 @__usermodehelper_disable(i32 noundef %0) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %1 = alloca %struct.wait_queue_entry, align 8   ; 8 uses
+  %1 = alloca %struct.wait_queue_entry, align 8   ; 6 uses
   %.not = icmp eq i32 %0, 0
   br i1 %.not, label %.critedge, label %bb.b
 
@@ -222,32 +222,31 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %bb.c
-  %.036 = phi i64 [ 5000, %bb.c ], [ %spec.store.select9, %bb.e ]
+  %.036 = phi i64 [ 5000, %bb.c ], [ %spec.store.select9, %bb.e ] ; 2 uses
   %i.d = call i64 @prepare_to_wait_event(ptr noundef @running_helpers_waitq, ptr noundef nonnull %1, i32 noundef 2) #11 ; 0 uses
   %i.e = load volatile i32, ptr @running_helpers, align 4
-  %.not47 = icmp eq i32 %i.e, 0
-  br i1 %.not47, label %select.unfold.thread, label %bb.e
-
-select.unfold.thread:                             ; preds = %bb.d
-  call void @finish_wait(ptr noundef @running_helpers_waitq, ptr noundef nonnull %1) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
-  br label %.critedge
+  %2 = icmp ne i32 %i.e, 0                        ; 2 uses
+  %3 = icmp ne i64 %.036, 0                       ; 2 uses
+  %or.cond4 = select i1 %2, i1 true, i1 %3
+  %spec.store.select8 = select i1 %or.cond4, i64 %.036, i64 1 ; 2 uses
+  %spec.select.not = select i1 %2, i1 %3, i1 false
+  br i1 %spec.select.not, label %bb.e, label %select.unfold
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = call i64 @schedule_timeout(i64 noundef %.036) #11 ; 2 uses
+  %i.f = call i64 @schedule_timeout(i64 noundef %spec.store.select8) #11 ; 2 uses
   %i.g = load volatile i32, ptr @running_helpers, align 4
   %i.h = icmp ne i32 %i.g, 0                      ; 2 uses
-  %i.i = icmp ne i64 %i.f, 0
+  %i.i = icmp ne i64 %i.f, 0                      ; 2 uses
   %or.cond7 = select i1 %i.h, i1 true, i1 %i.i
-  %spec.store.select9 = select i1 %or.cond7, i64 %i.f, i64 1 ; 3 uses
-  %.not39 = icmp ne i64 %spec.store.select9, 0
-  %spec.select41.not = select i1 %i.h, i1 %.not39, i1 false
+  %spec.store.select9 = select i1 %or.cond7, i64 %i.f, i64 1 ; 2 uses
+  %spec.select41.not = select i1 %i.h, i1 %i.i, i1 false
   br i1 %spec.select41.not, label %bb.d, label %select.unfold
 
-select.unfold:                                    ; preds = %bb.e
+select.unfold:                                    ; preds = %bb.e, %bb.d
+  %.1.ph = phi i64 [ %spec.store.select8, %bb.d ], [ %spec.store.select9, %bb.e ]
   call void @finish_wait(ptr noundef @running_helpers_waitq, ptr noundef nonnull %1) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
-  %i.j = icmp eq i64 %spec.store.select9, 0
+  %i.j = icmp eq i64 %.1.ph, 0
   br i1 %i.j, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %select.unfold
@@ -257,8 +256,8 @@ bb.f:                                             ; preds = %select.unfold
   call void @up_write(ptr noundef @umhelper_sem) #11
   br label %.critedge
 
-.critedge:                                        ; preds = %select.unfold.thread, %bb.b, %select.unfold, %bb.a, %bb.f
-  %.0 = phi i32 [ -22, %bb.a ], [ -11, %bb.f ], [ 0, %select.unfold ], [ 0, %bb.b ], [ 0, %select.unfold.thread ]
+.critedge:                                        ; preds = %bb.b, %select.unfold, %bb.a, %bb.f
+  %.0 = phi i32 [ -22, %bb.a ], [ -11, %bb.f ], [ 0, %select.unfold ], [ 0, %bb.b ]
   ret i32 %.0
 }
 

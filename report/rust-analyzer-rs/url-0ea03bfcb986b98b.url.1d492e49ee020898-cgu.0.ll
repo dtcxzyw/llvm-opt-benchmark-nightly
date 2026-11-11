@@ -204,8 +204,8 @@ _RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.
   %i.ej = load i8, ptr %i.ei, align 8, !range !7
   %i.ek = trunc nuw i8 %i.ej to i1                ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %.pre2.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8 ; 4 uses
-  %.promoted320 = load i64, ptr %i.dv, align 8    ; 4 uses
+  %.pre2.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8 ; 5 uses
+  %.promoted320 = load i64, ptr %i.dv, align 8    ; 5 uses
   %.not.i.i.fr = freeze i1 %.not.i.i
   br i1 %.not.i.i.fr, label %_RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.exit.thread.split.us, label %_RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.exit.thread.split.preheader
 
@@ -217,14 +217,14 @@ _RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.
 
 _RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.exit.thread.split.us: ; preds = %_RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.exit.thread
   %.promoted330 = load i8, ptr %i.dw, align 1     ; 2 uses
-  %.not.i3.i.us = icmp ne i64 %.pre2.i.i, %.promoted320
-  %or.cond.not.i.i.us = select i1 %i.ek, i1 true, i1 %.not.i3.i.us ; 3 uses
-  %3 = sub nuw i64 %.pre2.i.i, %.promoted320
-  %.sroa.3.0.i.i.us = select i1 %or.cond.not.i.i.us, i64 %3, i64 undef ; 2 uses
   %i.en = trunc nuw i64 %.promoted313 to i1
   br i1 %i.en, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCs2vT3jxLudSK_3url.exit.i.us.peel, label %bb.ao
 
 bb.ao:                                            ; preds = %_RNvXs7_NtNtCshzWfHUSfYae_4core3cmp5implsReNtB7_9PartialEq2eqCs2vT3jxLudSK_3url.exit.thread.split.us
+  %3 = sub nuw i64 %.pre2.i.i, %.promoted320
+  %.not.i3.i.us = icmp ne i64 %.pre2.i.i, %.promoted320
+  %or.cond.not.i.i.us = select i1 %i.ek, i1 true, i1 %.not.i3.i.us ; 2 uses
+  %.sroa.3.0.i.i.us = select i1 %or.cond.not.i.i.us, i64 %3, i64 undef
   %i.eo = getelementptr inbounds nuw i8, ptr %.val.i117, i64 %.promoted320
   %.sroa.0.0.i.i119.us = select i1 %or.cond.not.i.i.us, ptr %i.eo, ptr null
   %i.ep = trunc nuw i8 %.promoted330 to i1
@@ -277,10 +277,9 @@ _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url
   br i1 %i.fc, label %.split325, label %bb.as
 
 bb.as:                                            ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit.us.peel
-  %4 = icmp ne i64 %.sroa.3.0.i.i.us, 0
-  %.not487 = select i1 %or.cond.not.i.i.us, i1 %4, i1 false
+  %.not488 = icmp eq i64 %.pre2.i.i, %.promoted320
   call void @llvm.experimental.noalias.scope.decl(metadata !461)
-  br i1 %.not487, label %bb.at, label %.split325
+  br i1 %.not488, label %.split325, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fd = icmp sgt i64 %storemerge, -1

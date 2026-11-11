@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.e
   %i.an = fadd <2 x double> %i.ak, %i.am          ; 5 uses
   %i.ao = fadd double %.sroa.10.0.copyload.i, %.sroa.8.0.copyload.i ; 5 uses
   %i.ap = fcmp ult double %i.ah, %i.ao
-  %..i = select i1 %i.ap, i32 -1, i32 1           ; 4 uses
+  %..i = select i1 %i.ap, i32 -1, i32 1           ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 112
   %i.ar = load double, ptr %i.aq, align 8, !tbaa !41 ; 3 uses
   %switch.tableidx = add i8 %i.r, -1              ; 2 uses
@@ -248,8 +248,7 @@ convert_sides_to_points.exit.i:                   ; preds = %bb.h
 
 bb.i:                                             ; preds = %convert_sides_to_points.exit.i, %convert_sides_to_points.exit.i
   %i.bc = fcmp oeq double %i.ah, %i.ao
-  %8 = sub nsw i32 0, %..i
-  %spec.select.i = select i1 %i.bc, i32 %8, i32 %..i
+  %spec.select.i = select i1 %i.bc, i32 -1, i32 %..i
   br label %convert_sides_to_points.exit.thread.i
 
 convert_sides_to_points.exit.thread.i:            ; preds = %bb.i, %convert_sides_to_points.exit.i, %bb.h
@@ -429,7 +428,7 @@ bb.p:                                             ; preds = %bb.o
   %i.fc = fadd <2 x double> %i.ez, %i.fb          ; 5 uses
   %i.fd = fadd double %.sroa.10.0.copyload.i49, %.sroa.8.0.copyload.i55 ; 5 uses
   %i.fe = fcmp ult double %i.ew, %i.fd
-  %..i56 = select i1 %i.fe, i32 -1, i32 1         ; 4 uses
+  %..i56 = select i1 %i.fe, i32 -1, i32 1         ; 3 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.et, i64 104
   %i.fg = load double, ptr %i.ff, align 8, !tbaa !90 ; 2 uses
   %switch.tableidx143 = add i8 %i.eg, -1          ; 2 uses
@@ -473,8 +472,7 @@ convert_sides_to_points.exit.i79:                 ; preds = %bb.r
 
 bb.s:                                             ; preds = %convert_sides_to_points.exit.i79, %convert_sides_to_points.exit.i79
   %i.fr = fcmp oeq double %i.ew, %i.fd
-  %9 = sub nsw i32 0, %..i56
-  %spec.select.i80 = select i1 %i.fr, i32 %9, i32 %..i56
+  %spec.select.i80 = select i1 %i.fr, i32 -1, i32 %..i56
   br label %convert_sides_to_points.exit.thread.i62
 
 convert_sides_to_points.exit.thread.i62:          ; preds = %bb.s, %convert_sides_to_points.exit.i79, %bb.r

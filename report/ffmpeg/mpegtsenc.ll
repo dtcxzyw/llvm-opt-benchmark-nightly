@@ -205,16 +205,14 @@ bb.fz:                                            ; preds = %.sink.split, %get_p
   %i.ama = phi ptr [ %i.aly, %get_pes_stream_id.exit ], [ %i.alz, %.sink.split ]
   %.0.i429472 = phi i32 [ %.0329524, %get_pes_stream_id.exit ], [ %.0.i429472.ph, %.sink.split ] ; 3 uses
   %i.amb = icmp eq i64 %spec.select393474, -9223372036854775808 ; 4 uses
-  %spec.select395 = select i1 %i.amb, i32 0, i32 5 ; 2 uses
-  %spec.select396 = select i1 %i.amb, i32 0, i32 128 ; 2 uses
   %i.amc = icmp eq i64 %spec.select394476, -9223372036854775808
   %.not376 = icmp eq i64 %spec.select394476, %spec.select393474
-  %i.amd = or i1 %i.amc, %.not376
-  %or.cond397 = or i1 %i.amb, %i.amd              ; 3 uses
-  %8 = add nuw nsw i32 %spec.select395, 5
-  %9 = or disjoint i32 %spec.select396, 64
-  %.1309.a = select i1 %or.cond397, i32 %spec.select395, i32 %8 ; 5 uses
-  %.1299 = select i1 %or.cond397, i32 %spec.select396, i32 %9 ; 5 uses
+  %i.amd = or i1 %i.amc, %.not376                 ; 3 uses
+  %or.cond397 = or i1 %i.amb, %i.amd
+  %spec.select395 = select i1 %i.amd, i32 5, i32 10
+  %.1309 = select i1 %i.amb, i32 0, i32 %spec.select395 ; 5 uses
+  %.1309.a = select i1 %i.amd, i32 128, i32 192
+  %.1299 = select i1 %i.amb, i32 0, i32 %.1309.a  ; 5 uses
   %i.ame = load ptr, ptr %i.p, align 8, !tbaa !51 ; 3 uses
   %i.amf = load i32, ptr %i.ame, align 8, !tbaa !76 ; 2 uses
   %i.amg = icmp ne i32 %i.amf, 0                  ; 2 uses
@@ -228,7 +226,7 @@ bb.ga:                                            ; preds = %bb.fz
 
 bb.gb:                                            ; preds = %bb.ga
   %i.amk = or disjoint i32 %.1299, 1
-  %i.aml = add nuw nsw i32 %.1309.a, 3
+  %i.aml = add nuw nsw i32 %.1309, 3
   br label %.thread603
 
 bb.gc:                                            ; preds = %bb.fz
@@ -246,11 +244,11 @@ bb.gd:                                            ; preds = %bb.gc
 
 bb.ge:                                            ; preds = %bb.gd
   %i.amr = or disjoint i32 %.1299, 1
-  %i.ams = add nuw nsw i32 %.1309.a, 3
+  %i.ams = add nuw nsw i32 %.1309, 3
   br label %.thread603
 
 .thread603:                                       ; preds = %bb.ga, %bb.gb, %bb.ge, %bb.gd, %bb.gc
-  %.3311 = phi i32 [ %i.ams, %bb.ge ], [ %.1309.a, %bb.gd ], [ %.1309.a, %bb.gc ], [ %.1309.a, %bb.ga ], [ %i.aml, %bb.gb ] ; 2 uses
+  %.3311 = phi i32 [ %i.ams, %bb.ge ], [ %.1309, %bb.gd ], [ %.1309, %bb.gc ], [ %.1309, %bb.ga ], [ %i.aml, %bb.gb ] ; 2 uses
   %.3301 = phi i32 [ %i.amr, %bb.ge ], [ %.1299, %bb.gd ], [ %.1299, %bb.gc ], [ %.1299, %bb.ga ], [ %i.amk, %bb.gb ] ; 2 uses
   %.not502 = phi i1 [ false, %bb.ge ], [ true, %bb.gd ], [ true, %bb.gc ], [ true, %bb.ga ], [ false, %bb.gb ]
   %i.amt = sub nuw nsw i32 36, %.3311
