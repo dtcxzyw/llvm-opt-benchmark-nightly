@@ -205,12 +205,9 @@ vector.ph33:                                      ; preds = %.lr.ph.split.us
 
 vector.body37:                                    ; preds = %vector.body37, %vector.ph33
   %index38 = phi i64 [ 0, %vector.ph33 ], [ %index.next41, %vector.body37 ] ; 2 uses
-  %vec.ind39 = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph33 ], [ %vec.ind.next42, %vector.body37 ] ; 3 uses
-  %2 = trunc <2 x i64> %vec.ind39 to <2 x i32>
-  %3 = add <2 x i32> %2, splat (i32 1)
-  %4 = trunc <2 x i64> %vec.ind39 to <2 x i32>
-  %i.w = add <2 x i32> %4, splat (i32 3)
-  %i.x = uitofp nneg <2 x i32> %3 to <2 x double>
+  %vec.ind39 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph33 ], [ %vec.ind.next42, %vector.body37 ] ; 3 uses
+  %i.w = add <2 x i32> %vec.ind39, splat (i32 2)
+  %i.x = uitofp nneg <2 x i32> %vec.ind39 to <2 x double>
   %i.y = uitofp nneg <2 x i32> %i.w to <2 x double>
   %i.z = fmul <2 x double> %broadcast.splat36, %i.x
   %i.aa = fmul <2 x double> %broadcast.splat36, %i.y
@@ -219,7 +216,7 @@ vector.body37:                                    ; preds = %vector.body37, %vec
   store <2 x double> %i.z, ptr %i.ab, align 8, !tbaa !50
   store <2 x double> %i.aa, ptr %i.ac, align 8, !tbaa !50
   %index.next41 = add nuw i64 %index38, 4         ; 2 uses
-  %vec.ind.next42 = add nuw <2 x i64> %vec.ind39, splat (i64 4)
+  %vec.ind.next42 = add <2 x i32> %vec.ind39, splat (i32 4)
   %i.ad = icmp eq i64 %index.next41, %n.vec34
   br i1 %i.ad, label %middle.block43, label %vector.body37, !llvm.loop !234
 
@@ -267,12 +264,9 @@ vector.ph:                                        ; preds = %.lr.ph.split.split.
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %5 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %6 = add <2 x i32> %5, splat (i32 1)
-  %7 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.al = add <2 x i32> %7, splat (i32 3)
-  %i.am = uitofp nneg <2 x i32> %6 to <2 x double>
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %i.al = add <2 x i32> %vec.ind, splat (i32 2)
+  %i.am = uitofp nneg <2 x i32> %vec.ind to <2 x double>
   %i.an = uitofp nneg <2 x i32> %i.al to <2 x double>
   %i.ao = fmul <2 x double> %broadcast.splat, %i.am
   %i.ap = fmul <2 x double> %broadcast.splat, %i.an
@@ -281,7 +275,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x double> %i.ao, ptr %i.aq, align 8, !tbaa !50
   store <2 x double> %i.ap, ptr %i.ar, align 8, !tbaa !50
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %i.as = icmp eq i64 %index.next, %n.vec
   br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !236
 

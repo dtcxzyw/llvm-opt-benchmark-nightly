@@ -205,32 +205,40 @@ bb.ah:                                            ; preds = %bb.w
           to label %.preheader.i.i unwind label %bb.ai
 
 .preheader.i.i:                                   ; preds = %bb.ah
-  %i.cd = load ptr, ptr %10, align 8, !tbaa !632  ; 2 uses
+  %i.cd = load ptr, ptr %10, align 8, !tbaa !632  ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader.i.i
-  %index = phi i64 [ 0, %.preheader.i.i ], [ %index.next.1, %vector.body ] ; 3 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.preheader.i.i ], [ %vec.ind.next.1, %vector.body ] ; 4 uses
-  %15 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %16 = add <4 x i32> %15, splat (i32 1)
-  %17 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %i.ce = add <4 x i32> %17, splat (i32 5)
+  %index = phi i64 [ 0, %.preheader.i.i ], [ %index.next.1, %vector.body ] ; 5 uses
+  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %.preheader.i.i ], [ %vec.ind.next.3, %vector.body ] ; 9 uses
+  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %index ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 16
+  store <4 x i32> %vec.ind, ptr %15, align 4, !tbaa !79
+  store <4 x i32> %step.add, ptr %16, align 4, !tbaa !79
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %i.ce = add <4 x i32> %vec.ind, splat (i32 12)
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %index ; 2 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 16
-  store <4 x i32> %16, ptr %i.cf, align 4, !tbaa !79
+  %17 = getelementptr inbounds nuw i8, ptr %i.cf, i64 32
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 48
+  store <4 x i32> %vec.ind.next, ptr %17, align 4, !tbaa !79
   store <4 x i32> %i.ce, ptr %i.cg, align 4, !tbaa !79
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8) ; 2 uses
-  %18 = trunc <4 x i64> %vec.ind.next to <4 x i32>
-  %19 = add <4 x i32> %18, splat (i32 1)
-  %20 = trunc <4 x i64> %vec.ind.next to <4 x i32>
-  %i.ch = add <4 x i32> %20, splat (i32 5)
+  %vec.ind.next.1 = add <4 x i32> %vec.ind, splat (i32 16)
+  %step.add.2 = add <4 x i32> %vec.ind, splat (i32 20)
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %index ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 64
+  %20 = getelementptr inbounds nuw i8, ptr %18, i64 80
+  store <4 x i32> %vec.ind.next.1, ptr %19, align 4, !tbaa !79
+  store <4 x i32> %step.add.2, ptr %20, align 4, !tbaa !79
+  %vec.ind.next.2 = add <4 x i32> %vec.ind, splat (i32 24)
+  %i.ch = add <4 x i32> %vec.ind, splat (i32 28)
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %index ; 2 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 32
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 48
-  store <4 x i32> %19, ptr %i.cj, align 4, !tbaa !79
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 96
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 112
+  store <4 x i32> %vec.ind.next.2, ptr %i.cj, align 4, !tbaa !79
   store <4 x i32> %i.ch, ptr %i.ck, align 4, !tbaa !79
-  %index.next.1 = add nuw nsw i64 %index, 16      ; 2 uses
-  %vec.ind.next.1 = add nuw <4 x i64> %vec.ind, splat (i64 16)
+  %index.next.1 = add nuw nsw i64 %index, 32      ; 2 uses
+  %vec.ind.next.3 = add <4 x i32> %vec.ind, splat (i32 32)
   %i.cl = icmp eq i64 %index.next.1, 2048
   br i1 %i.cl, label %_ZN6duckdb15SelectionVectorC2Emm.exit.i, label %vector.body, !llvm.loop !1622
 
@@ -633,32 +641,40 @@ bb.w:                                             ; preds = %bb.l
           to label %.preheader.i unwind label %bb.x
 
 .preheader.i:                                     ; preds = %bb.w
-  %i.x = load ptr, ptr %14, align 8, !tbaa !632   ; 2 uses
+  %i.x = load ptr, ptr %14, align 8, !tbaa !632   ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader.i
-  %index = phi i64 [ 0, %.preheader.i ], [ %index.next.1, %vector.body ] ; 3 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.preheader.i ], [ %vec.ind.next.1, %vector.body ] ; 4 uses
-  %18 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %19 = add <4 x i32> %18, splat (i32 1)
-  %20 = trunc <4 x i64> %vec.ind to <4 x i32>
-  %i.y = add <4 x i32> %20, splat (i32 5)
+  %index = phi i64 [ 0, %.preheader.i ], [ %index.next.1, %vector.body ] ; 5 uses
+  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %.preheader.i ], [ %vec.ind.next.3, %vector.body ] ; 9 uses
+  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %index ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 16
+  store <4 x i32> %vec.ind, ptr %18, align 4, !tbaa !79
+  store <4 x i32> %step.add, ptr %19, align 4, !tbaa !79
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %i.y = add <4 x i32> %vec.ind, splat (i32 12)
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %index ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  store <4 x i32> %19, ptr %i.z, align 4, !tbaa !79
+  %20 = getelementptr inbounds nuw i8, ptr %i.z, i64 32
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 48
+  store <4 x i32> %vec.ind.next, ptr %20, align 4, !tbaa !79
   store <4 x i32> %i.y, ptr %i.aa, align 4, !tbaa !79
-  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8) ; 2 uses
-  %21 = trunc <4 x i64> %vec.ind.next to <4 x i32>
-  %22 = add <4 x i32> %21, splat (i32 1)
-  %23 = trunc <4 x i64> %vec.ind.next to <4 x i32>
-  %i.ab = add <4 x i32> %23, splat (i32 5)
+  %vec.ind.next.1 = add <4 x i32> %vec.ind, splat (i32 16)
+  %step.add.2 = add <4 x i32> %vec.ind, splat (i32 20)
+  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %index ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %21, i64 64
+  %23 = getelementptr inbounds nuw i8, ptr %21, i64 80
+  store <4 x i32> %vec.ind.next.1, ptr %22, align 4, !tbaa !79
+  store <4 x i32> %step.add.2, ptr %23, align 4, !tbaa !79
+  %vec.ind.next.2 = add <4 x i32> %vec.ind, splat (i32 24)
+  %i.ab = add <4 x i32> %vec.ind, splat (i32 28)
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %index ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
-  store <4 x i32> %22, ptr %i.ad, align 4, !tbaa !79
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 96
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 112
+  store <4 x i32> %vec.ind.next.2, ptr %i.ad, align 4, !tbaa !79
   store <4 x i32> %i.ab, ptr %i.ae, align 4, !tbaa !79
-  %index.next.1 = add nuw nsw i64 %index, 16      ; 2 uses
-  %vec.ind.next.1 = add nuw <4 x i64> %vec.ind, splat (i64 16)
+  %index.next.1 = add nuw nsw i64 %index, 32      ; 2 uses
+  %vec.ind.next.3 = add <4 x i32> %vec.ind, splat (i32 32)
   %i.af = icmp eq i64 %index.next.1, 2048
   br i1 %i.af, label %_ZN6duckdb15SelectionVectorC2Emm.exit, label %vector.body, !llvm.loop !2028
 

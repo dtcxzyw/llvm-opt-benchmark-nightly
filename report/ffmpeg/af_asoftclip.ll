@@ -191,13 +191,11 @@ bb.d:                                             ; preds = %bb.a, %bb.b
 
 vector.body:                                      ; preds = %vector.body, %.preheader
   %index = phi i64 [ 0, %.preheader ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %.preheader ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %.preheader ], [ %vec.ind.next, %vector.body ] ; 2 uses
   %i.s = getelementptr inbounds nuw [72 x i8], ptr %i.m, i64 %index ; 12 uses
   %i.t = getelementptr inbounds nuw [72 x i8], ptr %i.m, i64 %index ; 5 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 72
-  %1 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %2 = add <2 x i32> %1, splat (i32 1)
-  %i.v = mul <2 x i32> %broadcast.splat, %2
+  %i.v = mul <2 x i32> %broadcast.splat, %vec.ind
   %i.w = sitofp nsz <2 x i32> %i.v to <2 x double>
   %i.x = fdiv nsz <2 x double> %broadcast.splat23, %i.w
   %i.y = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.x) ; 2 uses
@@ -277,7 +275,7 @@ vector.body:                                      ; preds = %vector.body, %.preh
   %i.ce = shufflevector <4 x float> %i.cc, <4 x float> %i.cd, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x float> %i.ce, ptr %i.u, align 8, !tbaa !53
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %i.cf = icmp eq i64 %index.next, 64
   br i1 %i.cf, label %.loopexit, label %vector.body, !llvm.loop !73
 

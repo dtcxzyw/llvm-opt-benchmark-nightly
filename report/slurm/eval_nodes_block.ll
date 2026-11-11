@@ -202,20 +202,18 @@ vector.ph:                                        ; preds = %vector.memcheck
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.qj = phi i64 [ 3, %vector.ph ], [ %i.qm, %vector.body ] ; 2 uses
+  %i.qj = phi i64 [ 0, %vector.ph ], [ %i.qm, %vector.body ] ; 3 uses
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.ql, %vector.body ]
-  %i.qk = getelementptr [4 x i8], ptr %invariant.gep, i64 %index
+  %i.qk = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.qj
   %wide.load = load <4 x i32>, ptr %i.qk, align 4, !alias.scope !38
   %i.ql = add <4 x i32> %wide.load, %vec.phi      ; 2 uses
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.qm = add nuw nsw i64 %i.qj, 4
-  %i.qn = icmp eq i64 %index.next, %n.vec
+  %i.qm = add nuw i64 %i.qj, 4                    ; 2 uses
+  %i.qn = icmp eq i64 %i.qm, %n.vec
   br i1 %i.qn, label %middle.block, label %vector.body, !llvm.loop !15
 
 middle.block:                                     ; preds = %vector.body
   %i.qo = trunc i64 %i.qj to i32
-  %i.qp = add i32 %i.qo, 1
+  %i.qp = add i32 %i.qo, 4
   store i32 %i.qp, ptr %i.k, align 4, !alias.scope !41, !noalias !38
   %i.qq = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ql) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count

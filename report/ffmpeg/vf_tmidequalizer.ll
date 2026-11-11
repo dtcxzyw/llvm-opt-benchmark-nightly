@@ -204,30 +204,28 @@ bb.a:
   %i.bc = fpext nsz float %i.bb to double         ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 84 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.ax to i64   ; 3 uses
-  %min.iters.check = icmp eq i32 %i.ax, 1
+  %min.iters.check = icmp ult i32 %i.ax, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %i.bc, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
+  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %broadcast.splatinsert = insertelement <4 x double> poison, double %i.bc, i64 0
+  %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %1 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %2 = add <2 x i32> %1, splat (i32 1)
-  %3 = uitofp nneg <2 x i32> %2 to <2 x double>   ; 2 uses
-  %4 = fmul nnan nsz <2 x double> %3, splat (double -5.000000e-01)
-  %5 = fmul nsz <2 x double> %4, %3
-  %6 = fdiv nsz <2 x double> %5, %broadcast.splat
-  %7 = fptrunc nsz <2 x double> %6 to <2 x float>
-  %8 = tail call nsz <2 x float> @llvm.exp.v2f32(<2 x float> %7)
+  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %1 = uitofp nneg <4 x i32> %vec.ind to <4 x double> ; 2 uses
+  %2 = fmul nnan nsz <4 x double> %1, splat (double -5.000000e-01)
+  %3 = fmul nsz <4 x double> %2, %1
+  %4 = fdiv nsz <4 x double> %3, %broadcast.splat
+  %5 = fptrunc nsz <4 x double> %4 to <4 x float>
+  %6 = tail call nsz <4 x float> @llvm.exp.v4f32(<4 x float> %5)
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %index
-  store <2 x float> %8, ptr %i.be, align 4, !tbaa !48
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  store <4 x float> %6, ptr %i.be, align 4, !tbaa !48
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %i.bf = icmp eq i64 %index.next, %n.vec
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !80
 
@@ -630,7 +628,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 declare void @av_freep(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.exp.v2f32(<2 x float>) #5
+declare <4 x float> @llvm.exp.v4f32(<4 x float>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

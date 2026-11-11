@@ -33,20 +33,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind17 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 2 uses
-  %i.e = uitofp nneg <2 x i32> %vec.ind17 to <2 x double>
+  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.ind17 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 2 uses
+  %i.e = uitofp nneg <2 x i32> %vec.ind to <2 x double>
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index
   store <2 x double> %i.e, ptr %i.f, align 8, !tbaa !13
-  %3 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %4 = add <2 x i32> %3, splat (i32 1)
-  %i.g = uitofp nneg <2 x i32> %4 to <2 x double> ; 2 uses
+  %i.g = uitofp nneg <2 x i32> %vec.ind17 to <2 x double> ; 2 uses
   %i.h = fmul nnan <2 x double> %i.g, %i.g        ; 2 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index
   %i.j = fmul <2 x double> %i.h, %i.h
   store <2 x double> %i.j, ptr %i.i, align 8, !tbaa !13
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %vec.ind.next18 = add <2 x i32> %vec.ind17, splat (i32 2)
   %i.k = icmp eq i64 %index.next, %n.vec
   br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !17
@@ -183,20 +181,18 @@ vector.ph49:                                      ; preds = %.lr.ph.preheader.i
 
 vector.body51:                                    ; preds = %vector.body51, %vector.ph49
   %index52 = phi i64 [ 0, %vector.ph49 ], [ %index.next54, %vector.body51 ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph49 ], [ %vec.ind.next, %vector.body51 ] ; 2 uses
-  %vec.ind53 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph49 ], [ %vec.ind.next55, %vector.body51 ] ; 2 uses
-  %i.ab = uitofp nneg <2 x i32> %vec.ind53 to <2 x double>
+  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph49 ], [ %vec.ind.next, %vector.body51 ] ; 2 uses
+  %vec.ind53 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph49 ], [ %vec.ind.next55, %vector.body51 ] ; 2 uses
+  %i.ab = uitofp nneg <2 x i32> %vec.ind to <2 x double>
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %index52
   store <2 x double> %i.ab, ptr %i.ac, align 8, !tbaa !13
-  %2 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %3 = add <2 x i32> %2, splat (i32 1)
-  %i.ad = uitofp nneg <2 x i32> %3 to <2 x double> ; 2 uses
+  %i.ad = uitofp nneg <2 x i32> %vec.ind53 to <2 x double> ; 2 uses
   %i.ae = fmul nnan <2 x double> %i.ad, %i.ad     ; 2 uses
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %index52
   %i.ag = fmul <2 x double> %i.ae, %i.ae
   store <2 x double> %i.ag, ptr %i.af, align 8, !tbaa !13
   %index.next54 = add nuw i64 %index52, 2         ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
   %vec.ind.next55 = add <2 x i32> %vec.ind53, splat (i32 2)
   %i.ah = icmp eq i64 %index.next54, %n.vec50
   br i1 %i.ah, label %middle.block56, label %vector.body51, !llvm.loop !20
