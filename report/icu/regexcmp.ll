@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %_ZNK6icu_789UVector
 
 .thread126.outer199:                              ; preds = %.thread126.outer199.backedge, %.thread126.outer
   %.487.ph200 = phi i32 [ %.487.ph, %.thread126.outer ], [ %i.dg, %.thread126.outer199.backedge ]
-  %.0.ph201 = phi i32 [ %.0.ph, %.thread126.outer ], [ %.0.ph201.be, %.thread126.outer199.backedge ] ; 2 uses
+  %.0.ph201 = phi i32 [ %.0.ph, %.thread126.outer ], [ %.0.ph201.be, %.thread126.outer199.backedge ] ; 3 uses
   br label %.thread126
 
 .thread126:                                       ; preds = %.thread126.outer199, %.thread126
@@ -225,8 +225,8 @@ _ZNK6icu_789UVector6410elementAtiEi.exit117:      ; preds = %.thread126
   %i.dp = add nsw i32 %.0.ph201, 2
   %spec.select = select i1 %i.do, i32 %i.dp, i32 %.0.ph201 ; 2 uses
   %i.dq = icmp eq i32 %i.dn, 44
-  %4 = zext i1 %i.dq to i32
-  %.2 = add nsw i32 %spec.select, %4              ; 5 uses
+  %4 = add nsw i32 %.0.ph201, 1
+  %.2 = select i1 %i.dq, i32 %4, i32 %spec.select ; 5 uses
   %trunc132 = trunc nuw i32 %i.dn to i8
   switch i8 %trunc132, label %.thread126.outer199.backedge [
     i8 38, label %bb.z
@@ -629,7 +629,7 @@ bb.de:                                            ; preds = %_ZNK6icu_789UVector
 
 .thread288.outer387:                              ; preds = %.thread288.outer387.backedge, %.thread288.outer
   %.3173.ph388 = phi i32 [ %.3173.ph, %.thread288.outer ], [ %i.jq, %.thread288.outer387.backedge ]
-  %.0.ph389 = phi i32 [ %.0.ph, %.thread288.outer ], [ %.0.ph389.be, %.thread288.outer387.backedge ] ; 2 uses
+  %.0.ph389 = phi i32 [ %.0.ph, %.thread288.outer ], [ %.0.ph389.be, %.thread288.outer387.backedge ] ; 3 uses
   br label %.thread288
 
 .thread288:                                       ; preds = %.thread288.outer387, %.thread288
@@ -650,8 +650,8 @@ _ZNK6icu_789UVector6410elementAtiEi.exit278:      ; preds = %.thread288
   %i.jz = add nsw i32 %.0.ph389, 2
   %spec.select = select i1 %i.jy, i32 %i.jz, i32 %.0.ph389
   %i.ka = icmp eq i32 %i.jx, 44
-  %8 = zext i1 %i.ka to i32
-  %.2 = add nsw i32 %spec.select, %8              ; 5 uses
+  %8 = add nsw i32 %.0.ph389, 1
+  %.2 = select i1 %i.ka, i32 %8, i32 %spec.select ; 5 uses
   %trunc293 = trunc nuw i32 %i.jx to i8
   switch i8 %trunc293, label %.thread288.outer387.backedge [
     i8 38, label %bb.df

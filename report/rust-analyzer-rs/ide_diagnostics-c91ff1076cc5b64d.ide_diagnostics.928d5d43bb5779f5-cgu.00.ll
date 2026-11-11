@@ -204,16 +204,16 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.869.0.i.i.i.i = select i1 %.not.i.i.i.i, i64 0, i64 %i.ae
   %i.af = add i64 %.sroa.8.0.i.i.i.i, %.sroa.7.0.i.i.i.i ; 3 uses
   %.not72.i.i.i.i = icmp uge i64 %i.af, %.sroa.7.0.i.i.i.i ; 2 uses
-  %i.ag = add i64 %.sroa.869.0.i.i.i.i, %i.af     ; 2 uses
+  %i.ag = add i64 %.sroa.869.0.i.i.i.i, %i.af     ; 3 uses
   %i.ah = icmp uge i64 %i.ag, %i.af
   %or.cond.not.i.i.i.i = select i1 %.not72.i.i.i.i, i1 %i.ah, i1 false, !prof !2927 ; 2 uses
-  %.sroa.8.3.i.i.i.i = select i1 %.not72.i.i.i.i, i64 %i.ag, i64 undef, !prof !2927 ; 2 uses
+  %.sroa.8.3.i.i.i.i = select i1 %.not72.i.i.i.i, i64 %i.ag, i64 undef, !prof !2927
   %.val.i.i = load i64, ptr %i.m, align 8, !alias.scope !2925, !noundef !8
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val8.i.i = load i64, ptr %i.ai, align 8, !alias.scope !2925, !noundef !8
   %i.aj = sub nuw i64 %.val8.i.i, %.val.i.i
   %i.ak = add i64 %.sroa.8.3.i.i.i.i, %i.aj       ; 2 uses
-  %i.al = icmp uge i64 %i.ak, %.sroa.8.3.i.i.i.i
+  %i.al = icmp uge i64 %i.ak, %i.ag
   %.sroa.46.0.i.i = select i1 %or.cond.not.i.i.i.i, i64 %i.ak, i64 undef
   %narrow.i.i = select i1 %or.cond.not.i.i.i.i, i1 %i.al, i1 false
   br i1 %narrow.i.i, label %.thread11.i, label %bb.g, !prof !2928
@@ -350,16 +350,16 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.869.0.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 0, i64 %i.cq
   %i.cr = add i64 %.sroa.8.0.i.i.i.i.i.i, %.sroa.7.0.i.i.i.i.i.i ; 3 uses
   %.not72.i.i.i.i.i.i = icmp uge i64 %i.cr, %.sroa.7.0.i.i.i.i.i.i ; 2 uses
-  %i.cs = add i64 %.sroa.869.0.i.i.i.i.i.i, %i.cr ; 2 uses
+  %i.cs = add i64 %.sroa.869.0.i.i.i.i.i.i, %i.cr ; 3 uses
   %i.ct = icmp uge i64 %i.cs, %i.cr
   %or.cond.not.i.i.i.i.i.i = select i1 %.not72.i.i.i.i.i.i, i1 %i.ct, i1 false, !prof !2927 ; 2 uses
-  %.sroa.8.3.i.i.i.i.i.i = select i1 %.not72.i.i.i.i.i.i, i64 %i.cs, i64 undef, !prof !2927 ; 2 uses
+  %.sroa.8.3.i.i.i.i.i.i = select i1 %.not72.i.i.i.i.i.i, i64 %i.cs, i64 undef, !prof !2927
   %.val.i.i.i5.i = load i64, ptr %i.by, align 8, !alias.scope !2935, !noalias !2924, !noundef !8
   %i.cu = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.val8.i.i.i.i = load i64, ptr %i.cu, align 8, !alias.scope !2935, !noalias !2924, !noundef !8
   %i.cv = sub nuw i64 %.val8.i.i.i.i, %.val.i.i.i5.i
   %i.cw = add i64 %.sroa.8.3.i.i.i.i.i.i, %i.cv   ; 2 uses
-  %i.cx = icmp uge i64 %i.cw, %.sroa.8.3.i.i.i.i.i.i
+  %i.cx = icmp uge i64 %i.cw, %i.cs
   %.sroa.46.0.i.i.i.i = select i1 %or.cond.not.i.i.i.i.i.i, i64 %i.cw, i64 undef
   %narrow.i.i.i.i = select i1 %or.cond.not.i.i.i.i.i.i, i1 %i.cx, i1 false
   br i1 %narrow.i.i.i.i, label %.thread13.i.i.i, label %bb.n, !prof !2928
@@ -762,7 +762,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6op
   %i.ah = lshr exact i64 %i.ag, 5
   %.sroa.8.0.i.i.i.i = select i1 %.not53.i.i.i.i, i64 0, i64 %i.ah
   %i.ai = add nuw nsw i64 %.sroa.8.0.i.i.i.i, %.sroa.7.0.i.i.i.i
-  %..i.i.i = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.ai)
+  %..i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.s, i64 %i.ai)
   %i.aj = tail call i64 @llvm.umax.i64(i64 %..i.i.i, i64 3)
   %i.ak = add nuw nsw i64 %i.aj, 1
   br label %bb.f
@@ -961,7 +961,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6op
   %i.bx = lshr exact i64 %i.bw, 5
   %.sroa.8.0.i.i.i.i.i.i = select i1 %.not53.i.i.i.i.i.i, i64 0, i64 %i.bx
   %i.by = add nuw nsw i64 %.sroa.7.0.i.i.i.i.i.i, %.sroa.8.0.i.i.i.i.i.i
-  %..i.i.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.33.0, i64 %i.by)
+  %..i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.sroa.33.0, i64 %i.by)
   %i.bz = add nuw nsw i64 %..i.i.i.i.i, 1
   br label %_RNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB5_3MapINtNtB7_4take4TakeINtNtB7_7flatten7FlattenINtNtBb_6option8IntoIterRSNtNtCsjJXvCMGntp8_6syntax12syntax_error11SyntaxErrorEEENCNvCscA5P7HRgTCP_15ide_diagnostics18syntax_diagnostics0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2Z_.exit.i.i
 

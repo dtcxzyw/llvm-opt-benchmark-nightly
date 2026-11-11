@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.not35 = icmp eq i32 %i.bm, 0
   %i.bn = sub nsw i32 0, %.0
   %spec.select = select i1 %.not35, i32 %.0, i32 %i.bn
-  %i.bo = add nsw i32 %spec.select, %1            ; 4 uses
+  %i.bo = add nsw i32 %spec.select, %1            ; 6 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 4420
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !58
   %.not36 = icmp eq i32 %i.bq, 0
@@ -221,11 +221,11 @@ bb.h:                                             ; preds = %bb.f
   %i.bv = icmp slt i32 %i.bo, -63
   %or.cond = select i1 %i.bu, i1 %i.bv, i1 false
   %i.bw = add nsw i32 %i.bo, 64
-  %spec.select37 = select i1 %or.cond, i32 %i.bw, i32 %i.bo ; 3 uses
+  %spec.select37 = select i1 %or.cond, i32 %i.bw, i32 %i.bo
   %i.bx = icmp sgt i32 %1, 32
-  %i.by = icmp sgt i32 %spec.select37, 63
+  %i.by = icmp sgt i32 %i.bo, 63
   %or.cond3 = select i1 %i.bx, i1 %i.by, i1 false
-  %i.bz = add nsw i32 %spec.select37, -64
+  %i.bz = add nsw i32 %i.bo, -64
   %spec.select38 = select i1 %or.cond3, i32 %i.bz, i32 %spec.select37
   br label %bb.i
 
@@ -628,7 +628,7 @@ bb.an:                                            ; preds = %bb.am
   %.not35.i = icmp eq i32 %i.jf, 0
   %i.jg = sub nsw i32 0, %.154.i.i
   %spec.select.i = select i1 %.not35.i, i32 %.154.i.i, i32 %i.jg
-  %i.jh = add nsw i32 %spec.select.i, %i.fp       ; 4 uses
+  %i.jh = add nsw i32 %spec.select.i, %i.fp       ; 6 uses
   %i.ji = load i32, ptr %i.fk, align 4, !tbaa !58
   %.not36.i = icmp eq i32 %i.ji, 0
   br i1 %.not36.i, label %.thread, label %bb.ao
@@ -643,11 +643,11 @@ bb.ao:                                            ; preds = %bb.an
   %i.jm = icmp slt i32 %i.jh, -63
   %or.cond.i = select i1 %i.jl, i1 %i.jm, i1 false
   %i.jn = add nsw i32 %i.jh, 64
-  %spec.select37.i = select i1 %or.cond.i, i32 %i.jn, i32 %i.jh ; 3 uses
+  %spec.select37.i = select i1 %or.cond.i, i32 %i.jn, i32 %i.jh
   %i.jo = icmp sgt i32 %i.fp, 32
-  %i.jp = icmp sgt i32 %spec.select37.i, 63
+  %i.jp = icmp sgt i32 %i.jh, 63
   %or.cond3.i = select i1 %i.jo, i1 %i.jp, i1 false
-  %i.jq = add nsw i32 %spec.select37.i, -64
+  %i.jq = add nsw i32 %i.jh, -64
   %spec.select38.i = select i1 %or.cond3.i, i32 %i.jq, i32 %spec.select37.i
   br label %h263p_decode_umotion.exit
 
@@ -814,7 +814,7 @@ bb.ay:                                            ; preds = %bb.ax
   %.not35.i420 = icmp eq i32 %i.no, 0
   %i.np = sub nsw i32 0, %.154.i.i416
   %spec.select.i421 = select i1 %.not35.i420, i32 %.154.i.i416, i32 %i.np
-  %i.nq = add nsw i32 %spec.select.i421, %i.lu    ; 4 uses
+  %i.nq = add nsw i32 %spec.select.i421, %i.lu    ; 6 uses
   %i.nr = load i32, ptr %i.fk, align 4, !tbaa !58
   %.not36.i422 = icmp eq i32 %i.nr, 0
   br i1 %.not36.i422, label %h263p_decode_umotion.exit414.thread469, label %bb.az
@@ -829,11 +829,11 @@ bb.az:                                            ; preds = %bb.ay
   %i.nv = icmp slt i32 %i.nq, -63
   %or.cond.i423 = select i1 %i.nu, i1 %i.nv, i1 false
   %i.nw = add nsw i32 %i.nq, 64
-  %spec.select37.i424 = select i1 %or.cond.i423, i32 %i.nw, i32 %i.nq ; 3 uses
+  %spec.select37.i424 = select i1 %or.cond.i423, i32 %i.nw, i32 %i.nq
   %i.nx = icmp sgt i32 %i.lu, 32
-  %i.ny = icmp sgt i32 %spec.select37.i424, 63
+  %i.ny = icmp sgt i32 %i.nq, 63
   %or.cond3.i425 = select i1 %i.nx, i1 %i.ny, i1 false
-  %i.nz = add nsw i32 %spec.select37.i424, -64
+  %i.nz = add nsw i32 %i.nq, -64
   %spec.select38.i426 = select i1 %or.cond3.i425, i32 %i.nz, i32 %spec.select37.i424
   br label %h263p_decode_umotion.exit414
 
@@ -1236,7 +1236,7 @@ bb.u:                                             ; preds = %bb.t
   %.not35.i = icmp eq i32 %i.hh, 0
   %i.hi = sub nsw i32 0, %.154.i.i
   %spec.select.i = select i1 %.not35.i, i32 %.154.i.i, i32 %i.hi
-  %i.hj = add nsw i32 %spec.select.i, %i.dt       ; 4 uses
+  %i.hj = add nsw i32 %spec.select.i, %i.dt       ; 6 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %0, i64 4420
   %i.hl = load i32, ptr %i.hk, align 4, !tbaa !58
   %.not36.i = icmp eq i32 %i.hl, 0
@@ -1252,11 +1252,11 @@ bb.w:                                             ; preds = %bb.u
   %i.hp = icmp slt i32 %i.hj, -63
   %or.cond.i = select i1 %i.ho, i1 %i.hp, i1 false
   %i.hq = add nsw i32 %i.hj, 64
-  %spec.select37.i = select i1 %or.cond.i, i32 %i.hq, i32 %i.hj ; 3 uses
+  %spec.select37.i = select i1 %or.cond.i, i32 %i.hq, i32 %i.hj
   %i.hr = icmp sgt i32 %i.dt, 32
-  %i.hs = icmp sgt i32 %spec.select37.i, 63
+  %i.hs = icmp sgt i32 %i.hj, 63
   %or.cond3.i = select i1 %i.hr, i1 %i.hs, i1 false
-  %i.ht = add nsw i32 %spec.select37.i, -64
+  %i.ht = add nsw i32 %i.hj, -64
   %spec.select38.i = select i1 %or.cond3.i, i32 %i.ht, i32 %spec.select37.i
   br label %h263p_decode_umotion.exit.thread
 
@@ -1420,7 +1420,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.not35.i121 = icmp eq i32 %i.lt, 0
   %i.lu = sub nsw i32 0, %.154.i.i117
   %spec.select.i122 = select i1 %.not35.i121, i32 %.154.i.i117, i32 %i.lu
-  %i.lv = add nsw i32 %spec.select.i122, %i.jx    ; 4 uses
+  %i.lv = add nsw i32 %spec.select.i122, %i.jx    ; 6 uses
   %i.lw = getelementptr inbounds nuw i8, ptr %0, i64 4420
   %i.lx = load i32, ptr %i.lw, align 4, !tbaa !58
   %.not36.i123 = icmp eq i32 %i.lx, 0
@@ -1436,11 +1436,11 @@ bb.ag:                                            ; preds = %bb.ae
   %i.mb = icmp slt i32 %i.lv, -63
   %or.cond.i124 = select i1 %i.ma, i1 %i.mb, i1 false
   %i.mc = add nsw i32 %i.lv, 64
-  %spec.select37.i125 = select i1 %or.cond.i124, i32 %i.mc, i32 %i.lv ; 3 uses
+  %spec.select37.i125 = select i1 %or.cond.i124, i32 %i.mc, i32 %i.lv
   %i.md = icmp sgt i32 %i.jx, 32
-  %i.me = icmp sgt i32 %spec.select37.i125, 63
+  %i.me = icmp sgt i32 %i.lv, 63
   %or.cond3.i126 = select i1 %i.md, i1 %i.me, i1 false
-  %i.mf = add nsw i32 %spec.select37.i125, -64
+  %i.mf = add nsw i32 %i.lv, -64
   %spec.select38.i127 = select i1 %or.cond3.i126, i32 %i.mf, i32 %spec.select37.i125
   br label %h263p_decode_umotion.exit115
 
@@ -1619,7 +1619,7 @@ bb.ar:                                            ; preds = %bb.aq
   %.not35.i142 = icmp eq i32 %i.qj, 0
   %i.qk = sub nsw i32 0, %.154.i.i138
   %spec.select.i143 = select i1 %.not35.i142, i32 %.154.i.i138, i32 %i.qk
-  %i.ql = add nsw i32 %spec.select.i143, %i.mv    ; 4 uses
+  %i.ql = add nsw i32 %spec.select.i143, %i.mv    ; 6 uses
   %i.qm = load i32, ptr %i.ms, align 4, !tbaa !58
   %.not36.i144 = icmp eq i32 %i.qm, 0
   br i1 %.not36.i144, label %bb.as, label %bb.at
@@ -1634,11 +1634,11 @@ bb.at:                                            ; preds = %bb.ar
   %i.qq = icmp slt i32 %i.ql, -63
   %or.cond.i145 = select i1 %i.qp, i1 %i.qq, i1 false
   %i.qr = add nsw i32 %i.ql, 64
-  %spec.select37.i146 = select i1 %or.cond.i145, i32 %i.qr, i32 %i.ql ; 3 uses
+  %spec.select37.i146 = select i1 %or.cond.i145, i32 %i.qr, i32 %i.ql
   %i.qs = icmp sgt i32 %i.mv, 32
-  %i.qt = icmp sgt i32 %spec.select37.i146, 63
+  %i.qt = icmp sgt i32 %i.ql, 63
   %or.cond3.i147 = select i1 %i.qs, i1 %i.qt, i1 false
-  %i.qu = add nsw i32 %spec.select37.i146, -64
+  %i.qu = add nsw i32 %i.ql, -64
   %spec.select38.i148 = select i1 %or.cond3.i147, i32 %i.qu, i32 %spec.select37.i146
   br label %h263p_decode_umotion.exit136.thread
 
@@ -1795,7 +1795,7 @@ bb.ba:                                            ; preds = %bb.az
   %.not35.i163 = icmp eq i32 %i.ur, 0
   %i.us = sub nsw i32 0, %.154.i.i159
   %spec.select.i164 = select i1 %.not35.i163, i32 %.154.i.i159, i32 %i.us
-  %i.ut = add nsw i32 %spec.select.i164, %i.sv    ; 4 uses
+  %i.ut = add nsw i32 %spec.select.i164, %i.sv    ; 6 uses
   %i.uu = load i32, ptr %i.ms, align 4, !tbaa !58
   %.not36.i165 = icmp eq i32 %i.uu, 0
   br i1 %.not36.i165, label %bb.bb, label %bb.bc
@@ -1810,11 +1810,11 @@ bb.bc:                                            ; preds = %bb.ba
   %i.uy = icmp slt i32 %i.ut, -63
   %or.cond.i166 = select i1 %i.ux, i1 %i.uy, i1 false
   %i.uz = add nsw i32 %i.ut, 64
-  %spec.select37.i167 = select i1 %or.cond.i166, i32 %i.uz, i32 %i.ut ; 3 uses
+  %spec.select37.i167 = select i1 %or.cond.i166, i32 %i.uz, i32 %i.ut
   %i.va = icmp sgt i32 %i.sv, 32
-  %i.vb = icmp sgt i32 %spec.select37.i167, 63
+  %i.vb = icmp sgt i32 %i.ut, 63
   %or.cond3.i168 = select i1 %i.va, i1 %i.vb, i1 false
-  %i.vc = add nsw i32 %spec.select37.i167, -64
+  %i.vc = add nsw i32 %i.ut, -64
   %spec.select38.i169 = select i1 %or.cond3.i168, i32 %i.vc, i32 %spec.select37.i167
   br label %h263p_decode_umotion.exit157.thread
 

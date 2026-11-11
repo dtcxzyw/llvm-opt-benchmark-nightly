@@ -205,8 +205,8 @@ bytestream2_get_be16.exit.i:                      ; preds = %bb.o
   %spec.select.i = select i1 %i.bl, i32 %i.bn, i32 6
   %i.bo = icmp eq i16 %.fr.i, 768
   %i.bp = mul nuw nsw i32 %i.o, 3
-  %4 = select i1 %i.bo, i32 %i.bp, i32 0
-  %spec.select351.i = add nuw nsw i32 %spec.select.i, %4
+  %4 = add nuw nsw i32 %i.bp, 6
+  %spec.select351.i = select i1 %i.bo, i32 %4, i32 %spec.select.i
   br label %.thread335.i
 
 .thread335.i:                                     ; preds = %bytestream2_get_be16.exit.i, %bb.o

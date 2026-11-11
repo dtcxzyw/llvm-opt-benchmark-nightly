@@ -205,14 +205,14 @@ _ZN3re23DFA5Workq4markEv.exit.i:                  ; preds = %bb.z, %bb.y, %bb.x,
 
 _ZN3re23DFA12StateToWorkqEPNS0_5StateEPNS0_5WorkqE.exit: ; preds = %bb.v, %_ZN3re23DFA5Workq4markEv.exit.i, %bb.u
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.dj = load i32, ptr %i.di, align 4, !tbaa !90 ; 3 uses
+  %i.dj = load i32, ptr %i.di, align 4, !tbaa !90 ; 4 uses
   %i.dk = lshr i32 %i.dj, 16
   %i.dl = and i32 %i.dj, 255                      ; 3 uses
   %i.dm = icmp eq i32 %2, 10                      ; 2 uses
   %i.dn = or i32 %i.dl, 2
-  %spec.select = select i1 %i.dm, i32 %i.dn, i32 %i.dl ; 2 uses
+  %spec.select = select i1 %i.dm, i32 %i.dn, i32 %i.dl
   %spec.select59 = zext i1 %i.dm to i32           ; 3 uses
-  %i.do = or i32 %spec.select, 10
+  %i.do = or i32 %i.dl, 10
   %.145 = select i1 %i.bn, i32 %i.do, i32 %spec.select
   br i1 %i.bn, label %bb.ab, label %bb.aa
 
@@ -235,7 +235,7 @@ bb.ab:                                            ; preds = %bb.aa, %_ZN3re23DFA
   %i.dy = xor i1 %i.dx, %i.dv
   %.2.v = select i1 %i.dy, i32 32, i32 16
   %.2 = or i32 %.2.v, %.145                       ; 2 uses
-  %i.dz = xor i32 %i.dl, -1
+  %i.dz = xor i32 %i.dj, -1
   %i.ea = and i32 %i.dk, %i.dz
   %i.eb = and i32 %i.ea, %.2
   %.not56 = icmp eq i32 %i.eb, 0

@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.ai, label %bb.o, label %.loopexit
 
 bb.o:                                             ; preds = %bb.n, %bb.j
-  %.0451 = phi i32 [ %i.ag, %bb.n ], [ 0, %bb.j ] ; 28 uses
+  %.0451 = phi i32 [ %i.ag, %bb.n ], [ 0, %bb.j ] ; 29 uses
   %i.aj = load ptr, ptr %i.d, align 8, !tbaa !41  ; 2 uses
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %_ZNK6icu_7816SimpleDateFormat22getNumberFormatByIndexE16UDateFormatField.exit, label %bb.p
@@ -386,8 +386,8 @@ bb.ag:                                            ; preds = %bb.af
   %or.cond10 = and i1 %i.da, %i.db
   %i.dc = icmp slt i32 %3, 3
   %or.cond12 = and i1 %i.dc, %or.cond10
-  %14 = sext i1 %or.cond12 to i32
-  %spec.select513 = add nsw i32 %spec.store.select, %14
+  %14 = add nsw i32 %.0451, -1
+  %spec.select513 = select i1 %or.cond12, i32 %14, i32 %spec.store.select
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af

@@ -205,10 +205,10 @@ bb.gf:                                            ; preds = %.critedge2.i
 bb.gg:                                            ; preds = %bb.gf
   %i.agx = tail call double @llvm.fmuladd.f64(double %i.afu, double %i.agd, double %i.agu)
   %i.agy = fcmp olt double %i.agt, %i.agx         ; 4 uses
-  %i.agz = fsub double %.0298.i, %i.agc
-  %.1299.ph.i = select i1 %i.agy, double %i.agz, double %.0298.i ; 2 uses
+  %i.agz = fsub double %.0298.i, %i.agc           ; 2 uses
+  %.1299.ph.i = select i1 %i.agy, double %i.agz, double %.0298.i
   %.1292.ph.i = select i1 %i.agy, double %i.agd, double %.0291.ph.i
-  %i.aha = fcmp oge double %.1299.ph.i, %i.aag
+  %i.aha = fcmp oge double %i.agz, %i.aag
   %i.ahb = select i1 %i.agy, i1 %i.aha, i1 false
   br i1 %i.ahb, label %.critedge2.outer.i, label %bb.gh
 

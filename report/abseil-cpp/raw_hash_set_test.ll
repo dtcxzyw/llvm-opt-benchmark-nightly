@@ -205,11 +205,11 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #43
   %i.av = icmp ult i64 %i.au, 17
   %i.aw = lshr i64 4035225266123964416, %i.au
-  %spec.select = select i1 %i.av, i64 140737488355327, i64 %i.aw ; 2 uses
+  %spec.select = select i1 %i.av, i64 140737488355327, i64 %i.aw
   %i.ax = icmp ult i64 %i.au, 3                   ; 2 uses
   %i.ay = shl nuw i64 8, %i.au
   %i.az = shl nuw nsw i64 1, %i.ay                ; 3 uses
-  %i.ba = call i64 @llvm.umin.i64(i64 %spec.select, i64 %i.az)
+  %i.ba = call i64 @llvm.umin.i64(i64 %i.az, i64 140737488355327)
   %.sroa.speculated.i = select i1 %i.ax, i64 %i.ba, i64 %spec.select
   store i64 %.sroa.speculated.i, ptr %i.b, align 8, !tbaa !166
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #43

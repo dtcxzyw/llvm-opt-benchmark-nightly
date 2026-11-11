@@ -205,23 +205,23 @@ bb.a:
   %i.t = zext nneg i8 %narrow to i32              ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !39
-  %i.w = sub nsw i32 %spec.select, %i.v           ; 2 uses
+  %i.w = sub nsw i32 %spec.select, %i.v           ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.y = load i32, ptr %i.x, align 4, !tbaa !38
-  %i.z = sub nsw i32 %i.y, %i.t                   ; 2 uses
+  %i.z = sub nsw i32 %i.y, %i.t                   ; 3 uses
   store i32 %spec.select, ptr %i.u, align 8, !tbaa !39
   store i32 %i.t, ptr %i.x, align 4, !tbaa !38
   %i.aa = icmp eq i8 %i.q, 2
   %i.ab = add nsw i32 %i.z, -12
-  %.092 = select i1 %i.aa, i32 %i.ab, i32 %i.z    ; 2 uses
+  %.092 = select i1 %i.aa, i32 %i.ab, i32 %i.z
   %i.ac = icmp eq i8 %i.q, 1
-  %i.ad = add nsw i32 %.092, 12
+  %i.ad = add nsw i32 %i.z, 12
   %.1 = select i1 %i.ac, i32 %i.ad, i32 %.092     ; 12 uses
   %i.ae = icmp eq i32 %i.m, 2
   %i.af = add nsw i32 %i.w, -6
-  %.093 = select i1 %i.ae, i32 %i.af, i32 %i.w    ; 2 uses
+  %.093 = select i1 %i.ae, i32 %i.af, i32 %i.w
   %i.ag = icmp eq i32 %i.m, 1
-  %i.ah = add nsw i32 %.093, 6
+  %i.ah = add nsw i32 %i.w, 6
   %.194 = select i1 %i.ag, i32 %i.ah, i32 %.093   ; 11 uses
   %i.ai = icmp ne i32 %.194, 0
   %i.aj = icmp ne i32 %.1, 0

@@ -205,9 +205,9 @@ bb.aj:                                            ; preds = %bb.ai
   %.sroa.16.1.i.i = phi i64 [ %.sroa.16.0164.i.i, %.lr.ph.i6.i ], [ %.sroa.5.0.copyload6.i.i.i, %bb.ag ] ; 4 uses
   %.sroa.11.1.i7.i = phi ptr [ %.sroa.11.0165.i.i, %.lr.ph.i6.i ], [ %.sroa.0.0.copyload5.i.i.i, %bb.ag ] ; 4 uses
   %.not28.not.i.i = icmp ne ptr %.sroa.11.1.i7.i, null ; 2 uses
-  %.sroa.16.16.extract.trunc.i.i = trunc i64 %.sroa.16.1.i.i to i32 ; 4 uses
-  %.sroa.7.0.i.i = select i1 %.not28.not.i.i, i32 %.sroa.16.16.extract.trunc.i.i, i32 undef ; 2 uses
-  %i.fk = icmp ugt i32 %.sroa.12.1160.i.i, %.sroa.7.0.i.i
+  %.sroa.16.16.extract.trunc.i.i = trunc i64 %.sroa.16.1.i.i to i32 ; 5 uses
+  %.sroa.7.0.i.i = select i1 %.not28.not.i.i, i32 %.sroa.16.16.extract.trunc.i.i, i32 undef
+  %i.fk = icmp ugt i32 %.sroa.12.1160.i.i, %.sroa.16.16.extract.trunc.i.i
   %or.cond.i.i = select i1 %.not28.not.i.i, i1 %i.fk, i1 false
   br i1 %or.cond.i.i, label %bb.ak, label %"_ZN4core6option15Option$LT$T$GT$18get_or_insert_with17h48eac9bf97d0e5d8E.exit.thread.i.i"
 

@@ -205,25 +205,25 @@ decode_run_2bit.exit.us:                          ; preds = %bb.e, %bb.d, %bb.c,
   %.lcssa89 = phi i32 [ %i.q, %.preheader.us ], [ %i.ab, %bb.c ], [ %i.am, %bb.d ], [ %i.ax, %bb.e ] ; 3 uses
   %.lcssa = phi i32 [ %i.r, %.preheader.us ], [ %i.ac, %bb.c ], [ %i.an, %bb.d ], [ %i.ay, %bb.e ] ; 3 uses
   %i.az = icmp ugt i32 %.lcssa, 3                 ; 2 uses
-  %i.ba = lshr i32 %.lcssa, 2
-  %.011.i.us = select i1 %i.az, i32 %i.ba, i32 2147483647 ; 2 uses
-  %i.bb = sub nsw i32 %2, %.03969.us              ; 2 uses
-  %i.bc = icmp sgt i32 %.011.i.us, %i.bb
+  %i.ba = lshr i32 %.lcssa, 2                     ; 2 uses
+  %i.bb = sub nsw i32 %2, %.03969.us              ; 3 uses
+  %i.bc = icmp sgt i32 %i.ba, %i.bb
   %or.cond.us = select i1 %i.az, i1 %i.bc, i1 false
   br i1 %or.cond.us, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %decode_run_2bit.exit.us
   %i.bd = and i32 %.lcssa, 3                      ; 2 uses
-  %i.be = tail call i32 @llvm.smin.i32(i32 %.011.i.us, i32 %i.bb) ; 2 uses
+  %i.be = tail call i32 @llvm.smin.i32(i32 %i.ba, i32 %i.bb)
+  %9 = select i1 %i.az, i32 %i.be, i32 %i.bb      ; 2 uses
   %i.bf = sext i32 %.03969.us to i64
   %i.bg = getelementptr inbounds i8, ptr %.071.us, i64 %i.bf
   %i.bh = trunc nuw nsw i32 %i.bd to i8
-  %i.bi = sext i32 %i.be to i64
+  %i.bi = sext i32 %9 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 %i.bh, i64 %i.bi, i1 false)
   %i.bj = zext nneg i32 %i.bd to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 %i.bj
   store i8 1, ptr %i.bk, align 1, !tbaa !29
-  %i.bl = add nsw i32 %i.be, %.03969.us           ; 2 uses
+  %i.bl = add nsw i32 %9, %.03969.us              ; 2 uses
   %.not50.us = icmp slt i32 %i.bl, %2
   br i1 %.not50.us, label %bb.h, label %bb.g
 

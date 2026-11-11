@@ -13,16 +13,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call { x86_fp80, x86_fp80 } @llvm.modf.f80(x86_fp80 %0) ; 2 uses
   %i.c = extractvalue { x86_fp80, x86_fp80 } %i.b, 0 ; 2 uses
-  %i.d = extractvalue { x86_fp80, x86_fp80 } %i.b, 1 ; 3 uses
+  %i.d = extractvalue { x86_fp80, x86_fp80 } %i.b, 1 ; 4 uses
   %i.e = fcmp ole x86_fp80 %i.d, 0.000000e+00
   %i.f = fcmp ole x86_fp80 %i.c, -5.000000e-01
   %or.cond3 = select i1 %i.e, i1 %i.f, i1 false
   %i.g = fadd x86_fp80 %i.d, -1.000000e+00
-  %spec.select = select i1 %or.cond3, x86_fp80 %i.g, x86_fp80 %i.d ; 3 uses
+  %spec.select = select i1 %or.cond3, x86_fp80 %i.g, x86_fp80 %i.d ; 2 uses
   %i.h = fcmp oge x86_fp80 %spec.select, 0.000000e+00
   %i.i = fcmp oge x86_fp80 %i.c, 5.000000e-01
   %or.cond5 = select i1 %i.h, i1 %i.i, i1 false
-  %i.j = fadd x86_fp80 %spec.select, 1.000000e+00
+  %i.j = fadd x86_fp80 %i.d, 1.000000e+00
   %.1 = select i1 %or.cond5, x86_fp80 %i.j, x86_fp80 %spec.select
   br label %bb.c
 

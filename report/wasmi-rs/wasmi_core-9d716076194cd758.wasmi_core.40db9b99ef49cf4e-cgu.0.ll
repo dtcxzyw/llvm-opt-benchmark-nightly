@@ -202,13 +202,12 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.e
   %i.u = load i64, ptr %1, align 8, !range !9, !noundef !5 ; 2 uses
-  %6 = trunc nuw i64 %i.u to i1                   ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.w = load i64, ptr %i.v, align 8
-  %.sroa.5.0 = select i1 %6, i64 %i.w, i64 undef  ; 3 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 3 uses
   %i.x = load ptr, ptr %5, align 8, !noundef !5   ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %.not23 = icmp eq ptr %i.x, null                ; 3 uses
+  %6 = trunc nuw i64 %i.u to i1                   ; 3 uses
   br i1 %.not23, label %bb.j, label %bb.i
 
 bb.h:                                             ; preds = %bb.e
@@ -216,6 +215,7 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.d
 
 bb.i:                                             ; preds = %bb.g
+  %.sroa.5.0 = select i1 %6, i64 %i.w, i64 undef
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !5, !align !7, !noundef !5 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   %i.ab = load ptr, ptr %i.aa, align 8, !invariant.load !5, !nonnull !5
@@ -226,12 +226,12 @@ bb.i:                                             ; preds = %bb.g
   ]
 
 bb.j:                                             ; preds = %bb.g
-  %i.ad = icmp ugt i64 %i.p, %.sroa.5.0
+  %i.ad = icmp ugt i64 %i.p, %i.w
   %or.cond = select i1 %6, i1 %i.ad, i1 false
   br i1 %or.cond, label %bb.n, label %bb.m
 
 .thread:                                          ; preds = %bb.i
-  %i.ae = icmp ugt i64 %i.p, %.sroa.5.0
+  %i.ae = icmp ugt i64 %i.p, %i.w
   %or.cond33 = select i1 %6, i1 %i.ae, i1 false
   br i1 %or.cond33, label %bb.o, label %bb.m
 

@@ -205,12 +205,12 @@ bb.a:
   %i.f = sub nuw i64 %i.d, %i.e, !dbg !123648
   %i.g = udiv exact i64 %i.f, 144, !dbg !123648
   %.not.i.not = icmp ult i64 %1, %i.g, !dbg !123649 ; 3 uses
-  %i.h = getelementptr inbounds nuw [144 x i8], ptr %i.c, i64 %1, !dbg !123649 ; 2 uses
+  %i.h = getelementptr inbounds nuw [144 x i8], ptr %i.c, i64 %1, !dbg !123649 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 144, !dbg !123649
   %storemerge.i = select i1 %.not.i.not, ptr %i.i, ptr %i.b, !dbg !123649
-  %.sroa.0.0.i = select i1 %.not.i.not, ptr %i.h, ptr null, !dbg !123649 ; 2 uses
+  %.sroa.0.0.i = select i1 %.not.i.not, ptr %i.h, ptr null, !dbg !123649
   store ptr %storemerge.i, ptr %0, align 8, !dbg !123650, !alias.scope !123644
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 112, !dbg !123651
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 112, !dbg !123651
   %.sroa.0.0 = select i1 %.not.i.not, ptr %i.j, ptr null, !dbg !123651
   %i.k = insertvalue { ptr, ptr } poison, ptr %.sroa.0.0, 0, !dbg !123652
   %i.l = insertvalue { ptr, ptr } %i.k, ptr %.sroa.0.0.i, 1, !dbg !123652
