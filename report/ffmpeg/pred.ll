@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/pred?download=true
-loop-unroll.NumCompletelyUnrolled: 289
+loop-unroll.NumCompletelyUnrolled: 290
 loop-unroll.NumRuntimeUnrolled: 54
-loop-unroll.NumUnrolled: 347
+loop-unroll.NumUnrolled: 348
 begin_hunk_0_@ref_filter_3tap_9:bb.a
   %i.cb = add nsw i32 %i.a, -2
   %i.cc = sub i32 %i.cb, %i.ca                    ; 2 uses
@@ -203,16 +203,15 @@ vector.body:                                      ; preds = %vector.memcheck
 
 vector.body37:                                    ; preds = %vector.body37, %.preheader
   %index38 = phi i64 [ 0, %.preheader ], [ %index.next42, %vector.body37 ] ; 2 uses
-  %vec.ind39 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader ], [ %vec.ind.next43, %vector.body37 ] ; 3 uses
+  %vec.ind39 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader ], [ %vec.ind.next43, %vector.body37 ] ; 2 uses
+  %vec.ind40 = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %.preheader ], [ %vec.ind.next45, %vector.body37 ] ; 2 uses
   %i.bz = sub nuw nsw <8 x i64> splat (i64 63), %vec.ind39
   %i.ca = mul nuw nsw <8 x i64> %i.bz, %broadcast.splat36
   %i.cb = load i16, ptr %i.bx, align 2, !tbaa !82
   %broadcast.splatinsert40 = insertelement <8 x i16> poison, i16 %i.cb, i64 0
   %broadcast.splat41 = shufflevector <8 x i16> %broadcast.splatinsert40, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cc = zext <8 x i16> %broadcast.splat41 to <8 x i32>
-  %3 = trunc <8 x i64> %vec.ind39 to <8 x i32>
-  %4 = add <8 x i32> %3, splat (i32 1)
-  %i.cd = mul nuw nsw <8 x i32> %4, %i.cc
+  %i.cd = mul nuw nsw <8 x i32> %vec.ind40, %i.cc
   %i.ce = trunc nuw nsw <8 x i64> %i.ca to <8 x i32>
   %i.cf = add nuw nsw <8 x i32> %i.ce, splat (i32 32)
   %i.cg = add nuw nsw <8 x i32> %i.cf, %i.cd
@@ -222,6 +221,7 @@ vector.body37:                                    ; preds = %vector.body37, %.pr
   store <8 x i16> %i.ci, ptr %i.cj, align 2, !tbaa !82
   %index.next42 = add nuw i64 %index38, 8         ; 2 uses
   %vec.ind.next43 = add nuw nsw <8 x i64> %vec.ind39, splat (i64 8)
+  %vec.ind.next45 = add <8 x i32> %vec.ind40, splat (i32 8)
   %i.ck = icmp eq i64 %index.next42, 56
   br i1 %i.ck, label %scalar.ph33, label %vector.body37, !llvm.loop !309
 
@@ -624,16 +624,15 @@ vector.body:                                      ; preds = %vector.memcheck
 
 vector.body37:                                    ; preds = %vector.body37, %.preheader
   %index38 = phi i64 [ 0, %.preheader ], [ %index.next42, %vector.body37 ] ; 2 uses
-  %vec.ind39 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader ], [ %vec.ind.next43, %vector.body37 ] ; 3 uses
+  %vec.ind39 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader ], [ %vec.ind.next43, %vector.body37 ] ; 2 uses
+  %vec.ind40 = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %.preheader ], [ %vec.ind.next45, %vector.body37 ] ; 2 uses
   %i.bz = sub nuw nsw <8 x i64> splat (i64 63), %vec.ind39
   %i.ca = mul nuw nsw <8 x i64> %i.bz, %broadcast.splat36
   %i.cb = load i16, ptr %i.bx, align 2, !tbaa !82
   %broadcast.splatinsert40 = insertelement <8 x i16> poison, i16 %i.cb, i64 0
   %broadcast.splat41 = shufflevector <8 x i16> %broadcast.splatinsert40, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cc = zext <8 x i16> %broadcast.splat41 to <8 x i32>
-  %3 = trunc <8 x i64> %vec.ind39 to <8 x i32>
-  %4 = add <8 x i32> %3, splat (i32 1)
-  %i.cd = mul nuw nsw <8 x i32> %4, %i.cc
+  %i.cd = mul nuw nsw <8 x i32> %vec.ind40, %i.cc
   %i.ce = trunc nuw nsw <8 x i64> %i.ca to <8 x i32>
   %i.cf = add nuw nsw <8 x i32> %i.ce, splat (i32 32)
   %i.cg = add nuw nsw <8 x i32> %i.cf, %i.cd
@@ -643,6 +642,7 @@ vector.body37:                                    ; preds = %vector.body37, %.pr
   store <8 x i16> %i.ci, ptr %i.cj, align 2, !tbaa !82
   %index.next42 = add nuw i64 %index38, 8         ; 2 uses
   %vec.ind.next43 = add nuw nsw <8 x i64> %vec.ind39, splat (i64 8)
+  %vec.ind.next45 = add <8 x i32> %vec.ind40, splat (i32 8)
   %i.ck = icmp eq i64 %index.next42, 56
   br i1 %i.ck, label %scalar.ph33, label %vector.body37, !llvm.loop !402
 
@@ -1045,16 +1045,15 @@ vector.body:                                      ; preds = %vector.memcheck
 
 vector.body37:                                    ; preds = %vector.body37, %.preheader
   %index38 = phi i64 [ 0, %.preheader ], [ %index.next42, %vector.body37 ] ; 2 uses
-  %vec.ind39 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader ], [ %vec.ind.next43, %vector.body37 ] ; 3 uses
+  %vec.ind39 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader ], [ %vec.ind.next43, %vector.body37 ] ; 2 uses
+  %vec.ind40 = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %.preheader ], [ %vec.ind.next45, %vector.body37 ] ; 2 uses
   %i.bz = sub nuw nsw <8 x i64> splat (i64 63), %vec.ind39
   %i.ca = mul nuw nsw <8 x i64> %i.bz, %broadcast.splat36
   %i.cb = load i16, ptr %i.bx, align 2, !tbaa !82
   %broadcast.splatinsert40 = insertelement <8 x i16> poison, i16 %i.cb, i64 0
   %broadcast.splat41 = shufflevector <8 x i16> %broadcast.splatinsert40, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cc = zext <8 x i16> %broadcast.splat41 to <8 x i32>
-  %3 = trunc <8 x i64> %vec.ind39 to <8 x i32>
-  %4 = add <8 x i32> %3, splat (i32 1)
-  %i.cd = mul nuw nsw <8 x i32> %4, %i.cc
+  %i.cd = mul nuw nsw <8 x i32> %vec.ind40, %i.cc
   %i.ce = trunc nuw nsw <8 x i64> %i.ca to <8 x i32>
   %i.cf = add nuw nsw <8 x i32> %i.ce, splat (i32 32)
   %i.cg = add nuw nsw <8 x i32> %i.cf, %i.cd
@@ -1064,6 +1063,7 @@ vector.body37:                                    ; preds = %vector.body37, %.pr
   store <8 x i16> %i.ci, ptr %i.cj, align 2, !tbaa !82
   %index.next42 = add nuw i64 %index38, 8         ; 2 uses
   %vec.ind.next43 = add nuw nsw <8 x i64> %vec.ind39, splat (i64 8)
+  %vec.ind.next45 = add <8 x i32> %vec.ind40, splat (i32 8)
   %i.ck = icmp eq i64 %index.next42, 56
   br i1 %i.ck, label %scalar.ph33, label %vector.body37, !llvm.loop !495
 
@@ -1466,11 +1466,11 @@ vec.epilog.vector.body105:                        ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @ref_filter_strong_8(ptr nofree noundef writeonly captures(none) initializes((-1, 0), (63, 64)) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) #4 {
 vector.memcheck:
-  %i.a = getelementptr inbounds i8, ptr %2, i64 -1 ; 6 uses
+  %i.a = getelementptr inbounds i8, ptr %2, i64 -1 ; 7 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !78
   %i.c = getelementptr inbounds i8, ptr %0, i64 -1
   store i8 %i.b, ptr %i.c, align 1, !tbaa !78
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 63 ; 5 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 63 ; 6 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !78
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 63 ; 2 uses
   store i8 %i.e, ptr %i.f, align 1, !tbaa !78
@@ -1481,7 +1481,7 @@ vector.memcheck:
   br i1 %found.conflict, label %scalar.ph.prol, label %vector.body
 
 scalar.ph.prol:                                   ; preds = %vector.body, %vector.memcheck
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 56, %vector.body ] ; 3 uses
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 60, %vector.body ] ; 3 uses
   %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1 ; 2 uses
   %i.h = load i8, ptr %i.a, align 1, !tbaa !78
   %i.i = zext i8 %i.h to i16
@@ -1504,66 +1504,90 @@ vector.body:                                      ; preds = %vector.memcheck
   %i.v = load i8, ptr %i.d, align 1, !tbaa !78, !alias.scope !588
   %broadcast.splatinsert29 = insertelement <8 x i8> poison, i8 %i.v, i64 0
   %broadcast.splat30 = shufflevector <8 x i8> %broadcast.splatinsert29, <8 x i8> poison, <8 x i32> zeroinitializer
-  %i.w = zext <8 x i8> %broadcast.splat30 to <8 x i16> ; 7 uses
+  %i.w = zext <8 x i8> %broadcast.splat30 to <8 x i16> ; 6 uses
   %i.x = load i8, ptr %i.a, align 1, !tbaa !78, !alias.scope !588
   %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %i.x, i64 0
   %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
-  %i.y = zext <8 x i8> %broadcast.splat to <8 x i16> ; 7 uses
-  %i.z = mul nuw nsw <8 x i16> %i.y, <i16 63, i16 62, i16 61, i16 60, i16 59, i16 58, i16 57, i16 56>
-  %i.aa = mul nuw nsw <8 x i16> %i.w, <i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7, i16 8>
-  %i.ab = add nuw nsw <8 x i16> %i.z, splat (i16 32)
-  %i.ac = add nuw <8 x i16> %i.ab, %i.aa
-  %i.ad = lshr <8 x i16> %i.ac, splat (i16 6)
-  %i.ae = trunc <8 x i16> %i.ad to <8 x i8>
-  store <8 x i8> %i.ae, ptr %0, align 1, !tbaa !78, !alias.scope !589, !noalias !588
-  %i.af = mul nuw nsw <8 x i16> %i.y, <i16 55, i16 54, i16 53, i16 52, i16 51, i16 50, i16 49, i16 48>
-  %i.ag = mul nuw nsw <8 x i16> %i.w, <i16 9, i16 10, i16 11, i16 12, i16 13, i16 14, i16 15, i16 16>
-  %i.ah = add nuw nsw <8 x i16> %i.af, splat (i16 32)
-  %i.ai = add nuw <8 x i16> %i.ah, %i.ag
-  %i.aj = lshr <8 x i16> %i.ai, splat (i16 6)
-  %i.ak = trunc <8 x i16> %i.aj to <8 x i8>
-  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <8 x i8> %i.ak, ptr %i.al, align 1, !tbaa !78, !alias.scope !589, !noalias !588
-  %i.am = mul nuw nsw <8 x i16> %i.y, <i16 47, i16 46, i16 45, i16 44, i16 43, i16 42, i16 41, i16 40>
-  %i.an = mul nuw nsw <8 x i16> %i.w, <i16 17, i16 18, i16 19, i16 20, i16 21, i16 22, i16 23, i16 24>
-  %i.ao = add nuw nsw <8 x i16> %i.am, splat (i16 32)
-  %i.ap = add nuw <8 x i16> %i.ao, %i.an
-  %i.aq = lshr <8 x i16> %i.ap, splat (i16 6)
-  %i.ar = trunc <8 x i16> %i.aq to <8 x i8>
-  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <8 x i8> %i.ar, ptr %i.as, align 1, !tbaa !78, !alias.scope !589, !noalias !588
-  %3 = mul nuw nsw <8 x i16> %i.y, <i16 39, i16 38, i16 37, i16 36, i16 35, i16 34, i16 33, i16 32>
-  %4 = mul nuw nsw <8 x i16> %i.w, <i16 25, i16 26, i16 27, i16 28, i16 29, i16 30, i16 31, i16 32>
+  %i.y = zext <8 x i8> %broadcast.splat to <8 x i16> ; 6 uses
+  %3 = mul nuw nsw <8 x i16> %i.y, <i16 63, i16 62, i16 61, i16 60, i16 59, i16 58, i16 57, i16 56>
+  %4 = mul nuw nsw <8 x i16> %i.y, <i16 55, i16 54, i16 53, i16 52, i16 51, i16 50, i16 49, i16 48>
+  %i.z = mul nuw nsw <8 x i16> %i.w, <i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7, i16 8>
+  %i.aa = mul nuw nsw <8 x i16> %i.w, <i16 9, i16 10, i16 11, i16 12, i16 13, i16 14, i16 15, i16 16>
   %5 = add nuw nsw <8 x i16> %3, splat (i16 32)
-  %6 = add nuw <8 x i16> %5, %4
-  %7 = lshr <8 x i16> %6, splat (i16 6)
+  %6 = add nuw nsw <8 x i16> %4, splat (i16 32)
+  %i.ab = add nuw <8 x i16> %5, %i.z
+  %i.ac = add nuw <8 x i16> %6, %i.aa
+  %7 = lshr <8 x i16> %i.ab, splat (i16 6)
+  %i.ad = lshr <8 x i16> %i.ac, splat (i16 6)
   %8 = trunc <8 x i16> %7 to <8 x i8>
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store <8 x i8> %8, ptr %9, align 1, !tbaa !78, !alias.scope !589, !noalias !588
-  %10 = mul nuw nsw <8 x i16> %i.y, <i16 31, i16 30, i16 29, i16 28, i16 27, i16 26, i16 25, i16 24>
-  %11 = mul nuw nsw <8 x i16> %i.w, <i16 33, i16 34, i16 35, i16 36, i16 37, i16 38, i16 39, i16 40>
+  %i.ae = trunc <8 x i16> %i.ad to <8 x i8>
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store <8 x i8> %8, ptr %0, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  store <8 x i8> %i.ae, ptr %9, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  %10 = mul nuw nsw <8 x i16> %i.y, <i16 47, i16 46, i16 45, i16 44, i16 43, i16 42, i16 41, i16 40>
+  %11 = mul nuw nsw <8 x i16> %i.y, <i16 39, i16 38, i16 37, i16 36, i16 35, i16 34, i16 33, i16 32>
+  %i.af = mul nuw nsw <8 x i16> %i.w, <i16 17, i16 18, i16 19, i16 20, i16 21, i16 22, i16 23, i16 24>
+  %i.ag = mul nuw nsw <8 x i16> %i.w, <i16 25, i16 26, i16 27, i16 28, i16 29, i16 30, i16 31, i16 32>
   %12 = add nuw nsw <8 x i16> %10, splat (i16 32)
-  %13 = add nuw nsw <8 x i16> %12, %11
-  %14 = lshr <8 x i16> %13, splat (i16 6)
+  %13 = add nuw nsw <8 x i16> %11, splat (i16 32)
+  %i.ah = add nuw <8 x i16> %12, %i.af
+  %i.ai = add nuw <8 x i16> %13, %i.ag
+  %14 = lshr <8 x i16> %i.ah, splat (i16 6)
+  %i.aj = lshr <8 x i16> %i.ai, splat (i16 6)
   %15 = trunc <8 x i16> %14 to <8 x i8>
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store <8 x i8> %15, ptr %i.at, align 1, !tbaa !78, !alias.scope !589, !noalias !588
-  %16 = mul nuw nsw <8 x i16> %i.y, <i16 23, i16 22, i16 21, i16 20, i16 19, i16 18, i16 17, i16 16>
-  %17 = mul nuw nsw <8 x i16> %i.w, <i16 41, i16 42, i16 43, i16 44, i16 45, i16 46, i16 47, i16 48>
-  %18 = add nuw nsw <8 x i16> %16, splat (i16 32)
-  %19 = add nuw nsw <8 x i16> %18, %17
-  %20 = lshr <8 x i16> %19, splat (i16 6)
-  %21 = trunc <8 x i16> %20 to <8 x i8>
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store <8 x i8> %21, ptr %i.au, align 1, !tbaa !78, !alias.scope !589, !noalias !588
-  %22 = mul nuw nsw <8 x i16> %i.y, <i16 15, i16 14, i16 13, i16 12, i16 11, i16 10, i16 9, i16 8>
-  %23 = mul nuw nsw <8 x i16> %i.w, <i16 49, i16 50, i16 51, i16 52, i16 53, i16 54, i16 55, i16 56>
-  %24 = add nuw nsw <8 x i16> %22, splat (i16 32)
-  %25 = add nuw nsw <8 x i16> %24, %23
-  %26 = lshr <8 x i16> %25, splat (i16 6)
-  %27 = trunc <8 x i16> %26 to <8 x i8>
-  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store <8 x i8> %27, ptr %i.av, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  %i.ak = trunc <8 x i16> %i.aj to <8 x i8>
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store <8 x i8> %15, ptr %16, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  store <8 x i8> %i.ak, ptr %i.al, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  %17 = mul nuw nsw <8 x i16> %i.y, <i16 31, i16 30, i16 29, i16 28, i16 27, i16 26, i16 25, i16 24>
+  %18 = mul nuw nsw <8 x i16> %i.y, <i16 23, i16 22, i16 21, i16 20, i16 19, i16 18, i16 17, i16 16>
+  %i.am = mul nuw nsw <8 x i16> %i.w, <i16 33, i16 34, i16 35, i16 36, i16 37, i16 38, i16 39, i16 40>
+  %i.an = mul nuw nsw <8 x i16> %i.w, <i16 41, i16 42, i16 43, i16 44, i16 45, i16 46, i16 47, i16 48>
+  %19 = add nuw nsw <8 x i16> %17, splat (i16 32)
+  %20 = add nuw nsw <8 x i16> %18, splat (i16 32)
+  %i.ao = add nuw nsw <8 x i16> %19, %i.am
+  %i.ap = add nuw nsw <8 x i16> %20, %i.an
+  %21 = lshr <8 x i16> %i.ao, splat (i16 6)
+  %i.aq = lshr <8 x i16> %i.ap, splat (i16 6)
+  %22 = trunc <8 x i16> %21 to <8 x i8>
+  %i.ar = trunc <8 x i16> %i.aq to <8 x i8>
+  %23 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store <8 x i8> %22, ptr %23, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  store <8 x i8> %i.ar, ptr %i.as, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  %24 = load i8, ptr %i.d, align 1, !tbaa !78, !alias.scope !588
+  %broadcast.splatinsert36 = insertelement <4 x i8> poison, i8 %24, i64 0
+  %broadcast.splat37 = shufflevector <4 x i8> %broadcast.splatinsert36, <4 x i8> poison, <4 x i32> zeroinitializer
+  %25 = zext <4 x i8> %broadcast.splat37 to <4 x i16> ; 3 uses
+  %26 = load i8, ptr %i.a, align 1, !tbaa !78, !alias.scope !588
+  %broadcast.splatinsert34 = insertelement <4 x i8> poison, i8 %26, i64 0
+  %broadcast.splat35 = shufflevector <4 x i8> %broadcast.splatinsert34, <4 x i8> poison, <4 x i32> zeroinitializer
+  %27 = zext <4 x i8> %broadcast.splat35 to <4 x i16> ; 3 uses
+  %28 = mul nuw nsw <4 x i16> %27, <i16 15, i16 14, i16 13, i16 12>
+  %29 = mul nuw nsw <4 x i16> %25, <i16 49, i16 50, i16 51, i16 52>
+  %30 = add nuw nsw <4 x i16> %28, splat (i16 32)
+  %31 = add nuw nsw <4 x i16> %30, %29
+  %32 = lshr <4 x i16> %31, splat (i16 6)
+  %33 = trunc <4 x i16> %32 to <4 x i8>
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store <4 x i8> %33, ptr %i.at, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  %34 = mul nuw nsw <4 x i16> %27, <i16 11, i16 10, i16 9, i16 8>
+  %35 = mul nuw nsw <4 x i16> %25, <i16 53, i16 54, i16 55, i16 56>
+  %36 = add nuw nsw <4 x i16> %34, splat (i16 32)
+  %37 = add nuw nsw <4 x i16> %36, %35
+  %38 = lshr <4 x i16> %37, splat (i16 6)
+  %39 = trunc <4 x i16> %38 to <4 x i8>
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 52
+  store <4 x i8> %39, ptr %i.au, align 1, !tbaa !78, !alias.scope !589, !noalias !588
+  %40 = mul nuw nsw <4 x i16> %27, <i16 7, i16 6, i16 5, i16 4>
+  %41 = mul nuw nsw <4 x i16> %25, <i16 57, i16 58, i16 59, i16 60>
+  %42 = add nuw nsw <4 x i16> %40, splat (i16 32)
+  %43 = add nuw nsw <4 x i16> %42, %41
+  %44 = lshr <4 x i16> %43, splat (i16 6)
+  %45 = trunc <4 x i16> %44 to <4 x i8>
+  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 56
+  store <4 x i8> %45, ptr %i.av, align 1, !tbaa !78, !alias.scope !589, !noalias !588
   br label %scalar.ph.prol
 
 .preheader:                                       ; preds = %scalar.ph
