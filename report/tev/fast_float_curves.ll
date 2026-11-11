@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/fast_float_curves?download=true
 inline.NumInlined: 8
 inline.NumDeleted: 5
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 6
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -10,9 +10,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @OptimizeFloatByJoiningCurves(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [3 x float], align 4              ; 8 uses
+  %i.a = alloca [3 x float], align 4              ; 15 uses
   %i.b = alloca [3 x float], align 4              ; 10 uses
-  %i.c = load ptr, ptr %3, align 8, !tbaa !26     ; 5 uses
+  %i.c = load ptr, ptr %3, align 8, !tbaa !27     ; 5 uses
   %i.d = load i32, ptr %4, align 4, !tbaa !10     ; 4 uses
   %i.e = and i32 %i.d, 4194304
   %.not = icmp eq i32 %i.e, 0
@@ -57,7 +57,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph
   %i.q = tail call ptr @cmsStageNext(ptr noundef nonnull %.046) #6 ; 2 uses
   %.not33 = icmp eq ptr %i.q, null
-  br i1 %.not33, label %._crit_edge, label %.lr.ph, !llvm.loop !21
+  br i1 %.not33, label %._crit_edge, label %.lr.ph, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -91,39 +91,64 @@ bb.f:                                             ; preds = %.lr.ph
   store float %i.af, ptr %i.ag, align 4, !tbaa !15
   %indvars.iv.next50.i = add nuw nsw i64 %indvars.iv49.i, 1 ; 2 uses
   %exitcond52.not.i = icmp eq i64 %indvars.iv.next50.i, 32769
-  br i1 %exitcond52.not.i, label %ComputeCompositeCurves.exit, label %._crit_edge.us.us.i, !llvm.loop !22
+  br i1 %exitcond52.not.i, label %ComputeCompositeCurves.exit, label %._crit_edge.us.us.i, !llvm.loop !23
 
 .preheader.us28.preheader.i:                      ; preds = %._crit_edge
   %wide.trip.count.i = zext nneg i32 %i.k to i64
-  %min.iters.check = icmp samesign ult i32 %i.k, 4
+  %min.iters.check = icmp samesign ult i32 %i.k, 8
   br label %.preheader.us28.i
 
 .preheader.us28.i:                                ; preds = %._crit_edge.us32.i, %.preheader.us28.preheader.i
   %indvars.iv36.i = phi i64 [ 0, %.preheader.us28.preheader.i ], [ %indvars.iv.next37.i, %._crit_edge.us32.i ] ; 5 uses
   %i.ah = trunc nuw nsw i64 %indvars.iv36.i to i32
   %i.ai = uitofp nneg i32 %i.ah to float
-  %i.aj = fmul nnan float %i.ai, f0x38000000      ; 2 uses
-  br i1 %min.iters.check, label %scalar.ph, label %vector.ph
+  %i.aj = fmul nnan float %i.ai, f0x38000000      ; 9 uses
+  br i1 %min.iters.check, label %.epil.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %.preheader.us28.i
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %i.aj, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
-  br label %vector.body
+vector.body:                                      ; preds = %.preheader.us28.i, %vector.body
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.7, %vector.body ], [ 0, %.preheader.us28.i ] ; 9 uses
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader.us28.i ]
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  store float %i.aj, ptr %7, align 4, !tbaa !15
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  store float %i.aj, ptr %9, align 4, !tbaa !15
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store float %i.aj, ptr %11, align 4, !tbaa !15
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 12
+  store float %i.aj, ptr %13, align 4, !tbaa !15
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  store float %i.aj, ptr %15, align 4, !tbaa !15
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 20
+  store float %i.aj, ptr %17, align 4, !tbaa !15
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 24
+  store float %i.aj, ptr %19, align 4, !tbaa !15
+  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %20 = getelementptr inbounds nuw i8, ptr %i.ak, i64 28
+  store float %i.aj, ptr %20, align 4, !tbaa !15
+  %indvars.iv.next.i.7 = add nuw nsw i64 %indvars.iv.i, 8 ; 2 uses
+  %index.next = add i64 %index, 8                 ; 2 uses
+  %niter.ncmp.7 = icmp eq i64 %index.next, 0
+  br i1 %niter.ncmp.7, label %.epil.preheader, label %vector.body, !llvm.loop !24
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index
-  store <4 x float> %broadcast.splat, ptr %i.ak, align 4, !tbaa !15
-  %index.next = add nuw i64 %index, 4
-  br label %vector.body, !llvm.loop !23
+.epil.preheader:                                  ; preds = %vector.body, %.preheader.us28.i
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us28.i ], [ %indvars.iv.next.i.7, %vector.body ]
+  br label %scalar.ph
 
-scalar.ph:                                        ; preds = %.preheader.us28.i, %scalar.ph
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %scalar.ph ], [ 0, %.preheader.us28.i ] ; 2 uses
-  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i.a
+scalar.ph:                                        ; preds = %scalar.ph, %.epil.preheader
+  %indvars.iv.i.epil = phi i64 [ %indvars.iv.next.i.epil, %scalar.ph ], [ %indvars.iv.i.epil.init, %.epil.preheader ] ; 2 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %scalar.ph ], [ 0, %.epil.preheader ]
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i.epil
   store float %i.aj, ptr %i.al, align 4, !tbaa !15
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
+  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.us32.i, label %scalar.ph, !llvm.loop !24
+  br i1 %exitcond.not.i, label %._crit_edge.us32.i, label %scalar.ph, !llvm.loop !25
 
 ._crit_edge.us32.i:                               ; preds = %scalar.ph
   call void @cmsPipelineEvalFloat(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef %i.c) #6
@@ -138,7 +163,7 @@ scalar.ph:                                        ; preds = %.preheader.us28.i, 
   store float %i.aq, ptr %i.ar, align 4, !tbaa !15
   %indvars.iv.next37.i = add nuw nsw i64 %indvars.iv36.i, 1 ; 2 uses
   %exitcond39.not.i = icmp eq i64 %indvars.iv.next37.i, 32769
-  br i1 %exitcond39.not.i, label %ComputeCompositeCurves.exit, label %.preheader.us28.i, !llvm.loop !22
+  br i1 %exitcond39.not.i, label %ComputeCompositeCurves.exit, label %.preheader.us28.i, !llvm.loop !23
 
 .preheader.i:                                     ; preds = %._crit_edge, %.preheader.i
   %indvars.iv40.i = phi i64 [ %indvars.iv.next41.i, %.preheader.i ], [ 0, %._crit_edge ] ; 4 uses
@@ -154,7 +179,7 @@ scalar.ph:                                        ; preds = %.preheader.us28.i, 
   store float %i.aw, ptr %i.ax, align 4, !tbaa !15
   %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv40.i, 1 ; 2 uses
   %exitcond43.not.i = icmp eq i64 %indvars.iv.next41.i, 32769
-  br i1 %exitcond43.not.i, label %ComputeCompositeCurves.exit, label %.preheader.i, !llvm.loop !22
+  br i1 %exitcond43.not.i, label %ComputeCompositeCurves.exit, label %.preheader.i, !llvm.loop !23
 
 ComputeCompositeCurves.exit:                      ; preds = %.preheader.i, %._crit_edge.us.us.i, %._crit_edge.us32.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
@@ -163,8 +188,8 @@ ComputeCompositeCurves.exit:                      ; preds = %.preheader.i, %._cr
   %i.az = and i32 %i.ay, -33554497
   %i.ba = or disjoint i32 %i.az, 64
   store i32 %i.ba, ptr %6, align 4, !tbaa !10
-  store ptr %i.w, ptr %1, align 8, !tbaa !29
-  store ptr @free_aligned, ptr %2, align 8, !tbaa !29
+  store ptr %i.w, ptr %1, align 8, !tbaa !28
+  store ptr @free_aligned, ptr %2, align 8, !tbaa !28
   %i.bb = icmp eq i32 %i.k, 1
   br i1 %i.bb, label %.preheader, label %bb.i
 
@@ -210,7 +235,7 @@ bb.i:                                             ; preds = %ComputeCompositeCur
 
 KCurveIsLinear.exit:                              ; preds = %bb.g, %.preheader, %.preheader.1, %bb.i
   %storemerge = phi ptr [ %i.bv, %bb.i ], [ @FastEvaluateFloatGrayCurves, %.preheader ], [ @FastFloatGrayIdentity, %bb.g ], [ @FastEvaluateFloatGrayCurves, %.preheader.1 ]
-  store ptr %storemerge, ptr %0, align 8, !tbaa !29
+  store ptr %storemerge, ptr %0, align 8, !tbaa !28
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.c, %bb.a, %bb.b, %KCurveIsLinear.exit
@@ -261,10 +286,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !17
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !18
   call void @_cmsComputeComponentIncrements(i32 noundef %i.g, i32 noundef %i.j, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !18
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !19
   call void @_cmsComputeComponentIncrements(i32 noundef %i.h, i32 noundef %i.l, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #6
   %i.m = call i32 @_cmsGetTransformFlags(ptr noundef %0) #6
   %i.n = and i32 %i.m, 67108864
@@ -295,10 +320,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.z = zext i32 %i.y to i64                     ; 11 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %i.ac = load i32, ptr %5, align 4, !tbaa !19
+  %i.ac = load i32, ptr %5, align 4, !tbaa !20
   %i.ad = zext i32 %i.ac to i64                   ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !20
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !21
   %i.ag = zext i32 %i.af to i64                   ; 2 uses
   br i1 %.not62, label %._crit_edge58.split, label %.lr.ph57.split
 
@@ -370,7 +395,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.x ; 2 uses
   %niter81.next.7 = add nuw i32 %niter81, 8       ; 2 uses
   %niter81.ncmp.7 = icmp eq i32 %niter81.next.7, %unroll_iter80
-  br i1 %niter81.ncmp.7, label %._crit_edge.us.unr-lcssa, label %.lr.ph.us.new, !llvm.loop !30
+  br i1 %niter81.ncmp.7, label %._crit_edge.us.unr-lcssa, label %.lr.ph.us.new, !llvm.loop !29
 
 ._crit_edge.us.unr-lcssa:                         ; preds = %.lr.ph.us.new
   br i1 %lcmp.mod78.not, label %._crit_edge.us, label %.epil.preheader76
@@ -391,14 +416,14 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %i.bm = getelementptr inbounds nuw i8, ptr %.04046.us.epil, i64 %i.x
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter77
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %bb.d, !llvm.loop !31
+  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %bb.d, !llvm.loop !30
 
 ._crit_edge.us:                                   ; preds = %bb.d, %._crit_edge.us.unr-lcssa
   %i.bn = add nuw i64 %.03354.us, %i.ad
   %i.bo = add nuw i64 %.055.us, %i.ag
   %i.bp = add nuw i32 %.04251.us, 1               ; 2 uses
   %exitcond66.not = icmp eq i32 %i.bp, %4
-  br i1 %exitcond66.not, label %._crit_edge58.split, label %.lr.ph.us, !llvm.loop !32
+  br i1 %exitcond66.not, label %._crit_edge58.split, label %.lr.ph.us, !llvm.loop !31
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %.055 = phi i64 [ %i.ct, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 3 uses
@@ -462,7 +487,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.3.1 = phi ptr [ %i.cp, %bb.g ], [ %.3, %bb.f ] ; 2 uses
   %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph.new, !llvm.loop !30
+  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph.new, !llvm.loop !29
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.h
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
@@ -488,7 +513,7 @@ bb.i:                                             ; preds = %.epil.preheader
   %i.ct = add nuw i64 %.055, %i.ag
   %i.cu = add nuw i32 %.04251, 1                  ; 2 uses
   %exitcond64.not = icmp eq i32 %i.cu, %4
-  br i1 %exitcond64.not, label %._crit_edge58.split, label %.lr.ph, !llvm.loop !32
+  br i1 %exitcond64.not, label %._crit_edge58.split, label %.lr.ph, !llvm.loop !31
 
 ._crit_edge58.split:                              ; preds = %._crit_edge, %._crit_edge.us, %.lr.ph57, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
@@ -519,9 +544,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !17
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !18
   call void @_cmsComputeComponentIncrements(i32 noundef %i.g, i32 noundef %i.k, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
-  %i.l = load i32, ptr %i.j, align 4, !tbaa !17
+  %i.l = load i32, ptr %i.j, align 4, !tbaa !18
   call void @_cmsComputeComponentIncrements(i32 noundef %i.h, i32 noundef %i.l, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #6
   %i.m = call i32 @_cmsGetTransformFlags(ptr noundef %0) #6
   %i.n = and i32 %i.m, 67108864
@@ -554,10 +579,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.aa = zext i32 %i.z to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %i.ad = load i32, ptr %5, align 4, !tbaa !19
+  %i.ad = load i32, ptr %5, align 4, !tbaa !20
   %i.ae = zext i32 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !20
+  %i.ag = load i32, ptr %i.af, align 4, !tbaa !21
   %i.ah = zext i32 %i.ag to i64
   br i1 %.not62, label %._crit_edge60.split, label %.lr.ph
 
@@ -646,14 +671,14 @@ bb.i:                                             ; preds = %flerp.exit, %bb.h
   %.3 = phi ptr [ %i.bw, %bb.h ], [ %.251, %flerp.exit ] ; 2 uses
   %i.bx = add nuw i32 %.04347, 1                  ; 2 uses
   %exitcond.not = icmp eq i32 %i.bx, %3
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !34
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !32
 
 ._crit_edge:                                      ; preds = %bb.i
   %i.by = add nuw i64 %.03556, %i.ae
   %i.bz = add nuw i64 %.057, %i.ah
   %i.ca = add nuw i32 %.04453, 1                  ; 2 uses
   %exitcond63.not = icmp eq i32 %i.ca, %4
-  br i1 %exitcond63.not, label %._crit_edge60.split, label %.lr.ph, !llvm.loop !35
+  br i1 %exitcond63.not, label %._crit_edge60.split, label %.lr.ph, !llvm.loop !33
 
 ._crit_edge60.split:                              ; preds = %._crit_edge, %.lr.ph59, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
@@ -675,7 +700,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 32769
-  br i1 %exitcond.not, label %bb.f, label %bb.c, !llvm.loop !36
+  br i1 %exitcond.not, label %bb.f, label %bb.c, !llvm.loop !34
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 5 uses
@@ -731,10 +756,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !17
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !18
   call void @_cmsComputeComponentIncrements(i32 noundef %i.g, i32 noundef %i.j, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !18
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !19
   call void @_cmsComputeComponentIncrements(i32 noundef %i.h, i32 noundef %i.l, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #6
   %i.m = call i32 @_cmsGetTransformFlags(ptr noundef %0) #6
   %i.n = and i32 %i.m, 67108864
@@ -793,10 +818,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bb = zext i32 %i.ba to i64                   ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.be = load i32, ptr %5, align 4, !tbaa !19
+  %i.be = load i32, ptr %5, align 4, !tbaa !20
   %i.bf = zext i32 %i.be to i64                   ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !20
+  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !21
   %i.bi = zext i32 %i.bh to i64                   ; 2 uses
   br i1 %.not87, label %._crit_edge83.split, label %.lr.ph82.split
 
@@ -868,7 +893,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.an ; 2 uses
   %niter106.next.1 = add nuw i32 %niter106, 2     ; 2 uses
   %niter106.ncmp.1 = icmp eq i32 %niter106.next.1, %unroll_iter105
-  br i1 %niter106.ncmp.1, label %._crit_edge.us.unr-lcssa, label %.lr.ph.us.new, !llvm.loop !37
+  br i1 %niter106.ncmp.1, label %._crit_edge.us.unr-lcssa, label %.lr.ph.us.new, !llvm.loop !35
 
 ._crit_edge.us.unr-lcssa:                         ; preds = %.lr.ph.us.new
   br i1 %lcmp.mod103.not, label %._crit_edge.us, label %.epil.preheader101
@@ -894,7 +919,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.co = add nuw i64 %.080.us, %i.bi
   %i.cp = add nuw i32 %.06276.us, 1               ; 2 uses
   %exitcond91.not = icmp eq i32 %i.cp, %4
-  br i1 %exitcond91.not, label %._crit_edge83.split, label %.lr.ph.us, !llvm.loop !38
+  br i1 %exitcond91.not, label %._crit_edge83.split, label %.lr.ph.us, !llvm.loop !36
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %.080 = phi i64 [ %i.el, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 5 uses
@@ -982,7 +1007,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.3.1 = phi ptr [ %i.ef, %bb.f ], [ %.3, %bb.e ] ; 2 uses
   %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph.new, !llvm.loop !37
+  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph.new, !llvm.loop !35
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.g
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
@@ -1016,7 +1041,7 @@ bb.h:                                             ; preds = %.epil.preheader
   %i.el = add nuw i64 %.080, %i.bi
   %i.em = add nuw i32 %.06276, 1                  ; 2 uses
   %exitcond89.not = icmp eq i32 %i.em, %4
-  br i1 %exitcond89.not, label %._crit_edge83.split, label %.lr.ph, !llvm.loop !38
+  br i1 %exitcond89.not, label %._crit_edge83.split, label %.lr.ph, !llvm.loop !36
 
 ._crit_edge83.split:                              ; preds = %._crit_edge, %._crit_edge.us, %.lr.ph82, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
@@ -1047,10 +1072,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !17
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !18
   call void @_cmsComputeComponentIncrements(i32 noundef %i.g, i32 noundef %i.k, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !18
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !19
   call void @_cmsComputeComponentIncrements(i32 noundef %i.h, i32 noundef %i.m, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #6
   %i.n = call i32 @_cmsGetTransformFlags(ptr noundef %0) #6
   %i.o = and i32 %i.n, 67108864
@@ -1113,10 +1138,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bf = zext i32 %i.be to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.bh = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.bi = load i32, ptr %5, align 4, !tbaa !19
+  %i.bi = load i32, ptr %5, align 4, !tbaa !20
   %i.bj = zext i32 %i.bi to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !20
+  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !21
   %i.bm = zext i32 %i.bl to i64
   br i1 %.not97, label %._crit_edge95.split, label %.lr.ph
 
@@ -1293,14 +1318,14 @@ bb.o:                                             ; preds = %flerp.exit77, %bb.n
   %.3 = phi ptr [ %i.fb, %bb.n ], [ %.286, %flerp.exit77 ] ; 2 uses
   %i.fc = add nuw i32 %.06578, 1                  ; 2 uses
   %exitcond.not = icmp eq i32 %i.fc, %3
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !39
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %bb.o
   %i.fd = add nuw i64 %.05391, %i.bj
   %i.fe = add nuw i64 %.092, %i.bm
   %i.ff = add nuw i32 %.06688, 1                  ; 2 uses
   %exitcond98.not = icmp eq i32 %i.ff, %4
-  br i1 %exitcond98.not, label %._crit_edge95.split, label %.lr.ph, !llvm.loop !40
+  br i1 %exitcond98.not, label %._crit_edge95.split, label %.lr.ph, !llvm.loop !38
 
 ._crit_edge95.split:                              ; preds = %._crit_edge, %.lr.ph94, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
@@ -1373,29 +1398,27 @@ attributes #6 = { nounwind }
 !13 = !{!12, !9, i64 393232}
 !14 = !{!"float", !5, i64 0}
 !15 = !{!14, !14, i64 0}
-!16 = !{!"", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
-!17 = !{!16, !6, i64 8}
-!18 = !{!16, !6, i64 12}
-!19 = !{!16, !6, i64 0}
-!20 = !{!16, !6, i64 4}
-!21 = distinct !{!21, !11}
+!16 = !{!"llvm.loop.unroll.disable"}
+!17 = !{!"", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
+!18 = !{!17, !6, i64 8}
+!19 = !{!17, !6, i64 12}
+!20 = !{!17, !6, i64 0}
+!21 = !{!17, !6, i64 4}
 !22 = distinct !{!22, !11}
-!23 = distinct !{!23, !11, !27, !28}
-!24 = distinct !{!24, !11, !28, !27}
-!25 = !{!"p1 _ZTS19_cmsPipeline_struct", !9, i64 0}
-!26 = !{!25, !25, i64 0}
-!27 = !{!"llvm.loop.isvectorized", i32 1}
-!28 = !{!"llvm.loop.unroll.runtime.disable"}
-!29 = !{!9, !9, i64 0}
-!30 = distinct !{!30, !11}
-!31 = distinct !{!31, !33}
+!23 = distinct !{!23, !11}
+!24 = distinct !{!24, !11}
+!25 = distinct !{!25, !16}
+!26 = !{!"p1 _ZTS19_cmsPipeline_struct", !9, i64 0}
+!27 = !{!26, !26, i64 0}
+!28 = !{!9, !9, i64 0}
+!29 = distinct !{!29, !11}
+!30 = distinct !{!30, !16}
+!31 = distinct !{!31, !11}
 !32 = distinct !{!32, !11}
-!33 = !{!"llvm.loop.unroll.disable"}
+!33 = distinct !{!33, !11}
 !34 = distinct !{!34, !11}
 !35 = distinct !{!35, !11}
 !36 = distinct !{!36, !11}
 !37 = distinct !{!37, !11}
 !38 = distinct !{!38, !11}
-!39 = distinct !{!39, !11}
-!40 = distinct !{!40, !11}
 end_hunk_0

@@ -205,10 +205,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !733  ; 23 uses
-  switch i32 %i.d, label %.lr.ph.i [
+  switch i32 %i.d, label %.lr.ph.i.preheader [
     i32 8, label %.lr.ph.i.preheader.i.i
     i32 0, label %_ZNK4llvm15IntervalMapImpl8LeafNodeIlSt9monostateLj8ENS_23IntervalMapHalfOpenInfoIlEEE8findFromEjjl.exit.thread
   ]
+
+.lr.ph.i.preheader:                               ; preds = %bb.b
+  %4 = zext i32 %i.d to i64
+  br label %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #36
@@ -305,8 +309,8 @@ _ZN4llvm11IntervalMapIlSt9monostateLj8ENS_23IntervalMapHalfOpenInfoIlEEE14const_
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #36
   br label %bb.o
 
-.lr.ph.i:                                         ; preds = %bb.b, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %bb.b ] ; 3 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.e
+  %indvars.iv = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvars.iv.next, %bb.e ] ; 3 uses
   %i.ag = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !367
@@ -315,8 +319,7 @@ _ZN4llvm11IntervalMapIlSt9monostateLj8ENS_23IntervalMapHalfOpenInfoIlEEE14const_
 
 bb.e:                                             ; preds = %.lr.ph.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %i.d, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %4
   br i1 %exitcond, label %_ZNK4llvm15IntervalMapImpl8LeafNodeIlSt9monostateLj8ENS_23IntervalMapHalfOpenInfoIlEEE8findFromEjjl.exit, label %.lr.ph.i, !llvm.loop !12
 
 _ZNK4llvm15IntervalMapImpl8LeafNodeIlSt9monostateLj8ENS_23IntervalMapHalfOpenInfoIlEEE8findFromEjjl.exit.split.loop.exit: ; preds = %.lr.ph.i
