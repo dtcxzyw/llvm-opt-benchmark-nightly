@@ -198,11 +198,11 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.ci = lshr i8 %i.cg, 6
-  %3 = or disjoint i8 %i.ci, 4
-  %i.cj = zext nneg i8 %3 to i32
+  %i.cj = zext nneg i8 %i.ci to i32
   %i.ck = zext i16 %.596 to i32
   %i.cl = shl nuw nsw i32 %i.ck, 3
-  %i.cm = or disjoint i32 %i.cl, %i.cj            ; 2 uses
+  %3 = or disjoint i32 %i.cl, %i.cj
+  %i.cm = or disjoint i32 %3, 4                   ; 2 uses
   %i.cn = trunc i32 %i.cm to i16                  ; 2 uses
   %i.co = add nsw i32 %.5, 3                      ; 3 uses
   %i.cp = and i32 %i.co, 7                        ; 2 uses

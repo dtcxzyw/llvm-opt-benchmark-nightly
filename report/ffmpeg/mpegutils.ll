@@ -204,17 +204,17 @@ bb.d:                                             ; preds = %.preheader250.us, %
   %i.cf = and i32 %.fr316, 64
   %.not224.us = icmp eq i32 %i.cf, 0
   %i.cg = shl nuw nsw i64 %indvars.iv, 4          ; 6 uses
-  %10 = or disjoint i64 %i.cg, 4                  ; 8 uses
-  %11 = shl nuw nsw i64 %indvars.iv, 1            ; 11 uses
+  %10 = shl nuw nsw i64 %indvars.iv, 1            ; 11 uses
+  %11 = or disjoint i64 %i.cg, 8                  ; 2 uses
   %i.ch = lshr i32 %.fr316, 7
   %i.ci = and i32 %i.ch, 1                        ; 8 uses
   %i.cj = and i32 %.fr316, 32
   %.not.i232.us = icmp eq i32 %i.cj, 0            ; 2 uses
   %i.ck = select i1 %.not.i232.us, i8 16, i8 8    ; 4 uses
-  %i.cl = trunc i64 %i.cg to i32
-  %12 = or disjoint i32 %i.cl, 8                  ; 7 uses
-  %13 = trunc i32 %12 to i16                      ; 6 uses
-  %i.cm = trunc nsw i64 %11 to i32
+  %i.cl = trunc nsw i64 %11 to i32                ; 6 uses
+  %12 = trunc i64 %11 to i16                      ; 6 uses
+  %13 = or disjoint i64 %i.cg, 4                  ; 8 uses
+  %i.cm = trunc nsw i64 %10 to i32
   %i.cn = add i32 %factor.op.mul.reass.us, %i.cm  ; 4 uses
   %i.co = add i64 %indvars.iv, %i.ao
   %i.cp = trunc i64 %i.co to i32
@@ -230,7 +230,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
 .preheader248.us:                                 ; preds = %.split.us278.preheader
   %i.ct = load ptr, ptr %4, align 8, !tbaa !48    ; 4 uses
   %i.cu = sext i32 %.1201272.us to i64            ; 4 uses
-  %i.cv = add i64 %11, %i.ap
+  %i.cv = add i64 %10, %i.ap
   %i.cw = trunc i64 %i.cv to i32
   %i.cx = shl i32 %i.cw, %i.w
   %i.cy = sext i32 %i.cx to i64
@@ -242,8 +242,8 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i8 8, ptr %i.dc, align 1, !tbaa !54
   %i.dd = getelementptr inbounds nuw i8, ptr %i.da, i64 24
   %i.de = getelementptr inbounds nuw i8, ptr %i.da, i64 32
-  %i.df = trunc nsw i64 %10 to i32                ; 2 uses
-  %i.dg = trunc i64 %10 to i16                    ; 2 uses
+  %i.df = trunc nsw i64 %13 to i32                ; 2 uses
+  %i.dg = trunc i64 %13 to i16                    ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.da, i64 10
   %i.di = getelementptr inbounds nuw i8, ptr %i.da, i64 12
   %i.dj = getelementptr inbounds nuw i8, ptr %i.da, i64 6
@@ -261,7 +261,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i32 -1, ptr %i.da, align 8, !tbaa !59
   %i.dq = getelementptr inbounds nuw i8, ptr %i.da, i64 16
   store i64 0, ptr %i.dq, align 8, !tbaa !60
-  %i.dr = or disjoint i64 %11, 1                  ; 2 uses
+  %i.dr = or disjoint i64 %10, 1                  ; 2 uses
   %i.ds = add i64 %i.dr, %i.ap
   %i.dt = trunc i64 %i.ds to i32
   %i.du = shl i32 %i.dt, %i.w
@@ -295,7 +295,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i32 -1, ptr %i.dy, align 8, !tbaa !59
   %i.ep = getelementptr i8, ptr %i.dx, i64 56
   store i64 0, ptr %i.ep, align 8, !tbaa !60
-  %i.eq = add i64 %11, %i.at
+  %i.eq = add i64 %10, %i.at
   %i.er = trunc i64 %i.eq to i32
   %i.es = shl i32 %i.er, %i.w
   %i.et = sext i32 %i.es to i64
@@ -367,7 +367,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
 .preheader248.us.1:                               ; preds = %.loopexit249.us
   %i.gh = load ptr, ptr %i.aa, align 8, !tbaa !48 ; 4 uses
   %i.gi = sext i32 %.6.us282 to i64               ; 4 uses
-  %i.gj = add i64 %11, %i.ax
+  %i.gj = add i64 %10, %i.ax
   %i.gk = trunc i64 %i.gj to i32
   %i.gl = shl i32 %i.gk, %i.w
   %i.gm = sext i32 %i.gl to i64
@@ -379,8 +379,8 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i8 8, ptr %i.gq, align 1, !tbaa !54
   %i.gr = getelementptr inbounds nuw i8, ptr %i.go, i64 24
   %i.gs = getelementptr inbounds nuw i8, ptr %i.go, i64 32
-  %i.gt = trunc nsw i64 %10 to i32                ; 2 uses
-  %i.gu = trunc i64 %10 to i16                    ; 2 uses
+  %i.gt = trunc nsw i64 %13 to i32                ; 2 uses
+  %i.gu = trunc i64 %13 to i16                    ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.go, i64 10
   %i.gw = getelementptr inbounds nuw i8, ptr %i.go, i64 12
   %i.gx = getelementptr inbounds nuw i8, ptr %i.go, i64 6
@@ -398,7 +398,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i32 1, ptr %i.go, align 8, !tbaa !59
   %i.he = getelementptr inbounds nuw i8, ptr %i.go, i64 16
   store i64 0, ptr %i.he, align 8, !tbaa !60
-  %i.hf = or disjoint i64 %11, 1                  ; 2 uses
+  %i.hf = or disjoint i64 %10, 1                  ; 2 uses
   %i.hg = add i64 %i.hf, %i.ax
   %i.hh = trunc i64 %i.hg to i32
   %i.hi = shl i32 %i.hh, %i.w
@@ -432,7 +432,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i32 1, ptr %i.hm, align 8, !tbaa !59
   %i.id = getelementptr i8, ptr %i.hl, i64 56
   store i64 0, ptr %i.id, align 8, !tbaa !60
-  %i.ie = add i64 %11, %i.bb
+  %i.ie = add i64 %10, %i.bb
   %i.if = trunc i64 %i.ie to i32
   %i.ig = shl i32 %i.if, %i.w
   %i.ih = sext i32 %i.ig to i64
@@ -508,7 +508,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
 .preheader246.us.us:                              ; preds = %.split.us.split.us285.preheader
   %i.jw = load ptr, ptr %4, align 8, !tbaa !48    ; 2 uses
   %i.jx = sext i32 %.1201272.us to i64            ; 2 uses
-  %i.jy = add i64 %i.bf, %11
+  %i.jy = add i64 %i.bf, %10
   %i.jz = trunc i64 %i.jy to i32
   %i.ka = shl i32 %i.jz, %i.w
   %i.kb = sext i32 %i.ka to i64
@@ -531,21 +531,21 @@ bb.d:                                             ; preds = %.preheader250.us, %
   %i.kn = getelementptr inbounds nuw i8, ptr %i.ki, i64 32
   store i16 %i.x, ptr %i.kn, align 8, !tbaa !56
   %i.ko = getelementptr inbounds nuw i8, ptr %i.ki, i64 10
-  store i16 %13, ptr %i.ko, align 2, !tbaa !57
+  store i16 %12, ptr %i.ko, align 2, !tbaa !57
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ki, i64 12
   store i16 %i.bh, ptr %i.kp, align 4, !tbaa !58
   %i.kq = getelementptr inbounds nuw i8, ptr %i.ki, i64 6
   %i.kr = insertelement <2 x i32> poison, i32 %i.ke, i64 0
   %i.ks = insertelement <2 x i32> %i.kr, i32 %spec.select.us.us, i64 1
   %i.kt = sdiv <2 x i32> %i.ks, %i.af
-  %i.ku = insertelement <2 x i32> %i.ca, i32 %12, i64 0
+  %i.ku = insertelement <2 x i32> %i.ca, i32 %i.cl, i64 0
   %i.kv = add nsw <2 x i32> %i.kt, %i.ku
   %i.kw = trunc <2 x i32> %i.kv to <2 x i16>
   store <2 x i16> %i.kw, ptr %i.kq, align 2, !tbaa !55
   store i32 -1, ptr %i.ki, align 8, !tbaa !59
   %i.kx = getelementptr inbounds nuw i8, ptr %i.ki, i64 16
   store i64 0, ptr %i.kx, align 8, !tbaa !60
-  %i.ky = add i64 %i.bj, %11
+  %i.ky = add i64 %i.bj, %10
   %i.kz = trunc i64 %i.ky to i32
   %i.la = shl i32 %i.kz, %i.w
   %i.lb = sext i32 %i.la to i64
@@ -569,14 +569,14 @@ bb.d:                                             ; preds = %.preheader250.us, %
   %i.lo = getelementptr i8, ptr %i.li, i64 72
   store i16 %i.x, ptr %i.lo, align 8, !tbaa !56
   %i.lp = getelementptr i8, ptr %i.li, i64 50
-  store i16 %13, ptr %i.lp, align 2, !tbaa !57
+  store i16 %12, ptr %i.lp, align 2, !tbaa !57
   %i.lq = getelementptr i8, ptr %i.li, i64 52
   store i16 %i.bm, ptr %i.lq, align 4, !tbaa !58
   %i.lr = getelementptr i8, ptr %i.li, i64 46
   %i.ls = insertelement <2 x i32> poison, i32 %i.le, i64 0
   %i.lt = insertelement <2 x i32> %i.ls, i32 %spec.select.us.us.1, i64 1
   %i.lu = sdiv <2 x i32> %i.lt, %i.af
-  %i.lv = insertelement <2 x i32> %i.cb, i32 %12, i64 0
+  %i.lv = insertelement <2 x i32> %i.cb, i32 %i.cl, i64 0
   %i.lw = add nsw <2 x i32> %i.lu, %i.lv
   %i.lx = trunc <2 x i32> %i.lw to <2 x i16>
   store <2 x i16> %i.lx, ptr %i.lr, align 2, !tbaa !55
@@ -595,7 +595,7 @@ bb.d:                                             ; preds = %.preheader250.us, %
 .preheader246.us.us.1:                            ; preds = %.loopexit247.us.us
   %i.ma = load ptr, ptr %i.ab, align 8, !tbaa !48 ; 2 uses
   %i.mb = sext i32 %.6.us.us289 to i64            ; 2 uses
-  %i.mc = add i64 %i.bn, %11
+  %i.mc = add i64 %i.bn, %10
   %i.md = trunc i64 %i.mc to i32
   %i.me = shl i32 %i.md, %i.w
   %i.mf = sext i32 %i.me to i64
@@ -618,21 +618,21 @@ bb.d:                                             ; preds = %.preheader250.us, %
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mm, i64 32
   store i16 %i.x, ptr %i.mr, align 8, !tbaa !56
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mm, i64 10
-  store i16 %13, ptr %i.ms, align 2, !tbaa !57
+  store i16 %12, ptr %i.ms, align 2, !tbaa !57
   %i.mt = getelementptr inbounds nuw i8, ptr %i.mm, i64 12
   store i16 %i.bp, ptr %i.mt, align 4, !tbaa !58
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mm, i64 6
   %i.mv = insertelement <2 x i32> poison, i32 %i.mi, i64 0
   %i.mw = insertelement <2 x i32> %i.mv, i32 %spec.select.us.us.1333, i64 1
   %i.mx = sdiv <2 x i32> %i.mw, %i.af
-  %i.my = insertelement <2 x i32> %i.cc, i32 %12, i64 0
+  %i.my = insertelement <2 x i32> %i.cc, i32 %i.cl, i64 0
   %i.mz = add nsw <2 x i32> %i.mx, %i.my
   %i.na = trunc <2 x i32> %i.mz to <2 x i16>
   store <2 x i16> %i.na, ptr %i.mu, align 2, !tbaa !55
   store i32 1, ptr %i.mm, align 8, !tbaa !59
   %i.nb = getelementptr inbounds nuw i8, ptr %i.mm, i64 16
   store i64 0, ptr %i.nb, align 8, !tbaa !60
-  %i.nc = add i64 %i.br, %11
+  %i.nc = add i64 %i.br, %10
   %i.nd = trunc i64 %i.nc to i32
   %i.ne = shl i32 %i.nd, %i.w
   %i.nf = sext i32 %i.ne to i64
@@ -656,14 +656,14 @@ bb.d:                                             ; preds = %.preheader250.us, %
   %i.ns = getelementptr i8, ptr %i.nm, i64 72
   store i16 %i.x, ptr %i.ns, align 8, !tbaa !56
   %i.nt = getelementptr i8, ptr %i.nm, i64 50
-  store i16 %13, ptr %i.nt, align 2, !tbaa !57
+  store i16 %12, ptr %i.nt, align 2, !tbaa !57
   %i.nu = getelementptr i8, ptr %i.nm, i64 52
   store i16 %i.bu, ptr %i.nu, align 4, !tbaa !58
   %i.nv = getelementptr i8, ptr %i.nm, i64 46
   %i.nw = insertelement <2 x i32> poison, i32 %i.ni, i64 0
   %i.nx = insertelement <2 x i32> %i.nw, i32 %spec.select.us.us.1.1, i64 1
   %i.ny = sdiv <2 x i32> %i.nx, %i.af
-  %i.nz = insertelement <2 x i32> %i.cd, i32 %12, i64 0
+  %i.nz = insertelement <2 x i32> %i.cd, i32 %i.cl, i64 0
   %i.oa = add nsw <2 x i32> %i.ny, %i.nz
   %i.ob = trunc <2 x i32> %i.oa to <2 x i16>
   store <2 x i16> %i.ob, ptr %i.nv, align 2, !tbaa !55
@@ -705,8 +705,8 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i32 %spec.select229.us.us.us, ptr %i.or, align 4, !tbaa !62
   %i.os = getelementptr inbounds nuw i8, ptr %i.on, i64 32
   store i16 %i.x, ptr %i.os, align 8, !tbaa !56
-  %i.ot = trunc nsw i64 %10 to i32
-  %i.ou = trunc i64 %10 to i16
+  %i.ot = trunc nsw i64 %13 to i32
+  %i.ou = trunc i64 %13 to i16
   %i.ov = getelementptr inbounds nuw i8, ptr %i.on, i64 10
   store i16 %i.ou, ptr %i.ov, align 2, !tbaa !57
   %i.ow = getelementptr inbounds nuw i8, ptr %i.on, i64 12
@@ -794,8 +794,8 @@ bb.d:                                             ; preds = %.preheader250.us, %
   store i32 %spec.select229.us.us.us.1339, ptr %i.qx, align 4, !tbaa !62
   %i.qy = getelementptr inbounds nuw i8, ptr %i.qt, i64 32
   store i16 %i.x, ptr %i.qy, align 8, !tbaa !56
-  %i.qz = trunc nsw i64 %10 to i32
-  %i.ra = trunc i64 %10 to i16
+  %i.qz = trunc nsw i64 %13 to i32
+  %i.ra = trunc i64 %13 to i16
   %i.rb = getelementptr inbounds nuw i8, ptr %i.qt, i64 10
   store i16 %i.ra, ptr %i.rb, align 2, !tbaa !57
   %i.rc = getelementptr inbounds nuw i8, ptr %i.qt, i64 12
@@ -872,10 +872,10 @@ bb.e:                                             ; preds = %.split.us.split.us.
   %i.ta = sext <2 x i16> %i.sz to <2 x i32>       ; 2 uses
   store <2 x i32> %i.ta, ptr %i.su, align 8, !tbaa !33
   store i16 %i.x, ptr %i.sv, align 8, !tbaa !56
-  store i16 %13, ptr %i.sw, align 2, !tbaa !57
+  store i16 %12, ptr %i.sw, align 2, !tbaa !57
   store i16 %i.an, ptr %i.sx, align 4, !tbaa !58
   %i.tb = sdiv <2 x i32> %i.ta, %i.af
-  %i.tc = insertelement <2 x i32> %i.bv, i32 %12, i64 0
+  %i.tc = insertelement <2 x i32> %i.bv, i32 %i.cl, i64 0
   %i.td = add nsw <2 x i32> %i.tb, %i.tc
   %i.te = trunc <2 x i32> %i.td to <2 x i16>
   store <2 x i16> %i.te, ptr %i.sy, align 2, !tbaa !55
@@ -909,10 +909,10 @@ bb.f:                                             ; preds = %.split.us.split.us.
   %i.tu = sext <2 x i16> %i.tt to <2 x i32>       ; 2 uses
   store <2 x i32> %i.tu, ptr %i.to, align 8, !tbaa !33
   store i16 %i.x, ptr %i.tp, align 8, !tbaa !56
-  store i16 %13, ptr %i.tq, align 2, !tbaa !57
+  store i16 %12, ptr %i.tq, align 2, !tbaa !57
   store i16 %i.an, ptr %i.tr, align 4, !tbaa !58
   %i.tv = sdiv <2 x i32> %i.tu, %i.af
-  %i.tw = insertelement <2 x i32> %i.bv, i32 %12, i64 0
+  %i.tw = insertelement <2 x i32> %i.bv, i32 %i.cl, i64 0
   %i.tx = add nsw <2 x i32> %i.tv, %i.tw
   %i.ty = trunc <2 x i32> %i.tx to <2 x i16>
   store <2 x i16> %i.ty, ptr %i.ts, align 2, !tbaa !55

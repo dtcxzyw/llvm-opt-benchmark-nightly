@@ -95,20 +95,20 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 36
   store float %i.e, ptr %i.f, align 4, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.h = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store float %i.h, ptr %i.i, align 4, !tbaa !10
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
   store float %i.h, ptr %2, align 4, !tbaa !10
   %i.j = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
   store float %i.j, ptr %i.k, align 4, !tbaa !10
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 68
   store float %i.j, ptr %i.l, align 4, !tbaa !10
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.m = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40
   store float %i.m, ptr %i.n, align 4, !tbaa !10
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96
   store float %i.m, ptr %3, align 4, !tbaa !10
   %i.o = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -127,10 +127,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 108
   store float %i.v, ptr %i.x, align 4, !tbaa !10
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 16 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.z = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 16
   store float %i.z, ptr %i.aa, align 4, !tbaa !10
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 128
   store float %i.z, ptr %4, align 4, !tbaa !10
   %i.ab = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -147,10 +147,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ah, ptr %i.ai, align 4, !tbaa !10
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 140
   store float %i.ah, ptr %i.aj, align 4, !tbaa !10
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.ak = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 48
   store float %i.ak, ptr %i.al, align 4, !tbaa !10
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 160
   store float %i.ak, ptr %5, align 4, !tbaa !10
   %i.am = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 52
@@ -167,10 +167,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.as, ptr %i.at, align 4, !tbaa !10
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 172
   store float %i.as, ptr %i.au, align 4, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.av = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 80
   store float %i.av, ptr %i.aw, align 4, !tbaa !10
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 192
   store float %i.av, ptr %6, align 4, !tbaa !10
   %i.ax = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 84
@@ -187,10 +187,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.bd, ptr %i.be, align 4, !tbaa !10
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 204
   store float %i.bd, ptr %i.bf, align 4, !tbaa !10
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 224
   %i.bg = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 112
   store float %i.bg, ptr %i.bh, align 4, !tbaa !10
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 224
   store float %i.bg, ptr %7, align 4, !tbaa !10
   %i.bi = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 116
@@ -261,20 +261,20 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 292
   store float %i.cw, ptr %i.cx, align 4, !tbaa !10
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 320
   %i.cz = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 264
   store float %i.cz, ptr %i.da, align 4, !tbaa !10
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 320
   store float %i.cz, ptr %8, align 4, !tbaa !10
   %i.db = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 268
   store float %i.db, ptr %i.dc, align 4, !tbaa !10
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 324
   store float %i.db, ptr %i.dd, align 4, !tbaa !10
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 352
   %i.de = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 296
   store float %i.de, ptr %i.df, align 4, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 352
   store float %i.de, ptr %9, align 4, !tbaa !10
   %i.dg = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 300
@@ -293,10 +293,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 364
   store float %i.dn, ptr %i.dp, align 4, !tbaa !10
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 16 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 384
   %i.dr = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 272
   store float %i.dr, ptr %i.ds, align 4, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 384
   store float %i.dr, ptr %10, align 4, !tbaa !10
   %i.dt = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 276
@@ -313,10 +313,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.dz, ptr %i.ea, align 4, !tbaa !10
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 396
   store float %i.dz, ptr %i.eb, align 4, !tbaa !10
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 416
   %i.ec = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 304
   store float %i.ec, ptr %i.ed, align 4, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 416
   store float %i.ec, ptr %11, align 4, !tbaa !10
   %i.ee = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 308
@@ -333,10 +333,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ek, ptr %i.el, align 4, !tbaa !10
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 428
   store float %i.ek, ptr %i.em, align 4, !tbaa !10
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 448
   %i.en = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 336
   store float %i.en, ptr %i.eo, align 4, !tbaa !10
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 448
   store float %i.en, ptr %12, align 4, !tbaa !10
   %i.ep = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 340
@@ -353,10 +353,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ev, ptr %i.ew, align 4, !tbaa !10
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 460
   store float %i.ev, ptr %i.ex, align 4, !tbaa !10
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 480
   %i.ey = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 368
   store float %i.ey, ptr %i.ez, align 4, !tbaa !10
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 480
   store float %i.ey, ptr %13, align 4, !tbaa !10
   %i.fa = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 372
@@ -427,20 +427,20 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 548
   store float %i.go, ptr %i.gp, align 4, !tbaa !10
   %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 576
   %i.gr = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %1, i64 520
   store float %i.gr, ptr %i.gs, align 4, !tbaa !10
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 576
   store float %i.gr, ptr %14, align 4, !tbaa !10
   %i.gt = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 524
   store float %i.gt, ptr %i.gu, align 4, !tbaa !10
   %i.gv = getelementptr inbounds nuw i8, ptr %1, i64 580
   store float %i.gt, ptr %i.gv, align 4, !tbaa !10
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 608
   %i.gw = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %1, i64 552
   store float %i.gw, ptr %i.gx, align 4, !tbaa !10
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 608
   store float %i.gw, ptr %15, align 4, !tbaa !10
   %i.gy = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 556
@@ -459,10 +459,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.hh = getelementptr inbounds nuw i8, ptr %1, i64 620
   store float %i.hf, ptr %i.hh, align 4, !tbaa !10
   %i.hi = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 16 uses
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 640
   %i.hj = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 528
   store float %i.hj, ptr %i.hk, align 4, !tbaa !10
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 640
   store float %i.hj, ptr %16, align 4, !tbaa !10
   %i.hl = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %1, i64 532
@@ -479,10 +479,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.hr, ptr %i.hs, align 4, !tbaa !10
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 652
   store float %i.hr, ptr %i.ht, align 4, !tbaa !10
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 672
   %i.hu = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %1, i64 560
   store float %i.hu, ptr %i.hv, align 4, !tbaa !10
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 672
   store float %i.hu, ptr %17, align 4, !tbaa !10
   %i.hw = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %1, i64 564
@@ -499,10 +499,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ic, ptr %i.id, align 4, !tbaa !10
   %i.ie = getelementptr inbounds nuw i8, ptr %1, i64 684
   store float %i.ic, ptr %i.ie, align 4, !tbaa !10
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 704
   %i.if = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %1, i64 592
   store float %i.if, ptr %i.ig, align 4, !tbaa !10
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 704
   store float %i.if, ptr %18, align 4, !tbaa !10
   %i.ih = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %1, i64 596
@@ -519,10 +519,10 @@ define hidden void @_ZN3jxl6N_SSE419GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.in, ptr %i.io, align 4, !tbaa !10
   %i.ip = getelementptr inbounds nuw i8, ptr %1, i64 716
   store float %i.in, ptr %i.ip, align 4, !tbaa !10
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 736
   %i.iq = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %1, i64 624
   store float %i.iq, ptr %i.ir, align 4, !tbaa !10
+  %19 = getelementptr inbounds nuw i8, ptr %1, i64 736
   store float %i.iq, ptr %19, align 4, !tbaa !10
   %i.is = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %1, i64 628
@@ -925,9 +925,9 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %.idx250 = shl nuw nsw i64 %.0242379, 7
   %i.wf = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx250 ; 15 uses
-  %i.wg = mul i64 %.0242379, %i.n
-  %i.wh = load ptr, ptr %6, align 8               ; 2 uses
-  %i.wi = getelementptr inbounds nuw [4 x i8], ptr %i.wh, i64 %i.wg ; 24 uses
+  %i.wg = mul i64 %.0242379, %i.n                 ; 4 uses
+  %i.wh = load ptr, ptr %6, align 8               ; 5 uses
+  %i.wi = getelementptr inbounds nuw [4 x i8], ptr %i.wh, i64 %i.wg ; 18 uses
   %i.wj = getelementptr inbounds nuw i8, ptr %i.wf, i64 4
   %i.wk = getelementptr inbounds nuw i8, ptr %i.wi, i64 36
   %i.wl = load <4 x float>, ptr %i.wj, align 4, !tbaa !10
@@ -940,38 +940,44 @@ bb.w:                                             ; preds = %bb.v
   %i.wq = load float, ptr %i.wp, align 4, !tbaa !10
   %i.wr = getelementptr inbounds nuw i8, ptr %i.wi, i64 60
   store float %i.wq, ptr %i.wr, align 4, !tbaa !10
+  %7 = getelementptr inbounds nuw i8, ptr %i.wh, i64 64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.wg ; 2 uses
   %i.ws = getelementptr inbounds nuw i8, ptr %i.wf, i64 32
   %i.wt = load float, ptr %i.ws, align 16, !tbaa !10
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wf, i64 36
   %i.wv = getelementptr inbounds nuw i8, ptr %i.wf, i64 44
-  %i.ww = getelementptr inbounds nuw i8, ptr %i.wi, i64 108
+  %i.ww = getelementptr inbounds nuw i8, ptr %8, i64 44
   %i.wx = load <4 x float>, ptr %i.wv, align 4, !tbaa !10
   store <4 x float> %i.wx, ptr %i.ww, align 4, !tbaa !10
   %i.wy = getelementptr inbounds nuw i8, ptr %i.wf, i64 60
   %i.wz = load float, ptr %i.wy, align 4, !tbaa !10
-  %i.xa = getelementptr inbounds nuw i8, ptr %i.wi, i64 124
+  %i.xa = getelementptr inbounds nuw i8, ptr %8, i64 60
   store float %i.wz, ptr %i.xa, align 4, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %i.wh, i64 128
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %i.wg ; 2 uses
   %i.xb = getelementptr inbounds nuw i8, ptr %i.wf, i64 64
   %i.xc = load float, ptr %i.xb, align 16, !tbaa !10
   %i.xd = getelementptr inbounds nuw i8, ptr %i.wf, i64 68
   %i.xe = getelementptr inbounds nuw i8, ptr %i.wf, i64 76
-  %i.xf = getelementptr inbounds nuw i8, ptr %i.wi, i64 172
+  %i.xf = getelementptr inbounds nuw i8, ptr %10, i64 44
   %i.xg = load <4 x float>, ptr %i.xe, align 4, !tbaa !10
   store <4 x float> %i.xg, ptr %i.xf, align 4, !tbaa !10
   %i.xh = getelementptr inbounds nuw i8, ptr %i.wf, i64 92
   %i.xi = load float, ptr %i.xh, align 4, !tbaa !10
-  %i.xj = getelementptr inbounds nuw i8, ptr %i.wi, i64 188
+  %i.xj = getelementptr inbounds nuw i8, ptr %10, i64 60
   store float %i.xi, ptr %i.xj, align 4, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %i.wh, i64 192
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.wg ; 2 uses
   %i.xk = getelementptr inbounds nuw i8, ptr %i.wf, i64 96
   %i.xl = load float, ptr %i.xk, align 16, !tbaa !10
   %i.xm = getelementptr inbounds nuw i8, ptr %i.wf, i64 100
   %i.xn = getelementptr inbounds nuw i8, ptr %i.wf, i64 108
-  %i.xo = getelementptr inbounds nuw i8, ptr %i.wi, i64 236
+  %i.xo = getelementptr inbounds nuw i8, ptr %12, i64 44
   %i.xp = load <4 x float>, ptr %i.xn, align 4, !tbaa !10
   store <4 x float> %i.xp, ptr %i.xo, align 4, !tbaa !10
   %i.xq = getelementptr inbounds nuw i8, ptr %i.wf, i64 124
   %i.xr = load float, ptr %i.xq, align 4, !tbaa !10
-  %i.xs = getelementptr inbounds nuw i8, ptr %i.wi, i64 252
+  %i.xs = getelementptr inbounds nuw i8, ptr %12, i64 60
   store float %i.xr, ptr %i.xs, align 4, !tbaa !10
   %i.xt = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.lq ; 15 uses
   %i.xu = getelementptr inbounds nuw i8, ptr %i.xt, i64 4
@@ -1363,20 +1369,20 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 36
   store float %i.e, ptr %i.f, align 4, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.h = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store float %i.h, ptr %i.i, align 4, !tbaa !10
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
   store float %i.h, ptr %2, align 4, !tbaa !10
   %i.j = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
   store float %i.j, ptr %i.k, align 4, !tbaa !10
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 68
   store float %i.j, ptr %i.l, align 4, !tbaa !10
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.m = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40
   store float %i.m, ptr %i.n, align 4, !tbaa !10
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96
   store float %i.m, ptr %3, align 4, !tbaa !10
   %i.o = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -1395,10 +1401,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.z = shufflevector <2 x float> %i.y, <2 x float> poison, <2 x i32> zeroinitializer
   store <2 x float> %i.z, ptr %i.x, align 4, !tbaa !10
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 16 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.ab = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16
   store float %i.ab, ptr %i.ac, align 4, !tbaa !10
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 128
   store float %i.ab, ptr %4, align 4, !tbaa !10
   %i.ad = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -1415,10 +1421,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.aj, ptr %i.ak, align 4, !tbaa !10
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 140
   store float %i.aj, ptr %i.al, align 4, !tbaa !10
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.am = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 48
   store float %i.am, ptr %i.an, align 4, !tbaa !10
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 160
   store float %i.am, ptr %5, align 4, !tbaa !10
   %i.ao = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 52
@@ -1435,10 +1441,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.au, ptr %i.av, align 4, !tbaa !10
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 172
   store float %i.au, ptr %i.aw, align 4, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.ax = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 80
   store float %i.ax, ptr %i.ay, align 4, !tbaa !10
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 192
   store float %i.ax, ptr %6, align 4, !tbaa !10
   %i.az = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 84
@@ -1455,10 +1461,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.bf, ptr %i.bg, align 4, !tbaa !10
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 204
   store float %i.bf, ptr %i.bh, align 4, !tbaa !10
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 224
   %i.bi = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 112
   store float %i.bi, ptr %i.bj, align 4, !tbaa !10
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 224
   store float %i.bi, ptr %7, align 4, !tbaa !10
   %i.bk = load float, ptr %i.aa, align 4, !tbaa !10 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 116
@@ -1529,20 +1535,20 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 292
   store float %i.dg, ptr %i.dh, align 4, !tbaa !10
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 320
   %i.dj = load float, ptr %i.di, align 4, !tbaa !10 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 264
   store float %i.dj, ptr %i.dk, align 4, !tbaa !10
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 320
   store float %i.dj, ptr %8, align 4, !tbaa !10
   %i.dl = load float, ptr %i.di, align 4, !tbaa !10 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 268
   store float %i.dl, ptr %i.dm, align 4, !tbaa !10
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 324
   store float %i.dl, ptr %i.dn, align 4, !tbaa !10
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 352
   %i.do = load float, ptr %i.di, align 4, !tbaa !10 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 296
   store float %i.do, ptr %i.dp, align 4, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 352
   store float %i.do, ptr %9, align 4, !tbaa !10
   %i.dq = load float, ptr %i.di, align 4, !tbaa !10 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 300
@@ -1561,10 +1567,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.eb = shufflevector <2 x float> %i.ea, <2 x float> poison, <2 x i32> zeroinitializer
   store <2 x float> %i.eb, ptr %i.dz, align 4, !tbaa !10
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 16 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 384
   %i.ed = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 272
   store float %i.ed, ptr %i.ee, align 4, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 384
   store float %i.ed, ptr %10, align 4, !tbaa !10
   %i.ef = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %1, i64 276
@@ -1581,10 +1587,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.el, ptr %i.em, align 4, !tbaa !10
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 396
   store float %i.el, ptr %i.en, align 4, !tbaa !10
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 416
   %i.eo = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 304
   store float %i.eo, ptr %i.ep, align 4, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 416
   store float %i.eo, ptr %11, align 4, !tbaa !10
   %i.eq = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 308
@@ -1601,10 +1607,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ew, ptr %i.ex, align 4, !tbaa !10
   %i.ey = getelementptr inbounds nuw i8, ptr %1, i64 428
   store float %i.ew, ptr %i.ey, align 4, !tbaa !10
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 448
   %i.ez = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %1, i64 336
   store float %i.ez, ptr %i.fa, align 4, !tbaa !10
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 448
   store float %i.ez, ptr %12, align 4, !tbaa !10
   %i.fb = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 340
@@ -1621,10 +1627,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.fh, ptr %i.fi, align 4, !tbaa !10
   %i.fj = getelementptr inbounds nuw i8, ptr %1, i64 460
   store float %i.fh, ptr %i.fj, align 4, !tbaa !10
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 480
   %i.fk = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 368
   store float %i.fk, ptr %i.fl, align 4, !tbaa !10
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 480
   store float %i.fk, ptr %13, align 4, !tbaa !10
   %i.fm = load float, ptr %i.ec, align 4, !tbaa !10 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %1, i64 372
@@ -1695,20 +1701,20 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.hj = getelementptr inbounds nuw i8, ptr %1, i64 548
   store float %i.hi, ptr %i.hj, align 4, !tbaa !10
   %i.hk = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 576
   %i.hl = load float, ptr %i.hk, align 4, !tbaa !10 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %1, i64 520
   store float %i.hl, ptr %i.hm, align 4, !tbaa !10
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 576
   store float %i.hl, ptr %14, align 4, !tbaa !10
   %i.hn = load float, ptr %i.hk, align 4, !tbaa !10 ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %1, i64 524
   store float %i.hn, ptr %i.ho, align 4, !tbaa !10
   %i.hp = getelementptr inbounds nuw i8, ptr %1, i64 580
   store float %i.hn, ptr %i.hp, align 4, !tbaa !10
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 608
   %i.hq = load float, ptr %i.hk, align 4, !tbaa !10 ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %1, i64 552
   store float %i.hq, ptr %i.hr, align 4, !tbaa !10
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 608
   store float %i.hq, ptr %15, align 4, !tbaa !10
   %i.hs = load float, ptr %i.hk, align 4, !tbaa !10 ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 556
@@ -1727,10 +1733,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.id = shufflevector <2 x float> %i.ic, <2 x float> poison, <2 x i32> zeroinitializer
   store <2 x float> %i.id, ptr %i.ib, align 4, !tbaa !10
   %i.ie = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 16 uses
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 640
   %i.if = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %1, i64 528
   store float %i.if, ptr %i.ig, align 4, !tbaa !10
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 640
   store float %i.if, ptr %16, align 4, !tbaa !10
   %i.ih = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %1, i64 532
@@ -1747,10 +1753,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.in, ptr %i.io, align 4, !tbaa !10
   %i.ip = getelementptr inbounds nuw i8, ptr %1, i64 652
   store float %i.in, ptr %i.ip, align 4, !tbaa !10
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 672
   %i.iq = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %1, i64 560
   store float %i.iq, ptr %i.ir, align 4, !tbaa !10
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 672
   store float %i.iq, ptr %17, align 4, !tbaa !10
   %i.is = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %1, i64 564
@@ -1767,10 +1773,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.iy, ptr %i.iz, align 4, !tbaa !10
   %i.ja = getelementptr inbounds nuw i8, ptr %1, i64 684
   store float %i.iy, ptr %i.ja, align 4, !tbaa !10
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 704
   %i.jb = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %1, i64 592
   store float %i.jb, ptr %i.jc, align 4, !tbaa !10
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 704
   store float %i.jb, ptr %18, align 4, !tbaa !10
   %i.jd = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.je = getelementptr inbounds nuw i8, ptr %1, i64 596
@@ -1787,10 +1793,10 @@ define hidden void @_ZN3jxl6N_AVX219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.jj, ptr %i.jk, align 4, !tbaa !10
   %i.jl = getelementptr inbounds nuw i8, ptr %1, i64 716
   store float %i.jj, ptr %i.jl, align 4, !tbaa !10
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 736
   %i.jm = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.jn = getelementptr inbounds nuw i8, ptr %1, i64 624
   store float %i.jm, ptr %i.jn, align 4, !tbaa !10
+  %19 = getelementptr inbounds nuw i8, ptr %1, i64 736
   store float %i.jm, ptr %19, align 4, !tbaa !10
   %i.jo = load float, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %1, i64 628
@@ -2193,9 +2199,9 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %.idx250 = shl nuw nsw i64 %.0242379, 7
   %i.sz = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx250 ; 15 uses
-  %i.ta = mul i64 %.0242379, %i.n
-  %i.tb = load ptr, ptr %6, align 8               ; 2 uses
-  %i.tc = getelementptr inbounds nuw [4 x i8], ptr %i.tb, i64 %i.ta ; 21 uses
+  %i.ta = mul i64 %.0242379, %i.n                 ; 4 uses
+  %i.tb = load ptr, ptr %6, align 8               ; 5 uses
+  %i.tc = getelementptr inbounds nuw [4 x i8], ptr %i.tb, i64 %i.ta ; 18 uses
   %i.td = getelementptr inbounds nuw i8, ptr %i.sz, i64 4
   %i.te = getelementptr inbounds nuw i8, ptr %i.tc, i64 36
   %i.tf = load <4 x float>, ptr %i.td, align 4, !tbaa !10
@@ -2208,29 +2214,32 @@ bb.w:                                             ; preds = %bb.v
   %i.tk = load float, ptr %i.tj, align 4, !tbaa !10
   %i.tl = getelementptr inbounds nuw i8, ptr %i.tc, i64 60
   store float %i.tk, ptr %i.tl, align 4, !tbaa !10
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.tb, i64 %i.ta
   %i.tm = getelementptr inbounds nuw i8, ptr %i.sz, i64 32
   %i.tn = load float, ptr %i.tm, align 16, !tbaa !10
   %i.to = getelementptr inbounds nuw i8, ptr %i.sz, i64 36
   %i.tp = getelementptr inbounds nuw i8, ptr %i.sz, i64 44
   %i.tq = getelementptr inbounds nuw i8, ptr %i.sz, i64 60
   %i.tr = load float, ptr %i.tq, align 4, !tbaa !10
-  %i.ts = getelementptr inbounds nuw i8, ptr %i.tc, i64 124
+  %i.ts = getelementptr inbounds nuw i8, ptr %7, i64 124
   store float %i.tr, ptr %i.ts, align 4, !tbaa !10
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.tb, i64 %i.ta
   %i.tt = getelementptr inbounds nuw i8, ptr %i.sz, i64 64
   %i.tu = load float, ptr %i.tt, align 16, !tbaa !10
   %i.tv = getelementptr inbounds nuw i8, ptr %i.sz, i64 68
   %i.tw = getelementptr inbounds nuw i8, ptr %i.sz, i64 76
   %i.tx = getelementptr inbounds nuw i8, ptr %i.sz, i64 92
   %i.ty = load float, ptr %i.tx, align 4, !tbaa !10
-  %i.tz = getelementptr inbounds nuw i8, ptr %i.tc, i64 188
+  %i.tz = getelementptr inbounds nuw i8, ptr %8, i64 188
   store float %i.ty, ptr %i.tz, align 4, !tbaa !10
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.tb, i64 %i.ta
   %i.ua = getelementptr inbounds nuw i8, ptr %i.sz, i64 96
   %i.ub = load float, ptr %i.ua, align 16, !tbaa !10
   %i.uc = getelementptr inbounds nuw i8, ptr %i.sz, i64 100
   %i.ud = getelementptr inbounds nuw i8, ptr %i.sz, i64 108
   %i.ue = getelementptr inbounds nuw i8, ptr %i.sz, i64 124
   %i.uf = load float, ptr %i.ue, align 4, !tbaa !10
-  %i.ug = getelementptr inbounds nuw i8, ptr %i.tc, i64 252
+  %i.ug = getelementptr inbounds nuw i8, ptr %9, i64 252
   store float %i.uf, ptr %i.ug, align 4, !tbaa !10
   %i.uh = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.kg ; 15 uses
   %i.ui = getelementptr inbounds nuw i8, ptr %i.uh, i64 4
@@ -2631,20 +2640,20 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 36
   store float %i.e, ptr %i.f, align 4, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.h = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store float %i.h, ptr %i.i, align 4, !tbaa !10
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
   store float %i.h, ptr %2, align 4, !tbaa !10
   %i.j = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
   store float %i.j, ptr %i.k, align 4, !tbaa !10
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 68
   store float %i.j, ptr %i.l, align 4, !tbaa !10
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.m = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40
   store float %i.m, ptr %i.n, align 4, !tbaa !10
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 96
   store float %i.m, ptr %3, align 4, !tbaa !10
   %i.o = load float, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -2663,10 +2672,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 108
   store float %i.v, ptr %i.x, align 4, !tbaa !10
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 16 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.z = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 16
   store float %i.z, ptr %i.aa, align 4, !tbaa !10
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 128
   store float %i.z, ptr %4, align 4, !tbaa !10
   %i.ab = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -2683,10 +2692,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ah, ptr %i.ai, align 4, !tbaa !10
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 140
   store float %i.ah, ptr %i.aj, align 4, !tbaa !10
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.ak = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 48
   store float %i.ak, ptr %i.al, align 4, !tbaa !10
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 160
   store float %i.ak, ptr %5, align 4, !tbaa !10
   %i.am = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 52
@@ -2703,10 +2712,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.as, ptr %i.at, align 4, !tbaa !10
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 172
   store float %i.as, ptr %i.au, align 4, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.av = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 80
   store float %i.av, ptr %i.aw, align 4, !tbaa !10
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 192
   store float %i.av, ptr %6, align 4, !tbaa !10
   %i.ax = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 84
@@ -2723,10 +2732,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.bd, ptr %i.be, align 4, !tbaa !10
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 204
   store float %i.bd, ptr %i.bf, align 4, !tbaa !10
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 224
   %i.bg = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 112
   store float %i.bg, ptr %i.bh, align 4, !tbaa !10
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 224
   store float %i.bg, ptr %7, align 4, !tbaa !10
   %i.bi = load float, ptr %i.y, align 4, !tbaa !10 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 116
@@ -2797,20 +2806,20 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 292
   store float %i.cw, ptr %i.cx, align 4, !tbaa !10
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 320
   %i.cz = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 264
   store float %i.cz, ptr %i.da, align 4, !tbaa !10
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 320
   store float %i.cz, ptr %8, align 4, !tbaa !10
   %i.db = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 268
   store float %i.db, ptr %i.dc, align 4, !tbaa !10
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 324
   store float %i.db, ptr %i.dd, align 4, !tbaa !10
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 352
   %i.de = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 296
   store float %i.de, ptr %i.df, align 4, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 352
   store float %i.de, ptr %9, align 4, !tbaa !10
   %i.dg = load float, ptr %i.cy, align 4, !tbaa !10 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 300
@@ -2829,10 +2838,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 364
   store float %i.dn, ptr %i.dp, align 4, !tbaa !10
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 16 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 384
   %i.dr = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 272
   store float %i.dr, ptr %i.ds, align 4, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 384
   store float %i.dr, ptr %10, align 4, !tbaa !10
   %i.dt = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 276
@@ -2849,10 +2858,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.dz, ptr %i.ea, align 4, !tbaa !10
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 396
   store float %i.dz, ptr %i.eb, align 4, !tbaa !10
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 416
   %i.ec = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 304
   store float %i.ec, ptr %i.ed, align 4, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 416
   store float %i.ec, ptr %11, align 4, !tbaa !10
   %i.ee = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 308
@@ -2869,10 +2878,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ek, ptr %i.el, align 4, !tbaa !10
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 428
   store float %i.ek, ptr %i.em, align 4, !tbaa !10
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 448
   %i.en = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 336
   store float %i.en, ptr %i.eo, align 4, !tbaa !10
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 448
   store float %i.en, ptr %12, align 4, !tbaa !10
   %i.ep = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 340
@@ -2889,10 +2898,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ev, ptr %i.ew, align 4, !tbaa !10
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 460
   store float %i.ev, ptr %i.ex, align 4, !tbaa !10
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 480
   %i.ey = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 368
   store float %i.ey, ptr %i.ez, align 4, !tbaa !10
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 480
   store float %i.ey, ptr %13, align 4, !tbaa !10
   %i.fa = load float, ptr %i.dq, align 4, !tbaa !10 ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 372
@@ -2963,20 +2972,20 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 548
   store float %i.go, ptr %i.gp, align 4, !tbaa !10
   %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 576
   %i.gr = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %1, i64 520
   store float %i.gr, ptr %i.gs, align 4, !tbaa !10
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 576
   store float %i.gr, ptr %14, align 4, !tbaa !10
   %i.gt = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 524
   store float %i.gt, ptr %i.gu, align 4, !tbaa !10
   %i.gv = getelementptr inbounds nuw i8, ptr %1, i64 580
   store float %i.gt, ptr %i.gv, align 4, !tbaa !10
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 608
   %i.gw = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %1, i64 552
   store float %i.gw, ptr %i.gx, align 4, !tbaa !10
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 608
   store float %i.gw, ptr %15, align 4, !tbaa !10
   %i.gy = load float, ptr %i.gq, align 4, !tbaa !10 ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 556
@@ -2995,10 +3004,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   %i.hh = getelementptr inbounds nuw i8, ptr %1, i64 620
   store float %i.hf, ptr %i.hh, align 4, !tbaa !10
   %i.hi = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 16 uses
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 640
   %i.hj = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 528
   store float %i.hj, ptr %i.hk, align 4, !tbaa !10
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 640
   store float %i.hj, ptr %16, align 4, !tbaa !10
   %i.hl = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %1, i64 532
@@ -3015,10 +3024,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.hr, ptr %i.hs, align 4, !tbaa !10
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 652
   store float %i.hr, ptr %i.ht, align 4, !tbaa !10
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 672
   %i.hu = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %1, i64 560
   store float %i.hu, ptr %i.hv, align 4, !tbaa !10
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 672
   store float %i.hu, ptr %17, align 4, !tbaa !10
   %i.hw = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %1, i64 564
@@ -3035,10 +3044,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.ic, ptr %i.id, align 4, !tbaa !10
   %i.ie = getelementptr inbounds nuw i8, ptr %1, i64 684
   store float %i.ic, ptr %i.ie, align 4, !tbaa !10
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 704
   %i.if = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %1, i64 592
   store float %i.if, ptr %i.ig, align 4, !tbaa !10
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 704
   store float %i.if, ptr %18, align 4, !tbaa !10
   %i.ih = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %1, i64 596
@@ -3055,10 +3064,10 @@ define hidden void @_ZN3jxl6N_SSE219GetQuantWeightsDCT2ERKNSt3__15arrayINS2_IfLm
   store float %i.in, ptr %i.io, align 4, !tbaa !10
   %i.ip = getelementptr inbounds nuw i8, ptr %1, i64 716
   store float %i.in, ptr %i.ip, align 4, !tbaa !10
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 736
   %i.iq = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %1, i64 624
   store float %i.iq, ptr %i.ir, align 4, !tbaa !10
+  %19 = getelementptr inbounds nuw i8, ptr %1, i64 736
   store float %i.iq, ptr %19, align 4, !tbaa !10
   %i.is = load float, ptr %i.hi, align 4, !tbaa !10 ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %1, i64 628
@@ -3461,9 +3470,9 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %.idx250 = shl nuw nsw i64 %.0242379, 7
   %i.te = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx250 ; 9 uses
-  %i.tf = mul i64 %.0242379, %i.n
-  %i.tg = load ptr, ptr %6, align 8               ; 2 uses
-  %i.th = getelementptr inbounds nuw [4 x i8], ptr %i.tg, i64 %i.tf ; 24 uses
+  %i.tf = mul i64 %.0242379, %i.n                 ; 4 uses
+  %i.tg = load ptr, ptr %6, align 8               ; 5 uses
+  %i.th = getelementptr inbounds nuw [4 x i8], ptr %i.tg, i64 %i.tf ; 18 uses
   %i.ti = getelementptr inbounds nuw i8, ptr %i.te, i64 4
   %i.tj = getelementptr inbounds nuw i8, ptr %i.th, i64 36
   %i.tk = load <4 x float>, ptr %i.ti, align 4, !tbaa !10
@@ -3476,28 +3485,34 @@ bb.x:                                             ; preds = %bb.w
   %i.tp = load float, ptr %i.to, align 4, !tbaa !10
   %i.tq = getelementptr inbounds nuw i8, ptr %i.th, i64 60
   store float %i.tp, ptr %i.tq, align 4, !tbaa !10
-  %i.tr = getelementptr inbounds nuw i8, ptr %i.th, i64 96
-  %i.ts = getelementptr inbounds nuw i8, ptr %i.te, i64 32
-  %i.tt = load <4 x float>, ptr %i.ts, align 16, !tbaa !10
-  store <4 x float> %i.tt, ptr %i.tr, align 4, !tbaa !10
+  %7 = getelementptr inbounds nuw i8, ptr %i.tg, i64 64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.tf ; 2 uses
+  %i.tr = getelementptr inbounds nuw i8, ptr %i.te, i64 32
+  %i.ts = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %i.tt = load <4 x float>, ptr %i.tr, align 16, !tbaa !10
+  store <4 x float> %i.tt, ptr %i.ts, align 4, !tbaa !10
   %i.tu = getelementptr inbounds nuw i8, ptr %i.te, i64 48
-  %i.tv = getelementptr inbounds nuw i8, ptr %i.th, i64 112
+  %i.tv = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.tw = load <4 x float>, ptr %i.tu, align 16, !tbaa !10
   store <4 x float> %i.tw, ptr %i.tv, align 4, !tbaa !10
-  %i.tx = getelementptr inbounds nuw i8, ptr %i.th, i64 160
-  %i.ty = getelementptr inbounds nuw i8, ptr %i.te, i64 64
-  %i.tz = load <4 x float>, ptr %i.ty, align 16, !tbaa !10
-  store <4 x float> %i.tz, ptr %i.tx, align 4, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %i.tg, i64 128
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %i.tf ; 2 uses
+  %i.tx = getelementptr inbounds nuw i8, ptr %i.te, i64 64
+  %i.ty = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %i.tz = load <4 x float>, ptr %i.tx, align 16, !tbaa !10
+  store <4 x float> %i.tz, ptr %i.ty, align 4, !tbaa !10
   %i.ua = getelementptr inbounds nuw i8, ptr %i.te, i64 80
-  %i.ub = getelementptr inbounds nuw i8, ptr %i.th, i64 176
+  %i.ub = getelementptr inbounds nuw i8, ptr %10, i64 48
   %i.uc = load <4 x float>, ptr %i.ua, align 16, !tbaa !10
   store <4 x float> %i.uc, ptr %i.ub, align 4, !tbaa !10
-  %i.ud = getelementptr inbounds nuw i8, ptr %i.th, i64 224
-  %i.ue = getelementptr inbounds nuw i8, ptr %i.te, i64 96
-  %i.uf = load <4 x float>, ptr %i.ue, align 16, !tbaa !10
-  store <4 x float> %i.uf, ptr %i.ud, align 4, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %i.tg, i64 192
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.tf ; 2 uses
+  %i.ud = getelementptr inbounds nuw i8, ptr %i.te, i64 96
+  %i.ue = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.uf = load <4 x float>, ptr %i.ud, align 16, !tbaa !10
+  store <4 x float> %i.uf, ptr %i.ue, align 4, !tbaa !10
   %i.ug = getelementptr inbounds nuw i8, ptr %i.te, i64 112
-  %i.uh = getelementptr inbounds nuw i8, ptr %i.th, i64 240
+  %i.uh = getelementptr inbounds nuw i8, ptr %12, i64 48
   %i.ui = load <4 x float>, ptr %i.ug, align 16, !tbaa !10
   store <4 x float> %i.ui, ptr %i.uh, align 4, !tbaa !10
   %i.uj = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.hj ; 15 uses

@@ -204,21 +204,29 @@ bb.d:                                             ; preds = %bb.c
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.ax
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !38
   %i.bb = icmp eq i8 %i.ba, 0
-  br i1 %i.bb, label %bb.e, label %.critedge
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  br i1 %i.bb, label %bb.e, label %..critedge_crit_edge
+
+..critedge_crit_edge:                             ; preds = %bb.d
+  %.pre = load ptr, ptr %4, align 8, !tbaa !117
+  %.pre46 = zext i32 %3 to i64
+  br label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.bc = zext i32 %3 to i64
-  %i.bd = load ptr, ptr %4, align 8, !tbaa !117
+  %i.bc = zext i32 %3 to i64                      ; 2 uses
+  %i.bd = load ptr, ptr %4, align 8, !tbaa !117   ; 2 uses
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %i.bc ; 2 uses
   %i.bf = load i32, ptr %i.be, align 4
   %storemerge.i = or i32 %i.bf, 256
   store i32 %storemerge.i, ptr %i.be, align 4, !tbaa !145
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.e, %bb.d
+.critedge:                                        ; preds = %..critedge_crit_edge, %bb.e
+  %.pre-phi = phi i64 [ %.pre46, %..critedge_crit_edge ], [ %i.bc, %bb.e ]
+  %5 = phi ptr [ %.pre, %..critedge_crit_edge ], [ %i.bd, %bb.e ]
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.pre-phi ; 2 uses
   %i.bg = icmp ugt i32 %i.at, 536870911
-  br i1 %i.bg, label %bb.f, label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a
+  br i1 %i.bg, label %bb.f, label %7
 
 bb.f:                                             ; preds = %.critedge
   %i.bh = tail call ptr @__cxa_allocate_exception(i64 16) #28 ; 3 uses
@@ -228,20 +236,26 @@ bb.f:                                             ; preds = %.critedge
   tail call void @__cxa_throw(ptr nonnull %i.bh, ptr nonnull @_ZTIN5Darts7Details9ExceptionE, ptr nonnull @_ZNSt9exceptionD2Ev) #27
   unreachable
 
-_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a: ; preds = %.critedge
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load ptr, ptr %5, align 8, !tbaa !117
-  %7 = zext i32 %3 to i64
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %7 ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !145
-  %10 = and i32 %9, -2147483137
-  %11 = icmp samesign ult i32 %i.at, 2097152
-  %i.bj = shl nuw nsw i32 %i.at, 2
-  %i.bk = or i32 %i.bj, 512
+7:                                                ; preds = %.critedge
+  %8 = load i32, ptr %6, align 4, !tbaa !145
+  %9 = and i32 %8, -2147483137                    ; 2 uses
+  %10 = icmp samesign ult i32 %i.at, 2097152
+  br i1 %10, label %11, label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a
+
+11:                                               ; preds = %7
   %12 = shl nuw nsw i32 %i.at, 10
-  %.pn.i = select i1 %11, i32 %12, i32 %i.bk
-  %storemerge.i44.a = or i32 %10, %.pn.i
-  store i32 %storemerge.i44.a, ptr %8, align 4, !tbaa !145
+  %13 = or disjoint i32 %9, %12
+  br label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+
+_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a: ; preds = %7
+  %i.bj = shl nuw nsw i32 %i.at, 2
+  %i.bk = or i32 %i.bj, %9
+  %storemerge.i44.a = or i32 %i.bk, 512
+  br label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+
+_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit: ; preds = %11, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a
+  %storemerge.i44 = phi i32 [ %storemerge.i44.a, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a ], [ %13, %11 ]
+  store i32 %storemerge.i44, ptr %6, align 4, !tbaa !145
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -319,7 +333,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %.not43.not, label %bb.j, label %.loopexit, !llvm.loop !255
 
-.loopexit:                                        ; preds = %bb.l, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.a
+.loopexit:                                        ; preds = %bb.l, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
   ret void
 }
 
@@ -722,9 +736,11 @@ _ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit: ; preds = %_ZN
   %.3.i = phi i32 [ %i.be, %bb.e ], [ %i.cg, %.split.us.i ], [ %i.an, %bb.d ], [ %i.bf, %_ZNK5Darts7Details18DoubleArrayBuilder15is_valid_offsetEjj.exit.i ] ; 4 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ci = zext i32 %3 to i64                      ; 2 uses
+  %4 = load ptr, ptr %i.ch, align 8, !tbaa !117
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ci ; 2 uses
   %i.cj = xor i32 %.3.i, %3                       ; 4 uses
   %i.ck = icmp ugt i32 %i.cj, 536870911
-  br i1 %i.ck, label %bb.g, label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+  br i1 %i.ck, label %bb.g, label %6
 
 bb.g:                                             ; preds = %_ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit
   %i.cl = tail call ptr @__cxa_allocate_exception(i64 16) #28 ; 3 uses
@@ -734,17 +750,25 @@ bb.g:                                             ; preds = %_ZNK5Darts7Details1
   tail call void @__cxa_throw(ptr nonnull %i.cl, ptr nonnull @_ZTIN5Darts7Details9ExceptionE, ptr nonnull @_ZNSt9exceptionD2Ev) #27
   unreachable
 
-_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit: ; preds = %_ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit
-  %4 = load ptr, ptr %i.ch, align 8, !tbaa !117
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ci ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !145
-  %7 = and i32 %6, -2147483137
-  %8 = icmp samesign ult i32 %i.cj, 2097152
-  %9 = shl nuw nsw i32 %i.cj, 2
-  %10 = or i32 %9, 512
+6:                                                ; preds = %_ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit
+  %7 = load i32, ptr %5, align 4, !tbaa !145
+  %8 = and i32 %7, -2147483137                    ; 2 uses
+  %9 = icmp samesign ult i32 %i.cj, 2097152
+  br i1 %9, label %10, label %13
+
+10:                                               ; preds = %6
   %11 = shl nuw nsw i32 %i.cj, 10
-  %.pn.i = select i1 %8, i32 %11, i32 %10
-  %storemerge.i = or i32 %7, %.pn.i
+  %12 = or disjoint i32 %8, %11
+  br label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+
+13:                                               ; preds = %6
+  %14 = shl nuw nsw i32 %i.cj, 2
+  %15 = or i32 %14, %8
+  %16 = or i32 %15, 512
+  br label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+
+_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit: ; preds = %10, %13
+  %storemerge.i = phi i32 [ %16, %13 ], [ %12, %10 ]
   store i32 %storemerge.i, ptr %5, align 4, !tbaa !145
   %i.cn = load i64, ptr %i.b, align 8, !tbaa !125
   %.not46 = icmp eq i64 %i.cn, 0
@@ -1147,9 +1171,11 @@ _ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit: ; preds = %_ZN
   %.3.i = phi i32 [ %i.ak, %bb.c ], [ %i.bm, %.split.us.i ], [ %i.t, %bb.b ], [ %i.al, %_ZNK5Darts7Details18DoubleArrayBuilder15is_valid_offsetEjj.exit.i ] ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bo = zext i32 %5 to i64                      ; 2 uses
+  %6 = load ptr, ptr %i.bn, align 8, !tbaa !117
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bo ; 2 uses
   %i.bp = xor i32 %.3.i, %5                       ; 4 uses
   %i.bq = icmp ugt i32 %i.bp, 536870911
-  br i1 %i.bq, label %bb.e, label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+  br i1 %i.bq, label %bb.e, label %8
 
 bb.e:                                             ; preds = %_ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit
   %i.br = tail call ptr @__cxa_allocate_exception(i64 16) #28 ; 3 uses
@@ -1159,17 +1185,25 @@ bb.e:                                             ; preds = %_ZNK5Darts7Details1
   tail call void @__cxa_throw(ptr nonnull %i.br, ptr nonnull @_ZTIN5Darts7Details9ExceptionE, ptr nonnull @_ZNSt9exceptionD2Ev) #27
   unreachable
 
-_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit: ; preds = %_ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit
-  %6 = load ptr, ptr %i.bn, align 8, !tbaa !117
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bo ; 2 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !145
-  %9 = and i32 %8, -2147483137
-  %10 = icmp samesign ult i32 %i.bp, 2097152
-  %11 = shl nuw nsw i32 %i.bp, 2
-  %12 = or i32 %11, 512
+8:                                                ; preds = %_ZNK5Darts7Details18DoubleArrayBuilder17find_valid_offsetEj.exit
+  %9 = load i32, ptr %7, align 4, !tbaa !145
+  %10 = and i32 %9, -2147483137                   ; 2 uses
+  %11 = icmp samesign ult i32 %i.bp, 2097152
+  br i1 %11, label %12, label %15
+
+12:                                               ; preds = %8
   %13 = shl nuw nsw i32 %i.bp, 10
-  %.pn.i = select i1 %10, i32 %13, i32 %12
-  %storemerge.i = or i32 %9, %.pn.i
+  %14 = or disjoint i32 %10, %13
+  br label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+
+15:                                               ; preds = %8
+  %16 = shl nuw nsw i32 %i.bp, 2
+  %17 = or i32 %16, %10
+  %18 = or i32 %17, 512
+  br label %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
+
+_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit: ; preds = %12, %15
+  %storemerge.i = phi i32 [ %18, %15 ], [ %14, %12 ]
   store i32 %storemerge.i, ptr %7, align 4, !tbaa !145
   %i.bt = load i64, ptr %i.b, align 8, !tbaa !125
   %.not78 = icmp eq i64 %i.bt, 0

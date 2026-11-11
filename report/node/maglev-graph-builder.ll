@@ -205,10 +205,10 @@ _ZN2v88internal6maglev8NodeBase3NewINS1_16Float64ToBooleanEJbEEEPT_PNS0_4ZoneEmD
   %i.r = shl i64 %2, 16
   %i.s = load i8, ptr %3, align 1, !range !283, !noundef !284
   %i.t = and i64 %i.r, -9007199254806528
-  %4 = or disjoint i64 %i.t, 262
-  %5 = zext nneg i8 %i.s to i64
-  %6 = shl nuw nsw i64 %5, 53
-  %i.u = or disjoint i64 %6, %4
+  %4 = zext nneg i8 %i.s to i64
+  %5 = shl nuw nsw i64 %4, 53
+  %6 = or disjoint i64 %5, %i.t
+  %i.u = or disjoint i64 %6, 262
   store ptr null, ptr %i.q, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i64 %i.u, ptr %i.v, align 8
@@ -579,10 +579,10 @@ _ZN2v88internal6maglev8NodeBase3NewINS1_14Int32ToBooleanEJbEEEPT_PNS0_4ZoneEmDpO
   %i.r = shl i64 %2, 16
   %i.s = load i8, ptr %3, align 1, !range !283, !noundef !284
   %i.t = and i64 %i.r, -9007199254806528
-  %4 = or disjoint i64 %i.t, 251
-  %5 = zext nneg i8 %i.s to i64
-  %6 = shl nuw nsw i64 %5, 53
-  %i.u = or disjoint i64 %6, %4
+  %4 = zext nneg i8 %i.s to i64
+  %5 = shl nuw nsw i64 %4, 53
+  %6 = or disjoint i64 %5, %i.t
+  %i.u = or disjoint i64 %6, 251
   store ptr null, ptr %i.q, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i64 %i.u, ptr %i.v, align 8
@@ -888,10 +888,10 @@ _ZN2v88internal6maglev8NodeBase3NewINS1_15IntPtrToBooleanEJbEEEPT_PNS0_4ZoneEmDp
   %i.r = shl i64 %2, 16
   %i.s = load i8, ptr %3, align 1, !range !283, !noundef !284
   %i.t = and i64 %i.r, -9007199254806528
-  %4 = or disjoint i64 %i.t, 180
-  %5 = zext nneg i8 %i.s to i64
-  %6 = shl nuw nsw i64 %5, 53
-  %i.u = or disjoint i64 %6, %4
+  %4 = zext nneg i8 %i.s to i64
+  %5 = shl nuw nsw i64 %4, 53
+  %6 = or disjoint i64 %5, %i.t
+  %i.u = or disjoint i64 %6, 180
   store ptr null, ptr %i.q, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i64 %i.u, ptr %i.v, align 8

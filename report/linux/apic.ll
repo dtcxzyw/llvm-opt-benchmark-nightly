@@ -204,17 +204,17 @@ native_read_msr.exit:                             ; preds = %bb.m, %bb.n
   %i.aj = trunc nuw i64 %i.ai to i32
   %i.ak = and i64 %i.ae, 2047
   %i.al = load i64, ptr @mp_lapic_addr, align 8
-  %i.am = or i64 %i.ak, %i.al
-  %1 = or i64 %i.am, 2048                         ; 2 uses
-  %2 = trunc i64 %1 to i32
+  %i.am = or i64 %i.al, %i.ak
+  %1 = trunc i64 %i.am to i32
+  %2 = or i32 %1, 2048                            ; 2 uses
   tail call void asm sideeffect "1: wrmsr\0A2:\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (2b) - .\0A .long 8 \0A .popsection\0A", "{cx},{ax},{dx},~{memory},~{dirflag},~{fpsr},~{flags}"(i32 27, i32 %2, i32 %i.aj) #17, !srcloc !29
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_write_msr, i64 8), i1 false) #17
           to label %__x2apic_enable.exit [label %bb.o], !srcloc !27
 
 bb.o:                                             ; preds = %native_read_msr.exit
-  %3 = and i64 %1, 4294967295
+  %3 = zext i32 %2 to i64
   %i.an = and i64 %i.ah, -4294967296
-  %i.ao = or disjoint i64 %3, %i.an
+  %i.ao = or disjoint i64 %i.an, %3
   tail call void @do_trace_write_msr(i32 noundef 27, i64 noundef %i.ao, i32 noundef 0) #16
   br label %__x2apic_enable.exit
 

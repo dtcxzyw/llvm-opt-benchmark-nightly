@@ -204,10 +204,10 @@ assert_dc_off.exit.i:                             ; preds = %dev_name.exit21.i.i
   %i.ah = shl nuw nsw i64 %indvars.iv, 2          ; 2 uses
   %i.ai = trunc nuw nsw i64 %i.ah to i32          ; 3 uses
   %.pre = trunc nuw nsw i64 %indvars.iv to i32
-  %invariant.op = or disjoint i32 %i.ai, 8
-  %i.aj = trunc nuw nsw i64 %indvars.iv to i32    ; 4 uses
-  %4 = trunc nuw nsw i64 %i.ah to i32
-  %i.ak = or disjoint i32 %4, 96
+  %4 = trunc nuw nsw i64 %indvars.iv to i32       ; 4 uses
+  %i.aj = trunc nuw nsw i64 %i.ah to i32
+  %5 = or disjoint i32 %i.aj, 96
+  %i.ak = or disjoint i32 %i.ai, 8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.x, %assert_dc_off.exit.i
@@ -271,7 +271,7 @@ bb.p:                                             ; preds = %bb.m
   %i.bp = shl i32 %.sink108.i.i, 9
   %i.bq = add i32 %i.bp, 1502272
   %i.br = select i1 %i.bm, i32 %i.bo, i32 %i.bq
-  %.sroa.01.0.i.reass.i.reass = or disjoint i32 %i.br, %invariant.op ; 4 uses
+  %.sroa.01.0.i.reass.i.reass = or disjoint i32 %i.br, %i.ak ; 4 uses
   call void @intel_dmc_wl_get(ptr noundef %i.an, i32 %.sroa.01.0.i.reass.i.reass) #9
   %.val.i.i.i = load ptr, ptr %i.an, align 8
   %i.bs = call ptr @to_intel_uncore(ptr noundef %.val.i.i.i) #9 ; 4 uses
@@ -300,7 +300,7 @@ bb.p:                                             ; preds = %bb.m
   %i.ck = load ptr, ptr %i.cj, align 8
   call void %i.ck(ptr noundef %i.ci, i32 %i.ch, i32 noundef range(i32 0, 285343744) %i.h, i1 noundef zeroext true) #9, !inline_history !40
   call void @intel_dmc_wl_put(ptr noundef %i.an, i32 %i.ch) #9
-  %i.cl = call i32 @intel_cx0_wait_for_ack(ptr noundef %0, i32 noundef 5, i32 noundef range(i32 0, 2) %i.aj, ptr noundef nonnull %i.a) #9
+  %i.cl = call i32 @intel_cx0_wait_for_ack(ptr noundef %0, i32 noundef 5, i32 noundef range(i32 0, 2) %4, ptr noundef nonnull %i.a) #9
   %i.cm = icmp slt i32 %i.cl, 0
   br i1 %i.cm, label %bb.x, label %bb.q
 
@@ -352,7 +352,7 @@ bb.w:                                             ; preds = %bb.u
 
 intel_lt_phy_clear_status_p2p.exit:               ; preds = %bb.v, %bb.w
   %i.df = phi i32 [ %i.da, %bb.v ], [ %i.de, %bb.w ]
-  %i.dg = add i32 %i.df, %i.ak                    ; 4 uses
+  %i.dg = add i32 %i.df, %5                       ; 4 uses
   call void @intel_dmc_wl_get(ptr noundef %i.cw, i32 %i.dg) #9
   %.val.i.i = load ptr, ptr %i.cw, align 8
   %i.dh = call ptr @to_intel_uncore(ptr noundef %.val.i.i) #9 ; 4 uses
@@ -368,13 +368,13 @@ intel_lt_phy_clear_status_p2p.exit:               ; preds = %bb.v, %bb.w
 
 __intel_lt_phy_p2p_write_once.exit.i:             ; preds = %bb.q
   call void @__const_udelay(i64 noundef 644250) #9
-  call void @intel_cx0_clear_response_ready_flag(ptr noundef %0, i32 noundef range(i32 0, 2) %i.aj) #9
-  call fastcc void @intel_lt_phy_clear_status_p2p(ptr noundef %0, i32 noundef range(i32 0, 2) %i.aj) #10, !srcloc !47
+  call void @intel_cx0_clear_response_ready_flag(ptr noundef %0, i32 noundef range(i32 0, 2) %4) #9
+  call fastcc void @intel_lt_phy_clear_status_p2p(ptr noundef %0, i32 noundef range(i32 0, 2) %4) #10, !srcloc !47
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %__intel_lt_phy_p2p_write.exit
 
 .sink.split.i:                                    ; preds = %intel_lt_phy_clear_status_p2p.exit, %__drm_to_dev.exit.i17.i
-  %.pre-phi = phi i32 [ %i.aj, %intel_lt_phy_clear_status_p2p.exit ], [ %.pre, %__drm_to_dev.exit.i17.i ]
+  %.pre-phi = phi i32 [ %4, %intel_lt_phy_clear_status_p2p.exit ], [ %.pre, %__drm_to_dev.exit.i17.i ]
   call void @intel_cx0_bus_reset(ptr noundef %0, i32 noundef range(i32 0, 2) %.pre-phi) #9
   br label %bb.x
 

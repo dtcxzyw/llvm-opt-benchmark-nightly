@@ -202,14 +202,14 @@ bb.at:                                            ; preds = %bb.al
   %i.ec = zext nneg i8 %i.eb to i32
   %i.ed = shl nuw nsw i32 %i.ec, 8
   %i.ee = and i32 %i.dz, -3962
-  %8 = or disjoint i32 %i.ee, 1
-  %i.ef = or disjoint i32 %i.ed, %8
+  %i.ef = or disjoint i32 %i.ee, %i.ed
   %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 1
   %i.eh = load i8, ptr %i.eg, align 1
   %i.ei = shl i8 %i.eh, 3
   %i.ej = and i8 %i.ei, 120
   %i.ek = zext nneg i8 %i.ej to i32
-  %i.el = or disjoint i32 %i.ef, %i.ek
+  %8 = or disjoint i32 %i.ef, %i.ek
+  %i.el = or disjoint i32 %8, 1
   store i32 %i.el, ptr %i.dy, align 4
   br label %bb.av
 

@@ -205,18 +205,17 @@ e1000_configure_tx.exit:                          ; preds = %.thread.i, %bb.j, %
   %i.em = shl i32 %i.el, 12
   %i.en = getelementptr i8, ptr %0, i64 1543
   %i.eo = load i8, ptr %i.en, align 1, !range !21, !noundef !22
-  %1 = shl nuw nsw i8 %i.eo, 2
-  %masksel.i = zext nneg i8 %1 to i32
+  %1 = trunc nuw i8 %i.eo to i1
+  %2 = or i32 %i.em, %i.ej
   %i.ep = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.eq = getelementptr i8, ptr %i.ep, i64 56
   %i.er = load i32, ptr %i.eq, align 8
   %i.es = icmp ult i32 %i.er, 1501
-  %masksel25.i = select i1 %i.es, i32 0, i32 32
-  %i.et = or i32 %i.em, %i.ej
-  %2 = or disjoint i32 %i.et, %masksel.i
-  %.0.i = or disjoint i32 %2, %masksel25.i        ; 2 uses
-  %.1.i = and i32 %.0.i, -33783809                ; 3 uses
-  %3 = or disjoint i32 %.1.i, 32768               ; 2 uses
+  %masksel25.i = select i1 %1, i32 32772, i32 32768
+  %i.et = or i32 %2, %masksel25.i
+  %masksel.i = select i1 %i.es, i32 0, i32 32
+  %.0.i = or disjoint i32 %i.et, %masksel.i       ; 2 uses
+  %.1.i = and i32 %.0.i, -33751041                ; 4 uses
   %i.eu = getelementptr i8, ptr %0, i64 520
   %i.ev = load i32, ptr %i.eu, align 8            ; 2 uses
   %i.ew = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.ev)
@@ -232,19 +231,19 @@ e1000_configure_tx.exit:                          ; preds = %.thread.i, %bb.j, %
   ]
 
 bb.m:                                             ; preds = %.split.i
-  %i.ez = or i32 %.0.i, 33783808
+  %i.ez = or i32 %.0.i, 33751040
   br label %e1000_setup_rctl.exit
 
 bb.n:                                             ; preds = %.split.i
-  %i.fa = or disjoint i32 %.1.i, 33718272
+  %i.fa = or disjoint i32 %.1.i, 33685504
   br label %e1000_setup_rctl.exit
 
 bb.o:                                             ; preds = %.split.i
-  %i.fb = or disjoint i32 %.1.i, 33652736
+  %i.fb = or disjoint i32 %.1.i, 33619968
   br label %e1000_setup_rctl.exit
 
 e1000_setup_rctl.exit:                            ; preds = %e1000_configure_tx.exit, %.split.i, %bb.m, %bb.n, %bb.o
-  %.2.i = phi i32 [ %i.fa, %bb.n ], [ %i.fb, %bb.o ], [ %i.ez, %bb.m ], [ %3, %e1000_configure_tx.exit ], [ %3, %.split.i ] ; 2 uses
+  %.2.i = phi i32 [ %i.fa, %bb.n ], [ %i.fb, %bb.o ], [ %i.ez, %bb.m ], [ %.1.i, %e1000_configure_tx.exit ], [ %.1.i, %.split.i ] ; 2 uses
   %i.fc = getelementptr i8, ptr %i.ep, i64 184
   %i.fd = load i64, ptr %i.fc, align 8
   %i.fe = and i64 %i.fd, 17592186044416
@@ -647,19 +646,18 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = shl i32 %i.z, 12
   %i.ab = getelementptr i8, ptr %.val86, i64 4167
   %i.ac = load i8, ptr %i.ab, align 1, !range !21, !noundef !22
-  %2 = shl nuw nsw i8 %i.ac, 2
-  %masksel.i = zext nneg i8 %2 to i32
+  %2 = trunc nuw i8 %i.ac to i1
+  %3 = or i32 %i.aa, %i.x
   %i.ad = getelementptr i8, ptr %.val86, i64 3880
   %i.ae = load ptr, ptr %i.ad, align 8            ; 2 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 56
   %i.ag = load i32, ptr %i.af, align 8
   %i.ah = icmp ult i32 %i.ag, 1501
-  %masksel25.i = select i1 %i.ah, i32 0, i32 32
-  %i.ai = or i32 %i.aa, %i.x
-  %3 = or disjoint i32 %i.ai, %masksel.i
-  %.0.i = or disjoint i32 %3, %masksel25.i        ; 2 uses
-  %.1.i = and i32 %.0.i, -33783809                ; 3 uses
-  %4 = or disjoint i32 %.1.i, 32768               ; 2 uses
+  %masksel25.i = select i1 %2, i32 32772, i32 32768
+  %i.ai = or i32 %3, %masksel25.i
+  %masksel.i = select i1 %i.ah, i32 0, i32 32
+  %.0.i = or disjoint i32 %i.ai, %masksel.i       ; 2 uses
+  %.1.i = and i32 %.0.i, -33751041                ; 4 uses
   %i.aj = getelementptr i8, ptr %.val86, i64 3144
   %i.ak = load i32, ptr %i.aj, align 8            ; 2 uses
   %i.al = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.ak)
@@ -675,19 +673,19 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %.split.i
-  %i.ao = or i32 %.0.i, 33783808
+  %i.ao = or i32 %.0.i, 33751040
   br label %e1000_setup_rctl.exit
 
 bb.h:                                             ; preds = %.split.i
-  %i.ap = or disjoint i32 %.1.i, 33718272
+  %i.ap = or disjoint i32 %.1.i, 33685504
   br label %e1000_setup_rctl.exit
 
 bb.i:                                             ; preds = %.split.i
-  %i.aq = or disjoint i32 %.1.i, 33652736
+  %i.aq = or disjoint i32 %.1.i, 33619968
   br label %e1000_setup_rctl.exit
 
 e1000_setup_rctl.exit:                            ; preds = %bb.f, %.split.i, %bb.g, %bb.h, %bb.i
-  %.2.i = phi i32 [ %i.ap, %bb.h ], [ %i.aq, %bb.i ], [ %i.ao, %bb.g ], [ %4, %bb.f ], [ %4, %.split.i ] ; 2 uses
+  %.2.i = phi i32 [ %i.ap, %bb.h ], [ %i.aq, %bb.i ], [ %i.ao, %bb.g ], [ %.1.i, %bb.f ], [ %.1.i, %.split.i ] ; 2 uses
   %i.ar = getelementptr i8, ptr %i.ae, i64 184
   %i.as = load i64, ptr %i.ar, align 8
   %i.at = and i64 %i.as, 17592186044416

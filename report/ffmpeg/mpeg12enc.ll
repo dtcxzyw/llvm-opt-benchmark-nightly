@@ -204,8 +204,8 @@ put_sbits.exit225.split.us.preheader.i:           ; preds = %put_sbits.exit225.i
   %.not215.i.12 = icmp sgt i64 %i.id, %spec.select217.i.11.sink
   %spec.select218.i.12 = select i1 %.not215.i.12, i32 %spec.select218.i.11.sink, i32 14
   %i.ie = shl nuw nsw i32 %i.ac, 4
-  %i.if = or disjoint i32 %i.ie, 805306368
-  %i.ig = or i32 %spec.select218.i.12, %i.if      ; 2 uses
+  %i.if = or i32 %spec.select218.i.12, %i.ie      ; 2 uses
+  %i.ig = or i32 %i.if, 805306368
   %.pre420.i = load i32, ptr %i.c, align 8, !tbaa !88 ; 2 uses
   store i32 %i.ig, ptr %i.a, align 16, !tbaa !52
   store i32 4, ptr %i.b, align 4, !tbaa !51
@@ -218,7 +218,7 @@ put_sbits.exit225.split.us.preheader.i:           ; preds = %put_sbits.exit225.i
   br i1 %i.im, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.loopexit.i
-  %i.in = shl i32 %i.ig, 4
+  %i.in = shl nuw i32 %i.if, 4
   %i.io = or i32 %i.in, %.pre420.i
   %i.ip = tail call i32 @llvm.bswap.i32(i32 %i.io)
   store i32 %i.ip, ptr %i.ii, align 1, !tbaa !9
@@ -328,8 +328,8 @@ put_bits.exit246.i:                               ; preds = %bb.o, %bb.n, %bb.m,
   %.phi.trans.insert422.i = getelementptr inbounds nuw i8, ptr %i.is, i64 288
   %.pre423.i = load ptr, ptr %.phi.trans.insert422.i, align 8, !tbaa !152
   %i.kk = shl i32 %i.jo, 1
-  %i.kl = or disjoint i32 %i.kk, 2048
-  %i.km = or disjoint i32 %i.kj, %i.kl
+  %i.kl = or disjoint i32 %i.kj, %i.kk
+  %i.km = or disjoint i32 %i.kl, 2048
   store i32 %i.km, ptr %i.a, align 16, !tbaa !52
   store i32 2, ptr %i.b, align 4, !tbaa !51
   tail call void @ff_write_quant_matrix(ptr noundef nonnull %i.a, ptr noundef %.pre423.i) #10

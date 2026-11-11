@@ -205,7 +205,7 @@ bb.bt:                                            ; preds = %._crit_edge613, %.l
 bb.bu:                                            ; preds = %.lr.ph576, %bb.bw
   %.1.i418575 = phi i64 [ 0, %.lr.ph576 ], [ %i.qf, %bb.bw ] ; 4 uses
   %i.oj = shl i64 %.1.i418575, 6
-  %i.ok = getelementptr inbounds nuw i8, ptr %i.oi, i64 %i.oj ; 8 uses
+  %i.ok = getelementptr i8, ptr %i.oi, i64 %i.oj  ; 8 uses
   %i.ol = load i8, ptr %i.ok, align 1, !tbaa !53  ; 6 uses
   %i.om = getelementptr i8, ptr %i.ok, i64 1
   %i.on = load i8, ptr %i.om, align 1, !tbaa !53
@@ -213,10 +213,10 @@ bb.bu:                                            ; preds = %.lr.ph576, %bb.bw
   %i.op = load i8, ptr %i.oo, align 1, !tbaa !53
   %i.oq = getelementptr inbounds nuw i8, ptr %i.ok, i64 3
   %i.or = load i8, ptr %i.oq, align 1, !tbaa !53
-  %i.os = getelementptr inbounds nuw i8, ptr %i.ok, i64 4
-  %i.ot = getelementptr inbounds nuw i8, ptr %i.ok, i64 8
-  %i.ou = getelementptr inbounds nuw i8, ptr %i.ok, i64 16
-  %i.ov = getelementptr inbounds nuw i8, ptr %i.ok, i64 32
+  %i.os = getelementptr i8, ptr %i.ok, i64 4
+  %i.ot = getelementptr i8, ptr %i.ok, i64 8
+  %i.ou = getelementptr i8, ptr %i.ok, i64 16
+  %i.ov = getelementptr i8, ptr %i.ok, i64 32
   %i.ow = load <16 x i8>, ptr %i.ou, align 1, !tbaa !53
   %i.ox = load <32 x i8>, ptr %i.ov, align 1, !tbaa !53
   %i.oy = shufflevector <16 x i8> %i.ow, <16 x i8> poison, <44 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 13, i32 12, i32 14, i32 15, i32 9, i32 8, i32 poison, i32 6, i32 7, i32 0, i32 2, i32 3> ; 2 uses
@@ -619,7 +619,7 @@ bb.b:                                             ; preds = %bb.d
   br label %._crit_edge309
 
 bb.c:                                             ; preds = %bb.k
-  %i.h = or i32 %i.bd, 4
+  %i.h = or i32 %3, 16388
   store i32 %i.h, ptr %i.e, align 4
   store i32 5, ptr %i.a, align 8, !tbaa !145
   br label %.preheader168
@@ -763,9 +763,9 @@ bb.k:                                             ; preds = %._crit_edge311, %Br
   %i.ba = trunc nuw nsw i64 %i.ax to i32
   %i.bb = load i32, ptr %i.e, align 4
   %i.bc = shl nuw nsw i32 %i.ba, 12
-  %2 = or disjoint i32 %i.bc, 16384
-  %3 = and i32 %i.bb, -1044481
-  %i.bd = or disjoint i32 %3, %2                  ; 3 uses
+  %2 = and i32 %i.bb, -1044481
+  %3 = or disjoint i32 %2, %i.bc                  ; 2 uses
+  %i.bd = or disjoint i32 %3, 16384               ; 2 uses
   store i32 %i.bd, ptr %i.e, align 4
   store i32 0, ptr %i.g, align 4, !tbaa !56
   %i.be = icmp eq i64 %i.ax, 3

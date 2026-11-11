@@ -1,0 +1,112 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+index a332f66dbbf84..c65ab961a060b 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+@@ -4525,6 +4525,7 @@ Instruction *InstCombinerImpl::visitOr(BinaryOperator &I) {
+   // be simplified by a later pass either, so we try swapping the inner/outer
+   // ORs in the hopes that we'll be able to simplify it this way.
+   // (X|C) | V --> (X|V) | C
++  // V | (X|C) --> (X|V) | C
+   // Pass the disjoint flag in the following two patterns:
+   // 1. or-disjoint (or-disjoint X, C), V -->
+   //    or-disjoint (or-disjoint X, V), C
+@@ -4532,12 +4533,17 @@ Instruction *InstCombinerImpl::visitOr(BinaryOperator &I) {
+   // 2. or-disjoint (or X, C), V -->
+   //    or (or-disjoint X, V), C
+   ConstantInt *CI;
+-  if (Op0->hasOneUse() && !match(Op1, m_ConstantInt()) &&
+-      match(Op0, m_Or(m_Value(A), m_ConstantInt(CI)))) {
++  Instruction *InnerOr;
++  Value *V;
++  if (match(&I,
++            m_c_Or(m_OneUse(m_CombineAnd(m_Instruction(InnerOr),
++                                         m_Or(m_Value(A), m_ConstantInt(CI)))),
++                   m_Value(V))) &&
++      !match(V, m_ConstantInt())) {
+     bool IsDisjointOuter = cast<PossiblyDisjointInst>(I).isDisjoint();
+-    bool IsDisjointInner = cast<PossiblyDisjointInst>(Op0)->isDisjoint();
+-    Value *Inner = Builder.CreateOr(A, Op1, "", /*IsDisjoint=*/IsDisjointOuter);
+-    Inner->takeName(Op0);
++    bool IsDisjointInner = cast<PossiblyDisjointInst>(InnerOr)->isDisjoint();
++    Value *Inner = Builder.CreateOr(A, V, "", /*IsDisjoint=*/IsDisjointOuter);
++    Inner->takeName(InnerOr);
+     return IsDisjointOuter && IsDisjointInner
+                ? BinaryOperator::CreateDisjointOr(Inner, CI)
+                : BinaryOperator::CreateOr(Inner, CI);
+diff --git a/llvm/test/Transforms/InstCombine/or-or-combine.ll b/llvm/test/Transforms/InstCombine/or-or-combine.ll
+index 9dc0dcc29b2f2..b645e05235c3b 100644
+--- a/llvm/test/Transforms/InstCombine/or-or-combine.ll
++++ b/llvm/test/Transforms/InstCombine/or-or-combine.ll
+@@ -46,3 +46,72 @@ define i32 @test4(i32 %x, i32 %y) {
+   %outer = or i32 %inner, %y
+   ret i32 %outer
+ }
++
++; V | (X | C) --> (X | V) | C
++
++define i32 @test4_commuted(i32 %x, i32 %y) {
++; CHECK-LABEL: @test4_commuted(
++; CHECK-NEXT:    [[INNER:%.*]] = or i32 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[OUTER:%.*]] = or i32 [[INNER]], 5
++; CHECK-NEXT:    ret i32 [[OUTER]]
++;
++  %inner = or i32 %x, 5
++  %outer = or i32 %y, %inner
++  ret i32 %outer
++}
++
++declare void @use(i32)
++
++; Negative test: the inner or has another use.
++define i32 @test_commuted_multiuse(i32 %x, i32 %y) {
++; CHECK-LABEL: @test_commuted_multiuse(
++; CHECK-NEXT:    [[INNER:%.*]] = or disjoint i32 [[X:%.*]], 5
++; CHECK-NEXT:    call void @use(i32 [[INNER]])
++; CHECK-NEXT:    [[OUTER:%.*]] = or disjoint i32 [[Y:%.*]], [[INNER]]
++; CHECK-NEXT:    ret i32 [[OUTER]]
++;
++  %inner = or disjoint i32 %x, 5
++  call void @use(i32 %inner)
++  %outer = or disjoint i32 %y, %inner
++  ret i32 %outer
++}
++
++; The constant should be moved outward even when the other operand is a phi,
++; so that a loop-invariant 'X | C' does not stay live across the loop for every
++; distinct C.
++define void @test_commuted_loop_phi(i32 %x, i32 %start, i32 %n) {
++; CHECK-LABEL: @test_commuted_loop_phi(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START:%.*]], [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[INV1:%.*]] = or disjoint i32 [[X:%.*]], [[IV]]
++; CHECK-NEXT:    [[R1:%.*]] = or disjoint i32 [[INV1]], 1
++; CHECK-NEXT:    [[INV2:%.*]] = or disjoint i32 [[X]], [[IV]]
++; CHECK-NEXT:    [[R2:%.*]] = or disjoint i32 [[INV2]], 2
++; CHECK-NEXT:    call void @use(i32 [[R1]])
++; CHECK-NEXT:    call void @use(i32 [[R2]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 32
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %inv1 = or disjoint i32 %x, 1
++  %inv2 = or disjoint i32 %x, 2
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %r1 = or disjoint i32 %iv, %inv1
++  %r2 = or disjoint i32 %iv, %inv2
++  call void @use(i32 %r1)
++  call void @use(i32 %r2)
++  %iv.next = add i32 %iv, 32
++  %cmp = icmp slt i32 %iv.next, %n
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}

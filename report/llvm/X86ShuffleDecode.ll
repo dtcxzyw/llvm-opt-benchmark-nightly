@@ -205,16 +205,16 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 24 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 8 uses
   %i.c = and i32 %1, 3
-  %invariant.op = or disjoint i32 %i.c, 4
   %i.d = lshr i32 %1, 2
   %i.e = and i32 %i.d, 3
-  %invariant.op44 = or disjoint i32 %i.e, 4
-  %i.f = lshr i32 %1, 4
-  %i.g = and i32 %i.f, 3
-  %invariant.op46 = or disjoint i32 %i.g, 4
-  %3 = lshr i32 %1, 6
+  %3 = lshr i32 %1, 4
   %4 = and i32 %3, 3
-  %invariant.op48 = or disjoint i32 %4, 4
+  %i.f = lshr i32 %1, 6
+  %i.g = and i32 %i.f, 3
+  %invariant.op46 = or disjoint i32 %i.c, 4
+  %invariant.op = or disjoint i32 %i.e, 4
+  %invariant.op51 = or disjoint i32 %4, 4
+  %invariant.op48 = or disjoint i32 %i.g, 4
   br label %.preheader23
 
 .preheader23:                                     ; preds = %.preheader23.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit22.3
@@ -310,7 +310,7 @@ bb.i:                                             ; preds = %_ZN4llvm23SmallVect
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit.3: ; preds = %bb.i, %bb.h
   %i.am = phi i32 [ %i.al, %bb.i ], [ %.pre31, %bb.h ] ; 2 uses
-  %.reass = or disjoint i32 %.01828, %invariant.op ; 2 uses
+  %.reass = or disjoint i32 %.01828, %invariant.op46 ; 2 uses
   %i.an = load i32, ptr %i.b, align 4, !tbaa !11
   %.not.i21 = icmp ult i32 %i.am, %i.an
   br i1 %.not.i21, label %bb.k, label %bb.j, !prof !12
@@ -332,7 +332,7 @@ bb.k:                                             ; preds = %_ZN4llvm23SmallVect
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit22: ; preds = %bb.j, %bb.k
   %i.at = phi i32 [ %.pre32, %bb.j ], [ %i.as, %bb.k ] ; 2 uses
-  %.reass45 = or disjoint i32 %.01828, %invariant.op44 ; 2 uses
+  %.reass45 = or disjoint i32 %.01828, %invariant.op ; 2 uses
   %i.au = load i32, ptr %i.b, align 4, !tbaa !11
   %.not.i21.1 = icmp ult i32 %i.at, %i.au
   br i1 %.not.i21.1, label %bb.m, label %bb.l, !prof !12
@@ -354,7 +354,7 @@ bb.m:                                             ; preds = %_ZN4llvm23SmallVect
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit22.1: ; preds = %bb.m, %bb.l
   %i.ba = phi i32 [ %i.az, %bb.m ], [ %.pre33, %bb.l ] ; 2 uses
-  %.reass47 = or disjoint i32 %.01828, %invariant.op46 ; 2 uses
+  %.reass47 = or disjoint i32 %.01828, %invariant.op51 ; 2 uses
   %i.bb = load i32, ptr %i.b, align 4, !tbaa !11
   %.not.i21.2 = icmp ult i32 %i.ba, %i.bb
   br i1 %.not.i21.2, label %bb.o, label %bb.n, !prof !12

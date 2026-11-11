@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 3016 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 72
   %.not89 = icmp eq ptr %2, null
-  %invariant.op = or disjoint i64 %i.bb, 1152921504606846976
+  %invariant.op = or i64 %i.bb, 1152921504606846976
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph126, %select.unfold112
@@ -488,7 +488,7 @@ revision_sources_at.exit110:                      ; preds = %bb.ah, %bb.ai
   br label %bb.aj
 
 bb.aj:                                            ; preds = %revision_sources_at.exit, %revision_sources_at.exit110, %bb.aa
-  %i.gb = load i64, ptr %i.bh, align 8            ; 2 uses
+  %i.gb = load i64, ptr %i.bh, align 8            ; 3 uses
   %.reass = or i64 %i.gb, %invariant.op           ; 2 uses
   store i64 %.reass, ptr %i.bh, align 8
   %i.gc = and i64 %i.gb, 4294967296
@@ -496,7 +496,10 @@ bb.aj:                                            ; preds = %revision_sources_at
   br i1 %.not88, label %bb.ak, label %bb.am
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.gd = or i64 %.reass, 144115192370823168
+  %3 = and i64 %.reass, 2161727812547903488
+  %4 = and i64 %i.gb, -2305843004918726657
+  %5 = or disjoint i64 %4, %3
+  %i.gd = or disjoint i64 %5, 144115192370823168
   store i64 %i.gd, ptr %i.bh, align 8
   br i1 %.not89, label %bb.am, label %bb.al
 

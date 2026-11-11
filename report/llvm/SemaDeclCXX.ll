@@ -205,7 +205,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.bq = or disjoint i32 %i.bp, %masksel.i.i.i
   %i.br = or disjoint i32 %i.bq, %i.ba
   %i.bs = or disjoint i32 %i.br, %spec.store.select.i.i.i
-  %i.bt = or i32 %i.bs, 56
+  %i.bt = or disjoint i32 %i.bs, 56
   %i.bu = xor i32 %.sroa.6.0.i, -1
   %i.bv = and i32 %i.bt, %i.bu
   %i.bw = and i32 %.sroa.0.0.i, %.sroa.6.0.i
@@ -608,7 +608,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.ae = or disjoint i32 %i.ad, %masksel.i.i.i
   %i.af = or disjoint i32 %i.ae, %i.o
   %i.ag = or disjoint i32 %i.af, %spec.store.select.i.i.i
-  %i.ah = or i32 %i.ag, 56
+  %i.ah = or disjoint i32 %i.ag, 56
   %i.ai = xor i32 %.sroa.6.0.i, -1
   %i.aj = and i32 %i.ah, %i.ai
   %i.ak = and i32 %.sroa.0.0.i, %.sroa.6.0.i
@@ -1011,7 +1011,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.ae = or disjoint i32 %i.ad, %masksel.i.i.i
   %i.af = or disjoint i32 %i.ae, %i.o
   %i.ag = or disjoint i32 %i.af, %spec.store.select.i.i.i
-  %i.ah = or i32 %i.ag, 56
+  %i.ah = or disjoint i32 %i.ag, 56
   %i.ai = xor i32 %.sroa.6.0.i, -1
   %i.aj = and i32 %i.ah, %i.ai
   %i.ak = and i32 %.sroa.0.0.i, %.sroa.6.0.i
@@ -1414,7 +1414,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.ag = or disjoint i32 %i.af, %masksel.i.i.i
   %i.ah = or disjoint i32 %i.ag, %i.q
   %i.ai = or disjoint i32 %i.ah, %spec.store.select.i.i.i
-  %i.aj = or i32 %i.ai, 56
+  %i.aj = or disjoint i32 %i.ai, 56
   %i.ak = xor i32 %.sroa.6.0.i, -1
   %i.al = and i32 %i.aj, %i.ak
   %i.am = and i32 %.sroa.0.0.i, %.sroa.6.0.i
@@ -1817,7 +1817,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.ak = or disjoint i32 %i.aj, %masksel.i.i.i
   %i.al = or disjoint i32 %i.ak, %i.u
   %i.am = or disjoint i32 %i.al, %spec.store.select.i.i.i
-  %i.an = or i32 %i.am, 56
+  %i.an = or disjoint i32 %i.am, 56
   %i.ao = xor i32 %.sroa.6.0.i, -1
   %i.ap = and i32 %i.an, %i.ao
   %i.aq = and i32 %.sroa.0.0.i, %.sroa.6.0.i
@@ -2220,7 +2220,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.ae = or disjoint i32 %i.ad, %masksel.i.i.i
   %i.af = or disjoint i32 %i.ae, %i.o
   %i.ag = or disjoint i32 %i.af, %spec.store.select.i.i.i
-  %i.ah = or i32 %i.ag, 56
+  %i.ah = or disjoint i32 %i.ag, 56
   %i.ai = xor i32 %.sroa.6.0.i, -1
   %i.aj = and i32 %i.ah, %i.ai
   %i.ak = and i32 %.sroa.0.0.i, %.sroa.6.0.i
@@ -2623,7 +2623,7 @@ _ZN12_GLOBAL__N_131DefaultedFunctionFPFeaturesRAIIC2ERN5clang4SemaEPNS1_12Functi
   %i.ae = or disjoint i32 %i.ad, %masksel.i.i.i
   %i.af = or disjoint i32 %i.ae, %i.o
   %i.ag = or disjoint i32 %i.af, %spec.store.select.i.i.i
-  %i.ah = or i32 %i.ag, 56
+  %i.ah = or disjoint i32 %i.ag, 56
   %i.ai = xor i32 %.sroa.6.0.i, -1
   %i.aj = and i32 %i.ah, %i.ai
   %i.ak = and i32 %.sroa.0.0.i, %.sroa.6.0.i

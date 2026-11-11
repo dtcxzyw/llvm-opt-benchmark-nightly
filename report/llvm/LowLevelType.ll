@@ -165,6 +165,7 @@ _ZNK4llvm3MVT13getScalarTypeEv.exit.i:            ; preds = %bb.k
   %i.ay = getelementptr i8, ptr %i.aw, i64 -16
   %.sroa.0.0.copyload.i60 = load i64, ptr %i.ay, align 16
   %.sroa.0.0.insert.ext.i.i58 = zext i16 %i.ap to i64
+  %.sroa.2.0.insert.shift.i.i57 = zext i1 %spec.select.i55 to i64
   %i.az = sext i16 %i.au to i64
   %i.ba = getelementptr [4 x i8], ptr @switch.table._ZN4llvm3LLTC2ENS_3MVTE.1, i64 %i.az
   %switch.gep = getelementptr i8, ptr %i.ba, i64 -48
@@ -172,11 +173,11 @@ _ZNK4llvm3MVT13getScalarTypeEv.exit.i:            ; preds = %bb.k
   %switch.ext = zext i32 %switch.load to i64
   %i.bb = shl i64 %.sroa.0.0.copyload.i60, 28
   %i.bc = and i64 %i.bb, 1152921504338411520
-  %2 = shl nuw nsw i64 %.sroa.0.0.insert.ext.i.i58, 4
-  %3 = select i1 %spec.select.i55, i64 8070450532247928833, i64 8070450532247928832
-  %i.bd = or disjoint i64 %3, %2
-  %i.be = or disjoint i64 %i.bd, %i.bc
-  %i.bf = or disjoint i64 %i.be, %switch.ext
+  %2 = or disjoint i64 %i.bc, %switch.ext
+  %3 = shl nuw nsw i64 %.sroa.0.0.insert.ext.i.i58, 4
+  %i.bd = or disjoint i64 %3, %.sroa.2.0.insert.shift.i.i57
+  %i.be = or disjoint i64 %2, %i.bd
+  %i.bf = or disjoint i64 %i.be, 8070450532247928832
   br label %bb.u
 
 bb.m:                                             ; preds = %.critedge40

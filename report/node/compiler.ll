@@ -204,9 +204,9 @@ bb.w:                                             ; preds = %bb.o
   %.sroa.8.12.insert.shift = shl nuw i64 %.sroa.8.12.insert.ext, 32
   %.sroa.8.12.insert.mask = and i64 %i.ef, 4294967295
   %.sroa.8.12.insert.insert = or disjoint i64 %.sroa.8.12.insert.mask, %.sroa.8.12.insert.shift
-  %23 = select i1 %5, i64 36, i64 4
-  %24 = and i64 %i.ee, -37
-  %.sroa.0180.0.insert.insert187 = or disjoint i64 %23, %24
+  %23 = and i64 %i.ee, -37
+  %.sroa.0180.0.insert.ext185 = select i1 %5, i64 36, i64 4
+  %.sroa.0180.0.insert.insert187 = or disjoint i64 %.sroa.0180.0.insert.ext185, %23
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #21
   store i8 0, ptr %16, align 8
   %i.eg = getelementptr inbounds nuw i8, ptr %16, i64 1
