@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.u, %bb.t, %bb.x,
 .preheader100:                                    ; preds = %.preheader100.lr.ph, %bb.ah
   %.045122 = phi i32 [ %i.fr, %.preheader100.lr.ph ], [ %.reass, %bb.ah ] ; 4 uses
   %.048121 = phi i32 [ 0, %.preheader100.lr.ph ], [ %i.ko, %bb.ah ]
-  %i.gm = load i16, ptr %i.b, align 2, !tbaa !80  ; 6 uses
+  %i.gm = load i16, ptr %i.b, align 2, !tbaa !80  ; 7 uses
   %i.gn = zext i16 %i.gm to i32                   ; 3 uses
   %.not125 = icmp eq i16 %i.gm, 0
   %.pre164 = load i32, ptr %i.bq, align 8, !tbaa !83 ; 3 uses
@@ -218,7 +218,7 @@ bb.y:                                             ; preds = %bb.u, %bb.t, %bb.x,
   %i.gp = sext i32 %.045122 to i64
   %i.gq = load i32, ptr %i.bn, align 4, !tbaa !82 ; 2 uses
   %i.gr = icmp sgt i32 %i.gq, 0
-  %i.gs = zext i16 %i.gm to i32                   ; 2 uses
+  %i.gs = zext i16 %i.gm to i32
   br label %.preheader
 
 .lr.ph115.split.us:                               ; preds = %.lr.ph115
@@ -369,15 +369,15 @@ bb.ae:                                            ; preds = %bb.ad
 
 ._crit_edge.loopexit:                             ; preds = %.loopexit
   %i.ka = trunc nsw i64 %indvars.iv.next161 to i32
-  br label %._crit_edge
+  br label %bb.ah
 
 ._crit_edge.loopexit127:                          ; preds = %..loopexit99_crit_edge.us.us
   %i.kb = trunc nsw i64 %indvars.iv.next146 to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph115.split.us.split, %._crit_edge.loopexit127, %._crit_edge.loopexit, %.preheader100
-  %.146.lcssa = phi i32 [ %.045122, %.preheader100 ], [ %i.kb, %._crit_edge.loopexit127 ], [ %i.ka, %._crit_edge.loopexit ], [ %i.ic, %.lr.ph115.split.us.split ]
-  %.lcssa = phi i32 [ 0, %.preheader100 ], [ %i.gn, %._crit_edge.loopexit127 ], [ %i.gs, %._crit_edge.loopexit ], [ %i.gn, %.lr.ph115.split.us.split ]
+._crit_edge:                                      ; preds = %.lr.ph115.split.us.split, %._crit_edge.loopexit127, %.preheader100
+  %.146.lcssa = phi i32 [ %.045122, %.preheader100 ], [ %i.kb, %._crit_edge.loopexit127 ], [ %i.ic, %.lr.ph115.split.us.split ] ; 3 uses
+  %.lcssa = phi i32 [ 0, %.preheader100 ], [ %i.gn, %._crit_edge.loopexit127 ], [ %i.gn, %.lr.ph115.split.us.split ]
   %i.kc = icmp eq i32 %.pre164, 16
   br i1 %i.kc, label %bb.af, label %bb.ah
 
@@ -398,9 +398,10 @@ bb.ag:                                            ; preds = %bb.af
   %.pre167 = load i16, ptr %i.b, align 2, !tbaa !80
   br label %bb.ah
 
-bb.ah:                                            ; preds = %._crit_edge165, %bb.af, %._crit_edge
-  %3 = phi i16 [ %.pre167, %._crit_edge165 ], [ %i.gm, %bb.af ], [ %i.gm, %._crit_edge ]
-  %4 = phi i32 [ %.pre166, %._crit_edge165 ], [ 16, %bb.af ], [ %.pre164, %._crit_edge ]
+bb.ah:                                            ; preds = %._crit_edge.loopexit, %._crit_edge165, %bb.af, %._crit_edge
+  %.146.lcssa187 = phi i32 [ %.146.lcssa, %._crit_edge165 ], [ %.146.lcssa, %bb.af ], [ %.146.lcssa, %._crit_edge ], [ %i.ka, %._crit_edge.loopexit ]
+  %3 = phi i16 [ %.pre167, %._crit_edge165 ], [ %i.gm, %bb.af ], [ %i.gm, %._crit_edge ], [ %i.gm, %._crit_edge.loopexit ]
+  %4 = phi i32 [ %.pre166, %._crit_edge165 ], [ 16, %bb.af ], [ %.pre164, %._crit_edge ], [ 8, %._crit_edge.loopexit ]
   %i.kh = load i32, ptr %i.bn, align 4, !tbaa !82
   %i.ki = mul nsw i32 %4, %i.kh
   %i.kj = sdiv i32 %i.ki, 8
@@ -409,7 +410,7 @@ bb.ah:                                            ; preds = %._crit_edge165, %bb
   %i.km = load ptr, ptr %i.gj, align 8, !tbaa !117
   %i.kn = call i64 @fwrite(ptr noundef %i.cc, i64 noundef %i.kk, i64 noundef %i.kl, ptr noundef %i.km) ; 0 uses
   %i.ko = add nuw nsw i32 %.048121, 1             ; 2 uses
-  %.reass = add i32 %.146.lcssa, %invariant.op
+  %.reass = add i32 %.146.lcssa187, %invariant.op
   %i.kp = load i16, ptr %i.e, align 4, !tbaa !81
   %i.kq = zext i16 %i.kp to i32
   %i.kr = icmp samesign ult i32 %i.ko, %i.kq

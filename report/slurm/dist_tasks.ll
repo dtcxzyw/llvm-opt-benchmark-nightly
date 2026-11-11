@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %.lr.ph118
   br i1 %or.cond, label %.loopexit94, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge119
-  %i.dn = load ptr, ptr @conf, align 8
+  %i.dn = load ptr, ptr @conf, align 8            ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 4158
   %i.dp = load i16, ptr %i.do, align 2            ; 2 uses
   %i.dq = icmp ne i16 %i.dp, 0
@@ -216,6 +216,8 @@ bb.k:                                             ; preds = %._crit_edge119
   br label %.lr.ph135
 
 .loopexit93:                                      ; preds = %.loopexit, %.lr.ph135
+  %.pre152155 = phi ptr [ %.pre152, %.lr.ph135 ], [ %.pre152153, %.loopexit ]
+  %4 = phi ptr [ %5, %.lr.ph135 ], [ %.pre149, %.loopexit ]
   %.2.lcssa = phi i32 [ %.1132, %.lr.ph135 ], [ %.3.lcssa, %.loopexit ] ; 2 uses
   %i.dv = icmp sgt i32 %.068133.in, 1
   %i.dw = icmp sgt i32 %.2.lcssa, 0
@@ -223,11 +225,12 @@ bb.k:                                             ; preds = %._crit_edge119
   br i1 %i.dx, label %.lr.ph135, label %.loopexit94, !llvm.loop !14
 
 .lr.ph135:                                        ; preds = %.lr.ph135.preheader, %.loopexit93
+  %.pre152 = phi ptr [ %.pre152155, %.loopexit93 ], [ %i.dn, %.lr.ph135.preheader ] ; 3 uses
+  %5 = phi ptr [ %4, %.loopexit93 ], [ %i.dn, %.lr.ph135.preheader ] ; 2 uses
   %.068133.in = phi i32 [ %.068133, %.loopexit93 ], [ %i.dt, %.lr.ph135.preheader ] ; 2 uses
   %.1132 = phi i32 [ %.2.lcssa, %.loopexit93 ], [ %i.du, %.lr.ph135.preheader ] ; 2 uses
   %.068133 = add nsw i32 %.068133.in, -1          ; 2 uses
-  %4 = load ptr, ptr @conf, align 8
-  %i.dy = getelementptr inbounds nuw i8, ptr %4, i64 4184
+  %i.dy = getelementptr inbounds nuw i8, ptr %5, i64 4184
   %i.dz = load i16, ptr %i.dy, align 8            ; 2 uses
   %.not139 = icmp eq i16 %i.dz, 0
   br i1 %.not139, label %.loopexit93, label %.lr.ph129.preheader
@@ -236,19 +239,26 @@ bb.k:                                             ; preds = %._crit_edge119
   %i.ea = zext i16 %i.dz to i32
   br label %.lr.ph129
 
-.loopexit:                                        ; preds = %.lr.ph123, %.lr.ph129
-  %.3.lcssa = phi i32 [ %.2126, %.lr.ph129 ], [ %i.ex, %.lr.ph123 ] ; 3 uses
+.loopexit.loopexit:                               ; preds = %.lr.ph123
+  %.pre151 = load ptr, ptr @conf, align 8         ; 2 uses
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.lr.ph129
+  %.pre152153 = phi ptr [ %.pre152154, %.lr.ph129 ], [ %.pre151, %.loopexit.loopexit ] ; 2 uses
+  %.pre149 = phi ptr [ %6, %.lr.ph129 ], [ %.pre151, %.loopexit.loopexit ] ; 2 uses
+  %.3.lcssa = phi i32 [ %.2126, %.lr.ph129 ], [ %i.ex, %.loopexit.loopexit ] ; 3 uses
   %i.eb = icmp samesign ugt i32 %.067127.in, 1
   %i.ec = icmp ne i32 %.3.lcssa, 0
   %i.ed = select i1 %i.eb, i1 %i.ec, i1 false
   br i1 %i.ed, label %.lr.ph129, label %.loopexit93, !llvm.loop !15
 
 .lr.ph129:                                        ; preds = %.lr.ph129.preheader, %.loopexit
+  %.pre152154 = phi ptr [ %.pre152153, %.loopexit ], [ %.pre152, %.lr.ph129.preheader ]
+  %6 = phi ptr [ %.pre149, %.loopexit ], [ %.pre152, %.lr.ph129.preheader ] ; 2 uses
   %.067127.in = phi i32 [ %.067127, %.loopexit ], [ %i.ea, %.lr.ph129.preheader ] ; 2 uses
   %.2126 = phi i32 [ %.3.lcssa, %.loopexit ], [ %.1132, %.lr.ph129.preheader ] ; 2 uses
   %.067127 = add nsw i32 %.067127.in, -1          ; 2 uses
-  %5 = load ptr, ptr @conf, align 8
-  %i.ee = getelementptr inbounds nuw i8, ptr %5, i64 4156
+  %i.ee = getelementptr inbounds nuw i8, ptr %6, i64 4156
   %i.ef = load i16, ptr %i.ee, align 4            ; 2 uses
   %.not140 = icmp eq i16 %i.ef, 0
   br i1 %.not140, label %.loopexit, label %.lr.ph123.preheader
@@ -282,7 +292,7 @@ bb.k:                                             ; preds = %._crit_edge119
   %i.ey = icmp samesign ugt i32 %.0.in121, 1
   %i.ez = icmp ne i32 %i.ex, 0
   %i.fa = select i1 %i.ey, i1 %i.ez, i1 false
-  br i1 %i.fa, label %.lr.ph123, label %.loopexit, !llvm.loop !16
+  br i1 %i.fa, label %.lr.ph123, label %.loopexit.loopexit, !llvm.loop !16
 
 .loopexit94:                                      ; preds = %.loopexit93, %bb.k, %._crit_edge119
   %i.fb = call ptr @slurm_bit_fmt_hexmask(ptr noundef %i.by) #9

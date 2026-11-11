@@ -205,7 +205,7 @@ bytestream2_init.exit.i36:                        ; preds = %bb.ca
   %i.uc = ptrtoint ptr %i.ty to i64               ; 3 uses
   %i.ud = getelementptr inbounds nuw i8, ptr %i.d, i64 1072 ; 3 uses
   %i.ue = getelementptr inbounds nuw i8, ptr %i.d, i64 1076 ; 5 uses
-  %i.uf = getelementptr inbounds nuw i8, ptr %i.d, i64 1088 ; 2 uses
+  %i.uf = getelementptr inbounds nuw i8, ptr %i.d, i64 1088 ; 3 uses
   %i.ug = load i32, ptr %i.ub, align 8, !tbaa !36 ; 2 uses
   %i.uh = icmp sgt i32 %i.ug, 0
   br i1 %i.uh, label %.preheader29.i, label %vqa_decode_frame_hicolor.exit
@@ -403,6 +403,7 @@ vector.early.exit:                                ; preds = %vector.body
 .lr.ph77.split.preheader.i:                       ; preds = %.lr.ph77.i
   %i.wz = sext i32 %.013389.i to i64
   %.pre130.i = load ptr, ptr %i.d, align 8, !tbaa !44
+  %.pre132.i = load ptr, ptr %i.uf, align 8, !tbaa !46
   br label %.lr.ph77.split.i
 
 bytestream2_get_byte.exit.us.us.i:                ; preds = %scalar.ph
@@ -426,6 +427,7 @@ bb.ck:                                            ; preds = %bytestream2_get_byt
 
 .lr.ph77.split.i:                                 ; preds = %bb.ck, %.lr.ph77.split.preheader.i
   %i.xi = phi i32 [ %i.wg, %.lr.ph77.split.preheader.i ], [ %i.yh, %bb.ck ] ; 3 uses
+  %4 = phi ptr [ %.pre132.i, %.lr.ph77.split.preheader.i ], [ %5, %bb.ck ] ; 2 uses
   %i.xj = phi ptr [ %.pre130.i, %.lr.ph77.split.preheader.i ], [ %i.yi, %bb.ck ] ; 3 uses
   %indvars.iv.i38 = phi i64 [ %i.wz, %.lr.ph77.split.preheader.i ], [ %indvars.iv.next.i39, %bb.ck ] ; 2 uses
   %i.xk = phi i32 [ %i.wb, %.lr.ph77.split.preheader.i ], [ %i.xe, %bb.ck ] ; 3 uses
@@ -433,7 +435,6 @@ bb.ck:                                            ; preds = %bytestream2_get_byt
   br i1 %i.xl, label %.lr.ph61.us.preheader.i, label %bytestream2_get_byte.exit.us.i
 
 .lr.ph61.us.preheader.i:                          ; preds = %.lr.ph77.split.i
-  %4 = load ptr, ptr %i.uf, align 8, !tbaa !46
   %i.xm = mul i32 %i.wf, %i.xi
   %i.xn = sext i32 %i.xm to i64
   %i.xo = getelementptr inbounds i8, ptr %4, i64 %i.xn
@@ -462,11 +463,16 @@ bb.ck:                                            ; preds = %bytestream2_get_byt
   %i.ye = add nuw nsw i32 %.012459.us.i, 1        ; 2 uses
   %i.yf = load i32, ptr %i.ue, align 4, !tbaa !40 ; 2 uses
   %i.yg = icmp slt i32 %i.ye, %i.yf
-  br i1 %i.yg, label %.lr.ph61.us.i, label %bytestream2_get_byte.exit.us.i, !llvm.loop !75
+  br i1 %i.yg, label %.lr.ph61.us.i, label %bytestream2_get_byte.exit.us.loopexit.i, !llvm.loop !75
 
-bytestream2_get_byte.exit.us.i:                   ; preds = %.lr.ph61.us.i, %.lr.ph77.split.i
-  %i.yh = phi i32 [ %i.xi, %.lr.ph77.split.i ], [ %i.yf, %.lr.ph61.us.i ]
-  %i.yi = phi ptr [ %i.xj, %.lr.ph77.split.i ], [ %i.xy, %.lr.ph61.us.i ]
+bytestream2_get_byte.exit.us.loopexit.i:          ; preds = %.lr.ph61.us.i
+  %.pre131.i = load ptr, ptr %i.uf, align 8, !tbaa !46
+  br label %bytestream2_get_byte.exit.us.i
+
+bytestream2_get_byte.exit.us.i:                   ; preds = %bytestream2_get_byte.exit.us.loopexit.i, %.lr.ph77.split.i
+  %i.yh = phi i32 [ %i.yf, %bytestream2_get_byte.exit.us.loopexit.i ], [ %i.xi, %.lr.ph77.split.i ]
+  %5 = phi ptr [ %.pre131.i, %bytestream2_get_byte.exit.us.loopexit.i ], [ %4, %.lr.ph77.split.i ]
+  %i.yi = phi ptr [ %i.xy, %bytestream2_get_byte.exit.us.loopexit.i ], [ %i.xj, %.lr.ph77.split.i ]
   %indvars.iv.next.i39 = add nsw i64 %indvars.iv.i38, 4 ; 4 uses
   %.not157.us.i = icmp eq i32 %i.xk, 0
   br i1 %.not157.us.i, label %.critedge.thread.loopexit98.i, label %bb.ck

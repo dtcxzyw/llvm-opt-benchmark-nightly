@@ -204,9 +204,11 @@ bb.a:
   %i.c = getelementptr i8, ptr %0, i64 56         ; 4 uses
   %i.d = getelementptr i8, ptr %0, i64 68
   %i.e = getelementptr i8, ptr %0, i64 72
+  %.pre126 = load i32, ptr @fol_NOT, align 4
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph111, %.loopexit
+  %6 = phi i32 [ %.pre126, %.lr.ph111 ], [ %7, %.loopexit ] ; 3 uses
   %.051110 = phi i32 [ 0, %.lr.ph111 ], [ %spec.select66, %.loopexit ] ; 3 uses
   %.val79 = load ptr, ptr %i.c, align 8
   %i.f = zext nneg i32 %.051110 to i64            ; 2 uses
@@ -214,9 +216,8 @@ bb.b:                                             ; preds = %.lr.ph111, %.loopex
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = getelementptr i8, ptr %i.h, i64 24
   %.val1.i = load ptr, ptr %i.i, align 8          ; 3 uses
-  %.val5.val.i.i = load i32, ptr %.val1.i, align 8
-  %i.j = load i32, ptr @fol_NOT, align 4
-  %.not.i.i = icmp eq i32 %.val5.val.i.i, %i.j
+  %i.j = load i32, ptr %.val1.i, align 8
+  %.not.i.i = icmp eq i32 %i.j, %6
   br i1 %.not.i.i, label %bb.c, label %clause_GetLiteralAtom.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -281,9 +282,11 @@ clause_GetLiteralAtom.exit86:                     ; preds = %.lr.ph, %bb.e
 
 .loopexit.loopexit:                               ; preds = %clause_GetLiteralAtom.exit86
   %i.ad = xor i1 %.not65, true
+  %.pre = load i32, ptr @fol_NOT, align 4
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %clause_GetLiteralAtom.exit
+  %7 = phi i32 [ %6, %clause_GetLiteralAtom.exit ], [ %.pre, %.loopexit.loopexit ] ; 2 uses
   %.3 = phi i1 [ true, %clause_GetLiteralAtom.exit ], [ %i.ad, %.loopexit.loopexit ] ; 3 uses
   %i.ae = zext i1 %.3 to i32
   %spec.select66 = add nuw nsw i32 %.051110, %i.ae ; 3 uses
@@ -295,6 +298,7 @@ clause_GetLiteralAtom.exit86:                     ; preds = %.lr.ph, %bb.e
   br i1 %.3, label %list_Delete.exit106, label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.d, %.critedge
+  %8 = phi i32 [ %7, %.critedge ], [ %6, %bb.d ]
   %spec.select66134137 = phi i32 [ %spec.select66, %.critedge ], [ %.051110, %bb.d ] ; 2 uses
   %.val77 = load ptr, ptr %i.c, align 8
   %i.af = zext nneg i32 %spec.select66134137 to i64 ; 2 uses
@@ -302,9 +306,8 @@ clause_GetLiteralAtom.exit86:                     ; preds = %.lr.ph, %bb.e
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = getelementptr i8, ptr %i.ah, i64 24
   %.val1.i87 = load ptr, ptr %i.ai, align 8       ; 3 uses
-  %.val5.val.i.i88 = load i32, ptr %.val1.i87, align 8
-  %i.aj = load i32, ptr @fol_NOT, align 4
-  %.not.i.i89 = icmp eq i32 %.val5.val.i.i88, %i.aj
+  %i.aj = load i32, ptr %.val1.i87, align 8
+  %.not.i.i89 = icmp eq i32 %i.aj, %8
   br i1 %.not.i.i89, label %bb.f, label %clause_GetLiteralAtom.exit93
 
 bb.f:                                             ; preds = %.critedge.thread

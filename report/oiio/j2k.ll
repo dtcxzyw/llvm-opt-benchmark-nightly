@@ -205,9 +205,10 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph88:                                         ; preds = %bb.d
   %i.by = mul i32 %i.bt, %4
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.bp, i64 4 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bp, i64 16 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 2 uses
+  %.pre126 = load i32, ptr %i.bz, align 4, !tbaa !420
   %.pre.a = load i32, ptr %i.ca, align 4, !tbaa !422 ; 2 uses
   br label %bb.e
 
@@ -215,15 +216,15 @@ bb.e:                                             ; preds = %.lr.ph88, %._crit_e
   %i.cc = phi i32 [ %i.bv, %.lr.ph88 ], [ %i.cy, %._crit_edge84 ]
   %i.cd = phi i32 [ %.pre.a, %.lr.ph88 ], [ %i.cz, %._crit_edge84 ] ; 2 uses
   %i.ce = phi i32 [ %.pre.a, %.lr.ph88 ], [ %i.da, %._crit_edge84 ] ; 2 uses
-  %.06986.a = phi i32 [ %i.bt, %.lr.ph88 ], [ %i.dc, %._crit_edge84 ]
-  %.07185.a = phi i32 [ %i.by, %.lr.ph88 ], [ %i.db, %._crit_edge84 ] ; 2 uses
-  %7 = load i32, ptr %i.bz, align 4, !tbaa !420   ; 3 uses
+  %.06986.a = phi i32 [ %.pre126, %.lr.ph88 ], [ %7, %._crit_edge84 ] ; 4 uses
+  %.07185.a = phi i32 [ %i.bt, %.lr.ph88 ], [ %i.dc, %._crit_edge84 ]
+  %.07185 = phi i32 [ %i.by, %.lr.ph88 ], [ %i.db, %._crit_edge84 ] ; 2 uses
   %i.cf = tail call noundef i32 @llvm.umin.i32(i32 %i.ce, i32 %4)
-  %i.cg = icmp ult i32 %7, %i.cf
+  %i.cg = icmp ult i32 %.06986.a, %i.cf
   br i1 %i.cg, label %.preheader78.preheader, label %._crit_edge84
 
 .preheader78.preheader:                           ; preds = %bb.e
-  %i.ch = add i32 %7, %.07185.a
+  %i.ch = add i32 %.06986.a, %.07185
   %.pre126.a = load i32, ptr %i.cb, align 4, !tbaa !451
   br label %.preheader78
 
@@ -231,7 +232,7 @@ bb.e:                                             ; preds = %.lr.ph88, %._crit_e
   %i.ci = phi i32 [ %i.cs, %._crit_edge ], [ %i.cd, %.preheader78.preheader ]
   %i.cj = phi i32 [ %i.ct, %._crit_edge ], [ %.pre126.a, %.preheader78.preheader ] ; 2 uses
   %.06283 = phi i32 [ %i.cu, %._crit_edge ], [ %i.ch, %.preheader78.preheader ] ; 2 uses
-  %.06782 = phi i32 [ %i.cv, %._crit_edge ], [ %7, %.preheader78.preheader ]
+  %.06782 = phi i32 [ %i.cv, %._crit_edge ], [ %.06986.a, %.preheader78.preheader ]
   %i.ck = tail call noundef i32 @llvm.umin.i32(i32 %i.cj, i32 %5)
   %.not115 = icmp eq i32 %i.ck, 0
   br i1 %.not115, label %._crit_edge, label %.lr.ph
@@ -263,6 +264,7 @@ bb.e:                                             ; preds = %.lr.ph88, %._crit_e
   br i1 %i.cx, label %.preheader78, label %._crit_edge84.loopexit, !llvm.loop !629
 
 ._crit_edge84.loopexit:                           ; preds = %._crit_edge
+  %.pre = load i32, ptr %i.bz, align 4, !tbaa !420
   %.pre128 = load i32, ptr %i.bu, align 4, !tbaa !452
   br label %._crit_edge84
 
@@ -270,8 +272,9 @@ bb.e:                                             ; preds = %.lr.ph88, %._crit_e
   %i.cy = phi i32 [ %.pre128, %._crit_edge84.loopexit ], [ %i.cc, %bb.e ] ; 2 uses
   %i.cz = phi i32 [ %i.cs, %._crit_edge84.loopexit ], [ %i.cd, %bb.e ]
   %i.da = phi i32 [ %i.cs, %._crit_edge84.loopexit ], [ %i.ce, %bb.e ]
-  %i.db = add i32 %.07185.a, %4
-  %i.dc = add nuw i32 %.06986.a, 1                ; 2 uses
+  %7 = phi i32 [ %.pre, %._crit_edge84.loopexit ], [ %.06986.a, %bb.e ]
+  %i.db = add i32 %.07185, %4
+  %i.dc = add nuw i32 %.07185.a, 1                ; 2 uses
   %i.dd = tail call noundef i32 @llvm.umin.i32(i32 %i.cy, i32 %3)
   %i.de = icmp ult i32 %i.dc, %i.dd
   br i1 %i.de, label %bb.e, label %.loopexit, !llvm.loop !630
@@ -674,7 +677,7 @@ bb.y:                                             ; preds = %._crit_edge533, %bb
 
 bb.z:                                             ; preds = %bb.z, %bb.y
   %.0.i = phi ptr [ @j2k_memory_marker_handler_tab, %bb.y ], [ %i.cc, %bb.z ] ; 4 uses
-  %i.ca = load i32, ptr %.0.i, align 8, !tbaa !497 ; 4 uses
+  %i.ca = load i32, ptr %.0.i, align 16, !tbaa !497 ; 4 uses
   %.not.i = icmp eq i32 %i.ca, 0
   %i.cb = icmp eq i32 %i.ca, %i.bz
   %or.cond.i = or i1 %.not.i, %i.cb
@@ -1077,7 +1080,7 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader121:                                    ; preds = %bb.j, %.preheader121
   %.0.i95 = phi ptr [ %i.ba, %.preheader121 ], [ @j2k_memory_marker_handler_tab, %bb.j ] ; 3 uses
-  %i.ay = load i32, ptr %.0.i95, align 8, !tbaa !497 ; 3 uses
+  %i.ay = load i32, ptr %.0.i95, align 16, !tbaa !497 ; 3 uses
   %.not.i96 = icmp eq i32 %i.ay, 0                ; 2 uses
   %i.az = icmp eq i32 %i.ay, %i.av
   %or.cond.i = or i1 %.not.i96, %i.az
@@ -1105,7 +1108,7 @@ bb.l:                                             ; preds = %opj_j2k_get_marker_
 
 .preheader.i:                                     ; preds = %.lr.ph.i, %.preheader.i
   %.0.i.i = phi ptr [ %i.bj, %.preheader.i ], [ @j2k_memory_marker_handler_tab, %.lr.ph.i ] ; 3 uses
-  %i.bh = load i32, ptr %.0.i.i, align 8, !tbaa !497 ; 6 uses
+  %i.bh = load i32, ptr %.0.i.i, align 16, !tbaa !497 ; 6 uses
   %.not.i.i97 = icmp eq i32 %i.bh, 0
   %i.bi = icmp eq i32 %i.bh, %i.bf
   %or.cond.i.i = or i1 %.not.i.i97, %i.bi
@@ -1214,7 +1217,7 @@ bb.s:                                             ; preds = %._crit_edge.i.i99, 
 
 .preheader:                                       ; preds = %bb.s, %.preheader
   %.0.i107 = phi ptr [ %i.cw, %.preheader ], [ @j2k_memory_marker_handler_tab, %bb.s ] ; 3 uses
-  %i.cu = load i32, ptr %.0.i107, align 8, !tbaa !497 ; 3 uses
+  %i.cu = load i32, ptr %.0.i107, align 16, !tbaa !497 ; 3 uses
   %.not.i108 = icmp eq i32 %i.cu, 0
   %i.cv = icmp eq i32 %i.cu, %i.bh
   %or.cond.i109 = or i1 %.not.i108, %i.cv

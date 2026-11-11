@@ -204,7 +204,11 @@ bb.k:                                             ; preds = %.lr.ph30.i
 .preheader7.i:                                    ; preds = %bb.k, %._crit_edge27.i
   %i.cd = load i32, ptr getelementptr inbounds nuw (i8, ptr @parseresult, i64 32), align 8 ; 2 uses
   %i.ce = icmp sgt i32 %i.cd, 0
-  br i1 %i.ce, label %.lr.ph36.i, label %.preheader6.i
+  br i1 %i.ce, label %.lr.ph36.preheader.i, label %.preheader6.i
+
+.lr.ph36.preheader.i:                             ; preds = %.preheader7.i
+  %.pre116.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @parseresult, i64 24), align 8
+  br label %.lr.ph36.i
 
 .lr.ph30.i:                                       ; preds = %bb.k, %.lr.ph30.preheader.i
   %indvars.iv81.i = phi i64 [ 1, %.lr.ph30.preheader.i ], [ %indvars.iv.next82.i, %bb.k ] ; 2 uses
@@ -233,10 +237,10 @@ bb.l:                                             ; preds = %.lr.ph30.i
   %.not24.i.i = icmp eq i32 %.0104.lcssa.i, 0
   br label %bb.n
 
-.lr.ph36.i:                                       ; preds = %.preheader7.i, %._crit_edge34.i
-  %i.cr = phi i32 [ %i.dg, %._crit_edge34.i ], [ %i.cd, %.preheader7.i ]
-  %indvars.iv89.i = phi i64 [ %indvars.iv.next90.i, %._crit_edge34.i ], [ 0, %.preheader7.i ] ; 3 uses
-  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @parseresult, i64 24), align 8
+.lr.ph36.i:                                       ; preds = %._crit_edge34.i, %.lr.ph36.preheader.i
+  %i.cr = phi i32 [ %i.cd, %.lr.ph36.preheader.i ], [ %i.dg, %._crit_edge34.i ]
+  %3 = phi ptr [ %.pre116.i, %.lr.ph36.preheader.i ], [ %4, %._crit_edge34.i ] ; 2 uses
+  %indvars.iv89.i = phi i64 [ 0, %.lr.ph36.preheader.i ], [ %indvars.iv.next90.i, %._crit_edge34.i ] ; 3 uses
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv89.i
   %i.ct = load ptr, ptr %i.cs, align 8            ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 32 ; 2 uses
@@ -263,11 +267,13 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph33.i
   br i1 %i.df, label %bb.m, label %._crit_edge34.loopexit.i, !llvm.loop !11
 
 ._crit_edge34.loopexit.i:                         ; preds = %bb.m
+  %.pre115.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @parseresult, i64 24), align 8
   %.pre115.i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @parseresult, i64 32), align 8
   br label %._crit_edge34.i
 
 ._crit_edge34.i:                                  ; preds = %._crit_edge34.loopexit.i, %.lr.ph36.i
   %i.dg = phi i32 [ %.pre115.i.a, %._crit_edge34.loopexit.i ], [ %i.cr, %.lr.ph36.i ] ; 2 uses
+  %4 = phi ptr [ %.pre115.i, %._crit_edge34.loopexit.i ], [ %3, %.lr.ph36.i ]
   %indvars.iv.next90.i = add nuw nsw i64 %indvars.iv89.i, 1 ; 2 uses
   %i.dh = sext i32 %i.dg to i64
   %i.di = icmp slt i64 %indvars.iv.next90.i, %i.dh

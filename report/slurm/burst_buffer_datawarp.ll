@@ -202,11 +202,12 @@ _recover_bb_state.exit:                           ; preds = %bb.es, %bb.ex, %bb.
   %i.yt = getelementptr inbounds nuw i8, ptr %2, i64 264
   %i.yu = getelementptr inbounds nuw i8, ptr %2, i64 292
   %i.yv = getelementptr inbounds nuw i8, ptr %3, i64 264
+  %.pre21.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 168), align 8
   br label %bb.gd
 
 bb.gd:                                            ; preds = %._crit_edge.i247, %_recover_bb_state.exit
+  %13 = phi ptr [ %.pre21.i, %_recover_bb_state.exit ], [ %14, %._crit_edge.i247 ] ; 2 uses
   %indvars.iv.i245 = phi i64 [ 0, %_recover_bb_state.exit ], [ %indvars.iv.next.i248, %._crit_edge.i247 ] ; 2 uses
-  %13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 168), align 8
   %i.yw = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %indvars.iv.i245
   %.01316.i = load ptr, ptr %i.yw, align 8        ; 2 uses
   %.not1517.i = icmp eq ptr %.01316.i, null
@@ -304,9 +305,14 @@ _set_assoc_mgr_ptrs.exit.i:                       ; preds = %bb.gk, %bb.gj, %bb.
   %i.aam = getelementptr inbounds nuw i8, ptr %.01318.i, i64 80
   %.013.i = load ptr, ptr %i.aam, align 8         ; 2 uses
   %.not15.i = icmp eq ptr %.013.i, null
-  br i1 %.not15.i, label %._crit_edge.i247, label %.lr.ph.i246, !llvm.loop !42
+  br i1 %.not15.i, label %._crit_edge.loopexit.i, label %.lr.ph.i246, !llvm.loop !42
 
-._crit_edge.i247:                                 ; preds = %_set_assoc_mgr_ptrs.exit.i, %bb.gd
+._crit_edge.loopexit.i:                           ; preds = %_set_assoc_mgr_ptrs.exit.i
+  %.pre.i247 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 168), align 8
+  br label %._crit_edge.i247
+
+._crit_edge.i247:                                 ; preds = %._crit_edge.loopexit.i, %bb.gd
+  %14 = phi ptr [ %.pre.i247, %._crit_edge.loopexit.i ], [ %13, %bb.gd ]
   %indvars.iv.next.i248 = add nuw nsw i64 %indvars.iv.i245, 1 ; 2 uses
   %exitcond.not.i249 = icmp eq i64 %indvars.iv.next.i248, 100
   br i1 %exitcond.not.i249, label %_apply_limits.exit, label %bb.gd, !llvm.loop !43
@@ -697,6 +703,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 264
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 292
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 264
+  %.pre21 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 168), align 8
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -706,8 +713,8 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 bb.k:                                             ; preds = %.preheader, %._crit_edge
+  %3 = phi ptr [ %.pre21, %.preheader ], [ %4, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 168), align 8
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %.016 = load ptr, ptr %i.p, align 8             ; 2 uses
   %.not1517 = icmp eq ptr %.016, null
@@ -782,9 +789,14 @@ _set_assoc_mgr_ptrs.exit:                         ; preds = %bb.n, %bb.o, %bb.p
   %i.aq = getelementptr inbounds nuw i8, ptr %.018, i64 80
   %.0 = load ptr, ptr %i.aq, align 8              ; 2 uses
   %.not15 = icmp eq ptr %.0, null
-  br i1 %.not15, label %._crit_edge, label %.lr.ph, !llvm.loop !50
+  br i1 %.not15, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !50
 
-._crit_edge:                                      ; preds = %_set_assoc_mgr_ptrs.exit, %bb.k
+._crit_edge.loopexit:                             ; preds = %_set_assoc_mgr_ptrs.exit
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bb_state, i64 168), align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.k
+  %4 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %3, %bb.k ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 100
   br i1 %exitcond.not, label %bb.q, label %bb.k, !llvm.loop !51

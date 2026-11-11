@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.critedge, %._crit_
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef zeroext i1 @_ZL21iterativelyFlattenCFGRN4llvm8FunctionEPNS_9AAResultsE(ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(140) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %"class.std::vector.45", align 8    ; 13 uses
+  %2 = alloca %"class.std::vector.45", align 8    ; 12 uses
   %3 = alloca %"class.llvm::WeakVH", align 8      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
@@ -237,7 +237,7 @@ _ZNK4llvm8Function4sizeEv.exit:                   ; preds = %.lr.ph.i.i.i, %bb.a
 
 .preheader:                                       ; preds = %_ZN4llvm15ValueHandleBaseD2Ev.exit, %_ZNK4llvm8Function4sizeEv.exit
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.l = load ptr, ptr %2, align 8, !tbaa !69     ; 2 uses
+  %i.l = load ptr, ptr %2, align 8, !tbaa !69     ; 3 uses
   %i.m = load ptr, ptr %i.k, align 8, !tbaa !69
   %i.n = icmp eq ptr %i.l, %i.m
   br i1 %i.n, label %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit.i, label %.preheader.split
@@ -299,13 +299,14 @@ _ZN4llvm15ValueHandleBaseD2Ev.exit:               ; preds = %_ZNSt6vectorIN4llvm
   br i1 %.not26, label %.preheader, label %bb.b
 
 .preheader.split:                                 ; preds = %.preheader, %._crit_edge
+  %4 = phi ptr [ %.pre, %._crit_edge ], [ %i.l, %.preheader ] ; 3 uses
   %.035 = phi i1 [ %i.ad, %._crit_edge ], [ false, %.preheader ] ; 2 uses
-  %4 = load ptr, ptr %2, align 8, !tbaa !69       ; 2 uses
   %i.aa = load ptr, ptr %i.k, align 8, !tbaa !69  ; 2 uses
   %.not2731 = icmp eq ptr %4, %i.aa
   br i1 %.not2731, label %.split.us, label %.lr.ph34
 
 ._crit_edge:                                      ; preds = %bb.h
+  %.pre = load ptr, ptr %2, align 8, !tbaa !69    ; 2 uses
   %i.ab = zext i1 %.035 to i8
   %i.ac = or i8 %.2, %i.ab
   %i.ad = icmp ne i8 %i.ac, 0                     ; 2 uses
@@ -333,13 +334,13 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph34
 
 .split.us:                                        ; preds = %._crit_edge, %.preheader.split
   %i.aj = phi i1 [ %.035, %.preheader.split ], [ %i.ad, %._crit_edge ] ; 2 uses
-  %.pre = load ptr, ptr %2, align 8, !tbaa !37    ; 3 uses
+  %5 = phi ptr [ %4, %.preheader.split ], [ %.pre, %._crit_edge ] ; 3 uses
   %.pre37 = load ptr, ptr %i.k, align 8, !tbaa !35 ; 2 uses
-  %.not4.i.i.i16 = icmp eq ptr %.pre, %.pre37
+  %.not4.i.i.i16 = icmp eq ptr %5, %.pre37
   br i1 %.not4.i.i.i16, label %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit.i, label %.lr.ph.i.i.i17
 
 .lr.ph.i.i.i17:                                   ; preds = %.split.us, %_ZSt8_DestroyIN4llvm6WeakVHEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.am, %_ZSt8_DestroyIN4llvm6WeakVHEEvPT_.exit.i.i.i ], [ %.pre, %.split.us ] ; 3 uses
+  %.05.i.i.i = phi ptr [ %i.am, %_ZSt8_DestroyIN4llvm6WeakVHEEvPT_.exit.i.i.i ], [ %5, %.split.us ] ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !33
   %.not.i.i.i.i.i = icmp eq ptr %i.al, null
@@ -360,7 +361,7 @@ _ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split.i: ; preds = %_ZSt8_De
 
 _ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit.i:      ; preds = %.preheader, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split.i, %.split.us
   %.us-phi54 = phi i1 [ %i.aj, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split.i ], [ %i.aj, %.split.us ], [ false, %.preheader ]
-  %i.an = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split.i ], [ %.pre, %.split.us ], [ %i.l, %.preheader ] ; 3 uses
+  %i.an = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split.i ], [ %5, %.split.us ], [ %i.l, %.preheader ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %i.an, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EED2Ev.exit, label %bb.j
 

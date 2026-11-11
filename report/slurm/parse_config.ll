@@ -125,22 +125,23 @@ bb.a:
 define dso_local void @s_p_hashtbl_destroy(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 9 uses
-  %i.b = alloca ptr, align 8                      ; 4 uses
+  %i.b = alloca ptr, align 8                      ; 2 uses
   store ptr %0, ptr %i.b, align 8
   %.not = icmp eq ptr %0, null
-  br i1 %.not, label %bb.l, label %.preheader8
+  br i1 %.not, label %bb.l, label %.preheader8.preheader
+
+.preheader8.preheader:                            ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  br label %.preheader8
 
 bb.b:                                             ; preds = %._crit_edge17
-  %1 = load ptr, ptr %i.b, align 8
-  call void @regfree(ptr noundef %1) #12
+  call void @regfree(ptr noundef nonnull %0) #12
   call void @slurm_xfree(ptr noundef nonnull %i.b) #12
   br label %bb.l
 
-.preheader8:                                      ; preds = %bb.a, %._crit_edge17
-  %indvars.iv24 = phi i64 [ %indvars.iv.next25, %._crit_edge17 ], [ 0, %bb.a ] ; 2 uses
-  %2 = load ptr, ptr %i.b, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %i.c = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv24
+.preheader8:                                      ; preds = %.preheader8.preheader, %._crit_edge17
+  %indvars.iv24 = phi i64 [ 0, %.preheader8.preheader ], [ %indvars.iv.next25, %._crit_edge17 ] ; 2 uses
+  %i.c = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv24
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %.not713 = icmp eq ptr %i.d, null
   br i1 %.not713, label %._crit_edge17, label %.lr.ph16

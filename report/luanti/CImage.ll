@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph94:                                         ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !44
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.v = load i32, ptr %i.t, align 8, !tbaa !51
@@ -215,33 +215,36 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph94.split.preheader:                         ; preds = %.lr.ph94
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !47
+  %.pre108 = load i32, ptr %i.s, align 8, !tbaa !42
   br label %.lr.ph94.split
 
 .lr.ph94.split:                                   ; preds = %.lr.ph94.split.preheader, %._crit_edge89
   %i.y = phi i32 [ %i.ae, %._crit_edge89 ], [ %i.p, %.lr.ph94.split.preheader ]
-  %i.z = phi i32 [ %i.af, %._crit_edge89 ], [ 1, %.lr.ph94.split.preheader ]
-  %.06892.a = phi i32 [ %i.aj, %._crit_edge89 ], [ 0, %.lr.ph94.split.preheader ]
+  %i.z = phi i32 [ %1, %._crit_edge89 ], [ 1, %.lr.ph94.split.preheader ]
+  %.06892.a = phi i32 [ %i.af, %._crit_edge89 ], [ %.pre108, %.lr.ph94.split.preheader ] ; 2 uses
+  %.06892 = phi i32 [ %i.aj, %._crit_edge89 ], [ 0, %.lr.ph94.split.preheader ]
   %.06991 = phi ptr [ %i.ai, %._crit_edge89 ], [ %i.x, %.lr.ph94.split.preheader ] ; 2 uses
   %.07090 = phi i32 [ %i.ak, %._crit_edge89 ], [ 0, %.lr.ph94.split.preheader ] ; 2 uses
-  %1 = load i32, ptr %i.s, align 8, !tbaa !42
   %i.aa = ashr i32 %.07090, 18
-  %i.ab = mul nsw i32 %1, %i.aa
+  %i.ab = mul nsw i32 %.06892.a, %i.aa
   %i.ac = sext i32 %i.ab to i64
   %i.ad = getelementptr inbounds i8, ptr %i.r, i64 %i.ac
   %.not99 = icmp eq i32 %i.z, 0
   br i1 %.not99, label %._crit_edge89, label %.lr.ph88
 
 ._crit_edge89.loopexit:                           ; preds = %.lr.ph88
+  %.pre = load i32, ptr %i.s, align 8, !tbaa !42
   %.pre.a = load i32, ptr %i.o, align 4, !tbaa !50
   br label %._crit_edge89
 
 ._crit_edge89:                                    ; preds = %._crit_edge89.loopexit, %.lr.ph94.split
   %i.ae = phi i32 [ %.pre.a, %._crit_edge89.loopexit ], [ %i.y, %.lr.ph94.split ] ; 2 uses
-  %i.af = phi i32 [ %i.as, %._crit_edge89.loopexit ], [ 0, %.lr.ph94.split ]
+  %1 = phi i32 [ %i.as, %._crit_edge89.loopexit ], [ 0, %.lr.ph94.split ]
+  %i.af = phi i32 [ %.pre, %._crit_edge89.loopexit ], [ %.06892.a, %.lr.ph94.split ]
   %i.ag = load i32, ptr %i.u, align 4, !tbaa !45
   %i.ah = zext i32 %i.ag to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.06991, i64 %i.ah
-  %i.aj = add nuw i32 %.06892.a, 1                ; 2 uses
+  %i.aj = add nuw i32 %.06892, 1                  ; 2 uses
   %i.ak = add nsw i32 %.07090, %i.l
   %i.al = icmp ult i32 %i.aj, %i.ae
   br i1 %i.al, label %.lr.ph94.split, label %.loopexit, !llvm.loop !81

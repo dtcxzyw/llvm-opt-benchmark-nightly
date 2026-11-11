@@ -46,6 +46,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 12 ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !29   ; 3 uses
   %i.t = icmp sgt i32 %i.s, 0
+  %.pre50 = load ptr, ptr %i.p, align 8, !tbaa !30 ; 2 uses
   br i1 %i.t, label %.lr.ph43, label %.preheader.._crit_edge44_crit_edge
 
 .preheader.._crit_edge44_crit_edge:               ; preds = %.preheader
@@ -58,8 +59,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph43, %._crit_edge
   %i.v = phi i32 [ %i.s, %.lr.ph43 ], [ %i.af, %._crit_edge ]
+  %2 = phi ptr [ %.pre50, %.lr.ph43 ], [ %3, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph43 ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %2 = load ptr, ptr %i.p, align 8, !tbaa !30
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !28   ; 2 uses
   %.not39 = icmp eq ptr %i.x, null
@@ -80,11 +81,13 @@ bb.d:                                             ; preds = %.lr.ph43, %._crit_e
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph41, !llvm.loop !34
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph41
+  %.pre = load ptr, ptr %i.p, align 8, !tbaa !30
   %.pre.a = load i32, ptr %i.r, align 4, !tbaa !29
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
   %i.af = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.v, %bb.d ] ; 2 uses
+  %3 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %2, %bb.d ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ag = sext i32 %i.af to i64                   ; 2 uses
   %i.ah = icmp slt i64 %indvars.iv.next, %i.ag
@@ -92,9 +95,9 @@ bb.d:                                             ; preds = %.lr.ph43, %._crit_e
 
 ._crit_edge44:                                    ; preds = %._crit_edge, %.preheader.._crit_edge44_crit_edge
   %.pre-phi = phi i64 [ %.pre48, %.preheader.._crit_edge44_crit_edge ], [ %i.ag, %._crit_edge ]
-  %3 = load ptr, ptr %i.p, align 8, !tbaa !30
+  %4 = phi ptr [ %.pre50, %.preheader.._crit_edge44_crit_edge ], [ %3, %._crit_edge ]
   %i.ai = shl nsw i64 %.pre-phi, 3
-  %i.aj = tail call ptr @luaM_realloc_(ptr noundef %0, ptr noundef %3, i64 noundef %i.ai, i64 noundef 0) #5 ; 0 uses
+  %i.aj = tail call ptr @luaM_realloc_(ptr noundef %0, ptr noundef %4, i64 noundef %i.ai, i64 noundef 0) #5 ; 0 uses
   store i32 %1, ptr %i.r, align 4, !tbaa !29
   store ptr %i.q, ptr %i.p, align 8, !tbaa !30
   br label %bb.e

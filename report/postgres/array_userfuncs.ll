@@ -202,8 +202,8 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca [6 x i32], align 16               ; 5 uses
   %i.c = alloca [6 x i32], align 16               ; 4 uses
-  %i.d = alloca ptr, align 8                      ; 7 uses
-  %i.e = alloca ptr, align 8                      ; 7 uses
+  %i.d = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca ptr, align 8                      ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = load i64, ptr %i.f, align 8
   %i.h = inttoptr i64 %i.g to ptr
@@ -264,19 +264,16 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.ak, ptr %i.a, align 4
   %i.al = sdiv i32 %i.ai, 2
   %i.am = icmp sgt i32 %i.ai, 1
-  %.pre63.i = load ptr, ptr %i.d, align 8         ; 2 uses
-  %.pre65.i = load ptr, ptr %i.e, align 8         ; 2 uses
+  %.pre63.i = load ptr, ptr %i.d, align 8         ; 3 uses
+  %.pre65.i = load ptr, ptr %i.e, align 8         ; 3 uses
   %i.an = icmp sgt i32 %i.ak, 0
   %or.cond.i = select i1 %i.am, i1 %i.an, i1 false
   br i1 %or.cond.i, label %.lr.ph59.split.i, label %array_reverse_n.exit
 
-._crit_edge60.loopexit.i:                         ; preds = %._crit_edge.i
-  %.pre.i = load ptr, ptr %i.d, align 8
-  %.pre64.i = load ptr, ptr %i.e, align 8
-  br label %array_reverse_n.exit
-
 .lr.ph59.split.i:                                 ; preds = %bb.f, %._crit_edge.i
   %i.ao = phi i32 [ %i.aw, %._crit_edge.i ], [ %i.ak, %bb.f ] ; 3 uses
+  %1 = phi ptr [ %3, %._crit_edge.i ], [ %.pre65.i, %bb.f ] ; 2 uses
+  %2 = phi ptr [ %4, %._crit_edge.i ], [ %.pre63.i, %bb.f ] ; 2 uses
   %.04557.i = phi i32 [ %i.ax, %._crit_edge.i ], [ 0, %bb.f ] ; 2 uses
   %.04656.i = phi ptr [ %.1.lcssa.i, %._crit_edge.i ], [ %.pre65.i, %bb.f ] ; 2 uses
   %.04755.i = phi ptr [ %.148.lcssa.i, %._crit_edge.i ], [ %.pre63.i, %bb.f ] ; 2 uses
@@ -284,23 +281,28 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.ap, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph59.split.i
-  %1 = load ptr, ptr %i.e, align 8
   %i.aq = xor i32 %.04557.i, -1
   %i.ar = add nsw i32 %i.ai, %i.aq
   %i.as = mul i32 %i.ar, %i.ao
   %i.at = sext i32 %i.as to i64                   ; 2 uses
   %i.au = getelementptr inbounds i8, ptr %1, i64 %i.at
-  %2 = load ptr, ptr %i.d, align 8
   %i.av = getelementptr inbounds [8 x i8], ptr %2, i64 %i.at
   br label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph59.split.i
-  %i.aw = phi i32 [ %i.ao, %.lr.ph59.split.i ], [ %i.bh, %.lr.ph.i ]
-  %.148.lcssa.i = phi ptr [ %.04755.i, %.lr.ph59.split.i ], [ %i.bb, %.lr.ph.i ]
-  %.1.lcssa.i = phi ptr [ %.04656.i, %.lr.ph59.split.i ], [ %i.bd, %.lr.ph.i ]
+._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
+  %.pre.i = load ptr, ptr %i.d, align 8
+  %.pre64.i = load ptr, ptr %i.e, align 8
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.lr.ph59.split.i
+  %i.aw = phi i32 [ %i.ao, %.lr.ph59.split.i ], [ %i.bh, %._crit_edge.loopexit.i ]
+  %3 = phi ptr [ %1, %.lr.ph59.split.i ], [ %.pre64.i, %._crit_edge.loopexit.i ] ; 2 uses
+  %4 = phi ptr [ %2, %.lr.ph59.split.i ], [ %.pre.i, %._crit_edge.loopexit.i ] ; 2 uses
+  %.148.lcssa.i = phi ptr [ %.04755.i, %.lr.ph59.split.i ], [ %i.bb, %._crit_edge.loopexit.i ]
+  %.1.lcssa.i = phi ptr [ %.04656.i, %.lr.ph59.split.i ], [ %i.bd, %._crit_edge.loopexit.i ]
   %i.ax = add nuw nsw i32 %.04557.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ax, %i.al
-  br i1 %exitcond.not.i, label %._crit_edge60.loopexit.i, label %.lr.ph59.split.i, !llvm.loop !59
+  br i1 %exitcond.not.i, label %array_reverse_n.exit, label %.lr.ph59.split.i, !llvm.loop !59
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %.053.i = phi i32 [ %i.bg, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
@@ -323,11 +325,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bg = add nuw nsw i32 %.053.i, 1              ; 2 uses
   %i.bh = load i32, ptr %i.a, align 4             ; 2 uses
   %i.bi = icmp slt i32 %i.bg, %i.bh
-  br i1 %i.bi, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !60
+  br i1 %i.bi, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !60
 
-array_reverse_n.exit:                             ; preds = %bb.f, %._crit_edge60.loopexit.i
-  %i.bj = phi ptr [ %.pre65.i, %bb.f ], [ %.pre64.i, %._crit_edge60.loopexit.i ]
-  %i.bk = phi ptr [ %.pre63.i, %bb.f ], [ %.pre.i, %._crit_edge60.loopexit.i ]
+array_reverse_n.exit:                             ; preds = %._crit_edge.i, %bb.f
+  %i.bj = phi ptr [ %.pre65.i, %bb.f ], [ %3, %._crit_edge.i ]
+  %i.bk = phi ptr [ %.pre63.i, %bb.f ], [ %4, %._crit_edge.i ]
   %i.bl = sext i32 %i.z to i64
   %i.bm = shl nsw i64 %i.bl, 2                    ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.bm

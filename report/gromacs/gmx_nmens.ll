@@ -205,7 +205,7 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit122:       ; preds = %_ZNSt10filesystem7_
 .preheader143:                                    ; preds = %.preheader143.lr.ph, %bb.bf
   %.068191 = phi i32 [ %i.jh, %.preheader143.lr.ph ], [ %.169.lcssa, %bb.bf ] ; 2 uses
   %.074190 = phi i32 [ 0, %.preheader143.lr.ph ], [ %i.tg, %bb.bf ]
-  %i.kc = load i32, ptr %i.o, align 4, !tbaa !10  ; 14 uses
+  %i.kc = load i32, ptr %i.o, align 4, !tbaa !10  ; 12 uses
   %i.kd = icmp sgt i32 %i.kc, 0                   ; 3 uses
   br i1 %i.kd, label %.lr.ph177, label %.preheader142
 
@@ -282,6 +282,7 @@ scalar.ph364.prol.loopexit:                       ; preds = %scalar.ph364.prol, 
 .lr.ph185:                                        ; preds = %.preheader142
   %i.kw = load ptr, ptr %i.n, align 8, !tbaa !103
   %i.kx = load ptr, ptr %i.l, align 8
+  %.pre253 = load float, ptr @_ZZ9gmx_nmensiPPcE4temp, align 4, !tbaa !82
   %wide.trip.count238 = zext i32 %i.kc to i64     ; 7 uses
   %i.ky = shl nuw nsw i64 %wide.trip.count238, 2
   %scevgep = getelementptr i8, ptr %i.bs, i64 %i.ky
@@ -394,11 +395,11 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   br label %bb.bd
 
 bb.bc:                                            ; preds = %.lr.ph185, %._crit_edge
+  %10 = phi float [ %.pre253, %.lr.ph185 ], [ %11, %._crit_edge ] ; 2 uses
   %indvars.iv240 = phi i64 [ 0, %.lr.ph185 ], [ %indvars.iv.next241, %._crit_edge ] ; 3 uses
   %.169184 = phi i32 [ %.068191, %.lr.ph185 ], [ %i.nj, %._crit_edge ]
   %i.mo = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %indvars.iv240
   %i.mp = load i32, ptr %i.mo, align 4, !tbaa !10
-  %10 = load float, ptr @_ZZ9gmx_nmensiPPcE4temp, align 4, !tbaa !82
   %i.mq = fpext float %10 to double
   %i.mr = fmul double %i.mq, f0x3F998AC26C586BA4
   %i.ms = getelementptr inbounds nuw [4 x i8], ptr %.1, i64 %indvars.iv240
@@ -479,7 +480,7 @@ vector.body346:                                   ; preds = %vector.body346, %ve
   br i1 %i.od, label %middle.block355, label %vector.body346, !llvm.loop !58
 
 middle.block355:                                  ; preds = %vector.body346
-  br i1 %cmp.n356, label %._crit_edge, label %.preheader.preheader
+  br i1 %cmp.n356, label %._crit_edge.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %vector.memcheck, %.preheader.lr.ph, %middle.block355
   %indvars.iv235.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.preheader.lr.ph ], [ %n.vec345, %middle.block355 ] ; 6 uses
@@ -517,7 +518,7 @@ middle.block355:                                  ; preds = %vector.body346
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
   %indvars.iv235.unr = phi i64 [ %indvars.iv235.ph, %.preheader.preheader ], [ %indvars.iv.next236.prol, %.preheader.prol ]
   %i.pa = icmp eq i64 %indvars.iv235.ph, %i.la
-  br i1 %i.pa, label %._crit_edge, label %.preheader
+  br i1 %i.pa, label %._crit_edge.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.prol.loopexit, %.preheader
   %indvars.iv235 = phi i64 [ %indvars.iv.next236.1, %.preheader ], [ %indvars.iv235.unr, %.preheader.prol.loopexit ] ; 5 uses
@@ -574,10 +575,15 @@ middle.block355:                                  ; preds = %vector.body346
   store float %i.qs, ptr %i.qq, align 4, !tbaa !82
   %indvars.iv.next236.1 = add nuw nsw i64 %indvars.iv235, 2 ; 2 uses
   %exitcond239.not.1 = icmp eq i64 %indvars.iv.next236.1, %wide.trip.count238
-  br i1 %exitcond239.not.1, label %._crit_edge, label %.preheader, !llvm.loop !59
+  br i1 %exitcond239.not.1, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !59
 
-._crit_edge:                                      ; preds = %.preheader.prol.loopexit, %.preheader, %middle.block355, %bb.bc
-  %storemerge108.lcssa = phi i32 [ 0, %bb.bc ], [ %i.kc, %middle.block355 ], [ %i.kc, %.preheader ], [ %i.kc, %.preheader.prol.loopexit ]
+._crit_edge.loopexit:                             ; preds = %.preheader.prol.loopexit, %.preheader, %middle.block355
+  %.pre252 = load float, ptr @_ZZ9gmx_nmensiPPcE4temp, align 4, !tbaa !82
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.bc
+  %11 = phi float [ %10, %bb.bc ], [ %.pre252, %._crit_edge.loopexit ]
+  %storemerge108.lcssa = phi i32 [ 0, %bb.bc ], [ %i.kc, %._crit_edge.loopexit ]
   store i32 %storemerge108.lcssa, ptr %i.q, align 4, !tbaa !10
   %indvars.iv.next241 = add nuw nsw i64 %indvars.iv240, 1 ; 2 uses
   %exitcond244.not = icmp eq i64 %indvars.iv.next241, %wide.trip.count243

@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %.idx.i199 = shl nuw nsw i64 %i.ga, 4           ; 3 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 %.idx.i199 ; 3 uses
   %.not9.i = icmp eq i32 %i.fz, 0                 ; 3 uses
-  %i.gc = load i8, ptr %i.cm, align 2, !tbaa !31
+  %i.gc = load i8, ptr %i.cm, align 2, !tbaa !31  ; 2 uses
   %i.gd = icmp eq i8 %i.gc, 0
   br i1 %i.gd, label %.preheader224.split.us, label %.preheader224.split.preheader, !prof !45
 
@@ -305,13 +305,9 @@ zend_hash_iterators_lower_pos.exit212.loopexit.us: ; preds = %bb.ad, %.lr.ph.i20
   %i.hk = icmp ult i32 %.1.i207.us.lcssa, %i.ez
   br i1 %i.hk, label %zend_hash_iterators_update.exit.us, label %.loopexit225, !llvm.loop !108
 
-.preheader224.splitthread-pre-split:              ; preds = %zend_hash_iterators_lower_pos.exit212
-  %.pr = load i8, ptr %i.cm, align 2, !tbaa !31
-  br label %.preheader224.split
-
-.preheader224.split:                              ; preds = %.preheader224.split.preheader, %.preheader224.splitthread-pre-split
-  %i.hl = phi i8 [ %.pr, %.preheader224.splitthread-pre-split ], [ 1, %.preheader224.split.preheader ]
-  %.1164 = phi i32 [ %.0.lcssa.i209, %.preheader224.splitthread-pre-split ], [ %.0163235, %.preheader224.split.preheader ] ; 4 uses
+.preheader224.split:                              ; preds = %.preheader224.split.preheader, %zend_hash_iterators_lower_pos.exit212
+  %i.hl = phi i8 [ %2, %zend_hash_iterators_lower_pos.exit212 ], [ %i.gc, %.preheader224.split.preheader ] ; 2 uses
+  %.1164 = phi i32 [ %.0.lcssa.i209, %zend_hash_iterators_lower_pos.exit212 ], [ %.0163235, %.preheader224.split.preheader ] ; 4 uses
   %.not.i = icmp eq i8 %i.hl, 0
   br i1 %.not.i, label %zend_hash_iterators_update.exit, label %bb.ae, !prof !45
 
@@ -337,7 +333,7 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph.i200.prol.loopexit:                        ; preds = %.lr.ph.i200.prol, %bb.af, %bb.ag, %.lr.ph.i200.preheader
   %.010.i.unr = phi ptr [ %i.fy, %.lr.ph.i200.preheader ], [ %i.gh, %bb.ag ], [ %i.gh, %bb.af ], [ %i.gh, %.lr.ph.i200.prol ]
-  br i1 %i.gi, label %zend_hash_iterators_update.exit, label %.lr.ph.i200
+  br i1 %i.gi, label %zend_hash_iterators_update.exit.loopexit, label %.lr.ph.i200
 
 zend_hash_iterators_update.exit.thread:           ; preds = %bb.ae
   %i.hq = load i32, ptr %i.bl, align 8, !tbaa !50 ; 2 uses
@@ -378,9 +374,14 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %.lr.ph.i200.1
   %i.ic = getelementptr inbounds nuw i8, ptr %.010.i, i64 32 ; 2 uses
   %.not.i201.1 = icmp eq ptr %i.ic, %i.gb
-  br i1 %.not.i201.1, label %zend_hash_iterators_update.exit, label %.lr.ph.i200, !llvm.loop !1
+  br i1 %.not.i201.1, label %zend_hash_iterators_update.exit.loopexit, label %.lr.ph.i200, !llvm.loop !1
 
-zend_hash_iterators_update.exit:                  ; preds = %.lr.ph.i200.prol.loopexit, %bb.al, %.preheader224.split
+zend_hash_iterators_update.exit.loopexit:         ; preds = %bb.al, %.lr.ph.i200.prol.loopexit
+  %.pre = load i8, ptr %i.cm, align 2, !tbaa !31
+  br label %zend_hash_iterators_update.exit
+
+zend_hash_iterators_update.exit:                  ; preds = %zend_hash_iterators_update.exit.loopexit, %.preheader224.split
+  %1 = phi i8 [ %.pre, %zend_hash_iterators_update.exit.loopexit ], [ 0, %.preheader224.split ] ; 3 uses
   %i.id = add i32 %.1164, 1                       ; 3 uses
   %i.ie = load i32, ptr %i.bl, align 8, !tbaa !50 ; 9 uses
   br i1 %.not9.i, label %zend_hash_iterators_lower_pos.exit212, label %.lr.ph.i204.preheader
@@ -444,9 +445,10 @@ bb.ap:                                            ; preds = %bb.ao, %.lr.ph.i204
 
 zend_hash_iterators_lower_pos.exit212:            ; preds = %.lr.ph.i204.prol.loopexit, %bb.ap, %zend_hash_iterators_update.exit.thread, %zend_hash_iterators_update.exit
   %.pre253 = phi i32 [ %i.ie, %zend_hash_iterators_update.exit ], [ %i.hq, %zend_hash_iterators_update.exit.thread ], [ %i.ie, %bb.ap ], [ %i.ie, %.lr.ph.i204.prol.loopexit ]
+  %2 = phi i8 [ %1, %zend_hash_iterators_update.exit ], [ %i.hl, %zend_hash_iterators_update.exit.thread ], [ %1, %bb.ap ], [ %1, %.lr.ph.i204.prol.loopexit ]
   %.0.lcssa.i209 = phi i32 [ %i.ie, %zend_hash_iterators_update.exit ], [ %i.hq, %zend_hash_iterators_update.exit.thread ], [ %.1.i207.lcssa.unr, %.lr.ph.i204.prol.loopexit ], [ %.1.i207.1, %bb.ap ] ; 3 uses
   %i.iv = icmp ult i32 %.0.lcssa.i209, %i.ez
-  br i1 %i.iv, label %.preheader224.splitthread-pre-split, label %.loopexit225, !llvm.loop !109
+  br i1 %i.iv, label %.preheader224.split, label %.loopexit225, !llvm.loop !109
 
 .loopexit225:                                     ; preds = %zend_hash_iterators_lower_pos.exit212, %zend_hash_iterators_lower_pos.exit212.loopexit.us, %..loopexit225_crit_edge, %.preheader224.split.us.split.us
   %.pre.a = phi i32 [ %.pre.pre, %..loopexit225_crit_edge ], [ %i.gn, %zend_hash_iterators_lower_pos.exit212.loopexit.us ], [ %i.gn, %.preheader224.split.us.split.us ], [ %.pre253, %zend_hash_iterators_lower_pos.exit212 ]
@@ -849,7 +851,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %.idx.i647 = shl nuw nsw i64 %i.nh, 4           ; 3 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %i.nf, i64 %.idx.i647 ; 3 uses
   %.not9.i = icmp eq i32 %i.ng, 0                 ; 3 uses
-  %i.nj = load i8, ptr %i.im, align 2, !tbaa !31
+  %i.nj = load i8, ptr %i.im, align 2, !tbaa !31  ; 2 uses
   %i.nk = icmp eq i8 %i.nj, 0
   br i1 %i.nk, label %.preheader817.split.us, label %.preheader817.split.preheader, !prof !45
 
@@ -951,13 +953,9 @@ zend_hash_iterators_lower_pos.exit660.loopexit.us: ; preds = %bb.br, %.lr.ph.i65
   %i.os = icmp ult i32 %.1.i655.us.lcssa, %.286.i457863
   br i1 %i.os, label %zend_hash_iterators_update.exit.i469.us, label %.loopexit818, !llvm.loop !122
 
-.preheader817.splitthread-pre-split:              ; preds = %zend_hash_iterators_lower_pos.exit660
-  %.pr = load i8, ptr %i.im, align 2, !tbaa !31
-  br label %.preheader817.split
-
-.preheader817.split:                              ; preds = %.preheader817.split.preheader, %.preheader817.splitthread-pre-split
-  %i.ot = phi i8 [ %.pr, %.preheader817.splitthread-pre-split ], [ 1, %.preheader817.split.preheader ]
-  %.1.i467 = phi i32 [ %.0.lcssa.i657, %.preheader817.splitthread-pre-split ], [ %.0.i461871, %.preheader817.split.preheader ] ; 4 uses
+.preheader817.split:                              ; preds = %.preheader817.split.preheader, %zend_hash_iterators_lower_pos.exit660
+  %i.ot = phi i8 [ %2, %zend_hash_iterators_lower_pos.exit660 ], [ %i.nj, %.preheader817.split.preheader ] ; 2 uses
+  %.1.i467 = phi i32 [ %.0.lcssa.i657, %zend_hash_iterators_lower_pos.exit660 ], [ %.0.i461871, %.preheader817.split.preheader ] ; 4 uses
   %.not.i.i468 = icmp eq i8 %i.ot, 0
   br i1 %.not.i.i468, label %zend_hash_iterators_update.exit.i469, label %bb.bs, !prof !45
 
@@ -983,7 +981,7 @@ bb.bu:                                            ; preds = %bb.bt
 
 .lr.ph.i648.prol.loopexit:                        ; preds = %.lr.ph.i648.prol, %bb.bt, %bb.bu, %.lr.ph.i648.preheader
   %.010.i.unr = phi ptr [ %i.nf, %.lr.ph.i648.preheader ], [ %i.no, %bb.bu ], [ %i.no, %bb.bt ], [ %i.no, %.lr.ph.i648.prol ]
-  br i1 %i.np, label %zend_hash_iterators_update.exit.i469, label %.lr.ph.i648
+  br i1 %i.np, label %zend_hash_iterators_update.exit.i469.loopexit, label %.lr.ph.i648
 
 zend_hash_iterators_update.exit.i469.thread:      ; preds = %bb.bs
   %i.oy = load i32, ptr %i.km, align 8, !tbaa !50
@@ -1024,9 +1022,14 @@ bb.by:                                            ; preds = %bb.bx
 bb.bz:                                            ; preds = %bb.by, %bb.bx, %.lr.ph.i648.1
   %i.pk = getelementptr inbounds nuw i8, ptr %.010.i, i64 32 ; 2 uses
   %.not.i649.1 = icmp eq ptr %i.pk, %i.ni
-  br i1 %.not.i649.1, label %zend_hash_iterators_update.exit.i469, label %.lr.ph.i648, !llvm.loop !1
+  br i1 %.not.i649.1, label %zend_hash_iterators_update.exit.i469.loopexit, label %.lr.ph.i648, !llvm.loop !1
 
-zend_hash_iterators_update.exit.i469:             ; preds = %.lr.ph.i648.prol.loopexit, %bb.bz, %.preheader817.split
+zend_hash_iterators_update.exit.i469.loopexit:    ; preds = %bb.bz, %.lr.ph.i648.prol.loopexit
+  %.pre959 = load i8, ptr %i.im, align 2, !tbaa !31
+  br label %zend_hash_iterators_update.exit.i469
+
+zend_hash_iterators_update.exit.i469:             ; preds = %zend_hash_iterators_update.exit.i469.loopexit, %.preheader817.split
+  %1 = phi i8 [ %.pre959, %zend_hash_iterators_update.exit.i469.loopexit ], [ 0, %.preheader817.split ] ; 3 uses
   %i.pl = add i32 %.1.i467, 1                     ; 3 uses
   %i.pm = load i32, ptr %i.km, align 8, !tbaa !50 ; 6 uses
   br i1 %.not9.i, label %zend_hash_iterators_lower_pos.exit660, label %.lr.ph.i652.preheader
@@ -1089,9 +1092,10 @@ bb.cd:                                            ; preds = %bb.cc, %.lr.ph.i652
   br i1 %.not.i656.1, label %zend_hash_iterators_lower_pos.exit660, label %.lr.ph.i652, !llvm.loop !0
 
 zend_hash_iterators_lower_pos.exit660:            ; preds = %.lr.ph.i652.prol.loopexit, %bb.cd, %zend_hash_iterators_update.exit.i469.thread, %zend_hash_iterators_update.exit.i469
+  %2 = phi i8 [ %1, %zend_hash_iterators_update.exit.i469 ], [ %i.ot, %zend_hash_iterators_update.exit.i469.thread ], [ %1, %bb.cd ], [ %1, %.lr.ph.i652.prol.loopexit ]
   %.0.lcssa.i657 = phi i32 [ %i.pm, %zend_hash_iterators_update.exit.i469 ], [ %i.oy, %zend_hash_iterators_update.exit.i469.thread ], [ %.1.i655.lcssa.unr, %.lr.ph.i652.prol.loopexit ], [ %.1.i655.1, %bb.cd ] ; 3 uses
   %i.qd = icmp ult i32 %.0.lcssa.i657, %.286.i457863
-  br i1 %i.qd, label %.preheader817.splitthread-pre-split, label %.loopexit818, !llvm.loop !123
+  br i1 %i.qd, label %.preheader817.split, label %.loopexit818, !llvm.loop !123
 
 .loopexit818:                                     ; preds = %zend_hash_iterators_lower_pos.exit660, %zend_hash_iterators_lower_pos.exit660.loopexit.us, %.preheader817.split.us.split.us, %bb.bn
   %.2.i470 = phi i32 [ %.0.i461871, %bb.bn ], [ %.1.i655.us.lcssa, %zend_hash_iterators_lower_pos.exit660.loopexit.us ], [ %i.nu, %.preheader817.split.us.split.us ], [ %.0.lcssa.i657, %zend_hash_iterators_lower_pos.exit660 ]
@@ -1494,7 +1498,7 @@ bb.dt:                                            ; preds = %bb.ds, %bb.dr
   %.idx.i672 = shl nuw nsw i64 %i.wr, 4           ; 3 uses
   %i.ws = getelementptr inbounds nuw i8, ptr %i.wp, i64 %.idx.i672 ; 3 uses
   %.not9.i673 = icmp eq i32 %i.wq, 0              ; 3 uses
-  %i.wt = load i8, ptr %i.sa, align 2, !tbaa !31
+  %i.wt = load i8, ptr %i.sa, align 2, !tbaa !31  ; 2 uses
   %i.wu = icmp eq i8 %i.wt, 0
   br i1 %i.wu, label %.preheader823.split.us, label %.preheader823.split.preheader, !prof !45
 
@@ -1596,13 +1600,9 @@ zend_hash_iterators_lower_pos.exit688.loopexit.us: ; preds = %bb.dx, %.lr.ph.i68
   %i.yc = icmp ult i32 %.1.i683.us.lcssa, %.286.i428844
   br i1 %i.yc, label %zend_hash_iterators_update.exit.i440.us, label %.loopexit824, !llvm.loop !122
 
-.preheader823.splitthread-pre-split:              ; preds = %zend_hash_iterators_lower_pos.exit688
-  %.pr1051 = load i8, ptr %i.sa, align 2, !tbaa !31
-  br label %.preheader823.split
-
-.preheader823.split:                              ; preds = %.preheader823.split.preheader, %.preheader823.splitthread-pre-split
-  %i.yd = phi i8 [ %.pr1051, %.preheader823.splitthread-pre-split ], [ 1, %.preheader823.split.preheader ]
-  %.1.i438 = phi i32 [ %.0.lcssa.i685, %.preheader823.splitthread-pre-split ], [ %.0.i432852, %.preheader823.split.preheader ] ; 4 uses
+.preheader823.split:                              ; preds = %.preheader823.split.preheader, %zend_hash_iterators_lower_pos.exit688
+  %i.yd = phi i8 [ %4, %zend_hash_iterators_lower_pos.exit688 ], [ %i.wt, %.preheader823.split.preheader ] ; 2 uses
+  %.1.i438 = phi i32 [ %.0.lcssa.i685, %zend_hash_iterators_lower_pos.exit688 ], [ %.0.i432852, %.preheader823.split.preheader ] ; 4 uses
   %.not.i.i439 = icmp eq i8 %i.yd, 0
   br i1 %.not.i.i439, label %zend_hash_iterators_update.exit.i440, label %bb.dy, !prof !45
 
@@ -1628,7 +1628,7 @@ bb.ea:                                            ; preds = %bb.dz
 
 .lr.ph.i674.prol.loopexit:                        ; preds = %.lr.ph.i674.prol, %bb.dz, %bb.ea, %.lr.ph.i674.preheader
   %.010.i675.unr = phi ptr [ %i.wp, %.lr.ph.i674.preheader ], [ %i.wy, %bb.ea ], [ %i.wy, %bb.dz ], [ %i.wy, %.lr.ph.i674.prol ]
-  br i1 %i.wz, label %zend_hash_iterators_update.exit.i440, label %.lr.ph.i674
+  br i1 %i.wz, label %zend_hash_iterators_update.exit.i440.loopexit, label %.lr.ph.i674
 
 zend_hash_iterators_update.exit.i440.thread:      ; preds = %bb.dy
   %i.yi = load i32, ptr %i.ty, align 8, !tbaa !50
@@ -1669,9 +1669,14 @@ bb.ee:                                            ; preds = %bb.ed
 bb.ef:                                            ; preds = %bb.ee, %bb.ed, %.lr.ph.i674.1
   %i.yu = getelementptr inbounds nuw i8, ptr %.010.i675, i64 32 ; 2 uses
   %.not.i676.1 = icmp eq ptr %i.yu, %i.ws
-  br i1 %.not.i676.1, label %zend_hash_iterators_update.exit.i440, label %.lr.ph.i674, !llvm.loop !1
+  br i1 %.not.i676.1, label %zend_hash_iterators_update.exit.i440.loopexit, label %.lr.ph.i674, !llvm.loop !1
 
-zend_hash_iterators_update.exit.i440:             ; preds = %.lr.ph.i674.prol.loopexit, %bb.ef, %.preheader823.split
+zend_hash_iterators_update.exit.i440.loopexit:    ; preds = %bb.ef, %.lr.ph.i674.prol.loopexit
+  %.pre955 = load i8, ptr %i.sa, align 2, !tbaa !31
+  br label %zend_hash_iterators_update.exit.i440
+
+zend_hash_iterators_update.exit.i440:             ; preds = %zend_hash_iterators_update.exit.i440.loopexit, %.preheader823.split
+  %3 = phi i8 [ %.pre955, %zend_hash_iterators_update.exit.i440.loopexit ], [ 0, %.preheader823.split ] ; 3 uses
   %i.yv = add i32 %.1.i438, 1                     ; 3 uses
   %i.yw = load i32, ptr %i.ty, align 8, !tbaa !50 ; 6 uses
   br i1 %.not9.i673, label %zend_hash_iterators_lower_pos.exit688, label %.lr.ph.i680.preheader
@@ -1734,9 +1739,10 @@ bb.ej:                                            ; preds = %bb.ei, %.lr.ph.i680
   br i1 %.not.i684.1, label %zend_hash_iterators_lower_pos.exit688, label %.lr.ph.i680, !llvm.loop !0
 
 zend_hash_iterators_lower_pos.exit688:            ; preds = %.lr.ph.i680.prol.loopexit, %bb.ej, %zend_hash_iterators_update.exit.i440.thread, %zend_hash_iterators_update.exit.i440
+  %4 = phi i8 [ %3, %zend_hash_iterators_update.exit.i440 ], [ %i.yd, %zend_hash_iterators_update.exit.i440.thread ], [ %3, %bb.ej ], [ %3, %.lr.ph.i680.prol.loopexit ]
   %.0.lcssa.i685 = phi i32 [ %i.yw, %zend_hash_iterators_update.exit.i440 ], [ %i.yi, %zend_hash_iterators_update.exit.i440.thread ], [ %.1.i683.lcssa.unr, %.lr.ph.i680.prol.loopexit ], [ %.1.i683.1, %bb.ej ] ; 3 uses
   %i.zn = icmp ult i32 %.0.lcssa.i685, %.286.i428844
-  br i1 %i.zn, label %.preheader823.splitthread-pre-split, label %.loopexit824, !llvm.loop !126
+  br i1 %i.zn, label %.preheader823.split, label %.loopexit824, !llvm.loop !126
 
 .loopexit824:                                     ; preds = %zend_hash_iterators_lower_pos.exit688, %zend_hash_iterators_lower_pos.exit688.loopexit.us, %.preheader823.split.us.split.us, %bb.dt
   %.2.i441 = phi i32 [ %.0.i432852, %bb.dt ], [ %.1.i683.us.lcssa, %zend_hash_iterators_lower_pos.exit688.loopexit.us ], [ %i.xe, %.preheader823.split.us.split.us ], [ %.0.lcssa.i685, %zend_hash_iterators_lower_pos.exit688 ]
@@ -2139,7 +2145,7 @@ bb.gg:                                            ; preds = %bb.gf, %bb.ge
   %.idx.i700 = shl nuw nsw i64 %i.ahg, 4          ; 3 uses
   %i.ahh = getelementptr inbounds nuw i8, ptr %i.ahe, i64 %.idx.i700 ; 3 uses
   %.not9.i701 = icmp eq i32 %i.ahf, 0             ; 3 uses
-  %i.ahi = load i8, ptr %i.acb, align 2, !tbaa !31
+  %i.ahi = load i8, ptr %i.acb, align 2, !tbaa !31 ; 2 uses
   %i.ahj = icmp eq i8 %i.ahi, 0
   br i1 %i.ahj, label %.preheader806.split.us, label %.preheader806.split.preheader, !prof !45
 
@@ -2241,13 +2247,9 @@ zend_hash_iterators_lower_pos.exit716.loopexit.us: ; preds = %bb.gk, %.lr.ph.i70
   %i.air = icmp ult i32 %.1.i711.us.lcssa, %.286.i399905
   br i1 %i.air, label %zend_hash_iterators_update.exit.i411.us, label %.loopexit, !llvm.loop !122
 
-.preheader806.splitthread-pre-split:              ; preds = %zend_hash_iterators_lower_pos.exit716
-  %.pr1052 = load i8, ptr %i.acb, align 2, !tbaa !31
-  br label %.preheader806.split
-
-.preheader806.split:                              ; preds = %.preheader806.split.preheader, %.preheader806.splitthread-pre-split
-  %i.ais = phi i8 [ %.pr1052, %.preheader806.splitthread-pre-split ], [ 1, %.preheader806.split.preheader ]
-  %.1.i409 = phi i32 [ %.0.lcssa.i713, %.preheader806.splitthread-pre-split ], [ %.0.i403913, %.preheader806.split.preheader ] ; 4 uses
+.preheader806.split:                              ; preds = %.preheader806.split.preheader, %zend_hash_iterators_lower_pos.exit716
+  %i.ais = phi i8 [ %6, %zend_hash_iterators_lower_pos.exit716 ], [ %i.ahi, %.preheader806.split.preheader ] ; 2 uses
+  %.1.i409 = phi i32 [ %.0.lcssa.i713, %zend_hash_iterators_lower_pos.exit716 ], [ %.0.i403913, %.preheader806.split.preheader ] ; 4 uses
   %.not.i.i410 = icmp eq i8 %i.ais, 0
   br i1 %.not.i.i410, label %zend_hash_iterators_update.exit.i411, label %bb.gl, !prof !45
 
@@ -2273,7 +2275,7 @@ bb.gn:                                            ; preds = %bb.gm
 
 .lr.ph.i702.prol.loopexit:                        ; preds = %.lr.ph.i702.prol, %bb.gm, %bb.gn, %.lr.ph.i702.preheader
   %.010.i703.unr = phi ptr [ %i.ahe, %.lr.ph.i702.preheader ], [ %i.ahn, %bb.gn ], [ %i.ahn, %bb.gm ], [ %i.ahn, %.lr.ph.i702.prol ]
-  br i1 %i.aho, label %zend_hash_iterators_update.exit.i411, label %.lr.ph.i702
+  br i1 %i.aho, label %zend_hash_iterators_update.exit.i411.loopexit, label %.lr.ph.i702
 
 zend_hash_iterators_update.exit.i411.thread:      ; preds = %bb.gl
   %i.aix = load i32, ptr %i.aeg, align 8, !tbaa !50
@@ -2314,9 +2316,14 @@ bb.gr:                                            ; preds = %bb.gq
 bb.gs:                                            ; preds = %bb.gr, %bb.gq, %.lr.ph.i702.1
   %i.ajj = getelementptr inbounds nuw i8, ptr %.010.i703, i64 32 ; 2 uses
   %.not.i704.1 = icmp eq ptr %i.ajj, %i.ahh
-  br i1 %.not.i704.1, label %zend_hash_iterators_update.exit.i411, label %.lr.ph.i702, !llvm.loop !1
+  br i1 %.not.i704.1, label %zend_hash_iterators_update.exit.i411.loopexit, label %.lr.ph.i702, !llvm.loop !1
 
-zend_hash_iterators_update.exit.i411:             ; preds = %.lr.ph.i702.prol.loopexit, %bb.gs, %.preheader806.split
+zend_hash_iterators_update.exit.i411.loopexit:    ; preds = %bb.gs, %.lr.ph.i702.prol.loopexit
+  %.pre969 = load i8, ptr %i.acb, align 2, !tbaa !31
+  br label %zend_hash_iterators_update.exit.i411
+
+zend_hash_iterators_update.exit.i411:             ; preds = %zend_hash_iterators_update.exit.i411.loopexit, %.preheader806.split
+  %5 = phi i8 [ %.pre969, %zend_hash_iterators_update.exit.i411.loopexit ], [ 0, %.preheader806.split ] ; 3 uses
   %i.ajk = add i32 %.1.i409, 1                    ; 3 uses
   %i.ajl = load i32, ptr %i.aeg, align 8, !tbaa !50 ; 6 uses
   br i1 %.not9.i701, label %zend_hash_iterators_lower_pos.exit716, label %.lr.ph.i708.preheader
@@ -2379,9 +2386,10 @@ bb.gw:                                            ; preds = %bb.gv, %.lr.ph.i708
   br i1 %.not.i712.1, label %zend_hash_iterators_lower_pos.exit716, label %.lr.ph.i708, !llvm.loop !0
 
 zend_hash_iterators_lower_pos.exit716:            ; preds = %.lr.ph.i708.prol.loopexit, %bb.gw, %zend_hash_iterators_update.exit.i411.thread, %zend_hash_iterators_update.exit.i411
+  %6 = phi i8 [ %5, %zend_hash_iterators_update.exit.i411 ], [ %i.ais, %zend_hash_iterators_update.exit.i411.thread ], [ %5, %bb.gw ], [ %5, %.lr.ph.i708.prol.loopexit ]
   %.0.lcssa.i713 = phi i32 [ %i.ajl, %zend_hash_iterators_update.exit.i411 ], [ %i.aix, %zend_hash_iterators_update.exit.i411.thread ], [ %.1.i711.lcssa.unr, %.lr.ph.i708.prol.loopexit ], [ %.1.i711.1, %bb.gw ] ; 3 uses
   %i.akc = icmp ult i32 %.0.lcssa.i713, %.286.i399905
-  br i1 %i.akc, label %.preheader806.splitthread-pre-split, label %.loopexit, !llvm.loop !127
+  br i1 %i.akc, label %.preheader806.split, label %.loopexit, !llvm.loop !127
 
 .loopexit:                                        ; preds = %zend_hash_iterators_lower_pos.exit716, %zend_hash_iterators_lower_pos.exit716.loopexit.us, %.preheader806.split.us.split.us, %bb.gg
   %.2.i412 = phi i32 [ %.0.i403913, %bb.gg ], [ %.1.i711.us.lcssa, %zend_hash_iterators_lower_pos.exit716.loopexit.us ], [ %i.aht, %.preheader806.split.us.split.us ], [ %.0.lcssa.i713, %zend_hash_iterators_lower_pos.exit716 ]
@@ -2784,7 +2792,7 @@ bb.iv:                                            ; preds = %bb.iu, %bb.it
   %.idx.i728 = shl nuw nsw i64 %i.arf, 4          ; 3 uses
   %i.arg = getelementptr inbounds nuw i8, ptr %i.ard, i64 %.idx.i728 ; 3 uses
   %.not9.i729 = icmp eq i32 %i.are, 0             ; 3 uses
-  %i.arh = load i8, ptr %i.ame, align 2, !tbaa !31
+  %i.arh = load i8, ptr %i.ame, align 2, !tbaa !31 ; 2 uses
   %i.ari = icmp eq i8 %i.arh, 0
   br i1 %i.ari, label %.preheader811.split.us, label %.preheader811.split.preheader, !prof !45
 
@@ -2886,13 +2894,9 @@ zend_hash_iterators_lower_pos.exit744.loopexit.us: ; preds = %bb.iz, %.lr.ph.i73
   %i.asq = icmp ult i32 %.1.i739.us.lcssa, %.286.i884
   br i1 %i.asq, label %zend_hash_iterators_update.exit.i.us, label %.loopexit812, !llvm.loop !122
 
-.preheader811.splitthread-pre-split:              ; preds = %zend_hash_iterators_lower_pos.exit744
-  %.pr1053 = load i8, ptr %i.ame, align 2, !tbaa !31
-  br label %.preheader811.split
-
-.preheader811.split:                              ; preds = %.preheader811.split.preheader, %.preheader811.splitthread-pre-split
-  %i.asr = phi i8 [ %.pr1053, %.preheader811.splitthread-pre-split ], [ 1, %.preheader811.split.preheader ]
-  %.1.i = phi i32 [ %.0.lcssa.i741, %.preheader811.splitthread-pre-split ], [ %.0.i393892, %.preheader811.split.preheader ] ; 4 uses
+.preheader811.split:                              ; preds = %.preheader811.split.preheader, %zend_hash_iterators_lower_pos.exit744
+  %i.asr = phi i8 [ %8, %zend_hash_iterators_lower_pos.exit744 ], [ %i.arh, %.preheader811.split.preheader ] ; 2 uses
+  %.1.i = phi i32 [ %.0.lcssa.i741, %zend_hash_iterators_lower_pos.exit744 ], [ %.0.i393892, %.preheader811.split.preheader ] ; 4 uses
   %.not.i.i = icmp eq i8 %i.asr, 0
   br i1 %.not.i.i, label %zend_hash_iterators_update.exit.i, label %bb.ja, !prof !45
 
@@ -2918,7 +2922,7 @@ bb.jc:                                            ; preds = %bb.jb
 
 .lr.ph.i730.prol.loopexit:                        ; preds = %.lr.ph.i730.prol, %bb.jb, %bb.jc, %.lr.ph.i730.preheader
   %.010.i731.unr = phi ptr [ %i.ard, %.lr.ph.i730.preheader ], [ %i.arm, %bb.jc ], [ %i.arm, %bb.jb ], [ %i.arm, %.lr.ph.i730.prol ]
-  br i1 %i.arn, label %zend_hash_iterators_update.exit.i, label %.lr.ph.i730
+  br i1 %i.arn, label %zend_hash_iterators_update.exit.i.loopexit, label %.lr.ph.i730
 
 zend_hash_iterators_update.exit.i.thread:         ; preds = %bb.ja
   %i.asw = load i32, ptr %i.aoh, align 8, !tbaa !50
@@ -2959,9 +2963,14 @@ bb.jg:                                            ; preds = %bb.jf
 bb.jh:                                            ; preds = %bb.jg, %bb.jf, %.lr.ph.i730.1
   %i.ati = getelementptr inbounds nuw i8, ptr %.010.i731, i64 32 ; 2 uses
   %.not.i732.1 = icmp eq ptr %i.ati, %i.arg
-  br i1 %.not.i732.1, label %zend_hash_iterators_update.exit.i, label %.lr.ph.i730, !llvm.loop !1
+  br i1 %.not.i732.1, label %zend_hash_iterators_update.exit.i.loopexit, label %.lr.ph.i730, !llvm.loop !1
 
-zend_hash_iterators_update.exit.i:                ; preds = %.lr.ph.i730.prol.loopexit, %bb.jh, %.preheader811.split
+zend_hash_iterators_update.exit.i.loopexit:       ; preds = %bb.jh, %.lr.ph.i730.prol.loopexit
+  %.pre965 = load i8, ptr %i.ame, align 2, !tbaa !31
+  br label %zend_hash_iterators_update.exit.i
+
+zend_hash_iterators_update.exit.i:                ; preds = %zend_hash_iterators_update.exit.i.loopexit, %.preheader811.split
+  %7 = phi i8 [ %.pre965, %zend_hash_iterators_update.exit.i.loopexit ], [ 0, %.preheader811.split ] ; 3 uses
   %i.atj = add i32 %.1.i, 1                       ; 3 uses
   %i.atk = load i32, ptr %i.aoh, align 8, !tbaa !50 ; 6 uses
   br i1 %.not9.i729, label %zend_hash_iterators_lower_pos.exit744, label %.lr.ph.i736.preheader
@@ -3024,9 +3033,10 @@ bb.jl:                                            ; preds = %bb.jk, %.lr.ph.i736
   br i1 %.not.i740.1, label %zend_hash_iterators_lower_pos.exit744, label %.lr.ph.i736, !llvm.loop !0
 
 zend_hash_iterators_lower_pos.exit744:            ; preds = %.lr.ph.i736.prol.loopexit, %bb.jl, %zend_hash_iterators_update.exit.i.thread, %zend_hash_iterators_update.exit.i
+  %8 = phi i8 [ %7, %zend_hash_iterators_update.exit.i ], [ %i.asr, %zend_hash_iterators_update.exit.i.thread ], [ %7, %bb.jl ], [ %7, %.lr.ph.i736.prol.loopexit ]
   %.0.lcssa.i741 = phi i32 [ %i.atk, %zend_hash_iterators_update.exit.i ], [ %i.asw, %zend_hash_iterators_update.exit.i.thread ], [ %.1.i739.lcssa.unr, %.lr.ph.i736.prol.loopexit ], [ %.1.i739.1, %bb.jl ] ; 3 uses
   %i.aub = icmp ult i32 %.0.lcssa.i741, %.286.i884
-  br i1 %i.aub, label %.preheader811.splitthread-pre-split, label %.loopexit812, !llvm.loop !128
+  br i1 %i.aub, label %.preheader811.split, label %.loopexit812, !llvm.loop !128
 
 .loopexit812:                                     ; preds = %zend_hash_iterators_lower_pos.exit744, %zend_hash_iterators_lower_pos.exit744.loopexit.us, %.preheader811.split.us.split.us, %bb.iv
   %.2.i = phi i32 [ %.0.i393892, %bb.iv ], [ %.1.i739.us.lcssa, %zend_hash_iterators_lower_pos.exit744.loopexit.us ], [ %i.ars, %.preheader811.split.us.split.us ], [ %.0.lcssa.i741, %zend_hash_iterators_lower_pos.exit744 ]

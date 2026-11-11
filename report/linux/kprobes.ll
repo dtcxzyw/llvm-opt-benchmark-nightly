@@ -204,20 +204,20 @@ bb.z:                                             ; preds = %bb.y
   %i.fm = getelementptr i8, ptr %2, i64 1104      ; 2 uses
   %i.fn = load i32, ptr %i.fm, align 16           ; 2 uses
   %.not30.i = icmp eq i32 %i.fn, 0
-  %i.fo = load ptr, ptr @kprobe_blacklist, align 8
+  %i.fo = load ptr, ptr @kprobe_blacklist, align 8 ; 2 uses
   %i.fp = icmp eq ptr %i.fo, @kprobe_blacklist
   %or.cond.i = select i1 %.not30.i, i1 true, i1 %i.fp
   br i1 %or.cond.i, label %.loopexit.i46, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.preheader.i43, %kprobe_remove_ksym_blacklist.exit.i
   %i.fq = phi i32 [ %i.gc, %kprobe_remove_ksym_blacklist.exit.i ], [ %i.fn, %.preheader.i43 ]
+  %3 = phi ptr [ %4, %kprobe_remove_ksym_blacklist.exit.i ], [ %i.fo, %.preheader.i43 ] ; 2 uses
   %.029.i = phi i32 [ %i.gd, %kprobe_remove_ksym_blacklist.exit.i ], [ 0, %.preheader.i43 ] ; 2 uses
   %i.fr = load ptr, ptr %i.fk, align 8
   %i.fs = sext i32 %.029.i to i64
   %i.ft = getelementptr [8 x i8], ptr %i.fr, i64 %i.fs
   %i.fu = load i64, ptr %i.ft, align 8            ; 2 uses
   %i.fv = add i64 %i.fu, 1
-  %3 = load ptr, ptr @kprobe_blacklist, align 8   ; 2 uses
   %.not19.i.i.i = icmp eq ptr %3, @kprobe_blacklist
   br i1 %.not19.i.i.i, label %kprobe_remove_ksym_blacklist.exit.i, label %.lr.ph.i.i.i
 
@@ -247,11 +247,13 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i.i.
   br i1 %.not.i.i.i45, label %kprobe_remove_ksym_blacklist.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !123
 
 kprobe_remove_ksym_blacklist.exit.loopexit.i:     ; preds = %bb.ab
+  %.pre.i = load ptr, ptr @kprobe_blacklist, align 8
   %.pre.i.a = load i32, ptr %i.fm, align 16
   br label %kprobe_remove_ksym_blacklist.exit.i
 
 kprobe_remove_ksym_blacklist.exit.i:              ; preds = %kprobe_remove_ksym_blacklist.exit.loopexit.i, %.lr.ph.split.i
   %i.gc = phi i32 [ %.pre.i.a, %kprobe_remove_ksym_blacklist.exit.loopexit.i ], [ %i.fq, %.lr.ph.split.i ] ; 2 uses
+  %4 = phi ptr [ %.pre.i, %kprobe_remove_ksym_blacklist.exit.loopexit.i ], [ @kprobe_blacklist, %.lr.ph.split.i ]
   %i.gd = add nuw i32 %.029.i, 1                  ; 2 uses
   %i.ge = icmp ult i32 %i.gd, %i.gc
   br i1 %i.ge, label %.lr.ph.split.i, label %.loopexit.i46, !llvm.loop !124

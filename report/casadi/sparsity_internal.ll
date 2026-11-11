@@ -204,19 +204,20 @@ _ZNSt6vectorIxSaIxEE6resizeEm.exit110:            ; preds = %_ZSt8_DestroyIPxxEv
 .lr.ph:                                           ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit110
   %i.ha = load ptr, ptr %i.a, align 8, !tbaa !69  ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 16
-  %i.hc = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
+  %i.hc = getelementptr inbounds nuw i8, ptr %i.ha, i64 8 ; 2 uses
+  %.pre187 = load i64, ptr %i.hc, align 8, !tbaa !43
   br label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit
   %i.hd = phi i64 [ %i.gy, %.lr.ph ], [ %i.hw, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit ]
-  %.0180.a = phi i64 [ %i.gv, %.lr.ph ], [ %i.hx, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit ] ; 2 uses
-  %.162179.a = phi i64 [ %.061182, %.lr.ph ], [ %.018.lcssa.i, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit ] ; 2 uses
-  %15 = getelementptr inbounds [8 x i8], ptr %i.bm, i64 %.0180.a
-  %16 = load i64, ptr %15, align 8, !tbaa !43
-  %i.he = load i64, ptr %i.hc, align 8, !tbaa !43
-  %i.hf = getelementptr [8 x i8], ptr %i.ha, i64 %i.he
+  %.0180.a = phi i64 [ %.pre187, %.lr.ph ], [ %16, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit ] ; 2 uses
+  %.162179.a = phi i64 [ %i.gv, %.lr.ph ], [ %i.hx, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit ] ; 2 uses
+  %.162179 = phi i64 [ %.061182, %.lr.ph ], [ %.018.lcssa.i, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit ] ; 2 uses
+  %15 = getelementptr inbounds [8 x i8], ptr %i.bm, i64 %.162179.a
+  %i.he = load i64, ptr %15, align 8, !tbaa !43
+  %i.hf = getelementptr [8 x i8], ptr %i.ha, i64 %.0180.a
   %i.hg = getelementptr i8, ptr %i.hf, i64 24
-  %i.hh = getelementptr inbounds [8 x i8], ptr %i.hb, i64 %16 ; 2 uses
+  %i.hh = getelementptr inbounds [8 x i8], ptr %i.hb, i64 %i.he ; 2 uses
   %i.hi = load i64, ptr %i.hh, align 8, !tbaa !43 ; 2 uses
   %i.hj = getelementptr i8, ptr %i.hh, i64 8      ; 2 uses
   %i.hk = load i64, ptr %i.hj, align 8, !tbaa !43 ; 2 uses
@@ -226,7 +227,7 @@ bb.at:                                            ; preds = %.lr.ph, %_ZNK6casad
 .lr.ph.i:                                         ; preds = %bb.at, %bb.av
   %i.hm = phi i64 [ %i.ht, %bb.av ], [ %i.hk, %bb.at ]
   %.021.i = phi i64 [ %i.hu, %bb.av ], [ %i.hi, %bb.at ] ; 2 uses
-  %.01820.i = phi i64 [ %.1.i, %bb.av ], [ %.162179.a, %bb.at ] ; 3 uses
+  %.01820.i = phi i64 [ %.1.i, %bb.av ], [ %.162179, %bb.at ] ; 3 uses
   %i.hn = getelementptr inbounds [8 x i8], ptr %i.hg, i64 %.021.i
   %i.ho = load i64, ptr %i.hn, align 8, !tbaa !43 ; 2 uses
   %i.hp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0158.0, i64 %i.ho ; 2 uses
@@ -250,13 +251,15 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph.i
   br i1 %i.hv, label %.lr.ph.i, label %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit, !llvm.loop !20
 
 _ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit: ; preds = %bb.av
+  %.pre = load i64, ptr %i.hc, align 8, !tbaa !43
   %.pre.a = load i64, ptr %i.gx, align 8, !tbaa !43
   br label %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit
 
 _ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit: ; preds = %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit, %bb.at
   %i.hw = phi i64 [ %i.hd, %bb.at ], [ %.pre.a, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit ] ; 2 uses
-  %.018.lcssa.i = phi i64 [ %.162179.a, %bb.at ], [ %.1.i, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit ] ; 2 uses
-  %i.hx = add nsw i64 %.0180.a, 1                 ; 2 uses
+  %16 = phi i64 [ %.0180.a, %bb.at ], [ %.pre, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit ]
+  %.018.lcssa.i = phi i64 [ %.162179, %bb.at ], [ %.1.i, %_ZNK6casadi16SparsityInternal7scatterExRSt6vectorIxSaIxEExPxx.exit.loopexit ] ; 2 uses
+  %i.hx = add nsw i64 %.162179.a, 1               ; 2 uses
   %i.hy = icmp slt i64 %i.hx, %i.hw
   br i1 %i.hy, label %bb.at, label %.loopexit, !llvm.loop !343
 

@@ -202,10 +202,11 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @opal_process_info, i64 304), align 8, !tbaa !18 ; 2 uses
   %i.e = icmp ult i32 %i.d, 2147483647
+  %.pre16 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_btl_sm_component, i64 5960), align 8, !tbaa !46 ; 2 uses
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %fini_sm_endpoint.exit, %.preheader
-  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_btl_sm_component, i64 5960), align 8, !tbaa !46
+  %1 = phi ptr [ %.pre16, %.preheader ], [ %3, %fini_sm_endpoint.exit ]
   tail call void @free(ptr noundef %1) #13
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @mca_btl_sm_component, i64 5960), align 8, !tbaa !46
   store i8 0, ptr %i.a, align 8, !tbaa !24
@@ -218,8 +219,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader, %fini_sm_endpoint.exit
   %i.i = phi i32 [ %i.t, %fini_sm_endpoint.exit ], [ %i.d, %.preheader ] ; 2 uses
+  %2 = phi ptr [ %3, %fini_sm_endpoint.exit ], [ %.pre16, %.preheader ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %fini_sm_endpoint.exit ], [ 0, %.preheader ] ; 2 uses
-  %2 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_btl_sm_component, i64 5960), align 8, !tbaa !46
   %i.j = getelementptr inbounds nuw [360 x i8], ptr %2, i64 %indvars.iv ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 128
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !73
@@ -244,11 +245,13 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not.i.i, label %fini_sm_endpoint.exit.loopexit, label %.lr.ph.i.i, !llvm.loop !2
 
 fini_sm_endpoint.exit.loopexit:                   ; preds = %.lr.ph.i.i
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_btl_sm_component, i64 5960), align 8, !tbaa !46
   %.pre.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @opal_process_info, i64 304), align 8, !tbaa !18
   br label %fini_sm_endpoint.exit
 
 fini_sm_endpoint.exit:                            ; preds = %fini_sm_endpoint.exit.loopexit, %.lr.ph, %bb.b
   %i.t = phi i32 [ %.pre.a, %fini_sm_endpoint.exit.loopexit ], [ %i.i, %.lr.ph ], [ %i.i, %bb.b ] ; 2 uses
+  %3 = phi ptr [ %.pre, %fini_sm_endpoint.exit.loopexit ], [ %2, %.lr.ph ], [ %2, %bb.b ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = add i32 %i.t, 1
   %i.v = sext i32 %i.u to i64

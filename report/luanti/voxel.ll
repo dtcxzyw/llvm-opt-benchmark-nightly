@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   %i.k = sext i16 %i.h to i32
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.pre = load i16, ptr %i.m, align 4, !tbaa !40  ; 2 uses
   %i.t = icmp sgt i32 %i.b, 0
@@ -223,6 +223,10 @@ bb.c:                                             ; preds = %.lr.ph33, %._crit_e
 
 .lr.ph28.preheader:                               ; preds = %bb.c
   %i.y = sext i16 %i.x to i32
+  %.pre36 = load i32, ptr %i.p, align 4, !tbaa !34
+  %.pre38 = load i16, ptr %i.r, align 2, !tbaa !35
+  %.pre40 = load i16, ptr %i.n, align 8, !tbaa !36
+  %.pre44 = load i32, ptr %i.q, align 8, !tbaa !33
   br label %.lr.ph28
 
 ._crit_edge29.loopexit:                           ; preds = %._crit_edge
@@ -231,34 +235,34 @@ bb.c:                                             ; preds = %.lr.ph33, %._crit_e
 
 ._crit_edge29:                                    ; preds = %._crit_edge29.loopexit, %bb.c
   %i.z = phi i16 [ %.pre36.a, %._crit_edge29.loopexit ], [ %i.u, %bb.c ] ; 2 uses
-  %i.aa = phi i16 [ %i.ax, %._crit_edge29.loopexit ], [ %i.v, %bb.c ]
-  %i.ab = phi i16 [ %i.ax, %._crit_edge29.loopexit ], [ %i.w, %bb.c ]
+  %i.aa = phi i16 [ %8, %._crit_edge29.loopexit ], [ %i.v, %bb.c ]
+  %i.ab = phi i16 [ %8, %._crit_edge29.loopexit ], [ %i.w, %bb.c ]
   %i.ac = add nsw i32 %.02131, 1
   %i.ad = sext i16 %i.z to i32
   %.not.not = icmp slt i32 %.02131, %i.ad
   br i1 %.not.not, label %bb.c, label %_ZNK9VoxelArea14hasEmptyExtentEv.exit.thread, !llvm.loop !144
 
 .lr.ph28:                                         ; preds = %.lr.ph28.preheader, %._crit_edge
-  %i.ae = phi i16 [ %i.ax, %._crit_edge ], [ %i.v, %.lr.ph28.preheader ]
+  %3 = phi i32 [ %7, %._crit_edge ], [ %.pre44, %.lr.ph28.preheader ] ; 2 uses
+  %4 = phi i16 [ %8, %._crit_edge ], [ %i.v, %.lr.ph28.preheader ]
+  %5 = phi i16 [ %9, %._crit_edge ], [ %.pre40, %.lr.ph28.preheader ] ; 2 uses
+  %i.ae = phi i16 [ %i.ax, %._crit_edge ], [ %.pre38, %.lr.ph28.preheader ] ; 2 uses
+  %6 = phi i32 [ %10, %._crit_edge ], [ %.pre36, %.lr.ph28.preheader ] ; 2 uses
   %.02026 = phi i32 [ %i.ay, %._crit_edge ], [ %i.y, %.lr.ph28.preheader ] ; 3 uses
   br i1 %i.t, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph28
   %i.af = load i16, ptr %1, align 4, !tbaa !36
   %i.ag = sext i16 %i.af to i32                   ; 2 uses
-  %3 = load i16, ptr %i.n, align 8, !tbaa !36
-  %i.ah = sext i16 %3 to i32                      ; 2 uses
+  %i.ah = sext i16 %5 to i32                      ; 2 uses
   %i.ai = sub nsw i32 %i.ag, %i.ah
   %i.aj = load i16, ptr %i.o, align 4, !tbaa !32
   %i.ak = sext i16 %i.aj to i32
   %i.al = sub i32 %.02131, %i.ak
-  %4 = load i32, ptr %i.q, align 8, !tbaa !33
-  %i.am = mul i32 %i.al, %4
+  %i.am = mul i32 %i.al, %3
   %i.an = add i32 %i.am, %.02026
-  %5 = load i16, ptr %i.r, align 2, !tbaa !35
-  %i.ao = sext i16 %5 to i32
+  %i.ao = sext i16 %i.ae to i32
   %i.ap = sub i32 %i.an, %i.ao
-  %6 = load i32, ptr %i.p, align 4, !tbaa !34
   %i.aq = mul i32 %i.ap, %6                       ; 2 uses
   %i.ar = add nsw i32 %i.ai, %i.aq
   %i.as = add nsw i32 %i.ar, %i.b
@@ -269,13 +273,21 @@ bb.c:                                             ; preds = %.lr.ph33, %._crit_e
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre35 = load i32, ptr %i.p, align 4, !tbaa !34
+  %.pre37 = load i16, ptr %i.r, align 2, !tbaa !35
+  %.pre39 = load i16, ptr %i.n, align 8, !tbaa !36
   %.pre35.a = load i16, ptr %i.m, align 4, !tbaa !40
+  %.pre43 = load i32, ptr %i.q, align 8, !tbaa !33
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph28
-  %i.ax = phi i16 [ %.pre35.a, %._crit_edge.loopexit ], [ %i.ae, %.lr.ph28 ] ; 4 uses
+  %7 = phi i32 [ %.pre43, %._crit_edge.loopexit ], [ %3, %.lr.ph28 ]
+  %8 = phi i16 [ %.pre35.a, %._crit_edge.loopexit ], [ %4, %.lr.ph28 ] ; 4 uses
+  %9 = phi i16 [ %.pre39, %._crit_edge.loopexit ], [ %5, %.lr.ph28 ]
+  %i.ax = phi i16 [ %.pre37, %._crit_edge.loopexit ], [ %i.ae, %.lr.ph28 ]
+  %10 = phi i32 [ %.pre35, %._crit_edge.loopexit ], [ %6, %.lr.ph28 ]
   %i.ay = add nsw i32 %.02026, 1
-  %i.az = sext i16 %i.ax to i32
+  %i.az = sext i16 %8 to i32
   %.not22.not = icmp slt i32 %.02026, %i.az
   br i1 %.not22.not, label %.lr.ph28, label %._crit_edge29.loopexit, !llvm.loop !145
 
@@ -322,11 +334,11 @@ bb.b:                                             ; preds = %bb.a
   %i.k = sext i16 %i.h to i32
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   %i.s = xor i8 %2, -1
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.pre = load i16, ptr %i.m, align 4, !tbaa !40  ; 2 uses
@@ -344,6 +356,10 @@ bb.c:                                             ; preds = %.lr.ph33, %._crit_e
 
 .lr.ph28.preheader:                               ; preds = %bb.c
   %i.z = sext i16 %i.y to i32
+  %.pre36 = load i32, ptr %i.p, align 4, !tbaa !34
+  %.pre38 = load i16, ptr %i.r, align 2, !tbaa !35
+  %.pre40 = load i16, ptr %i.n, align 8, !tbaa !36
+  %.pre44 = load i32, ptr %i.q, align 8, !tbaa !33
   br label %.lr.ph28
 
 ._crit_edge29.loopexit:                           ; preds = %._crit_edge
@@ -352,34 +368,34 @@ bb.c:                                             ; preds = %.lr.ph33, %._crit_e
 
 ._crit_edge29:                                    ; preds = %._crit_edge29.loopexit, %bb.c
   %i.aa = phi i16 [ %.pre36.a, %._crit_edge29.loopexit ], [ %i.v, %bb.c ] ; 2 uses
-  %i.ab = phi i16 [ %i.ay, %._crit_edge29.loopexit ], [ %i.w, %bb.c ]
-  %i.ac = phi i16 [ %i.ay, %._crit_edge29.loopexit ], [ %i.x, %bb.c ]
+  %i.ab = phi i16 [ %8, %._crit_edge29.loopexit ], [ %i.w, %bb.c ]
+  %i.ac = phi i16 [ %8, %._crit_edge29.loopexit ], [ %i.x, %bb.c ]
   %i.ad = add nsw i32 %.02131, 1
   %i.ae = sext i16 %i.aa to i32
   %.not.not = icmp slt i32 %.02131, %i.ae
   br i1 %.not.not, label %bb.c, label %_ZNK9VoxelArea14hasEmptyExtentEv.exit.thread, !llvm.loop !147
 
 .lr.ph28:                                         ; preds = %.lr.ph28.preheader, %._crit_edge
-  %i.af = phi i16 [ %i.ay, %._crit_edge ], [ %i.w, %.lr.ph28.preheader ]
+  %3 = phi i32 [ %7, %._crit_edge ], [ %.pre44, %.lr.ph28.preheader ] ; 2 uses
+  %4 = phi i16 [ %8, %._crit_edge ], [ %i.w, %.lr.ph28.preheader ]
+  %5 = phi i16 [ %9, %._crit_edge ], [ %.pre40, %.lr.ph28.preheader ] ; 2 uses
+  %i.af = phi i16 [ %i.ay, %._crit_edge ], [ %.pre38, %.lr.ph28.preheader ] ; 2 uses
+  %6 = phi i32 [ %10, %._crit_edge ], [ %.pre36, %.lr.ph28.preheader ] ; 2 uses
   %.02026 = phi i32 [ %i.az, %._crit_edge ], [ %i.z, %.lr.ph28.preheader ] ; 3 uses
   br i1 %i.u, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph28
   %i.ag = load i16, ptr %1, align 4, !tbaa !36
   %i.ah = sext i16 %i.ag to i32                   ; 2 uses
-  %3 = load i16, ptr %i.n, align 8, !tbaa !36
-  %i.ai = sext i16 %3 to i32                      ; 2 uses
+  %i.ai = sext i16 %5 to i32                      ; 2 uses
   %i.aj = sub nsw i32 %i.ah, %i.ai
   %i.ak = load i16, ptr %i.o, align 4, !tbaa !32
   %i.al = sext i16 %i.ak to i32
   %i.am = sub i32 %.02131, %i.al
-  %4 = load i32, ptr %i.q, align 8, !tbaa !33
-  %i.an = mul i32 %i.am, %4
+  %i.an = mul i32 %i.am, %3
   %i.ao = add i32 %i.an, %.02026
-  %5 = load i16, ptr %i.r, align 2, !tbaa !35
-  %i.ap = sext i16 %5 to i32
+  %i.ap = sext i16 %i.af to i32
   %i.aq = sub i32 %i.ao, %i.ap
-  %6 = load i32, ptr %i.p, align 4, !tbaa !34
   %i.ar = mul i32 %i.aq, %6                       ; 2 uses
   %i.as = add nsw i32 %i.aj, %i.ar
   %i.at = add nsw i32 %i.as, %i.b
@@ -390,13 +406,21 @@ bb.c:                                             ; preds = %.lr.ph33, %._crit_e
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre35 = load i32, ptr %i.p, align 4, !tbaa !34
+  %.pre37 = load i16, ptr %i.r, align 2, !tbaa !35
+  %.pre39 = load i16, ptr %i.n, align 8, !tbaa !36
   %.pre35.a = load i16, ptr %i.m, align 4, !tbaa !40
+  %.pre43 = load i32, ptr %i.q, align 8, !tbaa !33
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph28
-  %i.ay = phi i16 [ %.pre35.a, %._crit_edge.loopexit ], [ %i.af, %.lr.ph28 ] ; 4 uses
+  %7 = phi i32 [ %.pre43, %._crit_edge.loopexit ], [ %3, %.lr.ph28 ]
+  %8 = phi i16 [ %.pre35.a, %._crit_edge.loopexit ], [ %4, %.lr.ph28 ] ; 4 uses
+  %9 = phi i16 [ %.pre39, %._crit_edge.loopexit ], [ %5, %.lr.ph28 ]
+  %i.ay = phi i16 [ %.pre37, %._crit_edge.loopexit ], [ %i.af, %.lr.ph28 ]
+  %10 = phi i32 [ %.pre35, %._crit_edge.loopexit ], [ %6, %.lr.ph28 ]
   %i.az = add nsw i32 %.02026, 1
-  %i.ba = sext i16 %i.ay to i32
+  %i.ba = sext i16 %8 to i32
   %.not22.not = icmp slt i32 %.02026, %i.ba
   br i1 %.not22.not, label %.lr.ph28, label %._crit_edge29.loopexit, !llvm.loop !148
 

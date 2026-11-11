@@ -205,11 +205,12 @@ _.exit99.i:                                       ; preds = %bb.f, %bb.e
   %i.az = call i32 @fputc(i32 noundef 10, ptr noundef nonnull %i.h) ; 0 uses
   %fwrite83.i = call i64 @fwrite(ptr nonnull @.str.62, i64 18, i64 1, ptr nonnull %i.h) ; 0 uses
   %fwrite84.i = call i64 @fwrite(ptr nonnull @.str.57, i64 18, i64 1, ptr nonnull %i.h) ; 0 uses
+  %.pre122.i = load ptr, ptr @branch_table, align 8, !tbaa !39
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge115.i, %._crit_edge109.i
+  %5 = phi ptr [ %.pre122.i, %._crit_edge109.i ], [ %6, %._crit_edge115.i ] ; 2 uses
   %.1116.i = phi i64 [ 0, %._crit_edge109.i ], [ %i.ci, %._crit_edge115.i ] ; 2 uses
-  %5 = load ptr, ptr @branch_table, align 8, !tbaa !39
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.1116.i
   %.171110.i = load ptr, ptr %i.ba, align 8, !tbaa !58 ; 2 uses
   %.not94111.i = icmp eq ptr %.171110.i, null
@@ -285,9 +286,14 @@ write_branch_report.exit.i:                       ; preds = %bb.n, %bb.m
   %i.ch = call i32 @fputc(i32 noundef 10, ptr noundef nonnull %i.h) ; 0 uses
   %.171.i = load ptr, ptr %.171112.i, align 8, !tbaa !58 ; 2 uses
   %.not94.i = icmp eq ptr %.171.i, null
-  br i1 %.not94.i, label %._crit_edge115.i, label %.lr.ph114.i, !llvm.loop !211
+  br i1 %.not94.i, label %._crit_edge115.loopexit.i, label %.lr.ph114.i, !llvm.loop !211
 
-._crit_edge115.i:                                 ; preds = %write_branch_report.exit.i, %bb.g
+._crit_edge115.loopexit.i:                        ; preds = %write_branch_report.exit.i
+  %.pre.i = load ptr, ptr @branch_table, align 8, !tbaa !39
+  br label %._crit_edge115.i
+
+._crit_edge115.i:                                 ; preds = %._crit_edge115.loopexit.i, %bb.g
+  %6 = phi ptr [ %.pre.i, %._crit_edge115.loopexit.i ], [ %5, %bb.g ]
   %i.ci = add nuw nsw i64 %.1116.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ci, 1039
   br i1 %exitcond.not.i, label %bb.o, label %bb.g, !llvm.loop !212
@@ -690,6 +696,7 @@ bb.ad:                                            ; preds = %keep_pack.exit
 bb.ae:                                            ; preds = %bb.ad
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ea, i64 208
   %i.ei = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.eg, ptr noundef nonnull @.str.290, ptr noundef nonnull %i.eh) #23 ; 0 uses
+  %.pre47 = load ptr, ptr @branch_table, align 8, !tbaa !39
   br label %bb.af
 
 .preheader:                                       ; preds = %._crit_edge
@@ -702,8 +709,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.lr.ph44
 
 bb.af:                                            ; preds = %bb.ae, %._crit_edge
+  %4 = phi ptr [ %.pre47, %bb.ae ], [ %5, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.ae ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %4 = load ptr, ptr @branch_table, align 8, !tbaa !39
   %i.ej = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
   %.02037 = load ptr, ptr %i.ej, align 8, !tbaa !58 ; 2 uses
   %.not3038 = icmp eq ptr %.02037, null
@@ -735,9 +742,14 @@ bb.ah:                                            ; preds = %.lr.ph, %bb.ag
   %i.eu = phi i32 [ %i.ek, %.lr.ph ], [ %.pre.a, %bb.ag ]
   %.020 = load ptr, ptr %.02039, align 8, !tbaa !58 ; 2 uses
   %.not30 = icmp eq ptr %.020, null
-  br i1 %.not30, label %._crit_edge, label %.lr.ph, !llvm.loop !227
+  br i1 %.not30, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !227
 
-._crit_edge:                                      ; preds = %bb.ah, %bb.af
+._crit_edge.loopexit:                             ; preds = %bb.ah
+  %.pre = load ptr, ptr @branch_table, align 8, !tbaa !39
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.af
+  %5 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %4, %bb.af ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 1039
   br i1 %exitcond.not, label %.preheader, label %bb.af, !llvm.loop !228

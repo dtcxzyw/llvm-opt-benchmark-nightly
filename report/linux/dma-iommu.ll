@@ -204,13 +204,14 @@ iommu_dma_free_fq_single.exit.i:                  ; preds = %bb.e, %bb.d
 
 bb.f:                                             ; preds = %bb.c
   %i.z = ptrtoint ptr %i.m to i64
+  %.pre18.i.i = load i64, ptr @__cpu_possible_mask, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge.i.i, %bb.f
-  %i.aa = phi i64 [ 0, %bb.f ], [ %i.ay, %._crit_edge.i.i ]
-  %1 = load i64, ptr @__cpu_possible_mask, align 8
-  %i.ab = shl nsw i64 -1, %i.aa
-  %i.ac = and i64 %1, %i.ab                       ; 2 uses
+  %i.aa = phi i64 [ %.pre18.i.i, %bb.f ], [ %2, %._crit_edge.i.i ] ; 2 uses
+  %1 = phi i64 [ 0, %bb.f ], [ %i.ay, %._crit_edge.i.i ]
+  %i.ab = shl nsw i64 -1, %1
+  %i.ac = and i64 %i.ab, %i.aa                    ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.ac, 0
   br i1 %.not.i.i.i, label %iommu_dma_free_fq_percpu.exit.i, label %find_next_bit.exit.i.i
 
@@ -248,9 +249,14 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i5.i
   %i.av = and i32 %i.au, %i.at                    ; 2 uses
   %i.aw = load i32, ptr %i.an, align 8
   %.not.i6.i = icmp eq i32 %i.av, %i.aw
-  br i1 %.not.i6.i, label %._crit_edge.i.i, label %bb.i, !llvm.loop !40
+  br i1 %.not.i6.i, label %._crit_edge.loopexit.i.i, label %bb.i, !llvm.loop !40
 
-._crit_edge.i.i:                                  ; preds = %bb.i, %bb.h
+._crit_edge.loopexit.i.i:                         ; preds = %bb.i
+  %.pre.i.i = load i64, ptr @__cpu_possible_mask, align 8
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.h
+  %2 = phi i64 [ %.pre.i.i, %._crit_edge.loopexit.i.i ], [ %i.aa, %bb.h ]
   %i.ax = add nuw nsw i64 %i.ad, 1
   %i.ay = and i64 %i.ax, 127                      ; 2 uses
   %i.az = icmp samesign ugt i64 %i.ay, 63

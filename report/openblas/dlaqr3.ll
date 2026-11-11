@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %._crit_edge.thread, %._crit_edge
   store i32 %i.ea, ptr %12, align 4, !tbaa !13
-  %i.fw = load i32, ptr %i.h, align 4, !tbaa !13  ; 2 uses
+  %i.fw = load i32, ptr %i.h, align 4, !tbaa !13  ; 3 uses
   %i.fx = add nsw i32 %i.fw, 1                    ; 2 uses
   store i32 %i.fx, ptr %i.g, align 4, !tbaa !13
   %.not657679.not = icmp slt i32 %i.fw, %i.ea
@@ -349,6 +349,7 @@ bb.x:                                             ; preds = %bb.v, %bb.w, %bb.s,
 
 ._crit_edge682:                                   ; preds = %bb.x
   %.pre = load i32, ptr %i.o, align 4, !tbaa !13  ; 2 uses
+  %.pre715.pre = load i32, ptr %i.h, align 4, !tbaa !13 ; 2 uses
   %i.jn = icmp eq i32 %.pr, 0
   %spec.select = select i1 %i.jn, double 0.000000e+00, double %.0625 ; 2 uses
   %i.jo = icmp slt i32 %.pr, %.pre
@@ -360,17 +361,18 @@ bb.y:                                             ; preds = %._crit_edge682
   br label %bb.z
 
 .loopexit675:                                     ; preds = %bb.ak, %bb.al
+  %.pre712 = load i32, ptr %i.h, align 4, !tbaa !13 ; 2 uses
   %i.jr = icmp eq i32 %.2, 0
   br i1 %i.jr, label %bb.z, label %.loopexit676.loopexit
 
 bb.z:                                             ; preds = %bb.y, %.loopexit675
-  %.0631691.a = phi i32 [ %i.jp, %bb.y ], [ %.2633, %.loopexit675 ] ; 3 uses
-  %26 = add nsw i32 %.0631691.a, -1               ; 3 uses
-  %27 = load i32, ptr %i.h, align 4, !tbaa !13    ; 3 uses
-  %i.js = add nsw i32 %27, 1                      ; 3 uses
+  %.0631691.a = phi i32 [ %.pre715.pre, %bb.y ], [ %.pre712, %.loopexit675 ] ; 4 uses
+  %.0631691 = phi i32 [ %i.jp, %bb.y ], [ %.2633, %.loopexit675 ] ; 3 uses
+  %26 = add nsw i32 %.0631691, -1                 ; 3 uses
+  %i.js = add nsw i32 %.0631691.a, 1              ; 3 uses
   %i.jt = load i32, ptr %12, align 4, !tbaa !13
   %i.ju = icmp eq i32 %i.js, %i.jt
-  %i.jv = add nsw i32 %27, 2                      ; 3 uses
+  %i.jv = add nsw i32 %.0631691.a, 2              ; 3 uses
   br i1 %i.ju, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -380,13 +382,13 @@ bb.aa:                                            ; preds = %bb.z
   %i.jz = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.jy
   %i.ka = load double, ptr %i.jz, align 8, !tbaa !15
   %i.kb = fcmp oeq double %i.ka, 0.000000e+00
-  %i.kc = add nsw i32 %27, 3
+  %i.kc = add nsw i32 %.0631691.a, 3
   %spec.select671 = select i1 %i.kb, i32 %i.jv, i32 %i.kc
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.z, %bb.aa
   %.0627 = phi i32 [ %spec.select671, %bb.aa ], [ %i.jv, %bb.z ] ; 2 uses
-  %.not659.not683 = icmp slt i32 %.0627, %.0631691.a
+  %.not659.not683 = icmp slt i32 %.0627, %.0631691
   br i1 %.not659.not683, label %.lr.ph688.preheader, label %.loopexit676.loopexit
 
 .lr.ph688.preheader:                              ; preds = %bb.ab
@@ -519,18 +521,19 @@ bb.al:                                            ; preds = %bb.ak
   %i.nh = fcmp oeq double %i.ng, 0.000000e+00
   %i.ni = add nsw i32 %.2633, 2
   %spec.select673 = select i1 %i.nh, i32 %i.nb, i32 %i.ni ; 2 uses
-  %.not659.not = icmp slt i32 %spec.select673, %.0631691.a
+  %.not659.not = icmp slt i32 %spec.select673, %.0631691
   br i1 %.not659.not, label %.lr.ph688, label %.loopexit675
 
 .loopexit676.loopexit:                            ; preds = %bb.ab, %.loopexit675
+  %27 = phi i32 [ %.pre712, %.loopexit675 ], [ %.0631691.a, %bb.ab ]
   %.pre712.a = load i32, ptr %i.o, align 4, !tbaa !13
   br label %.loopexit676
 
 .loopexit676:                                     ; preds = %._crit_edge682.thread, %.loopexit676.loopexit, %._crit_edge682
   %spec.select742 = phi double [ %spec.select, %.loopexit676.loopexit ], [ %spec.select, %._crit_edge682 ], [ %spec.select741, %._crit_edge682.thread ] ; 2 uses
-  %i.nj = phi i32 [ %.pre712.a, %.loopexit676.loopexit ], [ %.pre, %._crit_edge682 ], [ %i.ea, %._crit_edge682.thread ] ; 3 uses
-  %28 = load i32, ptr %i.h, align 4, !tbaa !13    ; 2 uses
-  %.not660.not692 = icmp sgt i32 %i.nj, %28
+  %i.nj = phi i32 [ %27, %.loopexit676.loopexit ], [ %.pre715.pre, %._crit_edge682 ], [ %i.fw, %._crit_edge682.thread ] ; 2 uses
+  %28 = phi i32 [ %.pre712.a, %.loopexit676.loopexit ], [ %.pre, %._crit_edge682 ], [ %i.ea, %._crit_edge682.thread ] ; 3 uses
+  %.not660.not692 = icmp sgt i32 %28, %i.nj
   br i1 %.not660.not692, label %.lr.ph695, label %._crit_edge696
 
 .lr.ph695:                                        ; preds = %.loopexit676
@@ -539,8 +542,8 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph695, %bb.ar
-  %i.nm = phi i32 [ %28, %.lr.ph695 ], [ %i.pj, %bb.ar ] ; 3 uses
-  %.3693 = phi i32 [ %i.nj, %.lr.ph695 ], [ %.4, %bb.ar ] ; 13 uses
+  %i.nm = phi i32 [ %i.nj, %.lr.ph695 ], [ %i.pj, %bb.ar ] ; 3 uses
+  %.3693 = phi i32 [ %28, %.lr.ph695 ], [ %.4, %bb.ar ] ; 13 uses
   %i.nn = add nsw i32 %i.nm, 1
   %i.no = icmp eq i32 %.3693, %i.nn
   br i1 %i.no, label %bb.an, label %bb.ao
@@ -624,7 +627,7 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aq, %bb.
   br label %._crit_edge696
 
 ._crit_edge696:                                   ; preds = %._crit_edge696.loopexit, %.loopexit676
-  %i.pk = phi i32 [ %.pre714, %._crit_edge696.loopexit ], [ %i.nj, %.loopexit676 ]
+  %i.pk = phi i32 [ %.pre714, %._crit_edge696.loopexit ], [ %28, %.loopexit676 ]
   %i.pl = load i32, ptr %12, align 4, !tbaa !13   ; 2 uses
   %i.pm = icmp slt i32 %i.pl, %i.pk
   %i.pn = fcmp oeq double %spec.select742, 0.000000e+00 ; 3 uses

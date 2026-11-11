@@ -205,8 +205,10 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %.not.i382.i, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit391.i, label %.lr.ph14.i383.i
 
 .lr.ph679.i:                                      ; preds = %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit391.2.i
-  %i.akl = getelementptr inbounds nuw i8, ptr %i.gp, i64 40
-  %i.akm = getelementptr inbounds nuw i8, ptr %i.gp, i64 16
+  %i.akl = getelementptr inbounds nuw i8, ptr %i.gp, i64 40 ; 2 uses
+  %i.akm = getelementptr inbounds nuw i8, ptr %i.gp, i64 16 ; 2 uses
+  %.pre856.i = load ptr, ptr %i.akl, align 8, !tbaa !141
+  %.pre858.i = load i64, ptr %i.akm, align 8, !tbaa !122
   %.pre855.i.a = load i64, ptr %i.gs, align 8, !tbaa !97
   br label %bb.bh
 
@@ -490,24 +492,28 @@ _ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit391.2.i: ; preds = %_ZN3jxl9FillIma
 
 bb.bh:                                            ; preds = %._crit_edge675.i, %.lr.ph679.i
   %i.aon = phi i64 [ %i.aom, %.lr.ph679.i ], [ %i.aor, %._crit_edge675.i ]
-  %i.aoo = phi i64 [ %.pre855.i.a, %.lr.ph679.i ], [ %i.aos, %._crit_edge675.i ]
+  %i.aoo = phi i64 [ %.pre855.i.a, %.lr.ph679.i ], [ %27, %._crit_edge675.i ]
+  %25 = phi i64 [ %.pre858.i, %.lr.ph679.i ], [ %i.aos, %._crit_edge675.i ] ; 2 uses
+  %26 = phi ptr [ %.pre856.i, %.lr.ph679.i ], [ %28, %._crit_edge675.i ] ; 2 uses
   %.6678.i = phi ptr [ %.0131, %.lr.ph679.i ], [ %.7.lcssa.i, %._crit_edge675.i ] ; 2 uses
   %.0337677.i = phi i64 [ 0, %.lr.ph679.i ], [ %i.aot, %._crit_edge675.i ] ; 2 uses
-  %25 = load ptr, ptr %i.akl, align 8, !tbaa !141
-  %26 = load i64, ptr %i.akm, align 8, !tbaa !122
-  %i.aop = mul i64 %26, %.0337677.i
-  %i.aoq = getelementptr inbounds nuw i8, ptr %25, i64 %i.aop ; 2 uses
+  %i.aop = mul i64 %.0337677.i, %25
+  %i.aoq = getelementptr inbounds nuw i8, ptr %26, i64 %i.aop ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.aoq, i64 64) ]
   %.not730.i = icmp eq i64 %i.aoo, 0
   br i1 %.not730.i, label %._crit_edge675.i, label %.lr.ph674.i
 
 ._crit_edge675.loopexit.i:                        ; preds = %.lr.ph674.i
+  %.pre855.i = load ptr, ptr %i.akl, align 8, !tbaa !141
+  %.pre857.i = load i64, ptr %i.akm, align 8, !tbaa !122
   %.pre856.i.a = load i64, ptr %i.gu, align 8, !tbaa !98
   br label %._crit_edge675.i
 
 ._crit_edge675.i:                                 ; preds = %._crit_edge675.loopexit.i, %bb.bh
   %i.aor = phi i64 [ %i.aon, %bb.bh ], [ %.pre856.i.a, %._crit_edge675.loopexit.i ] ; 2 uses
-  %i.aos = phi i64 [ 0, %bb.bh ], [ %i.apf, %._crit_edge675.loopexit.i ]
+  %27 = phi i64 [ 0, %bb.bh ], [ %i.apf, %._crit_edge675.loopexit.i ]
+  %i.aos = phi i64 [ %25, %bb.bh ], [ %.pre857.i, %._crit_edge675.loopexit.i ]
+  %28 = phi ptr [ %26, %bb.bh ], [ %.pre855.i, %._crit_edge675.loopexit.i ]
   %.7.lcssa.i = phi ptr [ %.6678.i, %bb.bh ], [ %i.apd, %._crit_edge675.loopexit.i ] ; 2 uses
   %i.aot = add nuw i64 %.0337677.i, 1             ; 2 uses
   %i.aou = icmp ult i64 %i.aot, %i.aor

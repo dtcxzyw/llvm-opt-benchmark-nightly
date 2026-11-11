@@ -202,7 +202,7 @@ bb.a:
   br i1 %cond, label %glib_autoptr_cleanup_QemuLockable.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.011.i = load ptr, ptr @yank_instance_list, align 8 ; 4 uses
+  %.011.i = load ptr, ptr @yank_instance_list, align 8 ; 5 uses
   %.not12.i = icmp eq ptr %.011.i, null
   br i1 %.not12.i, label %.loopexit39, label %.lr.ph.i
 
@@ -283,13 +283,13 @@ yank_find_entry.exit:                             ; preds = %.lr.ph.i.split.us43
   br i1 %.not, label %.lr.ph78, label %.lr.ph.i, !llvm.loop !11
 
 .lr.ph78:                                         ; preds = %yank_find_entry.exit, %._crit_edge
-  %.177.a = phi ptr [ %i.ar, %._crit_edge ], [ %0, %yank_find_entry.exit ] ; 2 uses
-  %.011.i22 = load ptr, ptr @yank_instance_list, align 8 ; 4 uses
-  %.not12.i23 = icmp eq ptr %.011.i22, null
+  %.177.a = phi ptr [ %.011.i2299, %._crit_edge ], [ %.011.i, %yank_find_entry.exit ] ; 5 uses
+  %.177 = phi ptr [ %i.ar, %._crit_edge ], [ %0, %yank_find_entry.exit ] ; 2 uses
+  %.not12.i23 = icmp eq ptr %.177.a, null
   br i1 %.not12.i23, label %.loopexit, label %.lr.ph.i24
 
 .lr.ph.i24:                                       ; preds = %.lr.ph78
-  %i.u = getelementptr inbounds nuw i8, ptr %.177.a, i64 8
+  %i.u = getelementptr inbounds nuw i8, ptr %.177, i64 8
   %i.v = load ptr, ptr %i.u, align 8              ; 2 uses
   %i.w = load i32, ptr %i.v, align 8
   %.fr64 = freeze i32 %i.w                        ; 3 uses
@@ -304,7 +304,7 @@ yank_find_entry.exit:                             ; preds = %.lr.ph.i.split.us43
   br label %.lr.ph.i24.split.us
 
 .lr.ph.i24.split.us:                              ; preds = %.lr.ph.i24.split.us.preheader, %yank_instance_equal.exit.thread8.i27.us
-  %.013.i25.us = phi ptr [ %.0.i28.us, %yank_instance_equal.exit.thread8.i27.us ], [ %.011.i22, %.lr.ph.i24.split.us.preheader ] ; 3 uses
+  %.013.i25.us = phi ptr [ %.0.i28.us, %yank_instance_equal.exit.thread8.i27.us ], [ %.177.a, %.lr.ph.i24.split.us.preheader ] ; 3 uses
   %i.y = load ptr, ptr %.013.i25.us, align 8      ; 2 uses
   %i.z = load i32, ptr %i.y, align 8
   %.not.i.i26.us = icmp eq i32 %i.z, %.fr64
@@ -325,7 +325,7 @@ yank_instance_equal.exit.thread8.i27.us:          ; preds = %yank_instance_equal
   br i1 %.not.i29.us, label %.loopexit, label %.lr.ph.i24.split.us, !llvm.loop !1
 
 .lr.ph.i24.split.us56:                            ; preds = %.lr.ph.i24, %yank_instance_equal.exit.thread8.i27.us59
-  %.013.i25.us57 = phi ptr [ %.0.i28.us60, %yank_instance_equal.exit.thread8.i27.us59 ], [ %.011.i22, %.lr.ph.i24 ] ; 3 uses
+  %.013.i25.us57 = phi ptr [ %.0.i28.us60, %yank_instance_equal.exit.thread8.i27.us59 ], [ %.177.a, %.lr.ph.i24 ] ; 3 uses
   %i.ag = load ptr, ptr %.013.i25.us57, align 8
   %i.ah = load i32, ptr %i.ag, align 8
   %.not.i.i26.us58 = icmp eq i32 %i.ah, 2
@@ -338,7 +338,7 @@ yank_instance_equal.exit.thread8.i27.us59:        ; preds = %.lr.ph.i24.split.us
   br i1 %.not.i29.us61, label %.loopexit, label %.lr.ph.i24.split.us56, !llvm.loop !1
 
 .lr.ph.i24.split:                                 ; preds = %.lr.ph.i24, %yank_instance_equal.exit.thread8.i27
-  %.013.i25 = phi ptr [ %.0.i28, %yank_instance_equal.exit.thread8.i27 ], [ %.011.i22, %.lr.ph.i24 ] ; 2 uses
+  %.013.i25 = phi ptr [ %.0.i28, %yank_instance_equal.exit.thread8.i27 ], [ %.177.a, %.lr.ph.i24 ] ; 2 uses
   %i.aj = load ptr, ptr %.013.i25, align 8
   %i.ak = load i32, ptr %i.aj, align 8
   %.not.i.i26 = icmp eq i32 %i.ak, %.fr64
@@ -374,10 +374,15 @@ yank_find_entry.exit32:                           ; preds = %.lr.ph.i24.split.us
   %i.aq = getelementptr inbounds nuw i8, ptr %.074, i64 16
   %.0 = load ptr, ptr %i.aq, align 8              ; 2 uses
   %.not20 = icmp eq ptr %.0, null
-  br i1 %.not20, label %._crit_edge, label %.lr.ph75, !llvm.loop !12
+  br i1 %.not20, label %._crit_edge.loopexit, label %.lr.ph75, !llvm.loop !12
 
-._crit_edge:                                      ; preds = %.lr.ph75, %yank_find_entry.exit32
-  %i.ar = load ptr, ptr %.177.a, align 8          ; 2 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph75
+  %.011.i22.pre = load ptr, ptr @yank_instance_list, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %yank_find_entry.exit32
+  %.011.i2299 = phi ptr [ %.011.i22.pre, %._crit_edge.loopexit ], [ %.177.a, %yank_find_entry.exit32 ]
+  %i.ar = load ptr, ptr %.177, align 8            ; 2 uses
   %.not18 = icmp eq ptr %i.ar, null
   br i1 %.not18, label %glib_autoptr_cleanup_QemuLockable.exit, label %.lr.ph78, !llvm.loop !13
 

@@ -205,22 +205,26 @@ bb.ao:                                            ; preds = %bb.an
   %i.md = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 3 uses
   %.val129.val = load i8, ptr %.val129, align 1, !tbaa !105, !range !38, !noundef !39
   %i.me = trunc nuw i8 %.val129.val to i1
-  %i.mf = load ptr, ptr %i.md, align 8
+  %i.mf = load ptr, ptr %i.md, align 8            ; 3 uses
   %i.mg = load i64, ptr %i.mf, align 8, !tbaa !72
   %i.mh = icmp eq i64 %i.mg, 0                    ; 2 uses
   br i1 %i.me, label %.lr.ph269.split.us, label %.lr.ph269.split
 
 .lr.ph269.split.us:                               ; preds = %.lr.ph269
-  br i1 %i.mh, label %._crit_edge270, label %.lr.ph269.split.us.split
+  br i1 %i.mh, label %._crit_edge270, label %.lr.ph269.split.us.split.preheader
 
-.lr.ph269.split.us.split:                         ; preds = %.lr.ph269.split.us, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us"
-  %i.mi = phi i64 [ %i.mv, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us" ], [ %i.lz, %.lr.ph269.split.us ]
-  %.0110268.us.a = phi i64 [ %i.mw, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us" ], [ 0, %.lr.ph269.split.us ] ; 2 uses
-  %27 = load i64, ptr %2, align 8, !tbaa !72
-  %i.mj = mul nsw i64 %27, %.0110268.us.a         ; 2 uses
+.lr.ph269.split.us.split.preheader:               ; preds = %.lr.ph269.split.us
+  %.pre302 = load i64, ptr %2, align 8, !tbaa !72
+  br label %.lr.ph269.split.us.split
+
+.lr.ph269.split.us.split:                         ; preds = %.lr.ph269.split.us.split.preheader, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us"
+  %i.mi = phi i64 [ %i.mv, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us" ], [ %i.lz, %.lr.ph269.split.us.split.preheader ]
+  %.val130.us = phi ptr [ %.val130.us304, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us" ], [ %i.mf, %.lr.ph269.split.us.split.preheader ] ; 2 uses
+  %.0110268.us.a = phi i64 [ %27, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us" ], [ %.pre302, %.lr.ph269.split.us.split.preheader ] ; 2 uses
+  %.0110268.us = phi i64 [ %i.mw, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us" ], [ 0, %.lr.ph269.split.us.split.preheader ] ; 2 uses
+  %i.mj = mul nsw i64 %.0110268.us.a, %.0110268.us ; 2 uses
   %i.mk = getelementptr inbounds [4 x i8], ptr %i.mb, i64 %i.mj ; 2 uses
   %i.ml = getelementptr inbounds [8 x i8], ptr %i.mc, i64 %i.mj ; 2 uses
-  %.val130.us = load ptr, ptr %i.md, align 8
   %i.mm = load i64, ptr %.val130.us, align 8, !tbaa !72 ; 5 uses
   %.not1.i.us = icmp eq i64 %i.mm, 0
   br i1 %.not1.i.us, label %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us", label %.lr.ph46.i5.i.us.preheader
@@ -266,30 +270,38 @@ middle.block393:                                  ; preds = %vector.body390
   br i1 %exitcond51.not.i7.i.us, label %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us.loopexit", label %.lr.ph46.i5.i.us, !llvm.loop !349
 
 "_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us.loopexit": ; preds = %.lr.ph46.i5.i.us, %middle.block393
+  %.pre301 = load i64, ptr %2, align 8, !tbaa !72
+  %.val130.us.pre = load ptr, ptr %i.md, align 8
   %.pre296.a = load i64, ptr %3, align 8, !tbaa !72
   br label %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us"
 
 "_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us": ; preds = %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us.loopexit", %.lr.ph269.split.us.split
   %i.mv = phi i64 [ %.pre296.a, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us.loopexit" ], [ %i.mi, %.lr.ph269.split.us.split ] ; 2 uses
-  %i.mw = add nuw nsw i64 %.0110268.us.a, 1       ; 2 uses
+  %.val130.us304 = phi ptr [ %.val130.us.pre, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us.loopexit" ], [ %.val130.us, %.lr.ph269.split.us.split ]
+  %27 = phi i64 [ %.pre301, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us.loopexit" ], [ %.0110268.us.a, %.lr.ph269.split.us.split ]
+  %i.mw = add nuw nsw i64 %.0110268.us, 1         ; 2 uses
   %i.mx = icmp slt i64 %i.mw, %i.mv
   br i1 %i.mx, label %.lr.ph269.split.us.split, label %._crit_edge270, !llvm.loop !350
 
 .lr.ph269.split:                                  ; preds = %.lr.ph269
-  br i1 %i.mh, label %._crit_edge270, label %.lr.ph269.split.split
+  br i1 %i.mh, label %._crit_edge270, label %.lr.ph269.split.split.preheader
+
+.lr.ph269.split.split.preheader:                  ; preds = %.lr.ph269.split
+  %.pre296 = load i64, ptr %2, align 8, !tbaa !72
+  br label %.lr.ph269.split.split
 
 ._crit_edge270:                                   ; preds = %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit", %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.us", %.lr.ph269.split, %.lr.ph269.split.us, %.preheader247
   call void @__kmpc_end_single(ptr nonnull @2, i32 %.pre294)
   br label %bb.ap
 
-.lr.ph269.split.split:                            ; preds = %.lr.ph269.split, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit"
-  %i.my = phi i64 [ %i.nl, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit" ], [ %i.lz, %.lr.ph269.split ]
-  %.0110268.a = phi i64 [ %i.nm, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit" ], [ 0, %.lr.ph269.split ] ; 2 uses
-  %28 = load i64, ptr %2, align 8, !tbaa !72
-  %i.mz = mul nsw i64 %28, %.0110268.a            ; 2 uses
+.lr.ph269.split.split:                            ; preds = %.lr.ph269.split.split.preheader, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit"
+  %i.my = phi i64 [ %i.nl, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit" ], [ %i.lz, %.lr.ph269.split.split.preheader ]
+  %.val130 = phi ptr [ %.val130298, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit" ], [ %i.mf, %.lr.ph269.split.split.preheader ] ; 2 uses
+  %.0110268.a = phi i64 [ %28, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit" ], [ %.pre296, %.lr.ph269.split.split.preheader ] ; 2 uses
+  %.0110268 = phi i64 [ %i.nm, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit" ], [ 0, %.lr.ph269.split.split.preheader ] ; 2 uses
+  %i.mz = mul nsw i64 %.0110268.a, %.0110268      ; 2 uses
   %i.na = getelementptr inbounds [4 x i8], ptr %i.mb, i64 %i.mz ; 2 uses
   %i.nb = getelementptr inbounds [8 x i8], ptr %i.mc, i64 %i.mz ; 2 uses
-  %.val130 = load ptr, ptr %i.md, align 8
   %i.nc = load i64, ptr %.val130, align 8, !tbaa !72 ; 5 uses
   %.not1.i = icmp eq i64 %i.nc, 0
   br i1 %.not1.i, label %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit", label %.lr.ph46.i.i.preheader
@@ -335,12 +347,16 @@ middle.block384:                                  ; preds = %vector.body381
   br i1 %exitcond51.not.i.i, label %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.loopexit", label %.lr.ph46.i.i, !llvm.loop !352
 
 "_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.loopexit": ; preds = %.lr.ph46.i.i, %middle.block384
+  %.pre295 = load i64, ptr %2, align 8, !tbaa !72
+  %.val130.pre = load ptr, ptr %i.md, align 8
   %.pre295.a = load i64, ptr %3, align 8, !tbaa !72
   br label %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit"
 
 "_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit": ; preds = %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.loopexit", %.lr.ph269.split.split
   %i.nl = phi i64 [ %.pre295.a, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.loopexit" ], [ %i.my, %.lr.ph269.split.split ] ; 2 uses
-  %i.nm = add nuw nsw i64 %.0110268.a, 1          ; 2 uses
+  %.val130298 = phi ptr [ %.val130.pre, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.loopexit" ], [ %.val130, %.lr.ph269.split.split ]
+  %28 = phi i64 [ %.pre295, %"_ZZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFEENK3$_1clES3_S4_.exit.loopexit" ], [ %.0110268.a, %.lr.ph269.split.split ]
+  %i.nm = add nuw nsw i64 %.0110268, 1            ; 2 uses
   %i.nn = icmp slt i64 %i.nm, %i.nl
   br i1 %i.nn, label %.lr.ph269.split.split, label %._crit_edge270, !llvm.loop !353
 
