@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/ip_tunnel?download=true
-inline.NumInlined: 351
+inline.NumInlined: 352
 inline.NumDeleted: 130
 begin_hunk_0_@ip_tunnel_rcv:bb.a
   %switch.selectcmp.i.i = icmp eq i16 %i.ap, 8
@@ -202,8 +202,8 @@ bb.x:                                             ; preds = %bb.w
   %i.dg = getelementptr i8, ptr %1, i64 140       ; 2 uses
   %i.dh = load i32, ptr %i.dg, align 4
   %i.di = xor i32 %i.da, -1
-  %i.dj = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.dh, i32 %i.di) #14, !srcloc !19
-  %i.dk = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.dj, i32 %i.db) #14, !srcloc !19
+  %i.dj = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.dh, i32 %i.di) #14, !srcloc !21
+  %i.dk = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.dj, i32 %i.db) #14, !srcloc !21
   store i32 %i.dk, ptr %i.dg, align 4
   br label %IP_ECN_decapsulate.exit.thread
 
@@ -291,8 +291,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.eq = getelementptr i8, ptr %1, i64 140       ; 2 uses
   %i.er = load i32, ptr %i.eq, align 4
   %i.es = xor i32 %i.ek, -1
-  %i.et = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.er, i32 %i.es) #14, !srcloc !19
-  %i.eu = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.et, i32 %i.el) #14, !srcloc !19
+  %i.et = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.er, i32 %i.es) #14, !srcloc !21
+  %i.eu = tail call i32 asm "addl $2,$0\0A\09adcl $$0,$0", "=r,0,rm,~{dirflag},~{fpsr},~{flags}"(i32 %i.et, i32 %i.el) #14, !srcloc !21
   store i32 %i.eu, ptr %i.eq, align 4
   br label %IP_ECN_decapsulate.exit.thread
 
@@ -327,7 +327,7 @@ bb.ak:                                            ; preds = %bb.aj
 IP_ECN_decapsulate.exit.thread:                   ; preds = %bb.s, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %skb_protocol.exit.i9.i.i, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.m, %bb.r, %skb_protocol.exit.i.i.i, %bb.o, %bb.ag, %skb_protocol.exit.i, %bb.aj
   %i.fe = load ptr, ptr %i.ab, align 8
   %i.ff = load i32, ptr %i.aw, align 8
-  %i.fg = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #14, !srcloc !20
+  %i.fg = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #14, !srcloc !22
   %i.fh = getelementptr i8, ptr %i.fe, i64 160
   %i.fi = load ptr, ptr %i.fh, align 32
   %i.fj = ptrtoint ptr %i.fi to i64
@@ -335,8 +335,8 @@ IP_ECN_decapsulate.exit.thread:                   ; preds = %bb.s, %bb.af, %bb.a
   %i.fl = inttoptr i64 %i.fk to ptr               ; 3 uses
   %i.fm = getelementptr i8, ptr %i.fl, i64 8      ; 2 uses
   %i.fn = zext i32 %i.ff to i64
-  tail call void asm sideeffect " addq $1,$0", "=*m,ir,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.fm, i64 range(i64 0, 4294967296) %i.fn, ptr elementtype(i64) %i.fm) #12, !srcloc !21
-  tail call void asm sideeffect " incq $0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.fl, ptr elementtype(i64) %i.fl) #12, !srcloc !22
+  tail call void asm sideeffect " addq $1,$0", "=*m,ir,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.fm, i64 range(i64 0, 4294967296) %i.fn, ptr elementtype(i64) %i.fm) #12, !srcloc !23
+  tail call void asm sideeffect " incq $0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.fl, ptr elementtype(i64) %i.fl) #12, !srcloc !24
   %i.fo = getelementptr i8, ptr %0, i64 32
   %i.fp = load ptr, ptr %i.fo, align 8
   %i.fq = load ptr, ptr %i.ab, align 8
@@ -464,7 +464,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i32 %1 to i64
   %i.c = getelementptr [8 x i8], ptr @iptun_encaps, i64 %i.b ; 2 uses
-  %i.d = tail call ptr asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgq $2, $1", "={ax},=*m,r,0,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.c, ptr %0, ptr null, ptr elementtype(i64) %i.c) #12, !srcloc !23
+  %i.d = tail call ptr asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgq $2, $1", "={ax},=*m,r,0,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.c, ptr %0, ptr null, ptr elementtype(i64) %i.c) #12, !srcloc !25
   %.not = icmp ne ptr %i.d, null
   %i.e = sext i1 %.not to i32
   br label %bb.c
@@ -483,7 +483,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i32 %1 to i64
   %i.c = getelementptr [8 x i8], ptr @iptun_encaps, i64 %i.b ; 2 uses
-  %i.d = tail call ptr asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgq $2, $1", "={ax},=*m,r,0,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.c, ptr null, ptr %0, ptr elementtype(i64) %i.c) #12, !srcloc !24
+  %i.d = tail call ptr asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgq $2, $1", "={ax},=*m,r,0,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.c, ptr null, ptr %0, ptr elementtype(i64) %i.c) #12, !srcloc !26
   %i.e = icmp ne ptr %i.d, %0
   %i.f = sext i1 %i.e to i32
   tail call void @synchronize_net() #13
@@ -624,14 +624,14 @@ bb.f:                                             ; preds = %bb.e, %bb.e
 skb_tunnel_info.exit:                             ; preds = %bb.d, %bb.f
   %.0.i = phi ptr [ %i.k, %bb.d ], [ %i.o, %bb.f ] ; 14 uses
   %.not = icmp eq ptr %.0.i, null
-  br i1 %.not, label %.critedge, label %bb.g, !prof !25
+  br i1 %.not, label %.critedge, label %bb.g, !prof !27
 
 bb.g:                                             ; preds = %skb_tunnel_info.exit
   %i.p = getelementptr i8, ptr %.0.i, i64 89
   %i.q = load i8, ptr %i.p, align 1
   %i.r = and i8 %i.q, 3
   %or.cond144 = icmp eq i8 %i.r, 1
-  br i1 %or.cond144, label %bb.h, label %.critedge, !prof !26
+  br i1 %or.cond144, label %bb.h, label %.critedge, !prof !28
 
 bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr i8, ptr %0, i64 44
@@ -851,7 +851,7 @@ bb.z:                                             ; preds = %.thread139
   %i.da = lshr i16 %i.cz, 2
   %spec.select = and i16 %i.da, 64                ; 2 uses
   %i.db = load i32, ptr %i.ai, align 4
-  %i.dc = call fastcc i32 @tnl_update_pmtu(ptr noundef %1, ptr noundef %0, ptr noundef %.1, i16 noundef zeroext %spec.select, ptr noundef %i.w, i32 noundef %.0, i32 noundef %i.db, i1 noundef zeroext true) #16, !srcloc !27
+  %i.dc = call fastcc i32 @tnl_update_pmtu(ptr noundef %1, ptr noundef %0, ptr noundef %.1, i16 noundef zeroext %spec.select, ptr noundef %i.w, i32 noundef %.0, i32 noundef %i.db, i1 noundef zeroext true) #16, !srcloc !29
   %.not100 = icmp eq i32 %i.dc, 0
   br i1 %.not100, label %bb.ab, label %bb.aa
 
@@ -920,7 +920,7 @@ bb.ah:                                            ; preds = %bb.af
   br label %bb.aj
 
 bb.ai:                                            ; preds = %bb.af
-  %i.dw = call fastcc i32 @ip4_dst_hoplimit(ptr noundef %.1) #16, !srcloc !28
+  %i.dw = call fastcc i32 @ip4_dst_hoplimit(ptr noundef %.1) #16, !srcloc !30
   %i.dx = trunc i32 %i.dw to i8
   br label %bb.aj
 
@@ -1074,7 +1074,7 @@ bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr i8, ptr %i.p, i64 32
   %i.r = load ptr, ptr %i.q, align 32             ; 3 uses
   %i.s = icmp eq ptr %i.r, @ip6_mtu
-  br i1 %i.s, label %bb.g, label %bb.h, !prof !32
+  br i1 %i.s, label %bb.g, label %bb.h, !prof !34
 
 bb.g:                                             ; preds = %bb.f
   %i.t = tail call i32 @ip6_mtu(ptr noundef %2) #13
@@ -1082,14 +1082,14 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.u = icmp eq ptr %i.r, @ipv4_mtu
-  br i1 %i.u, label %bb.i, label %bb.j, !prof !32
+  br i1 %i.u, label %bb.i, label %bb.j, !prof !34
 
 bb.i:                                             ; preds = %bb.h
   %i.v = tail call i32 @ipv4_mtu(ptr noundef %2) #13
   br label %dst_mtu.exit
 
 bb.j:                                             ; preds = %bb.h
-  %i.w = tail call i32 %i.r(ptr noundef %2) #13, !inline_history !29
+  %i.w = tail call i32 %i.r(ptr noundef %2) #13, !inline_history !31
   br label %dst_mtu.exit
 
 dst_mtu.exit:                                     ; preds = %bb.g, %bb.i, %bb.j
@@ -1132,7 +1132,7 @@ bb.n:                                             ; preds = %skb_valid_dst.exit
   %i.ap = getelementptr i8, ptr %i.ao, i64 32
   %i.aq = load ptr, ptr %i.ap, align 32           ; 3 uses
   %i.ar = icmp eq ptr %i.aq, @ip6_mtu
-  br i1 %i.ar, label %bb.o, label %bb.p, !prof !32
+  br i1 %i.ar, label %bb.o, label %bb.p, !prof !34
 
 bb.o:                                             ; preds = %bb.n
   %i.as = tail call i32 @ip6_mtu(ptr noundef nonnull %i.aj) #13
@@ -1140,14 +1140,14 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.at = icmp eq ptr %i.aq, @ipv4_mtu
-  br i1 %i.at, label %bb.q, label %bb.r, !prof !32
+  br i1 %i.at, label %bb.q, label %bb.r, !prof !34
 
 bb.q:                                             ; preds = %bb.p
   %i.au = tail call i32 @ipv4_mtu(ptr noundef nonnull %i.aj) #13
   br label %dst_mtu.exit76
 
 bb.r:                                             ; preds = %bb.p
-  %i.av = tail call i32 %i.aq(ptr noundef nonnull %i.aj) #13, !inline_history !29
+  %i.av = tail call i32 %i.aq(ptr noundef nonnull %i.aj) #13, !inline_history !31
   br label %dst_mtu.exit76
 
 skb_valid_dst.exit.thread:                        ; preds = %bb.m, %skb_valid_dst.exit
@@ -1180,7 +1180,7 @@ bb.s:                                             ; preds = %skb_valid_dst.exit7
   br i1 %.not7.i, label %skb_dst_update_pmtu_no_confirm.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  tail call void %i.bh(ptr noundef nonnull %i.ba, ptr noundef null, ptr noundef %1, i32 noundef %.057, i1 noundef zeroext false) #13, !inline_history !30
+  tail call void %i.bh(ptr noundef nonnull %i.ba, ptr noundef null, ptr noundef %1, i32 noundef %.057, i1 noundef zeroext false) #13, !inline_history !32
   br label %skb_dst_update_pmtu_no_confirm.exit
 
 skb_dst_update_pmtu_no_confirm.exit:              ; preds = %dst_mtu.exit76, %bb.t, %bb.s, %skb_valid_dst.exit79
@@ -1253,7 +1253,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ch = getelementptr i8, ptr %i.cg, i64 32
   %i.ci = load ptr, ptr %i.ch, align 32           ; 3 uses
   %i.cj = icmp eq ptr %i.ci, @ip6_mtu
-  br i1 %i.cj, label %bb.ab, label %bb.ac, !prof !32
+  br i1 %i.cj, label %bb.ab, label %bb.ac, !prof !34
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ck = tail call i32 @ip6_mtu(ptr noundef %i.ce) #13
@@ -1261,14 +1261,14 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa
   %i.cl = icmp eq ptr %i.ci, @ipv4_mtu
-  br i1 %i.cl, label %bb.ad, label %bb.ae, !prof !32
+  br i1 %i.cl, label %bb.ad, label %bb.ae, !prof !34
 
 bb.ad:                                            ; preds = %bb.ac
   %i.cm = tail call i32 @ipv4_mtu(ptr noundef %i.ce) #13
   br label %dst_mtu.exit84
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.cn = tail call i32 %i.ci(ptr noundef %i.ce) #13, !inline_history !29
+  %i.cn = tail call i32 %i.ci(ptr noundef %i.ce) #13, !inline_history !31
   br label %dst_mtu.exit84
 
 dst_mtu.exit84:                                   ; preds = %bb.ab, %bb.ad, %bb.ae
@@ -1305,8 +1305,8 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i, label %bb.ai, label %bb.aj, !prof !13
 
 bb.ai:                                            ; preds = %bb.ah
-  tail call void asm sideeffect "706: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 706b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 706) #12, !srcloc !33
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.1, ptr @.str.2, i32 133, i32 0, i64 16) #12, !srcloc !34
+  tail call void asm sideeffect "706: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 706b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 706) #12, !srcloc !35
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.1, ptr @.str.2, i32 133, i32 0, i64 16) #12, !srcloc !36
   unreachable
 
 bb.aj:                                            ; preds = %bb.ah
@@ -1319,7 +1319,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.df = load ptr, ptr %i.de, align 8
   %i.dg = getelementptr i8, ptr %i.df, i64 40
   %i.dh = load ptr, ptr %i.dg, align 8
-  %i.di = tail call ptr %i.dh(ptr noundef %i.da, i64 noundef %i.dc) #13, !inline_history !31
+  %i.di = tail call ptr %i.dh(ptr noundef %i.da, i64 noundef %i.dc) #13, !inline_history !33
   br label %dst_metrics_write_ptr.exit.i
 
 bb.al:                                            ; preds = %bb.aj
@@ -1528,7 +1528,7 @@ bb.n:                                             ; preds = %skb_tunnel_info.exi
   %i.aw = load ptr, ptr %i.av, align 8
   %i.ax = getelementptr i8, ptr %i.aw, i64 104
   %i.ay = load ptr, ptr %i.ax, align 8
-  %i.az = tail call ptr %i.ay(ptr noundef nonnull %i.s, ptr noundef null, ptr noundef %i.au) #13, !inline_history !35 ; 5 uses
+  %i.az = tail call ptr %i.ay(ptr noundef nonnull %i.s, ptr noundef null, ptr noundef %i.au) #13, !inline_history !37 ; 5 uses
   %i.ba = icmp ugt ptr %i.az, inttoptr (i64 -4096 to ptr)
   %.not163236 = icmp eq ptr %i.az, null
   %.not163 = or i1 %i.ba, %.not163236
@@ -1565,7 +1565,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q, %bb.r
   %.0134 = phi i32 [ %i.bm, %bb.r ], [ 0, %bb.q ]
   %i.bn = getelementptr i8, ptr %i.az, i64 72     ; 3 uses
-  %i.bo = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bn, i32 -1, ptr elementtype(i32) %i.bn) #12, !srcloc !37 ; 2 uses
+  %i.bo = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bn, i32 -1, ptr elementtype(i32) %i.bn) #12, !srcloc !39 ; 2 uses
   %i.bp = icmp eq i32 %i.bo, 1
   br i1 %i.bp, label %bb.v, label %bb.t
 
@@ -1578,7 +1578,7 @@ bb.u:                                             ; preds = %bb.t
   br label %neigh_release.exit
 
 bb.v:                                             ; preds = %bb.s
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !38
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !40
   tail call void @neigh_destroy(ptr noundef nonnull %i.az) #13
   br label %neigh_release.exit
 
@@ -1823,7 +1823,7 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.at, %bb.as, %bb.ar
   %.0133 = phi i16 [ %i.eb, %bb.as ], [ %i.ej, %bb.at ], [ %i.eb, %bb.ar ] ; 2 uses
-  %i.ek = call fastcc i32 @tnl_update_pmtu(ptr noundef %1, ptr noundef %0, ptr noundef %.3146, i16 noundef zeroext %.0133, ptr noundef %i.e, i32 noundef 0, i32 noundef 0, i1 noundef zeroext false) #16, !srcloc !39
+  %i.ek = call fastcc i32 @tnl_update_pmtu(ptr noundef %1, ptr noundef %0, ptr noundef %.3146, i16 noundef zeroext %.0133, ptr noundef %i.e, i32 noundef 0, i32 noundef 0, i1 noundef zeroext false) #16, !srcloc !41
   %.not166 = icmp eq i32 %i.ek, 0
   br i1 %.not166, label %bb.aw, label %bb.av
 
@@ -1869,7 +1869,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not9.i, label %dst_link_failure.exit, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  call void %i.fa(ptr noundef %0) #13, !inline_history !36
+  call void %i.fa(ptr noundef %0) #13, !inline_history !38
   br label %dst_link_failure.exit
 
 bb.bc:                                            ; preds = %bb.ax
@@ -1936,7 +1936,7 @@ bb.bj:                                            ; preds = %bb.bi
   br label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bi
-  %i.ft = call fastcc i32 @ip4_dst_hoplimit(ptr noundef %.3146) #16, !srcloc !40
+  %i.ft = call fastcc i32 @ip4_dst_hoplimit(ptr noundef %.3146) #16, !srcloc !42
   %i.fu = trunc i32 %i.ft to i8
   br label %bb.bl
 
@@ -2088,7 +2088,7 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %.not9.i201, label %dst_link_failure.exit202, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  tail call void %i.ih(ptr noundef %0) #13, !inline_history !36
+  tail call void %i.ih(ptr noundef %0) #13, !inline_history !38
   br label %dst_link_failure.exit202
 
 dst_link_failure.exit202:                         ; preds = %bb.ad, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %ip_tunnel_encap.exit.thread215, %bb.n, %skb_tunnel_info.exit.thread, %ip_tunnel_encap.exit, %bb.av, %bb.aq, %bb.al, %bb.d
@@ -2133,7 +2133,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr i8, ptr %i.k, i64 544
   %i.n = load i16, ptr %i.m, align 32
   %i.o = zext i16 %i.n to i32
-  %i.p = tail call fastcc ptr @ip_tunnel_find(ptr noundef %i.j, ptr noundef %1, i32 noundef %i.o) #16, !srcloc !41 ; 2 uses
+  %i.p = tail call fastcc ptr @ip_tunnel_find(ptr noundef %i.j, ptr noundef %1, i32 noundef %i.o) #16, !srcloc !43 ; 2 uses
   %.not109 = icmp eq ptr %i.p, null
   %spec.select118 = select i1 %.not109, ptr %i.a, ptr %i.p
   br label %bb.d
@@ -2196,7 +2196,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k, %bb.l, %bb.h
   %i.aj = getelementptr i8, ptr %i.j, i64 1048
   %i.ak = load i32, ptr %i.aj, align 8
-  %i.al = tail call fastcc ptr @ip_tunnel_find(ptr noundef %i.j, ptr noundef %1, i32 noundef %i.ak) #16, !srcloc !42 ; 5 uses
+  %i.al = tail call fastcc ptr @ip_tunnel_find(ptr noundef %i.j, ptr noundef %1, i32 noundef %i.ak) #16, !srcloc !44 ; 5 uses
   %i.am = icmp eq i32 %2, 35313
   br i1 %i.am, label %bb.n, label %bb.z
 
@@ -2207,12 +2207,12 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.an = getelementptr i8, ptr %i.j, i64 8
   %i.ao = load ptr, ptr %i.an, align 8
-  %i.ap = tail call fastcc ptr @__ip_tunnel_create(ptr noundef %i.c, ptr noundef %i.ao, ptr noundef %1) #16, !srcloc !43 ; 17 uses
+  %i.ap = tail call fastcc ptr @__ip_tunnel_create(ptr noundef %i.c, ptr noundef %i.ao, ptr noundef %1) #16, !srcloc !45 ; 17 uses
   %i.aq = icmp ugt ptr %i.ap, inttoptr (i64 -4096 to ptr)
   br i1 %i.aq, label %ip_tunnel_create.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ar = tail call fastcc i32 @ip_tunnel_bind_dev(ptr noundef %i.ap) #16, !srcloc !44
+  %i.ar = tail call fastcc i32 @ip_tunnel_bind_dev(ptr noundef %i.ap) #16, !srcloc !46
   %i.as = tail call i32 @dev_set_mtu(ptr noundef %i.ap, i32 noundef %i.ar) #13 ; 2 uses
   %.not.i = icmp eq i32 %i.as, 0
   br i1 %.not.i, label %bb.q, label %bb.x
@@ -2349,7 +2349,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 .thread114:                                       ; preds = %bb.ab, %.thread
   %.2117 = phi ptr [ %.2, %.thread ], [ %i.al, %bb.ab ]
-  tail call fastcc void @ip_tunnel_update(ptr noundef %i.j, ptr noundef nonnull %.2117, ptr noundef %0, ptr noundef %1, i1 noundef zeroext true, i32 noundef 0) #16, !srcloc !45
+  tail call fastcc void @ip_tunnel_update(ptr noundef %i.j, ptr noundef nonnull %.2117, ptr noundef %0, ptr noundef %1, i1 noundef zeroext true, i32 noundef 0) #16, !srcloc !47
   br label %PTR_ERR_OR_ZERO.exit
 
 bb.ad:                                            ; preds = %bb.a
@@ -2367,7 +2367,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.da = getelementptr i8, ptr %i.cy, i64 544
   %i.db = load i16, ptr %i.da, align 32
   %i.dc = zext i16 %i.db to i32
-  %i.dd = tail call fastcc ptr @ip_tunnel_find(ptr noundef %i.j, ptr noundef %1, i32 noundef %i.dc) #16, !srcloc !46 ; 3 uses
+  %i.dd = tail call fastcc ptr @ip_tunnel_find(ptr noundef %i.j, ptr noundef %1, i32 noundef %i.dc) #16, !srcloc !48 ; 3 uses
   %.not = icmp eq ptr %i.dd, null
   br i1 %.not, label %PTR_ERR_OR_ZERO.exit, label %bb.ag
 
@@ -2657,7 +2657,7 @@ bb.m:                                             ; preds = %bb.l, %ip_tunnel_ad
   store volatile i32 %i.bf, ptr %i.bc, align 8
   %i.bi = getelementptr i8, ptr %1, i64 200
   store i32 %5, ptr %i.bi, align 8
-  %i.bj = tail call fastcc i32 @ip_tunnel_bind_dev(ptr noundef %2) #16, !srcloc !47
+  %i.bj = tail call fastcc i32 @ip_tunnel_bind_dev(ptr noundef %2) #16, !srcloc !49
   br i1 %4, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -2700,11 +2700,11 @@ bb.a:                                             ; preds = %copy_from_user.exit
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, i64 16) #12, !srcloc !48
+  call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, i64 16) #12, !srcloc !19
   br label %ip_tunnel_flags_from_be16.exit
 
 bb.c:                                             ; preds = %bb.a
-  call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, i64 16) #12, !srcloc !49
+  call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, i64 16) #12, !srcloc !20
   br label %ip_tunnel_flags_from_be16.exit
 
 ip_tunnel_flags_from_be16.exit:                   ; preds = %bb.b, %bb.c
@@ -2719,11 +2719,11 @@ ip_tunnel_flags_from_be16.exit:                   ; preds = %bb.b, %bb.c
   br i1 %.not.i13, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %ip_tunnel_flags_from_be16.exit
-  call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.l, i64 16) #12, !srcloc !48
+  call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.l, i64 16) #12, !srcloc !19
   br label %ip_tunnel_flags_from_be16.exit16
 
 bb.e:                                             ; preds = %ip_tunnel_flags_from_be16.exit
-  call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.l, i64 16) #12, !srcloc !49
+  call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.l, i64 16) #12, !srcloc !20
   br label %ip_tunnel_flags_from_be16.exit16
 
 ip_tunnel_flags_from_be16.exit16:                 ; preds = %bb.d, %bb.e
@@ -2818,74 +2818,131 @@ bb.c:                                             ; preds = %bb.a, %bb.b, %ip_tu
 define dso_local i32 @ip_tunnel_siocdevprivate(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, i32 noundef %3) #3 align 16 prefalign(16) {
 bb.a:
   %4 = alloca %struct.ip_tunnel_parm, align 4     ; 12 uses
-  %5 = alloca %struct.ip_tunnel_parm_kern, align 8 ; 12 uses
+  %5 = alloca %struct.ip_tunnel_parm, align 4     ; 12 uses
+  %6 = alloca %struct.ip_tunnel_parm_kern, align 8 ; 12 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %6, i8 0, i64 64, i1 false), !annotation !14
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %5, i8 0, i64 64, i1 false), !annotation !14
-  %6 = call zeroext i1 @ip_tunnel_parm_from_user(ptr noundef nonnull %5, ptr noundef %2) #16
-  br i1 %6, label %bb.b, label %bb.f
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %5, i8 0, i64 52, i1 false), !annotation !14
+  %7 = call i64 @_copy_from_user(ptr noundef nonnull %5, ptr noundef %2, i64 noundef 52) #13
+  %.not.i = icmp eq i64 %7, 0
+  br i1 %.not.i, label %8, label %ip_tunnel_parm_from_user.exit
 
-bb.b:                                             ; preds = %bb.a
+8:                                                ; preds = %bb.a
+  %9 = call i64 @sized_strscpy(ptr noundef nonnull %6, ptr noundef nonnull %5, i64 noundef 16) #13 ; 0 uses
+  %10 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %11 = load i32, ptr %10, align 4
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
+  store i32 %11, ptr %12, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 6 uses
+  %14 = getelementptr inbounds nuw i8, ptr %5, i64 20
+  %15 = load i16, ptr %14, align 4                ; 2 uses
+  %16 = call i16 @llvm.bswap.i16(i16 %15)
+  %17 = zext i16 %16 to i64
+  store i64 %17, ptr %13, align 8
+  %18 = and i16 %15, 1
+  %.not.i.i = icmp eq i16 %18, 0
+  br i1 %.not.i.i, label %20, label %19
+
+19:                                               ; preds = %8
+  call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) %13, i64 16) #12, !srcloc !19
+  br label %ip_tunnel_flags_from_be16.exit.i
+
+20:                                               ; preds = %8
+  call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) %13, i64 16) #12, !srcloc !20
+  br label %ip_tunnel_flags_from_be16.exit.i
+
+ip_tunnel_flags_from_be16.exit.i:                 ; preds = %20, %19
+  %21 = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 6 uses
+  %22 = getelementptr inbounds nuw i8, ptr %5, i64 22
+  %23 = load i16, ptr %22, align 2                ; 2 uses
+  %24 = call i16 @llvm.bswap.i16(i16 %23)
+  %25 = zext i16 %24 to i64
+  store i64 %25, ptr %21, align 8
+  %26 = and i16 %23, 1
+  %.not.i13.i = icmp eq i16 %26, 0
+  br i1 %.not.i13.i, label %28, label %27
+
+27:                                               ; preds = %ip_tunnel_flags_from_be16.exit.i
+  call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) %21, i64 16) #12, !srcloc !19
+  br label %bb.b
+
+28:                                               ; preds = %ip_tunnel_flags_from_be16.exit.i
+  call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) %21, i64 16) #12, !srcloc !20
+  br label %bb.b
+
+ip_tunnel_parm_from_user.exit:                    ; preds = %bb.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  br label %bb.f
+
+bb.b:                                             ; preds = %27, %28
+  %29 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %30 = load i32, ptr %29, align 4
+  %31 = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  store i32 %30, ptr %31, align 8
+  %32 = getelementptr inbounds nuw i8, ptr %5, i64 28
+  %33 = load i32, ptr %32, align 4
+  %34 = getelementptr inbounds nuw i8, ptr %6, i64 36 ; 2 uses
+  store i32 %33, ptr %34, align 4
+  %35 = getelementptr inbounds nuw i8, ptr %6, i64 44 ; 2 uses
+  %36 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %35, ptr noundef nonnull align 4 dereferenceable(20) %36, i64 20, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   %i.a = getelementptr i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr i8, ptr %i.b, i64 648
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = call i32 %i.d(ptr noundef %0, ptr noundef nonnull %5, i32 noundef %3) #13 ; 2 uses
+  %i.e = call i32 %i.d(ptr noundef %0, ptr noundef nonnull %6, i32 noundef %3) #13 ; 2 uses
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
-  %i.f = load i64, ptr %7, align 8
+  %i.f = load i64, ptr %13, align 8
   %i.g = and i64 %i.f, 131072
   %.not.i.i.i = icmp eq i64 %i.g, 0
   br i1 %.not.i.i.i, label %bb.d, label %ip_tunnel_parm_to_user.exit.thread
 
 bb.d:                                             ; preds = %bb.c
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 3 uses
-  %i.h = load i64, ptr %8, align 8
+  %i.h = load i64, ptr %21, align 8
   %i.i = and i64 %i.h, 131072
   %.not.i.i15.i = icmp eq i64 %i.i, 0
   br i1 %.not.i.i15.i, label %ip_tunnel_flags_to_be16.exit.i, label %ip_tunnel_parm_to_user.exit.thread
 
 ip_tunnel_flags_to_be16.exit.i:                   ; preds = %bb.d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %4, i8 0, i64 52, i1 false)
-  %i.j = call i64 @sized_strscpy(ptr noundef nonnull %4, ptr noundef nonnull %5, i64 noundef 16) #13 ; 0 uses
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 40
-  %i.k = load i32, ptr %9, align 8
+  %i.j = call i64 @sized_strscpy(ptr noundef nonnull %4, ptr noundef nonnull %6, i64 noundef 16) #13 ; 0 uses
+  %i.k = load i32, ptr %12, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 %i.k, ptr %i.l, align 4
-  %i.m = load i64, ptr %7, align 8
+  %i.m = load i64, ptr %13, align 8
   %i.n = trunc i64 %i.m to i16
   %i.o = call i16 @llvm.bswap.i16(i16 %i.n)
-  %i.p = load volatile i64, ptr %7, align 8
+  %i.p = load volatile i64, ptr %13, align 8
   %i.q = lshr i64 %i.p, 16
   %i.r = trunc i64 %i.q to i16
   %i.s = and i16 %i.r, 1
   %.0.i16.i = or i16 %i.o, %i.s
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 20
   store i16 %.0.i16.i, ptr %i.t, align 4
-  %i.u = load i64, ptr %8, align 8
+  %i.u = load i64, ptr %21, align 8
   %i.v = trunc i64 %i.u to i16
   %i.w = call i16 @llvm.bswap.i16(i16 %i.v)
-  %i.x = load volatile i64, ptr %8, align 8
+  %i.x = load volatile i64, ptr %21, align 8
   %i.y = lshr i64 %i.x, 16
   %i.z = trunc i64 %i.y to i16
   %i.aa = and i16 %i.z, 1
   %.0.i19.i = or i16 %i.w, %i.aa
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 22
   store i16 %.0.i19.i, ptr %i.ab, align 2
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.ac = load i32, ptr %10, align 8
+  %i.ac = load i32, ptr %31, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 24
   store i32 %i.ac, ptr %i.ad, align 4
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 36
-  %i.ae = load i32, ptr %11, align 4
+  %i.ae = load i32, ptr %34, align 4
   %i.af = getelementptr inbounds nuw i8, ptr %4, i64 28
   store i32 %i.ae, ptr %i.af, align 4
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 44
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %12, ptr noundef nonnull align 4 dereferenceable(20) %i.ag, i64 20, i1 false)
+  %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ag, ptr noundef nonnull align 4 dereferenceable(20) %35, i64 20, i1 false)
   %i.ah = call i64 @_copy_to_user(ptr noundef %2, ptr noundef nonnull %4, i64 noundef 52) #13
   %i.ai = icmp eq i64 %i.ah, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
@@ -2898,9 +2955,9 @@ ip_tunnel_parm_to_user.exit.thread:               ; preds = %bb.d, %bb.c
 bb.e:                                             ; preds = %ip_tunnel_flags_to_be16.exit.i, %bb.b
   br label %bb.f
 
-bb.f:                                             ; preds = %ip_tunnel_parm_to_user.exit.thread, %ip_tunnel_flags_to_be16.exit.i, %bb.a, %bb.e
-  %.0 = phi i32 [ %i.e, %bb.e ], [ -14, %bb.a ], [ -14, %ip_tunnel_flags_to_be16.exit.i ], [ -14, %ip_tunnel_parm_to_user.exit.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+bb.f:                                             ; preds = %ip_tunnel_parm_to_user.exit.thread, %ip_tunnel_parm_from_user.exit, %ip_tunnel_flags_to_be16.exit.i, %bb.e
+  %.0 = phi i32 [ %i.e, %bb.e ], [ -14, %ip_tunnel_parm_from_user.exit ], [ -14, %ip_tunnel_flags_to_be16.exit.i ], [ -14, %ip_tunnel_parm_to_user.exit.thread ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret i32 %.0
 }
 
@@ -3303,37 +3360,37 @@ attributes #16 = { noredzone "no-builtin-wcslen" }
 !16 = !{}
 !17 = !{i64 2162312172}
 !18 = !{i64 2153157919}
-!19 = !{i64 8544434, i64 8544447}
-!20 = !{i64 2159205900}
-!21 = !{i64 2157123710}
-!22 = !{i64 2157123000}
-!23 = !{i64 2162366271, i64 2162366310, i64 2162366331, i64 2162366368, i64 2162366391, i64 2162366400}
-!24 = !{i64 2162371090, i64 2162371129, i64 2162371150, i64 2162371187, i64 2162371210, i64 2162371219}
-!25 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
-!26 = !{!"branch_weights", i32 4000000, i32 4001}
-!27 = !{i64 15684}
-!28 = !{i64 16081}
-!29 = distinct !{null}
-!30 = distinct !{null}
-!31 = distinct !{null, null}
-!32 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!33 = !{i64 2159843111, i64 2159842986}
-!34 = !{i64 2159843634, i64 2159844110, i64 2159844143, i64 2159844178, i64 2159844194, i64 2159845035, i64 2159845093, i64 2159845142, i64 2159844952, i64 2159844253, i64 2159844285}
-!35 = distinct !{null}
-!36 = distinct !{null}
-!37 = !{i64 2149012111, i64 2149012150, i64 2149012171, i64 2149012208, i64 2149012231, i64 2149012240}
-!38 = !{i64 2151109010}
-!39 = !{i64 20082}
-!40 = !{i64 20778}
-!41 = !{i64 22606}
-!42 = !{i64 23112}
-!43 = !{i64 8052}
-!44 = !{i64 8154}
-!45 = !{i64 23778}
-!46 = !{i64 24024}
-!47 = !{i64 22155}
-!48 = !{i64 2148607500}
-!49 = !{i64 2148609057}
+!19 = !{i64 2148607500}
+!20 = !{i64 2148609057}
+!21 = !{i64 8544434, i64 8544447}
+!22 = !{i64 2159205900}
+!23 = !{i64 2157123710}
+!24 = !{i64 2157123000}
+!25 = !{i64 2162366271, i64 2162366310, i64 2162366331, i64 2162366368, i64 2162366391, i64 2162366400}
+!26 = !{i64 2162371090, i64 2162371129, i64 2162371150, i64 2162371187, i64 2162371210, i64 2162371219}
+!27 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
+!28 = !{!"branch_weights", i32 4000000, i32 4001}
+!29 = !{i64 15684}
+!30 = !{i64 16081}
+!31 = distinct !{null}
+!32 = distinct !{null}
+!33 = distinct !{null, null}
+!34 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!35 = !{i64 2159843111, i64 2159842986}
+!36 = !{i64 2159843634, i64 2159844110, i64 2159844143, i64 2159844178, i64 2159844194, i64 2159845035, i64 2159845093, i64 2159845142, i64 2159844952, i64 2159844253, i64 2159844285}
+!37 = distinct !{null}
+!38 = distinct !{null}
+!39 = !{i64 2149012111, i64 2149012150, i64 2149012171, i64 2149012208, i64 2149012231, i64 2149012240}
+!40 = !{i64 2151109010}
+!41 = !{i64 20082}
+!42 = !{i64 20778}
+!43 = !{i64 22606}
+!44 = !{i64 23112}
+!45 = !{i64 8052}
+!46 = !{i64 8154}
+!47 = !{i64 23778}
+!48 = !{i64 24024}
+!49 = !{i64 22155}
 !50 = !{i64 28115}
 !51 = !{i64 28394}
 !52 = !{i64 2162349125, i64 2162349152, i64 2162349550, i64 2162349583, i64 2162349618, i64 2162349634, i64 2162350475, i64 2162350533, i64 2162350582, i64 2162350392, i64 2162349693, i64 2162349725}

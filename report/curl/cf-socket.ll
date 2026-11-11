@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/curl/original/cf-socket?download=true
-inline.NumInlined: 43
+inline.NumInlined: 45
 inline.NumDeleted: 19
 begin_hunk_0_@cf_udp_connect:bb.a
   br i1 %i.bi, label %bb.x, label %bb.y
@@ -202,8 +202,8 @@ cf_socket_ctx_free.exit:                          ; preds = %bb.c, %.thread18, %
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 43) i32 @cf_tcp_accept_connect(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 1)) %2) #0 {
 bb.a:
-  %i.a = alloca [256 x i8], align 16              ; 3 uses
-  %3 = alloca %struct.Curl_sockaddr_storage, align 8 ; 5 uses
+  %i.a = alloca [256 x i8], align 16              ; 4 uses
+  %3 = alloca %struct.Curl_sockaddr_storage, align 8 ; 10 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca [256 x i8], align 16              ; 3 uses
   %4 = alloca %struct.Curl_sockaddr_storage, align 8 ; 3 uses
@@ -466,9 +466,9 @@ socket_close.exit:                                ; preds = %bb.af, %bb.ai, %.th
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  %i.cy = getelementptr inbounds nuw i8, ptr %.val131, i64 156 ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %.val131, i64 156 ; 6 uses
   store i8 0, ptr %i.cy, align 4, !tbaa !20
-  %i.cz = getelementptr inbounds nuw i8, ptr %.val131, i64 248 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %.val131, i64 248 ; 5 uses
   store i16 0, ptr %i.cz, align 4, !tbaa !131
   store i32 128, ptr %i.b, align 4, !tbaa !21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %3, i8 0, i64 128, i1 false)
@@ -476,22 +476,77 @@ socket_close.exit:                                ; preds = %bb.af, %bb.ai, %.th
   %i.db = load i32, ptr %i.da, align 8, !tbaa !118
   %i.dc = call i32 @getpeername(i32 noundef %i.db, ptr nonnull %3, ptr noundef nonnull %i.b) #10
   %.not.i134 = icmp eq i32 %i.dc, 0
-  br i1 %.not.i134, label %bb.aj, label %.sink.split.i
+  br i1 %.not.i134, label %9, label %5
 
-bb.aj:                                            ; preds = %socket_close.exit
-  %i.dd = load i32, ptr %i.b, align 4, !tbaa !21
-  %5 = call zeroext i1 @sockaddr2string(ptr noundef nonnull %3, i32 noundef %i.dd, ptr noundef nonnull %i.cy, ptr noundef nonnull %i.cz)
-  br i1 %5, label %bb.ak, label %.sink.split.i
-
-.sink.split.i:                                    ; preds = %bb.aj, %socket_close.exit
-  %.str.62.sink.i = phi ptr [ @.str.61, %socket_close.exit ], [ @.str.62, %bb.aj ]
-  %i.de = tail call ptr @__errno_location() #11
-  %6 = load i32, ptr %i.de, align 4, !tbaa !21    ; 2 uses
-  %i.df = call ptr @curlx_strerror(i32 noundef %6, ptr noundef nonnull %i.a, i64 noundef 256) #10
-  call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %1, ptr noundef nonnull %.str.62.sink.i, i32 noundef %6, ptr noundef %i.df) #10
+5:                                                ; preds = %socket_close.exit
+  %6 = tail call ptr @__errno_location() #11
+  %7 = load i32, ptr %6, align 4, !tbaa !21       ; 2 uses
+  %8 = call ptr @curlx_strerror(i32 noundef %7, ptr noundef nonnull %i.a, i64 noundef 256) #10
+  call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %1, ptr noundef nonnull @.str.61, i32 noundef %7, ptr noundef %8) #10
   br label %bb.ak
 
-bb.ak:                                            ; preds = %.sink.split.i, %bb.aj
+9:                                                ; preds = %socket_close.exit
+  %10 = load i16, ptr %3, align 8, !tbaa !12
+  switch i16 %10, label %.sink.split.i [
+    i16 2, label %11
+    i16 10, label %17
+    i16 1, label %bb.aj
+  ]
+
+11:                                               ; preds = %9
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %13 = call ptr @inet_ntop(i32 noundef 2, ptr noundef nonnull %12, ptr noundef nonnull %i.cy, i32 noundef 46) #10
+  %.not22.i.i = icmp eq ptr %13, null
+  br i1 %.not22.i.i, label %.sink.split.i, label %14
+
+14:                                               ; preds = %11
+  %15 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %16 = load i16, ptr %15, align 2, !tbaa !15
+  %rev.i.i.i = call noundef i16 @llvm.bswap.i16(i16 %16)
+  store i16 %rev.i.i.i, ptr %i.cz, align 8, !tbaa !16
+  br label %bb.ak
+
+17:                                               ; preds = %9
+  %18 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %19 = call ptr @inet_ntop(i32 noundef 10, ptr noundef nonnull %18, ptr noundef nonnull %i.cy, i32 noundef 46) #10
+  %.not.i.i = icmp eq ptr %19, null
+  br i1 %.not.i.i, label %.sink.split.i, label %20
+
+20:                                               ; preds = %17
+  %21 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %22 = load i16, ptr %21, align 2, !tbaa !19
+  %rev.i23.i.i = call noundef i16 @llvm.bswap.i16(i16 %22)
+  store i16 %rev.i23.i.i, ptr %i.cz, align 8, !tbaa !16
+  br label %bb.ak
+
+bb.aj:                                            ; preds = %9
+  %i.dd = load i32, ptr %i.b, align 4, !tbaa !21
+  %23 = icmp ugt i32 %i.dd, 2
+  br i1 %23, label %24, label %27
+
+24:                                               ; preds = %bb.aj
+  %25 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %26 = call i32 (ptr, i64, ptr, ...) @curl_msnprintf(ptr noundef nonnull %i.cy, i64 noundef 46, ptr noundef nonnull @.str, ptr noundef nonnull %25) #10 ; 0 uses
+  br label %28
+
+27:                                               ; preds = %bb.aj
+  store i8 0, ptr %i.cy, align 4, !tbaa !20
+  br label %28
+
+28:                                               ; preds = %27, %24
+  store i16 0, ptr %i.cz, align 8, !tbaa !16
+  br label %bb.ak
+
+.sink.split.i:                                    ; preds = %17, %11, %9
+  store i8 0, ptr %i.cy, align 4, !tbaa !20
+  store i16 0, ptr %i.cz, align 8, !tbaa !16
+  %i.de = tail call ptr @__errno_location() #11
+  store i32 97, ptr %i.de, align 4, !tbaa !21
+  %i.df = call ptr @curlx_strerror(i32 noundef 97, ptr noundef nonnull %i.a, i64 noundef 256) #10
+  call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %1, ptr noundef nonnull @.str.62, i32 noundef 97, ptr noundef %i.df) #10
+  br label %bb.ak
+
+bb.ak:                                            ; preds = %.sink.split.i, %28, %20, %14, %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
@@ -894,31 +949,77 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not117, label %bb.f, label %bb.cc
 
 bb.f:                                             ; preds = %bb.e
-  %.val142 = load ptr, ptr %i.l, align 8, !tbaa !113 ; 7 uses
+  %.val142 = load ptr, ptr %i.l, align 8, !tbaa !113 ; 12 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.val142, i64 308
   %i.ac = load i8, ptr %i.ab, align 4, !tbaa !132
-  %i.ad = getelementptr inbounds nuw i8, ptr %.val142, i64 156
+  %i.ad = getelementptr inbounds nuw i8, ptr %.val142, i64 156 ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.val142, i64 252
   store i8 %i.ac, ptr %i.ae, align 4, !tbaa !161
-  %3 = getelementptr inbounds nuw i8, ptr %.val142, i64 24
-  %i.af = getelementptr inbounds nuw i8, ptr %.val142, i64 20
-  %4 = load i32, ptr %i.af, align 4, !tbaa !125
-  %i.ag = getelementptr inbounds nuw i8, ptr %.val142, i64 248
-  %5 = tail call zeroext i1 @sockaddr2string(ptr noundef nonnull %3, i32 noundef %4, ptr noundef nonnull %i.ad, ptr noundef nonnull %i.ag)
-  br i1 %5, label %bb.g, label %set_remote_ip.exit
+  %i.af = getelementptr inbounds nuw i8, ptr %.val142, i64 24
+  %i.ag = getelementptr inbounds nuw i8, ptr %.val142, i64 248 ; 2 uses
+  %3 = load i16, ptr %i.af, align 4, !tbaa !12
+  switch i16 %3, label %set_remote_ip.exit [
+    i16 2, label %4
+    i16 10, label %10
+    i16 1, label %16
+  ]
 
-set_remote_ip.exit:                               ; preds = %bb.f
+4:                                                ; preds = %bb.f
+  %5 = getelementptr inbounds nuw i8, ptr %.val142, i64 28
+  %6 = tail call ptr @inet_ntop(i32 noundef 2, ptr noundef nonnull %5, ptr noundef nonnull %i.ad, i32 noundef 46) #10
+  %.not22.i.i = icmp eq ptr %6, null
+  br i1 %.not22.i.i, label %set_remote_ip.exit, label %7
+
+7:                                                ; preds = %4
+  %8 = getelementptr inbounds nuw i8, ptr %.val142, i64 26
+  %9 = load i16, ptr %8, align 2, !tbaa !15
+  %rev.i.i.i = tail call noundef i16 @llvm.bswap.i16(i16 %9)
+  br label %bb.g
+
+10:                                               ; preds = %bb.f
+  %11 = getelementptr inbounds nuw i8, ptr %.val142, i64 32
+  %12 = tail call ptr @inet_ntop(i32 noundef 10, ptr noundef nonnull %11, ptr noundef nonnull %i.ad, i32 noundef 46) #10
+  %.not.i.i = icmp eq ptr %12, null
+  br i1 %.not.i.i, label %set_remote_ip.exit, label %13
+
+13:                                               ; preds = %10
+  %14 = getelementptr inbounds nuw i8, ptr %.val142, i64 26
+  %15 = load i16, ptr %14, align 2, !tbaa !19
+  %rev.i23.i.i = tail call noundef i16 @llvm.bswap.i16(i16 %15)
+  br label %bb.g
+
+16:                                               ; preds = %bb.f
+  %17 = getelementptr inbounds nuw i8, ptr %.val142, i64 20
+  %18 = load i32, ptr %17, align 4, !tbaa !125
+  %19 = icmp ugt i32 %18, 2
+  br i1 %19, label %20, label %23
+
+20:                                               ; preds = %16
+  %21 = getelementptr inbounds nuw i8, ptr %.val142, i64 26
+  %22 = tail call i32 (ptr, i64, ptr, ...) @curl_msnprintf(ptr noundef nonnull %i.ad, i64 noundef 46, ptr noundef nonnull @.str, ptr noundef nonnull %21) #10 ; 0 uses
+  br label %bb.g
+
+23:                                               ; preds = %16
+  store i8 0, ptr %i.ad, align 4, !tbaa !20
+  br label %bb.g
+
+set_remote_ip.exit:                               ; preds = %bb.f, %4, %10
+  store i8 0, ptr %i.ad, align 4, !tbaa !20
+  store i16 0, ptr %i.ag, align 4, !tbaa !16
+  %i.ah = tail call ptr @__errno_location() #11   ; 2 uses
+  store i32 97, ptr %i.ah, align 4, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #10
-  %i.ah = tail call ptr @__errno_location() #11
-  %6 = load i32, ptr %i.ah, align 4, !tbaa !21    ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.val142, i64 304
-  store i32 %6, ptr %i.ai, align 8, !tbaa !127
-  %i.aj = call ptr @curlx_strerror(i32 noundef %6, ptr noundef nonnull %i.k, i64 noundef 256) #10
-  call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %1, ptr noundef nonnull @.str.20, i32 noundef %6, ptr noundef %i.aj) #10
+  store i32 97, ptr %i.ai, align 8, !tbaa !127
+  %24 = load i32, ptr %i.ah, align 4, !tbaa !21   ; 2 uses
+  %i.aj = call ptr @curlx_strerror(i32 noundef %24, ptr noundef nonnull %i.k, i64 noundef 256) #10
+  call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %1, ptr noundef nonnull @.str.20, i32 noundef %24, ptr noundef %i.aj) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #10
   br label %bb.cc
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %20, %23, %7, %13
+  %rev.i.i.i.sink = phi i16 [ %rev.i.i.i, %7 ], [ %rev.i23.i.i, %13 ], [ 0, %23 ], [ 0, %20 ]
+  store i16 %rev.i.i.i.sink, ptr %i.ag, align 4, !tbaa !16
   %i.ak = load i32, ptr %i.u, align 8, !tbaa !133
   %i.al = icmp eq i32 %i.ak, 10
   br i1 %i.al, label %bb.h, label %bb.q

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DWARFDebugInfoEntry?download=true
-inline.NumInlined: 1387
+inline.NumInlined: 1388
 inline.NumDeleted: 824
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,19 +204,19 @@ define dso_local void @_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry25Get
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %6 = alloca %"class.lldb_private::plugin::dwarf::DWARFFormValue", align 8 ; 6 uses
-  %7 = alloca i64, align 8                        ; 5 uses
-  %8 = alloca i64, align 8                        ; 5 uses
+  %6 = alloca %"class.lldb_private::plugin::dwarf::DWARFFormValue", align 8 ; 8 uses
+  %7 = alloca %"class.lldb_private::plugin::dwarf::DWARFFormValue", align 8 ; 8 uses
+  %8 = alloca %"class.lldb_private::plugin::dwarf::DWARFFormValue", align 8 ; 6 uses
   %9 = alloca %"class.llvm::Error", align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
-  store ptr null, ptr %6, align 8, !tbaa !129
-  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
+  store ptr null, ptr %8, align 8, !tbaa !129
+  %i.b = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store i16 0, ptr %i.b, align 8, !tbaa !132
-  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 16, i1 false)
-  %i.d = call noundef i64 @_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry17GetAttributeValueEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeERNS1_14DWARFFormValueEPmb(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, i16 noundef zeroext 85, ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef null, i1 noundef zeroext false)
+  %i.d = call noundef i64 @_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry17GetAttributeValueEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeERNS1_14DWARFFormValueEPmb(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, i16 noundef zeroext 85, ptr noundef nonnull align 8 dereferenceable(40) %8, ptr noundef null, i1 noundef zeroext false)
   %.not = icmp eq i64 %i.d, 0
-  br i1 %.not, label %bb.e, label %bb.b
+  br i1 %.not, label %10, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.val = load i16, ptr %i.b, align 8, !tbaa !132
@@ -233,27 +233,76 @@ bb.d:                                             ; preds = %bb.b
   call void @_ZN12lldb_private6plugin5dwarf9DWARFUnit21FindRnglistFromOffsetEm(ptr dead_on_unwind writable sret(%"class.llvm::Expected") align 8 %0, ptr noundef nonnull align 8 dereferenceable(864) %2, i64 noundef %.val6) #18
   br label %_ZL9GetRangesRN12lldb_private6plugin5dwarf9DWARFUnitERKNS1_14DWARFFormValueE.exit
 
-bb.e:                                             ; preds = %bb.a
-  br i1 %3, label %bb.f, label %._crit_edge.i.i.i.i
+10:                                               ; preds = %bb.a
+  br i1 %3, label %11, label %._crit_edge.i.i.i.i
+
+11:                                               ; preds = %10
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
+  store ptr null, ptr %7, align 8, !tbaa !129
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i16 0, ptr %12, align 8, !tbaa !132
+  %13 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, i8 0, i64 16, i1 false)
+  %14 = call noundef i64 @_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry17GetAttributeValueEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeERNS1_14DWARFFormValueEPmb(ptr noundef nonnull readonly align 8 dereferenceable(16) %1, ptr noundef %2, i16 noundef zeroext 17, ptr noundef nonnull align 8 dereferenceable(40) %7, ptr noundef null, i1 noundef zeroext %4)
+  %.not.i.i = icmp eq i64 %14, 0
+  br i1 %.not.i.i, label %_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry26GetAttributeValueAsAddressEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeEmb.exit.thread.i, label %bb.e
+
+_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry26GetAttributeValueAsAddressEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeEmb.exit.thread.i: ; preds = %11
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
+  br label %._crit_edge.i.i.i.i
+
+bb.e:                                             ; preds = %11
+  %15 = call noundef i64 @_ZNK12lldb_private6plugin5dwarf14DWARFFormValue7AddressEv(ptr noundef nonnull align 8 dereferenceable(40) %7) #18 ; 4 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
+  %.not.i = icmp eq i64 %15, -1
+  br i1 %.not.i, label %._crit_edge.i.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
-  %10 = call noundef zeroext i1 @_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry24GetAttributeAddressRangeEPKNS1_9DWARFUnitERmS6_mb(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i64 noundef -1, i1 noundef zeroext %4)
-  br i1 %10, label %bb.g, label %13
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
+  store ptr null, ptr %6, align 8, !tbaa !129
+  %16 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  store i16 0, ptr %16, align 8, !tbaa !132
+  %17 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 16, i1 false)
+  %18 = call noundef i64 @_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry17GetAttributeValueEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeERNS1_14DWARFFormValueEPmb(ptr noundef nonnull readonly align 8 dereferenceable(16) %1, ptr noundef %2, i16 noundef zeroext 18, ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef null, i1 noundef zeroext %4)
+  %.not.i21.i = icmp eq i64 %18, 0
+  br i1 %.not.i21.i, label %_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry18GetAttributeHighPCEPKNS1_9DWARFUnitEmmb.exit.thread.i, label %19
 
-bb.g:                                             ; preds = %bb.f
-  %11 = load i64, ptr %7, align 8, !tbaa !17      ; 2 uses
-  %12 = load i64, ptr %8, align 8, !tbaa !17      ; 2 uses
-  %i.g = icmp ult i64 %11, %12
-  br i1 %i.g, label %_ZNSt6vectorIN4llvm17DWARFAddressRangeESaIS1_EED2Ev.exit, label %13
+_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry18GetAttributeHighPCEPKNS1_9DWARFUnitEmmb.exit.thread.i: ; preds = %bb.f
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  br label %._crit_edge.i.i.i.i
+
+19:                                               ; preds = %bb.f
+  %20 = load i16, ptr %16, align 8, !tbaa !132
+  switch i16 %20, label %23 [
+    i16 7937, label %21
+    i16 27, label %21
+    i16 1, label %21
+  ]
+
+21:                                               ; preds = %19, %19, %19
+  %22 = call noundef i64 @_ZNK12lldb_private6plugin5dwarf14DWARFFormValue7AddressEv(ptr noundef nonnull align 8 dereferenceable(40) %6) #18
+  br label %bb.g
+
+23:                                               ; preds = %19
+  %24 = load i64, ptr %17, align 8, !tbaa !116
+  %25 = add i64 %24, %15
+  br label %bb.g
+
+bb.g:                                             ; preds = %23, %21
+  %.1.i.i = phi i64 [ %25, %23 ], [ %22, %21 ]    ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  %.not20.i = icmp ne i64 %.1.i.i, -1
+  %i.g = icmp ult i64 %15, %.1.i.i
+  %or.cond = and i1 %.not20.i, %i.g
+  br i1 %or.cond, label %_ZNSt6vectorIN4llvm17DWARFAddressRangeESaIS1_EED2Ev.exit, label %._crit_edge.i.i.i.i
 
 _ZNSt6vectorIN4llvm17DWARFAddressRangeESaIS1_EED2Ev.exit: ; preds = %bb.g
   %i.h = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #21 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
-  store i64 %11, ptr %i.h, align 8, !tbaa !17
+  store i64 %15, ptr %i.h, align 8, !tbaa !17
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store i64 %12, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !17
+  store i64 %.1.i.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !17
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 -1, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !17
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -265,16 +314,9 @@ _ZNSt6vectorIN4llvm17DWARFAddressRangeESaIS1_EED2Ev.exit: ; preds = %bb.g
   store ptr %i.i, ptr %i.m, align 8, !tbaa !151
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.i, ptr %i.n, align 8, !tbaa !135
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   br label %_ZL9GetRangesRN12lldb_private6plugin5dwarf9DWARFUnitERKNS1_14DWARFFormValueE.exit
 
-13:                                               ; preds = %bb.f, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
-  br label %._crit_edge.i.i.i.i
-
-._crit_edge.i.i.i.i:                              ; preds = %13, %bb.e
+._crit_edge.i.i.i.i:                              ; preds = %_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry26GetAttributeValueAsAddressEPKNS1_9DWARFUnitEN4llvm5dwarf9AttributeEmb.exit.thread.i, %bb.e, %_ZNK12lldb_private6plugin5dwarf19DWARFDebugInfoEntry18GetAttributeHighPCEPKNS1_9DWARFUnitEmmb.exit.thread.i, %bb.g, %10
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   %i.o = call { i32, ptr } @_ZN4llvm22inconvertibleErrorCodeEv() #18, !noalias !308 ; 2 uses
   %i.p = extractvalue { i32, ptr } %i.o, 0
@@ -318,7 +360,7 @@ _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %._crit_edge.i.i.i.i
   br label %_ZL9GetRangesRN12lldb_private6plugin5dwarf9DWARFUnitERKNS1_14DWARFFormValueE.exit
 
 _ZL9GetRangesRN12lldb_private6plugin5dwarf9DWARFUnitERKNS1_14DWARFFormValueE.exit: ; preds = %bb.d, %bb.c, %_ZNSt6vectorIN4llvm17DWARFAddressRangeESaIS1_EED2Ev.exit, %_ZN4llvm5ErrorD2Ev.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   ret void
 }
 
