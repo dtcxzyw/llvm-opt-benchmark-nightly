@@ -205,8 +205,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   %i.ag = and i64 %i.af, 512
   %i.ah = lshr i64 %i.ae, 5
   %i.ai = and i64 %i.ah, 8388608
-  %11 = or disjoint i64 %i.ag, %i.ai
-  %i.aj = or disjoint i64 %11, 4472834
+  %i.aj = or disjoint i64 %i.ag, %i.ai
   %i.ak = and i64 %i.ae, 8192
   %.not.i42 = icmp eq i64 %i.ak, 0
   %i.al = shl i64 %i.ae, 21
@@ -239,10 +238,10 @@ bb.h:                                             ; preds = %.thread, %bb.g
   %i.bl = and i64 %i.bk, 140737488355328
   %.masked.masked.masked = or i64 %i.az, %i.bb
   %.masked106.masked = or i64 %.masked.masked.masked, %i.bd
-  %.masked = or i64 %.masked106.masked, %i.aj
+  %.masked = or i64 %i.aj, %.masked106.masked
   %i.bm = or i64 %.masked, %i.bh
   %i.bn = or i64 %i.bm, %i.bl
-  %i.bo = xor i64 %i.bn, 1610612736
+  %i.bo = xor i64 %i.bn, 1615085570
   store i64 %i.bo, ptr %4, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr null, ptr %i.bp, align 8, !tbaa !5667

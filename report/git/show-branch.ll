@@ -205,12 +205,11 @@ name_commits.exit.loopexit:                       ; preds = %._crit_edge23.i
 
 name_commits.exit:                                ; preds = %name_commits.exit.loopexit, %.thread255
   %.0153328 = phi ptr [ %.0153328.pre, %name_commits.exit.loopexit ], [ %.0153328.pre376, %.thread255 ] ; 2 uses
+  %.neg = shl i32 -4, %.0164.lcssa433
   %.not196329 = icmp eq ptr %.0153328, null
   br i1 %.not196329, label %show_merge_base.exit, label %.lr.ph332
 
 .lr.ph332:                                        ; preds = %name_commits.exit
-  %.neg = shl i32 -4, %.0164.lcssa433
-  %10 = or disjoint i32 %.neg, 3
   %i.aeq = load i32, ptr @column_colors_ansi_max, align 4
   %umax = call i32 @llvm.umax.i32(i32 %.0164.lcssa433, i32 1)
   %min.iters.check510 = icmp ult i32 %.0164.lcssa433, 8
@@ -226,10 +225,10 @@ bb.do:                                            ; preds = %.lr.ph332, %.thread
   %i.aet = load ptr, ptr %.0153331, align 8, !tbaa !43 ; 4 uses
   %i.aeu = load i64, ptr %i.aet, align 8
   %i.aev = lshr i64 %i.aeu, 32
-  %i.aew = trunc nuw i64 %i.aev to i32            ; 3 uses
-  %i.aex = and i32 %i.aew, 536870911              ; 2 uses
-  %i.aey = or i32 %i.aex, %10
-  %i.aez = icmp eq i32 %i.aey, -1                 ; 2 uses
+  %i.aew = trunc nuw i64 %i.aev to i32            ; 2 uses
+  %i.aex = and i32 %i.aew, 536870908              ; 4 uses
+  %i.aey = or i32 %i.aex, %.neg
+  %i.aez = icmp eq i32 %i.aey, -4                 ; 2 uses
   %i.afa = zext i1 %i.aez to i32
   %i.afb = or i32 %.0170330, %i.afa               ; 2 uses
   br i1 %i.tu, label %bb.dp, label %bb.dz
@@ -260,26 +259,18 @@ bb.ds:                                            ; preds = %bb.dr
   %i.afl = load i32, ptr %i.o, align 4, !tbaa !15
   %i.afm = icmp eq i32 %i.afl, 0
   %or.cond21 = select i1 %i.afm, i1 %i.afh, i1 false
-  br i1 %or.cond21, label %.preheader, label %omit_in_dense.exit.thread.preheader
+  br i1 %or.cond21, label %.preheader271, label %omit_in_dense.exit.thread.preheader
 
-bb.dt:                                            ; preds = %.preheader
-  %indvars.iv.next.i235 = add nuw nsw i64 %indvars.iv.i234, 1 ; 2 uses
+bb.dt:                                            ; preds = %.preheader271
+  %indvars.iv.next.i235 = add nuw nsw i64 %indvars.iv.i235, 1 ; 2 uses
   %exitcond.not.i236 = icmp eq i64 %indvars.iv.next.i235, %.lcssa285434
-  br i1 %exitcond.not.i236, label %bb.du, label %.preheader, !llvm.loop !88
-
-.preheader:                                       ; preds = %bb.ds, %bb.dt
-  %indvars.iv.i234 = phi i64 [ %indvars.iv.next.i235, %bb.dt ], [ 0, %bb.ds ] ; 2 uses
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i234
-  %12 = load ptr, ptr %11, align 8, !tbaa !104
-  %13 = icmp eq ptr %12, %i.aet
-  br i1 %13, label %omit_in_dense.exit.thread.preheader, label %bb.dt
+  br i1 %exitcond.not.i236, label %bb.du, label %.preheader271, !llvm.loop !88
 
 bb.du:                                            ; preds = %bb.dt
-  %14 = and i32 %i.aew, 536870908                 ; 2 uses
   br i1 %min.iters.check510, label %scalar.ph509.preheader, label %vector.ph511
 
 vector.ph511:                                     ; preds = %bb.du
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %14, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.aex, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 6 uses
   %i.afn = and <4 x i32> %broadcast.splat, <i32 4, i32 8, i32 16, i32 32>
   %i.afo = and <4 x i32> %broadcast.splat, <i32 64, i32 128, i32 256, i32 512>
@@ -323,11 +314,18 @@ scalar.ph509.preheader:                           ; preds = %bb.du, %middle.bloc
   %.11519.i.ph = phi i32 [ 0, %bb.du ], [ %n.vec512, %middle.block517 ]
   br label %scalar.ph509
 
+.preheader271:                                    ; preds = %bb.ds, %bb.dt
+  %indvars.iv.i235 = phi i64 [ %indvars.iv.next.i235, %bb.dt ], [ 0, %bb.ds ] ; 2 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i235
+  %11 = load ptr, ptr %10, align 8, !tbaa !104
+  %12 = icmp eq ptr %11, %i.aet
+  br i1 %12, label %omit_in_dense.exit.thread.preheader, label %bb.dt
+
 scalar.ph509:                                     ; preds = %scalar.ph509.preheader, %scalar.ph509
   %.020.i = phi i32 [ %spec.select.i238, %scalar.ph509 ], [ %.020.i.ph, %scalar.ph509.preheader ]
   %.11519.i = phi i32 [ %i.agn, %scalar.ph509 ], [ %.11519.i.ph, %scalar.ph509.preheader ] ; 2 uses
   %i.agk = shl nuw i32 4, %.11519.i
-  %i.agl = and i32 %14, %i.agk
+  %i.agl = and i32 %i.agk, %i.aex
   %.not.i237 = icmp ne i32 %i.agl, 0
   %i.agm = zext i1 %.not.i237 to i32
   %spec.select.i238 = add nuw nsw i32 %.020.i, %i.agm ; 2 uses
@@ -340,7 +338,7 @@ omit_in_dense.exit:                               ; preds = %scalar.ph509, %midd
   %.not269 = icmp eq i32 %spec.select.i238.lcssa, 1
   br i1 %.not269, label %.thread261, label %omit_in_dense.exit.thread.preheader
 
-omit_in_dense.exit.thread.preheader:              ; preds = %.preheader, %omit_in_dense.exit, %bb.ds
+omit_in_dense.exit.thread.preheader:              ; preds = %.preheader271, %omit_in_dense.exit, %bb.ds
   br label %omit_in_dense.exit.thread
 
 omit_in_dense.exit.thread:                        ; preds = %omit_in_dense.exit.thread.preheader, %bb.dx

@@ -204,9 +204,9 @@ bb.sp:                                            ; preds = %_ZN7testing15Assert
   %i.apz = call range(i64 57, 65) i64 @llvm.ctlz.i64(i64 %indvars.iv, i1 true) ; 2 uses
   %i.aqa = shl i64 %indvars.iv, %i.apz
   %i.aqb = lshr i64 %i.aqa, 11
-  %i.aqc = shl nuw nsw i64 %i.apz, 52             ; 2 uses
-  %i.aqd = and i64 %i.aqb, 4503599627370495       ; 2 uses
-  %i.aqe = or disjoint i64 %i.aqd, %i.aqc
+  %i.aqc = shl nuw nsw i64 %i.apz, 52
+  %i.aqd = and i64 %i.aqb, 4503599627370495
+  %i.aqe = or disjoint i64 %i.aqd, %i.aqc         ; 2 uses
   %i.aqf = xor i64 %i.aqe, 4607182418800017408    ; 2 uses
   %i.aqg = bitcast i64 %i.aqf to double
   store i64 %i.aqf, ptr %i.d, align 8, !tbaa !61
@@ -351,9 +351,7 @@ _ZN7testing15AssertionResultD2Ev.exit903:         ; preds = %bb.td, %_ZNKSt14def
   %i.arj = fmul double %i.ari, %i.apx             ; 2 uses
   store double %i.arj, ptr %i.e, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #17
-  %145 = or disjoint i64 %i.aqc, -9223372036854775808
-  %146 = or disjoint i64 %i.aqd, %145
-  %i.ark = xor i64 %146, 4607182418800017408      ; 2 uses
+  %i.ark = xor i64 %i.aqe, -4616189618054758400   ; 2 uses
   %i.arl = bitcast i64 %i.ark to double
   store i64 %i.ark, ptr %i.f, align 8, !tbaa !61
   %i.arm = fcmp oeq double %i.arj, %i.arl

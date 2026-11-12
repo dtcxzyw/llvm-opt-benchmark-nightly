@@ -205,8 +205,6 @@ put_bits.exit:                                    ; preds = %.put_bits.exit_crit
   %i.ap = or disjoint i32 %.2132, 1000
   %i.aq = mul nuw nsw i32 %i.ap, %.2
   %i.ar = load i32, ptr %i.a, align 16, !tbaa !12
-  %1 = shl i32 %i.ar, 30
-  %2 = or disjoint i32 %1, 8192
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 6328
   %i.at = load i32, ptr %i.as, align 8, !tbaa !126
   %i.au = sext i32 %i.at to i64
@@ -217,10 +215,11 @@ put_bits.exit:                                    ; preds = %.put_bits.exit_crit
   %i.az = mul nsw i64 %.pre-phi365, %i.ay
   %i.ba = sdiv i64 %i.ax, %i.az
   %i.bb = trunc i64 %i.ba to i32                  ; 2 uses
-  %3 = and i32 %i.bb, 255
-  %4 = or disjoint i32 %3, %2
-  %5 = shl i32 %4, 1
-  %i.bc = or disjoint i32 %5, 1                   ; 2 uses
+  %1 = shl i32 %i.ar, 31
+  %2 = shl i32 %i.bb, 1
+  %3 = and i32 %2, 510
+  %4 = or disjoint i32 %1, %3
+  %i.bc = or disjoint i32 %4, 16385               ; 2 uses
   store i32 %i.bc, ptr %i.a, align 16, !tbaa !12
   store i32 1, ptr %i.b, align 4, !tbaa !13
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 4408 ; 48 uses
