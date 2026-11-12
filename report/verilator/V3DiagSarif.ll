@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
   store i64 11, ptr %i.en, align 8, !tbaa !71
   %i.eo = getelementptr inbounds nuw i8, ptr %14, i64 27
   store i8 0, ptr %i.eo, align 1, !tbaa !72
-  %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.eq = load i64, ptr %i.ep, align 8
   %i.er = trunc i64 %i.eq to i32
   %i.es = and i32 %i.er, 16777215
@@ -401,10 +401,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194: ; preds = %bb
   store i64 9, ptr %i.gx, align 8, !tbaa !71
   %i.gy = getelementptr inbounds nuw i8, ptr %16, i64 25
   store i8 0, ptr %i.gy, align 1, !tbaa !72
-  %21 = load i64, ptr %i.ep, align 8
-  %22 = lshr i64 %21, 32
-  %23 = trunc nuw i64 %22 to i32
-  %i.gz = and i32 %23, 16777215
+  %21 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  %22 = load i32, ptr %21, align 4
+  %i.gz = and i32 %22, 16777215
   %i.ha = invoke noundef nonnull align 8 dereferenceable(320) ptr @_ZN13V3OutJsonFile3putERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi(ptr noundef nonnull align 8 dereferenceable(320) %1, ptr noundef nonnull align 8 dereferenceable(32) %16, i32 noundef %i.gz)
           to label %bb.ac unwind label %bb.al     ; 0 uses
 
@@ -807,11 +806,9 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local noundef i32 @_ZNK8FileLine10lastColumnEv(ptr noundef nonnull align 8 dereferenceable(48) %0) #1 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load i64, ptr %i.a, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.b = and i32 %3, 16777215
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %1 = load i32, ptr %i.a, align 4
+  %i.b = and i32 %1, 16777215
   ret i32 %i.b
 }
 

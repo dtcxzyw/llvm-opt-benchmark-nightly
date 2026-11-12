@@ -202,10 +202,9 @@ bb.d:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 272
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %i.r, align 8, !tbaa !87
-  %.sroa.49.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i, 32
-  %.sroa.49.0.extract.trunc = trunc nuw i64 %.sroa.49.0.extract.shift to i32
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 296
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 300
+  %.sroa.49.0.extract.trunc = load i32, ptr %5, align 4, !tbaa !87
   %.not = icmp slt i32 %i.o, %.sroa.49.0.extract.trunc
   br i1 %.not, label %bb.f, label %.critedge
 
@@ -537,7 +536,7 @@ bb.d:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.v, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 296
   %.sroa.0.0.copyload.i = load i64, ptr %i.w, align 8, !tbaa !87
   %.sroa.06.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32
   %.not = icmp slt i32 %i.u, %.sroa.06.0.extract.trunc
@@ -560,9 +559,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ac, label %.critedge2, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %.sroa.0.0.copyload.i17 = load i64, ptr %i.w, align 8, !tbaa !87
-  %.sroa.4.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i17, 32
-  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 300
+  %.sroa.4.0.extract.trunc = load i32, ptr %5, align 4, !tbaa !87
   %.not16 = icmp slt i32 %i.ab, %.sroa.4.0.extract.trunc
   br i1 %.not16, label %bb.h, label %.critedge2
 

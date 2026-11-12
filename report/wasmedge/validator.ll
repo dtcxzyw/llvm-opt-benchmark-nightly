@@ -205,11 +205,9 @@ bb.b:                                             ; preds = %.lr.ph81, %.loopexi
   br i1 %i.o, label %bb.c, label %.preheader75
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 120
-  %.sroa.01.0.copyload.i = load i64, ptr %i.p, align 8
-  %.sroa.066.4.extract.shift = lshr i64 %.sroa.01.0.copyload.i, 32
-  %.sroa.066.4.extract.trunc = trunc nuw i64 %.sroa.066.4.extract.shift to i32
-  %i.q = add i32 %.04180, %.sroa.066.4.extract.trunc ; 5 uses
+  %i.p = getelementptr i8, ptr %i.n, i64 124
+  %.sroa.066.4.extract.trunc = load i32, ptr %i.p, align 4
+  %i.q = add i32 %.sroa.066.4.extract.trunc, %.04180 ; 5 uses
   %i.r = icmp ult i32 %.04180, %i.q
   br i1 %i.r, label %.lr.ph.preheader, label %.loopexit
 

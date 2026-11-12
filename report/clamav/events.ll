@@ -142,10 +142,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.2) #13
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i16, ptr %i.f, align 4
-  %6 = lshr i16 %5, 8
-  %trunc.i.i = trunc nuw i16 %6 to i8
+  %i.f = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.f, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.c
     i8 1, label %bb.d
@@ -208,10 +206,8 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.h
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.3) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %7 = load i16, ptr %i.ag, align 4
-  %8 = lshr i16 %7, 8
-  %trunc.i.i36 = trunc nuw i16 %8 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i36 = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i36, label %cli_event_error_str.exit [
     i8 0, label %bb.j
     i8 1, label %bb.k
@@ -272,10 +268,8 @@ bb.o:                                             ; preds = %bb.h
 
 bb.p:                                             ; preds = %bb.o
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.4) #13
-  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %9 = load i16, ptr %i.bf, align 4
-  %10 = lshr i16 %9, 8
-  %trunc.i.i41 = trunc nuw i16 %10 to i8
+  %i.bf = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i41 = load i8, ptr %i.bf, align 1
   switch i8 %trunc.i.i41, label %cli_event_error_str.exit [
     i8 0, label %bb.q
     i8 1, label %bb.r
@@ -337,10 +331,8 @@ bb.v:                                             ; preds = %bb.o
 
 bb.w:                                             ; preds = %bb.v
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.5) #13
-  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %11 = load i16, ptr %i.cf, align 4
-  %12 = lshr i16 %11, 8
-  %trunc.i.i46 = trunc nuw i16 %12 to i8
+  %i.cf = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i46 = load i8, ptr %i.cf, align 1
   switch i8 %trunc.i.i46, label %cli_event_error_str.exit [
     i8 0, label %bb.x
     i8 1, label %bb.y
@@ -425,10 +417,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef %1) #13
   %.not.i = icmp eq ptr %1, null
   %spec.store.select.i = select i1 %.not.i, ptr @.str.19, ptr %1 ; 2 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %2 = load i16, ptr %i.a, align 4
-  %3 = lshr i16 %2, 8
-  %trunc.i = trunc nuw i16 %3 to i8
+  %i.a = getelementptr i8, ptr %0, i64 29
+  %trunc.i = load i8, ptr %i.a, align 1
   switch i8 %trunc.i, label %event_string.exit [
     i8 0, label %bb.c
     i8 1, label %bb.d
@@ -501,10 +491,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %2 = load i16, ptr %i.c, align 4
-  %3 = lshr i16 %2, 8
-  %trunc.i.i.i = trunc nuw i16 %3 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %get_event.exit.thread [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -588,10 +576,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %3 = load i16, ptr %i.c, align 4
-  %4 = lshr i16 %3, 8
-  %trunc.i.i.i = trunc nuw i16 %4 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -661,10 +647,8 @@ bb.i:                                             ; preds = %get_event.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.6) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i16, ptr %i.ag, align 4
-  %6 = lshr i16 %5, 8
-  %trunc.i.i = trunc nuw i16 %6 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.k
     i8 1, label %bb.l
@@ -806,10 +790,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %3 = load i16, ptr %i.c, align 4
-  %4 = lshr i16 %3, 8
-  %trunc.i.i.i = trunc nuw i16 %4 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -879,10 +861,8 @@ bb.i:                                             ; preds = %get_event.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.7) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i16, ptr %i.ag, align 4
-  %6 = lshr i16 %5, 8
-  %trunc.i.i = trunc nuw i16 %6 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.k
     i8 1, label %bb.l
@@ -977,10 +957,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %4 = load i16, ptr %i.c, align 4
-  %5 = lshr i16 %4, 8
-  %trunc.i.i.i = trunc nuw i16 %5 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %bb.j [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -1048,10 +1026,8 @@ bb.j:                                             ; preds = %bb.c, %bb.d, %bb.f,
 
 bb.k:                                             ; preds = %bb.j
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %6 = load i16, ptr %i.ae, align 4
-  %7 = lshr i16 %6, 8
-  %trunc.i.i.i17 = trunc nuw i16 %7 to i8
+  %i.ae = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i17 = load i8, ptr %i.ae, align 1
   switch i8 %trunc.i.i.i17, label %cli_event_error_str.exit [
     i8 0, label %bb.l
     i8 1, label %bb.m
@@ -1130,10 +1106,8 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.7) #13
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %8 = load i16, ptr %i.bn, align 4
-  %9 = lshr i16 %8, 8
-  %trunc.i.i = trunc nuw i16 %9 to i8
+  %i.bn = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.bn, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.t
     i8 1, label %bb.u
@@ -1229,10 +1203,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %3 = load i16, ptr %i.c, align 4
-  %4 = lshr i16 %3, 8
-  %trunc.i.i.i = trunc nuw i16 %4 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -1302,10 +1274,8 @@ bb.i:                                             ; preds = %get_event.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.7) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i16, ptr %i.ag, align 4
-  %6 = lshr i16 %5, 8
-  %trunc.i.i = trunc nuw i16 %6 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.k
     i8 1, label %bb.l
@@ -1393,10 +1363,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %4 = load i16, ptr %i.c, align 4
-  %5 = lshr i16 %4, 8
-  %trunc.i.i.i = trunc nuw i16 %5 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %bb.j [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -1464,10 +1432,8 @@ bb.j:                                             ; preds = %bb.c, %bb.d, %bb.f,
 
 bb.k:                                             ; preds = %bb.j
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %6 = load i16, ptr %i.ae, align 4
-  %7 = lshr i16 %6, 8
-  %trunc.i.i.i16 = trunc nuw i16 %7 to i8
+  %i.ae = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i16 = load i8, ptr %i.ae, align 1
   switch i8 %trunc.i.i.i16, label %cli_event_error_str.exit [
     i8 0, label %bb.l
     i8 1, label %bb.m
@@ -1546,10 +1512,8 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.7) #13
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %8 = load i16, ptr %i.bn, align 4
-  %9 = lshr i16 %8, 8
-  %trunc.i.i = trunc nuw i16 %9 to i8
+  %i.bn = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.bn, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.t
     i8 1, label %bb.u
@@ -1641,10 +1605,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %3 = load i16, ptr %i.c, align 4
-  %4 = lshr i16 %3, 8
-  %trunc.i.i.i = trunc nuw i16 %4 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -1714,10 +1676,8 @@ bb.i:                                             ; preds = %get_event.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i16, ptr %i.ag, align 4
-  %6 = lshr i16 %5, 8
-  %trunc.i.i = trunc nuw i16 %6 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.k
     i8 1, label %bb.l
@@ -1772,11 +1732,11 @@ bb.o:                                             ; preds = %bb.l
   br label %cli_event_error_str.exit
 
 bb.p:                                             ; preds = %bb.i
+  %3 = lshr i16 %i.ae, 8
+  %4 = trunc nuw i16 %3 to i8
   %.not.i9 = icmp eq ptr %2, null
   %spec.store.select.i = select i1 %.not.i9, ptr @.str.19, ptr %2 ; 2 uses
-  %7 = lshr i16 %i.ae, 8
-  %trunc.i = trunc nuw i16 %7 to i8
-  switch i8 %trunc.i, label %cli_event_error_str.exit [
+  switch i8 %4, label %cli_event_error_str.exit [
     i8 0, label %bb.q
     i8 1, label %bb.r
   ]
@@ -1848,10 +1808,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %4 = load i16, ptr %i.c, align 4
-  %5 = lshr i16 %4, 8
-  %trunc.i.i.i = trunc nuw i16 %5 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -1921,10 +1879,8 @@ bb.i:                                             ; preds = %get_event.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.10) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %6 = load i16, ptr %i.ag, align 4
-  %7 = lshr i16 %6, 8
-  %trunc.i.i = trunc nuw i16 %7 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.k
     i8 1, label %bb.l
@@ -2082,10 +2038,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %4 = load i16, ptr %i.c, align 4
-  %5 = lshr i16 %4, 8
-  %trunc.i.i.i = trunc nuw i16 %5 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -2155,10 +2109,8 @@ bb.i:                                             ; preds = %get_event.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.11) #13
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %6 = load i16, ptr %i.ag, align 4
-  %7 = lshr i16 %6, 8
-  %trunc.i.i = trunc nuw i16 %7 to i8
+  %i.ag = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i = load i8, ptr %i.ag, align 1
   switch i8 %trunc.i.i, label %cli_event_error_str.exit [
     i8 0, label %bb.k
     i8 1, label %bb.l
@@ -2253,10 +2205,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %4 = load i16, ptr %i.c, align 4
-  %5 = lshr i16 %4, 8
-  %trunc.i.i.i = trunc nuw i16 %5 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %get_event.exit.thread [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -2344,10 +2294,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %2 = load i16, ptr %i.c, align 4
-  %3 = lshr i16 %2, 8
-  %trunc.i.i.i = trunc nuw i16 %3 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %get_event.exit.thread [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -2574,10 +2522,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %3 = load i16, ptr %i.c, align 4
-  %4 = lshr i16 %3, 8
-  %trunc.i.i.i = trunc nuw i16 %4 to i8
+  %i.c = getelementptr i8, ptr %0, i64 29
+  %trunc.i.i.i = load i8, ptr %i.c, align 1
   switch i8 %trunc.i.i.i, label %get_event.exit [
     i8 0, label %bb.d
     i8 1, label %bb.e
@@ -2650,10 +2596,8 @@ bb.j:                                             ; preds = %get_event.exit
 
 bb.k:                                             ; preds = %bb.j
   tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.18) #13
-  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %5 = load i16, ptr %i.af, align 4
-  %6 = lshr i16 %5, 8
-  %trunc.i.i.i78 = trunc nuw i16 %6 to i8
+  %i.af = getelementptr i8, ptr %1, i64 29
+  %trunc.i.i.i78 = load i8, ptr %i.af, align 1
   switch i8 %trunc.i.i.i78, label %get_event.exit82.thread [
     i8 0, label %bb.l
     i8 1, label %bb.m

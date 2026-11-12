@@ -205,7 +205,7 @@ fmap_need_off_once_len.exit.thread:               ; preds = %fmap_need_off_once_
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @decode_f(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #0 {
 bb.a:
-  %1 = alloca %struct.arj_decode_tag, align 8     ; 36 uses
+  %1 = alloca %struct.arj_decode_tag, align 8     ; 37 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #11
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(13352) %i.a, i8 0, i64 13352, i1 false)
@@ -245,7 +245,7 @@ bb.d:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 54 ; 31 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 16 uses
   store i16 0, ptr %i.r, align 4, !tbaa !91
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 13368 ; 6 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 13368 ; 5 uses
   store i32 0, ptr %i.s, align 8, !tbaa !38
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !28
@@ -258,22 +258,16 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph112:                                        ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 55
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph112, %.loopexit
-  %i.w = phi i16 [ 0, %.lr.ph112 ], [ %i.hx, %.loopexit ] ; 4 uses
-  %i.x = phi i16 [ 0, %.lr.ph112 ], [ %i.hy, %.loopexit ] ; 8 uses
+  %i.w = phi i16 [ 0, %.lr.ph112 ], [ %i.hx, %.loopexit ] ; 2 uses
+  %i.x = phi i16 [ 0, %.lr.ph112 ], [ %i.hy, %.loopexit ] ; 4 uses
   %.054111 = phi i32 [ 0, %.lr.ph112 ], [ %.3, %.loopexit ] ; 5 uses
   %.056110 = phi i32 [ 0, %.lr.ph112 ], [ %.157, %.loopexit ] ; 2 uses
   %i.y = icmp slt i16 %i.x, 1
-  br i1 %i.y, label %.thread.a, label %2
-
-2:                                                ; preds = %bb.e
-  %3 = shl i16 %i.w, 1                            ; 4 uses
-  %4 = add nsw i16 %i.x, -1                       ; 4 uses
-  store i16 %4, ptr %i.r, align 4, !tbaa !91
-  %5 = icmp sgt i16 %i.w, -1
-  br i1 %5, label %decode_len.exit.thread, label %8
+  br i1 %i.y, label %.thread.a, label %bb.f
 
 .thread.a:                                        ; preds = %bb.e
   %i.z = load i16, ptr %i.l, align 2, !tbaa !39
@@ -286,30 +280,34 @@ bb.e:                                             ; preds = %.lr.ph112, %.loopex
   %i.af = sext i16 %i.x to i32
   %i.ag = sub nsw i32 16, %i.af
   %i.ah = call fastcc i32 @fill_buf(ptr noundef nonnull %1, i32 noundef %i.ag) ; 0 uses
-  %.pre = load i16, ptr %i.q, align 2, !tbaa !92  ; 3 uses
-  %6 = shl i16 %.pre, 1                           ; 2 uses
-  %7 = icmp sgt i16 %.pre, -1
-  br i1 %7, label %decode_len.exit.thread.thread, label %.thread159
+  %.pre = load i16, ptr %i.q, align 2, !tbaa !92
+  br label %bb.f
 
-8:                                                ; preds = %2
-  %9 = icmp eq i16 %i.x, 1
-  br i1 %9, label %.thread83.i, label %bb.f
-
-bb.f:                                             ; preds = %8
-  %i.ai = shl i16 %i.w, 2                         ; 3 uses
-  %i.aj = add nsw i16 %i.x, -2                    ; 3 uses
+bb.f:                                             ; preds = %.thread.a, %bb.e
+  %3 = phi i16 [ %.pre, %.thread.a ], [ %i.w, %bb.e ] ; 4 uses
+  %4 = phi i16 [ 16, %.thread.a ], [ %i.x, %bb.e ] ; 6 uses
+  %i.ai = shl i16 %3, 1                           ; 4 uses
+  %i.aj = add nsw i16 %4, -1                      ; 3 uses
   store i16 %i.aj, ptr %i.r, align 4, !tbaa !91
   %i.ak = icmp sgt i16 %3, -1
-  br i1 %i.ak, label %.thread.i, label %bb.g
+  %5 = lshr i16 %i.ai, 8
+  %6 = trunc nuw i16 %5 to i8
+  br i1 %i.ak, label %decode_len.exit.thread.thread, label %7
 
-.thread159:                                       ; preds = %.thread.a
-  %i.al = shl i16 %.pre, 2                        ; 2 uses
-  %i.am = icmp sgt i16 %6, -1
-  br i1 %i.am, label %.lr.ph.i, label %.thread84.i
+7:                                                ; preds = %bb.f
+  %8 = icmp samesign ult i16 %4, 2
+  br i1 %8, label %.thread83.i, label %.thread159
 
-.thread83.i:                                      ; preds = %8
+.thread159:                                       ; preds = %7
+  %i.al = shl i16 %3, 2                           ; 3 uses
+  %9 = add nsw i16 %4, -2                         ; 3 uses
+  store i16 %9, ptr %i.r, align 4, !tbaa !91
+  %i.am = icmp sgt i16 %i.ai, -1
+  br i1 %i.am, label %.thread.i, label %bb.g
+
+.thread83.i:                                      ; preds = %7
   %i.an = load i16, ptr %i.l, align 2, !tbaa !39
-  %i.ao = or i16 %i.an, %3
+  %i.ao = or i16 %i.an, %i.ai
   store i16 %i.ao, ptr %i.q, align 2, !tbaa !92
   %i.ap = call fastcc i32 @fill_buf(ptr noundef nonnull %1, i32 noundef 16) ; 0 uses
   %.pre.i = load i16, ptr %i.q, align 2, !tbaa !92 ; 2 uses
@@ -317,21 +315,21 @@ bb.f:                                             ; preds = %8
   %i.ar = icmp sgt i16 %.pre.i, -1
   br i1 %i.ar, label %.lr.ph.i, label %.thread84.i
 
-bb.g:                                             ; preds = %bb.f
-  %i.as = icmp eq i16 %i.x, 2
+bb.g:                                             ; preds = %.thread159
+  %i.as = icmp eq i16 %4, 2
   br i1 %i.as, label %bb.h, label %.thread84.i
 
 bb.h:                                             ; preds = %bb.g
   %i.at = load i16, ptr %i.l, align 2, !tbaa !39
-  %i.au = or i16 %i.at, %i.ai
+  %i.au = or i16 %i.at, %i.al
   store i16 %i.au, ptr %i.q, align 2, !tbaa !92
   %i.av = call fastcc i32 @fill_buf(ptr noundef nonnull %1, i32 noundef 16) ; 0 uses
   %.pre62.i = load i16, ptr %i.q, align 2, !tbaa !92
   br label %.thread84.i
 
-.thread84.i:                                      ; preds = %.thread159, %bb.h, %bb.g, %.thread83.i
-  %10 = phi i16 [ 16, %bb.h ], [ %i.aj, %bb.g ], [ 15, %.thread83.i ], [ 14, %.thread159 ] ; 4 uses
-  %11 = phi i16 [ %.pre62.i, %bb.h ], [ %i.ai, %bb.g ], [ %i.aq, %.thread83.i ], [ %i.al, %.thread159 ] ; 3 uses
+.thread84.i:                                      ; preds = %bb.h, %bb.g, %.thread83.i
+  %10 = phi i16 [ 16, %bb.h ], [ %9, %bb.g ], [ 15, %.thread83.i ] ; 4 uses
+  %11 = phi i16 [ %.pre62.i, %bb.h ], [ %i.al, %bb.g ], [ %i.aq, %.thread83.i ] ; 3 uses
   %i.aw = shl i16 %11, 1                          ; 3 uses
   %i.ax = add nsw i16 %10, -1                     ; 2 uses
   store i16 %i.ax, ptr %i.r, align 4, !tbaa !91
@@ -424,11 +422,11 @@ bb.p:                                             ; preds = %bb.o
   %spec.select97.i = select i1 %i.ci, i16 63, i16 127
   br label %.thread.i
 
-.thread.i:                                        ; preds = %.thread88.i, %bb.n, %.thread86.i, %bb.j, %.thread84.i, %bb.f
-  %i.cj = phi i16 [ %i.cg, %.thread88.i ], [ %i.aw, %.thread84.i ], [ %i.ai, %bb.f ], [ %i.ba, %bb.j ], [ %i.bs, %bb.n ], [ %i.bo, %.thread86.i ] ; 2 uses
-  %i.ck = phi i16 [ %i.ch, %.thread88.i ], [ %i.ax, %.thread84.i ], [ %i.aj, %bb.f ], [ %i.bb, %bb.j ], [ %i.bt, %bb.n ], [ %i.bp, %.thread86.i ] ; 3 uses
-  %.03850.i = phi i16 [ %spec.select.i, %.thread88.i ], [ 2, %.thread84.i ], [ 1, %bb.f ], [ 3, %bb.j ], [ 5, %bb.n ], [ 4, %.thread86.i ] ; 3 uses
-  %.03747.i = phi i16 [ %spec.select97.i, %.thread88.i ], [ 3, %.thread84.i ], [ 1, %bb.f ], [ 7, %bb.j ], [ 31, %bb.n ], [ 15, %.thread86.i ] ; 2 uses
+.thread.i:                                        ; preds = %.thread88.i, %bb.n, %.thread86.i, %bb.j, %.thread84.i, %.thread159
+  %i.cj = phi i16 [ %i.cg, %.thread88.i ], [ %i.aw, %.thread84.i ], [ %i.al, %.thread159 ], [ %i.ba, %bb.j ], [ %i.bs, %bb.n ], [ %i.bo, %.thread86.i ] ; 2 uses
+  %i.ck = phi i16 [ %i.ch, %.thread88.i ], [ %i.ax, %.thread84.i ], [ %9, %.thread159 ], [ %i.bb, %bb.j ], [ %i.bt, %bb.n ], [ %i.bp, %.thread86.i ] ; 3 uses
+  %.03850.i = phi i16 [ %spec.select.i, %.thread88.i ], [ 2, %.thread84.i ], [ 1, %.thread159 ], [ 3, %bb.j ], [ 5, %bb.n ], [ 4, %.thread86.i ] ; 3 uses
+  %.03747.i = phi i16 [ %spec.select97.i, %.thread88.i ], [ 3, %.thread84.i ], [ 1, %.thread159 ], [ 7, %bb.j ], [ 31, %bb.n ], [ 15, %.thread86.i ] ; 2 uses
   %i.cl = icmp samesign ult i16 %i.ck, %.03850.i
   br i1 %i.cl, label %bb.q, label %.lr.ph.i
 
@@ -445,11 +443,11 @@ bb.q:                                             ; preds = %.thread.i
   %.pre67.i = load i16, ptr %i.q, align 2, !tbaa !92
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.thread159, %.thread83.i, %.thread85.i, %.thread87.i, %bb.q, %.thread.i
-  %.0374796.i = phi i16 [ %.03747.i, %bb.q ], [ %.03747.i, %.thread.i ], [ 1, %.thread83.i ], [ 7, %.thread85.i ], [ 31, %.thread87.i ], [ 1, %.thread159 ]
-  %.0385095.i = phi i16 [ %.03850.i, %bb.q ], [ %.03850.i, %.thread.i ], [ 1, %.thread83.i ], [ 3, %.thread85.i ], [ 5, %.thread87.i ], [ 1, %.thread159 ] ; 3 uses
-  %12 = phi i16 [ 16, %bb.q ], [ %i.ck, %.thread.i ], [ 15, %.thread83.i ], [ 15, %.thread85.i ], [ 15, %.thread87.i ], [ 14, %.thread159 ]
-  %.promoted.i = phi i16 [ %.pre67.i, %bb.q ], [ %i.cj, %.thread.i ], [ %i.aq, %.thread83.i ], [ %i.bg, %.thread85.i ], [ %i.by, %.thread87.i ], [ %i.al, %.thread159 ] ; 3 uses
+.lr.ph.i:                                         ; preds = %.thread83.i, %.thread85.i, %.thread87.i, %bb.q, %.thread.i
+  %.0374796.i = phi i16 [ %.03747.i, %bb.q ], [ %.03747.i, %.thread.i ], [ 1, %.thread83.i ], [ 7, %.thread85.i ], [ 31, %.thread87.i ]
+  %.0385095.i = phi i16 [ %.03850.i, %bb.q ], [ %.03850.i, %.thread.i ], [ 1, %.thread83.i ], [ 3, %.thread85.i ], [ 5, %.thread87.i ] ; 3 uses
+  %12 = phi i16 [ 16, %bb.q ], [ %i.ck, %.thread.i ], [ 15, %.thread83.i ], [ 15, %.thread85.i ], [ 15, %.thread87.i ]
+  %.promoted.i = phi i16 [ %.pre67.i, %bb.q ], [ %i.cj, %.thread.i ], [ %i.aq, %.thread83.i ], [ %i.bg, %.thread85.i ], [ %i.by, %.thread87.i ] ; 3 uses
   %i.cu = zext nneg i16 %.0385095.i to i32        ; 3 uses
   %xtraiter = and i32 %i.cu, 7                    ; 3 uses
   %i.cv = add i16 %.0385095.i, -1
@@ -496,46 +494,40 @@ decode_len.exit:                                  ; preds = %bb.s, %decode_len.e
   %.not66 = icmp eq i32 %i.dd, 0
   br i1 %.not66, label %bb.z, label %bb.t
 
-decode_len.exit.thread:                           ; preds = %2
-  %13 = load i32, ptr %i.s, align 8, !tbaa !38    ; 2 uses
-  %.not6680 = icmp eq i32 %13, 0
-  br i1 %.not6680, label %bb.u, label %bb.t
-
-decode_len.exit.thread.thread:                    ; preds = %.thread.a
+decode_len.exit.thread.thread:                    ; preds = %bb.f
   %i.de = load i32, ptr %i.s, align 8, !tbaa !38  ; 2 uses
   %.not6680163 = icmp eq i32 %i.de, 0
-  br i1 %.not6680163, label %.thread166, label %bb.t
+  br i1 %.not6680163, label %bb.u, label %bb.t
 
-bb.t:                                             ; preds = %decode_len.exit.thread.thread, %decode_len.exit.thread, %decode_len.exit
-  %14 = phi i32 [ %13, %decode_len.exit.thread ], [ %i.dd, %decode_len.exit ], [ %i.de, %decode_len.exit.thread.thread ]
+bb.t:                                             ; preds = %decode_len.exit.thread.thread, %decode_len.exit
+  %13 = phi i32 [ %i.de, %decode_len.exit.thread.thread ], [ %i.dd, %decode_len.exit ]
   %i.df = load ptr, ptr %1, align 8, !tbaa !33
   br label %.sink.split
 
-bb.u:                                             ; preds = %decode_len.exit.thread
-  %i.dg = icmp samesign ult i16 %i.x, 9
+bb.u:                                             ; preds = %decode_len.exit.thread.thread
+  %i.dg = icmp samesign ult i16 %4, 9
   br i1 %i.dg, label %bb.v, label %.thread166
 
-.thread166:                                       ; preds = %bb.u, %decode_len.exit.thread.thread
-  %.ph = phi i16 [ %4, %bb.u ], [ 15, %decode_len.exit.thread.thread ]
-  %.ph165 = phi i16 [ %3, %bb.u ], [ %6, %decode_len.exit.thread.thread ] ; 2 uses
-  %i.dh = shl i16 %.ph165, 8                      ; 2 uses
+.thread166:                                       ; preds = %bb.u
+  %i.dh = shl i16 %3, 9                           ; 2 uses
   store i16 %i.dh, ptr %i.q, align 2, !tbaa !92
-  %i.di = add nsw i16 %.ph, -8                    ; 2 uses
+  %i.di = add nsw i16 %4, -9                      ; 2 uses
   store i16 %i.di, ptr %i.r, align 4, !tbaa !91
   br label %bb.x
 
 bb.v:                                             ; preds = %bb.u
   %i.dj = load i16, ptr %i.l, align 2, !tbaa !39
   %i.dk = zext i16 %i.dj to i32
-  %i.dl = zext nneg i16 %4 to i32
+  %i.dl = zext nneg i16 %i.aj to i32
   %i.dm = lshr i32 %i.dk, %i.dl
   %i.dn = trunc nuw i32 %i.dm to i16
-  %i.do = or i16 %3, %i.dn
+  %i.do = or i16 %i.ai, %i.dn
   store i16 %i.do, ptr %i.q, align 2, !tbaa !92
-  %i.dp = zext nneg i16 %4 to i32
+  %i.dp = zext nneg i16 %i.aj to i32
   %i.dq = sub nuw nsw i32 16, %i.dp
   %i.dr = call fastcc i32 @fill_buf(ptr noundef %1, i32 noundef %i.dq) ; 0 uses
-  %.pre130.a = load i16, ptr %i.q, align 2, !tbaa !92 ; 2 uses
+  %.pre130 = load i8, ptr %2, align 1, !tbaa !92
+  %.pre130.a = load i16, ptr %i.q, align 2, !tbaa !92
   %.pre131 = load i32, ptr %i.s, align 8, !tbaa !38 ; 2 uses
   %i.ds = shl i16 %.pre130.a, 8                   ; 2 uses
   store i16 %i.ds, ptr %i.q, align 2, !tbaa !92
@@ -550,13 +542,11 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %.thread166, %bb.v
   %i.du = phi i16 [ %i.di, %.thread166 ], [ 8, %bb.v ] ; 2 uses
   %i.dv = phi i16 [ %i.dh, %.thread166 ], [ %i.ds, %bb.v ] ; 2 uses
-  %15 = phi i16 [ %.ph165, %.thread166 ], [ %.pre130.a, %bb.v ]
-  %16 = lshr i16 %15, 8
-  %17 = trunc nuw i16 %16 to i8
+  %14 = phi i8 [ %6, %.thread166 ], [ %.pre130, %bb.v ]
   %i.dw = load ptr, ptr %1, align 8, !tbaa !33    ; 3 uses
   %i.dx = zext i32 %.054111 to i64
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 %i.dx
-  store i8 %17, ptr %i.dy, align 1, !tbaa !25
+  store i8 %14, ptr %i.dy, align 1, !tbaa !25
   %i.dz = add nuw i32 %.056110, 1                 ; 2 uses
   %i.ea = add i32 %.054111, 1                     ; 2 uses
   %i.eb = icmp ugt i32 %i.ea, 26623
@@ -822,7 +812,7 @@ bb.as:                                            ; preds = %.loopexit89
 
 .sink.split:                                      ; preds = %bb.y, %bb.aq, %.loopexit89, %bb.as, %.loopexit89.thread, %bb.c, %bb.t, %bb.w, %bb.am
   %.pre132171.sink = phi ptr [ %.pre132, %.loopexit89 ], [ %i.hj, %bb.aq ], [ %i.hb, %bb.am ], [ %i.p, %bb.c ], [ %i.dt, %bb.w ], [ %i.df, %bb.t ], [ %.pre132170, %.loopexit89.thread ], [ %.pre132, %bb.as ], [ %i.dw, %bb.y ]
-  %.058.ph = phi i32 [ 0, %.loopexit89 ], [ 14, %bb.aq ], [ %i.ha, %bb.am ], [ %i.o, %bb.c ], [ %.pre131, %bb.w ], [ %14, %bb.t ], [ 0, %.loopexit89.thread ], [ 0, %bb.as ], [ 14, %bb.y ]
+  %.058.ph = phi i32 [ 0, %.loopexit89 ], [ 14, %bb.aq ], [ %i.ha, %bb.am ], [ %i.o, %bb.c ], [ %.pre131, %bb.w ], [ %13, %bb.t ], [ 0, %.loopexit89.thread ], [ 0, %bb.as ], [ 14, %bb.y ]
   tail call void @free(ptr noundef %.pre132171.sink) #11
   %i.if = load i64, ptr %i.h, align 8, !tbaa !35
   store i64 %i.if, ptr %i.f, align 8, !tbaa !16

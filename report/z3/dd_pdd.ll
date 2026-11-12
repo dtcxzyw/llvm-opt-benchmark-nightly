@@ -205,10 +205,8 @@ bb.r:                                             ; preds = %.split27, %.split, 
   br i1 %.not, label %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit, label %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit.thread
 
 _ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit.thread: ; preds = %bb.r
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 40
-  %6 = load i64, ptr %i.cy, align 8, !tbaa !93
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %i.cy = getelementptr i8, ptr %i.cx, i64 44
+  %6 = load i32, ptr %i.cy, align 4, !tbaa !93
   br label %bb.s
 
 _ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit: ; preds = %bb.r
@@ -218,7 +216,7 @@ _ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit.thread, %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit
-  %i.cz = phi i32 [ %8, %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit.thread ], [ %.pre25, %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit ]
+  %i.cz = phi i32 [ %6, %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit.thread ], [ %.pre25, %_ZNK9table2mapI17default_map_entryI8rationalN2dd11pdd_manager10const_infoEENS1_9hash_procENS1_7eq_procEE4findERKS1_RS4_.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
   br label %bb.t
 

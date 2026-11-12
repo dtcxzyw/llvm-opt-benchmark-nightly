@@ -202,11 +202,12 @@ bb.ek:                                            ; preds = %bb.ej, %bb.ei
   br i1 %.b67, label %bb.el, label %bb.em
 
 bb.el:                                            ; preds = %bb.ek
-  %4 = load i64, ptr getelementptr inbounds nuw (i8, ptr @ControlFile, i64 72), align 8
-  %5 = and i64 %4, -4294967296
-  %6 = load i32, ptr @next_xid_val, align 4
-  %i.qa = zext i32 %6 to i64
-  %i.qb = or disjoint i64 %5, %i.qa
+  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ControlFile, i64 76), align 4
+  %5 = load i32, ptr @next_xid_val, align 4
+  %6 = zext i32 %4 to i64
+  %7 = shl nuw i64 %6, 32
+  %i.qa = zext i32 %5 to i64
+  %i.qb = or disjoint i64 %7, %i.qa
   store i64 %i.qb, ptr getelementptr inbounds nuw (i8, ptr @ControlFile, i64 72), align 8
   br label %bb.em
 
@@ -609,10 +610,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %.b, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %0 = load i64, ptr getelementptr inbounds nuw (i8, ptr @ControlFile, i64 72), align 8
-  %1 = lshr i64 %0, 32
-  %2 = trunc nuw i64 %1 to i32
-  %i.ae = call i32 (ptr, ...) @pg_printf(ptr noundef nonnull @.str.118, i32 noundef %2) #12 ; 0 uses
+  %0 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ControlFile, i64 76), align 4
+  %i.ae = call i32 (ptr, ...) @pg_printf(ptr noundef nonnull @.str.118, i32 noundef %0) #12 ; 0 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k

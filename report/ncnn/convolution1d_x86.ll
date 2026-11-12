@@ -205,12 +205,11 @@ _ZN4ncnn3MatD2Ev.exit.i.us:                       ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.nz = trunc nuw i32 %i.ny to i16
   store i16 %i.nz, ptr %i.nw, align 2, !tbaa !66
   %i.oa = getelementptr inbounds nuw i8, ptr %.1345599.us.i.us, i64 8
-  %i.ob = getelementptr inbounds nuw [4 x i8], ptr %.0347603.us.i.us, i64 %indvars.iv774.i.us
-  %i.oc = getelementptr inbounds nuw i8, ptr %i.ob, i64 4 ; 2 uses
-  %2 = load i32, ptr %i.oc, align 4, !tbaa !45
-  %3 = lshr i32 %2, 16
-  %4 = trunc nuw i32 %3 to i16
-  store i16 %4, ptr %i.oa, align 2, !tbaa !66
+  %i.ob = getelementptr inbounds nuw [4 x i8], ptr %.0347603.us.i.us, i64 %indvars.iv774.i.us ; 2 uses
+  %i.oc = getelementptr inbounds nuw i8, ptr %i.ob, i64 4
+  %2 = getelementptr i8, ptr %i.ob, i64 6
+  %3 = load i16, ptr %2, align 2, !tbaa !45
+  store i16 %3, ptr %i.oa, align 2, !tbaa !66
   %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.oc, i64 %i.mi ; 2 uses
   %i.oe = getelementptr inbounds nuw i8, ptr %.1345599.us.i.us, i64 10
   %i.of = load i32, ptr %i.od, align 4, !tbaa !45

@@ -84,7 +84,7 @@ bb.a:
   %4 = alloca %struct.replay_revisions_options, align 8 ; 12 uses
   %5 = alloca %struct.replay_result, align 8      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
-  %6 = alloca %struct.rev_info, align 8           ; 8 uses
+  %6 = alloca %struct.rev_info, align 8           ; 9 uses
   %7 = alloca %struct.strbuf, align 8             ; 10 uses
   %8 = alloca %struct.strbuf, align 8             ; 8 uses
   %i.c = alloca [2 x ptr], align 16               ; 5 uses
@@ -313,7 +313,7 @@ get_ref_action_mode.exit:                         ; preds = %bb.d, %bb.e, %bb.g,
   %i.cv = load ptr, ptr %i.am, align 8, !tbaa !33
   %.not = icmp eq ptr %i.cv, null                 ; 2 uses
   call void @repo_init_revisions(ptr noundef %3, ptr noundef nonnull %6, ptr noundef %2) #10
-  %i.cw = getelementptr inbounds nuw i8, ptr %6, i64 332 ; 10 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %6, i64 332 ; 9 uses
   %i.cx = load i64, ptr %i.cw, align 4
   %i.cy = select i1 %.not, i64 4294967296, i64 0  ; 2 uses
   %i.cz = and i64 %i.cx, -4294967937
@@ -343,11 +343,11 @@ _.exit:                                           ; preds = %bb.l, %bb.m
   br label %.thread92
 
 bb.n:                                             ; preds = %get_ref_action_mode.exit
-  %11 = load i64, ptr %i.cw, align 4              ; 2 uses
-  %12 = and i64 %11, 4294967296
-  %13 = icmp eq i64 %12, 0
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 336
+  %12 = load i32, ptr %11, align 8
+  %13 = trunc i32 %12 to i1
   %.not51 = xor i1 %.not, %13
-  br i1 %.not51, label %bb.q, label %bb.o
+  br i1 %.not51, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
   %i.dk = load i32, ptr @git_gettext_enabled, align 4, !tbaa !12
@@ -363,12 +363,11 @@ _.exit68:                                         ; preds = %bb.o, %bb.p
   call void (ptr, ...) @warning(ptr noundef %.0.i67, ptr noundef nonnull @.str.24) #10
   %i.dm = load i64, ptr %i.cw, align 4
   %i.dn = and i64 %i.dm, -4294967297
-  %i.do = or disjoint i64 %i.dn, %i.cy            ; 2 uses
+  %i.do = or disjoint i64 %i.dn, %i.cy
   store i64 %i.do, ptr %i.cw, align 4
   br label %bb.q
 
 bb.q:                                             ; preds = %_.exit68, %bb.n
-  %14 = phi i64 [ %i.do, %_.exit68 ], [ %11, %bb.n ]
   %i.dp = load i32, ptr %i.db, align 8, !tbaa !85
   %.not52 = icmp eq i32 %i.dp, 0
   br i1 %.not52, label %bb.t, label %bb.r
@@ -386,12 +385,11 @@ _.exit71:                                         ; preds = %bb.r, %bb.s
   %.0.i70 = phi ptr [ %i.dr, %bb.s ], [ @.str.23, %bb.r ]
   call void (ptr, ...) @warning(ptr noundef %.0.i70, ptr noundef nonnull @.str.25) #10
   store i32 0, ptr %i.db, align 8, !tbaa !85
-  %.pre = load i64, ptr %i.cw, align 4
   br label %bb.t
 
 bb.t:                                             ; preds = %_.exit71, %bb.q
-  %15 = phi i64 [ %.pre, %_.exit71 ], [ %14, %bb.q ] ; 2 uses
-  %i.ds = and i64 %15, 512
+  %14 = load i64, ptr %i.cw, align 4              ; 2 uses
+  %i.ds = and i64 %14, 512
   %.not53.not = icmp eq i64 %i.ds, 0
   br i1 %.not53.not, label %bb.u, label %bb.w
 
@@ -413,7 +411,7 @@ _.exit74:                                         ; preds = %bb.u, %bb.v
   br label %bb.w
 
 bb.w:                                             ; preds = %_.exit74, %bb.t
-  %i.dx = phi i64 [ %i.dw, %_.exit74 ], [ %15, %bb.t ]
+  %i.dx = phi i64 [ %i.dw, %_.exit74 ], [ %14, %bb.t ]
   %i.dy = and i64 %i.dx, 128
   %.not54 = icmp eq i64 %i.dy, 0
   br i1 %.not54, label %bb.z, label %bb.x

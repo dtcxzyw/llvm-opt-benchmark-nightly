@@ -202,7 +202,7 @@ _thumb_get_under_mouse.exit.thread:               ; preds = %bb.y, %_thumb_get_u
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @_event_draw(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
-  %3 = alloca %struct._PangoRectangle, align 8    ; 4 uses
+  %3 = alloca %struct._PangoRectangle, align 8    ; 5 uses
   %4 = alloca %struct._cairo_rectangle_int, align 4 ; 5 uses
   %i.a = tail call ptr @gtk_widget_get_parent(ptr noundef %0) #15 ; 3 uses
   %i.b = tail call i64 @gtk_container_get_type() #20 ; 2 uses
@@ -351,7 +351,7 @@ bb.j:                                             ; preds = %bb.i
   call void @cairo_set_line_width(ptr noundef %1, double noundef %i.ck) #15
   call void @cairo_new_path(ptr noundef %1) #15
   %i.cl = fpext reassoc nsz arcp contract afn float %i.cb to double ; 2 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 9 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.cn = load i64, ptr %i.cm, align 8
   call fastcc void @_line_to_module(ptr noundef %1, i32 noundef %i.t, i64 %i.cn, float noundef %i.aa, double noundef 3.000000e+00, double noundef %i.cl, ptr noundef nonnull @.str.102)
   %i.co = load i32, ptr %i.cm, align 8, !tbaa !161
@@ -365,9 +365,8 @@ bb.j:                                             ; preds = %bb.i
   %i.cw = fadd reassoc nsz arcp contract afn double %i.cv, %i.cr
   %i.cx = fmul reassoc nnan nsz arcp contract afn float %i.ab, 4.500000e-01
   %i.cy = fpext reassoc nsz arcp contract afn float %i.cx to double ; 2 uses
-  %5 = load i64, ptr %i.cm, align 8
-  %.sroa.2.8.extract.shift.i.i = lshr i64 %5, 32
-  %.sroa.2.8.extract.trunc.i.i = trunc nuw i64 %.sroa.2.8.extract.shift.i.i to i32
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 4 uses
+  %.sroa.2.8.extract.trunc.i.i = load i32, ptr %5, align 4
   %i.cz = fmul reassoc nsz arcp contract afn double %i.cu, 3.000000e+00 ; 3 uses
   call void @cairo_new_path(ptr noundef %1) #15
   %i.da = sitofp reassoc nsz arcp contract afn i32 %.sroa.2.8.extract.trunc.i.i to double
@@ -383,9 +382,7 @@ bb.j:                                             ; preds = %bb.i
   call fastcc void @_line_to_module(ptr noundef %1, i32 noundef %i.t, i64 %i.de, float noundef %i.aa, double noundef 6.000000e+00, double noundef %i.cl, ptr noundef nonnull @.str.103)
   %i.df = shl nsw i32 %i.cg, 2
   %i.dg = sitofp reassoc nsz arcp contract afn i32 %i.df to double ; 3 uses
-  %6 = load i64, ptr %i.cm, align 8
-  %.sroa.2.8.extract.shift.i93.i = lshr i64 %6, 32
-  %.sroa.2.8.extract.trunc.i94.i = trunc nuw i64 %.sroa.2.8.extract.shift.i93.i to i32
+  %.sroa.2.8.extract.trunc.i94.i = load i32, ptr %5, align 4
   %i.dh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !105
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 1432
   %i.dj = load double, ptr %i.di, align 8, !tbaa !110
@@ -409,9 +406,7 @@ bb.j:                                             ; preds = %bb.i
   %i.dv = sitofp reassoc nsz arcp contract afn i32 %i.cg to double
   %i.dw = fmul reassoc nnan nsz arcp contract afn double %i.dv, 2.750000e+00
   %i.dx = fsub reassoc nsz arcp contract afn double %i.x, %i.dw ; 2 uses
-  %7 = load i64, ptr %i.cm, align 8
-  %.sroa.2.8.extract.shift.i95.i = lshr i64 %7, 32
-  %.sroa.2.8.extract.trunc.i96.i = trunc nuw i64 %.sroa.2.8.extract.shift.i95.i to i32
+  %.sroa.2.8.extract.trunc.i96.i = load i32, ptr %5, align 4
   %i.dy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !105
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 1432
   %i.ea = load double, ptr %i.dz, align 8, !tbaa !110
@@ -428,9 +423,7 @@ bb.j:                                             ; preds = %bb.i
   call void @cairo_stroke(ptr noundef %1) #15
   %i.eg = sub nsw i32 %i.t, %i.cg
   %i.eh = sitofp reassoc nsz arcp contract afn i32 %i.eg to double ; 2 uses
-  %8 = load i64, ptr %i.cm, align 8
-  %.sroa.2.8.extract.shift.i97.i = lshr i64 %8, 32
-  %.sroa.2.8.extract.trunc.i98.i = trunc nuw i64 %.sroa.2.8.extract.shift.i97.i to i32
+  %.sroa.2.8.extract.trunc.i98.i = load i32, ptr %5, align 4
   %i.ei = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !105
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 1432
   %i.ek = load double, ptr %i.ej, align 8, !tbaa !110

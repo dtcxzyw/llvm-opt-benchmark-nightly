@@ -205,10 +205,8 @@ bb.g:                                             ; preds = %bb.e
   %i.z = call noundef nonnull align 8 ptr %.val.i(ptr noundef nonnull %.val), !noalias !19883, !inline_history !19880 ; 2 uses
   %i.aa = call noundef nonnull align 8 ptr @_RINvMs_NtNtCs45bxiIjzMqg_5salsa16ingredient_cache3impINtB5_15IngredientCacheINtNtB9_8interned14IngredientImplNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types9dedicated8pydantic13ModelMetadataEE13get_or_createINtB1f_7JarImplB1J_EKj0_EB1R_(ptr noundef nonnull align 4 @_RNvNvMs2_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types9dedicated8pydantic1__NtB9_13ModelMetadata10ingredient5CACHE, ptr noundef nonnull align 8 %i.z), !noalias !19883
   %i.ab = call noundef nonnull align 8 ptr @_RNvMs6_NtCs45bxiIjzMqg_5salsa8internedINtB5_14IngredientImplNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types9dedicated8pydantic13ModelMetadataE6fieldsB14_(ptr noundef nonnull align 8 %i.aa, ptr noundef nonnull align 8 %i.z, i32 noundef range(i32 1, 0) %.sroa.4.0.copyload, i32 noundef %.sroa.5.0.copyload), !noalias !19883
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %.sroa.0.0.copyload.i.i.i = load i56, ptr %i.ac, align 8, !noalias !19883
-  %.sroa.03.6.extract.shift.i.i = lshr i56 %.sroa.0.0.copyload.i.i.i, 48
-  %trunc.i = trunc nuw i56 %.sroa.03.6.extract.shift.i.i to i8
+  %i.ac = getelementptr i8, ptr %i.ab, i64 22
+  %trunc.i = load i8, ptr %i.ac, align 2, !noalias !19883
   switch i8 %trunc.i, label %_RNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types9dedicated8pydantic25model_init_discards_extra.exit.thread [
     i8 -1, label %_RNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types9dedicated8pydantic25model_init_discards_extra.exit
     i8 2, label %_RNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types9dedicated8pydantic25model_init_discards_extra.exit

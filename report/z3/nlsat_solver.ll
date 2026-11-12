@@ -205,11 +205,10 @@ bb.ac:                                            ; preds = %_ZNK6vectorIPN5nlsa
   br i1 %i.gl, label %bb.ad, label %_ZNK6vectorIPN5nlsat6clauseELb0EjE4sizeEv.exit47.thread
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.gc, i64 8
-  %1 = load i64, ptr %i.gm, align 8
-  %2 = and i64 %1, 4294967296
-  %.not50 = icmp eq i64 %2, 0
-  br i1 %.not50, label %bb.ae, label %_ZNK6vectorIPN5nlsat6clauseELb0EjE4sizeEv.exit47.thread
+  %i.gm = getelementptr inbounds nuw i8, ptr %i.gc, i64 12
+  %1 = load i32, ptr %i.gm, align 4
+  %2 = trunc i32 %1 to i1
+  br i1 %2, label %_ZNK6vectorIPN5nlsat6clauseELb0EjE4sizeEv.exit47.thread, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   tail call void @_ZN5nlsat6solver3imp10del_clauseEPNS_6clauseE(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull %i.gc)

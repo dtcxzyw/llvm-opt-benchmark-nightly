@@ -205,10 +205,8 @@ bb.a:
   %i.k = lshr i32 %i.c, 15                        ; 2 uses
   %i.l = trunc i32 %i.k to i8
   %i.m = and i8 %i.l, 1                           ; 4 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %3 = load i32, ptr %i.n, align 1
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
+  %i.n = getelementptr i8, ptr %1, i64 115
+  %3 = load i8, ptr %i.n, align 1
   %i.o = lshr i32 %i.e, 16                        ; 4 uses
   %i.p = zext i32 %i.g to i64                     ; 2 uses
   %i.q = zext i32 %i.i to i64
@@ -568,7 +566,7 @@ bb.ai:                                            ; preds = %nvme_check_mdts.exi
   br label %nvme_vendor_specific_log.exit
 
 bb.aj:                                            ; preds = %nvme_check_mdts.exit
-  %i.de = tail call fastcc zeroext i16 @nvme_cmd_effects(ptr noundef nonnull %0, i8 noundef zeroext %5, i32 noundef %i.t, i64 noundef %i.v, ptr noundef nonnull %1)
+  %i.de = tail call fastcc zeroext i16 @nvme_cmd_effects(ptr noundef nonnull %0, i8 noundef zeroext %3, i32 noundef %i.t, i64 noundef %i.v, ptr noundef nonnull %1)
   br label %nvme_vendor_specific_log.exit
 
 bb.ak:                                            ; preds = %nvme_check_mdts.exit

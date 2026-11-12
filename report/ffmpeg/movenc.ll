@@ -205,7 +205,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 136 ; 29 uses
   %i.r = getelementptr i8, ptr %0, i64 24
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 120 ; 8 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 120 ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 128 ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 116
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 11 uses
@@ -220,6 +220,7 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 160
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 1608
   %i.ag = getelementptr i8, ptr %3, i64 400       ; 4 uses
+  %5 = getelementptr i8, ptr %3, i64 122
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 148
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 144
@@ -622,10 +623,8 @@ bb.ba:                                            ; preds = %bb.av, %bb.av
   call void @avio_wb32(ptr noundef %1, i32 noundef 0) #18
   %i.gi = load i32, ptr %i.s, align 8, !tbaa !107
   call void @avio_wl32(ptr noundef %1, i32 noundef %i.gi) #18
-  %5 = load i32, ptr %i.s, align 8, !tbaa !107
-  %6 = lshr i32 %5, 16
-  %7 = trunc nuw i32 %6 to i16
-  %i.gj = call i16 @llvm.bswap.i16(i16 %7)
+  %6 = load i16, ptr %5, align 2, !tbaa !107
+  %i.gj = call i16 @llvm.bswap.i16(i16 %6)
   %i.gk = zext i16 %i.gj to i32
   %i.gl = load ptr, ptr %i.q, align 8, !tbaa !75  ; 2 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 8
