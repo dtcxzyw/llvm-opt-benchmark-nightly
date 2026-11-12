@@ -204,8 +204,9 @@ bb.a:
   %i.ai = getelementptr i8, ptr %0, i64 8         ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1544 ; 7 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 1456 ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 8 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1620 ; 3 uses
+  %52 = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 8 uses
+  %i.al = getelementptr i8, ptr %0, i64 1621
+  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1620 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 696 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.ap = getelementptr inbounds nuw i8, ptr %25, i64 8
@@ -608,12 +609,10 @@ bb.nc:                                            ; preds = %bb.na
   br i1 %i.adt, label %.critedge128.i, label %_ZN4bssl5ArrayIhEixEm.exit.i
 
 _ZN4bssl5ArrayIhEixEm.exit.i:                     ; preds = %.noexc139.i
-  store i64 48, ptr %i.al, align 8, !tbaa !169
-  %52 = load i16, ptr %i.am, align 4, !tbaa !137
-  %53 = lshr i16 %52, 8
-  %54 = trunc nuw i16 %53 to i8
-  store i8 %54, ptr %i.ads, align 1, !tbaa !215
-  %i.adu = load i64, ptr %i.al, align 8, !tbaa !169
+  store i64 48, ptr %52, align 8, !tbaa !169
+  %53 = load i8, ptr %i.al, align 1, !tbaa !137
+  store i8 %53, ptr %i.ads, align 1, !tbaa !215
+  %i.adu = load i64, ptr %52, align 8, !tbaa !169
   %i.adv = icmp ugt i64 %i.adu, 1
   br i1 %i.adv, label %_ZN4bssl5ArrayIhEixEm.exit140.i, label %bb.nd
 
@@ -627,7 +626,7 @@ _ZN4bssl5ArrayIhEixEm.exit140.i:                  ; preds = %_ZN4bssl5ArrayIhEix
   %i.ady = load ptr, ptr %17, align 8, !tbaa !168
   %i.adz = getelementptr inbounds nuw i8, ptr %i.ady, i64 1
   store i8 %i.adx, ptr %i.adz, align 1, !tbaa !215
-  %i.aea = load i64, ptr %i.al, align 8, !tbaa !169
+  %i.aea = load i64, ptr %52, align 8, !tbaa !169
   %i.aeb = icmp ugt i64 %i.aea, 2
   br i1 %i.aeb, label %_ZN4bssl5ArrayIhEixEm.exit141.i, label %bb.ne
 
@@ -677,7 +676,7 @@ bb.nl:                                            ; preds = %bb.nk
 bb.nm:                                            ; preds = %bb.nl
   %i.ael = zext i32 %i.aek to i64
   %i.aem = load ptr, ptr %17, align 8, !tbaa !168
-  %i.aen = load i64, ptr %i.al, align 8, !tbaa !169
+  %i.aen = load i64, ptr %52, align 8, !tbaa !169
   %i.aeo = invoke i32 @RSA_encrypt(ptr noundef nonnull %i.ado, ptr noundef nonnull %i.g, ptr noundef %i.aej, i64 noundef %i.ael, ptr noundef %i.aem, i64 noundef %i.aen, i32 noundef 1)
           to label %bb.nn unwind label %bb.ns
 
@@ -838,7 +837,7 @@ bb.om:                                            ; preds = %.noexc144.i
   br i1 %i.afr, label %.critedge128.i, label %bb.on
 
 bb.on:                                            ; preds = %.noexc145.i
-  store i64 %i.afn, ptr %i.al, align 8, !tbaa !169
+  store i64 %i.afn, ptr %52, align 8, !tbaa !169
   store i8 0, ptr %i.afq, align 1, !tbaa !215
   %i.afs = add nsw i64 %i.afn, -1                 ; 2 uses
   %i.aft = icmp eq i64 %i.afs, 0
@@ -865,7 +864,7 @@ _ZN4bssl8internal14StackAllocatedI6cbb_stvXadL_Z8CBB_zeroEEXadL_Z11CBB_cleanupEE
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #11
   %i.afv = add i32 %.0.i96, 4
   %i.afw = zext i32 %i.afv to i64
-  %i.afx = load i64, ptr %i.al, align 8, !tbaa !169
+  %i.afx = load i64, ptr %52, align 8, !tbaa !169
   %i.afy = add i64 %i.afx, %i.afw
   %i.afz = invoke i32 @CBB_init(ptr noundef nonnull %23, i64 noundef %i.afy)
           to label %bb.or unwind label %bb.pd
@@ -884,7 +883,7 @@ bb.ot:                                            ; preds = %bb.os
 
 bb.ou:                                            ; preds = %bb.ot
   %i.agb = load ptr, ptr %17, align 8, !tbaa !168
-  %i.agc = load i64, ptr %i.al, align 8, !tbaa !169
+  %i.agc = load i64, ptr %52, align 8, !tbaa !169
   %i.agd = invoke i32 @CBB_add_bytes(ptr noundef nonnull %24, ptr noundef %i.agb, i64 noundef %i.agc)
           to label %bb.ov unwind label %bb.pd
 
@@ -985,7 +984,7 @@ bb.pk:                                            ; preds = %bb.pj
   %i.agt = getelementptr inbounds nuw i8, ptr %i.agr, i64 58
   store i8 48, ptr %i.agt, align 1, !tbaa !329
   %i.agu = load ptr, ptr %17, align 8, !tbaa !168
-  %i.agv = load i64, ptr %i.al, align 8, !tbaa !169
+  %i.agv = load i64, ptr %52, align 8, !tbaa !169
   %i.agw = invoke noundef zeroext i1 @_ZN4bssl27tls1_generate_master_secretEPNS_13SSL_HANDSHAKEENS_4SpanIhEENS2_IKhEE(ptr noundef nonnull %0, ptr nonnull %i.ags, i64 48, ptr %i.agu, i64 %i.agv)
           to label %bb.pl unwind label %bb.nb
 

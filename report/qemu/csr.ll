@@ -204,11 +204,13 @@ riscv_write_uxl.exit:                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.az = xor i64 %spec.select48, -1
   %i.ba = and i64 %i.b, %i.az
   %i.bb = and i64 %spec.select48, %.239
-  %i.bc = or i64 %i.ba, %i.bb                     ; 2 uses
+  %i.bc = or i64 %i.ba, %i.bb                     ; 3 uses
   store i64 %i.bc, ptr %i.a, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 15352
   %i.be = load i8, ptr %i.bd, align 8, !range !12, !noundef !13
   %i.bf = trunc nuw i8 %i.be to i1
+  %4 = lshr i64 %i.bc, 32
+  %5 = trunc nuw i64 %4 to i32
   br i1 %i.bf, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %riscv_write_uxl.exit
@@ -219,23 +221,23 @@ bb.m:                                             ; preds = %riscv_write_uxl.exi
 bb.n:                                             ; preds = %bb.m
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 5017
   %i.bi = load i8, ptr %i.bh, align 1
-  switch i8 %i.bi, label %bb.o [
+  switch i8 %i.bi, label %.sink.split.i.i [
     i8 3, label %cpu_recompute_xl.exit
-    i8 0, label %.sink.split.i.i
+    i8 0, label %bb.o
   ]
 
 bb.o:                                             ; preds = %bb.n
-  br label %.sink.split.i.i
+  %6 = and i32 %5, 3
+  br label %cpu_recompute_xl.exit
 
-.sink.split.i.i:                                  ; preds = %bb.o, %bb.n
-  %.sink8.i.i = phi i64 [ 34, %bb.o ], [ 32, %bb.n ]
-  %i.bj = lshr i64 %i.bc, %.sink8.i.i
-  %i.bk = trunc nuw i64 %i.bj to i32
+.sink.split.i.i:                                  ; preds = %bb.n
+  %i.bj = lshr i64 %i.bc, 34
+  %i.bk = trunc nuw nsw i64 %i.bj to i32
   %i.bl = and i32 %i.bk, 3
   br label %cpu_recompute_xl.exit
 
-cpu_recompute_xl.exit:                            ; preds = %bb.m, %bb.n, %.sink.split.i.i
-  %.0.i.i = phi i32 [ 1, %bb.m ], [ %i.bg, %bb.n ], [ %i.bl, %.sink.split.i.i ]
+cpu_recompute_xl.exit:                            ; preds = %bb.m, %bb.n, %bb.o, %.sink.split.i.i
+  %.0.i.i = phi i32 [ %i.bl, %.sink.split.i.i ], [ %i.bg, %bb.n ], [ %6, %bb.o ], [ 1, %bb.m ]
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 4972
   store i32 %.0.i.i, ptr %i.bm, align 4
   br label %bb.p

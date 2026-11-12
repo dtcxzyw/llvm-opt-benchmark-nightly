@@ -204,17 +204,20 @@ bb.b:                                             ; preds = %bb.a
   %i.s = load <2 x i32>, ptr %i.r, align 8, !tbaa !204
   store <2 x i32> %i.s, ptr %i.q, align 8, !tbaa !204
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.v = load i64, ptr %i.u, align 8
   %i.w = and i64 %i.v, 16777215
   %i.x = load i64, ptr %i.t, align 8
   %i.y = and i64 %i.x, -16777216
   %i.z = or disjoint i64 %i.y, %i.w               ; 2 uses
   store i64 %i.z, ptr %i.t, align 8
-  %2 = load i64, ptr %i.u, align 8
-  %3 = and i64 %2, 72057589742960640
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 16777215
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 32
   %i.aa = and i64 %i.z, -72057589742960641
-  %i.ab = or disjoint i64 %i.aa, %3
+  %i.ab = or disjoint i64 %6, %i.aa
   store i64 %i.ab, ptr %i.t, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -617,17 +620,20 @@ _ZNSt5dequeI8FileLineSaIS0_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %
   %i.bd = load <2 x i32>, ptr %i.bc, align 8, !tbaa !204
   store <2 x i32> %i.bd, ptr %i.bb, align 8, !tbaa !204
   %i.be = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 3 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bg = load i64, ptr %i.bf, align 8
   %i.bh = and i64 %i.bg, 16777215
   %i.bi = load i64, ptr %i.be, align 8
   %i.bj = and i64 %i.bi, -16777216
   %i.bk = or disjoint i64 %i.bj, %i.bh            ; 2 uses
   store i64 %i.bk, ptr %i.be, align 8
-  %2 = load i64, ptr %i.bf, align 8
-  %3 = and i64 %2, 72057589742960640
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 16777215
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 32
   %i.bl = and i64 %i.bk, -72057589742960641
-  %i.bm = or disjoint i64 %i.bl, %3
+  %i.bm = or disjoint i64 %6, %i.bl
   store i64 %i.bm, ptr %i.be, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 24

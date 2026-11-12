@@ -205,12 +205,11 @@ bb.f:                                             ; preds = %bb.e, %bb.c, %bb.d,
 define hidden noundef ptr @_ZN4bssl20dtls_get_write_epochEPK6ssl_stt(ptr nofree noundef readonly captures(none) %0, i16 noundef zeroext %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 2 uses
-  %2 = load i64, ptr %i.c, align 8, !tbaa !122
-  %3 = lshr i64 %2, 48
-  %4 = trunc nuw i64 %3 to i16
-  %i.d = icmp eq i16 %1, %4
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
+  %2 = getelementptr i8, ptr %i.b, i64 150
+  %3 = load i16, ptr %2, align 2, !tbaa !122
+  %i.d = icmp eq i16 %3, %1
   br i1 %i.d, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -613,12 +612,11 @@ _ZN4bsslL24use_dtls13_record_headerEPK6ssl_stt.exit.thread: ; preds = %_ZN4bsslL
 define hidden noundef i64 @_ZN4bssl22dtls_max_seal_overheadEPK6ssl_stt(ptr noundef %0, i16 noundef zeroext %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 2 uses
-  %2 = load i64, ptr %i.c, align 8, !tbaa !122
-  %3 = lshr i64 %2, 48
-  %4 = trunc nuw i64 %3 to i16
-  %i.d = icmp eq i16 %1, %4
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
+  %2 = getelementptr i8, ptr %i.b, i64 150
+  %3 = load i16, ptr %2, align 2, !tbaa !122
+  %i.d = icmp eq i16 %3, %1
   br i1 %i.d, label %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -694,12 +692,11 @@ declare noundef i64 @_ZNK4bssl14SSLAEADContext11MaxOverheadEv(ptr noundef nonnul
 define hidden noundef i64 @_ZN4bssl20dtls_seal_prefix_lenEPK6ssl_stt(ptr noundef %0, i16 noundef zeroext %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 2 uses
-  %2 = load i64, ptr %i.c, align 8, !tbaa !122
-  %3 = lshr i64 %2, 48
-  %4 = trunc nuw i64 %3 to i16
-  %i.d = icmp eq i16 %1, %4
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
+  %2 = getelementptr i8, ptr %i.b, i64 150
+  %3 = load i16, ptr %2, align 2, !tbaa !122
+  %i.d = icmp eq i16 %3, %1
   br i1 %i.d, label %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -762,12 +759,11 @@ declare noundef i64 @_ZNK4bssl14SSLAEADContext16ExplicitNonceLenEv(ptr noundef n
 define hidden noundef i64 @_ZN4bssl23dtls_seal_max_input_lenEPK6ssl_sttm(ptr noundef %0, i16 noundef zeroext %1, i64 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 2 uses
-  %3 = load i64, ptr %i.c, align 8, !tbaa !122
-  %4 = lshr i64 %3, 48
-  %5 = trunc nuw i64 %4 to i16
-  %i.d = icmp eq i16 %1, %5
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
+  %3 = getelementptr i8, ptr %i.b, i64 150
+  %4 = load i16, ptr %3, align 2, !tbaa !122
+  %i.d = icmp eq i16 %4, %1
   br i1 %i.d, label %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -856,12 +852,11 @@ bb.a:
   %i.c = alloca [2 x i8], align 1                 ; 6 uses
   store i8 %5, ptr %i.a, align 1, !tbaa !283
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !68   ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144 ; 2 uses
-  %10 = load i64, ptr %i.f, align 8, !tbaa !122
-  %11 = lshr i64 %10, 48
-  %12 = trunc nuw i64 %11 to i16
-  %i.g = icmp eq i16 %8, %12
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !68   ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144
+  %10 = getelementptr i8, ptr %i.e, i64 150
+  %11 = load i16, ptr %10, align 2, !tbaa !122
+  %i.g = icmp eq i16 %11, %8
   br i1 %i.g, label %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -936,12 +931,11 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.z
 
 bb.f:                                             ; preds = %bb.d, %_ZN4bssl20dtls_seal_prefix_lenEPK6ssl_stt.exit
-  %i.al = load ptr, ptr %i.d, align 8, !tbaa !68  ; 3 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 144 ; 2 uses
-  %13 = load i64, ptr %i.am, align 8, !tbaa !122  ; 2 uses
-  %14 = lshr i64 %13, 48
-  %15 = trunc nuw i64 %14 to i16
-  %i.an = icmp eq i16 %8, %15
+  %i.al = load ptr, ptr %i.d, align 8, !tbaa !68  ; 4 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 144
+  %12 = getelementptr i8, ptr %i.al, i64 150
+  %13 = load i16, ptr %12, align 2, !tbaa !122
+  %i.an = icmp eq i16 %13, %8
   br i1 %i.an, label %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -962,7 +956,7 @@ bb.h:                                             ; preds = %.lr.ph.i
 .lr.ph.i:                                         ; preds = %bb.g, %bb.h
   %.01525.i = phi ptr [ %i.at, %bb.h ], [ %i.ao, %bb.g ] ; 2 uses
   %i.au = load ptr, ptr %.01525.i, align 8, !tbaa !125 ; 2 uses
-  %i.av = load i64, ptr %i.au, align 8, !tbaa !122 ; 2 uses
+  %i.av = load i64, ptr %i.au, align 8, !tbaa !122
   %i.aw = lshr i64 %i.av, 48
   %i.ax = trunc nuw i64 %i.aw to i16
   %.not19.i = icmp eq i16 %8, %i.ax
@@ -973,7 +967,6 @@ bb.h:                                             ; preds = %.lr.ph.i
   br label %bb.z
 
 _ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit:   ; preds = %.lr.ph.i, %bb.f
-  %16 = phi i64 [ %13, %bb.f ], [ %i.av, %.lr.ph.i ]
   %.3.i = phi ptr [ %i.am, %bb.f ], [ %i.au, %.lr.ph.i ] ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !126
@@ -988,13 +981,12 @@ _ZN4bsslL24use_dtls13_record_headerEPK6ssl_stt.exit.i: ; preds = %_ZN4bssl20dtls
   %i.be = icmp ne i16 %8, 0
   %spec.select.i.i76 = and i1 %i.be, %i.bd
   %spec.select.i = select i1 %spec.select.i.i76, i64 5, i64 13
-  %.pre = load i64, ptr %.3.i, align 8, !tbaa !21
   br label %_ZN4bssl28dtls_record_header_write_lenEPK6ssl_stt.exit
 
 _ZN4bssl28dtls_record_header_write_lenEPK6ssl_stt.exit: ; preds = %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit, %_ZN4bsslL24use_dtls13_record_headerEPK6ssl_stt.exit.i
-  %i.bf = phi i64 [ %16, %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit ], [ %.pre, %_ZN4bsslL24use_dtls13_record_headerEPK6ssl_stt.exit.i ] ; 6 uses
-  %17 = phi i64 [ 13, %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit ], [ %spec.select.i, %_ZN4bsslL24use_dtls13_record_headerEPK6ssl_stt.exit.i ] ; 5 uses
-  %i.bg = and i64 %i.bf, 281474976710655          ; 2 uses
+  %i.bf = phi i64 [ 13, %_ZN4bssl20dtls_get_write_epochEPK6ssl_stt.exit ], [ %spec.select.i, %_ZN4bsslL24use_dtls13_record_headerEPK6ssl_stt.exit.i ] ; 5 uses
+  %14 = load i64, ptr %.3.i, align 8, !tbaa !21   ; 6 uses
+  %i.bg = and i64 %14, 281474976710655            ; 2 uses
   %.not = icmp eq i64 %i.bg, 281474976710655
   br i1 %.not, label %bb.i, label %bb.j
 
@@ -1035,7 +1027,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bt = load i64, ptr %i.b, align 8, !tbaa !21
-  %i.bu = add i64 %i.bt, %17
+  %i.bu = add i64 %i.bt, %i.bf
   %i.bv = icmp ult i64 %4, %i.bu
   br i1 %i.bv, label %bb.n, label %bb.o
 
@@ -1079,7 +1071,7 @@ bb.s:                                             ; preds = %_ZN4bsslL19dtls_rec
   store i8 %5, ptr %2, align 1, !tbaa !283
   %i.cl = call noundef i16 @llvm.bswap.i16(i16 %.0.i79)
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 3
-  %i.cn = call noundef i64 @llvm.bswap.i64(i64 %i.bf)
+  %i.cn = call noundef i64 @llvm.bswap.i64(i64 %14)
   store i64 %i.cn, ptr %i.cm, align 1
   br label %bb.t
 
@@ -1094,7 +1086,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   store i16 %.sink, ptr %i.cs, align 1
   %i.ct = load ptr, ptr %i.bq, align 8, !tbaa !284
-  %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 %17 ; 2 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 %i.bf ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 %.0.i ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 %7
   %i.cx = load ptr, ptr %i.ay, align 8, !tbaa !126
@@ -1106,14 +1098,14 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 bb.u:                                             ; preds = %bb.t
   %i.da = call noundef zeroext i16 @_ZN4bssl20ssl_protocol_versionEPK6ssl_st(ptr noundef nonnull %0)
   %i.db = icmp ugt i16 %i.da, 771
-  %spec.select.i81 = select i1 %i.db, i64 %i.bg, i64 %i.bf
+  %spec.select.i81 = select i1 %i.db, i64 %i.bg, i64 %14
   br label %_ZN4bsslL18dtls_aead_sequenceEPK6ssl_stNS_16DTLSRecordNumberE.exit
 
 _ZN4bsslL18dtls_aead_sequenceEPK6ssl_stNS_16DTLSRecordNumberE.exit: ; preds = %bb.t, %bb.u
-  %i.dc = phi i64 [ %i.bf, %bb.t ], [ %spec.select.i81, %bb.u ]
+  %i.dc = phi i64 [ %14, %bb.t ], [ %spec.select.i81, %bb.u ]
   store ptr %2, ptr %9, align 8
   %.sroa.585.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 %17, ptr %.sroa.585.0..sroa_idx, align 8
+  store i64 %i.bf, ptr %.sroa.585.0..sroa_idx, align 8
   %i.dd = call noundef zeroext i1 @_ZN4bssl14SSLAEADContext11SealScatterEPhS1_S1_htmNS_4SpanIKhEEPS3_mS5_m(ptr noundef nonnull align 8 dereferenceable(599) %i.ct, ptr noundef nonnull %i.cu, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.cw, i8 noundef zeroext %5, i16 noundef zeroext %.0.i79, i64 noundef %i.dc, ptr noundef nonnull byval(%"class.bssl::Span.73") align 8 %9, ptr noundef %6, i64 noundef %7, ptr noundef %i.bn, i64 noundef %i.bp)
   br i1 %i.dd, label %bb.v, label %bb.y
 
@@ -1146,13 +1138,13 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZNK4bssl16DTLSRecordNumber4NextEv.exit
 
 _ZNK4bssl16DTLSRecordNumber4NextEv.exit:          ; preds = %bb.v, %bb.x
-  store i64 %i.bf, ptr %1, align 8, !tbaa !21
-  %i.dt = add i64 %i.bf, 1
+  store i64 %14, ptr %1, align 8, !tbaa !21
+  %i.dt = add i64 %14, 1
   store i64 %i.dt, ptr %.3.i, align 8, !tbaa !21
   %i.du = load i64, ptr %i.b, align 8, !tbaa !21
-  %i.dv = add i64 %i.du, %17
+  %i.dv = add i64 %i.du, %i.bf
   store i64 %i.dv, ptr %3, align 8, !tbaa !21
-  call void @_ZN4bssl19ssl_do_msg_callbackEPK6ssl_stiiNS_4SpanIKhEE(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 256, ptr nonnull %2, i64 %17)
+  call void @_ZN4bssl19ssl_do_msg_callbackEPK6ssl_stiiNS_4SpanIKhEE(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 256, ptr nonnull %2, i64 %i.bf)
   br label %bb.y
 
 .critedge:                                        ; preds = %bb.w

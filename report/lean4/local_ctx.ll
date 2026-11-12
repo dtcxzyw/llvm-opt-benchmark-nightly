@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4lean10
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
   call void @llvm.experimental.noalias.scope.decl(metadata !49)
-  %i.g = load ptr, ptr %6, align 8, !tbaa !12, !noalias !49 ; 13 uses
-  %i.h = getelementptr i8, ptr %i.g, i64 4
-  %.val.i.i = load i32, ptr %i.h, align 4, !noalias !49
-  %14 = icmp ult i32 %.val.i.i, 16777216
+  %i.g = load ptr, ptr %6, align 8, !tbaa !12, !noalias !49 ; 15 uses
+  %i.h = getelementptr i8, ptr %i.g, i64 7
+  %.val.i.i = load i8, ptr %i.h, align 1, !noalias !49
+  %14 = icmp eq i8 %.val.i.i, 0
   br i1 %14, label %_ZNK4lean10local_decl9get_valueEv.exit.thread85, label %bb.d
 
 _ZNK4lean10local_decl9get_valueEv.exit.thread85:  ; preds = %bb.c
@@ -470,16 +470,22 @@ bb.aq:                                            ; preds = %_ZNK4lean10local_de
 bb.ar:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #14
   %i.bi = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %.val.i.i.i.i.i = load i32, ptr %i.g, align 4, !tbaa !14 ; 3 uses
-  %15 = icmp sgt i32 %.val.i.i.i.i.i, 0
-  br i1 %15, label %bb.as, label %bb.at, !prof !15
+  %15 = ptrtoint ptr %i.g to i64
+  %16 = and i64 %15, 1
+  %.not.i.i.i.i52 = icmp eq i64 %16, 0
+  br i1 %.not.i.i.i.i52, label %17, label %_ZNK4lean10object_ref10to_obj_argEv.exit.i
 
-bb.as:                                            ; preds = %bb.ar
+17:                                               ; preds = %bb.ar
+  %.val.i.i.i.i.i = load i32, ptr %i.g, align 4, !tbaa !14 ; 3 uses
+  %18 = icmp sgt i32 %.val.i.i.i.i.i, 0
+  br i1 %18, label %bb.as, label %bb.at, !prof !15
+
+bb.as:                                            ; preds = %17
   %i.bj = add nuw i32 %.val.i.i.i.i.i, 1
   store i32 %i.bj, ptr %i.g, align 4, !tbaa !14
   br label %_ZNK4lean10object_ref10to_obj_argEv.exit.i
 
-bb.at:                                            ; preds = %bb.ar
+bb.at:                                            ; preds = %17
   %.not.i.i.i.i.i = icmp eq i32 %.val.i.i.i.i.i, 0
   br i1 %.not.i.i.i.i.i, label %_ZNK4lean10object_ref10to_obj_argEv.exit.i, label %bb.au
 
@@ -487,7 +493,7 @@ bb.au:                                            ; preds = %bb.at
   %i.bk = atomicrmw add ptr %i.g, i32 -1 monotonic, align 4 ; 0 uses
   br label %_ZNK4lean10object_ref10to_obj_argEv.exit.i
 
-_ZNK4lean10object_ref10to_obj_argEv.exit.i:       ; preds = %bb.au, %bb.at, %bb.as
+_ZNK4lean10object_ref10to_obj_argEv.exit.i:       ; preds = %bb.au, %bb.at, %bb.as, %bb.ar
   %i.bl = invoke zeroext i8 @lean_local_decl_binder_info(ptr noundef nonnull %i.g)
           to label %bb.av unwind label %bb.bi
 
@@ -623,17 +629,23 @@ bb.bq:                                            ; preds = %bb.bp
 
 _ZN4lean8optionalINS_4exprEED2Ev.exit:            ; preds = %bb.bk, %bb.bl, %bb.bn, %bb.bo, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
-  %16 = load i32, ptr %i.g, align 4, !tbaa !14    ; 3 uses
-  %17 = icmp sgt i32 %16, 1
-  br i1 %17, label %bb.br, label %bb.bs, !prof !15
+  %19 = ptrtoint ptr %i.g to i64
+  %20 = and i64 %19, 1
+  %.not.i.i.i64 = icmp eq i64 %20, 0
+  br i1 %.not.i.i.i64, label %21, label %_ZN4lean10object_refD2Ev.exit66
 
-bb.br:                                            ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit
-  %i.cq = add nsw i32 %16, -1
+21:                                               ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit
+  %22 = load i32, ptr %i.g, align 4, !tbaa !14    ; 3 uses
+  %23 = icmp sgt i32 %22, 1
+  br i1 %23, label %bb.br, label %bb.bs, !prof !15
+
+bb.br:                                            ; preds = %21
+  %i.cq = add nsw i32 %22, -1
   store i32 %i.cq, ptr %i.g, align 4, !tbaa !14
   br label %_ZN4lean10object_refD2Ev.exit66
 
-bb.bs:                                            ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit
-  %.not.i1.i.i65 = icmp eq i32 %16, 0
+bb.bs:                                            ; preds = %21
+  %.not.i1.i.i65 = icmp eq i32 %22, 0
   br i1 %.not.i1.i.i65, label %_ZN4lean10object_refD2Ev.exit66, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
@@ -647,7 +659,7 @@ bb.bu:                                            ; preds = %bb.bt
   call void @__clang_call_terminate(ptr %i.cs) #15
   unreachable
 
-_ZN4lean10object_refD2Ev.exit66:                  ; preds = %bb.br, %bb.bs, %bb.bt
+_ZN4lean10object_refD2Ev.exit66:                  ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit, %bb.br, %bb.bs, %bb.bt
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   %.not = icmp eq i32 %indvars, 0
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !48
@@ -711,10 +723,10 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4lean10
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
   call void @llvm.experimental.noalias.scope.decl(metadata !60)
-  %i.g = load ptr, ptr %6, align 8, !tbaa !12, !noalias !60 ; 13 uses
-  %i.h = getelementptr i8, ptr %i.g, i64 4
-  %.val.i.i = load i32, ptr %i.h, align 4, !noalias !60
-  %14 = icmp ult i32 %.val.i.i, 16777216
+  %i.g = load ptr, ptr %6, align 8, !tbaa !12, !noalias !60 ; 15 uses
+  %i.h = getelementptr i8, ptr %i.g, i64 7
+  %.val.i.i = load i8, ptr %i.h, align 1, !noalias !60
+  %14 = icmp eq i8 %.val.i.i, 0
   br i1 %14, label %_ZNK4lean10local_decl9get_valueEv.exit.thread85, label %bb.d
 
 _ZNK4lean10local_decl9get_valueEv.exit.thread85:  ; preds = %bb.c
@@ -979,16 +991,22 @@ bb.aq:                                            ; preds = %_ZNK4lean10local_de
 bb.ar:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #14
   %i.bi = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %.val.i.i.i.i.i = load i32, ptr %i.g, align 4, !tbaa !14 ; 3 uses
-  %15 = icmp sgt i32 %.val.i.i.i.i.i, 0
-  br i1 %15, label %bb.as, label %bb.at, !prof !15
+  %15 = ptrtoint ptr %i.g to i64
+  %16 = and i64 %15, 1
+  %.not.i.i.i.i52 = icmp eq i64 %16, 0
+  br i1 %.not.i.i.i.i52, label %17, label %_ZNK4lean10object_ref10to_obj_argEv.exit.i
 
-bb.as:                                            ; preds = %bb.ar
+17:                                               ; preds = %bb.ar
+  %.val.i.i.i.i.i = load i32, ptr %i.g, align 4, !tbaa !14 ; 3 uses
+  %18 = icmp sgt i32 %.val.i.i.i.i.i, 0
+  br i1 %18, label %bb.as, label %bb.at, !prof !15
+
+bb.as:                                            ; preds = %17
   %i.bj = add nuw i32 %.val.i.i.i.i.i, 1
   store i32 %i.bj, ptr %i.g, align 4, !tbaa !14
   br label %_ZNK4lean10object_ref10to_obj_argEv.exit.i
 
-bb.at:                                            ; preds = %bb.ar
+bb.at:                                            ; preds = %17
   %.not.i.i.i.i.i = icmp eq i32 %.val.i.i.i.i.i, 0
   br i1 %.not.i.i.i.i.i, label %_ZNK4lean10object_ref10to_obj_argEv.exit.i, label %bb.au
 
@@ -996,7 +1014,7 @@ bb.au:                                            ; preds = %bb.at
   %i.bk = atomicrmw add ptr %i.g, i32 -1 monotonic, align 4 ; 0 uses
   br label %_ZNK4lean10object_ref10to_obj_argEv.exit.i
 
-_ZNK4lean10object_ref10to_obj_argEv.exit.i:       ; preds = %bb.au, %bb.at, %bb.as
+_ZNK4lean10object_ref10to_obj_argEv.exit.i:       ; preds = %bb.au, %bb.at, %bb.as, %bb.ar
   %i.bl = invoke zeroext i8 @lean_local_decl_binder_info(ptr noundef nonnull %i.g)
           to label %bb.av unwind label %bb.bi
 
@@ -1132,17 +1150,23 @@ bb.bq:                                            ; preds = %bb.bp
 
 _ZN4lean8optionalINS_4exprEED2Ev.exit:            ; preds = %bb.bk, %bb.bl, %bb.bn, %bb.bo, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
-  %16 = load i32, ptr %i.g, align 4, !tbaa !14    ; 3 uses
-  %17 = icmp sgt i32 %16, 1
-  br i1 %17, label %bb.br, label %bb.bs, !prof !15
+  %19 = ptrtoint ptr %i.g to i64
+  %20 = and i64 %19, 1
+  %.not.i.i.i64 = icmp eq i64 %20, 0
+  br i1 %.not.i.i.i64, label %21, label %_ZN4lean10object_refD2Ev.exit66
 
-bb.br:                                            ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit
-  %i.cq = add nsw i32 %16, -1
+21:                                               ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit
+  %22 = load i32, ptr %i.g, align 4, !tbaa !14    ; 3 uses
+  %23 = icmp sgt i32 %22, 1
+  br i1 %23, label %bb.br, label %bb.bs, !prof !15
+
+bb.br:                                            ; preds = %21
+  %i.cq = add nsw i32 %22, -1
   store i32 %i.cq, ptr %i.g, align 4, !tbaa !14
   br label %_ZN4lean10object_refD2Ev.exit66
 
-bb.bs:                                            ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit
-  %.not.i1.i.i65 = icmp eq i32 %16, 0
+bb.bs:                                            ; preds = %21
+  %.not.i1.i.i65 = icmp eq i32 %22, 0
   br i1 %.not.i1.i.i65, label %_ZN4lean10object_refD2Ev.exit66, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
@@ -1156,7 +1180,7 @@ bb.bu:                                            ; preds = %bb.bt
   call void @__clang_call_terminate(ptr %i.cs) #15
   unreachable
 
-_ZN4lean10object_refD2Ev.exit66:                  ; preds = %bb.br, %bb.bs, %bb.bt
+_ZN4lean10object_refD2Ev.exit66:                  ; preds = %_ZN4lean8optionalINS_4exprEED2Ev.exit, %bb.br, %bb.bs, %bb.bt
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   %.not = icmp eq i32 %indvars, 0
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !59

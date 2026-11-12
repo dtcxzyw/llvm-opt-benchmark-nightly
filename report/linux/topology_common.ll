@@ -80,30 +80,31 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 2
   %i.b = load i8, ptr %i.a, align 2
   switch i8 %i.b, label %bb.c [
-    i8 0, label %.sink.split
-    i8 2, label %bb.b
+    i8 0, label %bb.b
+    i8 2, label %.sink.split
   ]
 
 bb.b:                                             ; preds = %bb.a
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.a, %bb.b
-  %.sink16 = phi i32 [ 28, %bb.b ], [ 24, %bb.a ]
-  %.sink14 = phi i32 [ 1, %bb.b ], [ 64, %bb.a ]
-  %.sink12 = phi i32 [ 1, %bb.b ], [ 0, %bb.a ]
-  %.sink11 = phi i32 [ 0, %bb.b ], [ 32, %bb.a ]
-  %.sink = phi i32 [ 0, %bb.b ], [ 1, %bb.a ]
-  %i.c = getelementptr i8, ptr %0, i64 272
-  %i.d = load i32, ptr %i.c, align 8
-  %i.e = lshr i32 %i.d, %.sink16                  ; 2 uses
-  %switch.selectcmp6.a = icmp eq i32 %i.e, %.sink14
-  %switch.select7.a = select i1 %switch.selectcmp6.a, i32 %.sink12, i32 2
-  %switch.selectcmp8.a = icmp eq i32 %i.e, %.sink11
-  %switch.select9.a = select i1 %switch.selectcmp8.a, i32 %.sink, i32 %switch.select7.a
+  %1 = getelementptr i8, ptr %0, i64 275
+  %trunc = load i8, ptr %1, align 1               ; 2 uses
+  %switch.selectcmp6 = icmp eq i8 %trunc, 64
+  %switch.select7 = select i1 %switch.selectcmp6, i32 0, i32 2
+  %switch.selectcmp8 = icmp eq i8 %trunc, 32
+  %switch.select9 = select i1 %switch.selectcmp8, i32 1, i32 %switch.select7
   br label %bb.c
 
-bb.c:                                             ; preds = %.sink.split, %bb.a
-  %.0 = phi i32 [ 2, %bb.a ], [ %switch.select9.a, %.sink.split ]
+.sink.split:                                      ; preds = %bb.a
+  %i.c = getelementptr i8, ptr %0, i64 272
+  %i.d = load i32, ptr %i.c, align 8
+  %i.e = lshr i32 %i.d, 28                        ; 2 uses
+  %switch.selectcmp6.a = icmp eq i32 %i.e, 1
+  %switch.select7.a = select i1 %switch.selectcmp6.a, i32 1, i32 2
+  %switch.selectcmp8.a = icmp eq i32 %i.e, 0
+  %switch.select9.a = select i1 %switch.selectcmp8.a, i32 0, i32 %switch.select7.a
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %bb.b, %.sink.split
+  %.0 = phi i32 [ 2, %bb.a ], [ %switch.select9.a, %.sink.split ], [ %switch.select9, %bb.b ]
   ret i32 %.0
 }
 
@@ -117,32 +118,32 @@ bb.a:
     i8 2, label %1
   ]
 
-1:                                                ; preds = %bb.a
-  br label %get_topology_cpu_type.exit.a
-
-get_topology_cpu_type.exit.a:                     ; preds = %bb.a, %1
-  %.sink16.i = phi i32 [ 28, %1 ], [ 24, %bb.a ]
-  %.sink14.i = phi i32 [ 1, %1 ], [ 64, %bb.a ]
-  %.sink12.i = phi i32 [ 1, %1 ], [ 0, %bb.a ]
-  %.sink11.i = phi i32 [ 0, %1 ], [ 32, %bb.a ]
-  %.sink.i = phi i32 [ 0, %1 ], [ 1, %bb.a ]
-  %i.c = getelementptr i8, ptr %0, i64 272
-  %2 = load i32, ptr %i.c, align 8
-  %3 = lshr i32 %2, %.sink16.i                    ; 2 uses
-  %switch.selectcmp6.i = icmp eq i32 %3, %.sink14.i
-  %switch.select7.i = select i1 %switch.selectcmp6.i, i32 %.sink12.i, i32 2
-  %switch.selectcmp8.i = icmp eq i32 %3, %.sink11.i
-  %switch.select9.i = select i1 %switch.selectcmp8.i, i32 %.sink.i, i32 %switch.select7.i
-  %switch.select9.i.fr = freeze i32 %switch.select9.i ; 2 uses
-  %switch.selectcmp = icmp eq i32 %switch.select9.i.fr, 1
-  %spec.select.a = select i1 %switch.selectcmp, ptr @.str.1, ptr @.str.2
-  %switch.selectcmp2 = icmp eq i32 %switch.select9.i.fr, 0
-  %spec.select12 = select i1 %switch.selectcmp2, ptr @.str, ptr %spec.select.a
+get_topology_cpu_type.exit.a:                     ; preds = %bb.a
+  %i.c = getelementptr i8, ptr %0, i64 275
+  %trunc.i = load i8, ptr %i.c, align 1
+  %trunc.i.fr = freeze i8 %trunc.i                ; 2 uses
+  %switch.selectcmp = icmp eq i8 %trunc.i.fr, 64
+  %spec.select.a = select i1 %switch.selectcmp, ptr @.str, ptr @.str.2
+  %switch.selectcmp2 = icmp eq i8 %trunc.i.fr, 32
+  %spec.select12 = select i1 %switch.selectcmp2, ptr @.str.1, ptr %spec.select.a
   br label %.thread
 
-.thread:                                          ; preds = %get_topology_cpu_type.exit.a, %bb.a
-  %4 = phi ptr [ @.str.2, %bb.a ], [ %spec.select12, %get_topology_cpu_type.exit.a ]
-  ret ptr %4
+1:                                                ; preds = %bb.a
+  %2 = getelementptr i8, ptr %0, i64 272
+  %3 = load i32, ptr %2, align 8
+  %.fr26 = freeze i32 %3
+  %4 = lshr i32 %.fr26, 28                        ; 2 uses
+  %switch.selectcmp4.i = icmp eq i32 %4, 0
+  br i1 %switch.selectcmp4.i, label %.thread, label %get_topology_cpu_type.exit
+
+get_topology_cpu_type.exit:                       ; preds = %1
+  %switch.selectcmp.i = icmp eq i32 %4, 1
+  %spec.select = select i1 %switch.selectcmp.i, ptr @.str.1, ptr @.str.2
+  br label %.thread
+
+.thread:                                          ; preds = %1, %get_topology_cpu_type.exit.a, %get_topology_cpu_type.exit, %bb.a
+  %5 = phi ptr [ %spec.select12, %get_topology_cpu_type.exit.a ], [ %spec.select, %get_topology_cpu_type.exit ], [ @.str.2, %bb.a ], [ @.str, %1 ]
+  ret ptr %5
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong

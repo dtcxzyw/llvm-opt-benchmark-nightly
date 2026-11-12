@@ -202,10 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = icmp ult i64 %i.g, 9223372036854775785
   tail call void @llvm.assume(i1 %i.i)
   %i.j = add i64 %i.c, 16
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = load i64, ptr %i.k, align 8, !noundef !3
-  %.sroa.3.0.extract.shift = and i64 %2, -72057594037927936
-  %i.l = icmp eq i64 %.sroa.3.0.extract.shift, -3458764513820540928
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 15
+  %.sroa.3.0.extract.trunc = load i8, ptr %i.k, align 1
+  %i.l = icmp eq i8 %.sroa.3.0.extract.trunc, -48
   %. = select i1 %i.l, i64 -8, i64 -16
   %i.m = getelementptr inbounds i8, ptr %i.e, i64 %.
   %i.n = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.m, i64 noundef %i.h, i64 noundef 8, i64 noundef %i.j) #9 ; 4 uses

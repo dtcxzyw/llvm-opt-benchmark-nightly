@@ -205,7 +205,7 @@ _ZN12WidthVisitor19userIterateChildrenEP7AstNodeP7WidthVP.exit: ; preds = %bb.a
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !259
   %i.o = call noundef ptr @_ZNK12AstNodeDType12skipRefIterpEbbb(ptr noundef nonnull align 8 dereferenceable(162) %i.n, i1 noundef zeroext true, i1 noundef zeroext false, i1 noundef zeroext true) ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !271  ; 16 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !271  ; 17 uses
   %i.r = load ptr, ptr %i.k, align 8, !tbaa !201
   %i.s = call i8 @_ZN7AstNode15computeCastableEPK12AstNodeDTypeS2_PKS_(ptr noundef %i.j, ptr noundef %i.o, ptr noundef %i.r)
   switch i8 %i.s, label %bb.bs [
@@ -264,8 +264,14 @@ _ZN7AstNode2asI12AstEnumDType12AstNodeDTypeEEPT_PT0_.exit: ; preds = %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.ar = load i64, ptr %i.aq, align 8
-  %i.as = and i64 %i.ar, 72057589759737855
-  store i64 %i.as, ptr %i.ap, align 8
+  %i.as = and i64 %i.ar, 16777215
+  %11 = getelementptr i8, ptr %i.q, i64 20
+  %12 = load i32, ptr %11, align 4
+  %13 = and i32 %12, 16777215
+  %14 = zext nneg i32 %13 to i64
+  %15 = shl nuw nsw i64 %14, 32
+  %16 = or disjoint i64 %15, %i.as
+  store i64 %16, ptr %i.ap, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
   %i.au = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.av = load i16, ptr %i.au, align 8, !tbaa !338

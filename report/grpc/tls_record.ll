@@ -202,11 +202,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !123
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  %1 = load i64, ptr %i.d, align 8, !tbaa !125
-  %2 = lshr i64 %1, 48
-  %3 = trunc nuw i64 %2 to i16
-  %i.e = tail call noundef i64 @_ZN4bssl22dtls_max_seal_overheadEPK6ssl_stt(ptr noundef %0, i16 noundef zeroext %3)
+  %i.d = getelementptr i8, ptr %i.c, i64 150
+  %1 = load i16, ptr %i.d, align 2, !tbaa !125
+  %i.e = tail call noundef i64 @_ZN4bssl22dtls_max_seal_overheadEPK6ssl_stt(ptr noundef %0, i16 noundef zeroext %1)
   br label %_ZN4bssl26ssl_needs_record_splittingEPK6ssl_st.exit.thread
 
 bb.c:                                             ; preds = %bb.a

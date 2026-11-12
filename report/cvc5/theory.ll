@@ -204,7 +204,7 @@ _ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit: ; preds = %_ZNSt6vectorIN4cv
   %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 -8 ; 2 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !98 ; 2 uses
   %.not.i30 = icmp eq ptr %.sroa.063.0, %i.bd
-  %spec.select = select i1 %.not.i30, ptr %.sroa.063.0, ptr %i.bd, !prof !90 ; 17 uses
+  %spec.select = select i1 %.not.i30, ptr %.sroa.063.0, ptr %i.bd, !prof !90 ; 18 uses
   store ptr %i.bc, ptr %i.h, align 8, !tbaa !108
   %i.be = load i64, ptr %spec.select, align 8     ; 4 uses
   %i.bf = lshr i64 %i.be, 40
@@ -303,7 +303,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %_ZNSt3setIN4cvc58in
   br i1 %.sroa.0.0.i.i, label %bb.s, label %thread-pre-split
 
 bb.s:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
-  %i.cl = getelementptr inbounds nuw i8, ptr %spec.select, i64 8 ; 4 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %spec.select, i64 8 ; 3 uses
   %i.cm = load i64, ptr %i.cl, align 8
   %i.cn = trunc i64 %i.cm to i32
   %i.co = and i32 %i.cn, 1023                     ; 3 uses
@@ -456,10 +456,11 @@ bb.ai:                                            ; preds = %bb.ah
   %spec.select.v.i.i = select i1 %i.el, i64 32, i64 24
   %spec.select.i.i51 = getelementptr inbounds nuw i8, ptr %spec.select, i64 %spec.select.v.i.i
   %i.em = getelementptr inbounds nuw i8, ptr %spec.select, i64 24
-  %7 = load i64, ptr %i.cl, align 8
-  %8 = lshr i64 %7, 32
-  %9 = and i64 %8, 67108863
-  %i.en = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %9
+  %7 = getelementptr inbounds nuw i8, ptr %spec.select, i64 12
+  %8 = load i32, ptr %7, align 4
+  %9 = and i32 %8, 67108863
+  %10 = zext nneg i32 %9 to i64
+  %i.en = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %10
   %i.eo = load ptr, ptr %4, align 8, !tbaa !140   ; 2 uses
   %i.ep = ptrtoint ptr %i.ee to i64
   %i.eq = ptrtoint ptr %i.eo to i64
@@ -862,8 +863,8 @@ bb.a:
   %9 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
   %10 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %11 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
-  %i.a = load ptr, ptr %1, align 8, !tbaa !98
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !98     ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load i64, ptr %i.b, align 8
   %i.d = trunc i64 %i.c to i32
   %i.e = and i32 %i.d, 1023                       ; 2 uses
@@ -871,13 +872,13 @@ bb.a:
   %i.g = select i1 %i.f, i32 -1, i32 %i.e
   %i.h = tail call noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.g)
   %i.i = icmp eq i32 %i.h, 2
-  %12 = load i64, ptr %i.b, align 8
-  %13 = lshr i64 %12, 32
-  %14 = and i64 %13, 67108863
-  %15 = sext i1 %i.i to i64
-  %16 = add nsw i64 %14, %15
-  %17 = and i64 %16, 4294967295                   ; 2 uses
-  %.not = icmp eq i64 %17, 0
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %13 = load i32, ptr %12, align 4
+  %14 = and i32 %13, 67108863
+  %15 = sext i1 %i.i to i32
+  %16 = add nsw i32 %14, %15                      ; 2 uses
+  %17 = zext i32 %16 to i64
+  %.not = icmp eq i32 %16, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a

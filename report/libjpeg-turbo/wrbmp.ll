@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
 
 .lr.ph101:                                        ; preds = %.lr.ph101.prol.loopexit, %.lr.ph101
   %.179100 = phi ptr [ %i.bt, %.lr.ph101 ], [ %.179100.unr, %.lr.ph101.prol.loopexit ] ; 7 uses
-  %.08099 = phi ptr [ %i.bu, %.lr.ph101 ], [ %.08099.unr, %.lr.ph101.prol.loopexit ] ; 5 uses
+  %.08099 = phi ptr [ %i.bu, %.lr.ph101 ], [ %.08099.unr, %.lr.ph101.prol.loopexit ] ; 6 uses
   %.08298 = phi i32 [ %i.bv, %.lr.ph101 ], [ %.08298.unr, %.lr.ph101.prol.loopexit ]
   %i.au = load i16, ptr %.08099, align 2, !tbaa !93
   %i.av = trunc i16 %i.au to i8
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %bb.d
   %i.bg = getelementptr inbounds nuw i8, ptr %.179100, i64 2
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !37
   %i.bh = getelementptr inbounds nuw i8, ptr %.179100, i64 3
-  %i.bi = getelementptr inbounds nuw i8, ptr %.08099, i64 2 ; 3 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %.08099, i64 2 ; 2 uses
   %i.bj = load i16, ptr %i.bi, align 2, !tbaa !93
   %i.bk = trunc i16 %i.bj to i8
   %i.bl = shl i8 %i.bk, 3
@@ -232,10 +232,9 @@ bb.f:                                             ; preds = %bb.d
   %i.bp = and i8 %i.bo, -4
   %i.bq = getelementptr inbounds nuw i8, ptr %.179100, i64 4
   store i8 %i.bp, ptr %i.bq, align 1, !tbaa !37
-  %3 = load i16, ptr %i.bi, align 2, !tbaa !93
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
-  %i.br = and i8 %5, -8
+  %3 = getelementptr i8, ptr %.08099, i64 3
+  %4 = load i8, ptr %3, align 1, !tbaa !93
+  %i.br = and i8 %4, -8
   %i.bs = getelementptr inbounds nuw i8, ptr %.179100, i64 5
   store i8 %i.br, ptr %i.bs, align 1, !tbaa !37
   %i.bt = getelementptr inbounds nuw i8, ptr %.179100, i64 6 ; 2 uses

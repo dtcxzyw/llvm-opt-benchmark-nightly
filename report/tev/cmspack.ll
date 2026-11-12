@@ -205,21 +205,17 @@ bb.b:                                             ; preds = %bb.a
   %i.q = lshr i16 %i.p, 8
   %i.r = trunc nuw i16 %i.q to i8
   store i8 %i.r, ptr %2, align 1, !tbaa !33
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %5 = load i16, ptr %i.s, align 2, !tbaa !31
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %5 = load i8, ptr %i.s, align 1, !tbaa !31
   %i.t = zext i32 %i.o to i64
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 %i.t
-  store i8 %7, ptr %i.u, align 1, !tbaa !33
-  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %8 = load i16, ptr %i.v, align 2, !tbaa !31
-  %9 = lshr i16 %8, 8
-  %10 = trunc nuw i16 %9 to i8
+  store i8 %5, ptr %i.u, align 1, !tbaa !33
+  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  %6 = load i8, ptr %i.v, align 1, !tbaa !31
   %i.w = shl i32 %i.o, 1
   %i.x = zext i32 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 %i.x
-  store i8 %10, ptr %i.y, align 1, !tbaa !33
+  store i8 %6, ptr %i.y, align 1, !tbaa !33
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 1
   br label %bb.d
 
@@ -228,18 +224,14 @@ bb.c:                                             ; preds = %bb.a
   %i.ab = lshr i16 %i.aa, 8
   %i.ac = trunc nuw i16 %i.ab to i8
   store i8 %i.ac, ptr %2, align 1, !tbaa !33
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %11 = load i16, ptr %i.ad, align 2, !tbaa !31
-  %12 = lshr i16 %11, 8
-  %13 = trunc nuw i16 %12 to i8
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %7 = load i8, ptr %i.ad, align 1, !tbaa !31
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %13, ptr %i.ae, align 1, !tbaa !33
-  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %14 = load i16, ptr %i.af, align 2, !tbaa !31
-  %15 = lshr i16 %14, 8
-  %16 = trunc nuw i16 %15 to i8
+  store i8 %7, ptr %i.ae, align 1, !tbaa !33
+  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  %8 = load i8, ptr %i.af, align 1, !tbaa !31
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %16, ptr %i.ag, align 1, !tbaa !33
+  store i8 %8, ptr %i.ag, align 1, !tbaa !33
   %i.ah = load i32, ptr %i.j, align 4, !tbaa !32
   %i.ai = lshr i32 %i.ah, 7
   %i.aj = and i32 %i.ai, 7

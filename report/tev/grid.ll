@@ -202,7 +202,7 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:
   %i.g = select i1 %or.cond, i64 12, i64 8        ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #24 ; 13 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #24 ; 16 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !35
   %i.k = getelementptr i8, ptr %i.j, i64 %i.g     ; 2 uses
   store ptr %i.k, ptr %i.i, align 8, !tbaa !49
@@ -235,10 +235,22 @@ bb.a:                                             ; preds = %_ZNSt3__16vectorIhN
   %i.aa = trunc i32 %i.z to i8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 5
   store i8 %i.aa, ptr %i.ab, align 1, !tbaa !36
-  %i.ac = load i32, ptr %i.d, align 4, !tbaa !57
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %2 = tail call i32 @llvm.bswap.i32(i32 %i.ac)
-  store i32 %2, ptr %i.ad, align 1, !tbaa !36
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 11
+  %3 = load i8, ptr %2, align 1, !tbaa !57
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  store i8 %3, ptr %4, align 1, !tbaa !36
+  %i.ac = load i32, ptr %i.d, align 4, !tbaa !57  ; 3 uses
+  %5 = lshr i32 %i.ac, 16
+  %6 = trunc i32 %5 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 9
+  store i8 %6, ptr %7, align 1, !tbaa !36
+  %8 = lshr i32 %i.ac, 8
+  %9 = trunc i32 %8 to i8
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.j, i64 10
+  store i8 %9, ptr %i.ad, align 1, !tbaa !36
+  %10 = trunc i32 %i.ac to i8
+  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 11
+  store i8 %10, ptr %11, align 1, !tbaa !36
   br label %bb.c
 
 bb.b:                                             ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit

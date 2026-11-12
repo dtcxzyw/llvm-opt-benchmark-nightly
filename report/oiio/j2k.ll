@@ -205,10 +205,12 @@ bb.k:                                             ; preds = %bb.g, %bb.i, %bb.f,
 define internal fastcc void @opj_j2k_set_imf_parameters(ptr nofree noundef nonnull captures(none) initializes((18696, 18698)) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #5 !guid !614 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 18716
-  %i.b = load i16, ptr %i.a, align 4, !tbaa !386  ; 2 uses
+  %i.b = load i16, ptr %i.a, align 4              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 5604 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !380
   %i.e = icmp eq i32 %i.d, 64
+  %2 = lshr i16 %i.b, 8
+  %3 = trunc nuw i16 %2 to i8
   br i1 %i.e, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -270,9 +272,7 @@ bb.k:                                             ; preds = %bb.j
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.in.i = select i1 %.not.i, ptr %i.z, ptr %i.y
   %i.aa = load i32, ptr %.in.i, align 4, !tbaa !10 ; 8 uses
-  %2 = lshr i16 %i.b, 8
-  %trunc.i = trunc nuw i16 %2 to i8
-  switch i8 %trunc.i, label %opj_j2k_get_imf_max_NL.exit [
+  switch i8 %3, label %opj_j2k_get_imf_max_NL.exit [
     i8 4, label %bb.t
     i8 9, label %bb.q
     i8 8, label %bb.n

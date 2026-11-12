@@ -202,9 +202,9 @@ bb.a:
   %15 = alloca %"class.mlir::StringAttr", align 8 ; 4 uses
   %i.g = inttoptr i64 %0 to ptr                   ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #18
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
-  %16 = load i32, ptr %i.h, align 4
-  %.not.i.i.i = icmp ult i32 %16, 16777216
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 47
+  %16 = load i8, ptr %i.h, align 1
+  %.not.i.i.i = icmp eq i8 %16, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -288,7 +288,8 @@ bb.j:                                             ; preds = %_ZN4llvm11raw_ostre
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit.i
 
 _ZN4llvm11raw_ostreamlsEPKc.exit.i:               ; preds = %bb.j, %bb.i
-  %i.ar = load i32, ptr %i.h, align 4             ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %i.ar = load i32, ptr %17, align 4              ; 3 uses
   %i.as = and i32 %i.ar, 8388607                  ; 2 uses
   %i.at = icmp eq i32 %i.as, 0
   br i1 %i.at, label %._crit_edge157.i, label %_ZN4mlir9Operation10getRegionsEv.exit.i

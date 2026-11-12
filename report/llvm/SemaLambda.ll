@@ -204,10 +204,8 @@ _ZNK5clang10Declarator20isFunctionDeclaratorERj.exit: ; preds = %bb.b, %_ZNK5cla
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 4
   %i.av = load i32, ptr %i.au, align 4, !tbaa !1053 ; 2 uses
   %.not184 = icmp eq i32 %i.av, 0
-  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %.sroa.0.0.copyload.i128 = load i64, ptr %i.aw, align 8, !tbaa !169
-  %.sroa.3168.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i128, 32
-  %.sroa.3168.0.extract.trunc = trunc nuw i64 %.sroa.3168.0.extract.shift to i32 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 92
+  %.sroa.3168.0.extract.trunc = load i32, ptr %i.aw, align 4, !tbaa !169 ; 3 uses
   %.sroa.3168.0.extract.trunc. = select i1 %.not184, i32 %.sroa.3168.0.extract.trunc, i32 %i.av
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 1616
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !984 ; 2 uses
@@ -610,7 +608,7 @@ bb.a:
   %i.g = load i16, ptr %i.f, align 8
   %i.h = and i16 %i.g, -4096
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.j = load i64, ptr %i.i, align 16             ; 4 uses
+  %i.j = load i64, ptr %i.i, align 16             ; 5 uses
   %i.k = lshr i64 %i.j, 34
   %i.l = trunc i64 %i.k to i16
   %i.m = and i16 %i.l, 16383
@@ -633,10 +631,14 @@ _ZNK5clang17FunctionProtoType14getEllipsisLocEv.exit: ; preds = %bb.a, %bb.b
   %.sroa.0.0.i = phi i32 [ %i.t, %bb.b ], [ 0, %bb.a ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 %.sroa.0.0.i, ptr %i.u, align 8, !tbaa !169
+  %2 = lshr i64 %i.j, 31
+  %3 = trunc i64 %2 to i16
+  %4 = and i16 %3, 2
   %i.v = lshr i64 %i.j, 31
   %i.w = trunc i64 %i.v to i16
-  %i.x = and i16 %i.w, 6
-  %i.y = or disjoint i16 %i.x, %i.p               ; 4 uses
+  %i.x = and i16 %i.w, 4
+  %5 = or disjoint i16 %i.x, %4
+  %i.y = or disjoint i16 %5, %i.p                 ; 4 uses
   store i16 %i.y, ptr %i.f, align 8
   tail call void @_ZNK5clang17FunctionProtoType20getExceptionSpecInfoEv(ptr dead_on_unwind nonnull writable sret(%"struct.clang::FunctionProtoType::ExceptionSpecInfo") align 8 %i.c, ptr noundef nonnull align 16 dereferenceable(48) %1)
   %i.z = load i64, ptr %i.i, align 16             ; 11 uses

@@ -204,10 +204,8 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = call i32 @pci_bus_alloc_resource(ptr noundef %i.ac, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @intel_private, i64 80), i64 noundef 4096, i64 noundef 4096, i64 noundef %i.ad, i64 noundef 0, ptr noundef @pcibios_align_resource, ptr noundef %i.aa) #11 ; 0 uses
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 144), align 8
   %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 16), align 8
-  %0 = load i64, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 80), align 8
-  %1 = lshr i64 %0, 32
-  %2 = trunc nuw i64 %1 to i32
-  %i.ag = call i32 @pci_write_config_dword(ptr noundef %i.af, i32 noundef 116, i32 noundef %2) #11 ; 0 uses
+  %0 = load i32, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 84), align 4
+  %i.ag = call i32 @pci_write_config_dword(ptr noundef %i.af, i32 noundef 116, i32 noundef %0) #11 ; 0 uses
   %i.ah = load ptr, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 16), align 8
   %i.ai = load i64, ptr getelementptr inbounds nuw (i8, ptr @intel_private, i64 80), align 8
   %i.aj = trunc i64 %i.ai to i32

@@ -205,7 +205,7 @@ bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !258
   store i32 %i.a, ptr %0, align 8, !tbaa !60
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 5 uses
   %i.d = load i32, ptr %i.c, align 4
   %i.e = and i32 %i.d, 15
   store i32 %i.e, ptr %i.b, align 4, !tbaa !61
@@ -233,10 +233,9 @@ bb.a:
   %i.x = and i8 %i.w, 3
   store i8 %i.x, ptr %i.t, align 2, !tbaa !65
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = load i32, ptr %i.c, align 4
-  %3 = lshr i32 %2, 16
-  %4 = trunc nuw i32 %3 to i16
-  store i16 %4, ptr %i.y, align 8, !tbaa !66
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %3 = load i16, ptr %2, align 2
+  store i16 %3, ptr %i.y, align 8, !tbaa !66
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr null, ptr %i.z, align 8, !tbaa !67
   ret void

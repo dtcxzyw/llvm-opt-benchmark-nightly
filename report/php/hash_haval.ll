@@ -204,9 +204,9 @@ PHP_HAVALUpdate.exit44:                           ; preds = %bb.d, %bb.c
   %i.bu = and i32 %i.bt, 520192
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !13
-  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.ca = load i32, ptr %i.bq, align 4, !tbaa !13 ; 5 uses
   %i.cb = and i32 %i.ca, -33554432
   %i.cc = load i32, ptr %i.br, align 8, !tbaa !13 ; 5 uses
@@ -278,11 +278,10 @@ PHP_HAVALUpdate.exit44:                           ; preds = %bb.d, %bb.c
   %i.ei = trunc i32 %i.eh to i8
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i8 %i.ei, ptr %i.ej, align 1, !tbaa !21
-  %2 = load i32, ptr %i.bz, align 4, !tbaa !13
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !13
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %4, ptr %i.ek, align 1, !tbaa !21
+  store i8 %3, ptr %i.ek, align 1, !tbaa !21
   %i.el = load i32, ptr %i.by, align 8, !tbaa !13
   %i.em = trunc i32 %i.el to i8
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -297,11 +296,10 @@ PHP_HAVALUpdate.exit44:                           ; preds = %bb.d, %bb.c
   %i.eu = trunc i32 %i.et to i8
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %i.eu, ptr %i.ev, align 1, !tbaa !21
-  %5 = load i32, ptr %i.by, align 8, !tbaa !13
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !13
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %7, ptr %i.ew, align 1, !tbaa !21
+  store i8 %5, ptr %i.ew, align 1, !tbaa !21
   %i.ex = load i32, ptr %i.bx, align 4, !tbaa !13
   %i.ey = trunc i32 %i.ex to i8
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -316,11 +314,10 @@ PHP_HAVALUpdate.exit44:                           ; preds = %bb.d, %bb.c
   %i.fg = trunc i32 %i.ff to i8
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 14
   store i8 %i.fg, ptr %i.fh, align 1, !tbaa !21
-  %8 = load i32, ptr %i.bx, align 4, !tbaa !13
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !13
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %10, ptr %i.fi, align 1, !tbaa !21
+  store i8 %7, ptr %i.fi, align 1, !tbaa !21
   %i.fj = load i32, ptr %i.bv, align 8, !tbaa !13
   %i.fk = trunc i32 %i.fj to i8
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -483,9 +480,9 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !13
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.bu = load i32, ptr %i.bt, align 8, !tbaa !13
-  %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.by = load <2 x i32>, ptr %i.bq, align 8, !tbaa !13 ; 4 uses
   %i.bz = extractelement <2 x i32> %i.by, i64 1   ; 4 uses
   %i.ca = and i32 %i.bz, -67108864
@@ -554,11 +551,10 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.ec = trunc i32 %i.eb to i8
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i8 %i.ec, ptr %i.ed, align 1, !tbaa !21
-  %2 = load i32, ptr %i.bx, align 4, !tbaa !13
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !13
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %4, ptr %i.ee, align 1, !tbaa !21
+  store i8 %3, ptr %i.ee, align 1, !tbaa !21
   %i.ef = load i32, ptr %i.bw, align 8, !tbaa !13
   %i.eg = trunc i32 %i.ef to i8
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -573,11 +569,10 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.eo = trunc i32 %i.en to i8
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %i.eo, ptr %i.ep, align 1, !tbaa !21
-  %5 = load i32, ptr %i.bw, align 8, !tbaa !13
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !13
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %7, ptr %i.eq, align 1, !tbaa !21
+  store i8 %5, ptr %i.eq, align 1, !tbaa !21
   %i.er = load i32, ptr %i.bv, align 4, !tbaa !13
   %i.es = trunc i32 %i.er to i8
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -592,11 +587,10 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.fa = trunc i32 %i.ez to i8
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 14
   store i8 %i.fa, ptr %i.fb, align 1, !tbaa !21
-  %8 = load i32, ptr %i.bv, align 4, !tbaa !13
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !13
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %10, ptr %i.fc, align 1, !tbaa !21
+  store i8 %7, ptr %i.fc, align 1, !tbaa !21
   %i.fd = load i32, ptr %i.bt, align 8, !tbaa !13
   %i.fe = trunc i32 %i.fd to i8
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -780,8 +774,8 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.bu = load i32, ptr %i.bt, align 8, !tbaa !13
   %i.bv = add i32 %i.bu, %i.bs
   store i32 %i.bv, ptr %i.bt, align 8, !tbaa !13
-  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.by = lshr i32 %i.br, 4
   %i.bz = lshr i32 %i.br, 9
   %i.ca = insertelement <2 x i32> poison, i32 %i.bz, i64 0
@@ -790,9 +784,9 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.cd = load <2 x i32>, ptr %i.bx, align 8, !tbaa !13
   %i.ce = add <2 x i32> %i.cd, %i.cc
   store <2 x i32> %i.ce, ptr %i.bx, align 8, !tbaa !13
-  %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.ci = lshr i32 %i.br, 13
   %i.cj = lshr i32 %i.br, 18
   %i.ck = lshr i32 %i.br, 22
@@ -837,11 +831,10 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.dq = trunc i32 %i.dp to i8
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i8 %i.dq, ptr %i.dr, align 1, !tbaa !21
-  %2 = load i32, ptr %i.ch, align 4, !tbaa !13
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !13
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %4, ptr %i.ds, align 1, !tbaa !21
+  store i8 %3, ptr %i.ds, align 1, !tbaa !21
   %i.dt = load i32, ptr %i.cg, align 8, !tbaa !13
   %i.du = trunc i32 %i.dt to i8
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -856,11 +849,10 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.ec = trunc i32 %i.eb to i8
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %i.ec, ptr %i.ed, align 1, !tbaa !21
-  %5 = load i32, ptr %i.cg, align 8, !tbaa !13
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !13
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %7, ptr %i.ee, align 1, !tbaa !21
+  store i8 %5, ptr %i.ee, align 1, !tbaa !21
   %i.ef = load i32, ptr %i.cf, align 4, !tbaa !13
   %i.eg = trunc i32 %i.ef to i8
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -875,11 +867,10 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.eo = trunc i32 %i.en to i8
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 14
   store i8 %i.eo, ptr %i.ep, align 1, !tbaa !21
-  %8 = load i32, ptr %i.cf, align 4, !tbaa !13
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !13
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %10, ptr %i.eq, align 1, !tbaa !21
+  store i8 %7, ptr %i.eq, align 1, !tbaa !21
   %i.er = load i32, ptr %i.bx, align 8, !tbaa !13
   %i.es = trunc i32 %i.er to i8
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -894,11 +885,10 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.fa = trunc i32 %i.ez to i8
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 18
   store i8 %i.fa, ptr %i.fb, align 1, !tbaa !21
-  %11 = load i32, ptr %i.bx, align 8, !tbaa !13
-  %12 = lshr i32 %11, 24
-  %13 = trunc nuw i32 %12 to i8
+  %8 = getelementptr i8, ptr %1, i64 19
+  %9 = load i8, ptr %8, align 1, !tbaa !13
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 19
-  store i8 %13, ptr %i.fc, align 1, !tbaa !21
+  store i8 %9, ptr %i.fc, align 1, !tbaa !21
   %i.fd = load i32, ptr %i.bw, align 4, !tbaa !13
   %i.fe = trunc i32 %i.fd to i8
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -913,11 +903,10 @@ PHP_HAVALUpdate.exit32:                           ; preds = %bb.d, %bb.c
   %i.fm = trunc i32 %i.fl to i8
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 22
   store i8 %i.fm, ptr %i.fn, align 1, !tbaa !21
-  %14 = load i32, ptr %i.bw, align 4, !tbaa !13
-  %15 = lshr i32 %14, 24
-  %16 = trunc nuw i32 %15 to i8
+  %10 = getelementptr i8, ptr %1, i64 23
+  %11 = load i8, ptr %10, align 1, !tbaa !13
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 23
-  store i8 %16, ptr %i.fo, align 1, !tbaa !21
+  store i8 %11, ptr %i.fo, align 1, !tbaa !21
   %i.fp = load i32, ptr %i.bt, align 8, !tbaa !13
   %i.fq = trunc i32 %i.fp to i8
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1093,7 +1082,7 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.cc = trunc nuw i32 %i.cb to i8
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 3
   store i8 %i.cc, ptr %i.cd, align 1, !tbaa !21
-  %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !13
   %i.cg = trunc i32 %i.cf to i8
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -1108,12 +1097,11 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.co = trunc i32 %i.cn to i8
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i8 %i.co, ptr %i.cp, align 1, !tbaa !21
-  %2 = load i32, ptr %i.ce, align 4, !tbaa !13
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !13
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %4, ptr %i.cq, align 1, !tbaa !21
-  %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  store i8 %3, ptr %i.cq, align 1, !tbaa !21
+  %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.cs = load i32, ptr %i.cr, align 8, !tbaa !13
   %i.ct = trunc i32 %i.cs to i8
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1128,12 +1116,11 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.db = trunc i32 %i.da to i8
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %i.db, ptr %i.dc, align 1, !tbaa !21
-  %5 = load i32, ptr %i.cr, align 8, !tbaa !13
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !13
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %7, ptr %i.dd, align 1, !tbaa !21
-  %i.de = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
+  store i8 %5, ptr %i.dd, align 1, !tbaa !21
+  %i.de = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
   %i.df = load i32, ptr %i.de, align 4, !tbaa !13
   %i.dg = trunc i32 %i.df to i8
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -1148,12 +1135,11 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.do = trunc i32 %i.dn to i8
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 14
   store i8 %i.do, ptr %i.dp, align 1, !tbaa !21
-  %8 = load i32, ptr %i.de, align 4, !tbaa !13
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !13
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %10, ptr %i.dq, align 1, !tbaa !21
-  %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  store i8 %7, ptr %i.dq, align 1, !tbaa !21
+  %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !13
   %i.dt = trunc i32 %i.ds to i8
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1168,12 +1154,11 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.eb = trunc i32 %i.ea to i8
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 18
   store i8 %i.eb, ptr %i.ec, align 1, !tbaa !21
-  %11 = load i32, ptr %i.dr, align 8, !tbaa !13
-  %12 = lshr i32 %11, 24
-  %13 = trunc nuw i32 %12 to i8
+  %8 = getelementptr i8, ptr %1, i64 19
+  %9 = load i8, ptr %8, align 1, !tbaa !13
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 19
-  store i8 %13, ptr %i.ed, align 1, !tbaa !21
-  %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
+  store i8 %9, ptr %i.ed, align 1, !tbaa !21
+  %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !13
   %i.eg = trunc i32 %i.ef to i8
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -1188,12 +1173,11 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.eo = trunc i32 %i.en to i8
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 22
   store i8 %i.eo, ptr %i.ep, align 1, !tbaa !21
-  %14 = load i32, ptr %i.ee, align 4, !tbaa !13
-  %15 = lshr i32 %14, 24
-  %16 = trunc nuw i32 %15 to i8
+  %10 = getelementptr i8, ptr %1, i64 23
+  %11 = load i8, ptr %10, align 1, !tbaa !13
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 23
-  store i8 %16, ptr %i.eq, align 1, !tbaa !21
-  %i.er = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
+  store i8 %11, ptr %i.eq, align 1, !tbaa !21
+  %i.er = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.es = load i32, ptr %i.er, align 8, !tbaa !13
   %i.et = trunc i32 %i.es to i8
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1208,12 +1192,11 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.fb = trunc i32 %i.fa to i8
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 26
   store i8 %i.fb, ptr %i.fc, align 1, !tbaa !21
-  %17 = load i32, ptr %i.er, align 8, !tbaa !13
-  %18 = lshr i32 %17, 24
-  %19 = trunc nuw i32 %18 to i8
+  %12 = getelementptr i8, ptr %1, i64 27
+  %13 = load i8, ptr %12, align 1, !tbaa !13
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 27
-  store i8 %19, ptr %i.fd, align 1, !tbaa !21
-  %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 4 uses
+  store i8 %13, ptr %i.fd, align 1, !tbaa !21
+  %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !13
   %i.fg = trunc i32 %i.ff to i8
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -1228,11 +1211,10 @@ PHP_HAVALUpdate.exit18:                           ; preds = %bb.d, %bb.c
   %i.fo = trunc i32 %i.fn to i8
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 30
   store i8 %i.fo, ptr %i.fp, align 1, !tbaa !21
-  %20 = load i32, ptr %i.fe, align 4, !tbaa !13
-  %21 = lshr i32 %20, 24
-  %22 = trunc nuw i32 %21 to i8
+  %14 = getelementptr i8, ptr %1, i64 31
+  %15 = load i8, ptr %14, align 1, !tbaa !13
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 31
-  store i8 %22, ptr %i.fq, align 1, !tbaa !21
+  store i8 %15, ptr %i.fq, align 1, !tbaa !21
   tail call void @explicit_bzero(ptr noundef nonnull %1, i64 noundef 184) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void

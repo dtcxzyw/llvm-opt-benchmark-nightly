@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %_ZN4mlir9TypeRangeC
   %i.ae = extractvalue { ptr, i64 } %i.ad, 0
   %i.af = extractvalue { ptr, i64 } %i.ad, 1
   call void @_ZN4mlir13NamedAttrListC1EN4llvm8ArrayRefINS_14NamedAttributeEEE(ptr noundef nonnull align 8 dereferenceable(88) %14, ptr %i.ae, i64 %i.af) #21
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 3 uses
-  %18 = load i32, ptr %i.ag, align 4              ; 2 uses
-  %.not.i = icmp ult i32 %18, 16777216
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 47
+  %18 = load i8, ptr %i.ag, align 1
+  %.not.i = icmp eq i8 %18, 0
   br i1 %.not.i, label %_ZN4mlir9Operation20getPropertiesStorageEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -214,7 +214,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 112
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.ai, align 8, !tbaa !14
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.ak = lshr i32 %18, 23
+  %19 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %20 = load i32, ptr %19, align 4
+  %i.ak = lshr i32 %20, 23
   %.lobit.i.i.i.i.i.i.i = and i32 %i.ak, 1
   %i.al = zext nneg i32 %.lobit.i.i.i.i.i.i.i to i64
   %i.am = getelementptr inbounds nuw [16 x i8], ptr %i.aj, i64 %i.al
@@ -233,7 +235,8 @@ _ZN4mlir9Operation20getPropertiesStorageEv.exit:  ; preds = %bb.c, %bb.d
   %.fca.1.load.i = load i64, ptr %.fca.1.gep.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @_ZN4mlir10BlockRangeC1ENS_14SuccessorRangeE(ptr noundef nonnull align 8 dereferenceable(16) %16, ptr %.fca.0.load.i, i64 %.fca.1.load.i) #21
-  %i.ao = load i32, ptr %i.ag, align 4
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
+  %i.ao = load i32, ptr %21, align 4
   %i.ap = and i32 %i.ao, 8388607
   %i.aq = load i64, ptr %12, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 8
@@ -253,7 +256,7 @@ bb.e:                                             ; preds = %_ZN4mlir9Operation2
 
 _ZN4mlir13NamedAttrListD2Ev.exit:                 ; preds = %_ZN4mlir9Operation20getPropertiesStorageEv.exit, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #21
-  %i.ba = load i32, ptr %i.ag, align 4            ; 3 uses
+  %i.ba = load i32, ptr %21, align 4              ; 3 uses
   %i.bb = and i32 %i.ba, 8388607                  ; 2 uses
   %i.bc = icmp eq i32 %i.bb, 0
   br i1 %i.bc, label %_ZN4mlir9Operation10getRegionsEv.exit, label %bb.f

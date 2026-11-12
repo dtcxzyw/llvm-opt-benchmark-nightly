@@ -202,7 +202,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hk, i64 24
   %i.hu = zext i1 %i.hs to i64
   %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.ht, i64 %i.hu
-  %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !23, !noalias !140 ; 11 uses
+  %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !23, !noalias !140 ; 12 uses
   store ptr %i.hw, ptr %30, align 8, !tbaa !22, !alias.scope !140
   %i.hx = load i64, ptr %i.hw, align 8, !noalias !140 ; 3 uses
   %i.hy = lshr i64 %i.hx, 40
@@ -231,7 +231,7 @@ bb.bn:                                            ; preds = %bb.bm
           to label %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit236 unwind label %bb.ci
 
 _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit236: ; preds = %bb.bm, %bb.bl, %bb.bn
-  %i.ij = getelementptr inbounds nuw i8, ptr %i.hw, i64 8 ; 2 uses
+  %i.ij = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
   %i.ik = load i64, ptr %i.ij, align 8
   %i.il = trunc i64 %i.ik to i32
   %i.im = and i32 %i.il, 1023                     ; 2 uses
@@ -243,12 +243,14 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit236: ; preds = %bb.bm, %bb.bl, %b
 bb.bo:                                            ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit236
   %i.iq = icmp eq i32 %i.ip, 2
   %spec.select.v.i.i = select i1 %i.iq, i64 32, i64 24 ; 2 uses
-  %66 = load i64, ptr %i.ij, align 8
-  %67 = lshr i64 %66, 29
-  %.idx = and i64 %67, 536870904
-  %68 = add nuw nsw i64 %.idx, 24                 ; 2 uses
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.hw, i64 %68
-  %.not658680 = icmp samesign eq i64 %spec.select.v.i.i, %68
+  %66 = getelementptr inbounds nuw i8, ptr %i.hw, i64 12
+  %67 = load i32, ptr %66, align 4
+  %68 = shl i32 %67, 3
+  %69 = and i32 %68, 536870904
+  %narrow = add nuw nsw i32 %69, 24
+  %70 = zext nneg i32 %narrow to i64              ; 2 uses
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.hw, i64 %70
+  %.not658680 = icmp samesign eq i64 %spec.select.v.i.i, %70
   br i1 %.not658680, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bo
@@ -651,8 +653,8 @@ bb.jv:                                            ; preds = %bb.ju
 
 .lr.ph685:                                        ; preds = %bb.jv, %.critedge185
   %.sroa.0630.0683 = phi ptr [ %i.ait, %.critedge185 ], [ %i.agb, %bb.jv ] ; 5 uses
-  %i.age = load ptr, ptr %.sroa.0630.0683, align 8, !tbaa !22
-  %i.agf = getelementptr inbounds nuw i8, ptr %i.age, i64 8 ; 2 uses
+  %i.age = load ptr, ptr %.sroa.0630.0683, align 8, !tbaa !22 ; 2 uses
+  %i.agf = getelementptr inbounds nuw i8, ptr %i.age, i64 8
   %i.agg = load i64, ptr %i.agf, align 8
   %i.agh = trunc i64 %i.agg to i32
   %i.agi = and i32 %i.agh, 1023                   ; 2 uses
@@ -663,13 +665,12 @@ bb.jv:                                            ; preds = %bb.ju
 
 bb.jw:                                            ; preds = %.lr.ph685
   %i.agm = icmp eq i32 %i.agl, 2
-  %69 = load i64, ptr %i.agf, align 8
-  %70 = lshr i64 %69, 32
-  %71 = and i64 %70, 67108863
-  %72 = sext i1 %i.agm to i64
-  %73 = add nsw i64 %71, %72
-  %74 = and i64 %73, 4294967295
-  %i.agn = icmp eq i64 %74, 3
+  %71 = getelementptr inbounds nuw i8, ptr %i.age, i64 12
+  %72 = load i32, ptr %71, align 4
+  %73 = and i32 %72, 67108863
+  %74 = sext i1 %i.agm to i32
+  %75 = add nsw i32 %73, %74
+  %i.agn = icmp eq i32 %75, 3
   br i1 %i.agn, label %bb.jx, label %.critedge185
 
 bb.jx:                                            ; preds = %bb.jw

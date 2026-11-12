@@ -204,7 +204,7 @@ define internal fastcc range(i32 -2147483648, 260) i32 @scsi_disk_emulate_inquir
 bb.a:
   %2 = alloca %struct.SCSIBlockLimits, align 4    ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8              ; 22 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 23 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 65
   %i.d = load i8, ptr %i.c, align 1
   %i.e = and i8 %i.d, 1
@@ -550,12 +550,11 @@ trace_scsi_disk_emulate_vpd_page_b0_not_supported.exit.i: ; preds = %bb.al, %bb.
   br label %bb.ao
 
 bb.am:                                            ; preds = %bb.b
-  %i.el = getelementptr inbounds nuw i8, ptr %i.b, i64 802 ; 2 uses
-  %3 = load i16, ptr %i.el, align 2
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
+  %i.el = getelementptr inbounds nuw i8, ptr %i.b, i64 802
+  %3 = getelementptr i8, ptr %i.b, i64 803
+  %4 = load i8, ptr %3, align 1
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %5, ptr %i.em, align 1
+  store i8 %4, ptr %i.em, align 1
   %i.en = load i16, ptr %i.el, align 2
   %i.eo = trunc i16 %i.en to i8
   %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 5

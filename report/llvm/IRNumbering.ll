@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ab, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %bb.g
-  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %7 = load i32, ptr %i.ac, align 4               ; 2 uses
-  %.not = icmp ult i32 %7, 16777216
+  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 47
+  %7 = load i8, ptr %i.ac, align 1
+  %.not = icmp eq i8 %7, 0
   br i1 %.not, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -238,7 +238,9 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN4mlir9Operation20getPropertiesStorageEv.exit:  ; preds = %bb.i
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.am = lshr i32 %7, 23
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %9 = load i32, ptr %8, align 4
+  %i.am = lshr i32 %9, 23
   %.lobit.i.i.i.i.i.i.i = and i32 %i.am, 1
   %i.an = zext nneg i32 %.lobit.i.i.i.i.i.i.i to i64
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.an

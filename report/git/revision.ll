@@ -204,7 +204,7 @@ rev_info_commit_list_to_queue.exit:               ; preds = %bb.e, %bb.d, %bb.b,
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = getelementptr i8, ptr %0, i64 3024       ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1464 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72
   br label %bb.f
 
@@ -607,9 +607,10 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %._crit_edge.i, %bb.ao
   %storemerge.i = phi i32 [ %i.gk, %._crit_edge.i ], [ %i.fq, %bb.ao ] ; 2 uses
   store i32 %storemerge.i, ptr %i.fl, align 8
-  %1 = load i64, ptr %i.p, align 4
-  %2 = and i64 %1, 4294967296
-  %.not20.i = icmp eq i64 %2, 0
+  %1 = getelementptr i8, ptr %0, i64 336
+  %2 = load i32, ptr %1, align 8
+  %3 = and i32 %2, 1
+  %.not20.i = icmp eq i32 %3, 0
   %i.gl = and i32 %storemerge.i, 1048576
   %.not21.i = icmp eq i32 %i.gl, 0
   %or.cond.i = select i1 %.not20.i, i1 true, i1 %.not21.i

@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZNKSt7__cxx1112bas
   store i8 0, ptr %i.cb, align 8, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
-  %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cm = load i64, ptr %i.cl, align 8
   %i.cn = trunc i64 %i.cm to i32
   %i.co = and i32 %i.cn, 16777215
@@ -396,10 +396,9 @@ bb.v:                                             ; preds = %_ZNKSt7__cxx1112bas
   store i8 0, ptr %i.eo, align 8, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24
-  %18 = load i64, ptr %i.cl, align 8
-  %19 = lshr i64 %18, 32
-  %20 = trunc nuw i64 %19 to i32
-  %i.ey = and i32 %20, 16777215
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %19 = load i32, ptr %18, align 4
+  %i.ey = and i32 %19, 16777215
   store i32 %i.ey, ptr %i.d, align 4, !tbaa !26
   invoke void @_Z8cvtToStrIiENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %15, ptr noundef nonnull align 4 dereferenceable(4) %i.d)
           to label %bb.w unwind label %bb.bf
@@ -802,11 +801,9 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local noundef i32 @_ZNK8FileLine10lastColumnEv(ptr noundef nonnull align 8 dereferenceable(48) %0) #2 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load i64, ptr %i.a, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.b = and i32 %3, 16777215
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %1 = load i32, ptr %i.a, align 4
+  %i.b = and i32 %1, 16777215
   ret i32 %i.b
 }
 
@@ -1209,7 +1206,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %._crit_edge.i.i133
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.l = load i64, ptr %i.k, align 8
   %i.m = and i64 %i.l, 16777215
   %.not = icmp eq i64 %i.m, 0
@@ -1231,11 +1228,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
-  %17 = load i64, ptr %i.k, align 8
-  %18 = lshr i64 %17, 32
-  %19 = and i64 %18, 16777215
-  %20 = add nsw i64 %19, -1
-  %.not19 = icmp ult i64 %i.q, %20
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
+  %18 = load i32, ptr %17, align 4
+  %19 = and i32 %18, 16777215
+  %20 = add nsw i32 %19, -1
+  %21 = sext i32 %20 to i64
+  %.not19 = icmp ult i64 %i.q, %21
   br i1 %.not19, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1551,19 +1549,18 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i61
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i61
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
-  %21 = load i64, ptr %i.k, align 8               ; 2 uses
-  %22 = lshr i64 %21, 32
-  %23 = trunc nuw i64 %22 to i32
-  %24 = and i32 %23, 16777215                     ; 2 uses
-  %i.cy = trunc i64 %21 to i32
+  %22 = load i32, ptr %17, align 4
+  %23 = and i32 %22, 16777215                     ; 2 uses
+  %24 = load i64, ptr %i.k, align 8
+  %i.cy = trunc i64 %24 to i32
   %i.cz = and i32 %i.cy, 16777215                 ; 2 uses
-  %i.da = icmp samesign ugt i32 %24, %i.cz
+  %i.da = icmp samesign ugt i32 %23, %i.cz
   br i1 %i.da, label %bb.y, label %bb.an
 
 bb.y:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   %i.db = xor i32 %i.cz, -1
-  %i.dc = add nsw i32 %24, %i.db
+  %i.dc = add nsw i32 %23, %i.db
   %i.dd = sext i32 %i.dc to i64
   %i.de = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 5 uses
   store ptr %i.de, ptr %13, align 8, !tbaa !20

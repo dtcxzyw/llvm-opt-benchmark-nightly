@@ -204,11 +204,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvMs2_NtNtCs8mxkWwUnjF1_14iceoryx2_ffi_c3api14unique_node_idNtB5_29iox2_unique_node_id_storage_t6as_ref.exit: ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %.sroa.0.0.copyload = load i128, ptr %i.d, align 4
-  %1 = lshr i128 %.sroa.0.0.copyload, 64
-  %2 = trunc nuw i128 %1 to i64
-  ret i64 %2
+  %i.d = getelementptr i8, ptr %i.a, i64 12
+  %1 = load i64, ptr %i.d, align 4
+  ret i64 %1
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable

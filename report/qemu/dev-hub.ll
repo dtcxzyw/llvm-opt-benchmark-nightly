@@ -204,13 +204,13 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %bb.h
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 5880
   %i.q = zext i32 %i.m to i64
-  %i.r = getelementptr inbounds nuw [80 x i8], ptr %i.p, i64 %i.q ; 2 uses
+  %i.r = getelementptr inbounds nuw [80 x i8], ptr %i.p, i64 %i.q ; 4 uses
   %i.s = load i8, ptr %i.a, align 8
   %i.t = zext i8 %i.s to i32
-  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 72 ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 72 ; 2 uses
   %i.v = load i16, ptr %i.u, align 8              ; 4 uses
   %i.w = zext i16 %i.v to i32
-  %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 74 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 74 ; 2 uses
   %i.y = load i16, ptr %i.x, align 2
   %i.z = zext i16 %i.y to i32
   %i.aa = load i32, ptr @trace_events_enabled_count, align 4
@@ -237,20 +237,18 @@ bb.l:                                             ; preds = %bb.k
   %i.ae = phi i16 [ %.pre187, %bb.l ], [ %i.v, %bb.k ], [ %i.v, %bb.j ], [ %i.v, %bb.i ]
   %i.af = trunc i16 %i.ae to i8
   store i8 %i.af, ptr %6, align 1
-  %7 = load i16, ptr %i.u, align 8
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %7 = getelementptr i8, ptr %i.r, i64 73
+  %8 = load i8, ptr %7, align 1
   %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 1
-  store i8 %9, ptr %i.ag, align 1
+  store i8 %8, ptr %i.ag, align 1
   %i.ah = load i16, ptr %i.x, align 2
   %i.ai = trunc i16 %i.ah to i8
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 2
   store i8 %i.ai, ptr %i.aj, align 1
-  %10 = load i16, ptr %i.x, align 2
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8
+  %9 = getelementptr i8, ptr %i.r, i64 75
+  %10 = load i8, ptr %9, align 1
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 3
-  store i8 %12, ptr %i.ak, align 1
+  store i8 %10, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 88
   store i32 4, ptr %i.al, align 8
   br label %.thread167

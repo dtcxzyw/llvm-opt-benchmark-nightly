@@ -205,7 +205,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fa = zext i32 %i.ez to i64
   %i.fb = load i8, ptr %i.cy, align 2, !tbaa !72
   %i.fc = zext i8 %i.fb to i64                    ; 6 uses
-  %i.fd = load i16, ptr %i.cz, align 8, !tbaa !73
+  %i.fd = load i16, ptr %i.cz, align 8
   store i16 %i.fd, ptr %i.dc, align 8
   store i16 0, ptr %i.cz, align 8, !tbaa !73
   store i8 0, ptr %i.cy, align 2, !tbaa !72
@@ -452,7 +452,7 @@ bb.bm:                                            ; preds = %bb.bl
   %.0112.i = phi ptr [ null, %bb.bm ], [ null, %bb.bj ], [ %i.ka, %.thread141.i ], [ null, %._crit_edge.i ], [ null, %.thread.i120 ]
   %.0111.i = phi ptr [ null, %bb.bm ], [ null, %bb.bj ], [ %i.ka, %.thread141.i ], [ %.pre.i, %._crit_edge.i ], [ %i.jw, %.thread.i120 ]
   %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 1610 ; 4 uses
-  %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 5 uses
+  %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 4 uses
   %i.kd = getelementptr inbounds nuw i8, ptr %0, i64 6920 ; 7 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %0, i64 6928 ; 9 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 6944 ; 2 uses
@@ -463,6 +463,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.kj = icmp ne i32 %1, 1
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 1616 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 3 uses
+  %7 = getelementptr i8, ptr %0, i64 1609
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 6872 ; 2 uses
   %.phi.trans.insert.i129.i = getelementptr inbounds nuw i8, ptr %0, i64 6864 ; 4 uses
   %i.km = getelementptr inbounds nuw i8, ptr %0, i64 2768
@@ -630,11 +631,9 @@ GetBrotliStorage.exit.i:                          ; preds = %bb.ce, %bb.cd, %bb.
   %i.mz = load i16, ptr %i.kc, align 8, !tbaa !73
   %i.na = trunc i16 %i.mz to i8
   store i8 %i.na, ptr %.0109.i, align 1, !tbaa !68
-  %7 = load i16, ptr %i.kc, align 8, !tbaa !73
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %8 = load i8, ptr %7, align 1, !tbaa !73
   %i.nb = getelementptr inbounds nuw i8, ptr %.0109.i, i64 1
-  store i8 %9, ptr %i.nb, align 1, !tbaa !68
+  store i8 %8, ptr %i.nb, align 1, !tbaa !68
   %i.nc = load i32, ptr %i.ik, align 4, !tbaa !42
   %i.nd = icmp eq i32 %i.nc, 0                    ; 2 uses
   %i.ne = select i1 %i.nd, i64 32768, i64 131072
@@ -1037,12 +1036,17 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 2 uses
   %i.ad = load i16, ptr %i.ac, align 8, !tbaa !73
   %i.ae = trunc i32 %i.ab to i16
-  %i.af = or i16 %i.ad, %i.ae                     ; 2 uses
+  %i.af = or i16 %i.ad, %i.ae                     ; 3 uses
   store i16 %i.af, ptr %i.ac, align 8, !tbaa !73
   %i.ag = add i8 %i.z, 2                          ; 2 uses
   store i8 %i.ag, ptr %i.y, align 2, !tbaa !72
+  %7 = trunc i16 %i.af to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 6944 ; 2 uses
-  store i16 %i.af, ptr %i.ah, align 8
+  store i8 %7, ptr %i.ah, align 8, !tbaa !68
+  %8 = lshr i16 %i.af, 8
+  %9 = trunc nuw i16 %8 to i8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 6945
+  store i8 %9, ptr %10, align 1, !tbaa !68
   store ptr %i.ah, ptr %4, align 8, !tbaa !69
   %i.ai = zext i8 %i.ag to i64
   %i.aj = add nuw nsw i64 %i.ai, 7
@@ -1141,15 +1145,14 @@ bb.q:                                             ; preds = %.thread
 
 GetBrotliStorage.exit:                            ; preds = %.thread, %bb.q
   %i.bn = phi ptr [ %i.bm, %bb.q ], [ %i.bl, %.thread ] ; 6 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 3 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 2 uses
   %i.bp = load i16, ptr %i.bo, align 8, !tbaa !73
   %i.bq = trunc i16 %i.bp to i8
   store i8 %i.bq, ptr %i.bn, align 1, !tbaa !68
-  %7 = load i16, ptr %i.bo, align 8, !tbaa !73
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %11 = getelementptr i8, ptr %0, i64 1609
+  %12 = load i8, ptr %11, align 1, !tbaa !73
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 1
-  store i8 %9, ptr %i.br, align 1, !tbaa !68
+  store i8 %12, ptr %i.br, align 1, !tbaa !68
   %i.bs = load i32, ptr %i.r, align 4, !tbaa !42
   %i.bt = and i64 %i.j, 4294967295                ; 3 uses
   %i.bu = icmp eq i32 %i.bs, 0                    ; 2 uses
@@ -1552,15 +1555,14 @@ GetBrotliStorage.exit387:                         ; preds = %bb.fb, %bb.fc
   %i.bcn = load i8, ptr %i.bcm, align 2, !tbaa !72
   %i.bco = zext i8 %i.bcn to i64                  ; 6 uses
   store i64 %i.bco, ptr %i.g, align 8, !tbaa !67
-  %i.bcp = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 3 uses
+  %i.bcp = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 2 uses
   %i.bcq = load i16, ptr %i.bcp, align 8, !tbaa !73
   %i.bcr = trunc i16 %i.bcq to i8                 ; 3 uses
   store i8 %i.bcr, ptr %i.bcl, align 1, !tbaa !68
-  %10 = load i16, ptr %i.bcp, align 8, !tbaa !73
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8                   ; 3 uses
+  %13 = getelementptr i8, ptr %0, i64 1609
+  %14 = load i8, ptr %13, align 1, !tbaa !73      ; 3 uses
   %i.bcs = getelementptr inbounds nuw i8, ptr %i.bcl, i64 1 ; 3 uses
-  store i8 %12, ptr %i.bcs, align 1, !tbaa !68
+  store i8 %14, ptr %i.bcs, align 1, !tbaa !68
   %i.bct = load i64, ptr %i.axw, align 8, !tbaa !79 ; 2 uses
   %i.bcu = and i64 %i.azl, 4294967295             ; 13 uses
   %i.bcv = getelementptr inbounds nuw i8, ptr %0, i64 1612 ; 2 uses
@@ -1699,7 +1701,7 @@ bb.fh:                                            ; preds = %._crit_edge.i.i, %b
 ShouldCompress.exit.i:                            ; preds = %._crit_edge.i.i.ShouldCompress.exit.i_crit_edge, %bb.fg, %bb.ff
   %i.bfl = phi i64 [ %.pre498, %._crit_edge.i.i.ShouldCompress.exit.i_crit_edge ], [ %i.bco, %bb.fg ], [ %i.bco, %bb.ff ]
   %i.bfm = phi i8 [ %.pre497, %._crit_edge.i.i.ShouldCompress.exit.i_crit_edge ], [ %i.bcr, %bb.fg ], [ %i.bcr, %bb.ff ]
-  %i.bfn = phi i8 [ %.pre496, %._crit_edge.i.i.ShouldCompress.exit.i_crit_edge ], [ %12, %bb.fg ], [ %12, %bb.ff ]
+  %i.bfn = phi i8 [ %.pre496, %._crit_edge.i.i.ShouldCompress.exit.i_crit_edge ], [ %14, %bb.fg ], [ %14, %bb.ff ]
   %i.bfo = load i32, ptr %i.r, align 4, !tbaa !50 ; 2 uses
   %i.bfp = icmp slt i32 %i.bfo, 3
   br i1 %i.bfp, label %bb.fi, label %bb.fj

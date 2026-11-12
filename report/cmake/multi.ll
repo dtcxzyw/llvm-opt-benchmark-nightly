@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %.thread
   ]
 
 bb.f:                                             ; preds = %bb.e
-  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 728
-  %2 = load i64, ptr %i.o, align 8
-  %3 = and i64 %2, 4294967296
-  %.not109 = icmp eq i64 %3, 0
+  %i.o = getelementptr i8, ptr %i.l, i64 732
+  %2 = load i32, ptr %i.o, align 4
+  %3 = and i32 %2, 1
+  %.not109 = icmp eq i32 %3, 0
   br i1 %.not109, label %bb.g, label %.thread142
 
 bb.g:                                             ; preds = %bb.f
@@ -611,10 +611,10 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !104
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 728
-  %4 = load i64, ptr %i.k, align 8
-  %5 = and i64 %4, 4294967296
-  %.not26 = icmp eq i64 %5, 0
+  %i.k = getelementptr i8, ptr %i.j, i64 732
+  %4 = load i32, ptr %i.k, align 4
+  %5 = and i32 %4, 1
+  %.not26 = icmp eq i32 %5, 0
   %i.l = select i1 %.not26, ptr @.str.55, ptr @.str.54
   %i.m = tail call ptr @Curl_pgrs_now(ptr noundef nonnull %0) #13
   %i.n = call i64 @curlx_ptimediff_ms(ptr noundef %i.m, ptr noundef nonnull %3) #13

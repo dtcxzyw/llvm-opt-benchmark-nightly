@@ -205,7 +205,7 @@ bb.a:
   %.sroa.2.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
   %.sroa.2.0.extract.trunc.i.i = trunc nuw i64 %.sroa.2.0.extract.shift.i.i to i32
   %i.m = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL11imageBoundsE, i64 8), align 8, !tbaa !45
-  %i.n = sub nsw i32 %i.m, %.sroa.0.0.extract.trunc.i.i ; 3 uses
+  %i.n = sub nsw i32 %i.m, %.sroa.0.0.extract.trunc.i.i ; 2 uses
   %i.o = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL11imageBoundsE, i64 12), align 4, !tbaa !46
   %i.p = sub nsw i32 %i.o, %.sroa.2.0.extract.trunc.i.i ; 2 uses
   %.sroa.2.0.insert.ext.i.i = zext i32 %i.p to i64
@@ -216,7 +216,6 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 340
   %.sroa.0.0.copyload.i170 = load i64, ptr %i.r, align 4 ; 5 uses
   %i.s = icmp eq i64 %.sroa.0.0.copyload.i170, 0
-  %15 = trunc i64 %.sroa.0.0.copyload.i170 to i32 ; 2 uses
   br i1 %i.s, label %._crit_edge.i.i, label %bb.f
 
 ._crit_edge.i.i:                                  ; preds = %bb.a
@@ -285,7 +284,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN4p
   %.pre = load ptr, ptr %0, align 8, !tbaa !63    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 340
   %.sroa.0.0.copyload.i182.pre = load i64, ptr %.phi.trans.insert, align 4 ; 3 uses
-  %i.au = trunc i64 %.sroa.0.0.copyload.i182.pre to i32 ; 2 uses
+  %i.au = trunc i64 %.sroa.0.0.copyload.i182.pre to i32
   %.pre1129.a = lshr i64 %.sroa.0.0.copyload.i182.pre, 32
   %.pre1131.a = trunc nuw i64 %.pre1129.a to i32
   br label %bb.i
@@ -324,6 +323,7 @@ bb.f:                                             ; preds = %bb.a
   store i64 %.sroa.0.0.copyload.i170, ptr %5, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   store i64 %.sroa.0.0.insert.insert.i.i, ptr %6, align 8
+  %15 = trunc i64 %.sroa.0.0.copyload.i170 to i32 ; 2 uses
   %i.bc = icmp eq i32 %i.n, %15
   %i.bd = lshr i64 %.sroa.0.0.copyload.i170, 32
   %i.be = trunc nuw i64 %i.bd to i32              ; 2 uses
@@ -342,10 +342,9 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.h
   %.pre-phi1132 = phi i32 [ %.pre1131.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.be, %bb.h ]
-  %.pre-phi = phi i32 [ %i.au, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %15, %bb.h ]
-  %i.bh = phi i32 [ %i.au, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.n, %bb.h ]
-  %.sroa.0.0.copyload.i1871061 = phi i64 [ %.sroa.0.0.copyload.i182.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.0.0.copyload.i170, %bb.h ] ; 2 uses
-  %i.bi = phi ptr [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.q, %bb.h ] ; 2 uses
+  %i.bh = phi i32 [ %i.au, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %15, %bb.h ]
+  %.sroa.0.0.copyload.i1871061 = phi i64 [ %.sroa.0.0.copyload.i182.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.0.0.copyload.i170, %bb.h ]
+  %i.bi = phi ptr [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.q, %bb.h ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   store i64 %.sroa.0.0.copyload.i1871061, ptr %7, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
@@ -354,9 +353,9 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %.sroa.0.0.copyload.i183 = load i64, ptr %i.bk, align 4 ; 3 uses
   store i64 %.sroa.0.0.copyload.i183, ptr %8, align 8
   %.sroa.0.0.extract.trunc.i184 = trunc i64 %.sroa.0.0.copyload.i183 to i32
-  %i.bl = icmp eq i32 %.pre-phi, %.sroa.0.0.extract.trunc.i184
+  %i.bl = icmp eq i32 %i.bh, %.sroa.0.0.extract.trunc.i184
   %.sroa.2.0.extract.shift.i185 = lshr i64 %.sroa.0.0.copyload.i183, 32
-  %.sroa.2.0.extract.trunc.i186 = trunc nuw i64 %.sroa.2.0.extract.shift.i185 to i32 ; 2 uses
+  %.sroa.2.0.extract.trunc.i186 = trunc nuw i64 %.sroa.2.0.extract.shift.i185 to i32
   %i.bm = icmp eq i32 %.pre-phi1132, %.sroa.2.0.extract.trunc.i186
   %i.bn = select i1 %i.bl, i1 %i.bm, i1 false
   br i1 %i.bn, label %bb.k, label %bb.j
@@ -368,22 +367,23 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
-  %i.bo = icmp sgt i32 %.sroa.2.0.extract.trunc.i186, 0
+  %16 = getelementptr i8, ptr %i.bi, i64 344
+  %.sroa.3104.0.extract.trunc1061 = load i32, ptr %16, align 4
+  %i.bo = icmp sgt i32 %.sroa.3104.0.extract.trunc1061, 0
   br i1 %i.bo, label %.preheader1054, label %._crit_edge1065
 
 .preheader1054:                                   ; preds = %bb.k, %._crit_edge
-  %.sroa.0.0.copyload.i187.pre = phi i64 [ %.sroa.0.0.copyload.i187.pre1128, %._crit_edge ], [ %.sroa.0.0.copyload.i1871061, %bb.k ] ; 3 uses
-  %16 = phi ptr [ %19, %._crit_edge ], [ %i.bi, %bb.k ] ; 3 uses
-  %17 = phi i32 [ %.pre-phi1134, %._crit_edge ], [ %i.bh, %bb.k ]
-  %indvars.iv1091 = phi i64 [ %indvars.iv.next1092, %._crit_edge ], [ 0, %bb.k ] ; 5 uses
-  %.sroa.096.0.extract.trunc1058 = trunc i64 %.sroa.0.0.copyload.i187.pre to i32 ; 2 uses
+  %17 = phi ptr [ %19, %._crit_edge ], [ %i.bi, %bb.k ] ; 3 uses
+  %indvars.iv1089 = phi i64 [ %indvars.iv.next1090, %._crit_edge ], [ 0, %bb.k ] ; 5 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 340 ; 2 uses
+  %.sroa.0.0.copyload.i1881057 = load i64, ptr %18, align 4 ; 2 uses
+  %.sroa.096.0.extract.trunc1058 = trunc i64 %.sroa.0.0.copyload.i1881057 to i32 ; 2 uses
   %i.bp = icmp sgt i32 %.sroa.096.0.extract.trunc1058, 0
   br i1 %i.bp, label %.preheader.preheader.i.lr.ph, label %._crit_edge
 
 .preheader.preheader.i.lr.ph:                     ; preds = %.preheader1054
-  %18 = getelementptr inbounds nuw i8, ptr %16, i64 340
-  %.sroa.2820.0.insert.shift = shl nuw nsw i64 %indvars.iv1091, 32
-  %i.bq = trunc nuw nsw i64 %indvars.iv1091 to i32 ; 4 uses
+  %.sroa.2820.0.insert.shift = shl nuw nsw i64 %indvars.iv1089, 32
+  %i.bq = trunc nuw nsw i64 %indvars.iv1089 to i32 ; 4 uses
   br label %.preheader.preheader.i
 
 ._crit_edge1065.loopexit:                         ; preds = %._crit_edge
@@ -413,26 +413,26 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ci, label %_ZNSt6vectorIN4pbrt5ImageESaIS1_EE6resizeEm.exit, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
 
 ._crit_edge:                                      ; preds = %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213, %.preheader1054
-  %.pre-phi1134 = phi i32 [ %.sroa.096.0.extract.trunc1058, %.preheader1054 ], [ %.sroa.096.0.extract.trunc, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ]
-  %.sroa.0.0.copyload.i187.pre1128 = phi i64 [ %.sroa.0.0.copyload.i187.pre, %.preheader1054 ], [ %.sroa.0.0.copyload.i188, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 2 uses
-  %19 = phi ptr [ %16, %.preheader1054 ], [ %i.hr, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 2 uses
-  %indvars.iv.next1092 = add nuw nsw i64 %indvars.iv1091, 1 ; 2 uses
-  %20 = ashr i64 %.sroa.0.0.copyload.i187.pre1128, 32
-  %i.cj = icmp slt i64 %indvars.iv.next1092, %20
+  %19 = phi ptr [ %17, %.preheader1054 ], [ %i.hr, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 3 uses
+  %indvars.iv.next1090 = add nuw nsw i64 %indvars.iv1089, 1 ; 2 uses
+  %20 = getelementptr i8, ptr %19, i64 344
+  %.sroa.3104.0.extract.trunc = load i32, ptr %20, align 4
+  %21 = sext i32 %.sroa.3104.0.extract.trunc to i64
+  %i.cj = icmp slt i64 %indvars.iv.next1090, %21
   br i1 %i.cj, label %.preheader1054, label %._crit_edge1065.loopexit, !llvm.loop !190
 
 .preheader.preheader.i:                           ; preds = %.preheader.preheader.i.lr.ph, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213
-  %i.ck = phi i32 [ %17, %.preheader.preheader.i.lr.ph ], [ %.sroa.096.0.extract.trunc, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 2 uses
+  %i.ck = phi i32 [ %.sroa.096.0.extract.trunc1058, %.preheader.preheader.i.lr.ph ], [ %.sroa.096.0.extract.trunc, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader.preheader.i.lr.ph ], [ %indvars.iv.next, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 6 uses
-  %.sroa.0.0.copyload.i1881060 = phi i64 [ %.sroa.0.0.copyload.i187.pre, %.preheader.preheader.i.lr.ph ], [ %.sroa.0.0.copyload.i188, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 2 uses
+  %.sroa.0.0.copyload.i1881060 = phi i64 [ %.sroa.0.0.copyload.i1881057, %.preheader.preheader.i.lr.ph ], [ %.sroa.0.0.copyload.i188, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 2 uses
   %i.cl = phi ptr [ %18, %.preheader.preheader.i.lr.ph ], [ %i.hs, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ]
-  %i.cm = phi ptr [ %16, %.preheader.preheader.i.lr.ph ], [ %i.hr, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 8 uses
+  %i.cm = phi ptr [ %17, %.preheader.preheader.i.lr.ph ], [ %i.hr, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213 ] ; 8 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 336 ; 2 uses
   %.sroa.0819.0.insert.insert = or disjoint i64 %.sroa.2820.0.insert.shift, %indvars.iv
   %.sroa.9.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload.i1881060, 32
   %.sroa.9.0.extract.trunc.i = trunc nuw i64 %.sroa.9.0.extract.shift.i to i32
   %i.co = ashr i64 %.sroa.0.0.copyload.i1881060, 32
-  %i.cp = icmp slt i64 %indvars.iv1091, %i.co
+  %i.cp = icmp slt i64 %indvars.iv1089, %i.co
   %i.cq = add nsw i32 %.sroa.9.0.extract.trunc.i, -1
   %..i.1.i = call i32 @llvm.smin.i32(i32 %i.bq, i32 %i.cq)
   %.sroa.14.2 = select i1 %i.cp, i32 %i.bq, i32 %..i.1.i ; 3 uses
@@ -567,7 +567,7 @@ bb.t:                                             ; preds = %.preheader.preheade
   %..i.i503 = call i32 @llvm.smin.i32(i32 %.pre-phi1133, i32 %i.ff)
   %.sroa.0851.0 = select i1 %i.fe, i32 %.pre-phi1133, i32 %..i.i503 ; 3 uses
   %i.fg = ashr i64 %.sroa.04.0.copyload.i194, 32
-  %i.fh = icmp slt i64 %indvars.iv1091, %i.fg
+  %i.fh = icmp slt i64 %indvars.iv1089, %i.fg
   %i.fi = add nsw i32 %.sroa.9.0.extract.trunc.i496, -1
   %..i.1.i509 = call i32 @llvm.smin.i32(i32 %i.bq, i32 %i.fi)
   %.sroa.14859.2 = select i1 %i.fh, i32 %i.bq, i32 %..i.1.i509 ; 3 uses
@@ -690,8 +690,8 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit213: ; preds = %
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.hr = load ptr, ptr %0, align 8, !tbaa !63    ; 3 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hr, i64 340 ; 2 uses
-  %.sroa.0.0.copyload.i188 = load i64, ptr %i.hs, align 4 ; 4 uses
-  %.sroa.096.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i188 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i188 = load i64, ptr %i.hs, align 4 ; 3 uses
+  %.sroa.096.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i188 to i32
   %sext1206.a = shl i64 %.sroa.0.0.copyload.i188, 32
   %i.ht = ashr exact i64 %sext1206.a, 32
   %i.hu = icmp slt i64 %indvars.iv.next, %i.ht

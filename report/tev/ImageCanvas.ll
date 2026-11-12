@@ -205,10 +205,8 @@ _ZNK3tev3BoxIiLj2EEeqES1_.exit.thread:            ; preds = %bb.b, %_ZNK3tev3Box
   %i.h = sitofp <2 x i32> %i.g to <2 x float>
   %i.i = bitcast i64 %.sroa.2.0.copyload.i to <2 x i32>
   %i.j = sitofp <2 x i32> %i.i to <2 x float>
-  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 376
-  %.sroa.0.0.copyload.i28 = load i64, ptr %i.k, align 8, !tbaa !79
-  %.sroa.066.4.extract.shift = lshr i64 %.sroa.0.0.copyload.i28, 32
-  %.sroa.066.4.extract.trunc = trunc nuw i64 %.sroa.066.4.extract.shift to i32
+  %i.k = getelementptr i8, ptr %i.b, i64 380
+  %.sroa.066.4.extract.trunc = load i32, ptr %i.k, align 4, !tbaa !79
   %i.l = icmp sgt i32 %.sroa.066.4.extract.trunc, %.sroa.074.4.extract.trunc
   tail call fastcc void @"_ZZN3tev11ImageCanvas20drawCoordinateSystemEP10NVGcontextENK3$_0clENS_3BoxIfLj2EEEN7nanogui5ColorEbbNSt3__117basic_string_viewIcNS8_11char_traitsIcEEEEZNS0_20drawCoordinateSystemES2_E9DrawFlags"(ptr noundef nonnull align 8 dereferenceable(24) %.8.val, <2 x float> %i.h, <2 x float> %i.j, <2 x float> <float f0x3F333333, float 4.000000e-01>, <2 x float> <float 4.000000e-01, float 1.000000e+00>, i1 noundef zeroext %i.l, i1 noundef zeroext true, ptr nonnull @.str.37, i64 21, i32 noundef %0)
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !207
@@ -245,11 +243,9 @@ _ZNK3tev3BoxIiLj2EEeqES1_.exit60.thread:          ; preds = %bb.c, %_ZNK3tev3Box
   %i.r = sitofp <2 x i32> %i.q to <2 x float>
   %i.s = bitcast i64 %.sroa.2.0.copyload.i40 to <2 x i32>
   %i.t = sitofp <2 x i32> %i.s to <2 x float>
-  %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 360
-  %.sroa.0.0.copyload.i71 = load i64, ptr %i.u, align 8, !tbaa !79
-  %.sroa.050.4.extract.shift = lshr i64 %.sroa.0.0.copyload.i71, 32
-  %.sroa.050.4.extract.trunc = trunc nuw i64 %.sroa.050.4.extract.shift to i32
-  %1 = icmp sle i32 %.sroa.060.4.extract.trunc, %.sroa.050.4.extract.trunc
+  %i.u = getelementptr i8, ptr %i.n, i64 364
+  %.sroa.050.4.extract.trunc = load i32, ptr %i.u, align 4, !tbaa !79
+  %1 = icmp sge i32 %.sroa.050.4.extract.trunc, %.sroa.060.4.extract.trunc
   tail call fastcc void @"_ZZN3tev11ImageCanvas20drawCoordinateSystemEP10NVGcontextENK3$_0clENS_3BoxIfLj2EEEN7nanogui5ColorEbbNSt3__117basic_string_viewIcNS8_11char_traitsIcEEEEZNS0_20drawCoordinateSystemES2_E9DrawFlags"(ptr noundef nonnull align 8 dereferenceable(24) %.8.val, <2 x float> %i.r, <2 x float> %i.t, <2 x float> <float f0x3F333333, float 4.000000e-01>, <2 x float> <float 4.000000e-01, float 1.000000e+00>, i1 noundef zeroext %1, i1 noundef zeroext true, ptr nonnull @.str.38, i64 24, i32 noundef %0)
   br label %bb.d
 
@@ -294,11 +290,9 @@ _ZNK3tev3BoxIiLj2EEeqES1_.exit98.thread:          ; preds = %bb.d
   %i.ag = bitcast i64 %.sroa.0.0.copyload.i114 to <2 x i32>
   %i.ah = sitofp <2 x i32> %i.ag to <2 x float>
   %i.ai = sitofp <2 x i32> %.sroa.2.0.copyload.i11677 to <2 x float>
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 360
-  %.sroa.0.0.copyload.i124 = load i64, ptr %i.aj, align 8, !tbaa !79
-  %.sroa.020.4.extract.shift = lshr i64 %.sroa.0.0.copyload.i124, 32
-  %.sroa.020.4.extract.trunc = trunc nuw i64 %.sroa.020.4.extract.shift to i32
-  %2 = icmp sle i32 %.sroa.028.4.extract.trunc, %.sroa.020.4.extract.trunc
+  %i.aj = getelementptr i8, ptr %i.ae, i64 364
+  %.sroa.020.4.extract.trunc = load i32, ptr %i.aj, align 4, !tbaa !79
+  %2 = icmp sge i32 %.sroa.020.4.extract.trunc, %.sroa.028.4.extract.trunc
   tail call fastcc void @"_ZZN3tev11ImageCanvas20drawCoordinateSystemEP10NVGcontextENK3$_0clENS_3BoxIfLj2EEEN7nanogui5ColorEbbNSt3__117basic_string_viewIcNS8_11char_traitsIcEEEEZNS0_20drawCoordinateSystemES2_E9DrawFlags"(ptr noundef nonnull align 8 dereferenceable(24) %.8.val, <2 x float> %i.ah, <2 x float> %i.ai, <2 x float> splat (float 3.000000e-01), <2 x float> <float 3.000000e-01, float 1.000000e+00>, i1 noundef zeroext %2, i1 noundef zeroext false, ptr nonnull @.str.40, i64 14, i32 noundef %0)
   br label %bb.f
 

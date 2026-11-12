@@ -177,12 +177,12 @@ bb.h:                                             ; preds = %.lr.ph, %Aig_ObjIsC
   %i.au = getelementptr i8, ptr %i.at, i64 8
   %.val81 = load ptr, ptr %i.au, align 8, !tbaa !47
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %.val81, i64 %indvars.iv
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !48 ; 8 uses
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !48 ; 9 uses
   %i.ax = icmp eq ptr %i.aw, null
   br i1 %i.ax, label %Aig_ObjIsChoice.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ay = getelementptr i8, ptr %i.aw, i64 24     ; 3 uses
+  %i.ay = getelementptr i8, ptr %i.aw, i64 24     ; 2 uses
   %.val82 = load i64, ptr %i.ay, align 8
   %i.az = and i64 %.val82, 7
   switch i64 %i.az, label %bb.o [
@@ -220,21 +220,20 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.bv = call ptr @If_ManCreateCi(ptr noundef %i.aj) #16 ; 4 uses
-  %.val90 = load i64, ptr %i.ay, align 8
-  %i.bw = load i32, ptr %i.bv, align 8
-  %sh.diff = lshr i64 %.val90, 19
-  %tr.sh.diff = trunc i64 %sh.diff to i32         ; 2 uses
-  %5 = and i32 %tr.sh.diff, -8192
-  %i.bx = and i32 %i.bw, 8191
-  %i.by = or disjoint i32 %5, %i.bx
+  %5 = getelementptr i8, ptr %i.aw, i64 28
+  %i.bw = load i32, ptr %5, align 4               ; 2 uses
+  %6 = load i32, ptr %i.bv, align 8
+  %7 = shl i32 %i.bw, 13
+  %i.bx = and i32 %6, 8191
+  %i.by = or disjoint i32 %i.bx, %7
   store i32 %i.by, ptr %i.bv, align 8
   %i.bz = load i32, ptr %i.aq, align 4, !tbaa !80
-  %6 = lshr i32 %tr.sh.diff, 13                   ; 2 uses
-  %i.ca = icmp slt i32 %i.bz, %6
+  %8 = and i32 %i.bw, 524287                      ; 2 uses
+  %i.ca = icmp slt i32 %i.bz, %8
   br i1 %i.ca, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  store i32 %6, ptr %i.aq, align 4, !tbaa !80
+  store i32 %8, ptr %i.aq, align 4, !tbaa !80
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.i

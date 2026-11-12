@@ -198,7 +198,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.bw = add nsw i64 %.1131, -12
-  %.val163 = load ptr, ptr %i.f, align 8, !tbaa !81 ; 5 uses
+  %.val163 = load ptr, ptr %i.f, align 8, !tbaa !81 ; 6 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.val163, i64 336 ; 4 uses
   store i64 %.1, ptr %i.bx, align 8, !tbaa !93
   %i.by = getelementptr inbounds nuw i8, ptr %.val163, i64 344 ; 4 uses
@@ -250,11 +250,10 @@ bb.x:                                             ; preds = %._crit_edge, %bb.w,
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ci, i64 3
   store i8 %i.cv, ptr %i.cw, align 1, !tbaa !100
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
-  %i.cy = getelementptr inbounds nuw i8, ptr %.val163, i64 328 ; 2 uses
-  %2 = load i16, ptr %i.cy, align 8, !tbaa !102
-  %3 = lshr i16 %2, 8
-  %4 = trunc nuw i16 %3 to i8
-  store i8 %4, ptr %i.cx, align 1, !tbaa !100
+  %i.cy = getelementptr inbounds nuw i8, ptr %.val163, i64 328
+  %2 = getelementptr i8, ptr %.val163, i64 329
+  %3 = load i8, ptr %2, align 1, !tbaa !102
+  store i8 %3, ptr %i.cx, align 1, !tbaa !100
   %i.cz = load i16, ptr %i.cy, align 8, !tbaa !102
   %i.da = trunc i16 %i.cz to i8
   %i.db = getelementptr inbounds nuw i8, ptr %i.ci, i64 5
@@ -354,7 +353,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.p, label %bb.aj, label %bb.ap
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.et = load ptr, ptr %i.f, align 8, !tbaa !81  ; 4 uses
+  %i.et = load ptr, ptr %i.f, align 8, !tbaa !81  ; 5 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 460
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !104
   %.not156 = icmp eq i32 %i.ev, 0
@@ -394,11 +393,10 @@ bb.am:                                            ; preds = %bb.al
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fa, i64 3
   store i8 %i.fp, ptr %i.fq, align 1, !tbaa !100
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fa, i64 4
-  %i.fs = getelementptr inbounds nuw i8, ptr %i.et, i64 328 ; 2 uses
-  %5 = load i16, ptr %i.fs, align 8, !tbaa !102
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
-  store i8 %7, ptr %i.fr, align 1, !tbaa !100
+  %i.fs = getelementptr inbounds nuw i8, ptr %i.et, i64 328
+  %4 = getelementptr i8, ptr %i.et, i64 329
+  %5 = load i8, ptr %4, align 1, !tbaa !102
+  store i8 %5, ptr %i.fr, align 1, !tbaa !100
   %i.ft = load i16, ptr %i.fs, align 8, !tbaa !102
   %i.fu = trunc i16 %i.ft to i8
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fa, i64 5
@@ -535,7 +533,7 @@ bb.a:
   %2 = alloca %struct.hm_header_st, align 8       ; 15 uses
   %i.f = alloca i64, align 8                      ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1264 ; 11 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !81   ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !81   ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 376 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -938,11 +936,10 @@ bb.bp:                                            ; preds = %bb.bm
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jh, i64 3
   store i8 %i.jw, ptr %i.jx, align 1, !tbaa !100
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jh, i64 4
-  %i.jz = getelementptr inbounds nuw i8, ptr %i.h, i64 392 ; 2 uses
-  %3 = load i16, ptr %i.jz, align 8, !tbaa !102
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
-  store i8 %5, ptr %i.jy, align 1, !tbaa !100
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.h, i64 392
+  %3 = getelementptr i8, ptr %i.h, i64 393
+  %4 = load i8, ptr %3, align 1, !tbaa !102
+  store i8 %4, ptr %i.jy, align 1, !tbaa !100
   %i.ka = load i16, ptr %i.jz, align 8, !tbaa !102
   %i.kb = trunc i16 %i.ka to i8
   %i.kc = getelementptr inbounds nuw i8, ptr %i.jh, i64 5

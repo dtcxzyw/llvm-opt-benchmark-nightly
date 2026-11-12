@@ -205,8 +205,10 @@ _ZN4mlir9Operation11getOperandsEv.exit:           ; preds = %_ZN4llvm4castIN4mli
   call void @_ZN4mlir10ValueRangeC1ENS_12OperandRangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr %.sroa.0.0.i.i15, i64 %.sroa.4.0.i.i) #16
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.sroa.0.0.copyload.i18 = load ptr, ptr %i.ah, align 8
-  %10 = load i32, ptr %i.z, align 4               ; 5 uses
-  %.not.i = icmp ult i32 %10, 16777216
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 47
+  %11 = load i8, ptr %10, align 1
+  %.not.i = icmp eq i8 %11, 0
+  %.pre = load i32, ptr %i.z, align 4             ; 4 uses
   br i1 %.not.i, label %_ZN4mlir9Operation20getPropertiesStorageEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %_ZN4mlir9Operation11getOperandsEv.exit
@@ -215,7 +217,7 @@ bb.d:                                             ; preds = %_ZN4mlir9Operation1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 112
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.ak, align 8, !tbaa !19
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.am = lshr i32 %10, 23
+  %i.am = lshr i32 %.pre, 23
   %.lobit.i.i.i.i.i.i.i = and i32 %i.am, 1
   %i.an = zext nneg i32 %.lobit.i.i.i.i.i.i.i to i64
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.an
@@ -224,18 +226,18 @@ bb.d:                                             ; preds = %_ZN4mlir9Operation1
 _ZN4mlir9Operation20getPropertiesStorageEv.exit:  ; preds = %_ZN4mlir9Operation11getOperandsEv.exit, %bb.d
   %.sroa.0.0.i = phi ptr [ %.sroa.0.0.copyload.i.i.i, %bb.d ], [ @_ZN4mlir6detail14TypeIDResolverIvvE2idE, %_ZN4mlir9Operation11getOperandsEv.exit ]
   %.sroa.4.0.i = phi ptr [ %i.ao, %bb.d ], [ null, %_ZN4mlir9Operation11getOperandsEv.exit ]
-  %i.ap = and i32 %10, 8388607                    ; 2 uses
+  %i.ap = and i32 %.pre, 8388607                  ; 2 uses
   %i.aq = icmp eq i32 %i.ap, 0
   br i1 %i.aq, label %_ZN4mlir9Operation10getRegionsEv.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN4mlir9Operation20getPropertiesStorageEv.exit
   %i.ar = zext nneg i32 %i.ap to i64
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.at = lshr i32 %10, 23
+  %i.at = lshr i32 %.pre, 23
   %.lobit.i.i.i.i.i.i.i.i.i = and i32 %i.at, 1
   %i.au = zext nneg i32 %.lobit.i.i.i.i.i.i.i.i.i to i64
   %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %i.au
-  %i.aw = lshr i32 %10, 21
+  %i.aw = lshr i32 %.pre, 21
   %i.ax = and i32 %i.aw, 2040
   %i.ay = zext nneg i32 %i.ax to i64
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ay

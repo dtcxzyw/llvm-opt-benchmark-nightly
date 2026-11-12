@@ -199,12 +199,11 @@ SHAEncode32.exit:
   %i.z = trunc i32 %i.y to i8
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 3
   store i8 %i.z, ptr %i.aa, align 1, !tbaa !16
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
-  %2 = load i32, ptr %i.ab, align 4, !tbaa !14
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !14
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %4, ptr %i.ac, align 1, !tbaa !16
+  store i8 %3, ptr %i.ac, align 1, !tbaa !16
   %i.ad = load i32, ptr %i.ab, align 4, !tbaa !14
   %i.ae = lshr i32 %i.ad, 16
   %i.af = trunc i32 %i.ae to i8
@@ -219,12 +218,11 @@ SHAEncode32.exit:
   %i.am = trunc i32 %i.al to i8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 7
   store i8 %i.am, ptr %i.an, align 1, !tbaa !16
-  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %5 = load i32, ptr %i.ao, align 4, !tbaa !14
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !14
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %7, ptr %i.ap, align 1, !tbaa !16
+  store i8 %5, ptr %i.ap, align 1, !tbaa !16
   %i.aq = load i32, ptr %i.ao, align 4, !tbaa !14
   %i.ar = lshr i32 %i.aq, 16
   %i.as = trunc i32 %i.ar to i8
@@ -239,12 +237,11 @@ SHAEncode32.exit:
   %i.az = trunc i32 %i.ay to i8
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 11
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !16
-  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
-  %8 = load i32, ptr %i.bb, align 4, !tbaa !14
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !14
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %10, ptr %i.bc, align 1, !tbaa !16
+  store i8 %7, ptr %i.bc, align 1, !tbaa !16
   %i.bd = load i32, ptr %i.bb, align 4, !tbaa !14
   %i.be = lshr i32 %i.bd, 16
   %i.bf = trunc i32 %i.be to i8
@@ -259,12 +256,11 @@ SHAEncode32.exit:
   %i.bm = trunc i32 %i.bl to i8
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 15
   store i8 %i.bm, ptr %i.bn, align 1, !tbaa !16
-  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %11 = load i32, ptr %i.bo, align 4, !tbaa !14
-  %12 = lshr i32 %11, 24
-  %13 = trunc nuw i32 %12 to i8
+  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
+  %8 = getelementptr i8, ptr %1, i64 19
+  %9 = load i8, ptr %8, align 1, !tbaa !14
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %13, ptr %i.bp, align 1, !tbaa !16
+  store i8 %9, ptr %i.bp, align 1, !tbaa !16
   %i.bq = load i32, ptr %i.bo, align 4, !tbaa !14
   %i.br = lshr i32 %i.bq, 16
   %i.bs = trunc i32 %i.br to i8
@@ -279,12 +275,11 @@ SHAEncode32.exit:
   %i.bz = trunc i32 %i.by to i8
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 19
   store i8 %i.bz, ptr %i.ca, align 1, !tbaa !16
-  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
-  %14 = load i32, ptr %i.cb, align 4, !tbaa !14
-  %15 = lshr i32 %14, 24
-  %16 = trunc nuw i32 %15 to i8
+  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
+  %10 = getelementptr i8, ptr %1, i64 23
+  %11 = load i8, ptr %10, align 1, !tbaa !14
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %16, ptr %i.cc, align 1, !tbaa !16
+  store i8 %11, ptr %i.cc, align 1, !tbaa !16
   %i.cd = load i32, ptr %i.cb, align 4, !tbaa !14
   %i.ce = lshr i32 %i.cd, 16
   %i.cf = trunc i32 %i.ce to i8
@@ -299,12 +294,11 @@ SHAEncode32.exit:
   %i.cm = trunc i32 %i.cl to i8
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 23
   store i8 %i.cm, ptr %i.cn, align 1, !tbaa !16
-  %i.co = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
-  %17 = load i32, ptr %i.co, align 4, !tbaa !14
-  %18 = lshr i32 %17, 24
-  %19 = trunc nuw i32 %18 to i8
+  %i.co = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
+  %12 = getelementptr i8, ptr %1, i64 27
+  %13 = load i8, ptr %12, align 1, !tbaa !14
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %19, ptr %i.cp, align 1, !tbaa !16
+  store i8 %13, ptr %i.cp, align 1, !tbaa !16
   %i.cq = load i32, ptr %i.co, align 4, !tbaa !14
   %i.cr = lshr i32 %i.cq, 16
   %i.cs = trunc i32 %i.cr to i8
@@ -319,12 +313,11 @@ SHAEncode32.exit:
   %i.cz = trunc i32 %i.cy to i8
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 27
   store i8 %i.cz, ptr %i.da, align 1, !tbaa !16
-  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 4 uses
-  %20 = load i32, ptr %i.db, align 4, !tbaa !14
-  %21 = lshr i32 %20, 24
-  %22 = trunc nuw i32 %21 to i8
+  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
+  %14 = getelementptr i8, ptr %1, i64 31
+  %15 = load i8, ptr %14, align 1, !tbaa !14
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i8 %22, ptr %i.dc, align 1, !tbaa !16
+  store i8 %15, ptr %i.dc, align 1, !tbaa !16
   %i.dd = load i32, ptr %i.db, align 4, !tbaa !14
   %i.de = lshr i32 %i.dd, 16
   %i.df = trunc i32 %i.de to i8
@@ -504,12 +497,11 @@ SHAEncode32.exit:
   %i.z = trunc i32 %i.y to i8
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 3
   store i8 %i.z, ptr %i.aa, align 1, !tbaa !16
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
-  %2 = load i32, ptr %i.ab, align 4, !tbaa !14
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !14
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %4, ptr %i.ac, align 1, !tbaa !16
+  store i8 %3, ptr %i.ac, align 1, !tbaa !16
   %i.ad = load i32, ptr %i.ab, align 4, !tbaa !14
   %i.ae = lshr i32 %i.ad, 16
   %i.af = trunc i32 %i.ae to i8
@@ -524,12 +516,11 @@ SHAEncode32.exit:
   %i.am = trunc i32 %i.al to i8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 7
   store i8 %i.am, ptr %i.an, align 1, !tbaa !16
-  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %5 = load i32, ptr %i.ao, align 4, !tbaa !14
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !14
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %7, ptr %i.ap, align 1, !tbaa !16
+  store i8 %5, ptr %i.ap, align 1, !tbaa !16
   %i.aq = load i32, ptr %i.ao, align 4, !tbaa !14
   %i.ar = lshr i32 %i.aq, 16
   %i.as = trunc i32 %i.ar to i8
@@ -544,12 +535,11 @@ SHAEncode32.exit:
   %i.az = trunc i32 %i.ay to i8
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 11
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !16
-  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
-  %8 = load i32, ptr %i.bb, align 4, !tbaa !14
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !14
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %10, ptr %i.bc, align 1, !tbaa !16
+  store i8 %7, ptr %i.bc, align 1, !tbaa !16
   %i.bd = load i32, ptr %i.bb, align 4, !tbaa !14
   %i.be = lshr i32 %i.bd, 16
   %i.bf = trunc i32 %i.be to i8
@@ -564,12 +554,11 @@ SHAEncode32.exit:
   %i.bm = trunc i32 %i.bl to i8
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 15
   store i8 %i.bm, ptr %i.bn, align 1, !tbaa !16
-  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %11 = load i32, ptr %i.bo, align 4, !tbaa !14
-  %12 = lshr i32 %11, 24
-  %13 = trunc nuw i32 %12 to i8
+  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
+  %8 = getelementptr i8, ptr %1, i64 19
+  %9 = load i8, ptr %8, align 1, !tbaa !14
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %13, ptr %i.bp, align 1, !tbaa !16
+  store i8 %9, ptr %i.bp, align 1, !tbaa !16
   %i.bq = load i32, ptr %i.bo, align 4, !tbaa !14
   %i.br = lshr i32 %i.bq, 16
   %i.bs = trunc i32 %i.br to i8
@@ -584,12 +573,11 @@ SHAEncode32.exit:
   %i.bz = trunc i32 %i.by to i8
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 19
   store i8 %i.bz, ptr %i.ca, align 1, !tbaa !16
-  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
-  %14 = load i32, ptr %i.cb, align 4, !tbaa !14
-  %15 = lshr i32 %14, 24
-  %16 = trunc nuw i32 %15 to i8
+  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
+  %10 = getelementptr i8, ptr %1, i64 23
+  %11 = load i8, ptr %10, align 1, !tbaa !14
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %16, ptr %i.cc, align 1, !tbaa !16
+  store i8 %11, ptr %i.cc, align 1, !tbaa !16
   %i.cd = load i32, ptr %i.cb, align 4, !tbaa !14
   %i.ce = lshr i32 %i.cd, 16
   %i.cf = trunc i32 %i.ce to i8
@@ -604,12 +592,11 @@ SHAEncode32.exit:
   %i.cm = trunc i32 %i.cl to i8
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 23
   store i8 %i.cm, ptr %i.cn, align 1, !tbaa !16
-  %i.co = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
-  %17 = load i32, ptr %i.co, align 4, !tbaa !14
-  %18 = lshr i32 %17, 24
-  %19 = trunc nuw i32 %18 to i8
+  %i.co = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
+  %12 = getelementptr i8, ptr %1, i64 27
+  %13 = load i8, ptr %12, align 1, !tbaa !14
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %19, ptr %i.cp, align 1, !tbaa !16
+  store i8 %13, ptr %i.cp, align 1, !tbaa !16
   %i.cq = load i32, ptr %i.co, align 4, !tbaa !14
   %i.cr = lshr i32 %i.cq, 16
   %i.cs = trunc i32 %i.cr to i8

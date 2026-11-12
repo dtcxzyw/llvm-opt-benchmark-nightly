@@ -205,56 +205,44 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.noexc.us
   %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 2
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  %6 = load i32, ptr %i.ag, align 4, !tbaa !36
-  %7 = lshr i32 %6, 16
-  %8 = trunc nuw i32 %7 to i16
-  store i16 %8, ptr %i.af, align 2, !tbaa !43
+  %i.ag = getelementptr i8, ptr %i.ab, i64 6
+  %6 = load i16, ptr %i.ag, align 2, !tbaa !36
+  store i16 %6, ptr %i.af, align 2, !tbaa !43
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.ah = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %9 = load i32, ptr %i.ai, align 4, !tbaa !36
-  %10 = lshr i32 %9, 16
-  %11 = trunc nuw i32 %10 to i16
-  store i16 %11, ptr %i.ah, align 2, !tbaa !43
+  %i.ai = getelementptr i8, ptr %i.ab, i64 10
+  %7 = load i16, ptr %i.ai, align 2, !tbaa !36
+  store i16 %7, ptr %i.ah, align 2, !tbaa !43
   br i1 %exitcond.not.2, label %._crit_edge.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 6
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.ab, i64 12
-  %12 = load i32, ptr %i.ak, align 4, !tbaa !36
-  %13 = lshr i32 %12, 16
-  %14 = trunc nuw i32 %13 to i16
-  store i16 %14, ptr %i.aj, align 2, !tbaa !43
+  %i.ak = getelementptr i8, ptr %i.ab, i64 14
+  %8 = load i16, ptr %i.ak, align 2, !tbaa !36
+  store i16 %8, ptr %i.aj, align 2, !tbaa !43
   br i1 %exitcond.not.3, label %._crit_edge.us, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  %i.am = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %15 = load i32, ptr %i.am, align 4, !tbaa !36
-  %16 = lshr i32 %15, 16
-  %17 = trunc nuw i32 %16 to i16
-  store i16 %17, ptr %i.al, align 2, !tbaa !43
+  %i.am = getelementptr i8, ptr %i.ab, i64 18
+  %9 = load i16, ptr %i.am, align 2, !tbaa !36
+  store i16 %9, ptr %i.al, align 2, !tbaa !43
   br i1 %exitcond.not.4, label %._crit_edge.us, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 10
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.ab, i64 20
-  %18 = load i32, ptr %i.ao, align 4, !tbaa !36
-  %19 = lshr i32 %18, 16
-  %20 = trunc nuw i32 %19 to i16
-  store i16 %20, ptr %i.an, align 2, !tbaa !43
+  %i.ao = getelementptr i8, ptr %i.ab, i64 22
+  %10 = load i16, ptr %i.ao, align 2, !tbaa !36
+  store i16 %10, ptr %i.an, align 2, !tbaa !43
   br i1 %exitcond.not.5, label %._crit_edge.us, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  %21 = load i32, ptr %i.aq, align 4, !tbaa !36
-  %22 = lshr i32 %21, 16
-  %23 = trunc nuw i32 %22 to i16
-  store i16 %23, ptr %i.ap, align 2, !tbaa !43
+  %i.aq = getelementptr i8, ptr %i.ab, i64 26
+  %11 = load i16, ptr %i.aq, align 2, !tbaa !36
+  store i16 %11, ptr %i.ap, align 2, !tbaa !43
   br label %._crit_edge.us
 
 ._crit_edge.us:                                   ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.noexc.us

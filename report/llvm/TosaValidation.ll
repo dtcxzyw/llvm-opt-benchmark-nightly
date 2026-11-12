@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ah = phi i1 [ false, %bb.d ], [ %i.ag, %bb.e ] ; 3 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 3 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4
   %i.ak = and i32 %i.aj, 8388608
   %.not.i.i.i = icmp eq i32 %i.ak, 0
@@ -608,8 +608,9 @@ bb.bk:                                            ; preds = %.sink.split.i, %_ZN
 
 bb.bl:                                            ; preds = %bb.bk
   call void @llvm.lifetime.start.p0(ptr nonnull %114) #24
-  %141 = load i32, ptr %i.ai, align 4
-  %.not.i.i5.i = icmp ult i32 %141, 16777216
+  %141 = getelementptr inbounds nuw i8, ptr %1, i64 47
+  %142 = load i8, ptr %141, align 1
+  %.not.i.i5.i = icmp eq i8 %142, 0
   br i1 %.not.i.i5.i, label %bb.bn, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl

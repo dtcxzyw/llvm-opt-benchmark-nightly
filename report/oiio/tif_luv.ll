@@ -205,27 +205,21 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.dy, ptr %.6125176.us, align 1, !tbaa !44
   %.6125.us = getelementptr inbounds nuw i8, ptr %.6125176.us, i64 1
   %i.dz = getelementptr [2 x i8], ptr %.0118, i64 %.3132174.us
-  %i.ea = getelementptr i8, ptr %i.dz, i64 2
-  %4 = load i16, ptr %i.ea, align 2, !tbaa !98
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  store i8 %6, ptr %.6125.us, align 1, !tbaa !44
+  %i.ea = getelementptr i8, ptr %i.dz, i64 3
+  %4 = load i8, ptr %i.ea, align 1, !tbaa !98
+  store i8 %4, ptr %.6125.us, align 1, !tbaa !44
   %.6125.us.1376 = getelementptr inbounds nuw i8, ptr %.6125176.us, i64 2
   %i.eb = getelementptr [2 x i8], ptr %.0118, i64 %.3132174.us
-  %i.ec = getelementptr i8, ptr %i.eb, i64 4
-  %7 = load i16, ptr %i.ec, align 2, !tbaa !98
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  store i8 %9, ptr %.6125.us.1376, align 1, !tbaa !44
+  %i.ec = getelementptr i8, ptr %i.eb, i64 5
+  %5 = load i8, ptr %i.ec, align 1, !tbaa !98
+  store i8 %5, ptr %.6125.us.1376, align 1, !tbaa !44
   %.6125.us.2 = getelementptr inbounds nuw i8, ptr %.6125176.us, i64 3
   %i.ed = add nsw i64 %.1128175.us, -4            ; 2 uses
   %i.ee = add nsw i64 %.3132174.us, 4             ; 2 uses
   %i.ef = getelementptr [2 x i8], ptr %.0118, i64 %.3132174.us
-  %i.eg = getelementptr i8, ptr %i.ef, i64 6
-  %10 = load i16, ptr %i.eg, align 2, !tbaa !98
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8
-  store i8 %12, ptr %.6125.us.2, align 1, !tbaa !44
+  %i.eg = getelementptr i8, ptr %i.ef, i64 7
+  %6 = load i8, ptr %i.eg, align 1, !tbaa !98
+  store i8 %6, ptr %.6125.us.2, align 1, !tbaa !44
   %.6125.us.3 = getelementptr inbounds nuw i8, ptr %.6125176.us, i64 4 ; 2 uses
   %.not143.us.3 = icmp eq i64 %i.ed, 0
   br i1 %.not143.us.3, label %.loopexit.us, label %.lr.ph178.us, !llvm.loop !242

@@ -202,11 +202,9 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !63
-  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 144
-  %5 = load i64, ptr %i.i, align 8, !tbaa !66
-  %6 = lshr i64 %5, 48
-  %7 = trunc nuw i64 %6 to i16
-  %i.j = tail call noundef i32 @_ZN4bssl18dtls1_write_recordEP6ssl_stiNS_4SpanIKhEEt(ptr noundef nonnull %0, i32 noundef 23, ptr %3, i64 %4, i16 noundef zeroext %7) ; 2 uses
+  %i.i = getelementptr i8, ptr %i.h, i64 150
+  %5 = load i16, ptr %i.i, align 2, !tbaa !66
+  %i.j = tail call noundef i32 @_ZN4bssl18dtls1_write_recordEP6ssl_stiNS_4SpanIKhEEt(ptr noundef nonnull %0, i32 noundef 23, ptr %3, i64 %4, i16 noundef zeroext %5) ; 2 uses
   %i.k = icmp slt i32 %i.j, 1
   br i1 %i.k, label %bb.i, label %bb.h
 
@@ -306,11 +304,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 461
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !63
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144
-  %1 = load i64, ptr %i.f, align 8, !tbaa !66
-  %2 = lshr i64 %1, 48
-  %3 = trunc nuw i64 %2 to i16
-  %i.g = tail call noundef i32 @_ZN4bssl18dtls1_write_recordEP6ssl_stiNS_4SpanIKhEEt(ptr noundef %0, i32 noundef 21, ptr nonnull %i.c, i64 2, i16 noundef zeroext %3) ; 2 uses
+  %i.f = getelementptr i8, ptr %i.e, i64 150
+  %1 = load i16, ptr %i.f, align 2, !tbaa !66
+  %i.g = tail call noundef i32 @_ZN4bssl18dtls1_write_recordEP6ssl_stiNS_4SpanIKhEEt(ptr noundef %0, i32 noundef 21, ptr nonnull %i.c, i64 2, i16 noundef zeroext %1) ; 2 uses
   %i.h = icmp slt i32 %i.g, 1
   br i1 %i.h, label %bb.e, label %bb.b
 

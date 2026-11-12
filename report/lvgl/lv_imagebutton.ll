@@ -158,7 +158,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p, %bb.o,
 suggest_state.exit.i:                             ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k
   %.0.i41.i = phi i64 [ %i.l, %bb.s ], [ 3, %bb.q ], [ 0, %bb.k ], [ 0, %bb.l ], [ 3, %bb.m ], [ 1, %bb.n ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.r ] ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 216
-  %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.aa, i64 %.0.i41.i ; 2 uses
+  %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.aa, i64 %.0.i41.i ; 3 uses
   %i.ac = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %i.d, i32 noundef 0, i8 noundef zeroext 4) #5
   %i.ad = ptrtoint ptr %i.ac to i64
   %.sroa.0.0.extract.trunc.i.i = trunc i64 %i.ad to i32
@@ -185,10 +185,9 @@ suggest_state.exit.i:                             ; preds = %bb.s, %bb.r, %bb.q,
 
 bb.t:                                             ; preds = %suggest_state.exit.i
   %i.an = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %6 = load i64, ptr %i.an, align 8               ; 2 uses
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.ao = and i32 %8, 65535                       ; 2 uses
+  %6 = getelementptr i8, ptr %i.ab, i64 12
+  %7 = load i32, ptr %6, align 4
+  %i.ao = and i32 %7, 65535                       ; 2 uses
   %i.ap = load i32, ptr %2, align 16, !tbaa !24   ; 2 uses
   store i32 %i.ap, ptr %4, align 4, !tbaa !24
   %i.aq = load i32, ptr %i.ah, align 4, !tbaa !25 ; 2 uses
@@ -198,10 +197,11 @@ bb.t:                                             ; preds = %suggest_state.exit.
   %i.at = add i32 %i.as, %i.ao
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.at, ptr %i.au, align 4, !tbaa !26
-  %i.av = lshr i64 %6, 48
+  %8 = load i64, ptr %i.an, align 8
+  %i.av = lshr i64 %8, 48
   %i.aw = trunc nuw nsw i64 %i.av to i32
-  %i.ax = add nsw i32 %i.aw, -1
-  %i.ay = add i32 %i.ax, %i.aq
+  %i.ax = add i32 %i.aq, -1
+  %i.ay = add i32 %i.ax, %i.aw
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 %i.ay, ptr %i.az, align 4, !tbaa !27
   %i.ba = getelementptr inbounds nuw i8, ptr %3, i64 64
@@ -212,30 +212,30 @@ bb.t:                                             ; preds = %suggest_state.exit.
 bb.u:                                             ; preds = %bb.t, %suggest_state.exit.i
   %.038.i = phi i32 [ %i.ao, %bb.t ], [ 0, %suggest_state.exit.i ]
   %i.bb = getelementptr inbounds nuw i8, ptr %i.d, i64 360
-  %i.bc = getelementptr inbounds nuw [24 x i8], ptr %i.bb, i64 %.0.i41.i ; 2 uses
+  %i.bc = getelementptr inbounds nuw [24 x i8], ptr %i.bb, i64 %.0.i41.i ; 3 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !11 ; 2 uses
   %.not39.i = icmp eq ptr %i.bd, null
   br i1 %.not39.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  %9 = load i64, ptr %i.be, align 8               ; 2 uses
-  %10 = lshr i64 %9, 32
-  %11 = trunc nuw i64 %10 to i32
-  %i.bf = and i32 %11, 65535                      ; 2 uses
+  %9 = getelementptr i8, ptr %i.bc, i64 12
+  %10 = load i32, ptr %9, align 4
+  %i.bf = and i32 %10, 65535                      ; 2 uses
   %i.bg = load i32, ptr %i.ai, align 8, !tbaa !26 ; 2 uses
-  %12 = add i32 %i.bg, 1
-  %13 = sub i32 %12, %i.bf
-  store i32 %13, ptr %4, align 4, !tbaa !24
+  %reass.sub = sub i32 %i.bg, %i.bf
+  %11 = add i32 %reass.sub, 1
+  store i32 %11, ptr %4, align 4, !tbaa !24
   %i.bh = load i32, ptr %i.ah, align 4, !tbaa !25 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %i.bh, ptr %i.bi, align 4, !tbaa !25
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.bg, ptr %i.bj, align 4, !tbaa !26
-  %i.bk = lshr i64 %9, 48
+  %12 = load i64, ptr %i.be, align 8
+  %i.bk = lshr i64 %12, 48
   %i.bl = trunc nuw nsw i64 %i.bk to i32
-  %i.bm = add nsw i32 %i.bl, -1
-  %i.bn = add i32 %i.bm, %i.bh
+  %i.bm = add i32 %i.bh, -1
+  %i.bn = add i32 %i.bm, %i.bl
   %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 %i.bn, ptr %i.bo, align 4, !tbaa !27
   %i.bp = getelementptr inbounds nuw i8, ptr %3, i64 64
@@ -424,11 +424,9 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.at
   %i.dq = load i32, ptr %i.ck, align 4, !tbaa !32
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
-  %14 = load i64, ptr %i.dr, align 8
-  %15 = lshr i64 %14, 32
-  %16 = trunc nuw i64 %15 to i32
-  %i.ds = and i32 %16, 65535
+  %i.dr = getelementptr i8, ptr %i.dk, i64 12
+  %13 = load i32, ptr %i.dr, align 4
+  %i.ds = and i32 %13, 65535
   %. = tail call i32 @llvm.smax.i32(i32 %i.dq, i32 %i.ds)
   store i32 %., ptr %i.ck, align 4, !tbaa !32
   br label %bb.av

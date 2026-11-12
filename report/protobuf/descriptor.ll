@@ -205,15 +205,14 @@ _ZN6google8protobuf15DescriptorProto15mutable_optionsEv.exit: ; preds = %bb.j, %
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN6google8protobuf15DescriptorProto15mutable_optionsEv.exit, %._crit_edge
-  %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %2 = load i16, ptr %i.cj, align 1
-  %3 = lshr i16 %2, 8
-  %4 = and i16 %3, 3                              ; 2 uses
-  %.not16 = icmp eq i16 %4, 0
+  %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %2 = load i8, ptr %i.cj, align 2
+  %3 = and i8 %2, 3                               ; 2 uses
+  %.not16 = icmp eq i8 %3, 0
   br i1 %.not16, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ck = zext nneg i16 %4 to i32
+  %i.ck = zext nneg i8 %3 to i32
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 168
   store i32 %i.ck, ptr %i.cl, align 8, !tbaa !588
   %i.cm = load i32, ptr %i.f, align 8, !tbaa !46
@@ -616,15 +615,14 @@ bb.n:                                             ; preds = %bb.m
   %i.bg = load ptr, ptr %20, align 8, !tbaa !587
   %i.bh = load i64, ptr %i.w, align 8, !tbaa !589
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #40
-  %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %38 = load i16, ptr %i.bi, align 1
-  %39 = lshr i16 %38, 8
-  %40 = and i16 %39, 3
+  %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %38 = load i8, ptr %i.bi, align 2
+  %39 = and i8 %38, 3
   %i.bj = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 9 uses
   store ptr %i.bj, ptr %22, align 8, !tbaa !584, !alias.scope !2054
-  switch i16 %40, label %._crit_edge.i.i8.i [
-    i16 2, label %._crit_edge.i.i.i228
-    i16 1, label %._crit_edge.i.i4.i
+  switch i8 %39, label %._crit_edge.i.i8.i [
+    i8 2, label %._crit_edge.i.i.i228
+    i8 1, label %._crit_edge.i.i4.i
   ]
 
 ._crit_edge.i.i.i228:                             ; preds = %bb.n
@@ -1027,22 +1025,19 @@ bb.j:                                             ; preds = %_ZNK6google8protobu
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %2 = load i16, ptr %i.ak, align 1
-  %3 = lshr i16 %2, 8
-  %4 = and i16 %3, 3
-  %5 = zext nneg i16 %4 to i32
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %2 = load i8, ptr %i.ak, align 1
   br label %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.i
 
 bb.l:                                             ; preds = %bb.j
   %i.al = lshr i8 %i.ah, 2
-  %6 = and i8 %i.al, 3
-  %7 = zext nneg i8 %6 to i32
   br label %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.i
 
 _ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.i: ; preds = %bb.l, %bb.k
-  %.0.i.i = phi i32 [ %7, %bb.l ], [ %5, %bb.k ]  ; 2 uses
-  %i.am = icmp eq i32 %.0.i.i, 0
+  %.0.shrunk.i.in.i = phi i8 [ %i.al, %bb.l ], [ %2, %bb.k ]
+  %.0.shrunk.i.i = and i8 %.0.shrunk.i.in.i, 3    ; 2 uses
+  %.0.i.i = zext nneg i8 %.0.shrunk.i.i to i32
+  %i.am = icmp eq i8 %.0.shrunk.i.i, 0
   br i1 %i.am, label %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.thread.i, label %_ZNK6google8protobuf6Symbol22GetEffectiveVisibilityEv.exit
 
 _ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.thread.i: ; preds = %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.i
@@ -1445,25 +1440,21 @@ bb.q:                                             ; preds = %_ZNK6google8protobu
   br label %bb.ab
 
 bb.r:                                             ; preds = %_ZNK6google8protobuf6Symbol7GetFileEv.exit.thread
-  %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 1
-  %14 = load i16, ptr %i.az, align 1
-  %15 = lshr i16 %14, 8
-  %16 = and i16 %15, 3
-  %17 = zext nneg i16 %16 to i32
+  %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 2
+  %14 = load i8, ptr %i.az, align 1
   br label %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit
 
 bb.s:                                             ; preds = %_ZNK6google8protobuf6Symbol7GetFileEv.exit.thread
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 1
   %i.bb = load i8, ptr %i.ba, align 1
   %i.bc = lshr i8 %i.bb, 2
-  %18 = and i8 %i.bc, 3
-  %19 = zext nneg i8 %18 to i32
   br label %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit
 
 _ZNK6google8protobuf6Symbol18visibility_keywordEv.exit: ; preds = %bb.r, %bb.s
-  %.0.i42 = phi i32 [ %19, %bb.s ], [ %17, %bb.r ]
+  %.0.shrunk.i.in = phi i8 [ %i.bc, %bb.s ], [ %14, %bb.r ]
+  %.0.shrunk.i = and i8 %.0.shrunk.i.in, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #40
-  %i.bd = icmp eq i32 %.0.i42, 1
+  %i.bd = icmp eq i8 %.0.shrunk.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #40

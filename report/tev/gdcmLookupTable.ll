@@ -205,22 +205,18 @@ bb.al:                                            ; preds = %bb.ah, %bb.y
   %i.cq = zext i16 %i.cp to i64
   %.idx59 = mul nuw nsw i64 %i.cq, 6
   %i.cr = getelementptr inbounds nuw i8, ptr %i.bl, i64 %.idx59
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 2
-  %5 = load i16, ptr %i.cs, align 2, !tbaa !28
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
+  %i.cs = getelementptr i8, ptr %i.cr, i64 3
+  %5 = load i8, ptr %i.cs, align 1, !tbaa !28
   %i.ct = getelementptr inbounds nuw i8, ptr %.04467, i64 1
-  store i8 %7, ptr %i.ct, align 1, !tbaa !49
+  store i8 %5, ptr %i.ct, align 1, !tbaa !49
   %i.cu = load i16, ptr %.068, align 2, !tbaa !28
   %i.cv = zext i16 %i.cu to i64
   %.idx60 = mul nuw nsw i64 %i.cv, 6
   %i.cw = getelementptr inbounds nuw i8, ptr %i.bl, i64 %.idx60
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 4
-  %8 = load i16, ptr %i.cx, align 2, !tbaa !28
-  %9 = lshr i16 %8, 8
-  %10 = trunc nuw i16 %9 to i8
+  %i.cx = getelementptr i8, ptr %i.cw, i64 5
+  %6 = load i8, ptr %i.cx, align 1, !tbaa !28
   %i.cy = getelementptr inbounds nuw i8, ptr %.04467, i64 2
-  store i8 %10, ptr %i.cy, align 1, !tbaa !49
+  store i8 %6, ptr %i.cy, align 1, !tbaa !49
   %i.cz = getelementptr inbounds nuw i8, ptr %.04467, i64 3
   %i.da = getelementptr inbounds nuw i8, ptr %.068, i64 2 ; 2 uses
   %.not = icmp eq ptr %i.da, %i.bq

@@ -204,11 +204,9 @@ _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16H
   %i.kb = load i64, ptr %i.ck, align 8
   %i.kc = add i64 %i.kb, -1
   %i.kd = inttoptr i64 %i.kc to ptr
-  %i.ke = getelementptr inbounds nuw i8, ptr %i.kd, i64 8
-  %7 = load i64, ptr %i.ke, align 8
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32
-  %i.kf = call ptr @_ZN2v88internal7Factory22NewJSArrayWithElementsENS0_12DirectHandleINS0_14FixedArrayBaseEEENS0_12ElementsKindEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull %i.ck, i8 noundef zeroext 3, i32 noundef %9, i8 noundef zeroext 0) #19
+  %i.ke = getelementptr inbounds nuw i8, ptr %i.kd, i64 12
+  %7 = load i32, ptr %i.ke, align 4
+  %i.kf = call ptr @_ZN2v88internal7Factory22NewJSArrayWithElementsENS0_12DirectHandleINS0_14FixedArrayBaseEEENS0_12ElementsKindEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull %i.ck, i8 noundef zeroext 3, i32 noundef %7, i8 noundef zeroext 0) #19
   %i.kg = load i64, ptr %i.kf, align 8
   store ptr %i.b, ptr %i.a, align 8
   %i.kh = load i32, ptr %i.e, align 8

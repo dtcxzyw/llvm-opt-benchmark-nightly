@@ -204,7 +204,7 @@ bb.hi:                                            ; preds = %bb.go
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
-  %i.zg = load ptr, ptr %i.o, align 8, !tbaa !83  ; 15 uses
+  %i.zg = load ptr, ptr %i.o, align 8, !tbaa !83  ; 17 uses
   %.not.i266 = icmp eq ptr %i.zg, null
   br i1 %.not.i266, label %transmit_udp.exit, label %bb.hj
 
@@ -308,18 +308,18 @@ bb.hv:                                            ; preds = %bb.hu
 build_udp_header.exit.i:                          ; preds = %bb.hv, %bb.hu
   %i.aan = phi i16 [ %i.aag, %bb.hu ], [ %i.aam, %bb.hv ] ; 2 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %i.zg, i64 126
-  %6 = load i16, ptr %i.aao, align 2, !tbaa !116  ; 2 uses
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
-  store i8 %8, ptr %i.a, align 1, !tbaa !80
-  %i.aap = trunc i16 %6 to i8
+  %6 = getelementptr i8, ptr %i.zg, i64 127
+  %7 = load i8, ptr %6, align 1, !tbaa !116
+  store i8 %7, ptr %i.a, align 1, !tbaa !80
+  %8 = load i16, ptr %i.aao, align 2, !tbaa !116
+  %i.aap = trunc i16 %8 to i8
   store i8 %i.aap, ptr %i.s, align 1, !tbaa !80
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.zg, i64 128 ; 2 uses
-  %9 = load i16, ptr %i.aaq, align 8, !tbaa !250  ; 3 uses
-  %10 = lshr i16 %9, 8
-  %11 = trunc nuw i16 %10 to i8
-  store i8 %11, ptr %i.t, align 1, !tbaa !80
-  %i.aar = trunc i16 %9 to i8
+  %9 = getelementptr i8, ptr %i.zg, i64 129
+  %10 = load i8, ptr %9, align 1, !tbaa !250
+  store i8 %10, ptr %i.t, align 1, !tbaa !80
+  %11 = load i16, ptr %i.aaq, align 8, !tbaa !250 ; 2 uses
+  %i.aar = trunc i16 %11 to i8
   store i8 %i.aar, ptr %i.u, align 1, !tbaa !80
   %i.aas = lshr i16 %i.aan, 8
   %i.aat = trunc nuw i16 %i.aas to i8
@@ -328,7 +328,7 @@ build_udp_header.exit.i:                          ; preds = %bb.hv, %bb.hu
   store i8 %i.aau, ptr %i.w, align 1, !tbaa !80
   store i8 0, ptr %i.x, align 1, !tbaa !80
   store i8 0, ptr %i.y, align 1, !tbaa !80
-  %i.aav = add i16 %9, 1
+  %i.aav = add i16 %11, 1
   store i16 %i.aav, ptr %i.aaq, align 8, !tbaa !250
   %i.aaw = call fastcc i32 @_transmit_pre(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 1, i1 noundef zeroext true), !inline_history !232 ; 3 uses
   %i.aax = icmp sgt i32 %i.aaw, 0
