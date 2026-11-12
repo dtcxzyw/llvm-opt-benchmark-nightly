@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bv = load <4 x float>, ptr %.02536, align 16, !tbaa !46 ; 2 uses
   %i.bw = fcmp fast ogt <4 x float> %i.bv, zeroinitializer
   %i.bx = fcmp fast olt <4 x float> %i.bv, zeroinitializer
-  %i.by = select fast <4 x i1> %i.bx, <4 x float> splat (float -1.000000e+00), <4 x float> splat (float -0.000000e+00)
+  %i.by = select fast <4 x i1> %i.bx, <4 x float> splat (float -1.000000e+00), <4 x float> zeroinitializer
   %i.bz = select fast <4 x i1> %i.bw, <4 x float> splat (float 1.000000e+00), <4 x float> %i.by
   store <4 x float> %i.bz, ptr %.02536, align 16, !tbaa !46
   %i.ca = getelementptr inbounds nuw i8, ptr %.02536, i64 16 ; 2 uses
@@ -607,7 +607,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cf = bitcast <8 x i16> %i.ce to <4 x float>  ; 2 uses
   %i.cg = fcmp fast ogt <4 x float> %i.cf, zeroinitializer
   %i.ch = fcmp fast olt <4 x float> %i.cf, zeroinitializer
-  %i.ci = select fast <4 x i1> %i.ch, <4 x float> splat (float -1.000000e+00), <4 x float> splat (float -0.000000e+00)
+  %i.ci = select fast <4 x i1> %i.ch, <4 x float> splat (float -1.000000e+00), <4 x float> zeroinitializer
   %i.cj = select fast <4 x i1> %i.cg, <4 x float> splat (float 1.000000e+00), <4 x float> %i.ci
   %i.ck = bitcast <4 x float> %i.cj to <8 x i16>
   %i.cl = shufflevector <8 x i16> %i.ck, <8 x i16> poison, <8 x i32> <i32 1, i32 3, i32 poison, i32 poison, i32 5, i32 7, i32 poison, i32 poison>
