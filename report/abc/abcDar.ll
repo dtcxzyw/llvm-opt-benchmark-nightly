@@ -205,15 +205,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !22   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   store ptr %i.v, ptr %i.w, align 8, !tbaa !42
-  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 24
-  %2 = load i64, ptr %i.x, align 8
+  %i.x = getelementptr i8, ptr %i.s, i64 28
+  %2 = load i32, ptr %i.x, align 4
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 20 ; 2 uses
   %i.z = load i32, ptr %i.y, align 4
-  %sh.diff = lshr i64 %2, 20
-  %tr.sh.diff = trunc i64 %sh.diff to i32
-  %3 = and i32 %tr.sh.diff, -4096
+  %3 = shl i32 %2, 12
   %i.aa = and i32 %i.z, 4095
-  %i.ab = or disjoint i32 %3, %i.aa
+  %i.ab = or disjoint i32 %i.aa, %3
   store i32 %i.ab, ptr %i.y, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ac = load ptr, ptr %i.k, align 8, !tbaa !80  ; 2 uses

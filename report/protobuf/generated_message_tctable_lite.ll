@@ -204,7 +204,8 @@ bb.a:
   %i.d = zext nneg i16 %.sroa.088.sroa.0.0.extract.trunc.mask to i32 ; 3 uses
   %.sroa.5.sroa.0.0.extract.trunc.mask = and i16 %.sroa.5.0.copyload, 255
   %i.e = zext nneg i16 %.sroa.5.sroa.0.0.extract.trunc.mask to i32 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 15
+  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 14
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -317,28 +318,24 @@ bb.l:                                             ; preds = %_ZN6google8protobuf
   %.1150 = phi ptr [ %.1.i, %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit ], [ %i.bc, %bb.k ] ; 20 uses
   %.0147 = phi i32 [ %.1148, %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit ], [ %i.ad, %bb.k ] ; 2 uses
   %i.bd = icmp eq i32 %.0147, %i.d
-  %.sroa.0.0.copyload.i = load i32, ptr %i.f, align 4 ; 3 uses
+  %.sroa.376.0.extract.trunc = load i8, ptr %7, align 1 ; 2 uses
   br i1 %i.bd, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %.sroa.376.0.extract.shift = lshr i32 %.sroa.0.0.copyload.i, 24
-  %.sroa.376.0.extract.trunc = trunc nuw i32 %.sroa.376.0.extract.shift to i8
   %i.be = and i8 %.sroa.376.0.extract.trunc, 15
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %sum.shift = lshr i32 %.sroa.0.0.copyload.i, 28
-  %7 = trunc nuw nsw i32 %sum.shift to i8
-  %8 = lshr i32 %.sroa.0.0.copyload.i, 16
-  %9 = and i32 %8, 255
-  %i.bf = zext nneg i32 %9 to i64
+  %8 = lshr i8 %.sroa.376.0.extract.trunc, 4
+  %9 = load i8, ptr %i.f, align 2, !tbaa !281
+  %i.bf = zext i8 %9 to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %i.bf
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.479.0.in.in = phi i16 [ %.sroa.088.0.copyload, %bb.m ], [ %.sroa.5.0.copyload, %bb.n ]
   %storemerge = phi ptr [ %i.g, %bb.m ], [ %i.bg, %bb.n ] ; 12 uses
-  %.031 = phi i8 [ %i.be, %bb.m ], [ %7, %bb.n ]  ; 2 uses
+  %.031 = phi i8 [ %i.be, %bb.m ], [ %8, %bb.n ]  ; 2 uses
   %.sroa.479.0.in = lshr i16 %.sroa.479.0.in.in, 8
   %.sroa.479.0 = trunc nuw i16 %.sroa.479.0.in to i8 ; 3 uses
   %i.bh = and i32 %.0147, 7

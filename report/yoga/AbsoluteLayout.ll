@@ -202,7 +202,7 @@ bb.a:
   %i.a = and i8 %4, -2
   %i.b = icmp eq i8 %i.a, 2                       ; 3 uses
   %i.c = select i1 %i.b, float %6, float %7       ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 14 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 13 uses
   %i.e = icmp eq i8 %3, 2                         ; 2 uses
   %i.f = select i1 %i.e, i32 2, i32 0
   %.0.i.i = select i1 %i.b, i32 %i.f, i32 1       ; 7 uses
@@ -434,10 +434,9 @@ bb.u:                                             ; preds = %_ZN8facebook4yoga25
   br label %_ZN8facebook4yogaL20justifyAbsoluteChildEPKNS0_4NodeEPS1_NS0_9DirectionENS0_13FlexDirectionEf.exit
 
 ._crit_edge:                                      ; preds = %bb.n
-  %8 = load i32, ptr %i.d, align 8
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
-  %i.ck = and i8 %10, 15                          ; 2 uses
+  %8 = getelementptr i8, ptr %2, i64 59
+  %9 = load i8, ptr %8, align 1
+  %i.ck = and i8 %9, 15                           ; 2 uses
   %i.cl = icmp eq i8 %i.ck, 0
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.cn = load i32, ptr %i.cm, align 8            ; 3 uses

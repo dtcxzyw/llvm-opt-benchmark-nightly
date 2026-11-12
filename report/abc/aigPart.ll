@@ -204,6 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %i.q = and i32 %i.p, 7
   %i.r = add nsw i32 %i.q, -7
   %narrow.i = icmp ult i32 %i.r, -2
+  %1 = lshr i64 %.val35, 32
+  %2 = trunc nuw i64 %1 to i32
   br i1 %narrow.i, label %Aig_ObjIsChoice.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -236,8 +238,6 @@ Aig_ObjEquiv.exit:                                ; preds = %bb.e, %Aig_ObjEquiv
   br i1 %.not31, label %bb.f, label %Aig_ObjEquiv.exit, !llvm.loop !171
 
 bb.f:                                             ; preds = %Aig_ObjEquiv.exit
-  %1 = lshr i64 %.val35, 32
-  %2 = trunc nuw i64 %1 to i32
   %i.ae = and i32 %2, 16777215
   %i.af = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.8, i32 noundef %i.t, i32 noundef %i.ae, i32 noundef %i.y) ; 0 uses
   br label %bb.g
@@ -246,11 +246,9 @@ bb.g:                                             ; preds = %bb.f, %Aig_ObjEquiv
   %.146 = phi ptr [ %i.m, %bb.f ], [ %i.ao, %Aig_ObjEquiv.exit41 ] ; 3 uses
   %i.ag = tail call i32 @Aig_NodeMffcSupp(ptr noundef nonnull %0, ptr noundef nonnull %.146, i32 noundef 0, ptr noundef nonnull %i.a) #26
   %.val = load i32, ptr %i.b, align 4, !tbaa !24
-  %i.ah = getelementptr inbounds nuw i8, ptr %.146, i64 24
-  %3 = load i64, ptr %i.ah, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.ai = and i32 %5, 16777215
+  %i.ah = getelementptr i8, ptr %.146, i64 28
+  %3 = load i32, ptr %i.ah, align 4
+  %i.ai = and i32 %3, 16777215
   %i.aj = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.9, i32 noundef %.val, i32 noundef %i.ag, i32 noundef %i.ai) ; 0 uses
   %.val37 = load ptr, ptr %i.i, align 8, !tbaa !174 ; 2 uses
   %.not.i40 = icmp eq ptr %.val37, null

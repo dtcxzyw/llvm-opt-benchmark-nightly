@@ -178,11 +178,9 @@ bb.n:                                             ; preds = %cpool_get_first.exi
   br i1 %.not.i49, label %.lr.ph.preheader, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 2187 ; 2 uses
-  %5 = load i64, ptr %i.al, align 1               ; 2 uses
-  %6 = lshr i64 %5, 32                            ; 2 uses
-  %7 = trunc nuw i64 %6 to i32
-  %i.am = and i32 %7, 1
+  %i.al = getelementptr i8, ptr %i.ak, i64 2191   ; 3 uses
+  %5 = load i32, ptr %i.al, align 1               ; 2 uses
+  %i.am = and i32 %5, 1
   %i.an = load i8, ptr %i.u, align 8              ; 2 uses
   %i.ao = and i8 %i.an, 1                         ; 2 uses
   %i.ap = zext nneg i8 %i.ao to i32
@@ -195,22 +193,21 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.aq = call i32 @sigaction(i32 noundef 13, ptr noundef nonnull %4, ptr noundef null) #7 ; 0 uses
-  %.pre.i = load i64, ptr %i.al, align 1          ; 2 uses
+  %.pre.i = load i32, ptr %i.al, align 1
   %.pre8.i = load i8, ptr %i.u, align 8
-  %.pre9.i = lshr i64 %.pre.i, 32
   br label %sigpipe_restore.exit.i
 
 sigpipe_restore.exit.i:                           ; preds = %bb.q, %bb.p
-  %8 = phi i64 [ %5, %bb.p ], [ %.pre.i, %bb.q ]
-  %.pre-phi.i = phi i64 [ %6, %bb.p ], [ %.pre9.i, %bb.q ]
-  %9 = phi i8 [ %i.an, %bb.p ], [ %.pre8.i, %bb.q ]
-  %i.ar = trunc i64 %.pre-phi.i to i8
+  %6 = phi i8 [ %i.an, %bb.p ], [ %.pre8.i, %bb.q ]
+  %7 = phi i32 [ %5, %bb.p ], [ %.pre.i, %bb.q ]
+  %i.ar = trunc i32 %7 to i8
   %i.as = and i8 %i.ar, 1
-  %i.at = and i8 %9, -2
+  %i.at = and i8 %6, -2
   %i.au = or disjoint i8 %i.as, %i.at
   store i8 %i.au, ptr %i.u, align 8
-  %10 = and i64 %8, 4294967296
-  %.not.i7.i = icmp eq i64 %10, 0
+  %8 = load i32, ptr %i.al, align 1
+  %9 = and i32 %8, 1
+  %.not.i7.i = icmp eq i32 %9, 0
   br i1 %.not.i7.i, label %bb.r, label %.lr.ph.preheader
 
 bb.r:                                             ; preds = %sigpipe_restore.exit.i

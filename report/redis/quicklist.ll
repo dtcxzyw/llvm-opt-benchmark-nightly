@@ -202,15 +202,14 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %2 = load i64, ptr %i.d, align 8                ; 2 uses
-  %3 = and i64 %2, 64424509440
-  %.not.i = icmp eq i64 %3, 0
+  %i.d = getelementptr i8, ptr %0, i64 44
+  %2 = load i32, ptr %i.d, align 4
+  %3 = and i32 %2, 15                             ; 2 uses
+  %.not.i = icmp eq i32 %3, 0
   br i1 %.not.i, label %_quicklistBookmarkFindByNode.exit.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = lshr i64 %2, 32
-  %wide.trip.count.i = and i64 %4, 15
+  %wide.trip.count.i = zext nneg i32 %3 to i64
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %.lr.ph.i
@@ -237,12 +236,13 @@ bb.c:                                             ; preds = %_quicklistBookmarkF
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !50
   call void @zfree_usable(ptr noundef %i.k, ptr noundef nonnull %i.a) #22
-  %i.l = load i64, ptr %i.d, align 8              ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.l = load i64, ptr %4, align 8                ; 2 uses
   %i.m = add i64 %i.l, 64424509440
   %i.n = and i64 %i.m, 64424509440                ; 2 uses
   %i.o = and i64 %i.l, -64424509441
   %i.p = or disjoint i64 %i.n, %i.o
-  store i64 %i.p, ptr %i.d, align 8
+  store i64 %i.p, ptr %4, align 8
   %i.q = load i64, ptr %i.a, align 8, !tbaa !39
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !39
@@ -355,15 +355,14 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 define dso_local noundef ptr @_quicklistBookmarkFindByNode(ptr nofree noundef readonly captures(ret: address, provenance) %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #13 !guid !108 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %2 = load i64, ptr %i.b, align 8                ; 2 uses
-  %3 = and i64 %2, 64424509440
-  %.not = icmp eq i64 %3, 0
+  %i.b = getelementptr i8, ptr %0, i64 44
+  %2 = load i32, ptr %i.b, align 4
+  %3 = and i32 %2, 15                             ; 2 uses
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = lshr i64 %2, 32
-  %wide.trip.count = and i64 %4, 15
+  %wide.trip.count = zext nneg i32 %3 to i64
   br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
@@ -397,8 +396,8 @@ bb.a:
   call void @zfree_usable(ptr noundef %i.f, ptr noundef nonnull %i.a) #22
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8              ; 2 uses
-  %i.i = add i64 %i.h, 64424509440
-  %i.j = and i64 %i.i, 64424509440                ; 2 uses
+  %i.i = add i64 %i.h, 64424509440                ; 2 uses
+  %i.j = and i64 %i.i, 64424509440
   %i.k = and i64 %i.h, -64424509441
   %i.l = or disjoint i64 %i.j, %i.k
   store i64 %i.l, ptr %i.g, align 8
@@ -409,7 +408,8 @@ bb.a:
   store i64 %i.p, ptr %i.n, align 8, !tbaa !39
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.neg8 = shl i64 %.neg, 28
-  %sext = add i64 %i.j, %.neg8
+  %.mask = and i64 %i.i, 64424509440
+  %sext = add i64 %.neg8, %.mask
   %i.r = ashr exact i64 %sext, 28
   %i.s = and i64 %i.r, -16
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %1, ptr nonnull align 8 %i.q, i64 %i.s, i1 false)
@@ -812,7 +812,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i64, ptr %i.d, align 8, !tbaa !39
   %i.f = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.8, i64 noundef %i.e) ; 0 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8
   %i.i = shl i64 %i.h, 48
   %i.j = ashr exact i64 %i.i, 48
@@ -822,10 +822,9 @@ bb.a:
   %i.n = trunc i64 %i.m to i32
   %i.o = lshr i32 %i.n, 16
   %i.p = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, i32 noundef %i.o) ; 0 uses
-  %2 = load i64, ptr %i.g, align 8
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
-  %i.q = and i32 %4, 15
+  %2 = getelementptr i8, ptr %0, i64 44
+  %3 = load i32, ptr %2, align 4
+  %i.q = and i32 %3, 15
   %i.r = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, i32 noundef %i.q) ; 0 uses
   %.037 = load ptr, ptr %0, align 8, !tbaa !46    ; 3 uses
   %.not38 = icmp eq ptr %.037, null
@@ -980,14 +979,15 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !142    ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %i.f = load i64, ptr %i.e, align 8              ; 3 uses
-  %i.g = and i64 %i.f, 64424509440                ; 2 uses
+  %i.f = load i64, ptr %i.e, align 8              ; 4 uses
+  %i.g = and i64 %i.f, 64424509440
   %i.h = icmp eq i64 %i.g, 64424509440
   br i1 %i.h, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  %.not12.i = icmp eq i64 %i.g, 0
+  %3 = and i64 %i.f, 64424509440
+  %.not12.i = icmp eq i64 %3, 0
   br i1 %.not12.i, label %.loopexit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
@@ -1019,28 +1019,29 @@ _quicklistBookmarkFindByName.exit:                ; preds = %.lr.ph.i
   %i.o = lshr i64 %i.f, 28
   %i.p = and i64 %i.o, 240
   %i.q = add nuw nsw i64 %i.p, 64
-  %i.r = call ptr @zrealloc_usable(ptr noundef nonnull %i.d, i64 noundef %i.q, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #22 ; 4 uses
+  %i.r = call ptr @zrealloc_usable(ptr noundef nonnull %i.d, i64 noundef %i.q, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #22 ; 5 uses
   store ptr %i.r, ptr %0, align 8, !tbaa !142
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 48 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 40 ; 3 uses
-  %3 = load i64, ptr %i.t, align 8
-  %4 = lshr i64 %3, 32
-  %5 = and i64 %4, 15
-  %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %5
+  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 48 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 40 ; 2 uses
+  %i.t = getelementptr i8, ptr %i.r, i64 44
+  %5 = load i32, ptr %i.t, align 4
+  %6 = and i32 %5, 15
+  %7 = zext nneg i32 %6 to i64
+  %i.u = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %7
   store ptr %2, ptr %i.u, align 8, !tbaa !55
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
   %i.v = call noalias ptr @zstrdup_usable(ptr noundef %1, ptr noundef nonnull %i.c) #22
-  %i.w = load i64, ptr %i.t, align 8              ; 3 uses
+  %i.w = load i64, ptr %i.s, align 8              ; 3 uses
   %i.x = lshr i64 %i.w, 32
   %i.y = and i64 %i.x, 15
-  %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %i.y
+  %i.z = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store ptr %i.v, ptr %i.aa, align 8, !tbaa !50
   %i.ab = add i64 %i.w, 4294967296
   %i.ac = and i64 %i.ab, 64424509440
   %i.ad = and i64 %i.w, -64424509441
   %i.ae = or disjoint i64 %i.ac, %i.ad
-  store i64 %i.ae, ptr %i.t, align 8
+  store i64 %i.ae, ptr %i.s, align 8
   %i.af = load i64, ptr %i.a, align 8, !tbaa !39
   %i.ag = load i64, ptr %i.c, align 8, !tbaa !39
   %i.ah = add i64 %i.ag, %i.af
@@ -1064,15 +1065,14 @@ bb.d:                                             ; preds = %_quicklistBookmarkF
 define dso_local ptr @_quicklistBookmarkFindByName(ptr nofree noundef readonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #17 !guid !143 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %2 = load i64, ptr %i.b, align 8                ; 2 uses
-  %3 = and i64 %2, 64424509440
-  %.not12 = icmp eq i64 %3, 0
+  %i.b = getelementptr i8, ptr %0, i64 44
+  %2 = load i32, ptr %i.b, align 4
+  %3 = and i32 %2, 15                             ; 2 uses
+  %.not12 = icmp eq i32 %3, 0
   br i1 %.not12, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = lshr i64 %2, 32
-  %wide.trip.count = and i64 %4, 15
+  %wide.trip.count = zext nneg i32 %3 to i64
   br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
@@ -1102,15 +1102,14 @@ declare noalias ptr @zstrdup_usable(ptr noundef, ptr noundef) local_unnamed_addr
 define dso_local ptr @quicklistBookmarkFind(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #17 !guid !144 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %2 = load i64, ptr %i.b, align 8                ; 2 uses
-  %3 = and i64 %2, 64424509440
-  %.not12.i = icmp eq i64 %3, 0
+  %i.b = getelementptr i8, ptr %0, i64 44
+  %2 = load i32, ptr %i.b, align 4
+  %3 = and i32 %2, 15                             ; 2 uses
+  %.not12.i = icmp eq i32 %3, 0
   br i1 %.not12.i, label %_quicklistBookmarkFindByName.exit.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = lshr i64 %2, 32
-  %wide.trip.count.i = and i64 %4, 15
+  %wide.trip.count.i = zext nneg i32 %3 to i64
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %.lr.ph.i
@@ -1141,15 +1140,14 @@ define dso_local range(i32 0, 2) i32 @quicklistBookmarkDelete(ptr nofree noundef
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %2 = load i64, ptr %i.c, align 8                ; 2 uses
-  %3 = and i64 %2, 64424509440
-  %.not12.i = icmp eq i64 %3, 0
+  %i.c = getelementptr i8, ptr %0, i64 44
+  %2 = load i32, ptr %i.c, align 4
+  %3 = and i32 %2, 15                             ; 2 uses
+  %.not12.i = icmp eq i32 %3, 0
   br i1 %.not12.i, label %_quicklistBookmarkFindByName.exit.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = lshr i64 %2, 32
-  %wide.trip.count.i = and i64 %4, 15
+  %wide.trip.count.i = zext nneg i32 %3 to i64
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %.lr.ph.i
@@ -1169,12 +1167,13 @@ bb.b:                                             ; preds = %.lr.ph.i
 _quicklistBookmarkFindByName.exit:                ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   call void @zfree_usable(ptr noundef nonnull %i.f, ptr noundef nonnull %i.a) #22
-  %i.h = load i64, ptr %i.c, align 8              ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.h = load i64, ptr %4, align 8                ; 2 uses
   %i.i = add i64 %i.h, 64424509440
   %i.j = and i64 %i.i, 64424509440                ; 2 uses
   %i.k = and i64 %i.h, -64424509441
   %i.l = or disjoint i64 %i.j, %i.k
-  store i64 %i.l, ptr %i.c, align 8
+  store i64 %i.l, ptr %4, align 8
   %i.m = load i64, ptr %i.a, align 8, !tbaa !39
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !tbaa !39

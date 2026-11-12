@@ -204,12 +204,10 @@ bb.l:                                             ; preds = %bb.k
   store i64 %i.ac, ptr %i.z, align 8, !tbaa !135
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.ad = load ptr, ptr %i.b, align 8, !tbaa !76  ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 144
-  %5 = load i64, ptr %i.ae, align 8, !tbaa !143
-  %6 = lshr i64 %5, 48
-  %7 = trunc nuw i64 %6 to i16
+  %i.ae = getelementptr i8, ptr %i.ad, i64 150
+  %5 = load i16, ptr %i.ae, align 2, !tbaa !143
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  store i16 %7, ptr %i.af, align 8, !tbaa !148
+  store i16 %5, ptr %i.af, align 8, !tbaa !148
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 18
   store i8 %i.a, ptr %i.ag, align 2, !tbaa !149
   br i1 %1, label %.critedge, label %bb.m
@@ -612,14 +610,12 @@ bb.f:                                             ; preds = %bb.d
 
 _ZN4bsslL16dtls1_update_mtuEP6ssl_st.exit.i:      ; preds = %bb.f, %bb.e, %bb.c, %bb.b
   %i.z = load ptr, ptr %i.f, align 8, !tbaa !76   ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 144
-  %12 = load i64, ptr %i.aa, align 8, !tbaa !143
-  %13 = lshr i64 %12, 48
-  %14 = trunc nuw i64 %13 to i16
+  %i.aa = getelementptr i8, ptr %i.z, i64 150
+  %12 = load i16, ptr %i.aa, align 2, !tbaa !143
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 936
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !199
   %i.ad = zext i32 %i.ac to i64
-  %i.ae = tail call noundef i64 @_ZN4bssl23dtls_seal_max_input_lenEPK6ssl_sttm(ptr noundef nonnull %0, i16 noundef zeroext %14, i64 noundef %i.ad) ; 2 uses
+  %i.ae = tail call noundef i64 @_ZN4bssl23dtls_seal_max_input_lenEPK6ssl_sttm(ptr noundef nonnull %0, i16 noundef zeroext %12, i64 noundef %i.ad) ; 2 uses
   %i.af = icmp ult i64 %i.ae, 18
   br i1 %i.af, label %.thread43, label %bb.g
 
@@ -930,11 +926,9 @@ bb.s:                                             ; preds = %._crit_edge62.i
   %i.fg = call ptr @CBB_data(ptr noundef nonnull %9)
   %i.fh = call i64 @CBB_len(ptr noundef nonnull %9)
   %i.fi = load ptr, ptr %i.f, align 8, !tbaa !76
-  %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 144
-  %15 = load i64, ptr %i.fj, align 8, !tbaa !143
-  %16 = lshr i64 %15, 48
-  %17 = trunc nuw i64 %16 to i16
-  %i.fk = call noundef zeroext i1 @_ZN4bssl16dtls_seal_recordEP6ssl_stPNS_16DTLSRecordNumberEPhPmmhPKhmt(ptr noundef nonnull %0, ptr noundef nonnull %11, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, i64 noundef 584, i8 noundef zeroext 26, ptr noundef %i.fg, i64 noundef %i.fh, i16 noundef zeroext %17)
+  %i.fj = getelementptr i8, ptr %i.fi, i64 150
+  %13 = load i16, ptr %i.fj, align 2, !tbaa !143
+  %i.fk = call noundef zeroext i1 @_ZN4bssl16dtls_seal_recordEP6ssl_stPNS_16DTLSRecordNumberEPhPmmhPKhmt(ptr noundef nonnull %0, ptr noundef nonnull %11, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, i64 noundef 584, i8 noundef zeroext 26, ptr noundef %i.fg, i64 noundef %i.fh, i16 noundef zeroext %13)
   br i1 %i.fk, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %bb.s

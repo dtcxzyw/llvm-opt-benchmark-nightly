@@ -14,13 +14,12 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local void @Ppmd8_RangeEnc_FlushData(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 !guid !18 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 9 uses
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !8      ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !11
-  %2 = load i32, ptr %i.b, align 8, !tbaa !17
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
-  tail call void %i.c(ptr noundef nonnull %1, i8 noundef zeroext %4) #4
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 8 uses
+  %1 = getelementptr i8, ptr %0, i64 115
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
+  %2 = load ptr, ptr %i.c, align 8, !tbaa !11
+  %3 = load i8, ptr %1, align 1, !tbaa !17
+  tail call void %2(ptr noundef nonnull %i.c, i8 noundef zeroext %3) #4
   %i.d = load i32, ptr %i.b, align 8, !tbaa !17
   %i.e = shl i32 %i.d, 8                          ; 2 uses
   store i32 %i.e, ptr %i.b, align 8, !tbaa !17

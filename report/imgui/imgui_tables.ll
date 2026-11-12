@@ -205,11 +205,9 @@ bb.l:                                             ; preds = %bb.k
   store i16 %i.as, ptr %i.at, align 4, !tbaa !586
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 6
   store i16 %i.am, ptr %i.au, align 2, !tbaa !587
-  %i.av = getelementptr inbounds nuw i8, ptr %i.ak, i64 115
-  %1 = load i16, ptr %i.av, align 1
-  %2 = lshr i16 %1, 8
-  %3 = trunc nuw i16 %2 to i8
-  %i.aw = and i8 %3, 3
+  %i.av = getelementptr inbounds nuw i8, ptr %i.ak, i64 116
+  %1 = load i8, ptr %i.av, align 4
+  %i.aw = and i8 %1, 3
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   store i8 %i.aw, ptr %i.ax, align 4, !tbaa !588
   br label %bb.m
@@ -612,15 +610,13 @@ bb.e:                                             ; preds = %bb.c, %_ZN5ImGui21T
   %i.be = load i16, ptr %i.bd, align 2, !tbaa !339
   %i.bf = getelementptr inbounds nuw i8, ptr %.06177, i64 12
   store i16 %i.be, ptr %i.bf, align 4, !tbaa !413
-  %i.bg = getelementptr inbounds nuw i8, ptr %.06276, i64 115
-  %1 = load i16, ptr %i.bg, align 1
-  %2 = lshr i16 %1, 8
-  %3 = trunc nuw i16 %2 to i8
-  %i.bh = and i8 %3, 3
+  %i.bg = getelementptr i8, ptr %.06276, i64 116
+  %1 = load i8, ptr %i.bg, align 4
+  %i.bh = and i8 %1, 3
   %i.bi = getelementptr inbounds nuw i8, ptr %.06177, i64 14 ; 4 uses
   %i.bj = load i8, ptr %i.bi, align 2
   %i.bk = and i8 %i.bj, -4
-  %i.bl = or disjoint i8 %i.bh, %i.bk             ; 2 uses
+  %i.bl = or disjoint i8 %i.bk, %i.bh             ; 2 uses
   store i8 %i.bl, ptr %i.bi, align 2
   %i.bm = getelementptr inbounds nuw i8, ptr %.06276, i64 107 ; 2 uses
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !308, !range !175, !noundef !176
@@ -1023,10 +1019,10 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %.0, i64 0
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.bg, i64 1
   %i.jy = call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 0, float noundef 1.000000e+00)
-  %i.jz = getelementptr inbounds nuw i8, ptr %i.r, i64 115
-  %6 = load i16, ptr %i.jz, align 1
-  %7 = and i16 %6, 768
-  %i.ka = icmp eq i16 %7, 256
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.r, i64 116
+  %6 = load i8, ptr %i.jz, align 4
+  %7 = and i8 %6, 3
+  %i.ka = icmp eq i8 %7, 1
   %i.kb = select i1 %i.ka, i32 2, i32 3
   call void @_ZN5ImGui11RenderArrowEP10ImDrawList6ImVec2j8ImGuiDirf(ptr noundef %i.jx, <2 x float> %.sroa.0.4.vec.insert, i32 noundef %i.jy, i32 noundef %i.kb, float noundef 6.500000e-01)
   br label %bb.av
@@ -1429,12 +1425,11 @@ _ZN5ImGui18TableGetColumnNameEPK10ImGuiTablei.exit: ; preds = %bb.y, %bb.z, %bb.
   %i.im = getelementptr inbounds nuw i8, ptr %i.ey, i64 98
   %i.in = load i16, ptr %i.im, align 2, !tbaa !339
   %i.io = sext i16 %i.in to i32
-  %i.ip = getelementptr inbounds nuw i8, ptr %i.ey, i64 115
-  %5 = load i16, ptr %i.ip, align 1
-  %6 = lshr i16 %5, 8
-  %7 = and i16 %6, 3                              ; 2 uses
-  %i.iq = icmp eq i16 %7, 1
-  %i.ir = icmp eq i16 %7, 2
+  %i.ip = getelementptr inbounds nuw i8, ptr %i.ey, i64 116
+  %5 = load i8, ptr %i.ip, align 4
+  %6 = and i8 %5, 3                               ; 2 uses
+  %i.iq = icmp eq i8 %6, 1
+  %i.ir = icmp eq i8 %6, 2
   %i.is = select i1 %i.ir, ptr @.str.36, ptr @.str.11
   %i.it = select i1 %i.iq, ptr @.str.35, ptr %i.is
   %i.iu = getelementptr inbounds nuw i8, ptr %i.ey, i64 56

@@ -205,32 +205,32 @@ bb.a:
   br i1 %.not, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit11, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %3 = load i64, ptr %i.k, align 8                ; 8 uses
-  %4 = lshr i64 %3, 56
-  %5 = trunc nuw i64 %4 to i8
-  %i.l = lshr i64 %3, 48
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 15
+  %3 = load i8, ptr %i.k, align 1
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %5 = load i64, ptr %4, align 8                  ; 7 uses
+  %i.l = lshr i64 %5, 48
   %i.m = trunc i64 %i.l to i8
-  %i.n = lshr i64 %3, 40
+  %i.n = lshr i64 %5, 40
   %i.o = trunc i64 %i.n to i8
-  %i.p = lshr i64 %3, 32
+  %i.p = lshr i64 %5, 32
   %i.q = trunc i64 %i.p to i8
-  %i.r = lshr i64 %3, 24
+  %i.r = lshr i64 %5, 24
   %i.s = trunc i64 %i.r to i8
-  %i.t = lshr i64 %3, 16
+  %i.t = lshr i64 %5, 16
   %i.u = trunc i64 %i.t to i8
-  %i.v = lshr i64 %3, 8
+  %i.v = lshr i64 %5, 8
   %i.w = trunc i64 %i.v to i8
-  %i.x = trunc i64 %3 to i8
-  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %6 = load i32, ptr %i.y, align 8                ; 4 uses
-  %7 = lshr i32 %6, 24
-  %8 = trunc nuw i32 %7 to i8
-  %i.z = lshr i32 %6, 16
+  %i.x = trunc i64 %5 to i8
+  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 27
+  %6 = load i8, ptr %i.y, align 1
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %8 = load i32, ptr %7, align 8                  ; 3 uses
+  %i.z = lshr i32 %8, 16
   %i.aa = trunc i32 %i.z to i8
-  %i.ab = lshr i32 %6, 8
+  %i.ab = lshr i32 %8, 8
   %i.ac = trunc i32 %i.ab to i8
-  %i.ad = trunc i32 %6 to i8
+  %i.ad = trunc i32 %8 to i8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 31
   %i.af = load i8, ptr %i.ae, align 1
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 30
@@ -348,7 +348,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8ice
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit11
 
 bb.s:                                             ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q
-  %.sroa.0.0.i = phi i8 [ %5, %bb.q ], [ %i.aj, %bb.c ], [ %i.ah, %bb.d ], [ %i.af, %bb.e ], [ %i.ad, %bb.f ], [ %i.ac, %bb.g ], [ %i.aa, %bb.h ], [ %8, %bb.i ], [ %i.x, %bb.j ], [ %i.w, %bb.k ], [ %i.u, %bb.l ], [ %i.s, %bb.m ], [ %i.q, %bb.n ], [ %i.o, %bb.o ], [ %i.m, %bb.p ], [ %i.al, %bb.b ]
+  %.sroa.0.0.i = phi i8 [ %3, %bb.q ], [ %i.aj, %bb.c ], [ %i.ah, %bb.d ], [ %i.af, %bb.e ], [ %i.ad, %bb.f ], [ %i.ac, %bb.g ], [ %i.aa, %bb.h ], [ %6, %bb.i ], [ %i.x, %bb.j ], [ %i.w, %bb.k ], [ %i.u, %bb.l ], [ %i.s, %bb.m ], [ %i.q, %bb.n ], [ %i.o, %bb.o ], [ %i.m, %bb.p ], [ %i.al, %bb.b ]
   %i.be = load i64, ptr %i.am, align 8, !alias.scope !9994, !noundef !21 ; 3 uses
   %i.bf = load i64, ptr %1, align 8, !range !22, !alias.scope !9994, !noundef !21
   %i.bg = icmp eq i64 %i.be, %i.bf
@@ -751,10 +751,8 @@ bb.de:                                            ; preds = %bb.cx
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.df:                                            ; preds = %bb.cx
-  %i.qo = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %6 = load i32, ptr %i.qo, align 8, !alias.scope !10738, !noundef !21
-  %7 = lshr i32 %6, 24
-  %8 = trunc nuw i32 %7 to i8
+  %i.qo = getelementptr inbounds nuw i8, ptr %1, i64 27
+  %6 = load i8, ptr %i.qo, align 1, !alias.scope !10738
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dg:                                            ; preds = %bb.cx
@@ -806,10 +804,8 @@ bb.dm:                                            ; preds = %bb.cx
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dn:                                            ; preds = %bb.cx
-  %i.rq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load i64, ptr %i.rq, align 8, !alias.scope !10738, !noundef !21
-  %10 = lshr i64 %9, 56
-  %11 = trunc nuw i64 %10 to i8
+  %i.rq = getelementptr inbounds nuw i8, ptr %1, i64 15
+  %7 = load i8, ptr %i.rq, align 1, !alias.scope !10738
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.do:                                            ; preds = %bb.cv
@@ -819,7 +815,7 @@ bb.do:                                            ; preds = %bb.cv
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cx, %bb.do, %bb.cw
-  %.sroa.0133.1 = phi i8 [ %i.pu, %bb.cw ], [ %i.rt, %bb.do ], [ 0, %bb.cx ], [ %i.pw, %bb.cy ], [ %i.py, %bb.cz ], [ %i.qa, %bb.da ], [ %i.qc, %bb.db ], [ %i.qf, %bb.dc ], [ %i.qj, %bb.dd ], [ %i.qn, %bb.de ], [ %8, %bb.df ], [ %i.qr, %bb.dg ], [ %i.qv, %bb.dh ], [ %i.qz, %bb.di ], [ %i.rd, %bb.dj ], [ %i.rh, %bb.dk ], [ %i.rl, %bb.dl ], [ %i.rp, %bb.dm ], [ %11, %bb.dn ] ; 7 uses
+  %.sroa.0133.1 = phi i8 [ %i.pu, %bb.cw ], [ %i.rt, %bb.do ], [ 0, %bb.cx ], [ %i.pw, %bb.cy ], [ %i.py, %bb.cz ], [ %i.qa, %bb.da ], [ %i.qc, %bb.db ], [ %i.qf, %bb.dc ], [ %i.qj, %bb.dd ], [ %i.qn, %bb.de ], [ %6, %bb.df ], [ %i.qr, %bb.dg ], [ %i.qv, %bb.dh ], [ %i.qz, %bb.di ], [ %i.rd, %bb.dj ], [ %i.rh, %bb.dk ], [ %i.rl, %bb.dl ], [ %i.rp, %bb.dm ], [ %7, %bb.dn ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.ru = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.rv = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -1048,10 +1044,8 @@ bb.ee:                                            ; preds = %bb.eb
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ef:                                            ; preds = %bb.eb
-  %i.ve = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %12 = load i32, ptr %i.ve, align 8, !alias.scope !10743, !noundef !21
-  %13 = lshr i32 %12, 16
-  %14 = trunc nuw i32 %13 to i16
+  %i.ve = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %8 = load i16, ptr %i.ve, align 2, !alias.scope !10743
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.eg:                                            ; preds = %bb.eb
@@ -1075,10 +1069,8 @@ bb.ei:                                            ; preds = %bb.eb
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ej:                                            ; preds = %bb.eb
-  %i.vq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %15 = load i64, ptr %i.vq, align 8, !alias.scope !10743, !noundef !21
-  %16 = lshr i64 %15, 48
-  %17 = trunc nuw i64 %16 to i16
+  %i.vq = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %9 = load i16, ptr %i.vq, align 2, !alias.scope !10743
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ek:                                            ; preds = %bb.dz
@@ -1089,7 +1081,7 @@ bb.ek:                                            ; preds = %bb.dz
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.ej, %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ek, %bb.ea
-  %.sroa.0140.1 = phi i16 [ %i.uw, %bb.ea ], [ %i.vu, %bb.ek ], [ 0, %bb.eb ], [ %i.uy, %bb.ec ], [ %i.va, %bb.ed ], [ %i.vd, %bb.ee ], [ %14, %bb.ef ], [ %i.vh, %bb.eg ], [ %i.vl, %bb.eh ], [ %i.vp, %bb.ei ], [ %17, %bb.ej ] ; 7 uses
+  %.sroa.0140.1 = phi i16 [ %i.uw, %bb.ea ], [ %i.vu, %bb.ek ], [ 0, %bb.eb ], [ %i.uy, %bb.ec ], [ %i.va, %bb.ed ], [ %i.vd, %bb.ee ], [ %8, %bb.ef ], [ %i.vh, %bb.eg ], [ %i.vl, %bb.eh ], [ %i.vp, %bb.ei ], [ %9, %bb.ej ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.vv = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.vw = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -1313,10 +1305,8 @@ bb.fa:                                            ; preds = %bb.ex
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fb:                                            ; preds = %bb.ex
-  %i.ze = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %18 = load i64, ptr %i.ze, align 8, !alias.scope !10748, !noundef !21
-  %19 = lshr i64 %18, 32
-  %20 = trunc nuw i64 %19 to i32
+  %i.ze = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %10 = load i32, ptr %i.ze, align 4, !alias.scope !10748
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fc:                                            ; preds = %bb.ev
@@ -1327,7 +1317,7 @@ bb.fc:                                            ; preds = %bb.ev
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.fb, %bb.fa, %bb.ez, %bb.ey, %bb.ex, %bb.fc, %bb.ew
-  %.sroa.0147.1 = phi i32 [ %i.yw, %bb.ew ], [ %i.zi, %bb.fc ], [ 0, %bb.ex ], [ %i.yy, %bb.ey ], [ %i.za, %bb.ez ], [ %i.zd, %bb.fa ], [ %20, %bb.fb ] ; 7 uses
+  %.sroa.0147.1 = phi i32 [ %i.yw, %bb.ew ], [ %i.zi, %bb.fc ], [ 0, %bb.ex ], [ %i.yy, %bb.ey ], [ %i.za, %bb.ez ], [ %i.zd, %bb.fa ], [ %10, %bb.fb ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.zj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.zk = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -1730,10 +1720,8 @@ bb.cs:                                            ; preds = %bb.cl
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ct:                                            ; preds = %bb.cl
-  %i.sn = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %6 = load i32, ptr %i.sn, align 8, !alias.scope !11092, !noundef !21
-  %7 = lshr i32 %6, 24
-  %8 = trunc nuw i32 %7 to i8
+  %i.sn = getelementptr inbounds nuw i8, ptr %1, i64 27
+  %6 = load i8, ptr %i.sn, align 1, !alias.scope !11092
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.cu:                                            ; preds = %bb.cl
@@ -1785,10 +1773,8 @@ bb.da:                                            ; preds = %bb.cl
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.db:                                            ; preds = %bb.cl
-  %i.tp = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load i64, ptr %i.tp, align 8, !alias.scope !11092, !noundef !21
-  %10 = lshr i64 %9, 56
-  %11 = trunc nuw i64 %10 to i8
+  %i.tp = getelementptr inbounds nuw i8, ptr %1, i64 15
+  %7 = load i8, ptr %i.tp, align 1, !alias.scope !11092
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dc:                                            ; preds = %bb.d
@@ -1798,7 +1784,7 @@ bb.dc:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cx, %bb.cw, %bb.cv, %bb.cu, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.d, %bb.dc, %bb.ck
-  %.sroa.0132.1 = phi i8 [ %i.rt, %bb.ck ], [ 3, %bb.d ], [ %i.ts, %bb.dc ], [ 0, %bb.cl ], [ %i.rv, %bb.cm ], [ %i.rx, %bb.cn ], [ %i.rz, %bb.co ], [ %i.sb, %bb.cp ], [ %i.se, %bb.cq ], [ %i.si, %bb.cr ], [ %i.sm, %bb.cs ], [ %8, %bb.ct ], [ %i.sq, %bb.cu ], [ %i.su, %bb.cv ], [ %i.sy, %bb.cw ], [ %i.tc, %bb.cx ], [ %i.tg, %bb.cy ], [ %i.tk, %bb.cz ], [ %i.to, %bb.da ], [ %11, %bb.db ] ; 7 uses
+  %.sroa.0132.1 = phi i8 [ %i.rt, %bb.ck ], [ 3, %bb.d ], [ %i.ts, %bb.dc ], [ 0, %bb.cl ], [ %i.rv, %bb.cm ], [ %i.rx, %bb.cn ], [ %i.rz, %bb.co ], [ %i.sb, %bb.cp ], [ %i.se, %bb.cq ], [ %i.si, %bb.cr ], [ %i.sm, %bb.cs ], [ %6, %bb.ct ], [ %i.sq, %bb.cu ], [ %i.su, %bb.cv ], [ %i.sy, %bb.cw ], [ %i.tc, %bb.cx ], [ %i.tg, %bb.cy ], [ %i.tk, %bb.cz ], [ %i.to, %bb.da ], [ %7, %bb.db ] ; 7 uses
   store i32 0, ptr %i.v, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.tt = getelementptr inbounds nuw i8, ptr %0, i64 328
@@ -2145,10 +2131,8 @@ bb.dw:                                            ; preds = %bb.dt
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dx:                                            ; preds = %bb.dt
-  %i.zf = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %12 = load i32, ptr %i.zf, align 8, !alias.scope !11100, !noundef !21
-  %13 = lshr i32 %12, 16
-  %14 = trunc nuw i32 %13 to i16
+  %i.zf = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %8 = load i16, ptr %i.zf, align 2, !alias.scope !11100
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dy:                                            ; preds = %bb.dt
@@ -2172,10 +2156,8 @@ bb.ea:                                            ; preds = %bb.dt
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.eb:                                            ; preds = %bb.dt
-  %i.zr = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %15 = load i64, ptr %i.zr, align 8, !alias.scope !11100, !noundef !21
-  %16 = lshr i64 %15, 48
-  %17 = trunc nuw i64 %16 to i16
+  %i.zr = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %9 = load i16, ptr %i.zr, align 2, !alias.scope !11100
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ec:                                            ; preds = %bb.d
@@ -2186,7 +2168,7 @@ bb.ec:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ec, %bb.ds
-  %.sroa.0139.1 = phi i16 [ %i.yx, %bb.ds ], [ %i.zv, %bb.ec ], [ 0, %bb.dt ], [ %i.yz, %bb.du ], [ %i.zb, %bb.dv ], [ %i.ze, %bb.dw ], [ %14, %bb.dx ], [ %i.zi, %bb.dy ], [ %i.zm, %bb.dz ], [ %i.zq, %bb.ea ], [ %17, %bb.eb ] ; 7 uses
+  %.sroa.0139.1 = phi i16 [ %i.yx, %bb.ds ], [ %i.zv, %bb.ec ], [ 0, %bb.dt ], [ %i.yz, %bb.du ], [ %i.zb, %bb.dv ], [ %i.ze, %bb.dw ], [ %8, %bb.dx ], [ %i.zi, %bb.dy ], [ %i.zm, %bb.dz ], [ %i.zq, %bb.ea ], [ %9, %bb.eb ] ; 7 uses
   store i32 0, ptr %i.v, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   %i.zw = getelementptr inbounds nuw i8, ptr %0, i64 328
@@ -2528,10 +2510,8 @@ bb.ew:                                            ; preds = %bb.et
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ex:                                            ; preds = %bb.et
-  %i.afh = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %18 = load i64, ptr %i.afh, align 8, !alias.scope !11108, !noundef !21
-  %19 = lshr i64 %18, 32
-  %20 = trunc nuw i64 %19 to i32
+  %i.afh = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %10 = load i32, ptr %i.afh, align 4, !alias.scope !11108
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ey:                                            ; preds = %bb.d
@@ -2542,7 +2522,7 @@ bb.ey:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.ex, %bb.ew, %bb.ev, %bb.eu, %bb.et, %bb.ey, %bb.es
-  %.sroa.0146.1 = phi i32 [ %i.aez, %bb.es ], [ %i.afl, %bb.ey ], [ 0, %bb.et ], [ %i.afb, %bb.eu ], [ %i.afd, %bb.ev ], [ %i.afg, %bb.ew ], [ %20, %bb.ex ] ; 7 uses
+  %.sroa.0146.1 = phi i32 [ %i.aez, %bb.es ], [ %i.afl, %bb.ey ], [ 0, %bb.et ], [ %i.afb, %bb.eu ], [ %i.afd, %bb.ev ], [ %i.afg, %bb.ew ], [ %10, %bb.ex ] ; 7 uses
   store i32 0, ptr %i.v, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.afm = getelementptr inbounds nuw i8, ptr %0, i64 328
@@ -2945,10 +2925,8 @@ bb.dy:                                            ; preds = %bb.dr
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dz:                                            ; preds = %bb.dr
-  %i.aad = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %6 = load i32, ptr %i.aad, align 8, !alias.scope !11486, !noundef !21
-  %7 = lshr i32 %6, 24
-  %8 = trunc nuw i32 %7 to i8
+  %i.aad = getelementptr inbounds nuw i8, ptr %1, i64 27
+  %6 = load i8, ptr %i.aad, align 1, !alias.scope !11486
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ea:                                            ; preds = %bb.dr
@@ -3000,10 +2978,8 @@ bb.eg:                                            ; preds = %bb.dr
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.eh:                                            ; preds = %bb.dr
-  %i.abf = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load i64, ptr %i.abf, align 8, !alias.scope !11486, !noundef !21
-  %10 = lshr i64 %9, 56
-  %11 = trunc nuw i64 %10 to i8
+  %i.abf = getelementptr inbounds nuw i8, ptr %1, i64 15
+  %7 = load i8, ptr %i.abf, align 1, !alias.scope !11486
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ei:                                            ; preds = %bb.d
@@ -3013,7 +2989,7 @@ bb.ei:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.ei, %bb.dq
-  %.sroa.0136.1 = phi i8 [ %i.zj, %bb.dq ], [ %i.abi, %bb.ei ], [ 0, %bb.dr ], [ %i.zl, %bb.ds ], [ %i.zn, %bb.dt ], [ %i.zp, %bb.du ], [ %i.zr, %bb.dv ], [ %i.zu, %bb.dw ], [ %i.zy, %bb.dx ], [ %i.aac, %bb.dy ], [ %8, %bb.dz ], [ %i.aag, %bb.ea ], [ %i.aak, %bb.eb ], [ %i.aao, %bb.ec ], [ %i.aas, %bb.ed ], [ %i.aaw, %bb.ee ], [ %i.aba, %bb.ef ], [ %i.abe, %bb.eg ], [ %11, %bb.eh ] ; 7 uses
+  %.sroa.0136.1 = phi i8 [ %i.zj, %bb.dq ], [ %i.abi, %bb.ei ], [ 0, %bb.dr ], [ %i.zl, %bb.ds ], [ %i.zn, %bb.dt ], [ %i.zp, %bb.du ], [ %i.zr, %bb.dv ], [ %i.zu, %bb.dw ], [ %i.zy, %bb.dx ], [ %i.aac, %bb.dy ], [ %6, %bb.dz ], [ %i.aag, %bb.ea ], [ %i.aak, %bb.eb ], [ %i.aao, %bb.ec ], [ %i.aas, %bb.ed ], [ %i.aaw, %bb.ee ], [ %i.aba, %bb.ef ], [ %i.abe, %bb.eg ], [ %7, %bb.eh ] ; 7 uses
   store i32 0, ptr %i.r, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.abj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
@@ -3233,10 +3209,8 @@ bb.ex:                                            ; preds = %bb.eu
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ey:                                            ; preds = %bb.eu
-  %i.aer = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %12 = load i32, ptr %i.aer, align 8, !alias.scope !11491, !noundef !21
-  %13 = lshr i32 %12, 16
-  %14 = trunc nuw i32 %13 to i16
+  %i.aer = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %8 = load i16, ptr %i.aer, align 2, !alias.scope !11491
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ez:                                            ; preds = %bb.eu
@@ -3260,10 +3234,8 @@ bb.fb:                                            ; preds = %bb.eu
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fc:                                            ; preds = %bb.eu
-  %i.afd = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %15 = load i64, ptr %i.afd, align 8, !alias.scope !11491, !noundef !21
-  %16 = lshr i64 %15, 48
-  %17 = trunc nuw i64 %16 to i16
+  %i.afd = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %9 = load i16, ptr %i.afd, align 2, !alias.scope !11491
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fd:                                            ; preds = %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter21show_sign_extend_info.exit
@@ -3274,7 +3246,7 @@ bb.fd:                                            ; preds = %_RNvMs_NtNtCsf8MNnN
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.fc, %bb.fb, %bb.fa, %bb.ez, %bb.ey, %bb.ex, %bb.ew, %bb.ev, %bb.eu, %bb.fd, %bb.et
-  %.sroa.0143.1 = phi i16 [ %i.aej, %bb.et ], [ %i.afh, %bb.fd ], [ 0, %bb.eu ], [ %i.ael, %bb.ev ], [ %i.aen, %bb.ew ], [ %i.aeq, %bb.ex ], [ %14, %bb.ey ], [ %i.aeu, %bb.ez ], [ %i.aey, %bb.fa ], [ %i.afc, %bb.fb ], [ %17, %bb.fc ] ; 7 uses
+  %.sroa.0143.1 = phi i16 [ %i.aej, %bb.et ], [ %i.afh, %bb.fd ], [ 0, %bb.eu ], [ %i.ael, %bb.ev ], [ %i.aen, %bb.ew ], [ %i.aeq, %bb.ex ], [ %8, %bb.ey ], [ %i.aeu, %bb.ez ], [ %i.aey, %bb.fa ], [ %i.afc, %bb.fb ], [ %9, %bb.fc ] ; 7 uses
   store i32 0, ptr %i.r, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.afi = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -3486,10 +3458,8 @@ bb.fs:                                            ; preds = %bb.fp
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ft:                                            ; preds = %bb.fp
-  %i.aim = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %18 = load i64, ptr %i.aim, align 8, !alias.scope !11496, !noundef !21
-  %19 = lshr i64 %18, 32
-  %20 = trunc nuw i64 %19 to i32
+  %i.aim = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %10 = load i32, ptr %i.aim, align 4, !alias.scope !11496
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fu:                                            ; preds = %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4nasmNtB4_13NasmFormatter21show_sign_extend_info.exit398
@@ -3500,7 +3470,7 @@ bb.fu:                                            ; preds = %_RNvMs_NtNtCsf8MNnN
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.ft, %bb.fs, %bb.fr, %bb.fq, %bb.fp, %bb.fu, %bb.fo
-  %.sroa.0150.1 = phi i32 [ %i.aie, %bb.fo ], [ %i.aiq, %bb.fu ], [ 0, %bb.fp ], [ %i.aig, %bb.fq ], [ %i.aii, %bb.fr ], [ %i.ail, %bb.fs ], [ %20, %bb.ft ] ; 7 uses
+  %.sroa.0150.1 = phi i32 [ %i.aie, %bb.fo ], [ %i.aiq, %bb.fu ], [ 0, %bb.fp ], [ %i.aig, %bb.fq ], [ %i.aii, %bb.fr ], [ %i.ail, %bb.fs ], [ %10, %bb.ft ] ; 7 uses
   store i32 0, ptr %i.r, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.air = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -3903,10 +3873,8 @@ bb.do:                                            ; preds = %bb.dh
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dp:                                            ; preds = %bb.dh
-  %i.xg = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %6 = load i32, ptr %i.xg, align 8, !alias.scope !11821, !noundef !21
-  %7 = lshr i32 %6, 24
-  %8 = trunc nuw i32 %7 to i8
+  %i.xg = getelementptr inbounds nuw i8, ptr %1, i64 27
+  %6 = load i8, ptr %i.xg, align 1, !alias.scope !11821
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dq:                                            ; preds = %bb.dh
@@ -3958,10 +3926,8 @@ bb.dw:                                            ; preds = %bb.dh
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dx:                                            ; preds = %bb.dh
-  %i.yi = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load i64, ptr %i.yi, align 8, !alias.scope !11821, !noundef !21
-  %10 = lshr i64 %9, 56
-  %11 = trunc nuw i64 %10 to i8
+  %i.yi = getelementptr inbounds nuw i8, ptr %1, i64 15
+  %7 = load i8, ptr %i.yi, align 1, !alias.scope !11821
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.dy:                                            ; preds = %bb.d
@@ -3971,7 +3937,7 @@ bb.dy:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulthNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dp, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dy, %bb.dg
-  %.sroa.0137.1 = phi i8 [ %i.wm, %bb.dg ], [ %i.yl, %bb.dy ], [ 0, %bb.dh ], [ %i.wo, %bb.di ], [ %i.wq, %bb.dj ], [ %i.ws, %bb.dk ], [ %i.wu, %bb.dl ], [ %i.wx, %bb.dm ], [ %i.xb, %bb.dn ], [ %i.xf, %bb.do ], [ %8, %bb.dp ], [ %i.xj, %bb.dq ], [ %i.xn, %bb.dr ], [ %i.xr, %bb.ds ], [ %i.xv, %bb.dt ], [ %i.xz, %bb.du ], [ %i.yd, %bb.dv ], [ %i.yh, %bb.dw ], [ %11, %bb.dx ] ; 7 uses
+  %.sroa.0137.1 = phi i8 [ %i.wm, %bb.dg ], [ %i.yl, %bb.dy ], [ 0, %bb.dh ], [ %i.wo, %bb.di ], [ %i.wq, %bb.dj ], [ %i.ws, %bb.dk ], [ %i.wu, %bb.dl ], [ %i.wx, %bb.dm ], [ %i.xb, %bb.dn ], [ %i.xf, %bb.do ], [ %6, %bb.dp ], [ %i.xj, %bb.dq ], [ %i.xn, %bb.dr ], [ %i.xr, %bb.ds ], [ %i.xv, %bb.dt ], [ %i.xz, %bb.du ], [ %i.yd, %bb.dv ], [ %i.yh, %bb.dw ], [ %7, %bb.dx ] ; 7 uses
   store i32 0, ptr %i.z, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.ym = getelementptr inbounds nuw i8, ptr %0, i64 328
@@ -4288,10 +4254,8 @@ bb.eq:                                            ; preds = %bb.en
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.er:                                            ; preds = %bb.en
-  %i.ado = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %12 = load i32, ptr %i.ado, align 8, !alias.scope !11828, !noundef !21
-  %13 = lshr i32 %12, 16
-  %14 = trunc nuw i32 %13 to i16
+  %i.ado = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %8 = load i16, ptr %i.ado, align 2, !alias.scope !11828
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.es:                                            ; preds = %bb.en
@@ -4315,10 +4279,8 @@ bb.eu:                                            ; preds = %bb.en
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ev:                                            ; preds = %bb.en
-  %i.aea = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %15 = load i64, ptr %i.aea, align 8, !alias.scope !11828, !noundef !21
-  %16 = lshr i64 %15, 48
-  %17 = trunc nuw i64 %16 to i16
+  %i.aea = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %9 = load i16, ptr %i.aea, align 2, !alias.scope !11828
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.ew:                                            ; preds = %bb.d
@@ -4329,7 +4291,7 @@ bb.ew:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResulttNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.ev, %bb.eu, %bb.et, %bb.es, %bb.er, %bb.eq, %bb.ep, %bb.eo, %bb.en, %bb.ew, %bb.em
-  %.sroa.0144.1 = phi i16 [ %i.adg, %bb.em ], [ %i.aee, %bb.ew ], [ 0, %bb.en ], [ %i.adi, %bb.eo ], [ %i.adk, %bb.ep ], [ %i.adn, %bb.eq ], [ %14, %bb.er ], [ %i.adr, %bb.es ], [ %i.adv, %bb.et ], [ %i.adz, %bb.eu ], [ %17, %bb.ev ] ; 7 uses
+  %.sroa.0144.1 = phi i16 [ %i.adg, %bb.em ], [ %i.aee, %bb.ew ], [ 0, %bb.en ], [ %i.adi, %bb.eo ], [ %i.adk, %bb.ep ], [ %i.adn, %bb.eq ], [ %8, %bb.er ], [ %i.adr, %bb.es ], [ %i.adv, %bb.et ], [ %i.adz, %bb.eu ], [ %9, %bb.ev ] ; 7 uses
   store i32 0, ptr %i.z, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   %i.aef = getelementptr inbounds nuw i8, ptr %0, i64 328
@@ -4641,10 +4603,8 @@ bb.fo:                                            ; preds = %bb.fl
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fp:                                            ; preds = %bb.fl
-  %i.ajg = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %18 = load i64, ptr %i.ajg, align 8, !alias.scope !11835, !noundef !21
-  %19 = lshr i64 %18, 32
-  %20 = trunc nuw i64 %19 to i32
+  %i.ajg = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %10 = load i32, ptr %i.ajg, align 4, !alias.scope !11835
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 bb.fq:                                            ; preds = %bb.d
@@ -4655,7 +4615,7 @@ bb.fq:                                            ; preds = %bb.d
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsf8MNnN4IDbl_8iced_x8610iced_error9IcedErrorEEB12_.exit: ; preds = %bb.fp, %bb.fo, %bb.fn, %bb.fm, %bb.fl, %bb.fq, %bb.fk
-  %.sroa.0151.1 = phi i32 [ %i.aiy, %bb.fk ], [ %i.ajk, %bb.fq ], [ 0, %bb.fl ], [ %i.aja, %bb.fm ], [ %i.ajc, %bb.fn ], [ %i.ajf, %bb.fo ], [ %20, %bb.fp ] ; 7 uses
+  %.sroa.0151.1 = phi i32 [ %i.aiy, %bb.fk ], [ %i.ajk, %bb.fq ], [ 0, %bb.fl ], [ %i.aja, %bb.fm ], [ %i.ajc, %bb.fn ], [ %i.ajf, %bb.fo ], [ %10, %bb.fp ] ; 7 uses
   store i32 0, ptr %i.z, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.ajl = getelementptr inbounds nuw i8, ptr %0, i64 328

@@ -202,10 +202,8 @@ bb.s:                                             ; preds = %bb.c
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 bb.t:                                             ; preds = %bb.c
-  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 3456
-  %3 = load i64, ptr %i.bj, align 16
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %i.bj = getelementptr i8, ptr %0, i64 3460
+  %3 = load i32, ptr %i.bj, align 4
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 bb.u:                                             ; preds = %bb.c
@@ -215,10 +213,8 @@ bb.u:                                             ; preds = %bb.c
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 bb.v:                                             ; preds = %bb.c
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 3464
-  %6 = load i64, ptr %i.bn, align 8
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %i.bn = getelementptr i8, ptr %0, i64 3468
+  %4 = load i32, ptr %i.bn, align 4
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 bb.w:                                             ; preds = %bb.c
@@ -234,10 +230,8 @@ bb.x:                                             ; preds = %bb.c
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 bb.y:                                             ; preds = %bb.c
-  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 3440
-  %9 = load i64, ptr %i.bu, align 16
-  %10 = lshr i64 %9, 32
-  %11 = trunc nuw i64 %10 to i32
+  %i.bu = getelementptr i8, ptr %0, i64 3444
+  %5 = load i32, ptr %i.bu, align 4
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 bb.z:                                             ; preds = %bb.c
@@ -303,7 +297,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %sdhci_buff_access_is_sequential.exit.thread
 
 sdhci_buff_access_is_sequential.exit.thread:      ; preds = %bb.k, %bb.j, %bb.af, %bb.ag, %sdhci_slotint.exit, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
-  %.070 = phi i32 [ 0, %bb.ag ], [ 0, %bb.af ], [ %i.g, %bb.d ], [ %i.i, %bb.e ], [ %i.k, %bb.f ], [ %i.m, %bb.g ], [ %i.ct, %sdhci_slotint.exit ], [ %11, %bb.y ], [ %i.bt, %bb.x ], [ %i.bq, %bb.w ], [ %8, %bb.v ], [ %i.bm, %bb.u ], [ %5, %bb.t ], [ %i.bi, %bb.s ], [ %i.bf, %bb.r ], [ %i.r, %bb.h ], [ %i.bd, %bb.q ], [ %i.an, %bb.l ], [ %i.ap, %bb.m ], [ %i.ax, %bb.n ], [ %i.az, %bb.o ], [ %i.bb, %bb.p ], [ 0, %bb.j ], [ 0, %bb.k ]
+  %.070 = phi i32 [ 0, %bb.ag ], [ 0, %bb.af ], [ %i.g, %bb.d ], [ %i.i, %bb.e ], [ %i.k, %bb.f ], [ %i.m, %bb.g ], [ %i.ct, %sdhci_slotint.exit ], [ %5, %bb.y ], [ %i.bt, %bb.x ], [ %i.bq, %bb.w ], [ %4, %bb.v ], [ %i.bm, %bb.u ], [ %3, %bb.t ], [ %i.bi, %bb.s ], [ %i.bf, %bb.r ], [ %i.r, %bb.h ], [ %i.bd, %bb.q ], [ %i.an, %bb.l ], [ %i.ap, %bb.m ], [ %i.ax, %bb.n ], [ %i.az, %bb.o ], [ %i.bb, %bb.p ], [ 0, %bb.j ], [ 0, %bb.k ]
   %.tr = trunc i64 %1 to i32
   %i.cw = shl i32 %.tr, 3
   %i.cx = and i32 %i.cw, 24

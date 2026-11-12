@@ -204,10 +204,8 @@ bb.b:                                             ; preds = %_ZN2v88internal7Ope
   %i.ar = ptrtoint ptr %i.ai to i64
   %i.as = add i64 %i.ar, -55464
   %i.at = inttoptr i64 %i.as to ptr
-  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 9840
-  %17 = load i64, ptr %i.au, align 8
-  %18 = lshr i64 %17, 32
-  %19 = trunc nuw i64 %18 to i32
+  %i.au = getelementptr i8, ptr %i.at, i64 9844
+  %17 = load i32, ptr %i.au, align 4
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.aw = load ptr, ptr %i.av, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -216,7 +214,7 @@ bb.b:                                             ; preds = %_ZN2v88internal7Ope
   %i.ba = ptrtoint ptr %i.ay to i64
   %i.bb = sub i64 %i.az, %i.ba
   %i.bc = trunc i64 %i.bb to i32
-  %i.bd = icmp eq i32 %19, %i.bc
+  %i.bd = icmp eq i32 %17, %i.bc
   br i1 %i.bd, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit199, label %bb.c, !prof !19
 
 bb.c:                                             ; preds = %bb.b

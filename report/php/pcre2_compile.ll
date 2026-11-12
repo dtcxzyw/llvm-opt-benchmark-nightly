@@ -205,7 +205,7 @@ bb.cs:                                            ; preds = %._crit_edge1758
 .lr.ph1152:                                       ; preds = %bb.cs, %bb.cw
   %i.ut = phi i16 [ %i.vd, %bb.cw ], [ %.pre1750, %bb.cs ] ; 3 uses
   %.7 = phi i64 [ %.8, %bb.cw ], [ %.31737, %bb.cs ] ; 3 uses
-  %.01303.i1150 = phi ptr [ %i.ve, %bb.cw ], [ %.0113, %bb.cs ] ; 3 uses
+  %.01303.i1150 = phi ptr [ %i.ve, %bb.cw ], [ %.0113, %bb.cs ] ; 4 uses
   %.61389.i1149 = phi ptr [ %.71390.i, %bb.cw ], [ %.31386.i, %bb.cs ] ; 6 uses
   %i.uu = getelementptr inbounds nuw i8, ptr %.01303.i1150, i64 10
   %i.uv = load i16, ptr %i.uu, align 2, !tbaa !200
@@ -222,11 +222,10 @@ bb.cu:                                            ; preds = %bb.ct
 bb.cv:                                            ; preds = %bb.ct
   %i.ux = getelementptr inbounds nuw i8, ptr %.61389.i1149, i64 1
   store i8 -90, ptr %.61389.i1149, align 1, !tbaa !29
-  %i.uy = getelementptr inbounds nuw i8, ptr %.01303.i1150, i64 8 ; 2 uses
-  %16 = load i16, ptr %i.uy, align 8, !tbaa !198
-  %17 = lshr i16 %16, 8
-  %18 = trunc nuw i16 %17 to i8
-  store i8 %18, ptr %i.ux, align 1, !tbaa !29
+  %i.uy = getelementptr inbounds nuw i8, ptr %.01303.i1150, i64 8
+  %16 = getelementptr i8, ptr %.01303.i1150, i64 9
+  %17 = load i8, ptr %16, align 1, !tbaa !198
+  store i8 %17, ptr %i.ux, align 1, !tbaa !29
   %i.uz = load i16, ptr %i.uy, align 8, !tbaa !198
   %i.va = trunc i16 %i.uz to i8
   %i.vb = getelementptr inbounds nuw i8, ptr %.61389.i1149, i64 2

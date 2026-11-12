@@ -205,56 +205,40 @@ bb.y:                                             ; preds = %bb.r
 
 .lr.ph298.i.1:                                    ; preds = %.preheader279.i
   %i.oc = getelementptr inbounds nuw i8, ptr %i.nm, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.nc, i64 4
-  %6 = getelementptr inbounds nuw i8, ptr %i.nf, i64 4
-  %7 = getelementptr inbounds nuw i8, ptr %i.ni, i64 4
-  %i.od = getelementptr inbounds nuw i8, ptr %i.nk, i64 4
-  %8 = load i32, ptr %i.od, align 4, !tbaa !51
-  %9 = lshr i32 %8, 16
-  %10 = trunc nuw i32 %9 to i16
-  store i16 %10, ptr %i.oc, align 2, !tbaa !73
-  %11 = load i32, ptr %7, align 4, !tbaa !51
-  %12 = lshr i32 %11, 16
-  %13 = trunc nuw i32 %12 to i16
+  %i.od = getelementptr i8, ptr %i.nk, i64 6
+  %5 = load i16, ptr %i.od, align 2, !tbaa !51
+  store i16 %5, ptr %i.oc, align 2, !tbaa !73
+  %6 = getelementptr i8, ptr %i.ni, i64 6
+  %7 = load i16, ptr %6, align 2, !tbaa !51
   %i.oe = getelementptr inbounds nuw i8, ptr %i.nm, i64 10
-  store i16 %13, ptr %i.oe, align 2, !tbaa !73
-  %14 = load i32, ptr %6, align 4, !tbaa !51
-  %15 = lshr i32 %14, 16
-  %16 = trunc nuw i32 %15 to i16
+  store i16 %7, ptr %i.oe, align 2, !tbaa !73
+  %8 = getelementptr i8, ptr %i.nf, i64 6
+  %9 = load i16, ptr %8, align 2, !tbaa !51
   %i.of = getelementptr inbounds nuw i8, ptr %i.nm, i64 12
-  store i16 %16, ptr %i.of, align 2, !tbaa !73
-  %17 = load i32, ptr %5, align 4, !tbaa !51
-  %18 = lshr i32 %17, 16
-  %19 = trunc nuw i32 %18 to i16
+  store i16 %9, ptr %i.of, align 2, !tbaa !73
+  %10 = getelementptr i8, ptr %i.nc, i64 6
+  %11 = load i16, ptr %10, align 2, !tbaa !51
   %i.og = getelementptr inbounds nuw i8, ptr %i.nm, i64 14
-  store i16 %19, ptr %i.og, align 2, !tbaa !73
+  store i16 %11, ptr %i.og, align 2, !tbaa !73
   br i1 %exitcond.not.i.1, label %._crit_edge.i.loopexit, label %.lr.ph298.i.2
 
 .lr.ph298.i.2:                                    ; preds = %.lr.ph298.i.1
   %i.oh = getelementptr inbounds nuw i8, ptr %i.nm, i64 16
-  %20 = getelementptr inbounds nuw i8, ptr %i.nc, i64 8
-  %21 = getelementptr inbounds nuw i8, ptr %i.nf, i64 8
-  %22 = getelementptr inbounds nuw i8, ptr %i.ni, i64 8
-  %i.oi = getelementptr inbounds nuw i8, ptr %i.nk, i64 8
-  %23 = load i32, ptr %i.oi, align 4, !tbaa !51
-  %24 = lshr i32 %23, 16
-  %25 = trunc nuw i32 %24 to i16
-  store i16 %25, ptr %i.oh, align 2, !tbaa !73
-  %26 = load i32, ptr %22, align 4, !tbaa !51
-  %27 = lshr i32 %26, 16
-  %28 = trunc nuw i32 %27 to i16
+  %i.oi = getelementptr i8, ptr %i.nk, i64 10
+  %12 = load i16, ptr %i.oi, align 2, !tbaa !51
+  store i16 %12, ptr %i.oh, align 2, !tbaa !73
+  %13 = getelementptr i8, ptr %i.ni, i64 10
+  %14 = load i16, ptr %13, align 2, !tbaa !51
   %i.oj = getelementptr inbounds nuw i8, ptr %i.nm, i64 18
-  store i16 %28, ptr %i.oj, align 2, !tbaa !73
-  %29 = load i32, ptr %21, align 4, !tbaa !51
-  %30 = lshr i32 %29, 16
-  %31 = trunc nuw i32 %30 to i16
+  store i16 %14, ptr %i.oj, align 2, !tbaa !73
+  %15 = getelementptr i8, ptr %i.nf, i64 10
+  %16 = load i16, ptr %15, align 2, !tbaa !51
   %i.ok = getelementptr inbounds nuw i8, ptr %i.nm, i64 20
-  store i16 %31, ptr %i.ok, align 2, !tbaa !73
-  %32 = load i32, ptr %20, align 4, !tbaa !51
-  %33 = lshr i32 %32, 16
-  %34 = trunc nuw i32 %33 to i16
+  store i16 %16, ptr %i.ok, align 2, !tbaa !73
+  %17 = getelementptr i8, ptr %i.nc, i64 10
+  %18 = load i16, ptr %17, align 2, !tbaa !51
   %i.ol = getelementptr inbounds nuw i8, ptr %i.nm, i64 22
-  store i16 %34, ptr %i.ol, align 2, !tbaa !73
+  store i16 %18, ptr %i.ol, align 2, !tbaa !73
   br label %._crit_edge.i.loopexit
 
 ._crit_edge.i.loopexit:                           ; preds = %.lr.ph298.i.2, %.lr.ph298.i.1, %.preheader279.i

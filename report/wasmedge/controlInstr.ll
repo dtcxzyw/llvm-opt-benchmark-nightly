@@ -205,12 +205,12 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %7 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !18
-  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -16 ; 3 uses
-  %.sroa.0.0.copyload.i = load i128, ptr %i.d, align 16, !tbaa !19
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !18   ; 2 uses
+  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -16 ; 2 uses
+  %8 = getelementptr i8, ptr %i.c, i64 -8
+  %.sroa.3.0.extract.trunc = load i64, ptr %8, align 8, !tbaa !19 ; 2 uses
   store ptr %i.d, ptr %i.b, align 8, !tbaa !21
-  %.sroa.3.0.extract.shift = lshr i128 %.sroa.0.0.copyload.i, 64 ; 2 uses
-  %i.e = icmp eq i128 %.sroa.3.0.extract.shift, 0
+  %i.e = icmp eq i64 %.sroa.3.0.extract.trunc, 0
   br i1 %i.e, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -286,7 +286,6 @@ _ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv1
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
-  %.sroa.3.0.extract.trunc = trunc nuw i128 %.sroa.3.0.extract.shift to i64
   %i.ac = inttoptr i64 %.sroa.3.0.extract.trunc to ptr ; 4 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !234
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 8

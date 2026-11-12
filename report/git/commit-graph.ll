@@ -204,11 +204,10 @@ bb.x:                                             ; preds = %.thread114, %bb.n, 
 .loopexit:                                        ; preds = %.preheader, %bb.x
   %.263 = phi i32 [ %.061136, %bb.x ], [ %i.ee, %.preheader ]
   %i.eh = load ptr, ptr %.064135, align 8, !tbaa !148 ; 2 uses
-  %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 48
-  %2 = load i64, ptr %i.ei, align 8, !tbaa !124
-  %sh.diff = lshr i64 %2, 8
-  %tr.sh.diff = trunc i64 %sh.diff to i32
-  %i.ej = and i32 %tr.sh.diff, 50331648
+  %i.ei = getelementptr i8, ptr %i.eh, i64 52
+  %2 = load i32, ptr %i.ei, align 4, !tbaa !124
+  %3 = shl i32 %2, 24
+  %i.ej = and i32 %3, 50331648
   store i32 %i.ej, ptr %i.f, align 4, !tbaa !44
   %i.ek = load ptr, ptr %i.p, align 8, !tbaa !163 ; 8 uses
   %i.el = getelementptr i8, ptr %i.eh, i64 72

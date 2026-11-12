@@ -205,10 +205,8 @@ bb.o:                                             ; preds = %bb.j
   br label %rocker_io_readl.exit
 
 bb.p:                                             ; preds = %bb.j
-  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 3872
-  %3 = load i64, ptr %i.bo, align 16
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %i.bo = getelementptr i8, ptr %0, i64 3876
+  %3 = load i32, ptr %i.bo, align 4
   br label %rocker_io_readl.exit
 
 bb.q:                                             ; preds = %bb.j
@@ -335,17 +333,15 @@ bb.z:                                             ; preds = %bb.j
   br label %rocker_io_readl.exit
 
 bb.aa:                                            ; preds = %bb.j
-  %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 3352
-  %6 = load i64, ptr %i.dq, align 8
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %i.dq = getelementptr i8, ptr %0, i64 3356
+  %4 = load i32, ptr %i.dq, align 4
   br label %rocker_io_readl.exit
 
 bb.ab:                                            ; preds = %bb.j
   br label %rocker_io_readl.exit
 
 rocker_io_readl.exit:                             ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.j, %bb.j, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %rocker_port_phys_link_status.exit.loopexit.i, %bb.t, %rocker_port_phys_link_status.exit45.loopexit.i, %bb.v, %rocker_port_phys_enable_read.exit.loopexit.i, %bb.x, %rocker_port_phys_enable_read.exit58.loopexit.i, %bb.z, %bb.aa, %bb.ab
-  %.038.i = phi i32 [ %i.ay, %bb.i ], [ -559039810, %bb.j ], [ %i.s, %bb.d ], [ %i.aa, %bb.e ], [ %i.ag, %bb.f ], [ %i.am, %bb.g ], [ %i.as, %bb.h ], [ 0, %bb.ab ], [ %8, %bb.aa ], [ %i.bb, %bb.k ], [ %i.be, %bb.l ], [ %i.bi, %bb.m ], [ %i.bk, %bb.n ], [ %i.bn, %bb.o ], [ %5, %bb.p ], [ %.val.i, %bb.q ], [ 0, %bb.c ], [ %i.ca, %rocker_port_phys_link_status.exit.loopexit.i ], [ %i.cn, %rocker_port_phys_link_status.exit45.loopexit.i ], [ %i.cz, %rocker_port_phys_enable_read.exit.loopexit.i ], [ %i.dp, %bb.z ], [ -559039810, %bb.j ], [ -559039810, %bb.j ], [ -559039810, %bb.j ], [ 0, %bb.r ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.x ], [ %i.dm, %rocker_port_phys_enable_read.exit58.loopexit.i ]
+  %.038.i = phi i32 [ %i.ay, %bb.i ], [ -559039810, %bb.j ], [ %i.s, %bb.d ], [ %i.aa, %bb.e ], [ %i.ag, %bb.f ], [ %i.am, %bb.g ], [ %i.as, %bb.h ], [ 0, %bb.ab ], [ %4, %bb.aa ], [ %i.bb, %bb.k ], [ %i.be, %bb.l ], [ %i.bi, %bb.m ], [ %i.bk, %bb.n ], [ %i.bn, %bb.o ], [ %3, %bb.p ], [ %.val.i, %bb.q ], [ 0, %bb.c ], [ %i.ca, %rocker_port_phys_link_status.exit.loopexit.i ], [ %i.cn, %rocker_port_phys_link_status.exit45.loopexit.i ], [ %i.cz, %rocker_port_phys_enable_read.exit.loopexit.i ], [ %i.dp, %bb.z ], [ -559039810, %bb.j ], [ -559039810, %bb.j ], [ -559039810, %bb.j ], [ 0, %bb.r ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.x ], [ %i.dm, %rocker_port_phys_enable_read.exit58.loopexit.i ]
   %i.dr = zext i32 %.038.i to i64
   br label %rocker_io_readq.exit
 

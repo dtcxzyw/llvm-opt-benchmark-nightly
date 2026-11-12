@@ -205,11 +205,9 @@ bb.i:                                             ; preds = %.split, %subsumes.e
 bb.j:                                             ; preds = %bb.i
   %i.bh = lshr i64 %i.s, 32
   %i.bi = trunc nuw i64 %i.bh to i32
-  %i.bj = getelementptr inbounds nuw i8, ptr %.029, i64 16
-  %3 = load i64, ptr %i.bj, align 4
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.bk = and i32 %5, 1048575
+  %i.bj = getelementptr i8, ptr %.029, i64 20
+  %3 = load i32, ptr %i.bj, align 4
+  %i.bk = and i32 %3, 1048575
   %i.bl = xor i32 %i.bk, 1048575
   %i.bm = and i32 %i.bl, %i.bi
   %i.bn = icmp eq i32 %i.bm, 0
@@ -246,10 +244,10 @@ bb.m:                                             ; preds = %bb.l, %.thread
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @search0(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef nonnull readonly captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 7 uses
-  %4 = load i64, ptr %i.a, align 4
-  %5 = and i64 %4, 8589934592
-  %.not.i = icmp eq i64 %5, 0
+  %i.a = getelementptr i8, ptr %0, i64 216        ; 2 uses
+  %4 = load i32, ptr %i.a, align 4
+  %5 = and i32 %4, 2
+  %.not.i = icmp eq i32 %5, 0
   br i1 %.not.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
@@ -289,6 +287,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
@@ -312,16 +311,16 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.ai = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %i.ah ; 4 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !40 ; 2 uses
   %.val = load i64, ptr %3, align 4, !tbaa !52
-  %.sroa.0.0.copyload.i = load i64, ptr %i.a, align 4, !tbaa !52 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %6, align 4, !tbaa !52 ; 2 uses
   %i.ak = load i32, ptr %i.v, align 8, !tbaa !30
   %i.al = and i64 %.val, -4286578689
-  store i64 %i.al, ptr %i.a, align 4
+  store i64 %i.al, ptr %6, align 4
   %i.am = load ptr, ptr %i.aj, align 8, !tbaa !45
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !54
   %i.ap = tail call ptr %i.ao(ptr noundef nonnull %i.aj, ptr noundef nonnull %1, ptr noundef nonnull %0) #8, !inline_history !0 ; 15 uses
   store i32 %i.ak, ptr %i.v, align 8, !tbaa !30
-  store i64 %.sroa.0.0.copyload.i, ptr %i.a, align 4, !tbaa !52
+  store i64 %.sroa.0.0.copyload.i, ptr %6, align 4, !tbaa !52
   %i.aq = load i32, ptr %i.o, align 4, !tbaa !31
   %.not67 = icmp eq i32 %i.aq, 0
   br i1 %.not67, label %bb.j, label %bb.f
@@ -378,7 +377,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not71, label %evaluate_plan.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bc = load i64, ptr %i.a, align 4             ; 2 uses
+  %i.bc = load i64, ptr %6, align 4               ; 2 uses
   %i.bd = and i64 %i.bc, 12884901888
   %or.cond.not.i = icmp eq i64 %i.bd, 4294967296
   br i1 %or.cond.not.i, label %bb.n, label %bb.o
@@ -448,7 +447,7 @@ bb.t:                                             ; preds = %bb.s
   br label %evaluate_plan.exit
 
 evaluate_plan.exit:                               ; preds = %bb.t, %bb.s, %bb.l
-  %i.ce = load i64, ptr %i.a, align 4             ; 2 uses
+  %i.ce = load i64, ptr %6, align 4               ; 2 uses
   %i.cf = and i64 %i.ce, 12884901888
   %or.cond.not.i81 = icmp eq i64 %i.cf, 4294967296
   br i1 %or.cond.not.i81, label %bb.u, label %bb.v
@@ -555,9 +554,9 @@ bb.ad:                                            ; preds = %bb.k
 bb.ae:                                            ; preds = %bb.ab, %bb.ac, %bb.ad
   %.157 = phi ptr [ %i.ap, %bb.ab ], [ %.056160, %bb.ac ], [ %i.ap, %bb.ad ] ; 2 uses
   %.254 = phi i32 [ 0, %bb.ab ], [ 0, %bb.ac ], [ %.052162, %bb.ad ]
-  %6 = load i64, ptr %i.a, align 4
-  %7 = and i64 %6, 562949953421312
-  %i.dx = icmp eq i64 %7, 0
+  %7 = load i32, ptr %i.a, align 8
+  %8 = and i32 %7, 131072
+  %i.dx = icmp eq i32 %8, 0
   %i.dy = icmp eq i32 %i.bb, 0
   %or.cond.not = select i1 %i.dx, i1 true, i1 %i.dy
   br i1 %or.cond.not, label %bb.af, label %timeout_p.exit.thread

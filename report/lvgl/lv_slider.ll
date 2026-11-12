@@ -202,15 +202,14 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 62
-  %2 = load i32, ptr %i.f, align 2
-  %3 = and i32 %2, 65536
-  %4 = icmp ne i32 %3, 0
+  %i.f = getelementptr i8, ptr %i.a, i64 64
+  %2 = load i16, ptr %i.f, align 2
+  %3 = trunc i16 %2 to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !47
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.j = load i32, ptr %i.i, align 8, !tbaa !48
-  tail call void @lv_bar_set_value(ptr noundef %i.h, i32 noundef %i.j, i1 noundef zeroext %4) #6
+  tail call void @lv_bar_set_value(ptr noundef %i.h, i32 noundef %i.j, i1 noundef zeroext %3) #6
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

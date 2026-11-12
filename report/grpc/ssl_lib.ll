@@ -204,7 +204,7 @@ define hidden void @_ZN6ssl_stC2EP10ssl_ctx_st(ptr noundef nonnull align 8 deref
 bb.a:                                             ; preds = %.split4.i15
   store ptr %1, ptr %i.n, align 8, !tbaa !112, !alias.scope !417
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.p = load ptr, ptr %i.m, align 8, !tbaa !112  ; 3 uses
+  %i.p = load ptr, ptr %i.m, align 8, !tbaa !112  ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 296
   %i.r = load <2 x i32>, ptr %i.q, align 8, !tbaa !220
   store <2 x i32> %i.r, ptr %i.o, align 8, !tbaa !220
@@ -218,26 +218,25 @@ bb.a:                                             ; preds = %.split4.i15
   %i.x = load i8, ptr %i.w, align 4               ; 2 uses
   %i.y = and i8 %i.x, -2
   store i8 %i.y, ptr %i.w, align 4
-  %i.z = getelementptr inbounds nuw i8, ptr %i.p, i64 648 ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.p, i64 648 ; 2 uses
   %i.aa = load i16, ptr %i.z, align 8
   %i.ab = trunc i16 %i.aa to i8
   %i.ac = and i8 %i.ab, 2
   %i.ad = and i8 %i.x, -4
   %i.ae = or disjoint i8 %i.ac, %i.ad             ; 2 uses
   store i8 %i.ae, ptr %i.w, align 4
-  %2 = load i16, ptr %i.z, align 8
-  %sh.diff = lshr i16 %2, 8
-  %tr.sh.diff = trunc nuw i16 %sh.diff to i8
+  %2 = getelementptr i8, ptr %i.p, i64 649
+  %tr.sh.diff = load i8, ptr %2, align 1
   %i.af = and i8 %tr.sh.diff, 4
   %i.ag = and i8 %i.ae, -6
-  %i.ah = or disjoint i8 %i.af, %i.ag             ; 2 uses
+  %i.ah = or disjoint i8 %i.ag, %i.af             ; 2 uses
   store i8 %i.ah, ptr %i.w, align 4
   %i.ai = load i16, ptr %i.z, align 8
   %sh.diff10 = lshr i16 %i.ai, 10
   %tr.sh.diff11 = trunc nuw nsw i16 %sh.diff10 to i8
   %i.aj = and i8 %tr.sh.diff11, 8
   %i.ak = and i8 %i.ah, -10
-  %i.al = or disjoint i8 %i.ak, %i.aj
+  %i.al = or disjoint i8 %i.aj, %i.ak
   store i8 %i.al, ptr %i.w, align 4
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 120
   invoke void @CRYPTO_new_ex_data(ptr noundef nonnull %i.am)
@@ -640,15 +639,13 @@ bb.k:                                             ; preds = %.split4.i
 
 bb.l:                                             ; preds = %_ZN4bssl5UpRefEP10ssl_ctx_st.exit, %.noexc.i.i.i.i, %bb.i
   %i.w = load ptr, ptr %i.c, align 8, !tbaa !112  ; 3 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 648
-  %3 = load i16, ptr %i.x, align 8
+  %i.x = getelementptr i8, ptr %i.w, i64 649
+  %tr.sh.diff = load i8, ptr %i.x, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
   %i.z = load i8, ptr %i.y, align 4
-  %sh.diff = lshr i16 %3, 8
-  %tr.sh.diff = trunc nuw i16 %sh.diff to i8
   %i.aa = and i8 %tr.sh.diff, 4
   %i.ab = and i8 %i.z, -5
-  %i.ac = or disjoint i8 %i.aa, %i.ab
+  %i.ac = or disjoint i8 %i.ab, %i.aa
   store i8 %i.ac, ptr %i.y, align 4
   %.pr = load ptr, ptr %2, align 8, !tbaa !208    ; 3 uses
   %.not.i18 = icmp eq ptr %.pr, null
@@ -1051,11 +1048,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !324
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %1 = load i64, ptr %i.e, align 8, !tbaa !388
-  %2 = lshr i64 %1, 48
-  %3 = trunc nuw i64 %2 to i16
-  ret i16 %3
+  %i.e = getelementptr i8, ptr %i.d, i64 150
+  %1 = load i16, ptr %i.e, align 2, !tbaa !388
+  ret i16 %1
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -202,11 +202,9 @@ bb.a:
   %i.a = add i64 %0, -1
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = load i64, ptr %i.d, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.e = ashr i32 %3, 3
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %1 = load i32, ptr %i.d, align 4
+  %i.e = ashr i32 %1, 3
   %i.f = sext i32 %i.e to i64
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %i.c, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %i.f, 1

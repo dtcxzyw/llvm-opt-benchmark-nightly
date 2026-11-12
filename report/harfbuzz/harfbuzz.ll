@@ -205,10 +205,8 @@ _ZNK21hb_sanitize_context_t11check_arrayIN2OT14UnsizedArrayOfINS1_8OffsetToINS2_
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT13ChainSubtableINS_13ExtendedTypesEE8dispatchI21hb_sanitize_context_tJEEENT_8return_tEPS5_DpOT0_(ptr noundef nonnull align 1 dereferenceable(40) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load i32, ptr %i.a, align 1, !tbaa !276
-  %3 = lshr i32 %2, 24
-  %trunc = trunc nuw i32 %3 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !276
   switch i8 %trunc, label %_ZN21hb_sanitize_context_t8dispatchIN3AAT16LigatureSubtableINS1_13ExtendedTypesEEEJEEEDTcl9_dispatchfp_cv11hb_priorityILj16EE_Espclsr3stdE7forwardIT0_Efp0_EEERKT_DpOS7_.exit [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -611,10 +609,8 @@ _ZNK21hb_sanitize_context_t11check_rangeEPKvj.exit.thread: ; preds = %bb.h, %bb.
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT13ChainSubtableINS_13ObsoleteTypesEE8dispatchI21hb_sanitize_context_tJEEENT_8return_tEPS5_DpOT0_(ptr noundef nonnull align 1 dereferenceable(22) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %2 = load i16, ptr %i.b, align 1, !tbaa !281
-  %3 = lshr i16 %2, 8
-  %trunc = trunc nuw i16 %3 to i8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %trunc = load i8, ptr %i.b, align 1, !tbaa !281
   switch i8 %trunc, label %_ZN21hb_sanitize_context_t8dispatchIN3AAT16LigatureSubtableINS1_13ObsoleteTypesEEEJEEEDTcl9_dispatchfp_cv11hb_priorityILj16EE_Espclsr3stdE7forwardIT0_Efp0_EEERKT_DpOS7_.exit [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -1017,10 +1013,8 @@ bb.d:                                             ; preds = %bb.b, %_ZNK3AAT5Cha
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK3AAT13ChainSubtableINS_13ExtendedTypesEE8dispatchINS_33hb_accelerate_subtables_context_tEJEEENT_8return_tEPS5_DpOT0_(ptr noundef nonnull align 1 dereferenceable(40) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load i32, ptr %i.a, align 1, !tbaa !276
-  %3 = lshr i32 %2, 24
-  %trunc = trunc nuw i32 %3 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !276
   switch i8 %trunc, label %_ZN3AAT33hb_accelerate_subtables_context_t8dispatchINS_21RearrangementSubtableINS_13ExtendedTypesEEEEE10hb_empty_tRKT_.exit [
     i8 0, label %bb.b
     i8 1, label %bb.d
@@ -1423,10 +1417,8 @@ bb.a:
   %7 = alloca %"struct.AAT::StateTableDriver.1854", align 8 ; 5 uses
   %8 = alloca %"struct.AAT::RearrangementSubtable<AAT::ExtendedTypes>::driver_context_t", align 8 ; 8 uses
   %9 = alloca %"struct.AAT::StateTableDriver.1852", align 8 ; 5 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %10 = load i32, ptr %i.a, align 1, !tbaa !276
-  %11 = lshr i32 %10, 24
-  %trunc = trunc nuw i32 %11 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !276
   switch i8 %trunc, label %bb.k [
     i8 0, label %bb.b
     i8 1, label %bb.d
@@ -1829,10 +1821,8 @@ bb.c:                                             ; preds = %bb.a, %_ZNK3AAT5Cha
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK3AAT13ChainSubtableINS_13ObsoleteTypesEE8dispatchINS_33hb_accelerate_subtables_context_tEJEEENT_8return_tEPS5_DpOT0_(ptr noundef nonnull align 1 dereferenceable(22) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %2 = load i16, ptr %i.a, align 1, !tbaa !281
-  %3 = lshr i16 %2, 8
-  %trunc = trunc nuw i16 %3 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !281
   switch i8 %trunc, label %_ZN3AAT33hb_accelerate_subtables_context_t8dispatchINS_21RearrangementSubtableINS_13ObsoleteTypesEEEEE10hb_empty_tRKT_.exit [
     i8 0, label %bb.b
     i8 1, label %bb.d
@@ -2235,10 +2225,8 @@ bb.a:
   %7 = alloca %"struct.AAT::StateTableDriver.1868", align 8 ; 5 uses
   %8 = alloca %"struct.AAT::RearrangementSubtable<AAT::ObsoleteTypes>::driver_context_t", align 8 ; 8 uses
   %9 = alloca %"struct.AAT::StateTableDriver.1866", align 8 ; 5 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %10 = load i16, ptr %i.a, align 1, !tbaa !281
-  %11 = lshr i16 %10, 8
-  %trunc = trunc nuw i16 %11 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !281
   switch i8 %trunc, label %bb.k [
     i8 0, label %bb.b
     i8 1, label %bb.d
@@ -2641,10 +2629,8 @@ bb.x:                                             ; preds = %_ZNK2OT8OffsetToINS
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT12KerxSubTable8dispatchI21hb_sanitize_context_tJEEENT_8return_tEPS3_DpOT0_(ptr noundef nonnull align 1 dereferenceable(36) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load i32, ptr %i.a, align 1, !tbaa !276
-  %3 = lshr i32 %2, 24
-  %trunc = trunc nuw i32 %3 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !276
   switch i8 %trunc, label %_ZN21hb_sanitize_context_t8dispatchIN3AAT19KerxSubTableFormat0INS1_18KerxSubTableHeaderEEEJEEEDTcl9_dispatchfp_cv11hb_priorityILj16EE_Espclsr3stdE7forwardIT0_Efp0_EEERKT_DpOS7_.exit [
     i8 0, label %bb.b
     i8 1, label %bb.f
@@ -3047,10 +3033,8 @@ _ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_7NumTypeILb1EjLj4
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK3AAT12KerxSubTable14collect_glyphsI12hb_bit_set_tEEvRT_S4_j(ptr noundef nonnull align 1 dereferenceable(36) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) %2, i32 noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %4 = load i32, ptr %i.a, align 1, !tbaa !276
-  %5 = lshr i32 %4, 24
-  %trunc = trunc nuw i32 %5 to i8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %trunc = load i8, ptr %i.a, align 1, !tbaa !276
   switch i8 %trunc, label %_ZNK3AAT19KerxSubTableFormat0INS_18KerxSubTableHeaderEE14collect_glyphsI12hb_bit_set_tEEvRT_S6_j.exit [
     i8 0, label %bb.b
     i8 1, label %bb.c

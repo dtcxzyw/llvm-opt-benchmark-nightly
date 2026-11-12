@@ -202,23 +202,19 @@ bb.ab:                                            ; preds = %bb.aa
           to label %bb.ac unwind label %bb.at     ; 2 uses
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dk = getelementptr i8, ptr %i.dj, i64 108
-  %.sroa.0.0.copyload.i141 = load i64, ptr %i.dk, align 4
-  %.sroa.2.0..sroa_idx.i142 = getelementptr i8, ptr %i.dj, i64 116
-  %.sroa.2.0.copyload.i143 = load i64, ptr %.sroa.2.0..sroa_idx.i142, align 4
+  %i.dk = getelementptr i8, ptr %i.dj, i64 112
+  %.sroa.0.4.extract.trunc = load i32, ptr %i.dk, align 4
+  %.sroa.2.0..sroa_idx.i142 = getelementptr i8, ptr %i.dj, i64 120
+  %.sroa.5.12.extract.trunc = load i32, ptr %.sroa.2.0..sroa_idx.i142, align 4
   %i.dl = invoke noundef ptr @_ZNK11QCustomPlot8axisRectEi(ptr noundef align 8 dereferenceable_or_null(513) %i.cd, i32 noundef 0)
           to label %bb.ad unwind label %bb.at     ; 2 uses
 
 bb.ad:                                            ; preds = %bb.ac
-  %.sroa.5.12.extract.shift = lshr i64 %.sroa.2.0.copyload.i143, 32
-  %.sroa.5.12.extract.trunc = trunc nuw i64 %.sroa.5.12.extract.shift to i32
-  %.sroa.0.4.extract.shift = lshr i64 %.sroa.0.0.copyload.i141, 32
-  %.sroa.0.4.extract.trunc = trunc nuw i64 %.sroa.0.4.extract.shift to i32
   %i.dm = getelementptr i8, ptr %i.dl, i64 104
   %i.dn = load i32, ptr %i.dm, align 4
   %i.do = getelementptr i8, ptr %i.dl, i64 96
   %i.dp = load i32, ptr %i.do, align 4
-  %i.dq = add i32 %i.dn, %.sroa.0.4.extract.trunc
+  %i.dq = add i32 %.sroa.0.4.extract.trunc, %i.dn
   %i.dr = sub i32 %.sroa.5.12.extract.trunc, %i.dq
   %i.ds = add i32 %i.dr, %i.dp
   %i.dt = load i32, ptr getelementptr inbounds nuw (i8, ptr @prefs, i64 384), align 8

@@ -205,10 +205,8 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.u
   %i.by = call noundef nonnull align 8 ptr @_RNvMs1z_NtCsileJQcQObtj_7hir_def10signaturesNtB6_17FunctionSignature2of(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(560) %1, i32 noundef %.sroa.4.0.copyload.i.i, i32 noundef %.sroa.7.0.copyload.i.i), !noalias !11632
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 154
-  %5 = load i16, ptr %i.bz, align 2, !noalias !11632, !noundef !245
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
+  %i.bz = getelementptr i8, ptr %i.by, i64 155
+  %5 = load i8, ptr %i.bz, align 1, !noalias !11632
   br label %_RNCNvNtCs8K4cjrcxBsw_6hir_ty6traits25is_inherent_impl_coherents0_0B5_.exit.i
 
 bb.x:                                             ; preds = %bb.u
@@ -226,7 +224,7 @@ bb.y:                                             ; preds = %bb.u
   br label %_RNCNvNtCs8K4cjrcxBsw_6hir_ty6traits25is_inherent_impl_coherents0_0B5_.exit.i
 
 _RNCNvNtCs8K4cjrcxBsw_6hir_ty6traits25is_inherent_impl_coherents0_0B5_.exit.i: ; preds = %bb.y, %bb.x, %bb.w
-  %.sroa.0.0.i.i = phi i8 [ %7, %bb.w ], [ %.lobit6.i.i, %bb.x ], [ %.lobit.i.i, %bb.y ]
+  %.sroa.0.0.i.i = phi i8 [ %5, %bb.w ], [ %.lobit6.i.i, %bb.x ], [ %.lobit.i.i, %bb.y ]
   %i.cg = trunc i8 %.sroa.0.0.i.i to i1           ; 2 uses
   %.not70 = xor i1 %i.cg, true
   %i.ch = icmp eq ptr %i.bw, %i.bu

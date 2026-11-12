@@ -202,10 +202,8 @@ bb.a:
   br i1 %i.h, label %bb.b, label %get_addressed_entity_type.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = getelementptr i8, ptr %i.d, i64 32
-  %4 = load i16, ptr %i.i, align 4
-  %5 = lshr i16 %4, 8
-  %6 = zext nneg i16 %5 to i64
+  %i.i = getelementptr i8, ptr %i.d, i64 33
+  %4 = load i8, ptr %i.i, align 1
   %i.j = getelementptr i8, ptr %3, i64 40
   %.val.i = load ptr, ptr %i.j, align 8           ; 2 uses
   %i.k = getelementptr i8, ptr %.val.i, i64 32
@@ -220,7 +218,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not6.i.i, label %bb.d, label %get_addressed_entity_type.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %6
+  %5 = zext i8 %4 to i64
+  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %5
   %i.p = load i32, ptr %i.o, align 4
   br label %get_addressed_entity_type.exit
 
@@ -243,10 +242,8 @@ bb.e:                                             ; preds = %get_addressed_entit
 
 bb.f:                                             ; preds = %bb.e, %get_addressed_entity_type.exit
   %i.w = load ptr, ptr %i.c, align 8
-  %i.x = getelementptr i8, ptr %i.w, i64 30
-  %7 = load i16, ptr %i.x, align 2
-  %8 = lshr i16 %7, 8                             ; 2 uses
-  %9 = zext nneg i16 %8 to i32
+  %i.x = getelementptr i8, ptr %i.w, i64 31
+  %6 = load i8, ptr %i.x, align 1                 ; 2 uses
   switch i32 %.0.i, label %.thread88 [
     i32 7, label %bb.g
     i32 8, label %bb.h
@@ -262,8 +259,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr @hf_wvalue_channel_number, ptr %i.a, align 16
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @hf_wvalue_fu_cs_v1, ptr %i.aa, align 8
-  %trunc = trunc nuw i16 %8 to i8
-  switch i8 %trunc, label %.fold.split [
+  switch i8 %6, label %.fold.split [
     i8 1, label %bb.j
     i8 2, label %bb.i
   ]
@@ -279,7 +275,8 @@ bb.j:                                             ; preds = %.fold.split, %bb.i,
   %.not70.ph = phi i1 [ true, %.fold.split ], [ false, %bb.i ], [ false, %bb.h ] ; 2 uses
   %.059.ph = phi ptr [ null, %.fold.split ], [ @hf_parameter_wvolume, %bb.i ], [ @hf_parameter_bmute, %bb.h ] ; 2 uses
   %.0.ph = phi i32 [ undef, %.fold.split ], [ 2, %bb.i ], [ 1, %bb.h ] ; 2 uses
-  %i.ab = tail call ptr @try_val_to_str(i32 noundef %9, ptr noundef @v1_fu_cs_vals) ; 2 uses
+  %7 = zext i8 %6 to i32
+  %i.ab = tail call ptr @try_val_to_str(i32 noundef %7, ptr noundef @v1_fu_cs_vals) ; 2 uses
   %.not67 = icmp eq ptr %i.ab, null
   br i1 %.not67, label %.thread88, label %bb.k
 
@@ -447,10 +444,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.v, label %bb.g, label %get_addressed_entity_type.exit.thread.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.w = getelementptr i8, ptr %i.r, i64 32
-  %4 = load i16, ptr %i.w, align 4
-  %5 = lshr i16 %4, 8
-  %6 = zext nneg i16 %5 to i64
+  %i.w = getelementptr i8, ptr %i.r, i64 33
+  %4 = load i8, ptr %i.w, align 1
   %i.x = getelementptr i8, ptr %3, i64 40
   %.val.i.i = load ptr, ptr %i.x, align 8         ; 2 uses
   %i.y = getelementptr i8, ptr %.val.i.i, i64 32
@@ -470,7 +465,8 @@ get_addressed_entity_type.exit.thread.i:          ; preds = %bb.h, %bb.g, %bb.f
   br label %.thread137.i
 
 get_addressed_entity_type.exit.i:                 ; preds = %bb.h
-  %i.ac = getelementptr [4 x i8], ptr %i.z, i64 %6
+  %5 = zext i8 %4 to i64
+  %i.ac = getelementptr [4 x i8], ptr %i.z, i64 %5
   %i.ad = load i32, ptr %i.ac, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef align 16 dereferenceable(24) @__const.dissect_v2_control_cur_range.wvalue_fields, i64 24, i1 false)

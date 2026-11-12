@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i46
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit48: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i46
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #33
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !451 ; 5 uses
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !451 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
   %i.bp = load i8, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 1109), align 1, !tbaa !148, !range !149, !noundef !150
   %i.bq = trunc nuw i8 %i.bp to i1
@@ -323,7 +323,7 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.0.i10.i = phi ptr [ %i.dd, %bb.q ], [ %i.cw, %bb.r ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %i.df = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.dg = load i64, ptr %i.df, align 8
   %i.dh = trunc i64 %i.dg to i32
   %i.di = and i32 %i.dh, 16777215
@@ -384,10 +384,9 @@ bb.z:                                             ; preds = %bb.x
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.0.i20.i = phi ptr [ %i.ee, %bb.y ], [ %i.dx, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %13 = load i64, ptr %i.df, align 8
-  %14 = lshr i64 %13, 32
-  %15 = trunc nuw i64 %14 to i32
-  %i.eg = and i32 %15, 16777215
+  %13 = getelementptr inbounds nuw i8, ptr %i.bo, i64 20
+  %14 = load i32, ptr %13, align 4
+  %i.eg = and i32 %14, 16777215
   %i.eh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %.0.i20.i, i32 noundef %i.eg)
           to label %bb.ab unwind label %bb.af     ; 4 uses
 
@@ -790,11 +789,9 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local noundef i32 @_ZNK8FileLine10lastColumnEv(ptr noundef nonnull align 8 dereferenceable(48) %0) #4 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load i64, ptr %i.a, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.b = and i32 %3, 16777215
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %1 = load i32, ptr %i.a, align 4
+  %i.b = and i32 %1, 16777215
   ret i32 %i.b
 }
 

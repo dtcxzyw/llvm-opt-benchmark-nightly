@@ -202,12 +202,12 @@ bb.f:                                             ; preds = %.lr.ph91, %bb.s
   %i.ap = getelementptr i8, ptr %i.ao, i64 8
   %.val67 = load ptr, ptr %i.ap, align 8, !tbaa !28
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %.val67, i64 %indvars.iv93
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !30 ; 8 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !30 ; 10 uses
   %i.as = icmp eq ptr %i.ar, null
   br i1 %i.as, label %bb.s, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.at = getelementptr i8, ptr %i.ar, i64 24     ; 3 uses
+  %i.at = getelementptr i8, ptr %i.ar, i64 24
   %.val71 = load i64, ptr %i.at, align 8
   %i.au = trunc i64 %.val71 to i32
   %i.av = and i32 %i.au, 7
@@ -316,10 +316,9 @@ bb.k:                                             ; preds = %Fra_ObjChild1Fra.ex
   br i1 %.not63, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %1 = load i64, ptr %i.at, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.dh = and i32 %3, 16777215
+  %1 = getelementptr i8, ptr %i.ar, i64 28
+  %2 = load i32, ptr %1, align 4
+  %i.dh = and i32 %2, 16777215
   %i.di = icmp sgt i32 %i.dh, %i.dg
   br i1 %i.di, label %bb.m, label %bb.n
 
@@ -337,10 +336,9 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   br i1 %.not64, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %4 = load i64, ptr %i.at, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.dn = and i32 %6, 16777215
+  %3 = getelementptr i8, ptr %i.ar, i64 28
+  %4 = load i32, ptr %3, align 4
+  %i.dn = and i32 %4, 16777215
   %i.do = icmp sgt i32 %i.dn, %i.dm
   br i1 %i.do, label %bb.p, label %bb.q
 

@@ -205,16 +205,15 @@ bb.a:
   %10 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 9 uses
   %11 = alloca %"class.WasmEdge::ErrCode", align 4 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 3 uses
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 -16 ; 2 uses
   %.sroa.0.0.copyload.i = load i128, ptr %i.c, align 16, !tbaa !26 ; 3 uses
   store ptr %i.c, ptr %i.a, align 8, !tbaa !24
-  %i.d = getelementptr inbounds i8, ptr %i.b, i64 -32 ; 2 uses
-  %.sroa.0.0.copyload.i8 = load i128, ptr %i.d, align 16, !tbaa !26
+  %i.d = getelementptr inbounds i8, ptr %i.b, i64 -32
+  %12 = getelementptr i8, ptr %i.b, i64 -24
+  %.sroa.3.0.extract.trunc = load i64, ptr %12, align 8, !tbaa !26 ; 3 uses
   store ptr %i.d, ptr %i.a, align 8, !tbaa !24
-  %.sroa.3.0.extract.shift = lshr i128 %.sroa.0.0.copyload.i8, 64 ; 2 uses
-  %.sroa.3.0.extract.trunc = trunc nuw i128 %.sroa.3.0.extract.shift to i64 ; 2 uses
-  %i.e = icmp eq i128 %.sroa.3.0.extract.shift, 0
+  %i.e = icmp eq i64 %.sroa.3.0.extract.trunc, 0
   br i1 %i.e, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -471,17 +470,16 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 9 uses
   %12 = alloca %"class.WasmEdge::ErrCode", align 4 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 3 uses
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 -16 ; 2 uses
   %.sroa.0.0.copyload.i = load i128, ptr %i.c, align 16, !tbaa !26
   store ptr %i.c, ptr %i.a, align 8, !tbaa !24
   %.sroa.017.0.extract.trunc = trunc i128 %.sroa.0.0.copyload.i to i64 ; 2 uses
-  %i.d = getelementptr inbounds i8, ptr %i.b, i64 -32 ; 2 uses
-  %.sroa.0.0.copyload.i8 = load i128, ptr %i.d, align 16, !tbaa !26
+  %i.d = getelementptr inbounds i8, ptr %i.b, i64 -32
+  %13 = getelementptr i8, ptr %i.b, i64 -24
+  %.sroa.3.0.extract.trunc = load i64, ptr %13, align 8, !tbaa !26 ; 3 uses
   store ptr %i.d, ptr %i.a, align 8, !tbaa !24
-  %.sroa.3.0.extract.shift = lshr i128 %.sroa.0.0.copyload.i8, 64 ; 2 uses
-  %.sroa.3.0.extract.trunc = trunc nuw i128 %.sroa.3.0.extract.shift to i64 ; 2 uses
-  %i.e = icmp eq i128 %.sroa.3.0.extract.shift, 0
+  %i.e = icmp eq i64 %.sroa.3.0.extract.trunc, 0
   br i1 %i.e, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -884,7 +882,7 @@ bb.a:
   %14 = alloca %"class.WasmEdge::ErrCode", align 4 ; 7 uses
   %15 = alloca %"class.WasmEdge::Variant", align 16 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 4 uses
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 -16 ; 2 uses
   %.sroa.0.0.copyload.i = load i128, ptr %i.c, align 16, !tbaa !26
   store ptr %i.c, ptr %i.a, align 8, !tbaa !24
@@ -893,12 +891,11 @@ bb.a:
   %.sroa.0.0.copyload.i9 = load i128, ptr %i.d, align 16, !tbaa !26
   store ptr %i.d, ptr %i.a, align 8, !tbaa !24
   %.sroa.018.0.extract.trunc = trunc i128 %.sroa.0.0.copyload.i9 to i64 ; 2 uses
-  %i.e = getelementptr inbounds i8, ptr %i.b, i64 -48 ; 2 uses
-  %.sroa.0.0.copyload.i10 = load i128, ptr %i.e, align 16, !tbaa !26
+  %i.e = getelementptr inbounds i8, ptr %i.b, i64 -48
+  %16 = getelementptr i8, ptr %i.b, i64 -40
+  %.sroa.3.0.extract.trunc = load i64, ptr %16, align 8, !tbaa !26 ; 3 uses
   store ptr %i.e, ptr %i.a, align 8, !tbaa !24
-  %.sroa.3.0.extract.shift = lshr i128 %.sroa.0.0.copyload.i10, 64 ; 2 uses
-  %.sroa.3.0.extract.trunc = trunc nuw i128 %.sroa.3.0.extract.shift to i64 ; 2 uses
-  %i.f = icmp eq i128 %.sroa.3.0.extract.shift, 0
+  %i.f = icmp eq i64 %.sroa.3.0.extract.trunc, 0
   br i1 %i.f, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

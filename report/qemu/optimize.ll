@@ -204,11 +204,9 @@ copy_propagate.exit.i:                            ; preds = %bb.n, %init_argumen
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 40
   %i.dp = load i64, ptr %i.do, align 8
   %i.dq = inttoptr i64 %i.dp to ptr
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 24
-  %2 = load i64, ptr %i.dr, align 8
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32                    ; 2 uses
-  %i.ds = and i32 %4, 3
+  %i.dr = getelementptr i8, ptr %i.dq, i64 28
+  %2 = load i32, ptr %i.dr, align 4               ; 2 uses
+  %i.ds = and i32 %2, 3
   %.not.i = icmp eq i32 %i.ds, 0
   br i1 %.not.i, label %bb.o, label %.loopexit.i
 
@@ -366,7 +364,7 @@ reset_ts.exit632:                                 ; preds = %bb.v, %._crit_edge.
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.p, !llvm.loop !19
 
 .loopexit.i:                                      ; preds = %reset_ts.exit632, %bb.o, %copy_propagate.exit.i
-  %i.fy = and i32 %4, 4
+  %i.fy = and i32 %2, 4
   %.not31.i = icmp eq i32 %i.fy, 0
   br i1 %.not31.i, label %bb.w, label %remove_mem_copy_all.exit.i
 

@@ -205,11 +205,10 @@ bb.bg:                                            ; preds = %bb.b
   br label %.sink.split
 
 bb.bh:                                            ; preds = %bb.b
-  %i.gy = getelementptr i8, ptr %0, i64 1921
-  %11 = load i16, ptr %i.gy, align 1
-  %12 = lshr i16 %11, 8
-  %13 = and i16 %12, 1
-  %i.gz = zext nneg i16 %13 to i32
+  %i.gy = getelementptr i8, ptr %0, i64 1922
+  %11 = load i8, ptr %i.gy, align 2
+  %12 = and i8 %11, 1
+  %i.gz = zext nneg i8 %12 to i32
   br label %.sink.split
 
 bb.bi:                                            ; preds = %bb.b
