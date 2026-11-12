@@ -205,18 +205,16 @@ bb.b:                                             ; preds = %.lr.ph.split.us
 bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %.02844.us, i64 32
   %i.q = load i32, ptr %i.f, align 4, !tbaa !311
-  %i.r = icmp eq i32 %i.q, 0                      ; 2 uses
-  %5 = select i1 %i.r, i32 8, i32 12
+  %i.r = icmp eq i32 %i.q, 0
   %i.s = load i32, ptr %i.g, align 4
-  %6 = icmp eq i32 %i.s, 0
-  %.not37.us = select i1 %i.r, i1 true, i1 %6
-  %i.t = select i1 %.not37.us, i32 4, i32 0
+  %5 = icmp ne i32 %i.s, 0
+  %.not37.us = select i1 %i.r, i1 true, i1 %5
+  %i.t = select i1 %.not37.us, i32 12, i32 16
+  %6 = add nsw i32 %i.t, %.02546.us
   %i.u = zext nneg i32 %i.n to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.u
   %i.w = sub nuw nsw i32 %i.m, %i.n               ; 2 uses
-  %7 = add i32 %5, %.02546.us
-  %8 = add i32 %7, %i.t
-  %i.x = add i32 %8, %i.n                         ; 2 uses
+  %i.x = add i32 %6, %i.n                         ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   %i.y = icmp sgt i32 %i.w, 31
   br i1 %i.y, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !308
@@ -239,12 +237,12 @@ bb.d:                                             ; preds = %.lr.ph.split
 
 bb.e:                                             ; preds = %bb.d
   %i.af = load i32, ptr %i.f, align 4, !tbaa !311
-  %i.ag = icmp eq i32 %i.af, 0                    ; 3 uses
-  %9 = select i1 %i.ag, i32 8, i32 12
+  %i.ag = icmp eq i32 %i.af, 0                    ; 2 uses
   %i.ah = load i32, ptr %i.g, align 4
-  %10 = icmp eq i32 %i.ah, 0
-  %.not37 = select i1 %i.ag, i1 true, i1 %10
-  %i.ai = select i1 %.not37, i32 4, i32 0
+  %7 = icmp ne i32 %i.ah, 0
+  %.not37 = select i1 %i.ag, i1 true, i1 %7
+  %i.ai = select i1 %.not37, i32 12, i32 16
+  %8 = add nsw i32 %i.ai, %.02546
   br i1 %i.ag, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -276,9 +274,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.at = zext i32 %i.as to i64
   %i.au = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.at
   %i.av = sub i32 %i.ac, %i.as                    ; 2 uses
-  %11 = add i32 %9, %.02546
-  %12 = add i32 %11, %i.ai
-  %i.aw = add i32 %12, %i.as                      ; 2 uses
+  %i.aw = add i32 %8, %i.as                       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   %i.ax = icmp sgt i32 %i.av, 31
   br i1 %i.ax, label %.lr.ph.split, label %._crit_edge, !llvm.loop !308

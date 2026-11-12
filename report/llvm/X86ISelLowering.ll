@@ -205,9 +205,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i.i:   ; preds = %_ZN4llvm5APIntC2ERK
   %i.afn = zext nneg i32 %i.afm to i64
   %i.afo = lshr i64 -1, %i.afn
   %i.afp = icmp eq i32 %i.afi, 0
-  %.04.i.i.i.i.i = select i1 %i.afp, i64 0, i64 %i.afo, !prof !648
-  %256 = and i64 %.04.i.i.i.i.i, %storemerge.i.i.i.i
-  store i64 %256, ptr %54, align 8, !tbaa !357, !alias.scope !3243
+  %256 = and i64 %i.afo, %storemerge.i.i.i.i
+  %257 = select i1 %i.afp, i64 0, i64 %256, !prof !648
+  store i64 %257, ptr %54, align 8, !tbaa !357, !alias.scope !3243
   br label %_ZNK4llvm5APIntlsEj.exit.i
 
 bb.ii:                                            ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i.i
@@ -273,9 +273,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i9.i:  ; preds = %_ZN4llvm5APIntC2ERK
   %i.agi = zext nneg i32 %i.agh to i64
   %i.agj = lshr i64 -1, %i.agi
   %i.agk = icmp eq i32 %i.agd, 0
-  %.04.i.i.i.i13.i = select i1 %i.agk, i64 0, i64 %i.agj, !prof !648
-  %257 = and i64 %.04.i.i.i.i13.i, %storemerge.i.i.i12.i
-  store i64 %257, ptr %55, align 8, !tbaa !357, !alias.scope !3246
+  %258 = and i64 %i.agj, %storemerge.i.i.i12.i
+  %259 = select i1 %i.agk, i64 0, i64 %258, !prof !648
+  store i64 %259, ptr %55, align 8, !tbaa !357, !alias.scope !3246
   br label %_ZNK4llvm5APIntlsEj.exit14.i
 
 bb.in:                                            ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i7.i
@@ -678,9 +678,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i:     ; preds = %_ZN4llvm5APIntC2ERK
   %i.q = zext nneg i32 %i.p to i64
   %i.r = lshr i64 -1, %i.q
   %i.s = icmp eq i32 %i.l, 0
-  %.04.i.i.i.i = select i1 %i.s, i64 0, i64 %i.r, !prof !648
-  %8 = and i64 %.04.i.i.i.i, %storemerge.i.i.i
-  store i64 %8, ptr %7, align 8, !tbaa !357, !alias.scope !4920
+  %8 = and i64 %i.r, %storemerge.i.i.i
+  %9 = select i1 %i.s, i64 0, i64 %8, !prof !648
+  store i64 %9, ptr %7, align 8, !tbaa !357, !alias.scope !4920
   br label %_ZNK4llvm5APIntlsEj.exit
 
 bb.b:                                             ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i

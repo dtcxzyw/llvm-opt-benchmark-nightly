@@ -204,15 +204,13 @@ vector.body413:                                   ; preds = %vector.ph405, %pred
   %i.jt = and <8 x i1> %i.jh, %i.jn
   %i.ju = and <8 x i1> %i.jg, %i.jo
   %i.jv = and <8 x i1> %i.jh, %i.jp
-  %i.jw = select <8 x i1> %i.js, <8 x i1> %broadcast.splat410, <8 x i1> zeroinitializer
-  %i.jx = select <8 x i1> %i.jt, <8 x i1> %broadcast.splat410, <8 x i1> zeroinitializer
-  %i.jy = select <8 x i1> %i.ju, <8 x i1> %broadcast.splat408, <8 x i1> %i.jw
-  %i.jz = select <8 x i1> %i.jv, <8 x i1> %broadcast.splat408, <8 x i1> %i.jx
-  %i.ka = select <8 x i1> %i.jq, <8 x i1> %broadcast.splat412, <8 x i1> zeroinitializer
-  %i.kb = select <8 x i1> %i.jr, <8 x i1> %broadcast.splat412, <8 x i1> zeroinitializer
-  %4 = or <8 x i1> %i.jy, %i.ka                   ; 8 uses
-  %5 = or <8 x i1> %i.jz, %i.kb                   ; 8 uses
-  %i.kc = extractelement <8 x i1> %4, i64 0
+  %i.jw = select <8 x i1> %i.jq, <8 x i1> %broadcast.splat412, <8 x i1> zeroinitializer
+  %i.jx = select <8 x i1> %i.jr, <8 x i1> %broadcast.splat412, <8 x i1> zeroinitializer
+  %i.jy = select <8 x i1> %i.js, <8 x i1> %broadcast.splat410, <8 x i1> %i.jw
+  %i.jz = select <8 x i1> %i.ju, <8 x i1> %broadcast.splat408, <8 x i1> %i.jy ; 8 uses
+  %i.ka = select <8 x i1> %i.jt, <8 x i1> %broadcast.splat410, <8 x i1> %i.jx
+  %i.kb = select <8 x i1> %i.jv, <8 x i1> %broadcast.splat408, <8 x i1> %i.ka ; 8 uses
+  %i.kc = extractelement <8 x i1> %i.jz, i64 0
   br i1 %i.kc, label %pred.store.if417, label %pred.store.continue418
 
 pred.store.if417:                                 ; preds = %vector.body413
@@ -222,7 +220,7 @@ pred.store.if417:                                 ; preds = %vector.body413
   br label %pred.store.continue418
 
 pred.store.continue418:                           ; preds = %pred.store.if417, %vector.body413
-  %i.kf = extractelement <8 x i1> %4, i64 1
+  %i.kf = extractelement <8 x i1> %i.jz, i64 1
   br i1 %i.kf, label %pred.store.if419, label %pred.store.continue420
 
 pred.store.if419:                                 ; preds = %pred.store.continue418
@@ -233,7 +231,7 @@ pred.store.if419:                                 ; preds = %pred.store.continue
   br label %pred.store.continue420
 
 pred.store.continue420:                           ; preds = %pred.store.if419, %pred.store.continue418
-  %i.kj = extractelement <8 x i1> %4, i64 2
+  %i.kj = extractelement <8 x i1> %i.jz, i64 2
   br i1 %i.kj, label %pred.store.if421, label %pred.store.continue422
 
 pred.store.if421:                                 ; preds = %pred.store.continue420
@@ -244,7 +242,7 @@ pred.store.if421:                                 ; preds = %pred.store.continue
   br label %pred.store.continue422
 
 pred.store.continue422:                           ; preds = %pred.store.if421, %pred.store.continue420
-  %i.kn = extractelement <8 x i1> %4, i64 3
+  %i.kn = extractelement <8 x i1> %i.jz, i64 3
   br i1 %i.kn, label %pred.store.if423, label %pred.store.continue424
 
 pred.store.if423:                                 ; preds = %pred.store.continue422
@@ -255,7 +253,7 @@ pred.store.if423:                                 ; preds = %pred.store.continue
   br label %pred.store.continue424
 
 pred.store.continue424:                           ; preds = %pred.store.if423, %pred.store.continue422
-  %i.kr = extractelement <8 x i1> %4, i64 4
+  %i.kr = extractelement <8 x i1> %i.jz, i64 4
   br i1 %i.kr, label %pred.store.if425, label %pred.store.continue426
 
 pred.store.if425:                                 ; preds = %pred.store.continue424
@@ -266,7 +264,7 @@ pred.store.if425:                                 ; preds = %pred.store.continue
   br label %pred.store.continue426
 
 pred.store.continue426:                           ; preds = %pred.store.if425, %pred.store.continue424
-  %i.kv = extractelement <8 x i1> %4, i64 5
+  %i.kv = extractelement <8 x i1> %i.jz, i64 5
   br i1 %i.kv, label %pred.store.if427, label %pred.store.continue428
 
 pred.store.if427:                                 ; preds = %pred.store.continue426
@@ -277,7 +275,7 @@ pred.store.if427:                                 ; preds = %pred.store.continue
   br label %pred.store.continue428
 
 pred.store.continue428:                           ; preds = %pred.store.if427, %pred.store.continue426
-  %i.kz = extractelement <8 x i1> %4, i64 6
+  %i.kz = extractelement <8 x i1> %i.jz, i64 6
   br i1 %i.kz, label %pred.store.if429, label %pred.store.continue430
 
 pred.store.if429:                                 ; preds = %pred.store.continue428
@@ -288,7 +286,7 @@ pred.store.if429:                                 ; preds = %pred.store.continue
   br label %pred.store.continue430
 
 pred.store.continue430:                           ; preds = %pred.store.if429, %pred.store.continue428
-  %i.ld = extractelement <8 x i1> %4, i64 7
+  %i.ld = extractelement <8 x i1> %i.jz, i64 7
   br i1 %i.ld, label %pred.store.if431, label %pred.store.continue432
 
 pred.store.if431:                                 ; preds = %pred.store.continue430
@@ -299,7 +297,7 @@ pred.store.if431:                                 ; preds = %pred.store.continue
   br label %pred.store.continue432
 
 pred.store.continue432:                           ; preds = %pred.store.if431, %pred.store.continue430
-  %i.lh = extractelement <8 x i1> %5, i64 0
+  %i.lh = extractelement <8 x i1> %i.kb, i64 0
   br i1 %i.lh, label %pred.store.if433, label %pred.store.continue434
 
 pred.store.if433:                                 ; preds = %pred.store.continue432
@@ -310,7 +308,7 @@ pred.store.if433:                                 ; preds = %pred.store.continue
   br label %pred.store.continue434
 
 pred.store.continue434:                           ; preds = %pred.store.if433, %pred.store.continue432
-  %i.ll = extractelement <8 x i1> %5, i64 1
+  %i.ll = extractelement <8 x i1> %i.kb, i64 1
   br i1 %i.ll, label %pred.store.if435, label %pred.store.continue436
 
 pred.store.if435:                                 ; preds = %pred.store.continue434
@@ -321,7 +319,7 @@ pred.store.if435:                                 ; preds = %pred.store.continue
   br label %pred.store.continue436
 
 pred.store.continue436:                           ; preds = %pred.store.if435, %pred.store.continue434
-  %i.lp = extractelement <8 x i1> %5, i64 2
+  %i.lp = extractelement <8 x i1> %i.kb, i64 2
   br i1 %i.lp, label %pred.store.if437, label %pred.store.continue438
 
 pred.store.if437:                                 ; preds = %pred.store.continue436
@@ -332,7 +330,7 @@ pred.store.if437:                                 ; preds = %pred.store.continue
   br label %pred.store.continue438
 
 pred.store.continue438:                           ; preds = %pred.store.if437, %pred.store.continue436
-  %i.lt = extractelement <8 x i1> %5, i64 3
+  %i.lt = extractelement <8 x i1> %i.kb, i64 3
   br i1 %i.lt, label %pred.store.if439, label %pred.store.continue440
 
 pred.store.if439:                                 ; preds = %pred.store.continue438
@@ -343,7 +341,7 @@ pred.store.if439:                                 ; preds = %pred.store.continue
   br label %pred.store.continue440
 
 pred.store.continue440:                           ; preds = %pred.store.if439, %pred.store.continue438
-  %i.lx = extractelement <8 x i1> %5, i64 4
+  %i.lx = extractelement <8 x i1> %i.kb, i64 4
   br i1 %i.lx, label %pred.store.if441, label %pred.store.continue442
 
 pred.store.if441:                                 ; preds = %pred.store.continue440
@@ -354,7 +352,7 @@ pred.store.if441:                                 ; preds = %pred.store.continue
   br label %pred.store.continue442
 
 pred.store.continue442:                           ; preds = %pred.store.if441, %pred.store.continue440
-  %i.mb = extractelement <8 x i1> %5, i64 5
+  %i.mb = extractelement <8 x i1> %i.kb, i64 5
   br i1 %i.mb, label %pred.store.if443, label %pred.store.continue444
 
 pred.store.if443:                                 ; preds = %pred.store.continue442
@@ -365,7 +363,7 @@ pred.store.if443:                                 ; preds = %pred.store.continue
   br label %pred.store.continue444
 
 pred.store.continue444:                           ; preds = %pred.store.if443, %pred.store.continue442
-  %i.mf = extractelement <8 x i1> %5, i64 6
+  %i.mf = extractelement <8 x i1> %i.kb, i64 6
   br i1 %i.mf, label %pred.store.if445, label %pred.store.continue446
 
 pred.store.if445:                                 ; preds = %pred.store.continue444
@@ -376,7 +374,7 @@ pred.store.if445:                                 ; preds = %pred.store.continue
   br label %pred.store.continue446
 
 pred.store.continue446:                           ; preds = %pred.store.if445, %pred.store.continue444
-  %i.mj = extractelement <8 x i1> %5, i64 7
+  %i.mj = extractelement <8 x i1> %i.kb, i64 7
   br i1 %i.mj, label %pred.store.if447, label %pred.store.continue448
 
 pred.store.if447:                                 ; preds = %pred.store.continue446
@@ -418,11 +416,10 @@ vec.epilog.vector.body465:                        ; preds = %pred.store.continue
   %i.mw = and <8 x i1> %i.mr, %i.mt
   %i.mx = and <8 x i1> %i.mr, %i.mu
   %i.my = and <8 x i1> %i.mr, %i.mv
-  %i.mz = select <8 x i1> %i.mx, <8 x i1> %broadcast.splat462, <8 x i1> zeroinitializer
-  %i.na = select <8 x i1> %i.my, <8 x i1> %broadcast.splat460, <8 x i1> %i.mz
-  %i.nb = select <8 x i1> %i.mw, <8 x i1> %broadcast.splat464, <8 x i1> zeroinitializer
-  %6 = or <8 x i1> %i.na, %i.nb                   ; 8 uses
-  %i.nc = extractelement <8 x i1> %6, i64 0
+  %i.mz = select <8 x i1> %i.mw, <8 x i1> %broadcast.splat464, <8 x i1> zeroinitializer
+  %i.na = select <8 x i1> %i.mx, <8 x i1> %broadcast.splat462, <8 x i1> %i.mz
+  %i.nb = select <8 x i1> %i.my, <8 x i1> %broadcast.splat460, <8 x i1> %i.na ; 8 uses
+  %i.nc = extractelement <8 x i1> %i.nb, i64 0
   br i1 %i.nc, label %pred.store.if468, label %pred.store.continue469
 
 pred.store.if468:                                 ; preds = %vec.epilog.vector.body465
@@ -432,7 +429,7 @@ pred.store.if468:                                 ; preds = %vec.epilog.vector.b
   br label %pred.store.continue469
 
 pred.store.continue469:                           ; preds = %pred.store.if468, %vec.epilog.vector.body465
-  %i.nf = extractelement <8 x i1> %6, i64 1
+  %i.nf = extractelement <8 x i1> %i.nb, i64 1
   br i1 %i.nf, label %pred.store.if470, label %pred.store.continue471
 
 pred.store.if470:                                 ; preds = %pred.store.continue469
@@ -443,7 +440,7 @@ pred.store.if470:                                 ; preds = %pred.store.continue
   br label %pred.store.continue471
 
 pred.store.continue471:                           ; preds = %pred.store.if470, %pred.store.continue469
-  %i.nj = extractelement <8 x i1> %6, i64 2
+  %i.nj = extractelement <8 x i1> %i.nb, i64 2
   br i1 %i.nj, label %pred.store.if472, label %pred.store.continue473
 
 pred.store.if472:                                 ; preds = %pred.store.continue471
@@ -454,7 +451,7 @@ pred.store.if472:                                 ; preds = %pred.store.continue
   br label %pred.store.continue473
 
 pred.store.continue473:                           ; preds = %pred.store.if472, %pred.store.continue471
-  %i.nn = extractelement <8 x i1> %6, i64 3
+  %i.nn = extractelement <8 x i1> %i.nb, i64 3
   br i1 %i.nn, label %pred.store.if474, label %pred.store.continue475
 
 pred.store.if474:                                 ; preds = %pred.store.continue473
@@ -465,7 +462,7 @@ pred.store.if474:                                 ; preds = %pred.store.continue
   br label %pred.store.continue475
 
 pred.store.continue475:                           ; preds = %pred.store.if474, %pred.store.continue473
-  %i.nr = extractelement <8 x i1> %6, i64 4
+  %i.nr = extractelement <8 x i1> %i.nb, i64 4
   br i1 %i.nr, label %pred.store.if476, label %pred.store.continue477
 
 pred.store.if476:                                 ; preds = %pred.store.continue475
@@ -476,7 +473,7 @@ pred.store.if476:                                 ; preds = %pred.store.continue
   br label %pred.store.continue477
 
 pred.store.continue477:                           ; preds = %pred.store.if476, %pred.store.continue475
-  %i.nv = extractelement <8 x i1> %6, i64 5
+  %i.nv = extractelement <8 x i1> %i.nb, i64 5
   br i1 %i.nv, label %pred.store.if478, label %pred.store.continue479
 
 pred.store.if478:                                 ; preds = %pred.store.continue477
@@ -487,7 +484,7 @@ pred.store.if478:                                 ; preds = %pred.store.continue
   br label %pred.store.continue479
 
 pred.store.continue479:                           ; preds = %pred.store.if478, %pred.store.continue477
-  %i.nz = extractelement <8 x i1> %6, i64 6
+  %i.nz = extractelement <8 x i1> %i.nb, i64 6
   br i1 %i.nz, label %pred.store.if480, label %pred.store.continue481
 
 pred.store.if480:                                 ; preds = %pred.store.continue479
@@ -498,7 +495,7 @@ pred.store.if480:                                 ; preds = %pred.store.continue
   br label %pred.store.continue481
 
 pred.store.continue481:                           ; preds = %pred.store.if480, %pred.store.continue479
-  %i.od = extractelement <8 x i1> %6, i64 7
+  %i.od = extractelement <8 x i1> %i.nb, i64 7
   br i1 %i.od, label %pred.store.if482, label %pred.store.continue483
 
 pred.store.if482:                                 ; preds = %pred.store.continue481
@@ -610,16 +607,14 @@ vector.body:                                      ; preds = %vector.ph, %pred.st
   %i.pp = and <8 x i1> %i.oz, %i.ph
   %i.pq = and <8 x i1> %i.oy, %i.pi
   %i.pr = and <8 x i1> %i.oz, %i.pj
-  %i.ps = select <8 x i1> %i.pm, <8 x i1> %broadcast.splat337, <8 x i1> zeroinitializer
-  %i.pt = select <8 x i1> %i.pn, <8 x i1> %broadcast.splat337, <8 x i1> zeroinitializer
-  %i.pu = select <8 x i1> %i.pk, <8 x i1> %broadcast.splat339, <8 x i1> %i.ps
-  %i.pv = select <8 x i1> %i.pl, <8 x i1> %broadcast.splat339, <8 x i1> %i.pt
-  %i.pw = select <8 x i1> %i.po, <8 x i1> %broadcast.splat, <8 x i1> zeroinitializer
-  %i.px = select <8 x i1> %i.pp, <8 x i1> %broadcast.splat, <8 x i1> zeroinitializer
-  %7 = or <8 x i1> %i.pu, %i.pw
-  %8 = or <8 x i1> %i.pv, %i.px
-  %i.py = or <8 x i1> %7, %i.pq                   ; 8 uses
-  %i.pz = or <8 x i1> %8, %i.pr                   ; 8 uses
+  %i.ps = select <8 x i1> %i.po, <8 x i1> %broadcast.splat, <8 x i1> zeroinitializer
+  %i.pt = select <8 x i1> %i.pp, <8 x i1> %broadcast.splat, <8 x i1> zeroinitializer
+  %i.pu = select <8 x i1> %i.pm, <8 x i1> %broadcast.splat337, <8 x i1> %i.ps
+  %i.pv = select <8 x i1> %i.pk, <8 x i1> %broadcast.splat339, <8 x i1> %i.pu
+  %i.pw = select <8 x i1> %i.pn, <8 x i1> %broadcast.splat337, <8 x i1> %i.pt
+  %i.px = select <8 x i1> %i.pl, <8 x i1> %broadcast.splat339, <8 x i1> %i.pw
+  %i.py = or <8 x i1> %i.pv, %i.pq                ; 8 uses
+  %i.pz = or <8 x i1> %i.px, %i.pr                ; 8 uses
   %i.qa = extractelement <8 x i1> %i.py, i64 0
   br i1 %i.qa, label %pred.store.if, label %pred.store.continue
 
@@ -828,11 +823,10 @@ vec.epilog.vector.body:                           ; preds = %pred.store.continue
   %i.sw = and <8 x i1> %i.sp, %i.ss
   %i.sx = and <8 x i1> %i.sp, %i.st
   %i.sy = and <8 x i1> %i.sp, %i.su
-  %i.sz = select <8 x i1> %i.sw, <8 x i1> %broadcast.splat375, <8 x i1> zeroinitializer
-  %i.ta = select <8 x i1> %i.sv, <8 x i1> %broadcast.splat377, <8 x i1> %i.sz
-  %i.tb = select <8 x i1> %i.sx, <8 x i1> %broadcast.splat373, <8 x i1> zeroinitializer
-  %9 = or <8 x i1> %i.ta, %i.tb
-  %i.tc = or <8 x i1> %9, %i.sy                   ; 8 uses
+  %i.sz = select <8 x i1> %i.sx, <8 x i1> %broadcast.splat373, <8 x i1> zeroinitializer
+  %i.ta = select <8 x i1> %i.sw, <8 x i1> %broadcast.splat375, <8 x i1> %i.sz
+  %i.tb = select <8 x i1> %i.sv, <8 x i1> %broadcast.splat377, <8 x i1> %i.ta
+  %i.tc = or <8 x i1> %i.tb, %i.sy                ; 8 uses
   %i.td = extractelement <8 x i1> %i.tc, i64 0
   br i1 %i.td, label %pred.store.if380, label %pred.store.continue381
 

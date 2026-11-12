@@ -204,9 +204,9 @@ _ZNK4llvm5APInt3shlEj.exit.thread:                ; preds = %bb.c, %_ZN4llvm5API
   %i.u = zext nneg i32 %i.t to i64
   %i.v = lshr i64 -1, %i.u
   %i.w = icmp eq i32 %i.p, 0
-  %.04.i.i.i = select i1 %i.w, i64 0, i64 %i.v, !prof !116
-  %5 = and i64 %.04.i.i.i, %storemerge.i.i
-  store i64 %5, ptr %4, align 8, !tbaa !31, !alias.scope !1205
+  %5 = and i64 %i.v, %storemerge.i.i
+  %6 = select i1 %i.w, i64 0, i64 %5, !prof !116
+  store i64 %6, ptr %4, align 8, !tbaa !31, !alias.scope !1205
   %i.x = load ptr, ptr %i.b, align 8, !tbaa !109
   br label %.split10
 

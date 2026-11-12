@@ -202,11 +202,11 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %or.cond.i170.not.i = icmp eq i8 %i.jw, 0
   %.not.i171.i = xor i1 %i.jn, true               ; 2 uses
   %or.cond6.i.i = and i1 %.not.i171.i, %i.jt
-  %3 = select i1 %or.cond6.i.i, i64 0, i64 %i.jl
   %or.cond9.i.i = or i1 %.not.i171.i, %i.jt
-  %i.jx = shl nuw i64 %i.jl, 32
+  %i.jx = shl nuw i64 %i.jl, 32                   ; 2 uses
   %i.jy = select i1 %or.cond9.i.i, i64 %i.jx, i64 0
-  %i.jz = or disjoint i64 %3, %i.jy               ; 2 uses
+  %i.jz = or disjoint i64 %i.jy, %i.jl
+  %3 = select i1 %or.cond6.i.i, i64 %i.jx, i64 %i.jz ; 2 uses
   %i.ka = load i32, ptr %i.ju, align 4
   %i.kb = icmp sgt i32 %i.ka, 0                   ; 2 uses
   br i1 %or.cond.i170.not.i, label %.lr.ph.split.us.split.i.i, label %.lr.ph.split.split.i.i
@@ -223,7 +223,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.ke = load i32, ptr %i.kd, align 8
   store i32 %i.ke, ptr %2, align 8
   store i32 %i.jq, ptr %i.az, align 4
-  store i64 %i.jz, ptr %i.ba, align 8
+  store i64 %3, ptr %i.ba, align 8
   %i.kf = call ptr @aclupdate(ptr noundef %.037.us54.i.i, ptr noundef nonnull %2, i32 noundef %i.jr, i32 noundef %i.el, i32 noundef %i.jo) #10 ; 2 uses
   call void @pfree(ptr noundef %.037.us54.i.i) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
@@ -256,7 +256,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 
 bb.ax:                                            ; preds = %.lr.ph50.i.i
   store i32 %i.jq, ptr %i.az, align 4
-  store i64 %i.jz, ptr %i.ba, align 8
+  store i64 %3, ptr %i.ba, align 8
   %i.kq = call ptr @aclupdate(ptr noundef %.03749.i.i, ptr noundef nonnull %2, i32 noundef %i.jr, i32 noundef %i.el, i32 noundef %i.jo) #10 ; 2 uses
   call void @pfree(ptr noundef %.03749.i.i) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10

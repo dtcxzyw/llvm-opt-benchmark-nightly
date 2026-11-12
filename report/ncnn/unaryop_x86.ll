@@ -204,11 +204,10 @@ middle.block:                                     ; preds = %vector.body
   %.02536 = phi ptr [ %i.bz, %.lr.ph ], [ %i.av, %.noexc ] ; 3 uses
   %i.bv = load <4 x float>, ptr %.02536, align 16, !tbaa !46 ; 2 uses
   %i.bw = fcmp fast ogt <4 x float> %i.bv, zeroinitializer
-  %6 = select <4 x i1> %i.bw, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
   %i.bx = fcmp fast olt <4 x float> %i.bv, zeroinitializer
-  %i.by = select <4 x i1> %i.bx, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
-  %7 = fsub fast <4 x float> %6, %i.by
-  store <4 x float> %7, ptr %.02536, align 16, !tbaa !46
+  %i.by = select fast <4 x i1> %i.bx, <4 x float> splat (float -1.000000e+00), <4 x float> splat (float -0.000000e+00)
+  %6 = select fast <4 x i1> %i.bw, <4 x float> splat (float 1.000000e+00), <4 x float> %i.by
+  store <4 x float> %6, ptr %.02536, align 16, !tbaa !46
   %i.bz = getelementptr inbounds nuw i8, ptr %.02536, i64 16 ; 2 uses
   %i.ca = add nuw nsw i32 %.037, 4                ; 3 uses
   %i.cb = or disjoint i32 %i.ca, 3
@@ -611,22 +610,24 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not46, label %._crit_edge48, label %.noexc.lr.ph
 
 .noexc.lr.ph:                                     ; preds = %bb.b
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.n = load i32, ptr %4, align 4, !tbaa !37     ; 5 uses
   %i.o = icmp sgt i32 %i.n, 3
-  %.pre61 = load i64, ptr %i.m, align 8, !tbaa !17, !noalias !398 ; 2 uses
   br i1 %i.o, label %.noexc.preheader, label %.noexc.lr.ph.split.us
 
 .noexc.preheader:                                 ; preds = %.noexc.lr.ph
   %i.p = sext i32 %i.k to i64
   %i.q = add nsw i32 %i.j, 1
+  %.pre61 = load i64, ptr %i.l, align 8, !tbaa !40, !noalias !398
+  %.pre63 = load i64, ptr %i.m, align 8, !tbaa !17, !noalias !398
   br label %.noexc
 
 .noexc.lr.ph.split.us:                            ; preds = %.noexc.lr.ph
   %i.r = load ptr, ptr %3, align 8, !tbaa !39, !noalias !398
   %i.s = load i64, ptr %i.l, align 8, !tbaa !40, !noalias !398
-  %factor.op.mul = mul i64 %i.s, %.pre61
+  %6 = load i64, ptr %i.m, align 8, !tbaa !17, !noalias !398
+  %factor.op.mul = mul i64 %i.s, %6
   %i.t = icmp sgt i32 %i.n, 0
   br i1 %i.t, label %.noexc.us.preheader, label %._crit_edge48
 
@@ -685,23 +686,25 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond54.not, label %._crit_edge48, label %.noexc.us
 
 .noexc:                                           ; preds = %.noexc.preheader, %._crit_edge
+  %7 = phi i64 [ %.pre63, %.noexc.preheader ], [ %8, %._crit_edge ] ; 2 uses
   %i.ax = phi i64 [ %.pre61, %.noexc.preheader ], [ %i.be, %._crit_edge ] ; 2 uses
   %i.ay = phi i32 [ %i.n, %.noexc.preheader ], [ %i.bf, %._crit_edge ] ; 2 uses
   %indvars.iv56 = phi i64 [ %i.p, %.noexc.preheader ], [ %indvars.iv.next57, %._crit_edge ] ; 2 uses
   %i.az = load ptr, ptr %3, align 8, !tbaa !39, !noalias !398
-  %6 = load i64, ptr %i.l, align 8, !tbaa !40, !noalias !398
-  %i.ba = mul i64 %6, %indvars.iv56
-  %i.bb = mul i64 %i.ba, %i.ax
+  %i.ba = mul i64 %i.ax, %indvars.iv56
+  %i.bb = mul i64 %i.ba, %7
   %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bb ; 2 uses
   %i.bd = icmp sgt i32 %i.ay, 3
   br i1 %i.bd, label %.lr.ph, label %.preheader
 
 .preheader.loopexit:                              ; preds = %.lr.ph
+  %.pre = load i64, ptr %i.l, align 8, !tbaa !40, !noalias !398
   %.pre.a = load i64, ptr %i.m, align 8, !tbaa !17, !noalias !398
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.noexc
-  %i.be = phi i64 [ %i.ax, %.noexc ], [ %.pre.a, %.preheader.loopexit ]
+  %8 = phi i64 [ %7, %.noexc ], [ %.pre.a, %.preheader.loopexit ]
+  %i.be = phi i64 [ %i.ax, %.noexc ], [ %.pre, %.preheader.loopexit ]
   %i.bf = phi i32 [ %i.ay, %.noexc ], [ %i.cp, %.preheader.loopexit ] ; 4 uses
   %.025.lcssa = phi ptr [ %i.bc, %.noexc ], [ %i.cm, %.preheader.loopexit ] ; 3 uses
   %.0.lcssa = phi i32 [ 0, %.noexc ], [ %i.cn, %.preheader.loopexit ] ; 4 uses
@@ -759,11 +762,10 @@ middle.block:                                     ; preds = %vector.body
   %i.cb = shufflevector <8 x i16> %i.ca, <8 x i16> <i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <8 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3>
   %i.cc = bitcast <8 x i16> %i.cb to <4 x float>  ; 2 uses
   %i.cd = fcmp fast ogt <4 x float> %i.cc, zeroinitializer
-  %7 = select <4 x i1> %i.cd, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
   %i.ce = fcmp fast olt <4 x float> %i.cc, zeroinitializer
-  %i.cf = select <4 x i1> %i.ce, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
-  %8 = fsub fast <4 x float> %7, %i.cf
-  %i.cg = bitcast <4 x float> %8 to <8 x i16>
+  %i.cf = select fast <4 x i1> %i.ce, <4 x float> splat (float -1.000000e+00), <4 x float> splat (float -0.000000e+00)
+  %9 = select fast <4 x i1> %i.cd, <4 x float> splat (float 1.000000e+00), <4 x float> %i.cf
+  %i.cg = bitcast <4 x float> %9 to <8 x i16>
   %i.ch = shufflevector <8 x i16> %i.cg, <8 x i16> poison, <8 x i32> <i32 1, i32 3, i32 poison, i32 poison, i32 5, i32 7, i32 poison, i32 poison>
   %i.ci = bitcast <8 x i16> %i.ch to <4 x float>
   %i.cj = shufflevector <4 x float> %i.ci, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
