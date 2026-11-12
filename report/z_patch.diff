@@ -1,0 +1,433 @@
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index d967fbdffdc5e..e3d52b3e3c80b 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -2189,19 +2189,21 @@ static bool canConvertValue(const DataLayout &DL, Type *OldTy, Type *NewTy,
+ /// for a single slice.
+ static bool isVectorPromotionViableForSlice(Partition &P, const Slice &S,
+                                             VectorType *Ty,
+-                                            uint64_t ElementSize,
++                                            uint64_t ElementBits,
+                                             const DataLayout &DL,
+                                             unsigned VScale) {
+-  // First validate the slice offsets.
+-  uint64_t BeginOffset =
+-      std::max(S.beginOffset(), P.beginOffset()) - P.beginOffset();
+-  uint64_t BeginIndex = BeginOffset / ElementSize;
+-  if (BeginIndex * ElementSize != BeginOffset ||
++  // First validate the slice offsets. Slices are byte-aligned, but elements
++  // may be narrower than a byte.
++  uint64_t BeginBit =
++      (std::max(S.beginOffset(), P.beginOffset()) - P.beginOffset()) * 8;
++  uint64_t BeginIndex = BeginBit / ElementBits;
++  if (BeginIndex * ElementBits != BeginBit ||
+       BeginIndex >= cast<FixedVectorType>(Ty)->getNumElements())
+     return false;
+-  uint64_t EndOffset = std::min(S.endOffset(), P.endOffset()) - P.beginOffset();
+-  uint64_t EndIndex = EndOffset / ElementSize;
+-  if (EndIndex * ElementSize != EndOffset ||
++  uint64_t EndBit =
++      (std::min(S.endOffset(), P.endOffset()) - P.beginOffset()) * 8;
++  uint64_t EndIndex = EndBit / ElementBits;
++  if (EndIndex * ElementBits != EndBit ||
+       EndIndex > cast<FixedVectorType>(Ty)->getNumElements())
+     return false;
+ 
+@@ -2212,7 +2214,7 @@ static bool isVectorPromotionViableForSlice(Partition &P, const Slice &S,
+                       : FixedVectorType::get(Ty->getElementType(), NumElements);
+ 
+   Type *SplitIntTy =
+-      Type::getIntNTy(Ty->getContext(), NumElements * ElementSize * 8);
++      Type::getIntNTy(Ty->getContext(), NumElements * ElementBits);
+ 
+   Use *U = S.getUse();
+ 
+@@ -2222,8 +2224,12 @@ static bool isVectorPromotionViableForSlice(Partition &P, const Slice &S,
+     if (!S.isSplittable())
+       return false; // Skip any unsplittable intrinsics.
+     if (isa<MemSetInst>(MI)) {
+-      Type *SplatTy = Type::getIntNTy(Ty->getContext(), ElementSize * 8);
+-      if (!canConvertValue(DL, SplatTy, Ty->getElementType(), VScale))
++      // The splatted byte pattern is converted to one element, or to the
++      // whole slice if the elements are narrower than a byte.
++      Type *SplatDstTy = ElementBits % 8 ? SliceTy : Ty->getElementType();
++      Type *SplatTy = Type::getIntNTy(
++          Ty->getContext(), DL.getTypeSizeInBits(SplatDstTy).getFixedValue());
++      if (!canConvertValue(DL, SplatTy, SplatDstTy, VScale))
+         return false;
+     }
+   } else if (IntrinsicInst *II = dyn_cast<IntrinsicInst>(U->getUser())) {
+@@ -2348,23 +2354,20 @@ checkVectorTypesForPromotion(Partition &P, const DataLayout &DL,
+ 
+   // Find a vector type viable for promotion by iterating over all slices.
+   auto *VTy = llvm::find_if(CandidateTys, [&](VectorType *VTy) -> bool {
+-    uint64_t ElementSize =
++    uint64_t ElementBits =
+         DL.getTypeSizeInBits(VTy->getElementType()).getFixedValue();
+ 
+-    // While the definition of LLVM vectors is bitpacked, we don't support sizes
+-    // that aren't byte sized.
+-    if (ElementSize % 8)
++    // Vectors are bit-packed, so elements may be narrower than a byte, but
++    // the vector as a whole must fill a whole number of bytes.
++    if (DL.getTypeSizeInBits(VTy).getFixedValue() % 8)
+       return false;
+-    assert((DL.getTypeSizeInBits(VTy).getFixedValue() % 8) == 0 &&
+-           "vector size not a multiple of element size?");
+-    ElementSize /= 8;
+ 
+     for (const Slice &S : P)
+-      if (!isVectorPromotionViableForSlice(P, S, VTy, ElementSize, DL, VScale))
++      if (!isVectorPromotionViableForSlice(P, S, VTy, ElementBits, DL, VScale))
+         return false;
+ 
+     for (const Slice *S : P.splitSliceTails())
+-      if (!isVectorPromotionViableForSlice(P, *S, VTy, ElementSize, DL, VScale))
++      if (!isVectorPromotionViableForSlice(P, *S, VTy, ElementBits, DL, VScale))
+         return false;
+ 
+     return true;
+@@ -2883,7 +2886,7 @@ class AllocaSliceRewriter : public InstVisitor<AllocaSliceRewriter, bool> {
+   //     which are promotable via mem2reg.
+   VectorType *VecTy;
+   Type *ElementTy;
+-  uint64_t ElementSize;
++  uint64_t ElementBits;
+ 
+   // The original offset of the slice currently being rewritten relative to
+   // the original alloca.
+@@ -2936,13 +2939,13 @@ class AllocaSliceRewriter : public InstVisitor<AllocaSliceRewriter, bool> {
+                   : nullptr),
+         VecTy(PromotableVecTy),
+         ElementTy(VecTy ? VecTy->getElementType() : nullptr),
+-        ElementSize(VecTy ? DL.getTypeSizeInBits(ElementTy).getFixedValue() / 8
++        ElementBits(VecTy ? DL.getTypeSizeInBits(ElementTy).getFixedValue()
+                           : 0),
+         PHIUsers(PHIUsers), SelectUsers(SelectUsers),
+         IRB(*NewAI.getModule(), ConstantFolder()) {
+     if (VecTy) {
+-      assert((DL.getTypeSizeInBits(ElementTy).getFixedValue() % 8) == 0 &&
+-             "Only multiple-of-8 sized vector elements are viable");
++      assert((DL.getTypeSizeInBits(VecTy).getFixedValue() % 8) == 0 &&
++             "Only vectors of whole bytes are viable");
+       ++NumVectorized;
+     }
+     assert((!IntTy && !VecTy) || (IntTy && !VecTy) || (!IntTy && VecTy));
+@@ -3480,10 +3483,10 @@ class AllocaSliceRewriter : public InstVisitor<AllocaSliceRewriter, bool> {
+ 
+   unsigned getIndex(uint64_t Offset) {
+     assert(VecTy && "Can only call getIndex when rewriting a vector");
+-    uint64_t RelOffset = Offset - NewAllocaBeginOffset;
+-    assert(RelOffset / ElementSize < UINT32_MAX && "Index out of bounds");
+-    uint32_t Index = RelOffset / ElementSize;
+-    assert(Index * ElementSize == RelOffset);
++    uint64_t RelBit = (Offset - NewAllocaBeginOffset) * 8;
++    assert(RelBit / ElementBits < UINT32_MAX && "Index out of bounds");
++    uint32_t Index = RelBit / ElementBits;
++    assert(Index * ElementBits == RelBit);
+     return Index;
+   }
+ 
+@@ -3894,11 +3897,19 @@ class AllocaSliceRewriter : public InstVisitor<AllocaSliceRewriter, bool> {
+       assert(NumElements <= cast<FixedVectorType>(VecTy)->getNumElements() &&
+              "Too many elements!");
+ 
+-      Value *Splat = getIntegerSplat(
+-          II.getValue(), DL.getTypeSizeInBits(ElementTy).getFixedValue() / 8);
+-      Splat = IRB.CreateBitPreservingCastChain(DL, Splat, ElementTy);
+-      if (NumElements > 1)
+-        Splat = getVectorSplat(Splat, NumElements);
++      Value *Splat;
++      if (ElementBits % 8) {
++        // A byte pattern isn't a splat of sub-byte elements, so splat the
++        // bytes the slice covers and cast them to its elements.
++        Splat = getIntegerSplat(II.getValue(), NewEndOffset - NewBeginOffset);
++        Splat = IRB.CreateBitPreservingCastChain(
++            DL, Splat, FixedVectorType::get(ElementTy, NumElements));
++      } else {
++        Splat = getIntegerSplat(II.getValue(), ElementBits / 8);
++        Splat = IRB.CreateBitPreservingCastChain(DL, Splat, ElementTy);
++        if (NumElements > 1)
++          Splat = getVectorSplat(Splat, NumElements);
++      }
+ 
+       Value *Old = IRB.CreateAlignedLoad(NewAllocaTy, &NewAI, NewAI.getAlign(),
+                                          "oldload");
+diff --git a/llvm/test/Transforms/SROA/subbyte-vector-promotion.ll b/llvm/test/Transforms/SROA/subbyte-vector-promotion.ll
+new file mode 100644
+index 0000000000000..dad17a62558f8
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/subbyte-vector-promotion.ll
+@@ -0,0 +1,272 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=sroa -S < %s | FileCheck %s
++
++; Allocas of sub-byte element vectors are promoted as vectors of their own
++; type.
++
++; Byte 1 of a <8 x i4> is overwritten, so lanes 2 and 3 are replaced.
++define void @rmw_b4_n8(ptr %in, ptr %replacement, ptr %out) {
++; CHECK-LABEL: define void @rmw_b4_n8(
++; CHECK-SAME: ptr [[IN:%.*]], ptr [[REPLACEMENT:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = load <8 x i4>, ptr [[IN]], align 1
++; CHECK-NEXT:    [[X:%.*]] = load <2 x i4>, ptr [[REPLACEMENT]], align 1
++; CHECK-NEXT:    [[A_1_VEC_EXPAND:%.*]] = shufflevector <2 x i4> [[X]], <2 x i4> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
++; CHECK-NEXT:    [[A_1_VECBLEND:%.*]] = shufflevector <8 x i4> [[A_1_VEC_EXPAND]], <8 x i4> [[V]], <8 x i32> <i32 8, i32 9, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
++; CHECK-NEXT:    store <8 x i4> [[A_1_VECBLEND]], ptr [[OUT]], align 1
++; CHECK-NEXT:    ret void
++;
++  %v = load <8 x i4>, ptr %in, align 1
++  %x = load <2 x i4>, ptr %replacement, align 1
++  %a = alloca <8 x i4>, align 16
++  store <8 x i4> %v, ptr %a, align 16
++  %p = getelementptr inbounds i8, ptr %a, i64 1
++  store <2 x i4> %x, ptr %p, align 1
++  %r = load <8 x i4>, ptr %a, align 16
++  store <8 x i4> %r, ptr %out, align 1
++  ret void
++}
++
++; A memset of bytes 2 to 5 sets lanes 4 to 11 from the splatted bytes.
++define <16 x i4> @memset_bytes(<16 x i4> %v, i8 %c) {
++; CHECK-LABEL: define <16 x i4> @memset_bytes(
++; CHECK-SAME: <16 x i4> [[V:%.*]], i8 [[C:%.*]]) {
++; CHECK-NEXT:    [[A_2_ZEXT:%.*]] = zext i8 [[C]] to i32
++; CHECK-NEXT:    [[A_2_ISPLAT:%.*]] = mul i32 [[A_2_ZEXT]], 16843009
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i32 [[A_2_ISPLAT]] to <8 x i4>
++; CHECK-NEXT:    [[A_2_VEC_EXPAND:%.*]] = shufflevector <8 x i4> [[TMP1]], <8 x i4> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison>
++; CHECK-NEXT:    [[A_2_VECBLEND:%.*]] = shufflevector <16 x i4> [[A_2_VEC_EXPAND]], <16 x i4> [[V]], <16 x i32> <i32 16, i32 17, i32 18, i32 19, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31>
++; CHECK-NEXT:    ret <16 x i4> [[A_2_VECBLEND]]
++;
++  %a = alloca <16 x i4>, align 8
++  store <16 x i4> %v, ptr %a, align 8
++  %p = getelementptr inbounds i8, ptr %a, i64 2
++  call void @llvm.memset.p0.i64(ptr align 2 %p, i8 %c, i64 4, i1 false)
++  %r = load <16 x i4>, ptr %a, align 8
++  ret <16 x i4> %r
++}
++
++; A memcpy of two bytes into offset 1 replaces lanes 2 to 5.
++define <8 x i4> @memcpy_bytes(<8 x i4> %v, ptr %src) {
++; CHECK-LABEL: define <8 x i4> @memcpy_bytes(
++; CHECK-SAME: <8 x i4> [[V:%.*]], ptr [[SRC:%.*]]) {
++; CHECK-NEXT:    [[A_1_COPYLOAD:%.*]] = load <4 x i4>, ptr [[SRC]], align 1
++; CHECK-NEXT:    [[A_1_VEC_EXPAND:%.*]] = shufflevector <4 x i4> [[A_1_COPYLOAD]], <4 x i4> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison>
++; CHECK-NEXT:    [[A_1_VECBLEND:%.*]] = shufflevector <8 x i4> [[A_1_VEC_EXPAND]], <8 x i4> [[V]], <8 x i32> <i32 8, i32 9, i32 2, i32 3, i32 4, i32 5, i32 14, i32 15>
++; CHECK-NEXT:    ret <8 x i4> [[A_1_VECBLEND]]
++;
++  %a = alloca <8 x i4>, align 4
++  store <8 x i4> %v, ptr %a, align 4
++  %p = getelementptr inbounds i8, ptr %a, i64 1
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %p, ptr align 1 %src, i64 2, i1 false)
++  %r = load <8 x i4>, ptr %a, align 4
++  ret <8 x i4> %r
++}
++
++; A <64 x i4> written whole and read back in 16-byte halves.
++define void @i4_halves(<64 x i4> %v, ptr %out) {
++; CHECK-LABEL: define void @i4_halves(
++; CHECK-SAME: <64 x i4> [[V:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    [[A_0_VEC_EXTRACT:%.*]] = shufflevector <64 x i4> [[V]], <64 x i4> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
++; CHECK-NEXT:    [[A_16_VEC_EXTRACT:%.*]] = shufflevector <64 x i4> [[V]], <64 x i4> poison, <32 x i32> <i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
++; CHECK-NEXT:    store <32 x i4> [[A_0_VEC_EXTRACT]], ptr [[OUT]], align 16
++; CHECK-NEXT:    [[O:%.*]] = getelementptr inbounds i8, ptr [[OUT]], i64 16
++; CHECK-NEXT:    store <32 x i4> [[A_16_VEC_EXTRACT]], ptr [[O]], align 16
++; CHECK-NEXT:    ret void
++;
++  %a = alloca <64 x i4>, align 64
++  store <64 x i4> %v, ptr %a, align 64
++  %lo = load <32 x i4>, ptr %a, align 64
++  %p = getelementptr inbounds i8, ptr %a, i64 16
++  %hi = load <32 x i4>, ptr %p, align 16
++  store <32 x i4> %lo, ptr %out, align 16
++  %o = getelementptr inbounds i8, ptr %out, i64 16
++  store <32 x i4> %hi, ptr %o, align 16
++  ret void
++}
++
++; A one-byte read at offset 1 is lanes 2 and 3.
++define <2 x i4> @byte_slice(<16 x i4> %v) {
++; CHECK-LABEL: define <2 x i4> @byte_slice(
++; CHECK-SAME: <16 x i4> [[V:%.*]]) {
++; CHECK-NEXT:    [[A_1_VEC_EXTRACT:%.*]] = shufflevector <16 x i4> [[V]], <16 x i4> poison, <2 x i32> <i32 2, i32 3>
++; CHECK-NEXT:    ret <2 x i4> [[A_1_VEC_EXTRACT]]
++;
++  %a = alloca <16 x i4>, align 8
++  store <16 x i4> %v, ptr %a, align 8
++  %p = getelementptr inbounds i8, ptr %a, i64 1
++  %b = load <2 x i4>, ptr %p, align 1
++  ret <2 x i4> %b
++}
++
++; A mask vector read back by halves.
++define <8 x i1> @i1_mask(<16 x i1> %m) {
++; CHECK-LABEL: define <8 x i1> @i1_mask(
++; CHECK-SAME: <16 x i1> [[M:%.*]]) {
++; CHECK-NEXT:    [[A_1_VEC_EXTRACT:%.*]] = shufflevector <16 x i1> [[M]], <16 x i1> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
++; CHECK-NEXT:    ret <8 x i1> [[A_1_VEC_EXTRACT]]
++;
++  %a = alloca <16 x i1>, align 2
++  store <16 x i1> %m, ptr %a, align 2
++  %p = getelementptr inbounds i8, ptr %a, i64 1
++  %b = load <8 x i1>, ptr %p, align 1
++  ret <8 x i1> %b
++}
++
++; A pointer copied through a <16 x b4> slot in halves and rebuilt.
++define ptr @b4_pointer_rebuild(ptr %p) {
++; CHECK-LABEL: define ptr @b4_pointer_rebuild(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = bitcast ptr [[P]] to <16 x b4>
++; CHECK-NEXT:    [[A_0_VEC_EXTRACT:%.*]] = shufflevector <16 x b4> [[V]], <16 x b4> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[A_4_VEC_EXTRACT:%.*]] = shufflevector <16 x b4> [[V]], <16 x b4> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
++; CHECK-NEXT:    [[W:%.*]] = shufflevector <8 x b4> [[A_0_VEC_EXTRACT]], <8 x b4> [[A_4_VEC_EXTRACT]], <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
++; CHECK-NEXT:    [[R:%.*]] = bitcast <16 x b4> [[W]] to ptr
++; CHECK-NEXT:    ret ptr [[R]]
++;
++  %a = alloca <16 x b4>, align 8
++  %v = bitcast ptr %p to <16 x b4>
++  store <16 x b4> %v, ptr %a, align 8
++  %lo = load <8 x b4>, ptr %a, align 8
++  %hp = getelementptr inbounds i8, ptr %a, i64 4
++  %hi = load <8 x b4>, ptr %hp, align 4
++  %w = shufflevector <8 x b4> %lo, <8 x b4> %hi, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
++  %r = bitcast <16 x b4> %w to ptr
++  ret ptr %r
++}
++
++; Lane 0 is poison and lane 1 is %x. They share a byte but stay separate
++; lanes, so lane 1 of the result is still %x.
++define <2 x i4> @poison_lane(i4 %x) {
++; CHECK-LABEL: define <2 x i4> @poison_lane(
++; CHECK-SAME: i4 [[X:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = insertelement <4 x i4> <i4 poison, i4 poison, i4 1, i4 2>, i4 [[X]], i64 1
++; CHECK-NEXT:    [[A_0_VEC_EXTRACT:%.*]] = shufflevector <4 x i4> [[V]], <4 x i4> poison, <2 x i32> <i32 0, i32 1>
++; CHECK-NEXT:    ret <2 x i4> [[A_0_VEC_EXTRACT]]
++;
++  %a = alloca <4 x i4>, align 2
++  %v = insertelement <4 x i4> <i4 poison, i4 poison, i4 1, i4 2>, i4 %x, i64 1
++  store <4 x i4> %v, ptr %a, align 2
++  %l = load <2 x i4>, ptr %a, align 2
++  ret <2 x i4> %l
++}
++
++; Byte 3 of a <16 x i3> is bit 24, the start of lane 8.
++define <8 x i3> @i3_aligned_half(<16 x i3> %v) {
++; CHECK-LABEL: define <8 x i3> @i3_aligned_half(
++; CHECK-SAME: <16 x i3> [[V:%.*]]) {
++; CHECK-NEXT:    [[A_3_VEC_EXTRACT:%.*]] = shufflevector <16 x i3> [[V]], <16 x i3> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
++; CHECK-NEXT:    ret <8 x i3> [[A_3_VEC_EXTRACT]]
++;
++  %a = alloca <16 x i3>, align 8
++  store <16 x i3> %v, ptr %a, align 8
++  %p = getelementptr inbounds i8, ptr %a, i64 3
++  %r = load <8 x i3>, ptr %p, align 1
++  ret <8 x i3> %r
++}
++
++; Byte 1 of a <16 x i3> is bit 8, inside lane 2, so it isn't promoted as a
++; vector.
++define <8 x i3> @i3_misaligned(<16 x i3> %v) {
++; CHECK-LABEL: define <8 x i3> @i3_misaligned(
++; CHECK-SAME: <16 x i3> [[V:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = alloca <16 x i3>, align 8
++; CHECK-NEXT:    store <16 x i3> [[V]], ptr [[A]], align 8
++; CHECK-NEXT:    [[A_1_P_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 1
++; CHECK-NEXT:    [[A_1_R:%.*]] = load <8 x i3>, ptr [[A_1_P_SROA_IDX]], align 1
++; CHECK-NEXT:    ret <8 x i3> [[A_1_R]]
++;
++  %a = alloca <16 x i3>, align 8
++  store <16 x i3> %v, ptr %a, align 8
++  %p = getelementptr inbounds i8, ptr %a, i64 1
++  %r = load <8 x i3>, ptr %p, align 1
++  ret <8 x i3> %r
++}
++
++; Elements wider than a byte but not a multiple of 8 bits work the same way:
++; byte 3 of a <4 x i12> is bit 24, the start of lane 2.
++define <2 x i12> @i12_half(<4 x i12> %v) {
++; CHECK-LABEL: define <2 x i12> @i12_half(
++; CHECK-SAME: <4 x i12> [[V:%.*]]) {
++; CHECK-NEXT:    [[A_3_VEC_EXTRACT:%.*]] = shufflevector <4 x i12> [[V]], <4 x i12> poison, <2 x i32> <i32 2, i32 3>
++; CHECK-NEXT:    ret <2 x i12> [[A_3_VEC_EXTRACT]]
++;
++  %a = alloca <4 x i12>, align 8
++  store <4 x i12> %v, ptr %a, align 8
++  %p = getelementptr inbounds i8, ptr %a, i64 3
++  %r = load <2 x i12>, ptr %p, align 1
++  ret <2 x i12> %r
++}
++
++; A vector whose size isn't a whole number of bytes is left to the other
++; strategies.
++define <3 x i4> @not_byte_sized(<3 x i4> %v) {
++; CHECK-LABEL: define <3 x i4> @not_byte_sized(
++; CHECK-SAME: <3 x i4> [[V:%.*]]) {
++; CHECK-NEXT:    ret <3 x i4> [[V]]
++;
++  %a = alloca <3 x i4>, align 2
++  store <3 x i4> %v, ptr %a, align 2
++  %b = load <3 x i4>, ptr %a, align 2
++  ret <3 x i4> %b
++}
++
++; A scalar i4 load covers two lanes of the slot, but an i4 can't be bitcast
++; from a <2 x i4>, so vector promotion is rejected.
++define i4 @scalar_subbyte_read(<16 x i4> %v) {
++; CHECK-LABEL: define i4 @scalar_subbyte_read(
++; CHECK-SAME: <16 x i4> [[V:%.*]]) {
++; CHECK-NEXT:    [[A_SROA_0:%.*]] = alloca <16 x i4>, align 8
++; CHECK-NEXT:    store <16 x i4> [[V]], ptr [[A_SROA_0]], align 8
++; CHECK-NEXT:    [[A_SROA_0_3_P_SROA_IDX1:%.*]] = getelementptr inbounds i8, ptr [[A_SROA_0]], i64 3
++; CHECK-NEXT:    [[A_SROA_0_3_A_SROA_0_3_R:%.*]] = load i4, ptr [[A_SROA_0_3_P_SROA_IDX1]], align 1
++; CHECK-NEXT:    ret i4 [[A_SROA_0_3_A_SROA_0_3_R]]
++;
++  %a = alloca [8 x i8], align 8
++  store <16 x i4> %v, ptr %a, align 8
++  %p = getelementptr inbounds i8, ptr %a, i64 3
++  %r = load i4, ptr %p, align 1
++  ret i4 %r
++}
++
++; A whole-value scalable predicate spill and reload is promoted without vector
++; promotion.
++define <vscale x 16 x i1> @scalable_pred_whole(<vscale x 16 x i1> %pg) {
++; CHECK-LABEL: define <vscale x 16 x i1> @scalable_pred_whole(
++; CHECK-SAME: <vscale x 16 x i1> [[PG:%.*]]) {
++; CHECK-NEXT:    ret <vscale x 16 x i1> [[PG]]
++;
++  %a = alloca <vscale x 16 x i1>
++  store <vscale x 16 x i1> %pg, ptr %a
++  %r = load <vscale x 16 x i1>, ptr %a
++  ret <vscale x 16 x i1> %r
++}
++
++; With vscale known, a fixed sub-byte store read back as a scalable predicate
++; is promoted.
++define <vscale x 16 x i1> @fixed_store_scalable_pred_load(<16 x i1> %m) vscale_range(1,1) {
++; CHECK-LABEL: define <vscale x 16 x i1> @fixed_store_scalable_pred_load(
++; CHECK-SAME: <16 x i1> [[M:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[TMP1:%.*]] = call <vscale x 16 x i1> @llvm.vector.insert.nxv16i1.v16i1(<vscale x 16 x i1> poison, <16 x i1> [[M]], i64 0)
++; CHECK-NEXT:    ret <vscale x 16 x i1> [[TMP1]]
++;
++  %a = alloca [2 x i8]
++  store <16 x i1> %m, ptr %a
++  %r = load <vscale x 16 x i1>, ptr %a
++  ret <vscale x 16 x i1> %r
++}
++
++; Vector promotion only considers fixed-width types, so a slot whose only
++; whole-slot access is scalable is not promoted, sub-byte elements or not.
++define <2 x i8> @scalable_store_fixed_load(<vscale x 16 x i1> %pg) vscale_range(1,1) {
++; CHECK-LABEL: define <2 x i8> @scalable_store_fixed_load(
++; CHECK-SAME: <vscale x 16 x i1> [[PG:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:    [[A:%.*]] = alloca <vscale x 16 x i1>, align 2
++; CHECK-NEXT:    store <vscale x 16 x i1> [[PG]], ptr [[A]], align 2
++; CHECK-NEXT:    [[R:%.*]] = load <2 x i8>, ptr [[A]], align 2
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %a = alloca <vscale x 16 x i1>
++  store <vscale x 16 x i1> %pg, ptr %a
++  %r = load <2 x i8>, ptr %a
++  ret <2 x i8> %r
++}
