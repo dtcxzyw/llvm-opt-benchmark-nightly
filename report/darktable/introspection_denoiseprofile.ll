@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %._crit_edge66, %bb.
   %i.aq = fcmp reassoc nsz arcp contract afn ogt double %i.ap, 0.000000e+00
   %i.ar = fptrunc reassoc nsz arcp contract afn double %i.ap to float
   %.neg.i = fneg reassoc nsz arcp contract afn float %i.ar
-  %i.as = select reassoc nsz arcp contract afn i1 %i.aq, float %.neg.i, float -0.000000e+00
+  %i.as = select reassoc nsz arcp contract afn i1 %i.aq, float %.neg.i, float 0.000000e+00
   store float %i.as, ptr %i.h, align 4, !tbaa !79
   %i.at = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -608,7 +608,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cq = fcmp reassoc nsz arcp contract afn ogt double %i.cp, 0.000000e+00
   %i.cr = fptrunc reassoc nsz arcp contract afn double %i.cp to float
   %.neg.i = fneg reassoc nsz arcp contract afn float %i.cr
-  %i.cs = select reassoc nsz arcp contract afn i1 %i.cq, float %.neg.i, float -0.000000e+00
+  %i.cs = select reassoc nsz arcp contract afn i1 %i.cq, float %.neg.i, float 0.000000e+00
   %i.ct = insertelement <2 x float> poison, float %i.cn, i64 0
   %i.cu = insertelement <2 x float> %i.ct, float %i.cs, i64 1
   br label %bb.m
@@ -1011,7 +1011,7 @@ bb.s:                                             ; preds = %bb.r
   %i.dz = fcmp reassoc nsz arcp contract afn ogt double %i.dy, 0.000000e+00
   %i.ea = fptrunc reassoc nsz arcp contract afn double %i.dy to float
   %.neg.i = fneg reassoc nsz arcp contract afn float %i.ea
-  %i.eb = select reassoc nsz arcp contract afn i1 %i.dz, float %.neg.i, float -0.000000e+00
+  %i.eb = select reassoc nsz arcp contract afn i1 %i.dz, float %.neg.i, float 0.000000e+00
   call void @dt_bauhaus_slider_set(ptr noundef %i.dw, float noundef %i.eb) #18
   br label %bb.t
 

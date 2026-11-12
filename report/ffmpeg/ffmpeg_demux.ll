@@ -202,7 +202,7 @@ bb.do:                                            ; preds = %bb.dn
   %i.sy = load ptr, ptr %i.sx, align 8, !tbaa !94 ; 2 uses
   %i.sz = load double, ptr %i.h, align 8
   %i.ta = fneg nsz double %i.sz
-  %i.tb = select nsz i1 %i.so, double %i.ta, double -0.000000e+00
+  %i.tb = select nsz i1 %i.so, double %i.ta, double 0.000000e+00
   call void @av_display_rotation_set(ptr noundef %i.sy, double noundef %i.tb) #13
   %i.tc = load i32, ptr %i.i, align 4
   %i.td = select i1 %i.sq, i32 %i.tc, i32 0
