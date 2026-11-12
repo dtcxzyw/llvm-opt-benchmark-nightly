@@ -205,96 +205,114 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   %i.dn = getelementptr inbounds nuw i8, ptr %.0125171, i64 32
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !1101 ; 2 uses
   %i.dp = zext i32 %i.do to i64
-  %i.dq = getelementptr inbounds nuw [20 x i8], ptr %i.dm, i64 %i.dp ; 6 uses
+  %i.dq = getelementptr inbounds nuw [20 x i8], ptr %i.dm, i64 %i.dp ; 9 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.0125171, i64 36 ; 2 uses
-  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !1102 ; 4 uses
+  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !1102 ; 5 uses
   %i.dt = load i32, ptr %i.ck, align 8, !tbaa !946 ; 2 uses
-  %i.du = add i32 %i.dt, %i.ds                    ; 2 uses
+  %i.du = add i32 %i.dt, %i.ds                    ; 3 uses
   %i.dv = icmp ult i32 %i.ds, %i.du
-  br i1 %i.dv, label %.lr.ph, label %._crit_edge.a
+  br i1 %i.dv, label %.lr.ph, label %.preheader154.split.preheader
 
 .lr.ph:                                           ; preds = %bb.v
   %.not149 = icmp eq ptr %i.dl, null
-  br label %.preheader154.a
+  br i1 %.not149, label %._crit_edge.a, label %.split160.us
 
-._crit_edge.loopexit:                             ; preds = %.split160.us
-  %10 = fpext float %i.ee to double
-  br label %._crit_edge.a
+._crit_edge.a:                                    ; preds = %.lr.ph, %._crit_edge.a
+  %.0122162.us = phi i32 [ %24, %._crit_edge.a ], [ %i.ds, %.lr.ph ] ; 4 uses
+  %.0124161.us = phi float [ %33, %._crit_edge.a ], [ 0.000000e+00, %.lr.ph ]
+  %10 = zext i32 %.0122162.us to i64
+  %11 = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %10 ; 2 uses
+  %12 = load float, ptr %11, align 4
+  %.sroa_idx189 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %13 = load float, ptr %.sroa_idx189, align 4    ; 2 uses
+  %14 = add nuw i32 %.0122162.us, 1
+  %15 = zext i32 %14 to i64
+  %16 = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %15 ; 2 uses
+  %17 = load float, ptr %16, align 4
+  %.sroa_idx193 = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %18 = load float, ptr %.sroa_idx193, align 4    ; 2 uses
+  %19 = add i32 %.0122162.us, 2
+  %20 = zext i32 %19 to i64
+  %21 = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %20 ; 2 uses
+  %22 = load float, ptr %21, align 4
+  %.sroa_idx197 = getelementptr inbounds nuw i8, ptr %21, i64 4
+  %23 = load float, ptr %.sroa_idx197, align 4    ; 2 uses
+  %24 = add i32 %.0122162.us, 3                   ; 2 uses
+  %25 = fsub float %18, %23
+  %26 = fsub float %23, %13
+  %27 = fmul float %17, %26
+  %28 = call float @llvm.fmuladd.f32(float %12, float %25, float %27)
+  %29 = fsub float %13, %18
+  %30 = call float @llvm.fmuladd.f32(float %22, float %29, float %28)
+  %31 = call float @llvm.fabs.f32(float %30)
+  %32 = fmul float %31, 5.000000e-01
+  %33 = fadd float %.0124161.us, %32              ; 2 uses
+  %34 = icmp ult i32 %24, %i.du
+  br i1 %34, label %._crit_edge.a, label %.preheader154.a, !llvm.loop !1719
 
-._crit_edge.a:                                    ; preds = %._crit_edge.loopexit, %bb.v
-  %.0124.lcssa = phi double [ 0.000000e+00, %bb.v ], [ %10, %._crit_edge.loopexit ]
-  %11 = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.b, i64 noundef 300, ptr noundef nonnull @.str.456, i32 noundef %i.dt, i32 noundef %i.do, i32 noundef %i.ds, double noundef %.0124.lcssa) ; 0 uses
+.preheader154.a:                                  ; preds = %.split160.us, %._crit_edge.a
+  %.0124161.a = phi float [ %33, %._crit_edge.a ], [ %i.ee, %.split160.us ]
+  %35 = fpext float %.0124161.a to double
+  br label %.preheader154.split.preheader
+
+.preheader154.split.preheader:                    ; preds = %.preheader154.a, %bb.v
+  %.0124.lcssa = phi double [ 0.000000e+00, %bb.v ], [ %35, %.preheader154.a ]
+  %36 = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.b, i64 noundef 300, ptr noundef nonnull @.str.456, i32 noundef %i.dt, i32 noundef %i.do, i32 noundef %i.ds, double noundef %.0124.lcssa) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #41
   store <2 x float> zeroinitializer, ptr %6, align 8, !tbaa !75
-  %12 = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.b, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %6) ; 0 uses
+  %37 = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.b, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %6) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #41
-  %13 = call noundef zeroext i1 @_ZN5ImGui13IsItemHoveredEi(i32 noundef 0)
-  %or.cond6 = and i1 %i.br, %13
+  %38 = call noundef zeroext i1 @_ZN5ImGui13IsItemHoveredEi(i32 noundef 0)
+  %or.cond6 = and i1 %i.br, %38
   br i1 %or.cond6, label %bb.w, label %bb.x
 
-.preheader154.a:                                  ; preds = %.lr.ph, %.split160.us
-  %.0122162 = phi i32 [ %i.ds, %.lr.ph ], [ %.us-phi, %.split160.us ] ; 6 uses
-  %.0124161.a = phi float [ 0.000000e+00, %.lr.ph ], [ %i.ee, %.split160.us ]
-  %14 = zext i32 %.0122162 to i64                 ; 2 uses
-  br i1 %.not149, label %.preheader154.split.us.preheader, label %.preheader154.split.preheader
-
-.preheader154.split.preheader:                    ; preds = %.preheader154.a
-  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.dl, i64 %14
-  %16 = load i16, ptr %15, align 2, !tbaa !255
-  %17 = zext i16 %16 to i64
-  %18 = add nuw i32 %.0122162, 1
-  %19 = zext i32 %18 to i64
-  %20 = getelementptr inbounds nuw [2 x i8], ptr %i.dl, i64 %19
-  %21 = load i16, ptr %20, align 2, !tbaa !255
-  %22 = zext i16 %21 to i64
-  %23 = add i32 %.0122162, 2
-  %24 = zext i32 %23 to i64
-  %25 = getelementptr inbounds nuw [2 x i8], ptr %i.dl, i64 %24
-  %26 = load i16, ptr %25, align 2, !tbaa !255
-  %27 = zext i16 %26 to i64
-  br label %.split160.us
-
-.preheader154.split.us.preheader:                 ; preds = %.preheader154.a
-  %28 = add nuw i32 %.0122162, 1
-  %29 = zext i32 %28 to i64
-  %30 = add i32 %.0122162, 2
-  %31 = zext i32 %30 to i64
-  br label %.split160.us
-
-.split160.us:                                     ; preds = %.preheader154.split.preheader, %.preheader154.split.us.preheader
-  %.pn221 = phi i64 [ %14, %.preheader154.split.us.preheader ], [ %17, %.preheader154.split.preheader ]
-  %.pn223 = phi i64 [ %29, %.preheader154.split.us.preheader ], [ %22, %.preheader154.split.preheader ]
-  %.pn225 = phi i64 [ %31, %.preheader154.split.us.preheader ], [ %27, %.preheader154.split.preheader ]
-  %.us-phi = add i32 %.0122162, 3                 ; 2 uses
-  %.sroa.15.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %.pn225 ; 2 uses
+.split160.us:                                     ; preds = %.lr.ph, %.split160.us
+  %.0122162 = phi i32 [ %56, %.split160.us ], [ %i.ds, %.lr.ph ] ; 4 uses
+  %.0124161 = phi float [ %i.ee, %.split160.us ], [ 0.000000e+00, %.lr.ph ]
+  %39 = zext i32 %.0122162 to i64
+  %40 = getelementptr inbounds nuw [2 x i8], ptr %i.dl, i64 %39
+  %41 = load i16, ptr %40, align 2, !tbaa !255
+  %42 = zext i16 %41 to i64
+  %.sroa.15.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %42 ; 2 uses
+  %43 = load float, ptr %.sroa.15.0.in, align 4
   %.sroa.18.0.in = getelementptr inbounds nuw i8, ptr %.sroa.15.0.in, i64 4
   %.sroa.18.0 = load float, ptr %.sroa.18.0.in, align 4 ; 2 uses
-  %.sroa.15.0 = load float, ptr %.sroa.15.0.in, align 4
-  %.sroa.9.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %.pn223 ; 2 uses
+  %44 = add nuw i32 %.0122162, 1
+  %45 = zext i32 %44 to i64
+  %46 = getelementptr inbounds nuw [2 x i8], ptr %i.dl, i64 %45
+  %47 = load i16, ptr %46, align 2, !tbaa !255
+  %48 = zext i16 %47 to i64
+  %.sroa.9.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %48 ; 2 uses
+  %49 = load float, ptr %.sroa.9.0.in, align 4
   %.sroa.12.0.in = getelementptr inbounds nuw i8, ptr %.sroa.9.0.in, i64 4
   %.sroa.12.0 = load float, ptr %.sroa.12.0.in, align 4 ; 2 uses
-  %.sroa.9.0 = load float, ptr %.sroa.9.0.in, align 4
-  %.sroa.0.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %.pn221 ; 2 uses
+  %50 = add i32 %.0122162, 2
+  %51 = zext i32 %50 to i64
+  %52 = getelementptr inbounds nuw [2 x i8], ptr %i.dl, i64 %51
+  %53 = load i16, ptr %52, align 2, !tbaa !255
+  %54 = zext i16 %53 to i64
+  %.sroa.0.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.dq, i64 %54 ; 2 uses
+  %55 = load float, ptr %.sroa.0.0.in, align 4
   %.sroa.6.0.in = getelementptr inbounds nuw i8, ptr %.sroa.0.0.in, i64 4
   %.sroa.6.0 = load float, ptr %.sroa.6.0.in, align 4 ; 2 uses
-  %.sroa.0.0 = load float, ptr %.sroa.0.0.in, align 4
-  %i.dw = fsub float %.sroa.12.0, %.sroa.18.0
-  %i.dx = fsub float %.sroa.18.0, %.sroa.6.0
-  %i.dy = fmul float %.sroa.9.0, %i.dx
-  %i.dz = call float @llvm.fmuladd.f32(float %.sroa.0.0, float %i.dw, float %i.dy)
-  %i.ea = fsub float %.sroa.6.0, %.sroa.12.0
-  %i.eb = call float @llvm.fmuladd.f32(float %.sroa.15.0, float %i.ea, float %i.dz)
+  %56 = add i32 %.0122162, 3                      ; 2 uses
+  %i.dw = fsub float %.sroa.12.0, %.sroa.6.0
+  %i.dx = fsub float %.sroa.6.0, %.sroa.18.0
+  %i.dy = fmul float %49, %i.dx
+  %i.dz = call float @llvm.fmuladd.f32(float %43, float %i.dw, float %i.dy)
+  %i.ea = fsub float %.sroa.18.0, %.sroa.12.0
+  %i.eb = call float @llvm.fmuladd.f32(float %55, float %i.ea, float %i.dz)
   %i.ec = call float @llvm.fabs.f32(float %i.eb)
   %i.ed = fmul float %i.ec, 5.000000e-01
-  %i.ee = fadd float %.0124161.a, %i.ed           ; 2 uses
-  %i.ef = icmp ult i32 %.us-phi, %i.du
-  br i1 %i.ef, label %.preheader154.a, label %._crit_edge.loopexit, !llvm.loop !1719
+  %i.ee = fadd float %.0124161, %i.ed             ; 2 uses
+  %i.ef = icmp ult i32 %56, %i.du
+  br i1 %i.ef, label %.split160.us, label %.preheader154.a, !llvm.loop !1719
 
-bb.w:                                             ; preds = %._crit_edge.a
+bb.w:                                             ; preds = %.preheader154.split.preheader
   call void @_ZN5ImGui38DebugNodeDrawCmdShowMeshAndBoundingBoxEP10ImDrawListPKS0_PK9ImDrawCmdbb(ptr noundef nonnull %i.ba, ptr noundef nonnull %2, ptr noundef nonnull %.0125171, i1 noundef zeroext true, i1 noundef zeroext false)
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %._crit_edge.a
+bb.x:                                             ; preds = %bb.w, %.preheader154.split.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #41
   call void @_ZN16ImGuiListClipperC1Ev(ptr noundef nonnull align 8 dereferenceable(56) %7)
   %i.eg = load i32, ptr %i.ck, align 8, !tbaa !946

@@ -205,10 +205,10 @@ bb.fs:                                            ; preds = %bb.fr
   br label %_ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i.i
 
 _ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i.i:  ; preds = %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i, %bb.fs, %bb.fr, %bb.fk, %.lr.ph.i254.i.i, %bb.ff, %_ZN5ImGui8ShortcutEiij.exit.i.i, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i
-  %i.aqq = phi ptr [ %i.aob, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ %i.api, %bb.fs ], [ %i.api, %bb.fk ], [ %i.api, %bb.fr ], [ %i.aoc, %bb.ff ], [ %.pre.i289, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ %i.aoc, %.lr.ph.i254.i.i ], [ %i.aoc, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ] ; 2 uses
-  %or.cond5391400516.i.i = phi i1 [ %or.cond5391.ph.i.i, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ true, %bb.fs ], [ false, %bb.fk ], [ true, %bb.fr ], [ %or.cond5391.ph522.i.i, %bb.ff ], [ false, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ %or.cond5391.ph522.i.i, %.lr.ph.i254.i.i ], [ %or.cond5391.ph522.i.i, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ]
-  %i.aqr = phi i1 [ %.ph.i.i, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ %.ph.i.i, %bb.fs ], [ %.ph.i.i, %bb.fk ], [ %.ph.i.i, %bb.fr ], [ %.ph.i.i, %bb.ff ], [ false, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ %.ph.i.i, %.lr.ph.i254.i.i ], [ %.ph.i.i, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ] ; 2 uses
-  %.2204.i.i = phi i1 [ false, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ %.not225.i.i, %bb.fs ], [ %.not225.i.i, %bb.fk ], [ %.not225.i.i, %bb.fr ], [ false, %bb.ff ], [ false, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ false, %.lr.ph.i254.i.i ], [ false, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ] ; 2 uses
+  %i.aqq = phi ptr [ %i.aob, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ %i.api, %bb.fs ], [ %i.api, %bb.fk ], [ %i.api, %bb.fr ], [ %i.aoc, %bb.ff ], [ %i.aoc, %.lr.ph.i254.i.i ], [ %.pre.i289, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ %i.aoc, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ] ; 2 uses
+  %or.cond5391400516.i.i = phi i1 [ %or.cond5391.ph.i.i, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ true, %bb.fs ], [ false, %bb.fk ], [ true, %bb.fr ], [ %or.cond5391.ph522.i.i, %bb.ff ], [ %or.cond5391.ph522.i.i, %.lr.ph.i254.i.i ], [ false, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ %or.cond5391.ph522.i.i, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ]
+  %i.aqr = phi i1 [ %.ph.i.i, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ %.ph.i.i, %bb.fs ], [ %.ph.i.i, %bb.fk ], [ %.ph.i.i, %bb.fr ], [ %.ph.i.i, %bb.ff ], [ %.ph.i.i, %.lr.ph.i254.i.i ], [ false, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ %.ph.i.i, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ] ; 2 uses
+  %.2204.i.i = phi i1 [ false, %_ZN5ImGui8ShortcutEiij.exit.i.i ], [ %.not225.i.i, %bb.fs ], [ %.not225.i.i, %bb.fk ], [ %.not225.i.i, %bb.fr ], [ false, %bb.ff ], [ false, %.lr.ph.i254.i.i ], [ false, %._ZN5ImGui23SetKeyOwnersForKeyChordEiji.exit.i_crit_edge.i ], [ false, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ] ; 2 uses
   %i.aqs = getelementptr inbounds nuw i8, ptr %i.ali, i64 8552 ; 4 uses
   %.not227.i.i = icmp eq ptr %i.aqq, null
   br i1 %.not227.i.i, label %bb.ft, label %.thread403.i.i
@@ -611,96 +611,114 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   %i.dx = getelementptr inbounds nuw i8, ptr %.0119164, i64 32
   %i.dy = load i32, ptr %i.dx, align 8, !tbaa !1099 ; 2 uses
   %i.dz = zext i32 %i.dy to i64
-  %i.ea = getelementptr inbounds nuw [20 x i8], ptr %i.dw, i64 %i.dz ; 6 uses
+  %i.ea = getelementptr inbounds nuw [20 x i8], ptr %i.dw, i64 %i.dz ; 9 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.0119164, i64 36 ; 2 uses
-  %i.ec = load i32, ptr %i.eb, align 4, !tbaa !1100 ; 4 uses
+  %i.ec = load i32, ptr %i.eb, align 4, !tbaa !1100 ; 5 uses
   %i.ed = load i32, ptr %i.cu, align 8, !tbaa !944 ; 2 uses
-  %i.ee = add i32 %i.ed, %i.ec                    ; 2 uses
+  %i.ee = add i32 %i.ed, %i.ec                    ; 3 uses
   %i.ef = icmp ult i32 %i.ec, %i.ee
-  br i1 %i.ef, label %.lr.ph, label %._crit_edge.a
+  br i1 %i.ef, label %.lr.ph, label %.preheader146.split.preheader
 
 .lr.ph:                                           ; preds = %bb.w
   %.not141 = icmp eq ptr %i.dv, null
-  br label %.preheader146.a
+  br i1 %.not141, label %._crit_edge.a, label %.split150.us
 
-._crit_edge.loopexit:                             ; preds = %.split150.us
-  %10 = fpext float %i.eo to double
-  br label %._crit_edge.a
+._crit_edge.a:                                    ; preds = %.lr.ph, %._crit_edge.a
+  %.0116152.us = phi i32 [ %24, %._crit_edge.a ], [ %i.ec, %.lr.ph ] ; 4 uses
+  %.0118151.us = phi float [ %33, %._crit_edge.a ], [ 0.000000e+00, %.lr.ph ]
+  %10 = zext i32 %.0116152.us to i64
+  %11 = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %10 ; 2 uses
+  %12 = load float, ptr %11, align 4
+  %.sroa_idx181 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %13 = load float, ptr %.sroa_idx181, align 4    ; 2 uses
+  %14 = add nuw i32 %.0116152.us, 1
+  %15 = zext i32 %14 to i64
+  %16 = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %15 ; 2 uses
+  %17 = load float, ptr %16, align 4
+  %.sroa_idx185 = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %18 = load float, ptr %.sroa_idx185, align 4    ; 2 uses
+  %19 = add i32 %.0116152.us, 2
+  %20 = zext i32 %19 to i64
+  %21 = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %20 ; 2 uses
+  %22 = load float, ptr %21, align 4
+  %.sroa_idx189 = getelementptr inbounds nuw i8, ptr %21, i64 4
+  %23 = load float, ptr %.sroa_idx189, align 4    ; 2 uses
+  %24 = add i32 %.0116152.us, 3                   ; 2 uses
+  %25 = fsub float %18, %23
+  %26 = fsub float %23, %13
+  %27 = fmul float %17, %26
+  %28 = call float @llvm.fmuladd.f32(float %12, float %25, float %27)
+  %29 = fsub float %13, %18
+  %30 = call float @llvm.fmuladd.f32(float %22, float %29, float %28)
+  %31 = call float @llvm.fabs.f32(float %30)
+  %32 = fmul float %31, 5.000000e-01
+  %33 = fadd float %.0118151.us, %32              ; 2 uses
+  %34 = icmp ult i32 %24, %i.ee
+  br i1 %34, label %._crit_edge.a, label %.preheader146.a, !llvm.loop !1673
 
-._crit_edge.a:                                    ; preds = %._crit_edge.loopexit, %bb.w
-  %.0118.lcssa = phi double [ 0.000000e+00, %bb.w ], [ %10, %._crit_edge.loopexit ]
-  %11 = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.b, i64 noundef 300, ptr noundef nonnull @.str.444, i32 noundef %i.ed, i32 noundef %i.dy, i32 noundef %i.ec, double noundef %.0118.lcssa) ; 0 uses
+.preheader146.a:                                  ; preds = %.split150.us, %._crit_edge.a
+  %.0118151.a = phi float [ %33, %._crit_edge.a ], [ %i.eo, %.split150.us ]
+  %35 = fpext float %.0118151.a to double
+  br label %.preheader146.split.preheader
+
+.preheader146.split.preheader:                    ; preds = %.preheader146.a, %bb.w
+  %.0118.lcssa = phi double [ 0.000000e+00, %bb.w ], [ %35, %.preheader146.a ]
+  %36 = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.b, i64 noundef 300, ptr noundef nonnull @.str.444, i32 noundef %i.ed, i32 noundef %i.dy, i32 noundef %i.ec, double noundef %.0118.lcssa) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #35
   store <2 x float> zeroinitializer, ptr %6, align 8, !tbaa !86
-  %12 = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.b, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %6) #35 ; 0 uses
+  %37 = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.b, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %6) #35 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #35
-  %13 = call noundef zeroext i1 @_ZN5ImGui13IsItemHoveredEi(i32 noundef 0)
-  %or.cond6 = and i1 %i.bt, %13
+  %38 = call noundef zeroext i1 @_ZN5ImGui13IsItemHoveredEi(i32 noundef 0)
+  %or.cond6 = and i1 %i.bt, %38
   br i1 %or.cond6, label %bb.x, label %bb.y
 
-.preheader146.a:                                  ; preds = %.lr.ph, %.split150.us
-  %.0116152 = phi i32 [ %i.ec, %.lr.ph ], [ %.us-phi, %.split150.us ] ; 6 uses
-  %.0118151.a = phi float [ 0.000000e+00, %.lr.ph ], [ %i.eo, %.split150.us ]
-  %14 = zext i32 %.0116152 to i64                 ; 2 uses
-  br i1 %.not141, label %.preheader146.split.us.preheader, label %.preheader146.split.preheader
-
-.preheader146.split.preheader:                    ; preds = %.preheader146.a
-  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %14
-  %16 = load i16, ptr %15, align 2, !tbaa !275
-  %17 = zext i16 %16 to i64
-  %18 = add nuw i32 %.0116152, 1
-  %19 = zext i32 %18 to i64
-  %20 = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %19
-  %21 = load i16, ptr %20, align 2, !tbaa !275
-  %22 = zext i16 %21 to i64
-  %23 = add i32 %.0116152, 2
-  %24 = zext i32 %23 to i64
-  %25 = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %24
-  %26 = load i16, ptr %25, align 2, !tbaa !275
-  %27 = zext i16 %26 to i64
-  br label %.split150.us
-
-.preheader146.split.us.preheader:                 ; preds = %.preheader146.a
-  %28 = add nuw i32 %.0116152, 1
-  %29 = zext i32 %28 to i64
-  %30 = add i32 %.0116152, 2
-  %31 = zext i32 %30 to i64
-  br label %.split150.us
-
-.split150.us:                                     ; preds = %.preheader146.split.preheader, %.preheader146.split.us.preheader
-  %.pn = phi i64 [ %14, %.preheader146.split.us.preheader ], [ %17, %.preheader146.split.preheader ]
-  %.pn213 = phi i64 [ %29, %.preheader146.split.us.preheader ], [ %22, %.preheader146.split.preheader ]
-  %.pn215 = phi i64 [ %31, %.preheader146.split.us.preheader ], [ %27, %.preheader146.split.preheader ]
-  %.us-phi = add i32 %.0116152, 3                 ; 2 uses
-  %.sroa.15.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %.pn215 ; 2 uses
+.split150.us:                                     ; preds = %.lr.ph, %.split150.us
+  %.0116152 = phi i32 [ %56, %.split150.us ], [ %i.ec, %.lr.ph ] ; 4 uses
+  %.0118151 = phi float [ %i.eo, %.split150.us ], [ 0.000000e+00, %.lr.ph ]
+  %39 = zext i32 %.0116152 to i64
+  %40 = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %39
+  %41 = load i16, ptr %40, align 2, !tbaa !275
+  %42 = zext i16 %41 to i64
+  %.sroa.15.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %42 ; 2 uses
+  %43 = load float, ptr %.sroa.15.0.in, align 4
   %.sroa.18.0.in = getelementptr inbounds nuw i8, ptr %.sroa.15.0.in, i64 4
   %.sroa.18.0 = load float, ptr %.sroa.18.0.in, align 4 ; 2 uses
-  %.sroa.15.0 = load float, ptr %.sroa.15.0.in, align 4
-  %.sroa.9.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %.pn213 ; 2 uses
+  %44 = add nuw i32 %.0116152, 1
+  %45 = zext i32 %44 to i64
+  %46 = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %45
+  %47 = load i16, ptr %46, align 2, !tbaa !275
+  %48 = zext i16 %47 to i64
+  %.sroa.9.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %48 ; 2 uses
+  %49 = load float, ptr %.sroa.9.0.in, align 4
   %.sroa.12.0.in = getelementptr inbounds nuw i8, ptr %.sroa.9.0.in, i64 4
   %.sroa.12.0 = load float, ptr %.sroa.12.0.in, align 4 ; 2 uses
-  %.sroa.9.0 = load float, ptr %.sroa.9.0.in, align 4
-  %.sroa.0.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %.pn ; 2 uses
+  %50 = add i32 %.0116152, 2
+  %51 = zext i32 %50 to i64
+  %52 = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %51
+  %53 = load i16, ptr %52, align 2, !tbaa !275
+  %54 = zext i16 %53 to i64
+  %.sroa.0.0.in = getelementptr inbounds nuw [20 x i8], ptr %i.ea, i64 %54 ; 2 uses
+  %55 = load float, ptr %.sroa.0.0.in, align 4
   %.sroa.6.0.in = getelementptr inbounds nuw i8, ptr %.sroa.0.0.in, i64 4
   %.sroa.6.0 = load float, ptr %.sroa.6.0.in, align 4 ; 2 uses
-  %.sroa.0.0 = load float, ptr %.sroa.0.0.in, align 4
-  %i.eg = fsub float %.sroa.12.0, %.sroa.18.0
-  %i.eh = fsub float %.sroa.18.0, %.sroa.6.0
-  %i.ei = fmul float %.sroa.9.0, %i.eh
-  %i.ej = call float @llvm.fmuladd.f32(float %.sroa.0.0, float %i.eg, float %i.ei)
-  %i.ek = fsub float %.sroa.6.0, %.sroa.12.0
-  %i.el = call float @llvm.fmuladd.f32(float %.sroa.15.0, float %i.ek, float %i.ej)
+  %56 = add i32 %.0116152, 3                      ; 2 uses
+  %i.eg = fsub float %.sroa.12.0, %.sroa.6.0
+  %i.eh = fsub float %.sroa.6.0, %.sroa.18.0
+  %i.ei = fmul float %49, %i.eh
+  %i.ej = call float @llvm.fmuladd.f32(float %43, float %i.eg, float %i.ei)
+  %i.ek = fsub float %.sroa.18.0, %.sroa.12.0
+  %i.el = call float @llvm.fmuladd.f32(float %55, float %i.ek, float %i.ej)
   %i.em = call float @llvm.fabs.f32(float %i.el)
   %i.en = fmul float %i.em, 5.000000e-01
-  %i.eo = fadd float %.0118151.a, %i.en           ; 2 uses
-  %i.ep = icmp ult i32 %.us-phi, %i.ee
-  br i1 %i.ep, label %.preheader146.a, label %._crit_edge.loopexit, !llvm.loop !1673
+  %i.eo = fadd float %.0118151, %i.en             ; 2 uses
+  %i.ep = icmp ult i32 %56, %i.ee
+  br i1 %i.ep, label %.split150.us, label %.preheader146.a, !llvm.loop !1673
 
-bb.x:                                             ; preds = %._crit_edge.a
+bb.x:                                             ; preds = %.preheader146.split.preheader
   call void @_ZN5ImGui38DebugNodeDrawCmdShowMeshAndBoundingBoxEP10ImDrawListPKS0_PK9ImDrawCmdbb(ptr noundef nonnull %i.ba, ptr noundef nonnull %2, ptr noundef nonnull %.0119164, i1 noundef zeroext true, i1 noundef zeroext false)
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %._crit_edge.a
+bb.y:                                             ; preds = %bb.x, %.preheader146.split.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %7, i8 0, i64 48, i1 false)
   %i.eq = load i32, ptr %i.cu, align 8, !tbaa !944

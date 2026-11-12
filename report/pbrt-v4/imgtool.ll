@@ -205,9 +205,9 @@ bb.gm:                                            ; preds = %bb.gl, %bb.gk
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1058
 
 bb.gn:                                            ; preds = %bb.gj, %bb.fy, %bb.fx
-  %.sroa.18.1.in.in = phi i64 [ %.sroa.0.0.copyload.i1153, %bb.gj ], [ %.sroa.0.0.copyload.i, %bb.fy ], [ %.sroa.0.0.copyload.i, %bb.fx ] ; 12 uses
+  %.sroa.18.1.in.in = phi i64 [ %.sroa.0.0.copyload.i1153, %bb.gj ], [ %.sroa.0.0.copyload.i, %bb.fy ], [ %.sroa.0.0.copyload.i, %bb.fx ] ; 11 uses
   %.sroa.0196.1 = trunc i64 %.sroa.18.1.in.in to i32 ; 12 uses
-  %.sroa.18.1.in = lshr i64 %.sroa.18.1.in.in, 32 ; 10 uses
+  %.sroa.18.1.in = lshr i64 %.sroa.18.1.in.in, 32 ; 11 uses
   %.sroa.18.1 = trunc nuw i64 %.sroa.18.1.in to i32 ; 5 uses
   %i.agw = load i64, ptr %i.ar, align 8, !tbaa !45
   %i.agx = icmp ne i64 %i.agw, 0
@@ -610,28 +610,27 @@ bb.rv:                                            ; preds = %_ZNK4pbrt5Image10Ge
   %i.eyh = getelementptr inbounds nuw i8, ptr %91, i64 8 ; 2 uses
   %i.eyi = getelementptr inbounds nuw i8, ptr %91, i64 16
   %i.eyj = getelementptr inbounds nuw i8, ptr %91, i64 32 ; 2 uses
-  %98 = icmp sgt i32 %i.ade, 0
   br i1 %i.eyf, label %.preheader3215.preheader, label %.loopexit3217
 
 .preheader3215.preheader:                         ; preds = %.preheader3215.lr.ph
-  %wide.trip.count4711 = and i64 %.sroa.18.1.in.in, 2147483647
-  %wide.trip.count4721 = and i64 %.sroa.18.1.in.in, 2147483647
-  %wide.trip.count4716 = and i64 %.fr, 2147483647
-  br label %.preheader3215.a
+  %98 = icmp sgt i32 %i.ade, 0
+  %wide.trip.count4721 = and i64 %.sroa.18.1.in.in, 2147483647 ; 2 uses
+  br i1 %98, label %.preheader3215.a, label %.preheader3215
 
-.preheader3215.a:                                 ; preds = %.preheader3215.preheader, %._crit_edge4486
-  %indvars.iv4723 = phi i64 [ 0, %.preheader3215.preheader ], [ %indvars.iv.next4724, %._crit_edge4486 ] ; 4 uses
-  %.sroa.22443.0.insert.shift = shl nuw nsw i64 %indvars.iv4723, 32 ; 2 uses
-  br i1 %98, label %.lr.ph4485.split.us.preheader, label %.lr.ph4485.split
+.preheader3215.a:                                 ; preds = %.preheader3215.preheader
+  %wide.trip.count4716.us = and i64 %.fr, 2147483647
+  br label %.lr.ph4485.split.us.preheader
 
-.lr.ph4485.split.us.preheader:                    ; preds = %.preheader3215.a
-  %i.eyk = trunc nuw nsw i64 %indvars.iv4723 to i32 ; 2 uses
+.lr.ph4485.split.us.preheader:                    ; preds = %._crit_edge4483.us, %.preheader3215.a
+  %indvars.iv4723.us = phi i64 [ 0, %.preheader3215.a ], [ %indvars.iv.next4719, %._crit_edge4483.us ] ; 4 uses
+  %.sroa.22443.0.insert.shift.us = shl nuw nsw i64 %indvars.iv4723.us, 32
+  %i.eyk = trunc nuw nsw i64 %indvars.iv4723.us to i32 ; 2 uses
   br label %.lr.ph4485.split.us
 
-.lr.ph4485.split.us:                              ; preds = %.lr.ph4485.split.us.preheader, %._crit_edge4483.us
-  %indvars.iv4718 = phi i64 [ 0, %.lr.ph4485.split.us.preheader ], [ %indvars.iv.next4719, %._crit_edge4483.us ] ; 4 uses
+.lr.ph4485.split.us:                              ; preds = %.lr.ph4485.split.us.preheader, %bb.si
+  %indvars.iv4718 = phi i64 [ 0, %.lr.ph4485.split.us.preheader ], [ %indvars.iv.next4714, %bb.si ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %91) #37
-  %.sroa.02442.0.insert.insert.us = or disjoint i64 %.sroa.22443.0.insert.shift, %indvars.iv4718 ; 2 uses
+  %.sroa.02442.0.insert.insert.us = or disjoint i64 %.sroa.22443.0.insert.shift.us, %indvars.iv4718 ; 2 uses
   invoke void @_ZNK4pbrt5Image11GetChannelsENS_6Point2IiEENS_10WrapMode2DE(ptr dead_on_unwind nonnull writable sret(%"struct.pbrt::ImageChannelValues") align 8 %91, ptr noundef nonnull align 8 dereferenceable(152) %67, i64 %.sroa.02442.0.insert.insert.us, i64 4294967297)
           to label %bb.rw unwind label %.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -744,8 +743,8 @@ _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400
   %i.fak = trunc nuw nsw i64 %indvars.iv4718 to i32 ; 2 uses
   br label %.preheader.preheader.i2273.us
 
-.preheader.preheader.i2273.us:                    ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400.us, %bb.si
-  %indvars.iv4713 = phi i64 [ 0, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400.us ], [ %indvars.iv.next4714, %bb.si ] ; 5 uses
+.preheader.preheader.i2273.us:                    ; preds = %99, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400.us
+  %indvars.iv4713 = phi i64 [ 0, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400.us ], [ %indvars.iv.next4714.us, %99 ] ; 5 uses
   %.sroa.04.0.copyload.i1402.us = load i64, ptr %i.adc, align 4 ; 4 uses
   %.sroa.0.0.extract.trunc.i2267.us = trunc i64 %.sroa.04.0.copyload.i1402.us to i32 ; 4 uses
   %.sroa.9.0.extract.shift.i2268.us = lshr i64 %.sroa.04.0.copyload.i1402.us, 32
@@ -757,7 +756,7 @@ _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400
   %..i.i2276.us = call i32 @llvm.smin.i32(i32 %i.fak, i32 %i.fan)
   %.sroa.02643.0.us = select i1 %i.fam, i32 %i.fak, i32 %..i.i2276.us ; 3 uses
   %i.fao = ashr i64 %.sroa.04.0.copyload.i1402.us, 32
-  %i.fap = icmp slt i64 %indvars.iv4723, %i.fao
+  %i.fap = icmp slt i64 %indvars.iv4723.us, %i.fao
   %i.faq = add nsw i32 %.sroa.9.0.extract.trunc.i2269.us, -1
   %..i.1.i2282.us = call i32 @llvm.smin.i32(i32 %i.eyk, i32 %i.faq)
   %.sroa.142651.2.us = select i1 %i.fap, i32 %i.eyk, i32 %..i.1.i2282.us ; 3 uses
@@ -869,25 +868,35 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1425.us: ; preds
   %i.fct = fmul float %i.faj, %.0.i1403.us
   %i.fcu = trunc nuw nsw i64 %indvars.iv4713 to i32
   invoke void @_ZN4pbrt5Image10SetChannelENS_6Point2IiEEif(ptr noundef nonnull align 8 dereferenceable(152) %67, i64 %.sroa.02442.0.insert.insert.us, i32 noundef %i.fcu, float noundef %i.fct)
-          to label %bb.si unwind label %.loopexit.split-lp3189.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %99 unwind label %.loopexit.split-lp3189.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.si:                                            ; preds = %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1425.us
-  %indvars.iv.next4714 = add nuw nsw i64 %indvars.iv4713, 1 ; 2 uses
-  %exitcond4717.not = icmp eq i64 %indvars.iv.next4714, %wide.trip.count4716
-  br i1 %exitcond4717.not, label %._crit_edge4483.us, label %.preheader.preheader.i2273.us, !llvm.loop !1056
+99:                                               ; preds = %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1425.us
+  %indvars.iv.next4714.us = add nuw nsw i64 %indvars.iv4713, 1 ; 2 uses
+  %exitcond4717.us.not = icmp eq i64 %indvars.iv.next4714.us, %wide.trip.count4716.us
+  br i1 %exitcond4717.us.not, label %bb.si, label %.preheader.preheader.i2273.us, !llvm.loop !1056
+
+bb.si:                                            ; preds = %99
+  %indvars.iv.next4714 = add nuw nsw i64 %indvars.iv4718, 1 ; 2 uses
+  %exitcond4717.not = icmp eq i64 %indvars.iv.next4714, %wide.trip.count4721
+  br i1 %exitcond4717.not, label %._crit_edge4483.us, label %.lr.ph4485.split.us, !llvm.loop !1057
 
 ._crit_edge4483.us:                               ; preds = %bb.si
-  %indvars.iv.next4719 = add nuw nsw i64 %indvars.iv4718, 1 ; 2 uses
-  %exitcond4722.not = icmp eq i64 %indvars.iv.next4719, %wide.trip.count4721
-  br i1 %exitcond4722.not, label %._crit_edge4486, label %.lr.ph4485.split.us, !llvm.loop !1057
+  %indvars.iv.next4719 = add nuw nsw i64 %indvars.iv4723.us, 1 ; 2 uses
+  %exitcond4722.not = icmp eq i64 %indvars.iv.next4719, %.sroa.18.1.in
+  br i1 %exitcond4722.not, label %.loopexit3217, label %.lr.ph4485.split.us.preheader, !llvm.loop !1058
 
-._crit_edge4486:                                  ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400, %._crit_edge4483.us
+.preheader3215:                                   ; preds = %.preheader3215.preheader, %._crit_edge4486
+  %indvars.iv4723 = phi i64 [ %indvars.iv.next4724, %._crit_edge4486 ], [ 0, %.preheader3215.preheader ] ; 2 uses
+  %.sroa.22443.0.insert.shift = shl nuw nsw i64 %indvars.iv4723, 32
+  br label %.lr.ph4485.split
+
+._crit_edge4486:                                  ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400
   %indvars.iv.next4724 = add nuw nsw i64 %indvars.iv4723, 1 ; 2 uses
   %exitcond4727.not = icmp eq i64 %indvars.iv.next4724, %.sroa.18.1.in
-  br i1 %exitcond4727.not, label %.loopexit3217, label %.preheader3215.a, !llvm.loop !1058
+  br i1 %exitcond4727.not, label %.loopexit3217, label %.preheader3215, !llvm.loop !1058
 
-.lr.ph4485.split:                                 ; preds = %.preheader3215.a, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400
-  %indvars.iv4708 = phi i64 [ %indvars.iv.next4709, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400 ], [ 0, %.preheader3215.a ] ; 2 uses
+.lr.ph4485.split:                                 ; preds = %.preheader3215, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400
+  %indvars.iv4708 = phi i64 [ 0, %.preheader3215 ], [ %indvars.iv.next4709, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %91) #37
   %.sroa.02442.0.insert.insert = or disjoint i64 %.sroa.22443.0.insert.shift, %indvars.iv4708
   invoke void @_ZNK4pbrt5Image11GetChannelsENS_6Point2IiEENS_10WrapMode2DE(ptr dead_on_unwind nonnull writable sret(%"struct.pbrt::ImageChannelValues") align 8 %91, ptr noundef nonnull align 8 dereferenceable(152) %67, i64 %.sroa.02442.0.insert.insert, i64 4294967297)
@@ -919,7 +928,7 @@ bb.sj:                                            ; preds = %.loopexit3214
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400: ; preds = %.loopexit3214, %bb.sj
   call void @llvm.lifetime.end.p0(ptr nonnull %91) #37
   %indvars.iv.next4709 = add nuw nsw i64 %indvars.iv4708, 1 ; 2 uses
-  %exitcond4712.not = icmp eq i64 %indvars.iv.next4709, %wide.trip.count4711
+  %exitcond4712.not = icmp eq i64 %indvars.iv.next4709, %wide.trip.count4721
   br i1 %exitcond4712.not, label %._crit_edge4486, label %.lr.ph4485.split, !llvm.loop !1057
 
 .split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph4485.split.us, %.lr.ph4485.split
@@ -928,7 +937,7 @@ _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit1400
   call void @llvm.lifetime.end.p0(ptr nonnull %91) #37
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1058
 
-.loopexit3217:                                    ; preds = %._crit_edge4486, %.preheader3215.lr.ph, %.loopexit3224
+.loopexit3217:                                    ; preds = %._crit_edge4486, %._crit_edge4483.us, %.preheader3215.lr.ph, %.loopexit3224
   %i.fdd = load i8, ptr %i.af, align 1, !tbaa !283, !range !161, !noundef !162
   %i.fde = trunc nuw i8 %i.fdd to i1
   %or.cond4530 = select i1 %i.fde, i1 %i.aih, i1 false
@@ -1331,7 +1340,7 @@ bb.tl:                                            ; preds = %"_ZZ7convertSt6vect
   %exitcond4752.not = icmp eq i64 %indvars.iv.next4749, %wide.trip.count4751
   br i1 %exitcond4752.not, label %._crit_edge4507, label %.preheader.preheader.i2354, !llvm.loop !1065
 
-.loopexit.split-lp3189.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.he, %bb.hd, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1189, %bb.iz, %bb.ja, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1386, %bb.ro, %bb.rp, %bb.sg, %bb.sh, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1425.us, %bb.sv, %bb.su, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1477, %"_ZZ7convertSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEENK3$_2clEf.exit", %bb.td, %bb.te, %bb.sm, %bb.sn, %bb.sk, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1361, %bb.rf, %bb.rg, %bb.jb, %bb.gv, %bb.gw, %.invoke5318, %bb.ul, %bb.en, %.noexc.i1039, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i, %.noexc.i1570, %.noexc.i1191
+.loopexit.split-lp3189.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.he, %bb.hd, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1189, %bb.iz, %bb.ja, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1386, %bb.ro, %bb.rp, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1425.us, %bb.sh, %bb.sg, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1477, %bb.su, %bb.sv, %bb.te, %bb.td, %"_ZZ7convertSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEENK3$_2clEf.exit", %bb.sn, %bb.sm, %bb.sk, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit1361, %bb.rf, %bb.rg, %bb.jb, %bb.gv, %bb.gw, %.invoke5318, %bb.ul, %bb.en, %.noexc.i1039, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i, %.noexc.i1570, %.noexc.i1191
   %lpad.loopexit.split-lp7546 = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1058

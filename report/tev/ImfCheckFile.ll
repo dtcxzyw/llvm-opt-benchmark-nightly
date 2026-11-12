@@ -204,9 +204,9 @@ bb.hm:                                            ; preds = %_ZNSt3__114__split_
   %i.agh = getelementptr inbounds nuw [4 x i8], ptr %i.xn, i64 %i.agg
   br label %.lr.ph386.split.us.us.split.us.us.i
 
-.lr.ph386.split.us.us.split.us.us.i:              ; preds = %.preheader287.us.us.i, %.loopexit286.us.us.us.us.i
-  %indvars.iv567.i = phi i64 [ %indvars.iv.next568.i, %.loopexit286.us.us.us.us.i ], [ 0, %.preheader287.us.us.i ] ; 8 uses
-  %.1383.us.us.us.us.i = phi i64 [ %.3.us.us.us.us.i, %.loopexit286.us.us.us.us.i ], [ %.0131401.us.us.i, %.preheader287.us.us.i ] ; 4 uses
+.lr.ph386.split.us.us.split.us.us.i:              ; preds = %.loopexit286.us.us.us.us.i, %.preheader287.us.us.i
+  %indvars.iv567.i = phi i64 [ 0, %.preheader287.us.us.i ], [ %indvars.iv.next568.i, %.loopexit286.us.us.us.us.i ] ; 8 uses
+  %.1383.us.us.us.us.i = phi i64 [ %.0131401.us.us.i, %.preheader287.us.us.i ], [ %.3.us.us.us.us.i, %.loopexit286.us.us.us.us.i ] ; 4 uses
   %i.agi = getelementptr inbounds nuw [4 x i8], ptr %i.agh, i64 %indvars.iv567.i
   %i.agj = load i32, ptr %i.agi, align 4, !tbaa !17 ; 2 uses
   %i.agk = mul i32 %i.agj, %i.wz
@@ -609,12 +609,12 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
 
 bb.am:                                            ; preds = %bb.al
   %i.ez = icmp ugt i64 %i.ex, %.0136.lcssa.us
-  br i1 %i.ez, label %bb.an, label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
+  br i1 %i.ez, label %bb.an, label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us
 
 bb.an:                                            ; preds = %bb.am
   %i.fa = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %.0136.lcssa.us
   store ptr %i.fa, ptr %i.bz, align 8, !tbaa !129
-  br label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
+  br label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us
 
 bb.ao:                                            ; preds = %bb.al
   %i.fb = sub nuw i64 %.0136.lcssa.us, %i.ex      ; 3 uses
@@ -630,7 +630,7 @@ bb.ao:                                            ; preds = %bb.al
   %i.fg = getelementptr i8, ptr %i.es, i64 %.idx.i.i.us
   call void @llvm.memset.p0.i64(ptr align 4 %i.es, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !104
   store ptr %i.fg, ptr %i.bz, align 8, !tbaa !129
-  br label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
+  br label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us
 
 bb.ap:                                            ; preds = %bb.ao
   %i.fh = icmp ugt i64 %.0136.lcssa.us, 4611686018427387903
@@ -729,22 +729,25 @@ _ZNSt3__114__split_bufferIfRNS_9allocatorIfEEE5clearB8ne180100Ev.exit.i.i.us: ; 
   %i.gl = load ptr, ptr %i.ca, align 8, !tbaa !132
   store ptr %i.fp, ptr %i.ca, align 8, !tbaa !132
   %.not.i9.i.us = icmp eq ptr %.pre11.i.us, null
-  br i1 %.not.i9.i.us, label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a, label %bb.as
+  br i1 %.not.i9.i.us, label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us, label %bb.as
 
 bb.as:                                            ; preds = %_ZNSt3__114__split_bufferIfRNS_9allocatorIfEEE5clearB8ne180100Ev.exit.i.i.us
   %i.gm = ptrtoint ptr %i.gl to i64
   %i.gn = ptrtoint ptr %.pre11.i.us to i64
   %i.go = sub i64 %i.gm, %i.gn
   call void @_ZdlPvm(ptr noundef nonnull %.pre11.i.us, i64 noundef %i.go) #24
-  br label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
+  br label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us
 
-_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a: ; preds = %bb.as, %_ZNSt3__114__split_bufferIfRNS_9allocatorIfEEE5clearB8ne180100Ev.exit.i.i.us, %.lr.ph.preheader.i.i.us, %bb.an, %bb.am
-  br i1 %brmerge, label %._crit_edge403.split.us, label %.preheader287.lr.ph.split.us
+_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us: ; preds = %bb.as, %_ZNSt3__114__split_bufferIfRNS_9allocatorIfEEE5clearB8ne180100Ev.exit.i.i.us, %.lr.ph.preheader.i.i.us, %bb.an, %bb.am
+  br i1 %brmerge, label %._crit_edge403.split.us, label %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
+
+_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a: ; preds = %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us
+  br i1 %1, label %.preheader287.lr.ph.split.us, label %.preheader287.lr.ph.split.split.us445
 
 .preheader287.lr.ph.split.us:                     ; preds = %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
-  br i1 %1, label %.preheader287.us.us, label %.preheader287.lr.ph.split.split.us445
+  br i1 %i.ab, label %._crit_edge403.split.us, label %.preheader287.us.us
 
-.preheader287.lr.ph.split.split.us445:            ; preds = %.preheader287.lr.ph.split.us
+.preheader287.lr.ph.split.split.us445:            ; preds = %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
   br i1 %i.ab, label %._crit_edge403.split.us, label %.preheader287.us407.us
 
 .preheader287.us407.us:                           ; preds = %.preheader287.lr.ph.split.split.us445, %._crit_edge387.split.split.us.us.us
@@ -829,14 +832,14 @@ _ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a: ; preds = %bb.as, %_ZNS
 
 .preheader287.us.us:                              ; preds = %.preheader287.lr.ph.split.us, %._crit_edge387.split.us.us.us
   %indvars.iv583 = phi i64 [ %indvars.iv.next584, %._crit_edge387.split.us.us.us ], [ 0, %.preheader287.lr.ph.split.us ] ; 8 uses
-  %.0131401.us.us = phi i64 [ %.us-phi410.us, %._crit_edge387.split.us.us.us ], [ 0, %.preheader287.lr.ph.split.us ] ; 2 uses
+  %.0131401.us.us = phi i64 [ %.3.us.us.us.us, %._crit_edge387.split.us.us.us ], [ 0, %.preheader287.lr.ph.split.us ]
   %i.ib = mul nuw nsw i64 %indvars.iv583, %i.m
   %i.ic = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.ib
-  br i1 %i.ab, label %._crit_edge387.split.us.us.us, label %.lr.ph386.split.us.us.split.us.us
+  br label %.lr.ph386.split.us.us.split.us.us
 
 .lr.ph386.split.us.us.split.us.us:                ; preds = %.preheader287.us.us, %.loopexit286.us.us.us.us
-  %indvars.iv567 = phi i64 [ %indvars.iv.next568, %.loopexit286.us.us.us.us ], [ 0, %.preheader287.us.us ] ; 8 uses
-  %.1383.us.us.us.us = phi i64 [ %.3.us.us.us.us, %.loopexit286.us.us.us.us ], [ %.0131401.us.us, %.preheader287.us.us ] ; 4 uses
+  %indvars.iv567 = phi i64 [ 0, %.preheader287.us.us ], [ %indvars.iv.next568, %.loopexit286.us.us.us.us ] ; 8 uses
+  %.1383.us.us.us.us = phi i64 [ %.0131401.us.us, %.preheader287.us.us ], [ %.3.us.us.us.us, %.loopexit286.us.us.us.us ] ; 4 uses
   %i.id = getelementptr inbounds nuw [4 x i8], ptr %i.ic, i64 %indvars.iv567
   %i.ie = load i32, ptr %i.id, align 4, !tbaa !17 ; 2 uses
   %i.if = mul i32 %i.ie, %i.d
@@ -953,13 +956,12 @@ _ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a: ; preds = %bb.as, %_ZNS
   %exitcond571.not = icmp eq i64 %indvars.iv.next568, %wide.trip.count570
   br i1 %exitcond571.not, label %._crit_edge387.split.us.us.us, label %.lr.ph386.split.us.us.split.us.us, !llvm.loop !315
 
-._crit_edge387.split.us.us.us:                    ; preds = %.loopexit286.us.us.us.us, %.preheader287.us.us
-  %.us-phi410.us = phi i64 [ %.0131401.us.us, %.preheader287.us.us ], [ %.3.us.us.us.us, %.loopexit286.us.us.us.us ]
+._crit_edge387.split.us.us.us:                    ; preds = %.loopexit286.us.us.us.us
   %indvars.iv.next584 = add nuw nsw i64 %indvars.iv583, 1 ; 2 uses
   %exitcond587.not = icmp eq i64 %indvars.iv.next584, %wide.trip.count586
   br i1 %exitcond587.not, label %._crit_edge403.split.us, label %.preheader287.us.us, !llvm.loop !316
 
-._crit_edge403.split.us:                          ; preds = %._crit_edge387.split.split.us.us.us, %._crit_edge387.split.us.us.us, %.preheader287.lr.ph.split.split.us445, %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us.a
+._crit_edge403.split.us:                          ; preds = %._crit_edge387.split.split.us.us.us, %._crit_edge387.split.us.us.us, %.preheader287.lr.ph.split.us, %.preheader287.lr.ph.split.split.us445, %_ZNSt3__16vectorIfNS_9allocatorIfEEE6resizeEm.exit.us
   invoke void @_ZN7Imf_3_418DeepTiledInputFile8readTileEiiii(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %.0139.us, i32 noundef %.0140.us, i32 noundef %.0141424.us, i32 noundef %.0146429.us)
           to label %._crit_edge363.us.thread unwind label %bb.av
 
