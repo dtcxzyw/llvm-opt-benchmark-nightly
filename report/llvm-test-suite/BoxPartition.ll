@@ -202,7 +202,7 @@ bb.a:
   %broadcast.splat100.a = shufflevector <16 x i32> %broadcast.splatinsert99.a, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert105 = insertelement <16 x i32> poison, i32 %i.au, i64 0
   %broadcast.splat106 = shufflevector <16 x i32> %broadcast.splatinsert105, <16 x i32> poison, <16 x i32> zeroinitializer
-  %induction107 = add nsw <16 x i32> %broadcast.splat106, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %induction107 = add <16 x i32> %broadcast.splat106, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.bf = add i32 %i.o, %i.w
   %i.bg = xor i32 %i.i, -1
   %i.bh = add i32 %i.bf, %i.bg
@@ -210,7 +210,7 @@ bb.a:
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert93 = insertelement <16 x i32> poison, i32 %i.au, i64 0
   %broadcast.splat94 = shufflevector <16 x i32> %broadcast.splatinsert93, <16 x i32> poison, <16 x i32> zeroinitializer
-  %induction = add nsw <16 x i32> %broadcast.splat94, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %induction = add <16 x i32> %broadcast.splat94, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   br label %.lr.ph417.split.us.split.us.i.us
 
 .lr.ph417.split.us.split.us.i.preheader42:        ; preds = %.lr.ph417.split.us.split.us.i.preheader.a
@@ -278,7 +278,7 @@ _ZL12box_disjointRK3BoxS1_.exit.us.us.i.us:       ; preds = %bb.e
   %i.ch = add nsw i32 %i.bs, %3
   br label %.preheader276.us.us.us.us.i.us
 
-.preheader276.us.us.us.us.i.us:                   ; preds = %.preheader276.lr.ph.us.us.i.us, %._crit_edge311.split.us.us.us.us.us.i.us
+.preheader276.us.us.us.us.i.us:                   ; preds = %._crit_edge311.split.us.us.us.us.us.i.us, %.preheader276.lr.ph.us.us.i.us
   %.0350.us.us.us.us.i.us = phi i32 [ %i.if, %._crit_edge311.split.us.us.us.us.us.i.us ], [ %i.au, %.preheader276.lr.ph.us.us.i.us ] ; 5 uses
   %.1163349.us.us.us.us.i.us = phi i32 [ %.us-phi341.us.us.us.us.i.us, %._crit_edge311.split.us.us.us.us.us.i.us ], [ %.0162415.us.us.i.us, %.preheader276.lr.ph.us.us.i.us ] ; 2 uses
   %.1165348.us.us.us.us.i.us = phi i32 [ %.us-phi340.us.us.us.us.i.us, %._crit_edge311.split.us.us.us.us.us.i.us ], [ %.0164414.us.us.i.us, %.preheader276.lr.ph.us.us.i.us ] ; 2 uses
@@ -366,7 +366,7 @@ vector.body108:                                   ; preds = %vector.body.interim
   br i1 %.not, label %vector.body.interim113, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
 
 vector.body.interim113:                           ; preds = %vector.body108
-  %vec.ind.next112 = add nsw <16 x i32> %vec.ind110, splat (i32 16)
+  %vec.ind.next112 = add <16 x i32> %vec.ind110, splat (i32 16)
   %index.next111 = add nuw i32 %index109, 16      ; 2 uses
   %i.dt = icmp eq i32 %index.next111, %n.vec98
   br i1 %i.dt, label %middle.block114, label %vector.body108, !llvm.loop !10
@@ -388,7 +388,7 @@ middle.block114:                                  ; preds = %vector.body.interim
   br i1 %or.cond.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph299.split.us315.split.us.split.us.us.us.us.us.i.us
-  %i.dy = add nsw i32 %.0160298.us316.us.us.us.us.us.us.i.us, 1 ; 2 uses
+  %i.dy = add i32 %.0160298.us316.us.us.us.us.us.us.i.us, 1 ; 2 uses
   %exitcond.not.i.us = icmp eq i32 %i.dy, %i.ay
   br i1 %exitcond.not.i.us, label %._crit_edge.split.us327.split.us.us.us.us.us.i.us, label %.lr.ph299.split.us315.split.us.split.us.us.us.us.us.i.us, !llvm.loop !11
 
@@ -420,7 +420,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.4168.us326.us.us.us.us.us.i.us = phi i32 [ %i.ef, %bb.h ], [ %.3167296.us317.us.us.us.us.us.i.us, %bb.g ] ; 2 uses
-  %i.ei = add nsw i32 %.0160298.us316.us.us366.us.us.us.i.us, 1 ; 2 uses
+  %i.ei = add i32 %.0160298.us316.us.us366.us.us.us.i.us, 1 ; 2 uses
   %exitcond458.not.i.us = icmp eq i32 %i.ei, %i.ay
   br i1 %exitcond458.not.i.us, label %._crit_edge.split.us327.split.us.us.us.us.us.i.us, label %.lr.ph299.split.us315.split.us.split.us365.us.us.us.i.us, !llvm.loop !12
 
@@ -507,7 +507,7 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not118, label %vector.body.interim, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add nsw <16 x i32> %vec.ind, splat (i32 16)
+  %vec.ind.next = add <16 x i32> %vec.ind, splat (i32 16)
   %index.next = add nuw i32 %index, 16            ; 2 uses
   %i.ft = icmp eq i32 %index.next, %n.vec
   br i1 %i.ft, label %middle.block, label %vector.body, !llvm.loop !14
@@ -530,7 +530,7 @@ middle.block:                                     ; preds = %vector.body.interim
   br i1 %or.cond443.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph299.split.us.us.us.split.us371.split.us.split.us.us.us.us.i.us
-  %i.fy = add nsw i32 %.0160298.us.us.us.us372.us.us.us.us.us.i.us, 1 ; 2 uses
+  %i.fy = add i32 %.0160298.us.us.us.us372.us.us.us.us.us.i.us, 1 ; 2 uses
   %exitcond459.not.i.us = icmp eq i32 %i.fy, %i.ay
   br i1 %exitcond459.not.i.us, label %._crit_edge.split.us.us.us.us.us.us.us.i.us, label %.lr.ph299.split.us.us.us.split.us371.split.us.split.us.us.us.us.i.us, !llvm.loop !15
 
@@ -562,7 +562,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.4168.us.us.us.us382.us.us.us.us.i.us = phi i32 [ %i.gf, %bb.l ], [ %.3167296.us.us.us.us373.us.us.us.us.i.us, %bb.k ] ; 2 uses
-  %i.gi = add nsw i32 %.0160298.us.us.us.us372.us.us399.us.us.i.us, 1 ; 2 uses
+  %i.gi = add i32 %.0160298.us.us.us.us372.us.us399.us.us.i.us, 1 ; 2 uses
   %exitcond460.not.i.us = icmp eq i32 %i.gi, %i.ay
   br i1 %exitcond460.not.i.us, label %._crit_edge.split.us.us.us.us.us.us.us.i.us, label %.lr.ph299.split.us.us.us.split.us371.split.us.split.us398.us.us.i.us, !llvm.loop !12
 
@@ -675,7 +675,7 @@ bb.v:                                             ; preds = %_ZL10resize_intPPiS
   %.4213.us.us.us.us.us.us.us.us.i.us = phi ptr [ %.6215.us.us.us.us.us.us.us.us.i.us, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.i.us ], [ %.3212294.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
   %.4207.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.7.us.us.us.us.us.us.us.us.i.us, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.i.us ], [ %.3206295.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
   %.4.us.us.us.us.us.us.us.us.i.us = phi i32 [ %i.ho, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.i.us ], [ %.3297.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
-  %i.ic = add nsw i32 %.0160298.us.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
+  %i.ic = add i32 %.0160298.us.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
   %exitcond461.not.i.us = icmp eq i32 %i.ic, %i.ay
   br i1 %exitcond461.not.i.us, label %._crit_edge.split.us.us.us.us.us.us.us.i.us, label %.lr.ph299.split.us.us.us.split.us.us.us.us.us.i.us, !llvm.loop !12
 

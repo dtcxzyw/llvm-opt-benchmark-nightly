@@ -205,13 +205,13 @@ bb.ev:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.anr = lshr i8 %i.anq, 3
   %narrow.i = select i1 %.not.i770, i8 0, i8 %i.anr
   %i.ans = zext nneg i8 %narrow.i to i32
-  %i.ant = mul i32 %i.ann, %i.ans                 ; 8 uses
+  %i.ant = mul i32 %i.ann, %i.ans                 ; 9 uses
   %i.anu = and i32 %i.ant, 3                      ; 2 uses
   %.not.i771 = icmp eq i32 %i.anu, 0
   %i.anv = sub nuw nsw i32 4, %i.anu
   %i.anw = select i1 %.not.i771, i32 0, i32 %i.anv
   %.0.i772 = add i32 %i.ant, 8
-  %i.anx = add i32 %.0.i772, %i.anw               ; 2 uses
+  %i.anx = add i32 %.0.i772, %i.anw               ; 3 uses
   %i.any = load i32, ptr %i.bc, align 4, !tbaa !202
   %i.anz = icmp eq i32 %i.any, 1
   %i.aoa = zext i32 %i.ant to i64                 ; 3 uses
@@ -228,8 +228,8 @@ bb.ew:                                            ; preds = %bb.ev
   br label %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit
 
 _ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit:            ; preds = %.noexc775, %bb.ev
-  %.sroa.01281.4 = phi ptr [ %i.aob, %.noexc775 ], [ null, %bb.ev ] ; 20 uses
-  %.sroa.27.4 = phi ptr [ %i.aoc, %.noexc775 ], [ null, %bb.ev ] ; 12 uses
+  %.sroa.01281.4 = phi ptr [ %i.aob, %.noexc775 ], [ null, %bb.ev ] ; 21 uses
+  %.sroa.27.4 = phi ptr [ %i.aoc, %.noexc775 ], [ null, %bb.ev ] ; 13 uses
   br i1 %i.anz, label %bb.ex, label %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread
 
 bb.ex:                                            ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit
@@ -632,7 +632,6 @@ _ZNSt6vectorIhSaIhEED2Ev.exit843.thread:          ; preds = %.thread1709, %.spli
   br i1 %.not5242144, label %.thread1687, label %.lr.ph2148
 
 .lr.ph2148:                                       ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread
-  %30 = load ptr, ptr %i.s, align 8, !tbaa !155   ; 3 uses
   %i.aub = load i32, ptr %i.al, align 4, !tbaa !212
   %i.auc = load i8, ptr %i.w, align 8, !tbaa !205
   %i.aud = lshr i8 %i.auc, 3
@@ -648,27 +647,29 @@ _ZNSt6vectorIhSaIhEED2Ev.exit843.thread:          ; preds = %.thread1709, %.spli
   %i.aul = zext nneg i8 %narrow.i.i848 to i64
   %i.aum = add nuw nsw i64 %i.auh, %i.aul         ; 3 uses
   %.not5262136 = icmp ugt i32 %i.ex, %i.ez
+  br i1 %.not5262136, label %.thread1687, label %.lr.ph2148.split
+
+.lr.ph2148.split:                                 ; preds = %.lr.ph2148
+  %30 = load ptr, ptr %i.s, align 8, !tbaa !155   ; 3 uses
   %.not.i849 = icmp eq i8 %i.aui, 0
   %31 = lshr i8 %i.auj, 3
-  %narrow.i850 = select i1 %.not.i849, i8 0, i8 %31
-  %narrow.i850.fr = freeze i8 %narrow.i850        ; 2 uses
-  %32 = zext i8 %narrow.i850.fr to i32            ; 2 uses
-  %33 = icmp eq i8 %narrow.i850.fr, 0
+  %narrow.i850 = select i1 %.not.i849, i8 0, i8 %31 ; 2 uses
+  %32 = zext nneg i8 %narrow.i850 to i32          ; 2 uses
+  %33 = icmp eq i8 %narrow.i850, 0
   %.02129 = add nsw i32 %32, -1
   %34 = zext i32 %.02129 to i64                   ; 6 uses
   %invariant.gep2741 = getelementptr inbounds nuw i8, ptr %30, i64 %i.auh
   %scevgep = getelementptr i8, ptr %30, i64 1
   %35 = add nuw nsw i64 %i.auh, %34               ; 2 uses
-  %scevgep2974 = getelementptr i8, ptr %scevgep, i64 %35
-  %scevgep2975 = getelementptr i8, ptr %30, i64 %35
-  %scevgep2976 = getelementptr i8, ptr %.sroa.01281.4, i64 1
-  %brmerge2743 = or i1 %.not5262136, %33
+  %scevgep2973 = getelementptr i8, ptr %scevgep, i64 %35
+  %scevgep2974 = getelementptr i8, ptr %30, i64 %35
+  %scevgep2975 = getelementptr i8, ptr %.sroa.01281.4, i64 1
   br label %bb.fx
 
-bb.fx:                                            ; preds = %.lr.ph2148, %._crit_edge2141
-  %.02862147 = phi i64 [ 0, %.lr.ph2148 ], [ %.1.lcssa, %._crit_edge2141 ] ; 2 uses
-  %storemerge5232145 = phi i32 [ %i.eo, %.lr.ph2148 ], [ %i.awv, %._crit_edge2141 ] ; 3 uses
-  br i1 %brmerge2743, label %._crit_edge2141, label %.lr.ph2133.preheader
+bb.fx:                                            ; preds = %.lr.ph2148.split, %._crit_edge2141
+  %.02862147 = phi i64 [ 0, %.lr.ph2148.split ], [ %.1.lcssa, %._crit_edge2141 ] ; 2 uses
+  %storemerge5232145 = phi i32 [ %i.eo, %.lr.ph2148.split ], [ %i.awv, %._crit_edge2141 ] ; 3 uses
+  br i1 %33, label %._crit_edge2141, label %.lr.ph2133.preheader
 
 .lr.ph2133.preheader:                             ; preds = %bb.fx
   %i.aun = mul i32 %i.aub, %storemerge5232145
@@ -687,20 +688,20 @@ bb.fx:                                            ; preds = %.lr.ph2148, %._crit
   %i.aut = mul nuw nsw i64 %i.aum, %i.auq
   %gep2740 = getelementptr inbounds nuw i8, ptr %gep2742, i64 %i.aut ; 2 uses
   %i.auu = sub i64 %umax2406, %.12138
-  %i.auv = call i64 @llvm.umin.i64(i64 %34, i64 %i.auu) ; 4 uses
+  %i.auv = call i64 @llvm.umin.i64(i64 %i.auu, i64 %34) ; 4 uses
   %i.auw = add nuw nsw i64 %i.auv, 1              ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.auv, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph2133
   %i.aux = getelementptr i8, ptr %.sroa.01281.4, i64 %.12138
-  %i.auy = getelementptr i8, ptr %scevgep2976, i64 %.12138
+  %i.auy = getelementptr i8, ptr %scevgep2975, i64 %.12138
   %i.auz = getelementptr i8, ptr %i.auy, i64 %i.auv
   %i.ava = add nuw nsw i64 %i.auo, %i.auq
   %i.avb = mul nuw nsw i64 %i.aum, %i.ava         ; 2 uses
   %i.avc = sub nsw i64 %i.avb, %i.auv
-  %i.avd = getelementptr i8, ptr %scevgep2975, i64 %i.avc
-  %i.ave = getelementptr i8, ptr %scevgep2974, i64 %i.avb
+  %i.avd = getelementptr i8, ptr %scevgep2974, i64 %i.avc
+  %i.ave = getelementptr i8, ptr %scevgep2973, i64 %i.avb
   %bound0 = icmp ult ptr %i.aux, %i.ave
   %bound1 = icmp ult ptr %i.avd, %i.auz
   %found.conflict = and i1 %bound0, %bound1
@@ -910,11 +911,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   br label %bb.gt
 
-.thread1687:                                      ; preds = %._crit_edge2141, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread, %.loopexit1742, %.split
-  %.33001671 = phi i32 [ %.2299, %.split ], [ %.2299, %.loopexit1742 ], [ %i.ant, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %i.ant, %._crit_edge2141 ]
-  %.sroa.27.21665 = phi ptr [ %.sroa.27.1, %.split ], [ %.sroa.27.1, %.loopexit1742 ], [ %.sroa.27.4, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %.sroa.27.4, %._crit_edge2141 ] ; 7 uses
-  %.sroa.01281.21658 = phi ptr [ %.sroa.01281.1, %.split ], [ %.sroa.01281.1, %.loopexit1742 ], [ %.sroa.01281.4, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %.sroa.01281.4, %._crit_edge2141 ] ; 8 uses
-  %.114851656 = phi i32 [ %i.ast, %.split ], [ %i.ast, %.loopexit1742 ], [ %i.anx, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %i.anx, %._crit_edge2141 ]
+.thread1687:                                      ; preds = %._crit_edge2141, %.lr.ph2148, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread, %.loopexit1742, %.split
+  %.33001671 = phi i32 [ %.2299, %.split ], [ %.2299, %.loopexit1742 ], [ %i.ant, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %i.ant, %.lr.ph2148 ], [ %i.ant, %._crit_edge2141 ]
+  %.sroa.27.21665 = phi ptr [ %.sroa.27.1, %.split ], [ %.sroa.27.1, %.loopexit1742 ], [ %.sroa.27.4, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %.sroa.27.4, %.lr.ph2148 ], [ %.sroa.27.4, %._crit_edge2141 ] ; 7 uses
+  %.sroa.01281.21658 = phi ptr [ %.sroa.01281.1, %.split ], [ %.sroa.01281.1, %.loopexit1742 ], [ %.sroa.01281.4, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %.sroa.01281.4, %.lr.ph2148 ], [ %.sroa.01281.4, %._crit_edge2141 ] ; 8 uses
+  %.114851656 = phi i32 [ %i.ast, %.split ], [ %i.ast, %.loopexit1742 ], [ %i.anx, %_ZNSt6vectorIhSaIhEED2Ev.exit843.thread ], [ %i.anx, %.lr.ph2148 ], [ %i.anx, %._crit_edge2141 ]
   %savedstack867 = call ptr @llvm.stacksave.p0()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.aww = call noundef i32 @llvm.bswap.i32(i32 %.114851656)

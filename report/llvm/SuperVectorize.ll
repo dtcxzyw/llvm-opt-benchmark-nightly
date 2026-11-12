@@ -202,7 +202,7 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit: ; preds
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef zeroext i1 @_ZL27isIVMappedToMultipleIndicesN4llvm8ArrayRefIN4mlir5ValueEEERKNS_8DenseMapIPNS1_9OperationEjNS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_jEEEE(ptr %0, i64 %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %"class.llvm::DenseSet.326", align 8 ; 9 uses
+  %3 = alloca %"class.llvm::DenseSet.326", align 8 ; 10 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !101, !noalias !523
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !102, !noalias !523 ; 4 uses
@@ -262,7 +262,9 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapIPN4mlir9OperationEjNS_12DenseMapInfoIS4_vEE
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 20
   %i.ab = add nuw nsw i64 %i.i, 31
   %i.ac = lshr i64 %i.ab, 5                       ; 2 uses
-  %.not98.a = icmp eq i64 %.idx, 8
+  %4 = add i64 %.idx, -8                          ; 2 uses
+  %.not98 = icmp eq i64 %4, 0
+  %.not98.a = icmp eq i64 %4, 0
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph59, %_ZN4llvm16DenseMapIteratorIPN4mlir9OperationEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEELb1EEppEv.exit
@@ -301,11 +303,15 @@ bb.c:                                             ; preds = %.lr.ph59, %_ZN4llvm
   %i.ay = load ptr, ptr %i.z, align 8, !tbaa !531, !noalias !530 ; 2 uses
   %i.az = icmp eq i32 %.pre, 0
   %i.ba = add i32 %.pre, -1                       ; 2 uses
-  br i1 %i.az, label %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader.a, label %.lr.ph.split
+  br i1 %i.az, label %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader, label %.lr.ph.split
 
-_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader.a: ; preds = %.lr.ph
+_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader: ; preds = %.lr.ph
+  br i1 %.not98, label %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader.a, label %.split.loop.exit50.thread
+
+_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader.a: ; preds = %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader
+  call void @llvm.assume(i1 %.not98.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
-  br i1 %.not98.a, label %.split.loop.exit50.thread.thread, label %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit._crit_edge
+  br label %.split.loop.exit50.thread.thread
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.thread
   %.054 = phi ptr [ %i.ch, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.thread ], [ %0, %.lr.ph ] ; 2 uses
@@ -362,6 +368,10 @@ _ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyE
   %i.ch = getelementptr inbounds nuw i8, ptr %.054, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ch, %i.y
   br i1 %.not, label %.split.loop.exit50, label %.lr.ph.split
+
+.split.loop.exit50.thread:                        ; preds = %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  br label %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit._crit_edge
 
 .split.loop.exit50:                               ; preds = %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.thread, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit, %bb.c
   %cond1 = phi i1 [ true, %bb.c ], [ true, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.thread ], [ false, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit ] ; 2 uses
@@ -429,8 +439,8 @@ _ZN4llvm16DenseMapIteratorIPN4mlir9OperationEjNS_12DenseMapInfoIS3_vEENS_6detail
   %.not45.not = icmp eq i64 %i.dk, %.idx97
   br i1 %.not45.not, label %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit._crit_edge, label %bb.c
 
-_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit._crit_edge: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.preheader, %_ZN4llvm16DenseMapIteratorIPN4mlir9OperationEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEELb1EEppEv.exit, %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit, %.split, %.split.loop.exit50.thread.thread, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader.a, %.lr.ph.i.i, %.lr.ph.i.i.i.preheader, %bb.a, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPN4mlir9OperationEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E5beginEv.exit
-  %.not45.lcssa = phi i1 [ false, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPN4mlir9OperationEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E5beginEv.exit ], [ false, %.lr.ph.i.i ], [ false, %bb.a ], [ true, %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit ], [ false, %.lr.ph.i.i.i.preheader ], [ true, %_ZNK4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEE5countERKS3_.exit.us.preheader.a ], [ false, %.split.loop.exit50.thread.thread ], [ true, %.split ], [ false, %_ZN4llvm16DenseMapIteratorIPN4mlir9OperationEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEELb1EEppEv.exit ], [ false, %.lr.ph.i.i.preheader ], [ false, %.lr.ph.i.i.i ]
+_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit._crit_edge: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.preheader, %_ZN4llvm16DenseMapIteratorIPN4mlir9OperationEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEELb1EEppEv.exit, %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit, %.split, %.split.loop.exit50.thread.thread, %.lr.ph.i.i, %.lr.ph.i.i.i.preheader, %.split.loop.exit50.thread, %bb.a, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPN4mlir9OperationEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E5beginEv.exit
+  %.not45.lcssa = phi i1 [ false, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPN4mlir9OperationEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E5beginEv.exit ], [ true, %_ZN4llvm6detail12DenseSetImplIN4mlir5ValueENS_8DenseMapIS3_NS0_13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS0_12DenseSetPairIS3_EEEEED2Ev.exit ], [ false, %bb.a ], [ true, %.split.loop.exit50.thread ], [ false, %.lr.ph.i.i ], [ false, %.lr.ph.i.i.i.preheader ], [ false, %.split.loop.exit50.thread.thread ], [ true, %.split ], [ false, %_ZN4llvm16DenseMapIteratorIPN4mlir9OperationEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEELb1EEppEv.exit ], [ false, %.lr.ph.i.i.preheader ], [ false, %.lr.ph.i.i.i ]
   ret i1 %.not45.lcssa
 }
 

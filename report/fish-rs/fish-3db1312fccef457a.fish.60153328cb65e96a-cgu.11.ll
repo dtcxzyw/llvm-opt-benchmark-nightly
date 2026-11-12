@@ -206,7 +206,7 @@ _RNvNtCs8frGy5WneL6_4fish5pager15divide_round_up.exit.i: ; preds = %.loopexit278
   %i.fa = udiv i64 %i.cf, %.sroa.4.0596
   %..i138.i = zext i1 %.not.i.i52 to i64
   %i.fb = add nuw nsw i64 %i.fa, %..i138.i
-  %.sroa.0.0.i207.fr794.i = freeze i64 %i.fb      ; 6 uses
+  %.sroa.0.0.i207.fr794.i = freeze i64 %i.fb      ; 5 uses
   %i.fc = icmp ule i64 %.sroa.0.0.i207.fr794.i, %spec.select1027
   %or.cond4.not.i = select i1 %i.db, i1 true, i1 %i.fc
   br i1 %or.cond4.not.i, label %.outer.split.i.split.us.preheader.sink.split, label %bb.s
@@ -609,8 +609,8 @@ bb.gi:                                            ; preds = %bb.x
   unreachable
 
 .split.i:                                         ; preds = %.outer.i, %.outer.split.i.split.us
-  %.us-phi = phi i64 [ %.sroa.022.0.ph461.i589, %.outer.split.i.split.us ], [ %..i200.i, %.outer.i ] ; 4 uses
-  %.us-phi575 = phi i64 [ %.sroa.025.0.ph460.i590, %.outer.split.i.split.us ], [ %..i201.i.a, %.outer.i ]
+  %.us-phi = phi i64 [ %.sroa.022.0.ph461.i589, %.outer.split.i.split.us ], [ %..i201.i.a, %.outer.i ] ; 4 uses
+  %.us-phi575 = phi i64 [ %.sroa.025.0.ph460.i590, %.outer.split.i.split.us ], [ %umax.i, %.outer.i ]
   %i.yn = add i64 %.us-phi575, %.us-phi           ; 2 uses
   %i.yo = icmp ult i64 %i.yn, %.us-phi
   br i1 %i.yo, label %.split473.us.i.invoke, label %bb.gj
@@ -956,15 +956,13 @@ bb.hi:                                            ; preds = %.split.5.i
   br i1 %i.acc, label %.split473.us.i.invoke, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.i
 
 .outer.i:                                         ; preds = %.split.us
-  %i.acd = add nuw i64 %.sroa.060.0.ph459.i591, 1 ; 3 uses
+  %i.acd = add nuw i64 %.sroa.060.0.ph459.i591, 1 ; 2 uses
   %i.ace = getelementptr inbounds nuw i8, ptr %i.ach, i64 128
   %i.acf = load i64, ptr %i.ace, align 8, !alias.scope !2751, !noundef !5
-  %..i200.i = call noundef i64 @llvm.umax.i64(i64 %i.acf, i64 %.sroa.022.0.ph461.i589) ; 2 uses
-  %..i201.i.a = call noundef i64 @llvm.umax.i64(i64 %i.acl, i64 %.sroa.025.0.ph460.i590) ; 2 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %i.acd, i64 %.sroa.0.0.i207.fr794.i)
-  %.not133.i = icmp ult i64 %i.acd, %i.cf
-  %.not133.i.fr = freeze i1 %.not133.i
-  br i1 %.not133.i.fr, label %.outer.split.i.split.us, label %.split.i
+  %..i201.i.a = call noundef i64 @llvm.umax.i64(i64 %i.acf, i64 %.sroa.022.0.ph461.i589) ; 2 uses
+  %umax.i = call noundef i64 @llvm.umax.i64(i64 %i.acl, i64 %.sroa.025.0.ph460.i590) ; 2 uses
+  %exitcond940.not = icmp eq i64 %i.acd, %i.cf
+  br i1 %exitcond940.not, label %.split.i, label %.outer.split.i.split.us
 
 .split449.us.i.invoke:                            ; preds = %.outer.split.us.1.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.5.i, %bb.af
   %i.acg = phi ptr [ @2856, %bb.af ], [ @2859, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs8frGy5WneL6_4fish5pager6ColumnjjNCNvMs_BX_NtBX_5Pager20completion_try_print0NCINvXsK_NtNtB8_6traits5accumjNtB2o_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0BZ_.exit.i.5.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.5.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.3.i ], [ @2876, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.2.i ], [ @2876, %.outer.split.us.1.i ]
@@ -975,11 +973,10 @@ bb.hi:                                            ; preds = %.split.5.i
   unreachable
 
 .outer.split.i.split.us:                          ; preds = %.outer.split.i.split.us.preheader, %.outer.i
-  %umax.i592 = phi i64 [ %umax.i, %.outer.i ], [ %.sroa.0.0.i207.fr794.i, %.outer.split.i.split.us.preheader ]
   %.sroa.060.0.ph459.i591 = phi i64 [ %i.acd, %.outer.i ], [ 0, %.outer.split.i.split.us.preheader ] ; 3 uses
-  %.sroa.025.0.ph460.i590 = phi i64 [ %..i201.i.a, %.outer.i ], [ 0, %.outer.split.i.split.us.preheader ] ; 2 uses
-  %.sroa.022.0.ph461.i589 = phi i64 [ %..i200.i, %.outer.i ], [ 0, %.outer.split.i.split.us.preheader ] ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %.sroa.060.0.ph459.i591, %umax.i592
+  %.sroa.025.0.ph460.i590 = phi i64 [ %umax.i, %.outer.i ], [ 0, %.outer.split.i.split.us.preheader ] ; 2 uses
+  %.sroa.022.0.ph461.i589 = phi i64 [ %..i201.i.a, %.outer.i ], [ 0, %.outer.split.i.split.us.preheader ] ; 2 uses
+  %exitcond.not.i.us = icmp eq i64 %.sroa.060.0.ph459.i591, %.sroa.0.0.i207.fr794.i
   br i1 %exitcond.not.i.us, label %.split.i, label %.split.us
 
 .split.us:                                        ; preds = %.outer.split.i.split.us

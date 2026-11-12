@@ -205,7 +205,7 @@ _ZN7RSCoder6gfMultEii.exit:                       ; preds = %.lr.ph23, %bb.c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN7RSCoder6EncodeEPhiS0_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(11273) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [256 x i32], align 16             ; 11 uses
+  %i.a = alloca [256 x i32], align 16             ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9220 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !14   ; 7 uses
@@ -226,10 +226,10 @@ bb.a:
 .lr.ph33:                                         ; preds = %.preheader26
   %i.h = add i32 %i.c, -1                         ; 2 uses
   %i.i = sext i32 %i.h to i64
-  %i.j = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.i ; 2 uses
+  %i.j = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.i ; 3 uses
   %i.k = icmp sgt i32 %i.c, 1
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 3072 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 2048 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 3072 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 2048 ; 6 uses
   %i.n = load i32, ptr %i.l, align 4, !tbaa !16
   %.fr43 = freeze i32 %i.n                        ; 2 uses
   %i.o = icmp eq i32 %.fr43, 0                    ; 2 uses
@@ -238,21 +238,73 @@ bb.a:
   br i1 %i.k, label %.lr.ph31.us.preheader, label %.lr.ph33.split
 
 .lr.ph31.us.preheader:                            ; preds = %.lr.ph33
-  %i.r = zext nneg i32 %i.h to i64                ; 2 uses
-  %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
+  %i.r = zext nneg i32 %i.h to i64                ; 3 uses
+  %i.s = shl nuw nsw i64 %i.r, 2                  ; 4 uses
   %i.t = add nsw i32 %i.c, -2
   %i.u = zext nneg i32 %i.t to i64
   %i.v = shl nuw nsw i64 %i.u, 2                  ; 2 uses
   %i.w = sub nsw i64 %i.s, %i.v
-  %scevgep = getelementptr i8, ptr %i.a, i64 %i.w
+  %scevgep = getelementptr i8, ptr %i.a, i64 %i.w ; 2 uses
   %i.x = add nsw i64 %i.s, -4
   %i.y = sub nsw i64 %i.x, %i.v
-  %scevgep52 = getelementptr i8, ptr %i.a, i64 %i.y
-  %wide.trip.count59 = zext nneg i32 %2 to i64
-  br label %.lr.ph31.us
+  %scevgep52 = getelementptr i8, ptr %i.a, i64 %i.y ; 2 uses
+  %wide.trip.count59 = zext nneg i32 %2 to i64    ; 2 uses
+  br i1 %i.o, label %.lr.ph31.us.us, label %.lr.ph31.us
+
+.lr.ph31.us.us:                                   ; preds = %.lr.ph31.us.preheader, %._crit_edge.us.us
+  %indvars.iv56.us = phi i64 [ %indvars.iv.next57.us, %._crit_edge.us.us ], [ 0, %.lr.ph31.us.preheader ] ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv56.us
+  %5 = load i8, ptr %4, align 1, !tbaa !18
+  %6 = zext i8 %5 to i32                          ; 2 uses
+  %7 = load i32, ptr %i.j, align 4, !tbaa !16     ; 2 uses
+  %8 = xor i32 %7, %6
+  %9 = icmp eq i32 %7, %6
+  %10 = sext i32 %8 to i64
+  %11 = getelementptr inbounds [4 x i8], ptr %i.m, i64 %10
+  %.fr.us.us = freeze i1 %9
+  br i1 %.fr.us.us, label %_ZN7RSCoder6gfMultEii.exit25.us.us.preheader.us, label %.lr.ph31.split.us34.us
+
+.lr.ph31.split.us34.us:                           ; preds = %.lr.ph31.us.us, %_ZN7RSCoder6gfMultEii.exit25.us36.us
+  %indvars.iv49.us = phi i64 [ %indvars.iv.next50.us, %_ZN7RSCoder6gfMultEii.exit25.us36.us ], [ %i.r, %.lr.ph31.us.us ] ; 4 uses
+  %12 = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv49.us ; 2 uses
+  %13 = getelementptr i8, ptr %12, i64 -4
+  %14 = load i32, ptr %13, align 4, !tbaa !16     ; 2 uses
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv49.us
+  %16 = load i32, ptr %15, align 4, !tbaa !16     ; 2 uses
+  %17 = icmp eq i32 %16, 0
+  br i1 %17, label %_ZN7RSCoder6gfMultEii.exit25.us36.us, label %18
+
+18:                                               ; preds = %.lr.ph31.split.us34.us
+  %19 = sext i32 %16 to i64
+  %20 = getelementptr inbounds [4 x i8], ptr %i.m, i64 %19
+  %21 = load i32, ptr %20, align 4, !tbaa !16
+  %22 = load i32, ptr %11, align 4, !tbaa !16
+  %23 = add nsw i32 %22, %21
+  %24 = sext i32 %23 to i64
+  %25 = getelementptr inbounds [4 x i8], ptr %0, i64 %24
+  %26 = load i32, ptr %25, align 4, !tbaa !16
+  %27 = xor i32 %26, %14
+  br label %_ZN7RSCoder6gfMultEii.exit25.us36.us
+
+_ZN7RSCoder6gfMultEii.exit25.us36.us:             ; preds = %18, %.lr.ph31.split.us34.us
+  %28 = phi i32 [ %27, %18 ], [ %14, %.lr.ph31.split.us34.us ]
+  store i32 %28, ptr %12, align 4, !tbaa !16
+  %indvars.iv.next50.us = add nsw i64 %indvars.iv49.us, -1
+  %29 = icmp sgt i64 %indvars.iv49.us, 1
+  br i1 %29, label %.lr.ph31.split.us34.us, label %._crit_edge.us.us, !llvm.loop !19
+
+._crit_edge.us.us:                                ; preds = %_ZN7RSCoder6gfMultEii.exit25.us36.us, %_ZN7RSCoder6gfMultEii.exit25.us.us.preheader.us
+  store i32 0, ptr %i.a, align 16, !tbaa !16
+  %indvars.iv.next57.us = add nuw nsw i64 %indvars.iv56.us, 1 ; 2 uses
+  %exitcond60.us.not = icmp eq i64 %indvars.iv.next57.us, %wide.trip.count59
+  br i1 %exitcond60.us.not, label %.preheader, label %.lr.ph31.us.us, !llvm.loop !20
+
+_ZN7RSCoder6gfMultEii.exit25.us.us.preheader.us:  ; preds = %.lr.ph31.us.us
+  call void @llvm.memmove.p0.p0.i64(ptr align 4 %scevgep, ptr align 4 %scevgep52, i64 %i.s, i1 false), !tbaa !16
+  br label %._crit_edge.us.us
 
 .lr.ph31.us:                                      ; preds = %.lr.ph31.us.preheader, %_ZN7RSCoder6gfMultEii.exit.us
-  %indvars.iv56 = phi i64 [ 0, %.lr.ph31.us.preheader ], [ %indvars.iv.next57, %_ZN7RSCoder6gfMultEii.exit.us ] ; 2 uses
+  %indvars.iv56 = phi i64 [ %indvars.iv.next57, %_ZN7RSCoder6gfMultEii.exit.us ], [ 0, %.lr.ph31.us.preheader ] ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv56
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !18
   %i.ab = zext i8 %i.aa to i32                    ; 2 uses
@@ -295,12 +347,9 @@ _ZN7RSCoder6gfMultEii.exit25.us36:                ; preds = %bb.b, %.lr.ph31.spl
   store i32 %i.aw, ptr %i.ah, align 4, !tbaa !16
   %indvars.iv.next50 = add nsw i64 %indvars.iv49, -1
   %i.ax = icmp sgt i64 %indvars.iv49, 1
-  br i1 %i.ax, label %.lr.ph31.split.us34, label %._crit_edge.us, !llvm.loop !19
+  br i1 %i.ax, label %.lr.ph31.split.us34, label %bb.c, !llvm.loop !19
 
-._crit_edge.us:                                   ; preds = %_ZN7RSCoder6gfMultEii.exit25.us36
-  br i1 %i.o, label %_ZN7RSCoder6gfMultEii.exit.us, label %bb.c
-
-bb.c:                                             ; preds = %._crit_edge.us
+bb.c:                                             ; preds = %_ZN7RSCoder6gfMultEii.exit25.us36
   %i.ay = load i32, ptr %i.q, align 4, !tbaa !16
   %i.az = load i32, ptr %i.ag, align 4, !tbaa !16
   %i.ba = add nsw i32 %i.az, %i.ay
@@ -309,9 +358,9 @@ bb.c:                                             ; preds = %._crit_edge.us
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !16
   br label %_ZN7RSCoder6gfMultEii.exit.us
 
-_ZN7RSCoder6gfMultEii.exit.us:                    ; preds = %._crit_edge.us.thread, %bb.c, %._crit_edge.us
-  %4 = phi i32 [ %i.bd, %bb.c ], [ 0, %._crit_edge.us ], [ 0, %._crit_edge.us.thread ]
-  store i32 %4, ptr %i.a, align 16, !tbaa !16
+_ZN7RSCoder6gfMultEii.exit.us:                    ; preds = %._crit_edge.us.thread, %bb.c
+  %30 = phi i32 [ %i.bd, %bb.c ], [ 0, %._crit_edge.us.thread ]
+  store i32 %30, ptr %i.a, align 16, !tbaa !16
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 2 uses
   %exitcond60.not = icmp eq i64 %indvars.iv.next57, %wide.trip.count59
   br i1 %exitcond60.not, label %.preheader, label %.lr.ph31.us, !llvm.loop !20
@@ -327,7 +376,7 @@ _ZN7RSCoder6gfMultEii.exit.us:                    ; preds = %._crit_edge.us.thre
   store i32 0, ptr %i.a, align 16, !tbaa !16
   br label %.preheader
 
-.preheader:                                       ; preds = %_ZN7RSCoder6gfMultEii.exit, %_ZN7RSCoder6gfMultEii.exit.us, %.lr.ph33.split.split.us, %.preheader26
+.preheader:                                       ; preds = %_ZN7RSCoder6gfMultEii.exit, %_ZN7RSCoder6gfMultEii.exit.us, %._crit_edge.us.us, %.lr.ph33.split.split.us, %.preheader26
   %i.be = icmp sgt i32 %i.c, 0
   br i1 %i.be, label %.lr.ph42, label %._crit_edge
 
