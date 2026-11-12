@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %lcmp.mod98.not = icmp eq i32 %i.w, 0
   br label %.lr.ph.us.us
 
-.lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %..loopexit48_crit_edge.us.us
+.lr.ph.us.us:                                     ; preds = %..loopexit48_crit_edge.us.us, %.lr.ph.us.us.preheader
   %.03559.us.us = phi i64 [ %i.cg, %..loopexit48_crit_edge.us.us ], [ %i.k, %.lr.ph.us.us.preheader ] ; 3 uses
   %i.x = mul nsw i64 %.03559.us.us, %i.n          ; 2 uses
   %i.y = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.x ; 9 uses
@@ -448,7 +448,7 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n98 = icmp eq i64 %n.vec90, %i.n
   br label %.lr.ph.us.us
 
-.lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %..loopexit51_crit_edge.us.us
+.lr.ph.us.us:                                     ; preds = %..loopexit51_crit_edge.us.us, %.lr.ph.us.us.preheader
   %.03662.us.us = phi i64 [ %i.bh, %..loopexit51_crit_edge.us.us ], [ %i.k, %.lr.ph.us.us.preheader ] ; 4 uses
   %i.aa = mul nsw i64 %.03662.us.us, %i.n
   %i.ab = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.aa ; 6 uses

@@ -205,9 +205,9 @@ bb.hz:                                            ; preds = %.lr.ph614
   br i1 %.not646, label %._crit_edge629.split, label %.lr.ph628
 
 .lr.ph628:                                        ; preds = %.preheader432
-  %2 = zext i16 %i.azu to i32
   %i.azv = load ptr, ptr %i.aw, align 8, !tbaa !73
   %i.azw = uitofp nneg i32 %.5331630 to float
+  %2 = zext i16 %i.azu to i32
   br label %bb.ia
 
 bb.ia:                                            ; preds = %.lr.ph628, %._crit_edge624.split
