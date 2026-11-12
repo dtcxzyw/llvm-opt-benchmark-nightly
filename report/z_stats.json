@@ -1,4 +1,5 @@
 {
+  "SLP.NumFailedSeedsSkipped": 1062437,
   "SLP.NumStoreChains": 689130,
   "SLP.NumVectorInstructions": 1979566,
   "SLP.NumVectorizedStores": 1766048,
