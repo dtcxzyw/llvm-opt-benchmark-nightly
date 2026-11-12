@@ -204,7 +204,6 @@ bb.bo:                                            ; preds = %.thread92.i.i.i.us.
   %i.ir = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i.i.i.us.i, %i.im
   %i.is = icmp eq <16 x i8> %.sroa.01.0.copyload.i.i.i.i.us.i, %i.io
   %i.it = and <16 x i1> %i.ir, %i.is
-  %7 = bitcast <16 x i1> %i.it to i16             ; 2 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %i.ip, i64 16 ; 2 uses
   %.sroa.0.0.copyload.i.1.i.i.i.us.i = load <16 x i8>, ptr %i.iu, align 1, !alias.scope !422, !noalias !423
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 %storemerge9194.i.i.i.us.i
@@ -212,7 +211,6 @@ bb.bo:                                            ; preds = %.thread92.i.i.i.us.
   %i.iw = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i.i.i.us.i, %i.im
   %i.ix = icmp eq <16 x i8> %.sroa.01.0.copyload.i.1.i.i.i.us.i, %i.io
   %i.iy = and <16 x i1> %i.iw, %i.ix
-  %8 = bitcast <16 x i1> %i.iy to i16             ; 2 uses
   %i.iz = getelementptr inbounds nuw i8, ptr %i.ip, i64 32 ; 2 uses
   %.sroa.0.0.copyload.i.2.i.i.i.us.i = load <16 x i8>, ptr %i.iz, align 1, !alias.scope !422, !noalias !423
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 %storemerge9194.i.i.i.us.i
@@ -220,7 +218,6 @@ bb.bo:                                            ; preds = %.thread92.i.i.i.us.
   %i.jb = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i.i.i.us.i, %i.im
   %i.jc = icmp eq <16 x i8> %.sroa.01.0.copyload.i.2.i.i.i.us.i, %i.io
   %i.jd = and <16 x i1> %i.jb, %i.jc
-  %9 = bitcast <16 x i1> %i.jd to i16             ; 2 uses
   %i.je = getelementptr inbounds nuw i8, ptr %i.ip, i64 48 ; 2 uses
   %.sroa.0.0.copyload.i.3.i.i.i.us.i = load <16 x i8>, ptr %i.je, align 1, !alias.scope !422, !noalias !423
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 %storemerge9194.i.i.i.us.i
@@ -228,50 +225,53 @@ bb.bo:                                            ; preds = %.thread92.i.i.i.us.
   %i.jg = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i.i.i.us.i, %i.im
   %i.jh = icmp eq <16 x i8> %.sroa.01.0.copyload.i.3.i.i.i.us.i, %i.io
   %i.ji = and <16 x i1> %i.jg, %i.jh
-  %i.jj = bitcast <16 x i1> %i.ji to i16          ; 2 uses
-  %i.jk = icmp eq i16 %7, 0
+  %i.jj = bitcast <16 x i1> %i.it to i16          ; 2 uses
+  %i.jk = icmp eq i16 %i.jj, 0
   br i1 %i.jk, label %.preheader95.1.i.i.i.us.i, label %bb.bp
 
 bb.bp:                                            ; preds = %.lr.ph.i7.i.i.us.i
-  %i.jl = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %.sroa.06.0102.i.i.i.us.i, i16 noundef %7, i1 noundef zeroext false) #28
+  %i.jl = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %.sroa.06.0102.i.i.i.us.i, i16 noundef %i.jj, i1 noundef zeroext false) #28
   %i.jm = zext i1 %i.jl to i8
   br label %.preheader95.1.i.i.i.us.i
 
 .preheader95.1.i.i.i.us.i:                        ; preds = %bb.bp, %.lr.ph.i7.i.i.us.i
   %.sroa.014.2.i.i.i.us.i = phi i8 [ 0, %.lr.ph.i7.i.i.us.i ], [ %i.jm, %bb.bp ] ; 3 uses
-  %i.jn = icmp eq i16 %8, 0
+  %7 = bitcast <16 x i1> %i.iy to i16             ; 2 uses
+  %i.jn = icmp eq i16 %7, 0
   br i1 %i.jn, label %.preheader95.2.i.i.i.us.i, label %bb.bq
 
 bb.bq:                                            ; preds = %.preheader95.1.i.i.i.us.i
   %i.jo = or disjoint i64 %.sroa.06.0102.i.i.i.us.i, 16
   %i.jp = trunc nuw i8 %.sroa.014.2.i.i.i.us.i to i1
-  %i.jq = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %i.jo, i16 noundef %8, i1 noundef zeroext %i.jp) #28
+  %i.jq = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %i.jo, i16 noundef %7, i1 noundef zeroext %i.jp) #28
   %i.jr = zext i1 %i.jq to i8
   %i.js = or i8 %.sroa.014.2.i.i.i.us.i, %i.jr
   br label %.preheader95.2.i.i.i.us.i
 
 .preheader95.2.i.i.i.us.i:                        ; preds = %bb.bq, %.preheader95.1.i.i.i.us.i
   %.sroa.014.2.1.i.i.i.us.i = phi i8 [ %.sroa.014.2.i.i.i.us.i, %.preheader95.1.i.i.i.us.i ], [ %i.js, %bb.bq ] ; 3 uses
-  %i.jt = icmp eq i16 %9, 0
+  %8 = bitcast <16 x i1> %i.jd to i16             ; 2 uses
+  %i.jt = icmp eq i16 %8, 0
   br i1 %i.jt, label %.preheader95.3.i.i.i.us.i, label %bb.br
 
 bb.br:                                            ; preds = %.preheader95.2.i.i.i.us.i
   %i.ju = or disjoint i64 %.sroa.06.0102.i.i.i.us.i, 32
   %i.jv = trunc nuw i8 %.sroa.014.2.1.i.i.i.us.i to i1
-  %i.jw = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %i.ju, i16 noundef %9, i1 noundef zeroext %i.jv) #28
+  %i.jw = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %i.ju, i16 noundef %8, i1 noundef zeroext %i.jv) #28
   %i.jx = zext i1 %i.jw to i8
   %i.jy = or i8 %.sroa.014.2.1.i.i.i.us.i, %i.jx
   br label %.preheader95.3.i.i.i.us.i
 
 .preheader95.3.i.i.i.us.i:                        ; preds = %bb.br, %.preheader95.2.i.i.i.us.i
   %.sroa.014.2.2.i.i.i.us.i = phi i8 [ %.sroa.014.2.1.i.i.i.us.i, %.preheader95.2.i.i.i.us.i ], [ %i.jy, %bb.br ] ; 3 uses
-  %i.jz = icmp eq i16 %i.jj, 0
+  %9 = bitcast <16 x i1> %i.ji to i16             ; 2 uses
+  %i.jz = icmp eq i16 %9, 0
   br i1 %i.jz, label %bb.bt, label %bb.bs
 
 bb.bs:                                            ; preds = %.preheader95.3.i.i.i.us.i
   %i.ka = or disjoint i64 %.sroa.06.0102.i.i.i.us.i, 48
   %i.kb = trunc nuw i8 %.sroa.014.2.2.i.i.i.us.i to i1
-  %i.kc = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %i.ka, i16 noundef %i.jj, i1 noundef zeroext %i.kb) #28
+  %i.kc = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsgN7rS7e43TA_7uu_more(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e, i64 noundef %i.ka, i16 noundef %9, i1 noundef zeroext %i.kb) #28
   %i.kd = zext i1 %i.kc to i8
   %i.ke = or i8 %.sroa.014.2.2.i.i.i.us.i, %i.kd
   br label %bb.bt
