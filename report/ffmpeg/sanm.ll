@@ -205,7 +205,12 @@ bb.fc:                                            ; preds = %bb.fb
   %.0128184.us.i = phi i32 [ %i.brr, %bb.ff ], [ 0, %bb.fc ] ; 2 uses
   %i.brj = icmp ult i32 %.1127185.us.i, %i.bpa
   %or.cond152.us.i = select i1 %i.bre, i1 %i.brj, i1 false
-  br i1 %or.cond152.us.i, label %bb.fd, label %.thread.us.i.a
+  br i1 %or.cond152.us.i, label %bb.fd, label %.thread.us.i
+
+.thread.us.i:                                     ; preds = %.split.us.i290
+  %4 = icmp slt i32 %.1127185.us.i, %i.bpa
+  %5 = zext i1 %4 to i32
+  br label %.thread.us.i.a
 
 bb.fd:                                            ; preds = %.split.us.i290
   %i.brk = zext nneg i32 %.1127185.us.i to i64
@@ -213,10 +218,9 @@ bb.fd:                                            ; preds = %.split.us.i290
   store i8 %i.brf, ptr %i.brl, align 1, !tbaa !48
   br label %.thread.us.i.a
 
-.thread.us.i.a:                                   ; preds = %bb.fd, %.split.us.i290
-  %.pn194.in.i = icmp slt i32 %.1127185.us.i, %i.bpa
-  %.pn194.i = zext i1 %.pn194.in.i to i32
-  %spec.select167.us.i = add nsw i32 %.1127185.us.i, %.pn194.i ; 4 uses
+.thread.us.i.a:                                   ; preds = %bb.fd, %.thread.us.i
+  %.pn194.i = phi i32 [ %5, %.thread.us.i ], [ 1, %bb.fd ]
+  %spec.select167.us.i = add nsw i32 %.pn194.i, %.1127185.us.i ; 4 uses
   %i.brm = icmp ult i32 %spec.select167.us.i, %i.bpa
   %or.cond155.us.i = select i1 %i.brg, i1 %i.brm, i1 false
   br i1 %or.cond155.us.i, label %bb.fe, label %bb.ff
@@ -239,7 +243,12 @@ bb.ff:                                            ; preds = %bb.fe, %.thread.us.
   %.1127185.i = phi i32 [ %spec.select157.i, %bb.fi ], [ %.0126188.i, %bb.fc ] ; 4 uses
   %.0128184.i = phi i32 [ %i.bry, %bb.fi ], [ 0, %bb.fc ] ; 2 uses
   %or.cond153.i = icmp ult i32 %.1127185.i, %i.bpa
-  br i1 %or.cond153.i, label %bb.fg, label %.thread170.i.a
+  br i1 %or.cond153.i, label %bb.fg, label %.thread170.i
+
+.thread170.i:                                     ; preds = %.split.i
+  %6 = icmp slt i32 %.1127185.i, %i.bpa
+  %7 = zext i1 %6 to i32
+  br label %.thread170.i.a
 
 bb.fg:                                            ; preds = %.split.i
   %i.brs = zext nneg i32 %.1127185.i to i64
@@ -247,10 +256,9 @@ bb.fg:                                            ; preds = %.split.i
   store i8 %i.brf, ptr %i.brt, align 1, !tbaa !48
   br label %.thread170.i.a
 
-.thread170.i.a:                                   ; preds = %bb.fg, %.split.i
-  %.pn.in.i = icmp slt i32 %.1127185.i, %i.bpa
-  %.pn.i287 = zext i1 %.pn.in.i to i32
-  %spec.select172.i = add nsw i32 %.1127185.i, %.pn.i287 ; 4 uses
+.thread170.i.a:                                   ; preds = %bb.fg, %.thread170.i
+  %.pn.i287 = phi i32 [ %7, %.thread170.i ], [ 1, %bb.fg ]
+  %spec.select172.i = add nsw i32 %.pn.i287, %.1127185.i ; 4 uses
   %or.cond156.i = icmp ult i32 %spec.select172.i, %i.bpa
   br i1 %or.cond156.i, label %bb.fh, label %bb.fi
 
@@ -330,7 +338,7 @@ bb.fm:                                            ; preds = %bb.fl, %.thread178.
   %i.bsv = icmp ne i8 %i.bsu, 0
   %i.bsw = icmp ult i32 %.4187.i, %i.bpa
   %or.cond159.i = select i1 %i.bsv, i1 %i.bsw, i1 false
-  br i1 %or.cond159.i, label %.thread.i, label %.thread173.i.a
+  br i1 %or.cond159.i, label %.thread.i, label %.thread173.i
 
 .thread.i:                                        ; preds = %.preheader.i291
   %i.bsx = add i8 %i.bsu, %i.f
@@ -339,10 +347,14 @@ bb.fm:                                            ; preds = %bb.fl, %.thread178.
   store i8 %i.bsx, ptr %i.bsz, align 1, !tbaa !48
   br label %.thread173.i.a
 
-.thread173.i.a:                                   ; preds = %.thread.i, %.preheader.i291
-  %4 = icmp slt i32 %.4187.i, %i.bpa
-  %5 = zext i1 %4 to i32
-  %spec.select161221.i = add nsw i32 %.4187.i, %5 ; 4 uses
+.thread173.i:                                     ; preds = %.preheader.i291
+  %8 = icmp slt i32 %.4187.i, %i.bpa
+  %9 = zext i1 %8 to i32
+  br label %.thread173.i.a
+
+.thread173.i.a:                                   ; preds = %.thread173.i, %.thread.i
+  %.sink.i293 = phi i32 [ 1, %.thread.i ], [ %9, %.thread173.i ]
+  %spec.select161221.i = add nsw i32 %.sink.i293, %.4187.i ; 4 uses
   %i.bta = icmp ugt i8 %i.bst, 15
   %i.btb = icmp ult i32 %spec.select161221.i, %i.bpa
   %or.cond163.i = select i1 %i.bta, i1 %i.btb, i1 false
