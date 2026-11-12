@@ -205,8 +205,8 @@ _ZNK11OpenImageIO4v3_17ustring5emptyEv.exit.thread: ; preds = %bb.k, %.thread, %
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !440
   %i.be = load i32, ptr %3, align 8, !tbaa !388   ; 3 uses
   %i.bf = sub i32 %i.bd, %i.be                    ; 2 uses
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.bf, i32 0) ; 4 uses
-  %.1.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i, i32 %10) ; 8 uses
+  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.bf, i32 0) ; 5 uses
+  %.1.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i, i32 %10) ; 6 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.bh = load i8, ptr %i.bg, align 8, !tbaa !441 ; 2 uses
   %i.bi = icmp eq i8 %i.bh, 0
@@ -305,18 +305,13 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph312:                                        ; preds = %.preheader308
   %i.cu = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %18 = tail call i32 @llvm.umin.i32(i32 %10, i32 %spec.select.i) ; 4 uses
-  %i.cv = zext nneg i32 %18 to i64                ; 3 uses
-  %19 = add nuw nsw i32 %10, %18
-  %20 = sub i32 %19, %.1.i
+  %i.cv = zext nneg i32 %spec.select.i to i64     ; 3 uses
   %.pre = load float, ptr %i.cu, align 8, !tbaa !444 ; 2 uses
-  %21 = add i32 %10, %18
-  %i.cw = xor i32 %.1.i, -1
-  %i.cx = add i32 %21, %i.cw
-  %22 = sub i32 %i.cx, %18                        ; 2 uses
-  %i.cy = zext i32 %22 to i64
+  %i.cw = xor i32 %spec.select.i, -1
+  %i.cx = add i32 %10, %i.cw                      ; 2 uses
+  %i.cy = zext i32 %i.cx to i64
   %i.cz = add nuw nsw i64 %i.cy, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %22, 7
+  %min.iters.check = icmp ult i32 %i.cx, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph312
@@ -387,7 +382,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store float %.pre, ptr %i.dm, align 4, !tbaa !266
   %indvars.iv.next322 = add nuw nsw i64 %indvars.iv321, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next322 to i32
-  %exitcond323.not = icmp eq i32 %20, %lftr.wideiv
+  %exitcond323.not = icmp eq i32 %10, %lftr.wideiv
   br i1 %exitcond323.not, label %._crit_edge, label %scalar.ph, !llvm.loop !800
 
 .loopexit:                                        ; preds = %.lr.ph314.preheader, %._crit_edge

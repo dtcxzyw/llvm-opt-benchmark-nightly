@@ -205,7 +205,7 @@ bb.gu:                                            ; preds = %_ZN2v88internal4was
   br label %bb.hg
 
 bb.gv:                                            ; preds = %_ZN2v88internal4wasm14IndexImmediateC2INS1_7Decoder17FullValidationTagEEEPS4_PKhPKcT_.exit
-  %i.aal = and i64 %.sroa.05.0.i.i, 16383         ; 8 uses
+  %i.aal = and i64 %.sroa.05.0.i.i, 16383         ; 7 uses
   %i.aam = getelementptr inbounds nuw i8, ptr %i.zw, i64 4
   %.sroa.0.0.copyload.i414 = load i32, ptr %i.aam, align 4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #22
@@ -265,7 +265,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27Cons
   %.sroa.4952.0..sroa_idx953 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %.sroa.6955.0..sroa_idx956 = getelementptr inbounds nuw i8, ptr %7, i64 12
   %wide.trip.count = and i64 %.sroa.05.0.i.i, 16383
-  br label %34
+  br label %_ZNK2v88internal9SignatureINS0_4wasm9ValueTypeEE8GetParamEm.exit
 
 _ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421.thread: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE20EnsureStackArgumentsEi.exit.i138
   %i.abf = getelementptr inbounds nuw i8, ptr %29, i64 24 ; 3 uses
@@ -301,26 +301,18 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27Cons
   %.pre1099.a = load ptr, ptr %29, align 8, !alias.scope !1372
   br label %.lr.ph.i.i.i428.preheader
 
-34:                                               ; preds = %.lr.ph, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE18ValidateStackValueEiNS5_5ValueENS1_9ValueTypeE.exit.i146
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE18ValidateStackValueEiNS5_5ValueENS1_9ValueTypeE.exit.i146 ] ; 5 uses
-  %35 = getelementptr inbounds nuw [48 x i8], ptr %i.abe, i64 %indvars.iv ; 3 uses
-  %.sroa.0957.0.copyload = load ptr, ptr %35, align 8, !noalias !1372
-  %.sroa.4958.0..sroa_idx = getelementptr inbounds nuw i8, ptr %35, i64 8
-  %.sroa.4958.0.copyload = load i32, ptr %.sroa.4958.0..sroa_idx, align 8, !noalias !1372 ; 4 uses
-  %exitcond.not = icmp eq i64 %indvars.iv, %i.aal
-  br i1 %exitcond.not, label %36, label %_ZNK2v88internal9SignatureINS0_4wasm9ValueTypeEE8GetParamEm.exit, !prof !979
-
-36:                                               ; preds = %34
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.92) #23, !noalias !1372
-  unreachable
-
-_ZNK2v88internal9SignatureINS0_4wasm9ValueTypeEE8GetParamEm.exit: ; preds = %34
-  %.sroa.5959.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %35, i64 12
-  %37 = getelementptr [4 x i8], ptr %i.aan, i64 %indvars.iv
-  %.sroa.0.0.copyload.i426 = load i32, ptr %37, align 4, !noalias !1372 ; 4 uses
+_ZNK2v88internal9SignatureINS0_4wasm9ValueTypeEE8GetParamEm.exit: ; preds = %.lr.ph, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE18ValidateStackValueEiNS5_5ValueENS1_9ValueTypeE.exit.i146
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE18ValidateStackValueEiNS5_5ValueENS1_9ValueTypeE.exit.i146 ] ; 4 uses
+  %34 = getelementptr inbounds nuw [48 x i8], ptr %i.abe, i64 %indvars.iv ; 3 uses
+  %.sroa.0957.0.copyload = load ptr, ptr %34, align 8, !noalias !1372
+  %.sroa.5959.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %34, i64 8
+  %.sroa.4958.0.copyload = load i32, ptr %.sroa.5959.0..sroa_idx.a, align 8, !noalias !1372 ; 4 uses
+  %.sroa.5959.0..sroa_idx = getelementptr inbounds nuw i8, ptr %34, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6955)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.6955, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5959.0..sroa_idx, i64 36, i1 false), !noalias !1372
+  %35 = getelementptr [4 x i8], ptr %i.aan, i64 %indvars.iv
+  %.sroa.0.0.copyload.i426 = load i32, ptr %35, align 4, !noalias !1372 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7), !noalias !1372
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.6955, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5959.0..sroa_idx.a, i64 36, i1 false)
   %i.abt = icmp eq i32 %.sroa.4958.0.copyload, %.sroa.0.0.copyload.i426
   br i1 %i.abt, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE18ValidateStackValueEiNS5_5ValueENS1_9ValueTypeE.exit.i146, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i.i143, !prof !980
 
@@ -328,7 +320,7 @@ _ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i.i
   %i.abu = load ptr, ptr %i.zg, align 8, !noalias !1372 ; 2 uses
   %i.abv = call noundef zeroext i1 @_ZN2v88internal4wasm15IsSubtypeOfImplENS1_9ValueTypeES2_PKNS1_10WasmModuleES5_(i32 %.sroa.4958.0.copyload, i32 %.sroa.0.0.copyload.i426, ptr noundef %i.abu, ptr noundef %i.abu) #22, !noalias !1372
   %i.abw = icmp eq i32 %.sroa.4958.0.copyload, 514
-  %or.cond1050 = select i1 %i.abv, i1 true, i1 %i.abw
+  %or.cond1050 = or i1 %i.abw, %i.abv
   %i.abx = icmp eq i32 %.sroa.0.0.copyload.i426, 514
   %or.cond1051 = or i1 %i.abx, %or.cond1050
   br i1 %or.cond1051, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE18ValidateStackValueEiNS5_5ValueENS1_9ValueTypeE.exit.i146, label %bb.gz, !prof !995
@@ -346,7 +338,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27Cons
   call void @llvm.lifetime.end.p0(ptr nonnull %7), !noalias !1372
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond1076.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond1076.not, label %_ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421, label %34, !llvm.loop !1347
+  br i1 %exitcond1076.not, label %_ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421, label %_ZNK2v88internal9SignatureINS0_4wasm9ValueTypeEE8GetParamEm.exit, !llvm.loop !1347
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE11PopSomeArgsEPKNS0_9SignatureINS1_9ValueTypeEEEi.exit: ; preds = %_ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421.thread, %_ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421
   %i.abz = phi ptr [ %i.abf, %_ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421.thread ], [ %i.abo, %_ZN2v88internal4wasm14FastZoneVectorINS1_27ConstantExpressionInterface5ValueEE3popEj.exit421 ] ; 2 uses
