@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/scope-info?download=true
-inline.NumInlined: 2263
+inline.NumInlined: 2264
 inline.NumDeleted: 671
 begin_hunk_0_@_ZNK2v88internal9ScopeInfo6EqualsENS0_6TaggedIS1_EEbPi:bb.a
   %.not10.i = icmp ult i64 %.not10.unshifted.i, 4294967296
@@ -202,15 +202,71 @@ _ZN2v88internal9ScopeInfo3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef ptr @_ZN2v88internal9ScopeInfo23CreateGlobalThisBindingEPNS0_7IsolateE(ptr noundef nonnull %0) local_unnamed_addr #0 align 2 !guid !192 {
-bb.a:
-  %1 = tail call ptr @_ZN2v88internal9ScopeInfo22CreateForBootstrappingEPNS0_7IsolateENS1_17BootstrappingTypeE(ptr noundef %0, i32 noundef 0)
-  ret ptr %1
+  %2 = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE12NewScopeInfoEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef 7, i8 noundef zeroext 4) #17 ; 2 uses
+  %3 = load i64, ptr %2, align 8                  ; 10 uses
+  %4 = add i64 %3, 7
+  %5 = inttoptr i64 %4 to ptr
+  store atomic volatile i32 65856, ptr %5 monotonic, align 4
+  %6 = add i64 %3, 15
+  %7 = inttoptr i64 %6 to ptr
+  store atomic volatile i64 0, ptr %7 monotonic, align 8
+  %8 = add i64 %3, 23
+  %9 = inttoptr i64 %8 to ptr
+  store atomic volatile i64 4294967296, ptr %9 monotonic, align 8
+  %10 = add i64 %3, 31
+  %11 = inttoptr i64 %10 to ptr
+  store atomic volatile i64 0, ptr %11 monotonic, align 8
+  %12 = add i64 %3, 39
+  %13 = inttoptr i64 %12 to ptr
+  store atomic volatile i64 0, ptr %13 monotonic, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 7568
+  %15 = load i64, ptr %14, align 8                ; 5 uses
+  %16 = add i64 %3, 47                            ; 3 uses
+  %17 = inttoptr i64 %16 to ptr
+  store atomic volatile i64 %15, ptr %17 monotonic, align 8
+  %18 = trunc i64 %15 to i1
+  br i1 %18, label %19, label %bb.a
+
+19:                                               ; preds = %1
+  %20 = and i64 %3, -262144
+  %21 = inttoptr i64 %20 to ptr
+  %22 = load i64, ptr %21, align 262144           ; 2 uses
+  %23 = and i64 %22, 32
+  %.not.i.i.i.i = icmp eq i64 %23, 0
+  %24 = and i64 %22, 25
+  %.not37.i.i.i.i = icmp eq i64 %24, 0
+  br i1 %.not37.i.i.i.i, label %25, label %30
+
+25:                                               ; preds = %19
+  %26 = and i64 %15, -262144
+  %27 = inttoptr i64 %26 to ptr
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %27, align 262144
+  %28 = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, 25
+  %.not38.i.i.i.i = icmp eq i64 %28, 0
+  br i1 %.not38.i.i.i.i, label %30, label %29
+
+29:                                               ; preds = %25
+  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %3, i64 noundef %16, i64 %15) #17
+  br label %30
+
+30:                                               ; preds = %29, %25, %19
+  br i1 %.not.i.i.i.i, label %bb.a, label %31, !prof !13
+
+31:                                               ; preds = %30
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %3, i64 %16, i64 %15) #17
+  br label %bb.a
+
+bb.a:                                             ; preds = %1, %30, %31
+  %32 = add i64 %3, 55
+  %33 = inttoptr i64 %32 to ptr
+  store atomic volatile i64 18014196646019072, ptr %33 monotonic, align 8
+  ret ptr %2
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef ptr @_ZN2v88internal9ScopeInfo22CreateForBootstrappingEPNS0_7IsolateENS1_17BootstrappingTypeE(ptr noundef nonnull %0, i32 noundef %1) local_unnamed_addr #0 align 2 !guid !193 {
 bb.a:
-  %i.a = icmp eq i32 %1, 1                        ; 5 uses
+  %i.a = icmp eq i32 %1, 1                        ; 3 uses
   %i.b = icmp eq i32 %1, 3
   %i.c = and i32 %1, -2
   %i.d = icmp eq i32 %i.c, 2
@@ -221,16 +277,11 @@ bb.a:
   %i.i = select i1 %i.a, i32 3, i32 0
   %i.j = add nuw nsw i32 %i.i, %i.h
   %i.k = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE12NewScopeInfoEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %i.j, i8 noundef zeroext 4) #17 ; 2 uses
-  %2 = select i1 %i.b, i32 73, i32 64
-  %3 = select i1 %i.a, i32 68, i32 %2
-  %i.l = select i1 %i.a, i32 12288, i32 0
-  %i.m = select i1 %i.a, i32 16384, i32 0
-  %i.n = select i1 %i.d, i32 67108864, i32 0
-  %i.o = select i1 %i.e, i32 65792, i32 65920
-  %4 = or disjoint i32 %i.o, %i.l
-  %5 = or disjoint i32 %4, %i.m
-  %6 = or disjoint i32 %5, %3
-  %i.p = or disjoint i32 %6, %i.n
+  %i.l = select i1 %i.e, i32 65856, i32 65984
+  %i.m = select i1 %i.b, i32 65993, i32 %i.l
+  %i.n = select i1 %i.a, i32 94660, i32 %i.m
+  %i.o = select i1 %i.d, i32 67108864, i32 0
+  %i.p = or disjoint i32 %i.n, %i.o
   %i.q = load i64, ptr %i.k, align 8              ; 19 uses
   %i.r = add i64 %i.q, 7
   %i.s = inttoptr i64 %i.r to ptr
