@@ -204,11 +204,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %.06595.us = phi i32 [ 0, %.preheader.us.preheader ], [ %.2.us, %._crit_edge93.us ]
   %i.ia = trunc nuw nsw i64 %indvars.iv117 to i32
   %i.ib = tail call i32 @llvm.smax.i32(i32 %i.ia, i32 3) ; 2 uses
-  %i.ic = add nsw i32 %i.ib, -3                   ; 2 uses
+  %i.ic = add nsw i32 %i.ib, -3
   %i.id = trunc i64 %indvars.iv117 to i32
   %i.ie = add i32 %i.id, 3
-  %i.if = tail call i32 @llvm.smin.i32(i32 %i.ie, i32 %i.hw) ; 2 uses
-  %.not81.i.us = icmp sgt i32 %i.ic, %i.if
+  %i.if = tail call i32 @llvm.smin.i32(i32 %i.ie, i32 %i.hw)
   %i.ig = mul nuw nsw i32 %i.ic, %4
   %i.ih = zext nneg i32 %i.ig to i64              ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ih
@@ -239,15 +238,14 @@ bb.b:                                             ; preds = %.preheader.us, %SSI
   %i.iz = add i34 %i.ix, %i.iy
   %i.ja = shl nsw i34 %i.iz, 2
   %i.jb = add nsw i34 %i.ja, 12                   ; 2 uses
-  %i.jc = trunc i64 %indvars.iv112 to i32
+  %i.jc = trunc nuw nsw i64 %indvars.iv112 to i32
   %i.jd = tail call i32 @llvm.smax.i32(i32 %i.jc, i32 3) ; 2 uses
   %i.je = trunc i64 %indvars.iv112 to i32
   %i.jf = add i32 %i.je, 3
   %i.jg = tail call i32 @llvm.smin.i32(i32 %i.jf, i32 %i.hx) ; 2 uses
   %i.jh = add nsw i32 %i.jd, -3
   %.not5468.i.us = icmp sgt i32 %i.jh, %i.jg
-  %or.cond = select i1 %.not81.i.us, i1 true, i1 %.not5468.i.us
-  br i1 %or.cond, label %._crit_edge91.i.us, label %.preheader.preheader.i.us
+  br i1 %.not5468.i.us, label %._crit_edge91.i.us, label %.preheader.preheader.i.us
 
 .preheader.preheader.i.us:                        ; preds = %bb.b
   %i.ji = zext nneg i32 %i.jd to i64              ; 2 uses
