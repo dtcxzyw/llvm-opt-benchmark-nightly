@@ -204,7 +204,6 @@ bb.jd:                                            ; preds = %bb.jc, %.thread93.i
   %i.adf = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, %i.acx
   %i.adg = icmp eq <16 x i8> %.sroa.02.0.copyload.i.i.i.i.i.i.i.i, %i.acz
   %i.adh = and <16 x i1> %i.adf, %i.adg
-  %11 = bitcast <16 x i1> %i.adh to i16           ; 3 uses
   %i.adi = getelementptr i8, ptr %i.add, i64 16   ; 4 uses
   %.sroa.0.0.copyload.i.1.i.i.i.i.i.i.i = load <16 x i8>, ptr %i.adi, align 1, !alias.scope !848, !noalias !849
   %i.adj = getelementptr inbounds nuw i8, ptr %i.adi, i64 %storemerge9295.i.i.i.i.i.i.i
@@ -212,7 +211,6 @@ bb.jd:                                            ; preds = %bb.jc, %.thread93.i
   %i.adk = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i.i.i.i.i.i.i, %i.acx
   %i.adl = icmp eq <16 x i8> %.sroa.02.0.copyload.i.1.i.i.i.i.i.i.i, %i.acz
   %i.adm = and <16 x i1> %i.adk, %i.adl
-  %12 = bitcast <16 x i1> %i.adm to i16           ; 3 uses
   %i.adn = getelementptr i8, ptr %i.add, i64 32   ; 4 uses
   %.sroa.0.0.copyload.i.2.i.i.i.i.i.i.i = load <16 x i8>, ptr %i.adn, align 1, !alias.scope !848, !noalias !849
   %i.ado = getelementptr inbounds nuw i8, ptr %i.adn, i64 %storemerge9295.i.i.i.i.i.i.i
@@ -220,7 +218,6 @@ bb.jd:                                            ; preds = %bb.jc, %.thread93.i
   %i.adp = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i.i.i.i.i.i.i, %i.acx
   %i.adq = icmp eq <16 x i8> %.sroa.02.0.copyload.i.2.i.i.i.i.i.i.i, %i.acz
   %i.adr = and <16 x i1> %i.adp, %i.adq
-  %13 = bitcast <16 x i1> %i.adr to i16           ; 3 uses
   %i.ads = getelementptr i8, ptr %i.add, i64 48   ; 4 uses
   %.sroa.0.0.copyload.i.3.i.i.i.i.i.i.i = load <16 x i8>, ptr %i.ads, align 1, !alias.scope !848, !noalias !849
   %i.adt = getelementptr inbounds nuw i8, ptr %i.ads, i64 %storemerge9295.i.i.i.i.i.i.i
@@ -228,19 +225,20 @@ bb.jd:                                            ; preds = %bb.jc, %.thread93.i
   %i.adu = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i.i.i.i.i.i.i, %i.acx
   %i.adv = icmp eq <16 x i8> %.sroa.02.0.copyload.i.3.i.i.i.i.i.i.i, %i.acz
   %i.adw = and <16 x i1> %i.adu, %i.adv
-  %i.adx = bitcast <16 x i1> %i.adw to i16        ; 3 uses
-  %i.ady = icmp eq i16 %11, 0
+  %i.adx = bitcast <16 x i1> %i.adh to i16        ; 3 uses
+  %i.ady = icmp eq i16 %i.adx, 0
   br i1 %i.ady, label %.preheader96.1.i.i.i.i.i.i.i, label %bb.jo
 
 .preheader96.1.i.i.i.i.i.i.i:                     ; preds = %bb.jr, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i131, %.lr.ph.i10.i.i.i.i.i.i
-  %i.adz = icmp eq i16 %12, 0
+  %11 = bitcast <16 x i1> %i.adm to i16           ; 3 uses
+  %i.adz = icmp eq i16 %11, 0
   br i1 %i.adz, label %.preheader96.2.i.i.i.i.i.i.i, label %.preheader.i198
 
 .preheader.i198:                                  ; preds = %.preheader96.1.i.i.i.i.i.i.i
   br i1 %i.un, label %.preheader.split.us.i215, label %.preheader.split.i202
 
 .preheader.split.us.i215:                         ; preds = %.preheader.i198, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i226
-  %.sroa.0.09.us.i216 = phi i16 [ %i.aem, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i226 ], [ %12, %.preheader.i198 ] ; 2 uses
+  %.sroa.0.09.us.i216 = phi i16 [ %i.aem, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i226 ], [ %11, %.preheader.i198 ] ; 2 uses
   %i.aea = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.us.i216, i1 true) ; 2 uses
   %i.aeb = zext nneg i16 %i.aea to i64
   %i.aec = getelementptr i8, ptr %i.adi, i64 %i.aeb ; 2 uses
@@ -288,7 +286,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.
   br i1 %i.aen, label %.preheader96.2.i.i.i.i.i.i.i, label %.preheader.split.us.i215
 
 .preheader.split.i202:                            ; preds = %.preheader.i198, %bb.jg
-  %.sroa.0.09.i203 = phi i16 [ %i.afb, %bb.jg ], [ %12, %.preheader.i198 ] ; 2 uses
+  %.sroa.0.09.i203 = phi i16 [ %i.afb, %bb.jg ], [ %11, %.preheader.i198 ] ; 2 uses
   %i.aeo = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.i203, i1 true) ; 2 uses
   %i.aep = zext nneg i16 %i.aeo to i64
   %i.aeq = getelementptr i8, ptr %i.adi, i64 %i.aep ; 2 uses
@@ -339,7 +337,8 @@ bb.jg:                                            ; preds = %_RNvNtNtCs4NRVxsYgn
 
 .preheader96.2.i.i.i.i.i.i.i:                     ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.i109, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.i204, %bb.jg, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i226, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6.i132, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6.i227, %.preheader96.1.i.i.i.i.i.i.i
   %.sroa.014.2.1.i.i.i.i.i.i.i = phi i8 [ 0, %.preheader96.1.i.i.i.i.i.i.i ], [ 1, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6.i227 ], [ 1, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6.i132 ], [ 0, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i226 ], [ 0, %bb.jg ], [ 1, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.i204 ], [ 1, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.i109 ] ; 2 uses
-  %i.afd = icmp eq i16 %13, 0
+  %12 = bitcast <16 x i1> %i.adr to i16           ; 3 uses
+  %i.afd = icmp eq i16 %12, 0
   br i1 %i.afd, label %.preheader96.3.i.i.i.i.i.i.i, label %bb.jh
 
 bb.jh:                                            ; preds = %.preheader96.2.i.i.i.i.i.i.i
@@ -350,7 +349,7 @@ bb.jh:                                            ; preds = %.preheader96.2.i.i.
   br i1 %i.un, label %.preheader.split.us.i183, label %.preheader.split.i170
 
 .preheader.split.us.i183:                         ; preds = %.preheader.i166, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i194
-  %.sroa.0.09.us.i184 = phi i16 [ %i.afr, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i194 ], [ %13, %.preheader.i166 ] ; 2 uses
+  %.sroa.0.09.us.i184 = phi i16 [ %i.afr, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i194 ], [ %12, %.preheader.i166 ] ; 2 uses
   %i.aff = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.us.i184, i1 true) ; 2 uses
   %i.afg = zext nneg i16 %i.aff to i64
   %i.afh = getelementptr i8, ptr %i.adn, i64 %i.afg ; 2 uses
@@ -398,7 +397,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.
   br i1 %i.afs, label %.preheader96.3.i.i.i.i.i.i.i, label %.preheader.split.us.i183
 
 .preheader.split.i170:                            ; preds = %.preheader.i166, %bb.jk
-  %.sroa.0.09.i171 = phi i16 [ %i.agg, %bb.jk ], [ %13, %.preheader.i166 ] ; 2 uses
+  %.sroa.0.09.i171 = phi i16 [ %i.agg, %bb.jk ], [ %12, %.preheader.i166 ] ; 2 uses
   %i.aft = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.i171, i1 true) ; 2 uses
   %i.afu = zext nneg i16 %i.aft to i64
   %i.afv = getelementptr i8, ptr %i.adn, i64 %i.afu ; 2 uses
@@ -449,7 +448,8 @@ bb.jk:                                            ; preds = %_RNvNtNtCs4NRVxsYgn
 
 .preheader96.3.i.i.i.i.i.i.i:                     ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.i172, %bb.jk, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i194, %bb.jh, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6.i195, %.preheader96.2.i.i.i.i.i.i.i
   %.sroa.014.2.2.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.2.1.i.i.i.i.i.i.i, %.preheader96.2.i.i.i.i.i.i.i ], [ 1, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6.i195 ], [ 1, %bb.jh ], [ 0, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i194 ], [ 1, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.i172 ], [ 0, %bb.jk ] ; 4 uses
-  %i.agi = icmp eq i16 %i.adx, 0
+  %13 = bitcast <16 x i1> %i.adw to i16           ; 3 uses
+  %i.agi = icmp eq i16 %13, 0
   %i.agj = trunc nuw i8 %.sroa.014.2.2.i.i.i.i.i.i.i to i1
   %or.cond1781 = select i1 %i.agi, i1 true, i1 %i.agj
   br i1 %or.cond1781, label %.noexc17.i.i.i.i.i, label %.preheader.i
@@ -458,7 +458,7 @@ bb.jk:                                            ; preds = %_RNvNtNtCs4NRVxsYgn
   br i1 %i.un, label %.preheader.split.us.i151, label %.preheader.split.i138
 
 .preheader.split.us.i151:                         ; preds = %.preheader.i, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i162
-  %.sroa.0.09.us.i152 = phi i16 [ %i.agw, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i162 ], [ %i.adx, %.preheader.i ] ; 2 uses
+  %.sroa.0.09.us.i152 = phi i16 [ %i.agw, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i162 ], [ %13, %.preheader.i ] ; 2 uses
   %i.agk = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.us.i152, i1 true) ; 2 uses
   %i.agl = zext nneg i16 %i.agk to i64
   %i.agm = getelementptr i8, ptr %i.ads, i64 %i.agl ; 2 uses
@@ -506,7 +506,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.
   br i1 %i.agx, label %.noexc17.i.i.i.i.i, label %.preheader.split.us.i151
 
 .preheader.split.i138:                            ; preds = %.preheader.i, %bb.jn
-  %.sroa.0.09.i139 = phi i16 [ %i.ahl, %bb.jn ], [ %i.adx, %.preheader.i ] ; 2 uses
+  %.sroa.0.09.i139 = phi i16 [ %i.ahl, %bb.jn ], [ %13, %.preheader.i ] ; 2 uses
   %i.agy = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.i139, i1 true) ; 2 uses
   %i.agz = zext nneg i16 %i.agy to i64
   %i.aha = getelementptr i8, ptr %i.ads, i64 %i.agz ; 2 uses
@@ -568,7 +568,7 @@ bb.jo:                                            ; preds = %.lr.ph.i10.i.i.i.i.
   br i1 %i.un, label %.preheader.split.us.i120, label %.preheader.split.i107
 
 .preheader.split.us.i120:                         ; preds = %bb.jo, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i131
-  %.sroa.0.09.us.i121 = phi i16 [ %i.aid, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i131 ], [ %11, %bb.jo ] ; 2 uses
+  %.sroa.0.09.us.i121 = phi i16 [ %i.aid, %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.i131 ], [ %i.adx, %bb.jo ] ; 2 uses
   %i.ahr = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.us.i121, i1 true) ; 2 uses
   %i.ahs = zext nneg i16 %i.ahr to i64
   %i.aht = getelementptr i8, ptr %i.add, i64 %i.ahs ; 2 uses
@@ -616,7 +616,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread.loopexit.us.
   br i1 %i.aie, label %.preheader96.1.i.i.i.i.i.i.i, label %.preheader.split.us.i120
 
 .preheader.split.i107:                            ; preds = %bb.jo, %bb.jr
-  %.sroa.0.09.i108 = phi i16 [ %i.ais, %bb.jr ], [ %11, %bb.jo ] ; 2 uses
+  %.sroa.0.09.i108 = phi i16 [ %i.ais, %bb.jr ], [ %i.adx, %bb.jo ] ; 2 uses
   %i.aif = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.09.i108, i1 true) ; 2 uses
   %i.aig = zext nneg i16 %i.aif to i64
   %i.aih = getelementptr i8, ptr %i.add, i64 %i.aig ; 2 uses

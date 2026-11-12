@@ -205,69 +205,69 @@ bb.g:                                             ; preds = %bb.f
   %i.aq = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i, %i.ad, !dbg !178917
   %i.ar = icmp eq <16 x i8> %.sroa.02.0.copyload.i.i, %i.af, !dbg !178918
   %i.as = and <16 x i1> %i.aq, %i.ar, !dbg !178919
-  %4 = bitcast <16 x i1> %i.as to i16, !dbg !178920 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 16, !dbg !178921 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 16, !dbg !178920 ; 2 uses
   %.sroa.0.0.copyload.i.1.i = load <16 x i8>, ptr %i.at, align 1, !dbg !178914, !alias.scope !178849, !noalias !178866
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %.lcssa37, !dbg !178915
   %.sroa.02.0.copyload.i.1.i = load <16 x i8>, ptr %i.au, align 1, !dbg !178916, !alias.scope !178849, !noalias !178866
   %i.av = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i, %i.ad, !dbg !178917
   %i.aw = icmp eq <16 x i8> %.sroa.02.0.copyload.i.1.i, %i.af, !dbg !178918
   %i.ax = and <16 x i1> %i.av, %i.aw, !dbg !178919
-  %5 = bitcast <16 x i1> %i.ax to i16, !dbg !178920 ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.ao, i64 32, !dbg !178921 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.ao, i64 32, !dbg !178920 ; 2 uses
   %.sroa.0.0.copyload.i.2.i = load <16 x i8>, ptr %i.ay, align 1, !dbg !178914, !alias.scope !178849, !noalias !178866
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %.lcssa37, !dbg !178915
   %.sroa.02.0.copyload.i.2.i = load <16 x i8>, ptr %i.az, align 1, !dbg !178916, !alias.scope !178849, !noalias !178866
   %i.ba = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i, %i.ad, !dbg !178917
   %i.bb = icmp eq <16 x i8> %.sroa.02.0.copyload.i.2.i, %i.af, !dbg !178918
   %i.bc = and <16 x i1> %i.ba, %i.bb, !dbg !178919
-  %6 = bitcast <16 x i1> %i.bc to i16, !dbg !178920 ; 2 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.ao, i64 48, !dbg !178921 ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.ao, i64 48, !dbg !178920 ; 2 uses
   %.sroa.0.0.copyload.i.3.i = load <16 x i8>, ptr %i.bd, align 1, !dbg !178914, !alias.scope !178849, !noalias !178866
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %.lcssa37, !dbg !178915
   %.sroa.02.0.copyload.i.3.i = load <16 x i8>, ptr %i.be, align 1, !dbg !178916, !alias.scope !178849, !noalias !178866
   %i.bf = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i, %i.ad, !dbg !178917
   %i.bg = icmp eq <16 x i8> %.sroa.02.0.copyload.i.3.i, %i.af, !dbg !178918
   %i.bh = and <16 x i1> %i.bf, %i.bg, !dbg !178919
-  %i.bi = bitcast <16 x i1> %i.bh to i16, !dbg !178920 ; 2 uses
-  %i.bj = icmp eq i16 %4, 0, !dbg !178922
+  %i.bi = bitcast <16 x i1> %i.as to i16, !dbg !178921 ; 2 uses
+  %i.bj = icmp eq i16 %i.bi, 0, !dbg !178922
   br i1 %i.bj, label %.preheader91.1.i, label %bb.l, !dbg !178922
 
 .preheader91.1.i:                                 ; preds = %bb.l, %.lr.ph.i
   %.sroa.014.2.i = phi i8 [ 0, %.lr.ph.i ], [ %i.ch, %bb.l ], !dbg !178923 ; 3 uses
-  %i.bk = icmp eq i16 %5, 0, !dbg !178922
+  %4 = bitcast <16 x i1> %i.ax to i16, !dbg !178921 ; 2 uses
+  %i.bk = icmp eq i16 %4, 0, !dbg !178922
   br i1 %i.bk, label %.preheader91.2.i, label %bb.h, !dbg !178922
 
 bb.h:                                             ; preds = %.preheader91.1.i
   %i.bl = or disjoint i64 %.sroa.06.098.i, 16, !dbg !178924
   %i.bm = trunc nuw i8 %.sroa.014.2.i to i1, !dbg !178925
-  %i.bn = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bl, i16 noundef %5, i1 noundef zeroext %i.bm) #49, !dbg !178926
+  %i.bn = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bl, i16 noundef %4, i1 noundef zeroext %i.bm) #49, !dbg !178926
   %i.bo = zext i1 %i.bn to i8, !dbg !178927
   %i.bp = or i8 %.sroa.014.2.i, %i.bo, !dbg !178927
   br label %.preheader91.2.i, !dbg !178928
 
 .preheader91.2.i:                                 ; preds = %bb.h, %.preheader91.1.i
   %.sroa.014.2.1.i = phi i8 [ %.sroa.014.2.i, %.preheader91.1.i ], [ %i.bp, %bb.h ], !dbg !178923 ; 3 uses
-  %i.bq = icmp eq i16 %6, 0, !dbg !178922
+  %5 = bitcast <16 x i1> %i.bc to i16, !dbg !178921 ; 2 uses
+  %i.bq = icmp eq i16 %5, 0, !dbg !178922
   br i1 %i.bq, label %.preheader91.3.i, label %bb.i, !dbg !178922
 
 bb.i:                                             ; preds = %.preheader91.2.i
   %i.br = or disjoint i64 %.sroa.06.098.i, 32, !dbg !178924
   %i.bs = trunc nuw i8 %.sroa.014.2.1.i to i1, !dbg !178925
-  %i.bt = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.br, i16 noundef %6, i1 noundef zeroext %i.bs) #49, !dbg !178926
+  %i.bt = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.br, i16 noundef %5, i1 noundef zeroext %i.bs) #49, !dbg !178926
   %i.bu = zext i1 %i.bt to i8, !dbg !178927
   %i.bv = or i8 %.sroa.014.2.1.i, %i.bu, !dbg !178927
   br label %.preheader91.3.i, !dbg !178928
 
 .preheader91.3.i:                                 ; preds = %bb.i, %.preheader91.2.i
   %.sroa.014.2.2.i = phi i8 [ %.sroa.014.2.1.i, %.preheader91.2.i ], [ %i.bv, %bb.i ], !dbg !178923 ; 3 uses
-  %i.bw = icmp eq i16 %i.bi, 0, !dbg !178922
+  %6 = bitcast <16 x i1> %i.bh to i16, !dbg !178921 ; 2 uses
+  %i.bw = icmp eq i16 %6, 0, !dbg !178922
   br i1 %i.bw, label %bb.k, label %bb.j, !dbg !178922
 
 bb.j:                                             ; preds = %.preheader91.3.i
   %i.bx = or disjoint i64 %.sroa.06.098.i, 48, !dbg !178924
   %i.by = trunc nuw i8 %.sroa.014.2.2.i to i1, !dbg !178925
-  %i.bz = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bx, i16 noundef %i.bi, i1 noundef zeroext %i.by) #49, !dbg !178926
+  %i.bz = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bx, i16 noundef %6, i1 noundef zeroext %i.by) #49, !dbg !178926
   %i.ca = zext i1 %i.bz to i8, !dbg !178927
   %i.cb = or i8 %.sroa.014.2.2.i, %i.ca, !dbg !178927
   br label %bb.k, !dbg !178928
@@ -282,7 +282,7 @@ bb.k:                                             ; preds = %bb.j, %.preheader91
   br i1 %or.cond.i, label %.preheader.i, label %.lr.ph.i, !dbg !178910
 
 bb.l:                                             ; preds = %.lr.ph.i
-  %i.cg = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.098.i, i16 noundef %4, i1 noundef zeroext false) #49, !dbg !178926
+  %i.cg = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsfcROwRM8ZtH_11polars_plan(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.098.i, i16 noundef %i.bi, i1 noundef zeroext false) #49, !dbg !178926
   %i.ch = zext i1 %i.cg to i8, !dbg !178927
   br label %.preheader91.1.i, !dbg !178928
 
@@ -685,8 +685,8 @@ begin_hunk_1_@llvm.umin.i16
 !178917 = !DILocation(line: 31, column: 52, scope: !178786, inlinedAt: !178788)
 !178918 = !DILocation(line: 31, column: 52, scope: !178786, inlinedAt: !178790)
 !178919 = !DILocation(line: 481, column: 23, scope: !178791, inlinedAt: !178793)
-!178920 = !DILocation(line: 1881, column: 13, scope: !178774, inlinedAt: !178684)
-!178921 = !DILocation(line: 863, column: 18, scope: !178779, inlinedAt: !178794)
+!178920 = !DILocation(line: 863, column: 18, scope: !178779, inlinedAt: !178794)
+!178921 = !DILocation(line: 1884, column: 24, scope: !178796, inlinedAt: !178684)
 !178922 = !DILocation(line: 1885, column: 16, scope: !178797, inlinedAt: !178684)
 !178923 = !DILocation(line: 0, scope: !178763, inlinedAt: !178684)
 !178924 = !DILocation(line: 1886, column: 38, scope: !178797, inlinedAt: !178684)
