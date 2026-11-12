@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   %.sroa.041.0 = phi ptr [ %.sroa.041.0.copyload, %bb.c ], [ %.sroa.031.0.copyload, %bb.e ], [ %.sroa.041.0.copyload, %bb.d ]
   %.sroa.7.0 = phi i32 [ %.sroa.7.0.copyload, %bb.c ], [ %.sroa.744.0.copyload, %bb.e ], [ %.sroa.7.0.copyload, %bb.d ]
   %.sroa.031.0 = phi ptr [ %.sroa.031.0.copyload, %bb.c ], [ %.sroa.041.0.copyload, %bb.e ], [ %.sroa.031.0.copyload, %bb.d ]
-  %.0 = phi i32 [ 22, %bb.c ], [ %i.t, %bb.e ], [ 22, %bb.d ] ; 2 uses
+  %.0 = phi i32 [ 22, %bb.c ], [ %i.t, %bb.e ], [ 22, %bb.d ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.v = load i64, ptr %i.u, align 8, !tbaa !426
@@ -228,26 +228,22 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   %i.ad = add i16 %.sroa.0.0.copyload.i.i, -195
   %spec.select.i.i29 = icmp ult i16 %i.ad, 21
   %i.ae = or i1 %spec.select.i.i29, %or.cond4.i.i
-  br i1 %i.ae, label %switch.lookup, label %switch.lookup60
+  br i1 %i.ae, label %_ZN4llvmL14fpCondCode2FccENS_3ISD8CondCodeE.exit, label %switch.lookup
 
 _ZNK4llvm3EVT15isFloatingPointEv.exit:            ; preds = %bb.f
   %i.af = call noundef zeroext i1 @_ZNK4llvm3EVT23isExtendedFloatingPointEv(ptr noundef nonnull align 8 dereferenceable(16) %4) #27
-  br i1 %i.af, label %switch.lookup, label %switch.lookup60
+  br i1 %i.af, label %_ZN4llvmL14fpCondCode2FccENS_3ISD8CondCodeE.exit, label %switch.lookup
 
-switch.lookup60:                                  ; preds = %.split59, %_ZNK4llvm3EVT15isFloatingPointEv.exit
-  %8 = sext i32 %.0 to i64
-  %9 = getelementptr i8, ptr @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.7, i64 %8
-  %switch.gep61 = getelementptr i8, ptr %9, i64 -10
+switch.lookup:                                    ; preds = %.split59, %_ZNK4llvm3EVT15isFloatingPointEv.exit
+  %switch.tableidx = add nsw i32 %.0, -10
   br label %_ZN4llvmL14fpCondCode2FccENS_3ISD8CondCodeE.exit
 
-switch.lookup:                                    ; preds = %_ZNK4llvm3EVT15isFloatingPointEv.exit, %.split59
-  %10 = zext nneg i32 %.0 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE, i64 %10
-  br label %_ZN4llvmL14fpCondCode2FccENS_3ISD8CondCodeE.exit
-
-_ZN4llvmL14fpCondCode2FccENS_3ISD8CondCodeE.exit: ; preds = %switch.lookup60, %switch.lookup
-  %switch.load62.sink.in = phi ptr [ %switch.gep61, %switch.lookup60 ], [ %switch.gep, %switch.lookup ]
-  %switch.load62.sink = load i8, ptr %switch.load62.sink.in, align 1
+_ZN4llvmL14fpCondCode2FccENS_3ISD8CondCodeE.exit: ; preds = %.split59, %_ZNK4llvm3EVT15isFloatingPointEv.exit, %switch.lookup
+  %switch.tableidx.sink = phi i32 [ %switch.tableidx, %switch.lookup ], [ %.0, %_ZNK4llvm3EVT15isFloatingPointEv.exit ], [ %.0, %.split59 ]
+  %switch.table._ZNK4llvm16VETargetLowering13combineSelectEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.6.sink = phi ptr [ @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.7, %switch.lookup ], [ @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE, %_ZNK4llvm3EVT15isFloatingPointEv.exit ], [ @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE, %.split59 ]
+  %8 = zext nneg i32 %switch.tableidx.sink to i64
+  %switch.gep61 = getelementptr inbounds nuw i8, ptr %switch.table._ZNK4llvm16VETargetLowering13combineSelectEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.6.sink, i64 %8
+  %switch.load62.sink = load i8, ptr %switch.gep61, align 1
   %switch.ext63 = zext i8 %switch.load62.sink to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store ptr %.sroa.051.0.copyload, ptr %6, align 16, !tbaa !280
@@ -650,14 +646,13 @@ bb.u:                                             ; preds = %bb.t, %.sink.split.
   %.fca.0.extract8 = extractvalue { ptr, i32 } %.fca.1.insert.merged.i, 0
   %.fca.1.extract9 = extractvalue { ptr, i32 } %.fca.1.insert.merged.i, 1
   %i.cr = add nsw i16 %.sroa.0.0.copyload.i.i, -12
-  %or.cond.i.i = icmp ult i16 %i.cr, 7
-  %11 = sext i32 %.1 to i64
-  %12 = getelementptr i8, ptr @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.7, i64 %11
-  %switch.gep108 = getelementptr i8, ptr %12, i64 -10
-  %i.cs = zext nneg i32 %.1 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE, i64 %i.cs
-  %switch.load109.sink.in = select i1 %or.cond.i.i, ptr %switch.gep, ptr %switch.gep108
-  %switch.load109.sink = load i8, ptr %switch.load109.sink.in, align 1
+  %or.cond.i.i = icmp ult i16 %i.cr, 7            ; 2 uses
+  %switch.tableidx = add nsw i32 %.1, -10
+  %switch.tableidx.sink = select i1 %or.cond.i.i, i32 %.1, i32 %switch.tableidx
+  %switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.7.sink = select i1 %or.cond.i.i, ptr @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE, ptr @switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.7
+  %i.cs = zext nneg i32 %switch.tableidx.sink to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr %switch.table._ZNK4llvm16VETargetLowering15combineSelectCCEPNS_6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.7.sink, i64 %i.cs
+  %switch.load109.sink = load i8, ptr %switch.gep, align 1
   %switch.ext110 = zext i8 %switch.load109.sink to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
   store ptr %.fca.0.extract8, ptr %9, align 16, !tbaa !280

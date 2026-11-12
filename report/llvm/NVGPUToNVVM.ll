@@ -205,36 +205,24 @@ _ZN12_GLOBAL__N_114classifyFPTypeEN4mlir4TypeE.exit25.i.i: ; preds = %bb.w, %bb.
 bb.x:                                             ; preds = %.preheader.preheader.i.i
   %switch.tableidx = add nsw i32 %.sroa.0.0.extract.trunc.i.i, -1 ; 2 uses
   %i.fa = icmp ult i32 %switch.tableidx, 5
-  br i1 %i.fa, label %switch.lookup, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.thread.i
+  br i1 %i.fa, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.thread.i
 
 bb.y:                                             ; preds = %.preheader.preheader.i.i
   %switch.tableidx17 = add nsw i32 %.sroa.0.0.extract.trunc.i.i, -3 ; 2 uses
   %i.fb = icmp ult i32 %switch.tableidx17, 3
-  br i1 %i.fb, label %switch.lookup18, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.thread.i
+  br i1 %i.fb, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.thread.i
 
 bb.z:                                             ; preds = %.preheader.preheader.i.i
   %switch.tableidx21 = add nsw i32 %.sroa.0.0.extract.trunc.i.i, -3 ; 2 uses
   %i.fc = icmp ult i32 %switch.tableidx21, 3
-  br i1 %i.fc, label %switch.lookup22, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.thread.i
+  br i1 %i.fc, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i, label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.thread.i
 
-switch.lookup:                                    ; preds = %bb.x
-  %23 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK12_GLOBAL__N_121NVGPUTruncfOpLowering15matchAndRewriteEN4mlir5nvgpu8TruncfOpENS2_15TruncfOpAdaptorERNS1_25ConversionPatternRewriterE, i64 %23
-  br label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i
-
-switch.lookup18:                                  ; preds = %bb.y
-  %24 = zext nneg i32 %switch.tableidx17 to i64
-  %switch.gep19 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK12_GLOBAL__N_121NVGPUTruncfOpLowering15matchAndRewriteEN4mlir5nvgpu8TruncfOpENS2_15TruncfOpAdaptorERNS1_25ConversionPatternRewriterE.582, i64 %24
-  br label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i
-
-switch.lookup22:                                  ; preds = %bb.z
-  %25 = zext nneg i32 %switch.tableidx21 to i64
-  %switch.gep23 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK12_GLOBAL__N_121NVGPUTruncfOpLowering15matchAndRewriteEN4mlir5nvgpu8TruncfOpENS2_15TruncfOpAdaptorERNS1_25ConversionPatternRewriterE.583, i64 %25
-  br label %_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i
-
-_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i: ; preds = %switch.lookup22, %switch.lookup18, %switch.lookup
-  %.0.ptr15.lcssa.i.i.in = phi ptr [ %switch.gep, %switch.lookup ], [ %switch.gep23, %switch.lookup22 ], [ %switch.gep19, %switch.lookup18 ]
-  %.0.ptr15.lcssa.i.i = load ptr, ptr %.0.ptr15.lcssa.i.i.in, align 8 ; 2 uses
+_ZN12_GLOBAL__N_112lookupConvOpINS_17FPTruncTableEntryELm11EEESt8optionalIT_ERAT0__KS3_N4mlir4TypeES9_.exit.i: ; preds = %bb.z, %bb.y, %bb.x
+  %switch.tableidx21.sink = phi i32 [ %switch.tableidx17, %bb.y ], [ %switch.tableidx, %bb.x ], [ %switch.tableidx21, %bb.z ]
+  %.0.ptr15.lcssa.i.i.in = phi ptr [ @switch.table._ZNK12_GLOBAL__N_121NVGPUTruncfOpLowering15matchAndRewriteEN4mlir5nvgpu8TruncfOpENS2_15TruncfOpAdaptorERNS1_25ConversionPatternRewriterE.582, %bb.y ], [ @switch.table._ZNK12_GLOBAL__N_121NVGPUTruncfOpLowering15matchAndRewriteEN4mlir5nvgpu8TruncfOpENS2_15TruncfOpAdaptorERNS1_25ConversionPatternRewriterE, %bb.x ], [ @switch.table._ZNK12_GLOBAL__N_121NVGPUTruncfOpLowering15matchAndRewriteEN4mlir5nvgpu8TruncfOpENS2_15TruncfOpAdaptorERNS1_25ConversionPatternRewriterE.583, %bb.z ]
+  %23 = zext nneg i32 %switch.tableidx21.sink to i64
+  %switch.gep23 = getelementptr inbounds nuw [8 x i8], ptr %.0.ptr15.lcssa.i.i.in, i64 %23
+  %.0.ptr15.lcssa.i.i = load ptr, ptr %switch.gep23, align 8 ; 2 uses
   %.sroa.06.0.copyload.i.i = load i64, ptr %.0.ptr15.lcssa.i.i, align 4, !tbaa !112 ; 2 uses
   %.sroa.2.0..0.ptr.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.0.ptr15.lcssa.i.i, i64 8
   %.sroa.2.0.copyload.i.i = load i32, ptr %.sroa.2.0..0.ptr.sroa_idx.i.i, align 4, !tbaa !112 ; 2 uses

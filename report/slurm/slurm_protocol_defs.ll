@@ -202,7 +202,7 @@ bb.a:
   %switch.shifted = lshr i8 113, %switch.maskindex
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond = select i1 %i.c, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %switch.lookup, label %bb.b
+  br i1 %or.cond, label %switch.lookup41, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp sgt i16 %0, -1
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = and i16 %0, 32767
   %switch.tableidx = add nsw i16 %i.d, -1         ; 2 uses
   %i.e = icmp ult i16 %switch.tableidx, 8
-  br i1 %i.e, label %switch.lookup29, label %bb.i
+  br i1 %i.e, label %switch.lookup41, label %bb.i
 
 bb.d:                                             ; preds = %bb.b
   %.not26 = icmp samesign ult i16 %0, 16384
@@ -222,7 +222,7 @@ bb.e:                                             ; preds = %bb.d
   %i.f = and i16 %0, 16383
   %switch.tableidx32 = add nsw i16 %i.f, -1       ; 2 uses
   %i.g = icmp ult i16 %switch.tableidx32, 8
-  br i1 %i.g, label %switch.lookup33, label %bb.i
+  br i1 %i.g, label %switch.lookup41, label %bb.i
 
 bb.f:                                             ; preds = %bb.d
   %.not27 = icmp samesign ult i16 %0, 8192
@@ -232,45 +232,23 @@ bb.g:                                             ; preds = %bb.f
   %i.h = and i16 %0, 8191
   %switch.tableidx36 = add nsw i16 %i.h, -1       ; 2 uses
   %i.i = icmp ult i16 %switch.tableidx36, 8
-  br i1 %i.i, label %switch.lookup37, label %bb.i
+  br i1 %i.i, label %switch.lookup41, label %bb.i
 
 bb.h:                                             ; preds = %bb.f
   %switch.tableidx40 = add nsw i16 %0, -1         ; 2 uses
   %i.j = icmp ult i16 %switch.tableidx40, 8
   br i1 %i.j, label %switch.lookup41, label %bb.i
 
-switch.lookup:                                    ; preds = %bb.a
-  %1 = zext nneg i16 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.preempt_mode_string, i64 %1
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %bb.i
-
-switch.lookup29:                                  ; preds = %bb.c
-  %2 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep30 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.preempt_mode_string.1, i64 %2
-  %switch.load31 = load ptr, ptr %switch.gep30, align 8
-  br label %bb.i
-
-switch.lookup33:                                  ; preds = %bb.e
-  %3 = zext nneg i16 %switch.tableidx32 to i64
-  %switch.gep34 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.preempt_mode_string.2, i64 %3
-  %switch.load35 = load ptr, ptr %switch.gep34, align 8
-  br label %bb.i
-
-switch.lookup37:                                  ; preds = %bb.g
-  %4 = zext nneg i16 %switch.tableidx36 to i64
-  %switch.gep38 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.preempt_mode_string.3, i64 %4
-  %switch.load39 = load ptr, ptr %switch.gep38, align 8
-  br label %bb.i
-
-switch.lookup41:                                  ; preds = %bb.h
-  %i.k = zext nneg i16 %switch.tableidx40 to i64
-  %switch.gep42 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.preempt_mode_string.4, i64 %i.k
+switch.lookup41:                                  ; preds = %bb.h, %bb.g, %bb.e, %bb.c, %bb.a
+  %switch.tableidx40.sink = phi i16 [ %switch.tableidx36, %bb.g ], [ %switch.tableidx32, %bb.e ], [ %switch.tableidx, %bb.c ], [ %i.b, %bb.a ], [ %switch.tableidx40, %bb.h ]
+  %switch.table.preempt_mode_string.4.sink = phi ptr [ @switch.table.preempt_mode_string.3, %bb.g ], [ @switch.table.preempt_mode_string.2, %bb.e ], [ @switch.table.preempt_mode_string.1, %bb.c ], [ @switch.table.preempt_mode_string, %bb.a ], [ @switch.table.preempt_mode_string.4, %bb.h ]
+  %i.k = zext nneg i16 %switch.tableidx40.sink to i64
+  %switch.gep42 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.preempt_mode_string.4.sink, i64 %i.k
   %switch.load43 = load ptr, ptr %switch.gep42, align 8
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %switch.lookup41, %bb.g, %switch.lookup37, %bb.e, %switch.lookup33, %bb.c, %switch.lookup29, %switch.lookup
-  %.0 = phi ptr [ %switch.load31, %switch.lookup29 ], [ %switch.load43, %switch.lookup41 ], [ @.str.27, %bb.c ], [ @.str.35, %bb.g ], [ %switch.load, %switch.lookup ], [ %switch.load39, %switch.lookup37 ], [ @.str.31, %bb.e ], [ %switch.load35, %switch.lookup33 ], [ @.str.13, %bb.h ]
+bb.i:                                             ; preds = %switch.lookup41, %bb.h, %bb.g, %bb.e, %bb.c
+  %.0 = phi ptr [ @.str.31, %bb.e ], [ @.str.13, %bb.h ], [ @.str.27, %bb.c ], [ @.str.35, %bb.g ], [ %switch.load43, %switch.lookup41 ]
   ret ptr %.0
 }
 

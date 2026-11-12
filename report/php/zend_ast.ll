@@ -202,21 +202,15 @@ smart_str_alloc.exit1236:                         ; preds = %bb.fo, %bb.fp
 switch.lookup:                                    ; preds = %bb.b
   %i.wu = getelementptr inbounds nuw i8, ptr %.02093, i64 2
   %i.wv = load i16, ptr %i.wu, align 2, !tbaa !71
-  %4 = sext i16 %i.wv to i64
-  %5 = getelementptr [8 x i8], ptr @switch.table.zend_ast_export_ex, i64 %4
-  %switch.gep = getelementptr i8, ptr %5, i64 -2768
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %.loopexit1831
+  %switch.tableidx = add nsw i16 %i.wv, -346
+  br label %.loopexit1831.sink.split
 
 switch.lookup3752:                                ; preds = %bb.b
   %i.ww = getelementptr inbounds nuw i8, ptr %.02093, i64 2
   %i.wx = load i16, ptr %i.ww, align 2, !tbaa !71
   %i.wy = and i16 %i.wx, -257
-  %6 = sext i16 %i.wy to i64
-  %7 = getelementptr [8 x i8], ptr @switch.table.zend_ast_export_ex.2, i64 %6
-  %switch.gep3753 = getelementptr i8, ptr %7, i64 -56
-  %switch.load3754 = load ptr, ptr %switch.gep3753, align 8
-  br label %.loopexit1831
+  %switch.tableidx3751 = add nsw i16 %i.wy, -7
+  br label %.loopexit1831.sink.split
 
 bb.fq:                                            ; preds = %bb.b
   %i.wz = load ptr, ptr %0, align 8, !tbaa !117   ; 3 uses
@@ -619,8 +613,16 @@ smart_str_appendc_ex.exit1779:                    ; preds = %bb.vy, %bb.vz
   store i64 %i.cmu, ptr %i.cna, align 8, !tbaa !64
   br label %.backedge
 
-.loopexit1831:                                    ; preds = %bb.b, %switch.lookup3752, %switch.lookup
-  %.5 = phi ptr [ %switch.load3754, %switch.lookup3752 ], [ %switch.load, %switch.lookup ], [ @.str.71, %bb.b ] ; 2 uses
+.loopexit1831.sink.split:                         ; preds = %switch.lookup, %switch.lookup3752
+  %switch.tableidx3751.sink = phi i16 [ %switch.tableidx3751, %switch.lookup3752 ], [ %switch.tableidx, %switch.lookup ]
+  %switch.table.zend_ast_export_ex.2.sink = phi ptr [ @switch.table.zend_ast_export_ex.2, %switch.lookup3752 ], [ @switch.table.zend_ast_export_ex, %switch.lookup ]
+  %4 = zext nneg i16 %switch.tableidx3751.sink to i64
+  %switch.gep3753 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.zend_ast_export_ex.2.sink, i64 %4
+  %switch.load3754 = load ptr, ptr %switch.gep3753, align 8
+  br label %.loopexit1831
+
+.loopexit1831:                                    ; preds = %bb.b, %.loopexit1831.sink.split
+  %.5 = phi ptr [ %switch.load3754, %.loopexit1831.sink.split ], [ @.str.71, %bb.b ] ; 2 uses
   %i.cnb = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.5) #16 ; 3 uses
   %i.cnc = load ptr, ptr %0, align 8, !tbaa !117  ; 3 uses
   %.not.i867 = icmp eq ptr %i.cnc, null

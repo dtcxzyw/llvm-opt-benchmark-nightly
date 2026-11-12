@@ -204,19 +204,18 @@ bb.d:                                             ; preds = %bb.c
 
 switch.lookup14:                                  ; preds = %bb.d
   %.val = load i32, ptr %i.n, align 8, !tbaa !403
-  %3 = zext nneg i32 %.val to i64
-  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm23WebAssemblyRegisterInfo32getConstrainedRegClassForOperandERKNS_14MachineOperandERKNS_19MachineRegisterInfoE.5, i64 %3
-  %switch.load16 = load ptr, ptr %switch.gep15, align 8
-  br label %_ZL18getRegClassForBankRKN4llvm12RegisterBankE.exit
+  br label %switch.lookup
 
-switch.lookup:                                    ; preds = %bb.b
-  %i.o = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm23WebAssemblyRegisterInfo32getConstrainedRegClassForOperandERKNS_14MachineOperandERKNS_19MachineRegisterInfoE, i64 %i.o
+switch.lookup:                                    ; preds = %bb.b, %switch.lookup14
+  %.val.sink = phi i32 [ %.val, %switch.lookup14 ], [ %switch.tableidx, %bb.b ]
+  %switch.table._ZNK4llvm23WebAssemblyRegisterInfo32getConstrainedRegClassForOperandERKNS_14MachineOperandERKNS_19MachineRegisterInfoE.5.sink = phi ptr [ @switch.table._ZNK4llvm23WebAssemblyRegisterInfo32getConstrainedRegClassForOperandERKNS_14MachineOperandERKNS_19MachineRegisterInfoE.5, %switch.lookup14 ], [ @switch.table._ZNK4llvm23WebAssemblyRegisterInfo32getConstrainedRegClassForOperandERKNS_14MachineOperandERKNS_19MachineRegisterInfoE, %bb.b ]
+  %i.o = zext nneg i32 %.val.sink to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZNK4llvm23WebAssemblyRegisterInfo32getConstrainedRegClassForOperandERKNS_14MachineOperandERKNS_19MachineRegisterInfoE.5.sink, i64 %i.o
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %_ZL18getRegClassForBankRKN4llvm12RegisterBankE.exit
 
-_ZL18getRegClassForBankRKN4llvm12RegisterBankE.exit: ; preds = %switch.lookup14, %bb.b, %switch.lookup, %bb.c, %bb.d
-  %.1 = phi ptr [ null, %bb.b ], [ %switch.load, %switch.lookup ], [ %switch.load16, %switch.lookup14 ], [ %i.n, %bb.d ], [ null, %bb.c ]
+_ZL18getRegClassForBankRKN4llvm12RegisterBankE.exit: ; preds = %switch.lookup, %bb.b, %bb.c, %bb.d
+  %.1 = phi ptr [ null, %bb.b ], [ %i.n, %bb.d ], [ null, %bb.c ], [ %switch.load, %switch.lookup ]
   ret ptr %.1
 }
 

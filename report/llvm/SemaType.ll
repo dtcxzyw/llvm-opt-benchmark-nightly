@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
   %i.ci = trunc i64 %i.u to i16
   %switch.tableidx = add i16 %i.ci, -303          ; 2 uses
   %i.cj = icmp ult i16 %switch.tableidx, 7
-  br i1 %i.cj, label %switch.lookup, label %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit
+  br i1 %i.cj, label %switch.lookup97, label %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit
 
 bb.u:                                             ; preds = %bb.s
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -215,21 +215,17 @@ bb.u:                                             ; preds = %bb.s
   %i.cm = icmp ult i16 %switch.tableidx96, 9
   br i1 %i.cm, label %switch.lookup97, label %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit
 
-switch.lookup:                                    ; preds = %bb.t
-  %8 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZL31HandleAddressSpaceTypeAttributeRN5clang8QualTypeERKNS_10ParsedAttrERN12_GLOBAL__N_119TypeProcessingStateE, i64 %8
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit
-
-switch.lookup97:                                  ; preds = %bb.u
-  %i.cn = zext nneg i16 %switch.tableidx96 to i64
-  %switch.gep98 = getelementptr inbounds nuw i8, ptr @switch.table._ZL31HandleAddressSpaceTypeAttributeRN5clang8QualTypeERKNS_10ParsedAttrERN12_GLOBAL__N_119TypeProcessingStateE.261, i64 %i.cn
+switch.lookup97:                                  ; preds = %bb.u, %bb.t
+  %switch.tableidx96.sink = phi i16 [ %switch.tableidx, %bb.t ], [ %switch.tableidx96, %bb.u ]
+  %switch.table._ZL31HandleAddressSpaceTypeAttributeRN5clang8QualTypeERKNS_10ParsedAttrERN12_GLOBAL__N_119TypeProcessingStateE.261.sink = phi ptr [ @switch.table._ZL31HandleAddressSpaceTypeAttributeRN5clang8QualTypeERKNS_10ParsedAttrERN12_GLOBAL__N_119TypeProcessingStateE, %bb.t ], [ @switch.table._ZL31HandleAddressSpaceTypeAttributeRN5clang8QualTypeERKNS_10ParsedAttrERN12_GLOBAL__N_119TypeProcessingStateE.261, %bb.u ]
+  %i.cn = zext nneg i16 %switch.tableidx96.sink to i64
+  %switch.gep98 = getelementptr inbounds nuw i8, ptr %switch.table._ZL31HandleAddressSpaceTypeAttributeRN5clang8QualTypeERKNS_10ParsedAttrERN12_GLOBAL__N_119TypeProcessingStateE.261.sink, i64 %i.cn
   %switch.load99 = load i8, ptr %switch.gep98, align 1
+  %switch.ext100 = zext i8 %switch.load99 to i32
   br label %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit
 
-_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit:      ; preds = %bb.t, %bb.u, %switch.lookup97, %switch.lookup
-  %.shrunk = phi i8 [ %switch.load, %switch.lookup ], [ %switch.load99, %switch.lookup97 ], [ 0, %bb.u ], [ 0, %bb.t ]
-  %9 = zext i8 %.shrunk to i32
+_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit:      ; preds = %switch.lookup97, %bb.t, %bb.u
+  %8 = phi i32 [ 0, %bb.u ], [ 0, %bb.t ], [ %switch.ext100, %switch.lookup97 ]
   %i.co = getelementptr inbounds nuw i8, ptr %i.ce, i64 80
   %i.cp = load i64, ptr %i.co, align 8
   %i.cq = and i64 %i.cp, 1099511627776
@@ -245,7 +241,7 @@ bb.v:                                             ; preds = %_ZNK5clang10ParsedA
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit
-  %.069 = phi i32 [ %..i, %bb.v ], [ %9, %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit ] ; 3 uses
+  %.069 = phi i32 [ %..i, %bb.v ], [ %8, %_ZNK5clang10ParsedAttr12asSYCLLangASEv.exit ] ; 3 uses
   %i.cu = icmp ne i32 %.069, 0
   tail call void @llvm.assume(i1 %i.cu)
   %i.cv = getelementptr inbounds nuw i8, ptr %i.d, i64 8

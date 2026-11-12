@@ -204,7 +204,7 @@ bb.a:
   %switch.shifted = lshr i64 137438953485, %switch.maskindex
   %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond9 = select i1 %i.c, i1 %switch.lobit, i1 false
-  br i1 %or.cond9, label %switch.lookup, label %bb.b
+  br i1 %or.cond9, label %switch.lookup5, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 181
@@ -227,21 +227,17 @@ bb.d:                                             ; preds = %bb.c
   %i.m = icmp ult i32 %switch.tableidx4, 28
   br i1 %i.m, label %switch.lookup5, label %bb.e
 
-switch.lookup:                                    ; preds = %bb.a
-  %1 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm14RuntimeDyldELF14getMaxStubSizeEv, i64 %1
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %bb.e
-
-switch.lookup5:                                   ; preds = %bb.d
-  %i.n = zext nneg i32 %switch.tableidx4 to i64
-  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm14RuntimeDyldELF14getMaxStubSizeEv.98, i64 %i.n
+switch.lookup5:                                   ; preds = %bb.d, %bb.a
+  %switch.tableidx4.sink = phi i32 [ %switch.tableidx, %bb.a ], [ %switch.tableidx4, %bb.d ]
+  %switch.table._ZNK4llvm14RuntimeDyldELF14getMaxStubSizeEv.98.sink = phi ptr [ @switch.table._ZNK4llvm14RuntimeDyldELF14getMaxStubSizeEv, %bb.a ], [ @switch.table._ZNK4llvm14RuntimeDyldELF14getMaxStubSizeEv.98, %bb.d ]
+  %i.n = zext nneg i32 %switch.tableidx4.sink to i64
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr %switch.table._ZNK4llvm14RuntimeDyldELF14getMaxStubSizeEv.98.sink, i64 %i.n
   %switch.load7 = load i8, ptr %switch.gep6, align 1
+  %switch.ext8 = zext i8 %switch.load7 to i32
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %switch.lookup5, %switch.lookup, %bb.c, %bb.b
-  %.0.shrunk = phi i8 [ 32, %bb.c ], [ %switch.load7, %switch.lookup5 ], [ %switch.load, %switch.lookup ], [ 16, %bb.b ], [ 0, %bb.d ]
-  %.0 = zext i8 %.0.shrunk to i32
+bb.e:                                             ; preds = %switch.lookup5, %bb.d, %bb.c, %bb.b
+  %.0 = phi i32 [ 32, %bb.c ], [ 16, %bb.b ], [ 0, %bb.d ], [ %switch.ext8, %switch.lookup5 ]
   ret i32 %.0
 }
 

@@ -204,12 +204,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.av = icmp samesign ult i32 %i.au, 53
-  br i1 %i.av, label %switch.lookup, label %bb.s
+  br i1 %i.av, label %switch.lookup214, label %bb.s
 
 bb.o:                                             ; preds = %bb.m
   %switch.tableidx = add nsw i32 %i.au, -16       ; 2 uses
   %i.aw = icmp ult i32 %switch.tableidx, 43
-  br i1 %i.aw, label %switch.lookup206, label %bb.s
+  br i1 %i.aw, label %switch.lookup214, label %bb.s
 
 bb.p:                                             ; preds = %bb.l
   %switch.tableidx213 = add nsw i32 %i.au, -16    ; 4 uses
@@ -217,38 +217,22 @@ bb.p:                                             ; preds = %bb.l
 
 bb.q:                                             ; preds = %bb.p
   %i.ax = icmp ult i32 %switch.tableidx213, 7
-  br i1 %i.ax, label %switch.lookup210, label %bb.s
+  br i1 %i.ax, label %switch.lookup214, label %bb.s
 
 bb.r:                                             ; preds = %bb.p
   %i.ay = icmp ult i32 %switch.tableidx213, 16
   br i1 %i.ay, label %switch.lookup214, label %bb.s
 
-switch.lookup:                                    ; preds = %bb.n
-  %7 = zext nneg i32 %i.au to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.be_chan_type, i64 %7
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %bb.s
-
-switch.lookup206:                                 ; preds = %bb.o
-  %8 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep207 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.be_chan_type.1, i64 %8
-  %switch.load208 = load ptr, ptr %switch.gep207, align 8
-  br label %bb.s
-
-switch.lookup210:                                 ; preds = %bb.q
-  %9 = zext nneg i32 %switch.tableidx213 to i64
-  %switch.gep211 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.be_chan_type.2, i64 %9
-  %switch.load212 = load ptr, ptr %switch.gep211, align 8
-  br label %bb.s
-
-switch.lookup214:                                 ; preds = %bb.r
-  %i.az = zext nneg i32 %switch.tableidx213 to i64
-  %switch.gep215 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.be_chan_type.3, i64 %i.az
+switch.lookup214:                                 ; preds = %bb.r, %bb.q, %bb.o, %bb.n
+  %switch.tableidx213.sink = phi i32 [ %switch.tableidx213, %bb.q ], [ %switch.tableidx, %bb.o ], [ %i.au, %bb.n ], [ %switch.tableidx213, %bb.r ]
+  %switch.table.be_chan_type.3.sink = phi ptr [ @switch.table.be_chan_type.2, %bb.q ], [ @switch.table.be_chan_type.1, %bb.o ], [ @switch.table.be_chan_type, %bb.n ], [ @switch.table.be_chan_type.3, %bb.r ]
+  %i.az = zext nneg i32 %switch.tableidx213.sink to i64
+  %switch.gep215 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.be_chan_type.3.sink, i64 %i.az
   %switch.load216 = load ptr, ptr %switch.gep215, align 8
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.n, %bb.o, %bb.q, %bb.r, %switch.lookup214, %switch.lookup210, %switch.lookup206, %switch.lookup
-  %.0 = phi ptr [ %switch.load216, %switch.lookup214 ], [ %switch.load208, %switch.lookup206 ], [ %switch.load, %switch.lookup ], [ %switch.load212, %switch.lookup210 ], [ @.str.28, %bb.r ], [ @.str.28, %bb.q ], [ @.str.28, %bb.o ], [ @.str.28, %bb.n ]
+bb.s:                                             ; preds = %switch.lookup214, %bb.n, %bb.o, %bb.q, %bb.r
+  %.0 = phi ptr [ @.str.28, %bb.r ], [ @.str.28, %bb.q ], [ @.str.28, %bb.o ], [ @.str.28, %bb.n ], [ %switch.load216, %switch.lookup214 ]
   %i.ba = load i32, ptr @hf_gsm_a_bssmap_rate, align 4
   %i.bb = and i8 %i.an, 63
   %i.bc = zext nneg i8 %i.bb to i32

@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.am, %bb.an
   %switch.shifted = lshr i16 291, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond408 = select i1 %i.fy, i1 %switch.lobit, i1 false
-  br i1 %or.cond408, label %switch.lookup, label %_ZNK8QCPCurve11mayTraverseEii.exit.thread298
+  br i1 %or.cond408, label %switch.lookup401, label %_ZNK8QCPCurve11mayTraverseEii.exit.thread298
 
 .split301:                                        ; preds = %bb.am, %bb.an
   %.0.i161362 = phi i32 [ %.0.i161.jt1, %bb.am ], [ %.0.i161.jt4, %bb.an ] ; 4 uses
@@ -221,7 +221,7 @@ bb.ax:                                            ; preds = %bb.am, %bb.an
   %switch.shifted393 = lshr i16 393, %switch.maskindex392
   %switch.lobit394 = trunc i16 %switch.shifted393 to i1
   %or.cond409 = select i1 %i.fz, i1 %switch.lobit394, i1 false
-  br i1 %or.cond409, label %switch.lookup391, label %_ZNK8QCPCurve11mayTraverseEii.exit.thread298
+  br i1 %or.cond409, label %switch.lookup401, label %_ZNK8QCPCurve11mayTraverseEii.exit.thread298
 
 .split300:                                        ; preds = %bb.am, %bb.an
   %.0.i161364 = phi i32 [ %.0.i161.jt1, %bb.am ], [ %.0.i161.jt4, %bb.an ] ; 3 uses
@@ -458,29 +458,17 @@ _ZN5QListI7QPointFED2Ev.exit217:                  ; preds = %_ZN5QListI7QPointFE
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #49
   br label %bb.bp
 
-switch.lookup:                                    ; preds = %bb.aw
-  %22 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged, i64 %22
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
-  br label %_ZNK8QCPCurve11mayTraverseEii.exit.thread
-
-switch.lookup391:                                 ; preds = %bb.ax
-  %23 = zext nneg i32 %switch.tableidx388 to i64
-  %switch.gep395 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged.5, i64 %23
-  %switch.load396 = load i8, ptr %switch.gep395, align 1
-  %switch.ext397 = zext i8 %switch.load396 to i32
-  br label %_ZNK8QCPCurve11mayTraverseEii.exit.thread
-
-switch.lookup401:                                 ; preds = %bb.ay
-  %i.hz = zext nneg i32 %switch.tableidx398 to i64
-  %switch.gep405 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged.6, i64 %i.hz
+switch.lookup401:                                 ; preds = %bb.ay, %bb.ax, %bb.aw
+  %switch.tableidx398.sink = phi i32 [ %switch.tableidx388, %bb.ax ], [ %switch.tableidx, %bb.aw ], [ %switch.tableidx398, %bb.ay ]
+  %switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged.6.sink = phi ptr [ @switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged.5, %bb.ax ], [ @switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged, %bb.aw ], [ @switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged.6, %bb.ay ]
+  %i.hz = zext nneg i32 %switch.tableidx398.sink to i64
+  %switch.gep405 = getelementptr inbounds nuw i8, ptr %switch.table._ZNK8QCPCurve13getCurveLinesEP5QListI7QPointFERK12QCPDataRanged.6.sink, i64 %i.hz
   %switch.load406 = load i8, ptr %switch.gep405, align 1
   %switch.ext407 = zext i8 %switch.load406 to i32
   br label %_ZNK8QCPCurve11mayTraverseEii.exit.thread
 
-_ZNK8QCPCurve11mayTraverseEii.exit.thread:        ; preds = %switch.lookup401, %switch.lookup391, %switch.lookup, %bb.an, %_ZNK8QCPCurve11mayTraverseEii.exit, %_ZNK8QCPCurve11mayTraverseEii.exit, %.split301, %.split301, %.split300, %.split, %bb.az
-  %.0.i161365 = phi i32 [ %.0.i161366, %bb.az ], [ %.0.i161360, %_ZNK8QCPCurve11mayTraverseEii.exit ], [ %.0.i161360, %_ZNK8QCPCurve11mayTraverseEii.exit ], [ %.0.i161362, %.split301 ], [ %.0.i161362, %.split301 ], [ %switch.ext, %switch.lookup ], [ %switch.ext407, %switch.lookup401 ], [ %switch.ext397, %switch.lookup391 ], [ %.0.i161364, %.split300 ], [ %.0.i161.jt4, %bb.an ], [ %.0.i161358, %.split ] ; 2 uses
+_ZNK8QCPCurve11mayTraverseEii.exit.thread:        ; preds = %switch.lookup401, %bb.an, %_ZNK8QCPCurve11mayTraverseEii.exit, %_ZNK8QCPCurve11mayTraverseEii.exit, %.split301, %.split301, %.split300, %.split, %bb.az
+  %.0.i161365 = phi i32 [ %.0.i161366, %bb.az ], [ %.0.i161360, %_ZNK8QCPCurve11mayTraverseEii.exit ], [ %.0.i161360, %_ZNK8QCPCurve11mayTraverseEii.exit ], [ %.0.i161362, %.split301 ], [ %.0.i161362, %.split301 ], [ %.0.i161364, %.split300 ], [ %.0.i161.jt4, %bb.an ], [ %.0.i161358, %.split ], [ %switch.ext407, %switch.lookup401 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #49
   %i.ia = getelementptr i8, ptr %.sroa.0.0307, i64 8
   %i.ib = load double, ptr %i.ia, align 8

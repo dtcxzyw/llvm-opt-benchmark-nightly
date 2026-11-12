@@ -205,18 +205,16 @@ _RNvXs_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB4_6WorkIdNtNtCsgdm2QMcbaeA_10fon
   %i.a = load i64, ptr %0, align 8, !range !14, !noundef !5
   %i.b = trunc nuw i64 %i.a to i1                 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val = load i64, ptr %i.c, align 8, !range !19, !noundef !5 ; 4 uses
-  %switch.gep5 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.255, i64 %.val
-  %switch.gep8 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.256, i64 %.val
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant, i64 %.val
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.254, i64 %.val
-  %.sroa.15.0.in.in = select i1 %i.b, ptr %switch.gep, ptr %switch.gep5
-  %.sroa.0.0.in = select i1 %i.b, ptr %switch.gep2, ptr %switch.gep8
-  %.sroa.0.0 = load ptr, ptr %.sroa.0.0.in, align 8
-  %.sroa.15.0.in = load i8, ptr %.sroa.15.0.in.in, align 1
-  %.sroa.15.0 = zext i8 %.sroa.15.0.in to i64
+  %.val = load i64, ptr %i.c, align 8, !range !19, !noundef !5 ; 2 uses
+  %switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.255 = select i1 %i.b, ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant, ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.255
+  %switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.254.switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.256 = select i1 %i.b, ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.254, ptr @switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.256
+  %switch.gep = getelementptr inbounds nuw i8, ptr %switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.255, i64 %.val
+  %switch.load6 = load i8, ptr %switch.gep, align 1
+  %switch.ext7 = zext i8 %switch.load6 to i64
+  %switch.gep8 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.254.switch.table._RNvXs0_NtCshxhuDJfZv4T_6fontbe13orchestrationNtB5_9AnyWorkIdNtNtCsgdm2QMcbaeA_10fontdrasil13orchestration10Identifier12discriminant.256, i64 %.val
+  %.sroa.0.0 = load ptr, ptr %switch.gep8, align 8
   %i.d = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
-  %i.e = insertvalue { ptr, i64 } %i.d, i64 %.sroa.15.0, 1
+  %i.e = insertvalue { ptr, i64 } %i.d, i64 %switch.ext7, 1
   ret { ptr, i64 } %i.e
 }
 

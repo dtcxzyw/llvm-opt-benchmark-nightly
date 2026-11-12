@@ -202,31 +202,26 @@ bb.a:
   %i.b = and i32 %i.a, 7168
   %i.c = icmp eq i32 %i.b, 0
   %i.d = lshr i32 %i.a, 6
-  %i.e = and i32 %i.d, 15                         ; 4 uses
+  %i.e = and i32 %i.d, 15                         ; 3 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.f = icmp samesign ult i32 %i.e, 8
-  br i1 %i.f, label %switch.lookup, label %bb.d
+  br i1 %i.f, label %switch.lookup3, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.g = icmp samesign ult i32 %i.e, 9
   br i1 %i.g, label %switch.lookup3, label %bb.d
 
-switch.lookup:                                    ; preds = %bb.b
-  %1 = zext nneg i32 %i.e to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ttl_create_interface, i64 %1
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %bb.d
-
-switch.lookup3:                                   ; preds = %bb.c
+switch.lookup3:                                   ; preds = %bb.c, %bb.b
+  %switch.table.ttl_get_device_name.16.sink = phi ptr [ @switch.table.ttl_create_interface, %bb.b ], [ @switch.table.ttl_create_interface.29, %bb.c ]
   %i.h = zext nneg i32 %i.e to i64
-  %switch.gep4 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ttl_create_interface.29, i64 %i.h
+  %switch.gep4 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.ttl_get_device_name.16.sink, i64 %i.h
   %switch.load5 = load ptr, ptr %switch.gep4, align 8
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %switch.lookup3, %switch.lookup
-  %.0 = phi ptr [ %switch.load5, %switch.lookup3 ], [ %switch.load, %switch.lookup ], [ @.str.8, %bb.c ], [ @.str.8, %bb.b ]
+bb.d:                                             ; preds = %switch.lookup3, %bb.b, %bb.c
+  %.0 = phi ptr [ @.str.8, %bb.c ], [ @.str.8, %bb.b ], [ %switch.load5, %switch.lookup3 ]
   ret ptr %.0
 }
 
@@ -629,31 +624,26 @@ bb.c:                                             ; preds = %bb.a
   %i.k = and i32 %i.j, 7168
   %i.l = icmp eq i32 %i.k, 0
   %i.m = lshr i32 %i.j, 6
-  %i.n = and i32 %i.m, 15                         ; 4 uses
+  %i.n = and i32 %i.m, 15                         ; 3 uses
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.o = icmp samesign ult i32 %i.n, 8
-  br i1 %i.o, label %switch.lookup, label %ttl_get_device_name.exit.i
+  br i1 %i.o, label %switch.lookup1, label %ttl_get_device_name.exit.i
 
 bb.e:                                             ; preds = %bb.c
   %i.p = icmp samesign ult i32 %i.n, 9
   br i1 %i.p, label %switch.lookup1, label %ttl_get_device_name.exit.i
 
-switch.lookup:                                    ; preds = %bb.d
-  %4 = zext nneg i32 %i.n to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ttl_create_interface, i64 %4
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %ttl_get_device_name.exit.i
-
-switch.lookup1:                                   ; preds = %bb.e
+switch.lookup1:                                   ; preds = %bb.e, %bb.d
+  %switch.table.ttl_create_interface.29.sink = phi ptr [ @switch.table.ttl_create_interface, %bb.d ], [ @switch.table.ttl_create_interface.29, %bb.e ]
   %i.q = zext nneg i32 %i.n to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ttl_create_interface.29, i64 %i.q
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.ttl_create_interface.29.sink, i64 %i.q
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   br label %ttl_get_device_name.exit.i
 
-ttl_get_device_name.exit.i:                       ; preds = %bb.d, %bb.e, %switch.lookup1, %switch.lookup
-  %.0.i.i = phi ptr [ %switch.load3, %switch.lookup1 ], [ %switch.load, %switch.lookup ], [ @.str.8, %bb.e ], [ @.str.8, %bb.d ]
+ttl_get_device_name.exit.i:                       ; preds = %switch.lookup1, %bb.d, %bb.e
+  %.0.i.i = phi ptr [ @.str.8, %bb.e ], [ @.str.8, %bb.d ], [ %switch.load3, %switch.lookup1 ]
   %i.r = tail call ptr @ttl_get_function_name(i16 noundef zeroext %2)
   %i.s = tail call i32 (ptr, i32, ptr, ...) @wtap_block_add_string_option_format(ptr noundef %i.a, i32 noundef 2, ptr noundef @.str.202, ptr noundef %i.i, ptr noundef nonnull %.0.i.i, ptr noundef nonnull %i.r) ; 0 uses
   br label %ttl_add_interface_name.exit

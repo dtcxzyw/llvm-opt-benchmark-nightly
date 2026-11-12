@@ -205,11 +205,10 @@ bb.g:                                             ; preds = %_ZN12_GLOBAL__N_112
   %i.cb = and i32 %i.ca, %i.bx
   %.not.i959 = icmp eq i32 %i.cb, 0
   %i.cc = load i32, ptr %i.at, align 4, !tbaa !377
-  %96 = zext nneg i32 %i.cc to i64                ; 2 uses
-  %switch.gep1534 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.379, i64 %96
-  %switch.gep1531 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.378, i64 %96
-  %.0.i961.in = select i1 %.not.i959, ptr %switch.gep1534, ptr %switch.gep1531
-  %.0.i961 = load ptr, ptr %.0.i961.in, align 8   ; 2 uses
+  %switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.379.switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.378 = select i1 %.not.i959, ptr @switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.379, ptr @switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.378
+  %96 = zext nneg i32 %i.cc to i64
+  %switch.gep1531 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.379.switch.table._ZN12_GLOBAL__N_112ARMAsmParser19validateInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEEj.378, i64 %96
+  %.0.i961 = load ptr, ptr %switch.gep1531, align 8 ; 2 uses
   %i.cd = load i8, ptr %.0.i961, align 1, !tbaa !60
   %.not.i963 = icmp eq i8 %i.cd, 0
   br i1 %.not.i963, label %_ZN4llvmplERKNS_5TwineES2_.exit978, label %_ZN4llvmplERKNS_5TwineES2_.exit978.thread

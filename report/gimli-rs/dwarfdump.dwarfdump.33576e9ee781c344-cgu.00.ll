@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.u = load i64, ptr %2, align 8, !range !38, !noundef !7
   %switch = icmp samesign ult i64 %i.u, 9
-  br i1 %switch, label %switch.lookup107, label %bb.c
+  br i1 %switch, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.v = icmp samesign ult i8 %1, 22
@@ -219,43 +219,26 @@ switch.hole_check:                                ; preds = %bb.a
   %switch.maskindex = zext nneg i8 %1 to i32
   %switch.shifted = lshr i32 32568841, %switch.maskindex
   %switch.lobit = trunc i32 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %.thread
-
-switch.lookup:                                    ; preds = %switch.hole_check
-  %7 = zext nneg i8 %1 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_, i64 %7
-  %8 = zext nneg i8 %1 to i64
-  %switch.gep94 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_.68, i64 %8
-  br label %bb.d
+  br i1 %switch.lobit, label %bb.d, label %.thread
 
 switch.hole_check97:                              ; preds = %bb.c
   %switch.maskindex99 = zext nneg i8 %1 to i32
   %switch.shifted100 = lshr i32 3036693, %switch.maskindex99
   %switch.lobit101 = trunc i32 %switch.shifted100 to i1
-  br i1 %switch.lobit101, label %switch.lookup98, label %.thread
+  br i1 %switch.lobit101, label %bb.d, label %.thread
 
-switch.lookup98:                                  ; preds = %switch.hole_check97
-  %9 = zext nneg i8 %1 to i64
-  %switch.gep102 = getelementptr inbounds nuw i8, ptr @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_.69, i64 %9
-  %10 = zext nneg i8 %1 to i64
-  %switch.gep105 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_.70, i64 %10
-  br label %bb.d
-
-switch.lookup107:                                 ; preds = %bb.b
-  %11 = zext nneg i8 %1 to i64
-  %switch.gep108 = getelementptr inbounds nuw i8, ptr @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump9dump_unitINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtBF_12endian_slice11EndianSliceNtNtBH_9endianity13RunTimeEndianERNtB2_13RelocationMapEINtNtCsexYYUdYSQU6_5alloc3vec3VechEEB2_, i64 %11
-  %12 = zext nneg i8 %1 to i64
-  %switch.gep111 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump9dump_unitINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtBF_12endian_slice11EndianSliceNtNtBH_9endianity13RunTimeEndianERNtB2_13RelocationMapEINtNtCsexYYUdYSQU6_5alloc3vec3VechEEB2_.74, i64 %12
-  br label %bb.d
-
-bb.d:                                             ; preds = %switch.lookup107, %switch.lookup98, %switch.lookup
-  %.sroa.6.0.in.in = phi ptr [ %switch.gep102, %switch.lookup98 ], [ %switch.gep, %switch.lookup ], [ %switch.gep108, %switch.lookup107 ]
-  %.sroa.0.0.in = phi ptr [ %switch.gep105, %switch.lookup98 ], [ %switch.gep94, %switch.lookup ], [ %switch.gep111, %switch.lookup107 ]
-  %.sroa.0.0 = load ptr, ptr %.sroa.0.0.in, align 8
-  %.sroa.6.0.in = load i8, ptr %.sroa.6.0.in.in, align 1
-  %.sroa.6.0 = zext i8 %.sroa.6.0.in to i64
+bb.d:                                             ; preds = %bb.b, %switch.hole_check97, %switch.hole_check
+  %.sroa.6.0.in.in = phi ptr [ @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_.69, %switch.hole_check97 ], [ @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_, %switch.hole_check ], [ @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump9dump_unitINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtBF_12endian_slice11EndianSliceNtNtBH_9endianity13RunTimeEndianERNtB2_13RelocationMapEINtNtCsexYYUdYSQU6_5alloc3vec3VechEEB2_, %bb.b ]
+  %.sroa.0.0.in = phi ptr [ @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_.70, %switch.hole_check97 ], [ @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump17load_file_sectionNtNtCsi68uqYEhoRA_5gimli9endianity13RunTimeEndianEB2_.68, %switch.hole_check ], [ @switch.table._RINvCs4phXRVW1pDQ_9dwarfdump9dump_unitINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtBF_12endian_slice11EndianSliceNtNtBH_9endianity13RunTimeEndianERNtB2_13RelocationMapEINtNtCsexYYUdYSQU6_5alloc3vec3VechEEB2_.74, %bb.b ]
+  %7 = zext nneg i8 %1 to i64
+  %switch.gep108 = getelementptr inbounds nuw i8, ptr %.sroa.6.0.in.in, i64 %7
+  %.sroa.6.0.in = load i8, ptr %switch.gep108, align 1
+  %switch.ext110 = zext i8 %.sroa.6.0.in to i64
+  %.sroa.6.0 = zext nneg i8 %1 to i64
+  %switch.gep111 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.in, i64 %.sroa.6.0
+  %switch.load112 = load ptr, ptr %switch.gep111, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
-  invoke void @_RNvXs0_NtNtCs9Jn0q30Ea0B_6object4read3anyNtB5_4FileNtNtB7_6traits6Object21section_by_name_bytesCs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.p, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(304) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0, i64 noundef %.sroa.6.0)
+  invoke void @_RNvXs0_NtNtCs9Jn0q30Ea0B_6object4read3anyNtB5_4FileNtNtB7_6traits6Object21section_by_name_bytesCs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.p, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(304) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load112, i64 noundef %switch.ext110)
           to label %bb.e unwind label %.body.thread72.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .thread:                                          ; preds = %switch.hole_check97, %bb.c, %switch.hole_check

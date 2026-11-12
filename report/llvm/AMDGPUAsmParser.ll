@@ -206,7 +206,7 @@ bb.e:                                             ; preds = %bb.d
   %switch.shifted = lshr i32 -2147446785, %switch.tableidx
   %switch.lobit = trunc i32 %switch.shifted to i1
   %or.cond = select i1 %i.q, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %switch.lookup, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
+  br i1 %or.cond, label %bb.i, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
 
 bb.f:                                             ; preds = %bb.d
   %i.r = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %4)
@@ -217,7 +217,7 @@ bb.f:                                             ; preds = %bb.d
   %i.t = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %4, i1 true)
   %switch.tableidx49 = add nsw i32 %i.t, -5       ; 2 uses
   %i.u = icmp ult i32 %switch.tableidx49, 5
-  br i1 %i.u, label %switch.lookup50, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
+  br i1 %i.u, label %bb.i, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
 
 bb.g:                                             ; preds = %bb.d
   %i.v = tail call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 27)
@@ -227,7 +227,7 @@ bb.g:                                             ; preds = %bb.d
   %switch.shifted58 = lshr i16 -28673, %switch.maskindex
   %switch.lobit59 = trunc i16 %switch.shifted58 to i1
   %or.cond72 = select i1 %i.w, i1 %switch.lobit59, i1 false
-  br i1 %or.cond72, label %switch.lookup57, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
+  br i1 %or.cond72, label %bb.i, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
 
 bb.h:                                             ; preds = %bb.d
   %i.x = tail call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 27)
@@ -236,7 +236,7 @@ bb.h:                                             ; preds = %bb.d
   %switch.shifted67 = lshr i32 -2147446785, %switch.tableidx63
   %switch.lobit68 = trunc i32 %switch.shifted67 to i1
   %or.cond73 = select i1 %i.y, i1 %switch.lobit68, i1 false
-  br i1 %or.cond73, label %switch.lookup66, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
+  br i1 %or.cond73, label %bb.i, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit
 
 _ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit: ; preds = %bb.h, %bb.g, %.split.i, %bb.e, %bb.f, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
@@ -251,29 +251,12 @@ _ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit: ; preds = %bb.h, %bb.g, %.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
   br label %bb.r
 
-switch.lookup:                                    ; preds = %bb.e
-  %10 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE, i64 %10
-  br label %bb.i
-
-switch.lookup50:                                  ; preds = %.split.i
-  %11 = zext nneg i32 %switch.tableidx49 to i64
-  %switch.gep51 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE.799, i64 %11
-  br label %bb.i
-
-switch.lookup57:                                  ; preds = %bb.g
-  %12 = zext nneg i32 %switch.tableidx54 to i64
-  %switch.gep60 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE.800, i64 %12
-  br label %bb.i
-
-switch.lookup66:                                  ; preds = %bb.h
-  %13 = zext nneg i32 %switch.tableidx63 to i64
-  %switch.gep69 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE.801, i64 %13
-  br label %bb.i
-
-bb.i:                                             ; preds = %switch.lookup66, %switch.lookup57, %switch.lookup50, %switch.lookup
-  %switch.load70.sink.in = phi ptr [ %switch.gep69, %switch.lookup66 ], [ %switch.gep60, %switch.lookup57 ], [ %switch.gep51, %switch.lookup50 ], [ %switch.gep, %switch.lookup ]
-  %switch.load70.sink = load i16, ptr %switch.load70.sink.in, align 2
+bb.i:                                             ; preds = %bb.h, %bb.g, %.split.i, %bb.e
+  %switch.tableidx63.sink = phi i32 [ %switch.tableidx54, %bb.g ], [ %switch.tableidx49, %.split.i ], [ %switch.tableidx, %bb.e ], [ %switch.tableidx63, %bb.h ]
+  %switch.load70.sink.in = phi ptr [ @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE.800, %bb.g ], [ @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE.799, %.split.i ], [ @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE, %bb.e ], [ @switch.table._ZN12_GLOBAL__N_115AMDGPUAsmParser13getRegularRegENS_12RegisterKindEjjjN4llvm5SMLocE.801, %bb.h ]
+  %10 = zext nneg i32 %switch.tableidx63.sink to i64
+  %switch.gep69 = getelementptr inbounds nuw [2 x i8], ptr %switch.load70.sink.in, i64 %10
+  %switch.load70.sink = load i16, ptr %switch.gep69, align 2
   %switch.ext71 = zext i16 %switch.load70.sink to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val = load ptr, ptr %i.ae, align 8, !tbaa !75 ; 2 uses

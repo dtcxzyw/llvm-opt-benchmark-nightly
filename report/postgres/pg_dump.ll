@@ -204,22 +204,18 @@ switch.hole_check:                                ; preds = %bb.vq
   %switch.maskindex = zext nneg i8 %switch.tableidx1267 to i64
   %switch.shifted1270 = lshr i64 2251937252786185, %switch.maskindex
   %switch.lobit1271 = trunc i64 %switch.shifted1270 to i1
-  br i1 %switch.lobit1271, label %switch.lookup1269, label %.sink.split74.i
+  br i1 %switch.lobit1271, label %switch.lookup1275, label %.sink.split74.i
 
-switch.lookup1269:                                ; preds = %switch.hole_check
-  %56 = zext nneg i8 %switch.tableidx1267 to i64
-  %switch.gep1272 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.main.16, i64 %56
-  %switch.load1273 = load ptr, ptr %switch.gep1272, align 8
-  br label %.sink.split74.sink.split.i
-
-switch.lookup1275:                                ; preds = %bb.vs
-  %i.dlg = zext nneg i8 %switch.tableidx1274 to i64
-  %switch.gep1276 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.main.17, i64 %i.dlg
+switch.lookup1275:                                ; preds = %bb.vs, %switch.hole_check
+  %switch.tableidx1274.sink = phi i8 [ %switch.tableidx1267, %switch.hole_check ], [ %switch.tableidx1274, %bb.vs ]
+  %switch.table.main.17.sink = phi ptr [ @switch.table.main.16, %switch.hole_check ], [ @switch.table.main.17, %bb.vs ]
+  %i.dlg = zext nneg i8 %switch.tableidx1274.sink to i64
+  %switch.gep1276 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.main.17.sink, i64 %i.dlg
   %switch.load1277 = load ptr, ptr %switch.gep1276, align 8
   br label %.sink.split74.sink.split.i
 
-.sink.split74.sink.split.i:                       ; preds = %bb.vs, %switch.lookup1275, %switch.lookup1269
-  %.str.1514.sink.sink.i = phi ptr [ %switch.load1273, %switch.lookup1269 ], [ %switch.load1277, %switch.lookup1275 ], [ @.str.1512, %bb.vs ]
+.sink.split74.sink.split.i:                       ; preds = %switch.lookup1275, %bb.vs
+  %.str.1514.sink.sink.i = phi ptr [ @.str.1512, %bb.vs ], [ %switch.load1277, %switch.lookup1275 ]
   call void @appendPQExpBufferStr(ptr noundef %i.djj, ptr noundef nonnull %.str.1514.sink.sink.i) #11
   br label %.sink.split74.i
 

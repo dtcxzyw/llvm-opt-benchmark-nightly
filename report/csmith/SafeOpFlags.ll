@@ -196,27 +196,22 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = icmp ult i32 %1, 5
-  br i1 %i.a, label %switch.lookup, label %bb.d
+  br i1 %i.a, label %switch.lookup4, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.b = icmp ult i32 %1, 4
   br i1 %i.b, label %switch.lookup4, label %bb.d
 
-switch.lookup:                                    ; preds = %bb.b
-  %2 = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11SafeOpFlags12get_rhs_typeEv, i64 %2
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %bb.d
-
-switch.lookup4:                                   ; preds = %bb.c
+switch.lookup4:                                   ; preds = %bb.c, %bb.b
+  %switch.table._ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.1.sink = phi ptr [ @switch.table._ZN11SafeOpFlags12get_rhs_typeEv, %bb.b ], [ @switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3, %bb.c ]
   %i.c = zext nneg i32 %1 to i64
-  %switch.gep5 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3, i64 %i.c
+  %switch.gep5 = getelementptr inbounds nuw i8, ptr %switch.table._ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.1.sink, i64 %i.c
   %switch.load6 = load i8, ptr %switch.gep5, align 1
+  %switch.ext7 = zext i8 %switch.load6 to i32
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %switch.lookup4, %switch.lookup
-  %.0.shrunk = phi i8 [ %switch.load6, %switch.lookup4 ], [ %switch.load, %switch.lookup ], [ 2, %bb.c ], [ 2, %bb.b ]
-  %.0 = zext i8 %.0.shrunk to i32
+bb.d:                                             ; preds = %switch.lookup4, %bb.b, %bb.c
+  %.0 = phi i32 [ 2, %bb.c ], [ 2, %bb.b ], [ %switch.ext7, %switch.lookup4 ]
   ret i32 %.0
 }
 
@@ -226,32 +221,27 @@ bb.a:
   %i.a = load i8, ptr %0, align 4, !tbaa !25, !range !29, !noundef !30
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !28   ; 4 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !28   ; 3 uses
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp ult i32 %i.d, 5
-  br i1 %i.e, label %switch.lookup, label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
+  br i1 %i.e, label %switch.lookup2, label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.f = icmp ult i32 %i.d, 4
   br i1 %i.f, label %switch.lookup2, label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
 
-switch.lookup:                                    ; preds = %bb.b
-  %1 = zext nneg i32 %i.d to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11SafeOpFlags12get_rhs_typeEv, i64 %1
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
-
-switch.lookup2:                                   ; preds = %bb.c
+switch.lookup2:                                   ; preds = %bb.c, %bb.b
+  %switch.table._ZN11SafeOpFlags12get_lhs_typeEv.2.sink = phi ptr [ @switch.table._ZN11SafeOpFlags12get_rhs_typeEv, %bb.b ], [ @switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3, %bb.c ]
   %i.g = zext nneg i32 %i.d to i64
-  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3, i64 %i.g
+  %switch.gep3 = getelementptr inbounds nuw i8, ptr %switch.table._ZN11SafeOpFlags12get_lhs_typeEv.2.sink, i64 %i.g
   %switch.load4 = load i8, ptr %switch.gep3, align 1
+  %switch.ext5 = zext i8 %switch.load4 to i32
   br label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
 
-_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit: ; preds = %bb.b, %bb.c, %switch.lookup2, %switch.lookup
-  %.0.i.shrunk = phi i8 [ %switch.load4, %switch.lookup2 ], [ %switch.load, %switch.lookup ], [ 2, %bb.c ], [ 2, %bb.b ]
-  %.0.i = zext i8 %.0.i.shrunk to i32
+_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit: ; preds = %switch.lookup2, %bb.b, %bb.c
+  %.0.i = phi i32 [ 2, %bb.c ], [ 2, %bb.b ], [ %switch.ext5, %switch.lookup2 ]
   %i.h = tail call noundef nonnull align 8 dereferenceable(136) ptr @_ZN4Type15get_simple_typeE11eSimpleType(i32 noundef %.0.i)
   ret ptr %i.h
 }
@@ -271,32 +261,27 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 1, !tbaa !26, !range !29, !noundef !30
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !28   ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !28   ; 3 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.f = icmp ult i32 %i.e, 5
-  br i1 %i.f, label %switch.lookup, label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
+  br i1 %i.f, label %switch.lookup2, label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.g = icmp ult i32 %i.e, 4
   br i1 %i.g, label %switch.lookup2, label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
 
-switch.lookup:                                    ; preds = %bb.b
-  %1 = zext nneg i32 %i.e to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11SafeOpFlags12get_rhs_typeEv, i64 %1
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
-
-switch.lookup2:                                   ; preds = %bb.c
+switch.lookup2:                                   ; preds = %bb.c, %bb.b
+  %switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3.sink = phi ptr [ @switch.table._ZN11SafeOpFlags12get_rhs_typeEv, %bb.b ], [ @switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3, %bb.c ]
   %i.h = zext nneg i32 %i.e to i64
-  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3, i64 %i.h
+  %switch.gep3 = getelementptr inbounds nuw i8, ptr %switch.table._ZN11SafeOpFlags12get_rhs_typeEv.3.sink, i64 %i.h
   %switch.load4 = load i8, ptr %switch.gep3, align 1
+  %switch.ext5 = zext i8 %switch.load4 to i32
   br label %_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit
 
-_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit: ; preds = %bb.b, %bb.c, %switch.lookup2, %switch.lookup
-  %.0.i.shrunk = phi i8 [ %switch.load4, %switch.lookup2 ], [ %switch.load, %switch.lookup ], [ 2, %bb.c ], [ 2, %bb.b ]
-  %.0.i = zext i8 %.0.i.shrunk to i32
+_ZN11SafeOpFlags13flags_to_typeEb10SafeOpSize.exit: ; preds = %switch.lookup2, %bb.b, %bb.c
+  %.0.i = phi i32 [ 2, %bb.c ], [ 2, %bb.b ], [ %switch.ext5, %switch.lookup2 ]
   %i.i = tail call noundef nonnull align 8 dereferenceable(136) ptr @_ZN4Type15get_simple_typeE11eSimpleType(i32 noundef %.0.i)
   ret ptr %i.i
 }

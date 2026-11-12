@@ -204,12 +204,12 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.j = icmp samesign ult i8 %i.h, 4
-  br i1 %i.j, label %switch.lookup, label %bb.g
+  br i1 %i.j, label %switch.lookup31, label %bb.g
 
 bb.e:                                             ; preds = %bb.c
   %switch.tableidx = add nsw i8 %i.h, -4          ; 2 uses
   %i.k = icmp ult i8 %switch.tableidx, 28
-  br i1 %i.k, label %switch.lookup27, label %bb.g
+  br i1 %i.k, label %switch.lookup31, label %bb.g
 
 bb.f:                                             ; preds = %bb.c
   %switch.tableidx30 = add nsw i8 %i.h, -4        ; 2 uses
@@ -219,26 +219,16 @@ bb.f:                                             ; preds = %bb.c
 default.unreachable26:                            ; preds = %bb.c
   unreachable
 
-switch.lookup:                                    ; preds = %bb.d
-  %6 = zext nneg i8 %i.h to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.tele_param_msg_status, i64 %6
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %bb.g
-
-switch.lookup27:                                  ; preds = %bb.e
-  %7 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep28 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.tele_param_msg_status.3, i64 %7
-  %switch.load29 = load ptr, ptr %switch.gep28, align 8
-  br label %bb.g
-
-switch.lookup31:                                  ; preds = %bb.f
-  %i.m = zext nneg i8 %switch.tableidx30 to i64
-  %switch.gep32 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.tele_param_msg_status.4, i64 %i.m
+switch.lookup31:                                  ; preds = %bb.f, %bb.e, %bb.d
+  %switch.tableidx30.sink = phi i8 [ %switch.tableidx, %bb.e ], [ %i.h, %bb.d ], [ %switch.tableidx30, %bb.f ]
+  %switch.table.tele_param_msg_status.4.sink = phi ptr [ @switch.table.tele_param_msg_status.3, %bb.e ], [ @switch.table.tele_param_msg_status, %bb.d ], [ @switch.table.tele_param_msg_status.4, %bb.f ]
+  %i.m = zext nneg i8 %switch.tableidx30.sink to i64
+  %switch.gep32 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.tele_param_msg_status.4.sink, i64 %i.m
   %switch.load33 = load ptr, ptr %switch.gep32, align 8
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f, %switch.lookup31, %switch.lookup27, %switch.lookup, %bb.c
-  %.0 = phi ptr [ @.str.43, %bb.c ], [ %switch.load33, %switch.lookup31 ], [ %switch.load, %switch.lookup ], [ %switch.load29, %switch.lookup27 ], [ @.str.43, %bb.f ], [ @.str.43, %bb.e ], [ @.str.43, %bb.d ]
+bb.g:                                             ; preds = %switch.lookup31, %bb.d, %bb.e, %bb.f, %bb.c
+  %.0 = phi ptr [ @.str.43, %bb.c ], [ @.str.43, %bb.f ], [ @.str.43, %bb.e ], [ @.str.43, %bb.d ], [ %switch.load33, %switch.lookup31 ]
   %i.n = load i32, ptr @hf_ansi_637_tele_msg_status_code, align 4
   %i.o = zext nneg i8 %i.h to i32
   %i.p = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %2, i32 noundef %i.n, ptr noundef %0, i32 noundef %4, i32 noundef 1, i32 noundef %i.g, ptr noundef @.str.341, ptr noundef nonnull %.0, i32 noundef %i.o) ; 0 uses

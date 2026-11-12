@@ -204,27 +204,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %switch.tableidx = add i16 %1, -2               ; 2 uses
   %i.a = icmp ult i16 %switch.tableidx, 13
-  br i1 %i.a, label %switch.lookup, label %ares_dns_opt_get_type_opt.exit
+  br i1 %i.a, label %switch.lookup5, label %ares_dns_opt_get_type_opt.exit
 
 bb.c:                                             ; preds = %bb.a, %bb.a
   %i.b = icmp ult i16 %1, 7
   br i1 %i.b, label %switch.lookup5, label %ares_dns_opt_get_type_opt.exit
 
-switch.lookup:                                    ; preds = %bb.b
-  %2 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.ares_dns_opt_get_datatype, i64 %2
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %ares_dns_opt_get_type_opt.exit
-
-switch.lookup5:                                   ; preds = %bb.c
-  %i.c = zext nneg i16 %1 to i64
-  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table.ares_dns_opt_get_datatype.1, i64 %i.c
+switch.lookup5:                                   ; preds = %bb.c, %bb.b
+  %.sink9 = phi i16 [ %switch.tableidx, %bb.b ], [ %1, %bb.c ]
+  %switch.table.ares_dns_opt_get_datatype.1.sink = phi ptr [ @switch.table.ares_dns_opt_get_datatype, %bb.b ], [ @switch.table.ares_dns_opt_get_datatype.1, %bb.c ]
+  %i.c = zext nneg i16 %.sink9 to i64
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr %switch.table.ares_dns_opt_get_datatype.1.sink, i64 %i.c
   %switch.load7 = load i8, ptr %switch.gep6, align 1
+  %switch.ext8 = zext i8 %switch.load7 to i32
   br label %ares_dns_opt_get_type_opt.exit
 
-ares_dns_opt_get_type_opt.exit:                   ; preds = %bb.b, %bb.c, %switch.lookup5, %switch.lookup, %bb.a
-  %.0.shrunk = phi i8 [ %switch.load7, %switch.lookup5 ], [ 10, %bb.a ], [ %switch.load, %switch.lookup ], [ 10, %bb.c ], [ 10, %bb.b ]
-  %.0 = zext i8 %.0.shrunk to i32
+ares_dns_opt_get_type_opt.exit:                   ; preds = %switch.lookup5, %bb.b, %bb.c, %bb.a
+  %.0 = phi i32 [ 10, %bb.c ], [ 10, %bb.a ], [ 10, %bb.b ], [ %switch.ext8, %switch.lookup5 ]
   ret i32 %.0
 }
 
@@ -240,26 +236,22 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %switch.tableidx = add i16 %1, -1               ; 2 uses
   %i.a = icmp ult i16 %switch.tableidx, 15
-  br i1 %i.a, label %switch.lookup, label %ares_dns_opt_get_name_opt.exit
+  br i1 %i.a, label %switch.lookup4, label %ares_dns_opt_get_name_opt.exit
 
 bb.c:                                             ; preds = %bb.a, %bb.a
   %i.b = icmp ult i16 %1, 7
   br i1 %i.b, label %switch.lookup4, label %ares_dns_opt_get_name_opt.exit
 
-switch.lookup:                                    ; preds = %bb.b
-  %2 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ares_dns_opt_get_name, i64 %2
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %ares_dns_opt_get_name_opt.exit
-
-switch.lookup4:                                   ; preds = %bb.c
-  %i.c = zext nneg i16 %1 to i64
-  %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ares_dns_opt_get_name.2, i64 %i.c
+switch.lookup4:                                   ; preds = %bb.c, %bb.b
+  %.sink7 = phi i16 [ %switch.tableidx, %bb.b ], [ %1, %bb.c ]
+  %switch.table.ares_dns_opt_get_name.2.sink = phi ptr [ @switch.table.ares_dns_opt_get_name, %bb.b ], [ @switch.table.ares_dns_opt_get_name.2, %bb.c ]
+  %i.c = zext nneg i16 %.sink7 to i64
+  %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.ares_dns_opt_get_name.2.sink, i64 %i.c
   %switch.load6 = load ptr, ptr %switch.gep5, align 8
   br label %ares_dns_opt_get_name_opt.exit
 
-ares_dns_opt_get_name_opt.exit:                   ; preds = %bb.b, %bb.c, %switch.lookup4, %switch.lookup, %bb.a
-  %.0 = phi ptr [ %switch.load, %switch.lookup ], [ null, %bb.a ], [ %switch.load6, %switch.lookup4 ], [ null, %bb.c ], [ null, %bb.b ]
+ares_dns_opt_get_name_opt.exit:                   ; preds = %switch.lookup4, %bb.b, %bb.c, %bb.a
+  %.0 = phi ptr [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.b ], [ %switch.load6, %switch.lookup4 ]
   ret ptr %.0
 }
 

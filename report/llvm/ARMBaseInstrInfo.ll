@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
   %switch.shifted = lshr i16 16143, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond457 = select i1 %or.cond447, i1 %switch.lobit, i1 false
-  br i1 %or.cond457, label %switch.lookup, label %.critedge186.thread.thread
+  br i1 %or.cond457, label %bb.ar, label %.critedge186.thread.thread
 
 .thread335:                                       ; preds = %bb.al
   br i1 %.0162, label %.critedge186.thread.thread, label %bb.aq
@@ -217,21 +217,14 @@ bb.aq:                                            ; preds = %.thread335
   %switch.shifted452 = lshr i8 51, %switch.maskindex451
   %switch.lobit453 = trunc i8 %switch.shifted452 to i1
   %or.cond458 = select i1 %i.fx, i1 %switch.lobit453, i1 false
-  br i1 %or.cond458, label %switch.lookup450, label %.critedge186.thread.thread
+  br i1 %or.cond458, label %bb.ar, label %.critedge186.thread.thread
 
-switch.lookup:                                    ; preds = %bb.ap
-  %8 = zext nneg i32 %.0163 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm16ARMBaseInstrInfo20optimizeCompareInstrERNS_12MachineInstrENS_8RegisterES3_llPKNS_19MachineRegisterInfoE, i64 %8
-  br label %bb.ar
-
-switch.lookup450:                                 ; preds = %bb.aq
-  %9 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep454 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm16ARMBaseInstrInfo20optimizeCompareInstrERNS_12MachineInstrENS_8RegisterES3_llPKNS_19MachineRegisterInfoE.83, i64 %9
-  br label %bb.ar
-
-bb.ar:                                            ; preds = %switch.lookup450, %switch.lookup
-  %switch.load455.sink.in = phi ptr [ %switch.gep454, %switch.lookup450 ], [ %switch.gep, %switch.lookup ]
-  %switch.load455.sink = load i8, ptr %switch.load455.sink.in, align 1
+bb.ar:                                            ; preds = %bb.aq, %bb.ap
+  %switch.tableidx.sink = phi i32 [ %.0163, %bb.ap ], [ %switch.tableidx, %bb.aq ]
+  %switch.load455.sink.in = phi ptr [ @switch.table._ZNK4llvm16ARMBaseInstrInfo20optimizeCompareInstrERNS_12MachineInstrENS_8RegisterES3_llPKNS_19MachineRegisterInfoE, %bb.ap ], [ @switch.table._ZNK4llvm16ARMBaseInstrInfo20optimizeCompareInstrERNS_12MachineInstrENS_8RegisterES3_llPKNS_19MachineRegisterInfoE.83, %bb.aq ]
+  %8 = zext nneg i32 %switch.tableidx.sink to i64
+  %switch.gep454 = getelementptr inbounds nuw i8, ptr %switch.load455.sink.in, i64 %8
+  %switch.load455.sink = load i8, ptr %switch.gep454, align 1
   %switch.ext456 = zext i8 %switch.load455.sink to i32 ; 2 uses
   %i.fy = add nuw i64 %indvars.iv, 4294967295
   %i.fz = and i64 %i.fy, 4294967295

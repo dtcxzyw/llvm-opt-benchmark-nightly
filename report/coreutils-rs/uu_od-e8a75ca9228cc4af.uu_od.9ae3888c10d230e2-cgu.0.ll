@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.ax
   %switch.shifted = lshr i32 66113, %switch.tableidx
   %switch.lobit = trunc i32 %switch.shifted to i1
   %or.cond1333 = select i1 %i.ir, i1 %switch.lobit, i1 false
-  br i1 %or.cond1333, label %switch.lookup, label %bb.be
+  br i1 %or.cond1333, label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit, label %bb.be
 
 bb.az:                                            ; preds = %bb.ax
   %switch.tableidx1308 = add i32 %.sroa.096.2, -66 ; 3 uses
@@ -214,7 +214,7 @@ bb.az:                                            ; preds = %bb.ax
   %switch.shifted1312 = lshr i16 1109, %switch.maskindex
   %switch.lobit1313 = trunc i16 %switch.shifted1312 to i1
   %or.cond1334 = select i1 %i.is, i1 %switch.lobit1313, i1 false
-  br i1 %or.cond1334, label %switch.lookup1311, label %bb.be
+  br i1 %or.cond1334, label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit, label %bb.be
 
 bb.ba:                                            ; preds = %bb.bd
   switch i8 %.sroa.042.0574, label %default.unreachable [
@@ -229,7 +229,7 @@ bb.bb:                                            ; preds = %bb.ba
   %switch.shifted1320 = lshr i32 66113, %switch.tableidx1316
   %switch.lobit1321 = trunc i32 %switch.shifted1320 to i1
   %or.cond1335 = select i1 %i.it, i1 %switch.lobit1321, i1 false
-  br i1 %or.cond1335, label %switch.lookup1319, label %.thread623
+  br i1 %or.cond1335, label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit218, label %.thread623
 
 bb.bc:                                            ; preds = %bb.ba
   %switch.tableidx1324 = add nsw i32 %.sroa.4.0.i209.ph, -66 ; 3 uses
@@ -238,7 +238,7 @@ bb.bc:                                            ; preds = %bb.ba
   %switch.shifted1329 = lshr i16 1109, %switch.maskindex1328
   %switch.lobit1330 = trunc i16 %switch.shifted1329 to i1
   %or.cond1336 = select i1 %i.iu, i1 %switch.lobit1330, i1 false
-  br i1 %or.cond1336, label %switch.lookup1327, label %.thread623
+  br i1 %or.cond1336, label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit218, label %.thread623
 
 bb.bd:                                            ; preds = %bb.aw
   switch i32 %.sroa.4.0.i209.ph, label %bb.ba [
@@ -259,19 +259,12 @@ bb.be:                                            ; preds = %bb.az, %bb.ay, %bb.
   %or.cond.i825 = select i1 %i.iv, i1 %or.cond6.i824, i1 false
   br i1 %or.cond.i825, label %.lr.ph828, label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats22is_format_size_decimal.exit.thread
 
-switch.lookup:                                    ; preds = %bb.ay
-  %3 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.279, i64 %3
-  br label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit
-
-switch.lookup1311:                                ; preds = %bb.az
-  %4 = zext nneg i32 %switch.tableidx1308 to i64
-  %switch.gep1314 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.280, i64 %4
-  br label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit
-
-_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit: ; preds = %switch.lookup1311, %switch.lookup
-  %.sink.i.in = phi ptr [ %switch.gep1314, %switch.lookup1311 ], [ %switch.gep, %switch.lookup ]
-  %.sink.i = load i8, ptr %.sink.i.in, align 1    ; 5 uses
+_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit: ; preds = %bb.az, %bb.ay
+  %switch.tableidx1308.sink = phi i32 [ %switch.tableidx, %bb.ay ], [ %switch.tableidx1308, %bb.az ]
+  %.sink.i.in = phi ptr [ @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.279, %bb.ay ], [ @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.280, %bb.az ]
+  %3 = zext nneg i32 %switch.tableidx1308.sink to i64
+  %switch.gep1314 = getelementptr inbounds nuw i8, ptr %.sink.i.in, i64 %3
+  %.sink.i = load i8, ptr %switch.gep1314, align 1 ; 5 uses
   %i.ix = icmp eq ptr %.sroa.0.8569, %i.be
   br i1 %i.ix, label %.thread668, label %bb.bf
 
@@ -674,19 +667,12 @@ _RNvNtCsdit6BuOJVAc_5uu_od13parse_formats22is_format_size_decimal.exit288.thread
   %or.cond6.i285819 = icmp ult i32 %i.wb, 10
   br i1 %or.cond6.i285819, label %.lr.ph, label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats22is_format_size_decimal.exit288.thread
 
-switch.lookup1319:                                ; preds = %bb.bb
-  %5 = zext nneg i32 %switch.tableidx1316 to i64
-  %switch.gep1322 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.279, i64 %5
-  br label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit218
-
-switch.lookup1327:                                ; preds = %bb.bc
-  %6 = zext nneg i32 %switch.tableidx1324 to i64
-  %switch.gep1331 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.280, i64 %6
-  br label %_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit218
-
-_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit218: ; preds = %switch.lookup1327, %switch.lookup1319
-  %.sink.i216.in = phi ptr [ %switch.gep1331, %switch.lookup1327 ], [ %switch.gep1322, %switch.lookup1319 ]
-  %.sink.i216 = load i8, ptr %.sink.i216.in, align 1 ; 5 uses
+_RNvNtCsdit6BuOJVAc_5uu_od13parse_formats19is_format_size_char.exit218: ; preds = %bb.bc, %bb.bb
+  %switch.tableidx1324.sink = phi i32 [ %switch.tableidx1316, %bb.bb ], [ %switch.tableidx1324, %bb.bc ]
+  %.sink.i216.in = phi ptr [ @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.279, %bb.bb ], [ @switch.table._RNvNtCsdit6BuOJVAc_5uu_od13parse_formats17parse_type_string.280, %bb.bc ]
+  %4 = zext nneg i32 %switch.tableidx1324.sink to i64
+  %switch.gep1331 = getelementptr inbounds nuw i8, ptr %.sink.i216.in, i64 %4
+  %.sink.i216 = load i8, ptr %switch.gep1331, align 1 ; 5 uses
   %i.wc = icmp eq ptr %.sroa.0.8.ph, %i.be
   br i1 %i.wc, label %.thread668, label %bb.dl
 
