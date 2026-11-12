@@ -205,12 +205,9 @@ _ZN2cvL8copyElemEPKhPhm.exit.us:                  ; preds = %bb.f, %.lr.ph17.i.u
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not, label %._crit_edge.us, label %.preheader.us, !llvm.loop !95
 
-6:                                                ; preds = %.lr.ph.us, %bb.h
-  %indvars.iv93 = phi i64 [ %i.ap, %.lr.ph.us ], [ %indvars.iv.next94, %bb.h ] ; 6 uses
-  %.267.us = phi ptr [ %i.ew, %.lr.ph.us ], [ %i.fh, %bb.h ]
-  br i1 %.not109, label %.split.us, label %_ZNK2cv8MatShapeixEm.exit51.us
-
-_ZNK2cv8MatShapeixEm.exit51.us:                   ; preds = %6
+_ZNK2cv8MatShapeixEm.exit51.us:                   ; preds = %.lr.ph.us, %bb.h
+  %indvars.iv93 = phi i64 [ %indvars.iv.next94, %bb.h ], [ %i.ap, %.lr.ph.us ] ; 6 uses
+  %.267.us = phi ptr [ %i.fh, %bb.h ], [ %i.ew, %.lr.ph.us ]
   %i.ex = add nuw nsw i64 %indvars.iv93, 1        ; 2 uses
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv93
   %i.ez = load i64, ptr %i.ey, align 8, !tbaa !63
@@ -235,7 +232,7 @@ bb.h:                                             ; preds = %_ZNK2cv8MatShapeixE
   store i32 0, ptr %i.fi, align 4, !tbaa !27
   %indvars.iv.next94 = add nsw i64 %indvars.iv93, -1
   %i.fo = icmp sgt i64 %indvars.iv93, 0
-  br i1 %i.fo, label %6, label %._crit_edge70, !llvm.loop !97
+  br i1 %i.fo, label %_ZNK2cv8MatShapeixEm.exit51.us, label %._crit_edge70, !llvm.loop !97
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph.us, %_ZN2cvL8copyElemEPKhPhm.exit.us
   %indvar = phi i64 [ 0, %.preheader.lr.ph.us ], [ %indvar.next, %_ZN2cvL8copyElemEPKhPhm.exit.us ] ; 3 uses
@@ -249,21 +246,18 @@ bb.h:                                             ; preds = %_ZNK2cv8MatShapeixE
 .lr.ph.us:                                        ; preds = %._crit_edge.us
   %i.fp = load i32, ptr %i.e, align 8, !tbaa !99
   %.not109 = icmp sgt i32 %i.i, %i.fp
-  br label %6
+  br i1 %.not109, label %.split.us, label %_ZNK2cv8MatShapeixEm.exit51.us
 
 _ZNK2cv8MatShapeixEm.exit.split:                  ; preds = %_ZNK2cv8MatShapeixEm.exit
   br i1 %i.al, label %.lr.ph.lr.ph, label %._crit_edge70
 
 .lr.ph.lr.ph:                                     ; preds = %_ZNK2cv8MatShapeixEm.exit.split
-  %7 = zext nneg i32 %i.ak to i64                 ; 2 uses
   %.not = icmp sgt i32 %i.i, %i.k
-  br label %.lr.ph.us73
-
-.lr.ph.us73:                                      ; preds = %.lr.ph.us73.backedge, %.lr.ph.lr.ph
-  %indvars.iv = phi i64 [ %7, %.lr.ph.lr.ph ], [ %indvars.iv.be, %.lr.ph.us73.backedge ] ; 4 uses
+  %6 = zext nneg i32 %i.ak to i64                 ; 2 uses
   br i1 %.not, label %.split.us, label %_ZNK2cv8MatShapeixEm.exit51.us76
 
-_ZNK2cv8MatShapeixEm.exit51.us76:                 ; preds = %.lr.ph.us73
+_ZNK2cv8MatShapeixEm.exit51.us76:                 ; preds = %.lr.ph.lr.ph, %.lr.ph.us73.backedge
+  %indvars.iv = phi i64 [ %indvars.iv.be, %.lr.ph.us73.backedge ], [ %6, %.lr.ph.lr.ph ] ; 4 uses
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv ; 3 uses
   %i.fr = load i32, ptr %i.fq, align 4, !tbaa !27
   %i.fs = add nsw i32 %i.fr, 1                    ; 2 uses
@@ -280,10 +274,10 @@ bb.i:                                             ; preds = %_ZNK2cv8MatShapeixE
   br i1 %i.fw, label %.lr.ph.us73.backedge, label %._crit_edge70
 
 .lr.ph.us73.backedge:                             ; preds = %bb.i, %_ZNK2cv8MatShapeixEm.exit51.us76
-  %indvars.iv.be = phi i64 [ %indvars.iv.next, %bb.i ], [ %7, %_ZNK2cv8MatShapeixEm.exit51.us76 ]
-  br label %.lr.ph.us73
+  %indvars.iv.be = phi i64 [ %indvars.iv.next, %bb.i ], [ %6, %_ZNK2cv8MatShapeixEm.exit51.us76 ]
+  br label %_ZNK2cv8MatShapeixEm.exit51.us76
 
-.split.us:                                        ; preds = %.lr.ph.us73, %6
+.split.us:                                        ; preds = %.lr.ph.us, %.lr.ph.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.16, ptr noundef nonnull align 1 dereferenceable(1) %3)

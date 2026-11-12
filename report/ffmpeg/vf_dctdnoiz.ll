@@ -205,8 +205,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 19 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 300
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !27   ; 4 uses
-  %i.g = shl nuw i32 1, %i.f                      ; 8 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !27
+  %.fr = freeze i32 %i.f                          ; 4 uses
+  %i.g = shl nuw i32 1, %.fr                      ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.i = load i32, ptr %i.h, align 4, !tbaa !86
   switch i32 %i.i, label %bb.d [
@@ -234,7 +235,7 @@ bb.e:                                             ; preds = %bb.a, %bb.c, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 328
   store ptr %color_correlation_gbrp.sink, ptr %i.k, align 8, !tbaa !56
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 296 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 296 ; 2 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !32
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 148 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
@@ -447,10 +448,11 @@ bb.s:                                             ; preds = %._crit_edge
   br i1 %.not157187, label %.preheader165, label %.preheader168.lr.ph
 
 .preheader168.lr.ph:                              ; preds = %.preheader169
-  %.not195 = icmp eq i32 %i.f, 31
   %i.dt = load i32, ptr %i.o, align 4, !tbaa !50  ; 2 uses
   %i.du = icmp slt i32 %i.dt, %i.g
-  br i1 %i.du, label %.preheader165, label %.preheader168.preheader
+  %.not195 = icmp eq i32 %.fr, 31
+  %or.cond270 = or i1 %i.du, %.not195
+  br i1 %or.cond270, label %.preheader165, label %.preheader168.preheader
 
 .preheader168.preheader:                          ; preds = %.preheader168.lr.ph
   %smax = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1)
@@ -460,15 +462,12 @@ bb.s:                                             ; preds = %._crit_edge
   %min.iters.check = icmp slt i32 %i.g, 8
   %n.vec = and i64 %wide.trip.count214, 2147483640
   %exitcond.not = icmp slt i32 %i.g, 2
-  %exitcond.not.1 = icmp eq i32 %i.f, 1
-  %exitcond.not.3 = icmp eq i32 %i.f, 2
-  br label %.preheader168
+  %exitcond.not.1 = icmp eq i32 %.fr, 1
+  %exitcond.not.3 = icmp eq i32 %.fr, 2
+  br label %.preheader167.us.preheader
 
-.preheader168:                                    ; preds = %.preheader168.preheader, %._crit_edge186
+.preheader167.us.preheader:                       ; preds = %.preheader168.preheader, %._crit_edge186
   %.0135188 = phi i32 [ %i.fg, %._crit_edge186 ], [ 0, %.preheader168.preheader ] ; 2 uses
-  br i1 %.not195, label %._crit_edge186, label %.preheader167.us.preheader
-
-.preheader167.us.preheader:                       ; preds = %.preheader168
   %i.dx = sext i32 %.0135188 to i64
   br label %.preheader167.us
 
@@ -544,7 +543,7 @@ vector.body:                                      ; preds = %.preheader166.us, %
   br i1 %exitcond215.not, label %._crit_edge183.us, label %.preheader166.us, !llvm.loop !80
 
 ._crit_edge183.us:                                ; preds = %._crit_edge181.us
-  %i.fa = load i32, ptr %i.m, align 8, !tbaa !32
+  %i.fa = load i32, ptr %i.m, align 8, !tbaa !32  ; 2 uses
   %i.fb = add nsw i32 %i.fa, %.0136185.us         ; 2 uses
   %.not158.us = icmp sgt i32 %i.fb, %i.dv
   br i1 %.not158.us, label %._crit_edge186, label %.preheader167.us, !llvm.loop !81
@@ -567,11 +566,10 @@ vector.body:                                      ; preds = %.preheader166.us, %
   %cmp.n260 = icmp eq i64 %n.vec254, %wide.trip.count219
   br label %.preheader
 
-._crit_edge186:                                   ; preds = %._crit_edge183.us, %.preheader168
-  %1 = load i32, ptr %i.m, align 8, !tbaa !32
-  %i.fg = add nsw i32 %1, %.0135188               ; 2 uses
+._crit_edge186:                                   ; preds = %._crit_edge183.us
+  %i.fg = add nsw i32 %i.fa, %.0135188            ; 2 uses
   %.not157 = icmp sgt i32 %i.fg, %i.dw
-  br i1 %.not157, label %.preheader165, label %.preheader168, !llvm.loop !82
+  br i1 %.not157, label %.preheader165, label %.preheader167.us.preheader, !llvm.loop !82
 
 .preheader:                                       ; preds = %.preheader.lr.ph.split, %._crit_edge192
   %indvars.iv221 = phi i64 [ 0, %.preheader.lr.ph.split ], [ %indvars.iv.next222, %._crit_edge192 ] ; 2 uses
