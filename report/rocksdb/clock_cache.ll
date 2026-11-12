@@ -205,15 +205,19 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bo = and i64 %i.bm, 255
   %i.bp = shl nuw i64 1, %i.bo
   %i.bq = add nuw i64 %i.bp, %i.bn                ; 3 uses
-  %i.br = and i64 %i.bi, 63
-  %invariant.op = or disjoint i64 %i.br, 192      ; 3 uses
-  %i.bs = and i64 %i.bj, 63
-  %invariant.op46 = or disjoint i64 %i.bs, 192    ; 5 uses
+  %i.br = and i64 %i.bi, 63                       ; 2 uses
+  %i.bs = and i64 %i.bj, 63                       ; 4 uses
   %i.bt = icmp eq i64 %i.bk, 0
   br i1 %i.bt, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.e
   %unroll_iter = and i64 %i.bl, -2
+  %invariant.op54 = or disjoint i64 %i.br, 192
+  %invariant.op55 = or disjoint i64 %i.bs, 192
+  %invariant.op = or disjoint i64 %i.bs, 192
+  %invariant.op56 = or disjoint i64 %i.br, 192
+  %invariant.op57 = or disjoint i64 %i.bs, 192
+  %invariant.op58 = or disjoint i64 %i.bs, 192
   br label %bb.h
 
 .epil.preheader:                                  ; preds = %bb.e
@@ -225,11 +229,11 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %i.bu, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.epil.preheader
-  store atomic i64 %invariant.op, ptr %i.bw monotonic, align 8
+  store atomic i64 192, ptr %i.bw monotonic, align 8
   br label %.unr-lcssa
 
 bb.g:                                             ; preds = %.epil.preheader
-  store atomic i64 %invariant.op46, ptr %i.bw monotonic, align 8
+  store atomic i64 193, ptr %i.bw monotonic, align 8
   %i.bx = load ptr, ptr %i.k, align 32, !tbaa !134
   %i.by = getelementptr inbounds nuw [64 x i8], ptr %i.bx, i64 %i.bl
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 48
@@ -251,18 +255,18 @@ bb.h:                                             ; preds = %bb.n, %.new
   br i1 %i.cb, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %.reass47 = or disjoint i64 %i.ce, %invariant.op46
+  %.reass47 = or disjoint i64 %i.ce, %invariant.op55
   store atomic i64 %.reass47, ptr %i.cf monotonic, align 8
   %i.cg = load ptr, ptr %i.k, align 32, !tbaa !134
   %i.ch = getelementptr inbounds nuw [64 x i8], ptr %i.cg, i64 %i.ca
   %i.ci = shl i64 %i.ca, 8
-  %.reass49 = or disjoint i64 %i.ci, %invariant.op46
+  %.reass49 = or disjoint i64 %i.ci, %invariant.op
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 48
   store atomic i64 %.reass49, ptr %i.cj monotonic, align 8
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
-  %.reass = or disjoint i64 %i.ce, %invariant.op
+  %.reass = or disjoint i64 %i.ce, %invariant.op54
   store atomic i64 %.reass, ptr %i.cf monotonic, align 8
   br label %bb.k
 
@@ -277,17 +281,17 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   br i1 %i.cm, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.reass.1 = or disjoint i64 %i.cp, %invariant.op
+  %.reass.1 = or disjoint i64 %i.cp, %invariant.op56
   store atomic i64 %.reass.1, ptr %i.cq monotonic, align 8
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %.reass47.1 = or disjoint i64 %i.cp, %invariant.op46
+  %.reass47.1 = or disjoint i64 %i.cp, %invariant.op57
   store atomic i64 %.reass47.1, ptr %i.cq monotonic, align 8
   %i.cr = load ptr, ptr %i.k, align 32, !tbaa !134
   %i.cs = getelementptr inbounds nuw [64 x i8], ptr %i.cr, i64 %i.cl
   %i.ct = shl i64 %i.cl, 8
-  %.reass49.1 = or disjoint i64 %i.ct, %invariant.op46
+  %.reass49.1 = or disjoint i64 %i.ct, %invariant.op58
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 48
   store atomic i64 %.reass49.1, ptr %i.cu monotonic, align 8
   br label %bb.n
@@ -613,7 +617,7 @@ _ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleI
   %i.o = sext i32 %i.a to i64                     ; 2 uses
   %i.p = shl i64 %1, 8
   %i.q = and i32 %i.a, 63                         ; 2 uses
-  %i.r = zext nneg i32 %i.q to i64                ; 5 uses
+  %i.r = zext nneg i32 %i.q to i64                ; 6 uses
   %i.s = or disjoint i64 %i.p, %i.r
   %i.t = or disjoint i64 %i.s, 192
   %i.u = or disjoint i32 %i.q, 128
@@ -830,7 +834,8 @@ _ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClo
 .preheader.a:                                     ; preds = %.cont189.us, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit
   %.5447 = phi i64 [ %.5, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit ], [ %.3239270, %.cont189.us ]
   %.5247446 = phi i64 [ %.5247, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit ], [ %i.bz, %.cont189.us ]
-  %invariant.op375 = or disjoint i64 %i.r, 192    ; 2 uses
+  %invariant.op644 = or disjoint i64 %i.r, 192
+  %invariant.op375 = or disjoint i64 %i.r, 192
   br label %bb.u
 
 bb.t:                                             ; preds = %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293
@@ -838,11 +843,11 @@ bb.t:                                             ; preds = %_ZN7rocksdb11clock_
   unreachable
 
 bb.u:                                             ; preds = %.preheader.a, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293
-  %.297374 = phi i64 [ %.096271, %.preheader.a ], [ %.3301, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ] ; 5 uses
-  %.4373 = phi i32 [ %.199344, %.preheader.a ], [ %.6300, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ] ; 6 uses
-  %.0102372 = phi i32 [ 0, %.preheader.a ], [ %i.fi, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ]
-  %.6241371 = phi i64 [ %.5447, %.preheader.a ], [ %.7299, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ] ; 10 uses
-  %.6248370 = phi i64 [ %.5247446, %.preheader.a ], [ %.7249298, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ] ; 10 uses
+  %.297374 = phi i64 [ %.3301, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ], [ %.096271, %.preheader.a ] ; 5 uses
+  %.4373 = phi i32 [ %.6300, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ], [ %.199344, %.preheader.a ] ; 6 uses
+  %.0102372 = phi i32 [ %i.fi, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ], [ 0, %.preheader.a ]
+  %.6241371 = phi i64 [ %.7299, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ], [ %.5447, %.preheader.a ] ; 10 uses
+  %.6248370 = phi i64 [ %.7249298, %_ZN7rocksdb11clock_cache12_GLOBAL__N_120UpgradeShiftsOnRangeEPNS0_19AutoHyperClockTable10HandleImplERmNS3_13NextWithShiftEii.exit142.thread293 ], [ %.5247446, %.preheader.a ] ; 10 uses
   %i.cp = icmp eq i32 %.4373, 0                   ; 11 uses
   %i.cq = getelementptr inbounds nuw [64 x i8], ptr %i.c, i64 %.297374
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 56
@@ -854,7 +859,7 @@ bb.u:                                             ; preds = %.preheader.a, %_ZN7
 bb.v:                                             ; preds = %bb.u
   %i.cu = select i1 %i.cp, i64 %2, i64 %1
   %i.cv = shl i64 %i.cu, 8
-  %.reass376 = or disjoint i64 %i.cv, %invariant.op375
+  %.reass376 = or disjoint i64 %i.cv, %invariant.op644
   %.sroa.speculated188 = select i1 %i.cp, i64 %.6248370, i64 %.6241371
   %i.cw = getelementptr inbounds nuw [64 x i8], ptr %i.c, i64 %.sroa.speculated188
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 56

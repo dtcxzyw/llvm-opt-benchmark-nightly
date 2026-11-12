@@ -205,20 +205,19 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
   %.sroa.6.1 = phi i64 [ %.sroa.6.0286, %bb.q ], [ %.sroa.6.2, %.loopexit ] ; 15 uses
   %.sroa.412.1 = phi i64 [ %.sroa.412.0287, %bb.q ], [ %.sroa.412.2, %.loopexit ] ; 16 uses
   %.sroa.010.0 = phi i1 [ false, %bb.q ], [ %.not37, %.loopexit ]
-  %i.bi = load atomic i64, ptr %.sroa.02.0288 acquire, align 8 ; 6 uses
+  %i.bi = load atomic i64, ptr %.sroa.02.0288 acquire, align 8 ; 7 uses
   %i.bj = and i64 %i.bi, 1
   %i.bk = icmp eq i64 %i.bj, 0
   br i1 %i.bk, label %bb.r, label %.loopexit249
 
 bb.r:                                             ; preds = %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtB3e_10ValueEntryB2j_NtB2l_16CachedReaderDataEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit63
-  %4 = and i64 %i.bi, 2                           ; 2 uses
-  %i.bl = and i64 %i.bi, -8                       ; 4 uses
+  %i.bl = and i64 %i.bi, -8                       ; 3 uses
   %i.bm = or i64 %i.bi, 4                         ; 7 uses
+  %4 = icmp eq i64 %i.bl, 0                       ; 2 uses
   br i1 %.sroa.010.0, label %bb.s, label %bb.x
 
 bb.s:                                             ; preds = %bb.r
-  %5 = icmp eq i64 %i.bl, 0
-  br i1 %5, label %bb.t, label %bb.u, !prof !113
+  br i1 %4, label %bb.t, label %bb.u, !prof !113
 
 bb.t:                                             ; preds = %bb.s
   invoke void @_RNvNtCscI6d9CVNmLh_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 44, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #48
@@ -260,13 +259,12 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
   br i1 %.sroa.18.0.in.i.i59, label %bb.be, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtB3e_10ValueEntryB2j_NtB2l_16CachedReaderDataEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit63
 
 bb.x:                                             ; preds = %bb.r
-  %6 = inttoptr i64 %i.bl to ptr                  ; 3 uses
-  %.not = icmp eq i64 %i.bl, 0
-  br i1 %.not, label %.loopexit, label %bb.y
+  br i1 %4, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
+  %5 = inttoptr i64 %i.bl to ptr                  ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !607)
-  %.val.i.i = load ptr, ptr %6, align 8, !alias.scope !607, !noalias !608, !nonnull !110, !noundef !110 ; 4 uses
+  %.val.i.i = load ptr, ptr %5, align 8, !alias.scope !607, !noalias !608, !nonnull !110, !noundef !110 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !609)
   %i.by = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 24
   %i.bz = load ptr, ptr %i.by, align 8, !alias.scope !609, !noalias !610, !nonnull !110, !noundef !110 ; 4 uses
@@ -568,60 +566,60 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   %i.ij = tail call noundef i64 @llvm.fshl.i64(i64 %i.ii, i64 %i.ii, i64 16)
   %i.ik = add i64 %i.ii, %.sroa.16.1              ; 2 uses
   %i.il = xor i64 %i.ij, %i.ik                    ; 3 uses
-  %7 = tail call noundef i64 @llvm.fshl.i64(i64 %i.il, i64 %i.il, i64 21)
   %i.im = add i64 %.sroa.0166.1, %.sroa.30.1      ; 3 uses
   %i.in = tail call noundef i64 @llvm.fshl.i64(i64 %i.im, i64 %i.im, i64 32)
   %i.io = add i64 %i.il, %i.in                    ; 2 uses
-  %i.ip = xor i64 %7, %i.io                       ; 3 uses
-  %8 = tail call noundef i64 @llvm.fshl.i64(i64 %i.ip, i64 %i.ip, i64 16)
+  %i.ip = xor i64 %i.io, %i.ih
   %i.iq = tail call noundef i64 @llvm.fshl.i64(i64 %.sroa.30.1, i64 %.sroa.30.1, i64 13)
   %i.ir = xor i64 %i.im, %i.iq                    ; 3 uses
   %i.is = add i64 %i.ik, %i.ir                    ; 3 uses
-  %i.it = tail call noundef i64 @llvm.fshl.i64(i64 %i.is, i64 %i.is, i64 32)
-  %i.iu = xor i64 %i.it, 255
-  %i.iv = add i64 %i.ip, %i.iu                    ; 2 uses
-  %i.iw = xor i64 %8, %i.iv                       ; 3 uses
-  %i.ix = tail call noundef i64 @llvm.fshl.i64(i64 %i.iw, i64 %i.iw, i64 21)
-  %i.iy = xor i64 %i.io, %i.ih
-  %i.iz = tail call noundef i64 @llvm.fshl.i64(i64 %i.ir, i64 %i.ir, i64 17)
-  %i.ja = xor i64 %i.is, %i.iz                    ; 3 uses
-  %i.jb = add i64 %i.iy, %i.ja                    ; 3 uses
-  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jb, i64 %i.jb, i64 32)
-  %10 = add i64 %i.iw, %9                         ; 2 uses
-  %i.jc = xor i64 %i.ix, %10                      ; 3 uses
-  %i.jd = tail call noundef i64 @llvm.fshl.i64(i64 %i.jc, i64 %i.jc, i64 16)
-  %i.je = tail call noundef i64 @llvm.fshl.i64(i64 %i.ja, i64 %i.ja, i64 13)
-  %i.jf = xor i64 %i.jb, %i.je                    ; 3 uses
-  %11 = add i64 %i.jf, %i.iv                      ; 3 uses
-  %12 = tail call noundef i64 @llvm.fshl.i64(i64 %11, i64 %11, i64 32)
-  %i.jg = add i64 %i.jc, %12                      ; 2 uses
+  %i.it = tail call noundef i64 @llvm.fshl.i64(i64 %i.ir, i64 %i.ir, i64 17)
+  %i.iu = xor i64 %i.is, %i.it                    ; 3 uses
+  %i.iv = add i64 %i.ip, %i.iu                    ; 3 uses
+  %6 = tail call noundef i64 @llvm.fshl.i64(i64 %i.iu, i64 %i.iu, i64 13)
+  %i.iw = xor i64 %i.iv, %6                       ; 3 uses
+  %i.ix = tail call noundef i64 @llvm.fshl.i64(i64 %i.il, i64 %i.il, i64 21)
+  %i.iy = xor i64 %i.ix, %i.io                    ; 3 uses
+  %i.iz = tail call noundef i64 @llvm.fshl.i64(i64 %i.is, i64 %i.is, i64 32)
+  %i.ja = xor i64 %i.iz, 255
+  %i.jb = add i64 %i.iy, %i.ja                    ; 2 uses
+  %7 = add i64 %i.iw, %i.jb                       ; 3 uses
+  %8 = tail call noundef i64 @llvm.fshl.i64(i64 %i.iw, i64 %i.iw, i64 17)
+  %i.jc = xor i64 %7, %8                          ; 3 uses
+  %i.jd = tail call noundef i64 @llvm.fshl.i64(i64 %i.jc, i64 %i.jc, i64 13)
+  %i.je = tail call noundef i64 @llvm.fshl.i64(i64 %i.iy, i64 %i.iy, i64 16)
+  %i.jf = xor i64 %i.je, %i.jb                    ; 3 uses
+  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %i.iv, i64 %i.iv, i64 32)
+  %10 = add i64 %i.jf, %9                         ; 2 uses
+  %i.jg = add i64 %i.jc, %10                      ; 3 uses
   %i.jh = xor i64 %i.jd, %i.jg                    ; 3 uses
-  %i.ji = tail call noundef i64 @llvm.fshl.i64(i64 %i.jh, i64 %i.jh, i64 21)
-  %i.jj = tail call noundef i64 @llvm.fshl.i64(i64 %i.jf, i64 %i.jf, i64 17)
-  %i.jk = xor i64 %11, %i.jj                      ; 3 uses
-  %13 = add i64 %i.jk, %10                        ; 3 uses
-  %14 = tail call noundef i64 @llvm.fshl.i64(i64 %13, i64 %13, i64 32)
-  %i.jl = add i64 %i.jh, %14                      ; 2 uses
+  %i.ji = tail call noundef i64 @llvm.fshl.i64(i64 %i.jh, i64 %i.jh, i64 17)
+  %i.jj = tail call noundef i64 @llvm.fshl.i64(i64 %i.jf, i64 %i.jf, i64 21)
+  %i.jk = xor i64 %i.jj, %10                      ; 3 uses
+  %11 = tail call noundef i64 @llvm.fshl.i64(i64 %7, i64 %7, i64 32)
+  %12 = add i64 %i.jk, %11                        ; 2 uses
+  %i.jl = add i64 %i.jh, %12                      ; 3 uses
   %i.jm = xor i64 %i.ji, %i.jl                    ; 3 uses
-  %i.jn = tail call noundef i64 @llvm.fshl.i64(i64 %i.jm, i64 %i.jm, i64 16)
-  %i.jo = tail call noundef i64 @llvm.fshl.i64(i64 %i.jk, i64 %i.jk, i64 13)
-  %i.jp = xor i64 %i.jo, %13                      ; 3 uses
-  %15 = add i64 %i.jp, %i.jg                      ; 3 uses
-  %16 = tail call noundef i64 @llvm.fshl.i64(i64 %15, i64 %15, i64 32)
-  %i.jq = add i64 %i.jm, %16                      ; 2 uses
-  %i.jr = xor i64 %i.jn, %i.jq                    ; 2 uses
-  %i.js = tail call noundef i64 @llvm.fshl.i64(i64 %i.jr, i64 %i.jr, i64 21)
-  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jp, i64 %i.jp, i64 17)
-  %18 = xor i64 %17, %15                          ; 3 uses
-  %19 = tail call noundef i64 @llvm.fshl.i64(i64 %18, i64 %18, i64 13)
-  %i.jt = add i64 %18, %i.jl
-  %20 = xor i64 %19, %i.jt                        ; 3 uses
-  %i.ju = tail call noundef i64 @llvm.fshl.i64(i64 %20, i64 %20, i64 17)
-  %i.jv = xor i64 %i.js, %i.ju
-  %21 = add i64 %20, %i.jq                        ; 3 uses
-  %i.jw = tail call noundef i64 @llvm.fshl.i64(i64 %21, i64 %21, i64 32)
-  %i.jx = xor i64 %i.jv, %i.jw
-  %i.jy = xor i64 %i.jx, %21
+  %i.jn = tail call noundef i64 @llvm.fshl.i64(i64 %i.jm, i64 %i.jm, i64 13)
+  %i.jo = tail call noundef i64 @llvm.fshl.i64(i64 %i.jk, i64 %i.jk, i64 16)
+  %i.jp = xor i64 %i.jo, %12                      ; 3 uses
+  %13 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jg, i64 %i.jg, i64 32)
+  %14 = add i64 %i.jp, %13                        ; 2 uses
+  %i.jq = add i64 %i.jm, %14
+  %i.jr = xor i64 %i.jn, %i.jq                    ; 3 uses
+  %i.js = tail call noundef i64 @llvm.fshl.i64(i64 %i.jp, i64 %i.jp, i64 21)
+  %15 = xor i64 %i.js, %14                        ; 3 uses
+  %16 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jl, i64 %i.jl, i64 32)
+  %17 = add i64 %15, %16                          ; 2 uses
+  %i.jt = add i64 %i.jr, %17                      ; 3 uses
+  %18 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jt, i64 %i.jt, i64 32)
+  %i.ju = tail call noundef i64 @llvm.fshl.i64(i64 %15, i64 %15, i64 16)
+  %i.jv = xor i64 %i.ju, %17                      ; 2 uses
+  %19 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jv, i64 %i.jv, i64 21)
+  %i.jw = tail call noundef i64 @llvm.fshl.i64(i64 %i.jr, i64 %i.jr, i64 17)
+  %20 = xor i64 %19, %i.jw
+  %i.jx = xor i64 %20, %18
+  %i.jy = xor i64 %i.jx, %i.jt
   %i.jz = load i64, ptr %i.bg, align 8, !noundef !110 ; 2 uses
   %i.ka = add i64 %i.jz, -1                       ; 5 uses
   %i.kb = and i64 %i.ka, %i.jy                    ; 6 uses
@@ -631,7 +629,8 @@ bb.an:                                            ; preds = %bb.al, %bb.am
 bb.ao:                                            ; preds = %bb.an
   %i.kc = load ptr, ptr %.sroa.0.0.i, align 8, !nonnull !110, !noundef !110 ; 3 uses
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %i.kc, i64 %i.kb ; 2 uses
-  %i.ke = icmp eq i64 %4, 0
+  %21 = and i64 %i.bi, 2
+  %i.ke = icmp eq i64 %21, 0
   br i1 %i.ke, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtB3e_10ValueEntryB2j_NtB2l_16CachedReaderDataEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtB3e_10ValueEntryB2j_NtB2l_16CachedReaderDataEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.i
 
 _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtB3e_10ValueEntryB2j_NtB2l_16CachedReaderDataEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i: ; preds = %bb.ao, %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtB3e_10ValueEntryB2j_NtB2l_16CachedReaderDataEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i.backedge
@@ -673,7 +672,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %.val.us.i = load ptr, ptr %i.kn, align 8, !nonnull !110, !noundef !110 ; 4 uses
-  %.val22.us.i = load ptr, ptr %6, align 8, !nonnull !110, !noundef !110 ; 4 uses
+  %.val22.us.i = load ptr, ptr %5, align 8, !nonnull !110, !noundef !110 ; 4 uses
   %i.kp = icmp eq ptr %.val.us.i, %.val22.us.i
   br i1 %i.kp, label %_RNvXsQ_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyENtNtCscI6d9CVNmLh_4core3cmp9PartialEq2neCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread50.us.i, label %bb.au
 
@@ -767,7 +766,7 @@ bb.az:                                            ; preds = %._crit_edge.i.i
 bb.ba:                                            ; preds = %bb.az
   %i.lt = inttoptr i64 %i.lr to ptr
   %.val.i = load ptr, ptr %i.lt, align 8, !nonnull !110, !noundef !110 ; 4 uses
-  %.val22.i = load ptr, ptr %6, align 8, !nonnull !110, !noundef !110 ; 4 uses
+  %.val22.i = load ptr, ptr %5, align 8, !nonnull !110, !noundef !110 ; 4 uses
   %i.lu = icmp eq ptr %.val.i, %.val22.i
   br i1 %i.lu, label %_RNvXsQ_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyENtNtCscI6d9CVNmLh_4core3cmp9PartialEq2neCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread50.i, label %bb.bb
 
@@ -816,7 +815,8 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
 
 bb.be:                                            ; preds = %.loopexit
   %i.ml = icmp eq i64 %i.bl, 0
-  %i.mm = icmp eq i64 %4, 0
+  %22 = and i64 %i.bi, 2
+  %i.mm = icmp eq i64 %22, 0
   %or.cond41 = or i1 %i.ml, %i.mm
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %.loopexit249, label %bb.bf
@@ -1219,20 +1219,19 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
   %.sroa.6.1 = phi i64 [ %.sroa.6.0287, %bb.q ], [ %.sroa.6.2, %.loopexit ] ; 15 uses
   %.sroa.412.1 = phi i64 [ %.sroa.412.0288, %bb.q ], [ %.sroa.412.2, %.loopexit ] ; 16 uses
   %.sroa.010.0 = phi i1 [ false, %bb.q ], [ %.not37, %.loopexit ]
-  %i.bm = load atomic i64, ptr %.sroa.02.0289 acquire, align 8 ; 7 uses
+  %i.bm = load atomic i64, ptr %.sroa.02.0289 acquire, align 8 ; 8 uses
   %i.bn = and i64 %i.bm, 1
   %i.bo = icmp eq i64 %i.bn, 0
   br i1 %i.bo, label %bb.r, label %_RINvNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket20defer_destroy_bucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB8_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEECsc93vp1BCDlY_26lance_namespace_datafusion.exit
 
 bb.r:                                             ; preds = %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit63
-  %4 = and i64 %i.bm, 2                           ; 2 uses
-  %i.bp = and i64 %i.bm, -8                       ; 4 uses
+  %i.bp = and i64 %i.bm, -8                       ; 3 uses
   %i.bq = or i64 %i.bm, 4                         ; 7 uses
+  %4 = icmp eq i64 %i.bp, 0                       ; 2 uses
   br i1 %.sroa.010.0, label %bb.s, label %bb.x
 
 bb.s:                                             ; preds = %bb.r
-  %5 = icmp eq i64 %i.bp, 0
-  br i1 %5, label %bb.t, label %bb.u, !prof !113
+  br i1 %4, label %bb.t, label %bb.u, !prof !113
 
 bb.t:                                             ; preds = %bb.s
   invoke void @_RNvNtCscI6d9CVNmLh_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 44, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #48
@@ -1274,13 +1273,12 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
   br i1 %.sroa.18.0.in.i.i59, label %bb.be, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit63
 
 bb.x:                                             ; preds = %bb.r
-  %6 = inttoptr i64 %i.bp to ptr                  ; 3 uses
-  %.not = icmp eq i64 %i.bp, 0
-  br i1 %.not, label %.loopexit, label %bb.y
+  br i1 %4, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
+  %5 = inttoptr i64 %i.bp to ptr                  ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !698)
-  %.val.i.i = load ptr, ptr %6, align 8, !alias.scope !698, !noalias !699, !nonnull !110, !noundef !110 ; 4 uses
+  %.val.i.i = load ptr, ptr %5, align 8, !alias.scope !698, !noalias !699, !nonnull !110, !noundef !110 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !700)
   %i.cc = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 24
   %i.cd = load ptr, ptr %i.cc, align 8, !alias.scope !700, !noalias !701, !nonnull !110, !noundef !110 ; 4 uses
@@ -1582,60 +1580,60 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   %i.in = tail call noundef i64 @llvm.fshl.i64(i64 %i.im, i64 %i.im, i64 16)
   %i.io = add i64 %i.im, %.sroa.16.1              ; 2 uses
   %i.ip = xor i64 %i.in, %i.io                    ; 3 uses
-  %7 = tail call noundef i64 @llvm.fshl.i64(i64 %i.ip, i64 %i.ip, i64 21)
   %i.iq = add i64 %.sroa.0168.1, %.sroa.30.1      ; 3 uses
   %i.ir = tail call noundef i64 @llvm.fshl.i64(i64 %i.iq, i64 %i.iq, i64 32)
   %i.is = add i64 %i.ip, %i.ir                    ; 2 uses
-  %i.it = xor i64 %7, %i.is                       ; 3 uses
-  %8 = tail call noundef i64 @llvm.fshl.i64(i64 %i.it, i64 %i.it, i64 16)
+  %i.it = xor i64 %i.is, %i.il
   %i.iu = tail call noundef i64 @llvm.fshl.i64(i64 %.sroa.30.1, i64 %.sroa.30.1, i64 13)
   %i.iv = xor i64 %i.iq, %i.iu                    ; 3 uses
   %i.iw = add i64 %i.io, %i.iv                    ; 3 uses
-  %i.ix = tail call noundef i64 @llvm.fshl.i64(i64 %i.iw, i64 %i.iw, i64 32)
-  %i.iy = xor i64 %i.ix, 255
-  %i.iz = add i64 %i.it, %i.iy                    ; 2 uses
-  %i.ja = xor i64 %8, %i.iz                       ; 3 uses
-  %i.jb = tail call noundef i64 @llvm.fshl.i64(i64 %i.ja, i64 %i.ja, i64 21)
-  %i.jc = xor i64 %i.is, %i.il
-  %i.jd = tail call noundef i64 @llvm.fshl.i64(i64 %i.iv, i64 %i.iv, i64 17)
-  %i.je = xor i64 %i.iw, %i.jd                    ; 3 uses
-  %i.jf = add i64 %i.jc, %i.je                    ; 3 uses
-  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jf, i64 %i.jf, i64 32)
-  %10 = add i64 %i.ja, %9                         ; 2 uses
-  %i.jg = xor i64 %i.jb, %10                      ; 3 uses
-  %i.jh = tail call noundef i64 @llvm.fshl.i64(i64 %i.jg, i64 %i.jg, i64 16)
-  %i.ji = tail call noundef i64 @llvm.fshl.i64(i64 %i.je, i64 %i.je, i64 13)
-  %i.jj = xor i64 %i.jf, %i.ji                    ; 3 uses
-  %11 = add i64 %i.jj, %i.iz                      ; 3 uses
-  %12 = tail call noundef i64 @llvm.fshl.i64(i64 %11, i64 %11, i64 32)
-  %i.jk = add i64 %i.jg, %12                      ; 2 uses
+  %i.ix = tail call noundef i64 @llvm.fshl.i64(i64 %i.iv, i64 %i.iv, i64 17)
+  %i.iy = xor i64 %i.iw, %i.ix                    ; 3 uses
+  %i.iz = add i64 %i.it, %i.iy                    ; 3 uses
+  %6 = tail call noundef i64 @llvm.fshl.i64(i64 %i.iy, i64 %i.iy, i64 13)
+  %i.ja = xor i64 %i.iz, %6                       ; 3 uses
+  %i.jb = tail call noundef i64 @llvm.fshl.i64(i64 %i.ip, i64 %i.ip, i64 21)
+  %i.jc = xor i64 %i.jb, %i.is                    ; 3 uses
+  %i.jd = tail call noundef i64 @llvm.fshl.i64(i64 %i.iw, i64 %i.iw, i64 32)
+  %i.je = xor i64 %i.jd, 255
+  %i.jf = add i64 %i.jc, %i.je                    ; 2 uses
+  %7 = add i64 %i.ja, %i.jf                       ; 3 uses
+  %8 = tail call noundef i64 @llvm.fshl.i64(i64 %i.ja, i64 %i.ja, i64 17)
+  %i.jg = xor i64 %7, %8                          ; 3 uses
+  %i.jh = tail call noundef i64 @llvm.fshl.i64(i64 %i.jg, i64 %i.jg, i64 13)
+  %i.ji = tail call noundef i64 @llvm.fshl.i64(i64 %i.jc, i64 %i.jc, i64 16)
+  %i.jj = xor i64 %i.ji, %i.jf                    ; 3 uses
+  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %i.iz, i64 %i.iz, i64 32)
+  %10 = add i64 %i.jj, %9                         ; 2 uses
+  %i.jk = add i64 %i.jg, %10                      ; 3 uses
   %i.jl = xor i64 %i.jh, %i.jk                    ; 3 uses
-  %i.jm = tail call noundef i64 @llvm.fshl.i64(i64 %i.jl, i64 %i.jl, i64 21)
-  %i.jn = tail call noundef i64 @llvm.fshl.i64(i64 %i.jj, i64 %i.jj, i64 17)
-  %i.jo = xor i64 %11, %i.jn                      ; 3 uses
-  %13 = add i64 %i.jo, %10                        ; 3 uses
-  %14 = tail call noundef i64 @llvm.fshl.i64(i64 %13, i64 %13, i64 32)
-  %i.jp = add i64 %i.jl, %14                      ; 2 uses
+  %i.jm = tail call noundef i64 @llvm.fshl.i64(i64 %i.jl, i64 %i.jl, i64 17)
+  %i.jn = tail call noundef i64 @llvm.fshl.i64(i64 %i.jj, i64 %i.jj, i64 21)
+  %i.jo = xor i64 %i.jn, %10                      ; 3 uses
+  %11 = tail call noundef i64 @llvm.fshl.i64(i64 %7, i64 %7, i64 32)
+  %12 = add i64 %i.jo, %11                        ; 2 uses
+  %i.jp = add i64 %i.jl, %12                      ; 3 uses
   %i.jq = xor i64 %i.jm, %i.jp                    ; 3 uses
-  %i.jr = tail call noundef i64 @llvm.fshl.i64(i64 %i.jq, i64 %i.jq, i64 16)
-  %i.js = tail call noundef i64 @llvm.fshl.i64(i64 %i.jo, i64 %i.jo, i64 13)
-  %i.jt = xor i64 %i.js, %13                      ; 3 uses
-  %15 = add i64 %i.jt, %i.jk                      ; 3 uses
-  %16 = tail call noundef i64 @llvm.fshl.i64(i64 %15, i64 %15, i64 32)
-  %i.ju = add i64 %i.jq, %16                      ; 2 uses
-  %i.jv = xor i64 %i.jr, %i.ju                    ; 2 uses
-  %i.jw = tail call noundef i64 @llvm.fshl.i64(i64 %i.jv, i64 %i.jv, i64 21)
-  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jt, i64 %i.jt, i64 17)
-  %18 = xor i64 %17, %15                          ; 3 uses
-  %19 = tail call noundef i64 @llvm.fshl.i64(i64 %18, i64 %18, i64 13)
-  %i.jx = add i64 %18, %i.jp
-  %20 = xor i64 %19, %i.jx                        ; 3 uses
-  %i.jy = tail call noundef i64 @llvm.fshl.i64(i64 %20, i64 %20, i64 17)
-  %i.jz = xor i64 %i.jw, %i.jy
-  %21 = add i64 %20, %i.ju                        ; 3 uses
-  %i.ka = tail call noundef i64 @llvm.fshl.i64(i64 %21, i64 %21, i64 32)
-  %i.kb = xor i64 %i.jz, %i.ka
-  %i.kc = xor i64 %i.kb, %21
+  %i.jr = tail call noundef i64 @llvm.fshl.i64(i64 %i.jq, i64 %i.jq, i64 13)
+  %i.js = tail call noundef i64 @llvm.fshl.i64(i64 %i.jo, i64 %i.jo, i64 16)
+  %i.jt = xor i64 %i.js, %12                      ; 3 uses
+  %13 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jk, i64 %i.jk, i64 32)
+  %14 = add i64 %i.jt, %13                        ; 2 uses
+  %i.ju = add i64 %i.jq, %14
+  %i.jv = xor i64 %i.jr, %i.ju                    ; 3 uses
+  %i.jw = tail call noundef i64 @llvm.fshl.i64(i64 %i.jt, i64 %i.jt, i64 21)
+  %15 = xor i64 %i.jw, %14                        ; 3 uses
+  %16 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jp, i64 %i.jp, i64 32)
+  %17 = add i64 %15, %16                          ; 2 uses
+  %i.jx = add i64 %i.jv, %17                      ; 3 uses
+  %18 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jx, i64 %i.jx, i64 32)
+  %i.jy = tail call noundef i64 @llvm.fshl.i64(i64 %15, i64 %15, i64 16)
+  %i.jz = xor i64 %i.jy, %17                      ; 2 uses
+  %19 = tail call noundef i64 @llvm.fshl.i64(i64 %i.jz, i64 %i.jz, i64 21)
+  %i.ka = tail call noundef i64 @llvm.fshl.i64(i64 %i.jv, i64 %i.jv, i64 17)
+  %20 = xor i64 %19, %i.ka
+  %i.kb = xor i64 %20, %18
+  %i.kc = xor i64 %i.kb, %i.jx
   %i.kd = load i64, ptr %i.bh, align 8, !noundef !110 ; 2 uses
   %i.ke = add i64 %i.kd, -1                       ; 5 uses
   %i.kf = and i64 %i.ke, %i.kc                    ; 6 uses
@@ -1645,7 +1643,8 @@ bb.an:                                            ; preds = %bb.al, %bb.am
 bb.ao:                                            ; preds = %bb.an
   %i.kg = load ptr, ptr %.sroa.0.0.i, align 8, !nonnull !110, !noundef !110 ; 3 uses
   %i.kh = getelementptr inbounds nuw [8 x i8], ptr %i.kg, i64 %i.kf ; 2 uses
-  %i.ki = icmp eq i64 %4, 0
+  %21 = and i64 %i.bm, 2
+  %i.ki = icmp eq i64 %21, 0
   br i1 %i.ki, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.i
 
 _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i: ; preds = %bb.ao, %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB16_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i.backedge
@@ -1687,7 +1686,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %.val23.us.i = load ptr, ptr %i.kr, align 8, !nonnull !110, !noundef !110 ; 4 uses
-  %.val24.us.i = load ptr, ptr %6, align 8, !nonnull !110, !noundef !110 ; 4 uses
+  %.val24.us.i = load ptr, ptr %5, align 8, !nonnull !110, !noundef !110 ; 4 uses
   %i.kt = icmp eq ptr %.val23.us.i, %.val24.us.i
   br i1 %i.kt, label %_RNvXsQ_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyENtNtCscI6d9CVNmLh_4core3cmp9PartialEq2neCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread50.us.i, label %bb.au
 
@@ -1781,7 +1780,7 @@ bb.az:                                            ; preds = %._crit_edge.i.i
 bb.ba:                                            ; preds = %bb.az
   %i.lx = inttoptr i64 %i.lv to ptr
   %.val23.i = load ptr, ptr %i.lx, align 8, !nonnull !110, !noundef !110 ; 4 uses
-  %.val24.i = load ptr, ptr %6, align 8, !nonnull !110, !noundef !110 ; 4 uses
+  %.val24.i = load ptr, ptr %5, align 8, !nonnull !110, !noundef !110 ; 4 uses
   %i.ly = icmp eq ptr %.val23.i, %.val24.i
   br i1 %i.ly, label %_RNvXsQ_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyENtNtCscI6d9CVNmLh_4core3cmp9PartialEq2neCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread50.i, label %bb.bb
 
@@ -1830,7 +1829,8 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
 
 bb.be:                                            ; preds = %.loopexit
   %i.mp = icmp eq i64 %i.bp, 0
-  %i.mq = icmp eq i64 %4, 0
+  %22 = and i64 %i.bm, 2
+  %i.mq = icmp eq i64 %22, 0
   %or.cond41 = or i1 %i.mp, %i.mq
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %_RINvNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket20defer_destroy_bucketINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEINtNtNtNtB8_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock5mutex5MutexuEEECsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %bb.bf
@@ -2233,13 +2233,12 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
   %.sroa.6.1 = phi i64 [ %.sroa.6.0228, %bb.q ], [ %.sroa.6.2, %.loopexit ] ; 15 uses
   %.sroa.412.1 = phi i64 [ %.sroa.412.0229, %bb.q ], [ %.sroa.412.2, %.loopexit ] ; 16 uses
   %.sroa.010.0 = phi i1 [ false, %bb.q ], [ %.not37, %.loopexit ]
-  %i.bh = load atomic i64, ptr %.sroa.02.0230 acquire, align 8 ; 6 uses
+  %i.bh = load atomic i64, ptr %.sroa.02.0230 acquire, align 8 ; 7 uses
   %i.bi = and i64 %i.bh, 1
   %i.bj = icmp eq i64 %i.bi, 0
   br i1 %i.bj, label %bb.r, label %.loopexit191
 
 bb.r:                                             ; preds = %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketNtNtCs40k4W9msRzi_5alloc6string6StringINtNtNtB16_6future11invalidator9PredicateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB34_16CachedReaderDataEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit63
-  %4 = and i64 %i.bh, 2                           ; 2 uses
   %i.bk = and i64 %i.bh, -8                       ; 3 uses
   %i.bl = or i64 %i.bh, 4                         ; 7 uses
   %i.bm = icmp eq i64 %i.bk, 0                    ; 2 uses
@@ -2293,9 +2292,9 @@ bb.x:                                             ; preds = %bb.r
 bb.y:                                             ; preds = %bb.x
   %i.by = inttoptr i64 %i.bk to ptr               ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !766)
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8 ; 3 uses
+  %i.bz = getelementptr i8, ptr %i.by, i64 8      ; 3 uses
   %.val.i.i = load ptr, ptr %i.bz, align 8, !alias.scope !766, !noalias !767, !nonnull !110, !noundef !110 ; 4 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 16 ; 3 uses
+  %i.ca = getelementptr i8, ptr %i.by, i64 16     ; 3 uses
   %.val1.i.i = load i64, ptr %i.ca, align 8, !alias.scope !766, !noalias !767, !noundef !110 ; 5 uses
   %i.cb = and i64 %.val1.i.i, 7                   ; 7 uses
   %i.cc = and i64 %.val1.i.i, -8                  ; 2 uses
@@ -2431,60 +2430,60 @@ bb.ad:                                            ; preds = %_RNvXs3_NtNtCscI6d9
   %i.ex = tail call noundef i64 @llvm.fshl.i64(i64 %i.ew, i64 %i.ew, i64 16)
   %i.ey = add i64 %i.ew, %.sroa.12138.2           ; 2 uses
   %i.ez = xor i64 %i.ex, %i.ey                    ; 3 uses
-  %5 = tail call noundef i64 @llvm.fshl.i64(i64 %i.ez, i64 %i.ez, i64 21)
   %i.fa = add i64 %.sroa.0133.2, %.sroa.22.2      ; 3 uses
   %i.fb = tail call noundef i64 @llvm.fshl.i64(i64 %i.fa, i64 %i.fa, i64 32)
   %i.fc = add i64 %i.ez, %i.fb                    ; 2 uses
-  %i.fd = xor i64 %5, %i.fc                       ; 3 uses
-  %6 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fd, i64 %i.fd, i64 16)
+  %i.fd = xor i64 %i.fc, %i.ev
   %i.fe = tail call noundef i64 @llvm.fshl.i64(i64 %.sroa.22.2, i64 %.sroa.22.2, i64 13)
   %i.ff = xor i64 %i.fa, %i.fe                    ; 3 uses
   %i.fg = add i64 %i.ey, %i.ff                    ; 3 uses
-  %i.fh = tail call noundef i64 @llvm.fshl.i64(i64 %i.fg, i64 %i.fg, i64 32)
-  %i.fi = xor i64 %i.fh, 255
-  %i.fj = add i64 %i.fd, %i.fi                    ; 2 uses
-  %i.fk = xor i64 %6, %i.fj                       ; 3 uses
-  %i.fl = tail call noundef i64 @llvm.fshl.i64(i64 %i.fk, i64 %i.fk, i64 21)
-  %i.fm = xor i64 %i.fc, %i.ev
-  %i.fn = tail call noundef i64 @llvm.fshl.i64(i64 %i.ff, i64 %i.ff, i64 17)
-  %i.fo = xor i64 %i.fg, %i.fn                    ; 3 uses
-  %i.fp = add i64 %i.fm, %i.fo                    ; 3 uses
-  %7 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fp, i64 %i.fp, i64 32)
-  %8 = add i64 %i.fk, %7                          ; 2 uses
-  %i.fq = xor i64 %i.fl, %8                       ; 3 uses
-  %i.fr = tail call noundef i64 @llvm.fshl.i64(i64 %i.fq, i64 %i.fq, i64 16)
-  %i.fs = tail call noundef i64 @llvm.fshl.i64(i64 %i.fo, i64 %i.fo, i64 13)
-  %i.ft = xor i64 %i.fp, %i.fs                    ; 3 uses
-  %9 = add i64 %i.ft, %i.fj                       ; 3 uses
-  %10 = tail call noundef i64 @llvm.fshl.i64(i64 %9, i64 %9, i64 32)
-  %i.fu = add i64 %i.fq, %10                      ; 2 uses
+  %i.fh = tail call noundef i64 @llvm.fshl.i64(i64 %i.ff, i64 %i.ff, i64 17)
+  %i.fi = xor i64 %i.fg, %i.fh                    ; 3 uses
+  %i.fj = add i64 %i.fd, %i.fi                    ; 3 uses
+  %4 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fi, i64 %i.fi, i64 13)
+  %i.fk = xor i64 %i.fj, %4                       ; 3 uses
+  %i.fl = tail call noundef i64 @llvm.fshl.i64(i64 %i.ez, i64 %i.ez, i64 21)
+  %i.fm = xor i64 %i.fl, %i.fc                    ; 3 uses
+  %i.fn = tail call noundef i64 @llvm.fshl.i64(i64 %i.fg, i64 %i.fg, i64 32)
+  %i.fo = xor i64 %i.fn, 255
+  %i.fp = add i64 %i.fm, %i.fo                    ; 2 uses
+  %5 = add i64 %i.fk, %i.fp                       ; 3 uses
+  %6 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fk, i64 %i.fk, i64 17)
+  %i.fq = xor i64 %5, %6                          ; 3 uses
+  %i.fr = tail call noundef i64 @llvm.fshl.i64(i64 %i.fq, i64 %i.fq, i64 13)
+  %i.fs = tail call noundef i64 @llvm.fshl.i64(i64 %i.fm, i64 %i.fm, i64 16)
+  %i.ft = xor i64 %i.fs, %i.fp                    ; 3 uses
+  %7 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fj, i64 %i.fj, i64 32)
+  %8 = add i64 %i.ft, %7                          ; 2 uses
+  %i.fu = add i64 %i.fq, %8                       ; 3 uses
   %i.fv = xor i64 %i.fr, %i.fu                    ; 3 uses
-  %i.fw = tail call noundef i64 @llvm.fshl.i64(i64 %i.fv, i64 %i.fv, i64 21)
-  %i.fx = tail call noundef i64 @llvm.fshl.i64(i64 %i.ft, i64 %i.ft, i64 17)
-  %i.fy = xor i64 %9, %i.fx                       ; 3 uses
-  %11 = add i64 %i.fy, %8                         ; 3 uses
-  %12 = tail call noundef i64 @llvm.fshl.i64(i64 %11, i64 %11, i64 32)
-  %i.fz = add i64 %i.fv, %12                      ; 2 uses
+  %i.fw = tail call noundef i64 @llvm.fshl.i64(i64 %i.fv, i64 %i.fv, i64 17)
+  %i.fx = tail call noundef i64 @llvm.fshl.i64(i64 %i.ft, i64 %i.ft, i64 21)
+  %i.fy = xor i64 %i.fx, %8                       ; 3 uses
+  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %5, i64 %5, i64 32)
+  %10 = add i64 %i.fy, %9                         ; 2 uses
+  %i.fz = add i64 %i.fv, %10                      ; 3 uses
   %i.ga = xor i64 %i.fw, %i.fz                    ; 3 uses
-  %i.gb = tail call noundef i64 @llvm.fshl.i64(i64 %i.ga, i64 %i.ga, i64 16)
-  %i.gc = tail call noundef i64 @llvm.fshl.i64(i64 %i.fy, i64 %i.fy, i64 13)
-  %i.gd = xor i64 %i.gc, %11                      ; 3 uses
-  %13 = add i64 %i.gd, %i.fu                      ; 3 uses
-  %14 = tail call noundef i64 @llvm.fshl.i64(i64 %13, i64 %13, i64 32)
-  %i.ge = add i64 %i.ga, %14                      ; 2 uses
-  %i.gf = xor i64 %i.gb, %i.ge                    ; 2 uses
-  %i.gg = tail call noundef i64 @llvm.fshl.i64(i64 %i.gf, i64 %i.gf, i64 21)
-  %15 = tail call noundef i64 @llvm.fshl.i64(i64 %i.gd, i64 %i.gd, i64 17)
-  %16 = xor i64 %15, %13                          ; 3 uses
-  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %16, i64 %16, i64 13)
-  %i.gh = add i64 %16, %i.fz
-  %18 = xor i64 %17, %i.gh                        ; 3 uses
-  %i.gi = tail call noundef i64 @llvm.fshl.i64(i64 %18, i64 %18, i64 17)
-  %i.gj = xor i64 %i.gg, %i.gi
-  %19 = add i64 %18, %i.ge                        ; 3 uses
-  %i.gk = tail call noundef i64 @llvm.fshl.i64(i64 %19, i64 %19, i64 32)
-  %i.gl = xor i64 %i.gj, %i.gk
-  %i.gm = xor i64 %i.gl, %19
+  %i.gb = tail call noundef i64 @llvm.fshl.i64(i64 %i.ga, i64 %i.ga, i64 13)
+  %i.gc = tail call noundef i64 @llvm.fshl.i64(i64 %i.fy, i64 %i.fy, i64 16)
+  %i.gd = xor i64 %i.gc, %10                      ; 3 uses
+  %11 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fu, i64 %i.fu, i64 32)
+  %12 = add i64 %i.gd, %11                        ; 2 uses
+  %i.ge = add i64 %i.ga, %12
+  %i.gf = xor i64 %i.gb, %i.ge                    ; 3 uses
+  %i.gg = tail call noundef i64 @llvm.fshl.i64(i64 %i.gd, i64 %i.gd, i64 21)
+  %13 = xor i64 %i.gg, %12                        ; 3 uses
+  %14 = tail call noundef i64 @llvm.fshl.i64(i64 %i.fz, i64 %i.fz, i64 32)
+  %15 = add i64 %13, %14                          ; 2 uses
+  %i.gh = add i64 %i.gf, %15                      ; 3 uses
+  %16 = tail call noundef i64 @llvm.fshl.i64(i64 %i.gh, i64 %i.gh, i64 32)
+  %i.gi = tail call noundef i64 @llvm.fshl.i64(i64 %13, i64 %13, i64 16)
+  %i.gj = xor i64 %i.gi, %15                      ; 2 uses
+  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %i.gj, i64 %i.gj, i64 21)
+  %i.gk = tail call noundef i64 @llvm.fshl.i64(i64 %i.gf, i64 %i.gf, i64 17)
+  %18 = xor i64 %17, %i.gk
+  %i.gl = xor i64 %18, %16
+  %i.gm = xor i64 %i.gl, %i.gh
   %i.gn = load i64, ptr %i.bf, align 8, !noundef !110 ; 2 uses
   %i.go = add i64 %i.gn, -1                       ; 5 uses
   %i.gp = and i64 %i.go, %i.gm                    ; 6 uses
@@ -2494,7 +2493,8 @@ bb.ad:                                            ; preds = %_RNvXs3_NtNtCscI6d9
 bb.ae:                                            ; preds = %bb.ad
   %i.gq = load ptr, ptr %.sroa.0.0.i, align 8, !nonnull !110, !noundef !110 ; 3 uses
   %i.gr = getelementptr inbounds nuw [8 x i8], ptr %i.gq, i64 %i.gp ; 2 uses
-  %i.gs = icmp eq i64 %4, 0
+  %19 = and i64 %i.bh, 2
+  %i.gs = icmp eq i64 %19, 0
   br i1 %i.gs, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketNtNtCs40k4W9msRzi_5alloc6string6StringINtNtNtB16_6future11invalidator9PredicateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB34_16CachedReaderDataEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i, label %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketNtNtCs40k4W9msRzi_5alloc6string6StringINtNtNtB16_6future11invalidator9PredicateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB34_16CachedReaderDataEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.i
 
 _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketNtNtCs40k4W9msRzi_5alloc6string6StringINtNtNtB16_6future11invalidator9PredicateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB34_16CachedReaderDataEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i: ; preds = %bb.ae, %_RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6bucket6BucketNtNtCs40k4W9msRzi_5alloc6string6StringINtNtNtB16_6future11invalidator9PredicateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB34_16CachedReaderDataEEE21compare_exchange_weakINtB6_6SharedBX_EECsc93vp1BCDlY_26lance_namespace_datafusion.exit.us.i.backedge
@@ -2639,7 +2639,8 @@ _RINvMs7_NtCskfeRsqx2rfd_15crossbeam_epoch6atomicINtB6_6AtomicINtNtNtNtCskTBvlRM
 
 bb.as:                                            ; preds = %.loopexit
   %i.ib = icmp eq i64 %i.bk, 0
-  %i.ic = icmp eq i64 %4, 0
+  %20 = and i64 %i.bh, 2
+  %i.ic = icmp eq i64 %20, 0
   %or.cond41 = or i1 %i.ib, %i.ic
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %.loopexit191, label %bb.at

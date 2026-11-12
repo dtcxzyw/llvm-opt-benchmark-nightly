@@ -205,9 +205,12 @@ _ZNK4llvm3LLT14getNumElementsEv.exit.lr.ph:       ; preds = %._crit_edge
   %umax = call i32 @llvm.umax.i32(i32 %i.mw, i32 %i.mz)
   %brmerge = select i1 %switch.selectcmp.i.i208, i1 true, i1 %i.nc
   %.mux = select i1 %switch.selectcmp.i.i208, i64 %3, i64 %i.nq
-  %invariant.op = or disjoint i64 %i.nh, 3458764513820540928
   %exitcond.not440.not = icmp ult i32 %i.mw, %i.mz
-  br i1 %exitcond.not440.not, label %.lr.ph442, label %_ZNK4llvm3LLT14getNumElementsEv.exit._crit_edge
+  br i1 %exitcond.not440.not, label %.lr.ph442.preheader, label %_ZNK4llvm3LLT14getNumElementsEv.exit._crit_edge
+
+.lr.ph442.preheader:                              ; preds = %_ZNK4llvm3LLT14getNumElementsEv.exit.lr.ph
+  %invariant.op453 = or disjoint i64 %i.nh, 3458764513820540928
+  br label %.lr.ph442
 
 bb.ae:                                            ; preds = %.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseINS_5SrcOpELb1EE9push_backERKS1_.exit
   %.0163381 = phi ptr [ %i.mt, %.lr.ph ], [ %i.oa, %_ZN4llvm23SmallVectorTemplateBaseINS_5SrcOpELb1EE9push_backERKS1_.exit ] ; 2 uses
@@ -290,8 +293,8 @@ _ZN4llvm11SmallVectorINS_5SrcOpELj8EED2Ev.exit:   ; preds = %_ZNK4llvm3LLT14getN
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #19
   br label %bb.cl
 
-.lr.ph442:                                        ; preds = %_ZNK4llvm3LLT14getNumElementsEv.exit.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseINS_5SrcOpELb1EE9push_backERKS1_.exit212
-  %.0164382441 = phi i32 [ %i.po, %_ZN4llvm23SmallVectorTemplateBaseINS_5SrcOpELb1EE9push_backERKS1_.exit212 ], [ %i.mw, %_ZNK4llvm3LLT14getNumElementsEv.exit.lr.ph ]
+.lr.ph442:                                        ; preds = %.lr.ph442.preheader, %_ZN4llvm23SmallVectorTemplateBaseINS_5SrcOpELb1EE9push_backERKS1_.exit212
+  %.0164382441 = phi i32 [ %i.po, %_ZN4llvm23SmallVectorTemplateBaseINS_5SrcOpELb1EE9push_backERKS1_.exit212 ], [ %i.mw, %.lr.ph442.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #19
   %i.ov = load ptr, ptr %0, align 8, !tbaa !192, !nonnull !179, !align !180
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #19
@@ -317,7 +320,7 @@ bb.ak:                                            ; preds = %bb.aj
   br label %_ZNK4llvm3LLT13getScalarTypeEv.exit
 
 bb.al:                                            ; preds = %bb.aj
-  %.reass = or disjoint i64 %i.pb, %invariant.op
+  %.reass = or disjoint i64 %i.pb, %invariant.op453
   br label %_ZNK4llvm3LLT13getScalarTypeEv.exit
 
 bb.am:                                            ; preds = %bb.ai
@@ -720,8 +723,8 @@ bb.i:                                             ; preds = %._crit_edge, %_ZNK4
   %i.bw = getelementptr inbounds nuw i8, ptr %16, i64 16
   %umax = call i32 @llvm.umax.i32(i32 %i.x, i32 1)
   %i.bx = zext nneg i32 %i.x to i64               ; 2 uses
-  %invariant.op = or disjoint i64 %i.aw, 3458764513820540928
   %wide.trip.count200 = zext nneg i32 %umax to i64
+  %invariant.op223 = or disjoint i64 %i.aw, 3458764513820540928
   br label %bb.n
 
 bb.j:                                             ; preds = %bb.ar
@@ -895,7 +898,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZNK4llvm3LLT14getElementTypeEv.exit
 
 bb.ac:                                            ; preds = %bb.aa
-  %.reass = or disjoint i64 %i.dm, %invariant.op
+  %.reass = or disjoint i64 %i.dm, %invariant.op223
   br label %_ZNK4llvm3LLT14getElementTypeEv.exit
 
 bb.ad:                                            ; preds = %bb.z

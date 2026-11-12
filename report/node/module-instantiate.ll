@@ -205,7 +205,7 @@ _ZN2v88internal6HandleINS0_8JSObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ;
   %i.au = load ptr, ptr %i.h, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 704
   %i.aw = load i8, ptr %i.av, align 8
-  %.not375 = icmp eq i8 %i.aw, 0                  ; 3 uses
+  %.not375 = icmp eq i8 %i.aw, 0                  ; 2 uses
   br i1 %.not375, label %_ZN2v88internal33TorqueGeneratedWasmInstanceObjectINS0_18WasmInstanceObjectENS0_8JSObjectEE18set_exports_objectENS0_6TaggedIS3_EENS0_16WriteBarrierModeE.exit, label %bb.h
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN2v88internal18IsWasmGlobalObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread
@@ -354,8 +354,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN2v88internal33TorqueGeneratedWasmInstanceObjectINS0_18WasmInstanceObjectENS0_8JSObjectEE18set_exports_objectENS0_6TaggedIS3_EENS0_16WriteBarrierModeE.exit
 
 _ZN2v88internal33TorqueGeneratedWasmInstanceObjectINS0_18WasmInstanceObjectENS0_8JSObjectEE18set_exports_objectENS0_6TaggedIS3_EENS0_16WriteBarrierModeE.exit: ; preds = %bb.o, %bb.n, %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %_ZN2v88internal6HandleINS0_8JSObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
-  %5 = phi i32 [ 0, %_ZN2v88internal6HandleINS0_8JSObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 4, %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 4, %bb.n ], [ 4, %bb.o ]
-  %i.dw = phi i8 [ 43, %_ZN2v88internal6HandleINS0_8JSObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 63, %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 63, %bb.n ], [ 63, %bb.o ]
+  %i.dw = phi i8 [ 40, %_ZN2v88internal6HandleINS0_8JSObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 60, %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 60, %bb.n ], [ 60, %bb.o ] ; 3 uses
   %.sroa.0280.0 = phi ptr [ %.0.i.i, %_ZN2v88internal6HandleINS0_8JSObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %i.di, %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %i.di, %bb.n ], [ %i.di, %bb.o ] ; 3 uses
   %i.dx = load ptr, ptr %0, align 8
   %i.dy = load ptr, ptr %i.h, align 8             ; 2 uses
@@ -372,11 +371,16 @@ _ZN2v88internal33TorqueGeneratedWasmInstanceObjectINS0_18WasmInstanceObjectENS0_
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ei, i8 0, i64 32, i1 false)
-  store i8 %i.dw, ptr %3, align 8
-  %6 = zext i1 %.not375 to i32
-  %7 = or disjoint i32 %5, %6
-  %8 = shl nuw nsw i32 %7, 2
-  %9 = xor i32 %8, 16                             ; 2 uses
+  %5 = or disjoint i8 %i.dw, 3
+  store i8 %5, ptr %3, align 8
+  %6 = and i8 %i.dw, 4
+  %7 = and i8 %i.dw, 48
+  %narrow5.i = icmp eq i8 %7, 32
+  %8 = zext i1 %narrow5.i to i8
+  %9 = or disjoint i8 %6, %8
+  %10 = shl nuw nsw i8 %9, 2
+  %11 = xor i8 %10, 16
+  %12 = zext nneg i8 %11 to i32                   ; 2 uses
   %i.ej = load ptr, ptr %i.h, align 8             ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 344
   %i.el = load ptr, ptr %i.ek, align 8            ; 2 uses
@@ -392,7 +396,7 @@ _ZN2v88internal33TorqueGeneratedWasmInstanceObjectINS0_18WasmInstanceObjectENS0_
   %i.er = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.es = load ptr, ptr @_ZN2v88internal5AsmJs19kSingleFunctionNameE, align 8 ; 2 uses
   %i.et = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN2v88internal18g_current_isolate_E)
-  %i.eu = lshr exact i32 %9, 2
+  %i.eu = lshr exact i32 %12, 2
   br label %bb.q
 
 ._crit_edge384:                                   ; preds = %.critedge130, %_ZN2v88internal33TorqueGeneratedWasmInstanceObjectINS0_18WasmInstanceObjectENS0_8JSObjectEE18set_exports_objectENS0_6TaggedIS3_EENS0_16WriteBarrierModeE.exit
@@ -795,7 +799,7 @@ bb.bj:                                            ; preds = %_ZN2v88internal6Str
   br label %bb.bk
 
 _ZN2v88internal6String12AsArrayIndexEPj.exit.thread371: ; preds = %bb.bi, %_ZN2v88internal6String12AsArrayIndexEPj.exit
-  call void @_ZN2v88internal8JSObject21SetNormalizedPropertyENS0_12DirectHandleIS1_EENS2_INS0_4NameEEENS2_INS0_6ObjectEEENS0_15PropertyDetailsE(ptr nonnull %.sroa.0280.0, ptr nonnull %i.ff, ptr %.sroa.0260.1, i32 %9) #22
+  call void @_ZN2v88internal8JSObject21SetNormalizedPropertyENS0_12DirectHandleIS1_EENS2_INS0_4NameEEENS2_INS0_6ObjectEEENS0_15PropertyDetailsE(ptr nonnull %.sroa.0280.0, ptr nonnull %i.ff, ptr %.sroa.0260.1, i32 %12) #22
   br label %bb.bk
 
 bb.bk:                                            ; preds = %_ZN2v88internal6String12AsArrayIndexEPj.exit.thread371, %bb.bj

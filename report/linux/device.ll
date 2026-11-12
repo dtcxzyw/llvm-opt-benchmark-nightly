@@ -204,12 +204,15 @@ bb.a:
   %i.c = getelementptr i8, ptr %0, i64 776        ; 4 uses
   %i.d = icmp ult i16 %1, 128
   %i.e = zext i16 %1 to i32                       ; 3 uses
-  %3 = shl nuw nsw i32 %i.e, 20
-  %invariant.op = or disjoint i32 %3, 984320
   %i.f = getelementptr i8, ptr %0, i64 848        ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 768        ; 2 uses
   %.neg10 = sub i64 -500, %i.b                    ; 2 uses
-  br i1 %i.d, label %.split, label %snd_hdac_make_cmd.exit.i.i.us
+  br i1 %i.d, label %.split.preheader, label %snd_hdac_make_cmd.exit.i.i.us
+
+.split.preheader:                                 ; preds = %bb.a
+  %3 = shl nuw nsw i32 %i.e, 20
+  %invariant.op = or disjoint i32 %3, 984320
+  br label %.split
 
 snd_hdac_make_cmd.exit.i.i.us:                    ; preds = %bb.a, %bb.f
   %.011.us = phi i32 [ %i.v, %bb.f ], [ 0, %bb.a ]
@@ -259,8 +262,8 @@ bb.f:                                             ; preds = %bb.e
   %exitcond.not = icmp eq i32 %i.v, 500
   br i1 %exitcond.not, label %.loopexit, label %snd_hdac_make_cmd.exit.i.i.us, !llvm.loop !27
 
-.split:                                           ; preds = %bb.a, %bb.m
-  %.011 = phi i32 [ %i.al, %bb.m ], [ 0, %bb.a ]
+.split:                                           ; preds = %.split.preheader, %bb.m
+  %.011 = phi i32 [ %i.al, %bb.m ], [ 0, %.split.preheader ]
   %i.w = load i32, ptr %i.c, align 8              ; 3 uses
   %.not.i.i.i = icmp ult i32 %i.w, 16
   br i1 %.not.i.i.i, label %bb.h, label %bb.g
