@@ -206,7 +206,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.av
   call void @llvm.experimental.noalias.scope.decl(metadata !20852), !noalias !20806
   %i.kh = load ptr, ptr %i.ae, align 8, !alias.scope !20852, !noalias !20804, !nonnull !152, !noundef !152 ; 5 uses
   %.val3.i.i.i = load <16 x i8>, ptr %i.kh, align 16, !noalias !20853
-  %i.ki = icmp sgt <16 x i8> %.val3.i.i.i, splat (i8 -1)
+  %i.ki = icmp sgt <16 x i8> %.val3.i.i.i, splat (i8 -1) ; 2 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.kh, i64 16 ; 2 uses
   %i.kk = load i64, ptr %i.eg, align 8, !alias.scope !20852, !noalias !20804, !noundef !152 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !20854
@@ -215,7 +215,6 @@ bb.ay:                                            ; preds = %bb.ax, %bb.av
   call void @llvm.experimental.noalias.scope.decl(metadata !20856), !noalias !20806
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !20855
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6173)
-  %4 = bitcast <16 x i1> %i.ki to i16             ; 2 uses
   %.not.i.i.i.i.i.i = icmp ugt i64 %i.kk, 4
   br i1 %.not.i.i.i.i.i.i, label %bb.bd, label %.lr.ph.i.i.preheader.i.i.i
 
@@ -284,13 +283,18 @@ bb.be:                                            ; preds = %.noexc.i.i.i.i
   %spec.select1.i.i.i = select i1 %i.kv, ptr %i.ei, ptr %i.eh ; 2 uses
   %.pre.i.i.i = load i64, ptr %spec.select1.i.i.i, align 8, !alias.scope !20856, !noalias !20855 ; 2 uses
   %i.kw = icmp ult i64 %.pre.i.i.i, %.pre33.i.i.i.i.i
-  br i1 %i.kw, label %.lr.ph.i.i.preheader.i.i.i, label %._crit_edge.i.i.i.i.i.thread.a
+  br i1 %i.kw, label %.lr.ph.i.i.preheader.i.i.i, label %._crit_edge.i.i.i.i.i.thread
+
+._crit_edge.i.i.i.i.i.thread:                     ; preds = %.thread.i.i.i.i
+  %4 = bitcast <16 x i1> %i.ki to i16
+  br label %._crit_edge.i.i.i.i.i.thread.a
 
 .lr.ph.i.i.preheader.i.i.i:                       ; preds = %.thread.i.i.i.i, %bb.ay
   %i.kx = phi ptr [ %spec.select1.i.i.i, %.thread.i.i.i.i ], [ %i.eh, %bb.ay ] ; 3 uses
   %.sink.i.pre-phi.i1822.i11.i.i.i = phi i64 [ %.pre33.i.i.i.i.i, %.thread.i.i.i.i ], [ 4, %bb.ay ] ; 3 uses
   %i.ky = phi ptr [ %spec.select.i.i.i, %.thread.i.i.i.i ], [ %i.v, %bb.ay ]
   %i.kz = phi i64 [ %.pre.i.i.i, %.thread.i.i.i.i ], [ 0, %bb.ay ] ; 2 uses
+  %5 = bitcast <16 x i1> %i.ki to i16
   %i.la = sub i64 %i.kk, %.sink.i.pre-phi.i1822.i11.i.i.i
   %i.lb = add i64 %i.la, %i.kz                    ; 2 uses
   br label %.lr.ph.i.i.i.i.i
@@ -301,12 +305,12 @@ bb.be:                                            ; preds = %.noexc.i.i.i.i
   %i.lc = icmp eq i64 %i.lb, 0
   br i1 %i.lc, label %._crit_edge30.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.thread.a
 
-._crit_edge.i.i.i.i.i.thread.a:                   ; preds = %.thread.i.i.i.i, %._crit_edge.i.i.i.i.i
-  %.sroa.15.1223 = phi i64 [ %i.lb, %._crit_edge.i.i.i.i.i ], [ %i.kk, %.thread.i.i.i.i ]
-  %.sroa.11.1222 = phi i16 [ %i.mj, %._crit_edge.i.i.i.i.i ], [ %4, %.thread.i.i.i.i ] ; 2 uses
-  %.sroa.7169.1221 = phi ptr [ %.sroa.7169.2, %._crit_edge.i.i.i.i.i ], [ %i.kj, %.thread.i.i.i.i ] ; 2 uses
-  %.sroa.0168.1220 = phi ptr [ %.sroa.0168.2, %._crit_edge.i.i.i.i.i ], [ %i.kh, %.thread.i.i.i.i ] ; 2 uses
-  %.not13.i.i.i.i.i95 = icmp eq i16 %.sroa.11.1222, 0
+._crit_edge.i.i.i.i.i.thread.a:                   ; preds = %._crit_edge.i.i.i.i.i.thread, %._crit_edge.i.i.i.i.i
+  %6 = phi i16 [ %4, %._crit_edge.i.i.i.i.i.thread ], [ %i.mj, %._crit_edge.i.i.i.i.i ] ; 2 uses
+  %.sroa.15.1223 = phi i64 [ %i.kk, %._crit_edge.i.i.i.i.i.thread ], [ %i.lb, %._crit_edge.i.i.i.i.i ]
+  %.sroa.7169.1221 = phi ptr [ %i.kj, %._crit_edge.i.i.i.i.i.thread ], [ %.sroa.7169.2, %._crit_edge.i.i.i.i.i ] ; 2 uses
+  %.sroa.0168.1220 = phi ptr [ %i.kh, %._crit_edge.i.i.i.i.i.thread ], [ %.sroa.0168.2, %._crit_edge.i.i.i.i.i ] ; 2 uses
+  %.not13.i.i.i.i.i95 = icmp eq i16 %6, 0
   br i1 %.not13.i.i.i.i.i95, label %.lr.ph.i.i.i.i.i104, label %._crit_edge20.i.i.i.i.i96
 
 .lr.ph.i.i.i.i.i104:                              ; preds = %._crit_edge.i.i.i.i.i.thread.a, %.lr.ph.i.i.i.i.i104
@@ -323,7 +327,7 @@ bb.be:                                            ; preds = %.noexc.i.i.i.i
 ._crit_edge20.i.i.i.i.i96:                        ; preds = %.lr.ph.i.i.i.i.i104, %._crit_edge.i.i.i.i.i.thread.a
   %.sroa.0175.3 = phi ptr [ %.sroa.0168.1220, %._crit_edge.i.i.i.i.i.thread.a ], [ %i.lg, %.lr.ph.i.i.i.i.i104 ] ; 2 uses
   %.sroa.9176.3 = phi ptr [ %.sroa.7169.1221, %._crit_edge.i.i.i.i.i.thread.a ], [ %i.lh, %.lr.ph.i.i.i.i.i104 ]
-  %.lcssa.i.i.i.i.i98 = phi i16 [ %.sroa.11.1222, %._crit_edge.i.i.i.i.i.thread.a ], [ %.cast.i.i.i.i.i108, %.lr.ph.i.i.i.i.i104 ] ; 3 uses
+  %.lcssa.i.i.i.i.i98 = phi i16 [ %6, %._crit_edge.i.i.i.i.i.thread.a ], [ %.cast.i.i.i.i.i108, %.lr.ph.i.i.i.i.i104 ] ; 3 uses
   %i.li = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i.i.i98, i1 true)
   %i.lj = zext nneg i16 %i.li to i64
   %i.lk = sub nsw i64 0, %i.lj
@@ -396,7 +400,7 @@ bb.bi:                                            ; preds = %bb.bf
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.bx, %.lr.ph.i.i.preheader.i.i.i
   %.sroa.0168.0 = phi ptr [ %i.kh, %.lr.ph.i.i.preheader.i.i.i ], [ %.sroa.0168.2, %bb.bx ] ; 2 uses
   %.sroa.7169.0 = phi ptr [ %i.kj, %.lr.ph.i.i.preheader.i.i.i ], [ %.sroa.7169.2, %bb.bx ] ; 2 uses
-  %.sroa.11.0 = phi i16 [ %4, %.lr.ph.i.i.preheader.i.i.i ], [ %i.mj, %bb.bx ] ; 2 uses
+  %.sroa.11.0 = phi i16 [ %5, %.lr.ph.i.i.preheader.i.i.i ], [ %i.mj, %bb.bx ] ; 2 uses
   %.sroa.15.0 = phi i64 [ %i.kk, %.lr.ph.i.i.preheader.i.i.i ], [ %i.mm, %bb.bx ] ; 2 uses
   %.sroa.7.026.i.i.i.i.i = phi i64 [ %i.kz, %.lr.ph.i.i.preheader.i.i.i ], [ %i.ok, %bb.bx ] ; 4 uses
   %i.ma = icmp eq i64 %.sroa.15.0, 0
@@ -799,7 +803,7 @@ bb.n:                                             ; preds = %"_ZN9hashbrown3raw2
   %.ph110 = phi ptr [ %i.gw, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ %i.af, %bb.n ]
   %.sroa.434.0.ph = phi ptr [ %.sroa.434.1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ %.sroa.0.0.i, %bb.n ]
   %.sroa.2235.0.ph = phi i64 [ %i.cb, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
-  %.sroa.19.0.ph = phi i16 [ %i.ca, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
+  %.sroa.19.0.ph = phi <16 x i1> [ %4, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
   %.sroa.14.0.ph = phi ptr [ %.sroa.14.2, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
   %.sroa.8.0.ph = phi ptr [ %.sroa.8.2, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ null, %bb.n ]
   br label %.split.us.preheader.i
@@ -807,7 +811,7 @@ bb.n:                                             ; preds = %"_ZN9hashbrown3raw2
 .split.us.preheader.i:                            ; preds = %.lr.ph.i.i.i23, %.split.us.preheader.i.outer
   %.sroa.434.0 = phi ptr [ %.sroa.434.0.ph, %.split.us.preheader.i.outer ], [ %.sroa.434.1, %.lr.ph.i.i.i23 ] ; 4 uses
   %.sroa.2235.0 = phi i64 [ %.sroa.2235.0.ph, %.split.us.preheader.i.outer ], [ %i.cb, %.lr.ph.i.i.i23 ] ; 2 uses
-  %.sroa.19.0 = phi i16 [ %.sroa.19.0.ph, %.split.us.preheader.i.outer ], [ %i.ca, %.lr.ph.i.i.i23 ]
+  %.sroa.19.0 = phi <16 x i1> [ %.sroa.19.0.ph, %.split.us.preheader.i.outer ], [ %4, %.lr.ph.i.i.i23 ]
   %.sroa.14.0 = phi ptr [ %.sroa.14.0.ph, %.split.us.preheader.i.outer ], [ %.sroa.14.2, %.lr.ph.i.i.i23 ]
   %.sroa.8.0 = phi ptr [ %.sroa.8.0.ph, %.split.us.preheader.i.outer ], [ %.sroa.8.2, %.lr.ph.i.i.i23 ] ; 2 uses
   %.not.i.us.peel.i = icmp eq ptr %.sroa.8.0, null
@@ -828,17 +832,17 @@ bb.p:                                             ; preds = %bb.o
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.434.0, i64 24
   %i.bs = load i64, ptr %i.br, align 8, !alias.scope !57892, !noalias !57893, !noundef !152 ; 2 uses
-  %3 = bitcast <16 x i1> %i.bp to i16
   %i.bt = icmp eq i64 %i.bs, 0
   br i1 %i.bt, label %.split53.us.i, label %.split49.us.i
 
 .split49.us.i:                                    ; preds = %.split.us.preheader.i, %bb.p
   %.sroa.434.1 = phi ptr [ null, %bb.p ], [ %.sroa.434.0, %.split.us.preheader.i ] ; 2 uses
-  %.sroa.19.1 = phi i16 [ %3, %bb.p ], [ %.sroa.19.0, %.split.us.preheader.i ] ; 2 uses
+  %.sroa.19.1 = phi <16 x i1> [ %i.bp, %bb.p ], [ %.sroa.19.0, %.split.us.preheader.i ]
   %.sroa.14.1 = phi ptr [ %i.bq, %bb.p ], [ %.sroa.14.0, %.split.us.preheader.i ] ; 2 uses
   %.sroa.8.1 = phi ptr [ %i.bo, %bb.p ], [ %.sroa.8.0, %.split.us.preheader.i ] ; 2 uses
   %.us-phi51.i = phi i64 [ %i.bs, %bb.p ], [ %.sroa.2235.0, %.split.us.preheader.i ]
-  %.not13.i.i.i.i.i.i = icmp eq i16 %.sroa.19.1, 0
+  %3 = bitcast <16 x i1> %.sroa.19.1 to i16       ; 2 uses
+  %.not13.i.i.i.i.i.i = icmp eq i16 %3, 0
   br i1 %.not13.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h30a840ad61c7bdc8E.exit"
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.split49.us.i, %.lr.ph.i.i.i.i.i.i
@@ -855,9 +859,10 @@ bb.p:                                             ; preds = %bb.o
 "_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h30a840ad61c7bdc8E.exit": ; preds = %.lr.ph.i.i.i.i.i.i, %.split49.us.i
   %.sroa.14.2 = phi ptr [ %.sroa.14.1, %.split49.us.i ], [ %i.by, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
   %.sroa.8.2 = phi ptr [ %.sroa.8.1, %.split49.us.i ], [ %i.bx, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
-  %.lcssa.i.i.i.i.i.i = phi i16 [ %.sroa.19.1, %.split49.us.i ], [ %.cast.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
+  %.lcssa.i.i.i.i.i.i = phi i16 [ %3, %.split49.us.i ], [ %.cast.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
   %i.bz = add i16 %.lcssa.i.i.i.i.i.i, -1
-  %i.ca = and i16 %i.bz, %.lcssa.i.i.i.i.i.i      ; 2 uses
+  %i.ca = and i16 %i.bz, %.lcssa.i.i.i.i.i.i
+  %4 = bitcast i16 %i.ca to <16 x i1>             ; 2 uses
   %i.cb = add i64 %.us-phi51.i, -1                ; 2 uses
   %i.cc = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i.i.i.i, i1 true)
   %i.cd = zext nneg i16 %i.cc to i64
@@ -1260,7 +1265,7 @@ bb.n:                                             ; preds = %"_ZN9hashbrown3raw2
   %.ph110 = phi ptr [ %i.gx, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ %i.ag, %bb.n ]
   %.sroa.434.0.ph = phi ptr [ %.sroa.434.1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ %.sroa.0.0.i, %bb.n ]
   %.sroa.2235.0.ph = phi i64 [ %i.cc, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
-  %.sroa.19.0.ph = phi i16 [ %i.cb, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
+  %.sroa.19.0.ph = phi <16 x i1> [ %4, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
   %.sroa.14.0.ph = phi ptr [ %.sroa.14.2, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ undef, %bb.n ]
   %.sroa.8.0.ph = phi ptr [ %.sroa.8.2, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h92cdda4ddbbc92fdE.exit" ], [ null, %bb.n ]
   br label %.split.us.preheader.i
@@ -1268,7 +1273,7 @@ bb.n:                                             ; preds = %"_ZN9hashbrown3raw2
 .split.us.preheader.i:                            ; preds = %.lr.ph.i.i.i23, %.split.us.preheader.i.outer
   %.sroa.434.0 = phi ptr [ %.sroa.434.0.ph, %.split.us.preheader.i.outer ], [ %.sroa.434.1, %.lr.ph.i.i.i23 ] ; 4 uses
   %.sroa.2235.0 = phi i64 [ %.sroa.2235.0.ph, %.split.us.preheader.i.outer ], [ %i.cc, %.lr.ph.i.i.i23 ] ; 2 uses
-  %.sroa.19.0 = phi i16 [ %.sroa.19.0.ph, %.split.us.preheader.i.outer ], [ %i.cb, %.lr.ph.i.i.i23 ]
+  %.sroa.19.0 = phi <16 x i1> [ %.sroa.19.0.ph, %.split.us.preheader.i.outer ], [ %4, %.lr.ph.i.i.i23 ]
   %.sroa.14.0 = phi ptr [ %.sroa.14.0.ph, %.split.us.preheader.i.outer ], [ %.sroa.14.2, %.lr.ph.i.i.i23 ]
   %.sroa.8.0 = phi ptr [ %.sroa.8.0.ph, %.split.us.preheader.i.outer ], [ %.sroa.8.2, %.lr.ph.i.i.i23 ] ; 2 uses
   %.not.i.us.peel.i = icmp eq ptr %.sroa.8.0, null
@@ -1289,17 +1294,17 @@ bb.p:                                             ; preds = %bb.o
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.434.0, i64 24
   %i.bt = load i64, ptr %i.bs, align 8, !alias.scope !57994, !noalias !57995, !noundef !152 ; 2 uses
-  %3 = bitcast <16 x i1> %i.bq to i16
   %i.bu = icmp eq i64 %i.bt, 0
   br i1 %i.bu, label %.split53.us.i, label %.split49.us.i
 
 .split49.us.i:                                    ; preds = %.split.us.preheader.i, %bb.p
   %.sroa.434.1 = phi ptr [ null, %bb.p ], [ %.sroa.434.0, %.split.us.preheader.i ] ; 2 uses
-  %.sroa.19.1 = phi i16 [ %3, %bb.p ], [ %.sroa.19.0, %.split.us.preheader.i ] ; 2 uses
+  %.sroa.19.1 = phi <16 x i1> [ %i.bq, %bb.p ], [ %.sroa.19.0, %.split.us.preheader.i ]
   %.sroa.14.1 = phi ptr [ %i.br, %bb.p ], [ %.sroa.14.0, %.split.us.preheader.i ] ; 2 uses
   %.sroa.8.1 = phi ptr [ %i.bp, %bb.p ], [ %.sroa.8.0, %.split.us.preheader.i ] ; 2 uses
   %.us-phi51.i = phi i64 [ %i.bt, %bb.p ], [ %.sroa.2235.0, %.split.us.preheader.i ]
-  %.not13.i.i.i.i.i.i = icmp eq i16 %.sroa.19.1, 0
+  %3 = bitcast <16 x i1> %.sroa.19.1 to i16       ; 2 uses
+  %.not13.i.i.i.i.i.i = icmp eq i16 %3, 0
   br i1 %.not13.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h30a840ad61c7bdc8E.exit"
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.split49.us.i, %.lr.ph.i.i.i.i.i.i
@@ -1316,9 +1321,10 @@ bb.p:                                             ; preds = %bb.o
 "_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h30a840ad61c7bdc8E.exit": ; preds = %.lr.ph.i.i.i.i.i.i, %.split49.us.i
   %.sroa.14.2 = phi ptr [ %.sroa.14.1, %.split49.us.i ], [ %i.bz, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
   %.sroa.8.2 = phi ptr [ %.sroa.8.1, %.split49.us.i ], [ %i.by, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
-  %.lcssa.i.i.i.i.i.i = phi i16 [ %.sroa.19.1, %.split49.us.i ], [ %.cast.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
+  %.lcssa.i.i.i.i.i.i = phi i16 [ %3, %.split49.us.i ], [ %.cast.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
   %i.ca = add i16 %.lcssa.i.i.i.i.i.i, -1
-  %i.cb = and i16 %i.ca, %.lcssa.i.i.i.i.i.i      ; 2 uses
+  %i.cb = and i16 %i.ca, %.lcssa.i.i.i.i.i.i
+  %4 = bitcast i16 %i.cb to <16 x i1>             ; 2 uses
   %i.cc = add i64 %.us-phi51.i, -1                ; 2 uses
   %i.cd = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i.i.i.i, i1 true)
   %i.ce = zext nneg i16 %i.cd to i64
@@ -1721,10 +1727,10 @@ bb.w:                                             ; preds = %.lr.ph.i.i.i
 .split49.us.i.i.i:                                ; preds = %bb.w
   %i.dp = getelementptr inbounds i8, ptr %i.dc, i64 -48
   %i.dq = load ptr, ptr %i.dp, align 8, !alias.scope !60865, !noalias !60866, !nonnull !152, !noundef !152 ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.dq, i64 16 ; 2 uses
   %.val3.i.i.i.i.i.us.peel.i.i.i = load <16 x i8>, ptr %i.dq, align 16, !noalias !60867
   %i.dr = icmp sgt <16 x i8> %.val3.i.i.i.i.i.us.peel.i.i.i, splat (i8 -1)
   %i.ds = bitcast <16 x i1> %i.dr to i16          ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.dq, i64 16 ; 2 uses
   %.not13.i.i.i.i.i.i.i.i = icmp eq i16 %i.ds, 0
   br i1 %.not13.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$9size_hint17he3e1a33231501438E.exit.i.i.i.i"
 
@@ -2127,7 +2133,6 @@ bb.h:                                             ; preds = %bb.g
   %i.bs = icmp eq <16 x i8> %.val3.i.i.i, %i.bf
   %i.bt = icmp eq <16 x i8> %.val.i.i.i, %i.bg
   %narrow.i.i.i = select <16 x i1> %i.bs, <16 x i1> %i.bt, <16 x i1> zeroinitializer
-  %3 = bitcast <16 x i1> %narrow.i.i.i to i16     ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 2 uses
   %.val3.i.1.i.i = load <16 x i8>, ptr %i.bu, align 1, !alias.scope !107918, !noalias !107919
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 %storemerge105108.i.i
@@ -2135,7 +2140,6 @@ bb.h:                                             ; preds = %bb.g
   %i.bw = icmp eq <16 x i8> %.val3.i.1.i.i, %i.bf
   %i.bx = icmp eq <16 x i8> %.val.i.1.i.i, %i.bg
   %narrow.i.1.i.i = select <16 x i1> %i.bw, <16 x i1> %i.bx, <16 x i1> zeroinitializer
-  %4 = bitcast <16 x i1> %narrow.i.1.i.i to i16   ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bq, i64 32 ; 2 uses
   %.val3.i.2.i.i = load <16 x i8>, ptr %i.by, align 1, !alias.scope !107918, !noalias !107919
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 %storemerge105108.i.i
@@ -2143,7 +2147,6 @@ bb.h:                                             ; preds = %bb.g
   %i.ca = icmp eq <16 x i8> %.val3.i.2.i.i, %i.bf
   %i.cb = icmp eq <16 x i8> %.val.i.2.i.i, %i.bg
   %narrow.i.2.i.i = select <16 x i1> %i.ca, <16 x i1> %i.cb, <16 x i1> zeroinitializer
-  %5 = bitcast <16 x i1> %narrow.i.2.i.i to i16   ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bq, i64 48 ; 2 uses
   %.val3.i.3.i.i = load <16 x i8>, ptr %i.cc, align 1, !alias.scope !107918, !noalias !107919
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 %storemerge105108.i.i
@@ -2151,45 +2154,48 @@ bb.h:                                             ; preds = %bb.g
   %i.ce = icmp eq <16 x i8> %.val3.i.3.i.i, %i.bf
   %i.cf = icmp eq <16 x i8> %.val.i.3.i.i, %i.bg
   %narrow.i.3.i.i = select <16 x i1> %i.ce, <16 x i1> %i.cf, <16 x i1> zeroinitializer
-  %i.cg = bitcast <16 x i1> %narrow.i.3.i.i to i16 ; 2 uses
-  %i.ch = icmp eq i16 %3, 0
+  %i.cg = bitcast <16 x i1> %narrow.i.i.i to i16  ; 2 uses
+  %i.ch = icmp eq i16 %i.cg, 0
   br i1 %i.ch, label %.preheader109.1.i.i, label %bb.m
 
 .preheader109.1.i.i:                              ; preds = %bb.m, %.lr.ph.i28.i
   %.sroa.015.2.i.i = phi i8 [ 0, %.lr.ph.i28.i ], [ %i.df, %bb.m ] ; 3 uses
-  %i.ci = icmp eq i16 %4, 0
+  %3 = bitcast <16 x i1> %narrow.i.1.i.i to i16   ; 2 uses
+  %i.ci = icmp eq i16 %3, 0
   br i1 %i.ci, label %.preheader109.2.i.i, label %bb.i
 
 bb.i:                                             ; preds = %.preheader109.1.i.i
   %i.cj = or disjoint i64 %.sroa.07.0117.i.i, 16
   %i.ck = trunc nuw i8 %.sroa.015.2.i.i to i1
-  %i.cl = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.cj, i16 noundef %4, i1 noundef zeroext %i.ck)
+  %i.cl = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.cj, i16 noundef %3, i1 noundef zeroext %i.ck)
   %i.cm = zext i1 %i.cl to i8
   %i.cn = or i8 %.sroa.015.2.i.i, %i.cm
   br label %.preheader109.2.i.i
 
 .preheader109.2.i.i:                              ; preds = %bb.i, %.preheader109.1.i.i
   %.sroa.015.2.1.i.i = phi i8 [ %.sroa.015.2.i.i, %.preheader109.1.i.i ], [ %i.cn, %bb.i ] ; 3 uses
-  %i.co = icmp eq i16 %5, 0
+  %4 = bitcast <16 x i1> %narrow.i.2.i.i to i16   ; 2 uses
+  %i.co = icmp eq i16 %4, 0
   br i1 %i.co, label %.preheader109.3.i.i, label %bb.j
 
 bb.j:                                             ; preds = %.preheader109.2.i.i
   %i.cp = or disjoint i64 %.sroa.07.0117.i.i, 32
   %i.cq = trunc nuw i8 %.sroa.015.2.1.i.i to i1
-  %i.cr = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.cp, i16 noundef %5, i1 noundef zeroext %i.cq)
+  %i.cr = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.cp, i16 noundef %4, i1 noundef zeroext %i.cq)
   %i.cs = zext i1 %i.cr to i8
   %i.ct = or i8 %.sroa.015.2.1.i.i, %i.cs
   br label %.preheader109.3.i.i
 
 .preheader109.3.i.i:                              ; preds = %bb.j, %.preheader109.2.i.i
   %.sroa.015.2.2.i.i = phi i8 [ %.sroa.015.2.1.i.i, %.preheader109.2.i.i ], [ %i.ct, %bb.j ] ; 3 uses
-  %i.cu = icmp eq i16 %i.cg, 0
+  %5 = bitcast <16 x i1> %narrow.i.3.i.i to i16   ; 2 uses
+  %i.cu = icmp eq i16 %5, 0
   br i1 %i.cu, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.preheader109.3.i.i
   %i.cv = or disjoint i64 %.sroa.07.0117.i.i, 48
   %i.cw = trunc nuw i8 %.sroa.015.2.2.i.i to i1
-  %i.cx = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.cv, i16 noundef %i.cg, i1 noundef zeroext %i.cw)
+  %i.cx = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.cv, i16 noundef %5, i1 noundef zeroext %i.cw)
   %i.cy = zext i1 %i.cx to i8
   %i.cz = or i8 %.sroa.015.2.2.i.i, %i.cy
   br label %bb.l
@@ -2204,7 +2210,7 @@ bb.l:                                             ; preds = %bb.k, %.preheader10
   br i1 %or.cond.i.i, label %.preheader.i26.i, label %.lr.ph.i28.i
 
 bb.m:                                             ; preds = %.lr.ph.i28.i
-  %i.de = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.07.0117.i.i, i16 noundef %3, i1 noundef zeroext false)
+  %i.de = call fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h62cfaca4d3fd88fbE"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.07.0117.i.i, i16 noundef %i.cg, i1 noundef zeroext false)
   %i.df = zext i1 %i.de to i8
   br label %.preheader109.1.i.i
 

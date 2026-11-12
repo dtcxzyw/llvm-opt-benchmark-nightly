@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %.lr.ph3747, %_ZNK3g
   %i.hx = fadd <16 x float> %i.hv, %i.hw
   %i.hy = fmul <16 x float> %i.hp, %i.hp
   %i.hz = fadd <16 x float> %i.hx, %i.hy          ; 2 uses
-  %i.ia = fcmp olt <16 x float> %i.hu, %i.au
-  %i.ib = bitcast <16 x i1> %i.ia to i16          ; 3 uses
-  %i.ic = fcmp olt <16 x float> %i.hz, %i.au
-  %i.id = bitcast <16 x i1> %i.ic to i16          ; 3 uses
+  %i.ia = fcmp olt <16 x float> %i.hu, %i.au      ; 2 uses
+  %i.ib = bitcast <16 x i1> %i.ia to i16          ; 2 uses
+  %i.ic = fcmp olt <16 x float> %i.hz, %i.au      ; 2 uses
+  %i.id = bitcast <16 x i1> %i.ic to i16          ; 2 uses
   %i.ie = shl nsw i32 %i.gu, 1                    ; 2 uses
   %i.if = icmp eq i32 %i.ie, %i.by
   br i1 %i.if, label %bb.d, label %bb.e
@@ -215,6 +215,8 @@ bb.c:                                             ; preds = %.lr.ph3747, %_ZNK3g
 bb.d:                                             ; preds = %.critedge562
   %i.ig = and i16 %i.ib, %i.v
   %i.ih = and i16 %i.id, %i.w
+  %5 = bitcast i16 %i.ig to <16 x i1>
+  %6 = bitcast i16 %i.ih to <16 x i1>
   br label %_ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit574
 
 bb.e:                                             ; preds = %.critedge562
@@ -225,11 +227,13 @@ bb.e:                                             ; preds = %.critedge562
 bb.f:                                             ; preds = %bb.e
   %i.ik = and i16 %i.ib, %i.x
   %i.il = and i16 %i.id, %i.y
+  %7 = bitcast i16 %i.ik to <16 x i1>
+  %8 = bitcast i16 %i.il to <16 x i1>
   br label %_ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit574
 
 _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit574: ; preds = %bb.d, %bb.e, %bb.f
-  %.sroa.9.0 = phi i16 [ %i.ih, %bb.d ], [ %i.il, %bb.f ], [ %i.id, %bb.e ]
-  %.sroa.0.0 = phi i16 [ %i.ig, %bb.d ], [ %i.ik, %bb.f ], [ %i.ib, %bb.e ]
+  %.sroa.9.0 = phi <16 x i1> [ %6, %bb.d ], [ %8, %bb.f ], [ %i.ic, %bb.e ]
+  %.sroa.0.0 = phi <16 x i1> [ %5, %bb.d ], [ %7, %bb.f ], [ %i.ia, %bb.e ] ; 2 uses
   %i.im = tail call noundef <16 x float> @llvm.x86.avx512.max.ps.512(<16 x float> %i.hu, <16 x float> splat (float 3.820000e-07), i32 4) ; 5 uses
   %i.in = tail call noundef <16 x float> @llvm.x86.avx512.max.ps.512(<16 x float> %i.hz, <16 x float> splat (float 3.820000e-07), i32 4) ; 3 uses
   %i.io = tail call noundef <16 x float> @llvm.x86.avx512.rsqrt14.ps.512(<16 x float> %i.im, <16 x float> zeroinitializer, i16 -1) ; 3 uses
@@ -245,10 +249,8 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.iy = sext i32 %i.hb to i64                   ; 2 uses
   %i.iz = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.iy
   %.val6934141 = load <8 x float>, ptr %i.iz, align 32, !tbaa !40
-  %5 = bitcast i16 %.sroa.0.0 to <16 x i1>        ; 2 uses
-  %i.ja = select <16 x i1> %5, <16 x float> %i.is, <16 x float> zeroinitializer ; 4 uses
-  %6 = bitcast i16 %.sroa.9.0 to <16 x i1>
-  %i.jb = select <16 x i1> %6, <16 x float> %i.ix, <16 x float> zeroinitializer ; 4 uses
+  %i.ja = select <16 x i1> %.sroa.0.0, <16 x float> %i.is, <16 x float> zeroinitializer ; 4 uses
+  %i.jb = select <16 x i1> %.sroa.9.0, <16 x float> %i.ix, <16 x float> zeroinitializer ; 4 uses
   %i.jc = fmul <16 x float> %i.im, %i.ja          ; 2 uses
   %i.jd = fmul <16 x float> %i.in, %i.jb          ; 2 uses
   %i.je = fmul <16 x float> %i.ad, %i.jc          ; 2 uses
@@ -302,7 +304,7 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %.val6944142 = load <8 x float>, ptr %i.ky, align 32, !tbaa !40
   %i.kz = shufflevector <8 x float> %.val6944142, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.la = fmul <16 x float> %i.gh, %i.kz
-  %i.lb = select <16 x i1> %5, <16 x float> %i.im, <16 x float> zeroinitializer
+  %i.lb = select <16 x i1> %.sroa.0.0, <16 x float> %i.im, <16 x float> zeroinitializer
   %i.lc = fmul <16 x float> %i.an, %i.lb          ; 3 uses
   %i.ld = bitcast <16 x float> %i.lc to <8 x i64>
   %i.le = xor <8 x i64> %i.ld, splat (i64 -9223372034707292160)
@@ -642,10 +644,10 @@ _ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_
   %i.uz = fadd <16 x float> %i.ux, %i.uy
   %i.va = fmul <16 x float> %i.ur, %i.ur
   %i.vb = fadd <16 x float> %i.uz, %i.va          ; 2 uses
-  %i.vc = fcmp olt <16 x float> %i.uw, %i.au
-  %i.vd = bitcast <16 x i1> %i.vc to i16          ; 3 uses
-  %i.ve = fcmp olt <16 x float> %i.vb, %i.au
-  %i.vf = bitcast <16 x i1> %i.ve to i16          ; 3 uses
+  %i.vc = fcmp olt <16 x float> %i.uw, %i.au      ; 2 uses
+  %i.vd = bitcast <16 x i1> %i.vc to i16          ; 2 uses
+  %i.ve = fcmp olt <16 x float> %i.vb, %i.au      ; 2 uses
+  %i.vf = bitcast <16 x i1> %i.ve to i16          ; 2 uses
   %i.vg = shl nsw i32 %i.tw, 1                    ; 2 uses
   %i.vh = icmp eq i32 %i.vg, %i.by
   br i1 %i.vh, label %bb.i, label %bb.j
@@ -653,6 +655,8 @@ _ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_
 bb.i:                                             ; preds = %_ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_eqT0_LS1_1EESt5arrayINS_9SimdFBoolEXdvclL_ZL15sc_iClusterSizeS1_ET0_ELi2EEEE4typeEiPNS_10SimdFInt32E.exit568
   %i.vi = and i16 %i.vd, %i.v
   %i.vj = and i16 %i.vf, %i.w
+  %9 = bitcast i16 %i.vi to <16 x i1>
+  %10 = bitcast i16 %i.vj to <16 x i1>
   br label %_ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit573
 
 bb.j:                                             ; preds = %_ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_eqT0_LS1_1EESt5arrayINS_9SimdFBoolEXdvclL_ZL15sc_iClusterSizeS1_ET0_ELi2EEEE4typeEiPNS_10SimdFInt32E.exit568
@@ -663,11 +667,13 @@ bb.j:                                             ; preds = %_ZN3gmx28loadSimdPa
 bb.k:                                             ; preds = %bb.j
   %i.vm = and i16 %i.vd, %i.x
   %i.vn = and i16 %i.vf, %i.y
+  %11 = bitcast i16 %i.vm to <16 x i1>
+  %12 = bitcast i16 %i.vn to <16 x i1>
   br label %_ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit573
 
 _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit573: ; preds = %bb.i, %bb.j, %bb.k
-  %.sroa.93623.0 = phi i16 [ %i.vj, %bb.i ], [ %i.vn, %bb.k ], [ %i.vf, %bb.j ]
-  %.sroa.03620.0 = phi i16 [ %i.vi, %bb.i ], [ %i.vm, %bb.k ], [ %i.vd, %bb.j ]
+  %.sroa.93656.0 = phi <16 x i1> [ %10, %bb.i ], [ %12, %bb.k ], [ %i.ve, %bb.j ] ; 2 uses
+  %.sroa.03647.0 = phi <16 x i1> [ %9, %bb.i ], [ %11, %bb.k ], [ %i.vc, %bb.j ] ; 2 uses
   %i.vo = tail call noundef <16 x float> @llvm.x86.avx512.max.ps.512(<16 x float> %i.uw, <16 x float> splat (float 3.820000e-07), i32 4) ; 5 uses
   %i.vp = tail call noundef <16 x float> @llvm.x86.avx512.max.ps.512(<16 x float> %i.vb, <16 x float> splat (float 3.820000e-07), i32 4) ; 5 uses
   %i.vq = tail call noundef <16 x float> @llvm.x86.avx512.rsqrt14.ps.512(<16 x float> %i.vo, <16 x float> zeroinitializer, i16 -1) ; 3 uses
@@ -683,10 +689,8 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.wa = sext i32 %i.ud to i64                   ; 2 uses
   %i.wb = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.wa
   %.val7034131 = load <8 x float>, ptr %i.wb, align 32, !tbaa !40
-  %7 = bitcast i16 %.sroa.03620.0 to <16 x i1>    ; 2 uses
-  %i.wc = select <16 x i1> %7, <16 x float> %i.vu, <16 x float> zeroinitializer ; 4 uses
-  %8 = bitcast i16 %.sroa.93623.0 to <16 x i1>    ; 2 uses
-  %i.wd = select <16 x i1> %8, <16 x float> %i.vz, <16 x float> zeroinitializer ; 4 uses
+  %i.wc = select <16 x i1> %.sroa.03647.0, <16 x float> %i.vu, <16 x float> zeroinitializer ; 4 uses
+  %i.wd = select <16 x i1> %.sroa.93656.0, <16 x float> %i.vz, <16 x float> zeroinitializer ; 4 uses
   %i.we = fmul <16 x float> %i.vo, %i.wc          ; 2 uses
   %i.wf = fmul <16 x float> %i.vp, %i.wd          ; 2 uses
   %i.wg = fmul <16 x float> %i.ad, %i.we          ; 2 uses
@@ -755,10 +759,10 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.yp = shufflevector <8 x float> %.val7044132, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7> ; 2 uses
   %i.yq = fmul <16 x float> %i.gh, %i.yp
   %i.yr = fmul <16 x float> %i.gm, %i.yp
-  %i.ys = select <16 x i1> %7, <16 x float> %i.vo, <16 x float> zeroinitializer
+  %i.ys = select <16 x i1> %.sroa.03647.0, <16 x float> %i.vo, <16 x float> zeroinitializer
   %i.yt = fmul <16 x float> %i.an, %i.ys          ; 3 uses
   %i.yu = bitcast <16 x float> %i.yt to <8 x i64>
-  %i.yv = select <16 x i1> %8, <16 x float> %i.vp, <16 x float> zeroinitializer
+  %i.yv = select <16 x i1> %.sroa.93656.0, <16 x float> %i.vp, <16 x float> zeroinitializer
   %i.yw = fmul <16 x float> %i.an, %i.yv          ; 3 uses
   %i.yx = bitcast <16 x float> %i.yw to <8 x i64>
   %i.yy = xor <8 x i64> %i.yu, splat (i64 -9223372034707292160)
@@ -1146,10 +1150,10 @@ _ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_
   %i.alg = fadd <16 x float> %i.ale, %i.alf
   %i.alh = fmul <16 x float> %i.aky, %i.aky
   %i.ali = fadd <16 x float> %i.alg, %i.alh       ; 2 uses
-  %i.alj = fcmp olt <16 x float> %i.ald, %i.au
-  %i.alk = bitcast <16 x i1> %i.alj to i16        ; 3 uses
-  %i.all = fcmp olt <16 x float> %i.ali, %i.au
-  %i.alm = bitcast <16 x i1> %i.all to i16        ; 3 uses
+  %i.alj = fcmp olt <16 x float> %i.ald, %i.au    ; 2 uses
+  %i.alk = bitcast <16 x i1> %i.alj to i16        ; 2 uses
+  %i.all = fcmp olt <16 x float> %i.ali, %i.au    ; 2 uses
+  %i.alm = bitcast <16 x i1> %i.all to i16        ; 2 uses
   %i.aln = shl nsw i32 %i.akd, 1                  ; 2 uses
   %i.alo = icmp eq i32 %i.aln, %i.by
   br i1 %i.alo, label %bb.m, label %bb.n
@@ -1157,6 +1161,8 @@ _ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_
 bb.m:                                             ; preds = %_ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_eqT0_LS1_1EESt5arrayINS_9SimdFBoolEXdvclL_ZL15sc_iClusterSizeS1_ET0_ELi2EEEE4typeEiPNS_10SimdFInt32E.exit
   %i.alp = and i16 %i.alk, %i.v
   %i.alq = and i16 %i.alm, %i.w
+  %13 = bitcast i16 %i.alp to <16 x i1>
+  %14 = bitcast i16 %i.alq to <16 x i1>
   br label %_ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit
 
 bb.n:                                             ; preds = %_ZN3gmx28loadSimdPairInteractionMasksILb1EL12KernelLayout1EEENSt9enable_ifIXaaT_eqT0_LS1_1EESt5arrayINS_9SimdFBoolEXdvclL_ZL15sc_iClusterSizeS1_ET0_ELi2EEEE4typeEiPNS_10SimdFInt32E.exit
@@ -1167,11 +1173,13 @@ bb.n:                                             ; preds = %_ZN3gmx28loadSimdPa
 bb.o:                                             ; preds = %bb.n
   %i.alt = and i16 %i.alk, %i.x
   %i.alu = and i16 %i.alm, %i.y
+  %15 = bitcast i16 %i.alt to <16 x i1>
+  %16 = bitcast i16 %i.alu to <16 x i1>
   br label %_ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit
 
 _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9maskArrayEiiRSt5arrayINS_9SimdFBoolELm2EE.exit: ; preds = %bb.m, %bb.n, %bb.o
-  %.sroa.93615.0 = phi i16 [ %i.alq, %bb.m ], [ %i.alu, %bb.o ], [ %i.alm, %bb.n ]
-  %.sroa.03612.0 = phi i16 [ %i.alp, %bb.m ], [ %i.alt, %bb.o ], [ %i.alk, %bb.n ]
+  %.sroa.93637.0 = phi <16 x i1> [ %14, %bb.m ], [ %16, %bb.o ], [ %i.all, %bb.n ] ; 2 uses
+  %.sroa.03628.0 = phi <16 x i1> [ %13, %bb.m ], [ %15, %bb.o ], [ %i.alj, %bb.n ] ; 2 uses
   %i.alv = sext i32 %i.akk to i64
   %i.alw = getelementptr inbounds [4 x i8], ptr %i.j, i64 %i.alv
   %.val7193633 = load <8 x i32>, ptr %i.alw, align 32, !tbaa !40 ; 4 uses
@@ -1199,10 +1207,8 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.ams = fmul <16 x float> %i.amq, splat (float -5.000000e-01)
   %i.amt = tail call noundef <16 x float> @llvm.fma.v16f32(<16 x float> %i.amr, <16 x float> %i.amq, <16 x float> splat (float -3.000000e+00))
   %i.amu = fmul <16 x float> %i.ams, %i.amt
-  %9 = bitcast i16 %.sroa.03612.0 to <16 x i1>    ; 2 uses
-  %i.amv = select <16 x i1> %9, <16 x float> %i.amp, <16 x float> zeroinitializer ; 2 uses
-  %10 = bitcast i16 %.sroa.93615.0 to <16 x i1>   ; 2 uses
-  %i.amw = select <16 x i1> %10, <16 x float> %i.amu, <16 x float> zeroinitializer ; 2 uses
+  %i.amv = select <16 x i1> %.sroa.03628.0, <16 x float> %i.amp, <16 x float> zeroinitializer ; 2 uses
+  %i.amw = select <16 x i1> %.sroa.93637.0, <16 x float> %i.amu, <16 x float> zeroinitializer ; 2 uses
   %i.amx = fmul <16 x float> %i.amv, %i.amv       ; 4 uses
   %i.amy = fmul <16 x float> %i.amw, %i.amw       ; 4 uses
   %i.amz = fcmp olt <16 x float> %i.amj, %i.az
@@ -1228,10 +1234,10 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.ans = shufflevector <8 x float> %.val7134123, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7> ; 2 uses
   %i.ant = fmul <16 x float> %i.gh, %i.ans
   %i.anu = fmul <16 x float> %i.gm, %i.ans
-  %i.anv = select <16 x i1> %9, <16 x float> %i.amj, <16 x float> zeroinitializer
+  %i.anv = select <16 x i1> %.sroa.03628.0, <16 x float> %i.amj, <16 x float> zeroinitializer
   %i.anw = fmul <16 x float> %i.an, %i.anv        ; 3 uses
   %i.anx = bitcast <16 x float> %i.anw to <8 x i64>
-  %i.any = select <16 x i1> %10, <16 x float> %i.amk, <16 x float> zeroinitializer
+  %i.any = select <16 x i1> %.sroa.93637.0, <16 x float> %i.amk, <16 x float> zeroinitializer
   %i.anz = fmul <16 x float> %i.an, %i.any        ; 3 uses
   %i.aoa = bitcast <16 x float> %i.anz to <8 x i64>
   %i.aob = xor <8 x i64> %i.anx, splat (i64 -9223372034707292160)
