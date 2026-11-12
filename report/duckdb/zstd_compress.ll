@@ -205,11 +205,10 @@ _ZN11duckdb_zstdL22ZSTD_estimateBlockSizeEPKhmS1_S1_S1_mPKNS_21ZSTD_entropyCTabl
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 5216
   %i.da = load i64, ptr %i.cz, align 8, !tbaa !647
   %i.db = icmp ugt i64 %i.ah, 32511
-  %i.dc = icmp ugt i64 %i.ah, 127
-  %i.dd = select i1 %i.dc, i64 3, i64 2
-  %i.de = select i1 %i.db, i64 4, i64 3
-  %2 = add nuw nsw i64 %i.de, %i.dd
-  %i.df = add i64 %2, %.126.i.i
+  %i.dc = icmp samesign ugt i64 %i.ah, 127
+  %i.dd = select i1 %i.dc, i64 6, i64 5
+  %i.de = select i1 %i.db, i64 7, i64 %i.dd
+  %i.df = add i64 %.126.i.i, %i.de
   %i.dg = add i64 %i.df, %.034.i.i.i
   %i.dh = add i64 %i.dg, %.034.i33.i.i
   %i.di = add i64 %i.dh, %.034.i49.i.i
