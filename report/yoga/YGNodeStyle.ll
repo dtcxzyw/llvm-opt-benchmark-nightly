@@ -204,10 +204,10 @@ _ZN12_GLOBAL__N_111updateStyleITnDaXadL_ZNK8facebook4yoga5Style9alignSelfEvEETnD
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define range(i32 0, 16) i32 @YGNodeStyleGetAlignSelf(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %1 = load i32, ptr %i.a, align 8
-  %2 = lshr i32 %1, 24
-  %3 = and i32 %2, 15
+  %i.a = getelementptr i8, ptr %0, i64 59
+  %1 = load i8, ptr %i.a, align 1
+  %2 = and i8 %1, 15
+  %3 = zext nneg i8 %2 to i32
   ret i32 %3
 }
 

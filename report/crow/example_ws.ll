@@ -205,7 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4401
   store i8 0, ptr %i.b, align 1, !tbaa !632
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4352 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !629
+  %i.d = load i64, ptr %i.c, align 8
   %i.e = tail call i64 @llvm.bswap.i64(i64 %i.d)
   store i64 %i.e, ptr %i.c, align 8, !tbaa !629
   %i.f = load i32, ptr %1, align 8, !tbaa !285
@@ -608,7 +608,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4401
   store i8 0, ptr %i.b, align 1, !tbaa !866
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4352 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !863
+  %i.d = load i64, ptr %i.c, align 8
   %i.e = tail call i64 @llvm.bswap.i64(i64 %i.d)
   store i64 %i.e, ptr %i.c, align 8, !tbaa !863
   %i.f = load i32, ptr %1, align 8, !tbaa !285

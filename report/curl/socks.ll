@@ -202,13 +202,13 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %or.cond55.i.i, label %bb.cp, label %select.unfold265.i
 
 bb.cp:                                            ; preds = %bb.co
-  %i.id = load ptr, ptr %i.be, align 8, !tbaa !89
-  %i.ie = getelementptr inbounds nuw i8, ptr %i.id, i64 32
-  %4 = load i16, ptr %i.ie, align 8, !tbaa !93    ; 2 uses
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  store i8 %6, ptr %i.u, align 1, !tbaa !94
-  %i.if = trunc i16 %4 to i8
+  %i.id = load ptr, ptr %i.be, align 8, !tbaa !89 ; 2 uses
+  %i.ie = getelementptr i8, ptr %i.id, i64 33
+  %4 = load i8, ptr %i.ie, align 1, !tbaa !93
+  store i8 %4, ptr %i.u, align 1, !tbaa !94
+  %5 = getelementptr inbounds nuw i8, ptr %i.id, i64 32
+  %6 = load i16, ptr %5, align 8, !tbaa !93
+  %i.if = trunc i16 %6 to i8
   store i8 %i.if, ptr %i.bb, align 1, !tbaa !94
   %i.ig = call i32 @Curl_bufq_write(ptr noundef nonnull %i.ba, ptr noundef nonnull %i.u, i64 noundef 2, ptr noundef nonnull %i.w) #5
   %i.ih = icmp ne i32 %i.ig, 0
@@ -473,13 +473,13 @@ bb.dt:                                            ; preds = %bb.ds
   br i1 %or.cond102.i.i, label %bb.du, label %socks5_resolving.exit.thread.i
 
 bb.du:                                            ; preds = %bb.dt
-  %i.lw = load ptr, ptr %i.be, align 8, !tbaa !89
-  %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 32
-  %7 = load i16, ptr %i.lx, align 8, !tbaa !93    ; 2 uses
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  store i8 %9, ptr %i.r, align 1, !tbaa !94
-  %i.ly = trunc i16 %7 to i8
+  %i.lw = load ptr, ptr %i.be, align 8, !tbaa !89 ; 2 uses
+  %i.lx = getelementptr i8, ptr %i.lw, i64 33
+  %7 = load i8, ptr %i.lx, align 1, !tbaa !93
+  store i8 %7, ptr %i.r, align 1, !tbaa !94
+  %8 = getelementptr inbounds nuw i8, ptr %i.lw, i64 32
+  %9 = load i16, ptr %8, align 8, !tbaa !93
+  %i.ly = trunc i16 %9 to i8
   %i.lz = getelementptr inbounds nuw i8, ptr %i.r, i64 1
   store i8 %i.ly, ptr %i.lz, align 1, !tbaa !94
   %i.ma = call i32 @Curl_bufq_write(ptr noundef nonnull %i.ba, ptr noundef nonnull %i.r, i64 noundef 2, ptr noundef nonnull %i.s) #5
@@ -836,13 +836,13 @@ bb.fh:                                            ; preds = %bb.fg, %bb.ff, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #5
   store i8 4, ptr %i.i, align 1, !tbaa !94
   store i8 1, ptr %i.ov, align 1, !tbaa !94
-  %i.pz = load ptr, ptr %i.ou, align 8, !tbaa !89
-  %i.qa = getelementptr inbounds nuw i8, ptr %i.pz, i64 32
-  %10 = load i16, ptr %i.qa, align 8, !tbaa !93   ; 2 uses
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8
-  store i8 %12, ptr %i.ow, align 1, !tbaa !94
-  %i.qb = trunc i16 %10 to i8
+  %i.pz = load ptr, ptr %i.ou, align 8, !tbaa !89 ; 2 uses
+  %i.qa = getelementptr i8, ptr %i.pz, i64 33
+  %10 = load i8, ptr %i.qa, align 1, !tbaa !93
+  store i8 %10, ptr %i.ow, align 1, !tbaa !94
+  %11 = getelementptr inbounds nuw i8, ptr %i.pz, i64 32
+  %12 = load i16, ptr %11, align 8, !tbaa !93
+  %i.qb = trunc i16 %12 to i8
   store i8 %i.qb, ptr %i.ox, align 1, !tbaa !94
   %i.qc = call i32 @Curl_bufq_write(ptr noundef nonnull %i.oo, ptr noundef nonnull %i.i, i64 noundef 4, ptr noundef nonnull %i.j) #5
   %i.qd = icmp eq i32 %i.qc, 0

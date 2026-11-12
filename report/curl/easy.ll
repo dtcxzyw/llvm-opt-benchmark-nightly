@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l
   %i.v = load i32, ptr %i.u, align 8, !tbaa !89
   %i.w = zext i32 %i.v to i64
   %i.x = call i32 (ptr, i32, ...) @curl_multi_setopt(ptr noundef nonnull %.034.i, i32 noundef 6, i64 noundef %i.w) #12 ; 0 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2187 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.z = load i64, ptr %i.y, align 1
   %i.aa = lshr i64 %i.z, 9
   %i.ab = and i64 %i.aa, 1
@@ -225,9 +225,10 @@ bb.o:                                             ; preds = %bb.m
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %2, i8 0, i64 160, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 3 uses
   store i8 1, ptr %i.ag, align 8
-  %3 = load i64, ptr %i.y, align 1
-  %4 = and i64 %3, 4294967296
-  %.not.i.not.i = icmp eq i64 %4, 0
+  %3 = getelementptr i8, ptr %0, i64 2191
+  %4 = load i32, ptr %3, align 1
+  %5 = and i32 %4, 1
+  %.not.i.not.i = icmp eq i32 %5, 0
   br i1 %.not.i.not.i, label %bb.p, label %sigpipe_apply.exit.i
 
 bb.p:                                             ; preds = %bb.o
@@ -337,18 +338,17 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2187
-  %3 = load i64, ptr %i.d, align 1                ; 2 uses
-  %4 = lshr i64 %3, 32
-  %i.e = trunc i64 %4 to i8
+  %i.d = getelementptr i8, ptr %0, i64 2191
+  %3 = load i32, ptr %i.d, align 1                ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 3 uses
+  %i.e = trunc i32 %3 to i8
   %i.f = and i8 %i.e, 1
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 3 uses
-  %i.g = load i8, ptr %5, align 8
+  %i.g = load i8, ptr %4, align 8
   %i.h = and i8 %i.g, -2
-  %i.i = or disjoint i8 %i.f, %i.h
-  store i8 %i.i, ptr %5, align 8
-  %6 = and i64 %3, 4294967296
-  %.not.i = icmp eq i64 %6, 0
+  %i.i = or disjoint i8 %i.h, %i.f
+  store i8 %i.i, ptr %4, align 8
+  %5 = and i32 %3, 1
+  %.not.i = icmp eq i32 %5, 0
   br i1 %.not.i, label %bb.d, label %sigpipe_ignore.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -366,7 +366,7 @@ bb.d:                                             ; preds = %bb.c
 
 sigpipe_ignore.exit:                              ; preds = %bb.c, %bb.d
   %i.o = call i32 @Curl_close(ptr noundef nonnull %i.a) #12 ; 0 uses
-  %i.p = load i8, ptr %5, align 8
+  %i.p = load i8, ptr %4, align 8
   %i.q = and i8 %i.p, 1
   %.not.i1 = icmp eq i8 %i.q, 0
   br i1 %.not.i1, label %bb.e, label %sigpipe_restore.exit
@@ -769,7 +769,7 @@ bb.a:
   br i1 %.not.i, label %easy_connection.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2187 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.c = load i64, ptr %i.b, align 1
   %i.d = and i64 %i.c, 1
   %.not8.i = icmp eq i64 %i.d, 0
@@ -797,17 +797,17 @@ bb.d:                                             ; preds = %easy_connection.exi
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %easy_connection.exit
-  %6 = load i64, ptr %i.b, align 1                ; 2 uses
-  %7 = lshr i64 %6, 32
-  %8 = trunc i64 %7 to i8
-  %9 = and i8 %8, 1
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 152 ; 3 uses
-  %i.j = load i8, ptr %10, align 8
+  %6 = getelementptr i8, ptr %0, i64 2191
+  %7 = load i32, ptr %6, align 1                  ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 152 ; 3 uses
+  %9 = trunc i32 %7 to i8
+  %10 = and i8 %9, 1
+  %i.j = load i8, ptr %8, align 8
   %i.k = and i8 %i.j, -2
-  %i.l = or disjoint i8 %9, %i.k
-  store i8 %i.l, ptr %10, align 8
-  %11 = and i64 %6, 4294967296
-  %.not.i19 = icmp eq i64 %11, 0
+  %i.l = or disjoint i8 %i.k, %10
+  store i8 %i.l, ptr %8, align 8
+  %11 = and i32 %7, 1
+  %.not.i19 = icmp eq i32 %11, 0
   br i1 %.not.i19, label %bb.f, label %sigpipe_ignore.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -825,7 +825,7 @@ bb.f:                                             ; preds = %bb.e
 
 sigpipe_ignore.exit:                              ; preds = %bb.e, %bb.f
   %i.r = call i32 @Curl_conn_send(ptr noundef nonnull %0, i32 noundef 0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext false, ptr noundef nonnull %3) #12 ; 2 uses
-  %i.s = load i8, ptr %10, align 8
+  %i.s = load i8, ptr %8, align 8
   %i.t = and i8 %i.s, 1
   %.not.i20 = icmp eq i8 %i.t, 0
   br i1 %.not.i20, label %bb.g, label %sigpipe_restore.exit
