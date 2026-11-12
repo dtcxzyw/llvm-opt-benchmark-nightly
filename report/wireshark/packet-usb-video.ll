@@ -204,13 +204,11 @@ declare ptr @proto_tree_add_item(ptr noundef, i32 noundef, ptr noundef, i32 noun
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc i32 @dissect_usb_vid_get_set(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i1 noundef zeroext %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr i8, ptr %5, i64 32         ; 2 uses
-  %7 = load i16, ptr %i.a, align 4
-  %8 = lshr i16 %7, 8                             ; 7 uses
-  %i.b = getelementptr i8, ptr %5, i64 30
-  %9 = load i16, ptr %i.b, align 2
-  %10 = lshr i16 %9, 8                            ; 3 uses
-  %11 = zext nneg i16 %10 to i32                  ; 7 uses
+  %i.a = getelementptr i8, ptr %5, i64 32
+  %i.b = getelementptr i8, ptr %5, i64 33
+  %7 = load i8, ptr %i.b, align 1                 ; 7 uses
+  %8 = getelementptr i8, ptr %5, i64 31
+  %9 = load i8, ptr %8, align 1                   ; 7 uses
   %i.c = getelementptr i8, ptr %0, i64 8          ; 6 uses
   %i.d = load ptr, ptr %i.c, align 8
   tail call void @col_append_str(ptr noundef %i.d, i32 noundef 25, ptr noundef @.str.553)
@@ -233,13 +231,13 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.k, align 8
-  %i.m = zext nneg i16 %8 to i32
+  %i.m = zext i8 %7 to i32
   %i.n = tail call ptr @wmem_tree_lookup32(ptr noundef %i.l, i32 noundef %i.m) ; 3 uses
-  %i.o = icmp eq i16 %8, 0
+  %i.o = icmp eq i8 %7, 0
   br i1 %i.o, label %bb.e, label %bb.f
 
 .thread.i.i:                                      ; preds = %bb.c
-  %i.p = icmp eq i16 %8, 0
+  %i.p = icmp eq i8 %7, 0
   br i1 %i.p, label %bb.e, label %get_control_selector_name.exit.thread.thread
 
 bb.e:                                             ; preds = %.thread.i.i, %bb.d
@@ -277,7 +275,8 @@ get_control_selector_values.exit.thread10.fold.split.i: ; preds = %bb.e
 
 get_control_selector_name.exit:                   ; preds = %bb.e, %bb.g, %bb.h, %bb.i, %get_control_selector_values.exit.thread10.fold.split.i
   %.013.i13.i = phi ptr [ @cs_camera_terminal_ext, %bb.h ], [ @cs_selector_unit_ext, %bb.i ], [ @cs_processing_unit_ext, %bb.g ], [ @cs_control_interface_ext, %bb.e ], [ @cs_streaming_interface_ext, %get_control_selector_values.exit.thread10.fold.split.i ]
-  %i.x = tail call ptr @try_val_to_str_ext(i32 noundef %11, ptr noundef nonnull %.013.i13.i) ; 3 uses
+  %10 = zext i8 %9 to i32
+  %i.x = tail call ptr @try_val_to_str_ext(i32 noundef %10, ptr noundef nonnull %.013.i13.i) ; 3 uses
   %.not = icmp eq ptr %i.x, null
   br i1 %.not, label %get_control_selector_name.exit.thread, label %bb.j
 
@@ -287,7 +286,7 @@ bb.j:                                             ; preds = %get_control_selecto
   br label %bb.k
 
 get_control_selector_name.exit.thread:            ; preds = %bb.b, %bb.a, %get_control_selector_name.exit
-  %i.z = icmp eq i16 %8, 0
+  %i.z = icmp eq i8 %7, 0
   br i1 %i.z, label %get_control_selector_name.exit.thread.thread141, label %get_control_selector_name.exit.thread.thread
 
 get_control_selector_name.exit.thread.thread141:  ; preds = %bb.e, %get_control_selector_name.exit.thread
@@ -295,14 +294,16 @@ get_control_selector_name.exit.thread.thread141:  ; preds = %bb.e, %get_control_
   %i.ab = load ptr, ptr %i.e, align 8
   %i.ac = getelementptr i8, ptr %i.ab, i64 10
   %i.ad = load i8, ptr %i.ac, align 2
-  %i.ae = zext i8 %i.ad to i32
-  tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.aa, i32 noundef 25, ptr noundef @.str.554, i32 noundef %i.ae, i32 noundef %11)
+  %11 = zext i8 %i.ad to i32
+  %i.ae = zext i8 %9 to i32
+  tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.aa, i32 noundef 25, ptr noundef @.str.554, i32 noundef %11, i32 noundef %i.ae)
   br label %bb.k
 
 get_control_selector_name.exit.thread.thread:     ; preds = %bb.f, %bb.g, %bb.h, %.thread.i.i, %get_control_selector_name.exit.thread
-  %i.af = zext nneg i16 %8 to i32
+  %i.af = zext i8 %7 to i32
   %i.ag = load ptr, ptr %i.c, align 8
-  tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.ag, i32 noundef 25, ptr noundef @.str.555, i32 noundef %i.af, i32 noundef %11)
+  %12 = zext i8 %9 to i32
+  tail call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.ag, i32 noundef 25, ptr noundef @.str.555, i32 noundef %i.af, i32 noundef %12)
   br label %bb.k
 
 bb.k:                                             ; preds = %get_control_selector_name.exit.thread.thread141, %get_control_selector_name.exit.thread.thread, %bb.j
@@ -337,7 +338,7 @@ bb.n:                                             ; preds = %bb.m
 
 proto_item_set_generated.exit:                    ; preds = %bb.l, %bb.m, %bb.n
   %i.at = load i32, ptr @hf_usb_vid_control_entity, align 4
-  %i.au = zext nneg i16 %8 to i32
+  %i.au = zext i8 %7 to i32
   %i.av = tail call ptr @proto_tree_add_uint(ptr noundef %1, i32 noundef %i.at, ptr noundef %2, i32 noundef 0, i32 noundef 0, i32 noundef %i.au) ; 2 uses
   %.not.i117 = icmp eq ptr %i.av, null
   br i1 %.not.i117, label %proto_item_set_generated.exit119, label %bb.o
@@ -357,7 +358,8 @@ bb.p:                                             ; preds = %bb.o
 
 proto_item_set_generated.exit119:                 ; preds = %proto_item_set_generated.exit, %bb.o, %bb.p
   %i.bb = load i32, ptr @hf_usb_vid_control_selector, align 4
-  %i.bc = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %1, i32 noundef %i.bb, ptr noundef %2, i32 noundef 0, i32 noundef 0, i32 noundef %11, ptr noundef @.str.557, ptr noundef %.0111, i32 noundef %11) ; 2 uses
+  %13 = zext i8 %9 to i32                         ; 2 uses
+  %i.bc = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %1, i32 noundef %i.bb, ptr noundef %2, i32 noundef 0, i32 noundef 0, i32 noundef %13, ptr noundef @.str.557, ptr noundef %.0111, i32 noundef %13) ; 2 uses
   %.not.i120 = icmp eq ptr %i.bc, null
   br i1 %.not.i120, label %proto_item_set_generated.exit122.thread, label %bb.q
 
@@ -377,7 +379,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.k
   %i.bi = add i32 %3, 1
   %i.bj = load i32, ptr @hf_usb_vid_control_selector, align 4
-  %i.bk = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %1, i32 noundef %i.bj, ptr noundef %2, i32 noundef %i.bi, i32 noundef 1, i32 noundef %11, ptr noundef @.str.557, ptr noundef %.0111, i32 noundef %11) ; 0 uses
+  %14 = zext i8 %9 to i32                         ; 2 uses
+  %i.bk = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %1, i32 noundef %i.bj, ptr noundef %2, i32 noundef %i.bi, i32 noundef 1, i32 noundef %14, ptr noundef @.str.557, ptr noundef %.0111, i32 noundef %14) ; 0 uses
   %i.bl = add i32 %3, 2
   %i.bm = load i32, ptr @hf_usb_vid_control_interface, align 4
   %i.bn = tail call ptr @proto_tree_add_item(ptr noundef %1, i32 noundef %i.bm, ptr noundef %2, i32 noundef %i.bl, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
@@ -400,7 +403,7 @@ proto_item_set_generated.exit122.thread:          ; preds = %proto_item_set_gene
   br i1 %.not116, label %bb.ag, label %bb.t
 
 bb.t:                                             ; preds = %proto_item_set_generated.exit122.thread
-  %i.bz = icmp eq i16 %8, 0                       ; 2 uses
+  %i.bz = icmp eq i8 %7, 0                        ; 2 uses
   br i1 %i.bz, label %bb.u, label %bb.y
 
 bb.u:                                             ; preds = %bb.t
@@ -411,8 +414,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.cd, label %bb.v, label %bb.y
 
 bb.v:                                             ; preds = %bb.u
-  %12 = add nsw i16 %10, -1
-  %or.cond = icmp ult i16 %12, 2
+  %15 = add i8 %9, -1
+  %or.cond = icmp ult i8 %15, 2
   br i1 %or.cond, label %bb.w, label %bb.ae
 
 bb.w:                                             ; preds = %bb.v
@@ -514,7 +517,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.et = getelementptr i8, ptr %i.es, i64 6
   %i.eu = load i16, ptr %i.et, align 2
   %i.ev = icmp eq i16 %i.eu, 1
-  %i.ew = icmp eq i16 %10, 2
+  %i.ew = icmp eq i8 %9, 2
   %or.cond8 = select i1 %i.ev, i1 %i.ew, i1 false
   br i1 %or.cond8, label %bb.ad, label %.thread
 

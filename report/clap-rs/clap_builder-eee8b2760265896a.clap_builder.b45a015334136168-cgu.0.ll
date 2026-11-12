@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b, %bb.d
   %i.z = phi i32 [ %i.v, %bb.b ], [ %.pre, %bb.d ]
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 7 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 6 uses
   %i.ab = load i32, ptr %i.aa, align 8, !noundef !10
   %i.ac = or i32 %i.ab, %i.z                      ; 3 uses
   %i.ad = and i32 %i.ac, 2048
@@ -608,6 +608,8 @@ _RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23__check_h
   %.pre-phi = phi i32 [ %i.fa, %bb.af ], [ 0, %bb.ag ], [ %.pre199, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder7command7CommandE8push_mutBL_.exit.i ]
   %i.km = phi i32 [ %.pre186, %bb.af ], [ %.pre186, %bb.ag ], [ %.pre185, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder7command7CommandE8push_mutBL_.exit.i ] ; 2 uses
   %i.kn = phi i32 [ %i.ez, %bb.af ], [ %i.ez, %bb.ag ], [ %.pre184, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder7command7CommandE8push_mutBL_.exit.i ]
+  %.in = lshr i32 %i.km, 24
+  %2 = trunc nuw i32 %.in to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
@@ -749,16 +751,16 @@ _RNvMs4_NtCsfu0rQaTkGUu_12clap_builder7mkeymapNtB5_7MKeyMap4push.exit.i128: ; pr
 
 _RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit.loopexit: ; preds = %.backedge.i
   %.pre187 = load i32, ptr %i.u, align 4
-  %.pre188 = load i32, ptr %i.aa, align 8
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 707
+  %.pre188 = load i8, ptr %.phi.trans.insert, align 1
   br label %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit
 
 _RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit: ; preds = %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit.loopexit, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23__check_help_and_version.exit
-  %2 = phi i32 [ %.pre188, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit.loopexit ], [ %i.km, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23__check_help_and_version.exit ]
+  %3 = phi i8 [ %.pre188, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit.loopexit ], [ %2, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23__check_help_and_version.exit ]
   %i.mp = phi i32 [ %.pre187, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit.loopexit ], [ %i.kn, %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23__check_help_and_version.exit ]
   %i.mq = and i32 %i.mp, 16777216
   %.not110 = icmp ne i32 %i.mq, 0
-  %3 = and i32 %2, 16777216
-  %4 = icmp ne i32 %3, 0
+  %4 = trunc i8 %3 to i1
   %.sroa.08.0 = select i1 %.not110, i1 true, i1 %4
   %i.mr = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
   %i.ms = load ptr, ptr %i.mr, align 8, !nonnull !10, !noundef !10 ; 2 uses

@@ -107,7 +107,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not.i, label %bb.g, label %ioam6_event_put_trace.exit.thread
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = getelementptr i8, ptr %3, i64 2          ; 2 uses
+  %i.p = getelementptr i8, ptr %3, i64 2
   %i.q = load i16, ptr %i.p, align 1
   %i.r = trunc i16 %i.q to i8
   %i.s = lshr i8 %i.r, 3
@@ -132,14 +132,15 @@ bb.h:                                             ; preds = %bb.g
 ioam6_event_put_trace.exit:                       ; preds = %bb.h
   %i.y = zext i32 %4 to i64
   %i.z = add nuw nsw i64 %i.y, 4294967288
-  %5 = load i16, ptr %i.p, align 1
-  %6 = lshr i16 %5, 6
-  %7 = and i16 %6, 508
-  %i.aa = zext nneg i16 %7 to i64                 ; 2 uses
-  %i.ab = sub nuw nsw i64 %i.z, %i.aa
+  %5 = getelementptr i8, ptr %3, i64 3
+  %6 = load i8, ptr %5, align 1
+  %7 = and i8 %6, 127
+  %i.aa = zext nneg i8 %7 to i64
+  %8 = shl nuw nsw i64 %i.aa, 2                   ; 2 uses
+  %i.ab = sub nuw nsw i64 %i.z, %8
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = getelementptr i8, ptr %3, i64 8
-  %i.ae = getelementptr i8, ptr %i.ad, i64 %i.aa
+  %i.ae = getelementptr i8, ptr %i.ad, i64 %8
   %i.af = call i32 @nla_put(ptr noundef nonnull %i.j, i32 noundef 4, i32 noundef %i.ac, ptr noundef %i.ae) #16
   %.not13.i.not = icmp eq i32 %i.af, 0
   br i1 %.not13.i.not, label %bb.i, label %ioam6_event_put_trace.exit.thread

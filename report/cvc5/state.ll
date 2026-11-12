@@ -204,7 +204,7 @@ _ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit: ; preds = %_ZN4cvc58internal
   %i.gn = getelementptr inbounds i8, ptr %.sroa.11.1, i64 -8 ; 6 uses
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !112 ; 2 uses
   %.not.i84 = icmp eq ptr %.sroa.0144.0, %i.go
-  %spec.select = select i1 %.not.i84, ptr %.sroa.0144.0, ptr %i.go, !prof !99 ; 26 uses
+  %spec.select = select i1 %.not.i84, ptr %.sroa.0144.0, ptr %i.go, !prof !99 ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
   store ptr %spec.select, ptr %8, align 8, !tbaa !72
   %i.gp = load i64, ptr %spec.select, align 8     ; 3 uses
@@ -406,7 +406,7 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.bd, %bb.bc, %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #23
-  %i.jq = getelementptr inbounds nuw i8, ptr %spec.select, i64 8 ; 3 uses
+  %i.jq = getelementptr inbounds nuw i8, ptr %spec.select, i64 8 ; 2 uses
   %i.jr = load i64, ptr %i.jq, align 8
   %i.js = and i64 %i.jr, 1023
   %i.jt = icmp eq i64 %i.js, 7
@@ -472,10 +472,11 @@ bb.bp:                                            ; preds = %bb.bo
   %spec.select.v.i.i = select i1 %i.kf, i64 32, i64 24
   %spec.select.i.i96 = getelementptr inbounds nuw i8, ptr %spec.select, i64 %spec.select.v.i.i
   %i.kg = getelementptr inbounds nuw i8, ptr %spec.select, i64 24
-  %17 = load i64, ptr %i.jq, align 8
-  %18 = lshr i64 %17, 32
-  %19 = and i64 %18, 67108863
-  %i.kh = getelementptr inbounds nuw [8 x i8], ptr %i.kg, i64 %19
+  %17 = getelementptr inbounds nuw i8, ptr %spec.select, i64 12
+  %18 = load i32, ptr %17, align 4
+  %19 = and i32 %18, 67108863
+  %20 = zext nneg i32 %19 to i64
+  %i.kh = getelementptr inbounds nuw [8 x i8], ptr %i.kg, i64 %20
   invoke void @_ZNSt3setIN4cvc58internal12NodeTemplateILb0EEESt4lessIS3_ESaIS3_EE6insertINS1_4expr9NodeValue8iteratorIS3_EEEEvT_SD_(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr nonnull %spec.select.i.i96, ptr nonnull %i.kh)
           to label %bb.bq unwind label %bb.bt
 
@@ -878,7 +879,7 @@ _ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.ex
 bb.a:                                             ; preds = %.noexc32, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit57
   %i.k = phi ptr [ %i.g, %.noexc32 ], [ %i.fc, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit57 ]
   %i.l = getelementptr inbounds i8, ptr %i.k, i64 -8 ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !112  ; 16 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !112  ; 17 uses
   store ptr %i.l, ptr %i.c, align 8, !tbaa !132
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
   store ptr %i.m, ptr %7, align 8, !tbaa !72
@@ -1281,7 +1282,7 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE17_M_realloc_insertIJRK
   br label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit57
 
 bb.ar:                                            ; preds = %bb.al
-  %i.el = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.em = load i64, ptr %i.el, align 8
   %i.en = trunc i64 %i.em to i32
   %i.eo = and i32 %i.en, 1023                     ; 2 uses
@@ -1295,10 +1296,11 @@ bb.as:                                            ; preds = %bb.ar
   %spec.select.v.i.i = select i1 %i.es, i64 32, i64 24
   %spec.select.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 %spec.select.v.i.i
   %i.et = getelementptr inbounds nuw i8, ptr %i.m, i64 24
-  %12 = load i64, ptr %i.el, align 8
-  %13 = lshr i64 %12, 32
-  %14 = and i64 %13, 67108863
-  %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %14
+  %12 = getelementptr inbounds nuw i8, ptr %i.m, i64 12
+  %13 = load i32, ptr %12, align 4
+  %14 = and i32 %13, 67108863
+  %15 = zext nneg i32 %14 to i64
+  %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %15
   %i.ev = load ptr, ptr %6, align 8, !tbaa !229   ; 2 uses
   %i.ew = ptrtoint ptr %i.da to i64
   %i.ex = ptrtoint ptr %i.ev to i64

@@ -202,13 +202,15 @@ Abc_UtilStrsav.exit22:                            ; preds = %Abc_UtilStrsav.exit
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.val20, i64 %indvars.iv
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !31 ; 2 uses
   %i.ac = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #19 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  %1 = load i64, ptr %i.ad, align 8
-  %2 = and i64 %1, 72057589742960640
+  %i.ad = getelementptr i8, ptr %i.ab, i64 28
+  %1 = load i32, ptr %i.ad, align 4
+  %2 = and i32 %1, 16777215
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 24 ; 2 uses
+  %3 = zext nneg i32 %2 to i64
   %i.af = load i64, ptr %i.ae, align 8
+  %4 = shl nuw nsw i64 %3, 32
   %i.ag = and i64 %i.af, -72057589742960641
-  %i.ah = or disjoint i64 %i.ag, %2
+  %i.ah = or disjoint i64 %4, %i.ag
   store i64 %i.ah, ptr %i.ae, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
   store ptr %i.ac, ptr %i.ai, align 8, !tbaa !38

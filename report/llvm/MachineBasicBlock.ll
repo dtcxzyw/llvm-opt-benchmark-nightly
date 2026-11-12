@@ -204,7 +204,7 @@ bb.bl:                                            ; preds = %_ZN4llvm11raw_ostre
 
 _ZN4llvm11raw_ostreamlsEPKc.exit142:              ; preds = %bb.bk, %bb.bj, %bb.bh, %bb.bg, %bb.bl, %bb.az
   %.9 = phi i8 [ %.8, %bb.az ], [ 1, %bb.bl ], [ 1, %bb.bh ], [ 1, %bb.bg ], [ 1, %bb.bk ], [ 1, %bb.bj ] ; 2 uses
-  %i.is = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
+  %i.is = getelementptr inbounds nuw i8, ptr %0, i64 240
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 248
   %.sroa.22.0.copyload.i = load i8, ptr %.sroa.22.0..sroa_idx.i, align 8
   %i.it = trunc nuw i8 %.sroa.22.0.copyload.i to i1
@@ -259,8 +259,9 @@ _ZN4llvm11raw_ostreamlsEPKc.exit152:              ; preds = %bb.bp, %bb.bq
   %.sroa.01.0.copyload.i153 = load i64, ptr %i.is, align 8
   %i.jo = and i64 %.sroa.01.0.copyload.i153, 4294967295
   %i.jp = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i151, i64 noundef %i.jo) #32 ; 0 uses
-  %.sroa.01.0.copyload.i158 = load i64, ptr %i.is, align 8
-  %.not79 = icmp ult i64 %.sroa.01.0.copyload.i158, 4294967296
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 244 ; 2 uses
+  %.sroa.0180.4.extract.trunc = load i32, ptr %4, align 4
+  %.not79 = icmp eq i32 %.sroa.0180.4.extract.trunc, 0
   br i1 %.not79, label %bb.bu, label %bb.br
 
 bb.br:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit152
@@ -282,9 +283,9 @@ bb.bt:                                            ; preds = %bb.br
 
 _ZN4llvm11raw_ostreamlsEPKc.exit165:              ; preds = %bb.bs, %bb.bt
   %.0.i.i164 = phi ptr [ %i.jt, %bb.bs ], [ %1, %bb.bt ]
-  %.sroa.01.0.copyload.i166 = load i64, ptr %i.is, align 8
-  %.sroa.0.4.extract.shift = lshr i64 %.sroa.01.0.copyload.i166, 32
-  %i.jw = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i164, i64 noundef %.sroa.0.4.extract.shift) #32 ; 0 uses
+  %.sroa.0.4.extract.trunc = load i32, ptr %4, align 4
+  %5 = zext i32 %.sroa.0.4.extract.trunc to i64
+  %i.jw = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i164, i64 noundef %5) #32 ; 0 uses
   br label %bb.bu
 
 bb.bu:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit152, %_ZN4llvm11raw_ostreamlsEPKc.exit165, %_ZN4llvm11raw_ostreamlsEPKc.exit142

@@ -204,69 +204,86 @@ bb.c:                                             ; preds = %.lr.ph25, %bb.c
 define range(i32 0, 2) i32 @Aig_NodeMffcExtendCut(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr i8, ptr %2, i64 4          ; 3 uses
-  %.val42 = load i32, ptr %i.a, align 4, !tbaa !28 ; 4 uses
+  %.val42 = load i32, ptr %i.a, align 4, !tbaa !28 ; 3 uses
   %i.b = icmp sgt i32 %.val42, 0
   br i1 %i.b, label %.lr.ph, label %.critedge.thread
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr i8, ptr %2, i64 8
-  %.val44 = load ptr, ptr %i.c, align 8, !tbaa !30 ; 3 uses
+  %.val44 = load ptr, ptr %i.c, align 8, !tbaa !30 ; 5 uses
   %wide.trip.count = zext nneg i32 %.val42 to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %4 = icmp eq i32 %.val42, 1
-  br i1 %4, label %.epil.preheader.a, label %.lr.ph.new
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %4 = icmp ult i32 %.val42, 4
+  br i1 %4, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %wide.trip.count, 2147483644
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.b ] ; 5 uses
   %.03346 = phi i32 [ 0, %.lr.ph.new ], [ %i.n, %bb.b ]
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.b ]
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %.val44, i64 %indvars.iv
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !31
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %5 = load i64, ptr %i.f, align 8
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.g = and i32 %7, 16777215
-  %i.h = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %.03346, i32 range(i32 0, 16777216) %i.g)
+  %5 = getelementptr i8, ptr %i.e, i64 28
+  %6 = load i32, ptr %5, align 4
+  %7 = and i32 %6, 16777215
+  %8 = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %.03346, i32 range(i32 0, 16777216) %7)
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %.val44, i64 %indvars.iv
+  %i.f = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %10 = load ptr, ptr %i.f, align 8, !tbaa !31
+  %11 = getelementptr i8, ptr %10, i64 28
+  %12 = load i32, ptr %11, align 4
+  %i.g = and i32 %12, 16777215
+  %i.h = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %8, i32 range(i32 0, 16777216) %i.g)
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %.val44, i64 %indvars.iv
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !31
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %8 = load i64, ptr %i.l, align 8
-  %9 = lshr i64 %8, 32
-  %10 = trunc nuw i64 %9 to i32
-  %i.m = and i32 %10, 16777215
-  %i.n = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %i.h, i32 range(i32 0, 16777216) %i.m) ; 3 uses
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %13 = getelementptr i8, ptr %i.k, i64 28
+  %14 = load i32, ptr %13, align 4
+  %15 = and i32 %14, 16777215
+  %16 = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %i.h, i32 range(i32 0, 16777216) %15)
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %.val44, i64 %indvars.iv
+  %i.l = getelementptr inbounds nuw i8, ptr %17, i64 24
+  %18 = load ptr, ptr %i.l, align 8, !tbaa !31
+  %19 = getelementptr i8, ptr %18, i64 28
+  %20 = load i32, ptr %19, align 4
+  %i.m = and i32 %20, 16777215
+  %i.n = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %16, i32 range(i32 0, 16777216) %i.m) ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
+  %niter.next.1 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.critedge.unr-lcssa, label %bb.b, !llvm.loop !43
 
 .critedge.unr-lcssa:                              ; preds = %bb.b
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.critedge, label %.epil.preheader.a
+  br i1 %lcmp.mod.not, label %.critedge, label %.epil.preheader
 
-.epil.preheader.a:                                ; preds = %.critedge.unr-lcssa, %.lr.ph
-  %indvars.iv.epil.init.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.critedge.unr-lcssa ]
-  %.03346.epil.init.a = phi i32 [ 0, %.lr.ph ], [ %i.n, %.critedge.unr-lcssa ]
-  %lcmp.mod64 = trunc i32 %.val42 to i1
+.epil.preheader:                                  ; preds = %.critedge.unr-lcssa, %.lr.ph
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.critedge.unr-lcssa ]
+  %.03346.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.n, %.critedge.unr-lcssa ]
+  %lcmp.mod64 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod64)
+  br label %.epil.preheader.a
+
+.epil.preheader.a:                                ; preds = %.epil.preheader.a, %.epil.preheader
+  %indvars.iv.epil.init.a = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %.epil.preheader.a ] ; 2 uses
+  %.03346.epil.init.a = phi i32 [ %.03346.epil.init, %.epil.preheader ], [ %23, %.epil.preheader.a ]
+  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %.epil.preheader.a ]
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %.val44, i64 %indvars.iv.epil.init.a
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !31
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  %11 = load i64, ptr %i.q, align 8
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw i64 %12 to i32
-  %14 = and i32 %13, 16777215
-  %15 = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %.03346.epil.init.a, i32 range(i32 0, 16777216) %14)
-  br label %.critedge
+  %i.q = getelementptr i8, ptr %i.p, i64 28
+  %21 = load i32, ptr %i.q, align 4
+  %22 = and i32 %21, 16777215
+  %23 = tail call range(i32 0, 16777216) i32 @llvm.umax.i32(i32 range(i32 0, 16777216) %.03346.epil.init.a, i32 range(i32 0, 16777216) %22) ; 2 uses
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil.init.a, 1
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
+  br i1 %epil.iter.cmp.not, label %.critedge, label %.epil.preheader.a, !llvm.loop !44
 
-.critedge:                                        ; preds = %.critedge.unr-lcssa, %.epil.preheader.a
-  %.lcssa = phi i32 [ %i.n, %.critedge.unr-lcssa ], [ %15, %.epil.preheader.a ] ; 2 uses
+.critedge:                                        ; preds = %.epil.preheader.a, %.critedge.unr-lcssa
+  %.lcssa = phi i32 [ %i.n, %.critedge.unr-lcssa ], [ %23, %.epil.preheader.a ] ; 2 uses
   %i.r = icmp eq i32 %.lcssa, 0
   br i1 %i.r, label %.critedge.thread, label %bb.c
 
@@ -289,11 +306,9 @@ bb.d:                                             ; preds = %.lr.ph51, %bb.f
   %.03648 = phi ptr [ null, %.lr.ph51 ], [ %.238, %bb.f ] ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %.val43, i64 %indvars.iv54
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !31   ; 4 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 24
-  %16 = load i64, ptr %i.x, align 8
-  %17 = lshr i64 %16, 32
-  %18 = trunc nuw i64 %17 to i32
-  %i.y = and i32 %18, 16777215
+  %i.x = getelementptr i8, ptr %i.w, i64 28
+  %24 = load i32, ptr %i.x, align 4
+  %i.y = and i32 %24, 16777215
   %.not = icmp eq i32 %i.y, %.lcssa
   br i1 %.not, label %bb.e, label %bb.f
 
@@ -315,7 +330,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %indvars.iv.next55 = add nuw nsw i64 %indvars.iv54, 1 ; 2 uses
   %i.ac = sext i32 %.val to i64
   %i.ad = icmp slt i64 %indvars.iv.next55, %i.ac
-  br i1 %i.ad, label %bb.d, label %.critedge2, !llvm.loop !44
+  br i1 %i.ad, label %bb.d, label %.critedge2, !llvm.loop !45
 
 .critedge2:                                       ; preds = %bb.f, %bb.c
   %.036.lcssa = phi ptr [ null, %bb.c ], [ %.238, %bb.f ] ; 3 uses
@@ -409,5 +424,7 @@ attributes #11 = { nounwind allocsize(0) }
 !41 = distinct !{!41, !32}
 !42 = distinct !{!42, !32}
 !43 = distinct !{!43, !32}
-!44 = distinct !{!44, !32}
+!44 = distinct !{!44, !46}
+!45 = distinct !{!45, !32}
+!46 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

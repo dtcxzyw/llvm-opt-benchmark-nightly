@@ -202,7 +202,7 @@ bb.a:
 define hidden void @_ZN2v88internal18EmbeddedFileWriter31PrepareBuiltinSourcePositionMapEPNS0_8BuiltinsE(ptr noundef nonnull align 8 dereferenceable(102880) %0, ptr noundef %1) unnamed_addr #0 align 2 !guid !48 {
 bb.a:
   %2 = alloca %"class.std::vector", align 8       ; 8 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.c
@@ -233,11 +233,11 @@ bb.d:                                             ; preds = %_ZNK2v88internal4Co
   %i.m = add i64 %i.h, -1
   %i.n = inttoptr i64 %i.m to ptr                 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %3 = load i64, ptr %i.p, align 8
-  %4 = ashr i64 %3, 32                            ; 6 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 12
+  %3 = load i32, ptr %i.p, align 4                ; 4 uses
+  %4 = sext i32 %3 to i64                         ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  %i.q = icmp slt i64 %4, 0
+  %i.q = icmp slt i32 %3, 0
   br i1 %i.q, label %bb.e, label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i
 
 bb.e:                                             ; preds = %bb.d
@@ -245,28 +245,33 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.d
-  %.not.i.i.i = icmp eq i64 %4, 0
-  br i1 %.not.i.i.i, label %_ZNSt6vectorIhSaIhEEC2IPhvEET_S4_RKS0_.exit, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
+  %.not.i.i.i = icmp eq i32 %3, 0
+  br i1 %.not.i.i.i, label %5, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.r = call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #19 ; 4 uses
   store ptr %i.r, ptr %2, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %4 ; 3 uses
   store ptr %i.s, ptr %i.a, align 8
-  %.not16 = icmp eq i64 %4, 1
+  %.not16 = icmp eq i32 %3, 1
   br i1 %.not16, label %bb.g, label %bb.f, !prof !49
 
 bb.f:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr nonnull align 8 %i.o, i64 %4, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr nonnull align 4 %i.o, i64 %4, i1 false)
+  br label %_ZNSt6vectorIhSaIhEEC2IPhvEET_S4_RKS0_.exit
+
+5:                                                ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i
+  %6 = getelementptr inbounds nuw i8, ptr null, i64 %4 ; 2 uses
+  store ptr %6, ptr %i.a, align 8
   br label %_ZNSt6vectorIhSaIhEEC2IPhvEET_S4_RKS0_.exit
 
 bb.g:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-  %i.t = load i8, ptr %i.o, align 8
+  %i.t = load i8, ptr %i.o, align 4
   store i8 %i.t, ptr %i.r, align 1
   br label %_ZNSt6vectorIhSaIhEEC2IPhvEET_S4_RKS0_.exit
 
-_ZNSt6vectorIhSaIhEEC2IPhvEET_S4_RKS0_.exit:      ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i, %bb.f, %bb.g
-  %i.u = phi ptr [ %i.s, %bb.f ], [ %i.s, %bb.g ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+_ZNSt6vectorIhSaIhEEC2IPhvEET_S4_RKS0_.exit:      ; preds = %bb.f, %5, %bb.g
+  %i.u = phi ptr [ %i.s, %bb.f ], [ %6, %5 ], [ %i.s, %bb.g ]
   store ptr %i.u, ptr %i.b, align 8
   %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %indvars.iv
   %i.w = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIhSaIhEEaSERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %2) ; 0 uses

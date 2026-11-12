@@ -205,15 +205,18 @@ bb.x:                                             ; preds = %Curl_multi_mark_dir
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !168
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 2072
   store i64 %i.bj, ptr %i.bk, align 8, !tbaa !168
-  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 2187 ; 2 uses
-  %2 = load i64, ptr %i.bl, align 1
-  %3 = and i64 %2, 4294967296
+  %i.bl = getelementptr i8, ptr %1, i64 2191
+  %2 = load i32, ptr %i.bl, align 1
+  %3 = and i32 %2, 1
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 2187 ; 2 uses
+  %4 = zext nneg i32 %3 to i64
   %i.bn = load i64, ptr %i.bm, align 1
+  %5 = shl nuw nsw i64 %4, 32
   %i.bo = and i64 %i.bn, -4294967297
-  %i.bp = or disjoint i64 %i.bo, %3
+  %i.bp = or disjoint i64 %5, %i.bo
   store i64 %i.bp, ptr %i.bm, align 1
-  %i.bq = load i64, ptr %i.bl, align 1
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 2187
+  %i.bq = load i64, ptr %6, align 1
   %i.br = and i64 %i.bq, 536870912
   %.not81 = icmp eq i64 %i.br, 0
   br i1 %.not81, label %bb.ab, label %bb.y
@@ -616,11 +619,9 @@ bb.j:                                             ; preds = %mstate.exit
   br label %bb.mb
 
 bb.k:                                             ; preds = %mstate.exit
-  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 2187 ; 31 uses
-  %4 = load i64, ptr %i.ap, align 1
-  %5 = lshr i64 %4, 32                            ; 2 uses
-  %6 = trunc nuw i64 %5 to i32
-  %i.aq = and i32 %6, 1
+  %i.ap = getelementptr i8, ptr %1, i64 2191      ; 3 uses
+  %4 = load i32, ptr %i.ap, align 1               ; 2 uses
+  %i.aq = and i32 %4, 1
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 3 uses
   %i.as = load i8, ptr %i.ar, align 8             ; 2 uses
   %i.at = and i8 %i.as, 1                         ; 2 uses
@@ -634,22 +635,21 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.av = tail call i32 @sigaction(i32 noundef 13, ptr noundef nonnull %2, ptr noundef null) #13 ; 0 uses
-  %.pre.i = load i64, ptr %i.ap, align 1
+  %.pre.i = load i32, ptr %i.ap, align 1
   %.pre7.i = load i8, ptr %i.ar, align 8
-  %.pre8.i = lshr i64 %.pre.i, 32
   br label %sigpipe_restore.exit.i
 
 sigpipe_restore.exit.i:                           ; preds = %bb.m, %bb.l
-  %.pre-phi.i = phi i64 [ %5, %bb.l ], [ %.pre8.i, %bb.m ]
-  %7 = phi i8 [ %i.as, %bb.l ], [ %.pre7.i, %bb.m ]
-  %i.aw = trunc i64 %.pre-phi.i to i8
+  %5 = phi i8 [ %i.as, %bb.l ], [ %.pre7.i, %bb.m ]
+  %6 = phi i32 [ %4, %bb.l ], [ %.pre.i, %bb.m ]
+  %i.aw = trunc i32 %6 to i8
   %i.ax = and i8 %i.aw, 1
-  %i.ay = and i8 %7, -2
+  %i.ay = and i8 %5, -2
   %i.az = or disjoint i8 %i.ax, %i.ay
   store i8 %i.az, ptr %i.ar, align 8
-  %8 = load i64, ptr %i.ap, align 1
-  %9 = and i64 %8, 4294967296
-  %.not.i6.i = icmp eq i64 %9, 0
+  %7 = load i32, ptr %i.ap, align 1
+  %8 = and i32 %7, 1
+  %.not.i6.i = icmp eq i32 %8, 0
   br i1 %.not.i6.i, label %bb.n, label %sigpipe_apply.exit
 
 bb.n:                                             ; preds = %sigpipe_restore.exit.i
@@ -666,6 +666,7 @@ bb.n:                                             ; preds = %sigpipe_restore.exi
   br label %sigpipe_apply.exit
 
 sigpipe_apply.exit:                               ; preds = %bb.k, %sigpipe_restore.exit.i, %bb.n
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 2187 ; 28 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 4504 ; 28 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 50 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 24 uses
@@ -699,7 +700,7 @@ sigpipe_apply.exit:                               ; preds = %bb.k, %sigpipe_rest
   br i1 %.not268, label %multi_ischanged.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %.critedge
-  %i.cc = load i64, ptr %i.ap, align 1
+  %i.cc = load i64, ptr %9, align 1
   %i.cd = and i64 %i.cc, 536870912
   %.not74 = icmp eq i64 %i.cd, 0
   br i1 %.not74, label %bb.t, label %bb.p
@@ -819,7 +820,7 @@ bb.aa:                                            ; preds = %.thread.i
   br i1 %i.df, label %mstate.exit.i, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dg = load i64, ptr %i.ap, align 1
+  %i.dg = load i64, ptr %9, align 1
   %i.dh = and i64 %i.dg, 536870912
   %.not19.i.i = icmp eq i64 %i.dh, 0
   br i1 %.not19.i.i, label %bb.ag, label %bb.ac
@@ -881,7 +882,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %i.ds, label %.thread.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.dt = load i64, ptr %i.ap, align 1
+  %i.dt = load i64, ptr %9, align 1
   %i.du = and i64 %i.dt, 536870912
   %.not19.i.i86 = icmp eq i64 %i.du, 0
   br i1 %.not19.i.i86, label %bb.ar, label %bb.an
@@ -927,7 +928,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.ef, label %mstate.exit.i96, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.eg = load i64, ptr %i.ap, align 1
+  %i.eg = load i64, ptr %9, align 1
   %i.eh = and i64 %i.eg, 536870912
   %.not19.i.i93 = icmp eq i64 %i.eh, 0
   br i1 %.not19.i.i93, label %bb.az, label %bb.av
@@ -1003,7 +1004,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.
   br i1 %i.fd, label %multistate_connect.exit, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.fe = load i64, ptr %i.ap, align 1
+  %i.fe = load i64, ptr %9, align 1
   %i.ff = and i64 %i.fe, 536870912
   %.not19.i24.i = icmp eq i64 %i.ff, 0
   br i1 %.not19.i24.i, label %bb.bl, label %bb.bh
@@ -1042,7 +1043,7 @@ bb.bm:                                            ; preds = %bb.bb
   br i1 %i.fo, label %multistate_connect.exit, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.fp = load i64, ptr %i.ap, align 1
+  %i.fp = load i64, ptr %9, align 1
   %i.fq = and i64 %i.fp, 536870912
   %.not19.i30.i = icmp eq i64 %i.fq, 0
   br i1 %.not19.i30.i, label %bb.bs, label %bb.bo
@@ -1128,7 +1129,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by, %bb.
   br i1 %i.gk, label %multistate_connecting.exit, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.gl = load i64, ptr %i.ap, align 1
+  %i.gl = load i64, ptr %9, align 1
   %i.gm = and i64 %i.gl, 536870912
   %.not19.i.i106 = icmp eq i64 %i.gm, 0
   br i1 %.not19.i.i106, label %bb.cg, label %bb.cc
@@ -1165,7 +1166,7 @@ bb.ch:                                            ; preds = %bb.bw
   br i1 %.not24.i, label %multistate_connecting.exit, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.gu = load i64, ptr %i.ap, align 1
+  %i.gu = load i64, ptr %9, align 1
   %i.gv = and i64 %i.gu, 536870912
   %.not27.i = icmp eq i64 %i.gv, 0
   br i1 %.not27.i, label %bb.cn, label %bb.cj
@@ -1219,7 +1220,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %.not15.i, label %bb.cw, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.hi = load i64, ptr %i.ap, align 1
+  %i.hi = load i64, ptr %9, align 1
   %i.hj = and i64 %i.hi, 536870912
   %.not19.i.i114 = icmp eq i64 %i.hj, 0
   br i1 %.not19.i.i114, label %bb.cv, label %bb.cr
@@ -1312,7 +1313,7 @@ bb.dc:                                            ; preds = %bb.db
   br i1 %i.ii, label %multistate_protoconnect.exit, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.ij = load i64, ptr %i.ap, align 1
+  %i.ij = load i64, ptr %9, align 1
   %i.ik = and i64 %i.ij, 536870912
   %.not19.i17.i = icmp eq i64 %i.ik, 0
   br i1 %.not19.i17.i, label %bb.di, label %bb.de
@@ -1351,7 +1352,7 @@ bb.dj:                                            ; preds = %bb.db, %.thread.i12
   br i1 %i.it, label %multistate_protoconnect.exit, label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj
-  %i.iu = load i64, ptr %i.ap, align 1
+  %i.iu = load i64, ptr %9, align 1
   %i.iv = and i64 %i.iu, 536870912
   %.not19.i23.i = icmp eq i64 %i.iv, 0
   br i1 %.not19.i23.i, label %bb.dp, label %bb.dl
@@ -1436,7 +1437,7 @@ bb.du:                                            ; preds = %protocol_connecting
   br i1 %i.jr, label %multistate_protoconnecting.exit, label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du
-  %i.js = load i64, ptr %i.ap, align 1
+  %i.js = load i64, ptr %9, align 1
   %i.jt = and i64 %i.js, 536870912
   %.not19.i.i127 = icmp eq i64 %i.jt, 0
   br i1 %.not19.i.i127, label %bb.ea, label %bb.dw
@@ -1530,7 +1531,7 @@ bb.eh:                                            ; preds = %Curl_set_in_callbac
   br label %multistate_do.exit
 
 .thread.i135:                                     ; preds = %Curl_set_in_callback.exit94.i, %bb.ed
-  %i.kt = load i64, ptr %i.ap, align 1            ; 2 uses
+  %i.kt = load i64, ptr %9, align 1               ; 2 uses
   %i.ku = and i64 %i.kt, 3
   %or.cond91.i = icmp eq i64 %i.ku, 1
   br i1 %or.cond91.i, label %bb.ei, label %bb.er
@@ -1639,7 +1640,7 @@ bb.et:                                            ; preds = %bb.es, %bb.es
   br i1 %i.ma, label %mstate.exit100.i, label %bb.eu
 
 bb.eu:                                            ; preds = %.thread119.i
-  %i.mb = load i64, ptr %i.ap, align 1
+  %i.mb = load i64, ptr %9, align 1
   %i.mc = and i64 %i.mb, 536870912
   %.not19.i95.i = icmp eq i64 %i.mc, 0
   br i1 %.not19.i95.i, label %bb.ez, label %bb.ev
@@ -1686,7 +1687,7 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %i.mp, label %mstate.exit100.i, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
-  %i.mq = load i64, ptr %i.ap, align 1
+  %i.mq = load i64, ptr %9, align 1
   %i.mr = and i64 %i.mq, 536870912
   %.not19.i101.i = icmp eq i64 %i.mr, 0
   br i1 %.not19.i101.i, label %bb.fh, label %bb.fd
@@ -1724,7 +1725,7 @@ bb.fi:                                            ; preds = %bb.fa
   br i1 %i.mz, label %mstate.exit100.i, label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi
-  %i.na = load i64, ptr %i.ap, align 1
+  %i.na = load i64, ptr %9, align 1
   %i.nb = and i64 %i.na, 536870912
   %.not19.i107.i = icmp eq i64 %i.nb, 0
   br i1 %.not19.i107.i, label %bb.fo, label %bb.fk
@@ -1903,7 +1904,7 @@ bb.gd:                                            ; preds = %bb.gc
 bb.ge:                                            ; preds = %.thread379, %bb.gd
   %i.os = phi i32 [ %i.ok, %.thread379 ], [ %i.oq, %bb.gd ] ; 3 uses
   %i.ot = phi i32 [ 8, %.thread379 ], [ %.pre283, %bb.gd ]
-  %i.ou = load i64, ptr %i.ap, align 1
+  %i.ou = load i64, ptr %9, align 1
   %i.ov = and i64 %i.ou, 536870912
   %.not19.i.i150 = icmp eq i64 %i.ov, 0
   br i1 %.not19.i.i150, label %bb.gj, label %bb.gf
@@ -1992,7 +1993,7 @@ bb.go:                                            ; preds = %bb.gn
   br i1 %i.pt, label %multistate_doing_more.exit, label %bb.gp
 
 bb.gp:                                            ; preds = %bb.go
-  %i.pu = load i64, ptr %i.ap, align 1
+  %i.pu = load i64, ptr %9, align 1
   %i.pv = and i64 %i.pu, 536870912
   %.not19.i.i162 = icmp eq i64 %i.pv, 0
   br i1 %.not19.i.i162, label %bb.gu, label %bb.gq
@@ -2081,7 +2082,7 @@ bb.hc:                                            ; preds = %bb.hb, %bb.ha
   br i1 %i.qs, label %.thread.thread, label %bb.hd
 
 bb.hd:                                            ; preds = %bb.hc
-  %i.qt = load i64, ptr %i.ap, align 1
+  %i.qt = load i64, ptr %9, align 1
   %i.qu = and i64 %i.qt, 536870912
   %.not19.i.i175 = icmp eq i64 %i.qu, 0
   br i1 %.not19.i.i175, label %.thread.thread.sink.split, label %bb.he
@@ -2132,7 +2133,7 @@ bb.hk:                                            ; preds = %bb.hj, %bb.hi, %bb.
   br i1 %i.rm, label %.thread.thread, label %bb.hl
 
 bb.hl:                                            ; preds = %bb.hk
-  %i.rn = load i64, ptr %i.ap, align 1
+  %i.rn = load i64, ptr %9, align 1
   %i.ro = and i64 %i.rn, 536870912
   %.not19.i14.i = icmp eq i64 %i.ro, 0
   br i1 %.not19.i14.i, label %bb.hq, label %bb.hm
@@ -2427,7 +2428,7 @@ bb.iw:                                            ; preds = %bb.iv
   br i1 %i.ut, label %.thread.thread, label %bb.ix
 
 bb.ix:                                            ; preds = %bb.iw
-  %i.uu = load i64, ptr %i.ap, align 1
+  %i.uu = load i64, ptr %9, align 1
   %i.uv = and i64 %i.uu, 536870912
   %.not19.i.i194 = icmp eq i64 %i.uv, 0
   br i1 %.not19.i.i194, label %.thread.thread.sink.split, label %bb.iy
@@ -2461,7 +2462,7 @@ bb.jb:                                            ; preds = %._crit_edge278, %bb
   br label %is_finished.exit
 
 bb.jc:                                            ; preds = %bb.jb
-  %i.vf = load i64, ptr %i.ap, align 1
+  %i.vf = load i64, ptr %9, align 1
   %i.vg = and i64 %i.vf, 536870912
   %.not19.i13.i = icmp eq i64 %i.vg, 0
   br i1 %.not19.i13.i, label %bb.jh, label %bb.jd
@@ -2608,7 +2609,7 @@ bb.jr:                                            ; preds = %thread-pre-split.i,
   br i1 %i.wl, label %.thread384thread-pre-split, label %bb.js
 
 bb.js:                                            ; preds = %bb.jr
-  %i.wm = load i64, ptr %i.ap, align 1
+  %i.wm = load i64, ptr %9, align 1
   %i.wn = and i64 %i.wm, 536870912
   %.not19.i.i207 = icmp eq i64 %i.wn, 0
   br i1 %.not19.i.i207, label %bb.jx, label %bb.jt
@@ -2666,7 +2667,7 @@ bb.kb:                                            ; preds = %bb.ka
   br i1 %i.xc, label %.thread384, label %bb.kc
 
 bb.kc:                                            ; preds = %bb.kb
-  %i.xd = load i64, ptr %i.ap, align 1
+  %i.xd = load i64, ptr %9, align 1
   %i.xe = and i64 %i.xd, 536870912
   %.not19.i34.i = icmp eq i64 %i.xe, 0
   br i1 %.not19.i34.i, label %bb.kh, label %bb.kd
@@ -2756,7 +2757,7 @@ bb.kk:                                            ; preds = %.thread384, %bb.kj
   br i1 %.not.i214, label %bb.lj, label %bb.kl
 
 bb.kl:                                            ; preds = %bb.kk
-  %i.ya = load i64, ptr %i.ap, align 1
+  %i.ya = load i64, ptr %9, align 1
   %i.yb = and i64 %i.ya, 536870912
   %.not63.i = icmp eq i64 %i.yb, 0
   br i1 %.not63.i, label %bb.kq, label %bb.km
@@ -2844,7 +2845,7 @@ bb.ky:                                            ; preds = %Curl_multi_get_easy
   br label %bb.lo
 
 bb.kz:                                            ; preds = %Curl_multi_get_easy.exit.i
-  %i.za = load i64, ptr %i.ap, align 1
+  %i.za = load i64, ptr %9, align 1
   %i.zb = and i64 %i.za, 536870912
   %.not69.i = icmp eq i64 %i.zb, 0
   br i1 %.not69.i, label %bb.lo, label %bb.la
@@ -2875,7 +2876,7 @@ bb.ld:                                            ; preds = %bb.lc, %bb.lb
 
 bb.le:                                            ; preds = %bb.kx, %bb.kw, %bb.kv, %bb.kt, %bb.ks
   call void @Curl_uint32_tbl_remove(ptr noundef nonnull %i.yj, i32 noundef %i.yi) #13
-  %i.zj = load i64, ptr %i.ap, align 1
+  %i.zj = load i64, ptr %9, align 1
   %i.zk = and i64 %i.zj, 536870912
   %.not66.i = icmp eq i64 %i.zk, 0
   br i1 %.not66.i, label %bb.lo, label %bb.lf
@@ -2948,7 +2949,7 @@ bb.lo:                                            ; preds = %multi_addmsg.exit.i
   br i1 %i.aae, label %mstate.exit.i221, label %bb.lp
 
 bb.lp:                                            ; preds = %bb.lo
-  %i.aaf = load i64, ptr %i.ap, align 1
+  %i.aaf = load i64, ptr %9, align 1
   %i.aag = and i64 %i.aaf, 536870912
   %.not19.i75.i = icmp eq i64 %i.aag, 0
   br i1 %.not19.i75.i, label %bb.lu, label %bb.lq

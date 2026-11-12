@@ -200,7 +200,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @PHP_MURMUR3CFinal(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = alloca [4 x i32], align 16               ; 8 uses
+  %i.a = alloca [4 x i32], align 16               ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -210,21 +210,57 @@ bb.a:
   %i.e = load i32, ptr %i.a, align 16, !tbaa !18
   %i.f = call i32 @llvm.bswap.i32(i32 %i.e)
   store i32 %i.f, ptr %0, align 1, !tbaa !12
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !18
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = call i32 @llvm.bswap.i32(i32 %i.h)
-  store i32 %2, ptr %i.i, align 1, !tbaa !12
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !18
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = call i32 @llvm.bswap.i32(i32 %i.k)
-  store i32 %3, ptr %i.l, align 1, !tbaa !12
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !18
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %4 = call i32 @llvm.bswap.i32(i32 %i.n)
-  store i32 %4, ptr %i.o, align 1, !tbaa !12
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  %4 = load i8, ptr %3, align 1, !tbaa !18
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i8 %4, ptr %i.g, align 1, !tbaa !12
+  %i.h = load i32, ptr %2, align 4, !tbaa !18     ; 3 uses
+  %5 = lshr i32 %i.h, 16
+  %6 = trunc i32 %5 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 5
+  store i8 %6, ptr %7, align 1, !tbaa !12
+  %8 = lshr i32 %i.h, 8
+  %9 = trunc i32 %8 to i8
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 6
+  store i8 %9, ptr %i.i, align 1, !tbaa !12
+  %10 = trunc i32 %i.h to i8
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 7
+  store i8 %10, ptr %11, align 1, !tbaa !12
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  %14 = load i8, ptr %13, align 1, !tbaa !18
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %14, ptr %i.j, align 1, !tbaa !12
+  %i.k = load i32, ptr %12, align 8, !tbaa !18    ; 3 uses
+  %15 = lshr i32 %i.k, 16
+  %16 = trunc i32 %15 to i8
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 9
+  store i8 %16, ptr %17, align 1, !tbaa !12
+  %18 = lshr i32 %i.k, 8
+  %19 = trunc i32 %18 to i8
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 10
+  store i8 %19, ptr %i.l, align 1, !tbaa !12
+  %20 = trunc i32 %i.k to i8
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  store i8 %20, ptr %21, align 1, !tbaa !12
+  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
+  %24 = load i8, ptr %23, align 1, !tbaa !18
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i8 %24, ptr %i.m, align 1, !tbaa !12
+  %i.n = load i32, ptr %22, align 4, !tbaa !18    ; 3 uses
+  %25 = lshr i32 %i.n, 16
+  %26 = trunc i32 %25 to i8
+  %27 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  store i8 %26, ptr %27, align 1, !tbaa !12
+  %28 = lshr i32 %i.n, 8
+  %29 = trunc i32 %28 to i8
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 14
+  store i8 %29, ptr %i.o, align 1, !tbaa !12
+  %30 = trunc i32 %i.n to i8
+  %31 = getelementptr inbounds nuw i8, ptr %0, i64 15
+  store i8 %30, ptr %31, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
@@ -325,7 +361,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @PHP_MURMUR3FFinal(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = alloca [2 x i64], align 16               ; 6 uses
+  %i.a = alloca [2 x i64], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -335,11 +371,39 @@ bb.a:
   %i.e = load i64, ptr %i.a, align 16, !tbaa !22
   %i.f = call i64 @llvm.bswap.i64(i64 %i.e)
   store i64 %i.f, ptr %0, align 1, !tbaa !12
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !22
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = call i64 @llvm.bswap.i64(i64 %i.h)
-  store i64 %2, ptr %i.i, align 1, !tbaa !12
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
+  %4 = load i8, ptr %3, align 1, !tbaa !22
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %4, ptr %i.g, align 1, !tbaa !12
+  %i.h = load i64, ptr %2, align 8, !tbaa !22     ; 7 uses
+  %5 = lshr i64 %i.h, 48
+  %6 = trunc i64 %5 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 9
+  store i8 %6, ptr %7, align 1, !tbaa !12
+  %8 = lshr i64 %i.h, 40
+  %9 = trunc i64 %8 to i8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 10
+  store i8 %9, ptr %10, align 1, !tbaa !12
+  %11 = lshr i64 %i.h, 32
+  %12 = trunc i64 %11 to i8
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  store i8 %12, ptr %13, align 1, !tbaa !12
+  %14 = lshr i64 %i.h, 24
+  %15 = trunc i64 %14 to i8
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i8 %15, ptr %16, align 1, !tbaa !12
+  %17 = lshr i64 %i.h, 16
+  %18 = trunc i64 %17 to i8
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  store i8 %18, ptr %19, align 1, !tbaa !12
+  %20 = lshr i64 %i.h, 8
+  %21 = trunc i64 %20 to i8
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 14
+  store i8 %21, ptr %i.i, align 1, !tbaa !12
+  %22 = trunc i64 %i.h to i8
+  %23 = getelementptr inbounds nuw i8, ptr %0, i64 15
+  store i8 %22, ptr %23, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }

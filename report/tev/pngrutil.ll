@@ -205,9 +205,21 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 544
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !29
-  %2 = tail call i32 @llvm.bswap.i32(i32 %i.h)
-  store i32 %2, ptr %i.c, align 8, !tbaa !10
+  %2 = getelementptr i8, ptr %0, i64 547
+  %3 = load i8, ptr %2, align 1, !tbaa !29
+  store i8 %3, ptr %i.c, align 8, !tbaa !10
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !29   ; 3 uses
+  %4 = lshr i32 %i.h, 16
+  %5 = trunc i32 %4 to i8
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1145
+  store i8 %5, ptr %6, align 1, !tbaa !10
+  %7 = lshr i32 %i.h, 8
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1146
+  store i8 %8, ptr %9, align 2, !tbaa !10
+  %10 = trunc i32 %i.h to i8
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 1147
+  store i8 %10, ptr %11, align 1, !tbaa !10
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1148
   store i8 0, ptr %i.i, align 4, !tbaa !10
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1160
@@ -610,14 +622,14 @@ define internal fastcc noundef i32 @png_inflate_claim(ptr noalias noundef %0, i3
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !78   ; 5 uses
+  %i.c = load i32, ptr %i.b, align 8              ; 5 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.d = lshr i32 %i.c, 24
   %i.e = trunc nuw i32 %i.d to i8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store i8 %i.e, ptr %i.a, align 16, !tbaa !10
   %i.f = lshr i32 %i.c, 16
   %i.g = trunc i32 %i.f to i8

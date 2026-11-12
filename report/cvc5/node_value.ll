@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %_ZN4cvc58internal4e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.ad = load i64, ptr %i.ac, align 8
   %i.ae = trunc i64 %i.ad to i32
   %i.af = and i32 %i.ae, 1023                     ; 2 uses
@@ -305,9 +305,10 @@ bb.r:                                             ; preds = %bb.p, %bb.q
 
 bb.s:                                             ; preds = %_ZNK4cvc58internal4expr9NodeValue11getMetaKindEv.exit36
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %3 = load i64, ptr %i.ac, align 8
-  %4 = and i64 %3, 288230371856744448
-  %.not = icmp eq i64 %4, 0
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %4 = load i32, ptr %3, align 4
+  %5 = and i32 %4, 67108863
+  %.not = icmp eq i32 %5, 0
   br i1 %.not, label %_ZNSolsEm.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.s
@@ -428,10 +429,10 @@ _ZNSolsEPFRSoS_E.exit44:                          ; preds = %.noexc72
 
 bb.z:                                             ; preds = %_ZNSolsEPFRSoS_E.exit44
   %i.dl = getelementptr inbounds nuw i8, ptr %.083, i64 8 ; 2 uses
-  %5 = load i64, ptr %i.ac, align 8
-  %6 = lshr i64 %5, 32
-  %7 = and i64 %6, 67108863
-  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %7
+  %6 = load i32, ptr %3, align 4
+  %7 = and i32 %6, 67108863
+  %8 = zext nneg i32 %7 to i64
+  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %8
   %.not21 = icmp eq ptr %i.dl, %i.dm
   br i1 %.not21, label %._crit_edge, label %bb.w, !llvm.loop !58
 

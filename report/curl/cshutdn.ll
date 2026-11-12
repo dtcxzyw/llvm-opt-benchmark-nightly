@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %.lr.ph28
   br i1 %.not.i, label %sigpipe_apply.exit, label %bb.c
 
 bb.c:                                             ; preds = %.split
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 2187
-  %5 = load i64, ptr %i.m, align 1
-  %6 = and i64 %5, 4294967296
-  %.not6.i.not = icmp eq i64 %6, 0
+  %i.m = getelementptr i8, ptr %1, i64 2191
+  %5 = load i32, ptr %i.m, align 1
+  %6 = and i32 %5, 1
+  %.not6.i.not = icmp eq i32 %6, 0
   br i1 %.not6.i.not, label %bb.d, label %sigpipe_apply.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -608,10 +608,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not33, label %Curl_cshutdn_run_once.exit.us, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2187 ; 5 uses
-  %i.d = load i64, ptr %i.c, align 1              ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2187 ; 2 uses
+  %i.d = load i64, ptr %i.c, align 1              ; 2 uses
   %i.e = and i64 %i.d, 536870912
   %.not34 = icmp eq i64 %i.e, 0
+  %4 = lshr i64 %i.d, 32
+  %5 = trunc nuw i64 %4 to i32                    ; 3 uses
   br i1 %.not34, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -637,13 +639,13 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.e, %bb.f
   %i.m = tail call i64 @Curl_llist_count(ptr noundef %0) #7
   tail call void (ptr, ptr, ...) @Curl_trc_multi(ptr noundef nonnull %1, ptr noundef nonnull @.str.15, i64 noundef %i.m) #7
-  %.pre = load i64, ptr %i.c, align 1
+  %.phi.trans.insert = getelementptr i8, ptr %1, i64 2191
+  %.pre = load i32, ptr %.phi.trans.insert, align 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.c
-  %4 = phi i64 [ %.pre, %bb.g ], [ %i.d, %bb.f ], [ %i.d, %bb.e ], [ %i.d, %bb.c ]
-  %5 = lshr i64 %4, 32                            ; 2 uses
-  %6 = trunc nuw i64 %5 to i32
+  %6 = phi i32 [ %.pre, %bb.g ], [ %5, %bb.f ], [ %5, %bb.e ], [ %5, %bb.c ] ; 2 uses
+  %7 = getelementptr i8, ptr %1, i64 2191         ; 2 uses
   %i.n = and i32 %6, 1
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 3 uses
   %i.p = load i8, ptr %i.o, align 8               ; 2 uses
@@ -658,22 +660,21 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.s = tail call i32 @sigaction(i32 noundef 13, ptr noundef nonnull %2, ptr noundef null) #7 ; 0 uses
-  %.pre.i = load i64, ptr %i.c, align 1
+  %.pre.i = load i32, ptr %7, align 1
   %.pre8.i = load i8, ptr %i.o, align 8
-  %.pre9.i = lshr i64 %.pre.i, 32
   br label %sigpipe_restore.exit.i
 
 sigpipe_restore.exit.i:                           ; preds = %bb.j, %bb.i
-  %.pre-phi.i = phi i64 [ %5, %bb.i ], [ %.pre9.i, %bb.j ]
-  %7 = phi i8 [ %i.p, %bb.i ], [ %.pre8.i, %bb.j ]
-  %i.t = trunc i64 %.pre-phi.i to i8
+  %8 = phi i8 [ %i.p, %bb.i ], [ %.pre8.i, %bb.j ]
+  %9 = phi i32 [ %6, %bb.i ], [ %.pre.i, %bb.j ]
+  %i.t = trunc i32 %9 to i8
   %i.u = and i8 %i.t, 1
-  %i.v = and i8 %7, -2
+  %i.v = and i8 %8, -2
   %i.w = or disjoint i8 %i.u, %i.v
   store i8 %i.w, ptr %i.o, align 8
-  %8 = load i64, ptr %i.c, align 1
-  %9 = and i64 %8, 4294967296
-  %.not.i7.i = icmp eq i64 %9, 0
+  %10 = load i32, ptr %7, align 1
+  %11 = and i32 %10, 1
+  %.not.i7.i = icmp eq i32 %11, 0
   br i1 %.not.i7.i, label %bb.k, label %sigpipe_apply.exit.split.preheader
 
 bb.k:                                             ; preds = %sigpipe_restore.exit.i

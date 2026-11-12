@@ -205,10 +205,9 @@ JS_FreeValueRT.exit41.a:                          ; preds = %bb.l, %bb.m
 
 bb.n:                                             ; preds = %bb.a
   %i.as = inttoptr i64 %1 to ptr                  ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 16
-  %3 = load i16, ptr %i.at, align 8
-  %4 = and i16 %3, 256
-  %.not = icmp eq i16 %4, 0
+  %i.at = getelementptr i8, ptr %i.as, i64 17
+  %3 = load i8, ptr %i.at, align 1
+  %4 = and i8 %3, 1
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !232
   %i.aw = getelementptr inbounds i8, ptr %i.as, i64 -4 ; 2 uses
@@ -223,7 +222,8 @@ bb.o:                                             ; preds = %bb.n
   br label %JS_FreeValueRT.exit42.a
 
 JS_FreeValueRT.exit42.a:                          ; preds = %bb.n, %bb.o
-  %i.ba = zext i1 %.not to i32
+  %5 = xor i8 %4, 1
+  %i.ba = zext nneg i8 %5 to i32
   br label %JS_FreeValueRT.exit43
 
 bb.p:                                             ; preds = %bb.a
@@ -626,10 +626,10 @@ bb.bbf:                                           ; preds = %bb.bbd
 
 bb.bbg:                                           ; preds = %bb.bbd
   %i.iwd = inttoptr i64 %.sroa.0134.0.copyload to ptr ; 3 uses
-  %i.iwe = getelementptr inbounds nuw i8, ptr %i.iwd, i64 16
-  %56 = load i16, ptr %i.iwe, align 8
-  %57 = and i16 %56, 256
-  %.not.i4471 = icmp eq i16 %57, 0
+  %i.iwe = getelementptr i8, ptr %i.iwd, i64 17
+  %56 = load i8, ptr %i.iwe, align 1
+  %57 = and i8 %56, 1
+  %.not.i4471 = icmp eq i8 %57, 0
   br i1 %.not.i4471, label %bb.bbh, label %js_operator_typeof.exit.thread, !prof !325
 
 bb.bbh:                                           ; preds = %bb.bbg
@@ -1032,10 +1032,10 @@ bb.ber:                                           ; preds = %bb.beq
   %i.jju = getelementptr inbounds i8, ptr %.31, i64 -16
   %i.jjv = load i64, ptr %i.jju, align 8          ; 2 uses
   %i.jjw = inttoptr i64 %i.jjv to ptr
-  %i.jjx = getelementptr inbounds nuw i8, ptr %i.jjw, i64 16
-  %58 = load i16, ptr %i.jjx, align 8
-  %59 = and i16 %58, 256
-  %.not.i4495 = icmp eq i16 %59, 0
+  %i.jjx = getelementptr i8, ptr %i.jjw, i64 17
+  %58 = load i8, ptr %i.jjx, align 1
+  %59 = and i8 %58, 1
+  %.not.i4495 = icmp eq i8 %59, 0
   br i1 %.not.i4495, label %js_operator_typeof.exit4503.thread, label %js_operator_typeof.exit4503, !prof !325
 
 bb.bes:                                           ; preds = %.backedge
@@ -1049,10 +1049,10 @@ bb.bet:                                           ; preds = %bb.bes
   %i.jkb = getelementptr inbounds i8, ptr %.31, i64 -16
   %i.jkc = load i64, ptr %i.jkb, align 8          ; 4 uses
   %i.jkd = inttoptr i64 %i.jkc to ptr             ; 3 uses
-  %i.jke = getelementptr inbounds nuw i8, ptr %i.jkd, i64 16
-  %60 = load i16, ptr %i.jke, align 8
-  %61 = and i16 %60, 256
-  %.not.i4506 = icmp eq i16 %61, 0
+  %i.jke = getelementptr i8, ptr %i.jkd, i64 17
+  %60 = load i8, ptr %i.jke, align 1
+  %61 = and i8 %60, 1
+  %.not.i4506 = icmp eq i8 %61, 0
   br i1 %.not.i4506, label %bb.beu, label %js_operator_typeof.exit4503.thread, !prof !1356
 
 bb.beu:                                           ; preds = %bb.bet
@@ -1455,7 +1455,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.h, %bb.j, %bb.g
   %.0115 = phi ptr [ %i.an, %bb.g ], [ null, %bb.j ], [ null, %bb.h ]
   %.0114 = phi ptr [ %i.at, %bb.g ], [ null, %bb.j ], [ null, %bb.h ]
-  %.0113 = phi ptr [ %i.ar, %bb.g ], [ null, %bb.j ], [ null, %bb.h ] ; 10 uses
+  %.0113 = phi ptr [ %i.ar, %bb.g ], [ null, %bb.j ], [ null, %bb.h ] ; 11 uses
   %.1112 = phi ptr [ null, %bb.g ], [ %i.bf, %bb.j ], [ null, %bb.h ] ; 10 uses
   %.1 = phi i64 [ %i.ax, %bb.g ], [ 1, %bb.j ], [ %i.ba, %bb.h ]
   %i.bg = tail call fastcc ptr @js_new_function_def(ptr noundef %0, ptr noundef null, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef %5, i32 noundef %6, i32 noundef 1) ; 14 uses
@@ -1480,7 +1480,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.aj, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bs = getelementptr inbounds nuw i8, ptr %.0113, i64 16 ; 4 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %.0113, i64 16 ; 3 uses
   %i.bt = load i16, ptr %i.bs, align 8
   %i.bu = shl i16 %i.bt, 4
   %i.bv = and i16 %i.bu, 2048
@@ -1488,12 +1488,13 @@ bb.m:                                             ; preds = %bb.l
   %i.bx = and i64 %i.br, -2049
   %i.by = or disjoint i64 %i.bx, %i.bw            ; 2 uses
   store i64 %i.by, ptr %i.bj, align 4
-  %11 = load i16, ptr %i.bs, align 8
-  %12 = shl i16 %11, 4
-  %13 = and i16 %12, 4096
-  %i.bz = zext nneg i16 %13 to i64
+  %11 = getelementptr i8, ptr %.0113, i64 17
+  %12 = load i8, ptr %11, align 1
+  %13 = and i8 %12, 1
+  %i.bz = zext nneg i8 %13 to i64
+  %14 = shl nuw nsw i64 %i.bz, 12
   %i.ca = and i64 %i.by, -4097
-  %i.cb = or disjoint i64 %i.ca, %i.bz            ; 2 uses
+  %i.cb = or disjoint i64 %i.ca, %14              ; 2 uses
   store i64 %i.cb, ptr %i.bj, align 4
   %i.cc = load i16, ptr %i.bs, align 8
   %i.cd = shl i16 %i.cc, 4
@@ -1896,13 +1897,12 @@ bb.ax:                                            ; preds = %tag_is_number.exit2
 
 JS_IsHTMLDDA.exit:                                ; preds = %bb.ax
   %i.gb = inttoptr i64 %i.fz to ptr
-  %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 16
-  %3 = load i16, ptr %i.gc, align 8
-  %4 = and i16 %3, 256
-  %5 = icmp ne i16 %4, 0
+  %i.gc = getelementptr i8, ptr %i.gb, i64 17
+  %3 = load i8, ptr %i.gc, align 1
+  %4 = trunc i8 %3 to i1
   %i.gd = and i32 %i.c, -2
   %or.cond29 = icmp eq i32 %i.gd, 2
-  %or.cond213 = and i1 %5, %or.cond29
+  %or.cond213 = and i1 %or.cond29, %4
   br i1 %or.cond213, label %bb.az, label %JS_IsHTMLDDA.exit.thread
 
 JS_IsHTMLDDA.exit.thread:                         ; preds = %.thread1060, %bb.ax, %JS_IsHTMLDDA.exit
@@ -1916,14 +1916,13 @@ JS_IsHTMLDDA.exit.thread:                         ; preds = %.thread1060, %bb.ax
 bb.ay:                                            ; preds = %JS_IsHTMLDDA.exit.thread
   %i.gg = bitcast double %.sroa.096.0.ph to i64
   %i.gh = inttoptr i64 %i.gg to ptr
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 16
-  %6 = load i16, ptr %i.gi, align 8
-  %7 = and i16 %6, 256
-  %8 = icmp ne i16 %7, 0
+  %i.gi = getelementptr i8, ptr %i.gh, i64 17
+  %5 = load i8, ptr %i.gi, align 1
+  %6 = trunc i8 %5 to i1
   br label %JS_IsHTMLDDA.exit225
 
 JS_IsHTMLDDA.exit225:                             ; preds = %JS_IsHTMLDDA.exit.thread, %bb.ay
-  %.0.i224 = phi i1 [ %8, %bb.ay ], [ false, %JS_IsHTMLDDA.exit.thread ]
+  %.0.i224 = phi i1 [ %6, %bb.ay ], [ false, %JS_IsHTMLDDA.exit.thread ]
   %i.gj = and i32 %.us-phi3111045104910591067, -2
   %or.cond31 = icmp eq i32 %i.gj, 2
   %or.cond214 = and i1 %or.cond31, %.0.i224
@@ -2326,14 +2325,17 @@ bb.c:                                             ; preds = %bb.a
 
 bc_put_u8.exit:                                   ; preds = %bb.b, %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %i.q = load i16, ptr %i.p, align 8
+  %i.q = load i16, ptr %i.p, align 8              ; 2 uses
+  %2 = lshr i16 %i.q, 1
   %i.r = lshr i16 %i.q, 1
-  %i.s = and i16 %i.r, 2047
+  %i.s = and i16 %i.r, 128
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.u = load i8, ptr %i.t, align 4, !tbaa !603, !range !234, !noundef !235
   %i.v = zext nneg i8 %i.u to i16
   %i.w = shl nuw nsw i16 %i.v, 11
-  %i.x = or disjoint i16 %i.s, %i.w               ; 2 uses
+  %3 = and i16 %2, 1919
+  %4 = or disjoint i16 %3, %i.s
+  %i.x = or disjoint i16 %4, %i.w                 ; 2 uses
   %i.y = load i64, ptr %i.h, align 8, !tbaa !465
   %i.z = load i64, ptr %i.j, align 8, !tbaa !466  ; 2 uses
   %i.aa = sub i64 %i.y, %i.z
@@ -2736,6 +2738,8 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 4              ; 5 uses
   %i.c = and i64 %i.b, 549755813888
   %.not = icmp eq i64 %i.c, 0
+  %3 = lshr i64 %i.b, 32
+  %4 = trunc nuw i64 %3 to i32
   br i1 %.not, label %.loopexit61, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2790,8 +2794,6 @@ js_invalid_strict_name.exit54:                    ; preds = %bb.d
   br i1 %or.cond, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.loopexit61
-  %3 = lshr i64 %i.b, 32
-  %4 = trunc nuw i64 %3 to i32
   %i.p = and i32 %4, 127
   switch i32 %i.p, label %.loopexit60 [
     i32 3, label %bb.f

@@ -205,7 +205,7 @@ _ZNSt12_Destroy_auxILb0EE9__destroyIPNSt7__cxx1112basic_stringIcSt11char_traitsI
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4crow9websocket10ConnectionINS_13SocketAdaptorENS_4CrowIJEEEE6createERKNS_7requestES2_PS4_mRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISG_EESt8functionIFvRNS0_10connectionEEESL_IFvSN_RKSG_bEESL_IFvSN_SR_tEESL_IFvSN_SR_EESL_IFvS8_RSt8optionalINS_8responseEEPPvEEb(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr nofreeobj noundef align 8 dereferenceable(88) %1, ptr noundef %2, i64 noundef %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr nofreeobj noundef align 8 dereferenceable(32) %5, ptr nofreeobj noundef align 8 dereferenceable(32) %6, ptr nofreeobj noundef align 8 dereferenceable(32) %7, ptr nofreeobj noundef align 8 dereferenceable(32) %8, ptr nofreeobj noundef align 8 dereferenceable(32) %9, i1 noundef zeroext %10) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [5 x i32], align 16               ; 8 uses
+  %i.a = alloca [5 x i32], align 16               ; 12 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %11 = alloca %"class.std::error_code", align 8  ; 5 uses
   %12 = alloca %"class.__gnu_cxx::__normal_iterator.264", align 8 ; 4 uses
@@ -233,7 +233,7 @@ bb.a:
   %30 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %31 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %32 = alloca %"class.sha1::SHA1", align 8       ; 11 uses
-  %i.g = alloca [20 x i8], align 16               ; 9 uses
+  %i.g = alloca [20 x i8], align 16               ; 21 uses
   %33 = alloca %"class.std::shared_ptr", align 8  ; 4 uses
   %34 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #40
@@ -636,25 +636,73 @@ bb.cb:                                            ; preds = %_ZN4sha14SHA112proc
   %i.mv = call i32 @llvm.bswap.i32(i32 %i.mu)
   store i32 %i.mv, ptr %i.g, align 16, !tbaa !165
   %i.mw = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.mx = load i32, ptr %i.mw, align 4, !tbaa !276
-  %i.my = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %35 = call i32 @llvm.bswap.i32(i32 %i.mx)
-  store i32 %35, ptr %i.my, align 4, !tbaa !165
+  %35 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  %36 = load i8, ptr %35, align 1, !tbaa !276
+  %37 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  store i8 %36, ptr %37, align 4, !tbaa !165
+  %i.mx = load i32, ptr %i.mw, align 4, !tbaa !276 ; 3 uses
+  %38 = lshr i32 %i.mx, 16
+  %39 = trunc i32 %38 to i8
+  %40 = getelementptr inbounds nuw i8, ptr %i.g, i64 5
+  store i8 %39, ptr %40, align 1, !tbaa !165
+  %41 = lshr i32 %i.mx, 8
+  %42 = trunc i32 %41 to i8
+  %i.my = getelementptr inbounds nuw i8, ptr %i.g, i64 6
+  store i8 %42, ptr %i.my, align 2, !tbaa !165
+  %43 = trunc i32 %i.mx to i8
+  %44 = getelementptr inbounds nuw i8, ptr %i.g, i64 7
+  store i8 %43, ptr %44, align 1, !tbaa !165
   %i.mz = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.na = load i32, ptr %i.mz, align 8, !tbaa !276
-  %i.nb = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %36 = call i32 @llvm.bswap.i32(i32 %i.na)
-  store i32 %36, ptr %i.nb, align 8, !tbaa !165
+  %45 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  %46 = load i8, ptr %45, align 1, !tbaa !276
+  %47 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  store i8 %46, ptr %47, align 8, !tbaa !165
+  %i.na = load i32, ptr %i.mz, align 8, !tbaa !276 ; 3 uses
+  %48 = lshr i32 %i.na, 16
+  %49 = trunc i32 %48 to i8
+  %50 = getelementptr inbounds nuw i8, ptr %i.g, i64 9
+  store i8 %49, ptr %50, align 1, !tbaa !165
+  %51 = lshr i32 %i.na, 8
+  %52 = trunc i32 %51 to i8
+  %i.nb = getelementptr inbounds nuw i8, ptr %i.g, i64 10
+  store i8 %52, ptr %i.nb, align 2, !tbaa !165
+  %53 = trunc i32 %i.na to i8
+  %54 = getelementptr inbounds nuw i8, ptr %i.g, i64 11
+  store i8 %53, ptr %54, align 1, !tbaa !165
   %i.nc = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.nd = load i32, ptr %i.nc, align 4, !tbaa !276
-  %i.ne = getelementptr inbounds nuw i8, ptr %i.g, i64 12
-  %37 = call i32 @llvm.bswap.i32(i32 %i.nd)
-  store i32 %37, ptr %i.ne, align 4, !tbaa !165
+  %55 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
+  %56 = load i8, ptr %55, align 1, !tbaa !276
+  %57 = getelementptr inbounds nuw i8, ptr %i.g, i64 12
+  store i8 %56, ptr %57, align 4, !tbaa !165
+  %i.nd = load i32, ptr %i.nc, align 4, !tbaa !276 ; 3 uses
+  %58 = lshr i32 %i.nd, 16
+  %59 = trunc i32 %58 to i8
+  %60 = getelementptr inbounds nuw i8, ptr %i.g, i64 13
+  store i8 %59, ptr %60, align 1, !tbaa !165
+  %61 = lshr i32 %i.nd, 8
+  %62 = trunc i32 %61 to i8
+  %i.ne = getelementptr inbounds nuw i8, ptr %i.g, i64 14
+  store i8 %62, ptr %i.ne, align 2, !tbaa !165
+  %63 = trunc i32 %i.nd to i8
+  %64 = getelementptr inbounds nuw i8, ptr %i.g, i64 15
+  store i8 %63, ptr %64, align 1, !tbaa !165
   %i.nf = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.ng = load i32, ptr %i.nf, align 16, !tbaa !276
-  %i.nh = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %38 = call i32 @llvm.bswap.i32(i32 %i.ng)
-  store i32 %38, ptr %i.nh, align 16, !tbaa !165
+  %65 = getelementptr inbounds nuw i8, ptr %i.a, i64 19
+  %66 = load i8, ptr %65, align 1, !tbaa !276
+  %67 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  store i8 %66, ptr %67, align 16, !tbaa !165
+  %i.ng = load i32, ptr %i.nf, align 16, !tbaa !276 ; 3 uses
+  %68 = lshr i32 %i.ng, 16
+  %69 = trunc i32 %68 to i8
+  %70 = getelementptr inbounds nuw i8, ptr %i.g, i64 17
+  store i8 %69, ptr %70, align 1, !tbaa !165
+  %71 = lshr i32 %i.ng, 8
+  %72 = trunc i32 %71 to i8
+  %i.nh = getelementptr inbounds nuw i8, ptr %i.g, i64 18
+  store i8 %72, ptr %i.nh, align 2, !tbaa !165
+  %73 = trunc i32 %i.ng to i8
+  %74 = getelementptr inbounds nuw i8, ptr %i.g, i64 19
+  store i8 %73, ptr %74, align 1, !tbaa !165
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
   %i.ni = load ptr, ptr %14, align 8, !tbaa !583  ; 2 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ni, i64 120
@@ -1057,7 +1105,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4401
   store i8 0, ptr %i.b, align 1, !tbaa !632
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4352 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !629
+  %i.d = load i64, ptr %i.c, align 8
   %i.e = tail call i64 @llvm.bswap.i64(i64 %i.d)
   store i64 %i.e, ptr %i.c, align 8, !tbaa !629
   %i.f = load i32, ptr %1, align 8, !tbaa !285
@@ -1460,7 +1508,7 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(pt
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4crow9websocket10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJEEEE6createERKNS_7requestES2_PS4_mRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISG_EESt8functionIFvRNS0_10connectionEEESL_IFvSN_RKSG_bEESL_IFvSN_SR_tEESL_IFvSN_SR_EESL_IFvS8_RSt8optionalINS_8responseEEPPvEEb(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr nofreeobj noundef align 8 dereferenceable(88) %1, ptr noundef %2, i64 noundef %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr nofreeobj noundef align 8 dereferenceable(32) %5, ptr nofreeobj noundef align 8 dereferenceable(32) %6, ptr nofreeobj noundef align 8 dereferenceable(32) %7, ptr nofreeobj noundef align 8 dereferenceable(32) %8, ptr nofreeobj noundef align 8 dereferenceable(32) %9, i1 noundef zeroext %10) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [5 x i32], align 16               ; 8 uses
+  %i.a = alloca [5 x i32], align 16               ; 12 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %11 = alloca %"class.std::error_code", align 8  ; 5 uses
   %12 = alloca %"class.__gnu_cxx::__normal_iterator.264", align 8 ; 4 uses
@@ -1488,7 +1536,7 @@ bb.a:
   %30 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %31 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %32 = alloca %"class.sha1::SHA1", align 8       ; 11 uses
-  %i.g = alloca [20 x i8], align 16               ; 9 uses
+  %i.g = alloca [20 x i8], align 16               ; 21 uses
   %33 = alloca %"class.std::shared_ptr", align 8  ; 4 uses
   %34 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #40
@@ -1891,25 +1939,73 @@ bb.cb:                                            ; preds = %_ZN4sha14SHA112proc
   %i.mv = call i32 @llvm.bswap.i32(i32 %i.mu)
   store i32 %i.mv, ptr %i.g, align 16, !tbaa !165
   %i.mw = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.mx = load i32, ptr %i.mw, align 4, !tbaa !276
-  %i.my = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %35 = call i32 @llvm.bswap.i32(i32 %i.mx)
-  store i32 %35, ptr %i.my, align 4, !tbaa !165
+  %35 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  %36 = load i8, ptr %35, align 1, !tbaa !276
+  %37 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  store i8 %36, ptr %37, align 4, !tbaa !165
+  %i.mx = load i32, ptr %i.mw, align 4, !tbaa !276 ; 3 uses
+  %38 = lshr i32 %i.mx, 16
+  %39 = trunc i32 %38 to i8
+  %40 = getelementptr inbounds nuw i8, ptr %i.g, i64 5
+  store i8 %39, ptr %40, align 1, !tbaa !165
+  %41 = lshr i32 %i.mx, 8
+  %42 = trunc i32 %41 to i8
+  %i.my = getelementptr inbounds nuw i8, ptr %i.g, i64 6
+  store i8 %42, ptr %i.my, align 2, !tbaa !165
+  %43 = trunc i32 %i.mx to i8
+  %44 = getelementptr inbounds nuw i8, ptr %i.g, i64 7
+  store i8 %43, ptr %44, align 1, !tbaa !165
   %i.mz = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.na = load i32, ptr %i.mz, align 8, !tbaa !276
-  %i.nb = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %36 = call i32 @llvm.bswap.i32(i32 %i.na)
-  store i32 %36, ptr %i.nb, align 8, !tbaa !165
+  %45 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  %46 = load i8, ptr %45, align 1, !tbaa !276
+  %47 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  store i8 %46, ptr %47, align 8, !tbaa !165
+  %i.na = load i32, ptr %i.mz, align 8, !tbaa !276 ; 3 uses
+  %48 = lshr i32 %i.na, 16
+  %49 = trunc i32 %48 to i8
+  %50 = getelementptr inbounds nuw i8, ptr %i.g, i64 9
+  store i8 %49, ptr %50, align 1, !tbaa !165
+  %51 = lshr i32 %i.na, 8
+  %52 = trunc i32 %51 to i8
+  %i.nb = getelementptr inbounds nuw i8, ptr %i.g, i64 10
+  store i8 %52, ptr %i.nb, align 2, !tbaa !165
+  %53 = trunc i32 %i.na to i8
+  %54 = getelementptr inbounds nuw i8, ptr %i.g, i64 11
+  store i8 %53, ptr %54, align 1, !tbaa !165
   %i.nc = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.nd = load i32, ptr %i.nc, align 4, !tbaa !276
-  %i.ne = getelementptr inbounds nuw i8, ptr %i.g, i64 12
-  %37 = call i32 @llvm.bswap.i32(i32 %i.nd)
-  store i32 %37, ptr %i.ne, align 4, !tbaa !165
+  %55 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
+  %56 = load i8, ptr %55, align 1, !tbaa !276
+  %57 = getelementptr inbounds nuw i8, ptr %i.g, i64 12
+  store i8 %56, ptr %57, align 4, !tbaa !165
+  %i.nd = load i32, ptr %i.nc, align 4, !tbaa !276 ; 3 uses
+  %58 = lshr i32 %i.nd, 16
+  %59 = trunc i32 %58 to i8
+  %60 = getelementptr inbounds nuw i8, ptr %i.g, i64 13
+  store i8 %59, ptr %60, align 1, !tbaa !165
+  %61 = lshr i32 %i.nd, 8
+  %62 = trunc i32 %61 to i8
+  %i.ne = getelementptr inbounds nuw i8, ptr %i.g, i64 14
+  store i8 %62, ptr %i.ne, align 2, !tbaa !165
+  %63 = trunc i32 %i.nd to i8
+  %64 = getelementptr inbounds nuw i8, ptr %i.g, i64 15
+  store i8 %63, ptr %64, align 1, !tbaa !165
   %i.nf = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.ng = load i32, ptr %i.nf, align 16, !tbaa !276
-  %i.nh = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %38 = call i32 @llvm.bswap.i32(i32 %i.ng)
-  store i32 %38, ptr %i.nh, align 16, !tbaa !165
+  %65 = getelementptr inbounds nuw i8, ptr %i.a, i64 19
+  %66 = load i8, ptr %65, align 1, !tbaa !276
+  %67 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  store i8 %66, ptr %67, align 16, !tbaa !165
+  %i.ng = load i32, ptr %i.nf, align 16, !tbaa !276 ; 3 uses
+  %68 = lshr i32 %i.ng, 16
+  %69 = trunc i32 %68 to i8
+  %70 = getelementptr inbounds nuw i8, ptr %i.g, i64 17
+  store i8 %69, ptr %70, align 1, !tbaa !165
+  %71 = lshr i32 %i.ng, 8
+  %72 = trunc i32 %71 to i8
+  %i.nh = getelementptr inbounds nuw i8, ptr %i.g, i64 18
+  store i8 %72, ptr %i.nh, align 2, !tbaa !165
+  %73 = trunc i32 %i.ng to i8
+  %74 = getelementptr inbounds nuw i8, ptr %i.g, i64 19
+  store i8 %73, ptr %74, align 1, !tbaa !165
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
   %i.ni = load ptr, ptr %14, align 8, !tbaa !852  ; 2 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ni, i64 120
@@ -2312,7 +2408,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4401
   store i8 0, ptr %i.b, align 1, !tbaa !866
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4352 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !863
+  %i.d = load i64, ptr %i.c, align 8
   %i.e = tail call i64 @llvm.bswap.i64(i64 %i.d)
   store i64 %i.e, ptr %i.c, align 8, !tbaa !863
   %i.f = load i32, ptr %1, align 8, !tbaa !285

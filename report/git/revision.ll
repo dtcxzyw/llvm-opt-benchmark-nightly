@@ -204,6 +204,8 @@ bb.dc:                                            ; preds = %bb.db, %bb.da
   %i.ms = load ptr, ptr %i.mr, align 8, !tbaa !198
   %.not218 = icmp ne ptr %i.ms, null              ; 2 uses
   %.pre365 = load i64, ptr %i.ki, align 4         ; 4 uses
+  %9 = lshr i64 %.pre365, 32
+  %10 = trunc nuw i64 %9 to i32
   %i.mt = and i64 %.pre365, 524288
   %.not219 = icmp ne i64 %i.mt, 0
   %or.cond.not434 = select i1 %.not218, i1 %.not219, i1 false
@@ -247,8 +249,6 @@ bb.dj:                                            ; preds = %bb.dh
   %i.nc = load ptr, ptr %i.du, align 8, !tbaa !188
   %i.nd = icmp ne ptr %i.nc, null
   %i.ne = zext i1 %i.nd to i32
-  %9 = lshr i64 %.pre365, 32
-  %10 = trunc nuw i64 %9 to i32
   %i.nf = and i32 %10, 1
   %i.ng = zext i1 %.not218 to i32
   call void @die_for_incompatible_opt4(i32 noundef range(i32 0, 2) %i.ne, ptr noundef nonnull @.str.10, i32 noundef range(i32 0, 2) %i.nf, ptr noundef nonnull @.str.21, i32 noundef range(i32 0, 2) %i.ng, ptr noundef nonnull @.str.22, i32 noundef 0, ptr noundef nonnull @.str.38) #24
@@ -651,9 +651,10 @@ retrieve_oldest_commits.exit:                     ; preds = %.lr.ph69.i, %.prehe
 bb.c:                                             ; preds = %retrieve_oldest_commits.exit, %bb.a
   %i.bd = phi i8 [ %i.bc, %retrieve_oldest_commits.exit ], [ %i.g, %bb.a ]
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 3 uses
-  %1 = load i64, ptr %i.be, align 4               ; 2 uses
-  %2 = and i64 %1, 4294967296
-  %.not51 = icmp eq i64 %2, 0
+  %1 = getelementptr i8, ptr %0, i64 336
+  %2 = load i32, ptr %1, align 4
+  %3 = and i32 %2, 1
+  %.not51 = icmp eq i32 %3, 0
   br i1 %.not51, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -686,24 +687,24 @@ bb.d:                                             ; preds = %bb.c
   %.not53 = icmp eq ptr %i.bn, null
   br i1 %.not53, label %.loopexit72, label %.lr.ph79, !llvm.loop !444
 
-.loopexit72:                                      ; preds = %.lr.ph, %.lr.ph79, %.preheader73, %.preheader
+.loopexit72:                                      ; preds = %.lr.ph, %.lr.ph79, %.preheader, %.preheader73
   %i.bo = load ptr, ptr %0, align 8, !tbaa !204
   call void @commit_list_free(ptr noundef %i.bo) #24
   %i.bp = load ptr, ptr %i.d, align 8, !tbaa !58
   store ptr %i.bp, ptr %0, align 8, !tbaa !204
   %i.bq = load i64, ptr %i.be, align 4
   %i.br = and i64 %i.bq, -12884901889
-  %i.bs = or disjoint i64 %i.br, 8589934592       ; 2 uses
+  %i.bs = or disjoint i64 %i.br, 8589934592
   store i64 %i.bs, ptr %i.be, align 4
-  br label %bb.e
+  br label %bb.f
 
-bb.e:                                             ; preds = %.loopexit72, %bb.c
-  %3 = phi i64 [ %i.bs, %.loopexit72 ], [ %1, %bb.c ]
-  %i.bt = and i64 %3, 8589934592
+bb.e:                                             ; preds = %bb.c
+  %.pre = load i64, ptr %i.be, align 4
+  %i.bt = and i64 %.pre, 8589934592
   %.not55 = icmp eq i64 %i.bt, 0
   br i1 %.not55, label %bb.j, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %.loopexit72, %bb.e
   %i.bu = call ptr @pop_commit(ptr noundef nonnull %0) #24 ; 4 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 8            ; 2 uses
@@ -1106,7 +1107,7 @@ rev_info_commit_list_to_queue.exit:               ; preds = %bb.e, %bb.d, %bb.b,
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = getelementptr i8, ptr %0, i64 3024       ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1464 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72
   br label %bb.f
 
@@ -1509,9 +1510,10 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %._crit_edge.i, %bb.ao
   %storemerge.i = phi i32 [ %i.gk, %._crit_edge.i ], [ %i.fq, %bb.ao ] ; 2 uses
   store i32 %storemerge.i, ptr %i.fl, align 8
-  %1 = load i64, ptr %i.p, align 4
-  %2 = and i64 %1, 4294967296
-  %.not20.i = icmp eq i64 %2, 0
+  %1 = getelementptr i8, ptr %0, i64 336
+  %2 = load i32, ptr %1, align 8
+  %3 = and i32 %2, 1
+  %.not20.i = icmp eq i32 %3, 0
   %i.gl = and i32 %storemerge.i, 1048576
   %.not21.i = icmp eq i32 %i.gl, 0
   %or.cond.i = select i1 %.not20.i, i1 true, i1 %.not21.i

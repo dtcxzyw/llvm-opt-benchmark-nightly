@@ -202,7 +202,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.bv, label %bb.ce, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 1179 ; 7 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 1179 ; 6 uses
   %i.bx = load i64, ptr %i.bw, align 1            ; 2 uses
   %i.by = and i64 %i.bx, 1073741824
   %.not208 = icmp eq i64 %i.by, 0
@@ -216,6 +216,8 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.cb = phi i64 [ %.pre, %bb.aj ], [ %i.bx, %bb.ai ] ; 2 uses
+  %.in = lshr i64 %i.cb, 32
+  %2 = trunc nuw i64 %.in to i32
   %i.cc = and i64 %i.cb, 2147483648
   %.not209 = icmp eq i64 %i.cc, 0
   br i1 %.not209, label %bb.am, label %bb.al
@@ -223,24 +225,24 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
 bb.al:                                            ; preds = %bb.ak
   %i.cd = tail call i32 @tool_setopt_long(ptr noundef %1, ptr noundef nonnull @.str.181, i32 noundef 306, i64 noundef 0) #11 ; 0 uses
   %i.ce = tail call i32 @tool_setopt_long(ptr noundef %1, ptr noundef nonnull @.str.182, i32 noundef 307, i64 noundef 0) #11 ; 0 uses
-  %.pre245 = load i64, ptr %i.bw, align 1
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 1183
+  %.pre245 = load i32, ptr %.phi.trans.insert, align 1
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %2 = phi i64 [ %.pre245, %bb.al ], [ %i.cb, %bb.ak ] ; 2 uses
-  %3 = and i64 %2, 4294967296
-  %.not210 = icmp eq i64 %3, 0
+  %3 = phi i32 [ %.pre245, %bb.al ], [ %2, %bb.ak ]
+  %4 = and i32 %3, 1
+  %.not210 = icmp eq i32 %4, 0
   br i1 %.not210, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.cf = tail call i32 @tool_setopt_long(ptr noundef %1, ptr noundef nonnull @.str.183, i32 noundef 248, i64 noundef 0) #11 ; 0 uses
   %i.cg = tail call i32 @tool_setopt_long(ptr noundef %1, ptr noundef nonnull @.str.184, i32 noundef 249, i64 noundef 0) #11 ; 0 uses
-  %.pre246 = load i64, ptr %i.bw, align 1
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %4 = phi i64 [ %.pre246, %bb.an ], [ %2, %bb.am ] ; 2 uses
-  %i.ch = and i64 %4, 17179869184
+  %5 = load i64, ptr %i.bw, align 1               ; 2 uses
+  %i.ch = and i64 %5, 17179869184
   %.not211 = icmp eq i64 %i.ch, 0
   br i1 %.not211, label %bb.aq, label %bb.ap
 
@@ -250,7 +252,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %i.cj = phi i64 [ %.pre247.a, %bb.ap ], [ %4, %bb.ao ]
+  %i.cj = phi i64 [ %.pre247.a, %bb.ap ], [ %5, %bb.ao ]
   %i.ck = and i64 %i.cj, 34359738368
   %.not212 = icmp eq i64 %i.ck, 0
   br i1 %.not212, label %bb.as, label %bb.ar

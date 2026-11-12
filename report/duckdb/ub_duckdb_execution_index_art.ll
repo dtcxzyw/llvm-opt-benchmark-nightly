@@ -205,11 +205,12 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt5stackIN6duckdb13IteratorEntryESt5dequeIS1_SaIS1_EEE3topEv.exit
 
 _ZNSt5stackIN6duckdb13IteratorEntryESt5dequeIS1_SaIS1_EEE3topEv.exit: ; preds = %bb.b, %bb.c
-  %i.o = phi ptr [ %i.n, %bb.c ], [ %i.h, %bb.b ] ; 2 uses
-  %i.p = getelementptr inbounds i8, ptr %i.o, i64 -16 ; 2 uses
-  %1 = load i64, ptr %i.p, align 8, !tbaa !298
-  %2 = and i64 %1, 9151314442816847872
-  %i.q = icmp eq i64 %2, 72057594037927936
+  %i.o = phi ptr [ %i.n, %bb.c ], [ %i.h, %bb.b ] ; 3 uses
+  %1 = getelementptr inbounds i8, ptr %i.o, i64 -16
+  %i.p = getelementptr i8, ptr %i.o, i64 -9
+  %2 = load i8, ptr %i.p, align 1, !tbaa !298
+  %3 = and i8 %2, 127
+  %i.q = icmp eq i8 %3, 1
   br i1 %i.q, label %bb.m, label %bb.d, !llvm.loop !1966
 
 bb.d:                                             ; preds = %_ZNSt5stackIN6duckdb13IteratorEntryESt5dequeIS1_SaIS1_EEE3topEv.exit
@@ -222,7 +223,7 @@ bb.e:                                             ; preds = %bb.d
   %i.u = add nuw i8 %i.s, 1
   store i8 %i.u, ptr %i.r, align 8, !tbaa !592
   %i.v = load ptr, ptr %i.g, align 8, !tbaa !586, !nonnull !209, !align !210
-  %i.w = tail call ptr @_ZN6duckdb20GetNextChildInternalIKNS_4NodeEEENS_12optional_ptrIS1_Lb0EEERNS_3ARTERT_Rh(ptr noundef nonnull align 8 dereferenceable(433) %i.v, ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull align 1 dereferenceable(1) %i.r) ; 2 uses
+  %i.w = tail call ptr @_ZN6duckdb20GetNextChildInternalIKNS_4NodeEEENS_12optional_ptrIS1_Lb0EEERNS_3ARTERT_Rh(ptr noundef nonnull align 8 dereferenceable(433) %i.v, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.r) ; 2 uses
   %.not = icmp eq ptr %i.w, null
   br i1 %.not, label %bb.m, label %bb.f, !llvm.loop !1966
 
@@ -526,7 +527,7 @@ _ZNSt5stackIN6duckdb13IteratorEntryESt5dequeIS1_SaIS1_EEE3topEv.exit3: ; preds =
   %i.h = getelementptr inbounds i8, ptr %i.g, i64 -8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !585
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 496
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !298  ; 3 uses
+  %i.k = load i64, ptr %i.j, align 8              ; 3 uses
   %sum.shift.i5 = lshr i64 %i.k, 63
   %.lobit1.i6 = trunc nuw nsw i64 %sum.shift.i5 to i8 ; 2 uses
   %i.l = and i64 %i.k, 9151314442816847872

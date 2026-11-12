@@ -202,13 +202,15 @@ bb.g:                                             ; preds = %bb.e
   %i.bq = and i64 %i.bp, 4294967295
   %i.br = or disjoint i64 %i.bq, %i.bn
   store i64 %i.br, ptr %i.bo, align 8, !tbaa !101
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bi ; 4 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8 ; 2 uses
-  %8 = load i64, ptr %i.bt, align 8, !tbaa !101
-  %9 = and i64 %8, -4294967296
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bi ; 5 uses
+  %i.bt = getelementptr i8, ptr %i.bs, i64 12
+  %8 = load i32, ptr %i.bt, align 4, !tbaa !101
+  %9 = zext i32 %8 to i64
+  %10 = shl nuw i64 %9, 32
   %i.bu = zext i32 %6 to i64
-  %i.bv = or disjoint i64 %9, %i.bu
-  store i64 %i.bv, ptr %i.bt, align 8, !tbaa !101
+  %i.bv = or disjoint i64 %10, %i.bu
+  %11 = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
+  store i64 %i.bv, ptr %11, align 8, !tbaa !101
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   store i64 %5, ptr %i.bw, align 8, !tbaa !153
   %i.bx = load i64, ptr %i.bs, align 8, !tbaa !78

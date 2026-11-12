@@ -205,13 +205,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = trunc i64 %1 to i32
   %i.e = and i32 %i.d, 268435455                  ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 9 uses
   %i.g = load i64, ptr %i.f, align 8              ; 2 uses
   %i.h = trunc i64 %i.g to i32
   %i.i = and i32 %i.h, 268435455
   %.not = icmp eq i32 %i.e, %i.i
   %.not43 = icmp eq i32 %i.e, 0
   %or.cond = or i1 %.not43, %.not
+  %2 = lshr i64 %i.g, 32
+  %3 = trunc nuw i64 %2 to i32
   br i1 %or.cond, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -221,28 +223,37 @@ bb.c:                                             ; preds = %bb.b
   %i.l = icmp ult i32 %i.k, 4
   %i.m = icmp samesign ugt i32 %i.e, 16777215
   %or.cond59 = select i1 %i.l, i1 %i.m, i1 false
-  %.pre = load i64, ptr %i.f, align 8             ; 2 uses
-  br i1 %or.cond59, label %bb.d, label %bb.e
+  br i1 %or.cond59, label %bb.d, label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.c
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 44
+  %.pre = load i32, ptr %.phi.trans.insert, align 4
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.n = and i64 %1, 268435455
-  %i.o = and i64 %.pre, -268435456
-  %i.p = or disjoint i64 %i.o, %i.n               ; 2 uses
+  %4 = load i64, ptr %i.f, align 8                ; 2 uses
+  %i.o = and i64 %4, -268435456
+  %i.p = or disjoint i64 %i.o, %i.n
   store i64 %i.p, ptr %i.f, align 8
+  %5 = lshr i64 %4, 32
+  %6 = trunc nuw i64 %5 to i32
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
-  %2 = phi i64 [ %.pre, %bb.c ], [ %i.p, %bb.d ], [ %i.g, %bb.b ] ; 2 uses
+bb.e:                                             ; preds = %._crit_edge, %bb.d, %bb.b
+  %7 = phi i32 [ %.pre, %._crit_edge ], [ %6, %bb.d ], [ %3, %bb.b ]
   %i.q = lshr i64 %1, 32
   %i.r = trunc nuw i64 %i.q to i32
   %i.s = and i32 %i.r, 268435455                  ; 4 uses
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
-  %i.t = and i32 %4, 268435455
+  %i.t = and i32 %7, 268435455
   %.not44 = icmp eq i32 %i.s, %i.t
   %.not45 = icmp eq i32 %i.s, 0
   %or.cond54 = or i1 %.not45, %.not44
-  br i1 %or.cond54, label %bb.h, label %bb.f
+  br i1 %or.cond54, label %._crit_edge61, label %bb.f
+
+._crit_edge61:                                    ; preds = %bb.e
+  %.pre62 = load i64, ptr %i.f, align 8
+  br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @term_color_ex(ptr noundef nonnull %0, i32 noundef range(i32 1, 268435456) %i.s, i1 noundef zeroext true)
@@ -261,8 +272,8 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.aa, ptr %i.f, align 8
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e
-  %i.ab = phi i64 [ %.pre61, %bb.f ], [ %i.aa, %bb.g ], [ %2, %bb.e ] ; 2 uses
+bb.h:                                             ; preds = %._crit_edge61, %bb.f, %bb.g
+  %i.ab = phi i64 [ %.pre62, %._crit_edge61 ], [ %.pre61, %bb.f ], [ %i.aa, %bb.g ] ; 2 uses
   %i.ac = shl i64 %1, 34
   %i.ad = ashr i64 %i.ac, 62                      ; 3 uses
   %i.ae = shl i64 %i.ab, 34

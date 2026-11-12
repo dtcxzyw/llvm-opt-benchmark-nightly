@@ -200,14 +200,38 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.p, i8 0, i64 %i.q, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !10
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 100
-  %2 = tail call i32 @llvm.bswap.i32(i32 %i.t)
-  store i32 %2, ptr %i.r, align 4, !tbaa !22
+  %2 = getelementptr i8, ptr %1, i64 39
+  %3 = load i8, ptr %2, align 1, !tbaa !10
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 97
+  store i8 %3, ptr %i.r, align 4, !tbaa !22
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !10   ; 3 uses
+  %5 = lshr i32 %i.t, 16
+  %6 = trunc i32 %5 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 98
+  store i8 %6, ptr %4, align 1, !tbaa !22
+  %8 = lshr i32 %i.t, 8
+  %9 = trunc i32 %8 to i8
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 99
+  store i8 %9, ptr %7, align 2, !tbaa !22
+  %10 = trunc i32 %i.t to i8
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 100
+  store i8 %10, ptr %i.u, align 1, !tbaa !22
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !9
-  %3 = tail call i32 @llvm.bswap.i32(i32 %i.w)
-  store i32 %3, ptr %i.u, align 4, !tbaa !22
+  %12 = getelementptr i8, ptr %1, i64 35
+  %13 = load i8, ptr %12, align 1, !tbaa !9
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 101
+  store i8 %13, ptr %11, align 4, !tbaa !22
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !9    ; 3 uses
+  %15 = lshr i32 %i.w, 16
+  %16 = trunc i32 %15 to i8
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 102
+  store i8 %16, ptr %14, align 1, !tbaa !22
+  %18 = lshr i32 %i.w, 8
+  %19 = trunc i32 %18 to i8
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 103
+  store i8 %19, ptr %17, align 2, !tbaa !22
+  %21 = trunc i32 %i.w to i8
+  store i8 %21, ptr %20, align 1, !tbaa !22
   %i.x = load i32, ptr getelementptr inbounds nuw (i8, ptr @OPENSSL_ia32cap_P, i64 8), align 4, !tbaa !12
   %i.y = and i32 %i.x, 32
   %.not109 = icmp eq i32 %i.y, 0

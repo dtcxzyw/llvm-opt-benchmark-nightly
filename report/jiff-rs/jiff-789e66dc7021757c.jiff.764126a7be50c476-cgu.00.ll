@@ -202,7 +202,8 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span8try_dayslEB7_.exit:
   %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 44
   %.sroa.31.0.copyload = load i32, ptr %.sroa.31.0..sroa_idx, align 4 ; 3 uses
   %.sroa.34.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.sroa.34.0.copyload = load i64, ptr %.sroa.34.0..sroa_idx, align 8 ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 52
+  %.sroa.34.sroa.11.0.extract.trunc = load i32, ptr %5, align 4 ; 2 uses
   %.sroa.40.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.40.0.copyload = load i16, ptr %.sroa.40.0..sroa_idx, align 8 ; 2 uses
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 58
@@ -214,8 +215,8 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span8try_dayslEB7_.exit:
   %or.cond.i.i = select i1 %i.p, i1 %i.q, i1 false
   %i.r = icmp eq i32 %.sroa.31.0.copyload, 0
   %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.r, i1 false ; 2 uses
-  %5 = icmp ult i64 %.sroa.34.0.copyload, 4294967296 ; 2 uses
-  %or.cond11.i.i = select i1 %or.cond5.i.i, i1 %5, i1 false
+  %6 = icmp eq i32 %.sroa.34.sroa.11.0.extract.trunc, 0 ; 3 uses
+  %or.cond11.i.i = select i1 %or.cond5.i.i, i1 %6, i1 false
   %i.s = icmp eq i64 %.sroa.0321.0.copyload, 0    ; 3 uses
   %or.cond13.i.i = select i1 %or.cond11.i.i, i1 %i.s, i1 false
   %i.t = icmp eq i64 %.sroa.12.0.copyload, 0      ; 3 uses
@@ -229,7 +230,6 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span8try_dayslEB7_.exit:
   %i.x = and i32 %.sroa.47.0.copyload, 255
   %.sroa.24636.60.insert.ext = select i1 %or.cond4.i.i, i32 0, i32 %i.x ; 2 uses
   %i.y = icmp eq i32 %.sroa.24636.60.insert.ext, 254
-  %6 = trunc i64 %.sroa.34.0.copyload to i32      ; 3 uses
   %i.z = trunc i32 %.sroa.47.0.copyload to i8     ; 3 uses
   br i1 %i.y, label %bb.a, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit137, !prof !6
 
@@ -273,7 +273,7 @@ common.resume:                                    ; preds = %.body, %bb.bc, %bb.
   resume { ptr, i32 } %common.resume.op
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit137: ; preds = %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span8try_dayslEB7_.exit
-  %i.ah = select i1 %5, i1 %i.s, i1 false
+  %i.ah = select i1 %6, i1 %i.s, i1 false
   %i.ai = select i1 %i.ah, i1 %i.t, i1 false
   %i.aj = select i1 %i.ai, i1 %i.u, i1 false
   %i.ak = select i1 %i.aj, i1 %i.v, i1 false
@@ -282,7 +282,6 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %.sroa.47.61.extract.shift438 = and i32 %.sroa.47.0.copyload, -256
   %.sroa.16.60.insert.insert.i = or disjoint i32 %.sroa.16.60.insert.ext.i, %.sroa.47.61.extract.shift438
   %i.am = and i16 %.sroa.40.0.copyload, -961
-  %.sroa.34.sroa.11.0.extract.shift453 = and i64 %.sroa.34.0.copyload, -4294967296
   store i64 %.sroa.0321.0.copyload, ptr %i.n, align 8, !alias.scope !1005
   %.sroa.12.0..sroa_idx327 = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i64 %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx327, align 8, !alias.scope !1005
@@ -297,7 +296,9 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %.sroa.31.0..sroa_idx377 = getelementptr inbounds nuw i8, ptr %i.n, i64 44
   store i32 0, ptr %.sroa.31.0..sroa_idx377, align 4, !alias.scope !1005
   %.sroa.34.0..sroa_idx387 = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  store i64 %.sroa.34.sroa.11.0.extract.shift453, ptr %.sroa.34.0..sroa_idx387, align 8, !alias.scope !1005
+  %.sroa.34.sroa.11.0.insert.ext = zext i32 %.sroa.34.sroa.11.0.extract.trunc to i64
+  %.sroa.34.sroa.11.0.insert.shift = shl nuw i64 %.sroa.34.sroa.11.0.insert.ext, 32
+  store i64 %.sroa.34.sroa.11.0.insert.shift, ptr %.sroa.34.0..sroa_idx387, align 8, !alias.scope !1005
   %.sroa.40.0..sroa_idx399 = getelementptr inbounds nuw i8, ptr %i.n, i64 56
   store i16 %i.am, ptr %.sroa.40.0..sroa_idx399, align 8, !alias.scope !1005
   %.sroa.44.0..sroa_idx409 = getelementptr inbounds nuw i8, ptr %i.n, i64 58
@@ -339,10 +340,10 @@ bb.g:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   %.sroa.4.0..sroa_idx309 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store ptr %.sroa.5.0.i, ptr %.sroa.4.0..sroa_idx309, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  %7 = icmp eq i32 %6, 0
+  %.sroa.47552.0.copyload = load i32, ptr %.sroa.34.0..sroa_idx, align 8 ; 3 uses
+  %7 = icmp eq i32 %.sroa.47552.0.copyload, 0
   %or.cond8.i.i142 = select i1 %or.cond5.i.i, i1 %7, i1 false ; 2 uses
-  %8 = icmp ult i64 %.sroa.34.0.copyload, 4294967296
-  %or.cond11.i.i143 = select i1 %or.cond8.i.i142, i1 %8, i1 false
+  %or.cond11.i.i143 = select i1 %or.cond8.i.i142, i1 %6, i1 false
   %or.cond13.i.i144 = select i1 %or.cond11.i.i143, i1 %i.s, i1 false
   %or.cond16.i.i145 = select i1 %or.cond13.i.i144, i1 %i.t, i1 false
   %or.cond19.i.i146 = select i1 %or.cond16.i.i145, i1 %i.u, i1 false
@@ -396,7 +397,7 @@ bb.m:                                             ; preds = %bb.k
   %.sroa.41.0..sroa_idx538 = getelementptr inbounds nuw i8, ptr %i.j, i64 44
   store i32 %.sroa.31.0.copyload, ptr %.sroa.41.0..sroa_idx538, align 4, !alias.scope !1013
   %.sroa.47552.0..sroa_idx553 = getelementptr inbounds nuw i8, ptr %i.j, i64 48
-  store i32 %6, ptr %.sroa.47552.0..sroa_idx553, align 8, !alias.scope !1013
+  store i32 %.sroa.47552.0.copyload, ptr %.sroa.47552.0..sroa_idx553, align 8, !alias.scope !1013
   %.sroa.53.0..sroa_idx567 = getelementptr inbounds nuw i8, ptr %i.j, i64 52
   store i32 0, ptr %.sroa.53.0..sroa_idx567, align 4, !alias.scope !1013
   %.sroa.58.0..sroa_idx581 = getelementptr inbounds nuw i8, ptr %i.j, i64 56
@@ -799,7 +800,7 @@ bb.bw:                                            ; preds = %_RNvXsa_NtCsa9sSWSf
   %i.gu = mul i32 %.sroa.31.0.copyload, %i.gs
   call fastcc void @_RINvMNtCsa9sSWSfjDbm_4jiff4spanNtB3_4Span5weekslEB5_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(64) %i.h, ptr noalias nofree noundef align 8 captures(address) dereferenceable(64) %i.g, i32 noundef %i.gu) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %i.gv = mul i32 %i.gs, %6
+  %i.gv = mul i32 %.sroa.47552.0.copyload, %i.gs
   %i.gw = add i32 %.sroa.07.0, %i.gv
   call fastcc void @_RINvMNtCsa9sSWSfjDbm_4jiff4spanNtB3_4Span4dayslEB5_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(64) %0, ptr noalias nofree noundef align 8 captures(address) dereferenceable(64) %i.h, i32 noundef %i.gw) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)

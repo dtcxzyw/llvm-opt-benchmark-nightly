@@ -204,7 +204,7 @@ bb.hi:                                            ; preds = %bb.go
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
-  %i.zg = load ptr, ptr %i.o, align 8, !tbaa !83  ; 15 uses
+  %i.zg = load ptr, ptr %i.o, align 8, !tbaa !83  ; 17 uses
   %.not.i266 = icmp eq ptr %i.zg, null
   br i1 %.not.i266, label %transmit_udp.exit, label %bb.hj
 
@@ -288,8 +288,10 @@ bb.hu:                                            ; preds = %bb.hj
   store ptr %i.a, ptr %1, align 16, !tbaa !113
   store i64 8, ptr %i.r, align 8, !tbaa !114
   %i.aaf = getelementptr inbounds nuw i8, ptr %i.zg, i64 130 ; 2 uses
-  %i.aag = load i16, ptr %i.aaf, align 2, !tbaa !249 ; 2 uses
+  %i.aag = load i16, ptr %i.aaf, align 2          ; 3 uses
   %.not.i45.i = icmp eq i16 %i.aag, 0
+  %6 = lshr i16 %i.aag, 8
+  %7 = trunc nuw i16 %6 to i8
   br i1 %.not.i45.i, label %bb.hv, label %build_udp_header.exit.i
 
 bb.hv:                                            ; preds = %bb.hu
@@ -300,35 +302,36 @@ bb.hv:                                            ; preds = %bb.hu
   %.not21.i.i = icmp ne i32 %i.aak, 0
   %i.aal = zext i1 %.not21.i.i to i32
   %spec.select.i.i = add nsw i32 %i.aaj, %i.aal
-  %spec.store.select.i.i = call i32 @llvm.umin.i32(i32 %spec.select.i.i, i32 65535)
+  %spec.store.select.i.i = call i32 @llvm.umin.i32(i32 %spec.select.i.i, i32 65535) ; 2 uses
   %i.aam = trunc nuw i32 %spec.store.select.i.i to i16 ; 2 uses
   store i16 %i.aam, ptr %i.aaf, align 2, !tbaa !249
+  %8 = lshr i32 %spec.store.select.i.i, 8
+  %9 = trunc nuw i32 %8 to i8
   br label %build_udp_header.exit.i
 
 build_udp_header.exit.i:                          ; preds = %bb.hv, %bb.hu
-  %i.aan = phi i16 [ %i.aag, %bb.hu ], [ %i.aam, %bb.hv ] ; 2 uses
+  %i.aan = phi i16 [ %i.aag, %bb.hu ], [ %i.aam, %bb.hv ]
+  %10 = phi i8 [ %7, %bb.hu ], [ %9, %bb.hv ]
   %i.aao = getelementptr inbounds nuw i8, ptr %i.zg, i64 126
-  %6 = load i16, ptr %i.aao, align 2, !tbaa !116  ; 2 uses
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
-  store i8 %8, ptr %i.a, align 1, !tbaa !80
-  %i.aap = trunc i16 %6 to i8
+  %11 = getelementptr i8, ptr %i.zg, i64 127
+  %12 = load i8, ptr %11, align 1, !tbaa !116
+  store i8 %12, ptr %i.a, align 1, !tbaa !80
+  %13 = load i16, ptr %i.aao, align 2, !tbaa !116
+  %i.aap = trunc i16 %13 to i8
   store i8 %i.aap, ptr %i.s, align 1, !tbaa !80
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.zg, i64 128 ; 2 uses
-  %9 = load i16, ptr %i.aaq, align 8, !tbaa !250  ; 3 uses
-  %10 = lshr i16 %9, 8
-  %11 = trunc nuw i16 %10 to i8
-  store i8 %11, ptr %i.t, align 1, !tbaa !80
-  %i.aar = trunc i16 %9 to i8
+  %14 = getelementptr i8, ptr %i.zg, i64 129
+  %15 = load i8, ptr %14, align 1, !tbaa !250
+  store i8 %15, ptr %i.t, align 1, !tbaa !80
+  %16 = load i16, ptr %i.aaq, align 8, !tbaa !250 ; 2 uses
+  %i.aar = trunc i16 %16 to i8
   store i8 %i.aar, ptr %i.u, align 1, !tbaa !80
-  %12 = lshr i16 %i.aan, 8
-  %13 = trunc nuw i16 %12 to i8
-  store i8 %13, ptr %i.v, align 1, !tbaa !80
+  store i8 %10, ptr %i.v, align 1, !tbaa !80
   %i.aas = trunc i16 %i.aan to i8
   store i8 %i.aas, ptr %i.w, align 1, !tbaa !80
   store i8 0, ptr %i.x, align 1, !tbaa !80
   store i8 0, ptr %i.y, align 1, !tbaa !80
-  %i.aat = add i16 %9, 1
+  %i.aat = add i16 %16, 1
   store i16 %i.aat, ptr %i.aaq, align 8, !tbaa !250
   %i.aau = call fastcc i32 @_transmit_pre(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 1, i1 noundef zeroext true), !inline_history !232 ; 3 uses
   %i.aav = icmp sgt i32 %i.aau, 0

@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local noundef range(i64 -14, 1) i64 @__ia32_compat_sys_sysinfo(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
-  %1 = alloca %struct.sysinfo, align 8            ; 25 uses
+  %1 = alloca %struct.sysinfo, align 8            ; 28 uses
   %2 = alloca %struct.compat_sysinfo, align 4     ; 17 uses
   %i.a = getelementptr i8, ptr %0, i64 40
   %i.b = load i64, ptr %i.a, align 8
@@ -212,21 +212,25 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %1, i8 0, i64 112, i1 false), !annotation !20
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   call fastcc void @do_sysinfo(ptr noundef nonnull %1) #14
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %3 = load i64, ptr %i.c, align 8                ; 3 uses
-  %.not.i.i = icmp ult i64 %3, 4294967296
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %4 = load i64, ptr %i.d, align 8                ; 3 uses
-  %.not11.i.i = icmp ult i64 %4, 4294967296
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 36
+  %4 = load i32, ptr %i.c, align 4
+  %.not.i.i = icmp eq i32 %4, 0
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 68
+  %5 = load i32, ptr %i.d, align 4
+  %.not11.i.i = icmp eq i32 %5, 0
   %or.cond.i.i = select i1 %.not.i.i, i1 %.not11.i.i, i1 false
   br i1 %or.cond.i.i, label %.copy_to_user.exit_crit_edge.i.i, label %.preheader.i.i
 
 .copy_to_user.exit_crit_edge.i.i:                 ; preds = %bb.a
-  %.phi.trans.insert.i.i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.pre.i.i = load i64, ptr %3, align 8
+  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.pre21.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8
+  %.phi.trans.insert.i.i.a = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.pre.i.i.a = load i64, ptr %.phi.trans.insert.i.i.a, align 8
-  %.phi.trans.insert21.i.i = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %.phi.trans.insert21.i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.pre22.i.i = load i64, ptr %.phi.trans.insert21.i.i, align 8
-  %.phi.trans.insert23.i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %.phi.trans.insert23.i.i = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.pre24.i.i = load i64, ptr %.phi.trans.insert23.i.i, align 8
   %.phi.trans.insert25.i.i = getelementptr inbounds nuw i8, ptr %1, i64 72
   %.pre26.i.i = load i64, ptr %.phi.trans.insert25.i.i, align 8
@@ -260,8 +264,9 @@ bb.a:
 bb.b:                                             ; preds = %._crit_edge.i.i, %.preheader.i.i
   %i.l = phi i32 [ %i.h, %._crit_edge.i.i ], [ %.promoted.i.i, %.preheader.i.i ]
   %.0.lcssa.i.i = phi i64 [ %i.k, %._crit_edge.i.i ], [ 0, %.preheader.i.i ] ; 8 uses
-  %i.m = lshr i64 %3, %.0.lcssa.i.i               ; 2 uses
-  store i64 %i.m, ptr %i.c, align 8
+  %6 = load i64, ptr %3, align 8
+  %i.m = lshr i64 %6, %.0.lcssa.i.i               ; 2 uses
+  store i64 %i.m, ptr %3, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8
   %i.p = lshr i64 %i.o, %.0.lcssa.i.i             ; 2 uses
@@ -274,8 +279,10 @@ bb.b:                                             ; preds = %._crit_edge.i.i, %.
   %i.u = load i64, ptr %i.t, align 8
   %i.v = lshr i64 %i.u, %.0.lcssa.i.i             ; 2 uses
   store i64 %i.v, ptr %i.t, align 8
-  %i.w = lshr i64 %4, %.0.lcssa.i.i               ; 2 uses
-  store i64 %i.w, ptr %i.d, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %8 = load i64, ptr %7, align 8
+  %i.w = lshr i64 %8, %.0.lcssa.i.i               ; 2 uses
+  store i64 %i.w, ptr %7, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.y = load i64, ptr %i.x, align 8
   %i.z = lshr i64 %i.y, %.0.lcssa.i.i             ; 2 uses
@@ -295,11 +302,11 @@ __se_compat_sys_sysinfo.exit:                     ; preds = %.copy_to_user.exit_
   %i.ah = phi i64 [ %.pre30.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.af, %bb.b ]
   %i.ai = phi i64 [ %.pre28.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.ac, %bb.b ]
   %i.aj = phi i64 [ %.pre26.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.z, %bb.b ]
-  %i.ak = phi i64 [ %4, %.copy_to_user.exit_crit_edge.i.i ], [ %i.w, %bb.b ]
-  %i.al = phi i64 [ %.pre24.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.v, %bb.b ]
-  %i.am = phi i64 [ %.pre22.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.s, %bb.b ]
-  %i.an = phi i64 [ %.pre.i.i.a, %.copy_to_user.exit_crit_edge.i.i ], [ %i.p, %bb.b ]
-  %i.ao = phi i64 [ %3, %.copy_to_user.exit_crit_edge.i.i ], [ %i.m, %bb.b ]
+  %i.ak = phi i64 [ %.pre24.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.w, %bb.b ]
+  %i.al = phi i64 [ %.pre22.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.v, %bb.b ]
+  %i.am = phi i64 [ %.pre.i.i.a, %.copy_to_user.exit_crit_edge.i.i ], [ %i.s, %bb.b ]
+  %i.an = phi i64 [ %.pre21.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.p, %bb.b ]
+  %i.ao = phi i64 [ %.pre.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.m, %bb.b ]
   %i.ap = and i64 %i.b, 4294967295
   %i.aq = inttoptr i64 %i.ap to ptr
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses

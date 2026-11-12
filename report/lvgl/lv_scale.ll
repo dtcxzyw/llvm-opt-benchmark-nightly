@@ -104,7 +104,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call i32 @lv_event_get_code(ptr noundef %1) #7
-  %i.c = tail call ptr @lv_event_get_current_target(ptr noundef %1) #7 ; 18 uses
+  %i.c = tail call ptr @lv_event_get_current_target(ptr noundef %1) #7 ; 20 uses
   switch i32 %i.b, label %.loopexit [
     i32 29, label %bb.c
     i32 32, label %bb.g
@@ -113,7 +113,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 116 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 116
   %i.e = load i64, ptr %i.d, align 4
   %i.f = and i64 %i.e, 2147483648
   %i.g = icmp eq i64 %i.f, 0
@@ -122,9 +122,10 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   tail call fastcc void @scale_find_section_tick_idx(ptr noundef nonnull %i.c)
   tail call fastcc void @scale_calculate_main_compensation(ptr noundef nonnull %i.c)
-  %2 = load i64, ptr %i.d, align 4
-  %3 = and i64 %2, 4294967296
-  %.not48 = icmp eq i64 %3, 0
+  %2 = getelementptr i8, ptr %i.c, i64 120
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 1
+  %.not48 = icmp eq i32 %4, 0
   br i1 %.not48, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -138,7 +139,7 @@ bb.f:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.b
-  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 116 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 116
   %i.i = load i64, ptr %i.h, align 4
   %i.j = and i64 %i.i, 2147483648
   %.not49 = icmp eq i64 %i.j, 0
@@ -147,9 +148,10 @@ bb.g:                                             ; preds = %bb.b
 bb.h:                                             ; preds = %bb.g
   tail call fastcc void @scale_find_section_tick_idx(ptr noundef nonnull %i.c)
   tail call fastcc void @scale_calculate_main_compensation(ptr noundef nonnull %i.c)
-  %4 = load i64, ptr %i.h, align 4
-  %5 = and i64 %4, 4294967296
-  %.not50 = icmp eq i64 %5, 0
+  %5 = getelementptr i8, ptr %i.c, i64 120
+  %6 = load i32, ptr %5, align 4
+  %7 = and i32 %6, 1
+  %.not50 = icmp eq i32 %7, 0
   br i1 %.not50, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -552,7 +554,7 @@ bb.a:
   %6 = alloca %struct.lv_point_t, align 4         ; 6 uses
   %7 = alloca %struct._lv_draw_image_dsc_t, align 8 ; 7 uses
   %8 = alloca %union.lv_style_value_t, align 8    ; 10 uses
-  %9 = alloca %struct.lv_draw_label_dsc_t, align 8 ; 18 uses
+  %9 = alloca %struct.lv_draw_label_dsc_t, align 8 ; 19 uses
   %10 = alloca %struct.lv_draw_line_dsc_t, align 8 ; 13 uses
   %11 = alloca %struct.lv_draw_line_dsc_t, align 8 ; 12 uses
   %12 = alloca %struct.lv_draw_line_dsc_t, align 8 ; 5 uses
@@ -626,10 +628,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 124
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %i.al = getelementptr inbounds nuw i8, ptr %7, i64 64
-  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 88
-  %i.an = getelementptr inbounds nuw i8, ptr %7, i64 108
+  %15 = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 64
+  %i.al = getelementptr inbounds nuw i8, ptr %7, i64 88
+  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 108
+  %i.an = getelementptr inbounds nuw i8, ptr %9, i64 143
   %i.ao = getelementptr inbounds nuw i8, ptr %11, i64 64
   %i.ap = getelementptr inbounds nuw i8, ptr %11, i64 72
   %i.aq = getelementptr inbounds nuw i8, ptr %11, i64 12
@@ -968,7 +971,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
   %i.fm = add i32 %i.fl, %.076.i
   store i32 %i.fm, ptr %6, align 4, !tbaa !39
   %i.fn = add nsw i32 %i.eo, %.sroa.0.0.extract.trunc.i84.i
-  store i32 %i.fn, ptr %i.ak, align 4, !tbaa !40
+  store i32 %i.fn, ptr %15, align 4, !tbaa !40
   %i.fo = and i32 %.sroa.0.0.extract.trunc.i85.i, 1048576
   %.not81.i = icmp eq i32 %i.fo, 0
   %i.fp = and i32 %.sroa.0.0.extract.trunc.i85.i, 524287 ; 2 uses
@@ -1014,12 +1017,12 @@ bb.ar:                                            ; preds = %bb.aq
   %i.fz = call i32 @lv_area_get_height(ptr noundef nonnull %2) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
   call void @lv_draw_image_dsc_init(ptr noundef nonnull %7) #7
-  store ptr %i.fx, ptr %i.al, align 8, !tbaa !119
-  store i32 %.178.i, ptr %i.am, align 8, !tbaa !120
+  store ptr %i.fx, ptr %i.ak, align 8, !tbaa !119
+  store i32 %.178.i, ptr %i.al, align 8, !tbaa !120
   %i.ga = insertelement <2 x i32> poison, i32 %i.fy, i64 0
   %i.gb = insertelement <2 x i32> %i.ga, i32 %i.fz, i64 1
   %i.gc = sdiv <2 x i32> %i.gb, splat (i32 2)
-  store <2 x i32> %i.gc, ptr %i.an, align 4, !tbaa !28
+  store <2 x i32> %i.gc, ptr %i.am, align 4, !tbaa !28
   call void @lv_draw_layer(ptr noundef %i.cx, ptr noundef nonnull %7, ptr noundef nonnull %2) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
   br label %bb.at
@@ -1029,14 +1032,15 @@ bb.as:                                            ; preds = %bb.aq
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
-  %15 = load i16, ptr %i.af, align 2              ; 2 uses
-  %16 = and i16 %15, 256
-  %.not83.i = icmp eq i16 %16, 0
+  %16 = load i8, ptr %i.an, align 1
+  %17 = and i8 %16, 1
+  %.not83.i = icmp eq i8 %17, 0
   br i1 %.not83.i, label %scale_draw_label.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   store ptr null, ptr %i.ae, align 8, !tbaa !73
-  %i.gd = and i16 %15, -257
+  %18 = load i16, ptr %i.af, align 2
+  %i.gd = and i16 %18, -257
   store i16 %i.gd, ptr %i.af, align 2
   br label %scale_draw_label.exit
 

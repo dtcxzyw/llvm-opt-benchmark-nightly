@@ -204,11 +204,11 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
-  %i.d = alloca [16 x i8], align 16               ; 7 uses
+  %i.d = alloca [16 x i8], align 16               ; 10 uses
   %i.e = alloca ptr, align 8                      ; 9 uses
   %i.f = alloca i32, align 4                      ; 24 uses
   %i.g = alloca i32, align 4                      ; 9 uses
-  %4 = alloca %struct.pdu_security_settings_t, align 8 ; 17 uses
+  %4 = alloca %struct.pdu_security_settings_t, align 8 ; 19 uses
   %i.h = alloca i32, align 4                      ; 5 uses
   %i.i = alloca i32, align 4                      ; 9 uses
   %i.j = alloca i32, align 4                      ; 6 uses
@@ -611,10 +611,22 @@ bb.et:                                            ; preds = %bb.er, %bb.es
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, i8 noundef 0, i64 noundef 16, i1 noundef false) #14
-  %i.wf = getelementptr inbounds nuw i8, ptr %4, i64 28
-  %i.wg = load i32, ptr %i.wf, align 4
-  %5 = call i32 @llvm.bswap.i32(i32 %i.wg)
-  store i32 %5, ptr %i.d, align 16
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 28
+  %i.wf = getelementptr inbounds nuw i8, ptr %4, i64 31
+  %6 = load i8, ptr %i.wf, align 1
+  store i8 %6, ptr %i.d, align 16
+  %i.wg = load i32, ptr %5, align 4               ; 3 uses
+  %7 = lshr i32 %i.wg, 16
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
+  store i8 %8, ptr %9, align 1
+  %10 = lshr i32 %i.wg, 8
+  %11 = trunc i32 %10 to i8
+  %12 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
+  store i8 %11, ptr %12, align 2
+  %13 = trunc i32 %i.wg to i8
+  %14 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
+  store i8 %13, ptr %14, align 1
   %i.wh = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.wi = load i8, ptr %i.wh, align 8
   %i.wj = shl i8 %i.wi, 3
@@ -754,11 +766,23 @@ bb.fh:                                            ; preds = %bb.ff
   %i.yo = load ptr, ptr %i.yn, align 8
   %i.yp = add i32 %i.ye, 5
   %i.yq = zext i32 %i.yp to i64                   ; 2 uses
-  %i.yr = call noalias ptr @wmem_alloc0(ptr noundef %i.yo, i64 noundef %i.yq) #15 ; 5 uses
-  %i.ys = getelementptr inbounds nuw i8, ptr %4, i64 28
-  %i.yt = load i32, ptr %i.ys, align 4
-  %6 = call i32 @llvm.bswap.i32(i32 %i.yt)
-  store i32 %6, ptr %i.yr, align 1
+  %i.yr = call noalias ptr @wmem_alloc0(ptr noundef %i.yo, i64 noundef %i.yq) #15 ; 8 uses
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 28
+  %i.ys = getelementptr inbounds nuw i8, ptr %4, i64 31
+  %16 = load i8, ptr %i.ys, align 1
+  store i8 %16, ptr %i.yr, align 1
+  %i.yt = load i32, ptr %15, align 4              ; 3 uses
+  %17 = lshr i32 %i.yt, 16
+  %18 = trunc i32 %17 to i8
+  %19 = getelementptr i8, ptr %i.yr, i64 1
+  store i8 %18, ptr %19, align 1
+  %20 = lshr i32 %i.yt, 8
+  %21 = trunc i32 %20 to i8
+  %22 = getelementptr i8, ptr %i.yr, i64 2
+  store i8 %21, ptr %22, align 1
+  %23 = trunc i32 %i.yt to i8
+  %24 = getelementptr i8, ptr %i.yr, i64 3
+  store i8 %23, ptr %24, align 1
   %i.yu = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.yv = load i8, ptr %i.yu, align 8
   %i.yw = shl i8 %i.yv, 3

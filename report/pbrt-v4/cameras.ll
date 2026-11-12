@@ -205,7 +205,7 @@ define dso_local noundef ptr @_ZN4pbrt15RealisticCamera6CreateERKNS_19ParameterD
   %41 = alloca %"class.std::allocator", align 1   ; 5 uses
   %42 = alloca %"class.std::allocator", align 1   ; 5 uses
   %43 = alloca %"class.std::allocator", align 1   ; 5 uses
-  %44 = alloca %"class.pbrt::Image", align 8      ; 9 uses
+  %44 = alloca %"class.pbrt::Image", align 8      ; 10 uses
   %45 = alloca [1 x %"class.std::__cxx11::basic_string"], align 8 ; 9 uses
   %46 = alloca %"class.std::allocator", align 1   ; 4 uses
   %47 = alloca %"class.pbrt::ColorEncoding", align 8 ; 2 uses
@@ -608,7 +608,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   store i32 0, ptr %23, align 8, !tbaa !95
   %i.ew = getelementptr inbounds nuw i8, ptr %23, i64 4 ; 8 uses
   store i32 0, ptr %i.ew, align 4, !tbaa !96
-  %i.ex = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
+  %i.ex = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 3 uses
   store i32 0, ptr %i.ex, align 8, !tbaa !341
   %i.ey = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   %i.ez = call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #29
@@ -700,15 +700,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i33
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit333: ; preds = %_ZN4pbrt5ImageaSEOS0_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i331
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #29
-  %.sroa.0.0.copyload.i505 = load i64, ptr %i.ew, align 4 ; 2 uses
-  %.sroa.3103.0.extract.shift506 = lshr i64 %.sroa.0.0.copyload.i505, 32
-  %.sroa.3103.0.extract.trunc507 = trunc nuw i64 %.sroa.3103.0.extract.shift506 to i32
-  %i.gj = icmp sgt i32 %.sroa.3103.0.extract.trunc507, 0
-  br i1 %i.gj, label %.preheader483, label %.loopexit487
+  %.sroa.3103.0.extract.trunc505 = load i32, ptr %i.ex, align 8
+  %i.gj = icmp sgt i32 %.sroa.3103.0.extract.trunc505, 0
+  br i1 %i.gj, label %.preheader483.preheader, label %.loopexit487
 
-.preheader483:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit333, %._crit_edge
-  %.sroa.0.0.copyload.i600 = phi i64 [ %.sroa.0.0.copyload.i, %._crit_edge ], [ %.sroa.0.0.copyload.i505, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit333 ] ; 3 uses
-  %indvars.iv569.a = phi i64 [ %indvars.iv.next570.a, %._crit_edge ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit333 ] ; 3 uses
+.preheader483.preheader:                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit333
+  %.sroa.0.0.copyload.i343500.pre = load i64, ptr %i.ew, align 4
+  br label %.preheader483
+
+.preheader483:                                    ; preds = %.preheader483.preheader, %._crit_edge
+  %.sroa.0.0.copyload.i600 = phi i64 [ %.sroa.0.0.copyload.i343500.pre, %.preheader483.preheader ], [ %.sroa.0.0.copyload.i, %._crit_edge ] ; 3 uses
+  %indvars.iv569.a = phi i64 [ 0, %.preheader483.preheader ], [ %indvars.iv.next570.a, %._crit_edge ] ; 3 uses
   %.sroa.096.0.extract.trunc501 = trunc i64 %.sroa.0.0.copyload.i600 to i32 ; 2 uses
   %i.gk = icmp sgt i32 %.sroa.096.0.extract.trunc501, 0
   br i1 %i.gk, label %.lr.ph, label %._crit_edge
@@ -1111,10 +1113,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit378: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #29
   %i.mz = getelementptr inbounds nuw i8, ptr %44, i64 4 ; 2 uses
-  %.sroa.0.0.copyload.i379514 = load i64, ptr %i.mz, align 4 ; 2 uses
-  %.sroa.344.0.extract.shift515 = lshr i64 %.sroa.0.0.copyload.i379514, 32
-  %.sroa.344.0.extract.trunc516 = trunc nuw i64 %.sroa.344.0.extract.shift515 to i32
-  %i.na = icmp sgt i32 %.sroa.344.0.extract.trunc516, 0
+  %49 = getelementptr inbounds nuw i8, ptr %44, i64 8
+  %.sroa.344.0.extract.trunc512 = load i32, ptr %49, align 8
+  %i.na = icmp sgt i32 %.sroa.344.0.extract.trunc512, 0
   br i1 %i.na, label %.preheader474.lr.ph, label %._crit_edge518
 
 .preheader474.lr.ph:                              ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit378
@@ -1122,10 +1123,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit378: ; preds = %bb
   %i.nc = getelementptr inbounds nuw i8, ptr %48, i64 8
   %i.nd = getelementptr inbounds nuw i8, ptr %48, i64 16
   %i.ne = getelementptr inbounds nuw i8, ptr %48, i64 32
+  %.sroa.0.0.copyload.i383507.pre = load i64, ptr %i.mz, align 4
   br label %.preheader474
 
 .preheader474:                                    ; preds = %.preheader474.lr.ph, %._crit_edge513
-  %.sroa.0.0.copyload.i379603 = phi i64 [ %.sroa.0.0.copyload.i379514, %.preheader474.lr.ph ], [ %.sroa.0.0.copyload.i379, %._crit_edge513 ] ; 2 uses
+  %.sroa.0.0.copyload.i379603 = phi i64 [ %.sroa.0.0.copyload.i383507.pre, %.preheader474.lr.ph ], [ %.sroa.0.0.copyload.i379, %._crit_edge513 ] ; 2 uses
   %indvars.iv575 = phi i64 [ 0, %.preheader474.lr.ph ], [ %indvars.iv.next576, %._crit_edge513 ] ; 2 uses
   %.sroa.037.0.extract.trunc510 = trunc i64 %.sroa.0.0.copyload.i379603 to i32
   %i.nf = icmp sgt i32 %.sroa.037.0.extract.trunc510, 0
@@ -1364,39 +1366,50 @@ bb.cv:                                            ; preds = %.loopexit487
 .preheader472:                                    ; preds = %bb.cv
   %.sroa.0.0.copyload.i384527 = load i64, ptr %i.ew, align 4 ; 2 uses
   %.sroa.330.0.extract.shift528 = lshr i64 %.sroa.0.0.copyload.i384527, 32
-  %.sroa.330.0.extract.trunc529 = trunc nuw i64 %.sroa.330.0.extract.shift528 to i32
+  %.sroa.330.0.extract.trunc529 = trunc nuw i64 %.sroa.330.0.extract.shift528 to i32 ; 2 uses
   %i.pu = icmp sgt i32 %.sroa.330.0.extract.trunc529, 0
   br i1 %i.pu, label %.preheader468, label %.loopexit467
 
 .preheader468:                                    ; preds = %.preheader472, %._crit_edge526
-  %.sroa.0.0.copyload.i384605 = phi i64 [ %.sroa.0.0.copyload.i384, %._crit_edge526 ], [ %.sroa.0.0.copyload.i384527, %.preheader472 ] ; 2 uses
+  %.sroa.3.0.extract.trunc537599 = phi i32 [ %.sroa.3.0.extract.trunc537598, %._crit_edge526 ], [ %.sroa.330.0.extract.trunc529, %.preheader472 ]
+  %.sroa.0.0.copyload.i384605 = phi i64 [ %.sroa.0.0.copyload.i384, %._crit_edge526 ], [ %.sroa.0.0.copyload.i384527, %.preheader472 ] ; 3 uses
   %indvars.iv589.a = phi i64 [ %indvars.iv.next590.a, %._crit_edge526 ], [ 0, %.preheader472 ] ; 2 uses
   %.0176530 = phi float [ %.1177.lcssa, %._crit_edge526 ], [ 0.000000e+00, %.preheader472 ] ; 2 uses
   %.sroa.024.0.extract.trunc522 = trunc i64 %.sroa.0.0.copyload.i384605 to i32
   %i.pv = icmp sgt i32 %.sroa.024.0.extract.trunc522, 0
-  br i1 %i.pv, label %.lr.ph525, label %._crit_edge526
+  br i1 %i.pv, label %.lr.ph525, label %.preheader468.._crit_edge522_crit_edge
+
+.preheader468.._crit_edge522_crit_edge:           ; preds = %.preheader468
+  %.pre607 = lshr i64 %.sroa.0.0.copyload.i384605, 32
+  %.pre608 = trunc nuw i64 %.pre607 to i32
+  br label %._crit_edge526
 
 .lr.ph525:                                        ; preds = %.preheader468
   %.sroa.2416.0.insert.shift = shl nuw nsw i64 %indvars.iv589.a, 32
   br label %bb.cw
 
 ._crit_edge532:                                   ; preds = %._crit_edge526
-  %.sroa.330.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i384, 32
-  %.sroa.330.0.extract.trunc = trunc nuw i64 %.sroa.330.0.extract.shift to i32 ; 2 uses
+  %50 = icmp sgt i32 %.sroa.3.0.extract.trunc537598, 0
   %.sroa.021.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i384 to i32
-  %i.pw = mul nsw i32 %.sroa.330.0.extract.trunc, %.sroa.021.0.extract.trunc
+  %i.pw = mul nsw i32 %.sroa.330.0.extract.trunc.pre-phi, %.sroa.021.0.extract.trunc
   %i.px = sitofp i32 %i.pw to float
   %i.py = fdiv float %.1177.lcssa, %i.px
   %i.pz = fdiv float f0x3F490FDB, %i.py
-  %49 = icmp sgt i32 %.sroa.330.0.extract.trunc, 0
-  br i1 %49, label %.preheader, label %.loopexit467
+  br i1 %50, label %.preheader, label %.loopexit467
 
-._crit_edge526:                                   ; preds = %bb.cx, %.preheader468
-  %.sroa.0.0.copyload.i384 = phi i64 [ %.sroa.0.0.copyload.i384605, %.preheader468 ], [ %.sroa.0.0.copyload.i387, %bb.cx ] ; 5 uses
-  %.1177.lcssa = phi float [ %.0176530, %.preheader468 ], [ %i.qc, %bb.cx ] ; 2 uses
+._crit_edge522.loopexit:                          ; preds = %bb.cx
+  %51 = lshr i64 %.sroa.0.0.copyload.i387, 32
+  %52 = trunc nuw i64 %51 to i32                  ; 2 uses
+  br label %._crit_edge526
+
+._crit_edge526:                                   ; preds = %.preheader468.._crit_edge522_crit_edge, %._crit_edge522.loopexit
+  %.sroa.330.0.extract.trunc.pre-phi = phi i32 [ %.pre608, %.preheader468.._crit_edge522_crit_edge ], [ %52, %._crit_edge522.loopexit ] ; 2 uses
+  %.sroa.3.0.extract.trunc537598 = phi i32 [ %.sroa.3.0.extract.trunc537599, %.preheader468.._crit_edge522_crit_edge ], [ %52, %._crit_edge522.loopexit ] ; 2 uses
+  %.sroa.0.0.copyload.i384 = phi i64 [ %.sroa.0.0.copyload.i384605, %.preheader468.._crit_edge522_crit_edge ], [ %.sroa.0.0.copyload.i387, %._crit_edge522.loopexit ] ; 3 uses
+  %.1177.lcssa = phi float [ %.0176530, %.preheader468.._crit_edge522_crit_edge ], [ %i.qc, %._crit_edge522.loopexit ] ; 2 uses
   %indvars.iv.next590.a = add nuw nsw i64 %indvars.iv589.a, 1 ; 2 uses
-  %50 = ashr i64 %.sroa.0.0.copyload.i384, 32
-  %i.qa = icmp slt i64 %indvars.iv.next590.a, %50
+  %53 = sext i32 %.sroa.330.0.extract.trunc.pre-phi to i64
+  %i.qa = icmp slt i64 %indvars.iv.next590.a, %53
   br i1 %i.qa, label %.preheader468, label %._crit_edge532, !llvm.loop !334
 
 bb.cw:                                            ; preds = %.lr.ph525, %bb.cx
@@ -1409,11 +1422,11 @@ bb.cw:                                            ; preds = %.lr.ph525, %bb.cx
 bb.cx:                                            ; preds = %bb.cw
   %i.qc = fadd float %.1177523, %i.qb             ; 2 uses
   %indvars.iv.next587.a = add nuw nsw i64 %indvars.iv586.a, 1 ; 2 uses
-  %.sroa.0.0.copyload.i387 = load i64, ptr %i.ew, align 4 ; 2 uses
+  %.sroa.0.0.copyload.i387 = load i64, ptr %i.ew, align 4 ; 3 uses
   %i.qd = shl i64 %.sroa.0.0.copyload.i387, 32
   %i.qe = ashr exact i64 %i.qd, 32
   %i.qf = icmp slt i64 %indvars.iv.next587.a, %i.qe
-  br i1 %i.qf, label %bb.cw, label %._crit_edge526, !llvm.loop !335
+  br i1 %i.qf, label %bb.cw, label %._crit_edge522.loopexit, !llvm.loop !335
 
 .preheader:                                       ; preds = %._crit_edge532, %._crit_edge540
   %.sroa.0.0.copyload.i389609 = phi i64 [ %.sroa.0.0.copyload.i389, %._crit_edge540 ], [ %.sroa.0.0.copyload.i384, %._crit_edge532 ] ; 2 uses
@@ -1816,14 +1829,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %.sroa.0.0.copyload.i30 = load i64, ptr %i.j, align 4 ; 3 uses
-  %.sroa.3.0.extract.shift31 = lshr i64 %.sroa.0.0.copyload.i30, 32
-  %.sroa.3.0.extract.trunc32 = trunc nuw i64 %.sroa.3.0.extract.shift31 to i32
-  %i.k = icmp sgt i32 %.sroa.3.0.extract.trunc32, 0
+  %5 = getelementptr i8, ptr %0, i64 8
+  %.sroa.3.0.extract.trunc30 = load i32, ptr %5, align 8
+  %i.k = icmp sgt i32 %.sroa.3.0.extract.trunc30, 0
   br i1 %i.k, label %.preheader.lr.ph, label %._crit_edge
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.not = icmp eq i64 %.fr35, 0
+  %.sroa.0.0.copyload.i5923.pre = load i64, ptr %i.j, align 4 ; 2 uses
   br i1 %.not, label %.preheader, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -1837,7 +1850,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge29.split.us.us
-  %.sroa.0.0.copyload.i.us57 = phi i64 [ %.sroa.0.0.copyload.i30, %.preheader.us.preheader ], [ %.sroa.0.0.copyload.i.us, %._crit_edge29.split.us.us ] ; 3 uses
+  %.sroa.0.0.copyload.i.us57 = phi i64 [ %.sroa.0.0.copyload.i5923.pre, %.preheader.us.preheader ], [ %.sroa.0.0.copyload.i.us, %._crit_edge29.split.us.us ] ; 3 uses
   %indvars.iv42 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next43, %._crit_edge29.split.us.us ] ; 3 uses
   %.sroa.022.0.extract.trunc24.us = trunc i64 %.sroa.0.0.copyload.i.us57 to i32 ; 2 uses
   %i.n = icmp sgt i32 %.sroa.022.0.extract.trunc24.us, 0
@@ -2127,7 +2140,7 @@ bb.g:                                             ; preds = %._crit_edge.us.us.p
   br label %bb.k
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge29.split
-  %.sroa.0.0.copyload.i61 = phi i64 [ %.sroa.0.0.copyload.i, %._crit_edge29.split ], [ %.sroa.0.0.copyload.i30, %.preheader.lr.ph ] ; 2 uses
+  %.sroa.0.0.copyload.i61 = phi i64 [ %.sroa.0.0.copyload.i, %._crit_edge29.split ], [ %.sroa.0.0.copyload.i5923.pre, %.preheader.lr.ph ] ; 2 uses
   %indvars.iv48 = phi i64 [ %indvars.iv.next49, %._crit_edge29.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.sroa.022.0.extract.trunc24 = trunc i64 %.sroa.0.0.copyload.i61 to i32
   %i.fj = icmp sgt i32 %.sroa.022.0.extract.trunc24, 0

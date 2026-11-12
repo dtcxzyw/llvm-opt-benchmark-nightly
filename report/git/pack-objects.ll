@@ -205,10 +205,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %2 = load i64, ptr %i.f, align 8                ; 2 uses
-  %3 = and i64 %2, 25769803776
-  %switch = icmp eq i64 %3, 25769803776
+  %i.f = getelementptr i8, ptr %1, i64 92
+  %2 = load i32, ptr %i.f, align 4
+  %3 = and i32 %2, 6
+  %switch = icmp eq i32 %3, 6
   br i1 %switch, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -240,7 +240,9 @@ bb.e:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.s = and i64 %2, 1023
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %5 = load i64, ptr %4, align 8
+  %i.s = and i64 %5, 1023
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.s
   br label %oe_in_pack.exit
 

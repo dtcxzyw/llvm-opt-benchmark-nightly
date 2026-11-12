@@ -204,11 +204,11 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = alloca [16 x i8], align 16               ; 4 uses
   %i.f = alloca [16 x i8], align 16               ; 9 uses
-  %i.g = alloca [16 x i8], align 16               ; 10 uses
+  %i.g = alloca [16 x i8], align 16               ; 13 uses
   %i.h = alloca ptr, align 8                      ; 10 uses
   %i.i = alloca [16 x i8], align 16               ; 7 uses
   %i.j = alloca ptr, align 8                      ; 7 uses
-  %i.k = alloca [16 x i8], align 16               ; 8 uses
+  %i.k = alloca [16 x i8], align 16               ; 11 uses
   %i.l = alloca ptr, align 8                      ; 7 uses
   %i.m = alloca i32, align 4                      ; 4 uses
   %i.n = alloca i32, align 4                      ; 6 uses
@@ -268,7 +268,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.056 = phi ptr [ %i.ag, %bb.f ], [ %i.ai, %bb.g ] ; 5 uses
+  %.056 = phi ptr [ %i.ag, %bb.f ], [ %i.ai, %bb.g ] ; 7 uses
   %i.am = load i8, ptr %i.r, align 1, !range !6, !noundef !7
   %i.an = icmp eq i8 %i.am, 0
   br i1 %i.an, label %bb.i, label %bb.ah
@@ -387,12 +387,25 @@ bb.p:                                             ; preds = %bb.n, %bb.m
   %i.de = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   store i32 %i.dd, ptr %i.de, align 4
   %i.df = getelementptr i8, ptr %.056, i64 4
-  %i.dg = load i32, ptr %i.df, align 4
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %4 = call i32 @llvm.bswap.i32(i32 %i.dg)        ; 2 uses
-  store i32 %4, ptr %i.dh, align 8
+  %4 = getelementptr i8, ptr %.056, i64 7
+  %5 = load i8, ptr %4, align 1
+  %6 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  store i8 %5, ptr %6, align 8
+  %i.dg = load i32, ptr %i.df, align 4            ; 4 uses
+  %7 = lshr i32 %i.dg, 16
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %i.g, i64 9
+  store i8 %8, ptr %9, align 1
+  %10 = lshr i32 %i.dg, 8
+  %11 = trunc i32 %10 to i8
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.g, i64 10
+  store i8 %11, ptr %i.dh, align 2
+  %12 = trunc i32 %i.dg to i8
+  %13 = getelementptr inbounds nuw i8, ptr %i.g, i64 11
+  store i8 %12, ptr %13, align 1
   %i.di = getelementptr inbounds nuw i8, ptr %i.g, i64 12
-  store i32 %4, ptr %i.di, align 4
+  %14 = call i32 @llvm.bswap.i32(i32 %i.dg)
+  store i32 %14, ptr %i.di, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #10
   %i.dj = call i32 @gcry_cipher_open(ptr noundef nonnull %i.h, i32 noundef 7, i32 noundef 1, i32 noundef 0)
   %.not107.i = icmp eq i32 %i.dj, 0
@@ -457,10 +470,22 @@ bb.x:                                             ; preds = %bb.m
   %i.eb = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store <4 x i8> <i8 67, i8 76, i8 83, i8 78>, ptr %i.eb, align 8
   %i.ec = getelementptr i8, ptr %.056, i64 4
-  %i.ed = load i32, ptr %i.ec, align 4
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.k, i64 12
-  %5 = call i32 @llvm.bswap.i32(i32 %i.ed)
-  store i32 %5, ptr %i.ee, align 4
+  %15 = getelementptr i8, ptr %.056, i64 7
+  %16 = load i8, ptr %15, align 1
+  %17 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
+  store i8 %16, ptr %17, align 4
+  %i.ed = load i32, ptr %i.ec, align 4            ; 3 uses
+  %18 = lshr i32 %i.ed, 16
+  %19 = trunc i32 %18 to i8
+  %20 = getelementptr inbounds nuw i8, ptr %i.k, i64 13
+  store i8 %19, ptr %20, align 1
+  %21 = lshr i32 %i.ed, 8
+  %22 = trunc i32 %21 to i8
+  %i.ee = getelementptr inbounds nuw i8, ptr %i.k, i64 14
+  store i8 %22, ptr %i.ee, align 2
+  %23 = trunc i32 %i.ed to i8
+  %24 = getelementptr inbounds nuw i8, ptr %i.k, i64 15
+  store i8 %23, ptr %24, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #10
   %i.ef = call i32 @gcry_cipher_open(ptr noundef nonnull %i.l, i32 noundef 7, i32 noundef 1, i32 noundef 0)
   %.not.i = icmp eq i32 %i.ef, 0

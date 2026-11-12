@@ -205,6 +205,7 @@ bb.cq:                                            ; preds = %.split.i
   %i.xz = load i16, ptr %i.xy, align 8, !tbaa !57, !alias.scope !318
   %i.ya = zext i16 %i.xz to i32
   %i.yb = getelementptr inbounds nuw i8, ptr %0, i64 652
+  %2 = getelementptr i8, ptr %0, i64 653
   br label %bb.cr
 
 .preheader805.i:                                  ; preds = %bb.cq
@@ -215,6 +216,7 @@ bb.cq:                                            ; preds = %.split.i
   %i.yd = load i16, ptr %i.yc, align 8, !tbaa !57, !alias.scope !318
   %i.ye = zext i16 %i.yd to i32                   ; 3 uses
   %i.yf = getelementptr inbounds nuw i8, ptr %0, i64 652 ; 3 uses
+  %3 = getelementptr i8, ptr %0, i64 653          ; 3 uses
   %xtraiter730 = and i32 %i.sd, 1
   %i.yg = icmp eq i32 %i.sd, 1
   br i1 %i.yg, label %.epil.preheader, label %.lr.ph873.i.new
@@ -234,7 +236,12 @@ bb.cr:                                            ; preds = %bb.ct, %.lr.ph870.i
   %i.ym = zext i8 %i.yl to i32                    ; 2 uses
   %i.yn = or disjoint i32 %i.yj, %i.ym
   %i.yo = icmp eq i32 %i.yn, %i.ya
-  br i1 %i.yo, label %bb.ct, label %bb.cs
+  br i1 %i.yo, label %4, label %bb.cs
+
+4:                                                ; preds = %bb.cr
+  %5 = load i8, ptr %2, align 1, !tbaa !55, !alias.scope !318
+  %6 = load i16, ptr %i.yb, align 4, !tbaa !55, !alias.scope !318
+  br label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
   %i.yp = lshr i32 %i.ym, %i.sa
@@ -243,15 +250,16 @@ bb.cs:                                            ; preds = %bb.cr
   %i.ys = load ptr, ptr %i.yr, align 8, !tbaa !316
   %i.yt = zext i8 %i.yh to i64
   %i.yu = getelementptr inbounds nuw [2 x i8], ptr %i.ys, i64 %i.yt
+  %7 = load i16, ptr %i.yu, align 2, !tbaa !27    ; 2 uses
+  %8 = lshr i16 %7, 8
+  %9 = trunc nuw i16 %8 to i8
   br label %bb.ct
 
-bb.ct:                                            ; preds = %bb.cs, %bb.cr
-  %storemerge778.in.in.i = phi ptr [ %i.yu, %bb.cs ], [ %i.yb, %bb.cr ]
-  %storemerge778.in.i = load i16, ptr %storemerge778.in.in.i, align 2, !tbaa !27 ; 2 uses
-  %storemerge779.in.i = lshr i16 %storemerge778.in.i, 8
-  %storemerge779.i = trunc nuw i16 %storemerge779.in.i to i8
-  store i8 %storemerge779.i, ptr %.12869.i, align 1, !tbaa !26, !noalias !318
-  %storemerge778.i = trunc i16 %storemerge778.in.i to i8
+bb.ct:                                            ; preds = %bb.cs, %4
+  %.sink.i194 = phi i8 [ %5, %4 ], [ %9, %bb.cs ]
+  %storemerge777.in.i = phi i16 [ %6, %4 ], [ %7, %bb.cs ]
+  store i8 %.sink.i194, ptr %.12869.i, align 1, !tbaa !26, !noalias !318
+  %storemerge778.i = trunc i16 %storemerge777.in.i to i8
   store i8 %storemerge778.i, ptr %i.yk, align 1, !tbaa !26, !noalias !318
   %i.yv = add nuw i32 %.7709868.i, 1              ; 2 uses
   %i.yw = getelementptr inbounds nuw i8, ptr %.12869.i, i64 2
@@ -272,11 +280,10 @@ bb.cu:                                            ; preds = %bb.cy, %.lr.ph873.i
   br i1 %i.ze, label %bb.cv, label %bb.cw
 
 bb.cv:                                            ; preds = %bb.cu
-  %2 = load i16, ptr %i.yf, align 4, !tbaa !55, !alias.scope !318 ; 2 uses
-  %3 = lshr i16 %2, 8
-  %4 = trunc nuw i16 %3 to i8
-  store i8 %4, ptr %.13872.i, align 1, !tbaa !26, !noalias !318
-  %i.zf = trunc i16 %2 to i8
+  %10 = load i8, ptr %3, align 1, !tbaa !55, !alias.scope !318
+  store i8 %10, ptr %.13872.i, align 1, !tbaa !26, !noalias !318
+  %11 = load i16, ptr %i.yf, align 4, !tbaa !55, !alias.scope !318
+  %i.zf = trunc i16 %11 to i8
   store i8 %i.zf, ptr %i.za, align 1, !tbaa !26, !noalias !318
   br label %bb.cw
 
@@ -293,11 +300,10 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu
   br i1 %i.zo, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cw
-  %5 = load i16, ptr %i.yf, align 4, !tbaa !55, !alias.scope !318 ; 2 uses
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
-  store i8 %7, ptr %i.zg, align 1, !tbaa !26, !noalias !318
-  %i.zp = trunc i16 %5 to i8
+  %12 = load i8, ptr %3, align 1, !tbaa !55, !alias.scope !318
+  store i8 %12, ptr %i.zg, align 1, !tbaa !26, !noalias !318
+  %13 = load i16, ptr %i.yf, align 4, !tbaa !55, !alias.scope !318
+  %i.zp = trunc i16 %13 to i8
   store i8 %i.zp, ptr %i.zk, align 1, !tbaa !26, !noalias !318
   br label %bb.cy
 
@@ -459,8 +465,11 @@ bb.dl:                                            ; preds = %bb.cz
   %i.acm = getelementptr inbounds nuw i8, ptr %0, i64 812
   %i.acn = getelementptr inbounds nuw i8, ptr %0, i64 814
   %i.aco = getelementptr inbounds nuw i8, ptr %0, i64 646
+  %14 = getelementptr i8, ptr %0, i64 647
   %i.acp = getelementptr inbounds nuw i8, ptr %0, i64 648
+  %15 = getelementptr i8, ptr %0, i64 649
   %i.acq = getelementptr inbounds nuw i8, ptr %0, i64 650
+  %16 = getelementptr i8, ptr %0, i64 651
   br label %bb.dm
 
 .preheader813.i:                                  ; preds = %bb.dl
@@ -473,8 +482,11 @@ bb.dl:                                            ; preds = %bb.cz
   %i.acu = getelementptr inbounds nuw i8, ptr %0, i64 812
   %i.acv = getelementptr inbounds nuw i8, ptr %0, i64 814
   %i.acw = getelementptr inbounds nuw i8, ptr %0, i64 646
+  %17 = getelementptr i8, ptr %0, i64 647
   %i.acx = getelementptr inbounds nuw i8, ptr %0, i64 648
+  %18 = getelementptr i8, ptr %0, i64 649
   %i.acy = getelementptr inbounds nuw i8, ptr %0, i64 650
+  %19 = getelementptr i8, ptr %0, i64 651
   br label %bb.ds
 
 bb.dm:                                            ; preds = %bb.dr, %.lr.ph858.i
@@ -489,7 +501,7 @@ bb.dm:                                            ; preds = %bb.dr, %.lr.ph858.i
   %i.adf = or disjoint i32 %i.adb, %i.ade
   %i.adg = getelementptr inbounds nuw i8, ptr %.16857.i, i64 2 ; 3 uses
   %i.adh = getelementptr inbounds nuw i8, ptr %.16857.i, i64 3 ; 3 uses
-  %i.adi = getelementptr inbounds nuw i8, ptr %.16857.i, i64 4 ; 2 uses
+  %i.adi = getelementptr inbounds nuw i8, ptr %.16857.i, i64 4 ; 3 uses
   %i.adj = load i8, ptr %i.adi, align 1, !tbaa !26, !noalias !318 ; 2 uses
   %i.adk = zext i8 %i.adj to i32
   %i.adl = shl nuw nsw i32 %i.adk, 8
@@ -523,18 +535,19 @@ bb.do:                                            ; preds = %bb.dn
   br i1 %i.aea, label %bb.dp, label %bb.dq
 
 bb.dp:                                            ; preds = %bb.do
-  %8 = load i16, ptr %i.aco, align 2, !tbaa !52, !alias.scope !318 ; 2 uses
-  %9 = lshr i16 %8, 8
-  %i.aeb = trunc nuw i16 %9 to i8
-  store i8 %i.aeb, ptr %.16857.i, align 1, !tbaa !26, !noalias !318
-  %10 = trunc i16 %8 to i8
-  store i8 %10, ptr %i.adc, align 1, !tbaa !26, !noalias !318
-  %i.aec = load i16, ptr %i.acp, align 8, !tbaa !53, !alias.scope !318 ; 2 uses
-  %11 = lshr i16 %i.aec, 8
-  %i.aed = trunc nuw i16 %11 to i8
-  store i8 %i.aed, ptr %i.adg, align 1, !tbaa !26, !noalias !318
-  %12 = trunc i16 %i.aec to i8
-  store i8 %12, ptr %i.adh, align 1, !tbaa !26, !noalias !318
+  %20 = load i8, ptr %14, align 1, !tbaa !52, !alias.scope !318
+  store i8 %20, ptr %.16857.i, align 1, !tbaa !26, !noalias !318
+  %21 = load i16, ptr %i.aco, align 2, !tbaa !52, !alias.scope !318
+  %i.aeb = trunc i16 %21 to i8
+  store i8 %i.aeb, ptr %i.adc, align 1, !tbaa !26, !noalias !318
+  %22 = load i8, ptr %15, align 1, !tbaa !53, !alias.scope !318
+  store i8 %22, ptr %i.adg, align 1, !tbaa !26, !noalias !318
+  %i.aec = load i16, ptr %i.acp, align 8, !tbaa !53, !alias.scope !318
+  %i.aed = trunc i16 %i.aec to i8
+  store i8 %i.aed, ptr %i.adh, align 1, !tbaa !26, !noalias !318
+  %23 = load i8, ptr %16, align 1, !tbaa !54, !alias.scope !318
+  store i8 %23, ptr %i.adi, align 1, !tbaa !26, !noalias !318
+  %24 = load i16, ptr %i.acq, align 2, !tbaa !54, !alias.scope !318
   br label %bb.dr
 
 bb.dq:                                            ; preds = %bb.do, %bb.dn, %._crit_edge963.i
@@ -569,14 +582,14 @@ bb.dq:                                            ; preds = %bb.do, %bb.dn, %._c
   %i.afb = load ptr, ptr %i.afa, align 8, !tbaa !316
   %i.afc = zext i8 %i.adj to i64
   %i.afd = getelementptr inbounds nuw [2 x i8], ptr %i.afb, i64 %i.afc
+  %25 = load i16, ptr %i.afd, align 2, !tbaa !27  ; 2 uses
+  %26 = lshr i16 %25, 8
+  %27 = trunc nuw i16 %26 to i8
+  store i8 %27, ptr %i.adi, align 1, !tbaa !26, !noalias !318
   br label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq, %bb.dp
-  %storemerge.in.in.i = phi ptr [ %i.afd, %bb.dq ], [ %i.acq, %bb.dp ]
-  %storemerge.in.i = load i16, ptr %storemerge.in.in.i, align 2, !tbaa !27 ; 2 uses
-  %storemerge775.in.i = lshr i16 %storemerge.in.i, 8
-  %storemerge775.i = trunc nuw i16 %storemerge775.in.i to i8
-  store i8 %storemerge775.i, ptr %i.adi, align 1, !tbaa !26, !noalias !318
+  %storemerge.in.i = phi i16 [ %25, %bb.dq ], [ %24, %bb.dp ]
   %storemerge.i194 = trunc i16 %storemerge.in.i to i8
   store i8 %storemerge.i194, ptr %i.adm, align 1, !tbaa !26, !noalias !318
   %i.afe = add nuw i32 %.11713856.i, 1            ; 2 uses
@@ -626,22 +639,19 @@ bb.du:                                            ; preds = %bb.dt
   br i1 %i.agj, label %bb.dv, label %bb.dw
 
 bb.dv:                                            ; preds = %bb.du
-  %13 = load i16, ptr %i.acw, align 2, !tbaa !52, !alias.scope !318 ; 2 uses
-  %14 = lshr i16 %13, 8
-  %i.agk = trunc nuw i16 %14 to i8
-  store i8 %i.agk, ptr %.17860.i, align 1, !tbaa !26, !noalias !318
-  %15 = trunc i16 %13 to i8
-  store i8 %15, ptr %i.afj, align 1, !tbaa !26, !noalias !318
-  %i.agl = load i16, ptr %i.acx, align 8, !tbaa !53, !alias.scope !318 ; 2 uses
-  %16 = lshr i16 %i.agl, 8
-  %i.agm = trunc nuw i16 %16 to i8
-  store i8 %i.agm, ptr %i.afn, align 1, !tbaa !26, !noalias !318
-  %17 = trunc i16 %i.agl to i8
-  store i8 %17, ptr %i.afo, align 1, !tbaa !26, !noalias !318
-  %i.agn = load i16, ptr %i.acy, align 2, !tbaa !54, !alias.scope !318 ; 2 uses
-  %18 = lshr i16 %i.agn, 8
-  %19 = trunc nuw i16 %18 to i8
-  store i8 %19, ptr %i.afp, align 1, !tbaa !26, !noalias !318
+  %28 = load i8, ptr %17, align 1, !tbaa !52, !alias.scope !318
+  store i8 %28, ptr %.17860.i, align 1, !tbaa !26, !noalias !318
+  %29 = load i16, ptr %i.acw, align 2, !tbaa !52, !alias.scope !318
+  %i.agk = trunc i16 %29 to i8
+  store i8 %i.agk, ptr %i.afj, align 1, !tbaa !26, !noalias !318
+  %30 = load i8, ptr %18, align 1, !tbaa !53, !alias.scope !318
+  store i8 %30, ptr %i.afn, align 1, !tbaa !26, !noalias !318
+  %i.agl = load i16, ptr %i.acx, align 8, !tbaa !53, !alias.scope !318
+  %i.agm = trunc i16 %i.agl to i8
+  store i8 %i.agm, ptr %i.afo, align 1, !tbaa !26, !noalias !318
+  %31 = load i8, ptr %19, align 1, !tbaa !54, !alias.scope !318
+  store i8 %31, ptr %i.afp, align 1, !tbaa !26, !noalias !318
+  %i.agn = load i16, ptr %i.acy, align 2, !tbaa !54, !alias.scope !318
   %i.ago = trunc i16 %i.agn to i8
   store i8 %i.ago, ptr %i.aft, align 1, !tbaa !26, !noalias !318
   br label %bb.dw
@@ -793,6 +803,7 @@ bb.ej:                                            ; preds = %bb.dx
 
 .lr.ph846.i:                                      ; preds = %.preheader823.i.a
   %i.aja = getelementptr inbounds nuw i8, ptr %0, i64 652 ; 2 uses
+  %32 = getelementptr i8, ptr %0, i64 653
   br label %bb.er
 
 .preheader821.i:                                  ; preds = %bb.ej
@@ -800,6 +811,7 @@ bb.ej:                                            ; preds = %bb.dx
 
 .lr.ph849.i:                                      ; preds = %.preheader821.i
   %i.ajb = getelementptr inbounds nuw i8, ptr %0, i64 652
+  %33 = getelementptr i8, ptr %0, i64 653
   %i.ajc = getelementptr inbounds nuw i8, ptr %0, i64 662
   br label %bb.ek
 
@@ -840,11 +852,10 @@ bb.el:                                            ; preds = %bb.ek
   br label %bb.eq
 
 bb.em:                                            ; preds = %bb.ek
-  %20 = load i16, ptr %i.ajb, align 4, !tbaa !55, !alias.scope !318 ; 2 uses
-  %21 = lshr i16 %20, 8
-  %22 = trunc nuw i16 %21 to i8
-  store i8 %22, ptr %.20848.i, align 1, !tbaa !26, !noalias !318
-  %i.ajz = trunc i16 %20 to i8
+  %34 = load i8, ptr %33, align 1, !tbaa !55, !alias.scope !318
+  store i8 %34, ptr %.20848.i, align 1, !tbaa !26, !noalias !318
+  %35 = load i16, ptr %i.ajb, align 4, !tbaa !55, !alias.scope !318
+  %i.ajz = trunc i16 %35 to i8
   %i.aka = getelementptr inbounds nuw i8, ptr %.20848.i, i64 1
   store i8 %i.ajz, ptr %i.aka, align 1, !tbaa !26, !noalias !318
   br label %bb.eq
@@ -920,11 +931,10 @@ bb.er:                                            ; preds = %bb.eu, %.lr.ph846.i
   ]
 
 bb.es:                                            ; preds = %bb.er
-  %23 = load i16, ptr %i.aja, align 4, !tbaa !55, !alias.scope !318 ; 2 uses
-  %24 = lshr i16 %23, 8
-  %25 = trunc nuw i16 %24 to i8
-  store i8 %25, ptr %.21845.i, align 1, !tbaa !26, !noalias !318
-  %i.alu = trunc i16 %23 to i8
+  %36 = load i8, ptr %32, align 1, !tbaa !55, !alias.scope !318
+  store i8 %36, ptr %.21845.i, align 1, !tbaa !26, !noalias !318
+  %37 = load i16, ptr %i.aja, align 4, !tbaa !55, !alias.scope !318
+  %i.alu = trunc i16 %37 to i8
   %i.alv = getelementptr inbounds nuw i8, ptr %.21845.i, i64 1
   store i8 %i.alu, ptr %i.alv, align 1, !tbaa !26, !noalias !318
   br label %bb.eu
@@ -1231,8 +1241,11 @@ bb.fm:                                            ; preds = %bb.ev
 
 .lr.ph.i186:                                      ; preds = %.preheader831.i
   %i.asy = getelementptr inbounds nuw i8, ptr %0, i64 646 ; 2 uses
+  %38 = getelementptr i8, ptr %0, i64 647
   %i.asz = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 2 uses
+  %39 = getelementptr i8, ptr %0, i64 649
   %i.ata = getelementptr inbounds nuw i8, ptr %0, i64 650 ; 2 uses
+  %40 = getelementptr i8, ptr %0, i64 651
   br label %bb.fy
 
 .preheader829.i:                                  ; preds = %bb.fm
@@ -1240,8 +1253,11 @@ bb.fm:                                            ; preds = %bb.ev
 
 .lr.ph837.i:                                      ; preds = %.preheader829.i
   %i.atb = getelementptr inbounds nuw i8, ptr %0, i64 646
+  %41 = getelementptr i8, ptr %0, i64 647
   %i.atc = getelementptr inbounds nuw i8, ptr %0, i64 648
+  %42 = getelementptr i8, ptr %0, i64 649
   %i.atd = getelementptr inbounds nuw i8, ptr %0, i64 650
+  %43 = getelementptr i8, ptr %0, i64 651
   %i.ate = getelementptr inbounds nuw i8, ptr %0, i64 656
   %i.atf = getelementptr inbounds nuw i8, ptr %0, i64 658
   %i.atg = getelementptr inbounds nuw i8, ptr %0, i64 660
@@ -1318,26 +1334,23 @@ bb.fo:                                            ; preds = %bb.fn
   br label %bb.fx
 
 bb.fp:                                            ; preds = %bb.fn
-  %i.avh = load i16, ptr %i.atb, align 2, !tbaa !52, !alias.scope !318 ; 2 uses
-  %26 = lshr i16 %i.avh, 8
-  %27 = trunc nuw i16 %26 to i8
-  store i8 %27, ptr %.24836.i, align 1, !tbaa !26, !noalias !318
-  %28 = trunc i16 %i.avh to i8
-  %i.avi = getelementptr inbounds nuw i8, ptr %.24836.i, i64 1
-  store i8 %28, ptr %i.avi, align 1, !tbaa !26, !noalias !318
-  %i.avj = load i16, ptr %i.atc, align 8, !tbaa !53, !alias.scope !318 ; 2 uses
-  %29 = lshr i16 %i.avj, 8
-  %i.avk = trunc nuw i16 %29 to i8
-  %i.avl = getelementptr inbounds nuw i8, ptr %.24836.i, i64 2
+  %44 = load i8, ptr %41, align 1, !tbaa !52, !alias.scope !318
+  store i8 %44, ptr %.24836.i, align 1, !tbaa !26, !noalias !318
+  %i.avh = load i16, ptr %i.atb, align 2, !tbaa !52, !alias.scope !318
+  %45 = trunc i16 %i.avh to i8
+  %46 = getelementptr inbounds nuw i8, ptr %.24836.i, i64 1
+  store i8 %45, ptr %46, align 1, !tbaa !26, !noalias !318
+  %47 = load i8, ptr %42, align 1, !tbaa !53, !alias.scope !318
+  %i.avi = getelementptr inbounds nuw i8, ptr %.24836.i, i64 2
+  store i8 %47, ptr %i.avi, align 1, !tbaa !26, !noalias !318
+  %i.avj = load i16, ptr %i.atc, align 8, !tbaa !53, !alias.scope !318
+  %i.avk = trunc i16 %i.avj to i8
+  %i.avl = getelementptr inbounds nuw i8, ptr %.24836.i, i64 3
   store i8 %i.avk, ptr %i.avl, align 1, !tbaa !26, !noalias !318
-  %30 = trunc i16 %i.avj to i8
-  %i.avm = getelementptr inbounds nuw i8, ptr %.24836.i, i64 3
-  store i8 %30, ptr %i.avm, align 1, !tbaa !26, !noalias !318
-  %i.avn = load i16, ptr %i.atd, align 2, !tbaa !54, !alias.scope !318 ; 2 uses
-  %31 = lshr i16 %i.avn, 8
-  %32 = trunc nuw i16 %31 to i8
-  %33 = getelementptr inbounds nuw i8, ptr %.24836.i, i64 4
-  store i8 %32, ptr %33, align 1, !tbaa !26, !noalias !318
+  %48 = load i8, ptr %43, align 1, !tbaa !54, !alias.scope !318
+  %i.avm = getelementptr inbounds nuw i8, ptr %.24836.i, i64 4
+  store i8 %48, ptr %i.avm, align 1, !tbaa !26, !noalias !318
+  %i.avn = load i16, ptr %i.atd, align 2, !tbaa !54, !alias.scope !318
   %i.avo = trunc i16 %i.avn to i8
   %i.avp = getelementptr inbounds nuw i8, ptr %.24836.i, i64 5
   store i8 %i.avo, ptr %i.avp, align 1, !tbaa !26, !noalias !318
@@ -1502,26 +1515,23 @@ bb.fy:                                            ; preds = %bb.gb, %.lr.ph.i186
   ]
 
 bb.fz:                                            ; preds = %bb.fy
-  %i.bab = load i16, ptr %i.asy, align 2, !tbaa !52, !alias.scope !318 ; 2 uses
-  %34 = lshr i16 %i.bab, 8
-  %35 = trunc nuw i16 %34 to i8
-  store i8 %35, ptr %.25834.i, align 1, !tbaa !26, !noalias !318
-  %36 = trunc i16 %i.bab to i8
-  %i.bac = getelementptr inbounds nuw i8, ptr %.25834.i, i64 1
-  store i8 %36, ptr %i.bac, align 1, !tbaa !26, !noalias !318
-  %i.bad = load i16, ptr %i.asz, align 8, !tbaa !53, !alias.scope !318 ; 2 uses
-  %37 = lshr i16 %i.bad, 8
-  %i.bae = trunc nuw i16 %37 to i8
-  %i.baf = getelementptr inbounds nuw i8, ptr %.25834.i, i64 2
+  %49 = load i8, ptr %38, align 1, !tbaa !52, !alias.scope !318
+  store i8 %49, ptr %.25834.i, align 1, !tbaa !26, !noalias !318
+  %i.bab = load i16, ptr %i.asy, align 2, !tbaa !52, !alias.scope !318
+  %50 = trunc i16 %i.bab to i8
+  %51 = getelementptr inbounds nuw i8, ptr %.25834.i, i64 1
+  store i8 %50, ptr %51, align 1, !tbaa !26, !noalias !318
+  %52 = load i8, ptr %39, align 1, !tbaa !53, !alias.scope !318
+  %i.bac = getelementptr inbounds nuw i8, ptr %.25834.i, i64 2
+  store i8 %52, ptr %i.bac, align 1, !tbaa !26, !noalias !318
+  %i.bad = load i16, ptr %i.asz, align 8, !tbaa !53, !alias.scope !318
+  %i.bae = trunc i16 %i.bad to i8
+  %i.baf = getelementptr inbounds nuw i8, ptr %.25834.i, i64 3
   store i8 %i.bae, ptr %i.baf, align 1, !tbaa !26, !noalias !318
-  %38 = trunc i16 %i.bad to i8
-  %i.bag = getelementptr inbounds nuw i8, ptr %.25834.i, i64 3
-  store i8 %38, ptr %i.bag, align 1, !tbaa !26, !noalias !318
-  %i.bah = load i16, ptr %i.ata, align 2, !tbaa !54, !alias.scope !318 ; 2 uses
-  %39 = lshr i16 %i.bah, 8
-  %40 = trunc nuw i16 %39 to i8
-  %41 = getelementptr inbounds nuw i8, ptr %.25834.i, i64 4
-  store i8 %40, ptr %41, align 1, !tbaa !26, !noalias !318
+  %53 = load i8, ptr %40, align 1, !tbaa !54, !alias.scope !318
+  %i.bag = getelementptr inbounds nuw i8, ptr %.25834.i, i64 4
+  store i8 %53, ptr %i.bag, align 1, !tbaa !26, !noalias !318
+  %i.bah = load i16, ptr %i.ata, align 2, !tbaa !54, !alias.scope !318
   %i.bai = trunc i16 %i.bah to i8
   %i.baj = getelementptr inbounds nuw i8, ptr %.25834.i, i64 5
   store i8 %i.bai, ptr %i.baj, align 1, !tbaa !26, !noalias !318
@@ -1669,11 +1679,10 @@ png_do_compose.exit.loopexit693.unr-lcssa:        ; preds = %bb.cy
   br i1 %i.bdo, label %bb.gf, label %png_do_compose.exit
 
 bb.gf:                                            ; preds = %.epil.preheader
-  %42 = load i16, ptr %i.yf, align 4, !tbaa !55, !alias.scope !318 ; 2 uses
-  %43 = lshr i16 %42, 8
-  %44 = trunc nuw i16 %43 to i8
-  store i8 %44, ptr %.13872.i.epil.init, align 1, !tbaa !26, !noalias !318
-  %i.bdp = trunc i16 %42 to i8
+  %54 = load i8, ptr %3, align 1, !tbaa !55, !alias.scope !318
+  store i8 %54, ptr %.13872.i.epil.init, align 1, !tbaa !26, !noalias !318
+  %55 = load i16, ptr %i.yf, align 4, !tbaa !55, !alias.scope !318
+  %i.bdp = trunc i16 %55 to i8
   store i8 %i.bdp, ptr %i.bdk, align 1, !tbaa !26, !noalias !318
   br label %png_do_compose.exit
 

@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %_ZN4cvc58internal12
   %i.dl = icmp eq i32 %i.dk, 2
   %i.dm = zext i1 %i.dl to i64
   %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %i.dm
-  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !33, !noalias !384 ; 11 uses
+  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !33, !noalias !384 ; 12 uses
   store ptr %i.do, ptr %68, align 8, !tbaa !32, !alias.scope !384
   %i.dp = load i64, ptr %i.do, align 8, !noalias !384 ; 3 uses
   %i.dq = lshr i64 %i.dp, 40
@@ -233,7 +233,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit187 unwind label %bb.al
 
 _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit187: ; preds = %bb.aa, %bb.z, %bb.ab
-  %i.eb = getelementptr inbounds nuw i8, ptr %i.do, i64 8 ; 2 uses
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.do, i64 8
   %i.ec = load i64, ptr %i.eb, align 8
   %i.ed = trunc i64 %i.ec to i32
   %i.ee = and i32 %i.ed, 1023                     ; 2 uses
@@ -245,12 +245,14 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit187: ; preds = %bb.aa, %bb.z, %bb
 bb.ac:                                            ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit187
   %i.ei = icmp eq i32 %i.eh, 2
   %spec.select.v.i.i = select i1 %i.ei, i64 32, i64 24 ; 2 uses
-  %117 = load i64, ptr %i.eb, align 8
-  %118 = lshr i64 %117, 29
-  %.idx = and i64 %118, 536870904
-  %119 = add nuw nsw i64 %.idx, 24                ; 2 uses
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.do, i64 %119
-  %.not556 = icmp samesign eq i64 %spec.select.v.i.i, %119
+  %117 = getelementptr inbounds nuw i8, ptr %i.do, i64 12
+  %118 = load i32, ptr %117, align 4
+  %119 = shl i32 %118, 3
+  %120 = and i32 %119, 536870904
+  %narrow = add nuw nsw i32 %120, 24
+  %121 = zext nneg i32 %narrow to i64             ; 2 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.do, i64 %121
+  %.not556 = icmp samesign eq i64 %spec.select.v.i.i, %121
   br i1 %.not556, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ac

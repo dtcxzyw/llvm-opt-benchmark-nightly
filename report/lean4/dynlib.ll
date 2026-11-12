@@ -202,11 +202,10 @@ define linkonce_odr hidden void @_ZN4lean17consume_io_resultEP11lean_object(ptr 
 bb.a:
   %1 = alloca %"class.lean::string_ref", align 8  ; 5 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %i.a = getelementptr i8, ptr %0, i64 4
-  %.val.i = load i32, ptr %i.a, align 4
-  %.mask.i.i = and i32 %.val.i, -16777216
-  %i.b = icmp eq i32 %.mask.i.i, 16777216
-  br i1 %i.b, label %bb.b, label %bb.l
+  %i.a = getelementptr i8, ptr %0, i64 7
+  %.val.i = load i8, ptr %i.a, align 1
+  %i.b = icmp eq i8 %.val.i, 1
+  br i1 %i.b, label %bb.b, label %3
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 8
@@ -290,7 +289,13 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   resume { ptr, i32 } %.pn15
 
-bb.l:                                             ; preds = %bb.a
+3:                                                ; preds = %bb.a
+  %4 = ptrtoint ptr %0 to i64
+  %5 = and i64 %4, 1
+  %.not.i.i12 = icmp eq i64 %5, 0
+  br i1 %.not.i.i12, label %bb.l, label %_ZN4lean3decEP11lean_object.exit
+
+bb.l:                                             ; preds = %3
   %i.r = load i32, ptr %0, align 4, !tbaa !21     ; 3 uses
   %i.s = icmp sgt i32 %i.r, 1
   br i1 %i.s, label %bb.m, label %bb.n, !prof !25
@@ -308,7 +313,7 @@ bb.o:                                             ; preds = %bb.n
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0)
   br label %_ZN4lean3decEP11lean_object.exit
 
-_ZN4lean3decEP11lean_object.exit:                 ; preds = %bb.m, %bb.n, %bb.o
+_ZN4lean3decEP11lean_object.exit:                 ; preds = %3, %bb.m, %bb.n, %bb.o
   ret void
 
 bb.p:                                             ; preds = %bb.h
