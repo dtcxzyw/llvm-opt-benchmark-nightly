@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %.critedge.critedge
   %i.q = load ptr, ptr %i.d, align 8, !tbaa !25   ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 28
   %i.s = load i32, ptr %i.r, align 4, !tbaa !35   ; 3 uses
-  %i.t = zext i32 %i.s to i64                     ; 4 uses
-  %i.u = call i64 @imaxabs(i64 noundef %i.n) #21  ; 7 uses
+  %i.t = zext i32 %i.s to i64                     ; 6 uses
+  %i.u = call i64 @imaxabs(i64 noundef %i.n) #21  ; 9 uses
   %.not217 = icmp sgt i64 %i.u, %i.t
   br i1 %.not217, label %bb.i, label %bb.g
 
@@ -226,7 +226,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.f
-  %i.aa = sub i64 %i.u, %i.t                      ; 10 uses
+  %i.aa = sub nuw i64 %i.u, %i.t                  ; 8 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 121
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !25
   %.not218 = icmp eq i8 %i.ac, 0
@@ -263,8 +263,8 @@ bb.m:                                             ; preds = %bb.l
   %i.aq = load ptr, ptr %1, align 8, !tbaa !25    ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 24 ; 3 uses
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !36 ; 4 uses
-  %2 = icmp sgt i64 %i.aa, 0
-  br i1 %2, label %.lr.ph, label %._crit_edge
+  %.not294 = icmp eq i64 %i.u, %i.t
+  br i1 %.not294, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
@@ -278,7 +278,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.az, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.aa, 9223372036854775804
+  %unroll_iter = and i64 %i.aa, -4
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.new
@@ -544,8 +544,8 @@ bb.w:                                             ; preds = %bb.w, %.epil.prehea
 bb.x:                                             ; preds = %bb.k
   %i.fg = load i64, ptr %i.a, align 8, !tbaa !24
   %i.fh = icmp slt i64 %i.fg, 0
-  %3 = icmp sgt i64 %i.aa, 0                      ; 2 uses
-  %or.cond275 = and i1 %i.fh, %3
+  %2 = icmp ne i64 %i.u, %i.t                     ; 2 uses
+  %or.cond275 = and i1 %i.fh, %2
   br i1 %or.cond275, label %.lr.ph266, label %.loopexit245
 
 .lr.ph266:                                        ; preds = %bb.x, %.lr.ph266
@@ -615,7 +615,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac, %.lr
 ._crit_edge272:                                   ; preds = %bb.ad, %.loopexit245
   %i.gg = load i64, ptr %i.a, align 8, !tbaa !24
   %i.gh = icmp sgt i64 %i.gg, 0
-  %or.cond276 = and i1 %i.gh, %3
+  %or.cond276 = and i1 %i.gh, %2
   br i1 %or.cond276, label %.lr.ph274, label %.loopexit
 
 .lr.ph274:                                        ; preds = %._crit_edge272, %.lr.ph274

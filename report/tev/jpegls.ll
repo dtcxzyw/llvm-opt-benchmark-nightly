@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -1414,7 +1414,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -1817,7 +1817,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -2220,7 +2220,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -2623,7 +2623,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b
@@ -3026,7 +3026,7 @@ bb.b:                                             ; preds = %bb.b, %_ZNSt3__110u
   %i.r = icmp eq i8 %i.q, -1
   %i.s = select i1 %i.r, i32 7, i32 8             ; 2 uses
   %.not.i = icmp slt i32 %.010.i, %i.s
-  %i.t = sub nsw i32 %.010.i, %i.s
+  %i.t = sub nuw nsw i32 %.010.i, %i.s
   br i1 %.not.i, label %_ZNK15DecoderStrategy13GetCurBytePosEv.exit, label %bb.b, !llvm.loop !4
 
 _ZNK15DecoderStrategy13GetCurBytePosEv.exit:      ; preds = %bb.b

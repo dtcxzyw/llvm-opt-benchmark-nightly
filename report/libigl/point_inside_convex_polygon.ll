@@ -31,8 +31,9 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   br i1 %.not.not.not.not.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %4 = urem i64 %indvars.iv.next, %i.d
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %4 = icmp eq i64 %indvars.iv.next, %i.d
+  %5 = select i1 %4, i64 0, i64 %indvars.iv.next
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #3
   %i.e = load ptr, ptr %0, align 8, !tbaa !17, !noalias !18 ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv ; 2 uses
@@ -42,7 +43,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load double, ptr %i.h, align 8, !tbaa !20
   store double %i.i, ptr %i.b, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #3
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %4 ; 2 uses
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %5 ; 2 uses
   %i.k = load double, ptr %i.j, align 8, !tbaa !20
   store double %i.k, ptr %3, align 16, !tbaa !20
   %i.l = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.d

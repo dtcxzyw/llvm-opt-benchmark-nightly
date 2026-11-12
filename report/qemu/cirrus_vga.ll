@@ -205,7 +205,7 @@ cirrus_src.exit.lr.ph:                            ; preds = %bb.a
   br i1 %i.f, label %cirrus_src.exit.preheader, label %._crit_edge49.split
 
 cirrus_src.exit.preheader:                        ; preds = %cirrus_src.exit.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -608,7 +608,7 @@ cirrus_src.exit.lr.ph:                            ; preds = %bb.a
   br i1 %i.f, label %cirrus_src.exit.preheader, label %._crit_edge49.split
 
 cirrus_src.exit.preheader:                        ; preds = %cirrus_src.exit.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -1011,7 +1011,7 @@ cirrus_src.exit.lr.ph:                            ; preds = %bb.a
   br i1 %i.f, label %cirrus_src.exit.preheader, label %._crit_edge49.split
 
 cirrus_src.exit.preheader:                        ; preds = %cirrus_src.exit.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -1414,7 +1414,7 @@ cirrus_src.exit.lr.ph:                            ; preds = %bb.a
   br i1 %i.f, label %cirrus_src.exit.preheader, label %._crit_edge40.split
 
 cirrus_src.exit.preheader:                        ; preds = %cirrus_src.exit.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -1817,7 +1817,7 @@ cirrus_src.exit.lr.ph:                            ; preds = %bb.a
   br i1 %i.f, label %cirrus_src.exit.preheader, label %._crit_edge40.split
 
 cirrus_src.exit.preheader:                        ; preds = %cirrus_src.exit.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -2078,7 +2078,7 @@ bb.a:
 .lr.ph41.split.us.preheader:                      ; preds = %.lr.ph41
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 70704
   %i.q = load i32, ptr %i.p, align 16
-  %i.r = sub i32 %5, %i.e
+  %i.r = sub nuw i32 %5, %i.e
   %.neg = add nuw nsw i32 %i.e, 1
   %xtraiter = and i32 %i.r, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -2481,7 +2481,7 @@ cirrus_src.exit.lr.ph:                            ; preds = %bb.a
   br i1 %i.f, label %cirrus_src.exit.preheader, label %._crit_edge40.split
 
 cirrus_src.exit.preheader:                        ; preds = %cirrus_src.exit.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -2884,7 +2884,7 @@ bb.a:
 .lr.ph41.split.us.preheader:                      ; preds = %.lr.ph41
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 70704
   %i.q = load i32, ptr %i.p, align 16
-  %i.r = sub i32 %5, %i.e
+  %i.r = sub nuw i32 %5, %i.e
   %.neg = add nuw nsw i32 %i.e, 1
   %xtraiter = and i32 %i.r, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -3287,7 +3287,7 @@ bb.a:
   br i1 %i.f, label %cirrus_src.exit.lr.ph.preheader, label %._crit_edge39.split
 
 cirrus_src.exit.lr.ph.preheader:                  ; preds = %.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -3690,7 +3690,7 @@ bb.a:
   br i1 %i.f, label %cirrus_src.exit.lr.ph.preheader, label %._crit_edge39.split
 
 cirrus_src.exit.lr.ph.preheader:                  ; preds = %.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -4093,7 +4093,7 @@ bb.a:
   br i1 %i.f, label %cirrus_src.exit.lr.ph.preheader, label %._crit_edge39.split
 
 cirrus_src.exit.lr.ph.preheader:                  ; preds = %.lr.ph
-  %i.i = sub i32 %5, %i.d
+  %i.i = sub nuw i32 %5, %i.d
   %.neg = add nuw nsw i32 %i.d, 1
   %xtraiter = and i32 %i.i, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0

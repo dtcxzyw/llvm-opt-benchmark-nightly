@@ -204,12 +204,11 @@ _ZNK6icu_7813UnicodeStringixEi.exit.i:            ; preds = %bb.g, %_ZNK6icu_781
   %indvars.iv.i = phi i64 [ 0, %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph.i ], [ %indvars.iv.next.i, %bb.g ] ; 2 uses
   %.01016.i = phi i8 [ 0, %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph.i ], [ %spec.select.i, %bb.g ] ; 2 uses
   %i.u = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %indvars.iv.i
-  %i.v = load i16, ptr %i.u, align 2, !tbaa !78
-  %.fr.i = freeze i16 %i.v                        ; 3 uses
-  %i.w = icmp eq i16 %.fr.i, 39
+  %i.v = load i16, ptr %i.u, align 2, !tbaa !78   ; 3 uses
+  %i.w = icmp eq i16 %i.v, 39
   %i.x = zext i1 %i.w to i8                       ; 2 uses
   %spec.select.i = xor i8 %.01016.i, %i.x
-  %i.y = icmp eq i16 %.fr.i, 24180
+  %i.y = icmp eq i16 %i.v, 24180
   br i1 %i.y, label %bb.c, label %.thread.i
 
 bb.c:                                             ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit.i
@@ -222,7 +221,7 @@ bb.c:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %.not.i, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %.thread.i
-  switch i16 %.fr.i, label %bb.g [
+  switch i16 %i.v, label %bb.g [
     i16 109, label %bb.e
     i16 115, label %bb.f
   ]
@@ -625,12 +624,11 @@ _ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %_ZNK6icu_7813Unicod
   %indvars.iv = phi i64 [ 0, %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 2 uses
   %.01016 = phi i8 [ 0, %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph ], [ %spec.select, %bb.f ] ; 2 uses
   %i.r = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %indvars.iv
-  %i.s = load i16, ptr %i.r, align 2, !tbaa !78
-  %.fr = freeze i16 %i.s                          ; 3 uses
-  %i.t = icmp eq i16 %.fr, 39
+  %i.s = load i16, ptr %i.r, align 2, !tbaa !78   ; 3 uses
+  %i.t = icmp eq i16 %i.s, 39
   %i.u = zext i1 %i.t to i8                       ; 2 uses
   %spec.select = xor i8 %.01016, %i.u
-  %i.v = icmp eq i16 %.fr, 24180
+  %i.v = icmp eq i16 %i.s, 24180
   br i1 %i.v, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit
@@ -642,7 +640,7 @@ bb.b:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %.not, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %.thread
-  switch i16 %.fr, label %bb.f [
+  switch i16 %i.s, label %bb.f [
     i16 109, label %bb.d
     i16 115, label %bb.e
   ]
@@ -1045,26 +1043,25 @@ _ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %_ZNK6icu_7813Unicod
   %i.z = load ptr, ptr %i.q, align 8
   %i.aa = select i1 %.not.i.i.i, ptr %i.z, ptr %i.p
   %i.ab = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %indvars.iv
-  %i.ac = load i16, ptr %i.ab, align 2, !tbaa !78
-  %.fr = freeze i16 %i.ac                         ; 8 uses
+  %i.ac = load i16, ptr %i.ab, align 2, !tbaa !78 ; 8 uses
   %.not32 = icmp eq i8 %.02867, 0
   br i1 %.not32, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit
-  %i.ad = icmp ne i16 %.fr, 39
+  %i.ad = icmp ne i16 %i.ac, 39
   %i.ae = zext i1 %i.ad to i8
   br label %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread
 
 bb.d:                                             ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit
-  %i.af = icmp eq i16 %.fr, 39
+  %i.af = icmp eq i16 %i.ac, 39
   br i1 %i.af, label %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ag = icmp ult i16 %.fr, 128
+  %i.ag = icmp ult i16 %i.ac, 128
   br i1 %i.ag, label %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit, label %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread
 
 _ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit: ; preds = %bb.e
-  %i.ah = zext nneg i16 %.fr to i64
+  %i.ah = zext nneg i16 %i.ac to i64
   %i.ai = getelementptr inbounds nuw i8, ptr @_ZZN6icu_7816SimpleDateFormat12isSyntaxCharEDsE17mapCharToIsSyntax, i64 %i.ah
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !50
   %.not33 = icmp eq i8 %i.aj, 0
@@ -1077,7 +1074,7 @@ bb.f:                                             ; preds = %_ZN6icu_7816SimpleD
   %i.an = sext i16 %i.am to i32
   %i.ao = load i32, ptr %i.s, align 4
   %i.ap = select i1 %i.al, i32 %i.ao, i32 %i.an
-  %i.aq = call noundef i32 @_ZNK6icu_7813UnicodeString9doIndexOfEDsii(ptr noundef nonnull align 8 dereferenceable(64) %2, i16 noundef zeroext %.fr, i32 noundef 0, i32 noundef %i.ap) ; 3 uses
+  %i.aq = call noundef i32 @_ZNK6icu_7813UnicodeString9doIndexOfEDsii(ptr noundef nonnull align 8 dereferenceable(64) %2, i16 noundef zeroext %i.ac, i32 noundef 0, i32 noundef %i.ap) ; 3 uses
   %.not34 = icmp eq i32 %i.aq, -1
   br i1 %.not34, label %._crit_edge.thread.sink.split, label %bb.g
 
@@ -1101,9 +1098,9 @@ bb.h:                                             ; preds = %bb.g
   %i.bd = load i16, ptr %i.bc, align 2, !tbaa !78
   br label %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread
 
-_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread: ; preds = %bb.c, %bb.g, %bb.h, %bb.e, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit, %bb.d
-  %.129.shrunk = phi i8 [ 0, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit ], [ 1, %bb.d ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.e ], [ %i.ae, %bb.c ] ; 2 uses
-  %.1 = phi i16 [ %.fr, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit ], [ 39, %bb.d ], [ -1, %bb.g ], [ %i.bd, %bb.h ], [ %.fr, %bb.e ], [ %.fr, %bb.c ]
+_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread: ; preds = %bb.g, %bb.h, %bb.e, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit, %bb.d, %bb.c
+  %.129.shrunk = phi i8 [ 0, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit ], [ 1, %bb.d ], [ %i.ae, %bb.c ], [ 0, %bb.e ], [ 0, %bb.h ], [ 0, %bb.g ] ; 2 uses
+  %.1 = phi i16 [ %i.ac, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit ], [ 39, %bb.d ], [ %i.ac, %bb.c ], [ %i.ac, %bb.e ], [ %i.bd, %bb.h ], [ -1, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i16 %.1, ptr %i.a, align 2, !tbaa !78
   %i.be = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.a, i32 noundef 0, i32 noundef 1) ; 0 uses
@@ -1236,12 +1233,11 @@ _ZNK6icu_7813UnicodeStringixEi.exit.i:            ; preds = %bb.f, %_ZNK6icu_781
   %indvars.iv.i = phi i64 [ 0, %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 2 uses
   %.01016.i = phi i8 [ 0, %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph.i ], [ %spec.select.i, %bb.f ] ; 2 uses
   %i.u = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %indvars.iv.i
-  %i.v = load i16, ptr %i.u, align 2, !tbaa !78
-  %.fr.i = freeze i16 %i.v                        ; 3 uses
-  %i.w = icmp eq i16 %.fr.i, 39
+  %i.v = load i16, ptr %i.u, align 2, !tbaa !78   ; 3 uses
+  %i.w = icmp eq i16 %i.v, 39
   %i.x = zext i1 %i.w to i8                       ; 2 uses
   %spec.select.i = xor i8 %.01016.i, %i.x
-  %i.y = icmp eq i16 %.fr.i, 24180
+  %i.y = icmp eq i16 %i.v, 24180
   br i1 %i.y, label %bb.b, label %.thread.i
 
 bb.b:                                             ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit.i
@@ -1253,7 +1249,7 @@ bb.b:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %.not.i, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %.thread.i
-  switch i16 %.fr.i, label %bb.f [
+  switch i16 %i.v, label %bb.f [
     i16 109, label %bb.d
     i16 115, label %bb.e
   ]

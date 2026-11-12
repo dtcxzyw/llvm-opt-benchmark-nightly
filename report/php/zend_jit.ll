@@ -205,7 +205,7 @@ zend_string_equals_cstr.exit2586:                 ; preds = %bb.ex
   br label %zend_jit_var_may_alias.exit2550
 
 zend_jit_var_may_alias.exit2550:                  ; preds = %zend_string_equals_cstr.exit2586, %bb.ex, %bb.ev, %bb.ew
-  %.0.i2545 = phi i8 [ 4, %bb.ev ], [ %i.ajm, %zend_string_equals_cstr.exit2586 ], [ 0, %bb.ex ], [ 4, %bb.ew ] ; 2 uses
+  %.0.i2545 = phi i8 [ 4, %bb.ev ], [ 4, %bb.ew ], [ %i.ajm, %zend_string_equals_cstr.exit2586 ], [ 0, %bb.ex ] ; 2 uses
   %i.ajn = getelementptr inbounds nuw [48 x i8], ptr %.0.i2414, i64 %indvars.iv344
   %i.ajo = getelementptr inbounds nuw i8, ptr %i.ajn, i64 40 ; 2 uses
   %i.ajp = load i8, ptr %i.ajo, align 8
@@ -608,7 +608,7 @@ zend_string_equals_cstr.exit2622:                 ; preds = %bb.aav
   br label %zend_jit_var_may_alias.exit
 
 zend_jit_var_may_alias.exit:                      ; preds = %zend_string_equals_cstr.exit2622, %bb.aav, %bb.aat, %bb.aau
-  %.0.i2465 = phi i8 [ 4, %bb.aat ], [ %i.ebu, %zend_string_equals_cstr.exit2622 ], [ 0, %bb.aav ], [ 4, %bb.aau ] ; 2 uses
+  %.0.i2465 = phi i8 [ 4, %bb.aat ], [ 4, %bb.aau ], [ %i.ebu, %zend_string_equals_cstr.exit2622 ], [ 0, %bb.aav ] ; 2 uses
   %i.ebv = getelementptr inbounds nuw i8, ptr %i.dyk, i64 40 ; 2 uses
   %i.ebw = load i8, ptr %i.ebv, align 8
   %i.ebx = and i8 %i.ebw, -13

@@ -205,30 +205,29 @@ bb.c:                                             ; preds = %bb.i, %bb.b
   %i.dv = add i64 %.049.i, %i.dt
   %.idx.i.i.i.i.i = mul nuw nsw i64 %.049.i, 48
   %i.dw = getelementptr inbounds nuw i8, ptr %9, i64 %.idx.i.i.i.i.i
-  %i.dx = sub nuw nsw i64 6, %.049.i              ; 4 uses
+  %i.dx = sub nuw nsw i64 6, %.049.i              ; 3 uses
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %.049.i ; 9 uses
-  %10 = and i64 %i.dx, 4                          ; 2 uses
   %i.dz = and i64 %i.dx, 6                        ; 4 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %.049.i, 5
   br i1 %.not.i.i.i.i.i.i, label %.thread.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %.cmp.i = icmp samesign ult i64 %.049.i, 3
   %i.ea = load <2 x double>, ptr %i.dy, align 8, !tbaa !20
   %i.eb = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ea) ; 2 uses
-  %11 = icmp samesign ult i64 %.049.i, 3
-  br i1 %11, label %._crit_edge.i.i.i.i.i.i, label %bb.f
+  br i1 %.cmp.i, label %._crit_edge.i.i.i.i.i.i, label %bb.f
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.d
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dy, i64 16
   %i.ed = load <2 x double>, ptr %i.ec, align 8, !tbaa !20
   %i.ee = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ed)
   %i.ef = fadd <2 x double> %i.eb, %i.ee          ; 2 uses
-  %i.eg = icmp samesign ugt i64 %i.dz, %10
+  %i.eg = icmp samesign ugt i64 %i.dz, 4
   br i1 %i.eg, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i.i.i.i
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %10
-  %i.eh = load <2 x double>, ptr %12, align 8, !tbaa !20
+  %10 = getelementptr inbounds nuw i8, ptr %i.dy, i64 32
+  %i.eh = load <2 x double>, ptr %10, align 8, !tbaa !20
   %i.ei = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.eh)
   %i.ej = fadd <2 x double> %i.ef, %i.ei
   br label %bb.f

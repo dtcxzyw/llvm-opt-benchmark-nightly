@@ -205,7 +205,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBA
   store ptr %i.asj, ptr %i.arz, align 8
   br label %_ZN2v88internal4wasm14FastZoneVectorINS1_9ValueBaseINS1_7Decoder15NoValidationTagEEEE3popEj.exit836.i
 
-_ZN2v88internal4wasm14FastZoneVectorINS1_9ValueBaseINS1_7Decoder15NoValidationTagEEEE3popEj.exit836.i: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE20EnsureStackArgumentsEi.exit.i.i, %.lr.ph.preheader.i834.i
+_ZN2v88internal4wasm14FastZoneVectorINS1_9ValueBaseINS1_7Decoder15NoValidationTagEEEE3popEj.exit836.i: ; preds = %.lr.ph.preheader.i834.i, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE20EnsureStackArgumentsEi.exit.i.i
   %i.ask = phi ptr [ %i.asi, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE20EnsureStackArgumentsEi.exit.i.i ], [ %i.asj, %.lr.ph.preheader.i834.i ]
   %i.asl = icmp ult i32 %.sroa.04.0.extract.trunc.i.i821.i, 1048576
   br i1 %i.asl, label %_ZNK2v88internal4wasm19ArrayIndexImmediate9heap_typeEv.exit840.i, label %bb.gh, !prof !963

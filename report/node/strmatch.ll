@@ -202,14 +202,14 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %_ZNK6icu_7813Unicod
   %i.aj = select i1 %.not.i.i.i, ptr %i.ai, ptr %i.ab
   %i.ak = getelementptr inbounds nuw [2 x i8], ptr %i.aj, i64 %indvars.iv
   %i.al = load i16, ptr %i.ak, align 2
-  %5 = zext i16 %i.al to i32                      ; 2 uses
-  %6 = load ptr, ptr %i.ad, align 8
-  %i.am = call noundef ptr @_ZNK6icu_7823TransliterationRuleData13lookupMatcherEi(ptr noundef nonnull align 8 dereferenceable(1168) %6, i32 noundef %5) #7 ; 3 uses
+  %5 = load ptr, ptr %i.ad, align 8
+  %6 = zext i16 %i.al to i32                      ; 2 uses
+  %i.am = call noundef ptr @_ZNK6icu_7823TransliterationRuleData13lookupMatcherEi(ptr noundef nonnull align 8 dereferenceable(1168) %5, i32 noundef %6) #7 ; 3 uses
   %i.an = icmp eq ptr %i.am, null
   br i1 %i.an, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
-  call void @_ZN6icu_7811ICU_Utility12appendToRuleERNS_13UnicodeStringEiaaS2_(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %5, i8 noundef signext 0, i8 noundef signext %2, ptr noundef nonnull align 8 dereferenceable(64) %4) #7
+  call void @_ZN6icu_7811ICU_Utility12appendToRuleERNS_13UnicodeStringEiaaS2_(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %6, i8 noundef signext 0, i8 noundef signext %2, ptr noundef nonnull align 8 dereferenceable(64) %4) #7
   br label %bb.i
 
 bb.h:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit

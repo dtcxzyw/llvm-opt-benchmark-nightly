@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.i, %bb.b
-  %.049.i = phi i64 [ 0, %bb.b ], [ %i.im, %bb.i ] ; 14 uses
+  %.049.i = phi i64 [ 0, %bb.b ], [ %i.im, %bb.i ] ; 15 uses
   %i.ey = phi double [ 0.000000e+00, %bb.b ], [ %i.il, %bb.i ] ; 2 uses
   %i.ez = add nsw i64 %.049.i, -1                 ; 2 uses
   %i.fa = add nsw i64 %.049.i, -2
@@ -215,9 +215,10 @@ bb.c:                                             ; preds = %bb.i, %bb.b
   %i.fe = add i64 %.049.i, %i.fc
   %.idx.i.i.i.i.i = mul nuw nsw i64 %.049.i, 56
   %i.ff = getelementptr inbounds nuw i8, ptr %9, i64 %.idx.i.i.i.i.i
-  %i.fg = sub nuw nsw i64 7, %.049.i              ; 4 uses
+  %i.fg = sub nuw nsw i64 7, %.049.i              ; 3 uses
   %i.fh = getelementptr inbounds nuw [8 x i8], ptr %i.ff, i64 %.049.i ; 9 uses
-  %i.fi = and i64 %i.fg, 4                        ; 2 uses
+  %i.fi = and i64 %.049.i, 4
+  %10 = xor i64 %i.fi, 4                          ; 2 uses
   %i.fj = and i64 %i.fg, 6                        ; 4 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %.049.i, 6
   br i1 %.not.i.i.i.i.i.i, label %.thread.i, label %bb.d
@@ -233,11 +234,11 @@ bb.d:                                             ; preds = %bb.c
   %i.fo = load <2 x double>, ptr %i.fn, align 8, !tbaa !20
   %i.fp = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.fo)
   %i.fq = fadd <2 x double> %i.fl, %i.fp          ; 2 uses
-  %i.fr = icmp samesign ugt i64 %i.fj, %i.fi
+  %i.fr = icmp samesign ugt i64 %i.fj, %10
   br i1 %i.fr, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i.i.i.i
-  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fh, i64 %i.fi
+  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fh, i64 %10
   %i.ft = load <2 x double>, ptr %i.fs, align 8, !tbaa !20
   %i.fu = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ft)
   %i.fv = fadd <2 x double> %i.fq, %i.fu

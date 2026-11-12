@@ -202,7 +202,7 @@ bb.r:                                             ; preds = %.lr.ph
 .lr.ph13:                                         ; preds = %.lr.ph13, %.preheader.i.preheader
   %.sroa.010.0.i12 = phi i64 [ %i.bu, %.lr.ph13 ], [ 0, %.preheader.i.preheader ]
   %i.bt = tail call zeroext i1 @_RNvXsb_NtCshzWfHUSfYae_4core3fmtNtB5_9FormatterNtB5_5Write10write_char(ptr align 8 %1, i32 %i.bm) ; 2 uses
-  %i.bu = add nuw i64 %.sroa.010.0.i12, 1         ; 2 uses
+  %i.bu = add nuw nsw i64 %.sroa.010.0.i12, 1     ; 2 uses
   %exitcond30.not.not.i.not = icmp eq i64 %i.bu, %.sroa.4.0.i
   %or.cond = select i1 %i.bt, i1 true, i1 %exitcond30.not.not.i.not
   br i1 %or.cond, label %_RINvNtCs9dV2ZPf2jOH_6semver7display3padNCNvXB2_NtB4_7VersionNtNtCshzWfHUSfYae_4core3fmt7Display3fmt0NCBD_s_0EB4_.exit, label %.lr.ph13
