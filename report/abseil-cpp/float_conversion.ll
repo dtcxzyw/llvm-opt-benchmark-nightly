@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph.i54.i
   %i.ko = load ptr, ptr %i.ju, align 8, !tbaa !62
   call void %i.kn(ptr noundef %i.ko, i64 %i.km, ptr nonnull %i.kg), !inline_history !131
   store ptr %i.kg, ptr %i.ka, align 8, !tbaa !60
-  %i.kp = icmp ugt i64 %i.kj, 1024
+  %i.kp = icmp samesign ugt i64 %i.kj, 1024
   br i1 %i.kp, label %.peel.next.i58.i.i.i.i, label %._crit_edge.i51.i.i.i.i
 
 .peel.next.i58.i.i.i.i:                           ; preds = %bb.aa, %.peel.next.i58.i.i.i.i
@@ -608,7 +608,7 @@ bb.at:                                            ; preds = %bb.as, %.lr.ph.i187
   %i.qd = load ptr, ptr %i.pj, align 8, !tbaa !62
   call void %i.qc(ptr noundef %i.qd, i64 %i.qb, ptr nonnull %i.pv), !inline_history !155
   store ptr %i.pv, ptr %i.pp, align 8, !tbaa !60
-  %i.qe = icmp ugt i64 %i.py, 1024
+  %i.qe = icmp samesign ugt i64 %i.py, 1024
   br i1 %i.qe, label %.peel.next.i191.i.i.i.i, label %._crit_edge.i184.i.i.i.i
 
 .peel.next.i191.i.i.i.i:                          ; preds = %bb.at, %.peel.next.i191.i.i.i.i
@@ -1011,7 +1011,7 @@ bb.am:                                            ; preds = %bb.al, %.lr.ph.i237
   %i.sz = load ptr, ptr %i.sf, align 8, !tbaa !62
   call void %i.sy(ptr noundef %i.sz, i64 %i.sx, ptr nonnull %i.sr), !inline_history !171
   store ptr %i.sr, ptr %i.sl, align 8, !tbaa !60
-  %i.ta = icmp ugt i64 %i.su, 1024
+  %i.ta = icmp samesign ugt i64 %i.su, 1024
   br i1 %i.ta, label %.peel.next.i241.i.i.i.i, label %._crit_edge.i234.i.i.i.i
 
 .peel.next.i241.i.i.i.i:                          ; preds = %bb.am, %.peel.next.i241.i.i.i.i

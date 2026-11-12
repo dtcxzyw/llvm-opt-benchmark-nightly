@@ -205,7 +205,7 @@ bb.ia:                                            ; preds = %bb.hy
   br label %bb.il, !dbg !30550
 
 bb.ib:                                            ; preds = %bb.hw
-  %i.boo = icmp ugt i64 %.sroa.0107.0, 38, !dbg !30556
+  %i.boo = icmp samesign ugt i64 %.sroa.0107.0, 38, !dbg !30556
   br i1 %i.boo, label %bb.id, label %bb.ie, !dbg !30556
 
 bb.ic:                                            ; preds = %bb.hw, %bb.if

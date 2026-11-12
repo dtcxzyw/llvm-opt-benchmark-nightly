@@ -161,14 +161,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.at, label %.lr.ph88.preheader, label %._crit_edge89
 
 .lr.ph88.preheader:                               ; preds = %.lr.ph92
-  %i.au = sub nsw i64 %0, %.17290                 ; 3 uses
+  %i.au = sub nuw nsw i64 %0, %.17290             ; 3 uses
   %min.iters.check122 = icmp ugt i64 %i.au, 7
   %or.cond153 = and i1 %min.iters.check122, %ident.check120.not
   br i1 %or.cond153, label %vector.ph123, label %.lr.ph88.preheader155
 
 vector.ph123:                                     ; preds = %.lr.ph88.preheader
-  %n.vec124 = and i64 %i.au, -8                   ; 3 uses
-  %i.av = add i64 %.17290, %n.vec124
+  %n.vec124 = and i64 %i.au, 9223372036854775800  ; 3 uses
+  %i.av = add nuw i64 %.17290, %n.vec124
   br label %vector.body125
 
 vector.body125:                                   ; preds = %vector.body125, %vector.ph123

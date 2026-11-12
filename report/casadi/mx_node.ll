@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
   tail call void @_ZdlPvm(ptr noundef nonnull %i.k, i64 noundef 48) #33
   br label %_ZNSt8_Rb_treeIPKN6casadi6MXNodeESt4pairIKS3_xESt10_Select1stIS6_ESt4lessIS3_ESaIS6_EE22_M_emplace_hint_uniqueIJS4_IS3_iEEEESt17_Rb_tree_iteratorIS6_ESt23_Rb_tree_const_iteratorIS6_EDpOT_.exit.split
 
-_ZNSt8_Rb_treeIPKN6casadi6MXNodeESt4pairIKS3_xESt10_Select1stIS6_ESt4lessIS3_ESaIS6_EE22_M_emplace_hint_uniqueIJS4_IS3_iEEEESt17_Rb_tree_iteratorIS6_ESt23_Rb_tree_const_iteratorIS6_EDpOT_.exit.split: ; preds = %bb.e, %.thread.i
+_ZNSt8_Rb_treeIPKN6casadi6MXNodeESt4pairIKS3_xESt10_Select1stIS6_ESt4lessIS3_ESaIS6_EE22_M_emplace_hint_uniqueIJS4_IS3_iEEEESt17_Rb_tree_iteratorIS6_ESt23_Rb_tree_const_iteratorIS6_EDpOT_.exit.split: ; preds = %.thread.i, %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !50

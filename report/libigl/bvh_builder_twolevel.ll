@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not88, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.noexc35
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses
@@ -608,7 +608,7 @@ bb.n:                                             ; preds = %.lr.ph104, %bb.r
   br i1 %.not86, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses
@@ -1011,7 +1011,7 @@ bb.n:                                             ; preds = %.lr.ph104, %bb.r
   br i1 %.not86, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses
@@ -1414,7 +1414,7 @@ bb.n:                                             ; preds = %.lr.ph104, %bb.r
   br i1 %.not86, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses
@@ -1817,7 +1817,7 @@ bb.n:                                             ; preds = %.lr.ph104, %bb.r
   br i1 %.not86, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses
@@ -2220,7 +2220,7 @@ bb.n:                                             ; preds = %.lr.ph104, %bb.r
   br i1 %.not86, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses
@@ -2623,7 +2623,7 @@ bb.n:                                             ; preds = %.lr.ph104, %bb.r
   br i1 %.not86, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ho = sub nsw i64 %i.hl, %i.hk
+  %i.ho = sub nuw nsw i64 %i.hl, %i.hk
   %i.hp = add i64 %i.ho, %i.hb                    ; 2 uses
   store i64 %i.hp, ptr %i.c, align 8
   %i.hq = add i64 %i.ha, 1                        ; 2 uses

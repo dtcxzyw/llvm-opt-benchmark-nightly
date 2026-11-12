@@ -204,12 +204,12 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   br label %.loopexit.split-lp
 
 bb.m:                                             ; preds = %_ZN6icu_7812FormatParser14isQuoteLiteralERKNS_13UnicodeStringE.exit
+  %8 = load ptr, ptr %i.d, align 8, !tbaa !47
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.bg = icmp sgt i32 %i.ar, 0
   br i1 %i.bg, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.lr.ph.i, label %_ZNK6icu_7812FormatParser18isPatternSeparatorERKNS_13UnicodeStringE.exit
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.lr.ph.i: ; preds = %bb.m
-  %8 = load ptr, ptr %i.d, align 8, !tbaa !47
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %wide.trip.count.i = zext nneg i32 %i.ar to i64
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i
 
@@ -585,6 +585,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit24.thread: ; preds = %.lr.ph, %_ZNK6icu_
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef signext range(i8 0, 2) i8 @_ZNK6icu_7812FormatParser18isPatternSeparatorERKNS_13UnicodeStringE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(3216) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %1) local_unnamed_addr #11 align 2 {
 bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !32   ; 3 uses
   %i.c = icmp slt i16 %i.b, 0
@@ -603,7 +604,6 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit.lr.ph:   ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = select i1 %.not.i.i.i, ptr %i.m, ptr %i.k
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %wide.trip.count = zext nneg i32 %i.h to i64
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit
 
@@ -1006,12 +1006,12 @@ bb.k:                                             ; preds = %bb.i, %bb.h
   br label %.loopexit.split-lp.loopexit.split-lp
 
 bb.l:                                             ; preds = %_ZN6icu_7812FormatParser14isQuoteLiteralERKNS_13UnicodeStringE.exit
+  %9 = load ptr, ptr %i.f, align 8, !tbaa !47
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.bv = icmp sgt i32 %i.bg, 0
   br i1 %i.bv, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.lr.ph.i, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.invoke
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.lr.ph.i: ; preds = %bb.l
-  %9 = load ptr, ptr %i.f, align 8, !tbaa !47
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %wide.trip.count.i = zext nneg i32 %i.bg to i64 ; 2 uses
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i
 

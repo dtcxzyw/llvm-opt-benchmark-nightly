@@ -202,9 +202,9 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %_ZNK6icu_7813Unicod
   %i.aj = select i1 %.not.i.i.i, ptr %i.ai, ptr %i.ab
   %i.ak = getelementptr inbounds nuw [2 x i8], ptr %i.aj, i64 %indvars.iv
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !28
-  %5 = zext i16 %i.al to i32                      ; 2 uses
-  %6 = load ptr, ptr %i.ad, align 8, !tbaa !21
-  %i.am = invoke noundef ptr @_ZNK6icu_7823TransliterationRuleData13lookupMatcherEi(ptr noundef nonnull align 8 dereferenceable(1168) %6, i32 noundef %5)
+  %5 = load ptr, ptr %i.ad, align 8, !tbaa !21
+  %6 = zext i16 %i.al to i32                      ; 2 uses
+  %i.am = invoke noundef ptr @_ZNK6icu_7823TransliterationRuleData13lookupMatcherEi(ptr noundef nonnull align 8 dereferenceable(1168) %5, i32 noundef %6)
           to label %bb.h unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.h:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
@@ -212,7 +212,7 @@ bb.h:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %i.an, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  invoke void @_ZN6icu_7811ICU_Utility12appendToRuleERNS_13UnicodeStringEiaaS2_(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %5, i8 noundef signext 0, i8 noundef signext %2, ptr noundef nonnull align 8 dereferenceable(64) %4)
+  invoke void @_ZN6icu_7811ICU_Utility12appendToRuleERNS_13UnicodeStringEiaaS2_(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %6, i8 noundef signext 0, i8 noundef signext %2, ptr noundef nonnull align 8 dereferenceable(64) %4)
           to label %bb.l unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.k, %bb.j, %bb.i, %_ZNK6icu_7813UnicodeString6charAtEi.exit, %bb.m, %bb.f, %bb.n

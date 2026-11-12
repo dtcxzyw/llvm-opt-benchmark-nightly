@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %vec.epilog.scalar.p
   br i1 %i.es, label %bb.c, label %iter.check71, !llvm.loop !810
 
 iter.check71:                                     ; preds = %bb.c
-  %i.et = sub i64 %i.er, %i.g                     ; 7 uses
+  %i.et = sub nuw i64 %i.er, %i.g                 ; 7 uses
   %i.eu = and i64 %i.q, -2                        ; 2 uses
   %i.ev = add i64 %i.eu, %i.i
   %i.ew = add i64 %i.ev, -4
@@ -522,7 +522,7 @@ bb.d:                                             ; preds = %scalar.ph, %bb.d
   br i1 %i.ax, label %bb.d, label %bb.e, !llvm.loop !830
 
 bb.e:                                             ; preds = %bb.d
-  %i.ay = sub i64 %i.aw, %i.g                     ; 5 uses
+  %i.ay = sub nuw i64 %i.aw, %i.g                 ; 5 uses
   %i.az = and i64 %i.r, -4                        ; 2 uses
   %i.ba = zext nneg i32 %.v.v.i to i64            ; 5 uses
   %i.bb = add i64 %i.az, %i.i
@@ -724,7 +724,7 @@ bb.d:                                             ; preds = %scalar.ph, %bb.d
   br i1 %i.ax, label %bb.d, label %bb.e, !llvm.loop !848
 
 bb.e:                                             ; preds = %bb.d
-  %i.ay = sub i64 %i.aw, %i.g                     ; 5 uses
+  %i.ay = sub nuw i64 %i.aw, %i.g                 ; 5 uses
   %i.az = and i64 %i.r, -8                        ; 2 uses
   %i.ba = zext nneg i32 %.v.v.i to i64            ; 5 uses
   %i.bb = add i64 %i.az, %i.i

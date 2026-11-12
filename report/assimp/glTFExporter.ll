@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.aq, label %.lr.ph71.preheader, label %._crit_edge
 
 .lr.ph71.preheader:                               ; preds = %bb.f
-  %i.ar = sub nsw i64 %i.af, %.04969
+  %i.ar = sub nuw nsw i64 %i.af, %.04969
   %.neg = add nuw i64 %.04969, 1
   %xtraiter = and i64 %i.ar, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -337,7 +337,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.da, label %.lr.ph71.1.preheader, label %._crit_edge.1
 
 .lr.ph71.1.preheader:                             ; preds = %bb.k
-  %i.db = sub nsw i64 %i.cm, %.04969.1
+  %i.db = sub nuw nsw i64 %i.cm, %.04969.1
   %.neg146 = add nuw i64 %.04969.1, 1
   %xtraiter139 = and i64 %i.db, 1
   %lcmp.mod140.not = icmp eq i64 %xtraiter139, 0
@@ -460,7 +460,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.fh, label %.lr.ph71.2.preheader, label %._crit_edge.2
 
 .lr.ph71.2.preheader:                             ; preds = %bb.p
-  %i.fi = sub nsw i64 %i.et, %.04969.2
+  %i.fi = sub nuw nsw i64 %i.et, %.04969.2
   %.neg147 = add nuw i64 %.04969.2, 1
   %xtraiter144 = and i64 %i.fi, 1
   %lcmp.mod145.not = icmp eq i64 %xtraiter144, 0
@@ -863,7 +863,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ca, label %.lr.ph156.preheader, label %._crit_edge
 
 .lr.ph156.preheader:                              ; preds = %bb.l
-  %i.cb = sub nsw i64 %i.bp, %.086154
+  %i.cb = sub nuw nsw i64 %i.bp, %.086154
   %.neg = add nuw i64 %.086154, 1
   %xtraiter = and i64 %i.cb, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1004,7 +1004,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.es, label %.lr.ph156.1.preheader, label %._crit_edge.1
 
 .lr.ph156.1.preheader:                            ; preds = %bb.q
-  %i.et = sub nsw i64 %i.ee, %.086154.1
+  %i.et = sub nuw nsw i64 %i.ee, %.086154.1
   %.neg338 = add nuw i64 %.086154.1, 1
   %xtraiter331 = and i64 %i.et, 1
   %lcmp.mod332.not = icmp eq i64 %xtraiter331, 0
@@ -1136,7 +1136,7 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.hh, label %.lr.ph156.2.preheader, label %._crit_edge.2
 
 .lr.ph156.2.preheader:                            ; preds = %bb.v
-  %i.hi = sub nsw i64 %i.gt, %.086154.2
+  %i.hi = sub nuw nsw i64 %i.gt, %.086154.2
   %.neg339 = add nuw i64 %.086154.2, 1
   %xtraiter336 = and i64 %i.hi, 1
   %lcmp.mod337.not = icmp eq i64 %xtraiter336, 0

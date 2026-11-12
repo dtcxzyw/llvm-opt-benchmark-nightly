@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge.i, %.pr
 .lr.ph.i.preheader:                               ; preds = %bb.g
   %i.aw = add i64 %spec.select.i, 1
   %i.ax = sub i64 %i.aw, %spec.store.select.i
-  %i.ay = sub i64 %spec.select.i, %spec.store.select.i
+  %i.ay = sub nuw i64 %spec.select.i, %spec.store.select.i
   %xtraiter68 = and i64 %i.ax, 3                  ; 2 uses
   %lcmp.mod69.not = icmp eq i64 %xtraiter68, 0
   br i1 %lcmp.mod69.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -608,7 +608,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.gw, label %.lr.ph752.us.us.i.preheader, label %._crit_edge760.us.i
 
 .lr.ph752.us.us.i.preheader:                      ; preds = %.lr.ph759.us.i
-  %i.gx = sub i64 %.sroa.speculated661.us.i, %.sroa.speculated666.us.i
+  %i.gx = sub nuw i64 %.sroa.speculated661.us.i, %.sroa.speculated666.us.i
   %.neg = add nuw i64 %.sroa.speculated666.us.i, 1
   %xtraiter70 = and i64 %i.gx, 1
   %lcmp.mod71.not = icmp eq i64 %xtraiter70, 0

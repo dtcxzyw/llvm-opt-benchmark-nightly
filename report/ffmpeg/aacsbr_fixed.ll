@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.pn = phi i32 [ %i.e, %bb.c ], [ %i.ba, %bb.b ]
-  %storemerge = sub nsw i32 %.pn, %i.b            ; 2 uses
+  %storemerge = sub nuw nsw i32 %.pn, %i.b        ; 2 uses
   store i32 %storemerge, ptr %8, align 4, !tbaa !14
-  %11 = sext i32 %storemerge to i64
-  %i.bc = getelementptr inbounds [4 x i8], ptr %7, i64 %11 ; 12 uses
+  %11 = zext nneg i32 %storemerge to i64
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %11 ; 12 uses
   %i.bd = getelementptr inbounds nuw [256 x i8], ptr %i.j, i64 %indvars.iv ; 10 uses
   br i1 %.not, label %bb.e, label %.preheader
 
