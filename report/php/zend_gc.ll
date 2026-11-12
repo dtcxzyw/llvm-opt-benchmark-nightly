@@ -202,8 +202,8 @@ gc_compress.exit:                                 ; preds = %bb.g, %bb.h
   %i.y = load i32, ptr %i.x, align 4, !tbaa !47
   %i.z = and i32 %i.y, 1023
   %i.aa = shl nuw nsw i32 %.0.i, 10
-  %1 = add nuw nsw i32 %i.aa, -1073741824
-  %2 = or disjoint i32 %i.z, %1
+  %1 = or disjoint i32 %i.z, %i.aa
+  %2 = add nuw nsw i32 %1, -1073741824
   store i32 %2, ptr %i.x, align 4, !tbaa !47
   %i.ab = load i32, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 28), align 4, !tbaa !29
   %i.ac = add i32 %i.ab, 1
@@ -366,8 +366,8 @@ gc_compress.exit:                                 ; preds = %bb.q, %bb.r
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !47
   %i.be = and i32 %i.bd, 1023
   %i.bf = shl nuw nsw i32 %.0.i, 10
-  %1 = add nuw nsw i32 %i.bf, -1073741824
-  %2 = or disjoint i32 %i.be, %1
+  %1 = or disjoint i32 %i.be, %i.bf
+  %2 = add nuw nsw i32 %1, -1073741824
   store i32 %2, ptr %i.bc, align 4, !tbaa !47
   %i.bg = load i32, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 28), align 4, !tbaa !29
   %i.bh = add i32 %i.bg, 1

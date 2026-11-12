@@ -23,7 +23,6 @@ put_bits.exit:
   %i.b = getelementptr i8, ptr %0, i64 4388       ; 3 uses
   %i.c = load i32, ptr %i.a, align 8, !tbaa !12
   %i.d = shl i32 %i.c, 30
-  %1 = or disjoint i32 %i.d, 8448
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 6328
   %i.f = load i32, ptr %i.e, align 8, !tbaa !46
   %i.g = sext i32 %i.f to i64
@@ -40,7 +39,8 @@ put_bits.exit:
   %i.r = sdiv i64 %i.n, %i.q
   %i.s = trunc i64 %i.r to i32
   %i.t = and i32 %i.s, 255
-  %i.u = or disjoint i32 %i.t, %1                 ; 4 uses
+  %1 = or disjoint i32 %i.d, %i.t
+  %i.u = or disjoint i32 %1, 8448                 ; 4 uses
   store i32 %i.u, ptr %i.a, align 8, !tbaa !12
   store i32 2, ptr %i.b, align 4, !tbaa !62
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 3 uses
@@ -221,13 +221,13 @@ put_bits.exit90:                                  ; preds = %bb.m, %bb.l, %bb.i,
   %i.dc = icmp eq i32 %i.db, 2
   %i.dd = shl i32 %i.cz, 8
   %i.de = select i1 %i.dc, i32 64, i32 0
-  %2 = or disjoint i32 %i.dd, %i.de
-  %i.df = or disjoint i32 %2, 32
+  %i.df = or disjoint i32 %i.dd, %i.de
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 1272
   %i.dh = load i32, ptr %i.dg, align 8, !tbaa !69
-  %i.di = or i32 %i.dh, %i.df
+  %i.di = or i32 %i.df, %i.dh
   %i.dj = shl i32 %i.di, 1
-  store i32 %i.dj, ptr %i.a, align 16, !tbaa !12
+  %2 = or i32 %i.dj, 64
+  store i32 %2, ptr %i.a, align 16, !tbaa !12
   store i32 %i.cy, ptr %i.b, align 4, !tbaa !62
   ret i32 0
 }

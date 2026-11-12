@@ -204,10 +204,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = trunc nsw i64 %2 to i32
   %i.d = shl i32 %1, 7
-  %4 = or disjoint i32 %i.d, 1
-  %5 = shl i32 %i.c, 15
-  %6 = add i32 %5, 2147450880
-  %i.e = or i32 %6, %4
+  %4 = shl i32 %i.c, 15
+  %5 = add i32 %4, 2147450880
+  %6 = or i32 %i.d, %5
+  %i.e = or disjoint i32 %6, 1
   %i.f = tail call range(i32 -2147483648, 2147483647) i32 @luaK_code(ptr noundef %0, i32 noundef %i.e) ; 0 uses
   br label %luaK_codek.exit
 
@@ -610,10 +610,10 @@ codeABRK.exit:                                    ; preds = %bb.f, %bb.g
   %i.ae = shl nuw nsw i32 %i.x, 7
   %i.af = shl nsw i32 %i.z, 16
   %i.ag = or disjoint i32 %i.af, %i.ae
-  %3 = or disjoint i32 %i.ag, 15
-  %4 = shl i32 %i.ad, 24
-  %i.ah = or disjoint i32 %.0.i.i, %3
-  %i.ai = or i32 %4, %i.ah
+  %3 = shl i32 %i.ad, 24
+  %4 = or disjoint i32 %.0.i.i, %i.ag
+  %i.ah = or i32 %4, %3
+  %i.ai = or disjoint i32 %i.ah, 15
   br label %.sink.split
 
 bb.h:                                             ; preds = %bb.a
@@ -638,10 +638,10 @@ codeABRK.exit32:                                  ; preds = %bb.h, %bb.i
   %i.at = shl nuw nsw i32 %i.am, 7
   %i.au = shl nsw i32 %i.ao, 16
   %i.av = or disjoint i32 %i.au, %i.at
-  %5 = or disjoint i32 %i.av, 17
-  %6 = shl i32 %i.as, 24
-  %i.aw = or disjoint i32 %.0.i.i31, %5
-  %i.ax = or i32 %6, %i.aw
+  %5 = shl i32 %i.as, 24
+  %6 = or disjoint i32 %.0.i.i31, %i.av
+  %i.aw = or i32 %6, %5
+  %i.ax = or disjoint i32 %i.aw, 17
   br label %.sink.split
 
 bb.j:                                             ; preds = %bb.a
@@ -666,10 +666,10 @@ codeABRK.exit35:                                  ; preds = %bb.j, %bb.k
   %i.bi = shl nuw nsw i32 %i.bb, 7
   %i.bj = shl nsw i32 %i.bd, 16
   %i.bk = or disjoint i32 %i.bj, %i.bi
-  %7 = or disjoint i32 %i.bk, 18
-  %8 = shl i32 %i.bh, 24
-  %i.bl = or disjoint i32 %.0.i.i34, %7
-  %i.bm = or i32 %8, %i.bl
+  %7 = shl i32 %i.bh, 24
+  %8 = or disjoint i32 %.0.i.i34, %i.bk
+  %i.bl = or i32 %8, %7
+  %i.bm = or disjoint i32 %i.bl, 18
   br label %.sink.split
 
 bb.l:                                             ; preds = %bb.a
@@ -702,10 +702,10 @@ codeABRK.exit38:                                  ; preds = %bb.m, %bb.n
   %i.cb = shl nuw nsw i32 %i.bu, 7
   %i.cc = shl nsw i32 %i.bw, 16
   %i.cd = or disjoint i32 %i.cc, %i.cb
-  %9 = or disjoint i32 %i.cd, 16
-  %10 = shl i32 %i.ca, 24
-  %i.ce = or disjoint i32 %.0.i.i37, %9
-  %i.cf = or i32 %10, %i.ce
+  %9 = shl i32 %i.ca, 24
+  %10 = or disjoint i32 %.0.i.i37, %i.cd
+  %i.ce = or i32 %10, %9
+  %i.cf = or disjoint i32 %i.ce, 16
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.e, %codeABRK.exit, %codeABRK.exit32, %codeABRK.exit35, %codeABRK.exit38
@@ -1055,8 +1055,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = shl i32 %i.c, 16
   %i.aj = shl i32 %i.ag, 24
   %i.ak = or disjoint i32 %i.ai, %i.ah
-  %i.al = or disjoint i32 %i.ak, 20
-  %i.am = or i32 %i.aj, %i.al
+  %i.al = or i32 %i.ak, %i.aj
+  %i.am = or disjoint i32 %i.al, 20
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e, %luaK_reserveregs.exit
@@ -1459,10 +1459,10 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.bn = trunc nsw i64 %i.bk to i32
   %i.bo = shl i32 %2, 7
-  %4 = or disjoint i32 %i.bo, 2
-  %5 = shl i32 %i.bn, 15
-  %6 = add i32 %5, 2147450880
-  %i.bp = or i32 %6, %4
+  %4 = shl i32 %i.bn, 15
+  %5 = add i32 %4, 2147450880
+  %6 = or i32 %i.bo, %5
+  %i.bp = or disjoint i32 %6, 2
   br label %luaK_float.exit
 
 bb.p:                                             ; preds = %bb.n, %bb.m

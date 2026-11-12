@@ -204,9 +204,9 @@ bb.af:                                            ; preds = %bb.ae
   %i.dr = shl i32 %i.dp, 18
   %i.ds = add i32 %i.dr, 262144
   %i.dt = and i32 %i.ds, 786432
-  %2 = or disjoint i32 %i.dt, 32768
-  %3 = select i1 %i.dq, i32 32768, i32 %2
-  %i.du = or i32 %3, %.9
+  %2 = select i1 %i.dq, i32 0, i32 %i.dt
+  %3 = or i32 %.9, %2
+  %i.du = or i32 %3, 32768
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad

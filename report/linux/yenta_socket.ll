@@ -204,19 +204,19 @@ bb.a:
   %i.n = icmp eq i32 %i.m, 1                      ; 2 uses
   %spec.select = zext i1 %i.n to i32              ; 2 uses
   %i.o = and i8 %i.i, 63
-  %2 = or disjoint i8 %i.o, -128
   %i.p = select i1 %i.n, i8 64, i8 0
-  %i.q = or disjoint i8 %i.p, %2                  ; 2 uses
+  %i.q = or disjoint i8 %i.o, %i.p                ; 2 uses
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.r = shl nuw nsw i32 1, %spec.select
   %i.s = trunc nuw nsw i32 %i.r to i8
-  %i.t = or i8 %i.q, %i.s
+  %2 = or i8 %i.q, %i.s
+  %i.t = or disjoint i8 %2, -128
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.u = xor i8 %i.q, 64
+  %i.u = xor i8 %i.q, -64
   %i.v = shl nuw nsw i32 1, %spec.select
   %i.w = trunc nuw nsw i32 %i.v to i8
   %i.x = xor i8 %i.w, -1

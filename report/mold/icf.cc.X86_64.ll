@@ -205,9 +205,9 @@ bb.a:
   %.sroa.7.0.insert.insert.i.i.i = or disjoint i64 %.sroa.8.0.insert.insert.i.i.i, %.sroa.7.0.insert.shift.i.i.i
   %.sroa.6.0.insert.insert.i.i.i = or disjoint i64 %.sroa.7.0.insert.insert.i.i.i, %.sroa.6.0.insert.shift.i.i.i
   %.sroa.4.0.insert.mask.i.i.i.a = or disjoint i64 %.sroa.6.0.insert.insert.i.i.i, %.sroa.5.0.insert.shift.i.i.i
-  %.sroa.0.0.insert.mask.i.i.i.a = or disjoint i64 %.sroa.4.0.insert.mask.i.i.i.a, 1
-  %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
-  %i.z = or i64 %.sroa.0.0.insert.insert.i.i.i, %.sroa.0.0.insert.mask.i.i.i.a ; 5 uses
+  %.sroa.0.0.insert.mask.i.i.i.a = or i64 %.sroa.4.0.insert.mask.i.i.i.a, %.sroa.0.0.insert.ext.i.i.i
+  %.sroa.0.0.insert.insert.i.i.i = or i64 %.sroa.0.0.insert.mask.i.i.i.a, %.sroa.4.0.insert.shift.i.i.i
+  %i.z = or i64 %.sroa.0.0.insert.insert.i.i.i, 1 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.ab = load atomic i64, ptr %i.aa acquire, align 8
   %i.ac = urem i64 %i.b, %i.ab
@@ -610,9 +610,9 @@ bb.a:
   %.sroa.7.0.insert.insert.i.i.i = or disjoint i64 %.sroa.8.0.insert.insert.i.i.i, %.sroa.7.0.insert.shift.i.i.i
   %.sroa.6.0.insert.insert.i.i.i = or disjoint i64 %.sroa.7.0.insert.insert.i.i.i, %.sroa.6.0.insert.shift.i.i.i
   %.sroa.4.0.insert.mask.i.i.i.a = or disjoint i64 %.sroa.6.0.insert.insert.i.i.i, %.sroa.5.0.insert.shift.i.i.i
-  %.sroa.0.0.insert.mask.i.i.i.a = or disjoint i64 %.sroa.4.0.insert.mask.i.i.i.a, 1
-  %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
-  %i.z = or i64 %.sroa.0.0.insert.insert.i.i.i, %.sroa.0.0.insert.mask.i.i.i.a ; 2 uses
+  %.sroa.0.0.insert.mask.i.i.i.a = or i64 %.sroa.4.0.insert.mask.i.i.i.a, %.sroa.0.0.insert.ext.i.i.i
+  %.sroa.0.0.insert.insert.i.i.i = or i64 %.sroa.0.0.insert.mask.i.i.i.a, %.sroa.4.0.insert.shift.i.i.i
+  %i.z = or i64 %.sroa.0.0.insert.insert.i.i.i, 1 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ab = load atomic i64, ptr %i.aa acquire, align 8
   %i.ac = urem i64 %i.b, %i.ab

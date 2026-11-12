@@ -204,16 +204,16 @@ bb.ak:                                            ; preds = %bb.aj
 _ZNK4llvm10DILocation20getBaseDiscriminatorEv.exit: ; preds = %bb.ae, %bb.af, %bb.ah, %bb.ai, %bb.ak, %.thread9.i
   %.1.i.i = phi i32 [ %i.it, %bb.ae ], [ %i.iy, %bb.ah ], [ %.0.i.i.i86, %bb.af ], [ 0, %bb.ai ], [ %i.jf, %bb.ak ], [ %i.jh, %.thread9.i ] ; 2 uses
   %i.ji = shl i32 %i.hb, 3
+  %6 = or i32 %i.ji, %.not51                      ; 2 uses
+  %7 = or i32 %6, 52428807
   %i.jj = icmp ult i32 %i.hb, 8192
   %i.jk = and i32 %.1.i.i, 2147483640
   %i.jl = icmp eq i32 %i.jk, 0
   %or.cond7.i = select i1 %i.jj, i1 %i.jl, i1 false
   %i.jm = shl nuw nsw i32 %.1.i.i, 16
-  %6 = or i32 %i.jm, 268435456
-  %7 = select i1 %or.cond7.i, i32 %6, i32 0
-  %i.jn = or i32 %i.ji, %.not51
-  %i.jo = or i32 %i.jn, %7
-  %.0.i = or i32 %i.jo, 52428807
+  %i.jn = or i32 %6, %i.jm
+  %i.jo = or i32 %i.jn, 320864263
+  %.0.i = select i1 %or.cond7.i, i32 %i.jo, i32 %7
   %i.jp = call noundef ptr @_ZNK4llvm10DILocation22cloneWithDiscriminatorEj(ptr noundef nonnull align 8 dereferenceable(24) %i.hy, i32 noundef %.0.i)
   store ptr %i.jp, ptr %i.hl, align 8, !tbaa !546
   br label %bb.al

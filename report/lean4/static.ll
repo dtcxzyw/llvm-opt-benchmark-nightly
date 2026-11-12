@@ -206,8 +206,8 @@ bb.ag:                                            ; preds = %bb.af, %._crit_edge
   %i.ih = icmp eq i32 %i.ig, 1
   %i.ii = select i1 %i.ih, i8 4, i8 0
   %i.ij = and i8 %i.ie, -6
-  %i.ik = or disjoint i8 %i.ij, 1
-  %i.il = or disjoint i8 %i.ii, %i.ik
+  %i.ik = or disjoint i8 %i.ij, %i.ii
+  %i.il = or disjoint i8 %i.ik, 1
   store i8 %i.il, ptr %i.id, align 8
   %i.im = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
   %i.in = load i64, ptr %i.im, align 8, !tbaa !193
