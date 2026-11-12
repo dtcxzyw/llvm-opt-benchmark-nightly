@@ -205,7 +205,7 @@ bb.bu:                                            ; preds = %bb.bt
   unreachable
 
 bb.bv:                                            ; preds = %bb.bt
-  %.sroa.07.0.copyload = load i64, ptr %i.b, align 4, !tbaa !36 ; 2 uses
+  %.sroa.07.0.copyload = load i64, ptr %i.b, align 4 ; 2 uses
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.07.0.copyload to i32
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jc, i64 4
   %i.jq = load i32, ptr %i.jp, align 4, !tbaa !124
@@ -216,12 +216,12 @@ bb.bv:                                            ; preds = %bb.bt
   %i.ju = call double @llvm.ceil.f64(double %i.jt)
   %i.jv = fptosi double %i.ju to i32              ; 5 uses
   %.not342 = icmp eq ptr %i.il, %i.im
+  %24 = lshr i64 %.sroa.07.0.copyload, 32
+  %25 = trunc nuw i64 %24 to i32                  ; 2 uses
   br i1 %.not342, label %._crit_edge339, label %.lr.ph338
 
 .lr.ph338:                                        ; preds = %bb.bv
   %i.jw = add nsw i32 %i.jv, -1                   ; 2 uses
-  %.sroa.2.0.extract.shift.i192 = lshr i64 %.sroa.07.0.copyload, 32
-  %.sroa.2.0.extract.trunc.i193 = trunc nuw i64 %.sroa.2.0.extract.shift.i192 to i32 ; 2 uses
   %min.iters.check = icmp ult i64 %i.iq, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -242,7 +242,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = sub nsw i64 %i.iq, %i.kd               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.jw, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert425 = insertelement <4 x i32> poison, i32 %.sroa.2.0.extract.trunc.i193, i64 0
+  %broadcast.splatinsert425 = insertelement <4 x i32> poison, i32 %25, i64 0
   %broadcast.splat426 = shufflevector <4 x i32> %broadcast.splatinsert425, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert427 = insertelement <4 x i32> poison, i32 %i.jv, i64 0
   %broadcast.splat428 = shufflevector <4 x i32> %broadcast.splatinsert427, <4 x i32> poison, <4 x i32> zeroinitializer
@@ -300,7 +300,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.lp = getelementptr inbounds nuw [20 x i8], ptr %i.jc, i64 %.0336 ; 2 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %i.lp, i64 8
   %i.lr = load i32, ptr %i.lq, align 4, !tbaa !123
-  %i.ls = sub nsw i32 %i.lr, %.sroa.2.0.extract.trunc.i193
+  %i.ls = sub nsw i32 %i.lr, %25
   %.sroa.speculated.i195 = call i32 @llvm.smax.i32(i32 %i.ls, i32 0)
   %i.lt = getelementptr inbounds nuw i8, ptr %i.lp, i64 16
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !116 ; 2 uses

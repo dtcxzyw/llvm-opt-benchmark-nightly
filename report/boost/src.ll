@@ -206,7 +206,7 @@ bb.ae:                                            ; preds = %bb.s
 bb.af:                                            ; preds = %bb.b
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 10 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
-  %i.ec = load i16, ptr %i.eb, align 4, !tbaa !347 ; 2 uses
+  %i.ec = load i16, ptr %i.eb, align 4            ; 2 uses
   %i.ed = trunc i16 %i.ec to i8                   ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 166 ; 4 uses
   %i.ef = load i8, ptr %i.ee, align 2, !tbaa !348 ; 4 uses
@@ -226,7 +226,7 @@ _ZN5boost4json6detail13utf8_sequence6appendEPKcm.exit.thread140: ; preds = %bb.a
   %i.em = zext i8 %i.ef to i64
   %i.en = getelementptr inbounds nuw i8, ptr %i.ea, i64 %i.em
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.en, ptr align 1 %1, i64 %i.el, i1 false)
-  %i.eo = load i16, ptr %i.eb, align 4, !tbaa !347 ; 2 uses
+  %i.eo = load i16, ptr %i.eb, align 4            ; 2 uses
   %i.ep = trunc i16 %i.eo to i8
   store i8 %i.ep, ptr %i.ee, align 2, !tbaa !348
   br label %_ZN5boost4json6detail13utf8_sequence6appendEPKcm.exit.thread
@@ -629,7 +629,7 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
 bb.ai:                                            ; preds = %bb.b
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 10 uses
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
-  %i.en = load i16, ptr %i.em, align 4, !tbaa !347 ; 2 uses
+  %i.en = load i16, ptr %i.em, align 4            ; 2 uses
   %i.eo = trunc i16 %i.en to i8                   ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 166 ; 4 uses
   %i.eq = load i8, ptr %i.ep, align 2, !tbaa !348 ; 4 uses
@@ -649,7 +649,7 @@ _ZN5boost4json6detail13utf8_sequence6appendEPKcm.exit.thread140: ; preds = %bb.a
   %i.ex = zext i8 %i.eq to i64
   %i.ey = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ex
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ey, ptr align 1 %1, i64 %i.ew, i1 false)
-  %i.ez = load i16, ptr %i.em, align 4, !tbaa !347 ; 2 uses
+  %i.ez = load i16, ptr %i.em, align 4            ; 2 uses
   %i.fa = trunc i16 %i.ez to i8
   store i8 %i.fa, ptr %i.ep, align 2, !tbaa !348
   br label %_ZN5boost4json6detail13utf8_sequence6appendEPKcm.exit.thread

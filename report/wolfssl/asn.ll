@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 1032 ; 7 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 1032 ; 6 uses
   %i.m = load i32, ptr %i.l, align 8
   %i.n = and i32 %i.m, 1
   %.not52 = icmp eq i32 %i.n, 0
@@ -240,10 +240,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ah = load <2 x ptr>, ptr %i.af, align 8, !tbaa !125
   store <2 x ptr> %i.ah, ptr %i.ag, align 8, !tbaa !125
-  %4 = load i32, ptr %i.l, align 8
-  %sh.diff = lshr i32 %4, 23
-  %tr.sh.diff = trunc i32 %sh.diff to i8
-  %i.ai = and i8 %tr.sh.diff, 2
+  %4 = getelementptr i8, ptr %1, i64 1035
+  %5 = load i8, ptr %4, align 1
+  %6 = shl i8 %5, 1
+  %i.ai = and i8 %6, 2
   %i.aj = and i8 %i.ae, -3
   %i.ak = or disjoint i8 %i.ai, %i.aj             ; 2 uses
   store i8 %i.ak, ptr %i.ab, align 2
@@ -252,7 +252,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %tr.sh.diff54 = trunc i32 %sh.diff53 to i8
   %i.am = and i8 %tr.sh.diff54, 4
   %i.an = and i8 %i.ak, -5
-  %i.ao = or disjoint i8 %i.an, %i.am
+  %i.ao = or disjoint i8 %i.am, %i.an
   store i8 %i.ao, ptr %i.ab, align 2
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 804

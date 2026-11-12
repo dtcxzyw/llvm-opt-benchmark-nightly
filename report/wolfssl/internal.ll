@@ -205,11 +205,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aq = load i8, ptr %i.ap, align 4, !tbaa !64
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1065
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !124
-  %i.as = getelementptr inbounds nuw i8, ptr %1, i64 169 ; 15 uses
-  %3 = load i16, ptr %i.as, align 1
-  %4 = lshr i16 %3, 8
-  %5 = and i16 %4, 1
-  %i.at = zext nneg i16 %5 to i64
+  %i.as = getelementptr inbounds nuw i8, ptr %1, i64 169 ; 14 uses
+  %3 = getelementptr i8, ptr %1, i64 170
+  %4 = load i8, ptr %3, align 2
+  %5 = and i8 %4, 1
+  %i.at = zext nneg i8 %5 to i64
   %i.au = shl nuw nsw i64 %i.at, 23
   %i.av = and i64 %i.ao, -8388609
   %i.aw = or disjoint i64 %i.au, %i.av            ; 2 uses
@@ -220,7 +220,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ba = zext nneg i16 %i.az to i64
   %i.bb = shl nuw nsw i64 %i.ba, 25
   %i.bc = and i64 %i.aw, -33554433
-  %i.bd = or disjoint i64 %i.bc, %i.bb            ; 4 uses
+  %i.bd = or disjoint i64 %i.bb, %i.bc            ; 4 uses
   store i64 %i.bd, ptr %i.aj, align 16
   %.not140 = icmp eq i16 %i.az, 0
   br i1 %.not140, label %bb.o, label %bb.g

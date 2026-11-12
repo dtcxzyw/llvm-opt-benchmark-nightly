@@ -205,7 +205,7 @@ define internal fastcc noundef i32 @png_deflate_claim(ptr noalias noundef %0, i3
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !49   ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8              ; 2 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
