@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.t, label %bb.d, label %.critedge41, !llvm.loop !36
 
 bb.f:                                             ; preds = %bb.d
-  %4 = or disjoint i64 %i.n, 64
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.v = load atomic i64, ptr %i.u monotonic, align 8
+  %invariant.op117 = or disjoint i64 %i.n, 64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
@@ -219,14 +219,14 @@ bb.h:                                             ; preds = %bb.g
   %i.w = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.1, i1 true)
   %i.x = add i64 %.050.1, -1
   %i.y = and i64 %i.x, %.050.1
-  %i.z = or disjoint i64 %i.w, %4
+  %i.z = or disjoint i64 %i.w, %invariant.op117
   %i.aa = tail call zeroext i1 %1(i64 noundef %i.z, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.aa, label %bb.g, label %.critedge41, !llvm.loop !36
 
 bb.i:                                             ; preds = %bb.g
-  %5 = or disjoint i64 %i.n, 128
   %i.ab = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.ac = load atomic i64, ptr %i.ab monotonic, align 8
+  %invariant.op = or disjoint i64 %i.n, 128
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
@@ -238,14 +238,14 @@ bb.k:                                             ; preds = %bb.j
   %i.ad = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.2, i1 true)
   %i.ae = add i64 %.050.2, -1
   %i.af = and i64 %i.ae, %.050.2
-  %i.ag = or disjoint i64 %i.ad, %5
+  %i.ag = or disjoint i64 %i.ad, %invariant.op
   %i.ah = tail call zeroext i1 %1(i64 noundef %i.ag, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.ah, label %bb.j, label %.critedge41, !llvm.loop !36
 
 bb.l:                                             ; preds = %bb.j
-  %6 = or disjoint i64 %i.n, 192
   %i.ai = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   %i.aj = load atomic i64, ptr %i.ai monotonic, align 8
+  %invariant.op118 = or disjoint i64 %i.n, 192
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.n, %bb.l
@@ -257,14 +257,14 @@ bb.n:                                             ; preds = %bb.m
   %i.ak = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.3, i1 true)
   %i.al = add i64 %.050.3, -1
   %i.am = and i64 %i.al, %.050.3
-  %i.an = or disjoint i64 %i.ak, %6
+  %i.an = or disjoint i64 %i.ak, %invariant.op118
   %i.ao = tail call zeroext i1 %1(i64 noundef %i.an, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.ao, label %bb.m, label %.critedge41, !llvm.loop !36
 
 bb.o:                                             ; preds = %bb.m
-  %7 = or disjoint i64 %i.n, 256
   %i.ap = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.aq = load atomic i64, ptr %i.ap monotonic, align 8
+  %invariant.op119 = or disjoint i64 %i.n, 256
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.q, %bb.o
@@ -276,14 +276,14 @@ bb.q:                                             ; preds = %bb.p
   %i.ar = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.4, i1 true)
   %i.as = add i64 %.050.4, -1
   %i.at = and i64 %i.as, %.050.4
-  %i.au = or disjoint i64 %i.ar, %7
+  %i.au = or disjoint i64 %i.ar, %invariant.op119
   %i.av = tail call zeroext i1 %1(i64 noundef %i.au, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.av, label %bb.p, label %.critedge41, !llvm.loop !36
 
 bb.r:                                             ; preds = %bb.p
-  %8 = or disjoint i64 %i.n, 320
   %i.aw = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   %i.ax = load atomic i64, ptr %i.aw monotonic, align 8
+  %invariant.op120 = or disjoint i64 %i.n, 320
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.t, %bb.r
@@ -295,14 +295,14 @@ bb.t:                                             ; preds = %bb.s
   %i.ay = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.5, i1 true)
   %i.az = add i64 %.050.5, -1
   %i.ba = and i64 %i.az, %.050.5
-  %i.bb = or disjoint i64 %i.ay, %8
+  %i.bb = or disjoint i64 %i.ay, %invariant.op120
   %i.bc = tail call zeroext i1 %1(i64 noundef %i.bb, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.bc, label %bb.s, label %.critedge41, !llvm.loop !36
 
 bb.u:                                             ; preds = %bb.s
-  %9 = or disjoint i64 %i.n, 384
   %i.bd = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %i.be = load atomic i64, ptr %i.bd monotonic, align 8
+  %invariant.op121 = or disjoint i64 %i.n, 384
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %bb.u
@@ -314,14 +314,14 @@ bb.w:                                             ; preds = %bb.v
   %i.bf = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.6, i1 true)
   %i.bg = add i64 %.050.6, -1
   %i.bh = and i64 %i.bg, %.050.6
-  %i.bi = or disjoint i64 %i.bf, %9
+  %i.bi = or disjoint i64 %i.bf, %invariant.op121
   %i.bj = tail call zeroext i1 %1(i64 noundef %i.bi, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.bj, label %bb.v, label %.critedge41, !llvm.loop !36
 
 bb.x:                                             ; preds = %bb.v
-  %10 = or disjoint i64 %i.n, 448
   %i.bk = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.bl = load atomic i64, ptr %i.bk monotonic, align 8
+  %invariant.op122 = or disjoint i64 %i.n, 448
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.z, %bb.x
@@ -333,7 +333,7 @@ bb.z:                                             ; preds = %bb.y
   %i.bm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.050.7, i1 true)
   %i.bn = add i64 %.050.7, -1
   %i.bo = and i64 %i.bn, %.050.7
-  %i.bp = or disjoint i64 %i.bm, %10
+  %i.bp = or disjoint i64 %i.bm, %invariant.op122
   %i.bq = tail call zeroext i1 %1(i64 noundef %i.bp, i64 noundef 1, ptr noundef %2, ptr noundef %3) #16
   br i1 %i.bq, label %bb.y, label %.critedge41, !llvm.loop !36
 
@@ -419,9 +419,9 @@ bb.e:                                             ; preds = %.loopexit
   br label %.critedge57
 
 .critedge55:                                      ; preds = %.critedge
-  %4 = or disjoint i64 %i.n, 64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %i.ad = atomicrmw xchg ptr %i.ac, i64 0 monotonic, align 8
+  %invariant.op350 = or disjoint i64 %i.n, 64
   br label %.critedge.1
 
 .critedge.1:                                      ; preds = %bb.f, %.critedge55
@@ -434,7 +434,7 @@ bb.f:                                             ; preds = %.critedge.1
   %i.af = lshr exact i64 %.050.1, %i.ae
   %i.ag = xor i64 %i.af, -1
   %i.ah = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ag, i1 false) ; 3 uses
-  %i.ai = or disjoint i64 %i.ae, %4
+  %i.ai = or disjoint i64 %i.ae, %invariant.op350
   %i.aj = icmp samesign ult i64 %i.ah, 64
   %notmask.i.1 = shl nsw i64 -1, %i.ah
   %i.ak = xor i64 %notmask.i.1, -1
@@ -446,9 +446,9 @@ bb.f:                                             ; preds = %.critedge.1
   br i1 %i.ap, label %.critedge.1, label %.loopexit
 
 .critedge55.1:                                    ; preds = %.critedge.1
-  %5 = or disjoint i64 %i.n, 128
   %i.aq = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
   %i.ar = atomicrmw xchg ptr %i.aq, i64 0 monotonic, align 8
+  %invariant.op = or disjoint i64 %i.n, 128
   br label %.critedge.2
 
 .critedge.2:                                      ; preds = %bb.g, %.critedge55.1
@@ -461,7 +461,7 @@ bb.g:                                             ; preds = %.critedge.2
   %i.at = lshr exact i64 %.050.2, %i.as
   %i.au = xor i64 %i.at, -1
   %i.av = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.au, i1 false) ; 3 uses
-  %i.aw = or disjoint i64 %i.as, %5
+  %i.aw = or disjoint i64 %i.as, %invariant.op
   %i.ax = icmp samesign ult i64 %i.av, 64
   %notmask.i.2 = shl nsw i64 -1, %i.av
   %i.ay = xor i64 %notmask.i.2, -1
@@ -473,9 +473,9 @@ bb.g:                                             ; preds = %.critedge.2
   br i1 %i.bd, label %.critedge.2, label %.loopexit
 
 .critedge55.2:                                    ; preds = %.critedge.2
-  %6 = or disjoint i64 %i.n, 192
   %i.be = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses
   %i.bf = atomicrmw xchg ptr %i.be, i64 0 monotonic, align 8
+  %invariant.op351 = or disjoint i64 %i.n, 192
   br label %.critedge.3
 
 .critedge.3:                                      ; preds = %bb.h, %.critedge55.2
@@ -488,7 +488,7 @@ bb.h:                                             ; preds = %.critedge.3
   %i.bh = lshr exact i64 %.050.3, %i.bg
   %i.bi = xor i64 %i.bh, -1
   %i.bj = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bi, i1 false) ; 3 uses
-  %i.bk = or disjoint i64 %i.bg, %6
+  %i.bk = or disjoint i64 %i.bg, %invariant.op351
   %i.bl = icmp samesign ult i64 %i.bj, 64
   %notmask.i.3 = shl nsw i64 -1, %i.bj
   %i.bm = xor i64 %notmask.i.3, -1
@@ -500,9 +500,9 @@ bb.h:                                             ; preds = %.critedge.3
   br i1 %i.br, label %.critedge.3, label %.loopexit
 
 .critedge55.3:                                    ; preds = %.critedge.3
-  %7 = or disjoint i64 %i.n, 256
   %i.bs = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 2 uses
   %i.bt = atomicrmw xchg ptr %i.bs, i64 0 monotonic, align 8
+  %invariant.op352 = or disjoint i64 %i.n, 256
   br label %.critedge.4
 
 .critedge.4:                                      ; preds = %bb.i, %.critedge55.3
@@ -515,7 +515,7 @@ bb.i:                                             ; preds = %.critedge.4
   %i.bv = lshr exact i64 %.050.4, %i.bu
   %i.bw = xor i64 %i.bv, -1
   %i.bx = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bw, i1 false) ; 3 uses
-  %i.by = or disjoint i64 %i.bu, %7
+  %i.by = or disjoint i64 %i.bu, %invariant.op352
   %i.bz = icmp samesign ult i64 %i.bx, 64
   %notmask.i.4 = shl nsw i64 -1, %i.bx
   %i.ca = xor i64 %notmask.i.4, -1
@@ -527,9 +527,9 @@ bb.i:                                             ; preds = %.critedge.4
   br i1 %i.cf, label %.critedge.4, label %.loopexit
 
 .critedge55.4:                                    ; preds = %.critedge.4
-  %8 = or disjoint i64 %i.n, 320
   %i.cg = getelementptr inbounds nuw i8, ptr %i.m, i64 40 ; 2 uses
   %i.ch = atomicrmw xchg ptr %i.cg, i64 0 monotonic, align 8
+  %invariant.op353 = or disjoint i64 %i.n, 320
   br label %.critedge.5
 
 .critedge.5:                                      ; preds = %bb.j, %.critedge55.4
@@ -542,7 +542,7 @@ bb.j:                                             ; preds = %.critedge.5
   %i.cj = lshr exact i64 %.050.5, %i.ci
   %i.ck = xor i64 %i.cj, -1
   %i.cl = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ck, i1 false) ; 3 uses
-  %i.cm = or disjoint i64 %i.ci, %8
+  %i.cm = or disjoint i64 %i.ci, %invariant.op353
   %i.cn = icmp samesign ult i64 %i.cl, 64
   %notmask.i.5 = shl nsw i64 -1, %i.cl
   %i.co = xor i64 %notmask.i.5, -1
@@ -554,9 +554,9 @@ bb.j:                                             ; preds = %.critedge.5
   br i1 %i.ct, label %.critedge.5, label %.loopexit
 
 .critedge55.5:                                    ; preds = %.critedge.5
-  %9 = or disjoint i64 %i.n, 384
   %i.cu = getelementptr inbounds nuw i8, ptr %i.m, i64 48 ; 2 uses
   %i.cv = atomicrmw xchg ptr %i.cu, i64 0 monotonic, align 8
+  %invariant.op354 = or disjoint i64 %i.n, 384
   br label %.critedge.6
 
 .critedge.6:                                      ; preds = %bb.k, %.critedge55.5
@@ -569,7 +569,7 @@ bb.k:                                             ; preds = %.critedge.6
   %i.cx = lshr exact i64 %.050.6, %i.cw
   %i.cy = xor i64 %i.cx, -1
   %i.cz = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cy, i1 false) ; 3 uses
-  %i.da = or disjoint i64 %i.cw, %9
+  %i.da = or disjoint i64 %i.cw, %invariant.op354
   %i.db = icmp samesign ult i64 %i.cz, 64
   %notmask.i.6 = shl nsw i64 -1, %i.cz
   %i.dc = xor i64 %notmask.i.6, -1
@@ -581,9 +581,9 @@ bb.k:                                             ; preds = %.critedge.6
   br i1 %i.dh, label %.critedge.6, label %.loopexit
 
 .critedge55.6:                                    ; preds = %.critedge.6
-  %10 = or disjoint i64 %i.n, 448
   %i.di = getelementptr inbounds nuw i8, ptr %i.m, i64 56 ; 2 uses
   %i.dj = atomicrmw xchg ptr %i.di, i64 0 monotonic, align 8
+  %invariant.op355 = or disjoint i64 %i.n, 448
   br label %.critedge.7
 
 .critedge.7:                                      ; preds = %bb.l, %.critedge55.6
@@ -596,7 +596,7 @@ bb.l:                                             ; preds = %.critedge.7
   %i.dl = lshr exact i64 %.050.7, %i.dk
   %i.dm = xor i64 %i.dl, -1
   %i.dn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.dm, i1 false) ; 3 uses
-  %i.do = or disjoint i64 %i.dk, %10
+  %i.do = or disjoint i64 %i.dk, %invariant.op355
   %i.dp = icmp samesign ult i64 %i.dn, 64
   %notmask.i.7 = shl nsw i64 -1, %i.dn
   %i.dq = xor i64 %notmask.i.7, -1

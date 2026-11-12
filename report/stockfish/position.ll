@@ -205,13 +205,13 @@ bb.j:                                             ; preds = %bb.i
   store <2 x i64> %i.eg, ptr %i.dm, align 8, !tbaa !56
   %i.eh = zext i8 %i.dw to i32
   %i.ei = shl nuw nsw i32 %i.eh, 20
-  %5 = or disjoint i32 %i.ei, -2147483648
   %i.ej = zext i8 %i.eb to i32
   %i.ek = shl nuw nsw i32 %i.ej, 16
-  %i.el = or i32 %i.ek, %5
+  %i.el = or i32 %i.ei, %i.ek
   %i.em = shl nuw nsw i32 %i.dz, 8
-  %i.en = or disjoint i32 %i.el, %i.em
-  %i.eo = or disjoint i32 %i.en, %i.dx
+  %5 = or disjoint i32 %i.el, %i.em
+  %i.en = or disjoint i32 %5, %i.dx
+  %i.eo = or disjoint i32 %i.en, -2147483648
   %i.ep = load i64, ptr %i.cx, align 8, !tbaa !120 ; 2 uses
   %i.eq = add i64 %i.ep, 1
   store i64 %i.eq, ptr %i.cx, align 8, !tbaa !120

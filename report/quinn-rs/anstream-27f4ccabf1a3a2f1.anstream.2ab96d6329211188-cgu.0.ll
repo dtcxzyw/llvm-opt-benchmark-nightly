@@ -202,22 +202,19 @@ bb.s:                                             ; preds = %_RNvXsf_NtCs2Skuq3A
   %.sroa.5203.0.insert.shift = shl nuw nsw i32 %.sroa.5203.0.insert.ext, 16
   %i.ay = shl i16 %.sroa.4148.12019, 8
   %.sroa.4202.0.insert.shift = zext i16 %i.ay to i32
-  %invariant.op = or disjoint i32 %.sroa.5203.0.insert.shift, %.sroa.4202.0.insert.shift, !dbg !5149
-  %invariant.op2799 = or disjoint i32 %invariant.op, 2, !dbg !5149 ; 2 uses
+  %invariant.op2799 = or disjoint i32 %.sroa.5203.0.insert.shift, %.sroa.4202.0.insert.shift, !dbg !5149 ; 2 uses
   %.mask359 = and i16 %.sroa.4150.12021, 255
   %.sroa.5198.0.insert.ext = zext nneg i16 %.mask359 to i32
   %.sroa.5198.0.insert.shift = shl nuw nsw i32 %.sroa.5198.0.insert.ext, 16
   %i.az = shl i16 %.sroa.4148.12019, 8
   %.sroa.4197.0.insert.shift = zext i16 %i.az to i32
-  %invariant.op2800 = or disjoint i32 %.sroa.5198.0.insert.shift, %.sroa.4197.0.insert.shift, !dbg !5149
-  %invariant.op2801 = or disjoint i32 %invariant.op2800, 2, !dbg !5149 ; 2 uses
+  %invariant.op2801 = or disjoint i32 %.sroa.5198.0.insert.shift, %.sroa.4197.0.insert.shift, !dbg !5149 ; 2 uses
   %i.ba = and i16 %.sroa.4150.12021, 255
   %.sroa.5193.0.insert.ext = zext nneg i16 %i.ba to i32
   %.sroa.5193.0.insert.shift = shl nuw nsw i32 %.sroa.5193.0.insert.ext, 16
   %i.bb = shl i16 %.sroa.4148.12019, 8
   %.sroa.4192.0.insert.shift = zext i16 %i.bb to i32
-  %invariant.op2802 = or disjoint i32 %.sroa.5193.0.insert.shift, %.sroa.4192.0.insert.shift, !dbg !5149
-  %invariant.op2803 = or disjoint i32 %invariant.op2802, 2, !dbg !5149 ; 2 uses
+  %invariant.op2803 = or disjoint i32 %.sroa.5193.0.insert.shift, %.sroa.4192.0.insert.shift, !dbg !5149 ; 2 uses
   br i1 %.sroa.0147.12018, label %.lr.ph3237.peel, label %.loopexit2341, !dbg !5149
 
 .lr.ph3237.peel:                                  ; preds = %.preheader2344
@@ -258,8 +255,9 @@ bb.u:                                             ; preds = %bb.t
   %.sroa.50.sroa.45.0.insert.shift1161.peel = shl nuw nsw i32 %.sroa.50.sroa.45.0.insert.ext1160.peel, 8, !dbg !5151
   %.sroa.50.sroa.45.0.insert.insert1163.peel = or disjoint i32 %.sroa.50.sroa.48.0.insert.insert1278.peel, %.sroa.50.sroa.45.0.insert.shift1161.peel, !dbg !5151
   %.sroa.50.sroa.0.0.insert.ext1054.peel = zext i8 %.sroa.50.sroa.0.020752259 to i32, !dbg !5151
-  %.sroa.50.sroa.0.0.insert.insert1056.peel.a = or disjoint i32 %.sroa.50.sroa.45.0.insert.insert1163.peel, %.sroa.50.sroa.0.0.insert.ext1054.peel, !dbg !5151
-  %.sroa.0201.0.insert.insert.reass.peel = or disjoint i32 %.sroa.6194.0.insert.shift.peel, %invariant.op2799
+  %.sroa.50.sroa.0.0.insert.insert1056.peel = or disjoint i32 %.sroa.50.sroa.45.0.insert.insert1163.peel, %.sroa.50.sroa.0.0.insert.ext1054.peel, !dbg !5151
+  %.sroa.50.sroa.0.0.insert.insert1056.peel.a = or disjoint i32 %invariant.op2799, %.sroa.6194.0.insert.shift.peel
+  %.sroa.0201.0.insert.insert.reass.peel = or disjoint i32 %.sroa.50.sroa.0.0.insert.insert1056.peel.a, 2
   br label %bb.x, !dbg !5152
 
 bb.v:                                             ; preds = %bb.t
@@ -274,8 +272,9 @@ bb.v:                                             ; preds = %bb.t
   %.sroa.0.sroa.0.0.insert.ext1434.peel = zext i8 %.sroa.0.sroa.0.020712287 to i32, !dbg !5153
   %.sroa.0.sroa.0.0.insert.insert1436.peel = or disjoint i32 %.sroa.0.sroa.45.0.insert.insert1522.peel, %.sroa.0.sroa.0.0.insert.ext1434.peel, !dbg !5153
   %.sroa.72.sroa.0.0.insert.ext594.peel = zext i8 %.sroa.72.sroa.0.020792231 to i32, !dbg !5153
-  %.sroa.72.sroa.0.0.insert.insert596.peel.a = or disjoint i32 %.sroa.72.sroa.48.0.insert.insert717.peel, %.sroa.72.sroa.0.0.insert.ext594.peel, !dbg !5153
-  %.sroa.0196.0.insert.insert.reass.peel = or disjoint i32 %.sroa.6194.0.insert.shift.peel, %invariant.op2801
+  %.sroa.72.sroa.0.0.insert.insert596.peel = or disjoint i32 %.sroa.72.sroa.48.0.insert.insert717.peel, %.sroa.72.sroa.0.0.insert.ext594.peel, !dbg !5153
+  %.sroa.72.sroa.0.0.insert.insert596.peel.a = or disjoint i32 %invariant.op2801, %.sroa.6194.0.insert.shift.peel
+  %.sroa.0196.0.insert.insert.reass.peel = or disjoint i32 %.sroa.72.sroa.0.0.insert.insert596.peel.a, 2
   br label %bb.x, !dbg !5154
 
 bb.w:                                             ; preds = %bb.t
@@ -293,14 +292,15 @@ bb.w:                                             ; preds = %bb.t
   %.sroa.50.sroa.0.0.insert.ext1051.peel = zext i8 %.sroa.50.sroa.0.020752259 to i32, !dbg !5155
   %.sroa.50.sroa.0.0.insert.insert1053.peel = or disjoint i32 %.sroa.50.sroa.45.0.insert.insert1159.peel, %.sroa.50.sroa.0.0.insert.ext1051.peel, !dbg !5155
   %.sroa.72.sroa.0.0.insert.ext591.peel = zext i8 %.sroa.72.sroa.0.020792231 to i32, !dbg !5155
-  %.sroa.72.sroa.0.0.insert.insert593.peel.a = or disjoint i32 %.sroa.72.sroa.48.0.insert.insert713.peel, %.sroa.72.sroa.0.0.insert.ext591.peel, !dbg !5155
-  %.sroa.0191.0.insert.insert.reass.peel = or disjoint i32 %.sroa.6194.0.insert.shift.peel, %invariant.op2803
+  %.sroa.72.sroa.0.0.insert.insert593.peel = or disjoint i32 %.sroa.72.sroa.48.0.insert.insert713.peel, %.sroa.72.sroa.0.0.insert.ext591.peel, !dbg !5155
+  %.sroa.72.sroa.0.0.insert.insert593.peel.a = or disjoint i32 %invariant.op2803, %.sroa.6194.0.insert.shift.peel
+  %.sroa.0191.0.insert.insert.reass.peel = or disjoint i32 %.sroa.72.sroa.0.0.insert.insert593.peel.a, 2
   br label %bb.x, !dbg !5156
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %.sroa.0166.0.peel = phi i32 [ %.sroa.0191.0.insert.insert.reass.peel, %bb.w ], [ %.sroa.0.sroa.0.0.insert.insert1436.peel, %bb.v ], [ %.sroa.0.sroa.0.0.insert.insert1439.peel, %bb.u ], !dbg !5051 ; 4 uses
-  %.sroa.5170.0.peel = phi i32 [ %.sroa.50.sroa.0.0.insert.insert1053.peel, %bb.w ], [ %.sroa.0196.0.insert.insert.reass.peel, %bb.v ], [ %.sroa.50.sroa.0.0.insert.insert1056.peel.a, %bb.u ], !dbg !5051 ; 4 uses
-  %.sroa.6177.0.peel = phi i32 [ %.sroa.72.sroa.0.0.insert.insert593.peel.a, %bb.w ], [ %.sroa.72.sroa.0.0.insert.insert596.peel.a, %bb.v ], [ %.sroa.0201.0.insert.insert.reass.peel, %bb.u ], !dbg !5051 ; 4 uses
+  %.sroa.5170.0.peel = phi i32 [ %.sroa.50.sroa.0.0.insert.insert1053.peel, %bb.w ], [ %.sroa.0196.0.insert.insert.reass.peel, %bb.v ], [ %.sroa.50.sroa.0.0.insert.insert1056.peel, %bb.u ], !dbg !5051 ; 4 uses
+  %.sroa.6177.0.peel = phi i32 [ %.sroa.72.sroa.0.0.insert.insert593.peel, %bb.w ], [ %.sroa.72.sroa.0.0.insert.insert596.peel, %bb.v ], [ %.sroa.0201.0.insert.insert.reass.peel, %bb.u ], !dbg !5051 ; 4 uses
   %.sroa.0.sroa.0.0.extract.trunc1440.peel = trunc i32 %.sroa.0166.0.peel to i8, !dbg !5157 ; 3 uses
     #dbg_value(i8 %.sroa.0.sroa.0.0.extract.trunc1440.peel, !4703, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !4957)
   %.sroa.0.sroa.45.0.extract.shift1527.peel = lshr i32 %.sroa.0166.0.peel, 8, !dbg !5157
@@ -423,6 +423,9 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %i.bh = load i16, ptr %i.be, align 2, !dbg !5145, !noundef !621
     #dbg_value(i16 %i.au, !4717, !DIExpression(), !5047)
     #dbg_value(i16 %i.au, !4719, !DIExpression(), !5048)
+  %invariant.op4207 = or disjoint i32 %invariant.op2799, 2, !dbg !5149
+  %invariant.op4208 = or disjoint i32 %invariant.op2801, 2, !dbg !5149
+  %invariant.op4209 = or disjoint i32 %invariant.op2803, 2, !dbg !5149
   br label %.lr.ph3237, !dbg !5149
 
 .lr.ph.jt1:                                       ; preds = %.lr.ph2087.jt1
@@ -825,7 +828,7 @@ bb.by:                                            ; preds = %.lr.ph3237
   %.sroa.72.sroa.48.0.insert.insert713 = or disjoint i32 %.sroa.72.sroa.49.0.insert.insert841, %.sroa.72.sroa.48.0.insert.shift711, !dbg !5155
   %.sroa.72.sroa.0.0.insert.ext591 = zext i8 %.sroa.72.sroa.0.0207922253236 to i32, !dbg !5155
   %.sroa.72.sroa.0.0.insert.insert593 = or disjoint i32 %.sroa.72.sroa.48.0.insert.insert713, %.sroa.72.sroa.0.0.insert.ext591, !dbg !5155
-  %.sroa.0191.0.insert.insert.reass = or disjoint i32 %.sroa.6194.0.insert.shift, %invariant.op2803
+  %.sroa.0191.0.insert.insert.reass = or disjoint i32 %.sroa.6194.0.insert.shift, %invariant.op4209
   br label %bb.ai, !dbg !5156
 
 bb.bz:                                            ; preds = %.lr.ph3237
@@ -847,7 +850,7 @@ bb.bz:                                            ; preds = %.lr.ph3237
   %.sroa.72.sroa.48.0.insert.insert717 = or disjoint i32 %.sroa.72.sroa.49.0.insert.insert845, %.sroa.72.sroa.48.0.insert.shift715, !dbg !5153
   %.sroa.72.sroa.0.0.insert.ext594 = zext i8 %.sroa.72.sroa.0.0207922253236 to i32, !dbg !5153
   %.sroa.72.sroa.0.0.insert.insert596 = or disjoint i32 %.sroa.72.sroa.48.0.insert.insert717, %.sroa.72.sroa.0.0.insert.ext594, !dbg !5153
-  %.sroa.0196.0.insert.insert.reass = or disjoint i32 %.sroa.6194.0.insert.shift, %invariant.op2801
+  %.sroa.0196.0.insert.insert.reass = or disjoint i32 %.sroa.6194.0.insert.shift, %invariant.op4208
   br label %bb.ai, !dbg !5154
 
 bb.ca:                                            ; preds = %.lr.ph3237
@@ -869,7 +872,7 @@ bb.ca:                                            ; preds = %.lr.ph3237
   %.sroa.50.sroa.45.0.insert.insert1163 = or disjoint i32 %.sroa.50.sroa.48.0.insert.insert1278, %.sroa.50.sroa.45.0.insert.shift1161, !dbg !5151
   %.sroa.50.sroa.0.0.insert.ext1054 = zext i8 %.sroa.50.sroa.0.0207522533232 to i32, !dbg !5151
   %.sroa.50.sroa.0.0.insert.insert1056 = or disjoint i32 %.sroa.50.sroa.45.0.insert.insert1163, %.sroa.50.sroa.0.0.insert.ext1054, !dbg !5151
-  %.sroa.0201.0.insert.insert.reass = or disjoint i32 %.sroa.6194.0.insert.shift, %invariant.op2799
+  %.sroa.0201.0.insert.insert.reass = or disjoint i32 %.sroa.6194.0.insert.shift, %invariant.op4207
   br label %bb.ai, !dbg !5152
 
 bb.cb:                                            ; preds = %.preheader2348

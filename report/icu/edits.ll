@@ -202,11 +202,12 @@ bb.at:                                            ; preds = %bb.ar
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.as, %bb.at, %bb.aq
-  %.070 = phi i32 [ %i.df, %bb.aq ], [ 32576, %bb.as ], [ %i.dp, %bb.at ]
+  %.070 = phi i32 [ %i.df, %bb.aq ], [ 32576, %bb.as ], [ %i.dp, %bb.at ] ; 3 uses
   %.0 = phi i32 [ %i.dd, %bb.aq ], [ %i.dk, %bb.as ], [ %i.dy, %bb.at ] ; 5 uses
   br i1 %i.bt, label %._crit_edge98, label %bb.av
 
 ._crit_edge98:                                    ; preds = %bb.au
+  %3 = or i32 %.070, %2
   %.pre99 = load ptr, ptr %0, align 8, !tbaa !12
   br label %bb.ay
 
@@ -215,6 +216,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.ec, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
+  %4 = or i32 %.070, 61
   %i.ed = trunc nuw nsw i32 %2 to i16
   %i.ee = or disjoint i16 %i.ed, -32768
   %i.ef = load ptr, ptr %0, align 8, !tbaa !12    ; 2 uses
@@ -226,7 +228,8 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.av
   %i.ej = lshr i32 %2, 30
-  %i.ek = or disjoint i32 %i.ej, 62
+  %5 = or i32 %i.ej, %.070
+  %i.ek = or i32 %5, 62
   %i.el = lshr i32 %2, 15
   %i.em = trunc nuw i32 %i.el to i16
   %i.en = or i16 %i.em, -32768
@@ -241,12 +244,11 @@ bb.ax:                                            ; preds = %bb.av
   store i16 %i.es, ptr %i.eu, align 2, !tbaa !20
   br label %bb.ay
 
-bb.ay:                                            ; preds = %._crit_edge98, %bb.aw, %bb.ax
-  %i.ev = phi ptr [ %i.eo, %bb.ax ], [ %i.ef, %bb.aw ], [ %.pre99, %._crit_edge98 ]
-  %.pn = phi i32 [ %i.ek, %bb.ax ], [ 61, %bb.aw ], [ %2, %._crit_edge98 ]
-  %.1 = phi i32 [ %i.et, %bb.ax ], [ %i.eg, %bb.aw ], [ %.0, %._crit_edge98 ]
-  %.171 = or i32 %.pn, %.070
-  %i.ew = trunc nuw nsw i32 %.171 to i16
+bb.ay:                                            ; preds = %bb.aw, %bb.ax, %._crit_edge98
+  %i.ev = phi ptr [ %.pre99, %._crit_edge98 ], [ %i.ef, %bb.aw ], [ %i.eo, %bb.ax ]
+  %.pn = phi i32 [ %3, %._crit_edge98 ], [ %4, %bb.aw ], [ %i.ek, %bb.ax ]
+  %.1 = phi i32 [ %.0, %._crit_edge98 ], [ %i.eg, %bb.aw ], [ %i.et, %bb.ax ]
+  %i.ew = trunc nuw nsw i32 %.pn to i16
   %i.ex = sext i32 %i.dc to i64
   %i.ey = getelementptr inbounds [2 x i8], ptr %i.ev, i64 %i.ex
   store i16 %i.ew, ptr %i.ey, align 2, !tbaa !20

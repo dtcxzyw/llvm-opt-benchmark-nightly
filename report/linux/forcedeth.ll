@@ -205,13 +205,12 @@ bb.a:
   %i.at = getelementptr [60 x i8], ptr @main_seedset, i64 %i.as
   %i.au = load i32, ptr %i.at, align 4
   %i.av = and i32 %i.au, 1023
-  %0 = or disjoint i32 %i.av, 16777216
   %i.aw = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.as
   %i.ax = load i32, ptr %i.aw, align 4
   %i.ay = shl i32 %i.ax, 12
   %i.az = and i32 %i.ay, 4190208
-  %i.ba = or disjoint i32 %i.az, %0
-  %i.bb = or disjoint i32 %i.ba, 1879048192
+  %i.ba = or disjoint i32 %i.av, %i.az
+  %i.bb = or disjoint i32 %i.ba, 1895825408
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.bb, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.bc = load i32, ptr %i.d, align 4
   %i.bd = zext i32 %i.bc to i64                   ; 2 uses
@@ -219,14 +218,13 @@ bb.a:
   %i.bf = getelementptr i8, ptr %i.be, i64 4
   %i.bg = load i32, ptr %i.bf, align 4
   %i.bh = and i32 %i.bg, 1023
-  %1 = or disjoint i32 %i.bh, 33554432
   %i.bi = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.bd
   %i.bj = getelementptr i8, ptr %i.bi, i64 4
   %i.bk = load i32, ptr %i.bj, align 4
   %i.bl = shl i32 %i.bk, 12
   %i.bm = and i32 %i.bl, 4190208
-  %i.bn = or disjoint i32 %i.bm, %1
-  %i.bo = or disjoint i32 %i.bn, 1879048192
+  %i.bn = or disjoint i32 %i.bh, %i.bm
+  %i.bo = or disjoint i32 %i.bn, 1912602624
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.bo, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.bp = load i32, ptr %i.d, align 4
   %i.bq = zext i32 %i.bp to i64                   ; 2 uses
@@ -234,14 +232,13 @@ bb.a:
   %i.bs = getelementptr i8, ptr %i.br, i64 8
   %i.bt = load i32, ptr %i.bs, align 4
   %i.bu = and i32 %i.bt, 1023
-  %2 = or disjoint i32 %i.bu, 50331648
   %i.bv = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.bq
   %i.bw = getelementptr i8, ptr %i.bv, i64 8
   %i.bx = load i32, ptr %i.bw, align 4
   %i.by = shl i32 %i.bx, 12
   %i.bz = and i32 %i.by, 4190208
-  %i.ca = or disjoint i32 %i.bz, %2
-  %i.cb = or disjoint i32 %i.ca, 1879048192
+  %i.ca = or disjoint i32 %i.bu, %i.bz
+  %i.cb = or disjoint i32 %i.ca, 1929379840
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.cb, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.cc = load i32, ptr %i.d, align 4
   %i.cd = zext i32 %i.cc to i64                   ; 2 uses
@@ -249,14 +246,13 @@ bb.a:
   %i.cf = getelementptr i8, ptr %i.ce, i64 12
   %i.cg = load i32, ptr %i.cf, align 4
   %i.ch = and i32 %i.cg, 1023
-  %3 = or disjoint i32 %i.ch, 67108864
   %i.ci = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.cd
   %i.cj = getelementptr i8, ptr %i.ci, i64 12
   %i.ck = load i32, ptr %i.cj, align 4
   %i.cl = shl i32 %i.ck, 12
   %i.cm = and i32 %i.cl, 4190208
-  %i.cn = or disjoint i32 %i.cm, %3
-  %i.co = or disjoint i32 %i.cn, 1879048192
+  %i.cn = or disjoint i32 %i.ch, %i.cm
+  %i.co = or disjoint i32 %i.cn, 1946157056
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.co, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.cp = load i32, ptr %i.d, align 4
   %i.cq = zext i32 %i.cp to i64                   ; 2 uses
@@ -264,14 +260,13 @@ bb.a:
   %i.cs = getelementptr i8, ptr %i.cr, i64 16
   %i.ct = load i32, ptr %i.cs, align 4
   %i.cu = and i32 %i.ct, 1023
-  %4 = or disjoint i32 %i.cu, 83886080
   %i.cv = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.cq
   %i.cw = getelementptr i8, ptr %i.cv, i64 16
   %i.cx = load i32, ptr %i.cw, align 4
   %i.cy = shl i32 %i.cx, 12
   %i.cz = and i32 %i.cy, 4190208
-  %i.da = or disjoint i32 %i.cz, %4
-  %i.db = or disjoint i32 %i.da, 1879048192
+  %i.da = or disjoint i32 %i.cu, %i.cz
+  %i.db = or disjoint i32 %i.da, 1962934272
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.db, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.dc = load i32, ptr %i.d, align 4
   %i.dd = zext i32 %i.dc to i64                   ; 2 uses
@@ -279,14 +274,13 @@ bb.a:
   %i.df = getelementptr i8, ptr %i.de, i64 20
   %i.dg = load i32, ptr %i.df, align 4
   %i.dh = and i32 %i.dg, 1023
-  %5 = or disjoint i32 %i.dh, 100663296
   %i.di = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.dd
   %i.dj = getelementptr i8, ptr %i.di, i64 20
   %i.dk = load i32, ptr %i.dj, align 4
   %i.dl = shl i32 %i.dk, 12
   %i.dm = and i32 %i.dl, 4190208
-  %i.dn = or disjoint i32 %i.dm, %5
-  %i.do = or disjoint i32 %i.dn, 1879048192
+  %i.dn = or disjoint i32 %i.dh, %i.dm
+  %i.do = or disjoint i32 %i.dn, 1979711488
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.do, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.dp = load i32, ptr %i.d, align 4
   %i.dq = zext i32 %i.dp to i64                   ; 2 uses
@@ -294,14 +288,13 @@ bb.a:
   %i.ds = getelementptr i8, ptr %i.dr, i64 24
   %i.dt = load i32, ptr %i.ds, align 4
   %i.du = and i32 %i.dt, 1023
-  %6 = or disjoint i32 %i.du, 117440512
   %i.dv = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.dq
   %i.dw = getelementptr i8, ptr %i.dv, i64 24
   %i.dx = load i32, ptr %i.dw, align 4
   %i.dy = shl i32 %i.dx, 12
   %i.dz = and i32 %i.dy, 4190208
-  %i.ea = or disjoint i32 %i.dz, %6
-  %i.eb = or disjoint i32 %i.ea, 1879048192
+  %i.ea = or disjoint i32 %i.du, %i.dz
+  %i.eb = or disjoint i32 %i.ea, 1996488704
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.eb, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.ec = load i32, ptr %i.d, align 4
   %i.ed = zext i32 %i.ec to i64                   ; 2 uses
@@ -309,14 +302,13 @@ bb.a:
   %i.ef = getelementptr i8, ptr %i.ee, i64 28
   %i.eg = load i32, ptr %i.ef, align 4
   %i.eh = and i32 %i.eg, 1023
-  %7 = or disjoint i32 %i.eh, 134217728
   %i.ei = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.ed
   %i.ej = getelementptr i8, ptr %i.ei, i64 28
   %i.ek = load i32, ptr %i.ej, align 4
   %i.el = shl i32 %i.ek, 12
   %i.em = and i32 %i.el, 4190208
-  %i.en = or disjoint i32 %i.em, %7
-  %i.eo = or disjoint i32 %i.en, 1879048192
+  %i.en = or disjoint i32 %i.eh, %i.em
+  %i.eo = or disjoint i32 %i.en, 2013265920
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.eo, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.ep = load i32, ptr %i.d, align 4
   %i.eq = zext i32 %i.ep to i64                   ; 2 uses
@@ -324,14 +316,13 @@ bb.a:
   %i.es = getelementptr i8, ptr %i.er, i64 32
   %i.et = load i32, ptr %i.es, align 4
   %i.eu = and i32 %i.et, 1023
-  %8 = or disjoint i32 %i.eu, 150994944
   %i.ev = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.eq
   %i.ew = getelementptr i8, ptr %i.ev, i64 32
   %i.ex = load i32, ptr %i.ew, align 4
   %i.ey = shl i32 %i.ex, 12
   %i.ez = and i32 %i.ey, 4190208
-  %i.fa = or disjoint i32 %i.ez, %8
-  %i.fb = or disjoint i32 %i.fa, 1879048192
+  %i.fa = or disjoint i32 %i.eu, %i.ez
+  %i.fb = or disjoint i32 %i.fa, 2030043136
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.fb, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.fc = load i32, ptr %i.d, align 4
   %i.fd = zext i32 %i.fc to i64                   ; 2 uses
@@ -339,14 +330,13 @@ bb.a:
   %i.ff = getelementptr i8, ptr %i.fe, i64 36
   %i.fg = load i32, ptr %i.ff, align 4
   %i.fh = and i32 %i.fg, 1023
-  %9 = or disjoint i32 %i.fh, 167772160
   %i.fi = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.fd
   %i.fj = getelementptr i8, ptr %i.fi, i64 36
   %i.fk = load i32, ptr %i.fj, align 4
   %i.fl = shl i32 %i.fk, 12
   %i.fm = and i32 %i.fl, 4190208
-  %i.fn = or disjoint i32 %i.fm, %9
-  %i.fo = or disjoint i32 %i.fn, 1879048192
+  %i.fn = or disjoint i32 %i.fh, %i.fm
+  %i.fo = or disjoint i32 %i.fn, 2046820352
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.fo, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.fp = load i32, ptr %i.d, align 4
   %i.fq = zext i32 %i.fp to i64                   ; 2 uses
@@ -354,14 +344,13 @@ bb.a:
   %i.fs = getelementptr i8, ptr %i.fr, i64 40
   %i.ft = load i32, ptr %i.fs, align 4
   %i.fu = and i32 %i.ft, 1023
-  %10 = or disjoint i32 %i.fu, 184549376
   %i.fv = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.fq
   %i.fw = getelementptr i8, ptr %i.fv, i64 40
   %i.fx = load i32, ptr %i.fw, align 4
   %i.fy = shl i32 %i.fx, 12
   %i.fz = and i32 %i.fy, 4190208
-  %i.ga = or disjoint i32 %i.fz, %10
-  %i.gb = or disjoint i32 %i.ga, 1879048192
+  %i.ga = or disjoint i32 %i.fu, %i.fz
+  %i.gb = or disjoint i32 %i.ga, 2063597568
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.gb, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.gc = load i32, ptr %i.d, align 4
   %i.gd = zext i32 %i.gc to i64                   ; 2 uses
@@ -369,14 +358,13 @@ bb.a:
   %i.gf = getelementptr i8, ptr %i.ge, i64 44
   %i.gg = load i32, ptr %i.gf, align 4
   %i.gh = and i32 %i.gg, 1023
-  %11 = or disjoint i32 %i.gh, 201326592
   %i.gi = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.gd
   %i.gj = getelementptr i8, ptr %i.gi, i64 44
   %i.gk = load i32, ptr %i.gj, align 4
   %i.gl = shl i32 %i.gk, 12
   %i.gm = and i32 %i.gl, 4190208
-  %i.gn = or disjoint i32 %i.gm, %11
-  %i.go = or disjoint i32 %i.gn, 1879048192
+  %i.gn = or disjoint i32 %i.gh, %i.gm
+  %i.go = or disjoint i32 %i.gn, 2080374784
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.go, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.gp = load i32, ptr %i.d, align 4
   %i.gq = zext i32 %i.gp to i64                   ; 2 uses
@@ -384,14 +372,13 @@ bb.a:
   %i.gs = getelementptr i8, ptr %i.gr, i64 48
   %i.gt = load i32, ptr %i.gs, align 4
   %i.gu = and i32 %i.gt, 1023
-  %12 = or disjoint i32 %i.gu, 218103808
   %i.gv = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.gq
   %i.gw = getelementptr i8, ptr %i.gv, i64 48
   %i.gx = load i32, ptr %i.gw, align 4
   %i.gy = shl i32 %i.gx, 12
   %i.gz = and i32 %i.gy, 4190208
-  %i.ha = or disjoint i32 %i.gz, %12
-  %i.hb = or disjoint i32 %i.ha, 1879048192
+  %i.ha = or disjoint i32 %i.gu, %i.gz
+  %i.hb = or disjoint i32 %i.ha, 2097152000
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.hb, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.hc = load i32, ptr %i.d, align 4
   %i.hd = zext i32 %i.hc to i64                   ; 2 uses
@@ -399,14 +386,13 @@ bb.a:
   %i.hf = getelementptr i8, ptr %i.he, i64 52
   %i.hg = load i32, ptr %i.hf, align 4
   %i.hh = and i32 %i.hg, 1023
-  %13 = or disjoint i32 %i.hh, 234881024
   %i.hi = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.hd
   %i.hj = getelementptr i8, ptr %i.hi, i64 52
   %i.hk = load i32, ptr %i.hj, align 4
   %i.hl = shl i32 %i.hk, 12
   %i.hm = and i32 %i.hl, 4190208
-  %i.hn = or disjoint i32 %i.hm, %13
-  %i.ho = or disjoint i32 %i.hn, 1879048192
+  %i.hn = or disjoint i32 %i.hh, %i.hm
+  %i.ho = or disjoint i32 %i.hn, 2113929216
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.ho, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   %i.hp = load i32, ptr %i.d, align 4
   %i.hq = zext i32 %i.hp to i64                   ; 2 uses
@@ -414,14 +400,13 @@ bb.a:
   %i.hs = getelementptr i8, ptr %i.hr, i64 56
   %i.ht = load i32, ptr %i.hs, align 4
   %i.hu = and i32 %i.ht, 1023
-  %14 = or disjoint i32 %i.hu, 251658240
   %i.hv = getelementptr [60 x i8], ptr @gear_seedset, i64 %i.hq
   %i.hw = getelementptr i8, ptr %i.hv, i64 56
   %i.hx = load i32, ptr %i.hw, align 4
   %i.hy = shl i32 %i.hx, 12
   %i.hz = and i32 %i.hy, 4190208
-  %i.ia = or disjoint i32 %i.hz, %14
-  %i.ib = or disjoint i32 %i.ia, 1879048192
+  %i.ia = or disjoint i32 %i.hu, %i.hz
+  %i.ib = or disjoint i32 %i.ia, 2130706432
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.ib, ptr elementtype(i32) %i.ap) #17, !srcloc !14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17

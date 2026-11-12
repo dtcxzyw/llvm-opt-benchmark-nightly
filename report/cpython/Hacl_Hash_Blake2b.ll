@@ -32,7 +32,7 @@ bb.a:
   %i.j = and i32 %2, 255
   %i.k = shl i32 %1, 8
   %i.l = and i32 %i.k, 65280
-  %i.m = or disjoint i32 %i.l, %i.j
+  %i.m = or disjoint i32 %i.j, %i.l
   %i.n = or disjoint i32 %i.m, 16842752
   %i.o = zext nneg i32 %i.n to i64
   %i.p = xor i64 %i.o, 7640891576956012808

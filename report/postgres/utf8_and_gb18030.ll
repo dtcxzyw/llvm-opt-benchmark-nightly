@@ -202,7 +202,7 @@ bb.a:
 declare i32 @UtfToLocal(ptr noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef, i32 noundef, ptr noundef, i32 noundef, i1 noundef zeroext) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal range(i32 -2127527888, 1) i32 @conv_utf8_to_18030(i32 noundef %0) #0 {
+define internal range(i32 -2127527632, 1) i32 @conv_utf8_to_18030(i32 noundef %0) #0 {
 bb.a:
   %i.a = icmp ult i32 %0, 128
   br i1 %i.a, label %utf8word_to_unicode.exit, label %bb.b
@@ -263,10 +263,10 @@ bb.g:                                             ; preds = %utf8word_to_unicode
   %i.ae = shl nuw nsw i32 %.zext, 16
   %i.af = shl nuw nsw i16 %i.ac, 8
   %i.ag = zext nneg i16 %i.af to i32
-  %1 = add nuw nsw i32 %i.ag, 33024
-  %2 = or disjoint i32 %1, %.zext72
+  %1 = or disjoint i32 %.zext72, 3178800
+  %2 = add nuw nsw i32 %1, %i.ag
   %i.ah = or i32 %i.ae, %2
-  %i.ai = or i32 %i.ah, -2127560656
+  %i.ai = or disjoint i32 %i.ah, -2130706432
   br label %bb.af
 
 bb.h:                                             ; preds = %utf8word_to_unicode.exit
@@ -286,10 +286,10 @@ bb.i:                                             ; preds = %bb.h
   %i.ap = shl nuw nsw i32 %.zext74, 16
   %i.aq = shl nuw nsw i16 %i.an, 8
   %i.ar = zext nneg i16 %i.aq to i32
-  %3 = add nuw nsw i32 %i.ar, 33024
-  %4 = or disjoint i32 %3, %.zext80
+  %3 = or disjoint i32 %.zext80, 3178800
+  %4 = add nuw nsw i32 %3, %i.ar
   %i.as = or i32 %i.ap, %4
-  %i.at = or i32 %i.as, -2127560656
+  %i.at = or disjoint i32 %i.as, -2130706432
   br label %bb.af
 
 bb.j:                                             ; preds = %bb.h
@@ -310,10 +310,10 @@ bb.k:                                             ; preds = %bb.j
   %i.bb = add nuw i32 %i.ba, 2146828288
   %i.bc = shl nuw nsw i16 %i.ay, 8
   %i.bd = zext nneg i16 %i.bc to i32
-  %5 = add nuw nsw i32 %i.bd, 33024
-  %6 = or disjoint i32 %5, %.zext88
+  %5 = or disjoint i32 %.zext88, 3178800
+  %6 = add nuw nsw i32 %5, %i.bd
   %i.be = or i32 %i.bb, %6
-  %i.bf = or i32 %i.be, -2110783440
+  %i.bf = or i32 %i.be, -2113929216
   br label %bb.af
 
 bb.l:                                             ; preds = %bb.j
@@ -334,10 +334,10 @@ bb.m:                                             ; preds = %bb.l
   %i.bn = add nuw i32 %i.bm, 2146828288
   %i.bo = shl nuw nsw i16 %i.bk, 8
   %i.bp = zext nneg i16 %i.bo to i32
-  %7 = add nuw nsw i32 %i.bp, 33024
-  %8 = or disjoint i32 %7, %.zext96
+  %7 = or disjoint i32 %.zext96, 3178800
+  %8 = add nuw nsw i32 %7, %i.bp
   %i.bq = or i32 %i.bn, %8
-  %i.br = or i32 %i.bq, -2110783440
+  %i.br = or i32 %i.bq, -2113929216
   br label %bb.af
 
 bb.n:                                             ; preds = %bb.l
@@ -358,10 +358,10 @@ bb.o:                                             ; preds = %bb.n
   %i.bz = add nuw i32 %i.by, 2146828288
   %i.ca = shl nuw nsw i16 %i.bw, 8
   %i.cb = zext nneg i16 %i.ca to i32
-  %9 = add nuw nsw i32 %i.cb, 33024
-  %10 = or disjoint i32 %9, %.zext104
+  %9 = or disjoint i32 %.zext104, 3178800
+  %10 = add nuw nsw i32 %9, %i.cb
   %i.cc = or i32 %i.bz, %10
-  %i.cd = or i32 %i.cc, -2110783440
+  %i.cd = or i32 %i.cc, -2113929216
   br label %bb.af
 
 bb.p:                                             ; preds = %bb.n
@@ -382,10 +382,10 @@ bb.q:                                             ; preds = %bb.p
   %i.cl = add nuw i32 %i.ck, 2146828288
   %i.cm = shl nuw nsw i16 %i.ci, 8
   %i.cn = zext nneg i16 %i.cm to i32
-  %11 = add nuw nsw i32 %i.cn, 33024
-  %12 = or disjoint i32 %11, %.zext112
+  %11 = or disjoint i32 %.zext112, 3178800
+  %12 = add nuw nsw i32 %11, %i.cn
   %i.co = or i32 %i.cl, %12
-  %i.cp = or i32 %i.co, -2110783440
+  %i.cp = or i32 %i.co, -2113929216
   br label %bb.af
 
 bb.r:                                             ; preds = %bb.p
@@ -406,10 +406,10 @@ bb.s:                                             ; preds = %bb.r
   %i.cx = add nuw i32 %i.cw, 2146828288
   %i.cy = shl nuw nsw i16 %i.cu, 8
   %i.cz = zext nneg i16 %i.cy to i32
-  %13 = add nuw nsw i32 %i.cz, 33024
-  %14 = or disjoint i32 %13, %.zext120
+  %13 = or disjoint i32 %.zext120, 3178800
+  %14 = add nuw nsw i32 %13, %i.cz
   %i.da = or i32 %i.cx, %14
-  %i.db = or i32 %i.da, -2110783440
+  %i.db = or i32 %i.da, -2113929216
   br label %bb.af
 
 bb.t:                                             ; preds = %bb.r
@@ -430,10 +430,10 @@ bb.u:                                             ; preds = %bb.t
   %i.dj = add nuw i32 %i.di, 2146828288
   %i.dk = shl nuw nsw i16 %i.dg, 8
   %i.dl = zext nneg i16 %i.dk to i32
-  %15 = add nuw nsw i32 %i.dl, 33024
-  %16 = or disjoint i32 %15, %.zext128
+  %15 = or disjoint i32 %.zext128, 3178800
+  %16 = add nuw nsw i32 %15, %i.dl
   %i.dm = or i32 %i.dj, %16
-  %i.dn = or i32 %i.dm, -2110783440
+  %i.dn = or i32 %i.dm, -2113929216
   br label %bb.af
 
 bb.v:                                             ; preds = %bb.t
@@ -460,10 +460,9 @@ bb.w:                                             ; preds = %bb.v
   %i.dz = or disjoint i32 %i.dy, %i.dx
   %i.ea = shl nuw nsw i16 %i.du, 8
   %i.eb = zext nneg i16 %i.ea to i32
-  %17 = add nuw nsw i32 %i.eb, 33024
-  %i.ec = or disjoint i32 %17, %.zext140
-  %18 = or i32 %i.dz, %i.ec
-  %i.ed = or disjoint i32 %18, 3145776
+  %i.ec = or disjoint i32 %.zext140, 3178800
+  %17 = add nuw nsw i32 %i.ec, %i.eb
+  %i.ed = or i32 %i.dz, %17
   br label %bb.af
 
 bb.x:                                             ; preds = %bb.v
@@ -490,10 +489,9 @@ bb.y:                                             ; preds = %bb.x
   %i.ep = or disjoint i32 %i.eo, %i.en
   %i.eq = shl nuw nsw i16 %i.ek, 8
   %i.er = zext nneg i16 %i.eq to i32
-  %19 = add nuw nsw i32 %i.er, 33024
-  %i.es = or disjoint i32 %19, %.zext152
-  %20 = or i32 %i.ep, %i.es
-  %i.et = or disjoint i32 %20, 3145776
+  %i.es = or disjoint i32 %.zext152, 3178800
+  %18 = add nuw nsw i32 %i.es, %i.er
+  %i.et = or i32 %i.ep, %18
   br label %bb.af
 
 bb.z:                                             ; preds = %bb.x
@@ -520,10 +518,9 @@ bb.aa:                                            ; preds = %bb.z
   %i.ff = or disjoint i32 %i.fe, %i.fd
   %i.fg = shl nuw nsw i16 %i.fa, 8
   %i.fh = zext nneg i16 %i.fg to i32
-  %21 = add nuw nsw i32 %i.fh, 33024
-  %i.fi = or disjoint i32 %21, %.zext164
-  %22 = or i32 %i.ff, %i.fi
-  %i.fj = or disjoint i32 %22, 3145776
+  %i.fi = or disjoint i32 %.zext164, 3178800
+  %19 = add nuw nsw i32 %i.fi, %i.fh
+  %i.fj = or i32 %i.ff, %19
   br label %bb.af
 
 bb.ab:                                            ; preds = %bb.z
@@ -540,9 +537,9 @@ bb.ac:                                            ; preds = %bb.ab
   %.zext176 = zext nneg i16 %i.fo to i32
   %i.fp = shl nuw nsw i16 %i.fn, 8
   %i.fq = zext nneg i16 %i.fp to i32
-  %23 = add nuw nsw i32 %i.fq, 33024
-  %24 = or disjoint i32 %23, %.zext176
-  %i.fr = or i32 %24, -2077163472
+  %20 = or disjoint i32 %.zext176, 3178800
+  %21 = add nuw nsw i32 %20, %i.fq
+  %i.fr = or i32 %21, -2080309248
   br label %bb.af
 
 bb.ad:                                            ; preds = %bb.ab
@@ -565,10 +562,9 @@ bb.ae:                                            ; preds = %bb.ad
   %i.gc = shl nuw nsw i32 %.zext178, 16
   %i.gd = or disjoint i32 %i.gc, %i.gb
   %i.ge = shl nuw nsw i32 %i.fy, 8
-  %25 = add nuw nsw i32 %i.ge, 33024
-  %i.gf = or disjoint i32 %25, %i.fz
-  %26 = or i32 %i.gf, %i.gd
-  %i.gg = or disjoint i32 %26, 3145776
+  %i.gf = or disjoint i32 %i.fz, 3178800
+  %22 = add nuw nsw i32 %i.gf, %i.ge
+  %i.gg = or i32 %i.gd, %22
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ad, %bb.ae, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.u, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g

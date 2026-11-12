@@ -202,15 +202,20 @@ bb.ar:                                            ; preds = %bb.ap
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.aq, %bb.ar, %bb.ao
-  %.070 = phi i32 [ %i.db, %bb.ao ], [ 32576, %bb.aq ], [ %i.dl, %bb.ar ]
+  %.070 = phi i32 [ %i.db, %bb.ao ], [ 32576, %bb.aq ], [ %i.dl, %bb.ar ] ; 3 uses
   %.0 = phi i32 [ %i.cz, %bb.ao ], [ %i.dg, %bb.aq ], [ %i.dv, %bb.ar ] ; 5 uses
-  br i1 %i.br, label %bb.aw, label %bb.at
+  br i1 %i.br, label %3, label %bb.at
+
+3:                                                ; preds = %bb.as
+  %4 = or i32 %.070, %2
+  br label %bb.aw
 
 bb.at:                                            ; preds = %bb.as
   %i.dz = icmp samesign ult i32 %2, 32768
   br i1 %i.dz, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
+  %5 = or i32 %.070, 61
   %i.ea = trunc nuw nsw i32 %2 to i16
   %i.eb = or disjoint i16 %i.ea, -32768
   %i.ec = load ptr, ptr %0, align 8
@@ -222,7 +227,8 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.at
   %i.eg = lshr i32 %2, 30
-  %i.eh = or disjoint i32 %i.eg, 62
+  %6 = or i32 %i.eg, %.070
+  %i.eh = or i32 %6, 62
   %i.ei = lshr i32 %2, 15
   %i.ej = trunc nuw i32 %i.ei to i16
   %i.ek = or i16 %i.ej, -32768
@@ -239,11 +245,10 @@ bb.av:                                            ; preds = %bb.at
   store i16 %i.ep, ptr %i.et, align 2
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.as, %bb.au, %bb.av
-  %.pn = phi i32 [ %i.eh, %bb.av ], [ 61, %bb.au ], [ %2, %bb.as ]
-  %.1 = phi i32 [ %i.er, %bb.av ], [ %i.ed, %bb.au ], [ %.0, %bb.as ]
-  %.171 = or i32 %.pn, %.070
-  %i.eu = trunc nuw nsw i32 %.171 to i16
+bb.aw:                                            ; preds = %bb.au, %bb.av, %3
+  %.pn = phi i32 [ %4, %3 ], [ %5, %bb.au ], [ %i.eh, %bb.av ]
+  %.1 = phi i32 [ %.0, %3 ], [ %i.ed, %bb.au ], [ %i.er, %bb.av ]
+  %i.eu = trunc nuw nsw i32 %.pn to i16
   %i.ev = load ptr, ptr %0, align 8
   %i.ew = load i32, ptr %i.v, align 4
   %i.ex = sext i32 %i.ew to i64

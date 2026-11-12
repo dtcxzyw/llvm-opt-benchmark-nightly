@@ -202,19 +202,17 @@ bb.w:                                             ; preds = %.lr.ph158, %_RINvNt
           to label %bb.az unwind label %.body.thread84.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .lr.ph153:                                        ; preds = %bb.w, %bb.ax
-  %i.bo = phi i64 [ %i.dn, %bb.ax ], [ %i.bl, %bb.w ] ; 6 uses
+  %i.bo = phi i64 [ %i.dn, %bb.ax ], [ %i.bl, %bb.w ] ; 7 uses
   %.sroa.010.0152 = phi i64 [ %.sroa.010.1, %bb.ax ], [ 0, %bb.w ]
   %.sroa.412.1151 = phi i64 [ %.sroa.412.2, %bb.ax ], [ %.sroa.412.0156, %bb.w ] ; 12 uses
   %.sroa.6.1150 = phi i64 [ %.sroa.6.2, %bb.ax ], [ %.sroa.6.0155, %bb.w ] ; 11 uses
-  %4 = and i64 %i.bo, 2                           ; 2 uses
-  %5 = and i64 %i.bo, -8                          ; 2 uses
-  %i.bp = and i64 %i.bo, -6
-  %i.bq = or disjoint i64 %i.bp, 4                ; 5 uses
+  %i.bp = and i64 %i.bo, -8                       ; 2 uses
+  %i.bq = or i64 %i.bo, 4                         ; 5 uses
   %i.br = trunc nuw i64 %.sroa.010.0152 to i1
   br i1 %i.br, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.lr.ph153
-  %i.bs = icmp eq i64 %5, 0
+  %i.bs = icmp eq i64 %i.bp, 0
   br i1 %i.bs, label %bb.z, label %bb.aa, !prof !9
 
 bb.y:                                             ; preds = %.lr.ph153
@@ -306,6 +304,7 @@ bb.ak:                                            ; preds = %bb.ai
 bb.al:                                            ; preds = %.noexc59
   %i.ck = load ptr, ptr %.sroa.0.0.i, align 8, !noalias !243, !nonnull !4, !noundef !4 ; 2 uses
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.cj
+  %4 = and i64 %i.bo, 2
   %i.cm = icmp eq i64 %4, 0                       ; 2 uses
   br label %.backedge.i
 
@@ -422,8 +421,9 @@ bb.av:                                            ; preds = %.loopexit
   br i1 %i.dk, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %i.dl = icmp eq i64 %5, 0
-  %i.dm = icmp eq i64 %4, 0
+  %i.dl = icmp eq i64 %i.bp, 0
+  %5 = and i64 %i.bo, 2
+  %i.dm = icmp eq i64 %5, 0
   %or.cond41 = or i1 %i.dl, %i.dm
   %.not37 = icmp ne i64 %.sroa.010.1, 0
   %or.cond42 = or i1 %or.cond41, %.not37
@@ -826,19 +826,17 @@ bb.w:                                             ; preds = %.lr.ph158, %_RINvNt
           to label %bb.az unwind label %.body.thread84.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .lr.ph153:                                        ; preds = %bb.w, %bb.ax
-  %i.bo = phi i64 [ %i.dn, %bb.ax ], [ %i.bl, %bb.w ] ; 6 uses
+  %i.bo = phi i64 [ %i.dn, %bb.ax ], [ %i.bl, %bb.w ] ; 7 uses
   %.sroa.010.0152 = phi i64 [ %.sroa.010.1, %bb.ax ], [ 0, %bb.w ]
   %.sroa.412.1151 = phi i64 [ %.sroa.412.2, %bb.ax ], [ %.sroa.412.0156, %bb.w ] ; 12 uses
   %.sroa.6.1150 = phi i64 [ %.sroa.6.2, %bb.ax ], [ %.sroa.6.0155, %bb.w ] ; 11 uses
-  %4 = and i64 %i.bo, 2                           ; 2 uses
-  %5 = and i64 %i.bo, -8                          ; 2 uses
-  %i.bp = and i64 %i.bo, -6
-  %i.bq = or disjoint i64 %i.bp, 4                ; 5 uses
+  %i.bp = and i64 %i.bo, -8                       ; 2 uses
+  %i.bq = or i64 %i.bo, 4                         ; 5 uses
   %i.br = trunc nuw i64 %.sroa.010.0152 to i1
   br i1 %i.br, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.lr.ph153
-  %i.bs = icmp eq i64 %5, 0
+  %i.bs = icmp eq i64 %i.bp, 0
   br i1 %i.bs, label %bb.z, label %bb.aa, !prof !9
 
 bb.y:                                             ; preds = %.lr.ph153
@@ -930,6 +928,7 @@ bb.ak:                                            ; preds = %bb.ai
 bb.al:                                            ; preds = %.noexc59
   %i.ck = load ptr, ptr %.sroa.0.0.i, align 8, !noalias !266, !nonnull !4, !noundef !4 ; 2 uses
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.cj
+  %4 = and i64 %i.bo, 2
   %i.cm = icmp eq i64 %4, 0                       ; 2 uses
   br label %.backedge.i
 
@@ -1046,8 +1045,9 @@ bb.av:                                            ; preds = %.loopexit
   br i1 %i.dk, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %i.dl = icmp eq i64 %5, 0
-  %i.dm = icmp eq i64 %4, 0
+  %i.dl = icmp eq i64 %i.bp, 0
+  %5 = and i64 %i.bo, 2
+  %i.dm = icmp eq i64 %5, 0
   %or.cond41 = or i1 %i.dl, %i.dm
   %.not37 = icmp ne i64 %.sroa.010.1, 0
   %or.cond42 = or i1 %or.cond41, %.not37
@@ -1450,19 +1450,17 @@ bb.w:                                             ; preds = %.lr.ph158, %_RINvNt
           to label %bb.az unwind label %.body.thread84.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .lr.ph153:                                        ; preds = %bb.w, %bb.ax
-  %i.bo = phi i64 [ %i.dm, %bb.ax ], [ %i.bl, %bb.w ] ; 6 uses
+  %i.bo = phi i64 [ %i.dm, %bb.ax ], [ %i.bl, %bb.w ] ; 7 uses
   %.sroa.010.0152 = phi i64 [ %.sroa.010.1, %bb.ax ], [ 0, %bb.w ]
   %.sroa.412.1151 = phi i64 [ %.sroa.412.2, %bb.ax ], [ %.sroa.412.0156, %bb.w ] ; 12 uses
   %.sroa.6.1150 = phi i64 [ %.sroa.6.2, %bb.ax ], [ %.sroa.6.0155, %bb.w ] ; 11 uses
-  %4 = and i64 %i.bo, 2                           ; 2 uses
-  %5 = and i64 %i.bo, -8                          ; 2 uses
-  %i.bp = and i64 %i.bo, -6
-  %i.bq = or disjoint i64 %i.bp, 4                ; 5 uses
+  %i.bp = and i64 %i.bo, -8                       ; 2 uses
+  %i.bq = or i64 %i.bo, 4                         ; 5 uses
   %i.br = trunc nuw i64 %.sroa.010.0152 to i1
   br i1 %i.br, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.lr.ph153
-  %i.bs = icmp eq i64 %5, 0
+  %i.bs = icmp eq i64 %i.bp, 0
   br i1 %i.bs, label %bb.z, label %bb.aa, !prof !9
 
 bb.y:                                             ; preds = %.lr.ph153
@@ -1556,6 +1554,7 @@ bb.al:                                            ; preds = %.noexc59
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.cj
   %i.cm = getelementptr i8, ptr %i.cg, i64 16
   %i.cn = getelementptr i8, ptr %i.cg, i64 8
+  %4 = and i64 %i.bo, 2
   %i.co = icmp eq i64 %4, 0                       ; 2 uses
   br label %.backedge.i
 
@@ -1664,8 +1663,9 @@ bb.av:                                            ; preds = %.loopexit
   br i1 %i.dj, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %i.dk = icmp eq i64 %5, 0
-  %i.dl = icmp eq i64 %4, 0
+  %i.dk = icmp eq i64 %i.bp, 0
+  %5 = and i64 %i.bo, 2
+  %i.dl = icmp eq i64 %5, 0
   %or.cond41 = or i1 %i.dk, %i.dl
   %.not37 = icmp ne i64 %.sroa.010.1, 0
   %or.cond42 = or i1 %or.cond41, %.not37
@@ -2068,19 +2068,17 @@ bb.w:                                             ; preds = %.lr.ph158, %_RINvNt
           to label %bb.ba unwind label %.body.thread84.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .lr.ph153:                                        ; preds = %bb.w, %bb.ay
-  %i.bo = phi i64 [ %i.dq, %bb.ay ], [ %i.bl, %bb.w ] ; 6 uses
+  %i.bo = phi i64 [ %i.dq, %bb.ay ], [ %i.bl, %bb.w ] ; 7 uses
   %.sroa.010.0152 = phi i64 [ %.sroa.010.1, %bb.ay ], [ 0, %bb.w ]
   %.sroa.412.1151 = phi i64 [ %.sroa.412.2, %bb.ay ], [ %.sroa.412.0156, %bb.w ] ; 12 uses
   %.sroa.6.1150 = phi i64 [ %.sroa.6.2, %bb.ay ], [ %.sroa.6.0155, %bb.w ] ; 11 uses
-  %4 = and i64 %i.bo, 2                           ; 2 uses
-  %5 = and i64 %i.bo, -8                          ; 2 uses
-  %i.bp = and i64 %i.bo, -6
-  %i.bq = or disjoint i64 %i.bp, 4                ; 5 uses
+  %i.bp = and i64 %i.bo, -8                       ; 2 uses
+  %i.bq = or i64 %i.bo, 4                         ; 5 uses
   %i.br = trunc nuw i64 %.sroa.010.0152 to i1
   br i1 %i.br, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.lr.ph153
-  %i.bs = icmp eq i64 %5, 0
+  %i.bs = icmp eq i64 %i.bp, 0
   br i1 %i.bs, label %bb.z, label %bb.aa, !prof !9
 
 bb.y:                                             ; preds = %.lr.ph153
@@ -2173,6 +2171,7 @@ bb.al:                                            ; preds = %.noexc59
   %i.ck = load ptr, ptr %.sroa.0.0.i, align 8, !noalias !312, !nonnull !4, !noundef !4 ; 2 uses
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.cj
   %i.cm = getelementptr i8, ptr %i.cg, i64 8
+  %4 = and i64 %i.bo, 2
   %i.cn = icmp eq i64 %4, 0                       ; 2 uses
   br label %.backedge.i
 
@@ -2298,8 +2297,9 @@ bb.aw:                                            ; preds = %.loopexit
   br i1 %i.dn, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.do = icmp eq i64 %5, 0
-  %i.dp = icmp eq i64 %4, 0
+  %i.do = icmp eq i64 %i.bp, 0
+  %5 = and i64 %i.bo, 2
+  %i.dp = icmp eq i64 %5, 0
   %or.cond41 = or i1 %i.do, %i.dp
   %.not37 = icmp ne i64 %.sroa.010.1, 0
   %or.cond42 = or i1 %or.cond41, %.not37

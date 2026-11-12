@@ -204,8 +204,6 @@ put_bits.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4384 ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 4388       ; 2 uses
   %i.c = load i32, ptr %i.a, align 8, !tbaa !55
-  %1 = shl i32 %i.c, 25
-  %2 = or disjoint i32 %1, 512
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 6328
   %i.e = load i32, ptr %i.d, align 8, !tbaa !91
   %i.f = sext i32 %i.e to i64
@@ -222,19 +220,21 @@ put_bits.exit:
   %i.q = mul nsw i64 %i.p, 1001
   %i.r = sdiv i64 %i.m, %i.q
   %i.s = trunc i64 %i.r to i32
-  %3 = and i32 %i.s, 31
-  %4 = or disjoint i32 %3, %2
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1280
   %i.u = load i32, ptr %i.t, align 16, !tbaa !95
   %i.v = icmp eq i32 %i.u, 1
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 10996 ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !53
-  %i.w = shl i32 %4, 4
-  %7 = select i1 %i.v, i32 2, i32 0
-  %i.x = or disjoint i32 %i.w, %7
-  %i.y = or i32 %i.x, %6
-  %i.z = shl i32 %i.y, 2
-  %i.aa = or disjoint i32 %i.z, 3                 ; 2 uses
+  %1 = zext i1 %i.v to i32
+  %2 = shl i32 %i.c, 28
+  %i.w = shl i32 %i.s, 3
+  %3 = and i32 %i.w, 248
+  %i.x = or disjoint i32 %2, %3
+  %i.y = or disjoint i32 %i.x, %1
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 10996 ; 2 uses
+  %5 = load i32, ptr %4, align 4, !tbaa !53
+  %6 = shl i32 %i.y, 3
+  %i.z = shl i32 %5, 2
+  %7 = or i32 %6, %i.z
+  %i.aa = or i32 %7, 32771                        ; 2 uses
   store i32 %i.aa, ptr %i.a, align 16, !tbaa !55
   store i32 1, ptr %i.b, align 4, !tbaa !56
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 4408
@@ -263,7 +263,7 @@ bb.b:                                             ; preds = %put_bits.exit
 put_bits.exit48:                                  ; preds = %bb.a, %bb.b
   store i32 0, ptr %i.a, align 16, !tbaa !55
   store i32 32, ptr %i.b, align 4, !tbaa !56
-  %i.an = load i32, ptr %5, align 4, !tbaa !53
+  %i.an = load i32, ptr %4, align 4, !tbaa !53
   %i.ao = add i32 %i.an, -1
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 10992
   store i32 %i.ao, ptr %i.ap, align 16, !tbaa !54

@@ -204,8 +204,7 @@ bb.a:
   %i.k = load i32, ptr %i.j, align 4
   %i.l = shl i32 %i.k, 3
   %i.m = zext i1 %2 to i32
-  %3 = or disjoint i32 %i.l, %i.m                 ; 2 uses
-  %i.n = or disjoint i32 %3, 4
+  %i.n = or disjoint i32 %i.l, %i.m               ; 2 uses
   %i.o = tail call zeroext i1 @sme_enabled_check_with_svcr(ptr noundef %0, i32 noundef 3) #10
   br i1 %i.o, label %bb.b, label %do_azz_acc_fp.exit
 
@@ -227,7 +226,8 @@ bb.b:                                             ; preds = %bb.a
   %i.z = ptrtoint ptr %i.t to i64                 ; 2 uses
   %i.aa = ptrtoint ptr %i.s to i64                ; 2 uses
   %i.ab = zext nneg i32 %i.a to i64
-  %i.ac = or disjoint i32 %3, 6
+  %3 = or disjoint i32 %i.n, 4
+  %i.ac = or disjoint i32 %i.n, 6
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -247,7 +247,7 @@ bb.b:                                             ; preds = %bb.a
   %i.am = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.an = ptrtoint ptr %i.ai to i64               ; 2 uses
   %i.ao = shl i32 %i.al, 8
-  %i.ap = tail call i32 @simd_desc(i32 noundef %.val.i, i32 noundef %.val.i, i32 noundef %i.n) #10
+  %i.ap = tail call i32 @simd_desc(i32 noundef %.val.i, i32 noundef %.val.i, i32 noundef %3) #10
   %i.aq = sext i32 %i.ao to i64
   tail call void @tcg_gen_addi_i64(ptr noundef %i.t, ptr noundef %i.r, i64 noundef range(i64 -2147483648, 2147483648) %i.aq) #10
   %i.ar = tail call ptr @tcg_constant_i32(i32 noundef %i.ap) #10

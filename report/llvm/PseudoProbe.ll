@@ -202,16 +202,16 @@ bb.j:                                             ; preds = %_ZNK4llvm10DILocati
   %i.cd = fptoui float %i.cc to i32
   %i.ce = shl nuw nsw i32 %.0.i, 3
   %i.cf = shl i32 %i.cd, 19
-  %3 = icmp samesign ult i32 %.0.i, 8192
-  %or.cond7.i = and i1 %.not.i40, %3
-  %i.cg = or disjoint i32 %i.ca, 268435456
-  %i.ch = select i1 %or.cond7.i, i32 %i.cg, i32 0
-  %i.ci = or disjoint i32 %i.ce, %i.bz
-  %4 = or disjoint i32 %i.cf, 7
-  %5 = select i1 %i.cb, i32 %4, i32 52428807
-  %i.cj = or i32 %5, %i.ci
-  %.0.i41.a = or i32 %i.cj, %i.ch
-  %i.ck = tail call noundef ptr @_ZNK4llvm10DILocation22cloneWithDiscriminatorEj(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, i32 noundef %.0.i41.a)
+  %3 = or disjoint i32 %i.ce, %i.bz
+  %i.cg = or disjoint i32 %i.cf, 7
+  %i.ch = select i1 %i.cb, i32 %i.cg, i32 52428807
+  %i.ci = or i32 %i.ch, %3                        ; 2 uses
+  %4 = icmp samesign ult i32 %.0.i, 8192
+  %or.cond7.i = and i1 %.not.i40, %4
+  %i.cj = or i32 %i.ca, %i.ci
+  %.0.i41.a = or i32 %i.cj, 268435456
+  %.0.i41 = select i1 %or.cond7.i, i32 %.0.i41.a, i32 %i.ci
+  %i.ck = tail call noundef ptr @_ZNK4llvm10DILocation22cloneWithDiscriminatorEj(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, i32 noundef %.0.i41)
   store ptr %i.ck, ptr %i.be, align 8, !tbaa !84
   br label %.critedge
 

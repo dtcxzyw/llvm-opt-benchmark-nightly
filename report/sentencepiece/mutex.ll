@@ -202,13 +202,14 @@ _ZNSt13__atomic_baseIlE21compare_exchange_weakERllSt12memory_orderS2_.exit: ; pr
   %i.ax = icmp eq i64 %i.aw, 0
   %i.ay = select i1 %i.ax, i64 -34, i64 -41
   %i.az = and i64 %i.ap, 159
-  %i.ba = and i64 %i.az, %i.ay
+  %i.ba = and i64 %i.az, %i.ay                    ; 2 uses
   %.not206 = icmp eq ptr %.0131, null
   %i.bb = ptrtoint ptr %.0131 to i64
-  %i.bc = or i64 %i.bb, 4
+  %3 = or i64 %i.ba, %i.bb
+  %i.bc = or i64 %3, 4
   %i.bd = and i64 %i.as, -256
-  %.pn207 = select i1 %.not206, i64 %i.bd, i64 %i.bc
-  %.0134 = or i64 %.pn207, %i.ba
+  %4 = or disjoint i64 %i.ba, %i.bd
+  %.0134 = select i1 %.not206, i64 %4, i64 %i.bc
   %i.be = cmpxchg weak ptr %0, i64 %i.ap, i64 %.0134 release monotonic, align 8
   %i.bf = extractvalue { i64, i1 } %i.be, 1
   br i1 %i.bf, label %.loopexit278, label %bb.p, !llvm.loop !116

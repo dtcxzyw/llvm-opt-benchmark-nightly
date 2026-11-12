@@ -204,8 +204,8 @@ bb.o:                                             ; preds = %bb.m
 cpu_x86_load_seg_cache.exit51:                    ; preds = %bb.n, %bb.o
   %.041.i45 = phi i32 [ %i.bz, %bb.o ], [ %i.bp, %bb.n ]
   %i.ca = and i32 %i.g, -32884
-  %i.cb = or disjoint i32 %i.ca, 16
-  %i.cc = or i32 %.041.i45, %i.cb
+  %i.cb = or i32 %i.ca, %.041.i45
+  %i.cc = or i32 %i.cb, 16
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ce = load i64, ptr %i.cd, align 8
   %i.cf = and i64 %i.ce, 4294967295
@@ -324,8 +324,7 @@ bb.w:                                             ; preds = %bb.u
 cpu_x86_load_seg_cache.exit68:                    ; preds = %bb.v, %bb.w
   %.041.i62 = phi i32 [ %i.el, %bb.w ], [ %i.eb, %bb.v ]
   %i.em = and i32 %i.g, -49268
-  %2 = or disjoint i32 %i.em, 16
-  %i.en = or i32 %.041.i62, %2
+  %i.en = or i32 %i.em, %.041.i62
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ep = load i64, ptr %i.eo, align 8
   %i.eq = and i64 %i.ep, 4294967295
@@ -339,7 +338,7 @@ cpu_x86_load_seg_cache.exit68:                    ; preds = %bb.v, %bb.w
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 376
   store i32 -1, ptr %i.ev, align 8
   store i32 12645120, ptr %i.dw, align 4
-  %i.ew = or i32 %i.en, 3
+  %i.ew = or i32 %i.en, 19
   store i32 %i.ew, ptr %i.f, align 16
   tail call void @cpu_sync_bndcs_hflags(ptr noundef nonnull %0) #12
   %i.ex = load i32, ptr %i.dw, align 4
@@ -742,8 +741,8 @@ bb.f:                                             ; preds = %bb.d
 cpu_x86_load_seg_cache.exit22:                    ; preds = %bb.e, %bb.f
   %.041.i16 = phi i32 [ %i.ao, %bb.f ], [ %i.ae, %bb.e ]
   %i.ap = and i32 %i.j, -49265
-  %i.aq = or disjoint i32 %i.ap, 16
-  %i.ar = or i32 %.041.i16, %i.aq
+  %i.aq = or i32 %i.ap, %.041.i16
+  %i.ar = or i32 %i.aq, 16
   br label %bb.g
 
 bb.g:                                             ; preds = %cpu_x86_load_seg_cache.exit22, %cpu_x86_load_seg_cache.exit
@@ -1000,8 +999,7 @@ bb.p:                                             ; preds = %bb.n
 cpu_x86_load_seg_cache.exit33:                    ; preds = %bb.o, %bb.p
   %.041.i27 = phi i32 [ %i.cq, %bb.p ], [ %i.cg, %bb.o ]
   %i.cr = and i32 %i.b, -32884
-  %2 = or disjoint i32 %i.cr, 16
-  %i.cs = or i32 %.041.i27, %2
+  %i.cs = or i32 %i.cr, %.041.i27
   %i.ct = add i32 %i.e, 24
   %i.cu = and i32 %i.ct, 65532
   %i.cv = or disjoint i32 %i.cu, 3
@@ -1012,7 +1010,7 @@ cpu_x86_load_seg_cache.exit33:                    ; preds = %bb.o, %bb.p
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 376
   store i32 -1, ptr %i.cy, align 8
   store i32 12645120, ptr %i.bw, align 4
-  %i.cz = or i32 %i.cs, 3
+  %i.cz = or i32 %i.cs, 19
   store i32 %i.cz, ptr %i.a, align 16
   tail call void @cpu_sync_bndcs_hflags(ptr noundef nonnull %0) #12
   %i.da = load i32, ptr %i.bw, align 4

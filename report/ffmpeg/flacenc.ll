@@ -205,15 +205,15 @@ bb.ax:                                            ; preds = %bb.av
 
 put_bits.exit46.i.i:                              ; preds = %bb.ax, %bb.aw
   %.sink.i104 = phi i32 [ %i.abt, %bb.ax ], [ %i.abs, %bb.aw ]
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  %5 = load i32, ptr %4, align 8, !tbaa !45
-  %6 = shl i32 %i.abl, 11
-  %7 = shl i32 %i.abn, 7
-  %8 = or i32 %6, %7
-  %9 = or i32 %8, 2147221504
-  %i.abu = shl i32 %.sink.i104, 3
-  %i.abv = or i32 %i.abu, %9
-  %i.abw = or i32 %i.abv, %5                      ; 2 uses
+  %4 = shl i32 %i.abl, 8
+  %5 = shl i32 %i.abn, 4
+  %6 = or i32 %5, %4
+  %7 = or i32 %6, %.sink.i104
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
+  %9 = load i32, ptr %8, align 8, !tbaa !45
+  %i.abu = shl i32 %7, 3
+  %i.abv = or i32 %9, %i.abu
+  %i.abw = or i32 %i.abv, 2147221504              ; 2 uses
   store i32 %i.abw, ptr %i.abc, align 8, !tbaa !158
   store i32 1, ptr %i.abj, align 4, !tbaa !159
   %i.abx = icmp sgt i32 %.val83, 3

@@ -146,12 +146,12 @@ Encode.exit:
   %i.c = load i8, ptr %i.b, align 8, !tbaa !17
   %i.d = shl i8 %i.c, 3
   %i.e = and i8 %i.d, 56
-  %2 = or disjoint i8 %i.e, 1
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 170
   %i.g = load i16, ptr %i.f, align 2, !tbaa !18   ; 2 uses
   %.tr = trunc i16 %i.g to i8
   %i.h = shl i8 %.tr, 6
-  %i.i = or disjoint i8 %i.h, %2
+  %2 = or disjoint i8 %i.h, %i.e
+  %i.i = or disjoint i8 %2, 1
   store i8 %i.i, ptr %i.a, align 1, !tbaa !21
   %i.j = lshr i16 %i.g, 2
   %i.k = trunc i16 %i.j to i8
@@ -554,12 +554,12 @@ Encode.exit:
   %i.c = load i8, ptr %i.b, align 8, !tbaa !17
   %i.d = shl i8 %i.c, 3
   %i.e = and i8 %i.d, 56
-  %2 = or disjoint i8 %i.e, 1
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 170
   %i.g = load i16, ptr %i.f, align 2, !tbaa !18   ; 2 uses
   %.tr = trunc i16 %i.g to i8
   %i.h = shl i8 %.tr, 6
-  %i.i = or disjoint i8 %i.h, %2
+  %2 = or disjoint i8 %i.h, %i.e
+  %i.i = or disjoint i8 %2, 1
   store i8 %i.i, ptr %i.a, align 1, !tbaa !21
   %i.j = lshr i16 %i.g, 2
   %i.k = trunc i16 %i.j to i8
@@ -835,12 +835,12 @@ Encode.exit:
   %i.c = load i8, ptr %i.b, align 8, !tbaa !17
   %i.d = shl i8 %i.c, 3
   %i.e = and i8 %i.d, 56
-  %2 = or disjoint i8 %i.e, 1
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 170
   %i.g = load i16, ptr %i.f, align 2, !tbaa !18   ; 2 uses
   %.tr = trunc i16 %i.g to i8
   %i.h = shl i8 %.tr, 6
-  %i.i = or disjoint i8 %i.h, %2
+  %2 = or disjoint i8 %i.h, %i.e
+  %i.i = or disjoint i8 %2, 1
   store i8 %i.i, ptr %i.a, align 1, !tbaa !21
   %i.j = lshr i16 %i.g, 2
   %i.k = trunc i16 %i.j to i8
@@ -1130,12 +1130,12 @@ Encode.exit:
   %i.c = load i8, ptr %i.b, align 8, !tbaa !17
   %i.d = shl i8 %i.c, 3
   %i.e = and i8 %i.d, 56
-  %2 = or disjoint i8 %i.e, 1
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 170
   %i.g = load i16, ptr %i.f, align 2, !tbaa !18   ; 2 uses
   %.tr = trunc i16 %i.g to i8
   %i.h = shl i8 %.tr, 6
-  %i.i = or disjoint i8 %i.h, %2
+  %2 = or disjoint i8 %i.h, %i.e
+  %i.i = or disjoint i8 %2, 1
   store i8 %i.i, ptr %i.a, align 1, !tbaa !21
   %i.j = lshr i16 %i.g, 2
   %i.k = trunc i16 %i.j to i8
@@ -1432,12 +1432,12 @@ Encode.exit:
   %i.c = load i8, ptr %i.b, align 8, !tbaa !17
   %i.d = shl i8 %i.c, 3
   %i.e = and i8 %i.d, 56
-  %2 = or disjoint i8 %i.e, 1
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 170
   %i.g = load i16, ptr %i.f, align 2, !tbaa !18   ; 2 uses
   %.tr = trunc i16 %i.g to i8
   %i.h = shl i8 %.tr, 6
-  %i.i = or disjoint i8 %i.h, %2
+  %2 = or disjoint i8 %i.h, %i.e
+  %i.i = or disjoint i8 %2, 1
   store i8 %i.i, ptr %i.a, align 1, !tbaa !21
   %i.j = lshr i16 %i.g, 2
   %i.k = trunc i16 %i.j to i8

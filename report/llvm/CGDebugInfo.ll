@@ -205,8 +205,7 @@ bb.cb:                                            ; preds = %tailrecurse
   %i.hz = and i64 %i.hy, 512
   %i.ia = lshr i64 %i.hx, 5
   %i.ib = and i64 %i.ia, 8388608
-  %16 = or disjoint i64 %i.hz, %i.ib
-  %i.ic = or disjoint i64 %16, 4472834
+  %i.ic = or disjoint i64 %i.hz, %i.ib
   %i.id = and i64 %i.hx, 8192
   %.not.i = icmp eq i64 %i.id, 0
   %i.ie = shl i64 %i.hx, 21
@@ -239,10 +238,10 @@ bb.cb:                                            ; preds = %tailrecurse
   %i.je = and i64 %i.jd, 140737488355328
   %.masked.masked.masked = or i64 %i.is, %i.iu
   %.masked1080.masked = or i64 %.masked.masked.masked, %i.iw
-  %.masked = or i64 %.masked1080.masked, %i.ic
+  %.masked = or i64 %i.ic, %.masked1080.masked
   %i.jf = or i64 %.masked, %i.ja
   %i.jg = or i64 %i.jf, %i.je
-  %i.jh = xor i64 %i.jg, 1610612736
+  %i.jh = xor i64 %i.jg, 1615085570
   store i64 %i.jh, ptr %7, align 8
   %i.ji = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.ji, align 8, !tbaa !2693
@@ -645,8 +644,7 @@ bb.ef:                                            ; preds = %tailrecurse, %tailr
   %i.uh = and i64 %i.ug, 512
   %i.ui = lshr i64 %i.uf, 5
   %i.uj = and i64 %i.ui, 8388608
-  %17 = or disjoint i64 %i.uh, %i.uj
-  %i.uk = or disjoint i64 %17, 4472834
+  %i.uk = or disjoint i64 %i.uh, %i.uj
   %i.ul = and i64 %i.uf, 8192
   %.not.i161 = icmp eq i64 %i.ul, 0
   %i.um = shl i64 %i.uf, 21
@@ -679,10 +677,10 @@ bb.ef:                                            ; preds = %tailrecurse, %tailr
   %i.vm = and i64 %i.vl, 140737488355328
   %.masked767.masked.masked = or i64 %i.va, %i.vc
   %.masked1083.masked = or i64 %.masked767.masked.masked, %i.ve
-  %.masked1085 = or i64 %.masked1083.masked, %i.uk
+  %.masked1085 = or i64 %i.uk, %.masked1083.masked
   %i.vn = or i64 %.masked1085, %i.vi
   %i.vo = or i64 %i.vn, %i.vm
-  %i.vp = xor i64 %i.vo, 1610612736
+  %i.vp = xor i64 %i.vo, 1615085570
   store i64 %i.vp, ptr %15, align 8
   %i.vq = getelementptr inbounds nuw i8, ptr %15, i64 8
   store ptr null, ptr %i.vq, align 8, !tbaa !2693

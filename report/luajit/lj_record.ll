@@ -80,14 +80,15 @@ bb.f:                                             ; preds = %bb.e
   %.034 = phi i32 [ %2, %bb.d ], [ %i.ab, %bb.f ], [ %2, %bb.b ]
   %.033 = phi i32 [ %i.u, %bb.d ], [ %1, %bb.f ], [ %1, %bb.b ]
   %.031 = phi i32 [ 14, %bb.d ], [ 14, %bb.f ], [ %i.i, %bb.b ]
-  %i.ac = select i1 %.not, i32 2432, i32 2176
-  %i.ad = or i32 %i.ac, %.031
+  %i.ac = select i1 %.not, i32 2304, i32 2048
+  %i.ad = or i32 %.031, %i.ac
   %i.ae = trunc nuw nsw i32 %i.ad to i16
+  %5 = or i16 %i.ae, 128
   %i.af = trunc i32 %.033 to i16
   %i.ag = trunc i32 %.034 to i16
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 188
-  store i16 %i.ae, ptr %i.ai, align 4, !tbaa !9
+  store i16 %5, ptr %i.ai, align 4, !tbaa !9
   store i16 %i.af, ptr %i.ah, align 8, !tbaa !9
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 186
   store i16 %i.ag, ptr %i.aj, align 2, !tbaa !9
@@ -490,9 +491,9 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.av
   %i.ju = shl nuw nsw i32 %i.jc, 8
-  %2 = or disjoint i32 %.0.i258.fr, 128
-  %3 = add nuw nsw i32 %2, %i.ju
-  %4 = trunc nuw nsw i32 %3 to i16
+  %2 = add nuw nsw i32 %.0.i258.fr, %i.ju
+  %3 = trunc nuw nsw i32 %2 to i16
+  %4 = or disjoint i16 %3, 128
   store i16 %4, ptr %i.h, align 4, !tbaa !9
   store i16 %i.iw, ptr %i.g, align 8, !tbaa !9
   store i16 0, ptr %i.i, align 2, !tbaa !9
@@ -729,12 +730,12 @@ bb.cd:                                            ; preds = %bb.cb
   %i.nb = icmp ult i64 %i.na, -14
   %i.nc = trunc nsw i64 %i.na to i32
   %i.nd = xor i32 %i.nc, -1
+  %.0.i = select i1 %i.nb, i32 14, i32 %i.nd
   %5 = shl nuw nsw i32 %i.jc, 8
-  %6 = or disjoint i32 %i.nd, 128
-  %7 = select i1 %i.nb, i32 142, i32 %6
-  %8 = add nuw nsw i32 %7, %5
-  %9 = trunc nuw nsw i32 %8 to i16
-  store i16 %9, ptr %i.h, align 4, !tbaa !9
+  %6 = add nuw nsw i32 %.0.i, %5
+  %7 = trunc nuw nsw i32 %6 to i16
+  %8 = or disjoint i16 %7, 128
+  store i16 %8, ptr %i.h, align 4, !tbaa !9
   store i16 %i.iw, ptr %i.g, align 8, !tbaa !9
   store i16 0, ptr %i.i, align 2, !tbaa !9
   %i.ne = tail call i32 @lj_opt_fold(ptr noundef nonnull %0) #8 ; 0 uses
@@ -1137,7 +1138,7 @@ bb.al:                                            ; preds = %rec_for_iter.exit, 
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 136
   store ptr %.sink126, ptr %i.gz, align 8, !tbaa !56
   tail call void @lj_snap_add(ptr noundef nonnull %0) #8
-  %i.ha = or i32 %.1, %.0103106
+  %i.ha = or i32 %.0103106, %.1
   %i.hb = trunc i32 %i.ha to i16
   %i.hc = or i16 %i.hb, 128
   %i.hd = load i32, ptr %i.l, align 4, !tbaa !37
@@ -1540,7 +1541,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.f = phi i32 [ %i.d, %bb.c ], [ %i.e, %bb.d ]
   %.not.not50 = icmp eq i32 %2, 0
   %i.g = shl nuw nsw i32 %2, 8
-  %i.h = or i32 %1, %i.g
+  %i.h = or i32 %i.g, %1
   %i.i = trunc i32 %i.h to i16
   %i.j = or i16 %i.i, 128
   %i.k = trunc i32 %i.f to i16

@@ -205,13 +205,13 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.077 = phi i32 [ %i.au, %bb.g ], [ 0, %bb.f ]
+  %.077 = phi i32 [ %i.au, %bb.g ], [ 0, %bb.f ]  ; 2 uses
   %i.av = trunc i8 %.079 to i1
   %i.aw = shl i32 %i.w, 8
   %i.ax = and i32 %i.aw, 1792
-  %i.ay = or disjoint i32 %i.ax, -2147481600
-  %2 = select i1 %i.av, i32 %i.ay, i32 0
-  %.1 = or i32 %.077, %2                          ; 2 uses
+  %i.ay = or i32 %i.ax, %.077
+  %2 = or i32 %i.ay, -2147481600
+  %.1 = select i1 %i.av, i32 %2, i32 %.077        ; 2 uses
   %i.az = and i8 %i.ao, 4
   %.not122 = icmp eq i8 %i.az, 0
   br i1 %.not122, label %bb.j, label %bb.i

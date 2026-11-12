@@ -205,7 +205,7 @@ ma_pivots.exit69:                                 ; preds = %ma_slots.exit67, %m
   %i.au = trunc i64 %i.at to i32
   %i.av = lshr i32 %i.au, 3
   %i.aw = and i32 %i.av, 15
-  %i.ax = and i64 %i.at, -256                     ; 4 uses
+  %i.ax = and i64 %i.at, -256                     ; 6 uses
   switch i32 %i.aw, label %mas_set_parent.exit.preheader [
     i32 0, label %bb.d
     i32 1, label %bb.e
@@ -225,13 +225,14 @@ mas_set_parent.exit.preheader.new:                ; preds = %mas_set_parent.exit
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph, %.lr.ph
   %wide.trip.count = zext i8 %2 to i64            ; 2 uses
-  %invariant.op = or disjoint i64 %i.ax, 6        ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.az = icmp eq i8 %2, 1
   br i1 %i.az, label %mas_set_parent.exit.us.epil.preheader, label %.lr.ph.split.split.us.new
 
 .lr.ph.split.split.us.new:                        ; preds = %.lr.ph.split.split.us
   %unroll_iter = and i64 %wide.trip.count, 254
+  %invariant.op9 = or i64 %i.ax, 6
+  %invariant.op = or i64 %i.ax, 6
   br label %mas_set_parent.exit.us
 
 mas_set_parent.exit.us:                           ; preds = %mas_set_parent.exit.us, %.lr.ph.split.split.us.new
@@ -243,7 +244,7 @@ mas_set_parent.exit.us:                           ; preds = %mas_set_parent.exit
   %i.bd = add i8 %6, %i.ba
   %i.be = zext i8 %i.bd to i64
   %i.bf = shl nuw nsw i64 %i.be, 3
-  %.reass = or i64 %i.bf, %invariant.op
+  %.reass = or i64 %i.bf, %invariant.op9
   %i.bg = inttoptr i64 %.reass to ptr
   %i.bh = ptrtoint ptr %i.bc to i64
   %i.bi = and i64 %i.bh, -256
@@ -343,7 +344,8 @@ mas_set_parent.exit.us.epil.preheader:            ; preds = %.loopexit.loopexit2
   %i.db = add i8 %6, %i.cy
   %i.dc = zext i8 %i.db to i64
   %i.dd = shl nuw nsw i64 %i.dc, 3
-  %.reass.epil = or i64 %i.dd, %invariant.op
+  %invariant.op.epil = or i64 %i.ax, %i.dd
+  %.reass.epil = or disjoint i64 %invariant.op.epil, 6
   %i.de = inttoptr i64 %.reass.epil to ptr
   %i.df = ptrtoint ptr %i.da to i64
   %i.dg = and i64 %i.df, -256

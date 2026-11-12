@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.b
   %i.f = tail call i64 @LFUGetTimeInMinutes() #13
   %i.g = shl i64 %i.f, 48
   %i.h = load i64, ptr %0, align 8
-  %1 = or disjoint i64 %i.g, 5497558138880
-  %2 = and i64 %i.h, 1099511627775
-  %i.i = or disjoint i64 %2, %1
+  %1 = and i64 %i.h, 1099511627775
+  %2 = or disjoint i64 %1, %i.g
+  %i.i = or disjoint i64 %2, 5497558138880
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
