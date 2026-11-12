@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i:                                         ; preds = %bb.d, %bb.h
   %.sroa.06.041.i = phi i64 [ %i.bt, %bb.h ], [ 0, %bb.d ] ; 7 uses
     #dbg_value(i64 %.sroa.06.041.i, !75337, !DIExpression(), !75131)
-    #dbg_value(i16 0, !75342, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !75133)
-    #dbg_value(i16 0, !75342, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !75133)
-    #dbg_value(i16 0, !75342, !DIExpression(DW_OP_LLVM_fragment, 32, 16), !75133)
-    #dbg_value(i16 0, !75342, !DIExpression(DW_OP_LLVM_fragment, 48, 16), !75133)
+    #dbg_value(<16 x i1> zeroinitializer, !75342, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !75133)
+    #dbg_value(<16 x i1> zeroinitializer, !75342, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !75133)
+    #dbg_value(<16 x i1> zeroinitializer, !75342, !DIExpression(DW_OP_LLVM_fragment, 32, 16), !75133)
+    #dbg_value(<16 x i1> zeroinitializer, !75342, !DIExpression(DW_OP_LLVM_fragment, 48, 16), !75133)
     #dbg_value(i64 0, !75343, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75134)
     #dbg_value(i64 4, !75343, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !75134)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.06.041.i ; 8 uses
@@ -247,15 +247,13 @@ bb.d:                                             ; preds = %bb.c
     #dbg_declare(ptr poison, !75539, !DIExpression(), !75184)
     #dbg_value(<16 x i8> poison, !75545, !DIExpression(), !75189)
     #dbg_value(<16 x i8> poison, !75550, !DIExpression(), !75190)
-    #dbg_value(i64 1, !75343, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75134)
-  %2 = bitcast <16 x i1> %i.aj to i16, !dbg !75577 ; 2 uses
-    #dbg_value(i16 %2, !75342, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !75133)
+    #dbg_value(<16 x i1> %i.aj, !75342, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !75133)
     #dbg_value(i64 1, !75343, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !75134)
     #dbg_value(i64 1, !75344, !DIExpression(), !75135)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 16), !75482, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75145)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 16), !75500, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75148)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 16), !75500, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75150)
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 16, !dbg !75578
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 16, !dbg !75577
     #dbg_value(ptr %i.ak, !75504, !DIExpression(), !75153)
     #dbg_value(ptr %i.ak, !75510, !DIExpression(), !75156)
   %.sroa.0.0.copyload.i.1.i = load <16 x i8>, ptr %i.ak, align 1, !dbg !75571, !alias.scope !75310, !noalias !75512
@@ -272,15 +270,13 @@ bb.d:                                             ; preds = %bb.c
   %i.an = icmp eq <16 x i8> %.sroa.01.0.copyload.i.1.i, splat (i8 48), !dbg !75575
   %i.ao = and <16 x i1> %i.am, %i.an, !dbg !75576
     #dbg_declare(ptr poison, !75539, !DIExpression(), !75184)
-    #dbg_value(i64 2, !75343, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75134)
-  %3 = bitcast <16 x i1> %i.ao to i16, !dbg !75577 ; 2 uses
-    #dbg_value(i16 %3, !75342, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !75133)
+    #dbg_value(<16 x i1> %i.ao, !75342, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !75133)
     #dbg_value(i64 2, !75343, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !75134)
     #dbg_value(i64 2, !75344, !DIExpression(), !75135)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 32), !75482, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75145)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 32), !75500, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75148)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 32), !75500, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75150)
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.af, i64 32, !dbg !75578
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.af, i64 32, !dbg !75577
     #dbg_value(ptr %i.ap, !75504, !DIExpression(), !75153)
     #dbg_value(ptr %i.ap, !75510, !DIExpression(), !75156)
   %.sroa.0.0.copyload.i.2.i = load <16 x i8>, ptr %i.ap, align 1, !dbg !75571, !alias.scope !75310, !noalias !75512
@@ -297,15 +293,13 @@ bb.d:                                             ; preds = %bb.c
   %i.as = icmp eq <16 x i8> %.sroa.01.0.copyload.i.2.i, splat (i8 48), !dbg !75575
   %i.at = and <16 x i1> %i.ar, %i.as, !dbg !75576
     #dbg_declare(ptr poison, !75539, !DIExpression(), !75184)
-    #dbg_value(i64 3, !75343, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75134)
-  %4 = bitcast <16 x i1> %i.at to i16, !dbg !75577 ; 2 uses
-    #dbg_value(i16 %4, !75342, !DIExpression(DW_OP_LLVM_fragment, 32, 16), !75133)
+    #dbg_value(<16 x i1> %i.at, !75342, !DIExpression(DW_OP_LLVM_fragment, 32, 16), !75133)
     #dbg_value(i64 3, !75343, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !75134)
     #dbg_value(i64 3, !75344, !DIExpression(), !75135)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 48), !75482, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75145)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 48), !75500, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75148)
     #dbg_value(!DIArgList(i64 %.sroa.06.041.i, i64 48), !75500, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_or, DW_OP_stack_value), !75150)
-  %i.au = getelementptr inbounds nuw i8, ptr %i.af, i64 48, !dbg !75578
+  %i.au = getelementptr inbounds nuw i8, ptr %i.af, i64 48, !dbg !75577
     #dbg_value(ptr %i.au, !75504, !DIExpression(), !75153)
     #dbg_value(ptr %i.au, !75510, !DIExpression(), !75156)
   %.sroa.0.0.copyload.i.3.i = load <16 x i8>, ptr %i.au, align 1, !dbg !75571, !alias.scope !75310, !noalias !75512
@@ -323,13 +317,13 @@ bb.d:                                             ; preds = %bb.c
   %i.ay = and <16 x i1> %i.aw, %i.ax, !dbg !75576
     #dbg_declare(ptr poison, !75539, !DIExpression(), !75184)
     #dbg_value(i64 4, !75343, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75134)
-  %i.az = bitcast <16 x i1> %i.ay to i16, !dbg !75577 ; 2 uses
-    #dbg_value(i16 %i.az, !75342, !DIExpression(DW_OP_LLVM_fragment, 48, 16), !75133)
+    #dbg_value(<16 x i1> %i.ay, !75342, !DIExpression(DW_OP_LLVM_fragment, 48, 16), !75133)
     #dbg_value(i8 0, !75338, !DIExpression(), !75132)
     #dbg_value(i64 1, !75345, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75191)
     #dbg_value(i64 0, !75346, !DIExpression(), !75192)
-    #dbg_value(i16 %2, !75347, !DIExpression(), !75193)
-  %i.ba = icmp eq i16 %2, 0, !dbg !75579
+  %i.az = bitcast <16 x i1> %i.aj to i16, !dbg !75578 ; 2 uses
+    #dbg_value(i16 %i.az, !75347, !DIExpression(), !75193)
+  %i.ba = icmp eq i16 %i.az, 0, !dbg !75579
   br i1 %i.ba, label %.preheader35.1.i, label %bb.i, !dbg !75579
 
 .preheader35.1.i:                                 ; preds = %bb.i, %.lr.ph.i
@@ -337,14 +331,15 @@ bb.d:                                             ; preds = %bb.c
     #dbg_value(i8 %.sroa.014.2.i, !75338, !DIExpression(), !75132)
     #dbg_value(i64 2, !75345, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75191)
     #dbg_value(i64 1, !75346, !DIExpression(), !75192)
-    #dbg_value(i16 %3, !75347, !DIExpression(), !75193)
-  %i.bb = icmp eq i16 %3, 0, !dbg !75579
+  %2 = bitcast <16 x i1> %i.ao to i16, !dbg !75578 ; 2 uses
+    #dbg_value(i16 %2, !75347, !DIExpression(), !75193)
+  %i.bb = icmp eq i16 %2, 0, !dbg !75579
   br i1 %i.bb, label %.preheader35.2.i, label %bb.e, !dbg !75579
 
 bb.e:                                             ; preds = %.preheader35.1.i
   %i.bc = or disjoint i64 %.sroa.06.041.i, 16, !dbg !75581
   %i.bd = trunc nuw i8 %.sroa.014.2.i to i1, !dbg !75582
-  %i.be = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bc, i16 noundef %3, i1 noundef zeroext %i.bd) #30, !dbg !75583
+  %i.be = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bc, i16 noundef %2, i1 noundef zeroext %i.bd) #30, !dbg !75583
   %i.bf = zext i1 %i.be to i8, !dbg !75584
   %i.bg = or i8 %.sroa.014.2.i, %i.bf, !dbg !75584
     #dbg_value(i8 %i.bg, !75338, !DIExpression(), !75132)
@@ -355,14 +350,15 @@ bb.e:                                             ; preds = %.preheader35.1.i
     #dbg_value(i8 %.sroa.014.2.1.i, !75338, !DIExpression(), !75132)
     #dbg_value(i64 3, !75345, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75191)
     #dbg_value(i64 2, !75346, !DIExpression(), !75192)
-    #dbg_value(i16 %4, !75347, !DIExpression(), !75193)
-  %i.bh = icmp eq i16 %4, 0, !dbg !75579
+  %3 = bitcast <16 x i1> %i.at to i16, !dbg !75578 ; 2 uses
+    #dbg_value(i16 %3, !75347, !DIExpression(), !75193)
+  %i.bh = icmp eq i16 %3, 0, !dbg !75579
   br i1 %i.bh, label %.preheader35.3.i, label %bb.f, !dbg !75579
 
 bb.f:                                             ; preds = %.preheader35.2.i
   %i.bi = or disjoint i64 %.sroa.06.041.i, 32, !dbg !75581
   %i.bj = trunc nuw i8 %.sroa.014.2.1.i to i1, !dbg !75582
-  %i.bk = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bi, i16 noundef %4, i1 noundef zeroext %i.bj) #30, !dbg !75583
+  %i.bk = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bi, i16 noundef %3, i1 noundef zeroext %i.bj) #30, !dbg !75583
   %i.bl = zext i1 %i.bk to i8, !dbg !75584
   %i.bm = or i8 %.sroa.014.2.1.i, %i.bl, !dbg !75584
     #dbg_value(i8 %i.bm, !75338, !DIExpression(), !75132)
@@ -373,14 +369,15 @@ bb.f:                                             ; preds = %.preheader35.2.i
     #dbg_value(i8 %.sroa.014.2.2.i, !75338, !DIExpression(), !75132)
     #dbg_value(i64 4, !75345, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !75191)
     #dbg_value(i64 3, !75346, !DIExpression(), !75192)
-    #dbg_value(i16 %i.az, !75347, !DIExpression(), !75193)
-  %i.bn = icmp eq i16 %i.az, 0, !dbg !75579
+  %4 = bitcast <16 x i1> %i.ay to i16, !dbg !75578 ; 2 uses
+    #dbg_value(i16 %4, !75347, !DIExpression(), !75193)
+  %i.bn = icmp eq i16 %4, 0, !dbg !75579
   br i1 %i.bn, label %bb.h, label %bb.g, !dbg !75579
 
 bb.g:                                             ; preds = %.preheader35.3.i
   %i.bo = or disjoint i64 %.sroa.06.041.i, 48, !dbg !75581
   %i.bp = trunc nuw i8 %.sroa.014.2.2.i to i1, !dbg !75582
-  %i.bq = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bo, i16 noundef %i.az, i1 noundef zeroext %i.bp) #30, !dbg !75583
+  %i.bq = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bo, i16 noundef %4, i1 noundef zeroext %i.bp) #30, !dbg !75583
   %i.br = zext i1 %i.bq to i8, !dbg !75584
   %i.bs = or i8 %.sroa.014.2.2.i, %i.br, !dbg !75584
     #dbg_value(i8 %i.bs, !75338, !DIExpression(), !75132)
@@ -399,7 +396,7 @@ bb.h:                                             ; preds = %bb.g, %.preheader35
   br i1 %or.cond.i, label %.preheader.i, label %.lr.ph.i, !dbg !75567
 
 bb.i:                                             ; preds = %.lr.ph.i
-  %i.bx = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.041.i, i16 noundef %2, i1 noundef zeroext false) #30, !dbg !75583
+  %i.bx = call fastcc noundef zeroext i1 @_RNCNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_containss0_0Cs5yXxDE1DkoT_4tera(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.041.i, i16 noundef %i.az, i1 noundef zeroext false) #30, !dbg !75583
   %i.by = zext i1 %i.bx to i8, !dbg !75584
     #dbg_value(i8 %i.by, !75338, !DIExpression(), !75132)
   br label %.preheader35.1.i, !dbg !75585
@@ -802,8 +799,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !75574 = !DILocation(line: 31, column: 52, scope: !75163, inlinedAt: !75164)
 !75575 = !DILocation(line: 31, column: 52, scope: !75163, inlinedAt: !75174)
 !75576 = !DILocation(line: 549, column: 23, scope: !75177, inlinedAt: !75178)
-!75577 = !DILocation(line: 1983, column: 13, scope: !75032, inlinedAt: !75049)
-!75578 = !DILocation(line: 872, column: 18, scope: !75146, inlinedAt: !75147)
+!75577 = !DILocation(line: 872, column: 18, scope: !75146, inlinedAt: !75147)
+!75578 = !DILocation(line: 1986, column: 24, scope: !75030, inlinedAt: !75049)
 !75579 = !DILocation(line: 1987, column: 16, scope: !75029, inlinedAt: !75049)
 !75580 = !DILocation(line: 0, scope: !75036, inlinedAt: !75049)
 !75581 = !DILocation(line: 1988, column: 38, scope: !75029, inlinedAt: !75049)
