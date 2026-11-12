@@ -205,10 +205,10 @@ bb.aq:                                            ; preds = %bb.ap
   br label %SanityCheckTls13MsgReceived.exit
 
 bb.ar:                                            ; preds = %bb.b
-  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 722
-  %6 = load i32, ptr %i.dr, align 2
-  %7 = and i32 %6, 65536
-  %.not.i = icmp eq i32 %7, 0
+  %i.dr = getelementptr i8, ptr %0, i64 724
+  %6 = load i16, ptr %i.dr, align 2
+  %7 = and i16 %6, 1
+  %.not.i = icmp eq i16 %7, 0
   br i1 %.not.i, label %bb.as, label %SanityCheckTls13MsgReceived.exit
 
 bb.as:                                            ; preds = %bb.ar, %bb.ap, %bb.c, %bb.d, %bb.e, %bb.f, %bb.h, %bb.i, %bb.j, %bb.l, %bb.m, %bb.o, %bb.p, %bb.q, %bb.t, %bb.v, %.thread.i, %bb.x, %bb.y, %bb.z, %bb.ac, %bb.ad, %bb.af, %bb.ae, %.thread82.i, %bb.ai, %bb.aj, %bb.ak, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.b

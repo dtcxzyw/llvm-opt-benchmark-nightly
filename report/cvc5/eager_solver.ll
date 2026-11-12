@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a, %_ZN4cvc58int
   br i1 %i.b, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load ptr, ptr %2, align 8, !tbaa !19
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !19     ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load i64, ptr %i.e, align 8
   %i.g = trunc i64 %i.f to i32
   %i.h = and i32 %i.g, 1023                       ; 2 uses
@@ -211,15 +211,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = select i1 %i.i, i32 -1, i32 %i.h
   %i.k = call noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.j)
   %i.l = icmp eq i32 %i.k, 2
-  %9 = load i64, ptr %i.e, align 8
-  %10 = lshr i64 %9, 32
-  %11 = and i64 %10, 67108863
-  %12 = select i1 %i.l, i64 -2, i64 -1
-  %13 = add nsw i64 %12, %11
+  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
+  %10 = load i32, ptr %9, align 4
+  %11 = and i32 %10, 67108863
+  %12 = select i1 %i.l, i32 -2, i32 -1
+  %13 = add nsw i32 %12, %11
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %14 = phi i64 [ %13, %bb.c ], [ 0, %bb.b ]
+  %14 = phi i32 [ %13, %bb.c ], [ 0, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   call void @llvm.experimental.noalias.scope.decl(metadata !78)
   %i.m = load ptr, ptr %2, align 8, !tbaa !19, !noalias !78 ; 2 uses
@@ -231,10 +231,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.s = select i1 %i.r, i32 -1, i32 %i.q
   %i.t = call noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.s), !noalias !78
   %i.u = icmp eq i32 %i.t, 2
-  %15 = zext i1 %i.u to i64
+  %15 = zext i1 %i.u to i32
+  %spec.select.i.i = add nsw i32 %14, %15
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 24
-  %16 = getelementptr [8 x i8], ptr %i.v, i64 %14
-  %i.w = getelementptr [8 x i8], ptr %16, i64 %15
+  %16 = sext i32 %spec.select.i.i to i64
+  %i.w = getelementptr inbounds [8 x i8], ptr %i.v, i64 %16
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !25, !noalias !78 ; 5 uses
   store ptr %i.x, ptr %5, align 8, !tbaa !19, !alias.scope !78
   %i.y = load i64, ptr %i.x, align 8, !noalias !78 ; 3 uses

@@ -202,53 +202,45 @@ bb.c:                                             ; preds = %bb.a
   %i.t = tail call i64 @llvm.bswap.i64(i64 %i.r)
   store i64 %i.t, ptr %i.s, align 8, !tbaa !13
   tail call fastcc void @sha256_transform(ptr noundef nonnull %0, ptr noundef nonnull %0)
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 4 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 4 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 4 uses
-  %2 = load i32, ptr %i.u, align 8, !tbaa !12
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %1, align 1, !tbaa !13
-  %5 = load i32, ptr %i.v, align 4, !tbaa !12
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 3 uses
+  %2 = getelementptr i8, ptr %0, i64 83
+  %3 = load i8, ptr %2, align 1, !tbaa !12
+  store i8 %3, ptr %1, align 1, !tbaa !13
+  %4 = getelementptr i8, ptr %0, i64 87
+  %5 = load i8, ptr %4, align 1, !tbaa !12
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %7, ptr %i.ac, align 1, !tbaa !13
-  %8 = load i32, ptr %i.w, align 8, !tbaa !12
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  store i8 %5, ptr %i.ac, align 1, !tbaa !13
+  %6 = getelementptr i8, ptr %0, i64 91
+  %7 = load i8, ptr %6, align 1, !tbaa !12
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i8 %10, ptr %i.ad, align 1, !tbaa !13
-  %11 = load i32, ptr %i.x, align 4, !tbaa !12
-  %12 = lshr i32 %11, 24
-  %13 = trunc nuw i32 %12 to i8
+  store i8 %7, ptr %i.ad, align 1, !tbaa !13
+  %8 = getelementptr i8, ptr %0, i64 95
+  %9 = load i8, ptr %8, align 1, !tbaa !12
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store i8 %13, ptr %i.ae, align 1, !tbaa !13
-  %14 = load i32, ptr %i.y, align 8, !tbaa !12
-  %15 = lshr i32 %14, 24
-  %16 = trunc nuw i32 %15 to i8
+  store i8 %9, ptr %i.ae, align 1, !tbaa !13
+  %10 = getelementptr i8, ptr %0, i64 99
+  %11 = load i8, ptr %10, align 1, !tbaa !12
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store i8 %16, ptr %i.af, align 1, !tbaa !13
-  %17 = load i32, ptr %i.z, align 4, !tbaa !12
-  %18 = lshr i32 %17, 24
-  %19 = trunc nuw i32 %18 to i8
+  store i8 %11, ptr %i.af, align 1, !tbaa !13
+  %12 = getelementptr i8, ptr %0, i64 103
+  %13 = load i8, ptr %12, align 1, !tbaa !12
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store i8 %19, ptr %i.ag, align 1, !tbaa !13
-  %20 = load i32, ptr %i.aa, align 8, !tbaa !12
-  %21 = lshr i32 %20, 24
-  %22 = trunc nuw i32 %21 to i8
+  store i8 %13, ptr %i.ag, align 1, !tbaa !13
+  %14 = getelementptr i8, ptr %0, i64 107
+  %15 = load i8, ptr %14, align 1, !tbaa !12
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store i8 %22, ptr %i.ah, align 1, !tbaa !13
-  %23 = load i32, ptr %i.ab, align 4, !tbaa !12
-  %24 = lshr i32 %23, 24
-  %25 = trunc nuw i32 %24 to i8
+  store i8 %15, ptr %i.ah, align 1, !tbaa !13
+  %16 = getelementptr i8, ptr %0, i64 111
+  %17 = load i8, ptr %16, align 1, !tbaa !12
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 28
-  store i8 %25, ptr %i.ai, align 1, !tbaa !13
+  store i8 %17, ptr %i.ai, align 1, !tbaa !13
   %i.aj = load i32, ptr %i.u, align 8, !tbaa !12
   %i.ak = lshr i32 %i.aj, 16
   %i.al = trunc i32 %i.ak to i8

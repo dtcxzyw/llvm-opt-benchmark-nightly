@@ -202,10 +202,8 @@ bb.d:                                             ; preds = %bb.b
   %i.m = load i32, ptr @hf_netlink_netfilter_subsys, align 4
   %i.n = load i32, ptr %i.j, align 4
   %i.o = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.m, ptr noundef %0, i32 noundef 4, i32 noundef 2, i32 noundef %i.n) ; 0 uses
-  %i.p = getelementptr i8, ptr %3, i64 8          ; 2 uses
-  %5 = load i16, ptr %i.p, align 4
-  %6 = lshr i16 %5, 8
-  %trunc = trunc nuw i16 %6 to i8
+  %i.p = getelementptr i8, ptr %3, i64 9          ; 2 uses
+  %trunc = load i8, ptr %i.p, align 1             ; 3 uses
   %switch.tableidx = add i8 %trunc, -2            ; 3 uses
   %i.q = icmp ult i8 %switch.tableidx, 9
   br i1 %i.q, label %switch.hole_check, label %bb.e
@@ -223,15 +221,14 @@ switch.lookup:                                    ; preds = %switch.hole_check
   %i.s = load i32, ptr %switch.load, align 4
   %i.t = load i32, ptr %i.j, align 4
   %i.u = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.s, ptr noundef %0, i32 noundef 4, i32 noundef 2, i32 noundef %i.t) ; 0 uses
+  %trunc64.pr = load i8, ptr %i.p, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %switch.hole_check, %bb.d, %switch.lookup
+  %trunc64 = phi i8 [ %trunc64.pr, %switch.lookup ], [ %trunc, %bb.d ], [ %trunc, %switch.hole_check ]
   store ptr %1, ptr %4, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i16 0, ptr %7, align 8
-  %8 = load i16, ptr %i.p, align 4                ; 7 uses
-  %9 = lshr i16 %8, 8
-  %trunc64 = trunc nuw i16 %9 to i8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i16 0, ptr %5, align 8
   switch i8 %trunc64, label %bb.n [
     i8 1, label %bb.f
     i8 2, label %bb.g
@@ -272,6 +269,8 @@ bb.g:                                             ; preds = %bb.e
   br label %dissect_netfilter_queue.exit
 
 bb.h:                                             ; preds = %bb.e
+  %6 = getelementptr i8, ptr %3, i64 8
+  %7 = load i16, ptr %6, align 4                  ; 4 uses
   %i.at = load i32, ptr @hf_netlink_netfilter_family, align 4
   %i.au = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.at, ptr noundef %0, i32 noundef %i.l, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.av = add i32 %i.l, 1
@@ -281,20 +280,20 @@ bb.h:                                             ; preds = %bb.e
   %i.az = load i32, ptr @hf_netlink_netfilter_resid, align 4
   %i.ba = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.az, ptr noundef %0, i32 noundef %i.ay, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.bb = add i32 %i.l, 4                         ; 2 uses
-  %trunc.i = trunc i16 %8 to i8
+  %trunc.i = trunc i16 %7 to i8
   %i.bc = icmp ult i8 %trunc.i, 3
   br i1 %i.bc, label %switch.lookup70, label %dissect_netfilter_queue.exit
 
 switch.lookup70:                                  ; preds = %bb.h
-  %trunc.i.mask = and i16 %8, 3
+  %trunc.i.mask = and i16 %7, 3
   %i.bd = zext nneg i16 %trunc.i.mask to i64
   %switch.gep71 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_netlink_netfilter.2, i64 %i.bd
   %switch.load72 = load ptr, ptr %switch.gep71, align 8
-  %trunc.i.mask77 = and i16 %8, 3
+  %trunc.i.mask77 = and i16 %7, 3
   %i.be = zext nneg i16 %trunc.i.mask77 to i64
   %switch.gep73 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_netlink_netfilter.3, i64 %i.be
   %switch.load74 = load ptr, ptr %switch.gep73, align 8
-  %trunc.i.mask78 = and i16 %8, 3
+  %trunc.i.mask78 = and i16 %7, 3
   %i.bf = zext nneg i16 %trunc.i.mask78 to i64
   %switch.gep75 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_netlink_netfilter.4, i64 %i.bf
   %switch.load76 = load ptr, ptr %switch.gep75, align 8
@@ -304,7 +303,9 @@ switch.lookup70:                                  ; preds = %bb.h
   br label %dissect_netfilter_queue.exit
 
 bb.i:                                             ; preds = %bb.e
-  %i.bj = and i16 %8, 255
+  %8 = getelementptr i8, ptr %3, i64 8
+  %.val = load i16, ptr %8, align 4
+  %i.bj = and i16 %.val, 255
   %cond.i = icmp eq i16 %i.bj, 0
   br i1 %cond.i, label %bb.j, label %dissect_netfilter_queue.exit
 
@@ -331,6 +332,8 @@ bb.k:                                             ; preds = %bb.e
   br label %dissect_netfilter_queue.exit
 
 bb.l:                                             ; preds = %bb.e
+  %9 = getelementptr i8, ptr %3, i64 8
+  %10 = load i16, ptr %9, align 4
   %i.ca = load i32, ptr @hf_netlink_netfilter_family, align 4
   %i.cb = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.ca, ptr noundef %0, i32 noundef %i.l, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.cc = add i32 %i.l, 1
@@ -340,7 +343,7 @@ bb.l:                                             ; preds = %bb.e
   %i.cg = load i32, ptr @hf_netlink_netfilter_resid, align 4
   %i.ch = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.cg, ptr noundef %0, i32 noundef %i.cf, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.ci = add i32 %i.l, 4                         ; 2 uses
-  %trunc.i66 = trunc i16 %8 to i8
+  %trunc.i66 = trunc i16 %10 to i8
   switch i8 %trunc.i66, label %dissect_netfilter_queue.exit [
     i8 6, label %bb.m
     i8 7, label %bb.m

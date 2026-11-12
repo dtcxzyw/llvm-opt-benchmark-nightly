@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @smmuv3_record_event(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.Evt, align 4                ; 25 uses
+  %2 = alloca %struct.Evt, align 4                ; 31 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
@@ -253,9 +253,14 @@ bb.c:                                             ; preds = %bb.b
   %i.q = or disjoint i32 %i.p, %i.e
   store i32 %i.q, ptr %2, align 4
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %3 = getelementptr i8, ptr %1, i64 28
+  %4 = load i32, ptr %3, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store i32 %4, ptr %5, align 4
   %i.s = load i64, ptr %i.r, align 8
+  %6 = trunc i64 %i.s to i32
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i64 %i.s, ptr %i.t, align 4
+  store i32 %6, ptr %i.t, align 4
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.w = load i8, ptr %i.v, align 8, !range !9, !noundef !10
@@ -297,9 +302,14 @@ bb.e:                                             ; preds = %bb.b
   %i.ay = or disjoint i32 %i.ax, %i.e
   store i32 %i.ay, ptr %2, align 4
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %7 = getelementptr i8, ptr %1, i64 28
+  %8 = load i32, ptr %7, align 4
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  store i32 %8, ptr %9, align 4
   %i.ba = load i64, ptr %i.az, align 8
+  %10 = trunc i64 %i.ba to i32
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store i64 %i.ba, ptr %i.bb, align 4
+  store i32 %10, ptr %i.bb, align 4
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.b
@@ -317,9 +327,14 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.b
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %11 = getelementptr i8, ptr %1, i64 20
+  %12 = load i32, ptr %11, align 4
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store i32 %12, ptr %13, align 4
   %i.bm = load i64, ptr %i.bl, align 8
+  %14 = trunc i64 %i.bm to i32
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i64 %i.bm, ptr %i.bn, align 4
+  store i32 %14, ptr %i.bn, align 4
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bq = load i8, ptr %i.bp, align 8, !range !9, !noundef !10
@@ -348,9 +363,14 @@ bb.i:                                             ; preds = %bb.b
   %i.cf = or disjoint i32 %i.ce, %i.e
   store i32 %i.cf, ptr %2, align 4
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %15 = getelementptr i8, ptr %1, i64 28
+  %16 = load i32, ptr %15, align 4
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store i32 %16, ptr %17, align 4
   %i.ch = load i64, ptr %i.cg, align 8
+  %18 = trunc i64 %i.ch to i32
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i64 %i.ch, ptr %i.ci, align 4
+  store i32 %18, ptr %i.ci, align 4
   br label %bb.n
 
 bb.j:                                             ; preds = %bb.b
@@ -392,9 +412,14 @@ bb.k:                                             ; preds = %bb.b, %bb.b, %bb.b,
   %i.dm = load i8, ptr %i.dl, align 1, !range !9, !noundef !10
   %i.dn = shl nuw i8 %i.dm, 7
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %19 = getelementptr i8, ptr %1, i64 36
+  %20 = load i32, ptr %19, align 4
+  %21 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store i32 %20, ptr %21, align 4
   %i.dp = load i64, ptr %i.do, align 8
+  %22 = trunc i64 %i.dp to i32
   %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i64 %i.dp, ptr %i.dq, align 4
+  store i32 %22, ptr %i.dq, align 4
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ds = load i8, ptr %i.dr, align 8, !range !9, !noundef !10
   %i.dt = shl nuw nsw i8 %i.ds, 3
@@ -416,9 +441,14 @@ bb.k:                                             ; preds = %bb.b, %bb.b, %bb.b,
   %i.ej = or disjoint i32 %i.ei, %i.ed
   store i32 %i.ej, ptr %i.dk, align 4
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %23 = getelementptr i8, ptr %1, i64 52
+  %24 = load i32, ptr %23, align 4
+  %25 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  store i32 %24, ptr %25, align 4
   %i.el = load i64, ptr %i.ek, align 8
+  %26 = trunc i64 %i.el to i32
   %i.em = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store i64 %i.el, ptr %i.em, align 4
+  store i32 %26, ptr %i.em, align 4
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.b

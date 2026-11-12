@@ -202,10 +202,9 @@ define linkonce_odr hidden noundef i32 @_ZN4lean20get_io_scalar_resultIjEET_P11l
 bb.a:
   %1 = alloca %"class.lean::string_ref", align 8  ; 5 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %i.a = getelementptr i8, ptr %0, i64 4
-  %.val.i = load i32, ptr %i.a, align 4
-  %.mask.i.i = and i32 %.val.i, -16777216
-  %i.b = icmp eq i32 %.mask.i.i, 16777216
+  %i.a = getelementptr i8, ptr %0, i64 7
+  %.val.i = load i8, ptr %i.a, align 1
+  %i.b = icmp eq i8 %.val.i, 1
   %i.c = getelementptr i8, ptr %0, i64 8
   %.val.i13 = load ptr, ptr %i.c, align 8, !tbaa !13 ; 6 uses
   br i1 %i.b, label %bb.b, label %bb.l
@@ -333,11 +332,10 @@ define linkonce_odr hidden void @_ZN4lean17consume_io_resultEP11lean_object(ptr 
 bb.a:
   %1 = alloca %"class.lean::string_ref", align 8  ; 5 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %i.a = getelementptr i8, ptr %0, i64 4
-  %.val.i = load i32, ptr %i.a, align 4
-  %.mask.i.i = and i32 %.val.i, -16777216
-  %i.b = icmp eq i32 %.mask.i.i, 16777216
-  br i1 %i.b, label %bb.b, label %bb.l
+  %i.a = getelementptr i8, ptr %0, i64 7
+  %.val.i = load i8, ptr %i.a, align 1
+  %i.b = icmp eq i8 %.val.i, 1
+  br i1 %i.b, label %bb.b, label %3
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 8
@@ -421,7 +419,13 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   resume { ptr, i32 } %.pn15
 
-bb.l:                                             ; preds = %bb.a
+3:                                                ; preds = %bb.a
+  %4 = ptrtoint ptr %0 to i64
+  %5 = and i64 %4, 1
+  %.not.i.i12 = icmp eq i64 %5, 0
+  br i1 %.not.i.i12, label %bb.l, label %_ZN4lean3decEP11lean_object.exit
+
+bb.l:                                             ; preds = %3
   %i.r = load i32, ptr %0, align 4, !tbaa !15     ; 3 uses
   %i.s = icmp sgt i32 %i.r, 1
   br i1 %i.s, label %bb.m, label %bb.n, !prof !16
@@ -439,7 +443,7 @@ bb.o:                                             ; preds = %bb.n
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0)
   br label %_ZN4lean3decEP11lean_object.exit
 
-_ZN4lean3decEP11lean_object.exit:                 ; preds = %bb.m, %bb.n, %bb.o
+_ZN4lean3decEP11lean_object.exit:                 ; preds = %3, %bb.m, %bb.n, %bb.o
   ret void
 
 bb.p:                                             ; preds = %bb.h
@@ -489,9 +493,9 @@ bb.d:                                             ; preds = %bb.a, %_ZN4lean14mk
   %i.g = load ptr, ptr %0, align 8, !tbaa !10
   store ptr inttoptr (i64 1 to ptr), ptr %0, align 8, !tbaa !10
   %i.h = tail call ptr @lean_shell_options_process(ptr noundef %i.g, i32 noundef %1, ptr noundef nonnull %i.f) ; 9 uses
-  %i.i = getelementptr i8, ptr %i.h, i64 4
-  %.val.i = load i32, ptr %i.i, align 4
-  %5 = icmp ugt i32 %.val.i, 16777215             ; 2 uses
+  %i.i = getelementptr i8, ptr %i.h, i64 7
+  %.val.i = load i8, ptr %i.i, align 1
+  %5 = icmp ne i8 %.val.i, 0                      ; 2 uses
   br i1 %5, label %bb.r, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 bb.c:                                             ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_T0_SC_T1_T2_.exit.i.i, %._crit_edge
   %.09.i.i = phi i64 [ %i.m, %._crit_edge ], [ %i.at, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_T0_SC_T1_T2_.exit.i.i ] ; 8 uses
   %i.u = getelementptr inbounds [16 x i8], ptr %0, i64 %.09.i.i ; 2 uses
-  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 4
+  %.sroa.4.0..sroa_idx.i.i = getelementptr i8, ptr %i.u, i64 12
+  %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i44 = load float, ptr %.sroa.4.0..sroa_idx.i.i, align 4
   %i.v = load <2 x i64>, ptr %i.u, align 4
   %i.w = icmp slt i64 %.09.i.i, %i.o
   br i1 %i.w, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
@@ -240,22 +240,16 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
   %.1.i.i.i = phi i64 [ %i.r, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.al = icmp sgt i64 %.1.i.i.i, %.09.i.i
-  br i1 %i.al, label %.lr.ph.i.i.i.i11, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_T0_SC_T1_T2_.exit.i.i
+  br i1 %i.al, label %bb.f, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_T0_SC_T1_T2_.exit.i.i
 
-.lr.ph.i.i.i.i11:                                 ; preds = %bb.e
-  %.sroa.2.sroa.2.0.extract.shift.i.i.i.i = lshr i64 %.sroa.4.0.copyload.i.i, 32
-  %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i = trunc nuw i64 %.sroa.2.sroa.2.0.extract.shift.i.i.i.i to i32
-  %10 = bitcast i32 %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i to float
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.g, %.lr.ph.i.i.i.i11
-  %.021.i.i.i.i = phi i64 [ %.1.i.i.i, %.lr.ph.i.i.i.i11 ], [ %.0922.i.i.i.i, %bb.g ] ; 3 uses
+bb.f:                                             ; preds = %bb.e, %bb.g
+  %.021.i.i.i.i = phi i64 [ %.0922.i.i.i.i, %bb.g ], [ %.1.i.i.i, %bb.e ] ; 3 uses
   %.0922.in.i.i.i.i = add nsw i64 %.021.i.i.i.i, -1
   %.0922.i.i.i.i = sdiv i64 %.0922.in.i.i.i.i, 2  ; 4 uses
   %i.am = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0922.i.i.i.i ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   %i.ao = load float, ptr %i.an, align 4, !tbaa !21
-  %i.ap = fcmp olt float %i.ao, %10
+  %i.ap = fcmp olt float %i.ao, %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i44
   br i1 %i.ap, label %bb.g, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_T0_SC_T1_T2_.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
@@ -279,8 +273,8 @@ _ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaI
 .lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.i.i
   %.sroa.0.05.i.i = phi ptr [ %i.av, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.i.i ], [ %storemerge19.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_T0_.exit ] ; 2 uses
   %i.av = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -16 ; 4 uses
-  %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -8
-  %.sroa.4.0.copyload.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i, align 4
+  %.sroa.4.0..sroa_idx.i.i.i = getelementptr i8, ptr %.sroa.0.05.i.i, i64 -4
+  %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i.i45 = load float, ptr %.sroa.4.0..sroa_idx.i.i.i, align 4
   %i.aw = load <2 x i64>, ptr %i.av, align 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.av, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !24
   %i.ax = ptrtoint ptr %i.av to i64
@@ -336,9 +330,6 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge.
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.i, %.thread.i.i.i
   %.1.i8.i.i.i = phi i64 [ %i.bw, %.thread.i.i.i ], [ %.0.lcssa.i.i.i.i, %bb.i ]
-  %.sroa.2.sroa.2.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.4.0.copyload.i.i.i, 32
-  %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i.i = trunc nuw i64 %.sroa.2.sroa.2.0.extract.shift.i.i.i.i.i to i32
-  %11 = bitcast i32 %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i.i to float
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.lr.ph.i.i.i.i.i
@@ -348,7 +339,7 @@ bb.j:                                             ; preds = %bb.k, %.lr.ph.i.i.i
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0922.i.i910.i.i.i ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 12
   %i.cb = load float, ptr %i.ca, align 4, !tbaa !21
-  %i.cc = fcmp olt float %i.cb, %11
+  %i.cc = fcmp olt float %i.cb, %.sroa.2.sroa.2.0.extract.trunc.i.i.i.i.i45
   br i1 %i.cc, label %bb.k, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2cv6DMatchESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.i.i
 
 bb.k:                                             ; preds = %bb.j

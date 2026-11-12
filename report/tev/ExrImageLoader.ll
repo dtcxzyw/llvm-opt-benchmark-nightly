@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.c, %bb.b
   call void @_ZNSt3__16futureIvED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #32, !noalias !1306
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32, !noalias !1306
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.s, align 8, !tbaa !77 ; 2 uses
   %.sroa.048.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32 ; 2 uses
   store i32 %.sroa.048.0.extract.trunc, ptr %.reload.addr101, align 8, !tbaa !104
@@ -296,13 +296,12 @@ bb.l:                                             ; preds = %bb.k
   br label %.body22
 
 _ZN3tev10ThreadPool6globalEv.exit:                ; preds = %bb.l, %bb.j, %bb.i
-  %.sroa.0.0.copyload.i32 = load i64, ptr %i.s, align 8, !tbaa !77
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  %.sroa.4.0.extract.trunc = load i32, ptr %6, align 4, !tbaa !77
   %i.aw = invoke noundef i64 @_Z7posProdIiLm2EEDaRKN7nanogui5ArrayIT_XT0_EEE(ptr noundef nonnull align 4 dereferenceable(8) %i.s)
           to label %_ZNK3tev7Channel9numPixelsEv.exit unwind label %.body30.from.
 
 _ZNK3tev7Channel9numPixelsEv.exit:                ; preds = %_ZN3tev10ThreadPool6globalEv.exit
-  %.sroa.4.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i32, 32
-  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
   store ptr %i.ab, ptr %5, align 8, !tbaa !482
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %.reload.addr101, ptr %i.ax, align 8, !tbaa !378
@@ -661,7 +660,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.c, %bb.b
   call void @_ZNSt3__16futureIvED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #32, !noalias !1322
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32, !noalias !1322
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.s, align 8, !tbaa !77 ; 2 uses
   %.sroa.048.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32 ; 2 uses
   store i32 %.sroa.048.0.extract.trunc, ptr %.reload.addr101, align 8, !tbaa !104
@@ -752,13 +751,12 @@ bb.l:                                             ; preds = %bb.k
   br label %.body22
 
 _ZN3tev10ThreadPool6globalEv.exit:                ; preds = %bb.l, %bb.j, %bb.i
-  %.sroa.0.0.copyload.i32 = load i64, ptr %i.s, align 8, !tbaa !77
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  %.sroa.4.0.extract.trunc = load i32, ptr %6, align 4, !tbaa !77
   %i.aw = invoke noundef i64 @_Z7posProdIiLm2EEDaRKN7nanogui5ArrayIT_XT0_EEE(ptr noundef nonnull align 4 dereferenceable(8) %i.s)
           to label %_ZNK3tev7Channel9numPixelsEv.exit unwind label %.body30.from.
 
 _ZNK3tev7Channel9numPixelsEv.exit:                ; preds = %_ZN3tev10ThreadPool6globalEv.exit
-  %.sroa.4.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i32, 32
-  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
   store ptr %i.ab, ptr %5, align 8, !tbaa !486
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %.reload.addr101, ptr %i.ax, align 8, !tbaa !378
@@ -1117,7 +1115,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.c, %bb.b
   call void @_ZNSt3__16futureIvED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #32, !noalias !1338
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32, !noalias !1338
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.s, align 8, !tbaa !77 ; 2 uses
   %.sroa.048.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32 ; 2 uses
   store i32 %.sroa.048.0.extract.trunc, ptr %.reload.addr101, align 8, !tbaa !104
@@ -1208,13 +1206,12 @@ bb.l:                                             ; preds = %bb.k
   br label %.body22
 
 _ZN3tev10ThreadPool6globalEv.exit:                ; preds = %bb.l, %bb.j, %bb.i
-  %.sroa.0.0.copyload.i32 = load i64, ptr %i.s, align 8, !tbaa !77
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  %.sroa.4.0.extract.trunc = load i32, ptr %6, align 4, !tbaa !77
   %i.aw = invoke noundef i64 @_Z7posProdIiLm2EEDaRKN7nanogui5ArrayIT_XT0_EEE(ptr noundef nonnull align 4 dereferenceable(8) %i.s)
           to label %_ZNK3tev7Channel9numPixelsEv.exit unwind label %.body30.from.
 
 _ZNK3tev7Channel9numPixelsEv.exit:                ; preds = %_ZN3tev10ThreadPool6globalEv.exit
-  %.sroa.4.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i32, 32
-  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
   store ptr %i.ab, ptr %5, align 8, !tbaa !489
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %.reload.addr101, ptr %i.ax, align 8, !tbaa !378

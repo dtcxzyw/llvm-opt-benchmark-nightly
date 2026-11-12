@@ -202,10 +202,11 @@ indev_reset_check.exit190.thread:                 ; preds = %bb.ap, %indev_reset
   br i1 %.not.i191, label %bb.aq, label %indev_gesture.exit
 
 bb.aq:                                            ; preds = %indev_reset_check.exit190.thread
-  %i.gp = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 3 uses
-  %1 = load i16, ptr %i.gp, align 4
-  %2 = and i16 %1, 256
-  %.not52.i = icmp eq i16 %2, 0
+  %i.gp = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 2 uses
+  %1 = getelementptr i8, ptr %0, i64 333
+  %2 = load i8, ptr %1, align 1
+  %3 = and i8 %2, 1
+  %.not52.i = icmp eq i8 %3, 0
   br i1 %.not52.i, label %bb.ar, label %indev_gesture.exit
 
 bb.ar:                                            ; preds = %bb.aq

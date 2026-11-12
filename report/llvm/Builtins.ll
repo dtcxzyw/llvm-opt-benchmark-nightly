@@ -202,9 +202,10 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %2 = load i64, ptr %i.ao, align 8               ; 2 uses
-  %3 = and i64 %2, 4294967296
-  %.not49 = icmp eq i64 %3, 0
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 60
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 1
+  %.not49 = icmp eq i32 %4, 0
   br i1 %.not49, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -215,7 +216,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not50, label %bb.q, label %bb.ai
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.as = and i64 %2, 8589934592
+  %5 = load i64, ptr %i.ao, align 8
+  %i.as = and i64 %5, 8589934592
   %.not51 = icmp eq i64 %i.as, 0
   br i1 %.not51, label %bb.r, label %bb.s
 

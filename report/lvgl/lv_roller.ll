@@ -202,8 +202,8 @@ declare ptr @lv_subject_add_observer_obj(ptr noundef, ptr noundef, ptr noundef, 
 define internal void @roller_value_observer_cb(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = tail call ptr @lv_observer_get_target_obj(ptr noundef %0) #6
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 62
-  %2 = load i32, ptr %i.b, align 2
+  %i.b = getelementptr i8, ptr %i.a, i64 64
+  %2 = load i16, ptr %i.b, align 2
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !52   ; 10 uses
   %.not.i = icmp eq ptr %i.d, null
@@ -282,8 +282,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
 lv_roller_set_selected.exit:                      ; preds = %.thread, %bb.c, %bb.h
   %i.al = phi i32 [ %i.j, %bb.c ], [ %i.j, %bb.h ], [ %i.x, %.thread ] ; 2 uses
   %.1.i = phi i32 [ %i.r, %bb.c ], [ %i.ak, %bb.h ], [ %i.v, %.thread ] ; 2 uses
-  %.in = and i32 %2, 65536
-  %3 = icmp ne i32 %.in, 0
+  %3 = trunc i16 %2 to i1
   %i.am = icmp ult i32 %.1.i, %i.al
   %i.an = add i32 %i.al, -1
   %i.ao = select i1 %i.am, i32 %.1.i, i32 %i.an   ; 2 uses

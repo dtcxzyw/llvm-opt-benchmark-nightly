@@ -64,7 +64,7 @@ bb.a:
   %i.b = tail call ptr @lv_event_get_target_obj(ptr noundef %0) #4
   %i.c = tail call ptr @lv_event_get_draw_task(ptr noundef %0) #4 ; 4 uses
   %i.d = tail call ptr @lv_draw_task_get_draw_dsc(ptr noundef %i.c) #4 ; 3 uses
-  %i.e = tail call ptr @lv_draw_task_get_label_dsc(ptr noundef %i.c) #4 ; 6 uses
+  %i.e = tail call ptr @lv_draw_task_get_label_dsc(ptr noundef %i.c) #4 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.g = load i32, ptr %i.f, align 8, !tbaa !15
   %i.h = icmp eq i32 %i.g, 131072
@@ -102,10 +102,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = zext i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw [3 x i8], ptr %1, i64 %i.ab
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.x, ptr noundef nonnull align 1 dereferenceable(3) %i.ac, i64 3, i1 false), !tbaa.struct !18
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 142 ; 3 uses
-  %3 = load i16, ptr %i.ad, align 2
-  %4 = and i16 %3, 256
-  %.not = icmp eq i16 %4, 0
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 142 ; 2 uses
+  %3 = getelementptr i8, ptr %i.e, i64 143
+  %4 = load i8, ptr %3, align 1
+  %5 = and i8 %4, 1
+  %.not = icmp eq i8 %5, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

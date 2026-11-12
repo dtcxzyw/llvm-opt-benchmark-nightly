@@ -205,7 +205,7 @@ _ZN8V3PreLex12curFilelinepEv.exit:                ; preds = %bb.a, %bb.b
   %i.l = phi ptr [ %i.k, %bb.b ], [ %i.c, %bb.a ]
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 -8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !59
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !70   ; 7 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !70   ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !167  ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -234,17 +234,20 @@ bb.c:                                             ; preds = %_ZN8V3PreLex12curFi
   %i.ah = load <2 x i32>, ptr %i.ag, align 8, !tbaa !28
   store <2 x i32> %i.ah, ptr %i.af, align 8, !tbaa !28
   %i.ai = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 3 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.ak = load i64, ptr %i.aj, align 8
   %i.al = and i64 %i.ak, 16777215
   %i.am = load i64, ptr %i.ai, align 8
   %i.an = and i64 %i.am, -16777216
   %i.ao = or disjoint i64 %i.an, %i.al            ; 2 uses
   store i64 %i.ao, ptr %i.ai, align 8
-  %1 = load i64, ptr %i.aj, align 8
-  %2 = and i64 %1, 72057589742960640
+  %1 = getelementptr inbounds nuw i8, ptr %i.o, i64 20
+  %2 = load i32, ptr %1, align 4
+  %3 = and i32 %2, 16777215
+  %4 = zext nneg i32 %3 to i64
+  %5 = shl nuw nsw i64 %4, 32
   %i.ap = and i64 %i.ao, -72057589742960641
-  %i.aq = or disjoint i64 %i.ap, %2
+  %i.aq = or disjoint i64 %5, %i.ap
   store i64 %i.aq, ptr %i.ai, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 24
@@ -647,17 +650,20 @@ _ZNSt5dequeI8FileLineSaIS0_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %
   %i.bd = load <2 x i32>, ptr %i.bc, align 8, !tbaa !28
   store <2 x i32> %i.bd, ptr %i.bb, align 8, !tbaa !28
   %i.be = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 3 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bg = load i64, ptr %i.bf, align 8
   %i.bh = and i64 %i.bg, 16777215
   %i.bi = load i64, ptr %i.be, align 8
   %i.bj = and i64 %i.bi, -16777216
   %i.bk = or disjoint i64 %i.bj, %i.bh            ; 2 uses
   store i64 %i.bk, ptr %i.be, align 8
-  %2 = load i64, ptr %i.bf, align 8
-  %3 = and i64 %2, 72057589742960640
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 16777215
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 32
   %i.bl = and i64 %i.bk, -72057589742960641
-  %i.bm = or disjoint i64 %i.bl, %3
+  %i.bm = or disjoint i64 %6, %i.bl
   store i64 %i.bm, ptr %i.be, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 24

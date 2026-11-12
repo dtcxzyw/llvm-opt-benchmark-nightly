@@ -204,12 +204,15 @@ bb.i:                                             ; preds = %p4_ht_thread.exit.t
   %i.bc = load i64, ptr %i.bb, align 8
   %i.bd = and i64 %i.bc, 9223371968168792063      ; 5 uses
   store i64 %i.bd, ptr %i.bb, align 8
-  %sum.shift.i.a = lshr i64 %i.bd, 57             ; 4 uses
+  %sum.shift.i.a = lshr i64 %i.bd, 32
+  %1 = trunc nuw nsw i64 %sum.shift.i.a to i32    ; 3 uses
+  %2 = lshr i32 %1, 25                            ; 4 uses
+  %3 = zext nneg i32 %2 to i64
   %i.be = icmp samesign ugt i64 %i.bd, 6629298651489370111
   br i1 %i.be, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bf = icmp eq i64 %sum.shift.i.a, 45
+  %i.bf = icmp eq i32 %2, 45
   br i1 %i.bf, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -226,7 +229,7 @@ bb.l:                                             ; preds = %bb.k, %bb.k, %bb.k,
   br i1 %i.bi, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bj = getelementptr [28 x i8], ptr @p4_event_bind_map, i64 %sum.shift.i.a
+  %i.bj = getelementptr [28 x i8], ptr @p4_event_bind_map, i64 %3
   %i.bk = getelementptr i8, ptr %i.bj, i64 16
   %i.bl = load i32, ptr %i.bk, align 4
   %.not19.i41 = icmp eq i32 %i.bl, 0
@@ -251,34 +254,36 @@ perf_allow_cpu.exit.i:                            ; preds = %perfmon_capable.exi
   br i1 %.not20.i, label %perf_allow_cpu.exit._crit_edge.i.a, label %.thread
 
 perf_allow_cpu.exit._crit_edge.i.a:               ; preds = %perf_allow_cpu.exit.i
-  %.pre.i = load i64, ptr %i.bb, align 8
+  %.pre.i = load i64, ptr %i.bb, align 8          ; 2 uses
+  %.pre56 = lshr i64 %.pre.i, 32
+  %.pre57 = trunc nuw i64 %.pre56 to i32
   br label %bb.p
 
 bb.p:                                             ; preds = %perf_allow_cpu.exit._crit_edge.i.a, %bb.m, %bb.l
-  %1 = phi i64 [ %.pre.i, %perf_allow_cpu.exit._crit_edge.i.a ], [ %i.bd, %bb.m ], [ %i.bd, %bb.l ] ; 5 uses
-  %.016.i.a = phi i64 [ 0, %perf_allow_cpu.exit._crit_edge.i.a ], [ %sum.shift.i.a, %bb.m ], [ %sum.shift.i.a, %bb.l ]
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.br = getelementptr [28 x i8], ptr @p4_event_bind_map, i64 %.016.i.a
+  %.pre-phi58 = phi i32 [ %.pre57, %perf_allow_cpu.exit._crit_edge.i.a ], [ %1, %bb.m ], [ %1, %bb.l ]
+  %.016.i.a = phi i64 [ %.pre.i, %perf_allow_cpu.exit._crit_edge.i.a ], [ %i.bd, %bb.m ], [ %i.bd, %bb.l ] ; 4 uses
+  %.016.i = phi i32 [ 0, %perf_allow_cpu.exit._crit_edge.i.a ], [ %2, %bb.m ], [ %2, %bb.l ]
+  %4 = zext nneg i32 %.016.i to i64
+  %i.br = getelementptr [28 x i8], ptr @p4_event_bind_map, i64 %4
   %i.bs = getelementptr i8, ptr %i.br, i64 12
   %i.bt = load i32, ptr %i.bs, align 4
   %i.bu = and i32 %i.bt, 33553920
   %i.bv = xor i32 %i.bu, 33553920
-  %i.bw = and i32 %i.bv, %3
+  %i.bw = and i32 %i.bv, %.pre-phi58
   %.not21.i = icmp ne i32 %i.bw, 0
-  %i.bx = and i64 %1, 128
+  %i.bx = and i64 %.016.i.a, 128
   %.not22.i = icmp ne i64 %i.bx, 0
   %or.cond.i.not55 = or i1 %.not22.i, %.not21.i
-  %i.by = and i64 %1, 62
+  %i.by = and i64 %.016.i.a, 62
   %i.bz = icmp samesign ugt i64 %i.by, 9
   %or.cond53 = select i1 %or.cond.i.not55, i1 true, i1 %i.bz
   br i1 %or.cond53, label %.thread, label %p4_validate_raw_event.exit
 
 p4_validate_raw_event.exit:                       ; preds = %bb.p
   %i.ca = load i64, ptr %i.ao, align 8
-  %i.cb = or i64 %i.ca, %1                        ; 2 uses
+  %i.cb = or i64 %i.ca, %.016.i.a                 ; 2 uses
   store i64 %i.cb, ptr %i.ao, align 8
-  %sum.shift.i43 = lshr i64 %1, 57
+  %sum.shift.i43 = lshr i64 %.016.i.a, 57
   %i.cc = and i64 %sum.shift.i43, 63              ; 2 uses
   %i.cd = icmp samesign ugt i64 %i.cc, 45
   %i.ce = getelementptr [28 x i8], ptr @p4_event_bind_map, i64 %i.cc ; 2 uses

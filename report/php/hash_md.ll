@@ -204,7 +204,7 @@ PHP_MD4Update.exit15:                             ; preds = %bb.d, %bb.c
   %i.bk = trunc nuw i32 %i.bj to i8
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 3
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !15
-  %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !13
   %i.bo = trunc i32 %i.bn to i8
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -219,12 +219,11 @@ PHP_MD4Update.exit15:                             ; preds = %bb.d, %bb.c
   %i.bw = trunc i32 %i.bv to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !15
-  %2 = load i32, ptr %i.bm, align 4, !tbaa !13
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %2 = getelementptr i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !13
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %4, ptr %i.by, align 1, !tbaa !15
-  %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  store i8 %3, ptr %i.by, align 1, !tbaa !15
+  %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !13
   %i.cb = trunc i32 %i.ca to i8
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -239,12 +238,11 @@ PHP_MD4Update.exit15:                             ; preds = %bb.d, %bb.c
   %i.cj = trunc i32 %i.ci to i8
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %i.cj, ptr %i.ck, align 1, !tbaa !15
-  %5 = load i32, ptr %i.bz, align 4, !tbaa !13
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
+  %4 = getelementptr i8, ptr %1, i64 11
+  %5 = load i8, ptr %4, align 1, !tbaa !13
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %7, ptr %i.cl, align 1, !tbaa !15
-  %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
+  store i8 %5, ptr %i.cl, align 1, !tbaa !15
+  %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !13
   %i.co = trunc i32 %i.cn to i8
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -259,11 +257,10 @@ PHP_MD4Update.exit15:                             ; preds = %bb.d, %bb.c
   %i.cw = trunc i32 %i.cv to i8
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 14
   store i8 %i.cw, ptr %i.cx, align 1, !tbaa !15
-  %8 = load i32, ptr %i.cm, align 4, !tbaa !13
-  %9 = lshr i32 %8, 24
-  %10 = trunc nuw i32 %9 to i8
+  %6 = getelementptr i8, ptr %1, i64 15
+  %7 = load i8, ptr %6, align 1, !tbaa !13
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %10, ptr %i.cy, align 1, !tbaa !15
+  store i8 %7, ptr %i.cy, align 1, !tbaa !15
   tail call void @explicit_bzero(ptr noundef nonnull %1, i64 noundef 88) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void

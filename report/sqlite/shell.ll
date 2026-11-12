@@ -206,11 +206,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !165  ; 5 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !257  ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %3 = load i32, ptr %i.d, align 8, !tbaa !261
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
-  %i.e = and i8 %5, 1
+  %i.d = getelementptr i8, ptr %i.b, i64 19
+  %3 = load i8, ptr %i.d, align 1, !tbaa !261
+  %i.e = and i8 %3, 1
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   store i8 %i.e, ptr %i.f, align 4, !tbaa !262
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32

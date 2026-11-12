@@ -202,7 +202,7 @@ _ZNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit: 
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK9ImageGrid5writeEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::__1::vector") align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !56
   %i.c = icmp ugt i32 %i.b, 65535
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -212,7 +212,7 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:
   %i.g = select i1 %or.cond, i64 12, i64 8        ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #24 ; 13 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #24 ; 17 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !35
   %i.k = getelementptr i8, ptr %i.j, i64 %i.g     ; 2 uses
   store ptr %i.k, ptr %i.i, align 8, !tbaa !49
@@ -233,36 +233,50 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:
   %i.t = add i8 %i.s, -1
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 3
   store i8 %i.t, ptr %i.u, align 1, !tbaa !36
-  %2 = load i32, ptr %i.a, align 4, !tbaa !56     ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 2 uses
   br i1 %or.cond, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit
-  %4 = lshr i32 %2, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr %3, align 1, !tbaa !36
-  %i.v = lshr i32 %2, 16
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 7
+  %3 = load i8, ptr %2, align 1, !tbaa !56
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  store i8 %3, ptr %4, align 1, !tbaa !36
+  %5 = load i32, ptr %i.a, align 4, !tbaa !56     ; 2 uses
+  %i.v = lshr i32 %5, 16
   %i.w = trunc i32 %i.v to i8
   %i.x = getelementptr inbounds nuw i8, ptr %i.j, i64 5
   store i8 %i.w, ptr %i.x, align 1, !tbaa !36
-  %i.y = load i32, ptr %i.d, align 4, !tbaa !57
-  %i.z = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %6 = tail call i32 @llvm.bswap.i32(i32 %i.y)
-  store i32 %6, ptr %i.z, align 1, !tbaa !36
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 11
+  %7 = load i8, ptr %6, align 1, !tbaa !57
+  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  store i8 %7, ptr %8, align 1, !tbaa !36
+  %i.y = load i32, ptr %i.d, align 4, !tbaa !57   ; 3 uses
+  %9 = lshr i32 %i.y, 16
+  %10 = trunc i32 %9 to i8
+  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 9
+  store i8 %10, ptr %11, align 1, !tbaa !36
+  %12 = lshr i32 %i.y, 8
+  %13 = trunc i32 %12 to i8
+  %i.z = getelementptr inbounds nuw i8, ptr %i.j, i64 10
+  store i8 %13, ptr %i.z, align 1, !tbaa !36
+  %14 = trunc i32 %i.y to i8
+  %15 = getelementptr inbounds nuw i8, ptr %i.j, i64 11
+  store i8 %14, ptr %15, align 1, !tbaa !36
   br label %bb.c
 
 bb.b:                                             ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit
-  %i.aa = lshr i32 %2, 8
+  %16 = load i32, ptr %i.a, align 4, !tbaa !56    ; 2 uses
+  %i.aa = lshr i32 %16, 8
   %i.ab = trunc i32 %i.aa to i8
-  store i8 %i.ab, ptr %3, align 1, !tbaa !36
-  %i.ac = trunc i32 %2 to i8
+  %17 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  store i8 %i.ab, ptr %17, align 1, !tbaa !36
+  %i.ac = trunc i32 %16 to i8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.j, i64 5
   store i8 %i.ac, ptr %i.ad, align 1, !tbaa !36
   %i.ae = load i32, ptr %i.d, align 4, !tbaa !57
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sink9.in.in = phi i32 [ %2, %bb.a ], [ %i.ae, %bb.b ] ; 2 uses
+  %.sink9.in.in = phi i32 [ %5, %bb.a ], [ %i.ae, %bb.b ] ; 2 uses
   %.sink = trunc i32 %.sink9.in.in to i8
   %.sink9.in = lshr i32 %.sink9.in.in, 8
   %.sink9 = trunc i32 %.sink9.in to i8
@@ -665,6 +679,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit35: ; pr
   br label %bb.bd
 
 bb.m:                                             ; preds = %bb.a
+  %.sroa.11.sroa.9.0.extract.shift = lshr i32 %2, 24
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !627)
   %i.ao = or i32 %3, %2
@@ -693,11 +708,9 @@ bb.m:                                             ; preds = %bb.a
   %i.az = add i8 %i.ay, -1
   %i.ba = getelementptr inbounds nuw i8, ptr %i.as, i64 3
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !36, !noalias !627
-  %18 = getelementptr inbounds nuw i8, ptr %i.as, i64 4
   br i1 %or.cond.i, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.noexc36
-  %19 = lshr i32 %2, 24
   %i.bb = lshr i32 %2, 16
   %i.bc = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.bd = tail call i32 @llvm.bswap.i32(i32 %3)
@@ -709,11 +722,12 @@ bb.o:                                             ; preds = %.noexc36
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %.sink77.in = phi i32 [ %19, %bb.n ], [ %i.be, %bb.o ]
+  %.sink77.in = phi i32 [ %.sroa.11.sroa.9.0.extract.shift, %bb.n ], [ %i.be, %bb.o ]
   %.sink.in = phi i32 [ %i.bb, %bb.n ], [ %2, %bb.o ]
   %.sink9.in.in.i = phi i32 [ %2, %bb.n ], [ %3, %bb.o ] ; 2 uses
   %.sink = trunc i32 %.sink.in to i8
   %.sink77 = trunc nuw i32 %.sink77.in to i8
+  %18 = getelementptr inbounds nuw i8, ptr %i.as, i64 4
   store i8 %.sink77, ptr %18, align 1, !tbaa !36, !noalias !627
   %i.bf = getelementptr inbounds nuw i8, ptr %i.as, i64 5
   store i8 %.sink, ptr %i.bf, align 1, !tbaa !36, !noalias !627
@@ -1116,6 +1130,7 @@ bb.a:
   %i.j = mul i32 %i.f, %i.i                       ; 7 uses
   %i.k = zext i16 %3 to i32                       ; 2 uses
   %i.l = mul i32 %i.h, %i.k                       ; 4 uses
+  %.sroa.8.sroa.8.0.extract.shift = lshr i32 %i.j, 24
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !693)
   %i.m = icmp ugt i32 %i.j, 65535
@@ -1151,11 +1166,9 @@ bb.a:
   %i.y = add i8 %i.x, -1
   %i.z = getelementptr inbounds nuw i8, ptr %i.r, i64 3
   store i8 %i.y, ptr %i.z, align 1, !tbaa !36, !noalias !693
-  %26 = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.noexc
-  %27 = lshr i32 %i.j, 24
   %i.aa = lshr i32 %i.j, 16
   %i.ab = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.ac = tail call i32 @llvm.bswap.i32(i32 %i.l)
@@ -1167,11 +1180,12 @@ bb.c:                                             ; preds = %.noexc
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sink153.in = phi i32 [ %27, %bb.b ], [ %i.ad, %bb.c ]
+  %.sink153.in = phi i32 [ %.sroa.8.sroa.8.0.extract.shift, %bb.b ], [ %i.ad, %bb.c ]
   %.sink.in = phi i32 [ %i.aa, %bb.b ], [ %i.j, %bb.c ]
   %.sink9.in.in.i = phi i32 [ %i.j, %bb.b ], [ %i.l, %bb.c ] ; 2 uses
   %.sink = trunc i32 %.sink.in to i8
   %.sink153 = trunc nuw i32 %.sink153.in to i8
+  %26 = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   store i8 %.sink153, ptr %26, align 1, !tbaa !36, !noalias !693
   %i.ae = getelementptr inbounds nuw i8, ptr %i.r, i64 5
   store i8 %.sink, ptr %i.ae, align 1, !tbaa !36, !noalias !693

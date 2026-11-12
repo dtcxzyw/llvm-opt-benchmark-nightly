@@ -131,13 +131,15 @@ bb.f:                                             ; preds = %Vec_IntDup.exit, %A
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %.val71, i64 %indvars.iv
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !39 ; 2 uses
   %i.az = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
-  %1 = load i64, ptr %i.ba, align 8
-  %2 = and i64 %1, 72057589742960640
+  %i.ba = getelementptr i8, ptr %i.ay, i64 28
+  %1 = load i32, ptr %i.ba, align 4
+  %2 = and i32 %1, 16777215
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 24 ; 2 uses
+  %3 = zext nneg i32 %2 to i64
   %i.bc = load i64, ptr %i.bb, align 8
+  %4 = shl nuw nsw i64 %3, 32
   %i.bd = and i64 %i.bc, -72057589742960641
-  %i.be = or disjoint i64 %i.bd, %2
+  %i.be = or disjoint i64 %4, %i.bd
   store i64 %i.be, ptr %i.bb, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ay, i64 40
   store ptr %i.az, ptr %i.bf, align 8, !tbaa !36
@@ -540,13 +542,15 @@ bb.f:                                             ; preds = %Vec_IntDup.exit, %A
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %.val64, i64 %indvars.iv
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !39 ; 2 uses
   %i.az = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
-  %1 = load i64, ptr %i.ba, align 8
-  %2 = and i64 %1, 72057589742960640
+  %i.ba = getelementptr i8, ptr %i.ay, i64 28
+  %1 = load i32, ptr %i.ba, align 4
+  %2 = and i32 %1, 16777215
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 24 ; 2 uses
+  %3 = zext nneg i32 %2 to i64
   %i.bc = load i64, ptr %i.bb, align 8
+  %4 = shl nuw nsw i64 %3, 32
   %i.bd = and i64 %i.bc, -72057589742960641
-  %i.be = or disjoint i64 %i.bd, %2
+  %i.be = or disjoint i64 %4, %i.bd
   store i64 %i.be, ptr %i.bb, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ay, i64 40
   store ptr %i.az, ptr %i.bf, align 8, !tbaa !36
@@ -834,12 +838,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.t
   %i.aq = getelementptr i8, ptr %i.ap, i64 8
   %.val62 = load ptr, ptr %i.aq, align 8, !tbaa !38
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %.val62, i64 %indvars.iv
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !39 ; 7 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !39 ; 8 uses
   %i.at = icmp eq ptr %i.as, null
   br i1 %i.at, label %bb.t, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.au = getelementptr i8, ptr %i.as, i64 24     ; 2 uses
+  %i.au = getelementptr i8, ptr %i.as, i64 24
   %.val63 = load i64, ptr %i.au, align 8          ; 2 uses
   %i.av = and i64 %.val63, 7                      ; 2 uses
   %.not83 = icmp eq i64 %i.av, 4
@@ -921,12 +925,15 @@ bb.o:                                             ; preds = %bb.k
 
 bb.p:                                             ; preds = %bb.o
   %i.cg = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %1 = load i64, ptr %i.au, align 8
-  %2 = and i64 %1, 72057589742960640
+  %1 = getelementptr i8, ptr %i.as, i64 28
+  %2 = load i32, ptr %1, align 4
+  %3 = and i32 %2, 16777215
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 24 ; 2 uses
+  %4 = zext nneg i32 %3 to i64
   %i.ci = load i64, ptr %i.ch, align 8
+  %5 = shl nuw nsw i64 %4, 32
   %i.cj = and i64 %i.ci, -72057589742960641
-  %i.ck = or disjoint i64 %i.cj, %2
+  %i.ck = or disjoint i64 %5, %i.cj
   store i64 %i.ck, ptr %i.ch, align 8
   br label %Aig_ObjChild0Copy.exit
 
@@ -1126,13 +1133,15 @@ bb.f:                                             ; preds = %Vec_IntDup.exit, %A
 
 bb.g:                                             ; preds = %.lr.ph.split.us
   %i.ay = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
-  %3 = load i64, ptr %i.az, align 8
-  %4 = and i64 %3, 72057589742960640
+  %i.az = getelementptr i8, ptr %i.aw, i64 28
+  %3 = load i32, ptr %i.az, align 4
+  %4 = and i32 %3, 16777215
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 24 ; 2 uses
+  %5 = zext nneg i32 %4 to i64
   %i.bb = load i64, ptr %i.ba, align 8
+  %6 = shl nuw nsw i64 %5, 32
   %i.bc = and i64 %i.bb, -72057589742960641
-  %i.bd = or disjoint i64 %i.bc, %4
+  %i.bd = or disjoint i64 %6, %i.bc
   store i64 %i.bd, ptr %i.ba, align 8
   br label %bb.i
 
@@ -1178,13 +1187,15 @@ bb.j:                                             ; preds = %.lr.ph.split
 
 bb.k:                                             ; preds = %.lr.ph.split
   %i.bu = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 24
-  %5 = load i64, ptr %i.bv, align 8
-  %6 = and i64 %5, 72057589742960640
+  %i.bv = getelementptr i8, ptr %i.bs, i64 28
+  %7 = load i32, ptr %i.bv, align 4
+  %8 = and i32 %7, 16777215
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 24 ; 2 uses
+  %9 = zext nneg i32 %8 to i64
   %i.bx = load i64, ptr %i.bw, align 8
+  %10 = shl nuw nsw i64 %9, 32
   %i.by = and i64 %i.bx, -72057589742960641
-  %i.bz = or disjoint i64 %i.by, %6
+  %i.bz = or disjoint i64 %10, %i.by
   store i64 %i.bz, ptr %i.bw, align 8
   br label %bb.l
 
@@ -1587,12 +1598,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.t
   %i.ar = getelementptr i8, ptr %i.aq, i64 8
   %.val60 = load ptr, ptr %i.ar, align 8, !tbaa !38
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %.val60, i64 %indvars.iv
-  %i.at = load ptr, ptr %i.as, align 8, !tbaa !39 ; 7 uses
+  %i.at = load ptr, ptr %i.as, align 8, !tbaa !39 ; 8 uses
   %i.au = icmp eq ptr %i.at, null
   br i1 %i.au, label %bb.t, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.av = getelementptr i8, ptr %i.at, i64 24     ; 2 uses
+  %i.av = getelementptr i8, ptr %i.at, i64 24
   %.val61 = load i64, ptr %i.av, align 8          ; 2 uses
   %i.aw = and i64 %.val61, 7                      ; 2 uses
   %.not81 = icmp eq i64 %i.aw, 4
@@ -1674,12 +1685,15 @@ bb.o:                                             ; preds = %bb.k
 
 bb.p:                                             ; preds = %bb.o
   %i.ch = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %1 = load i64, ptr %i.av, align 8
-  %2 = and i64 %1, 72057589742960640
+  %1 = getelementptr i8, ptr %i.at, i64 28
+  %2 = load i32, ptr %1, align 4
+  %3 = and i32 %2, 16777215
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 24 ; 2 uses
+  %4 = zext nneg i32 %3 to i64
   %i.cj = load i64, ptr %i.ci, align 8
+  %5 = shl nuw nsw i64 %4, 32
   %i.ck = and i64 %i.cj, -72057589742960641
-  %i.cl = or disjoint i64 %i.ck, %2
+  %i.cl = or disjoint i64 %5, %i.ck
   store i64 %i.cl, ptr %i.ci, align 8
   br label %Aig_ObjChild0Copy.exit
 
@@ -2045,12 +2059,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.be = getelementptr i8, ptr %i.bd, i64 8
   %.val69 = load ptr, ptr %i.be, align 8, !tbaa !38
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %.val69, i64 %indvars.iv
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !39 ; 4 uses
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !39 ; 5 uses
   %i.bh = icmp eq ptr %i.bg, null
   br i1 %i.bh, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.bi = getelementptr i8, ptr %i.bg, i64 24     ; 2 uses
+  %i.bi = getelementptr i8, ptr %i.bg, i64 24
   %.val74 = load i64, ptr %i.bi, align 8
   %i.bj = and i64 %.val74, 7
   switch i64 %i.bj, label %bb.o [
@@ -2060,12 +2074,15 @@ bb.k:                                             ; preds = %.lr.ph
 
 bb.l:                                             ; preds = %bb.k
   %i.bk = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %1 = load i64, ptr %i.bi, align 8
-  %2 = and i64 %1, 72057589742960640
+  %1 = getelementptr i8, ptr %i.bg, i64 28
+  %2 = load i32, ptr %1, align 4
+  %3 = and i32 %2, 16777215
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 24 ; 2 uses
+  %4 = zext nneg i32 %3 to i64
   %i.bm = load i64, ptr %i.bl, align 8
+  %5 = shl nuw nsw i64 %4, 32
   %i.bn = and i64 %i.bm, -72057589742960641
-  %i.bo = or disjoint i64 %i.bn, %2
+  %i.bo = or disjoint i64 %5, %i.bn
   store i64 %i.bo, ptr %i.bl, align 8
   br label %.sink.split
 
@@ -2468,8 +2485,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.o
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 2 uses
   %.val73 = load ptr, ptr %i.bc, align 8, !tbaa !38
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %.val73, i64 %indvars.iv
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !39 ; 3 uses
-  %i.bf = getelementptr i8, ptr %i.be, i64 24     ; 2 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !39 ; 4 uses
+  %i.bf = getelementptr i8, ptr %i.be, i64 24
   %.val78 = load i64, ptr %i.bf, align 8
   %i.bg = and i64 %.val78, 7
   switch i64 %i.bg, label %bb.o [
@@ -2479,12 +2496,15 @@ bb.k:                                             ; preds = %.lr.ph, %bb.o
 
 bb.l:                                             ; preds = %bb.k
   %i.bh = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %2 = load i64, ptr %i.bf, align 8
-  %3 = and i64 %2, 72057589742960640
+  %2 = getelementptr i8, ptr %i.be, i64 28
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 16777215
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 24 ; 2 uses
+  %5 = zext nneg i32 %4 to i64
   %i.bj = load i64, ptr %i.bi, align 8
+  %6 = shl nuw nsw i64 %5, 32
   %i.bk = and i64 %i.bj, -72057589742960641
-  %i.bl = or disjoint i64 %i.bk, %3
+  %i.bl = or disjoint i64 %6, %i.bk
   store i64 %i.bl, ptr %i.bi, align 8
   br label %.sink.split
 
@@ -2714,13 +2734,15 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.val91, i64 %indvars.iv
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !39 ; 2 uses
   %i.bi = tail call ptr @Aig_ObjCreateCi(ptr noundef nonnull %i.c) #12 ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 24
-  %1 = load i64, ptr %i.bj, align 8
-  %2 = and i64 %1, 72057589742960640
+  %i.bj = getelementptr i8, ptr %i.bh, i64 28
+  %1 = load i32, ptr %i.bj, align 4
+  %2 = and i32 %1, 16777215
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 24 ; 2 uses
+  %3 = zext nneg i32 %2 to i64
   %i.bl = load i64, ptr %i.bk, align 8
+  %4 = shl nuw nsw i64 %3, 32
   %i.bm = and i64 %i.bl, -72057589742960641
-  %i.bn = or disjoint i64 %i.bm, %2
+  %i.bn = or disjoint i64 %4, %i.bm
   store i64 %i.bn, ptr %i.bk, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bh, i64 40
   store ptr %i.bi, ptr %i.bo, align 8, !tbaa !36

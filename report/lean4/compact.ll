@@ -204,14 +204,19 @@ _ZN4lean16object_compactor5allocEm.exit:          ; preds = %bb.d, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %.0.i
   store ptr %i.aa, ptr %i.c, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.lcssa.i, ptr align 4 %1, i64 %.0, i1 false)
+  %3 = getelementptr i8, ptr %1, i64 7
+  %.val = load i8, ptr %3, align 1
+  %4 = zext i8 %.val to i32
   %i.ab = getelementptr i8, ptr %1, i64 4
   %.val.a = load i32, ptr %i.ab, align 4
+  %5 = and i32 %.val.a, 16711680
   store i32 0, ptr %.lcssa.i, align 4, !tbaa !115
   %i.ac = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 4
-  %3 = and i32 %.val.a, -65536
+  %6 = shl nuw i32 %4, 24
+  %7 = or disjoint i32 %5, %6
   %i.ad = trunc i64 %.0 to i32
   %i.ae = and i32 %i.ad, 65535
-  %i.af = or disjoint i32 %3, %i.ae
+  %i.af = or disjoint i32 %7, %i.ae
   store i32 %i.af, ptr %i.ac, align 4
   ret ptr %.lcssa.i
 }
@@ -608,13 +613,18 @@ _ZN4lean16object_compactor11copy_objectEP11lean_objectm.exit: ; preds = %bb.f, %
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %.0.i.i
   store ptr %i.az, ptr %i.ab, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.lcssa.i.i, ptr nonnull align 4 %1, i64 %i.aa, i1 false)
+  %5 = getelementptr i8, ptr %1, i64 7
+  %.val.i = load i8, ptr %5, align 1
+  %6 = zext i8 %.val.i to i32
   %.val.i.a = load i32, ptr %i.b, align 4
+  %7 = and i32 %.val.i.a, 16711680
   store i32 0, ptr %.lcssa.i.i, align 4, !tbaa !115
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4
-  %5 = and i32 %.val.i.a, -65536
+  %8 = shl nuw i32 %6, 24
+  %9 = or disjoint i32 %7, %8
   %i.bb = trunc i64 %i.aa to i32
   %i.bc = and i32 %i.bb, 65535
-  %i.bd = or disjoint i32 %5, %i.bc
+  %i.bd = or disjoint i32 %9, %i.bc
   store i32 %i.bd, ptr %i.ba, align 4
   %.val32 = load i32, ptr %i.b, align 4
   %i.be = and i32 %.val32, 16711680
@@ -1017,12 +1027,17 @@ _ZN4lean16object_compactor11copy_objectEP11lean_objectm.exit: ; preds = %bb.d, %
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   store ptr %i.ae, ptr %i.g, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.lcssa.i.i, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  %5 = getelementptr i8, ptr %1, i64 7
+  %.val.i = load i8, ptr %5, align 1
+  %6 = zext i8 %.val.i to i32
   %i.af = getelementptr i8, ptr %1, i64 4
   %.val.i.a = load i32, ptr %i.af, align 4
+  %7 = and i32 %.val.i.a, 16711680
   store i32 0, ptr %.lcssa.i.i, align 4, !tbaa !115
   %i.ag = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4
-  %5 = and i32 %.val.i.a, -65536
-  %i.ah = or disjoint i32 %5, 24
+  %8 = shl nuw i32 %6, 24
+  %9 = or disjoint i32 %7, %8
+  %i.ah = or disjoint i32 %9, 24
   store i32 %i.ah, ptr %i.ag, align 4
   %i.ai = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 8
   store atomic ptr %i.d, ptr %i.ai seq_cst, align 8
@@ -1140,12 +1155,17 @@ _ZN4lean16object_compactor11copy_objectEP11lean_objectm.exit: ; preds = %bb.c, %
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   store ptr %i.ad, ptr %i.f, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.lcssa.i.i, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
+  %5 = getelementptr i8, ptr %1, i64 7
+  %.val.i = load i8, ptr %5, align 1
+  %6 = zext i8 %.val.i to i32
   %i.ae = getelementptr i8, ptr %1, i64 4
   %.val.i.a = load i32, ptr %i.ae, align 4
+  %7 = and i32 %.val.i.a, 16711680
   store i32 0, ptr %.lcssa.i.i, align 4, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4
-  %5 = and i32 %.val.i.a, -65536
-  %i.ag = or disjoint i32 %5, 16
+  %8 = shl nuw i32 %6, 24
+  %9 = or disjoint i32 %7, %8
+  %i.ag = or disjoint i32 %9, 16
   store i32 %i.ag, ptr %i.af, align 4
   %i.ah = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 8
   store ptr %i.c, ptr %i.ah, align 8, !tbaa !121
@@ -1262,12 +1282,17 @@ _ZN4lean16object_compactor11copy_objectEP11lean_objectm.exit: ; preds = %bb.c, %
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   store ptr %i.ac, ptr %i.e, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.lcssa.i.i, ptr noundef nonnull align 4 dereferenceable(24) %1, i64 24, i1 false)
+  %5 = getelementptr i8, ptr %1, i64 7
+  %.val.i = load i8, ptr %5, align 1
+  %6 = zext i8 %.val.i to i32
   %i.ad = getelementptr i8, ptr %1, i64 4
   %.val.i.a = load i32, ptr %i.ad, align 4
+  %7 = and i32 %.val.i.a, 16711680
   store i32 0, ptr %.lcssa.i.i, align 4, !tbaa !115
   %i.ae = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4
-  %5 = and i32 %.val.i.a, -65536
-  %i.af = or disjoint i32 %5, 24
+  %8 = shl nuw i32 %6, 24
+  %9 = or disjoint i32 %7, %8
+  %i.af = or disjoint i32 %9, 24
   store i32 %i.af, ptr %i.ae, align 4
   %i.ag = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 8
   store atomic ptr %i.b, ptr %i.ag seq_cst, align 8
@@ -1464,14 +1489,19 @@ _ZN4lean16object_compactor11copy_objectEP11lean_objectm.exit: ; preds = %bb.j, %
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %.0.i.i
   store ptr %i.be, ptr %i.ag, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.lcssa.i.i, ptr nonnull align 4 %1, i64 %i.af, i1 false)
+  %3 = getelementptr i8, ptr %1, i64 7
+  %.val.i = load i8, ptr %3, align 1
+  %4 = zext i8 %.val.i to i32
   %i.bf = getelementptr i8, ptr %1, i64 4
   %.val.i.a = load i32, ptr %i.bf, align 4
+  %5 = and i32 %.val.i.a, 16711680
   store i32 0, ptr %.lcssa.i.i, align 4, !tbaa !115
   %i.bg = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4
-  %3 = and i32 %.val.i.a, -65536
+  %6 = shl nuw i32 %4, 24
+  %7 = or disjoint i32 %5, %6
   %i.bh = trunc i64 %i.af to i32
   %i.bi = and i32 %i.bh, 65535
-  %i.bj = or disjoint i32 %3, %i.bi
+  %i.bj = or disjoint i32 %7, %i.bi
   store i32 %i.bj, ptr %i.bg, align 4
   br i1 %.not30, label %._crit_edge35, label %.lr.ph34
 
@@ -1693,12 +1723,17 @@ _ZN4lean16object_compactor11copy_objectEP11lean_objectm.exit: ; preds = %bb.c, %
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   store ptr %i.ad, ptr %i.f, align 8, !tbaa !93
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.lcssa.i.i, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
+  %5 = getelementptr i8, ptr %1, i64 7
+  %.val.i = load i8, ptr %5, align 1
+  %6 = zext i8 %.val.i to i32
   %i.ae = getelementptr i8, ptr %1, i64 4
   %.val.i.a = load i32, ptr %i.ae, align 4
+  %7 = and i32 %.val.i.a, 16711680
   store i32 0, ptr %.lcssa.i.i, align 4, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4
-  %5 = and i32 %.val.i.a, -65536
-  %i.ag = or disjoint i32 %5, 16
+  %8 = shl nuw i32 %6, 24
+  %9 = or disjoint i32 %7, %8
+  %i.ag = or disjoint i32 %9, 16
   store i32 %i.ag, ptr %i.af, align 4
   %i.ah = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 8
   store ptr %i.c, ptr %i.ah, align 8, !tbaa !126
@@ -2044,11 +2079,9 @@ _ZNSt13unordered_mapIP11lean_objectS1_St4hashIS1_ESt8equal_toIS1_E16mi_stl_alloc
   br label %.sink.split, !llvm.loop !172
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i, %.preheader, %..loopexit_crit_edge21.i.i.i.i, %bb.k
-  %i.ch = getelementptr i8, ptr %i.bl, i64 4
-  %.val = load i32, ptr %i.ch, align 4
-  %2 = lshr i32 %.val, 24
-  %3 = trunc nuw i32 %2 to i8
-  switch i8 %3, label %.split [
+  %i.ch = getelementptr i8, ptr %i.bl, i64 7
+  %.val = load i8, ptr %i.ch, align 1
+  switch i8 %.val, label %.split [
     i8 -11, label %bb.v
     i8 -10, label %.split30
     i8 -8, label %bb.o
@@ -2451,10 +2484,10 @@ _ZN4lean13region_reader14fix_object_ptrEP11lean_object.exit: ; preds = %.thread,
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph140, %bb.ax
-  %i.df = phi ptr [ %i.da, %.lr.ph140 ], [ %i.lk, %bb.ax ] ; 17 uses
-  %i.dg = getelementptr i8, ptr %i.df, i64 4
-  %.val = load i32, ptr %i.dg, align 4            ; 3 uses
-  %i.dh = icmp ult i32 %.val, -201326592
+  %i.df = phi ptr [ %i.da, %.lr.ph140 ], [ %i.lk, %bb.ax ] ; 18 uses
+  %i.dg = getelementptr i8, ptr %i.df, i64 7
+  %.val = load i8, ptr %i.dg, align 1             ; 2 uses
+  %i.dh = icmp ult i8 %.val, -12
   br i1 %i.dh, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -2462,9 +2495,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.ax
 
 bb.r:                                             ; preds = %bb.p
-  %1 = lshr i32 %.val, 24
-  %2 = trunc nuw i32 %1 to i8
-  switch i8 %2, label %bb.aw [
+  switch i8 %.val, label %bb.aw [
     i8 -11, label %bb.s
     i8 -10, label %bb.t
     i8 -8, label %bb.u
@@ -2486,9 +2517,11 @@ bb.t:                                             ; preds = %bb.r
   br label %bb.ax
 
 bb.u:                                             ; preds = %bb.r
+  %1 = getelementptr i8, ptr %i.df, i64 4
+  %.val59 = load i32, ptr %1, align 4
   %i.di = getelementptr i8, ptr %i.df, i64 16
   %.val60 = load i64, ptr %i.di, align 8, !tbaa !66
-  %i.dj = lshr i32 %.val, 16
+  %i.dj = lshr i32 %.val59, 16
   %i.dk = and i32 %i.dj, 255
   %i.dl = zext nneg i32 %i.dk to i64
   %i.dm = mul i64 %.val60, %i.dl

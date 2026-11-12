@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %5 = alloca %"class.pstd::pmr::polymorphic_allocator.3", align 8 ; 3 uses
   %i.b = alloca i32, align 4                      ; 2 uses
-  %6 = alloca %"struct.pbrt::ImageAndMetadata", align 8 ; 38 uses
+  %6 = alloca %"struct.pbrt::ImageAndMetadata", align 8 ; 39 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %8 = alloca %"class.pbrt::ColorEncoding", align 8 ; 2 uses
   %9 = alloca %"struct.pbrt::ImageChannelDesc", align 8 ; 11 uses
@@ -449,10 +449,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126.2: ; preds = %
 
 .preheader188:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126.2
   %i.co = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
-  %.sroa.0.0.copyload.i197 = load i64, ptr %i.co, align 4 ; 2 uses
-  %.sroa.3.0.extract.shift198 = lshr i64 %.sroa.0.0.copyload.i197, 32
-  %.sroa.3.0.extract.trunc199 = trunc nuw i64 %.sroa.3.0.extract.shift198 to i32
-  %i.cp = icmp sgt i32 %.sroa.3.0.extract.trunc199, 0
+  %17 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %.sroa.3.0.extract.trunc197 = load i32, ptr %17, align 8
+  %i.cp = icmp sgt i32 %.sroa.3.0.extract.trunc197, 0
   br i1 %i.cp, label %.preheader.lr.ph, label %.critedge
 
 .preheader.lr.ph:                                 ; preds = %.preheader188
@@ -460,10 +459,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126.2: ; preds = %
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %13, i64 28
   %i.cr = getelementptr inbounds nuw i8, ptr %13, i64 40
   %i.cs = getelementptr inbounds nuw i8, ptr %13, i64 32
+  %.sroa.0.0.copyload.i142193.pre = load i64, ptr %i.co, align 4
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.sroa.0.0.copyload.i207 = phi i64 [ %.sroa.0.0.copyload.i197, %.preheader.lr.ph ], [ %.sroa.0.0.copyload.i, %._crit_edge ] ; 2 uses
+  %.sroa.0.0.copyload.i207 = phi i64 [ %.sroa.0.0.copyload.i142193.pre, %.preheader.lr.ph ], [ %.sroa.0.0.copyload.i, %._crit_edge ] ; 2 uses
   %indvars.iv204 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next205, %._crit_edge ] ; 2 uses
   %.070200 = phi i1 [ true, %.preheader.lr.ph ], [ %.171.lcssa, %._crit_edge ] ; 2 uses
   %.sroa.07.0.extract.trunc194 = trunc i64 %.sroa.0.0.copyload.i207 to i32

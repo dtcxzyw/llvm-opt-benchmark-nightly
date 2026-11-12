@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.b, %bb.e
   %i.cb = phi i32 [ %i.bv, %bb.b ], [ %.pre, %bb.e ]
-  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 11 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 10 uses
   %i.cd = load i32, ptr %i.cc, align 8, !noundef !6
   %i.ce = or i32 %i.cd, %i.cb                     ; 3 uses
   %i.cf = and i32 %i.ce, 2048
@@ -605,9 +605,9 @@ _RNvMs3_NtNtCsdjW2DEjcQy2_12clap_builder7builder7commandNtB5_7Command22__propaga
   br i1 %i.adn, label %bb.lq, label %bb.lr
 
 bb.lq:                                            ; preds = %_RNvMs3_NtNtCsdjW2DEjcQy2_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit
-  %2 = load i32, ptr %i.cc, align 8, !noundef !6
-  %3 = and i32 %2, 16777216
-  %4 = icmp ne i32 %3, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 771
+  %3 = load i8, ptr %2, align 1
+  %4 = trunc i8 %3 to i1
   br label %bb.lr
 
 bb.lr:                                            ; preds = %_RNvMs3_NtNtCsdjW2DEjcQy2_12clap_builder7builder7commandNtB5_7Command22__propagate_global_args.exit, %bb.lq

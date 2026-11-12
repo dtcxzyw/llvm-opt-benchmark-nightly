@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit, %bb.a
   %i.m = phi ptr [ %i.et, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit ], [ %i.e, %bb.a ]
   %i.n = getelementptr inbounds i8, ptr %i.m, i64 -8 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !47   ; 15 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !47   ; 16 uses
   store ptr %i.n, ptr %i.h, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   store ptr %i.o, ptr %4, align 8, !tbaa !41
@@ -423,7 +423,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y, %bb.x, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.cs = load i64, ptr %i.cr, align 8
   %i.ct = and i64 %i.cs, 1023
   %i.cu = icmp eq i64 %i.ct, 21
@@ -439,10 +439,11 @@ bb.ac:                                            ; preds = %bb.ab
   %spec.select.v.i.i = select i1 %i.cx, i64 32, i64 24
   %spec.select.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 %spec.select.v.i.i
   %i.cy = getelementptr inbounds nuw i8, ptr %i.o, i64 24
-  %6 = load i64, ptr %i.cr, align 8
-  %7 = lshr i64 %6, 32
-  %8 = and i64 %7, 67108863
-  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %8
+  %6 = getelementptr inbounds nuw i8, ptr %i.o, i64 12
+  %7 = load i32, ptr %6, align 4
+  %8 = and i32 %7, 67108863
+  %9 = zext nneg i32 %8 to i64
+  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %9
   %i.da = load ptr, ptr %3, align 8, !tbaa !49    ; 2 uses
   %i.db = ptrtoint ptr %i.cv to i64
   %i.dc = ptrtoint ptr %i.da to i64

@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define i32 @SCT_CTX_verify(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @SCT_is_complete(ptr noundef %1) #5
+  %i.a = tail call i32 @SCT_is_complete(ptr noundef %1) #4
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -34,9 +34,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.h, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b, %bb.a
-  tail call void @ERR_new() #5
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 102, ptr noundef nonnull @__func__.SCT_CTX_verify) #5
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 106, ptr noundef null) #5
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 102, ptr noundef nonnull @__func__.SCT_CTX_verify) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 106, ptr noundef null) #4
   br label %bb.s
 
 bb.f:                                             ; preds = %bb.c, %bb.d
@@ -45,9 +45,9 @@ bb.f:                                             ; preds = %bb.c, %bb.d
   br i1 %.not32, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @ERR_new() #5
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 106, ptr noundef nonnull @__func__.SCT_CTX_verify) #5
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 115, ptr noundef null) #5
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 106, ptr noundef nonnull @__func__.SCT_CTX_verify) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 115, ptr noundef null) #4
   br label %bb.s
 
 bb.h:                                             ; preds = %bb.f
@@ -68,9 +68,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not34, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  tail call void @ERR_new() #5
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 110, ptr noundef nonnull @__func__.SCT_CTX_verify) #5
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 114, ptr noundef null) #5
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 110, ptr noundef nonnull @__func__.SCT_CTX_verify) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 114, ptr noundef null) #4
   br label %bb.s
 
 bb.k:                                             ; preds = %bb.i
@@ -82,13 +82,13 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.v, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @ERR_new() #5
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 114, ptr noundef nonnull @__func__.SCT_CTX_verify) #5
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 116, ptr noundef null) #5
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 114, ptr noundef nonnull @__func__.SCT_CTX_verify) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 116, ptr noundef null) #4
   br label %bb.s
 
 bb.m:                                             ; preds = %bb.k
-  %i.w = tail call ptr @EVP_MD_CTX_new() #5       ; 5 uses
+  %i.w = tail call ptr @EVP_MD_CTX_new() #4       ; 5 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %bb.r, label %bb.n
 
@@ -98,7 +98,7 @@ bb.n:                                             ; preds = %bb.m
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !26
   %i.ac = load ptr, ptr %0, align 8, !tbaa !19
-  %i.ad = tail call i32 @EVP_DigestVerifyInit_ex(ptr noundef nonnull %i.w, ptr noundef null, ptr noundef nonnull @.str.1, ptr noundef %i.z, ptr noundef %i.ab, ptr noundef %i.ac, ptr noundef null) #5
+  %i.ad = tail call i32 @EVP_DigestVerifyInit_ex(ptr noundef nonnull %i.w, ptr noundef null, ptr noundef nonnull @.str.1, ptr noundef %i.z, ptr noundef %i.ab, ptr noundef %i.ac, ptr noundef null) #4
   %.not35 = icmp eq i32 %i.ad, 0
   br i1 %.not35, label %bb.r, label %bb.o
 
@@ -112,19 +112,19 @@ bb.p:                                             ; preds = %bb.o
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !27
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !28
-  %i.aj = tail call i32 @EVP_DigestVerifyFinal(ptr noundef nonnull %i.w, ptr noundef %i.ag, i64 noundef %i.ai) #5 ; 2 uses
+  %i.aj = tail call i32 @EVP_DigestVerifyFinal(ptr noundef nonnull %i.w, ptr noundef %i.ag, i64 noundef %i.ai) #4 ; 2 uses
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @ERR_new() #5
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 133, ptr noundef nonnull @__func__.SCT_CTX_verify) #5
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 107, ptr noundef null) #5
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 133, ptr noundef nonnull @__func__.SCT_CTX_verify) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 50, i32 noundef 107, ptr noundef null) #4
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %bb.o, %bb.n, %bb.m
   %.0 = phi i32 [ 0, %bb.m ], [ 0, %bb.q ], [ %i.aj, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ]
-  tail call void @EVP_MD_CTX_free(ptr noundef %i.w) #5
+  tail call void @EVP_MD_CTX_free(ptr noundef %i.w) #4
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.l, %bb.j, %bb.g, %bb.e
@@ -150,8 +150,8 @@ declare i32 @EVP_DigestVerifyInit_ex(ptr noundef, ptr noundef, ptr noundef, ptr 
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @sct_ctx_update(ptr noundef nonnull %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 1                ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  %i.a = alloca [12 x i8], align 1                ; 19 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !15   ; 3 uses
   switch i32 %i.c, label %bb.c [
@@ -173,17 +173,45 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   store i8 0, ptr %i.i, align 1, !tbaa !29
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !18
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %3 = tail call i64 @llvm.bswap.i64(i64 %i.l)
-  store i64 %3, ptr %i.j, align 1, !tbaa !29
+  %3 = getelementptr i8, ptr %2, i64 47
+  %4 = load i8, ptr %3, align 1, !tbaa !18
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  store i8 %4, ptr %i.j, align 1, !tbaa !29
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !18   ; 7 uses
+  %6 = lshr i64 %i.l, 48
+  %7 = trunc i64 %6 to i8
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store i8 %7, ptr %5, align 1, !tbaa !29
+  %9 = lshr i64 %i.l, 40
+  %10 = trunc i64 %9 to i8
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  store i8 %10, ptr %8, align 1, !tbaa !29
+  %12 = lshr i64 %i.l, 32
+  %13 = trunc i64 %12 to i8
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  store i8 %13, ptr %11, align 1, !tbaa !29
+  %15 = lshr i64 %i.l, 24
+  %16 = trunc i64 %15 to i8
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  store i8 %16, ptr %14, align 1, !tbaa !29
+  %18 = lshr i64 %i.l, 16
+  %19 = trunc i64 %18 to i8
+  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i8 %19, ptr %17, align 1, !tbaa !29
+  %21 = lshr i64 %i.l, 8
+  %22 = trunc i64 %21 to i8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  store i8 %22, ptr %20, align 1, !tbaa !29
+  %23 = trunc i64 %i.l to i8
+  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %23, ptr %i.m, align 1, !tbaa !29
   %i.n = lshr i32 %i.c, 8
   %i.o = trunc i32 %i.n to i8
-  store i8 %i.o, ptr %i.m, align 1, !tbaa !29
+  store i8 %i.o, ptr %24, align 1, !tbaa !29
   %i.p = trunc i32 %i.c to i8
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   store i8 %i.p, ptr %i.q, align 1, !tbaa !29
-  %i.r = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 12) #5
+  %i.r = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 12) #4
   %.not = icmp eq i32 %i.r, 0
   br i1 %.not, label %bb.m, label %bb.d
 
@@ -197,7 +225,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !16
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.x = load i64, ptr %i.w, align 8, !tbaa !30
-  %i.y = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef %i.v, i64 noundef %i.x) #5
+  %i.y = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef %i.v, i64 noundef %i.x) #4
   %.not63 = icmp eq i32 %i.y, 0
   br i1 %.not63, label %bb.m, label %bb.f
 
@@ -220,12 +248,12 @@ bb.g:                                             ; preds = %bb.f
   store i8 %i.af, ptr %i.i, align 1, !tbaa !29
   %i.ag = trunc i64 %.0 to i8
   store i8 %i.ag, ptr %i.j, align 1, !tbaa !29
-  %i.ah = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 3) #5
+  %i.ah = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 3) #4
   %.not64 = icmp eq i32 %i.ah, 0
   br i1 %.not64, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ai = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %.059, i64 noundef %.0) #5
+  %i.ai = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %.059, i64 noundef %.0) #4
   %.not65 = icmp eq i32 %i.ai, 0
   br i1 %.not65, label %bb.m, label %bb.i
 
@@ -237,7 +265,7 @@ bb.i:                                             ; preds = %bb.h
   store i8 %i.am, ptr %i.a, align 1, !tbaa !29
   %i.an = trunc i64 %i.ak to i8
   store i8 %i.an, ptr %i.i, align 1, !tbaa !29
-  %i.ao = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 2) #5
+  %i.ao = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 2) #4
   %.not66 = icmp eq i32 %i.ao, 0
   br i1 %.not66, label %bb.m, label %bb.j
 
@@ -249,7 +277,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !34
-  %i.as = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef %i.ar, i64 noundef %i.ap) #5
+  %i.as = call i32 @EVP_DigestUpdate(ptr noundef nonnull %0, ptr noundef %i.ar, i64 noundef %i.ap) #4
   %.not68 = icmp eq i32 %i.as, 0
   br i1 %.not68, label %bb.m, label %bb.l
 
@@ -258,7 +286,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.c, %bb.b, %bb.a, %bb.l
   %.060 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 0, %bb.e ], [ 1, %bb.l ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.k ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.060
 }
 
@@ -274,15 +302,11 @@ declare i32 @EVP_DigestUpdate(ptr noundef, ptr noundef, i64 noundef) local_unnam
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.bswap.i64(i64) #4
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca [1 x %"class.cv::util::variant.315"], align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !162
-  %i.c = load ptr, ptr %1, align 8, !tbaa !163    ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !163    ; 3 uses
   %.not.i.i.i.not = icmp eq ptr %i.b, %i.c
   br i1 %.not.i.i.i.not, label %bb.b, label %_ZNKSt6vectorIN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescENS0_10GArrayDescENS0_11GOpaqueDescENS0_10GFrameDescEEEESaIS9_EE2atEm.exit.i
 
@@ -238,18 +238,9 @@ bb.e:                                             ; preds = %bb.c
   br label %common.resume
 
 bb.f:                                             ; preds = %_ZNKSt6vectorIN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescENS0_10GArrayDescENS0_11GOpaqueDescENS0_10GFrameDescEEEESaIS9_EE2atEm.exit.i
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %.sroa.01.0.copyload.i = load i64, ptr %5, align 8
-  %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %.sroa.22.0.copyload.i = load i32, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !43
-  %.sroa.012.4.extract.shift = lshr i64 %.sroa.01.0.copyload.i, 32
-  %.sroa.012.4.extract.trunc = trunc nuw i64 %.sroa.012.4.extract.shift to i32
-  %6 = sdiv i32 %.sroa.012.4.extract.trunc, 2
-  %7 = sdiv i32 %.sroa.22.0.copyload.i, 2
-  %.sroa.2.0.insert.ext.i = zext i32 %7 to i64
-  %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
-  %.sroa.0.0.insert.ext.i = zext i32 %6 to i64
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
+  %.sroa.22.0..sroa_idx.i = getelementptr i8, ptr %i.c, i64 12
+  %5 = load <2 x i32>, ptr %.sroa.22.0..sroa_idx.i, align 4
+  %6 = sdiv <2 x i32> %5, splat (i32 2)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   store i64 1, ptr %4, align 8, !tbaa !169
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -257,7 +248,7 @@ bb.f:                                             ; preds = %_ZNKSt6vectorIN2cv4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 2, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i64 %.sroa.0.0.insert.insert.i, ptr %.sroa.6.0..sroa_idx, align 8
+  store <2 x i32> %6, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
   store i8 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 32

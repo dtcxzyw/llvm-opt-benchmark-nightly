@@ -202,7 +202,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !32
-  %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !36 ; 11 uses
+  %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !36 ; 12 uses
   store ptr %i.dn, ptr %12, align 8, !tbaa !36
   %i.do = load i64, ptr %i.dn, align 8            ; 3 uses
   %i.dp = lshr i64 %i.do, 40
@@ -239,7 +239,7 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit: ; preds = %bb.ag, %bb.af, %b
 
 bb.ai:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
-  %i.ec = getelementptr inbounds nuw i8, ptr %i.dn, i64 8 ; 2 uses
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
   %i.ed = load i64, ptr %i.ec, align 8
   %i.ee = trunc i64 %i.ed to i32
   %i.ef = and i32 %i.ee, 1023                     ; 2 uses
@@ -251,14 +251,16 @@ bb.ai:                                            ; preds = %_ZN4cvc58internal12
 bb.aj:                                            ; preds = %bb.ai
   %i.ej = icmp eq i32 %i.ei, 2
   %spec.select.v.i.i = select i1 %i.ej, i64 32, i64 24 ; 3 uses
-  %spec.select.i.i.a = getelementptr inbounds nuw i8, ptr %i.dn, i64 %spec.select.v.i.i
-  %23 = load i64, ptr %i.ec, align 8
-  %24 = lshr i64 %23, 29
-  %.idx = and i64 %24, 536870904
-  %25 = add nuw nsw i64 %.idx, 24                 ; 3 uses
-  %i.ek = getelementptr inbounds nuw i8, ptr %i.dn, i64 %25
+  %spec.select.i.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 %spec.select.v.i.i
+  %spec.select.i.i.a = getelementptr inbounds nuw i8, ptr %i.dn, i64 12
+  %23 = load i32, ptr %spec.select.i.i.a, align 4
+  %24 = shl i32 %23, 3
+  %25 = and i32 %24, 536870904
+  %narrow = add nuw nsw i32 %25, 24
+  %26 = zext nneg i32 %narrow to i64              ; 3 uses
+  %i.ek = getelementptr inbounds nuw i8, ptr %i.dn, i64 %26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
-  %gepdiff = sub nsw i64 %25, %spec.select.v.i.i  ; 3 uses
+  %gepdiff = sub nsw i64 %26, %spec.select.v.i.i  ; 3 uses
   %i.el = icmp ugt i64 %gepdiff, 9223372036854775800
   br i1 %i.el, label %bb.ak, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
 
@@ -270,7 +272,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i: ; preds = %bb.aj
-  %.not.i.i.i101 = icmp samesign eq i64 %25, %spec.select.v.i.i
+  %.not.i.i.i101 = icmp samesign eq i64 %spec.select.v.i.i, %26
   br i1 %.not.i.i.i101, label %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE11_M_allocateEm.exit.i.i, label %_ZNSt15__new_allocatorIN4cvc58internal12NodeTemplateILb1EEEE8allocateEmPKv.exit.i.i.i
 
 _ZNSt15__new_allocatorIN4cvc58internal12NodeTemplateILb1EEEE8allocateEmPKv.exit.i.i.i: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
@@ -282,7 +284,7 @@ _ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE11_M_allocateEm.
   store ptr %i.en, ptr %14, align 8, !tbaa !32
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 %gepdiff
   store ptr %i.eo, ptr %i.r, align 8, !tbaa !39
-  %i.ep = invoke noundef ptr @_ZSt16__do_uninit_copyIN4cvc58internal4expr9NodeValue8iteratorINS1_12NodeTemplateILb1EEEEEPS6_ET0_T_SA_S9_(ptr nonnull %spec.select.i.i.a, ptr nonnull %i.ek, ptr noundef %i.en)
+  %i.ep = invoke noundef ptr @_ZSt16__do_uninit_copyIN4cvc58internal4expr9NodeValue8iteratorINS1_12NodeTemplateILb1EEEEEPS6_ET0_T_SA_S9_(ptr nonnull %spec.select.i.i, ptr nonnull %i.ek, ptr noundef %i.en)
           to label %bb.am unwind label %.loopexit.split-lp343.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .loopexit.split-lp343.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE11_M_allocateEm.exit.i.i, %_ZNSt15__new_allocatorIN4cvc58internal12NodeTemplateILb1EEEE8allocateEmPKv.exit.i.i.i, %bb.ak

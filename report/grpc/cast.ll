@@ -23,7 +23,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @CAST_ecb_encrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2 x i32], align 4                ; 7 uses
+  %i.a = alloca [2 x i32], align 4                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.c = load i8, ptr %0, align 1, !tbaa !11
@@ -79,9 +79,21 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.an = tail call i32 @llvm.bswap.i32(i32 %i.al)
   store i32 %i.an, ptr %1, align 1, !tbaa !11
-  %i.ao = load i32, ptr %i.x, align 4, !tbaa !12
-  %4 = tail call i32 @llvm.bswap.i32(i32 %i.ao)
-  store i32 %4, ptr %i.am, align 1, !tbaa !11
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  %5 = load i8, ptr %4, align 1, !tbaa !12
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 5
+  store i8 %5, ptr %i.am, align 1, !tbaa !11
+  %i.ao = load i32, ptr %i.x, align 4, !tbaa !12  ; 3 uses
+  %7 = lshr i32 %i.ao, 16
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  store i8 %8, ptr %6, align 1, !tbaa !11
+  %10 = lshr i32 %i.ao, 8
+  %11 = trunc i32 %10 to i8
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 7
+  store i8 %11, ptr %9, align 1, !tbaa !11
+  %13 = trunc i32 %i.ao to i8
+  store i8 %13, ptr %12, align 1, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
 }
@@ -484,7 +496,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal noundef i32 @_ZL15cast_ecb_cipherP17evp_cipher_ctx_stPhPKhm(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) #2 {
 bb.a:
-  %i.a = alloca [2 x i32], align 4                ; 7 uses
+  %i.a = alloca [2 x i32], align 4                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 2 uses
   %i.d = icmp ugt i64 %3, 7
@@ -493,12 +505,13 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %CAST_ecb_encrypt.exit
   %.012 = phi i64 [ %3, %.lr.ph ], [ %i.aw, %CAST_ecb_encrypt.exit ]
   %.0811 = phi ptr [ %2, %.lr.ph ], [ %i.au, %CAST_ecb_encrypt.exit ] ; 9 uses
-  %.0910 = phi ptr [ %1, %.lr.ph ], [ %i.av, %CAST_ecb_encrypt.exit ] ; 3 uses
+  %.0910 = phi ptr [ %1, %.lr.ph ], [ %i.av, %CAST_ecb_encrypt.exit ] ; 6 uses
   %i.g = load i32, ptr %i.e, align 4, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.h = getelementptr inbounds nuw i8, ptr %.0811, i64 1
@@ -554,9 +567,20 @@ CAST_ecb_encrypt.exit:                            ; preds = %bb.c, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %.0910, i64 4
   %i.as = tail call i32 @llvm.bswap.i32(i32 %i.aq)
   store i32 %i.as, ptr %.0910, align 1, !tbaa !11
-  %i.at = load i32, ptr %i.f, align 4, !tbaa !12
-  %4 = tail call i32 @llvm.bswap.i32(i32 %i.at)
-  store i32 %4, ptr %i.ar, align 1, !tbaa !11
+  %5 = load i8, ptr %4, align 1, !tbaa !12
+  %6 = getelementptr inbounds nuw i8, ptr %.0910, i64 5
+  store i8 %5, ptr %i.ar, align 1, !tbaa !11
+  %i.at = load i32, ptr %i.f, align 4, !tbaa !12  ; 3 uses
+  %7 = lshr i32 %i.at, 16
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %.0910, i64 6
+  store i8 %8, ptr %6, align 1, !tbaa !11
+  %10 = lshr i32 %i.at, 8
+  %11 = trunc i32 %10 to i8
+  %12 = getelementptr inbounds nuw i8, ptr %.0910, i64 7
+  store i8 %11, ptr %9, align 1, !tbaa !11
+  %13 = trunc i32 %i.at to i8
+  store i8 %13, ptr %12, align 1, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.au = getelementptr inbounds nuw i8, ptr %.0811, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %.0910, i64 8

@@ -123,7 +123,7 @@ bb.a:
   %3 = alloca %struct.ip_quadruple, align 2       ; 7 uses
   %i.ai = alloca i8, align 1                      ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !15 ; 124 uses
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !15 ; 126 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 5 uses
   %i.am = load i8, ptr %i.al, align 4
   %i.an = and i8 %i.am, 1
@@ -174,6 +174,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.bg = getelementptr inbounds nuw i8, ptr %i.u, i64 3
   %i.bh = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ak, i64 72 ; 6 uses
+  %4 = getelementptr i8, ptr %i.ak, i64 73        ; 2 uses
   %.not51.i.i = icmp eq ptr %1, null              ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 2049 ; 6 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 4296 ; 6 uses
@@ -576,11 +577,10 @@ bb.cn:                                            ; preds = %bb.cm
   br i1 %or.cond55.i.i, label %bb.co, label %select.unfold266.i
 
 bb.co:                                            ; preds = %bb.cn
-  %4 = load i16, ptr %i.bi, align 8, !tbaa !89    ; 2 uses
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  store i8 %6, ptr %i.u, align 1, !tbaa !91
-  %i.hl = trunc i16 %4 to i8
+  %5 = load i8, ptr %4, align 1, !tbaa !89
+  store i8 %5, ptr %i.u, align 1, !tbaa !91
+  %6 = load i16, ptr %i.bi, align 8, !tbaa !89
+  %i.hl = trunc i16 %6 to i8
   store i8 %i.hl, ptr %i.bc, align 1, !tbaa !91
   %i.hm = call i32 @Curl_bufq_write(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.u, i64 noundef 2, ptr noundef nonnull %i.w) #6
   %i.hn = icmp ne i32 %i.hm, 0
@@ -831,11 +831,10 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %or.cond101.i.i, label %bb.dt, label %socks5_resolving.exit.thread.i
 
 bb.dt:                                            ; preds = %bb.ds
-  %7 = load i16, ptr %i.bi, align 8, !tbaa !89    ; 2 uses
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  store i8 %9, ptr %i.r, align 1, !tbaa !91
-  %i.ko = trunc i16 %7 to i8
+  %7 = load i8, ptr %4, align 1, !tbaa !89
+  store i8 %7, ptr %i.r, align 1, !tbaa !91
+  %8 = load i16, ptr %i.bi, align 8, !tbaa !89
+  %i.ko = trunc i16 %8 to i8
   %i.kp = getelementptr inbounds nuw i8, ptr %i.r, i64 1
   store i8 %i.ko, ptr %i.kp, align 1, !tbaa !91
   %i.kq = call i32 @Curl_bufq_write(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.r, i64 noundef 2, ptr noundef nonnull %i.s) #6
@@ -1111,6 +1110,7 @@ bb.ey:                                            ; preds = %bb.e, %bb.e
   %i.nh = getelementptr inbounds nuw i8, ptr %i.ak, i64 108 ; 6 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %i.ak, i64 72 ; 3 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %i.i, i64 1
+  %9 = getelementptr i8, ptr %i.ak, i64 73
   %i.nk = getelementptr inbounds nuw i8, ptr %i.i, i64 2
   %i.nl = getelementptr inbounds nuw i8, ptr %i.i, i64 3
   %i.nm = getelementptr inbounds nuw i8, ptr %i.ak, i64 80 ; 2 uses
@@ -1186,11 +1186,10 @@ bb.fg:                                            ; preds = %bb.ff, %bb.fe, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #6
   store i8 4, ptr %i.i, align 1, !tbaa !91
   store i8 1, ptr %i.nj, align 1, !tbaa !91
-  %10 = load i16, ptr %i.ni, align 8, !tbaa !89   ; 2 uses
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8
-  store i8 %12, ptr %i.nk, align 1, !tbaa !91
-  %i.oj = trunc i16 %10 to i8
+  %10 = load i8, ptr %9, align 1, !tbaa !89
+  store i8 %10, ptr %i.nk, align 1, !tbaa !91
+  %11 = load i16, ptr %i.ni, align 8, !tbaa !89
+  %i.oj = trunc i16 %11 to i8
   store i8 %i.oj, ptr %i.nl, align 1, !tbaa !91
   %i.ok = call i32 @Curl_bufq_write(ptr noundef nonnull %i.nb, ptr noundef nonnull %i.i, i64 noundef 4, ptr noundef nonnull %i.j) #6
   %i.ol = icmp eq i32 %i.ok, 0

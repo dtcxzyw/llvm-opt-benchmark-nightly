@@ -204,14 +204,12 @@ bb.v:                                             ; preds = %bb.s
   br i1 %.not39, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cl = getelementptr inbounds i8, ptr %i.ce, i64 -2
-  %5 = load i16, ptr %i.cl, align 2, !tbaa !50
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
+  %i.cl = getelementptr i8, ptr %i.ce, i64 -1
+  %5 = load i8, ptr %i.cl, align 1, !tbaa !50
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.v, %bb.w
-  %.0 = phi i8 [ %7, %bb.w ], [ 0, %bb.v ]
+  %.0 = phi i8 [ %5, %bb.w ], [ 0, %bb.v ]
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ce, i64 2
   %i.cn = tail call noundef signext i8 @_ZN6icu_7816ReorderingBuffer6appendEPKDsiahhR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull %i.cm, i32 noundef %i.ch, i8 noundef signext 1, i8 noundef zeroext %.0, i8 noundef zeroext %i.cj, ptr noundef nonnull align 4 dereferenceable(4) %4)
   br label %_ZN6icu_7816ReorderingBuffer6appendEihR10UErrorCode.exit
@@ -614,14 +612,12 @@ bb.bq:                                            ; preds = %bb.bh
   br i1 %.not157, label %bb.bs, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  %i.kz = getelementptr inbounds i8, ptr %i.ks, i64 -2
-  %7 = load i16, ptr %i.kz, align 2, !tbaa !50
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %i.kz = getelementptr i8, ptr %i.ks, i64 -1
+  %7 = load i8, ptr %i.kz, align 1, !tbaa !50
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.bq, %bb.br
-  %.0 = phi i8 [ %9, %bb.br ], [ 0, %bb.bq ]      ; 2 uses
+  %.0 = phi i8 [ %7, %bb.br ], [ 0, %bb.bq ]      ; 2 uses
   %i.la = icmp eq i8 %.0, 0
   %or.cond4 = and i1 %i.h, %i.la
   br i1 %or.cond4, label %.thread192, label %bb.bt

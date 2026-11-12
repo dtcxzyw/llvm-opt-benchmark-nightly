@@ -204,10 +204,10 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
   %.in = phi i32 [ %i.f, %bb.e ], [ %3, %.lr.ph.preheader ] ; 2 uses
-  %.043 = phi ptr [ %i.cb, %bb.e ], [ %2, %.lr.ph.preheader ] ; 7 uses
+  %.043 = phi ptr [ %i.cb, %bb.e ], [ %2, %.lr.ph.preheader ] ; 8 uses
   %.02741 = phi ptr [ %i.cc, %bb.e ], [ %i.e, %.lr.ph.preheader ] ; 5 uses
   %i.f = add nsw i32 %.in, -1
-  %i.g = getelementptr i8, ptr %.043, i64 4       ; 4 uses
+  %i.g = getelementptr i8, ptr %.043, i64 4       ; 3 uses
   %i.h = load i32, ptr %i.g, align 4
   %i.i = icmp eq i32 %i.h, 0
   %i.j = getelementptr i8, ptr %.043, i64 8
@@ -236,17 +236,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 LDT_zero.exit.thread:                             ; preds = %.lr.ph, %bb.c
   %i.s = phi i32 [ %i.k, %.lr.ph ], [ 0, %bb.c ]
-  %4 = getelementptr i8, ptr %.043, i64 8
   %i.t = trunc i32 %i.s to i16
   store i16 %i.t, ptr %.02741, align 1
   %i.u = load i32, ptr %i.g, align 4
   %i.v = trunc i32 %i.u to i16
   %i.w = getelementptr i8, ptr %.02741, i64 2
   store i16 %i.v, ptr %i.w, align 1
-  %5 = load i32, ptr %i.g, align 4
-  %6 = lshr i32 %5, 16
-  %7 = and i32 %6, 255
+  %4 = getelementptr i8, ptr %.043, i64 6
+  %5 = load i16, ptr %4, align 2
+  %6 = and i16 %5, 255
   %i.x = getelementptr i8, ptr %.02741, i64 4     ; 10 uses
+  %7 = zext nneg i16 %6 to i32
   %i.y = load i32, ptr %i.x, align 1
   %i.z = and i32 %i.y, -256
   %i.aa = or disjoint i32 %i.z, %7                ; 3 uses
@@ -281,10 +281,13 @@ LDT_zero.exit.thread:                             ; preds = %.lr.ph, %bb.c
   %i.az = and i32 %i.as, -32769
   %i.ba = or disjoint i32 %i.az, %i.ay            ; 2 uses
   store i32 %i.ba, ptr %i.x, align 1
-  %8 = load i32, ptr %4, align 4
-  %9 = and i32 %8, 983040
+  %8 = getelementptr i8, ptr %.043, i64 10
+  %9 = load i16, ptr %8, align 2
+  %10 = and i16 %9, 15
+  %11 = zext nneg i16 %10 to i32
+  %12 = shl nuw nsw i32 %11, 16
   %i.bb = and i32 %i.ba, -983041
-  %i.bc = or disjoint i32 %i.bb, %9               ; 2 uses
+  %i.bc = or disjoint i32 %i.bb, %12              ; 2 uses
   store i32 %i.bc, ptr %i.x, align 1
   %i.bd = load i8, ptr %i.ab, align 4
   %i.be = lshr i8 %i.bd, 6

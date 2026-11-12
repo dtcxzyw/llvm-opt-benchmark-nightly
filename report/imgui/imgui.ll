@@ -205,11 +205,13 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
   %.05986 = phi ptr [ %i.c, %.lr.ph ], [ %i.ch, %bb.f ] ; 2 uses
-  %i.t = load ptr, ptr %.05986, align 8, !tbaa !601 ; 7 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 20 ; 2 uses
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !614  ; 3 uses
+  %i.t = load ptr, ptr %.05986, align 8, !tbaa !601 ; 8 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 20
+  %i.v = load i32, ptr %i.u, align 4              ; 2 uses
   %i.w = and i32 %i.v, 256
   %.not66 = icmp eq i32 %i.w, 0
+  %3 = lshr i32 %i.v, 24
+  %4 = trunc nuw i32 %3 to i8                     ; 2 uses
   br i1 %.not66, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -279,11 +281,12 @@ _ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread: ; preds = %sel
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = trunc i64 %i.bh to i32
   store i32 %i.bi, ptr %i.x, align 4, !tbaa !602
-  %.pre = load i32, ptr %i.u, align 4, !tbaa !614
+  %.phi.trans.insert = getelementptr i8, ptr %i.t, i64 23
+  %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !614
   br label %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread77
 
 _ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread77: ; preds = %bb.e, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit
-  %3 = phi i32 [ %i.v, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit ], [ %.pre, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread ], [ %i.v, %bb.e ]
+  %5 = phi i8 [ %4, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit ], [ %.pre, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread ], [ %4, %bb.e ]
   %.058 = phi ptr [ %i.ay, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit ], [ %i.bb, %_ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread ], [ %.0914.i.i, %bb.e ] ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.t, i64 40
   %i.bk = getelementptr inbounds nuw i8, ptr %.058, i64 4
@@ -301,11 +304,10 @@ _ZN5ImGui26FindWindowSettingsByWindowEP11ImGuiWindow.exit.thread77: ; preds = %b
   store <2 x i32> %i.bv, ptr %i.bk, align 4, !tbaa !255
   %i.bw = getelementptr inbounds nuw i8, ptr %.058, i64 14 ; 3 uses
   %i.bx = load i8, ptr %i.bw, align 2
-  %sh.diff = lshr i32 %3, 23
-  %tr.sh.diff = trunc i32 %sh.diff to i8
-  %i.by = and i8 %tr.sh.diff, 2
+  %6 = shl i8 %5, 1
+  %i.by = and i8 %6, 2
   %i.bz = and i8 %i.bx, -3
-  %i.ca = or disjoint i8 %i.by, %i.bz             ; 2 uses
+  %i.ca = or disjoint i8 %i.bz, %i.by             ; 2 uses
   store i8 %i.ca, ptr %i.bw, align 2
   %i.cb = getelementptr inbounds nuw i8, ptr %i.t, i64 207
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !613, !range !100, !noundef !236

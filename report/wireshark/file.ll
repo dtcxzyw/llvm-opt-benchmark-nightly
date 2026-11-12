@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(296) %4, ptr noundef align 8 dereferenceable(296) %2, i64 296, i1 false)
-  %i.c = getelementptr i8, ptr %1, i64 53         ; 2 uses
+  %i.c = getelementptr i8, ptr %1, i64 53
   %i.d = load i16, ptr %i.c, align 1              ; 2 uses
   %i.e = and i16 %i.d, 256
   %.not = icmp eq i16 %i.e, 0
@@ -213,22 +213,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %0, i64 232
   %i.g = tail call ptr @cap_file_provider_get_modified_block(ptr noundef %i.f, ptr noundef %1)
-  %.pre = load i16, ptr %i.c, align 1
+  %.phi.trans.insert = getelementptr i8, ptr %1, i64 54
+  %.pre = load i8, ptr %.phi.trans.insert, align 1
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
+  %5 = lshr i16 %i.d, 8
+  %6 = trunc nuw i16 %5 to i8
   %i.h = getelementptr i8, ptr %2, i64 216
   %i.i = load ptr, ptr %i.h, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %5 = phi i16 [ %.pre, %bb.b ], [ %i.d, %bb.c ]
+  %7 = phi i8 [ %.pre, %bb.b ], [ %6, %bb.c ]
   %.0 = phi ptr [ %i.g, %bb.b ], [ %i.i, %bb.c ]
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 216
   store ptr %.0, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 224
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
   %i.l = and i8 %7, 1
   store i8 %i.l, ptr %i.k, align 8
   %i.m = getelementptr i8, ptr %1, i64 72         ; 3 uses

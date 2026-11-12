@@ -204,12 +204,13 @@ bb.db:                                            ; preds = %bb.da
   br label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db, %bb.cz
-  %i.pw = phi i64 [ %.val.i, %bb.cz ], [ %i.pv, %bb.db ] ; 3 uses
+  %i.pw = phi i64 [ %.val.i, %bb.cz ], [ %i.pv, %bb.db ] ; 2 uses
   %i.px = and i64 %i.pw, 115712
   %or.cond.not.i.i.i.i = icmp eq i64 %i.px, 50176
   br i1 %or.cond.not.i.i.i.i, label %bb.dd, label %ch_maybe_trigger_spontaneous_txku.exit.i
 
 bb.dd:                                            ; preds = %bb.dc
+  %8 = getelementptr i8, ptr %0, i64 1572
   %i.py = and i64 %i.pw, 4294967296
   %.not.i.i.i.i.i = icmp eq i64 %i.py, 0
   br i1 %.not.i.i.i.i.i, label %txku_allowed.exit.i.i.i, label %bb.de
@@ -240,24 +241,26 @@ bb.df:                                            ; preds = %bb.de
   br label %txku_allowed.exit.i.i.i
 
 txku_allowed.exit.i.i.i:                          ; preds = %bb.df, %bb.de, %bb.dd
-  %8 = load i64, ptr %i.h, align 8                ; 2 uses
-  %9 = and i64 %8, 4294967296
-  %.not.not.i.i.i = icmp eq i64 %9, 0
+  %9 = load i32, ptr %8, align 4
+  %10 = and i32 %9, 1
+  %.not.not.i.i.i = icmp eq i32 %10, 0
   br i1 %.not.not.i.i.i, label %bb.dg, label %ch_maybe_trigger_spontaneous_txku.exit.i
 
 bb.dg:                                            ; preds = %txku_allowed.exit.i.i.i
   %i.qo = load ptr, ptr %0, align 8, !tbaa !45
   %i.qp = call i64 @ossl_quic_port_get_time(ptr noundef %i.qo) #12
   %i.qq = getelementptr inbounds nuw i8, ptr %0, i64 1536
-  %10 = load i64, ptr %i.qq, align 8
-  %.not.i.i.i100 = icmp uge i64 %i.qp, %10
-  %.pre37.i.a = load i64, ptr %i.h, align 8       ; 2 uses
-  %11 = and i64 %.pre37.i.a, 25769803776
-  %or.cond.i.i101 = icmp eq i64 %11, 0
-  %or.cond43.i = select i1 %.not.i.i.i100, i1 %or.cond.i.i101, i1 false
-  br i1 %or.cond43.i, label %bb.dh, label %ch_maybe_trigger_spontaneous_txku.exit.i
+  %.pre37.i.a = load i64, ptr %i.qq, align 8
+  %.not.i.i.i100 = icmp ult i64 %i.qp, %.pre37.i.a
+  br i1 %.not.i.i.i100, label %ch_maybe_trigger_spontaneous_txku.exit.i, label %11
 
-bb.dh:                                            ; preds = %bb.dg
+11:                                               ; preds = %bb.dg
+  %12 = load i64, ptr %i.h, align 8
+  %13 = and i64 %12, 25769803776
+  %or.cond.i.i101 = icmp eq i64 %13, 0
+  br i1 %or.cond.i.i101, label %bb.dh, label %ch_maybe_trigger_spontaneous_txku.exit.i
+
+bb.dh:                                            ; preds = %11
   %i.qr = getelementptr inbounds nuw i8, ptr %0, i64 1056 ; 3 uses
   %i.qs = load ptr, ptr %i.qr, align 8, !tbaa !70
   %i.qt = call i64 @ossl_qtx_get_cur_epoch_pkt_count(ptr noundef %i.qs, i32 noundef 3) #12
@@ -269,11 +272,11 @@ bb.dh:                                            ; preds = %bb.dg
   %.not.i5.i.i = icmp eq i64 %i.qy, -1
   %spec.select.i.i.i = select i1 %.not.i5.i.i, i64 %i.qw, i64 %i.qy
   %.not.i.i102 = icmp ult i64 %i.qt, %spec.select.i.i.i
-  %.pre38.i = load i64, ptr %i.h, align 8         ; 2 uses
   br i1 %.not.i.i102, label %ch_maybe_trigger_spontaneous_txku.exit.i, label %bb.di
 
 bb.di:                                            ; preds = %bb.dh
-  %i.qz = or i64 %.pre38.i, 2147483648
+  %14 = load i64, ptr %i.h, align 8
+  %i.qz = or i64 %14, 2147483648
   store i64 %i.qz, ptr %i.h, align 8
   %i.ra = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.rb = load ptr, ptr %i.ra, align 8, !tbaa !85
@@ -289,7 +292,6 @@ bb.dj:                                            ; preds = %bb.di
 
 bb.dk:                                            ; preds = %bb.dj, %bb.di
   call void @ossl_quic_channel_raise_protocol_error_loc(ptr noundef nonnull %0, i64 noundef 1, i64 noundef 0, ptr noundef nonnull @.str.111, ptr noundef null, ptr noundef nonnull @.str, i32 noundef 797, ptr noundef nonnull @__func__.ch_trigger_txku)
-  %.pre.i = load i64, ptr %i.h, align 8
   br label %ch_maybe_trigger_spontaneous_txku.exit.i
 
 bb.dl:                                            ; preds = %bb.dj
@@ -301,11 +303,12 @@ bb.dl:                                            ; preds = %bb.dj
   %i.rk = and i64 %i.rg, -73014444033
   %i.rl = or disjoint i64 %i.rk, %i.rj
   %i.rm = or disjoint i64 %i.rl, 4294967296
+  store i64 %i.rm, ptr %i.h, align 8
   br label %ch_maybe_trigger_spontaneous_txku.exit.i
 
-ch_maybe_trigger_spontaneous_txku.exit.i:         ; preds = %bb.dl, %bb.dk, %bb.dh, %bb.dg, %txku_allowed.exit.i.i.i, %bb.dc
-  %12 = phi i64 [ %i.pw, %bb.dc ], [ %8, %txku_allowed.exit.i.i.i ], [ %.pre37.i.a, %bb.dg ], [ %i.rm, %bb.dl ], [ %.pre38.i, %bb.dh ], [ %.pre.i, %bb.dk ]
-  %i.rn = and i64 %12, -34359738369
+ch_maybe_trigger_spontaneous_txku.exit.i:         ; preds = %bb.dl, %bb.dk, %bb.dh, %11, %bb.dg, %txku_allowed.exit.i.i.i, %bb.dc
+  %15 = load i64, ptr %i.h, align 8
+  %i.rn = and i64 %15, -34359738369
   store i64 %i.rn, ptr %i.h, align 8
   %i.ro = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.rp = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -708,6 +711,7 @@ bb.a:
   br i1 %or.cond.not.i, label %bb.b, label %ch_trigger_txku.exit
 
 bb.b:                                             ; preds = %bb.a
+  %1 = getelementptr i8, ptr %0, i64 1572
   %i.d = and i64 %i.b, 4294967296
   %.not.i.i = icmp eq i64 %i.d, 0
   br i1 %.not.i.i, label %txku_allowed.exit, label %bb.c
@@ -739,13 +743,14 @@ bb.d:                                             ; preds = %bb.c
   br label %txku_allowed.exit
 
 txku_allowed.exit:                                ; preds = %bb.b, %bb.c, %bb.d
-  %1 = load i64, ptr %i.a, align 8                ; 2 uses
-  %2 = and i64 %1, 4294967296
-  %.not.not = icmp eq i64 %2, 0
+  %2 = load i32, ptr %1, align 4
+  %3 = and i32 %2, 1
+  %.not.not = icmp eq i32 %3, 0
   br i1 %.not.not, label %bb.e, label %ch_trigger_txku.exit
 
 bb.e:                                             ; preds = %txku_allowed.exit
-  %i.u = or i64 %1, 2147483648
+  %4 = load i64, ptr %i.a, align 8
+  %i.u = or i64 %4, 2147483648
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !85

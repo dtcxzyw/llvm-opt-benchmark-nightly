@@ -205,7 +205,8 @@ bb.r:                                             ; preds = %bb.q, %.thread95.i,
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 504 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 5568 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 5568 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 5569
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 4608
@@ -348,11 +349,9 @@ bb.ad:                                            ; preds = %bb.ab, %.thread97.i
   unreachable
 
 bb.ae:                                            ; preds = %bb.ad
-  %8 = load i16, ptr %i.cf, align 8, !alias.scope !38821, !noundef !52
-  %9 = lshr i16 %8, 8
+  %9 = load i8, ptr %8, align 1, !alias.scope !38821
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.016.0102.i, i64 1
-  %10 = trunc nuw i16 %9 to i8
-  store i8 %10, ptr %i.dq, align 1, !noalias !38828
+  store i8 %9, ptr %i.dq, align 1, !noalias !38828
   %i.dr = load i32, ptr %i.ai, align 8, !alias.scope !38821, !noundef !52
   %i.ds = invoke fastcc { ptr, i64 } @_ZN6brotli3enc6encode20GetHashTableInternal17hd59a7ac31547727cE(ptr noalias noundef align 4 dereferenceable(4096) %i.cg, ptr noalias noundef align 8 dereferenceable(16) %i.ch, i32 noundef %i.dr, i64 noundef %.sroa.0.0.i125.i, ptr noalias noundef align 8 dereferenceable(8) %i.ac)
           to label %bb.af unwind label %.loopexit.i.loopexit.split-lp, !noalias !38828 ; 2 uses
@@ -562,7 +561,8 @@ bb.ay:                                            ; preds = %bb.c, %bb.e
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 504 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 15 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 15 uses
-  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 5568 ; 6 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 5568 ; 5 uses
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 5569
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 5573 ; 6 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 233
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 9 uses
@@ -784,11 +784,9 @@ bb.bk:                                            ; preds = %"_ZN6brotli3enc6enc
 
 bb.bl:                                            ; preds = %bb.bj
   %.val146.i = load ptr, ptr %i.fw, align 8, !alias.scope !38839, !nonnull !52, !align !62, !noundef !52
-  %11 = load i16, ptr %i.fx, align 8, !alias.scope !38839, !noundef !52
-  %12 = lshr i16 %11, 8
+  %11 = load i8, ptr %10, align 1, !alias.scope !38839
   %i.js = getelementptr inbounds nuw i8, ptr %.val146.i, i64 1
-  %13 = trunc nuw i16 %12 to i8
-  store i8 %13, ptr %i.js, align 1, !noalias !38846
+  store i8 %11, ptr %i.js, align 1, !noalias !38846
   %i.jt = load i8, ptr %i.fy, align 1, !range !58, !alias.scope !38839, !noundef !52 ; 2 uses
   %i.ju = icmp eq i8 %i.jt, 0
   br i1 %i.ju, label %bb.bn, label %thread-pre-split.i

@@ -205,10 +205,12 @@ bb.b:                                             ; preds = %md5eq.exit.thread, 
   %i.q = add nsw i32 %i.n, 1                      ; 2 uses
   store i32 %i.q, ptr %i.k, align 8, !tbaa !95
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %i.s = load i64, ptr %i.r, align 4              ; 4 uses
+  %i.s = load i64, ptr %i.r, align 4              ; 3 uses
   %i.t = trunc i64 %i.s to i32                    ; 5 uses
   %i.u = and i32 %i.t, 2097152
   %.not = icmp eq i32 %i.u, 0
+  %3 = lshr i64 %i.s, 32
+  %4 = trunc nuw i64 %3 to i32                    ; 2 uses
   br i1 %.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -245,12 +247,10 @@ md5eq.exit:                                       ; preds = %bb.f
 
 bb.g:                                             ; preds = %md5eq.exit
   %.not.i = icmp ugt i64 %i.s, -4503599627370497
+  %5 = load i64, ptr %2, align 4                  ; 3 uses
   br i1 %.not.i, label %.split, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %3 = lshr i64 %i.s, 32
-  %4 = trunc nuw i64 %3 to i32
-  %5 = load i64, ptr %2, align 4                  ; 2 uses
   %i.ak = lshr i64 %5, 32
   %i.al = trunc nuw i64 %i.ak to i32
   %i.am = and i32 %i.al, 1048575
@@ -260,8 +260,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ap, label %subsumes.exit, label %md5eq.exit.thread
 
 .split:                                           ; preds = %bb.g
-  %6 = load i64, ptr %2, align 4
-  %i.aq = trunc i64 %6 to i32                     ; 2 uses
+  %i.aq = trunc i64 %5 to i32                     ; 2 uses
   %i.ar = and i32 %i.aq, 1048575
   %i.as = xor i32 %i.ar, 1048575
   %i.at = and i32 %i.as, %i.t
@@ -285,15 +284,11 @@ bb.i:                                             ; preds = %.split, %subsumes.e
   br i1 %.not35, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %7 = lshr i64 %i.s, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.bd = getelementptr inbounds nuw i8, ptr %.029, i64 16
-  %9 = load i64, ptr %i.bd, align 4
-  %10 = lshr i64 %9, 32
-  %11 = trunc nuw i64 %10 to i32
-  %i.be = and i32 %11, 1048575
+  %i.bd = getelementptr i8, ptr %.029, i64 20
+  %6 = load i32, ptr %i.bd, align 4
+  %i.be = and i32 %6, 1048575
   %i.bf = xor i32 %i.be, 1048575
-  %i.bg = and i32 %i.bf, %8
+  %i.bg = and i32 %i.bf, %4
   %i.bh = icmp eq i32 %i.bg, 0
   br i1 %i.bh, label %bb.k, label %md5eq.exit.thread
 
@@ -328,10 +323,10 @@ bb.m:                                             ; preds = %bb.l, %.thread
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @search0(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef nonnull readonly captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 7 uses
-  %4 = load i64, ptr %i.a, align 4
-  %5 = and i64 %4, 8589934592
-  %.not.i = icmp eq i64 %5, 0
+  %i.a = getelementptr i8, ptr %0, i64 216        ; 4 uses
+  %4 = load i32, ptr %i.a, align 4
+  %5 = and i32 %4, 2
+  %.not.i = icmp eq i32 %5, 0
   br i1 %.not.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
@@ -371,12 +366,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 232
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 8 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 4 uses
@@ -394,16 +390,16 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.ai = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %i.ah ; 4 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !40 ; 2 uses
   %.val = load i64, ptr %3, align 4, !tbaa !52
-  %.sroa.0.0.copyload.i = load i64, ptr %i.a, align 4, !tbaa !52 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %6, align 4, !tbaa !52 ; 2 uses
   %i.ak = load i32, ptr %i.v, align 8, !tbaa !30
   %i.al = and i64 %.val, -4286578689
-  store i64 %i.al, ptr %i.a, align 4
+  store i64 %i.al, ptr %6, align 4
   %i.am = load ptr, ptr %i.aj, align 8, !tbaa !45
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !54
   %i.ap = tail call ptr %i.ao(ptr noundef nonnull %i.aj, ptr noundef nonnull %1, ptr noundef nonnull %0) #8, !inline_history !0 ; 15 uses
   store i32 %i.ak, ptr %i.v, align 8, !tbaa !30
-  store i64 %.sroa.0.0.copyload.i, ptr %i.a, align 4, !tbaa !52
+  store i64 %.sroa.0.0.copyload.i, ptr %6, align 4, !tbaa !52
   %i.aq = load i32, ptr %i.o, align 4, !tbaa !31
   %.not67 = icmp eq i32 %i.aq, 0
   br i1 %.not67, label %bb.j, label %bb.f
@@ -460,23 +456,29 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not71, label %evaluate_plan.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %6 = load i64, ptr %i.a, align 4                ; 2 uses
-  %7 = and i64 %6, 12884901888
-  %or.cond.not.i = icmp eq i64 %7, 4294967296
+  %7 = load i32, ptr %i.a, align 8                ; 2 uses
+  %8 = and i32 %7, 3
+  %or.cond.not.i = icmp eq i32 %8, 1
   br i1 %or.cond.not.i, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.bc = getelementptr inbounds nuw i8, ptr %.056160, i64 40
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !100
   %i.be = fcmp oeq double %i.bd, 0.000000e+00
-  br i1 %i.be, label %bb.o, label %bb.s
+  br i1 %i.be, label %.thread.i, label %bb.s
 
-bb.o:                                             ; preds = %bb.n, %bb.m
+.thread.i:                                        ; preds = %bb.n
+  %9 = load i32, ptr %i.aa, align 8, !tbaa !28
+  %10 = add nsw i32 %9, 1
+  store i32 %10, ptr %i.aa, align 8, !tbaa !28
+  br label %bb.r
+
+bb.o:                                             ; preds = %bb.m
+  %11 = and i32 %7, 2
   %i.bf = load i32, ptr %i.aa, align 8, !tbaa !28
   %i.bg = add nsw i32 %i.bf, 1
   store i32 %i.bg, ptr %i.aa, align 8, !tbaa !28
-  %8 = and i64 %6, 8589934592
-  %.not25.i = icmp eq i64 %8, 0
+  %.not25.i = icmp eq i32 %11, 0
   br i1 %.not25.i, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.r, %bb.o
@@ -506,7 +508,7 @@ fftw_iestimate_cost.exit.i:                       ; preds = %bb.q, %bb.p
   store double %i.bu, ptr %i.ad, align 8, !tbaa !101
   br label %bb.s
 
-bb.r:                                             ; preds = %bb.o
+bb.r:                                             ; preds = %bb.o, %.thread.i
   %i.bv = tail call double @fftw_measure_execution_time(ptr noundef nonnull %0, ptr noundef nonnull %.056160, ptr noundef nonnull %1) #8 ; 3 uses
   %i.bw = fcmp olt double %i.bv, 0.000000e+00
   br i1 %i.bw, label %bb.p, label %.thread.i.a
@@ -530,23 +532,29 @@ bb.t:                                             ; preds = %bb.s
   br label %evaluate_plan.exit
 
 evaluate_plan.exit:                               ; preds = %bb.t, %bb.s, %bb.l
-  %9 = load i64, ptr %i.a, align 4                ; 2 uses
-  %10 = and i64 %9, 12884901888
-  %or.cond.not.i81 = icmp eq i64 %10, 4294967296
+  %12 = load i32, ptr %i.a, align 8               ; 2 uses
+  %13 = and i32 %12, 3
+  %or.cond.not.i81 = icmp eq i32 %13, 1
   br i1 %or.cond.not.i81, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %evaluate_plan.exit
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ap, i64 40
   %i.cc = load double, ptr %i.cb, align 8, !tbaa !100 ; 2 uses
   %i.cd = fcmp oeq double %i.cc, 0.000000e+00
-  br i1 %i.cd, label %bb.v, label %bb.z
+  br i1 %i.cd, label %.thread.i88, label %bb.z
 
-bb.v:                                             ; preds = %bb.u, %evaluate_plan.exit
+.thread.i88:                                      ; preds = %bb.u
+  %14 = load i32, ptr %i.aa, align 8, !tbaa !28
+  %15 = add nsw i32 %14, 1
+  store i32 %15, ptr %i.aa, align 8, !tbaa !28
+  br label %bb.y
+
+bb.v:                                             ; preds = %evaluate_plan.exit
+  %16 = and i32 %12, 2
   %i.ce = load i32, ptr %i.aa, align 8, !tbaa !28
   %i.cf = add nsw i32 %i.ce, 1
   store i32 %i.cf, ptr %i.aa, align 8, !tbaa !28
-  %11 = and i64 %9, 8589934592
-  %.not25.i82 = icmp eq i64 %11, 0
+  %.not25.i82 = icmp eq i32 %16, 0
   br i1 %.not25.i82, label %bb.y, label %bb.w
 
 bb.w:                                             ; preds = %bb.y, %bb.v
@@ -576,7 +584,7 @@ fftw_iestimate_cost.exit.i84:                     ; preds = %bb.x, %bb.w
   store double %i.ct, ptr %i.ad, align 8, !tbaa !101
   br label %bb.z
 
-bb.y:                                             ; preds = %bb.v
+bb.y:                                             ; preds = %bb.v, %.thread.i88
   %i.cu = tail call double @fftw_measure_execution_time(ptr noundef nonnull %0, ptr noundef nonnull %i.ap, ptr noundef nonnull %1) #8 ; 4 uses
   %i.cv = fcmp olt double %i.cu, 0.000000e+00
   br i1 %i.cv, label %bb.w, label %.thread.i87
@@ -637,9 +645,9 @@ bb.ad:                                            ; preds = %bb.k
 bb.ae:                                            ; preds = %bb.ab, %bb.ac, %bb.ad
   %.157 = phi ptr [ %i.ap, %bb.ab ], [ %.056160, %bb.ac ], [ %i.ap, %bb.ad ] ; 2 uses
   %.254 = phi i32 [ 0, %bb.ab ], [ 0, %bb.ac ], [ %.052162, %bb.ad ]
-  %12 = load i64, ptr %i.a, align 4
-  %13 = and i64 %12, 562949953421312
-  %i.dr = icmp eq i64 %13, 0
+  %17 = load i32, ptr %i.a, align 8
+  %18 = and i32 %17, 131072
+  %i.dr = icmp eq i32 %18, 0
   %i.ds = icmp eq i32 %i.bb, 0
   %or.cond.not = select i1 %i.dr, i1 true, i1 %i.ds
   br i1 %or.cond.not, label %bb.af, label %timeout_p.exit.thread

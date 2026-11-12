@@ -203,7 +203,7 @@ bb.a:
   %i.a = zext i32 %1 to i64
   %i.b = getelementptr inbounds nuw [16 x i8], ptr @lj_ir_callinfo, i64 %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !45   ; 4 uses
+  %i.d = load i32, ptr %i.c, align 8              ; 4 uses
   %i.e = and i32 %i.d, 255
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @llvm.va_start.p0(ptr nonnull %2)
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.q = phi ptr [ %i.l, %bb.c ], [ %i.o, %bb.d ]
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !46   ; 2 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !44   ; 2 uses
   %.not = icmp eq i32 %spec.select, 1
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -273,7 +273,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ah = phi ptr [ %i.ad, %bb.g ], [ %i.af, %bb.h ]
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !46
+  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !44
   %i.aj = trunc i32 %i.ai to i16
   store i16 25600, ptr %i.v, align 4, !tbaa !37
   store i16 %i.y, ptr %i.u, align 8, !tbaa !37
@@ -291,7 +291,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %._crit_edge
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 181
-  store i8 1, ptr %i.an, align 1, !tbaa !47
+  store i8 1, ptr %i.an, align 1, !tbaa !45
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge
@@ -694,7 +694,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.d = getelementptr inbounds nuw i8, ptr %i.f, i64 6
   %.0.in = load i16, ptr %i.d, align 2, !tbaa !37 ; 2 uses
   %.not = icmp eq i16 %.0.in, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !48
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !46
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.0.in24 = phi i16 [ %.0.in, %bb.b ], [ %.0.in22, %bb.a ] ; 2 uses
@@ -800,7 +800,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %i.h, i64 6
   %.0.in = load i16, ptr %i.f, align 2, !tbaa !37 ; 2 uses
   %.not = icmp eq i16 %.0.in, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !49
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !47
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.0.in26 = phi i16 [ %.0.in, %bb.b ], [ %.0.in24, %bb.a ] ; 2 uses
@@ -871,7 +871,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.d = getelementptr inbounds nuw i8, ptr %i.f, i64 6
   %.0.in = load i16, ptr %i.d, align 2, !tbaa !37 ; 2 uses
   %.not = icmp eq i16 %.0.in, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !50
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !48
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.0.in22 = phi i16 [ %.0.in, %bb.b ], [ %.0.in20, %bb.a ] ; 2 uses
@@ -943,7 +943,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %i.i, i64 6
   %.0.in = load i16, ptr %i.g, align 2, !tbaa !37 ; 2 uses
   %.not = icmp eq i16 %.0.in, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !51
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !49
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.0.in23 = phi i16 [ %.0.in, %bb.b ], [ %.0.in21, %bb.a ] ; 2 uses
@@ -1059,13 +1059,13 @@ bb.g:                                             ; preds = %bb.a
 bb.h:                                             ; preds = %bb.a
   %i.y = tail call ptr @lj_mem_newgco(ptr noundef %0, i64 noundef 24) #13 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 9
-  store i8 10, ptr %i.z, align 1, !tbaa !53
+  store i8 10, ptr %i.z, align 1, !tbaa !51
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 10
-  store i16 11, ptr %i.aa, align 2, !tbaa !54
+  store i16 11, ptr %i.aa, align 2, !tbaa !52
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !37
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  store i64 %i.ac, ptr %i.ad, align 8, !tbaa !55
+  store i64 %i.ac, ptr %i.ad, align 8, !tbaa !53
   %i.ae = ptrtoint ptr %i.y to i64
   %i.af = or i64 %i.ae, -1548112371908608
   store i64 %i.af, ptr %1, align 8, !tbaa !37
@@ -1315,7 +1315,7 @@ bb.a:
   store i16 %i.m, ptr %i.q, align 2, !tbaa !38
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !56
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !54
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
   %indvars.iv.unr = phi i64 [ %i.g, %.lr.ph ], [ %i.j, %.prol.preheader ]
@@ -1360,7 +1360,7 @@ bb.a:
   %i.av = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.au
   store i16 %i.ar, ptr %i.av, align 2, !tbaa !38
   %.wide.3 = icmp ugt i64 %i.ao, %i.h
-  br i1 %.wide.3, label %.lr.ph.new, label %._crit_edge.loopexit, !llvm.loop !57
+  br i1 %.wide.3, label %.lr.ph.new, label %._crit_edge.loopexit, !llvm.loop !55
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph.new, %.prol.loopexit
   %.lcssa = phi i64 [ %.lcssa.unr, %.prol.loopexit ], [ %i.ao, %.lr.ph.new ]
@@ -1425,18 +1425,18 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ah, ptr align 8 %i.f, i64 %i.am, i1 false)
   %i.an = load ptr, ptr %i.y, align 8, !tbaa !33
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
-  %i.ap = load i64, ptr %i.ao, align 8, !tbaa !62
+  %i.ap = load i64, ptr %i.ao, align 8, !tbaa !60
   %i.aq = inttoptr i64 %i.ap to ptr               ; 3 uses
   %i.ar = zext i32 %i.i to i64
   %i.as = shl nuw nsw i64 %i.ar, 3                ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 16 ; 2 uses
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !71
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !69
   %i.av = sub i64 %i.au, %i.as
-  store i64 %i.av, ptr %i.at, align 8, !tbaa !71
-  %i.aw = load ptr, ptr %i.aq, align 8, !tbaa !72
+  store i64 %i.av, ptr %i.at, align 8, !tbaa !69
+  %i.aw = load ptr, ptr %i.aq, align 8, !tbaa !70
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !73
-  %i.az = tail call ptr %i.aw(ptr noundef %i.ay, ptr noundef %i.f, i64 noundef range(i64 0, 34359738361) %i.as, i64 noundef 0) #13, !inline_history !59 ; 0 uses
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !71
+  %i.az = tail call ptr %i.aw(ptr noundef %i.ay, ptr noundef %i.f, i64 noundef range(i64 0, 34359738361) %i.as, i64 noundef 0) #13, !inline_history !57 ; 0 uses
   %i.ba = load i32, ptr %i.c, align 4, !tbaa !30
   %i.bb = sub i32 %i.ba, %i.af                    ; 2 uses
   %i.bc = add i32 %i.bb, %i.aa
@@ -1528,34 +1528,32 @@ attributes #15 = { noreturn nounwind }
 !41 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !42 = !{!29, !7, i64 182}
 !43 = distinct !{!43, !39}
-!44 = !{!"CCallInfo", !14, i64 0, !8, i64 8}
-!45 = !{!44, !8, i64 8}
-!46 = !{!8, !8, i64 0}
-!47 = !{!29, !7, i64 181}
+!44 = !{!8, !8, i64 0}
+!45 = !{!29, !7, i64 181}
+!46 = distinct !{!46, !39}
+!47 = distinct !{!47, !39}
 !48 = distinct !{!48, !39}
 !49 = distinct !{!49, !39}
-!50 = distinct !{!50, !39}
-!51 = distinct !{!51, !39}
-!52 = !{!"GCcdata", !12, i64 0, !7, i64 8, !7, i64 9, !13, i64 10}
-!53 = !{!52, !7, i64 9}
-!54 = !{!52, !13, i64 10}
-!55 = !{!11, !11, i64 0}
-!56 = distinct !{!56, !58}
-!57 = distinct !{!57, !39}
-!58 = !{!"llvm.loop.unroll.disable"}
-!59 = distinct !{null}
-!60 = !{!"p1 _ZTS6TValue", !14, i64 0}
-!61 = !{!"lua_State", !12, i64 0, !7, i64 8, !7, i64 9, !7, i64 10, !7, i64 11, !18, i64 16, !12, i64 24, !60, i64 32, !60, i64 40, !18, i64 48, !18, i64 56, !12, i64 64, !12, i64 72, !14, i64 80, !8, i64 88}
-!62 = !{!61, !11, i64 16}
-!63 = !{!"GCState", !11, i64 0, !11, i64 8, !7, i64 16, !7, i64 17, !7, i64 18, !7, i64 19, !8, i64 20, !12, i64 24, !18, i64 32, !12, i64 40, !12, i64 48, !12, i64 56, !12, i64 64, !11, i64 72, !11, i64 80, !8, i64 88, !8, i64 92, !18, i64 96}
-!64 = !{!"GCstr", !12, i64 0, !7, i64 8, !7, i64 9, !7, i64 10, !7, i64 11, !8, i64 12, !8, i64 16, !8, i64 20}
-!65 = !{!"StrInternState", !27, i64 0, !8, i64 8, !8, i64 12, !8, i64 16, !7, i64 20, !7, i64 21, !7, i64 22, !7, i64 23, !11, i64 24}
-!66 = !{!"SBuf", !19, i64 0, !19, i64 8, !19, i64 16, !18, i64 24}
-!67 = !{!"Node", !7, i64 0, !7, i64 8, !18, i64 16}
-!68 = !{!"GCupval", !12, i64 0, !7, i64 8, !7, i64 9, !7, i64 10, !7, i64 11, !7, i64 16, !18, i64 32, !8, i64 40}
-!69 = !{!"PRNGState", !7, i64 0}
-!70 = !{!"global_State", !14, i64 0, !14, i64 8, !63, i64 16, !64, i64 120, !7, i64 144, !7, i64 145, !7, i64 146, !7, i64 147, !65, i64 152, !8, i64 184, !12, i64 192, !66, i64 200, !7, i64 232, !7, i64 240, !67, i64 248, !7, i64 272, !12, i64 280, !68, i64 288, !8, i64 336, !8, i64 340, !14, i64 344, !14, i64 352, !14, i64 360, !8, i64 368, !8, i64 372, !12, i64 376, !18, i64 384, !18, i64 392, !69, i64 400, !7, i64 432}
-!71 = !{!70, !11, i64 16}
-!72 = !{!70, !14, i64 0}
-!73 = !{!70, !14, i64 8}
+!50 = !{!"GCcdata", !12, i64 0, !7, i64 8, !7, i64 9, !13, i64 10}
+!51 = !{!50, !7, i64 9}
+!52 = !{!50, !13, i64 10}
+!53 = !{!11, !11, i64 0}
+!54 = distinct !{!54, !56}
+!55 = distinct !{!55, !39}
+!56 = !{!"llvm.loop.unroll.disable"}
+!57 = distinct !{null}
+!58 = !{!"p1 _ZTS6TValue", !14, i64 0}
+!59 = !{!"lua_State", !12, i64 0, !7, i64 8, !7, i64 9, !7, i64 10, !7, i64 11, !18, i64 16, !12, i64 24, !58, i64 32, !58, i64 40, !18, i64 48, !18, i64 56, !12, i64 64, !12, i64 72, !14, i64 80, !8, i64 88}
+!60 = !{!59, !11, i64 16}
+!61 = !{!"GCState", !11, i64 0, !11, i64 8, !7, i64 16, !7, i64 17, !7, i64 18, !7, i64 19, !8, i64 20, !12, i64 24, !18, i64 32, !12, i64 40, !12, i64 48, !12, i64 56, !12, i64 64, !11, i64 72, !11, i64 80, !8, i64 88, !8, i64 92, !18, i64 96}
+!62 = !{!"GCstr", !12, i64 0, !7, i64 8, !7, i64 9, !7, i64 10, !7, i64 11, !8, i64 12, !8, i64 16, !8, i64 20}
+!63 = !{!"StrInternState", !27, i64 0, !8, i64 8, !8, i64 12, !8, i64 16, !7, i64 20, !7, i64 21, !7, i64 22, !7, i64 23, !11, i64 24}
+!64 = !{!"SBuf", !19, i64 0, !19, i64 8, !19, i64 16, !18, i64 24}
+!65 = !{!"Node", !7, i64 0, !7, i64 8, !18, i64 16}
+!66 = !{!"GCupval", !12, i64 0, !7, i64 8, !7, i64 9, !7, i64 10, !7, i64 11, !7, i64 16, !18, i64 32, !8, i64 40}
+!67 = !{!"PRNGState", !7, i64 0}
+!68 = !{!"global_State", !14, i64 0, !14, i64 8, !61, i64 16, !62, i64 120, !7, i64 144, !7, i64 145, !7, i64 146, !7, i64 147, !63, i64 152, !8, i64 184, !12, i64 192, !64, i64 200, !7, i64 232, !7, i64 240, !65, i64 248, !7, i64 272, !12, i64 280, !66, i64 288, !8, i64 336, !8, i64 340, !14, i64 344, !14, i64 352, !14, i64 360, !8, i64 368, !8, i64 372, !12, i64 376, !18, i64 384, !18, i64 392, !67, i64 400, !7, i64 432}
+!69 = !{!68, !11, i64 16}
+!70 = !{!68, !14, i64 0}
+!71 = !{!68, !14, i64 8}
 end_hunk_1

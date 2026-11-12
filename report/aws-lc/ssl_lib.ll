@@ -204,7 +204,7 @@ _ZN4bssl5UpRefEP10ssl_ctx_st.exit14:
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i64 65, ptr %i.w, align 8, !tbaa !241
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %i.y = load ptr, ptr %i.u, align 8, !tbaa !116  ; 3 uses
+  %i.y = load ptr, ptr %i.u, align 8, !tbaa !116  ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 336
   %i.aa = load <2 x i32>, ptr %i.z, align 8, !tbaa !242
   store <2 x i32> %i.aa, ptr %i.x, align 8, !tbaa !242
@@ -218,24 +218,21 @@ _ZN4bssl5UpRefEP10ssl_ctx_st.exit14:
   %i.ag = load i8, ptr %i.af, align 4             ; 2 uses
   %i.ah = and i8 %i.ag, -2
   store i8 %i.ah, ptr %i.af, align 4
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.y, i64 712 ; 3 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.y, i64 712
   %i.aj = load i16, ptr %i.ai, align 8
   %i.ak = trunc i16 %i.aj to i8
   %i.al = and i8 %i.ak, 2
   %i.am = and i8 %i.ag, -4
   %i.an = or disjoint i8 %i.al, %i.am             ; 2 uses
   store i8 %i.an, ptr %i.af, align 4
-  %2 = load i16, ptr %i.ai, align 8
-  %sh.diff = lshr i16 %2, 8
-  %tr.sh.diff = trunc nuw i16 %sh.diff to i8
+  %2 = getelementptr i8, ptr %i.y, i64 713        ; 2 uses
+  %tr.sh.diff = load i8, ptr %2, align 1
   %i.ao = and i8 %tr.sh.diff, 4
   %i.ap = and i8 %i.an, -6
-  %i.aq = or disjoint i8 %i.ao, %i.ap             ; 2 uses
+  %i.aq = or disjoint i8 %i.ap, %i.ao             ; 2 uses
   store i8 %i.aq, ptr %i.af, align 4
-  %3 = load i16, ptr %i.ai, align 8
-  %sh.diff10 = lshr i16 %3, 8
-  %tr.sh.diff11 = trunc nuw i16 %sh.diff10 to i8
-  %i.ar = and i8 %tr.sh.diff11, 8
+  %tr.sh.diff10 = load i8, ptr %2, align 1
+  %i.ar = and i8 %tr.sh.diff10, 8
   %i.as = and i8 %i.aq, -26
   %i.at = or disjoint i8 %i.as, %i.ar
   store i8 %i.at, ptr %i.af, align 4
@@ -638,15 +635,13 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %_ZN4bssl5UpRefEP10ssl_ctx_st.exit, %bb.f, %bb.g
   %i.p = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !116 ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 712
-  %3 = load i16, ptr %i.q, align 8
+  %i.q = getelementptr i8, ptr %i.p, i64 713
+  %tr.sh.diff = load i8, ptr %i.q, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 220 ; 2 uses
   %i.s = load i8, ptr %i.r, align 4
-  %sh.diff = lshr i16 %3, 8
-  %tr.sh.diff = trunc nuw i16 %sh.diff to i8
   %i.t = and i8 %tr.sh.diff, 4
   %i.u = and i8 %i.s, -5
-  %i.v = or disjoint i8 %i.t, %i.u
+  %i.v = or disjoint i8 %i.u, %i.t
   store i8 %i.v, ptr %i.r, align 4
   %.pr = load ptr, ptr %2, align 8, !tbaa !218    ; 3 uses
   %.not.i19 = icmp eq ptr %.pr, null
@@ -1049,7 +1044,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   store i64 65, ptr %i.z, align 8, !tbaa !241
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 184
-  %i.ab = load ptr, ptr %i.x, align 8, !tbaa !116 ; 3 uses
+  %i.ab = load ptr, ptr %i.x, align 8, !tbaa !116 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 336
   %i.ad = load <2 x i32>, ptr %i.ac, align 8, !tbaa !242
   store <2 x i32> %i.ad, ptr %i.aa, align 8, !tbaa !242
@@ -1063,24 +1058,21 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = load i8, ptr %i.ai, align 4             ; 2 uses
   %i.ak = and i8 %i.aj, -2
   store i8 %i.ak, ptr %i.ai, align 4
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ab, i64 712 ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ab, i64 712
   %i.am = load i16, ptr %i.al, align 8
   %i.an = trunc i16 %i.am to i8
   %i.ao = and i8 %i.an, 2
   %i.ap = and i8 %i.aj, -4
   %i.aq = or disjoint i8 %i.ao, %i.ap             ; 2 uses
   store i8 %i.aq, ptr %i.ai, align 4
-  %1 = load i16, ptr %i.al, align 8
-  %sh.diff.i = lshr i16 %1, 8
-  %tr.sh.diff.i = trunc nuw i16 %sh.diff.i to i8
+  %1 = getelementptr i8, ptr %i.ab, i64 713       ; 2 uses
+  %tr.sh.diff.i = load i8, ptr %1, align 1
   %i.ar = and i8 %tr.sh.diff.i, 4
   %i.as = and i8 %i.aq, -6
-  %i.at = or disjoint i8 %i.ar, %i.as             ; 2 uses
+  %i.at = or disjoint i8 %i.as, %i.ar             ; 2 uses
   store i8 %i.at, ptr %i.ai, align 4
-  %2 = load i16, ptr %i.al, align 8
-  %sh.diff10.i = lshr i16 %2, 8
-  %tr.sh.diff11.i = trunc nuw i16 %sh.diff10.i to i8
-  %i.au = and i8 %tr.sh.diff11.i, 8
+  %tr.sh.diff10.i = load i8, ptr %1, align 1
+  %i.au = and i8 %tr.sh.diff10.i, 8
   %i.av = and i8 %i.at, -26
   %i.aw = or disjoint i8 %i.av, %i.au
   store i8 %i.aw, ptr %i.ai, align 4

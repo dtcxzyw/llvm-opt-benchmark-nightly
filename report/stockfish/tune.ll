@@ -202,30 +202,31 @@ _ZNK9Stockfish8SetRangeclEi.exit57:               ; preds = %bb.l, %bb.m
   br i1 %.not.i58, label %_ZNK9Stockfish8SetRangeclEi.exit61.thread, label %_ZNK9Stockfish8SetRangeclEi.exit61
 
 _ZNK9Stockfish8SetRangeclEi.exit61.thread:        ; preds = %_ZNK9Stockfish8SetRangeclEi.exit57
-  %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.0.0.copyload.i60 = load i64, ptr %i.bz, align 8 ; 2 uses
-  br label %_ZNK9Stockfish8SetRangeclEi.exit65
+  %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %.sroa.3.0.extract.trunc83 = load i32, ptr %i.bz, align 4
+  br label %bb.n
 
 _ZNK9Stockfish8SetRangeclEi.exit61:               ; preds = %_ZNK9Stockfish8SetRangeclEi.exit57
-  %i.ca = call i64 %i.by(i32 noundef %.0) #16, !inline_history !81 ; 2 uses
+  %i.ca = call i64 %i.by(i32 noundef %.0) #16, !inline_history !81
   %.pr80 = load ptr, ptr %3, align 8, !tbaa !87   ; 2 uses
+  %.sroa.3.0.extract.shift = lshr i64 %i.ca, 32
+  %.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.3.0.extract.shift to i32 ; 2 uses
   %.not.i62 = icmp eq ptr %.pr80, null
-  br i1 %.not.i62, label %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge, label %bb.n
+  br i1 %.not.i62, label %bb.n, label %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge
 
 _ZNK9Stockfish8SetRangeclEi.exit61._crit_edge:    ; preds = %_ZNK9Stockfish8SetRangeclEi.exit61
-  %.phi.trans.insert90 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.0.0.copyload.i64.pre = load i64, ptr %.phi.trans.insert90, align 8
-  br label %_ZNK9Stockfish8SetRangeclEi.exit65
-
-bb.n:                                             ; preds = %_ZNK9Stockfish8SetRangeclEi.exit61
   %6 = call i64 %.pr80(i32 noundef %.0) #16, !inline_history !81
   br label %_ZNK9Stockfish8SetRangeclEi.exit65
 
-_ZNK9Stockfish8SetRangeclEi.exit65:               ; preds = %_ZNK9Stockfish8SetRangeclEi.exit61.thread, %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge, %bb.n
-  %.sroa.3.0.extract.trunc85.in.in = phi i64 [ %i.ca, %bb.n ], [ %.sroa.0.0.copyload.i60, %_ZNK9Stockfish8SetRangeclEi.exit61.thread ], [ %i.ca, %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge ]
-  %.sroa.0.0.i63 = phi i64 [ %6, %bb.n ], [ %.sroa.0.0.copyload.i60, %_ZNK9Stockfish8SetRangeclEi.exit61.thread ], [ %.sroa.0.0.copyload.i64.pre, %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge ]
-  %.sroa.3.0.extract.trunc85.in = lshr i64 %.sroa.3.0.extract.trunc85.in.in, 32
-  %.sroa.3.0.extract.trunc85 = trunc nuw i64 %.sroa.3.0.extract.trunc85.in to i32
+bb.n:                                             ; preds = %_ZNK9Stockfish8SetRangeclEi.exit61.thread, %_ZNK9Stockfish8SetRangeclEi.exit61
+  %.sroa.3.0.extract.trunc86 = phi i32 [ %.sroa.3.0.extract.trunc83, %_ZNK9Stockfish8SetRangeclEi.exit61.thread ], [ %.sroa.3.0.extract.trunc, %_ZNK9Stockfish8SetRangeclEi.exit61 ]
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.0.0.copyload.i64 = load i64, ptr %7, align 8
+  br label %_ZNK9Stockfish8SetRangeclEi.exit65
+
+_ZNK9Stockfish8SetRangeclEi.exit65:               ; preds = %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge, %bb.n
+  %.sroa.3.0.extract.trunc85 = phi i32 [ %.sroa.3.0.extract.trunc, %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge ], [ %.sroa.3.0.extract.trunc86, %bb.n ]
+  %.sroa.0.0.i63 = phi i64 [ %6, %_ZNK9Stockfish8SetRangeclEi.exit61._crit_edge ], [ %.sroa.0.0.copyload.i64, %bb.n ]
   %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.i63 to i32
   %i.cb = sub nsw i32 %.sroa.3.0.extract.trunc85, %.sroa.0.0.extract.trunc
   %i.cc = sitofp i32 %i.cb to double

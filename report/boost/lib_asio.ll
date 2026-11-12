@@ -204,7 +204,7 @@ bb.a:
   %3 = alloca %"class.boost::asio::ip::bad_address_cast", align 8 ; 5 uses
   %i.a = load <8 x i8>, ptr %2, align 4
   %.fr = freeze <8 x i8> %i.a
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load i8, ptr %i.b, align 4
   %i.d = icmp eq i8 %i.c, 0
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
@@ -241,9 +241,8 @@ bb.c:                                             ; preds = %_ZNK5boost4asio2ip1
   resume { ptr, i32 } %i.o
 
 bb.d:                                             ; preds = %bb.a
-  %.sroa.2.0.copyload.i = load i64, ptr %i.b, align 4
-  %.sroa.3.12.extract.shift = lshr i64 %.sroa.2.0.copyload.i, 32
-  %.sroa.3.12.extract.trunc = trunc nuw i64 %.sroa.3.12.extract.shift to i32
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %.sroa.3.12.extract.trunc = load i32, ptr %4, align 4
   store i32 %.sroa.3.12.extract.trunc, ptr %0, align 4
   ret void
 }

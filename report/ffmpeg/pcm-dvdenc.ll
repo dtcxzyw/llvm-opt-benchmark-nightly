@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %.preheader190, %byt
   %.sroa.57.1 = phi i32 [ %.sroa.57.16.1, %bytestream2_put_byte.exit76.1 ], [ 0, %.preheader190 ]
   %.sroa.0.1 = phi ptr [ %.sroa.0.16.1, %bytestream2_put_byte.exit76.1 ], [ %i.v, %.preheader190 ] ; 11 uses
   %.045 = phi i32 [ %i.dd, %bytestream2_put_byte.exit76.1 ], [ %i.i, %.preheader190 ]
-  %.043 = phi ptr [ %i.dc, %bytestream2_put_byte.exit76.1 ], [ %i.t, %.preheader190 ] ; 6 uses
+  %.043 = phi ptr [ %i.dc, %bytestream2_put_byte.exit76.1 ], [ %i.t, %.preheader190 ] ; 9 uses
   %.not.i64 = icmp eq i32 %.sroa.57.1, 0
   %i.bc = ptrtoint ptr %.sroa.0.1 to i64
   %i.bd = sub i64 %i.bb, %i.bc
@@ -218,17 +218,16 @@ bb.i:                                             ; preds = %bb.h
   %i.bi = tail call i16 @llvm.bswap.i16(i16 %i.bh)
   store i16 %i.bi, ptr %.sroa.0.1, align 1, !tbaa !35
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 2 ; 3 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %.043, i64 4 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %.043, i64 4
   %i.bl = ptrtoint ptr %i.bj to i64
   %i.bm = sub i64 %i.bb, %i.bl
   %i.bn = icmp sgt i64 %i.bm, 1
   br i1 %i.bn, label %bb.j, label %bytestream2_put_byte.exit76.1
 
 bb.j:                                             ; preds = %bb.i
-  %4 = load i32, ptr %i.bk, align 4, !tbaa !57
-  %5 = lshr i32 %4, 16
-  %6 = trunc nuw i32 %5 to i16
-  %i.bo = tail call i16 @llvm.bswap.i16(i16 %6)
+  %4 = getelementptr i8, ptr %.043, i64 6
+  %5 = load i16, ptr %4, align 2, !tbaa !57
+  %i.bo = tail call i16 @llvm.bswap.i16(i16 %5)
   store i16 %i.bo, ptr %i.bj, align 1, !tbaa !35
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 4 ; 3 uses
   %i.bq = ptrtoint ptr %i.bp to i64
@@ -255,28 +254,26 @@ bytestream2_put_byte.exit76:                      ; preds = %bb.k
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 6 ; 3 uses
   %.pre = ptrtoint ptr %i.cd to i64
   %.pre209 = sub i64 %i.bb, %.pre
-  %i.ce = getelementptr inbounds nuw i8, ptr %.043, i64 8 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %.043, i64 8
   %i.cf = icmp sgt i64 %.pre209, 1
   br i1 %i.cf, label %bb.l, label %bytestream2_put_byte.exit76.1
 
 bb.l:                                             ; preds = %bytestream2_put_byte.exit76
-  %7 = load i32, ptr %i.ce, align 4, !tbaa !57
-  %8 = lshr i32 %7, 16
-  %9 = trunc nuw i32 %8 to i16
-  %i.cg = tail call i16 @llvm.bswap.i16(i16 %9)
+  %6 = getelementptr i8, ptr %.043, i64 10
+  %7 = load i16, ptr %6, align 2, !tbaa !57
+  %i.cg = tail call i16 @llvm.bswap.i16(i16 %7)
   store i16 %i.cg, ptr %i.cd, align 1, !tbaa !35
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 8 ; 3 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %.043, i64 12 ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %.043, i64 12
   %i.cj = ptrtoint ptr %i.ch to i64
   %i.ck = sub i64 %i.bb, %i.cj
   %i.cl = icmp sgt i64 %i.ck, 1
   br i1 %i.cl, label %bb.m, label %bytestream2_put_byte.exit76.1
 
 bb.m:                                             ; preds = %bb.l
-  %10 = load i32, ptr %i.ci, align 4, !tbaa !57
-  %11 = lshr i32 %10, 16
-  %12 = trunc nuw i32 %11 to i16
-  %i.cm = tail call i16 @llvm.bswap.i16(i16 %12)
+  %8 = getelementptr i8, ptr %.043, i64 14
+  %9 = load i16, ptr %8, align 2, !tbaa !57
+  %i.cm = tail call i16 @llvm.bswap.i16(i16 %9)
   store i16 %i.cm, ptr %i.ch, align 1, !tbaa !35
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 10 ; 3 uses
   %i.co = ptrtoint ptr %i.cn to i64
@@ -334,7 +331,7 @@ bytestream2_put_byte.exit76.1:                    ; preds = %bb.k, %bb.j, %bb.i,
 
 .lr.ph:                                           ; preds = %.preheader192.split, %bytestream2_put_byte.exit
   %.0198 = phi i32 [ %i.fj, %bytestream2_put_byte.exit ], [ %i.de, %.preheader192.split ]
-  %.3197 = phi ptr [ %i.fi, %bytestream2_put_byte.exit ], [ %.2, %.preheader192.split ] ; 6 uses
+  %.3197 = phi ptr [ %i.fi, %bytestream2_put_byte.exit ], [ %.2, %.preheader192.split ] ; 9 uses
   %.sroa.0.4196 = phi ptr [ %.sroa.0.12, %bytestream2_put_byte.exit ], [ %.sroa.0.3, %.preheader192.split ] ; 11 uses
   %.sroa.57.4195 = phi i32 [ %.sroa.57.12, %bytestream2_put_byte.exit ], [ %.sroa.57.3, %.preheader192.split ]
   %.not.i60 = icmp eq i32 %.sroa.57.4195, 0
@@ -351,43 +348,40 @@ bb.p:                                             ; preds = %.lr.ph
   %i.dm = tail call i16 @llvm.bswap.i16(i16 %i.dl)
   store i16 %i.dm, ptr %.sroa.0.4196, align 1, !tbaa !35
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0.4196, i64 2 ; 3 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %.3197, i64 4 ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %.3197, i64 4
   %i.dp = ptrtoint ptr %i.dn to i64
   %i.dq = sub i64 %i.ay, %i.dp
   %i.dr = icmp sgt i64 %i.dq, 1
   br i1 %i.dr, label %bb.q, label %bytestream2_put_byte.exit
 
 bb.q:                                             ; preds = %bb.p
-  %13 = load i32, ptr %i.do, align 4, !tbaa !57
-  %14 = lshr i32 %13, 16
-  %15 = trunc nuw i32 %14 to i16
-  %i.ds = tail call i16 @llvm.bswap.i16(i16 %15)
+  %10 = getelementptr i8, ptr %.3197, i64 6
+  %11 = load i16, ptr %10, align 2, !tbaa !57
+  %i.ds = tail call i16 @llvm.bswap.i16(i16 %11)
   store i16 %i.ds, ptr %i.dn, align 1, !tbaa !35
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.0.4196, i64 4 ; 3 uses
-  %i.du = getelementptr inbounds nuw i8, ptr %.3197, i64 8 ; 2 uses
+  %i.du = getelementptr inbounds nuw i8, ptr %.3197, i64 8
   %i.dv = ptrtoint ptr %i.dt to i64
   %i.dw = sub i64 %i.ay, %i.dv
   %i.dx = icmp sgt i64 %i.dw, 1
   br i1 %i.dx, label %bb.r, label %bytestream2_put_byte.exit
 
 bb.r:                                             ; preds = %bb.q
-  %16 = load i32, ptr %i.du, align 4, !tbaa !57
-  %17 = lshr i32 %16, 16
-  %18 = trunc nuw i32 %17 to i16
-  %i.dy = tail call i16 @llvm.bswap.i16(i16 %18)
+  %12 = getelementptr i8, ptr %.3197, i64 10
+  %13 = load i16, ptr %12, align 2, !tbaa !57
+  %i.dy = tail call i16 @llvm.bswap.i16(i16 %13)
   store i16 %i.dy, ptr %i.dt, align 1, !tbaa !35
   %i.dz = getelementptr inbounds nuw i8, ptr %.sroa.0.4196, i64 6 ; 3 uses
-  %i.ea = getelementptr inbounds nuw i8, ptr %.3197, i64 12 ; 2 uses
+  %i.ea = getelementptr inbounds nuw i8, ptr %.3197, i64 12
   %i.eb = ptrtoint ptr %i.dz to i64
   %i.ec = sub i64 %i.ay, %i.eb
   %i.ed = icmp sgt i64 %i.ec, 1
   br i1 %i.ed, label %bb.s, label %bytestream2_put_byte.exit
 
 bb.s:                                             ; preds = %bb.r
-  %19 = load i32, ptr %i.ea, align 4, !tbaa !57
-  %20 = lshr i32 %19, 16
-  %21 = trunc nuw i32 %20 to i16
-  %i.ee = tail call i16 @llvm.bswap.i16(i16 %21)
+  %14 = getelementptr i8, ptr %.3197, i64 14
+  %15 = load i16, ptr %14, align 2, !tbaa !57
+  %i.ee = tail call i16 @llvm.bswap.i16(i16 %15)
   store i16 %i.ee, ptr %i.dz, align 1, !tbaa !35
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.0.4196, i64 8 ; 3 uses
   %i.eg = ptrtoint ptr %i.ef to i64

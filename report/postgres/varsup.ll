@@ -202,12 +202,12 @@ bb.a:
   %i.h = icmp sgt i32 %i.g, -1
   %i.i = icmp uge i32 %0, %i.d
   %.0.i = select i1 %or.cond.i, i1 %i.h, i1 %i.i
+  %1 = lshr i64 %i.c, 32                          ; 2 uses
   br i1 %.0.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.j = add i32 %0, 1
   %spec.store.select = tail call i32 @llvm.umax.i32(i32 %i.j, i32 3) ; 2 uses
-  %1 = lshr i64 %i.c, 32                          ; 2 uses
   %i.k = icmp ult i32 %spec.store.select, %i.d
   br i1 %i.k, label %bb.c, label %bb.d, !prof !7
 

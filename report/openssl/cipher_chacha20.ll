@@ -202,7 +202,7 @@ declare ptr @ossl_cipher_generic_gettable_params(ptr noundef) #1
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @chacha20_get_ctx_params(ptr nofree noundef readonly captures(address_is_null) %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 4 uses
+  %i.a = alloca [16 x i8], align 16               ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %.thread48, label %bb.b
@@ -317,8 +317,72 @@ bb.p:                                             ; preds = %bb.n, %bb.m
 
 bb.q:                                             ; preds = %bb.p
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 224
-  %2 = load <4 x i32>, ptr %i.y, align 8, !tbaa !30
-  store <4 x i32> %2, ptr %i.a, align 16
+  %2 = getelementptr i8, ptr %0, i64 227
+  %3 = load i8, ptr %2, align 1, !tbaa !30
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  store i8 %3, ptr %4, align 1, !tbaa !20
+  %5 = load i32, ptr %i.y, align 8, !tbaa !30     ; 3 uses
+  %6 = lshr i32 %5, 16
+  %7 = trunc i32 %6 to i8
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  store i8 %7, ptr %8, align 2, !tbaa !20
+  %9 = lshr i32 %5, 8
+  %10 = trunc i32 %9 to i8
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  store i8 %10, ptr %11, align 1, !tbaa !20
+  %12 = trunc i32 %5 to i8
+  store i8 %12, ptr %i.a, align 16, !tbaa !20
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 228
+  %14 = getelementptr i8, ptr %0, i64 231
+  %15 = load i8, ptr %14, align 1, !tbaa !30
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  store i8 %15, ptr %17, align 1, !tbaa !20
+  %18 = load i32, ptr %13, align 4, !tbaa !30     ; 3 uses
+  %19 = lshr i32 %18, 16
+  %20 = trunc i32 %19 to i8
+  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  store i8 %20, ptr %21, align 2, !tbaa !20
+  %22 = lshr i32 %18, 8
+  %23 = trunc i32 %22 to i8
+  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  store i8 %23, ptr %24, align 1, !tbaa !20
+  %25 = trunc i32 %18 to i8
+  store i8 %25, ptr %16, align 4, !tbaa !20
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 232
+  %27 = getelementptr i8, ptr %0, i64 235
+  %28 = load i8, ptr %27, align 1, !tbaa !30
+  %29 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 %28, ptr %30, align 1, !tbaa !20
+  %31 = load i32, ptr %26, align 8, !tbaa !30     ; 3 uses
+  %32 = lshr i32 %31, 16
+  %33 = trunc i32 %32 to i8
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %33, ptr %34, align 2, !tbaa !20
+  %35 = lshr i32 %31, 8
+  %36 = trunc i32 %35 to i8
+  %37 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  store i8 %36, ptr %37, align 1, !tbaa !20
+  %38 = trunc i32 %31 to i8
+  store i8 %38, ptr %29, align 8, !tbaa !20
+  %39 = getelementptr inbounds nuw i8, ptr %0, i64 236
+  %40 = getelementptr i8, ptr %0, i64 239
+  %41 = load i8, ptr %40, align 1, !tbaa !30
+  %42 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %43 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
+  store i8 %41, ptr %43, align 1, !tbaa !20
+  %44 = load i32, ptr %39, align 4, !tbaa !30     ; 3 uses
+  %45 = lshr i32 %44, 16
+  %46 = trunc i32 %45 to i8
+  %47 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
+  store i8 %46, ptr %47, align 2, !tbaa !20
+  %48 = lshr i32 %44, 8
+  %49 = trunc i32 %48 to i8
+  %50 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
+  store i8 %49, ptr %50, align 1, !tbaa !20
+  %51 = trunc i32 %44 to i8
+  store i8 %51, ptr %42, align 4, !tbaa !20
   %i.z = call i32 @OSSL_PARAM_set_octet_string(ptr noundef nonnull %.sroa.7.1, ptr noundef nonnull %i.a, i64 noundef 16) #5
   %.not27 = icmp eq i32 %i.z, 0
   br i1 %.not27, label %bb.r, label %.thread48

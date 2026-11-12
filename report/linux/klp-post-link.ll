@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.y
   %i.ey = lshr exact i64 %i.ex, 5
   %i.ez = and i64 %i.ey, 4294967295
   %i.fa = mul i64 %i.ez, %.val11.val.i.i
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.fa ; 2 uses
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.fa ; 3 uses
   br i1 %i.ep, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
@@ -213,10 +213,12 @@ bb.ab:                                            ; preds = %bb.aa
   br label %set_reloc_type.exit.i
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.ff = getelementptr inbounds nuw i8, ptr %i.fb, i64 8 ; 2 uses
-  %2 = load i64, ptr %i.ff, align 8, !tbaa !66
-  %3 = and i64 %2, -4294967296
-  store i64 %3, ptr %i.ff, align 8, !tbaa !66
+  %i.ff = getelementptr i8, ptr %i.fb, i64 12
+  %2 = load i32, ptr %i.ff, align 4, !tbaa !66
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
+  store i64 %4, ptr %5, align 8, !tbaa !66
   br label %set_reloc_type.exit.i
 
 set_reloc_type.exit.i:                            ; preds = %bb.ac, %bb.ab

@@ -205,11 +205,9 @@ _ZN6vectorIN3sat7literalELb0EjE3endEv.exit:       ; preds = %bb.c, %bb.d
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !205
   %i.w = zext nneg i32 %i.t to i64
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %i.w
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %3 = load i64, ptr %i.y, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.z = and i32 %5, 8388607
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 12
+  %3 = load i32, ptr %i.y, align 4
+  %i.z = and i32 %3, 8388607
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   store i32 %i.z, ptr %i.aa, align 4, !tbaa !796
   %.not23 = icmp samesign eq i64 %.0.i.i, 4
@@ -239,25 +237,26 @@ bb.e:                                             ; preds = %.lr.ph
   %i.al = load ptr, ptr %i.n, align 8, !tbaa !202, !nonnull !134, !align !135 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8968
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !205
-  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.an, i64 %i.ag
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 2 uses
+  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.an, i64 %i.ag ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = load i64, ptr %i.ap, align 8            ; 2 uses
   %i.ar = trunc i64 %i.aq to i32
   %i.as = and i32 %i.ar, 16777215                 ; 2 uses
   %i.at = load i32, ptr %i.r, align 8, !tbaa !795
   %i.au = icmp ugt i32 %i.as, %i.at
+  %4 = lshr i64 %i.aq, 32
+  %5 = trunc nuw i64 %4 to i32
   br i1 %i.au, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   store i32 %i.as, ptr %i.r, align 8, !tbaa !795
-  %.pre = load i64, ptr %i.ap, align 8
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ao, i64 12
+  %.pre = load i32, ptr %.phi.trans.insert, align 4
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %6 = phi i64 [ %.pre, %bb.f ], [ %i.aq, %bb.e ]
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.av = and i32 %8, 8388607                     ; 2 uses
+  %6 = phi i32 [ %.pre, %bb.f ], [ %5, %bb.e ]
+  %i.av = and i32 %6, 8388607                     ; 2 uses
   %i.aw = load i32, ptr %i.aa, align 4, !tbaa !796
   %i.ax = icmp ugt i32 %i.av, %i.aw
   br i1 %i.ax, label %bb.h, label %bb.i

@@ -202,19 +202,25 @@ _ZNK4lean7sstream3strB5cxx11Ev.exit:              ; preds = %bb.d, %bb.b
 
 bb.e:                                             ; preds = %_ZNK4lean7sstream3strB5cxx11Ev.exit
   %i.u = invoke ptr @lean_io_eprint(ptr noundef %i.t)
-          to label %.noexc unwind label %bb.j     ; 5 uses
+          to label %.noexc unwind label %bb.j     ; 6 uses
 
 .noexc:                                           ; preds = %bb.e
-  %i.v = getelementptr i8, ptr %i.u, i64 4
-  %.val.i = load i32, ptr %i.v, align 4
-  %2 = icmp ult i32 %.val.i, 16777216
-  br i1 %2, label %.noexc1.a, label %bb.f
+  %i.v = getelementptr i8, ptr %i.u, i64 7
+  %.val.i = load i8, ptr %i.v, align 1
+  %2 = icmp eq i8 %.val.i, 0
+  br i1 %2, label %.noexc1, label %bb.f
 
 bb.f:                                             ; preds = %.noexc
   invoke void @lean_io_result_show_error(ptr noundef nonnull %i.u)
-          to label %.noexc1.a unwind label %bb.j
+          to label %.noexc1 unwind label %bb.j
 
-.noexc1.a:                                        ; preds = %.noexc, %bb.f
+.noexc1:                                          ; preds = %bb.f, %.noexc
+  %3 = ptrtoint ptr %i.u to i64
+  %4 = and i64 %3, 1
+  %.not.i.i = icmp eq i64 %4, 0
+  br i1 %.not.i.i, label %.noexc1.a, label %_ZN4leanL9io_eprintEP11lean_object.exit
+
+.noexc1.a:                                        ; preds = %.noexc1
   %i.w = load i32, ptr %i.u, align 4, !tbaa !12   ; 3 uses
   %i.x = icmp sgt i32 %i.w, 1
   br i1 %i.x, label %bb.g, label %bb.h, !prof !13
@@ -232,7 +238,7 @@ bb.i:                                             ; preds = %bb.h
   invoke void @lean_dec_ref_cold(ptr noundef nonnull %i.u)
           to label %_ZN4leanL9io_eprintEP11lean_object.exit unwind label %bb.j
 
-_ZN4leanL9io_eprintEP11lean_object.exit:          ; preds = %bb.h, %bb.g, %bb.i
+_ZN4leanL9io_eprintEP11lean_object.exit:          ; preds = %bb.h, %bb.g, %.noexc1, %bb.i
   %i.z = load ptr, ptr %1, align 8, !tbaa !24     ; 2 uses
   %i.aa = icmp eq ptr %i.z, %i.a
   br i1 %i.aa, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i

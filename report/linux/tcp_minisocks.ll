@@ -202,7 +202,7 @@ bb.r:                                             ; preds = %bb.q
   %i.fw = and i8 %i.fv, -18                       ; 2 uses
   %i.fx = or disjoint i8 %i.fw, 16
   store i8 %i.fx, ptr %i.fu, align 16
-  %i.fy = getelementptr i8, ptr %1, i64 310       ; 6 uses
+  %i.fy = getelementptr i8, ptr %1, i64 310       ; 5 uses
   %i.fz = load i16, ptr %i.fy, align 2
   %i.ga = getelementptr i8, ptr %i.a, i64 1921    ; 2 uses
   %i.gb = load i16, ptr %i.ga, align 1
@@ -305,14 +305,14 @@ bb.aa:                                            ; preds = %bb.z
   br label %tcp_accecn_third_ack.exit.i
 
 tcp_accecn_third_ack.exit.i:                      ; preds = %bb.aa, %bb.z, %bb.y, %tcp_accecn_validate_syn_feedback.exit.i.i, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.r, %bb.r
-  %3 = load i16, ptr %i.fy, align 2
+  %3 = getelementptr i8, ptr %1, i64 311
+  %4 = load i8, ptr %3, align 1
   %i.hs = getelementptr i8, ptr %i.a, i64 1926    ; 4 uses
   %i.ht = load i8, ptr %i.hs, align 2
-  %sh.diff.i = lshr i16 %3, 4
-  %tr.sh.diff.i = trunc i16 %sh.diff.i to i8
-  %i.hu = and i8 %tr.sh.diff.i, 48
+  %5 = shl i8 %4, 4
+  %i.hu = and i8 %5, 48
   %i.hv = and i8 %i.ht, -49
-  %i.hw = or disjoint i8 %i.hu, %i.hv             ; 3 uses
+  %i.hw = or disjoint i8 %i.hv, %i.hu             ; 3 uses
   store i8 %i.hw, ptr %i.hs, align 2
   %i.hx = load i16, ptr %i.fy, align 2            ; 2 uses
   %i.hy = and i16 %i.hx, 16
@@ -715,18 +715,19 @@ bb.am:                                            ; preds = %bb.al
   br i1 %.not228, label %bb.ap, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.gg = getelementptr i8, ptr %2, i64 310       ; 3 uses
-  %7 = load i16, ptr %i.gg, align 2
-  %8 = and i16 %7, 512
-  %.not229.not = icmp eq i16 %8, 0
+  %i.gg = getelementptr i8, ptr %2, i64 311
+  %7 = load i8, ptr %i.gg, align 1
+  %8 = and i8 %7, 2
+  %.not229.not = icmp eq i8 %8, 0
   br i1 %.not229.not, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
+  %9 = getelementptr i8, ptr %2, i64 310          ; 2 uses
   %.val250 = load i16, ptr %i.b, align 2
   %.val251 = load ptr, ptr %i.c, align 8
   %i.gh = call fastcc zeroext i8 @tcp_accecn_option_init(i16 %.val250, ptr %.val251, i8 noundef zeroext %i.gf) #11 ; 2 uses
   %i.gi = zext nneg i8 %i.gh to i16
-  %i.gj = load i16, ptr %i.gg, align 2            ; 2 uses
+  %i.gj = load i16, ptr %9, align 2               ; 2 uses
   %i.gk = shl nuw nsw i16 %i.gi, 8
   %i.gl = and i16 %i.gj, -769
   %i.gm = or disjoint i16 %i.gl, %i.gk            ; 2 uses
@@ -736,7 +737,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.gq = or disjoint i16 %i.go, %i.gp
   %i.gr = or disjoint i16 %i.gq, 128
   %storemerge = select i1 %i.gn, i16 %i.gr, i16 %i.gm
-  store i16 %storemerge, ptr %i.gg, align 2
+  store i16 %storemerge, ptr %9, align 2
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an, %bb.am, %bb.al

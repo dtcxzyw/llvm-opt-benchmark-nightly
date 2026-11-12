@@ -202,7 +202,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %.0.copyload.i.i.i.i.i = load i64, ptr %i.b, align 8
   %i.c = and i64 %.0.copyload.i.i.i.i.i, -8       ; 2 uses
-  %i.d = inttoptr i64 %i.c to ptr                 ; 7 uses
+  %i.d = inttoptr i64 %i.c to ptr                 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !73   ; 2 uses
@@ -260,9 +260,9 @@ _ZN4llvm14SmallSetVectorIlLj3EECI2NS_9SetVectorIlNS_11SmallVectorIlLj3EEENS_8Den
   br i1 %.not.i, label %_ZN4mlir3acc23isSpecializedAccRoutineEPNS_9OperationE.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %_ZN4llvm14SmallSetVectorIlLj3EECI2NS_9SetVectorIlNS_11SmallVectorIlLj3EEENS_8DenseSetIlNS_12DenseMapInfoIlvEEEELj3EEEIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEEET_SG_.exit
-  %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 44 ; 2 uses
-  %9 = load i32, ptr %i.z, align 4
-  %.not.i.i = icmp ult i32 %9, 16777216
+  %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 47
+  %9 = load i8, ptr %i.z, align 1
+  %.not.i.i = icmp eq i8 %9, 0
   br i1 %.not.i.i, label %_ZN4mlir3acc23isSpecializedAccRoutineEPNS_9OperationE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -304,7 +304,8 @@ bb.d:                                             ; preds = %.split, %_ZN4mlir3a
   store i8 1, ptr %.sroa.11.0..sroa_idx, align 1
   %.sroa.1248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 50
   store i8 0, ptr %.sroa.1248.0..sroa_idx, align 2
-  %i.ag = load i32, ptr %i.z, align 4             ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 44
+  %i.ag = load i32, ptr %10, align 4              ; 3 uses
   %i.ah = and i32 %i.ag, 8388607                  ; 2 uses
   %i.ai = icmp eq i32 %i.ah, 0
   br i1 %i.ai, label %_ZN4mlir21applyPatternsGreedilyEPNS_9OperationERKNS_23FrozenRewritePatternSetENS_19GreedyRewriteConfigEPb.exit, label %_ZN4mlir9Operation10getRegionsEv.exit.i

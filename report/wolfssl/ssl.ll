@@ -78,7 +78,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define ptr @wolfSSL_CertManagerNew_ex(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @wolfSSL_Malloc(i64 noundef 240) #23 ; 13 uses
+  %i.a = tail call ptr @wolfSSL_Malloc(i64 noundef 240) #23 ; 14 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %.critedge.thread27, label %bb.b
 
@@ -110,21 +110,24 @@ bb.b:                                             ; preds = %bb.a
 .critedge:                                        ; preds = %bb.b
   %i.m = load ptr, ptr %i.b, align 8, !tbaa !18
   tail call void @FreeSignerTable(ptr noundef nonnull %i.a, i32 noundef 11, ptr noundef %i.m) #23
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 224 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 224
   %i.o = load i16, ptr %i.n, align 8              ; 2 uses
   %i.p = and i16 %i.o, 128
   %.not.i = icmp eq i16 %i.p, 0
+  %1 = lshr i16 %i.o, 8
+  %2 = trunc nuw i16 %1 to i8
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.critedge
   %i.q = tail call i32 @wc_FreeMutex(ptr noundef nonnull %i.c) #23 ; 0 uses
-  %.pre.i = load i16, ptr %i.n, align 8
+  %.phi.trans.insert.i = getelementptr i8, ptr %i.a, i64 225
+  %.pre.i = load i8, ptr %.phi.trans.insert.i, align 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.critedge
-  %1 = phi i16 [ %.pre.i, %bb.c ], [ %i.o, %.critedge ]
-  %2 = and i16 %1, 256
-  %.not9.i = icmp eq i16 %2, 0
+  %3 = phi i8 [ %.pre.i, %bb.c ], [ %2, %.critedge ]
+  %4 = and i8 %3, 1
+  %.not9.i = icmp eq i8 %4, 0
   br i1 %.not9.i, label %DoCertManagerFree.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -179,22 +182,25 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !18
   tail call void @FreeSignerTable(ptr noundef nonnull %0, i32 noundef 11, ptr noundef %i.e) #23
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.g = load i16, ptr %i.f, align 8              ; 2 uses
   %i.h = and i16 %i.g, 128
   %.not.i = icmp eq i16 %i.h, 0
+  %1 = lshr i16 %i.g, 8
+  %2 = trunc nuw i16 %1 to i8
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.j = tail call i32 @wc_FreeMutex(ptr noundef nonnull %i.i) #23 ; 0 uses
-  %.pre.i = load i16, ptr %i.f, align 8
+  %.phi.trans.insert.i = getelementptr i8, ptr %0, i64 225
+  %.pre.i = load i8, ptr %.phi.trans.insert.i, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %1 = phi i16 [ %.pre.i, %bb.d ], [ %i.g, %bb.c ]
-  %2 = and i16 %1, 256
-  %.not9.i = icmp eq i16 %2, 0
+  %3 = phi i8 [ %.pre.i, %bb.d ], [ %2, %bb.c ]
+  %4 = and i8 %3, 1
+  %.not9.i = icmp eq i8 %4, 0
   br i1 %.not9.i, label %DoCertManagerFree.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -335,7 +341,7 @@ wolfSSL_CTX_set_verify.exit:                      ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 208
   store ptr null, ptr %i.k, align 8, !tbaa !31
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 144 ; 3 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !32   ; 7 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !32   ; 8 uses
   %.not.i54 = icmp eq ptr %i.m, null
   br i1 %.not.i54, label %bb.h, label %bb.c
 
@@ -349,22 +355,25 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 88
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !18
   tail call void @FreeSignerTable(ptr noundef nonnull %i.m, i32 noundef 11, ptr noundef %i.r) #23
-  %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 224 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 224
   %i.t = load i16, ptr %i.s, align 8              ; 2 uses
   %i.u = and i16 %i.t, 128
   %.not.i.i = icmp eq i16 %i.u, 0
+  %7 = lshr i16 %i.t, 8
+  %8 = trunc nuw i16 %7 to i8
   br i1 %.not.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 184
   %i.w = tail call i32 @wc_FreeMutex(ptr noundef nonnull %i.v) #23 ; 0 uses
-  %.pre.i.i = load i16, ptr %i.s, align 8
+  %.phi.trans.insert.i.i = getelementptr i8, ptr %i.m, i64 225
+  %.pre.i.i = load i8, ptr %.phi.trans.insert.i.i, align 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %7 = phi i16 [ %.pre.i.i, %bb.e ], [ %i.t, %bb.d ]
-  %8 = and i16 %7, 256
-  %.not9.i.i = icmp eq i16 %8, 0
+  %9 = phi i8 [ %.pre.i.i, %bb.e ], [ %8, %bb.d ]
+  %10 = and i8 %9, 1
+  %.not9.i.i = icmp eq i8 %10, 0
   br i1 %.not9.i.i, label %DoCertManagerFree.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -767,7 +776,7 @@ wolfSSL_CTX_set_verify.exit:                      ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 208
   store ptr null, ptr %i.j, align 8, !tbaa !31
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 144 ; 3 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !32   ; 7 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !32   ; 8 uses
   %.not.i19 = icmp eq ptr %i.l, null
   br i1 %.not.i19, label %bb.h, label %bb.c
 
@@ -781,22 +790,25 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 88
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !18
   tail call void @FreeSignerTable(ptr noundef nonnull %i.l, i32 noundef 11, ptr noundef %i.q) #23
-  %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 224 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 224
   %i.s = load i16, ptr %i.r, align 8              ; 2 uses
   %i.t = and i16 %i.s, 128
   %.not.i.i = icmp eq i16 %i.t, 0
+  %3 = lshr i16 %i.s, 8
+  %4 = trunc nuw i16 %3 to i8
   br i1 %.not.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.l, i64 184
   %i.v = tail call i32 @wc_FreeMutex(ptr noundef nonnull %i.u) #23 ; 0 uses
-  %.pre.i.i = load i16, ptr %i.r, align 8
+  %.phi.trans.insert.i.i = getelementptr i8, ptr %i.l, i64 225
+  %.pre.i.i = load i8, ptr %.phi.trans.insert.i.i, align 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %3 = phi i16 [ %.pre.i.i, %bb.e ], [ %i.s, %bb.d ]
-  %4 = and i16 %3, 256
-  %.not9.i.i = icmp eq i16 %4, 0
+  %5 = phi i8 [ %.pre.i.i, %bb.e ], [ %4, %bb.d ]
+  %6 = and i8 %5, 1
+  %.not9.i.i = icmp eq i8 %6, 0
   br i1 %.not9.i.i, label %DoCertManagerFree.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

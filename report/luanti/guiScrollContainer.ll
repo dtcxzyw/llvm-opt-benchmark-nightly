@@ -204,27 +204,38 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ak = tail call nsz noundef float @llvm.ceil.f32(float %i.aj)
   %i.al = fptosi float %i.ak to i32
   tail call void @_ZN3gui13CGUIScrollBar6setMaxEi(ptr noundef nonnull align 8 dereferenceable(420) %i.af, i32 noundef %i.al)
-  %i.am = load ptr, ptr %i.a, align 8, !tbaa !52  ; 4 uses
+  %i.am = load ptr, ptr %i.a, align 8, !tbaa !52  ; 6 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 349
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !118, !range !80, !noundef !81
-  %i.ap = trunc nuw i8 %i.ao to i1                ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.am, i64 48
-  %.sroa.0.0.copyload.i10 = load i64, ptr %2, align 8, !tbaa !60 ; 2 uses
+  %i.ap = trunc nuw i8 %i.ao to i1
+  br i1 %i.ap, label %2, label %5
+
+2:                                                ; preds = %bb.g
+  %3 = getelementptr inbounds nuw i8, ptr %i.am, i64 48
+  %.sroa.0.0.copyload.i10 = load i64, ptr %3, align 8, !tbaa !60
   %.sroa.2.0..sroa_idx.i11 = getelementptr inbounds nuw i8, ptr %i.am, i64 56
-  %.sroa.2.0.copyload.i12 = load i64, ptr %.sroa.2.0..sroa_idx.i11, align 8, !tbaa !60 ; 2 uses
-  %.sroa.4.12.extract.shift = lshr i64 %.sroa.2.0.copyload.i12, 32
-  %.sroa.0.4.extract.shift = lshr i64 %.sroa.0.0.copyload.i10, 32
-  %.sroa.0.4.extract.shift.sink = select i1 %i.ap, i64 %.sroa.0.0.copyload.i10, i64 %.sroa.0.4.extract.shift
-  %.sroa.4.12.extract.trunc.sink.v = select i1 %i.ap, i64 %.sroa.2.0.copyload.i12, i64 %.sroa.4.12.extract.shift
-  %.sroa.4.12.extract.trunc.sink = trunc i64 %.sroa.4.12.extract.trunc.sink.v to i32
-  %.sroa.0.4.extract.trunc = trunc i64 %.sroa.0.4.extract.shift.sink to i32
-  %3 = sub nsw i32 %.sroa.4.12.extract.trunc.sink, %.sroa.0.4.extract.trunc
-  %4 = mul nsw i32 %3, %i.ad
-  %5 = sdiv i32 %4, %i.aa
-  tail call void @_ZN3gui13CGUIScrollBar11setPageSizeEi(ptr noundef nonnull align 8 dereferenceable(420) %i.am, i32 noundef %5)
+  %.sroa.2.0.copyload.i12 = load i64, ptr %.sroa.2.0..sroa_idx.i11, align 8, !tbaa !60
+  %.sroa.421.8.extract.trunc = trunc i64 %.sroa.2.0.copyload.i12 to i32
+  %.sroa.020.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i10 to i32
+  %4 = sub nsw i32 %.sroa.421.8.extract.trunc, %.sroa.020.0.extract.trunc
+  br label %9
+
+5:                                                ; preds = %bb.g
+  %6 = getelementptr i8, ptr %i.am, i64 52
+  %.sroa.0.4.extract.trunc = load i32, ptr %6, align 4, !tbaa !60
+  %7 = getelementptr i8, ptr %i.am, i64 60
+  %.sroa.4.12.extract.trunc = load i32, ptr %7, align 4, !tbaa !60
+  %8 = sub nsw i32 %.sroa.4.12.extract.trunc, %.sroa.0.4.extract.trunc
+  br label %9
+
+9:                                                ; preds = %5, %2
+  %10 = phi i32 [ %4, %2 ], [ %8, %5 ]
+  %11 = mul nsw i32 %10, %i.ad
+  %12 = sdiv i32 %11, %i.aa
+  tail call void @_ZN3gui13CGUIScrollBar11setPageSizeEi(ptr noundef nonnull align 8 dereferenceable(420) %i.am, i32 noundef %12)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.c, %bb.b, %bb.a
+bb.h:                                             ; preds = %9, %bb.c, %bb.b, %bb.a
   ret void
 }
 

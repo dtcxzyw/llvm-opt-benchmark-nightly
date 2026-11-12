@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
-  %i.d = alloca [16 x i8], align 16               ; 7 uses
+  %i.d = alloca [16 x i8], align 16               ; 10 uses
   %i.e = alloca ptr, align 8                      ; 9 uses
   %i.f = alloca i32, align 4                      ; 8 uses
   %i.g = alloca i8, align 1                       ; 7 uses
@@ -607,7 +607,7 @@ bb.gc:                                            ; preds = %bb.ga, %proto_item_
   %i.agq = getelementptr i8, ptr %.sink.i, i64 24
   %i.agr = load i32, ptr %i.agq, align 4
   %i.ags = mul i32 %i.agr, %.0150.i
-  %i.agt = add i32 %i.ags, %i.vr                  ; 5 uses
+  %i.agt = add i32 %i.ags, %i.vr                  ; 3 uses
   %i.agu = load i32, ptr @hf_pdcp_nr_security_count, align 4
   %i.agv = call ptr @proto_tree_add_uint(ptr noundef %.0369, i32 noundef %i.agu, ptr noundef %0, i32 noundef 0, i32 noundef 0, i32 noundef %i.agt) ; 2 uses
   %.not.i192.i = icmp eq ptr %i.agv, null
@@ -627,6 +627,9 @@ bb.ge:                                            ; preds = %bb.gd
   br label %proto_item_set_generated.exit194.i
 
 proto_item_set_generated.exit194.i:               ; preds = %bb.ge, %bb.gd, %bb.gc
+  %.sroa.21588.sroa.0.0.extract.trunc = trunc i32 %i.agt to i24 ; 4 uses
+  %.sroa.21588.sroa.6.0.extract.shift = lshr i32 %i.agt, 24
+  %.sroa.21588.sroa.6.0.extract.trunc = trunc nuw i32 %.sroa.21588.sroa.6.0.extract.shift to i8 ; 4 uses
   %i.ahb = load i16, ptr %i.lp, align 2           ; 2 uses
   %i.ahc = load i32, ptr %i.lr, align 4
   %i.ahd = load ptr, ptr @pdcp_security_key_hash, align 8
@@ -952,7 +955,8 @@ proto_item_set_generated.exit207.i:               ; preds = %bb.hl, %bb.hk, %bb.
   %.sroa.14.1 = phi ptr [ null, %bb.dy ], [ null, %bb.fu ], [ null, %.preheader.i.i ], [ null, %look_up_keys_record.exit.i ], [ %.sroa.14.0, %proto_item_set_generated.exit207.i ], [ null, %.thread516 ], [ null, %bb.ec ], [ null, %.split ], [ null, %bb.dz ], [ null, %bb.ea ], [ null, %bb.gq ] ; 5 uses
   %.sroa.16.4 = phi i1 [ false, %bb.dy ], [ false, %bb.fu ], [ false, %.preheader.i.i ], [ false, %look_up_keys_record.exit.i ], [ %.sroa.16.3, %proto_item_set_generated.exit207.i ], [ false, %.thread516 ], [ false, %bb.ec ], [ false, %.split ], [ false, %bb.dz ], [ false, %bb.ea ], [ false, %bb.gq ] ; 5 uses
   %.sroa.19.1 = phi i1 [ false, %bb.dy ], [ false, %bb.fu ], [ false, %.preheader.i.i ], [ false, %look_up_keys_record.exit.i ], [ %.sroa.19.0, %proto_item_set_generated.exit207.i ], [ false, %.thread516 ], [ false, %bb.ec ], [ false, %.split ], [ false, %bb.dz ], [ false, %bb.ea ], [ false, %bb.gq ] ; 5 uses
-  %.sroa.21588.0 = phi i32 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %i.agt, %.preheader.i.i ], [ %i.agt, %look_up_keys_record.exit.i ], [ %i.agt, %proto_item_set_generated.exit207.i ], [ 0, %.thread516 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ %i.agt, %bb.gq ] ; 5 uses
+  %.sroa.21588.sroa.0.sroa.0.0 = phi i24 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %.sroa.21588.sroa.0.0.extract.trunc, %.preheader.i.i ], [ %.sroa.21588.sroa.0.0.extract.trunc, %look_up_keys_record.exit.i ], [ %.sroa.21588.sroa.0.0.extract.trunc, %proto_item_set_generated.exit207.i ], [ 0, %.thread516 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ %.sroa.21588.sroa.0.0.extract.trunc, %bb.gq ] ; 5 uses
+  %.sroa.21588.sroa.6.0 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %.sroa.21588.sroa.6.0.extract.trunc, %.preheader.i.i ], [ %.sroa.21588.sroa.6.0.extract.trunc, %look_up_keys_record.exit.i ], [ %.sroa.21588.sroa.6.0.extract.trunc, %proto_item_set_generated.exit207.i ], [ 0, %.thread516 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ %.sroa.21588.sroa.6.0.extract.trunc, %bb.gq ] ; 5 uses
   %.sroa.24.0 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %i.agf, %.preheader.i.i ], [ %i.agf, %look_up_keys_record.exit.i ], [ %i.agf, %proto_item_set_generated.exit207.i ], [ 0, %.thread516 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ %i.agf, %bb.gq ] ; 5 uses
   %.sroa.27.0 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ 0, %.preheader.i.i ], [ 0, %look_up_keys_record.exit.i ], [ %i.ali, %proto_item_set_generated.exit207.i ], [ 0, %.thread516 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ 0, %bb.gq ] ; 5 uses
   %.3530.ph = phi i32 [ %.3.ph, %bb.dy ], [ %.3.ph, %bb.fu ], [ %.3.ph, %.preheader.i.i ], [ %.3.ph, %look_up_keys_record.exit.i ], [ %.3.ph, %proto_item_set_generated.exit207.i ], [ %.1500, %.thread516 ], [ %.3.ph, %bb.ec ], [ %.3.ph, %.split ], [ %.3.ph, %bb.dz ], [ %.3.ph, %bb.ea ], [ %.3.ph, %bb.gq ] ; 5 uses
@@ -989,7 +993,8 @@ bb.hp:                                            ; preds = %bb.ho, %bb.hn
   %.sroa.14.2 = phi ptr [ null, %bb.ch ], [ %.sroa.14.1, %bb.hm ], [ %.sroa.14.1, %bb.hn ], [ %.sroa.14.1, %bb.hp ], [ %.sroa.14.1, %bb.ho ], [ %.sroa.14.1, %.critedge421 ]
   %.sroa.16.5 = phi i1 [ false, %bb.ch ], [ %.sroa.16.4, %bb.hm ], [ %.sroa.16.4, %bb.hn ], [ %.sroa.16.4, %bb.hp ], [ %.sroa.16.4, %bb.ho ], [ %.sroa.16.4, %.critedge421 ]
   %.sroa.19.2 = phi i1 [ false, %bb.ch ], [ %.sroa.19.1, %bb.hm ], [ %.sroa.19.1, %bb.hn ], [ %.sroa.19.1, %bb.hp ], [ %.sroa.19.1, %bb.ho ], [ %.sroa.19.1, %.critedge421 ]
-  %.sroa.21588.1 = phi i32 [ 0, %bb.ch ], [ %.sroa.21588.0, %bb.hm ], [ %.sroa.21588.0, %bb.hn ], [ %.sroa.21588.0, %bb.hp ], [ %.sroa.21588.0, %bb.ho ], [ %.sroa.21588.0, %.critedge421 ] ; 2 uses
+  %.sroa.21588.sroa.0.sroa.0.1 = phi i24 [ 0, %bb.ch ], [ %.sroa.21588.sroa.0.sroa.0.0, %bb.hm ], [ %.sroa.21588.sroa.0.sroa.0.0, %bb.hn ], [ %.sroa.21588.sroa.0.sroa.0.0, %bb.hp ], [ %.sroa.21588.sroa.0.sroa.0.0, %bb.ho ], [ %.sroa.21588.sroa.0.sroa.0.0, %.critedge421 ] ; 4 uses
+  %.sroa.21588.sroa.6.1 = phi i8 [ 0, %bb.ch ], [ %.sroa.21588.sroa.6.0, %bb.hm ], [ %.sroa.21588.sroa.6.0, %bb.hn ], [ %.sroa.21588.sroa.6.0, %bb.hp ], [ %.sroa.21588.sroa.6.0, %bb.ho ], [ %.sroa.21588.sroa.6.0, %.critedge421 ] ; 2 uses
   %.sroa.24.1 = phi i8 [ 0, %bb.ch ], [ %.sroa.24.0, %bb.hm ], [ %.sroa.24.0, %bb.hn ], [ %.sroa.24.0, %bb.hp ], [ %.sroa.24.0, %bb.ho ], [ %.sroa.24.0, %.critedge421 ] ; 2 uses
   %.sroa.27.1 = phi i8 [ 0, %bb.ch ], [ %.sroa.27.0, %bb.hm ], [ %.sroa.27.0, %bb.hn ], [ %.sroa.27.0, %bb.hp ], [ %.sroa.27.0, %bb.ho ], [ %.sroa.27.0, %.critedge421 ] ; 2 uses
   %i.alr = phi i1 [ false, %bb.ch ], [ true, %bb.hm ], [ true, %bb.hn ], [ true, %bb.hp ], [ true, %bb.ho ], [ false, %.critedge421 ]
@@ -1077,8 +1082,19 @@ bb.ic:                                            ; preds = %bb.ia, %bb.ib
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, i8 noundef 0, i64 noundef 16, i1 noundef false) #14
-  %4 = call i32 @llvm.bswap.i32(i32 %.sroa.21588.1)
-  store i32 %4, ptr %i.d, align 16
+  store i8 %.sroa.21588.sroa.6.1, ptr %i.d, align 16
+  %.sroa.21588.sroa.0.0.insert.ext = zext i24 %.sroa.21588.sroa.0.sroa.0.1 to i32 ; 2 uses
+  %4 = lshr i32 %.sroa.21588.sroa.0.0.insert.ext, 16
+  %5 = trunc nuw i32 %4 to i8
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
+  store i8 %5, ptr %6, align 1
+  %7 = lshr i32 %.sroa.21588.sroa.0.0.insert.ext, 8
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
+  store i8 %8, ptr %9, align 2
+  %10 = trunc i24 %.sroa.21588.sroa.0.sroa.0.1 to i8
+  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
+  store i8 %10, ptr %11, align 1
   %i.amp = shl i8 %.sroa.24.1, 3
   %i.amq = shl i8 %.sroa.27.1, 2
   %i.amr = add i8 %i.amq, %i.amp
@@ -1219,9 +1235,20 @@ bb.it:                                            ; preds = %bb.ir
   %i.aoo = add i32 %reass.sub, 4
   %i.aop = add i32 %i.aoo, %i.aoh                 ; 2 uses
   %i.aoq = zext i32 %i.aop to i64                 ; 2 uses
-  %i.aor = call noalias ptr @wmem_alloc0(ptr noundef %i.aon, i64 noundef %i.aoq) #15 ; 5 uses
-  %5 = call i32 @llvm.bswap.i32(i32 %.sroa.21588.1)
-  store i32 %5, ptr %i.aor, align 1
+  %i.aor = call noalias ptr @wmem_alloc0(ptr noundef %i.aon, i64 noundef %i.aoq) #15 ; 8 uses
+  store i8 %.sroa.21588.sroa.6.1, ptr %i.aor, align 1
+  %.sroa.21588.sroa.0.0.insert.ext596 = zext i24 %.sroa.21588.sroa.0.sroa.0.1 to i32 ; 2 uses
+  %12 = lshr i32 %.sroa.21588.sroa.0.0.insert.ext596, 16
+  %13 = trunc nuw i32 %12 to i8
+  %14 = getelementptr i8, ptr %i.aor, i64 1
+  store i8 %13, ptr %14, align 1
+  %15 = lshr i32 %.sroa.21588.sroa.0.0.insert.ext596, 8
+  %16 = trunc i32 %15 to i8
+  %17 = getelementptr i8, ptr %i.aor, i64 2
+  store i8 %16, ptr %17, align 1
+  %18 = trunc i24 %.sroa.21588.sroa.0.sroa.0.1 to i8
+  %19 = getelementptr i8, ptr %i.aor, i64 3
+  store i8 %18, ptr %19, align 1
   %i.aos = shl i8 %.sroa.24.1, 3
   %i.aot = shl i8 %.sroa.27.1, 2
   %i.aou = add i8 %i.aot, %i.aos
