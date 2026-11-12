@@ -1,0 +1,572 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 6515548f943d16..2d8c5c0c7f2bb6 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -17,7 +17,9 @@
+ #include "llvm/ADT/STLFunctionalExtras.h"
+ #include "llvm/ADT/SetVector.h"
+ #include "llvm/ADT/SmallVector.h"
++#include "llvm/Analysis/AliasAnalysis.h"
+ #include "llvm/Analysis/ConstantFolding.h"
++#include "llvm/Analysis/Loads.h"
+ #include "llvm/IR/DataLayout.h"
+ #include "llvm/IR/DebugInfo.h"
+ #include "llvm/IR/Instruction.h"
+@@ -1060,6 +1062,82 @@ static Instruction *shrinkInsertElt(CastInst &Trunc,
+   return nullptr;
+ }
+ 
++// Narrowing a load before another load is CSE'd can split one value into
++// different byte values and prevent later vectorization of their uses.
++static bool hasReusableWideLoad(LoadInst &Load, AAResults &AA,
++                                const DataLayout &DL) {
++  Value *Ptr = Load.getPointerOperand();
++  constexpr unsigned ScanLimit = 32;
++  BatchAAResults BatchAA(AA);
++  unsigned UsesScanned = 0;
++  for (User *U : Ptr->users()) {
++    if (++UsesScanned > ScanLimit)
++      return true;
++
++    auto *Other = dyn_cast<LoadInst>(U);
++    if (!Other || Other == &Load || !Other->isSimple() ||
++        Other->getType() != Load.getType() ||
++        Other->getFunction() != Load.getFunction())
++      continue;
++
++    // Conservatively preserve possible reuse across basic blocks.
++    if (Other->getParent() != Load.getParent())
++      return true;
++
++    LoadInst *Earlier = &Load, *Later = Other;
++    if (Other->comesBefore(&Load))
++      std::swap(Earlier, Later);
++
++    // If the loads are too far apart, leave the decision to later passes.
++    unsigned Distance = 1;
++    for (Instruction *I = Later->getPrevNode(); I != Earlier;
++         I = I->getPrevNode())
++      if (++Distance > ScanLimit)
++        return true;
++
++    bool IsLoadCSE = false;
++    if (FindAvailableLoadedValue(Later, BatchAA, &IsLoadCSE, ScanLimit) ==
++            Earlier &&
++        IsLoadCSE)
++      return true;
++  }
++  // Equivalent GEPs may not have been combined when the trunc is visited.
++  // Look for nearby loads at the same base and constant offset, checking any
++  // intervening writes only when such a load is found.
++  APInt Offset(DL.getIndexTypeSizeInBits(Ptr->getType()), 0);
++  Value *Base = Ptr->stripAndAccumulateConstantOffsets(
++      DL, Offset, /*AllowNonInbounds=*/true);
++  auto ScanForReusableLoad = [&](auto It, auto End) {
++    SmallVector<Instruction *, 8> Writes;
++    unsigned Scanned = 0;
++    for (; It != End && Scanned++ < ScanLimit; ++It) {
++      Instruction &I = *It;
++      auto *Other = dyn_cast<LoadInst>(&I);
++      if (Other && Other->isSimple() && Other->getType() == Load.getType() &&
++          Other->getPointerAddressSpace() == Load.getPointerAddressSpace()) {
++        APInt OtherOffset(Offset.getBitWidth(), 0);
++        Value *OtherBase =
++            Other->getPointerOperand()->stripAndAccumulateConstantOffsets(
++                DL, OtherOffset, /*AllowNonInbounds=*/true);
++        if (Base == OtherBase && Offset == OtherOffset) {
++          MemoryLocation Loc = MemoryLocation::get(&Load);
++          for (Instruction *Write : Writes)
++            if (isModSet(BatchAA.getModRefInfo(Write, Loc)))
++              return false;
++          return true;
++        }
++      }
++      if (I.mayWriteToMemory())
++        Writes.push_back(&I);
++    }
++    return false;
++  };
++
++  return ScanForReusableLoad(++Load.getReverseIterator(),
++                             Load.getParent()->rend()) ||
++         ScanForReusableLoad(++Load.getIterator(), Load.getParent()->end());
++}
++
+ Instruction *InstCombinerImpl::visitTrunc(TruncInst &Trunc) {
+   if (Instruction *Result = commonCastTransforms(Trunc))
+     return Result;
+@@ -1069,6 +1147,53 @@ Instruction *InstCombinerImpl::visitTrunc(TruncInst &Trunc) {
+   unsigned DestWidth = DestTy->getScalarSizeInBits();
+   unsigned SrcWidth = SrcTy->getScalarSizeInBits();
+ 
++  // Fold a byte-aligned extraction of the high part of a load into the
++  // constant offset of its GEP. Restrict this to common scalar load types so
++  // we do not create unusual or potentially expensive memory operations.
++  //
++  // The original load must remain at its old position: moving the narrowed
++  // load to the trunc could otherwise cross a write to the same memory.
++  if (DL.isLittleEndian() && SrcTy->isIntegerTy() && DestTy->isIntegerTy() &&
++      (DestWidth == 8 || DestWidth == 16 || DestWidth == 32 ||
++       DestWidth == 64) &&
++      SrcWidth % 8 == 0 && shouldChangeType(SrcTy, DestTy)) {
++    const APInt *ShiftAmt;
++    Value *Ptr;
++    if (match(Src, m_OneUse(m_LShr(m_OneUse(m_Load(m_Value(Ptr))),
++                                   m_APInt(ShiftAmt)))) &&
++        *ShiftAmt == SrcWidth - DestWidth) {
++      auto *Load = cast<LoadInst>(cast<Instruction>(Src)->getOperand(0));
++      auto *GEP = dyn_cast<GEPOperator>(Ptr);
++      unsigned AS = Load->getPointerAddressSpace();
++      // Be conservative for address spaces where GEP arithmetic uses fewer
++      // bits than the pointer representation.
++      if (Load->isSimple() && GEP &&
++          DL.getIndexSizeInBits(AS) == DL.getPointerSizeInBits(AS)) {
++        APInt Offset(DL.getIndexTypeSizeInBits(Ptr->getType()), 0);
++        if (GEP->accumulateConstantOffset(DL, Offset) &&
++            !hasReusableWideLoad(*Load, *AA, DL)) {
++          uint64_t ByteOffset = (SrcWidth - DestWidth) / 8;
++          Offset += ByteOffset;
++          IRBuilderBase::InsertPointGuard Guard(Builder);
++          Builder.SetInsertPoint(Load);
++          Value *NewPtr = Builder.CreatePtrAdd(GEP->getPointerOperand(),
++                                               Builder.getInt(Offset));
++          auto *NewLoad = Builder.CreateAlignedLoad(
++              DestTy, NewPtr, commonAlignment(Load->getAlign(), ByteOffset));
++          AAMDNodes AATags = Load->getAAMetadata();
++          NewLoad->setAAMetadata(
++              AATags.adjustForAccess(ByteOffset, DestTy, DL));
++          NewLoad->copyMetadata(*Load,
++                                {LLVMContext::MD_invariant_load,
++                                 LLVMContext::MD_nontemporal,
++                                 LLVMContext::MD_mem_parallel_loop_access,
++                                 LLVMContext::MD_access_group});
++          return replaceInstUsesWith(Trunc, NewLoad);
++        }
++      }
++    }
++  }
++
+   // Attempt to truncate the entire input expression tree to the destination
+   // type.   Only do this if the dest type is a simple type, don't convert the
+   // expression tree to something weird like i93 unless the source is also
+diff --git a/llvm/test/Transforms/InstCombine/trunc-lshr-load.ll b/llvm/test/Transforms/InstCombine/trunc-lshr-load.ll
+new file mode 100644
+index 00000000000000..e9dd973a41db81
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/trunc-lshr-load.ll
+@@ -0,0 +1,415 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=instcombine -S -data-layout="e-p:64:64-p1:64:64-p2:64:64:64:32-n8:16:32:64" < %s | FileCheck %s --check-prefixes=CHECK,LE
++; RUN: opt -passes=instcombine -S -data-layout="E-p:64:64-p1:64:64-p2:64:64:64:32-n8:16:32:64" < %s | FileCheck %s --check-prefixes=CHECK,BE
++
++define i32 @issue_example(ptr %base) {
++; LE-LABEL: define i32 @issue_example(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 68
++; LE-NEXT:    [[R:%.*]] = load i32, ptr [[TMP1]], align 4
++; LE-NEXT:    ret i32 [[R]]
++;
++; BE-LABEL: define i32 @issue_example(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr inbounds nuw i8, ptr [[BASE]], i64 64
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; BE-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; BE-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr inbounds i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i16 @i64_to_i16_negative_offset(ptr %base) {
++; LE-LABEL: define i16 @i64_to_i16_negative_offset(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 -10
++; LE-NEXT:    [[R:%.*]] = load i16, ptr [[TMP1]], align 2
++; LE-NEXT:    ret i16 [[R]]
++;
++; BE-LABEL: define i16 @i64_to_i16_negative_offset(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 -16
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 16
++; BE-NEXT:    [[S:%.*]] = lshr i64 [[V]], 48
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i16
++; BE-NEXT:    ret i16 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 -16
++  %v = load i64, ptr %p, align 16
++  %s = lshr i64 %v, 48
++  %r = trunc i64 %s to i16
++  ret i16 %r
++}
++
++define i8 @addrspace_and_typed_gep(ptr addrspace(1) %base) {
++; LE-LABEL: define i8 @addrspace_and_typed_gep(
++; LE-SAME: ptr addrspace(1) [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr addrspace(1) [[BASE]], i64 19
++; LE-NEXT:    [[R:%.*]] = load i8, ptr addrspace(1) [[TMP1]], align 1
++; LE-NEXT:    ret i8 [[R]]
++;
++; BE-LABEL: define i8 @addrspace_and_typed_gep(
++; BE-SAME: ptr addrspace(1) [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr addrspace(1) [[BASE]], i64 16
++; BE-NEXT:    [[V:%.*]] = load i32, ptr addrspace(1) [[P]], align 4
++; BE-NEXT:    [[S:%.*]] = lshr i32 [[V]], 24
++; BE-NEXT:    [[R:%.*]] = trunc nuw i32 [[S]] to i8
++; BE-NEXT:    ret i8 [[R]]
++;
++  %p = getelementptr i32, ptr addrspace(1) %base, i64 4
++  %v = load i32, ptr addrspace(1) %p, align 4
++  %s = lshr i32 %v, 24
++  %r = trunc i32 %s to i8
++  ret i8 %r
++}
++
++define i32 @aggregate_gep(ptr %base) {
++; LE-LABEL: define i32 @aggregate_gep(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 28
++; LE-NEXT:    [[R:%.*]] = load i32, ptr [[TMP1]], align 1
++; LE-NEXT:    ret i32 [[R]]
++;
++; BE-LABEL: define i32 @aggregate_gep(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 24
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 1
++; BE-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; BE-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr { i64, [4 x i64] }, ptr %base, i64 0, i32 1, i64 2
++  %v = load i64, ptr %p, align 1
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i64 @i128_to_i64(ptr %base) {
++; LE-LABEL: define i64 @i128_to_i64(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 16
++; LE-NEXT:    [[R:%.*]] = load i64, ptr [[TMP1]], align 8
++; LE-NEXT:    ret i64 [[R]]
++;
++; BE-LABEL: define i64 @i128_to_i64(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 8
++; BE-NEXT:    [[V:%.*]] = load i128, ptr [[P]], align 16
++; BE-NEXT:    [[S:%.*]] = lshr i128 [[V]], 64
++; BE-NEXT:    [[R:%.*]] = trunc nuw i128 [[S]] to i64
++; BE-NEXT:    ret i64 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 8
++  %v = load i128, ptr %p, align 16
++  %s = lshr i128 %v, 64
++  %r = trunc i128 %s to i64
++  ret i64 %r
++}
++
++define i32 @exact_shift(ptr %base) {
++; LE-LABEL: define i32 @exact_shift(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 68
++; LE-NEXT:    [[R:%.*]] = load i32, ptr [[TMP1]], align 4
++; LE-NEXT:    ret i32 [[R]]
++;
++; BE-LABEL: define i32 @exact_shift(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; BE-NEXT:    [[S:%.*]] = lshr exact i64 [[V]], 32
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; BE-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  %s = lshr exact i64 %v, 32
++  %r = trunc nuw i64 %s to i32
++  ret i32 %r
++}
++
++; The narrow load must remain at the original load's position.
++define i32 @intervening_store(ptr %base) {
++; LE-LABEL: define i32 @intervening_store(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 68
++; LE-NEXT:    [[R:%.*]] = load i32, ptr [[TMP1]], align 4
++; LE-NEXT:    store i64 0, ptr [[P]], align 8
++; LE-NEXT:    ret i32 [[R]]
++;
++; BE-LABEL: define i32 @intervening_store(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; BE-NEXT:    store i64 0, ptr [[P]], align 8
++; BE-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; BE-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  store i64 0, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @extra_gep_use(ptr %base, ptr %out) {
++; LE-LABEL: define i32 @extra_gep_use(
++; LE-SAME: ptr [[BASE:%.*]], ptr [[OUT:%.*]]) {
++; LE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; LE-NEXT:    store ptr [[P]], ptr [[OUT]], align 8
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 68
++; LE-NEXT:    [[R:%.*]] = load i32, ptr [[TMP1]], align 4
++; LE-NEXT:    ret i32 [[R]]
++;
++; BE-LABEL: define i32 @extra_gep_use(
++; BE-SAME: ptr [[BASE:%.*]], ptr [[OUT:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; BE-NEXT:    store ptr [[P]], ptr [[OUT]], align 8
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; BE-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; BE-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  store ptr %p, ptr %out
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @load_metadata(ptr %base) {
++; LE-LABEL: define i32 @load_metadata(
++; LE-SAME: ptr [[BASE:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[BASE]], i64 68
++; LE-NEXT:    [[R:%.*]] = load i32, ptr [[TMP1]], align 4, !tbaa [[SCALAR_TBAA0:![0-9]+]], !invariant.load [[META3:![0-9]+]], !alias.scope [[META4:![0-9]+]], !noalias [[META7:![0-9]+]], !nontemporal [[META9:![0-9]+]], !llvm.access.group [[ACC_GRP10:![0-9]+]]
++; LE-NEXT:    ret i32 [[R]]
++;
++; BE-LABEL: define i32 @load_metadata(
++; BE-SAME: ptr [[BASE:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; BE-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8, !tbaa [[SCALAR_TBAA0:![0-9]+]], !range [[RNG3:![0-9]+]], !invariant.load [[META4:![0-9]+]], !alias.scope [[META5:![0-9]+]], !noalias [[META8:![0-9]+]], !nontemporal [[META10:![0-9]+]], !llvm.access.group [[ACC_GRP11:![0-9]+]], !noundef [[META4]]
++; BE-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; BE-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; BE-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8, !tbaa !2, !alias.scope !3, !noalias !4, !nontemporal !5, !invariant.load !6, !noundef !6, !range !7, !llvm.access.group !8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++; Negative cases.
++define i32 @volatile_load(ptr %base) {
++; CHECK-LABEL: define i32 @volatile_load(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load volatile i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load volatile i64, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @atomic_load(ptr %base) {
++; CHECK-LABEL: define i32 @atomic_load(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load atomic i64, ptr [[P]] monotonic, align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load atomic i64, ptr %p monotonic, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++declare void @use_i64(i64)
++
++define i32 @extra_load_use(ptr %base) {
++; CHECK-LABEL: define i32 @extra_load_use(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    call void @use_i64(i64 [[V]])
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  call void @use_i64(i64 %v)
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @extra_shift_use(ptr %base) {
++; CHECK-LABEL: define i32 @extra_shift_use(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    call void @use_i64(i64 [[S]])
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  call void @use_i64(i64 %s)
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @non_byte_shift(ptr %base) {
++; CHECK-LABEL: define i32 @non_byte_shift(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 31
++; CHECK-NEXT:    [[R:%.*]] = trunc i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 31
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @middle_bytes(ptr %base) {
++; CHECK-LABEL: define i32 @middle_bytes(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 16
++; CHECK-NEXT:    [[R:%.*]] = trunc i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 16
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i24 @unnatural_result_width(ptr %base) {
++; CHECK-LABEL: define i24 @unnatural_result_width(
++; CHECK-SAME: ptr [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 64
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 40
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i24
++; CHECK-NEXT:    ret i24 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i64 64
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 40
++  %r = trunc i64 %s to i24
++  ret i24 %r
++}
++
++define i32 @dynamic_gep(ptr %base, i32 %offset) {
++; CHECK-LABEL: define i32 @dynamic_gep(
++; CHECK-SAME: ptr [[BASE:%.*]], i32 [[OFFSET:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = sext i32 [[OFFSET]] to i64
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[TMP1]]
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr %base, i32 %offset
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @no_gep(ptr %p) {
++; CHECK-LABEL: define i32 @no_gep(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %v = load i64, ptr %p, align 8
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++define i32 @narrow_pointer_index(ptr addrspace(2) %base) {
++; CHECK-LABEL: define i32 @narrow_pointer_index(
++; CHECK-SAME: ptr addrspace(2) [[BASE:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr i8, ptr addrspace(2) [[BASE]], i32 64
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr addrspace(2) [[P]], align 1
++; CHECK-NEXT:    [[S:%.*]] = lshr i64 [[V]], 32
++; CHECK-NEXT:    [[R:%.*]] = trunc nuw i64 [[S]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %p = getelementptr i8, ptr addrspace(2) %base, i32 64
++  %v = load i64, ptr addrspace(2) %p, align 1
++  %s = lshr i64 %v, 32
++  %r = trunc i64 %s to i32
++  ret i32 %r
++}
++
++!0 = !{!"root"}
++!1 = !{!"scalar", !0, i64 0}
++!2 = !{!1, !1, i64 0}
++!3 = !{!9}
++!4 = !{!10}
++!5 = !{i32 1}
++!6 = !{}
++!7 = !{i64 1, i64 -1}
++!8 = distinct !{}
++!9 = distinct !{!9, !11, !"scope"}
++!10 = distinct !{!10, !11, !"other"}
++!11 = distinct !{!11, i1 false, !"domain"}
++;.
++; LE: [[SCALAR_TBAA0]] = !{[[META1:![0-9]+]], [[META1]], i64 0}
++; LE: [[META1]] = !{!"scalar", [[META2:![0-9]+]], i64 0}
++; LE: [[META2]] = !{!"root"}
++; LE: [[META3]] = !{}
++; LE: [[META4]] = !{[[META5:![0-9]+]]}
++; LE: [[META5]] = distinct !{[[META5]], [[META6:![0-9]+]], !"scope"}
++; LE: [[META6]] = distinct !{[[META6]], i1 false, !"domain"}
++; LE: [[META7]] = !{[[META8:![0-9]+]]}
++; LE: [[META8]] = distinct !{[[META8]], [[META6]], !"other"}
++; LE: [[META9]] = !{i32 1}
++; LE: [[ACC_GRP10]] = distinct !{}
++;.
++; BE: [[SCALAR_TBAA0]] = !{[[META1:![0-9]+]], [[META1]], i64 0}
++; BE: [[META1]] = !{!"scalar", [[META2:![0-9]+]], i64 0}
++; BE: [[META2]] = !{!"root"}
++; BE: [[RNG3]] = !{i64 1, i64 -1}
++; BE: [[META4]] = !{}
++; BE: [[META5]] = !{[[META6:![0-9]+]]}
++; BE: [[META6]] = distinct !{[[META6]], [[META7:![0-9]+]], !"scope"}
++; BE: [[META7]] = distinct !{[[META7]], i1 false, !"domain"}
++; BE: [[META8]] = !{[[META9:![0-9]+]]}
++; BE: [[META9]] = distinct !{[[META9]], [[META7]], !"other"}
++; BE: [[META10]] = !{i32 1}
++; BE: [[ACC_GRP11]] = distinct !{}
++;.
