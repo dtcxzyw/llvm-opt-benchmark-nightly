@@ -1,0 +1,153 @@
+diff --git a/llvm/lib/Transforms/Scalar/GVNHoist.cpp b/llvm/lib/Transforms/Scalar/GVNHoist.cpp
+index 3647239633df1..560e18efd6add 100644
+--- a/llvm/lib/Transforms/Scalar/GVNHoist.cpp
++++ b/llvm/lib/Transforms/Scalar/GVNHoist.cpp
+@@ -250,7 +250,7 @@ class GVNHoist {
+   DenseSet<const BasicBlock *> HoistBarrier;
+   SmallVector<BasicBlock *, 32> IDFBlocks;
+   unsigned NumFuncArgs;
+-  const bool HoistingGeps = false;
++  const bool HoistingGeps = true;
+ 
+   enum InsKind { Unknown, Scalar, Load, Store };
+ 
+diff --git a/llvm/test/Transforms/GVNHoist/hoist-md.ll b/llvm/test/Transforms/GVNHoist/hoist-md.ll
+index 9e51e845448fc..c9068396ebc52 100644
+--- a/llvm/test/Transforms/GVNHoist/hoist-md.ll
++++ b/llvm/test/Transforms/GVNHoist/hoist-md.ll
+@@ -39,10 +39,8 @@ define void @test2(i1 %b, ptr %x) {
+ ; CHECK-NEXT:    store i32 2, ptr [[TMP0]], align 4, !tbaa [[CHAR_TBAA0]]
+ ; CHECK-NEXT:    br i1 [[B]], label %[[IF_THEN:.*]], label %[[IF_ELSE:.*]]
+ ; CHECK:       [[IF_THEN]]:
+-; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr inbounds i32, ptr [[X]], i64 1
+ ; CHECK-NEXT:    br label %[[IF_END:.*]]
+ ; CHECK:       [[IF_ELSE]]:
+-; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr inbounds i32, ptr [[X]], i64 1
+ ; CHECK-NEXT:    br label %[[IF_END]]
+ ; CHECK:       [[IF_END]]:
+ ; CHECK-NEXT:    ret void
+@@ -72,10 +70,8 @@ define void @test3(i1 %b, ptr %x) {
+ ; CHECK-NEXT:    store i32 2, ptr [[TMP0]], align 4, !tbaa [[CHAR_TBAA0]]
+ ; CHECK-NEXT:    br i1 [[B]], label %[[IF_THEN:.*]], label %[[IF_ELSE:.*]]
+ ; CHECK:       [[IF_THEN]]:
+-; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr inbounds i32, ptr [[X]], i64 1
+ ; CHECK-NEXT:    br label %[[IF_END:.*]]
+ ; CHECK:       [[IF_ELSE]]:
+-; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr i32, ptr [[X]], i64 1
+ ; CHECK-NEXT:    br label %[[IF_END]]
+ ; CHECK:       [[IF_END]]:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/GVNHoist/hoist-merge-geps.ll b/llvm/test/Transforms/GVNHoist/hoist-merge-geps.ll
+index b3b5916c7f26f..c682984758313 100644
+--- a/llvm/test/Transforms/GVNHoist/hoist-merge-geps.ll
++++ b/llvm/test/Transforms/GVNHoist/hoist-merge-geps.ll
+@@ -1,10 +1,9 @@
+ ; RUN: opt -S -passes=gvn-hoist < %s | FileCheck %s 
+ 
+ define dso_local void @func(i32 noundef %a, ptr noundef %b) !dbg !10 {
+-; Check the merged debug location of hoisted GEP
++; Check that the hoisted GEP does not keep the debug location of either branch
+ ; CHECK: entry
+-; CHECK: %{{[a-zA-Z0-9_]*}} = getelementptr {{.*}} !dbg [[MERGED_DL:![0-9]+]]
+-; CHECK: [[MERGED_DL]] = !DILocation(line: 0, scope: !{{[0-9]+}})
++; CHECK: %{{[a-zA-Z0-9_]*}} = getelementptr inbounds i32, ptr %b, i64 1{{$}}
+ entry:
+   tail call void @llvm.dbg.value(metadata i32 %a, metadata !16, metadata !DIExpression()), !dbg !17
+   tail call void @llvm.dbg.value(metadata ptr %b, metadata !18, metadata !DIExpression()), !dbg !17
+diff --git a/llvm/test/Transforms/GVNHoist/hoist-pr28606.ll b/llvm/test/Transforms/GVNHoist/hoist-pr28606.ll
+index ed14ad4e039d5..944e16e967d4b 100644
+--- a/llvm/test/Transforms/GVNHoist/hoist-pr28606.ll
++++ b/llvm/test/Transforms/GVNHoist/hoist-pr28606.ll
+@@ -21,10 +21,8 @@ define void @test(i1 %b) {
+ ; CHECK-NEXT:    store ptr [[X]], ptr [[TMP0]], align 4
+ ; CHECK-NEXT:    br i1 [[B:%.*]], label [[TRUE:%.*]], label [[FALSE:%.*]]
+ ; CHECK:       true:
+-; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds [[STRUCT_S]], ptr [[ARGMEM]], i32 0, i32 1
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       false:
+-; CHECK-NEXT:    [[P2:%.*]] = getelementptr inbounds [[STRUCT_S]], ptr [[ARGMEM]], i32 0, i32 1
+ ; CHECK-NEXT:    br label [[EXIT]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    call void @f(ptr inalloca(<{ [[STRUCT_S]] }>) [[ARGMEM]])
+diff --git a/llvm/test/Transforms/GVNHoist/hoist.ll b/llvm/test/Transforms/GVNHoist/hoist.ll
+index 74fba8459c7d3..2c4febaa361fa 100644
+--- a/llvm/test/Transforms/GVNHoist/hoist.ll
++++ b/llvm/test/Transforms/GVNHoist/hoist.ll
+@@ -63,7 +63,7 @@ define float @readsAndScalarsHoisting(float %d, ptr %min, ptr %max, ptr %a) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = fcmp oge float [[DIV]], 0.000000e+00
+ ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr float, ptr [[MIN:%.*]], i32 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load float, ptr [[TMP0]], align 4
+-; CHECK-NEXT:    [[TMP2:%.*]] = load float, ptr [[A:%.*]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = load float, ptr [[TMP0:%.*]], align 4
+ ; CHECK-NEXT:    [[TMP3:%.*]] = load float, ptr [[MAX:%.*]], align 4
+ ; CHECK-NEXT:    [[SUB:%.*]] = fsub float [[TMP1]], [[TMP2]]
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul float [[SUB]], [[DIV]]
+@@ -71,10 +71,8 @@ define float @readsAndScalarsHoisting(float %d, ptr %min, ptr %max, ptr %a) {
+ ; CHECK-NEXT:    [[MUL2:%.*]] = fmul float [[SUB1]], [[DIV]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[IF_THEN:%.*]], label [[IF_ELSE:%.*]]
+ ; CHECK:       if.then:
+-; CHECK-NEXT:    [[A:%.*]] = getelementptr float, ptr [[MIN]], i32 1
+ ; CHECK-NEXT:    br label [[IF_END:%.*]]
+ ; CHECK:       if.else:
+-; CHECK-NEXT:    [[B:%.*]] = getelementptr float, ptr [[MIN]], i32 1
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+ ; CHECK-NEXT:    [[TMAX_0:%.*]] = phi float [ [[MUL2]], [[IF_THEN]] ], [ [[MUL]], [[IF_ELSE]] ]
+@@ -740,9 +738,8 @@ define void @hoistStores(ptr %s, ptr %coord, i1 zeroext %delta) {
+ ; CHECK-NEXT:    [[TOBOOL:%.*]] = trunc i8 [[FROMBOOL]] to i1
+ ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds [[STRUCT_FOO:%.*]], ptr [[S:%.*]], i32 0, i32 0
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load ptr, ptr [[TMP0]], align 8
+-; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds [[STRUCT_FOO]], ptr [[S]], i32 0, i32 0
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds i16, ptr [[TMP1]], i32 1
+-; CHECK-NEXT:    store ptr [[TMP3]], ptr [[TMP2]], align 8
++; CHECK-NEXT:    store ptr [[TMP3]], ptr [[TMP0]], align 8
+ ; CHECK-NEXT:    [[TMP4:%.*]] = load i16, ptr [[TMP1]], align 2
+ ; CHECK-NEXT:    [[TMP5:%.*]] = load i32, ptr [[COORD:%.*]], align 4
+ ; CHECK-NEXT:    [[CONV:%.*]] = zext i16 [[TMP4]] to i32
+@@ -750,15 +747,11 @@ define void @hoistStores(ptr %s, ptr %coord, i1 zeroext %delta) {
+ ; CHECK-NEXT:    store i32 [[ADD]], ptr [[COORD]], align 4
+ ; CHECK-NEXT:    br i1 [[TOBOOL]], label [[IF_THEN:%.*]], label [[IF_ELSE:%.*]]
+ ; CHECK:       if.then:
+-; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds [[STRUCT_FOO]], ptr [[S]], i32 0, i32 0
+-; CHECK-NEXT:    [[INCDEC_PTR:%.*]] = getelementptr inbounds i16, ptr [[TMP1]], i32 1
+ ; CHECK-NEXT:    br label [[IF_END:%.*]]
+ ; CHECK:       if.else:
+-; CHECK-NEXT:    [[P1:%.*]] = getelementptr inbounds [[STRUCT_FOO]], ptr [[S]], i32 0, i32 0
+-; CHECK-NEXT:    [[INCDEC_PTR2:%.*]] = getelementptr inbounds i16, ptr [[TMP1]], i32 1
+-; CHECK-NEXT:    [[TMP6:%.*]] = load ptr, ptr [[P1]], align 8
++; CHECK-NEXT:    [[TMP6:%.*]] = load ptr, ptr [[TMP0]], align 8
+ ; CHECK-NEXT:    [[INCDEC_PTR6:%.*]] = getelementptr inbounds i16, ptr [[TMP6]], i32 1
+-; CHECK-NEXT:    store ptr [[INCDEC_PTR6]], ptr [[P1]], align 8
++; CHECK-NEXT:    store ptr [[INCDEC_PTR6]], ptr [[TMP0]], align 8
+ ; CHECK-NEXT:    [[TMP7:%.*]] = load i16, ptr [[TMP6]], align 2
+ ; CHECK-NEXT:    [[CONV7:%.*]] = zext i16 [[TMP7]] to i32
+ ; CHECK-NEXT:    [[SHL:%.*]] = shl i32 [[CONV7]], 8
+diff --git a/llvm/test/Transforms/GVNHoist/ld_hoist1.ll b/llvm/test/Transforms/GVNHoist/ld_hoist1.ll
+index 9e2661a42e3a9..6f700d350daf5 100644
+--- a/llvm/test/Transforms/GVNHoist/ld_hoist1.ll
++++ b/llvm/test/Transforms/GVNHoist/ld_hoist1.ll
+@@ -15,8 +15,8 @@ for.body.lr.ph:                                   ; preds = %entry
+ 
+ ; CHECK-LABEL: for.body
+ ; CHECK: load
+-; CHECK:  %2 = getelementptr inbounds i32, ptr %in, i64 %indvars.iv
+-; CHECK:  %3 = load i32, ptr %2, align 4
++; CHECK:  [[GEP:%.*]] = getelementptr inbounds i32, ptr %in, i64 %indvars.iv
++; CHECK:  {{%.*}} = load i32, ptr [[GEP]], align 4
+ 
+ for.body:                                         ; preds = %for.body.lr.ph, %for.inc
+   %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.inc ]
+diff --git a/llvm/test/Transforms/GVNHoist/pr38807.ll b/llvm/test/Transforms/GVNHoist/pr38807.ll
+index e6cc50d98cde6..2d2c0fa73b6ed 100644
+--- a/llvm/test/Transforms/GVNHoist/pr38807.ll
++++ b/llvm/test/Transforms/GVNHoist/pr38807.ll
+@@ -15,8 +15,8 @@ bb0:
+ 
+ ;CHECK: bb1:
+ ;CHECK:   %call264 = call zeroext i1 @bar
+-;CHECK:   store i32 %call.idx.val.i, ptr %arg
+ ;CHECK:   %0 = getelementptr inbounds %S, ptr %arg, i64 0, i32 0, i32 1
++;CHECK:   store i32 %call.idx.val.i, ptr %arg
+ ;CHECK:   store i64 undef, ptr %0
+ ;CHECK:   br i1 %call264, label %bb2, label %bb3
+ 
