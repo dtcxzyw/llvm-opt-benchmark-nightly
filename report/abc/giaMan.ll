@@ -205,36 +205,37 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %i.a, i64 4
   %.val = load i32, ptr %i.e, align 4, !tbaa !47
-  %i.f = tail call ptr @Gia_ManCountSymbsAll(ptr noundef nonnull %i.a) ; 4 uses
+  %i.f = tail call ptr @Gia_ManCountSymbsAll(ptr noundef nonnull %i.a) ; 3 uses
   %i.g = getelementptr i8, ptr %i.f, i64 4
   %.val50 = load i32, ptr %i.g, align 4, !tbaa !40 ; 2 uses
+  %3 = sdiv i32 %.val50, 2                        ; 2 uses
   %i.h = icmp sgt i32 %.val50, 1
+  %4 = getelementptr i8, ptr %i.f, i64 8
+  %.val55 = load ptr, ptr %4, align 8, !tbaa !42  ; 4 uses
   br i1 %i.h, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.d
-  %3 = lshr i32 %.val50, 1                        ; 2 uses
-  %4 = getelementptr i8, ptr %i.f, i64 8
-  %.val55 = load ptr, ptr %4, align 8, !tbaa !42  ; 3 uses
   %i.i = getelementptr i8, ptr %i.a, i64 8
-  %5 = zext nneg i32 %3 to i64                    ; 2 uses
-  %wide.trip.count = zext nneg i32 %3 to i64
+  %wide.trip.count = zext nneg i32 %3 to i64      ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %Gia_ManPrintOneName.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Gia_ManPrintOneName.exit ] ; 4 uses
   %.057 = phi i32 [ 1, %.lr.ph ], [ %.1, %Gia_ManPrintOneName.exit ] ; 2 uses
-  %6 = xor i64 %indvars.iv, -1
-  %7 = add nsw i64 %5, %6
-  %.idx = shl i64 %7, 3
-  %8 = getelementptr i8, ptr %.val55, i64 %.idx   ; 2 uses
-  %i.j = load i32, ptr %8, align 4, !tbaa !75     ; 2 uses
-  %i.k = getelementptr i8, ptr %8, i64 4
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  %6 = xor i32 %5, -1
+  %7 = add nsw i32 %3, %6
+  %8 = shl nuw nsw i32 %7, 1
+  %9 = zext nneg i32 %8 to i64
+  %10 = getelementptr [4 x i8], ptr %.val55, i64 %9 ; 2 uses
+  %i.j = load i32, ptr %10, align 4, !tbaa !75    ; 2 uses
+  %i.k = getelementptr i8, ptr %10, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !75   ; 2 uses
   %.not58 = icmp eq i64 %indvars.iv, 0
   br i1 %.not58, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = sub nuw nsw i64 %5, %indvars.iv
+  %i.m = sub nuw nsw i64 %wide.trip.count, %indvars.iv
   %.idx62 = shl nuw nsw i64 %i.m, 3
   %i.n = getelementptr inbounds nuw i8, ptr %.val55, i64 %.idx62
   %i.o = load i32, ptr %i.n, align 4, !tbaa !75
@@ -283,14 +284,11 @@ Gia_ManPrintOneName.exit:                         ; preds = %.lr.ph.i, %bb.j, %b
   br i1 %exitcond.not, label %._crit_edge.thread, label %bb.e, !llvm.loop !296
 
 ._crit_edge:                                      ; preds = %bb.d
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !42 ; 2 uses
-  %.not.i = icmp eq ptr %.pre, null
+  %.not.i = icmp eq ptr %.val55, null
   br i1 %.not.i, label %Vec_IntFree.exit, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %Gia_ManPrintOneName.exit, %._crit_edge
-  %9 = phi ptr [ %.pre, %._crit_edge ], [ %.val55, %Gia_ManPrintOneName.exit ]
-  tail call void @free(ptr noundef nonnull %9) #29
+  tail call void @free(ptr noundef nonnull %.val55) #29
   br label %Vec_IntFree.exit
 
 Vec_IntFree.exit:                                 ; preds = %._crit_edge, %._crit_edge.thread

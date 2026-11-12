@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   %i.at = call ptr @proto_tree_add_item_ret_uint16(ptr noundef %i.an, i32 noundef %i.as, ptr noundef %0, i32 noundef 2, i32 noundef 2, i32 noundef -2147483648, ptr noundef nonnull %i.f) ; 0 uses
   %i.au = load i16, ptr %i.f, align 2             ; 2 uses
   %i.av = icmp ult i16 %i.au, 8
-  br i1 %i.av, label %switch.lookup, label %dissect_ttl_dest_addr_ret.exit
+  br i1 %i.av, label %switch.lookup116, label %dissect_ttl_dest_addr_ret.exit
 
 bb.i:                                             ; preds = %bb.g
   %i.aw = load i32, ptr @hf_ttl_trace_data_entry_dest_addr_device_tap, align 4
@@ -211,20 +211,16 @@ bb.i:                                             ; preds = %bb.g
   %i.az = icmp ult i16 %i.ay, 9
   br i1 %i.az, label %switch.lookup116, label %dissect_ttl_dest_addr_ret.exit
 
-switch.lookup:                                    ; preds = %bb.h
-  %4 = zext nneg i16 %i.au to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_ttl_common, i64 %4
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %dissect_ttl_dest_addr_ret.exit
-
-switch.lookup116:                                 ; preds = %bb.i
-  %i.ba = zext nneg i16 %i.ay to i64
-  %switch.gep117 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_ttl_common.2, i64 %i.ba
+switch.lookup116:                                 ; preds = %bb.i, %bb.h
+  %.sink126 = phi i16 [ %i.au, %bb.h ], [ %i.ay, %bb.i ]
+  %switch.table.dissect_ttl_common.2.sink = phi ptr [ @switch.table.dissect_ttl_common, %bb.h ], [ @switch.table.dissect_ttl_common.2, %bb.i ]
+  %i.ba = zext nneg i16 %.sink126 to i64
+  %switch.gep117 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.dissect_ttl_common.2.sink, i64 %i.ba
   %switch.load118 = load ptr, ptr %switch.gep117, align 8
   br label %dissect_ttl_dest_addr_ret.exit
 
-dissect_ttl_dest_addr_ret.exit:                   ; preds = %bb.h, %bb.i, %switch.lookup116, %switch.lookup
-  %hf_ttl_trace_data_entry_dest_addr_function_unknown.sink.i = phi ptr [ %switch.load118, %switch.lookup116 ], [ %switch.load, %switch.lookup ], [ @hf_ttl_trace_data_entry_dest_addr_function_unknown, %bb.i ], [ @hf_ttl_trace_data_entry_dest_addr_function_unknown, %bb.h ]
+dissect_ttl_dest_addr_ret.exit:                   ; preds = %switch.lookup116, %bb.h, %bb.i
+  %hf_ttl_trace_data_entry_dest_addr_function_unknown.sink.i = phi ptr [ @hf_ttl_trace_data_entry_dest_addr_function_unknown, %bb.i ], [ @hf_ttl_trace_data_entry_dest_addr_function_unknown, %bb.h ], [ %switch.load118, %switch.lookup116 ]
   %i.bb = load i32, ptr %hf_ttl_trace_data_entry_dest_addr_function_unknown.sink.i, align 4
   %i.bc = call ptr @proto_tree_add_item(ptr noundef %i.an, i32 noundef %i.bb, ptr noundef %0, i32 noundef 2, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
@@ -278,7 +274,7 @@ bb.n:                                             ; preds = %proto_item_set_hidd
   %i.by = call ptr @proto_tree_add_item_ret_uint16(ptr noundef %i.bs, i32 noundef %i.bx, ptr noundef %0, i32 noundef 4, i32 noundef 2, i32 noundef -2147483648, ptr noundef nonnull %i.c) ; 0 uses
   %i.bz = load i16, ptr %i.c, align 2             ; 2 uses
   %i.ca = icmp ult i16 %i.bz, 8
-  br i1 %i.ca, label %switch.lookup119, label %dissect_ttl_src_addr_ret.exit
+  br i1 %i.ca, label %switch.lookup122, label %dissect_ttl_src_addr_ret.exit
 
 bb.o:                                             ; preds = %proto_item_set_hidden.exit
   %i.cb = load i32, ptr @hf_ttl_trace_data_entry_src_addr_device_tap, align 4
@@ -287,20 +283,16 @@ bb.o:                                             ; preds = %proto_item_set_hidd
   %i.ce = icmp ult i16 %i.cd, 9
   br i1 %i.ce, label %switch.lookup122, label %dissect_ttl_src_addr_ret.exit
 
-switch.lookup119:                                 ; preds = %bb.n
-  %5 = zext nneg i16 %i.bz to i64
-  %switch.gep120 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_ttl_common.3, i64 %5
-  %switch.load121 = load ptr, ptr %switch.gep120, align 8
-  br label %dissect_ttl_src_addr_ret.exit
-
-switch.lookup122:                                 ; preds = %bb.o
-  %i.cf = zext nneg i16 %i.cd to i64
-  %switch.gep123 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_ttl_common.4, i64 %i.cf
+switch.lookup122:                                 ; preds = %bb.o, %bb.n
+  %.sink125 = phi i16 [ %i.bz, %bb.n ], [ %i.cd, %bb.o ]
+  %switch.table.dissect_ttl_common.4.sink = phi ptr [ @switch.table.dissect_ttl_common.3, %bb.n ], [ @switch.table.dissect_ttl_common.4, %bb.o ]
+  %i.cf = zext nneg i16 %.sink125 to i64
+  %switch.gep123 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.dissect_ttl_common.4.sink, i64 %i.cf
   %switch.load124 = load ptr, ptr %switch.gep123, align 8
   br label %dissect_ttl_src_addr_ret.exit
 
-dissect_ttl_src_addr_ret.exit:                    ; preds = %bb.n, %bb.o, %switch.lookup122, %switch.lookup119
-  %hf_ttl_trace_data_entry_src_addr_function_pt15_fpga.sink.i = phi ptr [ %switch.load121, %switch.lookup119 ], [ %switch.load124, %switch.lookup122 ], [ @hf_ttl_trace_data_entry_src_addr_function_unknown, %bb.o ], [ @hf_ttl_trace_data_entry_src_addr_function_unknown, %bb.n ]
+dissect_ttl_src_addr_ret.exit:                    ; preds = %switch.lookup122, %bb.n, %bb.o
+  %hf_ttl_trace_data_entry_src_addr_function_pt15_fpga.sink.i = phi ptr [ @hf_ttl_trace_data_entry_src_addr_function_unknown, %bb.o ], [ @hf_ttl_trace_data_entry_src_addr_function_unknown, %bb.n ], [ %switch.load124, %switch.lookup122 ]
   %i.cg = load i32, ptr %hf_ttl_trace_data_entry_src_addr_function_pt15_fpga.sink.i, align 4
   %i.ch = call ptr @proto_tree_add_item(ptr noundef %i.bs, i32 noundef %i.cg, ptr noundef %0, i32 noundef 4, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
   %i.ci = load i16, ptr %i.a, align 2             ; 2 uses

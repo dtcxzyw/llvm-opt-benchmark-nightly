@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   %switch.shifted = lshr i64 35184372292623, %switch.maskindex
   %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond = select i1 %i.w, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %switch.lookup, label %bb.h
+  br i1 %or.cond, label %switch.lookup51, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %switch.tableidx48 = add i32 %i.s, -3           ; 3 uses
@@ -239,20 +239,16 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread:         ; preds = %bb.a
   %.not.i4 = icmp ult i64 %2, 5
   br i1 %.not.i4, label %_ZNK4llvm9StringRef11starts_withES0_.exit.thread20, label %_ZNK4llvm9StringRef11starts_withES0_.exit
 
-switch.lookup:                                    ; preds = %bb.g
-  %3 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvm3ARM16computeTargetABIERKNS_6TripleENS_9StringRefE, i64 %3
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %_ZNK4llvm9StringRef11starts_withES0_.exit
-
-switch.lookup51:                                  ; preds = %bb.h
-  %i.ak = zext nneg i32 %switch.tableidx48 to i64
-  %switch.gep55 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvm3ARM16computeTargetABIERKNS_6TripleENS_9StringRefE.4, i64 %i.ak
+switch.lookup51:                                  ; preds = %bb.h, %bb.g
+  %switch.tableidx48.sink = phi i32 [ %switch.tableidx, %bb.g ], [ %switch.tableidx48, %bb.h ]
+  %switch.table._ZN4llvm3ARM16computeTargetABIERKNS_6TripleENS_9StringRefE.4.sink = phi ptr [ @switch.table._ZN4llvm3ARM16computeTargetABIERKNS_6TripleENS_9StringRefE, %bb.g ], [ @switch.table._ZN4llvm3ARM16computeTargetABIERKNS_6TripleENS_9StringRefE.4, %bb.h ]
+  %i.ak = zext nneg i32 %switch.tableidx48.sink to i64
+  %switch.gep55 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZN4llvm3ARM16computeTargetABIERKNS_6TripleENS_9StringRefE.4.sink, i64 %i.ak
   %switch.load56 = load ptr, ptr %switch.gep55, align 8
   br label %_ZNK4llvm9StringRef11starts_withES0_.exit
 
-_ZNK4llvm9StringRef11starts_withES0_.exit:        ; preds = %bb.i, %switch.lookup51, %switch.lookup, %bb.f, %bb.d, %bb.c, %bb.e, %_ZN4llvmeqENS_9StringRefES0_.exit, %_ZN4llvmeqENS_9StringRefES0_.exit.thread
-  %.sroa.014.02942 = phi ptr [ %1, %_ZN4llvmeqENS_9StringRefES0_.exit.thread ], [ %.sroa.014.035, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ %spec.select57, %bb.i ], [ %switch.load, %switch.lookup ], [ @.str.175, %bb.f ], [ @.str.177, %bb.e ], [ @.str.175, %bb.c ], [ @.str.175, %bb.d ], [ %switch.load56, %switch.lookup51 ] ; 3 uses
+_ZNK4llvm9StringRef11starts_withES0_.exit:        ; preds = %bb.i, %switch.lookup51, %bb.f, %bb.d, %bb.c, %bb.e, %_ZN4llvmeqENS_9StringRefES0_.exit, %_ZN4llvmeqENS_9StringRefES0_.exit.thread
+  %.sroa.014.02942 = phi ptr [ %1, %_ZN4llvmeqENS_9StringRefES0_.exit.thread ], [ %.sroa.014.035, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ %switch.load56, %switch.lookup51 ], [ %spec.select57, %bb.i ], [ @.str.175, %bb.f ], [ @.str.177, %bb.e ], [ @.str.175, %bb.c ], [ @.str.175, %bb.d ] ; 3 uses
   %i.al = load i32, ptr %.sroa.014.02942, align 1
   %i.am = xor i32 %i.al, 1668309345
   %i.an = getelementptr i8, ptr %.sroa.014.02942, i64 4

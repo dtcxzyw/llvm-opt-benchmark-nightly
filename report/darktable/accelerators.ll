@@ -204,24 +204,23 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr %i.k, align 8, !tbaa !104
-  %1 = zext nneg i32 %i.g to i64
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !73
-  br label %bb.h
+  br label %switch.lookup
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %switch.tableidx = add i32 %i.f, -3             ; 2 uses
   %i.p = icmp ult i32 %switch.tableidx, 10
   br i1 %i.p, label %switch.lookup, label %bb.h
 
-switch.lookup:                                    ; preds = %bb.g
-  %i.q = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._action_find_definition, i64 %i.q
+switch.lookup:                                    ; preds = %bb.g, %bb.f
+  %switch.tableidx.sink = phi i32 [ %i.g, %bb.f ], [ %switch.tableidx, %bb.g ]
+  %switch.table._action_find_definition.sink = phi ptr [ %i.o, %bb.f ], [ @switch.table._action_find_definition, %bb.g ]
+  %i.q = zext nneg i32 %switch.tableidx.sink to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr %switch.table._action_find_definition.sink, i64 %i.q
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %switch.lookup, %bb.f, %bb.a
-  %.1 = phi ptr [ null, %bb.a ], [ %3, %bb.f ], [ %switch.load, %switch.lookup ], [ null, %bb.g ]
+bb.h:                                             ; preds = %switch.lookup, %bb.g, %bb.a
+  %.1 = phi ptr [ null, %bb.a ], [ null, %bb.g ], [ %switch.load, %switch.lookup ]
   ret ptr %.1
 }
 
@@ -624,20 +623,19 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aa, label %_action_find_definition.exit.i, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.d, %bb.c
-  %5 = sext i32 %i.s to i64
-  %6 = getelementptr [8 x i8], ptr @switch.table._element_changed, i64 %5
-  %switch.gep = getelementptr i8, ptr %6, i64 -24
+  %switch.tableidx = add nsw i32 %i.s, -3
   br label %_action_find_definition.exit.thread.i
 
 _action_find_definition.exit.i:                   ; preds = %bb.d
   %i.ab = load ptr, ptr %i.x, align 8, !tbaa !104
-  %7 = zext nneg i32 %i.t to i64
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %7
   br label %_action_find_definition.exit.thread.i
 
 _action_find_definition.exit.thread.i:            ; preds = %switch.lookup, %_action_find_definition.exit.i
-  %.1.i7.i.in = phi ptr [ %8, %_action_find_definition.exit.i ], [ %switch.gep, %switch.lookup ]
-  %.1.i7.i = load ptr, ptr %.1.i7.i.in, align 8
+  %switch.tableidx.sink = phi i32 [ %switch.tableidx, %switch.lookup ], [ %i.t, %_action_find_definition.exit.i ]
+  %.1.i7.i.in = phi ptr [ @switch.table._element_changed, %switch.lookup ], [ %i.ab, %_action_find_definition.exit.i ]
+  %5 = zext nneg i32 %switch.tableidx.sink to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr %.1.i7.i.in, i64 %5
+  %.1.i7.i = load ptr, ptr %switch.gep, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %.1.i7.i, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !108 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 2 uses

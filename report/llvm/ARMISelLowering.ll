@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.d, align 1, !tbaa !204
   %switch.tableidx = add i8 %i.e, -109            ; 2 uses
   %i.f = icmp ult i8 %switch.tableidx, 13
-  br i1 %i.f, label %switch.lookup, label %_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit
+  br i1 %i.f, label %switch.lookup13, label %_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit
 
 _ZN4llvmeqENS_9StringRefES0_.exit.i:              ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit
   %lhsc.i = load i8, ptr %1, align 1
@@ -213,21 +213,17 @@ _ZN4llvmeqENS_9StringRefES0_.exit.i:              ; preds = %_ZN4llvmeqENS_9Stri
   %i.g = icmp ult i8 %switch.tableidx12, 25
   br i1 %i.g, label %switch.lookup13, label %_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit
 
-switch.lookup:                                    ; preds = %bb.c
-  %3 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17ARMTargetLowering25getInlineAsmMemConstraintENS_9StringRefE, i64 %3
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit
-
-switch.lookup13:                                  ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i
-  %i.h = zext nneg i8 %switch.tableidx12 to i64
-  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm17ARMTargetLowering25getInlineAsmMemConstraintENS_9StringRefE.154, i64 %i.h
+switch.lookup13:                                  ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i, %bb.c
+  %switch.tableidx12.sink = phi i8 [ %switch.tableidx, %bb.c ], [ %switch.tableidx12, %_ZN4llvmeqENS_9StringRefES0_.exit.i ]
+  %switch.table._ZNK4llvm17ARMTargetLowering25getInlineAsmMemConstraintENS_9StringRefE.154.sink = phi ptr [ @switch.table._ZNK4llvm17ARMTargetLowering25getInlineAsmMemConstraintENS_9StringRefE, %bb.c ], [ @switch.table._ZNK4llvm17ARMTargetLowering25getInlineAsmMemConstraintENS_9StringRefE.154, %_ZN4llvmeqENS_9StringRefES0_.exit.i ]
+  %i.h = zext nneg i8 %switch.tableidx12.sink to i64
+  %switch.gep14 = getelementptr inbounds nuw i8, ptr %switch.table._ZNK4llvm17ARMTargetLowering25getInlineAsmMemConstraintENS_9StringRefE.154.sink, i64 %i.h
   %switch.load15 = load i8, ptr %switch.gep14, align 1
+  %switch.ext16 = zext i8 %switch.load15 to i32
   br label %_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit
 
-_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit: ; preds = %bb.b, %bb.c, %_ZN4llvmeqENS_9StringRefES0_.exit.i, %switch.lookup13, %switch.lookup, %bb.a, %_ZN4llvmeqENS_9StringRefES0_.exit
-  %.0.shrunk = phi i8 [ %switch.load, %switch.lookup ], [ 0, %bb.a ], [ 8, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ 0, %bb.b ], [ %switch.load15, %switch.lookup13 ], [ 0, %bb.c ], [ 0, %_ZN4llvmeqENS_9StringRefES0_.exit.i ]
-  %.0 = zext i8 %.0.shrunk to i32
+_ZNK4llvm14TargetLowering25getInlineAsmMemConstraintENS_9StringRefE.exit: ; preds = %switch.lookup13, %bb.b, %bb.c, %_ZN4llvmeqENS_9StringRefES0_.exit.i, %bb.a, %_ZN4llvmeqENS_9StringRefES0_.exit
+  %.0 = phi i32 [ 0, %bb.c ], [ 0, %bb.a ], [ 8, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ 0, %bb.b ], [ 0, %_ZN4llvmeqENS_9StringRefES0_.exit.i ], [ %switch.ext16, %switch.lookup13 ]
   ret i32 %.0
 }
 

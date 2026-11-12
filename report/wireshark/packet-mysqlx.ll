@@ -200,7 +200,7 @@ bb.c:                                             ; preds = %bb.a
   %switch.shifted37 = lshr i32 1046559, %switch.maskindex36
   %switch.lobit38 = trunc i32 %switch.shifted37 to i1
   %or.cond = select i1 %i.z, i1 %switch.lobit38, i1 false
-  br i1 %or.cond, label %switch.lookup35, label %.critedge
+  br i1 %or.cond, label %bb.d, label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %switch.hole_check, %bb.b
   %i.aa = phi i8 [ %i.y, %bb.c ], [ %i.v, %bb.b ], [ %i.v, %switch.hole_check ]
@@ -212,21 +212,14 @@ switch.hole_check:                                ; preds = %bb.b
   %switch.maskindex = zext nneg i8 %switch.tableidx to i64
   %switch.shifted = lshr i64 69822772611199, %switch.maskindex
   %switch.lobit = trunc i64 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %.critedge
+  br i1 %switch.lobit, label %bb.d, label %.critedge
 
-switch.lookup:                                    ; preds = %switch.hole_check
-  %4 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_mysqlx_pdu, i64 %4
-  br label %bb.d
-
-switch.lookup35:                                  ; preds = %bb.c
-  %5 = zext nneg i8 %i.y to i64
-  %switch.gep39 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_mysqlx_pdu.1, i64 %5
-  br label %bb.d
-
-bb.d:                                             ; preds = %switch.lookup35, %switch.lookup
-  %.0.in = phi ptr [ %switch.gep39, %switch.lookup35 ], [ %switch.gep, %switch.lookup ]
-  %.0 = load ptr, ptr %.0.in, align 8
+bb.d:                                             ; preds = %bb.c, %switch.hole_check
+  %.sink41 = phi i8 [ %switch.tableidx, %switch.hole_check ], [ %i.y, %bb.c ]
+  %.0.in = phi ptr [ @switch.table.dissect_mysqlx_pdu, %switch.hole_check ], [ @switch.table.dissect_mysqlx_pdu.1, %bb.c ]
+  %4 = zext nneg i8 %.sink41 to i64
+  %switch.gep39 = getelementptr inbounds nuw [8 x i8], ptr %.0.in, i64 %4
+  %.0 = load ptr, ptr %switch.gep39, align 8
   %i.ad = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 5)
   %i.ae = call ptr @tvb_new_subset_length(ptr noundef %0, i32 noundef 5, i32 noundef %i.ad)
   %i.af = load ptr, ptr @mysqlx_protobuf_handle, align 8

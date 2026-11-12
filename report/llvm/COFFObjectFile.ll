@@ -204,73 +204,39 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp ult i16 %1, 17
-  br i1 %i.e, label %switch.lookup, label %bb.g
+  br i1 %i.e, label %switch.lookup25, label %bb.g
 
 bb.c:                                             ; preds = %bb.a
   %i.f = icmp ult i16 %1, 23
-  br i1 %i.f, label %switch.lookup7, label %bb.g
+  br i1 %i.f, label %switch.lookup25, label %bb.g
 
 bb.d:                                             ; preds = %bb.a
   %i.g = icmp ult i16 %1, 18
-  br i1 %i.g, label %switch.lookup13, label %bb.g
+  br i1 %i.g, label %switch.lookup25, label %bb.g
 
 bb.e:                                             ; preds = %bb.a
   %i.h = icmp ult i16 %1, 21
-  br i1 %i.h, label %switch.lookup19, label %bb.g
+  br i1 %i.h, label %switch.lookup25, label %bb.g
 
 bb.f:                                             ; preds = %bb.a
   %i.i = icmp ult i16 %1, 38
   br i1 %i.i, label %switch.lookup25, label %bb.g
 
-switch.lookup:                                    ; preds = %bb.b
-  %2 = zext nneg i16 %1 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt, i64 %2
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %3 = zext nneg i16 %1 to i64
-  %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.30, i64 %3
-  %switch.load6 = load ptr, ptr %switch.gep5, align 8
-  br label %bb.g
-
-switch.lookup7:                                   ; preds = %bb.c
-  %4 = zext nneg i16 %1 to i64
-  %switch.gep8 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.31, i64 %4
-  %switch.load9 = load i8, ptr %switch.gep8, align 1
-  %5 = zext nneg i16 %1 to i64
-  %switch.gep11 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.32, i64 %5
-  %switch.load12 = load ptr, ptr %switch.gep11, align 8
-  br label %bb.g
-
-switch.lookup13:                                  ; preds = %bb.d
-  %6 = zext nneg i16 %1 to i64
-  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.33, i64 %6
-  %switch.load15 = load i8, ptr %switch.gep14, align 1
-  %7 = zext nneg i16 %1 to i64
-  %switch.gep17 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.34, i64 %7
-  %switch.load18 = load ptr, ptr %switch.gep17, align 8
-  br label %bb.g
-
-switch.lookup19:                                  ; preds = %bb.e
-  %8 = zext nneg i16 %1 to i64
-  %switch.gep20 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.35, i64 %8
-  %switch.load21 = load i8, ptr %switch.gep20, align 1
-  %9 = zext nneg i16 %1 to i64
-  %switch.gep23 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.36, i64 %9
-  %switch.load24 = load ptr, ptr %switch.gep23, align 8
-  br label %bb.g
-
-switch.lookup25:                                  ; preds = %bb.f
+switch.lookup25:                                  ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+  %switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.37.sink = phi ptr [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.35, %bb.e ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.33, %bb.d ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.31, %bb.c ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt, %bb.b ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.37, %bb.f ]
+  %switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.38.sink = phi ptr [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.36, %bb.e ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.34, %bb.d ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.32, %bb.c ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.30, %bb.b ], [ @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.38, %bb.f ]
   %i.j = zext nneg i16 %1 to i64
-  %switch.gep26 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.37, i64 %i.j
+  %switch.gep26 = getelementptr inbounds nuw i8, ptr %switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.37.sink, i64 %i.j
   %switch.load27 = load i8, ptr %switch.gep26, align 1
+  %switch.ext28 = zext i8 %switch.load27 to i64
   %i.k = zext nneg i16 %1 to i64
-  %switch.gep29 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.38, i64 %i.k
+  %switch.gep29 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZNK4llvm6object14COFFObjectFile21getRelocationTypeNameEt.38.sink, i64 %i.k
   %switch.load30 = load ptr, ptr %switch.gep29, align 8
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %switch.lookup25, %switch.lookup19, %switch.lookup13, %switch.lookup7, %switch.lookup, %bb.a
-  %.sroa.85.0.shrunk = phi i8 [ %switch.load27, %switch.lookup25 ], [ 7, %bb.a ], [ %switch.load15, %switch.lookup13 ], [ %switch.load9, %switch.lookup7 ], [ %switch.load, %switch.lookup ], [ %switch.load21, %switch.lookup19 ], [ 7, %bb.f ], [ 7, %bb.e ], [ 7, %bb.d ], [ 7, %bb.c ], [ 7, %bb.b ]
-  %.sroa.0.0 = phi ptr [ %switch.load30, %switch.lookup25 ], [ @.str.56, %bb.a ], [ %switch.load18, %switch.lookup13 ], [ %switch.load12, %switch.lookup7 ], [ %switch.load6, %switch.lookup ], [ %switch.load24, %switch.lookup19 ], [ @.str.56, %bb.f ], [ @.str.56, %bb.e ], [ @.str.56, %bb.d ], [ @.str.56, %bb.c ], [ @.str.56, %bb.b ]
-  %.sroa.85.0 = zext i8 %.sroa.85.0.shrunk to i64
+bb.g:                                             ; preds = %switch.lookup25, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.a
+  %.sroa.85.0 = phi i64 [ 7, %bb.f ], [ 7, %bb.a ], [ 7, %bb.e ], [ 7, %bb.d ], [ 7, %bb.c ], [ 7, %bb.b ], [ %switch.ext28, %switch.lookup25 ]
+  %.sroa.0.0 = phi ptr [ @.str.56, %bb.f ], [ @.str.56, %bb.a ], [ @.str.56, %bb.e ], [ @.str.56, %bb.d ], [ @.str.56, %bb.c ], [ @.str.56, %bb.b ], [ %switch.load30, %switch.lookup25 ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.85.0, 1
   ret { ptr, i64 } %.fca.1.insert

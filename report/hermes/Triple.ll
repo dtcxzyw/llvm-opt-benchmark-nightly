@@ -205,40 +205,33 @@ bb.f:                                             ; preds = %.thread, %_ZNK4llvh
 bb.g:                                             ; preds = %bb.f
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !172
-  %switch.tableidx = add i32 %i.aq, -4            ; 3 uses
+  %switch.tableidx = add i32 %i.aq, -4            ; 2 uses
   %i.ar = icmp ult i32 %switch.tableidx, 6
-  br i1 %i.ar, label %switch.lookup, label %.thread35
+  br i1 %i.ar, label %switch.lookup41, label %.thread35
 
 bb.h:                                             ; preds = %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.at = load i32, ptr %i.as, align 8, !tbaa !172
-  %switch.tableidx40 = add i32 %i.at, -5          ; 3 uses
+  %switch.tableidx40 = add i32 %i.at, -5          ; 2 uses
   %i.au = icmp ult i32 %switch.tableidx40, 9
   br i1 %i.au, label %switch.lookup41, label %.thread35
 
-switch.lookup:                                    ; preds = %bb.g
-  %4 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE, i64 %4
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i64
-  %5 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep38 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.25, i64 %5
-  %switch.load39 = load ptr, ptr %switch.gep38, align 8
-  br label %.thread35
-
-switch.lookup41:                                  ; preds = %bb.h
-  %i.av = zext nneg i32 %switch.tableidx40 to i64
-  %switch.gep42 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.26, i64 %i.av
+switch.lookup41:                                  ; preds = %bb.h, %bb.g
+  %switch.tableidx40.sink47 = phi i32 [ %switch.tableidx, %bb.g ], [ %switch.tableidx40, %bb.h ] ; 2 uses
+  %switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.26.sink = phi ptr [ @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE, %bb.g ], [ @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.26, %bb.h ]
+  %switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.27.sink = phi ptr [ @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.25, %bb.g ], [ @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.27, %bb.h ]
+  %i.av = zext nneg i32 %switch.tableidx40.sink47 to i64
+  %switch.gep42 = getelementptr inbounds nuw i8, ptr %switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.26.sink, i64 %i.av
   %switch.load43 = load i8, ptr %switch.gep42, align 1
   %switch.ext44 = zext i8 %switch.load43 to i64
-  %i.aw = zext nneg i32 %switch.tableidx40 to i64
-  %switch.gep45 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.27, i64 %i.aw
+  %i.aw = zext nneg i32 %switch.tableidx40.sink47 to i64
+  %switch.gep45 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.27.sink, i64 %i.aw
   %switch.load46 = load ptr, ptr %switch.gep45, align 8
   br label %.thread35
 
-.thread35:                                        ; preds = %bb.h, %switch.lookup41, %bb.g, %switch.lookup, %bb.f, %bb.f, %.thread, %bb.e, %_ZNK4llvh9StringRef6equalsES0_.exit10, %bb.c, %_ZNK4llvh9StringRef6equalsES0_.exit, %bb.d, %_ZNK4llvh9StringRef6equalsES0_.exit11, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread
-  %.sroa.12.1 = phi i64 [ 9, %bb.c ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.ae, %.thread ], [ 12, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ 7, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ 9, %bb.g ], [ 9, %bb.f ], [ 9, %bb.f ], [ %i.k, %bb.e ], [ %switch.ext, %switch.lookup ], [ %i.k, %bb.d ], [ 9, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ %switch.ext44, %switch.lookup41 ], [ 8, %bb.h ]
-  %.sroa.029.1 = phi ptr [ @.str.143, %bb.c ], [ null, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.ad, %.thread ], [ @.str.142, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %i.ad, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ @.str.148, %bb.g ], [ @.str.149, %bb.f ], [ @.str.149, %bb.f ], [ null, %bb.e ], [ %switch.load39, %switch.lookup ], [ null, %bb.d ], [ @.str.145, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ %switch.load46, %switch.lookup41 ], [ @.str.150, %bb.h ]
+.thread35:                                        ; preds = %switch.lookup41, %bb.h, %bb.g, %bb.f, %bb.f, %.thread, %bb.e, %_ZNK4llvh9StringRef6equalsES0_.exit10, %bb.c, %_ZNK4llvh9StringRef6equalsES0_.exit, %bb.d, %_ZNK4llvh9StringRef6equalsES0_.exit11, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread
+  %.sroa.12.1 = phi i64 [ 9, %bb.c ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.ae, %.thread ], [ 12, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ 7, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ 9, %bb.g ], [ 9, %bb.f ], [ 9, %bb.f ], [ %i.k, %bb.e ], [ 8, %bb.h ], [ %i.k, %bb.d ], [ 9, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ %switch.ext44, %switch.lookup41 ]
+  %.sroa.029.1 = phi ptr [ @.str.143, %bb.c ], [ null, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.ad, %.thread ], [ @.str.142, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %i.ad, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ @.str.148, %bb.g ], [ @.str.149, %bb.f ], [ @.str.149, %bb.f ], [ null, %bb.e ], [ @.str.150, %bb.h ], [ null, %bb.d ], [ @.str.145, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ %switch.load46, %switch.lookup41 ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.029.1, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.12.1, 1
   ret { ptr, i64 } %.fca.1.insert

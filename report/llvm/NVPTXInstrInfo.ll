@@ -202,11 +202,10 @@ _ZN4llvm19MachineRegisterInfo26defusechain_instr_iteratorILb1ELb0ELb1ELb1EE7adva
   %.val38 = phi ptr [ %.val38.pre, %.critedge34.loopexit ], [ %i.m, %_ZL17isScalarFloatSetpRKN4llvm12MachineInstrE.exit.thread ], [ %i.m, %.critedge2.i.i.i.i ]
   %switch.i.i = icmp ult i32 %.off.i.i.pre-phi, 9
   %i.bb = getelementptr inbounds nuw i8, ptr %.val38, i64 112 ; 2 uses
-  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !211 ; 2 uses
-  %switch.gep109 = getelementptr inbounds i8, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.9, i64 %i.bc
-  %switch.gep = getelementptr inbounds i8, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.8, i64 %i.bc
-  %switch.load110.sink.in = select i1 %switch.i.i, ptr %switch.gep, ptr %switch.gep109
-  %switch.load110.sink = load i8, ptr %switch.load110.sink.in, align 1
+  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !211
+  %switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.7 = select i1 %switch.i.i, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.8, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.9
+  %switch.gep = getelementptr inbounds i8, ptr %switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.7, i64 %i.bc
+  %switch.load110.sink = load i8, ptr %switch.gep, align 1
   %switch.ext111 = zext i8 %switch.load110.sink to i64
   store i64 %switch.ext111, ptr %i.bb, align 8, !tbaa !211
   %.val40 = load ptr, ptr %5, align 8, !tbaa !205 ; 3 uses
@@ -323,11 +322,10 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge.
   %.off.i.i44 = add i32 %.val37, -1590
   %switch.i.i45 = icmp ult i32 %.off.i.i44, 9
   %i.cf = getelementptr inbounds nuw i8, ptr %.val36, i64 112 ; 2 uses
-  %i.cg = load i64, ptr %i.cf, align 8, !tbaa !211 ; 2 uses
-  %switch.gep116 = getelementptr inbounds i8, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.9, i64 %i.cg
-  %switch.gep113 = getelementptr inbounds i8, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.8, i64 %i.cg
-  %switch.load117.sink.in = select i1 %switch.i.i45, ptr %switch.gep113, ptr %switch.gep116
-  %switch.load117.sink = load i8, ptr %switch.load117.sink.in, align 1
+  %i.cg = load i64, ptr %i.cf, align 8, !tbaa !211
+  %switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.8.switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.9 = select i1 %switch.i.i45, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.8, ptr @switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.9
+  %switch.gep113 = getelementptr inbounds i8, ptr %switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.8.switch.table._ZNK4llvm14NVPTXInstrInfo22commuteInstructionImplERNS_12MachineInstrEbjj.9, i64 %i.cg
+  %switch.load117.sink = load i8, ptr %switch.gep113, align 1
   %switch.ext118 = zext i8 %switch.load117.sink to i64
   store i64 %switch.ext118, ptr %i.cf, align 8, !tbaa !211
   br label %.critedge

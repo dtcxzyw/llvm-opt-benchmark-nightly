@@ -204,12 +204,12 @@ bb.an:                                            ; preds = %bb.aj, %bb.am
 bb.ao:                                            ; preds = %bb.an
   %switch.tableidx = add i8 %i.dy, -1             ; 2 uses
   %i.ea = icmp ult i8 %switch.tableidx, 3
-  br i1 %i.ea, label %switch.lookup, label %bb.as
+  br i1 %i.ea, label %switch.lookup4464, label %bb.as
 
 bb.ap:                                            ; preds = %bb.an
   %switch.tableidx4459 = add i8 %i.dy, -1         ; 2 uses
   %i.eb = icmp ult i8 %switch.tableidx4459, 3
-  br i1 %i.eb, label %switch.lookup4460, label %bb.as
+  br i1 %i.eb, label %switch.lookup4464, label %bb.as
 
 bb.aq:                                            ; preds = %bb.an
   %i.ec = icmp ult i32 %.93573, -1879048192
@@ -220,26 +220,16 @@ bb.ar:                                            ; preds = %bb.aq
   %i.ed = icmp ult i8 %switch.tableidx4463, 4
   br i1 %i.ed, label %switch.lookup4464, label %bb.as
 
-switch.lookup:                                    ; preds = %bb.ao
-  %7 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_gmm_ms_radio_acc_cap.3, i64 %7
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %bb.as
-
-switch.lookup4460:                                ; preds = %bb.ap
-  %8 = zext nneg i8 %switch.tableidx4459 to i64
-  %switch.gep4461 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_gmm_ms_radio_acc_cap.4, i64 %8
-  %switch.load4462 = load ptr, ptr %switch.gep4461, align 8
-  br label %bb.as
-
-switch.lookup4464:                                ; preds = %bb.ar
-  %i.ee = zext nneg i8 %switch.tableidx4463 to i64
-  %switch.gep4465 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_gmm_ms_radio_acc_cap.5, i64 %i.ee
+switch.lookup4464:                                ; preds = %bb.ar, %bb.ap, %bb.ao
+  %switch.tableidx4463.sink = phi i8 [ %switch.tableidx4459, %bb.ap ], [ %switch.tableidx, %bb.ao ], [ %switch.tableidx4463, %bb.ar ]
+  %switch.table.de_gmm_ms_radio_acc_cap.2.sink = phi ptr [ @switch.table.de_gmm_ms_radio_acc_cap.4, %bb.ap ], [ @switch.table.de_gmm_ms_radio_acc_cap.3, %bb.ao ], [ @switch.table.de_gmm_ms_radio_acc_cap.5, %bb.ar ]
+  %i.ee = zext nneg i8 %switch.tableidx4463.sink to i64
+  %switch.gep4465 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.de_gmm_ms_radio_acc_cap.2.sink, i64 %i.ee
   %switch.load4466 = load ptr, ptr %switch.gep4465, align 8
   br label %bb.as
 
-bb.as:                                            ; preds = %bb.ao, %bb.ap, %bb.ar, %switch.lookup4464, %switch.lookup4460, %switch.lookup, %bb.aq
-  %.13492 = phi ptr [ %switch.load4462, %switch.lookup4460 ], [ %switch.load4466, %switch.lookup4464 ], [ @.str.70, %bb.aq ], [ %switch.load, %switch.lookup ], [ @.str.65, %bb.ar ], [ @.str.65, %bb.ap ], [ @.str.65, %bb.ao ]
+bb.as:                                            ; preds = %switch.lookup4464, %bb.ao, %bb.ap, %bb.ar, %bb.aq
+  %.13492 = phi ptr [ @.str.65, %bb.ar ], [ @.str.65, %bb.ap ], [ @.str.70, %bb.aq ], [ @.str.65, %bb.ao ], [ %switch.load4466, %switch.lookup4464 ]
   %i.ef = load i32, ptr @hf_gsm_a_gm_rf_power_capability, align 4
   %i.eg = xor i32 %.33501, -1
   %i.eh = add i32 %.103875, %i.eg
@@ -354,12 +344,12 @@ bb.bd:                                            ; preds = %bb.az, %bb.bc
 bb.be:                                            ; preds = %bb.bd
   %switch.tableidx4467 = add i8 %i.ga, -1         ; 2 uses
   %i.gc = icmp ult i8 %switch.tableidx4467, 3
-  br i1 %i.gc, label %switch.lookup4468, label %bb.bi
+  br i1 %i.gc, label %switch.lookup4476, label %bb.bi
 
 bb.bf:                                            ; preds = %bb.bd
   %switch.tableidx4471 = add i8 %i.ga, -1         ; 2 uses
   %i.gd = icmp ult i8 %switch.tableidx4471, 3
-  br i1 %i.gd, label %switch.lookup4472, label %bb.bi
+  br i1 %i.gd, label %switch.lookup4476, label %bb.bi
 
 bb.bg:                                            ; preds = %bb.bd
   %i.ge = icmp ult i32 %.33567, -1879048192
@@ -370,26 +360,16 @@ bb.bh:                                            ; preds = %bb.bg
   %i.gf = icmp ult i8 %switch.tableidx4475, 4
   br i1 %i.gf, label %switch.lookup4476, label %bb.bi
 
-switch.lookup4468:                                ; preds = %bb.be
-  %9 = zext nneg i8 %switch.tableidx4467 to i64
-  %switch.gep4469 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_gmm_ms_radio_acc_cap.3, i64 %9
-  %switch.load4470 = load ptr, ptr %switch.gep4469, align 8
-  br label %bb.bi
-
-switch.lookup4472:                                ; preds = %bb.bf
-  %10 = zext nneg i8 %switch.tableidx4471 to i64
-  %switch.gep4473 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_gmm_ms_radio_acc_cap.4, i64 %10
-  %switch.load4474 = load ptr, ptr %switch.gep4473, align 8
-  br label %bb.bi
-
-switch.lookup4476:                                ; preds = %bb.bh
-  %i.gg = zext nneg i8 %switch.tableidx4475 to i64
-  %switch.gep4477 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_gmm_ms_radio_acc_cap.5, i64 %i.gg
+switch.lookup4476:                                ; preds = %bb.bh, %bb.bf, %bb.be
+  %switch.tableidx4475.sink = phi i8 [ %switch.tableidx4471, %bb.bf ], [ %switch.tableidx4467, %bb.be ], [ %switch.tableidx4475, %bb.bh ]
+  %switch.table.de_gmm_ms_radio_acc_cap.5.sink = phi ptr [ @switch.table.de_gmm_ms_radio_acc_cap.4, %bb.bf ], [ @switch.table.de_gmm_ms_radio_acc_cap.3, %bb.be ], [ @switch.table.de_gmm_ms_radio_acc_cap.5, %bb.bh ]
+  %i.gg = zext nneg i8 %switch.tableidx4475.sink to i64
+  %switch.gep4477 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.de_gmm_ms_radio_acc_cap.5.sink, i64 %i.gg
   %switch.load4478 = load ptr, ptr %switch.gep4477, align 8
   br label %bb.bi
 
-bb.bi:                                            ; preds = %bb.be, %bb.bf, %bb.bh, %switch.lookup4476, %switch.lookup4472, %switch.lookup4468, %bb.bg
-  %.23493 = phi ptr [ %switch.load4474, %switch.lookup4472 ], [ %switch.load4478, %switch.lookup4476 ], [ @.str.70, %bb.bg ], [ %switch.load4470, %switch.lookup4468 ], [ @.str.65, %bb.bh ], [ @.str.65, %bb.bf ], [ @.str.65, %bb.be ]
+bb.bi:                                            ; preds = %switch.lookup4476, %bb.be, %bb.bf, %bb.bh, %bb.bg
+  %.23493 = phi ptr [ @.str.65, %bb.bh ], [ @.str.65, %bb.bf ], [ @.str.70, %bb.bg ], [ @.str.65, %bb.be ], [ %switch.load4478, %switch.lookup4476 ]
   %i.gh = load i32, ptr @hf_gsm_a_gm_rf_power_capability, align 4
   %i.gi = xor i32 %.73505, -1
   %i.gj = add i32 %.133878, %i.gi
@@ -792,58 +772,46 @@ bb.d:                                             ; preds = %.lr.ph, %bb.dx
   %i.ak = load i32, ptr @ett_sm_pco, align 4
   %i.al = call ptr @proto_item_add_subtree(ptr noundef %i.aj, i32 noundef %i.ak) ; 82 uses
   %i.am = add i32 %.0518544, 2
-  br i1 %i.ac, label %bb.e, label %7
+  br i1 %i.ac, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %switch.tableidx = add i16 %i.ae, -35           ; 5 uses
+  %switch.tableidx = add i16 %i.ae, -35           ; 2 uses
   %i.an = icmp ult i16 %switch.tableidx, 52
-  br i1 %i.an, label %switch.lookup, label %.thread
+  br i1 %i.an, label %switch.lookup581, label %.thread
 
-7:                                                ; preds = %bb.d
-  br i1 %.not, label %bb.f, label %.thread
-
-bb.f:                                             ; preds = %7
-  %switch.tableidx580 = add i16 %i.ae, -65        ; 5 uses
+bb.f:                                             ; preds = %bb.d
+  %switch.tableidx580 = add i16 %i.ae, -65        ; 2 uses
   %i.ao = icmp ult i16 %switch.tableidx580, 22
-  br i1 %i.ao, label %switch.lookup581, label %.thread
+  %or.cond = and i1 %.not, %i.ao
+  br i1 %or.cond, label %switch.lookup581, label %.thread
 
-switch.lookup:                                    ; preds = %bb.e
-  %8 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_sm_pco, i64 %8
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  %9 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep573 = getelementptr inbounds nuw i8, ptr @switch.table.de_sm_pco.6, i64 %9
-  %switch.load574 = load i8, ptr %switch.gep573, align 1
-  %10 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep575 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.de_sm_pco.7, i64 %10
-  %switch.load576 = load i32, ptr %switch.gep575, align 4
-  %11 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep577 = getelementptr inbounds nuw i8, ptr @switch.table.de_sm_pco.8, i64 %11
-  %switch.load578 = load i8, ptr %switch.gep577, align 1
-  br label %.thread
-
-switch.lookup581:                                 ; preds = %bb.f
-  %i.ap = zext nneg i16 %switch.tableidx580 to i64
-  %switch.gep582 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.de_sm_pco.9, i64 %i.ap
+switch.lookup581:                                 ; preds = %bb.f, %bb.e
+  %switch.tableidx580.sink598 = phi i16 [ %switch.tableidx, %bb.e ], [ %switch.tableidx580, %bb.f ] ; 4 uses
+  %switch.table.de_sm_pco.9.sink = phi ptr [ @switch.table.de_sm_pco, %bb.e ], [ @switch.table.de_sm_pco.9, %bb.f ]
+  %switch.table.de_sm_pco.10.sink = phi ptr [ @switch.table.de_sm_pco.6, %bb.e ], [ @switch.table.de_sm_pco.10, %bb.f ]
+  %switch.table.de_sm_pco.11.sink = phi ptr [ @switch.table.de_sm_pco.7, %bb.e ], [ @switch.table.de_sm_pco.11, %bb.f ]
+  %switch.table.de_sm_pco.12.sink = phi ptr [ @switch.table.de_sm_pco.8, %bb.e ], [ @switch.table.de_sm_pco.12, %bb.f ]
+  %i.ap = zext nneg i16 %switch.tableidx580.sink598 to i64
+  %switch.gep582 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.de_sm_pco.9.sink, i64 %i.ap
   %switch.load583 = load ptr, ptr %switch.gep582, align 8
-  %i.aq = zext nneg i16 %switch.tableidx580 to i64
-  %switch.gep584 = getelementptr inbounds nuw i8, ptr @switch.table.de_sm_pco.10, i64 %i.aq
+  %i.aq = zext nneg i16 %switch.tableidx580.sink598 to i64
+  %switch.gep584 = getelementptr inbounds nuw i8, ptr %switch.table.de_sm_pco.10.sink, i64 %i.aq
   %switch.load585 = load i8, ptr %switch.gep584, align 1
-  %i.ar = zext nneg i16 %switch.tableidx580 to i64
-  %switch.gep587 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.de_sm_pco.11, i64 %i.ar
+  %switch.ext586 = zext i8 %switch.load585 to i32
+  %i.ar = zext nneg i16 %switch.tableidx580.sink598 to i64
+  %switch.gep587 = getelementptr inbounds nuw [4 x i8], ptr %switch.table.de_sm_pco.11.sink, i64 %i.ar
   %switch.load588 = load i32, ptr %switch.gep587, align 4
-  %i.as = zext nneg i16 %switch.tableidx580 to i64
-  %switch.gep589 = getelementptr inbounds nuw i8, ptr @switch.table.de_sm_pco.12, i64 %i.as
+  %i.as = zext nneg i16 %switch.tableidx580.sink598 to i64
+  %switch.gep589 = getelementptr inbounds nuw i8, ptr %switch.table.de_sm_pco.12.sink, i64 %i.as
   %switch.load590 = load i8, ptr %switch.gep589, align 1
+  %switch.ext591 = zext i8 %switch.load590 to i32
   br label %.thread
 
-.thread:                                          ; preds = %7, %bb.e, %bb.f, %switch.lookup581, %switch.lookup
-  %hf_gsm_a_gm_sm_pco_length.sink = phi ptr [ %switch.load, %switch.lookup ], [ %switch.load583, %switch.lookup581 ], [ @hf_gsm_a_gm_sm_pco_length, %bb.f ], [ @hf_gsm_a_gm_sm_pco_length, %bb.e ], [ @hf_gsm_a_gm_sm_pco_length, %7 ]
-  %.sink571.shrunk = phi i8 [ %switch.load574, %switch.lookup ], [ %switch.load585, %switch.lookup581 ], [ 1, %bb.f ], [ 1, %bb.e ], [ 1, %7 ]
-  %.sink569 = phi i32 [ %switch.load576, %switch.lookup ], [ %switch.load588, %switch.lookup581 ], [ -3, %bb.f ], [ -3, %bb.e ], [ -3, %7 ]
-  %.sink.shrunk = phi i8 [ %switch.load578, %switch.lookup ], [ %switch.load590, %switch.lookup581 ], [ 3, %bb.f ], [ 3, %bb.e ], [ 3, %7 ]
-  %.sink = zext i8 %.sink.shrunk to i32
-  %.sink571 = zext i8 %.sink571.shrunk to i32
+.thread:                                          ; preds = %switch.lookup581, %bb.f, %bb.e
+  %hf_gsm_a_gm_sm_pco_length.sink = phi ptr [ @hf_gsm_a_gm_sm_pco_length, %bb.e ], [ @hf_gsm_a_gm_sm_pco_length, %bb.f ], [ %switch.load583, %switch.lookup581 ]
+  %.sink571 = phi i32 [ 1, %bb.e ], [ 1, %bb.f ], [ %switch.ext586, %switch.lookup581 ]
+  %.sink569 = phi i32 [ -3, %bb.e ], [ -3, %bb.f ], [ %switch.load588, %switch.lookup581 ]
+  %.sink = phi i32 [ 3, %bb.e ], [ 3, %bb.f ], [ %switch.ext591, %switch.lookup581 ]
   %i.at = load i32, ptr %hf_gsm_a_gm_sm_pco_length.sink, align 4
   %i.au = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.al, i32 noundef %i.at, ptr noundef %0, i32 noundef %i.am, i32 noundef %.sink571, i32 noundef 0, ptr noundef nonnull %i.a) ; 0 uses
   %i.av = add nsw i32 %.0516545, %.sink569

@@ -204,7 +204,7 @@ bb.mr:                                            ; preds = %bb.mq
   %switch.shifted1329 = lshr i8 27, %switch.tableidx1326
   %switch.lobit1330 = trunc i8 %switch.shifted1329 to i1
   %or.cond1334 = select i1 %i.chj, i1 %switch.lobit1330, i1 false
-  br i1 %or.cond1334, label %switch.lookup1328, label %ff_dovi_rpu_extension_is_static.exit616
+  br i1 %or.cond1334, label %bb.ms, label %ff_dovi_rpu_extension_is_static.exit616
 
 ff_dovi_rpu_extension_is_static.exit616.thread:   ; preds = %bb.mq
   %switch.tableidx = add i8 %.pr751, 1            ; 3 uses
@@ -212,21 +212,14 @@ ff_dovi_rpu_extension_is_static.exit616.thread:   ; preds = %bb.mq
   %switch.shifted = lshr i8 -19, %switch.tableidx
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond1325 = select i1 %i.chk, i1 %switch.lobit, i1 false
-  br i1 %or.cond1325, label %switch.lookup, label %ff_dovi_rpu_extension_is_static.exit616
+  br i1 %or.cond1325, label %bb.ms, label %ff_dovi_rpu_extension_is_static.exit616
 
-switch.lookup:                                    ; preds = %ff_dovi_rpu_extension_is_static.exit616.thread
-  %6 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.ff_dovi_rpu_generate, i64 %6
-  br label %bb.ms
-
-switch.lookup1328:                                ; preds = %bb.mr
-  %7 = zext nneg i8 %switch.tableidx1326 to i64
-  %switch.gep1331 = getelementptr inbounds nuw i8, ptr @switch.table.ff_dovi_rpu_generate.5, i64 %7
-  br label %bb.ms
-
-bb.ms:                                            ; preds = %switch.lookup1328, %switch.lookup
-  %switch.load1332.sink.in = phi ptr [ %switch.gep1331, %switch.lookup1328 ], [ %switch.gep, %switch.lookup ]
-  %switch.load1332.sink = load i8, ptr %switch.load1332.sink.in, align 1 ; 2 uses
+bb.ms:                                            ; preds = %bb.mr, %ff_dovi_rpu_extension_is_static.exit616.thread
+  %switch.tableidx1326.sink = phi i8 [ %switch.tableidx, %ff_dovi_rpu_extension_is_static.exit616.thread ], [ %switch.tableidx1326, %bb.mr ]
+  %switch.load1332.sink.in = phi ptr [ @switch.table.ff_dovi_rpu_generate, %ff_dovi_rpu_extension_is_static.exit616.thread ], [ @switch.table.ff_dovi_rpu_generate.5, %bb.mr ]
+  %6 = zext nneg i8 %switch.tableidx1326.sink to i64
+  %switch.gep1331 = getelementptr inbounds nuw i8, ptr %switch.load1332.sink.in, i64 %6
+  %switch.load1332.sink = load i8, ptr %switch.gep1331, align 1 ; 2 uses
   %switch.ext1333 = zext i8 %switch.load1332.sink to i32 ; 2 uses
   %i.chl = zext i8 %switch.load1332.sink to i64
   %i.chm = getelementptr inbounds nuw i8, ptr @ff_ue_golomb_len, i64 %i.chl

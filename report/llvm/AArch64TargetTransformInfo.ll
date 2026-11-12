@@ -205,27 +205,18 @@ bb.t:                                             ; preds = %bb.s
   %i.ax = add i16 %.sroa.025.0.i, -12
   %or.cond283 = icmp ult i16 %i.ax, 204
   %i.ay = zext i16 %.sroa.025.0.i to i64
-  %i.az = getelementptr [16 x i8], ptr @_ZZNK4llvm3MVT13getSizeInBitsEvE9SizeTable, i64 %i.ay ; 3 uses
+  %i.az = getelementptr [16 x i8], ptr @_ZZNK4llvm3MVT13getSizeInBitsEvE9SizeTable, i64 %i.ay ; 2 uses
   %.sroa.2.0..sroa_idx.i = getelementptr i8, ptr %i.az, i64 -8
   %.sroa.2.0.copyload.i = load i8, ptr %.sroa.2.0..sroa_idx.i, align 8
   %i.ba = trunc nuw i8 %.sroa.2.0.copyload.i to i1 ; 2 uses
   br i1 %or.cond283, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %bb.t
-  br i1 %i.ba, label %bb.v, label %_ZNK4llvm8TypeSizecvmEv.exit
+  br i1 %i.ba, label %bb.v, label %_ZNK4llvm8TypeSizecvmEv.exit145
 
 bb.v:                                             ; preds = %bb.u
   call void @_ZN4llvm24reportFatalInternalErrorEPKc(ptr noundef nonnull @.str.57) #32
   unreachable
-
-_ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.u
-  %13 = getelementptr i8, ptr %i.az, i64 -16
-  %.sroa.0.0.copyload.i137 = load i64, ptr %13, align 16
-  %14 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.sroa.0.0.copyload.i137, i1 true)
-  %15 = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm14AArch64TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS4_16OperandValueInfoEPKNS_11InstructionE, i64 %14
-  %switch.gep = getelementptr i8, ptr %15, i64 -24
-  %switch.load = load i64, ptr %switch.gep, align 8
-  br label %bb.y
 
 bb.w:                                             ; preds = %bb.t
   br i1 %i.ba, label %bb.x, label %_ZNK4llvm8TypeSizecvmEv.exit145
@@ -234,17 +225,18 @@ bb.x:                                             ; preds = %bb.w
   call void @_ZN4llvm24reportFatalInternalErrorEPKc(ptr noundef nonnull @.str.57) #32
   unreachable
 
-_ZNK4llvm8TypeSizecvmEv.exit145:                  ; preds = %bb.w
+_ZNK4llvm8TypeSizecvmEv.exit145:                  ; preds = %bb.w, %bb.u
+  %switch.table._ZNK4llvm14AArch64TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS4_16OperandValueInfoEPKNS_11InstructionE.122.sink = phi ptr [ @switch.table._ZNK4llvm14AArch64TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS4_16OperandValueInfoEPKNS_11InstructionE, %bb.u ], [ @switch.table._ZNK4llvm14AArch64TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS4_16OperandValueInfoEPKNS_11InstructionE.122, %bb.w ]
   %i.bb = getelementptr i8, ptr %i.az, i64 -16
   %.sroa.0.0.copyload.i140 = load i64, ptr %i.bb, align 16
   %i.bc = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.sroa.0.0.copyload.i140, i1 true)
-  %i.bd = getelementptr [8 x i8], ptr @switch.table._ZNK4llvm14AArch64TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS4_16OperandValueInfoEPKNS_11InstructionE.122, i64 %i.bc
+  %i.bd = getelementptr [8 x i8], ptr %switch.table._ZNK4llvm14AArch64TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS4_16OperandValueInfoEPKNS_11InstructionE.122.sink, i64 %i.bc
   %switch.gep303 = getelementptr i8, ptr %i.bd, i64 -24
   %switch.load304 = load i64, ptr %switch.gep303, align 8
   br label %bb.y
 
-bb.y:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit145, %_ZNK4llvm8TypeSizecvmEv.exit, %bb.r, %bb.s
-  %.0108.neg = phi i64 [ %switch.load, %_ZNK4llvm8TypeSizecvmEv.exit ], [ -5173, %bb.r ], [ %switch.load304, %_ZNK4llvm8TypeSizecvmEv.exit145 ], [ -5173, %bb.s ]
+bb.y:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit145, %bb.r, %bb.s
+  %.0108.neg = phi i64 [ -5173, %bb.s ], [ -5173, %bb.r ], [ %switch.load304, %_ZNK4llvm8TypeSizecvmEv.exit145 ]
   %i.be = load ptr, ptr %i.ap, align 8, !tbaa !110 ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 208
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !255
