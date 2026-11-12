@@ -204,7 +204,7 @@ _ZN4llvm11raw_ostreamlsEc.exit3393:               ; preds = %bb.cwi, %bb.cwj
 .critedge182:                                     ; preds = %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit..critedge182_crit_edge, %bb.cwh
   %.pre-phi4138 = phi ptr [ %.pre4137, %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit..critedge182_crit_edge ], [ %i.ohp, %bb.cwh ]
   %i.oiv = phi ptr [ %.pre4132, %_ZNK5clang4Type5getAsINS_14ObjCObjectTypeEEEPKT_v.exit..critedge182_crit_edge ], [ %i.ohm, %bb.cwh ]
-  %i.oiw = load ptr, ptr %.pre-phi4138, align 8, !tbaa !478 ; 3 uses
+  %i.oiw = load ptr, ptr %.pre-phi4138, align 8, !tbaa !478 ; 4 uses
   %i.oix = getelementptr inbounds nuw i8, ptr %i.oiw, i64 16
   %i.oiy = load i8, ptr %i.oix, align 16
   %i.oiz = icmp ne i8 %i.oiy, 51
@@ -213,7 +213,7 @@ _ZN4llvm11raw_ostreamlsEc.exit3393:               ; preds = %bb.cwi, %bb.cwj
   br i1 %.not168, label %.critedge184, label %bb.cwk
 
 bb.cwk:                                           ; preds = %.critedge182
-  %i.oja = getelementptr inbounds nuw i8, ptr %i.oiw, i64 16 ; 2 uses
+  %i.oja = getelementptr inbounds nuw i8, ptr %i.oiw, i64 16
   %i.ojb = load ptr, ptr %i.e, align 8, !tbaa !23 ; 3 uses
   %i.ojc = load ptr, ptr %i.f, align 8, !tbaa !22
   %.not.i3400 = icmp ult ptr %i.ojb, %i.ojc
@@ -231,10 +231,11 @@ bb.cwm:                                           ; preds = %bb.cwk
 
 _ZN4llvm11raw_ostreamlsEc.exit3402:               ; preds = %bb.cwl, %bb.cwm
   %.0.i3401 = phi ptr [ %i.ojd, %bb.cwl ], [ %i.g, %bb.cwm ]
-  %3 = load i64, ptr %i.oja, align 16
-  %4 = lshr i64 %3, 32
-  %5 = and i64 %4, 32767
-  %i.ojf = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i3401, i64 noundef %5) #13 ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.oiw, i64 20
+  %4 = load i32, ptr %3, align 4
+  %5 = and i32 %4, 32767
+  %6 = zext nneg i32 %5 to i64
+  %i.ojf = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i3401, i64 noundef %6) #13 ; 4 uses
   %i.ojg = getelementptr inbounds nuw i8, ptr %i.ojf, i64 32 ; 2 uses
   %i.ojh = load ptr, ptr %i.ojg, align 8, !tbaa !23 ; 3 uses
   %i.oji = getelementptr inbounds nuw i8, ptr %i.ojf, i64 24

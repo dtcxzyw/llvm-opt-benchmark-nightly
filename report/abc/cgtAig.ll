@@ -20,12 +20,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i32 %.val, ptr %i.b, align 8, !tbaa !26
-  %i.c = getelementptr i8, ptr %2, i64 24         ; 2 uses
+  %i.c = getelementptr i8, ptr %2, i64 24
   %.val26 = load i64, ptr %i.c, align 8           ; 2 uses
   %i.d = trunc i64 %.val26 to i32
   %i.e = and i32 %i.d, 7
   %i.f = add nsw i32 %i.e, -7
   %narrow.i = icmp ult i32 %i.f, -2
+  %5 = lshr i64 %.val26, 32
+  %6 = trunc nuw i64 %5 to i32
   br i1 %narrow.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -41,14 +43,13 @@ bb.c:                                             ; preds = %bb.b
   %i.m = and i64 %i.l, -2
   %i.n = inttoptr i64 %i.m to ptr
   tail call void @Cgt_ManDetectCandidates_rec(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %i.n, i32 noundef %3, ptr noundef %4)
-  %.val29.pre = load i64, ptr %i.c, align 8
+  %.phi.trans.insert = getelementptr i8, ptr %2, i64 28
+  %.val29.pre = load i32, ptr %.phi.trans.insert, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.val29 = phi i64 [ %.val29.pre, %bb.c ], [ %.val26, %bb.b ]
-  %5 = lshr i64 %.val29, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.o = and i32 %6, 16777215
+  %.val29 = phi i32 [ %.val29.pre, %bb.c ], [ %6, %bb.b ]
+  %i.o = and i32 %.val29, 16777215
   %.not22 = icmp sgt i32 %i.o, %3
   br i1 %.not22, label %bb.q, label %bb.e
 

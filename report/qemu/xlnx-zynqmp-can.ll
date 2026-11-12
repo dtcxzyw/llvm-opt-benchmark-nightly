@@ -204,7 +204,7 @@ declare void @ptimer_transaction_commit(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @transfer_fifo(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.qemu_can_frame, align 8     ; 11 uses
+  %2 = alloca %struct.qemu_can_frame, align 8     ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2248 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -262,8 +262,11 @@ tx_ready_check.exit.preheader:                    ; preds = %bb.g
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 2384 ; 17 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2276 ; 4 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 9
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 10
+  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 11
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 13
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 14
@@ -393,6 +396,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %.sroa.0.3 = phi i32 [ %.sroa.0.1, %bb.r ], [ %.sroa.0.2, %bb.s ] ; 6 uses
   %.sroa.6.2 = phi i32 [ %.sroa.6.0, %bb.r ], [ %.sroa.6.1, %bb.s ] ; 5 uses
   %.sink.i40 = phi i32 [ %i.by, %bb.r ], [ %i.cm, %bb.s ] ; 9 uses
+  %.sroa.9.sroa.5.0.extract.shift = lshr i32 %.sink.i40, 24 ; 2 uses
+  %.sroa.9.sroa.5.0.extract.trunc = trunc nuw i32 %.sroa.9.sroa.5.0.extract.shift to i8
   %i.cn = call zeroext i8 @fifo8_pop(ptr noundef %1) #6 ; 3 uses
   %i.co = zext i8 %i.cn to i32
   %i.cp = call zeroext i8 @fifo8_pop(ptr noundef %1) #6 ; 3 uses
@@ -400,7 +405,6 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.cr = call zeroext i8 @fifo8_pop(ptr noundef %1) #6 ; 3 uses
   %i.cs = zext i8 %i.cr to i32
   %i.ct = call zeroext i8 @fifo8_pop(ptr noundef %1) #6 ; 3 uses
-  %3 = zext i8 %i.ct to i32
   br i1 %.not29.i, label %read_tx_frame.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -477,11 +481,16 @@ bb.y:                                             ; preds = %read_tx_frame.exit
   store i32 %.sroa.0.3, ptr %2, align 8
   %i.dz = lshr i32 %.sroa.6.2, 28                 ; 2 uses
   %i.ea = trunc nuw nsw i32 %i.dz to i8
-  store i8 %i.ea, ptr %i.z, align 4
-  store i32 %.sink.i40, ptr %i.aa, align 8
-  %i.eb = lshr i32 %.sink.i40, 8
-  %i.ec = lshr i32 %.sink.i40, 16
-  %4 = lshr i32 %.sink.i40, 24
+  store i8 %i.ea, ptr %3, align 4
+  %6 = trunc i32 %.sink.i40 to i8
+  store i8 %6, ptr %4, align 8
+  %i.eb = lshr i32 %.sink.i40, 8                  ; 2 uses
+  %7 = trunc i32 %i.eb to i8
+  store i8 %7, ptr %5, align 1
+  %i.ec = lshr i32 %.sink.i40, 16                 ; 2 uses
+  %8 = trunc i32 %i.ec to i8
+  store i8 %8, ptr %i.z, align 2
+  store i8 %.sroa.9.sroa.5.0.extract.trunc, ptr %i.aa, align 1
   store i8 %i.cn, ptr %i.ab, align 4
   store i8 %i.cp, ptr %i.ac, align 1
   store i8 %i.cr, ptr %i.ad, align 2
@@ -505,7 +514,8 @@ bb.ab:                                            ; preds = %bb.aa
   %i.eh = and i32 %.sink.i40, 255
   %i.ei = and i32 %i.eb, 255
   %i.ej = and i32 %i.ec, 255
-  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.57, i32 noundef %.sroa.0.3, i32 noundef %i.dz, i32 noundef %i.eh, i32 noundef %i.ei, i32 noundef %i.ej, i32 noundef %4, i32 noundef %i.co, i32 noundef %i.cq, i32 noundef %i.cs, i32 noundef %3) #6
+  %9 = zext i8 %i.ct to i32
+  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.57, i32 noundef %.sroa.0.3, i32 noundef %i.dz, i32 noundef %i.eh, i32 noundef %i.ei, i32 noundef %i.ej, i32 noundef %.sroa.9.sroa.5.0.extract.shift, i32 noundef %i.co, i32 noundef %i.cq, i32 noundef %i.cs, i32 noundef %9) #6
   br label %trace_xlnx_can_tx_data.exit
 
 trace_xlnx_can_tx_data.exit:                      ; preds = %bb.y, %bb.z, %bb.aa, %bb.ab

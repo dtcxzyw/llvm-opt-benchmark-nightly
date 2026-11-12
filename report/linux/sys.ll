@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local noundef range(i64 -14, 1) i64 @__ia32_compat_sys_sysinfo(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
-  %1 = alloca %struct.sysinfo, align 8            ; 25 uses
+  %1 = alloca %struct.sysinfo, align 8            ; 27 uses
   %2 = alloca %struct.compat_sysinfo, align 4     ; 17 uses
   %i.a = getelementptr i8, ptr %0, i64 40
   %i.b = load i64, ptr %i.a, align 8
@@ -215,18 +215,20 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.d = load i64, ptr %i.c, align 8              ; 3 uses
   %.not.i.i = icmp ult i64 %i.d, 4294967296
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %3 = load i64, ptr %i.e, align 8                ; 3 uses
-  %.not11.i.i = icmp ult i64 %3, 4294967296
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 68
+  %3 = load i32, ptr %i.e, align 4
+  %.not11.i.i = icmp eq i32 %3, 0
   %or.cond.i.i = select i1 %.not.i.i, i1 %.not11.i.i, i1 false
   br i1 %or.cond.i.i, label %.copy_to_user.exit_crit_edge.i.i, label %.preheader.i.i
 
 .copy_to_user.exit_crit_edge.i.i:                 ; preds = %bb.a
-  %.phi.trans.insert.i.i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8
+  %.phi.trans.insert.i.i.a = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.pre.i.i.a = load i64, ptr %.phi.trans.insert.i.i.a, align 8
-  %.phi.trans.insert21.i.i = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %.phi.trans.insert21.i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.pre22.i.i = load i64, ptr %.phi.trans.insert21.i.i, align 8
-  %.phi.trans.insert23.i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %.phi.trans.insert23.i.i = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.pre24.i.i = load i64, ptr %.phi.trans.insert23.i.i, align 8
   %.phi.trans.insert25.i.i = getelementptr inbounds nuw i8, ptr %1, i64 72
   %.pre26.i.i = load i64, ptr %.phi.trans.insert25.i.i, align 8
@@ -274,8 +276,10 @@ bb.b:                                             ; preds = %._crit_edge.i.i, %.
   %i.v = load i64, ptr %i.u, align 8
   %i.w = lshr i64 %i.v, %.0.lcssa.i.i             ; 2 uses
   store i64 %i.w, ptr %i.u, align 8
-  %i.x = lshr i64 %3, %.0.lcssa.i.i               ; 2 uses
-  store i64 %i.x, ptr %i.e, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %5 = load i64, ptr %4, align 8
+  %i.x = lshr i64 %5, %.0.lcssa.i.i               ; 2 uses
+  store i64 %i.x, ptr %4, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.z = load i64, ptr %i.y, align 8
   %i.aa = lshr i64 %i.z, %.0.lcssa.i.i            ; 2 uses
@@ -295,10 +299,10 @@ __se_compat_sys_sysinfo.exit:                     ; preds = %.copy_to_user.exit_
   %i.ai = phi i64 [ %.pre30.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.ag, %bb.b ]
   %i.aj = phi i64 [ %.pre28.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.ad, %bb.b ]
   %i.ak = phi i64 [ %.pre26.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.aa, %bb.b ]
-  %i.al = phi i64 [ %3, %.copy_to_user.exit_crit_edge.i.i ], [ %i.x, %bb.b ]
-  %i.am = phi i64 [ %.pre24.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.w, %bb.b ]
-  %i.an = phi i64 [ %.pre22.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.t, %bb.b ]
-  %i.ao = phi i64 [ %.pre.i.i.a, %.copy_to_user.exit_crit_edge.i.i ], [ %i.q, %bb.b ]
+  %i.al = phi i64 [ %.pre24.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.x, %bb.b ]
+  %i.am = phi i64 [ %.pre22.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.w, %bb.b ]
+  %i.an = phi i64 [ %.pre.i.i.a, %.copy_to_user.exit_crit_edge.i.i ], [ %i.t, %bb.b ]
+  %i.ao = phi i64 [ %.pre.i.i, %.copy_to_user.exit_crit_edge.i.i ], [ %i.q, %bb.b ]
   %i.ap = phi i64 [ %i.d, %.copy_to_user.exit_crit_edge.i.i ], [ %i.n, %bb.b ]
   %i.aq = and i64 %i.b, 4294967295
   %i.ar = inttoptr i64 %i.aq to ptr

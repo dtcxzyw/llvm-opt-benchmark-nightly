@@ -205,7 +205,7 @@ _ZN4mlir6linalg8LinalgOp14getNumDpsInitsEv.exit:  ; preds = %bb.a, %bb.b
   br i1 %.not, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %_ZN4mlir6linalg8LinalgOp14getNumDpsInitsEv.exit
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.k = load i32, ptr %i.j, align 4
   %i.l = and i32 %i.k, 8388608
   %.not.i.i = icmp eq i32 %i.l, 0
@@ -291,8 +291,9 @@ bb.g:                                             ; preds = %_ZN4mlir6linalg8Lin
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !50, !noalias !352
   call void %i.aw(ptr dead_on_unwind nonnull writable sret(%"class.llvm::SmallVector.17") align 8 %7, ptr noundef nonnull %2, ptr noundef nonnull %1) #21, !inline_history !143
   %i.ax = load ptr, ptr %7, align 8, !tbaa !65
-  %8 = load i32, ptr %i.j, align 4
-  %.not.i.i14 = icmp ult i32 %8, 16777216
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 47 ; 2 uses
+  %9 = load i8, ptr %8, align 1
+  %.not.i.i14 = icmp eq i8 %9, 0
   br i1 %.not.i.i14, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge
@@ -320,8 +321,8 @@ bb.j:                                             ; preds = %_ZN4mlir9Operation7
 
 _ZN4mlir9Operation13getAttrOfTypeINS_20DenseIntElementsAttrEEET_N4llvm9StringRefE.exit: ; preds = %_ZN4mlir9Operation7getAttrEN4llvm9StringRefE.exit.i, %bb.j
   %.sroa.02.0.i.i.i = phi i64 [ %i.bg, %bb.j ], [ 0, %_ZN4mlir9Operation7getAttrEN4llvm9StringRefE.exit.i ]
-  %9 = load i32, ptr %i.j, align 4
-  %.not.i.i15 = icmp ult i32 %9, 16777216
+  %10 = load i8, ptr %8, align 1
+  %.not.i.i15 = icmp eq i8 %10, 0
   br i1 %.not.i.i15, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %_ZN4mlir9Operation13getAttrOfTypeINS_20DenseIntElementsAttrEEET_N4llvm9StringRefE.exit
@@ -724,9 +725,9 @@ _ZN4llvm6detail12DenseSetImplIlNS_13SmallDenseMapIlNS0_13DenseSetEmptyELj4ENS_12
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden ptr @_ZN4mlir9Operation13getAttrOfTypeINS_20DenseIntElementsAttrEEET_N4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %1, i64 %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %3 = load i32, ptr %i.a, align 4
-  %.not.i = icmp ult i32 %3, 16777216
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 47
+  %3 = load i8, ptr %i.a, align 1
+  %.not.i = icmp eq i8 %3, 0
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

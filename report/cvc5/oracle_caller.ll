@@ -202,7 +202,7 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit:  ; preds = %bb.e, %bb.f, %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %i.aq = zext i1 %i.ao to i64
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %i.aq
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !99, !noalias !144 ; 11 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !99, !noalias !144 ; 12 uses
   store ptr %i.as, ptr %3, align 8, !tbaa !14, !alias.scope !144
   %i.at = load i64, ptr %i.as, align 8, !noalias !144 ; 3 uses
   %i.au = lshr i64 %i.at, 40
@@ -258,7 +258,7 @@ bb.m:                                             ; preds = %bb.l
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit24, %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.as, i64 8 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.bp = load i64, ptr %i.bo, align 8
   %i.bq = trunc i64 %i.bp to i32
   %i.br = and i32 %i.bq, 1023                     ; 2 uses
@@ -270,12 +270,14 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %_ZNK4cvc58internal1
 bb.n:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
   %i.bv = icmp eq i32 %i.bu, 2
   %spec.select.v.i.i = select i1 %i.bv, i64 32, i64 24 ; 2 uses
-  %6 = load i64, ptr %i.bo, align 8
-  %7 = lshr i64 %6, 29
-  %.idx = and i64 %7, 536870904
-  %8 = add nuw nsw i64 %.idx, 24                  ; 2 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.as, i64 %8
-  %.not3946 = icmp samesign eq i64 %spec.select.v.i.i, %8
+  %6 = getelementptr inbounds nuw i8, ptr %i.as, i64 12
+  %7 = load i32, ptr %6, align 4
+  %8 = shl i32 %7, 3
+  %9 = and i32 %8, 536870904
+  %narrow = add nuw nsw i32 %9, 24
+  %10 = zext nneg i32 %narrow to i64              ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.as, i64 %10
+  %.not3946 = icmp samesign eq i64 %spec.select.v.i.i, %10
   br i1 %.not3946, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.n
@@ -612,10 +614,10 @@ _ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEESt6vectorIS3_SaIS3_EESt4lessIS3_ES
   %spec.select.i.i31 = getelementptr inbounds nuw i8, ptr %.pre, i64 %spec.select.v.i.i ; 3 uses
   %i.ab = load ptr, ptr %1, align 8, !tbaa !14    ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %7 = load i64, ptr %i.ad, align 8
-  %8 = lshr i64 %7, 32
-  %9 = and i64 %8, 67108863
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 12
+  %7 = load i32, ptr %i.ad, align 4
+  %8 = and i32 %7, 67108863
+  %9 = zext nneg i32 %8 to i64
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %9 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.af = ptrtoint ptr %i.ae to i64

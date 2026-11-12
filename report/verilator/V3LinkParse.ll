@@ -204,17 +204,20 @@ bb.a:
   %i.n = load <2 x i32>, ptr %i.m, align 8, !tbaa !32
   store <2 x i32> %i.n, ptr %i.l, align 8, !tbaa !32
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.q = load i64, ptr %i.p, align 8
   %i.r = and i64 %i.q, 16777215
   %i.s = load i64, ptr %i.o, align 8
   %i.t = and i64 %i.s, -16777216
   %i.u = or disjoint i64 %i.t, %i.r               ; 2 uses
   store i64 %i.u, ptr %i.o, align 8
-  %2 = load i64, ptr %i.p, align 8
-  %3 = and i64 %2, 72057589742960640
+  %2 = getelementptr i8, ptr %1, i64 20
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 16777215
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 32
   %i.v = and i64 %i.u, -72057589742960641
-  %i.w = or disjoint i64 %i.v, %3
+  %i.w = or disjoint i64 %6, %i.v
   store i64 %i.w, ptr %i.o, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 24

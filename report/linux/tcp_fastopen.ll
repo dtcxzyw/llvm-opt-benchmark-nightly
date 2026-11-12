@@ -204,10 +204,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %i.b = getelementptr i8, ptr %0, i64 1921       ; 3 uses
-  %3 = load i16, ptr %i.b, align 1
-  %4 = and i16 %3, 256
-  %.not = icmp eq i16 %4, 0
+  %i.b = getelementptr i8, ptr %0, i64 1922
+  %3 = load i8, ptr %i.b, align 1
+  %4 = and i8 %3, 1
+  %.not = icmp eq i8 %4, 0
   br i1 %.not, label %bb.o, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -271,7 +271,8 @@ bb.g:                                             ; preds = %bb.f, %bb.d, %bb.c
   br i1 %.not.i15.i, label %bb.h, label %tcp_fastopen_no_cookie.exit.thread.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ad = load i16, ptr %i.b, align 1             ; 2 uses
+  %5 = getelementptr i8, ptr %0, i64 1921         ; 2 uses
+  %i.ad = load i16, ptr %5, align 1               ; 2 uses
   %i.ae = and i16 %i.ad, 512
   %.not7.i.i = icmp eq i16 %i.ae, 0
   br i1 %.not7.i.i, label %bb.i, label %tcp_fastopen_no_cookie.exit.thread.i
@@ -304,7 +305,7 @@ tcp_fastopen_no_cookie.exit.thread17.i:           ; preds = %tcp_fastopen_no_coo
 bb.j:                                             ; preds = %tcp_fastopen_no_cookie.exit.thread17.i
   %i.ao = and i16 %i.ad, -3585
   %i.ap = or disjoint i16 %i.ao, 1024
-  store i16 %i.ap, ptr %i.b, align 1
+  store i16 %i.ap, ptr %5, align 1
   br label %tcp_fastopen_cookie_check.exit
 
 bb.k:                                             ; preds = %tcp_fastopen_no_cookie.exit.thread.i, %tcp_fastopen_no_cookie.exit.thread17.i

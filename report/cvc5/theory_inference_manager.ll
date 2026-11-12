@@ -204,8 +204,8 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit175.sink.split: ; preds = %.no
   br label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit175
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit175: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit175.sink.split, %bb.aa, %bb.ab, %bb.x, %bb.y
-  %i.du = phi ptr [ %i.dh, %bb.aa ], [ %i.cf, %bb.y ], [ %i.dh, %bb.ab ], [ %i.cf, %bb.x ], [ %.sink428, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit175.sink.split ] ; 6 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 8 ; 2 uses
+  %i.du = phi ptr [ %i.dh, %bb.aa ], [ %i.cf, %bb.y ], [ %i.dh, %bb.ab ], [ %i.cf, %bb.x ], [ %.sink428, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit175.sink.split ] ; 7 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   %i.dw = load i64, ptr %i.dv, align 8
   %i.dx = and i64 %i.dw, 1023
   %i.dy = icmp eq i64 %i.dx, 21
@@ -218,12 +218,14 @@ bb.ac:                                            ; preds = %_ZN4cvc58internal12
 bb.ad:                                            ; preds = %bb.ac
   %i.ea = icmp eq i32 %i.dz, 2
   %spec.select.v.i.i = select i1 %i.ea, i64 32, i64 24 ; 2 uses
-  %29 = load i64, ptr %i.dv, align 8
-  %30 = lshr i64 %29, 29
-  %.idx = and i64 %30, 536870904
-  %31 = add nuw nsw i64 %.idx, 24                 ; 2 uses
-  %i.eb = getelementptr inbounds nuw i8, ptr %i.du, i64 %31
-  %.not352371 = icmp samesign eq i64 %spec.select.v.i.i, %31
+  %29 = getelementptr inbounds nuw i8, ptr %i.du, i64 12
+  %30 = load i32, ptr %29, align 4
+  %31 = shl i32 %30, 3
+  %32 = and i32 %31, 536870904
+  %narrow = add nuw nsw i32 %32, 24
+  %33 = zext nneg i32 %narrow to i64              ; 2 uses
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.du, i64 %33
+  %.not352371 = icmp samesign eq i64 %spec.select.v.i.i, %33
   br i1 %.not352371, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ad
@@ -626,10 +628,10 @@ bb.b:                                             ; preds = %bb.a
   %spec.select.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select.v.i.i ; 2 uses
   %i.h = load ptr, ptr %1, align 8, !tbaa !113    ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %6 = load i64, ptr %i.j, align 8
-  %7 = lshr i64 %6, 32
-  %8 = and i64 %7, 67108863
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 12
+  %6 = load i32, ptr %i.j, align 4
+  %7 = and i32 %6, 67108863
+  %8 = zext nneg i32 %7 to i64
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %8 ; 2 uses
   %.not15 = icmp eq ptr %spec.select.i.i, %i.k
   br i1 %.not15, label %.loopexit, label %.lr.ph

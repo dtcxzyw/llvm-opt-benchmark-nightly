@@ -205,7 +205,7 @@ bb.a:
   %i.g = load i16, ptr %i.f, align 8
   %i.h = and i16 %i.g, -4096
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.j = load i64, ptr %i.i, align 16             ; 4 uses
+  %i.j = load i64, ptr %i.i, align 16             ; 5 uses
   %i.k = lshr i64 %i.j, 34
   %i.l = trunc i64 %i.k to i16
   %i.m = and i16 %i.l, 16383
@@ -228,10 +228,14 @@ _ZNK5clang17FunctionProtoType14getEllipsisLocEv.exit: ; preds = %bb.a, %bb.b
   %.sroa.0.0.i = phi i32 [ %i.t, %bb.b ], [ 0, %bb.a ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 %.sroa.0.0.i, ptr %i.u, align 8, !tbaa !1081
+  %2 = lshr i64 %i.j, 31
+  %3 = trunc i64 %2 to i16
+  %4 = and i16 %3, 2
   %i.v = lshr i64 %i.j, 31
   %i.w = trunc i64 %i.v to i16
-  %i.x = and i16 %i.w, 6
-  %i.y = or disjoint i16 %i.x, %i.p               ; 4 uses
+  %i.x = and i16 %i.w, 4
+  %5 = or disjoint i16 %i.x, %4
+  %i.y = or disjoint i16 %5, %i.p                 ; 4 uses
   store i16 %i.y, ptr %i.f, align 8
   tail call void @_ZNK5clang17FunctionProtoType20getExceptionSpecInfoEv(ptr dead_on_unwind nonnull writable sret(%"struct.clang::FunctionProtoType::ExceptionSpecInfo") align 8 %i.c, ptr noundef nonnull align 16 dereferenceable(48) %1)
   %i.z = load i64, ptr %i.i, align 16             ; 11 uses

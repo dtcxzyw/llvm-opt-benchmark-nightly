@@ -202,10 +202,10 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48
   store ptr %0, ptr %i.g, align 8, !tbaa !92
   call void @_ZN4llvm11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef null, i64 noundef 0, i32 noundef 0) #18
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %5 = load i64, ptr %i.h, align 8
-  %6 = and i64 %5, 4294967296
-  %.not = icmp eq i64 %6, 0                       ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 52
+  %5 = load i32, ptr %i.h, align 4
+  %6 = and i32 %5, 1
+  %.not = icmp eq i32 %6, 0                       ; 2 uses
   %i.i = select i1 %.not, ptr @.str.1, ptr @.str  ; 2 uses
   %i.j = select i1 %.not, i64 8, i64 14           ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -258,7 +258,8 @@ _ZN4llvm11raw_ostreamlsEPKc.exit4:                ; preds = %bb.d, %bb.e
   %.0.i.i3 = phi ptr [ %i.ac, %bb.d ], [ %.0.i.i, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  %i.ag = load i64, ptr %i.h, align 8             ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.ag = load i64, ptr %7, align 8               ; 2 uses
   %i.ah = and i64 %i.ag, 4294967296
   %.not.i = icmp ne i64 %i.ah, 0                  ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 56

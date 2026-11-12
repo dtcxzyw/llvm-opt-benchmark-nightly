@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.noexc, %bb.b
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.i = load i16, ptr %i.h, align 8
   %i.j = and i16 %i.i, 15
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -218,10 +218,13 @@ bb.c:                                             ; preds = %.noexc, %bb.b
   %i.q = and i16 %i.n, -241
   %i.r = or disjoint i16 %i.q, %i.p               ; 2 uses
   store i16 %i.r, ptr %i.k, align 8
-  %2 = load i16, ptr %i.h, align 8
-  %3 = and i16 %2, 3840
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 9
+  %3 = load i8, ptr %2, align 1
+  %4 = and i8 %3, 15
+  %5 = zext nneg i8 %4 to i16
+  %6 = shl nuw nsw i16 %5, 8
   %i.s = and i16 %i.r, -3841
-  %i.t = or disjoint i16 %i.s, %3
+  %i.t = or disjoint i16 %6, %i.s
   store i16 %i.t, ptr %i.k, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -256,7 +259,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.noexc.1, %bb.d
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ah = load i16, ptr %i.ag, align 8
   %i.ai = and i16 %i.ah, 15
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
@@ -269,10 +272,13 @@ bb.f:                                             ; preds = %.noexc.1, %bb.d
   %i.ap = and i16 %i.am, -241
   %i.aq = or disjoint i16 %i.ap, %i.ao            ; 2 uses
   store i16 %i.aq, ptr %i.aj, align 8
-  %4 = load i16, ptr %i.ag, align 8
-  %5 = and i16 %4, 3840
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 33
+  %8 = load i8, ptr %7, align 1
+  %9 = and i8 %8, 15
+  %10 = zext nneg i8 %9 to i16
+  %11 = shl nuw nsw i16 %10, 8
   %i.ar = and i16 %i.aq, -3841
-  %i.as = or disjoint i16 %i.ar, %5
+  %i.as = or disjoint i16 %11, %i.ar
   store i16 %i.as, ptr %i.aj, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 34
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 34
@@ -307,7 +313,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %.noexc.2, %bb.g
-  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.bg = load i16, ptr %i.bf, align 8
   %i.bh = and i16 %i.bg, 15
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
@@ -320,10 +326,13 @@ bb.i:                                             ; preds = %.noexc.2, %bb.g
   %i.bo = and i16 %i.bl, -241
   %i.bp = or disjoint i16 %i.bo, %i.bn            ; 2 uses
   store i16 %i.bp, ptr %i.bi, align 8
-  %6 = load i16, ptr %i.bf, align 8
-  %7 = and i16 %6, 3840
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 57
+  %13 = load i8, ptr %12, align 1
+  %14 = and i8 %13, 15
+  %15 = zext nneg i8 %14 to i16
+  %16 = shl nuw nsw i16 %15, 8
   %i.bq = and i16 %i.bp, -3841
-  %i.br = or disjoint i16 %i.bq, %7
+  %i.br = or disjoint i16 %16, %i.bq
   store i16 %i.br, ptr %i.bi, align 8
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 58
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 58
@@ -358,7 +367,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %.noexc.3, %bb.j
-  %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.cf = load i16, ptr %i.ce, align 8
   %i.cg = and i16 %i.cf, 15
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
@@ -371,10 +380,13 @@ bb.l:                                             ; preds = %.noexc.3, %bb.j
   %i.cn = and i16 %i.ck, -241
   %i.co = or disjoint i16 %i.cn, %i.cm            ; 2 uses
   store i16 %i.co, ptr %i.ch, align 8
-  %8 = load i16, ptr %i.ce, align 8
-  %9 = and i16 %8, 3840
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 81
+  %18 = load i8, ptr %17, align 1
+  %19 = and i8 %18, 15
+  %20 = zext nneg i8 %19 to i16
+  %21 = shl nuw nsw i16 %20, 8
   %i.cp = and i16 %i.co, -3841
-  %i.cq = or disjoint i16 %i.cp, %9
+  %i.cq = or disjoint i16 %21, %i.cp
   store i16 %i.cq, ptr %i.ch, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 82
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 82
@@ -777,7 +789,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN5video14SMaterialLayeraSERKS0_.exit
 
 _ZN5video14SMaterialLayeraSERKS0_.exit:           ; preds = %bb.f, %bb.e, %bb.d, %bb.c
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.l = load i16, ptr %i.k, align 8
   %i.m = and i16 %i.l, 15
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -790,10 +802,13 @@ _ZN5video14SMaterialLayeraSERKS0_.exit:           ; preds = %bb.f, %bb.e, %bb.d,
   %i.t = and i16 %i.q, -241
   %i.u = or disjoint i16 %i.t, %i.s               ; 2 uses
   store i16 %i.u, ptr %i.n, align 8
-  %2 = load i16, ptr %i.k, align 8
-  %3 = and i16 %2, 3840
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 9
+  %3 = load i8, ptr %2, align 1
+  %4 = and i8 %3, 15
+  %5 = zext nneg i8 %4 to i16
+  %6 = shl nuw nsw i16 %5, 8
   %i.v = and i16 %i.u, -3841
-  %i.w = or disjoint i16 %i.v, %3
+  %i.w = or disjoint i16 %6, %i.v
   store i16 %i.w, ptr %i.n, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -834,7 +849,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN5video14SMaterialLayeraSERKS0_.exit.1
 
 _ZN5video14SMaterialLayeraSERKS0_.exit.1:         ; preds = %bb.k, %bb.j, %bb.i, %bb.h
-  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ak = load i16, ptr %i.aj, align 8
   %i.al = and i16 %i.ak, 15
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
@@ -847,10 +862,13 @@ _ZN5video14SMaterialLayeraSERKS0_.exit.1:         ; preds = %bb.k, %bb.j, %bb.i,
   %i.as = and i16 %i.ap, -241
   %i.at = or disjoint i16 %i.as, %i.ar            ; 2 uses
   store i16 %i.at, ptr %i.am, align 8
-  %4 = load i16, ptr %i.aj, align 8
-  %5 = and i16 %4, 3840
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 33
+  %8 = load i8, ptr %7, align 1
+  %9 = and i8 %8, 15
+  %10 = zext nneg i8 %9 to i16
+  %11 = shl nuw nsw i16 %10, 8
   %i.au = and i16 %i.at, -3841
-  %i.av = or disjoint i16 %i.au, %5
+  %i.av = or disjoint i16 %11, %i.au
   store i16 %i.av, ptr %i.am, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 34
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 34
@@ -891,7 +909,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN5video14SMaterialLayeraSERKS0_.exit.2
 
 _ZN5video14SMaterialLayeraSERKS0_.exit.2:         ; preds = %bb.p, %bb.o, %bb.n, %bb.m
-  %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.bj = load i16, ptr %i.bi, align 8
   %i.bk = and i16 %i.bj, 15
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
@@ -904,10 +922,13 @@ _ZN5video14SMaterialLayeraSERKS0_.exit.2:         ; preds = %bb.p, %bb.o, %bb.n,
   %i.br = and i16 %i.bo, -241
   %i.bs = or disjoint i16 %i.br, %i.bq            ; 2 uses
   store i16 %i.bs, ptr %i.bl, align 8
-  %6 = load i16, ptr %i.bi, align 8
-  %7 = and i16 %6, 3840
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 57
+  %13 = load i8, ptr %12, align 1
+  %14 = and i8 %13, 15
+  %15 = zext nneg i8 %14 to i16
+  %16 = shl nuw nsw i16 %15, 8
   %i.bt = and i16 %i.bs, -3841
-  %i.bu = or disjoint i16 %i.bt, %7
+  %i.bu = or disjoint i16 %16, %i.bt
   store i16 %i.bu, ptr %i.bl, align 8
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 58
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 58
@@ -948,7 +969,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN5video14SMaterialLayeraSERKS0_.exit.3
 
 _ZN5video14SMaterialLayeraSERKS0_.exit.3:         ; preds = %bb.u, %bb.t, %bb.s, %bb.r
-  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.ci = load i16, ptr %i.ch, align 8
   %i.cj = and i16 %i.ci, 15
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
@@ -961,10 +982,13 @@ _ZN5video14SMaterialLayeraSERKS0_.exit.3:         ; preds = %bb.u, %bb.t, %bb.s,
   %i.cq = and i16 %i.cn, -241
   %i.cr = or disjoint i16 %i.cq, %i.cp            ; 2 uses
   store i16 %i.cr, ptr %i.ck, align 8
-  %8 = load i16, ptr %i.ch, align 8
-  %9 = and i16 %8, 3840
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 81
+  %18 = load i8, ptr %17, align 1
+  %19 = and i8 %18, 15
+  %20 = zext nneg i8 %19 to i16
+  %21 = shl nuw nsw i16 %20, 8
   %i.cs = and i16 %i.cr, -3841
-  %i.ct = or disjoint i16 %i.cs, %9
+  %i.ct = or disjoint i16 %21, %i.cs
   store i16 %i.ct, ptr %i.ck, align 8
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 82
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 82

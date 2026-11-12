@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_ZN12_GLOBAL__N_118
   %.sroa.12.0.i = phi ptr [ null, %.lr.ph.i.i ], [ %.sroa.12.1.i, %_ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19PrototypeDescriptorEEE.exit100.i.i ] ; 3 uses
   %.sroa.7.0.i = phi ptr [ null, %.lr.ph.i.i ], [ %.sroa.7.1.i, %_ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19PrototypeDescriptorEEE.exit100.i.i ] ; 3 uses
   %.sroa.034.0.i = phi ptr [ null, %.lr.ph.i.i ], [ %.sroa.034.1.i, %_ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19PrototypeDescriptorEEE.exit100.i.i ] ; 5 uses
-  %.011.i.i = phi ptr [ %.val.i, %.lr.ph.i.i ], [ %i.hj, %_ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19PrototypeDescriptorEEE.exit100.i.i ] ; 14 uses
+  %.011.i.i = phi ptr [ %.val.i, %.lr.ph.i.i ], [ %i.hj, %_ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19PrototypeDescriptorEEE.exit100.i.i ] ; 15 uses
   %.not.i70.i.i = icmp eq ptr %.sroa.7.0.i, %.sroa.12.0.i
   br i1 %.not.i70.i.i, label %bb.j, label %bb.i
 
@@ -509,7 +509,7 @@ _ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19Pr
   %i.fz = trunc i32 %i.fy to i8
   %i.ga = getelementptr inbounds nuw i8, ptr %.pn.i, i64 37
   store i8 %i.fz, ptr %i.ga, align 1, !tbaa !204
-  %i.gb = getelementptr inbounds nuw i8, ptr %.011.i.i, i64 300 ; 10 uses
+  %i.gb = getelementptr inbounds nuw i8, ptr %.011.i.i, i64 300 ; 9 uses
   %i.gc = load i16, ptr %i.gb, align 4
   %i.gd = getelementptr inbounds nuw i8, ptr %.pn.i, i64 38 ; 11 uses
   %i.ge = and i16 %i.gc, 1
@@ -542,10 +542,13 @@ _ZN12_GLOBAL__N_118SemaSignatureTable8getIndexEN4llvm8ArrayRefIN5clang5RISCV19Pr
   %i.gv = and i16 %i.gt, -65
   %i.gw = or disjoint i16 %i.gv, %.lobit59.i.i    ; 2 uses
   store i16 %i.gw, ptr %i.gd, align 2
-  %7 = load i16, ptr %i.gb, align 4
-  %8 = and i16 %7, 768
+  %7 = getelementptr i8, ptr %.011.i.i, i64 301
+  %8 = load i8, ptr %7, align 1
+  %9 = and i8 %8, 3
+  %10 = zext nneg i8 %9 to i16
+  %11 = shl nuw nsw i16 %10, 8
   %i.gx = and i16 %i.gw, -769
-  %i.gy = or disjoint i16 %i.gx, %8               ; 2 uses
+  %i.gy = or disjoint i16 %11, %i.gx              ; 2 uses
   store i16 %i.gy, ptr %i.gd, align 2
   %i.gz = load i16, ptr %i.gb, align 4
   %i.ha = and i16 %i.gz, 3072

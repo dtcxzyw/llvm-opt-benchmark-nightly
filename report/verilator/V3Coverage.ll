@@ -204,7 +204,7 @@ _ZN7AstNode2isI8AstClass13AstNodeModuleEEbPKT0_.exit: ; preds = %bb.c
 _ZN7AstNode2isI8AstClass13AstNodeModuleEEbPKT0_.exit.thread: ; preds = %bb.c, %_ZN7AstNode2isI8AstClass13AstNodeModuleEEbPKT0_.exit
   %i.l = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #28 ; 9 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 6 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !166  ; 6 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !166  ; 7 uses
   %i.o = load <2 x i16>, ptr %i.n, align 8, !tbaa !325
   store <2 x i16> %i.o, ptr %i.l, align 8, !tbaa !325
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 4
@@ -218,8 +218,14 @@ _ZN7AstNode2isI8AstClass13AstNodeModuleEEbPKT0_.exit.thread: ; preds = %bb.c, %_
   %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.x = load i64, ptr %i.w, align 8
-  %i.y = and i64 %i.x, 72057589759737855
-  store i64 %i.y, ptr %i.v, align 8
+  %i.y = and i64 %i.x, 16777215
+  %11 = getelementptr i8, ptr %i.n, i64 20
+  %12 = load i32, ptr %11, align 4
+  %13 = and i32 %12, 16777215
+  %14 = zext nneg i32 %13 to i64
+  %15 = shl nuw nsw i64 %14, 32
+  %16 = or disjoint i64 %15, %i.y
+  store i64 %16, ptr %i.v, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.aa = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.ab = load i16, ptr %i.aa, align 8, !tbaa !293
@@ -622,17 +628,20 @@ bb.a:
   %i.n = load <2 x i32>, ptr %i.m, align 8, !tbaa !34
   store <2 x i32> %i.n, ptr %i.l, align 8, !tbaa !34
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.q = load i64, ptr %i.p, align 8
   %i.r = and i64 %i.q, 16777215
   %i.s = load i64, ptr %i.o, align 8
   %i.t = and i64 %i.s, -16777216
   %i.u = or disjoint i64 %i.t, %i.r               ; 2 uses
   store i64 %i.u, ptr %i.o, align 8
-  %2 = load i64, ptr %i.p, align 8
-  %3 = and i64 %2, 72057589742960640
+  %2 = getelementptr i8, ptr %1, i64 20
+  %3 = load i32, ptr %2, align 4
+  %4 = and i32 %3, 16777215
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 32
   %i.v = and i64 %i.u, -72057589742960641
-  %i.w = or disjoint i64 %i.v, %3
+  %i.w = or disjoint i64 %6, %i.v
   store i64 %i.w, ptr %i.o, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 24

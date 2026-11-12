@@ -204,9 +204,9 @@ bb.a:
   %2 = alloca %"class.mlir::StringAttr", align 8  ; 4 uses
   %i.a = inttoptr i64 %0 to ptr                   ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 3 uses
-  %3 = load i32, ptr %i.b, align 4
-  %.not.i.i.i = icmp ult i32 %3, 16777216
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 47
+  %3 = load i8, ptr %i.b, align 1
+  %.not.i.i.i = icmp eq i8 %3, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -313,7 +313,8 @@ bb.l:                                             ; preds = %_ZN4llvm11raw_ostre
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit32.i
 
 _ZN4llvm11raw_ostreamlsEPKc.exit32.i:             ; preds = %bb.l, %bb.k
-  %i.aw = load i32, ptr %i.b, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
+  %i.aw = load i32, ptr %4, align 4
   %i.ax = and i32 %i.aw, 8388608
   %.not.i.i33.i = icmp eq i32 %i.ax, 0
   br i1 %.not.i.i33.i, label %._crit_edge.i, label %_ZN4mlir9Operation11getOperandsEv.exit.i, !prof !223
@@ -427,7 +428,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit45.i:             ; preds = %bb.s, %bb.r
   br i1 %.not.i, label %._crit_edge.i, label %bb.m
 
 ._crit_edge164.i:                                 ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit57.i, %._crit_edge.i
-  %i.cz = load i32, ptr %i.b, align 4             ; 3 uses
+  %i.cz = load i32, ptr %4, align 4               ; 3 uses
   %i.da = and i32 %i.cz, 8388607                  ; 2 uses
   %i.db = icmp eq i32 %i.da, 0
   br i1 %i.db, label %_ZZN12_GLOBAL__N_124TestLivenessAnalysisPass14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit, label %_ZN4mlir9Operation10getRegionsEv.exit.i

@@ -204,9 +204,9 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 728
   %i.v = load i64, ptr %i.u, align 8
   %i.w = add i64 %i.t, -1
-  %i.x = inttoptr i64 %i.w to ptr                 ; 3 uses
+  %i.x = inttoptr i64 %i.w to ptr                 ; 4 uses
   store atomic volatile i64 %i.v, ptr %i.x monotonic, align 8
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   store atomic volatile i64 1099511627776, ptr %i.y monotonic, align 8
   %i.z = load ptr, ptr %i.d, align 8              ; 2 uses
   %i.aa = load ptr, ptr %i.f, align 8
@@ -225,9 +225,10 @@ _ZN2v88internal14SmiStringCache3NewINS0_7IsolateEEENS0_12DirectHandleIS1_EEPT_i.
   store ptr %i.af, ptr %i.d, align 8
   store i64 %i.t, ptr %.0.i.i.i.i, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  %1 = load i64, ptr %i.y, align 8
-  %2 = ashr i64 %1, 32
-  %i.ah = tail call { i64, ptr } asm sideeffect "cld;rep ; stosq", "=&{cx},=&{di},{ax},0,1,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(i64 0, i64 %2, ptr nonnull %i.ag) #10, !srcloc !771 ; 0 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.x, i64 12
+  %2 = load i32, ptr %1, align 4
+  %3 = sext i32 %2 to i64
+  %i.ah = tail call { i64, ptr } asm sideeffect "cld;rep ; stosq", "=&{cx},=&{di},{ax},0,1,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(i64 0, i64 %3, ptr nonnull %i.ag) #10, !srcloc !771 ; 0 uses
   %i.ai = load i64, ptr %.0.i.i.i.i, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.c, i64 9608
   store i64 %i.ai, ptr %i.aj, align 8

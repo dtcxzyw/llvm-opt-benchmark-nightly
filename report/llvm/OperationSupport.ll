@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %4 = load i32, ptr %i.h, align 4                ; 2 uses
-  %.not.i = icmp ult i32 %4, 16777216
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 47
+  %4 = load i8, ptr %i.h, align 1
+  %.not.i = icmp eq i8 %4, 0
   br i1 %.not.i, label %_ZN4mlir9Operation20getPropertiesStorageEv.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -215,7 +215,9 @@ bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 112
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !38
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.m = lshr i32 %4, 23
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %6 = load i32, ptr %5, align 4
+  %i.m = lshr i32 %6, 23
   %.lobit.i.i.i.i.i.i.i = and i32 %i.m, 1
   %i.n = zext nneg i32 %.lobit.i.i.i.i.i.i.i to i64
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %i.n
@@ -618,9 +620,9 @@ bb.a:
   %3 = alloca %"class.mlir::StringAttr", align 8  ; 4 uses
   %4 = alloca %"class.mlir::NamedAttrList", align 8 ; 10 uses
   store ptr %1, ptr %3, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %5 = load i32, ptr %i.a, align 4
-  %.not = icmp ult i32 %5, 16777216
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 47
+  %5 = load i8, ptr %i.a, align 1
+  %.not = icmp eq i8 %5, 0
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

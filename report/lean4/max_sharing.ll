@@ -202,16 +202,14 @@ bb.l:                                             ; preds = %bb.k
 
 _ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread: ; preds = %_ZNKSt8__detail15_Hashtable_baseIN4lean4exprES2_NS_9_IdentityENS1_16is_bi_equal_procENS1_9expr_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE9_M_equalsERKS2_mRKNS_16_Hash_node_valueIS2_Lb1EEE.exit.thread.i.i.i.i, %bb.h, %bb.c, %bb.e, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit
   tail call void @_ZN4lean4exprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %0)
-  %i.ao = load ptr, ptr %2, align 8, !tbaa !31    ; 13 uses
-  %i.ap = getelementptr i8, ptr %i.ao, i64 4
-  %.val.i.i.i = load i32, ptr %i.ap, align 4
-  %23 = lshr i32 %.val.i.i.i, 24
-  %trunc = trunc nuw i32 %23 to i8
-  switch i8 %trunc, label %bb.fh [
-    i8 0, label %bb.n
-    i8 9, label %bb.n
-    i8 2, label %bb.n
-    i8 1, label %bb.n
+  %i.ao = load ptr, ptr %2, align 8, !tbaa !31    ; 15 uses
+  %i.ap = getelementptr i8, ptr %i.ao, i64 7
+  %.val.i.i.i = load i8, ptr %i.ap, align 1
+  switch i8 %.val.i.i.i, label %bb.fh [
+    i8 0, label %23
+    i8 9, label %23
+    i8 2, label %23
+    i8 1, label %23
     i8 4, label %bb.v
     i8 3, label %bb.aj
     i8 10, label %bb.az
@@ -227,7 +225,13 @@ bb.m:                                             ; preds = %bb.fh, %bb.u
           cleanup
   br label %bb.fi
 
-bb.n:                                             ; preds = %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread
+23:                                               ; preds = %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread, %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread
+  %24 = ptrtoint ptr %i.ao to i64
+  %25 = and i64 %24, 1
+  %.not.i.i.i.i58 = icmp eq i64 %25, 0
+  br i1 %.not.i.i.i.i58, label %bb.n, label %_ZN4lean3incEP11lean_object.exit.i.i
+
+bb.n:                                             ; preds = %23
   %.val.i.i.i.i.i59 = load i32, ptr %i.ao, align 4, !tbaa !33 ; 3 uses
   %i.ar = icmp sgt i32 %.val.i.i.i.i.i59, 0
   br i1 %i.ar, label %bb.o, label %bb.p, !prof !34
@@ -246,8 +250,8 @@ bb.q:                                             ; preds = %bb.p
   %.pre.i.i = load ptr, ptr %2, align 8, !tbaa !31
   br label %_ZN4lean3incEP11lean_object.exit.i.i
 
-_ZN4lean3incEP11lean_object.exit.i.i:             ; preds = %bb.q, %bb.p, %bb.o
-  %24 = phi ptr [ %.pre.i.i, %bb.q ], [ %i.ao, %bb.o ], [ %i.ao, %bb.p ]
+_ZN4lean3incEP11lean_object.exit.i.i:             ; preds = %bb.q, %bb.p, %bb.o, %23
+  %26 = phi ptr [ %i.ao, %23 ], [ %i.ao, %bb.o ], [ %i.ao, %bb.p ], [ %.pre.i.i, %bb.q ]
   %i.au = load ptr, ptr %0, align 8, !tbaa !31    ; 4 uses
   %i.av = ptrtoint ptr %i.au to i64
   %i.aw = and i64 %i.av, 1
@@ -273,7 +277,7 @@ bb.u:                                             ; preds = %bb.t
           to label %_ZN4lean4expraSERKS0_.exit unwind label %bb.m
 
 _ZN4lean4expraSERKS0_.exit:                       ; preds = %bb.u, %_ZN4lean3incEP11lean_object.exit.i.i, %bb.s, %bb.t
-  store ptr %24, ptr %0, align 8, !tbaa !31
+  store ptr %26, ptr %0, align 8, !tbaa !31
   br label %bb.fh
 
 bb.v:                                             ; preds = %_ZNSt13unordered_setIN4lean4exprENS0_9expr_hashENS0_16is_bi_equal_procE16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread
@@ -676,11 +680,9 @@ _ZNSt13unordered_setIN4lean5levelENS0_10level_hashESt8equal_toIS1_E16mi_stl_allo
   br i1 %.not.i, label %_ZNK4lean5level4kindEv.exit, label %_ZN4lean3incEP11lean_object.exit.i.i
 
 _ZNK4lean5level4kindEv.exit:                      ; preds = %_ZNSt13unordered_setIN4lean5levelENS0_10level_hashESt8equal_toIS1_E16mi_stl_allocatorIS1_EE4findERKS1_.exit.thread
-  %i.al = getelementptr i8, ptr %i.ai, i64 4
-  %.val.i = load i32, ptr %i.al, align 4
-  %12 = lshr i32 %.val.i, 24
-  %trunc = trunc nuw i32 %12 to i8
-  switch i8 %trunc, label %bb.ch [
+  %i.al = getelementptr i8, ptr %i.ai, i64 7
+  %.val.i = load i8, ptr %i.al, align 1
+  switch i8 %.val.i, label %bb.ch [
     i8 0, label %bb.n
     i8 4, label %bb.n
     i8 5, label %bb.n

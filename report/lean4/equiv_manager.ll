@@ -202,7 +202,7 @@ _ZN4lean10object_refD2Ev.exit:                    ; preds = %bb.a, %bb.c, %bb.d,
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN4lean13equiv_manager13is_equiv_coreERKNS_4exprES3_(ptr noundef nonnull align 8 dereferenceable(81) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !31     ; 4 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !31     ; 5 uses
   %i.b = load ptr, ptr %2, align 8, !tbaa !31     ; 5 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %_ZN4leaneqERKNS_3natES2_.exit, label %bb.b
@@ -211,11 +211,16 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.e = load i8, ptr %i.d, align 8, !tbaa !72, !range !45, !noundef !46
   %i.f = trunc nuw i8 %i.e to i1
-  %3 = getelementptr i8, ptr %i.a, i64 4
-  %.val.i.i = load i32, ptr %3, align 4           ; 2 uses
-  br i1 %i.f, label %bb.c, label %._crit_edge.a
+  br i1 %i.f, label %bb.c, label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.b
+  %.phi.trans.insert = getelementptr i8, ptr %i.a, i64 7
+  %.val.i.i.i.i.pre = load i8, ptr %.phi.trans.insert, align 1
+  br label %._crit_edge.a
 
 bb.c:                                             ; preds = %bb.b
+  %3 = getelementptr i8, ptr %i.a, i64 4
+  %.val.i.i = load i32, ptr %3, align 4           ; 2 uses
   %i.g = lshr i32 %.val.i.i, 13
   %i.h = and i32 %i.g, 2040
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -233,17 +238,20 @@ bb.c:                                             ; preds = %bb.b
   %i.t = load i64, ptr %i.s, align 8, !tbaa !32
   %i.u = trunc i64 %i.t to i32
   %.not = icmp eq i32 %i.m, %i.u
+  %4 = lshr i32 %.val.i.i, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %.not, label %._crit_edge.a, label %_ZN4leaneqERKNS_3natES2_.exit
 
-._crit_edge.a:                                    ; preds = %bb.b, %bb.c
-  %4 = icmp ult i32 %.val.i.i, 16777216
-  br i1 %4, label %bb.d, label %bb.g
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.c
+  %.val.i.i.i.i = phi i8 [ %.val.i.i.i.i.pre, %._crit_edge ], [ %5, %bb.c ]
+  %6 = icmp eq i8 %.val.i.i.i.i, 0
+  br i1 %6, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %._crit_edge.a
-  %i.v = getelementptr i8, ptr %i.b, i64 4
-  %.val.i.i.i.i60 = load i32, ptr %i.v, align 4
-  %5 = icmp ult i32 %.val.i.i.i.i60, 16777216
-  br i1 %5, label %bb.e, label %bb.g
+  %i.v = getelementptr i8, ptr %i.b, i64 7
+  %.val.i.i.i.i60 = load i8, ptr %i.v, align 1
+  %7 = icmp eq i8 %.val.i.i.i.i60, 0
+  br i1 %7, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -297,23 +305,20 @@ _ZN4lean13equiv_manager4findEj.exit63:            ; preds = %bb.i
 
 bb.j:                                             ; preds = %_ZN4lean13equiv_manager4findEj.exit63
   %i.ar = load ptr, ptr %1, align 8, !tbaa !31
-  %i.as = getelementptr i8, ptr %i.ar, i64 4
-  %.val.i.i.i = load i32, ptr %i.as, align 4
+  %i.as = getelementptr i8, ptr %i.ar, i64 7
+  %.val.i.i.i = load i8, ptr %i.as, align 1
   %i.at = load ptr, ptr %2, align 8, !tbaa !31
-  %i.au = getelementptr i8, ptr %i.at, i64 4
-  %.val.i.i.i64 = load i32, ptr %i.au, align 4
-  %.not57.unshifted = xor i32 %.val.i.i.i64, %.val.i.i.i
-  %.not57 = icmp ult i32 %.not57.unshifted, 16777216
+  %i.au = getelementptr i8, ptr %i.at, i64 7
+  %.val.i.i.i64 = load i8, ptr %i.au, align 1
+  %.not57 = icmp eq i8 %.val.i.i.i, %.val.i.i.i64
   br i1 %.not57, label %bb.k, label %_ZN4leaneqERKNS_3natES2_.exit
 
 bb.k:                                             ; preds = %bb.j
   tail call void @_ZN4lean12check_systemEPKcb(ptr noundef nonnull @.str, i1 noundef zeroext false)
   %i.av = load ptr, ptr %1, align 8, !tbaa !31    ; 11 uses
-  %i.aw = getelementptr i8, ptr %i.av, i64 4
-  %.val.i.i.i65 = load i32, ptr %i.aw, align 4
-  %6 = lshr i32 %.val.i.i.i65, 24
-  %trunc = trunc nuw i32 %6 to i8
-  switch i8 %trunc, label %_ZN4leaneqERKNS_3natES2_.exit [
+  %i.aw = getelementptr i8, ptr %i.av, i64 7
+  %.val.i.i.i65 = load i8, ptr %i.aw, align 1
+  switch i8 %.val.i.i.i65, label %_ZN4leaneqERKNS_3natES2_.exit [
     i8 0, label %bb.l
     i8 4, label %bb.m
     i8 2, label %.split80

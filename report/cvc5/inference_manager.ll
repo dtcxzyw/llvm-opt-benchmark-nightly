@@ -204,13 +204,13 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.k, %bb.l, %bb.m, %bb.o, %bb.p, %bb.q
-  %i.bt = phi ptr [ %i.ak, %bb.k ], [ %i.ak, %bb.l ], [ %i.ak, %bb.m ], [ %i.bg, %bb.o ], [ %i.bg, %bb.p ], [ %i.bg, %bb.q ] ; 6 uses
+  %i.bt = phi ptr [ %i.ak, %bb.k ], [ %i.ak, %bb.l ], [ %i.ak, %bb.m ], [ %i.bg, %bb.o ], [ %i.bg, %bb.p ], [ %i.bg, %bb.q ] ; 7 uses
   %i.bu = load ptr, ptr %2, align 8, !tbaa !26
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load i64, ptr %i.bv, align 8
   %i.bx = and i64 %i.bw, 1023
   %i.by = icmp eq i64 %i.bx, 21
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 2 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   %i.ca = load i64, ptr %i.bz, align 8
   %i.cb = trunc i64 %i.ca to i32
   %i.cc = and i32 %i.cb, 1023                     ; 2 uses
@@ -222,12 +222,14 @@ bb.r:                                             ; preds = %bb.k, %bb.l, %bb.m,
 bb.s:                                             ; preds = %bb.r
   %i.cg = icmp eq i32 %i.cf, 2
   %spec.select.v.i.i = select i1 %i.cg, i64 32, i64 24 ; 2 uses
-  %23 = load i64, ptr %i.bz, align 8
-  %24 = lshr i64 %23, 29
-  %.idx = and i64 %24, 536870904
-  %25 = add nuw nsw i64 %.idx, 24                 ; 2 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.bt, i64 %25
-  %.not238 = icmp samesign eq i64 %spec.select.v.i.i, %25
+  %23 = getelementptr inbounds nuw i8, ptr %i.bt, i64 12
+  %24 = load i32, ptr %23, align 4
+  %25 = shl i32 %24, 3
+  %26 = and i32 %25, 536870904
+  %narrow = add nuw nsw i32 %26, 24
+  %27 = zext nneg i32 %narrow to i64              ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.bt, i64 %27
+  %.not238 = icmp samesign eq i64 %spec.select.v.i.i, %27
   br i1 %.not238, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.s
@@ -630,7 +632,7 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit: ; preds = %_
 bb.k:                                             ; preds = %bb.b
   %i.bp = load ptr, ptr %i.f, align 8, !tbaa !35  ; 2 uses
   %.not10.i.i.i = icmp eq ptr %i.bp, null
-  %.pre = load ptr, ptr %10, align 8, !tbaa !94   ; 2 uses
+  %.pre = load ptr, ptr %10, align 8, !tbaa !94   ; 3 uses
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit188, label %.lr.ph.i.i.i161
 
 .lr.ph.i.i.i161:                                  ; preds = %bb.k
@@ -1009,7 +1011,7 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE17_M_realloc_insertIJRK
   br label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit223
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit188: ; preds = %_ZNKSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_S3_ESt10_Select1stIS6_ESt4lessIS3_ESaIS6_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS6_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i, %bb.k, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb0EEESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit, %_ZNKSt3mapIN4cvc58internal12NodeTemplateILb0EEES3_St4lessIS3_ESaISt4pairIKS3_S3_EEE4findERS7_.exit
-  %i.gv = getelementptr inbounds nuw i8, ptr %.pre, i64 8 ; 2 uses
+  %i.gv = getelementptr inbounds nuw i8, ptr %.pre, i64 8
   %i.gw = load i64, ptr %i.gv, align 8
   %i.gx = and i64 %i.gw, 1023
   %i.gy = icmp eq i64 %i.gx, 319
@@ -1021,13 +1023,13 @@ bb.ac:                                            ; preds = %_ZNSt6vectorIN4cvc5
 
 _ZNK4cvc58internal12NodeTemplateILb0EE14getNumChildrenEv.exit: ; preds = %bb.ac
   %i.ha = icmp eq i32 %i.gz, 2
-  %13 = load i64, ptr %i.gv, align 8
-  %14 = lshr i64 %13, 32
-  %15 = and i64 %14, 67108863
-  %16 = sext i1 %i.ha to i64
-  %17 = add nsw i64 %15, %16                      ; 2 uses
-  %18 = and i64 %17, 4294967295                   ; 2 uses
-  %.not450 = icmp eq i64 %18, 0
+  %13 = getelementptr inbounds nuw i8, ptr %.pre, i64 12
+  %14 = load i32, ptr %13, align 4
+  %15 = and i32 %14, 67108863
+  %16 = sext i1 %i.ha to i32
+  %17 = add nsw i32 %15, %16                      ; 2 uses
+  %18 = zext i32 %17 to i64                       ; 2 uses
+  %.not450 = icmp eq i32 %17, 0
   br i1 %.not450, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit223, label %.lr.ph, !llvm.loop !468
 
 .lr.ph:                                           ; preds = %_ZNK4cvc58internal12NodeTemplateILb0EE14getNumChildrenEv.exit
@@ -1050,7 +1052,7 @@ bb.ad:                                            ; preds = %.lr.ph, %_ZNSt6vect
 
 bb.ae:                                            ; preds = %bb.ad
   %i.hm = xor i64 %.0436, -1
-  %i.hn = add nsw i64 %17, %i.hm
+  %i.hn = add nsw i64 %i.hm, %18
   %i.ho = select i1 %6, i64 %.0436, i64 %i.hn
   %i.hp = icmp eq i32 %i.hl, 2
   %i.hq = zext i1 %i.hp to i64

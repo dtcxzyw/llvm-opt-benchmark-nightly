@@ -204,7 +204,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.k = zext i1 %i.i to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.k
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !47, !noalias !88 ; 11 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !47, !noalias !88 ; 12 uses
   store ptr %i.m, ptr %2, align 8, !tbaa !49, !alias.scope !88
   %i.n = load i64, ptr %i.m, align 8, !noalias !88 ; 3 uses
   %i.o = lshr i64 %i.n, 40
@@ -233,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit
 
 _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit:  ; preds = %bb.b, %bb.c, %bb.d
-  %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = trunc i64 %i.aa to i32
   %i.ac = and i32 %i.ab, 1023                     ; 2 uses
@@ -245,12 +245,14 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit:  ; preds = %bb.b, %bb.c, %bb.d
 bb.e:                                             ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit
   %i.ag = icmp eq i32 %i.af, 2
   %spec.select.v.i.i = select i1 %i.ag, i64 32, i64 24 ; 2 uses
-  %5 = load i64, ptr %i.z, align 8
-  %6 = lshr i64 %5, 29
-  %.idx = and i64 %6, 536870904
-  %7 = add nuw nsw i64 %.idx, 24                  ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.m, i64 %7
-  %.not28 = icmp samesign eq i64 %spec.select.v.i.i, %7
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 12
+  %6 = load i32, ptr %5, align 4
+  %7 = shl i32 %6, 3
+  %8 = and i32 %7, 536870904
+  %narrow = add nuw nsw i32 %8, 24
+  %9 = zext nneg i32 %narrow to i64               ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.m, i64 %9
+  %.not28 = icmp samesign eq i64 %spec.select.v.i.i, %9
   br i1 %.not28, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
@@ -653,8 +655,8 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZN4cvc58internal8TypeNodeD2Ev.exit, %bb.a
   %.08 = phi i64 [ 0, %bb.a ], [ %i.cm, %_ZN4cvc58internal8TypeNodeD2Ev.exit ] ; 3 uses
-  %i.d = load ptr, ptr %2, align 8, !tbaa !66
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !66     ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load i64, ptr %i.e, align 8
   %i.g = trunc i64 %i.f to i32
   %i.h = and i32 %i.g, 1023                       ; 2 uses
@@ -665,12 +667,12 @@ bb.b:                                             ; preds = %_ZN4cvc58internal8T
 
 bb.c:                                             ; preds = %bb.b
   %i.l = icmp eq i32 %i.k, 2
-  %4 = load i64, ptr %i.e, align 8
-  %5 = lshr i64 %4, 32
-  %6 = and i64 %5, 67108863
-  %7 = sext i1 %i.l to i64
-  %8 = add nsw i64 %6, %7
-  %9 = and i64 %8, 4294967295
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
+  %5 = load i32, ptr %4, align 4
+  %6 = and i32 %5, 67108863
+  %7 = sext i1 %i.l to i32
+  %8 = add nsw i32 %6, %7
+  %9 = zext i32 %8 to i64
   %i.m = add nsw i64 %9, -1
   %i.n = icmp ult i64 %.08, %i.m
   br i1 %i.n, label %bb.k, label %bb.d

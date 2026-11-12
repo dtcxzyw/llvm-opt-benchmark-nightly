@@ -205,7 +205,7 @@ bb.a:
   %i.k = alloca i32, align 4                      ; 4 uses
   %i.l = alloca i32, align 4                      ; 4 uses
   %i.m = alloca i32, align 4                      ; 4 uses
-  %i.n = alloca [11 x i8], align 4                ; 7 uses
+  %i.n = alloca [11 x i8], align 4                ; 10 uses
   %i.o = icmp eq ptr %3, null
   br i1 %i.o, label %.critedge371, label %bb.b
 
@@ -608,7 +608,7 @@ bb.au:                                            ; preds = %bb.am
   br label %bb.av
 
 bb.av:                                            ; preds = %.sink.split, %bb.al
-  %.0323.ph = phi ptr [ %i.gy, %bb.al ], [ %i.ha, %.sink.split ] ; 7 uses
+  %.0323.ph = phi ptr [ %i.gy, %bb.al ], [ %i.ha, %.sink.split ] ; 8 uses
   %i.hy = getelementptr i8, ptr %i.ez, i64 52     ; 2 uses
   %i.hz = load i8, ptr %i.hy, align 4, !range !12, !noundef !13
   %i.ia = trunc nuw i8 %i.hz to i1
@@ -809,10 +809,22 @@ bb.bo:                                            ; preds = %bb.bm
   %i.li = getelementptr inbounds nuw i8, ptr %i.n, i64 5
   store i8 %i.lh, ptr %i.li, align 1
   %i.lj = getelementptr i8, ptr %.0323.ph, i64 4
-  %i.lk = load i32, ptr %i.lj, align 4
-  %i.ll = getelementptr inbounds nuw i8, ptr %i.n, i64 7
-  %4 = call i32 @llvm.bswap.i32(i32 %i.lk)
-  store i32 %4, ptr %i.ll, align 1
+  %4 = getelementptr i8, ptr %.0323.ph, i64 7
+  %5 = load i8, ptr %4, align 1
+  %6 = getelementptr inbounds nuw i8, ptr %i.n, i64 7
+  store i8 %5, ptr %6, align 1
+  %i.lk = load i32, ptr %i.lj, align 4            ; 3 uses
+  %7 = lshr i32 %i.lk, 16
+  %8 = trunc i32 %7 to i8
+  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 8
+  store i8 %8, ptr %9, align 4
+  %10 = lshr i32 %i.lk, 8
+  %11 = trunc i32 %10 to i8
+  %i.ll = getelementptr inbounds nuw i8, ptr %i.n, i64 9
+  store i8 %11, ptr %i.ll, align 1
+  %12 = trunc i32 %i.lk to i8
+  %13 = getelementptr inbounds nuw i8, ptr %i.n, i64 10
+  store i8 %12, ptr %13, align 2
   call void @proto_item_set_end(ptr noundef %i.gf, ptr noundef %0, i32 noundef %.4322)
   %i.lm = getelementptr i8, ptr %i.fy, i64 37
   %i.ln = load i8, ptr %i.lm, align 1, !range !12, !noundef !13
