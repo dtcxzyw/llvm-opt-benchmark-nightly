@@ -205,14 +205,10 @@ icv_pmr_write.exit:                               ; preds = %bb.j, %bb.k, %bb.l,
   %i.am = sub i32 8, %.val9.i
   %i.an = shl nsw i32 -1, %i.am
   %i.ao = zext i32 %i.an to i64
-  %3 = and i64 %2, %i.ao
-  %4 = getelementptr inbounds nuw i8, ptr %.val20, i64 616 ; 2 uses
-  %5 = load i64, ptr %4, align 8
-  %i.ap = and i64 %5, -4278190081
-  %6 = shl nuw nsw i64 %3, 24
-  %7 = and i64 %6, 4278190080
-  %8 = or disjoint i64 %7, %i.ap
-  store i64 %8, ptr %4, align 8
+  %i.ap = and i64 %2, %i.ao
+  %3 = trunc i64 %i.ap to i8
+  %4 = getelementptr i8, ptr %.val20, i64 619
+  store i8 %3, ptr %4, align 1
   tail call void @gicv3_cpuif_virt_irq_fiq_update(ptr noundef nonnull %.val20)
   br label %bb.v
 

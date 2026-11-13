@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.m
 
 bb.c:                                             ; preds = %bb.a
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 6
   %i.s = load i16, ptr %i.r, align 2
   %i.t = shl i16 %i.s, 8
   %i.u = ashr exact i16 %i.t, 8
@@ -236,11 +236,10 @@ bb.e:                                             ; preds = %bb.c
   store i32 %i.ag, ptr %6, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %7 = load i16, ptr %i.ai, align 4
-  store i16 %7, ptr %i.ah, align 4
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 6
-  %9 = load i16, ptr %i.r, align 2
-  %.lobit.i = and i16 %9, 256
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 6
+  %8 = load <2 x i16>, ptr %i.ai, align 4
+  %9 = and <2 x i16> %8, <i16 -1, i16 511>
+  store <2 x i16> %9, ptr %i.ah, align 4
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr null, ptr %i.aj, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -255,8 +254,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ap, ptr noundef nonnull align 8 dereferenceable(64) %i.aq, i64 64, i1 false)
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 104
   store ptr %2, ptr %i.ar, align 8
-  %10 = or disjoint i16 %.lobit.i, 1
-  store i16 %10, ptr %8, align 2
+  store i8 1, ptr %7, align 2
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.at = load ptr, ptr %i.as, align 8            ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8
@@ -659,12 +657,10 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   store i32 %i.ai, ptr %3, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %4 = load i16, ptr %i.ak, align 4
-  store i16 %4, ptr %i.aj, align 4
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 6
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %6 = load i16, ptr %5, align 2
-  %.lobit.i = and i16 %6, 256
+  %4 = load <2 x i16>, ptr %i.ak, align 4
+  %5 = and <2 x i16> %4, <i16 -1, i16 511>
+  store <2 x i16> %5, ptr %i.aj, align 4
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr null, ptr %i.am, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -921,9 +917,7 @@ _ZN2v88internal5Trace29AdvanceCurrentPositionInTraceEiPNS0_14RegExpCompilerE.exi
   %.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %i.dg, i32 0)
   store i32 %.sroa.speculated.i, ptr %i.ar, align 4
   %i.dh = sub nsw i8 0, %i.de
-  %7 = zext i8 %i.dh to i16
-  %8 = or disjoint i16 %.lobit.i, %7
-  store i16 %8, ptr %i.al, align 2
+  store i8 %i.dh, ptr %i.al, align 2
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.dj = load i32, ptr %i.di, align 8
   %i.dk = add nsw i32 %i.dj, 1
@@ -1326,7 +1320,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ab, label %bb.i, label %_ZN2v88internal20FixedLengthLoopStateC2EbPNS0_10ChoiceNodeE.exit
 
 bb.i:                                             ; preds = %bb.h
-  store i16 0, ptr %i.af, align 2
+  store i8 0, ptr %i.af, align 2
   br label %_ZN2v88internal20FixedLengthLoopStateC2EbPNS0_10ChoiceNodeE.exit
 
 _ZN2v88internal20FixedLengthLoopStateC2EbPNS0_10ChoiceNodeE.exit: ; preds = %bb.h, %bb.i
@@ -1729,7 +1723,7 @@ bb.a:
   br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i16 0, ptr %i.d, align 2
+  store i8 0, ptr %i.d, align 2
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -2132,7 +2126,7 @@ bb.a:
   br i1 %i.n, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i16 0, ptr %i.h, align 2
+  store i8 0, ptr %i.h, align 2
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -2354,9 +2348,8 @@ _ZN2v88internal10ChoiceNode12SetUpPreLoadEPNS0_14RegExpCompilerEPNS0_5TraceEPNS0
   %i.ai = sdiv i32 %i.ah, %i.ad
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ak = add nsw i32 %i.ad, -1
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %7, i64 6 ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 6
+  %i.al = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 6 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
@@ -2405,11 +2398,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   %i.bn = load i32, ptr %4, align 8
   store i32 %i.bn, ptr %7, align 8
-  %9 = load i16, ptr %i.am, align 2
   %i.bo = load <2 x i16>, ptr %i.ae, align 4
-  %.lobit.i = and i16 %9, 256
   %i.bp = and <2 x i16> %i.bo, <i16 -1, i16 511>
-  store <2 x i16> %i.bp, ptr %8, align 4
+  store <2 x i16> %i.bp, ptr %i.al, align 4
   store ptr null, ptr %i.an, align 8
   %i.bq = load <2 x ptr>, ptr %i.ap, align 8
   store <2 x ptr> %i.bq, ptr %i.ao, align 8
@@ -2502,7 +2493,7 @@ _ZN2v88internal17QuickCheckDetails5ClearEv.exit:  ; preds = %_ZN2v88internal17Qu
   br i1 %i.cq, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_ZN2v88internal17QuickCheckDetails5ClearEv.exit
-  store i16 %.lobit.i, ptr %i.al, align 2
+  store i8 0, ptr %i.am, align 2
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %_ZN2v88internal17QuickCheckDetails5ClearEv.exit
@@ -2573,13 +2564,13 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.v, %bb.aa, %bb.z
-  %i.dm = load i16, ptr %i.al, align 2
+  %i.dm = load i16, ptr %i.am, align 2
   %i.dn = and i16 %i.dm, 256
   %.not70 = icmp eq i16 %i.dn, 0
   br i1 %.not70, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  store i16 %i.ay, ptr %8, align 4
+  store i16 %i.ay, ptr %i.al, align 4
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
@@ -2672,8 +2663,6 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.h, ptr %8, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %11 = load i16, ptr %10, align 2
   %i.k = load <2 x i16>, ptr %i.j, align 4
   %i.l = and <2 x i16> %i.k, <i16 -1, i16 511>
   store <2 x i16> %i.l, ptr %i.i, align 4
@@ -2704,8 +2693,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %8, i64 6
-  %.lobit.i = and i16 %11, 256
-  store i16 %.lobit.i, ptr %i.ac, align 2
+  store i8 0, ptr %i.ac, align 2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -3108,7 +3096,7 @@ bb.a:
   br i1 %i.e, label %bb.b, label %_ZNK2v88internal5Trace10is_trivialEv.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 2 uses
   %i.g = load i16, ptr %i.f, align 2              ; 2 uses
   %i.h = and i16 %i.g, 256
   %.not.i = icmp eq i16 %i.h, 0
@@ -3187,9 +3175,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ax, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %3 = load i16, ptr %i.f, align 2
-  %4 = or i16 %3, 255
-  store i16 %4, ptr %i.f, align 2
+  store i8 -1, ptr %i.f, align 2
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g

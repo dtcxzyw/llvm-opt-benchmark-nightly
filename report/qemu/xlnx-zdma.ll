@@ -203,15 +203,13 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %.th
   br i1 %or.cond5.i.i.i, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  %i.hc = load i32, ptr %i.cc, align 4            ; 3 uses
-  %2 = and i32 %i.hc, 255
-  %3 = add i32 %i.hc, 1
-  %i.hd = and i32 %3, 255
-  %4 = and i32 %i.hc, -256
-  %5 = or disjoint i32 %i.hd, %4
-  store i32 %5, ptr %i.cc, align 4
+  %i.hc = load i32, ptr %i.cc, align 4            ; 2 uses
+  %i.hd = and i32 %i.hc, 255
+  %2 = trunc i32 %i.hc to i8
+  %3 = add i8 %2, 1
+  store i8 %3, ptr %i.cc, align 4
   %i.he = load i32, ptr %i.bn, align 8
-  %.not.not.i.i.i.i = icmp eq i32 %2, 255
+  %.not.not.i.i.i.i = icmp eq i32 %i.hd, 255
   %spec.select.v.i.i.i.i = select i1 %.not.not.i.i.i.i, i32 36, i32 4
   %spec.select.i.i.i.i = or i32 %spec.select.v.i.i.i.i, %i.he ; 2 uses
   store i32 %spec.select.i.i.i.i, ptr %i.bn, align 8
@@ -248,14 +246,12 @@ zdma_write_dst.exit.i.i:                          ; preds = %bb.aw, %bb.ah
   br i1 %.not.i.i, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %._crit_edge.i.i
-  %i.hu = load i32, ptr %i.cj, align 8            ; 3 uses
-  %6 = and i32 %i.hu, 255
-  %7 = add i32 %i.hu, 1
-  %i.hv = and i32 %7, 255
-  %8 = and i32 %i.hu, -256
-  %9 = or disjoint i32 %i.hv, %8
-  store i32 %9, ptr %i.cj, align 8
-  %.not.not.i.i.i = icmp eq i32 %6, 255
+  %i.hu = load i32, ptr %i.cj, align 8            ; 2 uses
+  %i.hv = and i32 %i.hu, 255
+  %4 = trunc i32 %i.hu to i8
+  %5 = add i8 %4, 1
+  store i8 %5, ptr %i.cj, align 8
+  %.not.not.i.i.i = icmp eq i32 %i.hv, 255
   %spec.select.v.i.i.i = select i1 %.not.not.i.i.i, i32 18, i32 2
   %spec.select.i97.i.i = or i32 %spec.select.v.i.i.i, %i.ht ; 2 uses
   store i32 %spec.select.i97.i.i, ptr %i.bn, align 8

@@ -204,7 +204,7 @@ bb.ea:                                            ; preds = %_ZNK5clang17Initial
   store i32 6, ptr %23, align 8
   %i.tp = getelementptr inbounds nuw i8, ptr %23, i64 8
   store i64 0, ptr %i.tp, align 8
-  %i.tq = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 6 uses
+  %i.tq = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 5 uses
   call void @_ZN5clang26StandardConversionSequence23setAsIdentityConversionEv(ptr noundef nonnull align 8 dereferenceable(56) %i.tq) #25
   %i.tr = load i32, ptr %23, align 8              ; 2 uses
   %i.ts = and i32 %i.tr, 2147483647
@@ -230,11 +230,8 @@ _ZN5clang26ImplicitConversionSequence11setStandardEv.exit: ; preds = %bb.ea, %bb
   %i.ua = getelementptr inbounds nuw i8, ptr %23, i64 48
   store ptr %i.tx, ptr %i.ua, align 8, !tbaa !1267
   %i.ub = load i64, ptr %i.sz, align 8
-  %25 = and i64 %i.ub, 255
-  %26 = load i64, ptr %i.tq, align 8
-  %27 = and i64 %26, -256
-  %28 = or disjoint i64 %27, %25
-  store i64 %28, ptr %i.tq, align 8
+  %25 = trunc i64 %i.ub to i8
+  store i8 %25, ptr %i.tq, align 8
   %i.uc = ptrtoint ptr %i.tx to i64
   call void @_ZN5clang22InitializationSequence25AddConversionSequenceStepERKNS_26ImplicitConversionSequenceENS_8QualTypeEb(ptr noundef nonnull align 8 dereferenceable(8084) %0, ptr noundef nonnull align 8 dereferenceable(152) %23, i64 %i.uc, i1 noundef zeroext false)
   %i.ud = load i32, ptr %23, align 8

@@ -204,17 +204,16 @@ mov_text_color_set.exit:                          ; preds = %bb.d, %bb.c, %bb.b,
 ; Function Attrs: nounwind uwtable
 define internal void @mov_text_alpha_cb(ptr noundef %0, i32 noundef %1, i32 noundef %2) #1 {
 bb.a:
-  %i.a = sub nsw i32 255, %1                      ; 3 uses
+  %i.a = sub nsw i32 255, %1                      ; 2 uses
   switch i32 %2, label %mov_text_alpha_set.exit [
     i32 1, label %bb.b
     i32 2, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = trunc i32 %i.a to i8
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
+  %i.b = trunc i32 %i.a to i8                     ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !67
-  %3 = and i32 %i.a, 255
   %i.e = trunc i32 %i.d to i8
   %i.f = icmp eq i8 %i.b, %i.e
   br i1 %i.f, label %mov_text_alpha_set.exit, label %bb.c
@@ -225,10 +224,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %mov_text_alpha_set.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = load i32, ptr %i.c, align 4, !tbaa !67
-  %5 = and i32 %4, -256
-  %6 = or disjoint i32 %5, %3
-  store i32 %6, ptr %i.c, align 4, !tbaa !67
+  store i8 %i.b, ptr %i.c, align 4, !tbaa !67
   br label %mov_text_alpha_set.exit
 
 bb.e:                                             ; preds = %bb.a

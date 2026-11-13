@@ -204,13 +204,10 @@ bb.as:                                            ; preds = %bb.ar
   %i.ks = ptrtoint ptr %i.kq to i64
   %i.kt = ptrtoint ptr %i.kr to i64
   %i.ku = sub i64 %i.ks, %i.kt
-  %5 = trunc i64 %i.ku to i32
-  %6 = shl i32 %5, 19
-  %7 = and i32 %6, -16777216
-  %8 = load i32, ptr %.43539, align 4, !tbaa !62
-  %9 = and i32 %8, 16777215
-  %10 = or disjoint i32 %7, %9
-  store i32 %10, ptr %.43539, align 4, !tbaa !62
+  %5 = lshr i64 %i.ku, 5
+  %6 = trunc i64 %5 to i8
+  %7 = getelementptr i8, ptr %.43539, i64 3
+  store i8 %6, ptr %7, align 1, !tbaa !62
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
@@ -302,13 +299,10 @@ bb.bb:                                            ; preds = %.critedge3880
   %i.mn = ptrtoint ptr %i.mi to i64
   %i.mo = ptrtoint ptr %i.mm to i64
   %i.mp = sub i64 %i.mn, %i.mo
-  %11 = trunc i64 %i.mp to i32
-  %12 = shl i32 %11, 19
-  %13 = and i32 %12, -16777216
-  %14 = load i32, ptr %.43539, align 4, !tbaa !62
-  %15 = and i32 %14, 16777215
-  %16 = or disjoint i32 %13, %15
-  store i32 %16, ptr %.43539, align 4, !tbaa !62
+  %8 = lshr i64 %i.mp, 5
+  %9 = trunc i64 %8 to i8
+  %10 = getelementptr i8, ptr %.43539, i64 3
+  store i8 %9, ptr %10, align 1, !tbaa !62
   %i.mq = load ptr, ptr %i.mi, align 8, !tbaa !30
   %i.mr = load ptr, ptr %i.jl, align 8, !tbaa !30
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 16
@@ -682,13 +676,10 @@ bb.ck:                                            ; preds = %bb.cj
   %i.uc = ptrtoint ptr %i.ua to i64
   %i.ud = ptrtoint ptr %i.ub to i64
   %i.ue = sub i64 %i.uc, %i.ud
-  %17 = trunc i64 %i.ue to i32
-  %18 = shl i32 %17, 19
-  %19 = and i32 %18, -16777216
-  %20 = load i32, ptr %.43539, align 4, !tbaa !62
-  %21 = and i32 %20, 16777215
-  %22 = or disjoint i32 %19, %21
-  store i32 %22, ptr %.43539, align 4, !tbaa !62
+  %11 = lshr i64 %i.ue, 5
+  %12 = trunc i64 %11 to i8
+  %13 = getelementptr i8, ptr %.43539, i64 3
+  store i8 %12, ptr %13, align 1, !tbaa !62
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ua, ptr noundef nonnull align 8 dereferenceable(16) %i.ry, i64 16, i1 false), !tbaa.struct !65
   %i.uf = getelementptr inbounds nuw i8, ptr %i.ry, i64 12
   %i.ug = load i32, ptr %i.uf, align 4, !tbaa !64
@@ -1091,7 +1082,7 @@ bb.zl:                                            ; preds = %bb.zj
   ret void
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.b
-  %.43539 = phi ptr [ %i.v, %bb.b ], [ %.43539.be, %.backedge.backedge ] ; 251 uses
+  %.43539 = phi ptr [ %i.v, %bb.b ], [ %.43539.be, %.backedge.backedge ] ; 248 uses
   %.03534 = phi ptr [ %i.ac, %bb.b ], [ %.03534.be, %.backedge.backedge ] ; 263 uses
   %.18 = phi ptr [ %i.z, %bb.b ], [ %.18.be, %.backedge.backedge ] ; 321 uses
   %.0 = phi ptr [ %i.y, %bb.b ], [ %.0.be, %.backedge.backedge ] ; 256 uses
@@ -1494,13 +1485,10 @@ bb.au:                                            ; preds = %bb.at
   %i.nw = ptrtoint ptr %i.nu to i64
   %i.nx = ptrtoint ptr %i.nv to i64
   %i.ny = sub i64 %i.nw, %i.nx
-  %5 = trunc i64 %i.ny to i32
-  %6 = shl i32 %5, 19
-  %7 = and i32 %6, -16777216
-  %8 = load i32, ptr %.43738, align 4, !tbaa !62
-  %9 = and i32 %8, 16777215
-  %10 = or disjoint i32 %7, %9
-  store i32 %10, ptr %.43738, align 4, !tbaa !62
+  %5 = lshr i64 %i.ny, 5
+  %6 = trunc i64 %5 to i8
+  %7 = getelementptr i8, ptr %.43738, i64 3
+  store i8 %6, ptr %7, align 1, !tbaa !62
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
@@ -1607,13 +1595,10 @@ bb.bd:                                            ; preds = %.critedge4081
   %i.qg = ptrtoint ptr %i.qb to i64
   %i.qh = ptrtoint ptr %i.qf to i64
   %i.qi = sub i64 %i.qg, %i.qh
-  %11 = trunc i64 %i.qi to i32
-  %12 = shl i32 %11, 19
-  %13 = and i32 %12, -16777216
-  %14 = load i32, ptr %.43738, align 4, !tbaa !62
-  %15 = and i32 %14, 16777215
-  %16 = or disjoint i32 %13, %15
-  store i32 %16, ptr %.43738, align 4, !tbaa !62
+  %8 = lshr i64 %i.qi, 5
+  %9 = trunc i64 %8 to i8
+  %10 = getelementptr i8, ptr %.43738, i64 3
+  store i8 %9, ptr %10, align 1, !tbaa !62
   %i.qj = load ptr, ptr %i.qb, align 8, !tbaa !30
   %i.qk = load ptr, ptr %i.mk, align 8, !tbaa !30
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
@@ -2016,13 +2001,10 @@ bb.cn:                                            ; preds = %bb.cm
   %i.zj = ptrtoint ptr %i.zh to i64
   %i.zk = ptrtoint ptr %i.zi to i64
   %i.zl = sub i64 %i.zj, %i.zk
-  %17 = trunc i64 %i.zl to i32
-  %18 = shl i32 %17, 19
-  %19 = and i32 %18, -16777216
-  %20 = load i32, ptr %.43738, align 4, !tbaa !62
-  %21 = and i32 %20, 16777215
-  %22 = or disjoint i32 %19, %21
-  store i32 %22, ptr %.43738, align 4, !tbaa !62
+  %11 = lshr i64 %i.zl, 5
+  %12 = trunc i64 %11 to i8
+  %13 = getelementptr i8, ptr %.43738, i64 3
+  store i8 %12, ptr %13, align 1, !tbaa !62
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.zh, ptr noundef nonnull align 8 dereferenceable(16) %i.xa, i64 16, i1 false), !tbaa.struct !65
   %i.zm = getelementptr inbounds nuw i8, ptr %i.xa, i64 12
   %i.zn = load i32, ptr %i.zm, align 4, !tbaa !64
@@ -2425,7 +2407,7 @@ bb.aal:                                           ; preds = %bb.aak, %bb.aah
   ret void
 
 .backedge:                                        ; preds = %.backedge.backedge, %.backedge4249
-  %.43738 = phi ptr [ %i.ak, %.backedge4249 ], [ %.43738.be, %.backedge.backedge ] ; 247 uses
+  %.43738 = phi ptr [ %i.ak, %.backedge4249 ], [ %.43738.be, %.backedge.backedge ] ; 244 uses
   %.03733 = phi ptr [ %i.ar, %.backedge4249 ], [ %.03733.be, %.backedge.backedge ] ; 233 uses
   %.17 = phi ptr [ %i.ao, %.backedge4249 ], [ %.17.be, %.backedge.backedge ] ; 291 uses
   %.0 = phi ptr [ %i.an, %.backedge4249 ], [ %.0.be, %.backedge.backedge ] ; 226 uses

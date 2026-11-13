@@ -202,13 +202,14 @@ bb.a:
   %3 = alloca %struct.CPValue, align 4            ; 7 uses
   %4 = alloca %struct.CPValue, align 4            ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 24 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 15 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.c = getelementptr i8, ptr %1, i64 45
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 9 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 12 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 15 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -230,14 +231,16 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.n = load i32, ptr %i.h, align 4, !tbaa !83
   %i.o = or i32 %i.n, 33554432
-  br label %.sink.split
+  store i32 %i.o, ptr %i.h, align 4, !tbaa !83
+  br label %.backedge
 
 bb.d:                                             ; preds = %bb.b
-  %i.p = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.p = load i32, ptr %i.h, align 4, !tbaa !83
   %i.q = or i32 %i.p, 16777216
-  br label %.sink.split
+  store i32 %i.q, ptr %i.h, align 4, !tbaa !83
+  br label %.backedge
 
 bb.e:                                             ; preds = %bb.b
   %i.r = tail call fastcc i32 @cp_next(ptr noundef nonnull %0), !inline_history !143 ; 0 uses
@@ -391,16 +394,16 @@ cp_check.exit52:                                  ; preds = %cp_expr_ksize.exit1
 
 cp_decl_align.exit:                               ; preds = %bb.l, %cp_check.exit52
   %.0.i29 = phi i32 [ %i.bi, %cp_check.exit52 ], [ 262145, %bb.l ]
-  %i.bj = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.bj = load i32, ptr %i.h, align 4, !tbaa !83
   %i.bk = and i32 %i.bj, -983042
   %i.bl = or i32 %i.bk, %.0.i29
-  store i32 %i.bl, ptr %i.b, align 4, !tbaa !83
+  store i32 %i.bl, ptr %i.h, align 4, !tbaa !83
   br label %thread-pre-split
 
 bb.r:                                             ; preds = %lj_cparse_case.exit, %lj_cparse_case.exit
-  %i.bm = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.bm = load i32, ptr %i.h, align 4, !tbaa !83
   %i.bn = or i32 %i.bm, 2
-  store i32 %i.bn, ptr %i.b, align 4, !tbaa !83
+  store i32 %i.bn, ptr %i.h, align 4, !tbaa !83
   br label %thread-pre-split
 
 bb.s:                                             ; preds = %lj_cparse_case.exit, %lj_cparse_case.exit
@@ -486,11 +489,11 @@ switch.lookup:                                    ; preds = %switch.hole_check
   ]
 
 bb.z:                                             ; preds = %switch.lookup, %switch.lookup
-  %i.cs = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.cs = load i32, ptr %i.h, align 4, !tbaa !83
   %i.ct = and i32 %i.cs, -65281
   %i.cu = shl nuw nsw i32 %switch.ext, 8
   %i.cv = or disjoint i32 %i.ct, %i.cu            ; 2 uses
-  store i32 %i.cv, ptr %i.b, align 4, !tbaa !83
+  store i32 %i.cv, ptr %i.h, align 4, !tbaa !83
   %.not.i27 = icmp eq i32 %.0.i26, 0
   br i1 %.not.i27, label %bb.ab, label %bb.aa
 
@@ -502,7 +505,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.da = and i32 %i.cz, 240
   %i.db = or disjoint i32 %i.cw, %i.da
   %i.dc = xor i32 %i.db, 240
-  store i32 %i.dc, ptr %i.b, align 4, !tbaa !83
+  store i32 %i.dc, ptr %i.h, align 4, !tbaa !83
   br label %bb.ab
 
 bb.ab:                                            ; preds = %switch.hole_check, %thread-pre-split.i, %bb.aa, %bb.z, %switch.lookup
@@ -602,14 +605,14 @@ cp_decl_sizeattr.exit:                            ; preds = %cp_expr_ksize.exit.
   br i1 %.not31.i, label %thread-pre-split, label %bb.al
 
 bb.al:                                            ; preds = %cp_decl_sizeattr.exit
-  %i.dz = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.dz = load i32, ptr %i.h, align 4, !tbaa !83
   %i.ea = and i32 %i.dz, -241
   %i.eb = tail call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %i.dv, i1 true)
   %i.ec = shl nuw nsw i32 %i.eb, 4
   %i.ed = and i32 %i.ec, 240
   %i.ee = or disjoint i32 %i.ea, %i.ed
   %i.ef = xor i32 %i.ee, 240
-  store i32 %i.ef, ptr %i.b, align 4, !tbaa !83
+  store i32 %i.ef, ptr %i.h, align 4, !tbaa !83
   br label %thread-pre-split
 
 bb.am:                                            ; preds = %cp_opt.exit
@@ -669,7 +672,7 @@ bb.aq:                                            ; preds = %cp_check.exit16
   tail call fastcc void @cp_err_token(ptr noundef nonnull %0, i32 noundef 41) #15
   unreachable
 
-.backedge:                                        ; preds = %cp_opt.exit45.thread, %bb.b, %bb.b, %bb.b, %.sink.split, %cp_check.exit16, %bb.au
+.backedge:                                        ; preds = %cp_opt.exit45.thread, %cp_check.exit16, %bb.b, %bb.b, %bb.b, %bb.c, %bb.d, %bb.bj, %bb.au
   %i.er = tail call fastcc i32 @cp_next(ptr noundef nonnull %0) ; 0 uses
   br label %bb.b
 
@@ -800,7 +803,7 @@ cp_expr_sub.exit.i:                               ; preds = %cp_check.exit58
   store i32 %i.gq, ptr %i.f, align 4, !tbaa !47
   call fastcc void @cp_expr_infix(ptr noundef nonnull %0, ptr noundef nonnull %3, i32 noundef 0), !inline_history !158
   %i.gr = load ptr, ptr %i.g, align 8, !tbaa !34
-  %i.gs = load i32, ptr %i.h, align 4, !tbaa !85
+  %i.gs = load i32, ptr %5, align 4, !tbaa !85
   %i.gt = load ptr, ptr %i.gr, align 8, !tbaa !59
   br label %bb.bc
 
@@ -853,10 +856,10 @@ cp_check.exit56:                                  ; preds = %cp_expr_ksize.exit
 
 cp_decl_align.exit48:                             ; preds = %bb.ba, %cp_check.exit56
   %.0.i46 = phi i32 [ %i.hg, %cp_check.exit56 ], [ 262145, %bb.ba ]
-  %i.hh = load i32, ptr %i.b, align 4, !tbaa !83
+  %i.hh = load i32, ptr %i.h, align 4, !tbaa !83
   %i.hi = and i32 %i.hh, -983042
   %i.hj = or i32 %i.hi, %.0.i46
-  store i32 %i.hj, ptr %i.b, align 4, !tbaa !83
+  store i32 %i.hj, ptr %i.h, align 4, !tbaa !83
   br label %cp_opt.exit45.thread.backedge
 
 bb.bg:                                            ; preds = %bb.az, %bb.ay
@@ -888,23 +891,15 @@ bb.bi:                                            ; preds = %cp_opt.exit45.threa
   unreachable
 
 bb.bj:                                            ; preds = %bb.b
-  %5 = load i32, ptr %i.b, align 4, !tbaa !83
-  %6 = and i32 %5, -65281
-  %i.hp = load ptr, ptr %i.c, align 8, !tbaa !78
+  %i.hp = load ptr, ptr %i.b, align 8, !tbaa !78
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 4
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !64
-  %7 = shl i32 %i.hr, 8
-  %8 = and i32 %7, 65280
-  %9 = or disjoint i32 %8, %6
-  br label %.sink.split
+  %6 = trunc i32 %i.hr to i8
+  store i8 %6, ptr %i.c, align 1, !tbaa !83
+  br label %.backedge
 
 bb.bk:                                            ; preds = %bb.b
   ret void
-
-.sink.split:                                      ; preds = %bb.c, %bb.d, %bb.bj
-  %.sink = phi i32 [ %9, %bb.bj ], [ %i.q, %bb.d ], [ %i.o, %bb.c ]
-  store i32 %.sink, ptr %i.b, align 4, !tbaa !83
-  br label %.backedge
 }
 
 ; Function Attrs: nounwind uwtable
