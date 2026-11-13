@@ -204,7 +204,7 @@ _ZN8facebook6hermes3abi12releaseValueERK14HermesABIValue.exit: ; preds = %_ZN12_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal range(i32 0, 258) i32 @_ZN12_GLOBAL__N_117HostObjectWrapper3setEN6hermes2vm8SymbolIDENS2_11HermesValueE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, i32 %1, i64 %2) unnamed_addr #1 align 2 !guid !817 {
+define internal range(i32 256, 512) i32 @_ZN12_GLOBAL__N_117HostObjectWrapper3setEN6hermes2vm8SymbolIDENS2_11HermesValueE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, i32 %1, i64 %2) unnamed_addr #1 align 2 !guid !817 {
 bb.a:
   %3 = alloca %struct.HermesABIValue, align 8     ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -284,10 +284,11 @@ bb.e:                                             ; preds = %_ZN8facebook6hermes
   %i.am = trunc i64 %i.al to i32
   %i.an = call fastcc noundef i32 @_ZN12_GLOBAL__N_120HermesABIRuntimeImpl10raiseErrorE18HermesABIErrorCode(ptr noundef nonnull align 8 dereferenceable(180) %i.ak, i32 noundef %i.am)
   %i.ao = and i32 %i.an, 255
+  %4 = or disjoint i32 %i.ao, 256
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN8facebook6hermes3abi12releaseValueERK14HermesABIValue.exit, %bb.e
-  %.sroa.08.0 = phi i32 [ %i.ao, %bb.e ], [ 257, %_ZN8facebook6hermes3abi12releaseValueERK14HermesABIValue.exit ]
+  %.sroa.08.0 = phi i32 [ %4, %bb.e ], [ 257, %_ZN8facebook6hermes3abi12releaseValueERK14HermesABIValue.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   ret i32 %.sroa.08.0
 }

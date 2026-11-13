@@ -204,7 +204,7 @@ define dso_local void @_ZN14GUIChatConsoleC2EPN3gui15IGUIEnvironmentEPNS0_11IGUI
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 388
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   store ptr null, ptr %i.ae, align 8, !tbaa !78
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 6 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ac, i8 0, i64 16, i1 false)
   store i32 -16777216, ptr %i.af, align 8, !tbaa !79
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 7 uses
@@ -326,8 +326,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
-  %16 = load i32, ptr %i.af, align 8, !tbaa !79
-  %17 = or i32 %16, 16777215
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 410
+  store i8 -1, ptr %16, align 2, !tbaa !79
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 409
+  store i8 -1, ptr %17, align 1, !tbaa !79
   br label %._crit_edge.i.i80
 
 bb.d:                                             ; preds = %._crit_edge.i.i
@@ -427,24 +429,26 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i72
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i72
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
-  %18 = load i32, ptr %i.af, align 8, !tbaa !79
-  %19 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
-  %.v.i76 = select i1 %19, float -5.000000e-01, float 5.000000e-01
-  %20 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i76
-  %21 = fptosi float %20 to i32
-  %22 = and i32 %18, -16777216
-  %23 = fcmp nsz olt <2 x float> %.sroa.02.0.i.sroa.speculated, zeroinitializer
-  %24 = select <2 x i1> %23, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
-  %25 = fadd nsz <2 x float> %.sroa.02.0.i.sroa.speculated, %24
-  %26 = insertelement <4 x i32> poison, i32 %21, i64 2
-  %27 = insertelement <4 x i32> %26, i32 %22, i64 3
-  %28 = shufflevector <2 x float> %25, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %29 = fptosi <4 x float> %28 to <4 x i32>
-  %30 = shufflevector <4 x i32> %29, <4 x i32> %27, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %31 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %30, <4 x i32> <i32 0, i32 0, i32 0, i32 -2147483648>)
-  %32 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %31, <4 x i32> <i32 255, i32 255, i32 255, i32 -1>)
-  %33 = shl nuw nsw <4 x i32> %32, <i32 16, i32 8, i32 0, i32 0>
-  %34 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %33)
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 410
+  %19 = fcmp nsz olt <2 x float> %.sroa.02.0.i.sroa.speculated, zeroinitializer
+  %20 = select <2 x i1> %19, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
+  %21 = fadd nsz <2 x float> %.sroa.02.0.i.sroa.speculated, %20
+  %22 = fptosi <2 x float> %21 to <2 x i32>
+  %23 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %22, <2 x i32> zeroinitializer)
+  %24 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %23, <2 x i32> splat (i32 255))
+  %25 = trunc nuw <2 x i32> %24 to <2 x i8>       ; 2 uses
+  %26 = extractelement <2 x i8> %25, i64 0
+  store i8 %26, ptr %18, align 2, !tbaa !79
+  %27 = getelementptr inbounds nuw i8, ptr %0, i64 409
+  %28 = extractelement <2 x i8> %25, i64 1
+  store i8 %28, ptr %27, align 1, !tbaa !79
+  %29 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
+  %.v.i76 = select i1 %29, float -5.000000e-01, float 5.000000e-01
+  %30 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i76
+  %31 = fptosi float %30 to i32
+  %32 = call i32 @llvm.smax.i32(i32 %31, i32 0)
+  %33 = call noundef i32 @llvm.umin.i32(i32 %32, i32 255)
+  %34 = trunc nuw i32 %33 to i8
   br label %._crit_edge.i.i80
 
 bb.j:                                             ; preds = %._crit_edge.i.i68
@@ -465,8 +469,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79: ; preds = %bb.
   br label %bb.am
 
 ._crit_edge.i.i80:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58
-  %storemerge = phi i32 [ %34, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %17, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58 ]
-  store i32 %storemerge, ptr %i.af, align 8, !tbaa !79
+  %storemerge = phi i8 [ %34, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ -1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58 ]
+  store i8 %storemerge, ptr %i.af, align 8, !tbaa !79
   %i.dj = load ptr, ptr @g_settings, align 8, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   %i.dk = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 6 uses
@@ -869,7 +873,7 @@ define dso_local void @_ZN14GUIChatConsoleC1EPN3gui15IGUIEnvironmentEPNS0_11IGUI
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 388
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   store ptr null, ptr %i.z, align 8, !tbaa !78
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 6 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.x, i8 0, i64 16, i1 false)
   store i32 -16777216, ptr %i.aa, align 8, !tbaa !79
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 7 uses
@@ -991,8 +995,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i57
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i57
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25
-  %15 = load i32, ptr %i.aa, align 8, !tbaa !79
-  %16 = or i32 %15, 16777215
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 410
+  store i8 -1, ptr %15, align 2, !tbaa !79
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 409
+  store i8 -1, ptr %16, align 1, !tbaa !79
   br label %._crit_edge.i.i81
 
 bb.d:                                             ; preds = %._crit_edge.i.i
@@ -1092,24 +1098,26 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i73
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i73
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
-  %17 = load i32, ptr %i.aa, align 8, !tbaa !79
-  %18 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
-  %.v.i77 = select i1 %18, float -5.000000e-01, float 5.000000e-01
-  %19 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i77
-  %20 = fptosi float %19 to i32
-  %21 = and i32 %17, -16777216
-  %22 = fcmp nsz olt <2 x float> %.sroa.02.0.i.sroa.speculated, zeroinitializer
-  %23 = select <2 x i1> %22, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
-  %24 = fadd nsz <2 x float> %.sroa.02.0.i.sroa.speculated, %23
-  %25 = insertelement <4 x i32> poison, i32 %20, i64 2
-  %26 = insertelement <4 x i32> %25, i32 %21, i64 3
-  %27 = shufflevector <2 x float> %24, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %28 = fptosi <4 x float> %27 to <4 x i32>
-  %29 = shufflevector <4 x i32> %28, <4 x i32> %26, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %30 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %29, <4 x i32> <i32 0, i32 0, i32 0, i32 -2147483648>)
-  %31 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %30, <4 x i32> <i32 255, i32 255, i32 255, i32 -1>)
-  %32 = shl nuw nsw <4 x i32> %31, <i32 16, i32 8, i32 0, i32 0>
-  %33 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %32)
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 410
+  %18 = fcmp nsz olt <2 x float> %.sroa.02.0.i.sroa.speculated, zeroinitializer
+  %19 = select <2 x i1> %18, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
+  %20 = fadd nsz <2 x float> %.sroa.02.0.i.sroa.speculated, %19
+  %21 = fptosi <2 x float> %20 to <2 x i32>
+  %22 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %21, <2 x i32> zeroinitializer)
+  %23 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %22, <2 x i32> splat (i32 255))
+  %24 = trunc nuw <2 x i32> %23 to <2 x i8>       ; 2 uses
+  %25 = extractelement <2 x i8> %24, i64 0
+  store i8 %25, ptr %17, align 2, !tbaa !79
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 409
+  %27 = extractelement <2 x i8> %24, i64 1
+  store i8 %27, ptr %26, align 1, !tbaa !79
+  %28 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
+  %.v.i77 = select i1 %28, float -5.000000e-01, float 5.000000e-01
+  %29 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i77
+  %30 = fptosi float %29 to i32
+  %31 = call i32 @llvm.smax.i32(i32 %30, i32 0)
+  %32 = call noundef i32 @llvm.umin.i32(i32 %31, i32 255)
+  %33 = trunc nuw i32 %32 to i8
   br label %._crit_edge.i.i81
 
 bb.j:                                             ; preds = %._crit_edge.i.i69
@@ -1130,8 +1138,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80: ; preds = %bb.
   br label %bb.am
 
 ._crit_edge.i.i81:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59
-  %storemerge = phi i32 [ %33, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ %16, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ]
-  store i32 %storemerge, ptr %i.aa, align 8, !tbaa !79
+  %storemerge = phi i8 [ %33, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ -1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ]
+  store i8 %storemerge, ptr %i.aa, align 8, !tbaa !79
   %i.de = load ptr, ptr @g_settings, align 8, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
   %i.df = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 6 uses
@@ -1534,13 +1542,10 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 declare <2 x i32> @llvm.umax.v2i32(<2 x i32>, <2 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #9
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #9
+declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #9
 
 attributes #0 = { uwtable "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/tcg?download=true
-inline.NumInlined: 1043
+inline.NumInlined: 1044
 inline.NumDeleted: 195
 loop-unroll.NumCompletelyUnrolled: 15
 loop-unroll.NumRuntimeUnrolled: 15
@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.loopexit.i
   br label %tcg_op_alloc.exit
 
 tcg_op_alloc.exit:                                ; preds = %bb.e, %bb.g, %bb.h
-  %.1.i = phi ptr [ %.03238.i, %bb.e ], [ %i.ad, %bb.g ], [ %i.ae, %bb.h ] ; 8 uses
+  %.1.i = phi ptr [ %.03238.i, %bb.e ], [ %i.ad, %bb.g ], [ %i.ae, %bb.h ] ; 7 uses
   %.0.i = phi i32 [ %i.r, %bb.e ], [ %i.s, %bb.g ], [ %i.s, %bb.h ] ; 2 uses
   store i64 0, ptr %.1.i, align 1
   %i.af = and i32 %2, 255
@@ -218,12 +218,9 @@ tcg_op_alloc.exit:                                ; preds = %bb.e, %bb.g, %bb.h
   %i.ak = load i32, ptr %i.aj, align 8
   %i.al = add i32 %i.ak, 1
   store i32 %i.al, ptr %i.aj, align 8
-  %5 = load i32, ptr %.1.i, align 8
-  %6 = shl i32 %3, 16
-  %7 = and i32 %6, 16711680
-  %8 = and i32 %5, -16711681
-  %9 = or disjoint i32 %8, %7
-  store i32 %9, ptr %.1.i, align 8
+  %5 = trunc i32 %3 to i8
+  %6 = getelementptr i8, ptr %.1.i, i64 2
+  store i8 %5, ptr %6, align 2
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %.1.i, i64 8 ; 2 uses
@@ -309,7 +306,7 @@ bb.h:                                             ; preds = %.loopexit.i
   br label %tcg_op_alloc.exit
 
 tcg_op_alloc.exit:                                ; preds = %bb.e, %bb.g, %bb.h
-  %.1.i = phi ptr [ %.03238.i, %bb.e ], [ %i.ad, %bb.g ], [ %i.ae, %bb.h ] ; 8 uses
+  %.1.i = phi ptr [ %.03238.i, %bb.e ], [ %i.ad, %bb.g ], [ %i.ae, %bb.h ] ; 7 uses
   %.0.i = phi i32 [ %i.r, %bb.e ], [ %i.s, %bb.g ], [ %i.s, %bb.h ] ; 2 uses
   store i64 0, ptr %.1.i, align 1
   %i.af = and i32 %2, 255
@@ -322,12 +319,9 @@ tcg_op_alloc.exit:                                ; preds = %bb.e, %bb.g, %bb.h
   %i.ak = load i32, ptr %i.aj, align 8
   %i.al = add i32 %i.ak, 1
   store i32 %i.al, ptr %i.aj, align 8
-  %5 = load i32, ptr %.1.i, align 8
-  %6 = shl i32 %3, 16
-  %7 = and i32 %6, 16711680
-  %8 = and i32 %5, -16711681
-  %9 = or disjoint i32 %8, %7
-  store i32 %9, ptr %.1.i, align 8
+  %5 = trunc i32 %3 to i8
+  %6 = getelementptr i8, ptr %.1.i, i64 2
+  store i8 %5, ptr %6, align 2
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8            ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.1.i, i64 8 ; 3 uses
@@ -730,7 +724,7 @@ bb.at:                                            ; preds = %bb.d
   br i1 %i.lr, label %.loopexit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %1 = and i32 %i.di, 16711680
+  %1 = lshr i32 %i.di, 16
   %i.ls = load ptr, ptr %i.f, align 8             ; 7 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %i.ls, i64 29360
   %i.lu = load ptr, ptr %i.lt, align 8            ; 2 uses
@@ -793,7 +787,7 @@ bb.bb:                                            ; preds = %.loopexit.i.i
   br label %tcg_op_insert_before.exit
 
 tcg_op_insert_before.exit:                        ; preds = %bb.ay, %bb.ba, %bb.bb
-  %.1.i.i = phi ptr [ %.03238.i.i, %bb.ay ], [ %i.mn, %bb.ba ], [ %i.mo, %bb.bb ] ; 11 uses
+  %.1.i.i = phi ptr [ %.03238.i.i, %bb.ay ], [ %i.mn, %bb.ba ], [ %i.mo, %bb.bb ] ; 10 uses
   %.0.i.i = phi i32 [ %i.mh, %bb.ay ], [ 1031, %bb.ba ], [ 1031, %bb.bb ]
   store i64 0, ptr %.1.i.i, align 1
   store i32 %.0.i.i, ptr %.1.i.i, align 8
@@ -801,10 +795,9 @@ tcg_op_insert_before.exit:                        ; preds = %bb.ay, %bb.ba, %bb.
   %i.mq = load i32, ptr %i.mp, align 8
   %i.mr = add i32 %i.mq, 1
   store i32 %i.mr, ptr %i.mp, align 8
-  %2 = load i32, ptr %.1.i.i, align 8
-  %3 = and i32 %2, -16711681
-  %4 = or disjoint i32 %3, %1
-  store i32 %4, ptr %.1.i.i, align 8
+  %2 = trunc i32 %1 to i8
+  %3 = getelementptr i8, ptr %.1.i.i, i64 2
+  store i8 %2, ptr %3, align 2
   %i.ms = load ptr, ptr %i.dd, align 8
   %i.mt = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 8 ; 2 uses
   %i.mu = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
@@ -846,7 +839,7 @@ bb.bc:                                            ; preds = %bb.d
   br i1 %i.nq, label %.loopexit, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %5 = and i32 %i.di, 16711680
+  %4 = lshr i32 %i.di, 16
   %i.nr = load ptr, ptr %i.f, align 8             ; 7 uses
   %i.ns = getelementptr inbounds nuw i8, ptr %i.nr, i64 29360
   %i.nt = load ptr, ptr %i.ns, align 8            ; 2 uses
@@ -909,7 +902,7 @@ bb.bk:                                            ; preds = %.loopexit.i.i397
   br label %tcg_op_insert_before.exit398
 
 tcg_op_insert_before.exit398:                     ; preds = %bb.bh, %bb.bj, %bb.bk
-  %.1.i.i394 = phi ptr [ %.03238.i.i391, %bb.bh ], [ %i.om, %bb.bj ], [ %i.on, %bb.bk ] ; 11 uses
+  %.1.i.i394 = phi ptr [ %.03238.i.i391, %bb.bh ], [ %i.om, %bb.bj ], [ %i.on, %bb.bk ] ; 10 uses
   %.0.i.i395 = phi i32 [ %i.og, %bb.bh ], [ 1081, %bb.bj ], [ 1081, %bb.bk ]
   store i64 0, ptr %.1.i.i394, align 1
   store i32 %.0.i.i395, ptr %.1.i.i394, align 8
@@ -917,10 +910,9 @@ tcg_op_insert_before.exit398:                     ; preds = %bb.bh, %bb.bj, %bb.
   %i.op = load i32, ptr %i.oo, align 8
   %i.oq = add i32 %i.op, 1
   store i32 %i.oq, ptr %i.oo, align 8
-  %6 = load i32, ptr %.1.i.i394, align 8
-  %7 = and i32 %6, -16711681
-  %8 = or disjoint i32 %7, %5
-  store i32 %8, ptr %.1.i.i394, align 8
+  %5 = trunc i32 %4 to i8
+  %6 = getelementptr i8, ptr %.1.i.i394, i64 2
+  store i8 %5, ptr %6, align 2
   %i.or = load ptr, ptr %i.dd, align 8
   %i.os = getelementptr inbounds nuw i8, ptr %.1.i.i394, i64 8 ; 2 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %.1.i.i394, i64 16
@@ -1323,14 +1315,14 @@ bb.e:                                             ; preds = %bb.b, %tcg_temp_all
   br i1 %.not224, label %.critedge, label %.lr.ph228
 
 .lr.ph228:                                        ; preds = %._crit_edge206
-  %i.aw = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 29352
+  %i.aw = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 3 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 29352 ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph228, %.loopexit
   %.0149226 = phi i1 [ false, %.lr.ph228 ], [ %.5154, %.loopexit ] ; 2 uses
-  %.0155225 = phi ptr [ %i.av, %.lr.ph228 ], [ %i.az, %.loopexit ] ; 12 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %.0155225, i64 8 ; 4 uses
+  %.0155225 = phi ptr [ %i.av, %.lr.ph228 ], [ %i.az, %.loopexit ] ; 11 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %.0155225, i64 8 ; 7 uses
   %i.az = load ptr, ptr %i.ay, align 8            ; 2 uses
   %i.ba = load i32, ptr %.0155225, align 8        ; 3 uses
   %i.bb = and i32 %i.ba, 255                      ; 3 uses
@@ -1394,7 +1386,6 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.cg = load i64, ptr %i.ca, align 8
-  %1 = trunc i64 %i.cg to i32
   %i.ch = load ptr, ptr %i.aw, align 8            ; 10 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 29360
   %i.cj = load ptr, ptr %i.ci, align 8            ; 2 uses
@@ -1502,7 +1493,7 @@ bb.x:                                             ; preds = %.loopexit.i.i
   br label %tcg_op_insert_before.exit
 
 tcg_op_insert_before.exit:                        ; preds = %bb.p, %tcg_malloc_internal.exit, %bb.x
-  %.1.i.i = phi ptr [ %.03238.i.i, %bb.p ], [ %i.dl, %tcg_malloc_internal.exit ], [ %i.ds, %bb.x ] ; 10 uses
+  %.1.i.i = phi ptr [ %.03238.i.i, %bb.p ], [ %i.dl, %tcg_malloc_internal.exit ], [ %i.ds, %bb.x ] ; 9 uses
   %.0.i.i = phi i32 [ %i.cw, %bb.p ], [ 1054, %tcg_malloc_internal.exit ], [ 1054, %bb.x ]
   store i64 0, ptr %.1.i.i, align 1
   store i32 %.0.i.i, ptr %.1.i.i, align 8
@@ -1510,12 +1501,10 @@ tcg_op_insert_before.exit:                        ; preds = %bb.p, %tcg_malloc_i
   %i.du = load i32, ptr %i.dt, align 8
   %i.dv = add i32 %i.du, 1
   store i32 %i.dv, ptr %i.dt, align 8
-  %2 = load i32, ptr %.1.i.i, align 8
-  %3 = lshr i32 %1, 8
-  %4 = and i32 %3, 16711680
-  %5 = and i32 %2, -16711681
-  %6 = or disjoint i32 %5, %4
-  store i32 %6, ptr %.1.i.i, align 8
+  %1 = lshr i64 %i.cg, 24
+  %2 = trunc i64 %1 to i8
+  %3 = getelementptr i8, ptr %.1.i.i, i64 2
+  store i8 %2, ptr %3, align 2
   %i.dw = load ptr, ptr %i.bs, align 8
   %i.dx = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 8 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
@@ -1605,40 +1594,130 @@ bb.ae:                                            ; preds = %bb.ad
   store i64 0, ptr %i.fd, align 8
   %i.fe = and i32 %i.bd, 1
   %.not171 = icmp eq i32 %i.fe, 0
-  br i1 %.not171, label %bb.aj, label %bb.af
+  br i1 %.not171, label %bb.aj, label %4
 
-bb.af:                                            ; preds = %bb.ae
-  %7 = load i64, ptr %i.ez, align 8
-  %8 = trunc i64 %7 to i32
-  %9 = lshr i32 %8, 24
-  %10 = tail call ptr @tcg_op_insert_after(ptr noundef %0, ptr noundef nonnull %.0155225, i32 noundef 56, i32 noundef %9, i32 noundef 3) ; 3 uses
-  %11 = and i32 %i.bd, 16
-  %.not173.a = icmp eq i32 %11, 0
-  br i1 %.not173.a, label %bb.ah, label %bb.ag
+4:                                                ; preds = %bb.ae
+  %5 = load i64, ptr %i.ez, align 8
+  %6 = load ptr, ptr %i.aw, align 8               ; 7 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 29360
+  %8 = load ptr, ptr %7, align 8                  ; 2 uses
+  %.not.i.i178 = icmp eq ptr %8, null
+  br i1 %.not.i.i178, label %.loopexit.i.i186, label %.preheader.i.i179, !prof !14
 
-bb.ag:                                            ; preds = %bb.af
+.preheader.i.i179:                                ; preds = %4, %26
+  %.03238.i.i180 = phi ptr [ %12, %26 ], [ %8, %4 ] ; 6 uses
+  %9 = load i32, ptr %.03238.i.i180, align 8
+  %10 = and i32 %9, 65280
+  %.not35.i.i181 = icmp samesign ult i32 %10, 768
+  %11 = getelementptr inbounds nuw i8, ptr %.03238.i.i180, i64 8
+  %12 = load ptr, ptr %11, align 8                ; 3 uses
+  %.not34.i.i185 = icmp eq ptr %12, null          ; 2 uses
+  br i1 %.not35.i.i181, label %26, label %13
+
+13:                                               ; preds = %.preheader.i.i179
+  %14 = getelementptr inbounds nuw i8, ptr %.03238.i.i180, i64 8 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %.03238.i.i180, i64 16
+  %16 = load ptr, ptr %15, align 8                ; 3 uses
+  br i1 %.not34.i.i185, label %19, label %17
+
+17:                                               ; preds = %13
+  %18 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  store ptr %16, ptr %18, align 8
+  br label %21
+
+19:                                               ; preds = %13
+  %20 = getelementptr inbounds nuw i8, ptr %6, i64 29368
+  store ptr %16, ptr %20, align 8
+  br label %21
+
+21:                                               ; preds = %19, %17
+  %22 = load ptr, ptr %14, align 8
+  store ptr %22, ptr %16, align 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, i8 0, i64 16, i1 false)
+  %23 = load i32, ptr %.03238.i.i180, align 8
+  %24 = and i32 %23, 65280
+  %25 = or disjoint i32 %24, 56
+  br label %bb.af
+
+26:                                               ; preds = %.preheader.i.i179
+  br i1 %.not34.i.i185, label %.loopexit.i.i186, label %.preheader.i.i179, !llvm.loop !1
+
+.loopexit.i.i186:                                 ; preds = %26, %4
+  %27 = load i64, ptr %6, align 8                 ; 2 uses
+  %28 = add i64 %27, 64                           ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %30 = load i64, ptr %29, align 8
+  %31 = icmp ugt i64 %28, %30
+  br i1 %31, label %32, label %34, !prof !11
+
+32:                                               ; preds = %.loopexit.i.i186
+  %33 = tail call ptr @tcg_malloc_internal(ptr noundef nonnull %6, i32 noundef 64)
+  br label %bb.af
+
+34:                                               ; preds = %.loopexit.i.i186
+  store i64 %28, ptr %6, align 8
+  %35 = inttoptr i64 %27 to ptr
+  br label %bb.af
+
+bb.af:                                            ; preds = %34, %32, %21
+  %.1.i.i183 = phi ptr [ %.03238.i.i180, %21 ], [ %33, %32 ], [ %35, %34 ] ; 9 uses
+  %.0.i.i184 = phi i32 [ %25, %21 ], [ 1080, %32 ], [ 1080, %34 ]
+  store i64 0, ptr %.1.i.i183, align 1
+  store i32 %.0.i.i184, ptr %.1.i.i183, align 8
+  %36 = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 2 uses
+  %37 = load i32, ptr %36, align 8
+  %38 = add i32 %37, 1
+  store i32 %38, ptr %36, align 8
+  %39 = lshr i64 %5, 24
+  %40 = trunc i64 %39 to i8
+  %41 = getelementptr i8, ptr %.1.i.i183, i64 2
+  store i8 %40, ptr %41, align 2
+  %42 = load ptr, ptr %i.ay, align 8              ; 3 uses
+  %43 = getelementptr inbounds nuw i8, ptr %.1.i.i183, i64 8 ; 3 uses
+  store ptr %42, ptr %43, align 8
+  %.not173.a = icmp eq ptr %42, null
+  br i1 %.not173.a, label %46, label %44
+
+44:                                               ; preds = %bb.af
+  %45 = getelementptr inbounds nuw i8, ptr %42, i64 16
+  store ptr %43, ptr %45, align 8
+  br label %tcg_op_insert_after.exit
+
+46:                                               ; preds = %bb.af
+  store ptr %43, ptr %i.ax, align 8
+  br label %tcg_op_insert_after.exit
+
+tcg_op_insert_after.exit:                         ; preds = %44, %46
+  store ptr %.1.i.i183, ptr %i.ay, align 8
+  %47 = getelementptr inbounds nuw i8, ptr %.1.i.i183, i64 16
+  store ptr %i.ay, ptr %47, align 8
+  %48 = and i32 %i.bd, 16
+  %.not173 = icmp eq i32 %48, 0
+  br i1 %.not173, label %bb.ah, label %bb.ag
+
+bb.ag:                                            ; preds = %tcg_op_insert_after.exit
   %i.ff = getelementptr inbounds nuw i8, ptr %.0155225, i64 40
   %i.fg = load i64, ptr %i.ff, align 8
   store i64 1, ptr %i.fd, align 8
   tail call void @tcg_op_remove(ptr noundef %0, ptr noundef nonnull %.0155225)
   br label %bb.ai
 
-bb.ah:                                            ; preds = %bb.af
+bb.ah:                                            ; preds = %tcg_op_insert_after.exit
   store i64 2, ptr %i.fd, align 8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.0 = phi i64 [ %i.fg, %bb.ag ], [ %i.fc, %bb.ah ]
-  %i.fh = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %i.fh = getelementptr inbounds nuw i8, ptr %.1.i.i183, i64 32
   store i64 %.0, ptr %i.fh, align 8
   %i.fi = getelementptr inbounds nuw i8, ptr %i.ez, i64 16
   %i.fj = load ptr, ptr %i.fi, align 8
   %i.fk = ptrtoint ptr %i.fj to i64
-  %i.fl = getelementptr inbounds nuw i8, ptr %10, i64 40
+  %i.fl = getelementptr inbounds nuw i8, ptr %.1.i.i183, i64 40
   store i64 %i.fk, ptr %i.fl, align 8
   %i.fm = getelementptr inbounds nuw i8, ptr %i.ez, i64 24
   %i.fn = load i64, ptr %i.fm, align 8
-  %i.fo = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.fo = getelementptr inbounds nuw i8, ptr %.1.i.i183, i64 48
   store i64 %i.fn, ptr %i.fo, align 8
   br label %.loopexit
 
@@ -1672,7 +1751,6 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.ga = load i64, ptr %i.fs, align 8
-  %12 = trunc i64 %i.ga to i32
   %i.gb = load ptr, ptr %i.aw, align 8            ; 10 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 29360
   %i.gd = load ptr, ptr %i.gc, align 8            ; 2 uses
@@ -1780,7 +1858,7 @@ bb.ay:                                            ; preds = %.loopexit.i.i186.a
   br label %tcg_op_alloc.exit.i
 
 tcg_op_alloc.exit.i:                              ; preds = %bb.ay, %tcg_malloc_internal.exit193, %bb.aq
-  %.1.i.i183.a = phi ptr [ %.03238.i.i180.a, %bb.aq ], [ %i.hf, %tcg_malloc_internal.exit193 ], [ %i.hm, %bb.ay ] ; 10 uses
+  %.1.i.i183.a = phi ptr [ %.03238.i.i180.a, %bb.aq ], [ %i.hf, %tcg_malloc_internal.exit193 ], [ %i.hm, %bb.ay ] ; 9 uses
   %.0.i.i184.a = phi i32 [ %i.gq, %bb.aq ], [ 1080, %tcg_malloc_internal.exit193 ], [ 1080, %bb.ay ]
   store i64 0, ptr %.1.i.i183.a, align 1
   store i32 %.0.i.i184.a, ptr %.1.i.i183.a, align 8
@@ -1788,12 +1866,10 @@ tcg_op_alloc.exit.i:                              ; preds = %bb.ay, %tcg_malloc_
   %i.ho = load i32, ptr %i.hn, align 8
   %i.hp = add i32 %i.ho, 1
   store i32 %i.hp, ptr %i.hn, align 8
-  %13 = load i32, ptr %.1.i.i183.a, align 8
-  %14 = lshr i32 %12, 8
-  %15 = and i32 %14, 16711680
-  %16 = and i32 %13, -16711681
-  %17 = or disjoint i32 %16, %15
-  store i32 %17, ptr %.1.i.i183.a, align 8
+  %49 = lshr i64 %i.ga, 24
+  %50 = trunc i64 %49 to i8
+  %51 = getelementptr i8, ptr %.1.i.i183.a, i64 2
+  store i8 %50, ptr %51, align 2
   %i.hq = load ptr, ptr %i.ay, align 8            ; 3 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %.1.i.i183.a, i64 8 ; 3 uses
   store ptr %i.hq, ptr %i.hr, align 8
