@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.eb = lshr i64 1275511473185297, %i.ea
   %i.ec = trunc i64 %i.eb to i32
   %i.ed = and i32 %i.ec, 15
-  %i.ee = mul nuw nsw i32 %i.ed, %i.dx            ; 3 uses
+  %i.ee = mul nuw nsw i32 %i.ed, %i.dx            ; 5 uses
   %i.ef = zext nneg i32 %i.ee to i64
   %i.eg = ptrtoint ptr %i.bx to i64
   %i.eh = ptrtoint ptr %i.cw to i64
@@ -214,9 +214,9 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.ek = or i64 %i.ej, %i.bz
   %i.el = or i64 %i.ek, %i.cy
   %i.em = and i64 %i.el, 3
-  %i.en = icmp eq i64 %i.em, 0                    ; 3 uses
+  %i.en = icmp eq i64 %i.em, 0                    ; 4 uses
   %.zext = lshr i32 %i.ee, 2
-  %.0161.i = select i1 %i.en, i32 %.zext, i32 %i.ee ; 13 uses
+  %.0161.i = select i1 %i.en, i32 %.zext, i32 %i.ee ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
   %i.eo = sub nsw i32 %i.dn, %i.co                ; 2 uses
   %i.ep = mul nsw i32 %.0161.i, %i.eo             ; 3 uses
@@ -410,22 +410,21 @@ bb.av:                                            ; preds = %.lr.ph194.split.i
   br i1 %i.gk, label %.lr.ph194.split.i, label %._crit_edge195.i, !llvm.loop !205
 
 ._crit_edge195.i:                                 ; preds = %._crit_edge.us197.i, %bb.av, %.preheader186.i
-  %29 = mul nsw i32 %.0161.i, %i.dn
   %i.gl = sext i32 %.0 to i64
   %i.gm = mul i64 %i.cy, %i.gl
   %i.gn = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.gm ; 3 uses
   %i.go = icmp sgt i32 %i.cu, 0
-  %30 = select i1 %i.en, i32 2, i32 0             ; 3 uses
   br i1 %i.go, label %.lr.ph212.i, label %._crit_edge.i
 
 .lr.ph212.i:                                      ; preds = %._crit_edge195.i
   %i.gp = mul i32 %.0161.i, %i.ey                 ; 4 uses
   %i.gq = mul i32 %.0161.i, %.0206                ; 6 uses
   %i.gr = mul nsw i32 %.0161.i, %i.co             ; 2 uses
-  %i.gs = shl i32 %i.gq, %30
+  %29 = select i1 %i.en, i32 2, i32 0             ; 2 uses
+  %i.gs = shl i32 %i.gq, %29
   %i.gt = sext i32 %i.gs to i64
   %i.gu = getelementptr inbounds i8, ptr %i.gn, i64 %i.gt ; 2 uses
-  %i.gv = shl i32 %i.gr, %30
+  %i.gv = shl i32 %i.gr, %29
   %i.gw = sext i32 %i.gv to i64                   ; 2 uses
   %i.gx = icmp sgt i32 %i.gq, 0                   ; 2 uses
   %i.gy = icmp sgt i32 %i.gp, 0                   ; 2 uses
@@ -783,12 +782,14 @@ bb.ax:                                            ; preds = %.lr.ph212.split.i
   br i1 %exitcond260.not.i, label %._crit_edge.i, label %.lr.ph212.split.i, !llvm.loop !210
 
 ._crit_edge.i:                                    ; preds = %.loopexit184.i, %.loopexit181.us.i, %._crit_edge195.i
-  %31 = shl i32 %29, %30                          ; 2 uses
+  %30 = and i32 %i.ee, 4092
+  %31 = select i1 %i.en, i32 %30, i32 %i.ee
+  %32 = mul i32 %31, %i.dn                        ; 2 uses
   %i.lr = icmp sgt i32 %.0, 0
   br i1 %i.lr, label %.lr.ph215.i, label %.preheader.i
 
 .lr.ph215.i:                                      ; preds = %._crit_edge.i
-  %i.ls = sext i32 %31 to i64
+  %i.ls = sext i32 %32 to i64
   %wide.trip.count275.i = zext nneg i32 %.0 to i64
   br label %bb.ay
 
@@ -797,7 +798,7 @@ bb.ax:                                            ; preds = %.lr.ph212.split.i
   br i1 %i.lt, label %.lr.ph217.i, label %._crit_edge218.i
 
 .lr.ph217.i:                                      ; preds = %.preheader.i
-  %i.lu = sext i32 %31 to i64
+  %i.lu = sext i32 %32 to i64
   %i.lv = sext i32 %i.cu to i64
   %wide.trip.count280.i = zext nneg i32 %i.fa to i64
   br label %bb.bb

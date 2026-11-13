@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i389) #13, !srcloc !14
   %.val374 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.v = getelementptr inbounds nuw i8, ptr %.val374, i64 %i.s
-  %.0.copyload.i390 = load i32, ptr %i.v, align 1 ; 6 uses
+  %.0.copyload.i390 = load i32, ptr %i.v, align 1 ; 8 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i390) #13, !srcloc !14
   %i.w = zext i32 %.0.copyload.i390 to i64        ; 4 uses
   %.val373 = load ptr, ptr %i.d, align 8, !tbaa !13
@@ -278,7 +278,7 @@ bb.f:                                             ; preds = %bb.m, %bb.e
   %.0.copyload.i399 = load i32, ptr %i.bc, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i399) #13, !srcloc !14
   %i.bd = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i399)
-  %i.be = select i1 %.not.i, i32 %.0.copyload.i399, i32 %i.bd ; 3 uses
+  %i.be = select i1 %.not.i, i32 %.0.copyload.i399, i32 %i.bd ; 4 uses
   %.not356 = icmp ugt i32 %.0.copyload.i389, %i.be
   %i.bf = sub nuw i32 %.0.copyload.i389, %i.be
   %.not357 = icmp ult i32 %i.ba, %i.bf
@@ -286,8 +286,8 @@ bb.f:                                             ; preds = %bb.m, %bb.e
   br i1 %or.cond365, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f
-  %i.bg = add i32 %i.be, %.0.copyload.i390        ; 3 uses
-  %i.bh = add i32 %i.bg, %i.ba
+  %i.bg = add i32 %i.be, %i.ba
+  %i.bh = add i32 %i.bg, %.0.copyload.i390
   %i.bi = zext i32 %i.bh to i64
   %.val383 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.bj = getelementptr inbounds nuw i8, ptr %.val383, i64 %i.bi
@@ -297,7 +297,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not358, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
-  %i.bk = zext i32 %i.bg to i64
+  %4 = add i32 %i.be, %.0.copyload.i390           ; 2 uses
+  %i.bk = zext i32 %4 to i64
   %.val53.i = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.bl = getelementptr inbounds nuw i8, ptr %.val53.i, i64 %i.bk
   %.0.copyload.i.i = load i8, ptr %i.bl, align 1  ; 3 uses
@@ -313,7 +314,7 @@ bb.h:                                             ; preds = %bb.g
 
 .preheader.i:                                     ; preds = %bb.h, %bb.i
   %.044.i = phi i32 [ %i.bu, %bb.i ], [ %i.n, %bb.h ] ; 2 uses
-  %.043.i = phi i32 [ %i.bt, %bb.i ], [ %i.bg, %bb.h ] ; 2 uses
+  %.043.i = phi i32 [ %i.bt, %bb.i ], [ %4, %bb.h ] ; 2 uses
   %i.bn = zext i32 %.043.i to i64
   %.val51.i = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.bo = getelementptr inbounds nuw i8, ptr %.val51.i, i64 %i.bn
@@ -357,7 +358,7 @@ bb.j:                                             ; preds = %w2c_hermes_strcmp.e
   %.0.copyload.i405 = load i32, ptr %i.cd, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i405) #13, !srcloc !14
   %i.ce = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i405)
-  %i.cf = select i1 %.not.i, i32 %.0.copyload.i405, i32 %i.ce ; 3 uses
+  %i.cf = select i1 %.not.i, i32 %.0.copyload.i405, i32 %i.ce ; 4 uses
   %.not360 = icmp ugt i32 %.0.copyload.i389, %i.cf
   %i.cg = sub nuw i32 %.0.copyload.i389, %i.cf
   %.not361 = icmp ult i32 %i.cb, %i.cg
@@ -365,15 +366,16 @@ bb.j:                                             ; preds = %w2c_hermes_strcmp.e
   br i1 %or.cond366, label %bb.k, label %.thread
 
 bb.k:                                             ; preds = %bb.j
-  %i.ch = add i32 %i.cf, %.0.copyload.i390
-  %.fr = freeze i32 %i.ch                         ; 3 uses
-  %i.ci = add i32 %.fr, %i.cb
+  %i.ch = add i32 %i.cf, %i.cb
+  %i.ci = add i32 %i.ch, %.0.copyload.i390
   %i.cj = zext i32 %i.ci to i64
   %.val382 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.ck = getelementptr inbounds nuw i8, ptr %.val382, i64 %i.cj
   %.0.copyload.i407 = load i8, ptr %i.ck, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i407) #13, !srcloc !31
   %.not362 = icmp ne i8 %.0.copyload.i407, 0
+  %5 = add i32 %i.cf, %.0.copyload.i390
+  %.fr = freeze i32 %5                            ; 2 uses
   %.not363 = icmp eq i32 %.fr, 0
   %or.cond421 = or i1 %.not363, %.not362
   br i1 %or.cond421, label %.thread, label %bb.n
