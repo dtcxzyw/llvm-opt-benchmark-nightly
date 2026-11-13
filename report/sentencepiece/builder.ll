@@ -205,11 +205,11 @@ bb.s:                                             ; preds = %bb.r
 
 .split.loop.exit.i.i:                             ; preds = %bb.r, %bb.q, %bb.p, %bb.o
   %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %bb.o ], [ %indvars.iv.next.i.i, %bb.p ], [ %indvars.iv.next.i.i.1, %bb.q ], [ %indvars.iv.next.i.i.2, %bb.r ]
-  %2 = trunc nuw i64 %indvars.iv.i.i.lcssa to i32
+  %2 = trunc i64 %indvars.iv.i.i.lcssa to i8
   br label %.split.loop.exit29.i.i
 
 .split.loop.exit29.i.i:                           ; preds = %bb.s, %.split.loop.exit.i.i
-  %.018.i.i = phi i32 [ %2, %.split.loop.exit.i.i ], [ 0, %bb.s ]
+  %.018.i.i = phi i8 [ %2, %.split.loop.exit.i.i ], [ 0, %bb.s ]
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.z, %.split.loop.exit29.i.i
@@ -270,14 +270,10 @@ _ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit.i.i: ; preds = %bb.y, %
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
   store i8 1, ptr %i.dn, align 4, !tbaa !182
   %i.do = load ptr, ptr %i.e, align 8, !tbaa !117
-  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv24.i.i ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv24.i.i to i32
-  %4 = xor i32 %.018.i.i, %3
-  %5 = load i32, ptr %i.dp, align 4, !tbaa !185
-  %6 = and i32 %5, -256
-  %7 = and i32 %4, 255
-  %8 = or disjoint i32 %6, %7
-  store i32 %8, ptr %i.dp, align 4, !tbaa !185
+  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv24.i.i
+  %3 = trunc i64 %indvars.iv24.i.i to i8
+  %4 = xor i8 %.018.i.i, %3
+  store i8 %4, ptr %i.dp, align 4, !tbaa !185
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit.i.i, %bb.t
@@ -680,11 +676,11 @@ bb.r:                                             ; preds = %bb.q
 
 .split.loop.exit.i.i:                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n
   %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %bb.n ], [ %indvars.iv.next.i.i, %bb.o ], [ %indvars.iv.next.i.i.1, %bb.p ], [ %indvars.iv.next.i.i.2, %bb.q ]
-  %2 = trunc nuw i64 %indvars.iv.i.i.lcssa to i32
+  %2 = trunc i64 %indvars.iv.i.i.lcssa to i8
   br label %.split.loop.exit29.i.i
 
 .split.loop.exit29.i.i:                           ; preds = %bb.r, %.split.loop.exit.i.i
-  %.018.i.i = phi i32 [ %2, %.split.loop.exit.i.i ], [ 0, %bb.r ]
+  %.018.i.i = phi i8 [ %2, %.split.loop.exit.i.i ], [ 0, %bb.r ]
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.y, %.split.loop.exit29.i.i
@@ -745,14 +741,10 @@ _ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit.i.i: ; preds = %bb.x, %
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
   store i8 1, ptr %i.cz, align 4, !tbaa !182
   %i.da = load ptr, ptr %i.d, align 8, !tbaa !117
-  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv24.i.i ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv24.i.i to i32
-  %4 = xor i32 %.018.i.i, %3
-  %5 = load i32, ptr %i.db, align 4, !tbaa !185
-  %6 = and i32 %5, -256
-  %7 = and i32 %4, 255
-  %8 = or disjoint i32 %6, %7
-  store i32 %8, ptr %i.db, align 4, !tbaa !185
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv24.i.i
+  %3 = trunc i64 %indvars.iv24.i.i to i8
+  %4 = xor i8 %.018.i.i, %3
+  store i8 %4, ptr %i.db, align 4, !tbaa !185
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit.i.i, %bb.s
@@ -1155,11 +1147,11 @@ bb.g:                                             ; preds = %bb.f
 
 .split.loop.exit:                                 ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.d ], [ %indvars.iv.next.1, %bb.e ], [ %indvars.iv.next.2, %bb.f ]
-  %1 = trunc nuw i64 %indvars.iv.lcssa to i32
+  %1 = trunc i64 %indvars.iv.lcssa to i8
   br label %.split.loop.exit68
 
 .split.loop.exit68:                               ; preds = %bb.g, %.split.loop.exit
-  %.018.i = phi i32 [ %1, %.split.loop.exit ], [ 0, %bb.g ]
+  %.018.i = phi i8 [ %1, %.split.loop.exit ], [ 0, %bb.g ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   br label %bb.h
 
@@ -1223,14 +1215,10 @@ _ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit: ; preds = %bb.k, %bb.l
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store i8 1, ptr %i.bl, align 4, !tbaa !182
   %i.bm = load ptr, ptr %i.a, align 8, !tbaa !117
-  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %indvars.iv46 ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv46 to i32
-  %3 = xor i32 %.018.i, %2
-  %4 = load i32, ptr %i.bn, align 4, !tbaa !185
-  %5 = and i32 %4, -256
-  %6 = and i32 %3, 255
-  %7 = or disjoint i32 %5, %6
-  store i32 %7, ptr %i.bn, align 4, !tbaa !185
+  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %indvars.iv46
+  %2 = trunc i64 %indvars.iv46 to i8
+  %3 = xor i8 %.018.i, %2
+  store i8 %3, ptr %i.bn, align 4, !tbaa !185
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit, %bb.h

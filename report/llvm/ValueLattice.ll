@@ -202,11 +202,10 @@ bb.k:                                             ; preds = %_ZN4llvm5APIntC2ERK
 
 _ZN4llvm13ConstantRangeC2ERKS0_.exit.i16:         ; preds = %bb.k, %bb.j
   %i.v = load i16, ptr %2, align 8
-  %5 = and i16 %i.v, -256
-  %6 = load i16, ptr %0, align 8
-  %7 = and i16 %6, 255
-  %8 = or disjoint i16 %7, %5
-  store i16 %8, ptr %0, align 8
+  %5 = lshr i16 %i.v, 8
+  %6 = trunc nuw i16 %5 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %6, ptr %7, align 1
   br label %_ZN4llvm19ValueLatticeElementC2ERKS0_.exit
 
 bb.l:                                             ; preds = %bb.f, %bb.f
@@ -270,11 +269,10 @@ bb.s:                                             ; preds = %_ZN4llvm5APIntC2ERK
 
 _ZN4llvm13ConstantRangeC2ERKS0_.exit.i20:         ; preds = %bb.s, %bb.r
   %i.ao = load i16, ptr %1, align 8
-  %9 = and i16 %i.ao, -256
-  %10 = load i16, ptr %0, align 8
-  %11 = and i16 %10, 255
-  %12 = or disjoint i16 %11, %9
-  store i16 %12, ptr %0, align 8
+  %8 = lshr i16 %i.ao, 8
+  %9 = trunc nuw i16 %8 to i8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %9, ptr %10, align 1
   br label %_ZN4llvm19ValueLatticeElementC2ERKS0_.exit
 
 bb.t:                                             ; preds = %bb.n, %bb.n
@@ -355,11 +353,10 @@ bb.aa:                                            ; preds = %_ZN4llvm5APIntC2ERK
 
 _ZN4llvm13ConstantRangeC2ERKS0_.exit.i24:         ; preds = %bb.aa, %bb.z
   %i.bm = load i16, ptr %1, align 8
-  %13 = and i16 %i.bm, -256
-  %14 = load i16, ptr %0, align 8
-  %15 = and i16 %14, 255
-  %16 = or disjoint i16 %15, %13
-  store i16 %16, ptr %0, align 8
+  %11 = lshr i16 %i.bm, 8
+  %12 = trunc nuw i16 %11 to i8
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %12, ptr %13, align 1
   br label %_ZN4llvm19ValueLatticeElementC2ERKS0_.exit
 
 bb.ab:                                            ; preds = %_ZN4llvmL14hasSingleValueERKNS_19ValueLatticeElementE.exit.thread, %_ZN4llvmL14hasSingleValueERKNS_19ValueLatticeElementE.exit.thread
@@ -507,11 +504,10 @@ bb.f:                                             ; preds = %_ZN4llvm5APIntC2ERK
 
 _ZN4llvm13ConstantRangeC2ERKS0_.exit:             ; preds = %bb.e, %bb.f
   %i.r = load i16, ptr %1, align 8
-  %2 = and i16 %i.r, -256
-  %3 = load i16, ptr %0, align 8
-  %4 = and i16 %3, 255
-  %5 = or disjoint i16 %4, %2
-  store i16 %5, ptr %0, align 8
+  %2 = lshr i16 %i.r, 8
+  %3 = trunc nuw i16 %2 to i8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %3, ptr %4, align 1
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.a, %bb.a

@@ -205,25 +205,19 @@ bb.pl:                                            ; preds = %bb.pk, %bb.pj
 bb.pm:                                            ; preds = %bb.pl
   %i.ddi = getelementptr inbounds nuw i8, ptr %i.kb, i64 239
   %i.ddj = load i32, ptr %i.ddi, align 1
-  %31 = shl i32 %i.ddj, 24
-  %32 = ashr exact i32 %31, 24
+  %31 = trunc i32 %i.ddj to i8
   br label %bb.po
 
 bb.pn:                                            ; preds = %bb.pl
   %i.ddk = getelementptr inbounds nuw i8, ptr %i.j, i64 130
   %i.ddl = load i8, ptr %i.ddk, align 2, !tbaa !1473, !range !100, !noundef !236
   %i.ddm = xor i8 %i.ddl, 1
-  %not. = zext nneg i8 %i.ddm to i32
   br label %bb.po
 
 bb.po:                                            ; preds = %bb.pn, %bb.pm
-  %33 = phi i32 [ %32, %bb.pm ], [ %not., %bb.pn ]
-  %i.ddn = getelementptr inbounds nuw i8, ptr %i.dde, i64 239 ; 2 uses
-  %34 = load i32, ptr %i.ddn, align 1
-  %35 = and i32 %33, 255
-  %36 = and i32 %34, -256
-  %37 = or disjoint i32 %36, %35
-  store i32 %37, ptr %i.ddn, align 1
+  %32 = phi i8 [ %31, %bb.pm ], [ %i.ddm, %bb.pn ]
+  %i.ddn = getelementptr inbounds nuw i8, ptr %i.dde, i64 239
+  store i8 %32, ptr %i.ddn, align 1
   %i.ddo = getelementptr inbounds nuw i8, ptr %i.dde, i64 480
   %i.ddp = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 10 uses
   %i.ddq = load <2 x float>, ptr %30, align 8, !tbaa !75 ; 2 uses

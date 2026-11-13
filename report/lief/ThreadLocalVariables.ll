@@ -205,11 +205,8 @@ define void @_ZN4LIEF5MachO20ThreadLocalVariablesC2Ev(ptr noundef nonnull align 
 bb.a:
   tail call void @_ZN4LIEF5MachO7SectionC2Ev(ptr noundef nonnull align 8 dereferenceable(192) %0) #23
   store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN4LIEF5MachO20ThreadLocalVariablesE, i64 16), ptr %0, align 8, !tbaa !44
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 2 uses
-  %1 = load i32, ptr %i.a, align 4, !tbaa !240
-  %2 = and i32 %1, -256
-  %3 = or disjoint i32 %2, 19
-  store i32 %3, ptr %i.a, align 4, !tbaa !240
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 116
+  store i8 19, ptr %i.a, align 4, !tbaa !240
   ret void
 }
 
