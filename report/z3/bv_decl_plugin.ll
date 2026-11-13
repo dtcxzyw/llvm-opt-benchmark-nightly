@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %_Z20force_ptr_array
   %i.aa = getelementptr inbounds nuw i8, ptr %7, i64 17 ; 3 uses
   %i.ab = load i16, ptr %i.aa, align 1
   %i.ac = and i16 %i.ab, -144
-  %i.ad = select i1 %6, i16 128, i16 0
-  %i.ae = select i1 %5, i16 15, i16 0
+  %i.ad = select i1 %5, i16 15, i16 0
+  %i.ae = select i1 %6, i16 128, i16 0
   %i.af = or disjoint i16 %i.ae, %i.ad
   %i.ag = or disjoint i16 %i.af, %i.ac
   store i16 %i.ag, ptr %i.aa, align 1

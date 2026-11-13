@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.am = select i1 %i.al, i64 4, i64 3
   %i.an = icmp ugt i64 %i.u, 16383
   %i.ao = zext i1 %i.an to i64
-  %2 = add nuw nsw i64 %i.am, %i.ao
   %i.ap = icmp ult i64 %i.u, 256
   switch i32 %i.ak, label %bb.h [
     i32 0, label %_ZN11duckdb_zstdL30ZSTD_estimateBlockSize_literalEPKhmPKNS_17ZSTD_hufCTables_tEPKNS_25ZSTD_hufCTablesMetadata_tEPvmi.exit.i
@@ -237,7 +236,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.0.i.i = phi i64 [ %i.aw, %bb.f ], [ %i.at, %bb.e ] ; 2 uses
   %i.ax = add i64 %.0.i.i, 6
   %spec.select.i.i = select i1 %i.ap, i64 %.0.i.i, i64 %i.ax
-  %i.ay = add i64 %2, %spec.select.i.i
+  %2 = add i64 %i.am, %spec.select.i.i
+  %i.ay = add i64 %2, %i.ao
   br label %_ZN11duckdb_zstdL30ZSTD_estimateBlockSize_literalEPKhmPKNS_17ZSTD_hufCTables_tEPKNS_25ZSTD_hufCTablesMetadata_tEPvmi.exit.i
 
 bb.h:                                             ; preds = %bb.b

@@ -89,8 +89,8 @@ bb.a:
   %i.e = load i16, ptr %i.d, align 2, !noundef !5
   %i.f = zext i16 %i.e to i32
   %i.g = icmp eq i8 %2, 0
-  %i.h = select i1 %i.c, i32 20480, i32 4096
-  %i.i = select i1 %i.g, i32 544768, i32 %i.h
+  %i.h = select i1 %i.g, i32 544768, i32 20480
+  %i.i = select i1 %i.c, i32 %i.h, i32 4096
   %spec.select = or i32 %i.i, %i.f
   br label %_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core33create_comp_flags_from_zip_params.exit
 
@@ -148,8 +148,8 @@ bb.a:
   %i.i = load i16, ptr %i.h, align 2, !noalias !16, !noundef !5
   %i.j = zext i16 %i.i to i32
   %i.k = icmp eq i32 %1, 0
-  %i.l = select i1 %i.g, i32 20480, i32 4096
-  %i.m = select i1 %i.k, i32 544768, i32 %i.l
+  %i.l = select i1 %i.k, i32 544768, i32 20480
+  %i.m = select i1 %i.g, i32 %i.l, i32 4096
   %spec.select.i = or i32 %i.m, %i.j
   br label %_RNvMs1_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_15CompressorOxide20set_format_and_level.exit
 
@@ -215,8 +215,8 @@ bb.a:
   %i.n = load i16, ptr %i.m, align 2, !noalias !23, !noundef !5
   %i.o = zext i16 %i.n to i32                     ; 2 uses
   %i.p = icmp eq i8 %1, 0
-  %i.q = select i1 %i.f, i32 20480, i32 4096
-  %i.r = select i1 %i.p, i32 544768, i32 %i.q
+  %i.q = select i1 %i.p, i32 544768, i32 20480
+  %i.r = select i1 %i.f, i32 %i.q, i32 4096
   %spec.select.i = or i32 %i.r, %i.o
   br label %bb.b
 
