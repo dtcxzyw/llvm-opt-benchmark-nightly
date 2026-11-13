@@ -206,7 +206,6 @@ bb.ca:                                            ; preds = %bb.bz
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit: ; preds = %bb.bz
   %i.fr = call i32 @llvm.smin.i32(i32 %i.fo, i32 -1022) ; 2 uses
-  %..i = add nsw i32 %i.fr, 1022
   %..i179 = call noundef range(i32 -1022, 1024) i32 @llvm.smax.i32(i32 range(i32 -2147483648, 1024) %i.fo, i32 -1022)
   %i.fs = add nsw i32 %..i179, 1023
   %i.ft = zext nneg i32 %i.fs to i64
@@ -216,16 +215,23 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntEr
   %i.fx = or i64 %i.fw, %.sroa.017.2203215
   %i.fy = or i64 %i.fx, %i.fu                     ; 2 uses
   %i.fz = icmp samesign ult i32 %i.fr, -1022
-  %3 = call double @llvm.powi.f64.i32(double 2.000000e+00, i32 %..i)
-  %4 = bitcast i64 %i.fy to double
-  %5 = fmul double %3, %4
-  %6 = bitcast double %5 to i64
-  %.sroa.056.0 = select i1 %i.fz, i64 %6, i64 %i.fy
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.056.0, ptr %7, align 8
+  br i1 %i.fz, label %5, label %3
+
+3:                                                ; preds = %5, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %.sroa.056.0 = phi i64 [ %9, %5 ], [ %i.fy, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sroa.056.0, ptr %4, align 8
   br label %.loopexit294.thread.sink.split423
 
-.loopexit294.thread.sink.split423:                ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit, %.loopexit294.thread.sink.split
+5:                                                ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %..i = add nuw nsw i32 %i.fr, 1022
+  %6 = call double @llvm.powi.f64.i32(double 2.000000e+00, i32 %..i)
+  %7 = bitcast i64 %i.fy to double
+  %8 = fmul double %6, %7
+  %9 = bitcast double %8 to i64
+  br label %3
+
+.loopexit294.thread.sink.split423:                ; preds = %3, %.loopexit294.thread.sink.split
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.0.9, ptr %i.ga, align 8
   br label %.loopexit294.thread
@@ -628,7 +634,6 @@ bb.bm:                                            ; preds = %bb.bl
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit: ; preds = %bb.bl
   %i.ed = call i32 @llvm.smin.i32(i32 %i.ea, i32 -1022) ; 2 uses
-  %..i = add nsw i32 %i.ed, 1022
   %..i167 = call noundef range(i32 -1022, 1024) i32 @llvm.smax.i32(i32 range(i32 -2147483648, 1024) %i.ea, i32 -1022)
   %i.ee = add nsw i32 %..i167, 1023
   %i.ef = zext nneg i32 %i.ee to i64
@@ -638,16 +643,23 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntEr
   %i.ej = or i64 %i.ei, %.sroa.017.2190201
   %i.ek = or i64 %i.ej, %i.eg                     ; 2 uses
   %i.el = icmp samesign ult i32 %i.ed, -1022
-  %3 = call double @llvm.powi.f64.i32(double 2.000000e+00, i32 %..i)
-  %4 = bitcast i64 %i.ek to double
-  %5 = fmul double %3, %4
-  %6 = bitcast double %5 to i64
-  %.sroa.056.0 = select i1 %i.el, i64 %6, i64 %i.ek
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.056.0, ptr %7, align 8
+  br i1 %i.el, label %5, label %3
+
+3:                                                ; preds = %5, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %.sroa.056.0 = phi i64 [ %9, %5 ], [ %i.ek, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sroa.056.0, ptr %4, align 8
   br label %.loopexit280.thread.sink.split398
 
-.loopexit280.thread.sink.split398:                ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit, %.loopexit280.thread.sink.split
+5:                                                ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %..i = add nuw nsw i32 %i.ed, 1022
+  %6 = call double @llvm.powi.f64.i32(double 2.000000e+00, i32 %..i)
+  %7 = bitcast i64 %i.ek to double
+  %8 = fmul double %6, %7
+  %9 = bitcast double %8 to i64
+  br label %3
+
+.loopexit280.thread.sink.split398:                ; preds = %3, %.loopexit280.thread.sink.split
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.0.9, ptr %i.em, align 8
   br label %.loopexit280.thread
@@ -1050,7 +1062,6 @@ bb.bf:                                            ; preds = %bb.be
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit: ; preds = %bb.be
   %i.gk = tail call i32 @llvm.smin.i32(i32 %i.gg, i32 -1022) ; 2 uses
-  %..i = add nsw i32 %i.gk, 1022
   %..i175 = tail call noundef range(i32 -1022, 1024) i32 @llvm.smax.i32(i32 range(i32 -2147483648, 1024) %i.gg, i32 -1022)
   %i.gl = add nsw i32 %..i175, 1023
   %i.gm = zext nneg i32 %i.gl to i64
@@ -1060,16 +1071,23 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntEr
   %i.gq = or i64 %i.gp, %.sroa.017.2264
   %i.gr = or i64 %i.gq, %i.gn                     ; 2 uses
   %i.gs = icmp samesign ult i32 %i.gk, -1022
-  %4 = tail call double @llvm.powi.f64.i32(double 2.000000e+00, i32 %..i)
-  %5 = bitcast i64 %i.gr to double
-  %6 = fmul double %4, %5
-  %7 = bitcast double %6 to i64
-  %.sroa.056.0 = select i1 %i.gs, i64 %7, i64 %i.gr
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.056.0, ptr %8, align 8
+  br i1 %i.gs, label %6, label %4
+
+4:                                                ; preds = %6, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %.sroa.056.0 = phi i64 [ %10, %6 ], [ %i.gr, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sroa.056.0, ptr %5, align 8
   br label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit168.thread.thread.sink.split
 
-_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit168.thread.thread.sink.split: ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit, %bb.bf, %bb.ax
+6:                                                ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
+  %..i = add nuw nsw i32 %i.gk, 1022
+  %7 = tail call double @llvm.powi.f64.i32(double 2.000000e+00, i32 %..i)
+  %8 = bitcast i64 %i.gr to double
+  %9 = fmul double %7, %8
+  %10 = bitcast double %9 to i64
+  br label %4
+
+_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit168.thread.thread.sink.split: ; preds = %4, %bb.bf, %bb.ax
   %i.gt = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.0.9, ptr %i.gt, align 8
   br label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit168.thread.thread
