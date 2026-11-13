@@ -205,16 +205,16 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %.sink.split, %bb.l, %bb.m
   %i.cl = phi double [ %i.bi, %bb.l ], [ %i.bi, %bb.m ], [ %.ph, %.sink.split ]
-  %1 = fcmp ugt double %i.cl, 0.000000e+00
+  %1 = fcmp ole double %i.cl, 0.000000e+00
   %i.cm = add nuw nsw i64 %.061, 1                ; 2 uses
-  %2 = icmp slt i64 %i.cm, %i.d
-  %or.cond = select i1 %1, i1 %2, i1 false
-  br i1 %or.cond, label %.backedge.backedge, label %.loopexit
+  %exitcond.not = icmp eq i64 %i.cm, %i.d
+  %or.cond = select i1 %1, i1 true, i1 %exitcond.not
+  br i1 %or.cond, label %.loopexit, label %.backedge.backedge
 
 .critedge:                                        ; preds = %.backedge
   %.old = add nuw nsw i64 %.061, 1                ; 2 uses
-  %.old62 = icmp slt i64 %.old, %i.d
-  br i1 %.old62, label %.backedge.backedge, label %.loopexit
+  %exitcond.not.old = icmp eq i64 %.old, %i.d
+  br i1 %exitcond.not.old, label %.loopexit, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %.critedge, %bb.o
   %.061.be = phi i64 [ %.old, %.critedge ], [ %i.cm, %bb.o ]

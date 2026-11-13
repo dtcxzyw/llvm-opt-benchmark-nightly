@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %i.cf = trunc i64 %i.ce to i32
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store i32 %i.cf, ptr %i.cg, align 8
-  tail call void @AssignDumpId(ptr noundef %i.bx) #11
+  tail call void @AssignDumpId(ptr noundef nonnull %i.bx) #11
   %i.ch = tail call ptr @PQgetvalue(ptr noundef %i.aw, i32 noundef %i.by, i32 noundef %i.ba) #11
   %i.ci = tail call ptr @pg_strdup(ptr noundef %i.ch) #11
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph, %.thread
   %i.af = trunc i64 %i.ae to i32
   %i.ag = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 2 uses
   store i32 %i.af, ptr %i.ag, align 8
-  tail call void @AssignDumpId(ptr noundef %i.x) #11
+  tail call void @AssignDumpId(ptr noundef nonnull %i.x) #11
   %i.ah = tail call ptr @PQgetvalue(ptr noundef %i.c, i32 noundef %i.y, i32 noundef %i.i) #11
   %i.ai = tail call ptr @pg_strdup(ptr noundef %i.ah) #11
   %i.aj = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 2 uses
@@ -1010,7 +1010,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.ar
   %i.cq = trunc i64 %i.cp to i32
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cj, i64 8 ; 3 uses
   store i32 %i.cq, ptr %i.cr, align 8
-  tail call void @AssignDumpId(ptr noundef %i.cj) #11
+  tail call void @AssignDumpId(ptr noundef nonnull %i.cj) #11
   %i.cs = tail call ptr @PQgetvalue(ptr noundef %i.ad, i32 noundef %i.cc, i32 noundef %i.aj) #11
   %i.ct = tail call ptr @pg_strdup(ptr noundef %i.cs) #11
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cj, i64 16 ; 2 uses
@@ -1413,7 +1413,7 @@ bb.n:                                             ; preds = %bb.m, %bb.w
   %i.dp = trunc i64 %i.do to i32
   %i.dq = getelementptr inbounds nuw i8, ptr %i.di, i64 8 ; 2 uses
   store i32 %i.dp, ptr %i.dq, align 8
-  call void @AssignDumpId(ptr noundef %i.di) #11
+  call void @AssignDumpId(ptr noundef nonnull %i.di) #11
   %i.dr = load i32, ptr %i.cv, align 8
   %i.ds = getelementptr inbounds nuw i8, ptr %i.di, i64 32
   store i32 %i.dr, ptr %i.ds, align 8

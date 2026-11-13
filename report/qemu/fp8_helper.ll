@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.1 = phi i64 [ %.0, %bb.b ], [ %i.bq, %bb.c ]  ; 3 uses
-  %i.aq = shl nuw i64 %.1, 1
+  %i.aq = shl i64 %.1, 1
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.aq
   %i.ar = load i8, ptr %gep, align 1
   %i.as = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.1 ; 2 uses
@@ -498,7 +498,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.1 = phi i64 [ %.0, %bb.b ], [ %i.br, %bb.c ]  ; 3 uses
-  %i.ar = shl nuw i64 %.1, 2
+  %i.ar = shl i64 %.1, 2
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.ar
   %i.as = load i8, ptr %gep, align 1
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.1 ; 2 uses

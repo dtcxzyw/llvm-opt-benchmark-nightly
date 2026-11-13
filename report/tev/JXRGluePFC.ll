@@ -205,17 +205,16 @@ bb.a:
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 2 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %wide.load = load <4 x i32>, ptr %i.l, align 4, !tbaa !21
   %wide.load28 = load <4 x i32>, ptr %i.m, align 4, !tbaa !21
   %i.n = sitofp <4 x i32> %wide.load to <4 x float>
   %i.o = sitofp <4 x i32> %wide.load28 to <4 x float>
   %i.p = fmul nnan <4 x float> %i.n, splat (float f0x33800000)
   %i.q = fmul nnan <4 x float> %i.o, splat (float f0x33800000)
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store <4 x float> %i.p, ptr %i.l, align 4, !tbaa !23
-  store <4 x float> %i.q, ptr %4, align 4, !tbaa !23
+  store <4 x float> %i.q, ptr %i.m, align 4, !tbaa !23
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.r = icmp eq i64 %index.next, %n.vec
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !55
@@ -279,17 +278,16 @@ bb.a:
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 2 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %wide.load = load <4 x float>, ptr %i.l, align 4, !tbaa !23
   %wide.load28 = load <4 x float>, ptr %i.m, align 4, !tbaa !23
   %i.n = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load, <4 x float> splat (float f0x4B800000), <4 x float> splat (float 5.000000e-01))
   %i.o = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load28, <4 x float> splat (float f0x4B800000), <4 x float> splat (float 5.000000e-01))
   %i.p = fptosi <4 x float> %i.n to <4 x i32>
   %i.q = fptosi <4 x float> %i.o to <4 x i32>
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store <4 x i32> %i.p, ptr %i.l, align 4, !tbaa !21
-  store <4 x i32> %i.q, ptr %4, align 4, !tbaa !21
+  store <4 x i32> %i.q, ptr %i.m, align 4, !tbaa !21
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.r = icmp eq i64 %index.next, %n.vec
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !58
@@ -356,17 +354,16 @@ bb.a:
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 2 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %wide.load = load <4 x i32>, ptr %i.l, align 4, !tbaa !21
   %wide.load28 = load <4 x i32>, ptr %i.m, align 4, !tbaa !21
   %i.n = sitofp <4 x i32> %wide.load to <4 x float>
   %i.o = sitofp <4 x i32> %wide.load28 to <4 x float>
   %i.p = fmul nnan <4 x float> %i.n, splat (float f0x33800000)
   %i.q = fmul nnan <4 x float> %i.o, splat (float f0x33800000)
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store <4 x float> %i.p, ptr %i.l, align 4, !tbaa !23
-  store <4 x float> %i.q, ptr %4, align 4, !tbaa !23
+  store <4 x float> %i.q, ptr %i.m, align 4, !tbaa !23
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.r = icmp eq i64 %index.next, %n.vec
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !61
@@ -552,17 +549,16 @@ bb.a:
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 2 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %wide.load = load <4 x float>, ptr %i.l, align 4, !tbaa !23
   %wide.load28 = load <4 x float>, ptr %i.m, align 4, !tbaa !23
   %i.n = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load, <4 x float> splat (float f0x4B800000), <4 x float> splat (float 5.000000e-01))
   %i.o = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load28, <4 x float> splat (float f0x4B800000), <4 x float> splat (float 5.000000e-01))
   %i.p = fptosi <4 x float> %i.n to <4 x i32>
   %i.q = fptosi <4 x float> %i.o to <4 x i32>
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store <4 x i32> %i.p, ptr %i.l, align 4, !tbaa !21
-  store <4 x i32> %i.q, ptr %4, align 4, !tbaa !21
+  store <4 x i32> %i.q, ptr %i.m, align 4, !tbaa !21
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.r = icmp eq i64 %index.next, %n.vec
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !67
@@ -965,17 +961,16 @@ bb.a:
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 2 uses
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %wide.load = load <4 x i32>, ptr %i.k, align 4, !tbaa !21
   %wide.load29 = load <4 x i32>, ptr %i.l, align 4, !tbaa !21
   %i.m = sitofp <4 x i32> %wide.load to <4 x float>
   %i.n = sitofp <4 x i32> %wide.load29 to <4 x float>
   %i.o = fmul nnan <4 x float> %i.m, splat (float f0x33800000)
   %i.p = fmul nnan <4 x float> %i.n, splat (float f0x33800000)
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   store <4 x float> %i.o, ptr %i.k, align 4, !tbaa !23
-  store <4 x float> %i.p, ptr %4, align 4, !tbaa !23
+  store <4 x float> %i.p, ptr %i.l, align 4, !tbaa !23
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.q = icmp eq i64 %index.next, %n.vec
   br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !85
@@ -1037,17 +1032,16 @@ bb.a:
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 2 uses
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %wide.load = load <4 x float>, ptr %i.k, align 4, !tbaa !23
   %wide.load29 = load <4 x float>, ptr %i.l, align 4, !tbaa !23
   %i.m = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load, <4 x float> splat (float f0x4B800000), <4 x float> splat (float 5.000000e-01))
   %i.n = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load29, <4 x float> splat (float f0x4B800000), <4 x float> splat (float 5.000000e-01))
   %i.o = fptosi <4 x float> %i.m to <4 x i32>
   %i.p = fptosi <4 x float> %i.n to <4 x i32>
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   store <4 x i32> %i.o, ptr %i.k, align 4, !tbaa !21
-  store <4 x i32> %i.p, ptr %4, align 4, !tbaa !21
+  store <4 x i32> %i.p, ptr %i.l, align 4, !tbaa !21
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.q = icmp eq i64 %index.next, %n.vec
   br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !88

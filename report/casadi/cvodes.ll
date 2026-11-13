@@ -205,17 +205,17 @@ vector.body863:                                   ; preds = %vector.body863, %ve
   %index864 = phi i64 [ 0, %vector.ph859 ], [ %index.next875, %vector.body863 ] ; 2 uses
   %i.jf = sub i64 %indvars.iv.i.i.i, %index864
   %i.jg = getelementptr [8 x i8], ptr %i.i, i64 %i.jf ; 4 uses
-  %i.jh = getelementptr i8, ptr %i.jg, i64 -16
-  %i.ji = getelementptr i8, ptr %i.jg, i64 -32
-  %wide.load865 = load <2 x double>, ptr %i.jh, align 8, !tbaa !53
+  %i.jh = getelementptr i8, ptr %i.jg, i64 -8     ; 2 uses
+  %i.ji = getelementptr i8, ptr %i.jg, i64 -16
+  %1 = getelementptr i8, ptr %i.jg, i64 -32
   %wide.load866.a = load <2 x double>, ptr %i.ji, align 8, !tbaa !53
-  %1 = getelementptr i8, ptr %i.jg, i64 -8        ; 2 uses
+  %wide.load866 = load <2 x double>, ptr %1, align 8, !tbaa !53
   %i.jj = getelementptr i8, ptr %i.jg, i64 -24    ; 2 uses
-  %wide.load869 = load <2 x double>, ptr %1, align 8, !tbaa !53
+  %wide.load869 = load <2 x double>, ptr %i.jh, align 8, !tbaa !53
   %wide.load870 = load <2 x double>, ptr %i.jj, align 8, !tbaa !53
-  %reverse873 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load865, <2 x double> %i.jd, <2 x double> %wide.load869)
-  %reverse874 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load866.a, <2 x double> %i.je, <2 x double> %wide.load870)
-  store <2 x double> %reverse873, ptr %1, align 8, !tbaa !53
+  %reverse873 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load866.a, <2 x double> %i.jd, <2 x double> %wide.load869)
+  %reverse874 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load866, <2 x double> %i.je, <2 x double> %wide.load870)
+  store <2 x double> %reverse873, ptr %i.jh, align 8, !tbaa !53
   store <2 x double> %reverse874, ptr %i.jj, align 8, !tbaa !53
   %index.next875 = add nuw i64 %index864, 4       ; 2 uses
   %i.jk = icmp eq i64 %index.next875, %n.vec860
@@ -451,17 +451,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.nh = sub i64 %i.nd, %index
   %i.ni = getelementptr [8 x i8], ptr %i.i, i64 %i.nh ; 4 uses
-  %i.nj = getelementptr i8, ptr %i.ni, i64 -16
-  %i.nk = getelementptr i8, ptr %i.ni, i64 -32
-  %wide.load = load <2 x double>, ptr %i.nj, align 8, !tbaa !53
+  %i.nj = getelementptr i8, ptr %i.ni, i64 -8     ; 2 uses
+  %i.nk = getelementptr i8, ptr %i.ni, i64 -16
+  %2 = getelementptr i8, ptr %i.ni, i64 -32
   %wide.load836.a = load <2 x double>, ptr %i.nk, align 8, !tbaa !53
-  %2 = getelementptr i8, ptr %i.ni, i64 -8        ; 2 uses
+  %wide.load836 = load <2 x double>, ptr %2, align 8, !tbaa !53
   %i.nl = getelementptr i8, ptr %i.ni, i64 -24    ; 2 uses
-  %wide.load838 = load <2 x double>, ptr %2, align 8, !tbaa !53
+  %wide.load838 = load <2 x double>, ptr %i.nj, align 8, !tbaa !53
   %wide.load839 = load <2 x double>, ptr %i.nl, align 8, !tbaa !53
-  %reverse842 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load, <2 x double> %i.nf, <2 x double> %wide.load838)
-  %reverse843 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load836.a, <2 x double> %i.ng, <2 x double> %wide.load839)
-  store <2 x double> %reverse842, ptr %2, align 8, !tbaa !53
+  %reverse842 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load836.a, <2 x double> %i.nf, <2 x double> %wide.load838)
+  %reverse843 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load836, <2 x double> %i.ng, <2 x double> %wide.load839)
+  store <2 x double> %reverse842, ptr %i.nj, align 8, !tbaa !53
   store <2 x double> %reverse843, ptr %i.nl, align 8, !tbaa !53
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.nm = icmp eq i64 %index.next, %n.vec
@@ -611,17 +611,17 @@ vector.body907:                                   ; preds = %vector.body907, %ve
   %index908 = phi i64 [ 0, %vector.ph903 ], [ %index.next919, %vector.body907 ] ; 2 uses
   %i.pk = sub i64 %indvars.iv.i.i, %index908
   %i.pl = getelementptr [8 x i8], ptr %i.bq, i64 %i.pk ; 4 uses
-  %i.pm = getelementptr i8, ptr %i.pl, i64 -16
-  %i.pn = getelementptr i8, ptr %i.pl, i64 -32
-  %wide.load909 = load <2 x double>, ptr %i.pm, align 8, !tbaa !53
+  %i.pm = getelementptr i8, ptr %i.pl, i64 -8     ; 2 uses
+  %i.pn = getelementptr i8, ptr %i.pl, i64 -16
+  %3 = getelementptr i8, ptr %i.pl, i64 -32
   %wide.load910.a = load <2 x double>, ptr %i.pn, align 8, !tbaa !53
-  %3 = getelementptr i8, ptr %i.pl, i64 -8        ; 2 uses
+  %wide.load910 = load <2 x double>, ptr %3, align 8, !tbaa !53
   %i.po = getelementptr i8, ptr %i.pl, i64 -24    ; 2 uses
-  %wide.load913 = load <2 x double>, ptr %3, align 8, !tbaa !53
+  %wide.load913 = load <2 x double>, ptr %i.pm, align 8, !tbaa !53
   %wide.load914 = load <2 x double>, ptr %i.po, align 8, !tbaa !53
-  %reverse917 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load909, <2 x double> %i.pi, <2 x double> %wide.load913)
-  %reverse918 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load910.a, <2 x double> %i.pj, <2 x double> %wide.load914)
-  store <2 x double> %reverse917, ptr %3, align 8, !tbaa !53
+  %reverse917 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load910.a, <2 x double> %i.pi, <2 x double> %wide.load913)
+  %reverse918 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load910, <2 x double> %i.pj, <2 x double> %wide.load914)
+  store <2 x double> %reverse917, ptr %i.pm, align 8, !tbaa !53
   store <2 x double> %reverse918, ptr %i.po, align 8, !tbaa !53
   %index.next919 = add nuw i64 %index908, 4       ; 2 uses
   %i.pp = icmp eq i64 %index.next919, %n.vec904
@@ -704,17 +704,17 @@ vector.body885:                                   ; preds = %vector.body885, %ve
   %index886 = phi i64 [ 0, %vector.ph881 ], [ %index.next897, %vector.body885 ] ; 2 uses
   %i.qz = sub i64 %.pre-phi.i.i, %index886
   %i.ra = getelementptr [8 x i8], ptr %i.bq, i64 %i.qz ; 4 uses
-  %i.rb = getelementptr i8, ptr %i.ra, i64 -16
-  %i.rc = getelementptr i8, ptr %i.ra, i64 -32
-  %wide.load887 = load <2 x double>, ptr %i.rb, align 8, !tbaa !53
+  %i.rb = getelementptr i8, ptr %i.ra, i64 -8     ; 2 uses
+  %i.rc = getelementptr i8, ptr %i.ra, i64 -16
+  %4 = getelementptr i8, ptr %i.ra, i64 -32
   %wide.load888.a = load <2 x double>, ptr %i.rc, align 8, !tbaa !53
-  %4 = getelementptr i8, ptr %i.ra, i64 -8        ; 2 uses
+  %wide.load888 = load <2 x double>, ptr %4, align 8, !tbaa !53
   %i.rd = getelementptr i8, ptr %i.ra, i64 -24    ; 2 uses
-  %wide.load891 = load <2 x double>, ptr %4, align 8, !tbaa !53
+  %wide.load891 = load <2 x double>, ptr %i.rb, align 8, !tbaa !53
   %wide.load892 = load <2 x double>, ptr %i.rd, align 8, !tbaa !53
-  %reverse895 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load887, <2 x double> %i.qx, <2 x double> %wide.load891)
-  %reverse896 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load888.a, <2 x double> %i.qy, <2 x double> %wide.load892)
-  store <2 x double> %reverse895, ptr %4, align 8, !tbaa !53
+  %reverse895 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load888.a, <2 x double> %i.qx, <2 x double> %wide.load891)
+  %reverse896 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load888, <2 x double> %i.qy, <2 x double> %wide.load892)
+  store <2 x double> %reverse895, ptr %i.rb, align 8, !tbaa !53
   store <2 x double> %reverse896, ptr %i.rd, align 8, !tbaa !53
   %index.next897 = add nuw i64 %index886, 4       ; 2 uses
   %i.re = icmp eq i64 %index.next897, %n.vec882

@@ -158,14 +158,14 @@ bb.a:
   %i.dq = trunc nsw i32 %.0.i.i to i16
   store i16 %i.dq, ptr %3, align 2, !tbaa !13
   %i.dr = sub i64 0, %4
-  %.0303 = getelementptr inbounds [2 x i8], ptr %3, i64 %4
-  %.0188304 = and i64 %i.dm, 16777215
+  %.0189303 = and i64 %i.dm, 16777215
+  %.0304 = getelementptr inbounds [2 x i8], ptr %3, i64 %4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
   %indvars.iv = phi i64 [ 1, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %.0188310 = phi i64 [ %.0188304, %bb.a ], [ %.0188, %bb.b ]
-  %.0309 = phi ptr [ %.0303, %bb.a ], [ %.0, %bb.b ] ; 2 uses
+  %.0310 = phi ptr [ %.0304, %bb.a ], [ %.0, %bb.b ] ; 2 uses
+  %.0189309 = phi i64 [ %.0189303, %bb.a ], [ %.0189, %bb.b ]
   %.pn308 = phi ptr [ %1, %bb.a ], [ %.0174, %bb.b ] ; 24 uses
   %.0175307 = phi ptr [ %i.b, %bb.a ], [ %i.kg, %bb.b ] ; 2 uses
   %.0177305 = phi ptr [ %i.c, %bb.a ], [ %i.kh, %bb.b ] ; 17 uses
@@ -333,7 +333,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %reass.add283 = add i64 %reass.add282, %.neg242
   %reass.add284 = add i64 %reass.add283, %.neg244
   %reass.add285 = add i64 %reass.add284, %.neg246
-  %i.jk = add nsw i64 %i.dx, %.0188310
+  %i.jk = add nsw i64 %i.dx, %.0189309
   %i.jl = add i64 %i.jk, %i.eg
   %i.jm = add i64 %i.jl, %i.eq
   %i.jn = add i64 %i.jm, %i.fa
@@ -351,7 +351,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.jz = tail call i32 @llvm.smax.i32(i32 %i.jx, i32 -32768)
   %.0.i.i178 = tail call range(i32 -32768, 32768) i32 @llvm.smin.i32(i32 %i.jz, i32 32767)
   %i.ka = trunc nsw i32 %.0.i.i178 to i16
-  store i16 %i.ka, ptr %.0309, align 2, !tbaa !13
+  store i16 %i.ka, ptr %.0310, align 2, !tbaa !13
   %.neg248 = mul nsw i64 %i.dz, %i.dw
   %.neg249 = mul nsw i64 %i.ej, %i.ef
   %.neg251 = mul nsw i64 %i.et, %i.ep
@@ -393,8 +393,8 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.kg = getelementptr inbounds [2 x i8], ptr %.0175307, i64 %i.dr
   %i.kh = getelementptr inbounds i8, ptr %.0177305, i64 -4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.0 = getelementptr inbounds [2 x i8], ptr %.0309, i64 %4 ; 2 uses
-  %.0188 = and i64 %i.kb, 16777215                ; 2 uses
+  %.0189 = and i64 %i.kb, 16777215                ; 2 uses
+  %.0 = getelementptr inbounds [2 x i8], ptr %.0310, i64 %4 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !11
 
@@ -462,7 +462,7 @@ bb.c:                                             ; preds = %bb.b
   %reass.add229 = add i64 %reass.add228, %.neg219
   %reass.add230 = add i64 %reass.add229, %.neg221
   %reass.add231 = add i64 %reass.add230, %.neg223
-  %i.me = sub i64 %.0188, %reass.add231           ; 2 uses
+  %i.me = sub i64 %.0189, %reass.add231           ; 2 uses
   %i.mf = lshr i64 %i.me, 24
   %i.mg = trunc i64 %i.mf to i32
   %i.mh = tail call i32 @llvm.smax.i32(i32 %i.mg, i32 -32768)

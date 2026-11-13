@@ -204,14 +204,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.s = sub i64 %i.m, %index
   %i.t = getelementptr [8 x i8], ptr %.pre28, i64 %i.s ; 4 uses
-  %i.u = getelementptr i8, ptr %i.t, i64 -16
-  %i.v = getelementptr i8, ptr %i.t, i64 -32
-  %wide.load = load <2 x ptr>, ptr %i.u, align 8, !tbaa !710
+  %i.u = getelementptr i8, ptr %i.t, i64 -8
+  %i.v = getelementptr i8, ptr %i.t, i64 -16
+  %3 = getelementptr i8, ptr %i.t, i64 -32
   %wide.load32.a = load <2 x ptr>, ptr %i.v, align 8, !tbaa !710
-  %3 = getelementptr i8, ptr %i.t, i64 -8
+  %wide.load32 = load <2 x ptr>, ptr %3, align 8, !tbaa !710
   %i.w = getelementptr i8, ptr %i.t, i64 -24
-  store <2 x ptr> %wide.load, ptr %3, align 8, !tbaa !710
-  store <2 x ptr> %wide.load32.a, ptr %i.w, align 8, !tbaa !710
+  store <2 x ptr> %wide.load32.a, ptr %i.u, align 8, !tbaa !710
+  store <2 x ptr> %wide.load32, ptr %i.w, align 8, !tbaa !710
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
   br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !1703

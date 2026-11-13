@@ -202,16 +202,12 @@ bb.cu:                                            ; preds = %bb.ct
 
 check_pos_arg.exit1225:                           ; preds = %bb.ct
   %.not1155 = icmp slt i32 %.01925.i1220, %i.q
-  br i1 %.not1155, label %3, label %bb.cv
+  br i1 %.not1155, label %bb.db, label %bb.cv
 
 bb.cv:                                            ; preds = %check_pos_arg.exit1225
   %i.im = load i64, ptr @rb_eArgError, align 8, !tbaa !64
   call void (i64, ptr, ...) @rb_raise(i64 noundef %i.im, ptr noundef nonnull @.str) #19
   unreachable
-
-3:                                                ; preds = %check_pos_arg.exit1225
-  %4 = zext nneg i32 %.01925.i1220 to i64
-  br label %bb.db
 
 bb.cw:                                            ; preds = %get_num.exit1224
   switch i32 %.1973, label %check_next_arg.exit [
@@ -240,15 +236,15 @@ bb.cz:                                            ; preds = %check_next_arg.exit
 
 bb.da:                                            ; preds = %check_next_arg.exit
   %i.iq = add nsw i32 %.1988, 1
-  %5 = sext i32 %.1988 to i64
   br label %bb.db
 
-bb.db:                                            ; preds = %bb.da, %3
-  %.pn1580 = phi i64 [ %5, %bb.da ], [ %4, %3 ]
-  %.2989 = phi i32 [ %i.iq, %bb.da ], [ %.1988, %3 ]
-  %.2974 = phi i32 [ %.1988, %bb.da ], [ -1, %3 ]
-  %.4872 = phi ptr [ %.1869, %bb.da ], [ %.01826.i1219, %3 ]
-  %storemerge1154.in = getelementptr [8 x i8], ptr %i.r, i64 %.pn1580
+bb.db:                                            ; preds = %check_pos_arg.exit1225, %bb.da
+  %.pn1157.in = phi i32 [ %.1988, %bb.da ], [ %.01925.i1220, %check_pos_arg.exit1225 ]
+  %.2989 = phi i32 [ %i.iq, %bb.da ], [ %.1988, %check_pos_arg.exit1225 ]
+  %.2974 = phi i32 [ %.1988, %bb.da ], [ -1, %check_pos_arg.exit1225 ]
+  %.4872 = phi ptr [ %.1869, %bb.da ], [ %.01826.i1219, %check_pos_arg.exit1225 ]
+  %.pn1157 = sext i32 %.pn1157.in to i64
+  %storemerge1154.in = getelementptr [8 x i8], ptr %i.r, i64 %.pn1157
   %storemerge1154 = load i64, ptr %storemerge1154.in, align 8, !tbaa !64 ; 4 uses
   store i64 %storemerge1154, ptr %i.b, align 8, !tbaa !64
   %i.ir = trunc i64 %storemerge1154 to i1
@@ -381,16 +377,12 @@ bb.du:                                            ; preds = %bb.dt
 
 check_pos_arg.exit1235:                           ; preds = %bb.dt
   %.not1149 = icmp slt i32 %.01925.i1230, %i.q
-  br i1 %.not1149, label %6, label %bb.dv
+  br i1 %.not1149, label %bb.eb, label %bb.dv
 
 bb.dv:                                            ; preds = %check_pos_arg.exit1235
   %i.kh = load i64, ptr @rb_eArgError, align 8, !tbaa !64
   call void (i64, ptr, ...) @rb_raise(i64 noundef %i.kh, ptr noundef nonnull @.str) #19
   unreachable
-
-6:                                                ; preds = %check_pos_arg.exit1235
-  %7 = zext nneg i32 %.01925.i1230 to i64
-  br label %bb.eb
 
 bb.dw:                                            ; preds = %get_num.exit1234
   switch i32 %.1973, label %check_next_arg.exit1236 [
@@ -419,15 +411,15 @@ bb.dz:                                            ; preds = %check_next_arg.exit
 
 bb.ea:                                            ; preds = %check_next_arg.exit1236
   %i.kl = add nsw i32 %.1988, 1
-  %8 = sext i32 %.1988 to i64
   br label %bb.eb
 
-bb.eb:                                            ; preds = %bb.ea, %6
-  %.pn1579 = phi i64 [ %8, %bb.ea ], [ %7, %6 ]
-  %.3990 = phi i32 [ %i.kl, %bb.ea ], [ %.1988, %6 ]
-  %.3975 = phi i32 [ %.1988, %bb.ea ], [ -1, %6 ]
-  %.5873 = phi ptr [ %i.je, %bb.ea ], [ %.01826.i1229, %6 ]
-  %storemerge.in = getelementptr [8 x i8], ptr %i.r, i64 %.pn1579
+bb.eb:                                            ; preds = %check_pos_arg.exit1235, %bb.ea
+  %.pn1150.in = phi i32 [ %.1988, %bb.ea ], [ %.01925.i1230, %check_pos_arg.exit1235 ]
+  %.3990 = phi i32 [ %i.kl, %bb.ea ], [ %.1988, %check_pos_arg.exit1235 ]
+  %.3975 = phi i32 [ %.1988, %bb.ea ], [ -1, %check_pos_arg.exit1235 ]
+  %.5873 = phi ptr [ %i.je, %bb.ea ], [ %.01826.i1229, %check_pos_arg.exit1235 ]
+  %.pn1150 = sext i32 %.pn1150.in to i64
+  %storemerge.in = getelementptr [8 x i8], ptr %i.r, i64 %.pn1150
   %storemerge = load i64, ptr %storemerge.in, align 8, !tbaa !64 ; 4 uses
   store i64 %storemerge, ptr %i.b, align 8, !tbaa !64
   %i.km = trunc i64 %storemerge to i1
