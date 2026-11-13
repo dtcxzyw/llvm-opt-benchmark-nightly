@@ -202,25 +202,50 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   br label %bb.b
 
-2:                                                ; preds = %bb.b
-  %3 = add nuw nsw i64 %.01016, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %3, 5
-  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !12
-
-bb.b:                                             ; preds = %bb.a, %2
-  %.01016 = phi i64 [ 0, %bb.a ], [ %3, %2 ]      ; 2 uses
-  %i.b = getelementptr inbounds nuw [16 x i8], ptr @parse_struct_ops, i64 %.01016 ; 2 uses
+bb.b:                                             ; preds = %bb.a, %9
+  %.01016 = phi i64 [ 0, %bb.a ], [ %10, %9 ]     ; 3 uses
+  %i.b = getelementptr inbounds nuw [16 x i8], ptr @parse_struct_ops, i64 %.01016
   %i.c = load i32, ptr %i.b, align 16
   %i.d = icmp eq i32 %i.c, %0
-  br i1 %i.d, label %bb.c, label %2
+  br i1 %i.d, label %2, label %9
 
-bb.c:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %5 = load ptr, ptr %4, align 8
-  %6 = tail call ptr %5(ptr noundef %1) #7        ; 3 uses
+2:                                                ; preds = %bb.b
+  switch i64 %.01016, label %default.switch.case.unreachable [
+    i64 0, label %call.0
+    i64 1, label %call.1
+    i64 2, label %call.2
+    i64 3, label %call.3
+    i64 4, label %call.4
+  ], !prof !13
+
+default.switch.case.unreachable:                  ; preds = %2
+  unreachable
+
+call.0:                                           ; preds = %2
+  %3 = tail call ptr @metrics_g_parse_jobs_metrics(ptr noundef %1) #7
+  br label %bb.c
+
+call.1:                                           ; preds = %2
+  %4 = tail call ptr @metrics_g_parse_nodes_metrics(ptr noundef %1) #7
+  br label %bb.c
+
+call.2:                                           ; preds = %2
+  %5 = tail call ptr @metrics_g_parse_parts_metrics(ptr noundef %1) #7
+  br label %bb.c
+
+call.3:                                           ; preds = %2
+  %6 = tail call ptr @metrics_g_parse_sched_metrics(ptr noundef %1) #7
+  br label %bb.c
+
+call.4:                                           ; preds = %2
+  %7 = tail call ptr @metrics_g_parse_ua_metrics(ptr noundef %1) #7
+  br label %bb.c
+
+bb.c:                                             ; preds = %call.4, %call.3, %call.2, %call.1, %call.0
+  %8 = phi ptr [ %3, %call.0 ], [ %4, %call.1 ], [ %5, %call.2 ], [ %6, %call.3 ], [ %7, %call.4 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store ptr null, ptr %i.a, align 8
-  %.not = icmp eq ptr %6, null
+  %.not = icmp eq ptr %8, null
   br i1 %.not, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -230,27 +255,32 @@ bb.d:                                             ; preds = %bb.c
 
 metrics_g_dump.exit:                              ; preds = %bb.d
   %i.g = load ptr, ptr @ops, align 8
-  %i.h = call i32 %i.g(ptr noundef nonnull %6, ptr noundef nonnull %i.a) #7, !inline_history !13 ; 0 uses
+  %i.h = call i32 %i.g(ptr noundef nonnull %8, ptr noundef nonnull %i.a) #7, !inline_history !14 ; 0 uses
   %.pr = load i32, ptr @plugin_inited, align 4
   %i.i = icmp eq i32 %.pr, 1
   br i1 %i.i, label %metrics_g_free_set.exit, label %bb.e
 
 bb.e:                                             ; preds = %metrics_g_dump.exit
   %i.j = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ops, i64 8), align 8
-  %i.k = call i32 %i.j(ptr noundef nonnull %6) #7, !inline_history !14 ; 0 uses
+  %i.k = call i32 %i.j(ptr noundef nonnull %8) #7, !inline_history !15 ; 0 uses
   br label %metrics_g_free_set.exit
 
 metrics_g_free_set.exit:                          ; preds = %bb.d, %metrics_g_dump.exit, %bb.e
   %i.l = load ptr, ptr %i.a, align 8
   br label %bb.f
 
+9:                                                ; preds = %bb.b
+  %10 = add nuw nsw i64 %.01016, 1                ; 2 uses
+  %exitcond.not = icmp eq i64 %10, 5
+  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !12
+
 bb.f:                                             ; preds = %metrics_g_free_set.exit, %bb.c
   %.011 = phi ptr [ %i.l, %metrics_g_free_set.exit ], [ null, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %.loopexit
 
-.loopexit:                                        ; preds = %2, %bb.f
-  %i.m = phi ptr [ %.011, %bb.f ], [ null, %2 ]
+.loopexit:                                        ; preds = %9, %bb.f
+  %i.m = phi ptr [ %.011, %bb.f ], [ null, %9 ]
   ret ptr %i.m
 }
 
@@ -416,6 +446,7 @@ attributes #9 = { noreturn nounwind }
 !10 = distinct !{!10, !8, !9}
 !11 = distinct !{!11, !8, !9}
 !12 = distinct !{!12, !8, !9}
-!13 = !{ptr @metrics_g_dump}
-!14 = !{ptr @metrics_g_free_set}
+!13 = !{!"unknown", !"jump-table-to-switch"}
+!14 = !{ptr @metrics_g_dump}
+!15 = !{ptr @metrics_g_free_set}
 end_hunk_0

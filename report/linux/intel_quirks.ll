@@ -110,7 +110,7 @@ quirk_invert_brightness.exit:                     ; preds = %bb.g, %bb.h
   tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.ah, ptr noundef @.str.2) #6
   br label %.preheader.1
 
-.preheader.1:                                     ; preds = %.preheader.preheader, %quirk_invert_brightness.exit
+.preheader.1:                                     ; preds = %quirk_invert_brightness.exit, %.preheader.preheader
   %i.ai = tail call i32 @dmi_check_system(ptr noundef @.compoundliteral.12) #5
   %.not.1 = icmp eq i32 %i.ai, 0
   br i1 %.not.1, label %bb.k, label %bb.i
@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %.not.i = icmp eq ptr %i.ah, null
   br i1 %.not.i, label %bb.i, label %bb.m
 
-bb.i:                                             ; preds = %bb.h, %bb.g
+bb.i:                                             ; preds = %bb.g, %bb.h
   %i.ai = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not.i40 = icmp eq ptr %i.ai, null
   br i1 %.not.i40, label %bb.k, label %bb.j
@@ -234,7 +234,7 @@ quirk_fw_sync_len.exit:                           ; preds = %bb.k, %bb.l
   tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.ar, ptr noundef @.str.17) #6
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.f, %bb.h, %quirk_fw_sync_len.exit, %bb.c
+bb.m:                                             ; preds = %bb.f, %bb.h, %bb.c, %quirk_fw_sync_len.exit
   %.pr = load i16, ptr %i.i, align 8
   %i.as = icmp eq i16 %.pr, 4136
   br i1 %i.as, label %thread-pre-split35, label %.thread39
@@ -277,7 +277,7 @@ bb.p:                                             ; preds = %bb.o
   %.not.i.1 = icmp eq ptr %i.bl, null
   br i1 %.not.i.1, label %bb.q, label %bb.u
 
-bb.q:                                             ; preds = %bb.p, %bb.o
+bb.q:                                             ; preds = %bb.o, %bb.p
   %i.bm = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not.i41 = icmp eq ptr %i.bm, null
   br i1 %.not.i41, label %bb.s, label %bb.r
@@ -345,7 +345,7 @@ bb.y:                                             ; preds = %bb.x
   %.not.i.2 = icmp eq ptr %i.cp, null
   br i1 %.not.i.2, label %bb.z, label %.thread39
 
-bb.z:                                             ; preds = %bb.y, %bb.x
+bb.z:                                             ; preds = %bb.x, %bb.y
   %i.cq = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not.i43 = icmp eq ptr %i.cq, null
   br i1 %.not.i43, label %bb.ab, label %bb.aa

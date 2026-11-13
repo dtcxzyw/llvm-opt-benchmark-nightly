@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/git/original/gc?download=true
-inline.NumInlined: 207
+inline.NumInlined: 210
 inline.NumDeleted: 67
 loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumUnrolled: 7
@@ -204,50 +204,58 @@ maintenance_run_tasks.exit:                       ; preds = %bb.g, %._crit_edge3
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @maintenance_start(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readnone captures(none) %3) #0 {
 bb.a:
-  %4 = alloca %struct.child_process, align 8      ; 7 uses
+  %4 = alloca i32, align 4                        ; 4 uses
+  %5 = alloca i32, align 4                        ; 4 uses
+  %6 = alloca %struct.child_process, align 8      ; 7 uses
+  %7 = alloca i32, align 4                        ; 4 uses
+  %8 = alloca %struct.child_process, align 8      ; 7 uses
   %i.a = alloca i32, align 4                      ; 4 uses
-  %5 = alloca %struct.maintenance_start_opts, align 4 ; 7 uses
-  %6 = alloca [2 x %struct.option], align 16      ; 15 uses
+  %9 = alloca %struct.maintenance_start_opts, align 4 ; 8 uses
+  %10 = alloca [2 x %struct.option], align 16     ; 15 uses
   %i.b = alloca [2 x ptr], align 16               ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  store i32 0, ptr %5, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
-  store i32 13, ptr %6, align 16, !tbaa !29
-  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
+  store i32 0, ptr %9, align 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
+  store i32 13, ptr %10, align 16, !tbaa !29
+  %i.c = getelementptr inbounds nuw i8, ptr %10, i64 4
   store i32 0, ptr %i.c, align 4, !tbaa !30
-  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr @.str.198, ptr %i.d, align 8, !tbaa !31
-  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store ptr %5, ptr %i.e, align 16, !tbaa !32
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.e = getelementptr inbounds nuw i8, ptr %10, i64 16
+  store ptr %9, ptr %i.e, align 16, !tbaa !32
+  %i.f = getelementptr inbounds nuw i8, ptr %10, i64 24
   store i64 0, ptr %i.f, align 8, !tbaa !33
-  %i.g = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.g = getelementptr inbounds nuw i8, ptr %10, i64 32
   store ptr @.str.198, ptr %i.g, align 16, !tbaa !34
-  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %i.h = getelementptr inbounds nuw i8, ptr %10, i64 40
   store ptr @.str.199, ptr %i.h, align 8, !tbaa !35
-  %i.i = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %i.i = getelementptr inbounds nuw i8, ptr %10, i64 48
   store i32 4, ptr %i.i, align 16, !tbaa !36
-  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 52
+  %i.j = getelementptr inbounds nuw i8, ptr %10, i64 52
   store i32 0, ptr %i.j, align 4
-  %i.k = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %i.k = getelementptr inbounds nuw i8, ptr %10, i64 56
   store ptr @maintenance_opt_scheduler, ptr %i.k, align 8, !tbaa !37
-  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 64
+  %i.l = getelementptr inbounds nuw i8, ptr %10, i64 64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.l, i8 0, i64 128, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef nonnull align 16 dereferenceable(16) @__const.maintenance_start.register_args, i64 16, i1 false)
-  %i.m = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %6, ptr noundef nonnull @builtin_maintenance_start_usage, i32 noundef 0) #18
+  %i.m = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %10, ptr noundef nonnull @builtin_maintenance_start_usage, i32 noundef 0) #18
   %.not = icmp eq i32 %i.m, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @usage_with_options(ptr noundef nonnull @builtin_maintenance_start_usage, ptr noundef nonnull %6) #19
+  call void @usage_with_options(ptr noundef nonnull @builtin_maintenance_start_usage, ptr noundef nonnull %10) #19
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = load i32, ptr %5, align 4, !tbaa !130    ; 2 uses
-  switch i32 %i.n, label %bb.k [
+  %i.n = load i32, ptr %9, align 4, !tbaa !130
+  switch i32 %i.n, label %default.switch.case.unreachable.i [
     i32 0, label %bb.d
-    i32 -1, label %bb.j
+    i32 -1, label %11
+    i32 1, label %call.1.i
+    i32 2, label %resolve_scheduler.exit.thread.a
+    i32 3, label %call.3.i
+    i32 4, label %call.4.i
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -261,71 +269,133 @@ bb.e:                                             ; preds = %bb.d
   br label %is_systemd_timer_available.exit.i
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %4, ptr noundef nonnull align 8 dereferenceable(136) @__const.schtasks_remove_task.child, i64 136, i1 false)
-  call void (ptr, ...) @strvec_pushl(ptr noundef nonnull %4, ptr noundef nonnull @.str.211, ptr noundef nonnull @.str.215, ptr noundef nonnull @.str.216, ptr noundef null) #18
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 104 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %8, ptr noundef nonnull align 8 dereferenceable(136) @__const.schtasks_remove_task.child, i64 136, i1 false)
+  call void (ptr, ...) @strvec_pushl(ptr noundef nonnull %8, ptr noundef nonnull @.str.211, ptr noundef nonnull @.str.215, ptr noundef nonnull @.str.216, ptr noundef null) #18
+  %i.q = getelementptr inbounds nuw i8, ptr %8, i64 104 ; 2 uses
   %i.r = load i8, ptr %i.q, align 8
   %i.s = or i8 %i.r, 23
   store i8 %i.s, ptr %i.q, align 8
-  %i.t = call i32 @start_command(ptr noundef nonnull %4) #18
+  %i.t = call i32 @start_command(ptr noundef nonnull %8) #18
   %.not.i.i.i = icmp eq i32 %i.t, 0
   br i1 %.not.i.i.i, label %bb.g, label %real_is_systemd_timer_available.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = call i32 @finish_command(ptr noundef nonnull %4) #18
+  %i.u = call i32 @finish_command(ptr noundef nonnull %8) #18
   %.not1.i.i.i = icmp eq i32 %i.u, 0
   %..i.i.i = zext i1 %.not1.i.i.i to i32
   br label %real_is_systemd_timer_available.exit.i.i
 
 real_is_systemd_timer_available.exit.i.i:         ; preds = %bb.g, %bb.f
   %.0.i.i.i = phi i32 [ 0, %bb.f ], [ %..i.i.i, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   br label %is_systemd_timer_available.exit.i
 
 is_systemd_timer_available.exit.i:                ; preds = %real_is_systemd_timer_available.exit.i.i, %bb.e
   %.0.i.i = phi i32 [ %i.p, %bb.e ], [ %.0.i.i.i, %real_is_systemd_timer_available.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   %.not4.i = icmp eq i32 %.0.i.i, 0
-  br i1 %.not4.i, label %bb.h, label %resolve_scheduler.exit.thread.a
+  br i1 %.not4.i, label %bb.h, label %resolve_scheduler.exit.thread18
+
+resolve_scheduler.exit.thread18:                  ; preds = %is_systemd_timer_available.exit.i
+  store i32 2, ptr %9, align 4, !tbaa !130
+  br label %resolve_scheduler.exit.thread.a
 
 bb.h:                                             ; preds = %is_systemd_timer_available.exit.i
   %i.v = call i32 @is_crontab_available()
   %.not5.i = icmp eq i32 %i.v, 0
-  br i1 %.not5.i, label %bb.i, label %resolve_scheduler.exit.thread.a
+  br i1 %.not5.i, label %bb.i, label %resolve_scheduler.exit.thread
+
+resolve_scheduler.exit.thread:                    ; preds = %bb.h
+  store i32 1, ptr %9, align 4, !tbaa !130
+  br label %call.1.i
 
 bb.i:                                             ; preds = %bb.h
   %i.w = call fastcc ptr @_(ptr noundef nonnull @.str.210)
   call void (ptr, ...) @die(ptr noundef %i.w) #19
   unreachable
 
-resolve_scheduler.exit.thread.a:                  ; preds = %is_systemd_timer_available.exit.i, %bb.h
-  %.0.i.ph = phi i32 [ 1, %bb.h ], [ 2, %is_systemd_timer_available.exit.i ] ; 2 uses
-  store i32 %.0.i.ph, ptr %5, align 4, !tbaa !130
-  br label %bb.k
-
-bb.j:                                             ; preds = %bb.c
+11:                                               ; preds = %bb.c
   call void (ptr, i32, ptr, ...) @BUG_fl(ptr noundef nonnull @.str.126, i32 noundef 3351, ptr noundef nonnull @.str.217) #19
   unreachable
 
-bb.k:                                             ; preds = %bb.c, %resolve_scheduler.exit.thread.a
-  %.0.i7 = phi i32 [ %.0.i.ph, %resolve_scheduler.exit.thread.a ], [ %i.n, %bb.c ]
-  %7 = sext i32 %.0.i7 to i64
-  %8 = getelementptr inbounds [24 x i8], ptr @scheduler_fn, i64 %7 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %9 = load ptr, ptr %i.x, align 8, !tbaa !184
-  %10 = call i32 %9() #18, !inline_history !183
-  %.not.i5.a = icmp eq i32 %10, 0
-  br i1 %.not.i5.a, label %bb.l, label %validate_scheduler.exit
+default.switch.case.unreachable.i:                ; preds = %bb.c
+  unreachable
 
-bb.l:                                             ; preds = %bb.k
+call.1.i:                                         ; preds = %bb.c, %resolve_scheduler.exit.thread
+  %12 = call i32 @is_crontab_available() #18
+  br label %.tail.i
+
+resolve_scheduler.exit.thread.a:                  ; preds = %bb.c, %resolve_scheduler.exit.thread18
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
+  %13 = call fastcc i32 @get_schedule_cmd(ptr noundef nonnull @.str.211, ptr noundef nonnull %7, ptr noundef null)
+  %.not.i.i6 = icmp eq i32 %13, 0
+  br i1 %.not.i.i6, label %bb.k, label %bb.j
+
+bb.j:                                             ; preds = %resolve_scheduler.exit.thread.a
+  %14 = load i32, ptr %7, align 4, !tbaa !15
+  br label %is_systemd_timer_available.exit.i7
+
+bb.k:                                             ; preds = %resolve_scheduler.exit.thread.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %6, ptr noundef nonnull align 8 dereferenceable(136) @__const.schtasks_remove_task.child, i64 136, i1 false)
+  call void (ptr, ...) @strvec_pushl(ptr noundef nonnull %6, ptr noundef nonnull @.str.211, ptr noundef nonnull @.str.215, ptr noundef nonnull @.str.216, ptr noundef null) #18
+  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 104 ; 2 uses
+  %15 = load i8, ptr %i.x, align 8
+  %16 = or i8 %15, 23
+  store i8 %16, ptr %i.x, align 8
+  %17 = call i32 @start_command(ptr noundef nonnull %6) #18
+  %.not.i5.a = icmp eq i32 %17, 0
+  br i1 %.not.i5.a, label %18, label %real_is_systemd_timer_available.exit.i.i10
+
+18:                                               ; preds = %bb.k
+  %19 = call i32 @finish_command(ptr noundef nonnull %6) #18
+  %.not1.i.i.i12 = icmp eq i32 %19, 0
+  %..i.i.i13 = zext i1 %.not1.i.i.i12 to i32
+  br label %real_is_systemd_timer_available.exit.i.i10
+
+real_is_systemd_timer_available.exit.i.i10:       ; preds = %18, %bb.k
+  %.0.i.i.i11 = phi i32 [ 0, %bb.k ], [ %..i.i.i13, %18 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  br label %is_systemd_timer_available.exit.i7
+
+is_systemd_timer_available.exit.i7:               ; preds = %real_is_systemd_timer_available.exit.i.i10, %bb.j
+  %.0.i.i8 = phi i32 [ %14, %bb.j ], [ %.0.i.i.i11, %real_is_systemd_timer_available.exit.i.i10 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
+  br label %.tail.i
+
+call.3.i:                                         ; preds = %bb.c
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
+  %20 = call fastcc i32 @get_schedule_cmd(ptr noundef nonnull @.str.207, ptr noundef nonnull %5, ptr noundef null)
+  %.not.i4.i = icmp eq i32 %20, 0
+  %21 = load i32, ptr %5, align 4
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
+  br i1 %.not.i4.i, label %bb.l, label %.tail.i
+
+call.4.i:                                         ; preds = %bb.c
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
+  %22 = call fastcc i32 @get_schedule_cmd(ptr noundef nonnull @.str.208, ptr noundef nonnull %4, ptr noundef null)
+  %.not.i6.i = icmp eq i32 %22, 0
+  %23 = load i32, ptr %4, align 4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  br i1 %.not.i6.i, label %bb.l, label %.tail.i
+
+.tail.i:                                          ; preds = %call.4.i, %call.3.i, %is_systemd_timer_available.exit.i7, %call.1.i
+  %.0.i15 = phi i64 [ 1, %call.1.i ], [ 2, %is_systemd_timer_available.exit.i7 ], [ 3, %call.3.i ], [ 4, %call.4.i ]
+  %24 = phi i32 [ %12, %call.1.i ], [ %.0.i.i8, %is_systemd_timer_available.exit.i7 ], [ %21, %call.3.i ], [ %23, %call.4.i ]
+  %.not.i5 = icmp eq i32 %24, 0
+  br i1 %.not.i5, label %bb.l, label %validate_scheduler.exit
+
+bb.l:                                             ; preds = %.tail.i, %call.4.i, %call.3.i
+  %.0.i16 = phi i64 [ %.0.i15, %.tail.i ], [ 4, %call.4.i ], [ 3, %call.3.i ]
+  %25 = getelementptr inbounds nuw [24 x i8], ptr @scheduler_fn, i64 %.0.i16
   %i.y = call fastcc ptr @_(ptr noundef nonnull @.str.219)
-  %i.z = load ptr, ptr %8, align 8, !tbaa !185
+  %i.z = load ptr, ptr %25, align 8, !tbaa !183
   call void (ptr, ...) @die(ptr noundef %i.y, ptr noundef %i.z) #19
   unreachable
 
-validate_scheduler.exit:                          ; preds = %bb.k
-  %i.aa = call fastcc i32 @update_background_schedule(ptr noundef nonnull %5, i32 noundef 1)
+validate_scheduler.exit:                          ; preds = %.tail.i
+  %i.aa = call fastcc i32 @update_background_schedule(ptr noundef nonnull %9, i32 noundef 1)
   %.not4 = icmp eq i32 %i.aa, 0
   br i1 %.not4, label %bb.n, label %bb.m
 
@@ -337,8 +407,8 @@ bb.m:                                             ; preds = %validate_scheduler.
 bb.n:                                             ; preds = %validate_scheduler.exit
   %i.ac = call i32 @maintenance_register(i32 noundef 1, ptr noundef nonnull %i.b, ptr noundef null, ptr poison) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   ret i32 0
 }
 
@@ -741,7 +811,7 @@ bb.e:                                             ; preds = %._crit_edge, %.lr.p
   %i.ba = phi ptr [ %i.ar, %.lr.ph ], [ %.pre, %._crit_edge ]
   %i.bb = add nuw i64 %.015, 1                    ; 2 uses
   %i.bc = icmp ult i64 %i.bb, %i.az
-  br i1 %i.bc, label %.lr.ph, label %.loopexit, !llvm.loop !186
+  br i1 %i.bc, label %.lr.ph, label %.loopexit, !llvm.loop !184
 
 .loopexit:                                        ; preds = %bb.d, %bb.e, %.preheader, %bb.c
   %not..1 = phi i32 [ 0, %bb.c ], [ 1, %.preheader ], [ 0, %bb.d ], [ 1, %bb.e ]
@@ -1121,7 +1191,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = trunc i64 %i.m to i32
   %i.o = add i64 %i.h, 1                          ; 3 uses
-  %i.p = load i64, ptr %i.f, align 8, !tbaa !191  ; 2 uses
+  %i.p = load i64, ptr %i.f, align 8, !tbaa !189  ; 2 uses
   %i.q = icmp ugt i64 %i.o, %i.p
   br i1 %i.q, label %bb.c, label %._crit_edge
 
@@ -1134,7 +1204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = add i64 %i.r, 48
   %i.t = lshr i64 %i.s, 1
   %. = tail call i64 @llvm.umax.i64(i64 %i.t, i64 %i.o) ; 4 uses
-  store i64 %., ptr %i.f, align 8, !tbaa !191
+  store i64 %., ptr %i.f, align 8, !tbaa !189
   %i.u = icmp ugt i64 %., 4611686018427387903
   br i1 %i.u, label %bb.d, label %st_mult.exit
 
@@ -1162,7 +1232,7 @@ bb.e:                                             ; preds = %._crit_edge, %st_mu
   store i32 %i.n, ptr %i.ab, align 4, !tbaa !15
   %i.ac = add nuw i64 %.04669, 1                  ; 2 uses
   %i.ad = icmp ult i64 %i.ac, %i.y
-  br i1 %i.ad, label %bb.b, label %.loopexit, !llvm.loop !187
+  br i1 %i.ad, label %bb.b, label %.loopexit, !llvm.loop !185
 
 bb.f:                                             ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
@@ -1175,7 +1245,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %3, ptr noundef nonnull align 4 dereferenceable(80) @geometric_strategy, i64 80, i1 false), !tbaa.struct !192
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %3, ptr noundef nonnull align 4 dereferenceable(80) @geometric_strategy, i64 80, i1 false), !tbaa.struct !190
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -1188,39 +1258,39 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.ai = load ptr, ptr %i.a, align 8, !tbaa !27  ; 4 uses
-  %i.aj = call i32 @strcasecmp(ptr noundef %i.ai, ptr noundef nonnull @.str.190) #22, !noalias !193
+  %i.aj = call i32 @strcasecmp(ptr noundef %i.ai, ptr noundef nonnull @.str.190) #22, !noalias !191
   %.not.i = icmp eq i32 %i.aj, 0
   br i1 %.not.i, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(80) @incremental_strategy, i64 80, i1 false), !tbaa.struct !192
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(80) @incremental_strategy, i64 80, i1 false), !tbaa.struct !190
   br label %parse_maintenance_strategy.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.ak = call i32 @strcasecmp(ptr noundef %i.ai, ptr noundef nonnull @.str.109) #22, !noalias !193
+  %i.ak = call i32 @strcasecmp(ptr noundef %i.ai, ptr noundef nonnull @.str.109) #22, !noalias !191
   %.not4.i = icmp eq i32 %i.ak, 0
   br i1 %.not4.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(80) @gc_strategy, i64 80, i1 false), !tbaa.struct !192
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(80) @gc_strategy, i64 80, i1 false), !tbaa.struct !190
   br label %parse_maintenance_strategy.exit
 
 bb.n:                                             ; preds = %bb.l
-  %i.al = call i32 @strcasecmp(ptr noundef %i.ai, ptr noundef nonnull @.str.191) #22, !noalias !193
+  %i.al = call i32 @strcasecmp(ptr noundef %i.ai, ptr noundef nonnull @.str.191) #22, !noalias !191
   %.not5.i = icmp eq i32 %i.al, 0
   br i1 %.not5.i, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(80) @geometric_strategy, i64 80, i1 false), !tbaa.struct !192
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(80) @geometric_strategy, i64 80, i1 false), !tbaa.struct !190
   br label %parse_maintenance_strategy.exit
 
 bb.p:                                             ; preds = %bb.n
-  %i.am = call fastcc ptr @_(ptr noundef nonnull @.str.192), !noalias !193
-  call void (ptr, ...) @die(ptr noundef %i.am, ptr noundef %i.ai) #19, !noalias !193
+  %i.am = call fastcc ptr @_(ptr noundef nonnull @.str.192), !noalias !191
+  call void (ptr, ...) @die(ptr noundef %i.am, ptr noundef %i.ai) #19, !noalias !191
   unreachable
 
 parse_maintenance_strategy.exit:                  ; preds = %bb.k, %bb.m, %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %3, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, i64 80, i1 false), !tbaa.struct !192
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %3, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, i64 80, i1 false), !tbaa.struct !190
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.q
 
@@ -1268,7 +1338,7 @@ strbuf_setlen.exit:                               ; preds = %bb.t, %bb.u
 
 strbuf_setlen.exit._crit_edge:                    ; preds = %strbuf_setlen.exit
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.070
-  %.pre75 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !195
+  %.pre75 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !193
   %i.ay = and i32 %.pre75, %.047
   %i.az = icmp eq i32 %i.ay, 0
   br i1 %i.az, label %bb.al, label %bb.x
@@ -1278,7 +1348,7 @@ bb.w:                                             ; preds = %strbuf_setlen.exit
   %.not57 = icmp eq i32 %i.ba, 0                  ; 2 uses
   %i.bb = select i1 %.not57, i32 0, i32 %.047
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.070
-  store i32 %i.bb, ptr %i.bc, align 4, !tbaa !195
+  store i32 %i.bb, ptr %i.bc, align 4, !tbaa !193
   br i1 %.not57, label %bb.al, label %bb.x
 
 bb.x:                                             ; preds = %strbuf_setlen.exit._crit_edge, %bb.w
@@ -1316,7 +1386,7 @@ strbuf_setlen.exit65:                             ; preds = %bb.z, %bb.aa
 
 strbuf_setlen.exit65._crit_edge:                  ; preds = %strbuf_setlen.exit65
   %.phi.trans.insert76 = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
-  %.pre77 = load i32, ptr %.phi.trans.insert76, align 4, !tbaa !196
+  %.pre77 = load i32, ptr %.phi.trans.insert76, align 4, !tbaa !194
   br label %bb.ag
 
 bb.ac:                                            ; preds = %strbuf_setlen.exit65
@@ -1343,7 +1413,7 @@ bb.af:                                            ; preds = %bb.ae
 parse_schedule.exit:                              ; preds = %bb.ac, %bb.ad, %bb.ae, %bb.af
   %.0.i = phi i32 [ 2, %bb.ae ], [ %..i, %bb.af ], [ 3, %bb.ad ], [ 0, %bb.ac ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
-  store i32 %.0.i, ptr %i.bo, align 4, !tbaa !196
+  store i32 %.0.i, ptr %i.bo, align 4, !tbaa !194
   br label %bb.ag
 
 bb.ag:                                            ; preds = %strbuf_setlen.exit65._crit_edge, %parse_schedule.exit
@@ -1355,7 +1425,7 @@ bb.ag:                                            ; preds = %strbuf_setlen.exit6
 bb.ah:                                            ; preds = %bb.x, %bb.ag
   %i.bs = load i64, ptr %i.ap, align 8, !tbaa !128 ; 2 uses
   %i.bt = add i64 %i.bs, 1                        ; 3 uses
-  %i.bu = load i64, ptr %i.aq, align 8, !tbaa !191 ; 2 uses
+  %i.bu = load i64, ptr %i.aq, align 8, !tbaa !189 ; 2 uses
   %i.bv = icmp ugt i64 %i.bt, %i.bu
   br i1 %i.bv, label %bb.ai, label %._crit_edge78
 
@@ -1368,7 +1438,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.bx = add i64 %i.bw, 48
   %i.by = lshr i64 %i.bx, 1
   %.62 = call i64 @llvm.umax.i64(i64 %i.by, i64 %i.bt) ; 4 uses
-  store i64 %.62, ptr %i.aq, align 8, !tbaa !191
+  store i64 %.62, ptr %i.aq, align 8, !tbaa !189
   %i.bz = icmp ugt i64 %.62, 4611686018427387903
   br i1 %i.bz, label %bb.aj, label %st_mult.exit68
 
@@ -1399,7 +1469,7 @@ bb.al:                                            ; preds = %strbuf_setlen.exit.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   %i.ch = add nuw nsw i64 %.070, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.ch, 10
-  br i1 %exitcond.not, label %bb.r, label %bb.s, !llvm.loop !190
+  br i1 %exitcond.not, label %bb.r, label %bb.s, !llvm.loop !188
 
 .loopexit:                                        ; preds = %bb.e, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
@@ -1798,7 +1868,7 @@ repo_for_each_pack_data_next.exit.i.i:            ; preds = %odb_source_files_do
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.6.1.i.i, i64 8
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !118 ; 2 uses
   %.not17.i.i = icmp eq ptr %i.bg, null
-  br i1 %.not17.i.i, label %.thread.loopexit.i.i, label %.lr.ph.i, !llvm.loop !197
+  br i1 %.not17.i.i, label %.thread.loopexit.i.i, label %.lr.ph.i, !llvm.loop !195
 
 get_auto_pack_size.exit.i:                        ; preds = %bb.k, %.thread.loopexit.i.i
   %.0.lcssa.i.i = phi i64 [ %i.au, %.thread.loopexit.i.i ], [ 1, %bb.k ]
@@ -1948,7 +2018,7 @@ repo_for_each_pack_data_next.exit:                ; preds = %odb_source_files_do
   %i.aj = load i32, ptr %i.a, align 4             ; 2 uses
   %.not11 = icmp slt i32 %spec.select, %i.aj
   %or.cond = select i1 %.not10, i1 %.not11, i1 false
-  br i1 %or.cond, label %.lr.ph89, label %.loopexit, !llvm.loop !198
+  br i1 %or.cond, label %.lr.ph89, label %.loopexit, !llvm.loop !196
 
 .loopexit:                                        ; preds = %repo_for_each_pack_data_next.exit, %.lr.ph.preheader, %.thread
   %.022 = phi i32 [ %.0.lcssa, %.thread ], [ 0, %.lr.ph.preheader ], [ %spec.select, %repo_for_each_pack_data_next.exit ]
@@ -2012,12 +2082,12 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = load i32, ptr %i.p, align 8, !tbaa !151
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !199
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !197
   %i.t = icmp ult i32 %i.q, %i.s
   br i1 %i.t, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = load i32, ptr %i.a, align 4, !tbaa !200
+  %i.u = load i32, ptr %i.a, align 4, !tbaa !198
   %i.v = call ptr (ptr, ptr, ...) @strvec_pushf(ptr noundef nonnull %6, ptr noundef nonnull @.str.165, i32 noundef %i.u) #18 ; 0 uses
   br label %bb.d
 
@@ -2255,7 +2325,7 @@ bb.a:
   tail call void @prepare_repo_settings(ptr noundef %i.a) #18
   %i.b = load ptr, ptr @the_repository, align 8, !tbaa !48 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 276
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !201
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !199
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -2342,13 +2412,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %2, ptr noundef nonnull align 8 dereferenceable(72) @__const.pack_refs_condition.excludes, i64 72, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  store i32 3, ptr %3, align 8, !tbaa !204
+  store i32 3, ptr %3, align 8, !tbaa !202
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 0, ptr %i.b, align 4
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %2, ptr %i.c, align 8, !tbaa !205
+  store ptr %2, ptr %i.c, align 8, !tbaa !203
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %1, ptr %i.d, align 8, !tbaa !206
+  store ptr %1, ptr %i.d, align 8, !tbaa !204
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.e = call ptr @string_list_append(ptr noundef nonnull %1, ptr noundef nonnull @.str.175) #18 ; 0 uses
   %i.f = load ptr, ptr @the_repository, align 8, !tbaa !48
@@ -2360,7 +2430,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @clear_ref_exclusions(ptr noundef nonnull %2) #18
   call void @string_list_clear(ptr noundef nonnull %1, i32 noundef 0) #18
-  %i.i = load i8, ptr %i.a, align 1, !tbaa !207, !range !208, !noundef !209
+  %i.i = load i8, ptr %i.a, align 1, !tbaa !205, !range !206, !noundef !207
   %i.j = zext nneg i8 %i.i to i32
   br label %bb.c
 
@@ -2388,10 +2458,10 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.f = add i64 %i.c, -2592000
-  store i64 %i.f, ptr %i.e, align 8, !tbaa !210
+  store i64 %i.f, ptr %i.e, align 8, !tbaa !208
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.h = add i64 %i.c, -7776000
-  store i64 %i.h, ptr %i.g, align 8, !tbaa !211
+  store i64 %i.h, ptr %i.g, align 8, !tbaa !209
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   store i32 100, ptr %i.a, align 4, !tbaa !15
   %i.i = load ptr, ptr @the_repository, align 8, !tbaa !48
@@ -2525,7 +2595,7 @@ bb.k:                                             ; preds = %bb.j, %strbuf_setle
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
   %i.ab = load i32, ptr %i.a, align 4, !tbaa !15
   %.not11 = icmp eq i32 %i.ab, 0
-  br i1 %.not11, label %._crit_edge, label %bb.e, !llvm.loop !212
+  br i1 %.not11, label %._crit_edge, label %bb.e, !llvm.loop !210
 
 ._crit_edge:                                      ; preds = %bb.k, %.._crit_edge.loopexit_crit_edge, %.preheader
   %.not13 = phi i1 [ true, %.preheader ], [ %i.s, %.._crit_edge.loopexit_crit_edge ], [ true, %bb.k ]
@@ -2599,7 +2669,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %2, ptr noundef nonnull align 8 dereferenceable(136) @__const.schtasks_remove_task.child, i64 136, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !218
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !216
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %bb.b, label %bb.e
 
@@ -2607,7 +2677,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 104
   store i8 8, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !219
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !217
   call void (ptr, ...) @strvec_pushl(ptr noundef nonnull %2, ptr noundef nonnull @.str.139, ptr noundef %i.e, ptr noundef nonnull @.str.140, ptr noundef nonnull @.str.105, ptr noundef nonnull @.str.141, ptr noundef nonnull @.str.142, ptr noundef nonnull @.str.143, ptr noundef null) #18
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.g = load i32, ptr %i.f, align 8, !tbaa !41
@@ -2697,10 +2767,10 @@ bb.a:
   %2 = alloca %struct.object_id, align 4          ; 4 uses
   %i.a = alloca ptr, align 8                      ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !224
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !222
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  store ptr null, ptr %i.a, align 8, !tbaa !225
+  store ptr null, ptr %i.a, align 8, !tbaa !223
   %i.d = load ptr, ptr @the_repository, align 8, !tbaa !48
   %i.e = call i32 @reference_get_peeled_oid(ptr noundef %i.d, ptr noundef %0, ptr noundef nonnull %2) #18
   %.not = icmp eq i32 %i.e, 0
@@ -2755,26 +2825,26 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph50:                                         ; preds = %bb.g, %._crit_edge
   %i.x = call ptr @pop_commit(ptr noundef nonnull %i.a) #18
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 56
-  %.043 = load ptr, ptr %i.y, align 8, !tbaa !225 ; 2 uses
+  %.043 = load ptr, ptr %i.y, align 8, !tbaa !223 ; 2 uses
   %.not3844 = icmp eq ptr %.043, null
   br i1 %.not3844, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph50, %bb.l
   %.045 = phi ptr [ %.0, %bb.l ], [ %.043, %.lr.ph50 ] ; 5 uses
   %i.z = load ptr, ptr @the_repository, align 8, !tbaa !48
-  %i.aa = load ptr, ptr %.045, align 8, !tbaa !227
+  %i.aa = load ptr, ptr %.045, align 8, !tbaa !225
   %i.ab = call i32 @repo_parse_commit_gently(ptr noundef %i.z, ptr noundef %i.aa, i32 noundef 0) #18
   %.not39 = icmp eq i32 %i.ab, 0
   br i1 %.not39, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.ac = load ptr, ptr %.045, align 8, !tbaa !227
+  %i.ac = load ptr, ptr %.045, align 8, !tbaa !225
   %i.ad = call i32 @commit_graph_position(ptr noundef %i.ac) #18
   %.not40 = icmp eq i32 %i.ad, -1
   br i1 %.not40, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
-  %i.ae = load ptr, ptr %.045, align 8, !tbaa !227 ; 2 uses
+  %i.ae = load ptr, ptr %.045, align 8, !tbaa !225 ; 2 uses
   %i.af = load i64, ptr %i.ae, align 8            ; 2 uses
   %i.ag = and i64 %i.af, 4294967296
   %.not41 = icmp eq i64 %i.ag, 0
@@ -2795,20 +2865,20 @@ bb.j:                                             ; preds = %bb.i
   br label %._crit_edge51
 
 bb.k:                                             ; preds = %bb.j
-  %i.am = load ptr, ptr %.045, align 8, !tbaa !227
+  %i.am = load ptr, ptr %.045, align 8, !tbaa !225
   %i.an = call ptr @commit_list_insert(ptr noundef %i.am, ptr noundef nonnull %i.a) #18 ; 0 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %bb.h, %bb.i, %bb.k
   %i.ao = getelementptr inbounds nuw i8, ptr %.045, i64 8
-  %.0 = load ptr, ptr %i.ao, align 8, !tbaa !225  ; 2 uses
+  %.0 = load ptr, ptr %i.ao, align 8, !tbaa !223  ; 2 uses
   %.not38 = icmp eq ptr %.0, null
-  br i1 %.not38, label %._crit_edge, label %.lr.ph, !llvm.loop !220
+  br i1 %.not38, label %._crit_edge, label %.lr.ph, !llvm.loop !218
 
 ._crit_edge:                                      ; preds = %bb.l, %.lr.ph50
   %i.ap = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not60 = icmp eq ptr %i.ap, null
-  br i1 %.not60, label %._crit_edge51, label %.lr.ph50, !llvm.loop !221
+  br i1 %.not60, label %._crit_edge51, label %.lr.ph50, !llvm.loop !219
 
 ._crit_edge51:                                    ; preds = %._crit_edge, %._crit_edge.thread, %bb.g
   %.028.lcssa = phi i32 [ 0, %bb.g ], [ 1, %._crit_edge.thread ], [ 0, %._crit_edge ]
@@ -3211,7 +3281,7 @@ bb.z:                                             ; preds = %.preheader.split.3,
   %i.bz = sext i32 %i.by to i64
   %i.ca = getelementptr inbounds [24 x i8], ptr @scheduler_fn, i64 %i.bz
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
-  %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !228
+  %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !226
   %.val = load ptr, ptr %4, align 8, !tbaa !57
   %i.cd = call i32 @get_tempfile_fd(ptr noundef %.val) #18
   %i.ce = call i32 %i.cc(i32 noundef 1, i32 noundef %i.cd) #18
@@ -3588,7 +3658,7 @@ bb.n:                                             ; preds = %.critedge, %bb.m, %
   %.1 = phi i32 [ %.mux, %.critedge ], [ 0, %.critedge40 ], [ 1, %bb.m ]
   %i.ai = call i32 @strbuf_getline_lf(ptr noundef nonnull %5, ptr noundef %i.ab) #18
   %.not30 = icmp eq i32 %i.ai, 0
-  br i1 %.not30, label %bb.l, label %._crit_edge, !llvm.loop !229
+  br i1 %.not30, label %bb.l, label %._crit_edge, !llvm.loop !227
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.k
   call void @strbuf_release(ptr noundef nonnull %5) #18
@@ -3991,15 +4061,15 @@ bb.b:                                             ; preds = %get_random_minute.e
 
 switch.lookup19:                                  ; preds = %get_random_minute.exit
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 3 uses
-  %i.r = load volatile ptr, ptr %i.q, align 8, !tbaa !233
+  %i.r = load volatile ptr, ptr %i.q, align 8, !tbaa !231
   %fwrite = call i64 @fwrite(ptr nonnull @.str.279, i64 135, i64 1, ptr %i.r) ; 0 uses
-  %i.s = load volatile ptr, ptr %i.q, align 8, !tbaa !233
+  %i.s = load volatile ptr, ptr %i.q, align 8, !tbaa !231
   %i.t = zext nneg i32 %1 to i64
   %i.u = getelementptr [8 x i8], ptr @switch.table.schtasks_schedule_task.9, i64 %i.t
   %switch.gep20 = getelementptr i8, ptr %i.u, i64 -8
   %switch.load21 = load ptr, ptr %switch.gep20, align 8
   %i.v = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.s, ptr noundef nonnull %switch.load21, i32 noundef %.0.i15) #18 ; 0 uses
-  %i.w = load volatile ptr, ptr %i.q, align 8, !tbaa !233
+  %i.w = load volatile ptr, ptr %i.q, align 8, !tbaa !231
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) @__const.get_maintpath.sb, i64 24, i1 false)
   %i.x = load ptr, ptr @get_extra_config_parameters.result, align 8, !tbaa !27 ; 2 uses
@@ -4301,55 +4371,53 @@ attributes #22 = { nounwind willreturn memory(read) }
 !180 = !{!28, !17, i64 88}
 !181 = distinct !{!181, !91}
 !182 = distinct !{!182, !91}
-!183 = distinct !{null}
-!184 = !{!131, !17, i64 8}
-!185 = !{!131, !18, i64 0}
-!186 = distinct !{!186, !91}
-!187 = distinct !{!187, !91}
-!188 = distinct !{!188, i1 true, !"parse_maintenance_strategy"}
-!189 = distinct !{!189, !188, !"parse_maintenance_strategy: argument 0"}
-!190 = distinct !{!190, !91}
-!191 = !{!40, !16, i64 16}
-!192 = !{i64 0, i64 80, !112}
-!193 = !{!189}
-!194 = !{!"", !12, i64 0, !12, i64 4}
-!195 = !{!194, !12, i64 0}
-!196 = !{!194, !12, i64 4}
-!197 = distinct !{!197, !91}
-!198 = distinct !{!198, !91}
-!199 = !{!150, !12, i64 8}
-!200 = !{!150, !12, i64 52}
-!201 = !{!80, !12, i64 276}
-!202 = !{!"p1 _ZTS14ref_exclusions", !17, i64 0}
-!203 = !{!"refs_optimize_opts", !12, i64 0, !202, i64 8, !134, i64 16}
-!204 = !{!203, !12, i64 0}
-!205 = !{!203, !202, i64 8}
-!206 = !{!203, !134, i64 16}
-!207 = !{!61, !61, i64 0}
-!208 = !{i8 0, i8 2}
-!209 = !{}
-!210 = !{!157, !16, i64 24}
-!211 = !{!157, !16, i64 40}
-!212 = distinct !{!212, !91}
-!213 = !{!"p1 _ZTS13hashmap_entry", !17, i64 0}
-!214 = !{!"hashmap_entry", !213, i64 0, !12, i64 8}
-!215 = !{!"p1 _ZTS12refspec_item", !17, i64 0}
-!216 = !{!"refspec", !215, i64 0, !12, i64 8, !12, i64 12, !12, i64 16}
-!217 = !{!"remote", !214, i64 0, !18, i64 16, !12, i64 24, !12, i64 28, !18, i64 32, !83, i64 40, !83, i64 64, !216, i64 88, !216, i64 112, !12, i64 136, !12, i64 140, !12, i64 144, !12, i64 148, !12, i64 152, !18, i64 160, !18, i64 168, !18, i64 176, !18, i64 184, !78, i64 192, !78, i64 232, !78, i64 272, !12, i64 312, !18, i64 320}
-!218 = !{!217, !12, i64 140}
-!219 = !{!217, !18, i64 16}
-!220 = distinct !{!220, !91}
-!221 = distinct !{!221, !91}
-!222 = !{!"p1 _ZTS9object_id", !17, i64 0}
-!223 = !{!"reference", !18, i64 0, !18, i64 8, !222, i64 16, !222, i64 24, !12, i64 32}
-!224 = !{!223, !222, i64 16}
-!225 = !{!158, !158, i64 0}
-!226 = !{!"commit_list", !159, i64 0, !158, i64 8}
-!227 = !{!226, !159, i64 0}
-!228 = !{!131, !17, i64 16}
-!229 = distinct !{!229, !91}
-!230 = !{!"p1 _ZTS18volatile_list_head", !17, i64 0}
-!231 = !{!"volatile_list_head", !230, i64 0, !230, i64 8}
-!232 = !{!"tempfile", !231, i64 0, !12, i64 16, !44, i64 24, !12, i64 32, !53, i64 40, !18, i64 64}
-!233 = !{!232, !44, i64 24}
+!183 = !{!131, !18, i64 0}
+!184 = distinct !{!184, !91}
+!185 = distinct !{!185, !91}
+!186 = distinct !{!186, i1 true, !"parse_maintenance_strategy"}
+!187 = distinct !{!187, !186, !"parse_maintenance_strategy: argument 0"}
+!188 = distinct !{!188, !91}
+!189 = !{!40, !16, i64 16}
+!190 = !{i64 0, i64 80, !112}
+!191 = !{!187}
+!192 = !{!"", !12, i64 0, !12, i64 4}
+!193 = !{!192, !12, i64 0}
+!194 = !{!192, !12, i64 4}
+!195 = distinct !{!195, !91}
+!196 = distinct !{!196, !91}
+!197 = !{!150, !12, i64 8}
+!198 = !{!150, !12, i64 52}
+!199 = !{!80, !12, i64 276}
+!200 = !{!"p1 _ZTS14ref_exclusions", !17, i64 0}
+!201 = !{!"refs_optimize_opts", !12, i64 0, !200, i64 8, !134, i64 16}
+!202 = !{!201, !12, i64 0}
+!203 = !{!201, !200, i64 8}
+!204 = !{!201, !134, i64 16}
+!205 = !{!61, !61, i64 0}
+!206 = !{i8 0, i8 2}
+!207 = !{}
+!208 = !{!157, !16, i64 24}
+!209 = !{!157, !16, i64 40}
+!210 = distinct !{!210, !91}
+!211 = !{!"p1 _ZTS13hashmap_entry", !17, i64 0}
+!212 = !{!"hashmap_entry", !211, i64 0, !12, i64 8}
+!213 = !{!"p1 _ZTS12refspec_item", !17, i64 0}
+!214 = !{!"refspec", !213, i64 0, !12, i64 8, !12, i64 12, !12, i64 16}
+!215 = !{!"remote", !212, i64 0, !18, i64 16, !12, i64 24, !12, i64 28, !18, i64 32, !83, i64 40, !83, i64 64, !214, i64 88, !214, i64 112, !12, i64 136, !12, i64 140, !12, i64 144, !12, i64 148, !12, i64 152, !18, i64 160, !18, i64 168, !18, i64 176, !18, i64 184, !78, i64 192, !78, i64 232, !78, i64 272, !12, i64 312, !18, i64 320}
+!216 = !{!215, !12, i64 140}
+!217 = !{!215, !18, i64 16}
+!218 = distinct !{!218, !91}
+!219 = distinct !{!219, !91}
+!220 = !{!"p1 _ZTS9object_id", !17, i64 0}
+!221 = !{!"reference", !18, i64 0, !18, i64 8, !220, i64 16, !220, i64 24, !12, i64 32}
+!222 = !{!221, !220, i64 16}
+!223 = !{!158, !158, i64 0}
+!224 = !{!"commit_list", !159, i64 0, !158, i64 8}
+!225 = !{!224, !159, i64 0}
+!226 = !{!131, !17, i64 16}
+!227 = distinct !{!227, !91}
+!228 = !{!"p1 _ZTS18volatile_list_head", !17, i64 0}
+!229 = !{!"volatile_list_head", !228, i64 0, !228, i64 8}
+!230 = !{!"tempfile", !229, i64 0, !12, i64 16, !44, i64 24, !12, i64 32, !53, i64 40, !18, i64 64}
+!231 = !{!230, !44, i64 24}
 end_hunk_3
