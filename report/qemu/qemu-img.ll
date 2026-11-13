@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/qemu-img?download=true
-inline.NumInlined: 83
+inline.NumInlined: 88
 inline.NumDeleted: 33
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -24,8 +24,6 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.ImgConvertState = type { ptr, ptr, ptr, i32, i64, i64, i64, i64, i64, i32, i64, ptr, i8, i8, i8, i8, i64, i8, i8, i8, i8, i32, i32, i64, i64, i64, i32, [16 x ptr], [16 x i64], %struct.CoMutex, i32 }
 %struct.CoMutex = type { i32, ptr, %struct.anon.9, %struct.anon.9, i32, i32, ptr }
 %struct.anon.9 = type { ptr }
-%struct.DdInfo = type { i32, i64 }
-%struct.DdIo = type { i32, ptr, ptr, i64 }
 %struct.option = type { ptr, i32, ptr, i32 }
 %struct.MapEntry = type { i64, i64, i8, i8, i8, i64, i8, i8, i64, ptr }
 %struct.QEMUSnapshotInfo = type { [128 x i8], [256 x i8], i64, i32, i32, i64, i64 }
@@ -354,7 +352,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.283 = private unnamed_addr constant [11 x i8] c"image size\00", align 1
 @.str.284 = private unnamed_addr constant [24 x i8] c"Unexpected argument: %s\00", align 1
 @.str.285 = private unnamed_addr constant [5 x i8] c"%s: \00", align 1
-@__const.img_dd.out = private unnamed_addr constant { i32, [4 x i8], ptr, ptr, i64 } { i32 512, [4 x i8] zeroinitializer, ptr null, ptr null, i64 0 }, align 8
 @.str.286 = private unnamed_addr constant [3 x i8] c"bs\00", align 1
 @.str.287 = private unnamed_addr constant [3 x i8] c"if\00", align 1
 @.str.288 = private unnamed_addr constant [3 x i8] c"of\00", align 1
@@ -757,19 +754,13 @@ bb.aa:                                            ; preds = %.loopexit, %bb.z, %
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef range(i32 0, 2) i32 @img_dd(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr noundef %2) #4 {
 bb.a:
-  %3 = alloca ptr, align 8                        ; 7 uses
-  %4 = alloca %struct.DdInfo, align 8             ; 10 uses
-  %5 = alloca %struct.DdIo, align 8               ; 15 uses
-  %6 = alloca %struct.DdIo, align 8               ; 7 uses
+  %3 = alloca i64, align 8                        ; 5 uses
+  %4 = alloca i64, align 8                        ; 5 uses
+  %5 = alloca i64, align 8                        ; 6 uses
+  %6 = alloca ptr, align 8                        ; 7 uses
   %7 = alloca [7 x %struct.option], align 16      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
-  store ptr null, ptr %3, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) @__const.img_dd.out, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) @__const.img_dd.out, i64 32, i1 false)
+  store ptr null, ptr %6, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(224) %7, ptr noundef nonnull align 16 dereferenceable(224) @__const.img_dd.long_options, i64 224, i1 false)
   %i.a = call i32 @getopt_long(i32 noundef %1, ptr noundef %2, ptr noundef nonnull @.str.291, ptr noundef nonnull %7, ptr noundef null) #22 ; 2 uses
@@ -837,17 +828,23 @@ bb.h:                                             ; preds = %.lr.ph, %bb.f, %bb.
   %.099.lcssa = phi i1 [ false, %bb.a ], [ %.1100, %bb.h ]
   %i.k = load i32, ptr @optind, align 4           ; 2 uses
   %i.l = icmp slt i32 %i.k, %1
-  br i1 %i.l, label %.lr.ph202.preheader, label %._crit_edge203
+  br i1 %i.l, label %.lr.ph202.preheader, label %bb.r
 
 .lr.ph202.preheader:                              ; preds = %._crit_edge
   %i.m = sext i32 %i.k to i64
   br label %.lr.ph202
 
 .lr.ph202:                                        ; preds = %bb.q, %.lr.ph202.preheader
+  %.sroa.0290.0 = phi i32 [ 0, %.lr.ph202.preheader ], [ %60, %bb.q ]
+  %.sroa.7294.0 = phi i64 [ 0, %.lr.ph202.preheader ], [ %.sroa.7294.1304, %bb.q ] ; 4 uses
+  %.sroa.14.0 = phi i64 [ 0, %.lr.ph202.preheader ], [ %.sroa.14.1305, %bb.q ] ; 4 uses
+  %.sroa.6285.0 = phi ptr [ null, %.lr.ph202.preheader ], [ %.sroa.6285.1306, %bb.q ] ; 7 uses
+  %.sroa.0284.0 = phi i32 [ 512, %.lr.ph202.preheader ], [ %.sroa.0284.1307, %bb.q ] ; 3 uses
+  %.sroa.4282.0 = phi ptr [ null, %.lr.ph202.preheader ], [ %.sroa.4282.1308, %bb.q ] ; 7 uses
   %indvars.iv = phi i64 [ %i.m, %.lr.ph202.preheader ], [ %indvars.iv.next, %bb.q ] ; 2 uses
   %i.n = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = call noalias ptr @g_strdup(ptr noundef %i.o) #22 ; 12 uses
+  %i.p = call noalias ptr @g_strdup(ptr noundef %i.o) #22 ; 19 uses
   %i.q = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.p, i32 noundef 61) #25 ; 3 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.i, label %bb.j
@@ -857,70 +854,218 @@ bb.i:                                             ; preds = %.lr.ph202
   br label %.thread
 
 bb.j:                                             ; preds = %.lr.ph202
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 1
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 1 ; 8 uses
   store i8 0, ptr %i.q, align 1
-  %8 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(3) @.str.286) #25
-  %.not154 = icmp eq i32 %8, 0
-  br i1 %.not154, label %bb.p, label %bb.k
+  %8 = load i8, ptr %i.p, align 1                 ; 2 uses
+  %.not154 = icmp eq i8 %8, 98
+  br i1 %.not154, label %sub_1, label %bb.k
+
+sub_1:                                            ; preds = %bb.j
+  %9 = getelementptr inbounds nuw i8, ptr %i.p, i64 1
+  %10 = load i8, ptr %9, align 1
+  %.not358 = icmp eq i8 %10, 115
+  br i1 %.not358, label %.tail318, label %bb.l
+
+.tail318:                                         ; preds = %sub_1
+  %11 = getelementptr inbounds nuw i8, ptr %i.p, i64 2
+  %12 = load i8, ptr %11, align 1
+  %13 = icmp eq i8 %12, 0
+  br i1 %13, label %call.0, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
   %i.t = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(6) @.str.80) #25
   %.not154.1 = icmp eq i32 %i.t, 0
-  br i1 %.not154.1, label %bb.p, label %bb.l
+  br i1 %.not154.1, label %call.1, label %sub_0320
 
-bb.l:                                             ; preds = %bb.k
-  %i.u = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(3) @.str.287) #25
+bb.l:                                             ; preds = %sub_1
+  %i.u = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(6) @.str.80) #25
   %.not154.2 = icmp eq i32 %i.u, 0
-  br i1 %.not154.2, label %bb.p, label %bb.m
+  br i1 %.not154.2, label %call.1, label %bb.n
 
-bb.m:                                             ; preds = %bb.l
-  %i.v = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(3) @.str.288) #25
+bb.m:                                             ; preds = %.tail318
+  %i.v = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(6) @.str.80) #25
   %.not154.3 = icmp eq i32 %i.v, 0
-  br i1 %.not154.3, label %bb.p, label %bb.n
+  br i1 %.not154.3, label %call.1, label %bb.n
 
-bb.n:                                             ; preds = %bb.m
+sub_0320:                                         ; preds = %bb.k
+  switch i8 %8, label %bb.n [
+    i8 105, label %sub_1321
+    i8 111, label %sub_1326
+  ]
+
+sub_1321:                                         ; preds = %sub_0320
+  %14 = getelementptr inbounds nuw i8, ptr %i.p, i64 1
+  %15 = load i8, ptr %14, align 1
+  %.not360 = icmp eq i8 %15, 102
+  br i1 %.not360, label %.tail319, label %bb.n
+
+.tail319:                                         ; preds = %sub_1321
+  %16 = getelementptr inbounds nuw i8, ptr %i.p, i64 2
+  %17 = load i8, ptr %16, align 1
+  %18 = icmp eq i8 %17, 0
+  br i1 %18, label %call.2, label %bb.n
+
+sub_1326:                                         ; preds = %sub_0320
+  %19 = getelementptr inbounds nuw i8, ptr %i.p, i64 1
+  %20 = load i8, ptr %19, align 1
+  %.not362 = icmp eq i8 %20, 102
+  br i1 %.not362, label %.tail324, label %bb.n
+
+.tail324:                                         ; preds = %sub_1326
+  %21 = getelementptr inbounds nuw i8, ptr %i.p, i64 2
+  %22 = load i8, ptr %21, align 1
+  %23 = icmp eq i8 %22, 0
+  br i1 %23, label %call.3, label %bb.n
+
+bb.n:                                             ; preds = %sub_0320, %bb.l, %bb.m, %sub_1321, %.tail319, %sub_1326, %.tail324
   %i.w = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(5) @.str.289) #25
   %.not154.4 = icmp eq i32 %i.w, 0
-  br i1 %.not154.4, label %bb.p, label %bb.o
+  br i1 %.not154.4, label %call.4, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   call void (ptr, ...) @error_report(ptr noundef nonnull @.str.294, ptr noundef nonnull %i.p) #22
   br label %.thread
 
-bb.p:                                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j
-  %.lcssa214 = phi ptr [ @__const.img_dd.options, %bb.j ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 24), %bb.k ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 48), %bb.l ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 72), %bb.m ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 96), %bb.n ] ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.lcssa214, i64 8
-  %10 = load ptr, ptr %9, align 8
-  %11 = call i32 %10(ptr noundef nonnull %i.s, ptr noundef nonnull %5, ptr noundef nonnull %6, ptr noundef nonnull %4) #22
-  %.not155 = icmp eq i32 %11, 0
+call.0:                                           ; preds = %.tail318
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
+  store i64 0, ptr %5, align 8, !annotation !11
+  %24 = call i32 @qemu_strtosz(ptr noundef nonnull %i.s, ptr noundef null, ptr noundef nonnull %5) #22 ; 2 uses
+  %25 = icmp slt i32 %24, 0
+  %26 = icmp ne i32 %24, -34                      ; 2 uses
+  %or.cond.i.i = and i1 %25, %26
+  br i1 %or.cond.i.i, label %27, label %28
+
+27:                                               ; preds = %call.0
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.108, ptr noundef nonnull @.str.286, ptr noundef nonnull %i.s) #22
+  br label %.tail.thread310
+
+28:                                               ; preds = %call.0
+  br i1 %26, label %29, label %32
+
+29:                                               ; preds = %28
+  %30 = load i64, ptr %5, align 8                 ; 2 uses
+  %31 = add i64 %30, -2147483648
+  %or.cond17.i.i = icmp ult i64 %31, -2147483647
+  br i1 %or.cond17.i.i, label %32, label %33
+
+32:                                               ; preds = %29, %28
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.109, ptr noundef nonnull @.str.286, i64 noundef 1, i64 noundef 2147483647) #22
+  br label %.tail.thread310
+
+.tail.thread310:                                  ; preds = %27, %32
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
+  br label %.thread
+
+33:                                               ; preds = %29
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
+  %34 = trunc nuw nsw i64 %30 to i32
+  br label %bb.q
+
+call.1:                                           ; preds = %bb.l, %bb.m, %bb.k
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
+  store i64 0, ptr %4, align 8, !annotation !11
+  %35 = call i32 @qemu_strtosz(ptr noundef nonnull %i.s, ptr noundef null, ptr noundef nonnull %4) #22 ; 3 uses
+  %36 = icmp slt i32 %35, 0
+  %37 = icmp ne i32 %35, -34                      ; 2 uses
+  %or.cond.i.i.i = and i1 %36, %37
+  br i1 %or.cond.i.i.i, label %38, label %40
+
+38:                                               ; preds = %call.1
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.108, ptr noundef nonnull @.str.80, ptr noundef nonnull %i.s) #22
+  %39 = sext i32 %35 to i64
+  br label %img_dd_count.exit
+
+40:                                               ; preds = %call.1
+  %41 = load i64, ptr %4, align 8                 ; 2 uses
+  %42 = icmp sgt i64 %41, -1
+  %or.cond.not.i.i = select i1 %37, i1 %42, i1 false
+  br i1 %or.cond.not.i.i, label %img_dd_count.exit, label %43
+
+43:                                               ; preds = %40
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.109, ptr noundef nonnull @.str.80, i64 noundef 0, i64 noundef 9223372036854775807) #22
+  br label %img_dd_count.exit
+
+img_dd_count.exit:                                ; preds = %38, %40, %43
+  %.sink.i = phi i64 [ %41, %40 ], [ -34, %43 ], [ %39, %38 ]
+  %44 = phi i32 [ 0, %40 ], [ 1, %43 ], [ 1, %38 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
+  br label %bb.p
+
+call.2:                                           ; preds = %.tail319
+  %45 = call noalias ptr @g_strdup(ptr noundef nonnull %i.s) #22
+  br label %bb.q
+
+call.3:                                           ; preds = %.tail324
+  %46 = call noalias ptr @g_strdup(ptr noundef nonnull %i.s) #22
+  br label %bb.q
+
+call.4:                                           ; preds = %bb.n
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  store i64 0, ptr %3, align 8, !annotation !11
+  %47 = call i32 @qemu_strtosz(ptr noundef nonnull %i.s, ptr noundef null, ptr noundef nonnull %3) #22 ; 3 uses
+  %48 = icmp slt i32 %47, 0
+  %49 = icmp ne i32 %47, -34                      ; 2 uses
+  %or.cond.i.i.i279 = and i1 %48, %49
+  br i1 %or.cond.i.i.i279, label %50, label %52
+
+50:                                               ; preds = %call.4
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.108, ptr noundef nonnull @.str.289, ptr noundef nonnull %i.s) #22
+  %51 = sext i32 %47 to i64
+  br label %img_dd_skip.exit
+
+52:                                               ; preds = %call.4
+  %53 = load i64, ptr %3, align 8                 ; 2 uses
+  %54 = icmp sgt i64 %53, -1
+  %or.cond.not.i.i280 = select i1 %49, i1 %54, i1 false
+  br i1 %or.cond.not.i.i280, label %img_dd_skip.exit, label %55
+
+55:                                               ; preds = %52
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.109, ptr noundef nonnull @.str.289, i64 noundef 0, i64 noundef 9223372036854775807) #22
+  br label %img_dd_skip.exit
+
+img_dd_skip.exit:                                 ; preds = %50, %52, %55
+  %.sink.i281 = phi i64 [ %53, %52 ], [ -34, %55 ], [ %51, %50 ]
+  %56 = phi i32 [ 0, %52 ], [ 1, %55 ], [ 1, %50 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
+  br label %bb.p
+
+bb.p:                                             ; preds = %img_dd_skip.exit, %img_dd_count.exit
+  %.sroa.7294.1 = phi i64 [ %.sroa.7294.0, %img_dd_skip.exit ], [ %.sink.i, %img_dd_count.exit ]
+  %.sroa.14.1 = phi i64 [ %.sink.i281, %img_dd_skip.exit ], [ %.sroa.14.0, %img_dd_count.exit ]
+  %.lcssa217261 = phi ptr [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 96), %img_dd_skip.exit ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 24), %img_dd_count.exit ]
+  %57 = phi i32 [ %56, %img_dd_skip.exit ], [ %44, %img_dd_count.exit ]
+  %.not155 = icmp eq i32 %57, 0
   br i1 %.not155, label %bb.q, label %.thread
 
-bb.q:                                             ; preds = %bb.p
-  %12 = getelementptr inbounds nuw i8, ptr %.lcssa214, i64 16
-  %13 = load i32, ptr %12, align 8
-  %14 = load i32, ptr %4, align 8
-  %15 = or i32 %14, %13
-  store i32 %15, ptr %4, align 8
+bb.q:                                             ; preds = %call.3, %33, %call.2, %bb.p
+  %.lcssa217261309 = phi ptr [ %.lcssa217261, %bb.p ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 72), %call.3 ], [ @__const.img_dd.options, %33 ], [ getelementptr inbounds nuw (i8, ptr @__const.img_dd.options, i64 48), %call.2 ]
+  %.sroa.4282.1308 = phi ptr [ %.sroa.4282.0, %bb.p ], [ %46, %call.3 ], [ %.sroa.4282.0, %33 ], [ %.sroa.4282.0, %call.2 ] ; 19 uses
+  %.sroa.0284.1307 = phi i32 [ %.sroa.0284.0, %bb.p ], [ %.sroa.0284.0, %call.3 ], [ %34, %33 ], [ %.sroa.0284.0, %call.2 ] ; 3 uses
+  %.sroa.6285.1306 = phi ptr [ %.sroa.6285.0, %bb.p ], [ %.sroa.6285.0, %call.3 ], [ %.sroa.6285.0, %33 ], [ %45, %call.2 ] ; 18 uses
+  %.sroa.14.1305 = phi i64 [ %.sroa.14.1, %bb.p ], [ %.sroa.14.0, %call.3 ], [ %.sroa.14.0, %33 ], [ %.sroa.14.0, %call.2 ] ; 7 uses
+  %.sroa.7294.1304 = phi i64 [ %.sroa.7294.1, %bb.p ], [ %.sroa.7294.0, %call.3 ], [ %.sroa.7294.0, %33 ], [ %.sroa.7294.0, %call.2 ] ; 3 uses
+  %58 = getelementptr inbounds nuw i8, ptr %.lcssa217261309, i64 16
+  %59 = load i32, ptr %58, align 8
+  %60 = or i32 %59, %.sroa.0290.0                 ; 4 uses
   call void @g_free(ptr noundef nonnull %i.p) #22
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %1, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge203, label %.lr.ph202, !llvm.loop !23
 
-._crit_edge203:                                   ; preds = %bb.q, %._crit_edge
-  %16 = load i32, ptr %4, align 8
-  %i.x = and i32 %16, 12
+._crit_edge203:                                   ; preds = %bb.q
+  %i.x = and i32 %60, 12
   %or.cond157.not = icmp eq i32 %i.x, 12
   br i1 %or.cond157.not, label %bb.s, label %bb.r
 
-bb.r:                                             ; preds = %._crit_edge203
+bb.r:                                             ; preds = %._crit_edge, %._crit_edge203
+  %.sroa.6285.2 = phi ptr [ %.sroa.6285.1306, %._crit_edge203 ], [ null, %._crit_edge ]
+  %.sroa.4282.2 = phi ptr [ %.sroa.4282.1308, %._crit_edge203 ], [ null, %._crit_edge ]
   call void (ptr, ...) @error_report(ptr noundef nonnull @.str.295) #22
   br label %.thread
 
 bb.s:                                             ; preds = %._crit_edge203
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
-  %18 = load ptr, ptr %17, align 8
-  %i.y = call fastcc ptr @img_open(i1 noundef zeroext %.0111.lcssa, ptr noundef %18, ptr noundef %.0106.lcssa, i32 noundef 0, i1 noundef zeroext false, i1 noundef zeroext %.099.lcssa) ; 15 uses
+  %i.y = call fastcc ptr @img_open(i1 noundef zeroext %.0111.lcssa, ptr noundef %.sroa.6285.1306, ptr noundef %.0106.lcssa, i32 noundef 0, i1 noundef zeroext false, i1 noundef zeroext %.099.lcssa) ; 15 uses
   %.not143 = icmp eq ptr %i.y, null
   br i1 %.not143, label %.thread, label %bb.t
 
@@ -934,14 +1079,12 @@ bb.u:                                             ; preds = %bb.t
   br label %.thread
 
 bb.v:                                             ; preds = %bb.t
-  %19 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %20 = load ptr, ptr %19, align 8
-  %i.aa = call ptr @bdrv_find_protocol(ptr noundef %20, i1 noundef zeroext true, ptr noundef nonnull %3) #22 ; 3 uses
+  %i.aa = call ptr @bdrv_find_protocol(ptr noundef %.sroa.4282.1308, i1 noundef zeroext true, ptr noundef nonnull %6) #22 ; 3 uses
   %.not145 = icmp eq ptr %i.aa, null
   br i1 %.not145, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %i.ab = load ptr, ptr %3, align 8
+  %i.ab = load ptr, ptr %6, align 8
   call void @error_report_err(ptr noundef %i.ab) #22
   br label %.thread
 
@@ -977,49 +1120,41 @@ bb.ab:                                            ; preds = %bb.z
   br i1 %i.an, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  %21 = load ptr, ptr %17, align 8
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.297, ptr noundef %21) #22
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.297, ptr noundef %.sroa.6285.1306) #22
   br label %.thread
 
 bb.ad:                                            ; preds = %bb.ab
-  %22 = load i32, ptr %4, align 8                 ; 2 uses
-  %i.ao = and i32 %22, 2
+  %i.ao = and i32 %60, 2
   %.not148 = icmp eq i32 %i.ao, 0
-  %.pre.pre = load i32, ptr %5, align 8           ; 2 uses
+  %.pre393 = sext i32 %.sroa.0284.1307 to i64     ; 11 uses
   br i1 %.not148, label %bb.ag, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %23 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %24 = load i64, ptr %23, align 8                ; 2 uses
-  %25 = sext i32 %.pre.pre to i64                 ; 2 uses
-  %i.ap = sdiv i64 9223372036854775807, %25
-  %.not149 = icmp sgt i64 %24, %i.ap
+  %i.ap = sdiv i64 9223372036854775807, %.pre393
+  %.not149 = icmp sgt i64 %.sroa.7294.1304, %i.ap
   br i1 %.not149, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.aq = mul i64 %24, %25
+  %i.aq = mul i64 %.sroa.7294.1304, %.pre393
   %spec.select = call i64 @llvm.smin.i64(i64 %i.aq, i64 %i.am)
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
-  %.0105 = phi i64 [ %i.am, %bb.ad ], [ %spec.select, %bb.af ], [ %i.am, %bb.ae ] ; 7 uses
-  %i.ar = and i32 %22, 16
-  %.not150 = icmp eq i32 %i.ar, 0
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %.pre226 = load i64, ptr %.phi.trans.insert, align 8 ; 3 uses
-  %.pre = sext i32 %.pre.pre to i64               ; 3 uses
+bb.ag:                                            ; preds = %bb.ad, %bb.af, %bb.ae
+  %.0105 = phi i64 [ %i.am, %bb.ae ], [ %spec.select, %bb.af ], [ %i.am, %bb.ad ] ; 7 uses
+  %i.ar = and i32 %60, 16
+  %.not150 = icmp eq i32 %i.ar, 0                 ; 2 uses
   br i1 %.not150, label %._crit_edge225, label %bb.ah
 
 ._crit_edge225:                                   ; preds = %bb.ag
-  %.pre232 = mul i64 %.pre226, %.pre
+  %.pre232 = mul i64 %.sroa.14.1305, %.pre393
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.as = sdiv i64 9223372036854775807, %.pre
-  %i.at = icmp sgt i64 %.pre226, %i.as
-  %i.au = mul i64 %.pre226, %.pre                 ; 2 uses
+  %i.as = sdiv i64 9223372036854775807, %.pre393
+  %i.at = icmp sgt i64 %.sroa.14.1305, %i.as
+  %i.au = mul i64 %.sroa.14.1305, %.pre393        ; 2 uses
   %i.av = icmp slt i64 %.0105, %i.au
-  %or.cond159 = or i1 %i.at, %i.av
+  %or.cond159 = or i1 %i.av, %i.at
   br i1 %or.cond159, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %._crit_edge225, %bb.ah
@@ -1030,76 +1165,56 @@ bb.ai:                                            ; preds = %._crit_edge225, %bb
 bb.aj:                                            ; preds = %bb.ah, %bb.ai
   %.sink = phi i64 [ %i.aw, %bb.ai ], [ 0, %bb.ah ]
   %i.ax = call zeroext i1 @qemu_opt_set_number(ptr noundef %i.al, ptr noundef nonnull @.str.232, i64 noundef %.sink, ptr noundef nonnull @error_abort) #22 ; 0 uses
-  %26 = load ptr, ptr %19, align 8
-  %i.ay = call i32 @bdrv_create(ptr noundef nonnull %i.z, ptr noundef %26, ptr noundef %i.al, ptr noundef nonnull %3) #22 ; 3 uses
+  %i.ay = call i32 @bdrv_create(ptr noundef nonnull %i.z, ptr noundef %.sroa.4282.1308, ptr noundef %i.al, ptr noundef nonnull %6) #22 ; 3 uses
   %i.az = icmp slt i32 %i.ay, 0
   br i1 %i.az, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %27 = load ptr, ptr %3, align 8
-  %i.ba = load ptr, ptr %19, align 8
-  call void (ptr, ptr, ...) @error_reportf_err(ptr noundef %27, ptr noundef nonnull @.str.298, ptr noundef %i.ba) #22
+  %i.ba = load ptr, ptr %6, align 8
+  call void (ptr, ptr, ...) @error_reportf_err(ptr noundef %i.ba, ptr noundef nonnull @.str.298, ptr noundef %.sroa.4282.1308) #22
   br label %.thread
 
 bb.al:                                            ; preds = %bb.aj
-  %28 = load ptr, ptr %19, align 8
-  %i.bb = call fastcc ptr @img_open_file(ptr noundef %28, ptr noundef null, ptr noundef %.0108.lcssa, i32 noundef 2, i1 noundef zeroext false, i1 noundef zeroext false) ; 7 uses
+  %i.bb = call fastcc ptr @img_open_file(ptr noundef %.sroa.4282.1308, ptr noundef null, ptr noundef %.0108.lcssa, i32 noundef 2, i1 noundef zeroext false, i1 noundef zeroext false) ; 7 uses
   %.not151 = icmp eq ptr %i.bb, null
   br i1 %.not151, label %.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %29 = load i32, ptr %4, align 8
-  %30 = and i32 %29, 16
-  %.not152 = icmp eq i32 %30, 0
-  %.phi.trans.insert228 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %.pre229 = load i64, ptr %.phi.trans.insert228, align 8 ; 3 uses
-  %.pre230 = load i32, ptr %5, align 8
-  %.pre234 = sext i32 %.pre230 to i64             ; 4 uses
-  br i1 %.not152, label %._crit_edge227, label %bb.an
+  br i1 %.not150, label %._crit_edge227, label %bb.an
 
 ._crit_edge227:                                   ; preds = %bb.am
-  %.pre236 = mul i64 %.pre229, %.pre234
+  %.pre236 = mul i64 %.sroa.14.1305, %.pre393
   br label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.bc = sdiv i64 9223372036854775807, %.pre234
-  %i.bd = icmp sgt i64 %.pre229, %i.bc
-  %i.be = mul i64 %.pre229, %.pre234              ; 2 uses
+  %i.bc = sdiv i64 9223372036854775807, %.pre393
+  %i.bd = icmp sgt i64 %.sroa.14.1305, %i.bc
+  %i.be = mul i64 %.sroa.14.1305, %.pre393        ; 2 uses
   %i.bf = icmp slt i64 %.0105, %i.be
-  %or.cond161 = or i1 %i.bd, %i.bf
+  %or.cond161 = or i1 %i.bf, %i.bd
   br i1 %or.cond161, label %.thread258, label %bb.ao
 
 .thread258:                                       ; preds = %bb.an
-  %31 = load ptr, ptr %17, align 8
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.299, ptr noundef %31) #22
-  %.pre231 = load i32, ptr %5, align 8
-  %.pre238 = sext i32 %.pre231 to i64
-  %i.bg = call noalias ptr @g_malloc(i64 noundef %.pre238) #28
-  %32 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store ptr %i.bg, ptr %32, align 8
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.299, ptr noundef %.sroa.6285.1306) #22
+  %i.bg = call noalias ptr @g_malloc(i64 noundef %.pre393) #28
   br label %.thread
 
 bb.ao:                                            ; preds = %bb.an, %._crit_edge227
   %.0101 = phi i64 [ %i.be, %bb.an ], [ %.pre236, %._crit_edge227 ] ; 2 uses
-  %i.bh = call noalias ptr @g_malloc(i64 noundef %.pre234) #28
-  %33 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
-  store ptr %i.bh, ptr %33, align 8
+  %i.bh = call noalias ptr @g_malloc(i64 noundef %.pre393) #28 ; 6 uses
   %i.bi = icmp slt i64 %.0101, %.0105
   br i1 %i.bi, label %.lr.ph207, label %.thread
 
 .lr.ph207:                                        ; preds = %bb.ao, %bb.as
   %.1102205 = phi i64 [ %i.bx, %bb.as ], [ %.0101, %bb.ao ] ; 4 uses
   %.0103204 = phi i64 [ %i.by, %bb.as ], [ 0, %bb.ao ] ; 2 uses
-  %34 = load i32, ptr %5, align 8                 ; 2 uses
-  %35 = sext i32 %34 to i64
-  %i.bj = add i64 %.1102205, %35
+  %i.bj = add i64 %.1102205, %.pre393
   %i.bk = icmp sgt i64 %i.bj, %.0105
   %i.bl = sub i64 %.0105, %.1102205
   %i.bm = trunc i64 %i.bl to i32
-  %i.bn = select i1 %i.bk, i32 %i.bm, i32 %34
+  %i.bn = select i1 %i.bk, i32 %i.bm, i32 %.sroa.0284.1307
   %i.bo = sext i32 %i.bn to i64                   ; 4 uses
-  %36 = load ptr, ptr %33, align 8
-  %i.bp = call i32 @blk_pread(ptr noundef nonnull %i.y, i64 noundef %.1102205, i64 noundef %i.bo, ptr noundef %36, i32 noundef 0) #22 ; 2 uses
+  %i.bp = call i32 @blk_pread(ptr noundef nonnull %i.y, i64 noundef %.1102205, i64 noundef %i.bo, ptr noundef %i.bh, i32 noundef 0) #22 ; 2 uses
   %i.bq = icmp slt i32 %i.bp, 0
   br i1 %i.bq, label %bb.ap, label %bb.aq
 
@@ -1110,8 +1225,7 @@ bb.ap:                                            ; preds = %.lr.ph207
   br label %.thread
 
 bb.aq:                                            ; preds = %.lr.ph207
-  %37 = load ptr, ptr %33, align 8
-  %i.bt = call i32 @blk_pwrite(ptr noundef nonnull %i.bb, i64 noundef %.0103204, i64 noundef %i.bo, ptr noundef %37, i32 noundef 0) #22 ; 3 uses
+  %i.bt = call i32 @blk_pwrite(ptr noundef nonnull %i.bb, i64 noundef %.0103204, i64 noundef %i.bo, ptr noundef %i.bh, i32 noundef 0) #22 ; 3 uses
   %i.bu = icmp slt i32 %i.bt, 0
   br i1 %i.bu, label %bb.ar, label %bb.as
 
@@ -1127,38 +1241,30 @@ bb.as:                                            ; preds = %bb.aq
   %i.bz = icmp slt i64 %i.bx, %.0105
   br i1 %i.bz, label %.lr.ph207, label %.thread
 
-.thread:                                          ; preds = %bb.p, %bb.as, %.thread258, %bb.ao, %bb.ar, %bb.ap, %bb.o, %bb.i, %bb.al, %bb.s, %bb.ak, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.u, %bb.r
-  %.4 = phi i32 [ -1, %bb.al ], [ -1, %bb.ac ], [ -1, %bb.ak ], [ %i.ay, %.thread258 ], [ -1, %bb.ap ], [ -1, %bb.s ], [ -1, %bb.aa ], [ -1, %bb.y ], [ -1, %bb.w ], [ -1, %bb.u ], [ -1, %bb.r ], [ -1, %bb.i ], [ -1, %bb.o ], [ -1, %bb.ar ], [ %i.ay, %bb.ao ], [ %i.bt, %bb.as ], [ -1, %bb.p ]
-  %.2119 = phi ptr [ null, %bb.al ], [ null, %bb.ac ], [ null, %bb.ak ], [ null, %.thread258 ], [ null, %bb.ap ], [ null, %bb.s ], [ null, %bb.aa ], [ null, %bb.y ], [ null, %bb.w ], [ null, %bb.u ], [ null, %bb.r ], [ %i.p, %bb.i ], [ %i.p, %bb.o ], [ null, %bb.ar ], [ null, %bb.ao ], [ null, %bb.as ], [ %i.p, %bb.p ]
-  %.0116 = phi ptr [ %i.y, %bb.al ], [ %i.y, %bb.ac ], [ %i.y, %bb.ak ], [ %i.y, %.thread258 ], [ %i.y, %bb.ap ], [ null, %bb.s ], [ %i.y, %bb.aa ], [ %i.y, %bb.y ], [ %i.y, %bb.w ], [ %i.y, %bb.u ], [ null, %bb.r ], [ null, %bb.i ], [ null, %bb.o ], [ %i.y, %bb.ar ], [ %i.y, %bb.ao ], [ %i.y, %bb.as ], [ null, %bb.p ]
-  %.0115 = phi ptr [ null, %bb.al ], [ null, %bb.ac ], [ null, %bb.ak ], [ %i.bb, %.thread258 ], [ %i.bb, %bb.ap ], [ null, %bb.s ], [ null, %bb.aa ], [ null, %bb.y ], [ null, %bb.w ], [ null, %bb.u ], [ null, %bb.r ], [ null, %bb.i ], [ null, %bb.o ], [ %i.bb, %bb.ar ], [ %i.bb, %bb.ao ], [ %i.bb, %bb.as ], [ null, %bb.p ]
-  %.0114 = phi ptr [ %i.al, %bb.al ], [ %i.al, %bb.ac ], [ %i.al, %bb.ak ], [ %i.al, %.thread258 ], [ %i.al, %bb.ap ], [ null, %bb.s ], [ null, %bb.aa ], [ null, %bb.y ], [ null, %bb.w ], [ null, %bb.u ], [ null, %bb.r ], [ null, %bb.i ], [ null, %bb.o ], [ %i.al, %bb.ar ], [ %i.al, %bb.ao ], [ %i.al, %bb.as ], [ null, %bb.p ]
-  %.0113 = phi ptr [ %i.ak, %bb.al ], [ %i.ak, %bb.ac ], [ %i.ak, %bb.ak ], [ %i.ak, %.thread258 ], [ %i.ak, %bb.ap ], [ null, %bb.s ], [ null, %bb.aa ], [ null, %bb.y ], [ null, %bb.w ], [ null, %bb.u ], [ null, %bb.r ], [ null, %bb.i ], [ null, %bb.o ], [ %i.ak, %bb.ar ], [ %i.ak, %bb.ao ], [ %i.ak, %bb.as ], [ null, %bb.p ]
+.thread:                                          ; preds = %bb.p, %bb.as, %.tail.thread310, %.thread258, %bb.ao, %bb.ar, %bb.ap, %bb.o, %bb.i, %bb.al, %bb.s, %bb.ak, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.u, %bb.r
+  %.sroa.11.0 = phi ptr [ null, %bb.i ], [ null, %bb.s ], [ null, %bb.u ], [ null, %bb.w ], [ null, %bb.y ], [ null, %bb.aa ], [ null, %bb.ac ], [ null, %bb.ak ], [ null, %bb.al ], [ %i.bh, %bb.ap ], [ %i.bh, %bb.ar ], [ null, %.tail.thread310 ], [ %i.bh, %bb.ao ], [ %i.bg, %.thread258 ], [ null, %bb.r ], [ %i.bh, %bb.as ], [ null, %bb.o ], [ null, %bb.p ]
+  %.sroa.6285.3 = phi ptr [ %.sroa.6285.0, %bb.i ], [ %.sroa.6285.1306, %bb.s ], [ %.sroa.6285.1306, %bb.u ], [ %.sroa.6285.1306, %bb.w ], [ %.sroa.6285.1306, %bb.y ], [ %.sroa.6285.1306, %bb.aa ], [ %.sroa.6285.1306, %bb.ac ], [ %.sroa.6285.1306, %bb.ak ], [ %.sroa.6285.1306, %bb.al ], [ %.sroa.6285.1306, %bb.ap ], [ %.sroa.6285.1306, %bb.ar ], [ %.sroa.6285.0, %.tail.thread310 ], [ %.sroa.6285.1306, %bb.ao ], [ %.sroa.6285.1306, %.thread258 ], [ %.sroa.6285.2, %bb.r ], [ %.sroa.6285.1306, %bb.as ], [ %.sroa.6285.0, %bb.o ], [ %.sroa.6285.0, %bb.p ]
+  %.sroa.4282.3 = phi ptr [ %.sroa.4282.0, %bb.i ], [ %.sroa.4282.1308, %bb.s ], [ %.sroa.4282.1308, %bb.u ], [ %.sroa.4282.1308, %bb.w ], [ %.sroa.4282.1308, %bb.y ], [ %.sroa.4282.1308, %bb.aa ], [ %.sroa.4282.1308, %bb.ac ], [ %.sroa.4282.1308, %bb.ak ], [ %.sroa.4282.1308, %bb.al ], [ %.sroa.4282.1308, %bb.ap ], [ %.sroa.4282.1308, %bb.ar ], [ %.sroa.4282.0, %.tail.thread310 ], [ %.sroa.4282.1308, %bb.ao ], [ %.sroa.4282.1308, %.thread258 ], [ %.sroa.4282.2, %bb.r ], [ %.sroa.4282.1308, %bb.as ], [ %.sroa.4282.0, %bb.o ], [ %.sroa.4282.0, %bb.p ]
+  %.4 = phi i32 [ -1, %bb.i ], [ -1, %bb.s ], [ -1, %bb.u ], [ -1, %bb.w ], [ -1, %bb.y ], [ -1, %bb.aa ], [ -1, %bb.ac ], [ -1, %bb.ak ], [ -1, %bb.al ], [ -1, %bb.ap ], [ -1, %bb.ar ], [ -1, %.tail.thread310 ], [ %i.ay, %bb.ao ], [ %i.ay, %.thread258 ], [ -1, %bb.r ], [ %i.bt, %bb.as ], [ -1, %bb.o ], [ -1, %bb.p ]
+  %.2119 = phi ptr [ %i.p, %bb.i ], [ null, %bb.s ], [ null, %bb.u ], [ null, %bb.w ], [ null, %bb.y ], [ null, %bb.aa ], [ null, %bb.ac ], [ null, %bb.ak ], [ null, %bb.al ], [ null, %bb.ap ], [ null, %bb.ar ], [ %i.p, %.tail.thread310 ], [ null, %bb.ao ], [ null, %.thread258 ], [ null, %bb.r ], [ null, %bb.as ], [ %i.p, %bb.o ], [ %i.p, %bb.p ]
+  %.0116 = phi ptr [ null, %bb.i ], [ null, %bb.s ], [ %i.y, %bb.u ], [ %i.y, %bb.w ], [ %i.y, %bb.y ], [ %i.y, %bb.aa ], [ %i.y, %bb.ac ], [ %i.y, %bb.ak ], [ %i.y, %bb.al ], [ %i.y, %bb.ap ], [ %i.y, %bb.ar ], [ null, %.tail.thread310 ], [ %i.y, %bb.ao ], [ %i.y, %.thread258 ], [ null, %bb.r ], [ %i.y, %bb.as ], [ null, %bb.o ], [ null, %bb.p ]
+  %.0115 = phi ptr [ null, %bb.i ], [ null, %bb.s ], [ null, %bb.u ], [ null, %bb.w ], [ null, %bb.y ], [ null, %bb.aa ], [ null, %bb.ac ], [ null, %bb.ak ], [ null, %bb.al ], [ %i.bb, %bb.ap ], [ %i.bb, %bb.ar ], [ null, %.tail.thread310 ], [ %i.bb, %bb.ao ], [ %i.bb, %.thread258 ], [ null, %bb.r ], [ %i.bb, %bb.as ], [ null, %bb.o ], [ null, %bb.p ]
+  %.0114 = phi ptr [ null, %bb.i ], [ null, %bb.s ], [ null, %bb.u ], [ null, %bb.w ], [ null, %bb.y ], [ null, %bb.aa ], [ %i.al, %bb.ac ], [ %i.al, %bb.ak ], [ %i.al, %bb.al ], [ %i.al, %bb.ap ], [ %i.al, %bb.ar ], [ null, %.tail.thread310 ], [ %i.al, %bb.ao ], [ %i.al, %.thread258 ], [ null, %bb.r ], [ %i.al, %bb.as ], [ null, %bb.o ], [ null, %bb.p ]
+  %.0113 = phi ptr [ null, %bb.i ], [ null, %bb.s ], [ null, %bb.u ], [ null, %bb.w ], [ null, %bb.y ], [ null, %bb.aa ], [ %i.ak, %bb.ac ], [ %i.ak, %bb.ak ], [ %i.ak, %bb.al ], [ %i.ak, %bb.ap ], [ %i.ak, %bb.ar ], [ null, %.tail.thread310 ], [ %i.ak, %bb.ao ], [ %i.ak, %.thread258 ], [ null, %bb.r ], [ %i.ak, %bb.as ], [ null, %bb.o ], [ null, %bb.p ]
   call void @g_free(ptr noundef %.2119) #22
   call void @qemu_opts_del(ptr noundef %.0114) #22
   call void @qemu_opts_free(ptr noundef %.0113) #22
   call void @blk_unref(ptr noundef %.0116) #22
   call void @blk_unref(ptr noundef %.0115) #22
-  %38 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %39 = load ptr, ptr %38, align 8
-  call void @g_free(ptr noundef %39) #22
-  %40 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %41 = load ptr, ptr %40, align 8
-  call void @g_free(ptr noundef %41) #22
-  %42 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %43 = load ptr, ptr %42, align 8
-  call void @g_free(ptr noundef %43) #22
-  %44 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %45 = load ptr, ptr %44, align 8
-  call void @g_free(ptr noundef %45) #22
+  call void @g_free(ptr noundef %.sroa.6285.3) #22
+  call void @g_free(ptr noundef %.sroa.4282.3) #22
+  call void @g_free(ptr noundef %.sroa.11.0) #22
+  call void @g_free(ptr noundef null) #22
   %.4.fr = freeze i32 %.4
   %.not156 = icmp ne i32 %.4.fr, 0
   %spec.select173 = zext i1 %.not156 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   ret i32 %spec.select173
 }
 

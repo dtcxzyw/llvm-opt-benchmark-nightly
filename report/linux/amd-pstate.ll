@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/amd-pstate?download=true
-inline.NumInlined: 137
+inline.NumInlined: 141
 inline.NumDeleted: 57
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumUnrolled: 4
@@ -204,12 +204,14 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 
 bb.f:                                             ; preds = %bb.d, %.sink.split.i
   store i32 %0, ptr @cppc_state, align 4
-  %i.e = load i8, ptr @amd_pstate_prefcore, align 1, !range !12, !noundef !13
-  %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
-  %spec.select.4.i = select i1 %i.f, i64 5, i64 3
+  %i.e = load i8, ptr @amd_pstate_prefcore, align 1, !range !12, !noundef !13 ; 2 uses
+  %i.f = trunc nuw i8 %i.e to i1
+  %1 = shl nuw nsw i8 %i.e, 1
+  %narrow.i = add nuw nsw i8 %1, 3
+  %spec.select.4.i = zext nneg i8 %narrow.i to i64
   %i.g = icmp eq i32 %0, 3                        ; 2 uses
   %reass.add39.i = select i1 %i.g, i64 2, i64 0
-  %spec.select.6.i = add nuw nsw i64 %spec.select.4.i, %reass.add39.i
+  %spec.select.6.i = add nuw nsw i64 %reass.add39.i, %spec.select.4.i
   callbr void asm sideeffect "# ALT: oldinstr\0A771:\0A\09# ALT: oldinstr\0A771:\0A\09jmp 6f\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 3*32+21)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09jmp ${4:l}\0A775:\0A.popsection\0A\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ${0:c}\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09\0A775:\0A.popsection\0A.pushsection .altinstr_aux,\22ax\22\0A6:\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A testb $1, ${2:a}\0A jnz ${3:l}\0A jmp ${4:l}\0A.popsection\0A", "i,i,i,!i,!i,~{dirflag},~{fpsr},~{flags}"(i16 546, i32 4, ptr nonnull getelementptr inbounds nuw (i8, ptr @boot_cpu_data, i64 116)) #17
           to label %floor_freq_visibility.exit.i [label %floor_freq_visibility.exit.i, label %bb.g], !srcloc !20
 

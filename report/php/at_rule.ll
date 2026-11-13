@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/at_rule?download=true
-inline.NumInlined: 20
+inline.NumInlined: 30
 inline.NumDeleted: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -64,15 +64,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !47
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !53
   %i.e = tail call ptr @lexbor_mraw_calloc(ptr noundef %i.d, i64 noundef 88) #4 ; 8 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %lxb_css_rule_at_create.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store i32 3, ptr %i.e, align 8, !tbaa !48
+  store i32 3, ptr %i.e, align 8, !tbaa !54
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  store ptr %i.b, ptr %i.g, align 8, !tbaa !49
+  store ptr %i.b, ptr %i.g, align 8, !tbaa !55
   %i.h = tail call ptr @lexbor_shs_entry_get_lower_static(ptr noundef nonnull @lxb_css_at_rule_shs, ptr noundef %1, i64 noundef %2) #4 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %lxb_css_at_rule_by_name.exit.thread, label %lxb_css_at_rule_by_name.exit
@@ -111,7 +111,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %lxb_css_at_rule_by_name.exit
   %i.aa = getelementptr inbounds nuw i8, ptr %i.k, i64 32
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !50
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !56
   %i.ac = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.ad = tail call ptr %i.ab(ptr noundef %i.ac) #4 ; 2 uses
   %i.ae = icmp eq ptr %i.ad, null
@@ -121,7 +121,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.039 = phi ptr [ %i.p, %bb.d ], [ %i.ad, %bb.e ]
   %.0 = phi ptr [ getelementptr inbounds nuw (i8, ptr @lxb_css_at_rule_data, i64 64), %bb.d ], [ %i.k, %bb.e ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %i.ag = load i64, ptr %i.af, align 8, !tbaa !51
+  %i.ag = load i64, ptr %i.af, align 8, !tbaa !57
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   store i64 %i.ag, ptr %i.ah, align 8, !tbaa !40
   %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 56
@@ -144,7 +144,7 @@ lxb_css_at_rule__custom_destroy.exit:             ; preds = %bb.c
 lxb_css_rule_at_create.exit.thread.sink.split:    ; preds = %.thread, %bb.f
   %.sink = phi ptr [ %.0, %bb.f ], [ null, %.thread ]
   %.041.ph = phi ptr [ %i.e, %bb.f ], [ null, %.thread ]
-  store ptr %.sink, ptr %3, align 8, !tbaa !52
+  store ptr %.sink, ptr %3, align 8, !tbaa !58
   br label %lxb_css_rule_at_create.exit.thread
 
 lxb_css_rule_at_create.exit.thread:               ; preds = %lxb_css_rule_at_create.exit.thread.sink.split, %bb.a, %.thread, %bb.f
@@ -160,19 +160,26 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare ptr @lxb_css_rule_at_destroy(ptr noundef, i1 noundef zeroext) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @lxb_css_at_rule_destroy(ptr noundef %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 {
-bb.a:
-  %4 = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %2
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 40
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !41
-  %5 = tail call ptr %i.b(ptr noundef %0, ptr noundef %1, i1 noundef zeroext %3) #4
-  ret ptr %5
+define dso_local ptr @lxb_css_at_rule_destroy(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 {
+  %5 = icmp ne ptr %1, null
+  %brmerge.not.i = and i1 %5, %3
+  br i1 %brmerge.not.i, label %bb.a, label %.tail
+
+bb.a:                                             ; preds = %4
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !32
+  %6 = tail call ptr @lexbor_mraw_free(ptr noundef %i.b, ptr noundef nonnull %1) #4
+  br label %.tail
+
+.tail:                                            ; preds = %4, %bb.a
+  %7 = phi ptr [ %6, %bb.a ], [ %1, %4 ]
+  ret ptr %7
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i32 @lxb_css_at_rule_convert_to_undef(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define dso_local i32 @lxb_css_at_rule_convert_to_undef(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !32
@@ -182,21 +189,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !40   ; 2 uses
-  store i64 %i.h, ptr %i.e, align 8, !tbaa !43
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !28
-  %3 = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %i.h
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %5 = load ptr, ptr %4, align 8, !tbaa !41
-  %6 = tail call ptr %5(ptr noundef %2, ptr noundef %1, i1 noundef zeroext false) #4, !inline_history !53 ; 0 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !40
+  store i64 %i.h, ptr %i.e, align 8, !tbaa !42
   store i64 0, ptr %i.g, align 8, !tbaa !40
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   store ptr %i.e, ptr %i.i, align 8, !tbaa !37
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !54
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !59
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !55
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !60
   %i.o = tail call i32 @lxb_css_make_data(ptr noundef nonnull %0, ptr noundef nonnull %i.j, i64 noundef %i.l, i64 noundef %i.n) #4
   br label %bb.c
 
@@ -217,13 +219,132 @@ bb.a:
 declare i32 @lxb_css_make_data(ptr noundef, ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define dso_local i32 @lxb_css_at_rule_serialize(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
-bb.a:
-  %4 = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %1
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %5 = load ptr, ptr %i.a, align 16, !tbaa !44
-  %i.b = tail call i32 %5(ptr noundef %0, ptr noundef %2, ptr noundef %3) #4
-  ret i32 %i.b
+define dso_local i32 @lxb_css_at_rule_serialize(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
+  switch i64 %1, label %default.switch.case.unreachable [
+    i64 0, label %call.0
+    i64 1, label %call.1
+    i64 2, label %call.2
+    i64 3, label %.tail
+    i64 4, label %.tail
+  ], !prof !61
+
+default.switch.case.unreachable:                  ; preds = %4
+  unreachable
+
+call.0:                                           ; preds = %4
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %6 = load ptr, ptr %5, align 8, !tbaa !43
+  %.not.i = icmp eq ptr %6, null
+  br i1 %.not.i, label %14, label %7
+
+7:                                                ; preds = %call.0
+  %8 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__undef_serialize.wc_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !62 ; 2 uses
+  %.not38.i = icmp eq i32 %8, 0
+  br i1 %.not38.i, label %9, label %.tail
+
+9:                                                ; preds = %7
+  %10 = load ptr, ptr %5, align 8, !tbaa !43
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %12 = load i64, ptr %11, align 8, !tbaa !44
+  %13 = tail call i32 %2(ptr noundef %10, i64 noundef %12, ptr noundef %3) #4, !inline_history !62 ; 2 uses
+  %.not39.i = icmp eq i32 %13, 0
+  br i1 %.not39.i, label %14, label %.tail
+
+14:                                               ; preds = %9, %call.0
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %16 = load ptr, ptr %15, align 8, !tbaa !45
+  %.not40.i = icmp eq ptr %16, null
+  br i1 %.not40.i, label %24, label %17
+
+17:                                               ; preds = %14
+  %18 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__undef_serialize.lb_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !62 ; 2 uses
+  %.not42.i = icmp eq i32 %18, 0
+  br i1 %.not42.i, label %19, label %.tail
+
+19:                                               ; preds = %17
+  %20 = load ptr, ptr %15, align 8, !tbaa !45
+  %21 = tail call i32 @lxb_css_rule_list_serialize(ptr noundef %20, ptr noundef %2, ptr noundef %3) #4, !inline_history !62 ; 2 uses
+  %.not43.i = icmp eq i32 %21, 0
+  br i1 %.not43.i, label %22, label %.tail
+
+22:                                               ; preds = %19
+  %23 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__undef_serialize.rb_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !62 ; 2 uses
+  %.not44.i = icmp eq i32 %23, 0
+  br i1 %.not44.i, label %50, label %.tail
+
+24:                                               ; preds = %14
+  %25 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__undef_serialize.sm_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !62 ; 2 uses
+  %.not41.i = icmp eq i32 %25, 0
+  br i1 %.not41.i, label %50, label %.tail
+
+call.1:                                           ; preds = %4
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %27 = load ptr, ptr %26, align 8, !tbaa !46
+  %.not.i7 = icmp eq ptr %27, null
+  br i1 %.not.i7, label %32, label %28
+
+28:                                               ; preds = %call.1
+  %29 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__custom_serialize.ws_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !63 ; 2 uses
+  %.not31.i = icmp eq i32 %29, 0
+  br i1 %.not31.i, label %bb.a, label %.tail
+
+bb.a:                                             ; preds = %28
+  %30 = load ptr, ptr %26, align 8, !tbaa !46
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %31 = load i64, ptr %i.a, align 8, !tbaa !47
+  %i.b = tail call i32 %2(ptr noundef %30, i64 noundef %31, ptr noundef %3) #4, !inline_history !63 ; 2 uses
+  %.not32.i = icmp eq i32 %i.b, 0
+  br i1 %.not32.i, label %32, label %.tail
+
+32:                                               ; preds = %bb.a, %call.1
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %34 = load ptr, ptr %33, align 8, !tbaa !48
+  %.not33.i = icmp eq ptr %34, null
+  br i1 %.not33.i, label %50, label %35
+
+35:                                               ; preds = %32
+  %36 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__custom_serialize.lb_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !63 ; 2 uses
+  %.not34.i = icmp eq i32 %36, 0
+  br i1 %.not34.i, label %37, label %.tail
+
+37:                                               ; preds = %35
+  %38 = load ptr, ptr %33, align 8, !tbaa !48
+  %39 = tail call i32 @lxb_css_rule_list_serialize(ptr noundef %38, ptr noundef %2, ptr noundef %3) #4 ; 2 uses
+  %.not35.i = icmp eq i32 %39, 0
+  br i1 %.not35.i, label %40, label %.tail
+
+40:                                               ; preds = %37
+  %41 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule__custom_serialize.rb_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !63 ; 2 uses
+  %.not36.i = icmp eq i32 %41, 0
+  br i1 %.not36.i, label %50, label %.tail
+
+call.2:                                           ; preds = %4
+  %42 = load ptr, ptr %0, align 8, !tbaa !50
+  %.not.i9 = icmp eq ptr %42, null
+  br i1 %.not.i9, label %50, label %43
+
+43:                                               ; preds = %call.2
+  %44 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule_font_face_serialize.lb_str, i64 noundef 2, ptr noundef %3) #4, !inline_history !64 ; 2 uses
+  %.not18.i = icmp eq i32 %44, 0
+  br i1 %.not18.i, label %45, label %.tail
+
+45:                                               ; preds = %43
+  %46 = load ptr, ptr %0, align 8, !tbaa !50
+  %47 = tail call i32 @lxb_css_rule_list_serialize(ptr noundef %46, ptr noundef %2, ptr noundef %3) #4 ; 2 uses
+  %.not19.i = icmp eq i32 %47, 0
+  br i1 %.not19.i, label %48, label %.tail
+
+48:                                               ; preds = %45
+  %49 = tail call i32 %2(ptr noundef nonnull @lxb_css_at_rule_font_face_serialize.rb_str, i64 noundef 1, ptr noundef %3) #4, !inline_history !64 ; 2 uses
+  %.not20.i = icmp eq i32 %49, 0
+  br i1 %.not20.i, label %50, label %.tail
+
+50:                                               ; preds = %22, %24, %32, %40, %48, %call.2
+  br label %.tail
+
+.tail:                                            ; preds = %4, %4, %50, %48, %45, %43, %40, %37, %35, %bb.a, %28, %24, %22, %19, %17, %9, %7
+  %51 = phi i32 [ 0, %4 ], [ 0, %4 ], [ %41, %40 ], [ %49, %48 ], [ %23, %22 ], [ %25, %24 ], [ %8, %7 ], [ %13, %9 ], [ %18, %17 ], [ %21, %19 ], [ %47, %45 ], [ %29, %28 ], [ %i.b, %bb.a ], [ %36, %35 ], [ %39, %37 ], [ 0, %50 ], [ %44, %43 ]
+  ret i32 %51
 }
 
 ; Function Attrs: nounwind uwtable
@@ -231,7 +352,7 @@ define dso_local i32 @lxb_css_at_rule_serialize_str(ptr noundef %0, i64 noundef 
 bb.a:
   %i.a = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %1
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.c = load ptr, ptr %i.b, align 16, !tbaa !44
+  %i.c = load ptr, ptr %i.b, align 16, !tbaa !65
   %i.d = tail call i32 @lxb_css_serialize_str_handler(ptr noundef %0, ptr noundef %3, ptr noundef %2, ptr noundef %i.c) #4
   ret i32 %i.d
 }
@@ -247,7 +368,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load i64, ptr %0, align 8, !tbaa !43
+  %i.a = load i64, ptr %0, align 8, !tbaa !42
   %i.b = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %i.a
   br label %bb.d
 
@@ -257,9 +378,9 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
   %.sink18 = phi ptr [ %i.c, %bb.c ], [ %i.b, %bb.b ], [ %0, %bb.a ] ; 2 uses
-  %.sink = load ptr, ptr %.sink18, align 8, !tbaa !56
+  %.sink = load ptr, ptr %.sink18, align 8, !tbaa !66
   %i.d = getelementptr inbounds nuw i8, ptr %.sink18, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !57
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !67
   %i.f = tail call i32 %2(ptr noundef %.sink, i64 noundef %i.e, ptr noundef %3) #4
   ret i32 %i.f
 }
@@ -267,11 +388,11 @@ bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @lxb_css_at_rule__undef_serialize_name(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) #0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !43
+  %i.a = load i64, ptr %0, align 8, !tbaa !42
   %i.b = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %i.a ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 16, !tbaa !45
+  %i.c = load ptr, ptr %i.b, align 16, !tbaa !51
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !46
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !52
   %i.f = tail call i32 %1(ptr noundef %i.c, i64 noundef %i.e, ptr noundef %2) #4
   ret i32 %i.f
 }
@@ -304,20 +425,20 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw [64 x i8], ptr @lxb_css_at_rule_data, i64 %1 ; 2 uses
-  %i.d = load ptr, ptr %3, align 8, !tbaa !58
+  %i.d = load ptr, ptr %3, align 8, !tbaa !68
   %i.e = icmp eq ptr %i.d, null
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !46   ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !52   ; 2 uses
   br i1 %i.e, label %bb.e, label %._crit_edge
 
 bb.e:                                             ; preds = %bb.d
   %i.h = tail call ptr @lexbor_str_init(ptr noundef nonnull %3, ptr noundef %2, i64 noundef %i.g) #4 ; 0 uses
-  %i.i = load ptr, ptr %3, align 8, !tbaa !58
+  %i.i = load ptr, ptr %3, align 8, !tbaa !68
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.f, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.e
-  %i.k = load ptr, ptr %i.c, align 16, !tbaa !45
+  %i.k = load ptr, ptr %i.c, align 16, !tbaa !51
   %i.l = tail call ptr @lexbor_str_append(ptr noundef nonnull %3, ptr noundef %2, ptr noundef %i.k, i64 noundef %i.g) #4 ; 0 uses
   br label %bb.f
 
@@ -354,7 +475,7 @@ declare ptr @lexbor_mraw_free(ptr noundef, ptr noundef) local_unnamed_addr #1
 define dso_local i32 @lxb_css_at_rule__undef_serialize(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !59
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !43
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -364,16 +485,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not38, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !59
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !60
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !44
   %i.g = tail call i32 %1(ptr noundef %i.d, i64 noundef %i.f, ptr noundef %2) #4 ; 2 uses
   %.not39 = icmp eq i32 %i.g, 0
   br i1 %.not39, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !61
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !45
   %.not40 = icmp eq ptr %i.i, null
   br i1 %.not40, label %bb.h, label %bb.e
 
@@ -383,7 +504,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not42, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = load ptr, ptr %i.h, align 8, !tbaa !61
+  %i.k = load ptr, ptr %i.h, align 8, !tbaa !45
   %i.l = tail call i32 @lxb_css_rule_list_serialize(ptr noundef %i.k, ptr noundef %1, ptr noundef %2) #4 ; 2 uses
   %.not43 = icmp eq i32 %i.l, 0
   br i1 %.not43, label %bb.g, label %bb.j
@@ -439,7 +560,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define dso_local i32 @lxb_css_at_rule__custom_serialize(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !62
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !46
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -449,16 +570,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not31, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !62
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !63
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !47
   %i.g = tail call i32 %1(ptr noundef %i.d, i64 noundef %i.f, ptr noundef %2) #4 ; 2 uses
   %.not32 = icmp eq i32 %i.g, 0
   br i1 %.not32, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !64
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !48
   %.not33 = icmp eq ptr %i.i, null
   br i1 %.not33, label %bb.h, label %bb.e
 
@@ -468,7 +589,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not34, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = load ptr, ptr %i.h, align 8, !tbaa !64
+  %i.k = load ptr, ptr %i.h, align 8, !tbaa !48
   %i.l = tail call i32 @lxb_css_rule_list_serialize(ptr noundef %i.k, ptr noundef %1, ptr noundef %2) #4 ; 2 uses
   %.not35 = icmp eq i32 %i.l, 0
   br i1 %.not35, label %bb.g, label %bb.i
@@ -582,7 +703,7 @@ lxb_css_at_rule__undef_destroy.exit:              ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @lxb_css_at_rule_font_face_serialize(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !66
+  %i.a = load ptr, ptr %0, align 8, !tbaa !50
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -592,7 +713,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not18, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = load ptr, ptr %0, align 8, !tbaa !66
+  %i.c = load ptr, ptr %0, align 8, !tbaa !50
   %i.d = tail call i32 @lxb_css_rule_list_serialize(ptr noundef %i.c, ptr noundef %1, ptr noundef %2) #4 ; 2 uses
   %.not19 = icmp eq i32 %i.d, 0
   br i1 %.not19, label %bb.d, label %bb.f
@@ -711,30 +832,32 @@ attributes #4 = { nounwind }
 !38 = !{!"", !13, i64 0, !14, i64 8, !14, i64 16, !12, i64 24, !12, i64 32, !12, i64 40, !12, i64 48, !12, i64 56}
 !39 = !{!"lxb_css_rule_at", !31, i64 0, !14, i64 48, !8, i64 56, !14, i64 64, !14, i64 72, !14, i64 80}
 !40 = !{!39, !14, i64 48}
-!41 = !{!38, !12, i64 40}
-!42 = !{!"", !14, i64 0, !25, i64 8, !33, i64 24}
-!43 = !{!42, !14, i64 0}
-!44 = !{!38, !12, i64 48}
-!45 = !{!38, !13, i64 0}
-!46 = !{!38, !14, i64 8}
-!47 = !{!29, !12, i64 16}
-!48 = !{!31, !9, i64 0}
-!49 = !{!31, !19, i64 32}
-!50 = !{!38, !12, i64 32}
-!51 = !{!38, !14, i64 16}
-!52 = !{!12, !12, i64 0}
-!53 = !{ptr @lxb_css_at_rule_destroy}
-!54 = !{!39, !14, i64 72}
-!55 = !{!39, !14, i64 80}
-!56 = !{!13, !13, i64 0}
-!57 = !{!14, !14, i64 0}
-!58 = !{!25, !13, i64 0}
-!59 = !{!42, !13, i64 8}
-!60 = !{!42, !14, i64 16}
-!61 = !{!42, !33, i64 24}
-!62 = !{!34, !13, i64 16}
-!63 = !{!34, !14, i64 24}
-!64 = !{!34, !33, i64 32}
-!65 = !{!"", !33, i64 0}
-!66 = !{!65, !33, i64 0}
+!41 = !{!"", !14, i64 0, !25, i64 8, !33, i64 24}
+!42 = !{!41, !14, i64 0}
+!43 = !{!41, !13, i64 8}
+!44 = !{!41, !14, i64 16}
+!45 = !{!41, !33, i64 24}
+!46 = !{!34, !13, i64 16}
+!47 = !{!34, !14, i64 24}
+!48 = !{!34, !33, i64 32}
+!49 = !{!"", !33, i64 0}
+!50 = !{!49, !33, i64 0}
+!51 = !{!38, !13, i64 0}
+!52 = !{!38, !14, i64 8}
+!53 = !{!29, !12, i64 16}
+!54 = !{!31, !9, i64 0}
+!55 = !{!31, !19, i64 32}
+!56 = !{!38, !12, i64 32}
+!57 = !{!38, !14, i64 16}
+!58 = !{!12, !12, i64 0}
+!59 = !{!39, !14, i64 72}
+!60 = !{!39, !14, i64 80}
+!61 = !{!"unknown", !"jump-table-to-switch"}
+!62 = !{ptr @lxb_css_at_rule__undef_serialize}
+!63 = !{ptr @lxb_css_at_rule__custom_serialize}
+!64 = !{ptr @lxb_css_at_rule_font_face_serialize}
+!65 = !{!38, !12, i64 48}
+!66 = !{!13, !13, i64 0}
+!67 = !{!14, !14, i64 0}
+!68 = !{!25, !13, i64 0}
 end_hunk_0

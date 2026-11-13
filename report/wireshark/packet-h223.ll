@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-h223?download=true
-inline.NumInlined: 27
+inline.NumInlined: 30
 inline.NumDeleted: 22
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,6 @@ begin_hunk_0
 @pdu_offset = internal unnamed_addr global i32 0, align 4
 @circuit_chain_count = internal unnamed_addr global i32 1, align 4
 @.str.116 = private unnamed_addr constant [5 x i8] c"conv\00", align 1
-@attempt_mux_header_parse = internal unnamed_addr constant [4 x ptr] [ptr @attempt_mux_level0_header_parse, ptr @attempt_mux_level1_header_parse, ptr @attempt_mux_level2_3_header_parse, ptr @attempt_mux_level2_3_header_parse], align 16
 @dissect_mux_pdu_fragment.catch_spec = internal constant [1 x %struct.except_id_t] [%struct.except_id_t { i64 1, i64 0 }], align 16
 @.str.117 = private unnamed_addr constant [55 x i8] c"%s:%u: failed assertion \22DISSECTOR_ASSERT_NOT_REACHED\22\00", align 1
 @.str.118 = private unnamed_addr constant [11 x i8] c"len >= mpl\00", align 1
@@ -283,7 +282,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 1343, ptr noundef @.str.105) #14
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 1343, ptr noundef @.str.105) #13
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -389,7 +388,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 281, ptr noundef @.str.115) #14
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 281, ptr noundef @.str.115) #13
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -402,7 +401,7 @@ bb.e:                                             ; preds = %bb.c
   %i.l = zext i1 %.not10 to i64
   %i.m = getelementptr [128 x i8], ptr %i.i, i64 %i.l
   %i.n = tail call ptr @wmem_file_scope()
-  %i.o = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.n, i64 noundef 24) #15 ; 7 uses
+  %i.o = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.n, i64 noundef 24) #14 ; 7 uses
   %i.p = zext nneg i8 %1 to i64
   %i.q = getelementptr [8 x i8], ptr %i.m, i64 %i.p ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
@@ -554,7 +553,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 1393, ptr noundef @.str.105) #14
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 1393, ptr noundef @.str.105) #13
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -633,7 +632,7 @@ find_or_create_call_info_circ.exit.thread.i:      ; preds = %find_or_create_call
   br i1 %.not.i6.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %find_or_create_call_info_circ.exit.thread.i
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 485, ptr noundef @.str.116) #14
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 485, ptr noundef @.str.116) #13
   unreachable
 
 bb.h:                                             ; preds = %find_or_create_call_info_circ.exit.thread.i
@@ -694,7 +693,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %.thread.i.i
   %i.ax = sext i32 %i.at to i64
-  %i.ay = tail call ptr @wmem_memdup(ptr noundef %i.ao, ptr noundef %i.av, i64 noundef %i.ax) #16 ; 2 uses
+  %i.ay = tail call ptr @wmem_memdup(ptr noundef %i.ao, ptr noundef %i.av, i64 noundef %i.ax) #15 ; 2 uses
   %i.az = getelementptr i8, ptr %i.am, i64 24
   store ptr %i.ay, ptr %i.az, align 8
   %i.ba = getelementptr i8, ptr %i.am, i64 16
@@ -836,61 +835,133 @@ declare i32 @tvb_reported_length(ptr noundef) local_unnamed_addr #2
 define internal fastcc i32 @dissect_mux_pdu_fragment(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef %5, i32 noundef %6) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %7 = alloca i32, align 4                        ; 15 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.b = alloca i32, align 4                      ; 16 uses
   %i.c = alloca ptr, align 8                      ; 13 uses
   %i.d = alloca i32, align 4                      ; 13 uses
-  %8 = alloca %struct.except_stacknode, align 8   ; 3 uses
-  %9 = alloca %struct.except_catch, align 8       ; 6 uses
+  %7 = alloca %struct.except_stacknode, align 8   ; 3 uses
+  %8 = alloca %struct.except_catch, align 8       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  store volatile i32 %1, ptr %7, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
-  store i32 0, ptr %i.b, align 4
-  %.0..0..0..0.29105 = load volatile i32, ptr %7, align 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  store volatile i32 %1, ptr %i.b, align 4
+  %.0..0..0..0.29105 = load volatile i32, ptr %i.b, align 4
   %i.e = call i32 @tvb_reported_length(ptr noundef %0)
   %i.f = icmp ult i32 %.0..0..0..0.29105, %i.e
-  br i1 %i.f, label %.lr.ph, label %.critedge
+  br i1 %i.f, label %.lr.ph, label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %bb.a
+  %.0..0..0..0..0..0.35182 = load volatile i32, ptr %i.b, align 4 ; 0 uses
+  br label %bb.bb
 
 .lr.ph:                                           ; preds = %bb.a, %h223_mux_check_hdlc.exit.thread
   %.06789108 = phi i1 [ %.16881, %h223_mux_check_hdlc.exit.thread ], [ false, %bb.a ]
-  %.06690107 = phi i32 [ %.1, %h223_mux_check_hdlc.exit.thread ], [ 0, %bb.a ] ; 2 uses
-  %.06591106 = phi i32 [ %i.o, %h223_mux_check_hdlc.exit.thread ], [ 0, %bb.a ]
-  %.0..0..0..0.30 = load volatile i32, ptr %7, align 4 ; 2 uses
+  %.06694144 = phi i32 [ %.1, %h223_mux_check_hdlc.exit.thread ], [ 0, %bb.a ] ; 2 uses
+  %.06690107 = phi i32 [ %i.o, %h223_mux_check_hdlc.exit.thread ], [ 0, %bb.a ]
+  %.06591106 = phi i32 [ %52, %h223_mux_check_hdlc.exit.thread ], [ 0, %bb.a ] ; 5 uses
+  %.0..0..0..0.30 = load volatile i32, ptr %i.b, align 4 ; 2 uses
   %i.g = add i32 %.0..0..0..0.30, 1
-  store volatile i32 %i.g, ptr %7, align 4
+  store volatile i32 %i.g, ptr %i.b, align 4
   %i.h = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.0..0..0..0.30)
-  %.0..0..0..0.31 = load volatile i32, ptr %7, align 4
+  %.0..0..0..0.31 = load volatile i32, ptr %i.b, align 4
   %i.i = sub i32 %.0..0..0..0.31, %1
   %i.j = icmp ult i32 %i.i, 5
-  %i.k = shl i32 %.06690107, 8
+  %i.k = shl i32 %.06694144, 8
   %i.l = zext i8 %i.h to i32                      ; 2 uses
   %i.m = or disjoint i32 %i.k, %i.l
-  %.1 = select i1 %i.j, i32 %i.m, i32 %.06690107  ; 2 uses
-  %i.n = shl i32 %.06591106, 8
+  %.1 = select i1 %i.j, i32 %i.m, i32 %.06694144  ; 8 uses
+  %i.n = shl i32 %.06690107, 8
   %i.o = or disjoint i32 %i.n, %i.l               ; 3 uses
-  br i1 %.06789108, label %.thread, label %bb.b
+  br i1 %.06789108, label %.thread, label %9
 
-bb.b:                                             ; preds = %.lr.ph
+9:                                                ; preds = %.lr.ph
   %10 = load i32, ptr %4, align 8
   %11 = sext i32 %10 to i64
-  %12 = getelementptr [8 x i8], ptr @attempt_mux_header_parse, i64 %11
-  %13 = load ptr, ptr %12, align 8
-  %.0..0..0..0.32 = load volatile i32, ptr %7, align 4
-  %14 = sub i32 %.0..0..0..0.32, %1
-  %15 = call zeroext i1 %13(i32 noundef %14, i32 noundef %.1, ptr noundef nonnull %i.b)
-  br i1 %15, label %.thread, label %h223_mux_check_hdlc.exit.thread
+  %.0..0..0..0..0..0.32 = load volatile i32, ptr %i.b, align 4
+  %12 = sub i32 %.0..0..0..0..0..0.32, %1         ; 3 uses
+  %13 = and i64 %11, 2305843009213693951
+  switch i64 %13, label %default.switch.case.unreachable [
+    i64 0, label %call.0
+    i64 1, label %.tail
+    i64 2, label %call.2
+    i64 3, label %call.3
+  ], !prof !12
 
-.thread:                                          ; preds = %.lr.ph, %bb.b
-  %.0..0..0..0.33 = load volatile i32, ptr %7, align 4
-  %16 = sub i32 %.0..0..0..0.33, %1
-  %17 = load i32, ptr %i.b, align 4
-  %.not77 = icmp ult i32 %16, %17
+default.switch.case.unreachable:                  ; preds = %9
+  unreachable
+
+call.0:                                           ; preds = %9
+  %14 = call fastcc zeroext i1 @attempt_mux_level0_header_parse(i32 poison, i32 poison, ptr nonnull poison) ; 0 uses
+  unreachable
+
+call.2:                                           ; preds = %9
+  %15 = icmp ugt i32 %12, 2
+  br i1 %15, label %16, label %h223_mux_check_hdlc.exit.thread
+
+16:                                               ; preds = %call.2
+  %17 = lshr i32 %.1, 16
+  %18 = and i32 %17, 255
+  %19 = and i32 %.1, 65280
+  %20 = or disjoint i32 %18, %19                  ; 2 uses
+  %21 = shl i32 %.1, 16
+  %22 = and i32 %21, 16711680
+  %23 = or disjoint i32 %20, %22
+  %24 = call i32 @golay_errors(i32 noundef %23)   ; 2 uses
+  %.not.i118 = icmp eq i32 %24, -1
+  br i1 %.not.i118, label %.thread, label %25
+
+25:                                               ; preds = %16
+  %26 = xor i32 %24, %20
+  %27 = lshr i32 %26, 4
+  %28 = and i32 %27, 255
+  %29 = add nuw nsw i32 %28, 5
+  br label %.thread
+
+call.3:                                           ; preds = %9
+  %30 = icmp ugt i32 %12, 2
+  br i1 %30, label %bb.b, label %h223_mux_check_hdlc.exit.thread
+
+bb.b:                                             ; preds = %call.3
+  %31 = lshr i32 %.1, 16
+  %32 = and i32 %31, 255
+  %33 = and i32 %.1, 65280
+  %34 = or disjoint i32 %32, %33                  ; 2 uses
+  %35 = shl i32 %.1, 16
+  %36 = and i32 %35, 16711680
+  %37 = or disjoint i32 %34, %36
+  %38 = call i32 @golay_errors(i32 noundef %37)   ; 2 uses
+  %.not.i119 = icmp eq i32 %38, -1
+  br i1 %.not.i119, label %.thread, label %39
+
+39:                                               ; preds = %bb.b
+  %40 = xor i32 %38, %34
+  %41 = lshr i32 %40, 4
+  %42 = and i32 %41, 255
+  %43 = add nuw nsw i32 %42, 5
+  br label %.thread
+
+.tail:                                            ; preds = %9
+  %44 = icmp ult i32 %12, 2
+  br i1 %44, label %h223_mux_check_hdlc.exit.thread, label %45
+
+45:                                               ; preds = %.tail
+  %46 = and i32 %.1, 65535                        ; 2 uses
+  %47 = icmp eq i32 %46, 57677
+  br i1 %47, label %h223_mux_check_hdlc.exit.thread, label %attempt_mux_level1_header_parse.exit
+
+attempt_mux_level1_header_parse.exit:             ; preds = %45
+  %48 = lshr i32 %46, 12
+  %49 = add nuw nsw i32 %48, 3
+  br label %.thread
+
+.thread:                                          ; preds = %39, %bb.b, %25, %16, %attempt_mux_level1_header_parse.exit, %.lr.ph
+  %50 = phi i32 [ %49, %attempt_mux_level1_header_parse.exit ], [ 5, %16 ], [ %.06591106, %.lr.ph ], [ %29, %25 ], [ %43, %39 ], [ 5, %bb.b ] ; 5 uses
+  %.0..0..0..0..0..0.33 = load volatile i32, ptr %i.b, align 4
+  %51 = sub i32 %.0..0..0..0..0..0.33, %1
+  %.not77 = icmp ult i32 %51, %50
   br i1 %.not77, label %h223_mux_check_hdlc.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %.thread
   %i.p = load i32, ptr %4, align 8
-  %.0..0..0..0.34 = load volatile i32, ptr %7, align 4
+  %.0..0..0..0.34 = load volatile i32, ptr %i.b, align 4
   %i.q = sub i32 %.0..0..0..0.34, %1              ; 2 uses
   switch i32 %i.p, label %bb.f [
     i32 0, label %bb.d
@@ -900,7 +971,7 @@ bb.c:                                             ; preds = %.thread
   ]
 
 bb.d:                                             ; preds = %bb.c
-  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1157) #14
+  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1157) #13
   unreachable
 
 .split:                                           ; preds = %bb.c
@@ -916,7 +987,7 @@ bb.e:                                             ; preds = %bb.c, %bb.c
   br i1 %i.v, label %h223_mux_check_hdlc.exit, label %h223_mux_check_hdlc.exit.thread
 
 bb.f:                                             ; preds = %bb.c
-  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1169) #14
+  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1169) #13
   unreachable
 
 h223_mux_check_hdlc.exit:                         ; preds = %bb.e
@@ -928,20 +999,20 @@ h223_mux_check_hdlc.exit:                         ; preds = %bb.e
   br i1 %cond.fr, label %.critedge78.critedge, label %h223_mux_check_hdlc.exit.thread
 
 .critedge78.critedge:                             ; preds = %.split, %h223_mux_check_hdlc.exit
-  %.0..0..0..0.37 = load volatile i32, ptr %7, align 4
+  %.0..0..0..0.37 = load volatile i32, ptr %i.b, align 4
   %i.aa = sub i32 %.0..0..0..0.37, %1
   %i.ab = call ptr @tvb_new_subset_length(ptr noundef %0, i32 noundef %1, i32 noundef %i.aa)
   store volatile ptr %i.ab, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store volatile i32 0, ptr %i.d, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #17
-  call void @except_setup_try(ptr noundef nonnull %8, ptr noundef nonnull %9, ptr noundef @dissect_mux_pdu_fragment.catch_spec, i64 noundef 1)
-  %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 48
-  %i.ad = call i32 @_setjmp(ptr noundef nonnull %i.ac) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
+  call void @except_setup_try(ptr noundef nonnull %7, ptr noundef nonnull %8, ptr noundef @dissect_mux_pdu_fragment.catch_spec, i64 noundef 1)
+  %i.ac = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %i.ad = call i32 @_setjmp(ptr noundef nonnull %i.ac) #17
   %.not = icmp eq i32 %i.ad, 0
-  %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 16
   %.sink = select i1 %.not, ptr null, ptr %i.ae
   store volatile ptr %.sink, ptr %i.c, align 8
   %.0..0..0..0. = load volatile i32, ptr %i.d, align 4
@@ -949,23 +1020,23 @@ h223_mux_check_hdlc.exit:                         ; preds = %bb.e
   %.not71 = icmp eq i32 %i.af, 0
   br i1 %.not71, label %bb.i, label %bb.h
 
-h223_mux_check_hdlc.exit.thread:                  ; preds = %bb.e, %h223_mux_check_hdlc.exit, %.split, %.thread, %bb.b
-  %.16881 = phi i1 [ false, %bb.b ], [ true, %.thread ], [ true, %bb.e ], [ true, %h223_mux_check_hdlc.exit ], [ true, %.split ]
-  %.0..0..0..0.29 = load volatile i32, ptr %7, align 4
+h223_mux_check_hdlc.exit.thread:                  ; preds = %45, %.tail, %call.3, %call.2, %bb.e, %h223_mux_check_hdlc.exit, %.split, %.thread
+  %52 = phi i32 [ %.06591106, %call.3 ], [ %50, %.thread ], [ %50, %bb.e ], [ %50, %h223_mux_check_hdlc.exit ], [ %50, %.split ], [ %.06591106, %call.2 ], [ %.06591106, %.tail ], [ %.06591106, %45 ] ; 3 uses
+  %.16881 = phi i1 [ false, %call.3 ], [ true, %.thread ], [ true, %bb.e ], [ true, %h223_mux_check_hdlc.exit ], [ true, %.split ], [ false, %call.2 ], [ false, %.tail ], [ false, %45 ]
+  %.0..0..0..0.29 = load volatile i32, ptr %i.b, align 4
   %i.ag = call i32 @tvb_reported_length(ptr noundef %0)
   %i.ah = icmp ult i32 %.0..0..0..0.29, %i.ag
   br i1 %i.ah, label %.lr.ph, label %.critedge, !llvm.loop !9
 
-.critedge:                                        ; preds = %h223_mux_check_hdlc.exit.thread, %bb.a
-  %18 = load i32, ptr %i.b, align 4               ; 2 uses
-  %.0..0..0..0.35 = load volatile i32, ptr %7, align 4
+.critedge:                                        ; preds = %h223_mux_check_hdlc.exit.thread
+  %.0..0..0..0.35 = load volatile i32, ptr %i.b, align 4
   %i.ai = sub i32 %.0..0..0..0.35, %1
-  %.not75 = icmp ugt i32 %18, %i.ai
+  %.not75 = icmp ugt i32 %52, %i.ai
   br i1 %.not75, label %bb.g, label %bb.bb
 
 bb.g:                                             ; preds = %.critedge
-  %.0..0..0..0.36 = load volatile i32, ptr %7, align 4
-  %i.aj = add i32 %18, %1
+  %.0..0..0..0.36 = load volatile i32, ptr %i.b, align 4
+  %i.aj = add i32 %52, %1
   %.neg76 = sub i32 %.0..0..0..0.36, %i.aj
   br label %bb.bb
 
@@ -1026,7 +1097,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not121.i, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 986, ptr noundef @.str.118) #14
+  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 986, ptr noundef @.str.118) #13
   unreachable
 
 bb.p:                                             ; preds = %bb.n
@@ -1038,7 +1109,7 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.k
-  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 999) #14
+  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 999) #13
   unreachable
 
 bb.r:                                             ; preds = %bb.p, %bb.m, %bb.l
@@ -1128,7 +1199,7 @@ proto_item_set_generated.exit.i:                  ; preds = %bb.aa, %bb.z, %bb.y
   br label %.thread.i
 
 bb.ab:                                            ; preds = %bb.t
-  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1049) #14
+  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1049) #13
   unreachable
 
 .thread.i:                                        ; preds = %proto_item_set_generated.exit.i, %bb.u, %bb.s, %bb.r
@@ -1362,26 +1433,25 @@ bb.ay:                                            ; preds = %bb.ax
 
 bb.az:                                            ; preds = %bb.ay
   %.0..0..0..0.16 = load volatile ptr, ptr %i.c, align 8
-  call void @except_rethrow(ptr noundef %.0..0..0..0.16) #14
+  call void @except_rethrow(ptr noundef %.0..0..0..0.16) #13
   unreachable
 
 bb.ba:                                            ; preds = %bb.ay, %bb.ax
-  %i.fj = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %i.fj = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.fk = load volatile ptr, ptr %i.fj, align 8
   call void @except_free(ptr noundef %i.fk)
   %i.fl = call ptr @except_pop()                  ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %.0..0..0..0.38 = load volatile i32, ptr %7, align 4
+  %.0..0..0..0.38 = load volatile i32, ptr %i.b, align 4
   %i.fm = sub i32 %.0..0..0..0.38, %1
   br label %bb.bb
 
-bb.bb:                                            ; preds = %.critedge, %bb.ba, %bb.g
-  %.0 = phi i32 [ %i.fm, %bb.ba ], [ %.neg76, %bb.g ], [ 0, %.critedge ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+bb.bb:                                            ; preds = %.critedge.thread, %.critedge, %bb.ba, %bb.g
+  %.0 = phi i32 [ %i.fm, %bb.ba ], [ %.neg76, %bb.g ], [ 0, %.critedge ], [ 0, %.critedge.thread ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i32 %.0
 }
@@ -1399,13 +1469,13 @@ declare ptr @conversation_get_proto_data(ptr noundef, i32 noundef) local_unnamed
 define internal fastcc noundef ptr @create_call_info(i32 noundef %0) unnamed_addr #0 {
 init_direction_data.exit20:
   %i.a = tail call ptr @wmem_file_scope()
-  %i.b = tail call noalias dereferenceable_or_null(296) ptr @wmem_alloc(ptr noundef %i.a, i64 noundef 296) #15 ; 6 uses
+  %i.b = tail call noalias dereferenceable_or_null(296) ptr @wmem_alloc(ptr noundef %i.a, i64 noundef 296) #14 ; 6 uses
   %i.c = getelementptr i8, ptr %i.b, i64 40       ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(128) %i.c, i8 0, i64 128, i1 false)
   %i.d = tail call ptr @wmem_file_scope()
-  %i.e = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.d, i64 noundef 24) #15 ; 5 uses
+  %i.e = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.d, i64 noundef 24) #14 ; 5 uses
   %i.f = tail call ptr @wmem_file_scope()
-  %i.g = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.f, i64 noundef 24) #15 ; 5 uses
+  %i.g = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.f, i64 noundef 24) #14 ; 5 uses
   store ptr %i.g, ptr %i.c, align 8
   %.pre.i = load i32, ptr @pdu_offset, align 4
   %i.h = getelementptr i8, ptr %i.g, i64 8
@@ -1425,9 +1495,9 @@ init_direction_data.exit20:
   %i.n = getelementptr i8, ptr %i.b, i64 168      ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(128) %i.n, i8 0, i64 128, i1 false)
   %i.o = tail call ptr @wmem_file_scope()
-  %i.p = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.o, i64 noundef 24) #15 ; 5 uses
+  %i.p = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.o, i64 noundef 24) #14 ; 5 uses
   %i.q = tail call ptr @wmem_file_scope()
-  %i.r = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.q, i64 noundef 24) #15 ; 5 uses
+  %i.r = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.q, i64 noundef 24) #14 ; 5 uses
   store ptr %i.r, ptr %i.n, align 8
   %.pre.i19 = load i32, ptr @pdu_offset, align 4
   %i.s = getelementptr i8, ptr %i.r, i64 8
@@ -1446,7 +1516,7 @@ init_direction_data.exit20:
   store ptr null, ptr %i.x, align 8
   store i32 2, ptr %i.b, align 8
   %i.y = tail call ptr @wmem_file_scope()
-  %i.z = tail call noalias dereferenceable_or_null(32) ptr @wmem_alloc(ptr noundef %i.y, i64 noundef 32) #15 ; 6 uses
+  %i.z = tail call noalias dereferenceable_or_null(32) ptr @wmem_alloc(ptr noundef %i.y, i64 noundef 32) #14 ; 6 uses
   store i32 1, ptr %i.z, align 8
   %i.aa = getelementptr i8, ptr %i.z, i64 8
   store ptr null, ptr %i.aa, align 8
@@ -1470,7 +1540,7 @@ declare noalias ptr @wmem_alloc(ptr noundef, i64 noundef) local_unnamed_addr #6
 define internal fastcc void @init_logical_channel(i32 noundef %0, ptr noundef %1, i32 noundef range(i32 0, 65536) %2, i32 noundef %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
   %5 = alloca %struct.circuit_chain_key, align 8  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   store ptr %1, ptr %5, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 %2, ptr %i.a, align 8
@@ -1483,7 +1553,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = call ptr @wmem_file_scope()
-  %i.h = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.g, i64 noundef 16) #15 ; 2 uses
+  %i.h = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.g, i64 noundef 16) #14 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
   %i.i = load i32, ptr @circuit_chain_count, align 4
   %i.j = add i32 %i.i, 1                          ; 3 uses
@@ -1496,7 +1566,7 @@ bb.b:                                             ; preds = %bb.a
 
 circuit_chain_lookup.exit:                        ; preds = %bb.a, %bb.b
   %.0.i = phi i32 [ %i.j, %bb.b ], [ %i.e, %bb.a ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   %i.o = call ptr @find_conversation_by_id(i32 noundef %0, i32 noundef 20, i32 noundef %.0.i) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.c, label %bb.d
@@ -1504,7 +1574,7 @@ circuit_chain_lookup.exit:                        ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %circuit_chain_lookup.exit
   %i.q = call ptr @conversation_new_by_id(i32 noundef %0, i32 noundef 20, i32 noundef %.0.i)
   %i.r = call ptr @wmem_file_scope()
-  %i.s = call noalias noundef dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.r, i64 noundef 24) #15 ; 4 uses
+  %i.s = call noalias noundef dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.r, i64 noundef 24) #14 ; 4 uses
   %i.t = getelementptr i8, ptr %i.s, i64 16
   call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
   store ptr %1, ptr %i.t, align 8
@@ -1524,7 +1594,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.x = call ptr @wmem_file_scope()
-  %i.y = call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.x, i64 noundef 24) #15 ; 7 uses
+  %i.y = call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.x, i64 noundef 24) #14 ; 7 uses
   %.not.i = icmp eq i32 %3, 0
   %i.z = zext i1 %.not.i to i64
   %i.aa = getelementptr [8 x i8], ptr %.0, i64 %i.z ; 3 uses
@@ -1542,7 +1612,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ac = getelementptr i8, ptr %.0.i16, i64 16   ; 3 uses
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
   %.not31.i = icmp eq ptr %i.ad, null
-  br i1 %.not31.i, label %bb.h, label %.preheader.i, !llvm.loop !12
+  br i1 %.not31.i, label %bb.h, label %.preheader.i, !llvm.loop !13
 
 bb.h:                                             ; preds = %.preheader.i
   %i.ae = getelementptr i8, ptr %.0.i16, i64 8
@@ -1625,62 +1695,10 @@ declare void @except_free(ptr noundef) local_unnamed_addr #2
 declare ptr @except_pop() local_unnamed_addr #2
 
 ; Function Attrs: noreturn null_pointer_is_valid sspstrong uwtable
-define internal noundef zeroext i1 @attempt_mux_level0_header_parse(i32 %0, i32 %1, ptr nofree readnone captures(none) %2) #9 {
+define internal fastcc noundef zeroext i1 @attempt_mux_level0_header_parse(i32 %0, i32 %1, ptr nofree readnone captures(none) %2) unnamed_addr #9 {
 bb.a:
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1095) #14
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.117, ptr noundef @.str.113, i32 noundef 1095) #13
   unreachable
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: write) uwtable
-define internal noundef zeroext i1 @attempt_mux_level1_header_parse(i32 noundef %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2) #10 {
-  %4 = icmp ult i32 %0, 2
-  br i1 %4, label %11, label %5
-
-5:                                                ; preds = %3
-  %6 = and i32 %1, 65535                          ; 2 uses
-  %7 = icmp eq i32 %6, 57677
-  br i1 %7, label %11, label %8
-
-8:                                                ; preds = %5
-  %9 = lshr i32 %6, 12
-  %10 = add nuw nsw i32 %9, 3
-  store i32 %10, ptr %2, align 4
-  br label %11
-
-11:                                               ; preds = %5, %3, %8
-  %.0 = phi i1 [ true, %8 ], [ false, %3 ], [ false, %5 ]
-  ret i1 %.0
-}
-
-; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef zeroext i1 @attempt_mux_level2_3_header_parse(i32 noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2) #0 {
-  %4 = icmp ugt i32 %0, 2                         ; 2 uses
-  br i1 %4, label %5, label %20
-
-5:                                                ; preds = %3
-  store i32 5, ptr %2, align 4
-  %6 = lshr i32 %1, 16
-  %7 = and i32 %6, 255
-  %8 = and i32 %1, 65280
-  %9 = or disjoint i32 %7, %8                     ; 2 uses
-  %10 = shl i32 %1, 16
-  %11 = and i32 %10, 16711680
-  %12 = or disjoint i32 %9, %11
-  %13 = tail call i32 @golay_errors(i32 noundef %12) ; 2 uses
-  %.not = icmp eq i32 %13, -1
-  br i1 %.not, label %20, label %14
-
-14:                                               ; preds = %5
-  %15 = xor i32 %13, %9
-  %16 = lshr i32 %15, 4
-  %17 = and i32 %16, 255
-  %18 = load i32, ptr %2, align 4
-  %19 = add i32 %18, %17
-  store i32 %19, ptr %2, align 4
-  br label %20
-
-20:                                               ; preds = %5, %14, %3
-  ret i1 %4
 }
 
 ; Function Attrs: null_pointer_is_valid
@@ -1737,7 +1755,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = tail call fastcc i32 @dissect_mux_payload_by_me_list(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %i.h, i32 noundef %.170, i1 noundef zeroext %7, i32 noundef %8, i32 noundef %9) ; 3 uses
   %i.j = add i32 %i.i, %i.f
   %.not65 = icmp ugt i32 %i.j, %i.a
-  br i1 %.not65, label %.loopexit, label %.lr.ph71, !llvm.loop !13
+  br i1 %.not65, label %.loopexit, label %.lr.ph71, !llvm.loop !14
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
   %.05868 = phi i32 [ %i.m, %.lr.ph ], [ 0, %bb.b ]
@@ -1748,7 +1766,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load i16, ptr %i.c, align 2
   %i.o = zext i16 %i.n to i32
   %i.p = icmp samesign ult i32 %i.m, %i.o
-  br i1 %i.p, label %.lr.ph, label %.loopexit, !llvm.loop !14
+  br i1 %i.p, label %.lr.ph, label %.loopexit, !llvm.loop !15
 
 bb.d:                                             ; preds = %.lr.ph76
   %i.q = sub i32 %i.a, %.06074
@@ -1773,7 +1791,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr i8, ptr %.075, i64 16
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %.not = icmp eq ptr %i.aa, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph76, !llvm.loop !15
+  br i1 %.not, label %._crit_edge, label %.lr.ph76, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.a
   %.060.lcssa = phi i32 [ %6, %bb.a ], [ %.3, %.loopexit ]
@@ -1818,7 +1836,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.i = getelementptr i8, ptr %.01318, i64 16
   %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
   %.not = icmp eq ptr %i.j, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !16
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %bb.c
   tail call void @decrement_dissection_depth(ptr noundef %0)
@@ -1826,7 +1844,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not15, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 822, ptr noundef @.str.122) #14
+  tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 822, ptr noundef @.str.122) #13
   unreachable
 
 bb.e:                                             ; preds = %._crit_edge
@@ -1846,11 +1864,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store volatile i32 0, ptr %i.c, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
   call void @except_setup_try(ptr noundef nonnull %10, ptr noundef nonnull %11, ptr noundef @dissect_mux_sdu_fragment.catch_spec, i64 noundef 1)
   %i.d = getelementptr inbounds nuw i8, ptr %11, i64 48
-  %i.e = call i32 @_setjmp(ptr noundef nonnull %i.d) #18
+  %i.e = call i32 @_setjmp(ptr noundef nonnull %i.d) #17
   %.not = icmp eq i32 %i.e, 0
   %i.f = getelementptr inbounds nuw i8, ptr %11, i64 16
   %.sink = select i1 %.not, ptr null, ptr %i.f
@@ -1881,7 +1899,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.l = zext i16 %5 to i32                       ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #16
   store ptr %4, ptr %9, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i32 %i.l, ptr %i.m, align 8
@@ -1894,7 +1912,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.s = call ptr @wmem_file_scope()
-  %i.t = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.s, i64 noundef 16) #15 ; 2 uses
+  %i.t = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.s, i64 noundef 16) #14 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false)
   %i.u = load i32, ptr @circuit_chain_count, align 4
   %i.v = add i32 %i.u, 1                          ; 3 uses
@@ -1907,7 +1925,7 @@ bb.f:                                             ; preds = %bb.e
 
 circuit_chain_lookup.exit:                        ; preds = %bb.e, %bb.f
   %.0.i = phi i32 [ %i.v, %bb.f ], [ %i.q, %bb.e ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #16
   call void @conversation_set_elements_by_id(ptr noundef %1, i32 noundef 20, i32 noundef %.0.i)
   %i.aa = getelementptr i8, ptr %1, i64 20        ; 5 uses
   %i.ab = load i32, ptr %i.aa, align 4
@@ -1958,7 +1976,7 @@ bb.l:                                             ; preds = %bb.k
   %i.au = getelementptr i8, ptr %i.at, i64 8
   %i.av = load i32, ptr %i.au, align 8
   %.not13.i = icmp ugt i32 %i.av, %i.ao
-  br i1 %.not13.i, label %find_h223_lc_params.exit, label %bb.j, !llvm.loop !17
+  br i1 %.not13.i, label %find_h223_lc_params.exit, label %bb.j, !llvm.loop !18
 
 find_h223_lc_params.exit:                         ; preds = %bb.k, %bb.l
   %i.aw = load ptr, ptr %.0.i78, align 8          ; 6 uses
@@ -1967,7 +1985,7 @@ find_h223_lc_params.exit:                         ; preds = %bb.k, %bb.l
 
 bb.m:                                             ; preds = %find_h223_lc_params.exit
   %i.ax = getelementptr i8, ptr %i.aw, i64 16
-  %i.ay = load i8, ptr %i.ax, align 8, !range !20, !noundef !21
+  %i.ay = load i8, ptr %i.ax, align 8, !range !21, !noundef !22
   %i.az = trunc nuw i8 %i.ay to i1
   br i1 %i.az, label %bb.n, label %bb.t
 
@@ -2097,7 +2115,7 @@ proto_item_set_generated.exit.i:                  ; preds = %bb.ac, %bb.ab, %bb.
   br i1 %i.cu, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %proto_item_set_generated.exit.i
-  call void @except_throw(i64 noundef 1, i64 noundef 1, ptr noundef null) #14
+  call void @except_throw(i64 noundef 1, i64 noundef 1, ptr noundef null) #13
   unreachable
 
 bb.ae:                                            ; preds = %proto_item_set_generated.exit.i
@@ -2137,7 +2155,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %.lr.ph.i.i
 
 bb.ah:                                            ; preds = %bb.ag
-  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 619, ptr noundef @.str.129) #14
+  call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.112, ptr noundef @.str.113, i32 noundef 619, ptr noundef @.str.129) #13
   unreachable
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -2174,7 +2192,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ei = load i8, ptr %i.eh, align 1             ; 3 uses
   %niter.next.3 = add i32 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %h223_al2_crc8bit.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !18
+  br i1 %niter.ncmp.3, label %h223_al2_crc8bit.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !19
 
 h223_al2_crc8bit.exit.i.loopexit.unr-lcssa:       ; preds = %.lr.ph.i.i
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -2200,7 +2218,7 @@ h223_al2_crc8bit.exit.i.loopexit.unr-lcssa:       ; preds = %.lr.ph.i.i
   %i.eo = load i8, ptr %i.en, align 1             ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %h223_al2_crc8bit.exit.i, label %.lr.ph.i.i.epil, !llvm.loop !19
+  br i1 %epil.iter.cmp.not, label %h223_al2_crc8bit.exit.i, label %.lr.ph.i.i.epil, !llvm.loop !20
 
 h223_al2_crc8bit.exit.i:                          ; preds = %h223_al2_crc8bit.exit.i.loopexit.unr-lcssa, %.lr.ph.i.i.epil, %.preheader.i.i
   %.08.lcssa.i.i = phi i8 [ 0, %.preheader.i.i ], [ %i.ei, %h223_al2_crc8bit.exit.i.loopexit.unr-lcssa ], [ %i.eo, %.lr.ph.i.i.epil ] ; 2 uses
@@ -2263,7 +2281,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %.0..0..0..0.30 = load volatile ptr, ptr %i.b, align 8
-  call void @except_rethrow(ptr noundef %.0..0..0..0.30) #14
+  call void @except_rethrow(ptr noundef %.0..0..0..0.30) #13
   unreachable
 
 bb.ao:                                            ; preds = %bb.am, %bb.al
@@ -2271,8 +2289,8 @@ bb.ao:                                            ; preds = %bb.am, %bb.al
   %i.fh = load volatile ptr, ptr %i.fg, align 8
   call void @except_free(ptr noundef %i.fh)
   %i.fi = call ptr @except_pop()                  ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void
@@ -2330,13 +2348,13 @@ declare ptr @tvb_new_child_real_data(ptr noundef, ptr noundef, i32 noundef, i32 
 declare ptr @add_new_data_source(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #11
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #13
+declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -2348,15 +2366,14 @@ attributes #6 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "
 attributes #7 = { null_pointer_is_valid allocsize(2) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nounwind null_pointer_is_valid returns_twice "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { noreturn null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #14 = { noreturn }
-attributes #15 = { allocsize(1) }
-attributes #16 = { allocsize(2) }
-attributes #17 = { nounwind }
-attributes #18 = { nounwind returns_twice }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #13 = { noreturn }
+attributes #14 = { allocsize(1) }
+attributes #15 = { allocsize(2) }
+attributes #16 = { nounwind }
+attributes #17 = { nounwind returns_twice }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}
@@ -2373,15 +2390,16 @@ attributes #18 = { nounwind returns_twice }
 !9 = distinct !{!9, !6}
 !10 = distinct !{!10, !6}
 !11 = distinct !{!11, !6}
-!12 = distinct !{!12, !6}
+!12 = !{!"unknown", !"jump-table-to-switch"}
 !13 = distinct !{!13, !6}
 !14 = distinct !{!14, !6}
 !15 = distinct !{!15, !6}
 !16 = distinct !{!16, !6}
 !17 = distinct !{!17, !6}
 !18 = distinct !{!18, !6}
-!19 = distinct !{!19, !22}
-!20 = !{i8 0, i8 2}
-!21 = !{}
-!22 = !{!"llvm.loop.unroll.disable"}
+!19 = distinct !{!19, !6}
+!20 = distinct !{!20, !23}
+!21 = !{i8 0, i8 2}
+!22 = !{}
+!23 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

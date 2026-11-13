@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/git/original/test-submodule?download=true
-inline.NumInlined: 2
+inline.NumInlined: 6
 inline.NumDeleted: 1
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -7,13 +7,11 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%struct.test_cmd = type { ptr, ptr }
 %struct.strbuf = type { i64, i64, ptr }
 %struct.option = type { i32, i32, ptr, ptr, i64, ptr, ptr, i32, ptr, i64, ptr, i64, ptr }
 
 @.str = private unnamed_addr constant [11 x i8] c"test-tools\00", align 1
 @submodule_usage = internal constant [5 x ptr] [ptr @.str.2, ptr @.str.3, ptr @.str.4, ptr @.str.5, ptr null], align 16
-@cmds = internal unnamed_addr constant [8 x %struct.test_cmd] [%struct.test_cmd { ptr @.str.6, ptr @cmd__submodule_check_name }, %struct.test_cmd { ptr @.str.7, ptr @cmd__submodule_check_url }, %struct.test_cmd { ptr @.str.8, ptr @cmd__submodule_is_active }, %struct.test_cmd { ptr @.str.9, ptr @cmd__submodule_resolve_relative_url }, %struct.test_cmd { ptr @.str.10, ptr @cmd__submodule_config_list }, %struct.test_cmd { ptr @.str.11, ptr @cmd__submodule_config_set }, %struct.test_cmd { ptr @.str.12, ptr @cmd__submodule_config_unset }, %struct.test_cmd { ptr @.str.13, ptr @cmd__submodule_config_writeable }], align 16
 @.str.1 = private unnamed_addr constant [24 x i8] c"unknown subcommand '%s'\00", align 1
 @.str.2 = private unnamed_addr constant [31 x i8] c"test-tool submodule check-name\00", align 1
 @.str.3 = private unnamed_addr constant [30 x i8] c"test-tool submodule check-url\00", align 1
@@ -49,10 +47,17 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @cmd__submodule(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca [1 x %struct.option], align 16      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %2, i8 0, i64 96, i1 false)
-  %i.a = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str, ptr noundef nonnull %2, ptr noundef nonnull @submodule_usage, i32 noundef 2) #8 ; 2 uses
+  %2 = alloca [1 x %struct.option], align 16      ; 4 uses
+  %3 = alloca [2 x ptr], align 16                 ; 4 uses
+  %4 = alloca [1 x %struct.option], align 16      ; 4 uses
+  %5 = alloca [2 x ptr], align 16                 ; 4 uses
+  %6 = alloca [1 x %struct.option], align 16      ; 5 uses
+  %7 = alloca [2 x ptr], align 16                 ; 5 uses
+  %8 = alloca [1 x %struct.option], align 16      ; 5 uses
+  %9 = alloca [1 x %struct.option], align 16      ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %9, i8 0, i64 96, i1 false)
+  %i.a = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str, ptr noundef nonnull %9, ptr noundef nonnull @submodule_usage, i32 noundef 2) #8 ; 9 uses
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %.preheader
 
@@ -60,58 +65,170 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8, !tbaa !16     ; 9 uses
   %i.d = call i32 @strcmp(ptr noundef nonnull dereferenceable(11) @.str.6, ptr noundef nonnull dereferenceable(1) %i.c) #9
   %.not = icmp eq i32 %i.d, 0
-  br i1 %.not, label %bb.k, label %bb.c
+  br i1 %.not, label %call.0, label %41
 
 bb.b:                                             ; preds = %bb.a
-  call void @usage_with_options(ptr noundef nonnull @submodule_usage, ptr noundef nonnull %2) #10
+  call void @usage_with_options(ptr noundef nonnull @submodule_usage, ptr noundef nonnull %9) #10
   unreachable
 
-bb.c:                                             ; preds = %.preheader
-  %3 = call i32 @strcmp(ptr noundef nonnull dereferenceable(10) @.str.7, ptr noundef nonnull dereferenceable(1) %i.c) #9
-  %.not.1.a = icmp eq i32 %3, 0
-  br i1 %.not.1.a, label %bb.k, label %bb.d
+call.0:                                           ; preds = %.preheader
+  %10 = call fastcc i32 @cmd__submodule_check_name(i32 noundef %i.a, ptr noundef nonnull %1) #8
+  br label %.tail
+
+call.1:                                           ; preds = %41
+  %11 = call fastcc i32 @cmd__submodule_check_url(i32 noundef %i.a, ptr noundef nonnull %1) #8
+  br label %.tail
+
+bb.c:                                             ; preds = %43
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %8, i8 0, i64 96, i1 false)
+  %12 = call i32 @parse_options(i32 noundef %i.a, ptr noundef nonnull %1, ptr noundef nonnull @.str, ptr noundef nonnull %8, ptr noundef nonnull @submodule_is_active_usage, i32 noundef 0) #8
+  %.not.1.a = icmp eq i32 %12, 1
+  br i1 %.not.1.a, label %bb.d, label %13
+
+13:                                               ; preds = %bb.c
+  call void @usage_with_options(ptr noundef nonnull @submodule_is_active_usage, ptr noundef nonnull %8) #10
+  unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @strcmp(ptr noundef nonnull dereferenceable(10) @.str.8, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %14 = load ptr, ptr @the_repository, align 8, !tbaa !18
+  %15 = call ptr @setup_git_directory(ptr noundef %14) #8 ; 0 uses
+  %16 = load ptr, ptr @the_repository, align 8, !tbaa !18
+  %17 = load ptr, ptr %1, align 8, !tbaa !16
+  %i.e = call i32 @is_submodule_active(ptr noundef %16, ptr noundef %17) #8
   %.not.2.a = icmp eq i32 %i.e, 0
-  br i1 %.not.2.a, label %bb.k, label %bb.e
+  %18 = zext i1 %.not.2.a to i32
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #8
+  br label %.tail
 
-bb.e:                                             ; preds = %bb.d
-  %4 = call i32 @strcmp(ptr noundef nonnull dereferenceable(21) @.str.9, ptr noundef nonnull dereferenceable(1) %i.c) #9
-  %.not.3.a = icmp eq i32 %4, 0
-  br i1 %.not.3.a, label %bb.k, label %bb.f
+call.3:                                           ; preds = %45
+  %19 = call fastcc i32 @cmd__submodule_resolve_relative_url(i32 noundef %i.a, ptr noundef nonnull %1) #8
+  br label %.tail
 
-bb.f:                                             ; preds = %bb.e
-  %5 = call i32 @strcmp(ptr noundef nonnull dereferenceable(12) @.str.10, ptr noundef nonnull dereferenceable(1) %i.c) #9
-  %.not.4.a = icmp eq i32 %5, 0
-  br i1 %.not.4.a, label %bb.k, label %bb.g
+bb.e:                                             ; preds = %47
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %6, i8 0, i64 96, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_list.usage, i64 16, i1 false)
+  %20 = call i32 @parse_options(i32 noundef %i.a, ptr noundef nonnull %1, ptr noundef nonnull @.str, ptr noundef nonnull %6, ptr noundef nonnull %7, i32 noundef 4) #8
+  %21 = load ptr, ptr @the_repository, align 8, !tbaa !18
+  %22 = call ptr @setup_git_directory(ptr noundef %21) #8 ; 0 uses
+  %.not.3.a = icmp eq i32 %20, 2
+  br i1 %.not.3.a, label %cmd__submodule_config_list.exit, label %23
+
+23:                                               ; preds = %bb.e
+  call void @usage_with_options(ptr noundef nonnull %7, ptr noundef nonnull %6) #10
+  unreachable
+
+cmd__submodule_config_list.exit:                  ; preds = %bb.e
+  %24 = load ptr, ptr @the_repository, align 8, !tbaa !18
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %26 = load ptr, ptr %25, align 8, !tbaa !16
+  %27 = call i32 @print_config_from_gitmodules(ptr noundef %24, ptr noundef %26) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
+  br label %.tail
+
+call.5:                                           ; preds = %49
+  %28 = call fastcc i32 @cmd__submodule_config_set(i32 noundef %i.a, ptr noundef nonnull %1) #8
+  br label %.tail
+
+bb.f:                                             ; preds = %51
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %4, i8 0, i64 96, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_unset.usage, i64 16, i1 false)
+  %29 = load ptr, ptr @the_repository, align 8, !tbaa !18
+  %30 = call ptr @setup_git_directory(ptr noundef %29) #8 ; 0 uses
+  %.not.4.a = icmp eq i32 %i.a, 2
+  br i1 %.not.4.a, label %bb.g, label %33
 
 bb.g:                                             ; preds = %bb.f
-  %6 = call i32 @strcmp(ptr noundef nonnull dereferenceable(11) @.str.11, ptr noundef nonnull dereferenceable(1) %i.c) #9
-  %.not.5.a = icmp eq i32 %6, 0
-  br i1 %.not.5.a, label %bb.k, label %bb.h
+  %31 = call i32 @is_writing_gitmodules_ok() #8
+  %.not.5.a = icmp eq i32 %31, 0
+  br i1 %.not.5.a, label %32, label %bb.h
+
+32:                                               ; preds = %bb.g
+  call void (ptr, ...) @die(ptr noundef nonnull @.str.18) #10
+  unreachable
+
+33:                                               ; preds = %bb.f
+  call void @usage_with_options(ptr noundef nonnull %5, ptr noundef nonnull %4) #10
+  unreachable
 
 bb.h:                                             ; preds = %bb.g
-  %i.f = call i32 @strcmp(ptr noundef nonnull dereferenceable(13) @.str.12, ptr noundef nonnull dereferenceable(1) %i.c) #9
-  %.not.6 = icmp eq i32 %i.f, 0
-  br i1 %.not.6, label %bb.k, label %bb.i
+  %34 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %35 = load ptr, ptr %34, align 8, !tbaa !16
+  %i.f = call i32 @config_set_in_gitmodules_file_gently(ptr noundef %35, ptr noundef null) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  br label %.tail
 
-bb.i:                                             ; preds = %bb.h
-  %7 = call i32 @strcmp(ptr noundef nonnull dereferenceable(17) @.str.13, ptr noundef nonnull dereferenceable(1) %i.c) #9
-  %.not.7.a = icmp eq i32 %7, 0
+bb.i:                                             ; preds = %53
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %2, i8 0, i64 96, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_writeable.usage, i64 16, i1 false)
+  %36 = load ptr, ptr @the_repository, align 8, !tbaa !18
+  %37 = call ptr @setup_git_directory(ptr noundef %36) #8 ; 0 uses
+  %.not.7.a = icmp eq i32 %i.a, 1
   br i1 %.not.7.a, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  call void (ptr, ptr, ptr, ...) @usage_msg_optf(ptr noundef nonnull @.str.1, ptr noundef nonnull @submodule_usage, ptr noundef nonnull %2, ptr noundef nonnull %i.c) #10
+  call void @usage_with_options(ptr noundef nonnull %3, ptr noundef nonnull %2) #10
   unreachable
 
-bb.k:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.preheader
-  %.lcssa = phi ptr [ @cmds, %.preheader ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 16), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 32), %bb.d ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 48), %bb.e ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 64), %bb.f ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 80), %bb.g ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 96), %bb.h ], [ getelementptr inbounds nuw (i8, ptr @cmds, i64 112), %bb.i ]
-  %8 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
-  %9 = load ptr, ptr %8, align 8, !tbaa !27
-  %10 = call i32 %9(i32 noundef %i.a, ptr noundef nonnull %1) #8
+bb.k:                                             ; preds = %bb.i
+  %38 = call i32 @is_writing_gitmodules_ok() #8
+  %.not.i28 = icmp eq i32 %38, 0
+  %39 = sext i1 %.not.i28 to i32
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
-  ret i32 %10
+  br label %.tail
+
+.tail:                                            ; preds = %bb.k, %bb.h, %call.5, %cmd__submodule_config_list.exit, %call.3, %bb.d, %call.1, %call.0
+  %40 = phi i32 [ %10, %call.0 ], [ %11, %call.1 ], [ %18, %bb.d ], [ %19, %call.3 ], [ %27, %cmd__submodule_config_list.exit ], [ %28, %call.5 ], [ %i.f, %bb.h ], [ %39, %bb.k ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #8
+  ret i32 %40
+
+41:                                               ; preds = %.preheader
+  %42 = call i32 @strcmp(ptr noundef nonnull dereferenceable(10) @.str.7, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.1 = icmp eq i32 %42, 0
+  br i1 %.not.1, label %call.1, label %43
+
+43:                                               ; preds = %41
+  %44 = call i32 @strcmp(ptr noundef nonnull dereferenceable(10) @.str.8, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.2 = icmp eq i32 %44, 0
+  br i1 %.not.2, label %bb.c, label %45
+
+45:                                               ; preds = %43
+  %46 = call i32 @strcmp(ptr noundef nonnull dereferenceable(21) @.str.9, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.3 = icmp eq i32 %46, 0
+  br i1 %.not.3, label %call.3, label %47
+
+47:                                               ; preds = %45
+  %48 = call i32 @strcmp(ptr noundef nonnull dereferenceable(12) @.str.10, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.4 = icmp eq i32 %48, 0
+  br i1 %.not.4, label %bb.e, label %49
+
+49:                                               ; preds = %47
+  %50 = call i32 @strcmp(ptr noundef nonnull dereferenceable(11) @.str.11, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.5 = icmp eq i32 %50, 0
+  br i1 %.not.5, label %call.5, label %51
+
+51:                                               ; preds = %49
+  %52 = call i32 @strcmp(ptr noundef nonnull dereferenceable(13) @.str.12, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.6 = icmp eq i32 %52, 0
+  br i1 %.not.6, label %bb.f, label %53
+
+53:                                               ; preds = %51
+  %54 = call i32 @strcmp(ptr noundef nonnull dereferenceable(17) @.str.13, ptr noundef nonnull dereferenceable(1) %i.c) #9
+  %.not.7 = icmp eq i32 %54, 0
+  br i1 %.not.7, label %bb.i, label %55
+
+55:                                               ; preds = %53
+  call void (ptr, ptr, ptr, ...) @usage_msg_optf(ptr noundef nonnull @.str.1, ptr noundef nonnull @submodule_usage, ptr noundef nonnull %9, ptr noundef nonnull %i.c) #10
+  unreachable
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -135,7 +252,7 @@ declare void @usage_msg_optf(ptr noundef, ptr noundef, ptr noundef, ...) local_u
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @cmd__submodule_check_name(i32 noundef %0, ptr noundef %1) #0 {
+define internal fastcc noundef i32 @cmd__submodule_check_name(i32 noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.strbuf, align 8             ; 7 uses
   %3 = alloca [1 x %struct.option], align 16      ; 5 uses
@@ -152,7 +269,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) @__const.check_submodule.buf, i64 24, i1 false)
-  %i.b = load ptr, ptr @stdin, align 8, !tbaa !18
+  %i.b = load ptr, ptr @stdin, align 8, !tbaa !20
   %i.c = call i32 @strbuf_getline(ptr noundef nonnull %2, ptr noundef %i.b) #8
   %.not2.i = icmp eq i32 %i.c, -1
   br i1 %.not2.i, label %check_submodule.exit, label %.lr.ph.i
@@ -162,18 +279,18 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %.lr.ph.i
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !21
-  %i.f = call i32 @check_submodule_name(ptr noundef %i.e) #8, !callees !22, !inline_history !0
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !23
+  %i.f = call i32 @check_submodule_name(ptr noundef %i.e) #8, !callees !24, !inline_history !0
   %.not1.i = icmp eq i32 %i.f, 0
   br i1 %.not1.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = load ptr, ptr %i.d, align 8, !tbaa !21
+  %i.g = load ptr, ptr %i.d, align 8, !tbaa !23
   %puts.i = call i32 @puts(ptr nonnull dereferenceable(1) %i.g) ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.h = load ptr, ptr @stdin, align 8, !tbaa !18
+  %i.h = load ptr, ptr @stdin, align 8, !tbaa !20
   %i.i = call i32 @strbuf_getline(ptr noundef nonnull %2, ptr noundef %i.h) #8
   %.not.i = icmp eq i32 %i.i, -1
   br i1 %.not.i, label %check_submodule.exit, label %bb.d, !llvm.loop !1
@@ -186,7 +303,7 @@ check_submodule.exit:                             ; preds = %bb.f, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef i32 @cmd__submodule_check_url(i32 noundef %0, ptr noundef %1) #0 {
+define internal fastcc noundef i32 @cmd__submodule_check_url(i32 noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.strbuf, align 8             ; 7 uses
   %3 = alloca [1 x %struct.option], align 16      ; 5 uses
@@ -203,7 +320,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) @__const.check_submodule.buf, i64 24, i1 false)
-  %i.b = load ptr, ptr @stdin, align 8, !tbaa !18
+  %i.b = load ptr, ptr @stdin, align 8, !tbaa !20
   %i.c = call i32 @strbuf_getline(ptr noundef nonnull %2, ptr noundef %i.b) #8
   %.not2.i = icmp eq i32 %i.c, -1
   br i1 %.not2.i, label %check_submodule.exit, label %.lr.ph.i
@@ -213,18 +330,18 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %.lr.ph.i
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !21
-  %i.f = call i32 @check_submodule_url(ptr noundef %i.e) #8, !callees !22, !inline_history !0
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !23
+  %i.f = call i32 @check_submodule_url(ptr noundef %i.e) #8, !callees !24, !inline_history !0
   %.not1.i = icmp eq i32 %i.f, 0
   br i1 %.not1.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = load ptr, ptr %i.d, align 8, !tbaa !21
+  %i.g = load ptr, ptr %i.d, align 8, !tbaa !23
   %puts.i = call i32 @puts(ptr nonnull dereferenceable(1) %i.g) ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.h = load ptr, ptr @stdin, align 8, !tbaa !18
+  %i.h = load ptr, ptr @stdin, align 8, !tbaa !20
   %i.i = call i32 @strbuf_getline(ptr noundef nonnull %2, ptr noundef %i.h) #8
   %.not.i = icmp eq i32 %i.i, -1
   br i1 %.not.i, label %check_submodule.exit, label %bb.d, !llvm.loop !1
@@ -237,32 +354,7 @@ check_submodule.exit:                             ; preds = %bb.f, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @cmd__submodule_is_active(i32 noundef %0, ptr noundef %1) #0 {
-  %3 = alloca [1 x %struct.option], align 16      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %3, i8 0, i64 96, i1 false)
-  %4 = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str, ptr noundef nonnull %3, ptr noundef nonnull @submodule_is_active_usage, i32 noundef 0) #8
-  %.not = icmp eq i32 %4, 1
-  br i1 %.not, label %6, label %5
-
-5:                                                ; preds = %2
-  call void @usage_with_options(ptr noundef nonnull @submodule_is_active_usage, ptr noundef nonnull %3) #10
-  unreachable
-
-6:                                                ; preds = %2
-  %7 = load ptr, ptr @the_repository, align 8, !tbaa !25
-  %8 = call ptr @setup_git_directory(ptr noundef %7) #8 ; 0 uses
-  %9 = load ptr, ptr @the_repository, align 8, !tbaa !25
-  %10 = load ptr, ptr %1, align 8, !tbaa !16
-  %11 = call i32 @is_submodule_active(ptr noundef %9, ptr noundef %10) #8
-  %.not3 = icmp eq i32 %11, 0
-  %12 = zext i1 %.not3 to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  ret i32 %12
-}
-
-; Function Attrs: nounwind uwtable
-define internal noundef i32 @cmd__submodule_resolve_relative_url(i32 noundef %0, ptr noundef %1) #0 {
+define internal fastcc noundef i32 @cmd__submodule_resolve_relative_url(i32 noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca [1 x %struct.option], align 16      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
@@ -294,35 +386,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @cmd__submodule_config_list(i32 noundef %0, ptr noundef %1) #0 {
-  %3 = alloca [1 x %struct.option], align 16      ; 5 uses
-  %4 = alloca [2 x ptr], align 16                 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %3, i8 0, i64 96, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_list.usage, i64 16, i1 false)
-  %5 = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str, ptr noundef nonnull %3, ptr noundef nonnull %4, i32 noundef 4) #8
-  %6 = load ptr, ptr @the_repository, align 8, !tbaa !25
-  %7 = call ptr @setup_git_directory(ptr noundef %6) #8 ; 0 uses
-  %8 = icmp eq i32 %5, 2
-  br i1 %8, label %9, label %14
-
-9:                                                ; preds = %2
-  %10 = load ptr, ptr @the_repository, align 8, !tbaa !25
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %12 = load ptr, ptr %11, align 8, !tbaa !16
-  %13 = call i32 @print_config_from_gitmodules(ptr noundef %10, ptr noundef %12) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  ret i32 %13
-
-14:                                               ; preds = %2
-  call void @usage_with_options(ptr noundef nonnull %4, ptr noundef nonnull %3) #10
-  unreachable
-}
-
-; Function Attrs: nounwind uwtable
-define internal i32 @cmd__submodule_config_set(i32 noundef %0, ptr noundef %1) #0 {
+define internal fastcc i32 @cmd__submodule_config_set(i32 noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca [1 x %struct.option], align 16      ; 5 uses
   %i.a = alloca [2 x ptr], align 16               ; 5 uses
@@ -331,7 +395,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_set.usage, i64 16, i1 false)
   %i.b = call i32 @parse_options(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str, ptr noundef nonnull %2, ptr noundef nonnull %i.a, i32 noundef 4) #8
-  %i.c = load ptr, ptr @the_repository, align 8, !tbaa !25
+  %i.c = load ptr, ptr @the_repository, align 8, !tbaa !18
   %i.d = call ptr @setup_git_directory(ptr noundef %i.c) #8 ; 0 uses
   %i.e = icmp eq i32 %i.b, 3
   br i1 %i.e, label %bb.b, label %bb.e
@@ -357,67 +421,6 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.a
   call void @usage_with_options(ptr noundef nonnull %i.a, ptr noundef nonnull %2) #10
-  unreachable
-}
-
-; Function Attrs: nounwind uwtable
-define internal i32 @cmd__submodule_config_unset(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
-  %3 = alloca [1 x %struct.option], align 16      ; 4 uses
-  %4 = alloca [2 x ptr], align 16                 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %3, i8 0, i64 96, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_unset.usage, i64 16, i1 false)
-  %5 = load ptr, ptr @the_repository, align 8, !tbaa !25
-  %6 = tail call ptr @setup_git_directory(ptr noundef %5) #8 ; 0 uses
-  %7 = icmp eq i32 %0, 2
-  br i1 %7, label %8, label %15
-
-8:                                                ; preds = %2
-  %9 = tail call i32 @is_writing_gitmodules_ok() #8
-  %.not = icmp eq i32 %9, 0
-  br i1 %.not, label %10, label %11
-
-10:                                               ; preds = %8
-  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.18) #10
-  unreachable
-
-11:                                               ; preds = %8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %13 = load ptr, ptr %12, align 8, !tbaa !16
-  %14 = tail call i32 @config_set_in_gitmodules_file_gently(ptr noundef %13, ptr noundef null) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  ret i32 %14
-
-15:                                               ; preds = %2
-  call void @usage_with_options(ptr noundef nonnull %4, ptr noundef nonnull %3) #10
-  unreachable
-}
-
-; Function Attrs: nounwind uwtable
-define internal range(i32 -1, 1) i32 @cmd__submodule_config_writeable(i32 noundef %0, ptr nofree readnone captures(none) %1) #0 {
-  %3 = alloca [1 x %struct.option], align 16      ; 4 uses
-  %4 = alloca [2 x ptr], align 16                 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %3, i8 0, i64 96, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) @__const.cmd__submodule_config_writeable.usage, i64 16, i1 false)
-  %5 = load ptr, ptr @the_repository, align 8, !tbaa !25
-  %6 = tail call ptr @setup_git_directory(ptr noundef %5) #8 ; 0 uses
-  %7 = icmp eq i32 %0, 1
-  br i1 %7, label %8, label %11
-
-8:                                                ; preds = %2
-  %9 = tail call i32 @is_writing_gitmodules_ok() #8
-  %.not = icmp eq i32 %9, 0
-  %10 = sext i1 %.not to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  ret i32 %10
-
-11:                                               ; preds = %2
-  call void @usage_with_options(ptr noundef nonnull %4, ptr noundef nonnull %3) #10
   unreachable
 }
 
@@ -472,7 +475,7 @@ attributes #10 = { noreturn nounwind }
 !llvm.errno.tbaa = !{!13}
 
 !0 = distinct !{null}
-!1 = distinct !{!1, !23}
+!1 = distinct !{!1, !25}
 !2 = !{i32 7, !"Dwarf Version", i32 5}
 !3 = !{i32 2, !"Debug Info Version", i32 3}
 !4 = !{i32 8, !"PIC Level", i32 2}
@@ -488,15 +491,13 @@ attributes #10 = { noreturn nounwind }
 !14 = !{!"any pointer", !10, i64 0}
 !15 = !{!"p1 omnipotent char", !14, i64 0}
 !16 = !{!15, !15, i64 0}
-!17 = !{!"p1 _ZTS8_IO_FILE", !14, i64 0}
+!17 = !{!"p1 _ZTS10repository", !14, i64 0}
 !18 = !{!17, !17, i64 0}
-!19 = !{!"long", !10, i64 0}
-!20 = !{!"strbuf", !19, i64 0, !19, i64 8, !15, i64 16}
-!21 = !{!20, !15, i64 16}
-!22 = !{ptr @check_submodule_name, ptr @check_submodule_url}
-!23 = !{!"llvm.loop.mustprogress"}
-!24 = !{!"p1 _ZTS10repository", !14, i64 0}
-!25 = !{!24, !24, i64 0}
-!26 = !{!"test_cmd", !15, i64 0, !14, i64 8}
-!27 = !{!26, !14, i64 8}
+!19 = !{!"p1 _ZTS8_IO_FILE", !14, i64 0}
+!20 = !{!19, !19, i64 0}
+!21 = !{!"long", !10, i64 0}
+!22 = !{!"strbuf", !21, i64 0, !21, i64 8, !15, i64 16}
+!23 = !{!22, !15, i64 16}
+!24 = !{ptr @check_submodule_name, ptr @check_submodule_url}
+!25 = !{!"llvm.loop.mustprogress"}
 end_hunk_0
