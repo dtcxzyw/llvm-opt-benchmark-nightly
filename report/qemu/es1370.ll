@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/es1370?download=true
-inline.NumInlined: 43
+inline.NumInlined: 46
 inline.NumDeleted: 29
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@es1370_write:bb.a
   tail call fastcc void @es1370_update_voices(ptr noundef %0, i32 noundef %i.j, i32 noundef %i.l)
   br label %trace_es1370_sample_count_wr.exit
@@ -204,26 +204,30 @@ declare void @qemu_log(ptr noundef, ...) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @es1370_update_voices(ptr noundef %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 {
 .peel.begin:
-  %3 = alloca i32, align 4                        ; 8 uses
-  %4 = alloca i32, align 4                        ; 10 uses
-  %5 = alloca %struct.audsettings, align 4        ; 16 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
+  %3 = alloca %struct.audsettings, align 4        ; 16 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3160 ; 6 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2768 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3120 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3136 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 3144 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 3144 ; 7 uses
   %i.h = and i32 %2, 3                            ; 2 uses
-  %i.i = load i32, ptr %i.a, align 8
-  %i.j = and i32 %i.i, 3
-  call void @es1370_dac1_calc_freq(ptr noundef %0, i32 noundef %1, ptr noundef nonnull %3, ptr noundef nonnull %4) #5
-  %.not.peel = icmp eq i32 %i.j, %i.h
-  %.pre.a = load i32, ptr %4, align 4             ; 4 uses
-  %i.k = load i32, ptr %3, align 4
-  %.not59.peel = icmp eq i32 %i.k, %.pre.a
+  %4 = load i32, ptr %i.a, align 8
+  %5 = and i32 %4, 3
+  %i.i = load i32, ptr %i.g, align 8              ; 2 uses
+  %6 = lshr i32 %i.i, 12
+  %i.j = and i32 %6, 3
+  %7 = zext nneg i32 %i.j to i64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr @dac1_samplerate, i64 %7
+  %.pre.a = load i32, ptr %8, align 4
+  %9 = lshr i32 %1, 12
+  %10 = and i32 %9, 3
+  %11 = zext nneg i32 %10 to i64
+  %12 = getelementptr inbounds nuw [4 x i8], ptr @dac1_samplerate, i64 %11
+  %i.k = load i32, ptr %12, align 4               ; 3 uses
+  %.not.peel = icmp eq i32 %5, %i.h
+  %.not59.peel = icmp eq i32 %.pre.a, %i.k
   %or.cond = select i1 %.not.peel, i1 %.not59.peel, i1 false
   br i1 %or.cond, label %bb.f, label %bb.a
 
@@ -231,7 +235,7 @@ bb.a:                                             ; preds = %.peel.begin
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 3056
   %i.m = and i32 %2, 1                            ; 3 uses
   %i.n = lshr i32 %i.h, 1
-  %i.o = add nuw nsw i32 %i.m, %i.n               ; 2 uses
+  %i.o = add nuw nsw i32 %i.n, %i.m               ; 2 uses
   store i32 %i.o, ptr %i.l, align 8
   %i.p = and i32 %2, 2
   %.not60.peel = icmp eq i32 %i.p, 0              ; 2 uses
@@ -240,52 +244,49 @@ bb.a:                                             ; preds = %.peel.begin
   %i.r = select i1 %.not61.peel, ptr @.str.17, ptr @.str.16
   %i.s = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.peel = icmp eq i32 %i.s, 0
-  br i1 %.not.i.peel, label %trace_es1370_stream_format.exit.peel, label %bb.b, !prof !7
+  br i1 %.not.i.peel, label %bb.e, label %bb.b, !prof !7
 
 bb.b:                                             ; preds = %bb.a
   %i.t = load i16, ptr @_TRACE_ES1370_STREAM_FORMAT_DSTATE, align 2
   %.not4.i.peel = icmp eq i16 %i.t, 0
-  br i1 %.not4.i.peel, label %trace_es1370_stream_format.exit.peel, label %bb.c
+  br i1 %.not4.i.peel, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.u = load i32, ptr @qemu_loglevel, align 4
   %i.v = and i32 %i.u, 32768
   %.not5.i.peel = icmp eq i32 %i.v, 0
-  br i1 %.not5.i.peel, label %trace_es1370_stream_format.exit.peel, label %bb.d
+  br i1 %.not5.i.peel, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.22, i32 noundef range(i32 0, 3) 0, i32 noundef %.pre.a, ptr noundef nonnull %i.q, ptr noundef nonnull %i.r, i32 noundef range(i32 0, -2147483647) %i.o) #5
-  br label %trace_es1370_stream_format.exit.peel
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.22, i32 noundef range(i32 0, 3) 0, i32 noundef %i.k, ptr noundef nonnull %i.q, ptr noundef nonnull %i.r, i32 noundef range(i32 0, -2147483647) %i.o) #5
+  br label %bb.e
 
-trace_es1370_stream_format.exit.peel:             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %.not62.peel = icmp eq i32 %.pre.a, 0
-  br i1 %.not62.peel, label %bb.f, label %bb.e
-
-bb.e:                                             ; preds = %trace_es1370_stream_format.exit.peel
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 12
+bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
+  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 0, ptr %i.w, align 4, !annotation !8
-  store i32 %.pre.a, ptr %5, align 4
+  store i32 %i.k, ptr %3, align 4
   %i.x = shl nuw nsw i32 1, %i.m
   store i32 %i.x, ptr %i.b, align 4
   %i.y = select i1 %.not60.peel, i32 0, i32 3
   store i32 %i.y, ptr %i.c, align 4
   %i.z = load ptr, ptr %i.d, align 16
   %i.aa = load ptr, ptr %i.e, align 16
-  %i.ab = call ptr @audio_be_open_out(ptr noundef %i.z, ptr noundef %i.aa, ptr noundef nonnull @.str.20, ptr noundef nonnull %0, ptr noundef nonnull @es1370_dac1_callback, ptr noundef nonnull %5) #5
+  %i.ab = call ptr @audio_be_open_out(ptr noundef %i.z, ptr noundef %i.aa, ptr noundef nonnull @.str.20, ptr noundef nonnull %0, ptr noundef nonnull @es1370_dac1_callback, ptr noundef nonnull %3) #5
   store ptr %i.ab, ptr %i.e, align 16
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
+  %.pre = load i32, ptr %i.g, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %.peel.begin, %bb.e, %trace_es1370_stream_format.exit.peel
-  %6 = load i32, ptr %i.g, align 8
-  %i.ac = xor i32 %6, %1
+bb.f:                                             ; preds = %.peel.begin, %bb.e
+  %13 = phi i32 [ %i.i, %.peel.begin ], [ %.pre, %bb.e ] ; 2 uses
+  %i.ac = xor i32 %13, %1
   %i.ad = and i32 %i.ac, 64
   %.not64.peel = icmp eq i32 %i.ad, 0
   br i1 %.not64.peel, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.ae = load i32, ptr %i.a, align 8
+  %i.ae = load i32, ptr %i.a, align 8             ; 2 uses
   %i.af = xor i32 %i.ae, %2
   %i.ag = and i32 %i.af, 2048
   %.not65.peel = icmp eq i32 %i.ag, 0
@@ -300,30 +301,39 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ak = load ptr, ptr %i.d, align 16
   %i.al = load ptr, ptr %i.e, align 16
   call void @audio_be_set_active_out(ptr noundef %i.ak, ptr noundef %i.al, i1 noundef zeroext %i.aj) #5
+  %.pre94 = load i32, ptr %i.a, align 8
+  %.pn.in.in.in.peel.pre = load i32, ptr %i.g, align 8
   br label %.peel.next
 
 .peel.next:                                       ; preds = %bb.g, %bb.h
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 3128 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 3128
-  %i.am = lshr i32 %2, 2                          ; 2 uses
-  %i.an = and i32 %i.am, 3                        ; 2 uses
-  %10 = load i32, ptr %i.a, align 8
-  %i.ao = lshr i32 %10, 2
-  %i.ap = and i32 %i.ao, 3
-  call void @es1370_dac2_and_adc_calc_freq(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %3, ptr noundef nonnull %4) #5
-  %.not = icmp eq i32 %i.ap, %i.an
-  %.pre70 = load i32, ptr %4, align 4             ; 5 uses
-  %11 = load i32, ptr %3, align 4
-  %.not59.a = icmp eq i32 %11, %.pre70
-  %or.cond73 = select i1 %.not, i1 %.not59.a, i1 false
-  br i1 %or.cond73, label %bb.n, label %bb.i
+  %.pn.in.in.in.peel = phi i32 [ %13, %bb.g ], [ %.pn.in.in.in.peel.pre, %bb.h ] ; 2 uses
+  %14 = phi i32 [ %i.ae, %bb.g ], [ %.pre94, %bb.h ]
+  %15 = lshr i32 %2, 2                            ; 2 uses
+  %16 = lshr i32 %14, 2
+  %i.am = lshr i32 %1, 16
+  %i.an = and i32 %i.am, 8191
+  %17 = add nuw nsw i32 %i.an, 2
+  %18 = udiv i32 1411200, %17                     ; 6 uses
+  %19 = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 3128 ; 3 uses
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 3096
+  %22 = lshr i32 %2, 4                            ; 2 uses
+  %i.ao = lshr i32 %.pn.in.in.in.peel, 16
+  %i.ap = and i32 %i.ao, 8191
+  %.pn.peel = add nuw nsw i32 %i.ap, 2
+  %.078.peel = udiv i32 1411200, %.pn.peel
+  %23 = and i32 %16, 3
+  %24 = and i32 %15, 3                            ; 2 uses
+  %.not.peel81 = icmp eq i32 %23, %24
+  %.not59.a = icmp eq i32 %.078.peel, %18
+  %or.cond73.peel = and i1 %.not.peel81, %.not59.a
+  br i1 %or.cond73.peel, label %bb.n, label %bb.i
 
 bb.i:                                             ; preds = %.peel.next
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 3076
-  %i.ar = and i32 %i.am, 1                        ; 3 uses
-  %i.as = lshr i32 %i.an, 1
-  %i.at = add nuw nsw i32 %i.ar, %i.as            ; 2 uses
+  %i.ar = and i32 %15, 1                          ; 3 uses
+  %i.as = lshr i32 %24, 1
+  %i.at = add nuw nsw i32 %i.as, %i.ar            ; 2 uses
   store i32 %i.at, ptr %i.aq, align 4
   %i.au = and i32 %2, 8
   %.not60.a = icmp eq i32 %i.au, 0                ; 2 uses
@@ -332,53 +342,48 @@ bb.i:                                             ; preds = %.peel.next
   %i.aw = select i1 %.not61.a, ptr @.str.17, ptr @.str.16
   %i.ax = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.a = icmp eq i32 %i.ax, 0
-  br i1 %.not.i.a, label %trace_es1370_stream_format.exit, label %bb.j, !prof !7
+  br i1 %.not.i.a, label %bb.m, label %bb.j, !prof !7
 
 bb.j:                                             ; preds = %bb.i
   %i.ay = load i16, ptr @_TRACE_ES1370_STREAM_FORMAT_DSTATE, align 2
   %.not4.i.a = icmp eq i16 %i.ay, 0
-  br i1 %.not4.i.a, label %trace_es1370_stream_format.exit, label %bb.k
+  br i1 %.not4.i.a, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.az = load i32, ptr @qemu_loglevel, align 4
   %i.ba = and i32 %i.az, 32768
   %.not5.i.a = icmp eq i32 %i.ba, 0
-  br i1 %.not5.i.a, label %trace_es1370_stream_format.exit, label %bb.l
+  br i1 %.not5.i.a, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.22, i32 noundef range(i32 0, 3) 1, i32 noundef %.pre70, ptr noundef nonnull %i.av, ptr noundef nonnull %i.aw, i32 noundef range(i32 0, -2147483647) %i.at) #5
-  %.pre71 = load i32, ptr %4, align 4
-  br label %trace_es1370_stream_format.exit
+  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.22, i32 noundef range(i32 0, 3) 1, i32 noundef %18, ptr noundef nonnull %i.av, ptr noundef nonnull %i.aw, i32 noundef range(i32 0, -2147483647) %i.at) #5
+  br label %bb.m
 
-trace_es1370_stream_format.exit:                  ; preds = %bb.i, %bb.j, %bb.k, %bb.l
-  %12 = phi i32 [ %.pre70, %bb.i ], [ %.pre70, %bb.j ], [ %.pre70, %bb.k ], [ %.pre71, %bb.l ] ; 2 uses
-  %.not62 = icmp eq i32 %12, 0
-  br i1 %.not62, label %bb.n, label %bb.m
-
-bb.m:                                             ; preds = %trace_es1370_stream_format.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
-  store i32 0, ptr %7, align 4, !annotation !8
-  store i32 %12, ptr %5, align 4
+bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
+  store i32 0, ptr %19, align 4, !annotation !8
+  store i32 %18, ptr %3, align 4
   %i.bb = shl nuw nsw i32 1, %i.ar
   store i32 %i.bb, ptr %i.b, align 4
   %i.bc = select i1 %.not60.a, i32 0, i32 3
   store i32 %i.bc, ptr %i.c, align 4
   %i.bd = load ptr, ptr %i.d, align 16
-  %i.be = load ptr, ptr %8, align 8
-  %i.bf = call ptr @audio_be_open_out(ptr noundef %i.bd, ptr noundef %i.be, ptr noundef nonnull @.str.19, ptr noundef nonnull %0, ptr noundef nonnull @es1370_dac2_callback, ptr noundef nonnull %5) #5
-  store ptr %i.bf, ptr %8, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  %i.be = load ptr, ptr %20, align 8
+  %i.bf = call ptr @audio_be_open_out(ptr noundef %i.bd, ptr noundef %i.be, ptr noundef nonnull @.str.19, ptr noundef nonnull %0, ptr noundef nonnull @es1370_dac2_callback, ptr noundef nonnull %3) #5
+  store ptr %i.bf, ptr %20, align 8
+  %.pre96.pre = load i32, ptr %i.g, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   br label %bb.n
 
-bb.n:                                             ; preds = %.peel.next, %trace_es1370_stream_format.exit, %bb.m
-  %13 = load i32, ptr %i.g, align 8
-  %i.bg = xor i32 %13, %1
+bb.n:                                             ; preds = %bb.m, %.peel.next
+  %25 = phi i32 [ %.pre96.pre, %bb.m ], [ %.pn.in.in.in.peel, %.peel.next ] ; 2 uses
+  %i.bg = xor i32 %25, %1
   %i.bh = and i32 %i.bg, 32
   %.not64.a = icmp eq i32 %i.bh, 0
   br i1 %.not64.a, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.bi = load i32, ptr %i.a, align 8
+  %i.bi = load i32, ptr %i.a, align 8             ; 2 uses
   %i.bj = xor i32 %i.bi, %2
   %i.bk = and i32 %i.bj, 4096
   %.not65 = icmp eq i32 %i.bk, 0
@@ -386,35 +391,37 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bl = and i32 %1, 32
-  %.not66 = icmp eq i32 %i.bl, 0
+  %.not66.peel91 = icmp ne i32 %i.bl, 0
   %i.bm = and i32 %2, 4096
   %.not67 = icmp eq i32 %i.bm, 0
-  %14 = select i1 %.not66, i1 false, i1 %.not67
+  %26 = and i1 %.not66.peel91, %.not67
   %i.bn = load ptr, ptr %i.d, align 16
-  %i.bo = load ptr, ptr %9, align 8
-  call void @audio_be_set_active_out(ptr noundef %i.bn, ptr noundef %i.bo, i1 noundef zeroext %14) #5
+  %i.bo = load ptr, ptr %20, align 8
+  call void @audio_be_set_active_out(ptr noundef %i.bn, ptr noundef %i.bo, i1 noundef zeroext %26) #5
+  %.pre97 = load i32, ptr %i.a, align 8
+  %.pn.in.in.in.pre.pre = load i32, ptr %i.g, align 8
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %15 = lshr i32 %2, 4                            ; 2 uses
-  %16 = and i32 %15, 3                            ; 2 uses
-  %17 = load i32, ptr %i.a, align 8
-  %i.bp = lshr i32 %17, 4
-  %i.bq = and i32 %i.bp, 3
-  call void @es1370_dac2_and_adc_calc_freq(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %3, ptr noundef nonnull %4) #5
-  %.not.1 = icmp eq i32 %i.bq, %16
-  %.pre70.1 = load i32, ptr %4, align 4           ; 5 uses
-  %18 = load i32, ptr %3, align 4
-  %.not59.1 = icmp eq i32 %18, %.pre70.1
-  %or.cond73.1 = select i1 %.not.1, i1 %.not59.1, i1 false
-  br i1 %or.cond73.1, label %bb.w, label %bb.r
+  %.pn.in.in.in.pre = phi i32 [ %.pn.in.in.in.pre.pre, %bb.p ], [ %25, %bb.o ] ; 2 uses
+  %27 = phi i32 [ %.pre97, %bb.p ], [ %i.bi, %bb.o ]
+  %28 = lshr i32 %27, 4
+  %i.bp = lshr i32 %.pn.in.in.in.pre, 16
+  %i.bq = and i32 %i.bp, 8191
+  %.pn = add nuw nsw i32 %i.bq, 2
+  %.078 = udiv i32 1411200, %.pn
+  %29 = and i32 %28, 3
+  %30 = and i32 %22, 3                            ; 2 uses
+  %.not = icmp eq i32 %29, %30
+  %.not59.1 = icmp eq i32 %.078, %18
+  %or.cond73 = and i1 %.not, %.not59.1
+  br i1 %or.cond73, label %bb.w, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 3096
-  %i.br = and i32 %15, 1                          ; 3 uses
-  %i.bs = lshr i32 %16, 1
-  %i.bt = add nuw nsw i32 %i.br, %i.bs            ; 2 uses
-  store i32 %i.bt, ptr %19, align 8
+  %i.br = and i32 %22, 1                          ; 3 uses
+  %i.bs = lshr i32 %30, 1
+  %i.bt = add nuw nsw i32 %i.bs, %i.br            ; 2 uses
+  store i32 %i.bt, ptr %21, align 8
   %i.bu = and i32 %2, 32
   %.not60.1 = icmp eq i32 %i.bu, 0                ; 2 uses
   %i.bv = select i1 %.not60.1, ptr @.str.15, ptr @.str.14
@@ -422,47 +429,42 @@ bb.r:                                             ; preds = %bb.q
   %i.bw = select i1 %.not61.1, ptr @.str.17, ptr @.str.16
   %i.bx = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.1 = icmp eq i32 %i.bx, 0
-  br i1 %.not.i.1, label %trace_es1370_stream_format.exit.1, label %bb.s, !prof !7
+  br i1 %.not.i.1, label %bb.v, label %bb.s, !prof !7
 
 bb.s:                                             ; preds = %bb.r
   %i.by = load i16, ptr @_TRACE_ES1370_STREAM_FORMAT_DSTATE, align 2
   %.not4.i.1 = icmp eq i16 %i.by, 0
-  br i1 %.not4.i.1, label %trace_es1370_stream_format.exit.1, label %bb.t
+  br i1 %.not4.i.1, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.bz = load i32, ptr @qemu_loglevel, align 4
   %i.ca = and i32 %i.bz, 32768
   %.not5.i.1 = icmp eq i32 %i.ca, 0
-  br i1 %.not5.i.1, label %trace_es1370_stream_format.exit.1, label %bb.u
+  br i1 %.not5.i.1, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.22, i32 noundef range(i32 0, 3) 2, i32 noundef %.pre70.1, ptr noundef nonnull %i.bv, ptr noundef nonnull %i.bw, i32 noundef range(i32 0, -2147483647) %i.bt) #5
-  %.pre71.1 = load i32, ptr %4, align 4
-  br label %trace_es1370_stream_format.exit.1
+  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.22, i32 noundef range(i32 0, 3) 2, i32 noundef %18, ptr noundef nonnull %i.bv, ptr noundef nonnull %i.bw, i32 noundef range(i32 0, -2147483647) %i.bt) #5
+  br label %bb.v
 
-trace_es1370_stream_format.exit.1:                ; preds = %bb.u, %bb.t, %bb.s, %bb.r
-  %20 = phi i32 [ %.pre70.1, %bb.r ], [ %.pre70.1, %bb.s ], [ %.pre70.1, %bb.t ], [ %.pre71.1, %bb.u ] ; 2 uses
-  %.not62.1 = icmp eq i32 %20, 0
-  br i1 %.not62.1, label %bb.w, label %bb.v
-
-bb.v:                                             ; preds = %trace_es1370_stream_format.exit.1
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
-  store i32 0, ptr %7, align 4, !annotation !8
-  store i32 %20, ptr %5, align 4
+bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
+  store i32 0, ptr %19, align 4, !annotation !8
+  store i32 %18, ptr %3, align 4
   %i.cb = shl nuw nsw i32 1, %i.br
   store i32 %i.cb, ptr %i.b, align 4
   %i.cc = select i1 %.not60.1, i32 0, i32 3
   store i32 %i.cc, ptr %i.c, align 4
   %i.cd = load ptr, ptr %i.d, align 16
   %i.ce = load ptr, ptr %i.f, align 16
-  %i.cf = call ptr @audio_be_open_in(ptr noundef %i.cd, ptr noundef %i.ce, ptr noundef nonnull @.str.18, ptr noundef nonnull %0, ptr noundef nonnull @es1370_adc_callback, ptr noundef nonnull %5) #5
+  %i.cf = call ptr @audio_be_open_in(ptr noundef %i.cd, ptr noundef %i.ce, ptr noundef nonnull @.str.18, ptr noundef nonnull %0, ptr noundef nonnull @es1370_adc_callback, ptr noundef nonnull %3) #5
   store ptr %i.cf, ptr %i.f, align 16
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  %.pre98.pre = load i32, ptr %i.g, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.v, %trace_es1370_stream_format.exit.1, %bb.q
-  %21 = load i32, ptr %i.g, align 8
-  %i.cg = xor i32 %21, %1
+bb.w:                                             ; preds = %bb.q, %bb.v
+  %.pn.in.in.in100 = phi i32 [ %.pn.in.in.in.pre, %bb.q ], [ %.pre98.pre, %bb.v ]
+  %i.cg = xor i32 %.pn.in.in.in100, %1
   %i.ch = and i32 %i.cg, 16
   %.not64.1 = icmp eq i32 %i.ch, 0
   br i1 %.not64.1, label %.loopexit, label %.thread
@@ -478,8 +480,6 @@ bb.w:                                             ; preds = %bb.v, %trace_es1370
 .loopexit:                                        ; preds = %bb.w, %.thread
   store i32 %1, ptr %i.g, align 8
   store i32 %2, ptr %i.a, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   ret void
 }
 
