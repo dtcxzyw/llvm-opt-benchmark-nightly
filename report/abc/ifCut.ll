@@ -204,6 +204,7 @@ bb.a:
   %i.e = getelementptr i8, ptr %0, i64 40         ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2272 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2264 ; 2 uses
+  %3 = getelementptr i8, ptr %2, i64 39
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph72, %bb.q
@@ -378,16 +379,16 @@ bb.o:                                             ; preds = %bb.d, %Vec_IntPush.
 
 .critedge4:                                       ; preds = %.lr.ph66, %.critedge2
   %i.ce = icmp eq i32 %i.bo, 2
-  %.pre84 = load i64, ptr %i.b, align 4           ; 3 uses
+  %.pre84 = load i64, ptr %i.b, align 4           ; 2 uses
   br i1 %i.ce, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.critedge4
-  %i.cf = add i64 %.pre84, 4278190080             ; 2 uses
-  %3 = and i64 %i.cf, 4278190080
-  %4 = and i64 %.pre84, -4278190081
-  %5 = or disjoint i64 %3, %4                     ; 2 uses
-  store i64 %5, ptr %i.b, align 4
-  %i.cg = trunc i64 %i.cf to i32
+  %i.cf = add i64 %.pre84, 4278190080
+  %4 = lshr i64 %i.cf, 24
+  %5 = trunc i64 %4 to i8
+  store i8 %5, ptr %3, align 1
+  %6 = load i64, ptr %i.b, align 4                ; 2 uses
+  %i.cg = trunc i64 %6 to i32
   %i.ch = lshr i32 %i.cg, 24
   %i.ci = icmp slt i32 %.05069, %i.ch
   br i1 %i.ci, label %.lr.ph68, label %._crit_edge
@@ -406,7 +407,7 @@ bb.p:                                             ; preds = %.critedge4
   br i1 %i.cp, label %.lr.ph68, label %._crit_edge, !llvm.loop !161
 
 ._crit_edge:                                      ; preds = %.lr.ph68, %bb.p
-  %i.cq = phi i64 [ %5, %bb.p ], [ %i.cm, %.lr.ph68 ]
+  %i.cq = phi i64 [ %6, %bb.p ], [ %i.cm, %.lr.ph68 ]
   %i.cr = add nsw i32 %.05069, -1
   br label %bb.q
 

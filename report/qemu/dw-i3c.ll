@@ -204,14 +204,12 @@ bb.c:                                             ; preds = %bb.b
   %i.r = shl nuw i32 %i.q, 24
   %i.s = or disjoint i32 %i.r, %i.o               ; 2 uses
   %i.t = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.d) #6
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1356 ; 2 uses
-  %4 = load i32, ptr %3, align 4
-  %5 = and i32 %4, -16711681
-  %6 = shl i32 %i.t, 14
-  %7 = add i32 %6, 49152
-  %8 = and i32 %7, 16711680
-  %9 = or disjoint i32 %8, %5
-  store i32 %9, ptr %3, align 4
+  %3 = shl i32 %i.t, 14
+  %4 = add i32 %3, 49152
+  %5 = lshr i32 %4, 16
+  %6 = trunc i32 %5 to i8
+  %7 = getelementptr i8, ptr %i.a, i64 1358
+  store i8 %6, ptr %7, align 2
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 1308
   %i.v = load i32, ptr %i.u, align 4
   %i.w = lshr i32 %i.v, 24
@@ -284,14 +282,12 @@ bb.j:                                             ; preds = %bb.f
   %i.bj = shl nuw i32 %i.bi, 24
   %i.bk = or disjoint i32 %i.bj, %i.bg            ; 5 uses
   %i.bl = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.as) #6
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 1360 ; 2 uses
-  %11 = load i32, ptr %10, align 16
-  %12 = and i32 %11, -16711681
-  %13 = shl i32 %i.bl, 14
-  %14 = add i32 %13, 49152
-  %15 = and i32 %14, 16711680
-  %16 = or disjoint i32 %15, %12
-  store i32 %16, ptr %10, align 16
+  %8 = shl i32 %i.bl, 14
+  %9 = add i32 %8, 49152
+  %10 = lshr i32 %9, 16
+  %11 = trunc i32 %10 to i8
+  %12 = getelementptr i8, ptr %i.a, i64 1362
+  store i8 %11, ptr %12, align 2
   %i.bm = getelementptr inbounds nuw i8, ptr %i.a, i64 1312
   %i.bn = load i32, ptr %i.bm, align 16           ; 2 uses
   %i.bo = lshr i32 %i.bn, 8
@@ -391,14 +387,12 @@ bb.t:                                             ; preds = %bb.p
   %i.di = shl nuw i32 %i.dh, 24
   %i.dj = or disjoint i32 %i.di, %i.df            ; 2 uses
   %i.dk = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.cr) #6
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 1356 ; 2 uses
-  %18 = load i32, ptr %17, align 4
-  %19 = and i32 %18, -65281
-  %20 = shl i32 %i.dk, 6
-  %21 = add i32 %20, 192
-  %22 = and i32 %21, 65280
-  %23 = or disjoint i32 %22, %19
-  store i32 %23, ptr %17, align 4
+  %13 = shl i32 %i.dk, 6
+  %14 = add i32 %13, 192
+  %15 = lshr i32 %14, 8
+  %16 = trunc i32 %15 to i8
+  %17 = getelementptr i8, ptr %i.a, i64 1357
+  store i8 %16, ptr %17, align 1
   %i.dl = getelementptr inbounds nuw i8, ptr %i.a, i64 1308
   %i.dm = load i32, ptr %i.dl, align 4
   %i.dn = lshr i32 %i.dm, 8
@@ -644,12 +638,9 @@ trace_dw_i3c_push_tx.exit.i:                      ; preds = %bb.r, %bb.q, %bb.p,
   %i.bg = tail call i32 @fifo8_num_free(ptr noundef nonnull %i.an) #6
   %i.bh = add i32 %i.bg, 3
   %i.bi = lshr i32 %i.bh, 2
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.a, i64 1360 ; 2 uses
-  %4 = load i32, ptr %i.bj, align 16
-  %5 = and i32 %i.bi, 255
-  %6 = and i32 %4, -256
-  %7 = or disjoint i32 %5, %6
-  store i32 %7, ptr %i.bj, align 16
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.a, i64 1360
+  %4 = trunc i32 %i.bi to i8
+  store i8 %4, ptr %i.bj, align 16
   %i.bk = getelementptr inbounds nuw i8, ptr %i.a, i64 1312
   %i.bl = load i32, ptr %i.bk, align 16
   %i.bm = and i32 %i.bl, 7                        ; 2 uses
@@ -721,7 +712,7 @@ bb.z:                                             ; preds = %trace_dw_i3c_write.
 
 bb.aa:                                            ; preds = %bb.z
   %i.cl = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.12, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #6
-  %i.cm = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.cl, ptr noundef nonnull @.str, ptr noundef nonnull @.str.15, i32 noundef 18, ptr noundef nonnull @__func__.DW_I3C) #6 ; 23 uses
+  %i.cm = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.cl, ptr noundef nonnull @.str, ptr noundef nonnull @.str.15, i32 noundef 18, ptr noundef nonnull @__func__.DW_I3C) #6 ; 26 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 1264
   %i.co = load i8, ptr %i.cn, align 16
   %i.cp = zext i8 %i.co to i32
@@ -769,10 +760,10 @@ trace_dw_i3c_reset.exit.i.i:                      ; preds = %bb.ad, %bb.ac, %bb.
   %i.dl = getelementptr inbounds nuw i8, ptr %i.cm, i64 1265
   %i.dm = load i8, ptr %i.dl, align 1
   %i.dn = zext i8 %i.dm to i32
-  %i.do = getelementptr inbounds nuw i8, ptr %i.cm, i64 1356 ; 8 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %i.cm, i64 1356 ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cm, i64 1266
   %i.dq = load i16, ptr %i.dp, align 2
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.cm, i64 1360 ; 4 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.cm, i64 1360
   %i.ds = and i16 %i.dq, 255
   %i.dt = zext nneg i16 %i.ds to i32
   %i.du = load <2 x i32>, ptr %i.do, align 4
@@ -786,11 +777,8 @@ trace_dw_i3c_reset.exit.i.i:                      ; preds = %bb.ad, %bb.ac, %bb.
   %i.ea = tail call i32 @fifo8_num_free(ptr noundef nonnull %i.dz) #6
   %i.eb = add i32 %i.ea, 3
   %i.ec = lshr i32 %i.eb, 2
-  %8 = load i32, ptr %i.do, align 4
-  %9 = and i32 %i.ec, 255
-  %10 = and i32 %8, -256
-  %11 = or disjoint i32 %9, %10
-  store i32 %11, ptr %i.do, align 4
+  %5 = trunc i32 %i.ec to i8
+  store i8 %5, ptr %i.do, align 4
   %i.ed = getelementptr inbounds nuw i8, ptr %i.cm, i64 1308
   %i.ee = load i32, ptr %i.ed, align 4
   %i.ef = and i32 %i.ee, 255
@@ -821,13 +809,12 @@ dw_i3c_reset.exit.i:                              ; preds = %bb.ae, %trace_dw_i3
   %i.ev = getelementptr inbounds nuw i8, ptr %i.cm, i64 1128 ; 4 uses
   tail call void @fifo8_reset(ptr noundef nonnull %i.ev) #6
   %i.ew = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.ev) #6
-  %12 = load i32, ptr %i.do, align 4
-  %13 = and i32 %12, -65281
-  %14 = shl i32 %i.ew, 6
-  %15 = add i32 %14, 192
-  %16 = and i32 %15, 65280
-  %17 = or disjoint i32 %16, %13
-  store i32 %17, ptr %i.do, align 4
+  %6 = shl i32 %i.ew, 6
+  %7 = add i32 %6, 192
+  %8 = lshr i32 %7, 8
+  %9 = trunc i32 %8 to i8
+  %10 = getelementptr i8, ptr %i.cm, i64 1357
+  store i8 %9, ptr %10, align 1
   %i.ex = getelementptr inbounds nuw i8, ptr %i.cm, i64 1340 ; 8 uses
   %i.ey = load i32, ptr %i.ex, align 4
   %i.ez = and i32 %i.ey, -17                      ; 2 uses
@@ -843,13 +830,12 @@ dw_i3c_reset.exit.i:                              ; preds = %bb.ae, %trace_dw_i3
   %i.fh = getelementptr inbounds nuw i8, ptr %i.cm, i64 1200
   tail call void @fifo8_reset(ptr noundef nonnull %i.fh) #6
   %i.fi = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.ev) #6
-  %18 = load i32, ptr %i.do, align 4
-  %19 = and i32 %18, -16711681
-  %20 = shl i32 %i.fi, 14
-  %21 = add i32 %20, 49152
-  %22 = and i32 %21, 16711680
-  %23 = or disjoint i32 %22, %19
-  store i32 %23, ptr %i.do, align 4
+  %11 = shl i32 %i.fi, 14
+  %12 = add i32 %11, 49152
+  %13 = lshr i32 %12, 16
+  %14 = trunc i32 %13 to i8
+  %15 = getelementptr i8, ptr %i.cm, i64 1358
+  store i8 %14, ptr %15, align 2
   %i.fj = load i32, ptr %i.ex, align 4
   %i.fk = and i32 %i.fj, -5                       ; 2 uses
   store i32 %i.fk, ptr %i.ex, align 4
@@ -864,11 +850,8 @@ dw_i3c_reset.exit.i:                              ; preds = %bb.ae, %trace_dw_i3
   %i.fr = tail call i32 @fifo8_num_free(ptr noundef nonnull %i.fq) #6
   %i.fs = add i32 %i.fr, 3
   %i.ft = lshr i32 %i.fs, 2
-  %24 = load i32, ptr %i.dr, align 16
-  %25 = and i32 %i.ft, 255
-  %26 = and i32 %24, -256
-  %27 = or disjoint i32 %25, %26
-  store i32 %27, ptr %i.dr, align 16
+  %16 = trunc i32 %i.ft to i8
+  store i8 %16, ptr %i.dr, align 16
   %i.fu = load i32, ptr %i.ex, align 4
   %i.fv = or i32 %i.fu, 1                         ; 2 uses
   store i32 %i.fv, ptr %i.ex, align 4
@@ -881,13 +864,12 @@ dw_i3c_reset.exit.i:                              ; preds = %bb.ae, %trace_dw_i3
   %i.gb = getelementptr inbounds nuw i8, ptr %i.cm, i64 1176
   tail call void @fifo8_reset(ptr noundef nonnull %i.gb) #6
   %i.gc = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.ev) #6
-  %28 = load i32, ptr %i.dr, align 16
-  %29 = and i32 %28, -16711681
-  %30 = shl i32 %i.gc, 14
-  %31 = add i32 %30, 49152
-  %32 = and i32 %31, 16711680
-  %33 = or disjoint i32 %32, %29
-  store i32 %33, ptr %i.dr, align 16
+  %17 = shl i32 %i.gc, 14
+  %18 = add i32 %17, 49152
+  %19 = lshr i32 %18, 16
+  %20 = trunc i32 %19 to i8
+  %21 = getelementptr i8, ptr %i.cm, i64 1362
+  store i8 %20, ptr %21, align 2
   %i.gd = load i32, ptr %i.ex, align 4
   %i.ge = and i32 %i.gd, -3                       ; 2 uses
   store i32 %i.ge, ptr %i.ex, align 4
@@ -910,12 +892,9 @@ bb.ag:                                            ; preds = %bb.af
   %i.gm = tail call i32 @fifo8_num_free(ptr noundef nonnull %i.gl) #6
   %i.gn = add i32 %i.gm, 3
   %i.go = lshr i32 %i.gn, 2
-  %i.gp = getelementptr inbounds nuw i8, ptr %i.a, i64 1356 ; 2 uses
-  %34 = load i32, ptr %i.gp, align 4
-  %35 = and i32 %i.go, 255
-  %36 = and i32 %34, -256
-  %37 = or disjoint i32 %35, %36
-  store i32 %37, ptr %i.gp, align 4
+  %i.gp = getelementptr inbounds nuw i8, ptr %i.a, i64 1356
+  %22 = trunc i32 %i.go to i8
+  store i8 %22, ptr %i.gp, align 4
   %i.gq = getelementptr inbounds nuw i8, ptr %i.a, i64 1308
   %i.gr = load i32, ptr %i.gq, align 4
   %i.gs = and i32 %i.gr, 255
@@ -951,14 +930,12 @@ bb.ai:                                            ; preds = %dw_i3c_cmd_queue_re
   %i.hj = getelementptr inbounds nuw i8, ptr %i.a, i64 1128 ; 2 uses
   tail call void @fifo8_reset(ptr noundef nonnull %i.hj) #6
   %i.hk = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.hj) #6
-  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 1356 ; 2 uses
-  %39 = load i32, ptr %38, align 4
-  %40 = and i32 %39, -65281
-  %41 = shl i32 %i.hk, 6
-  %42 = add i32 %41, 192
-  %43 = and i32 %42, 65280
-  %44 = or disjoint i32 %43, %40
-  store i32 %44, ptr %38, align 4
+  %23 = shl i32 %i.hk, 6
+  %24 = add i32 %23, 192
+  %25 = lshr i32 %24, 8
+  %26 = trunc i32 %25 to i8
+  %27 = getelementptr i8, ptr %i.a, i64 1357
+  store i8 %26, ptr %27, align 1
   %i.hl = getelementptr inbounds nuw i8, ptr %i.a, i64 1340 ; 2 uses
   %i.hm = load i32, ptr %i.hl, align 4
   %i.hn = and i32 %i.hm, -17                      ; 2 uses
@@ -984,12 +961,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.hx = tail call i32 @fifo8_num_free(ptr noundef nonnull %i.hw) #6
   %i.hy = add i32 %i.hx, 3
   %i.hz = lshr i32 %i.hy, 2
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 1360 ; 2 uses
-  %45 = load i32, ptr %i.ia, align 16
-  %46 = and i32 %i.hz, 255
-  %47 = and i32 %45, -256
-  %48 = or disjoint i32 %46, %47
-  store i32 %48, ptr %i.ia, align 16
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 1360
+  %28 = trunc i32 %i.hz to i8
+  store i8 %28, ptr %i.ia, align 16
   %i.ib = getelementptr inbounds nuw i8, ptr %i.a, i64 1340 ; 2 uses
   %i.ic = load i32, ptr %i.ib, align 4
   %i.id = or i32 %i.ic, 1                         ; 2 uses
@@ -1014,14 +988,12 @@ bb.am:                                            ; preds = %bb.al
   tail call void @fifo8_reset(ptr noundef nonnull %i.im) #6
   %i.in = getelementptr inbounds nuw i8, ptr %i.a, i64 1128
   %i.io = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.in) #6
-  %49 = getelementptr inbounds nuw i8, ptr %i.a, i64 1360 ; 2 uses
-  %50 = load i32, ptr %49, align 16
-  %51 = and i32 %50, -16711681
-  %52 = shl i32 %i.io, 14
-  %53 = add i32 %52, 49152
-  %54 = and i32 %53, 16711680
-  %55 = or disjoint i32 %54, %51
-  store i32 %55, ptr %49, align 16
+  %29 = shl i32 %i.io, 14
+  %30 = add i32 %29, 49152
+  %31 = lshr i32 %30, 16
+  %32 = trunc i32 %31 to i8
+  %33 = getelementptr i8, ptr %i.a, i64 1362
+  store i8 %32, ptr %33, align 2
   %i.ip = getelementptr inbounds nuw i8, ptr %i.a, i64 1340 ; 2 uses
   %i.iq = load i32, ptr %i.ip, align 4
   %i.ir = and i32 %i.iq, -3                       ; 2 uses
@@ -1046,14 +1018,12 @@ bb.ao:                                            ; preds = %bb.an
   tail call void @fifo8_reset(ptr noundef nonnull %i.ja) #6
   %i.jb = getelementptr inbounds nuw i8, ptr %i.a, i64 1128
   %i.jc = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.jb) #6
-  %56 = getelementptr inbounds nuw i8, ptr %i.a, i64 1356 ; 2 uses
-  %57 = load i32, ptr %56, align 4
-  %58 = and i32 %57, -16711681
-  %59 = shl i32 %i.jc, 14
-  %60 = add i32 %59, 49152
-  %61 = and i32 %60, 16711680
-  %62 = or disjoint i32 %61, %58
-  store i32 %62, ptr %56, align 4
+  %34 = shl i32 %i.jc, 14
+  %35 = add i32 %34, 49152
+  %36 = lshr i32 %35, 16
+  %37 = trunc i32 %36 to i8
+  %38 = getelementptr i8, ptr %i.a, i64 1358
+  store i8 %37, ptr %38, align 2
   %i.jd = getelementptr inbounds nuw i8, ptr %i.a, i64 1340 ; 2 uses
   %i.je = load i32, ptr %i.jd, align 4
   %i.jf = and i32 %i.je, -5                       ; 2 uses
@@ -1199,7 +1169,7 @@ bb.b:                                             ; preds = %bb.a
   %i.af = getelementptr i8, ptr %0, i64 1288      ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 1152 ; 7 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1360 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1360
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1312
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 1348 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 1088 ; 2 uses
@@ -1602,11 +1572,8 @@ trace_dw_i3c_pop_tx.exit.i.i.i.i:                 ; preds = %bb.ay, %bb.ax, %bb.
   %i.gt = call i32 @fifo8_num_free(ptr noundef nonnull %i.ah) #6
   %i.gu = add i32 %i.gt, 3
   %i.gv = lshr i32 %i.gu, 2
-  %3 = load i32, ptr %i.ai, align 16
-  %4 = and i32 %i.gv, 255
-  %5 = and i32 %3, -256
-  %6 = or disjoint i32 %4, %5
-  store i32 %6, ptr %i.ai, align 16
+  %3 = trunc i32 %i.gv to i8
+  store i8 %3, ptr %i.ai, align 16
   %i.gw = load i32, ptr %i.aj, align 16
   %i.gx = and i32 %i.gw, 7                        ; 2 uses
   %.not.i21.i.i.i.i = icmp eq i32 %i.gx, 0
@@ -2009,14 +1976,12 @@ trace_dw_i3c_resp_queue_push.exit:                ; preds = %bb.b, %bb.c, %bb.d,
 
 bb.f:                                             ; preds = %trace_dw_i3c_resp_queue_push.exit, %bb.a
   %i.x = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.i) #6
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1356 ; 2 uses
-  %5 = load i32, ptr %4, align 4
-  %6 = and i32 %5, -65281
-  %7 = shl i32 %i.x, 6
-  %8 = add i32 %7, 192
-  %9 = and i32 %8, 65280
-  %10 = or disjoint i32 %9, %6
-  store i32 %10, ptr %4, align 4
+  %4 = shl i32 %i.x, 6
+  %5 = add i32 %4, 192
+  %6 = lshr i32 %5, 8
+  %7 = trunc i32 %6 to i8
+  %8 = getelementptr i8, ptr %0, i64 1357
+  store i8 %7, ptr %8, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1308
   %i.z = load i32, ptr %i.y, align 4
   %i.aa = lshr i32 %i.z, 8
@@ -2330,14 +2295,12 @@ trace_dw_i3c_push_rx.exit:                        ; preds = %bb.e, %bb.f, %bb.g,
   %i.t = trunc nuw i32 %i.s to i8
   tail call void @fifo8_push(ptr noundef nonnull %i.a, i8 noundef zeroext %i.t) #6
   %i.u = tail call i32 @fifo8_num_used(ptr noundef nonnull %i.a) #6
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1360 ; 2 uses
-  %3 = load i32, ptr %2, align 16
-  %4 = and i32 %3, -16711681
-  %5 = shl i32 %i.u, 14
-  %6 = add i32 %5, 49152
-  %7 = and i32 %6, 16711680
-  %8 = or disjoint i32 %7, %4
-  store i32 %8, ptr %2, align 16
+  %2 = shl i32 %i.u, 14
+  %3 = add i32 %2, 49152
+  %4 = lshr i32 %3, 16
+  %5 = trunc i32 %4 to i8
+  %6 = getelementptr i8, ptr %0, i64 1362
+  store i8 %5, ptr %6, align 2
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1312
   %i.w = load i32, ptr %i.v, align 16             ; 2 uses
   %i.x = lshr i32 %i.w, 8

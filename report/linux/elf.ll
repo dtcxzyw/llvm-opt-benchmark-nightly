@@ -202,12 +202,9 @@ bb.f:                                             ; preds = %bb.e
   %i.au = or disjoint i32 %i.at, %i.aq
   store i32 %i.au, ptr %i.ar, align 4, !tbaa !100
   %i.av = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.am ; 4 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 4 ; 2 uses
-  %8 = load i32, ptr %i.aw, align 4, !tbaa !100
-  %9 = and i32 %8, -256
-  %10 = and i32 %6, 255
-  %11 = or disjoint i32 %9, %10
-  store i32 %11, ptr %i.aw, align 4, !tbaa !100
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 4
+  %8 = trunc i32 %6 to i8
+  store i8 %8, ptr %i.aw, align 4, !tbaa !100
   %i.ax = trunc i64 %5 to i32
   %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store i32 %i.ax, ptr %i.ay, align 4, !tbaa !152

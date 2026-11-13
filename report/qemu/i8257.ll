@@ -205,7 +205,6 @@ bb.a:
   %.not.i = icmp eq i8 %i.j, 0                    ; 2 uses
   %i.k = zext i1 %.not.i to i8
   store i8 %i.k, ptr %i.i, align 1
-  %4 = trunc i64 %2 to i16                        ; 2 uses
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -214,7 +213,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw [2 x i8], ptr %i.m, i64 %i.l ; 2 uses
   %i.o = load i16, ptr %i.n, align 2
   %i.p = and i16 %i.o, 255
-  %i.q = shl i16 %4, 8
+  %.tr = trunc i64 %2 to i16
+  %i.q = shl i16 %.tr, 8
   %i.r = or disjoint i16 %i.p, %i.q
   store i16 %i.r, ptr %i.n, align 2
   %i.s = load i16, ptr %i.m, align 8
@@ -228,12 +228,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.x = and i64 %i.d, 1
-  %i.y = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.x ; 2 uses
-  %5 = load i16, ptr %i.y, align 2
-  %6 = and i16 %5, -256
-  %7 = and i16 %4, 255
-  %8 = or disjoint i16 %6, %7
-  store i16 %8, ptr %i.y, align 2
+  %i.y = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.x
+  %4 = trunc i64 %2 to i8
+  store i8 %4, ptr %i.y, align 2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1019
 inline.NumDeleted: 410
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZN2cv9SIFT_Impl16detectAndComputeERKNS_11_InputArrayES3_RSt6vectorINS_8KeyPointESaIS5_EERKNS_12_OutputArrayEb:bb.a
   %i.ac = icmp eq ptr %i.aa, %i.ab
   br i1 %i.ac, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit77, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75
@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %._crit_edge.thread
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.x
-  %.1 = phi i32 [ %.sroa.speculated179, %bb.ad ], [ -1, %bb.x ] ; 5 uses
+  %.1 = phi i32 [ %.sroa.speculated179, %bb.ad ], [ -1, %bb.x ] ; 7 uses
   %.049 = phi i32 [ %i.dp, %bb.ad ], [ 0, %bb.x ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #25
   %i.dq = icmp slt i32 %.1, 0                     ; 2 uses
@@ -608,43 +608,63 @@ bb.cf:                                            ; preds = %bb.cd, %bb.cc
 .preheader:                                       ; preds = %bb.cf
   %i.iq = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !39 ; 2 uses
-  %i.is = load ptr, ptr %3, align 8, !tbaa !42    ; 3 uses
+  %i.is = load ptr, ptr %3, align 8, !tbaa !42    ; 5 uses
   %.not150 = icmp eq ptr %i.ir, %i.is
   br i1 %.not150, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
   %i.it = ptrtoint ptr %i.ir to i64
   %i.iu = ptrtoint ptr %i.is to i64
-  %i.iv = sub i64 %i.it, %i.iu
-  %i.iw = sdiv exact i64 %i.iv, 28
+  %i.iv = sub i64 %i.it, %i.iu                    ; 2 uses
+  %i.iw = sdiv exact i64 %i.iv, 28                ; 3 uses
   %i.ix = sub nsw i32 0, %.1
   %i.iy = shl nuw i32 1, %i.ix
   %i.iz = sitofp i32 %i.iy to float
-  %i.ja = fdiv float 1.000000e+00, %i.iz          ; 2 uses
+  %i.ja = fdiv float 1.000000e+00, %i.iz          ; 4 uses
   %i.jb = insertelement <2 x float> poison, float %i.ja, i64 0
-  %i.jc = shufflevector <2 x float> %i.jb, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.jc = shufflevector <2 x float> %i.jb, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
+  %xtraiter = and i64 %i.iw, 1
+  %44 = icmp eq i64 %i.iv, 28
+  br i1 %44, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %i.iw, -2
   br label %bb.cg
 
-bb.cg:                                            ; preds = %.lr.ph, %bb.cg
-  %.0148.a = phi i64 [ 0, %.lr.ph ], [ %i.jl, %bb.cg ] ; 2 uses
-  %i.jd = getelementptr inbounds nuw [28 x i8], ptr %i.is, i64 %.0148.a ; 4 uses
+bb.cg:                                            ; preds = %bb.cg, %.lr.ph.new
+  %.0148 = phi i64 [ 0, %.lr.ph.new ], [ %58, %bb.cg ] ; 3 uses
+  %.0148.a = phi i64 [ 0, %.lr.ph.new ], [ %i.jl, %bb.cg ]
+  %i.jd = getelementptr inbounds nuw [28 x i8], ptr %i.is, i64 %.0148 ; 4 uses
   %i.je = getelementptr inbounds nuw i8, ptr %i.jd, i64 20 ; 2 uses
-  %i.jf = load i32, ptr %i.je, align 4, !tbaa !231 ; 2 uses
-  %44 = and i32 %i.jf, -256
+  %i.jf = load i32, ptr %i.je, align 4, !tbaa !231
   %45 = add nsw i32 %i.jf, %.1
-  %46 = and i32 %45, 255
-  %47 = or disjoint i32 %46, %44
-  store i32 %47, ptr %i.je, align 4, !tbaa !231
-  %i.jg = load <2 x float>, ptr %i.jd, align 4, !tbaa !30
+  %46 = trunc i32 %45 to i8
+  store i8 %46, ptr %i.je, align 4, !tbaa !231
+  %47 = load <2 x float>, ptr %i.jd, align 4, !tbaa !30
+  %48 = fmul <2 x float> %i.jc, %47
+  store <2 x float> %48, ptr %i.jd, align 4, !tbaa !30
+  %49 = getelementptr inbounds nuw i8, ptr %i.jd, i64 8 ; 2 uses
+  %50 = load float, ptr %49, align 4, !tbaa !241
+  %51 = fmul float %i.ja, %50
+  store float %51, ptr %49, align 4, !tbaa !241
+  %52 = getelementptr inbounds nuw [28 x i8], ptr %i.is, i64 %.0148 ; 3 uses
+  %53 = getelementptr inbounds nuw i8, ptr %52, i64 28 ; 2 uses
+  %54 = getelementptr inbounds nuw i8, ptr %52, i64 48 ; 2 uses
+  %55 = load i32, ptr %54, align 4, !tbaa !231
+  %56 = add nsw i32 %55, %.1
+  %57 = trunc i32 %56 to i8
+  store i8 %57, ptr %54, align 4, !tbaa !231
+  %i.jg = load <2 x float>, ptr %53, align 4, !tbaa !30
   %i.jh = fmul <2 x float> %i.jc, %i.jg
-  store <2 x float> %i.jh, ptr %i.jd, align 4, !tbaa !30
-  %i.ji = getelementptr inbounds nuw i8, ptr %i.jd, i64 8 ; 2 uses
+  store <2 x float> %i.jh, ptr %53, align 4, !tbaa !30
+  %i.ji = getelementptr inbounds nuw i8, ptr %52, i64 36 ; 2 uses
   %i.jj = load float, ptr %i.ji, align 4, !tbaa !241
   %i.jk = fmul float %i.ja, %i.jj
   store float %i.jk, ptr %i.ji, align 4, !tbaa !241
-  %i.jl = add nuw i64 %.0148.a, 1                 ; 2 uses
-  %exitcond152.not = icmp eq i64 %i.jl, %i.iw
-  br i1 %exitcond152.not, label %.loopexit, label %bb.cg, !llvm.loop !224
+  %58 = add nuw i64 %.0148, 2                     ; 2 uses
+  %i.jl = add i64 %.0148.a, 2                     ; 2 uses
+  %exitcond152.not = icmp eq i64 %i.jl, %unroll_iter
+  br i1 %exitcond152.not, label %.loopexit.loopexit.unr-lcssa, label %bb.cg, !llvm.loop !224
 
 bb.ch:                                            ; preds = %bb.bz, %bb.ca, %bb.cb, %bb.cd, %.loopexit, %bb.cj
   %i.jm = landingpad { ptr, i32 }
@@ -653,7 +673,30 @@ bb.ch:                                            ; preds = %bb.bz, %bb.ca, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #25
   br label %bb.dg
 
-.loopexit:                                        ; preds = %bb.cg, %.preheader, %bb.cf
+.loopexit.loopexit.unr-lcssa:                     ; preds = %bb.cg
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
+  %.0148.epil.init = phi i64 [ 0, %.lr.ph ], [ %58, %.loopexit.loopexit.unr-lcssa ]
+  %lcmp.mod195 = trunc i64 %i.iw to i1
+  call void @llvm.assume(i1 %lcmp.mod195)
+  %59 = getelementptr inbounds nuw [28 x i8], ptr %i.is, i64 %.0148.epil.init ; 4 uses
+  %60 = getelementptr inbounds nuw i8, ptr %59, i64 20 ; 2 uses
+  %61 = load i32, ptr %60, align 4, !tbaa !231
+  %62 = add nsw i32 %61, %.1
+  %63 = trunc i32 %62 to i8
+  store i8 %63, ptr %60, align 4, !tbaa !231
+  %64 = load <2 x float>, ptr %59, align 4, !tbaa !30
+  %65 = fmul <2 x float> %i.jc, %64
+  store <2 x float> %65, ptr %59, align 4, !tbaa !30
+  %66 = getelementptr inbounds nuw i8, ptr %59, i64 8 ; 2 uses
+  %67 = load float, ptr %66, align 4, !tbaa !241
+  %68 = fmul float %i.ja, %67
+  store float %68, ptr %66, align 4, !tbaa !241
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader, %bb.cf
   %i.jn = invoke noundef zeroext i1 @_ZNK2cv3Mat5emptyEv(ptr noundef nonnull align 8 dereferenceable(208) %33)
           to label %bb.ci unwind label %bb.ch
 
