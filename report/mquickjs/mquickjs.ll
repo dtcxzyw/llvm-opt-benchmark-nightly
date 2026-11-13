@@ -204,7 +204,7 @@ bb.bi:                                            ; preds = %js_parse_pop_val.ex
   %i.mm = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.mo = load i32, ptr %i.mn, align 4, !tbaa !168
-  %i.mp = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
+  %i.mp = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.mq = load i64, ptr %i.mp, align 8            ; 2 uses
   %i.mr = load i32, ptr %i.mm, align 8, !tbaa !119
   %i.ms = tail call fastcc i32 @is_regexp_allowed(i32 noundef %i.mr) #28
@@ -220,11 +220,8 @@ bb.bi:                                            ; preds = %js_parse_pop_val.ex
   tail call fastcc void @next_token(ptr noundef nonnull %0) #28
   tail call fastcc void @js_parse_call(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 2) #28, !inline_history !391
   store i32 %i.mo, ptr %i.mt, align 8, !tbaa !116
-  %4 = load i64, ptr %i.mp, align 8
-  %5 = and i64 %i.mq, 255
-  %6 = and i64 %4, -256
-  %7 = or disjoint i64 %6, %5
-  store i64 %7, ptr %i.mp, align 8
+  %4 = trunc i64 %i.mq to i8
+  store i8 %4, ptr %i.mp, align 8
   %.not.i429.not.not = icmp eq i32 %i.ms, 0
   %i.my = select i1 %.not.i429.not.not, i32 41, i32 32
   store i32 %i.my, ptr %i.mm, align 8, !tbaa !119
@@ -627,18 +624,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.c = load i32, ptr %i.b, align 4, !tbaa !168
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8
   %i.f = load i32, ptr %i.a, align 8, !tbaa !119
   %i.g = tail call fastcc i32 @is_regexp_allowed(i32 noundef %i.f) #28
   %i.h = tail call fastcc i32 @js_skip_parens(ptr noundef %0, ptr noundef null) #28
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 %i.c, ptr %i.i, align 8, !tbaa !116
-  %1 = load i64, ptr %i.d, align 8
-  %2 = and i64 %i.e, 255
-  %3 = and i64 %1, -256
-  %4 = or disjoint i64 %3, %2
-  store i64 %4, ptr %i.d, align 8
+  %1 = trunc i64 %i.e to i8
+  store i8 %1, ptr %i.d, align 8
   %.not.i.not.not = icmp eq i32 %i.g, 0
   %i.j = select i1 %.not.i.not.not, i32 41, i32 32
   store i32 %i.j, ptr %i.a, align 8, !tbaa !119

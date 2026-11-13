@@ -202,7 +202,7 @@ declare void @Rwt_ManIncTravId(ptr noundef) local_unnamed_addr #4
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc range(i32 0, -2147483648) i32 @Rwt_TravCollect_rec(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2) unnamed_addr #5 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
   %i.c = and i32 %i.b, 1073741824
   %.not = icmp eq i32 %i.c, 0
@@ -483,12 +483,9 @@ Dec_GraphAddNodeAnd.exit:                         ; preds = %bb.s, %bb.w
 
 bb.x:                                             ; preds = %Dec_GraphAddNodeAnd.exit, %Dec_GraphAddNodeXor.exit
   %.sroa.04.0 = phi i32 [ %i.di, %Dec_GraphAddNodeXor.exit ], [ %i.em, %Dec_GraphAddNodeAnd.exit ] ; 2 uses
-  %3 = load i32, ptr %i.a, align 8
-  %4 = shl i32 %.sroa.04.0, 16
-  %5 = and i32 %4, 16711680
-  %6 = and i32 %3, -16711681
-  %7 = or disjoint i32 %6, %5
-  store i32 %7, ptr %i.a, align 8
+  %3 = trunc i32 %.sroa.04.0 to i8
+  %4 = getelementptr i8, ptr %1, i64 10
+  store i8 %3, ptr %4, align 2
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.d, %bb.b

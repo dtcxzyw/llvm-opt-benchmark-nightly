@@ -204,13 +204,9 @@ bb.ao:                                            ; preds = %bb.d
   br label %omap_rtc_alarm_update.exit
 
 bb.ap:                                            ; preds = %bb.d
-  %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 298 ; 2 uses
-  %5 = load i16, ptr %i.hz, align 2
-  %6 = and i16 %5, -256
-  %7 = trunc i64 %2 to i16
-  %8 = and i16 %7, 255
-  %9 = or disjoint i16 %6, %8
-  store i16 %9, ptr %i.hz, align 2
+  %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 298
+  %5 = trunc i64 %2 to i8
+  store i8 %5, ptr %i.hz, align 2
   br label %omap_rtc_alarm_update.exit
 
 bb.aq:                                            ; preds = %bb.d

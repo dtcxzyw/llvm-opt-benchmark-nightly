@@ -202,13 +202,10 @@ hladdword.exit.i:                                 ; preds = %bb.l, %bb.k
   %i.bi = load ptr, ptr %1, align 8
   %i.bj = load i32, ptr %i.u, align 4
   %i.bk = sext i32 %i.bj to i64
-  %i.bl = getelementptr inbounds [24 x i8], ptr %i.bi, i64 %i.bk ; 2 uses
-  %6 = load i32, ptr %i.bl, align 8
-  %7 = shl i32 %i.as, 8
-  %8 = and i32 %7, 65280
-  %9 = and i32 %6, -65281
-  %10 = or disjoint i32 %9, %8
-  store i32 %10, ptr %i.bl, align 8
+  %i.bl = getelementptr inbounds [24 x i8], ptr %i.bi, i64 %i.bk
+  %6 = trunc i32 %i.as to i8
+  %7 = getelementptr i8, ptr %i.bl, i64 1
+  store i8 %6, ptr %7, align 1
   %i.bm = load ptr, ptr %1, align 8
   %i.bn = load i32, ptr %i.u, align 4
   %i.bo = sext i32 %i.bn to i64
@@ -313,13 +310,10 @@ hladdword.exit:                                   ; preds = %bb.c, %bb.d
   %i.w = load ptr, ptr %0, align 8
   %i.x = load i32, ptr %i.a, align 4
   %i.y = sext i32 %i.x to i64
-  %i.z = getelementptr inbounds [24 x i8], ptr %i.w, i64 %i.y ; 2 uses
-  %4 = load i32, ptr %i.z, align 8
-  %5 = shl i32 %i.g, 8
-  %6 = and i32 %5, 65280
-  %7 = and i32 %4, -65281
-  %8 = or disjoint i32 %7, %6
-  store i32 %8, ptr %i.z, align 8
+  %i.z = getelementptr inbounds [24 x i8], ptr %i.w, i64 %i.y
+  %4 = trunc i32 %i.g to i8
+  %5 = getelementptr i8, ptr %i.z, i64 1
+  store i8 %4, ptr %5, align 1
   %i.aa = load ptr, ptr %0, align 8
   %i.ab = load i32, ptr %i.a, align 4
   %i.ac = sext i32 %i.ab to i64

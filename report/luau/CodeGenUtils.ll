@@ -204,13 +204,10 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = sub i64 %i.ad, %i.ae
-  %4 = trunc i64 %i.af to i32
-  %5 = shl i32 %4, 19
-  %6 = and i32 %5, -16777216
-  %7 = load i32, ptr %1, align 4, !tbaa !21
-  %8 = and i32 %7, 16777215
-  %9 = or disjoint i32 %6, %8
-  store i32 %9, ptr %1, align 4, !tbaa !21
+  %4 = lshr i64 %i.af, 5
+  %5 = trunc i64 %4 to i8
+  %6 = getelementptr i8, ptr %1, i64 3
+  store i8 %5, ptr %6, align 1, !tbaa !21
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -308,13 +305,10 @@ bb.m:                                             ; preds = %.critedge
   %i.ce = ptrtoint ptr %i.bz to i64
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = sub i64 %i.ce, %i.cf
-  %10 = trunc i64 %i.cg to i32
-  %11 = shl i32 %10, 19
-  %12 = and i32 %11, -16777216
-  %13 = load i32, ptr %1, align 4, !tbaa !21
-  %14 = and i32 %13, 16777215
-  %15 = or disjoint i32 %12, %14
-  store i32 %15, ptr %1, align 4, !tbaa !21
+  %7 = lshr i64 %i.cg, 5
+  %8 = trunc i64 %7 to i8
+  %9 = getelementptr i8, ptr %1, i64 3
+  store i8 %8, ptr %9, align 1, !tbaa !21
   %i.ch = load ptr, ptr %i.bz, align 8, !tbaa !20
   %i.ci = load ptr, ptr %i.l, align 8, !tbaa !20
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
@@ -555,13 +549,10 @@ bb.e:                                             ; preds = %bb.d
   %i.ak = ptrtoint ptr %i.ah to i64
   %i.al = ptrtoint ptr %i.aj to i64
   %i.am = sub i64 %i.ak, %i.al
-  %4 = trunc i64 %i.am to i32
-  %5 = shl i32 %4, 19
-  %6 = and i32 %5, -16777216
-  %7 = load i32, ptr %1, align 4, !tbaa !21
-  %8 = and i32 %7, 16777215
-  %9 = or disjoint i32 %6, %8
-  store i32 %9, ptr %1, align 4, !tbaa !21
+  %4 = lshr i64 %i.am, 5
+  %5 = trunc i64 %4 to i8
+  %6 = getelementptr i8, ptr %1, i64 3
+  store i8 %5, ptr %6, align 1, !tbaa !21
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !28
   %i.an = getelementptr inbounds nuw i8, ptr %i.h, i64 12
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !19

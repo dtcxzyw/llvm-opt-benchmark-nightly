@@ -204,13 +204,10 @@ bb.ai:                                            ; preds = %bb.ae, %bb.af, %bb.
   br label %.loopexit
 
 bb.aj:                                            ; preds = %trace_mps2_scc_write.exit
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 1196 ; 2 uses
-  %5 = load i32, ptr %4, align 4
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, -16777216
-  %8 = and i32 %5, 16777215
-  %9 = or disjoint i32 %8, %7
-  store i32 %9, ptr %4, align 4
+  %4 = lshr i64 %2, 24
+  %5 = trunc i64 %4 to i8
+  %6 = getelementptr i8, ptr %i.a, i64 1199
+  store i8 %5, ptr %6, align 1
   br label %.loopexit
 
 have_cfg2.exit:                                   ; preds = %bb.l, %bb.j, %bb.h, %bb.n, %trace_mps2_scc_write.exit

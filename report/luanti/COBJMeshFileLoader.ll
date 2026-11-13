@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %._crit_edge.thread,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nounwind uwtable
-define noundef ptr @_ZN5scene18COBJMeshFileLoader9readColorEPKcRN5video6SColorES2_(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef readonly captures(address, ret: address, provenance) %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #9 align 2 {
+define noundef ptr @_ZN5scene18COBJMeshFileLoader9readColorEPKcRN5video6SColorES2_(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef readonly captures(address, ret: address, provenance) %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 30 uses
   %i.b = ptrtoaddr ptr %i.a to i64                ; 3 uses
@@ -390,12 +390,9 @@ _ZN5scene18COBJMeshFileLoader17goAndCopyNextWordEPcPKcjS3_.exit: ; preds = %bb.c
   %i.ap = fadd float %i.ao, 5.000000e-01
   %i.aq = tail call noundef float @llvm.floor.f32(float %i.ap)
   %i.ar = fptosi float %i.aq to i32
-  %4 = shl i32 %i.ar, 16
-  %5 = and i32 %4, 16711680
-  %6 = load i32, ptr %2, align 4, !tbaa !63
-  %7 = and i32 %6, -16711681
-  %8 = or disjoint i32 %5, %7
-  store i32 %8, ptr %2, align 4, !tbaa !63
+  %4 = trunc i32 %i.ar to i8
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i8 %4, ptr %5, align 2, !tbaa !63
   %.not11.i.i11 = icmp eq ptr %.2.i.i.i93, %3
   br i1 %.not11.i.i11, label %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21, label %.lr.ph.preheader.i.i12
 
@@ -575,12 +572,9 @@ _ZN5scene18COBJMeshFileLoader17goAndCopyNextWordEPcPKcjS3_.exit40: ; preds = %bb
   %i.ce = fadd float %i.cd, 5.000000e-01
   %i.cf = tail call noundef float @llvm.floor.f32(float %i.ce)
   %i.cg = fptosi float %i.cf to i32
-  %9 = shl i32 %i.cg, 8
-  %10 = and i32 %9, 65280
-  %11 = load i32, ptr %2, align 4, !tbaa !63
-  %12 = and i32 %11, -65281
-  %13 = or disjoint i32 %10, %12
-  store i32 %13, ptr %2, align 4, !tbaa !63
+  %6 = trunc i32 %i.cg to i8
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  store i8 %6, ptr %7, align 1, !tbaa !63
   %.not11.i.i41 = icmp eq ptr %.2.i.i.i2297, %3
   br i1 %.not11.i.i41, label %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51, label %.lr.ph.preheader.i.i42
 
@@ -760,11 +754,8 @@ _ZN5scene18COBJMeshFileLoader17goAndCopyNextWordEPcPKcjS3_.exit70: ; preds = %bb
   %i.dt = fadd float %i.ds, 5.000000e-01
   %i.du = tail call noundef float @llvm.floor.f32(float %i.dt)
   %i.dv = fptosi float %i.du to i32
-  %14 = and i32 %i.dv, 255
-  %15 = load i32, ptr %2, align 4, !tbaa !63
-  %16 = and i32 %15, -256
-  %17 = or disjoint i32 %14, %16
-  store i32 %17, ptr %2, align 4, !tbaa !63
+  %8 = trunc i32 %i.dv to i8
+  store i8 %8, ptr %2, align 4, !tbaa !63
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   ret ptr %.2.i.i.i52101
 }

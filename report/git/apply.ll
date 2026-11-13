@@ -205,14 +205,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.cb = getelementptr inbounds nuw [16 x i8], ptr %i.ca, i64 %indvars.iv
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   %i.cd = load i32, ptr %i.cc, align 8
-  %5 = and i32 %i.cd, -16777216
   %i.ce = load ptr, ptr %i.a, align 8, !tbaa !156
   %i.cf = getelementptr inbounds nuw [16 x i8], ptr %i.ce, i64 %indvars.iv
-  %6 = getelementptr inbounds nuw i8, ptr %i.cf, i64 8 ; 2 uses
-  %7 = load i32, ptr %6, align 8
-  %8 = and i32 %7, 16777215
-  %9 = or disjoint i32 %8, %5
-  store i32 %9, ptr %6, align 8
+  %5 = lshr i32 %i.cd, 24
+  %6 = trunc nuw i32 %5 to i8
+  %7 = getelementptr i8, ptr %i.cf, i64 11
+  store i8 %6, ptr %7, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cg = load i64, ptr %i.by, align 8, !tbaa !159
   %i.ch = icmp ugt i64 %i.cg, %indvars.iv.next
