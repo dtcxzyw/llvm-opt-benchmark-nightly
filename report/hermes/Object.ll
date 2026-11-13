@@ -204,7 +204,6 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %_ZNK6hermes2vm10Nat
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 3, ptr %i.s, align 8, !tbaa !58
   %i.t = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr noundef nonnull align 8 dereferenceable(48) %3) #9
-  %6 = and i32 %i.t, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   br label %bb.j
 
@@ -264,19 +263,23 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
 bb.h:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit
   %.sroa.02.0.copyload = load i32, ptr %4, align 4, !tbaa !57
   %.sroa.01.0.copyload = load ptr, ptr %5, align 8
-  %i.ap = call i32 @_ZN6hermes2vm8JSObject26defineOwnComputedPrimitiveENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr nonnull %.sroa.03.0.i, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %.sroa.02.0.i13, i32 %.sroa.02.0.copyload, ptr %.sroa.01.0.copyload, i32 %2) #9
-  %i.aq = and i32 %i.ap, 65535
+  %i.ap = call i32 @_ZN6hermes2vm8JSObject26defineOwnComputedPrimitiveENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr nonnull %.sroa.03.0.i, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %.sroa.02.0.i13, i32 %.sroa.02.0.copyload, ptr %.sroa.01.0.copyload, i32 %2) #9 ; 2 uses
+  %i.aq = and i32 %i.ap, 65280
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit, %bb.h
+  %.sroa.016.sroa.0.0 = phi i32 [ %i.ap, %bb.h ], [ 0, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit ]
   %.sroa.016.0 = phi i32 [ %i.aq, %bb.h ], [ 0, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
-  %.sroa.016.2 = phi i32 [ %6, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %.sroa.016.0, %bb.i ], [ 0, %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ]
-  ret i32 %.sroa.016.2
+  %.sroa.016.sroa.0.2 = phi i32 [ %i.t, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %.sroa.016.sroa.0.0, %bb.i ], [ 0, %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ]
+  %.sroa.016.2 = phi i32 [ 0, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %.sroa.016.0, %bb.i ], [ 0, %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ]
+  %.sroa.016.sroa.0.0.insert.ext = and i32 %.sroa.016.sroa.0.2, 255
+  %.sroa.016.0.insert.ext = or i32 %.sroa.016.2, %.sroa.016.sroa.0.0.insert.ext
+  ret i32 %.sroa.016.0.insert.ext
 }
 
 declare noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816), ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #2

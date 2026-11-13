@@ -49,19 +49,14 @@ define hidden ptr @_ZN6hermes2vm15JSCallableProxy14_newObjectImplENS0_6HandleINS
 bb.a:
   %3 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %0, align 8, !tbaa !13
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 9480 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 9480 ; 6 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !255
   %i.c = add i64 %i.b, 1                          ; 2 uses
   store i64 %i.c, ptr %i.a, align 8, !tbaa !255
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 9488
   %i.e = load i64, ptr %i.d, align 8, !tbaa !256
   %i.f = icmp ugt i64 %i.c, %i.e
-  br i1 %i.f, label %4, label %bb.b, !prof !257
-
-4:                                                ; preds = %bb.a
-  %5 = tail call noundef i32 @_ZN6hermes2vm7Runtime18raiseStackOverflowENS1_17StackOverflowKindE(ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef 1) #6
-  %6 = and i32 %5, 255
-  br label %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit
+  br i1 %i.f, label %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit, label %bb.b, !prof !257
 
 bb.b:                                             ; preds = %bb.a
   %i.g = and i64 %.sroa.0.0.copyload.i.i.i, 281474976710655
@@ -74,24 +69,29 @@ bb.b:                                             ; preds = %bb.a
   %i.l = add i64 %i.k, %i.j
   %i.m = inttoptr i64 %i.l to ptr
   %i.n = select i1 %.not.i.i.i.i.i, ptr null, ptr %i.m
-  %i.o = tail call i32 @_ZN6hermes2vm13isConstructorERNS0_7RuntimeEPNS0_8CallableE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef %i.n) #6
-  br label %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit
+  %i.o = tail call i32 @_ZN6hermes2vm13isConstructorERNS0_7RuntimeEPNS0_8CallableE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef %i.n) #6 ; 2 uses
+  %4 = load i64, ptr %i.a, align 8, !tbaa !255
+  %5 = add i64 %4, -1
+  store i64 %5, ptr %i.a, align 8, !tbaa !255
+  %.mask = and i32 %i.o, 255
+  %6 = icmp eq i32 %.mask, 0
+  br i1 %6, label %bb.g, label %bb.c, !prof !257
 
-_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit: ; preds = %4, %bb.b
-  %.sroa.05.0.i = phi i32 [ %6, %4 ], [ %i.o, %bb.b ] ; 2 uses
+_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit: ; preds = %bb.a
+  %7 = tail call noundef i32 @_ZN6hermes2vm7Runtime18raiseStackOverflowENS1_17StackOverflowKindE(ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef 1) #6
   %i.p = load i64, ptr %i.a, align 8, !tbaa !255
   %i.q = add i64 %i.p, -1
   store i64 %i.q, ptr %i.a, align 8, !tbaa !255
-  %.mask.a = and i32 %.sroa.05.0.i, 255
+  %.mask.a = and i32 %7, 255
   %i.r = icmp eq i32 %.mask.a, 0
-  br i1 %i.r, label %bb.g, label %bb.c, !prof !257
+  br i1 %i.r, label %bb.g, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit, !prof !257
 
-bb.c:                                             ; preds = %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit
-  %i.s = and i32 %.sroa.05.0.i, 256
+bb.c:                                             ; preds = %bb.b
+  %i.s = and i32 %i.o, 256
   %.not = icmp eq i32 %i.s, 0
   br i1 %.not, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit, label %bb.d
 
-_ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %bb.c
+_ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i32 1, ptr %i.t, align 8, !tbaa !260
@@ -153,8 +153,8 @@ _ZN6hermes2vm7Runtime10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EERKNS0_9GCPoint
   %i.ay = tail call ptr %i.ax(ptr nonnull %.0.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2) #6, !inline_history !292
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit, %_ZN6hermes2vm7Runtime10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EERKNS0_9GCPointerIS5_EE.exit, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
-  %.sroa.015.0 = phi ptr [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %i.ay, %_ZN6hermes2vm7Runtime10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EERKNS0_9GCPointerIS5_EE.exit ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit ]
+bb.g:                                             ; preds = %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit, %bb.b, %_ZN6hermes2vm7Runtime10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EERKNS0_9GCPointerIS5_EE.exit, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
+  %.sroa.015.0 = phi ptr [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %i.ay, %_ZN6hermes2vm7Runtime10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EERKNS0_9GCPointerIS5_EE.exit ], [ inttoptr (i64 -1 to ptr), %bb.b ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm15JSCallableProxy13isConstructorERNS0_7RuntimeE.exit ]
   ret ptr %.sroa.015.0
 }
 
@@ -315,7 +315,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call noundef i32 @_ZN6hermes2vm7Runtime18raiseStackOverflowENS1_17StackOverflowKindE(ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef 1) #6
-  %2 = and i32 %i.g, 255
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -327,16 +326,19 @@ bb.c:                                             ; preds = %bb.a
   %i.k = add i64 %i.j, %i.i
   %i.l = inttoptr i64 %i.k to ptr
   %i.m = select i1 %.not.i.i.i.i, ptr null, ptr %i.l
-  %i.n = tail call i32 @_ZN6hermes2vm13isConstructorERNS0_7RuntimeEPNS0_8CallableE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef %i.m) #6
-  %i.o = and i32 %i.n, 65535
+  %i.n = tail call i32 @_ZN6hermes2vm13isConstructorERNS0_7RuntimeEPNS0_8CallableE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef %i.m) #6 ; 2 uses
+  %i.o = and i32 %i.n, 65280
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.05.0 = phi i32 [ %2, %bb.b ], [ %i.o, %bb.c ]
+  %.sroa.05.sroa.0.0.in = phi i32 [ %i.g, %bb.b ], [ %i.n, %bb.c ]
+  %.sroa.05.0 = phi i32 [ 0, %bb.b ], [ %i.o, %bb.c ]
   %i.p = load i64, ptr %i.a, align 8, !tbaa !255
   %i.q = add i64 %i.p, -1
   store i64 %i.q, ptr %i.a, align 8, !tbaa !255
-  ret i32 %.sroa.05.0
+  %.sroa.05.sroa.0.0.insert.ext = and i32 %.sroa.05.sroa.0.0.in, 255
+  %.sroa.05.sroa.0.0.insert.insert = or disjoint i32 %.sroa.05.0, %.sroa.05.sroa.0.0.insert.ext
+  ret i32 %.sroa.05.sroa.0.0.insert.insert
 }
 
 declare noundef i32 @_ZN6hermes2vm7Runtime18raiseStackOverflowENS1_17StackOverflowKindE(ptr noundef nonnull align 8 dereferenceable(9816), i32 noundef) local_unnamed_addr #0
