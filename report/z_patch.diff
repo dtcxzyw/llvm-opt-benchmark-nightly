@@ -1,0 +1,140 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 89d4291bd2816..8ab8c555bbd8b 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -630,16 +630,6 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+       return true;
+   }
+ 
+-  // A signed sum of operands with opposite signs cannot wrap.
+-  if (Signed && Opcode == Instruction::Add) {
+-    std::optional<bool> Op0Sign =
+-        Info.getKnownSign(Op0, /*StrictlyNegative=*/false);
+-    std::optional<bool> Op1Sign =
+-        Info.getKnownSign(Op1, /*StrictlyNegative=*/false);
+-    if (Op0Sign && Op1Sign && *Op0Sign != *Op1Sign)
+-      return true;
+-  }
+-
+   if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
+       (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
+       Info.isKnownNonNegative(Op0))
+@@ -647,15 +637,22 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+ 
+   // For a constant Op1, the ranges of Op0 for which the operation does not
+   // wrap are known exactly; check if the systems imply one of them.
+-  auto *C = dyn_cast<ConstantInt>(Op1);
+-  if (!C)
+-    return false;
++  if (auto *C = dyn_cast<ConstantInt>(Op1)) {
++    auto Range = ConstantRange::makeExactNoWrapRegion(
++        Opcode, C->getValue(),
++        Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap);
++    return doesHoldInRange(Info, Op0, Range, Signed);
++  }
+ 
+-  return doesHoldInRange(Info, Op0,
+-                         ConstantRange::makeExactNoWrapRegion(
+-                             Opcode, C->getValue(),
+-                             Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap),
+-                         Signed);
++  // A signed sum of operands with opposite signs cannot wrap.
++  if (Signed && Opcode == Instruction::Add) {
++    if (auto Op0Sign = Info.getKnownSign(Op0, /*StrictlyNegative=*/false))
++      if (auto Op1Sign = Info.getKnownSign(Op1, /*StrictlyNegative=*/false))
++        if (*Op0Sign != *Op1Sign)
++          return true;
++  }
++
++  return false;
+ }
+ 
+ /// Returns true if \p V is known to not wrap in signed or unsigned, depending
+@@ -1179,6 +1176,8 @@ bool ConstraintInfo::isKnownPositive(Value *V) {
+ 
+ std::optional<bool> ConstraintInfo::getKnownSign(Value *V,
+                                                  bool StrictlyNegative) {
++  if (auto *CI = dyn_cast<ConstantInt>(V))
++    return CI->isNegative();
+   KnownBits Known = computeKnownBits(V, DL);
+   if (Known.isNonNegative())
+     return false;
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 757ed12e16730..c66ca9b85587f 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -1200,3 +1200,15 @@ define i64 @add_i64_bound_above_max_constraint_value(i64 %x) {
+   %add = add i64 %x, 3
+   ret i64 %add
+ }
++
++; We could infer nsw on the add here, but don't currently.
++define i64 @add_neg_via_known_bits(i64 %x) {
++; CHECK-LABEL: @add_neg_via_known_bits(
++; CHECK-NEXT:    [[NEG:%.*]] = or i64 [[X:%.*]], -9223372036854775808
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[NEG]], 3
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %neg = or i64 %x, -9223372036854775808
++  %sum = add i64 %neg, 3
++  ret i64 %sum
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+index df7d867003d68..2f38de1737a60 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+@@ -319,6 +319,54 @@ else:
+   ret i8 0
+ }
+ 
++define void @sadd_positive_constant_lhs(i64 %x) {
++; CHECK-LABEL: define void @sadd_positive_constant_lhs(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++  %c = icmp slt i64 %x, 0
++  call void @llvm.assume(i1 %c)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 3, i64 %x)
++  %o = extractvalue { i64, i1 } %s, 1
++  call void @use(i1 %o)
++  ret void
++}
++
++define void @sadd_negative_constant_lhs(i64 %x) {
++; CHECK-LABEL: define void @sadd_negative_constant_lhs(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++  %c = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %c)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 -3, i64 %x)
++  %o = extractvalue { i64, i1 } %s, 1
++  call void @use(i1 %o)
++  ret void
++}
++
++define void @sadd_opposite_signs_known_non_positive(i64 %v, i64 %w) {
++; CHECK-LABEL: define void @sadd_opposite_signs_known_non_positive(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[B:%.*]] = and i64 [[W]], -9223372036854775808
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++  %a = lshr i64 %v, 1
++  %b = and i64 %w, -9223372036854775808
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %b)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
+ define void @sadd_opposite_signs(i64 %v, i64 %s) {
+ ; CHECK-LABEL: define void @sadd_opposite_signs(
+ ; CHECK-SAME: i64 [[V:%.*]], i64 [[S:%.*]]) {
