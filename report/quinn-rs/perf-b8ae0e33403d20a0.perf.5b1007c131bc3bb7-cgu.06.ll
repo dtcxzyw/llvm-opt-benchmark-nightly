@@ -204,7 +204,7 @@ _RNvMCsgR93kpVnVos_12hdrhistogramINtB2_9HistogramyE9value_forCs7OITKvp9Irj_4perf
   %i.dj = select i1 %i.di, i32 0, i32 %i.df, !dbg !5075
   %spec.select.i = add i32 %i.dj, %i.dh, !dbg !5075
   %i.dk = tail call i64 @llvm.umax.i64(i64 %i.dd, i64 1), !dbg !5075
-    #dbg_value(i64 %i.dk, !1800, !DIExpression(DW_OP_plus_uconst, 255, DW_OP_stack_value), !4659)
+    #dbg_value(i64 poison, !1800, !DIExpression(DW_OP_plus_uconst, 255, DW_OP_stack_value), !4659)
     #dbg_value(i32 %spec.select.i, !1841, !DIExpression(), !4663)
     #dbg_value(i32 %spec.select.i, !1808, !DIExpression(), !4654)
     #dbg_value(i32 %spec.select.i, !1801, !DIExpression(), !4661)
@@ -607,7 +607,7 @@ _RNvMCsgR93kpVnVos_12hdrhistogramINtB2_9HistogramyE9value_forCs7OITKvp9Irj_4perf
   %i.ab = select i1 %i.aa, i32 0, i32 %i.x, !dbg !5636
   %spec.select.i = add i32 %i.ab, %i.z, !dbg !5636
   %i.ac = tail call i64 @llvm.umax.i64(i64 %i.u, i64 1), !dbg !5636
-    #dbg_value(i64 %i.ac, !1800, !DIExpression(DW_OP_plus_uconst, 255, DW_OP_stack_value), !5428)
+    #dbg_value(i64 poison, !1800, !DIExpression(DW_OP_plus_uconst, 255, DW_OP_stack_value), !5428)
     #dbg_value(i32 %spec.select.i, !1841, !DIExpression(), !5432)
     #dbg_value(i32 %spec.select.i, !1808, !DIExpression(), !5423)
     #dbg_value(i32 %spec.select.i, !1801, !DIExpression(), !5430)
@@ -878,7 +878,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = select i1 %i.l, i32 0, i32 %i.i, !dbg !5896
   %spec.select = add i32 %i.m, %i.k, !dbg !5896
   %i.n = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1), !dbg !5896
-    #dbg_value(i64 %i.n, !1800, !DIExpression(DW_OP_plus_uconst, 255, DW_OP_stack_value), !5883)
+    #dbg_value(i64 poison, !1800, !DIExpression(DW_OP_plus_uconst, 255, DW_OP_stack_value), !5883)
     #dbg_value(i32 %spec.select, !1841, !DIExpression(), !5887)
     #dbg_value(i32 %spec.select, !1808, !DIExpression(), !5878)
     #dbg_value(i32 %spec.select, !1801, !DIExpression(), !5885)
