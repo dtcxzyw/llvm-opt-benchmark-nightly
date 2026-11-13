@@ -202,12 +202,10 @@ bb.m:                                             ; preds = %bb.l
   %i.gu = icmp eq i64 %i.gt, 100
   %i.gv = and i64 %i.gm, 4294967295
   %i.gw = icmp eq i64 %i.gv, 200
-  %i.gx = select i1 %.not.i123, i1 %i.gw, i1 %i.gu ; 2 uses
-  %8 = select i1 %i.gx, i64 8589934592, i64 0
+  %i.gx = select i1 %.not.i123, i1 %i.gw, i1 %i.gu
   %i.gy = and i64 %i.gs, -12884901889
-  %9 = or disjoint i64 %8, %i.gy
-  %i.gz = select i1 %i.gx, i64 4294967296, i64 0
-  %i.ha = or disjoint i64 %9, %i.gz
+  %i.gz = select i1 %i.gx, i64 12884901888, i64 0
+  %i.ha = or disjoint i64 %i.gz, %i.gy
   store i64 %i.ha, ptr %i.gr, align 8
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.hc = load i64, ptr %i.hb, align 8            ; 2 uses
