@@ -205,14 +205,14 @@ bb.mo:                                            ; preds = %_ZN6casadi21casadi_
   %..i = select i1 %or.cond.i, i64 %i.bis, i64 0
   %i.biv = add i64 %i.biu, %..i
   %i.biw = add nsw i64 %i.bht, %i.biv
-  %spec.select = select i1 %or.cond.i, i64 %i.biw, i64 %i.biu
   %i.bix = add nsw i64 %reass.add.i, %i.bin
   %.not.i1264 = icmp eq i8 %i.bhy, 0
   %i.biy = mul i64 %i.bin, 13
-  %i.biz = select i1 %.not.i1264, i64 0, i64 %i.biy
-  %i.bja = add i64 %spec.select, %i.biz
-  %i.bjb = select i1 %i.bio, i64 %i.bix, i64 0
-  %.2 = add nsw i64 %i.bja, %i.bjb
+  %159 = select i1 %.not.i1264, i64 0, i64 %i.biy
+  %i.biz = select i1 %i.bio, i64 %i.bix, i64 0
+  %i.bja = add i64 %i.biw, %i.biz
+  %i.bjb = select i1 %or.cond.i, i64 %i.bja, i64 %i.biu
+  %.2 = add i64 %i.bjb, %159
   invoke void @_ZN6casadi16FunctionInternal7alloc_wEmb(ptr noundef nonnull align 8 dereferenceable(1312) %0, i64 noundef %.2, i1 noundef zeroext true)
           to label %bb.mp unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

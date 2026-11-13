@@ -202,13 +202,11 @@ bb.e:                                             ; preds = %bb.d
   %i.q = tail call ptr @pci_bridge_get_sec_bus(ptr noundef %i.p) #12
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 184
   %i.s = load ptr, ptr %i.r, align 8
-  %.not19 = icmp eq ptr %i.s, null                ; 2 uses
+  %.not19 = icmp eq ptr %i.s, null
   %.val.i23 = load i16, ptr %i.j, align 1
-  %i.t = and i16 %.val.i23, -1025
-  %masksel = select i1 %.not19, i16 1024, i16 0
-  %storemerge = or disjoint i16 %i.t, %masksel
-  %i.u = select i1 %.not19, i16 768, i16 256
-  %i.v = or i16 %i.u, %storemerge
+  %i.t = and i16 %.val.i23, -1281
+  %i.u = select i1 %.not19, i16 1792, i16 256
+  %i.v = or i16 %i.t, %i.u
   store i16 %i.v, ptr %i.j, align 1
   br label %bb.f
 

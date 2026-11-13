@@ -202,11 +202,10 @@ bb.ak:                                            ; preds = %bb.aj
   %i.gc = icmp samesign ugt i8 %i.gb, 1
   %i.gd = zext i1 %i.gc to i16
   %.not.i.i119 = icmp eq i8 %i.gb, 2
-  %8 = select i1 %.not.i.i119, i16 0, i16 -32768
   %i.ge = icmp eq i8 %i.gb, 1
-  %i.gf = select i1 %i.ge, i16 16384, i16 0
-  %9 = or disjoint i16 %8, %i.gd
-  %i.gg = or disjoint i16 %9, %i.gf
+  %i.gf = select i1 %i.ge, i16 -16384, i16 -32768
+  %8 = select i1 %.not.i.i119, i16 0, i16 %i.gf
+  %i.gg = or disjoint i16 %8, %i.gd
   %i.gh = or disjoint i16 %i.gg, 4608
   br label %tcp_ecn_make_synack.exit.sink.split
 

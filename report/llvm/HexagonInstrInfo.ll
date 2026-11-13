@@ -202,16 +202,13 @@ _ZN4llvm18MCSuperRegIteratorppEv.exit55:          ; preds = %.lr.ph106
 .critedge:                                        ; preds = %_ZN4llvm18MCSuperRegIteratorppEv.exit55, %.lr.ph106, %bb.e, %bb.a, %.loopexit, %bb.b
   %.446 = phi i32 [ %5, %.loopexit ], [ %5, %bb.b ], [ %5, %bb.a ], [ %5, %bb.e ], [ %5, %_ZN4llvm18MCSuperRegIteratorppEv.exit55 ], [ %i.bg, %.lr.ph106 ]
   %.4 = phi i32 [ %.3, %.loopexit ], [ %3, %bb.b ], [ %3, %bb.a ], [ %.3, %bb.e ], [ %.3, %.lr.ph106 ], [ %.3, %_ZN4llvm18MCSuperRegIteratorppEv.exit55 ]
-  %i.bk = tail call i64 @_ZNK4llvm15TargetInstrInfo17getOperandLatencyEPKNS_18InstrItineraryDataERKNS_12MachineInstrEjS6_j(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(80) %2, i32 noundef %.4, ptr noundef nonnull align 8 dereferenceable(80) %4, i32 noundef %.446) #29 ; 4 uses
+  %i.bk = tail call i64 @_ZNK4llvm15TargetInstrInfo17getOperandLatencyEPKNS_18InstrItineraryDataERKNS_12MachineInstrEjS6_j(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(80) %2, i32 noundef %.4, ptr noundef nonnull align 8 dereferenceable(80) %4, i32 noundef %.446) #29 ; 3 uses
   %.sroa.790.0.extract.shift = and i64 %i.bk, -1099511627776
   %i.bl = and i64 %i.bk, 8589934591
-  %i.bm = icmp eq i64 %i.bl, 4294967296           ; 2 uses
-  %6 = and i64 %i.bk, 1095216660480
-  %.sroa.488.0.insert.shift = select i1 %i.bm, i64 4294967296, i64 %6
-  %.sroa.488.0.insert.insert = or disjoint i64 %.sroa.488.0.insert.shift, %.sroa.790.0.extract.shift
-  %i.bn = and i64 %i.bk, 4294967295
-  %.sroa.086.0.insert.ext = select i1 %i.bm, i64 1, i64 %i.bn
-  %.sroa.086.0.insert.insert = or disjoint i64 %.sroa.488.0.insert.insert, %.sroa.086.0.insert.ext
+  %i.bm = icmp eq i64 %i.bl, 4294967296
+  %i.bn = and i64 %i.bk, 1099511627775
+  %.sroa.086.0.insert.ext = select i1 %i.bm, i64 4294967297, i64 %i.bn
+  %.sroa.086.0.insert.insert = or disjoint i64 %.sroa.086.0.insert.ext, %.sroa.790.0.extract.shift
   ret i64 %.sroa.086.0.insert.insert
 }
 

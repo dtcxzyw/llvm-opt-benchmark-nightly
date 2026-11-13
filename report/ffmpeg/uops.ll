@@ -204,18 +204,16 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   store i32 %i.bo, ptr %8, align 8, !tbaa !11
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 8 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bl, i64 12
-  %i.br = load i8, ptr %i.bq, align 4, !tbaa !14  ; 5 uses
+  %i.br = load i8, ptr %i.bq, align 4, !tbaa !14  ; 4 uses
   %.not.i.i = icmp ne i8 %i.br, 0
   %i.bs = zext i1 %.not.i.i to i8
-  %.inv.i.i = icmp ult i8 %i.br, 2
-  %11 = select i1 %.inv.i.i, i8 0, i8 2
-  %12 = or disjoint i8 %11, %i.bs
-  %i.bt = icmp ugt i8 %i.br, 2
-  %i.bu = select i1 %i.bt, i8 4, i8 0
-  %13 = or disjoint i8 %12, %i.bu
-  %14 = icmp ugt i8 %i.br, 3
-  %i.bv = select i1 %14, i8 8, i8 0
-  %i.bw = or disjoint i8 %13, %i.bv
+  %11 = icmp ugt i8 %i.br, 1                      ; 2 uses
+  %12 = icmp ugt i8 %i.br, 2
+  %i.bt = icmp ugt i8 %i.br, 3
+  %i.bu = select i1 %i.bt, i8 14, i8 6
+  %13 = select i1 %12, i8 %i.bu, i8 2
+  %i.bv = select i1 %11, i8 %13, i8 0
+  %i.bw = or disjoint i8 %i.bv, %i.bs
   store i8 %i.bw, ptr %i.aw, align 8, !tbaa !13
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bl, i64 16 ; 2 uses
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !14
@@ -292,8 +290,7 @@ check_filter_fma.exit.thread.i.i:                 ; preds = %check_filter_fma.ex
   br label %check_filter_fma.exit.thread44.i.i
 
 bb.k:                                             ; preds = %switch.lookup
-  %15 = icmp ugt i8 %i.br, 1
-  br i1 %15, label %bb.l, label %.thread46.i.i
+  br i1 %11, label %bb.l, label %.thread46.i.i
 
 bb.l:                                             ; preds = %bb.k
   %i.da = getelementptr inbounds nuw i8, ptr %i.bl, i64 13

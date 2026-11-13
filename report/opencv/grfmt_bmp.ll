@@ -204,13 +204,12 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   %.not85 = select i1 %i.aq, i1 true, i1 %.063.lcssa ; 3 uses
   %i.ar = select i1 %.not85, i32 40, i32 124      ; 2 uses
   %.not111 = icmp eq i32 %i.h, 0                  ; 2 uses
-  %8 = select i1 %.not111, i32 1024, i32 0
   %i.as = add nuw nsw i32 %i.ar, 14
-  %9 = or disjoint i32 %i.as, %8                  ; 2 uses
+  %8 = select i1 %.not111, i32 1078, i32 %i.as    ; 2 uses
   %i.at = sext i32 %i.l to i64
   %i.au = sext i32 %i.e to i64
   %i.av = mul nsw i64 %i.at, %i.au
-  %i.aw = zext nneg i32 %9 to i64
+  %i.aw = zext nneg i32 %8 to i64
   %i.ax = add nsw i64 %i.av, %i.aw                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   %i.ay = load ptr, ptr %i.m, align 8, !tbaa !221 ; 6 uses
@@ -532,7 +531,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.em, label %bb.an, label %.loopexit112
 
 bb.an:                                            ; preds = %bb.am
-  %i.en = invoke noundef zeroext i1 @_ZN2cv12WLByteStream8putDWordEi(ptr noundef nonnull align 8 dereferenceable(64) %3, i32 noundef %9)
+  %i.en = invoke noundef zeroext i1 @_ZN2cv12WLByteStream8putDWordEi(ptr noundef nonnull align 8 dereferenceable(64) %3, i32 noundef %8)
           to label %bb.ao unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ao:                                            ; preds = %bb.an

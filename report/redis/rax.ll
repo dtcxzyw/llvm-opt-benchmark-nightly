@@ -202,16 +202,16 @@ bb.d:                                             ; preds = %raxGetData.exit, %t
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = icmp samesign ugt i32 %spec.select, 1
-  %3 = select i1 %i.aa, i32 7, i32 4
-  %i.ab = add nsw i32 %3, %.tr67
-  %4 = icmp eq i32 %spec.select, 1
-  %i.ac = select i1 %4, i32 %.037, i32 0
-  %spec.select42 = add nsw i32 %i.ab, %i.ac
-  %5 = freeze i32 %spec.select42
+  %3 = icmp eq i32 %spec.select, 1
+  %i.ab = add i32 %.037, 4
+  %4 = select i1 %3, i32 %i.ab, i32 4
+  %i.ac = select i1 %i.aa, i32 7, i32 %4
+  %.fr = freeze i32 %i.ac
+  %spec.select42 = add i32 %.fr, %.tr67
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0 = phi i32 [ %.tr67, %bb.d ], [ %5, %bb.e ]  ; 5 uses
+  %.0 = phi i32 [ %.tr67, %bb.d ], [ %spec.select42, %bb.e ] ; 5 uses
   %i.ad = zext nneg i32 %i.z to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.ad
   %i.af = xor i32 %i.z, 3

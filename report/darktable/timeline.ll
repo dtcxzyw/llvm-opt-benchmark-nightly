@@ -202,6 +202,7 @@ _time_days_in_month.exit.i.i:                     ; preds = %bb.bg
   %i.dr = add nsw i32 %.val110.i, -1
   %i.ds = sdiv i32 %i.dr, 4
   %i.dt = shl nsw i32 %i.ds, 2                    ; 3 uses
+  %switch.selectcmp.i.i = icmp ult i32 %i.dt, 8
   %i.du = or disjoint i32 %i.dt, 2
   switch i32 %i.du, label %bb.bi [
     i32 2, label %bb.bh
@@ -225,12 +226,11 @@ bb.bi:                                            ; preds = %_time_days_in_month
 
 _block_get_bar_count.exit.thread49.i:             ; preds = %bb.bi, %bb.bh, %_time_days_in_month.exit.i.i
   %.0.i13.i.i = phi i32 [ 30, %bb.bi ], [ %spec.select.i17.i.i, %bb.bh ], [ 31, %_time_days_in_month.exit.i.i ]
-  %switch.selectcmp2.i.i = icmp ult i32 %i.dt, 8
+  %12 = select i1 %switch.selectcmp.i.i, i32 62, i32 60
   %i.ea = add i32 %i.dt, -4
   %switch.selectcmp4.i.i = icmp ult i32 %i.ea, 8
-  %12 = select i1 %switch.selectcmp4.i.i, i32 31, i32 30
-  %i.eb = select i1 %switch.selectcmp2.i.i, i32 62, i32 60
-  %i.ec = add nuw nsw i32 %12, %i.eb
+  %i.eb = select i1 %switch.selectcmp4.i.i, i32 31, i32 30
+  %i.ec = add nuw nsw i32 %i.eb, %12
   %i.ed = add nuw nsw i32 %i.ec, %.0.i13.i.i      ; 3 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dg, i64 24 ; 2 uses
   store i32 %i.ed, ptr %i.ee, align 8, !tbaa !149

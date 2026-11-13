@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.gh = and <8 x i32> %i.gg, splat (i32 -2147483648)
   %i.gi = shl nuw nsw <8 x i32> %predphi232, splat (i32 23)
   %i.gj = select <8 x i1> %i.fu, <8 x i32> splat (i32 2139095040), <8 x i32> %i.gi
-  %i.gk = or disjoint <8 x i32> %i.gj, %i.gh
-  %i.gl = or disjoint <8 x i32> %i.gk, %predphi235
+  %i.gk = or disjoint <8 x i32> %i.gj, %predphi235
+  %i.gl = or disjoint <8 x i32> %i.gk, %i.gh
   %gep467 = getelementptr inbounds [4 x i8], ptr %invariant.gep466, i64 %i.fi
   store <8 x i32> %i.gl, ptr %gep467, align 4, !tbaa !161, !alias.scope !162, !noalias !163
   %index.next = add nuw i64 %index, 8             ; 2 uses
@@ -332,8 +332,8 @@ vector.body288:                                   ; preds = %vector.body288, %ve
   %i.ip = and <8 x i32> %i.hx, splat (i32 -2147483648)
   %i.iq = shl nuw nsw <8 x i32> %predphi295, splat (i32 23)
   %i.ir = select <8 x i1> %i.id, <8 x i32> splat (i32 2139095040), <8 x i32> %i.iq
-  %i.is = or disjoint <8 x i32> %i.ir, %i.ip
-  %i.it = or disjoint <8 x i32> %i.is, %predphi298
+  %i.is = or disjoint <8 x i32> %i.ir, %predphi298
+  %i.it = or disjoint <8 x i32> %i.is, %i.ip
   %gep463 = getelementptr inbounds [4 x i8], ptr %invariant.gep462, i64 %i.ho
   store <8 x i32> %i.it, ptr %gep463, align 4, !tbaa !161, !alias.scope !167, !noalias !168
   %index.next299 = add nuw i64 %index289, 8       ; 2 uses

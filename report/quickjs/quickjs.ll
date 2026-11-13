@@ -205,11 +205,10 @@ bb.bc:                                            ; preds = %string_skip_char.ex
 
 bb.bd:                                            ; preds = %bb.bc
   %i.aaj = icmp slt i32 %.019.i125.i.lcssa, 100
-  %5 = select i1 %i.aaj, i32 1900, i32 0
-  %6 = add nsw i32 %5, %.019.i125.i.lcssa
-  %7 = icmp slt i32 %.019.i125.i.lcssa, 50
-  %i.aak = select i1 %7, i32 100, i32 0
-  %i.aal = add nsw i32 %6, %i.aak
+  %5 = icmp slt i32 %.019.i125.i.lcssa, 50
+  %6 = select i1 %5, i32 2000, i32 1900
+  %i.aak = select i1 %i.aaj, i32 %6, i32 0
+  %i.aal = add nsw i32 %i.aak, %.019.i125.i.lcssa
   store i32 %i.aal, ptr %i.d, align 16, !tbaa !191
   br label %string_skip_until.exit.i
 
@@ -564,11 +563,10 @@ bb.bx:                                            ; preds = %bb.bw
   %i.afe = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.aff = load i32, ptr %i.afe, align 4, !tbaa !191 ; 3 uses
   %i.afg = icmp slt i32 %i.aff, 100
-  %8 = select i1 %i.afg, i32 1900, i32 0
-  %9 = add nsw i32 %8, %i.aff
-  %10 = icmp slt i32 %i.aff, 50
-  %i.afh = select i1 %10, i32 100, i32 0
-  %i.afi = add nsw i32 %9, %i.afh
+  %7 = icmp slt i32 %i.aff, 50
+  %8 = select i1 %7, i32 2000, i32 1900
+  %i.afh = select i1 %i.afg, i32 %8, i32 0
+  %i.afi = add i32 %i.afh, %i.aff
   store i32 %i.afi, ptr %i.d, align 16, !tbaa !191
   %i.afj = load i32, ptr %i.b, align 4, !tbaa !191
   br label %thread-pre-split.sink.split.i
@@ -584,11 +582,10 @@ bb.bz:                                            ; preds = %bb.br
   %i.afn = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.afo = load i32, ptr %i.afn, align 4, !tbaa !191 ; 3 uses
   %i.afp = icmp slt i32 %i.afo, 100
-  %11 = select i1 %i.afp, i32 1900, i32 0
-  %12 = add nsw i32 %11, %i.afo
-  %13 = icmp slt i32 %i.afo, 50
-  %i.afq = select i1 %13, i32 100, i32 0
-  %i.afr = add nsw i32 %12, %i.afq
+  %9 = icmp slt i32 %i.afo, 50
+  %10 = select i1 %9, i32 2000, i32 1900
+  %i.afq = select i1 %i.afp, i32 %10, i32 0
+  %i.afr = add i32 %i.afq, %i.afo
   store i32 %i.afr, ptr %i.d, align 16, !tbaa !191
   %i.afs = load i32, ptr %i.b, align 4, !tbaa !191
   %i.aft = getelementptr inbounds nuw i8, ptr %i.b, i64 4

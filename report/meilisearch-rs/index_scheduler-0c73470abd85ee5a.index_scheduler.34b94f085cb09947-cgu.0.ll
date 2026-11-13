@@ -206,12 +206,10 @@ bb.j:                                             ; preds = %bb.h
   %.sroa.04.0.i.i = select i1 %i.cz, i32 %i.da, i32 %i.cy
   %i.db = mul i32 %.sroa.04.0.i.i, 33555415
   %i.dc = and i32 %i.db, 100695055
-  %i.dd = icmp samesign ult i32 %i.dc, 31745      ; 2 uses
-  %1 = select i1 %i.dd, i32 512, i32 0
-  %.sroa.01.0.i.i = select i1 %i.dd, i32 366, i32 365
+  %i.dd = icmp samesign ult i32 %i.dc, 31745
   %i.de = shl nsw i32 %i.cy, 10
-  %2 = or disjoint i32 %1, %i.de
-  %i.df = or disjoint i32 %2, %.sroa.01.0.i.i
+  %1 = select i1 %i.dd, i32 878, i32 365
+  %i.df = or disjoint i32 %1, %i.de
   br label %"_ZN108_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$core..ops..arith..Sub$LT$core..time..Duration$GT$$GT$3sub17ha87334fc6f4304bdE.exit"
 
 bb.k:                                             ; preds = %_ZN4time4time4Time17adjusting_sub_std17hf29ef2d769c2f610E.exit.i.thread, %bb.e, %bb.d
