@@ -204,10 +204,14 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %indvars212 = trunc i64 %indvars.iv.next to i32
   %.not180 = icmp eq i32 %i.b, %indvars212
-  br i1 %.not180, label %.loopexit210, label %bb.d
+  br i1 %.not180, label %.loopexit210.loopexit, label %bb.d
 
-.loopexit210:                                     ; preds = %bb.d, %bb.b
-  %.1 = phi i32 [ 0, %bb.b ], [ %i.b, %bb.d ]
+.loopexit210.loopexit:                            ; preds = %bb.d
+  %3 = zext i32 %i.b to i64
+  br label %.loopexit210
+
+.loopexit210:                                     ; preds = %.loopexit210.loopexit, %bb.b
+  %.1 = phi i64 [ 0, %bb.b ], [ %3, %.loopexit210.loopexit ]
   %i.ac = and i32 %2, 3                           ; 2 uses
   %.not181 = icmp eq i32 %i.ac, 0
   br i1 %.not181, label %.loopexit209, label %.preheader208
@@ -217,9 +221,10 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader208, %bb.e
-  %.2 = phi i32 [ %3, %bb.e ], [ %.1, %.preheader208 ] ; 2 uses
-  %.0 = phi i32 [ %i.ak, %bb.e ], [ 0, %.preheader208 ]
-  %i.ae = shl i32 %.2, 3
+  %indvars.iv214 = phi i64 [ %.1, %.preheader208 ], [ %indvars.iv.next215, %bb.e ] ; 2 uses
+  %.2 = phi i32 [ 0, %.preheader208 ], [ %i.ak, %bb.e ]
+  %4 = trunc nuw i64 %indvars.iv214 to i32
+  %i.ae = shl i32 %4, 3
   %i.af = add i32 %i.ae, %1
   %i.ag = zext i32 %i.af to i64                   ; 2 uses
   %.val196 = load ptr, ptr %i.ad, align 8, !tbaa !12
@@ -230,8 +235,8 @@ bb.e:                                             ; preds = %.preheader208, %bb.
   %.val188 = load ptr, ptr %i.ad, align 8, !tbaa !12
   %i.aj = getelementptr inbounds nuw i8, ptr %.val188, i64 %i.ag
   store i64 %i.ai, ptr %i.aj, align 1
-  %3 = add nsw i32 %.2, 1
-  %i.ak = add nuw nsw i32 %.0, 1                  ; 2 uses
+  %indvars.iv.next215 = add nuw nsw i64 %indvars.iv214, 1
+  %i.ak = add nuw nsw i32 %.2, 1                  ; 2 uses
   %.not182 = icmp eq i32 %i.ak, %i.ac
   br i1 %.not182, label %.loopexit209, label %bb.e
 
@@ -634,10 +639,14 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %indvars137 = trunc i64 %indvars.iv.next to i32
   %.not119 = icmp eq i32 %i.b, %indvars137
-  br i1 %.not119, label %.loopexit135, label %bb.d
+  br i1 %.not119, label %.loopexit135.loopexit, label %bb.d
 
-.loopexit135:                                     ; preds = %bb.d, %bb.b
-  %.1 = phi i32 [ 0, %bb.b ], [ %i.b, %bb.d ]
+.loopexit135.loopexit:                            ; preds = %bb.d
+  %3 = zext i32 %i.b to i64
+  br label %.loopexit135
+
+.loopexit135:                                     ; preds = %.loopexit135.loopexit, %bb.b
+  %.1 = phi i64 [ 0, %bb.b ], [ %3, %.loopexit135.loopexit ]
   %i.ac = and i32 %2, 3                           ; 2 uses
   %.not120 = icmp eq i32 %i.ac, 0
   br i1 %.not120, label %.loopexit, label %.preheader
@@ -647,9 +656,10 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %bb.e
-  %.2 = phi i32 [ %3, %bb.e ], [ %.1, %.preheader ] ; 2 uses
-  %.0116 = phi i32 [ %i.ak, %bb.e ], [ 0, %.preheader ]
-  %i.ae = shl i32 %.2, 3
+  %indvars.iv139 = phi i64 [ %.1, %.preheader ], [ %indvars.iv.next140, %bb.e ] ; 2 uses
+  %.2 = phi i32 [ 0, %.preheader ], [ %i.ak, %bb.e ]
+  %4 = trunc nuw i64 %indvars.iv139 to i32
+  %i.ae = shl i32 %4, 3
   %i.af = add i32 %i.ae, %1
   %i.ag = zext i32 %i.af to i64                   ; 2 uses
   %.val126 = load ptr, ptr %i.ad, align 8, !tbaa !12
@@ -660,8 +670,8 @@ bb.e:                                             ; preds = %.preheader, %bb.e
   %.val = load ptr, ptr %i.ad, align 8, !tbaa !12
   %i.aj = getelementptr inbounds nuw i8, ptr %.val, i64 %i.ag
   store i64 %i.ai, ptr %i.aj, align 1
-  %3 = add nsw i32 %.2, 1
-  %i.ak = add nuw nsw i32 %.0116, 1               ; 2 uses
+  %indvars.iv.next140 = add nuw nsw i64 %indvars.iv139, 1
+  %i.ak = add nuw nsw i32 %.2, 1                  ; 2 uses
   %.not121 = icmp eq i32 %i.ak, %i.ac
   br i1 %.not121, label %.loopexit, label %bb.e
 

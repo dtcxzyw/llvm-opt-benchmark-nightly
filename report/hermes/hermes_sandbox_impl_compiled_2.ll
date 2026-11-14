@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i732) #7, !srcloc !19
   %i.dg = icmp ugt i32 %.0.copyload.i731, %.0.copyload.i732 ; 2 uses
   %i.dh = select i1 %i.dg, i64 %.0.copyload.i729, i64 %.0.copyload.i730 ; 3 uses
-  %i.di = lshr i64 %i.dh, 32                      ; 2 uses
+  %i.di = lshr i64 %i.dh, 32                      ; 3 uses
   %i.dj = trunc nuw i64 %i.di to i32              ; 4 uses
   %i.dk = icmp ult i32 %.0.copyload.i728, %i.dj
   br i1 %i.dk, label %.critedge, label %bb.g
@@ -267,7 +267,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ei, label %bb.n, label %.loopexit749
 
 bb.n:                                             ; preds = %bb.m
-  %i.ej = and i32 %i.dj, -4                       ; 2 uses
+  %i.ej = and i32 %i.dj, -4
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %bb.n
@@ -344,18 +344,23 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %indvars755 = trunc i64 %indvars.iv.next to i32
   %.not634 = icmp eq i32 %i.ej, %indvars755
-  br i1 %.not634, label %.loopexit749, label %bb.o
+  br i1 %.not634, label %.loopexit749.loopexit, label %bb.o
 
-.loopexit749:                                     ; preds = %bb.o, %bb.m
-  %.1620 = phi i32 [ 0, %bb.m ], [ %i.ej, %bb.o ]
+.loopexit749.loopexit:                            ; preds = %bb.o
+  %5 = and i64 %i.di, 4294967292
+  br label %.loopexit749
+
+.loopexit749:                                     ; preds = %.loopexit749.loopexit, %bb.m
+  %.1620 = phi i64 [ 0, %bb.m ], [ %5, %.loopexit749.loopexit ]
   %i.fv = and i32 %i.dj, 3                        ; 2 uses
   %.not635 = icmp eq i32 %i.fv, 0
   br i1 %.not635, label %.loopexit748, label %.preheader
 
 .preheader:                                       ; preds = %.loopexit749, %.preheader
-  %.2621 = phi i32 [ %5, %.preheader ], [ %.1620, %.loopexit749 ] ; 2 uses
-  %.0613 = phi i32 [ %i.gf, %.preheader ], [ 0, %.loopexit749 ]
-  %i.fw = shl i32 %.2621, 3                       ; 2 uses
+  %indvars.iv757 = phi i64 [ %indvars.iv.next758, %.preheader ], [ %.1620, %.loopexit749 ] ; 2 uses
+  %.2621 = phi i32 [ %i.gf, %.preheader ], [ 0, %.loopexit749 ]
+  %6 = trunc nuw i64 %indvars.iv757 to i32
+  %i.fw = shl i32 %6, 3                           ; 2 uses
   %i.fx = add i32 %i.fw, %i.dv
   %i.fy = zext i32 %i.fx to i64                   ; 2 uses
   %.val681 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -372,8 +377,8 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %.val700 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ge = getelementptr inbounds nuw i8, ptr %.val700, i64 %i.fy
   store i64 %i.gd, ptr %i.ge, align 1
-  %5 = add nsw i32 %.2621, 1
-  %i.gf = add nuw nsw i32 %.0613, 1               ; 2 uses
+  %indvars.iv.next758 = add nuw nsw i64 %indvars.iv757, 1
+  %i.gf = add nuw nsw i32 %.2621, 1               ; 2 uses
   %.not636 = icmp eq i32 %i.gf, %i.fv
   br i1 %.not636, label %.loopexit748, label %.preheader
 
@@ -739,7 +744,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i732) #7, !srcloc !19
   %i.dg = icmp ugt i32 %.0.copyload.i731, %.0.copyload.i732 ; 2 uses
   %i.dh = select i1 %i.dg, i64 %.0.copyload.i729, i64 %.0.copyload.i730 ; 3 uses
-  %i.di = lshr i64 %i.dh, 32                      ; 2 uses
+  %i.di = lshr i64 %i.dh, 32                      ; 3 uses
   %i.dj = trunc nuw i64 %i.di to i32              ; 4 uses
   %i.dk = icmp ult i32 %.0.copyload.i728, %i.dj
   br i1 %i.dk, label %.critedge, label %bb.g
@@ -802,7 +807,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ei, label %bb.n, label %.loopexit749
 
 bb.n:                                             ; preds = %bb.m
-  %i.ej = and i32 %i.dj, -4                       ; 2 uses
+  %i.ej = and i32 %i.dj, -4
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %bb.n
@@ -879,18 +884,23 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %indvars755 = trunc i64 %indvars.iv.next to i32
   %.not634 = icmp eq i32 %i.ej, %indvars755
-  br i1 %.not634, label %.loopexit749, label %bb.o
+  br i1 %.not634, label %.loopexit749.loopexit, label %bb.o
 
-.loopexit749:                                     ; preds = %bb.o, %bb.m
-  %.1620 = phi i32 [ 0, %bb.m ], [ %i.ej, %bb.o ]
+.loopexit749.loopexit:                            ; preds = %bb.o
+  %5 = and i64 %i.di, 4294967292
+  br label %.loopexit749
+
+.loopexit749:                                     ; preds = %.loopexit749.loopexit, %bb.m
+  %.1620 = phi i64 [ 0, %bb.m ], [ %5, %.loopexit749.loopexit ]
   %i.fv = and i32 %i.dj, 3                        ; 2 uses
   %.not635 = icmp eq i32 %i.fv, 0
   br i1 %.not635, label %.loopexit748, label %.preheader
 
 .preheader:                                       ; preds = %.loopexit749, %.preheader
-  %.2621 = phi i32 [ %5, %.preheader ], [ %.1620, %.loopexit749 ] ; 2 uses
-  %.0613 = phi i32 [ %i.gf, %.preheader ], [ 0, %.loopexit749 ]
-  %i.fw = shl i32 %.2621, 3                       ; 2 uses
+  %indvars.iv757 = phi i64 [ %indvars.iv.next758, %.preheader ], [ %.1620, %.loopexit749 ] ; 2 uses
+  %.2621 = phi i32 [ %i.gf, %.preheader ], [ 0, %.loopexit749 ]
+  %6 = trunc nuw i64 %indvars.iv757 to i32
+  %i.fw = shl i32 %6, 3                           ; 2 uses
   %i.fx = add i32 %i.fw, %i.dv
   %i.fy = zext i32 %i.fx to i64                   ; 2 uses
   %.val681 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -907,8 +917,8 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %.val700 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ge = getelementptr inbounds nuw i8, ptr %.val700, i64 %i.fy
   store i64 %i.gd, ptr %i.ge, align 1
-  %5 = add nsw i32 %.2621, 1
-  %i.gf = add nuw nsw i32 %.0613, 1               ; 2 uses
+  %indvars.iv.next758 = add nuw nsw i64 %indvars.iv757, 1
+  %i.gf = add nuw nsw i32 %.2621, 1               ; 2 uses
   %.not636 = icmp eq i32 %i.gf, %i.fv
   br i1 %.not636, label %.loopexit748, label %.preheader
 
@@ -1274,7 +1284,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i732) #7, !srcloc !19
   %i.dg = icmp ugt i32 %.0.copyload.i731, %.0.copyload.i732 ; 2 uses
   %i.dh = select i1 %i.dg, i64 %.0.copyload.i729, i64 %.0.copyload.i730 ; 3 uses
-  %i.di = lshr i64 %i.dh, 32                      ; 2 uses
+  %i.di = lshr i64 %i.dh, 32                      ; 3 uses
   %i.dj = trunc nuw i64 %i.di to i32              ; 4 uses
   %i.dk = icmp ult i32 %.0.copyload.i728, %i.dj
   br i1 %i.dk, label %.critedge, label %bb.g
@@ -1337,7 +1347,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ei, label %bb.n, label %.loopexit749
 
 bb.n:                                             ; preds = %bb.m
-  %i.ej = and i32 %i.dj, -4                       ; 2 uses
+  %i.ej = and i32 %i.dj, -4
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %bb.n
@@ -1414,18 +1424,23 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %indvars755 = trunc i64 %indvars.iv.next to i32
   %.not634 = icmp eq i32 %i.ej, %indvars755
-  br i1 %.not634, label %.loopexit749, label %bb.o
+  br i1 %.not634, label %.loopexit749.loopexit, label %bb.o
 
-.loopexit749:                                     ; preds = %bb.o, %bb.m
-  %.1620 = phi i32 [ 0, %bb.m ], [ %i.ej, %bb.o ]
+.loopexit749.loopexit:                            ; preds = %bb.o
+  %5 = and i64 %i.di, 4294967292
+  br label %.loopexit749
+
+.loopexit749:                                     ; preds = %.loopexit749.loopexit, %bb.m
+  %.1620 = phi i64 [ 0, %bb.m ], [ %5, %.loopexit749.loopexit ]
   %i.fv = and i32 %i.dj, 3                        ; 2 uses
   %.not635 = icmp eq i32 %i.fv, 0
   br i1 %.not635, label %.loopexit748, label %.preheader
 
 .preheader:                                       ; preds = %.loopexit749, %.preheader
-  %.2621 = phi i32 [ %5, %.preheader ], [ %.1620, %.loopexit749 ] ; 2 uses
-  %.0613 = phi i32 [ %i.gf, %.preheader ], [ 0, %.loopexit749 ]
-  %i.fw = shl i32 %.2621, 3                       ; 2 uses
+  %indvars.iv757 = phi i64 [ %indvars.iv.next758, %.preheader ], [ %.1620, %.loopexit749 ] ; 2 uses
+  %.2621 = phi i32 [ %i.gf, %.preheader ], [ 0, %.loopexit749 ]
+  %6 = trunc nuw i64 %indvars.iv757 to i32
+  %i.fw = shl i32 %6, 3                           ; 2 uses
   %i.fx = add i32 %i.fw, %i.dv
   %i.fy = zext i32 %i.fx to i64                   ; 2 uses
   %.val681 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -1442,8 +1457,8 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %.val700 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ge = getelementptr inbounds nuw i8, ptr %.val700, i64 %i.fy
   store i64 %i.gd, ptr %i.ge, align 1
-  %5 = add nsw i32 %.2621, 1
-  %i.gf = add nuw nsw i32 %.0613, 1               ; 2 uses
+  %indvars.iv.next758 = add nuw nsw i64 %indvars.iv757, 1
+  %i.gf = add nuw nsw i32 %.2621, 1               ; 2 uses
   %.not636 = icmp eq i32 %i.gf, %i.fv
   br i1 %.not636, label %.loopexit748, label %.preheader
 
