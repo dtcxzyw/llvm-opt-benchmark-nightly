@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.sink.split13, %bb.
   %i.ck = tail call noundef i32 %i.cj(ptr noundef nonnull align 8 dereferenceable(8) %i.cg, i64 noundef 668, i32 noundef 1), !call_target !85 ; 0 uses
   %i.cl = tail call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cm = uitofp reassoc nsz arcp contract afn i32 %i.cl to float
-  %i.cn = fmul reassoc nnan nsz arcp contract afn float %i.cm, f0x3089705F
+  %i.cn = fmul reassoc nsz arcp contract afn float %i.cm, f0x3089705F
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 192692
   store float %i.cn, ptr %i.co, align 4, !tbaa !107
   %i.cp = load ptr, ptr %i.a, align 8, !tbaa !74  ; 2 uses
@@ -607,10 +607,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.t = tail call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.u = uitofp reassoc nsz arcp contract afn i32 %i.t to float
-  %i.v = fmul reassoc nnan nsz arcp contract afn float %i.u, 1.250000e-01 ; 2 uses
-  %or.cond.i.i = fcmp reassoc nsz arcp contract afn ogt float %i.v, 6.400000e+01
-  %exp2 = tail call reassoc nnan nsz arcp contract afn float @llvm.exp2.f32(float %i.v)
-  %i.w = fmul reassoc nnan nsz arcp contract afn float %exp2, 6.250000e-05
+  %i.v = fmul reassoc nsz arcp contract afn float %i.u, 1.250000e-01 ; 2 uses
+  %1 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.v)
+  %or.cond.i.i = fcmp reassoc nsz arcp contract afn ogt float %1, 6.400000e+01
+  %exp2 = tail call reassoc nsz arcp contract afn float @llvm.exp2.f32(float %i.v)
+  %i.w = fmul reassoc nsz arcp contract afn float %exp2, 6.250000e-05
   %i.x = select i1 %or.cond.i.i, float 0.000000e+00, float %i.w
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 192692
   store float %i.x, ptr %i.y, align 4, !tbaa !107
@@ -637,8 +638,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ap = tail call noundef i32 %i.ao(ptr noundef nonnull align 8 dereferenceable(8) %i.al, i64 noundef 88, i32 noundef 0), !call_target !85 ; 0 uses
   %i.aq = tail call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ar = uitofp reassoc nsz arcp contract afn i32 %i.aq to float
-  %i.as = fmul reassoc nnan nsz arcp contract afn float %i.ar, 6.250000e-02 ; 2 uses
-  %or.cond.i.i9 = fcmp reassoc nsz arcp contract afn ogt float %i.as, 6.400000e+01
+  %i.as = fmul reassoc nsz arcp contract afn float %i.ar, 6.250000e-02 ; 2 uses
+  %2 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.as)
+  %or.cond.i.i9 = fcmp reassoc nsz arcp contract afn ogt float %2, 6.400000e+01
   %exp211 = tail call reassoc nsz arcp contract afn float @llvm.exp2.f32(float %i.as)
   %i.at = select reassoc nsz arcp contract afn i1 %or.cond.i.i9, float 0.000000e+00, float %exp211
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 192696
@@ -659,8 +661,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bh = tail call noundef i32 %i.bg(ptr noundef nonnull align 8 dereferenceable(8) %i.bd, i64 noundef 104, i32 noundef 0), !call_target !85 ; 0 uses
   %i.bi = tail call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bj = uitofp reassoc nsz arcp contract afn i32 %i.bi to float
-  %i.bk = fmul reassoc nnan nsz arcp contract afn float %i.bj, 6.250000e-02 ; 2 uses
-  %or.cond.i.i10 = fcmp reassoc nsz arcp contract afn ogt float %i.bk, 6.400000e+01
+  %i.bk = fmul reassoc nsz arcp contract afn float %i.bj, 6.250000e-02 ; 2 uses
+  %3 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bk)
+  %or.cond.i.i10 = fcmp reassoc nsz arcp contract afn ogt float %3, 6.400000e+01
   %exp212 = tail call reassoc nsz arcp contract afn float @llvm.exp2.f32(float %i.bk)
   %i.bl = select reassoc nsz arcp contract afn i1 %or.cond.i.i10, float 0.000000e+00, float %exp212
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1496
@@ -896,6 +899,9 @@ declare i32 @llvm.umin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fabs.f32(float) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.exp2.f32(float) #12

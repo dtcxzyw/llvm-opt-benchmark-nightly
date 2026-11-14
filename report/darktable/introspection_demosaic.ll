@@ -205,7 +205,7 @@ _get_variance_threshold.exit.i:                   ; preds = %_noise_requested.ex
   %i.fk = fmul reassoc nsz arcp contract afn float %i.fj, 1.000000e+02
   %i.fl = fptosi float %i.fk to i32
   %i.fm = sitofp reassoc nsz arcp contract afn i32 %i.fl to float
-  %i.fn = fmul reassoc nnan nsz arcp contract afn float %i.fm, f0x3C23D70A ; 5 uses
+  %i.fn = fmul reassoc nsz arcp contract afn float %i.fm, f0x3C23D70A ; 5 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.ey, i64 28 ; 2 uses
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !129
   %i.fq = fsub reassoc nsz arcp contract afn float %i.fp, %i.fn
@@ -322,13 +322,13 @@ bb.aq:                                            ; preds = %bb.ap, %.thread176.
   %i.hi = icmp slt <2 x i32> %i.hg, %i.hh
   %i.hj = sub nsw <2 x i32> %i.hf, %i.hg
   %i.hk = sitofp reassoc nsz arcp contract afn <2 x i32> %i.hj to <2 x float>
-  %i.hl = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.hk, splat (float 2.000000e-01)
+  %i.hl = fmul reassoc nsz arcp contract afn <2 x float> %i.hk, splat (float 2.000000e-01)
   %i.hm = fptosi <2 x float> %i.hl to <2 x i32>
   %i.hn = select <2 x i1> %i.hi, <2 x i32> %i.hm, <2 x i32> zeroinitializer ; 9 uses
   %i.ho = sub nsw <2 x i32> %i.he, %i.hn
   %i.hp = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ho to <2 x float> ; 2 uses
   %i.hq = sitofp reassoc nsz arcp contract afn <2 x i32> %i.hf to <2 x float> ; 3 uses
-  %i.hr = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.hq, splat (float 8.000000e-01)
+  %i.hr = fmul reassoc nsz arcp contract afn <2 x float> %i.hq, splat (float 8.000000e-01)
   %i.hs = sitofp reassoc nsz arcp contract afn <2 x i32> %i.hg to <2 x float>
   %i.ht = sitofp reassoc nsz arcp contract afn <2 x i32> %i.hn to <2 x float>
   %i.hu = fadd reassoc nsz arcp contract afn <2 x float> %i.hs, %i.ht
@@ -731,10 +731,12 @@ _calcRadiusXtrans.exit.i.i:                       ; preds = %._crit_edge360.loop
   br label %bb.fg
 
 bb.fg:                                            ; preds = %_calcRadiusXtrans.exit.i.i, %_calcRadiusBayer.exit.i.i, %_calcRadiusMono.exit.i.i
-  %i.ajr = phi reassoc nsz arcp contract afn float [ %i.uz, %_calcRadiusMono.exit.i.i ], [ %i.ym, %_calcRadiusBayer.exit.i.i ], [ %i.ajq, %_calcRadiusXtrans.exit.i.i ] ; 2 uses
+  %i.ajr = phi reassoc nsz arcp contract afn float [ %i.uz, %_calcRadiusMono.exit.i.i ], [ %i.ym, %_calcRadiusBayer.exit.i.i ], [ %i.ajq, %_calcRadiusXtrans.exit.i.i ] ; 3 uses
   tail call void @free(ptr noundef %i.io) #27
   %i.ajs = fcmp reassoc nsz arcp contract afn ogt float %i.ajr, 1.500000e+00
-  %i.ajt = select reassoc nsz arcp contract afn i1 %i.ajs, float 1.500000e+00, float %i.ajr
+  %6 = fcmp reassoc nsz arcp contract afn olt float %i.ajr, 0.000000e+00
+  %7 = select reassoc nsz arcp contract afn i1 %6, float 0.000000e+00, float %i.ajr
+  %i.ajt = select reassoc nsz arcp contract afn i1 %i.ajs, float 1.500000e+00, float %7
   br label %_calc_auto_radius.exit.i
 
 _calc_auto_radius.exit.i:                         ; preds = %bb.fg, %bb.as, %bb.ar, %bb.aq
@@ -1029,7 +1031,7 @@ bb.gp:                                            ; preds = %bb.gn
 
 bb.gq:                                            ; preds = %bb.gp
   %i.ane = sitofp reassoc nsz arcp contract afn i32 %i.en to float
-  %i.anf = fmul reassoc nnan nsz arcp contract afn float %i.ane, f0x38D1B717 ; 2 uses
+  %i.anf = fmul reassoc nsz arcp contract afn float %i.ane, f0x38D1B717 ; 2 uses
   %i.ang = sext i32 %i.bo to i64
   %i.anh = sext i32 %i.bq to i64
   %i.ani = shl nsw i64 %i.ang, 2
@@ -1128,7 +1130,7 @@ bb.hb:                                            ; preds = %bb.ha, %bb.gz
   %i.aok = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.aol = add nsw i32 %i.bo, -17
   %i.aom = sdiv i32 %i.aol, 112                   ; 2 uses
-  %invariant.op.i553 = fmul reassoc nnan nsz arcp contract afn float %i.anw, 6.553500e+04
+  %invariant.op.i553 = fmul reassoc nsz arcp contract afn float %i.anw, 6.553500e+04
   %i.aon = mul i32 %i.bo, 112
   %smax.i554 = tail call i32 @llvm.smax.i32(i32 %i.aom, i32 0)
   %i.aoo = icmp slt i32 %i.bo, 20
@@ -1531,19 +1533,19 @@ bb.oj:                                            ; preds = %bb.oi
   %indvars.iv.i.i573 = phi i64 [ %indvars.iv.next.i.i574, %bb.op ], [ 0, %bb.oi ] ; 4 uses
   %i.liz = trunc nuw nsw i64 %indvars.iv.i.i573 to i32
   %i.lja = uitofp nsz nneg i32 %i.liz to double   ; 4 uses
-  %i.ljb = fmul reassoc nnan nsz arcp contract afn double %i.lja, f0x3EF0001000100010 ; 3 uses
+  %i.ljb = fmul reassoc nsz arcp contract afn double %i.lja, f0x3EF0001000100010 ; 3 uses
   %i.ljc = fcmp reassoc nsz arcp contract afn ugt double %i.ljb, 1.867000e-03
   br i1 %i.ljc, label %bb.ol, label %bb.ok
 
 bb.ok:                                            ; preds = %.preheader.i.i572
-  %i.ljd = fmul reassoc nnan nsz arcp contract afn double %i.lja, f0x3F31001100110011
+  %i.ljd = fmul reassoc nsz arcp contract afn double %i.lja, f0x3F31001100110011
   br label %bb.om
 
 bb.ol:                                            ; preds = %.preheader.i.i572
-  %i.lje = tail call fast double @llvm.log.f64(double %i.ljb)
-  %i.ljf = fmul reassoc nnan nsz arcp contract afn double %i.lje, f0x3FDAAAAAAAAAAAAB
-  %i.ljg = tail call reassoc nnan nsz arcp contract afn double @llvm.exp.f64(double %i.ljf)
-  %i.ljh = fmul reassoc nnan nsz arcp contract afn double %i.ljg, f0x3FF0B60BF5D78812
+  %i.lje = tail call reassoc nsz arcp contract afn double @llvm.log.f64(double %i.ljb)
+  %i.ljf = fmul reassoc nsz arcp contract afn double %i.lje, f0x3FDAAAAAAAAAAAAB
+  %i.ljg = tail call reassoc nsz arcp contract afn double @llvm.exp.f64(double %i.ljf)
+  %i.ljh = fmul reassoc nsz arcp contract afn double %i.ljg, f0x3FF0B60BF5D78812
   %i.lji = fadd reassoc nsz arcp contract afn double %i.ljh, -4.444500e-02
   br label %bb.om
 
@@ -1556,14 +1558,14 @@ bb.om:                                            ; preds = %bb.ol, %bb.ok
   br i1 %i.ljm, label %bb.oo, label %bb.on
 
 bb.on:                                            ; preds = %bb.om
-  %i.ljn = fmul reassoc nnan nsz arcp contract afn double %i.lja, f0x3EAE1E3C3C5A5A78
+  %i.ljn = fmul reassoc nsz arcp contract afn double %i.lja, f0x3EAE1E3C3C5A5A78
   br label %bb.op
 
 bb.oo:                                            ; preds = %bb.om
-  %i.ljo = fmul reassoc nnan nsz arcp contract afn double %i.lja, f0x3EEEA3850F60F739
-  %i.ljp = fadd reassoc nnan nsz arcp contract afn double %i.ljo, f0x3FA5C99942418271
-  %i.ljq = tail call reassoc nnan nsz arcp contract afn double @llvm.log.f64(double %i.ljp)
-  %i.ljr = fmul reassoc nnan nsz arcp contract afn double %i.ljq, 2.400000e+00
+  %i.ljo = fmul reassoc nsz arcp contract afn double %i.lja, f0x3EEEA3850F60F739
+  %i.ljp = fadd reassoc nsz arcp contract afn double %i.ljo, f0x3FA5C99942418271
+  %i.ljq = tail call reassoc nsz arcp contract afn double @llvm.log.f64(double %i.ljp)
+  %i.ljr = fmul reassoc nsz arcp contract afn double %i.ljq, 2.400000e+00
   %i.ljs = tail call reassoc nsz arcp contract afn double @llvm.exp.f64(double %i.ljr)
   br label %bb.op
 
@@ -1966,7 +1968,7 @@ bb.qt:                                            ; preds = %bb.qt, %.lr.ph.i197
   %i.pys = tail call i32 @llvm.smin.i32(i32 %i.pyc, i32 %..i.i604)
   %i.pyt = tail call i32 @llvm.smin.i32(i32 %i.pys, i32 8)
   %i.pyu = sitofp reassoc nsz arcp contract afn i32 %i.pyt to float
-  %i.pyv = fmul reassoc nnan nsz arcp contract afn float %i.pyu, 1.250000e+01
+  %i.pyv = fmul reassoc nsz arcp contract afn float %i.pyu, 1.250000e+01
   %i.pyw = fmul reassoc nsz arcp contract afn float %i.pyv, %i.pyo
   %i.pyx = fptosi float %i.pyw to i32
   %i.pyy = tail call i32 @llvm.smax.i32(i32 %i.pyx, i32 0)
@@ -2018,7 +2020,7 @@ vector.body1971:                                  ; preds = %vector.body1971, %v
   %i.pzl = getelementptr inbounds nuw i8, ptr %i.pxk, i64 %index1972
   %wide.load1974 = load <8 x i8>, ptr %i.pzl, align 1, !tbaa !133, !alias.scope !593
   %i.pzm = uitofp <8 x i8> %wide.load1974 to <8 x float>
-  %i.pzn = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.pzm, splat (float f0x3B808081)
+  %i.pzn = fmul reassoc nsz arcp contract afn <8 x float> %i.pzm, splat (float f0x3B808081)
   %wide.gep1975 = getelementptr inbounds nuw [4 x i8], ptr %i.anu, <8 x i64> %vec.ind1973
   %wide.gep1976 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1975, i64 12
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.pzn, <8 x ptr> align 4 %wide.gep1976, <8 x i1> splat (i1 true)), !tbaa !12, !alias.scope !594, !noalias !593
@@ -2054,7 +2056,7 @@ middle.block1979:                                 ; preds = %vector.body1971
   %i.pzv = getelementptr inbounds nuw i8, ptr %i.pxk, i64 %i.pzu
   %i.pzw = load i8, ptr %i.pzv, align 1, !tbaa !133
   %i.pzx = uitofp reassoc nsz arcp contract afn i8 %i.pzw to float
-  %i.pzy = fmul reassoc nnan nsz arcp contract afn float %i.pzx, f0x3B808081
+  %i.pzy = fmul reassoc nsz arcp contract afn float %i.pzx, f0x3B808081
   %i.pzz = getelementptr inbounds nuw [4 x i8], ptr %i.anu, i64 %.016629.i
   %i.qaa = getelementptr inbounds nuw i8, ptr %i.pzz, i64 12
   store float %i.pzy, ptr %i.qaa, align 4, !tbaa !12
@@ -2457,13 +2459,13 @@ bb.c:                                             ; preds = %bb.a, %_calc_9x9_ga
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_calc_9x9_gauss_coeffs.exit ] ; 3 uses
   %i.q = trunc nuw nsw i64 %indvars.iv to i32
   %i.r = uitofp nsz nneg i32 %i.q to float
-  %i.s = fmul reassoc nnan nsz arcp contract afn float %i.r, f0x3C23D70A ; 2 uses
+  %i.s = fmul reassoc nsz arcp contract afn float %i.r, f0x3C23D70A ; 2 uses
   %i.t = fcmp reassoc nsz arcp contract afn olt float %i.s, 1.000000e-07
   %i.u = select reassoc nsz arcp contract afn i1 %i.t, float 1.000000e-07, float %i.s ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   %i.v = fcmp reassoc nsz arcp contract afn olt float %i.u, 6.600000e-01
   %spec.select.i = select reassoc nsz arcp contract afn i1 %i.v, float 6.250000e+00, float 2.025000e+01 ; 5 uses
-  %i.w = fmul reassoc nnan nsz arcp contract afn float %i.u, %i.u ; 9 uses
+  %i.w = fmul reassoc nsz arcp contract afn float %i.u, %i.u ; 9 uses
   %i.x = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.w
   %i.y = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.w
   %i.z = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.w
@@ -2487,7 +2489,7 @@ bb.c:                                             ; preds = %bb.a, %_calc_9x9_ga
   br i1 %i.al, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.preheader37.i
-  %i.am = fmul reassoc nnan nsz arcp contract afn float %i.ak, -5.000000e-01
+  %i.am = fmul reassoc nsz arcp contract afn float %i.ak, -5.000000e-01
   %i.an = fmul reassoc nsz arcp contract afn float %i.am, %i.x
   %i.ao = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.an) ; 2 uses
   %i.ap = fadd reassoc nsz arcp contract afn float %i.ao, %.03440.i
@@ -2504,7 +2506,7 @@ bb.e:                                             ; preds = %.preheader37.i, %bb
   br i1 %i.at, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.au = fmul reassoc nnan nsz arcp contract afn float %i.as, -5.000000e-01
+  %i.au = fmul reassoc nsz arcp contract afn float %i.as, -5.000000e-01
   %i.av = fmul reassoc nsz arcp contract afn float %i.au, %i.y
   %i.aw = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.av) ; 2 uses
   %i.ax = fadd reassoc nsz arcp contract afn float %.2.i, %i.aw
@@ -2521,7 +2523,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %i.bb, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bc = fmul reassoc nnan nsz arcp contract afn float %i.ba, -5.000000e-01
+  %i.bc = fmul reassoc nsz arcp contract afn float %i.ba, -5.000000e-01
   %i.bd = fmul reassoc nsz arcp contract afn float %i.bc, %i.z
   %i.be = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.bd) ; 2 uses
   %i.bf = fadd reassoc nsz arcp contract afn float %.2.1.i, %i.be
@@ -2538,7 +2540,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %i.bj, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bk = fmul reassoc nnan nsz arcp contract afn float %i.bi, -5.000000e-01
+  %i.bk = fmul reassoc nsz arcp contract afn float %i.bi, -5.000000e-01
   %i.bl = fmul reassoc nsz arcp contract afn float %i.bk, %i.aa
   %i.bm = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.bl) ; 2 uses
   %i.bn = fadd reassoc nsz arcp contract afn float %.2.2.i, %i.bm
@@ -2554,7 +2556,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   br i1 %i.bq, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.br = fmul reassoc nnan nsz arcp contract afn float %i.bp, -5.000000e-01
+  %i.br = fmul reassoc nsz arcp contract afn float %i.bp, -5.000000e-01
   %i.bs = fmul reassoc nsz arcp contract afn float %i.br, %i.ab
   %i.bt = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.bs) ; 2 uses
   %i.bu = fadd reassoc nsz arcp contract afn float %.2.3.i, %i.bt
@@ -2568,7 +2570,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br i1 %i.bj, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bw = fmul reassoc nnan nsz arcp contract afn float %i.bi, -5.000000e-01
+  %i.bw = fmul reassoc nsz arcp contract afn float %i.bi, -5.000000e-01
   %i.bx = fmul reassoc nsz arcp contract afn float %i.bw, %i.ac
   %i.by = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.bx) ; 2 uses
   %i.bz = fadd reassoc nsz arcp contract afn float %.2.4.i, %i.by
@@ -2582,7 +2584,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br i1 %i.bb, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.cb = fmul reassoc nnan nsz arcp contract afn float %i.ba, -5.000000e-01
+  %i.cb = fmul reassoc nsz arcp contract afn float %i.ba, -5.000000e-01
   %i.cc = fmul reassoc nsz arcp contract afn float %i.cb, %i.ad
   %i.cd = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.cc) ; 2 uses
   %i.ce = fadd reassoc nsz arcp contract afn float %.2.5.i, %i.cd
@@ -2596,7 +2598,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %i.at, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.cg = fmul reassoc nnan nsz arcp contract afn float %i.as, -5.000000e-01
+  %i.cg = fmul reassoc nsz arcp contract afn float %i.as, -5.000000e-01
   %i.ch = fmul reassoc nsz arcp contract afn float %i.cg, %i.ae
   %i.ci = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.ch) ; 2 uses
   %i.cj = fadd reassoc nsz arcp contract afn float %.2.6.i, %i.ci
@@ -2610,7 +2612,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   br i1 %i.al, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.cl = fmul reassoc nnan nsz arcp contract afn float %i.ak, -5.000000e-01
+  %i.cl = fmul reassoc nsz arcp contract afn float %i.ak, -5.000000e-01
   %i.cm = fmul reassoc nsz arcp contract afn float %i.cl, %i.af
   %i.cn = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.cm) ; 2 uses
   %i.co = fadd reassoc nsz arcp contract afn float %.2.7.i, %i.cn
@@ -2725,7 +2727,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !693 ; 2 uses
   %i.af = sitofp reassoc nsz arcp contract afn i32 %i.ae to float
   %i.ag = tail call reassoc nsz arcp contract afn float @llvm.powi.f32.i32(float %i.af, i32 4)
-  %i.ah = fmul reassoc nnan nsz arcp contract afn float %i.ag, 6.500000e-05
+  %i.ah = fmul reassoc nsz arcp contract afn float %i.ag, 6.500000e-05
   %i.ai = fptosi float %i.ah to i32
   %i.aj = add nsw i32 %i.ae, %i.ai
   %i.ak = getelementptr inbounds nuw i8, ptr %i.b, i64 136

@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %.noexc.us, %bb.c
   %i.ap = fadd fast <4 x float> %i.ao, splat (float -5.000000e-01)
   %i.aq = fmul fast <4 x float> %i.an, %i.ap
   %i.ar = fadd fast <4 x float> %i.aq, %i.am
-  %i.as = fadd fast <4 x float> %i.am, splat (float 1.000000e+00)
+  %i.as = fadd fast <4 x float> %i.am, splat (float 1.000000e+00) ; 2 uses
+  %6 = fcmp fast ole <4 x float> %i.as, zeroinitializer
   %i.at = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.as, <4 x float> splat (float f0x00800000))
   %i.au = bitcast <4 x float> %i.at to <4 x i32>  ; 2 uses
   %i.av = lshr <4 x i32> %i.au, splat (i32 23)
@@ -244,11 +245,13 @@ bb.c:                                             ; preds = %.noexc.us, %bb.c
   %i.ca = fadd fast <4 x float> %i.bz, %reass.mul118
   %i.cb = call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.am)
   %i.cc = fcmp fast uge <4 x float> %i.cb, splat (float f0x38D1B717) ; 2 uses
-  %i.cd = select <4 x i1> %i.cc, <4 x float> %i.ca, <4 x float> %i.ar
+  %7 = select <4 x i1> %6, <4 x float> splat (float -nan(0x3FFFFF)), <4 x float> %i.ca
+  %i.cd = select <4 x i1> %i.cc, <4 x float> %7, <4 x float> %i.ar
   %i.ce = fsub fast <4 x float> splat (float -5.000000e-01), %i.ao
   %i.cf = fmul fast <4 x float> %i.an, %i.ce
   %i.cg = fsub fast <4 x float> %i.cf, %i.am
-  %i.ch = fsub fast <4 x float> splat (float 1.000000e+00), %i.am
+  %i.ch = fsub fast <4 x float> splat (float 1.000000e+00), %i.am ; 2 uses
+  %8 = fcmp fast ole <4 x float> %i.ch, zeroinitializer
   %i.ci = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.ch, <4 x float> splat (float f0x00800000))
   %i.cj = bitcast <4 x float> %i.ci to <4 x i32>  ; 2 uses
   %i.ck = lshr <4 x i32> %i.cj, splat (i32 23)
@@ -286,7 +289,8 @@ bb.c:                                             ; preds = %.noexc.us, %bb.c
   %reass.mul120 = fmul fast <4 x float> %i.cw, %reass.add119
   %i.do = fadd fast <4 x float> %reass.mul116, %i.cv
   %i.dp = fadd fast <4 x float> %i.do, %reass.mul120
-  %i.dq = select <4 x i1> %i.cc, <4 x float> %i.dp, <4 x float> %i.cg
+  %9 = select <4 x i1> %8, <4 x float> splat (float -nan(0x3FFFFF)), <4 x float> %i.dp
+  %i.dq = select <4 x i1> %i.cc, <4 x float> %9, <4 x float> %i.cg
   %i.dr = fsub fast <4 x float> %i.cd, %i.dq
   %i.ds = fmul fast <4 x float> %i.dr, splat (float 5.000000e-01)
   store <4 x float> %i.ds, ptr %.025121, align 16, !tbaa !46
@@ -689,7 +693,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = fmul fast float %i.aa, %i.aa
   %i.ac = bitcast float %i.ab to i32
   %i.ad = lshr i32 %i.ac, 16
-  %i.ae = trunc nuw nsw i32 %i.ad to i16
+  %i.ae = trunc nuw i32 %i.ad to i16
   store i16 %i.ae, ptr %i.w, align 2, !tbaa !51
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c
 
@@ -702,7 +706,7 @@ bb.c:                                             ; preds = %.noexc.us
   %i.ak = fmul fast float %i.aj, %i.aj
   %i.al = bitcast float %i.ak to i32
   %i.am = lshr i32 %i.al, 16
-  %i.an = trunc nuw nsw i32 %i.am to i16
+  %i.an = trunc nuw i32 %i.am to i16
   store i16 %i.an, ptr %i.af, align 2, !tbaa !51
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
@@ -715,7 +719,7 @@ bb.d:                                             ; preds = %bb.c
   %i.at = fmul fast float %i.as, %i.as
   %i.au = bitcast float %i.at to i32
   %i.av = lshr i32 %i.au, 16
-  %i.aw = trunc nuw nsw i32 %i.av to i16
+  %i.aw = trunc nuw i32 %i.av to i16
   store i16 %i.aw, ptr %i.ao, align 2, !tbaa !51
   br label %._crit_edge.us
 
@@ -780,7 +784,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bw = fmul fast <8 x float> %i.bv, %i.bv
   %i.bx = bitcast <8 x float> %i.bw to <8 x i32>
   %i.by = lshr <8 x i32> %i.bx, splat (i32 16)
-  %i.bz = trunc nuw nsw <8 x i32> %i.by to <8 x i16>
+  %i.bz = trunc nuw <8 x i32> %i.by to <8 x i16>
   store <8 x i16> %i.bz, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ca = icmp eq i64 %index.next, %n.vec
@@ -828,7 +832,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cw = fmul fast float %i.cv, %i.cv
   %i.cx = bitcast float %i.cw to i32
   %i.cy = lshr i32 %i.cx, 16
-  %i.cz = trunc nuw nsw i32 %i.cy to i16
+  %i.cz = trunc nuw i32 %i.cy to i16
   store i16 %i.cz, ptr %.12642, align 2, !tbaa !51
   %i.da = getelementptr inbounds nuw i8, ptr %.12642, i64 2
   %i.db = add nuw nsw i32 %.143, 1                ; 2 uses
@@ -1158,7 +1162,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = fdiv fast float 1.000000e+00, %i.ab
   %i.ad = bitcast float %i.ac to i32
   %i.ae = lshr i32 %i.ad, 16
-  %i.af = trunc nuw nsw i32 %i.ae to i16
+  %i.af = trunc nuw i32 %i.ae to i16
   store i16 %i.af, ptr %i.w, align 2, !tbaa !51
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c
 
@@ -1172,7 +1176,7 @@ bb.c:                                             ; preds = %.noexc.us
   %i.am = fdiv fast float 1.000000e+00, %i.al
   %i.an = bitcast float %i.am to i32
   %i.ao = lshr i32 %i.an, 16
-  %i.ap = trunc nuw nsw i32 %i.ao to i16
+  %i.ap = trunc nuw i32 %i.ao to i16
   store i16 %i.ap, ptr %i.ag, align 2, !tbaa !51
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
@@ -1186,7 +1190,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aw = fdiv fast float 1.000000e+00, %i.av
   %i.ax = bitcast float %i.aw to i32
   %i.ay = lshr i32 %i.ax, 16
-  %i.az = trunc nuw nsw i32 %i.ay to i16
+  %i.az = trunc nuw i32 %i.ay to i16
   store i16 %i.az, ptr %i.aq, align 2, !tbaa !51
   br label %._crit_edge.us
 
@@ -1252,7 +1256,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ca = fdiv fast <8 x float> splat (float 1.000000e+00), %i.bz
   %i.cb = bitcast <8 x float> %i.ca to <8 x i32>
   %i.cc = lshr <8 x i32> %i.cb, splat (i32 16)
-  %i.cd = trunc nuw nsw <8 x i32> %i.cc to <8 x i16>
+  %i.cd = trunc nuw <8 x i32> %i.cc to <8 x i16>
   store <8 x i16> %i.cd, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ce = icmp eq i64 %index.next, %n.vec
@@ -1301,7 +1305,7 @@ middle.block:                                     ; preds = %vector.body
   %i.db = fdiv fast float 1.000000e+00, %i.da
   %i.dc = bitcast float %i.db to i32
   %i.dd = lshr i32 %i.dc, 16
-  %i.de = trunc nuw nsw i32 %i.dd to i16
+  %i.de = trunc nuw i32 %i.dd to i16
   store i16 %i.de, ptr %.12642, align 2, !tbaa !51
   %i.df = getelementptr inbounds nuw i8, ptr %.12642, i64 2
   %i.dg = add nuw nsw i32 %.143, 1                ; 2 uses
@@ -1394,7 +1398,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = call fast noundef nofpclass(nan inf) float @llvm.exp.f32(float %i.ab)
   %i.ad = bitcast float %i.ac to i32
   %i.ae = lshr i32 %i.ad, 16
-  %i.af = trunc nuw nsw i32 %i.ae to i16
+  %i.af = trunc nuw i32 %i.ae to i16
   store i16 %i.af, ptr %i.x, align 2, !tbaa !51
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c
 
@@ -1407,7 +1411,7 @@ bb.c:                                             ; preds = %.noexc.us
   %i.al = call fast noundef nofpclass(nan inf) float @llvm.exp.f32(float %i.ak)
   %i.am = bitcast float %i.al to i32
   %i.an = lshr i32 %i.am, 16
-  %i.ao = trunc nuw nsw i32 %i.an to i16
+  %i.ao = trunc nuw i32 %i.an to i16
   store i16 %i.ao, ptr %i.ag, align 2, !tbaa !51
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
@@ -1420,7 +1424,7 @@ bb.d:                                             ; preds = %bb.c
   %i.au = call fast noundef nofpclass(nan inf) float @llvm.exp.f32(float %i.at)
   %i.av = bitcast float %i.au to i32
   %i.aw = lshr i32 %i.av, 16
-  %i.ax = trunc nuw nsw i32 %i.aw to i16
+  %i.ax = trunc nuw i32 %i.aw to i16
   store i16 %i.ax, ptr %i.ap, align 2, !tbaa !51
   br label %._crit_edge.us
 
@@ -1476,7 +1480,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bu = call fast <8 x float> @llvm.exp.v8f32(<8 x float> %i.bt)
   %i.bv = bitcast <8 x float> %i.bu to <8 x i32>
   %i.bw = lshr <8 x i32> %i.bv, splat (i32 16)
-  %i.bx = trunc nuw nsw <8 x i32> %i.bw to <8 x i16>
+  %i.bx = trunc nuw <8 x i32> %i.bw to <8 x i16>
   store <8 x i16> %i.bx, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.by = icmp eq i64 %index.next, %n.vec
@@ -1553,7 +1557,7 @@ middle.block:                                     ; preds = %vector.body
   %i.dx = call fast noundef nofpclass(nan inf) float @llvm.exp.f32(float %i.dw)
   %i.dy = bitcast float %i.dx to i32
   %i.dz = lshr i32 %i.dy, 16
-  %i.ea = trunc nuw nsw i32 %i.dz to i16
+  %i.ea = trunc nuw i32 %i.dz to i16
   store i16 %i.ea, ptr %.12665, align 2, !tbaa !51
   %i.eb = getelementptr inbounds nuw i8, ptr %.12665, i64 2
   %i.ec = add nuw nsw i32 %.166, 1                ; 2 uses
@@ -1956,7 +1960,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = call fast noundef nofpclass(nan inf) float @llvm.acos.f32(float %i.ab)
   %i.ad = bitcast float %i.ac to i32
   %i.ae = lshr i32 %i.ad, 16
-  %i.af = trunc nuw nsw i32 %i.ae to i16
+  %i.af = trunc nuw i32 %i.ae to i16
   store i16 %i.af, ptr %i.x, align 2, !tbaa !51
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c
 
@@ -1969,7 +1973,7 @@ bb.c:                                             ; preds = %.noexc.us
   %i.al = call fast noundef nofpclass(nan inf) float @llvm.acos.f32(float %i.ak)
   %i.am = bitcast float %i.al to i32
   %i.an = lshr i32 %i.am, 16
-  %i.ao = trunc nuw nsw i32 %i.an to i16
+  %i.ao = trunc nuw i32 %i.an to i16
   store i16 %i.ao, ptr %i.ag, align 2, !tbaa !51
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
@@ -1982,7 +1986,7 @@ bb.d:                                             ; preds = %bb.c
   %i.au = call fast noundef nofpclass(nan inf) float @llvm.acos.f32(float %i.at)
   %i.av = bitcast float %i.au to i32
   %i.aw = lshr i32 %i.av, 16
-  %i.ax = trunc nuw nsw i32 %i.aw to i16
+  %i.ax = trunc nuw i32 %i.aw to i16
   store i16 %i.ax, ptr %i.ap, align 2, !tbaa !51
   br label %._crit_edge.us
 
@@ -2038,7 +2042,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bu = call fast <8 x float> @llvm.acos.v8f32(<8 x float> %i.bt)
   %i.bv = bitcast <8 x float> %i.bu to <8 x i32>
   %i.bw = lshr <8 x i32> %i.bv, splat (i32 16)
-  %i.bx = trunc nuw nsw <8 x i32> %i.bw to <8 x i16>
+  %i.bx = trunc nuw <8 x i32> %i.bw to <8 x i16>
   store <8 x i16> %i.bx, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.by = icmp eq i64 %index.next, %n.vec
@@ -2120,7 +2124,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ea = call fast noundef nofpclass(nan inf) float @llvm.acos.f32(float %i.dz)
   %i.eb = bitcast float %i.ea to i32
   %i.ec = lshr i32 %i.eb, 16
-  %i.ed = trunc nuw nsw i32 %i.ec to i16
+  %i.ed = trunc nuw i32 %i.ec to i16
   store i16 %i.ed, ptr %.12660, align 2, !tbaa !51
   %i.ee = getelementptr inbounds nuw i8, ptr %.12660, i64 2
   %i.ef = add nuw nsw i32 %.161, 1                ; 2 uses
@@ -2523,7 +2527,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = call fast noundef nofpclass(nan inf) float @llvm.cosh.f32(float %i.ab)
   %i.ad = bitcast float %i.ac to i32
   %i.ae = lshr i32 %i.ad, 16
-  %i.af = trunc nuw nsw i32 %i.ae to i16
+  %i.af = trunc nuw i32 %i.ae to i16
   store i16 %i.af, ptr %i.x, align 2, !tbaa !51
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c
 
@@ -2536,7 +2540,7 @@ bb.c:                                             ; preds = %.noexc.us
   %i.al = call fast noundef nofpclass(nan inf) float @llvm.cosh.f32(float %i.ak)
   %i.am = bitcast float %i.al to i32
   %i.an = lshr i32 %i.am, 16
-  %i.ao = trunc nuw nsw i32 %i.an to i16
+  %i.ao = trunc nuw i32 %i.an to i16
   store i16 %i.ao, ptr %i.ag, align 2, !tbaa !51
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
@@ -2549,7 +2553,7 @@ bb.d:                                             ; preds = %bb.c
   %i.au = call fast noundef nofpclass(nan inf) float @llvm.cosh.f32(float %i.at)
   %i.av = bitcast float %i.au to i32
   %i.aw = lshr i32 %i.av, 16
-  %i.ax = trunc nuw nsw i32 %i.aw to i16
+  %i.ax = trunc nuw i32 %i.aw to i16
   store i16 %i.ax, ptr %i.ap, align 2, !tbaa !51
   br label %._crit_edge.us
 
@@ -2605,7 +2609,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bu = call fast <8 x float> @llvm.cosh.v8f32(<8 x float> %i.bt)
   %i.bv = bitcast <8 x float> %i.bu to <8 x i32>
   %i.bw = lshr <8 x i32> %i.bv, splat (i32 16)
-  %i.bx = trunc nuw nsw <8 x i32> %i.bw to <8 x i16>
+  %i.bx = trunc nuw <8 x i32> %i.bw to <8 x i16>
   store <8 x i16> %i.bx, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.by = icmp eq i64 %index.next, %n.vec
@@ -2715,7 +2719,7 @@ middle.block:                                     ; preds = %vector.body
   %i.fe = call fast noundef nofpclass(nan inf) float @llvm.cosh.f32(float %i.fd)
   %i.ff = bitcast float %i.fe to i32
   %i.fg = lshr i32 %i.ff, 16
-  %i.fh = trunc nuw nsw i32 %i.fg to i16
+  %i.fh = trunc nuw i32 %i.fg to i16
   store i16 %i.fh, ptr %.12689, align 2, !tbaa !51
   %i.fi = getelementptr inbounds nuw i8, ptr %.12689, i64 2
   %i.fj = add nuw nsw i32 %.190, 1                ; 2 uses
@@ -3100,7 +3104,8 @@ bb.c:                                             ; preds = %.noexc.us, %bb.c
   %i.az = fadd fast <4 x float> %i.ay, splat (float -5.000000e-01)
   %i.ba = fmul fast <4 x float> %i.ax, %i.az
   %i.bb = fadd fast <4 x float> %i.ba, %i.aw
-  %i.bc = fadd fast <4 x float> %i.aw, splat (float 1.000000e+00)
+  %i.bc = fadd fast <4 x float> %i.aw, splat (float 1.000000e+00) ; 2 uses
+  %6 = fcmp fast ole <4 x float> %i.bc, zeroinitializer
   %i.bd = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.bc, <4 x float> splat (float f0x00800000))
   %i.be = bitcast <4 x float> %i.bd to <4 x i32>  ; 2 uses
   %i.bf = lshr <4 x i32> %i.be, splat (i32 23)
@@ -3142,11 +3147,13 @@ bb.c:                                             ; preds = %.noexc.us, %bb.c
   %i.cm = and <4 x i32> %i.cl, splat (i32 2147418112)
   %i.cn = bitcast <4 x i32> %i.cm to <4 x float>
   %i.co = fcmp fast uge <4 x float> %i.cn, splat (float f0x38D1B717)
-  %i.cp = select <4 x i1> %i.co, <4 x float> %i.ck, <4 x float> %i.bb
+  %7 = select <4 x i1> %6, <4 x float> splat (float -nan(0x3FFFFF)), <4 x float> %i.ck
+  %i.cp = select <4 x i1> %i.co, <4 x float> %7, <4 x float> %i.bb
   %i.cq = fsub fast <4 x float> splat (float -5.000000e-01), %i.ay
   %i.cr = fmul fast <4 x float> %i.ax, %i.cq
   %i.cs = fsub fast <4 x float> %i.cr, %i.aw
-  %i.ct = fsub fast <4 x float> splat (float 1.000000e+00), %i.aw
+  %i.ct = fsub fast <4 x float> splat (float 1.000000e+00), %i.aw ; 2 uses
+  %8 = fcmp fast ole <4 x float> %i.ct, zeroinitializer
   %i.cu = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.ct, <4 x float> splat (float f0x00800000))
   %i.cv = bitcast <4 x float> %i.cu to <4 x i32>  ; 2 uses
   %i.cw = lshr <4 x i32> %i.cv, splat (i32 23)
@@ -3186,7 +3193,8 @@ bb.c:                                             ; preds = %.noexc.us, %bb.c
   %i.eb = fadd fast <4 x float> %i.ea, %reass.mul123
   %i.ec = call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.aw)
   %i.ed = fcmp fast uge <4 x float> %i.ec, splat (float f0x38D1B717)
-  %i.ee = select <4 x i1> %i.ed, <4 x float> %i.eb, <4 x float> %i.cs
+  %9 = select <4 x i1> %8, <4 x float> splat (float -nan(0x3FFFFF)), <4 x float> %i.eb
+  %i.ee = select <4 x i1> %i.ed, <4 x float> %9, <4 x float> %i.cs
   %i.ef = fsub fast <4 x float> %i.cp, %i.ee
   %i.eg = fmul fast <4 x float> %i.ef, splat (float 5.000000e-01)
   %i.eh = bitcast <4 x float> %i.eg to <8 x i16>
