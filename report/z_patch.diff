@@ -1,0 +1,94 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index c295190ac1c811..7429dba18e67a8 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -10993,7 +10993,8 @@ ConstantRange llvm::computeConstantRange(const Value *V, bool ForSigned,
+         computeConstantRange(SI->getTrueValue(), ForSigned, SQ, Depth + 1);
+     ConstantRange CRFalse =
+         computeConstantRange(SI->getFalseValue(), ForSigned, SQ, Depth + 1);
+-    CR = CRTrue.unionWith(CRFalse);
++    CR = CRTrue.unionWith(CRFalse, ForSigned ? ConstantRange::Signed
++                                             : ConstantRange::Unsigned);
+     CR = CR.intersectWith(getRangeForSelectPattern(*SI, SQ.IIQ));
+   } else if (auto *TI = dyn_cast<TruncInst>(V)) {
+     ConstantRange SrcCR =
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index 1f7f5ef53f1d44..3594c5f4d140de 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -5398,3 +5398,29 @@ define i8 @neg_add_or(i8 %x) {
+   %ret = add i8 %or, %x
+   ret i8 %ret
+ }
++
++; The unsigned range of %s is [1, 254), which proves the add does not wrap
++; unsigned.
++define i8 @add_select_of_ranges_nuw(i1 %c, i8 range(i8 1, 10) %a, i8 range(i8 -10, -2) %b) {
++; CHECK-LABEL: @add_select_of_ranges_nuw(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = add nuw nsw i8 [[S]], 2
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  %r = add i8 %s, 2
++  ret i8 %r
++}
++
++; The signed range of %s is [-100, 100), which proves the add does not wrap
++; signed.
++define i8 @add_select_of_ranges_nsw(i1 %c, i8 range(i8 -100, -90) %a, i8 range(i8 90, 100) %b) {
++; CHECK-LABEL: @add_select_of_ranges_nsw(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = add nuw nsw i8 [[S]], 27
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %s = select i1 %c, i8 %a, i8 %b
++  %r = add i8 %s, 27
++  ret i8 %r
++}
+diff --git a/llvm/unittests/Analysis/ValueTrackingTest.cpp b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+index fca64afa6d5875..521ac29d6ea4e6 100644
+--- a/llvm/unittests/Analysis/ValueTrackingTest.cpp
++++ b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+@@ -4059,6 +4059,41 @@ TEST_F(ValueTrackingTest, ComputeConstantRange) {
+     EXPECT_EQ(-3, CR3.getSignedMin().getSExtValue());
+     EXPECT_EQ(5, CR3.getSignedMax().getSExtValue());
+   }
++  {
++    // Range of selects of constants, where the union of the operand ranges
++    // may wrap in the unsigned or signed domain.
++    auto M = parseModule(R"(
++  define void @test(i1 %c) {
++    %s.u = select i1 %c, i8 1, i8 -2
++    %s.s = select i1 %c, i8 -100, i8 100
++    %s.nowrap = select i1 %c, i8 1, i8 5
++    ret void
++  })");
++    Function *F = M->getFunction("test");
++    SimplifyQuery SQ(M->getDataLayout());
++
++    // {1, 254}: the smallest union [-2, 2) wraps unsigned, [1, 255) does not.
++    Instruction *SU = &findInstructionByName(F, "s.u");
++    EXPECT_EQ(computeConstantRange(SU, /*ForSigned=*/false, SQ),
++              ConstantRange(APInt(8, 1), APInt(8, 255)));
++    EXPECT_EQ(computeConstantRange(SU, /*ForSigned=*/true, SQ),
++              ConstantRange(APInt(8, -2, true), APInt(8, 2)));
++
++    // {-100, 100}: the smallest union [100, -99) wraps signed, [-100, 101)
++    // does not.
++    Instruction *SS = &findInstructionByName(F, "s.s");
++    EXPECT_EQ(computeConstantRange(SS, /*ForSigned=*/false, SQ),
++              ConstantRange(APInt(8, 100), APInt(8, -99, true)));
++    EXPECT_EQ(computeConstantRange(SS, /*ForSigned=*/true, SQ),
++              ConstantRange(APInt(8, -100, true), APInt(8, 101)));
++
++    // {1, 5}: no wrapping in either signedness.
++    Instruction *SNoWrap = &findInstructionByName(F, "s.nowrap");
++    EXPECT_EQ(computeConstantRange(SNoWrap, /*ForSigned=*/false, SQ),
++              ConstantRange(APInt(8, 1), APInt(8, 6)));
++    EXPECT_EQ(computeConstantRange(SNoWrap, /*ForSigned=*/true, SQ),
++              ConstantRange(APInt(8, 1), APInt(8, 6)));
++  }
+ }
+ 
+ struct FindAllocaForValueTestParams {
