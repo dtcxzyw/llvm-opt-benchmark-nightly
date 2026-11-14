@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opendal-rs/original/opendal_core-ba0671c8f10fcf8e.opendal_core.455f99aaf940afe2-cgu.01?download=true
 inline.NumInlined: 443
 inline.NumDeleted: 173
-loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumCompletelyUnrolled: 15
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@_RNvMs0_NtNtCs5XgW7KoffLW_12opendal_core3raw4timeNtB5_9Timestamp13parse_rfc2822:bb.a
   %i.u = alloca [8 x i8], align 8                 ; 4 uses
   %i.v = alloca [16 x i8], align 8                ; 3 uses
@@ -205,10 +205,10 @@ bb.q:                                             ; preds = %bb.o, %bb.n, %bb.m,
 _RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser13parse_weekday.exit.i.i.i: ; preds = %.lr.ph472.i, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit83.i.i
   %.sroa.14.0.i = phi i8 [ 0, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit83.i.i ], [ %.sroa.08.0.i206.i.i.i, %.lr.ph472.i ] ; 3 uses
   %.sroa.1157.0.i = phi i64 [ %.sroa.6.0.i79.i462.i, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit83.i.i ], [ %.sroa.6.0.i.i471.i, %.lr.ph472.i ] ; 3 uses
-  %.sroa.056.0.i = phi ptr [ %.sroa.0.0.i80.i463.i, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit83.i.i ], [ %.sroa.0.0.i.i470.i, %.lr.ph472.i ] ; 3 uses
+  %.sroa.056.0.i = phi ptr [ %.sroa.0.0.i80.i463.i, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit83.i.i ], [ %.sroa.0.0.i.i470.i, %.lr.ph472.i ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !658)
   %cond.i = icmp eq i64 %.sroa.1157.0.i, 1
-  br i1 %cond.i, label %.lr.ph476.preheader.i, label %bb.r
+  br i1 %cond.i, label %.lr.ph476.i, label %bb.r
 
 bb.r:                                             ; preds = %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser13parse_weekday.exit.i.i.i
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.056.0.i, i64 1
@@ -216,46 +216,42 @@ bb.r:                                             ; preds = %_RNvMNtNtCs4CtJ3uPH
   %i.bm = add i8 %i.bl, -48
   %or.cond.i.i = icmp ult i8 %i.bm, 10
   %spec.select.i.i = select i1 %or.cond.i.i, i64 2, i64 1
-  br label %.lr.ph476.preheader.i
-
-.lr.ph476.preheader.i:                            ; preds = %bb.r, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser13parse_weekday.exit.i.i.i
-  %.sroa.01.0.i.i14 = phi i64 [ %spec.select.i.i, %bb.r ], [ 1, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser13parse_weekday.exit.i.i.i ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.056.0.i, i64 %.sroa.01.0.i.i14 ; 3 uses
   br label %.lr.ph476.i
 
-.lr.ph476.i:                                      ; preds = %bb.u, %.lr.ph476.preheader.i
-  %.sroa.0.0.i474.i = phi ptr [ %i.bn, %bb.u ], [ %.sroa.056.0.i, %.lr.ph476.preheader.i ] ; 2 uses
-  %.sroa.012.0.i473.i = phi i64 [ %10, %bb.u ], [ 0, %.lr.ph476.preheader.i ]
-  %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i474.i, i64 1 ; 2 uses
-  %i.bo = load i8, ptr %.sroa.0.0.i474.i, align 1, !alias.scope !660, !noalias !661, !noundef !5 ; 2 uses
+.lr.ph476.i:                                      ; preds = %bb.r, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser13parse_weekday.exit.i.i.i
+  %.sroa.01.0.i.i14 = phi i64 [ %spec.select.i.i, %bb.r ], [ 1, %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser13parse_weekday.exit.i.i.i ] ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.056.0.i, i64 %.sroa.01.0.i.i14 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.056.0.i, i64 1
+  %i.bo = load i8, ptr %.sroa.056.0.i, align 1, !alias.scope !660, !noalias !661, !noundef !5 ; 2 uses
   %i.bp = add i8 %i.bo, -48                       ; 2 uses
   %or.cond.i31.i = icmp ult i8 %i.bp, 10
   br i1 %or.cond.i31.i, label %bb.s, label %bb.v
 
 bb.s:                                             ; preds = %.lr.ph476.i
-  %4 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.012.0.i473.i, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.v, label %bb.t, !prof !9
+  %4 = zext nneg i8 %i.bp to i64                  ; 2 uses
+  %5 = icmp samesign eq i64 %.sroa.01.0.i.i14, 1
+  br i1 %5, label %_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %6 = extractvalue { i64, i1 } %4, 0
-  %7 = zext nneg i8 %i.bp to i64
-  %8 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 %7) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1
-  br i1 %9, label %bb.v, label %bb.u, !prof !9
+  %6 = load i8, ptr %i.bn, align 1, !alias.scope !660, !noalias !661, !noundef !5 ; 2 uses
+  %7 = add i8 %6, -48                             ; 2 uses
+  %or.cond.i31.i.1 = icmp ult i8 %7, 10
+  br i1 %or.cond.i31.i.1, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %10 = extractvalue { i64, i1 } %8, 0            ; 3 uses
-  %11 = icmp eq ptr %i.bn, %3
-  br i1 %11, label %_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit.i, label %.lr.ph476.i
+  %8 = mul nuw nsw i64 %4, 10
+  %9 = zext nneg i8 %7 to i64
+  %10 = add nuw nsw i64 %8, %9
+  br label %_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit.i
 
-bb.v:                                             ; preds = %bb.t, %bb.s, %.lr.ph476.i
-  %.sroa.7205.1.ph.i = phi i8 [ 2, %bb.s ], [ 2, %bb.t ], [ 1, %.lr.ph476.i ]
-  %i.bq = tail call noundef ptr @_RNvXs1_NtNtCs4CtJ3uPHEZZ_4jiff5error4utilNtB7_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_13ParseIntErrorE4from(i8 noundef %.sroa.7205.1.ph.i, i8 %i.bo) #24, !noalias !662
+bb.v:                                             ; preds = %bb.t, %.lr.ph476.i
+  %.lcssa296 = phi i8 [ %6, %bb.t ], [ %i.bo, %.lr.ph476.i ]
+  %i.bq = tail call noundef ptr @_RNvXs1_NtNtCs4CtJ3uPHEZZ_4jiff5error4utilNtB7_5ErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_13ParseIntErrorE4from(i8 noundef 1, i8 %.lcssa296) #24, !noalias !662
   br label %bb.x
 
-_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit.i: ; preds = %bb.u
-  %i.br = add i64 %10, -32
+_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit.i: ; preds = %bb.u, %bb.s
+  %.lcssa298 = phi i64 [ %4, %bb.s ], [ %10, %bb.u ] ; 2 uses
+  %i.br = add nsw i64 %.lcssa298, -32
   %or.cond.i = icmp ult i64 %i.br, -31
   br i1 %or.cond.i, label %bb.w, label %bb.ac
 
@@ -303,7 +299,7 @@ _RNCINvXsk_NtCs4CtJ3uPHEZZ_4jiff5errorINtNtCsgxBkk5gSRhY_4core6result6ResultaNtB
   br label %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser20parse_zoned_internal.exit.thread.i
 
 bb.ac:                                            ; preds = %_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit.i
-  %i.cb = trunc nuw nsw i64 %10 to i8
+  %i.cb = trunc nuw nsw i64 %.lcssa298 to i8
   %.not.i33.i28477.i = icmp eq i64 %.sroa.1157.0.i, %.sroa.01.0.i.i14
   br i1 %.not.i33.i28477.i, label %.critedge.i, label %.lr.ph482.preheader.i
 
