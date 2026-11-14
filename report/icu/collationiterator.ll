@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %.0.i.i = phi i32 [ %.1.i.i, %.preheader.i.i ], [ %i.p, %bb.e ] ; 3 uses
   %i.s = icmp slt i32 %.0.i.i, 1000
   %.1.v.i.i = select i1 %i.s, i32 2, i32 1
-  %.1.i.i = shl nsw i32 %.0.i.i, %.1.v.i.i        ; 5 uses
+  %.1.i.i = shl nsw i32 %.0.i.i, %.1.v.i.i        ; 4 uses
   %.not.i = icmp sgt i32 %.1.i.i, %i.e
   br i1 %.not.i, label %bb.f, label %.preheader.i.i, !llvm.loop !0
 
@@ -222,8 +222,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.x = load i32, ptr %i.o, align 8, !tbaa !14
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.x)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %.1.i.i)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.x)
   %i.y = load ptr, ptr %i.n, align 8, !tbaa !13   ; 2 uses
   %i.z = sext i32 %.1.i.i.i to i64
   %i.aa = shl nsw i64 %i.z, 3
@@ -626,7 +625,7 @@ bb.g:                                             ; preds = %bb.f
   %.0.i.i = phi i32 [ %.1.i.i, %.preheader.i.i ], [ %i.r, %bb.g ] ; 3 uses
   %i.u = icmp slt i32 %.0.i.i, 1000
   %.1.v.i.i = select i1 %i.u, i32 2, i32 1
-  %.1.i.i = shl nsw i32 %.0.i.i, %.1.v.i.i        ; 5 uses
+  %.1.i.i = shl nsw i32 %.0.i.i, %.1.v.i.i        ; 4 uses
   %.not.i = icmp sgt i32 %.1.i.i, %i.n
   br i1 %.not.i, label %bb.h, label %.preheader.i.i, !llvm.loop !0
 
@@ -643,8 +642,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.z = load i32, ptr %i.q, align 8, !tbaa !14
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.n, i32 %i.z)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %.1.i.i)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.n, i32 %i.z)
   %i.aa = load ptr, ptr %i.p, align 8, !tbaa !13  ; 2 uses
   %i.ab = sext i32 %.1.i.i.i to i64
   %i.ac = shl nsw i64 %i.ab, 3
@@ -704,7 +702,7 @@ bb.o:                                             ; preds = %bb.n
   %.0.i.i167 = phi i32 [ %.1.i.i169, %.preheader.i.i166 ], [ %i.as, %bb.o ] ; 3 uses
   %i.av = icmp slt i32 %.0.i.i167, 1000
   %.1.v.i.i168 = select i1 %i.av, i32 2, i32 1
-  %.1.i.i169 = shl nsw i32 %.0.i.i167, %.1.v.i.i168 ; 5 uses
+  %.1.i.i169 = shl nsw i32 %.0.i.i167, %.1.v.i.i168 ; 4 uses
   %.not.i170 = icmp sgt i32 %.1.i.i169, %i.ao
   br i1 %.not.i170, label %bb.p, label %.preheader.i.i166, !llvm.loop !0
 
@@ -721,8 +719,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.ba = load i32, ptr %i.ar, align 8, !tbaa !14
-  %spec.select.i.i.i172 = tail call i32 @llvm.smin.i32(i32 %i.ao, i32 %i.ba)
-  %.1.i.i.i173 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i172, i32 %.1.i.i169)
+  %.1.i.i.i173 = tail call i32 @llvm.smin.i32(i32 %i.ao, i32 %i.ba)
   %i.bb = load ptr, ptr %i.aq, align 8, !tbaa !13 ; 2 uses
   %i.bc = sext i32 %.1.i.i.i173 to i64
   %i.bd = shl nsw i64 %i.bc, 3
@@ -781,7 +778,7 @@ bb.v:                                             ; preds = %bb.u
   %.0.i = phi i32 [ %.1.i, %.preheader.i ], [ %i.bp, %bb.v ] ; 3 uses
   %i.bu = icmp slt i32 %.0.i, 1000
   %.1.v.i = select i1 %i.bu, i32 2, i32 1
-  %.1.i = shl nsw i32 %.0.i, %.1.v.i              ; 5 uses
+  %.1.i = shl nsw i32 %.0.i, %.1.v.i              ; 4 uses
   %i.bv = icmp slt i32 %.1.i, %i.br
   br i1 %i.bv, label %.preheader.i, label %bb.w, !llvm.loop !0
 
@@ -802,8 +799,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.cb = load i32, ptr %i.bo, align 8, !tbaa !14
-  %spec.select.i.i = tail call i32 @llvm.smin.i32(i32 %i.bq, i32 %i.cb)
-  %.1.i.i181 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i, i32 %.1.i)
+  %.1.i.i181 = tail call i32 @llvm.smin.i32(i32 %i.bq, i32 %i.cb)
   %i.cc = load ptr, ptr %i.bn, align 8, !tbaa !13
   %i.cd = sext i32 %.1.i.i181 to i64
   %i.ce = shl nsw i64 %i.cd, 3
@@ -1206,7 +1202,7 @@ bb.cp:                                            ; preds = %bb.co
   %.0.i.i222 = phi i32 [ %.1.i.i224, %.preheader.i.i221 ], [ %i.pa, %bb.cp ] ; 3 uses
   %i.pd = icmp slt i32 %.0.i.i222, 1000
   %.1.v.i.i223 = select i1 %i.pd, i32 2, i32 1
-  %.1.i.i224 = shl nsw i32 %.0.i.i222, %.1.v.i.i223 ; 5 uses
+  %.1.i.i224 = shl nsw i32 %.0.i.i222, %.1.v.i.i223 ; 4 uses
   %.not.i225 = icmp sgt i32 %.1.i.i224, %i.ow
   br i1 %.not.i225, label %bb.cq, label %.preheader.i.i221, !llvm.loop !0
 
@@ -1223,8 +1219,7 @@ bb.cr:                                            ; preds = %bb.cq
 
 bb.cs:                                            ; preds = %bb.cr
   %i.pi = load i32, ptr %i.oz, align 8, !tbaa !14
-  %spec.select.i.i.i227 = tail call i32 @llvm.smin.i32(i32 %i.ow, i32 %i.pi)
-  %.1.i.i.i228 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i227, i32 %.1.i.i224)
+  %.1.i.i.i228 = tail call i32 @llvm.smin.i32(i32 %i.ow, i32 %i.pi)
   %i.pj = load ptr, ptr %i.oy, align 8, !tbaa !13 ; 2 uses
   %i.pk = sext i32 %.1.i.i.i228 to i64
   %i.pl = shl nsw i64 %i.pk, 3
@@ -1627,7 +1622,7 @@ bb.ec:                                            ; preds = %bb.eb
   %.0.i.i257 = phi i32 [ %.1.i.i259, %.preheader.i.i256 ], [ %i.xs, %bb.ec ] ; 3 uses
   %i.xv = icmp slt i32 %.0.i.i257, 1000
   %.1.v.i.i258 = select i1 %i.xv, i32 2, i32 1
-  %.1.i.i259 = shl nsw i32 %.0.i.i257, %.1.v.i.i258 ; 5 uses
+  %.1.i.i259 = shl nsw i32 %.0.i.i257, %.1.v.i.i258 ; 4 uses
   %.not.i260 = icmp sgt i32 %.1.i.i259, %i.xo
   br i1 %.not.i260, label %bb.ed, label %.preheader.i.i256, !llvm.loop !0
 
@@ -1644,8 +1639,7 @@ bb.ee:                                            ; preds = %bb.ed
 
 bb.ef:                                            ; preds = %bb.ee
   %i.ya = load i32, ptr %i.xr, align 8, !tbaa !14
-  %spec.select.i.i.i262 = tail call i32 @llvm.smin.i32(i32 %i.xo, i32 %i.ya)
-  %.1.i.i.i263 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i262, i32 %.1.i.i259)
+  %.1.i.i.i263 = tail call i32 @llvm.smin.i32(i32 %i.xo, i32 %i.ya)
   %i.yb = load ptr, ptr %i.xq, align 8, !tbaa !13 ; 2 uses
   %i.yc = sext i32 %.1.i.i.i263 to i64
   %i.yd = shl nsw i64 %i.yc, 3
@@ -1720,7 +1714,7 @@ bb.em:                                            ; preds = %bb.el
   %.0.i.i271 = phi i32 [ %.1.i.i273, %.preheader.i.i270 ], [ %i.zb, %bb.em ] ; 3 uses
   %i.ze = icmp slt i32 %.0.i.i271, 1000
   %.1.v.i.i272 = select i1 %i.ze, i32 2, i32 1
-  %.1.i.i273 = shl nsw i32 %.0.i.i271, %.1.v.i.i272 ; 5 uses
+  %.1.i.i273 = shl nsw i32 %.0.i.i271, %.1.v.i.i272 ; 4 uses
   %.not.i274 = icmp sgt i32 %.1.i.i273, %i.yx
   br i1 %.not.i274, label %bb.en, label %.preheader.i.i270, !llvm.loop !0
 
@@ -1737,8 +1731,7 @@ bb.eo:                                            ; preds = %bb.en
 
 bb.ep:                                            ; preds = %bb.eo
   %i.zj = load i32, ptr %i.za, align 8, !tbaa !14
-  %spec.select.i.i.i276 = tail call i32 @llvm.smin.i32(i32 %i.yx, i32 %i.zj)
-  %.1.i.i.i277 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i276, i32 %.1.i.i273)
+  %.1.i.i.i277 = tail call i32 @llvm.smin.i32(i32 %i.yx, i32 %i.zj)
   %i.zk = load ptr, ptr %i.yz, align 8, !tbaa !13 ; 2 uses
   %i.zl = sext i32 %.1.i.i.i277 to i64
   %i.zm = shl nsw i64 %i.zl, 3
@@ -1819,7 +1812,7 @@ bb.et:                                            ; preds = %bb.es
   %.0.i.i285 = phi i32 [ %.1.i.i287, %.preheader.i.i284 ], [ %i.aam, %bb.et ] ; 3 uses
   %i.aap = icmp slt i32 %.0.i.i285, 1000
   %.1.v.i.i286 = select i1 %i.aap, i32 2, i32 1
-  %.1.i.i287 = shl nsw i32 %.0.i.i285, %.1.v.i.i286 ; 5 uses
+  %.1.i.i287 = shl nsw i32 %.0.i.i285, %.1.v.i.i286 ; 4 uses
   %.not.i288 = icmp sgt i32 %.1.i.i287, %i.aai
   br i1 %.not.i288, label %bb.eu, label %.preheader.i.i284, !llvm.loop !0
 
@@ -1836,8 +1829,7 @@ bb.ev:                                            ; preds = %bb.eu
 
 bb.ew:                                            ; preds = %bb.ev
   %i.aau = load i32, ptr %i.aal, align 8, !tbaa !14
-  %spec.select.i.i.i290 = tail call i32 @llvm.smin.i32(i32 %i.aai, i32 %i.aau)
-  %.1.i.i.i291 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i290, i32 %.1.i.i287)
+  %.1.i.i.i291 = tail call i32 @llvm.smin.i32(i32 %i.aai, i32 %i.aau)
   %i.aav = load ptr, ptr %i.aak, align 8, !tbaa !13 ; 2 uses
   %i.aaw = sext i32 %.1.i.i.i291 to i64
   %i.aax = shl nsw i64 %i.aaw, 3
@@ -2240,7 +2232,7 @@ bb.e:                                             ; preds = %bb.d
   %.0.i.i = phi i32 [ %.1.i.i, %.preheader.i.i ], [ %i.ay, %bb.e ] ; 3 uses
   %i.bb = icmp slt i32 %.0.i.i, 1000
   %.1.v.i.i = select i1 %i.bb, i32 2, i32 1
-  %.1.i.i = shl nsw i32 %.0.i.i, %.1.v.i.i        ; 5 uses
+  %.1.i.i = shl nsw i32 %.0.i.i, %.1.v.i.i        ; 4 uses
   %.not.i = icmp sgt i32 %.1.i.i, %i.au
   br i1 %.not.i, label %bb.f, label %.preheader.i.i, !llvm.loop !0
 
@@ -2257,8 +2249,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.bg = load i32, ptr %i.ax, align 8, !tbaa !14
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.au, i32 %i.bg)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %.1.i.i)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.au, i32 %i.bg)
   %i.bh = load ptr, ptr %i.aw, align 8, !tbaa !13 ; 2 uses
   %i.bi = sext i32 %.1.i.i.i to i64
   %i.bj = shl nsw i64 %i.bi, 3
@@ -2335,7 +2326,7 @@ bb.n:                                             ; preds = %bb.m
   %.0.i.i98 = phi i32 [ %.1.i.i100, %.preheader.i.i97 ], [ %i.cl, %bb.n ] ; 3 uses
   %i.co = icmp slt i32 %.0.i.i98, 1000
   %.1.v.i.i99 = select i1 %i.co, i32 2, i32 1
-  %.1.i.i100 = shl nsw i32 %.0.i.i98, %.1.v.i.i99 ; 5 uses
+  %.1.i.i100 = shl nsw i32 %.0.i.i98, %.1.v.i.i99 ; 4 uses
   %.not.i101 = icmp sgt i32 %.1.i.i100, %i.ch
   br i1 %.not.i101, label %bb.o, label %.preheader.i.i97, !llvm.loop !0
 
@@ -2352,8 +2343,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.ct = load i32, ptr %i.ck, align 8, !tbaa !14
-  %spec.select.i.i.i103 = tail call i32 @llvm.smin.i32(i32 %i.ch, i32 %i.ct)
-  %.1.i.i.i104 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i103, i32 %.1.i.i100)
+  %.1.i.i.i104 = tail call i32 @llvm.smin.i32(i32 %i.ch, i32 %i.ct)
   %i.cu = load ptr, ptr %i.cj, align 8, !tbaa !13 ; 2 uses
   %i.cv = sext i32 %.1.i.i.i104 to i64
   %i.cw = shl nsw i64 %i.cv, 3
@@ -2433,7 +2423,7 @@ bb.w:                                             ; preds = %bb.v
   %.0.i.i112 = phi i32 [ %.1.i.i114, %.preheader.i.i111 ], [ %i.ec, %bb.w ] ; 3 uses
   %i.ef = icmp slt i32 %.0.i.i112, 1000
   %.1.v.i.i113 = select i1 %i.ef, i32 2, i32 1
-  %.1.i.i114 = shl nsw i32 %.0.i.i112, %.1.v.i.i113 ; 5 uses
+  %.1.i.i114 = shl nsw i32 %.0.i.i112, %.1.v.i.i113 ; 4 uses
   %.not.i115 = icmp sgt i32 %.1.i.i114, %i.dy
   br i1 %.not.i115, label %bb.x, label %.preheader.i.i111, !llvm.loop !0
 
@@ -2450,8 +2440,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.ek = load i32, ptr %i.eb, align 8, !tbaa !14
-  %spec.select.i.i.i117 = tail call i32 @llvm.smin.i32(i32 %i.dy, i32 %i.ek)
-  %.1.i.i.i118 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i117, i32 %.1.i.i114)
+  %.1.i.i.i118 = tail call i32 @llvm.smin.i32(i32 %i.dy, i32 %i.ek)
   %i.el = load ptr, ptr %i.ea, align 8, !tbaa !13 ; 2 uses
   %i.em = sext i32 %.1.i.i.i118 to i64
   %i.en = shl nsw i64 %i.em, 3
@@ -2574,7 +2563,7 @@ bb.ak:                                            ; preds = %bb.aj
   %.0.i.i126 = phi i32 [ %.1.i.i128, %.preheader.i.i125 ], [ %i.gf, %bb.ak ] ; 3 uses
   %i.gi = icmp slt i32 %.0.i.i126, 1000
   %.1.v.i.i127 = select i1 %i.gi, i32 2, i32 1
-  %.1.i.i128 = shl nsw i32 %.0.i.i126, %.1.v.i.i127 ; 5 uses
+  %.1.i.i128 = shl nsw i32 %.0.i.i126, %.1.v.i.i127 ; 4 uses
   %.not.i129 = icmp sgt i32 %.1.i.i128, %i.gd
   br i1 %.not.i129, label %bb.al, label %.preheader.i.i125, !llvm.loop !0
 
@@ -2591,8 +2580,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %i.gn = load i32, ptr %i.fv, align 8, !tbaa !14
-  %spec.select.i.i.i131 = tail call i32 @llvm.smin.i32(i32 %i.gd, i32 %i.gn)
-  %.1.i.i.i132 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i131, i32 %.1.i.i128)
+  %.1.i.i.i132 = tail call i32 @llvm.smin.i32(i32 %i.gd, i32 %i.gn)
   %i.go = load ptr, ptr %i.fu, align 8, !tbaa !13 ; 2 uses
   %i.gp = sext i32 %.1.i.i.i132 to i64
   %i.gq = shl nsw i64 %i.gp, 3
@@ -2680,7 +2668,7 @@ bb.as:                                            ; preds = %bb.ar
   %.0.i.i140 = phi i32 [ %.1.i.i142, %.preheader.i.i139 ], [ %i.hv, %bb.as ] ; 3 uses
   %i.hy = icmp slt i32 %.0.i.i140, 1000
   %.1.v.i.i141 = select i1 %i.hy, i32 2, i32 1
-  %.1.i.i142 = shl nsw i32 %.0.i.i140, %.1.v.i.i141 ; 5 uses
+  %.1.i.i142 = shl nsw i32 %.0.i.i140, %.1.v.i.i141 ; 4 uses
   %.not.i143 = icmp sgt i32 %.1.i.i142, %i.hr
   br i1 %.not.i143, label %bb.at, label %.preheader.i.i139, !llvm.loop !0
 
@@ -2697,8 +2685,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %i.id = load i32, ptr %i.hu, align 8, !tbaa !14
-  %spec.select.i.i.i145 = tail call i32 @llvm.smin.i32(i32 %i.hr, i32 %i.id)
-  %.1.i.i.i146 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i145, i32 %.1.i.i142)
+  %.1.i.i.i146 = tail call i32 @llvm.smin.i32(i32 %i.hr, i32 %i.id)
   %i.ie = load ptr, ptr %i.ht, align 8, !tbaa !13 ; 2 uses
   %i.if = sext i32 %.1.i.i.i146 to i64
   %i.ig = shl nsw i64 %i.if, 3
