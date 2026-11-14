@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lua/original/lobject?download=true
 inline.NumInlined: 25
 inline.NumDeleted: 10
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -29,21 +29,26 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(none) uwtable
 define hidden zeroext i8 @luaO_ceillog2(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = add i32 %0, -1                           ; 3 uses
+  %i.a = add i32 %0, -1                           ; 7 uses
   %i.b = icmp ugt i32 %i.a, 255
-  br i1 %i.b, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.b, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %bb.a, %.lr.ph.a
-  %.08 = phi i8 [ %1, %.lr.ph.a ], [ 0, %bb.a ]
-  %.067 = phi i32 [ %2, %.lr.ph.a ], [ %i.a, %bb.a ] ; 2 uses
-  %1 = add i8 %.08, 8                             ; 2 uses
-  %2 = lshr i32 %.067, 8                          ; 2 uses
-  %3 = icmp ugt i32 %.067, 65535
-  br i1 %3, label %.lr.ph.a, label %._crit_edge
+.lr.ph:                                           ; preds = %bb.a
+  %1 = lshr i32 %i.a, 8
+  %2 = icmp ugt i32 %i.a, 65535
+  br i1 %2, label %.lr.ph.a, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph.a, %bb.a
-  %.06.lcssa = phi i32 [ %i.a, %bb.a ], [ %2, %.lr.ph.a ]
-  %.0.lcssa = phi i8 [ 0, %bb.a ], [ %1, %.lr.ph.a ]
+.lr.ph.a:                                         ; preds = %.lr.ph
+  %3 = lshr i32 %i.a, 16
+  %4 = icmp ugt i32 %i.a, 16777215                ; 2 uses
+  %5 = lshr i32 %i.a, 24
+  %spec.select = select i1 %4, i8 24, i8 16
+  %spec.select14 = select i1 %4, i32 %5, i32 %3
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.a, %.lr.ph, %bb.a
+  %.06.lcssa = phi i32 [ %i.a, %bb.a ], [ %1, %.lr.ph ], [ %spec.select14, %.lr.ph.a ]
+  %.0.lcssa = phi i8 [ 0, %bb.a ], [ 8, %.lr.ph ], [ %spec.select, %.lr.ph.a ]
   %i.c = zext nneg i32 %.06.lcssa to i64
   %i.d = getelementptr inbounds nuw i8, ptr @luaO_ceillog2.log_2, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !9

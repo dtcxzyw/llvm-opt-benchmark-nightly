@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yara-x-rs/original/yr_ls.yr_ls.99ec3cc769773652-cgu.12?download=true
 inline.NumInlined: 190
 inline.NumDeleted: 116
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvXNvCs2w2nn1AeeqK_9lsp_types1__NtB5_14NumberOrStringNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeINtNvNtNtCsbgTeJz5vL0a_5serde7private2de13missing_field24MissingFieldDeserializerNtNtCsbbTh99npV2h_10serde_json5error5ErrorEECsddkiMbsmfqo_5yr_ls:bb.a
   %i.o = inttoptr i64 %.sroa.645.0.insert.ext to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -202,7 +204,7 @@ bb.n:                                             ; preds = %.body
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef align 8 ptr @_RINvXNvCs2w2nn1AeeqK_9lsp_typess_1__NtB5_14NumberOrStringNtNtCsaeRQ2XwCvzm_10serde_core3ser9Serialize9serializeQINtNtCsbbTh99npV2h_10serde_json3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEEECsddkiMbsmfqo_5yr_ls(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(8) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [40 x i8], align 1                ; 9 uses
+  %i.a = alloca [40 x i8], align 1                ; 11 uses
   %i.b = load i64, ptr %0, align 8, !range !10, !noundef !5
   %.not = icmp eq i64 %i.b, -1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -227,21 +229,19 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
   %i.k = icmp sgt i32 %i.j, -1
-  %.sroa.0.0.i.i.i = tail call i32 @llvm.abs.i32(i32 %i.j, i1 false) ; 3 uses
+  %.sroa.0.0.i.i.i = tail call i32 @llvm.abs.i32(i32 %i.j, i1 false) ; 6 uses
   %i.l = icmp ugt i32 %.sroa.0.0.i.i.i, 9999
   br i1 %i.l, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %bb.d
-  %.sroa.09.0.lcssa.i.i.i = phi i64 [ 11, %bb.d ], [ %2, %.lr.ph.i.i.i ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ] ; 3 uses
+._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.1, %bb.d
+  %.sroa.09.0.lcssa.i.i.i = phi i64 [ 11, %bb.d ], [ 7, %.lr.ph.i.i.i ], [ 3, %.lr.ph.i.i.i.1 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ], [ %3, %.lr.ph.i.i.i.1 ] ; 3 uses
   %i.m = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i, 99
   br i1 %i.m, label %bb.e, label %bb.f
 
-.lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
-  %.sroa.0.129.i.i.i = phi i32 [ %i.o, %.lr.ph.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.d ] ; 3 uses
-  %.sroa.09.028.i.i.i = phi i64 [ %2, %.lr.ph.i.i.i ], [ 11, %bb.d ] ; 2 uses
-  %i.n = urem i32 %.sroa.0.129.i.i.i, 10000
-  %i.o = udiv i32 %.sroa.0.129.i.i.i, 10000       ; 2 uses
+.lr.ph.i.i.i:                                     ; preds = %bb.d
+  %i.n = urem i32 %.sroa.0.0.i.i.i, 10000
+  %i.o = udiv i32 %.sroa.0.0.i.i.i, 10000         ; 2 uses
   %.lhs.trunc.i.i.i = trunc nuw nsw i32 %i.n to i16 ; 2 uses
   %i.p = udiv i16 %.lhs.trunc.i.i.i, 100
   %i.q = shl nuw nsw i16 %i.p, 1
@@ -249,18 +249,36 @@ bb.d:                                             ; preds = %bb.a
   %i.s = urem i16 %.lhs.trunc.i.i.i, 100
   %i.t = shl nuw nsw i16 %i.s, 1
   %i.u = zext nneg i16 %i.t to i64
-  %2 = add i64 %.sroa.09.028.i.i.i, -4            ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr @22, i64 %i.r
-  %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
+  %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %i.x = load i16, ptr %i.v, align 1, !noalias !68
   store i16 %i.x, ptr %i.w, align 1, !alias.scope !68
-  %3 = getelementptr inbounds nuw i8, ptr @22, i64 %i.u
-  %i.y = getelementptr i8, ptr %i.a, i64 %.sroa.09.028.i.i.i
-  %i.z = getelementptr i8, ptr %i.y, i64 -2
-  %i.aa = load i16, ptr %3, align 1, !noalias !68
+  %i.y = getelementptr inbounds nuw i8, ptr @22, i64 %i.u
+  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  %i.aa = load i16, ptr %i.y, align 1, !noalias !68
   store i16 %i.aa, ptr %i.z, align 1, !alias.scope !68
-  %i.ab = icmp ugt i32 %.sroa.0.129.i.i.i, 99999999
-  br i1 %i.ab, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
+  %i.ab = icmp ugt i32 %.sroa.0.0.i.i.i, 99999999
+  br i1 %i.ab, label %.lr.ph.i.i.i.1, label %._crit_edge.i.i.i
+
+.lr.ph.i.i.i.1:                                   ; preds = %.lr.ph.i.i.i
+  %2 = urem i32 %i.o, 10000
+  %3 = udiv i32 %.sroa.0.0.i.i.i, 100000000
+  %.lhs.trunc.i.i.i.1 = trunc nuw nsw i32 %2 to i16 ; 2 uses
+  %4 = udiv i16 %.lhs.trunc.i.i.i.1, 100
+  %5 = shl nuw nsw i16 %4, 1
+  %6 = zext nneg i16 %5 to i64
+  %7 = urem i16 %.lhs.trunc.i.i.i.1, 100
+  %8 = shl nuw nsw i16 %7, 1
+  %9 = zext nneg i16 %8 to i64
+  %10 = getelementptr inbounds nuw i8, ptr @22, i64 %6
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %12 = load i16, ptr %10, align 1, !noalias !68
+  store i16 %12, ptr %11, align 1, !alias.scope !68
+  %13 = getelementptr inbounds nuw i8, ptr @22, i64 %9
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  %15 = load i16, ptr %13, align 1, !noalias !68
+  store i16 %15, ptr %14, align 1, !alias.scope !68
+  br label %._crit_edge.i.i.i
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i
   %.lhs.trunc24.i.i.i = trunc nuw i32 %.sroa.0.1.lcssa.i.i.i to i16 ; 2 uses

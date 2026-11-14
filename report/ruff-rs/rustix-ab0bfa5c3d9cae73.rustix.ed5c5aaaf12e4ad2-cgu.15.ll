@@ -24,10 +24,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.sroa.0.012 = phi i32 [ %.sroa.3.0.i, %bb.a ], [ %i.f, %bb.b ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ 1, %bb.a ], [ %i.c, %bb.b ] ; 6 uses
+  %.sroa.0.0 = phi i64 [ 1, %bb.a ], [ %i.c, %bb.b ] ; 5 uses
   %i.c = add nuw nsw i64 %.sroa.0.0, 1            ; 2 uses
-  %2 = icmp samesign ult i64 %.sroa.0.0, 21
-  tail call void @llvm.assume(i1 %2)
   %i.d = urem i32 %.sroa.0.012, 10
   %i.e = trunc nuw nsw i32 %i.d to i8
   %i.f = udiv i32 %.sroa.0.012, 10

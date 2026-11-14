@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/idna?download=true
 inline.NumInlined: 7
 inline.NumDeleted: 3
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@uv__utf8_decode1:bb.a
   br i1 %i.g, label %uv__utf8_decode1_slow.exit, label %bb.e
 
@@ -202,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i32 @uv__idna_toascii_label(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull captures(none) %2, ptr nofree noundef readnone captures(address) %3) unnamed_addr #0 !guid !29 {
+define internal fastcc i32 @uv__idna_toascii_label(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull captures(none) %2, ptr nofree noundef readnone captures(address) %3) unnamed_addr #0 !guid !28 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 12 uses
   store ptr %0, ptr %i.a, align 8
@@ -489,21 +491,37 @@ bb.ah:                                            ; preds = %bb.ag, %._crit_edge
   %.3112 = select i1 %.not150, i32 %i.ca, i32 %i.cb ; 2 uses
   %i.cc = add i32 %.3126.ph, 1                    ; 2 uses
   %i.cd = udiv i32 %.3112, %i.cc
-  %i.ce = add nuw i32 %i.cd, %.3112               ; 3 uses
+  %i.ce = add nuw i32 %i.cd, %.3112               ; 11 uses
   %i.cf = icmp ugt i32 %i.ce, 455
-  br i1 %i.cf, label %.lr.ph191.a, label %._crit_edge192
+  br i1 %i.cf, label %.lr.ph191, label %._crit_edge192
 
-.lr.ph191.a:                                      ; preds = %bb.ah, %.lr.ph191.a
-  %.4189 = phi i32 [ %i.cg, %.lr.ph191.a ], [ %i.ce, %bb.ah ] ; 2 uses
-  %.2115188 = phi i32 [ %4, %.lr.ph191.a ], [ 0, %bb.ah ]
-  %i.cg = udiv i32 %.4189, 35                     ; 2 uses
-  %4 = add i32 %.2115188, 36                      ; 2 uses
-  %i.ch = icmp ugt i32 %.4189, 15959
-  br i1 %i.ch, label %.lr.ph191.a, label %._crit_edge192, !llvm.loop !27
+.lr.ph191:                                        ; preds = %bb.ah
+  %4 = udiv i32 %i.ce, 35
+  %5 = icmp ugt i32 %i.ce, 15959
+  br i1 %5, label %.lr.ph191.1, label %._crit_edge192
 
-._crit_edge192:                                   ; preds = %.lr.ph191.a, %bb.ah
-  %.2115.lcssa = phi i32 [ 0, %bb.ah ], [ %4, %.lr.ph191.a ]
-  %.4.lcssa = phi i32 [ %i.ce, %bb.ah ], [ %i.cg, %.lr.ph191.a ]
+.lr.ph191.1:                                      ; preds = %.lr.ph191
+  %6 = udiv i32 %i.ce, 1225
+  %7 = icmp ugt i32 %i.ce, 558599
+  br i1 %7, label %.lr.ph191.2, label %._crit_edge192
+
+.lr.ph191.2:                                      ; preds = %.lr.ph191.1
+  %8 = udiv i32 %i.ce, 42875
+  %9 = icmp ugt i32 %i.ce, 19550999
+  br i1 %9, label %.lr.ph191.a, label %._crit_edge192
+
+.lr.ph191.a:                                      ; preds = %.lr.ph191.2
+  %i.cg = udiv i32 %i.ce, 1500625
+  %i.ch = icmp ugt i32 %i.ce, 684284999
+  br i1 %i.ch, label %.lr.ph191.4, label %._crit_edge192
+
+.lr.ph191.4:                                      ; preds = %.lr.ph191.a
+  %10 = udiv i32 %i.ce, 52521875
+  br label %._crit_edge192
+
+._crit_edge192:                                   ; preds = %.lr.ph191, %.lr.ph191.1, %.lr.ph191.2, %.lr.ph191.a, %.lr.ph191.4, %bb.ah
+  %.2115.lcssa = phi i32 [ 0, %bb.ah ], [ 36, %.lr.ph191 ], [ 72, %.lr.ph191.1 ], [ 108, %.lr.ph191.2 ], [ 144, %.lr.ph191.a ], [ 180, %.lr.ph191.4 ]
+  %.4.lcssa = phi i32 [ %i.ce, %bb.ah ], [ %4, %.lr.ph191 ], [ %6, %.lr.ph191.1 ], [ %8, %.lr.ph191.2 ], [ %i.cg, %.lr.ph191.a ], [ %10, %.lr.ph191.4 ]
   %i.ci = trunc nuw i32 %.4.lcssa to i16          ; 2 uses
   %.lhs.trunc = mul nuw i16 %i.ci, 36
   %.rhs.trunc = add nuw nsw i16 %i.ci, 38
@@ -517,7 +535,7 @@ bb.ai:                                            ; preds = %bb.y
   %i.cm = add i32 %.1110, 1
   %i.cn = add nsw i32 %.0119.lcssa, 1
   %.not147 = icmp eq i32 %.3.ph, 0
-  br i1 %.not147, label %.loopexit, label %bb.u, !llvm.loop !28
+  br i1 %.not147, label %.loopexit, label %bb.u, !llvm.loop !27
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.ai, %._crit_edge179, %bb.ac, %.loopexit155
   %.0127 = phi i32 [ 0, %bb.ai ], [ -7, %bb.ac ], [ %.0123.lcssa250, %.loopexit155 ], [ -7, %._crit_edge179 ], [ -22, %.lr.ph ]
@@ -525,7 +543,7 @@ bb.ai:                                            ; preds = %bb.y
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define dso_local i64 @uv_wtf8_length_as_utf16(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 !guid !31 {
+define dso_local i64 @uv_wtf8_length_as_utf16(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 !guid !30 {
 bb.a:
   br label %bb.b
 
@@ -598,7 +616,7 @@ uv__wtf8_decode1.exit:                            ; preds = %bb.g, %bb.e, %bb.j,
   %i.ac = add i64 %spec.select, %.0.i             ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.1, i64 1
   %.not = icmp eq i8 %i.ab, 0
-  br i1 %.not, label %uv__wtf8_decode1.exit.thread, label %bb.b, !llvm.loop !30
+  br i1 %.not, label %uv__wtf8_decode1.exit.thread, label %bb.b, !llvm.loop !29
 
 uv__wtf8_decode1.exit.thread:                     ; preds = %bb.i, %bb.f, %bb.d, %bb.c, %bb.h, %uv__wtf8_decode1.exit
   %.06 = phi i64 [ %i.ac, %uv__wtf8_decode1.exit ], [ -1, %bb.h ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %bb.f ], [ -1, %bb.i ]
@@ -606,7 +624,7 @@ uv__wtf8_decode1.exit.thread:                     ; preds = %bb.i, %bb.f, %bb.d,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @uv_wtf8_to_utf16(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 !guid !33 {
+define dso_local void @uv_wtf8_to_utf16(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 !guid !32 {
 bb.a:
   br label %bb.b
 
@@ -721,7 +739,7 @@ bb.o:                                             ; preds = %bb.n, %uv__wtf8_dec
   %i.as = getelementptr inbounds nuw i8, ptr %.11623, i64 1
   %i.at = load i8, ptr %.11623, align 1
   %.not = icmp eq i8 %i.at, 0
-  br i1 %.not, label %bb.p, label %bb.b, !llvm.loop !32
+  br i1 %.not, label %bb.p, label %bb.b, !llvm.loop !31
 
 bb.p:                                             ; preds = %bb.o
   %i.au = icmp eq i64 %i.ar, 0
@@ -736,7 +754,7 @@ bb.r:                                             ; preds = %bb.p
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define dso_local i64 @uv_utf16_length_as_wtf8(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #3 !guid !34 {
+define dso_local i64 @uv_utf16_length_as_wtf8(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #3 !guid !33 {
 bb.a:
   %.not38 = icmp eq i64 %1, 0
   br i1 %.not38, label %uv__get_surrogate_value.exit._crit_edge, label %.lr.ph
@@ -809,7 +827,7 @@ uv__get_surrogate_value.exit._crit_edge:          ; preds = %bb.h, %uv__get_surr
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -105, 1) i32 @uv_utf16_to_wtf8(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr nofree noundef captures(address_is_null) %3) local_unnamed_addr #0 !guid !36 {
+define dso_local range(i32 -105, 1) i32 @uv_utf16_to_wtf8(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr nofree noundef captures(address_is_null) %3) local_unnamed_addr #0 !guid !35 {
 bb.a:
   %i.a = icmp eq ptr %2, null                     ; 2 uses
   br i1 %i.a, label %bb.c, label %bb.b
@@ -1068,7 +1086,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.v, %bb.y
   %i.cy = icmp ne ptr %.2, %i.ab
   %i.cz = icmp ne i64 %spec.select119, 0
   %i.da = select i1 %i.cy, i1 %i.cz, i1 false
-  br i1 %i.da, label %.lr.ph, label %uv__get_surrogate_value.exit._crit_edge, !llvm.loop !35
+  br i1 %i.da, label %.lr.ph, label %uv__get_surrogate_value.exit._crit_edge, !llvm.loop !34
 
 uv__get_surrogate_value.exit._crit_edge:          ; preds = %bb.ac, %bb.u, %.thread160, %bb.x, %bb.w, %bb.z, %bb.aa, %uv__get_surrogate_value.exit, %bb.p
   %.091.lcssa = phi ptr [ %0, %bb.p ], [ %.091163, %uv__get_surrogate_value.exit ], [ %.091163, %bb.aa ], [ %.091163, %bb.z ], [ %.091163, %bb.w ], [ %.091163, %bb.x ], [ %.091163, %.thread160 ], [ %.091163, %bb.u ], [ %i.cv, %bb.ac ] ; 2 uses
@@ -1225,13 +1243,12 @@ attributes #7 = { nounwind }
 !25 = distinct !{!25, !19}
 !26 = distinct !{!26, !19}
 !27 = distinct !{!27, !19}
-!28 = distinct !{!28, !19}
-!29 = !{i64 7206393452179899112}
-!30 = distinct !{!30, !19}
-!31 = !{i64 9147601872555408457}
-!32 = distinct !{!32, !19}
-!33 = !{i64 -5305741765654791715}
-!34 = !{i64 4125486578940191827}
-!35 = distinct !{!35, !19}
-!36 = !{i64 -4581038983507330557}
+!28 = !{i64 7206393452179899112}
+!29 = distinct !{!29, !19}
+!30 = !{i64 9147601872555408457}
+!31 = distinct !{!31, !19}
+!32 = !{i64 -5305741765654791715}
+!33 = !{i64 4125486578940191827}
+!34 = distinct !{!34, !19}
+!35 = !{i64 -4581038983507330557}
 end_hunk_0

@@ -79,16 +79,12 @@ bb.a:
   %.08 = phi i64 [ %i.b, %.lr.ph ], [ 0, %bb.a ]
   %.057 = phi i64 [ %i.a, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
   %i.a = udiv i64 %.057, 10
-  %i.b = add i64 %.08, 1                          ; 2 uses
+  %i.b = add nuw nsw i64 %.08, 1                  ; 2 uses
   %.not = icmp ult i64 %.057, 10
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %1 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 1)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i64 [ 1, %bb.a ], [ %1, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.0.lcssa = phi i64 [ 1, %bb.a ], [ %i.b, %.lr.ph ]
   ret i64 %.0.lcssa
 }
 
@@ -120,12 +116,8 @@ bb.a:
   ret i8 %i.c
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #2
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

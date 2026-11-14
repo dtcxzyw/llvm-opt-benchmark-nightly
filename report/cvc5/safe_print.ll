@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.016.i = phi i64 [ %i.k, %.preheader.i ], [ 19, %.preheader.i.preheader ] ; 5 uses
+  %.016.i = phi i64 [ %i.k, %.preheader.i ], [ 19, %.preheader.i.preheader ] ; 4 uses
   %.01315.i = phi i64 [ %i.j, %.preheader.i ], [ %i.d, %.preheader.i.preheader ] ; 3 uses
   %i.f = urem i64 %.01315.i, 10
   %i.g = trunc nuw nsw i64 %i.f to i8
@@ -212,9 +212,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = udiv i64 %.01315.i, 10
   %i.k = add nsw i64 %.016.i, -1
   %i.l = icmp samesign ugt i64 %.01315.i, 9
-  %2 = icmp ne i64 %.016.i, 0
-  %3 = and i1 %2, %i.l
-  br i1 %3, label %.preheader.i, label %bb.d, !llvm.loop !0
+  br i1 %i.l, label %.preheader.i, label %bb.d, !llvm.loop !0
 
 bb.d:                                             ; preds = %.preheader.i
   %i.m = getelementptr inbounds i8, ptr %i.a, i64 %.016.i
@@ -376,7 +374,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 .preheader:                                       ; preds = %_ZN4cvc58internal10safe_printILm3EEEviRAT__Kc.exit, %.preheader
-  %.023 = phi i64 [ %i.m, %.preheader ], [ 19, %_ZN4cvc58internal10safe_printILm3EEEviRAT__Kc.exit ] ; 5 uses
+  %.023 = phi i64 [ %i.m, %.preheader ], [ 19, %_ZN4cvc58internal10safe_printILm3EEEviRAT__Kc.exit ] ; 4 uses
   %.01822 = phi i64 [ %i.l, %.preheader ], [ %1, %_ZN4cvc58internal10safe_printILm3EEEviRAT__Kc.exit ] ; 2 uses
   %i.e = trunc i64 %.01822 to i32
   %i.f = and i32 %i.e, 15                         ; 2 uses
@@ -389,10 +387,8 @@ bb.d:                                             ; preds = %bb.c
   store i8 %.sink, ptr %i.k, align 1, !tbaa !14
   %i.l = lshr i64 %.01822, 4                      ; 2 uses
   %i.m = add nsw i64 %.023, -1
-  %2 = icmp ne i64 %i.l, 0
-  %3 = icmp ne i64 %.023, 0
-  %4 = and i1 %2, %3
-  br i1 %4, label %.preheader, label %bb.e, !llvm.loop !34
+  %.not26 = icmp eq i64 %i.l, 0
+  br i1 %.not26, label %bb.e, label %.preheader, !llvm.loop !34
 
 bb.e:                                             ; preds = %.preheader
   %i.n = getelementptr inbounds i8, ptr %i.a, i64 %.023

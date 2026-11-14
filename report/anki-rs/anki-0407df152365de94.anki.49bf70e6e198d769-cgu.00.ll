@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/anki-rs/original/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.00?download=true
 inline.NumInlined: 5827
 inline.NumDeleted: 1787
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN10serde_json3ser6to_vec17h281f20344c2f3eeeE:bb.a
   invoke void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$17extend_from_slice17h10977ceb909cc7a8E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.t, i64 noundef %i.u)
           to label %.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.loopexit.split-lp.
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_ZN10serde_json3ser6to_vec17h29b7cd1d87828c2fE(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, i32 %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality !guid !96 {
 bb.a:
-  %i.a = alloca [40 x i8], align 1                ; 9 uses
+  %i.a = alloca [40 x i8], align 1                ; 11 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -236,21 +236,19 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !97
   call void @llvm.experimental.noalias.scope.decl(metadata !98)
   %i.n = icmp sgt i32 %.0.val, -1
-  %.sroa.0.0.i.i.i.i.i = call i32 @llvm.abs.i32(i32 %.0.val, i1 false) ; 3 uses
+  %.sroa.0.0.i.i.i.i.i = call i32 @llvm.abs.i32(i32 %.0.val, i1 false) ; 6 uses
   %i.o = icmp ugt i32 %.sroa.0.0.i.i.i.i.i, 9999
   br i1 %i.o, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit"
-  %.sroa.09.0.lcssa.i.i.i.i.i = phi i64 [ 11, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit" ], [ %1, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit" ], [ %i.r, %.lr.ph.i.i.i.i.i ] ; 3 uses
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit"
+  %.sroa.09.0.lcssa.i.i.i.i.i = phi i64 [ 11, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit" ], [ 7, %.lr.ph.i.i.i.i.i ], [ 3, %.lr.ph.i.i.i.i.i.1 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit" ], [ %i.r, %.lr.ph.i.i.i.i.i ], [ %2, %.lr.ph.i.i.i.i.i.1 ] ; 3 uses
   %i.p = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i, 99
   br i1 %i.p, label %bb.c, label %bb.d
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit", %.lr.ph.i.i.i.i.i
-  %.sroa.0.129.i.i.i.i.i = phi i32 [ %i.r, %.lr.ph.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit" ] ; 3 uses
-  %.sroa.09.028.i.i.i.i.i = phi i64 [ %1, %.lr.ph.i.i.i.i.i ], [ 11, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit" ] ; 2 uses
-  %i.q = urem i32 %.sroa.0.129.i.i.i.i.i, 10000
-  %i.r = udiv i32 %.sroa.0.129.i.i.i.i.i, 10000   ; 2 uses
+.lr.ph.i.i.i.i.i:                                 ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit"
+  %i.q = urem i32 %.sroa.0.0.i.i.i.i.i, 10000
+  %i.r = udiv i32 %.sroa.0.0.i.i.i.i.i, 10000     ; 2 uses
   %.lhs.trunc.i.i.i.i.i = trunc nuw nsw i32 %i.q to i16 ; 2 uses
   %i.s = udiv i16 %.lhs.trunc.i.i.i.i.i, 100
   %i.t = shl nuw nsw i16 %i.s, 1
@@ -258,18 +256,36 @@ bb.b:                                             ; preds = %bb.a
   %i.v = urem i16 %.lhs.trunc.i.i.i.i.i, 100
   %i.w = shl nuw nsw i16 %i.v, 1
   %i.x = zext nneg i16 %i.w to i64
-  %1 = add i64 %.sroa.09.028.i.i.i.i.i, -4        ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr @414, i64 %i.u
-  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 %1
+  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %i.aa = load i16, ptr %i.y, align 1, !noalias !99
   store i16 %i.aa, ptr %i.z, align 1, !alias.scope !98, !noalias !97
-  %2 = getelementptr inbounds nuw i8, ptr @414, i64 %i.x
-  %i.ab = getelementptr i8, ptr %i.a, i64 %.sroa.09.028.i.i.i.i.i
-  %i.ac = getelementptr i8, ptr %i.ab, i64 -2
-  %i.ad = load i16, ptr %2, align 1, !noalias !99
+  %i.ab = getelementptr inbounds nuw i8, ptr @414, i64 %i.x
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  %i.ad = load i16, ptr %i.ab, align 1, !noalias !99
   store i16 %i.ad, ptr %i.ac, align 1, !alias.scope !98, !noalias !97
-  %i.ae = icmp ugt i32 %.sroa.0.129.i.i.i.i.i, 99999999
-  br i1 %i.ae, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  %i.ae = icmp ugt i32 %.sroa.0.0.i.i.i.i.i, 99999999
+  br i1 %i.ae, label %.lr.ph.i.i.i.i.i.1, label %._crit_edge.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.1:                               ; preds = %.lr.ph.i.i.i.i.i
+  %1 = urem i32 %i.r, 10000
+  %2 = udiv i32 %.sroa.0.0.i.i.i.i.i, 100000000
+  %.lhs.trunc.i.i.i.i.i.1 = trunc nuw nsw i32 %1 to i16 ; 2 uses
+  %3 = udiv i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %4 = shl nuw nsw i16 %3, 1
+  %5 = zext nneg i16 %4 to i64
+  %6 = urem i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %7 = shl nuw nsw i16 %6, 1
+  %8 = zext nneg i16 %7 to i64
+  %9 = getelementptr inbounds nuw i8, ptr @414, i64 %5
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %11 = load i16, ptr %9, align 1, !noalias !99
+  store i16 %11, ptr %10, align 1, !alias.scope !98, !noalias !97
+  %12 = getelementptr inbounds nuw i8, ptr @414, i64 %8
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  %14 = load i16, ptr %12, align 1, !noalias !99
+  store i16 %14, ptr %13, align 1, !alias.scope !98, !noalias !97
+  br label %._crit_edge.i.i.i.i.i
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i.i
   %.lhs.trunc24.i.i.i.i.i = trunc nuw i32 %.sroa.0.1.lcssa.i.i.i.i.i to i16 ; 2 uses
@@ -672,7 +688,7 @@ bb.l:                                             ; preds = %bb.k, %bb.d
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @"_ZN4anki6config46_$LT$impl$u20$anki..collection..Collection$GT$10set_config17hfb1e3d430b811404E"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull align 8 dereferenceable(728) %1, i8 noundef range(i8 3, 14) %2, i32 %.0.val) unnamed_addr #2 personality ptr @rust_eh_personality !guid !7729 {
 switch.lookup:
-  %i.a = alloca [40 x i8], align 1                ; 8 uses
+  %i.a = alloca [40 x i8], align 1                ; 10 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [112 x i8], align 8               ; 7 uses
@@ -716,17 +732,15 @@ bb.a:                                             ; preds = %switch.lookup
   %i.r = icmp ugt i32 %.0.val, 9999
   br i1 %i.r, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i"
-  %.sroa.011.0.lcssa.i.i.i.i.i.i = phi i64 [ 10, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i" ], [ %3, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i.i.i.i = phi i32 [ %.0.val, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i" ], [ %i.u, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
+._crit_edge.i.i.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i"
+  %.sroa.011.0.lcssa.i.i.i.i.i.i = phi i64 [ 10, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i" ], [ 6, %.lr.ph.i.i.i.i.i.i ], [ 2, %.lr.ph.i.i.i.i.i.i.1 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i.i.i.i = phi i32 [ %.0.val, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i" ], [ %i.u, %.lr.ph.i.i.i.i.i.i ], [ %4, %.lr.ph.i.i.i.i.i.i.1 ] ; 3 uses
   %i.s = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i, 99
   br i1 %i.s, label %bb.b, label %bb.c
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i", %.lr.ph.i.i.i.i.i.i
-  %.sroa.0.131.i.i.i.i.i.i = phi i32 [ %i.u, %.lr.ph.i.i.i.i.i.i ], [ %.0.val, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i" ] ; 3 uses
-  %.sroa.011.030.i.i.i.i.i.i = phi i64 [ %3, %.lr.ph.i.i.i.i.i.i ], [ 10, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i" ] ; 2 uses
-  %i.t = urem i32 %.sroa.0.131.i.i.i.i.i.i, 10000
-  %i.u = udiv i32 %.sroa.0.131.i.i.i.i.i.i, 10000 ; 2 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i"
+  %i.t = urem i32 %.0.val, 10000
+  %i.u = udiv i32 %.0.val, 10000                  ; 2 uses
   %.lhs.trunc.i.i.i.i.i.i = trunc nuw nsw i32 %i.t to i16 ; 2 uses
   %i.v = udiv i16 %.lhs.trunc.i.i.i.i.i.i, 100
   %i.w = shl nuw nsw i16 %i.v, 1
@@ -734,18 +748,36 @@ bb.a:                                             ; preds = %switch.lookup
   %i.y = urem i16 %.lhs.trunc.i.i.i.i.i.i, 100
   %i.z = shl nuw nsw i16 %i.y, 1
   %i.aa = zext nneg i16 %i.z to i64
-  %3 = add i64 %.sroa.011.030.i.i.i.i.i.i, -4     ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr @414, i64 %i.x
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   %i.ad = load i16, ptr %i.ab, align 1, !noalias !7733
   store i16 %i.ad, ptr %i.ac, align 1, !alias.scope !7732, !noalias !7731
-  %4 = getelementptr inbounds nuw i8, ptr @414, i64 %i.aa
-  %i.ae = getelementptr i8, ptr %i.a, i64 %.sroa.011.030.i.i.i.i.i.i
-  %i.af = getelementptr i8, ptr %i.ae, i64 -2
-  %i.ag = load i16, ptr %4, align 1, !noalias !7733
+  %i.ae = getelementptr inbounds nuw i8, ptr @414, i64 %i.aa
+  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.ag = load i16, ptr %i.ae, align 1, !noalias !7733
   store i16 %i.ag, ptr %i.af, align 1, !alias.scope !7732, !noalias !7731
-  %i.ah = icmp ugt i32 %.sroa.0.131.i.i.i.i.i.i, 99999999
-  br i1 %i.ah, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
+  %i.ah = icmp ugt i32 %.0.val, 99999999
+  br i1 %i.ah, label %.lr.ph.i.i.i.i.i.i.1, label %._crit_edge.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.1:                             ; preds = %.lr.ph.i.i.i.i.i.i
+  %3 = urem i32 %i.u, 10000
+  %4 = udiv i32 %.0.val, 100000000
+  %.lhs.trunc.i.i.i.i.i.i.1 = trunc nuw nsw i32 %3 to i16 ; 2 uses
+  %5 = udiv i16 %.lhs.trunc.i.i.i.i.i.i.1, 100
+  %6 = shl nuw nsw i16 %5, 1
+  %7 = zext nneg i16 %6 to i64
+  %8 = urem i16 %.lhs.trunc.i.i.i.i.i.i.1, 100
+  %9 = shl nuw nsw i16 %8, 1
+  %10 = zext nneg i16 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr @414, i64 %7
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %13 = load i16, ptr %11, align 1, !noalias !7733
+  store i16 %13, ptr %12, align 1, !alias.scope !7732, !noalias !7731
+  %14 = getelementptr inbounds nuw i8, ptr @414, i64 %10
+  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %16 = load i16, ptr %14, align 1, !noalias !7733
+  store i16 %16, ptr %15, align 1, !alias.scope !7732, !noalias !7731
+  br label %._crit_edge.i.i.i.i.i.i
 
 bb.b:                                             ; preds = %._crit_edge.i.i.i.i.i.i
   %.lhs.trunc26.i.i.i.i.i.i = trunc nuw i32 %.sroa.0.1.lcssa.i.i.i.i.i.i to i16 ; 2 uses

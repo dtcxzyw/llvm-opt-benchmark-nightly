@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ValueTypes?download=true
 inline.NumInlined: 805
 inline.NumDeleted: 200
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK4llvm3EVT27isExtendedFixedLengthVectorEv:bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZNK4llvm3EVT24isExtendedScalableVectorEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #3 align 2 {
@@ -202,7 +204,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 6 uses
-  %i.d = alloca [21 x i8], align 16               ; 4 uses
+  %i.d = alloca [21 x i8], align 16               ; 7 uses
   %i.e = alloca i64, align 8                      ; 6 uses
   %i.f = alloca [21 x i8], align 16               ; 4 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -251,7 +253,7 @@ _ZNK4llvm3EVT13getSizeInBitsEv.exit:              ; preds = %bb.b
   %i.l = trunc i64 %.sroa.0.0.copyload.i.i to i32 ; 2 uses
   %i.m = getelementptr i8, ptr @_ZZNK4llvm3MVT28getRISCVVectorTupleNumFieldsEvE7NFTable, i64 %i.i
   %i.n = getelementptr i8, ptr %i.m, i64 -1
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !42    ; 3 uses
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !42    ; 7 uses
   %i.p = zext i8 %i.o to i32
   %i.q = shl nuw nsw i32 %i.p, 3                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
@@ -410,33 +412,41 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_.ex
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.experimental.noalias.scope.decl(metadata !65)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19, !noalias !65
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 21 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 21
   %i.br = icmp eq i8 %i.o, 0
-  br i1 %i.br, label %.thread.i27, label %.lr.ph.i20.preheader
+  br i1 %i.br, label %.lr.ph.i20.preheader, label %.thread.i27
 
 .lr.ph.i20.preheader:                             ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_.exit
-  %13 = zext i8 %i.o to i64
-  br label %.lr.ph.i20
-
-.thread.i27:                                      ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_.exit
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 2 uses
-  store i8 48, ptr %i.bs, align 4, !tbaa !42, !noalias !65
+  %13 = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 2 uses
+  store i8 48, ptr %13, align 4, !tbaa !42, !noalias !65
   br label %._crit_edge.i24
 
-.lr.ph.i20:                                       ; preds = %.lr.ph.i20.preheader, %.lr.ph.i20
-  %.111.i21 = phi ptr [ %i.bu, %.lr.ph.i20 ], [ %i.bq, %.lr.ph.i20.preheader ]
-  %.0810.i22 = phi i64 [ %16, %.lr.ph.i20 ], [ %13, %.lr.ph.i20.preheader ] ; 3 uses
-  %14 = urem i64 %.0810.i22, 10
-  %15 = trunc nuw nsw i64 %14 to i8
-  %i.bt = or disjoint i8 %15, 48
-  %i.bu = getelementptr inbounds i8, ptr %.111.i21, i64 -1 ; 3 uses
-  store i8 %i.bt, ptr %i.bu, align 1, !tbaa !42, !noalias !65
-  %16 = udiv i64 %.0810.i22, 10
-  %.not.i23.a = icmp samesign ult i64 %.0810.i22, 10
-  br i1 %.not.i23.a, label %._crit_edge.i24, label %.lr.ph.i20, !llvm.loop !0
+.thread.i27:                                      ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_.exit
+  %14 = urem i8 %i.o, 10
+  %15 = udiv i8 %i.o, 10
+  %16 = or disjoint i8 %14, 48
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 2 uses
+  store i8 %16, ptr %i.bs, align 4, !tbaa !42, !noalias !65
+  %.not.i23 = icmp ult i8 %i.o, 10
+  br i1 %.not.i23, label %._crit_edge.i24, label %.lr.ph.i20
 
-._crit_edge.i24:                                  ; preds = %.lr.ph.i20, %.thread.i27
-  %.1.lcssa.i25 = phi ptr [ %i.bs, %.thread.i27 ], [ %i.bu, %.lr.ph.i20 ] ; 3 uses
+.lr.ph.i20:                                       ; preds = %.thread.i27
+  %17 = urem i8 %15, 10
+  %i.bt = or disjoint i8 %17, 48
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.d, i64 19 ; 2 uses
+  store i8 %i.bt, ptr %i.bu, align 1, !tbaa !42, !noalias !65
+  %.not.i23.a = icmp ult i8 %i.o, 100
+  br i1 %.not.i23.a, label %._crit_edge.i24, label %.lr.ph.i20.2
+
+.lr.ph.i20.2:                                     ; preds = %.lr.ph.i20
+  %18 = udiv i8 %i.o, 100
+  %19 = or disjoint i8 %18, 48
+  %20 = getelementptr inbounds nuw i8, ptr %i.d, i64 18 ; 2 uses
+  store i8 %19, ptr %20, align 2, !tbaa !42, !noalias !65
+  br label %._crit_edge.i24
+
+._crit_edge.i24:                                  ; preds = %.thread.i27, %.lr.ph.i20, %.lr.ph.i20.2, %.lr.ph.i20.preheader
+  %.1.lcssa.i25 = phi ptr [ %13, %.lr.ph.i20.preheader ], [ %i.bs, %.thread.i27 ], [ %i.bu, %.lr.ph.i20 ], [ %20, %.lr.ph.i20.2 ] ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   store ptr %i.bv, ptr %5, align 8, !tbaa !45, !alias.scope !65
   %i.bw = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses

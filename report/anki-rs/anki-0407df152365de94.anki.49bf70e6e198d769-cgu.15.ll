@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/anki-rs/original/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.15?download=true
 inline.NumInlined: 4530
 inline.NumDeleted: 1604
-loop-unroll.NumCompletelyUnrolled: 19
+loop-unroll.NumCompletelyUnrolled: 20
 loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 27
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@_ZN4anki5notes15normalize_field17hd98c2f3c8b98abb2E:bb.a
 
 bb.c:                                             ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit16.i.i.i.i.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit14.i.i.i.i.i", %bb.b, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit12.i.i.i.i.i"
@@ -205,27 +205,67 @@ bb.v:                                             ; preds = %_ZN4core3str7patter
 ; Function Attrs: nonlazybind uwtable
 define hidden noalias noundef align 8 ptr @"_ZN4anki5notes1_76_$LT$impl$u20$serde_core..ser..Serialize$u20$for$u20$anki..notes..NoteId$GT$9serialize17ha6850305cb7bcc95E"(ptr noalias noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #0 !guid !7669 {
 bb.a:
-  %i.a = alloca [40 x i8], align 1                ; 9 uses
+  %i.a = alloca [40 x i8], align 2                ; 15 uses
   %.val = load ptr, ptr %1, align 8               ; 2 uses
   %.val1 = load i64, ptr %0, align 8, !noundef !40 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7670)
   %i.b = icmp sgt i64 %.val1, -1
-  %.sroa.0.0.i.i.i.i.i = tail call i64 @llvm.abs.i64(i64 %.val1, i1 false) ; 3 uses
+  %.sroa.0.0.i.i.i.i.i = tail call i64 @llvm.abs.i64(i64 %.val1, i1 false) ; 10 uses
   %i.c = icmp ugt i64 %.sroa.0.0.i.i.i.i.i, 9999
-  br i1 %i.c, label %.lr.ph.i.i.i.i.i.a, label %._crit_edge.i.i.i.i.i.a
+  br i1 %i.c, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.a:                          ; preds = %.lr.ph.i.i.i.i.i.a, %bb.a
-  %.sroa.09.0.lcssa.i.i.i.i.i = phi i64 [ 20, %bb.a ], [ %2, %.lr.ph.i.i.i.i.i.a ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i.i, %bb.a ], [ %i.f, %.lr.ph.i.i.i.i.i.a ] ; 3 uses
-  %i.d = icmp samesign ugt i64 %.sroa.0.1.lcssa.i.i.i.i.i, 99
-  br i1 %i.d, label %bb.b, label %bb.c
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %._crit_edge.i.i.i.i.i.a, %.lr.ph.i.i.i.i.i.a, %.lr.ph.i.i.i.i.i.3, %bb.a
+  %.sroa.09.0.lcssa.i.i.i.i.i = phi i64 [ 20, %bb.a ], [ 16, %.lr.ph.i.i.i.i.i ], [ 12, %._crit_edge.i.i.i.i.i.a ], [ 8, %.lr.ph.i.i.i.i.i.a ], [ 4, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i.i, %bb.a ], [ %4, %.lr.ph.i.i.i.i.i ], [ %19, %._crit_edge.i.i.i.i.i.a ], [ %i.f, %.lr.ph.i.i.i.i.i.a ], [ %33, %.lr.ph.i.i.i.i.i.3 ] ; 3 uses
+  %2 = icmp samesign ugt i64 %.sroa.0.1.lcssa.i.i.i.i.i, 99
+  br i1 %2, label %bb.b, label %bb.c
 
-.lr.ph.i.i.i.i.i.a:                               ; preds = %bb.a, %.lr.ph.i.i.i.i.i.a
-  %.sroa.0.129.i.i.i.i.i = phi i64 [ %i.f, %.lr.ph.i.i.i.i.i.a ], [ %.sroa.0.0.i.i.i.i.i, %bb.a ] ; 3 uses
-  %.sroa.09.028.i.i.i.i.i = phi i64 [ %2, %.lr.ph.i.i.i.i.i.a ], [ 20, %bb.a ] ; 2 uses
-  %i.e = urem i64 %.sroa.0.129.i.i.i.i.i, 10000
-  %i.f = udiv i64 %.sroa.0.129.i.i.i.i.i, 10000   ; 2 uses
+.lr.ph.i.i.i.i.i:                                 ; preds = %bb.a
+  %3 = urem i64 %.sroa.0.0.i.i.i.i.i, 10000
+  %4 = udiv i64 %.sroa.0.0.i.i.i.i.i, 10000       ; 2 uses
+  %.lhs.trunc.i.i.i.i.i = trunc nuw nsw i64 %3 to i16 ; 2 uses
+  %5 = udiv i16 %.lhs.trunc.i.i.i.i.i, 100
+  %6 = shl nuw nsw i16 %5, 1
+  %7 = zext nneg i16 %6 to i64
+  %8 = urem i16 %.lhs.trunc.i.i.i.i.i, 100
+  %9 = shl nuw nsw i16 %8, 1
+  %10 = zext nneg i16 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr @567, i64 %7
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %13 = load i16, ptr %11, align 1, !noalias !7670
+  store i16 %13, ptr %12, align 2, !alias.scope !7670
+  %14 = getelementptr inbounds nuw i8, ptr @567, i64 %10
+  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
+  %16 = load i16, ptr %14, align 1, !noalias !7670
+  store i16 %16, ptr %15, align 2, !alias.scope !7670
+  %17 = icmp ugt i64 %.sroa.0.0.i.i.i.i.i, 99999999
+  br i1 %17, label %._crit_edge.i.i.i.i.i.a, label %._crit_edge.i.i.i.i.i
+
+._crit_edge.i.i.i.i.i.a:                          ; preds = %.lr.ph.i.i.i.i.i
+  %18 = urem i64 %4, 10000
+  %19 = udiv i64 %.sroa.0.0.i.i.i.i.i, 100000000  ; 2 uses
+  %.lhs.trunc.i.i.i.i.i.1 = trunc nuw nsw i64 %18 to i16 ; 2 uses
+  %20 = udiv i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %21 = shl nuw nsw i16 %20, 1
+  %22 = zext nneg i16 %21 to i64
+  %23 = urem i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %24 = shl nuw nsw i16 %23, 1
+  %25 = zext nneg i16 %24 to i64
+  %26 = getelementptr inbounds nuw i8, ptr @567, i64 %22
+  %27 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %28 = load i16, ptr %26, align 1, !noalias !7670
+  store i16 %28, ptr %27, align 2, !alias.scope !7670
+  %29 = getelementptr inbounds nuw i8, ptr @567, i64 %25
+  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
+  %31 = load i16, ptr %29, align 1, !noalias !7670
+  store i16 %31, ptr %30, align 2, !alias.scope !7670
+  %i.d = icmp ugt i64 %.sroa.0.0.i.i.i.i.i, 999999999999
+  br i1 %i.d, label %.lr.ph.i.i.i.i.i.a, label %._crit_edge.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.a:                               ; preds = %._crit_edge.i.i.i.i.i.a
+  %i.e = urem i64 %19, 10000
+  %i.f = udiv i64 %.sroa.0.0.i.i.i.i.i, 1000000000000 ; 2 uses
   %.lhs.trunc.i.i.i.i.i.a = trunc nuw nsw i64 %i.e to i16 ; 2 uses
   %i.g = udiv i16 %.lhs.trunc.i.i.i.i.i.a, 100
   %i.h = shl nuw nsw i16 %i.g, 1
@@ -233,20 +273,38 @@ bb.a:
   %i.j = urem i16 %.lhs.trunc.i.i.i.i.i.a, 100
   %i.k = shl nuw nsw i16 %i.j, 1
   %i.l = zext nneg i16 %i.k to i64
-  %2 = add i64 %.sroa.09.028.i.i.i.i.i, -4        ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr @567, i64 %i.i
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.o = load i16, ptr %i.m, align 1, !noalias !7670
-  store i16 %i.o, ptr %i.n, align 1, !alias.scope !7670
-  %3 = getelementptr inbounds nuw i8, ptr @567, i64 %i.l
-  %i.p = getelementptr i8, ptr %i.a, i64 %.sroa.09.028.i.i.i.i.i
-  %i.q = getelementptr i8, ptr %i.p, i64 -2
-  %i.r = load i16, ptr %3, align 1, !noalias !7670
-  store i16 %i.r, ptr %i.q, align 1, !alias.scope !7670
-  %i.s = icmp ugt i64 %.sroa.0.129.i.i.i.i.i, 99999999
-  br i1 %i.s, label %.lr.ph.i.i.i.i.i.a, label %._crit_edge.i.i.i.i.i.a
+  store i16 %i.o, ptr %i.n, align 2, !alias.scope !7670
+  %i.p = getelementptr inbounds nuw i8, ptr @567, i64 %i.l
+  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  %i.r = load i16, ptr %i.p, align 1, !noalias !7670
+  store i16 %i.r, ptr %i.q, align 2, !alias.scope !7670
+  %i.s = icmp ugt i64 %.sroa.0.0.i.i.i.i.i, 9999999999999999
+  br i1 %i.s, label %.lr.ph.i.i.i.i.i.3, label %._crit_edge.i.i.i.i.i
 
-bb.b:                                             ; preds = %._crit_edge.i.i.i.i.i.a
+.lr.ph.i.i.i.i.i.3:                               ; preds = %.lr.ph.i.i.i.i.i.a
+  %32 = urem i64 %i.f, 10000
+  %33 = udiv i64 %.sroa.0.0.i.i.i.i.i, 10000000000000000
+  %.lhs.trunc.i.i.i.i.i.3 = trunc nuw nsw i64 %32 to i16 ; 2 uses
+  %34 = udiv i16 %.lhs.trunc.i.i.i.i.i.3, 100
+  %35 = shl nuw nsw i16 %34, 1
+  %36 = zext nneg i16 %35 to i64
+  %37 = urem i16 %.lhs.trunc.i.i.i.i.i.3, 100
+  %38 = shl nuw nsw i16 %37, 1
+  %39 = zext nneg i16 %38 to i64
+  %40 = getelementptr inbounds nuw i8, ptr @567, i64 %36
+  %41 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %42 = load i16, ptr %40, align 1, !noalias !7670
+  store i16 %42, ptr %41, align 2, !alias.scope !7670
+  %43 = getelementptr inbounds nuw i8, ptr @567, i64 %39
+  %44 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  %45 = load i16, ptr %43, align 1, !noalias !7670
+  store i16 %45, ptr %44, align 2, !alias.scope !7670
+  br label %._crit_edge.i.i.i.i.i
+
+bb.b:                                             ; preds = %._crit_edge.i.i.i.i.i
   %.lhs.trunc24.i.i.i.i.i = trunc nuw i64 %.sroa.0.1.lcssa.i.i.i.i.i to i16 ; 2 uses
   %i.t = urem i16 %.lhs.trunc24.i.i.i.i.i, 100
   %i.u = shl nuw nsw i16 %i.t, 1
@@ -260,9 +318,9 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i.i
   store i16 %i.aa, ptr %i.z, align 1, !alias.scope !7670
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %._crit_edge.i.i.i.i.i.a
-  %.sroa.09.1.i.i.i.i.i = phi i64 [ %i.x, %bb.b ], [ %.sroa.09.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i.a ] ; 2 uses
-  %.sroa.0.2.i.i.i.i.i = phi i64 [ %.zext27.i.i.i.i.i, %bb.b ], [ %.sroa.0.1.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i.a ] ; 3 uses
+bb.c:                                             ; preds = %bb.b, %._crit_edge.i.i.i.i.i
+  %.sroa.09.1.i.i.i.i.i = phi i64 [ %i.x, %bb.b ], [ %.sroa.09.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.2.i.i.i.i.i = phi i64 [ %.zext27.i.i.i.i.i, %bb.b ], [ %.sroa.0.1.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 3 uses
   %i.ab = icmp samesign ult i64 %.sroa.0.2.i.i.i.i.i, 10
   br i1 %i.ab, label %bb.e, label %bb.d
 

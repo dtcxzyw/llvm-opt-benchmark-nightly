@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/decNumber?download=true
 inline.NumInlined: 182
 inline.NumDeleted: 7
-loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZL7decLnOpP9decNumberPKS_P10decContextPj:bb.a
   %min.epilog.iters.check = icmp eq i64 %i.ah, 0
   br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !34
@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ad, %bb.ac
   %.0147 = phi ptr [ null, %bb.ac ], [ %i.cz, %bb.ad ]
-  %.0 = phi ptr [ %5, %bb.ac ], [ %i.cz, %bb.ad ] ; 26 uses
+  %.0 = phi ptr [ %5, %bb.ac ], [ %i.cz, %bb.ad ] ; 31 uses
   %i.dd = call ptr @uprv_decContextDefault_78(ptr noundef nonnull %8, i32 noundef 64) ; 0 uses
   %i.de = load i32, ptr %i.bf, align 4, !tbaa !17
   %i.df = load i32, ptr %1, align 4, !tbaa !18
@@ -506,29 +506,59 @@ _ZL9decGetIntPK9decNumber.exit.thread:            ; preds = %uprv_decNumberFromI
   %i.hk = sext i32 %i.hj to i64
   %i.hl = getelementptr [2 x i8], ptr @_ZL4LNnn, i64 %i.hk
   %i.hm = getelementptr i8, ptr %i.hl, i64 -20
-  %i.hn = load i16, ptr %i.hm, align 2, !tbaa !110
-  %i.ho = zext i16 %i.hn to i32                   ; 2 uses
+  %i.hn = load i16, ptr %i.hm, align 2, !tbaa !110 ; 5 uses
+  %i.ho = zext i16 %i.hn to i32                   ; 5 uses
   %i.hp = lshr i32 %i.ho, 2                       ; 2 uses
   store i8 0, ptr %i.ea, align 4, !tbaa !16
   store i32 0, ptr %i.eb, align 4, !tbaa !17
   store i32 1, ptr %.0, align 4, !tbaa !18
   store i8 0, ptr %i.ec, align 1, !tbaa !19
   %i.hq = icmp eq i32 %i.hp, 0
-  br i1 %i.hq, label %uprv_decNumberFromInt32_78.exit220, label %.preheader.i.i205.a
+  br i1 %i.hq, label %uprv_decNumberFromInt32_78.exit220, label %.preheader.i.i205
 
-.preheader.i.i205.a:                              ; preds = %_ZL9decGetIntPK9decNumber.exit.thread, %.preheader.i.i205.a
-  %.018.i.i206 = phi ptr [ %i.ht, %.preheader.i.i205.a ], [ %i.ec, %_ZL9decGetIntPK9decNumber.exit.thread ] ; 2 uses
-  %.01417.i.i207 = phi i32 [ %10, %.preheader.i.i205.a ], [ %i.hp, %_ZL9decGetIntPK9decNumber.exit.thread ] ; 3 uses
-  %i.hr = urem i32 %.01417.i.i207, 10
+.preheader.i.i205:                                ; preds = %_ZL9decGetIntPK9decNumber.exit.thread
+  %10 = urem i32 %i.hp, 10
+  %11 = trunc nuw nsw i32 %10 to i8
+  store i8 %11, ptr %i.ec, align 1, !tbaa !19
+  %12 = getelementptr inbounds nuw i8, ptr %.0, i64 10 ; 2 uses
+  %.not.i.i208 = icmp ult i16 %i.hn, 40
+  br i1 %.not.i.i208, label %bb.aq, label %.preheader.i.i205.1
+
+.preheader.i.i205.1:                              ; preds = %.preheader.i.i205
+  %13 = udiv i32 %i.ho, 40
+  %14 = urem i32 %13, 10
+  %15 = trunc nuw nsw i32 %14 to i8
+  store i8 %15, ptr %12, align 2, !tbaa !19
+  %16 = getelementptr inbounds nuw i8, ptr %.0, i64 11 ; 2 uses
+  %.not.i.i208.1 = icmp ult i16 %i.hn, 400
+  br i1 %.not.i.i208.1, label %bb.aq, label %.preheader.i.i205.2
+
+.preheader.i.i205.2:                              ; preds = %.preheader.i.i205.1
+  %17 = udiv i32 %i.ho, 400
+  %18 = urem i32 %17, 10
+  %19 = trunc nuw nsw i32 %18 to i8
+  store i8 %19, ptr %16, align 1, !tbaa !19
+  %20 = getelementptr inbounds nuw i8, ptr %.0, i64 12 ; 2 uses
+  %.not.i.i208.2 = icmp ult i16 %i.hn, 4000
+  br i1 %.not.i.i208.2, label %bb.aq, label %.preheader.i.i205.a
+
+.preheader.i.i205.a:                              ; preds = %.preheader.i.i205.2
+  %21 = udiv i32 %i.ho, 4000
+  %i.hr = urem i32 %21, 10
   %i.hs = trunc nuw nsw i32 %i.hr to i8
-  store i8 %i.hs, ptr %.018.i.i206, align 1, !tbaa !19
-  %10 = udiv i32 %.01417.i.i207, 10
-  %i.ht = getelementptr inbounds nuw i8, ptr %.018.i.i206, i64 1 ; 2 uses
-  %.not.i.i208.a = icmp samesign ult i32 %.01417.i.i207, 10
-  br i1 %.not.i.i208.a, label %bb.aq, label %.preheader.i.i205.a, !llvm.loop !0
+  store i8 %i.hs, ptr %20, align 4, !tbaa !19
+  %i.ht = getelementptr inbounds nuw i8, ptr %.0, i64 13 ; 2 uses
+  %.not.i.i208.a = icmp ult i16 %i.hn, -25536
+  br i1 %.not.i.i208.a, label %bb.aq, label %.preheader.i.i205.4
 
-bb.aq:                                            ; preds = %.preheader.i.i205.a
-  %i.hu = ptrtoint ptr %i.ht to i64
+.preheader.i.i205.4:                              ; preds = %.preheader.i.i205.a
+  store i8 1, ptr %i.ht, align 1, !tbaa !19
+  %22 = getelementptr inbounds nuw i8, ptr %.0, i64 14
+  br label %bb.aq
+
+bb.aq:                                            ; preds = %.preheader.i.i205.4, %.preheader.i.i205.a, %.preheader.i.i205.2, %.preheader.i.i205.1, %.preheader.i.i205
+  %.lcssa = phi ptr [ %12, %.preheader.i.i205 ], [ %16, %.preheader.i.i205.1 ], [ %20, %.preheader.i.i205.2 ], [ %i.ht, %.preheader.i.i205.a ], [ %22, %.preheader.i.i205.4 ]
+  %i.hu = ptrtoint ptr %.lcssa to i64
   %i.hv = sub i64 %i.hu, %i.ed                    ; 2 uses
   %i.hw = trunc i64 %i.hv to i32                  ; 2 uses
   %sext.i.i209 = shl i64 %i.hv, 32

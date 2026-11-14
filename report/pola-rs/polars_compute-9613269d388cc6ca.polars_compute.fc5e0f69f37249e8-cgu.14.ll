@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_compute-9613269d388cc6ca.polars_compute.fc5e0f69f37249e8-cgu.14?download=true
 inline.NumInlined: 1566
 inline.NumDeleted: 498
-loop-unroll.NumCompletelyUnrolled: 24
+loop-unroll.NumCompletelyUnrolled: 25
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 25
+loop-unroll.NumUnrolled: 26
 begin_hunk_0_@_RNvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean21filter_boolean_kernel:bb.a
   %.sink11.i = phi ptr [ %i.an, %bb.g ], [ %i.ba, %_RINvXs1_NtNtCsgZ49sUHp3tW_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECslFlrwjHoTci_14polars_compute.exit.i ]
   %.sink.i = phi i64 [ %i.z, %bb.g ], [ 0, %_RINvXs1_NtNtCsgZ49sUHp3tW_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECslFlrwjHoTci_14polars_compute.exit.i ]
@@ -205,25 +205,18 @@ _RNvXs5_NtNtCs8774dFTUdNv_12polars_arrow6bitmap8iteratorNtB5_17FastU56BitmapIter
 
 .lr.ph.preheader.i:                               ; preds = %.noexc18
   %i.dv = extractvalue { i64, i64 } %i.dr, 0, !dbg !23618
-  br label %.lr.ph.i, !dbg !23624
-
-.lr.ph.i:                                         ; preds = %.outer.i, %.lr.ph.preheader.i
-  %.sroa.0.1.ph98.i = phi ptr [ %i.em, %.outer.i ], [ %.sroa.0.0.lcssa.i, %.lr.ph.preheader.i ]
-  %.sroa.08.1.ph97.i = phi i64 [ %i.ep, %.outer.i ], [ %.sroa.08.0.ph.lcssa.i, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.018.1.ph96.i = phi i64 [ %i.eo, %.outer.i ], [ %.sroa.018.0.lcssa.i, %.lr.ph.preheader.i ]
-  %.sroa.039.0.ph95.i = phi i64 [ %i.dy, %.outer.i ], [ %i.dv, %.lr.ph.preheader.i ]
-  %.sroa.041.0.ph94.i = phi i64 [ %i.dz, %.outer.i ], [ %i.dt, %.lr.ph.preheader.i ]
   br label %bb.t, !dbg !23624
 
-bb.t:                                             ; preds = %bb.u, %.lr.ph.i
-  %.sroa.0.192.i = phi ptr [ %.sroa.0.1.ph98.i, %.lr.ph.i ], [ %.sroa.0.2.i, %bb.u ] ; 5 uses
-  %.sroa.018.191.i = phi i64 [ %.sroa.018.1.ph96.i, %.lr.ph.i ], [ %.sroa.018.2.i, %bb.u ] ; 3 uses
-  %.sroa.039.090.i = phi i64 [ %.sroa.039.0.ph95.i, %.lr.ph.i ], [ %i.dy, %bb.u ] ; 2 uses
-  %.sroa.041.089.i = phi i64 [ %.sroa.041.0.ph94.i, %.lr.ph.i ], [ %i.dz, %bb.u ] ; 2 uses
+bb.t:                                             ; preds = %.outer.i, %.lr.ph.preheader.i
+  %.sroa.0.192.i = phi ptr [ %i.em, %.outer.i ], [ %.sroa.0.0.lcssa.i, %.lr.ph.preheader.i ] ; 4 uses
+  %.sroa.08.1.ph97.i = phi i64 [ %i.ep, %.outer.i ], [ %.sroa.08.0.ph.lcssa.i, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.018.191.i = phi i64 [ %i.eo, %.outer.i ], [ %.sroa.018.0.lcssa.i, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.039.090.i = phi i64 [ %.lcssa140, %.outer.i ], [ %i.dv, %.lr.ph.preheader.i ] ; 2 uses
+  %.sroa.041.089.i = phi i64 [ %.lcssa, %.outer.i ], [ %i.dt, %.lr.ph.preheader.i ] ; 2 uses
   %i.dw = and i64 %.sroa.039.090.i, 72057594037927935, !dbg !23625 ; 2 uses
-  %i.dx = and i64 %.sroa.041.089.i, 72057594037927935, !dbg !23626 ; 3 uses
+  %i.dx = and i64 %.sroa.041.089.i, 72057594037927935, !dbg !23626 ; 2 uses
   %i.dy = lshr i64 %.sroa.039.090.i, 56, !dbg !23627 ; 2 uses
-  %i.dz = lshr i64 %.sroa.041.089.i, 56, !dbg !23628 ; 4 uses
+  %i.dz = lshr i64 %.sroa.041.089.i, 56, !dbg !23628 ; 3 uses
   switch i64 %i.dx, label %.outer.i [
     i64 0, label %bb.u
     i64 72057594037927935, label %bb.v
@@ -233,7 +226,7 @@ bb.u:                                             ; preds = %bb.v, %bb.t
   %.sroa.018.2.i = phi i64 [ %.sroa.018.191.i, %bb.t ], [ %i.ee, %bb.v ], !dbg !23617
   %.sroa.0.2.i = phi ptr [ %.sroa.0.192.i, %bb.t ], [ %i.ed, %bb.v ]
   %i.ea = icmp eq i64 %i.dz, 0, !dbg !23624
-  br i1 %i.ea, label %_RINvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean26filter_boolean_kernel_pextKb0_NvB2_15pext64_polyfillEB6_.exit, label %bb.t, !dbg !23624
+  br i1 %i.ea, label %_RINvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean26filter_boolean_kernel_pextKb0_NvB2_15pext64_polyfillEB6_.exit, label %.outer.i, !dbg !23624
 
 bb.v:                                             ; preds = %bb.t
   %i.eb = shl nuw nsw i64 %i.dw, %.sroa.08.1.ph97.i, !dbg !23630
@@ -243,21 +236,27 @@ bb.v:                                             ; preds = %bb.t
   %i.ee = lshr i64 %i.ec, 56, !dbg !23634
   br label %bb.u, !dbg !23635
 
-.outer.i:                                         ; preds = %bb.t
-  %i.ef = call range(i64 0, 57) i64 @llvm.ctpop.i64(i64 %i.dx), !dbg !23636 ; 2 uses
+.outer.i:                                         ; preds = %bb.u, %bb.t
+  %.sroa.0.192.i.lcssa = phi ptr [ %.sroa.0.192.i, %bb.t ], [ %.sroa.0.2.i, %bb.u ] ; 2 uses
+  %.sroa.018.191.i.lcssa = phi i64 [ %.sroa.018.191.i, %bb.t ], [ %.sroa.018.2.i, %bb.u ]
+  %.lcssa144 = phi i64 [ %i.dw, %bb.t ], [ %i.dy, %bb.u ], !dbg !23625
+  %.lcssa142 = phi i64 [ %i.dx, %bb.t ], [ %i.dz, %bb.u ], !dbg !23626 ; 2 uses
+  %.lcssa140 = phi i64 [ %i.dy, %bb.t ], [ 0, %bb.u ], !dbg !23627
+  %.lcssa = phi i64 [ %i.dz, %bb.t ], [ 0, %bb.u ], !dbg !23628 ; 2 uses
+  %i.ef = call range(i64 0, 57) i64 @llvm.ctpop.i64(i64 %.lcssa142), !dbg !23636 ; 2 uses
   %i.eg = trunc nuw nsw i64 %i.ef to i32, !dbg !23636
-  %i.eh = call fastcc noundef i64 @_RNvYNvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean15pext64_polyfillINtNtNtCscgRAwXFJnXP_4core3ops8function2FnTyymEE4callB8_(i64 noundef %i.dw, i64 noundef %i.dx, i32 noundef %i.eg), !dbg !23637
+  %i.eh = call fastcc noundef i64 @_RNvYNvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean15pext64_polyfillINtNtNtCscgRAwXFJnXP_4core3ops8function2FnTyymEE4callB8_(i64 noundef %.lcssa144, i64 noundef %.lcssa142, i32 noundef %i.eg), !dbg !23637
   %i.ei = shl i64 %i.eh, %.sroa.08.1.ph97.i, !dbg !23638
-  %i.ej = or i64 %i.ei, %.sroa.018.191.i, !dbg !23639 ; 2 uses
+  %i.ej = or i64 %i.ei, %.sroa.018.191.i.lcssa, !dbg !23639 ; 2 uses
   %i.ek = add nuw nsw i64 %i.ef, %.sroa.08.1.ph97.i, !dbg !23640 ; 3 uses
-  store i64 %i.ej, ptr %.sroa.0.192.i, align 1, !dbg !23641
+  store i64 %i.ej, ptr %.sroa.0.192.i.lcssa, align 1, !dbg !23641
   %i.el = lshr i64 %i.ek, 3, !dbg !23642
-  %i.em = getelementptr inbounds nuw i8, ptr %.sroa.0.192.i, i64 %i.el, !dbg !23643
+  %i.em = getelementptr inbounds nuw i8, ptr %.sroa.0.192.i.lcssa, i64 %i.el, !dbg !23643
   %i.en = and i64 %i.ek, -8, !dbg !23644
   %i.eo = lshr i64 %i.ej, %i.en, !dbg !23645
   %i.ep = and i64 %i.ek, 7, !dbg !23646
-  %i.eq = icmp eq i64 %i.dz, 0, !dbg !23624
-  br i1 %i.eq, label %_RINvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean26filter_boolean_kernel_pextKb0_NvB2_15pext64_polyfillEB6_.exit, label %.lr.ph.i, !dbg !23624
+  %i.eq = icmp eq i64 %.lcssa, 0, !dbg !23624
+  br i1 %i.eq, label %_RINvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean26filter_boolean_kernel_pextKb0_NvB2_15pext64_polyfillEB6_.exit, label %bb.t, !dbg !23624
 
 bb.w:                                             ; preds = %bb.x, %_RNvXs5_NtNtCs8774dFTUdNv_12polars_arrow6bitmap8iteratorNtB5_17FastU56BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit59.i
   %i.er = phi i64 [ %i.de, %_RNvXs5_NtNtCs8774dFTUdNv_12polars_arrow6bitmap8iteratorNtB5_17FastU56BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit59.i ], [ %.pre131.i, %bb.x ], !dbg !23595 ; 2 uses
@@ -302,7 +301,7 @@ bb.x:                                             ; preds = %_RNvXs5_NtNtCs8774d
   %i.fp = icmp ugt i64 %i.fo, 63, !dbg !23595
   br i1 %i.fp, label %_RNvXs5_NtNtCs8774dFTUdNv_12polars_arrow6bitmap8iteratorNtB5_17FastU56BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit59.lr.ph.i, label %.outer66._crit_edge.i, !dbg !23595
 
-_RINvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean26filter_boolean_kernel_pextKb0_NvB2_15pext64_polyfillEB6_.exit: ; preds = %.outer.i, %bb.u, %.noexc18
+_RINvNtNtCslFlrwjHoTci_14polars_compute6filter7boolean26filter_boolean_kernel_pextKb0_NvB2_15pext64_polyfillEB6_.exit: ; preds = %bb.u, %.outer.i, %.noexc18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !23663
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !23664
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !23665

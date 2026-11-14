@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/CGUITTFont?download=true
 inline.NumInlined: 1171
 inline.NumDeleted: 570
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZNSt6vectorIN3gui18SGUITTGlyphPendingESaIS1_EE17_M_realloc_insertIJRPKNS0_11SGUITTGlyphERPN5video6IImageEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_:bb.a
   %i.h = ashr exact i64 %i.f, 4                   ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
@@ -205,86 +205,139 @@ bb.a:
   store i64 0, ptr %i.b, align 8, !tbaa !29
   store i8 0, ptr %i.a, align 8, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !366)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !364)
   %i.c = icmp ult i32 %1, 10
-  br i1 %i.c, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i.a
+  br i1 %i.c, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i
 
-.lr.ph.i.i.a:                                     ; preds = %bb.a, %bb.g
-  %.030.i.i = phi i32 [ %7, %bb.g ], [ 1, %bb.a ] ; 4 uses
-  %.02329.i.i = phi i32 [ %6, %bb.g ], [ %1, %bb.a ] ; 5 uses
-  %i.d = icmp ult i32 %.02329.i.i, 100
-  br i1 %i.d, label %bb.b, label %bb.c
+.lr.ph.i.i:                                       ; preds = %bb.a
+  %3 = icmp ult i32 %1, 100
+  br i1 %3, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i.a
+
+.lr.ph.i.i.a:                                     ; preds = %.lr.ph.i.i
+  %i.d = icmp ult i32 %1, 1000
+  br i1 %i.d, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.a
-  %3 = add i32 %.030.i.i, 1
-  br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
+  %4 = icmp ult i32 %1, 10000
+  br i1 %4, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph.i.i.a
-  %i.e = icmp ult i32 %.02329.i.i, 1000
-  br i1 %i.e, label %bb.d, label %bb.e
+bb.c:                                             ; preds = %bb.b
+  %i.e = icmp ult i32 %1, 100000
+  br i1 %i.e, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = add i32 %.030.i.i, 2
-  br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
+  %5 = icmp ult i32 %1, 1000000
+  br i1 %5, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %bb.e
 
-bb.e:                                             ; preds = %bb.c
-  %i.f = icmp ult i32 %.02329.i.i, 10000
-  br i1 %i.f, label %bb.f, label %bb.g
+bb.e:                                             ; preds = %bb.d
+  %i.f = icmp ult i32 %1, 10000000
+  br i1 %i.f, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %5 = add i32 %.030.i.i, 3
+  %6 = icmp ult i32 %1, 100000000
+  br i1 %6, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %bb.g
+
+bb.g:                                             ; preds = %bb.f
+  %7 = icmp ult i32 %1, 1000000000
+  %spec.select = select i1 %7, i64 9, i64 10
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
-bb.g:                                             ; preds = %bb.e
-  %6 = udiv i32 %.02329.i.i, 10000
-  %7 = add i32 %.030.i.i, 4                       ; 2 uses
-  %8 = icmp ult i32 %.02329.i.i, 100000
-  br i1 %8, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i.a, !llvm.loop !364
-
-_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.g, %bb.f, %bb.d, %bb.b, %bb.a
-  %.022.i.i = phi i32 [ %5, %bb.f ], [ %3, %bb.b ], [ %4, %bb.d ], [ 1, %bb.a ], [ %7, %bb.g ]
-  %9 = zext i32 %.022.i.i to i64
+_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.g, %bb.c, %bb.b, %bb.f, %.lr.ph.i.i.a, %bb.e, %.lr.ph.i.i, %bb.d, %bb.a
+  %.022.i.i = phi i64 [ 7, %bb.e ], [ %spec.select, %bb.g ], [ 8, %bb.f ], [ 1, %bb.a ], [ 2, %.lr.ph.i.i ], [ 6, %bb.d ], [ 3, %.lr.ph.i.i.a ], [ 4, %bb.b ], [ 5, %bb.c ]
+  %8 = and i64 %.022.i.i, 4294967295
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
-  store ptr %i.g, ptr %2, align 8, !tbaa !25, !alias.scope !366
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef %9, i8 noundef signext 0)
+  store ptr %i.g, ptr %2, align 8, !tbaa !25, !alias.scope !364
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef %8, i8 noundef signext 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i unwind label %bb.j
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i: ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
-  %i.h = load ptr, ptr %2, align 8, !tbaa !28, !alias.scope !366 ; 4 uses
+  %i.h = load ptr, ptr %2, align 8, !tbaa !28, !alias.scope !364 ; 10 uses
   %i.i = icmp ugt i32 %1, 99
   br i1 %i.i, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !29, !alias.scope !366
-  %10 = trunc i64 %i.k to i32
-  %11 = add i32 %10, -1
-  br label %.lr.ph.i2.i
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !29, !alias.scope !364 ; 8 uses
+  %9 = add i64 %i.k, 4294967295
+  %10 = urem i32 %1, 100
+  %11 = shl nuw nsw i32 %10, 1
+  %12 = udiv i32 %1, 100                          ; 2 uses
+  %13 = zext nneg i32 %11 to i64
+  %14 = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %13 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 1
+  %16 = load i8, ptr %15, align 1, !tbaa !30, !noalias !364
+  %17 = and i64 %9, 4294967295
+  %18 = getelementptr inbounds nuw i8, ptr %i.h, i64 %17
+  store i8 %16, ptr %18, align 1, !tbaa !30
+  %19 = load i8, ptr %14, align 2, !tbaa !30, !noalias !364
+  %20 = add i64 %i.k, 4294967294
+  %21 = and i64 %20, 4294967295
+  %22 = getelementptr inbounds nuw i8, ptr %i.h, i64 %21
+  store i8 %19, ptr %22, align 1, !tbaa !30
+  %23 = icmp ugt i32 %1, 9999
+  br i1 %23, label %.lr.ph.i2.i.1, label %._crit_edge.i.i
 
-.lr.ph.i2.i:                                      ; preds = %.lr.ph.i2.i, %.lr.ph.preheader.i.i
-  %.020.i.i = phi i32 [ %i.n, %.lr.ph.i2.i ], [ %1, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.01819.i.i = phi i32 [ %15, %.lr.ph.i2.i ], [ %11, %.lr.ph.preheader.i.i ] ; 3 uses
-  %i.l = urem i32 %.020.i.i, 100
+.lr.ph.i2.i.1:                                    ; preds = %.lr.ph.preheader.i.i
+  %24 = add i64 %i.k, 4294967293
+  %25 = urem i32 %12, 100
+  %26 = shl nuw nsw i32 %25, 1
+  %27 = udiv i32 %1, 10000                        ; 2 uses
+  %28 = zext nneg i32 %26 to i64
+  %29 = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %28 ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 1
+  %31 = load i8, ptr %30, align 1, !tbaa !30, !noalias !364
+  %32 = and i64 %24, 4294967295
+  %33 = getelementptr inbounds nuw i8, ptr %i.h, i64 %32
+  store i8 %31, ptr %33, align 1, !tbaa !30
+  %34 = load i8, ptr %29, align 2, !tbaa !30, !noalias !364
+  %35 = add i64 %i.k, 4294967292
+  %36 = and i64 %35, 4294967295
+  %37 = getelementptr inbounds nuw i8, ptr %i.h, i64 %36
+  store i8 %34, ptr %37, align 1, !tbaa !30
+  %38 = icmp ugt i32 %1, 999999
+  br i1 %38, label %.lr.ph.i2.i, label %._crit_edge.i.i
+
+.lr.ph.i2.i:                                      ; preds = %.lr.ph.i2.i.1
+  %39 = add i64 %i.k, 4294967291
+  %i.l = urem i32 %27, 100
   %i.m = shl nuw nsw i32 %i.l, 1
-  %i.n = udiv i32 %.020.i.i, 100                  ; 2 uses
+  %i.n = udiv i32 %1, 1000000                     ; 2 uses
   %i.o = zext nneg i32 %i.m to i64
   %i.p = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %i.o ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 1
-  %i.r = load i8, ptr %i.q, align 1, !tbaa !30, !noalias !366
-  %12 = zext i32 %.01819.i.i to i64
-  %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 %12
+  %i.r = load i8, ptr %i.q, align 1, !tbaa !30, !noalias !364
+  %40 = and i64 %39, 4294967295
+  %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 %40
   store i8 %i.r, ptr %i.s, align 1, !tbaa !30
-  %i.t = load i8, ptr %i.p, align 2, !tbaa !30, !noalias !366
-  %13 = add i32 %.01819.i.i, -1
-  %14 = zext i32 %13 to i64
-  %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 %14
+  %i.t = load i8, ptr %i.p, align 2, !tbaa !30, !noalias !364
+  %41 = add i64 %i.k, 4294967290
+  %42 = and i64 %41, 4294967295
+  %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 %42
   store i8 %i.t, ptr %i.u, align 1, !tbaa !30
-  %15 = add i32 %.01819.i.i, -2
-  %i.v = icmp ugt i32 %.020.i.i, 9999
-  br i1 %i.v, label %.lr.ph.i2.i, label %._crit_edge.i.i, !llvm.loop !365
+  %i.v = icmp ugt i32 %1, 99999999
+  br i1 %i.v, label %.lr.ph.i2.i.3, label %._crit_edge.i.i
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i2.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i
-  %.0.lcssa.i.i = phi i32 [ %1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i ], [ %i.n, %.lr.ph.i2.i ] ; 3 uses
+.lr.ph.i2.i.3:                                    ; preds = %.lr.ph.i2.i
+  %43 = add i64 %i.k, 4294967289
+  %44 = urem i32 %i.n, 100
+  %45 = shl nuw nsw i32 %44, 1
+  %46 = udiv i32 %1, 100000000
+  %47 = zext nneg i32 %45 to i64
+  %48 = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %47 ; 2 uses
+  %49 = getelementptr inbounds nuw i8, ptr %48, i64 1
+  %50 = load i8, ptr %49, align 1, !tbaa !30, !noalias !364
+  %51 = and i64 %43, 4294967295
+  %52 = getelementptr inbounds nuw i8, ptr %i.h, i64 %51
+  store i8 %50, ptr %52, align 1, !tbaa !30
+  %53 = load i8, ptr %48, align 2, !tbaa !30, !noalias !364
+  %54 = add i64 %i.k, 4294967288
+  %55 = and i64 %54, 4294967295
+  %56 = getelementptr inbounds nuw i8, ptr %i.h, i64 %55
+  store i8 %53, ptr %56, align 1, !tbaa !30
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i2.i.1, %.lr.ph.i2.i, %.lr.ph.i2.i.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i
+  %.0.lcssa.i.i = phi i32 [ %1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i ], [ %12, %.lr.ph.preheader.i.i ], [ %27, %.lr.ph.i2.i.1 ], [ %i.n, %.lr.ph.i2.i ], [ %46, %.lr.ph.i2.i.3 ] ; 3 uses
   %i.w = icmp samesign ugt i32 %.0.lcssa.i.i, 9
   br i1 %i.w, label %bb.h, label %bb.i
 
@@ -293,10 +346,10 @@ bb.h:                                             ; preds = %._crit_edge.i.i
   %i.y = zext nneg i32 %i.x to i64
   %i.z = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %i.y ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
-  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !30, !noalias !366
+  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !30, !noalias !364
   %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 1
   store i8 %i.ab, ptr %i.ac, align 1, !tbaa !30
-  %i.ad = load i8, ptr %i.z, align 2, !tbaa !30, !noalias !366
+  %i.ad = load i8, ptr %i.z, align 2, !tbaa !30, !noalias !364
   br label %_ZNSt7__cxx119to_stringEj.exit
 
 bb.i:                                             ; preds = %._crit_edge.i.i
@@ -699,7 +752,5 @@ begin_hunk_1_@llvm.smin.i32
 !361 = !{!358, !357}
 !362 = distinct !{!362, i1 true, !"_ZNSt7__cxx119to_stringEj"}
 !363 = distinct !{!363, !362, !"_ZNSt7__cxx119to_stringEj: argument 0"}
-!364 = distinct !{!364, !72}
-!365 = distinct !{!365, !72}
-!366 = !{!363}
+!364 = !{!363}
 end_hunk_1

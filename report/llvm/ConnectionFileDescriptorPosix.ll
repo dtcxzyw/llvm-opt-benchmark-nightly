@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ConnectionFileDescriptorPosix?download=true
 inline.NumInlined: 1704
 inline.NumDeleted: 915
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZN4llvm15format_providerINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEvE11consumeUnitERNS_9StringRefERKS5_:bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 1
   %i.ap = add i64 %i.b, -1
@@ -204,10 +204,10 @@ define internal void @"_ZN4llvm12function_refIFvRN12lldb_private6SocketEEE11call
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
-  %i.b = tail call noundef zeroext i16 @_ZNK12lldb_private9TCPSocket18GetLocalPortNumberEv(ptr noundef nonnull align 8 dereferenceable(72) %1) #18 ; 6 uses
+  %i.b = tail call noundef zeroext i16 @_ZNK12lldb_private9TCPSocket18GetLocalPortNumberEv(ptr noundef nonnull align 8 dereferenceable(72) %1) #18 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
-  %i.c = zext i16 %i.b to i32                     ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !397)
+  %i.c = zext i16 %i.b to i32                     ; 4 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !396)
   %i.d = icmp ult i16 %i.b, 10
   br i1 %i.d, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i, label %.lr.ph.i.i.i
 
@@ -225,43 +225,56 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i:  ; preds = %bb.c, %bb.b, %.lr.ph.i.i.i, %bb.a
-  %.022.i.i.i = phi i32 [ %..i, %bb.c ], [ 3, %bb.b ], [ 2, %.lr.ph.i.i.i ], [ 1, %bb.a ] ; 2 uses
+  %.022.i.i.i = phi i32 [ %..i, %bb.c ], [ 3, %bb.b ], [ 2, %.lr.ph.i.i.i ], [ 1, %bb.a ] ; 5 uses
   %i.h = zext nneg i32 %.022.i.i.i to i64
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  store ptr %i.i, ptr %2, align 8, !tbaa !29, !alias.scope !397
+  store ptr %i.i, ptr %2, align 8, !tbaa !29, !alias.scope !396
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef %i.h, i8 noundef signext 45) #18
-  %i.j = load ptr, ptr %2, align 8, !tbaa !46, !alias.scope !397 ; 4 uses
+  %i.j = load ptr, ptr %2, align 8, !tbaa !46, !alias.scope !396 ; 6 uses
   %i.k = icmp ugt i16 %i.b, 99
   br i1 %i.k, label %.lr.ph.preheader.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i
   %i.l = add nsw i32 %.022.i.i.i, -1
-  br label %.lr.ph.i11.i.i
+  %3 = urem i32 %i.c, 100
+  %4 = shl nuw nsw i32 %3, 1
+  %5 = udiv i32 %i.c, 100                         ; 2 uses
+  %6 = zext nneg i32 %4 to i64
+  %7 = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %6 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !33, !noalias !396
+  %10 = zext i32 %i.l to i64
+  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 %10
+  store i8 %9, ptr %11, align 1, !tbaa !33
+  %12 = load i8, ptr %7, align 2, !tbaa !33, !noalias !396
+  %13 = add nsw i32 %.022.i.i.i, -2
+  %14 = zext i32 %13 to i64
+  %15 = getelementptr inbounds nuw i8, ptr %i.j, i64 %14
+  store i8 %12, ptr %15, align 1, !tbaa !33
+  %16 = icmp ugt i16 %i.b, 9999
+  br i1 %16, label %.lr.ph.i11.i.i, label %._crit_edge.i.i.i
 
-.lr.ph.i11.i.i:                                   ; preds = %.lr.ph.i11.i.i, %.lr.ph.preheader.i.i.i
-  %.020.i.i.i = phi i32 [ %i.o, %.lr.ph.i11.i.i ], [ %i.c, %.lr.ph.preheader.i.i.i ] ; 3 uses
-  %.01819.i.i.i = phi i32 [ %3, %.lr.ph.i11.i.i ], [ %i.l, %.lr.ph.preheader.i.i.i ] ; 3 uses
-  %i.m = urem i32 %.020.i.i.i, 100
+.lr.ph.i11.i.i:                                   ; preds = %.lr.ph.preheader.i.i.i
+  %17 = add nsw i32 %.022.i.i.i, -3
+  %i.m = urem i32 %5, 100
   %i.n = shl nuw nsw i32 %i.m, 1
-  %i.o = udiv i32 %.020.i.i.i, 100                ; 2 uses
+  %i.o = udiv i32 %i.c, 10000
   %i.p = zext nneg i32 %i.n to i64
   %i.q = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %i.p ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !33, !noalias !397
-  %i.t = zext i32 %.01819.i.i.i to i64
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !33, !noalias !396
+  %i.t = zext i32 %17 to i64
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.t
   store i8 %i.s, ptr %i.u, align 1, !tbaa !33
-  %i.v = load i8, ptr %i.q, align 2, !tbaa !33, !noalias !397
-  %i.w = add i32 %.01819.i.i.i, -1
+  %i.v = load i8, ptr %i.q, align 2, !tbaa !33, !noalias !396
+  %i.w = add nsw i32 %.022.i.i.i, -4
   %i.x = zext i32 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.x
   store i8 %i.v, ptr %i.y, align 1, !tbaa !33
-  %3 = add i32 %.01819.i.i.i, -2
-  %4 = icmp samesign ugt i32 %.020.i.i.i, 9999
-  br i1 %4, label %.lr.ph.i11.i.i, label %._crit_edge.i.i.i, !llvm.loop !395
+  br label %._crit_edge.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.lr.ph.i11.i.i, %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i
-  %.0.lcssa.i.i.i = phi i32 [ %i.c, %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i ], [ %i.o, %.lr.ph.i11.i.i ] ; 3 uses
+._crit_edge.i.i.i:                                ; preds = %.lr.ph.preheader.i.i.i, %.lr.ph.i11.i.i, %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i
+  %.0.lcssa.i.i.i = phi i32 [ %i.c, %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i ], [ %5, %.lr.ph.preheader.i.i.i ], [ %i.o, %.lr.ph.i11.i.i ] ; 3 uses
   %i.z = icmp samesign ugt i32 %.0.lcssa.i.i.i, 9
   br i1 %i.z, label %bb.d, label %bb.e
 
@@ -270,10 +283,10 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   %i.ab = zext nneg i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %i.ab ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 1
-  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !33, !noalias !397
+  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !33, !noalias !396
   %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 1
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !33
-  %i.ag = load i8, ptr %i.ac, align 2, !tbaa !33, !noalias !397
+  %i.ag = load i8, ptr %i.ac, align 2, !tbaa !33, !noalias !396
   br label %_ZNSt7__cxx119to_stringEi.exit.i
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i
@@ -290,7 +303,7 @@ _ZNSt7__cxx119to_stringEi.exit.i:                 ; preds = %bb.e, %bb.d
   %i.am = load ptr, ptr %i.a, align 8, !tbaa !101
   %i.an = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !102
-  call void %i.am(i64 noundef %i.ao, ptr %i.aj, i64 %i.al) #18, !inline_history !396
+  call void %i.am(i64 noundef %i.ao, ptr %i.aj, i64 %i.al) #18, !inline_history !395
   %i.ap = load ptr, ptr %2, align 8, !tbaa !46    ; 2 uses
   %i.aq = icmp eq ptr %i.ap, %i.i
   br i1 %i.aq, label %"_ZZN12lldb_private24ConnectionFileDescriptor9AcceptTCPEN4llvm9StringRefENS1_12function_refIFvS2_EEEPNS_6StatusEENK3$_0clERNS_6SocketE.exit", label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
@@ -315,7 +328,7 @@ declare void @_ZN4llvm8toStringB5cxx11ENS_5ErrorE(ptr dead_on_unwind writable sr
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt12__shared_ptrIN12lldb_private8IOObjectELN9__gnu_cxx12_Lock_policyE2EEC2INS0_9UDPSocketESt14default_deleteIS6_EvEEOSt10unique_ptrIT_T0_E(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !398    ; 2 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !397    ; 2 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !49
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   store ptr null, ptr %i.b, align 8, !tbaa !41
@@ -324,15 +337,15 @@ bb.a:
 
 _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IN12lldb_private9UDPSocketESt14default_deleteIS5_EEEOSt10unique_ptrIT_T0_E.exit: ; preds = %bb.a
   %i.d = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #19 ; 13 uses
-  %i.e = load ptr, ptr %1, align 8, !tbaa !398
-  store ptr null, ptr %1, align 8, !tbaa !398
+  %i.e = load ptr, ptr %1, align 8, !tbaa !397
+  store ptr null, ptr %1, align 8, !tbaa !397
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
   store i32 1, ptr %i.f, align 8, !tbaa !35
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   store i32 1, ptr %i.g, align 4, !tbaa !36
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN12lldb_private9UDPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !17
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %i.e, ptr %i.h, align 8, !tbaa !399
+  store ptr %i.e, ptr %i.h, align 8, !tbaa !398
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !41   ; 2 uses
   %.not.i = icmp eq ptr %i.d, %i.i
   br i1 %.not.i, label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit.thread20, label %bb.b
@@ -463,7 +476,7 @@ bb.a:
 define linkonce_odr hidden void @_ZNSt19_Sp_counted_deleterIPN12lldb_private9UDPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !402  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !401  ; 3 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %_ZNKSt14default_deleteIN12lldb_private9UDPSocketEEclEPS1_.exit, label %bb.b
 
@@ -471,7 +484,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8
-  tail call void %i.f(ptr noundef nonnull align 8 dereferenceable(152) %i.b) #18, !inline_history !400
+  tail call void %i.f(ptr noundef nonnull align 8 dereferenceable(152) %i.b) #18, !inline_history !399
   br label %_ZNKSt14default_deleteIN12lldb_private9UDPSocketEEclEPS1_.exit
 
 _ZNKSt14default_deleteIN12lldb_private9UDPSocketEEclEPS1_.exit: ; preds = %bb.a, %bb.b
@@ -515,7 +528,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IN12lldb_private9TCPSocket
   store i32 1, ptr %i.g, align 4, !tbaa !36
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN12lldb_private9TCPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !17
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %i.e, ptr %i.h, align 8, !tbaa !403
+  store ptr %i.e, ptr %i.h, align 8, !tbaa !402
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !41   ; 2 uses
   %.not.i = icmp eq ptr %i.d, %i.i
   br i1 %.not.i, label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit.thread20, label %bb.b
@@ -646,7 +659,7 @@ bb.a:
 define linkonce_odr hidden void @_ZNSt19_Sp_counted_deleterIPN12lldb_private9TCPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !406  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !405  ; 3 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %_ZNKSt14default_deleteIN12lldb_private9TCPSocketEEclEPS1_.exit, label %bb.b
 
@@ -654,7 +667,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8
-  tail call void %i.f(ptr noundef nonnull align 8 dereferenceable(72) %i.b) #18, !inline_history !404
+  tail call void %i.f(ptr noundef nonnull align 8 dereferenceable(72) %i.b) #18, !inline_history !403
   br label %_ZNKSt14default_deleteIN12lldb_private9TCPSocketEEclEPS1_.exit
 
 _ZNKSt14default_deleteIN12lldb_private9TCPSocketEEclEPS1_.exit: ; preds = %bb.a, %bb.b
@@ -677,7 +690,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt12__shared_ptrIN12lldb_private8IOObjectELN9__gnu_cxx12_Lock_policyE2EEC2INS0_10SerialPortESt14default_deleteIS6_EvEEOSt10unique_ptrIT_T0_E(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !407    ; 2 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !406    ; 2 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !49
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   store ptr null, ptr %i.b, align 8, !tbaa !41
@@ -686,15 +699,15 @@ bb.a:
 
 _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IN12lldb_private10SerialPortESt14default_deleteIS5_EEEOSt10unique_ptrIT_T0_E.exit: ; preds = %bb.a
   %i.d = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #19 ; 13 uses
-  %i.e = load ptr, ptr %1, align 8, !tbaa !407
-  store ptr null, ptr %1, align 8, !tbaa !407
+  %i.e = load ptr, ptr %1, align 8, !tbaa !406
+  store ptr null, ptr %1, align 8, !tbaa !406
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
   store i32 1, ptr %i.f, align 8, !tbaa !35
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   store i32 1, ptr %i.g, align 4, !tbaa !36
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN12lldb_private10SerialPortESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !17
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %i.e, ptr %i.h, align 8, !tbaa !408
+  store ptr %i.e, ptr %i.h, align 8, !tbaa !407
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !41   ; 2 uses
   %.not.i = icmp eq ptr %i.d, %i.i
   br i1 %.not.i, label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit.thread20, label %bb.b
@@ -831,7 +844,7 @@ bb.a:
 define linkonce_odr hidden void @_ZNSt19_Sp_counted_deleterIPN12lldb_private10SerialPortESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !411  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !410  ; 3 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %_ZNKSt14default_deleteIN12lldb_private10SerialPortEEclEPS1_.exit, label %bb.b
 
@@ -839,7 +852,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8
-  tail call void %i.f(ptr noundef nonnull align 8 dereferenceable(192) %i.b) #18, !inline_history !409
+  tail call void %i.f(ptr noundef nonnull align 8 dereferenceable(192) %i.b) #18, !inline_history !408
   br label %_ZNKSt14default_deleteIN12lldb_private10SerialPortEEclEPS1_.exit
 
 _ZNKSt14default_deleteIN12lldb_private10SerialPortEEclEPS1_.exit: ; preds = %bb.a, %bb.b
@@ -1242,21 +1255,20 @@ begin_hunk_1_@llvm.umin.i64
 !392 = distinct !{null, null}
 !393 = distinct !{!393, i1 true, !"_ZNSt7__cxx119to_stringEi"}
 !394 = distinct !{!394, !393, !"_ZNSt7__cxx119to_stringEi: argument 0"}
-!395 = distinct !{!395, !63}
-!396 = distinct !{null, null}
-!397 = !{!394}
-!398 = !{!103, !103, i64 0}
-!399 = !{!104, !103, i64 0}
-!400 = distinct !{null}
-!401 = !{!"_ZTSSt19_Sp_counted_deleterIPN12lldb_private9UDPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE", !34, i64 0, !104, i64 16}
-!402 = !{!401, !103, i64 16}
-!403 = !{!105, !59, i64 0}
-!404 = distinct !{null}
-!405 = !{!"_ZTSSt19_Sp_counted_deleterIPN12lldb_private9TCPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE", !34, i64 0, !105, i64 16}
-!406 = !{!405, !59, i64 16}
-!407 = !{!106, !106, i64 0}
-!408 = !{!107, !106, i64 0}
-!409 = distinct !{null}
-!410 = !{!"_ZTSSt19_Sp_counted_deleterIPN12lldb_private10SerialPortESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE", !34, i64 0, !107, i64 16}
-!411 = !{!410, !106, i64 16}
+!395 = distinct !{null, null}
+!396 = !{!394}
+!397 = !{!103, !103, i64 0}
+!398 = !{!104, !103, i64 0}
+!399 = distinct !{null}
+!400 = !{!"_ZTSSt19_Sp_counted_deleterIPN12lldb_private9UDPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE", !34, i64 0, !104, i64 16}
+!401 = !{!400, !103, i64 16}
+!402 = !{!105, !59, i64 0}
+!403 = distinct !{null}
+!404 = !{!"_ZTSSt19_Sp_counted_deleterIPN12lldb_private9TCPSocketESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE", !34, i64 0, !105, i64 16}
+!405 = !{!404, !59, i64 16}
+!406 = !{!106, !106, i64 0}
+!407 = !{!107, !106, i64 0}
+!408 = distinct !{null}
+!409 = !{!"_ZTSSt19_Sp_counted_deleterIPN12lldb_private10SerialPortESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE", !34, i64 0, !107, i64 16}
+!410 = !{!409, !106, i64 16}
 end_hunk_1

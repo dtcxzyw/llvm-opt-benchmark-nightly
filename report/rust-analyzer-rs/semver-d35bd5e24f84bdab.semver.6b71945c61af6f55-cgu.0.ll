@@ -202,12 +202,12 @@ tailrecurse.i.i.i.i:                              ; preds = %bb.b, %tailrecurse.
   %.tr2.i.i.i.i = phi i64 [ %i.k, %tailrecurse.i.i.i.i ], [ %i.i, %bb.b ] ; 2 uses
   %accumulator.tr1.i.i.i.i = phi i64 [ %i.l, %tailrecurse.i.i.i.i ], [ 0, %bb.b ] ; 2 uses
   %i.k = udiv i64 %.tr2.i.i.i.i, 10
-  %i.l = add i64 %accumulator.tr1.i.i.i.i, 1
+  %i.l = add nuw nsw i64 %accumulator.tr1.i.i.i.i, 1
   %i.m = icmp ult i64 %.tr2.i.i.i.i, 100
   br i1 %i.m, label %tailrecurse._crit_edge.loopexit.i.i.i.i, label %tailrecurse.i.i.i.i
 
 tailrecurse._crit_edge.loopexit.i.i.i.i:          ; preds = %tailrecurse.i.i.i.i
-  %i.n = add i64 %accumulator.tr1.i.i.i.i, 4
+  %i.n = add nuw i64 %accumulator.tr1.i.i.i.i, 4
   br label %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit.i.i.i
 
 _RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit.i.i.i: ; preds = %tailrecurse._crit_edge.loopexit.i.i.i.i, %bb.b
@@ -221,12 +221,12 @@ tailrecurse.i1.i.i.i:                             ; preds = %_RNvNtCs9dV2ZPf2jOH
   %.tr2.i2.i.i.i = phi i64 [ %i.r, %tailrecurse.i1.i.i.i ], [ %i.p, %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit.i.i.i ] ; 2 uses
   %accumulator.tr1.i3.i.i.i = phi i64 [ %i.s, %tailrecurse.i1.i.i.i ], [ 0, %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit.i.i.i ] ; 2 uses
   %i.r = udiv i64 %.tr2.i2.i.i.i, 10
-  %i.s = add i64 %accumulator.tr1.i3.i.i.i, 1
+  %i.s = add nuw nsw i64 %accumulator.tr1.i3.i.i.i, 1
   %i.t = icmp ult i64 %.tr2.i2.i.i.i, 100
   br i1 %i.t, label %tailrecurse._crit_edge.loopexit.i4.i.i.i, label %tailrecurse.i1.i.i.i
 
 tailrecurse._crit_edge.loopexit.i4.i.i.i:         ; preds = %tailrecurse.i1.i.i.i
-  %i.u = add i64 %accumulator.tr1.i3.i.i.i, 2
+  %i.u = add nuw i64 %accumulator.tr1.i3.i.i.i, 2
   br label %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit6.i.i.i
 
 _RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit6.i.i.i: ; preds = %tailrecurse._crit_edge.loopexit.i4.i.i.i, %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit.i.i.i
@@ -240,12 +240,12 @@ tailrecurse.i7.i.i.i:                             ; preds = %_RNvNtCs9dV2ZPf2jOH
   %.tr2.i8.i.i.i = phi i64 [ %i.y, %tailrecurse.i7.i.i.i ], [ %i.w, %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit6.i.i.i ] ; 2 uses
   %accumulator.tr1.i9.i.i.i = phi i64 [ %i.z, %tailrecurse.i7.i.i.i ], [ 0, %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit6.i.i.i ] ; 2 uses
   %i.y = udiv i64 %.tr2.i8.i.i.i, 10
-  %i.z = add i64 %accumulator.tr1.i9.i.i.i, 1
+  %i.z = add nuw nsw i64 %accumulator.tr1.i9.i.i.i, 1
   %i.aa = icmp ult i64 %.tr2.i8.i.i.i, 100
   br i1 %i.aa, label %tailrecurse._crit_edge.loopexit.i10.i.i.i, label %tailrecurse.i7.i.i.i
 
 tailrecurse._crit_edge.loopexit.i10.i.i.i:        ; preds = %tailrecurse.i7.i.i.i
-  %i.ab = add i64 %accumulator.tr1.i9.i.i.i, 2
+  %i.ab = add nuw i64 %accumulator.tr1.i9.i.i.i, 2
   br label %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit12.i.i.i
 
 _RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit12.i.i.i: ; preds = %tailrecurse._crit_edge.loopexit.i10.i.i.i, %_RNvNtCs9dV2ZPf2jOH_6semver7display6digits.exit6.i.i.i

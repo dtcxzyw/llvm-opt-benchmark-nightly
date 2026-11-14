@@ -1,0 +1,510 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 87d98ad9fa120..8a85ea1e784ec 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2219,9 +2219,9 @@ class ScalarEvolution {
+                                                  bool IsSubExpr);
+ 
+   /// Compute the exit limit of a loop that is controlled by a
+-  /// "(IV >> 1) != 0" type comparison.  We cannot compute the exact trip
+-  /// count in these cases (since SCEV has no way of expressing them), but we
+-  /// can still sometimes compute an upper bound.
++  /// "(IV >> 1) != 0" or "(IV / 10) != 0" type comparison.  We cannot compute
++  /// the exact trip count in these cases (since SCEV has no way of expressing
++  /// them), but we can still sometimes compute an upper bound.
+   ///
+   /// Return an ExitLimit for a loop whose backedge is guarded by `LHS Pred
+   /// RHS`.
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 393107341fa82..f41577cadf38f 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -9466,29 +9466,21 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+   if (!Predecessor)
+     return getCouldNotCompute();
+ 
+-  // Return true if V is of the form "LHS `shift_op` <positive constant>".
+-  // Return LHS in OutLHS, shift_op in OutOpCode, and the shift amount in
+-  // OutShiftAmt.
+-  auto MatchPositiveShift = [](Value *V, Value *&OutLHS,
+-                               Instruction::BinaryOps &OutOpCode,
+-                               unsigned &OutShiftAmt) {
++  // Return true if V is of the form "LHS `op` <constant>", where op is a shift
++  // by a positive amount or a division by at least 2. Return LHS in OutLHS, op
++  // in OutOpCode, and the constant in OutC.
++  auto MatchShiftOrDiv = [](Value *V, Value *&OutLHS,
++                            Instruction::BinaryOps &OutOpCode,
++                            const APInt *&OutC) {
+     using namespace PatternMatch;
+ 
+-    ConstantInt *ShiftAmt;
+-    if (match(V, m_LShr(m_Value(OutLHS), m_ConstantInt(ShiftAmt))))
+-      OutOpCode = Instruction::LShr;
+-    else if (match(V, m_AShr(m_Value(OutLHS), m_ConstantInt(ShiftAmt))))
+-      OutOpCode = Instruction::AShr;
+-    else if (match(V, m_Shl(m_Value(OutLHS), m_ConstantInt(ShiftAmt))))
+-      OutOpCode = Instruction::Shl;
+-    else
+-      return false;
+-
+-    uint64_t Amt = ShiftAmt->getValue().getLimitedValue();
+-    if (Amt == 0 || Amt >= OutLHS->getType()->getScalarSizeInBits())
++    if (!match(V, m_BinOp(m_Value(OutLHS), m_APInt(OutC))))
+       return false;
+-    OutShiftAmt = Amt;
+-    return true;
++    OutOpCode = cast<BinaryOperator>(V)->getOpcode();
++    if (Instruction::isShift(OutOpCode))
++      return !OutC->isZero() && OutC->ult(OutC->getBitWidth());
++    return (OutOpCode == Instruction::UDiv || OutOpCode == Instruction::SDiv) &&
++           OutC->sge(2);
+   };
+ 
+   // Recognize a "shift recurrence" either of the form %iv or of %iv.shifted in
+@@ -9498,17 +9490,17 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+   //   %iv.shifted = lshr i32 %iv, <positive constant>
+   //
+   // Return true on a successful match.  Return the corresponding PHI node (%iv
+-  // above) in PNOut, the opcode of the shift operation in OpCodeOut, and the
+-  // shift amount in ShiftAmtOut.
++  // above) in PNOut, the opcode of the operation in OpCodeOut, and its constant
++  // operand in COut.
+   auto MatchShiftRecurrence = [&](Value *V, PHINode *&PNOut,
+                                   Instruction::BinaryOps &OpCodeOut,
+-                                  unsigned &ShiftAmtOut) {
++                                  const APInt *&COut) {
+     std::optional<Instruction::BinaryOps> PostShiftOpCode;
+ 
+     {
+       Instruction::BinaryOps OpC;
+       Value *V;
+-      unsigned Amt;
++      const APInt *C;
+ 
+       // If we encounter a shift instruction, "peel off" the shift operation,
+       // and remember that we did so.  Later when we inspect %iv's backedge
+@@ -9519,7 +9511,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+       // instruction as the one feeding into the PHI's backedge value.  We only
+       // really care about it being the same *kind* of shift instruction --
+       // that's all that is required for our later inferences to hold.
+-      if (MatchPositiveShift(LHS, V, OpC, Amt)) {
++      if (MatchShiftOrDiv(LHS, V, OpC, C)) {
+         PostShiftOpCode = OpC;
+         LHS = V;
+       }
+@@ -9533,9 +9525,8 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+     Value *OpLHS;
+ 
+     return
+-        // The backedge value for the PHI node must be a shift by a positive
+-        // amount
+-        MatchPositiveShift(BEValue, OpLHS, OpCodeOut, ShiftAmtOut) &&
++        // The backedge value for the PHI node must be a shift or division
++        MatchShiftOrDiv(BEValue, OpLHS, OpCodeOut, COut) &&
+ 
+         // of the PHI node itself
+         OpLHS == PNOut &&
+@@ -9547,8 +9538,8 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+ 
+   PHINode *PN;
+   Instruction::BinaryOps OpCode;
+-  unsigned ShiftAmt;
+-  if (!MatchShiftRecurrence(LHS, PN, OpCode, ShiftAmt))
++  const APInt *C;
++  if (!MatchShiftRecurrence(LHS, PN, OpCode, C))
+     return getCouldNotCompute();
+ 
+   const DataLayout &DL = getDataLayout();
+@@ -9583,8 +9574,10 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+   }
+   case Instruction::LShr:
+   case Instruction::Shl:
+-    // Both {K,lshr,<positive-constant>} and {K,shl,<positive-constant>}
+-    // stabilize to 0 in at most bitwidth(K) iterations.
++  case Instruction::UDiv:
++  case Instruction::SDiv:
++    // {K,lshr,<positive-constant>}, {K,shl,<positive-constant>} and divisions
++    // by a constant >= 2 stabilize to 0 in at most bitwidth(K) iterations.
+     StableValue = ConstantInt::get(cast<IntegerType>(RHS->getType()), 0);
+     break;
+   }
+@@ -9598,20 +9591,30 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeShiftCompareExitLimit(
+     unsigned BitWidth = getTypeSizeInBits(RHS->getType());
+     unsigned MaxBTC = BitWidth;
+ 
+-    // For right-shift recurrences (lshr/ashr with non-negative start), we can
+-    // compute a tighter max backedge-taken count from the range of the start
+-    // value. After k shifts of ShiftAmt, value = start >> (k * ShiftAmt).
+-    // The value reaches 0 (the stable value) when k * ShiftAmt >=
+-    // activeBits(start), so max BTC = ceil(activeBits(maxStart) / ShiftAmt).
++    // A right shift by C shifts out C bits, so the recurrence reaches its
++    // stable value after at most ceil(activeBits(MaxStart) / C) shifts.
++    // Negative ashr starts have all bits active and reach -1 within that bound.
+     if (OpCode == Instruction::LShr || OpCode == Instruction::AShr) {
+       Value *StartValue = PN->getIncomingValueForBlock(Predecessor);
+       const SCEV *StartSCEV = getSCEV(StartValue);
+       APInt MaxStart = getUnsignedRangeMax(StartSCEV);
+-      if (MaxStart.isStrictlyPositive()) {
+-        unsigned ActiveBits = MaxStart.getActiveBits();
+-        unsigned RangeBTC = divideCeil(ActiveBits, ShiftAmt);
+-        MaxBTC = std::min(MaxBTC, RangeBTC);
+-      }
++      MaxBTC = divideCeil(MaxStart.getActiveBits(), C->getZExtValue());
++    }
++
++    // Each division divides the magnitude by at least C, so count the
++    // divisions it takes to bring the largest start magnitude to 0. Counting
++    // is quadratic in the bitwidth, so for types wider than 64 bits use that
++    // each division shifts out at least log2(C) bits instead.
++    if (OpCode == Instruction::UDiv || OpCode == Instruction::SDiv) {
++      const SCEV *Start = getSCEV(PN->getIncomingValueForBlock(Predecessor));
++      APInt MaxMag = OpCode == Instruction::UDiv
++                         ? getUnsignedRangeMax(Start)
++                         : getSignedRange(Start).abs().getUnsignedMax();
++      if (BitWidth > 64)
++        MaxBTC = divideCeil(MaxMag.getActiveBits(), C->logBase2());
++      else
++        for (MaxBTC = 0; !MaxMag.isZero(); ++MaxBTC)
++          MaxMag = MaxMag.udiv(*C);
+     }
+ 
+     const SCEV *UpperBound =
+diff --git a/llvm/test/Analysis/ScalarEvolution/shift-op.ll b/llvm/test/Analysis/ScalarEvolution/shift-op.ll
+index a0188ee40ab73..a560154bc7d94 100644
+--- a/llvm/test/Analysis/ScalarEvolution/shift-op.ll
++++ b/llvm/test/Analysis/ScalarEvolution/shift-op.ll
+@@ -338,6 +338,275 @@ define void @test_gpu_reduction(ptr %blockdim.ptr) {
+   ret void
+ }
+ 
++; lshr by 3 with an unknown start, which may have the top bit set: %iv is 0
++; after at most ceil(32 / 3) = 11 shifts.
++define void @test_lshr_shift3(i32 %init) {
++; CHECK-LABEL: 'test_lshr_shift3'
++; CHECK-NEXT:  Determining loop execution counts for: @test_lshr_shift3
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 11
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 11
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.shift, %loop ]
++  %iv.shift = lshr i32 %iv, 3
++  %exit.cond = icmp eq i32 %iv, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; Varint-style loop comparing the shifted value: an i64 is 0 after at most
++; ceil(64 / 7) = 10 shifts.
++define void @test_lshr_shift7_shifted_cond(i64 %init) {
++; CHECK-LABEL: 'test_lshr_shift7_shifted_cond'
++; CHECK-NEXT:  Determining loop execution counts for: @test_lshr_shift7_shifted_cond
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 10
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i64 10
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i64 [ %init, %entry ], [ %iv.shift, %loop ]
++  %iv.shift = lshr i64 %iv, 7
++  %exit.cond = icmp eq i64 %iv.shift, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; The tested value is shifted by a different amount than the recurrence. It is
++; 0 no later than %iv, after at most ceil(32 / 3) = 11 shifts.
++define void @test_lshr_shift3_test_shift1(i32 %init) {
++; CHECK-LABEL: 'test_lshr_shift3_test_shift1'
++; CHECK-NEXT:  Determining loop execution counts for: @test_lshr_shift3_test_shift1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 11
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 11
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.shift, %loop ]
++  %iv.shift = lshr i32 %iv, 3
++  %iv.test = lshr i32 %iv, 1
++  %exit.cond = icmp eq i32 %iv.test, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; The start is known to be 0, so the backedge is never taken.
++define void @test_lshr_zero_start(ptr %init.ptr) {
++; CHECK-LABEL: 'test_lshr_zero_start'
++; CHECK-NEXT:  Determining loop execution counts for: @test_lshr_zero_start
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 0
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 0
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 0
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++ entry:
++  %init = load i32, ptr %init.ptr, !range !3
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.shift, %loop ]
++  %iv.shift = lshr i32 %iv, 1
++  %exit.cond = icmp eq i32 %iv, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; A negative start has all 32 bits active and stabilizes to -1 after at most
++; ceil(32 / 2) = 16 shifts.
++define void @test_ashr_shift2_negative(ptr %init.ptr) {
++; CHECK-LABEL: 'test_ashr_shift2_negative'
++; CHECK-NEXT:  Determining loop execution counts for: @test_ashr_shift2_negative
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 16
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 16
++;
++ entry:
++  %init = load i32, ptr %init.ptr, !range !1
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.shift, %loop ]
++  %iv.shift = ashr i32 %iv, 2
++  %exit.cond = icmp eq i32 %iv, -1
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; The start is only known to be non-negative via the assume, so %iv stabilizes
++; to 0. Its range is unknown, giving at most ceil(32 / 3) = 11 shifts.
++define void @test_ashr_shift3_assume_nonneg(i32 %init) {
++; CHECK-LABEL: 'test_ashr_shift3_assume_nonneg'
++; CHECK-NEXT:  Determining loop execution counts for: @test_ashr_shift3_assume_nonneg
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 11
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 11
++;
++ entry:
++  %nonneg = icmp sgt i32 %init, -1
++  call void @llvm.assume(i1 %nonneg)
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.shift, %loop ]
++  %iv.shift = ashr i32 %iv, 3
++  %exit.cond = icmp eq i32 %iv, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; Dividing by 10 reaches 0 after at most 10 steps, as in digit-counting loops.
++define void @test_udiv(i32 %init) {
++; CHECK-LABEL: 'test_udiv'
++; CHECK-NEXT:  Determining loop execution counts for: @test_udiv
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 10
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 10
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.div, %loop ]
++  %iv.div = udiv i32 %iv, 10
++  %exit.cond = icmp eq i32 %iv.div, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; The range of the start bounds the number of divisions: 49999 reaches 0
++; after 5 divisions by 10.
++define void @test_udiv_range(ptr %init.ptr) {
++; CHECK-LABEL: 'test_udiv_range'
++; CHECK-NEXT:  Determining loop execution counts for: @test_udiv_range
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 5
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 5
++;
++ entry:
++  %init = load i32, ptr %init.ptr, !range !0
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.div, %loop ]
++  %iv.div = udiv i32 %iv, 10
++  %exit.cond = icmp eq i32 %iv, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; Signed division by 2 truncates towards 0, so the magnitude of any start
++; reaches 0 after at most 32 steps.
++define void @test_sdiv(i32 %init) {
++; CHECK-LABEL: 'test_sdiv'
++; CHECK-NEXT:  Determining loop execution counts for: @test_sdiv
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 32
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 32
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.div, %loop ]
++  %iv.div = sdiv i32 %iv, 2
++  %exit.cond = icmp eq i32 %iv.div, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; The largest magnitude in [-5000, -2] reaches 0 after 13 divisions by 2.
++define void @test_sdiv_range(ptr %init.ptr) {
++; CHECK-LABEL: 'test_sdiv_range'
++; CHECK-NEXT:  Determining loop execution counts for: @test_sdiv_range
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 13
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 13
++;
++ entry:
++  %init = load i32, ptr %init.ptr, !range !1
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.div, %loop ]
++  %iv.div = sdiv i32 %iv, 2
++  %exit.cond = icmp eq i32 %iv, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; Dividing by 1 does not change %iv, so the loop may be infinite.
++define void @test_udiv_by_one(i32 %init) {
++; CHECK-LABEL: 'test_udiv_by_one'
++; CHECK-NEXT:  Determining loop execution counts for: @test_udiv_by_one
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i32 [ %init, %entry ], [ %iv.div, %loop ]
++  %iv.div = udiv i32 %iv, 1
++  %exit.cond = icmp eq i32 %iv.div, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
++; Dividing an i128 by 10 shifts out at least 3 bits, so it reaches 0 after at
++; most 43 steps.
++define void @test_udiv_i128(i128 %init) {
++; CHECK-LABEL: 'test_udiv_i128'
++; CHECK-NEXT:  Determining loop execution counts for: @test_udiv_i128
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i128 43
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i128 43
++;
++ entry:
++  br label %loop
++
++ loop:
++  %iv = phi i128 [ %init, %entry ], [ %iv.div, %loop ]
++  %iv.div = udiv i128 %iv, 10
++  %exit.cond = icmp eq i128 %iv, 0
++  br i1 %exit.cond, label %leave, label %loop
++
++ leave:
++  ret void
++}
++
+ !0 = !{i32 0, i32 50000}
+ !1 = !{i32 -5000, i32 -1}
+ !2 = !{i32 1, i32 1025}
++!3 = !{i32 0, i32 1}
+diff --git a/llvm/test/CodeGen/X86/pr38217.ll b/llvm/test/CodeGen/X86/pr38217.ll
+index 02d2d9e02721a..4df415aa9724b 100644
+--- a/llvm/test/CodeGen/X86/pr38217.ll
++++ b/llvm/test/CodeGen/X86/pr38217.ll
+@@ -9,29 +9,26 @@ define dso_local void @_Z12d2s_bufferedmPc(i64 %arg, ptr nocapture %arg1) {
+ ; CHECK-NEXT:    cmpq $10000, %rdi # imm = 0x2710
+ ; CHECK-NEXT:    jb .LBB0_3
+ ; CHECK-NEXT:  # %bb.1: # %bb2.preheader
+-; CHECK-NEXT:    xorl %ecx, %ecx
+-; CHECK-NEXT:    movabsq $3777893186295716171, %r8 # imm = 0x346DC5D63886594B
++; CHECK-NEXT:    decq %rsi
++; CHECK-NEXT:    movabsq $3777893186295716171, %rcx # imm = 0x346DC5D63886594B
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_2: # %bb2
+ ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    movq %rdi, %rax
+-; CHECK-NEXT:    mulq %r8
++; CHECK-NEXT:    mulq %rcx
+ ; CHECK-NEXT:    shrq $11, %rdx
+ ; CHECK-NEXT:    imulq $10000, %rdx, %rax # imm = 0x2710
+-; CHECK-NEXT:    movq %rdi, %r9
+-; CHECK-NEXT:    subq %rax, %r9
+-; CHECK-NEXT:    imulq $42949673, %r9, %rax # imm = 0x28F5C29
++; CHECK-NEXT:    movq %rdi, %r8
++; CHECK-NEXT:    subq %rax, %r8
++; CHECK-NEXT:    imulq $42949673, %r8, %rax # imm = 0x28F5C29
+ ; CHECK-NEXT:    shrq $32, %rax
+-; CHECK-NEXT:    imull $100, %eax, %r10d
+-; CHECK-NEXT:    subl %r10d, %r9d
+-; CHECK-NEXT:    movl %ecx, %r10d
+-; CHECK-NEXT:    movq %rsi, %r11
+-; CHECK-NEXT:    subq %r10, %r11
+-; CHECK-NEXT:    movzwl _ZL11DIGIT_TABLE(%r9,%r9), %r9d
+-; CHECK-NEXT:    movw %r9w, -1(%r11)
++; CHECK-NEXT:    imull $100, %eax, %r9d
++; CHECK-NEXT:    subl %r9d, %r8d
++; CHECK-NEXT:    movzwl _ZL11DIGIT_TABLE(%r8,%r8), %r8d
++; CHECK-NEXT:    movw %r8w, (%rsi)
+ ; CHECK-NEXT:    movzwl _ZL11DIGIT_TABLE(%rax,%rax), %eax
+-; CHECK-NEXT:    movw %ax, -3(%r11)
+-; CHECK-NEXT:    addl $4, %ecx
++; CHECK-NEXT:    movw %ax, -2(%rsi)
++; CHECK-NEXT:    addq $-4, %rsi
+ ; CHECK-NEXT:    cmpq $99999999, %rdi # imm = 0x5F5E0FF
+ ; CHECK-NEXT:    movq %rdx, %rdi
+ ; CHECK-NEXT:    ja .LBB0_2
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll b/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
+index 24b8b0a2417df..4878828ee0eb6 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
+@@ -35,7 +35,7 @@ define void @_Z15IntegerToStringjjR7Vector2(i32 %i, i32 %radix, ptr nocapture %r
+ ; CHECK-NEXT:    [[TMP0:%.*]] = icmp ugt i32 [[I_ADDR_0]], 9
+ ; CHECK-NEXT:    [[SCEVGEP5]] = getelementptr i8, ptr [[LSR_IV4]], i64 -2
+ ; CHECK-NEXT:    [[SCEVGEP9]] = getelementptr i8, ptr [[LSR_IV8]], i64 -2
+-; CHECK-NEXT:    [[LSR_IV_NEXT11]] = add i64 [[LSR_IV10]], 1
++; CHECK-NEXT:    [[LSR_IV_NEXT11]] = add nsw i64 [[LSR_IV10]], 1
+ ; CHECK-NEXT:    br i1 [[TMP0]], label [[DO_BODY]], label [[DO_END:%.*]]
+ ; CHECK:       do.end:
+ ; CHECK-NEXT:    [[SCEVGEP9_LCSSA:%.*]] = phi ptr [ [[SCEVGEP9]], [[DO_BODY]] ]

@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not.i, label %BaseToBase.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.a ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.a ] ; 3 uses
   %.01718.i = phi i32 [ %i.h, %.lr.ph.i ], [ %i.d, %bb.a ] ; 3 uses
   %i.e = urem i32 %.01718.i, 10
   %i.f = trunc nuw nsw i32 %i.e to i8
@@ -214,9 +214,7 @@ bb.a:
   %i.h = udiv i32 %.01718.i, 10
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 5 uses
   %i.i = icmp ugt i32 %.01718.i, 9
-  %2 = icmp samesign ult i64 %indvars.iv.i, 99
-  %3 = select i1 %i.i, i1 %2, i1 false
-  br i1 %3, label %.lr.ph.i, label %.lr.ph22.i.preheader, !llvm.loop !112
+  br i1 %i.i, label %.lr.ph.i, label %.lr.ph22.i.preheader, !llvm.loop !112
 
 .lr.ph22.i.preheader:                             ; preds = %.lr.ph.i
   %xtraiter = and i64 %indvars.iv.next.i, 3       ; 3 uses

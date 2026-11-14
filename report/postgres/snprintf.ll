@@ -204,19 +204,18 @@ bb.g:                                             ; preds = %.thread
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %.149.a = phi i64 [ %i.n, %.preheader ], [ %.04895100, %.preheader.preheader ] ; 3 uses
-  %.0 = phi i32 [ %9, %.preheader ], [ 0, %.preheader.preheader ]
-  %i.i = urem i64 %.149.a, 10
+  %.149.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next86, %.preheader ] ; 2 uses
+  %.149 = phi i64 [ %.04895100, %.preheader.preheader ], [ %i.n, %.preheader ] ; 3 uses
+  %i.i = urem i64 %.149, 10
   %i.j = getelementptr inbounds nuw i8, ptr %.0456492102, i64 %i.i
   %i.k = load i8, ptr %i.j, align 1
-  %9 = add i32 %.0, 1                             ; 3 uses
-  %10 = sext i32 %9 to i64
-  %i.l = sub nsw i64 64, %10
+  %indvars.iv.next86 = add nuw nsw i64 %.149.a, 1 ; 2 uses
+  %i.l = sub nuw nsw i64 63, %.149.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.l
   store i8 %i.k, ptr %i.m, align 1
-  %i.n = udiv i64 %.149.a, 10
-  %.not56 = icmp ult i64 %.149.a, 10
-  br i1 %.not56, label %.loopexit, label %.preheader, !llvm.loop !11
+  %i.n = udiv i64 %.149, 10
+  %.not56 = icmp ult i64 %.149, 10
+  br i1 %.not56, label %.loopexit.loopexit, label %.preheader, !llvm.loop !11
 
 bb.h:                                             ; preds = %bb.g
   br i1 %i.d, label %.preheader71, label %.preheader73
@@ -228,7 +227,7 @@ bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %.04564, i64 %i.o
   %i.q = load i8, ptr %i.p, align 1
   %indvars.iv.next83 = add nuw nsw i64 %indvars.iv82, 1 ; 2 uses
-  %i.r = sub nsw i64 63, %indvars.iv82
+  %i.r = sub nuw nsw i64 63, %indvars.iv82
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
   store i8 %i.q, ptr %i.s, align 1
   %i.t = lshr i64 %.250, 4                        ; 2 uses
@@ -242,12 +241,16 @@ bb.h:                                             ; preds = %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %.04564, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.x = sub nsw i64 63, %indvars.iv
+  %i.x = sub nuw nsw i64 63, %indvars.iv
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.x
   store i8 %i.w, ptr %i.y, align 1
   %i.z = lshr i64 %.351, 3                        ; 2 uses
   %.not54 = icmp eq i64 %i.z, 0
   br i1 %.not54, label %.loopexit.loopexit78, label %.preheader73, !llvm.loop !13
+
+.loopexit.loopexit:                               ; preds = %.preheader
+  %9 = trunc nuw nsw i64 %indvars.iv.next86 to i32
+  br label %.loopexit
 
 .loopexit.loopexit77:                             ; preds = %.preheader71
   %i.aa = trunc nuw nsw i64 %indvars.iv.next83 to i32
@@ -257,9 +260,9 @@ bb.h:                                             ; preds = %bb.g
   %i.ab = trunc nuw nsw i64 %indvars.iv.next to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader, %.loopexit.loopexit78, %.loopexit.loopexit77, %.thread
-  %.05994 = phi i32 [ %.059, %.loopexit.loopexit77 ], [ %.059, %.thread ], [ %.059, %.loopexit.loopexit78 ], [ %.05993101, %.preheader ]
-  %.3 = phi i32 [ %i.aa, %.loopexit.loopexit77 ], [ 0, %.thread ], [ %i.ab, %.loopexit.loopexit78 ], [ %9, %.preheader ] ; 4 uses
+.loopexit:                                        ; preds = %.loopexit.loopexit78, %.loopexit.loopexit77, %.loopexit.loopexit, %.thread
+  %.05994 = phi i32 [ %.059, %.loopexit.loopexit77 ], [ %.059, %.thread ], [ %.05993101, %.loopexit.loopexit ], [ %.059, %.loopexit.loopexit78 ]
+  %.3 = phi i32 [ %i.aa, %.loopexit.loopexit77 ], [ 0, %.thread ], [ %9, %.loopexit.loopexit ], [ %i.ab, %.loopexit.loopexit78 ] ; 4 uses
   %i.ac = sub i32 %6, %.3                         ; 2 uses
   %i.ad = tail call i32 @llvm.smax.i32(i32 %i.ac, i32 0) ; 2 uses
   %i.ae = add i32 %.3, %i.ad

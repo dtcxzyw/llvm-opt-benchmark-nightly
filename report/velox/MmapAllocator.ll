@@ -205,23 +205,26 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.i
-  %.020.i = phi i32 [ %6, %.lr.ph.i ], [ 64, %bb.b ]
-  %.01819.i.a = phi i64 [ %i.k, %.lr.ph.i ], [ %1, %bb.b ] ; 3 uses
-  %6 = add i32 %.020.i, -2                        ; 3 uses
-  %7 = zext i32 %6 to i64
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %7
-  %i.g = urem i64 %.01819.i.a, 100
+  %.01819.i.a = phi i64 [ %indvars.iv.next, %.lr.ph.i ], [ 64, %bb.b ]
+  %.01819.i = phi i64 [ %i.k, %.lr.ph.i ], [ %1, %bb.b ] ; 3 uses
+  %indvars.iv.next = add nsw i64 %.01819.i.a, -2  ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
+  %i.g = urem i64 %.01819.i, 100
   %i.h = shl nuw nsw i64 %i.g, 1
   %i.i = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v116detail7digits2EmE4data, i64 %i.h
   %i.j = load i16, ptr %i.i, align 2
   store i16 %i.j, ptr %i.f, align 2
-  %i.k = udiv i64 %.01819.i.a, 100                ; 2 uses
-  %i.l = icmp ugt i64 %.01819.i.a, 9999
-  br i1 %i.l, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !1056
+  %i.k = udiv i64 %.01819.i, 100                  ; 2 uses
+  %i.l = icmp ugt i64 %.01819.i, 9999
+  br i1 %i.l, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !1056
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.b
-  %.018.lcssa.i = phi i64 [ %1, %bb.b ], [ %i.k, %.lr.ph.i ] ; 3 uses
-  %.0.lcssa.i = phi i32 [ 64, %bb.b ], [ %6, %.lr.ph.i ] ; 2 uses
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
+  %6 = trunc nuw nsw i64 %indvars.iv.next to i32
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.b
+  %.018.lcssa.i = phi i64 [ %1, %bb.b ], [ %i.k, %._crit_edge.i.loopexit ] ; 3 uses
+  %.0.lcssa.i = phi i32 [ 64, %bb.b ], [ %6, %._crit_edge.i.loopexit ] ; 2 uses
   %i.m = icmp samesign ugt i64 %.018.lcssa.i, 9
   br i1 %i.m, label %bb.c, label %bb.d
 

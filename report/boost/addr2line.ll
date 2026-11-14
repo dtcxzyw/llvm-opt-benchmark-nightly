@@ -205,50 +205,45 @@ bb.k:                                             ; preds = %bb.j
   store i8 48, ptr %4, align 1, !tbaa !19, !alias.scope !70
   br label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit
 
-.preheader.i:                                     ; preds = %.preheader19.i
-  %.not1822.i = icmp eq i64 %i.ab, 0
-  br i1 %.not1822.i, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %umax.i = call i64 @llvm.umax.i64(i64 %indvars.iv.i, i64 2)
-  %6 = add i64 %umax.i, -1                        ; 3 uses
-  %xtraiter = and i64 %6, 1
-  %7 = icmp ult i64 %indvars.iv.i, 3
-  br i1 %7, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
-
-.lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %6, -2
-  br label %.lr.ph.i
-
 .preheader19.i:                                   ; preds = %.preheader19.i.preheader, %.preheader19.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader19.i ], [ 2, %.preheader19.i.preheader ] ; 3 uses
   %.01321.i = phi i64 [ %i.ac, %.preheader19.i ], [ %.061, %.preheader19.i.preheader ] ; 2 uses
   %.01420.i = phi i64 [ %i.ab, %.preheader19.i ], [ 0, %.preheader19.i.preheader ] ; 2 uses
-  %i.ab = add i64 %.01420.i, 1                    ; 6 uses
+  %i.ab = add nuw nsw i64 %.01420.i, 1            ; 5 uses
   %i.ac = udiv i64 %.01321.i, 10
   %.not17.i = icmp ult i64 %.01321.i, 10
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1
-  br i1 %.not17.i, label %.preheader.i, label %.preheader19.i, !llvm.loop !67
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  br i1 %.not17.i, label %.lr.ph.i.preheader, label %.preheader19.i, !llvm.loop !67
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %.024.i = phi i64 [ 1, %.lr.ph.preheader.i.new ], [ %i.ap, %.lr.ph.i ] ; 3 uses
-  %.01523.i = phi i64 [ %.061, %.lr.ph.preheader.i.new ], [ %i.ao, %.lr.ph.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
+.lr.ph.i.preheader:                               ; preds = %.preheader19.i
+  %6 = add nsw i64 %indvars.iv.i, -1              ; 3 uses
+  %xtraiter = and i64 %6, 1
+  %7 = icmp eq i64 %indvars.iv.i, 2
+  br i1 %7, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
+
+.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
+  %unroll_iter = and i64 %6, -2
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
+  %.024.i = phi i64 [ 1, %.lr.ph.i.preheader.new ], [ %i.ap, %.lr.ph.i ] ; 3 uses
+  %.01523.i = phi i64 [ %.061, %.lr.ph.i.preheader.new ], [ %i.ao, %.lr.ph.i ] ; 3 uses
+  %niter = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %.lr.ph.i ]
   %i.ad = urem i64 %.01523.i, 10
   %i.ae = trunc nuw nsw i64 %i.ad to i8
   %i.af = or disjoint i8 %i.ae, 48
-  %i.ag = sub nuw i64 %i.ab, %.024.i
+  %i.ag = sub nuw nsw i64 %i.ab, %.024.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 %i.ag
   store i8 %i.af, ptr %i.ah, align 1, !tbaa !19, !alias.scope !70
   %i.ai = udiv i64 %.01523.i, 10
   %i.aj = urem i64 %i.ai, 10
   %i.ak = trunc nuw nsw i64 %i.aj to i8
   %i.al = or disjoint i8 %i.ak, 48
-  %i.am = sub i64 %.01420.i, %.024.i
+  %i.am = sub nsw i64 %.01420.i, %.024.i
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 %i.am
   store i8 %i.al, ptr %i.an, align 1, !tbaa !19, !alias.scope !70
   %i.ao = udiv i64 %.01523.i, 100                 ; 2 uses
-  %i.ap = add nuw i64 %.024.i, 2                  ; 2 uses
+  %i.ap = add nuw nsw i64 %.024.i, 2              ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !68
@@ -257,21 +252,21 @@ _ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa: ; preds = 
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit, label %.lr.ph.i.epil.preheader
 
-.lr.ph.i.epil.preheader:                          ; preds = %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
-  %.024.i.epil.init = phi i64 [ 1, %.lr.ph.preheader.i ], [ %i.ap, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ]
-  %.01523.i.epil.init = phi i64 [ %.061, %.lr.ph.preheader.i ], [ %i.ao, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ]
+.lr.ph.i.epil.preheader:                          ; preds = %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
+  %.024.i.epil.init = phi i64 [ 1, %.lr.ph.i.preheader ], [ %i.ap, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ]
+  %.01523.i.epil.init = phi i64 [ %.061, %.lr.ph.i.preheader ], [ %i.ao, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ]
   %lcmp.mod84 = trunc i64 %6 to i1
   call void @llvm.assume(i1 %lcmp.mod84)
   %i.aq = urem i64 %.01523.i.epil.init, 10
   %i.ar = trunc nuw nsw i64 %i.aq to i8
   %i.as = or disjoint i8 %i.ar, 48
-  %i.at = sub nuw i64 %i.ab, %.024.i.epil.init
+  %i.at = sub nuw nsw i64 %i.ab, %.024.i.epil.init
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 %i.at
   store i8 %i.as, ptr %i.au, align 1, !tbaa !19, !alias.scope !70
   br label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit
 
-_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit: ; preds = %.lr.ph.i.epil.preheader, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, %bb.k, %.preheader.i
-  %.lcssa.sink.i = phi i64 [ 1, %bb.k ], [ 0, %.preheader.i ], [ %i.ab, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ], [ %i.ab, %.lr.ph.i.epil.preheader ]
+_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit: ; preds = %.lr.ph.i.epil.preheader, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, %bb.k
+  %.lcssa.sink.i = phi i64 [ 1, %bb.k ], [ %i.ab, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ], [ %i.ab, %.lr.ph.i.epil.preheader ]
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 %.lcssa.sink.i
   store i8 0, ptr %i.av, align 1, !tbaa !19, !alias.scope !70
   %i.aw = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %4) #19 ; 2 uses
@@ -673,9 +668,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #18
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

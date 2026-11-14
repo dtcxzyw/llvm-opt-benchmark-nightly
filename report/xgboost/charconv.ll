@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/charconv?download=true
 inline.NumInlined: 70
 inline.NumDeleted: 27
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN7xgboost6detail16ToCharsFloatImplEfPc:bb.a
   br label %_ZN7xgboost6detail10RyuPrinter17PrintSpecialFloatEbNS0_18UnsignedFloatBase2EPc.exit
 
@@ -202,7 +204,7 @@ _ZN7xgboost6detail17PowerBaseComputer22ShortestRepresentationEbbhbNS0_15Mantissa
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr noundef i32 @_ZN7xgboost6detail10RyuPrinter16PrintBase10FloatENS0_19UnsignedFloatBase10EbPc(i64 %0, i1 noundef zeroext %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.0.extract.trunc = trunc i64 %0 to i32  ; 11 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %0 to i32  ; 14 uses
   %.sroa.2.0.extract.shift = lshr i64 %0, 32
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   br i1 %1, label %bb.b, label %bb.c
@@ -250,41 +252,56 @@ _ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit: ; preds = %bb.c, %tailrecur
   %i.a = zext nneg i32 %.063 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 %i.a ; 3 uses
   %i.c = zext nneg i32 %.0.i to i64
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c ; 5 uses
   %.not86 = icmp ult i32 %.sroa.0.0.extract.trunc, 10000
   br i1 %.not86, label %._crit_edge, label %tailrecurse.i71.preheader
 
-tailrecurse.i71.preheader:                        ; preds = %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit, %tailrecurse.i71.preheader
-  %.06488 = phi i32 [ %i.f, %tailrecurse.i71.preheader ], [ %.sroa.0.0.extract.trunc, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ] ; 3 uses
-  %.06687 = phi i32 [ %6, %tailrecurse.i71.preheader ], [ 0, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ] ; 2 uses
-  %i.e = urem i32 %.06488, 10000                  ; 2 uses
-  %i.f = udiv i32 %.06488, 10000                  ; 2 uses
+tailrecurse.i71.preheader:                        ; preds = %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit
+  %i.e = urem i32 %.sroa.0.0.extract.trunc, 10000 ; 2 uses
+  %i.f = udiv i32 %.sroa.0.0.extract.trunc, 10000 ; 2 uses
   %.lhs.trunc82 = trunc nuw nsw i32 %i.e to i16
   %i.g = urem i16 %.lhs.trunc82, 100
   %i.h = shl nuw nsw i16 %i.g, 1
   %.lhs.trunc84 = trunc nuw nsw i32 %i.e to i16
   %i.i = udiv i16 %.lhs.trunc84, 100
   %i.j = shl nuw nsw i16 %i.i, 1
-  %3 = zext i32 %.06687 to i64
-  %4 = sub nsw i64 0, %3
-  %5 = getelementptr inbounds i8, ptr %i.d, i64 %4 ; 2 uses
-  %i.k = getelementptr inbounds i8, ptr %5, i64 -1
+  %i.k = getelementptr inbounds i8, ptr %i.d, i64 -1
   %i.l = zext nneg i16 %i.h to i64
   %i.m = getelementptr inbounds nuw i8, ptr @_ZN7xgboost6detailL8kItoaLutE, i64 %i.l
   %i.n = load i16, ptr %i.m, align 2
   store i16 %i.n, ptr %i.k, align 1
-  %i.o = getelementptr inbounds i8, ptr %5, i64 -3
+  %i.o = getelementptr inbounds i8, ptr %i.d, i64 -3
   %i.p = zext nneg i16 %i.j to i64
   %i.q = getelementptr inbounds nuw i8, ptr @_ZN7xgboost6detailL8kItoaLutE, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2
   store i16 %i.r, ptr %i.o, align 1
-  %6 = add i32 %.06687, 4                         ; 2 uses
-  %.not = icmp ult i32 %.06488, 100000000
-  br i1 %.not, label %._crit_edge, label %tailrecurse.i71.preheader, !llvm.loop !21
+  %.not = icmp ult i32 %.sroa.0.0.extract.trunc, 100000000
+  br i1 %.not, label %._crit_edge, label %tailrecurse.i71.preheader.1
 
-._crit_edge:                                      ; preds = %tailrecurse.i71.preheader, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit
-  %.066.lcssa = phi i32 [ 0, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ], [ %6, %tailrecurse.i71.preheader ] ; 3 uses
-  %.064.lcssa = phi i32 [ %.sroa.0.0.extract.trunc, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ], [ %i.f, %tailrecurse.i71.preheader ] ; 4 uses
+tailrecurse.i71.preheader.1:                      ; preds = %tailrecurse.i71.preheader
+  %3 = urem i32 %i.f, 10000                       ; 2 uses
+  %4 = udiv i32 %.sroa.0.0.extract.trunc, 100000000
+  %.lhs.trunc82.1 = trunc nuw nsw i32 %3 to i16
+  %5 = urem i16 %.lhs.trunc82.1, 100
+  %6 = shl nuw nsw i16 %5, 1
+  %.lhs.trunc84.1 = trunc nuw nsw i32 %3 to i16
+  %7 = udiv i16 %.lhs.trunc84.1, 100
+  %8 = shl nuw nsw i16 %7, 1
+  %9 = getelementptr inbounds i8, ptr %i.d, i64 -5
+  %10 = zext nneg i16 %6 to i64
+  %11 = getelementptr inbounds nuw i8, ptr @_ZN7xgboost6detailL8kItoaLutE, i64 %10
+  %12 = load i16, ptr %11, align 2
+  store i16 %12, ptr %9, align 1
+  %13 = getelementptr inbounds i8, ptr %i.d, i64 -7
+  %14 = zext nneg i16 %8 to i64
+  %15 = getelementptr inbounds nuw i8, ptr @_ZN7xgboost6detailL8kItoaLutE, i64 %14
+  %16 = load i16, ptr %15, align 2
+  store i16 %16, ptr %13, align 1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %tailrecurse.i71.preheader, %tailrecurse.i71.preheader.1, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit
+  %.066.lcssa = phi i32 [ 0, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ], [ 4, %tailrecurse.i71.preheader ], [ 8, %tailrecurse.i71.preheader.1 ] ; 3 uses
+  %.064.lcssa = phi i32 [ %.sroa.0.0.extract.trunc, %_ZN7xgboost6detail10RyuPrinter12OutputLengthEj.exit ], [ %i.f, %tailrecurse.i71.preheader ], [ %4, %tailrecurse.i71.preheader.1 ] ; 4 uses
   %i.s = icmp samesign ugt i32 %.064.lcssa, 99
   br i1 %i.s, label %bb.e, label %bb.f
 
@@ -458,51 +475,92 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define { ptr, i32 } @_ZN7xgboost6detail19ToCharsUnsignedImplEPcS1_m(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = icmp ult i64 %2, 10
-  br i1 %i.a, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i.preheader.i.i.a
+  br i1 %i.a, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i.preheader.i.i
 
-tailrecurse.i.preheader.i.i.a:                    ; preds = %bb.a, %tailrecurse.i18.preheader.i.i.a
-  %.tr2227.i.i = phi i32 [ %6, %tailrecurse.i18.preheader.i.i.a ], [ 1, %bb.a ] ; 4 uses
-  %.tr26.i.i = phi i64 [ %5, %tailrecurse.i18.preheader.i.i.a ], [ %2, %bb.a ] ; 5 uses
-  %i.b = icmp ult i64 %.tr26.i.i, 100
-  br i1 %i.b, label %bb.b, label %tailrecurse.i10.preheader.i.i.a
+tailrecurse.i.preheader.i.i:                      ; preds = %bb.a
+  %3 = icmp ult i64 %2, 100
+  br i1 %3, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i10.preheader.i.i
+
+tailrecurse.i10.preheader.i.i:                    ; preds = %tailrecurse.i.preheader.i.i
+  %4 = icmp ult i64 %2, 1000
+  br i1 %4, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i14.preheader.i.i
+
+tailrecurse.i14.preheader.i.i:                    ; preds = %tailrecurse.i10.preheader.i.i
+  %5 = icmp ult i64 %2, 10000
+  br i1 %5, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i18.preheader.i.i
+
+tailrecurse.i18.preheader.i.i:                    ; preds = %tailrecurse.i14.preheader.i.i
+  %6 = icmp ult i64 %2, 100000
+  br i1 %6, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i.preheader.i.i.1
+
+tailrecurse.i.preheader.i.i.1:                    ; preds = %tailrecurse.i18.preheader.i.i
+  %7 = icmp ult i64 %2, 1000000
+  br i1 %7, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i10.preheader.i.i.1
+
+tailrecurse.i10.preheader.i.i.1:                  ; preds = %tailrecurse.i.preheader.i.i.1
+  %8 = icmp ult i64 %2, 10000000
+  br i1 %8, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i14.preheader.i.i.1
+
+tailrecurse.i14.preheader.i.i.1:                  ; preds = %tailrecurse.i10.preheader.i.i.1
+  %9 = icmp ult i64 %2, 100000000
+  br i1 %9, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i18.preheader.i.i.1
+
+tailrecurse.i18.preheader.i.i.1:                  ; preds = %tailrecurse.i14.preheader.i.i.1
+  %10 = icmp ult i64 %2, 1000000000
+  br i1 %10, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i.preheader.i.i.2
+
+tailrecurse.i.preheader.i.i.2:                    ; preds = %tailrecurse.i18.preheader.i.i.1
+  %11 = icmp ult i64 %2, 10000000000
+  br i1 %11, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i10.preheader.i.i.2
+
+tailrecurse.i10.preheader.i.i.2:                  ; preds = %tailrecurse.i.preheader.i.i.2
+  %12 = icmp ult i64 %2, 100000000000
+  br i1 %12, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i14.preheader.i.i.2
+
+tailrecurse.i14.preheader.i.i.2:                  ; preds = %tailrecurse.i10.preheader.i.i.2
+  %13 = icmp ult i64 %2, 1000000000000
+  br i1 %13, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i.preheader.i.i.a
+
+tailrecurse.i.preheader.i.i.a:                    ; preds = %tailrecurse.i14.preheader.i.i.2
+  %i.b = icmp ult i64 %2, 10000000000000
+  br i1 %i.b, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i10.preheader.i.i.a
 
 tailrecurse.i10.preheader.i.i.a:                  ; preds = %tailrecurse.i.preheader.i.i.a
-  %i.c = icmp ult i64 %.tr26.i.i, 1000
-  br i1 %i.c, label %bb.c, label %tailrecurse.i14.preheader.i.i.a
+  %i.c = icmp ult i64 %2, 100000000000000
+  br i1 %i.c, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %bb.b
 
-bb.b:                                             ; preds = %tailrecurse.i.preheader.i.i.a
-  %3 = add i32 %.tr2227.i.i, 1
+bb.b:                                             ; preds = %tailrecurse.i10.preheader.i.i.a
+  %14 = icmp ult i64 %2, 1000000000000000
+  br i1 %14, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i14.preheader.i.i.a
+
+tailrecurse.i14.preheader.i.i.a:                  ; preds = %bb.b
+  %i.d = icmp ult i64 %2, 10000000000000000
+  br i1 %i.d, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %bb.c
+
+bb.c:                                             ; preds = %tailrecurse.i14.preheader.i.i.a
+  %15 = icmp ult i64 %2, 100000000000000000
+  br i1 %15, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i18.preheader.i.i.a
+
+tailrecurse.i18.preheader.i.i.a:                  ; preds = %bb.c
+  %i.e = icmp ult i64 %2, 1000000000000000000
+  br i1 %i.e, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %bb.d
+
+bb.d:                                             ; preds = %tailrecurse.i18.preheader.i.i.a
+  %16 = icmp ult i64 %2, -8446744073709551616
+  %spec.select = select i1 %16, i32 19, i32 20
   br label %_ZN7xgboost6detail15ShortestDigit10Em.exit
 
-tailrecurse.i14.preheader.i.i.a:                  ; preds = %tailrecurse.i10.preheader.i.i.a
-  %i.d = icmp ult i64 %.tr26.i.i, 10000
-  br i1 %i.d, label %bb.d, label %tailrecurse.i18.preheader.i.i.a
-
-bb.c:                                             ; preds = %tailrecurse.i10.preheader.i.i.a
-  %4 = add i32 %.tr2227.i.i, 2
-  br label %_ZN7xgboost6detail15ShortestDigit10Em.exit
-
-tailrecurse.i18.preheader.i.i.a:                  ; preds = %tailrecurse.i14.preheader.i.i.a
-  %5 = udiv i64 %.tr26.i.i, 10000
-  %6 = add i32 %.tr2227.i.i, 4                    ; 2 uses
-  %i.e = icmp ult i64 %.tr26.i.i, 100000
-  br i1 %i.e, label %_ZN7xgboost6detail15ShortestDigit10Em.exit, label %tailrecurse.i.preheader.i.i.a
-
-bb.d:                                             ; preds = %tailrecurse.i14.preheader.i.i.a
-  %7 = add i32 %.tr2227.i.i, 3
-  br label %_ZN7xgboost6detail15ShortestDigit10Em.exit
-
-_ZN7xgboost6detail15ShortestDigit10Em.exit:       ; preds = %tailrecurse.i18.preheader.i.i.a, %bb.a, %bb.b, %bb.c, %bb.d
-  %8 = phi i32 [ %7, %bb.d ], [ %3, %bb.b ], [ %4, %bb.c ], [ 1, %bb.a ], [ %6, %tailrecurse.i18.preheader.i.i.a ] ; 2 uses
+_ZN7xgboost6detail15ShortestDigit10Em.exit:       ; preds = %bb.d, %tailrecurse.i18.preheader.i.i, %tailrecurse.i18.preheader.i.i.1, %tailrecurse.i.preheader.i.i.a, %bb.c, %tailrecurse.i14.preheader.i.i, %tailrecurse.i14.preheader.i.i.1, %tailrecurse.i14.preheader.i.i.2, %tailrecurse.i14.preheader.i.i.a, %tailrecurse.i10.preheader.i.i, %tailrecurse.i10.preheader.i.i.1, %tailrecurse.i10.preheader.i.i.2, %bb.b, %tailrecurse.i.preheader.i.i, %tailrecurse.i.preheader.i.i.1, %tailrecurse.i.preheader.i.i.2, %tailrecurse.i10.preheader.i.i.a, %tailrecurse.i18.preheader.i.i.a, %bb.a
+  %17 = phi i32 [ %spec.select, %bb.d ], [ 17, %bb.c ], [ 18, %tailrecurse.i18.preheader.i.i.a ], [ 1, %bb.a ], [ 2, %tailrecurse.i.preheader.i.i ], [ 6, %tailrecurse.i.preheader.i.i.1 ], [ 10, %tailrecurse.i.preheader.i.i.2 ], [ 14, %tailrecurse.i10.preheader.i.i.a ], [ 3, %tailrecurse.i10.preheader.i.i ], [ 7, %tailrecurse.i10.preheader.i.i.1 ], [ 11, %tailrecurse.i10.preheader.i.i.2 ], [ 15, %bb.b ], [ 4, %tailrecurse.i14.preheader.i.i ], [ 8, %tailrecurse.i14.preheader.i.i.1 ], [ 12, %tailrecurse.i14.preheader.i.i.2 ], [ 16, %tailrecurse.i14.preheader.i.i.a ], [ 5, %tailrecurse.i18.preheader.i.i ], [ 9, %tailrecurse.i18.preheader.i.i.1 ], [ 13, %tailrecurse.i.preheader.i.i.a ] ; 2 uses
   %i.f = icmp eq ptr %1, %0
-  br i1 %i.f, label %bb.h, label %bb.e, !prof !22
+  br i1 %i.f, label %bb.h, label %bb.e, !prof !21
 
 bb.e:                                             ; preds = %_ZN7xgboost6detail15ShortestDigit10Em.exit
   %.not.i11 = icmp ult i64 %2, 100
   br i1 %.not.i11, label %tailrecurse.i.i._crit_edge, label %tailrecurse.i19.i.preheader
 
 tailrecurse.i19.i.preheader:                      ; preds = %bb.e
-  %i.g = add i32 %8, -1
+  %i.g = add i32 %17, -1
   br label %tailrecurse.i19.i
 
 tailrecurse.i19.i:                                ; preds = %tailrecurse.i19.i.preheader, %tailrecurse.i19.i
@@ -549,7 +607,7 @@ bb.g:                                             ; preds = %tailrecurse.i.i._cr
 _ZN7xgboost6detail16ItoaUnsignedImplEPcjm.exit:   ; preds = %bb.f, %bb.g
   %.sink.i = phi i8 [ %i.x, %bb.f ], [ %i.ac, %bb.g ]
   store i8 %.sink.i, ptr %0, align 1, !tbaa !9
-  %i.ad = zext i32 %8 to i64
+  %i.ad = zext i32 %17 to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %i.ad
   br label %bb.h
 
@@ -619,7 +677,7 @@ select.unfold:                                    ; preds = %bb.c, %bb.f
   %.1170.ph = phi i32 [ %i.n, %bb.f ], [ %.0169274, %bb.c ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.thread.thread, label %.lr.ph, !llvm.loop !23
+  br i1 %exitcond.not, label %.loopexit.thread.thread, label %.lr.ph, !llvm.loop !22
 
 bb.g:                                             ; preds = %bb.d
   %i.p = trunc nuw nsw i64 %indvars.iv to i32     ; 5 uses
@@ -682,7 +740,7 @@ bb.m:                                             ; preds = %bb.l
   %indvars.iv.next306 = add nsw i64 %indvars.iv305, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next306 to i32
   %exitcond308.not = icmp eq i32 %1, %lftr.wideiv
-  br i1 %exitcond308.not, label %.loopexit.thread, label %.lr.ph283, !llvm.loop !24
+  br i1 %exitcond308.not, label %.loopexit.thread, label %.lr.ph283, !llvm.loop !23
 
 .loopexit:                                        ; preds = %bb.b, %bb.k, %bb.g
   %.0179268 = phi i32 [ %.0179272, %bb.k ], [ %.0179272, %bb.g ], [ 0, %bb.b ]
@@ -726,7 +784,7 @@ bb.n:                                             ; preds = %.loopexit
 
 bb.o:                                             ; preds = %.loopexit.thread.thread
   %i.as = select i1 %i.c, float -0.000000e+00, float 0.000000e+00
-  store float %i.as, ptr %2, align 4, !tbaa !26
+  store float %i.as, ptr %2, align 4, !tbaa !25
   br label %.thread
 
 bb.p:                                             ; preds = %.loopexit.thread.thread
@@ -736,7 +794,7 @@ bb.p:                                             ; preds = %.loopexit.thread.th
 
 bb.q:                                             ; preds = %bb.p
   %i.av = select i1 %i.c, float -0.000000e+00, float 0.000000e+00
-  store float %i.av, ptr %2, align 4, !tbaa !26
+  store float %i.av, ptr %2, align 4, !tbaa !25
   br label %.thread
 
 bb.r:                                             ; preds = %bb.p
@@ -745,7 +803,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.ax = select i1 %i.c, float -inf, float +inf
-  store float %i.ax, ptr %2, align 4, !tbaa !26
+  store float %i.ax, ptr %2, align 4, !tbaa !25
   br label %.thread
 
 bb.t:                                             ; preds = %bb.r
@@ -857,7 +915,7 @@ _ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit: ; preds = %bb.z,
 
 bb.aa:                                            ; preds = %_ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit
   %i.df = select i1 %i.c, float -inf, float +inf
-  store float %i.df, ptr %2, align 4, !tbaa !26
+  store float %i.df, ptr %2, align 4, !tbaa !25
   br label %.thread
 
 bb.ab:                                            ; preds = %_ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit
@@ -897,7 +955,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad, %bb.
   %i.ea = or i32 %spec.select203, %i.dz
   %i.eb = shl nuw i32 %i.ea, 23
   %i.ec = or disjoint i32 %i.eb, %i.dw
-  store i32 %i.ec, ptr %2, align 4, !tbaa !26
+  store i32 %i.ec, ptr %2, align 4, !tbaa !25
   br label %.thread
 
 .thread.loopexit:                                 ; preds = %.lr.ph283, %bb.l
@@ -935,7 +993,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = mul i64 %i.b, 169464822037455            ; 2 uses
   %i.d = lshr i64 %i.c, 49                        ; 5 uses
   %i.e = trunc nuw nsw i64 %i.d to i32            ; 5 uses
-  store i32 %i.e, ptr %4, align 4, !tbaa !28
+  store i32 %i.e, ptr %4, align 4, !tbaa !27
   %i.f = mul nuw nsw i64 %i.d, 163391164108059
   %i.g = lshr i64 %i.f, 46
   %i.h = trunc nuw nsw i64 %i.g to i32
@@ -954,7 +1012,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = lshr i64 %i.q, %i.t
   %i.v = trunc i64 %i.u to i32                    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %i.v, ptr %i.w, align 4, !tbaa !29
+  store i32 %i.v, ptr %i.w, align 4, !tbaa !28
   %i.x = and i64 %3, 4294967295                   ; 4 uses
   %i.y = mul nuw i64 %i.m, %i.x
   %i.z = mul nuw i64 %i.l, %i.x
@@ -963,7 +1021,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = lshr i64 %i.ab, %i.t
   %i.ad = trunc i64 %i.ac to i32
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %i.ad, ptr %i.ae, align 4, !tbaa !30
+  store i32 %i.ad, ptr %i.ae, align 4, !tbaa !29
   %i.af = mul nuw i64 %i.m, %.sroa.19.8.extract.shift
   %i.ag = mul nuw i64 %i.l, %.sroa.19.8.extract.shift
   %i.ah = lshr i64 %i.af, 32
@@ -971,7 +1029,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = lshr i64 %i.ai, %i.t
   %i.ak = trunc i64 %i.aj to i32                  ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
-  store i32 %i.ak, ptr %i.al, align 4, !tbaa !31
+  store i32 %i.ak, ptr %i.al, align 4, !tbaa !30
   %.not81 = icmp eq i64 %i.d, 0
   br i1 %.not81, label %.thread, label %bb.c
 
@@ -1073,7 +1131,7 @@ _ZN7xgboost6detail14RyuPowLogUtils18MultipleOfPowerOf5Ejj.exit96: ; preds = %.lr
   %i.ca = icmp uge i32 %.07.lcssa.i.i91, %i.e
   %.neg = sext i1 %i.ca to i32
   %i.cb = add i32 %.neg, %i.ak
-  store i32 %i.cb, ptr %i.al, align 4, !tbaa !31
+  store i32 %i.cb, ptr %i.al, align 4, !tbaa !30
   br label %bb.q
 
 bb.i:                                             ; preds = %bb.a
@@ -1083,7 +1141,7 @@ bb.i:                                             ; preds = %bb.a
   %i.cf = lshr i64 %i.ce, 48                      ; 5 uses
   %i.cg = trunc nuw nsw i64 %i.cf to i32          ; 2 uses
   %i.ch = add nsw i32 %i.cg, %.sroa.0.0.extract.trunc ; 3 uses
-  store i32 %i.ch, ptr %4, align 4, !tbaa !28
+  store i32 %i.ch, ptr %4, align 4, !tbaa !27
   %i.ci = sub i32 0, %i.ch                        ; 2 uses
   %i.cj = sext i32 %i.ci to i64
   %i.ck = mul i64 %i.cj, 163391164108059
@@ -1103,7 +1161,7 @@ bb.i:                                             ; preds = %bb.a
   %i.cy = lshr i64 %i.cv, %i.cx
   %i.cz = trunc i64 %i.cy to i32
   %i.da = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %i.cz, ptr %i.da, align 4, !tbaa !30
+  store i32 %i.cz, ptr %i.da, align 4, !tbaa !29
   %i.db = mul nuw i64 %i.cr, %.sroa.19.8.extract.shift
   %i.dc = mul nuw i64 %i.cp, %.sroa.19.8.extract.shift
   %i.dd = lshr i64 %i.db, 32
@@ -1111,7 +1169,7 @@ bb.i:                                             ; preds = %bb.a
   %i.df = lshr i64 %i.de, %i.cx
   %i.dg = trunc i64 %i.df to i32                  ; 3 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
-  store i32 %i.dg, ptr %i.dh, align 4, !tbaa !31
+  store i32 %i.dg, ptr %i.dh, align 4, !tbaa !30
   %i.di = mul nuw i64 %i.cr, %.sroa.8.0.extract.shift
   %i.dj = mul nuw i64 %i.cp, %.sroa.8.0.extract.shift
   %i.dk = lshr i64 %i.di, 32
@@ -1119,7 +1177,7 @@ bb.i:                                             ; preds = %bb.a
   %i.dm = lshr i64 %i.dl, %i.cx
   %i.dn = trunc i64 %i.dm to i32                  ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %i.dn, ptr %i.do, align 4, !tbaa !29
+  store i32 %i.dn, ptr %i.do, align 4, !tbaa !28
   %.not = icmp eq i64 %i.cf, 0
   br i1 %.not, label %.thread99, label %bb.j
 
@@ -1170,7 +1228,7 @@ bb.m:                                             ; preds = %.thread99
 
 bb.n:                                             ; preds = %.thread99
   %i.eo = add i32 %i.dg, -1
-  store i32 %i.eo, ptr %i.dh, align 4, !tbaa !31
+  store i32 %i.eo, ptr %i.dh, align 4, !tbaa !30
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.l
@@ -1234,15 +1292,14 @@ attributes #6 = { nounwind }
 !18 = !{i8 0, i8 2}
 !19 = !{}
 !20 = !{!6, !6, i64 0}
-!21 = distinct !{!21, !12}
-!22 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!21 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!22 = distinct !{!22, !12}
 !23 = distinct !{!23, !12}
-!24 = distinct !{!24, !12}
-!25 = !{!"float", !5, i64 0}
-!26 = !{!25, !25, i64 0}
-!27 = !{!"_ZTSN7xgboost6detail15MantissaIntevalE", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
-!28 = !{!27, !6, i64 0}
-!29 = !{!27, !6, i64 4}
-!30 = !{!27, !6, i64 8}
-!31 = !{!27, !6, i64 12}
+!24 = !{!"float", !5, i64 0}
+!25 = !{!24, !24, i64 0}
+!26 = !{!"_ZTSN7xgboost6detail15MantissaIntevalE", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
+!27 = !{!26, !6, i64 0}
+!28 = !{!26, !6, i64 4}
+!29 = !{!26, !6, i64 8}
+!30 = !{!26, !6, i64 12}
 end_hunk_0

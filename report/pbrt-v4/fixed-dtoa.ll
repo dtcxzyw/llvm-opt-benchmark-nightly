@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/fixed-dtoa?download=true
 inline.NumInlined: 53
 inline.NumDeleted: 19
-loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN17double_conversion13FastFixedDtoaEdiNS_6VectorIcEEPiS2_:bb.a
   %i.gt = add nsw i32 %i.gs, %.02228.i102
   %i.gu = sext i32 %i.gt to i64
@@ -204,28 +204,85 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = udiv i64 %0, 100000000000000
-  %i.g = trunc nuw nsw i64 %i.f to i32
-  br label %.lr.ph.i
+  %i.g = trunc nuw nsw i64 %i.f to i32            ; 6 uses
+  %3 = urem i32 %i.g, 10
+  %4 = udiv i32 %i.g, 10
+  %5 = trunc nuw nsw i32 %3 to i8
+  %6 = or disjoint i8 %5, 48
+  %7 = load i32, ptr %2, align 4, !tbaa !11
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds i8, ptr %1, i64 %8
+  store i8 %6, ptr %9, align 1, !tbaa !12
+  %.not.i = icmp ult i64 %0, 1000000000000000
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i.1
 
-.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.i
-  %.029.i = phi i32 [ %3, %.lr.ph.i ], [ %i.g, %bb.b ] ; 3 uses
-  %.02228.i = phi i32 [ %5, %.lr.ph.i ], [ 0, %bb.b ] ; 3 uses
-  %i.h = urem i32 %.029.i, 10
-  %3 = udiv i32 %.029.i, 10
+.lr.ph.i.1:                                       ; preds = %bb.b
+  %10 = urem i32 %4, 10
+  %11 = trunc nuw nsw i32 %10 to i8
+  %12 = or disjoint i8 %11, 48
+  %13 = load i32, ptr %2, align 4, !tbaa !11
+  %14 = sext i32 %13 to i64
+  %15 = getelementptr i8, ptr %1, i64 %14
+  %16 = getelementptr i8, ptr %15, i64 1
+  store i8 %12, ptr %16, align 1, !tbaa !12
+  %.not.i.1 = icmp ult i64 %0, 10000000000000000
+  br i1 %.not.i.1, label %._crit_edge.i, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
+  %17 = udiv i32 %i.g, 100
+  %18 = urem i32 %17, 10
+  %19 = trunc nuw nsw i32 %18 to i8
+  %20 = or disjoint i8 %19, 48
+  %21 = load i32, ptr %2, align 4, !tbaa !11
+  %22 = sext i32 %21 to i64
+  %23 = getelementptr i8, ptr %1, i64 %22
+  %24 = getelementptr i8, ptr %23, i64 2
+  store i8 %20, ptr %24, align 1, !tbaa !12
+  %.not.i.2 = icmp ult i64 %0, 100000000000000000
+  br i1 %.not.i.2, label %._crit_edge.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
+  %25 = udiv i32 %i.g, 1000
+  %26 = urem i32 %25, 10
+  %27 = trunc nuw nsw i32 %26 to i8
+  %28 = or disjoint i8 %27, 48
+  %29 = load i32, ptr %2, align 4, !tbaa !11
+  %30 = sext i32 %29 to i64
+  %31 = getelementptr i8, ptr %1, i64 %30
+  %32 = getelementptr i8, ptr %31, i64 3
+  store i8 %28, ptr %32, align 1, !tbaa !12
+  %.not.i.3 = icmp ult i64 %0, 1000000000000000000
+  br i1 %.not.i.3, label %._crit_edge.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.3
+  %33 = udiv i32 %i.g, 10000
+  %i.h = urem i32 %33, 10
   %i.i = trunc nuw nsw i32 %i.h to i8
   %i.j = or disjoint i8 %i.i, 48
   %i.k = load i32, ptr %2, align 4, !tbaa !11
-  %4 = add nsw i32 %i.k, %.02228.i
-  %i.l = sext i32 %4 to i64
-  %i.m = getelementptr inbounds i8, ptr %1, i64 %i.l
-  store i8 %i.j, ptr %i.m, align 1, !tbaa !12
-  %5 = add nuw nsw i32 %.02228.i, 1               ; 2 uses
-  %.not.i.a = icmp samesign ult i32 %.029.i, 10
-  br i1 %.not.i.a, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !0
+  %i.l = sext i32 %i.k to i64
+  %i.m = getelementptr i8, ptr %1, i64 %i.l
+  %34 = getelementptr i8, ptr %i.m, i64 4
+  store i8 %i.j, ptr %34, align 1, !tbaa !12
+  %.not.i.a = icmp ult i64 %0, -8446744073709551616
+  br i1 %.not.i.a, label %._crit_edge.i, label %.lr.ph.i.5
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i
+.lr.ph.i.5:                                       ; preds = %.lr.ph.i
+  %35 = udiv i32 %i.g, 100000
+  %36 = trunc nuw nsw i32 %35 to i8
+  %37 = or disjoint i8 %36, 48
+  %38 = load i32, ptr %2, align 4, !tbaa !11
+  %39 = sext i32 %38 to i64
+  %40 = getelementptr i8, ptr %1, i64 %39
+  %41 = getelementptr i8, ptr %40, i64 5
+  store i8 %37, ptr %41, align 1, !tbaa !12
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %.lr.ph.i.5, %.lr.ph.i, %.lr.ph.i.3, %.lr.ph.i.2, %.lr.ph.i.1, %bb.b
+  %.02228.i.lcssa = phi i32 [ 0, %bb.b ], [ 1, %.lr.ph.i.1 ], [ 2, %.lr.ph.i.2 ], [ 3, %.lr.ph.i.3 ], [ 4, %.lr.ph.i ], [ 5, %.lr.ph.i.5 ]
+  %.lcssa4 = phi i32 [ 1, %bb.b ], [ 2, %.lr.ph.i.1 ], [ 3, %.lr.ph.i.2 ], [ 4, %.lr.ph.i.3 ], [ 5, %.lr.ph.i ], [ 6, %.lr.ph.i.5 ]
   %i.n = load i32, ptr %2, align 4, !tbaa !11     ; 4 uses
-  %.02030.i = add i32 %i.n, %.02228.i             ; 2 uses
+  %.02030.i = add i32 %i.n, %.02228.i.lcssa       ; 2 uses
   %i.o = icmp slt i32 %i.n, %.02030.i
   br i1 %i.o, label %.lr.ph34.preheader.i, label %_ZN17double_conversionL12FillDigits32EjNS_6VectorIcEEPi.exit
 
@@ -254,7 +311,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN17double_conversionL12FillDigits32EjNS_6VectorIcEEPi.exit: ; preds = %._crit_edge.i, %._crit_edge35.loopexit.i
   %.pre.i.pn = phi i32 [ %.pre.i, %._crit_edge35.loopexit.i ], [ %i.n, %._crit_edge.i ]
-  %.pre-phi.i = add nsw i32 %.pre.i.pn, %5        ; 2 uses
+  %.pre-phi.i = add nsw i32 %.pre.i.pn, %.lcssa4  ; 2 uses
   store i32 %.pre-phi.i, ptr %2, align 4, !tbaa !11
   %i.w = urem i32 %i.e, 10
   %i.x = trunc nuw nsw i32 %i.w to i8

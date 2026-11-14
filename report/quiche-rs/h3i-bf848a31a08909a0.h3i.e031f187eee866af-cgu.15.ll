@@ -204,7 +204,7 @@ bb.a:
     #dbg_value(ptr undef, !6345, !DIExpression(), !6334)
     #dbg_value(i64 10, !6350, !DIExpression(), !6334)
   %i.a = udiv i64 %.sroa.0.057, 10, !dbg !6362
-  %i.b = add i64 %.sroa.0.08, 1, !dbg !6363       ; 2 uses
+  %i.b = add nuw nsw i64 %.sroa.0.08, 1, !dbg !6363 ; 2 uses
     #dbg_value(i64 %i.b, !6339, !DIExpression(), !6352)
     #dbg_value(ptr undef, !6340, !DIExpression(DW_OP_deref), !6355)
     #dbg_value(ptr undef, !6356, !DIExpression(), !6337)

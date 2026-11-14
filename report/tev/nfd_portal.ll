@@ -205,18 +205,18 @@ bb.c:                                             ; preds = %bb.c, %bb.b
 
 iter.check:                                       ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 5 uses
-  %i.o = ptrtoaddr ptr %i.l to i64                ; 2 uses
-  %i.p = sub i64 %i.o, %i.b                       ; 6 uses
+  %i.o = ptrtoaddr ptr %i.l to i64                ; 3 uses
+  %i.p = sub i64 %i.o, %i.b                       ; 4 uses
   %min.iters.check = icmp ult i64 %i.p, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check6 = icmp ult i64 %i.p, 32
+  %min.iters.check6 = icmp ult i64 %i.p, 16
   br i1 %min.iters.check6, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.q = and i64 %i.p, 24
-  %n.vec = and i64 %i.p, -32                      ; 5 uses
+  %i.q = and i64 %i.o, 15                         ; 3 uses
+  %n.vec = sub nuw i64 %i.p, %i.q                 ; 4 uses
   %i.r = getelementptr i8, ptr %i.n, i64 %n.vec   ; 2 uses
   %i.s = sub i64 0, %n.vec
   %i.t = getelementptr i8, ptr %i.l, i64 %i.s
@@ -224,29 +224,24 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %i.n, i64 %index ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.n, i64 %index
   %i.u = sub i64 0, %index
-  %next.gep7 = getelementptr i8, ptr %i.l, i64 %i.u ; 2 uses
-  %i.v = getelementptr inbounds i8, ptr %next.gep7, i64 -16
-  %i.w = getelementptr inbounds i8, ptr %next.gep7, i64 -32
-  %wide.load = load <16 x i8>, ptr %i.v, align 1, !tbaa !38
+  %i.v = getelementptr i8, ptr %i.l, i64 %i.u
+  %i.w = getelementptr inbounds i8, ptr %i.v, i64 -16
   %wide.load8 = load <16 x i8>, ptr %i.w, align 1, !tbaa !38
-  %reverse = shufflevector <16 x i8> %wide.load, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   %reverse9 = shufflevector <16 x i8> %wide.load8, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  %2 = getelementptr i8, ptr %next.gep, i64 16
-  store <16 x i8> %reverse, ptr %next.gep, align 4, !tbaa !38
-  store <16 x i8> %reverse9, ptr %2, align 4, !tbaa !38
-  %index.next = add nuw i64 %index, 32            ; 2 uses
+  store <16 x i8> %reverse9, ptr %next.gep, align 4, !tbaa !38
+  %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
   br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !91
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.p, %n.vec
+  %cmp.n = icmp eq i64 %i.q, 0
   br i1 %cmp.n, label %_ZN12_GLOBAL__N_121FormatUIntToHexStringEPcm.exit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  %min.epilog.iters.check = icmp eq i64 %i.q, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.preheader, label %vec.epilog.ph, !prof !48
+  %min.epilog.iters.check = icmp samesign ult i64 %i.q, 8
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.preheader, label %vec.epilog.ph, !prof !94
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -265,7 +260,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ad = getelementptr inbounds i8, ptr %next.gep13, i64 -8
   %wide.load14 = load <8 x i8>, ptr %i.ad, align 1, !tbaa !38
   %reverse15 = shufflevector <8 x i8> %wide.load14, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %reverse15, ptr %next.gep12, align 4, !tbaa !38
+  store <8 x i8> %reverse15, ptr %next.gep12, align 1, !tbaa !38
   %index.next16 = add nuw i64 %index11, 8         ; 2 uses
   %i.ae = icmp eq i64 %index.next16, %n.vec10
   br i1 %i.ae, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !92
@@ -365,7 +360,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 1
   %i.g = load i8, ptr %.0, align 1, !tbaa !38
   %.not7 = icmp eq i8 %i.g, 0
-  br i1 %.not7, label %bb.d, label %bb.c, !llvm.loop !94
+  br i1 %.not7, label %bb.d, label %bb.c, !llvm.loop !95
 
 bb.d:                                             ; preds = %bb.c
   %i.h = call i32 @dbus_message_iter_close_container(ptr noundef nonnull %3, ptr noundef nonnull %4) #15 ; 0 uses
@@ -491,7 +486,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <16 x i8> %wide.load95, ptr %i.t, align 16, !tbaa !38
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.u = icmp eq i64 %index.next, %n.vec
-  br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !95
+  br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !96
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.i, %n.vec
@@ -516,7 +511,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %wide.load100, ptr %next.gep98, align 8, !tbaa !38
   %index.next101 = add nuw i64 %index97, 8        ; 2 uses
   %i.x = icmp eq i64 %index.next101, %n.vec96
-  br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !96
+  br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !97
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n102 = icmp eq i64 %i.i, %n.vec96
@@ -535,7 +530,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.y, ptr %.09.i, align 1, !tbaa !38
   %i.aa = getelementptr inbounds nuw i8, ptr %.068.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.aa, %i.o
-  br i1 %.not.i, label %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit, label %.lr.ph.i, !llvm.loop !97
+  br i1 %.not.i, label %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit, label %.lr.ph.i, !llvm.loop !98
 
 _ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit:    ; preds = %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %bb.c
   %.0.lcssa.i = phi ptr [ %i.n, %bb.c ], [ %i.v, %vec.epilog.middle.block ], [ %i.q, %middle.block ], [ %i.z, %.lr.ph.i ] ; 3 uses
@@ -553,7 +548,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b, %bb.d
   %.1 = phi i64 [ %i.ad, %bb.d ], [ %.059, %bb.b ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.068, i64 1
-  br label %bb.b, !llvm.loop !98
+  br label %bb.b, !llvm.loop !99
 
 bb.f:                                             ; preds = %bb.h, %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit
   %i.af = phi i8 [ %.pre, %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit ], [ %i.al, %bb.h ]
@@ -575,7 +570,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %.065, i64 1 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !38  ; 2 uses
   %.not72 = icmp eq i8 %i.al, 0
-  br i1 %.not72, label %bb.i, label %bb.f, !llvm.loop !99
+  br i1 %.not72, label %bb.i, label %bb.f, !llvm.loop !100
 
 bb.i:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %.167, i64 1
@@ -679,7 +674,7 @@ bb.p:                                             ; preds = %bb.o
   %i.br = getelementptr inbounds nuw i8, ptr %.086, i64 1
   %i.bs = getelementptr inbounds nuw i8, ptr %.05885, i64 1
   %.not75 = icmp eq ptr %.086, %.161
-  br i1 %.not75, label %.critedge2, label %.lr.ph, !llvm.loop !100
+  br i1 %.not75, label %.critedge2, label %.lr.ph, !llvm.loop !101
 
 .critedge2:                                       ; preds = %bb.p
   %i.bt = load i8, ptr %indvars.iv, align 1, !tbaa !38
@@ -692,7 +687,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bu = load i8, ptr %i.as, align 1, !tbaa !38
   %i.bv = icmp eq i8 %i.bu, 0
   %i.bw = getelementptr inbounds nuw i8, ptr %.161, i64 2
-  br i1 %i.bv, label %bb.q, label %bb.j, !llvm.loop !101
+  br i1 %i.bv, label %bb.q, label %bb.j, !llvm.loop !102
 
 bb.q:                                             ; preds = %.critedge2.thread
   %i.bx = call i32 @dbus_message_iter_close_container(ptr noundef nonnull %3, ptr noundef nonnull %4) #15 ; 0 uses
@@ -771,7 +766,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <16 x i8> %wide.load64, ptr %i.t, align 16, !tbaa !38
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.u = icmp eq i64 %index.next, %n.vec
-  br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !102
+  br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !103
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.i, %n.vec
@@ -796,7 +791,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %wide.load69, ptr %next.gep67, align 8, !tbaa !38
   %index.next70 = add nuw i64 %index66, 8         ; 2 uses
   %i.x = icmp eq i64 %index.next70, %n.vec65
-  br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !103
+  br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !104
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n71 = icmp eq i64 %i.i, %n.vec65
@@ -815,7 +810,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.y, ptr %.09.i, align 1, !tbaa !38
   %i.aa = getelementptr inbounds nuw i8, ptr %.068.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.aa, %i.o
-  br i1 %.not.i, label %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit, label %.lr.ph.i, !llvm.loop !104
+  br i1 %.not.i, label %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit, label %.lr.ph.i, !llvm.loop !105
 
 _ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit:    ; preds = %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %bb.c
   %.0.lcssa.i = phi ptr [ %i.n, %bb.c ], [ %i.v, %vec.epilog.middle.block ], [ %i.q, %middle.block ], [ %i.z, %.lr.ph.i ] ; 3 uses
@@ -833,7 +828,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b, %bb.d
   %.1 = phi i64 [ %i.ad, %bb.d ], [ %.0, %bb.b ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.048, i64 1
-  br label %bb.b, !llvm.loop !105
+  br label %bb.b, !llvm.loop !106
 
 bb.f:                                             ; preds = %bb.h, %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit
   %i.af = phi i8 [ %.pre, %_ZN12_GLOBAL__N_14copyIcEEPT_PKS1_S4_S2_.exit ], [ %i.al, %bb.h ]
@@ -855,7 +850,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %.045, i64 1 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !38  ; 2 uses
   %.not51 = icmp eq i8 %i.al, 0
-  br i1 %.not51, label %bb.i, label %bb.f, !llvm.loop !106
+  br i1 %.not51, label %bb.i, label %bb.f, !llvm.loop !107
 
 bb.i:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %.147, i64 1
@@ -940,7 +935,7 @@ _ZN12_GLOBAL__N_126emit_case_insensitive_globEPKcS1_Pc.exit: ; preds = %bb.n
   %i.bo = load i8, ptr %i.as, align 1, !tbaa !38
   %i.bp = icmp eq i8 %i.bo, 0
   %i.bq = getelementptr inbounds nuw i8, ptr %.143, i64 2
-  br i1 %i.bp, label %bb.o, label %bb.j, !llvm.loop !107
+  br i1 %i.bp, label %bb.o, label %bb.j, !llvm.loop !108
 
 bb.o:                                             ; preds = %_ZN12_GLOBAL__N_126emit_case_insensitive_globEPKcS1_Pc.exit
   %i.br = call i32 @dbus_message_iter_close_container(ptr noundef nonnull %2, ptr noundef nonnull %3) #15 ; 0 uses
@@ -1038,7 +1033,7 @@ bb.d:                                             ; preds = %bb.b, %bb.d
   call fastcc void @_ZN12_GLOBAL__N_118AppendSingleFilterER15DBusMessageIterRK17nfdu8filteritem_t(ptr noundef nonnull align 8 dereferenceable(72) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.n)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not11 = icmp eq i64 %indvars.iv.next, %i.e
-  br i1 %.not11, label %bb.c, label %bb.d, !llvm.loop !108
+  br i1 %.not11, label %bb.c, label %bb.d, !llvm.loop !109
 
 bb.e:                                             ; preds = %bb.c, %bb.a
   ret void
@@ -1165,19 +1160,20 @@ attributes #18 = { nounwind willreturn memory(none) }
 !91 = distinct !{!91, !37, !46, !47}
 !92 = distinct !{!92, !37, !46, !47}
 !93 = distinct !{!93, !37, !47, !46}
-!94 = distinct !{!94, !37}
-!95 = distinct !{!95, !37, !46, !47}
+!94 = !{!"branch_weights", i32 8, i32 8}
+!95 = distinct !{!95, !37}
 !96 = distinct !{!96, !37, !46, !47}
-!97 = distinct !{!97, !37, !47, !46}
-!98 = distinct !{!98, !37}
+!97 = distinct !{!97, !37, !46, !47}
+!98 = distinct !{!98, !37, !47, !46}
 !99 = distinct !{!99, !37}
 !100 = distinct !{!100, !37}
 !101 = distinct !{!101, !37}
-!102 = distinct !{!102, !37, !46, !47}
+!102 = distinct !{!102, !37}
 !103 = distinct !{!103, !37, !46, !47}
-!104 = distinct !{!104, !37, !47, !46}
-!105 = distinct !{!105, !37}
+!104 = distinct !{!104, !37, !46, !47}
+!105 = distinct !{!105, !37, !47, !46}
 !106 = distinct !{!106, !37}
 !107 = distinct !{!107, !37}
 !108 = distinct !{!108, !37}
+!109 = distinct !{!109, !37}
 end_hunk_0
