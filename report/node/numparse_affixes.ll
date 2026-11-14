@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not, label %_ZN6icu_7815MaybeStackArrayIPKNS_8numparse4impl18NumberParseMatcherELi3EE6resizeEii.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = shl nuw nsw i32 %i.b, 1                  ; 3 uses
+  %i.f = shl nuw nsw i32 %i.b, 1                  ; 2 uses
   %i.g = icmp sgt i32 %i.b, 0
   br i1 %i.g, label %bb.c, label %_ZN6icu_7815MaybeStackArrayIPKNS_8numparse4impl18NumberParseMatcherELi3EE6resizeEii.exit
 
@@ -217,8 +217,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load i32, ptr %i.d, align 8
-  %spec.select.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.k)
-  %.1.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i, i32 %i.f)
+  %.1.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.k)
   %i.l = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.m = sext i32 %.1.i to i64
   %i.n = shl nsw i64 %i.m, 3
@@ -261,7 +260,7 @@ bb.a:
   br i1 %.not.i, label %_ZN6icu_788numparse4impl26AffixPatternMatcherBuilder10addMatcherERNS1_18NumberParseMatcherE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = shl nuw nsw i32 %i.b, 1                  ; 3 uses
+  %i.f = shl nuw nsw i32 %i.b, 1                  ; 2 uses
   %i.g = icmp sgt i32 %i.b, 0
   br i1 %i.g, label %bb.c, label %_ZN6icu_788numparse4impl26AffixPatternMatcherBuilder10addMatcherERNS1_18NumberParseMatcherE.exit
 
@@ -274,8 +273,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load i32, ptr %i.d, align 8
-  %spec.select.i.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.k)
-  %.1.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i, i32 %i.f)
+  %.1.i.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.k)
   %i.l = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.m = sext i32 %.1.i.i to i64
   %i.n = shl nsw i64 %i.m, 3

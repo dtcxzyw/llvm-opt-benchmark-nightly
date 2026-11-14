@@ -202,14 +202,13 @@ bb.g:                                             ; preds = %bb.f
 .sink.split.i.i.i:                                ; preds = %bb.f
   %spec.select.i.i = tail call i32 @llvm.smin.i32(i32 %i.m, i32 2) ; 2 uses
   %i.as = sub nsw i32 %i.m, %spec.select.i.i
-  %spec.select13.i.i = tail call i32 @llvm.smin.i32(i32 %i.as, i32 99)
   %i.at = and i16 %i.g, 2
   %.not.i.i.i43 = icmp eq i16 %i.at, 0
   %i.au = getelementptr inbounds nuw i8, ptr %i.e, i64 10
   %i.av = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.aw = load ptr, ptr %i.av, align 8
   %i.ax = select i1 %.not.i.i.i43, ptr %i.aw, ptr %i.au
-  %i.ay = tail call noundef signext i8 @_ZNK6icu_7813UnicodeString9doCompareEiiPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %i.t, i32 noundef 1, i32 noundef 99, ptr noundef %i.ax, i32 noundef %spec.select.i.i, i32 noundef %spec.select13.i.i)
+  %i.ay = tail call noundef signext i8 @_ZNK6icu_7813UnicodeString9doCompareEiiPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %i.t, i32 noundef 1, i32 noundef 99, ptr noundef %i.ax, i32 noundef %spec.select.i.i, i32 noundef %i.as)
   br label %_ZNK6icu_7813UnicodeString7compareEiiRKS0_ii.exit
 
 _ZNK6icu_7813UnicodeString7compareEiiRKS0_ii.exit: ; preds = %bb.g, %.sink.split.i.i.i
