@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal void @dissect_pcep_obj_unreach_destination(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 %5, i32 noundef %6) #0 {
 bb.a:
-  %i.a = add i32 %4, -4                           ; 3 uses
+  %i.a = add i32 %4, -4                           ; 5 uses
   %switch.selectcmp = icmp eq i32 %6, 2
   %switch.select = select i1 %switch.selectcmp, i32 16, i32 4 ; 4 uses
   %i.b = icmp sgt i32 %i.a, 0
@@ -211,8 +211,12 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   switch i32 %6, label %.loopexit [
     i32 1, label %.lr.ph.split.us
-    i32 2, label %.lr.ph.split.us44
+    i32 2, label %.lr.ph.split.us44.preheader
   ]
+
+.lr.ph.split.us44.preheader:                      ; preds = %.lr.ph
+  %7 = icmp samesign ult i32 %i.a, 16
+  br i1 %7, label %.split48.us, label %bb.c
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.b
   %.042.us = phi i32 [ %i.g, %bb.b ], [ %i.a, %.lr.ph ] ; 4 uses
@@ -228,17 +232,17 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph.split.us, label %.loopexit, !llvm.loop !18
 
-.lr.ph.split.us44:                                ; preds = %.lr.ph, %bb.c
-  %.042.us45 = phi i32 [ %i.l, %bb.c ], [ %i.a, %.lr.ph ] ; 4 uses
-  %.03441.us46 = phi i32 [ %7, %bb.c ], [ %3, %.lr.ph ] ; 3 uses
-  %i.i = icmp samesign ult i32 %.042.us45, 16
-  br i1 %i.i, label %.split48.us, label %bb.c
+.lr.ph.split.us44:                                ; preds = %bb.c
+  %8 = add i32 %.03441.us4670, %switch.select     ; 2 uses
+  %i.i = icmp samesign ult i32 %i.l, 16
+  br i1 %i.i, label %.split48.us, label %bb.c, !llvm.loop !18
 
-bb.c:                                             ; preds = %.lr.ph.split.us44
+bb.c:                                             ; preds = %.lr.ph.split.us44.preheader, %.lr.ph.split.us44
+  %.03441.us4670 = phi i32 [ %8, %.lr.ph.split.us44 ], [ %3, %.lr.ph.split.us44.preheader ] ; 2 uses
+  %.042.us4569 = phi i32 [ %i.l, %.lr.ph.split.us44 ], [ %i.a, %.lr.ph.split.us44.preheader ]
   %i.j = load i32, ptr @hf_pcep_unreach_destination_obj_ipv6_address, align 4
-  %i.k = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.j, ptr noundef %2, i32 noundef %.03441.us46, i32 noundef 16, i32 noundef 0) ; 0 uses
-  %7 = add i32 %.03441.us46, %switch.select
-  %i.l = sub nuw nsw i32 %.042.us45, %switch.select ; 2 uses
+  %i.k = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.j, ptr noundef %2, i32 noundef %.03441.us4670, i32 noundef 16, i32 noundef 0) ; 0 uses
+  %i.l = sub nuw nsw i32 %.042.us4569, %switch.select ; 4 uses
   %.not = icmp eq i32 %i.l, 0
   br i1 %.not, label %.loopexit, label %.lr.ph.split.us44, !llvm.loop !18
 
@@ -246,8 +250,10 @@ bb.c:                                             ; preds = %.lr.ph.split.us44
   %i.m = tail call ptr (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @proto_tree_add_expert_format(ptr noundef %0, ptr noundef %1, ptr noundef @ei_pcep_subobject_bad_length, ptr noundef %2, i32 noundef %.03441.us, i32 noundef %.042.us, ptr noundef @.str.1448, i32 noundef %.042.us, i32 noundef 4) ; 0 uses
   br label %.loopexit
 
-.split48.us:                                      ; preds = %.lr.ph.split.us44
-  %i.n = tail call ptr (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @proto_tree_add_expert_format(ptr noundef %0, ptr noundef %1, ptr noundef @ei_pcep_subobject_bad_length, ptr noundef %2, i32 noundef %.03441.us46, i32 noundef %.042.us45, ptr noundef @.str.1449, i32 noundef %.042.us45, i32 noundef 16) ; 0 uses
+.split48.us:                                      ; preds = %.lr.ph.split.us44, %.lr.ph.split.us44.preheader
+  %.042.us45.lcssa = phi i32 [ %i.a, %.lr.ph.split.us44.preheader ], [ %i.l, %.lr.ph.split.us44 ] ; 2 uses
+  %.03441.us46.lcssa = phi i32 [ %3, %.lr.ph.split.us44.preheader ], [ %8, %.lr.ph.split.us44 ]
+  %i.n = tail call ptr (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @proto_tree_add_expert_format(ptr noundef %0, ptr noundef %1, ptr noundef @ei_pcep_subobject_bad_length, ptr noundef %2, i32 noundef %.03441.us46.lcssa, i32 noundef %.042.us45.lcssa, ptr noundef @.str.1449, i32 noundef %.042.us45.lcssa, i32 noundef 16) ; 0 uses
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.c, %bb.b, %.lr.ph, %bb.a, %.split48.us, %.split.us
