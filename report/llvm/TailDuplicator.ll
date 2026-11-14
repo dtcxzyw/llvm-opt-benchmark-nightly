@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.ak
   br i1 %i.la, label %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit.thread, label %.loopexit
 
 _ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit.thread: ; preds = %bb.at, %bb.as, %bb.aj, %bb.ah, %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit, %bb.ai, %bb.ag, %bb.af, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
-  %.4 = phi i8 [ %.0128.lcssa, %bb.ag ], [ %.0128.lcssa, %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit ], [ %.0128.lcssa, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %.0128.lcssa, %bb.ai ], [ %.0128.lcssa, %bb.ah ], [ %.0128.lcssa, %bb.aj ], [ %.0128.lcssa, %bb.af ], [ 1, %bb.as ], [ 1, %bb.at ]
+  %.4 = phi i8 [ %.0128.lcssa, %bb.ag ], [ %.0128.lcssa, %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit ], [ %.0128.lcssa, %bb.aj ], [ %.0128.lcssa, %bb.ai ], [ %.0128.lcssa, %bb.ah ], [ 1, %bb.at ], [ %.0128.lcssa, %bb.af ], [ %.0128.lcssa, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ 1, %bb.as ]
   %i.lb = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.lc = load i8, ptr %i.lb, align 8, !tbaa !174, !range !29, !noundef !30
   %i.ld = trunc nuw i8 %i.lc to i1                ; 2 uses

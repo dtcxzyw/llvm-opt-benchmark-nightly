@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %bb.a, %bb.i
   %.not141 = icmp eq i32 %i.v, -1
   br i1 %.not141, label %bb.n, label %bb.j
 
-.body:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i191, %bb.g, %.body151
-  %.sroa.0102.0 = phi i8 [ %.sroa.0102.1, %bb.g ], [ %.sroa.0102.2, %.body151 ], [ %.sroa.0102.10, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i191 ]
-  %.pn147 = phi { ptr, i32 } [ %i.x, %bb.g ], [ %.pn145, %.body151 ], [ %i.dj, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i191 ] ; 2 uses
+.body:                                            ; preds = %bb.g, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i191, %.body151
+  %.sroa.0102.0 = phi i8 [ %.sroa.0102.2, %.body151 ], [ %.sroa.0102.1, %bb.g ], [ %.sroa.0102.10, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i191 ]
+  %.pn147 = phi { ptr, i32 } [ %.pn145, %.body151 ], [ %i.x, %bb.g ], [ %i.dj, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i191 ] ; 2 uses
   %i.w = trunc nuw i8 %.sroa.0102.0 to i1
   br i1 %i.w, label %.body.thread, label %bb.bv
 
@@ -607,7 +607,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %bb.bq
 
-.body151:                                         ; preds = %bb.m, %bb.o, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i162, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i172, %.body159
+.body151:                                         ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i172, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i162, %bb.m, %bb.o, %.body159
   %.sroa.0102.2 = phi i8 [ %.sroa.0102.4, %.body159 ], [ 1, %bb.m ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i162 ], [ %.sroa.0102.3, %bb.o ], [ %.sroa.0102.7, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i172 ]
   %.pn145 = phi { ptr, i32 } [ %.pn, %.body159 ], [ %i.af, %bb.m ], [ %i.bh, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i162 ], [ %i.aj, %bb.o ], [ %i.cl, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i172 ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp10ChildStdioEEB13_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.j) #25
@@ -617,8 +617,8 @@ bb.bv:                                            ; preds = %.body.thread, %.bod
   %.pn147243 = phi { ptr, i32 } [ %.pn147244, %.body.thread ], [ %.pn147, %.body ]
   resume { ptr, i32 } %.pn147243
 
-.body.thread:                                     ; preds = %bb.e, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i, %.body
-  %.pn147244 = phi { ptr, i32 } [ %.pn147, %.body ], [ %i.s, %bb.e ], [ %i.an, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i ]
+.body.thread:                                     ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i, %bb.e, %.body
+  %.pn147244 = phi { ptr, i32 } [ %.pn147, %.body ], [ %i.an, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7process3imp4PipeEEB13_.exit.i.i.i ], [ %i.s, %bb.e ]
   call fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std7process5ChildECslghKHtsL3a4_5tokio(ptr noalias nofree noundef align 4 dereferenceable(28) %1) #25
   br label %bb.bv
 }

@@ -204,7 +204,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   %.not191 = icmp eq ptr %.sroa.0578.0.copyload, null
   %cond217 = icmp eq i8 %.sroa.058.0, 0
   %or.cond218 = or i1 %.not191, %cond217
-  br i1 %or.cond218, label %.thread742, label %bb.qv
+  br i1 %or.cond218, label %bb.qp, label %bb.qv
 
 bb.m:                                             ; preds = %.invoke, %bb.qk, %bb.nw, %bb.bw, %bb.bu, %bb.nm, %bb.ne, %bb.ah, %bb.ab, %bb.y, %bb.w, %bb.u, %bb.s, %bb.p, %bb.n, %bb.l
   %.sroa.058.1 = phi i8 [ 0, %bb.bu ], [ %.sroa.058.3, %bb.qk ], [ %.sroa.058.3, %bb.nw ], [ %.sroa.058.3, %bb.nm ], [ %.sroa.058.3, %.invoke ], [ %.sroa.058.3, %bb.ne ], [ 1, %bb.l ], [ %.sroa.058.3, %bb.ah ], [ 0, %bb.bw ], [ 1, %bb.ab ], [ 1, %bb.y ], [ 1, %bb.w ], [ 1, %bb.u ], [ 1, %bb.s ], [ 1, %bb.p ], [ 1, %bb.n ]
@@ -286,13 +286,13 @@ bb.ad:                                            ; preds = %_RINvNtCshzWfHUSfYa
   %i.ch = add i32 %i.cg, -1                       ; 2 uses
   store i32 %i.ch, ptr %i.cf, align 4
   %i.ci = icmp eq i32 %i.ch, 0
-  br i1 %i.ci, label %bb.ae, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a
+  br i1 %i.ci, label %bb.ae, label %.noexc548
 
 bb.ae:                                            ; preds = %bb.ad
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.0578.0.copyload) #24
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a unwind label %bb.qp
+          to label %.noexc548 unwind label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit373, %.noexc548, %bb.qn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit454, %bb.z
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit373, %.thread742, %bb.qo, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit454, %bb.z
   %i.cj = getelementptr inbounds nuw i8, ptr %i.br, i64 48 ; 2 uses
   %i.ck = load i32, ptr %i.cj, align 4, !noundef !12
   %i.cl = add i32 %i.ck, -1                       ; 2 uses
@@ -554,7 +554,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %i.cv) #24
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4MetaECsf8NQSppxkmK_14ide_completion.exit355 unwind label %bb.aj
 
-bb.bj:                                            ; preds = %.invoke908, %bb.rb, %bb.ra, %bb.qz, %bb.qy, %bb.qx, %bb.qw, %bb.qu, %bb.qr, %bb.qq, %bb.qo, %bb.qf, %bb.pz, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i505.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i497.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i489.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i, %bb.ot, %bb.of, %bb.nx, %bb.ns, %bb.nk, %bb.mv, %bb.ms, %bb.mk, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsf8NQSppxkmK_14ide_completion.exit.sink.split.i.i.i379, %bb.bs, %bb.bp, %bb.bm, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes10UnsafeMetaECsf8NQSppxkmK_14ide_completion.exit.sink.split.i, %bb.ai, %.critedge208, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit433, %.thread779, %bb.mc, %.body386, %bb.bk
+bb.bj:                                            ; preds = %.invoke908, %bb.rb, %bb.ra, %bb.qz, %bb.qy, %bb.qx, %bb.qw, %bb.qu, %bb.qr, %bb.qq, %bb.qm, %bb.qf, %bb.pz, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i505.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i497.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i489.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.sink.split.i, %bb.ot, %bb.of, %bb.nx, %bb.ns, %bb.nk, %bb.mv, %bb.ms, %bb.mk, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsf8NQSppxkmK_14ide_completion.exit.sink.split.i.i.i379, %bb.bs, %bb.bp, %bb.bm, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes10UnsafeMetaECsf8NQSppxkmK_14ide_completion.exit.sink.split.i, %bb.ai, %.critedge208, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit433, %.thread779, %bb.mc, %.body386, %bb.bk
   %i.ei = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #25
@@ -647,11 +647,11 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNod
   %i.fi = add i32 %i.fh, -1                       ; 2 uses
   store i32 %i.fi, ptr %i.fg, align 4
   %i.fj = icmp eq i32 %i.fi, 0
-  br i1 %i.fj, label %bb.bs, label %.thread742
+  br i1 %i.fj, label %bb.bs, label %bb.qp
 
 bb.bs:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit367
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.0578.0.copyload) #24
-          to label %.thread742 unwind label %bb.bj
+          to label %bb.qp unwind label %bb.bj
 
 bb.bt:                                            ; preds = %bb.bv, %bb.br
   %i.fk = landingpad { ptr, i32 }
@@ -1054,8 +1054,8 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTok
   %or.cond801 = and i1 %.not130, %i.abg
   br i1 %or.cond801, label %bb.ad, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit554: ; preds = %.thread742, %bb.qo, %bb.mt
-  %.pn197 = phi { ptr, i32 } [ %i.abl, %bb.mt ], [ %.pn195, %bb.qo ], [ %.pn195, %.thread742 ] ; 2 uses
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit554: ; preds = %bb.qp, %bb.qq, %bb.mt
+  %.pn197 = phi { ptr, i32 } [ %i.abl, %bb.mt ], [ %.pn797, %bb.qq ], [ %.pn797, %bb.qp ] ; 2 uses
   %i.abh = getelementptr inbounds nuw i8, ptr %i.bn, i64 48 ; 2 uses
   %i.abi = load i32, ptr %i.abh, align 4, !noundef !12
   %i.abj = add i32 %i.abi, -1                     ; 2 uses
@@ -1458,83 +1458,83 @@ bb.ql:                                            ; preds = %bb.nl, %_RINvNtCshz
   store i8 %.sroa.11.0, ptr %.sroa.8659.sroa.6.0..sroa.8659.0..sroa_idx.sroa_idx, align 8
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit454
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a: ; preds = %bb.ae, %bb.ad
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a: ; preds = %bb.ae
+  %5 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0.copyload) ]
   %i.akn = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 48 ; 2 uses
   %i.ako = load i32, ptr %i.akn, align 4, !noundef !12
   %i.akp = add i32 %i.ako, -1                     ; 2 uses
   store i32 %i.akp, ptr %i.akn, align 4
   %i.akq = icmp eq i32 %i.akp, 0
-  br i1 %i.akq, label %bb.qm, label %.noexc548
+  br i1 %i.akq, label %bb.qm, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556
 
 bb.qm:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.12.0.copyload) #24
-          to label %.noexc548 unwind label %5
+          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556 unwind label %bb.bj
 
-5:                                                ; preds = %bb.qm
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556
-
-.noexc548:                                        ; preds = %bb.qm, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17584.0.copyload) ]
-  %i.akr = getelementptr inbounds nuw i8, ptr %.sroa.17584.0.copyload, i64 48 ; 2 uses
+.noexc548:                                        ; preds = %bb.ae, %bb.ad
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0.copyload) ]
+  %i.akr = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 48 ; 2 uses
   %i.aks = load i32, ptr %i.akr, align 4, !noundef !12
   %i.akt = add i32 %i.aks, -1                     ; 2 uses
   store i32 %i.akt, ptr %i.akr, align 4
   %i.aku = icmp eq i32 %i.akt, 0
-  br i1 %i.aku, label %bb.qn, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552
+  br i1 %i.aku, label %bb.qn, label %.thread742
 
 bb.qn:                                            ; preds = %.noexc548
-  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.17584.0.copyload) #24
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552 unwind label %7
+  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.12.0.copyload) #24
+          to label %.thread742 unwind label %6
 
-.thread742:                                       ; preds = %.noexc567, %bb.qy, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556, %bb.qr, %bb.bs, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit367, %7, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefECsf8NQSppxkmK_14ide_completion.exit438
-  %.pn195 = phi { ptr, i32 } [ %8, %7 ], [ %.pn187, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit367 ], [ %.pn187, %bb.bs ], [ %.pn193, %bb.qr ], [ %.pn189, %.noexc567 ], [ %.pn189, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefECsf8NQSppxkmK_14ide_completion.exit438 ], [ %.pn193, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556 ], [ %.pn189, %bb.qy ] ; 2 uses
-  %i.akv = getelementptr inbounds nuw i8, ptr %i.br, i64 48 ; 2 uses
+6:                                                ; preds = %bb.qn
+  %7 = landingpad { ptr, i32 }
+          cleanup
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556
+
+.thread742:                                       ; preds = %bb.qn, %.noexc548
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17584.0.copyload) ]
+  %i.akv = getelementptr inbounds nuw i8, ptr %.sroa.17584.0.copyload, i64 48 ; 2 uses
   %i.akw = load i32, ptr %i.akv, align 4, !noundef !12
   %i.akx = add i32 %i.akw, -1                     ; 2 uses
   store i32 %i.akx, ptr %i.akv, align 4
   %i.aky = icmp eq i32 %i.akx, 0
-  br i1 %i.aky, label %bb.qo, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit554
+  br i1 %i.aky, label %bb.qo, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552
 
 bb.qo:                                            ; preds = %.thread742
-  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %i.br) #24
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit554 unwind label %bb.bj
+  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.17584.0.copyload) #24
+          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552 unwind label %8
 
-7:                                                ; preds = %bb.qn
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread742
-
-bb.qp:                                            ; preds = %bb.ae
-  %9 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0.copyload) ]
-  %i.akz = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 48 ; 2 uses
+bb.qp:                                            ; preds = %bb.bs, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit367, %.noexc567, %bb.qy, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556, %bb.qr, %8, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefECsf8NQSppxkmK_14ide_completion.exit438
+  %.pn797 = phi { ptr, i32 } [ %9, %8 ], [ %.pn193, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556 ], [ %.pn189, %.noexc567 ], [ %.pn193, %bb.qr ], [ %.pn187, %bb.bs ], [ %.pn189, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefECsf8NQSppxkmK_14ide_completion.exit438 ], [ %.pn189, %bb.qy ], [ %.pn187, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit367 ] ; 2 uses
+  %i.akz = getelementptr inbounds nuw i8, ptr %i.br, i64 48 ; 2 uses
   %i.ala = load i32, ptr %i.akz, align 4, !noundef !12
   %i.alb = add i32 %i.ala, -1                     ; 2 uses
   store i32 %i.alb, ptr %i.akz, align 4
   %i.alc = icmp eq i32 %i.alb, 0
-  br i1 %i.alc, label %bb.qq, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556
+  br i1 %i.alc, label %bb.qq, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit554
 
 bb.qq:                                            ; preds = %bb.qp
-  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.12.0.copyload) #24
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556 unwind label %bb.bj
+  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %i.br) #24
+          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit554 unwind label %bb.bj
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556: ; preds = %bb.qp, %bb.qq, %5
-  %.pn193 = phi { ptr, i32 } [ %6, %5 ], [ %9, %bb.qq ], [ %9, %bb.qp ] ; 2 uses
+8:                                                ; preds = %bb.qo
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.qp
+
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556: ; preds = %6, %bb.qm, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a
+  %.pn193 = phi { ptr, i32 } [ %7, %6 ], [ %5, %bb.qm ], [ %5, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit.a ] ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17584.0.copyload) ]
   %i.ald = getelementptr inbounds nuw i8, ptr %.sroa.17584.0.copyload, i64 48 ; 2 uses
   %i.ale = load i32, ptr %i.ald, align 4, !noundef !12
   %i.alf = add i32 %i.ale, -1                     ; 2 uses
   store i32 %i.alf, ptr %i.ald, align 4
   %i.alg = icmp eq i32 %i.alf, 0
-  br i1 %i.alg, label %bb.qr, label %.thread742
+  br i1 %i.alg, label %bb.qr, label %bb.qp
 
 bb.qr:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit556
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.17584.0.copyload) #24
-          to label %.thread742 unwind label %bb.bj
+          to label %bb.qp unwind label %bb.bj
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsf8NQSppxkmK_14ide_completion.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrECsf8NQSppxkmK_14ide_completion.exit552, %bb.af
   %i.alh = getelementptr inbounds nuw i8, ptr %i.bn, i64 48 ; 2 uses
@@ -1610,11 +1610,11 @@ bb.qx:                                            ; preds = %.noexc565
   %i.amd = add i32 %i.amc, -1                     ; 2 uses
   store i32 %i.amd, ptr %i.amb, align 4
   %i.ame = icmp eq i32 %i.amd, 0
-  br i1 %i.ame, label %bb.qy, label %.thread742
+  br i1 %i.ame, label %bb.qy, label %bb.qp
 
 bb.qy:                                            ; preds = %.noexc567
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.17584.0.copyload) #24
-          to label %.thread742 unwind label %bb.bj
+          to label %bb.qp unwind label %bb.bj
 
 .thread732:                                       ; preds = %bb.j, %.thread737
   %eh.lpad-body736 = phi { ptr, i32 } [ %lpad.thr_comm, %.thread737 ], [ %i.bj, %bb.j ]

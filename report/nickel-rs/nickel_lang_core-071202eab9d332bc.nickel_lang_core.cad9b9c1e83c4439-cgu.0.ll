@@ -206,7 +206,7 @@ bb.cr:                                            ; preds = %bb.cq
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %.body304.thread
-  %.pn253.ph = phi { ptr, i32 } [ %i.bn, %.body304.thread ], [ %i.el, %bb.cr ]
+  %.pn253.ph = phi { ptr, i32 } [ %i.el, %bb.cr ], [ %i.bn, %.body304.thread ]
   invoke fastcc void @"_ZN4core3ptr194drop_in_place$LT$nickel_lang_parser..typ..EnumRowsF$LT$alloc..boxed..Box$LT$nickel_lang_core..typecheck..UnifType$GT$$C$alloc..boxed..Box$LT$nickel_lang_core..typecheck..UnifEnumRows$GT$$GT$$GT$17h3e0f661ff7b6e1c3E"(ptr noalias noundef align 8 dereferenceable(40) %i.ap) #86
           to label %.thread unwind label %bb.bv
 
@@ -538,8 +538,8 @@ bb.ed:                                            ; preds = %bb.b
   invoke fastcc void @"_ZN4core3ptr62drop_in_place$LT$nickel_lang_core..typecheck..UnifEnumRows$GT$17h2b3491074b13628eE"(ptr noalias noundef align 8 dereferenceable(48) %i.w) #86
           to label %.thread unwind label %bb.bv
 
-.thread:                                          ; preds = %bb.ct, %.body259.thread, %bb.cu, %.thread458, %bb.cs, %bb.ea, %bb.di, %bb.dd, %bb.ed, %bb.ee
-  %.pn255.pn346 = phi { ptr, i32 } [ %i.gr, %bb.ee ], [ %i.gp, %bb.ea ], [ %.pn249, %.thread458 ], [ %lpad.thr_comm.split-lp, %bb.ed ], [ %i.fh, %bb.di ], [ %i.ez, %bb.dd ], [ %.pn253.ph, %bb.cs ], [ %.pn249, %bb.ct ], [ %.pn249, %bb.cu ], [ %eh.lpad-body260461, %.body259.thread ]
+.thread:                                          ; preds = %bb.ea, %bb.di, %bb.dd, %bb.ct, %.body259.thread, %bb.cu, %.thread458, %bb.cs, %bb.ed, %bb.ee
+  %.pn255.pn346 = phi { ptr, i32 } [ %i.gr, %bb.ee ], [ %.pn249, %bb.cu ], [ %.pn249, %.thread458 ], [ %lpad.thr_comm.split-lp, %bb.ed ], [ %i.fh, %bb.di ], [ %i.ez, %bb.dd ], [ %.pn253.ph, %bb.cs ], [ %.pn249, %bb.ct ], [ %i.gp, %bb.ea ], [ %eh.lpad-body260461, %.body259.thread ]
   resume { ptr, i32 } %.pn255.pn346
 
 bb.ee:                                            ; preds = %bb.a
@@ -942,7 +942,7 @@ bb.cd:                                            ; preds = %bb.cc
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd, %.body269.thread
-  %.pn219.ph = phi { ptr, i32 } [ %i.bm, %.body269.thread ], [ %i.ee, %bb.cd ]
+  %.pn219.ph = phi { ptr, i32 } [ %i.ee, %bb.cd ], [ %i.bm, %.body269.thread ]
   invoke fastcc void @"_ZN4core3ptr198drop_in_place$LT$nickel_lang_parser..typ..RecordRowsF$LT$alloc..boxed..Box$LT$nickel_lang_core..typecheck..UnifType$GT$$C$alloc..boxed..Box$LT$nickel_lang_core..typecheck..UnifRecordRows$GT$$GT$$GT$17he0d9b2b312d5c72dE"(ptr noalias noundef align 8 dereferenceable(40) %i.aq) #86
           to label %.thread unwind label %bb.bf
 
@@ -1255,8 +1255,8 @@ bb.dl:                                            ; preds = %bb.b
   invoke fastcc void @"_ZN4core3ptr64drop_in_place$LT$nickel_lang_core..typecheck..UnifRecordRows$GT$17h5eaf304118771440E"(ptr noalias noundef align 8 dereferenceable(48) %i.x) #86
           to label %.thread unwind label %bb.bf
 
-.thread:                                          ; preds = %bb.by, %.body225.thread, %bb.bz, %.thread377, %bb.ce, %bb.di, %bb.cq, %bb.cl, %bb.dl, %bb.dm
-  %.pn221.pn304 = phi { ptr, i32 } [ %i.gj, %bb.dm ], [ %i.gh, %bb.di ], [ %.pn215, %.thread377 ], [ %lpad.thr_comm.split-lp, %bb.dl ], [ %i.ez, %bb.cq ], [ %i.er, %bb.cl ], [ %.pn219.ph, %bb.ce ], [ %.pn215, %bb.by ], [ %.pn215, %bb.bz ], [ %eh.lpad-body226392, %.body225.thread ]
+.thread:                                          ; preds = %bb.di, %bb.cq, %bb.cl, %bb.by, %.body225.thread, %bb.bz, %.thread377, %bb.ce, %bb.dl, %bb.dm
+  %.pn221.pn304 = phi { ptr, i32 } [ %i.gj, %bb.dm ], [ %.pn215, %bb.bz ], [ %.pn215, %.thread377 ], [ %lpad.thr_comm.split-lp, %bb.dl ], [ %i.ez, %bb.cq ], [ %i.er, %bb.cl ], [ %.pn219.ph, %bb.ce ], [ %.pn215, %bb.by ], [ %i.gh, %bb.di ], [ %eh.lpad-body226392, %.body225.thread ]
   resume { ptr, i32 } %.pn221.pn304
 
 bb.dm:                                            ; preds = %bb.a
@@ -1659,8 +1659,8 @@ bb.ca:                                            ; preds = %.thread369
   %i.eq = load i32, ptr %i.ep, align 8, !range !169, !noundef !152 ; 2 uses
   %i.er = icmp ne i32 %i.eq, 4
   tail call void @llvm.assume(i1 %i.er)
-  %4 = icmp samesign ugt i32 %i.eq, 2
-  br i1 %4, label %.thread431, label %bb.cf
+  %4 = icmp samesign ult i32 %i.eq, 3
+  br i1 %4, label %bb.cf, label %.thread431
 
 bb.cb:                                            ; preds = %bb.bz
   %.val262 = load ptr, ptr %i.aw, align 8, !alias.scope !230, !nonnull !152, !noundef !152 ; 4 uses
@@ -2010,10 +2010,10 @@ bb.dn:                                            ; preds = %bb.b
   invoke fastcc void @"_ZN4core3ptr64drop_in_place$LT$nickel_lang_core..typecheck..UnifRecordRows$GT$17h5eaf304118771440E"(ptr noalias noundef align 8 dereferenceable(48) %i.y) #86
           to label %.thread431 unwind label %bb.al
 
-.thread431:                                       ; preds = %.thread383.thread, %.body229, %bb.cg, %.body283, %bb.ca, %bb.by, %bb.bv, %.body229.thread, %.critedge225.thread309, %.critedge225.thread305, %.critedge225.thread314, %bb.dn, %.thread, %.thread383
-  %.sroa.30.0300 = phi i32 [ %i.af, %.thread ], [ %.sroa.30.5377, %.thread383 ], [ %i.hl, %bb.dn ], [ %i.fs, %.critedge225.thread309 ], [ %i.hj, %.critedge225.thread305 ], [ %i.ah, %.critedge225.thread314 ], [ %i.gc, %.body229 ], [ %i.eo, %bb.cg ], [ %i.ev, %.body283 ], [ %i.eo, %bb.ca ], [ %.sroa.30.5, %bb.by ], [ %.sroa.30.5, %bb.bv ], [ %i.gy, %.body229.thread ], [ %.sroa.30.5377466, %.thread383.thread ] ; 2 uses
-  %.sroa.0198.0299 = phi ptr [ %i.ae, %.thread ], [ %.sroa.0198.5378, %.thread383 ], [ %i.hk, %bb.dn ], [ %i.fr, %.critedge225.thread309 ], [ %i.hi, %.critedge225.thread305 ], [ %i.ag, %.critedge225.thread314 ], [ %i.gb, %.body229 ], [ %i.en, %bb.cg ], [ %i.ew, %.body283 ], [ %i.en, %bb.ca ], [ %.sroa.0198.5, %bb.by ], [ %.sroa.0198.5, %bb.bv ], [ %i.gx, %.body229.thread ], [ %.sroa.0198.5378467, %.thread383.thread ] ; 2 uses
-  %.sroa.0141.0298 = phi i1 [ true, %.thread ], [ false, %.thread383 ], [ false, %bb.dn ], [ false, %.critedge225.thread309 ], [ false, %.critedge225.thread305 ], [ false, %.critedge225.thread314 ], [ false, %.body229 ], [ false, %bb.cg ], [ false, %.body283 ], [ false, %bb.ca ], [ false, %bb.by ], [ false, %bb.bv ], [ false, %.body229.thread ], [ false, %.thread383.thread ]
+.thread431:                                       ; preds = %.thread383.thread, %.body283, %.body229.thread, %bb.cg, %.body229, %bb.ca, %bb.by, %bb.bv, %.critedge225.thread309, %.critedge225.thread305, %.critedge225.thread314, %bb.dn, %.thread, %.thread383
+  %.sroa.30.0300 = phi i32 [ %i.af, %.thread ], [ %.sroa.30.5377, %.thread383 ], [ %i.hl, %bb.dn ], [ %i.fs, %.critedge225.thread309 ], [ %i.hj, %.critedge225.thread305 ], [ %i.ah, %.critedge225.thread314 ], [ %i.ev, %.body283 ], [ %i.gy, %.body229.thread ], [ %i.eo, %bb.cg ], [ %i.gc, %.body229 ], [ %i.eo, %bb.ca ], [ %.sroa.30.5, %bb.by ], [ %.sroa.30.5, %bb.bv ], [ %.sroa.30.5377466, %.thread383.thread ] ; 2 uses
+  %.sroa.0198.0299 = phi ptr [ %i.ae, %.thread ], [ %.sroa.0198.5378, %.thread383 ], [ %i.hk, %bb.dn ], [ %i.fr, %.critedge225.thread309 ], [ %i.hi, %.critedge225.thread305 ], [ %i.ag, %.critedge225.thread314 ], [ %i.ew, %.body283 ], [ %i.gx, %.body229.thread ], [ %i.en, %bb.cg ], [ %i.gb, %.body229 ], [ %i.en, %bb.ca ], [ %.sroa.0198.5, %bb.by ], [ %.sroa.0198.5, %bb.bv ], [ %.sroa.0198.5378467, %.thread383.thread ] ; 2 uses
+  %.sroa.0141.0298 = phi i1 [ true, %.thread ], [ false, %.thread383 ], [ false, %bb.dn ], [ false, %.critedge225.thread309 ], [ false, %.critedge225.thread305 ], [ false, %.critedge225.thread314 ], [ false, %.body283 ], [ false, %.body229.thread ], [ false, %bb.cg ], [ false, %.body229 ], [ false, %bb.ca ], [ false, %bb.by ], [ false, %bb.bv ], [ false, %.thread383.thread ]
   invoke fastcc void @"_ZN4core3ptr57drop_in_place$LT$nickel_lang_core..typecheck..Context$GT$17h2b50e9aeb08bca24E"(ptr noalias noundef align 8 dereferenceable(40) %3) #86
           to label %bb.df unwind label %bb.al
 

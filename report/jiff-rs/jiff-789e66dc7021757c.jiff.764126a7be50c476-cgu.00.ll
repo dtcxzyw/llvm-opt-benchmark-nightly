@@ -202,6 +202,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff4span8RelativeEBF
   %or.cond838 = select i1 %or.cond837, i1 %i.jw, i1 false
   br i1 %or.cond838, label %bb.ct, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff4span13RelativeZonedEBF_.exit
 
+3:                                                ; preds = %bb.x, %bb.w, %bb.v, %bb.u
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff4span13RelativeZonedEBF_(i64 %.sroa.556.sroa.7.0.copyload, ptr %.sroa.556.sroa.10.0.copyload) #26
+          to label %bb.cz unwind label %bb.da
+
 .thread:                                          ; preds = %switch.lookup846, %bb.s, %bb.s, %bb.s, %bb.s, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i.i.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i.i.i.i.i
   %.old = icmp eq i64 %.sroa.556.sroa.7.0.copyload, 0
   br i1 %.old, label %bb.ct, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff4span13RelativeZonedEBF_.exit
@@ -266,12 +272,6 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNt
 bb.cz:                                            ; preds = %3, %bb.dc, %bb.o
   %.pn75 = phi { ptr, i32 } [ %4, %3 ], [ %.pn71, %bb.o ], [ %.pn71, %bb.dc ]
   resume { ptr, i32 } %.pn75
-
-3:                                                ; preds = %bb.u, %bb.v, %bb.w, %bb.x
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff4span13RelativeZonedEBF_(i64 %.sroa.556.sroa.7.0.copyload, ptr %.sroa.556.sroa.10.0.copyload) #26
-          to label %bb.cz unwind label %bb.da
 
 bb.da:                                            ; preds = %.body, %bb.cf, %3, %bb.db, %bb.dc
   %i.kl = landingpad { ptr, i32 }
