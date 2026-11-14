@@ -139,7 +139,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.i = load float, ptr %i.h, align 8, !tbaa !35
   %i.j = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.i, float 1.000000e+00)
-  %i.k = fpext nnan float %i.g to double
+  %i.k = fpext float %i.g to double
   %i.l = fpext float %i.j to double
   %i.m = insertelement <2 x double> poison, double %i.k, i64 0
   %i.n = shufflevector <2 x double> %i.m, <2 x double> poison, <2 x i32> zeroinitializer

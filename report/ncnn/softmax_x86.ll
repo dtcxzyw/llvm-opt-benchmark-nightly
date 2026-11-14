@@ -205,8 +205,8 @@ vector.body180:                                   ; preds = %vector.body180, %ve
   %i.ck = bitcast <4 x float> %i.ci to <4 x i32>
   %i.cl = lshr <4 x i32> %i.cj, splat (i32 16)
   %i.cm = lshr <4 x i32> %i.ck, splat (i32 16)
-  %i.cn = trunc nuw nsw <4 x i32> %i.cl to <4 x i16>
-  %i.co = trunc nuw nsw <4 x i32> %i.cm to <4 x i16>
+  %i.cn = trunc nuw <4 x i32> %i.cl to <4 x i16>
+  %i.co = trunc nuw <4 x i32> %i.cm to <4 x i16>
   store <4 x i16> %i.cn, ptr %next.gep184, align 2, !tbaa !82
   store <4 x i16> %i.co, ptr %i.by, align 2, !tbaa !82
   %i.cp = fadd fast <4 x float> %i.ch, %vec.phi182 ; 2 uses
@@ -293,7 +293,7 @@ middle.block188:                                  ; preds = %vector.body180
   %i.et = tail call fast float @llvm.exp.f32(float %i.es) ; 2 uses
   %i.eu = bitcast float %i.et to i32
   %i.ev = lshr i32 %i.eu, 16
-  %i.ew = trunc nuw nsw i32 %i.ev to i16
+  %i.ew = trunc nuw i32 %i.ev to i16
   store i16 %i.ew, ptr %.153137, align 2, !tbaa !82
   %i.ex = fadd fast float %i.et, %.054136         ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %.153137, i64 2
@@ -696,7 +696,7 @@ vector.body142:                                   ; preds = %vector.body142, %ve
   %i.ka = tail call fast <4 x float> @llvm.exp.v4f32(<4 x float> %i.jz) ; 2 uses
   %i.kb = bitcast <4 x float> %i.ka to <4 x i32>
   %i.kc = lshr <4 x i32> %i.kb, splat (i32 16)
-  %i.kd = trunc nuw nsw <4 x i32> %i.kc to <4 x i16>
+  %i.kd = trunc nuw <4 x i32> %i.kc to <4 x i16>
   store <4 x i16> %i.kd, ptr %next.gep146, align 2, !tbaa !82
   %wide.load149 = load <4 x float>, ptr %next.gep144, align 4, !tbaa !66, !alias.scope !260, !noalias !259
   %i.ke = fadd fast <4 x float> %i.ka, %wide.load149
@@ -730,7 +730,7 @@ middle.block151:                                  ; preds = %vector.body142
   %i.kn = tail call fast float @llvm.exp.f32(float %i.km) ; 2 uses
   %i.ko = bitcast float %i.kn to i32
   %i.kp = lshr i32 %i.ko, 16
-  %i.kq = trunc nuw nsw i32 %i.kp to i16
+  %i.kq = trunc nuw i32 %i.kp to i16
   store i16 %i.kq, ptr %.1119186.i.ph, align 2, !tbaa !82
   %i.kr = load float, ptr %.1115188.i.ph, align 4, !tbaa !66
   %i.ks = fadd fast float %i.kn, %i.kr
@@ -823,7 +823,7 @@ middle.block151:                                  ; preds = %vector.body142
   %i.nd = tail call fast float @llvm.exp.f32(float %i.nc) ; 2 uses
   %i.ne = bitcast float %i.nd to i32
   %i.nf = lshr i32 %i.ne, 16
-  %i.ng = trunc nuw nsw i32 %i.nf to i16
+  %i.ng = trunc nuw i32 %i.nf to i16
   store i16 %i.ng, ptr %.1119186.i, align 2, !tbaa !82
   %i.nh = load float, ptr %.1115188.i, align 4, !tbaa !66
   %i.ni = fadd fast float %i.nd, %i.nh
@@ -840,7 +840,7 @@ middle.block151:                                  ; preds = %vector.body142
   %i.ns = tail call fast float @llvm.exp.f32(float %i.nr) ; 2 uses
   %i.nt = bitcast float %i.ns to i32
   %i.nu = lshr i32 %i.nt, 16
-  %i.nv = trunc nuw nsw i32 %i.nu to i16
+  %i.nv = trunc nuw i32 %i.nu to i16
   store i16 %i.nv, ptr %i.nj, align 2, !tbaa !82
   %i.nw = load float, ptr %i.nl, align 4, !tbaa !66
   %i.nx = fadd fast float %i.ns, %i.nw
@@ -1243,7 +1243,7 @@ vector.body159:                                   ; preds = %vector.body159, %ve
   %i.gt = call fast <4 x float> @llvm.exp.v4f32(<4 x float> %i.gs) ; 2 uses
   %i.gu = bitcast <4 x float> %i.gt to <4 x i32>
   %i.gv = lshr <4 x i32> %i.gu, splat (i32 16)
-  %i.gw = trunc nuw nsw <4 x i32> %i.gv to <4 x i16>
+  %i.gw = trunc nuw <4 x i32> %i.gv to <4 x i16>
   store <4 x i16> %i.gw, ptr %next.gep163, align 2, !tbaa !82
   %wide.load166 = load <4 x float>, ptr %next.gep161, align 4, !tbaa !66, !alias.scope !287, !noalias !286
   %i.gx = fadd fast <4 x float> %i.gt, %wide.load166
@@ -1277,7 +1277,7 @@ middle.block168:                                  ; preds = %vector.body159
   %i.hg = call fast float @llvm.exp.f32(float %i.hf) ; 2 uses
   %i.hh = bitcast float %i.hg to i32
   %i.hi = lshr i32 %i.hh, 16
-  %i.hj = trunc nuw nsw i32 %i.hi to i16
+  %i.hj = trunc nuw i32 %i.hi to i16
   store i16 %i.hj, ptr %.1119186.i.i.ph, align 2, !tbaa !82
   %i.hk = load float, ptr %.1115188.i.i.ph, align 4, !tbaa !66
   %i.hl = fadd fast float %i.hg, %i.hk
@@ -1370,7 +1370,7 @@ middle.block168:                                  ; preds = %vector.body159
   %i.jw = call fast float @llvm.exp.f32(float %i.jv) ; 2 uses
   %i.jx = bitcast float %i.jw to i32
   %i.jy = lshr i32 %i.jx, 16
-  %i.jz = trunc nuw nsw i32 %i.jy to i16
+  %i.jz = trunc nuw i32 %i.jy to i16
   store i16 %i.jz, ptr %.1119186.i.i, align 2, !tbaa !82
   %i.ka = load float, ptr %.1115188.i.i, align 4, !tbaa !66
   %i.kb = fadd fast float %i.jw, %i.ka
@@ -1387,7 +1387,7 @@ middle.block168:                                  ; preds = %vector.body159
   %i.kl = call fast float @llvm.exp.f32(float %i.kk) ; 2 uses
   %i.km = bitcast float %i.kl to i32
   %i.kn = lshr i32 %i.km, 16
-  %i.ko = trunc nuw nsw i32 %i.kn to i16
+  %i.ko = trunc nuw i32 %i.kn to i16
   store i16 %i.ko, ptr %i.kc, align 2, !tbaa !82
   %i.kp = load float, ptr %i.ke, align 4, !tbaa !66
   %i.kq = fadd fast float %i.kl, %i.kp
@@ -1790,8 +1790,8 @@ vector.body73:                                    ; preds = %vector.body73, %vec
   %i.dm = bitcast <4 x float> %i.dk to <4 x i32>
   %i.dn = lshr <4 x i32> %i.dl, splat (i32 16)
   %i.do = lshr <4 x i32> %i.dm, splat (i32 16)
-  %i.dp = trunc nuw nsw <4 x i32> %i.dn to <4 x i16>
-  %i.dq = trunc nuw nsw <4 x i32> %i.do to <4 x i16>
+  %i.dp = trunc nuw <4 x i32> %i.dn to <4 x i16>
+  %i.dq = trunc nuw <4 x i32> %i.do to <4 x i16>
   store <4 x i16> %i.dp, ptr %next.gep76, align 2, !tbaa !82
   store <4 x i16> %i.dq, ptr %i.da, align 2, !tbaa !82
   %i.dr = fadd fast <4 x float> %i.dj, %vec.phi   ; 2 uses
@@ -1878,7 +1878,7 @@ middle.block80:                                   ; preds = %vector.body73
   %i.fv = call fast float @llvm.exp.f32(float %i.fu) ; 2 uses
   %i.fw = bitcast float %i.fv to i32
   %i.fx = lshr i32 %i.fw, 16
-  %i.fy = trunc nuw nsw i32 %i.fx to i16
+  %i.fy = trunc nuw i32 %i.fx to i16
   store i16 %i.fy, ptr %.153137.i, align 2, !tbaa !82
   %i.fz = fadd fast float %i.fv, %.054136.i       ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %.153137.i, i64 2
@@ -2281,8 +2281,8 @@ vector.body92:                                    ; preds = %vector.body92, %vec
   %i.dx = bitcast <4 x float> %i.dv to <4 x i32>
   %i.dy = lshr <4 x i32> %i.dw, splat (i32 16)
   %i.dz = lshr <4 x i32> %i.dx, splat (i32 16)
-  %i.ea = trunc nuw nsw <4 x i32> %i.dy to <4 x i16>
-  %i.eb = trunc nuw nsw <4 x i32> %i.dz to <4 x i16>
+  %i.ea = trunc nuw <4 x i32> %i.dy to <4 x i16>
+  %i.eb = trunc nuw <4 x i32> %i.dz to <4 x i16>
   store <4 x i16> %i.ea, ptr %next.gep95, align 2, !tbaa !82
   store <4 x i16> %i.eb, ptr %i.dl, align 2, !tbaa !82
   %i.ec = fadd fast <4 x float> %i.du, %vec.phi   ; 2 uses
@@ -2369,7 +2369,7 @@ middle.block99:                                   ; preds = %vector.body92
   %i.gg = call fast float @llvm.exp.f32(float %i.gf) ; 2 uses
   %i.gh = bitcast float %i.gg to i32
   %i.gi = lshr i32 %i.gh, 16
-  %i.gj = trunc nuw nsw i32 %i.gi to i16
+  %i.gj = trunc nuw i32 %i.gi to i16
   store i16 %i.gj, ptr %.153137.i, align 2, !tbaa !82
   %i.gk = fadd fast float %i.gg, %.054136.i       ; 2 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %.153137.i, i64 2
