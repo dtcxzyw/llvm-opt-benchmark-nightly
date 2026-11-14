@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph110.i
   %.041106.i = phi i32 [ %i.ai, %.lr.ph.i ], [ 1, %bb.f ]
   %.143105.i = phi i32 [ %i.ah, %.lr.ph.i ], [ %.042.i, %bb.f ] ; 2 uses
   %i.ah = lshr i32 %.143105.i, 2
-  %i.ai = shl i32 %.041106.i, 1                   ; 2 uses
+  %i.ai = shl nuw nsw i32 %.041106.i, 1           ; 2 uses
   %i.aj = icmp samesign ugt i32 %.143105.i, 35
   br i1 %i.aj, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !162
 

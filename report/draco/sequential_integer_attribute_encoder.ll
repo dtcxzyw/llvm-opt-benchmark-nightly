@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph.i:                                         ; preds = %bb.l, %.lr.ph.i
   %.018.i = phi i64 [ %i.fq, %.lr.ph.i ], [ 1, %bb.l ]
   %.01317.i = phi i64 [ %i.fr, %.lr.ph.i ], [ %i.fp, %bb.l ] ; 2 uses
-  %i.fq = shl i64 %.018.i, 1                      ; 2 uses
+  %i.fq = shl nuw nsw i64 %.018.i, 1              ; 2 uses
   %i.fr = lshr i64 %.01317.i, 2
   %i.fs = icmp ugt i64 %.01317.i, 7
   br i1 %i.fs, label %.lr.ph.i, label %.preheader.i.preheader, !llvm.loop !7
@@ -608,7 +608,7 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.i
   %.018.i = phi i64 [ %i.fq, %.lr.ph.i ], [ 1, %bb.k ]
   %.01317.i = phi i64 [ %i.fr, %.lr.ph.i ], [ %i.fp, %bb.k ] ; 2 uses
-  %i.fq = shl i64 %.018.i, 1                      ; 2 uses
+  %i.fq = shl nuw nsw i64 %.018.i, 1              ; 2 uses
   %i.fr = lshr i64 %.01317.i, 2
   %i.fs = icmp ugt i64 %.01317.i, 7
   br i1 %i.fs, label %.lr.ph.i, label %.preheader.i.preheader, !llvm.loop !7

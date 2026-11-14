@@ -142,8 +142,8 @@ bb.j:                                             ; preds = %bb.h
 
 _ZN4llvh11raw_ostreamlsEc.exit24.i:               ; preds = %bb.j, %bb.i
   %i.ac = add nuw i64 %.025.i, 1                  ; 2 uses
-  %5 = icmp ult i64 %i.ac, %2
-  br i1 %5, label %bb.h, label %.loopexit.i, !llvm.loop !23
+  %exitcond.not.i = icmp eq i64 %i.ac, %2
+  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.h, !llvm.loop !23
 
 .loopexit.i:                                      ; preds = %_ZN4llvh11raw_ostreamlsEc.exit24.i, %_ZN4llvh11raw_ostreamlsEc.exit.i
   %i.ad = sub nsw i64 0, %i.n
@@ -315,8 +315,8 @@ bb.j:                                             ; preds = %bb.h
 
 _ZN4llvh11raw_ostreamlsEc.exit24.i:               ; preds = %bb.j, %bb.i
   %i.ac = add nuw i64 %.025.i, 1                  ; 2 uses
-  %5 = icmp ult i64 %i.ac, %2
-  br i1 %5, label %bb.h, label %.loopexit.i, !llvm.loop !28
+  %exitcond.not.i = icmp eq i64 %i.ac, %2
+  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.h, !llvm.loop !28
 
 .loopexit.i:                                      ; preds = %_ZN4llvh11raw_ostreamlsEc.exit24.i, %_ZN4llvh11raw_ostreamlsEc.exit.i
   %i.ad = sub nsw i64 0, %i.n
@@ -719,9 +719,9 @@ bb.h:                                             ; preds = %bb.f
   br label %_ZN4llvh11raw_ostreamlsEc.exit24
 
 _ZN4llvh11raw_ostreamlsEc.exit24:                 ; preds = %bb.g, %bb.h
-  %i.aa = add nuw i64 %.025, 1                    ; 2 uses
-  %5 = icmp ult i64 %i.aa, %2
-  br i1 %5, label %bb.f, label %.loopexit, !llvm.loop !47
+  %i.aa = add i64 %.025, 1                        ; 2 uses
+  %exitcond.not = icmp eq i64 %i.aa, %2
+  br i1 %exitcond.not, label %.loopexit, label %bb.f, !llvm.loop !47
 
 .loopexit:                                        ; preds = %_ZN4llvh11raw_ostreamlsEc.exit24, %_ZN4llvh11raw_ostreamlsEc.exit
   %i.ab = sub nsw i64 0, %i.l

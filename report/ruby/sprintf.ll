@@ -202,7 +202,7 @@ bb.ci:                                            ; preds = %bb.ch
   store i8 %i.jc, ptr %i.jd, align 1, !tbaa !67
   %i.je = udiv i32 %.124.i, 10                    ; 2 uses
   %i.jf = icmp samesign ugt i32 %.124.i, 99
-  %indvar.next.i = add i64 %indvar.i, 1
+  %indvar.next.i = add nuw nsw i64 %indvar.i, 1
   %scevgep31.i = getelementptr i8, ptr %indvars.iv.i, i64 1
   br i1 %i.jf, label %.preheader.i, label %bb.cj, !llvm.loop !165
 
@@ -215,8 +215,8 @@ bb.cj:                                            ; preds = %.preheader.i
   br i1 %i.jj, label %.lr.ph.preheader.i, label %exponent.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.cj
-  %i.jk = add i64 %indvar.i, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.021.i768, ptr nonnull align 1 %i.ji, i64 %i.jk, i1 false), !tbaa !67
+  %i.jk = add nuw i64 %indvar.i, 2
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.021.i768, ptr noundef nonnull align 1 dereferenceable(1) %i.ji, i64 range(i64 0, 13) %i.jk, i1 false), !tbaa !67
   br label %exponent.exit
 
 bb.ck:                                            ; preds = %bb.ci
@@ -268,7 +268,7 @@ bb.cm:                                            ; preds = %bb.cl
   store i8 %i.kc, ptr %i.kd, align 1, !tbaa !67
   %i.ke = udiv i32 %.124.i777, 10                 ; 2 uses
   %i.kf = icmp samesign ugt i32 %.124.i777, 99
-  %indvar.next.i779 = add i64 %indvar.i776, 1
+  %indvar.next.i779 = add nuw nsw i64 %indvar.i776, 1
   %scevgep31.i780 = getelementptr i8, ptr %indvars.iv.i775, i64 1
   br i1 %i.kf, label %.preheader.i774, label %bb.cn, !llvm.loop !165
 
@@ -281,8 +281,8 @@ bb.cn:                                            ; preds = %.preheader.i774
   br i1 %i.kj, label %.lr.ph.preheader.i781, label %exponent.exit782
 
 .lr.ph.preheader.i781:                            ; preds = %bb.cn
-  %i.kk = add i64 %indvar.i776, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.021.i768, ptr nonnull align 1 %i.ki, i64 %i.kk, i1 false), !tbaa !67
+  %i.kk = add nuw i64 %indvar.i776, 2
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.021.i768, ptr noundef nonnull align 1 dereferenceable(1) %i.ki, i64 range(i64 0, 13) %i.kk, i1 false), !tbaa !67
   br label %exponent.exit782
 
 bb.co:                                            ; preds = %bb.cm
