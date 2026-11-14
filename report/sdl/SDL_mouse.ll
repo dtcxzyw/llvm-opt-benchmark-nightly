@@ -204,14 +204,18 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.g = icmp sgt i32 %2, 0
-  br i1 %i.g, label %.lr.ph, label %._crit_edge62.split
+  br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge62.split
 
-.lr.ph:                                           ; preds = %.lr.ph61, %._crit_edge
-  %.060 = phi i8 [ %i.v, %._crit_edge ], [ 0, %.lr.ph61 ]
-  %.02859 = phi i8 [ %i.u, %._crit_edge ], [ 0, %.lr.ph61 ]
-  %.03358 = phi i32 [ %i.x, %._crit_edge ], [ 0, %.lr.ph61 ] ; 2 uses
-  %.03657 = phi ptr [ %.238, %._crit_edge ], [ %0, %.lr.ph61 ]
-  %.03956 = phi ptr [ %.241, %._crit_edge ], [ %1, %.lr.ph61 ]
+.lr.ph.preheader:                                 ; preds = %.lr.ph61
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1)
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
+  %.060 = phi i8 [ %i.v, %._crit_edge ], [ 0, %.lr.ph.preheader ]
+  %.02859 = phi i8 [ %i.u, %._crit_edge ], [ 0, %.lr.ph.preheader ]
+  %.03358 = phi i32 [ %i.x, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %.03657 = phi ptr [ %.238, %._crit_edge ], [ %0, %.lr.ph.preheader ]
+  %.03956 = phi ptr [ %.241, %._crit_edge ], [ %1, %.lr.ph.preheader ]
   %i.h = load ptr, ptr %i.e, align 8
   %i.i = load i32, ptr %i.f, align 8
   %i.j = mul nsw i32 %i.i, %.03358
@@ -252,7 +256,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.u = shl i8 %.230, 1                          ; 2 uses
   %i.v = shl i8 %.2, 1                            ; 2 uses
   %i.w = add nuw nsw i32 %.03449, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %i.w, %i.b
+  %exitcond.not = icmp eq i32 %i.w, %smax
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !42
 
 ._crit_edge:                                      ; preds = %bb.d
