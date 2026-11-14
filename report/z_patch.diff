@@ -1,0 +1,330 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 28a27237307adf..a3046262d93178 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -6869,6 +6869,12 @@ const ConstantRange &ScalarEvolution::getRangeRef(
+       }
+     }
+ 
++    // A select of two constants produces one of them.
++    const APInt *TrueC, *FalseC;
++    if (match(V, m_Select(m_Value(), m_APInt(TrueC), m_APInt(FalseC))))
++      ConservativeResult = ConservativeResult.intersectWith(
++          ConstantRange(*TrueC).unionWith(*FalseC, RangeType), RangeType);
++
+     // vscale can't be equal to zero
+     if (const auto *II = dyn_cast<IntrinsicInst>(V))
+       if (II->getIntrinsicID() == Intrinsic::vscale) {
+diff --git a/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll b/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
+index 05f31a68c7b4ef..39a5524c458ab8 100644
+--- a/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
++++ b/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
+@@ -7,13 +7,13 @@ define void @f0(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 127, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,128) S: [0,128)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -1, i32 1
+-; CHECK-NEXT:    --> %step U: [1,0) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [1,0) S: [-1,2)
+ ; CHECK-NEXT:    %loop.iv = phi i32 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,128) S: [0,128) Exits: 127 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {%start,+,%step}<nsw><%loop> U: [0,128) S: [0,128) Exits: ((127 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-128,256) S: [-128,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f0
+@@ -45,7 +45,7 @@ define void @f1(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 120, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,121) S: [0,121)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -8, i32 8
+-; CHECK-NEXT:    --> %step U: [8,-7) S: [-16,16)
++; CHECK-NEXT:    --> %step U: [8,-7) S: [-8,9)
+ ; CHECK-NEXT:    %loop.iv = phi i32 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,16) S: [0,16) Exits: 15 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+@@ -79,7 +79,7 @@ define void @f1(i1 %c) {
+ ; CHECK-NEXT:    %iv.m7 = sub i32 %iv, 7
+ ; CHECK-NEXT:    --> {(-7 + %start)<nsw>,+,%step}<nsw><%loop> U: [-7,114) S: [-7,114) Exits: (-7 + (15 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [0,-7) S: [-256,361) Exits: ((16 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [0,-7) S: [-128,249) Exits: ((16 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,17) S: [1,17) Exits: 16 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f1
+@@ -130,7 +130,7 @@ define void @f2(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 127, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,128) S: [0,128)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -1, i32 1
+-; CHECK-NEXT:    --> %step U: [1,0) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [1,0) S: [-1,2)
+ ; CHECK-NEXT:    %loop.iv = phi i32 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,128) S: [0,128) Exits: 127 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+@@ -138,7 +138,7 @@ define void @f2(i1 %c) {
+ ; CHECK-NEXT:    %iv.sext = sext i32 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i32 %start to i64),+,(sext i32 %step to i64)}<nsw><%loop> U: [0,128) S: [0,128) Exits: ((zext i32 %start to i64) + (127 * (sext i32 %step to i64))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-128,256) S: [-128,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f2
+@@ -219,7 +219,7 @@ define void @f4(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 127, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,128) S: [0,128)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -1, i32 1
+-; CHECK-NEXT:    --> %step U: [1,0) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [1,0) S: [-1,2)
+ ; CHECK-NEXT:    %loop.iv = phi i32 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,128) S: [0,128) Exits: 127 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+@@ -227,7 +227,7 @@ define void @f4(i1 %c) {
+ ; CHECK-NEXT:    %iv.trunc = trunc i32 %iv to i16
+ ; CHECK-NEXT:    --> {(trunc i32 %start to i16),+,(trunc i32 %step to i16)}<%loop> U: [0,128) S: [0,128) Exits: ((trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-128,256) S: [-128,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f4
+@@ -261,7 +261,7 @@ define void @f5(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 127, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,128) S: [0,128)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -1, i32 1
+-; CHECK-NEXT:    --> %step U: [1,0) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [1,0) S: [-1,2)
+ ; CHECK-NEXT:    %loop.iv = phi i16 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,128) S: [0,128) Exits: 127 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+@@ -269,7 +269,7 @@ define void @f5(i1 %c) {
+ ; CHECK-NEXT:    %iv.trunc = trunc i32 %iv to i16
+ ; CHECK-NEXT:    --> {(trunc i32 %start to i16),+,(trunc i32 %step to i16)}<%loop> U: [0,128) S: [0,128) Exits: ((trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-128,256) S: [-128,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i16 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f5
+@@ -303,15 +303,15 @@ define void @f6(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 127, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,128) S: [0,128)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -2, i32 0
+-; CHECK-NEXT:    --> %step U: [0,-1) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [0,-1) S: [-2,1)
+ ; CHECK-NEXT:    %loop.iv = phi i16 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,128) S: [0,128) Exits: 127 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {%start,+,(1 + %step)<nuw><nsw>}<nsw><%loop> U: [0,128) S: [0,128) Exits: (127 + (127 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %step.plus.one = add i32 %step, 1
+-; CHECK-NEXT:    --> (1 + %step)<nuw><nsw> U: [1,0) S: [-1,3) Exits: (1 + %step)<nuw><nsw> LoopDispositions: { %loop: Invariant }
++; CHECK-NEXT:    --> (1 + %step)<nuw><nsw> U: [1,0) S: [-1,2) Exits: (1 + %step)<nuw><nsw> LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step.plus.one
+-; CHECK-NEXT:    --> {(1 + %start + %step),+,(1 + %step)<nuw><nsw>}<nw><%loop> U: [-128,384) S: [-128,384) Exits: (128 + (128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(1 + %start + %step),+,(1 + %step)<nuw><nsw>}<nw><%loop> U: [-128,256) S: [-128,256) Exits: (128 + (128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.sext = sext i32 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i32 %start to i64),+,(1 + (sext i32 %step to i64))<nuw><nsw>}<nsw><%loop> U: [0,128) S: [0,128) Exits: (127 + (zext i32 %start to i64) + (127 * (sext i32 %step to i64))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i16 %loop.iv, 1
+@@ -348,7 +348,7 @@ define void @f7(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 127, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,128) S: [0,128)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -1, i32 1
+-; CHECK-NEXT:    --> %step U: [1,0) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [1,0) S: [-1,2)
+ ; CHECK-NEXT:    %loop.iv = phi i16 [ 0, %entry ], [ %loop.iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,128) S: [0,128) Exits: 127 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+@@ -356,7 +356,7 @@ define void @f7(i1 %c) {
+ ; CHECK-NEXT:    %iv.trunc = trunc i32 %iv to i16
+ ; CHECK-NEXT:    --> {(trunc i32 %start to i16),+,(trunc i32 %step to i16)}<%loop> U: [0,128) S: [0,128) Exits: ((trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-128,256) S: [-128,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.trunc.plus.one = add i16 %iv.trunc, 1
+ ; CHECK-NEXT:    --> {(1 + (trunc i32 %start to i16))<nuw><nsw>,+,(trunc i32 %step to i16)}<nsw><%loop> U: [1,129) S: [1,129) Exits: (1 + (trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.trunc.plus.two = add i16 %iv.trunc, 2
+diff --git a/llvm/test/Analysis/ScalarEvolution/logical-operations.ll b/llvm/test/Analysis/ScalarEvolution/logical-operations.ll
+index 8f836384d7fcd6..3960a293d7fd23 100644
+--- a/llvm/test/Analysis/ScalarEvolution/logical-operations.ll
++++ b/llvm/test/Analysis/ScalarEvolution/logical-operations.ll
+@@ -301,7 +301,7 @@ define i32 @select_between_constants(i1 %c, i32 %y) {
+ ; CHECK-LABEL: 'select_between_constants'
+ ; CHECK-NEXT:  Classifying expressions for: @select_between_constants
+ ; CHECK-NEXT:    %r = select i1 %c, i32 42, i32 24
+-; CHECK-NEXT:    --> %r U: [8,59) S: [8,59)
++; CHECK-NEXT:    --> %r U: [24,43) S: [24,43)
+ ; CHECK-NEXT:  Determining loop execution counts for: @select_between_constants
+ ;
+   %r = select i1 %c, i32 42, i32 24
+diff --git a/llvm/test/Analysis/ScalarEvolution/nsw.ll b/llvm/test/Analysis/ScalarEvolution/nsw.ll
+index d2cd5080615d4c..f3568a4cca31d9 100644
+--- a/llvm/test/Analysis/ScalarEvolution/nsw.ll
++++ b/llvm/test/Analysis/ScalarEvolution/nsw.ll
+@@ -396,7 +396,7 @@ define void @select_cond_poison_propagation(ptr %p, i32 %x) nounwind {
+ ; CHECK-NEXT:    %iv.next = add nsw i32 %iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,-2147483648) S: [1,-2147483648) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %sel = select i1 %cmp, i32 10, i32 20
+-; CHECK-NEXT:    --> %sel U: [0,31) S: [0,31) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
++; CHECK-NEXT:    --> %sel U: [10,21) S: [10,21) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond = call i1 @cond()
+ ; CHECK-NEXT:    --> %cond U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @select_cond_poison_propagation
+diff --git a/llvm/test/Analysis/ScalarEvolution/ranges.ll b/llvm/test/Analysis/ScalarEvolution/ranges.ll
+index 07ff3102c7a89b..e548c90f74c678 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ranges.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ranges.ll
+@@ -509,4 +509,93 @@ leave:
+   ret void
+ }
+ 
++; The range of a select of two constants is the union of the constants, which
++; is tighter than its known bits. Used as a loop bound, this gives a tight
++; constant max backedge-taken count.
++define void @select_of_constants_bound(i1 %c) {
++; CHECK-LABEL: 'select_of_constants_bound'
++; CHECK-NEXT:  Classifying expressions for: @select_of_constants_bound
++; CHECK-NEXT:    %n = select i1 %c, i64 5, i64 2
++; CHECK-NEXT:    --> %n U: [2,6) S: [2,6)
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,5) S: [0,5) Exits: (-1 + %n)<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw nsw i64 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,6) S: [1,6) Exits: %n LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @select_of_constants_bound
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %n)<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %n)<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = select i1 %c, i64 5, i64 2
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp ult i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++
++define void @select_of_constants_bound_wraps_unsigned(i1 %c) {
++; CHECK-LABEL: 'select_of_constants_bound_wraps_unsigned'
++; CHECK-NEXT:  Classifying expressions for: @select_of_constants_bound_wraps_unsigned
++; CHECK-NEXT:    %n = select i1 %c, i8 1, i8 -2
++; CHECK-NEXT:    --> %n U: [1,-1) S: [-2,2)
++; CHECK-NEXT:    %iv = phi i8 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-2) S: [0,-2) Exits: (-1 + %n)<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i8 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,-1) S: [1,-1) Exits: %n LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @select_of_constants_bound_wraps_unsigned
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %n)<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -3
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %n)<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = select i1 %c, i8 1, i8 -2
++  br label %loop
++
++loop:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw i8 %iv, 1
++  %ec = icmp ult i8 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @select_of_constants_bound_wraps_signed(i1 %c) {
++; CHECK-LABEL: 'select_of_constants_bound_wraps_signed'
++; CHECK-NEXT:  Classifying expressions for: @select_of_constants_bound_wraps_signed
++; CHECK-NEXT:    %n = select i1 %c, i8 -100, i8 100
++; CHECK-NEXT:    --> %n U: [100,-99) S: [-100,101)
++; CHECK-NEXT:    %iv = phi i8 [ -128, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {-128,+,1}<nsw><%loop> U: [-128,100) S: [-128,100) Exits: (-1 + %n)<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nsw i8 %iv, 1
++; CHECK-NEXT:    --> {-127,+,1}<nsw><%loop> U: [-127,101) S: [-127,101) Exits: %n LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @select_of_constants_bound_wraps_signed
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (127 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -29
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (127 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 4
++;
++entry:
++  %n = select i1 %c, i8 -100, i8 100
++  br label %loop
+ 
++loop:
++  %iv = phi i8 [ -128, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nsw i8 %iv, 1
++  %ec = icmp slt i8 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll b/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll
+index 49520e093ea8b3..260c726da11e63 100644
+--- a/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll
++++ b/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll
+@@ -7,7 +7,7 @@ define void @f(i1 %c) {
+ ; CHECK-NEXT:    %start = select i1 %c, i32 100, i32 0
+ ; CHECK-NEXT:    --> %start U: [0,101) S: [0,101)
+ ; CHECK-NEXT:    %step = select i1 %c, i32 -1, i32 1
+-; CHECK-NEXT:    --> %step U: [1,0) S: [-2,2)
++; CHECK-NEXT:    --> %step U: [1,0) S: [-1,2)
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.dec, %loop ]
+ ; CHECK-NEXT:    --> {%start,+,%step}<nsw><%loop> U: [0,101) S: [0,101) Exits: ((99 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.tc = phi i32 [ 0, %entry ], [ %iv.tc.inc, %loop ]
+@@ -15,7 +15,7 @@ define void @f(i1 %c) {
+ ; CHECK-NEXT:    %iv.tc.inc = add i32 %iv.tc, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,101) S: [1,101) Exits: 100 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.dec = add nsw i32 %iv, %step
+-; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-200,201) S: [-200,201) Exits: ((100 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-100,201) S: [-100,201) Exits: ((100 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.sext = sext i32 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i32 %start to i64),+,(sext i32 %step to i64)}<nsw><%loop> U: [0,101) S: [0,101) Exits: ((zext i32 %start to i64) + (99 * (sext i32 %step to i64))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f
+diff --git a/llvm/test/Analysis/StackSafetyAnalysis/local.ll b/llvm/test/Analysis/StackSafetyAnalysis/local.ll
+index 28c6172b8f61cb..26d51b4f1e6070 100644
+--- a/llvm/test/Analysis/StackSafetyAnalysis/local.ll
++++ b/llvm/test/Analysis/StackSafetyAnalysis/local.ll
+@@ -339,8 +339,7 @@ define void @NonConstantOffset(i1 zeroext %z) {
+ ; CHECK-LABEL: @NonConstantOffset dso_preemptable{{$}}
+ ; CHECK-NEXT: args uses:
+ ; CHECK-NEXT: allocas uses:
+-; FIXME: SCEV can't look through selects.
+-; CHECK-NEXT: x[4]: [0,4){{$}}
++; CHECK-NEXT: x[4]: [1,3){{$}}
+ ; GLOBAL-NEXT: safe accesses:
+ ; GLOBAL-NEXT: store i8 0, ptr %x2, align 1
+ ; CHECK-EMPTY:
+@@ -384,7 +383,7 @@ define void @NonConstantOffsetOOB(i1 zeroext %z) {
+ ; CHECK-LABEL: @NonConstantOffsetOOB dso_preemptable{{$}}
+ ; CHECK-NEXT: args uses:
+ ; CHECK-NEXT: allocas uses:
+-; CHECK-NEXT: x[4]: [0,6){{$}}
++; CHECK-NEXT: x[4]: [1,5){{$}}
+ ; GLOBAL-NEXT: safe accesses:
+ ; CHECK-EMPTY:
+ entry:
+diff --git a/llvm/test/Analysis/StackSafetyAnalysis/memintrin.ll b/llvm/test/Analysis/StackSafetyAnalysis/memintrin.ll
+index 6913816cc8fe7a..ceb90483728637 100644
+--- a/llvm/test/Analysis/StackSafetyAnalysis/memintrin.ll
++++ b/llvm/test/Analysis/StackSafetyAnalysis/memintrin.ll
+@@ -70,8 +70,9 @@ define void @MemsetNonConstInBounds(i1 zeroext %z) {
+ ; CHECK-LABEL: MemsetNonConstInBounds dso_preemptable{{$}}
+ ; CHECK-NEXT: args uses:
+ ; CHECK-NEXT: allocas uses:
+-; CHECK-NEXT: x[4]: [0,7){{$}}
++; CHECK-NEXT: x[4]: [0,4){{$}}
+ ; GLOBAL-NEXT: safe accesses:
++; GLOBAL-NEXT: call void @llvm.memset.p0.i32(ptr %x, i8 42, i32 %size, i1 false)
+ ; CHECK-EMPTY:
+ entry:
+   %x = alloca i32, align 4

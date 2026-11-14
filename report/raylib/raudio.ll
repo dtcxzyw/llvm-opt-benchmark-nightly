@@ -205,8 +205,8 @@ drmp3_bs_get_bits.exit167:                        ; preds = %bb.e, %._crit_edge.
   %i.ga = load i8, ptr %i.j, align 1
   %i.gb = and i8 %i.ga, 8
   %.not101 = icmp eq i8 %i.gb, 0
-  %i.gc = select i1 %.not101, i32 9, i32 4        ; 2 uses
-  %i.gd = load i32, ptr %i.ct, align 8            ; 3 uses
+  %i.gc = select i1 %.not101, i32 9, i32 4        ; 3 uses
+  %i.gd = load i32, ptr %i.ct, align 8            ; 4 uses
   %i.ge = load ptr, ptr %0, align 8
   %i.gf = add nsw i32 %i.gc, %i.gd                ; 2 uses
   store i32 %i.gf, ptr %i.ct, align 8
@@ -228,17 +228,19 @@ bb.g:                                             ; preds = %drmp3_bs_get_bits.e
   br i1 %i.gr, label %._crit_edge.i168.loopexit, label %._crit_edge.i168
 
 ._crit_edge.i168.loopexit:                        ; preds = %bb.g
+  %3 = add nsw i32 %i.gm, -8
+  %4 = shl nuw nsw i32 %i.gq, %3
   %.0.i178 = getelementptr inbounds nuw i8, ptr %i.gk, i64 1
   %i.gs = load i8, ptr %.0.i178, align 1
   %i.gt = zext i8 %i.gs to i32
-  %3 = add nsw i32 %i.gm, -8                      ; 2 uses
-  %4 = shl nuw nsw i32 %i.gq, %3
+  %5 = or i32 %i.gd, -8
+  %6 = add nsw i32 %i.gc, %5
   br label %._crit_edge.i168
 
 ._crit_edge.i168:                                 ; preds = %._crit_edge.i168.loopexit, %bb.g
   %.020.lcssa.i169 = phi i32 [ %i.gq, %bb.g ], [ %i.gt, %._crit_edge.i168.loopexit ]
   %.019.lcssa.i170 = phi i32 [ 0, %bb.g ], [ %4, %._crit_edge.i168.loopexit ]
-  %.018.lcssa.i171 = phi i32 [ %i.gm, %bb.g ], [ %3, %._crit_edge.i168.loopexit ]
+  %.018.lcssa.i171 = phi i32 [ %i.gm, %bb.g ], [ %6, %._crit_edge.i168.loopexit ]
   %i.gu = sub nuw nsw i32 8, %.018.lcssa.i171
   %i.gv = lshr i32 %.020.lcssa.i169, %i.gu
   %i.gw = or i32 %i.gv, %.019.lcssa.i170

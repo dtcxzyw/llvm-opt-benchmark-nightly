@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 915
 inline.NumDeleted: 385
 loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZNK2cv3dnn16EltwiseLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #23
   br label %common.resume
@@ -204,22 +204,43 @@ _ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.thread.us.us: ; pre
   br i1 %.not23.i.us, label %.split283.us, label %.preheader.split.i.us
 
 .preheader.split.i.us:                            ; preds = %.lr.ph277.split.split.us.split
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 12
+  %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 12 ; 4 uses
   br label %_ZNK2cv8MatShapeixEm.exit.i.us
 
 _ZNK2cv8MatShapeixEm.exit.i.us:                   ; preds = %bb.be, %.preheader.split.i.us
-  %indvars.iv.i.us = phi i64 [ 2, %.preheader.split.i.us ], [ %indvars.iv.next.i.us, %bb.be ] ; 2 uses
+  %indvars.iv.i.us = phi i64 [ 2, %.preheader.split.i.us ], [ %indvars.iv.next.i.us, %bb.be ] ; 5 uses
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %indvars.iv.i.us
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !92
   %.not24.i.us = icmp eq i32 %i.eq, 1
-  br i1 %.not24.i.us, label %bb.be, label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us
+  br i1 %.not24.i.us, label %_ZNK2cv8MatShapeixEm.exit.i.us.1, label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us
 
-bb.be:                                            ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us
-  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
+_ZNK2cv8MatShapeixEm.exit.i.us.1:                 ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %indvars.iv.i.us
+  %32 = getelementptr inbounds nuw i8, ptr %31, i64 4
+  %33 = load i32, ptr %32, align 4, !tbaa !92
+  %.not24.i.us.1 = icmp eq i32 %33, 1
+  br i1 %.not24.i.us.1, label %_ZNK2cv8MatShapeixEm.exit.i.us.2, label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us
+
+_ZNK2cv8MatShapeixEm.exit.i.us.2:                 ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us.1
+  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %indvars.iv.i.us
+  %35 = getelementptr inbounds nuw i8, ptr %34, i64 8
+  %36 = load i32, ptr %35, align 4, !tbaa !92
+  %.not24.i.us.2 = icmp eq i32 %36, 1
+  br i1 %.not24.i.us.2, label %_ZNK2cv8MatShapeixEm.exit.i.us.3, label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us
+
+_ZNK2cv8MatShapeixEm.exit.i.us.3:                 ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us.2
+  %37 = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %indvars.iv.i.us
+  %38 = getelementptr inbounds nuw i8, ptr %37, i64 12
+  %39 = load i32, ptr %38, align 4, !tbaa !92
+  %.not24.i.us.3 = icmp eq i32 %39, 1
+  br i1 %.not24.i.us.3, label %bb.be, label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us
+
+bb.be:                                            ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us.3
+  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 4 ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %spec.select.i
   br i1 %exitcond.not.i.us, label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.thread.us, label %_ZNK2cv8MatShapeixEm.exit.i.us, !llvm.loop !2
 
-_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us: ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us
+_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.us: ; preds = %_ZNK2cv8MatShapeixEm.exit.i.us.3, %_ZNK2cv8MatShapeixEm.exit.i.us.2, %_ZNK2cv8MatShapeixEm.exit.i.us.1, %_ZNK2cv8MatShapeixEm.exit.i.us
   %i.er = trunc nuw i8 %.066275.us to i1
   %spec.select116.us = select i1 %i.er, i64 %.067274.us, i64 %.065276.us
   br label %_ZN2cv3dnn14dnn5_v20260605L9isAllOnesERKNS_8MatShapeEii.exit.thread.us

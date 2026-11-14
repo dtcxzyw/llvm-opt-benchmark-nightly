@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/jiff-40853fb6ac434a7c.jiff.3ee8fab6f2ec3df8-cgu.07?download=true
 inline.NumInlined: 177
 inline.NumDeleted: 76
-loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 13
 loop-unroll.NumUnrolled: 23
 begin_hunk_0_@_RNvMs0_NtNtNtCs5oRRSLMQMUC_4jiff3fmt8temporal7printerNtB5_11SpanPrinter10print_span:bb.a
 
@@ -205,62 +205,42 @@ _RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_cha
 
 _RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit: ; preds = %bb.o, %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit29
   %i.n = phi i16 [ %i.ca, %bb.o ], [ %i.l, %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit29 ] ; 2 uses
-  %.sroa.0.0 = phi i64 [ %.zext4, %bb.o ], [ %.0.val1, %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit29 ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ %.zext4, %bb.o ], [ %.0.val1, %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit29 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1196)
-  %i.o = icmp samesign ult i64 %.sroa.0.0, 10     ; 2 uses
+  %i.o = icmp samesign ult i64 %.sroa.0.0, 10
   %spec.select50 = select i1 %i.o, i8 1, i8 2     ; 2 uses
-  %i.p = zext nneg i8 %spec.select50 to i64       ; 4 uses
+  %i.p = zext nneg i8 %spec.select50 to i64       ; 3 uses
   %i.q = zext i16 %i.n to i64                     ; 2 uses
   %i.r = sub nuw i64 %i.c, %i.q
-  %i.s = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.q ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.q ; 2 uses
   %.not.i15 = icmp ult i64 %i.r, %i.p
-  br i1 %.not.i15, label %2, label %.preheader.preheader, !prof !10
+  br i1 %.not.i15, label %.preheader.preheader, label %.preheader.prol, !prof !10
 
 .preheader.preheader:                             ; preds = %_RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit
-  %xtraiter54 = and i64 %i.p, 1
-  %lcmp.mod55.not = icmp eq i64 %xtraiter54, 0
-  br i1 %lcmp.mod55.not, label %.preheader.prol.loopexit, label %.preheader.prol
-
-.preheader.prol:                                  ; preds = %.preheader.preheader
-  %i.t = add nsw i64 %i.p, -1                     ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
-  %i.v = urem i64 %.sroa.0.0, 10
-  %i.w = trunc nuw nsw i64 %i.v to i8
-  %i.x = or disjoint i8 %i.w, 48
-  store i8 %i.x, ptr %i.u, align 1, !noalias !1196
-  %1 = udiv i64 %.sroa.0.0, 10
-  br label %.preheader.prol.loopexit
-
-.preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
-  %.sroa.0.0.i1714.unr = phi i64 [ %.sroa.0.0, %.preheader.preheader ], [ %1, %.preheader.prol ]
-  %.sroa.03.0.i1613.unr = phi i64 [ %i.p, %.preheader.preheader ], [ %i.t, %.preheader.prol ]
-  br i1 %i.o, label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit19, label %.preheader
-
-2:                                                ; preds = %_RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit
   tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 48, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #13, !noalias !1196
   unreachable
 
-.preheader:                                       ; preds = %.preheader.prol.loopexit, %.preheader
-  %.sroa.0.0.i1714 = phi i64 [ %9, %.preheader ], [ %.sroa.0.0.i1714.unr, %.preheader.prol.loopexit ] ; 3 uses
-  %.sroa.03.0.i1613 = phi i64 [ %8, %.preheader ], [ %.sroa.03.0.i1613.unr, %.preheader.prol.loopexit ] ; 2 uses
-  %3 = getelementptr i8, ptr %i.s, i64 %.sroa.03.0.i1613
-  %i.y = getelementptr i8, ptr %3, i64 -1
-  %4 = urem i64 %.sroa.0.0.i1714, 10
-  %5 = trunc nuw nsw i64 %4 to i8
-  %6 = or disjoint i8 %5, 48
-  store i8 %6, ptr %i.y, align 1, !noalias !1196
-  %7 = udiv i64 %.sroa.0.0.i1714, 10
-  %8 = add nsw i64 %.sroa.03.0.i1613, -2          ; 3 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 %8
-  %i.aa = urem i64 %7, 10
+.preheader.prol:                                  ; preds = %_RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit
+  %i.t = add nsw i64 %i.p, -1                     ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
+  %i.v = urem i64 %.sroa.0.0, 10
+  %1 = udiv i64 %.sroa.0.0, 10
+  %i.w = trunc nuw nsw i64 %i.v to i8
+  %i.x = or disjoint i8 %i.w, 48
+  store i8 %i.x, ptr %i.u, align 1, !noalias !1196
+  %.not8.i18 = icmp eq i64 %i.t, 0
+  br i1 %.not8.i18, label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit19, label %.preheader
+
+.preheader:                                       ; preds = %.preheader.prol
+  %i.y = getelementptr i8, ptr %i.s, i64 %i.p
+  %i.z = getelementptr i8, ptr %i.y, i64 -2
+  %i.aa = urem i64 %1, 10
   %i.ab = trunc nuw nsw i64 %i.aa to i8
   %i.ac = or disjoint i8 %i.ab, 48
   store i8 %i.ac, ptr %i.z, align 1, !noalias !1196
-  %9 = udiv i64 %.sroa.0.0.i1714, 100
-  %.not8.i18.1 = icmp eq i64 %8, 0
-  br i1 %.not8.i18.1, label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit19, label %.preheader
+  br label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit19
 
-_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit19: ; preds = %.preheader, %.preheader.prol.loopexit
+_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit19: ; preds = %.preheader, %.preheader.prol
   %i.ad = zext nneg i8 %spec.select50 to i16
   %i.ae = add i16 %i.n, %i.ad                     ; 4 uses
   store i16 %i.ae, ptr %i.d, align 8, !alias.scope !1196
@@ -272,7 +252,7 @@ bb.d:                                             ; preds = %_RNvMs0_NtNtCs5oRRS
   %i.ah = udiv i64 %.0.val1, 3600                 ; 3 uses
   %.lhs.trunc = trunc nuw nsw i64 %i.ag to i16    ; 2 uses
   %i.ai = udiv i16 %.lhs.trunc, 60
-  %.zext = trunc nuw nsw i16 %i.ai to i8          ; 3 uses
+  %.zext = trunc nuw nsw i16 %i.ai to i8          ; 2 uses
   %i.aj = urem i16 %.lhs.trunc, 60                ; 2 uses
   %.zext4 = zext nneg i16 %i.aj to i64
   %i.ak = icmp ult i64 %.0.val1, 3600
@@ -402,57 +382,38 @@ bb.o:                                             ; preds = %_RNvMs0_NtNtCs5oRRS
 
 _RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit36: ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1199)
-  %i.cd = icmp samesign ult i64 %i.ag, 600        ; 2 uses
+  %i.cd = icmp samesign ult i64 %i.ag, 600
   %spec.select = select i1 %i.cd, i8 1, i8 2      ; 2 uses
-  %i.ce = zext nneg i8 %spec.select to i64        ; 4 uses
+  %i.ce = zext nneg i8 %spec.select to i64        ; 3 uses
   %i.cf = zext i16 %i.al to i64                   ; 2 uses
   %i.cg = sub nuw i64 %i.c, %i.cf
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.cf ; 3 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.cf ; 2 uses
   %.not.i = icmp ult i64 %i.cg, %i.ce
-  br i1 %.not.i, label %11, label %.preheader6.preheader, !prof !10
+  br i1 %.not.i, label %.preheader6.preheader, label %.preheader6.prol, !prof !10
 
 .preheader6.preheader:                            ; preds = %_RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit36
-  %xtraiter52 = and i64 %i.ce, 1
-  %lcmp.mod53.not = icmp eq i64 %xtraiter52, 0
-  br i1 %lcmp.mod53.not, label %.preheader6.prol.loopexit, label %.preheader6.prol
-
-.preheader6.prol:                                 ; preds = %.preheader6.preheader
-  %i.ci = add nsw i64 %i.ce, -1                   ; 2 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ci
-  %i.ck = urem i8 %.zext, 10
-  %i.cl = or disjoint i8 %i.ck, 48
-  store i8 %i.cl, ptr %i.cj, align 1, !noalias !1199
-  %10 = udiv i8 %.zext, 10
-  br label %.preheader6.prol.loopexit
-
-.preheader6.prol.loopexit:                        ; preds = %.preheader6.prol, %.preheader6.preheader
-  %.sroa.0.0.i12.unr = phi i8 [ %.zext, %.preheader6.preheader ], [ %10, %.preheader6.prol ]
-  %.sroa.03.0.i11.unr = phi i64 [ %i.ce, %.preheader6.preheader ], [ %i.ci, %.preheader6.prol ]
-  br i1 %i.cd, label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit, label %.preheader6
-
-11:                                               ; preds = %_RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit36
   tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 48, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #13, !noalias !1199
   unreachable
 
-.preheader6:                                      ; preds = %.preheader6.prol.loopexit, %.preheader6
-  %.sroa.0.0.i12 = phi i8 [ %17, %.preheader6 ], [ %.sroa.0.0.i12.unr, %.preheader6.prol.loopexit ] ; 3 uses
-  %.sroa.03.0.i11 = phi i64 [ %16, %.preheader6 ], [ %.sroa.03.0.i11.unr, %.preheader6.prol.loopexit ] ; 2 uses
-  %12 = getelementptr i8, ptr %i.ch, i64 %.sroa.03.0.i11
-  %i.cm = getelementptr i8, ptr %12, i64 -1
-  %13 = urem i8 %.sroa.0.0.i12, 10
-  %14 = or disjoint i8 %13, 48
-  store i8 %14, ptr %i.cm, align 1, !noalias !1199
-  %15 = udiv i8 %.sroa.0.0.i12, 10
-  %16 = add nsw i64 %.sroa.03.0.i11, -2           ; 3 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.ch, i64 %16
-  %i.co = urem i8 %15, 10
+.preheader6.prol:                                 ; preds = %_RNvNtNtCs5oRRSLMQMUC_4jiff3fmt6buffer6digits.exit36
+  %i.ci = add nsw i64 %i.ce, -1                   ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ci
+  %i.ck = urem i8 %.zext, 10
+  %2 = udiv i8 %.zext, 10
+  %i.cl = or disjoint i8 %i.ck, 48
+  store i8 %i.cl, ptr %i.cj, align 1, !noalias !1199
+  %.not8.i = icmp eq i64 %i.ci, 0
+  br i1 %.not8.i, label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit, label %.preheader6
+
+.preheader6:                                      ; preds = %.preheader6.prol
+  %i.cm = getelementptr i8, ptr %i.ch, i64 %i.ce
+  %i.cn = getelementptr i8, ptr %i.cm, i64 -2
+  %i.co = urem i8 %2, 10
   %i.cp = or disjoint i8 %i.co, 48
   store i8 %i.cp, ptr %i.cn, align 1, !noalias !1199
-  %17 = udiv i8 %.sroa.0.0.i12, 100
-  %.not8.i.1 = icmp eq i64 %16, 0
-  br i1 %.not8.i.1, label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit, label %.preheader6
+  br label %_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit
 
-_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit: ; preds = %.preheader6, %.preheader6.prol.loopexit
+_RINvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_intyEBa_.exit: ; preds = %.preheader6, %.preheader6.prol
   %i.cq = zext nneg i8 %spec.select to i16
   %i.cr = add i16 %i.al, %i.cq                    ; 3 uses
   store i16 %i.cr, ptr %i.d, align 8, !alias.scope !1199

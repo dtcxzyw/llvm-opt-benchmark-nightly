@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.al
 bb.ap:                                            ; preds = %bb.av, %bb.ao
   %i.el = phi ptr [ %i.dn, %bb.ao ], [ %i.eu, %bb.av ]
   %i.em = phi i64 [ 0, %bb.ao ], [ %i.en, %bb.av ] ; 3 uses
-  %i.en = add i64 %i.em, 1                        ; 3 uses
+  %i.en = add nuw nsw i64 %i.em, 1                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !18671
   invoke fastcc void @_RNvMs_NtNtNtCskTBvlRM5ILY_4moka3cht3map6bucketINtB4_11BucketArrayINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs63DIHKhvmTb_10lance_core5cache3key16InternalCacheKeyEINtNtNtNtBa_6common10concurrent3arc7MiniArcINtB2D_10ValueEntryB1z_NtNtB1D_4moka14MokaCacheEntryEEE11with_lengthB1F_(ptr noalias noundef align 8 captures(none) dereferenceable(48) %i.c, i64 noundef 0, i64 noundef %.sroa.06.0.i.i.i)
           to label %bb.aq unwind label %bb.am, !noalias !18679
