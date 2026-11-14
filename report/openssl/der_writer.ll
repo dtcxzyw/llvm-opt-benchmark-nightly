@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/der_writer?download=true
 inline.NumInlined: 13
 inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@ossl_DER_w_precompiled:bb.a
   %i.n = icmp eq i64 %i.l, %i.m
   br i1 %i.n, label %int_end_context.exit, label %bb.h
@@ -202,27 +204,42 @@ int_start_context.exit.thread:                    ; preds = %bb.b, %int_end_cont
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @ossl_DER_w_octet_string_uint32(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 5 uses
+  %i.a = alloca [4 x i8], align 4                 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   store i32 0, ptr %i.a, align 4
   %.not6 = icmp eq i32 %2, 0
-  br i1 %.not6, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not6, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  br label %.lr.ph.a
+.lr.ph:                                           ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %4 = trunc i32 %2 to i8
+  store i8 %4, ptr %3, align 1, !tbaa !12
+  %5 = lshr i32 %2, 8                             ; 2 uses
+  %.not = icmp eq i32 %5, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.a:                                         ; preds = %.lr.ph.preheader, %.lr.ph.a
-  %.08 = phi ptr [ %3, %.lr.ph.a ], [ %i.b, %.lr.ph.preheader ] ; 2 uses
-  %.057 = phi i32 [ %i.d, %.lr.ph.a ], [ %2, %.lr.ph.preheader ] ; 2 uses
-  %i.c = trunc i32 %.057 to i8
-  %3 = getelementptr inbounds i8, ptr %.08, i64 -1
-  store i8 %i.c, ptr %.08, align 1, !tbaa !14
-  %i.d = lshr i32 %.057, 8                        ; 2 uses
+.lr.ph.preheader:                                 ; preds = %.lr.ph
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %6 = trunc i32 %5 to i8
+  store i8 %6, ptr %i.b, align 2, !tbaa !12
+  %7 = lshr i32 %2, 16                            ; 2 uses
+  %.not.1 = icmp eq i32 %7, 0
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph.preheader
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %i.c = trunc i32 %7 to i8
+  store i8 %i.c, ptr %8, align 1, !tbaa !12
+  %i.d = lshr i32 %2, 24                          ; 2 uses
   %.not.a = icmp eq i32 %i.d, 0
-  br i1 %.not.a, label %._crit_edge, label %.lr.ph.a, !llvm.loop !13
+  br i1 %.not.a, label %._crit_edge, label %.lr.ph.3
 
-._crit_edge:                                      ; preds = %.lr.ph.a, %bb.a
+.lr.ph.3:                                         ; preds = %.lr.ph.a
+  %9 = trunc nuw i32 %i.d to i8
+  store i8 %9, ptr %i.a, align 4, !tbaa !12
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.preheader, %.lr.ph.a, %.lr.ph.3, %bb.a
   %i.e = call i32 @ossl_DER_w_octet_string(ptr noundef %0, i32 noundef %1, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   ret i32 %i.e
@@ -238,7 +255,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 define range(i32 0, 2) i32 @ossl_DER_w_uint32(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
-  store i32 %2, ptr %i.a, align 4, !tbaa !12
+  store i32 %2, ptr %i.a, align 4, !tbaa !11
   %i.b = call fastcc i32 @int_der_w_integer(ptr noundef %0, i32 noundef %1, ptr noundef nonnull @int_put_bytes_uint32, ptr noundef %i.a)
   ret i32 %i.b
 }
@@ -250,7 +267,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
-  store i32 0, ptr %i.c, align 4, !tbaa !12
+  store i32 0, ptr %i.c, align 4, !tbaa !11
   %i.d = icmp slt i32 %1, 0                       ; 2 uses
   br i1 %i.d, label %int_start_context.exit.thread18, label %bb.b
 
@@ -269,12 +286,12 @@ int_start_context.exit.thread18:                  ; preds = %bb.a, %int_start_co
   br i1 %.not10, label %int_start_context.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %int_start_context.exit.thread18
-  %i.h = call i32 %2(ptr noundef %0, ptr noundef nonnull %3, ptr noundef nonnull %i.c) #3, !callees !15
+  %i.h = call i32 %2(ptr noundef %0, ptr noundef nonnull %3, ptr noundef nonnull %i.c) #3, !callees !13
   %.not11 = icmp eq i32 %i.h, 0
   br i1 %.not11, label %int_start_context.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = load i32, ptr %i.c, align 4, !tbaa !12
+  %i.i = load i32, ptr %i.c, align 4, !tbaa !11
   %i.j = and i32 %i.i, 128
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.f, label %bb.e
@@ -343,27 +360,38 @@ int_start_context.exit.thread:                    ; preds = %bb.b, %int_end_cont
 ; Function Attrs: nounwind uwtable
 define internal i32 @int_put_bytes_uint32(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) #0 {
 bb.a:
-  %i.a = load i32, ptr %1, align 4, !tbaa !12     ; 2 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !11     ; 5 uses
   %.not11 = icmp eq i32 %i.a, 0
-  br i1 %.not11, label %bb.b, label %.lr.ph.a
+  br i1 %.not11, label %bb.b, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.a, %.lr.ph.a
-  %.013 = phi i64 [ %3, %.lr.ph.a ], [ 0, %bb.a ]
-  %.01012 = phi i32 [ %4, %.lr.ph.a ], [ %i.a, %bb.a ] ; 2 uses
-  %3 = add nuw nsw i64 %.013, 1                   ; 2 uses
-  %4 = lshr i32 %.01012, 8                        ; 2 uses
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph.a, !llvm.loop !16
+.lr.ph:                                           ; preds = %bb.a
+  %3 = lshr i32 %i.a, 8                           ; 2 uses
+  %.not = icmp eq i32 %3, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph.1
 
-._crit_edge:                                      ; preds = %.lr.ph.a
-  store i32 %.01012, ptr %2, align 4, !tbaa !12
-  %.pre = load i32, ptr %1, align 4, !tbaa !12
+.lr.ph.1:                                         ; preds = %.lr.ph
+  %4 = lshr i32 %i.a, 16                          ; 2 uses
+  %.not.1 = icmp eq i32 %4, 0
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph.1
+  %5 = lshr i32 %i.a, 24                          ; 2 uses
+  %.not.2 = icmp eq i32 %5, 0                     ; 2 uses
+  %spec.select = select i1 %.not.2, i32 %4, i32 %5
+  %spec.select14 = select i1 %.not.2, i64 3, i64 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.a, %.lr.ph.1, %.lr.ph
+  %.01012.lcssa = phi i32 [ %i.a, %.lr.ph ], [ %3, %.lr.ph.1 ], [ %spec.select, %.lr.ph.a ]
+  %.lcssa = phi i64 [ 1, %.lr.ph ], [ 2, %.lr.ph.1 ], [ %spec.select14, %.lr.ph.a ]
+  store i32 %.01012.lcssa, ptr %2, align 4, !tbaa !11
+  %.pre = load i32, ptr %1, align 4, !tbaa !11
   %i.b = zext i32 %.pre to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
   %i.c = phi i64 [ %i.b, %._crit_edge ], [ 0, %bb.a ]
-  %.0.lcssa = phi i64 [ %3, %._crit_edge ], [ 1, %bb.a ]
+  %.0.lcssa = phi i64 [ %.lcssa, %._crit_edge ], [ 1, %bb.a ]
   %i.d = tail call i32 @WPACKET_put_bytes__(ptr noundef %0, i64 noundef %i.c, i64 noundef %.0.lcssa) #3
   ret i32 %i.d
 }
@@ -387,7 +415,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i32 0, ptr %i.a, align 4, !tbaa !12
+  store i32 0, ptr %i.a, align 4, !tbaa !11
   %i.e = call fastcc range(i32 0, 2) i32 @int_der_w_integer(ptr noundef %0, i32 noundef %1, ptr noundef nonnull @int_put_bytes_uint32, ptr noundef %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.f
@@ -410,7 +438,7 @@ define internal range(i32 0, 2) i32 @int_put_bytes_bn(ptr noundef %0, ptr nounde
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  store ptr null, ptr %i.a, align 8, !tbaa !19
+  store ptr null, ptr %i.a, align 8, !tbaa !16
   %i.b = tail call i32 @BN_num_bits(ptr noundef %1) #3
   %i.c = add nsw i32 %i.b, 7
   %i.d = sdiv i32 %i.c, 8
@@ -425,13 +453,13 @@ bb.a:
   %i.m = lshr i64 %i.j, %i.l
   %i.n = trunc i64 %i.m to i32
   %i.o = and i32 %i.n, 255
-  store i32 %i.o, ptr %2, align 4, !tbaa !12
+  store i32 %i.o, ptr %2, align 4, !tbaa !11
   %i.p = call i32 @WPACKET_allocate_bytes(ptr noundef %0, i64 noundef %i.e, ptr noundef nonnull %i.a) #3
   %.not = icmp eq i32 %i.p, 0
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.q = load ptr, ptr %i.a, align 8, !tbaa !19   ; 2 uses
+  %i.q = load ptr, ptr %i.a, align 8, !tbaa !16   ; 2 uses
   %.not9 = icmp eq ptr %i.q, null
   br i1 %.not9, label %bb.d, label %bb.c
 
@@ -671,13 +699,10 @@ attributes #3 = { nounwind }
 !8 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !9 = !{!"long", !4, i64 0}
 !10 = !{!9, !9, i64 0}
-!11 = !{!"llvm.loop.mustprogress"}
-!12 = !{!5, !5, i64 0}
-!13 = distinct !{!13, !11}
-!14 = !{!4, !4, i64 0}
-!15 = !{ptr @int_put_bytes_bn, ptr @int_put_bytes_uint32}
-!16 = distinct !{!16, !11}
-!17 = !{!"any pointer", !4, i64 0}
-!18 = !{!"p1 omnipotent char", !17, i64 0}
-!19 = !{!18, !18, i64 0}
+!11 = !{!5, !5, i64 0}
+!12 = !{!4, !4, i64 0}
+!13 = !{ptr @int_put_bytes_bn, ptr @int_put_bytes_uint32}
+!14 = !{!"any pointer", !4, i64 0}
+!15 = !{!"p1 omnipotent char", !14, i64 0}
+!16 = !{!15, !15, i64 0}
 end_hunk_0

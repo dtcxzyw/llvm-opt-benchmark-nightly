@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InlineAdvisor?download=true
 inline.NumInlined: 1588
 inline.NumDeleted: 950
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4llvm12shouldInlineERNS_8CallBaseERNS_19TargetTransformInfoENS_12function_refIFNS_10InlineCostES1_EEERNS_25OptimizationRemarkEmitterEb:bb.a
   %i.og = add i64 %i.of, 1
   call void @_ZdlPvm(ptr noundef %i.oc, i64 noundef %i.og) #20
@@ -202,7 +204,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca [21 x i8], align 16               ; 3 uses
   %i.c = alloca i64, align 8                      ; 6 uses
-  %i.d = alloca [21 x i8], align 16               ; 4 uses
+  %i.d = alloca [21 x i8], align 16               ; 9 uses
   %i.e = alloca i64, align 8                      ; 6 uses
   %i.f = alloca [21 x i8], align 16               ; 4 uses
   %i.g = alloca i64, align 8                      ; 6 uses
@@ -245,7 +247,7 @@ _ZN4llvm13ListSeparatorcvNS_9StringRefEEv.exit.lr.ph: ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.x = ptrtoint ptr %i.t to i64
-  %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 21 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 21
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
@@ -254,6 +256,11 @@ _ZN4llvm13ListSeparatorcvNS_9StringRefEEv.exit.lr.ph: ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.ag = ptrtoint ptr %i.ad to i64
+  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 19 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 18 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.d, i64 17 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   br label %_ZN4llvm13ListSeparatorcvNS_9StringRefEEv.exit
 
 ._crit_edge:                                      ; preds = %_ZNK4llvm6MDNode14getNumOperandsEv.exit.thread.i.i, %_ZNK4llvm6MDNode14getNumOperandsEv.exit.i.i, %_ZNK4llvm10DILocation12getInlinedAtEv.exit, %bb.a
@@ -656,34 +663,60 @@ _ZN4llvm11raw_ostreamlsEPKc.exit40:               ; preds = %bb.am, %bb.an
   %.0.i.i39 = phi ptr [ %i.gz, %bb.am ], [ %4, %bb.an ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   %i.hc = getelementptr inbounds nuw i8, ptr %.092, i64 2
-  %i.hd = load i16, ptr %i.hc, align 2, !tbaa !366 ; 2 uses
+  %i.hd = load i16, ptr %i.hc, align 2, !tbaa !366 ; 10 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !479)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19, !noalias !479
   %i.he = icmp eq i16 %i.hd, 0
-  br i1 %i.he, label %.thread.i48, label %.lr.ph.i41.preheader
+  br i1 %i.he, label %.lr.ph.i41.preheader, label %.lr.ph.i41
 
 .lr.ph.i41.preheader:                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit40
-  %9 = zext i16 %i.hd to i64
-  br label %.lr.ph.i41.a
-
-.thread.i48:                                      ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit40
   store i8 48, ptr %i.z, align 4, !tbaa !30, !noalias !479
   br label %._crit_edge.i45
 
-.lr.ph.i41.a:                                     ; preds = %.lr.ph.i41.preheader, %.lr.ph.i41.a
-  %.111.i42 = phi ptr [ %11, %.lr.ph.i41.a ], [ %i.y, %.lr.ph.i41.preheader ]
-  %.0810.i43 = phi i64 [ %12, %.lr.ph.i41.a ], [ %9, %.lr.ph.i41.preheader ] ; 3 uses
-  %10 = urem i64 %.0810.i43, 10
-  %i.hf = trunc nuw nsw i64 %10 to i8
-  %i.hg = or disjoint i8 %i.hf, 48
-  %11 = getelementptr inbounds i8, ptr %.111.i42, i64 -1 ; 3 uses
-  store i8 %i.hg, ptr %11, align 1, !tbaa !30, !noalias !479
-  %12 = udiv i64 %.0810.i43, 10
-  %.not.i44.a = icmp samesign ult i64 %.0810.i43, 10
-  br i1 %.not.i44.a, label %._crit_edge.i45, label %.lr.ph.i41.a, !llvm.loop !468
+.lr.ph.i41:                                       ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit40
+  %14 = urem i16 %i.hd, 10
+  %15 = udiv i16 %i.hd, 10
+  %16 = trunc nuw nsw i16 %14 to i8
+  %17 = or disjoint i8 %16, 48
+  store i8 %17, ptr %9, align 4, !tbaa !30, !noalias !479
+  %.not.i44 = icmp ult i16 %i.hd, 10
+  br i1 %.not.i44, label %._crit_edge.i45, label %.lr.ph.i41.1
 
-._crit_edge.i45:                                  ; preds = %.lr.ph.i41.a, %.thread.i48
-  %.1.lcssa.i46 = phi ptr [ %i.z, %.thread.i48 ], [ %11, %.lr.ph.i41.a ] ; 3 uses
+.lr.ph.i41.1:                                     ; preds = %.lr.ph.i41
+  %18 = urem i16 %15, 10
+  %19 = trunc nuw nsw i16 %18 to i8
+  %20 = or disjoint i8 %19, 48
+  store i8 %20, ptr %10, align 1, !tbaa !30, !noalias !479
+  %.not.i44.1 = icmp ult i16 %i.hd, 100
+  br i1 %.not.i44.1, label %._crit_edge.i45, label %.thread.i48
+
+.thread.i48:                                      ; preds = %.lr.ph.i41.1
+  %21 = udiv i16 %i.hd, 100
+  %22 = urem i16 %21, 10
+  %23 = trunc nuw nsw i16 %22 to i8
+  %24 = or disjoint i8 %23, 48
+  store i8 %24, ptr %11, align 2, !tbaa !30, !noalias !479
+  %.not.i44.2 = icmp ult i16 %i.hd, 1000
+  br i1 %.not.i44.2, label %._crit_edge.i45, label %.lr.ph.i41.a
+
+.lr.ph.i41.a:                                     ; preds = %.thread.i48
+  %25 = udiv i16 %i.hd, 1000
+  %26 = urem i16 %25, 10
+  %i.hf = trunc nuw nsw i16 %26 to i8
+  %i.hg = or disjoint i8 %i.hf, 48
+  store i8 %i.hg, ptr %12, align 1, !tbaa !30, !noalias !479
+  %.not.i44.a = icmp ult i16 %i.hd, 10000
+  br i1 %.not.i44.a, label %._crit_edge.i45, label %.lr.ph.i41.4
+
+.lr.ph.i41.4:                                     ; preds = %.lr.ph.i41.a
+  %27 = udiv i16 %i.hd, 10000
+  %28 = trunc nuw nsw i16 %27 to i8
+  %29 = or disjoint i8 %28, 48
+  store i8 %29, ptr %13, align 1, !tbaa !30, !noalias !479
+  br label %._crit_edge.i45
+
+._crit_edge.i45:                                  ; preds = %.lr.ph.i41, %.lr.ph.i41.1, %.thread.i48, %.lr.ph.i41.a, %.lr.ph.i41.4, %.lr.ph.i41.preheader
+  %.1.lcssa.i46 = phi ptr [ %i.z, %.lr.ph.i41.preheader ], [ %9, %.lr.ph.i41 ], [ %10, %.lr.ph.i41.1 ], [ %11, %.thread.i48 ], [ %12, %.lr.ph.i41.a ], [ %13, %.lr.ph.i41.4 ] ; 3 uses
   store ptr %i.aa, ptr %7, align 8, !tbaa !48, !alias.scope !479
   store i64 0, ptr %i.ab, align 8, !tbaa !50, !alias.scope !479
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19, !noalias !479

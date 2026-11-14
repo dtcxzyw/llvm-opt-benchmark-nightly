@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/d2s?download=true
 inline.NumInlined: 35
 inline.NumDeleted: 19
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@double_to_shortest_decimal_bufn:bb.a
   %.5146.i = phi i32 [ 2, %bb.q ], [ 0, %.thread.i ] ; 2 uses
   %.6.i = phi i64 [ %i.ex, %bb.q ], [ %.0116202.i, %.thread.i ] ; 2 uses
@@ -202,9 +204,9 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
-  %.0110.i.i = phi i32 [ 8, %bb.aq ], [ 0, %bb.ap ] ; 2 uses
+  %.0110.i.i = phi i32 [ 8, %bb.aq ], [ 0, %bb.ap ] ; 4 uses
   %.0109.i.i = phi i64 [ %i.gq, %bb.aq ], [ %.sroa.0.039, %bb.ap ]
-  %i.id = trunc i64 %.0109.i.i to i32             ; 3 uses
+  %i.id = trunc i64 %.0109.i.i to i32             ; 6 uses
   %i.ie = icmp ugt i32 %i.id, 9999
   br i1 %i.ie, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -212,22 +214,41 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.if = zext nneg i32 %.0.i144.i to i64
   %i.ig = getelementptr inbounds nuw i8, ptr %i.gm, i64 %i.if
   %i.ih = zext nneg i32 %.0.i.i to i64
-  %i.ii = getelementptr inbounds nuw i8, ptr %i.ig, i64 %i.ih
-  br label %bb.as
+  %2 = getelementptr inbounds nuw i8, ptr %i.ig, i64 %i.ih ; 2 uses
+  %3 = zext nneg i32 %.0110.i.i to i64            ; 2 uses
+  %4 = udiv i32 %i.id, 10000                      ; 3 uses
+  %.neg120.i.i = mul i32 %4, -10000
+  %5 = add i32 %.neg120.i.i, %i.id                ; 2 uses
+  %6 = urem i32 %5, 100
+  %7 = shl nuw nsw i32 %6, 1
+  %8 = udiv i32 %5, 100
+  %9 = shl nuw nsw i32 %8, 1
+  %10 = sub nsw i64 0, %3
+  %11 = getelementptr inbounds i8, ptr %2, i64 %10 ; 2 uses
+  %12 = getelementptr inbounds i8, ptr %11, i64 -2
+  %13 = zext nneg i32 %7 to i64
+  %14 = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %13
+  %15 = load i16, ptr %14, align 2
+  store i16 %15, ptr %12, align 1
+  %16 = getelementptr inbounds i8, ptr %11, i64 -4
+  %17 = zext nneg i32 %9 to i64
+  %i.ii = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %17
+  %18 = load i16, ptr %i.ii, align 2
+  store i16 %18, ptr %16, align 1
+  %indvars.iv.next.i.i = or disjoint i32 %.0110.i.i, 4
+  %19 = icmp ugt i32 %i.id, 99999999
+  br i1 %19, label %bb.as, label %._crit_edge.i.i
 
-bb.as:                                            ; preds = %bb.as, %.lr.ph.i.i
-  %.1111132.i.i = phi i32 [ %.0110.i.i, %.lr.ph.i.i ], [ %i.iz, %bb.as ] ; 2 uses
-  %.0113131.i.i = phi i32 [ %i.id, %.lr.ph.i.i ], [ %i.ij, %bb.as ] ; 3 uses
-  %i.ij = udiv i32 %.0113131.i.i, 10000           ; 3 uses
-  %.neg120.i.i.a = mul i32 %i.ij, -10000
-  %i.ik = add i32 %.neg120.i.i.a, %.0113131.i.i   ; 2 uses
+bb.as:                                            ; preds = %.lr.ph.i.i
+  %i.ij = udiv i32 %i.id, 100000000               ; 2 uses
+  %.neg120.i.i.a = mul nsw i32 %i.ij, -10000
+  %i.ik = add nsw i32 %.neg120.i.i.a, %4          ; 2 uses
   %i.il = urem i32 %i.ik, 100
   %i.im = shl nuw nsw i32 %i.il, 1
   %i.in = udiv i32 %i.ik, 100
   %i.io = shl nuw nsw i32 %i.in, 1
-  %2 = zext i32 %.1111132.i.i to i64
-  %i.ip = sub nsw i64 0, %2
-  %i.iq = getelementptr inbounds i8, ptr %i.ii, i64 %i.ip ; 2 uses
+  %i.ip = sub nuw nsw i64 -4, %3
+  %i.iq = getelementptr inbounds i8, ptr %2, i64 %i.ip ; 2 uses
   %i.ir = getelementptr inbounds i8, ptr %i.iq, i64 -2
   %i.is = zext nneg i32 %i.im to i64
   %i.it = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %i.is
@@ -238,13 +259,12 @@ bb.as:                                            ; preds = %bb.as, %.lr.ph.i.i
   %i.ix = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %i.iw
   %i.iy = load i16, ptr %i.ix, align 2
   store i16 %i.iy, ptr %i.iv, align 1
-  %i.iz = add i32 %.1111132.i.i, 4                ; 2 uses
-  %3 = icmp ugt i32 %.0113131.i.i, 99999999
-  br i1 %3, label %bb.as, label %._crit_edge.i.i, !llvm.loop !3
+  %i.iz = add nuw nsw i32 %.0110.i.i, 8
+  br label %._crit_edge.i.i
 
-._crit_edge.i.i:                                  ; preds = %bb.as, %bb.ar
-  %.0113.lcssa.i.i = phi i32 [ %i.id, %bb.ar ], [ %i.ij, %bb.as ] ; 3 uses
-  %.1111.lcssa.i.i = phi i32 [ %.0110.i.i, %bb.ar ], [ %i.iz, %bb.as ] ; 3 uses
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.as, %bb.ar
+  %.0113.lcssa.i.i = phi i32 [ %i.id, %bb.ar ], [ %4, %.lr.ph.i.i ], [ %i.ij, %bb.as ] ; 3 uses
+  %.1111.lcssa.i.i = phi i32 [ %.0110.i.i, %bb.ar ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ %i.iz, %bb.as ] ; 3 uses
   %i.ja = icmp samesign ugt i32 %.0113.lcssa.i.i, 99
   br i1 %i.ja, label %bb.at, label %bb.au
 
@@ -453,9 +473,9 @@ bb.bk:                                            ; preds = %.loopexit.i
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %.loopexit.i
-  %.0136.i = phi i32 [ 8, %bb.bk ], [ 0, %.loopexit.i ] ; 2 uses
+  %.0136.i = phi i32 [ 8, %bb.bk ], [ 0, %.loopexit.i ] ; 4 uses
   %.3128.i = phi i64 [ %i.lq, %bb.bk ], [ %.2127.i, %.loopexit.i ]
-  %i.nd = trunc i64 %.3128.i to i32               ; 3 uses
+  %i.nd = trunc i64 %.3128.i to i32               ; 6 uses
   %i.ne = icmp ugt i32 %i.nd, 9999
   br i1 %i.ne, label %.lr.ph.i27, label %._crit_edge.i24
 
@@ -463,22 +483,41 @@ bb.bl:                                            ; preds = %bb.bk, %.loopexit.i
   %i.nf = zext nneg i32 %.0124.i to i64
   %i.ng = getelementptr inbounds nuw i8, ptr %1, i64 %i.nf
   %i.nh = zext i32 %.2131.i to i64
-  %i.ni = getelementptr inbounds nuw i8, ptr %i.ng, i64 %i.nh
-  br label %bb.bm
+  %20 = getelementptr inbounds nuw i8, ptr %i.ng, i64 %i.nh ; 2 uses
+  %21 = zext nneg i32 %.0136.i to i64             ; 2 uses
+  %22 = udiv i32 %i.nd, 10000                     ; 3 uses
+  %.neg143.i = mul i32 %22, -10000
+  %23 = add i32 %.neg143.i, %i.nd                 ; 2 uses
+  %24 = urem i32 %23, 100
+  %25 = shl nuw nsw i32 %24, 1
+  %26 = udiv i32 %23, 100
+  %27 = shl nuw nsw i32 %26, 1
+  %28 = sub nsw i64 0, %21
+  %29 = getelementptr inbounds i8, ptr %20, i64 %28 ; 2 uses
+  %30 = getelementptr inbounds i8, ptr %29, i64 -1
+  %31 = zext nneg i32 %25 to i64
+  %32 = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %31
+  %33 = load i16, ptr %32, align 2
+  store i16 %33, ptr %30, align 1
+  %34 = getelementptr inbounds i8, ptr %29, i64 -3
+  %35 = zext nneg i32 %27 to i64
+  %i.ni = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %35
+  %36 = load i16, ptr %i.ni, align 2
+  store i16 %36, ptr %34, align 1
+  %indvars.iv.next.i = or disjoint i32 %.0136.i, 4
+  %37 = icmp ugt i32 %i.nd, 99999999
+  br i1 %37, label %bb.bm, label %._crit_edge.i24
 
-bb.bm:                                            ; preds = %bb.bm, %.lr.ph.i27
-  %.0134157.i = phi i32 [ %i.nd, %.lr.ph.i27 ], [ %i.nj, %bb.bm ] ; 3 uses
-  %.1137156.i = phi i32 [ %.0136.i, %.lr.ph.i27 ], [ %i.nz, %bb.bm ] ; 2 uses
-  %i.nj = udiv i32 %.0134157.i, 10000             ; 3 uses
-  %.neg143.i.a = mul i32 %i.nj, -10000
-  %i.nk = add i32 %.neg143.i.a, %.0134157.i       ; 2 uses
+bb.bm:                                            ; preds = %.lr.ph.i27
+  %i.nj = udiv i32 %i.nd, 100000000               ; 2 uses
+  %.neg143.i.a = mul nsw i32 %i.nj, -10000
+  %i.nk = add nsw i32 %.neg143.i.a, %22           ; 2 uses
   %i.nl = urem i32 %i.nk, 100
   %i.nm = shl nuw nsw i32 %i.nl, 1
   %i.nn = udiv i32 %i.nk, 100
   %i.no = shl nuw nsw i32 %i.nn, 1
-  %4 = zext i32 %.1137156.i to i64
-  %i.np = sub nsw i64 0, %4
-  %i.nq = getelementptr inbounds i8, ptr %i.ni, i64 %i.np ; 2 uses
+  %i.np = sub nuw nsw i64 -4, %21
+  %i.nq = getelementptr inbounds i8, ptr %20, i64 %i.np ; 2 uses
   %i.nr = getelementptr inbounds i8, ptr %i.nq, i64 -1
   %i.ns = zext nneg i32 %i.nm to i64
   %i.nt = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %i.ns
@@ -489,13 +528,12 @@ bb.bm:                                            ; preds = %bb.bm, %.lr.ph.i27
   %i.nx = getelementptr inbounds nuw i8, ptr @DIGIT_TABLE, i64 %i.nw
   %i.ny = load i16, ptr %i.nx, align 2
   store i16 %i.ny, ptr %i.nv, align 1
-  %i.nz = add i32 %.1137156.i, 4                  ; 2 uses
-  %5 = icmp ugt i32 %.0134157.i, 99999999
-  br i1 %5, label %bb.bm, label %._crit_edge.i24, !llvm.loop !4
+  %i.nz = add nuw nsw i32 %.0136.i, 8
+  br label %._crit_edge.i24
 
-._crit_edge.i24:                                  ; preds = %bb.bm, %bb.bl
-  %.1137.lcssa.i = phi i32 [ %.0136.i, %bb.bl ], [ %i.nz, %bb.bm ] ; 3 uses
-  %.0134.lcssa.i = phi i32 [ %i.nd, %bb.bl ], [ %i.nj, %bb.bm ] ; 3 uses
+._crit_edge.i24:                                  ; preds = %.lr.ph.i27, %bb.bm, %bb.bl
+  %.1137.lcssa.i = phi i32 [ %.0136.i, %bb.bl ], [ %indvars.iv.next.i, %.lr.ph.i27 ], [ %i.nz, %bb.bm ] ; 3 uses
+  %.0134.lcssa.i = phi i32 [ %i.nd, %bb.bl ], [ %22, %.lr.ph.i27 ], [ %i.nj, %bb.bm ] ; 3 uses
   %i.oa = icmp samesign ugt i32 %.0134.lcssa.i, 99
   br i1 %i.oa, label %bb.bn, label %bb.bo
 
@@ -658,7 +696,4 @@ attributes #6 = { nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
-!3 = distinct !{!3, !5}
-!4 = distinct !{!4, !5}
-!5 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

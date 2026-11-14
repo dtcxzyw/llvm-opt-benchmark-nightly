@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libuv/original/idna?download=true
 inline.NumInlined: 12
 inline.NumDeleted: 3
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@uv__idna_toascii_label:bb.a
   %i.fb = xor i32 %.0106245, -1
   %i.fc = udiv i32 %i.fb, %i.fa
@@ -202,21 +204,37 @@ bb.bq:                                            ; preds = %bb.bp, %._crit_edge
   %.3109 = select i1 %.not144, i32 %i.ia, i32 %i.ib ; 2 uses
   %i.ic = add i32 %.3123.ph, 1                    ; 2 uses
   %i.id = udiv i32 %.3109, %i.ic
-  %i.ie = add nuw i32 %i.id, %.3109               ; 3 uses
+  %i.ie = add nuw i32 %i.id, %.3109               ; 11 uses
   %i.if = icmp ugt i32 %i.ie, 455
-  br i1 %i.if, label %.lr.ph238.a, label %._crit_edge239
+  br i1 %i.if, label %.lr.ph238, label %._crit_edge239
 
-.lr.ph238.a:                                      ; preds = %bb.bq, %.lr.ph238.a
-  %.4236 = phi i32 [ %i.ig, %.lr.ph238.a ], [ %i.ie, %bb.bq ] ; 2 uses
-  %.2112235 = phi i32 [ %4, %.lr.ph238.a ], [ 0, %bb.bq ]
-  %i.ig = udiv i32 %.4236, 35                     ; 2 uses
-  %4 = add i32 %.2112235, 36                      ; 2 uses
-  %i.ih = icmp ugt i32 %.4236, 15959
-  br i1 %i.ih, label %.lr.ph238.a, label %._crit_edge239, !llvm.loop !11
+.lr.ph238:                                        ; preds = %bb.bq
+  %4 = udiv i32 %i.ie, 35
+  %5 = icmp ugt i32 %i.ie, 15959
+  br i1 %5, label %.lr.ph238.1, label %._crit_edge239
 
-._crit_edge239:                                   ; preds = %.lr.ph238.a, %bb.bq
-  %.2112.lcssa = phi i32 [ 0, %bb.bq ], [ %4, %.lr.ph238.a ]
-  %.4.lcssa = phi i32 [ %i.ie, %bb.bq ], [ %i.ig, %.lr.ph238.a ]
+.lr.ph238.1:                                      ; preds = %.lr.ph238
+  %6 = udiv i32 %i.ie, 1225
+  %7 = icmp ugt i32 %i.ie, 558599
+  br i1 %7, label %.lr.ph238.2, label %._crit_edge239
+
+.lr.ph238.2:                                      ; preds = %.lr.ph238.1
+  %8 = udiv i32 %i.ie, 42875
+  %9 = icmp ugt i32 %i.ie, 19550999
+  br i1 %9, label %.lr.ph238.a, label %._crit_edge239
+
+.lr.ph238.a:                                      ; preds = %.lr.ph238.2
+  %i.ig = udiv i32 %i.ie, 1500625
+  %i.ih = icmp ugt i32 %i.ie, 684284999
+  br i1 %i.ih, label %.lr.ph238.4, label %._crit_edge239
+
+.lr.ph238.4:                                      ; preds = %.lr.ph238.a
+  %10 = udiv i32 %i.ie, 52521875
+  br label %._crit_edge239
+
+._crit_edge239:                                   ; preds = %.lr.ph238, %.lr.ph238.1, %.lr.ph238.2, %.lr.ph238.a, %.lr.ph238.4, %bb.bq
+  %.2112.lcssa = phi i32 [ 0, %bb.bq ], [ 36, %.lr.ph238 ], [ 72, %.lr.ph238.1 ], [ 108, %.lr.ph238.2 ], [ 144, %.lr.ph238.a ], [ 180, %.lr.ph238.4 ]
+  %.4.lcssa = phi i32 [ %i.ie, %bb.bq ], [ %4, %.lr.ph238 ], [ %6, %.lr.ph238.1 ], [ %8, %.lr.ph238.2 ], [ %i.ig, %.lr.ph238.a ], [ %10, %.lr.ph238.4 ]
   %i.ii = trunc nuw i32 %.4.lcssa to i16          ; 2 uses
   %.lhs.trunc = mul nuw i16 %i.ii, 36
   %.rhs.trunc = add nuw nsw i16 %i.ii, 38
@@ -230,7 +248,7 @@ bb.br:                                            ; preds = %bb.az
   %i.im = add i32 %.1107, 1
   %i.in = add nsw i32 %.0116.lcssa, 1
   %.not142 = icmp eq i32 %.3.ph, 0
-  br i1 %.not142, label %uv__utf8_decode1.exit.thread, label %.preheader206, !llvm.loop !12
+  br i1 %.not142, label %uv__utf8_decode1.exit.thread, label %.preheader206, !llvm.loop !11
 
 uv__utf8_decode1.exit.thread:                     ; preds = %bb.m, %bb.i, %bb.l, %bb.k, %bb.d, %bb.c, %bb.br, %._crit_edge226, %bb.bm, %.loopexit
   %.0124 = phi i32 [ 0, %bb.br ], [ -7, %bb.bm ], [ %.0120.lcssa300, %.loopexit ], [ -7, %._crit_edge226 ], [ -22, %bb.c ], [ -22, %bb.d ], [ -22, %bb.k ], [ -22, %bb.l ], [ -22, %bb.i ], [ -22, %bb.m ]
@@ -311,7 +329,7 @@ uv__wtf8_decode1.exit:                            ; preds = %bb.g, %bb.e, %bb.j,
   %i.ac = add i64 %spec.select, %.0.i             ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.1, i64 1
   %.not = icmp eq i8 %i.ab, 0
-  br i1 %.not, label %uv__wtf8_decode1.exit.thread, label %bb.b, !llvm.loop !13
+  br i1 %.not, label %uv__wtf8_decode1.exit.thread, label %bb.b, !llvm.loop !12
 
 uv__wtf8_decode1.exit.thread:                     ; preds = %bb.i, %bb.f, %bb.d, %bb.c, %bb.h, %uv__wtf8_decode1.exit
   %.06 = phi i64 [ %i.ac, %uv__wtf8_decode1.exit ], [ -1, %bb.h ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %bb.f ], [ -1, %bb.i ]
@@ -419,7 +437,7 @@ bb.l:                                             ; preds = %bb.k, %uv__wtf8_dec
   %i.aq = getelementptr inbounds nuw i8, ptr %.11417, i64 1
   %i.ar = load i8, ptr %.11417, align 1
   %.not = icmp eq i8 %i.ar, 0
-  br i1 %.not, label %bb.m, label %bb.b, !llvm.loop !14
+  br i1 %.not, label %bb.m, label %bb.b, !llvm.loop !13
 
 bb.m:                                             ; preds = %bb.l
   ret void
@@ -758,7 +776,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.v, %bb.y
   %i.cy = icmp ne ptr %.2, %i.ab
   %i.cz = icmp ne i64 %spec.select119, 0
   %i.da = select i1 %i.cy, i1 %i.cz, i1 false
-  br i1 %i.da, label %.lr.ph, label %uv__get_surrogate_value.exit._crit_edge, !llvm.loop !15
+  br i1 %i.da, label %.lr.ph, label %uv__get_surrogate_value.exit._crit_edge, !llvm.loop !14
 
 uv__get_surrogate_value.exit._crit_edge:          ; preds = %bb.ac, %bb.u, %.thread160, %bb.x, %bb.w, %bb.z, %bb.aa, %uv__get_surrogate_value.exit, %bb.p
   %.090.lcssa = phi ptr [ %0, %bb.p ], [ %.090163, %uv__get_surrogate_value.exit ], [ %.090163, %bb.aa ], [ %.090163, %bb.z ], [ %.090163, %bb.w ], [ %.090163, %bb.x ], [ %.090163, %.thread160 ], [ %.090163, %bb.u ], [ %i.cv, %bb.ac ] ; 2 uses
@@ -902,5 +920,4 @@ attributes #7 = { nounwind }
 !12 = distinct !{!12, !5}
 !13 = distinct !{!13, !5}
 !14 = distinct !{!14, !5}
-!15 = distinct !{!15, !5}
 end_hunk_0

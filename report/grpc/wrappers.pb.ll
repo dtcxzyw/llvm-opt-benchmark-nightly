@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/wrappers.pb?download=true
 inline.NumInlined: 406
 inline.NumDeleted: 133
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN6google8protobuf10Int32Value12InternalSwapEPS1_:bb.a
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -202,27 +204,51 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit
 
 _ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit: ; preds = %bb.c, %bb.d
-  %i.h = phi i32 [ %i.e, %bb.c ], [ %.pr, %bb.d ] ; 3 uses
-  %.0.i12 = phi ptr [ %1, %bb.c ], [ %i.g, %bb.d ] ; 2 uses
+  %i.h = phi i32 [ %i.e, %bb.c ], [ %.pr, %bb.d ] ; 10 uses
+  %.0.i12 = phi ptr [ %1, %bb.c ], [ %i.g, %bb.d ] ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.0.i12, i64 1 ; 2 uses
   store i8 8, ptr %.0.i12, align 1, !tbaa !14
   %i.j = icmp ugt i32 %i.h, 127
-  br i1 %i.j, label %.lr.ph.i.a, label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit, !prof !38
+  br i1 %i.j, label %.lr.ph.i, label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit, !prof !38
 
-.lr.ph.i.a:                                       ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit, %.lr.ph.i.a
-  %.0.i2.i = phi ptr [ %i.n, %.lr.ph.i.a ], [ %i.i, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit ] ; 2 uses
-  %.07.i1.i = phi i32 [ %i.m, %.lr.ph.i.a ], [ %i.h, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit ] ; 3 uses
-  %i.k = trunc i32 %.07.i1.i to i8
+.lr.ph.i:                                         ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit
+  %3 = trunc i32 %i.h to i8
+  %4 = or i8 %3, -128
+  store i8 %4, ptr %i.i, align 1, !tbaa !14
+  %5 = lshr i32 %i.h, 7                           ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.0.i12, i64 2 ; 2 uses
+  %7 = icmp ugt i32 %i.h, 16383
+  br i1 %7, label %.lr.ph.i.1, label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit, !prof !39
+
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i
+  %8 = trunc i32 %5 to i8
+  %9 = or i8 %8, -128
+  store i8 %9, ptr %6, align 1, !tbaa !14
+  %10 = lshr i32 %i.h, 14                         ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %.0.i12, i64 3 ; 2 uses
+  %12 = icmp ugt i32 %i.h, 2097151
+  br i1 %12, label %.lr.ph.i.a, label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit, !prof !39
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.1
+  %i.k = trunc i32 %10 to i8
   %i.l = or i8 %i.k, -128
-  store i8 %i.l, ptr %.0.i2.i, align 1, !tbaa !14
-  %i.m = lshr i32 %.07.i1.i, 7                    ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %.0.i2.i, i64 1 ; 2 uses
-  %i.o = icmp ugt i32 %.07.i1.i, 16383
-  br i1 %i.o, label %.lr.ph.i.a, label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit, !prof !39, !llvm.loop !58
+  store i8 %i.l, ptr %11, align 1, !tbaa !14
+  %i.m = lshr i32 %i.h, 21                        ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.0.i12, i64 4 ; 2 uses
+  %i.o = icmp ugt i32 %i.h, 268435455
+  br i1 %i.o, label %.lr.ph.i.3, label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit, !prof !39
 
-_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit: ; preds = %.lr.ph.i.a, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit
-  %.07.i.lcssa.i = phi i32 [ %i.h, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit ], [ %i.m, %.lr.ph.i.a ]
-  %.0.i.lcssa.i = phi ptr [ %i.i, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit ], [ %i.n, %.lr.ph.i.a ] ; 2 uses
+.lr.ph.i.3:                                       ; preds = %.lr.ph.i.a
+  %13 = trunc i32 %i.m to i8
+  %14 = or i8 %13, -128
+  store i8 %14, ptr %i.n, align 1, !tbaa !14
+  %15 = lshr i32 %i.h, 28
+  %16 = getelementptr inbounds nuw i8, ptr %.0.i12, i64 5
+  br label %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit
+
+_ZN6google8protobuf2io17CodedOutputStream20WriteVarint32ToArrayEjPh.exit: ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.a, %.lr.ph.i.3, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit
+  %.07.i.lcssa.i = phi i32 [ %i.h, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit ], [ %5, %.lr.ph.i ], [ %10, %.lr.ph.i.1 ], [ %i.m, %.lr.ph.i.a ], [ %15, %.lr.ph.i.3 ]
+  %.0.i.lcssa.i = phi ptr [ %i.i, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit ], [ %6, %.lr.ph.i ], [ %11, %.lr.ph.i.1 ], [ %i.n, %.lr.ph.i.a ], [ %16, %.lr.ph.i.3 ] ; 2 uses
   %i.p = trunc nuw nsw i32 %.07.i.lcssa.i to i8
   %i.q = getelementptr inbounds nuw i8, ptr %.0.i.lcssa.i, i64 1
   store i8 %i.p, ptr %.0.i.lcssa.i, align 1, !tbaa !14
@@ -379,7 +405,7 @@ define void @_ZN6google8protobuf9BoolValueC2EPNS0_5ArenaERKS1_(ptr noundef nonnu
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6google8protobuf9BoolValueE, i64 16), ptr %0, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.c, ptr noundef nonnull align 8 dereferenceable(12) %i.d, i64 12, i1 false), !tbaa.struct !59
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.c, ptr noundef nonnull align 8 dereferenceable(12) %i.d, i64 12, i1 false), !tbaa.struct !58
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load i64, ptr %i.e, align 8, !tbaa !11   ; 2 uses
   %i.g = trunc i64 %i.f to i1
@@ -782,6 +808,5 @@ attributes #17 = { builtin nounwind }
 !55 = !{!18, !18, i64 0}
 !56 = !{i64 0, i64 4, !14, i64 4, i64 4, !15, i64 8, i64 8, !17}
 !57 = !{i64 0, i64 4, !14, i64 4, i64 4, !15, i64 8, i64 4, !36}
-!58 = distinct !{!58, !40}
-!59 = !{i64 0, i64 4, !14, i64 4, i64 4, !15, i64 8, i64 1, !42}
+!58 = !{i64 0, i64 4, !14, i64 4, i64 4, !15, i64 8, i64 1, !42}
 end_hunk_1

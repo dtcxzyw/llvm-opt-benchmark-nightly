@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ryu-52b9754017523787.ryu.2ff3b564546b6a30-cgu.3?download=true
 inline.NumInlined: 1
 inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -58,40 +60,58 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.05.0 = phi ptr [ %1, %bb.a ], [ %i.ai, %bb.b ] ; 2 uses
+  %.sroa.05.0 = phi ptr [ %1, %bb.a ], [ %i.ai, %bb.b ] ; 5 uses
   %.sroa.0.0 = phi i64 [ %0, %bb.a ], [ %i.b, %bb.b ]
-  %i.ak = trunc i64 %.sroa.0.0 to i32             ; 3 uses
+  %i.ak = trunc i64 %.sroa.0.0 to i32             ; 6 uses
   %i.al = icmp ugt i32 %i.ak, 9999
   br i1 %i.al, label %.lr.ph.i, label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.c
-  %.sroa.010.0.lcssa.i = phi ptr [ %.sroa.05.0, %bb.c ], [ %i.az, %.lr.ph.i ] ; 2 uses
-  %.sroa.0.0.lcssa.i = phi i32 [ %i.ak, %bb.c ], [ %i.an, %.lr.ph.i ] ; 3 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph.i.1, %bb.c
+  %.sroa.010.0.lcssa.i = phi ptr [ %.sroa.05.0, %bb.c ], [ %i.az, %.lr.ph.i ], [ %14, %.lr.ph.i.1 ] ; 2 uses
+  %.sroa.0.0.lcssa.i = phi i32 [ %i.ak, %bb.c ], [ %i.an, %.lr.ph.i ], [ %2, %.lr.ph.i.1 ] ; 3 uses
   %i.am = icmp samesign ugt i32 %.sroa.0.0.lcssa.i, 99
   br i1 %i.am, label %bb.d, label %bb.e
 
-.lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
-  %.sroa.0.020.i = phi i32 [ %i.an, %.lr.ph.i ], [ %i.ak, %bb.c ] ; 3 uses
-  %.sroa.010.019.i = phi ptr [ %i.az, %.lr.ph.i ], [ %.sroa.05.0, %bb.c ] ; 2 uses
-  %i.an = udiv i32 %.sroa.0.020.i, 10000          ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.c
+  %i.an = udiv i32 %i.ak, 10000                   ; 3 uses
   %.neg.i = mul i32 %i.an, -10000
-  %i.ao = add i32 %.neg.i, %.sroa.0.020.i         ; 2 uses
+  %i.ao = add i32 %.neg.i, %i.ak                  ; 2 uses
   %i.ap = urem i32 %i.ao, 100
   %i.aq = shl nuw nsw i32 %i.ap, 1
   %i.ar = udiv i32 %i.ao, 100
   %i.as = shl nuw nsw i32 %i.ar, 1
   %i.at = zext nneg i32 %i.aq to i64
   %i.au = getelementptr inbounds nuw i8, ptr @_RNvNtCs47fkClTvdUi_3ryu11digit_table11DIGIT_TABLE, i64 %i.at
-  %i.av = getelementptr inbounds i8, ptr %.sroa.010.019.i, i64 -2
+  %i.av = getelementptr inbounds i8, ptr %.sroa.05.0, i64 -2
   %i.aw = load i16, ptr %i.au, align 1
   store i16 %i.aw, ptr %i.av, align 1
   %i.ax = zext nneg i32 %i.as to i64
   %i.ay = getelementptr inbounds nuw i8, ptr @_RNvNtCs47fkClTvdUi_3ryu11digit_table11DIGIT_TABLE, i64 %i.ax
-  %i.az = getelementptr inbounds i8, ptr %.sroa.010.019.i, i64 -4 ; 3 uses
+  %i.az = getelementptr inbounds i8, ptr %.sroa.05.0, i64 -4 ; 2 uses
   %i.ba = load i16, ptr %i.ay, align 1
   store i16 %i.ba, ptr %i.az, align 1
-  %i.bb = icmp ugt i32 %.sroa.0.020.i, 99999999
-  br i1 %i.bb, label %.lr.ph.i, label %._crit_edge.i
+  %i.bb = icmp ugt i32 %i.ak, 99999999
+  br i1 %i.bb, label %.lr.ph.i.1, label %._crit_edge.i
+
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i
+  %2 = udiv i32 %i.ak, 100000000                  ; 2 uses
+  %.neg.i.1 = mul nsw i32 %2, -10000
+  %3 = add nsw i32 %.neg.i.1, %i.an               ; 2 uses
+  %4 = urem i32 %3, 100
+  %5 = shl nuw nsw i32 %4, 1
+  %6 = udiv i32 %3, 100
+  %7 = shl nuw nsw i32 %6, 1
+  %8 = zext nneg i32 %5 to i64
+  %9 = getelementptr inbounds nuw i8, ptr @_RNvNtCs47fkClTvdUi_3ryu11digit_table11DIGIT_TABLE, i64 %8
+  %10 = getelementptr inbounds i8, ptr %.sroa.05.0, i64 -6
+  %11 = load i16, ptr %9, align 1
+  store i16 %11, ptr %10, align 1
+  %12 = zext nneg i32 %7 to i64
+  %13 = getelementptr inbounds nuw i8, ptr @_RNvNtCs47fkClTvdUi_3ryu11digit_table11DIGIT_TABLE, i64 %12
+  %14 = getelementptr inbounds i8, ptr %.sroa.05.0, i64 -8 ; 2 uses
+  %15 = load i16, ptr %13, align 1
+  store i16 %15, ptr %14, align 1
+  br label %._crit_edge.i
 
 bb.d:                                             ; preds = %._crit_edge.i
   %.lhs.trunc.i = trunc nuw i32 %.sroa.0.0.lcssa.i to i16 ; 2 uses

@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/lsp_server-845110c84ac35e73.lsp_server.ccb47bab1596fc87-cgu.14?download=true
 inline.NumInlined: 175
 inline.NumDeleted: 105
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvXNtNtCscvBHLZPbXnS_10serde_json5value3serNtB5_5ValueNtNtCs6nZeqdiIoCH_10serde_core3ser9Serialize9serializeQINtNtB7_3ser10SerializerQINtNtCscdodAO9FK5_5alloc3vec3VechEEECshzDG46PUpLf_10lsp_server:bb.a
 
 .loopexit:                                        ; preds = %_RNvXs1_NtCscvBHLZPbXnS_10serde_json3serQINtB5_10SerializerQINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtCs6nZeqdiIoCH_10serde_core3ser10Serializer13serialize_mapCshzDG46PUpLf_10lsp_server.exit
@@ -202,7 +204,7 @@ _RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5allo
 ; Function Attrs: nonlazybind uwtable
 define hidden noalias noundef align 8 ptr @_RINvYINtNtCscvBHLZPbXnS_10serde_json3ser8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap15serialize_entryelECshzDG46PUpLf_10lsp_server(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef readonly align 4 captures(none) dereferenceable(4) %3) unnamed_addr #0 !guid !173 {
 bb.a:
-  %i.a = alloca [40 x i8], align 1                ; 9 uses
+  %i.a = alloca [40 x i8], align 1                ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !174)
   %i.b = load ptr, ptr %0, align 8, !alias.scope !174, !nonnull !4, !align !5, !noundef !4 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -225,21 +227,19 @@ _RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5allo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !176)
   %i.g = icmp sgt i32 %.val3, -1
-  %.sroa.0.0.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val3, i1 false) ; 3 uses
+  %.sroa.0.0.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val3, i1 false) ; 6 uses
   %i.h = icmp ugt i32 %.sroa.0.0.i.i.i.i.i, 9999
   br i1 %i.h, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit
-  %.sroa.09.0.lcssa.i.i.i.i.i = phi i64 [ 11, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit ], [ %4, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit ], [ %i.k, %.lr.ph.i.i.i.i.i ] ; 3 uses
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.1, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit
+  %.sroa.09.0.lcssa.i.i.i.i.i = phi i64 [ 11, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit ], [ 7, %.lr.ph.i.i.i.i.i ], [ 3, %.lr.ph.i.i.i.i.i.1 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit ], [ %i.k, %.lr.ph.i.i.i.i.i ], [ %5, %.lr.ph.i.i.i.i.i.1 ] ; 3 uses
   %i.i = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i, 99
   br i1 %i.i, label %bb.c, label %bb.d
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit, %.lr.ph.i.i.i.i.i
-  %.sroa.0.129.i.i.i.i.i = phi i32 [ %i.k, %.lr.ph.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit ] ; 3 uses
-  %.sroa.09.028.i.i.i.i.i = phi i64 [ %4, %.lr.ph.i.i.i.i.i ], [ 11, %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit ] ; 2 uses
-  %i.j = urem i32 %.sroa.0.129.i.i.i.i.i, 10000
-  %i.k = udiv i32 %.sroa.0.129.i.i.i.i.i, 10000   ; 2 uses
+.lr.ph.i.i.i.i.i:                                 ; preds = %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeECshzDG46PUpLf_10lsp_server.exit
+  %i.j = urem i32 %.sroa.0.0.i.i.i.i.i, 10000
+  %i.k = udiv i32 %.sroa.0.0.i.i.i.i.i, 10000     ; 2 uses
   %.lhs.trunc.i.i.i.i.i = trunc nuw nsw i32 %i.j to i16 ; 2 uses
   %i.l = udiv i16 %.lhs.trunc.i.i.i.i.i, 100
   %i.m = shl nuw nsw i16 %i.l, 1
@@ -247,18 +247,36 @@ _RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5allo
   %i.o = urem i16 %.lhs.trunc.i.i.i.i.i, 100
   %i.p = shl nuw nsw i16 %i.o, 1
   %i.q = zext nneg i16 %i.p to i64
-  %4 = add i64 %.sroa.09.028.i.i.i.i.i, -4        ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr @23, i64 %i.n
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %i.t = load i16, ptr %i.r, align 1, !noalias !176
   store i16 %i.t, ptr %i.s, align 1, !alias.scope !176
-  %5 = getelementptr inbounds nuw i8, ptr @23, i64 %i.q
-  %i.u = getelementptr i8, ptr %i.a, i64 %.sroa.09.028.i.i.i.i.i
-  %i.v = getelementptr i8, ptr %i.u, i64 -2
-  %i.w = load i16, ptr %5, align 1, !noalias !176
+  %i.u = getelementptr inbounds nuw i8, ptr @23, i64 %i.q
+  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  %i.w = load i16, ptr %i.u, align 1, !noalias !176
   store i16 %i.w, ptr %i.v, align 1, !alias.scope !176
-  %i.x = icmp ugt i32 %.sroa.0.129.i.i.i.i.i, 99999999
-  br i1 %i.x, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  %i.x = icmp ugt i32 %.sroa.0.0.i.i.i.i.i, 99999999
+  br i1 %i.x, label %.lr.ph.i.i.i.i.i.1, label %._crit_edge.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.1:                               ; preds = %.lr.ph.i.i.i.i.i
+  %4 = urem i32 %i.k, 10000
+  %5 = udiv i32 %.sroa.0.0.i.i.i.i.i, 100000000
+  %.lhs.trunc.i.i.i.i.i.1 = trunc nuw nsw i32 %4 to i16 ; 2 uses
+  %6 = udiv i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %7 = shl nuw nsw i16 %6, 1
+  %8 = zext nneg i16 %7 to i64
+  %9 = urem i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %10 = shl nuw nsw i16 %9, 1
+  %11 = zext nneg i16 %10 to i64
+  %12 = getelementptr inbounds nuw i8, ptr @23, i64 %8
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %14 = load i16, ptr %12, align 1, !noalias !176
+  store i16 %14, ptr %13, align 1, !alias.scope !176
+  %15 = getelementptr inbounds nuw i8, ptr @23, i64 %11
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  %17 = load i16, ptr %15, align 1, !noalias !176
+  store i16 %17, ptr %16, align 1, !alias.scope !176
+  br label %._crit_edge.i.i.i.i.i
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i.i
   %.lhs.trunc24.i.i.i.i.i = trunc nuw i32 %.sroa.0.1.lcssa.i.i.i.i.i to i16 ; 2 uses

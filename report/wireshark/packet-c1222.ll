@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-c1222?download=true
 inline.NumInlined: 19
 inline.NumDeleted: 14
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@tvb_get_uint8
 ; Function Attrs: null_pointer_is_valid
 declare void @tvb_ensure_bytes_exist(ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.q, %bb.d
   %.03035.i = phi ptr [ @canonifyTable, %bb.d ], [ %i.bo, %bb.q ] ; 8 uses
   %i.h = getelementptr i8, ptr %.03035.i, i64 16
   %i.i = load ptr, ptr %i.h, align 16
-  %i.j = load i32, ptr %i.i, align 4              ; 6 uses
+  %i.j = load i32, ptr %i.i, align 4              ; 9 uses
   %i.k = getelementptr i8, ptr %.03035.i, i64 24
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = load i32, ptr %i.l, align 4
@@ -239,7 +239,7 @@ bb.h:                                             ; preds = %.thread.i
   %i.ac = shufflevector <4 x i32> %i.ab, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ad = icmp ugt <4 x i32> %i.ac, <i32 255, i32 65535, i32 16777215, i32 127>
   %i.ae = select <4 x i1> %i.ad, <4 x i32> <i32 1, i32 1, i32 1, i32 2>, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.af = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ae) ; 5 uses
+  %i.af = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ae) ; 8 uses
   %i.ag = icmp samesign ugt i32 %i.af, 4
   br i1 %i.ag, label %encode_ber_len.exit.i, label %bb.i
 
@@ -263,21 +263,37 @@ bb.k:                                             ; preds = %bb.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.k
   %i.an = zext nneg i32 %i.ak to i64
-  %i.ao = getelementptr i8, ptr %i.aa, i64 %i.an
-  br label %.lr.ph.i.i
+  %i.ao = getelementptr i8, ptr %i.aa, i64 %i.an  ; 4 uses
+  %3 = trunc i32 %i.j to i8
+  store i8 %3, ptr %i.ao, align 1
+  %4 = lshr i32 %i.j, 8                           ; 2 uses
+  %.not.i.i = icmp eq i32 %4, 0
+  br i1 %.not.i.i, label %encode_ber_len.exit.i, label %.lr.ph.i.i.1
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
-  %.01520.i.i = phi i32 [ %i.aq, %.lr.ph.i.i ], [ %i.j, %.lr.ph.preheader.i.i ] ; 2 uses
-  %.01619.i.i = phi ptr [ %3, %.lr.ph.i.i ], [ %i.ao, %.lr.ph.preheader.i.i ] ; 2 uses
-  %i.ap = trunc i32 %.01520.i.i to i8
-  %3 = getelementptr i8, ptr %.01619.i.i, i64 -1
-  store i8 %i.ap, ptr %.01619.i.i, align 1
-  %i.aq = lshr i32 %.01520.i.i, 8                 ; 2 uses
+.lr.ph.i.i.1:                                     ; preds = %.lr.ph.preheader.i.i
+  %5 = getelementptr i8, ptr %i.ao, i64 -1
+  %6 = trunc i32 %4 to i8
+  store i8 %6, ptr %5, align 1
+  %7 = lshr i32 %i.j, 16                          ; 2 uses
+  %.not.i.i.1 = icmp eq i32 %7, 0
+  br i1 %.not.i.i.1, label %encode_ber_len.exit.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.1
+  %8 = getelementptr i8, ptr %i.ao, i64 -2
+  %i.ap = trunc i32 %7 to i8
+  store i8 %i.ap, ptr %8, align 1
+  %i.aq = lshr i32 %i.j, 24                       ; 2 uses
   %.not.i.i.a = icmp eq i32 %i.aq, 0
-  br i1 %.not.i.i.a, label %encode_ber_len.exit.i, label %.lr.ph.i.i, !llvm.loop !23
+  br i1 %.not.i.i.a, label %encode_ber_len.exit.i, label %.lr.ph.i.i.3
 
-encode_ber_len.exit.i:                            ; preds = %.lr.ph.i.i, %bb.k, %bb.j, %bb.h
-  %.0.i.i = phi i32 [ 0, %bb.h ], [ 1, %bb.j ], [ %i.af, %bb.k ], [ %i.af, %.lr.ph.i.i ]
+.lr.ph.i.i.3:                                     ; preds = %.lr.ph.i.i
+  %9 = getelementptr i8, ptr %i.ao, i64 -3
+  %10 = trunc nuw i32 %i.aq to i8
+  store i8 %10, ptr %9, align 1
+  br label %encode_ber_len.exit.i
+
+encode_ber_len.exit.i:                            ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i, %.lr.ph.i.i.3, %bb.k, %bb.j, %bb.h
+  %.0.i.i = phi i32 [ 0, %bb.h ], [ 1, %bb.j ], [ %i.af, %bb.k ], [ %i.af, %.lr.ph.i.i.3 ], [ %i.af, %.lr.ph.i.i ], [ %i.af, %.lr.ph.i.i.1 ], [ %i.af, %.lr.ph.preheader.i.i ]
   %i.ar = add nuw nsw i32 %.0.i.i, %i.w
   br label %bb.l
 
@@ -316,7 +332,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bl = select i1 %i.bk, i64 0, i64 %i.bj       ; 2 uses
   %i.bm = icmp ne i64 %i.bl, -1
   call void @llvm.assume(i1 %i.bm)
-  %i.bn = call ptr @__memcpy_chk(ptr noundef %i.bg, ptr noundef %i.bh, i64 noundef %i.bi, i64 noundef %i.bl) #13, !alias.scope !29 ; 0 uses
+  %i.bn = call ptr @__memcpy_chk(ptr noundef %i.bg, ptr noundef %i.bh, i64 noundef %i.bi, i64 noundef %i.bl) #13, !alias.scope !28 ; 0 uses
   br i1 %i.t, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -329,7 +345,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.g
   %i.bp = getelementptr i8, ptr %.03035.i, i64 40
   %i.bq = load ptr, ptr %i.bp, align 8            ; 2 uses
   %.not.i = icmp eq ptr %i.bq, null
-  br i1 %.not.i, label %canonify_unencrypted_header.exit, label %bb.e, !llvm.loop !27
+  br i1 %.not.i, label %canonify_unencrypted_header.exit, label %bb.e, !llvm.loop !26
 
 canonify_unencrypted_header.exit:                 ; preds = %bb.q
   %.not14 = icmp eq i32 %.2, 0
@@ -352,7 +368,7 @@ bb.r:                                             ; preds = %canonify_unencrypte
 bb.s:                                             ; preds = %bb.t
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %canonify_unencrypted_header.exit.thread, label %bb.t, !llvm.loop !28
+  br i1 %exitcond.not.i, label %canonify_unencrypted_header.exit.thread, label %bb.t, !llvm.loop !27
 
 bb.t:                                             ; preds = %bb.s, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.s ] ; 2 uses
@@ -484,11 +500,10 @@ attributes #14 = { allocsize(2) }
 !20 = !{!19, !18}
 !21 = distinct !{!21, !8}
 !22 = distinct !{!22, !8}
-!23 = distinct !{!23, !8}
-!24 = distinct !{!24, i1 true, !"memcpy.inline"}
-!25 = distinct !{!25, !24, !"memcpy.inline: argument 1"}
-!26 = distinct !{!26, !24, !"memcpy.inline: argument 0"}
+!23 = distinct !{!23, i1 true, !"memcpy.inline"}
+!24 = distinct !{!24, !23, !"memcpy.inline: argument 1"}
+!25 = distinct !{!25, !23, !"memcpy.inline: argument 0"}
+!26 = distinct !{!26, !8}
 !27 = distinct !{!27, !8}
-!28 = distinct !{!28, !8}
-!29 = !{!26, !25}
+!28 = !{!25, !24}
 end_hunk_0

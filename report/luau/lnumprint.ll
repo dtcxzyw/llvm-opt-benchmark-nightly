@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luau/original/lnumprint?download=true
 inline.NumInlined: 15
 inline.NumDeleted: 8
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -13,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden noundef ptr @_Z12luai_num2strPcd(ptr nofree noundef captures(ret: address, provenance) %0, double noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [40 x i8], align 16               ; 3 uses
+  %i.a = alloca [40 x i8], align 16               ; 11 uses
   %i.b = bitcast double %1 to i64                 ; 3 uses
   %i.c = lshr i64 %i.b, 63                        ; 3 uses
   %i.d = lshr i64 %i.b, 52
@@ -21,7 +23,7 @@ bb.a:
   %i.f = and i32 %i.e, 2047                       ; 3 uses
   %i.g = and i64 %i.b, 4503599627370495           ; 4 uses
   %i.h = icmp eq i32 %i.f, 2047
-  br i1 %i.h, label %bb.b, label %bb.e, !prof !14
+  br i1 %i.h, label %bb.b, label %bb.e, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.i = icmp eq i64 %i.g, 0
@@ -101,13 +103,13 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.au = lshr i32 %i.at, 4
   %i.av = zext nneg i32 %i.au to i64
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr @_ZL11kPow10Table, i64 %i.av ; 3 uses
-  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !16
+  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !14
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
-  %i.az = load i64, ptr %i.ay, align 8, !tbaa !16
+  %i.az = load i64, ptr %i.ay, align 8, !tbaa !14
   %i.ba = and i32 %i.at, 15                       ; 2 uses
   %i.bb = zext nneg i32 %i.ba to i64
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr @_ZL10kPow5Table, i64 %i.bb
-  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !16 ; 2 uses
+  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !14 ; 2 uses
   %i.be = zext i64 %i.ax to i128
   %i.bf = zext i64 %i.bd to i128
   %i.bg = mul nuw i128 %i.bf, %i.be               ; 2 uses
@@ -120,7 +122,7 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.bn = zext i1 %i.bm to i64
   %i.bo = add nuw i64 %i.bn, %i.bi
   %i.bp = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
-  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !16
+  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !14
   %i.br = shl nuw nsw i32 %i.ba, 2
   %i.bs = zext nneg i32 %i.br to i64
   %i.bt = lshr i64 %i.bq, %i.bs                   ; 2 uses
@@ -218,60 +220,163 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
   br label %_ZL9schubfachim.exit
 
 _ZL9schubfachim.exit:                             ; preds = %bb.i, %bb.k, %bb.l
-  %.sroa.0.2.i = phi i64 [ %i.ab, %bb.i ], [ %i.es, %bb.l ], [ %i.ef, %bb.k ] ; 3 uses
+  %.sroa.0.2.i = phi i64 [ %i.ab, %bb.i ], [ %i.es, %bb.l ], [ %i.ef, %bb.k ] ; 10 uses
   %.sroa.4.2.i = phi i32 [ 0, %bb.i ], [ %i.ao, %bb.l ], [ %i.eg, %bb.k ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %i.et = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 3 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 2 uses
   %i.eu = icmp samesign ugt i64 %.sroa.0.2.i, 9999
-  br i1 %i.eu, label %.lr.ph.i.a, label %._crit_edge.i78
+  br i1 %i.eu, label %.lr.ph.i, label %._crit_edge.i78
 
-.lr.ph.i.a:                                       ; preds = %_ZL9schubfachim.exit, %.lr.ph.i.a
-  %.01823.i = phi ptr [ %i.ew, %.lr.ph.i.a ], [ %i.et, %_ZL9schubfachim.exit ] ; 2 uses
-  %.01922.i = phi i64 [ %i.fi, %.lr.ph.i.a ], [ %.sroa.0.2.i, %_ZL9schubfachim.exit ] ; 3 uses
-  %i.ev = urem i64 %.01922.i, 10000
-  %i.ew = getelementptr inbounds i8, ptr %.01823.i, i64 -4 ; 3 uses
+.lr.ph.i:                                         ; preds = %_ZL9schubfachim.exit
+  %2 = urem i64 %.sroa.0.2.i, 10000
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %.lhs.trunc.i = trunc nuw nsw i64 %2 to i16     ; 2 uses
+  %4 = udiv i16 %.lhs.trunc.i, 100
+  %5 = shl nuw nsw i16 %4, 1
+  %6 = zext nneg i16 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %6
+  %8 = load i16, ptr %7, align 2
+  store i16 %8, ptr %3, align 16
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
+  %10 = urem i16 %.lhs.trunc.i, 100
+  %11 = shl nuw nsw i16 %10, 1
+  %12 = zext nneg i16 %11 to i64
+  %13 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %12
+  %14 = load i16, ptr %13, align 2
+  store i16 %14, ptr %9, align 2
+  %15 = udiv i64 %.sroa.0.2.i, 10000              ; 2 uses
+  %16 = icmp samesign ugt i64 %.sroa.0.2.i, 99999999
+  br i1 %16, label %.lr.ph.i.1, label %._crit_edge.i78
+
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i
+  %17 = urem i64 %15, 10000
+  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
+  %.lhs.trunc.i.1 = trunc nuw nsw i64 %17 to i16  ; 2 uses
+  %19 = udiv i16 %.lhs.trunc.i.1, 100
+  %20 = shl nuw nsw i16 %19, 1
+  %21 = zext nneg i16 %20 to i64
+  %22 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %21
+  %23 = load i16, ptr %22, align 2
+  store i16 %23, ptr %18, align 4
+  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
+  %25 = urem i16 %.lhs.trunc.i.1, 100
+  %26 = shl nuw nsw i16 %25, 1
+  %27 = zext nneg i16 %26 to i64
+  %28 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %27
+  %29 = load i16, ptr %28, align 2
+  store i16 %29, ptr %24, align 2
+  %30 = udiv i64 %.sroa.0.2.i, 100000000          ; 2 uses
+  %31 = icmp ugt i64 %.sroa.0.2.i, 999999999999
+  br i1 %31, label %.lr.ph.i.a, label %._crit_edge.i78
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.1
+  %i.ev = urem i64 %30, 10000
+  %i.ew = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %.lhs.trunc.i.a = trunc nuw nsw i64 %i.ev to i16 ; 2 uses
   %i.ex = udiv i16 %.lhs.trunc.i.a, 100
   %i.ey = shl nuw nsw i16 %i.ex, 1
   %i.ez = zext nneg i16 %i.ey to i64
   %i.fa = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %i.ez
   %i.fb = load i16, ptr %i.fa, align 2
-  store i16 %i.fb, ptr %i.ew, align 4
-  %i.fc = getelementptr inbounds i8, ptr %.01823.i, i64 -2
+  store i16 %i.fb, ptr %i.ew, align 8
+  %i.fc = getelementptr inbounds nuw i8, ptr %i.a, i64 10
   %i.fd = urem i16 %.lhs.trunc.i.a, 100
   %i.fe = shl nuw nsw i16 %i.fd, 1
   %i.ff = zext nneg i16 %i.fe to i64
   %i.fg = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %i.ff
   %i.fh = load i16, ptr %i.fg, align 2
   store i16 %i.fh, ptr %i.fc, align 2
-  %i.fi = udiv i64 %.01922.i, 10000               ; 2 uses
-  %i.fj = icmp samesign ugt i64 %.01922.i, 99999999
-  br i1 %i.fj, label %.lr.ph.i.a, label %._crit_edge.i78, !llvm.loop !11
+  %i.fi = udiv i64 %.sroa.0.2.i, 1000000000000    ; 2 uses
+  %i.fj = icmp ugt i64 %.sroa.0.2.i, 9999999999999999
+  br i1 %i.fj, label %.lr.ph.i.3, label %._crit_edge.i78
 
-._crit_edge.i78:                                  ; preds = %.lr.ph.i.a, %_ZL9schubfachim.exit
-  %.019.lcssa.i = phi i64 [ %.sroa.0.2.i, %_ZL9schubfachim.exit ], [ %i.fi, %.lr.ph.i.a ] ; 2 uses
-  %.018.lcssa.i = phi ptr [ %i.et, %_ZL9schubfachim.exit ], [ %i.ew, %.lr.ph.i.a ] ; 2 uses
-  %i.fk = trunc nuw nsw i64 %.019.lcssa.i to i32  ; 2 uses
+.lr.ph.i.3:                                       ; preds = %.lr.ph.i.a
+  %32 = urem i64 %i.fi, 10000
+  %33 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
+  %.lhs.trunc.i.3 = trunc nuw nsw i64 %32 to i16  ; 2 uses
+  %34 = udiv i16 %.lhs.trunc.i.3, 100
+  %35 = shl nuw nsw i16 %34, 1
+  %36 = zext nneg i16 %35 to i64
+  %37 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %36
+  %38 = load i16, ptr %37, align 2
+  store i16 %38, ptr %33, align 4
+  %39 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  %40 = urem i16 %.lhs.trunc.i.3, 100
+  %41 = shl nuw nsw i16 %40, 1
+  %42 = zext nneg i16 %41 to i64
+  %43 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %42
+  %44 = load i16, ptr %43, align 2
+  store i16 %44, ptr %39, align 2
+  %45 = udiv i64 %.sroa.0.2.i, 10000000000000000
+  br label %._crit_edge.i78
+
+._crit_edge.i78:                                  ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.a, %.lr.ph.i.3, %_ZL9schubfachim.exit
+  %.019.lcssa.i = phi i64 [ %.sroa.0.2.i, %_ZL9schubfachim.exit ], [ %15, %.lr.ph.i ], [ %30, %.lr.ph.i.1 ], [ %i.fi, %.lr.ph.i.a ], [ %45, %.lr.ph.i.3 ] ; 6 uses
+  %.018.lcssa.i = phi ptr [ %i.et, %_ZL9schubfachim.exit ], [ %3, %.lr.ph.i ], [ %18, %.lr.ph.i.1 ], [ %i.ew, %.lr.ph.i.a ], [ %33, %.lr.ph.i.3 ] ; 6 uses
+  %i.fk = trunc nuw nsw i64 %.019.lcssa.i to i32  ; 6 uses
   %i.fl = icmp samesign ugt i64 %.019.lcssa.i, 9
-  br i1 %i.fl, label %.lr.ph28.i.a, label %._crit_edge29.i
+  br i1 %i.fl, label %.lr.ph28.i, label %._crit_edge29.i
 
-.lr.ph28.i.a:                                     ; preds = %._crit_edge.i78, %.lr.ph28.i.a
-  %.026.i = phi i32 [ %i.fs, %.lr.ph28.i.a ], [ %i.fk, %._crit_edge.i78 ] ; 3 uses
-  %.125.i = phi ptr [ %i.fm, %.lr.ph28.i.a ], [ %.018.lcssa.i, %._crit_edge.i78 ]
-  %i.fm = getelementptr inbounds i8, ptr %.125.i, i64 -2 ; 3 uses
-  %i.fn = urem i32 %.026.i, 100
+.lr.ph28.i:                                       ; preds = %._crit_edge.i78
+  %46 = getelementptr inbounds i8, ptr %.018.lcssa.i, i64 -2 ; 2 uses
+  %47 = urem i32 %i.fk, 100
+  %48 = shl nuw nsw i32 %47, 1
+  %49 = zext nneg i32 %48 to i64
+  %50 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %49
+  %51 = load i16, ptr %50, align 2
+  store i16 %51, ptr %46, align 1
+  %52 = udiv i32 %i.fk, 100                       ; 2 uses
+  %53 = icmp ugt i64 %.019.lcssa.i, 999
+  br i1 %53, label %.lr.ph28.i.1, label %._crit_edge29.i
+
+.lr.ph28.i.1:                                     ; preds = %.lr.ph28.i
+  %54 = getelementptr inbounds i8, ptr %.018.lcssa.i, i64 -4 ; 2 uses
+  %55 = urem i32 %52, 100
+  %56 = shl nuw nsw i32 %55, 1
+  %57 = zext nneg i32 %56 to i64
+  %58 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %57
+  %59 = load i16, ptr %58, align 2
+  store i16 %59, ptr %54, align 1
+  %60 = udiv i32 %i.fk, 10000                     ; 2 uses
+  %61 = icmp ugt i64 %.019.lcssa.i, 99999
+  br i1 %61, label %.lr.ph28.i.2, label %._crit_edge29.i
+
+.lr.ph28.i.2:                                     ; preds = %.lr.ph28.i.1
+  %62 = getelementptr inbounds i8, ptr %.018.lcssa.i, i64 -6 ; 2 uses
+  %63 = urem i32 %60, 100
+  %64 = shl nuw nsw i32 %63, 1
+  %65 = zext nneg i32 %64 to i64
+  %66 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %65
+  %67 = load i16, ptr %66, align 2
+  store i16 %67, ptr %62, align 1
+  %68 = udiv i32 %i.fk, 1000000                   ; 2 uses
+  %69 = icmp ugt i64 %.019.lcssa.i, 9999999
+  br i1 %69, label %.lr.ph28.i.a, label %._crit_edge29.i
+
+.lr.ph28.i.a:                                     ; preds = %.lr.ph28.i.2
+  %i.fm = getelementptr inbounds i8, ptr %.018.lcssa.i, i64 -8 ; 2 uses
+  %i.fn = urem i32 %68, 100
   %i.fo = shl nuw nsw i32 %i.fn, 1
   %i.fp = zext nneg i32 %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %i.fp
   %i.fr = load i16, ptr %i.fq, align 2
   store i16 %i.fr, ptr %i.fm, align 1
-  %i.fs = udiv i32 %.026.i, 100                   ; 2 uses
-  %i.ft = icmp ugt i32 %.026.i, 999
-  br i1 %i.ft, label %.lr.ph28.i.a, label %._crit_edge29.i, !llvm.loop !12
+  %i.fs = udiv i32 %i.fk, 100000000               ; 2 uses
+  %i.ft = icmp ugt i64 %.019.lcssa.i, 999999999
+  br i1 %i.ft, label %.lr.ph28.i.4, label %._crit_edge29.i
 
-._crit_edge29.i:                                  ; preds = %.lr.ph28.i.a, %._crit_edge.i78
-  %.1.lcssa.i = phi ptr [ %.018.lcssa.i, %._crit_edge.i78 ], [ %i.fm, %.lr.ph28.i.a ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ %i.fk, %._crit_edge.i78 ], [ %i.fs, %.lr.ph28.i.a ] ; 2 uses
+.lr.ph28.i.4:                                     ; preds = %.lr.ph28.i.a
+  %70 = getelementptr inbounds i8, ptr %.018.lcssa.i, i64 -10 ; 2 uses
+  %71 = shl nuw nsw i32 %i.fs, 1
+  %72 = zext nneg i32 %71 to i64
+  %73 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %72
+  %74 = load i16, ptr %73, align 2
+  store i16 %74, ptr %70, align 1
+  br label %._crit_edge29.i
+
+._crit_edge29.i:                                  ; preds = %.lr.ph28.i, %.lr.ph28.i.1, %.lr.ph28.i.2, %.lr.ph28.i.a, %.lr.ph28.i.4, %._crit_edge.i78
+  %.1.lcssa.i = phi ptr [ %.018.lcssa.i, %._crit_edge.i78 ], [ %46, %.lr.ph28.i ], [ %54, %.lr.ph28.i.1 ], [ %62, %.lr.ph28.i.2 ], [ %i.fm, %.lr.ph28.i.a ], [ %70, %.lr.ph28.i.4 ] ; 2 uses
+  %.0.lcssa.i = phi i32 [ %i.fk, %._crit_edge.i78 ], [ %52, %.lr.ph28.i ], [ %60, %.lr.ph28.i.1 ], [ %68, %.lr.ph28.i.2 ], [ %i.fs, %.lr.ph28.i.a ], [ 0, %.lr.ph28.i.4 ] ; 2 uses
   %.not.i79 = icmp eq i32 %.0.lcssa.i, 0
   br i1 %.not.i79, label %_ZL16printunsignedrevPcm.exit, label %bb.m
 
@@ -317,7 +422,7 @@ bb.p:                                             ; preds = %bb.p, %bb.o
   %i.gl = getelementptr inbounds i8, ptr %.0.i80, i64 -1 ; 2 uses
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !9
   %i.gn = icmp eq i8 %i.gm, 48
-  br i1 %i.gn, label %bb.p, label %_Z8trimzeroPc.exit, !llvm.loop !13
+  br i1 %i.gn, label %bb.p, label %_Z8trimzeroPc.exit, !llvm.loop !11
 
 bb.q:                                             ; preds = %bb.n
   %i.go = icmp eq i32 %.sroa.4.2.i, 0
@@ -351,7 +456,7 @@ bb.u:                                             ; preds = %bb.u, %bb.t
   %i.gz = getelementptr inbounds i8, ptr %.0.i81, i64 -1 ; 2 uses
   %i.ha = load i8, ptr %i.gz, align 1, !tbaa !9
   %i.hb = icmp eq i8 %i.ha, 48
-  br i1 %i.hb, label %bb.u, label %_Z8trimzeroPc.exit, !llvm.loop !13
+  br i1 %i.hb, label %bb.u, label %_Z8trimzeroPc.exit, !llvm.loop !11
 
 bb.v:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(17) %i.p, ptr noundef nonnull align 1 dereferenceable(17) %.2.i, i64 17, i1 false)
@@ -382,7 +487,7 @@ bb.x:                                             ; preds = %bb.x, %bb.w
   %i.hn = getelementptr inbounds i8, ptr %.0.i83, i64 -1 ; 3 uses
   %i.ho = load i8, ptr %i.hn, align 1, !tbaa !9   ; 2 uses
   %i.hp = icmp eq i8 %i.ho, 48
-  br i1 %i.hp, label %bb.x, label %_Z8trimzeroPc.exit84, !llvm.loop !13
+  br i1 %i.hp, label %bb.x, label %_Z8trimzeroPc.exit84, !llvm.loop !11
 
 _Z8trimzeroPc.exit84:                             ; preds = %bb.x
   %i.hq = icmp eq i8 %i.ho, 46
@@ -469,7 +574,7 @@ bb.a:
   %i.n = icmp samesign ult i32 %.02527, 18
   %i.o = icmp ule i64 %i.m, %i.b
   %i.p = select i1 %i.n, i1 %i.o, i1 false
-  br i1 %i.p, label %.lr.ph, label %._crit_edge, !llvm.loop !17
+  br i1 %i.p, label %.lr.ph, label %._crit_edge, !llvm.loop !15
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ %i.k, %._crit_edge ] ; 2 uses
@@ -482,7 +587,7 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge
   store i8 %i.s, ptr %i.t, align 1, !tbaa !9
   %i.u = udiv i64 %.026, 10
   %.not = icmp ult i64 %.026, 10
-  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !18
+  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !16
 
 bb.c:                                             ; preds = %bb.b
   br i1 %i.a, label %bb.e, label %bb.d
@@ -534,11 +639,9 @@ attributes #6 = { nounwind }
 !9 = !{!5, !5, i64 0}
 !10 = !{!"llvm.loop.mustprogress"}
 !11 = distinct !{!11, !10}
-!12 = distinct !{!12, !10}
-!13 = distinct !{!13, !10}
-!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!15 = !{!"long", !5, i64 0}
-!16 = !{!15, !15, i64 0}
-!17 = distinct !{!17, !10}
-!18 = distinct !{!18, !10}
+!12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!13 = !{!"long", !5, i64 0}
+!14 = !{!13, !13, i64 0}
+!15 = distinct !{!15, !10}
+!16 = distinct !{!16, !10}
 end_hunk_0

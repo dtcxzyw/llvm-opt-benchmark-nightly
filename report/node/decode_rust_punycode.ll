@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/decode_rust_punycode?download=true
 inline.NumInlined: 11
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.absl::debugging_internal::Utf8ForCodePoint" = type { [4 x i8], i32 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local noundef ptr @_ZN4absl18debugging_internal18DecodeRustPunycodeENS0_25DecodeRustPunycodeOptionsE(ptr nofree noundef readonly byval(%"struct.absl::debugging_internal::DecodeRustPunycodeOptions") align 8 captures(none) %0) local_unnamed_addr #0 !guid !9 {
+define dso_local noundef ptr @_ZN4absl18debugging_internal18DecodeRustPunycodeENS0_25DecodeRustPunycodeOptionsE(ptr nofree noundef readonly byval(%"struct.absl::debugging_internal::DecodeRustPunycodeOptions") align 8 captures(none) %0) local_unnamed_addr #0 !guid !8 {
 bb.a:
   %1 = alloca %"class.absl::debugging_internal::BoundedUtf8LengthSequence", align 8 ; 26 uses
   %2 = alloca %"struct.absl::debugging_internal::Utf8ForCodePoint", align 4 ; 6 uses
@@ -126,8 +126,8 @@ bb.h:                                             ; preds = %_ZN4absl18debugging
   %.044104148 = phi i32 [ %i.cd, %bb.h ], [ 128, %.lr.ph.i51.preheader ]
   %.041105147 = phi i32 [ %i.cb, %bb.h ], [ 72, %.lr.ph.i51.preheader ] ; 3 uses
   %.038106146 = phi i32 [ %i.hg, %bb.h ], [ %.1.ph, %.lr.ph.i51.preheader ] ; 2 uses
-  %i.as = add i32 %.041105147, 1
-  %i.at = add i32 %.041105147, 26
+  %i.as = add nsw i32 %.041105147, 1
+  %i.at = add nsw i32 %.041105147, 26
   %i.au = zext nneg i32 %.075102150 to i64
   br label %bb.i
 
@@ -195,21 +195,37 @@ _ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit: ; pre
   %i.bs = udiv i32 %i.bp, %i.br                   ; 2 uses
   %i.bt = add nuw nsw i32 %.0103149, 1            ; 5 uses
   %i.bu = udiv i32 %i.bs, %i.bt
-  %i.bv = add nuw i32 %i.bu, %i.bs                ; 3 uses
+  %i.bv = add nuw i32 %i.bu, %i.bs                ; 11 uses
   %i.bw = icmp ugt i32 %i.bv, 455
-  br i1 %i.bw, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.bw, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit, %.lr.ph.a
-  %.03798 = phi i32 [ %i.bx, %.lr.ph.a ], [ %i.bv, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit ] ; 2 uses
-  %.14297 = phi i32 [ %3, %.lr.ph.a ], [ 0, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit ]
-  %i.bx = udiv i32 %.03798, 35                    ; 2 uses
-  %3 = add i32 %.14297, 36                        ; 2 uses
-  %i.by = icmp ugt i32 %.03798, 15959
-  br i1 %i.by, label %.lr.ph.a, label %._crit_edge, !llvm.loop !8
+.lr.ph:                                           ; preds = %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit
+  %3 = udiv i32 %i.bv, 35
+  %4 = icmp ugt i32 %i.bv, 15959
+  br i1 %4, label %.lr.ph.1, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph.a, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit
-  %.142.lcssa = phi i32 [ 0, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit ], [ %3, %.lr.ph.a ]
-  %.037.lcssa = phi i32 [ %i.bv, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit ], [ %i.bx, %.lr.ph.a ]
+.lr.ph.1:                                         ; preds = %.lr.ph
+  %5 = udiv i32 %i.bv, 1225
+  %6 = icmp ugt i32 %i.bv, 558599
+  br i1 %6, label %.lr.ph.2, label %._crit_edge
+
+.lr.ph.2:                                         ; preds = %.lr.ph.1
+  %7 = udiv i32 %i.bv, 42875
+  %8 = icmp ugt i32 %i.bv, 19550999
+  br i1 %8, label %.lr.ph.a, label %._crit_edge
+
+.lr.ph.a:                                         ; preds = %.lr.ph.2
+  %i.bx = udiv i32 %i.bv, 1500625
+  %i.by = icmp ugt i32 %i.bv, 684284999
+  br i1 %i.by, label %.lr.ph.4, label %._crit_edge
+
+.lr.ph.4:                                         ; preds = %.lr.ph.a
+  %9 = udiv i32 %i.bv, 52521875
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.a, %.lr.ph.4, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit
+  %.142.lcssa = phi i32 [ 0, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit ], [ 36, %.lr.ph ], [ 72, %.lr.ph.1 ], [ 108, %.lr.ph.2 ], [ 144, %.lr.ph.a ], [ 180, %.lr.ph.4 ]
+  %.037.lcssa = phi i32 [ %i.bv, %_ZN4absl18debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS3_jRj.exit ], [ %3, %.lr.ph ], [ %5, %.lr.ph.1 ], [ %7, %.lr.ph.2 ], [ %i.bx, %.lr.ph.a ], [ %9, %.lr.ph.4 ]
   %i.bz = trunc nuw i32 %.037.lcssa to i16        ; 2 uses
   %.lhs.trunc = mul nuw i16 %i.bz, 36
   %.rhs.trunc = add nuw nsw i16 %i.bz, 38
@@ -504,10 +520,9 @@ attributes #5 = { nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
 !4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
-!5 = distinct !{!5, !10}
-!6 = distinct !{!6, !10}
-!7 = distinct !{!7, !10}
-!8 = distinct !{!8, !10}
-!9 = !{i64 2823310716616717299}
-!10 = !{!"llvm.loop.mustprogress"}
+!5 = distinct !{!5, !9}
+!6 = distinct !{!6, !9}
+!7 = distinct !{!7, !9}
+!8 = !{i64 2823310716616717299}
+!9 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jiff-rs/original/jiff-789e66dc7021757c.jiff.764126a7be50c476-cgu.02?download=true
 inline.NumInlined: 431
 inline.NumDeleted: 215
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly7printerNtB5_11SpanPrinter14print_span_hms:bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.f = load i16, ptr %i.e, align 8, !noundef !4 ; 6 uses
@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader401:                                    ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit44, %.preheader401
   %.sroa.06.0.i = phi i64 [ %i.bw, %.preheader401 ], [ %i.bn, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit44 ]
   %.sroa.0.0.i = phi i64 [ %i.cb, %.preheader401 ], [ %i.au, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit44 ] ; 3 uses
-  %i.bw = add i64 %.sroa.06.0.i, -1               ; 4 uses
+  %i.bw = add nsw i64 %.sroa.06.0.i, -1           ; 4 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bw
   %i.by = urem i64 %.sroa.0.0.i, 10
   %i.bz = trunc nuw nsw i64 %i.by to i8
@@ -311,7 +311,7 @@ bb.v:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader399:                                    ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader399
   %.sroa.06.0.i31 = phi i64 [ %i.dn, %.preheader399 ], [ %i.dh, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
   %.sroa.0.0.i32 = phi i64 [ %i.ds, %.preheader399 ], [ %.sroa.0.0.copyload, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 3 uses
-  %i.dn = add i64 %.sroa.06.0.i31, -1             ; 4 uses
+  %i.dn = add nsw i64 %.sroa.06.0.i31, -1         ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dm, i64 %i.dn
   %i.dp = urem i64 %.sroa.0.0.i32, 10
   %i.dq = trunc nuw nsw i64 %i.dp to i8
@@ -714,11 +714,10 @@ bb.a:
   %i.f = load i8, ptr %i.e, align 1
   %.sroa.0.0 = select i1 %i.d, i8 %i.f, i8 2      ; 2 uses
   %i.g = udiv i64 %.0.val, 3600                   ; 2 uses
-  %i.h = urem i64 %.0.val, 3600                   ; 2 uses
-  %.lhs.trunc = trunc nuw nsw i64 %i.h to i16     ; 2 uses
+  %i.h = urem i64 %.0.val, 3600                   ; 3 uses
+  %.lhs.trunc = trunc nuw nsw i64 %i.h to i16     ; 3 uses
   %i.i = udiv i16 %.lhs.trunc, 60
   %i.j = urem i16 %.lhs.trunc, 60
-  %.zext = zext nneg i16 %i.i to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !193)
   %..i = tail call noundef range(i8 0, 21) i8 @llvm.umin.i8(i8 %.sroa.0.0, i8 20) ; 2 uses
   %i.k = icmp ult i64 %.0.val, 36000
@@ -790,7 +789,7 @@ bb.g:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader6:                                      ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader6
   %.sroa.06.0.i12 = phi i64 [ %i.ap, %.preheader6 ], [ %i.ag, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
   %.sroa.0.0.i13 = phi i64 [ %i.au, %.preheader6 ], [ %i.g, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 3 uses
-  %i.ap = add i64 %.sroa.06.0.i12, -1             ; 4 uses
+  %i.ap = add nsw i64 %.sroa.06.0.i12, -1         ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ap
   %i.ar = urem i64 %.sroa.0.0.i13, 10
   %i.as = trunc nuw nsw i64 %i.ar to i8
@@ -831,10 +830,10 @@ _RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_cha
   %i.bc = icmp samesign ult i64 %i.h, 600
   %spec.select = select i1 %i.bc, i8 1, i8 2
   %..i33 = tail call noundef range(i8 1, 0) i8 @llvm.umax.i8(i8 range(i8 1, 21) %spec.select, i8 %..i) ; 2 uses
-  %i.bd = zext nneg i8 %..i33 to i64              ; 2 uses
+  %i.bd = zext nneg i8 %..i33 to i64              ; 3 uses
   %i.be = zext i16 %i.bb to i64                   ; 2 uses
   %i.bf = sub nuw i64 %i.aj, %i.be
-  %i.bg = getelementptr i8, ptr %i.ah, i64 %i.be  ; 2 uses
+  %i.bg = getelementptr i8, ptr %i.ah, i64 %i.be  ; 3 uses
   %.not.i = icmp ult i64 %i.bf, %i.bd
   br i1 %.not.i, label %bb.i, label %.preheader4, !prof !11
 
@@ -842,26 +841,35 @@ bb.i:                                             ; preds = %_RNvMs0_NtNtCsa9sSW
   tail call void @_RNvNtCs3oUPovFnLWP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 48, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #24, !noalias !195
   unreachable
 
-.preheader4:                                      ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21, %.preheader4
-  %.sroa.06.0.i = phi i64 [ %i.bh, %.preheader4 ], [ %i.bd, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21 ]
-  %.sroa.0.0.i = phi i64 [ %3, %.preheader4 ], [ %.zext, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21 ] ; 3 uses
-  %i.bh = add i64 %.sroa.06.0.i, -1               ; 4 uses
+.preheader4:                                      ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21
+  %i.bh = add nsw i64 %i.bd, -1                   ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bh
-  %2 = urem i64 %.sroa.0.0.i, 10
-  %i.bj = trunc nuw nsw i64 %2 to i8
+  %2 = urem i16 %i.i, 10
+  %i.bj = trunc nuw nsw i16 %2 to i8
   %i.bk = or disjoint i8 %i.bj, 48
   store i8 %i.bk, ptr %i.bi, align 1, !noalias !195
-  %3 = udiv i64 %.sroa.0.0.i, 10
-  %i.bl = icmp samesign ugt i64 %.sroa.0.0.i, 9
+  %i.bl = icmp samesign ugt i64 %i.h, 599
   %i.bm = icmp ne i64 %i.bh, 0                    ; 2 uses
   %or.cond2.i = and i1 %i.bl, %i.bm
-  br i1 %or.cond2.i, label %.preheader4, label %.preheader
+  br i1 %or.cond2.i, label %.preheader4.1, label %.preheader
 
-.preheader:                                       ; preds = %.preheader4
-  br i1 %i.bm, label %.lr.ph12.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit
+.preheader4.1:                                    ; preds = %.preheader4
+  %3 = udiv i16 %.lhs.trunc, 600
+  %4 = add nsw i64 %i.bd, -2                      ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.bg, i64 %4
+  %6 = trunc nuw nsw i16 %3 to i8
+  %7 = or disjoint i8 %6, 48
+  store i8 %7, ptr %5, align 1, !noalias !195
+  %8 = icmp ne i64 %4, 0
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader4.1, %.preheader4
+  %.lcssa25 = phi i64 [ %i.bh, %.preheader4 ], [ %4, %.preheader4.1 ]
+  %.lcssa = phi i1 [ %i.bm, %.preheader4 ], [ %8, %.preheader4.1 ]
+  br i1 %.lcssa, label %.lr.ph12.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit
 
 .lr.ph12.preheader:                               ; preds = %.preheader
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 48, i64 %i.bh, i1 false), !noalias !195
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 48, i64 %.lcssa25, i1 false), !noalias !195
   br label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit
 
 _RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit: ; preds = %.lr.ph12.preheader, %.preheader
@@ -1264,7 +1272,7 @@ bb.g:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader9:                                      ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader9
   %.sroa.06.0.i = phi i64 [ %i.aj, %.preheader9 ], [ %i.aa, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
   %.sroa.0.0.i = phi i64 [ %i.ao, %.preheader9 ], [ %i.b, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 3 uses
-  %i.aj = add i64 %.sroa.06.0.i, -1               ; 4 uses
+  %i.aj = add nsw i64 %.sroa.06.0.i, -1           ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj
   %i.al = urem i64 %.sroa.0.0.i, 10
   %i.am = trunc nuw nsw i64 %i.al to i8

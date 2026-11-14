@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/punycode?download=true
 inline.NumInlined: 4
 inline.NumDeleted: 4
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -10,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str = private unnamed_addr constant [5 x i8] c"xn--\00", align 1, !guid !10
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local range(i32 0, 2) i32 @ossl_punycode_decode(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 !guid !19 {
+define dso_local range(i32 0, 2) i32 @ossl_punycode_decode(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 !guid !18 {
 bb.a:
   %i.a = load i32, ptr %3, align 4, !tbaa !11     ; 2 uses
   %.not143 = icmp eq i64 %1, 0
@@ -131,7 +133,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not104128, label %.lr.ph133, label %.critedge
 
 .lr.ph133:                                        ; preds = %.preheader
-  %i.ag = add i32 %.088138, 26
+  %i.ag = add nsw i32 %.088138, 26
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph133, %bb.l
@@ -216,21 +218,37 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bk = phi i32 [ %i.bh, %bb.n ], [ %i.bj, %bb.o ] ; 2 uses
   %i.bl = udiv i32 %i.bk, %i.bg
-  %i.bm = add nuw i32 %i.bl, %i.bk                ; 3 uses
+  %i.bm = add nuw i32 %i.bl, %i.bk                ; 11 uses
   %i.bn = icmp ugt i32 %i.bm, 455
-  br i1 %i.bn, label %.lr.ph.i.a, label %adapt.exit
+  br i1 %i.bn, label %.lr.ph.i, label %adapt.exit
 
-.lr.ph.i.a:                                       ; preds = %bb.p, %.lr.ph.i.a
-  %.014.i = phi i32 [ %4, %.lr.ph.i.a ], [ 0, %bb.p ]
-  %.01213.i = phi i32 [ %i.bo, %.lr.ph.i.a ], [ %i.bm, %bb.p ] ; 2 uses
-  %i.bo = udiv i32 %.01213.i, 35                  ; 2 uses
-  %4 = add i32 %.014.i, 36                        ; 2 uses
-  %i.bp = icmp ugt i32 %.01213.i, 15959
-  br i1 %i.bp, label %.lr.ph.i.a, label %adapt.exit, !llvm.loop !17
+.lr.ph.i:                                         ; preds = %bb.p
+  %4 = udiv i32 %i.bm, 35
+  %5 = icmp ugt i32 %i.bm, 15959
+  br i1 %5, label %.lr.ph.i.1, label %adapt.exit
 
-adapt.exit:                                       ; preds = %.lr.ph.i.a, %bb.p
-  %.012.lcssa.i = phi i32 [ %i.bm, %bb.p ], [ %i.bo, %.lr.ph.i.a ]
-  %.0.lcssa.i = phi i32 [ 0, %bb.p ], [ %4, %.lr.ph.i.a ]
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i
+  %6 = udiv i32 %i.bm, 1225
+  %7 = icmp ugt i32 %i.bm, 558599
+  br i1 %7, label %.lr.ph.i.2, label %adapt.exit
+
+.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
+  %8 = udiv i32 %i.bm, 42875
+  %9 = icmp ugt i32 %i.bm, 19550999
+  br i1 %9, label %.lr.ph.i.a, label %adapt.exit
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.2
+  %i.bo = udiv i32 %i.bm, 1500625
+  %i.bp = icmp ugt i32 %i.bm, 684284999
+  br i1 %i.bp, label %.lr.ph.i.4, label %adapt.exit
+
+.lr.ph.i.4:                                       ; preds = %.lr.ph.i.a
+  %10 = udiv i32 %i.bm, 52521875
+  br label %adapt.exit
+
+adapt.exit:                                       ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.a, %.lr.ph.i.4, %bb.p
+  %.012.lcssa.i = phi i32 [ %i.bm, %bb.p ], [ %4, %.lr.ph.i ], [ %6, %.lr.ph.i.1 ], [ %8, %.lr.ph.i.2 ], [ %i.bo, %.lr.ph.i.a ], [ %10, %.lr.ph.i.4 ]
+  %.0.lcssa.i = phi i32 [ 0, %bb.p ], [ 36, %.lr.ph.i ], [ 72, %.lr.ph.i.1 ], [ 108, %.lr.ph.i.2 ], [ 144, %.lr.ph.i.a ], [ 180, %.lr.ph.i.4 ]
   %i.bq = zext i32 %i.aw to i64                   ; 2 uses
   %i.br = udiv i64 %i.bq, %i.bf                   ; 2 uses
   %i.bs = urem i64 %i.bq, %i.bf                   ; 3 uses
@@ -260,7 +278,7 @@ bb.q:                                             ; preds = %adapt.exit
   %i.cg = add i32 %i.bz, 1
   %i.ch = zext i32 %i.ar to i64
   %i.ci = icmp ugt i64 %1, %i.ch
-  br i1 %i.ci, label %.preheader, label %._crit_edge141, !llvm.loop !18
+  br i1 %i.ci, label %.preheader, label %._crit_edge141, !llvm.loop !17
 
 ._crit_edge141:                                   ; preds = %bb.q, %.._crit_edge141_crit_edge
   %.pre-phi = phi i32 [ %.pre, %.._crit_edge141_crit_edge ], [ %i.bg, %bb.q ]
@@ -282,7 +300,7 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -1, 2) i32 @ossl_a2ulabel(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 !guid !23 {
+define dso_local range(i32 -1, 2) i32 @ossl_a2ulabel(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 !guid !22 {
 bb.a:
   %i.a = alloca [512 x i32], align 16             ; 4 uses
   %3 = alloca %struct.wpacket_st, align 8         ; 8 uses
@@ -295,7 +313,7 @@ bb.a:
   %.sink34.i.sroa.gep47 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.sink34.i.sroa.gep49 = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
   %.sink34.i.sroa.gep50 = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 3 uses
-  br i1 %.not, label %bb.t, label %bb.b, !prof !24
+  br i1 %.not, label %bb.t, label %bb.b, !prof !23
 
 bb.b:                                             ; preds = %bb.a
   %i.d = call i32 @WPACKET_init_static_len(ptr noundef nonnull %3, ptr noundef nonnull %1, i64 noundef %2, i64 noundef 0) #7
@@ -433,7 +451,7 @@ bb.o:                                             ; preds = %bb.n, %bb.l, %bb.j,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !22
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !21
 
 .thread69:                                        ; preds = %bb.g, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
@@ -524,15 +542,14 @@ attributes #8 = { nounwind willreturn memory(read) }
 !11 = !{!7, !7, i64 0}
 !12 = !{!6, !6, i64 0}
 !13 = !{!"llvm.loop.mustprogress"}
-!14 = distinct !{!14, !13, !20, !21}
-!15 = distinct !{!15, !13, !20}
+!14 = distinct !{!14, !13, !19, !20}
+!15 = distinct !{!15, !13, !19}
 !16 = distinct !{!16, !13}
 !17 = distinct !{!17, !13}
-!18 = distinct !{!18, !13}
-!19 = !{i64 -8838324878497988081}
-!20 = !{!"llvm.loop.isvectorized", i32 1}
-!21 = !{!"llvm.loop.unroll.runtime.disable"}
-!22 = distinct !{!22, !13}
-!23 = !{i64 4516564615325781916}
-!24 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!18 = !{i64 -8838324878497988081}
+!19 = !{!"llvm.loop.isvectorized", i32 1}
+!20 = !{!"llvm.loop.unroll.runtime.disable"}
+!21 = distinct !{!21, !13}
+!22 = !{i64 4516564615325781916}
+!23 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

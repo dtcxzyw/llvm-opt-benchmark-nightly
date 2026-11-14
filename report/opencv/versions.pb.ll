@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/versions.pb?download=true
 inline.NumInlined: 163
 inline.NumDeleted: 97
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN17opencv_tensorflow10VersionDef14_InternalParseEPKcPN6google8protobuf8internal12ParseContextE:bb.a
   store i32 %.fca.1.extract.i.i.i, ptr %i.g, align 4, !tbaa !33
   %.not9 = icmp eq ptr %.fca.0.extract.i.i.i, null
@@ -202,7 +204,7 @@ bb.a:
   br i1 %.not, label %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %2, align 8, !tbaa !60
+  %i.c = load ptr, ptr %2, align 8, !tbaa !59
   %.not.i = icmp ult ptr %1, %i.c
   br i1 %.not.i, label %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit, label %bb.c, !prof !26
 
@@ -264,7 +266,7 @@ _ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.
   br i1 %.not14, label %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit28, label %bb.f
 
 bb.f:                                             ; preds = %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit
-  %i.y = load ptr, ptr %2, align 8, !tbaa !60
+  %i.y = load ptr, ptr %2, align 8, !tbaa !59
   %.not.i20 = icmp ult ptr %.0, %i.y
   br i1 %.not.i20, label %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit22, label %bb.g, !prof !26
 
@@ -321,13 +323,13 @@ bb.i:                                             ; preds = %_ZN6google8protobuf
 _ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit28: ; preds = %.preheader.i24, %bb.i, %bb.h, %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit
   %.1 = phi ptr [ %.0, %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit ], [ %i.ae, %bb.h ], [ %i.al, %bb.i ], [ %i.aq, %.preheader.i24 ] ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.at = load atomic i32, ptr %i.as monotonic, align 8 ; 4 uses
+  %i.at = load atomic i32, ptr %i.as monotonic, align 8 ; 11 uses
   %i.au = icmp sgt i32 %i.at, 0
   br i1 %i.au, label %bb.j, label %_ZN6google8protobuf2io19EpsCopyOutputStream17WriteVarintPackedINS0_13RepeatedFieldIiEEFmmEEEPhiRKT_iS7_RKT0_.exit
 
 bb.j:                                             ; preds = %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit28
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aw = load ptr, ptr %2, align 8, !tbaa !60
+  %i.aw = load ptr, ptr %2, align 8, !tbaa !59
   %.not.i29 = icmp ult ptr %.1, %i.aw
   br i1 %.not.i29, label %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31, label %bb.k, !prof !26
 
@@ -336,27 +338,51 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31
 
 _ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31: ; preds = %bb.j, %bb.k
-  %.0.i30 = phi ptr [ %i.ax, %bb.k ], [ %.1, %bb.j ] ; 3 uses
+  %.0.i30 = phi ptr [ %i.ax, %bb.k ], [ %.1, %bb.j ] ; 7 uses
   store i8 26, ptr %.0.i30, align 1, !tbaa !27
-  %.0.i1738 = getelementptr inbounds nuw i8, ptr %.0.i30, i64 1 ; 2 uses
+  %.0.i1738 = getelementptr inbounds nuw i8, ptr %.0.i30, i64 1 ; 3 uses
   %i.ay = icmp samesign ugt i32 %i.at, 127
-  br i1 %i.ay, label %.lr.ph.a, label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit, !prof !62
+  br i1 %i.ay, label %.lr.ph, label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit, !prof !61
 
-.lr.ph.a:                                         ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31, %.lr.ph.a
-  %.0.i1740 = phi ptr [ %.0.i17.a, %.lr.ph.a ], [ %.0.i1738, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ] ; 3 uses
-  %.07.i39 = phi i32 [ %i.bb, %.lr.ph.a ], [ %i.at, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ] ; 3 uses
-  %i.az = trunc i32 %.07.i39 to i8
+.lr.ph:                                           ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31
+  %3 = trunc i32 %i.at to i8
+  %4 = or i8 %3, -128
+  store i8 %4, ptr %.0.i1738, align 1, !tbaa !27
+  %5 = lshr i32 %i.at, 7                          ; 2 uses
+  %.0.i17 = getelementptr inbounds nuw i8, ptr %.0.i30, i64 2 ; 3 uses
+  %6 = icmp samesign ugt i32 %i.at, 16383
+  br i1 %6, label %.lr.ph.1, label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit, !prof !62
+
+.lr.ph.1:                                         ; preds = %.lr.ph
+  %7 = trunc i32 %5 to i8
+  %8 = or i8 %7, -128
+  store i8 %8, ptr %.0.i17, align 1, !tbaa !27
+  %9 = lshr i32 %i.at, 14                         ; 2 uses
+  %.0.i17.1 = getelementptr inbounds nuw i8, ptr %.0.i30, i64 3 ; 3 uses
+  %10 = icmp ugt i32 %i.at, 2097151
+  br i1 %10, label %.lr.ph.a, label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit, !prof !62
+
+.lr.ph.a:                                         ; preds = %.lr.ph.1
+  %i.az = trunc i32 %9 to i8
   %i.ba = or i8 %i.az, -128
-  store i8 %i.ba, ptr %.0.i1740, align 1, !tbaa !27
-  %i.bb = lshr i32 %.07.i39, 7                    ; 2 uses
-  %.0.i17.a = getelementptr inbounds nuw i8, ptr %.0.i1740, i64 1 ; 2 uses
-  %i.bc = icmp samesign ugt i32 %.07.i39, 16383
-  br i1 %i.bc, label %.lr.ph.a, label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit, !prof !63, !llvm.loop !55
+  store i8 %i.ba, ptr %.0.i17.1, align 1, !tbaa !27
+  %i.bb = lshr i32 %i.at, 21                      ; 2 uses
+  %.0.i17.a = getelementptr inbounds nuw i8, ptr %.0.i30, i64 4 ; 3 uses
+  %i.bc = icmp ugt i32 %i.at, 268435455
+  br i1 %i.bc, label %.lr.ph.3, label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit, !prof !62
 
-_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit: ; preds = %.lr.ph.a, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31
-  %.07.i.lcssa = phi i32 [ %i.at, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ], [ %i.bb, %.lr.ph.a ]
-  %.0.i30.pn.lcssa = phi ptr [ %.0.i30, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ], [ %.0.i1740, %.lr.ph.a ]
-  %.0.i17.lcssa = phi ptr [ %.0.i1738, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ], [ %.0.i17.a, %.lr.ph.a ]
+.lr.ph.3:                                         ; preds = %.lr.ph.a
+  %11 = trunc i32 %i.bb to i8
+  %12 = or i8 %11, -128
+  store i8 %12, ptr %.0.i17.a, align 1, !tbaa !27
+  %13 = lshr i32 %i.at, 28
+  %.0.i17.3 = getelementptr inbounds nuw i8, ptr %.0.i30, i64 5
+  br label %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit
+
+_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit: ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.a, %.lr.ph.3, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31
+  %.07.i.lcssa = phi i32 [ %i.at, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ], [ %5, %.lr.ph ], [ %9, %.lr.ph.1 ], [ %i.bb, %.lr.ph.a ], [ %13, %.lr.ph.3 ]
+  %.0.i30.pn.lcssa = phi ptr [ %.0.i30, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ], [ %.0.i1738, %.lr.ph ], [ %.0.i17, %.lr.ph.1 ], [ %.0.i17.1, %.lr.ph.a ], [ %.0.i17.a, %.lr.ph.3 ]
+  %.0.i17.lcssa = phi ptr [ %.0.i1738, %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit31 ], [ %.0.i17, %.lr.ph ], [ %.0.i17.1, %.lr.ph.1 ], [ %.0.i17.a, %.lr.ph.a ], [ %.0.i17.3, %.lr.ph.3 ]
   %i.bd = trunc nuw nsw i32 %.07.i.lcssa to i8
   %i.be = getelementptr inbounds nuw i8, ptr %.0.i30.pn.lcssa, i64 2
   store i8 %i.bd, ptr %.0.i17.lcssa, align 1, !tbaa !27
@@ -370,7 +396,7 @@ _ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit: ; preds =
 bb.l:                                             ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream12UnsafeVarintImEEPhT_S4_.exit.i, %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit
   %.014.i = phi ptr [ %i.be, %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit ], [ %.019.i.i, %_ZN6google8protobuf2io19EpsCopyOutputStream12UnsafeVarintImEEPhT_S4_.exit.i ] ; 3 uses
   %.0.i15 = phi ptr [ %i.bg, %_ZN6google8protobuf2io19EpsCopyOutputStream15UnsafeWriteSizeEjPh.exit ], [ %i.bm, %_ZN6google8protobuf2io19EpsCopyOutputStream12UnsafeVarintImEEPhT_S4_.exit.i ] ; 2 uses
-  %i.bk = load ptr, ptr %2, align 8, !tbaa !60
+  %i.bk = load ptr, ptr %2, align 8, !tbaa !59
   %.not.i32 = icmp ult ptr %.014.i, %i.bk
   br i1 %.not.i32, label %_ZN6google8protobuf2io19EpsCopyOutputStream11EnsureSpaceEPh.exit34, label %bb.m, !prof !26
 
@@ -425,7 +451,7 @@ bb.p:                                             ; preds = %.preheader, %bb.p
 _ZN6google8protobuf2io19EpsCopyOutputStream12UnsafeVarintImEEPhT_S4_.exit.i: ; preds = %bb.p, %bb.o, %bb.n
   %.019.i.i = phi ptr [ %i.bq, %bb.n ], [ %i.bx, %bb.o ], [ %i.cc, %bb.p ] ; 2 uses
   %i.ce = icmp ult ptr %i.bm, %i.bj
-  br i1 %i.ce, label %bb.l, label %_ZN6google8protobuf2io19EpsCopyOutputStream17WriteVarintPackedINS0_13RepeatedFieldIiEEFmmEEEPhiRKT_iS7_RKT0_.exit, !llvm.loop !56
+  br i1 %i.ce, label %bb.l, label %_ZN6google8protobuf2io19EpsCopyOutputStream17WriteVarintPackedINS0_13RepeatedFieldIiEEFmmEEEPhiRKT_iS7_RKT0_.exit, !llvm.loop !55
 
 _ZN6google8protobuf2io19EpsCopyOutputStream17WriteVarintPackedINS0_13RepeatedFieldIiEEFmmEEEPhiRKT_iS7_RKT0_.exit: ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream12UnsafeVarintImEEPhT_S4_.exit.i, %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit28
   %.2 = phi ptr [ %.1, %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit28 ], [ %.019.i.i, %_ZN6google8protobuf2io19EpsCopyOutputStream12UnsafeVarintImEEPhT_S4_.exit.i ] ; 2 uses
@@ -760,10 +786,10 @@ define hidden void @_ZN17opencv_tensorflow10VersionDef12InternalSwapEPS0_(ptr no
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load i64, ptr %i.a, align 8, !tbaa !64
-  %i.d = load i64, ptr %i.b, align 8, !tbaa !64
-  store i64 %i.d, ptr %i.a, align 8, !tbaa !64
-  store i64 %i.c, ptr %i.b, align 8, !tbaa !64
+  %i.c = load i64, ptr %i.a, align 8, !tbaa !63
+  %i.d = load i64, ptr %i.b, align 8, !tbaa !63
+  store i64 %i.d, ptr %i.a, align 8, !tbaa !63
+  store i64 %i.c, ptr %i.b, align 8, !tbaa !63
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %.0.copyload.i.i.i = load i128, ptr %i.e, align 8
@@ -834,7 +860,7 @@ declare void @_ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev(ptr dead_on_unw
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZNK17opencv_tensorflow10VersionDef3NewEPN6google8protobuf5ArenaE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %1) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN6google8protobuf5Arena18CreateMaybeMessageIN17opencv_tensorflow10VersionDefEJEEEPT_PS1_DpOT0_(ptr noundef %1), !inline_history !65
+  %i.a = tail call noundef ptr @_ZN6google8protobuf5Arena18CreateMaybeMessageIN17opencv_tensorflow10VersionDefEJEEEPT_PS1_DpOT0_(ptr noundef %1), !inline_history !64
   ret ptr %i.a
 }
 
@@ -1033,9 +1059,9 @@ bb.d:                                             ; preds = %_ZNK6google8protobu
   %i.h = tail call { ptr, ptr } @_ZN6google8protobuf5Arena26AllocateAlignedWithCleanupEmPKSt9type_info(ptr noundef nonnull align 8 dereferenceable(32) %.0.i, i64 noundef 32, ptr noundef nonnull @_ZTIN6google8protobuf8internal16InternalMetadata9ContainerINS0_15UnknownFieldSetEEE) ; 2 uses
   %i.i = extractvalue { ptr, ptr } %i.h, 0        ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.h, 1        ; 2 uses
-  store ptr %i.i, ptr %i.j, align 8, !tbaa !67
+  store ptr %i.i, ptr %i.j, align 8, !tbaa !66
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store ptr @_ZN6google8protobuf8internal21arena_destruct_objectINS1_16InternalMetadata9ContainerINS0_15UnknownFieldSetEEEEEvPv, ptr %i.k, align 8, !tbaa !68
+  store ptr @_ZN6google8protobuf8internal21arena_destruct_objectINS1_16InternalMetadata9ContainerINS0_15UnknownFieldSetEEEEEvPv, ptr %i.k, align 8, !tbaa !67
   br label %_ZN6google8protobuf5Arena14CreateInternalINS0_8internal16InternalMetadata9ContainerINS0_15UnknownFieldSetEEEJEEEPT_PS1_St17integral_constantIbLb0EEDpOT0_.exit
 
 _ZN6google8protobuf5Arena14CreateInternalINS0_8internal16InternalMetadata9ContainerINS0_15UnknownFieldSetEEEJEEEPT_PS1_St17integral_constantIbLb0EEDpOT0_.exit: ; preds = %bb.c, %bb.d
@@ -1189,19 +1215,18 @@ attributes #20 = { builtin allocsize(0) }
 !51 = !{!"branch_weights", !"expected", i32 7631680, i32 2139851968}
 !52 = !{!"branch_weights", i32 1, i32 4000, i32 1}
 !53 = !{!42, !5, i64 80}
-!54 = distinct !{!54, !61}
-!55 = distinct !{!55, !61}
-!56 = distinct !{!56, !61}
-!57 = !{!"p1 _ZTSN6google8protobuf2io20ZeroCopyOutputStreamE", !13, i64 0}
-!58 = !{!"bool", !4, i64 0}
-!59 = !{!"_ZTSN6google8protobuf2io19EpsCopyOutputStreamE", !24, i64 0, !24, i64 8, !4, i64 16, !57, i64 48, !58, i64 56, !58, i64 57, !58, i64 58}
-!60 = !{!59, !24, i64 0}
-!61 = !{!"llvm.loop.mustprogress"}
-!62 = !{!"branch_weights", i32 1, i32 1999}
-!63 = !{!"branch_weights", i32 0, i32 1}
-!64 = !{!8, !8, i64 0}
-!65 = distinct !{null}
-!66 = !{!"_ZTSN6google8protobuf8internal11SerialArena11CleanupNodeE", !13, i64 0, !13, i64 8}
-!67 = !{!66, !13, i64 0}
-!68 = !{!66, !13, i64 8}
+!54 = distinct !{!54, !60}
+!55 = distinct !{!55, !60}
+!56 = !{!"p1 _ZTSN6google8protobuf2io20ZeroCopyOutputStreamE", !13, i64 0}
+!57 = !{!"bool", !4, i64 0}
+!58 = !{!"_ZTSN6google8protobuf2io19EpsCopyOutputStreamE", !24, i64 0, !24, i64 8, !4, i64 16, !56, i64 48, !57, i64 56, !57, i64 57, !57, i64 58}
+!59 = !{!58, !24, i64 0}
+!60 = !{!"llvm.loop.mustprogress"}
+!61 = !{!"branch_weights", i32 1, i32 1999}
+!62 = !{!"branch_weights", i32 0, i32 1}
+!63 = !{!8, !8, i64 0}
+!64 = distinct !{null}
+!65 = !{!"_ZTSN6google8protobuf8internal11SerialArena11CleanupNodeE", !13, i64 0, !13, i64 8}
+!66 = !{!65, !13, i64 0}
+!67 = !{!65, !13, i64 8}
 end_hunk_0

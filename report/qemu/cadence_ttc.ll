@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/cadence_ttc?download=true
 inline.NumInlined: 23
 inline.NumDeleted: 14
-loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@cadence_ttc_read:bb.a
   %i.y = load i32, ptr %i.x, align 8
   store i32 0, ptr %i.x, align 8
@@ -204,27 +204,38 @@ bb.e:                                             ; preds = %bb.c
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %bb.e
-  %.017.lcssa.i = phi i64 [ 1000000000, %bb.e ], [ 1000000, %.lr.ph.i ], [ 1000, %.lr.ph.i.1 ], [ 1, %.lr.ph.i.2 ] ; 3 uses
+  %.017.lcssa.i = phi i64 [ 1000000000, %bb.e ], [ 1000000, %.lr.ph.i ], [ 1000, %.lr.ph.i.1 ], [ 1, %.lr.ph.i.2 ] ; 7 uses
   %.0.lcssa.i = phi i64 [ %i.p, %bb.e ], [ %i.r, %.lr.ph.i ], [ %i.t, %.lr.ph.i.1 ], [ %i.v, %.lr.ph.i.2 ]
-  %i.w = shl i64 %.0.lcssa.i, 16                  ; 3 uses
+  %i.w = shl i64 %.0.lcssa.i, 16                  ; 7 uses
   %i.x = icmp ugt i64 %i.w, 8589934591
   %i.y = icmp samesign ugt i64 %.017.lcssa.i, 1
   %i.z = select i1 %i.x, i1 %i.y, i1 false
   br i1 %i.z, label %.lr.ph25.i, label %cadence_timer_get_steps.exit
 
-.lr.ph25.i:                                       ; preds = %._crit_edge.i, %.lr.ph25.i
-  %.123.i = phi i64 [ %i.aa, %.lr.ph25.i ], [ %i.w, %._crit_edge.i ] ; 2 uses
-  %.11822.i = phi i64 [ %i.ab, %.lr.ph25.i ], [ %.017.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %i.aa = udiv i64 %.123.i, 1000                  ; 2 uses
-  %i.ab = udiv i64 %.11822.i, 1000                ; 2 uses
-  %i.ac = icmp ugt i64 %.123.i, 8589934591999
-  %i.ad = icmp samesign ugt i64 %.11822.i, 1999
+.lr.ph25.i:                                       ; preds = %._crit_edge.i
+  %i.aa = udiv i64 %i.w, 1000
+  %i.ab = udiv i64 %.017.lcssa.i, 1000
+  %i.ac = icmp ugt i64 %i.w, 8589934591999
+  %i.ad = icmp samesign ugt i64 %.017.lcssa.i, 1999
   %i.ae = select i1 %i.ac, i1 %i.ad, i1 false
-  br i1 %i.ae, label %.lr.ph25.i, label %cadence_timer_get_steps.exit, !llvm.loop !7
+  br i1 %i.ae, label %.lr.ph25.i.1, label %cadence_timer_get_steps.exit
 
-cadence_timer_get_steps.exit:                     ; preds = %.lr.ph25.i, %._crit_edge.i
-  %.118.lcssa.i = phi i64 [ %.017.lcssa.i, %._crit_edge.i ], [ %i.ab, %.lr.ph25.i ]
-  %.1.lcssa.i = phi i64 [ %i.w, %._crit_edge.i ], [ %i.aa, %.lr.ph25.i ]
+.lr.ph25.i.1:                                     ; preds = %.lr.ph25.i
+  %1 = udiv i64 %i.w, 1000000
+  %2 = udiv i64 %.017.lcssa.i, 1000000
+  %3 = icmp ugt i64 %i.w, 8589934591999999
+  %4 = icmp ugt i64 %.017.lcssa.i, 1999999
+  %5 = and i1 %3, %4
+  br i1 %5, label %.lr.ph25.i.2, label %cadence_timer_get_steps.exit
+
+.lr.ph25.i.2:                                     ; preds = %.lr.ph25.i.1
+  %6 = udiv i64 %i.w, 1000000000
+  %7 = udiv i64 %.017.lcssa.i, 1000000000
+  br label %cadence_timer_get_steps.exit
+
+cadence_timer_get_steps.exit:                     ; preds = %.lr.ph25.i, %.lr.ph25.i.1, %.lr.ph25.i.2, %._crit_edge.i
+  %.118.lcssa.i = phi i64 [ %.017.lcssa.i, %._crit_edge.i ], [ %i.ab, %.lr.ph25.i ], [ %2, %.lr.ph25.i.1 ], [ %7, %.lr.ph25.i.2 ]
+  %.1.lcssa.i = phi i64 [ %i.w, %._crit_edge.i ], [ %i.aa, %.lr.ph25.i ], [ %1, %.lr.ph25.i.1 ], [ %6, %.lr.ph25.i.2 ]
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ag = load i32, ptr %i.af, align 8
   %i.ah = sext i32 %i.ag to i64
@@ -469,7 +480,7 @@ bb.k:                                             ; preds = %.preheader, %bb.k
   %.0 = phi i64 [ %i.es, %bb.k ], [ %i.ay, %.preheader ] ; 3 uses
   %i.er = icmp slt i64 %.0, 0
   %i.es = add nsw i64 %.0, %i.i
-  br i1 %i.er, label %bb.k, label %bb.l, !llvm.loop !8
+  br i1 %i.er, label %bb.k, label %bb.l, !llvm.loop !7
 
 bb.l:                                             ; preds = %bb.k
   %i.et = urem i64 %.0, %i.i
@@ -750,7 +761,6 @@ attributes #8 = { nounwind allocsize(0) }
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !6 = !{!"Ubuntu clang version 24.0.0 (++20260815081758+83e1178daa12-1~exp1~20260815201912.1788)"}
-!7 = distinct !{!7, !9}
-!8 = distinct !{!8, !9}
-!9 = !{!"llvm.loop.mustprogress"}
+!7 = distinct !{!7, !8}
+!8 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

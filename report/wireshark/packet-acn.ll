@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-acn?download=true
 inline.NumInlined: 128
 inline.NumDeleted: 57
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@dissect_acn_root_pdu:bb.a
   %i.gp = load i32, ptr %i.er, align 4            ; 2 uses
   %hf_acn_pdu_length.val.i.i = load i32, ptr @hf_acn_pdu_length, align 4
@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %.117.i.i = select i1 %cond1.i.i, i32 8, i32 10 ; 3 uses
   %i.ki = load i32, ptr @global_acn_dmx_display_view, align 4
   %cond2.i.i = icmp eq i32 %i.ki, 0               ; 2 uses
-  %.0107.i.i = select i1 %cond2.i.i, i8 2, i8 3   ; 7 uses
+  %.0107.i.i = select i1 %cond2.i.i, i8 2, i8 3   ; 8 uses
   %i.kj = load i8, ptr @global_acn_dmx_display_leading_zeros, align 1, !range !7, !noundef !8
   %.0.i.i = select i1 %switch.selectcmp.i, i16 %i.kg, i16 %i.jq
   %i.kk = load ptr, ptr %i.gh, align 8
@@ -233,52 +233,63 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   store i8 32, ptr %i.ld, align 1
   %i.lf = getelementptr i8, ptr %i.in, i64 3
   store i8 32, ptr %i.le, align 1
-  %15 = add nsw i8 %.0107.i.i, -2                 ; 2 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.t, %bb.q
-  %.0109171.i.i = phi i32 [ 0, %bb.q ], [ %i.lg, %bb.t ]
-  %.0110170.i.i = phi ptr [ %i.lf, %bb.q ], [ %.1111.i.i, %bb.t ] ; 5 uses
+  %.0109171.i.i = phi i32 [ 0, %bb.q ], [ %i.lg, %bb.t ] ; 3 uses
+  %.0110170.i.i = phi ptr [ %i.lf, %bb.q ], [ %.1111.i.i, %bb.t ] ; 7 uses
   %i.lg = add nuw nsw i32 %.0109171.i.i, 1        ; 4 uses
-  %i.lh = trunc nuw nsw i32 %i.lg to i8
-  br label %.preheader45.i.i.i
+  %i.lh = trunc nuw nsw i32 %i.lg to i8           ; 3 uses
+  %15 = urem i8 %i.lh, 10
+  %16 = udiv i8 %i.lh, 10
+  %17 = zext nneg i8 %15 to i64
+  %18 = getelementptr i8, ptr @.str.789, i64 %17
+  %19 = load i8, ptr %18, align 1
+  store i8 %19, ptr %.0110170.i.i, align 1
+  %.not.i122.i.i = icmp samesign ult i32 %.0109171.i.i, 9
+  br i1 %.not.i122.i.i, label %.preheader.i.i.i, label %.preheader45.i.i.i
 
-.preheader45.i.i.i:                               ; preds = %.preheader45.i.i.i, %bb.r
-  %.043.i.i.i = phi i8 [ %18, %.preheader45.i.i.i ], [ %i.lh, %bb.r ] ; 3 uses
-  %.1.i.i.i = phi i8 [ %16, %.preheader45.i.i.i ], [ 0, %bb.r ] ; 3 uses
-  %i.li = urem i8 %.043.i.i.i, 10
+.preheader45.i.i.i:                               ; preds = %bb.r
+  %i.li = urem i8 %16, 10
   %i.lj = zext nneg i8 %i.li to i64
   %i.lk = getelementptr i8, ptr @.str.789, i64 %i.lj
   %i.ll = load i8, ptr %i.lk, align 1
-  %16 = add i8 %.1.i.i.i, 1                       ; 4 uses
-  %17 = zext i8 %.1.i.i.i to i64
-  %i.lm = getelementptr i8, ptr %.0110170.i.i, i64 %17
+  %i.lm = getelementptr i8, ptr %.0110170.i.i, i64 1
   store i8 %i.ll, ptr %i.lm, align 1
-  %18 = udiv i8 %.043.i.i.i, 10
-  %.not.i122.i.i.a = icmp ult i8 %.043.i.i.i, 10
-  br i1 %.not.i122.i.i.a, label %.preheader.i.i.i, label %.preheader45.i.i.i, !llvm.loop !35
+  %.not.i122.i.i.a = icmp samesign ult i32 %.0109171.i.i, 99
+  br i1 %.not.i122.i.i.a, label %.preheader.i.i.i, label %.preheader45.i.i.i.2
 
-.preheader.i.i.i:                                 ; preds = %.preheader45.i.i.i
-  %19 = icmp ult i8 %16, %.0107.i.i
-  br i1 %19, label %.lr.ph.preheader.i.i.i, label %ltos.exit.i.i
+.preheader45.i.i.i.2:                             ; preds = %.preheader45.i.i.i
+  %20 = udiv i8 %i.lh, 100
+  %21 = zext nneg i8 %20 to i64
+  %22 = getelementptr i8, ptr @.str.789, i64 %21
+  %23 = load i8, ptr %22, align 1
+  %24 = getelementptr i8, ptr %.0110170.i.i, i64 2
+  store i8 %23, ptr %24, align 1
+  br label %.preheader.i.i.i
+
+.preheader.i.i.i:                                 ; preds = %.preheader45.i.i.i.2, %.preheader45.i.i.i, %bb.r
+  %25 = phi i8 [ -1, %bb.r ], [ -2, %.preheader45.i.i.i ], [ -3, %.preheader45.i.i.i.2 ]
+  %indvars.iv.next.i.i.lcssa = phi i64 [ 1, %bb.r ], [ 2, %.preheader45.i.i.i ], [ 3, %.preheader45.i.i.i.2 ] ; 2 uses
+  %26 = trunc nuw nsw i64 %indvars.iv.next.i.i.lcssa to i8 ; 2 uses
+  %27 = icmp samesign ugt i8 %.0107.i.i, %26
+  br i1 %27, label %.lr.ph.preheader.i.i.i, label %ltos.exit.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.preheader.i.i.i
-  %20 = zext nneg i8 %16 to i64
-  %scevgep.i.i.i = getelementptr i8, ptr %.0110170.i.i, i64 %20
-  %21 = sub i8 %15, %.1.i.i.i
-  %i.ln = zext i8 %21 to i64
-  %22 = add nuw nsw i64 %i.ln, 1
-  call void @llvm.memset.p0.i64(ptr noundef align 1 %scevgep.i.i.i, i8 32, i64 range(i64 0, 5) %22, i1 false)
+  %scevgep.i.i.i = getelementptr i8, ptr %.0110170.i.i, i64 %indvars.iv.next.i.i.lcssa
+  %narrow.i = add nsw i8 %.0107.i.i, %25
+  %i.ln = zext nneg i8 %narrow.i to i64
+  call void @llvm.memset.p0.i64(ptr noundef align 1 %scevgep.i.i.i, i8 32, i64 range(i64 0, 5) %i.ln, i1 false)
   br label %ltos.exit.i.i
 
 ltos.exit.i.i:                                    ; preds = %.lr.ph.preheader.i.i.i, %.preheader.i.i.i
-  %.2.lcssa.i.i.i = phi i8 [ %16, %.preheader.i.i.i ], [ %.0107.i.i, %.lr.ph.preheader.i.i.i ] ; 2 uses
+  %.2.lcssa.i.i.i = phi i8 [ %26, %.preheader.i.i.i ], [ %.0107.i.i, %.lr.ph.preheader.i.i.i ] ; 2 uses
   %i.lo = zext i8 %.2.lcssa.i.i.i to i64
   %i.lp = getelementptr i8, ptr %.0110170.i.i, i64 %i.lo ; 2 uses
   store i8 0, ptr %i.lp, align 1
   %i.lq = call ptr @g_strreverse(ptr noundef %.0110170.i.i) ; 0 uses
   store i8 32, ptr %i.lp, align 1
-  %.sink.i.i.i = add i8 %.2.lcssa.i.i.i, 1
+  %.sink.i.i.i = add nsw i8 %.2.lcssa.i.i.i, 1
   %i.lr = zext i8 %.sink.i.i.i to i64
   %i.ls = getelementptr i8, ptr %.0110170.i.i, i64 %i.lr ; 5 uses
   store i8 0, ptr %i.ls, align 1
@@ -295,9 +306,10 @@ bb.s:                                             ; preds = %ltos.exit.i.i
 bb.t:                                             ; preds = %bb.s, %ltos.exit.i.i
   %.1111.i.i = phi ptr [ %i.lv, %bb.s ], [ %i.ls, %ltos.exit.i.i ] ; 2 uses
   %exitcond.not.i.i = icmp eq i32 %i.lg, %..i.i
-  br i1 %exitcond.not.i.i, label %bb.u, label %bb.r, !llvm.loop !36
+  br i1 %exitcond.not.i.i, label %bb.u, label %bb.r, !llvm.loop !35
 
 bb.u:                                             ; preds = %bb.t
+  %28 = add nsw i8 %.0107.i.i, -2
   %.0106.i.i = select i1 %cond2.i.i, i8 16, i8 10 ; 3 uses
   %i.lw = trunc nuw i8 %i.kj to i1
   %.0105.i.i = select i1 %i.lw, i8 48, i8 32
@@ -367,7 +379,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   store i8 %i.mw, ptr %i.mz, align 1
   %i.na = udiv i8 %.043.i127.i.i, %.0106.i.i
   %.not.i129.i.i = icmp ugt i8 %.0106.i.i, %.043.i127.i.i
-  br i1 %.not.i129.i.i, label %.preheader.i131.i.i, label %.preheader45.i125.i.i, !llvm.loop !35
+  br i1 %.not.i129.i.i, label %.preheader.i131.i.i, label %.preheader45.i125.i.i, !llvm.loop !36
 
 .preheader.i131.i.i:                              ; preds = %.preheader45.i125.i.i
   %i.nb = icmp ult i8 %i.mx, %.0107.i.i
@@ -376,7 +388,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
 
 .lr.ph.preheader.i133.i.i:                        ; preds = %.preheader.i131.i.i
   %scevgep.i134.i.i = getelementptr i8, ptr %.2175.i.i, i64 %i.nc
-  %i.nd = sub i8 %15, %.1.i128.i.i
+  %i.nd = sub i8 %28, %.1.i128.i.i
   %i.ne = zext i8 %i.nd to i64
   %i.nf = add nuw nsw i64 %i.ne, 1
   call void @llvm.memset.p0.i64(ptr noundef align 1 %scevgep.i134.i.i, i8 range(i8 32, 49) %.0105.i.i, i64 range(i64 0, 5) %i.nf, i1 false)

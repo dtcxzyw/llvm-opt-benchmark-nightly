@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ty-a9a23bbb4fda8628.ty.1965635c94f67e52-cgu.03?download=true
 inline.NumInlined: 578
 inline.NumDeleted: 271
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvYINtNtCscvBHLZPbXnS_10serde_json3ser8CompoundQNtNtCs2bbjMbSOFjy_2ty7printer6StdoutNtB6_15PrettyFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap15serialize_entryeINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtBQ_7version10CommitInfoEEBQ_:bb.a
 }
 
@@ -204,7 +205,7 @@ _RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQNtNtCs2bbjMbSOFjy_2ty7p
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef align 8 ptr @_RINvYINtNtCscvBHLZPbXnS_10serde_json3ser8CompoundQNtNtCs2bbjMbSOFjy_2ty7printer6StdoutNtB6_15PrettyFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap15serialize_entryemEBQ_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef readonly align 4 captures(none) dereferenceable(4) %3) unnamed_addr #0 !guid !774 {
 bb.a:
-  %i.a = alloca [40 x i8], align 1                ; 8 uses
+  %i.a = alloca [40 x i8], align 1                ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !775)
   %i.b = load ptr, ptr %0, align 8, !alias.scope !775, !nonnull !4, !align !15, !noundef !4 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -261,7 +262,7 @@ _RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQNtNtCs2bbjMbSOFjy_2ty7p
   br i1 %.not, label %bb.e, label %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQNtNtCs2bbjMbSOFjy_2ty7printer6StdoutNtB6_15PrettyFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap15serialize_valuemEBW_.exit
 
 bb.e:                                             ; preds = %_RINvXs6_NtCscvBHLZPbXnS_10serde_json3serINtB6_8CompoundQNtNtCs2bbjMbSOFjy_2ty7printer6StdoutNtB6_15PrettyFormatterENtNtCs6nZeqdiIoCH_10serde_core3ser12SerializeMap13serialize_keyeEBW_.exit
-  %.val3 = load i32, ptr %3, align 4              ; 3 uses
+  %.val3 = load i32, ptr %3, align 4              ; 6 uses
   %.val.i4 = load ptr, ptr %i.b, align 8, !nonnull !4, !align !15, !noundef !4
   %i.r = tail call noundef ptr @_RNvYNtNtCs2bbjMbSOFjy_2ty7printer6StdoutNtNtCs2AWtUsOyxgP_3std2io5Write9write_allB6_(ptr noalias noundef nonnull align 8 dereferenceable(16) %.val.i4, ptr noalias noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 2) ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
@@ -278,17 +279,15 @@ bb.g:                                             ; preds = %bb.e
   %i.t = icmp ugt i32 %.val3, 9999
   br i1 %i.t, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %bb.g
-  %.sroa.011.0.lcssa.i.i.i.i.i = phi i64 [ 10, %bb.g ], [ %4, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i.i.i = phi i32 [ %.val3, %bb.g ], [ %i.w, %.lr.ph.i.i.i.i.i ] ; 3 uses
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.1, %bb.g
+  %.sroa.011.0.lcssa.i.i.i.i.i = phi i64 [ 10, %bb.g ], [ 6, %.lr.ph.i.i.i.i.i ], [ 2, %.lr.ph.i.i.i.i.i.1 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i.i.i = phi i32 [ %.val3, %bb.g ], [ %i.w, %.lr.ph.i.i.i.i.i ], [ %5, %.lr.ph.i.i.i.i.i.1 ] ; 3 uses
   %i.u = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i, 99
   br i1 %i.u, label %bb.h, label %bb.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %bb.g, %.lr.ph.i.i.i.i.i
-  %.sroa.0.131.i.i.i.i.i = phi i32 [ %i.w, %.lr.ph.i.i.i.i.i ], [ %.val3, %bb.g ] ; 3 uses
-  %.sroa.011.030.i.i.i.i.i = phi i64 [ %4, %.lr.ph.i.i.i.i.i ], [ 10, %bb.g ] ; 2 uses
-  %i.v = urem i32 %.sroa.0.131.i.i.i.i.i, 10000
-  %i.w = udiv i32 %.sroa.0.131.i.i.i.i.i, 10000   ; 2 uses
+.lr.ph.i.i.i.i.i:                                 ; preds = %bb.g
+  %i.v = urem i32 %.val3, 10000
+  %i.w = udiv i32 %.val3, 10000                   ; 2 uses
   %.lhs.trunc.i.i.i.i.i = trunc nuw nsw i32 %i.v to i16 ; 2 uses
   %i.x = udiv i16 %.lhs.trunc.i.i.i.i.i, 100
   %i.y = shl nuw nsw i16 %i.x, 1
@@ -296,18 +295,36 @@ bb.g:                                             ; preds = %bb.e
   %i.aa = urem i16 %.lhs.trunc.i.i.i.i.i, 100
   %i.ab = shl nuw nsw i16 %i.aa, 1
   %i.ac = zext nneg i16 %i.ab to i64
-  %4 = add i64 %.sroa.011.030.i.i.i.i.i, -4       ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr @181, i64 %i.z
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   %i.af = load i16, ptr %i.ad, align 1, !noalias !779
   store i16 %i.af, ptr %i.ae, align 1, !alias.scope !779
-  %5 = getelementptr inbounds nuw i8, ptr @181, i64 %i.ac
-  %i.ag = getelementptr i8, ptr %i.a, i64 %.sroa.011.030.i.i.i.i.i
-  %i.ah = getelementptr i8, ptr %i.ag, i64 -2
-  %i.ai = load i16, ptr %5, align 1, !noalias !779
+  %i.ag = getelementptr inbounds nuw i8, ptr @181, i64 %i.ac
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.ai = load i16, ptr %i.ag, align 1, !noalias !779
   store i16 %i.ai, ptr %i.ah, align 1, !alias.scope !779
-  %i.aj = icmp ugt i32 %.sroa.0.131.i.i.i.i.i, 99999999
-  br i1 %i.aj, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  %i.aj = icmp ugt i32 %.val3, 99999999
+  br i1 %i.aj, label %.lr.ph.i.i.i.i.i.1, label %._crit_edge.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.1:                               ; preds = %.lr.ph.i.i.i.i.i
+  %4 = urem i32 %i.w, 10000
+  %5 = udiv i32 %.val3, 100000000
+  %.lhs.trunc.i.i.i.i.i.1 = trunc nuw nsw i32 %4 to i16 ; 2 uses
+  %6 = udiv i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %7 = shl nuw nsw i16 %6, 1
+  %8 = zext nneg i16 %7 to i64
+  %9 = urem i16 %.lhs.trunc.i.i.i.i.i.1, 100
+  %10 = shl nuw nsw i16 %9, 1
+  %11 = zext nneg i16 %10 to i64
+  %12 = getelementptr inbounds nuw i8, ptr @181, i64 %8
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %14 = load i16, ptr %12, align 1, !noalias !779
+  store i16 %14, ptr %13, align 1, !alias.scope !779
+  %15 = getelementptr inbounds nuw i8, ptr @181, i64 %11
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %17 = load i16, ptr %15, align 1, !noalias !779
+  store i16 %17, ptr %16, align 1, !alias.scope !779
+  br label %._crit_edge.i.i.i.i.i
 
 bb.h:                                             ; preds = %._crit_edge.i.i.i.i.i
   %.lhs.trunc26.i.i.i.i.i = trunc nuw i32 %.sroa.0.1.lcssa.i.i.i.i.i to i16 ; 2 uses

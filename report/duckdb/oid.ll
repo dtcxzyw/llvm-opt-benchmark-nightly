@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/oid?download=true
 inline.NumInlined: 12
 inline.NumDeleted: 10
-loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumCompletelyUnrolled: 9
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@mbedtls_oid_from_numeric_string:bb.a
 bb.e:                                             ; preds = %bb.d
   %i.aj = mul nuw i32 %.075, 10
@@ -205,43 +205,52 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef range(i32 -11, 1) i32 @_ZL29oid_subidentifier_encode_intoPPhS_j(ptr nofree noundef nonnull captures(none) %0, ptr noundef %1, i32 noundef %2) unnamed_addr #8 !guid !229 {
-bb.a:
-  br label %bb.b
+define internal fastcc noundef range(i32 -11, 1) i32 @_ZL29oid_subidentifier_encode_intoPPhS_j(ptr nofree noundef nonnull captures(none) %0, ptr noundef %1, i32 noundef %2) unnamed_addr #8 !guid !228 {
+  %.not.i = icmp ult i32 %2, 128
+  br i1 %.not.i, label %_ZL27oid_subidentifier_num_bytesj.exit, label %4
 
-bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 2, %bb.a ] ; 2 uses
-  %.04.i = phi i32 [ %3, %bb.b ], [ %2, %bb.a ]
-  %.0.i = phi i64 [ %4, %bb.b ], [ 0, %bb.a ]     ; 8 uses
-  %3 = lshr i32 %.04.i, 7                         ; 2 uses
-  %4 = add nuw nsw i64 %.0.i, 1                   ; 4 uses
-  %.not.i = icmp eq i32 %3, 0
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  br i1 %.not.i, label %_ZL27oid_subidentifier_num_bytesj.exit, label %bb.b, !llvm.loop !227
+4:                                                ; preds = %3
+  %.not.i.1 = icmp ult i32 %2, 16384
+  br i1 %.not.i.1, label %_ZL27oid_subidentifier_num_bytesj.exit, label %bb.a
 
-_ZL27oid_subidentifier_num_bytesj.exit:           ; preds = %bb.b
+bb.a:                                             ; preds = %4
+  %.not.i.2 = icmp ult i32 %2, 2097152
+  br i1 %.not.i.2, label %_ZL27oid_subidentifier_num_bytesj.exit, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %.not.i.3 = icmp ult i32 %2, 268435456
+  br i1 %.not.i.3, label %_ZL27oid_subidentifier_num_bytesj.exit, label %5
+
+5:                                                ; preds = %bb.b
+  br label %_ZL27oid_subidentifier_num_bytesj.exit
+
+_ZL27oid_subidentifier_num_bytesj.exit:           ; preds = %5, %bb.b, %bb.a, %4, %3
+  %6 = phi i1 [ false, %3 ], [ true, %4 ], [ false, %bb.a ], [ false, %bb.b ], [ false, %5 ]
+  %indvars.iv.lcssa = phi i64 [ 2, %3 ], [ 3, %4 ], [ 4, %bb.a ], [ 5, %bb.b ], [ 6, %5 ] ; 3 uses
+  %.not22 = phi i1 [ true, %3 ], [ false, %4 ], [ false, %bb.a ], [ false, %bb.b ], [ false, %5 ]
+  %.0.i.lcssa = phi i64 [ 0, %3 ], [ 1, %4 ], [ 2, %bb.a ], [ 3, %bb.b ], [ 4, %5 ] ; 2 uses
+  %.lcssa = phi i64 [ 1, %3 ], [ 2, %4 ], [ 3, %bb.a ], [ 4, %bb.b ], [ 5, %5 ] ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !178    ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %i.a to i64
   %i.d = sub i64 %i.b, %i.c
-  %.not21 = icmp ugt i64 %i.d, %.0.i
+  %.not21 = icmp ugt i64 %i.d, %.0.i.lcssa
   br i1 %.not21, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZL27oid_subidentifier_num_bytesj.exit
   %i.e = trunc i32 %2 to i8
   %i.f = and i8 %i.e, 127
-  %i.g = getelementptr i8, ptr %i.a, i64 %.0.i
+  %i.g = getelementptr i8, ptr %i.a, i64 %.0.i.lcssa
   store i8 %i.f, ptr %i.g, align 1, !tbaa !186
-  %.not22 = icmp eq i64 %.0.i, 0
   br i1 %.not22, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %xtraiter = and i64 %.0.i, 1
-  %5 = icmp eq i64 %indvars.iv, 3
-  br i1 %5, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %xtraiter = and i64 %indvars.iv.lcssa, 1
+  br i1 %6, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %.0.i, 9223372036854775806
+  %unroll_iter = and i64 %indvars.iv.lcssa, -2
+  %7 = add i64 %unroll_iter, -4
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
@@ -251,45 +260,46 @@ bb.c:                                             ; preds = %_ZL27oid_subidentif
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.024.epil.init = phi i64 [ 2, %.lr.ph.preheader ], [ %i.x, %._crit_edge.loopexit.unr-lcssa ]
   %.018.in23.epil.init = phi i32 [ %2, %.lr.ph.preheader ], [ %.018.1, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod25 = trunc i64 %.0.i to i1
+  %lcmp.mod25 = trunc i64 %indvars.iv.lcssa to i1
   tail call void @llvm.assume(i1 %lcmp.mod25)
   %.018.epil = lshr i32 %.018.in23.epil.init, 7
   %i.h = trunc i32 %.018.epil to i8
   %i.i = or i8 %i.h, -128
   %i.j = load ptr, ptr %0, align 8, !tbaa !178
-  %i.k = sub nuw nsw i64 %4, %.024.epil.init
+  %i.k = sub nuw nsw i64 %.lcssa, %.024.epil.init
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.k
   store i8 %i.i, ptr %i.l, align 1, !tbaa !186
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.c
   %i.m = load ptr, ptr %0, align 8, !tbaa !178
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %4
+  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %.lcssa
   store ptr %i.n, ptr %0, align 8, !tbaa !178
   br label %bb.d
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.024 = phi i64 [ 2, %.lr.ph.preheader.new ], [ %i.x, %.lr.ph ] ; 3 uses
   %.018.in23 = phi i32 [ %2, %.lr.ph.preheader.new ], [ %.018.1, %.lr.ph ] ; 2 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ] ; 2 uses
   %.018 = lshr i32 %.018.in23, 7
   %i.o = trunc i32 %.018 to i8
   %i.p = or i8 %i.o, -128
   %i.q = load ptr, ptr %0, align 8, !tbaa !178
-  %i.r = sub nuw nsw i64 %4, %.024
+  %i.r = sub nuw nsw i64 %.lcssa, %.024
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.r
   store i8 %i.p, ptr %i.s, align 1, !tbaa !186
+  %.neg = xor i64 %.024, -1
   %.018.1 = lshr i32 %.018.in23, 14               ; 3 uses
   %i.t = trunc i32 %.018.1 to i8
   %i.u = or i8 %i.t, -128
   %i.v = load ptr, ptr %0, align 8, !tbaa !178
-  %6 = sub nsw i64 %.0.i, %.024
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %6
+  %8 = getelementptr i8, ptr %i.v, i64 %.lcssa
+  %i.w = getelementptr i8, ptr %8, i64 %.neg
   store i8 %i.u, ptr %i.w, align 1, !tbaa !186
   %i.x = add nuw nsw i64 %.024, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !228
+  %niter.next.1 = add i64 %niter, 2
+  %niter.ncmp.1 = icmp eq i64 %niter, %7
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !227
 
 bb.d:                                             ; preds = %_ZL27oid_subidentifier_num_bytesj.exit, %._crit_edge
   %.019 = phi i32 [ 0, %._crit_edge ], [ -11, %_ZL27oid_subidentifier_num_bytesj.exit ]
@@ -559,6 +569,5 @@ attributes #14 = { nounwind allocsize(0,1) }
 !225 = !{!174, !6, i64 0}
 !226 = !{i64 2336552327384082166}
 !227 = distinct !{!227, !187}
-!228 = distinct !{!228, !187}
-!229 = !{i64 5229344897515646823}
+!228 = !{i64 5229344897515646823}
 end_hunk_0
