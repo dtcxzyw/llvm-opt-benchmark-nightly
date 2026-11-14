@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/dev-audio?download=true
 inline.NumInlined: 22
 inline.NumDeleted: 13
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -150,13 +152,13 @@ declare void @device_class_set_props_n(ptr noundef, ptr noundef, i64 noundef) lo
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @usb_audio_realize(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.13, i32 noundef 657, ptr noundef nonnull @__func__.USB_AUDIO) #6 ; 7 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.13, i32 noundef 657, ptr noundef nonnull @__func__.USB_AUDIO) #6 ; 14 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5856
   %i.c = tail call zeroext i1 @audio_be_check(ptr noundef nonnull %i.b, ptr noundef %1) #6
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 5972 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 5972 ; 7 uses
   %i.e = load i8, ptr %i.d, align 4, !range !7, !noundef !8
   %i.f = trunc nuw i8 %i.e to i1
   %i.g = select i1 %i.f, ptr @desc_audio_multi, ptr @desc_audio
@@ -171,20 +173,54 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 5896
   store i8 0, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 5904
-  br label %bb.c
+  store i8 -16, ptr %i.l, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 5905
+  store i8 -16, ptr %2, align 1
+  %3 = load i8, ptr %i.d, align 4, !range !7, !noundef !8
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %5, label %bb.d
 
-bb.c:                                             ; preds = %bb.b, %bb.c
-  %indvars.iv = phi i64 [ 0, %bb.b ], [ %indvars.iv.next, %bb.c ] ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv
-  store i8 -16, ptr %i.m, align 1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+5:                                                ; preds = %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5906
+  store i8 -16, ptr %6, align 2
+  %7 = load i8, ptr %i.d, align 4, !range !7, !noundef !8
+  %8 = trunc nuw i8 %7 to i1
+  br i1 %8, label %9, label %bb.d
+
+9:                                                ; preds = %5
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 5907
+  store i8 -16, ptr %10, align 1
+  %11 = load i8, ptr %i.d, align 4, !range !7, !noundef !8
+  %12 = trunc nuw i8 %11 to i1
+  br i1 %12, label %13, label %bb.d
+
+13:                                               ; preds = %9
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 5908
+  store i8 -16, ptr %14, align 4
+  %15 = load i8, ptr %i.d, align 4, !range !7, !noundef !8
+  %16 = trunc nuw i8 %15 to i1
+  br i1 %16, label %17, label %bb.d
+
+17:                                               ; preds = %13
+  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 5909
+  store i8 -16, ptr %18, align 1
+  %19 = load i8, ptr %i.d, align 4, !range !7, !noundef !8
+  %20 = trunc nuw i8 %19 to i1
+  br i1 %20, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %17
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 5910
+  store i8 -16, ptr %i.m, align 2
   %i.n = load i8, ptr %i.d, align 4, !range !7, !noundef !8
   %i.o = trunc nuw i8 %i.n to i1
-  %2 = select i1 %i.o, i64 8, i64 2
-  %3 = icmp samesign ult i64 %indvars.iv.next, %2
-  br i1 %3, label %bb.c, label %bb.d, !llvm.loop !10
+  br i1 %i.o, label %21, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
+21:                                               ; preds = %bb.c
+  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 5911
+  store i8 -16, ptr %22, align 1
+  br label %bb.d
+
+bb.d:                                             ; preds = %21, %bb.c, %17, %13, %9, %5, %bb.b
   %i.p = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.13, i32 noundef 657, ptr noundef nonnull @__func__.USB_AUDIO) #6 ; 15 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 5952
   store i32 2, ptr %i.q, align 8
@@ -493,7 +529,7 @@ bb.x:                                             ; preds = %bb.x, %bb.w
   %i.df = trunc nuw i8 %i.de to i1
   %i.dg = select i1 %i.df, i64 8, i64 2
   %i.dh = icmp samesign ult i64 %indvars.iv.next.i, %i.dg
-  br i1 %i.dh, label %bb.x, label %bb.y, !llvm.loop !11
+  br i1 %i.dh, label %bb.x, label %bb.y, !llvm.loop !10
 
 bb.y:                                             ; preds = %bb.x
   %i.di = load ptr, ptr @stderr, align 8
@@ -762,7 +798,7 @@ bb.d:                                             ; preds = %streambuf_get.exit
   %i.w = add i64 %i.v, %i.s
   store i64 %i.w, ptr %i.d, align 8
   %.not19 = icmp ult i64 %i.s, %i.p
-  br i1 %.not19, label %.critedge, label %bb.b, !llvm.loop !12
+  br i1 %.not19, label %.critedge, label %bb.b, !llvm.loop !11
 
 .critedge:                                        ; preds = %bb.c, %streambuf_get.exit, %bb.b, %bb.d
   ret void
@@ -935,5 +971,4 @@ attributes #8 = { noreturn nounwind }
 !9 = !{!"llvm.loop.mustprogress"}
 !10 = distinct !{!10, !9}
 !11 = distinct !{!11, !9}
-!12 = distinct !{!12, !9}
 end_hunk_0

@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/fontdrasil-bdef820a3e288df5.fontdrasil.bcdef5e85db49d1a-cgu.03?download=true
 inline.NumInlined: 239
 inline.NumDeleted: 196
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -75,16 +76,37 @@ _RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i: ; preds
   %i.t = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.i ; 2 uses
   %i.u = load i8, ptr %i.t, align 1, !alias.scope !37, !noalias !35, !noundef !4
   %cond.i.i.i.i.i = icmp eq i8 %i.u, 43           ; 2 uses
-  %.sroa.15.0.i.i.i.i.i = select i1 %cond.i.i.i.i.i, i64 3, i64 4
   %.sroa.0.0.idx.i.i.i.i.i = zext i1 %cond.i.i.i.i.i to i64
-  %.sroa.0.0.i5.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 %.sroa.0.0.idx.i.i.i.i.i
-  br label %bb.f
+  %.sroa.0.0.i5.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 %.sroa.0.0.idx.i.i.i.i.i ; 4 uses
+  %3 = load i8, ptr %.sroa.0.0.i5.i.i.i.i, align 1, !alias.scope !37, !noalias !35, !noundef !4 ; 2 uses
+  %4 = zext i8 %3 to i32                          ; 2 uses
+  %5 = icmp ugt i8 %3, 57
+  %6 = add nsw i32 %4, -65
+  %7 = and i32 %6, -33
+  %8 = add nuw nsw i32 %7, 10
+  %9 = add nsw i32 %4, -48
+  %.sroa.02.0.i.i.i.i.i.i = select i1 %5, i32 %8, i32 %9 ; 2 uses
+  %10 = icmp ult i32 %.sroa.02.0.i.i.i.i.i.i, 16
+  br i1 %10, label %11, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i
 
-bb.f:                                             ; preds = %bb.g, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i
-  %.sroa.0.258.i.i.i.i.i = phi ptr [ %.sroa.0.0.i5.i.i.i.i, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i ], [ %5, %bb.g ] ; 2 uses
-  %.sroa.15.257.i.i.i.i.i = phi i64 [ %.sroa.15.0.i.i.i.i.i, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i ], [ %4, %bb.g ]
-  %.sroa.045.256.i.i.i.i.i = phi i32 [ 0, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i ], [ %6, %bb.g ] ; 2 uses
-  %i.v = load i8, ptr %.sroa.0.258.i.i.i.i.i, align 1, !alias.scope !37, !noalias !35, !noundef !4 ; 2 uses
+11:                                               ; preds = %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i5.i.i.i.i, i64 1
+  %13 = load i8, ptr %12, align 1, !alias.scope !37, !noalias !35, !noundef !4 ; 2 uses
+  %14 = zext i8 %13 to i32                        ; 2 uses
+  %15 = icmp ugt i8 %13, 57
+  %16 = add nsw i32 %14, -65
+  %17 = and i32 %16, -33
+  %18 = add nuw nsw i32 %17, 10
+  %19 = add nsw i32 %14, -48
+  %.sroa.02.0.i.i.i.i.i.i.1 = select i1 %15, i32 %18, i32 %19 ; 2 uses
+  %20 = icmp ult i32 %.sroa.02.0.i.i.i.i.i.i.1, 16
+  br i1 %20, label %bb.f, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i
+
+bb.f:                                             ; preds = %11
+  %21 = shl nuw nsw i32 %.sroa.02.0.i.i.i.i.i.i, 4
+  %22 = or disjoint i32 %.sroa.02.0.i.i.i.i.i.i.1, %21 ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i5.i.i.i.i, i64 2
+  %i.v = load i8, ptr %23, align 1, !alias.scope !37, !noalias !35, !noundef !4 ; 2 uses
   %i.w = zext i8 %i.v to i32                      ; 2 uses
   %i.x = icmp ugt i8 %i.v, 57
   %i.y = add nsw i32 %i.w, -65
@@ -93,39 +115,54 @@ bb.f:                                             ; preds = %bb.g, %_RNvNtNtCsf3
   %i.ab = add nsw i32 %i.w, -48
   %.sroa.02.0.i.i.i.i.i.i.a = select i1 %i.x, i32 %i.aa, i32 %i.ab ; 2 uses
   %i.ac = icmp ult i32 %.sroa.02.0.i.i.i.i.i.i.a, 16
-  br i1 %i.ac, label %bb.g, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i
+  br i1 %i.ac, label %24, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i
 
-bb.g:                                             ; preds = %bb.f
-  %3 = shl i32 %.sroa.045.256.i.i.i.i.i, 4
-  %4 = add nsw i64 %.sroa.15.257.i.i.i.i.i, -1    ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.258.i.i.i.i.i, i64 1
-  %6 = or disjoint i32 %.sroa.02.0.i.i.i.i.i.i.a, %3 ; 4 uses
-  %.not.i.i.i.i.i = icmp eq i64 %4, 0
-  br i1 %.not.i.i.i.i.i, label %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i, label %bb.f
+24:                                               ; preds = %bb.f
+  %25 = shl nuw nsw i32 %22, 4
+  %26 = or disjoint i32 %.sroa.02.0.i.i.i.i.i.i.a, %25 ; 3 uses
+  br i1 %cond.i.i.i.i.i, label %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i, label %bb.g
 
-_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i: ; preds = %bb.f
+bb.g:                                             ; preds = %24
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i5.i.i.i.i, i64 3
+  %28 = load i8, ptr %27, align 1, !alias.scope !37, !noalias !35, !noundef !4 ; 2 uses
+  %29 = zext i8 %28 to i32                        ; 2 uses
+  %30 = icmp ugt i8 %28, 57
+  %31 = add nsw i32 %29, -65
+  %32 = and i32 %31, -33
+  %33 = add nuw nsw i32 %32, 10
+  %34 = add nsw i32 %29, -48
+  %.sroa.02.0.i.i.i.i.i.i.3 = select i1 %30, i32 %33, i32 %34 ; 2 uses
+  %35 = icmp ult i32 %.sroa.02.0.i.i.i.i.i.i.3, 16
+  br i1 %35, label %36, label %_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i
+
+36:                                               ; preds = %bb.g
+  %37 = shl nuw nsw i32 %26, 4
+  %38 = or disjoint i32 %.sroa.02.0.i.i.i.i.i.i.3, %37
+  br label %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i
+
+_RNvMsB_NtCsf3Ta7LF998c_4core3numm27from_ascii_bytes_radix_impl.exit.thread.i.i.i.i: ; preds = %bb.g, %bb.f, %11, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !35
   store i8 1, ptr %i.a, align 1, !noalias !35
   call void @_RNvNtCsf3Ta7LF998c_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @7, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #15, !noalias !35
   unreachable
 
-_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i: ; preds = %bb.g
-  %i.ad = and i32 %.sroa.045.256.i.i.i.i.i, 268435328
+_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i: ; preds = %36, %24
+  %.lcssa = phi i32 [ %38, %36 ], [ %26, %24 ]    ; 2 uses
+  %.sroa.045.256.i.i.i.i.i.lcssa9 = phi i32 [ %26, %36 ], [ %22, %24 ]
+  %i.ad = and i32 %.sroa.045.256.i.i.i.i.i.lcssa9, 268435328
   %spec.select.i.i.i.i.i.i = icmp eq i32 %i.ad, 3456
-  %i.ae = xor i32 %6, 55296
+  %i.ae = xor i32 %.lcssa, 55296
   %i.af = add i32 %i.ae, -1114112
   %i.ag = icmp ult i32 %i.af, -1112064
   %i.ah = or i1 %spec.select.i.i.i.i.i.i, %i.ag
-  %7 = icmp eq i32 %6, -1
-  %8 = select i1 %i.ah, i1 true, i1 %7
-  br i1 %8, label %bb.h, label %_RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3ops5range5RangejENCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldmINtNtBc_6option6OptioncEuINtNtB12_12control_flow11ControlFlowIB3M_cEENCB1r_s_0NCINvXB8_INtB8_12GenericShuntIBO_BN_B4t_EIB3n_zEEB2h_8try_folduNCINvNvB2h_12try_for_each4callcB4l_NcNtB4l_5Break0E0B4l_E0E0B3L_EB1v_.exit
+  br i1 %i.ah, label %bb.h, label %_RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3ops5range5RangejENCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldmINtNtBc_6option6OptioncEuINtNtB12_12control_flow11ControlFlowIB3M_cEENCB1r_s_0NCINvXB8_INtB8_12GenericShuntIBO_BN_B4t_EIB3n_zEEB2h_8try_folduNCINvNvB2h_12try_for_each4callcB4l_NcNtB4l_5Break0E0B4l_E0E0B3L_EB1v_.exit
 
 bb.h:                                             ; preds = %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i
   store i8 1, ptr %2, align 1, !noalias !35
   br label %_RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3ops5range5RangejENCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldmINtNtBc_6option6OptioncEuINtNtB12_12control_flow11ControlFlowIB3M_cEENCB1r_s_0NCINvXB8_INtB8_12GenericShuntIBO_BN_B4t_EIB3n_zEEB2h_8try_folduNCINvNvB2h_12try_for_each4callcB4l_NcNtB4l_5Break0E0B4l_E0E0B3L_EB1v_.exit
 
 _RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3ops5range5RangejENCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldmINtNtBc_6option6OptioncEuINtNtB12_12control_flow11ControlFlowIB3M_cEENCB1r_s_0NCINvXB8_INtB8_12GenericShuntIBO_BN_B4t_EIB3n_zEEB2h_8try_folduNCINvNvB2h_12try_for_each4callcB4l_NcNtB4l_5Break0E0B4l_E0E0B3L_EB1v_.exit: ; preds = %bb.a, %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i, %bb.h
-  %.sroa.0.0.i.i = phi i32 [ -1, %bb.h ], [ %6, %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i ], [ -2, %bb.a ]
+  %.sroa.0.0.i.i = phi i32 [ -1, %bb.h ], [ %.lcssa, %_RNCNvNtCsgdm2QMcbaeA_10fontdrasil3agl14uni_to_unicode0B5_.exit.i.i.i ], [ -2, %bb.a ]
   ret i32 %.sroa.0.0.i.i
 }
 

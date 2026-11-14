@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/gvplugin_vt?download=true
 inline.NumInlined: 6
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@process3:bb.a
   ret void
 }
@@ -204,7 +204,7 @@ bb.a:
 define internal fastcc void @processNup(ptr noundef %0, i32 noundef range(i32 2, 5) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 272
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 12 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 24 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 580 ; 3 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !32
   %.not = icmp eq i32 %i.d, 0
@@ -246,27 +246,50 @@ bb.a:
 
 .preheader.us.preheader:                          ; preds = %.preheader61
   %i.s = sub i32 0, %indvars.iv78
-  %.not88 = icmp eq i32 %i.o, %i.s
-  %wide.trip.count = select i1 %.not88, i64 1, i64 2 ; 4 uses
+  %.not88 = icmp eq i32 %i.o, %i.s                ; 4 uses
   %i.t = mul i32 %.05173, %i.o
-  %invariant.op = add i32 %.05271, %i.t
-  br label %bb.b
+  %invariant.op = add i32 %.05271, %i.t           ; 2 uses
+  %3 = shl i32 %invariant.op, 2                   ; 3 uses
+  %4 = or disjoint i32 %3, 2
+  %5 = zext i32 %4 to i64
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 %5
+  %7 = load i8, ptr %6, align 1, !tbaa !35
+  %8 = or disjoint i32 %3, 1
+  %9 = zext i32 %8 to i64
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 %9
+  %11 = load i8, ptr %10, align 1, !tbaa !35
+  %12 = zext i32 %3 to i64
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 %12
+  %14 = load i8, ptr %13, align 1, !tbaa !35
+  %15 = uitofp i8 %7 to double
+  %16 = fdiv nnan double %15, 2.550000e+02
+  %17 = insertelement <2 x i8> poison, i8 %11, i64 0
+  %18 = insertelement <2 x i8> %17, i8 %14, i64 1
+  %19 = uitofp <2 x i8> %18 to <2 x double>
+  %20 = fdiv nnan <2 x double> %19, splat (double 2.550000e+02) ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %22 = fmul nnan double %21, 7.152000e-01
+  %23 = tail call double @llvm.fmuladd.f64(double %16, double 2.126000e-01, double %22)
+  %24 = extractelement <2 x double> %20, i64 1
+  %25 = tail call double @llvm.fmuladd.f64(double %24, double 7.220000e-02, double %23)
+  %26 = fmul double %25, 2.559990e+02
+  %27 = fptoui double %26 to i32
+  %28 = icmp ugt i32 %27, 239
+  %29 = zext i1 %28 to i64                        ; 2 uses
+  br i1 %.not88, label %._crit_edge.us, label %bb.b
 
-bb.b:                                             ; preds = %.preheader.us.preheader, %bb.b
-  %indvars.iv = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %.165.us = phi i32 [ 0, %.preheader.us.preheader ], [ %8, %bb.b ]
-  %3 = trunc i64 %indvars.iv to i32
-  %.reass = add i32 %invariant.op, %3
-  %4 = shl i32 %.reass, 2                         ; 3 uses
-  %i.u = or disjoint i32 %4, 2
+bb.b:                                             ; preds = %.preheader.us.preheader
+  %.reass.1 = shl i32 %invariant.op, 2
+  %.reass = add i32 %.reass.1, 4                  ; 3 uses
+  %i.u = or disjoint i32 %.reass, 2
   %i.v = zext i32 %i.u to i64
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.v
   %i.x = load i8, ptr %i.w, align 1, !tbaa !35
-  %i.y = or disjoint i32 %4, 1
+  %i.y = or disjoint i32 %.reass, 1
   %i.z = zext i32 %i.y to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.z
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !35
-  %i.ac = zext i32 %4 to i64
+  %i.ac = zext i32 %.reass to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !35
   %i.af = uitofp i8 %i.x to double
@@ -283,38 +306,60 @@ bb.b:                                             ; preds = %.preheader.us.prehe
   %i.aq = fmul double %i.ap, 2.559990e+02
   %i.ar = fptoui double %i.aq to i32
   %i.as = icmp ugt i32 %i.ar, 239
-  %5 = zext i1 %i.as to i32
-  %6 = trunc nuw nsw i64 %indvars.iv to i32
-  %7 = shl nuw nsw i32 %5, %6
-  %8 = or i32 %7, %.165.us                        ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !38
+  %30 = select i1 %i.as, i64 2, i64 0
+  %31 = or disjoint i64 %30, %29
+  br label %._crit_edge.us
 
-._crit_edge.us:                                   ; preds = %bb.b
+._crit_edge.us:                                   ; preds = %bb.b, %.preheader.us.preheader
+  %.lcssa = phi i64 [ %29, %.preheader.us.preheader ], [ %31, %bb.b ] ; 2 uses
   %i.at = icmp ult i32 %i.i, %i.p
   br i1 %i.at, label %.preheader.us.1, label %._crit_edge69.loopexit
 
 .preheader.us.1:                                  ; preds = %._crit_edge.us
   %i.au = mul i32 %i.j, %i.o
-  %invariant.op.1 = add i32 %.05271, %i.au
-  br label %bb.c
+  %invariant.op.1 = add i32 %.05271, %i.au        ; 2 uses
+  %32 = shl i32 %invariant.op.1, 2                ; 3 uses
+  %33 = or disjoint i32 %32, 2
+  %34 = zext i32 %33 to i64
+  %35 = getelementptr inbounds nuw i8, ptr %i.b, i64 %34
+  %36 = load i8, ptr %35, align 1, !tbaa !35
+  %37 = or disjoint i32 %32, 1
+  %38 = zext i32 %37 to i64
+  %39 = getelementptr inbounds nuw i8, ptr %i.b, i64 %38
+  %40 = load i8, ptr %39, align 1, !tbaa !35
+  %41 = zext i32 %32 to i64
+  %42 = getelementptr inbounds nuw i8, ptr %i.b, i64 %41
+  %43 = load i8, ptr %42, align 1, !tbaa !35
+  %44 = uitofp i8 %36 to double
+  %45 = fdiv nnan double %44, 2.550000e+02
+  %46 = insertelement <2 x i8> poison, i8 %40, i64 0
+  %47 = insertelement <2 x i8> %46, i8 %43, i64 1
+  %48 = uitofp <2 x i8> %47 to <2 x double>
+  %49 = fdiv nnan <2 x double> %48, splat (double 2.550000e+02) ; 2 uses
+  %50 = extractelement <2 x double> %49, i64 0
+  %51 = fmul nnan double %50, 7.152000e-01
+  %52 = tail call double @llvm.fmuladd.f64(double %45, double 2.126000e-01, double %51)
+  %53 = extractelement <2 x double> %49, i64 1
+  %54 = tail call double @llvm.fmuladd.f64(double %53, double 7.220000e-02, double %52)
+  %55 = fmul double %54, 2.559990e+02
+  %56 = fptoui double %55 to i32
+  %57 = icmp ugt i32 %56, 239
+  %58 = select i1 %57, i64 4, i64 0
+  %59 = or i64 %58, %.lcssa                       ; 2 uses
+  br i1 %.not88, label %._crit_edge.us.1, label %bb.c
 
-bb.c:                                             ; preds = %bb.c, %.preheader.us.1
-  %indvars.iv.1 = phi i64 [ 0, %.preheader.us.1 ], [ %indvars.iv.next.1, %bb.c ] ; 3 uses
-  %.165.us.1 = phi i32 [ %8, %.preheader.us.1 ], [ %15, %bb.c ]
-  %9 = trunc i64 %indvars.iv.1 to i32
-  %.reass.1.a = add i32 %invariant.op.1, %9
-  %10 = shl i32 %.reass.1.a, 2                    ; 3 uses
-  %i.av = or disjoint i32 %10, 2
+bb.c:                                             ; preds = %.preheader.us.1
+  %.reass.1.1 = shl i32 %invariant.op.1, 2
+  %.reass.1.a = add i32 %.reass.1.1, 4            ; 3 uses
+  %i.av = or disjoint i32 %.reass.1.a, 2
   %i.aw = zext i32 %i.av to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.aw
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !35
-  %i.az = or disjoint i32 %10, 1
+  %i.az = or disjoint i32 %.reass.1.a, 1
   %i.ba = zext i32 %i.az to i64
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ba
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !35
-  %i.bd = zext i32 %10 to i64
+  %i.bd = zext i32 %.reass.1.a to i64
   %i.be = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bd
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !35
   %i.bg = uitofp i8 %i.ay to double
@@ -331,40 +376,61 @@ bb.c:                                             ; preds = %bb.c, %.preheader.u
   %i.br = fmul double %i.bq, 2.559990e+02
   %i.bs = fptoui double %i.br to i32
   %i.bt = icmp ugt i32 %i.bs, 239
-  %11 = zext i1 %i.bt to i32
-  %12 = trunc i64 %indvars.iv.1 to i32
-  %13 = add i32 %12, 2
-  %14 = shl nuw nsw i32 %11, %13
-  %15 = or i32 %14, %.165.us.1                    ; 3 uses
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1, 1 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
-  br i1 %exitcond.not.1, label %._crit_edge.us.1, label %bb.c, !llvm.loop !38
+  %60 = select i1 %i.bt, i64 8, i64 0
+  %61 = or i64 %60, %59
+  br label %._crit_edge.us.1
 
-._crit_edge.us.1:                                 ; preds = %bb.c
+._crit_edge.us.1:                                 ; preds = %bb.c, %.preheader.us.1
+  %.lcssa.1 = phi i64 [ %59, %.preheader.us.1 ], [ %61, %bb.c ] ; 2 uses
   %i.bu = icmp ult i32 %i.k, %i.p
   %i.bv = select i1 %i.bu, i1 %i.f, i1 false
   br i1 %i.bv, label %.preheader.us.2, label %._crit_edge69.loopexit
 
 .preheader.us.2:                                  ; preds = %._crit_edge.us.1
   %i.bw = mul i32 %i.l, %i.o
-  %invariant.op.2 = add i32 %.05271, %i.bw
-  br label %bb.d
+  %invariant.op.2 = add i32 %.05271, %i.bw        ; 2 uses
+  %62 = shl i32 %invariant.op.2, 2                ; 3 uses
+  %63 = or disjoint i32 %62, 2
+  %64 = zext i32 %63 to i64
+  %65 = getelementptr inbounds nuw i8, ptr %i.b, i64 %64
+  %66 = load i8, ptr %65, align 1, !tbaa !35
+  %67 = or disjoint i32 %62, 1
+  %68 = zext i32 %67 to i64
+  %69 = getelementptr inbounds nuw i8, ptr %i.b, i64 %68
+  %70 = load i8, ptr %69, align 1, !tbaa !35
+  %71 = zext i32 %62 to i64
+  %72 = getelementptr inbounds nuw i8, ptr %i.b, i64 %71
+  %73 = load i8, ptr %72, align 1, !tbaa !35
+  %74 = uitofp i8 %66 to double
+  %75 = fdiv nnan double %74, 2.550000e+02
+  %76 = insertelement <2 x i8> poison, i8 %70, i64 0
+  %77 = insertelement <2 x i8> %76, i8 %73, i64 1
+  %78 = uitofp <2 x i8> %77 to <2 x double>
+  %79 = fdiv nnan <2 x double> %78, splat (double 2.550000e+02) ; 2 uses
+  %80 = extractelement <2 x double> %79, i64 0
+  %81 = fmul nnan double %80, 7.152000e-01
+  %82 = tail call double @llvm.fmuladd.f64(double %75, double 2.126000e-01, double %81)
+  %83 = extractelement <2 x double> %79, i64 1
+  %84 = tail call double @llvm.fmuladd.f64(double %83, double 7.220000e-02, double %82)
+  %85 = fmul double %84, 2.559990e+02
+  %86 = fptoui double %85 to i32
+  %87 = icmp ugt i32 %86, 239
+  %88 = select i1 %87, i64 16, i64 0
+  %89 = or i64 %88, %.lcssa.1                     ; 2 uses
+  br i1 %.not88, label %._crit_edge.us.2, label %bb.d
 
-bb.d:                                             ; preds = %bb.d, %.preheader.us.2
-  %indvars.iv.2 = phi i64 [ 0, %.preheader.us.2 ], [ %indvars.iv.next.2, %bb.d ] ; 3 uses
-  %.165.us.2 = phi i32 [ %15, %.preheader.us.2 ], [ %22, %bb.d ]
-  %16 = trunc i64 %indvars.iv.2 to i32
-  %.reass.2 = add i32 %invariant.op.2, %16
-  %17 = shl i32 %.reass.2, 2                      ; 3 uses
-  %i.bx = or disjoint i32 %17, 2
+bb.d:                                             ; preds = %.preheader.us.2
+  %.reass.1.2 = shl i32 %invariant.op.2, 2
+  %.reass.2 = add i32 %.reass.1.2, 4              ; 3 uses
+  %i.bx = or disjoint i32 %.reass.2, 2
   %i.by = zext i32 %i.bx to i64
   %i.bz = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.by
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !35
-  %i.cb = or disjoint i32 %17, 1
+  %i.cb = or disjoint i32 %.reass.2, 1
   %i.cc = zext i32 %i.cb to i64
   %i.cd = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cc
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !35
-  %i.cf = zext i32 %17 to i64
+  %i.cf = zext i32 %.reass.2 to i64
   %i.cg = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !35
   %i.ci = uitofp i8 %i.ca to double
@@ -381,40 +447,61 @@ bb.d:                                             ; preds = %bb.d, %.preheader.u
   %i.ct = fmul double %i.cs, 2.559990e+02
   %i.cu = fptoui double %i.ct to i32
   %i.cv = icmp ugt i32 %i.cu, 239
-  %18 = zext i1 %i.cv to i32
-  %19 = trunc i64 %indvars.iv.2 to i32
-  %20 = add i32 %19, 4
-  %21 = shl nuw nsw i32 %18, %20
-  %22 = or i32 %21, %.165.us.2                    ; 3 uses
-  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.2, 1 ; 2 uses
-  %exitcond.not.2 = icmp eq i64 %indvars.iv.next.2, %wide.trip.count
-  br i1 %exitcond.not.2, label %._crit_edge.us.2, label %bb.d, !llvm.loop !38
+  %90 = select i1 %i.cv, i64 32, i64 0
+  %91 = or i64 %90, %89
+  br label %._crit_edge.us.2
 
-._crit_edge.us.2:                                 ; preds = %bb.d
+._crit_edge.us.2:                                 ; preds = %bb.d, %.preheader.us.2
+  %.lcssa.2 = phi i64 [ %89, %.preheader.us.2 ], [ %91, %bb.d ] ; 2 uses
   %i.cw = icmp ult i32 %i.m, %i.p
   %i.cx = select i1 %i.cw, i1 %i.g, i1 false
   br i1 %i.cx, label %.preheader.us.3, label %._crit_edge69.loopexit
 
 .preheader.us.3:                                  ; preds = %._crit_edge.us.2
   %i.cy = mul i32 %i.n, %i.o
-  %invariant.op.3 = add i32 %.05271, %i.cy
-  br label %bb.e
+  %invariant.op.3 = add i32 %.05271, %i.cy        ; 2 uses
+  %92 = shl i32 %invariant.op.3, 2                ; 3 uses
+  %93 = or disjoint i32 %92, 2
+  %94 = zext i32 %93 to i64
+  %95 = getelementptr inbounds nuw i8, ptr %i.b, i64 %94
+  %96 = load i8, ptr %95, align 1, !tbaa !35
+  %97 = or disjoint i32 %92, 1
+  %98 = zext i32 %97 to i64
+  %99 = getelementptr inbounds nuw i8, ptr %i.b, i64 %98
+  %100 = load i8, ptr %99, align 1, !tbaa !35
+  %101 = zext i32 %92 to i64
+  %102 = getelementptr inbounds nuw i8, ptr %i.b, i64 %101
+  %103 = load i8, ptr %102, align 1, !tbaa !35
+  %104 = uitofp i8 %96 to double
+  %105 = fdiv nnan double %104, 2.550000e+02
+  %106 = insertelement <2 x i8> poison, i8 %100, i64 0
+  %107 = insertelement <2 x i8> %106, i8 %103, i64 1
+  %108 = uitofp <2 x i8> %107 to <2 x double>
+  %109 = fdiv nnan <2 x double> %108, splat (double 2.550000e+02) ; 2 uses
+  %110 = extractelement <2 x double> %109, i64 0
+  %111 = fmul nnan double %110, 7.152000e-01
+  %112 = tail call double @llvm.fmuladd.f64(double %105, double 2.126000e-01, double %111)
+  %113 = extractelement <2 x double> %109, i64 1
+  %114 = tail call double @llvm.fmuladd.f64(double %113, double 7.220000e-02, double %112)
+  %115 = fmul double %114, 2.559990e+02
+  %116 = fptoui double %115 to i32
+  %117 = icmp ugt i32 %116, 239
+  %118 = select i1 %117, i64 64, i64 0
+  %119 = or i64 %118, %.lcssa.2                   ; 2 uses
+  br i1 %.not88, label %._crit_edge69.loopexit, label %bb.e
 
-bb.e:                                             ; preds = %bb.e, %.preheader.us.3
-  %indvars.iv.3 = phi i64 [ 0, %.preheader.us.3 ], [ %indvars.iv.next.3, %bb.e ] ; 3 uses
-  %.165.us.3 = phi i32 [ %22, %.preheader.us.3 ], [ %29, %bb.e ]
-  %23 = trunc i64 %indvars.iv.3 to i32
-  %.reass.3 = add i32 %invariant.op.3, %23
-  %24 = shl i32 %.reass.3, 2                      ; 3 uses
-  %i.cz = or disjoint i32 %24, 2
+bb.e:                                             ; preds = %.preheader.us.3
+  %.reass.1.3 = shl i32 %invariant.op.3, 2
+  %.reass.3 = add i32 %.reass.1.3, 4              ; 3 uses
+  %i.cz = or disjoint i32 %.reass.3, 2
   %i.da = zext i32 %i.cz to i64
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.da
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !35
-  %i.dd = or disjoint i32 %24, 1
+  %i.dd = or disjoint i32 %.reass.3, 1
   %i.de = zext i32 %i.dd to i64
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.de
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !35
-  %i.dh = zext i32 %24 to i64
+  %i.dh = zext i32 %.reass.3 to i64
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.dh
   %i.dj = load i8, ptr %i.di, align 1, !tbaa !35
   %i.dk = uitofp i8 %i.dc to double
@@ -431,37 +518,32 @@ bb.e:                                             ; preds = %bb.e, %.preheader.u
   %i.dv = fmul double %i.du, 2.559990e+02
   %i.dw = fptoui double %i.dv to i32
   %i.dx = icmp ugt i32 %i.dw, 239
-  %25 = zext i1 %i.dx to i32
-  %26 = trunc i64 %indvars.iv.3 to i32
-  %27 = add i32 %26, 6
-  %28 = shl nuw nsw i32 %25, %27
-  %29 = or i32 %28, %.165.us.3                    ; 2 uses
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.3, 1 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
-  br i1 %exitcond.not.3, label %._crit_edge69.loopexit, label %bb.e, !llvm.loop !38
+  %120 = select i1 %i.dx, i64 128, i64 0
+  %121 = or i64 %120, %119
+  br label %._crit_edge69.loopexit
 
 ._crit_edge:                                      ; preds = %._crit_edge69, %.preheader62
   %i.dy = tail call i32 @gvputc(ptr noundef nonnull %0, i32 noundef 10) #3 ; 0 uses
   %i.dz = add i32 %.05173, %1                     ; 2 uses
   %i.ea = load i32, ptr %i.c, align 4, !tbaa !32
   %i.eb = icmp ult i32 %i.dz, %i.ea
-  br i1 %i.eb, label %.preheader62, label %._crit_edge74, !llvm.loop !39
+  br i1 %i.eb, label %.preheader62, label %._crit_edge74, !llvm.loop !38
 
-._crit_edge69.loopexit:                           ; preds = %bb.e, %._crit_edge.us.2, %._crit_edge.us.1, %._crit_edge.us
-  %.lcssa.lcssa = phi i32 [ %8, %._crit_edge.us ], [ %15, %._crit_edge.us.1 ], [ %22, %._crit_edge.us.2 ], [ %29, %bb.e ]
-  %30 = zext nneg i32 %.lcssa.lcssa to i64
+._crit_edge69.loopexit:                           ; preds = %.preheader.us.3, %bb.e, %._crit_edge.us.2, %._crit_edge.us.1, %._crit_edge.us
+  %.lcssa.lcssa = phi i64 [ %.lcssa, %._crit_edge.us ], [ %.lcssa.1, %._crit_edge.us.1 ], [ %.lcssa.2, %._crit_edge.us.2 ], [ %119, %.preheader.us.3 ], [ %121, %bb.e ]
+  %122 = and i64 %.lcssa.lcssa, 4294967295
   br label %._crit_edge69
 
 ._crit_edge69:                                    ; preds = %._crit_edge69.loopexit, %.preheader61
-  %.055.lcssa = phi i64 [ 0, %.preheader61 ], [ %30, %._crit_edge69.loopexit ]
+  %.055.lcssa = phi i64 [ 0, %.preheader61 ], [ %122, %._crit_edge69.loopexit ]
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.055.lcssa
-  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !41
+  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !40
   %i.ee = tail call i32 @gvputs(ptr noundef nonnull %0, ptr noundef %i.ed) #3 ; 0 uses
   %i.ef = add i32 %.05271, 2                      ; 2 uses
   %i.eg = load i32, ptr %i.e, align 8, !tbaa !33  ; 2 uses
   %i.eh = icmp ult i32 %i.ef, %i.eg
   %indvars.iv.next79 = add i32 %indvars.iv78, -2
-  br i1 %i.eh, label %.preheader61, label %._crit_edge, !llvm.loop !40
+  br i1 %i.eh, label %.preheader61, label %._crit_edge, !llvm.loop !39
 }
 
 declare i32 @gvputs(ptr noundef, ptr noundef) local_unnamed_addr #1
@@ -544,6 +626,5 @@ attributes #3 = { nounwind }
 !37 = distinct !{!37, !34}
 !38 = distinct !{!38, !34}
 !39 = distinct !{!39, !34}
-!40 = distinct !{!40, !34}
-!41 = !{!13, !13, i64 0}
+!40 = !{!13, !13, i64 0}
 end_hunk_0
