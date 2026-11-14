@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -9999, 1) i32 @SUNLogger_SetDebugFilename(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
+define range(i32 -9999, 1) i32 @SUNLogger_SetDebugFilename(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %.not = icmp eq ptr %0, null
   %. = select i1 %.not, i32 -9999, i32 0
@@ -210,7 +210,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -9999, 1) i32 @SUNLogger_SetInfoFilename(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
+define range(i32 -9999, 1) i32 @SUNLogger_SetInfoFilename(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %.not = icmp eq ptr %0, null
   %. = select i1 %.not, i32 -9999, i32 0
@@ -372,7 +372,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -9999, 1) i32 @SUNLogger_SetInfoFile(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
+define range(i32 -9999, 1) i32 @SUNLogger_SetInfoFile(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %.not = icmp eq ptr %0, null
   %. = select i1 %.not, i32 -9999, i32 0
@@ -397,7 +397,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -9999, 1) i32 @SUNLogger_SetDebugFile(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
+define range(i32 -9999, 1) i32 @SUNLogger_SetDebugFile(ptr nofree noundef readnone captures(address_is_null) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %.not = icmp eq ptr %0, null
   %. = select i1 %.not, i32 -9999, i32 0

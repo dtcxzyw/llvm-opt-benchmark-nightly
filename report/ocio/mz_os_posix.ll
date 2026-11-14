@@ -93,7 +93,7 @@ declare i32 @rand() local_unnamed_addr #6
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #5
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i32 -107, 1) i32 @mz_os_rename(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #7 {
+define range(i32 -107, 1) i32 @mz_os_rename(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call i32 @rename(ptr noundef %0, ptr noundef %1) #13
   %i.b = icmp eq i32 %i.a, -1
@@ -105,7 +105,7 @@ bb.a:
 declare noundef i32 @rename(ptr noundef readonly captures(none), ptr noundef readonly captures(none)) local_unnamed_addr #8
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i32 -107, 1) i32 @mz_os_unlink(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
+define range(i32 -107, 1) i32 @mz_os_unlink(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call i32 @unlink(ptr noundef %0) #13
   %i.b = icmp eq i32 %i.a, -1
@@ -117,7 +117,7 @@ bb.a:
 declare noundef i32 @unlink(ptr noundef readonly captures(none)) local_unnamed_addr #8
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i32 -107, 1) i32 @mz_os_file_exists(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
+define range(i32 -107, 1) i32 @mz_os_file_exists(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %1 = alloca %struct.stat, align 8               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
@@ -228,7 +228,7 @@ bb.h:                                             ; preds = %bb.g, %.tail
 declare i32 @mz_path_remove_slash(ptr noundef) local_unnamed_addr #10
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i32 -104, 1) i32 @mz_os_set_file_date(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #7 {
+define range(i32 -104, 1) i32 @mz_os_set_file_date(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #7 {
 bb.a:
   %4 = alloca %struct.utimbuf, align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
@@ -246,7 +246,7 @@ bb.a:
 declare noundef i32 @utime(ptr noundef readonly captures(none), ptr noundef readonly captures(none)) local_unnamed_addr #8
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i32 -104, 1) i32 @mz_os_get_file_attribs(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1) local_unnamed_addr #7 {
+define range(i32 -104, 1) i32 @mz_os_get_file_attribs(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1) local_unnamed_addr #7 {
 bb.a:
   %2 = alloca %struct.stat, align 8               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
@@ -265,7 +265,7 @@ bb.a:
 declare noundef i32 @lstat(ptr noundef readonly captures(none), ptr noundef captures(none)) local_unnamed_addr #8
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i32 -104, 1) i32 @mz_os_set_file_attribs(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #7 {
+define range(i32 -104, 1) i32 @mz_os_set_file_attribs(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call i32 @chmod(ptr noundef %0, i32 noundef %1) #13
   %i.b = icmp eq i32 %i.a, -1
