@@ -1,0 +1,656 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 87d98ad9fa120..a1f33f9e95bb9 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -1584,8 +1584,6 @@ class ScalarEvolution {
+   class LoopGuards {
+     DenseMap<const SCEV *, const SCEV *> RewriteMap;
+     SmallDenseSet<std::pair<const SCEV *, const SCEV *>> NotEqual;
+-    bool PreserveNUW = false;
+-    bool PreserveNSW = false;
+     /// The loop to collect guards for on first use by applyLoopGuards, if not
+     /// collected yet.
+     const Loop *PendingLoop = nullptr;
+@@ -1618,8 +1616,8 @@ class ScalarEvolution {
+         unsigned Depth);
+ 
+     /// Like rewrite(Expr), but look up rewrites with \p Lookup if set.
+-    const SCEV *rewrite(const SCEV *Expr,
+-                        function_ref<const SCEV *(const SCEV *)> Lookup) const;
++    SCEVUse rewrite(const SCEV *Expr,
++                    function_ref<const SCEV *(const SCEV *)> Lookup) const;
+ 
+   public:
+     /// Return loop guards for loop \p L, which are collected on first use.
+@@ -1629,13 +1627,15 @@ class ScalarEvolution {
+       return Guards;
+     }
+ 
+-    /// Try to apply the collected loop guards to \p Expr.
+-    LLVM_ABI const SCEV *rewrite(const SCEV *Expr) const;
++    /// Try to apply the collected loop guards to \p Expr. The no-wrap flags
++    /// of rewritten adds only hold under the guards and are returned as use
++    /// flags, also on the operands of the result.
++    LLVM_ABI SCEVUse rewrite(const SCEV *Expr) const;
+   };
+ 
+   /// Try to apply information from loop guards for \p L to \p Expr.
+-  LLVM_ABI const SCEV *applyLoopGuards(const SCEV *Expr, const Loop *L);
+-  LLVM_ABI const SCEV *applyLoopGuards(const SCEV *Expr, LoopGuards &Guards);
++  LLVM_ABI SCEVUse applyLoopGuards(const SCEV *Expr, const Loop *L);
++  LLVM_ABI SCEVUse applyLoopGuards(const SCEV *Expr, LoopGuards &Guards);
+ 
+   /// Return true if the loop has no abnormal exits. That is, if the loop
+   /// is not infinite, it must exit through an explicit edge in the CFG.
+@@ -2032,6 +2032,11 @@ class ScalarEvolution {
+   LLVM_ABI const ConstantRange &getRangeRef(const SCEV *S, RangeSignHint Hint,
+                                             unsigned Depth = 0);
+ 
++  /// Determine the range of the use \p S, also using the use flags of \p S
++  /// and, through adds and zero-extends, of its operands. Not cached, as the
++  /// flags only hold for this use.
++  ConstantRange getRangeOfUse(SCEVUse S, RangeSignHint Hint);
++
+   /// Determine the range for a particular SCEV, but evaluates ranges for
+   /// operands iteratively first.
+   const ConstantRange &getRangeRefIter(const SCEV *S, RangeSignHint Hint);
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+index 20dde05a12333..1b148304e913c 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+@@ -869,8 +869,8 @@ class SCEVRewriteVisitor : public SCEVVisitor<SC, const SCEV *> {
+   }
+ 
+   const SCEV *visitUDivExpr(const SCEVUDivExpr *Expr) {
+-    auto *LHS = ((SC *)this)->visit(Expr->getLHS());
+-    auto *RHS = ((SC *)this)->visit(Expr->getRHS());
++    const SCEV *LHS = ((SC *)this)->visit(Expr->getLHS());
++    const SCEV *RHS = ((SC *)this)->visit(Expr->getRHS());
+     bool Changed = LHS != Expr->getLHS() || RHS != Expr->getRHS();
+     return !Changed ? Expr : SE.getUDivExpr(LHS, RHS);
+   }
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 393107341fa82..fdb965da77f26 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -6885,6 +6885,41 @@ const ConstantRange &ScalarEvolution::getRangeRef(
+   return setRange(S, SignHint, std::move(ConservativeResult));
+ }
+ 
++ConstantRange ScalarEvolution::getRangeOfUse(SCEVUse S, RangeSignHint Hint) {
++  // Compute the range as getRangeRef does, but with the flags of the use and
++  // the ranges of the operand uses. Memoize the latter, as they may be shared.
++  auto RangeType = Hint == HINT_RANGE_UNSIGNED ? ConstantRange::Unsigned
++                                               : ConstantRange::Signed;
++  SmallDenseMap<const void *, ConstantRange> UseRanges;
++  std::function<ConstantRange(SCEVUse)> GetRange = [&](SCEVUse U) {
++    ConstantRange CR = getRangeRef(U, Hint);
++    if (U.isCanonical())
++      return CR;
++    if (auto It = UseRanges.find(U.getOpaqueValue()); It != UseRanges.end())
++      return It->second;
++
++    if (auto *ZExt = dyn_cast<SCEVZeroExtendExpr>(U)) {
++      ConstantRange OpCR = GetRange(ZExt->getOperand());
++      CR = CR.intersectWith(OpCR.zeroExtend(getTypeSizeInBits(U->getType())),
++                            RangeType);
++    } else if (auto *Add = dyn_cast<SCEVAddExpr>(U)) {
++      using OBO = OverflowingBinaryOperator;
++      unsigned WrapType = OBO::AnyWrap;
++      if (hasFlags(U.getNoWrapFlags(), SCEV::FlagNSW))
++        WrapType |= OBO::NoSignedWrap;
++      if (hasFlags(U.getNoWrapFlags(), SCEV::FlagNUW))
++        WrapType |= OBO::NoUnsignedWrap;
++      ConstantRange X = GetRange(Add->getOperand(0));
++      for (SCEVUse Op : drop_begin(Add->operands()))
++        X = X.addWithNoWrap(GetRange(Op), WrapType, RangeType);
++      CR = CR.intersectWith(X, RangeType);
++    }
++    UseRanges.try_emplace(U.getOpaqueValue(), CR);
++    return CR;
++  };
++  return GetRange(S);
++}
++
+ // Given a StartRange, Step and MaxBECount for an expression compute a range of
+ // values that the expression can take. Initially, the expression has a value
+ // from StartRange and then is changed by Step up to MaxBECount times. Signed
+@@ -10713,8 +10748,14 @@ ScalarEvolution::ExitLimit ScalarEvolution::howFarToZero(const SCEV *V,
+   //   N = Distance (as unsigned)
+ 
+   if (match(Step, m_CombineOr(m_scev_One(), m_scev_AllOnes()))) {
+-    APInt MaxBECount = getUnsignedRangeMax(applyLoopGuards(Distance, Guards));
+-    MaxBECount = APIntOps::umin(MaxBECount, getUnsignedRangeMax(Distance));
++    // The unsigned max of S, also using the loop guards.
++    auto GetUMax = [&](const SCEV *S) {
++      APInt GuardedMax =
++          getRangeOfUse(applyLoopGuards(S, Guards), HINT_RANGE_UNSIGNED)
++              .getUnsignedMax();
++      return APIntOps::umin(GuardedMax, getUnsignedRangeMax(S));
++    };
++    APInt MaxBECount = GetUMax(Distance);
+ 
+     // When a loop like "for (int i = 0; i != n; ++i) { /* body */ }" is rotated,
+     // we end up with a loop whose backedge-taken count is n - 1.  Detect this
+@@ -10731,10 +10772,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::howFarToZero(const SCEV *V,
+       // as "unsigned_max(Distance + 1) - 1". Also apply the loop guards to
+       // Distance + 1; the range of Distance itself may be a wrapped set even
+       // when the guards bound Distance + 1 tightly.
+-      APInt Max = APIntOps::umin(
+-          getUnsignedRangeMax(applyLoopGuards(DistancePlusOne, Guards)),
+-          getUnsignedRangeMax(DistancePlusOne));
+-      MaxBECount = APIntOps::umin(MaxBECount, Max - 1);
++      MaxBECount = APIntOps::umin(MaxBECount, GetUMax(DistancePlusOne) - 1);
+     }
+     return ExitLimit(Distance, getConstant(MaxBECount), Distance, false,
+                      Predicates);
+@@ -13658,14 +13696,17 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         };
+ 
+         auto CondGE = IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
+-        const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, Guards);
+-        const SCEV *GuardedStart = applyLoopGuards(OrigStart, Guards);
++        SCEVUse GuardedRHS = applyLoopGuards(OrigRHS, Guards);
++        SCEVUse GuardedStart = applyLoopGuards(OrigStart, Guards);
+         if (Invert)
+           std::swap(GuardedRHS, GuardedStart);
+ 
+         auto [GELHS, GERHS] = SwapIfInverted(OrigRHS, OrigStart);
++        auto Hint = IsSigned ? HINT_RANGE_SIGNED : HINT_RANGE_UNSIGNED;
+         if (isLoopEntryGuardedByCond(L, CondGE, GELHS, GERHS) ||
+-            isKnownPredicate(CondGE, GuardedRHS, GuardedStart))
++            isKnownPredicate(CondGE, GuardedRHS, GuardedStart) ||
++            getRangeOfUse(GuardedRHS, Hint)
++                .icmp(CondGE, getRangeOfUse(GuardedStart, Hint)))
+           return true;
+ 
+         if ((GuardedRHS != GELHS || GuardedStart != GERHS) &&
+@@ -16094,19 +16135,6 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+     ExprsToRewrite.push_back(K);
+   }
+ 
+-  // Let the rewriter preserve NUW/NSW flags if the unsigned/signed ranges of
+-  // the replacement expressions are contained in the ranges of the replaced
+-  // expressions.
+-  Guards.PreserveNUW = true;
+-  Guards.PreserveNSW = true;
+-  for (const SCEV *Expr : ExprsToRewrite) {
+-    const SCEV *RewriteTo = Guards.RewriteMap[Expr];
+-    Guards.PreserveNUW &=
+-        SE.getUnsignedRange(Expr).contains(SE.getUnsignedRange(RewriteTo));
+-    Guards.PreserveNSW &=
+-        SE.getSignedRange(Expr).contains(SE.getSignedRange(RewriteTo));
+-  }
+-
+   // Now that all rewrite information is collect, rewrite the collected
+   // expressions with the information in the map. This applies information to
+   // sub-expressions. A collected expression is rewritten when it is first
+@@ -16130,22 +16158,25 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+   }
+ }
+ 
+-const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
++SCEVUse ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+   return rewrite(Expr, nullptr);
+ }
+ 
+-const SCEV *ScalarEvolution::LoopGuards::rewrite(
++SCEVUse ScalarEvolution::LoopGuards::rewrite(
+     const SCEV *Expr, function_ref<const SCEV *(const SCEV *)> Lookup) const {
+   /// A rewriter to replace SCEV expressions in Map with the corresponding entry
+   /// in the map. It skips AddRecExpr because we cannot guarantee that the
+-  /// replacement is loop invariant in the loop of the AddRec.
++  /// replacement is loop invariant in the loop of the AddRec. Rewritten
++  /// expressions are only equal to the originals under the guards, so the
++  /// flags of rewritten adds are returned as use flags.
+   class SCEVLoopGuardRewriter
+       : public SCEVRewriteVisitor<SCEVLoopGuardRewriter> {
+     const DenseMap<const SCEV *, const SCEV *> &Map;
+     const SmallDenseSet<std::pair<const SCEV *, const SCEV *>> &NotEqual;
+     function_ref<const SCEV *(const SCEV *)> Lookup;
+ 
+-    SCEVFlags FlagMask = SCEV::FlagNone;
++    /// Rewritten adds, with their use flags.
++    SmallDenseMap<const SCEV *, SCEVUse> RewrittenAdds;
+ 
+     const SCEV *lookup(const SCEV *Key) {
+       return Lookup ? Lookup(Key) : Map.lookup(Key);
+@@ -16156,11 +16187,19 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(
+                           const ScalarEvolution::LoopGuards &Guards,
+                           function_ref<const SCEV *(const SCEV *)> Lookup)
+         : SCEVRewriteVisitor(SE), Map(Guards.RewriteMap),
+-          NotEqual(Guards.NotEqual), Lookup(Lookup) {
+-      if (Guards.PreserveNUW)
+-        FlagMask = ScalarEvolution::setFlags(FlagMask, SCEV::FlagNUW);
+-      if (Guards.PreserveNSW)
+-        FlagMask = ScalarEvolution::setFlags(FlagMask, SCEV::FlagNSW);
++          NotEqual(Guards.NotEqual), Lookup(Lookup) {}
++
++    /// Visit \p S, keeping the use flags of rewritten adds, which
++    /// SCEVRewriteVisitor::visit drops.
++    SCEVUse visit(const SCEV *S) {
++      auto *Add = dyn_cast<SCEVAddExpr>(S);
++      if (!Add)
++        return SCEVRewriteVisitor::visit(S);
++      if (SCEVUse R = RewrittenAdds.lookup(S))
++        return R;
++      SCEVUse R = visitAddExpr(Add);
++      RewrittenAdds[S] = R;
++      return R;
+     }
+ 
+     const SCEV *visitAddRecExpr(const SCEVAddRecExpr *Expr) { return Expr; }
+@@ -16196,8 +16235,9 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(
+         Bitwidth = Bitwidth / 2;
+       }
+ 
+-      return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitZeroExtendExpr(
+-          Expr);
++      // Keep the use flags of the rewritten operand.
++      SCEVUse NewOp = visit(Op);
++      return NewOp == Op ? Expr : SE.getZeroExtendExpr(NewOp, Ty);
+     }
+ 
+     const SCEV *visitSignExtendExpr(const SCEVSignExtendExpr *Expr) {
+@@ -16219,7 +16259,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitSMinExpr(Expr);
+     }
+ 
+-    const SCEV *visitAddExpr(const SCEVAddExpr *Expr) {
++    SCEVUse visitAddExpr(const SCEVAddExpr *Expr) {
+       if (const SCEV *S = lookup(Expr))
+         return S;
+ 
+@@ -16252,9 +16292,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(
+           const SCEV *Add =
+               SE.getAddExpr(Expr->getOperand(1), Expr->getOperand(2));
+           if (const SCEV *Rewritten = RewriteSubtraction(Add))
+-            return SE.getAddExpr(
+-                Expr->getOperand(0), Rewritten,
+-                ScalarEvolution::maskFlags(Expr->getNoWrapFlags(), FlagMask));
++            return SE.getAddExpr(Expr->getOperand(0), Rewritten);
+           if (const SCEV *S = lookup(Add))
+             return SE.getAddExpr(Expr->getOperand(0), S);
+         }
+@@ -16280,32 +16318,13 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(
+       SmallVector<SCEVUse, 2> Operands;
+       bool Changed = false;
+       for (SCEVUse Op : Expr->operands()) {
+-        Operands.push_back(
+-            SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visit(Op));
++        Operands.push_back(visit(Op));
+         Changed |= Op != Operands.back();
+       }
+-      // We are only replacing operands with equivalent values, so transfer the
+-      // flags from the original expression.
+-      return !Changed ? Expr
+-                      : SE.getAddExpr(Operands,
+-                                      ScalarEvolution::maskFlags(
+-                                          Expr->getNoWrapFlags(), FlagMask));
+-    }
+-
+-    const SCEV *visitMulExpr(const SCEVMulExpr *Expr) {
+-      SmallVector<SCEVUse, 2> Operands;
+-      bool Changed = false;
+-      for (SCEVUse Op : Expr->operands()) {
+-        Operands.push_back(
+-            SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visit(Op));
+-        Changed |= Op != Operands.back();
+-      }
+-      // We are only replacing operands with equivalent values, so transfer the
+-      // flags from the original expression.
+-      return !Changed ? Expr
+-                      : SE.getMulExpr(Operands,
+-                                      ScalarEvolution::maskFlags(
+-                                          Expr->getNoWrapFlags(), FlagMask));
++      if (!Changed)
++        return Expr;
++      SCEVFlags UseFlags = Expr->getNoWrapFlags();
++      return SE.getAddExpr(Operands, {SCEV::FlagNone, UseFlags});
+     }
+   };
+ 
+@@ -16316,13 +16335,12 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(
+   return Rewriter.visit(Expr);
+ }
+ 
+-const SCEV *ScalarEvolution::applyLoopGuards(const SCEV *Expr, const Loop *L) {
++SCEVUse ScalarEvolution::applyLoopGuards(const SCEV *Expr, const Loop *L) {
+   LoopGuards Guards = LoopGuards::collectOnDemand(L, *this);
+   return applyLoopGuards(Expr, Guards);
+ }
+ 
+-const SCEV *ScalarEvolution::applyLoopGuards(const SCEV *Expr,
+-                                             LoopGuards &Guards) {
++SCEVUse ScalarEvolution::applyLoopGuards(const SCEV *Expr, LoopGuards &Guards) {
+   // Loop guards never rewrite constants and AddRecs, so there is no need to
+   // collect pending guards for them.
+   if (isa<SCEVConstant, SCEVAddRecExpr>(Expr))
+diff --git a/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll
+index 2bce47bfc83e0..8d39f5cc6a05c 100644
+--- a/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll
+@@ -78,6 +78,145 @@ exit:
+   ret void
+ }
+ 
++; Under the guard %a s> -1, (1 + %a)<nsw> is rewritten to (1 + (0 smax %a)),
++; which does not wrap under the guard and bounds the constant max
++; backedge-taken count.
++define void @rewrite_preserve_add_nsw_constant_max(i32 %a) {
++; CHECK-LABEL: 'rewrite_preserve_add_nsw_constant_max'
++; CHECK-NEXT:  Determining loop execution counts for: @rewrite_preserve_add_nsw_constant_max
++; CHECK-NEXT:  Loop %loop: backedge-taken count is %a
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 2147483646
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %a
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %add = add nsw i32 %a, 1
++  call void @use(i32 noundef %add)
++  %pre = icmp sgt i32 %a, -1
++  br i1 %pre, label %loop, label %exit
++
++loop:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @clobber()
++  %iv.next = add i32 %iv, 1
++  %ec = icmp eq i32 %iv.next, %add
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; Same as @rewrite_preserve_add_nsw_constant_max, but the rewritten add is the
++; operand of a zext.
++define void @rewrite_preserve_add_nsw_zext_constant_max(i32 %a) {
++; CHECK-LABEL: 'rewrite_preserve_add_nsw_zext_constant_max'
++; CHECK-NEXT:  Determining loop execution counts for: @rewrite_preserve_add_nsw_zext_constant_max
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (zext i32 (4 + %a)<nsw> to i64))<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 2147483646
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (zext i32 (4 + %a)<nsw> to i64))<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %add = add nsw i32 %a, 4
++  call void @use(i32 noundef %add)
++  %pre = icmp sgt i32 %a, -4
++  br i1 %pre, label %ph, label %exit
++
++ph:
++  %add.ext = zext nneg i32 %add to i64
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  call void @clobber()
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %add.ext
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The guard %a == 16 rewrites the exit count (%a + %y)<nuw> of %loop.2 to
++; (16 + %y), the SCEV of the unguarded %n. The nuw only holds under the guard,
++; so it must not end up on (16 + %y) in the trip count of %loop.1.
++define void @rewrite_flags_only_hold_under_guard(i32 %a, i32 %y) {
++; CHECK-LABEL: 'rewrite_flags_only_hold_under_guard'
++; CHECK-NEXT:  Determining loop execution counts for: @rewrite_flags_only_hold_under_guard
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is (%a + %y)<nuw>
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is (%a + %y)<nuw>
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop.1: backedge-taken count is (-1 + (1 umax (16 + %y)))
++; CHECK-NEXT:  Loop %loop.1: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop.1: symbolic max backedge-taken count is (-1 + (1 umax (16 + %y)))
++; CHECK-NEXT:  Loop %loop.1: Trip multiple is 1
++;
++entry:
++  %add = add nuw i32 %a, %y
++  call void @use(i32 noundef %add)
++  %n = add i32 %y, 16
++  br label %loop.1
++
++loop.1:
++  %iv.1 = phi i32 [ 0, %entry ], [ %iv.1.next, %loop.1 ]
++  %iv.1.next = add i32 %iv.1, 1
++  %ec.1 = icmp ult i32 %iv.1.next, %n
++  br i1 %ec.1, label %loop.1, label %guard
++
++guard:
++  %pre = icmp eq i32 %a, 16
++  br i1 %pre, label %loop.2, label %exit
++
++loop.2:
++  %iv.2 = phi i32 [ 0, %guard ], [ %iv.2.next, %loop.2 ]
++  %iv.2.next = add i32 %iv.2, 1
++  %ec.2 = icmp eq i32 %iv.2, %add
++  br i1 %ec.2, label %exit, label %loop.2
++
++exit:
++  ret void
++}
++
++; Same as @rewrite_flags_only_hold_under_guard, but with a mul.
++define void @rewrite_flags_only_hold_under_guard_mul(i32 %a, i32 %y) {
++; CHECK-LABEL: 'rewrite_flags_only_hold_under_guard_mul'
++; CHECK-NEXT:  Determining loop execution counts for: @rewrite_flags_only_hold_under_guard_mul
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is (%a * %y)<nuw>
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i32 -16
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is (%a * %y)<nuw>
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop.1: backedge-taken count is (-1 + (1 umax (16 * %y)))
++; CHECK-NEXT:  Loop %loop.1: constant max backedge-taken count is i32 -17
++; CHECK-NEXT:  Loop %loop.1: symbolic max backedge-taken count is (-1 + (1 umax (16 * %y)))
++; CHECK-NEXT:  Loop %loop.1: Trip multiple is 1
++;
++entry:
++  %mul = mul nuw i32 %a, %y
++  call void @use(i32 noundef %mul)
++  %n = mul i32 %y, 16
++  br label %loop.1
++
++loop.1:
++  %iv.1 = phi i32 [ 0, %entry ], [ %iv.1.next, %loop.1 ]
++  %iv.1.next = add i32 %iv.1, 1
++  %ec.1 = icmp ult i32 %iv.1.next, %n
++  br i1 %ec.1, label %loop.1, label %guard
++
++guard:
++  %pre = icmp eq i32 %a, 16
++  br i1 %pre, label %loop.2, label %exit
++
++loop.2:
++  %iv.2 = phi i32 [ 0, %guard ], [ %iv.2.next, %loop.2 ]
++  %iv.2.next = add i32 %iv.2, 1
++  %ec.2 = icmp eq i32 %iv.2, %mul
++  br i1 %ec.2, label %exit, label %loop.2
++
++exit:
++  ret void
++}
++
+ declare void @clobber()
+ 
+ 
+diff --git a/llvm/test/Transforms/IndVarSimplify/trip-count-expansion-loop-guard-preserve-nsw.ll b/llvm/test/Transforms/IndVarSimplify/trip-count-expansion-loop-guard-preserve-nsw.ll
+index 945eb82e18595..0377e9e343734 100644
+--- a/llvm/test/Transforms/IndVarSimplify/trip-count-expansion-loop-guard-preserve-nsw.ll
++++ b/llvm/test/Transforms/IndVarSimplify/trip-count-expansion-loop-guard-preserve-nsw.ll
+@@ -42,5 +42,173 @@ exit:
+   ret void
+ }
+ 
++; The guard %a u>= 16 rewrites the exit count (%a + %y)<nuw> of %loop.1 to
++; ((16 umax %a) + %y), the SCEV of %n. The nuw only holds under the guard: the
++; exit value (1 umax %n) of %iv.2.next is 1, not %n, for %a = 0 and %y = -16.
++define i32 @rewrite_flags_only_hold_under_guard(i32 %a, i32 %y) {
++; CHECK-LABEL: define i32 @rewrite_flags_only_hold_under_guard(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw i32 [[A]], [[Y]]
++; CHECK-NEXT:    call void @use(i32 noundef [[ADD]])
++; CHECK-NEXT:    [[PRE:%.*]] = icmp uge i32 [[A]], 16
++; CHECK-NEXT:    br i1 [[PRE]], label [[LOOP_1_PREHEADER:%.*]], label [[LOOP_2_PH:%.*]]
++; CHECK:       loop.1.preheader:
++; CHECK-NEXT:    br label [[LOOP_1:%.*]]
++; CHECK:       loop.1:
++; CHECK-NEXT:    br i1 true, label [[LOOP_2_PH_LOOPEXIT:%.*]], label [[LOOP_1]]
++; CHECK:       loop.2.ph.loopexit:
++; CHECK-NEXT:    br label [[LOOP_2_PH]]
++; CHECK:       loop.2.ph:
++; CHECK-NEXT:    br label [[LOOP_2:%.*]]
++; CHECK:       loop.2:
++; CHECK-NEXT:    br i1 false, label [[LOOP_2]], label [[EXIT:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[UMAX:%.*]] = call i32 @llvm.umax.i32(i32 [[A]], i32 16)
++; CHECK-NEXT:    [[N:%.*]] = add i32 [[UMAX]], [[Y]]
++; CHECK-NEXT:    [[UMAX1:%.*]] = call i32 @llvm.umax.i32(i32 [[N]], i32 1)
++; CHECK-NEXT:    ret i32 [[UMAX1]]
++;
++entry:
++  %add = add nuw i32 %a, %y
++  call void @use(i32 noundef %add)
++  %pre = icmp uge i32 %a, 16
++  br i1 %pre, label %loop.1, label %loop.2.ph
++
++loop.1:
++  %iv.1 = phi i32 [ 0, %entry ], [ %iv.1.next, %loop.1 ]
++  %iv.1.next = add i32 %iv.1, 1
++  %ec.1 = icmp eq i32 %iv.1, %add
++  br i1 %ec.1, label %loop.2.ph, label %loop.1
++
++loop.2.ph:
++  %umax = call i32 @llvm.umax.i32(i32 %a, i32 16)
++  %n = add i32 %umax, %y
++  br label %loop.2
++
++loop.2:
++  %iv.2 = phi i32 [ 0, %loop.2.ph ], [ %iv.2.next, %loop.2 ]
++  %iv.2.next = add i32 %iv.2, 1
++  %ec.2 = icmp ult i32 %iv.2.next, %n
++  br i1 %ec.2, label %loop.2, label %exit
++
++exit:
++  ret i32 %iv.2.next
++}
++
++; Same as @rewrite_flags_only_hold_under_guard, but %k.next is (%umax + %y),
++; which is expanded as exit value. The nuw only holds under the guard and must
++; not be added to the expansion: for %a = 0 and %y = -16, it would be poison.
++define i32 @rewrite_flags_only_hold_under_guard_exit_value(i32 %a, i32 %y) {
++; CHECK-LABEL: define i32 @rewrite_flags_only_hold_under_guard_exit_value(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw i32 [[A]], [[Y]]
++; CHECK-NEXT:    call void @use(i32 noundef [[ADD]])
++; CHECK-NEXT:    [[PRE:%.*]] = icmp uge i32 [[A]], 16
++; CHECK-NEXT:    br i1 [[PRE]], label [[LOOP_1_PREHEADER:%.*]], label [[LOOP_2_PH:%.*]]
++; CHECK:       loop.1.preheader:
++; CHECK-NEXT:    br label [[LOOP_1:%.*]]
++; CHECK:       loop.1:
++; CHECK-NEXT:    br i1 true, label [[LOOP_2_PH_LOOPEXIT:%.*]], label [[LOOP_1]]
++; CHECK:       loop.2.ph.loopexit:
++; CHECK-NEXT:    br label [[LOOP_2_PH]]
++; CHECK:       loop.2.ph:
++; CHECK-NEXT:    br label [[LOOP_2:%.*]]
++; CHECK:       loop.2:
++; CHECK-NEXT:    br i1 true, label [[EXIT:%.*]], label [[LOOP_2]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[UMAX:%.*]] = call i32 @llvm.umax.i32(i32 [[A]], i32 16)
++; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[Y]], [[UMAX]]
++; CHECK-NEXT:    ret i32 [[TMP0]]
++;
++entry:
++  %add = add nuw i32 %a, %y
++  call void @use(i32 noundef %add)
++  %pre = icmp uge i32 %a, 16
++  br i1 %pre, label %loop.1, label %loop.2.ph
++
++loop.1:
++  %iv.1 = phi i32 [ 0, %entry ], [ %iv.1.next, %loop.1 ]
++  %iv.1.next = add i32 %iv.1, 1
++  %ec.1 = icmp eq i32 %iv.1, %add
++  br i1 %ec.1, label %loop.2.ph, label %loop.1
++
++loop.2.ph:
++  %umax = call i32 @llvm.umax.i32(i32 %a, i32 16)
++  br label %loop.2
++
++loop.2:
++  %iv.2 = phi i32 [ 0, %loop.2.ph ], [ %iv.2.next, %loop.2 ]
++  %k = phi i32 [ %umax, %loop.2.ph ], [ %k.next, %loop.2 ]
++  %k.next = add i32 %k, %y
++  %iv.2.next = add i32 %iv.2, 1
++  %ec.2 = icmp eq i32 %iv.2, 0
++  br i1 %ec.2, label %exit, label %loop.2
++
++exit:
++  ret i32 %k.next
++}
++
++; The guard %a == -1 rewrites the exit count (%a + %p)<nuw> of %inner to
++; (-1 + %p), which is also the SCEV of %r. The nuw only holds under the guard
++; and must not be added to %r, which wraps for %p != 0.
++define i32 @rewrite_flags_only_hold_under_guard_strengthen(i32 %a, i32 %start) {
++; CHECK-LABEL: define i32 @rewrite_flags_only_hold_under_guard_strengthen(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[START:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[START]], [[ENTRY:%.*]] ], [ [[P_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw i32 [[A]], [[P]]
++; CHECK-NEXT:    call void @use(i32 noundef [[ADD]])
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[P]], -1
++; CHECK-NEXT:    [[PRE:%.*]] = icmp eq i32 [[A]], -1
++; CHECK-NEXT:    br i1 [[PRE]], label [[INNER_PREHEADER:%.*]], label [[OUTER_LATCH]]
++; CHECK:       inner.preheader:
++; CHECK-NEXT:    br label [[INNER:%.*]]
++; CHECK:       inner:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_NEXT:%.*]], [[INNER]] ], [ 0, [[INNER_PREHEADER]] ]
++; CHECK-NEXT:    call void @clobber()
++; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV]], [[ADD]]
++; CHECK-NEXT:    br i1 [[EC]], label [[OUTER_LATCH_LOOPEXIT:%.*]], label [[INNER]]
++; CHECK:       outer.latch.loopexit:
++; CHECK-NEXT:    br label [[OUTER_LATCH]]
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[P_NEXT]] = udiv i32 [[P]], 3
++; CHECK-NEXT:    [[OUTER_EC:%.*]] = icmp ult i32 [[P]], 3
++; CHECK-NEXT:    br i1 [[OUTER_EC]], label [[EXIT:%.*]], label [[OUTER_HEADER]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[R_LCSSA:%.*]] = phi i32 [ [[R]], [[OUTER_LATCH]] ]
++; CHECK-NEXT:    ret i32 [[R_LCSSA]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %p = phi i32 [ %start, %entry ], [ %p.next, %outer.latch ]
++  %add = add nuw i32 %a, %p
++  call void @use(i32 noundef %add)
++  %r = add i32 %p, -1
++  %pre = icmp eq i32 %a, -1
++  br i1 %pre, label %inner, label %outer.latch
++
++inner:
++  %iv = phi i32 [ 0, %outer.header ], [ %iv.next, %inner ]
++  call void @clobber()
++  %iv.next = add i32 %iv, 1
++  %ec = icmp eq i32 %iv, %add
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %p.next = udiv i32 %p, 3
++  %outer.ec = icmp ult i32 %p, 3
++  br i1 %outer.ec, label %exit, label %outer.header
++
++exit:
++  ret i32 %r
++}
++
+ declare void @clobber()
+ declare void @use(i32)
