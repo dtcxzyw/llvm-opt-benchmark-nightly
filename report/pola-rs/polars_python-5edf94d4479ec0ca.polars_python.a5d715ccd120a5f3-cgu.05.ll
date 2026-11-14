@@ -205,12 +205,20 @@ bb.e:                                             ; preds = %bb.oe, %bb.b
   %.not.i = icmp eq i64 %i.cu, -9223372036854775808, !dbg !278153
   br i1 %.not.i, label %bb.i, label %bb.g, !dbg !278154
 
+.body142.thread.i:                                ; preds = %bb.ez, %bb.ey, %bb.ex, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i, %bb.n
+  %.pn133.ph.i = phi { ptr, i32 } [ %.pn776.i.i, %bb.ex ], [ %.pn776.i.i, %bb.ez ], [ %.pn75.i.i, %bb.n ], [ %.pn7512.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i ], [ %.pn776.i.i, %bb.ey ] ; 2 uses
+  %.sroa.38.0315.i = extractvalue { ptr, i32 } %.pn133.ph.i, 1
+  %.sroa.0111.0316.i = extractvalue { ptr, i32 } %.pn133.ph.i, 0
+  br label %.thread.i.a, !dbg !278155
+
 .body157.i:                                       ; preds = %bb.mf, %.body.thread.i, %.body.i, %bb.f
-  %.sroa.052.0.i = phi i8 [ %.sroa.052.2.i, %.body.i ], [ %.sroa.052.2319.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.052.2319.i, %bb.mf ], !dbg !278155
-  %.sroa.049.0.i = phi i8 [ %.sroa.049.2.i, %.body.i ], [ %.sroa.049.2320.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.049.2320.i, %bb.mf ], !dbg !278155 ; 2 uses
+  %.sroa.052.0.i = phi i8 [ %.sroa.052.2.i, %.body.i ], [ %.sroa.052.2319.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.052.2319.i, %bb.mf ], !dbg !278156
+  %.sroa.049.0.i = phi i8 [ %.sroa.049.2.i, %.body.i ], [ %.sroa.049.2320.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.049.2320.i, %bb.mf ], !dbg !278156 ; 2 uses
   %.pn133.i = phi { ptr, i32 } [ %.pn129.i, %.body.i ], [ %.pn129321.i, %.body.thread.i ], [ %i.cv, %bb.f ], [ %.pn129321.i, %bb.mf ] ; 2 uses
-  %cond.i = icmp eq i8 %.sroa.052.0.i, 0, !dbg !278156
-  br i1 %cond.i, label %bb.ns, label %.thread.i.a, !dbg !278156
+  %.sroa.38.0.i = extractvalue { ptr, i32 } %.pn133.i, 1 ; 2 uses
+  %.sroa.0111.0.i = extractvalue { ptr, i32 } %.pn133.i, 0 ; 2 uses
+  %cond.i = icmp eq i8 %.sroa.052.0.i, 0, !dbg !278155
+  br i1 %cond.i, label %bb.ns, label %.thread.i.a, !dbg !278155
 
 bb.f:                                             ; preds = %bb.mh, %bb.ly, %bb.ky, %bb.fv, %bb.fb, %bb.t, %bb.k, %bb.j
   %.sroa.049.1.i = phi i8 [ 1, %bb.mh ], [ 1, %bb.fv ], [ %.sroa.049.6.i, %bb.ly ], [ 0, %bb.ky ], [ 1, %bb.k ], [ 1, %bb.fb ], [ 1, %bb.t ], [ 1, %bb.j ], !dbg !278157 ; 2 uses
@@ -264,7 +272,7 @@ bb.m:                                             ; preds = %bb.l
           to label %bb.o unwind label %.thread.i.i, !dbg !278176, !noalias !277800 ; 2 uses
 
 bb.n:                                             ; preds = %bb.x
-  br i1 %.sroa.036.1.i.i, label %bb.ex, label %.thread.i.a, !dbg !278177
+  br i1 %.sroa.036.1.i.i, label %bb.ex, label %.body142.thread.i, !dbg !278177
 
 .thread.i.i:                                      ; preds = %bb.al, %bb.p, %bb.m
   %i.dj = landingpad { ptr, i32 }
@@ -667,24 +675,24 @@ bb.ew:                                            ; preds = %.thread7.i.i, %bb.x
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i unwind label %bb.ev, !dbg !278523, !noalias !277800
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i: ; preds = %bb.ew
-  br i1 %.sroa.036.111.i.i, label %bb.ex, label %.thread.i.a, !dbg !278177
+  br i1 %.sroa.036.111.i.i, label %bb.ex, label %.body142.thread.i, !dbg !278177
 
 bb.ex:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i, %.thread.i.i, %bb.n
   %.pn776.i.i = phi { ptr, i32 } [ %i.dj, %.thread.i.i ], [ %.pn75.i.i, %bb.n ], [ %.pn7512.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !277890), !dbg !278177
   %i.mm = load ptr, ptr %i.bj, align 8, !dbg !278524, !alias.scope !277890, !noalias !277799, !noundef !3778 ; 2 uses
   %i.mn = icmp eq ptr %i.mm, null, !dbg !278524
-  br i1 %i.mn, label %.thread.i.a, label %bb.ey, !dbg !278524
+  br i1 %i.mn, label %.body142.thread.i, label %bb.ey, !dbg !278524
 
 bb.ey:                                            ; preds = %bb.ex
   %i.mo = atomicrmw add ptr %i.mm, i64 -1 release, align 8, !dbg !278525, !noalias !277891
   %i.mp = icmp eq i64 %i.mo, 1, !dbg !278526
-  br i1 %i.mp, label %bb.ez, label %.thread.i.a, !dbg !278526
+  br i1 %i.mp, label %bb.ez, label %.body142.thread.i, !dbg !278526
 
 bb.ez:                                            ; preds = %bb.ey
   fence acquire, !dbg !278527
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDNtNtCslpwjCj2YNBy_9polars_io10predicates14PhysicalIoExprEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.bj) #36
-          to label %.thread.i.a unwind label %bb.ev, !dbg !278528, !noalias !277800
+          to label %.body142.thread.i unwind label %bb.ev, !dbg !278528, !noalias !277800
 
 bb.fa:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit97.i.i, %bb.t, %bb.s, %bb.r
   %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.2 = phi i64 [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.1, %bb.r ], [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.1, %bb.t ], [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.1, %bb.s ], [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.11, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit97.i.i ], !dbg !278183 ; 2 uses
@@ -753,10 +761,10 @@ bb.ff:                                            ; preds = %bb.mn, %bb.mk, %bb.
   %.sroa.40.3 = phi ptr [ %.sroa.40.16.copyload, %bb.fm ], [ %.sroa.40.2, %bb.fa ], [ %.sroa.40.0.copyload120, %bb.fd ], [ %.sroa.40.8.copyload131, %bb.mn ], [ %.sroa.40.16.copyload136, %bb.mk ], !dbg !278157 ; 2 uses
   %.sroa.24.3 = phi i64 [ %i.ni, %bb.fm ], [ %.sroa.24.2, %bb.fa ], [ %.sroa.24.0.copyload107, %bb.fd ], [ %.sroa.24.8.copyload115, %bb.mn ], [ %i.zk, %bb.mk ], !dbg !278157 ; 2 uses
   %.sroa.0.3 = phi i64 [ %i.nf, %bb.fm ], [ 18, %bb.fa ], [ %i.mq, %bb.fd ], [ 18, %bb.mn ], [ %i.zi, %bb.mk ], !dbg !278157 ; 2 uses
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.cg, i64 296, !dbg !278156
-  %.val153.i = load ptr, ptr %i.mr, align 8, !dbg !278156, !alias.scope !277789 ; 5 uses
-  %i.ms = getelementptr inbounds nuw i8, ptr %i.cg, i64 304, !dbg !278156
-  %.val154.i = load ptr, ptr %i.ms, align 8, !dbg !278156, !alias.scope !277789, !nonnull !3778, !align !4055, !noundef !3778 ; 5 uses
+  %i.mr = getelementptr inbounds nuw i8, ptr %i.cg, i64 296, !dbg !278155
+  %.val153.i = load ptr, ptr %i.mr, align 8, !dbg !278155, !alias.scope !277789 ; 5 uses
+  %i.ms = getelementptr inbounds nuw i8, ptr %i.cg, i64 304, !dbg !278155
+  %.val154.i = load ptr, ptr %i.ms, align 8, !dbg !278155, !alias.scope !277789, !nonnull !3778, !align !4055, !noundef !3778 ; 5 uses
   %i.mt = load ptr, ptr %.val154.i, align 8, !dbg !278540, !invariant.load !3778, !noalias !277795 ; 2 uses
   %.not.i159.i = icmp eq ptr %i.mt, null, !dbg !278540
   br i1 %.not.i159.i, label %bb.fh, label %bb.fg, !dbg !278540
@@ -785,13 +793,13 @@ bb.fj:                                            ; preds = %bb.fg
   %i.na = getelementptr inbounds nuw i8, ptr %.val154.i, i64 8, !dbg !278546
   %i.nb = load i64, ptr %i.na, align 8, !dbg !278546, !range !3991, !invariant.load !3778, !noalias !277795 ; 2 uses
   %i.nc = icmp eq i64 %i.nb, 0, !dbg !278547
-  br i1 %i.nc, label %.body160.thread.i, label %bb.fk, !dbg !278547
+  br i1 %i.nc, label %.body145.i, label %bb.fk, !dbg !278547
 
 bb.fk:                                            ; preds = %bb.fj
   %i.nd = getelementptr inbounds nuw i8, ptr %.val154.i, i64 16, !dbg !278546
   %i.ne = load i64, ptr %i.nd, align 8, !dbg !278548, !range !4194, !invariant.load !3778, !noalias !277795
   call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val153.i, i64 noundef range(i64 1, 0) %i.nb, i64 noundef range(i64 1, 536870913) %i.ne) #33, !dbg !278549, !noalias !277795
-  br label %.body160.thread.i, !dbg !278550
+  br label %.body145.i, !dbg !278550
 
 bb.fl:                                            ; preds = %bb.k
   %i.nf = load i64, ptr %i.bu, align 8, !dbg !278551, !range !4199, !noalias !277796, !noundef !3778 ; 2 uses
@@ -816,7 +824,7 @@ bb.fm:                                            ; preds = %bb.fl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bu), !dbg !278555, !noalias !277796
   %i.ni = ptrtoint ptr %i.nh to i64, !dbg !278556
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv), !dbg !278557, !noalias !277796
-  br label %bb.ff, !dbg !278156
+  br label %bb.ff, !dbg !278155
 
 bb.fn:                                            ; preds = %bb.fl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bu), !dbg !278555, !noalias !277796
@@ -965,10 +973,10 @@ bb.gb:                                            ; preds = %_RINvNtCscgRAwXFJnX
   %.sroa.40.7 = phi ptr [ %.sroa.40.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], [ %.sroa.620.i.sroa.7.0.copyload165, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit.i ], !dbg !277899 ; 2 uses
   %.sroa.24.7 = phi i64 [ %.sroa.24.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], [ %.sroa.620.i.sroa.0.0.copyload162, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit.i ], !dbg !277899 ; 2 uses
   %.sroa.0.7 = phi i64 [ %.sroa.0.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], [ %i.nx, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit.i ], !dbg !278590 ; 2 uses
-  %i.oh = getelementptr inbounds nuw i8, ptr %i.cg, i64 296, !dbg !278156
-  %.val151.i = load ptr, ptr %i.oh, align 8, !dbg !278156, !alias.scope !277789 ; 5 uses
-  %i.oi = getelementptr inbounds nuw i8, ptr %i.cg, i64 304, !dbg !278156
-  %.val152.i = load ptr, ptr %i.oi, align 8, !dbg !278156, !alias.scope !277789, !nonnull !3778, !align !4055, !noundef !3778 ; 5 uses
+  %i.oh = getelementptr inbounds nuw i8, ptr %i.cg, i64 296, !dbg !278155
+  %.val151.i = load ptr, ptr %i.oh, align 8, !dbg !278155, !alias.scope !277789 ; 5 uses
+  %i.oi = getelementptr inbounds nuw i8, ptr %i.cg, i64 304, !dbg !278155
+  %.val152.i = load ptr, ptr %i.oi, align 8, !dbg !278155, !alias.scope !277789, !nonnull !3778, !align !4055, !noundef !3778 ; 5 uses
   %i.oj = load ptr, ptr %.val152.i, align 8, !dbg !278591, !invariant.load !3778, !noalias !277795 ; 2 uses
   %.not.i166.i = icmp eq ptr %i.oj, null, !dbg !278591
   br i1 %.not.i166.i, label %bb.gd, label %bb.gc, !dbg !278591
@@ -997,13 +1005,13 @@ bb.gf:                                            ; preds = %bb.gc
   %i.oq = getelementptr inbounds nuw i8, ptr %.val152.i, i64 8, !dbg !278597
   %i.or = load i64, ptr %i.oq, align 8, !dbg !278597, !range !3991, !invariant.load !3778, !noalias !277795 ; 2 uses
   %i.os = icmp eq i64 %i.or, 0, !dbg !278598
-  br i1 %i.os, label %.body160.thread.i, label %bb.gg, !dbg !278598
+  br i1 %i.os, label %.body145.i, label %bb.gg, !dbg !278598
 
 bb.gg:                                            ; preds = %bb.gf
   %i.ot = getelementptr inbounds nuw i8, ptr %.val152.i, i64 16, !dbg !278597
   %i.ou = load i64, ptr %i.ot, align 8, !dbg !278599, !range !4194, !invariant.load !3778, !noalias !277795
   call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val151.i, i64 noundef range(i64 1, 0) %i.or, i64 noundef range(i64 1, 536870913) %i.ou) #33, !dbg !278600, !noalias !277795
-  br label %.body160.thread.i, !dbg !278601
+  br label %.body145.i, !dbg !278601
 
 bb.gh:                                            ; preds = %bb.fr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.br), !dbg !278602, !noalias !277796
@@ -1406,16 +1414,16 @@ bb.ky:                                            ; preds = %bb.kx
 bb.kz:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECseeLknQCOKOd_13polars_python.exit.i.i
   %i.wn = landingpad { ptr, i32 }
           cleanup
-  br label %.body194.i, !dbg !278156
+  br label %.body194.i, !dbg !278155
 
 .body194.i:                                       ; preds = %bb.kz, %bb.kv
   %eh.lpad-body195.i = phi { ptr, i32 } [ %i.wn, %bb.kz ], [ %i.wi, %bb.kv ]
-  %i.wo = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278156
+  %i.wo = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.wo) #30
-          to label %.body199.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body199.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECseeLknQCOKOd_13polars_python.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit198.i
-  %i.wp = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278156 ; 4 uses
+  %i.wp = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278155 ; 4 uses
   %i.wq = load i64, ptr %i.wp, align 8, !dbg !278890, !range !3914, !alias.scope !277988, !noundef !3778
   %i.wr = icmp eq i64 %i.wq, -9223372036854775808, !dbg !278890
   br i1 %i.wr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python.exit.i, label %bb.la, !dbg !278890
@@ -1442,9 +1450,9 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
 
 .body199.i:                                       ; preds = %bb.ld, %bb.lb, %.body194.i
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body195.i, %.body194.i ], [ %i.wv, %bb.ld ], [ %i.ws, %bb.lb ]
-  %i.wu = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278156
+  %i.wu = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(40) %i.wu) #30
-          to label %.body203.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body203.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.ld:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEECseeLknQCOKOd_13polars_python.exit.i.i
   %i.wv = landingpad { ptr, i32 }
@@ -1460,7 +1468,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   ], !dbg !278894, !prof !4217
 
 bb.le:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python.exit.i
-  %i.wy = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278156
+  %i.wy = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278155
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.wy)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECseeLknQCOKOd_13polars_python.exit.i.i.i unwind label %bb.lf, !dbg !278895, !noalias !277795
 
@@ -1505,7 +1513,7 @@ bb.li:                                            ; preds = %bb.lg
 .body203.i:                                       ; preds = %bb.lj, %bb.lg, %bb.lf, %.body199.i
   %.pn123.i = phi { ptr, i32 } [ %.pn.i, %.body199.i ], [ %i.xj, %bb.lj ], [ %i.wz, %bb.lg ], [ %i.wz, %bb.lf ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.db) #30
-          to label %.body205.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body205.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.lj:                                            ; preds = %bb.lh
   %i.xj = landingpad { ptr, i32 }
@@ -1539,7 +1547,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBuf
 
 .body205.i:                                       ; preds = %bb.lo, %bb.ll, %.body203.i
   %.pn125.i = phi { ptr, i32 } [ %.pn123.i, %.body203.i ], [ %i.xr, %bb.lo ], [ %i.xm, %bb.ll ] ; 2 uses
-  %i.xo = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278156 ; 2 uses
+  %i.xo = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278155 ; 2 uses
   %i.xp = load i64, ptr %i.xo, align 8, !dbg !278915, !range !3914, !alias.scope !278001, !noundef !3778
   %i.xq = icmp eq i64 %i.xp, -9223372036854775808, !dbg !278915
   br i1 %i.xq, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i, label %bb.ln, !dbg !278915
@@ -1554,7 +1562,7 @@ bb.lo:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body205.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBufECseeLknQCOKOd_13polars_python.exit.i.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python.exit.i
-  %i.xs = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278156 ; 2 uses
+  %i.xs = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278155 ; 2 uses
   %i.xt = load i64, ptr %i.xs, align 8, !dbg !278916, !range !3914, !alias.scope !278002, !noundef !3778
   %i.xu = icmp eq i64 %i.xt, -9223372036854775808, !dbg !278916
   br i1 %i.xu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit210.i, label %bb.lp, !dbg !278916
@@ -1564,22 +1572,24 @@ bb.lp:                                            ; preds = %_RINvNtCscgRAwXFJnX
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit210.i unwind label %bb.ls, !dbg !278916, !noalias !277795
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i: ; preds = %bb.ls, %bb.ln, %.body205.i
-  %.pn127.i = phi { ptr, i32 } [ %i.ya, %bb.ls ], [ %.pn125.i, %bb.ln ], [ %.pn125.i, %.body205.i ] ; 3 uses
-  %i.xv = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278156 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !278003), !dbg !278156
+  %.pn127.i = phi { ptr, i32 } [ %i.ya, %bb.ls ], [ %.pn125.i, %bb.ln ], [ %.pn125.i, %.body205.i ] ; 2 uses
+  %.sroa.38.5.i = extractvalue { ptr, i32 } %.pn127.i, 1 ; 3 uses
+  %.sroa.0111.5.i = extractvalue { ptr, i32 } %.pn127.i, 0 ; 3 uses
+  %i.xv = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278155 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !278003), !dbg !278155
   %i.xw = load ptr, ptr %i.xv, align 8, !dbg !278917, !alias.scope !278004, !noundef !3778 ; 2 uses
   %i.xx = icmp eq ptr %i.xw, null, !dbg !278917
-  br i1 %i.xx, label %.body, label %bb.lq, !dbg !278917
+  br i1 %i.xx, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, label %bb.lq, !dbg !278917
 
 bb.lq:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i
   %i.xy = atomicrmw add ptr %i.xw, i64 -1 release, align 8, !dbg !278918, !noalias !278005
   %i.xz = icmp eq i64 %i.xy, 1, !dbg !278919
-  br i1 %i.xz, label %bb.lr, label %.body, !dbg !278919
+  br i1 %i.xz, label %bb.lr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, !dbg !278919
 
 bb.lr:                                            ; preds = %bb.lq
   fence acquire, !dbg !278920
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.xv) #36
-          to label %.body unwind label %bb.lu, !dbg !278921, !noalias !277795
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.lu, !dbg !278921, !noalias !277795
 
 bb.ls:                                            ; preds = %bb.lp
   %i.ya = landingpad { ptr, i32 }
@@ -1587,8 +1597,8 @@ bb.ls:                                            ; preds = %bb.lp
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit210.i: ; preds = %bb.lp, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python.exit.i
-  %i.yb = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278156 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !278006), !dbg !278156
+  %i.yb = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278155 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !278006), !dbg !278155
   %i.yc = load ptr, ptr %i.yb, align 8, !dbg !278922, !alias.scope !278007, !noundef !3778 ; 2 uses
   %i.yd = icmp eq ptr %i.yc, null, !dbg !278922
   br i1 %i.yd, label %.thread406, label %bb.lt, !dbg !278922
@@ -1611,11 +1621,18 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %.sink.i) #36
           to label %bb.oh unwind label %bb.og, !dbg !278928
 
-bb.lu:                                            ; preds = %bb.ob, %bb.nz, %bb.nx, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i, %bb.nv, %bb.nu, %bb.nt, %bb.ns, %.thread.i.a, %bb.nr, %.body160.thread.i, %bb.no, %bb.nk, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i, %.body235.i, %.body221.i, %.body227.i.a, %bb.mq, %bb.mf, %bb.lr, %bb.ln, %.body203.i, %.body199.i, %.body194.i, %bb.gq
+bb.lu:                                            ; preds = %bb.ob, %bb.nz, %bb.nx, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i, %bb.nv, %bb.nu, %bb.nt, %bb.ns, %.thread.i.a, %bb.nr, %bb.no, %bb.nk, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i, %.body235.i, %.body221.i, %.body227.i.a, %bb.mq, %bb.mf, %.body145.i, %bb.lr, %bb.ln, %.body203.i, %.body199.i, %.body194.i, %bb.gq
   %i.yg = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #32, !dbg !278929, !noalias !277795
   unreachable, !dbg !278929
+
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i: ; preds = %bb.ob, %bb.oa, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i, %bb.no, %bb.nn, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a, %bb.lr, %bb.lq, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i
+  %.sroa.0111.6.i = phi ptr [ %.sroa.0111.5.i, %bb.lq ], [ %.sroa.0111.13.i, %bb.nn ], [ %.sroa.0111.5.i, %bb.lr ], [ %.sroa.0111.5.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.0111.13.i, %bb.no ], [ %.sroa.0111.13.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a ], [ %.sroa.0111.0302.i, %bb.ob ], [ %.sroa.0111.0302.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i ], [ %.sroa.0111.0302.i, %bb.oa ]
+  %.sroa.38.6.i = phi i32 [ %.sroa.38.5.i, %bb.lq ], [ %.sroa.38.13.i, %bb.nn ], [ %.sroa.38.5.i, %bb.lr ], [ %.sroa.38.5.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.38.13.i, %bb.no ], [ %.sroa.38.13.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a ], [ %.sroa.38.0300.i, %bb.ob ], [ %.sroa.38.0300.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i ], [ %.sroa.38.0300.i, %bb.oa ]
+  %2 = insertvalue { ptr, i32 } poison, ptr %.sroa.0111.6.i, 0, !dbg !278929
+  %3 = insertvalue { ptr, i32 } %2, i32 %.sroa.38.6.i, 1, !dbg !278929
+  br label %.body, !dbg !278929
 
 bb.lv:                                            ; preds = %bb.kr, %bb.gs
   %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.8 = phi i64 [ %.sroa.16.i.sroa.9.sroa.9.sroa.9.1, %bb.kr ], [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.0.copyload305, %bb.gs ], !dbg !278009 ; 2 uses
@@ -1645,8 +1662,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcI
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i: ; preds = %bb.ly, %bb.lx, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit216.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv), !dbg !278557, !noalias !277796
-  %i.yl = trunc nuw i8 %.sroa.049.6.i to i1, !dbg !278156
-  br i1 %i.yl, label %bb.gb, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit170.i, !dbg !278156
+  %i.yl = trunc nuw i8 %.sroa.049.6.i to i1, !dbg !278155
+  br i1 %i.yl, label %bb.gb, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit170.i, !dbg !278155
 
 bb.lx:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit216.i
   call void @llvm.experimental.noalias.scope.decl(metadata !278014), !dbg !278557
@@ -1661,6 +1678,11 @@ bb.ly:                                            ; preds = %bb.lx
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.bv) #36
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i unwind label %bb.f, !dbg !278942, !noalias !277795
 
+.body145.i:                                       ; preds = %bb.gg, %bb.gf, %bb.fk, %bb.fj
+  %eh.lpad-body146.i = phi { ptr, i32 } [ %i.mz, %bb.fj ], [ %i.mz, %bb.fk ], [ %i.op, %bb.gf ], [ %i.op, %bb.gg ]
+  invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.ct) #30
+          to label %.body227.i.a unwind label %bb.lu, !dbg !278155, !noalias !277795
+
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit170.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i
   %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.5 = phi i64 [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ %.sroa.47.sroa.24.sroa.24.sroa.24.sroa.0.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278872 ; 3 uses
   %.sroa.47.sroa.24.sroa.24.sroa.0.5 = phi i64 [ %.sroa.47.sroa.24.sroa.24.sroa.0.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.47.sroa.24.sroa.24.sroa.0.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ %.sroa.47.sroa.24.sroa.24.sroa.0.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278872 ; 3 uses
@@ -1669,8 +1691,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3Box
   %.sroa.40.5 = phi ptr [ %.sroa.40.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.40.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ %.sroa.40.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278943 ; 3 uses
   %.sroa.24.5 = phi i64 [ %.sroa.24.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.24.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ %.sroa.24.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278943 ; 3 uses
   %.sroa.0.5 = phi i64 [ %.sroa.0.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ %.sroa.0.4, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ %.sroa.0.8, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278943 ; 3 uses
-  %.sroa.049.9.i = phi i8 [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278155 ; 8 uses
-  %i.yp = getelementptr inbounds nuw i8, ptr %i.cg, i64 40, !dbg !278156 ; 4 uses
+  %.sroa.049.9.i = phi i8 [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit.i ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i ], [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECseeLknQCOKOd_13polars_python.exit218.i ], !dbg !278156 ; 8 uses
+  %i.yp = getelementptr inbounds nuw i8, ptr %i.cg, i64 40, !dbg !278155 ; 4 uses
   %i.yq = load i64, ptr %i.yp, align 8, !dbg !278944, !range !3914, !alias.scope !278019, !noundef !3778
   %i.yr = icmp eq i64 %i.yq, -9223372036854775808, !dbg !278944
   br i1 %i.yr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECseeLknQCOKOd_13polars_python.exit224.i, label %bb.lz, !dbg !278944
@@ -1826,9 +1848,14 @@ bb.mp:                                            ; preds = %bb.mm
 
 bb.mq:                                            ; preds = %bb.mr, %bb.mo
   %i.zm = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(48) %i.bz) #30
-          to label %.thread.i.a unwind label %bb.lu, !dbg !278976, !noalias !277795
+          to label %.thread.i unwind label %bb.lu, !dbg !278976, !noalias !277795
+
+.thread.i:                                        ; preds = %bb.mq
+  %.sroa.38.0293.i = extractvalue { ptr, i32 } %i.zm, 1
+  %.sroa.0111.0294.i = extractvalue { ptr, i32 } %i.zm, 0
+  br label %.thread.i.a, !dbg !278155
 
 bb.mr:                                            ; preds = %bb.mp, %bb.mo
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.by, ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 24, i1 false), !dbg !278981, !noalias !277796
@@ -1846,11 +1873,11 @@ bb.ms:                                            ; preds = %bb.mr
   %.sroa.47.sroa.24.sroa.0.0.copyload229.pre = load i64, ptr %i.ze, align 8, !dbg !278975, !noalias !277789
   br label %bb.mn, !dbg !278986
 
-.body227.i.a:                                     ; preds = %.body160.thread.i, %bb.mt, %bb.md
-  %.pn135.i = phi { ptr, i32 } [ %i.yw, %bb.md ], [ %eh.lpad-body161326.i, %.body160.thread.i ], [ %i.zr, %bb.mt ]
-  %i.zq = getelementptr inbounds nuw i8, ptr %i.cg, i64 40, !dbg !278156
+.body227.i.a:                                     ; preds = %bb.mt, %bb.md, %.body145.i
+  %.pn135.i = phi { ptr, i32 } [ %eh.lpad-body146.i, %.body145.i ], [ %i.zr, %bb.mt ], [ %i.yw, %bb.md ]
+  %i.zq = getelementptr inbounds nuw i8, ptr %i.cg, i64 40, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.zq) #30
-          to label %.body221.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body221.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.mt:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECseeLknQCOKOd_13polars_python.exit.i226.i
   %i.zr = landingpad { ptr, i32 }
@@ -1858,11 +1885,11 @@ bb.mt:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body227.i.a
 
 .body221.i:                                       ; preds = %bb.mu, %.body227.i.a, %bb.ma
-  %.sroa.049.12.i = phi i8 [ 1, %.body227.i.a ], [ %.sroa.049.9.i, %bb.ma ], [ %.sroa.049.9.i, %bb.mu ], !dbg !278155
+  %.sroa.049.12.i = phi i8 [ 1, %.body227.i.a ], [ %.sroa.049.9.i, %bb.ma ], [ %.sroa.049.9.i, %bb.mu ], !dbg !278156
   %.pn137.i = phi { ptr, i32 } [ %.pn135.i, %.body227.i.a ], [ %i.ys, %bb.ma ], [ %i.zt, %bb.mu ]
-  %i.zs = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278156
+  %i.zs = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.zs) #30
-          to label %.body235.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body235.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.mu:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECseeLknQCOKOd_13polars_python.exit.i220.i
   %i.zt = landingpad { ptr, i32 }
@@ -1870,7 +1897,7 @@ bb.mu:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body221.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECseeLknQCOKOd_13polars_python.exit224.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECseeLknQCOKOd_13polars_python.exit.i220.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python.exit170.i
-  %i.zu = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278156 ; 4 uses
+  %i.zu = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278155 ; 4 uses
   %i.zv = load i64, ptr %i.zu, align 8, !dbg !278987, !range !3914, !alias.scope !278027, !noundef !3778
   %i.zw = icmp eq i64 %i.zv, -9223372036854775808, !dbg !278987
   br i1 %i.zw, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python.exit238.i, label %bb.mv, !dbg !278987
@@ -1896,11 +1923,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python.exit238.i unwind label %bb.my, !dbg !278990, !noalias !277795
 
 .body235.i:                                       ; preds = %bb.my, %bb.mw, %.body221.i
-  %.sroa.049.13.i = phi i8 [ %.sroa.049.12.i, %.body221.i ], [ %.sroa.049.9.i, %bb.mw ], [ %.sroa.049.9.i, %bb.my ], !dbg !278155
+  %.sroa.049.13.i = phi i8 [ %.sroa.049.12.i, %.body221.i ], [ %.sroa.049.9.i, %bb.mw ], [ %.sroa.049.9.i, %bb.my ], !dbg !278156
   %.pn139.i = phi { ptr, i32 } [ %.pn137.i, %.body221.i ], [ %i.zx, %bb.mw ], [ %i.aaa, %bb.my ]
-  %i.zz = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278156
+  %i.zz = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(40) %i.zz) #30
-          to label %.body242.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body242.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.my:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEECseeLknQCOKOd_13polars_python.exit.i234.i
   %i.aaa = landingpad { ptr, i32 }
@@ -1916,7 +1943,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   ], !dbg !278991, !prof !4217
 
 bb.mz:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python.exit238.i
-  %i.aad = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278156
+  %i.aad = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278155
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.aad)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECseeLknQCOKOd_13polars_python.exit.i.i240.i unwind label %bb.na, !dbg !278992, !noalias !277795
 
@@ -1959,14 +1986,14 @@ bb.nd:                                            ; preds = %bb.nb
   unreachable, !dbg !278993
 
 .body242.i:                                       ; preds = %bb.ne, %bb.nb, %bb.na, %.body235.i
-  %.sroa.049.14.i = phi i8 [ %.sroa.049.13.i, %.body235.i ], [ %.sroa.049.9.i, %bb.na ], [ %.sroa.049.9.i, %bb.nb ], [ %.sroa.049.9.i, %bb.ne ], !dbg !278155
+  %.sroa.049.14.i = phi i8 [ %.sroa.049.13.i, %.body235.i ], [ %.sroa.049.9.i, %bb.na ], [ %.sroa.049.9.i, %bb.nb ], [ %.sroa.049.9.i, %bb.ne ], !dbg !278156
   %.pn141.i = phi { ptr, i32 } [ %.pn139.i, %.body235.i ], [ %i.aae, %bb.na ], [ %i.aae, %bb.nb ], [ %i.aar, %bb.ne ] ; 2 uses
-  %i.aao = trunc nuw i8 %.sroa.049.14.i to i1, !dbg !278156
+  %i.aao = trunc nuw i8 %.sroa.049.14.i to i1, !dbg !278155
   %i.aap = getelementptr inbounds nuw i8, ptr %i.cg, i64 287
   %i.aaq = load i8, ptr %i.aap, align 1, !range !4216
   %cond.i261.i = icmp eq i8 %i.aaq, -40
-  %or.cond438 = select i1 %i.aao, i1 %cond.i261.i, i1 false, !dbg !278156, !prof !4943
-  br i1 %or.cond438, label %bb.nr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i, !dbg !278156, !prof !4943
+  %or.cond438 = select i1 %i.aao, i1 %cond.i261.i, i1 false, !dbg !278155, !prof !4943
+  br i1 %or.cond438, label %bb.nr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i, !dbg !278155, !prof !4943
 
 bb.ne:                                            ; preds = %bb.nc
   %i.aar = landingpad { ptr, i32 }
@@ -1974,15 +2001,15 @@ bb.ne:                                            ; preds = %bb.nc
   br label %.body242.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python.exit244.i: ; preds = %bb.nc, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECseeLknQCOKOd_13polars_python.exit.i.i240.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python.exit238.i
-  %i.aas = trunc nuw i8 %.sroa.049.9.i to i1, !dbg !278156
+  %i.aas = trunc nuw i8 %.sroa.049.9.i to i1, !dbg !278155
   %i.aat = getelementptr inbounds nuw i8, ptr %i.cg, i64 287
   %i.aau = load i8, ptr %i.aat, align 1, !range !4216
   %cond.i.i = icmp eq i8 %i.aau, -40
-  %or.cond436 = select i1 %i.aas, i1 %cond.i.i, i1 false, !dbg !278156, !prof !4943
-  br i1 %or.cond436, label %bb.ni, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit.i, !dbg !278156, !prof !4943
+  %or.cond436 = select i1 %i.aas, i1 %cond.i.i, i1 false, !dbg !278155, !prof !4943
+  br i1 %or.cond436, label %bb.ni, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit.i, !dbg !278155, !prof !4943
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit.i: ; preds = %bb.ni, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python.exit244.i
-  %i.aav = getelementptr inbounds nuw i8, ptr %i.cg, i64 88, !dbg !278156 ; 4 uses
+  %i.aav = getelementptr inbounds nuw i8, ptr %i.cg, i64 88, !dbg !278155 ; 4 uses
   %i.aaw = load i64, ptr %i.aav, align 8, !dbg !279008, !range !3914, !alias.scope !278039, !noundef !3778
   %i.aax = icmp eq i64 %i.aaw, -9223372036854775808, !dbg !279008
   br i1 %i.aax, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python.exit250.i, label %bb.nf, !dbg !279008
@@ -2008,15 +2035,15 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBuf
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python.exit250.i unwind label %bb.nl, !dbg !279011, !noalias !277795
 
 bb.ni:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python.exit244.i
-  %i.aba = getelementptr inbounds nuw i8, ptr %i.cg, i64 264, !dbg !278156
+  %i.aba = getelementptr inbounds nuw i8, ptr %i.cg, i64 264, !dbg !278155
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.aba)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.nj, !dbg !279012, !noalias !277795
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i: ; preds = %bb.nr, %bb.nj, %.body242.i
   %.pn143.i = phi { ptr, i32 } [ %i.abc, %bb.nj ], [ %.pn141.i, %.body242.i ], [ %.pn141.i, %bb.nr ]
-  %i.abb = getelementptr inbounds nuw i8, ptr %i.cg, i64 88, !dbg !278156
+  %i.abb = getelementptr inbounds nuw i8, ptr %i.cg, i64 88, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.abb) #30
-          to label %.body247.i unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %.body247.i unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.nj:                                            ; preds = %bb.ni
   %i.abc = landingpad { ptr, i32 }
@@ -2025,7 +2052,7 @@ bb.nj:                                            ; preds = %bb.ni
 
 .body247.i:                                       ; preds = %bb.nl, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i, %bb.ng
   %.pn145.i = phi { ptr, i32 } [ %.pn143.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i ], [ %i.abg, %bb.nl ], [ %i.aay, %bb.ng ] ; 2 uses
-  %i.abd = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278156 ; 2 uses
+  %i.abd = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278155 ; 2 uses
   %i.abe = load i64, ptr %i.abd, align 8, !dbg !279013, !range !3914, !alias.scope !278040, !noundef !3778
   %i.abf = icmp eq i64 %i.abe, -9223372036854775808, !dbg !279013
   br i1 %i.abf, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a, label %bb.nk, !dbg !279013
@@ -2040,7 +2067,7 @@ bb.nl:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body247.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python.exit250.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBufECseeLknQCOKOd_13polars_python.exit.i.i246.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit.i
-  %i.abh = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278156 ; 2 uses
+  %i.abh = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278155 ; 2 uses
   %i.abi = load i64, ptr %i.abh, align 8, !dbg !279014, !range !3914, !alias.scope !278041, !noundef !3778
   %i.abj = icmp eq i64 %i.abi, -9223372036854775808, !dbg !279014
   br i1 %i.abj, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit255.i, label %bb.nm, !dbg !279014
@@ -2050,22 +2077,24 @@ bb.nm:                                            ; preds = %_RINvNtCscgRAwXFJnX
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit255.i unwind label %bb.np, !dbg !279014, !noalias !277795
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a: ; preds = %bb.np, %bb.nk, %.body247.i
-  %.pn147.i = phi { ptr, i32 } [ %i.abp, %bb.np ], [ %.pn145.i, %bb.nk ], [ %.pn145.i, %.body247.i ] ; 3 uses
-  %i.abk = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278156 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !278042), !dbg !278156
+  %.pn147.i = phi { ptr, i32 } [ %i.abp, %bb.np ], [ %.pn145.i, %bb.nk ], [ %.pn145.i, %.body247.i ] ; 2 uses
+  %.sroa.38.13.i = extractvalue { ptr, i32 } %.pn147.i, 1 ; 3 uses
+  %.sroa.0111.13.i = extractvalue { ptr, i32 } %.pn147.i, 0 ; 3 uses
+  %i.abk = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278155 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !278042), !dbg !278155
   %i.abl = load ptr, ptr %i.abk, align 8, !dbg !279015, !alias.scope !278043, !noundef !3778 ; 2 uses
   %i.abm = icmp eq ptr %i.abl, null, !dbg !279015
-  br i1 %i.abm, label %.body, label %bb.nn, !dbg !279015
+  br i1 %i.abm, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, label %bb.nn, !dbg !279015
 
 bb.nn:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a
   %i.abn = atomicrmw add ptr %i.abl, i64 -1 release, align 8, !dbg !279016, !noalias !278044
   %i.abo = icmp eq i64 %i.abn, 1, !dbg !279017
-  br i1 %i.abo, label %bb.no, label %.body, !dbg !279017
+  br i1 %i.abo, label %bb.no, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, !dbg !279017
 
 bb.no:                                            ; preds = %bb.nn
   fence acquire, !dbg !279018
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.abk) #36
-          to label %.body unwind label %bb.lu, !dbg !279019, !noalias !277795
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.lu, !dbg !279019, !noalias !277795
 
 bb.np:                                            ; preds = %bb.nm
   %i.abp = landingpad { ptr, i32 }
@@ -2073,8 +2102,8 @@ bb.np:                                            ; preds = %bb.nm
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit255.i: ; preds = %bb.nm, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python.exit250.i
-  %i.abq = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278156 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !278045), !dbg !278156
+  %i.abq = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278155 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !278045), !dbg !278155
   %i.abr = load ptr, ptr %i.abq, align 8, !dbg !279020, !alias.scope !278046, !noundef !3778 ; 2 uses
   %i.abs = icmp eq ptr %i.abr, null, !dbg !279020
   br i1 %i.abs, label %bb.oh, label %bb.nq, !dbg !279020
@@ -2084,67 +2113,64 @@ bb.nq:                                            ; preds = %_RINvNtCscgRAwXFJnX
   %i.abu = icmp eq i64 %i.abt, 1, !dbg !279022
   br i1 %i.abu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit214.sink.split.i, label %bb.oh, !dbg !279022
 
-.body160.thread.i:                                ; preds = %bb.gg, %bb.gf, %bb.fk, %bb.fj
-  %eh.lpad-body161326.i = phi { ptr, i32 } [ %i.mz, %bb.fj ], [ %i.op, %bb.gf ], [ %i.op, %bb.gg ], [ %i.mz, %bb.fk ]
-  invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.ct) #30
-          to label %.body227.i.a unwind label %bb.lu, !dbg !278156, !noalias !277795
-
 bb.nr:                                            ; preds = %.body242.i
-  %i.abv = getelementptr inbounds nuw i8, ptr %i.cg, i64 264, !dbg !278156
+  %i.abv = getelementptr inbounds nuw i8, ptr %i.cg, i64 264, !dbg !278155
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.abv)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit263.i unwind label %bb.lu, !dbg !279023, !noalias !277795
 
-.thread.i.a:                                      ; preds = %bb.mq, %bb.ez, %bb.ey, %bb.ex, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i, %bb.n, %.body157.i
-  %.pn133312.i = phi { ptr, i32 } [ %.pn133.i, %.body157.i ], [ %i.zm, %bb.mq ], [ %.pn776.i.i, %bb.ex ], [ %.pn776.i.i, %bb.ez ], [ %.pn75.i.i, %bb.n ], [ %.pn7512.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i ], [ %.pn776.i.i, %bb.ey ]
-  %.sroa.049.0310.i = phi i8 [ %.sroa.049.0.i, %.body157.i ], [ 1, %bb.mq ], [ 1, %bb.ex ], [ 1, %bb.ez ], [ 1, %bb.n ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECseeLknQCOKOd_13polars_python.exit101.i.i ], [ 1, %bb.ey ]
-  %i.abw = getelementptr inbounds nuw i8, ptr %i.cg, i64 296, !dbg !278156
-  %.val.i = load ptr, ptr %i.abw, align 8, !dbg !278156, !alias.scope !277789
-  %i.abx = getelementptr inbounds nuw i8, ptr %i.cg, i64 304, !dbg !278156
-  %.val150.i = load ptr, ptr %i.abx, align 8, !dbg !278156, !alias.scope !277789, !nonnull !3778, !align !4055, !noundef !3778
+.thread.i.a:                                      ; preds = %.thread.i, %.body157.i, %.body142.thread.i
+  %.sroa.0111.0301.i = phi ptr [ %.sroa.0111.0294.i, %.thread.i ], [ %.sroa.0111.0.i, %.body157.i ], [ %.sroa.0111.0316.i, %.body142.thread.i ]
+  %.sroa.38.0299.i = phi i32 [ %.sroa.38.0293.i, %.thread.i ], [ %.sroa.38.0.i, %.body157.i ], [ %.sroa.38.0315.i, %.body142.thread.i ]
+  %.sroa.049.0297.i = phi i8 [ 1, %.thread.i ], [ %.sroa.049.0.i, %.body157.i ], [ 1, %.body142.thread.i ]
+  %i.abw = getelementptr inbounds nuw i8, ptr %i.cg, i64 296, !dbg !278155
+  %.val.i = load ptr, ptr %i.abw, align 8, !dbg !278155, !alias.scope !277789
+  %i.abx = getelementptr inbounds nuw i8, ptr %i.cg, i64 304, !dbg !278155
+  %.val150.i = load ptr, ptr %i.abx, align 8, !dbg !278155, !alias.scope !277789, !nonnull !3778, !align !4055, !noundef !3778
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EECseeLknQCOKOd_13polars_python(ptr %.val.i, ptr nonnull %.val150.i) #30
-          to label %bb.nt unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %bb.nt unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.ns:                                            ; preds = %bb.nt, %.body157.i
-  %.pn133313.i = phi { ptr, i32 } [ %.pn133.i, %.body157.i ], [ %.pn133312.i, %bb.nt ] ; 3 uses
-  %.sroa.049.0311.i = phi i8 [ %.sroa.049.0.i, %.body157.i ], [ %.sroa.049.0310.i, %bb.nt ]
-  %i.aby = getelementptr inbounds nuw i8, ptr %i.cg, i64 40, !dbg !278156
+  %.sroa.0111.0302.i = phi ptr [ %.sroa.0111.0.i, %.body157.i ], [ %.sroa.0111.0301.i, %bb.nt ] ; 3 uses
+  %.sroa.38.0300.i = phi i32 [ %.sroa.38.0.i, %.body157.i ], [ %.sroa.38.0299.i, %bb.nt ] ; 3 uses
+  %.sroa.049.0311.i = phi i8 [ %.sroa.049.0.i, %.body157.i ], [ %.sroa.049.0297.i, %bb.nt ]
+  %i.aby = getelementptr inbounds nuw i8, ptr %i.cg, i64 40, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.aby) #30
-          to label %bb.nu unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %bb.nu unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.nt:                                            ; preds = %.thread.i.a
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.ct) #30
-          to label %bb.ns unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %bb.ns unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.nu:                                            ; preds = %bb.ns
-  %i.abz = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278156
+  %i.abz = getelementptr inbounds nuw i8, ptr %i.cg, i64 64, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.abz) #30
-          to label %bb.nv unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %bb.nv unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.nv:                                            ; preds = %bb.nu
-  %i.aca = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278156
+  %i.aca = getelementptr inbounds nuw i8, ptr %i.cg, i64 224, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(40) %i.aca) #30
-          to label %bb.nw unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %bb.nw unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.nw:                                            ; preds = %bb.nv
-  %i.acb = trunc nuw i8 %.sroa.049.0311.i to i1, !dbg !278156
+  %i.acb = trunc nuw i8 %.sroa.049.0311.i to i1, !dbg !278155
   %i.acc = getelementptr inbounds nuw i8, ptr %i.cg, i64 287
   %i.acd = load i8, ptr %i.acc, align 1, !range !4216
   %cond.i264.i = icmp eq i8 %i.acd, -40
-  %or.cond440 = select i1 %i.acb, i1 %cond.i264.i, i1 false, !dbg !278156, !prof !4943
-  br i1 %or.cond440, label %bb.nx, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i, !dbg !278156, !prof !4943
+  %or.cond440 = select i1 %i.acb, i1 %cond.i264.i, i1 false, !dbg !278155, !prof !4943
+  br i1 %or.cond440, label %bb.nx, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i, !dbg !278155, !prof !4943
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i: ; preds = %bb.nx, %bb.nw
-  %i.ace = getelementptr inbounds nuw i8, ptr %i.cg, i64 88, !dbg !278156
+  %i.ace = getelementptr inbounds nuw i8, ptr %i.cg, i64 88, !dbg !278155
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECseeLknQCOKOd_13polars_python(ptr noalias noundef align 8 dereferenceable(24) %i.ace) #30
-          to label %bb.ny unwind label %bb.lu, !dbg !278156, !noalias !277795
+          to label %bb.ny unwind label %bb.lu, !dbg !278155, !noalias !277795
 
 bb.nx:                                            ; preds = %bb.nw
-  %i.acf = getelementptr inbounds nuw i8, ptr %i.cg, i64 264, !dbg !278156
+  %i.acf = getelementptr inbounds nuw i8, ptr %i.cg, i64 264, !dbg !278155
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.acf)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i unwind label %bb.lu, !dbg !279024, !noalias !277795
 
 bb.ny:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECseeLknQCOKOd_13polars_python.exit266.i
-  %i.acg = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278156 ; 2 uses
+  %i.acg = getelementptr inbounds nuw i8, ptr %i.cg, i64 112, !dbg !278155 ; 2 uses
   %i.ach = load i64, ptr %i.acg, align 8, !dbg !279025, !range !3914, !alias.scope !278048, !noundef !3778
   %i.aci = icmp eq i64 %i.ach, -9223372036854775808, !dbg !279025
   br i1 %i.aci, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i, label %bb.nz, !dbg !279025
@@ -2154,21 +2180,21 @@ bb.nz:                                            ; preds = %bb.ny
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i unwind label %bb.lu, !dbg !279025, !noalias !277795
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i: ; preds = %bb.nz, %bb.ny
-  %i.acj = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278156 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !278049), !dbg !278156
+  %i.acj = getelementptr inbounds nuw i8, ptr %i.cg, i64 312, !dbg !278155 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !278049), !dbg !278155
   %i.ack = load ptr, ptr %i.acj, align 8, !dbg !279026, !alias.scope !278050, !noundef !3778 ; 2 uses
   %i.acl = icmp eq ptr %i.ack, null, !dbg !279026
-  br i1 %i.acl, label %.body, label %bb.oa, !dbg !279026
+  br i1 %i.acl, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, label %bb.oa, !dbg !279026
 
 bb.oa:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i
   %i.acm = atomicrmw add ptr %i.ack, i64 -1 release, align 8, !dbg !279027, !noalias !278051
   %i.acn = icmp eq i64 %i.acm, 1, !dbg !279028
-  br i1 %i.acn, label %bb.ob, label %.body, !dbg !279028
+  br i1 %i.acn, label %bb.ob, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, !dbg !279028
 
 bb.ob:                                            ; preds = %bb.oa
   fence acquire, !dbg !279029
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.acj) #36
-          to label %.body unwind label %bb.lu, !dbg !279030, !noalias !277795
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.lu, !dbg !279030, !noalias !277795
 
 bb.oc:                                            ; preds = %bb.c
   %i.aco = load i64, ptr %i.ck, align 8, !dbg !279031, !range !4199, !noundef !3778 ; 2 uses
@@ -2201,10 +2227,10 @@ bb.of:                                            ; preds = %bb.oe
   tail call void @llvm.trap(), !dbg !279041
   unreachable, !dbg !279041
 
-.body:                                            ; preds = %bb.og, %bb.ob, %bb.oa, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i, %bb.no, %bb.nn, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a, %bb.lr, %bb.lq, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i, %.body82
-  %.sroa.024.0 = phi i1 [ %.not65, %.body82 ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i ], [ true, %bb.lq ], [ true, %bb.lr ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a ], [ true, %bb.nn ], [ true, %bb.no ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i ], [ true, %bb.oa ], [ true, %bb.ob ], [ true, %bb.og ], !dbg !279042 ; 3 uses
-  %.sroa.022.0 = phi i8 [ %.sroa.022.1, %.body82 ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i ], [ 1, %bb.lq ], [ 1, %bb.lr ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a ], [ 1, %bb.nn ], [ 1, %bb.no ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i ], [ 1, %bb.oa ], [ 1, %bb.ob ], [ 1, %bb.og ], !dbg !279043
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body82 ], [ %.pn127.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit.i ], [ %.pn127.i, %bb.lq ], [ %.pn127.i, %bb.lr ], [ %.pn147.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit253.i.a ], [ %.pn147.i, %bb.nn ], [ %.pn147.i, %bb.no ], [ %.pn133313.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECseeLknQCOKOd_13polars_python.exit268.i ], [ %.pn133313.i, %bb.oa ], [ %.pn133313.i, %bb.ob ], [ %i.acx, %bb.og ] ; 3 uses
+.body:                                            ; preds = %bb.og, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i, %.body82
+  %.sroa.024.0 = phi i1 [ %.not65, %.body82 ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i ], [ true, %bb.og ], !dbg !279042 ; 3 uses
+  %.sroa.022.0 = phi i8 [ %.sroa.022.1, %.body82 ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i ], [ 1, %bb.og ], !dbg !279043
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body82 ], [ %3, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECseeLknQCOKOd_13polars_python.exit.i ], [ %i.acx, %bb.og ] ; 3 uses
   %i.acv = getelementptr inbounds nuw i8, ptr %i.ci, i64 23, !dbg !279044
   %i.acw = load i8, ptr %i.acv, align 1, !dbg !279044, !range !4216, !noundef !3778 ; 2 uses
   %.not70 = icmp eq i8 %i.acw, -38, !dbg !279044
@@ -2607,8 +2633,8 @@ begin_hunk_3_@llvm.umax.i64
 !278152 = !DILocation(line: 304, column: 13, scope: !276339)
 !278153 = !DILocation(line: 745, column: 15, scope: !276342, inlinedAt: !276345)
 !278154 = !DILocation(line: 745, column: 9, scope: !276342, inlinedAt: !276345)
-!278155 = !DILocation(line: 305, column: 13, scope: !276343, inlinedAt: !276344)
-!278156 = !DILocation(line: 351, column: 9, scope: !276343, inlinedAt: !276344)
+!278155 = !DILocation(line: 351, column: 9, scope: !276343, inlinedAt: !276344)
+!278156 = !DILocation(line: 305, column: 13, scope: !276343, inlinedAt: !276344)
 !278157 = !DILocation(line: 0, scope: !276343, inlinedAt: !276344)
 !278158 = !DILocation(line: 664, column: 24, scope: !276347, inlinedAt: !276348)
 !278159 = !DILocation(line: 3029, column: 37, scope: !276350, inlinedAt: !276355)

@@ -205,6 +205,8 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   %.sroa.047.0 = phi i8 [ %.sroa.047.1.lpad-body, %.body ], [ %.sroa.047.2, %bb.az ], [ %.sroa.047.2, %bb.aq ], [ %.sroa.047.2, %bb.cb ]
   %.sroa.054.0 = phi i8 [ 1, %.body ], [ 0, %bb.az ], [ 0, %bb.aq ], [ 1, %bb.cb ] ; 2 uses
   %.pn92 = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.ds, %bb.az ], [ %lpad.thr_comm.split-lp, %bb.aq ], [ %.pn85.ph, %bb.cb ] ; 2 uses
+  %.sroa.30.0 = extractvalue { ptr, i32 } %.pn92, 1 ; 2 uses
+  %.sroa.077.0 = extractvalue { ptr, i32 } %.pn92, 0 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !range !23, !noundef !12
   %.not94 = icmp eq i64 %i.w, -1
@@ -284,7 +286,7 @@ bb.k:                                             ; preds = %bb.j
   %i.al = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ak)
-          to label %.body107 unwind label %bb.l
+          to label %.body96 unwind label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.am = landingpad { ptr, i32 }
@@ -439,9 +441,14 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2Ji
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit125 unwind label %bb.ab
 
 .body112:                                         ; preds = %bb.s, %bb.z, %bb.ab, %bb.o
-  %.pn90 = phi { ptr, i32 } [ %.pn.pn, %bb.o ], [ %i.bg, %bb.s ], [ %i.bo, %bb.ab ], [ %i.bm, %bb.z ]
+  %.pn90 = phi { ptr, i32 } [ %.pn.pn, %bb.o ], [ %i.bg, %bb.s ], [ %i.bo, %bb.ab ], [ %i.bm, %bb.z ] ; 2 uses
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.n) #29
-          to label %.thread.thread unwind label %bb.ag
+          to label %.thread242 unwind label %bb.ag
+
+.thread242:                                       ; preds = %.body112
+  %.sroa.30.0184 = extractvalue { ptr, i32 } %.pn90, 1
+  %.sroa.077.0185 = extractvalue { ptr, i32 } %.pn90, 0
+  br label %.thread.thread
 
 bb.ab:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i121, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i111
   %i.bo = landingpad { ptr, i32 }
@@ -489,7 +496,7 @@ bb.af:                                            ; preds = %bb.u
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringB18_EEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(24) %i.l) #29
           to label %bb.o unwind label %bb.ag
 
-bb.ag:                                            ; preds = %.thread.thread, %bb.cb, %.thread217, %bb.bi, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.cd, %bb.cc, %bb.ca, %.body177, %.body167, %.body172, %.body107, %bb.as, %bb.af, %.body112, %bb.o
+bb.ag:                                            ; preds = %.thread.thread, %bb.cb, %.thread217, %bb.bi, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.cd, %bb.cc, %bb.ca, %.body177, %.body167, %.body172, %.body96, %bb.as, %bb.af, %.body112, %bb.o
   %i.bs = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #30
@@ -776,7 +783,13 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHash
 bb.bd:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i
   %i.dx = landingpad { ptr, i32 }
           cleanup
-  br label %.body107
+  br label %.body96
+
+.body96:                                          ; preds = %bb.k, %bb.bd
+  %eh.lpad-body97 = phi { ptr, i32 } [ %i.dx, %bb.bd ], [ %i.al, %bb.k ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %2) #29
+          to label %.body159 unwind label %bb.ag
 
 bb.be:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
@@ -799,20 +812,16 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2Ji
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dy)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit unwind label %bb.bh
 
-.body159:                                         ; preds = %bb.bh, %bb.bf, %.body107
-  %.pn88 = phi { ptr, i32 } [ %eh.lpad-body108, %.body107 ], [ %i.eb, %bb.bh ], [ %i.dz, %bb.bf ] ; 2 uses
+.body159:                                         ; preds = %bb.bh, %bb.bf, %.body96
+  %.pn88 = phi { ptr, i32 } [ %eh.lpad-body97, %.body96 ], [ %i.eb, %bb.bh ], [ %i.dz, %bb.bf ] ; 2 uses
+  %.sroa.30.6 = extractvalue { ptr, i32 } %.pn88, 1 ; 2 uses
+  %.sroa.077.6 = extractvalue { ptr, i32 } %.pn88, 0 ; 2 uses
   br i1 %.sroa.040.2, label %bb.bi, label %.body172
 
 bb.bh:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i158
   %i.eb = landingpad { ptr, i32 }
           cleanup
   br label %.body159
-
-.body107:                                         ; preds = %bb.bd, %bb.k
-  %eh.lpad-body108 = phi { ptr, i32 } [ %i.dx, %bb.bd ], [ %i.al, %bb.k ]
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %2) #29
-          to label %.body159 unwind label %bb.ag
 
 bb.bi:                                            ; preds = %.body159
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 152
@@ -826,7 +835,9 @@ bb.bi:                                            ; preds = %.body159
 
 bb.bj:                                            ; preds = %.thread202
   %i.ee = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
+  %3 = extractvalue { ptr, i32 } %i.ee, 0
+  %4 = extractvalue { ptr, i32 } %i.ee, 1
   br label %bb.ca
 
 .thread206:                                       ; preds = %bb.bp, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapmNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers.exit, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit
@@ -843,7 +854,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.ei = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ef)
-          to label %.body167 unwind label %bb.bm
+          to label %.body156 unwind label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
   %i.ej = landingpad { ptr, i32 }
@@ -863,7 +874,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.ek = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecTNtNtB7_6string6StringBM_EENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
-          to label %.body172 unwind label %bb.bq
+          to label %.body161 unwind label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bn
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecTNtNtB7_6string6StringBM_EENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
@@ -875,8 +886,9 @@ bb.bq:                                            ; preds = %bb.bo
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #30
   unreachable
 
-.body172:                                         ; preds = %bb.br, %bb.bo, %.body159, %bb.ca
-  %.pn97 = phi { ptr, i32 } [ %.pn88, %.body159 ], [ %.pn95.ph, %bb.ca ], [ %i.en, %bb.br ], [ %i.ek, %bb.bo ]
+.body172:                                         ; preds = %.body159, %bb.ca, %.body161
+  %.sroa.077.8 = phi ptr [ %5, %.body161 ], [ %.sroa.077.7.ph, %bb.ca ], [ %.sroa.077.6, %.body159 ]
+  %.sroa.30.8 = phi i32 [ %6, %.body161 ], [ %.sroa.30.7.ph, %bb.ca ], [ %.sroa.30.6, %.body159 ]
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 72
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.em) #29
           to label %.body167 unwind label %bb.ag
@@ -884,10 +896,17 @@ bb.bq:                                            ; preds = %bb.bo
 bb.br:                                            ; preds = %bb.bp
   %i.en = landingpad { ptr, i32 }
           cleanup
+  br label %.body161
+
+.body161:                                         ; preds = %bb.bo, %bb.br
+  %eh.lpad-body162 = phi { ptr, i32 } [ %i.en, %bb.br ], [ %i.ek, %bb.bo ] ; 2 uses
+  %5 = extractvalue { ptr, i32 } %eh.lpad-body162, 0
+  %6 = extractvalue { ptr, i32 } %eh.lpad-body162, 1
   br label %.body172
 
-.body167:                                         ; preds = %bb.bs, %bb.bl, %.body172
-  %.pn99 = phi { ptr, i32 } [ %.pn97, %.body172 ], [ %i.ep, %bb.bs ], [ %i.ei, %bb.bl ]
+.body167:                                         ; preds = %.body156, %.body172
+  %.sroa.077.9 = phi ptr [ %7, %.body156 ], [ %.sroa.077.8, %.body172 ]
+  %.sroa.30.9 = phi i32 [ %8, %.body156 ], [ %.sroa.30.8, %.body172 ]
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 96
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.eo) #29
           to label %.body177 unwind label %bb.ag
@@ -895,6 +914,12 @@ bb.br:                                            ; preds = %bb.bp
 bb.bs:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit.i
   %i.ep = landingpad { ptr, i32 }
           cleanup
+  br label %.body156
+
+.body156:                                         ; preds = %bb.bl, %bb.bs
+  %eh.lpad-body157 = phi { ptr, i32 } [ %i.ep, %bb.bs ], [ %i.ei, %bb.bl ] ; 2 uses
+  %7 = extractvalue { ptr, i32 } %eh.lpad-body157, 0
+  %8 = extractvalue { ptr, i32 } %eh.lpad-body157, 1
   br label %.body167
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %.thread206, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit.i
@@ -911,7 +936,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.et = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.eq)
-          to label %.body177 unwind label %bb.bv
+          to label %.body166 unwind label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
   %i.eu = landingpad { ptr, i32 }
@@ -923,15 +948,22 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.eq)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers.exit180 unwind label %bb.bw
 
-.body177:                                         ; preds = %bb.bw, %bb.bu, %.body167
-  %.pn101 = phi { ptr, i32 } [ %.pn99, %.body167 ], [ %i.ew, %bb.bw ], [ %i.et, %bb.bu ]
+.body177:                                         ; preds = %.body166, %.body167
+  %.sroa.077.10 = phi ptr [ %9, %.body166 ], [ %.sroa.077.9, %.body167 ]
+  %.sroa.30.10 = phi i32 [ %10, %.body166 ], [ %.sroa.30.9, %.body167 ]
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 120
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ev) #29
-          to label %common.resume unwind label %bb.ag
+          to label %11 unwind label %bb.ag
 
 bb.bw:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit.i176
   %i.ew = landingpad { ptr, i32 }
           cleanup
+  br label %.body166
+
+.body166:                                         ; preds = %bb.bu, %bb.bw
+  %eh.lpad-body167 = phi { ptr, i32 } [ %i.ew, %bb.bw ], [ %i.et, %bb.bu ] ; 2 uses
+  %9 = extractvalue { ptr, i32 } %eh.lpad-body167, 0
+  %10 = extractvalue { ptr, i32 } %eh.lpad-body167, 1
   br label %.body177
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers.exit180: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers.exit, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit.i176
@@ -956,8 +988,8 @@ bb.bz:                                            ; preds = %bb.by
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #30
   unreachable
 
-common.resume:                                    ; preds = %.body177, %bb.ci, %bb.ce, %bb.by
-  %common.resume.op = phi { ptr, i32 } [ %i.fa, %bb.by ], [ %.pn101, %.body177 ], [ %.pn92201252, %bb.ci ], [ %.pn92201252, %bb.ce ]
+common.resume:                                    ; preds = %bb.by, %11
+  %common.resume.op = phi { ptr, i32 } [ %13, %11 ], [ %i.fa, %bb.by ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers.exit.i182: ; preds = %bb.bx
@@ -965,9 +997,17 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers.exit183
 
 bb.ca:                                            ; preds = %bb.bj, %bb.bi
-  %.pn95.ph = phi { ptr, i32 } [ %i.ee, %bb.bj ], [ %.pn88, %bb.bi ]
+  %.sroa.077.7.ph = phi ptr [ %3, %bb.bj ], [ %.sroa.077.6, %bb.bi ]
+  %.sroa.30.7.ph = phi i32 [ %4, %bb.bj ], [ %.sroa.30.6, %bb.bi ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringB18_EEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(24) %1) #29
           to label %.body172 unwind label %bb.ag
+
+11:                                               ; preds = %bb.ce, %bb.ci, %.body177
+  %.sroa.077.11 = phi ptr [ %.sroa.077.10, %.body177 ], [ %.sroa.077.0193248, %bb.ci ], [ %.sroa.077.0193248, %bb.ce ]
+  %.sroa.30.11 = phi i32 [ %.sroa.30.10, %.body177 ], [ %.sroa.30.0192250, %bb.ci ], [ %.sroa.30.0192250, %bb.ce ]
+  %12 = insertvalue { ptr, i32 } poison, ptr %.sroa.077.11, 0
+  %13 = insertvalue { ptr, i32 } %12, i32 %.sroa.30.11, 1
+  br label %common.resume
 
 .thread217:                                       ; preds = %bb.av, %bb.as, %.thread233
   %.pn83223 = phi { ptr, i32 } [ %i.cx, %bb.as ], [ %lpad.thr_comm, %.thread233 ], [ %i.dg, %bb.av ]
@@ -996,21 +1036,23 @@ bb.cd:                                            ; preds = %bb.cc
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapNtNtCscdodAO9FK5_5alloc6string6StringmEECs2JiOgHzbbc7_10tokenizers.exit189: ; preds = %.thread.thread, %.thread
   %.sroa.037.0198256 = phi i8 [ %.sroa.037.0, %.thread ], [ %.sroa.037.0198257, %.thread.thread ]
   %.sroa.054.0200254 = phi i8 [ %.sroa.054.0, %.thread ], [ %.sroa.054.0200255, %.thread.thread ]
-  %.pn92201252 = phi { ptr, i32 } [ %.pn92, %.thread ], [ %.pn92201253, %.thread.thread ] ; 2 uses
+  %.sroa.30.0192250 = phi i32 [ %.sroa.30.0, %.thread ], [ %.sroa.30.0192251, %.thread.thread ] ; 2 uses
+  %.sroa.077.0193248 = phi ptr [ %.sroa.077.0, %.thread ], [ %.sroa.077.0193249, %.thread.thread ] ; 2 uses
   %i.fd = trunc nuw i8 %.sroa.037.0198256 to i1
   br i1 %i.fd, label %bb.cf, label %bb.ce
 
-.thread.thread:                                   ; preds = %.body112, %.thread
-  %.sroa.037.0198257 = phi i8 [ %.sroa.037.0, %.thread ], [ 1, %.body112 ]
-  %.sroa.054.0200255 = phi i8 [ %.sroa.054.0, %.thread ], [ 1, %.body112 ]
-  %.pn92201253 = phi { ptr, i32 } [ %.pn92, %.thread ], [ %.pn90, %.body112 ]
+.thread.thread:                                   ; preds = %.thread242, %.thread
+  %.sroa.037.0198257 = phi i8 [ 1, %.thread242 ], [ %.sroa.037.0, %.thread ]
+  %.sroa.054.0200255 = phi i8 [ 1, %.thread242 ], [ %.sroa.054.0, %.thread ]
+  %.sroa.30.0192251 = phi i32 [ %.sroa.30.0184, %.thread242 ], [ %.sroa.30.0, %.thread ]
+  %.sroa.077.0193249 = phi ptr [ %.sroa.077.0185, %.thread242 ], [ %.sroa.077.0, %.thread ]
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 152
   invoke void @_RNvXsg_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringmEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.fe)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapNtNtCscdodAO9FK5_5alloc6string6StringmEECs2JiOgHzbbc7_10tokenizers.exit189 unwind label %bb.ag
 
 bb.ce:                                            ; preds = %bb.cf, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapNtNtCscdodAO9FK5_5alloc6string6StringmEECs2JiOgHzbbc7_10tokenizers.exit189
   %cond105 = icmp eq i8 %.sroa.054.0200254, 0
-  br i1 %cond105, label %common.resume, label %bb.cg
+  br i1 %cond105, label %11, label %bb.cg
 
 bb.cf:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsiTTz6JxaXqu_5ahash8hash_map8AHashMapNtNtCscdodAO9FK5_5alloc6string6StringmEECs2JiOgHzbbc7_10tokenizers.exit189
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringB18_EEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(24) %1) #29
@@ -1029,7 +1071,7 @@ bb.ch:                                            ; preds = %bb.cg
 bb.ci:                                            ; preds = %bb.ch
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 120
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.fh) #29
-          to label %common.resume unwind label %bb.ag
+          to label %11 unwind label %bb.ag
 }
 
 ; Function Attrs: nonlazybind uwtable
