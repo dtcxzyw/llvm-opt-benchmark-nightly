@@ -205,54 +205,43 @@ bb.g:                                             ; preds = %_RNvMs_NtCsexYYUdYS
 
 _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit: ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCsf8MNnN4IDbl_8iced_x86.exit.i, %bb.g
   %i.z = phi i64 [ %i.v, %bb.g ], [ %i.h, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCsf8MNnN4IDbl_8iced_x86.exit.i ]
-  %i.aa = add i64 %i.z, %i.p                      ; 3 uses
+  %i.aa = add i64 %i.z, %i.p                      ; 2 uses
   store i64 %i.aa, ptr %i.a, align 8, !alias.scope !12075
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.ac = load i8, ptr %i.ab, align 8, !noundef !21 ; 3 uses
+  %i.ac = load i8, ptr %i.ab, align 8, !noundef !21 ; 2 uses
   %i.ad = zext i8 %i.ac to i32
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.af = load ptr, ptr %i.ae, align 8, !nonnull !21, !noundef !21
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.ah = load i64, ptr %i.ag, align 8, !noundef !21 ; 6 uses
+  %i.ah = load i64, ptr %i.ag, align 8, !noundef !21 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12077)
   %i.ai = icmp ult i64 %3, 10
-  br i1 %i.ai, label %._crit_edge.thread.i, label %.lr.ph.i
-
-._crit_edge.thread.i:                             ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit
-  %.not32.i = icmp ne i8 %i.ac, 0
-  %6 = icmp ne i64 %i.ah, 0
-  %invariant.op33.i = and i1 %.not32.i, %6
-  br label %.lr.ph22.i
+  br i1 %i.ai, label %.lr.ph22.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit, %.lr.ph.i
   %.sroa.0.019.i = phi i32 [ %i.ak, %.lr.ph.i ], [ 1, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit ]
   %.sroa.04.018.i = phi i64 [ %i.aj, %.lr.ph.i ], [ %3, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit ] ; 2 uses
   %i.aj = udiv i64 %.sroa.04.018.i, 10
-  %i.ak = add i32 %.sroa.0.019.i, 1               ; 3 uses
+  %i.ak = add nuw nsw i32 %.sroa.0.019.i, 1       ; 2 uses
   %i.al = icmp ult i64 %.sroa.04.018.i, 100
-  br i1 %i.al, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %i.al, label %.lr.ph22.i, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i
+.lr.ph22.i:                                       ; preds = %.lr.ph.i, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit
+  %.sroa.0.0.lcssa.i = phi i32 [ 1, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit ], [ %i.ak, %.lr.ph.i ] ; 2 uses
   %.not.i8 = icmp ne i8 %i.ac, 0
-  %7 = icmp ne i64 %i.ah, 0
-  %invariant.op.i = and i1 %.not.i8, %7
-  %.not24.i = icmp eq i32 %i.ak, 0
-  br i1 %.not24.i, label %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit, label %.lr.ph22.i
-
-.lr.ph22.i:                                       ; preds = %._crit_edge.i, %._crit_edge.thread.i
-  %invariant.op36.i = phi i1 [ %invariant.op33.i, %._crit_edge.thread.i ], [ %invariant.op.i, %._crit_edge.i ]
-  %.sroa.0.0.lcssa35.i = phi i32 [ 1, %._crit_edge.thread.i ], [ %i.ak, %._crit_edge.i ] ; 2 uses
+  %6 = icmp ne i64 %i.ah, 0
+  %invariant.op.i = and i1 %.not.i8, %6
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %wide.trip.count.i = zext i32 %.sroa.0.0.lcssa35.i to i64
+  %wide.trip.count.i = zext i32 %.sroa.0.0.lcssa.i to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.k, %.lr.ph22.i
   %i.an = phi i64 [ %i.aa, %.lr.ph22.i ], [ %i.bi, %bb.k ] ; 7 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph22.i ], [ %indvars.iv.next.i, %bb.k ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ao = trunc nuw i64 %indvars.iv.i to i32
+  %i.ao = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.ap = xor i32 %i.ao, -1
-  %i.aq = add i32 %.sroa.0.0.lcssa35.i, %i.ap     ; 4 uses
+  %i.aq = add nsw i32 %.sroa.0.0.lcssa.i, %i.ap   ; 4 uses
   %i.ar = icmp ult i32 %i.aq, 20
   br i1 %i.ar, label %bb.j, label %bb.i
 
@@ -276,7 +265,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String4push.exit16.i: ; preds = %bb.j, %
   %storemerge.i = add nuw i64 %i.an, 1            ; 7 uses
   store i64 %storemerge.i, ptr %i.a, align 8, !alias.scope !12077
   %i.ax = icmp ne i32 %i.aq, 0
-  %or.cond.reass.i = and i1 %invariant.op36.i, %i.ax
+  %or.cond.reass.i = and i1 %invariant.op.i, %i.ax
   br i1 %or.cond.reass.i, label %bb.l, label %bb.k
 
 bb.j:                                             ; preds = %bb.h
@@ -332,8 +321,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8ice
   store i64 %i.bu, ptr %i.a, align 8, !alias.scope !12084
   br label %bb.k
 
-_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit: ; preds = %bb.k, %._crit_edge.i
-  %8 = phi i64 [ %i.aa, %._crit_edge.i ], [ %i.bi, %bb.k ]
+_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit: ; preds = %bb.k
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 24
   br label %bb.aj
@@ -736,7 +724,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8ice
   br label %bb.aj
 
 bb.aj:                                            ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit48, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter17write_hexadecimal.exit, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter12write_binary.exit, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter11write_octal.exit, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit
-  %i.jw = phi i64 [ %i.jt, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit48 ], [ %i.fj, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter12write_binary.exit ], [ %i.ij, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter17write_hexadecimal.exit ], [ %8, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit ], [ %i.ns, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter11write_octal.exit ] ; 5 uses
+  %i.jw = phi i64 [ %i.jt, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit48 ], [ %i.fj, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter12write_binary.exit ], [ %i.ij, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter17write_hexadecimal.exit ], [ %i.bi, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit ], [ %i.ns, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter11write_octal.exit ] ; 5 uses
   %.sroa.7.0.in = phi ptr [ %i.jv, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit48 ], [ %i.fl, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter12write_binary.exit ], [ %i.ix, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter17write_hexadecimal.exit ], [ %i.bw, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit ], [ %i.nu, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter11write_octal.exit ]
   %.sroa.04.0.in = phi ptr [ %i.ju, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8iced_x86.exit48 ], [ %i.fk, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter12write_binary.exit ], [ %i.iw, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter17write_hexadecimal.exit ], [ %i.bv, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter13write_decimal.exit ], [ %i.nt, %_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter7num_fmtNtB4_15NumberFormatter11write_octal.exit ]
   %.sroa.04.0 = load ptr, ptr %.sroa.04.0.in, align 8, !nonnull !21, !noundef !21

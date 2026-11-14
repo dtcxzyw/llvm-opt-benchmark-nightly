@@ -204,16 +204,12 @@ bb.a:
   %.02834 = phi i32 [ %i.i, %.lr.ph ], [ %i.g, %bb.a ] ; 2 uses
   %.02933 = phi i32 [ %i.j, %.lr.ph ], [ 0, %bb.a ]
   %i.i = udiv i32 %.02834, 10
-  %i.j = add i32 %.02933, 1                       ; 2 uses
+  %i.j = add nuw nsw i32 %.02933, 1               ; 2 uses
   %.not37 = icmp samesign ult i32 %.02834, 10
-  br i1 %.not37, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !93
+  br i1 %.not37, label %._crit_edge, label %.lr.ph, !llvm.loop !93
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %2 = tail call i32 @llvm.umax.i32(i32 %i.j, i32 1)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.029.lcssa = phi i32 [ 1, %bb.a ], [ %2, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.029.lcssa = phi i32 [ 1, %bb.a ], [ %i.j, %.lr.ph ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %0, ptr noundef nonnull align 1 dereferenceable(9) @.str.4, i64 9, i1 false) #17
   %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #16 ; 2 uses
   %wide.trip.count = zext i32 %.029.lcssa to i64  ; 2 uses
@@ -222,9 +218,9 @@ bb.a:
 bb.b:                                             ; preds = %._crit_edge, %bb.d
   %indvars.iv = phi i64 [ 0, %._crit_edge ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %.036 = phi i32 [ %i.g, %._crit_edge ], [ %i.r, %bb.d ] ; 2 uses
-  %i.l = trunc nuw i64 %indvars.iv to i32
+  %i.l = trunc nuw nsw i64 %indvars.iv to i32
   %i.m = xor i32 %i.l, -1
-  %i.n = add i32 %.029.lcssa, %i.m
+  %i.n = add nsw i32 %.029.lcssa, %i.m
   %i.o = zext i32 %i.n to i64
   %i.p = add i64 %i.k, %i.o                       ; 2 uses
   %i.q = icmp ult i64 %i.p, 127
@@ -496,9 +492,6 @@ declare noundef i32 @_Z25tMPI_Thread_mutex_destroyP19tMPI_Thread_mutex_t(ptr nou
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14

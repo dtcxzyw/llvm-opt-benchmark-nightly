@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/git/original/u-reftable-stack?download=true
 inline.NumInlined: 61
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 16
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumCompletelyUnrolled: 17
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@write_nothing
 define internal noundef i32 @write_nothing(ptr noundef %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.e
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.e
-  %.012 = phi i64 [ 0, %bb.a ], [ %i.ae, %bb.e ]  ; 4 uses
+  %.012 = phi i64 [ 0, %bb.a ], [ %i.ae, %bb.e ]  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.n, i8 0, i64 88, i1 false)
@@ -228,31 +228,22 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !48
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !50
-  br label %3
-
-3:                                                ; preds = %3, %bb.d
-  %.011.i = phi i32 [ 0, %bb.d ], [ %4, %3 ]      ; 2 uses
-  %.0810.i = phi i64 [ %.012, %bb.d ], [ %5, %3 ] ; 2 uses
-  %4 = add nuw nsw i32 %.011.i, 1
-  %5 = udiv i64 %.0810.i, 5
-  %.not.i = icmp samesign ult i64 %.0810.i, 5
-  br i1 %.not.i, label %fastlogN.exit, label %3, !llvm.loop !82
-
-fastlogN.exit:                                    ; preds = %3
-  %6 = mul nuw nsw i32 %.011.i, 5
-  %7 = zext nneg i32 %6 to i64
-  %8 = icmp ult i64 %i.ac, %7
-  %9 = zext i1 %8 to i32
+  %.not.i.1 = icmp samesign ult i64 %.012, 25
+  %.not.i.2 = icmp samesign ult i64 %.012, 125
+  %spec.select = select i1 %.not.i.2, i64 10, i64 15
+  %.011.i.lcssa = select i1 %.not.i.1, i64 5, i64 %spec.select
+  %3 = icmp ult i64 %i.ac, %.011.i.lcssa
+  %4 = zext i1 %3 to i32
   br label %bb.e
 
-bb.e:                                             ; preds = %fastlogN.exit, %bb.c
-  %i.ad = phi i32 [ 1, %bb.c ], [ %9, %fastlogN.exit ]
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %i.ad = phi i32 [ 1, %bb.c ], [ %4, %bb.d ]
   call void @clar__assert(i32 noundef %i.ad, ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__auto_compaction_factor, i64 noundef 1006, ptr noundef nonnull @.str.115, ptr noundef null, i32 noundef 1) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   %i.ae = add nuw nsw i64 %.012, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.ae, 100
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !83
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !82
 }
 
 declare i32 @xsnprintf(ptr noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #2
@@ -389,7 +380,7 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   %i.q = add nuw nsw i64 %.014, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.q, %1
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !84
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !83
 }
 
 ; Function Attrs: nounwind uwtable
@@ -428,7 +419,7 @@ define dso_local void @test_reftable_stack__add_performs_auto_compaction() local
   store i32 3, ptr %i.m, align 8, !tbaa !46
   store ptr @.str.12, ptr %i.n, align 8, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  store i8 0, ptr %i.b, align 1, !tbaa !86
+  store i8 0, ptr %i.b, align 1, !tbaa !85
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 188 ; 2 uses
@@ -451,7 +442,7 @@ define dso_local void @test_reftable_stack__add_performs_auto_compaction() local
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !50 ; 2 uses
   call void (ptr, ptr, i64, i32, i32, i64, i64, ptr, ptr, ...) @clar__assert_compare_i(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__add_performs_auto_compaction, i64 noundef 1093, i32 noundef 1, i32 noundef 0, i64 noundef %i.ag, i64 noundef 1, ptr noundef nonnull @.str.49, ptr noundef nonnull @.str.6, i64 noundef %i.ag, i64 noundef 1) #10
-  %i.ah = load i8, ptr %i.b, align 1, !tbaa !86, !range !87, !noundef !88
+  %i.ah = load i8, ptr %i.b, align 1, !tbaa !85, !range !86, !noundef !87
   %i.ai = zext nneg i8 %i.ah to i32
   call void (ptr, ptr, i64, ptr, i32, ptr, ...) @clar__assert_equal(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__add_performs_auto_compaction, i64 noundef 1095, ptr noundef nonnull @.str.124, i32 noundef 1, ptr noundef nonnull @.str.125, i32 noundef %i.ai, i32 noundef 0) #10
   br label %bb.a
@@ -469,7 +460,7 @@ bb.a:                                             ; preds = %bb.b, %.peel.next
   store i32 3, ptr %i.m, align 8, !tbaa !46
   store ptr @.str.12, ptr %i.n, align 8, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  store i8 0, ptr %i.b, align 1, !tbaa !86
+  store i8 0, ptr %i.b, align 1, !tbaa !85
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   %.not = icmp eq i64 %.031, 20                   ; 2 uses
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !18
@@ -499,14 +490,14 @@ bb.a:                                             ; preds = %bb.b, %.peel.next
 bb.b:                                             ; preds = %bb.a
   %i.bd = add nuw nsw i64 %.031, 1                ; 3 uses
   call void (ptr, ptr, i64, i32, i32, i64, i64, ptr, ptr, ...) @clar__assert_compare_i(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__add_performs_auto_compaction, i64 noundef 1093, i32 noundef 1, i32 noundef 0, i64 noundef %i.bc, i64 noundef %i.bd, ptr noundef nonnull @.str.49, ptr noundef nonnull @.str.6, i64 noundef %i.bc, i64 noundef %i.bd) #10
-  %i.be = load i8, ptr %i.b, align 1, !tbaa !86, !range !87, !noundef !88
+  %i.be = load i8, ptr %i.b, align 1, !tbaa !85, !range !86, !noundef !87
   %i.bf = zext nneg i8 %i.be to i32
   call void (ptr, ptr, i64, ptr, i32, ptr, ...) @clar__assert_equal(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__add_performs_auto_compaction, i64 noundef 1097, ptr noundef nonnull @.str.126, i32 noundef 1, ptr noundef nonnull @.str.125, i32 noundef %i.bf, i32 noundef 1) #10
   br label %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void (ptr, ptr, i64, i32, i32, i64, i64, ptr, ptr, ...) @clar__assert_compare_i(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__add_performs_auto_compaction, i64 noundef 1099, i32 noundef 1, i32 noundef 0, i64 noundef %i.bc, i64 noundef 1, ptr noundef nonnull @.str.50, ptr noundef nonnull @.str.6, i64 noundef %i.bc, i64 noundef 1) #10
-  %i.bg = load i8, ptr %i.b, align 1, !tbaa !86, !range !87, !noundef !88
+  %i.bg = load i8, ptr %i.b, align 1, !tbaa !85, !range !86, !noundef !87
   %i.bh = zext nneg i8 %i.bg to i32
   call void (ptr, ptr, i64, ptr, i32, ptr, ...) @clar__assert_equal(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__add_performs_auto_compaction, i64 noundef 1100, ptr noundef nonnull @.str.124, i32 noundef 1, ptr noundef nonnull @.str.125, i32 noundef %i.bh, i32 noundef 0) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
@@ -756,7 +747,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.y = add nuw i64 %.07.i, 1                    ; 2 uses
   %i.z = load i64, ptr %i.s, align 8, !tbaa !30
   %i.aa = icmp ult i64 %i.y, %i.z
-  br i1 %i.aa, label %bb.b, label %unclean_stack_close.exit, !llvm.loop !89
+  br i1 %i.aa, label %bb.b, label %unclean_stack_close.exit, !llvm.loop !88
 
 unclean_stack_close.exit:                         ; preds = %bb.b, %bb.a
   store i64 0, ptr %i.s, align 8, !tbaa !30
@@ -783,7 +774,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i29
   %i.ak = add nuw i64 %.07.i30, 1                 ; 2 uses
   %i.al = load i64, ptr %i.ae, align 8, !tbaa !30
   %i.am = icmp ult i64 %i.ak, %i.al
-  br i1 %i.am, label %bb.c, label %unclean_stack_close.exit31, !llvm.loop !89
+  br i1 %i.am, label %bb.c, label %unclean_stack_close.exit31, !llvm.loop !88
 
 unclean_stack_close.exit31:                       ; preds = %bb.c, %unclean_stack_close.exit
   store i64 0, ptr %i.ae, align 8, !tbaa !30
@@ -1044,7 +1035,7 @@ bb.a:
   call void @clar__assert(i32 noundef %i.an, ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__reload_with_missing_table, i64 noundef 1271, ptr noundef nonnull @.str.149, ptr noundef null, i32 noundef 1) #10
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 144
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !90
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !89
   %i.ar = call i32 @reftable_buf_addstr(ptr noundef nonnull %4, ptr noundef %i.aq) #10
   %.not38 = icmp eq i32 %i.ar, 0
   %i.as = zext i1 %.not38 to i32
@@ -1058,12 +1049,12 @@ bb.a:
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !32
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !91
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !90
   call void @write_file_buf(ptr noundef %i.aw, ptr noundef %i.ay, i64 noundef %i.ba) #10
   %i.bb = load ptr, ptr %i.av, align 8, !tbaa !32
   %i.bc = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 144
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !90
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !89
   %i.bf = call i32 @rename(ptr noundef %i.bb, ptr noundef %i.be) #10
   %i.bg = sext i32 %i.bf to i64                   ; 2 uses
   call void (ptr, ptr, i64, i32, i32, i64, i64, ptr, ptr, ...) @clar__assert_compare_i(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.test_reftable_stack__reload_with_missing_table, i64 noundef 1275, i32 noundef 1, i32 noundef 0, i64 noundef %i.bg, i64 noundef 0, ptr noundef nonnull @.str.151, ptr noundef nonnull @.str.6, i64 noundef %i.bg, i64 noundef 0) #10
@@ -1326,12 +1317,11 @@ attributes #11 = { nounwind willreturn memory(read) }
 !81 = !{!28, !19, i64 8}
 !82 = distinct !{!82, !16}
 !83 = distinct !{!83, !16}
-!84 = distinct !{!84, !16}
-!85 = !{!"_Bool", !9, i64 0}
-!86 = !{!85, !85, i64 0}
-!87 = !{i8 0, i8 2}
-!88 = !{}
-!89 = distinct !{!89, !16}
-!90 = !{!29, !15, i64 144}
-!91 = !{!31, !19, i64 8}
+!84 = !{!"_Bool", !9, i64 0}
+!85 = !{!84, !84, i64 0}
+!86 = !{i8 0, i8 2}
+!87 = !{}
+!88 = distinct !{!88, !16}
+!89 = !{!29, !15, i64 144}
+!90 = !{!31, !19, i64 8}
 end_hunk_0

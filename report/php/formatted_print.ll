@@ -204,7 +204,7 @@ zval_get_long.exit199:                            ; preds = %bb.bu, %bb.bv
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bw, %zval_get_long.exit199
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.bw ], [ 499, %zval_get_long.exit199 ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.bw ], [ 499, %zval_get_long.exit199 ] ; 2 uses
   %.129.i = phi i64 [ %i.kx, %bb.bw ], [ %.028.i, %zval_get_long.exit199 ] ; 3 uses
   %i.kx = udiv i64 %.129.i, 10                    ; 2 uses
   %.neg.i252 = mul i64 %i.kx, 246
@@ -214,10 +214,8 @@ bb.bw:                                            ; preds = %bb.bw, %zval_get_lo
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 4 uses
   %i.lb = getelementptr inbounds nuw i8, ptr %i.i, i64 %indvars.iv.next.i
   store i8 %i.la, ptr %i.lb, align 1, !tbaa !19
-  %5 = icmp ugt i64 %.129.i, 9
-  %i.lc = icmp samesign ugt i64 %indvars.iv.i, 2
-  %6 = and i1 %i.lc, %5
-  br i1 %6, label %bb.bw, label %bb.bx, !llvm.loop !75
+  %i.lc = icmp ugt i64 %.129.i, 9
+  br i1 %i.lc, label %bb.bw, label %bb.bx, !llvm.loop !75
 
 bb.bx:                                            ; preds = %bb.bw
   %i.ld = zext nneg i32 %.3141 to i64
@@ -281,13 +279,11 @@ bb.cc:                                            ; preds = %bb.cc, %zval_get_lo
   %i.lx = add i64 %.neg.i258, %.019.i
   %i.ly = trunc i64 %i.lx to i8
   %i.lz = add i8 %i.ly, 48
-  %indvars.iv.next.i259 = add nsw i64 %indvars.iv.i257, -1 ; 4 uses
+  %indvars.iv.next.i259 = add nsw i64 %indvars.iv.i257, -1 ; 3 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.next.i259
   store i8 %i.lz, ptr %i.ma, align 1, !tbaa !19
   %i.mb = icmp ugt i64 %.019.i, 9
-  %7 = icmp ne i64 %indvars.iv.next.i259, 0
-  %8 = and i1 %i.mb, %7
-  br i1 %8, label %bb.cc, label %php_sprintf_appenduint.exit, !llvm.loop !76
+  br i1 %i.mb, label %bb.cc, label %php_sprintf_appenduint.exit, !llvm.loop !76
 
 php_sprintf_appenduint.exit:                      ; preds = %bb.cc
   %i.mc = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.next.i259

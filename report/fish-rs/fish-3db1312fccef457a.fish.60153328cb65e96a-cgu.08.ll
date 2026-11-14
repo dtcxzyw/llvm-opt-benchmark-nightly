@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.c
   %.sroa.0.020.i.i = phi i64 [ %1, %bb.c ], [ %i.g, %bb.e ] ; 3 uses
-  %.sroa.06.019.i.i = phi i64 [ 24, %bb.c ], [ %i.j, %bb.e ] ; 3 uses
+  %.sroa.06.019.i.i = phi i64 [ 24, %bb.c ], [ %i.j, %bb.e ] ; 2 uses
   %i.f = urem i64 %.sroa.0.020.i.i, 10
   %i.g = udiv i64 %.sroa.0.020.i.i, 10
   %i.h = trunc nuw nsw i64 %i.f to i8
@@ -213,10 +213,8 @@ bb.e:                                             ; preds = %bb.e, %bb.c
   %i.j = add nsw i64 %.sroa.06.019.i.i, -1        ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.j
   store i8 %i.i, ptr %i.k, align 1, !alias.scope !1064
-  %2 = icmp ugt i64 %.sroa.0.020.i.i, 9
-  %i.l = icmp samesign ugt i64 %.sroa.06.019.i.i, 2
-  %or.cond.i.i = and i1 %2, %i.l
-  br i1 %or.cond.i.i, label %bb.e, label %bb.d
+  %i.l = icmp ugt i64 %.sroa.0.020.i.i, 9
+  br i1 %i.l, label %bb.e, label %bb.d
 
 _RNvXs2_NtNtCs8frGy5WneL6_4fish9fork_exec9flog_safejNtB5_25FloggableDisplayAsyncSafe22to_flog_str_async_safe.exit: ; preds = %bb.b, %bb.d
   %.sroa.3.0.i.i = phi i64 [ %i.e, %bb.d ], [ 1, %bb.b ]
@@ -265,7 +263,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.g, %bb.c
   %.sroa.0.020.i.i = phi i64 [ %i.e, %bb.c ], [ %i.k, %bb.g ] ; 3 uses
-  %.sroa.06.019.i.i = phi i64 [ 24, %bb.c ], [ %i.n, %bb.g ] ; 3 uses
+  %.sroa.06.019.i.i = phi i64 [ 24, %bb.c ], [ %i.n, %bb.g ] ; 2 uses
   %i.j = urem i64 %.sroa.0.020.i.i, 10
   %i.k = udiv i64 %.sroa.0.020.i.i, 10
   %i.l = trunc nuw nsw i64 %i.j to i8
@@ -273,10 +271,8 @@ bb.g:                                             ; preds = %bb.g, %bb.c
   %i.n = add nsw i64 %.sroa.06.019.i.i, -1        ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.n
   store i8 %i.m, ptr %i.o, align 1, !alias.scope !1069
-  %2 = icmp samesign ugt i64 %.sroa.0.020.i.i, 9
-  %i.p = icmp samesign ugt i64 %.sroa.06.019.i.i, 2
-  %or.cond.i.i = and i1 %2, %i.p
-  br i1 %or.cond.i.i, label %bb.g, label %bb.d
+  %i.p = icmp samesign ugt i64 %.sroa.0.020.i.i, 9
+  br i1 %i.p, label %bb.g, label %bb.d
 
 _RNvXs1_NtNtCs8frGy5WneL6_4fish9fork_exec9flog_safelNtB5_25FloggableDisplayAsyncSafe22to_flog_str_async_safe.exit: ; preds = %bb.b, %bb.f
   %.sroa.3.0.i.i = phi i64 [ %i.h, %bb.f ], [ 1, %bb.b ]
@@ -324,7 +320,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.g, %bb.c
   %.sroa.0.020.i.i = phi i64 [ %.sroa.0.0.i, %bb.c ], [ %i.j, %bb.g ] ; 3 uses
-  %.sroa.06.019.i.i = phi i64 [ 24, %bb.c ], [ %i.m, %bb.g ] ; 3 uses
+  %.sroa.06.019.i.i = phi i64 [ 24, %bb.c ], [ %i.m, %bb.g ] ; 2 uses
   %i.i = urem i64 %.sroa.0.020.i.i, 10
   %i.j = udiv i64 %.sroa.0.020.i.i, 10
   %i.k = trunc nuw nsw i64 %i.i to i8
@@ -332,10 +328,8 @@ bb.g:                                             ; preds = %bb.g, %bb.c
   %i.m = add nsw i64 %.sroa.06.019.i.i, -1        ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.m
   store i8 %i.l, ptr %i.n, align 1, !alias.scope !1074
-  %2 = icmp ugt i64 %.sroa.0.020.i.i, 9
-  %i.o = icmp samesign ugt i64 %.sroa.06.019.i.i, 2
-  %or.cond.i.i = and i1 %2, %i.o
-  br i1 %or.cond.i.i, label %bb.g, label %bb.d
+  %i.o = icmp ugt i64 %.sroa.0.020.i.i, 9
+  br i1 %i.o, label %bb.g, label %bb.d
 
 _RNvXs0_NtNtCs8frGy5WneL6_4fish9fork_exec9flog_safexNtB5_25FloggableDisplayAsyncSafe22to_flog_str_async_safe.exit: ; preds = %bb.b, %bb.f
   %.sroa.3.0.i.i = phi i64 [ %i.g, %bb.f ], [ 1, %bb.b ]
@@ -738,7 +732,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.f, %bb.b
   %.sroa.0.020.i = phi i64 [ %.sroa.0.0, %bb.b ], [ %i.i, %bb.f ] ; 3 uses
-  %.sroa.06.019.i = phi i64 [ 24, %bb.b ], [ %i.l, %bb.f ] ; 3 uses
+  %.sroa.06.019.i = phi i64 [ 24, %bb.b ], [ %i.l, %bb.f ] ; 2 uses
   %i.h = urem i64 %.sroa.0.020.i, 10
   %i.i = udiv i64 %.sroa.0.020.i, 10
   %i.j = trunc nuw nsw i64 %i.h to i8
@@ -746,10 +740,8 @@ bb.f:                                             ; preds = %bb.f, %bb.b
   %i.l = add nsw i64 %.sroa.06.019.i, -1          ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %i.l
   store i8 %i.k, ptr %i.m, align 1, !alias.scope !3807
-  %2 = icmp ugt i64 %.sroa.0.020.i, 9
-  %i.n = icmp samesign ugt i64 %.sroa.06.019.i, 2
-  %or.cond.i = and i1 %2, %i.n
-  br i1 %or.cond.i, label %bb.f, label %bb.c
+  %i.n = icmp ugt i64 %.sroa.0.020.i, 9
+  br i1 %i.n, label %bb.f, label %bb.c
 
 _RNvNtNtCs8frGy5WneL6_4fish9fork_exec9flog_safe10format_int.exit: ; preds = %bb.a, %bb.e
   %.sroa.3.0.i = phi i64 [ %i.f, %bb.e ], [ 1, %bb.a ]
@@ -1152,7 +1144,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.f, %bb.b
   %.sroa.0.020.i = phi i64 [ %i.d, %bb.b ], [ %i.j, %bb.f ] ; 3 uses
-  %.sroa.06.019.i = phi i64 [ 24, %bb.b ], [ %i.m, %bb.f ] ; 3 uses
+  %.sroa.06.019.i = phi i64 [ 24, %bb.b ], [ %i.m, %bb.f ] ; 2 uses
   %i.i = urem i64 %.sroa.0.020.i, 10
   %i.j = udiv i64 %.sroa.0.020.i, 10
   %i.k = trunc nuw nsw i64 %i.i to i8
@@ -1160,10 +1152,8 @@ bb.f:                                             ; preds = %bb.f, %bb.b
   %i.m = add nsw i64 %.sroa.06.019.i, -1          ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.m
   store i8 %i.l, ptr %i.n, align 1, !alias.scope !3889
-  %2 = icmp samesign ugt i64 %.sroa.0.020.i, 9
-  %i.o = icmp samesign ugt i64 %.sroa.06.019.i, 2
-  %or.cond.i = and i1 %2, %i.o
-  br i1 %or.cond.i, label %bb.f, label %bb.c
+  %i.o = icmp samesign ugt i64 %.sroa.0.020.i, 9
+  br i1 %i.o, label %bb.f, label %bb.c
 
 _RNvNtNtCs8frGy5WneL6_4fish9fork_exec9flog_safe10format_int.exit: ; preds = %bb.a, %bb.e
   %.sroa.3.0.i = phi i64 [ %i.g, %bb.e ], [ 1, %bb.a ]
@@ -1311,7 +1301,7 @@ bb.c:                                             ; preds = %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.b
   %.sroa.0.020.i = phi i64 [ %i.a, %bb.b ], [ %i.f, %bb.d ] ; 3 uses
-  %.sroa.06.019.i = phi i64 [ 24, %bb.b ], [ %i.i, %bb.d ] ; 3 uses
+  %.sroa.06.019.i = phi i64 [ 24, %bb.b ], [ %i.i, %bb.d ] ; 2 uses
   %i.e = urem i64 %.sroa.0.020.i, 10
   %i.f = udiv i64 %.sroa.0.020.i, 10
   %i.g = trunc nuw nsw i64 %i.e to i8
@@ -1319,10 +1309,8 @@ bb.d:                                             ; preds = %bb.d, %bb.b
   %i.i = add nsw i64 %.sroa.06.019.i, -1          ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 %i.i
   store i8 %i.h, ptr %i.j, align 1, !alias.scope !3893
-  %2 = icmp ugt i64 %.sroa.0.020.i, 9
-  %i.k = icmp samesign ugt i64 %.sroa.06.019.i, 2
-  %or.cond.i = and i1 %2, %i.k
-  br i1 %or.cond.i, label %bb.d, label %bb.c
+  %i.k = icmp ugt i64 %.sroa.0.020.i, 9
+  br i1 %i.k, label %bb.d, label %bb.c
 
 _RNvNtNtCs8frGy5WneL6_4fish9fork_exec9flog_safe10format_int.exit: ; preds = %bb.a, %bb.c
   %.sroa.3.0.i = phi i64 [ %i.d, %bb.c ], [ 1, %bb.a ]

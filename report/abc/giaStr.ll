@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %.preheader, %bb.an
   %i.ct = udiv i32 %.11533.i, 10
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %.not.i32 = icmp ult i32 %.11533.i, 10
-  %indvars.iv.next38.i = add nuw i64 %indvars.iv37.i, 1
+  %indvars.iv.next38.i = add nuw nsw i64 %indvars.iv37.i, 1
   br i1 %.not.i32, label %.preheader.i, label %bb.an, !llvm.loop !101
 
 .preheader.i:                                     ; preds = %bb.an, %Vec_StrPush.exit32.i
@@ -277,8 +277,7 @@ Vec_StrPush.exit32.i:                             ; preds = %Vec_StrGrow.exit11.
   %i.dn = sext i32 %i.dk to i64
   %i.do = getelementptr inbounds i8, ptr %i.dl, i64 %i.dn
   store i8 %i.cw, ptr %i.do, align 1, !tbaa !63
-  %3 = trunc nuw i64 %indvars.iv39.i to i32
-  %i.dp = icmp sgt i32 %3, 1
+  %i.dp = icmp sgt i64 %indvars.iv39.i, 1
   br i1 %i.dp, label %.preheader.i, label %Vec_StrPrintNum.exit, !llvm.loop !102
 
 Vec_StrPrintNum.exit:                             ; preds = %Vec_StrPush.exit32.i, %Vec_StrPush.exit.i

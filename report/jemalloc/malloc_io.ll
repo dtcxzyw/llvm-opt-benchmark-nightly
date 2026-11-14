@@ -202,26 +202,25 @@ bb.ax:                                            ; preds = %bb.av, %bb.ar, %bb.
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %bb.ax
-  %.030.i.i.a = phi i64 [ %i.du, %.preheader.i.i ], [ %spec.select.i, %bb.ax ] ; 3 uses
-  %.0.i.i = phi i32 [ %4, %.preheader.i.i ], [ 64, %bb.ax ] ; 2 uses
-  %4 = add i32 %.0.i.i, -1                        ; 2 uses
-  %i.dq = urem i64 %.030.i.i.a, 10
+  %.030.i.i.a = phi i64 [ %indvars.iv.next45.i.i, %.preheader.i.i ], [ 64, %bb.ax ] ; 2 uses
+  %.030.i.i = phi i64 [ %i.du, %.preheader.i.i ], [ %spec.select.i, %bb.ax ] ; 3 uses
+  %indvars.iv.next45.i.i = add nsw i64 %.030.i.i.a, -1 ; 3 uses
+  %i.dq = urem i64 %.030.i.i, 10
   %i.dr = getelementptr inbounds nuw i8, ptr @.str, i64 %i.dq
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !15
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.dt = getelementptr inbounds nuw i8, ptr %i.b, i64 %5
+  %i.dt = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.next45.i.i
   store i8 %i.ds, ptr %i.dt, align 1, !tbaa !15
-  %i.du = udiv i64 %.030.i.i.a, 10
-  %.not33.i.i = icmp samesign ult i64 %.030.i.i.a, 10
+  %i.du = udiv i64 %.030.i.i, 10
+  %.not33.i.i = icmp samesign ult i64 %.030.i.i, 10
   br i1 %.not33.i.i, label %u2s.exit.i, label %.preheader.i.i, !llvm.loop !19
 
 u2s.exit.i:                                       ; preds = %.preheader.i.i
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.b, i64 %5 ; 2 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.next45.i.i ; 2 uses
   %i.dw = select i1 %.0396.ph902, i8 32, i8 45
   %i.dx = select i1 %.0401.ph, i8 43, i8 %i.dw
   %i.dy = icmp slt i64 %.0412, 0                  ; 2 uses
-  %6 = sub i32 65, %.0.i.i
-  %7 = zext i32 %6 to i64                         ; 2 uses
+  %4 = sub nsw i64 65, %.030.i.i.a
+  %5 = and i64 %4, 4294967295                     ; 2 uses
   %.013.i = select i1 %i.dy, i8 45, i8 %i.dx      ; 2 uses
   %i.dz = icmp ne i8 %.013.i, 45
   %brmerge.i = or i1 %i.dy, %i.dz
@@ -229,12 +228,12 @@ u2s.exit.i:                                       ; preds = %.preheader.i.i
 
 bb.ay:                                            ; preds = %u2s.exit.i
   %i.ea = getelementptr inbounds i8, ptr %i.dv, i64 -1 ; 2 uses
-  %i.eb = add nuw nsw i64 %7, 1
+  %i.eb = add nuw nsw i64 %5, 1
   store i8 %.013.i, ptr %i.ea, align 1, !tbaa !15
   br label %d2s.exit
 
 d2s.exit:                                         ; preds = %u2s.exit.i, %bb.ay
-  %.0511 = phi i64 [ %i.eb, %bb.ay ], [ %7, %u2s.exit.i ] ; 4 uses
+  %.0511 = phi i64 [ %i.eb, %bb.ay ], [ %5, %u2s.exit.i ] ; 4 uses
   %.012.i = phi ptr [ %i.ea, %bb.ay ], [ %i.dv, %u2s.exit.i ]
   %i.ec = icmp eq i32 %.0410, -1
   br i1 %i.ec, label %.thread, label %bb.az
@@ -450,21 +449,20 @@ bb.cb:                                            ; preds = %bb.bz, %bb.bv, %bb.
 bb.cc:                                            ; preds = %bb.cc, %bb.cb
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.cc ], [ 64, %bb.cb ] ; 2 uses
   %.232.i.i = phi i64 [ %i.gv, %bb.cc ], [ %.0408, %bb.cb ] ; 3 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
   %i.gr = and i64 %.232.i.i, 7                    ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr @.str.4, i64 %i.gr
   %i.gt = load i8, ptr %i.gs, align 1, !tbaa !15
-  %8 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
-  %i.gu = getelementptr inbounds nuw i8, ptr %i.c, i64 %8
+  %i.gu = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next.i
   store i8 %i.gt, ptr %i.gu, align 1, !tbaa !15
   %i.gv = lshr i64 %.232.i.i, 3
   %.not34.i.i = icmp ult i64 %.232.i.i, 8
   br i1 %.not34.i.i, label %u2s.exit.i484, label %bb.cc, !llvm.loop !22
 
 u2s.exit.i484:                                    ; preds = %bb.cc
-  %i.gw = getelementptr inbounds nuw i8, ptr %i.c, i64 %8 ; 2 uses
+  %i.gw = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next.i ; 2 uses
   %i.gx = trunc nuw i8 %.0387 to i1
-  %i.gy = sub i64 65, %indvars.iv.i
+  %i.gy = sub nsw i64 65, %indvars.iv.i
   %i.gz = and i64 %i.gy, 4294967295               ; 2 uses
   %.not.i = icmp ne i64 %i.gr, 0
   %or.cond532.not = and i1 %.not.i, %i.gx
@@ -691,23 +689,22 @@ bb.dg:                                            ; preds = %bb.de, %bb.da, %bb.
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %bb.dg
-  %.030.i.a = phi i64 [ %i.jv, %.preheader.i ], [ %.0404, %bb.dg ] ; 3 uses
-  %.0.i485 = phi i32 [ %9, %.preheader.i ], [ 64, %bb.dg ] ; 2 uses
-  %9 = add i32 %.0.i485, -1                       ; 2 uses
-  %i.jr = urem i64 %.030.i.a, 10
+  %.030.i.a = phi i64 [ %indvars.iv.next45.i, %.preheader.i ], [ 64, %bb.dg ] ; 2 uses
+  %.030.i = phi i64 [ %i.jv, %.preheader.i ], [ %.0404, %bb.dg ] ; 3 uses
+  %indvars.iv.next45.i = add nsw i64 %.030.i.a, -1 ; 3 uses
+  %i.jr = urem i64 %.030.i, 10
   %i.js = getelementptr inbounds nuw i8, ptr @.str, i64 %i.jr
   %i.jt = load i8, ptr %i.js, align 1, !tbaa !15
-  %10 = zext i32 %9 to i64                        ; 2 uses
-  %i.ju = getelementptr inbounds nuw i8, ptr %i.d, i64 %10
+  %i.ju = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next45.i
   store i8 %i.jt, ptr %i.ju, align 1, !tbaa !15
-  %i.jv = udiv i64 %.030.i.a, 10
-  %.not33.i = icmp ult i64 %.030.i.a, 10
+  %i.jv = udiv i64 %.030.i, 10
+  %.not33.i = icmp ult i64 %.030.i, 10
   br i1 %.not33.i, label %u2s.exit, label %.preheader.i, !llvm.loop !19
 
 u2s.exit:                                         ; preds = %.preheader.i
-  %i.jw = getelementptr inbounds nuw i8, ptr %i.d, i64 %10
-  %11 = sub i32 65, %.0.i485
-  %12 = zext i32 %11 to i64                       ; 4 uses
+  %i.jw = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next45.i
+  %6 = sub nsw i64 65, %.030.i.a
+  %7 = and i64 %6, 4294967295                     ; 4 uses
   %i.jx = icmp eq i32 %.0410, -1
   br i1 %i.jx, label %.thread519, label %bb.dh
 
@@ -717,11 +714,11 @@ u2s.exit:                                         ; preds = %.preheader.i
 
 bb.dh:                                            ; preds = %u2s.exit
   %i.jz = sext i32 %.0410 to i64                  ; 2 uses
-  %i.ka = call i64 @llvm.usub.sat.i64(i64 %i.jz, i64 %12) ; 3 uses
+  %i.ka = call i64 @llvm.usub.sat.i64(i64 %i.jz, i64 %7) ; 3 uses
   %i.kb = trunc nuw i8 %.2393 to i1               ; 2 uses
   %.not9 = xor i1 %i.kb, true
-  %13 = icmp ugt i64 %i.jz, %12                   ; 2 uses
-  %or.cond11 = select i1 %.not9, i1 %13, i1 false
+  %8 = icmp ult i64 %7, %i.jz                     ; 2 uses
+  %or.cond11 = select i1 %.not9, i1 %8, i1 false
   br i1 %or.cond11, label %.lr.ph634, label %.loopexit542
 
 .lr.ph634:                                        ; preds = %bb.dh, %bb.di
@@ -742,7 +739,7 @@ bb.di:                                            ; preds = %.lr.ph634, %.sink.s
   br i1 %i.kf, label %.lr.ph634, label %.loopexit542, !llvm.loop !25
 
 .loopexit542:                                     ; preds = %bb.di, %.thread519, %bb.dh
-  %i.kg = phi i1 [ %13, %bb.dh ], [ false, %.thread519 ], [ true, %bb.di ]
+  %i.kg = phi i1 [ %8, %bb.dh ], [ false, %.thread519 ], [ true, %bb.di ]
   %i.kh = phi i1 [ %i.kb, %bb.dh ], [ %i.jy, %.thread519 ], [ false, %bb.di ]
   %i.ki = phi i64 [ %i.ka, %bb.dh ], [ 0, %.thread519 ], [ %i.ka, %bb.di ] ; 2 uses
   %.13 = phi i64 [ %.0384, %bb.dh ], [ %.0384, %.thread519 ], [ %.12, %bb.di ] ; 4 uses
@@ -751,13 +748,13 @@ bb.di:                                            ; preds = %.lr.ph634, %.sink.s
 
 bb.dj:                                            ; preds = %.loopexit542
   %i.kk = sub nuw i64 %1, %.13
-  %i.kl = call i64 @llvm.umin.i64(i64 %12, i64 %i.kk)
+  %i.kl = call i64 @llvm.umin.i64(i64 %7, i64 %i.kk)
   %i.km = getelementptr inbounds nuw i8, ptr %0, i64 %.13
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.km, ptr nonnull align 1 %i.jw, i64 %i.kl, i1 false)
   br label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj, %.loopexit542
-  %i.kn = add i64 %.13, %12                       ; 2 uses
+  %i.kn = add i64 %.13, %7                        ; 2 uses
   %or.cond13 = select i1 %i.kh, i1 %i.kg, i1 false
   %i.ko = icmp ne i64 %i.ki, 0
   %or.cond660 = select i1 %or.cond13, i1 %i.ko, i1 false
@@ -925,21 +922,20 @@ bb.ej:                                            ; preds = %bb.eh, %bb.ed, %bb.
 bb.ek:                                            ; preds = %bb.ek, %bb.ej
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ek ], [ 64, %bb.ej ] ; 2 uses
   %.131.i.i = phi i64 [ %i.ms, %bb.ek ], [ %.0399, %bb.ej ] ; 2 uses
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 3 uses
   %i.mo = and i64 %.131.i.i, 15
   %i.mp = getelementptr inbounds nuw i8, ptr %i.mn, i64 %i.mo
   %i.mq = load i8, ptr %i.mp, align 1, !tbaa !15
-  %14 = and i64 %indvars.iv.next.i.i, 4294967295  ; 2 uses
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.e, i64 %14
+  %i.mr = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next.i.i
   store i8 %i.mq, ptr %i.mr, align 1, !tbaa !15
   %i.ms = lshr i64 %.131.i.i, 4                   ; 2 uses
   %.not.i.i = icmp eq i64 %i.ms, 0
   br i1 %.not.i.i, label %u2s.exit.i486, label %bb.ek, !llvm.loop !27
 
 u2s.exit.i486:                                    ; preds = %bb.ek
-  %i.mt = getelementptr inbounds nuw i8, ptr %i.e, i64 %14 ; 3 uses
+  %i.mt = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next.i.i ; 3 uses
   %i.mu = trunc nuw i8 %.0387 to i1
-  %i.mv = sub i64 65, %indvars.iv.i.i
+  %i.mv = sub nsw i64 65, %indvars.iv.i.i
   %i.mw = and i64 %i.mv, 4294967295               ; 2 uses
   br i1 %i.mu, label %bb.el, label %x2s.exit
 
@@ -1265,20 +1261,19 @@ bb.fr:                                            ; preds = %bb.fq, %bb.fp
 bb.fs:                                            ; preds = %bb.fs, %bb.fr
   %indvars.iv.i.i488 = phi i64 [ %indvars.iv.next.i.i490, %bb.fs ], [ 64, %bb.fr ] ; 2 uses
   %.131.i.i489 = phi i64 [ %i.rc, %bb.fs ], [ %i.qx, %bb.fr ] ; 2 uses
-  %indvars.iv.next.i.i490 = add nsw i64 %indvars.iv.i.i488, -1 ; 2 uses
+  %indvars.iv.next.i.i490 = add nsw i64 %indvars.iv.i.i488, -1 ; 3 uses
   %i.qy = and i64 %.131.i.i489, 15
   %i.qz = getelementptr inbounds nuw i8, ptr @.str.2, i64 %i.qy
   %i.ra = load i8, ptr %i.qz, align 1, !tbaa !15
-  %15 = and i64 %indvars.iv.next.i.i490, 4294967295 ; 2 uses
-  %i.rb = getelementptr inbounds nuw i8, ptr %i.f, i64 %15
+  %i.rb = getelementptr inbounds nuw i8, ptr %i.f, i64 %indvars.iv.next.i.i490
   store i8 %i.ra, ptr %i.rb, align 1, !tbaa !15
   %i.rc = lshr i64 %.131.i.i489, 4                ; 2 uses
   %.not.i.i491 = icmp eq i64 %i.rc, 0
   br i1 %.not.i.i491, label %x2s.exit494, label %bb.fs, !llvm.loop !27
 
 x2s.exit494:                                      ; preds = %bb.fs
-  %i.rd = getelementptr inbounds nuw i8, ptr %i.f, i64 %15 ; 2 uses
-  %i.re = sub i64 65, %indvars.iv.i.i488
+  %i.rd = getelementptr inbounds nuw i8, ptr %i.f, i64 %indvars.iv.next.i.i490 ; 2 uses
+  %i.re = sub nsw i64 65, %indvars.iv.i.i488
   %i.rf = and i64 %i.re, 4294967295
   %i.rg = getelementptr inbounds i8, ptr %i.rd, i64 -2 ; 2 uses
   %i.rh = add nuw nsw i64 %i.rf, 2                ; 4 uses
