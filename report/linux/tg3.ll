@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none)
-define internal noundef range(i32 -95, 73) i32 @tg3_get_sset_count(ptr nofree readnone captures(none) %0, i32 noundef %1) #8 align 16 prefalign(16) {
+define internal range(i32 -95, 73) i32 @tg3_get_sset_count(ptr nofree readnone captures(none) %0, i32 noundef %1) #8 align 16 prefalign(16) {
 bb.a:
   %switch.selectcmp = icmp eq i32 %1, 1
   %switch.select = select i1 %switch.selectcmp, i32 72, i32 -95
