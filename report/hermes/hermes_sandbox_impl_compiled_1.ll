@@ -204,18 +204,23 @@ bb.ah:                                            ; preds = %bb.ah, %bb.ag
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %indvars1724 = trunc i64 %indvars.iv.next to i32
   %.not1506 = icmp eq i32 %i.dw, %indvars1724
-  br i1 %.not1506, label %.loopexit1698, label %bb.ah
+  br i1 %.not1506, label %.loopexit1698.loopexit, label %bb.ah
 
-.loopexit1698:                                    ; preds = %bb.ah, %bb.af
-  %.21456 = phi i32 [ 0, %bb.af ], [ %i.dw, %bb.ah ]
+.loopexit1698.loopexit:                           ; preds = %bb.ah
+  %7 = zext i32 %i.dw to i64
+  br label %.loopexit1698
+
+.loopexit1698:                                    ; preds = %.loopexit1698.loopexit, %bb.af
+  %.21456 = phi i64 [ 0, %bb.af ], [ %7, %.loopexit1698.loopexit ]
   %i.fa = and i32 %i.o, 3                         ; 2 uses
   %.not1507 = icmp eq i32 %i.fa, 0
   br i1 %.not1507, label %.loopexit1697, label %.preheader1696
 
 .preheader1696:                                   ; preds = %.loopexit1698, %.preheader1696
-  %.31457 = phi i32 [ %7, %.preheader1696 ], [ %.21456, %.loopexit1698 ] ; 2 uses
-  %.11442 = phi i32 [ %i.fi, %.preheader1696 ], [ 0, %.loopexit1698 ]
-  %i.fb = shl i32 %.31457, 3                      ; 2 uses
+  %indvars.iv1726 = phi i64 [ %indvars.iv.next1727, %.preheader1696 ], [ %.21456, %.loopexit1698 ] ; 2 uses
+  %.31457 = phi i32 [ %i.fi, %.preheader1696 ], [ 0, %.loopexit1698 ]
+  %8 = trunc nuw i64 %indvars.iv1726 to i32
+  %i.fb = shl i32 %8, 3                           ; 2 uses
   %i.fc = add i32 %i.fb, %.11446
   %i.fd = add i32 %i.fb, %.0.copyload.i1640
   %i.fe = zext i32 %i.fd to i64
@@ -227,8 +232,8 @@ bb.ah:                                            ; preds = %bb.ah, %bb.ag
   %.val1615 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.fh = getelementptr inbounds nuw i8, ptr %.val1615, i64 %i.fg
   store i64 %.0.copyload.i1646, ptr %i.fh, align 1
-  %7 = add nsw i32 %.31457, 1
-  %i.fi = add nuw nsw i32 %.11442, 1              ; 2 uses
+  %indvars.iv.next1727 = add nuw nsw i64 %indvars.iv1726, 1
+  %i.fi = add nuw nsw i32 %.31457, 1              ; 2 uses
   %.not1508 = icmp eq i32 %i.fi, %i.fa
   br i1 %.not1508, label %.loopexit1697, label %.preheader1696
 
@@ -457,18 +462,23 @@ bb.as:                                            ; preds = %bb.as, %bb.ar
   %indvars.iv.next1727.a = add nuw nsw i64 %indvars.iv1726.a, 4 ; 2 uses
   %indvars1729 = trunc i64 %indvars.iv.next1727.a to i32
   %.not1514 = icmp eq i32 %i.iq, %indvars1729
-  br i1 %.not1514, label %.loopexit1693, label %bb.as
+  br i1 %.not1514, label %.loopexit1693.loopexit, label %bb.as
 
-.loopexit1693:                                    ; preds = %bb.as, %bb.aq
-  %.7 = phi i32 [ 0, %bb.aq ], [ %i.iq, %bb.as ]
+.loopexit1693.loopexit:                           ; preds = %bb.as
+  %9 = zext i32 %i.iq to i64
+  br label %.loopexit1693
+
+.loopexit1693:                                    ; preds = %.loopexit1693.loopexit, %bb.aq
+  %.7 = phi i64 [ 0, %bb.aq ], [ %9, %.loopexit1693.loopexit ]
   %i.ju = and i32 %i.o, 3                         ; 2 uses
   %.not1515 = icmp eq i32 %i.ju, 0
   br i1 %.not1515, label %.loopexit1692, label %.preheader1691
 
 .preheader1691:                                   ; preds = %.loopexit1693, %.preheader1691
-  %.8 = phi i32 [ %8, %.preheader1691 ], [ %.7, %.loopexit1693 ] ; 2 uses
-  %.21450 = phi i32 [ %i.kc, %.preheader1691 ], [ 0, %.loopexit1693 ]
-  %i.jv = shl i32 %.8, 3                          ; 2 uses
+  %indvars.iv1734 = phi i64 [ %indvars.iv.next1735, %.preheader1691 ], [ %.7, %.loopexit1693 ] ; 2 uses
+  %.8 = phi i32 [ %i.kc, %.preheader1691 ], [ 0, %.loopexit1693 ]
+  %10 = trunc nuw i64 %indvars.iv1734 to i32
+  %i.jv = shl i32 %10, 3                          ; 2 uses
   %i.jw = add i32 %i.jv, %i.dg
   %i.jx = add i32 %i.jv, %i.ck
   %i.jy = zext i32 %i.jx to i64
@@ -480,8 +490,8 @@ bb.as:                                            ; preds = %bb.as, %bb.ar
   %.val1603 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.kb = getelementptr inbounds nuw i8, ptr %.val1603, i64 %i.ka
   store i64 %.0.copyload.i1658, ptr %i.kb, align 1
-  %8 = add nsw i32 %.8, 1
-  %i.kc = add nuw nsw i32 %.21450, 1              ; 2 uses
+  %indvars.iv.next1735 = add nuw nsw i64 %indvars.iv1734, 1
+  %i.kc = add nuw nsw i32 %.8, 1                  ; 2 uses
   %.not1516 = icmp eq i32 %i.kc, %i.ju
   br i1 %.not1516, label %.loopexit1692, label %.preheader1691
 
