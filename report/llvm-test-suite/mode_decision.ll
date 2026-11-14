@@ -205,7 +205,7 @@ declare void @store_macroblock_parameters(i32 noundef) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define dso_local void @submacroblock_mode_decision(ptr nofree noundef readonly byval(%struct.RD_PARAMS) align 8 captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i16 noundef signext %5, i32 noundef %6, ptr nofree noundef captures(none) %7, ptr nofree noundef captures(none) initializes((0, 4)) %8, ptr nofree noundef captures(none) %9, i32 noundef %10) local_unnamed_addr #2 !guid !290 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 8 uses
+  %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca [5 x i32], align 16               ; 10 uses
   %i.d = alloca i32, align 4                      ; 5 uses
@@ -338,7 +338,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.bu
-  %indvars.iv445 = phi i64 [ %i.bw, %bb.c ], [ %indvars.iv.next446, %bb.bu ] ; 5 uses
+  %indvars.iv445 = phi i64 [ %i.bw, %bb.c ], [ %indvars.iv.next446, %bb.bu ] ; 4 uses
   %.0320403 = phi i32 [ 0, %bb.c ], [ %.2, %bb.bu ] ; 4 uses
   %.0323401 = phi i32 [ 2147483647, %bb.c ], [ %.2325, %bb.bu ] ; 5 uses
   %.0336400 = phi double [ 0.000000e+00, %bb.c ], [ %.2338, %bb.bu ] ; 4 uses
@@ -354,9 +354,7 @@ bb.d:                                             ; preds = %bb.c, %bb.bu
 
 bb.e:                                             ; preds = %bb.d
   %i.cs = icmp ne i64 %indvars.iv445, 0
-  %11 = icmp ne i64 %indvars.iv445, 5
-  %12 = and i1 %i.cs, %11
-  %or.cond = or i1 %.not, %12
+  %or.cond = or i1 %.not, %i.cs
   br i1 %or.cond, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -364,19 +362,23 @@ bb.f:                                             ; preds = %bb.e
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 1156
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !214
   %.not354 = icmp eq i32 %i.cv, 0
-  br i1 %.not354, label %bb.bu, label %bb.g
+  br i1 %.not354, label %bb.bu, label %.thread
 
-bb.g:                                             ; preds = %bb.f, %bb.e
+.thread:                                          ; preds = %bb.f
+  store i64 0, ptr %i.a, align 8, !tbaa !291
+  br label %bb.h
+
+bb.g:                                             ; preds = %bb.e
   store i64 0, ptr %i.a, align 8, !tbaa !291
   %i.cw = trunc nuw nsw i64 %indvars.iv445 to i32
-  %13 = load ptr, ptr @input, align 8, !tbaa !159 ; 2 uses
   switch i32 %i.cw, label %bb.t [
     i32 5, label %bb.h
     i32 0, label %bb.h
   ]
 
-bb.h:                                             ; preds = %bb.g, %bb.g
-  %i.cx = getelementptr inbounds nuw i8, ptr %13, i64 4168
+bb.h:                                             ; preds = %.thread, %bb.g, %bb.g
+  %11 = load ptr, ptr @input, align 8, !tbaa !159
+  %i.cx = getelementptr inbounds nuw i8, ptr %11, i64 4168
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !207
   %.not356 = icmp eq i32 %i.cy, 0
   br i1 %.not356, label %bb.i, label %bb.s
@@ -485,7 +487,8 @@ bb.s:                                             ; preds = %.sink.split, %bb.q,
   br label %.loopexit382
 
 bb.t:                                             ; preds = %bb.g
-  %i.et = getelementptr inbounds nuw i8, ptr %13, i64 4172
+  %12 = load ptr, ptr @input, align 8, !tbaa !159
+  %i.et = getelementptr inbounds nuw i8, ptr %12, i64 4172
   %i.eu = load i32, ptr %i.et, align 4, !tbaa !297
   %i.ev = icmp eq i32 %i.eu, 0
   br i1 %i.ev, label %bb.u, label %bb.v
@@ -888,8 +891,8 @@ bb.bu:                                            ; preds = %bb.d, %bb.f, %bb.bt
   %.2325 = phi i32 [ %.1324, %bb.bt ], [ %.0323401, %bb.f ], [ %.0323401, %bb.d ] ; 3 uses
   %.2 = phi i32 [ %.1, %bb.bt ], [ %.0320403, %bb.f ], [ %.0320403, %bb.d ] ; 3 uses
   %indvars.iv.next446 = add nuw nsw i64 %indvars.iv445, 1 ; 2 uses
-  %14 = icmp samesign ult i64 %indvars.iv.next446, %i.j
-  br i1 %14, label %bb.d, label %bb.bv, !llvm.loop !285
+  %exitcond.not = icmp eq i64 %indvars.iv.next446, %i.j
+  br i1 %exitcond.not, label %bb.bv, label %bb.d, !llvm.loop !285
 
 bb.bv:                                            ; preds = %bb.bu
   %i.yp = sext i16 %5 to i32

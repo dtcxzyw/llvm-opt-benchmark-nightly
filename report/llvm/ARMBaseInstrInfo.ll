@@ -205,8 +205,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not87129.not, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.e
+  %.078128 = add nsw i32 %i.ac, -1
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 104
+  %7 = zext nneg i32 %.078128 to i64
   br label %bb.m
 
 ._crit_edge:                                      ; preds = %.critedge, %bb.e
@@ -317,12 +319,10 @@ bb.l:                                             ; preds = %bb.k, %_ZN4llvm23Sm
   br i1 %.not91.us, label %._crit_edge138, label %.lr.ph137.split.us, !llvm.loop !1591
 
 bb.m:                                             ; preds = %.lr.ph, %.critedge
-  %.078131.in = phi i32 [ %i.ac, %.lr.ph ], [ %.078131, %.critedge ]
+  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 2 uses
   %.079130 = phi i32 [ -1, %.lr.ph ], [ %.180, %.critedge ] ; 2 uses
-  %.078131 = add nsw i32 %.078131.in, -1          ; 3 uses
   %i.bw = load ptr, ptr %i.ad, align 8, !tbaa !238
-  %7 = zext nneg i32 %.078131 to i64
-  %i.bx = getelementptr inbounds nuw [32 x i8], ptr %i.bw, i64 %7 ; 4 uses
+  %i.bx = getelementptr inbounds nuw [32 x i8], ptr %i.bw, i64 %indvars.iv ; 4 uses
   %i.by = load i32, ptr %i.p, align 8, !tbaa !56  ; 2 uses
   %i.bz = load i32, ptr %i.q, align 4, !tbaa !57
   %.not.i = icmp ult i32 %i.by, %i.bz
@@ -361,8 +361,10 @@ bb.p:                                             ; preds = %_ZN4llvm23SmallVect
 
 .critedge:                                        ; preds = %bb.p, %_ZN4llvm23SmallVectorTemplateBaseINS_14MachineOperandELb1EE9push_backERKS1_.exit
   %.180 = phi i32 [ %spec.select, %bb.p ], [ %.079130, %_ZN4llvm23SmallVectorTemplateBaseINS_14MachineOperandELb1EE9push_backERKS1_.exit ] ; 2 uses
-  %.not87.not = icmp sgt i32 %.078131, %i.n
-  br i1 %.not87.not, label %bb.m, label %._crit_edge, !llvm.loop !1592
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %.not87.not = icmp sgt i32 %i.n, %indvars
+  br i1 %.not87.not, label %._crit_edge, label %bb.m, !llvm.loop !1592
 
 .lr.ph137.split:                                  ; preds = %.lr.ph137, %bb.u
   %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %bb.u ], [ %i.at, %.lr.ph137 ] ; 4 uses
