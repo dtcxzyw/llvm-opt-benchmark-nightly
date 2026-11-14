@@ -205,16 +205,16 @@ bb.bp:                                            ; preds = %bb.bt, %_RINvMNtCsa
   %i.mw = icmp sgt i32 %i.mt, %i.mv
   br i1 %i.mw, label %.split38.i, label %bb.bu
 
-._crit_edge:                                      ; preds = %bb.bo
-  %8 = icmp eq i32 %i.ml, 17
-  br i1 %8, label %.split.i, label %bb.bs
-
-bb.bq:                                            ; preds = %bb.br, %.lr.ph.preheader
+bb.bq:                                            ; preds = %.lr.ph.preheader, %bb.br
   %indvars.iv = phi i64 [ %i.mr, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.br ] ; 4 uses
   %i.mx = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.my = load i32, ptr %i.mx, align 4, !alias.scope !195, !noundef !5
   %i.mz = icmp sgt i32 %i.my, %i.mp
   br i1 %i.mz, label %bb.bt, label %bb.br
+
+._crit_edge:                                      ; preds = %bb.bo
+  %8 = icmp eq i32 %i.ml, 17
+  br i1 %8, label %.split.i, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -618,16 +618,16 @@ bb.fh:                                            ; preds = %bb.ff, %bb.fm
   %i.aax = icmp sgt i32 %i.aau, %i.aaw
   br i1 %i.aax, label %.split79, label %bb.fn
 
-._crit_edge698:                                   ; preds = %bb.fg
-  %9 = icmp eq i32 %i.aam, 17
-  br i1 %9, label %.split, label %bb.fl
-
-bb.fi:                                            ; preds = %bb.fj, %.lr.ph697.preheader
+bb.fi:                                            ; preds = %.lr.ph697.preheader, %bb.fj
   %indvars.iv820 = phi i64 [ %i.aas, %.lr.ph697.preheader ], [ %indvars.iv.next821, %bb.fj ] ; 4 uses
   %i.aay = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv820
   %i.aaz = load i32, ptr %i.aay, align 4, !noundef !5
   %i.aba = icmp sgt i32 %i.aaz, %i.aaq
   br i1 %i.aba, label %bb.fm, label %bb.fj
+
+._crit_edge698:                                   ; preds = %bb.fg
+  %9 = icmp eq i32 %i.aam, 17
+  br i1 %9, label %.split, label %bb.fl
 
 bb.fj:                                            ; preds = %bb.fi
   %indvars.iv.next821 = add nuw nsw i64 %indvars.iv820, 1 ; 2 uses
@@ -1031,16 +1031,16 @@ bb.bp:                                            ; preds = %bb.bt, %_RINvMNtCsa
   %i.mw = icmp sgt i32 %i.mt, %i.mv
   br i1 %i.mw, label %.split38.i, label %bb.bu
 
-._crit_edge:                                      ; preds = %bb.bo
-  %8 = icmp eq i32 %i.ml, 17
-  br i1 %8, label %.split.i, label %bb.bs
-
-bb.bq:                                            ; preds = %bb.br, %.lr.ph.preheader
+bb.bq:                                            ; preds = %.lr.ph.preheader, %bb.br
   %indvars.iv = phi i64 [ %i.mr, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.br ] ; 4 uses
   %i.mx = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.my = load i32, ptr %i.mx, align 4, !alias.scope !438, !noundef !5
   %i.mz = icmp sgt i32 %i.my, %i.mp
   br i1 %i.mz, label %bb.bt, label %bb.br
+
+._crit_edge:                                      ; preds = %bb.bo
+  %8 = icmp eq i32 %i.ml, 17
+  br i1 %8, label %.split.i, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -1444,16 +1444,16 @@ bb.fh:                                            ; preds = %bb.ff, %bb.fm
   %i.aax = icmp sgt i32 %i.aau, %i.aaw
   br i1 %i.aax, label %.split79, label %bb.fn
 
-._crit_edge698:                                   ; preds = %bb.fg
-  %9 = icmp eq i32 %i.aam, 17
-  br i1 %9, label %.split, label %bb.fl
-
-bb.fi:                                            ; preds = %bb.fj, %.lr.ph697.preheader
+bb.fi:                                            ; preds = %.lr.ph697.preheader, %bb.fj
   %indvars.iv820 = phi i64 [ %i.aas, %.lr.ph697.preheader ], [ %indvars.iv.next821, %bb.fj ] ; 4 uses
   %i.aay = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv820
   %i.aaz = load i32, ptr %i.aay, align 4, !noundef !5
   %i.aba = icmp sgt i32 %i.aaz, %i.aaq
   br i1 %i.aba, label %bb.fm, label %bb.fj
+
+._crit_edge698:                                   ; preds = %bb.fg
+  %9 = icmp eq i32 %i.aam, 17
+  br i1 %9, label %.split, label %bb.fl
 
 bb.fj:                                            ; preds = %bb.fi
   %indvars.iv.next821 = add nuw nsw i64 %indvars.iv820, 1 ; 2 uses
@@ -1857,16 +1857,16 @@ bb.cm:                                            ; preds = %bb.cq, %_RINvMNtCsa
   %i.mb = icmp sgt i32 %i.lz, %i.ma
   br i1 %i.mb, label %.split38.i, label %bb.cr
 
-._crit_edge.i:                                    ; preds = %bb.cl
-  %5 = icmp eq i32 %i.lr, 17
-  br i1 %5, label %.split.i, label %bb.cp
-
 bb.cn:                                            ; preds = %bb.co, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ %i.lx, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.co ] ; 4 uses
   %i.mc = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
   %i.md = load i32, ptr %i.mc, align 4, !alias.scope !719, !noundef !5
   %i.me = icmp sgt i32 %i.md, %i.lv
   br i1 %i.me, label %bb.cq, label %bb.co
+
+._crit_edge.i:                                    ; preds = %bb.cl
+  %5 = icmp eq i32 %i.lr, 17
+  br i1 %5, label %.split.i, label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -2270,16 +2270,16 @@ bb.gh:                                            ; preds = %bb.ge, %bb.gm
   %i.zt = icmp sgt i32 %i.zq, %i.zs
   br i1 %i.zt, label %.split65, label %bb.gn
 
-._crit_edge:                                      ; preds = %bb.gg
-  %6 = icmp eq i32 %i.yx, 17
-  br i1 %6, label %.split, label %bb.gl
-
-bb.gi:                                            ; preds = %bb.gj, %.lr.ph.preheader
+bb.gi:                                            ; preds = %.lr.ph.preheader, %bb.gj
   %indvars.iv = phi i64 [ %i.zo, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.gj ] ; 4 uses
   %i.zu = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
   %i.zv = load i32, ptr %i.zu, align 4, !noundef !5
   %i.zw = icmp sgt i32 %i.zv, %i.zm
   br i1 %i.zw, label %bb.gm, label %bb.gj
+
+._crit_edge:                                      ; preds = %bb.gg
+  %6 = icmp eq i32 %i.yx, 17
+  br i1 %6, label %.split, label %bb.gl
 
 bb.gj:                                            ; preds = %bb.gi
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -2683,16 +2683,16 @@ bb.cm:                                            ; preds = %bb.cq, %_RINvMNtCsa
   %i.mb = icmp sgt i32 %i.lz, %i.ma
   br i1 %i.mb, label %.split38.i, label %bb.cr
 
-._crit_edge.i:                                    ; preds = %bb.cl
-  %5 = icmp eq i32 %i.lr, 17
-  br i1 %5, label %.split.i, label %bb.cp
-
 bb.cn:                                            ; preds = %bb.co, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ %i.lx, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.co ] ; 4 uses
   %i.mc = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
   %i.md = load i32, ptr %i.mc, align 4, !alias.scope !1030, !noundef !5
   %i.me = icmp sgt i32 %i.md, %i.lv
   br i1 %i.me, label %bb.cq, label %bb.co
+
+._crit_edge.i:                                    ; preds = %bb.cl
+  %5 = icmp eq i32 %i.lr, 17
+  br i1 %5, label %.split.i, label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -3096,16 +3096,16 @@ bb.gh:                                            ; preds = %bb.ge, %bb.gm
   %i.zt = icmp sgt i32 %i.zq, %i.zs
   br i1 %i.zt, label %.split65, label %bb.gn
 
-._crit_edge:                                      ; preds = %bb.gg
-  %6 = icmp eq i32 %i.yx, 17
-  br i1 %6, label %.split, label %bb.gl
-
-bb.gi:                                            ; preds = %bb.gj, %.lr.ph.preheader
+bb.gi:                                            ; preds = %.lr.ph.preheader, %bb.gj
   %indvars.iv = phi i64 [ %i.zo, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.gj ] ; 4 uses
   %i.zu = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
   %i.zv = load i32, ptr %i.zu, align 4, !noundef !5
   %i.zw = icmp sgt i32 %i.zv, %i.zm
   br i1 %i.zw, label %bb.gm, label %bb.gj
+
+._crit_edge:                                      ; preds = %bb.gg
+  %6 = icmp eq i32 %i.yx, 17
+  br i1 %6, label %.split, label %bb.gl
 
 bb.gj:                                            ; preds = %bb.gi
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -3509,16 +3509,16 @@ bb.cp:                                            ; preds = %bb.cn, %bb.cu
   %i.lf = icmp sgt i32 %i.ld, %i.le
   br i1 %i.lf, label %.split53, label %bb.cv
 
-._crit_edge:                                      ; preds = %bb.co
-  %5 = icmp eq i32 %i.kv, 17
-  br i1 %5, label %.split, label %bb.ct
-
-bb.cq:                                            ; preds = %bb.cr, %.lr.ph.preheader
+bb.cq:                                            ; preds = %.lr.ph.preheader, %bb.cr
   %indvars.iv = phi i64 [ %i.lb, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.cr ] ; 4 uses
   %i.lg = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.lh = load i32, ptr %i.lg, align 4, !noundef !5
   %i.li = icmp sgt i32 %i.lh, %i.kz
   br i1 %i.li, label %bb.cu, label %bb.cr
+
+._crit_edge:                                      ; preds = %bb.co
+  %5 = icmp eq i32 %i.kv, 17
+  br i1 %5, label %.split, label %bb.ct
 
 bb.cr:                                            ; preds = %bb.cq
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -3922,16 +3922,16 @@ bb.cp:                                            ; preds = %bb.cn, %bb.cu
   %i.lf = icmp sgt i32 %i.ld, %i.le
   br i1 %i.lf, label %.split53, label %bb.cv
 
-._crit_edge:                                      ; preds = %bb.co
-  %5 = icmp eq i32 %i.kv, 17
-  br i1 %5, label %.split, label %bb.ct
-
-bb.cq:                                            ; preds = %bb.cr, %.lr.ph.preheader
+bb.cq:                                            ; preds = %.lr.ph.preheader, %bb.cr
   %indvars.iv = phi i64 [ %i.lb, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.cr ] ; 4 uses
   %i.lg = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.lh = load i32, ptr %i.lg, align 4, !noundef !5
   %i.li = icmp sgt i32 %i.lh, %i.kz
   br i1 %i.li, label %bb.cu, label %bb.cr
+
+._crit_edge:                                      ; preds = %bb.co
+  %5 = icmp eq i32 %i.kv, 17
+  br i1 %5, label %.split, label %bb.ct
 
 bb.cr:                                            ; preds = %bb.cq
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -4335,16 +4335,16 @@ bb.ca:                                            ; preds = %_RINvMNtCsaXAyoiiLu
   %i.of = icmp sgt i32 %i.oc, %i.oe
   br i1 %i.of, label %.split118, label %bb.cg
 
-._crit_edge:                                      ; preds = %bb.bz
-  %5 = icmp eq i32 %i.nu, 17
-  br i1 %5, label %.split, label %bb.ce
-
-bb.cb:                                            ; preds = %bb.cc, %.lr.ph.preheader
+bb.cb:                                            ; preds = %.lr.ph.preheader, %bb.cc
   %indvars.iv = phi i64 [ %i.oa, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.cc ] ; 4 uses
   %i.og = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.oh = load i32, ptr %i.og, align 4, !noundef !5
   %i.oi = icmp sgt i32 %i.oh, %i.ny
   br i1 %i.oi, label %bb.cf, label %bb.cc
+
+._crit_edge:                                      ; preds = %bb.bz
+  %5 = icmp eq i32 %i.nu, 17
+  br i1 %5, label %.split, label %bb.ce
 
 bb.cc:                                            ; preds = %bb.cb
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -4748,16 +4748,16 @@ bb.ca:                                            ; preds = %_RINvMNtCsaXAyoiiLu
   %i.of = icmp sgt i32 %i.oc, %i.oe
   br i1 %i.of, label %.split118, label %bb.cg
 
-._crit_edge:                                      ; preds = %bb.bz
-  %5 = icmp eq i32 %i.nu, 17
-  br i1 %5, label %.split, label %bb.ce
-
-bb.cb:                                            ; preds = %bb.cc, %.lr.ph.preheader
+bb.cb:                                            ; preds = %.lr.ph.preheader, %bb.cc
   %indvars.iv = phi i64 [ %i.oa, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.cc ] ; 4 uses
   %i.og = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.oh = load i32, ptr %i.og, align 4, !noundef !5
   %i.oi = icmp sgt i32 %i.oh, %i.ny
   br i1 %i.oi, label %bb.cf, label %bb.cc
+
+._crit_edge:                                      ; preds = %bb.bz
+  %5 = icmp eq i32 %i.nu, 17
+  br i1 %5, label %.split, label %bb.ce
 
 bb.cc:                                            ; preds = %bb.cb
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

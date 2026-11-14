@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jq/original/jv?download=true
-inline.NumInlined: 353
+inline.NumInlined: 352
 inline.NumDeleted: 49
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 6
@@ -205,34 +205,26 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.not = icmp eq i32 %2, -2
-  br i1 %.not, label %bb.d, label %jvp_object_size.exit.preheader
+  br i1 %.not, label %4, label %jvp_object_size.exit.preheader
 
 jvp_object_size.exit.preheader:                   ; preds = %bb.c
   %.sroa.21.0.extract.shift.i = lshr i64 %0, 32
   %.sroa.21.0.extract.trunc.i = trunc nuw i64 %.sroa.21.0.extract.shift.i to i32 ; 2 uses
   %i.c = icmp sgt i32 %2, -2
   %i.d = add nsw i32 %2, 1                        ; 2 uses
-  %.not3455 = icmp slt i32 %i.d, %.sroa.21.0.extract.trunc.i
-  br i1 %.not3455, label %.lr.ph, label %.loopexit
+  %.not3455 = icmp slt i32 %i.d, %.sroa.21.0.extract.trunc.i ; 2 uses
+  br i1 %i.c, label %bb.d, label %jvp_object_size.exit.preheader.split
 
-bb.d:                                             ; preds = %bb.c
-  tail call void @__assert_fail(ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.8, i32 noundef 1976, ptr noundef nonnull @__PRETTY_FUNCTION__.jv_object_iter_next) #19
-  unreachable
+bb.d:                                             ; preds = %jvp_object_size.exit.preheader
+  br i1 %.not3455, label %jvp_object_get_slot.exit, label %.loopexit
 
 jvp_object_size.exit:                             ; preds = %jvp_object_get_slot.exit
   %i.e = add nsw i32 %3, 1                        ; 2 uses
   %.not34 = icmp slt i32 %i.e, %.sroa.21.0.extract.trunc.i
-  br i1 %.not34, label %.lr.ph, label %.loopexit, !llvm.loop !78
+  br i1 %.not34, label %jvp_object_get_slot.exit, label %.loopexit, !llvm.loop !78
 
-.lr.ph:                                           ; preds = %jvp_object_size.exit.preheader, %jvp_object_size.exit
-  %3 = phi i32 [ %i.e, %jvp_object_size.exit ], [ %i.d, %jvp_object_size.exit.preheader ] ; 3 uses
-  br i1 %i.c, label %jvp_object_get_slot.exit, label %4
-
-4:                                                ; preds = %.lr.ph
-  tail call void @__assert_fail(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.8, i32 noundef 1664, ptr noundef nonnull @__PRETTY_FUNCTION__.jvp_object_get_slot) #19
-  unreachable
-
-jvp_object_get_slot.exit:                         ; preds = %.lr.ph
+jvp_object_get_slot.exit:                         ; preds = %bb.d, %jvp_object_size.exit
+  %3 = phi i32 [ %i.e, %jvp_object_size.exit ], [ %i.d, %bb.d ] ; 3 uses
   %i.f = zext nneg i32 %3 to i64
   %i.g = getelementptr inbounds nuw [40 x i8], ptr %1, i64 %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
@@ -243,12 +235,23 @@ jvp_object_get_slot.exit:                         ; preds = %.lr.ph
     i64 5, label %.loopexit
   ]
 
+jvp_object_size.exit.preheader.split:             ; preds = %jvp_object_size.exit.preheader
+  br i1 %.not3455, label %5, label %.loopexit
+
+4:                                                ; preds = %bb.c
+  tail call void @__assert_fail(ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.8, i32 noundef 1976, ptr noundef nonnull @__PRETTY_FUNCTION__.jv_object_iter_next) #19
+  unreachable
+
+5:                                                ; preds = %jvp_object_size.exit.preheader.split
+  tail call void @__assert_fail(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.8, i32 noundef 1664, ptr noundef nonnull @__PRETTY_FUNCTION__.jvp_object_get_slot) #19
+  unreachable
+
 bb.e:                                             ; preds = %jvp_object_get_slot.exit
   tail call void @__assert_fail(ptr noundef nonnull @.str.35, ptr noundef nonnull @.str.8, i32 noundef 1985, ptr noundef nonnull @__PRETTY_FUNCTION__.jv_object_iter_next) #19
   unreachable
 
-.loopexit:                                        ; preds = %jvp_object_size.exit, %jvp_object_get_slot.exit, %jvp_object_size.exit.preheader
-  %.031 = phi i32 [ -2, %jvp_object_size.exit.preheader ], [ -2, %jvp_object_size.exit ], [ %3, %jvp_object_get_slot.exit ]
+.loopexit:                                        ; preds = %jvp_object_size.exit, %jvp_object_get_slot.exit, %bb.d, %jvp_object_size.exit.preheader.split
+  %.031 = phi i32 [ -2, %bb.d ], [ -2, %jvp_object_size.exit.preheader.split ], [ -2, %jvp_object_size.exit ], [ %3, %jvp_object_get_slot.exit ]
   ret i32 %.031
 }
 
@@ -651,7 +654,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @jvp_contains(i64 %0, ptr %1, i64 %2, ptr %3, i32 noundef %4) unnamed_addr #1 {
 bb.a:
-  %.fr = freeze i64 %0                            ; 19 uses
+  %.fr = freeze i64 %0                            ; 20 uses
   %i.a = icmp sgt i32 %4, 10000
   br i1 %i.a, label %jvp_object_contains.exit, label %bb.b
 
@@ -671,7 +674,7 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = add nsw i32 %4, 1
+  %i.d = add nsw i32 %4, 1                        ; 2 uses
   %i.e = and i64 %.fr, 15
   %i.f = icmp eq i64 %i.e, 7
   br i1 %i.f, label %bb.f, label %bb.e
@@ -691,7 +694,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %.sroa.21.0.extract.shift.i.i.i148 = lshr i64 %2, 32
-  %.sroa.21.0.extract.trunc.i.i.i149 = trunc nuw i64 %.sroa.21.0.extract.shift.i.i.i148 to i32 ; 5 uses
+  %.sroa.21.0.extract.trunc.i.i.i149 = trunc nuw i64 %.sroa.21.0.extract.shift.i.i.i148 to i32 ; 4 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %.sroa.21.0.extract.trunc.i.i.i149, i32 0)
   %exitcond.not.i521 = icmp slt i32 %.sroa.21.0.extract.trunc.i.i.i149, 1
   br i1 %exitcond.not.i521, label %jvp_object_contains.exit, label %.lr.ph523.preheader
@@ -706,7 +709,7 @@ jvp_object_size.exit.i.i150:                      ; preds = %.lr.ph523
 
 .lr.ph523:                                        ; preds = %.lr.ph523.preheader, %jvp_object_size.exit.i.i150
   %.0.i.i522 = phi i32 [ %i.j, %jvp_object_size.exit.i.i150 ], [ -1, %.lr.ph523.preheader ] ; 2 uses
-  %i.j = add nsw i32 %.0.i.i522, 1                ; 4 uses
+  %i.j = add nsw i32 %.0.i.i522, 1                ; 5 uses
   %i.k = zext nneg i32 %i.j to i64
   %i.l = getelementptr inbounds nuw [40 x i8], ptr %3, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
@@ -722,35 +725,30 @@ bb.i:                                             ; preds = %.lr.ph523
   unreachable
 
 jv_object_iter.exit:                              ; preds = %.lr.ph523
-  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.q = and i64 %.fr, 128
   %.not.i137 = icmp eq i64 %i.q, 0
-  %.not206345 = icmp eq i32 %i.j, -2
+  %.not206345 = icmp eq i32 %i.j, -2              ; 2 uses
+  br i1 %.not.i137, label %.preheader.us, label %bb.m
+
+.preheader.us:                                    ; preds = %jv_object_iter.exit
   br i1 %.not206345, label %jvp_object_contains.exit, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %jv_object_iter.exit, %jv_object_iter_next.exit
-  %.169.i346 = phi i32 [ %16, %jv_object_iter_next.exit ], [ %i.j, %jv_object_iter.exit ] ; 3 uses
+.lr.ph.a:                                         ; preds = %.preheader.us, %10
+  %.169.i346 = phi i32 [ %11, %10 ], [ %i.j, %.preheader.us ] ; 4 uses
   %i.r = icmp ne i32 %.169.i346, -1
   tail call void @llvm.assume(i1 %i.r)
   %or.cond.a = icmp ult i32 %.169.i346, %.sroa.21.0.extract.trunc.i.i.i149
-  br i1 %or.cond.a, label %jvp_object_ptr.exit.i.i144, label %5
-
-5:                                                ; preds = %.lr.ph.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.8, i32 noundef 1664, ptr noundef nonnull @__PRETTY_FUNCTION__.jvp_object_get_slot) #19
-  unreachable
+  br i1 %or.cond.a, label %jvp_object_ptr.exit.i.i144, label %.split344.us
 
 jvp_object_ptr.exit.i.i144:                       ; preds = %.lr.ph.a
-  %i.s = zext nneg i32 %.169.i346 to i64          ; 2 uses
+  %i.s = zext nneg i32 %.169.i346 to i64
   %i.t = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %i.s ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.sroa.0.0.copyload.i.a = load i64, ptr %i.u, align 8 ; 3 uses
   %i.v = and i64 %.sroa.0.0.copyload.i.a, 15
   %i.w = icmp eq i64 %i.v, 5
-  br i1 %i.w, label %bb.j, label %6
-
-6:                                                ; preds = %jvp_object_ptr.exit.i.i144
-  tail call void @__assert_fail(ptr noundef nonnull @.str.36, ptr noundef nonnull @.str.8, i32 noundef 1991, ptr noundef nonnull @__PRETTY_FUNCTION__.jv_object_iter_key) #19
-  unreachable
+  br i1 %i.w, label %bb.j, label %.split346.us
 
 bb.j:                                             ; preds = %jvp_object_ptr.exit.i.i144
   %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.t, i64 16
@@ -772,60 +770,97 @@ jvp_object_ptr.exit.i.i.a:                        ; preds = %bb.k, %bb.j
   %i.ad = load ptr, ptr %i.ac, align 8            ; 3 uses
   %i.ae = and i64 %i.ab, 128
   %.not.i.i.a = icmp eq i64 %i.ae, 0
-  br i1 %.not.i.i.a, label %bb.m, label %bb.l
+  br i1 %.not.i.i.a, label %jv_copy.exit138.us.us, label %bb.l
 
 bb.l:                                             ; preds = %jvp_object_ptr.exit.i.i.a
   %i.af = load i32, ptr %i.ad, align 4, !tbaa !17
   %i.ag = add nsw i32 %i.af, 1
   store i32 %i.ag, ptr %i.ad, align 4, !tbaa !17
-  br label %bb.m
+  br label %jv_copy.exit138.us.us
 
-bb.m:                                             ; preds = %jvp_object_ptr.exit.i.i.a, %bb.l
-  br i1 %.not.i137, label %jv_copy.exit140, label %bb.n
+jv_copy.exit138.us.us:                            ; preds = %bb.l, %jvp_object_ptr.exit.i.i.a
+  %5 = tail call { i64, ptr } @jv_object_get(i64 %.fr, ptr %1, i64 %.sroa.0.0.copyload.i.a, ptr %.sroa.5.0.copyload.i.a), !inline_history !83 ; 2 uses
+  %6 = extractvalue { i64, ptr } %5, 0
+  %7 = extractvalue { i64, ptr } %5, 1
+  %8 = tail call fastcc i32 @jvp_contains(i64 %6, ptr %7, i64 %i.ab, ptr %i.ad, i32 noundef %i.d), !inline_history !83 ; 3 uses
+  %9 = icmp sgt i32 %8, 0
+  br i1 %9, label %10, label %jvp_object_contains.exit
 
-bb.n:                                             ; preds = %bb.m
-  %7 = load i32, ptr %1, align 4, !tbaa !17
-  %8 = add nsw i32 %7, 1
-  store i32 %8, ptr %1, align 4, !tbaa !17
-  br label %jv_copy.exit140
+10:                                               ; preds = %jv_copy.exit138.us.us
+  %11 = tail call i32 @jv_object_iter_next(i64 %2, ptr nonnull %3, i32 noundef %.169.i346), !inline_history !83 ; 2 uses
+  %.not201.us.us = icmp eq i32 %11, -2
+  br i1 %.not201.us.us, label %jvp_object_contains.exit, label %.lr.ph.a, !llvm.loop !84
 
-jv_copy.exit140:                                  ; preds = %bb.m, %bb.n
-  %9 = tail call { i64, ptr } @jv_object_get(i64 %.fr, ptr %1, i64 %.sroa.0.0.copyload.i.a, ptr %.sroa.5.0.copyload.i.a), !inline_history !83 ; 2 uses
-  %10 = extractvalue { i64, ptr } %9, 0
-  %11 = extractvalue { i64, ptr } %9, 1
-  %12 = tail call fastcc i32 @jvp_contains(i64 %10, ptr %11, i64 %i.ab, ptr %i.ad, i32 noundef %i.d), !inline_history !83 ; 4 uses
-  %13 = icmp sgt i32 %12, 0
-  %indvars.iv.next394524 = add nuw nsw i64 %i.s, 1 ; 2 uses
-  %14 = trunc nuw i64 %indvars.iv.next394524 to i32 ; 2 uses
-  %.not34.i525 = icmp slt i32 %14, %.sroa.21.0.extract.trunc.i.i.i149
-  %or.cond528 = select i1 %13, i1 %.not34.i525, i1 false
-  br i1 %or.cond528, label %jvp_object_get_slot.exit.i, label %jvp_object_contains.exit
+bb.m:                                             ; preds = %jv_object_iter.exit
+  br i1 %.not206345, label %jvp_object_contains.exit, label %bb.n
 
-jvp_object_size.exit.i:                           ; preds = %jvp_object_get_slot.exit.i
-  %indvars.iv.next394 = add nuw nsw i64 %indvars.iv.next394526, 1 ; 2 uses
-  %15 = trunc nuw i64 %indvars.iv.next394 to i32  ; 2 uses
-  %.not34.i = icmp slt i32 %15, %.sroa.21.0.extract.trunc.i.i.i149
-  br i1 %.not34.i, label %jvp_object_get_slot.exit.i, label %jvp_object_contains.exit
+bb.n:                                             ; preds = %bb.m, %jv_object_iter_next.exit
+  %.169.i339 = phi i32 [ %37, %jv_object_iter_next.exit ], [ %i.j, %bb.m ] ; 4 uses
+  %12 = icmp ne i32 %.169.i339, -1
+  tail call void @llvm.assume(i1 %12)
+  %or.cond = icmp ult i32 %.169.i339, %.sroa.21.0.extract.trunc.i.i.i149
+  br i1 %or.cond, label %jv_copy.exit140, label %.split344.us
 
-jvp_object_get_slot.exit.i:                       ; preds = %jv_copy.exit140, %jvp_object_size.exit.i
-  %16 = phi i32 [ %15, %jvp_object_size.exit.i ], [ %14, %jv_copy.exit140 ]
-  %indvars.iv.next394526 = phi i64 [ %indvars.iv.next394, %jvp_object_size.exit.i ], [ %indvars.iv.next394524, %jv_copy.exit140 ] ; 3 uses
-  %17 = getelementptr inbounds nuw [40 x i8], ptr %3, i64 %indvars.iv.next394526
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %19 = load i64, ptr %18, align 8
-  %20 = and i64 %19, 15
-  switch i64 %20, label %bb.o [
-    i64 1, label %jvp_object_size.exit.i
-    i64 5, label %jv_object_iter_next.exit
-  ]
-
-bb.o:                                             ; preds = %jvp_object_get_slot.exit.i
-  tail call void @__assert_fail(ptr noundef nonnull @.str.35, ptr noundef nonnull @.str.8, i32 noundef 1985, ptr noundef nonnull @__PRETTY_FUNCTION__.jv_object_iter_next) #19
+.split344.us:                                     ; preds = %bb.n, %.lr.ph.a
+  tail call void @__assert_fail(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.8, i32 noundef 1664, ptr noundef nonnull @__PRETTY_FUNCTION__.jvp_object_get_slot) #19
   unreachable
 
-jv_object_iter_next.exit:                         ; preds = %jvp_object_get_slot.exit.i
-  %.not206 = icmp eq i64 %indvars.iv.next394526, 4294967294
-  br i1 %.not206, label %jvp_object_contains.exit, label %.lr.ph.a, !llvm.loop !84
+jv_copy.exit140:                                  ; preds = %bb.n
+  %13 = zext nneg i32 %.169.i339 to i64
+  %14 = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %13 ; 4 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %.sroa.0.0.copyload.i = load i64, ptr %15, align 8 ; 3 uses
+  %16 = and i64 %.sroa.0.0.copyload.i, 15
+  %17 = icmp eq i64 %16, 5
+  br i1 %17, label %jvp_object_size.exit.i, label %.split346.us
+
+.split346.us:                                     ; preds = %jv_copy.exit140, %jvp_object_ptr.exit.i.i144
+  tail call void @__assert_fail(ptr noundef nonnull @.str.36, ptr noundef nonnull @.str.8, i32 noundef 1991, ptr noundef nonnull @__PRETTY_FUNCTION__.jv_object_iter_key) #19
+  unreachable
+
+jvp_object_size.exit.i:                           ; preds = %jv_copy.exit140
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %.sroa.5.0.copyload.i = load ptr, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
+  %18 = and i64 %.sroa.0.0.copyload.i, 128
+  %.not.i.i143 = icmp eq i64 %18, 0
+  br i1 %.not.i.i143, label %jvp_object_get_slot.exit.i, label %19
+
+19:                                               ; preds = %jvp_object_size.exit.i
+  %20 = load i32, ptr %.sroa.5.0.copyload.i, align 4, !tbaa !17
+  %21 = add nsw i32 %20, 1
+  store i32 %21, ptr %.sroa.5.0.copyload.i, align 4, !tbaa !17
+  br label %jvp_object_get_slot.exit.i
+
+jvp_object_get_slot.exit.i:                       ; preds = %19, %jvp_object_size.exit.i
+  %22 = getelementptr inbounds nuw i8, ptr %14, i64 24
+  %23 = load i64, ptr %22, align 8                ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %14, i64 32
+  %25 = load ptr, ptr %24, align 8                ; 3 uses
+  %26 = and i64 %23, 128
+  %.not.i.i = icmp eq i64 %26, 0
+  br i1 %.not.i.i, label %bb.o, label %27
+
+27:                                               ; preds = %jvp_object_get_slot.exit.i
+  %28 = load i32, ptr %25, align 4, !tbaa !17
+  %29 = add nsw i32 %28, 1
+  store i32 %29, ptr %25, align 4, !tbaa !17
+  br label %bb.o
+
+bb.o:                                             ; preds = %jvp_object_get_slot.exit.i, %27
+  %30 = load i32, ptr %1, align 4, !tbaa !17
+  %31 = add nsw i32 %30, 1
+  store i32 %31, ptr %1, align 4, !tbaa !17
+  %32 = tail call { i64, ptr } @jv_object_get(i64 %.fr, ptr %1, i64 %.sroa.0.0.copyload.i, ptr %.sroa.5.0.copyload.i), !inline_history !83 ; 2 uses
+  %33 = extractvalue { i64, ptr } %32, 0
+  %34 = extractvalue { i64, ptr } %32, 1
+  %35 = tail call fastcc i32 @jvp_contains(i64 %33, ptr %34, i64 %23, ptr %25, i32 noundef %i.d), !inline_history !83 ; 3 uses
+  %36 = icmp sgt i32 %35, 0
+  br i1 %36, label %jv_object_iter_next.exit, label %jvp_object_contains.exit
+
+jv_object_iter_next.exit:                         ; preds = %bb.o
+  %37 = tail call i32 @jv_object_iter_next(i64 %2, ptr nonnull %3, i32 noundef %.169.i339), !inline_history !83 ; 2 uses
+  %.not206 = icmp eq i32 %37, -2
+  br i1 %.not206, label %jvp_object_contains.exit, label %bb.n, !llvm.loop !84
 
 bb.p:                                             ; preds = %bb.c
   %i.ah = add nsw i32 %4, 1                       ; 4 uses
@@ -1228,8 +1263,8 @@ jv_copy.exit134:                                  ; preds = %jv_copy.exit130, %b
   %i.fz = tail call fastcc i32 @jvp_equal(i64 %.fr, ptr %1, i64 %2, ptr %3, i32 noundef 0)
   br label %jvp_object_contains.exit
 
-jvp_object_contains.exit:                         ; preds = %bb.al, %.split235.us256.us, %bb.ab, %.split235.us.us.us.us.us, %jvp_object_size.exit.i.i150, %jv_copy.exit140, %jv_object_iter_next.exit, %jvp_object_size.exit.i, %bb.h, %jv_copy.exit134, %bb.b, %jv_string_length_bytes.exit, %jv_string_value.exit126, %jv_array_length.exit187.split, %jv_object_iter.exit, %.preheader208.us.us, %.preheader208.us, %.split235.us.us.us.us.us.thread, %.split235.us256.us.thread, %bb.a
-  %.0 = phi i32 [ -1, %bb.a ], [ %i.fz, %jv_copy.exit134 ], [ 1, %jv_string_length_bytes.exit ], [ 1, %jv_array_length.exit187.split ], [ 0, %bb.b ], [ %i.fs, %jv_string_value.exit126 ], [ 0, %.split235.us256.us.thread ], [ 1, %.preheader208.us ], [ %12, %jvp_object_size.exit.i ], [ 1, %jv_object_iter.exit ], [ 1, %.preheader208.us.us ], [ 0, %.split235.us.us.us.us.us.thread ], [ 1, %bb.h ], [ %12, %jv_copy.exit140 ], [ %.us-phi239.us.us.us.us, %.split235.us.us.us.us.us ], [ 1, %jvp_object_size.exit.i.i150 ], [ %12, %jv_object_iter_next.exit ], [ 1, %bb.ab ], [ %.us-phi312.us, %.split235.us256.us ], [ 1, %bb.al ]
+jvp_object_contains.exit:                         ; preds = %bb.al, %.split235.us256.us, %bb.ab, %.split235.us.us.us.us.us, %jvp_object_size.exit.i.i150, %bb.o, %jv_object_iter_next.exit, %10, %jv_copy.exit138.us.us, %bb.h, %jv_copy.exit134, %bb.b, %jv_string_length_bytes.exit, %jv_string_value.exit126, %jv_array_length.exit187.split, %.preheader.us, %bb.m, %.preheader208.us.us, %.preheader208.us, %.split235.us.us.us.us.us.thread, %.split235.us256.us.thread, %bb.a
+  %.0 = phi i32 [ -1, %bb.a ], [ %i.fz, %jv_copy.exit134 ], [ 1, %jv_string_length_bytes.exit ], [ 1, %jv_array_length.exit187.split ], [ 0, %bb.b ], [ %i.fs, %jv_string_value.exit126 ], [ 1, %.preheader208.us.us ], [ 1, %.preheader208.us ], [ 1, %bb.ab ], [ 1, %.preheader.us ], [ 1, %bb.h ], [ 0, %.split235.us256.us.thread ], [ 1, %bb.m ], [ 0, %.split235.us.us.us.us.us.thread ], [ %8, %10 ], [ %35, %bb.o ], [ 1, %jvp_object_size.exit.i.i150 ], [ %8, %jv_copy.exit138.us.us ], [ %35, %jv_object_iter_next.exit ], [ %.us-phi239.us.us.us.us, %.split235.us.us.us.us.us ], [ %.us-phi312.us, %.split235.us256.us ], [ 1, %bb.al ]
   tail call void @jv_free(i64 %.fr, ptr %1)
   tail call void @jv_free(i64 %2, ptr %3)
   ret i32 %.0
