@@ -205,7 +205,7 @@ bb.cb:                                            ; preds = %bb.ca
 .preheader432.i:                                  ; preds = %bb.cb
   %i.ayp = getelementptr inbounds nuw i8, ptr %i.axu, i64 76
   %i.ayq = zext nneg i32 %i.ayk to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ayp, i8 0, i64 range(i64 0, 20) %i.ayq, i1 false), !tbaa !32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ayp, i8 0, i64 range(i64 0, 19) %i.ayq, i1 false), !tbaa !32
   br label %.loopexit433.i
 
 bb.cc:                                            ; preds = %bb.cc, %.preheader434.i
@@ -608,7 +608,7 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %i.bmd, label %bb.cf, label %.preheader417.preheader.1.i
 
 .loopexit.thread.i:                               ; preds = %bb.ce
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(6) %i.bis, i8 0, i64 range(i64 0, 8) 6, i1 false), !tbaa !32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(6) %i.bis, i8 0, i64 range(i64 0, 7) 6, i1 false), !tbaa !32
   %i.bme = and i32 %i.biu, 4
   %i.bmf = icmp eq i32 %i.bme, 0
   br i1 %i.bmf, label %.preheader.preheader.1.i, label %.preheader417.preheader.1.i
@@ -710,7 +710,7 @@ bb.cf:                                            ; preds = %.loopexit.i
 .preheader.preheader.1.i:                         ; preds = %bb.cf, %.loopexit.thread.i
   %i.bpa = phi i32 [ %i.bma, %bb.cf ], [ %.promoted493.i, %.loopexit.thread.i ]
   %scevgep604.1.i = getelementptr i8, ptr %i.axu, i64 82
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(5) %scevgep604.1.i, i8 0, i64 range(i64 0, 8) 5, i1 false), !tbaa !32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(5) %scevgep604.1.i, i8 0, i64 range(i64 0, 7) 5, i1 false), !tbaa !32
   br label %.loopexit.1.i
 
 .loopexit.1.i:                                    ; preds = %.preheader.preheader.1.i, %.preheader415.1.i, %.preheader417.preheader.1.i
@@ -817,7 +817,7 @@ bb.cg:                                            ; preds = %.loopexit.1.i
 
 .loopexit.2.thread.i:                             ; preds = %bb.cg
   %scevgep604.2.i = getelementptr i8, ptr %i.axu, i64 87
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %scevgep604.2.i, i8 0, i64 range(i64 0, 8) 5, i1 false), !tbaa !32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %scevgep604.2.i, i8 0, i64 range(i64 0, 7) 5, i1 false), !tbaa !32
   %i.brx = and i32 %i.biu, 1
   %i.bry = icmp eq i32 %i.brx, 0
   br i1 %i.bry, label %.preheader.preheader.3.i, label %.preheader417.preheader.3.i
@@ -915,7 +915,7 @@ bb.ch:                                            ; preds = %.loopexit.2.i
 
 .preheader.preheader.3.i:                         ; preds = %bb.ch, %.loopexit.2.thread.i
   %scevgep604.3.i = getelementptr i8, ptr %i.axu, i64 92
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %scevgep604.3.i, i8 0, i64 range(i64 0, 8) 5, i1 false), !tbaa !32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %scevgep604.3.i, i8 0, i64 range(i64 0, 7) 5, i1 false), !tbaa !32
   br label %.loopexit.3.i
 
 .loopexit.3.i:                                    ; preds = %.preheader.preheader.3.i, %.preheader415.3.i, %.preheader417.preheader.3.i

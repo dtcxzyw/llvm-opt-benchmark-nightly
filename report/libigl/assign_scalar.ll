@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %.lr.ph, %bb.q
 bb.q:                                             ; preds = %bb.p
   %i.ca = add nuw nsw i64 %.064203, 1             ; 2 uses
   %.065 = add i64 %.065204, -1                    ; 2 uses
-  %13 = icmp ult i64 %i.ca, %i.bd
-  br i1 %13, label %bb.p, label %._crit_edge, !llvm.loop !730
+  %exitcond.not = icmp eq i64 %i.ca, %i.bd
+  br i1 %exitcond.not, label %._crit_edge, label %bb.p, !llvm.loop !730
 
 bb.r:                                             ; preds = %._crit_edge
   %i.cb = load i8, ptr %i.bb, align 1, !tbaa !74, !range !63, !noundef !64
