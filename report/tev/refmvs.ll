@@ -205,63 +205,57 @@ bb.m:                                             ; preds = %._crit_edge
   %i.eh = icmp ugt i8 %i.eg, 15
   %i.ei = extractelement <2 x i8> %i.n, i64 1
   %i.ej = icmp ugt i8 %i.ei, 15                   ; 2 uses
-  %i.ek = select i1 %i.ej, i32 2, i32 1           ; 2 uses
+  %i.ek = select i1 %i.ej, i32 2, i32 1
   %i.el = add nsw i32 %i.s, 1
   %i.em = ashr i32 %i.el, 1                       ; 2 uses
   %i.en = add nsw i32 %i.z, 1
-  %i.eo = ashr i32 %i.en, 1                       ; 3 uses
+  %i.eo = ashr i32 %i.en, 1                       ; 2 uses
   %i.ep = icmp sgt i32 %i.eo, 0
-  br i1 %i.ep, label %.preheader621.lr.ph, label %._crit_edge628
+  br i1 %i.ep, label %.preheader621.lr.ph, label %bb.n
 
 .preheader621.lr.ph:                              ; preds = %bb.m
   %i.eq = icmp sgt i32 %i.em, 0
   %i.er = zext i1 %i.ej to i64
   %i.es = shl i64 %i.dv, %i.er
-  br i1 %i.eq, label %.preheader621.us.preheader, label %.preheader621
+  br i1 %i.eq, label %.preheader621.us.preheader, label %bb.n
 
 .preheader621.us.preheader:                       ; preds = %.preheader621.lr.ph
   %i.et = select i1 %i.eh, i64 2, i64 1
+  %13 = zext nneg i32 %i.em to i64
   br label %.preheader621.us
 
 .preheader621.us:                                 ; preds = %.preheader621.us.preheader, %._crit_edge625.us
   %.0559627.us = phi i32 [ %i.ev, %._crit_edge625.us ], [ 0, %.preheader621.us.preheader ] ; 2 uses
   %.0560626.us = phi ptr [ %i.eu, %._crit_edge625.us ], [ %i.ef, %.preheader621.us.preheader ] ; 2 uses
-  br label %bb.n
+  br label %._crit_edge628
 
-bb.n:                                             ; preds = %.preheader621.us, %bb.n
-  %indvars.iv668 = phi i64 [ 0, %.preheader621.us ], [ %indvars.iv.next669, %bb.n ] ; 3 uses
-  %13 = getelementptr inbounds nuw [5 x i8], ptr %.0560626.us, i64 %indvars.iv668
-  %14 = trunc nuw nsw i64 %indvars.iv668 to i32
-  %15 = or i32 %.0559627.us, %14
-  %.not598.us = icmp eq i32 %15, 0
-  %..us = select i1 %.not598.us, ptr %i.d, ptr null
-  call fastcc void @add_temporal_candidate(ptr noundef nonnull %i.g, ptr noundef %1, ptr noundef nonnull %2, ptr noundef %13, i16 %4, ptr noundef %..us, ptr noundef nonnull %10)
-  %indvars.iv.next669 = add nuw nsw i64 %indvars.iv668, %i.et ; 2 uses
-  %16 = trunc nuw i64 %indvars.iv.next669 to i32
-  %17 = icmp sgt i32 %i.em, %16
-  br i1 %17, label %bb.n, label %._crit_edge625.us
+bb.n:                                             ; preds = %._crit_edge625.us, %.preheader621.lr.ph, %bb.m
+  %14 = call noundef i32 @llvm.smin.i32(i32 %i.q, i32 %i.t)
+  %15 = icmp samesign ugt i32 %14, 1
+  %16 = call i32 @llvm.smax.i32(i32 range(i32 -2147483648, 2147483641) %i.q, i32 %i.t)
+  %17 = icmp samesign ult i32 %16, 16
+  %or.cond606 = select i1 %15, i1 %17, i1 false
+  br i1 %or.cond606, label %bb.o, label %bb.w
 
-._crit_edge625.us:                                ; preds = %bb.n
+._crit_edge625.us:                                ; preds = %._crit_edge628
   %i.eu = getelementptr inbounds [5 x i8], ptr %.0560626.us, i64 %i.es
   %i.ev = add nuw nsw i32 %.0559627.us, %i.ek     ; 2 uses
   %i.ew = icmp slt i32 %i.ev, %i.eo
-  br i1 %i.ew, label %.preheader621.us, label %._crit_edge628
+  br i1 %i.ew, label %.preheader621.us, label %bb.n
 
-.preheader621:                                    ; preds = %.preheader621.lr.ph, %.preheader621
-  %.0559627 = phi i32 [ %18, %.preheader621 ], [ 0, %.preheader621.lr.ph ]
-  %18 = add nuw nsw i32 %.0559627, %i.ek          ; 2 uses
-  %19 = icmp slt i32 %18, %i.eo
-  br i1 %19, label %.preheader621, label %._crit_edge628
+._crit_edge628:                                   ; preds = %.preheader621.us, %._crit_edge628
+  %indvars.iv667 = phi i64 [ 0, %.preheader621.us ], [ %indvars.iv.next668, %._crit_edge628 ] ; 3 uses
+  %18 = getelementptr inbounds nuw [5 x i8], ptr %.0560626.us, i64 %indvars.iv667
+  %19 = trunc nuw nsw i64 %indvars.iv667 to i32
+  %20 = or i32 %.0559627.us, %19
+  %.not598 = icmp eq i32 %20, 0
+  %. = select i1 %.not598, ptr %i.d, ptr null
+  call fastcc void @add_temporal_candidate(ptr noundef nonnull %i.g, ptr noundef %1, ptr noundef nonnull %2, ptr noundef %18, i16 %4, ptr noundef %., ptr noundef nonnull %10)
+  %indvars.iv.next668 = add nuw nsw i64 %indvars.iv667, %i.et ; 2 uses
+  %21 = icmp samesign ult i64 %indvars.iv.next668, %13
+  br i1 %21, label %._crit_edge628, label %._crit_edge625.us
 
-._crit_edge628:                                   ; preds = %.preheader621, %._crit_edge625.us, %bb.m
-  %20 = call noundef i32 @llvm.smin.i32(i32 %i.q, i32 %i.t)
-  %21 = icmp samesign ugt i32 %20, 1
-  %22 = call i32 @llvm.smax.i32(i32 range(i32 -2147483648, 2147483641) %i.q, i32 %i.t)
-  %23 = icmp samesign ult i32 %22, 16
-  %or.cond606 = select i1 %21, i1 %23, i1 false
-  br i1 %or.cond606, label %bb.o, label %bb.w
-
-bb.o:                                             ; preds = %._crit_edge628
+bb.o:                                             ; preds = %bb.n
   %i.ex = lshr i32 %i.t, 1                        ; 2 uses
   %i.ey = lshr i32 %i.q, 1                        ; 3 uses
   %i.ez = zext nneg i32 %i.ex to i64
@@ -326,7 +320,7 @@ bb.v:                                             ; preds = %bb.u
   call fastcc void @add_temporal_candidate(ptr noundef nonnull %i.g, ptr noundef %1, ptr noundef nonnull %2, ptr noundef %i.gb, i16 %4, ptr noundef null, ptr noundef null)
   br label %bb.w
 
-bb.w:                                             ; preds = %._crit_edge628, %bb.u, %bb.v, %bb.r, %._crit_edge
+bb.w:                                             ; preds = %bb.n, %bb.u, %bb.v, %bb.r, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #18
   %i.gc = or i32 %.0563, %.0567
   %.not588 = icmp eq i32 %i.gc, -1

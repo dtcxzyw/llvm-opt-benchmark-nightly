@@ -204,16 +204,12 @@ bb.j:                                             ; preds = %bb.h
   %i.al = sext i32 %i.ak to i64
   %i.am = add nsw i64 %i.ai, -16
   %.not69 = icmp eq i64 %i.am, %i.al
-  br i1 %.not69, label %.preheader.preheader, label %bb.k
+  br i1 %.not69, label %vector.ph, label %bb.k
 
-.preheader.preheader:                             ; preds = %bb.j
-  %1 = add nsw i64 %i.ai, -4                      ; 2 uses
+vector.ph:                                        ; preds = %bb.j
+  %1 = add nsw i64 %i.ai, -4
   %2 = lshr exact i64 %1, 2
   %3 = add nuw nsw i64 %2, 1                      ; 2 uses
-  %min.iters.check = icmp ult i64 %1, 28
-  br i1 %min.iters.check, label %.preheader.preheader127, label %vector.ph
-
-vector.ph:                                        ; preds = %.preheader.preheader
   %n.vec = and i64 %3, 9223372036854775800        ; 9 uses
   %i.an = shl i64 %n.vec, 2
   %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -297,21 +293,16 @@ middle.block:                                     ; preds = %vector.body.7, %vec
   %bin.rdx = add <4 x i32> %.lcssa129, %.lcssa130
   %i.by = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %3, %n.vec
-  br i1 %cmp.n, label %check_checksum.exit, label %.preheader.preheader127
-
-.preheader.preheader127:                          ; preds = %.preheader.preheader, %middle.block
-  %indvars.iv.i.ph = phi i64 [ 0, %.preheader.preheader ], [ %i.an, %middle.block ]
-  %.08.i.ph = phi i32 [ 0, %.preheader.preheader ], [ %i.by, %middle.block ]
-  br label %.preheader
+  br i1 %cmp.n, label %check_checksum.exit, label %.preheader
 
 bb.k:                                             ; preds = %bb.j
   %i.bz = icmp slt i32 %i.ak, 0
   %i.ca = select i1 %i.bz, i32 %i.ak, i32 -541478725
   br label %bb.aa
 
-.preheader:                                       ; preds = %.preheader.preheader127, %.preheader
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader ], [ %indvars.iv.i.ph, %.preheader.preheader127 ] ; 2 uses
-  %.08.i = phi i32 [ %i.cd, %.preheader ], [ %.08.i.ph, %.preheader.preheader127 ]
+.preheader:                                       ; preds = %middle.block, %.preheader
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader ], [ %i.an, %middle.block ] ; 2 uses
+  %.08.i = phi i32 [ %i.cd, %.preheader ], [ %i.by, %middle.block ]
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !28
   %i.cd = add i32 %i.cc, %.08.i                   ; 2 uses

@@ -204,22 +204,21 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am, %bb.al
   %.01617 = phi i32 [ %.0.copyload.i1918, %bb.am ], [ %.0.copyload.i1917, %bb.al ] ; 2 uses
-  %5 = select i1 %.01641, i32 60247, i32 60248
   %.val1764 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.hi = getelementptr inbounds nuw i8, ptr %.val1764, i64 %i.bu
   %.0.copyload.i1919 = load i32, ptr %i.hi, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1919) #8, !srcloc !19
   %i.hj = shl i32 %.01617, 1
   %i.hk = add i32 %.0.copyload.i1919, %i.hj
+  %5 = select i1 %.01641, i64 60247, i64 60248
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ao, %bb.an
-  %.31633 = phi i32 [ %5, %bb.an ], [ %7, %bb.ao ] ; 2 uses
-  %.31626 = phi i32 [ %i.hk, %bb.an ], [ %i.hp, %bb.ao ] ; 2 uses
-  %.01620 = phi i32 [ 0, %bb.an ], [ %i.hq, %bb.ao ]
-  %6 = zext i32 %.31633 to i64
+  %indvars.iv1997 = phi i64 [ %indvars.iv.next1998, %bb.ao ], [ %5, %bb.an ] ; 2 uses
+  %.31626 = phi i32 [ %i.hp, %bb.ao ], [ %i.hk, %bb.an ] ; 2 uses
+  %.01620 = phi i32 [ %i.hq, %bb.ao ], [ 0, %bb.an ]
   %.val1836 = load ptr, ptr %i.d, align 8, !tbaa !18
-  %i.hl = getelementptr inbounds nuw i8, ptr %.val1836, i64 %6
+  %i.hl = getelementptr inbounds nuw i8, ptr %.val1836, i64 %indvars.iv1997
   %.0.copyload.i1920 = load i8, ptr %i.hl, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1920) #8, !srcloc !21
   %i.hm = zext i32 %.31626 to i64
@@ -228,8 +227,8 @@ bb.ao:                                            ; preds = %bb.ao, %bb.an
   %i.ho = getelementptr inbounds nuw i8, ptr %.val1873, i64 %i.hm
   store i16 %i.hn, ptr %i.ho, align 1
   %i.hp = add i32 %.31626, 2
-  %7 = add i32 %.31633, 1
-  %i.hq = add i32 %.01620, 1                      ; 2 uses
+  %indvars.iv.next1998 = add nuw nsw i64 %indvars.iv1997, 1
+  %i.hq = add nuw nsw i32 %.01620, 1              ; 2 uses
   %.not1694 = icmp eq i32 %i.hq, %i.ha
   br i1 %.not1694, label %bb.ap, label %bb.ao
 
@@ -263,22 +262,21 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %.11618 = phi i32 [ %.0.copyload.i1923, %bb.ar ], [ %.0.copyload.i1922, %bb.aq ] ; 2 uses
-  %8 = select i1 %.01641, i32 43017, i32 43018
   %.val1760 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ia = getelementptr inbounds nuw i8, ptr %.val1760, i64 %i.bu
   %.0.copyload.i1924 = load i32, ptr %i.ia, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1924) #8, !srcloc !19
   %i.ib = shl i32 %.11618, 1
   %i.ic = add i32 %.0.copyload.i1924, %i.ib
+  %6 = select i1 %.01641, i64 43017, i64 43018
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.at, %bb.as
-  %.41634 = phi i32 [ %8, %bb.as ], [ %10, %bb.at ] ; 2 uses
-  %.41627 = phi i32 [ %i.ic, %bb.as ], [ %i.ih, %bb.at ] ; 2 uses
-  %.11621 = phi i32 [ 0, %bb.as ], [ %i.ii, %bb.at ]
-  %9 = zext i32 %.41634 to i64
+  %indvars.iv1994 = phi i64 [ %indvars.iv.next1995, %bb.at ], [ %6, %bb.as ] ; 2 uses
+  %.41627 = phi i32 [ %i.ih, %bb.at ], [ %i.ic, %bb.as ] ; 2 uses
+  %.11621 = phi i32 [ %i.ii, %bb.at ], [ 0, %bb.as ]
   %.val1835 = load ptr, ptr %i.d, align 8, !tbaa !18
-  %i.id = getelementptr inbounds nuw i8, ptr %.val1835, i64 %9
+  %i.id = getelementptr inbounds nuw i8, ptr %.val1835, i64 %indvars.iv1994
   %.0.copyload.i1925 = load i8, ptr %i.id, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1925) #8, !srcloc !21
   %i.ie = zext i32 %.41627 to i64
@@ -287,8 +285,8 @@ bb.at:                                            ; preds = %bb.at, %bb.as
   %i.ig = getelementptr inbounds nuw i8, ptr %.val1872, i64 %i.ie
   store i16 %i.if, ptr %i.ig, align 1
   %i.ih = add i32 %.41627, 2
-  %10 = add i32 %.41634, 1
-  %i.ii = add i32 %.11621, 1                      ; 2 uses
+  %indvars.iv.next1995 = add nuw nsw i64 %indvars.iv1994, 1
+  %i.ii = add nuw nsw i32 %.11621, 1              ; 2 uses
   %.not1688 = icmp eq i32 %i.ii, %i.hs
   br i1 %.not1688, label %bb.au, label %bb.at
 
@@ -322,22 +320,21 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
   %.21619 = phi i32 [ %.0.copyload.i1928, %bb.aw ], [ %.0.copyload.i1927, %bb.av ] ; 2 uses
-  %11 = select i1 %.01641, i32 39575, i32 39576
   %.val1756 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.is = getelementptr inbounds nuw i8, ptr %.val1756, i64 %i.bu
   %.0.copyload.i1929 = load i32, ptr %i.is, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1929) #8, !srcloc !19
   %i.it = shl i32 %.21619, 1
   %i.iu = add i32 %.0.copyload.i1929, %i.it
+  %7 = select i1 %.01641, i64 39575, i64 39576
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ay, %bb.ax
-  %.51635 = phi i32 [ %11, %bb.ax ], [ %13, %bb.ay ] ; 2 uses
-  %.51628 = phi i32 [ %i.iu, %bb.ax ], [ %i.iz, %bb.ay ] ; 2 uses
-  %.21622 = phi i32 [ 0, %bb.ax ], [ %i.ja, %bb.ay ]
-  %12 = zext i32 %.51635 to i64
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ay ], [ %7, %bb.ax ] ; 2 uses
+  %.51628 = phi i32 [ %i.iz, %bb.ay ], [ %i.iu, %bb.ax ] ; 2 uses
+  %.21622 = phi i32 [ %i.ja, %bb.ay ], [ 0, %bb.ax ]
   %.val1834 = load ptr, ptr %i.d, align 8, !tbaa !18
-  %i.iv = getelementptr inbounds nuw i8, ptr %.val1834, i64 %12
+  %i.iv = getelementptr inbounds nuw i8, ptr %.val1834, i64 %indvars.iv
   %.0.copyload.i1930 = load i8, ptr %i.iv, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1930) #8, !srcloc !21
   %i.iw = zext i32 %.51628 to i64
@@ -346,8 +343,8 @@ bb.ay:                                            ; preds = %bb.ay, %bb.ax
   %i.iy = getelementptr inbounds nuw i8, ptr %.val1871, i64 %i.iw
   store i16 %i.ix, ptr %i.iy, align 1
   %i.iz = add i32 %.51628, 2
-  %13 = add i32 %.51635, 1
-  %i.ja = add i32 %.21622, 1                      ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.ja = add nuw nsw i32 %.21622, 1              ; 2 uses
   %.not1686 = icmp eq i32 %i.ja, %i.ik
   br i1 %.not1686, label %bb.az, label %bb.ay
 
