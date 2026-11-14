@@ -202,7 +202,7 @@ bytestream2_peek_byte.exit:                       ; preds = %.preheader199, %bb.
   %i.cb = sub nuw nsw i64 %i.v, %indvars.iv162
   %i.cc = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cb
   store i8 %i.ca, ptr %i.cc, align 1, !tbaa !39
-  %i.cd = trunc nsw i64 %indvars.iv162 to i32
+  %i.cd = trunc nuw nsw i64 %indvars.iv162 to i32
   %i.ce = and i32 %i.t, %i.cd
   %i.cf = icmp eq i32 %i.ce, 0
   %i.cg = zext i1 %i.cf to i64
