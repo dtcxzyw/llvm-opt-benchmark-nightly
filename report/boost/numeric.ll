@@ -205,7 +205,7 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit174.thread: ; preds = %
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 114 ; 2 uses
-  %i.dh = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.dh = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dj = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -333,12 +333,12 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i192.peel: ; p
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193
-  %.0118367 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 6 uses
-  %.0125366 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0137364 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1291363 = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1362 = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0.7301.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0266.1360 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.1360.ph, %.peel.next.preheader ] ; 13 uses
+  %.0118367 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 5 uses
+  %.0125366 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0137364 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1291363 = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1362 = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0.7301.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0266.1360 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.1360.ph, %.peel.next.preheader ] ; 12 uses
   %i.fg = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %bb.y, label %bb.z
@@ -356,23 +356,17 @@ bb.z:                                             ; preds = %bb.y, %.peel.next
 bb.aa:                                            ; preds = %bb.z
   %i.fm = load i8, ptr %i.dg, align 2, !tbaa !55
   %i.fn = icmp ne i8 %.1291363, %i.fm
-  %10 = trunc nuw i8 %.0125366 to i1              ; 2 uses
   %i.fo = icmp ne i32 %.0137364, 10
-  %or.cond.not = and i1 %i.fo, %10
-  %or.cond = select i1 %i.fn, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.ab
+  %or.cond = select i1 %i.fn, i1 true, i1 %i.fo
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = add nsw i32 %.0118367, 1
-  %spec.select = select i1 %i.dh, i32 8, i32 %.0137364 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select157 = select i1 %11, i32 0, i32 %i.fp
+  %spec.select = select i1 %i.dh, i32 8, i32 %.0137364
+  %spec.select157 = select i1 %i.dh, i32 0, i32 %i.fp
   br label %bb.af
 
-12:                                               ; preds = %bb.aa
-  br i1 %10, label %bb.ac, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit
-
-bb.ac:                                            ; preds = %12
+bb.ac:                                            ; preds = %bb.aa
   %i.fq = load i8, ptr %i.di, align 8, !tbaa !55
   %i.fr = icmp eq i8 %.1291363, %i.fq
   br i1 %i.fr, label %bb.ae, label %bb.ad
@@ -496,14 +490,14 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193: ; preds = %_ZNSt15
   %i.hl = trunc nuw i8 %.1126 to i1
   br i1 %i.hl, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit, !llvm.loop !282
 
-_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split302, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.z, %bb.y, %bb.ae, %bb.ad, %12, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193
-  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ false, %12 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ true, %.split302 ]
-  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.1360, %12 ], [ %.sroa.0266.1360, %bb.ad ], [ %.sroa.0266.1360, %bb.ae ], [ %.sroa.0266.1360, %bb.y ], [ %.sroa.0266.1360, %bb.z ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.sroa.0266.13, %.split302 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0.1362, %12 ], [ %.sroa.0.1362, %bb.ad ], [ %.sroa.0.1362, %bb.ae ], [ %.sroa.0.1362, %bb.y ], [ %.sroa.0.1362, %bb.z ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ null, %.split302 ]
-  %.3.ph.ph = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363, %12 ], [ %.1291363, %bb.ad ], [ %.1291363, %bb.ae ], [ %.1291363, %bb.y ], [ %.1291363, %bb.z ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.1291363, %.split302 ]
-  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.0137364, %12 ], [ %.0137364, %bb.ad ], [ %.0137364, %bb.ae ], [ %.0137364, %bb.y ], [ %.0137364, %bb.z ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.3140, %.split302 ]
-  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ 0, %12 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0125366, %bb.y ], [ %.0125366, %bb.z ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.1126, %.split302 ]
-  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.0118367, %12 ], [ %.0118367, %bb.ad ], [ %.0118367, %bb.ae ], [ %.0118367, %bb.y ], [ %.0118367, %bb.z ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.1119, %.split302 ]
+_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split302, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.z, %bb.y, %bb.ae, %bb.ad, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193
+  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ true, %.split302 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.13, %.split302 ], [ %.sroa.0266.1360, %bb.ad ], [ %.sroa.0266.1360, %bb.ae ], [ %.sroa.0266.1360, %bb.y ], [ %.sroa.0266.1360, %bb.z ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ null, %.split302 ], [ %.sroa.0.1362, %bb.ad ], [ %.sroa.0.1362, %bb.ae ], [ %.sroa.0.1362, %bb.y ], [ %.sroa.0.1362, %bb.z ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.3.ph.ph = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363, %.split302 ], [ %.1291363, %bb.ad ], [ %.1291363, %bb.ae ], [ %.1291363, %bb.y ], [ %.1291363, %bb.z ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.3140, %.split302 ], [ %.0137364, %bb.ad ], [ %.0137364, %bb.ae ], [ %.0137364, %bb.y ], [ %.0137364, %bb.z ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1126, %.split302 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0125366, %bb.y ], [ %.0125366, %bb.z ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1119, %.split302 ], [ %.0118367, %bb.ad ], [ %.0118367, %bb.ae ], [ %.0118367, %bb.y ], [ %.0118367, %bb.z ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
   %i.hm = trunc nuw i8 %.2127.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge
 
@@ -906,7 +900,7 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit175.thread: ; preds = %
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 114 ; 2 uses
-  %i.dh = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.dh = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dj = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -1034,12 +1028,12 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i193.peel: ; p
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194
-  %.0117365 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %spec.select158.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124364 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136362 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1292361 = phi i8 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.1292361.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1360 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0267.1358 = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0267.1358.ph, %.peel.next.preheader ] ; 13 uses
+  %.0117365 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %spec.select158.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124364 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136362 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1292361 = phi i8 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.1292361.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1360 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0267.1358 = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0267.1358.ph, %.peel.next.preheader ] ; 12 uses
   %i.fg = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %bb.y, label %bb.z
@@ -1057,23 +1051,17 @@ bb.z:                                             ; preds = %bb.y, %.peel.next
 bb.aa:                                            ; preds = %bb.z
   %i.fm = load i8, ptr %i.dg, align 2, !tbaa !55
   %i.fn = icmp ne i8 %.1292361, %i.fm
-  %10 = trunc nuw i8 %.0124364 to i1              ; 2 uses
   %i.fo = icmp ne i32 %.0136362, 10
-  %or.cond.not = and i1 %i.fo, %10
-  %or.cond = select i1 %i.fn, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.ab
+  %or.cond = select i1 %i.fn, i1 true, i1 %i.fo
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = add nsw i32 %.0117365, 1
-  %spec.select = select i1 %i.dh, i32 8, i32 %.0136362 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select158 = select i1 %11, i32 0, i32 %i.fp
+  %spec.select = select i1 %i.dh, i32 8, i32 %.0136362
+  %spec.select158 = select i1 %i.dh, i32 0, i32 %i.fp
   br label %bb.af
 
-12:                                               ; preds = %bb.aa
-  br i1 %10, label %bb.ac, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194._crit_edge.loopexit.loopexit
-
-bb.ac:                                            ; preds = %12
+bb.ac:                                            ; preds = %bb.aa
   %i.fq = load i8, ptr %i.di, align 8, !tbaa !55
   %i.fr = icmp eq i8 %.1292361, %i.fq
   br i1 %i.fr, label %bb.ae, label %bb.ad
@@ -1197,14 +1185,14 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194: ; preds = %_ZNSt15
   %i.hl = trunc nuw i8 %.1125 to i1
   br i1 %i.hl, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194._crit_edge.loopexit.loopexit, !llvm.loop !285
 
-_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188, %bb.z, %bb.y, %bb.ae, %bb.ad, %12, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ false, %12 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ true, %.split303 ]
-  %.sroa.0267.3.ph.ph = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0267.1358, %12 ], [ %.sroa.0267.1358, %bb.ad ], [ %.sroa.0267.1358, %bb.ae ], [ %.sroa.0267.1358, %bb.y ], [ %.sroa.0267.1358, %bb.z ], [ %.sroa.0267.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0267.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ %.sroa.0267.13, %.split303 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0.1360, %12 ], [ %.sroa.0.1360, %bb.ad ], [ %.sroa.0.1360, %bb.ae ], [ %.sroa.0.1360, %bb.y ], [ %.sroa.0.1360, %bb.z ], [ %.sroa.0.1360, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0.1360, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ null, %.split303 ]
-  %.3.ph.ph = phi i8 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.1292361, %12 ], [ %.1292361, %bb.ad ], [ %.1292361, %bb.ae ], [ %.1292361, %bb.y ], [ %.1292361, %bb.z ], [ %.1292361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1292361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ %.1292361, %.split303 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.0136362, %12 ], [ %.0136362, %bb.ad ], [ %.0136362, %bb.ae ], [ %.0136362, %bb.y ], [ %.0136362, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ %.3139, %.split303 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ 0, %12 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124364, %bb.y ], [ %.0124364, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ %.1125, %.split303 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.0117365, %12 ], [ %.0117365, %bb.ad ], [ %.0117365, %bb.ae ], [ %.0117365, %bb.y ], [ %.0117365, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ], [ %.1118, %.split303 ]
+_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188, %bb.z, %bb.y, %bb.ae, %bb.ad, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ true, %.split303 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
+  %.sroa.0267.3.ph.ph = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.sroa.0267.13, %.split303 ], [ %.sroa.0267.1358, %bb.ad ], [ %.sroa.0267.1358, %bb.ae ], [ %.sroa.0267.1358, %bb.y ], [ %.sroa.0267.1358, %bb.z ], [ %.sroa.0267.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0267.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ null, %.split303 ], [ %.sroa.0.1360, %bb.ad ], [ %.sroa.0.1360, %bb.ae ], [ %.sroa.0.1360, %bb.y ], [ %.sroa.0.1360, %bb.z ], [ %.sroa.0.1360, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0.1360, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
+  %.3.ph.ph = phi i8 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.1292361, %.split303 ], [ %.1292361, %bb.ad ], [ %.1292361, %bb.ae ], [ %.1292361, %bb.y ], [ %.1292361, %bb.z ], [ %.1292361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1292361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.3139, %.split303 ], [ %.0136362, %bb.ad ], [ %.0136362, %bb.ae ], [ %.0136362, %bb.y ], [ %.0136362, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.1125, %.split303 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124364, %bb.y ], [ %.0124364, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194 ], [ %.1118, %.split303 ], [ %.0117365, %bb.ad ], [ %.0117365, %bb.ae ], [ %.0117365, %bb.y ], [ %.0117365, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188.thr_comm ]
   %i.hm = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit194._crit_edge
 
@@ -1607,7 +1595,7 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit173.thread: ; preds = %
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 114 ; 2 uses
-  %i.dh = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.dh = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dj = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -1735,12 +1723,12 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i191.peel: ; p
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
-  %.0117363 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124362 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136360 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1290359 = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290359.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1358 = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.7300.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0265.1356 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1356.ph, %.peel.next.preheader ] ; 13 uses
+  %.0117363 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124362 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136360 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1290359 = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290359.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1358 = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.7300.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0265.1356 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1356.ph, %.peel.next.preheader ] ; 12 uses
   %i.fg = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %bb.y, label %bb.z
@@ -1758,23 +1746,17 @@ bb.z:                                             ; preds = %bb.y, %.peel.next
 bb.aa:                                            ; preds = %bb.z
   %i.fm = load i8, ptr %i.dg, align 2, !tbaa !55
   %i.fn = icmp ne i8 %.1290359, %i.fm
-  %10 = trunc nuw i8 %.0124362 to i1              ; 2 uses
   %i.fo = icmp ne i32 %.0136360, 10
-  %or.cond.not = and i1 %i.fo, %10
-  %or.cond = select i1 %i.fn, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.ab
+  %or.cond = select i1 %i.fn, i1 true, i1 %i.fo
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = add nsw i32 %.0117363, 1
-  %spec.select = select i1 %i.dh, i32 8, i32 %.0136360 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select156 = select i1 %11, i32 0, i32 %i.fp
+  %spec.select = select i1 %i.dh, i32 8, i32 %.0136360
+  %spec.select156 = select i1 %i.dh, i32 0, i32 %i.fp
   br label %bb.af
 
-12:                                               ; preds = %bb.aa
-  br i1 %10, label %bb.ac, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit
-
-bb.ac:                                            ; preds = %12
+bb.ac:                                            ; preds = %bb.aa
   %i.fq = load i8, ptr %i.di, align 8, !tbaa !55
   %i.fr = icmp eq i8 %.1290359, %i.fq
   br i1 %i.fr, label %bb.ae, label %bb.ad
@@ -1898,14 +1880,14 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192: ; preds = %_ZNSt15
   %i.hl = trunc nuw i8 %.1125 to i1
   br i1 %i.hl, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit, !llvm.loop !288
 
-_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split301, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.z, %bb.y, %bb.ae, %bb.ad, %12, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ false, %12 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ true, %.split301 ]
-  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1356, %12 ], [ %.sroa.0265.1356, %bb.ad ], [ %.sroa.0265.1356, %bb.ae ], [ %.sroa.0265.1356, %bb.y ], [ %.sroa.0265.1356, %bb.z ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.sroa.0265.13, %.split301 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.1358, %12 ], [ %.sroa.0.1358, %bb.ad ], [ %.sroa.0.1358, %bb.ae ], [ %.sroa.0.1358, %bb.y ], [ %.sroa.0.1358, %bb.z ], [ %.sroa.0.1358, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1358, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ null, %.split301 ]
-  %.3.ph.ph = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290359, %12 ], [ %.1290359, %bb.ad ], [ %.1290359, %bb.ae ], [ %.1290359, %bb.y ], [ %.1290359, %bb.z ], [ %.1290359, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290359, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1290359, %.split301 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.0136360, %12 ], [ %.0136360, %bb.ad ], [ %.0136360, %bb.ae ], [ %.0136360, %bb.y ], [ %.0136360, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.3139, %.split301 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 0, %12 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124362, %bb.y ], [ %.0124362, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1125, %.split301 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.0117363, %12 ], [ %.0117363, %bb.ad ], [ %.0117363, %bb.ae ], [ %.0117363, %bb.y ], [ %.0117363, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1118, %.split301 ]
+_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split301, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.z, %bb.y, %bb.ae, %bb.ad, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ true, %.split301 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.13, %.split301 ], [ %.sroa.0265.1356, %bb.ad ], [ %.sroa.0265.1356, %bb.ae ], [ %.sroa.0265.1356, %bb.y ], [ %.sroa.0265.1356, %bb.z ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ null, %.split301 ], [ %.sroa.0.1358, %bb.ad ], [ %.sroa.0.1358, %bb.ae ], [ %.sroa.0.1358, %bb.y ], [ %.sroa.0.1358, %bb.z ], [ %.sroa.0.1358, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1358, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.3.ph.ph = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290359, %.split301 ], [ %.1290359, %bb.ad ], [ %.1290359, %bb.ae ], [ %.1290359, %bb.y ], [ %.1290359, %bb.z ], [ %.1290359, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290359, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.3139, %.split301 ], [ %.0136360, %bb.ad ], [ %.0136360, %bb.ae ], [ %.0136360, %bb.y ], [ %.0136360, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1125, %.split301 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124362, %bb.y ], [ %.0124362, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1118, %.split301 ], [ %.0117363, %bb.ad ], [ %.0117363, %bb.ae ], [ %.0117363, %bb.y ], [ %.0117363, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
   %i.hm = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge
 
@@ -2308,7 +2290,7 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit173.thread: ; preds = %
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 114 ; 2 uses
-  %i.dh = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.dh = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dj = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -2436,12 +2418,12 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i191.peel: ; p
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
-  %.0117366 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124365 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136363 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1290362 = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1361 = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.7300.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0265.1359 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1359.ph, %.peel.next.preheader ] ; 13 uses
+  %.0117366 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124365 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136363 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1290362 = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1361 = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.7300.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0265.1359 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1359.ph, %.peel.next.preheader ] ; 12 uses
   %i.fg = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %bb.y, label %bb.z
@@ -2459,23 +2441,17 @@ bb.z:                                             ; preds = %bb.y, %.peel.next
 bb.aa:                                            ; preds = %bb.z
   %i.fm = load i8, ptr %i.dg, align 2, !tbaa !55
   %i.fn = icmp ne i8 %.1290362, %i.fm
-  %10 = trunc nuw i8 %.0124365 to i1              ; 2 uses
   %i.fo = icmp ne i32 %.0136363, 10
-  %or.cond.not = and i1 %i.fo, %10
-  %or.cond = select i1 %i.fn, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.ab
+  %or.cond = select i1 %i.fn, i1 true, i1 %i.fo
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = add nsw i32 %.0117366, 1
-  %spec.select = select i1 %i.dh, i32 8, i32 %.0136363 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select156 = select i1 %11, i32 0, i32 %i.fp
+  %spec.select = select i1 %i.dh, i32 8, i32 %.0136363
+  %spec.select156 = select i1 %i.dh, i32 0, i32 %i.fp
   br label %bb.af
 
-12:                                               ; preds = %bb.aa
-  br i1 %10, label %bb.ac, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit
-
-bb.ac:                                            ; preds = %12
+bb.ac:                                            ; preds = %bb.aa
   %i.fq = load i8, ptr %i.di, align 8, !tbaa !55
   %i.fr = icmp eq i8 %.1290362, %i.fq
   br i1 %i.fr, label %bb.ae, label %bb.ad
@@ -2599,14 +2575,14 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192: ; preds = %_ZNSt15
   %i.hl = trunc nuw i8 %.1125 to i1
   br i1 %i.hl, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit, !llvm.loop !291
 
-_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split301, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.z, %bb.y, %bb.ae, %bb.ad, %12, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ false, %12 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ true, %.split301 ]
-  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1359, %12 ], [ %.sroa.0265.1359, %bb.ad ], [ %.sroa.0265.1359, %bb.ae ], [ %.sroa.0265.1359, %bb.y ], [ %.sroa.0265.1359, %bb.z ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.sroa.0265.13, %.split301 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.1361, %12 ], [ %.sroa.0.1361, %bb.ad ], [ %.sroa.0.1361, %bb.ae ], [ %.sroa.0.1361, %bb.y ], [ %.sroa.0.1361, %bb.z ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ null, %.split301 ]
-  %.3.ph.ph = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362, %12 ], [ %.1290362, %bb.ad ], [ %.1290362, %bb.ae ], [ %.1290362, %bb.y ], [ %.1290362, %bb.z ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1290362, %.split301 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.0136363, %12 ], [ %.0136363, %bb.ad ], [ %.0136363, %bb.ae ], [ %.0136363, %bb.y ], [ %.0136363, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.3139, %.split301 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 0, %12 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124365, %bb.y ], [ %.0124365, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1125, %.split301 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.0117366, %12 ], [ %.0117366, %bb.ad ], [ %.0117366, %bb.ae ], [ %.0117366, %bb.y ], [ %.0117366, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1118, %.split301 ]
+_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split301, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.z, %bb.y, %bb.ae, %bb.ad, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ true, %.split301 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.13, %.split301 ], [ %.sroa.0265.1359, %bb.ad ], [ %.sroa.0265.1359, %bb.ae ], [ %.sroa.0265.1359, %bb.y ], [ %.sroa.0265.1359, %bb.z ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ null, %.split301 ], [ %.sroa.0.1361, %bb.ad ], [ %.sroa.0.1361, %bb.ae ], [ %.sroa.0.1361, %bb.y ], [ %.sroa.0.1361, %bb.z ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.3.ph.ph = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362, %.split301 ], [ %.1290362, %bb.ad ], [ %.1290362, %bb.ae ], [ %.1290362, %bb.y ], [ %.1290362, %bb.z ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.3139, %.split301 ], [ %.0136363, %bb.ad ], [ %.0136363, %bb.ae ], [ %.0136363, %bb.y ], [ %.0136363, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1125, %.split301 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124365, %bb.y ], [ %.0124365, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1118, %.split301 ], [ %.0117366, %bb.ad ], [ %.0117366, %bb.ae ], [ %.0117366, %bb.y ], [ %.0117366, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
   %i.hm = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge
 
@@ -3009,7 +2985,7 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit174.thread: ; preds = %
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 114 ; 2 uses
-  %i.dh = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.dh = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dj = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -3137,12 +3113,12 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i192.peel: ; p
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193
-  %.0118367 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 6 uses
-  %.0125366 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0137364 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1291363 = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1362 = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0.7301.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0266.1360 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.1360.ph, %.peel.next.preheader ] ; 13 uses
+  %.0118367 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 5 uses
+  %.0125366 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0137364 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1291363 = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1362 = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0.7301.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0266.1360 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.1360.ph, %.peel.next.preheader ] ; 12 uses
   %i.fg = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %bb.y, label %bb.z
@@ -3160,23 +3136,17 @@ bb.z:                                             ; preds = %bb.y, %.peel.next
 bb.aa:                                            ; preds = %bb.z
   %i.fm = load i8, ptr %i.dg, align 2, !tbaa !55
   %i.fn = icmp ne i8 %.1291363, %i.fm
-  %10 = trunc nuw i8 %.0125366 to i1              ; 2 uses
   %i.fo = icmp ne i32 %.0137364, 10
-  %or.cond.not = and i1 %i.fo, %10
-  %or.cond = select i1 %i.fn, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.ab
+  %or.cond = select i1 %i.fn, i1 true, i1 %i.fo
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = add nsw i32 %.0118367, 1
-  %spec.select = select i1 %i.dh, i32 8, i32 %.0137364 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select157 = select i1 %11, i32 0, i32 %i.fp
+  %spec.select = select i1 %i.dh, i32 8, i32 %.0137364
+  %spec.select157 = select i1 %i.dh, i32 0, i32 %i.fp
   br label %bb.af
 
-12:                                               ; preds = %bb.aa
-  br i1 %10, label %bb.ac, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit
-
-bb.ac:                                            ; preds = %12
+bb.ac:                                            ; preds = %bb.aa
   %i.fq = load i8, ptr %i.di, align 8, !tbaa !55
   %i.fr = icmp eq i8 %.1291363, %i.fq
   br i1 %i.fr, label %bb.ae, label %bb.ad
@@ -3300,14 +3270,14 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193: ; preds = %_ZNSt15
   %i.hl = trunc nuw i8 %.1126 to i1
   br i1 %i.hl, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit, !llvm.loop !294
 
-_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split302, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.z, %bb.y, %bb.ae, %bb.ad, %12, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193
-  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ false, %12 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ true, %.split302 ]
-  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.1360, %12 ], [ %.sroa.0266.1360, %bb.ad ], [ %.sroa.0266.1360, %bb.ae ], [ %.sroa.0266.1360, %bb.y ], [ %.sroa.0266.1360, %bb.z ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.sroa.0266.13, %.split302 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0.1362, %12 ], [ %.sroa.0.1362, %bb.ad ], [ %.sroa.0.1362, %bb.ae ], [ %.sroa.0.1362, %bb.y ], [ %.sroa.0.1362, %bb.z ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ null, %.split302 ]
-  %.3.ph.ph = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363, %12 ], [ %.1291363, %bb.ad ], [ %.1291363, %bb.ae ], [ %.1291363, %bb.y ], [ %.1291363, %bb.z ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.1291363, %.split302 ]
-  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.0137364, %12 ], [ %.0137364, %bb.ad ], [ %.0137364, %bb.ae ], [ %.0137364, %bb.y ], [ %.0137364, %bb.z ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.3140, %.split302 ]
-  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ 0, %12 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0125366, %bb.y ], [ %.0125366, %bb.z ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.1126, %.split302 ]
-  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.0118367, %12 ], [ %.0118367, %bb.ad ], [ %.0118367, %bb.ae ], [ %.0118367, %bb.y ], [ %.0118367, %bb.z ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ], [ %.1119, %.split302 ]
+_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split302, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.z, %bb.y, %bb.ae, %bb.ad, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193
+  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ true, %.split302 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.sroa.0266.13, %.split302 ], [ %.sroa.0266.1360, %bb.ad ], [ %.sroa.0266.1360, %bb.ae ], [ %.sroa.0266.1360, %bb.y ], [ %.sroa.0266.1360, %bb.z ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7301, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ null, %.split302 ], [ %.sroa.0.1362, %bb.ad ], [ %.sroa.0.1362, %bb.ae ], [ %.sroa.0.1362, %bb.y ], [ %.sroa.0.1362, %bb.z ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.3.ph.ph = phi i8 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1291363, %.split302 ], [ %.1291363, %bb.ad ], [ %.1291363, %bb.ae ], [ %.1291363, %bb.y ], [ %.1291363, %bb.z ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291363, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.3140, %.split302 ], [ %.0137364, %bb.ad ], [ %.0137364, %bb.ae ], [ %.0137364, %bb.y ], [ %.0137364, %bb.z ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1126, %.split302 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0125366, %bb.y ], [ %.0125366, %bb.z ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
+  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193 ], [ %.1119, %.split302 ], [ %.0118367, %bb.ad ], [ %.0118367, %bb.ae ], [ %.0118367, %bb.y ], [ %.0118367, %bb.z ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187.thr_comm ]
   %i.hm = trunc nuw i8 %.2127.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit193._crit_edge
 
@@ -3710,7 +3680,7 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit173.thread: ; preds = %
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 114 ; 2 uses
-  %i.dh = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.dh = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.dj = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -3838,12 +3808,12 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i191.peel: ; p
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
-  %.0117366 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124365 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136363 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1290362 = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1361 = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.7300.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0265.1359 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1359.ph, %.peel.next.preheader ] ; 13 uses
+  %.0117366 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124365 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136363 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1290362 = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1361 = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.7300.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0265.1359 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1359.ph, %.peel.next.preheader ] ; 12 uses
   %i.fg = load i8, ptr %i.de, align 8, !tbaa !100, !range !101, !noundef !102
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %bb.y, label %bb.z
@@ -3861,23 +3831,17 @@ bb.z:                                             ; preds = %bb.y, %.peel.next
 bb.aa:                                            ; preds = %bb.z
   %i.fm = load i8, ptr %i.dg, align 2, !tbaa !55
   %i.fn = icmp ne i8 %.1290362, %i.fm
-  %10 = trunc nuw i8 %.0124365 to i1              ; 2 uses
   %i.fo = icmp ne i32 %.0136363, 10
-  %or.cond.not = and i1 %i.fo, %10
-  %or.cond = select i1 %i.fn, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.ab
+  %or.cond = select i1 %i.fn, i1 true, i1 %i.fo
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = add nsw i32 %.0117366, 1
-  %spec.select = select i1 %i.dh, i32 8, i32 %.0136363 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select156 = select i1 %11, i32 0, i32 %i.fp
+  %spec.select = select i1 %i.dh, i32 8, i32 %.0136363
+  %spec.select156 = select i1 %i.dh, i32 0, i32 %i.fp
   br label %bb.af
 
-12:                                               ; preds = %bb.aa
-  br i1 %10, label %bb.ac, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit
-
-bb.ac:                                            ; preds = %12
+bb.ac:                                            ; preds = %bb.aa
   %i.fq = load i8, ptr %i.di, align 8, !tbaa !55
   %i.fr = icmp eq i8 %.1290362, %i.fq
   br i1 %i.fr, label %bb.ae, label %bb.ad
@@ -4001,14 +3965,14 @@ _ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192: ; preds = %_ZNSt15
   %i.hl = trunc nuw i8 %.1125 to i1
   br i1 %i.hl, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit, !llvm.loop !297
 
-_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split301, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.z, %bb.y, %bb.ae, %bb.ad, %12, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ false, %12 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ true, %.split301 ]
-  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.1359, %12 ], [ %.sroa.0265.1359, %bb.ad ], [ %.sroa.0265.1359, %bb.ae ], [ %.sroa.0265.1359, %bb.y ], [ %.sroa.0265.1359, %bb.z ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.sroa.0265.13, %.split301 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0.1361, %12 ], [ %.sroa.0.1361, %bb.ad ], [ %.sroa.0.1361, %bb.ae ], [ %.sroa.0.1361, %bb.y ], [ %.sroa.0.1361, %bb.z ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ null, %.split301 ]
-  %.3.ph.ph = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362, %12 ], [ %.1290362, %bb.ad ], [ %.1290362, %bb.ae ], [ %.1290362, %bb.y ], [ %.1290362, %bb.z ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1290362, %.split301 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.0136363, %12 ], [ %.0136363, %bb.ad ], [ %.0136363, %bb.ae ], [ %.0136363, %bb.y ], [ %.0136363, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.3139, %.split301 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ 0, %12 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124365, %bb.y ], [ %.0124365, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1125, %.split301 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.0117366, %12 ], [ %.0117366, %bb.ad ], [ %.0117366, %bb.ae ], [ %.0117366, %bb.y ], [ %.0117366, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ], [ %.1118, %.split301 ]
+_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split301, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.z, %bb.y, %bb.ae, %bb.ad, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ true, %.split301 ], [ false, %bb.ad ], [ false, %bb.ae ], [ false, %bb.y ], [ false, %bb.z ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.sroa.0265.13, %.split301 ], [ %.sroa.0265.1359, %bb.ad ], [ %.sroa.0265.1359, %bb.ae ], [ %.sroa.0265.1359, %bb.y ], [ %.sroa.0265.1359, %bb.z ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.13, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7300, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ null, %.split301 ], [ %.sroa.0.1361, %bb.ad ], [ %.sroa.0.1361, %bb.ae ], [ %.sroa.0.1361, %bb.y ], [ %.sroa.0.1361, %bb.z ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1361, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.3.ph.ph = phi i8 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1290362, %.split301 ], [ %.1290362, %bb.ad ], [ %.1290362, %bb.ae ], [ %.1290362, %bb.y ], [ %.1290362, %bb.z ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290362, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.3139, %.split301 ], [ %.0136363, %bb.ad ], [ %.0136363, %bb.ae ], [ %.0136363, %bb.y ], [ %.0136363, %bb.z ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1125, %.split301 ], [ 1, %bb.ad ], [ 1, %bb.ae ], [ %.0124365, %bb.y ], [ %.0124365, %bb.z ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192 ], [ %.1118, %.split301 ], [ %.0117366, %bb.ad ], [ %.0117366, %bb.ae ], [ %.0117366, %bb.y ], [ %.0117366, %bb.z ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZStneIcSt11char_traitsIcEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186.thr_comm ]
   %i.hm = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIcSt11char_traitsIcEEdeEv.exit192._crit_edge
 
@@ -4411,7 +4375,7 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit174.thread: ; preds = %
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 2 uses
-  %i.de = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.de = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 232
   %i.dg = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.dh = trunc nuw i8 %i.dg to i1
@@ -4551,12 +4515,12 @@ _ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i191.peel: ; preds = 
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193
-  %.0118374 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 6 uses
-  %.0125373 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0137371 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1291370 = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1369 = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0.7303.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0266.1367 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0266.1367.ph, %.peel.next.preheader ] ; 15 uses
+  %.0118374 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 5 uses
+  %.0125373 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0137371 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1291370 = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1369 = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0.7303.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0266.1367 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0266.1367.ph, %.peel.next.preheader ] ; 14 uses
   %i.fc = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.fd = trunc nuw i8 %i.fc to i1
   br i1 %i.fd, label %bb.aq, label %bb.ar
@@ -4574,23 +4538,17 @@ bb.ar:                                            ; preds = %bb.aq, %.peel.next
 bb.as:                                            ; preds = %bb.ar
   %i.fi = load i32, ptr %i.dd, align 8, !tbaa !119
   %i.fj = icmp ne i32 %.1291370, %i.fi
-  %10 = trunc nuw i8 %.0125373 to i1              ; 2 uses
   %i.fk = icmp ne i32 %.0137371, 10
-  %or.cond.not = and i1 %i.fk, %10
-  %or.cond = select i1 %i.fj, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.at
+  %or.cond = select i1 %i.fj, i1 true, i1 %i.fk
+  br i1 %or.cond, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fl = add nsw i32 %.0118374, 1
-  %spec.select = select i1 %i.de, i32 8, i32 %.0137371 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select157 = select i1 %11, i32 0, i32 %i.fl
+  %spec.select = select i1 %i.de, i32 8, i32 %.0137371
+  %spec.select157 = select i1 %i.de, i32 0, i32 %i.fl
   br label %bb.ax
 
-12:                                               ; preds = %bb.as
-  br i1 %10, label %bb.au, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit
-
-bb.au:                                            ; preds = %12
+bb.au:                                            ; preds = %bb.as
   %i.fm = load i32, ptr %i.df, align 8, !tbaa !119
   %i.fn = icmp eq i32 %.1291370, %i.fm
   br i1 %i.fn, label %bb.aw, label %bb.av
@@ -4726,14 +4684,14 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193: ; preds = %_ZNSt15
   %i.hg = trunc nuw i8 %.1126 to i1
   br i1 %i.hg, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit, !llvm.loop !306
 
-_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split304, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.ar, %bb.aq, %bb.aw, %bb.av, %12, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193
-  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ false, %12 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ true, %.split304 ]
-  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0266.1367, %12 ], [ %.sroa.0266.1367, %bb.av ], [ %.sroa.0266.1367, %bb.aw ], [ %.sroa.0266.1367, %bb.aq ], [ %.sroa.0266.1367, %bb.ar ], [ %spec.select336, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.1367, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ null, %.split304 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0.1369, %12 ], [ %.sroa.0.1369, %bb.av ], [ %.sroa.0.1369, %bb.aw ], [ %.sroa.0.1369, %bb.aq ], [ %.sroa.0.1369, %bb.ar ], [ %.sroa.0.1369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ null, %.split304 ]
-  %.3.ph.ph = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370, %12 ], [ %.1291370, %bb.av ], [ %.1291370, %bb.aw ], [ %.1291370, %bb.aq ], [ %.1291370, %bb.ar ], [ %.1291370, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291370, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.1291370, %.split304 ]
-  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.0137371, %12 ], [ %.0137371, %bb.av ], [ %.0137371, %bb.aw ], [ %.0137371, %bb.aq ], [ %.0137371, %bb.ar ], [ %.3140, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.3140, %.split304 ]
-  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ 0, %12 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0125373, %bb.aq ], [ %.0125373, %bb.ar ], [ %.1126, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.1126, %.split304 ]
-  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.0118374, %12 ], [ %.0118374, %bb.av ], [ %.0118374, %bb.aw ], [ %.0118374, %bb.aq ], [ %.0118374, %bb.ar ], [ %.1119, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.1119, %.split304 ]
+_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split304, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.ar, %bb.aq, %bb.aw, %bb.av, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193
+  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ true, %.split304 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ null, %.split304 ], [ %.sroa.0266.1367, %bb.av ], [ %.sroa.0266.1367, %bb.aw ], [ %.sroa.0266.1367, %bb.aq ], [ %.sroa.0266.1367, %bb.ar ], [ %spec.select336, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.1367, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ null, %.split304 ], [ %.sroa.0.1369, %bb.av ], [ %.sroa.0.1369, %bb.aw ], [ %.sroa.0.1369, %bb.aq ], [ %.sroa.0.1369, %bb.ar ], [ %.sroa.0.1369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.3.ph.ph = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370, %.split304 ], [ %.1291370, %bb.av ], [ %.1291370, %bb.aw ], [ %.1291370, %bb.aq ], [ %.1291370, %bb.ar ], [ %.1291370, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291370, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.3140, %.split304 ], [ %.0137371, %bb.av ], [ %.0137371, %bb.aw ], [ %.0137371, %bb.aq ], [ %.0137371, %bb.ar ], [ %.3140, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1126, %.split304 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0125373, %bb.aq ], [ %.0125373, %bb.ar ], [ %.1126, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1119, %.split304 ], [ %.0118374, %bb.av ], [ %.0118374, %bb.aw ], [ %.0118374, %bb.aq ], [ %.0118374, %bb.ar ], [ %.1119, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
   %i.hh = trunc nuw i8 %.2127.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge
 
@@ -5136,7 +5094,7 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit175.thread: ; preds = %
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 2 uses
-  %i.de = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.de = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 232
   %i.dg = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.dh = trunc nuw i8 %i.dg to i1
@@ -5276,12 +5234,12 @@ _ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i192.peel: ; preds = 
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194
-  %.0117372 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %spec.select158.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124371 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136369 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1292368 = phi i32 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.1292368.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1367 = phi ptr [ %.sroa.0.7304, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.sroa.0.7304.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0267.1365 = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.sroa.0267.1365.ph, %.peel.next.preheader ] ; 15 uses
+  %.0117372 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %spec.select158.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124371 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136369 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1292368 = phi i32 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.1292368.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1367 = phi ptr [ %.sroa.0.7304, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.sroa.0.7304.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0267.1365 = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.sroa.0267.1365.ph, %.peel.next.preheader ] ; 14 uses
   %i.fc = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.fd = trunc nuw i8 %i.fc to i1
   br i1 %i.fd, label %bb.aq, label %bb.ar
@@ -5299,23 +5257,17 @@ bb.ar:                                            ; preds = %bb.aq, %.peel.next
 bb.as:                                            ; preds = %bb.ar
   %i.fi = load i32, ptr %i.dd, align 8, !tbaa !119
   %i.fj = icmp ne i32 %.1292368, %i.fi
-  %10 = trunc nuw i8 %.0124371 to i1              ; 2 uses
   %i.fk = icmp ne i32 %.0136369, 10
-  %or.cond.not = and i1 %i.fk, %10
-  %or.cond = select i1 %i.fj, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.at
+  %or.cond = select i1 %i.fj, i1 true, i1 %i.fk
+  br i1 %or.cond, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fl = add nsw i32 %.0117372, 1
-  %spec.select = select i1 %i.de, i32 8, i32 %.0136369 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select158 = select i1 %11, i32 0, i32 %i.fl
+  %spec.select = select i1 %i.de, i32 8, i32 %.0136369
+  %spec.select158 = select i1 %i.de, i32 0, i32 %i.fl
   br label %bb.ax
 
-12:                                               ; preds = %bb.as
-  br i1 %10, label %bb.au, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194._crit_edge.loopexit.loopexit
-
-bb.au:                                            ; preds = %12
+bb.au:                                            ; preds = %bb.as
   %i.fm = load i32, ptr %i.df, align 8, !tbaa !119
   %i.fn = icmp eq i32 %.1292368, %i.fm
   br i1 %i.fn, label %bb.aw, label %bb.av
@@ -5451,14 +5403,14 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194: ; preds = %_ZNSt15
   %i.hg = trunc nuw i8 %.1125 to i1
   br i1 %i.hg, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194._crit_edge.loopexit.loopexit, !llvm.loop !309
 
-_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194._crit_edge.loopexit.loopexit: ; preds = %.split305, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188, %bb.ar, %bb.aq, %bb.aw, %bb.av, %12, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ false, %12 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ true, %.split305 ]
-  %.sroa.0267.3.ph.ph = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.sroa.0267.1365, %12 ], [ %.sroa.0267.1365, %bb.av ], [ %.sroa.0267.1365, %bb.aw ], [ %.sroa.0267.1365, %bb.aq ], [ %.sroa.0267.1365, %bb.ar ], [ %spec.select335, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0267.1365, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ null, %.split305 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7304, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.sroa.0.1367, %12 ], [ %.sroa.0.1367, %bb.av ], [ %.sroa.0.1367, %bb.aw ], [ %.sroa.0.1367, %bb.aq ], [ %.sroa.0.1367, %bb.ar ], [ %.sroa.0.1367, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0.1367, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ null, %.split305 ]
-  %.3.ph.ph = phi i32 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.1292368, %12 ], [ %.1292368, %bb.av ], [ %.1292368, %bb.aw ], [ %.1292368, %bb.aq ], [ %.1292368, %bb.ar ], [ %.1292368, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1292368, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ %.1292368, %.split305 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.0136369, %12 ], [ %.0136369, %bb.av ], [ %.0136369, %bb.aw ], [ %.0136369, %bb.aq ], [ %.0136369, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ %.3139, %.split305 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ 0, %12 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124371, %bb.aq ], [ %.0124371, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ %.1125, %.split305 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.0117372, %12 ], [ %.0117372, %bb.av ], [ %.0117372, %bb.aw ], [ %.0117372, %bb.aq ], [ %.0117372, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ], [ %.1118, %.split305 ]
+_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194._crit_edge.loopexit.loopexit: ; preds = %.split305, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188, %bb.ar, %bb.aq, %bb.aw, %bb.av, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ true, %.split305 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
+  %.sroa.0267.3.ph.ph = phi ptr [ %.sroa.0267.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ null, %.split305 ], [ %.sroa.0267.1365, %bb.av ], [ %.sroa.0267.1365, %bb.aw ], [ %.sroa.0267.1365, %bb.aq ], [ %.sroa.0267.1365, %bb.ar ], [ %spec.select335, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0267.1365, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7304, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ null, %.split305 ], [ %.sroa.0.1367, %bb.av ], [ %.sroa.0.1367, %bb.aw ], [ %.sroa.0.1367, %bb.aq ], [ %.sroa.0.1367, %bb.ar ], [ %.sroa.0.1367, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.sroa.0.1367, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
+  %.3.ph.ph = phi i32 [ %.0.i.i191, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.1292368, %.split305 ], [ %.1292368, %bb.av ], [ %.1292368, %bb.aw ], [ %.1292368, %bb.aq ], [ %.1292368, %bb.ar ], [ %.1292368, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1292368, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.3139, %.split305 ], [ %.0136369, %bb.av ], [ %.0136369, %bb.aw ], [ %.0136369, %bb.aq ], [ %.0136369, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.1125, %.split305 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124371, %bb.aq ], [ %.0124371, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194 ], [ %.1118, %.split305 ], [ %.0117372, %bb.av ], [ %.0117372, %bb.aw ], [ %.0117372, %bb.aq ], [ %.0117372, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i184._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit188_crit_edge ]
   %i.hh = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit194._crit_edge
 
@@ -5861,7 +5813,7 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit173.thread: ; preds = %
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 2 uses
-  %i.de = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.de = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 232
   %i.dg = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.dh = trunc nuw i8 %i.dg to i1
@@ -6001,12 +5953,12 @@ _ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i190.peel: ; preds = 
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
-  %.0117370 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124369 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136367 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1290366 = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290366.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1365 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0265.1363 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1363.ph, %.peel.next.preheader ] ; 15 uses
+  %.0117370 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124369 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136367 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1290366 = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290366.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1365 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0265.1363 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1363.ph, %.peel.next.preheader ] ; 14 uses
   %i.fc = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.fd = trunc nuw i8 %i.fc to i1
   br i1 %i.fd, label %bb.aq, label %bb.ar
@@ -6024,23 +5976,17 @@ bb.ar:                                            ; preds = %bb.aq, %.peel.next
 bb.as:                                            ; preds = %bb.ar
   %i.fi = load i32, ptr %i.dd, align 8, !tbaa !119
   %i.fj = icmp ne i32 %.1290366, %i.fi
-  %10 = trunc nuw i8 %.0124369 to i1              ; 2 uses
   %i.fk = icmp ne i32 %.0136367, 10
-  %or.cond.not = and i1 %i.fk, %10
-  %or.cond = select i1 %i.fj, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.at
+  %or.cond = select i1 %i.fj, i1 true, i1 %i.fk
+  br i1 %or.cond, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fl = add nsw i32 %.0117370, 1
-  %spec.select = select i1 %i.de, i32 8, i32 %.0136367 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select156 = select i1 %11, i32 0, i32 %i.fl
+  %spec.select = select i1 %i.de, i32 8, i32 %.0136367
+  %spec.select156 = select i1 %i.de, i32 0, i32 %i.fl
   br label %bb.ax
 
-12:                                               ; preds = %bb.as
-  br i1 %10, label %bb.au, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit
-
-bb.au:                                            ; preds = %12
+bb.au:                                            ; preds = %bb.as
   %i.fm = load i32, ptr %i.df, align 8, !tbaa !119
   %i.fn = icmp eq i32 %.1290366, %i.fm
   br i1 %i.fn, label %bb.aw, label %bb.av
@@ -6176,14 +6122,14 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192: ; preds = %_ZNSt15
   %i.hg = trunc nuw i8 %.1125 to i1
   br i1 %i.hg, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit, !llvm.loop !312
 
-_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.ar, %bb.aq, %bb.aw, %bb.av, %12, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ false, %12 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ true, %.split303 ]
-  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1363, %12 ], [ %.sroa.0265.1363, %bb.av ], [ %.sroa.0265.1363, %bb.aw ], [ %.sroa.0265.1363, %bb.aq ], [ %.sroa.0265.1363, %bb.ar ], [ %spec.select333, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.1363, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ null, %.split303 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.1365, %12 ], [ %.sroa.0.1365, %bb.av ], [ %.sroa.0.1365, %bb.aw ], [ %.sroa.0.1365, %bb.aq ], [ %.sroa.0.1365, %bb.ar ], [ %.sroa.0.1365, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1365, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ null, %.split303 ]
-  %.3.ph.ph = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290366, %12 ], [ %.1290366, %bb.av ], [ %.1290366, %bb.aw ], [ %.1290366, %bb.aq ], [ %.1290366, %bb.ar ], [ %.1290366, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290366, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1290366, %.split303 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.0136367, %12 ], [ %.0136367, %bb.av ], [ %.0136367, %bb.aw ], [ %.0136367, %bb.aq ], [ %.0136367, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.3139, %.split303 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 0, %12 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124369, %bb.aq ], [ %.0124369, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1125, %.split303 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.0117370, %12 ], [ %.0117370, %bb.av ], [ %.0117370, %bb.aw ], [ %.0117370, %bb.aq ], [ %.0117370, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1118, %.split303 ]
+_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.ar, %bb.aq, %bb.aw, %bb.av, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ true, %.split303 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ null, %.split303 ], [ %.sroa.0265.1363, %bb.av ], [ %.sroa.0265.1363, %bb.aw ], [ %.sroa.0265.1363, %bb.aq ], [ %.sroa.0265.1363, %bb.ar ], [ %spec.select333, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.1363, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ null, %.split303 ], [ %.sroa.0.1365, %bb.av ], [ %.sroa.0.1365, %bb.aw ], [ %.sroa.0.1365, %bb.aq ], [ %.sroa.0.1365, %bb.ar ], [ %.sroa.0.1365, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1365, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.3.ph.ph = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290366, %.split303 ], [ %.1290366, %bb.av ], [ %.1290366, %bb.aw ], [ %.1290366, %bb.aq ], [ %.1290366, %bb.ar ], [ %.1290366, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290366, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.3139, %.split303 ], [ %.0136367, %bb.av ], [ %.0136367, %bb.aw ], [ %.0136367, %bb.aq ], [ %.0136367, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1125, %.split303 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124369, %bb.aq ], [ %.0124369, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1118, %.split303 ], [ %.0117370, %bb.av ], [ %.0117370, %bb.aw ], [ %.0117370, %bb.aq ], [ %.0117370, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
   %i.hh = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge
 
@@ -6586,7 +6532,7 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit173.thread: ; preds = %
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 2 uses
-  %i.de = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.de = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 232
   %i.dg = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.dh = trunc nuw i8 %i.dg to i1
@@ -6726,12 +6672,12 @@ _ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i190.peel: ; preds = 
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
-  %.0117373 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124372 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136370 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1290369 = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1368 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0265.1366 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1366.ph, %.peel.next.preheader ] ; 15 uses
+  %.0117373 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124372 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136370 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1290369 = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1368 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0265.1366 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1366.ph, %.peel.next.preheader ] ; 14 uses
   %i.fc = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.fd = trunc nuw i8 %i.fc to i1
   br i1 %i.fd, label %bb.aq, label %bb.ar
@@ -6749,23 +6695,17 @@ bb.ar:                                            ; preds = %bb.aq, %.peel.next
 bb.as:                                            ; preds = %bb.ar
   %i.fi = load i32, ptr %i.dd, align 8, !tbaa !119
   %i.fj = icmp ne i32 %.1290369, %i.fi
-  %10 = trunc nuw i8 %.0124372 to i1              ; 2 uses
   %i.fk = icmp ne i32 %.0136370, 10
-  %or.cond.not = and i1 %i.fk, %10
-  %or.cond = select i1 %i.fj, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.at
+  %or.cond = select i1 %i.fj, i1 true, i1 %i.fk
+  br i1 %or.cond, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fl = add nsw i32 %.0117373, 1
-  %spec.select = select i1 %i.de, i32 8, i32 %.0136370 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select156 = select i1 %11, i32 0, i32 %i.fl
+  %spec.select = select i1 %i.de, i32 8, i32 %.0136370
+  %spec.select156 = select i1 %i.de, i32 0, i32 %i.fl
   br label %bb.ax
 
-12:                                               ; preds = %bb.as
-  br i1 %10, label %bb.au, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit
-
-bb.au:                                            ; preds = %12
+bb.au:                                            ; preds = %bb.as
   %i.fm = load i32, ptr %i.df, align 8, !tbaa !119
   %i.fn = icmp eq i32 %.1290369, %i.fm
   br i1 %i.fn, label %bb.aw, label %bb.av
@@ -6901,14 +6841,14 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192: ; preds = %_ZNSt15
   %i.hg = trunc nuw i8 %.1125 to i1
   br i1 %i.hg, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit, !llvm.loop !315
 
-_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.ar, %bb.aq, %bb.aw, %bb.av, %12, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ false, %12 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ true, %.split303 ]
-  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1366, %12 ], [ %.sroa.0265.1366, %bb.av ], [ %.sroa.0265.1366, %bb.aw ], [ %.sroa.0265.1366, %bb.aq ], [ %.sroa.0265.1366, %bb.ar ], [ %spec.select335, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.1366, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ null, %.split303 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.1368, %12 ], [ %.sroa.0.1368, %bb.av ], [ %.sroa.0.1368, %bb.aw ], [ %.sroa.0.1368, %bb.aq ], [ %.sroa.0.1368, %bb.ar ], [ %.sroa.0.1368, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1368, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ null, %.split303 ]
-  %.3.ph.ph = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369, %12 ], [ %.1290369, %bb.av ], [ %.1290369, %bb.aw ], [ %.1290369, %bb.aq ], [ %.1290369, %bb.ar ], [ %.1290369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1290369, %.split303 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.0136370, %12 ], [ %.0136370, %bb.av ], [ %.0136370, %bb.aw ], [ %.0136370, %bb.aq ], [ %.0136370, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.3139, %.split303 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 0, %12 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124372, %bb.aq ], [ %.0124372, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1125, %.split303 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.0117373, %12 ], [ %.0117373, %bb.av ], [ %.0117373, %bb.aw ], [ %.0117373, %bb.aq ], [ %.0117373, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1118, %.split303 ]
+_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.ar, %bb.aq, %bb.aw, %bb.av, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ true, %.split303 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ null, %.split303 ], [ %.sroa.0265.1366, %bb.av ], [ %.sroa.0265.1366, %bb.aw ], [ %.sroa.0265.1366, %bb.aq ], [ %.sroa.0265.1366, %bb.ar ], [ %spec.select335, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.1366, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ null, %.split303 ], [ %.sroa.0.1368, %bb.av ], [ %.sroa.0.1368, %bb.aw ], [ %.sroa.0.1368, %bb.aq ], [ %.sroa.0.1368, %bb.ar ], [ %.sroa.0.1368, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1368, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.3.ph.ph = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369, %.split303 ], [ %.1290369, %bb.av ], [ %.1290369, %bb.aw ], [ %.1290369, %bb.aq ], [ %.1290369, %bb.ar ], [ %.1290369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.3139, %.split303 ], [ %.0136370, %bb.av ], [ %.0136370, %bb.aw ], [ %.0136370, %bb.aq ], [ %.0136370, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1125, %.split303 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124372, %bb.aq ], [ %.0124372, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1118, %.split303 ], [ %.0117373, %bb.av ], [ %.0117373, %bb.aw ], [ %.0117373, %bb.aq ], [ %.0117373, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
   %i.hh = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge
 
@@ -7311,7 +7251,7 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit174.thread: ; preds = %
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 2 uses
-  %i.de = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.de = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 232
   %i.dg = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.dh = trunc nuw i8 %i.dg to i1
@@ -7451,12 +7391,12 @@ _ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i191.peel: ; preds = 
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193
-  %.0118374 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 6 uses
-  %.0125373 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0137371 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1291370 = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1369 = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0.7303.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0266.1367 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0266.1367.ph, %.peel.next.preheader ] ; 15 uses
+  %.0118374 = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select157.peel, %.peel.next.preheader ] ; 5 uses
+  %.0125373 = phi i8 [ %.1126, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0137371 = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1291370 = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1369 = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0.7303.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0266.1367 = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0266.1367.ph, %.peel.next.preheader ] ; 14 uses
   %i.fc = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.fd = trunc nuw i8 %i.fc to i1
   br i1 %i.fd, label %bb.aq, label %bb.ar
@@ -7474,23 +7414,17 @@ bb.ar:                                            ; preds = %bb.aq, %.peel.next
 bb.as:                                            ; preds = %bb.ar
   %i.fi = load i32, ptr %i.dd, align 8, !tbaa !119
   %i.fj = icmp ne i32 %.1291370, %i.fi
-  %10 = trunc nuw i8 %.0125373 to i1              ; 2 uses
   %i.fk = icmp ne i32 %.0137371, 10
-  %or.cond.not = and i1 %i.fk, %10
-  %or.cond = select i1 %i.fj, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.at
+  %or.cond = select i1 %i.fj, i1 true, i1 %i.fk
+  br i1 %or.cond, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fl = add nsw i32 %.0118374, 1
-  %spec.select = select i1 %i.de, i32 8, i32 %.0137371 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select157 = select i1 %11, i32 0, i32 %i.fl
+  %spec.select = select i1 %i.de, i32 8, i32 %.0137371
+  %spec.select157 = select i1 %i.de, i32 0, i32 %i.fl
   br label %bb.ax
 
-12:                                               ; preds = %bb.as
-  br i1 %10, label %bb.au, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit
-
-bb.au:                                            ; preds = %12
+bb.au:                                            ; preds = %bb.as
   %i.fm = load i32, ptr %i.df, align 8, !tbaa !119
   %i.fn = icmp eq i32 %.1291370, %i.fm
   br i1 %i.fn, label %bb.aw, label %bb.av
@@ -7626,14 +7560,14 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193: ; preds = %_ZNSt15
   %i.hg = trunc nuw i8 %.1126 to i1
   br i1 %i.hg, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit, !llvm.loop !318
 
-_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split304, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.ar, %bb.aq, %bb.aw, %bb.av, %12, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193
-  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ false, %12 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ true, %.split304 ]
-  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0266.1367, %12 ], [ %.sroa.0266.1367, %bb.av ], [ %.sroa.0266.1367, %bb.aw ], [ %.sroa.0266.1367, %bb.aq ], [ %.sroa.0266.1367, %bb.ar ], [ %spec.select336, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.1367, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ null, %.split304 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.sroa.0.1369, %12 ], [ %.sroa.0.1369, %bb.av ], [ %.sroa.0.1369, %bb.aw ], [ %.sroa.0.1369, %bb.aq ], [ %.sroa.0.1369, %bb.ar ], [ %.sroa.0.1369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ null, %.split304 ]
-  %.3.ph.ph = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370, %12 ], [ %.1291370, %bb.av ], [ %.1291370, %bb.aw ], [ %.1291370, %bb.aq ], [ %.1291370, %bb.ar ], [ %.1291370, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291370, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.1291370, %.split304 ]
-  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.0137371, %12 ], [ %.0137371, %bb.av ], [ %.0137371, %bb.aw ], [ %.0137371, %bb.aq ], [ %.0137371, %bb.ar ], [ %.3140, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.3140, %.split304 ]
-  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ 0, %12 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0125373, %bb.aq ], [ %.0125373, %bb.ar ], [ %.1126, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.1126, %.split304 ]
-  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.0118374, %12 ], [ %.0118374, %bb.av ], [ %.0118374, %bb.aw ], [ %.0118374, %bb.aq ], [ %.0118374, %bb.ar ], [ %.1119, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ], [ %.1119, %.split304 ]
+_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge.loopexit.loopexit: ; preds = %.split304, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187, %bb.ar, %bb.aq, %bb.aw, %bb.av, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193
+  %.1130.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ true, %.split304 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.sroa.0266.3.ph.ph = phi ptr [ %.sroa.0266.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ null, %.split304 ], [ %.sroa.0266.1367, %bb.av ], [ %.sroa.0266.1367, %bb.aw ], [ %.sroa.0266.1367, %bb.aq ], [ %.sroa.0266.1367, %bb.ar ], [ %spec.select336, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0266.1367, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7303, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ null, %.split304 ], [ %.sroa.0.1369, %bb.av ], [ %.sroa.0.1369, %bb.aw ], [ %.sroa.0.1369, %bb.aq ], [ %.sroa.0.1369, %bb.ar ], [ %.sroa.0.1369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.sroa.0.1369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.3.ph.ph = phi i32 [ %.0.i.i190, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1291370, %.split304 ], [ %.1291370, %bb.av ], [ %.1291370, %bb.aw ], [ %.1291370, %bb.aq ], [ %.1291370, %bb.ar ], [ %.1291370, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1291370, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.4141.ph.ph = phi i32 [ %.3140, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.3140, %.split304 ], [ %.0137371, %bb.av ], [ %.0137371, %bb.aw ], [ %.0137371, %bb.aq ], [ %.0137371, %bb.ar ], [ %.3140, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.3140, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.2127.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1126, %.split304 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0125373, %bb.aq ], [ %.0125373, %bb.ar ], [ %.1126, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1126, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
+  %.2120.ph.ph = phi i32 [ %.1119, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193 ], [ %.1119, %.split304 ], [ %.0118374, %bb.av ], [ %.0118374, %bb.aw ], [ %.0118374, %bb.aq ], [ %.0118374, %bb.ar ], [ %.1119, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187 ], [ %.1119, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i183._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit187_crit_edge ]
   %i.hh = trunc nuw i8 %.2127.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit193._crit_edge
 
@@ -8036,7 +7970,7 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit173.thread: ; preds = %
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 2 uses
-  %i.de = icmp eq i32 %i.e, 0                     ; 5 uses
+  %i.de = icmp eq i32 %i.e, 0                     ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 232
   %i.dg = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.dh = trunc nuw i8 %i.dg to i1
@@ -8176,12 +8110,12 @@ _ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i190.peel: ; preds = 
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
-  %.0117373 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 6 uses
-  %.0124372 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 3 uses
-  %.0136370 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 9 uses
-  %.1290369 = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369.ph, %.peel.next.preheader ] ; 13 uses
-  %.sroa.0.1368 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 14 uses
-  %.sroa.0265.1366 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1366.ph, %.peel.next.preheader ] ; 15 uses
+  %.0117373 = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select156.peel, %.peel.next.preheader ] ; 5 uses
+  %.0124372 = phi i8 [ %.1125, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 1, %.peel.next.preheader ] ; 2 uses
+  %.0136370 = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %spec.select.peel, %.peel.next.preheader ] ; 8 uses
+  %.1290369 = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369.ph, %.peel.next.preheader ] ; 12 uses
+  %.sroa.0.1368 = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.7302.peel, %.peel.next.preheader ] ; 13 uses
+  %.sroa.0265.1366 = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1366.ph, %.peel.next.preheader ] ; 14 uses
   %i.fc = load i8, ptr %i.db, align 8, !tbaa !125, !range !101, !noundef !102
   %i.fd = trunc nuw i8 %i.fc to i1
   br i1 %i.fd, label %bb.aq, label %bb.ar
@@ -8199,23 +8133,17 @@ bb.ar:                                            ; preds = %bb.aq, %.peel.next
 bb.as:                                            ; preds = %bb.ar
   %i.fi = load i32, ptr %i.dd, align 8, !tbaa !119
   %i.fj = icmp ne i32 %.1290369, %i.fi
-  %10 = trunc nuw i8 %.0124372 to i1              ; 2 uses
   %i.fk = icmp ne i32 %.0136370, 10
-  %or.cond.not = and i1 %i.fk, %10
-  %or.cond = select i1 %i.fj, i1 true, i1 %or.cond.not
-  br i1 %or.cond, label %12, label %bb.at
+  %or.cond = select i1 %i.fj, i1 true, i1 %i.fk
+  br i1 %or.cond, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fl = add nsw i32 %.0117373, 1
-  %spec.select = select i1 %i.de, i32 8, i32 %.0136370 ; 2 uses
-  %11 = icmp eq i32 %spec.select, 8
-  %spec.select156 = select i1 %11, i32 0, i32 %i.fl
+  %spec.select = select i1 %i.de, i32 8, i32 %.0136370
+  %spec.select156 = select i1 %i.de, i32 0, i32 %i.fl
   br label %bb.ax
 
-12:                                               ; preds = %bb.as
-  br i1 %10, label %bb.au, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit
-
-bb.au:                                            ; preds = %12
+bb.au:                                            ; preds = %bb.as
   %i.fm = load i32, ptr %i.df, align 8, !tbaa !119
   %i.fn = icmp eq i32 %.1290369, %i.fm
   br i1 %i.fn, label %bb.aw, label %bb.av
@@ -8351,14 +8279,14 @@ _ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192: ; preds = %_ZNSt15
   %i.hg = trunc nuw i8 %.1125 to i1
   br i1 %i.hg, label %.peel.next, label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit, !llvm.loop !321
 
-_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.ar, %bb.aq, %bb.aw, %bb.av, %12, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
-  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ false, %12 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ true, %.split303 ]
-  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0265.1366, %12 ], [ %.sroa.0265.1366, %bb.av ], [ %.sroa.0265.1366, %bb.aw ], [ %.sroa.0265.1366, %bb.aq ], [ %.sroa.0265.1366, %bb.ar ], [ %spec.select335, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.1366, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ null, %.split303 ]
-  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.sroa.0.1368, %12 ], [ %.sroa.0.1368, %bb.av ], [ %.sroa.0.1368, %bb.aw ], [ %.sroa.0.1368, %bb.aq ], [ %.sroa.0.1368, %bb.ar ], [ %.sroa.0.1368, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1368, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ null, %.split303 ]
-  %.3.ph.ph = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369, %12 ], [ %.1290369, %bb.av ], [ %.1290369, %bb.aw ], [ %.1290369, %bb.aq ], [ %.1290369, %bb.ar ], [ %.1290369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1290369, %.split303 ]
-  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.0136370, %12 ], [ %.0136370, %bb.av ], [ %.0136370, %bb.aw ], [ %.0136370, %bb.aq ], [ %.0136370, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.3139, %.split303 ]
-  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ 0, %12 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124372, %bb.aq ], [ %.0124372, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1125, %.split303 ]
-  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.0117373, %12 ], [ %.0117373, %bb.av ], [ %.0117373, %bb.aw ], [ %.0117373, %bb.aq ], [ %.0117373, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ], [ %.1118, %.split303 ]
+_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge.loopexit.loopexit: ; preds = %.split303, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186, %bb.ar, %bb.aq, %bb.aw, %bb.av, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192
+  %.1129.lcssa.ph.ph = phi i1 [ false, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ true, %.split303 ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.aq ], [ false, %bb.ar ], [ true, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ true, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.sroa.0265.3.ph.ph = phi ptr [ %.sroa.0265.14, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ null, %.split303 ], [ %.sroa.0265.1366, %bb.av ], [ %.sroa.0265.1366, %bb.aw ], [ %.sroa.0265.1366, %bb.aq ], [ %.sroa.0265.1366, %bb.ar ], [ %spec.select335, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0265.1366, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.sroa.0.2.ph.ph = phi ptr [ %.sroa.0.7302, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ null, %.split303 ], [ %.sroa.0.1368, %bb.av ], [ %.sroa.0.1368, %bb.aw ], [ %.sroa.0.1368, %bb.aq ], [ %.sroa.0.1368, %bb.ar ], [ %.sroa.0.1368, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.sroa.0.1368, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.3.ph.ph = phi i32 [ %.0.i.i189, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1290369, %.split303 ], [ %.1290369, %bb.av ], [ %.1290369, %bb.aw ], [ %.1290369, %bb.aq ], [ %.1290369, %bb.ar ], [ %.1290369, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1290369, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.4140.ph.ph = phi i32 [ %.3139, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.3139, %.split303 ], [ %.0136370, %bb.av ], [ %.0136370, %bb.aw ], [ %.0136370, %bb.aq ], [ %.0136370, %bb.ar ], [ %.3139, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.3139, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.2126.ph.ph = phi i8 [ 0, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1125, %.split303 ], [ 1, %bb.av ], [ 1, %bb.aw ], [ %.0124372, %bb.aq ], [ %.0124372, %bb.ar ], [ %.1125, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1125, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
+  %.2119.ph.ph = phi i32 [ %.1118, %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192 ], [ %.1118, %.split303 ], [ %.0117373, %bb.av ], [ %.0117373, %bb.aw ], [ %.0117373, %bb.aq ], [ %.0117373, %bb.ar ], [ %.1118, %_ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186 ], [ %.1118, %_ZNSt15basic_streambufIwSt11char_traitsIwEE5sgetcEv.exit.i.i5.i.i182._ZStneIwSt11char_traitsIwEEbRKSt19istreambuf_iteratorIT_T0_ES7_.exit186_crit_edge ]
   %i.hh = trunc nuw i8 %.2126.ph.ph to i1
   br label %_ZNKSt19istreambuf_iteratorIwSt11char_traitsIwEEdeEv.exit192._crit_edge
 

@@ -205,12 +205,20 @@ bb.e:                                             ; preds = %bb.hk, %bb.b
   %.not.i = icmp eq i64 %i.bn, -9223372036854775808, !dbg !94119
   br i1 %.not.i, label %bb.i, label %bb.g, !dbg !94120
 
+.body135.thread.i:                                ; preds = %bb.bq, %bb.bp, %bb.bo, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i, %bb.l
+  %.pn132.ph.i = phi { ptr, i32 } [ %.pn766.i.i, %bb.bo ], [ %.pn766.i.i, %bb.bq ], [ %.pn74.i.i, %bb.l ], [ %.pn7412.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i ], [ %.pn766.i.i, %bb.bp ] ; 2 uses
+  %.sroa.38.0258.i = extractvalue { ptr, i32 } %.pn132.ph.i, 1
+  %.sroa.0111.0259.i = extractvalue { ptr, i32 } %.pn132.ph.i, 0
+  br label %.body150.thread.i, !dbg !94121
+
 .body150.i:                                       ; preds = %bb.fn, %.body.thread.i, %.body.i, %bb.f
-  %.sroa.052.0.i = phi i8 [ %.sroa.052.2.i, %.body.i ], [ %.sroa.052.2261.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.052.2261.i, %bb.fn ], !dbg !94121
-  %.sroa.049.0.i = phi i8 [ %.sroa.049.2.i, %.body.i ], [ %.sroa.049.2262.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.049.2262.i, %bb.fn ], !dbg !94121 ; 2 uses
+  %.sroa.052.0.i = phi i8 [ %.sroa.052.2.i, %.body.i ], [ %.sroa.052.2261.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.052.2261.i, %bb.fn ], !dbg !94122
+  %.sroa.049.0.i = phi i8 [ %.sroa.049.2.i, %.body.i ], [ %.sroa.049.2262.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.049.2262.i, %bb.fn ], !dbg !94122 ; 2 uses
   %.pn132.i = phi { ptr, i32 } [ %.pn128.i, %.body.i ], [ %.pn128263.i, %.body.thread.i ], [ %i.bo, %bb.f ], [ %.pn128263.i, %bb.fn ] ; 2 uses
-  %cond.i = icmp eq i8 %.sroa.052.0.i, 0, !dbg !94122
-  br i1 %cond.i, label %bb.gz, label %.body150.thread.i, !dbg !94122
+  %.sroa.38.0.i = extractvalue { ptr, i32 } %.pn132.i, 1 ; 2 uses
+  %.sroa.0111.0.i = extractvalue { ptr, i32 } %.pn132.i, 0 ; 2 uses
+  %cond.i = icmp eq i8 %.sroa.052.0.i, 0, !dbg !94121
+  br i1 %cond.i, label %bb.gz, label %.body150.thread.i, !dbg !94121
 
 bb.f:                                             ; preds = %bb.fp, %bb.fg, %bb.eg, %bb.cg, %bb.bs, %bb.bm, %bb.j
   %.sroa.049.1.i = phi i8 [ 1, %bb.fp ], [ 1, %bb.cg ], [ %.sroa.049.6.i, %bb.fg ], [ 0, %bb.eg ], [ 1, %bb.j ], [ 1, %bb.bs ], [ 1, %bb.bm ], !dbg !94123 ; 2 uses
@@ -260,7 +268,7 @@ bb.k:                                             ; preds = %bb.i
           to label %bb.m unwind label %.thread.i.i, !dbg !94141, !noalias !93851
 
 bb.l:                                             ; preds = %bb.p
-  br i1 %.sroa.036.1.i.i, label %bb.bo, label %.body150.thread.i, !dbg !94142
+  br i1 %.sroa.036.1.i.i, label %bb.bo, label %.body135.thread.i, !dbg !94142
 
 .thread.i.i:                                      ; preds = %bb.ad, %bb.k
   %i.ca = landingpad { ptr, i32 }
@@ -663,24 +671,24 @@ bb.bn:                                            ; preds = %.thread7.i.i, %bb.p
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i unwind label %bb.bk, !dbg !94290, !noalias !93851
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i: ; preds = %bb.bn
-  br i1 %.sroa.036.111.i.i, label %bb.bo, label %.body150.thread.i, !dbg !94142
+  br i1 %.sroa.036.111.i.i, label %bb.bo, label %.body135.thread.i, !dbg !94142
 
 bb.bo:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i, %.thread.i.i, %bb.l
   %.pn766.i.i = phi { ptr, i32 } [ %i.ca, %.thread.i.i ], [ %.pn74.i.i, %bb.l ], [ %.pn7412.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !93900), !dbg !94142
   %i.fo = load ptr, ptr %i.z, align 8, !dbg !94291, !alias.scope !93900, !noalias !93849, !noundef !2279 ; 2 uses
   %i.fp = icmp eq ptr %i.fo, null, !dbg !94291
-  br i1 %i.fp, label %.body150.thread.i, label %bb.bp, !dbg !94291
+  br i1 %i.fp, label %.body135.thread.i, label %bb.bp, !dbg !94291
 
 bb.bp:                                            ; preds = %bb.bo
   %i.fq = atomicrmw add ptr %i.fo, i64 -1 release, align 8, !dbg !94292, !noalias !93901
   %i.fr = icmp eq i64 %i.fq, 1, !dbg !94293
-  br i1 %i.fr, label %bb.bq, label %.body150.thread.i, !dbg !94293
+  br i1 %i.fr, label %bb.bq, label %.body135.thread.i, !dbg !94293
 
 bb.bq:                                            ; preds = %bb.bp
   fence acquire, !dbg !94294
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDNtNtCslpwjCj2YNBy_9polars_io10predicates14PhysicalIoExprEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.z) #38
-          to label %.body150.thread.i unwind label %bb.bk, !dbg !94295, !noalias !93851
+          to label %.body135.thread.i unwind label %bb.bk, !dbg !94295, !noalias !93851
 
 bb.br:                                            ; preds = %bb.bm, %bb.bl, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit93.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !dbg !94296, !noalias !93846
@@ -724,7 +732,7 @@ bb.bx:                                            ; preds = %bb.bw
   %.sroa.280.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 8, !dbg !94311
   store ptr %i.fw, ptr %.sroa.280.0..sroa_idx.i, align 8, !dbg !94311, !alias.scope !93839
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !dbg !94313, !noalias !93846
-  br label %.thread264.i, !dbg !94122
+  br label %.thread264.i, !dbg !94121
 
 bb.by:                                            ; preds = %bb.bw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !dbg !94312, !noalias !93846
@@ -1127,16 +1135,16 @@ bb.eg:                                            ; preds = %bb.ef
 bb.eh:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECs2g09Ig8GZd6_13polars_stream.exit.i.i
   %i.jy = landingpad { ptr, i32 }
           cleanup
-  br label %.body168.i, !dbg !94122
+  br label %.body168.i, !dbg !94121
 
 .body168.i:                                       ; preds = %bb.eh, %bb.ed
   %eh.lpad-body169.i = phi { ptr, i32 } [ %i.jy, %bb.eh ], [ %i.jt, %bb.ed ]
-  %i.jz = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94122
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.jz) #33
-          to label %.body173.i unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %.body173.i unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECs2g09Ig8GZd6_13polars_stream.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit172.i
-  %i.ka = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94122 ; 4 uses
+  %i.ka = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94121 ; 4 uses
   %i.kb = load i64, ptr %i.ka, align 8, !dbg !94473, !range !2623, !alias.scope !93960, !noundef !2279
   %i.kc = icmp eq i64 %i.kb, -9223372036854775808, !dbg !94473
   br i1 %i.kc, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.ei, !dbg !94473
@@ -1163,9 +1171,9 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
 
 .body173.i:                                       ; preds = %bb.el, %bb.ej, %.body168.i
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body169.i, %.body168.i ], [ %i.kg, %bb.el ], [ %i.kd, %bb.ej ]
-  %i.kf = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94122
+  %i.kf = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(40) %i.kf) #33
-          to label %.body177.i unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %.body177.i unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.el:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEECs2g09Ig8GZd6_13polars_stream.exit.i.i
   %i.kg = landingpad { ptr, i32 }
@@ -1181,7 +1189,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   ], !dbg !94477, !prof !2633
 
 bb.em:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream.exit.i
-  %i.kj = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94122
+  %i.kj = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94121
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.kj)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECs2g09Ig8GZd6_13polars_stream.exit.i.i.i unwind label %bb.en, !dbg !94478, !noalias !93839
 
@@ -1226,7 +1234,7 @@ bb.eq:                                            ; preds = %bb.eo
 .body177.i:                                       ; preds = %bb.er, %bb.eo, %bb.en, %.body173.i
   %.pn122.i = phi { ptr, i32 } [ %.pn.i, %.body173.i ], [ %i.ku, %bb.er ], [ %i.kk, %bb.eo ], [ %i.kk, %bb.en ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.bu) #33
-          to label %.body179.i unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %.body179.i unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.er:                                            ; preds = %bb.ep
   %i.ku = landingpad { ptr, i32 }
@@ -1260,7 +1268,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBuf
 
 .body179.i:                                       ; preds = %bb.ew, %bb.et, %.body177.i
   %.pn124.i = phi { ptr, i32 } [ %.pn122.i, %.body177.i ], [ %i.lc, %bb.ew ], [ %i.kx, %bb.et ] ; 2 uses
-  %i.kz = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94122 ; 2 uses
+  %i.kz = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94121 ; 2 uses
   %i.la = load i64, ptr %i.kz, align 8, !dbg !94498, !range !2623, !alias.scope !93973, !noundef !2279
   %i.lb = icmp eq i64 %i.la, -9223372036854775808, !dbg !94498
   br i1 %i.lb, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.ev, !dbg !94498
@@ -1275,7 +1283,7 @@ bb.ew:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body179.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBufECs2g09Ig8GZd6_13polars_stream.exit.i.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream.exit.i
-  %i.ld = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94122 ; 2 uses
+  %i.ld = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94121 ; 2 uses
   %i.le = load i64, ptr %i.ld, align 8, !dbg !94499, !range !2623, !alias.scope !93974, !noundef !2279
   %i.lf = icmp eq i64 %i.le, -9223372036854775808, !dbg !94499
   br i1 %i.lf, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit184.i, label %bb.ex, !dbg !94499
@@ -1285,22 +1293,24 @@ bb.ex:                                            ; preds = %_RINvNtCscgRAwXFJnX
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit184.i unwind label %bb.fa, !dbg !94499, !noalias !93839
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.fa, %bb.ev, %.body179.i
-  %.pn126.i = phi { ptr, i32 } [ %i.ll, %bb.fa ], [ %.pn124.i, %bb.ev ], [ %.pn124.i, %.body179.i ] ; 3 uses
-  %i.lg = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94122 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !93975), !dbg !94122
+  %.pn126.i = phi { ptr, i32 } [ %i.ll, %bb.fa ], [ %.pn124.i, %bb.ev ], [ %.pn124.i, %.body179.i ] ; 2 uses
+  %.sroa.38.5.i = extractvalue { ptr, i32 } %.pn126.i, 1 ; 3 uses
+  %.sroa.0111.5.i = extractvalue { ptr, i32 } %.pn126.i, 0 ; 3 uses
+  %i.lg = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94121 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !93975), !dbg !94121
   %i.lh = load ptr, ptr %i.lg, align 8, !dbg !94500, !alias.scope !93976, !noundef !2279 ; 2 uses
   %i.li = icmp eq ptr %i.lh, null, !dbg !94500
-  br i1 %i.li, label %.body, label %bb.ey, !dbg !94500
+  br i1 %i.li, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.ey, !dbg !94500
 
 bb.ey:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i
   %i.lj = atomicrmw add ptr %i.lh, i64 -1 release, align 8, !dbg !94501, !noalias !93977
   %i.lk = icmp eq i64 %i.lj, 1, !dbg !94502
-  br i1 %i.lk, label %bb.ez, label %.body, !dbg !94502
+  br i1 %i.lk, label %bb.ez, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, !dbg !94502
 
 bb.ez:                                            ; preds = %bb.ey
   fence acquire, !dbg !94503
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.lg) #38
-          to label %.body unwind label %bb.fc, !dbg !94504, !noalias !93839
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.fc, !dbg !94504, !noalias !93839
 
 bb.fa:                                            ; preds = %bb.ex
   %i.ll = landingpad { ptr, i32 }
@@ -1308,8 +1318,8 @@ bb.fa:                                            ; preds = %bb.ex
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit184.i: ; preds = %bb.ex, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream.exit.i
-  %i.lm = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94122 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !93978), !dbg !94122
+  %i.lm = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94121 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !93978), !dbg !94121
   %i.ln = load ptr, ptr %i.lm, align 8, !dbg !94505, !alias.scope !93979, !noundef !2279 ; 2 uses
   %i.lo = icmp eq ptr %i.ln, null, !dbg !94505
   br i1 %i.lo, label %bb.hn, label %bb.fb, !dbg !94505
@@ -1330,6 +1340,13 @@ bb.fc:                                            ; preds = %bb.hh, %bb.hf, %bb.
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #35, !dbg !94510, !noalias !93839
   unreachable, !dbg !94510
+
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.hh, %bb.hg, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i, %bb.gv, %bb.gu, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i, %bb.ez, %bb.ey, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i
+  %.sroa.0111.6.i = phi ptr [ %.sroa.0111.5.i, %bb.ey ], [ %.sroa.0111.13.i, %bb.gu ], [ %.sroa.0111.5.i, %bb.ez ], [ %.sroa.0111.5.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %.sroa.0111.13.i, %bb.gv ], [ %.sroa.0111.13.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i ], [ %.sroa.0111.0244.i, %bb.hh ], [ %.sroa.0111.0244.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i ], [ %.sroa.0111.0244.i, %bb.hg ]
+  %.sroa.38.6.i = phi i32 [ %.sroa.38.5.i, %bb.ey ], [ %.sroa.38.13.i, %bb.gu ], [ %.sroa.38.5.i, %bb.ez ], [ %.sroa.38.5.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %.sroa.38.13.i, %bb.gv ], [ %.sroa.38.13.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i ], [ %.sroa.38.0242.i, %bb.hh ], [ %.sroa.38.0242.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i ], [ %.sroa.38.0242.i, %bb.hg ]
+  %2 = insertvalue { ptr, i32 } poison, ptr %.sroa.0111.6.i, 0, !dbg !94510
+  %3 = insertvalue { ptr, i32 } %2, i32 %.sroa.38.6.i, 1, !dbg !94510
+  br label %.body, !dbg !94510
 
 bb.fd:                                            ; preds = %bb.dz, %bb.cx
   %.sroa.049.6.i = phi i8 [ 1, %bb.cx ], [ 0, %bb.dz ], !dbg !94123 ; 3 uses
@@ -1352,8 +1369,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcI
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit192.i: ; preds = %bb.fg, %bb.ff, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit190.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !dbg !94313, !noalias !93846
-  %i.lw = trunc nuw i8 %.sroa.049.6.i to i1, !dbg !94122
-  br i1 %i.lw, label %.thread264.i, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream.exit204.i, !dbg !94122
+  %i.lw = trunc nuw i8 %.sroa.049.6.i to i1, !dbg !94121
+  br i1 %i.lw, label %.thread264.i, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream.exit204.i, !dbg !94121
 
 bb.ff:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit190.i
   call void @llvm.experimental.noalias.scope.decl(metadata !93985), !dbg !94313
@@ -1369,8 +1386,8 @@ bb.fg:                                            ; preds = %bb.ff
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit192.i unwind label %bb.f, !dbg !94522, !noalias !93839
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream.exit204.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECs2g09Ig8GZd6_13polars_stream.exit.i200.i, %.thread264.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit192.i
-  %.sroa.049.9.i = phi i8 [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit192.i ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECs2g09Ig8GZd6_13polars_stream.exit.i200.i ], [ 1, %.thread264.i ], !dbg !94121 ; 8 uses
-  %i.ma = getelementptr inbounds nuw i8, ptr %i.ay, i64 40, !dbg !94122 ; 4 uses
+  %.sroa.049.9.i = phi i8 [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit192.i ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECs2g09Ig8GZd6_13polars_stream.exit.i200.i ], [ 1, %.thread264.i ], !dbg !94122 ; 8 uses
+  %i.ma = getelementptr inbounds nuw i8, ptr %i.ay, i64 40, !dbg !94121 ; 4 uses
   %i.mb = load i64, ptr %i.ma, align 8, !dbg !94523, !range !2623, !alias.scope !93989, !noundef !2279
   %i.mc = icmp eq i64 %i.mb, -9223372036854775808, !dbg !94523
   br i1 %i.mc, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream.exit198.i, label %bb.fh, !dbg !94523
@@ -1396,7 +1413,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream.exit198.i unwind label %bb.gb, !dbg !94526, !noalias !93839
 
 .thread264.i:                                     ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECs2g09Ig8GZd6_13polars_stream.exit192.i, %bb.br, %bb.bu, %bb.bx, %bb.fs, %bb.fv
-  %.val.i156.sink.in.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 304, !dbg !94122
+  %.val.i156.sink.in.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 304, !dbg !94121
   %.val.i156.sink.i = load i32, ptr %.val.i156.sink.in.i, align 8, !dbg !94527, !range !2624, !alias.scope !93840, !noundef !2279
   %i.mf = call noundef i32 @close(i32 noundef %.val.i156.sink.i) #36, !dbg !94528, !noalias !93839 ; 0 uses
   %i.mg = load i64, ptr %i.bm, align 8, !dbg !94529, !range !2623, !alias.scope !93990, !noundef !2279
@@ -1421,7 +1438,7 @@ bb.fm:                                            ; preds = %bb.fl
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECs2g09Ig8GZd6_13polars_stream.exit.i200.i: ; preds = %bb.fk
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecjENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bm)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream.exit204.i unwind label %2, !dbg !94532, !noalias !93839
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream.exit204.i unwind label %4, !dbg !94532, !noalias !93839
 
 .body.thread.i:                                   ; preds = %bb.cq, %.thread256.i, %.body.i
   %.pn128263.i = phi { ptr, i32 } [ %eh.lpad-body154.i.a, %.thread256.i ], [ %.pn128.i, %.body.i ], [ %i.hg, %bb.cq ] ; 2 uses
@@ -1512,9 +1529,14 @@ bb.fx:                                            ; preds = %bb.fu
 
 bb.fy:                                            ; preds = %bb.fz, %bb.fw
   %i.mz = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(48) %i.ar) #33
-          to label %.body150.thread.i unwind label %bb.fc, !dbg !94558, !noalias !93839
+          to label %.thread.i unwind label %bb.fc, !dbg !94558, !noalias !93839
+
+.thread.i:                                        ; preds = %bb.fy
+  %.sroa.38.0235.i = extractvalue { ptr, i32 } %i.mz, 1
+  %.sroa.0111.0236.i = extractvalue { ptr, i32 } %i.mz, 0
+  br label %.body150.thread.i, !dbg !94121
 
 bb.fz:                                            ; preds = %bb.fx, %bb.fw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i64 24, i1 false), !dbg !94563, !noalias !93846
@@ -1528,23 +1550,23 @@ bb.ga:                                            ; preds = %bb.fz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !dbg !94567, !noalias !93846
   br label %bb.fv, !dbg !94568
 
-.body201.i.a:                                     ; preds = %2, %bb.fl
-  %.pn134.i = phi { ptr, i32 } [ %i.mi, %bb.fl ], [ %3, %2 ]
-  %i.nd = getelementptr inbounds nuw i8, ptr %i.ay, i64 40, !dbg !94122
-  invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.nd) #33
-          to label %.body195.i unwind label %bb.fc, !dbg !94122, !noalias !93839
-
-2:                                                ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECs2g09Ig8GZd6_13polars_stream.exit.i200.i
-  %3 = landingpad { ptr, i32 }
+4:                                                ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECs2g09Ig8GZd6_13polars_stream.exit.i200.i
+  %5 = landingpad { ptr, i32 }
           cleanup
   br label %.body201.i.a
 
+.body201.i.a:                                     ; preds = %4, %bb.fl
+  %.pn134.i = phi { ptr, i32 } [ %5, %4 ], [ %i.mi, %bb.fl ]
+  %i.nd = getelementptr inbounds nuw i8, ptr %i.ay, i64 40, !dbg !94121
+  invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.nd) #33
+          to label %.body195.i unwind label %bb.fc, !dbg !94121, !noalias !93839
+
 .body195.i:                                       ; preds = %bb.gb, %.body201.i.a, %bb.fi
-  %.sroa.049.12.i = phi i8 [ 1, %.body201.i.a ], [ %.sroa.049.9.i, %bb.fi ], [ %.sroa.049.9.i, %bb.gb ], !dbg !94121
+  %.sroa.049.12.i = phi i8 [ 1, %.body201.i.a ], [ %.sroa.049.9.i, %bb.fi ], [ %.sroa.049.9.i, %bb.gb ], !dbg !94122
   %.pn136.i = phi { ptr, i32 } [ %.pn134.i, %.body201.i.a ], [ %i.md, %bb.fi ], [ %i.nf, %bb.gb ]
-  %i.ne = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94122
+  %i.ne = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.ne) #33
-          to label %.body209.i unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %.body209.i unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.gb:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECs2g09Ig8GZd6_13polars_stream.exit.i194.i
   %i.nf = landingpad { ptr, i32 }
@@ -1552,7 +1574,7 @@ bb.gb:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body195.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream.exit198.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECs2g09Ig8GZd6_13polars_stream.exit.i194.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream.exit204.i
-  %i.ng = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94122 ; 4 uses
+  %i.ng = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94121 ; 4 uses
   %i.nh = load i64, ptr %i.ng, align 8, !dbg !94569, !range !2623, !alias.scope !93997, !noundef !2279
   %i.ni = icmp eq i64 %i.nh, -9223372036854775808, !dbg !94569
   br i1 %i.ni, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream.exit212.i, label %bb.gc, !dbg !94569
@@ -1578,11 +1600,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream.exit212.i unwind label %bb.gf, !dbg !94572, !noalias !93839
 
 .body209.i:                                       ; preds = %bb.gf, %bb.gd, %.body195.i
-  %.sroa.049.13.i = phi i8 [ %.sroa.049.12.i, %.body195.i ], [ %.sroa.049.9.i, %bb.gd ], [ %.sroa.049.9.i, %bb.gf ], !dbg !94121
+  %.sroa.049.13.i = phi i8 [ %.sroa.049.12.i, %.body195.i ], [ %.sroa.049.9.i, %bb.gd ], [ %.sroa.049.9.i, %bb.gf ], !dbg !94122
   %.pn138.i = phi { ptr, i32 } [ %.pn136.i, %.body195.i ], [ %i.nj, %bb.gd ], [ %i.nm, %bb.gf ]
-  %i.nl = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94122
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(40) %i.nl) #33
-          to label %.body216.i unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %.body216.i unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.gf:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEECs2g09Ig8GZd6_13polars_stream.exit.i208.i
   %i.nm = landingpad { ptr, i32 }
@@ -1598,7 +1620,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   ], !dbg !94573, !prof !2633
 
 bb.gg:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream.exit212.i
-  %i.np = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94122
+  %i.np = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94121
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.np)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECs2g09Ig8GZd6_13polars_stream.exit.i.i214.i unwind label %bb.gh, !dbg !94574, !noalias !93839
 
@@ -1641,14 +1663,14 @@ bb.gk:                                            ; preds = %bb.gi
   unreachable, !dbg !94575
 
 .body216.i:                                       ; preds = %bb.gl, %bb.gi, %bb.gh, %.body209.i
-  %.sroa.049.14.i = phi i8 [ %.sroa.049.13.i, %.body209.i ], [ %.sroa.049.9.i, %bb.gh ], [ %.sroa.049.9.i, %bb.gi ], [ %.sroa.049.9.i, %bb.gl ], !dbg !94121
+  %.sroa.049.14.i = phi i8 [ %.sroa.049.13.i, %.body209.i ], [ %.sroa.049.9.i, %bb.gh ], [ %.sroa.049.9.i, %bb.gi ], [ %.sroa.049.9.i, %bb.gl ], !dbg !94122
   %.pn140.i = phi { ptr, i32 } [ %.pn138.i, %.body209.i ], [ %i.nq, %bb.gh ], [ %i.nq, %bb.gi ], [ %i.od, %bb.gl ] ; 2 uses
-  %i.oa = trunc nuw i8 %.sroa.049.14.i to i1, !dbg !94122
+  %i.oa = trunc nuw i8 %.sroa.049.14.i to i1, !dbg !94121
   %i.ob = getelementptr inbounds nuw i8, ptr %i.ay, i64 287
   %i.oc = load i8, ptr %i.ob, align 1, !range !2632
   %cond.i235.i = icmp eq i8 %i.oc, -40
-  %or.cond131 = select i1 %i.oa, i1 %cond.i235.i, i1 false, !dbg !94122, !prof !3260
-  br i1 %or.cond131, label %bb.gy, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit237.i, !dbg !94122, !prof !3260
+  %or.cond131 = select i1 %i.oa, i1 %cond.i235.i, i1 false, !dbg !94121, !prof !3260
+  br i1 %or.cond131, label %bb.gy, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit237.i, !dbg !94121, !prof !3260
 
 bb.gl:                                            ; preds = %bb.gj
   %i.od = landingpad { ptr, i32 }
@@ -1656,15 +1678,15 @@ bb.gl:                                            ; preds = %bb.gj
   br label %.body216.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream.exit218.i: ; preds = %bb.gj, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECs2g09Ig8GZd6_13polars_stream.exit.i.i214.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream.exit212.i
-  %i.oe = trunc nuw i8 %.sroa.049.9.i to i1, !dbg !94122
+  %i.oe = trunc nuw i8 %.sroa.049.9.i to i1, !dbg !94121
   %i.of = getelementptr inbounds nuw i8, ptr %i.ay, i64 287
   %i.og = load i8, ptr %i.of, align 1, !range !2632
   %cond.i.i = icmp eq i8 %i.og, -40
-  %or.cond129 = select i1 %i.oe, i1 %cond.i.i, i1 false, !dbg !94122, !prof !3260
-  br i1 %or.cond129, label %bb.gp, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit.i, !dbg !94122, !prof !3260
+  %or.cond129 = select i1 %i.oe, i1 %cond.i.i, i1 false, !dbg !94121, !prof !3260
+  br i1 %or.cond129, label %bb.gp, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit.i, !dbg !94121, !prof !3260
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.gp, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream.exit218.i
-  %i.oh = getelementptr inbounds nuw i8, ptr %i.ay, i64 88, !dbg !94122 ; 4 uses
+  %i.oh = getelementptr inbounds nuw i8, ptr %i.ay, i64 88, !dbg !94121 ; 4 uses
   %i.oi = load i64, ptr %i.oh, align 8, !dbg !94590, !range !2623, !alias.scope !94009, !noundef !2279
   %i.oj = icmp eq i64 %i.oi, -9223372036854775808, !dbg !94590
   br i1 %i.oj, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream.exit224.i, label %bb.gm, !dbg !94590
@@ -1690,15 +1712,15 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBuf
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream.exit224.i unwind label %bb.gs, !dbg !94593, !noalias !93839
 
 bb.gp:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream.exit218.i
-  %i.om = getelementptr inbounds nuw i8, ptr %i.ay, i64 264, !dbg !94122
+  %i.om = getelementptr inbounds nuw i8, ptr %i.ay, i64 264, !dbg !94121
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.om)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.gq, !dbg !94594, !noalias !93839
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit237.i: ; preds = %bb.gy, %bb.gq, %.body216.i
   %.pn142.i = phi { ptr, i32 } [ %i.oo, %bb.gq ], [ %.pn140.i, %.body216.i ], [ %.pn140.i, %bb.gy ]
-  %i.on = getelementptr inbounds nuw i8, ptr %i.ay, i64 88, !dbg !94122
+  %i.on = getelementptr inbounds nuw i8, ptr %i.ay, i64 88, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.on) #33
-          to label %.body221.i unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %.body221.i unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.gq:                                            ; preds = %bb.gp
   %i.oo = landingpad { ptr, i32 }
@@ -1707,7 +1729,7 @@ bb.gq:                                            ; preds = %bb.gp
 
 .body221.i:                                       ; preds = %bb.gs, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit237.i, %bb.gn
   %.pn144.i = phi { ptr, i32 } [ %.pn142.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit237.i ], [ %i.os, %bb.gs ], [ %i.ok, %bb.gn ] ; 2 uses
-  %i.op = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94122 ; 2 uses
+  %i.op = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94121 ; 2 uses
   %i.oq = load i64, ptr %i.op, align 8, !dbg !94595, !range !2623, !alias.scope !94010, !noundef !2279
   %i.or = icmp eq i64 %i.oq, -9223372036854775808, !dbg !94595
   br i1 %i.or, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i, label %bb.gr, !dbg !94595
@@ -1722,7 +1744,7 @@ bb.gs:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body221.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream.exit224.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBufECs2g09Ig8GZd6_13polars_stream.exit.i.i220.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit.i
-  %i.ot = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94122 ; 2 uses
+  %i.ot = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94121 ; 2 uses
   %i.ou = load i64, ptr %i.ot, align 8, !dbg !94596, !range !2623, !alias.scope !94011, !noundef !2279
   %i.ov = icmp eq i64 %i.ou, -9223372036854775808, !dbg !94596
   br i1 %i.ov, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit229.i, label %bb.gt, !dbg !94596
@@ -1732,22 +1754,24 @@ bb.gt:                                            ; preds = %_RINvNtCscgRAwXFJnX
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit229.i unwind label %bb.gw, !dbg !94596, !noalias !93839
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i: ; preds = %bb.gw, %bb.gr, %.body221.i
-  %.pn146.i = phi { ptr, i32 } [ %i.pb, %bb.gw ], [ %.pn144.i, %bb.gr ], [ %.pn144.i, %.body221.i ] ; 3 uses
-  %i.ow = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94122 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !94012), !dbg !94122
+  %.pn146.i = phi { ptr, i32 } [ %i.pb, %bb.gw ], [ %.pn144.i, %bb.gr ], [ %.pn144.i, %.body221.i ] ; 2 uses
+  %.sroa.38.13.i = extractvalue { ptr, i32 } %.pn146.i, 1 ; 3 uses
+  %.sroa.0111.13.i = extractvalue { ptr, i32 } %.pn146.i, 0 ; 3 uses
+  %i.ow = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94121 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !94012), !dbg !94121
   %i.ox = load ptr, ptr %i.ow, align 8, !dbg !94597, !alias.scope !94013, !noundef !2279 ; 2 uses
   %i.oy = icmp eq ptr %i.ox, null, !dbg !94597
-  br i1 %i.oy, label %.body, label %bb.gu, !dbg !94597
+  br i1 %i.oy, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.gu, !dbg !94597
 
 bb.gu:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i
   %i.oz = atomicrmw add ptr %i.ox, i64 -1 release, align 8, !dbg !94598, !noalias !94014
   %i.pa = icmp eq i64 %i.oz, 1, !dbg !94599
-  br i1 %i.pa, label %bb.gv, label %.body, !dbg !94599
+  br i1 %i.pa, label %bb.gv, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, !dbg !94599
 
 bb.gv:                                            ; preds = %bb.gu
   fence acquire, !dbg !94600
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.ow) #38
-          to label %.body unwind label %bb.fc, !dbg !94601, !noalias !93839
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.fc, !dbg !94601, !noalias !93839
 
 bb.gw:                                            ; preds = %bb.gt
   %i.pb = landingpad { ptr, i32 }
@@ -1755,8 +1779,8 @@ bb.gw:                                            ; preds = %bb.gt
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit229.i: ; preds = %bb.gt, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream.exit224.i
-  %i.pc = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94122 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !94015), !dbg !94122
+  %i.pc = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94121 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !94015), !dbg !94121
   %i.pd = load ptr, ptr %i.pc, align 8, !dbg !94602, !alias.scope !94016, !noundef !2279 ; 2 uses
   %i.pe = icmp eq ptr %i.pd, null, !dbg !94602
   br i1 %i.pe, label %bb.hn, label %bb.gx, !dbg !94602
@@ -1767,57 +1791,59 @@ bb.gx:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br i1 %i.pg, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit188.sink.split.i, label %bb.hn, !dbg !94604
 
 bb.gy:                                            ; preds = %.body216.i
-  %i.ph = getelementptr inbounds nuw i8, ptr %i.ay, i64 264, !dbg !94122
+  %i.ph = getelementptr inbounds nuw i8, ptr %i.ay, i64 264, !dbg !94121
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ph)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit237.i unwind label %bb.fc, !dbg !94605, !noalias !93839
 
 bb.gz:                                            ; preds = %.body150.thread.i, %.body150.i
-  %.pn132255.i = phi { ptr, i32 } [ %.pn132.i, %.body150.i ], [ %.pn132254.i, %.body150.thread.i ] ; 3 uses
-  %.sroa.049.0253.i = phi i8 [ %.sroa.049.0.i, %.body150.i ], [ %.sroa.049.0252.i, %.body150.thread.i ]
-  %i.pi = getelementptr inbounds nuw i8, ptr %i.ay, i64 40, !dbg !94122
+  %.sroa.0111.0244.i = phi ptr [ %.sroa.0111.0.i, %.body150.i ], [ %.sroa.0111.0243.i, %.body150.thread.i ] ; 3 uses
+  %.sroa.38.0242.i = phi i32 [ %.sroa.38.0.i, %.body150.i ], [ %.sroa.38.0241.i, %.body150.thread.i ] ; 3 uses
+  %.sroa.049.0253.i = phi i8 [ %.sroa.049.0.i, %.body150.i ], [ %.sroa.049.0239.i, %.body150.thread.i ]
+  %i.pi = getelementptr inbounds nuw i8, ptr %i.ay, i64 40, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.pi) #33
-          to label %bb.ha unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %bb.ha unwind label %bb.fc, !dbg !94121, !noalias !93839
 
-.body150.thread.i:                                ; preds = %bb.fy, %bb.bq, %bb.bp, %bb.bo, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i, %bb.l, %.body150.i
-  %.pn132254.i = phi { ptr, i32 } [ %.pn132.i, %.body150.i ], [ %i.mz, %bb.fy ], [ %.pn766.i.i, %bb.bo ], [ %.pn766.i.i, %bb.bq ], [ %.pn74.i.i, %bb.l ], [ %.pn7412.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i ], [ %.pn766.i.i, %bb.bp ]
-  %.sroa.049.0252.i = phi i8 [ %.sroa.049.0.i, %.body150.i ], [ 1, %bb.fy ], [ 1, %bb.bo ], [ 1, %bb.bq ], [ 1, %bb.l ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECs2g09Ig8GZd6_13polars_stream.exit97.i.i ], [ 1, %bb.bp ]
-  %i.pj = getelementptr inbounds nuw i8, ptr %i.ay, i64 304, !dbg !94122
-  call void @llvm.experimental.noalias.scope.decl(metadata !94018), !dbg !94122
+.body150.thread.i:                                ; preds = %.thread.i, %.body150.i, %.body135.thread.i
+  %.sroa.0111.0243.i = phi ptr [ %.sroa.0111.0236.i, %.thread.i ], [ %.sroa.0111.0.i, %.body150.i ], [ %.sroa.0111.0259.i, %.body135.thread.i ]
+  %.sroa.38.0241.i = phi i32 [ %.sroa.38.0235.i, %.thread.i ], [ %.sroa.38.0.i, %.body150.i ], [ %.sroa.38.0258.i, %.body135.thread.i ]
+  %.sroa.049.0239.i = phi i8 [ 1, %.thread.i ], [ %.sroa.049.0.i, %.body150.i ], [ 1, %.body135.thread.i ]
+  %i.pj = getelementptr inbounds nuw i8, ptr %i.ay, i64 304, !dbg !94121
+  call void @llvm.experimental.noalias.scope.decl(metadata !94018), !dbg !94121
   %.val.i238.i = load i32, ptr %i.pj, align 8, !dbg !94606, !range !2624, !alias.scope !94019, !noundef !2279
   %i.pk = call noundef i32 @close(i32 noundef %.val.i238.i) #36, !dbg !94607, !noalias !94020 ; 0 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.bm) #33
-          to label %bb.gz unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %bb.gz unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.ha:                                            ; preds = %bb.gz
-  %i.pl = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94122
+  %i.pl = getelementptr inbounds nuw i8, ptr %i.ay, i64 64, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.pl) #33
-          to label %bb.hb unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %bb.hb unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.hb:                                            ; preds = %bb.ha
-  %i.pm = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94122
+  %i.pm = getelementptr inbounds nuw i8, ptr %i.ay, i64 224, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(40) %i.pm) #33
-          to label %bb.hc unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %bb.hc unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.hc:                                            ; preds = %bb.hb
-  %i.pn = trunc nuw i8 %.sroa.049.0253.i to i1, !dbg !94122
+  %i.pn = trunc nuw i8 %.sroa.049.0253.i to i1, !dbg !94121
   %i.po = getelementptr inbounds nuw i8, ptr %i.ay, i64 287
   %i.pp = load i8, ptr %i.po, align 1, !range !2632
   %cond.i239.i = icmp eq i8 %i.pp, -40
-  %or.cond133 = select i1 %i.pn, i1 %cond.i239.i, i1 false, !dbg !94122, !prof !3260
-  br i1 %or.cond133, label %bb.hd, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit241.i, !dbg !94122, !prof !3260
+  %or.cond133 = select i1 %i.pn, i1 %cond.i239.i, i1 false, !dbg !94121, !prof !3260
+  br i1 %or.cond133, label %bb.hd, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit241.i, !dbg !94121, !prof !3260
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit241.i: ; preds = %bb.hd, %bb.hc
-  %i.pq = getelementptr inbounds nuw i8, ptr %i.ay, i64 88, !dbg !94122
+  %i.pq = getelementptr inbounds nuw i8, ptr %i.ay, i64 88, !dbg !94121
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef align 8 dereferenceable(24) %i.pq) #33
-          to label %bb.he unwind label %bb.fc, !dbg !94122, !noalias !93839
+          to label %bb.he unwind label %bb.fc, !dbg !94121, !noalias !93839
 
 bb.hd:                                            ; preds = %bb.hc
-  %i.pr = getelementptr inbounds nuw i8, ptr %i.ay, i64 264, !dbg !94122
+  %i.pr = getelementptr inbounds nuw i8, ptr %i.ay, i64 264, !dbg !94121
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.pr)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit241.i unwind label %bb.fc, !dbg !94608, !noalias !93839
 
 bb.he:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECs2g09Ig8GZd6_13polars_stream.exit241.i
-  %i.ps = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94122 ; 2 uses
+  %i.ps = getelementptr inbounds nuw i8, ptr %i.ay, i64 112, !dbg !94121 ; 2 uses
   %i.pt = load i64, ptr %i.ps, align 8, !dbg !94609, !range !2623, !alias.scope !94021, !noundef !2279
   %i.pu = icmp eq i64 %i.pt, -9223372036854775808, !dbg !94609
   br i1 %i.pu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i, label %bb.hf, !dbg !94609
@@ -1827,21 +1853,21 @@ bb.hf:                                            ; preds = %bb.he
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i unwind label %bb.fc, !dbg !94609, !noalias !93839
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i: ; preds = %bb.hf, %bb.he
-  %i.pv = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94122 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !94022), !dbg !94122
+  %i.pv = getelementptr inbounds nuw i8, ptr %i.ay, i64 296, !dbg !94121 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !94022), !dbg !94121
   %i.pw = load ptr, ptr %i.pv, align 8, !dbg !94610, !alias.scope !94023, !noundef !2279 ; 2 uses
   %i.px = icmp eq ptr %i.pw, null, !dbg !94610
-  br i1 %i.px, label %.body, label %bb.hg, !dbg !94610
+  br i1 %i.px, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.hg, !dbg !94610
 
 bb.hg:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i
   %i.py = atomicrmw add ptr %i.pw, i64 -1 release, align 8, !dbg !94611, !noalias !94024
   %i.pz = icmp eq i64 %i.py, 1, !dbg !94612
-  br i1 %i.pz, label %bb.hh, label %.body, !dbg !94612
+  br i1 %i.pz, label %bb.hh, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, !dbg !94612
 
 bb.hh:                                            ; preds = %bb.hg
   fence acquire, !dbg !94613
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.pv) #38
-          to label %.body unwind label %bb.fc, !dbg !94614, !noalias !93839
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.fc, !dbg !94614, !noalias !93839
 
 bb.hi:                                            ; preds = %bb.c
   %i.qa = load i64, ptr %i.bd, align 8, !dbg !94615, !range !2639, !noundef !2279 ; 2 uses
@@ -1874,10 +1900,10 @@ bb.hl:                                            ; preds = %bb.hk
   tail call void @llvm.trap(), !dbg !94625
   unreachable, !dbg !94625
 
-.body:                                            ; preds = %bb.hm, %bb.hh, %bb.hg, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i, %bb.gv, %bb.gu, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i, %bb.ez, %bb.ey, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i, %.body82
-  %.sroa.024.0 = phi i1 [ %.not65, %.body82 ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ true, %bb.ey ], [ true, %bb.ez ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i ], [ true, %bb.gu ], [ true, %bb.gv ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i ], [ true, %bb.hg ], [ true, %bb.hh ], [ true, %bb.hm ], !dbg !94626 ; 3 uses
-  %.sroa.022.0 = phi i8 [ %.sroa.022.1, %.body82 ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ 1, %bb.ey ], [ 1, %bb.ez ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i ], [ 1, %bb.gu ], [ 1, %bb.gv ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i ], [ 1, %bb.hg ], [ 1, %bb.hh ], [ 1, %bb.hm ], !dbg !94627
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body82 ], [ %.pn126.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %.pn126.i, %bb.ey ], [ %.pn126.i, %bb.ez ], [ %.pn146.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit227.i ], [ %.pn146.i, %bb.gu ], [ %.pn146.i, %bb.gv ], [ %.pn132255.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECs2g09Ig8GZd6_13polars_stream.exit243.i ], [ %.pn132255.i, %bb.hg ], [ %.pn132255.i, %bb.hh ], [ %i.qj, %bb.hm ] ; 3 uses
+.body:                                            ; preds = %bb.hm, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i, %.body82
+  %.sroa.024.0 = phi i1 [ %.not65, %.body82 ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ true, %bb.hm ], !dbg !94626 ; 3 uses
+  %.sroa.022.0 = phi i8 [ %.sroa.022.1, %.body82 ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ 1, %bb.hm ], !dbg !94627
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body82 ], [ %3, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %i.qj, %bb.hm ] ; 3 uses
   %i.qh = getelementptr inbounds nuw i8, ptr %i.bb, i64 23, !dbg !94628
   %i.qi = load i8, ptr %i.qh, align 1, !dbg !94628, !range !2632, !noundef !2279 ; 2 uses
   %.not70 = icmp eq i8 %i.qi, -38, !dbg !94628
@@ -2280,8 +2306,8 @@ begin_hunk_3_@llvm.memmove.p0.p0.i64
 !94118 = !DILocation(line: 304, column: 13, scope: !92877)
 !94119 = !DILocation(line: 745, column: 15, scope: !92881, inlinedAt: !92884)
 !94120 = !DILocation(line: 745, column: 9, scope: !92881, inlinedAt: !92884)
-!94121 = !DILocation(line: 305, column: 13, scope: !92882, inlinedAt: !92883)
-!94122 = !DILocation(line: 351, column: 9, scope: !92882, inlinedAt: !92883)
+!94121 = !DILocation(line: 351, column: 9, scope: !92882, inlinedAt: !92883)
+!94122 = !DILocation(line: 305, column: 13, scope: !92882, inlinedAt: !92883)
 !94123 = !DILocation(line: 0, scope: !92882, inlinedAt: !92883)
 !94124 = !DILocation(line: 664, column: 24, scope: !92886, inlinedAt: !92887)
 !94125 = !DILocation(line: 3029, column: 37, scope: !92889, inlinedAt: !92894)

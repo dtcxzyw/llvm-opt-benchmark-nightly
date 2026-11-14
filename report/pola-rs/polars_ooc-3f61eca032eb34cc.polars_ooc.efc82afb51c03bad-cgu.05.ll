@@ -202,12 +202,20 @@ bb.e:                                             ; preds = %bb.hk, %bb.b
   %.not.i = icmp eq i64 %i.cc, -9223372036854775808, !dbg !9600
   br i1 %.not.i, label %bb.i, label %bb.g, !dbg !9601
 
+.body138.thread.i:                                ; preds = %bb.bq, %bb.bp, %bb.bo, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i, %bb.l
+  %.pn132.ph.i = phi { ptr, i32 } [ %.pn766.i.i, %bb.bo ], [ %.pn766.i.i, %bb.bq ], [ %.pn74.i.i, %bb.l ], [ %.pn7412.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i ], [ %.pn766.i.i, %bb.bp ] ; 2 uses
+  %.sroa.38.0258.i = extractvalue { ptr, i32 } %.pn132.ph.i, 1
+  %.sroa.0111.0259.i = extractvalue { ptr, i32 } %.pn132.ph.i, 0
+  br label %.body153.thread.i, !dbg !9602
+
 .body153.i:                                       ; preds = %bb.fn, %.body.thread.i, %.body.i, %bb.f
-  %.sroa.052.0.i = phi i8 [ %.sroa.052.2.i, %.body.i ], [ %.sroa.052.2261.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.052.2261.i, %bb.fn ], !dbg !9602
-  %.sroa.049.0.i = phi i8 [ %.sroa.049.2.i, %.body.i ], [ %.sroa.049.2262.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.049.2262.i, %bb.fn ], !dbg !9602 ; 2 uses
+  %.sroa.052.0.i = phi i8 [ %.sroa.052.2.i, %.body.i ], [ %.sroa.052.2261.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.052.2261.i, %bb.fn ], !dbg !9603
+  %.sroa.049.0.i = phi i8 [ %.sroa.049.2.i, %.body.i ], [ %.sroa.049.2262.i, %.body.thread.i ], [ %.sroa.049.1.i, %bb.f ], [ %.sroa.049.2262.i, %bb.fn ], !dbg !9603 ; 2 uses
   %.pn132.i = phi { ptr, i32 } [ %.pn128.i, %.body.i ], [ %.pn128263.i, %.body.thread.i ], [ %i.cd, %bb.f ], [ %.pn128263.i, %bb.fn ] ; 2 uses
-  %cond.i = icmp eq i8 %.sroa.052.0.i, 0, !dbg !9603
-  br i1 %cond.i, label %bb.gz, label %.body153.thread.i, !dbg !9603
+  %.sroa.38.0.i = extractvalue { ptr, i32 } %.pn132.i, 1 ; 2 uses
+  %.sroa.0111.0.i = extractvalue { ptr, i32 } %.pn132.i, 0 ; 2 uses
+  %cond.i = icmp eq i8 %.sroa.052.0.i, 0, !dbg !9602
+  br i1 %cond.i, label %bb.gz, label %.body153.thread.i, !dbg !9602
 
 bb.f:                                             ; preds = %bb.fp, %bb.fg, %bb.eg, %bb.cg, %bb.bs, %bb.bm, %bb.j
   %.sroa.049.1.i = phi i8 [ 1, %bb.fp ], [ 1, %bb.cg ], [ %.sroa.049.6.i, %bb.fg ], [ 0, %bb.eg ], [ 1, %bb.j ], [ 1, %bb.bs ], [ 1, %bb.bm ], !dbg !9604 ; 2 uses
@@ -257,7 +265,7 @@ bb.k:                                             ; preds = %bb.i
           to label %bb.m unwind label %.thread.i.i, !dbg !9622, !noalias !9192
 
 bb.l:                                             ; preds = %bb.p
-  br i1 %.sroa.036.1.i.i, label %bb.bo, label %.body153.thread.i, !dbg !9623
+  br i1 %.sroa.036.1.i.i, label %bb.bo, label %.body138.thread.i, !dbg !9623
 
 .thread.i.i:                                      ; preds = %bb.ad, %bb.k
   %i.cp = landingpad { ptr, i32 }
@@ -660,24 +668,24 @@ bb.bn:                                            ; preds = %.thread7.i.i, %bb.p
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i unwind label %bb.bk, !dbg !9771, !noalias !9192
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i: ; preds = %bb.bn
-  br i1 %.sroa.036.111.i.i, label %bb.bo, label %.body153.thread.i, !dbg !9623
+  br i1 %.sroa.036.111.i.i, label %bb.bo, label %.body138.thread.i, !dbg !9623
 
 bb.bo:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i, %.thread.i.i, %bb.l
   %.pn766.i.i = phi { ptr, i32 } [ %i.cp, %.thread.i.i ], [ %.pn74.i.i, %bb.l ], [ %.pn7412.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9261), !dbg !9623
   %i.gd = load ptr, ptr %i.ao, align 8, !dbg !9772, !alias.scope !9261, !noalias !9190, !noundef !241 ; 2 uses
   %i.ge = icmp eq ptr %i.gd, null, !dbg !9772
-  br i1 %i.ge, label %.body153.thread.i, label %bb.bp, !dbg !9772
+  br i1 %i.ge, label %.body138.thread.i, label %bb.bp, !dbg !9772
 
 bb.bp:                                            ; preds = %bb.bo
   %i.gf = atomicrmw add ptr %i.gd, i64 -1 release, align 8, !dbg !9773, !noalias !9262
   %i.gg = icmp eq i64 %i.gf, 1, !dbg !9774
-  br i1 %i.gg, label %bb.bq, label %.body153.thread.i, !dbg !9774
+  br i1 %i.gg, label %bb.bq, label %.body138.thread.i, !dbg !9774
 
 bb.bq:                                            ; preds = %bb.bp
   fence acquire, !dbg !9775
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDNtNtCslpwjCj2YNBy_9polars_io10predicates14PhysicalIoExprEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.ao) #24
-          to label %.body153.thread.i unwind label %bb.bk, !dbg !9776, !noalias !9192
+          to label %.body138.thread.i unwind label %bb.bk, !dbg !9776, !noalias !9192
 
 bb.br:                                            ; preds = %bb.bm, %bb.bl, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit92.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !dbg !9777, !noalias !9187
@@ -721,7 +729,7 @@ bb.bx:                                            ; preds = %bb.bw
   %.sroa.280.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bo, i64 8, !dbg !9792
   store ptr %i.gl, ptr %.sroa.280.0..sroa_idx.i, align 8, !dbg !9792, !alias.scope !9178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc), !dbg !9794, !noalias !9187
-  br label %.thread264.i, !dbg !9603
+  br label %.thread264.i, !dbg !9602
 
 bb.by:                                            ; preds = %bb.bw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb), !dbg !9793, !noalias !9187
@@ -1124,16 +1132,16 @@ bb.eg:                                            ; preds = %bb.ef
 bb.eh:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECskAlUH1kY1DR_10polars_ooc.exit.i.i
   %i.kn = landingpad { ptr, i32 }
           cleanup
-  br label %.body169.i, !dbg !9603
+  br label %.body169.i, !dbg !9602
 
 .body169.i:                                       ; preds = %bb.eh, %bb.ed
   %eh.lpad-body170.i = phi { ptr, i32 } [ %i.kn, %bb.eh ], [ %i.ki, %bb.ed ]
-  %i.ko = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9603
+  %i.ko = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.ko) #22
-          to label %.body174.i unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %.body174.i unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECskAlUH1kY1DR_10polars_ooc.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit173.i
-  %i.kp = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9603 ; 4 uses
+  %i.kp = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9602 ; 4 uses
   %i.kq = load i64, ptr %i.kp, align 8, !dbg !9954, !range !418, !alias.scope !9325, !noundef !241
   %i.kr = icmp eq i64 %i.kq, -9223372036854775808, !dbg !9954
   br i1 %i.kr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc.exit.i, label %bb.ei, !dbg !9954
@@ -1160,9 +1168,9 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
 
 .body174.i:                                       ; preds = %bb.el, %bb.ej, %.body169.i
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body170.i, %.body169.i ], [ %i.kv, %bb.el ], [ %i.ks, %bb.ej ]
-  %i.ku = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9603
+  %i.ku = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(40) %i.ku) #22
-          to label %.body178.i unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %.body178.i unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.el:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEECskAlUH1kY1DR_10polars_ooc.exit.i.i
   %i.kv = landingpad { ptr, i32 }
@@ -1178,7 +1186,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   ], !dbg !9958, !prof !426
 
 bb.em:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc.exit.i
-  %i.ky = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9603
+  %i.ky = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9602
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.ky)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECskAlUH1kY1DR_10polars_ooc.exit.i.i.i unwind label %bb.en, !dbg !9959, !noalias !9178
 
@@ -1223,7 +1231,7 @@ bb.eq:                                            ; preds = %bb.eo
 .body178.i:                                       ; preds = %bb.er, %bb.eo, %bb.en, %.body174.i
   %.pn122.i = phi { ptr, i32 } [ %.pn.i, %.body174.i ], [ %i.lj, %bb.er ], [ %i.kz, %bb.eo ], [ %i.kz, %bb.en ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.cj) #22
-          to label %.body180.i unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %.body180.i unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.er:                                            ; preds = %bb.ep
   %i.lj = landingpad { ptr, i32 }
@@ -1257,7 +1265,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBuf
 
 .body180.i:                                       ; preds = %bb.ew, %bb.et, %.body178.i
   %.pn124.i = phi { ptr, i32 } [ %.pn122.i, %.body178.i ], [ %i.lr, %bb.ew ], [ %i.lm, %bb.et ] ; 2 uses
-  %i.lo = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9603 ; 2 uses
+  %i.lo = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9602 ; 2 uses
   %i.lp = load i64, ptr %i.lo, align 8, !dbg !9979, !range !418, !alias.scope !9338, !noundef !241
   %i.lq = icmp eq i64 %i.lp, -9223372036854775808, !dbg !9979
   br i1 %i.lq, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i, label %bb.ev, !dbg !9979
@@ -1272,7 +1280,7 @@ bb.ew:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body180.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc.exit.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBufECskAlUH1kY1DR_10polars_ooc.exit.i.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc.exit.i
-  %i.ls = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9603 ; 2 uses
+  %i.ls = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9602 ; 2 uses
   %i.lt = load i64, ptr %i.ls, align 8, !dbg !9980, !range !418, !alias.scope !9339, !noundef !241
   %i.lu = icmp eq i64 %i.lt, -9223372036854775808, !dbg !9980
   br i1 %i.lu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit185.i, label %bb.ex, !dbg !9980
@@ -1282,22 +1290,24 @@ bb.ex:                                            ; preds = %_RINvNtCscgRAwXFJnX
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit185.i unwind label %bb.fa, !dbg !9980, !noalias !9178
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i: ; preds = %bb.fa, %bb.ev, %.body180.i
-  %.pn126.i = phi { ptr, i32 } [ %i.ma, %bb.fa ], [ %.pn124.i, %bb.ev ], [ %.pn124.i, %.body180.i ] ; 3 uses
-  %i.lv = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9603 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !9340), !dbg !9603
+  %.pn126.i = phi { ptr, i32 } [ %i.ma, %bb.fa ], [ %.pn124.i, %bb.ev ], [ %.pn124.i, %.body180.i ] ; 2 uses
+  %.sroa.38.5.i = extractvalue { ptr, i32 } %.pn126.i, 1 ; 3 uses
+  %.sroa.0111.5.i = extractvalue { ptr, i32 } %.pn126.i, 0 ; 3 uses
+  %i.lv = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9602 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !9340), !dbg !9602
   %i.lw = load ptr, ptr %i.lv, align 8, !dbg !9981, !alias.scope !9341, !noundef !241 ; 2 uses
   %i.lx = icmp eq ptr %i.lw, null, !dbg !9981
-  br i1 %i.lx, label %.body, label %bb.ey, !dbg !9981
+  br i1 %i.lx, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, label %bb.ey, !dbg !9981
 
 bb.ey:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i
   %i.ly = atomicrmw add ptr %i.lw, i64 -1 release, align 8, !dbg !9982, !noalias !9342
   %i.lz = icmp eq i64 %i.ly, 1, !dbg !9983
-  br i1 %i.lz, label %bb.ez, label %.body, !dbg !9983
+  br i1 %i.lz, label %bb.ez, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, !dbg !9983
 
 bb.ez:                                            ; preds = %bb.ey
   fence acquire, !dbg !9984
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.lv) #24
-          to label %.body unwind label %bb.fc, !dbg !9985, !noalias !9178
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i unwind label %bb.fc, !dbg !9985, !noalias !9178
 
 bb.fa:                                            ; preds = %bb.ex
   %i.ma = landingpad { ptr, i32 }
@@ -1305,8 +1315,8 @@ bb.fa:                                            ; preds = %bb.ex
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit185.i: ; preds = %bb.ex, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc.exit.i
-  %i.mb = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9603 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !9343), !dbg !9603
+  %i.mb = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9602 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !9343), !dbg !9602
   %i.mc = load ptr, ptr %i.mb, align 8, !dbg !9986, !alias.scope !9344, !noundef !241 ; 2 uses
   %i.md = icmp eq ptr %i.mc, null, !dbg !9986
   br i1 %i.md, label %bb.hn, label %bb.fb, !dbg !9986
@@ -1327,6 +1337,13 @@ bb.fc:                                            ; preds = %bb.hh, %bb.hf, %bb.
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #23, !dbg !9991, !noalias !9178
   unreachable, !dbg !9991
+
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i: ; preds = %bb.hh, %bb.hg, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i, %bb.gv, %bb.gu, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a, %bb.ez, %bb.ey, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i
+  %.sroa.0111.6.i = phi ptr [ %.sroa.0111.5.i, %bb.ey ], [ %.sroa.0111.13.i, %bb.gu ], [ %.sroa.0111.5.i, %bb.ez ], [ %.sroa.0111.5.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ %.sroa.0111.13.i, %bb.gv ], [ %.sroa.0111.13.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a ], [ %.sroa.0111.0244.i, %bb.hh ], [ %.sroa.0111.0244.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i ], [ %.sroa.0111.0244.i, %bb.hg ]
+  %.sroa.38.6.i = phi i32 [ %.sroa.38.5.i, %bb.ey ], [ %.sroa.38.13.i, %bb.gu ], [ %.sroa.38.5.i, %bb.ez ], [ %.sroa.38.5.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ %.sroa.38.13.i, %bb.gv ], [ %.sroa.38.13.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a ], [ %.sroa.38.0242.i, %bb.hh ], [ %.sroa.38.0242.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i ], [ %.sroa.38.0242.i, %bb.hg ]
+  %2 = insertvalue { ptr, i32 } poison, ptr %.sroa.0111.6.i, 0, !dbg !9991
+  %3 = insertvalue { ptr, i32 } %2, i32 %.sroa.38.6.i, 1, !dbg !9991
+  br label %.body, !dbg !9991
 
 bb.fd:                                            ; preds = %bb.dz, %bb.cx
   %.sroa.049.6.i = phi i8 [ 1, %bb.cx ], [ 0, %bb.dz ], !dbg !9604 ; 3 uses
@@ -1349,8 +1366,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcI
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit193.i: ; preds = %bb.fg, %bb.ff, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit191.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc), !dbg !9794, !noalias !9187
-  %i.ml = trunc nuw i8 %.sroa.049.6.i to i1, !dbg !9603
-  br i1 %i.ml, label %.thread264.i, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc.exit205.i, !dbg !9603
+  %i.ml = trunc nuw i8 %.sroa.049.6.i to i1, !dbg !9602
+  br i1 %i.ml, label %.thread264.i, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc.exit205.i, !dbg !9602
 
 bb.ff:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit191.i
   call void @llvm.experimental.noalias.scope.decl(metadata !9350), !dbg !9794
@@ -1366,8 +1383,8 @@ bb.fg:                                            ; preds = %bb.ff
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit193.i unwind label %bb.f, !dbg !10003, !noalias !9178
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc.exit205.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECskAlUH1kY1DR_10polars_ooc.exit.i201.i, %.thread264.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit193.i
-  %.sroa.049.9.i = phi i8 [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit193.i ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECskAlUH1kY1DR_10polars_ooc.exit.i201.i ], [ 1, %.thread264.i ], !dbg !9602 ; 8 uses
-  %i.mp = getelementptr inbounds nuw i8, ptr %i.bn, i64 40, !dbg !9603 ; 4 uses
+  %.sroa.049.9.i = phi i8 [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit193.i ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECskAlUH1kY1DR_10polars_ooc.exit.i201.i ], [ 1, %.thread264.i ], !dbg !9603 ; 8 uses
+  %i.mp = getelementptr inbounds nuw i8, ptr %i.bn, i64 40, !dbg !9602 ; 4 uses
   %i.mq = load i64, ptr %i.mp, align 8, !dbg !10004, !range !418, !alias.scope !9354, !noundef !241
   %i.mr = icmp eq i64 %i.mq, -9223372036854775808, !dbg !10004
   br i1 %i.mr, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc.exit199.i, label %bb.fh, !dbg !10004
@@ -1393,8 +1410,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc.exit199.i unwind label %bb.gb, !dbg !10007, !noalias !9178
 
 .thread264.i:                                     ; preds = %bb.fv, %bb.fs, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit193.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtBL_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3C_EEEECskAlUH1kY1DR_10polars_ooc.exit.i, %bb.bx, %bb.bu, %bb.br
-  %i.mu = getelementptr inbounds nuw i8, ptr %i.bn, i64 304, !dbg !9603
-  %.val151.i = load i32, ptr %i.mu, align 8, !dbg !9603, !range !419, !alias.scope !9179, !noundef !241
+  %i.mu = getelementptr inbounds nuw i8, ptr %i.bn, i64 304, !dbg !9602
+  %.val151.i = load i32, ptr %i.mu, align 8, !dbg !9602, !range !419, !alias.scope !9179, !noundef !241
   %i.mv = call noundef i32 @close(i32 noundef %.val151.i) #25, !dbg !10008, !noalias !9178 ; 0 uses
   %i.mw = load i64, ptr %i.cb, align 8, !dbg !10009, !range !418, !alias.scope !9355, !noundef !241
   %i.mx = icmp eq i64 %i.mw, -9223372036854775808, !dbg !10009
@@ -1418,7 +1435,7 @@ bb.fm:                                            ; preds = %bb.fl
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECskAlUH1kY1DR_10polars_ooc.exit.i201.i: ; preds = %bb.fk
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecjENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCskAlUH1kY1DR_10polars_ooc(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.cb)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc.exit205.i unwind label %2, !dbg !10012, !noalias !9178
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc.exit205.i unwind label %4, !dbg !10012, !noalias !9178
 
 .body.thread.i:                                   ; preds = %bb.cq, %.thread256.i, %.body.i
   %.pn128263.i = phi { ptr, i32 } [ %eh.lpad-body157.i, %.thread256.i ], [ %.pn128.i, %.body.i ], [ %i.hv, %bb.cq ] ; 2 uses
@@ -1509,9 +1526,14 @@ bb.fx:                                            ; preds = %bb.fu
 
 bb.fy:                                            ; preds = %bb.fz, %bb.fw
   %i.np = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(48) %i.bg) #22
-          to label %.body153.thread.i unwind label %bb.fc, !dbg !10038, !noalias !9178
+          to label %.thread.i unwind label %bb.fc, !dbg !10038, !noalias !9178
+
+.thread.i:                                        ; preds = %bb.fy
+  %.sroa.38.0235.i = extractvalue { ptr, i32 } %i.np, 1
+  %.sroa.0111.0236.i = extractvalue { ptr, i32 } %i.np, 0
+  br label %.body153.thread.i, !dbg !9602
 
 bb.fz:                                            ; preds = %bb.fx, %bb.fw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i64 24, i1 false), !dbg !10043, !noalias !9187
@@ -1525,23 +1547,23 @@ bb.ga:                                            ; preds = %bb.fz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf), !dbg !10047, !noalias !9187
   br label %bb.fv, !dbg !10048
 
-.body202.i.a:                                     ; preds = %2, %bb.fl
-  %.pn134.i = phi { ptr, i32 } [ %i.my, %bb.fl ], [ %3, %2 ]
-  %i.nt = getelementptr inbounds nuw i8, ptr %i.bn, i64 40, !dbg !9603
-  invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.nt) #22
-          to label %.body196.i unwind label %bb.fc, !dbg !9603, !noalias !9178
-
-2:                                                ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECskAlUH1kY1DR_10polars_ooc.exit.i201.i
-  %3 = landingpad { ptr, i32 }
+4:                                                ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEECskAlUH1kY1DR_10polars_ooc.exit.i201.i
+  %5 = landingpad { ptr, i32 }
           cleanup
   br label %.body202.i.a
 
+.body202.i.a:                                     ; preds = %4, %bb.fl
+  %.pn134.i = phi { ptr, i32 } [ %5, %4 ], [ %i.my, %bb.fl ]
+  %i.nt = getelementptr inbounds nuw i8, ptr %i.bn, i64 40, !dbg !9602
+  invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.nt) #22
+          to label %.body196.i unwind label %bb.fc, !dbg !9602, !noalias !9178
+
 .body196.i:                                       ; preds = %bb.gb, %.body202.i.a, %bb.fi
-  %.sroa.049.12.i = phi i8 [ 1, %.body202.i.a ], [ %.sroa.049.9.i, %bb.fi ], [ %.sroa.049.9.i, %bb.gb ], !dbg !9602
+  %.sroa.049.12.i = phi i8 [ 1, %.body202.i.a ], [ %.sroa.049.9.i, %bb.fi ], [ %.sroa.049.9.i, %bb.gb ], !dbg !9603
   %.pn136.i = phi { ptr, i32 } [ %.pn134.i, %.body202.i.a ], [ %i.ms, %bb.fi ], [ %i.nv, %bb.gb ]
-  %i.nu = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9603
+  %i.nu = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.nu) #22
-          to label %.body210.i unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %.body210.i unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.gb:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECskAlUH1kY1DR_10polars_ooc.exit.i195.i
   %i.nv = landingpad { ptr, i32 }
@@ -1549,7 +1571,7 @@ bb.gb:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body196.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc.exit199.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtBL_6string6StringEECskAlUH1kY1DR_10polars_ooc.exit.i195.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc.exit205.i
-  %i.nw = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9603 ; 4 uses
+  %i.nw = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9602 ; 4 uses
   %i.nx = load i64, ptr %i.nw, align 8, !dbg !10049, !range !418, !alias.scope !9367, !noundef !241
   %i.ny = icmp eq i64 %i.nx, -9223372036854775808, !dbg !10049
   br i1 %i.ny, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc.exit213.i, label %bb.gc, !dbg !10049
@@ -1575,11 +1597,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc.exit213.i unwind label %bb.gf, !dbg !10052, !noalias !9178
 
 .body210.i:                                       ; preds = %bb.gf, %bb.gd, %.body196.i
-  %.sroa.049.13.i = phi i8 [ %.sroa.049.12.i, %.body196.i ], [ %.sroa.049.9.i, %bb.gd ], [ %.sroa.049.9.i, %bb.gf ], !dbg !9602
+  %.sroa.049.13.i = phi i8 [ %.sroa.049.12.i, %.body196.i ], [ %.sroa.049.9.i, %bb.gd ], [ %.sroa.049.9.i, %bb.gf ], !dbg !9603
   %.pn138.i = phi { ptr, i32 } [ %.pn136.i, %.body196.i ], [ %i.nz, %bb.gd ], [ %i.oc, %bb.gf ]
-  %i.ob = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9603
+  %i.ob = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(40) %i.ob) #22
-          to label %.body217.i unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %.body217.i unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.gf:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEECskAlUH1kY1DR_10polars_ooc.exit.i209.i
   %i.oc = landingpad { ptr, i32 }
@@ -1595,7 +1617,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
   ], !dbg !10053, !prof !426
 
 bb.gg:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc.exit213.i
-  %i.of = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9603
+  %i.of = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9602
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.of)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECskAlUH1kY1DR_10polars_ooc.exit.i.i215.i unwind label %bb.gh, !dbg !10054, !noalias !9178
 
@@ -1638,14 +1660,14 @@ bb.gk:                                            ; preds = %bb.gi
   unreachable, !dbg !10055
 
 .body217.i:                                       ; preds = %bb.gl, %bb.gi, %bb.gh, %.body210.i
-  %.sroa.049.14.i = phi i8 [ %.sroa.049.13.i, %.body210.i ], [ %.sroa.049.9.i, %bb.gh ], [ %.sroa.049.9.i, %bb.gi ], [ %.sroa.049.9.i, %bb.gl ], !dbg !9602
+  %.sroa.049.14.i = phi i8 [ %.sroa.049.13.i, %.body210.i ], [ %.sroa.049.9.i, %bb.gh ], [ %.sroa.049.9.i, %bb.gi ], [ %.sroa.049.9.i, %bb.gl ], !dbg !9603
   %.pn140.i = phi { ptr, i32 } [ %.pn138.i, %.body210.i ], [ %i.og, %bb.gh ], [ %i.og, %bb.gi ], [ %i.ot, %bb.gl ] ; 2 uses
-  %i.oq = trunc nuw i8 %.sroa.049.14.i to i1, !dbg !9603
+  %i.oq = trunc nuw i8 %.sroa.049.14.i to i1, !dbg !9602
   %i.or = getelementptr inbounds nuw i8, ptr %i.bn, i64 287
   %i.os = load i8, ptr %i.or, align 1, !range !425
   %cond.i236.i = icmp eq i8 %i.os, -40
-  %or.cond149 = select i1 %i.oq, i1 %cond.i236.i, i1 false, !dbg !9603, !prof !9379
-  br i1 %or.cond149, label %bb.gy, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit238.i, !dbg !9603, !prof !9379
+  %or.cond149 = select i1 %i.oq, i1 %cond.i236.i, i1 false, !dbg !9602, !prof !9379
+  br i1 %or.cond149, label %bb.gy, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit238.i, !dbg !9602, !prof !9379
 
 bb.gl:                                            ; preds = %bb.gj
   %i.ot = landingpad { ptr, i32 }
@@ -1653,15 +1675,15 @@ bb.gl:                                            ; preds = %bb.gj
   br label %.body217.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc.exit219.i: ; preds = %bb.gj, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECskAlUH1kY1DR_10polars_ooc.exit.i.i215.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc.exit213.i
-  %i.ou = trunc nuw i8 %.sroa.049.9.i to i1, !dbg !9603
+  %i.ou = trunc nuw i8 %.sroa.049.9.i to i1, !dbg !9602
   %i.ov = getelementptr inbounds nuw i8, ptr %i.bn, i64 287
   %i.ow = load i8, ptr %i.ov, align 1, !range !425
   %cond.i.i = icmp eq i8 %i.ow, -40
-  %or.cond147 = select i1 %i.ou, i1 %cond.i.i, i1 false, !dbg !9603, !prof !9379
-  br i1 %or.cond147, label %bb.gp, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit.i, !dbg !9603, !prof !9379
+  %or.cond147 = select i1 %i.ou, i1 %cond.i.i, i1 false, !dbg !9602, !prof !9379
+  br i1 %or.cond147, label %bb.gp, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit.i, !dbg !9602, !prof !9379
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit.i: ; preds = %bb.gp, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc.exit219.i
-  %i.ox = getelementptr inbounds nuw i8, ptr %i.bn, i64 88, !dbg !9603 ; 4 uses
+  %i.ox = getelementptr inbounds nuw i8, ptr %i.bn, i64 88, !dbg !9602 ; 4 uses
   %i.oy = load i64, ptr %i.ox, align 8, !dbg !10070, !range !418, !alias.scope !9380, !noundef !241
   %i.oz = icmp eq i64 %i.oy, -9223372036854775808, !dbg !10070
   br i1 %i.oz, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc.exit225.i, label %bb.gm, !dbg !10070
@@ -1687,15 +1709,15 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBuf
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc.exit225.i unwind label %bb.gs, !dbg !10073, !noalias !9178
 
 bb.gp:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc.exit219.i
-  %i.pc = getelementptr inbounds nuw i8, ptr %i.bn, i64 264, !dbg !9603
+  %i.pc = getelementptr inbounds nuw i8, ptr %i.bn, i64 264, !dbg !9602
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.pc)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit.i unwind label %bb.gq, !dbg !10074, !noalias !9178
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit238.i: ; preds = %bb.gy, %bb.gq, %.body217.i
   %.pn142.i = phi { ptr, i32 } [ %i.pe, %bb.gq ], [ %.pn140.i, %.body217.i ], [ %.pn140.i, %bb.gy ]
-  %i.pd = getelementptr inbounds nuw i8, ptr %i.bn, i64 88, !dbg !9603
+  %i.pd = getelementptr inbounds nuw i8, ptr %i.bn, i64 88, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.pd) #22
-          to label %.body222.i unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %.body222.i unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.gq:                                            ; preds = %bb.gp
   %i.pe = landingpad { ptr, i32 }
@@ -1704,7 +1726,7 @@ bb.gq:                                            ; preds = %bb.gp
 
 .body222.i:                                       ; preds = %bb.gs, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit238.i, %bb.gn
   %.pn144.i = phi { ptr, i32 } [ %.pn142.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit238.i ], [ %i.pi, %bb.gs ], [ %i.pa, %bb.gn ] ; 2 uses
-  %i.pf = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9603 ; 2 uses
+  %i.pf = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9602 ; 2 uses
   %i.pg = load i64, ptr %i.pf, align 8, !dbg !10075, !range !418, !alias.scope !9381, !noundef !241
   %i.ph = icmp eq i64 %i.pg, -9223372036854775808, !dbg !10075
   br i1 %i.ph, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a, label %bb.gr, !dbg !10075
@@ -1719,7 +1741,7 @@ bb.gs:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br label %.body222.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc.exit225.i: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsh8eZTKRCwoO_3std4path7PathBufECskAlUH1kY1DR_10polars_ooc.exit.i.i221.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit.i
-  %i.pj = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9603 ; 2 uses
+  %i.pj = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9602 ; 2 uses
   %i.pk = load i64, ptr %i.pj, align 8, !dbg !10076, !range !418, !alias.scope !9382, !noundef !241
   %i.pl = icmp eq i64 %i.pk, -9223372036854775808, !dbg !10076
   br i1 %i.pl, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit230.i, label %bb.gt, !dbg !10076
@@ -1729,22 +1751,24 @@ bb.gt:                                            ; preds = %_RINvNtCscgRAwXFJnX
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit230.i unwind label %bb.gw, !dbg !10076, !noalias !9178
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a: ; preds = %bb.gw, %bb.gr, %.body222.i
-  %.pn146.i = phi { ptr, i32 } [ %i.pr, %bb.gw ], [ %.pn144.i, %bb.gr ], [ %.pn144.i, %.body222.i ] ; 3 uses
-  %i.pm = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9603 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !9383), !dbg !9603
+  %.pn146.i = phi { ptr, i32 } [ %i.pr, %bb.gw ], [ %.pn144.i, %bb.gr ], [ %.pn144.i, %.body222.i ] ; 2 uses
+  %.sroa.38.13.i = extractvalue { ptr, i32 } %.pn146.i, 1 ; 3 uses
+  %.sroa.0111.13.i = extractvalue { ptr, i32 } %.pn146.i, 0 ; 3 uses
+  %i.pm = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9602 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !9383), !dbg !9602
   %i.pn = load ptr, ptr %i.pm, align 8, !dbg !10077, !alias.scope !9384, !noundef !241 ; 2 uses
   %i.po = icmp eq ptr %i.pn, null, !dbg !10077
-  br i1 %i.po, label %.body, label %bb.gu, !dbg !10077
+  br i1 %i.po, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, label %bb.gu, !dbg !10077
 
 bb.gu:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a
   %i.pp = atomicrmw add ptr %i.pn, i64 -1 release, align 8, !dbg !10078, !noalias !9385
   %i.pq = icmp eq i64 %i.pp, 1, !dbg !10079
-  br i1 %i.pq, label %bb.gv, label %.body, !dbg !10079
+  br i1 %i.pq, label %bb.gv, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, !dbg !10079
 
 bb.gv:                                            ; preds = %bb.gu
   fence acquire, !dbg !10080
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.pm) #24
-          to label %.body unwind label %bb.fc, !dbg !10081, !noalias !9178
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i unwind label %bb.fc, !dbg !10081, !noalias !9178
 
 bb.gw:                                            ; preds = %bb.gt
   %i.pr = landingpad { ptr, i32 }
@@ -1752,8 +1776,8 @@ bb.gw:                                            ; preds = %bb.gt
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit230.i: ; preds = %bb.gt, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc.exit225.i
-  %i.ps = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9603 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !9386), !dbg !9603
+  %i.ps = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9602 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !9386), !dbg !9602
   %i.pt = load ptr, ptr %i.ps, align 8, !dbg !10082, !alias.scope !9387, !noundef !241 ; 2 uses
   %i.pu = icmp eq ptr %i.pt, null, !dbg !10082
   br i1 %i.pu, label %bb.hn, label %bb.gx, !dbg !10082
@@ -1764,56 +1788,58 @@ bb.gx:                                            ; preds = %_RINvNtCscgRAwXFJnX
   br i1 %i.pw, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit189.sink.split.i, label %bb.hn, !dbg !10084
 
 bb.gy:                                            ; preds = %.body217.i
-  %i.px = getelementptr inbounds nuw i8, ptr %i.bn, i64 264, !dbg !9603
+  %i.px = getelementptr inbounds nuw i8, ptr %i.bn, i64 264, !dbg !9602
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.px)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit238.i unwind label %bb.fc, !dbg !10085, !noalias !9178
 
 bb.gz:                                            ; preds = %.body153.thread.i, %.body153.i
-  %.pn132255.i = phi { ptr, i32 } [ %.pn132.i, %.body153.i ], [ %.pn132254.i, %.body153.thread.i ] ; 3 uses
-  %.sroa.049.0253.i = phi i8 [ %.sroa.049.0.i, %.body153.i ], [ %.sroa.049.0252.i, %.body153.thread.i ]
-  %i.py = getelementptr inbounds nuw i8, ptr %i.bn, i64 40, !dbg !9603
+  %.sroa.0111.0244.i = phi ptr [ %.sroa.0111.0.i, %.body153.i ], [ %.sroa.0111.0243.i, %.body153.thread.i ] ; 3 uses
+  %.sroa.38.0242.i = phi i32 [ %.sroa.38.0.i, %.body153.i ], [ %.sroa.38.0241.i, %.body153.thread.i ] ; 3 uses
+  %.sroa.049.0253.i = phi i8 [ %.sroa.049.0.i, %.body153.i ], [ %.sroa.049.0239.i, %.body153.thread.i ]
+  %i.py = getelementptr inbounds nuw i8, ptr %i.bn, i64 40, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtB17_6string6StringEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.py) #22
-          to label %bb.ha unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %bb.ha unwind label %bb.fc, !dbg !9602, !noalias !9178
 
-.body153.thread.i:                                ; preds = %bb.fy, %bb.bq, %bb.bp, %bb.bo, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i, %bb.l, %.body153.i
-  %.pn132254.i = phi { ptr, i32 } [ %.pn132.i, %.body153.i ], [ %i.np, %bb.fy ], [ %.pn766.i.i, %bb.bo ], [ %.pn766.i.i, %bb.bq ], [ %.pn74.i.i, %bb.l ], [ %.pn7412.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i ], [ %.pn766.i.i, %bb.bp ]
-  %.sroa.049.0252.i = phi i8 [ %.sroa.049.0.i, %.body153.i ], [ 1, %bb.fy ], [ 1, %bb.bo ], [ 1, %bb.bq ], [ 1, %bb.l ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils4mmap13MMapSemaphoreECskAlUH1kY1DR_10polars_ooc.exit96.i.i ], [ 1, %bb.bp ]
-  %i.pz = getelementptr inbounds nuw i8, ptr %i.bn, i64 304, !dbg !9603
-  %.val150.i = load i32, ptr %i.pz, align 8, !dbg !9603, !range !419, !alias.scope !9179, !noundef !241
+.body153.thread.i:                                ; preds = %.thread.i, %.body153.i, %.body138.thread.i
+  %.sroa.0111.0243.i = phi ptr [ %.sroa.0111.0236.i, %.thread.i ], [ %.sroa.0111.0.i, %.body153.i ], [ %.sroa.0111.0259.i, %.body138.thread.i ]
+  %.sroa.38.0241.i = phi i32 [ %.sroa.38.0235.i, %.thread.i ], [ %.sroa.38.0.i, %.body153.i ], [ %.sroa.38.0258.i, %.body138.thread.i ]
+  %.sroa.049.0239.i = phi i8 [ 1, %.thread.i ], [ %.sroa.049.0.i, %.body153.i ], [ 1, %.body138.thread.i ]
+  %i.pz = getelementptr inbounds nuw i8, ptr %i.bn, i64 304, !dbg !9602
+  %.val150.i = load i32, ptr %i.pz, align 8, !dbg !9602, !range !419, !alias.scope !9179, !noundef !241
   %i.qa = call noundef i32 @close(i32 noundef %.val150.i) #25, !dbg !10086, !noalias !9178 ; 0 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecjEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.cb) #22
-          to label %bb.gz unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %bb.gz unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.ha:                                            ; preds = %bb.gz
-  %i.qb = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9603
+  %i.qb = getelementptr inbounds nuw i8, ptr %i.bn, i64 64, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.qb) #22
-          to label %bb.hb unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %bb.hb unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.hb:                                            ; preds = %bb.ha
-  %i.qc = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9603
+  %i.qc = getelementptr inbounds nuw i8, ptr %i.bn, i64 224, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtB17_10pl_ref_str8PlRefStrEEECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(40) %i.qc) #22
-          to label %bb.hc unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %bb.hc unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.hc:                                            ; preds = %bb.hb
-  %i.qd = trunc nuw i8 %.sroa.049.0253.i to i1, !dbg !9603
+  %i.qd = trunc nuw i8 %.sroa.049.0253.i to i1, !dbg !9602
   %i.qe = getelementptr inbounds nuw i8, ptr %i.bn, i64 287
   %i.qf = load i8, ptr %i.qe, align 1, !range !425
   %cond.i239.i = icmp eq i8 %i.qf, -40
-  %or.cond151 = select i1 %i.qd, i1 %cond.i239.i, i1 false, !dbg !9603, !prof !9379
-  br i1 %or.cond151, label %bb.hd, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit241.i, !dbg !9603, !prof !9379
+  %or.cond151 = select i1 %i.qd, i1 %cond.i239.i, i1 false, !dbg !9602, !prof !9379
+  br i1 %or.cond151, label %bb.hd, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit241.i, !dbg !9602, !prof !9379
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit241.i: ; preds = %bb.hd, %bb.hc
-  %i.qg = getelementptr inbounds nuw i8, ptr %i.bn, i64 88, !dbg !9603
+  %i.qg = getelementptr inbounds nuw i8, ptr %i.bn, i64 88, !dbg !9602
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCslpwjCj2YNBy_9polars_io3ipc8ipc_file20memory_mapped_hidden3KeyECskAlUH1kY1DR_10polars_ooc(ptr noalias noundef align 8 dereferenceable(24) %i.qg) #22
-          to label %bb.he unwind label %bb.fc, !dbg !9603, !noalias !9178
+          to label %bb.he unwind label %bb.fc, !dbg !9602, !noalias !9178
 
 bb.hd:                                            ; preds = %bb.hc
-  %i.qh = getelementptr inbounds nuw i8, ptr %i.bn, i64 264, !dbg !9603
+  %i.qh = getelementptr inbounds nuw i8, ptr %i.bn, i64 264, !dbg !9602
   invoke void @_RNvNvXs2_NtCs7VARH73bmU_11compact_str4reprNtB7_4ReprNtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.qh)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit241.i unwind label %bb.fc, !dbg !10087, !noalias !9178
 
 bb.he:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCslpwjCj2YNBy_9polars_io7options8RowIndexEECskAlUH1kY1DR_10polars_ooc.exit241.i
-  %i.qi = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9603 ; 2 uses
+  %i.qi = getelementptr inbounds nuw i8, ptr %i.bn, i64 112, !dbg !9602 ; 2 uses
   %i.qj = load i64, ptr %i.qi, align 8, !dbg !10088, !range !418, !alias.scope !9389, !noundef !241
   %i.qk = icmp eq i64 %i.qj, -9223372036854775808, !dbg !10088
   br i1 %i.qk, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i, label %bb.hf, !dbg !10088
@@ -1823,21 +1849,21 @@ bb.hf:                                            ; preds = %bb.he
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i unwind label %bb.fc, !dbg !10088, !noalias !9178
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i: ; preds = %bb.hf, %bb.he
-  %i.ql = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9603 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !9390), !dbg !9603
+  %i.ql = getelementptr inbounds nuw i8, ptr %i.bn, i64 296, !dbg !9602 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !9390), !dbg !9602
   %i.qm = load ptr, ptr %i.ql, align 8, !dbg !10089, !alias.scope !9391, !noundef !241 ; 2 uses
   %i.qn = icmp eq ptr %i.qm, null, !dbg !10089
-  br i1 %i.qn, label %.body, label %bb.hg, !dbg !10089
+  br i1 %i.qn, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, label %bb.hg, !dbg !10089
 
 bb.hg:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i
   %i.qo = atomicrmw add ptr %i.qm, i64 -1 release, align 8, !dbg !10090, !noalias !9392
   %i.qp = icmp eq i64 %i.qo, 1, !dbg !10091
-  br i1 %i.qp, label %bb.hh, label %.body, !dbg !10091
+  br i1 %i.qp, label %bb.hh, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, !dbg !10091
 
 bb.hh:                                            ; preds = %bb.hg
   fence acquire, !dbg !10092
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB7_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB34_EEE9drop_slowB1y_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.ql) #24
-          to label %.body unwind label %bb.fc, !dbg !10093, !noalias !9178
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i unwind label %bb.fc, !dbg !10093, !noalias !9178
 
 bb.hi:                                            ; preds = %bb.c
   %i.qq = load i64, ptr %i.bs, align 8, !dbg !10094, !range !9193, !noundef !241 ; 2 uses
@@ -1870,10 +1896,10 @@ bb.hl:                                            ; preds = %bb.hk
   tail call void @llvm.trap(), !dbg !10104
   unreachable, !dbg !10104
 
-.body:                                            ; preds = %bb.hm, %bb.hh, %bb.hg, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i, %bb.gv, %bb.gu, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a, %bb.ez, %bb.ey, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i, %.body92
-  %.sroa.024.0 = phi i1 [ %.sroa.024.2, %.body92 ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ true, %bb.ey ], [ true, %bb.ez ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a ], [ true, %bb.gu ], [ true, %bb.gv ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i ], [ true, %bb.hg ], [ true, %bb.hh ], [ true, %bb.hm ], !dbg !10105 ; 3 uses
-  %.sroa.022.0 = phi i8 [ %.sroa.022.1, %.body92 ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ 1, %bb.ey ], [ 1, %bb.ez ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a ], [ 1, %bb.gu ], [ 1, %bb.gv ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i ], [ 1, %bb.hg ], [ 1, %bb.hh ], [ 1, %bb.hm ], !dbg !10106
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body92 ], [ %.pn126.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ %.pn126.i, %bb.ey ], [ %.pn126.i, %bb.ez ], [ %.pn146.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit228.i.a ], [ %.pn146.i, %bb.gu ], [ %.pn146.i, %bb.gv ], [ %.pn132255.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read4file12FileMetadataEECskAlUH1kY1DR_10polars_ooc.exit243.i ], [ %.pn132255.i, %bb.hg ], [ %.pn132255.i, %bb.hh ], [ %i.qz, %bb.hm ] ; 3 uses
+.body:                                            ; preds = %bb.hm, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i, %.body92
+  %.sroa.024.0 = phi i1 [ %.sroa.024.2, %.body92 ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ true, %bb.hm ], !dbg !10105 ; 3 uses
+  %.sroa.022.0 = phi i8 [ %.sroa.022.1, %.body92 ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ 1, %bb.hm ], !dbg !10106
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body92 ], [ %3, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldINtNtNtNtB17_11collections5btree3map8BTreeMapNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB3Z_EEEEECskAlUH1kY1DR_10polars_ooc.exit.i ], [ %i.qz, %bb.hm ] ; 3 uses
   %i.qx = getelementptr inbounds nuw i8, ptr %i.bq, i64 23, !dbg !10107
   %i.qy = load i8, ptr %i.qx, align 1, !dbg !10107, !range !425, !noundef !241 ; 2 uses
   %.not70 = icmp eq i8 %i.qy, -38, !dbg !10107
@@ -2276,8 +2302,8 @@ begin_hunk_3_@llvm.umax.i64
 !9599 = !DILocation(line: 304, column: 13, scope: !7794)
 !9600 = !DILocation(line: 745, column: 15, scope: !7798, inlinedAt: !7801)
 !9601 = !DILocation(line: 745, column: 9, scope: !7798, inlinedAt: !7801)
-!9602 = !DILocation(line: 305, column: 13, scope: !7799, inlinedAt: !7800)
-!9603 = !DILocation(line: 351, column: 9, scope: !7799, inlinedAt: !7800)
+!9602 = !DILocation(line: 351, column: 9, scope: !7799, inlinedAt: !7800)
+!9603 = !DILocation(line: 305, column: 13, scope: !7799, inlinedAt: !7800)
 !9604 = !DILocation(line: 0, scope: !7799, inlinedAt: !7800)
 !9605 = !DILocation(line: 664, column: 24, scope: !7803, inlinedAt: !7804)
 !9606 = !DILocation(line: 3029, column: 37, scope: !7806, inlinedAt: !7811)

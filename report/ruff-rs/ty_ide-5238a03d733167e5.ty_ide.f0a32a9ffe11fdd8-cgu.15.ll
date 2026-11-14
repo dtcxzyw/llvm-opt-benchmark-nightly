@@ -204,6 +204,14 @@ bb.ge:                                            ; preds = %bb.gc
   store i8 -1, ptr %0, align 8
   br label %bb.cy
 
+5:                                                ; preds = %bb.fz
+  %6 = landingpad { ptr, i32 }
+          cleanup
+  %7 = getelementptr inbounds nuw i8, ptr %i.ac, i64 120
+  %.val420 = load ptr, ptr %7, align 8, !alias.scope !50, !align !22, !noundef !18
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelECskEUeM34gmJU_6ty_ide(ptr %.val420) #29
+          to label %common.resume unwind label %bb.ck
+
 .thread598:                                       ; preds = %bb.fz
   %i.qs = getelementptr inbounds nuw i8, ptr %i.ac, i64 120
   %.val422 = load ptr, ptr %i.qs, align 8, !alias.scope !50, !align !22, !noundef !18 ; 4 uses
@@ -222,14 +230,6 @@ bb.gg:                                            ; preds = %bb.gf
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEECskEUeM34gmJU_6ty_ide.exit.i.i539: ; preds = %bb.gf
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val422, i64 noundef 72, i64 noundef 8) #33, !noalias !1679, !inline_history !40
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionTINtCsb6FLkjZuKG_18ruff_python_parser6ParsedNtNtCskLngH8kgpZI_15ruff_python_ast9generated13ModExpressionENtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelEEECskEUeM34gmJU_6ty_ide.exit
-
-5:                                                ; preds = %bb.fz
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  %7 = getelementptr inbounds nuw i8, ptr %i.ac, i64 120
-  %.val421 = load ptr, ptr %7, align 8, !alias.scope !50, !align !22, !noundef !18
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelECskEUeM34gmJU_6ty_ide(ptr %.val421) #29
-          to label %common.resume unwind label %bb.ck
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionTINtCsb6FLkjZuKG_18ruff_python_parser6ParsedNtNtCskLngH8kgpZI_15ruff_python_ast9generated13ModExpressionENtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model13SemanticModelEEECskEUeM34gmJU_6ty_ide.exit: ; preds = %bb.bj, %bb.cy, %bb.cs, %.thread598, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEECskEUeM34gmJU_6ty_ide.exit.i.i539, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEECskEUeM34gmJU_6ty_ide.exit.i.i.i.i, %bb.av, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)

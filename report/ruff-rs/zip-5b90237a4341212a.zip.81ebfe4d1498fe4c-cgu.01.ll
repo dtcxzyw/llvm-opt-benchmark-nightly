@@ -175,7 +175,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.z, %bb.ab, %bb.x, %bb.ac, %bb.aa, %bb.y, %bb.q, %bb.v, %bb.s
+bb.w:                                             ; preds = %bb.x, %bb.ab, %bb.z, %bb.ac, %bb.aa, %bb.y, %bb.q, %bb.v, %bb.s
   ret void
 
 bb.x:                                             ; preds = %bb.n

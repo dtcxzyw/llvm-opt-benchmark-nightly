@@ -205,7 +205,7 @@ bb.xg:                                            ; preds = %bb.wx, %bb.ww
   call void @llvm.lifetime.end.p0(ptr nonnull %i.eo), !dbg !160172
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !160164
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit: ; preds = %bb.abw, %.thread1720.a, %bb.abt, %.thread1718.a, %bb.abq, %.thread1716.a, %7, %.thread1714, %bb.abm, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECsfcROwRM8ZtH_11polars_plan.exit1325, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrEECsfcROwRM8ZtH_11polars_plan.exit.i1320, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdEECsfcROwRM8ZtH_11polars_plan.exit1302, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrEECsfcROwRM8ZtH_11polars_plan.exit.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdEECsfcROwRM8ZtH_11polars_plan.exit, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdEECsfcROwRM8ZtH_11polars_plan.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr7rolling15RollingFunctionEBO_.exit, %bb.xv, %bb.aaq, %bb.aap, %bb.aao, %bb.aan, %bb.xr, %bb.xq, %bb.xp, %bb.xo, %bb.zi, %bb.zh, %bb.yu, %bb.yt, %bb.ys, %bb.yr, %bb.yq, %bb.yp, %bb.yo, %bb.yk, %bb.yj, %bb.yi, %bb.yh, %bb.yg, %bb.ye, %bb.yd, %bb.yc, %bb.yb, %bb.ya, %bb.xz, %bb.xx, %bb.xw, %.thread1722, %bb.aar, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecbEECsfcROwRM8ZtH_11polars_plan.exit, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes7reshape16ReshapeDimensionEECsfcROwRM8ZtH_11polars_plan.exit, %bb.yn, %bb.ym, %bb.yl, %bb.yf, %bb.xu, %bb.xt, %bb.xs, %bb.xn, %bb.xm, %bb.xl, %bb.xk, %bb.xj, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIREEB1j_.exit, %bb.xg, %bb.d
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit: ; preds = %bb.abz, %.thread1718, %bb.abw, %.thread1720.a, %bb.abt, %.thread1718.a, %bb.abq, %.thread1716.a, %bb.abm, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECsfcROwRM8ZtH_11polars_plan.exit1325, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrEECsfcROwRM8ZtH_11polars_plan.exit.i1320, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdEECsfcROwRM8ZtH_11polars_plan.exit1302, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrEECsfcROwRM8ZtH_11polars_plan.exit.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdEECsfcROwRM8ZtH_11polars_plan.exit, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdEECsfcROwRM8ZtH_11polars_plan.exit.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr7rolling15RollingFunctionEBO_.exit, %bb.xv, %bb.aaq, %bb.aap, %bb.aao, %bb.aan, %bb.xr, %bb.xq, %bb.xp, %bb.xo, %bb.zi, %bb.zh, %bb.yu, %bb.yt, %bb.ys, %bb.yr, %bb.yq, %bb.yp, %bb.yo, %bb.yk, %bb.yj, %bb.yi, %bb.yh, %bb.yg, %bb.ye, %bb.yd, %bb.yc, %bb.yb, %bb.ya, %bb.xz, %bb.xx, %bb.xw, %.thread1720, %bb.aar, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecbEECsfcROwRM8ZtH_11polars_plan.exit, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes7reshape16ReshapeDimensionEECsfcROwRM8ZtH_11polars_plan.exit, %bb.yn, %bb.ym, %bb.yl, %bb.yf, %bb.xu, %bb.xt, %bb.xs, %bb.xn, %bb.xm, %bb.xl, %bb.xk, %bb.xj, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIREEB1j_.exit, %bb.xg, %bb.d
   ret void, !dbg !161478
 
 bb.xh:                                            ; preds = %bb.qa, %bb.wt, %bb.ws
@@ -529,8 +529,8 @@ bb.zd:                                            ; preds = %bb.zc
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #47, !dbg !161520
   unreachable, !dbg !161520
 
-common.resume:                                    ; preds = %.invoke1902, %.invoke1901, %.invoke1900.a, %bb.abg, %bb.abc, %.body, %bb.aaw, %.body1296, %.body1300, %.body1317, %bb.aca, %bb.acb, %bb.acc, %bb.acd, %bb.ace, %bb.acf, %bb.acg, %bb.ach, %bb.aci, %bb.ack, %bb.acl, %bb.acm, %bb.acu, %bb.acv, %bb.acw, %bb.acy, %bb.adb, %bb.adg, %bb.adh, %bb.adi, %bb.adj, %bb.adl, %bb.adm, %bb.adn, %bb.acj, %bb.acn, %bb.aco, %bb.acp, %bb.acq, %bb.acr, %bb.acs, %bb.act, %bb.acx, %bb.abn, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECsfcROwRM8ZtH_11polars_plan.exit1323, %bb.abp, %bb.abo, %bb.abs, %bb.abr, %bb.abv, %bb.abu, %bb.aby, %bb.abx, %bb.acz, %bb.adc, %bb.adf, %bb.add, %bb.ade, %bb.adp, %bb.ado, %bb.adt, %.noexc1352, %bb.adv, %bb.adx, %bb.adz, %bb.aeb, %bb.aec, %bb.aee, %bb.aed, %bb.aay, %bb.zf, %bb.zc
-  %common.resume.op = phi { ptr, i32 } [ %i.axn, %bb.abc ], [ %i.auo, %bb.zc ], [ %i.aur, %bb.zf ], [ %i.axg, %bb.aay ], [ %.pn1177.pn.pn, %bb.aee ], [ %i.axb, %bb.aaw ], [ %.pn1177.pn.pn, %bb.aed ], [ %eh.lpad-body1297, %.body1296 ], [ %.pn1177.pn.pn, %.invoke1901 ], [ %eh.lpad-body1301, %.body1300 ], [ %.pn1177.pn.pn, %bb.acw ], [ %.pn1177.pn.pn, %bb.acx ], [ %.pn1177.pn.pn, %bb.acq ], [ %.pn1181, %bb.abn ], [ %.pn1181, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECsfcROwRM8ZtH_11polars_plan.exit1323 ], [ %i.ayo, %bb.abp ], [ %i.ayo, %bb.abo ], [ %i.ayv, %bb.abs ], [ %i.ayv, %bb.abr ], [ %i.azc, %bb.abv ], [ %i.azc, %bb.abu ], [ %eh.lpad-body1318, %.body1317 ], [ %i.azj, %bb.abx ], [ %.pn1177.pn.pn, %.body ], [ %.pn1177.pn.pn, %bb.acy ], [ %.pn1177.pn.pn, %bb.aca ], [ %i.azj, %bb.aby ], [ %.pn1177.pn.pn, %bb.acb ], [ %.pn1177.pn.pn, %bb.adb ], [ %.pn1177.pn.pn, %bb.acc ], [ %.pn1177.pn.pn, %bb.acz ], [ %.pn1177.pn.pn, %bb.acd ], [ %.pn1177.pn.pn, %bb.adc ], [ %.pn1177.pn.pn, %bb.ace ], [ %.pn1177.pn.pn, %bb.adg ], [ %.pn1177.pn.pn, %bb.acf ], [ %.pn1177.pn.pn, %bb.adh ], [ %.pn1177.pn.pn, %bb.acg ], [ %.pn1177.pn.pn, %bb.adi ], [ %.pn1177.pn.pn, %bb.ach ], [ %.pn1177.pn.pn, %bb.adj ], [ %.pn1177.pn.pn, %bb.aci ], [ %.pn1177.pn.pn, %bb.adl ], [ %.pn1177.pn.pn, %bb.ade ], [ %.pn1177.pn.pn, %bb.adm ], [ %.pn1177.pn.pn, %bb.ack ], [ %.pn1177.pn.pn, %bb.adn ], [ %.pn1177.pn.pn, %bb.acl ], [ %.pn1177.pn.pn, %bb.add ], [ %.pn1177.pn.pn, %bb.acm ], [ %.pn1177.pn.pn, %bb.acp ], [ %.pn1177.pn.pn, %bb.ado ], [ %.pn1177.pn.pn, %.invoke1902 ], [ %.pn1177.pn.pn, %bb.adp ], [ %.pn1177.pn.pn, %bb.acr ], [ %.pn1177.pn.pn, %bb.acs ], [ %.pn1177.pn.pn, %bb.adt ], [ %.pn1177.pn.pn, %.noexc1352 ], [ %.pn1177.pn.pn, %bb.act ], [ %.pn1177.pn.pn, %bb.adv ], [ %i.axu, %bb.abg ], [ %.pn1177.pn.pn, %bb.adx ], [ %.pn1177.pn.pn, %.invoke1900.a ], [ %.pn1177.pn.pn, %bb.adz ], [ %.pn1177.pn.pn, %bb.aeb ], [ %.pn1177.pn.pn, %bb.acu ], [ %.pn1177.pn.pn, %bb.aec ], [ %.pn1177.pn.pn, %bb.acv ], [ %.pn1177.pn.pn, %bb.acj ], [ %.pn1177.pn.pn, %bb.acn ], [ %.pn1177.pn.pn, %bb.aco ], [ %.pn1177.pn.pn, %bb.adf ]
+common.resume:                                    ; preds = %.invoke1902, %.invoke1901, %.invoke1900.a, %.body, %bb.aaw, %.body1296, %.body1300, %.body1317, %bb.aca, %bb.acb, %bb.acc, %bb.acd, %bb.ace, %bb.acf, %bb.acg, %bb.ach, %bb.aci, %bb.ack, %bb.acl, %bb.acm, %bb.acu, %bb.acv, %bb.acw, %bb.acy, %bb.adb, %bb.adg, %bb.adh, %bb.adi, %bb.adj, %bb.adl, %bb.adm, %bb.adn, %bb.acj, %bb.acn, %bb.aco, %bb.acp, %bb.acq, %bb.acr, %bb.acs, %bb.act, %bb.acx, %bb.abn, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECsfcROwRM8ZtH_11polars_plan.exit1323, %bb.abp, %bb.abo, %bb.abs, %bb.abr, %bb.abv, %bb.abu, %bb.aby, %bb.abx, %bb.acz, %bb.adc, %bb.adf, %bb.add, %bb.ade, %bb.adp, %bb.ado, %bb.adt, %.noexc1352, %bb.adv, %bb.adx, %bb.adz, %bb.aeb, %bb.aec, %bb.aee, %bb.aed, %bb.abg, %bb.abc, %bb.aay, %bb.zf, %bb.zc
+  %common.resume.op = phi { ptr, i32 } [ %i.axn, %bb.abc ], [ %i.auo, %bb.zc ], [ %i.aur, %bb.zf ], [ %i.axu, %bb.abg ], [ %i.axg, %bb.aay ], [ %i.axb, %bb.aaw ], [ %.pn1177.pn.pn, %bb.aed ], [ %eh.lpad-body1297, %.body1296 ], [ %.pn1177.pn.pn, %.invoke1901 ], [ %eh.lpad-body1301, %.body1300 ], [ %.pn1177.pn.pn, %bb.acw ], [ %.pn1177.pn.pn, %bb.acx ], [ %i.ayo, %bb.abp ], [ %.pn1181, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrECsfcROwRM8ZtH_11polars_plan.exit1323 ], [ %.pn1177.pn.pn, %bb.adz ], [ %i.ayo, %bb.abo ], [ %.pn1177.pn.pn, %bb.aeb ], [ %i.ayv, %bb.abr ], [ %.pn1177.pn.pn, %bb.acu ], [ %i.azc, %bb.abu ], [ %.pn1177.pn.pn, %bb.aec ], [ %eh.lpad-body1318, %.body1317 ], [ %.pn1177.pn.pn, %bb.acv ], [ %.pn1177.pn.pn, %.body ], [ %.pn1177.pn.pn, %bb.acy ], [ %.pn1177.pn.pn, %bb.aca ], [ %i.azj, %bb.abx ], [ %.pn1177.pn.pn, %bb.acb ], [ %.pn1177.pn.pn, %bb.adb ], [ %.pn1177.pn.pn, %bb.acc ], [ %.pn1177.pn.pn, %bb.acz ], [ %.pn1177.pn.pn, %bb.acd ], [ %.pn1177.pn.pn, %bb.adc ], [ %.pn1177.pn.pn, %bb.ace ], [ %.pn1177.pn.pn, %bb.adg ], [ %.pn1177.pn.pn, %bb.acf ], [ %.pn1177.pn.pn, %bb.adh ], [ %.pn1177.pn.pn, %bb.acg ], [ %.pn1177.pn.pn, %bb.adi ], [ %.pn1177.pn.pn, %bb.ach ], [ %.pn1177.pn.pn, %bb.adj ], [ %.pn1177.pn.pn, %bb.aci ], [ %.pn1177.pn.pn, %bb.adl ], [ %.pn1177.pn.pn, %bb.ade ], [ %.pn1177.pn.pn, %bb.adm ], [ %.pn1177.pn.pn, %bb.ack ], [ %.pn1177.pn.pn, %bb.adn ], [ %.pn1177.pn.pn, %bb.acl ], [ %.pn1177.pn.pn, %bb.add ], [ %.pn1177.pn.pn, %bb.acm ], [ %.pn1181, %bb.abn ], [ %.pn1177.pn.pn, %bb.ado ], [ %.pn1177.pn.pn, %.invoke1902 ], [ %.pn1177.pn.pn, %bb.adp ], [ %i.ayv, %bb.abs ], [ %i.azc, %bb.abv ], [ %.pn1177.pn.pn, %bb.adt ], [ %.pn1177.pn.pn, %.noexc1352 ], [ %i.azj, %bb.aby ], [ %.pn1177.pn.pn, %bb.adv ], [ %.pn1177.pn.pn, %bb.aee ], [ %.pn1177.pn.pn, %bb.adx ], [ %.pn1177.pn.pn, %.invoke1900.a ], [ %.pn1177.pn.pn, %bb.acj ], [ %.pn1177.pn.pn, %bb.acn ], [ %.pn1177.pn.pn, %bb.aco ], [ %.pn1177.pn.pn, %bb.adf ], [ %.pn1177.pn.pn, %bb.acp ], [ %.pn1177.pn.pn, %bb.acq ], [ %.pn1177.pn.pn, %bb.acr ], [ %.pn1177.pn.pn, %bb.acs ], [ %.pn1177.pn.pn, %bb.act ]
   resume { ptr, i32 } %common.resume.op, !dbg !160162
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes7reshape16ReshapeDimensionEECsfcROwRM8ZtH_11polars_plan.exit: ; preds = %bb.zb
@@ -637,22 +637,22 @@ bb.zu:                                            ; preds = %bb.zt
   %i.avl = load ptr, ptr %i.avk, align 16, !dbg !161541, !alias.scope !160098, !nonnull !4700, !noundef !4700
   %i.avm = atomicrmw add ptr %i.avl, i64 -1 release, align 8, !dbg !161542, !noalias !160098
   %i.avn = icmp eq i64 %i.avm, 1, !dbg !161543
-  br i1 %i.avn, label %bb.zv, label %.thread1714, !dbg !161543
+  br i1 %i.avn, label %bb.zv, label %.thread1716.a, !dbg !161543
 
 bb.zv:                                            ; preds = %bb.zu
   fence acquire, !dbg !161544
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectE9drop_slowCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.avk) #51
-          to label %.thread1714 unwind label %bb.abo, !dbg !161545
+          to label %.thread1716.a unwind label %bb.abo, !dbg !161545
 
 bb.zw:                                            ; preds = %bb.zt
   %i.avo = atomicrmw add ptr %i.avi, i64 -1 release, align 8, !dbg !161546, !noalias !160099
   %i.avp = icmp eq i64 %i.avo, 1, !dbg !161547
-  br i1 %i.avp, label %bb.zx, label %.thread1714, !dbg !161547
+  br i1 %i.avp, label %bb.zx, label %.thread1716.a, !dbg !161547
 
 bb.zx:                                            ; preds = %bb.zw
   fence acquire, !dbg !161548
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDINtNtNtCscgRAwXFJnXP_4core3ops8function2FnTTNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesB1p_EEEp6OutputINtNtBO_6result6ResultB1p_NtCsgjwxzEoLG5s_12polars_error11PolarsErrorENtNtBO_6marker4SendNtB3x_4SyncEL_E9drop_slowCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.avh) #51
-          to label %.thread1714 unwind label %bb.abo, !dbg !161549
+          to label %.thread1716.a unwind label %bb.abo, !dbg !161549
 
 bb.zy:                                            ; preds = %bb.xp, %bb.d
   %i.avq = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !160164 ; 2 uses
@@ -669,22 +669,22 @@ bb.zz:                                            ; preds = %bb.zy
   %i.avu = load ptr, ptr %i.avt, align 16, !dbg !161553, !alias.scope !160104, !nonnull !4700, !noundef !4700
   %i.avv = atomicrmw add ptr %i.avu, i64 -1 release, align 8, !dbg !161554, !noalias !160104
   %i.avw = icmp eq i64 %i.avv, 1, !dbg !161555
-  br i1 %i.avw, label %bb.aaa, label %.thread1716.a, !dbg !161555
+  br i1 %i.avw, label %bb.aaa, label %.thread1718.a, !dbg !161555
 
 bb.aaa:                                           ; preds = %bb.zz
   fence acquire, !dbg !161556
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectE9drop_slowCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.avt) #51
-          to label %.thread1716.a unwind label %bb.abr, !dbg !161557
+          to label %.thread1718.a unwind label %bb.abr, !dbg !161557
 
 bb.aab:                                           ; preds = %bb.zy
   %i.avx = atomicrmw add ptr %i.avr, i64 -1 release, align 8, !dbg !161558, !noalias !160105
   %i.avy = icmp eq i64 %i.avx, 1, !dbg !161559
-  br i1 %i.avy, label %bb.aac, label %.thread1716.a, !dbg !161559
+  br i1 %i.avy, label %bb.aac, label %.thread1718.a, !dbg !161559
 
 bb.aac:                                           ; preds = %bb.aab
   fence acquire, !dbg !161560
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDINtNtNtCscgRAwXFJnXP_4core3ops8function2FnTTNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesB1p_EEEp6OutputINtNtBO_6result6ResultB1p_NtCsgjwxzEoLG5s_12polars_error11PolarsErrorENtNtBO_6marker4SendNtB3x_4SyncEL_E9drop_slowCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.avq) #51
-          to label %.thread1716.a unwind label %bb.abr, !dbg !161561
+          to label %.thread1718.a unwind label %bb.abr, !dbg !161561
 
 bb.aad:                                           ; preds = %bb.xq, %bb.d
   %i.avz = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !160164 ; 2 uses
@@ -701,22 +701,22 @@ bb.aae:                                           ; preds = %bb.aad
   %i.awd = load ptr, ptr %i.awc, align 16, !dbg !161565, !alias.scope !160110, !nonnull !4700, !noundef !4700
   %i.awe = atomicrmw add ptr %i.awd, i64 -1 release, align 8, !dbg !161566, !noalias !160110
   %i.awf = icmp eq i64 %i.awe, 1, !dbg !161567
-  br i1 %i.awf, label %bb.aaf, label %.thread1718.a, !dbg !161567
+  br i1 %i.awf, label %bb.aaf, label %.thread1720.a, !dbg !161567
 
 bb.aaf:                                           ; preds = %bb.aae
   fence acquire, !dbg !161568
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectE9drop_slowCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.awc) #51
-          to label %.thread1718.a unwind label %bb.abu, !dbg !161569
+          to label %.thread1720.a unwind label %bb.abu, !dbg !161569
 
 bb.aag:                                           ; preds = %bb.aad
   %i.awg = atomicrmw add ptr %i.awa, i64 -1 release, align 8, !dbg !161570, !noalias !160111
   %i.awh = icmp eq i64 %i.awg, 1, !dbg !161571
-  br i1 %i.awh, label %bb.aah, label %.thread1718.a, !dbg !161571
+  br i1 %i.awh, label %bb.aah, label %.thread1720.a, !dbg !161571
 
 bb.aah:                                           ; preds = %bb.aag
   fence acquire, !dbg !161572
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDINtNtNtCscgRAwXFJnXP_4core3ops8function2FnTTNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesB1p_EEEp6OutputINtNtBO_6result6ResultB1p_NtCsgjwxzEoLG5s_12polars_error11PolarsErrorENtNtBO_6marker4SendNtB3x_4SyncEL_E9drop_slowCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.avz) #51
-          to label %.thread1718.a unwind label %bb.abu, !dbg !161573
+          to label %.thread1720.a unwind label %bb.abu, !dbg !161573
 
 bb.aai:                                           ; preds = %bb.xr, %bb.d
   %i.awi = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !160164 ; 2 uses
@@ -733,22 +733,22 @@ bb.aaj:                                           ; preds = %bb.aai
   %i.awm = load ptr, ptr %i.awl, align 16, !dbg !161577, !alias.scope !160116, !nonnull !4700, !noundef !4700
   %i.awn = atomicrmw add ptr %i.awm, i64 -1 release, align 8, !dbg !161578, !noalias !160116
   %i.awo = icmp eq i64 %i.awn, 1, !dbg !161579
-  br i1 %i.awo, label %bb.aak, label %.thread1720.a, !dbg !161579
+  br i1 %i.awo, label %bb.aak, label %.thread1718, !dbg !161579
 
 bb.aak:                                           ; preds = %bb.aaj
   fence acquire, !dbg !161580
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectE9drop_slowCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.awl) #51
-          to label %.thread1720.a unwind label %bb.abx, !dbg !161581
+          to label %.thread1718 unwind label %bb.abx, !dbg !161581
 
 bb.aal:                                           ; preds = %bb.aai
   %i.awp = atomicrmw add ptr %i.awj, i64 -1 release, align 8, !dbg !161582, !noalias !160117
   %i.awq = icmp eq i64 %i.awp, 1, !dbg !161583
-  br i1 %i.awq, label %bb.aam, label %.thread1720.a, !dbg !161583
+  br i1 %i.awq, label %bb.aam, label %.thread1718, !dbg !161583
 
 bb.aam:                                           ; preds = %bb.aal
   fence acquire, !dbg !161584
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcDINtNtNtCscgRAwXFJnXP_4core3ops8function2FnTTNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesB1p_EEEp6OutputINtNtBO_6result6ResultB1p_NtCsgjwxzEoLG5s_12polars_error11PolarsErrorENtNtBO_6marker4SendNtB3x_4SyncEL_E9drop_slowCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.awi) #51
-          to label %.thread1720.a unwind label %bb.abx, !dbg !161585
+          to label %.thread1718 unwind label %bb.abx, !dbg !161585
 
 bb.aan:                                           ; preds = %bb.xs, %bb.d
   %i.awr = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !160164 ; 2 uses
@@ -788,7 +788,7 @@ bb.aat:                                           ; preds = %bb.aas
 
 bb.aau:                                           ; preds = %bb.aas
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecTNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropB1I_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.awy)
-          to label %.thread1722 unwind label %bb.abz, !dbg !161590
+          to label %.thread1720 unwind label %.thread1722, !dbg !161590
 
 bb.aav:                                           ; preds = %bb.aat
   %i.axa = landingpad { ptr, i32 }
@@ -861,7 +861,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecdE
 bb.aba:                                           ; preds = %bb.zl
   %i.axi = landingpad { ptr, i32 }
           cleanup
-  br label %.body1296, !dbg !160164
+  br label %.body1296
 
 .body1296:                                        ; preds = %bb.zk, %bb.aba
   %eh.lpad-body1297 = phi { ptr, i32 } [ %i.axi, %bb.aba ], [ %i.auy, %bb.zk ]
@@ -898,7 +898,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
 bb.abe:                                           ; preds = %bb.zp
   %i.axp = landingpad { ptr, i32 }
           cleanup
-  br label %.body1300, !dbg !160164
+  br label %.body1300
 
 .body1300:                                        ; preds = %bb.zo, %bb.abe
   %eh.lpad-body1301 = phi { ptr, i32 } [ %i.axp, %bb.abe ], [ %i.avb, %bb.zo ]
@@ -990,109 +990,109 @@ bb.abn:                                           ; preds = %_RINvNtCscgRAwXFJnX
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcShE9drop_slowCsbm5zPlkZccl_4pyo3(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.ayk) #51
           to label %common.resume unwind label %bb.ew, !dbg !161621
 
-.thread1714:                                      ; preds = %bb.zx, %bb.zv, %bb.zu, %bb.zw
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %5 = load i8, ptr %4, align 16, !dbg !161622, !range !5256, !alias.scope !160131, !noundef !4700
-  %6 = icmp eq i8 %5, 39, !dbg !161622
-  br i1 %6, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %7, !dbg !161622
-
-7:                                                ; preds = %.thread1714
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %4), !dbg !161622, !inline_history !1954
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161622
-
-bb.abo:                                           ; preds = %bb.zv, %bb.zx
+bb.abo:                                           ; preds = %bb.zx, %bb.zv
   %i.ayo = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ayp = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.ayq = load i8, ptr %i.ayp, align 16, !dbg !161623, !range !5256, !alias.scope !160132, !noundef !4700
-  %i.ayr = icmp eq i8 %i.ayq, 39, !dbg !161623
-  br i1 %i.ayr, label %common.resume, label %bb.abp, !dbg !161623
+  %i.ayq = load i8, ptr %i.ayp, align 16, !dbg !161622, !range !5256, !alias.scope !160131, !noundef !4700
+  %i.ayr = icmp eq i8 %i.ayq, 39, !dbg !161622
+  br i1 %i.ayr, label %common.resume, label %bb.abp, !dbg !161622
 
 bb.abp:                                           ; preds = %bb.abo
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.ayp)
-          to label %common.resume unwind label %bb.ew, !dbg !161623, !inline_history !1954
+          to label %common.resume unwind label %bb.ew, !dbg !161622, !inline_history !1954
 
-.thread1716.a:                                    ; preds = %bb.aac, %bb.aaa, %bb.zz, %bb.aab
+.thread1716.a:                                    ; preds = %bb.zx, %bb.zv, %bb.zu, %bb.zw
   %i.ays = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.ayt = load i8, ptr %i.ays, align 16, !dbg !161624, !range !5256, !alias.scope !160133, !noundef !4700
-  %i.ayu = icmp eq i8 %i.ayt, 39, !dbg !161624
-  br i1 %i.ayu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abq, !dbg !161624
+  %i.ayt = load i8, ptr %i.ays, align 16, !dbg !161623, !range !5256, !alias.scope !160132, !noundef !4700
+  %i.ayu = icmp eq i8 %i.ayt, 39, !dbg !161623
+  br i1 %i.ayu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abq, !dbg !161623
 
 bb.abq:                                           ; preds = %.thread1716.a
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.ays), !dbg !161624, !inline_history !1954
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161624
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.ays), !dbg !161623, !inline_history !1954
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161623
 
-bb.abr:                                           ; preds = %bb.aaa, %bb.aac
+bb.abr:                                           ; preds = %bb.aac, %bb.aaa
   %i.ayv = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ayw = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.ayx = load i8, ptr %i.ayw, align 16, !dbg !161625, !range !5256, !alias.scope !160134, !noundef !4700
-  %i.ayy = icmp eq i8 %i.ayx, 39, !dbg !161625
-  br i1 %i.ayy, label %common.resume, label %bb.abs, !dbg !161625
+  %i.ayx = load i8, ptr %i.ayw, align 16, !dbg !161624, !range !5256, !alias.scope !160133, !noundef !4700
+  %i.ayy = icmp eq i8 %i.ayx, 39, !dbg !161624
+  br i1 %i.ayy, label %common.resume, label %bb.abs, !dbg !161624
 
 bb.abs:                                           ; preds = %bb.abr
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.ayw)
-          to label %common.resume unwind label %bb.ew, !dbg !161625, !inline_history !1954
+          to label %common.resume unwind label %bb.ew, !dbg !161624, !inline_history !1954
 
-.thread1718.a:                                    ; preds = %bb.aah, %bb.aaf, %bb.aae, %bb.aag
+.thread1718.a:                                    ; preds = %bb.aac, %bb.aaa, %bb.zz, %bb.aab
   %i.ayz = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.aza = load i8, ptr %i.ayz, align 16, !dbg !161626, !range !5256, !alias.scope !160135, !noundef !4700
-  %i.azb = icmp eq i8 %i.aza, 39, !dbg !161626
-  br i1 %i.azb, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abt, !dbg !161626
+  %i.aza = load i8, ptr %i.ayz, align 16, !dbg !161625, !range !5256, !alias.scope !160134, !noundef !4700
+  %i.azb = icmp eq i8 %i.aza, 39, !dbg !161625
+  br i1 %i.azb, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abt, !dbg !161625
 
 bb.abt:                                           ; preds = %.thread1718.a
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.ayz), !dbg !161626, !inline_history !1954
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161626
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.ayz), !dbg !161625, !inline_history !1954
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161625
 
-bb.abu:                                           ; preds = %bb.aaf, %bb.aah
+bb.abu:                                           ; preds = %bb.aah, %bb.aaf
   %i.azc = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.azd = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.aze = load i8, ptr %i.azd, align 16, !dbg !161627, !range !5256, !alias.scope !160136, !noundef !4700
-  %i.azf = icmp eq i8 %i.aze, 39, !dbg !161627
-  br i1 %i.azf, label %common.resume, label %bb.abv, !dbg !161627
+  %i.aze = load i8, ptr %i.azd, align 16, !dbg !161626, !range !5256, !alias.scope !160135, !noundef !4700
+  %i.azf = icmp eq i8 %i.aze, 39, !dbg !161626
+  br i1 %i.azf, label %common.resume, label %bb.abv, !dbg !161626
 
 bb.abv:                                           ; preds = %bb.abu
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.azd)
-          to label %common.resume unwind label %bb.ew, !dbg !161627, !inline_history !1954
+          to label %common.resume unwind label %bb.ew, !dbg !161626, !inline_history !1954
 
-.thread1720.a:                                    ; preds = %bb.aam, %bb.aak, %bb.aaj, %bb.aal
+.thread1720.a:                                    ; preds = %bb.aah, %bb.aaf, %bb.aae, %bb.aag
   %i.azg = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.azh = load i8, ptr %i.azg, align 16, !dbg !161628, !range !5256, !alias.scope !160137, !noundef !4700
-  %i.azi = icmp eq i8 %i.azh, 39, !dbg !161628
-  br i1 %i.azi, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abw, !dbg !161628
+  %i.azh = load i8, ptr %i.azg, align 16, !dbg !161627, !range !5256, !alias.scope !160136, !noundef !4700
+  %i.azi = icmp eq i8 %i.azh, 39, !dbg !161627
+  br i1 %i.azi, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abw, !dbg !161627
 
 bb.abw:                                           ; preds = %.thread1720.a
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.azg), !dbg !161628, !inline_history !1954
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161628
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.azg), !dbg !161627, !inline_history !1954
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161627
 
-bb.abx:                                           ; preds = %bb.aak, %bb.aam
+bb.abx:                                           ; preds = %bb.aam, %bb.aak
   %i.azj = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.azk = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
-  %i.azl = load i8, ptr %i.azk, align 16, !dbg !161629, !range !5256, !alias.scope !160138, !noundef !4700
-  %i.azm = icmp eq i8 %i.azl, 39, !dbg !161629
-  br i1 %i.azm, label %common.resume, label %bb.aby, !dbg !161629
+  %i.azl = load i8, ptr %i.azk, align 16, !dbg !161628, !range !5256, !alias.scope !160137, !noundef !4700
+  %i.azm = icmp eq i8 %i.azl, 39, !dbg !161628
+  br i1 %i.azm, label %common.resume, label %bb.aby, !dbg !161628
 
 bb.aby:                                           ; preds = %bb.abx
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %i.azk)
-          to label %common.resume unwind label %bb.ew, !dbg !161629, !inline_history !1954
+          to label %common.resume unwind label %bb.ew, !dbg !161628, !inline_history !1954
 
-bb.abz:                                           ; preds = %bb.aau
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body1317, !dbg !160164
+.thread1718:                                      ; preds = %bb.aam, %bb.aak, %bb.aaj, %bb.aal
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !160164 ; 2 uses
+  %5 = load i8, ptr %4, align 16, !dbg !161629, !range !5256, !alias.scope !160138, !noundef !4700
+  %6 = icmp eq i8 %5, 39, !dbg !161629
+  br i1 %6, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, label %bb.abz, !dbg !161629
+
+bb.abz:                                           ; preds = %.thread1718
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13datatype_expr12DataTypeExprEBM_(ptr noalias noundef nonnull align 16 dereferenceable(48) %4), !dbg !161629, !inline_history !1954
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !161629
 
 .thread1722:                                      ; preds = %bb.aau
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !160164
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr10row_encode18RowEncodingVariantEBQ_(ptr noalias noundef align 8 dereferenceable(56) %9), !dbg !160164
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !160164
+  %7 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body1317
 
-.body1317:                                        ; preds = %bb.abz, %bb.aat
-  %eh.lpad-body1318 = phi { ptr, i32 } [ %8, %bb.abz ], [ %i.awz, %bb.aat ]
+.body1317:                                        ; preds = %bb.aat, %.thread1722
+  %eh.lpad-body1318 = phi { ptr, i32 } [ %7, %.thread1722 ], [ %i.awz, %bb.aat ]
   %i.azn = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !160164
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr10row_encode18RowEncodingVariantEBQ_(ptr noalias noundef align 8 dereferenceable(56) %i.azn) #45
           to label %common.resume unwind label %bb.ew, !dbg !160164
+
+.thread1720:                                      ; preds = %bb.aau
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !160164
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr10row_encode18RowEncodingVariantEBQ_(ptr noalias noundef align 8 dereferenceable(56) %8), !dbg !160164
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl13function_expr5array13ArrayFunctionEBO_.exit, !dbg !160164
 
 bb.aca:                                           ; preds = %.body
   br i1 %.sroa.0740.0, label %bb.acy, label %common.resume, !dbg !160164

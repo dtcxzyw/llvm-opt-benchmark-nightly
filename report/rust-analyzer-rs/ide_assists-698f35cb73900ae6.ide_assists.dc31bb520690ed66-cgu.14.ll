@@ -205,11 +205,11 @@ bb.g:                                             ; preds = %bb.cs, %bb.f
   %i.aq = add i32 %i.ap, -1                       ; 2 uses
   store i32 %i.aq, ptr %i.ao, align 4
   %i.ar = icmp eq i32 %i.aq, 0
-  br i1 %i.ar, label %bb.h, label %bb.cu
+  br i1 %i.ar, label %bb.h, label %bb.cv
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.0.val) #32
-          to label %bb.cu unwind label %bb.cv
+          to label %bb.cv unwind label %bb.cu
 
 bb.i:                                             ; preds = %bb.ct, %bb.f
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
@@ -274,11 +274,11 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   %i.bi = add i32 %i.bh, -1                       ; 2 uses
   store i32 %i.bi, ptr %i.bg, align 4
   %i.bj = icmp eq i32 %i.bi, 0
-  br i1 %i.bj, label %bb.q, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205
+  br i1 %i.bj, label %bb.q, label %bb.cw
 
 bb.q:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsiU5vK8fN4ZC_11ide_assists.exit
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.8.val) #32
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205 unwind label %bb.at
+          to label %bb.cw unwind label %bb.at
 
 bb.r:                                             ; preds = %bb.p
   %.not77 = icmp eq ptr %i.bf, null
@@ -498,7 +498,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit: ; preds = %2, %bb.cu, %bb.cs, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes10TupleFieldECsiU5vK8fN4ZC_11ide_assists.exit190, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit141, %bb.j, %bb.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir4ImplEECsiU5vK8fN4ZC_11ide_assists.exit214, %bb.ct
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit: ; preds = %3, %bb.cv, %bb.cs, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes10TupleFieldECsiU5vK8fN4ZC_11ide_assists.exit190, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit141, %bb.j, %bb.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir4ImplEECsiU5vK8fN4ZC_11ide_assists.exit214, %bb.ct
   ret void
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit149: ; preds = %bb.ap, %bb.ao, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes10TupleFieldECsiU5vK8fN4ZC_11ide_assists.exit192
@@ -521,7 +521,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   invoke void @_RNvMs6_NtCs8Xq8PKFYOms_3hir9semanticsNtB5_13SemanticsImpl12resolve_type(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.u, ptr noundef nonnull align 8 %i.dd, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ac)
           to label %bb.cm unwind label %bb.cl
 
-bb.at:                                            ; preds = %.invoke, %bb.dw, %bb.dj, %bb.df, %bb.cw, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TupleTypeECsiU5vK8fN4ZC_11ide_assists.exit.sink.split.i, %bb.cg, %bb.bc, %bb.av, %bb.aa, %bb.q, %bb.ds, %bb.dr, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir5TraitEECsiU5vK8fN4ZC_11ide_assists.exit, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4TypeECsiU5vK8fN4ZC_11ide_assists.exit, %bb.by, %bb.au, %bb.al
+bb.at:                                            ; preds = %.invoke, %bb.dw, %bb.dj, %bb.df, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TupleTypeECsiU5vK8fN4ZC_11ide_assists.exit.sink.split.i, %bb.cg, %bb.bc, %bb.av, %bb.aa, %bb.q, %bb.ds, %bb.dr, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir5TraitEECsiU5vK8fN4ZC_11ide_assists.exit, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4TypeECsiU5vK8fN4ZC_11ide_assists.exit, %bb.by, %bb.au, %bb.al
   %i.de = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #30
@@ -856,11 +856,11 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   %i.ge = add i32 %i.gd, -1                       ; 2 uses
   store i32 %i.ge, ptr %i.gc, align 4
   %i.gf = icmp eq i32 %i.ge, 0
-  br i1 %i.gf, label %bb.cg, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205
+  br i1 %i.gf, label %bb.cg, label %bb.cw
 
 bb.cg:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.0.val) #32
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205 unwind label %bb.at
+          to label %bb.cw unwind label %bb.at
 
 bb.ch:                                            ; preds = %bb.cc, %bb.bh
   %i.gg = landingpad { ptr, i32 }
@@ -994,37 +994,37 @@ bb.ct:                                            ; preds = %_RINvNtCshzWfHUSfYa
   %i.hf = trunc nuw i8 %.sroa.048.2 to i1
   br i1 %i.hf, label %bb.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit
 
-bb.cu:                                            ; preds = %bb.h, %bb.g
+bb.cu:                                            ; preds = %bb.h
+  %2 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.hg = getelementptr inbounds nuw i8, ptr %.8.val, i64 48 ; 2 uses
   %i.hh = load i32, ptr %i.hg, align 4, !noundef !12
   %i.hi = add i32 %i.hh, -1                       ; 2 uses
   store i32 %i.hi, ptr %i.hg, align 4
   %i.hj = icmp eq i32 %i.hi, 0
-  br i1 %i.hj, label %2, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit
+  br i1 %i.hj, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205, label %bb.cw
 
-2:                                                ; preds = %bb.cu
-  call void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.8.val) #32
-  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205: ; preds = %bb.cu
+  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.8.val) #32
+          to label %bb.cw unwind label %bb.at
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205: ; preds = %.invoke, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit, %bb.cg, %bb.q, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsiU5vK8fN4ZC_11ide_assists.exit, %.noexc222, %bb.du, %bb.cv, %bb.cw, %bb.dt, %.thread
-  %.pn101.pn.pn.pn = phi { ptr, i32 } [ %.pn101.pn.pn, %.noexc222 ], [ %.pn101.pn.pn, %.thread ], [ %.pn101.pn.pn, %bb.du ], [ %.pn.pn, %bb.q ], [ %.pn101.pn.pn, %bb.dt ], [ %3, %bb.cw ], [ %3, %bb.cv ], [ %.pn101.pn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit ], [ %.pn101.pn.pn, %.invoke ], [ %.pn.pn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsiU5vK8fN4ZC_11ide_assists.exit ], [ %.pn101.pn, %bb.cg ]
-  resume { ptr, i32 } %.pn101.pn.pn.pn
-
-bb.cv:                                            ; preds = %bb.h
-  %3 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+bb.cv:                                            ; preds = %bb.h, %bb.g
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.hk = getelementptr inbounds nuw i8, ptr %.8.val, i64 48 ; 2 uses
   %i.hl = load i32, ptr %i.hk, align 4, !noundef !12
   %i.hm = add i32 %i.hl, -1                       ; 2 uses
   store i32 %i.hm, ptr %i.hk, align 4
   %i.hn = icmp eq i32 %i.hm, 0
-  br i1 %i.hn, label %bb.cw, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205
+  br i1 %i.hn, label %3, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit
 
-bb.cw:                                            ; preds = %bb.cv
-  invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.8.val) #32
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205 unwind label %bb.at
+3:                                                ; preds = %bb.cv
+  call void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.8.val) #32
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11RecordFieldECsiU5vK8fN4ZC_11ide_assists.exit
+
+bb.cw:                                            ; preds = %.invoke, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit, %bb.cg, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsiU5vK8fN4ZC_11ide_assists.exit, %bb.q, %.noexc222, %bb.du, %bb.cu, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205, %bb.dt, %.thread
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn101.pn.pn, %.invoke ], [ %.pn101.pn.pn, %.thread ], [ %.pn101.pn.pn, %bb.du ], [ %.pn101.pn.pn, %.noexc222 ], [ %.pn101.pn.pn, %bb.dt ], [ %2, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205 ], [ %2, %bb.cu ], [ %.pn101.pn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit ], [ %.pn.pn, %bb.q ], [ %.pn.pn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4NameECsiU5vK8fN4ZC_11ide_assists.exit ], [ %.pn101.pn, %bb.cg ]
+  resume { ptr, i32 } %.pn.pn.pn
 
 bb.cx:                                            ; preds = %bb.cn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
@@ -1304,11 +1304,11 @@ bb.ds:                                            ; preds = %bb.bo
 
 .thread:                                          ; preds = %.body199
   %i.jx = trunc nuw i8 %.sroa.048.0 to i1
-  br i1 %i.jx, label %bb.du, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205
+  br i1 %i.jx, label %bb.du, label %bb.cw
 
 bb.dt:                                            ; preds = %.body199
   %cond = icmp eq i8 %.sroa.050.0, 0
-  br i1 %cond, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205, label %bb.dv
+  br i1 %cond, label %bb.cw, label %bb.dv
 
 bb.du:                                            ; preds = %.thread
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
@@ -1317,7 +1317,7 @@ bb.du:                                            ; preds = %.thread
   %i.ka = add i32 %i.jz, -1                       ; 2 uses
   store i32 %i.ka, ptr %i.jy, align 4
   %i.kb = icmp eq i32 %i.ka, 0
-  br i1 %i.kb, label %.invoke, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205
+  br i1 %i.kb, label %.invoke, label %bb.cw
 
 bb.dv:                                            ; preds = %bb.dt
   %i.kc = getelementptr inbounds nuw i8, ptr %.0.val, i64 48 ; 2 uses
@@ -1338,11 +1338,11 @@ bb.dw:                                            ; preds = %bb.dv
   %i.ki = add i32 %i.kh, -1                       ; 2 uses
   store i32 %i.ki, ptr %i.kg, align 4
   %i.kj = icmp eq i32 %i.ki, 0
-  br i1 %i.kj, label %.invoke, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205
+  br i1 %i.kj, label %.invoke, label %bb.cw
 
 .invoke:                                          ; preds = %.noexc222, %bb.du
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.8.val) #32
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleFieldListECsiU5vK8fN4ZC_11ide_assists.exit205 unwind label %bb.at
+          to label %bb.cw unwind label %bb.at
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
