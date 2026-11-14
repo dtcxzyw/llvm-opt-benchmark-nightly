@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = uitofp reassoc nsz arcp i32 %1 to double
-  %i.c = fmul reassoc nnan nsz arcp double %0, 5.000000e-01
+  %i.c = fmul reassoc nsz arcp double %0, 5.000000e-01
   %i.d = fdiv reassoc nsz arcp double %i.c, %i.b
   %i.e = tail call reassoc nsz arcp double @log(double noundef %i.d) #14
   %i.f = fmul reassoc nsz arcp double %i.e, f0x3FE71547652B82FE ; 2 uses
@@ -272,7 +272,7 @@ bb.b:                                             ; preds = %.lr.ph, %FLAC__lpc_
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = fmul reassoc nnan nsz arcp double %i.d, 5.000000e-01
+  %i.f = fmul reassoc nsz arcp double %i.d, 5.000000e-01
   %i.g = fmul reassoc nsz arcp double %i.f, %i.b
   %i.h = tail call reassoc nsz arcp double @log(double noundef %i.g) #14
   %i.i = fmul reassoc nsz arcp double %i.h, f0x3FE71547652B82FE ; 2 uses

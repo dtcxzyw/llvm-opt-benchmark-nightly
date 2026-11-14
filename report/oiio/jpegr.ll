@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %._crit_edge207, %bb
   %i.bo = fdiv contract float %.pre-phi, %.pre-phi213 ; 2 uses
   %i.bp = call contract float @llvm.round.f32(float %i.bo)
   %i.bq = fptosi float %i.bp to i32
-  %.sroa.speculated173 = call i32 @llvm.umax.i32(i32 %i.bq, i32 1) ; 4 uses
+  %.sroa.speculated173 = call i32 @llvm.smax.i32(i32 %i.bq, i32 1) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   store i32 %.sroa.speculated173, ptr %12, align 8, !tbaa !590
   %i.br = shl i32 %.sroa.speculated173, 2
@@ -607,11 +607,11 @@ bb.j:                                             ; preds = %bb.h, %bb.j
   %i.bf = uitofp nneg i32 %i.be to float
   %i.bg = fdiv contract float %i.bf, 1.023000e+03 ; 2 uses
   %i.bh = tail call contract double @log2(double noundef %i.az) #28, !tbaa !14
-  %i.bi = fsub nnan contract float 1.000000e+00, %i.bg
-  %i.bj = fpext nnan contract float %i.bi to double
+  %i.bi = fsub contract float 1.000000e+00, %i.bg
+  %i.bj = fpext contract float %i.bi to double
   %i.bk = fmul contract double %i.bh, %i.bj
   %i.bl = tail call contract double @log2(double noundef %i.bc) #28, !tbaa !14
-  %i.bm = fpext nnan contract float %i.bg to double
+  %i.bm = fpext contract float %i.bg to double
   %i.bn = fmul contract double %i.bl, %i.bm
   %i.bo = fadd contract double %i.bk, %i.bn
   %i.bp = fptrunc contract double %i.bo to float

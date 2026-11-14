@@ -1,0 +1,2118 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index c295190ac1c81..3204a739bfd61 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -5346,6 +5346,21 @@ static void computeKnownFPClass(const Value *V, KnownFPClass &Known,
+   computeKnownFPClass(V, DemandedElts, InterestedClasses, Known, Q, Depth);
+ }
+ 
++// computeKnownFPClass can only model what Alive2 models. The afn, arcp,
++// contract and reassoc fast-math flags permit the operation to be replaced
++// with an arbitrarily different computation, so none of the deductions below
++// hold. nsz, ninf and nnan are fine to analyze: they are value assumptions,
++// not license to change the operation.
++static bool hasUnmodeledFastMathFlags(const Operator *Op) {
++  const auto *FPOp = dyn_cast<FPMathOperator>(Op);
++  if (!FPOp)
++    return false;
++
++  FastMathFlags FMF = FPOp->getFastMathFlags();
++  return FMF.approxFunc() || FMF.allowReciprocal() || FMF.allowContract() ||
++         FMF.allowReassoc();
++}
++
+ static void computeKnownFPClassForFPTrunc(const Operator *Op,
+                                           const APInt &DemandedElts,
+                                           FPClassTest InterestedClasses,
+@@ -5652,6 +5667,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     }
+     case Intrinsic::fma:
+     case Intrinsic::fmuladd: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       if ((InterestedClasses & (fcNegative | fcNan)) == fcNone)
+         break;
+ 
+@@ -5721,12 +5739,18 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::experimental_constrained_frem: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       computeKnownFPClassForFRem(Op, DemandedElts, InterestedClasses, Known, Q,
+                                  Depth);
+       break;
+     }
+     case Intrinsic::sqrt:
+     case Intrinsic::experimental_constrained_sqrt: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       FPClassTest InterestedSrcs = InterestedClasses;
+       if (InterestedClasses & fcQNan)
+@@ -5755,6 +5779,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::sin: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5762,6 +5789,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::cos: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5769,6 +5799,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::tan: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5776,6 +5809,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::sinh: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5783,6 +5819,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::cosh: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5790,6 +5829,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::tanh: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5797,6 +5839,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::asin: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5804,6 +5849,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::acos: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5811,6 +5859,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::atan: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5818,6 +5869,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::atan2: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       FPClassTest InterestedY = InterestedClasses;
+       FPClassTest InterestedX = InterestedClasses;
+ 
+@@ -5853,6 +5907,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     case Intrinsic::maximum:
+     case Intrinsic::minimumnum:
+     case Intrinsic::maximumnum: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownLHS, KnownRHS;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownLHS, Q, Depth + 1);
+@@ -5871,6 +5928,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::canonicalize: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5889,6 +5949,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     case Intrinsic::vector_reduce_fminimum:
+     case Intrinsic::vector_reduce_fmaximumnum:
+     case Intrinsic::vector_reduce_fminimumnum: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       // reduce min/max will choose an element from one of the vector elements,
+       // so we can infer and class information that is common to all elements.
+       Known = computeKnownFPClass(II->getArgOperand(0), II->getFastMathFlags(),
+@@ -5911,6 +5974,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     case Intrinsic::nearbyint:
+     case Intrinsic::round:
+     case Intrinsic::roundeven: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       FPClassTest InterestedSrcs = InterestedClasses;
+ 
+@@ -5954,6 +6020,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     case Intrinsic::exp2:
+     case Intrinsic::exp10:
+     case Intrinsic::amdgcn_exp2: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -5967,6 +6036,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::fptrunc_round: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       computeKnownFPClassForFPTrunc(Op, DemandedElts, InterestedClasses, Known,
+                                     Q, Depth);
+       break;
+@@ -5978,6 +6050,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     case Intrinsic::experimental_constrained_log10:
+     case Intrinsic::experimental_constrained_log2:
+     case Intrinsic::amdgcn_log: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       FPClassTest InterestedSrcs = fcNone;
+ 
+       // log(negative) produces NaN.
+@@ -6015,6 +6090,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::pow: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       const bool WantNaN = (InterestedClasses & fcNan) != fcNone;
+       const bool WantNegative = (InterestedClasses & fcNegative) != fcNone;
+       if (!WantNaN && !WantNegative)
+@@ -6052,6 +6130,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::powi: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       if ((InterestedClasses & (fcNan | fcInf | fcNegative)) == fcNone)
+         break;
+ 
+@@ -6080,6 +6161,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+       break;
+     }
+     case Intrinsic::ldexp: {
++      if (hasUnmodeledFastMathFlags(Op))
++        break;
++
+       KnownFPClass KnownSrc;
+       computeKnownFPClass(II->getArgOperand(0), DemandedElts, InterestedClasses,
+                           KnownSrc, Q, Depth + 1);
+@@ -6262,6 +6346,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+   }
+   case Instruction::FAdd:
+   case Instruction::FSub: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     KnownFPClass KnownLHS, KnownRHS;
+     bool WantNegative =
+         Op->getOpcode() == Instruction::FAdd &&
+@@ -6318,6 +6405,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     break;
+   }
+   case Instruction::FMul: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     const Function *F = cast<Instruction>(Op)->getFunction();
+     DenormalMode Mode =
+         F ? F->getDenormalMode(
+@@ -6365,6 +6455,9 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     break;
+   }
+   case Instruction::FDiv: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     const bool WantNan = (InterestedClasses & fcNan) != fcNone;
+ 
+     const Function *F = cast<Instruction>(Op)->getFunction();
+@@ -6412,11 +6505,17 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     break;
+   }
+   case Instruction::FRem: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     computeKnownFPClassForFRem(Op, DemandedElts, InterestedClasses, Known, Q,
+                                Depth);
+     break;
+   }
+   case Instruction::FPExt: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Op->getOperand(0), DemandedElts, InterestedClasses,
+                         KnownSrc, Q, Depth + 1);
+@@ -6437,12 +6536,18 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+     break;
+   }
+   case Instruction::FPTrunc: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     computeKnownFPClassForFPTrunc(Op, DemandedElts, InterestedClasses, Known, Q,
+                                   Depth);
+     break;
+   }
+   case Instruction::SIToFP:
+   case Instruction::UIToFP: {
++    if (hasUnmodeledFastMathFlags(Op))
++      break;
++
+     // Cannot produce nan
+     Known.knownNot(fcNan);
+ 
+diff --git a/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp b/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp
+index 2477c8ac8d852..eb26405a67d2e 100644
+--- a/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp
++++ b/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp
+@@ -1298,6 +1298,17 @@ void GISelValueTracking::computeKnownBitsImpl(Register R, KnownBits &Known,
+   Results.clear();
+ }
+ 
++// computeKnownFPClass can only model what Alive2 models. The afn, arcp,
++// contract and reassoc fast-math flags permit the operation to be replaced
++// with an arbitrarily different computation, so none of the deductions below
++// hold. nsz, ninf and nnan are fine to analyze: they are value assumptions,
++// not license to change the operation.
++static bool hasUnmodeledFastMathFlags(const MachineInstr &MI) {
++  return MI.getFlag(MachineInstr::FmAfn) || MI.getFlag(MachineInstr::FmArcp) ||
++         MI.getFlag(MachineInstr::FmContract) ||
++         MI.getFlag(MachineInstr::FmReassoc);
++}
++
+ void GISelValueTracking::computeKnownFPClass(Register R, KnownFPClass &Known,
+                                              FPClassTest InterestedClasses,
+                                              unsigned Depth) {
+@@ -1484,6 +1495,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   }
+   case TargetOpcode::G_FMA:
+   case TargetOpcode::G_FMAD: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     if ((InterestedClasses & (fcNegative | fcNan)) == fcNone)
+       break;
+ 
+@@ -1545,6 +1559,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   }
+   case TargetOpcode::G_FSQRT:
+   case TargetOpcode::G_STRICT_FSQRT: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     KnownFPClass KnownSrc;
+     FPClassTest InterestedSrcs = InterestedClasses;
+     if (InterestedClasses & fcQNan)
+@@ -1575,6 +1592,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FATAN2: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     FPClassTest InterestedY = InterestedClasses;
+     FPClassTest InterestedX = InterestedClasses;
+ 
+@@ -1601,6 +1621,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FSINH: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1609,6 +1632,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FCOSH: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1617,6 +1643,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FTANH: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1625,6 +1654,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FASIN: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1633,6 +1665,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FACOS: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1641,6 +1676,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FATAN: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1649,6 +1687,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FTAN: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1658,6 +1699,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   }
+   case TargetOpcode::G_FSIN:
+   case TargetOpcode::G_FCOS: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     // Return NaN on infinite inputs.
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+@@ -1668,6 +1712,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FSINCOS: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     // Operand layout: (sin_dst, cos_dst, src)
+     Register Src = MI.getOperand(2).getReg();
+     KnownFPClass KnownSrc;
+@@ -1687,6 +1734,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   case TargetOpcode::G_FMAXNUM_IEEE:
+   case TargetOpcode::G_FMAXIMUMNUM:
+   case TargetOpcode::G_FMINIMUMNUM: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register LHS = MI.getOperand(1).getReg();
+     Register RHS = MI.getOperand(2).getReg();
+     KnownFPClass KnownLHS, KnownRHS;
+@@ -1728,6 +1778,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FCANONICALIZE: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1745,6 +1798,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   case TargetOpcode::G_VECREDUCE_FMINIMUM:
+   case TargetOpcode::G_VECREDUCE_FMAXIMUMNUM:
+   case TargetOpcode::G_VECREDUCE_FMINIMUMNUM: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     // reduce min/max will choose an element from one of the vector elements,
+     // so we can infer and class information that is common to all elements.
+@@ -1763,6 +1819,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   case TargetOpcode::G_INTRINSIC_ROUND:
+   case TargetOpcode::G_INTRINSIC_ROUNDEVEN:
+   case TargetOpcode::G_INTRINSIC_TRUNC: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     FPClassTest InterestedSrcs = InterestedClasses;
+@@ -1801,6 +1860,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   case TargetOpcode::G_FEXP:
+   case TargetOpcode::G_FEXP2:
+   case TargetOpcode::G_FEXP10: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1811,6 +1873,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   case TargetOpcode::G_FLOG:
+   case TargetOpcode::G_FLOG2:
+   case TargetOpcode::G_FLOG10: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     FPClassTest InterestedSrcs = fcNone;
+ 
+     // log(negative) produces NaN.
+@@ -1847,6 +1912,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FPOW: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     const bool WantNaN = (InterestedClasses & fcNan) != fcNone;
+     const bool WantNegative = (InterestedClasses & fcNegative) != fcNone;
+     if (!WantNaN && !WantNegative)
+@@ -1883,6 +1951,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FPOWI: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     if ((InterestedClasses & (fcNan | fcInf | fcNegative)) == fcNone)
+       break;
+ 
+@@ -1912,6 +1983,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FLDEXP: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Val = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Val, DemandedElts, InterestedClasses, KnownSrc,
+@@ -1935,6 +2009,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   }
+   case TargetOpcode::G_FADD:
+   case TargetOpcode::G_FSUB: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register LHS = MI.getOperand(1).getReg();
+     Register RHS = MI.getOperand(2).getReg();
+     bool IsAdd = Opcode == TargetOpcode::G_FADD;
+@@ -1985,6 +2062,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FMUL: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register LHS = MI.getOperand(1).getReg();
+     Register RHS = MI.getOperand(2).getReg();
+     DenormalMode Mode =
+@@ -2020,6 +2100,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FDIV: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     const bool WantNan = (InterestedClasses & fcNan) != fcNone;
+ 
+     Register LHS = MI.getOperand(1).getReg();
+@@ -2064,6 +2147,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   }
+   case TargetOpcode::G_FREM:
+   case TargetOpcode::G_STRICT_FREM: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     FPClassTest InterestedLHS = fcNone;
+     FPClassTest InterestedRHS = fcNone;
+ 
+@@ -2121,6 +2207,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FFREXP: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     // Only handle the mantissa output (operand 0); the exponent is an integer.
+     if (R != MI.getOperand(0).getReg())
+       break;
+@@ -2149,6 +2238,9 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+     break;
+   }
+   case TargetOpcode::G_FPEXT: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     Register Src = MI.getOperand(1).getReg();
+     KnownFPClass KnownSrc;
+     computeKnownFPClass(Src, DemandedElts, InterestedClasses, KnownSrc,
+@@ -2166,12 +2258,18 @@ void GISelValueTracking::computeKnownFPClass(Register R,
+   }
+   case TargetOpcode::G_FPTRUNC:
+   case TargetOpcode::G_INTRINSIC_FPTRUNC_ROUND: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     computeKnownFPClassForFPTrunc(MI, DemandedElts, InterestedClasses, Known,
+                                   Depth);
+     break;
+   }
+   case TargetOpcode::G_SITOFP:
+   case TargetOpcode::G_UITOFP: {
++    if (hasUnmodeledFastMathFlags(MI))
++      break;
++
+     // Cannot produce nan
+     Known.knownNot(fcNan);
+ 
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index b2bbac6d5a456..ad0e7bfbe8de7 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -2365,11 +2365,23 @@ simplifyDemandedFPClassMinMax(KnownFPClass &Known, Intrinsic::ID IID,
+                             /*IsCanonicalizing=*/true);
+ }
+ 
++// computeKnownFPClass can only model what Alive2 models. The afn, arcp,
++// contract and reassoc fast-math flags permit the operation to be replaced
++// with an arbitrarily different computation, so none of the deductions below
++// hold. nsz, ninf and nnan are fine to analyze: they are value assumptions,
++// not license to change the operation.
++static bool hasUnmodeledFastMathFlags(FastMathFlags FMF) {
++  return FMF.approxFunc() || FMF.allowReciprocal() || FMF.allowContract() ||
++         FMF.allowReassoc();
++}
++
+ static Value *
+ simplifyDemandedUseFPClassFPTrunc(InstCombinerImpl &IC, Instruction &I,
+                                   FastMathFlags FMF, FPClassTest DemandedMask,
+                                   KnownFPClass &Known, const SimplifyQuery &SQ,
+                                   unsigned Depth) {
++  if (hasUnmodeledFastMathFlags(FMF))
++    return nullptr;
+ 
+   const fltSemantics &DstTy = I.getType()->getScalarType()->getFltSemantics();
+   const fltSemantics &SrcTy =
+@@ -2491,6 +2503,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+   }
+   case Instruction::FAdd:
+   case Instruction::FSub: {
++    if (hasUnmodeledFastMathFlags(FMF))
++      break;
++
+     KnownFPClass KnownLHS, KnownRHS;
+ 
+     // fadd x, x can be handled more aggressively.
+@@ -2590,6 +2605,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     return nullptr;
+   }
+   case Instruction::FMul: {
++    if (hasUnmodeledFastMathFlags(FMF))
++      break;
++
+     KnownFPClass KnownLHS, KnownRHS;
+ 
+     Value *X = I->getOperand(0);
+@@ -2764,6 +2782,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     return nullptr;
+   }
+   case Instruction::FDiv: {
++    if (hasUnmodeledFastMathFlags(FMF))
++      break;
++
+     Value *X = I->getOperand(0);
+     Value *Y = I->getOperand(1);
+     if (X == Y &&
+@@ -2908,6 +2929,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     return simplifyDemandedUseFPClassFPTrunc(*this, *I, FMF, DemandedMask,
+                                              Known, SQ, Depth);
+   case Instruction::FPExt: {
++    if (hasUnmodeledFastMathFlags(FMF))
++      break;
++
+     FPClassTest SrcDemandedMask = DemandedMask;
+     if (DemandedMask & fcNan)
+       SrcDemandedMask |= fcNan;
+@@ -3011,6 +3035,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     }
+     case Intrinsic::fma:
+     case Intrinsic::fmuladd: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       // Keep in mind that fma can rule out NaN in places that fmuladd cannot.
+ 
+       // We can't do any simplification on the source besides stripping out
+@@ -3061,6 +3088,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     case Intrinsic::minimumnum:
+     case Intrinsic::maxnum:
+     case Intrinsic::minnum: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       const bool PropagateNaN =
+           IID == Intrinsic::maximum || IID == Intrinsic::minimum;
+ 
+@@ -3125,6 +3155,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     case Intrinsic::exp:
+     case Intrinsic::exp2:
+     case Intrinsic::exp10: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       if ((DemandedMask & fcPositive) == fcNone) {
+         // Only returns positive values or nans.
+         if ((DemandedMask & fcNan) == fcNone)
+@@ -3225,6 +3258,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     case Intrinsic::log:
+     case Intrinsic::log2:
+     case Intrinsic::log10: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       Type *EltTy = VTy->getScalarType();
+       bool IsMultiUnitFPType = EltTy->isMultiUnitFPType();
+ 
+@@ -3275,6 +3311,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+                                            KnownSrc);
+     }
+     case Intrinsic::sqrt: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       Type *EltTy = VTy->getScalarType();
+       DenormalMode Mode = F.getDenormalMode(EltTy->getFltSemantics());
+ 
+@@ -3338,6 +3377,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+                                            {KnownSrc});
+     }
+     case Intrinsic::ldexp: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       Type *EltTy = VTy->getScalarType();
+       const fltSemantics &FltSem = EltTy->getFltSemantics();
+       DenormalMode Mode = F.getDenormalMode(FltSem);
+@@ -3389,6 +3431,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+     case Intrinsic::nearbyint:
+     case Intrinsic::round:
+     case Intrinsic::roundeven: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       Type *EltTy = VTy->getScalarType();
+       DenormalMode Mode = F.getDenormalMode(EltTy->getFltSemantics());
+ 
+@@ -3504,6 +3549,9 @@ Value *InstCombinerImpl::SimplifyDemandedUseFPClass(Instruction *I,
+       return simplifyDemandedUseFPClassFPTrunc(*this, *CI, FMF, DemandedMask,
+                                                Known, SQ, Depth);
+     case Intrinsic::canonicalize: {
++      if (hasUnmodeledFastMathFlags(FMF))
++        break;
++
+       Type *EltTy = VTy->getScalarType();
+ 
+       if (EltTy->isIEEELikeFPTy()) {
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll
+index 8ef7156b5188b..8ff1dbf9538a0 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pow.ll
+@@ -1323,7 +1323,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_0.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp afn oeq <2 x float> [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp afn une <2 x float> [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and <2 x i1> [[TMP10]], [[TMP13]]
+@@ -1384,7 +1384,7 @@ define float @test_pow_afn_f32_0.5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -1423,7 +1423,7 @@ define float @test_pow_afn_f32_neg0.5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -1465,7 +1465,7 @@ define <2 x float> @test_pow_afn_v2f32_0.5(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -1504,7 +1504,7 @@ define <2 x float> @test_pow_afn_v2f32_neg0.5(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -1546,7 +1546,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_0.5(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -1588,7 +1588,7 @@ define <3 x float> @test_pow_afn_v3f32_0.5_splat_undef(<3 x float> %x, <3 x floa
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn <3 x float> @llvm.exp2.v3f32(<3 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn <3 x float> @llvm.trunc.v3f32(<3 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq <3 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn <3 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn <3 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn <3 x float> @llvm.trunc.v3f32(<3 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une <3 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <3 x i1> [[TMP8]], [[TMP11]]
+@@ -1627,7 +1627,7 @@ define <3 x float> @test_pow_afn_v3f32_neg0.5_splat_undef(<3 x float> %x, <3 x f
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call ninf nsz afn <3 x float> @llvm.exp2.v3f32(<3 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call ninf nsz afn <3 x float> @llvm.trunc.v3f32(<3 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp ninf nsz afn oeq <3 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan ninf nsz afn <3 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul ninf nsz afn <3 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call ninf nsz afn <3 x float> @llvm.trunc.v3f32(<3 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp ninf nsz afn une <3 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <3 x i1> [[TMP8]], [[TMP11]]
+@@ -1707,7 +1707,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_1.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -1781,7 +1781,7 @@ define float @test_pow_afn_f32_neg2.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -1836,7 +1836,7 @@ define <2 x float> @test_pow_afn_v2f32_neg2.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -1881,7 +1881,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_2.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -1926,7 +1926,7 @@ define float @test_pow_afn_f32_3.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -1969,7 +1969,7 @@ define float @test_pow_afn_f32_neg3.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2014,7 +2014,7 @@ define <2 x float> @test_pow_afn_v2f32_3.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2057,7 +2057,7 @@ define <2 x float> @test_pow_afn_v2f32_neg3.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2102,7 +2102,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_3.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2147,7 +2147,7 @@ define float @test_pow_afn_f32_3.99(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2190,7 +2190,7 @@ define float @test_pow_afn_f32_neg3.99(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2235,7 +2235,7 @@ define <2 x float> @test_pow_afn_v2f32_3.99(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2278,7 +2278,7 @@ define <2 x float> @test_pow_afn_v2f32_neg3.99(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2323,7 +2323,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_3.99(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2368,7 +2368,7 @@ define float @test_pow_afn_f32_8.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2411,7 +2411,7 @@ define float @test_pow_afn_f32_neg8.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2456,7 +2456,7 @@ define <2 x float> @test_pow_afn_v2f32_8.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2499,7 +2499,7 @@ define <2 x float> @test_pow_afn_v2f32_neg8.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2544,7 +2544,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_8.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2589,7 +2589,7 @@ define float @test_pow_afn_f32_12.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2632,7 +2632,7 @@ define float @test_pow_afn_f32_neg12.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2677,7 +2677,7 @@ define <2 x float> @test_pow_afn_v2f32_12.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2720,7 +2720,7 @@ define <2 x float> @test_pow_afn_v2f32_neg12.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2765,7 +2765,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_12.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2810,7 +2810,7 @@ define float @test_pow_afn_f32_13.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2853,7 +2853,7 @@ define float @test_pow_afn_f32_neg13.0(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -2898,7 +2898,7 @@ define <2 x float> @test_pow_afn_v2f32_13.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2941,7 +2941,7 @@ define <2 x float> @test_pow_afn_v2f32_neg13.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -2986,7 +2986,7 @@ define <2 x float> @test_pow_afn_v2f32_13.0_15.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -3029,7 +3029,7 @@ define <2 x float> @test_pow_afn_v2f32_13.0_14.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -3072,7 +3072,7 @@ define <2 x float> @test_pow_afn_v2f32_14.0_16.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -3115,7 +3115,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_13.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -3160,7 +3160,7 @@ define <2 x float> @test_pow_afn_v2f32_plus_minus_13.0_minus_14.0(<2 x float> %x
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq <2 x float> [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une <2 x float> [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and <2 x i1> [[TMP8]], [[TMP11]]
+@@ -3254,25 +3254,26 @@ define float @test_pow_afn_f32_nnan_ninf_x_known_positive(float nofpclass(ninf n
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = select nnan ninf afn i1 [[TMP1]], float 1.000000e+00, float [[Y]]
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fcmp nnan ninf afn oeq float [[TMP2]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = select nnan ninf afn i1 [[TMP3]], float 1.000000e+00, float [[X]]
+-; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP4]])
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = fmul nnan ninf afn float [[TMP2]], [[TMP5]]
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP6]])
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.trunc.f32(float [[TMP2]])
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fcmp nnan ninf afn oeq float [[TMP8]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP10:%.*]] = fmul nnan ninf afn float [[TMP2]], 5.000000e-01
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = call nnan ninf afn float @llvm.trunc.f32(float [[TMP10]])
+-; NOPRELINK-NEXT:    [[TMP12:%.*]] = fcmp nnan ninf afn une float [[TMP11]], [[TMP10]]
+-; NOPRELINK-NEXT:    [[TMP13:%.*]] = and i1 [[TMP9]], [[TMP12]]
+-; NOPRELINK-NEXT:    [[TMP14:%.*]] = select nnan ninf afn i1 [[TMP13]], float [[TMP4]], float 1.000000e+00
+-; NOPRELINK-NEXT:    [[TMP15:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP7]], float [[TMP14]])
+-; NOPRELINK-NEXT:    [[TMP16:%.*]] = fcmp nnan ninf afn oeq float [[TMP4]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP17:%.*]] = fcmp nnan ninf afn olt float [[TMP2]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP18:%.*]] = xor i1 [[TMP16]], [[TMP17]]
+-; NOPRELINK-NEXT:    [[TMP19:%.*]] = select nnan ninf afn i1 [[TMP18]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP20:%.*]] = select nnan ninf afn i1 [[TMP13]], float [[TMP4]], float 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP19]], float [[TMP20]])
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select nnan ninf afn i1 [[TMP16]], float [[TMP21]], float [[TMP15]]
+-; NOPRELINK-NEXT:    ret float [[TMP22]]
++; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[TMP4]])
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP5]])
++; NOPRELINK-NEXT:    [[TMP7:%.*]] = fmul nnan ninf afn float [[TMP2]], [[TMP6]]
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP7]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn float @llvm.trunc.f32(float [[TMP2]])
++; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp nnan ninf afn oeq float [[TMP9]], [[TMP2]]
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan ninf afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP12:%.*]] = call nnan ninf afn float @llvm.trunc.f32(float [[TMP11]])
++; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp nnan ninf afn une float [[TMP12]], [[TMP11]]
++; NOPRELINK-NEXT:    [[TMP14:%.*]] = and i1 [[TMP10]], [[TMP13]]
++; NOPRELINK-NEXT:    [[TMP15:%.*]] = select nnan ninf afn i1 [[TMP14]], float [[TMP4]], float 1.000000e+00
++; NOPRELINK-NEXT:    [[TMP16:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP8]], float [[TMP15]])
++; NOPRELINK-NEXT:    [[TMP17:%.*]] = fcmp nnan ninf afn oeq float [[TMP4]], 0.000000e+00
++; NOPRELINK-NEXT:    [[TMP18:%.*]] = fcmp nnan ninf afn olt float [[TMP2]], 0.000000e+00
++; NOPRELINK-NEXT:    [[TMP19:%.*]] = xor i1 [[TMP17]], [[TMP18]]
++; NOPRELINK-NEXT:    [[TMP20:%.*]] = select nnan ninf afn i1 [[TMP19]], float 0.000000e+00, float +inf
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = select nnan ninf afn i1 [[TMP14]], float [[TMP4]], float 0.000000e+00
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = call nnan ninf afn float @llvm.copysign.f32(float [[TMP20]], float [[TMP21]])
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select nnan ninf afn i1 [[TMP17]], float [[TMP22]], float [[TMP16]]
++; NOPRELINK-NEXT:    ret float [[TMP23]]
+ ;
+   %pow = tail call afn nnan ninf float @_Z3powff(float %x, float %y)
+   ret float %pow
+@@ -3343,25 +3344,26 @@ define <2 x float> @test_pow_afn_v2f32_nnan_ninf_x_known_positive(<2 x float> no
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = select nnan ninf afn <2 x i1> [[TMP1]], <2 x float> splat (float 1.000000e+00), <2 x float> [[Y]]
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[TMP2]], zeroinitializer
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = select nnan ninf afn <2 x i1> [[TMP3]], <2 x float> splat (float 1.000000e+00), <2 x float> [[X]]
+-; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn <2 x float> @llvm.log2.v2f32(<2 x float> [[TMP4]])
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = fmul nnan ninf afn <2 x float> [[TMP2]], [[TMP5]]
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP6]])
+-; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[TMP8]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP10:%.*]] = fmul nnan ninf afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = call nnan ninf afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP10]])
+-; NOPRELINK-NEXT:    [[TMP12:%.*]] = fcmp nnan ninf afn une <2 x float> [[TMP11]], [[TMP10]]
+-; NOPRELINK-NEXT:    [[TMP13:%.*]] = and <2 x i1> [[TMP9]], [[TMP12]]
+-; NOPRELINK-NEXT:    [[TMP14:%.*]] = select nnan ninf afn <2 x i1> [[TMP13]], <2 x float> [[TMP4]], <2 x float> splat (float 1.000000e+00)
+-; NOPRELINK-NEXT:    [[TMP15:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP7]], <2 x float> [[TMP14]])
+-; NOPRELINK-NEXT:    [[TMP16:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[TMP4]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP17:%.*]] = fcmp nnan ninf afn olt <2 x float> [[TMP2]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP18:%.*]] = xor <2 x i1> [[TMP16]], [[TMP17]]
+-; NOPRELINK-NEXT:    [[TMP19:%.*]] = select nnan ninf afn <2 x i1> [[TMP18]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
+-; NOPRELINK-NEXT:    [[TMP20:%.*]] = select nnan ninf afn <2 x i1> [[TMP13]], <2 x float> [[TMP4]], <2 x float> zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP21:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP19]], <2 x float> [[TMP20]])
+-; NOPRELINK-NEXT:    [[TMP22:%.*]] = select nnan ninf afn <2 x i1> [[TMP16]], <2 x float> [[TMP21]], <2 x float> [[TMP15]]
+-; NOPRELINK-NEXT:    ret <2 x float> [[TMP22]]
++; NOPRELINK-NEXT:    [[TMP5:%.*]] = call nnan ninf afn <2 x float> @llvm.fabs.v2f32(<2 x float> [[TMP4]])
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = call nnan ninf afn <2 x float> @llvm.log2.v2f32(<2 x float> [[TMP5]])
++; NOPRELINK-NEXT:    [[TMP7:%.*]] = fmul nnan ninf afn <2 x float> [[TMP2]], [[TMP6]]
++; NOPRELINK-NEXT:    [[TMP8:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP7]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
++; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[TMP9]], [[TMP2]]
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan ninf afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP12:%.*]] = call nnan ninf afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP11]])
++; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp nnan ninf afn une <2 x float> [[TMP12]], [[TMP11]]
++; NOPRELINK-NEXT:    [[TMP14:%.*]] = and <2 x i1> [[TMP10]], [[TMP13]]
++; NOPRELINK-NEXT:    [[TMP15:%.*]] = select nnan ninf afn <2 x i1> [[TMP14]], <2 x float> [[TMP4]], <2 x float> splat (float 1.000000e+00)
++; NOPRELINK-NEXT:    [[TMP16:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP8]], <2 x float> [[TMP15]])
++; NOPRELINK-NEXT:    [[TMP17:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[TMP4]], zeroinitializer
++; NOPRELINK-NEXT:    [[TMP18:%.*]] = fcmp nnan ninf afn olt <2 x float> [[TMP2]], zeroinitializer
++; NOPRELINK-NEXT:    [[TMP19:%.*]] = xor <2 x i1> [[TMP17]], [[TMP18]]
++; NOPRELINK-NEXT:    [[TMP20:%.*]] = select nnan ninf afn <2 x i1> [[TMP19]], <2 x float> zeroinitializer, <2 x float> splat (float +inf)
++; NOPRELINK-NEXT:    [[TMP21:%.*]] = select nnan ninf afn <2 x i1> [[TMP14]], <2 x float> [[TMP4]], <2 x float> zeroinitializer
++; NOPRELINK-NEXT:    [[TMP22:%.*]] = call nnan ninf afn <2 x float> @llvm.copysign.v2f32(<2 x float> [[TMP20]], <2 x float> [[TMP21]])
++; NOPRELINK-NEXT:    [[TMP23:%.*]] = select nnan ninf afn <2 x i1> [[TMP17]], <2 x float> [[TMP22]], <2 x float> [[TMP16]]
++; NOPRELINK-NEXT:    ret <2 x float> [[TMP23]]
+ ;
+   %pow = tail call afn nnan ninf <2 x float> @_Z3powDv2_fS_(<2 x float> %x, <2 x float> %y)
+   ret <2 x float> %pow
+@@ -4208,7 +4210,7 @@ define float @test_pow_afn_f32__y_3(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -4262,7 +4264,7 @@ define float @test_pow_afn_f32__y_4(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -4353,7 +4355,7 @@ define float @test_pow_afn_f32__y_5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -4408,7 +4410,7 @@ define float @test_pow_afn_f32__y_neg5(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn float @llvm.exp2.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = fcmp afn oeq float [[TMP7]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = call afn float @llvm.trunc.f32(float [[TMP9]])
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp afn une float [[TMP10]], [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = and i1 [[TMP8]], [[TMP11]]
+@@ -4993,7 +4995,7 @@ define float @test_pow_afn_f32_known_integral_sitofp(float %x, i32 %y) {
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call afn float @llvm.exp2.f32(float [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp afn oeq float [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call afn float @llvm.trunc.f32(float [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp afn une float [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and i1 [[TMP10]], [[TMP13]]
+@@ -5130,7 +5132,7 @@ define float @test_pow_afn_ninf_f32_known_integral_sitofp(float %x, i32 %y) {
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call ninf afn float @llvm.exp2.f32(float [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call ninf afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp ninf afn oeq float [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan ninf afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul ninf afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call ninf afn float @llvm.trunc.f32(float [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp ninf afn une float [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and i1 [[TMP10]], [[TMP13]]
+@@ -5216,7 +5218,7 @@ define float @test_pow_afn_f32_known_integral_uitofp(float %x, i32 %y) {
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call afn float @llvm.exp2.f32(float [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp afn oeq float [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call afn float @llvm.trunc.f32(float [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp afn une float [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and i1 [[TMP10]], [[TMP13]]
+@@ -5546,7 +5548,7 @@ define <2 x float> @test_pow_afn_v2f32_known_integral_uitofp(<2 x float> %x, <2
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp afn oeq <2 x float> [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul afn <2 x float> [[TMP2]], splat (float 5.000000e-01)
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call afn <2 x float> @llvm.trunc.v2f32(<2 x float> [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp afn une <2 x float> [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and <2 x i1> [[TMP10]], [[TMP13]]
+@@ -5671,7 +5673,7 @@ define float @test_pow_afn_f32_known_positive_x__known_integral_sitofp(float nof
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call afn float @llvm.exp2.f32(float [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp afn oeq float [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call afn float @llvm.trunc.f32(float [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp afn une float [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and i1 [[TMP10]], [[TMP13]]
+@@ -5708,7 +5710,8 @@ define float @test_pow_afn_nnan_ninf_f32__known_positive_x__known_integral_sitof
+ ; NOPRELINK-LABEL: define float @test_pow_afn_nnan_ninf_f32__known_positive_x__known_integral_sitofp
+ ; NOPRELINK-SAME: (float nofpclass(ninf nsub nnorm) [[X:%.*]], i32 [[Y:%.*]]) {
+ ; NOPRELINK-NEXT:    [[Y_CAST:%.*]] = sitofp i32 [[Y]] to float
+-; NOPRELINK-NEXT:    [[__LOG2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[X]])
++; NOPRELINK-NEXT:    [[__FABS:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[X]])
++; NOPRELINK-NEXT:    [[__LOG2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[__FABS]])
+ ; NOPRELINK-NEXT:    [[__YLOGX:%.*]] = fmul nnan ninf afn float [[__LOG2]], [[Y_CAST]]
+ ; NOPRELINK-NEXT:    [[__EXP2:%.*]] = call nnan ninf afn nofpclass(nan ninf nzero nsub nnorm) float @llvm.exp2.f32(float [[__YLOGX]])
+ ; NOPRELINK-NEXT:    [[__YTOU:%.*]] = fptosi float [[Y_CAST]] to i32
+@@ -5792,7 +5795,7 @@ define float @test_pow_afn_f32_nnan_ninf__y_known_integral_trunc(float %x, float
+ ;
+ ; NOPRELINK-LABEL: define float @test_pow_afn_f32_nnan_ninf__y_known_integral_trunc
+ ; NOPRELINK-SAME: (float [[X:%.*]], float [[Y_ARG:%.*]]) {
+-; NOPRELINK-NEXT:    [[Y:%.*]] = call nnan ninf float @llvm.trunc.f32(float [[Y_ARG]])
++; NOPRELINK-NEXT:    [[Y:%.*]] = call float @llvm.trunc.f32(float [[Y_ARG]])
+ ; NOPRELINK-NEXT:    [[__FABS:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[X]])
+ ; NOPRELINK-NEXT:    [[__LOG2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[__FABS]])
+ ; NOPRELINK-NEXT:    [[__YLOGX:%.*]] = fmul nnan ninf afn float [[Y]], [[__LOG2]]
+@@ -5830,7 +5833,7 @@ define float @test_pow_afn_f32__y_known_integral_trunc(float %x, float nofpclass
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = call afn float @llvm.exp2.f32(float [[TMP7]])
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = call afn float @llvm.trunc.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = fcmp afn oeq float [[TMP9]], [[TMP2]]
+-; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul nnan afn float [[TMP2]], 5.000000e-01
++; NOPRELINK-NEXT:    [[TMP11:%.*]] = fmul afn float [[TMP2]], 5.000000e-01
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = call afn float @llvm.trunc.f32(float [[TMP11]])
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = fcmp afn une float [[TMP12]], [[TMP11]]
+ ; NOPRELINK-NEXT:    [[TMP14:%.*]] = and i1 [[TMP10]], [[TMP13]]
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pown.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pown.ll
+index 52edb382e4f2a..c97824ef6607d 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pown.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-pown.ll
+@@ -1153,7 +1153,8 @@ define float @test_pown_afn_ninf_nnan_f32__x_known_positive(float nofpclass(ninf
+ ; CHECK-LABEL: define float @test_pown_afn_ninf_nnan_f32__x_known_positive
+ ; CHECK-SAME: (float nofpclass(ninf nsub nnorm) [[X:%.*]], i32 [[Y:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[__LOG2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[X]])
++; CHECK-NEXT:    [[__FABS:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[X]])
++; CHECK-NEXT:    [[__LOG2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[__FABS]])
+ ; CHECK-NEXT:    [[POWNI2F:%.*]] = sitofp nnan ninf afn i32 [[Y]] to float
+ ; CHECK-NEXT:    [[__YLOGX:%.*]] = fmul nnan ninf afn float [[__LOG2]], [[POWNI2F]]
+ ; CHECK-NEXT:    [[__EXP2:%.*]] = call nnan ninf afn nofpclass(nan ninf nzero nsub nnorm) float @llvm.exp2.f32(float [[__YLOGX]])
+@@ -1245,7 +1246,8 @@ define float @test_fast_pown_f32_known_positive_y_known_even(float nofpclass(nin
+ ; CHECK-SAME: (float nofpclass(ninf nsub nnorm) [[X:%.*]], i32 [[Y_ARG:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[Y:%.*]] = shl i32 [[Y_ARG]], 1
+-; CHECK-NEXT:    [[__LOG2:%.*]] = call fast float @llvm.log2.f32(float [[X]])
++; CHECK-NEXT:    [[__FABS:%.*]] = call fast float @llvm.fabs.f32(float [[X]])
++; CHECK-NEXT:    [[__LOG2:%.*]] = call fast float @llvm.log2.f32(float [[__FABS]])
+ ; CHECK-NEXT:    [[POWNI2F:%.*]] = sitofp fast i32 [[Y]] to float
+ ; CHECK-NEXT:    [[__YLOGX:%.*]] = fmul fast float [[__LOG2]], [[POWNI2F]]
+ ; CHECK-NEXT:    [[__EXP2:%.*]] = call fast nofpclass(nan ninf nzero nsub nnorm) float @llvm.exp2.f32(float [[__YLOGX]])
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll
+index 5113fb42b7bfc..3718f01bfa4df 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll
+@@ -95,7 +95,7 @@ define float @test_powr_afn_f32_nnan(float %x, float %y) {
+ ; NOPRELINK-SAME: (float [[X:%.*]], float [[Y:%.*]]) {
+ ; NOPRELINK-NEXT:    [[TMP1:%.*]] = fcmp nnan afn olt float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = select nnan afn i1 [[TMP1]], float +qnan, float [[X]]
+-; NOPRELINK-NEXT:    [[TMP3:%.*]] = call nnan afn float @llvm.fabs.f32(float [[X]])
++; NOPRELINK-NEXT:    [[TMP3:%.*]] = call nnan afn float @llvm.fabs.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan afn float @llvm.log2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fmul nnan afn float [[Y]], [[TMP4]]
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call nnan afn float @llvm.exp2.f32(float [[TMP5]])
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll
+index 7a5d26be441d2..fdc45135668e3 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-rootn.ll
+@@ -1033,7 +1033,7 @@ define float @test_rootn_afn_f32(float %x, i32 %y) {
+ ; NOPRELINK-SAME: float [[X:%.*]], i32 [[Y:%.*]]) {
+ ; NOPRELINK-NEXT:  entry:
+ ; NOPRELINK-NEXT:    [[TMP0:%.*]] = sitofp afn i32 [[Y]] to float
+-; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv nnan afn float 1.000000e+00, [[TMP0]]
++; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv afn float 1.000000e+00, [[TMP0]]
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call afn float @llvm.fabs.f32(float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = call afn float @llvm.log2.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = fmul afn float [[TMP1]], [[TMP3]]
+@@ -1075,7 +1075,7 @@ define <2 x float> @test_rootn_afn_v2f32(<2 x float> %x, <2 x i32> %y) {
+ ; NOPRELINK-SAME: <2 x float> [[X:%.*]], <2 x i32> [[Y:%.*]]) {
+ ; NOPRELINK-NEXT:  entry:
+ ; NOPRELINK-NEXT:    [[TMP0:%.*]] = sitofp afn <2 x i32> [[Y]] to <2 x float>
+-; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv nnan afn <2 x float> splat (float 1.000000e+00), [[TMP0]]
++; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv afn <2 x float> splat (float 1.000000e+00), [[TMP0]]
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call afn <2 x float> @llvm.fabs.v2f32(<2 x float> [[X]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = call afn <2 x float> @llvm.log2.v2f32(<2 x float> [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = fmul afn <2 x float> [[TMP1]], [[TMP3]]
+@@ -1402,8 +1402,9 @@ define float @test_rootn_afn_nnan_ninf_f32__y_4(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn float [[TMP2]], 2.500000e-01
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp nnan ninf afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float 0.000000e+00, float [[TMP4]]
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float 0.000000e+00, float [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp nnan ninf afn olt float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select nnan ninf afn i1 [[TMP7]], float +qnan, float [[TMP6]]
+ ; NOPRELINK-NEXT:    ret float [[TMP8]]
+@@ -1424,8 +1425,9 @@ define float @test_rootn_afn_nnan_ninf_f32__y_neg4(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn float [[TMP2]], -2.500000e-01
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp nnan ninf afn une float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float [[TMP4]], float +inf
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float [[TMP9]], float +inf
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp nnan ninf afn olt float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select nnan ninf afn i1 [[TMP7]], float +qnan, float [[TMP6]]
+ ; NOPRELINK-NEXT:    ret float [[TMP8]]
+@@ -1530,8 +1532,9 @@ define float @test_rootn_afn_nnan_ninf_f32__y_8(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn float [[TMP2]], 1.250000e-01
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp nnan ninf afn oeq float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float 0.000000e+00, float [[TMP4]]
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float 0.000000e+00, float [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp nnan ninf afn olt float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select nnan ninf afn i1 [[TMP7]], float +qnan, float [[TMP6]]
+ ; NOPRELINK-NEXT:    ret float [[TMP8]]
+@@ -1552,8 +1555,9 @@ define float @test_rootn_afn_nnan_ninf_f32__y_neg8(float %x) {
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn float [[TMP2]], -1.250000e-01
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp nnan ninf afn une float [[X]], 0.000000e+00
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float [[TMP4]], float +inf
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn i1 [[TMP5]], float [[TMP9]], float +inf
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp nnan ninf afn olt float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select nnan ninf afn i1 [[TMP7]], float +qnan, float [[TMP6]]
+ ; NOPRELINK-NEXT:    ret float [[TMP8]]
+@@ -1600,8 +1604,9 @@ define <2 x float> @test_rootn_afn_nnan_ninf_v2f32__y_4(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn <2 x float> @llvm.log2.v2f32(<2 x float> [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn <2 x float> [[TMP2]], splat (float 2.500000e-01)
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn <2 x float> @llvm.fabs.v2f32(<2 x float> [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp nnan ninf afn oeq <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn <2 x i1> [[TMP5]], <2 x float> zeroinitializer, <2 x float> [[TMP4]]
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn <2 x i1> [[TMP5]], <2 x float> zeroinitializer, <2 x float> [[TMP9]]
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp nnan ninf afn olt <2 x float> [[X]], zeroinitializer
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select nnan ninf afn <2 x i1> [[TMP7]], <2 x float> splat (float +qnan), <2 x float> [[TMP6]]
+ ; NOPRELINK-NEXT:    ret <2 x float> [[TMP8]]
+@@ -1649,8 +1654,9 @@ define <2 x float> @test_rootn_afn_nnan_ninf_v2f32__y_neg4(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn <2 x float> @llvm.log2.v2f32(<2 x float> [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn <2 x float> [[TMP2]], splat (float -2.500000e-01)
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = call nnan ninf afn <2 x float> @llvm.fabs.v2f32(<2 x float> [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp nnan ninf afn une <2 x float> [[X]], zeroinitializer
+-; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn <2 x i1> [[TMP5]], <2 x float> [[TMP4]], <2 x float> splat (float +inf)
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = select nnan ninf afn <2 x i1> [[TMP5]], <2 x float> [[TMP9]], <2 x float> splat (float +inf)
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp nnan ninf afn olt <2 x float> [[X]], zeroinitializer
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select nnan ninf afn <2 x i1> [[TMP7]], <2 x float> splat (float +qnan), <2 x float> [[TMP6]]
+ ; NOPRELINK-NEXT:    ret <2 x float> [[TMP8]]
+@@ -1707,7 +1713,7 @@ define float @test_rootn_afn_f32__x_known_positive(float nofpclass(ninf nsub nno
+ ; NOPRELINK-SAME: float nofpclass(ninf nsub nnorm) [[X:%.*]], i32 [[Y:%.*]]) {
+ ; NOPRELINK-NEXT:  entry:
+ ; NOPRELINK-NEXT:    [[TMP0:%.*]] = sitofp afn i32 [[Y]] to float
+-; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv nnan afn float 1.000000e+00, [[TMP0]]
++; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv afn float 1.000000e+00, [[TMP0]]
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call afn float @llvm.fabs.f32(float [[X]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = call afn float @llvm.log2.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = fmul afn float [[TMP1]], [[TMP3]]
+@@ -1747,7 +1753,8 @@ define float @test_rootn_afn_ninf_nnan_f32__x_known_positive(float nofpclass(nin
+ ; NOPRELINK-NEXT:  entry:
+ ; NOPRELINK-NEXT:    [[TMP0:%.*]] = sitofp nnan ninf afn i32 [[Y]] to float
+ ; NOPRELINK-NEXT:    [[TMP1:%.*]] = fdiv nnan ninf afn float 1.000000e+00, [[TMP0]]
+-; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[X]])
++; NOPRELINK-NEXT:    [[TMP17:%.*]] = call nnan ninf afn float @llvm.fabs.f32(float [[X]])
++; NOPRELINK-NEXT:    [[TMP2:%.*]] = call nnan ninf afn float @llvm.log2.f32(float [[TMP17]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fmul nnan ninf afn float [[TMP1]], [[TMP2]]
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call nnan ninf afn float @llvm.exp2.f32(float [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = and i32 [[Y]], 1
+@@ -1840,10 +1847,11 @@ define float @test_fast_rootn_f32_y_known_even(float %x, i32 %y.arg) {
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = call fast float @llvm.log2.f32(float [[TMP2]])
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = fdiv fast float [[TMP3]], [[TMP0]]
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = call fast float @llvm.exp2.f32(float [[TMP4]])
++; NOPRELINK-NEXT:    [[TMP7:%.*]] = call fast float @llvm.fabs.f32(float [[TMP5]])
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = fcmp fast oeq float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = icmp sgt i32 [[Y]], -1
+ ; NOPRELINK-NEXT:    [[TMP9:%.*]] = select fast i1 [[TMP8]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP10:%.*]] = select fast i1 [[TMP6]], float [[TMP9]], float [[TMP5]]
++; NOPRELINK-NEXT:    [[TMP10:%.*]] = select fast i1 [[TMP6]], float [[TMP9]], float [[TMP7]]
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = fcmp fast olt float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP12:%.*]] = icmp eq i32 [[Y]], 0
+ ; NOPRELINK-NEXT:    [[TMP13:%.*]] = or i1 [[TMP11]], [[TMP12]]
+@@ -1873,10 +1881,11 @@ define float @test_fast_rootn_f32_known_positive_y_known_even(float nofpclass(ni
+ ; NOPRELINK-NEXT:    [[TMP2:%.*]] = call fast float @llvm.log2.f32(float [[TMP1]])
+ ; NOPRELINK-NEXT:    [[TMP3:%.*]] = fdiv fast float [[TMP2]], [[TMP0]]
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call fast float @llvm.exp2.f32(float [[TMP3]])
++; NOPRELINK-NEXT:    [[TMP6:%.*]] = call fast float @llvm.fabs.f32(float [[TMP4]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fcmp fast oeq float [[X]], 0.000000e+00
+ ; NOPRELINK-NEXT:    [[TMP7:%.*]] = icmp sgt i32 [[Y]], -1
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select fast i1 [[TMP7]], float 0.000000e+00, float +inf
+-; NOPRELINK-NEXT:    [[TMP9:%.*]] = select fast i1 [[TMP5]], float [[TMP8]], float [[TMP4]]
++; NOPRELINK-NEXT:    [[TMP9:%.*]] = select fast i1 [[TMP5]], float [[TMP8]], float [[TMP6]]
+ ; NOPRELINK-NEXT:    [[TMP10:%.*]] = icmp eq i32 [[Y]], 0
+ ; NOPRELINK-NEXT:    [[TMP11:%.*]] = select fast i1 [[TMP10]], float +qnan, float [[TMP9]]
+ ; NOPRELINK-NEXT:    ret float [[TMP11]]
+diff --git a/llvm/test/CodeGen/AMDGPU/fold-fabs.ll b/llvm/test/CodeGen/AMDGPU/fold-fabs.ll
+index 0dbbae3c94f38..31547717fac9a 100644
+--- a/llvm/test/CodeGen/AMDGPU/fold-fabs.ll
++++ b/llvm/test/CodeGen/AMDGPU/fold-fabs.ll
+@@ -166,6 +166,7 @@ define float @fold_abs_in_branch_phi(float %arg1, float %arg2) {
+ ; GFX10-NEXT:    ; =>This Inner Loop Header: Depth=1
+ ; GFX10-NEXT:    v_mul_f32_e32 v0, 0x40400000, v0
+ ; GFX10-NEXT:    v_cmp_ge_f32_e32 vcc_lo, -1.0, v0
++; GFX10-NEXT:    v_and_b32_e32 v0, 0x7fffffff, v0
+ ; GFX10-NEXT:    s_cbranch_vccz .LBB5_2
+ ; GFX10-NEXT:  .LBB5_3: ; %Flow
+ ; GFX10-NEXT:    s_or_b32 exec_lo, exec_lo, s4
+diff --git a/llvm/test/Transforms/InstCombine/fast-math.ll b/llvm/test/Transforms/InstCombine/fast-math.ll
+index 722d3967974d6..cafbab81e7fee 100644
+--- a/llvm/test/Transforms/InstCombine/fast-math.ll
++++ b/llvm/test/Transforms/InstCombine/fast-math.ll
+@@ -18,7 +18,7 @@ define float @fold(float %a) {
+ define float @notfold(float %a) {
+ ; CHECK-LABEL: @notfold(
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul fast float [[A:%.*]], 1.200000e+00
+-; CHECK-NEXT:    [[MUL1:%.*]] = fmul nnan float [[MUL]], 2.300000e+00
++; CHECK-NEXT:    [[MUL1:%.*]] = fmul float [[MUL]], 2.300000e+00
+ ; CHECK-NEXT:    ret float [[MUL1]]
+ ;
+   %mul = fmul fast float %a, 0x3FF3333340000000
+@@ -728,7 +728,7 @@ define double @sqrt_intrinsic_three_args6(double %x, ptr %yp) {
+ 
+ define double @sqrt_intrinsic_not_so_fast(double %x, double %y) {
+ ; CHECK-LABEL: @sqrt_intrinsic_not_so_fast(
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul nnan ninf double [[X:%.*]], [[X]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul double [[X:%.*]], [[X]]
+ ; CHECK-NEXT:    [[MUL2:%.*]] = fmul fast double [[MUL]], [[Y:%.*]]
+ ; CHECK-NEXT:    [[SQRT:%.*]] = call fast double @llvm.sqrt.f64(double [[MUL2]])
+ ; CHECK-NEXT:    ret double [[SQRT]]
+@@ -742,7 +742,8 @@ define double @sqrt_intrinsic_not_so_fast(double %x, double %y) {
+ define double @sqrt_intrinsic_arg_4th(double noundef %x) {
+ ; CHECK-LABEL: @sqrt_intrinsic_arg_4th(
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul fast double [[X:%.*]], [[X]]
+-; CHECK-NEXT:    ret double [[MUL]]
++; CHECK-NEXT:    [[FABS:%.*]] = call fast double @llvm.fabs.f64(double [[MUL]])
++; CHECK-NEXT:    ret double [[FABS]]
+ ;
+   %mul = fmul fast double %x, %x
+   %mul2 = fmul fast double %mul, %mul
+@@ -753,8 +754,9 @@ define double @sqrt_intrinsic_arg_4th(double noundef %x) {
+ define double @sqrt_intrinsic_arg_5th(double noundef %x) {
+ ; CHECK-LABEL: @sqrt_intrinsic_arg_5th(
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul fast double [[X:%.*]], [[X]]
++; CHECK-NEXT:    [[FABS:%.*]] = call fast double @llvm.fabs.f64(double [[MUL]])
+ ; CHECK-NEXT:    [[SQRT1:%.*]] = call fast double @llvm.sqrt.f64(double [[X]])
+-; CHECK-NEXT:    [[SQRT:%.*]] = fmul fast double [[MUL]], [[SQRT1]]
++; CHECK-NEXT:    [[SQRT:%.*]] = fmul fast double [[FABS]], [[SQRT1]]
+ ; CHECK-NEXT:    ret double [[SQRT]]
+ ;
+   %mul = fmul fast double %x, %x
+diff --git a/llvm/test/Transforms/InstCombine/fmul-sqrt.ll b/llvm/test/Transforms/InstCombine/fmul-sqrt.ll
+index 4bee1876b1f04..0f903da1afed2 100644
+--- a/llvm/test/Transforms/InstCombine/fmul-sqrt.ll
++++ b/llvm/test/Transforms/InstCombine/fmul-sqrt.ll
+@@ -72,8 +72,8 @@ define double @sqrt_a_sqrt_b_reassoc(double %a, double %b) {
+ 
+ define double @sqrt_a_sqrt_b_sqrt_c_sqrt_d_reassoc(double %a, double %b, double %c, double %d) {
+ ; CHECK-LABEL: @sqrt_a_sqrt_b_sqrt_c_sqrt_d_reassoc(
+-; CHECK-NEXT:    [[TMP2:%.*]] = fmul reassoc nnan ninf arcp double [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[TMP3:%.*]] = fmul reassoc nnan ninf double [[TMP2]], [[D:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = fmul reassoc nnan arcp double [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[TMP3:%.*]] = fmul reassoc nnan double [[TMP1]], [[C:%.*]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = fmul reassoc nnan ninf double [[TMP3]], [[D1:%.*]]
+ ; CHECK-NEXT:    [[MUL2:%.*]] = call reassoc nnan ninf double @llvm.sqrt.f64(double [[TMP4]])
+ ; CHECK-NEXT:    ret double [[MUL2]]
+diff --git a/llvm/test/Transforms/InstCombine/fmul.ll b/llvm/test/Transforms/InstCombine/fmul.ll
+index eaf33a54b9861..c24874a67ad03 100644
+--- a/llvm/test/Transforms/InstCombine/fmul.ll
++++ b/llvm/test/Transforms/InstCombine/fmul.ll
+@@ -1451,7 +1451,7 @@ define <2 x float> @fmul_ldexp_v2f32(<2 x float> %x, <2 x i32> %exp) {
+ 
+ define float @fmul_ldexp_noreassoc_fmul(float %x, i32 %exp) {
+ ; CHECK-LABEL: @fmul_ldexp_noreassoc_fmul(
+-; CHECK-NEXT:    [[LDEXP:%.*]] = call reassoc nnan float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 [[EXP:%.*]])
++; CHECK-NEXT:    [[LDEXP:%.*]] = call reassoc float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 [[EXP:%.*]])
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul float [[X:%.*]], [[LDEXP]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+@@ -1462,7 +1462,7 @@ define float @fmul_ldexp_noreassoc_fmul(float %x, i32 %exp) {
+ 
+ define float @fmul_ldexp_noreassoc_ldexp(float %x, i32 %exp) {
+ ; CHECK-LABEL: @fmul_ldexp_noreassoc_ldexp(
+-; CHECK-NEXT:    [[LDEXP:%.*]] = call nnan float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 [[EXP:%.*]])
++; CHECK-NEXT:    [[LDEXP:%.*]] = call float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 [[EXP:%.*]])
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc float [[X:%.*]], [[LDEXP]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+@@ -1498,7 +1498,7 @@ define float @fmul_ldexp_multiuse_x(float %x, i32 %exp) {
+ 
+ define float @fmul_ldexp_not_fpone(float %x, i32 %exp) {
+ ; CHECK-LABEL: @fmul_ldexp_not_fpone(
+-; CHECK-NEXT:    [[LDEXP:%.*]] = call reassoc nnan float @llvm.ldexp.f32.i32(float 2.000000e+00, i32 [[EXP:%.*]])
++; CHECK-NEXT:    [[LDEXP:%.*]] = call reassoc float @llvm.ldexp.f32.i32(float 2.000000e+00, i32 [[EXP:%.*]])
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc float [[X:%.*]], [[LDEXP]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/fsqrtdiv-transform.ll b/llvm/test/Transforms/InstCombine/fsqrtdiv-transform.ll
+index 940be31c39604..5223200ae91bb 100644
+--- a/llvm/test/Transforms/InstCombine/fsqrtdiv-transform.ll
++++ b/llvm/test/Transforms/InstCombine/fsqrtdiv-transform.ll
+@@ -80,7 +80,7 @@ define void @bb_constraint_case3(double %a, i32 %d) {
+ ; CHECK-NEXT:    [[D_NOT:%.*]] = icmp eq i32 [[D]], 0
+ ; CHECK-NEXT:    br i1 [[D_NOT]], label [[IF_END:%.*]], label [[IF_THEN:%.*]]
+ ; CHECK:       if.then:
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    store double [[MUL]], ptr @r1, align 8
+ ; CHECK-NEXT:    [[DIV1:%.*]] = fdiv reassoc double [[A]], [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV1]], ptr @r2, align 8
+@@ -117,7 +117,7 @@ define void @bb_constraint_case4(double %a, i32 %c, i32 %d) {
+ ; CHECK-NEXT:    [[C_NOT:%.*]] = icmp eq i32 [[C]], 0
+ ; CHECK-NEXT:    br i1 [[C_NOT]], label [[IF_END:%.*]], label [[IF_THEN:%.*]]
+ ; CHECK:       if.then:
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    store double [[MUL]], ptr @r1, align 8
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+@@ -172,7 +172,7 @@ define void @bb_constraint_case5(double %a, i32 %c) {
+ ; CHECK:       if.end:
+ ; CHECK-NEXT:    [[SQRT:%.*]] = phi double [ [[TMP0]], [[IF_THEN]] ], [ [[TMP1]], [[IF_ELSE]] ]
+ ; CHECK-NEXT:    [[DIV:%.*]] = fdiv reassoc ninf arcp double 1.000000e+00, [[SQRT]]
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    store double [[MUL]], ptr @r1, align 8
+ ; CHECK-NEXT:    [[DIV1:%.*]] = fdiv reassoc double [[A]], [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV1]], ptr @r2, align 8
+@@ -267,7 +267,7 @@ define void @bb_constraint_case7(double %a, i32 %c, i32 %d) {
+ ; CHECK-NEXT:    [[TMP1:%.*]] = fdiv double 2.000000e+00, [[A]]
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.else1:
+-; CHECK-NEXT:    [[TMP2:%.*]] = fmul reassoc nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[TMP2:%.*]] = fmul reassoc double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+ ; CHECK-NEXT:    [[MUL:%.*]] = phi double [ [[TMP1]], [[IF_THEN1]] ], [ [[TMP2]], [[IF_ELSE1]] ], [ [[TMP0]], [[IF_THEN]] ]
+@@ -382,7 +382,7 @@ define void @missing_arcp_flag_on_div(double %a) {
+ ; CHECK-NEXT:    [[SQRT:%.*]] = call reassoc nnan ninf nsz double @llvm.sqrt.f64(double [[A]])
+ ; CHECK-NEXT:    [[DIV:%.*]] = fdiv reassoc ninf double 1.000000e+00, [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV]], ptr @x, align 8
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    store double [[MUL]], ptr @r1, align 8
+ ; CHECK-NEXT:    [[DIV1:%.*]] = fdiv reassoc double [[A]], [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV1]], ptr @r2, align 8
+@@ -407,7 +407,7 @@ define void @missing_reassoc_flag_on_mul(double %a) {
+ ; CHECK-NEXT:    [[SQRT:%.*]] = call reassoc nnan ninf nsz double @llvm.sqrt.f64(double [[A]])
+ ; CHECK-NEXT:    [[DIV:%.*]] = fdiv reassoc ninf arcp double 1.000000e+00, [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV]], ptr @x, align 8
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    store double [[MUL]], ptr @r1, align 8
+ ; CHECK-NEXT:    [[DIV1:%.*]] = fdiv reassoc double [[A]], [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV1]], ptr @r2, align 8
+@@ -432,7 +432,7 @@ define void @missing_reassoc_flag_on_div1(double %a) {
+ ; CHECK-NEXT:    [[SQRT:%.*]] = call reassoc nnan ninf nsz double @llvm.sqrt.f64(double [[A]])
+ ; CHECK-NEXT:    [[DIV:%.*]] = fdiv reassoc ninf arcp double 1.000000e+00, [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV]], ptr @x, align 8
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc nnan double [[DIV]], [[DIV]]
++; CHECK-NEXT:    [[MUL:%.*]] = fmul reassoc double [[DIV]], [[DIV]]
+ ; CHECK-NEXT:    store double [[MUL]], ptr @r1, align 8
+ ; CHECK-NEXT:    [[DIV1:%.*]] = fdiv double [[A]], [[SQRT]]
+ ; CHECK-NEXT:    store double [[DIV1]], ptr @r2, align 8
+diff --git a/llvm/test/Transforms/InstCombine/pow_fp_int.ll b/llvm/test/Transforms/InstCombine/pow_fp_int.ll
+index 13c2d3ca8070c..a019dc43f232f 100644
+--- a/llvm/test/Transforms/InstCombine/pow_fp_int.ll
++++ b/llvm/test/Transforms/InstCombine/pow_fp_int.ll
+@@ -72,7 +72,7 @@ define double @pow_sitofp_double_const_base_power_of_2_fast(i32 %x) {
+ ; CHECK-LABEL: define double @pow_sitofp_double_const_base_power_of_2_fast(
+ ; CHECK-SAME: i32 [[X:%.*]]) {
+ ; CHECK-NEXT:    [[SUBFP:%.*]] = sitofp i32 [[X]] to float
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul nnan afn float [[SUBFP]], 4.000000e+00
++; CHECK-NEXT:    [[MUL:%.*]] = fmul afn float [[SUBFP]], 4.000000e+00
+ ; CHECK-NEXT:    [[EXP2:%.*]] = tail call afn float @llvm.exp2.f32(float [[MUL]])
+ ; CHECK-NEXT:    [[RES:%.*]] = fpext float [[EXP2]] to double
+ ; CHECK-NEXT:    ret double [[RES]]
+@@ -101,7 +101,7 @@ define double @pow_uitofp_const_base_power_of_2_fast(i31 %x) {
+ ; CHECK-LABEL: define double @pow_uitofp_const_base_power_of_2_fast(
+ ; CHECK-SAME: i31 [[X:%.*]]) {
+ ; CHECK-NEXT:    [[SUBFP:%.*]] = uitofp i31 [[X]] to float
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul nnan afn float [[SUBFP]], 4.000000e+00
++; CHECK-NEXT:    [[MUL:%.*]] = fmul afn float [[SUBFP]], 4.000000e+00
+ ; CHECK-NEXT:    [[EXP2:%.*]] = tail call afn float @llvm.exp2.f32(float [[MUL]])
+ ; CHECK-NEXT:    [[RES:%.*]] = fpext float [[EXP2]] to double
+ ; CHECK-NEXT:    ret double [[RES]]
+diff --git a/llvm/test/Transforms/InstCombine/pow_fp_int16.ll b/llvm/test/Transforms/InstCombine/pow_fp_int16.ll
+index db836258daa1c..db347fb4cb9a0 100644
+--- a/llvm/test/Transforms/InstCombine/pow_fp_int16.ll
++++ b/llvm/test/Transforms/InstCombine/pow_fp_int16.ll
+@@ -70,7 +70,7 @@ define double @pow_sitofp_double_const_base_power_of_2_fast(i16 %x) {
+ ; CHECK-LABEL: define double @pow_sitofp_double_const_base_power_of_2_fast(
+ ; CHECK-SAME: i16 [[X:%.*]]) {
+ ; CHECK-NEXT:    [[SUBFP:%.*]] = sitofp i16 [[X]] to float
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul nnan afn float [[SUBFP]], 4.000000e+00
++; CHECK-NEXT:    [[MUL:%.*]] = fmul afn float [[SUBFP]], 4.000000e+00
+ ; CHECK-NEXT:    [[EXP2:%.*]] = tail call afn float @llvm.exp2.f32(float [[MUL]])
+ ; CHECK-NEXT:    [[RES:%.*]] = fpext float [[EXP2]] to double
+ ; CHECK-NEXT:    ret double [[RES]]
+@@ -99,7 +99,7 @@ define double @pow_uitofp_const_base_power_of_2_fast(i15 %x) {
+ ; CHECK-LABEL: define double @pow_uitofp_const_base_power_of_2_fast(
+ ; CHECK-SAME: i15 [[X:%.*]]) {
+ ; CHECK-NEXT:    [[SUBFP:%.*]] = uitofp i15 [[X]] to float
+-; CHECK-NEXT:    [[MUL:%.*]] = fmul nnan afn float [[SUBFP]], 4.000000e+00
++; CHECK-NEXT:    [[MUL:%.*]] = fmul afn float [[SUBFP]], 4.000000e+00
+ ; CHECK-NEXT:    [[EXP2:%.*]] = tail call afn float @llvm.exp2.f32(float [[MUL]])
+ ; CHECK-NEXT:    [[RES:%.*]] = fpext float [[EXP2]] to double
+ ; CHECK-NEXT:    ret double [[RES]]
+diff --git a/llvm/test/Transforms/InstCombine/powi.ll b/llvm/test/Transforms/InstCombine/powi.ll
+index e106ccad909b9..7bdd6ce30958f 100644
+--- a/llvm/test/Transforms/InstCombine/powi.ll
++++ b/llvm/test/Transforms/InstCombine/powi.ll
+@@ -709,7 +709,7 @@ define <4 x float> @pow_2_i_ldexp_1_i_afn_v4f32(i32 %i) {
+ define <4 x float> @pow_2_i_ldexp_a_i_afn_v4f32(<4 x float> %a, i32 %i) {
+ ; CHECK-LABEL: @pow_2_i_ldexp_a_i_afn_v4f32(
+ ; CHECK-NEXT:    [[DOTSPLATINSERT:%.*]] = insertelement <4 x i32> poison, i32 [[I:%.*]], i64 0
+-; CHECK-NEXT:    [[TMP3:%.*]] = call reassoc nnan afn <4 x float> @llvm.ldexp.v4f32.v4i32(<4 x float> <float 1.000000e+00, float poison, float poison, float poison>, <4 x i32> [[DOTSPLATINSERT]])
++; CHECK-NEXT:    [[TMP3:%.*]] = call reassoc afn <4 x float> @llvm.ldexp.v4f32.v4i32(<4 x float> <float 1.000000e+00, float poison, float poison, float poison>, <4 x i32> [[DOTSPLATINSERT]])
+ ; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[TMP3]], <4 x float> poison, <4 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[TMP1:%.*]] = fmul reassoc <4 x float> [[A:%.*]], [[TMP2]]
+ ; CHECK-NEXT:    ret <4 x float> [[TMP1]]
+@@ -722,7 +722,7 @@ define <4 x float> @pow_2_i_ldexp_a_i_afn_v4f32(<4 x float> %a, i32 %i) {
+ define <4 x double> @pow_2_i_ldexp_a_i_afn_v4f64(<4 x double> %a, i32 %i) {
+ ; CHECK-LABEL: @pow_2_i_ldexp_a_i_afn_v4f64(
+ ; CHECK-NEXT:    [[DOTSPLATINSERT:%.*]] = insertelement <4 x i32> poison, i32 [[I:%.*]], i64 0
+-; CHECK-NEXT:    [[TMP3:%.*]] = call reassoc nnan afn <4 x double> @llvm.ldexp.v4f64.v4i32(<4 x double> <double 1.000000e+00, double poison, double poison, double poison>, <4 x i32> [[DOTSPLATINSERT]])
++; CHECK-NEXT:    [[TMP3:%.*]] = call reassoc afn <4 x double> @llvm.ldexp.v4f64.v4i32(<4 x double> <double 1.000000e+00, double poison, double poison, double poison>, <4 x i32> [[DOTSPLATINSERT]])
+ ; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x double> [[TMP3]], <4 x double> poison, <4 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[TMP1:%.*]] = fmul reassoc <4 x double> [[A:%.*]], [[TMP2]]
+ ; CHECK-NEXT:    ret <4 x double> [[TMP1]]
+diff --git a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-exp.ll b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-exp.ll
+index e12074404ca64..134afe4f71e95 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-exp.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-exp.ll
+@@ -421,7 +421,8 @@ define nofpclass(nzero) float @source_is_known_nan(float nofpclass(inf norm sub
+ define nofpclass(nzero) float @source_is_known_nan_preserve_flags(float nofpclass(inf norm sub zero) %must.be.nan) {
+ ; CHECK-LABEL: define nofpclass(nzero) float @source_is_known_nan_preserve_flags(
+ ; CHECK-SAME: float nofpclass(inf zero sub norm) [[MUST_BE_NAN:%.*]]) {
+-; CHECK-NEXT:    ret float [[MUST_BE_NAN]]
++; CHECK-NEXT:    [[EXP:%.*]] = call nsz contract float @llvm.exp2.f32(float [[MUST_BE_NAN]])
++; CHECK-NEXT:    ret float [[EXP]]
+ ;
+   %exp = call contract nsz float @llvm.exp2.f32(float %must.be.nan)
+   ret float %exp
+@@ -441,8 +442,7 @@ define nofpclass(nzero) float @source_is_known_inf_or_nan(float nofpclass(norm s
+ define nofpclass(nzero) float @source_is_known_inf_or_nan_preserve_flags(float nofpclass(norm sub zero) %must.be.inf.or.nan) {
+ ; CHECK-LABEL: define nofpclass(nzero) float @source_is_known_inf_or_nan_preserve_flags(
+ ; CHECK-SAME: float nofpclass(zero sub norm) [[MUST_BE_INF_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[TMP1:%.*]] = fcmp nsz contract ueq float [[MUST_BE_INF_OR_NAN]], +inf
+-; CHECK-NEXT:    [[TMP2:%.*]] = select nsz contract i1 [[TMP1]], float [[MUST_BE_INF_OR_NAN]], float 0.000000e+00
++; CHECK-NEXT:    [[TMP2:%.*]] = call nsz contract float @llvm.exp2.f32(float [[MUST_BE_INF_OR_NAN]])
+ ; CHECK-NEXT:    ret float [[TMP2]]
+ ;
+   %exp = call contract nsz float @llvm.exp2.f32(float %must.be.inf.or.nan)
+diff --git a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fdiv.ll b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fdiv.ll
+index b9f4f209b0a02..d076ee41c2abf 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fdiv.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fdiv.ll
+@@ -216,7 +216,8 @@ define nofpclass(inf) half @ret_src_must_be_zero_or_nan_self(half noundef nofpcl
+ define nofpclass(inf) half @ret_src_must_be_zero_or_nan_self__preserve_flags(half noundef nofpclass(inf norm sub) %x) {
+ ; CHECK-LABEL: define nofpclass(inf) half @ret_src_must_be_zero_or_nan_self__preserve_flags(
+ ; CHECK-SAME: half noundef nofpclass(inf sub norm) [[X:%.*]]) {
+-; CHECK-NEXT:    ret half +qnan
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv contract half [[X]], [[X]]
++; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv contract half %x, %x
+   ret half %div
+@@ -1217,7 +1218,7 @@ define nofpclass(ninf) half @ret_ninf__fdiv_nnan_unknown__zero(half %unknown) {
+ define nofpclass(snan) half @known__nzero_or_nan__fdiv__not_inf_or_nan(half nofpclass(inf sub norm pzero) %nzero.or.nan, half nofpclass(inf nan) %not.inf.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) half @known__nzero_or_nan__fdiv__not_inf_or_nan(
+ ; CHECK-SAME: half nofpclass(inf pzero sub norm) [[NZERO_OR_NAN:%.*]], half nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = fdiv ninf contract half [[NZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv contract half [[NZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv contract half %nzero.or.nan, %not.inf.or.nan
+@@ -1369,7 +1370,7 @@ define nofpclass(snan) half @not_inf_or_nan__fdiv_nnan__nzero_or_nan(half %unkno
+ define nofpclass(snan) half @known__pzero_or_nan__fdiv__not_inf_or_nan(half nofpclass(inf sub norm nzero) %pzero.or.nan, half nofpclass(inf nan) %not.inf.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) half @known__pzero_or_nan__fdiv__not_inf_or_nan(
+ ; CHECK-SAME: half nofpclass(inf nzero sub norm) [[PZERO_OR_NAN:%.*]], half nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = fdiv ninf contract half [[PZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv contract half [[PZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv contract half %pzero.or.nan, %not.inf.or.nan
+@@ -1966,7 +1967,8 @@ define nofpclass(nan) half @ret_nonan__known_zero_or_nan__fdiv__unknown(half nof
+ define nofpclass(nan) half @ret_nonan__zero_or_nan__fdiv_nsz__unknown(half nofpclass(inf sub norm) %zero.or.nan, half %unknown) {
+ ; CHECK-LABEL: define nofpclass(nan) half @ret_nonan__zero_or_nan__fdiv_nsz__unknown(
+ ; CHECK-SAME: half nofpclass(inf sub norm) [[ZERO_OR_NAN:%.*]], half [[UNKNOWN:%.*]]) {
+-; CHECK-NEXT:    ret half 0.000000e+00
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[ZERO_OR_NAN]], [[UNKNOWN]]
++; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %zero.or.nan, %unknown
+   ret half %div
+@@ -2172,7 +2174,7 @@ define nofpclass(snan) half @ret__unknown__fdiv__pzero(half %unknown, half nofpc
+ define nofpclass(snan) half @ret__unknown__fdiv_nsz__pzero(half %unknown, half nofpclass(nan inf sub norm nzero) %pzero) {
+ ; CHECK-LABEL: define nofpclass(snan) half @ret__unknown__fdiv_nsz__pzero(
+ ; CHECK-SAME: half [[UNKNOWN:%.*]], half nofpclass(nan inf nzero sub norm) [[PZERO:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], 0.000000e+00
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], [[PZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %unknown, %pzero
+@@ -2192,7 +2194,7 @@ define nofpclass(snan) half @ret__unknown__fdiv__nzero(half %unknown, half nofpc
+ define nofpclass(snan) half @ret__unknown__fdiv_nsz__nzero(half %unknown, half nofpclass(nan inf sub norm pzero) %nzero) {
+ ; CHECK-LABEL: define nofpclass(snan) half @ret__unknown__fdiv_nsz__nzero(
+ ; CHECK-SAME: half [[UNKNOWN:%.*]], half nofpclass(nan inf pzero sub norm) [[NZERO:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], -0.000000e+00
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], [[NZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %unknown, %nzero
+@@ -2212,7 +2214,7 @@ define nofpclass(nan) half @ret_nonan__unknown__fdiv__zero(half %unknown, half n
+ define nofpclass(nan) half @ret_nonan__unknown__fdiv_nsz__zero(half %unknown, half nofpclass(nan inf sub norm) %zero) {
+ ; CHECK-LABEL: define nofpclass(nan) half @ret_nonan__unknown__fdiv_nsz__zero(
+ ; CHECK-SAME: half [[UNKNOWN:%.*]], half nofpclass(nan inf sub norm) [[ZERO:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = call nsz contract half @llvm.copysign.f16(half +inf, half [[UNKNOWN]])
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], [[ZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %unknown, %zero
+@@ -2232,7 +2234,7 @@ define nofpclass(nan) half @ret_nonan__unknown__fdiv__pzero(half %unknown, half
+ define nofpclass(nan) half @ret_nonan__unknown__fdiv_nsz__pzero(half %unknown, half nofpclass(nan inf sub norm nzero) %pzero) {
+ ; CHECK-LABEL: define nofpclass(nan) half @ret_nonan__unknown__fdiv_nsz__pzero(
+ ; CHECK-SAME: half [[UNKNOWN:%.*]], half nofpclass(nan inf nzero sub norm) [[PZERO:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = call nsz contract half @llvm.copysign.f16(half +inf, half [[UNKNOWN]])
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], [[PZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %unknown, %pzero
+@@ -2252,7 +2254,7 @@ define nofpclass(nan) half @ret_nonan__unknown__fdiv__nzero(half %unknown, half
+ define nofpclass(nan) half @ret_nonan__unknown__fdiv_nsz__nzero(half %unknown, half nofpclass(nan inf sub norm pzero) %nzero) {
+ ; CHECK-LABEL: define nofpclass(nan) half @ret_nonan__unknown__fdiv_nsz__nzero(
+ ; CHECK-SAME: half [[UNKNOWN:%.*]], half nofpclass(nan inf pzero sub norm) [[NZERO:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = call nsz contract half @llvm.copysign.f16(half +inf, half [[UNKNOWN]])
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[UNKNOWN]], [[NZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %unknown, %nzero
+@@ -2272,7 +2274,7 @@ define nofpclass(snan) half @ret__not_nan__fdiv_nsz__zero(half nofpclass(nan) %n
+ define nofpclass(snan) half @ret__not_nan_not_zero__fdiv_nsz__zero(half nofpclass(nan zero) %not.nan.or.zero, half nofpclass(nan inf sub norm) %zero) {
+ ; CHECK-LABEL: define nofpclass(snan) half @ret__not_nan_not_zero__fdiv_nsz__zero(
+ ; CHECK-SAME: half nofpclass(nan zero) [[NOT_NAN_OR_ZERO:%.*]], half nofpclass(nan inf sub norm) [[ZERO:%.*]]) {
+-; CHECK-NEXT:    [[DIV:%.*]] = call nsz contract half @llvm.copysign.f16(half +inf, half [[NOT_NAN_OR_ZERO]])
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[NOT_NAN_OR_ZERO]], [[ZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %not.nan.or.zero, %zero
+@@ -2302,7 +2304,7 @@ define nofpclass(snan) half @ret__not_nan_not_zero__fdiv_nsz__zero__dynamic(half
+ define nofpclass(snan) half @ret__not_nan_not_zero_not_sub__fdiv_nsz__zero__daz(half nofpclass(nan zero sub) %not.nan.or.zero.or.sub, half nofpclass(nan inf sub norm) %zero) #2 {
+ ; CHECK-LABEL: define nofpclass(snan) half @ret__not_nan_not_zero_not_sub__fdiv_nsz__zero__daz(
+ ; CHECK-SAME: half nofpclass(nan zero sub) [[NOT_NAN_OR_ZERO_OR_SUB:%.*]], half nofpclass(nan inf sub norm) [[ZERO:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[DIV:%.*]] = call nsz contract half @llvm.copysign.f16(half +inf, half [[NOT_NAN_OR_ZERO_OR_SUB]])
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[NOT_NAN_OR_ZERO_OR_SUB]], [[ZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %not.nan.or.zero.or.sub, %zero
+@@ -2312,7 +2314,7 @@ define nofpclass(snan) half @ret__not_nan_not_zero_not_sub__fdiv_nsz__zero__daz(
+ define nofpclass(snan) half @ret__not_nan_not_zero_not_sub__fdiv_nsz__zero__dynamic(half nofpclass(nan zero sub) %not.nan.or.zero.or.sub, half nofpclass(nan inf sub norm) %zero) #3 {
+ ; CHECK-LABEL: define nofpclass(snan) half @ret__not_nan_not_zero_not_sub__fdiv_nsz__zero__dynamic(
+ ; CHECK-SAME: half nofpclass(nan zero sub) [[NOT_NAN_OR_ZERO_OR_SUB:%.*]], half nofpclass(nan inf sub norm) [[ZERO:%.*]]) #[[ATTR3]] {
+-; CHECK-NEXT:    [[DIV:%.*]] = call nsz contract half @llvm.copysign.f16(half +inf, half [[NOT_NAN_OR_ZERO_OR_SUB]])
++; CHECK-NEXT:    [[DIV:%.*]] = fdiv nsz contract half [[NOT_NAN_OR_ZERO_OR_SUB]], [[ZERO]]
+ ; CHECK-NEXT:    ret half [[DIV]]
+ ;
+   %div = fdiv nsz contract half %not.nan.or.zero.or.sub, %zero
+diff --git a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fmul.ll b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fmul.ll
+index e8a7887283d67..c7dd1b18e5e57 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fmul.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-fmul.ll
+@@ -217,7 +217,7 @@ define nofpclass(inf) float @ret_src_must_be_zero_or_nan_square(float noundef no
+ define nofpclass(inf) float @ret_src_must_be_zero_or_nan_square__preserve_flags(float noundef nofpclass(inf norm sub) %x) {
+ ; CHECK-LABEL: define nofpclass(inf) float @ret_src_must_be_zero_or_nan_square__preserve_flags(
+ ; CHECK-SAME: float noundef nofpclass(inf sub norm) [[X:%.*]]) {
+-; CHECK-NEXT:    [[MUL:%.*]] = call contract float @llvm.fabs.f32(float [[X]])
++; CHECK-NEXT:    [[MUL:%.*]] = fmul contract float [[X]], [[X]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+   %mul = fmul contract float %x, %x
+@@ -1086,8 +1086,7 @@ define nofpclass(ninf) float @ret_ninf__fmul_nnan_unknown__zero(float %unknown)
+ define nofpclass(snan) float @known__nzero_or_nan__fmul__not_inf_or_nan(float nofpclass(inf sub norm pzero) %nzero.or.nan, float nofpclass(inf nan) %not.inf.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) float @known__nzero_or_nan__fmul__not_inf_or_nan(
+ ; CHECK-SAME: float nofpclass(inf pzero sub norm) [[NZERO_OR_NAN:%.*]], float nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[TMP1:%.*]] = fneg contract float [[NOT_INF_OR_NAN]]
+-; CHECK-NEXT:    [[MUL:%.*]] = call contract float @llvm.copysign.f32(float [[NZERO_OR_NAN]], float [[TMP1]])
++; CHECK-NEXT:    [[MUL:%.*]] = fmul contract float [[NZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+   %mul = fmul contract float %nzero.or.nan, %not.inf.or.nan
+@@ -1097,8 +1096,7 @@ define nofpclass(snan) float @known__nzero_or_nan__fmul__not_inf_or_nan(float no
+ define nofpclass(snan) float @known__nzero_or_nan__fmul__not_inf_or_nan__insert_point(float nofpclass(inf sub norm pzero) %nzero.or.nan, float nofpclass(inf nan) %not.inf.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) float @known__nzero_or_nan__fmul__not_inf_or_nan__insert_point(
+ ; CHECK-SAME: float nofpclass(inf pzero sub norm) [[NZERO_OR_NAN:%.*]], float nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[TMP1:%.*]] = fneg contract float [[NOT_INF_OR_NAN]]
+-; CHECK-NEXT:    [[MUL:%.*]] = call contract float @llvm.copysign.f32(float [[NZERO_OR_NAN]], float [[TMP1]])
++; CHECK-NEXT:    [[MUL:%.*]] = fmul contract float [[NZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
+ ; CHECK-NEXT:    [[BARRIER:%.*]] = call float @llvm.arithmetic.fence.f32(float [[MUL]])
+ ; CHECK-NEXT:    ret float [[BARRIER]]
+ ;
+@@ -1111,8 +1109,7 @@ define nofpclass(snan) float @known__nzero_or_nan__fmul__not_inf_or_nan__insert_
+ define nofpclass(snan) float @known__not_inf_or_nan__fmul__nzero_or_nan(float nofpclass(inf nan) %not.inf.or.nan, float nofpclass(inf sub norm pzero) %nzero.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) float @known__not_inf_or_nan__fmul__nzero_or_nan(
+ ; CHECK-SAME: float nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]], float nofpclass(inf pzero sub norm) [[NZERO_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[TMP1:%.*]] = fneg contract float [[NOT_INF_OR_NAN]]
+-; CHECK-NEXT:    [[MUL:%.*]] = call contract float @llvm.copysign.f32(float [[NZERO_OR_NAN]], float [[TMP1]])
++; CHECK-NEXT:    [[MUL:%.*]] = fmul contract float [[NOT_INF_OR_NAN]], [[NZERO_OR_NAN]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+   %mul = fmul contract float %not.inf.or.nan, %nzero.or.nan
+@@ -1261,7 +1258,7 @@ define nofpclass(snan) float @not_inf_or_nan__fmul_nnan__nzero_or_nan(float %unk
+ define nofpclass(snan) float @known__pzero_or_nan__fmul__not_inf_or_nan(float nofpclass(inf sub norm nzero) %pzero.or.nan, float nofpclass(inf nan) %not.inf.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) float @known__pzero_or_nan__fmul__not_inf_or_nan(
+ ; CHECK-SAME: float nofpclass(inf nzero sub norm) [[PZERO_OR_NAN:%.*]], float nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[MUL:%.*]] = call contract float @llvm.copysign.f32(float [[PZERO_OR_NAN]], float [[NOT_INF_OR_NAN]])
++; CHECK-NEXT:    [[MUL:%.*]] = fmul contract float [[PZERO_OR_NAN]], [[NOT_INF_OR_NAN]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+   %mul = fmul contract float %pzero.or.nan, %not.inf.or.nan
+@@ -1272,7 +1269,7 @@ define nofpclass(snan) float @known__pzero_or_nan__fmul__not_inf_or_nan(float no
+ define nofpclass(snan) float @known__not_inf_or_nan__fmul__pzero_or_nan(float nofpclass(inf nan) %not.inf.or.nan, float nofpclass(inf sub norm nzero) %pzero.or.nan) {
+ ; CHECK-LABEL: define nofpclass(snan) float @known__not_inf_or_nan__fmul__pzero_or_nan(
+ ; CHECK-SAME: float nofpclass(nan inf) [[NOT_INF_OR_NAN:%.*]], float nofpclass(inf nzero sub norm) [[PZERO_OR_NAN:%.*]]) {
+-; CHECK-NEXT:    [[MUL:%.*]] = call contract float @llvm.copysign.f32(float [[PZERO_OR_NAN]], float [[NOT_INF_OR_NAN]])
++; CHECK-NEXT:    [[MUL:%.*]] = fmul contract float [[NOT_INF_OR_NAN]], [[PZERO_OR_NAN]]
+ ; CHECK-NEXT:    ret float [[MUL]]
+ ;
+   %mul = fmul contract float %not.inf.or.nan, %pzero.or.nan
+diff --git a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-log.ll b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-log.ll
+index 459e7561c52ee..5ccae8d599ac0 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-log.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-log.ll
+@@ -281,7 +281,7 @@ define nofpclass(ninf) float @ret_no_ninf__log(float %x) {
+ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log(float %x) {
+ ; CHECK-LABEL: define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log(
+ ; CHECK-SAME: float [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.log.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.log.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.log.f32(float %x)
+@@ -292,7 +292,7 @@ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log(float %x) {
+ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero(float nofpclass(zero) %x) {
+ ; CHECK-LABEL: define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero(
+ ; CHECK-SAME: float nofpclass(zero) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan ninf contract float @llvm.log.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.log.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.log.f32(float %x)
+@@ -303,7 +303,7 @@ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero(float nofpclas
+ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero__daz(float nofpclass(zero) %x) #0 {
+ ; CHECK-LABEL: define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero__daz(
+ ; CHECK-SAME: float nofpclass(zero) [[X:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.log.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.log.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.log.f32(float %x)
+@@ -314,7 +314,7 @@ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero__daz(float nof
+ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero_or_sub__daz(float nofpclass(zero sub) %x) #0 {
+ ; CHECK-LABEL: define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero_or_sub__daz(
+ ; CHECK-SAME: float nofpclass(zero sub) [[X:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan ninf contract float @llvm.log.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.log.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.log.f32(float %x)
+@@ -325,7 +325,7 @@ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__log_no_zero_or_sub__daz(fl
+ define nofpclass(nan) float @ret_no_nan__log__no_pinf_inputs(float nofpclass(pinf) %x) {
+ ; CHECK-LABEL: define nofpclass(nan) float @ret_no_nan__log__no_pinf_inputs(
+ ; CHECK-SAME: float nofpclass(pinf) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.log.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.log.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.log.f32(float %x)
+@@ -336,7 +336,7 @@ define nofpclass(nan) float @ret_no_nan__log__no_pinf_inputs(float nofpclass(pin
+ define nofpclass(nan) float @ret_no_nan__log__no_inf_inputs(float nofpclass(inf) %x) {
+ ; CHECK-LABEL: define nofpclass(nan) float @ret_no_nan__log__no_inf_inputs(
+ ; CHECK-SAME: float nofpclass(inf) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.log.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.log.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.log.f32(float %x)
+diff --git a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-sqrt.ll b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-sqrt.ll
+index 26b52eb25c169..621742d9d6434 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-sqrt.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-demanded-fpclass-sqrt.ll
+@@ -264,7 +264,7 @@ define nofpclass(nan inf zero nsub norm) float @psub_result_implies_not_pnorm_so
+ define nofpclass(nan) float @ret_no_nan__sqrt(float %x) {
+ ; CHECK-LABEL: define nofpclass(nan) float @ret_no_nan__sqrt(
+ ; CHECK-SAME: float [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.sqrt.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.sqrt.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.sqrt.f32(float %x)
+@@ -284,7 +284,7 @@ define nofpclass(snan) float @ret_no_snan__sqrt__no_neg_inputs(float nofpclass(n
+ define nofpclass(snan) float @ret_no_snan__sqrt__no_neg_or_nan_inputs(float nofpclass(nan ninf nnorm nsub) %x) {
+ ; CHECK-LABEL: define nofpclass(snan) float @ret_no_snan__sqrt__no_neg_or_nan_inputs(
+ ; CHECK-SAME: float nofpclass(nan ninf nsub nnorm) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.sqrt.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.sqrt.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.sqrt.f32(float %x)
+@@ -295,7 +295,7 @@ define nofpclass(snan) float @ret_no_snan__sqrt__no_neg_or_nan_inputs(float nofp
+ define nofpclass(snan) float @ret_no_snan__noundef_sqrt__no_neg_or_nan_inputs(float nofpclass(nan ninf nnorm nsub) %x) {
+ ; CHECK-LABEL: define nofpclass(snan) float @ret_no_snan__noundef_sqrt__no_neg_or_nan_inputs(
+ ; CHECK-SAME: float nofpclass(nan ninf nsub nnorm) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan contract float @llvm.sqrt.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract noundef float @llvm.sqrt.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract noundef float @llvm.sqrt.f32(float %x)
+@@ -328,7 +328,7 @@ define nofpclass(pinf) float @ret_no_pinf__sqrt(float %x) {
+ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__sqrt(float %x) {
+ ; CHECK-LABEL: define nofpclass(nan pinf) float @ret_no_pinf_no_nan__sqrt(
+ ; CHECK-SAME: float [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan ninf contract float @llvm.sqrt.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.sqrt.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.sqrt.f32(float %x)
+@@ -339,7 +339,7 @@ define nofpclass(nan pinf) float @ret_no_pinf_no_nan__sqrt(float %x) {
+ define nofpclass(nan) float @ret_no_nan__sqrt__no_pinf_inputs(float nofpclass(pinf) %x) {
+ ; CHECK-LABEL: define nofpclass(nan) float @ret_no_nan__sqrt__no_pinf_inputs(
+ ; CHECK-SAME: float nofpclass(pinf) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan ninf contract float @llvm.sqrt.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.sqrt.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.sqrt.f32(float %x)
+@@ -350,7 +350,7 @@ define nofpclass(nan) float @ret_no_nan__sqrt__no_pinf_inputs(float nofpclass(pi
+ define nofpclass(nan) float @ret_no_nan__sqrt__no_inf_inputs(float nofpclass(inf) %x) {
+ ; CHECK-LABEL: define nofpclass(nan) float @ret_no_nan__sqrt__no_inf_inputs(
+ ; CHECK-SAME: float nofpclass(inf) [[X:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = call nnan ninf contract float @llvm.sqrt.f32(float [[X]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call contract float @llvm.sqrt.f32(float [[X]])
+ ; CHECK-NEXT:    ret float [[RESULT]]
+ ;
+   %result = call contract float @llvm.sqrt.f32(float %x)
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/predicated-reduction.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/predicated-reduction.ll
+index cb50e859a60e5..5fb641187801d 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/predicated-reduction.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/predicated-reduction.ll
+@@ -31,8 +31,8 @@ define nofpclass(nan inf) double @monte_simple(i32 noundef %nblocks, i32 noundef
+ ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds nuw i8, ptr [[ARRAYIDX]], i64 16
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x float>, ptr [[ARRAYIDX]], align 4
+ ; CHECK-NEXT:    [[WIDE_LOAD19:%.*]] = load <4 x float>, ptr [[TMP1]], align 4
+-; CHECK-NEXT:    [[TMP2:%.*]] = fpext nnan ninf <4 x float> [[WIDE_LOAD]] to <4 x double>
+-; CHECK-NEXT:    [[TMP3:%.*]] = fpext nnan ninf <4 x float> [[WIDE_LOAD19]] to <4 x double>
++; CHECK-NEXT:    [[TMP2:%.*]] = fpext <4 x float> [[WIDE_LOAD]] to <4 x double>
++; CHECK-NEXT:    [[TMP3:%.*]] = fpext <4 x float> [[WIDE_LOAD19]] to <4 x double>
+ ; CHECK-NEXT:    [[TMP4:%.*]] = fmul fast <4 x double> [[BROADCAST_SPLAT]], [[TMP2]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = fmul fast <4 x double> [[BROADCAST_SPLAT]], [[TMP3]]
+ ; CHECK-NEXT:    [[TMP6:%.*]] = fsub fast <4 x double> [[TMP4]], [[BROADCAST_SPLAT15]]
+@@ -70,7 +70,7 @@ define nofpclass(nan inf) double @monte_simple(i32 noundef %nblocks, i32 noundef
+ ; CHECK-NEXT:    [[V0_011:%.*]] = phi double [ [[V0_2:%.*]], %[[FOR_BODY]] ], [ [[V0_010_PH]], %[[FOR_BODY_PREHEADER22]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX1:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[SAMPLES]], i64 [[INDVARS_IV1]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load float, ptr [[ARRAYIDX1]], align 4
+-; CHECK-NEXT:    [[CONV:%.*]] = fpext nnan ninf float [[TMP0]] to double
++; CHECK-NEXT:    [[CONV:%.*]] = fpext float [[TMP0]] to double
+ ; CHECK-NEXT:    [[MUL:%.*]] = fmul fast double [[Y]], [[CONV]]
+ ; CHECK-NEXT:    [[SUB:%.*]] = fsub fast double [[MUL]], [[Z]]
+ ; CHECK-NEXT:    [[CMP1:%.*]] = fcmp fast ogt double [[SUB]], 0.000000e+00
+@@ -217,8 +217,8 @@ define nofpclass(nan inf) double @monte_exp(i32 noundef %nblocks, i32 noundef %R
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds nuw i8, ptr [[ARRAYIDX_US]], i64 16
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x float>, ptr [[ARRAYIDX_US]], align 4
+ ; CHECK-NEXT:    [[WIDE_LOAD34:%.*]] = load <4 x float>, ptr [[TMP3]], align 4
+-; CHECK-NEXT:    [[TMP4:%.*]] = fpext nnan <4 x float> [[WIDE_LOAD]] to <4 x double>
+-; CHECK-NEXT:    [[TMP5:%.*]] = fpext nnan <4 x float> [[WIDE_LOAD34]] to <4 x double>
++; CHECK-NEXT:    [[TMP4:%.*]] = fpext <4 x float> [[WIDE_LOAD]] to <4 x double>
++; CHECK-NEXT:    [[TMP5:%.*]] = fpext <4 x float> [[WIDE_LOAD34]] to <4 x double>
+ ; CHECK-NEXT:    [[TMP6:%.*]] = tail call fast <4 x double> @llvm.exp2.v4f64(<4 x double> [[TMP4]])
+ ; CHECK-NEXT:    [[TMP7:%.*]] = tail call fast <4 x double> @llvm.exp2.v4f64(<4 x double> [[TMP5]])
+ ; CHECK-NEXT:    [[TMP8:%.*]] = fmul fast <4 x double> [[TMP6]], [[BROADCAST_SPLAT]]
+@@ -257,7 +257,7 @@ define nofpclass(nan inf) double @monte_exp(i32 noundef %nblocks, i32 noundef %R
+ ; CHECK-NEXT:    [[V0_115_US:%.*]] = phi double [ [[V0_2_US:%.*]], %[[FOR_BODY3_US]] ], [ [[V0_113_US_PH]], %[[FOR_BODY3_US_PREHEADER]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX_US1:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[SAMPLES]], i64 [[INDVARS_IV1]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load float, ptr [[ARRAYIDX_US1]], align 4
+-; CHECK-NEXT:    [[CONV_US:%.*]] = fpext nnan float [[TMP0]] to double
++; CHECK-NEXT:    [[CONV_US:%.*]] = fpext float [[TMP0]] to double
+ ; CHECK-NEXT:    [[TMP1:%.*]] = tail call fast double @llvm.exp2.f64(double [[CONV_US]])
+ ; CHECK-NEXT:    [[MUL_US:%.*]] = fmul fast double [[TMP1]], [[Y]]
+ ; CHECK-NEXT:    [[SUB_US:%.*]] = fsub fast double [[MUL_US]], [[Z]]

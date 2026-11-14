@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.k = sitofp reassoc nsz arcp contract afn i64 %i.j to double
-  %i.l = fmul reassoc nnan nsz arcp contract afn double %i.k, f0x3EB0C6F7A0B5ED8D
+  %i.l = fmul reassoc nsz arcp contract afn double %i.k, f0x3EB0C6F7A0B5ED8D
   %i.m = add nsw i64 %i.h, -1290608000
   %i.n = sitofp reassoc nsz arcp contract afn i64 %i.m to double
   %i.o = fadd reassoc nsz arcp contract afn double %i.l, %i.n
@@ -259,7 +259,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ai = sitofp reassoc nsz arcp contract afn i64 %i.ah to double
   %i.aj = load i64, ptr %i.r, align 8, !tbaa !101
   %i.ak = sitofp reassoc nsz arcp contract afn i64 %i.aj to double
-  %i.al = fmul reassoc nnan nsz arcp contract afn double %i.ak, f0x3EB0C6F7A0B5ED8D
+  %i.al = fmul reassoc nsz arcp contract afn double %i.ak, f0x3EB0C6F7A0B5ED8D
   %i.am = fadd reassoc nsz arcp contract afn double %i.al, %i.ai ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   %i.an = fsub reassoc nsz arcp contract afn double %i.am, %.03240
@@ -286,7 +286,7 @@ _collection_update.exit:                          ; preds = %bb.h, %bb.g, %bb.c
   %i.aw = sitofp reassoc nsz arcp contract afn i64 %i.av to double
   %i.ax = load i64, ptr %i.u, align 8, !tbaa !101
   %i.ay = sitofp reassoc nsz arcp contract afn i64 %i.ax to double
-  %i.az = fmul reassoc nnan nsz arcp contract afn double %i.ay, f0x3EB0C6F7A0B5ED8D
+  %i.az = fmul reassoc nsz arcp contract afn double %i.ay, f0x3EB0C6F7A0B5ED8D
   %i.ba = fadd reassoc nsz arcp contract afn double %i.az, %i.aw ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.bb = fadd reassoc nsz arcp contract afn double %.03539, 5.000000e-01
@@ -388,7 +388,7 @@ bb.c:                                             ; preds = %bb.b
   %i.u = sitofp reassoc nsz arcp contract afn i64 %i.t to double
   %i.v = load i64, ptr %i.k, align 8, !tbaa !101
   %i.w = sitofp reassoc nsz arcp contract afn i64 %i.v to double
-  %i.x = fmul reassoc nnan nsz arcp contract afn double %i.w, f0x3EB0C6F7A0B5ED8D
+  %i.x = fmul reassoc nsz arcp contract afn double %i.w, f0x3EB0C6F7A0B5ED8D
   %i.y = fadd reassoc nsz arcp contract afn double %i.x, %i.u ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.z = fadd reassoc nsz arcp contract afn double %.02124, 5.000000e-01
@@ -498,7 +498,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = sitofp reassoc nsz arcp contract afn i64 %i.y to double
   %i.aa = load i64, ptr %i.p, align 8, !tbaa !101
   %i.ab = sitofp reassoc nsz arcp contract afn i64 %i.aa to double
-  %i.ac = fmul reassoc nnan nsz arcp contract afn double %i.ab, f0x3EB0C6F7A0B5ED8D
+  %i.ac = fmul reassoc nsz arcp contract afn double %i.ab, f0x3EB0C6F7A0B5ED8D
   %i.ad = fadd reassoc nsz arcp contract afn double %i.ac, %i.z ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.ae = fadd reassoc nsz arcp contract afn double %.02528, 5.000000e-01
@@ -746,7 +746,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bo = sitofp reassoc nsz arcp contract afn i64 %i.bn to double
   %i.bp = load i64, ptr %i.as, align 8, !tbaa !101
   %i.bq = sitofp reassoc nsz arcp contract afn i64 %i.bp to double
-  %i.br = fmul reassoc nnan nsz arcp contract afn double %i.bq, f0x3EB0C6F7A0B5ED8D
+  %i.br = fmul reassoc nsz arcp contract afn double %i.bq, f0x3EB0C6F7A0B5ED8D
   %i.bs = fadd reassoc nsz arcp contract afn double %i.br, %i.bo ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.bt = fadd reassoc nsz arcp contract afn double %.061, 5.000000e-01
@@ -1113,7 +1113,7 @@ bb.v:                                             ; preds = %bb.p, %bb.q, %._cri
   %i.cd = sitofp reassoc nsz arcp contract afn i64 %i.cc to double
   %i.ce = load i64, ptr %i.ac, align 8, !tbaa !101
   %i.cf = sitofp reassoc nsz arcp contract afn i64 %i.ce to double
-  %i.cg = fmul reassoc nnan nsz arcp contract afn double %i.cf, f0x3EB0C6F7A0B5ED8D
+  %i.cg = fmul reassoc nsz arcp contract afn double %i.cf, f0x3EB0C6F7A0B5ED8D
   %i.ch = fadd reassoc nsz arcp contract afn double %i.cg, %i.cd ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.ci = fadd reassoc nsz arcp contract afn double %.080, 5.000000e-01
@@ -1510,7 +1510,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ac = sitofp reassoc nsz arcp contract afn i64 %i.ab to double
   %i.ad = load i64, ptr %i.p, align 8, !tbaa !101
   %i.ae = sitofp reassoc nsz arcp contract afn i64 %i.ad to double
-  %i.af = fmul reassoc nnan nsz arcp contract afn double %i.ae, f0x3EB0C6F7A0B5ED8D
+  %i.af = fmul reassoc nsz arcp contract afn double %i.ae, f0x3EB0C6F7A0B5ED8D
   %i.ag = fadd reassoc nsz arcp contract afn double %i.af, %i.ac ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.ah = fadd reassoc nsz arcp contract afn double %.03741.us, 5.000000e-01
@@ -1566,7 +1566,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bb = sitofp reassoc nsz arcp contract afn i64 %i.ba to double
   %i.bc = load i64, ptr %i.p, align 8, !tbaa !101
   %i.bd = sitofp reassoc nsz arcp contract afn i64 %i.bc to double
-  %i.be = fmul reassoc nnan nsz arcp contract afn double %i.bd, f0x3EB0C6F7A0B5ED8D
+  %i.be = fmul reassoc nsz arcp contract afn double %i.bd, f0x3EB0C6F7A0B5ED8D
   %i.bf = fadd reassoc nsz arcp contract afn double %i.be, %i.bb ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.bg = fadd reassoc nsz arcp contract afn double %.03741, 5.000000e-01
@@ -1763,7 +1763,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ai = sitofp reassoc nsz arcp contract afn i64 %i.ah to double
   %i.aj = load i64, ptr %i.k, align 8, !tbaa !101
   %i.ak = sitofp reassoc nsz arcp contract afn i64 %i.aj to double
-  %i.al = fmul reassoc nnan nsz arcp contract afn double %i.ak, f0x3EB0C6F7A0B5ED8D
+  %i.al = fmul reassoc nsz arcp contract afn double %i.ak, f0x3EB0C6F7A0B5ED8D
   %i.am = fadd reassoc nsz arcp contract afn double %i.al, %i.ai ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.an = fadd reassoc nsz arcp contract afn double %.03942, 5.000000e-01
@@ -2014,7 +2014,7 @@ bb.h:                                             ; preds = %_safe_history_job_o
   %i.aj = sitofp reassoc nsz arcp contract afn i64 %i.ai to double
   %i.ak = load i64, ptr %i.o, align 8, !tbaa !101
   %i.al = sitofp reassoc nsz arcp contract afn i64 %i.ak to double
-  %i.am = fmul reassoc nnan nsz arcp contract afn double %i.al, f0x3EB0C6F7A0B5ED8D
+  %i.am = fmul reassoc nsz arcp contract afn double %i.al, f0x3EB0C6F7A0B5ED8D
   %i.an = fadd reassoc nsz arcp contract afn double %i.am, %i.aj ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.ao = fadd reassoc nsz arcp contract afn double %.04350, 5.000000e-01
@@ -2268,7 +2268,7 @@ bb.f:                                             ; preds = %_safe_history_job_o
   %i.ab = sitofp reassoc nsz arcp contract afn i64 %i.aa to double
   %i.ac = load i64, ptr %i.i, align 8, !tbaa !101
   %i.ad = sitofp reassoc nsz arcp contract afn i64 %i.ac to double
-  %i.ae = fmul reassoc nnan nsz arcp contract afn double %i.ad, f0x3EB0C6F7A0B5ED8D
+  %i.ae = fmul reassoc nsz arcp contract afn double %i.ad, f0x3EB0C6F7A0B5ED8D
   %i.af = fadd reassoc nsz arcp contract afn double %i.ae, %i.ab ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.ag = fadd reassoc nsz arcp contract afn double %.03239, 5.000000e-01
@@ -2413,7 +2413,7 @@ bb.f:                                             ; preds = %bb.e, %_safe_histor
   %i.ab = sitofp reassoc nsz arcp contract afn i64 %i.aa to double
   %i.ac = load i64, ptr %i.j, align 8, !tbaa !101
   %i.ad = sitofp reassoc nsz arcp contract afn i64 %i.ac to double
-  %i.ae = fmul reassoc nnan nsz arcp contract afn double %i.ad, f0x3EB0C6F7A0B5ED8D
+  %i.ae = fmul reassoc nsz arcp contract afn double %i.ad, f0x3EB0C6F7A0B5ED8D
   %i.af = fadd reassoc nsz arcp contract afn double %i.ae, %i.ab ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.ag = fadd reassoc nsz arcp contract afn double %.02632, 5.000000e-01
@@ -2653,7 +2653,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %._cri
   %i.aw = sitofp reassoc nsz arcp contract afn i64 %i.av to double
   %i.ax = load i64, ptr %i.u, align 8, !tbaa !101
   %i.ay = sitofp reassoc nsz arcp contract afn i64 %i.ax to double
-  %i.az = fmul reassoc nnan nsz arcp contract afn double %i.ay, f0x3EB0C6F7A0B5ED8D
+  %i.az = fmul reassoc nsz arcp contract afn double %i.ay, f0x3EB0C6F7A0B5ED8D
   %i.ba = fadd reassoc nsz arcp contract afn double %i.az, %i.aw ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.bb = fadd reassoc nsz arcp contract afn double %.07379, 5.000000e-01
@@ -3056,7 +3056,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.w
   %i.ez = sitofp reassoc nsz arcp contract afn i64 %i.ey to double
   %i.fa = load i64, ptr %i.dm, align 8, !tbaa !101
   %i.fb = sitofp reassoc nsz arcp contract afn i64 %i.fa to double
-  %i.fc = fmul reassoc nnan nsz arcp contract afn double %i.fb, f0x3EB0C6F7A0B5ED8D
+  %i.fc = fmul reassoc nsz arcp contract afn double %i.fb, f0x3EB0C6F7A0B5ED8D
   %i.fd = fadd reassoc nsz arcp contract afn double %i.fc, %i.ez ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.fe = fadd reassoc nsz arcp contract afn double %.0148151, 5.000000e-01
@@ -3379,7 +3379,7 @@ bb.m:                                             ; preds = %bb.l, %bb.g
   %i.av = add nsw <2 x i64> %i.au, <i64 -1290608000, i64 0>
   %i.aw = sitofp reassoc nsz arcp contract afn <2 x i64> %i.av to <2 x double> ; 2 uses
   %i.ax = extractelement <2 x double> %i.aw, i64 1
-  %i.ay = fmul reassoc nnan nsz arcp contract afn double %i.ax, f0x3EB0C6F7A0B5ED8D
+  %i.ay = fmul reassoc nsz arcp contract afn double %i.ax, f0x3EB0C6F7A0B5ED8D
   %i.az = extractelement <2 x double> %i.aw, i64 0
   %i.ba = fadd reassoc nsz arcp contract afn double %i.ay, %i.az ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
@@ -3389,9 +3389,11 @@ bb.m:                                             ; preds = %bb.l, %bb.g
 
 bb.n:                                             ; preds = %bb.m
   %i.bd = uitofp reassoc nsz arcp contract afn i64 %i.as to double
-  %i.be = fmul reassoc nsz arcp contract afn double %i.bd, %i.s ; 2 uses
+  %i.be = fmul reassoc nsz arcp contract afn double %i.bd, %i.s ; 3 uses
   %i.bf = fcmp reassoc nsz arcp contract afn ogt double %i.be, 1.000000e+00
-  %i.bg = select reassoc nsz arcp contract afn i1 %i.bf, double 1.000000e+00, double %i.be
+  %2 = fcmp reassoc nsz arcp contract afn olt double %i.be, 0.000000e+00
+  %3 = select reassoc nsz arcp contract afn i1 %2, double 0.000000e+00, double %i.be
+  %i.bg = select reassoc nsz arcp contract afn i1 %i.bf, double 1.000000e+00, double %3
   call void @dt_control_job_set_progress(ptr noundef %0, double noundef %i.bg) #17
   br label %_update_progress.exit
 
@@ -3794,7 +3796,7 @@ bb.j:                                             ; preds = %bb.i, %.thread229.u
   %i.nk = select reassoc nsz arcp contract afn i1 %i.nj, float %i.nh, float 1.000000e+00
   %i.nl = select reassoc nsz arcp contract afn i1 %i.ni, float %i.nk, float 0.000000e+00 ; 2 uses
   %i.nm = fcmp reassoc nsz arcp contract afn olt float %i.nl, 5.000000e-01
-  %i.nn = fmul reassoc nnan nsz arcp contract afn float %i.nl, 2.000000e+00 ; 2 uses
+  %i.nn = fmul reassoc nsz arcp contract afn float %i.nl, 2.000000e+00 ; 2 uses
   br i1 %i.nm, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.preheader.preheader
@@ -3806,8 +3808,8 @@ bb.k:                                             ; preds = %.preheader.preheade
 bb.l:                                             ; preds = %.preheader.preheader
   %i.nr = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.nn ; 3 uses
   %i.ns = fmul reassoc nsz arcp contract afn float %i.nr, %i.nr
-  %i.nt = fmul reassoc nnan nsz arcp contract afn float %i.nr, 2.000000e+00
-  %i.nu = fsub reassoc nnan nsz arcp contract afn float 3.000000e+00, %i.nt
+  %i.nt = fmul reassoc nsz arcp contract afn float %i.nr, 2.000000e+00
+  %i.nu = fsub reassoc nsz arcp contract afn float 3.000000e+00, %i.nt
   %i.nv = fmul reassoc nsz arcp contract afn float %i.ns, %i.nu
   br label %bb.m
 
@@ -4063,7 +4065,7 @@ bb.n:                                             ; preds = %._crit_edge, %bb.l
   %i.ak = add nsw <2 x i64> %i.aj, <i64 -1290608000, i64 0>
   %i.al = sitofp reassoc nsz arcp contract afn <2 x i64> %i.ak to <2 x double> ; 2 uses
   %i.am = extractelement <2 x double> %i.al, i64 1
-  %i.an = fmul reassoc nnan nsz arcp contract afn double %i.am, f0x3EB0C6F7A0B5ED8D
+  %i.an = fmul reassoc nsz arcp contract afn double %i.am, f0x3EB0C6F7A0B5ED8D
   %i.ao = extractelement <2 x double> %i.al, i64 0
   %i.ap = fadd reassoc nsz arcp contract afn double %i.an, %i.ao ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
@@ -4466,7 +4468,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = sitofp reassoc nsz arcp contract afn i64 %i.ab to double
   %i.ad = load i64, ptr %i.p, align 8, !tbaa !101
   %i.ae = sitofp reassoc nsz arcp contract afn i64 %i.ad to double
-  %i.af = fmul reassoc nnan nsz arcp contract afn double %i.ae, f0x3EB0C6F7A0B5ED8D
+  %i.af = fmul reassoc nsz arcp contract afn double %i.ae, f0x3EB0C6F7A0B5ED8D
   %i.ag = fadd reassoc nsz arcp contract afn double %i.af, %i.ac ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   %i.ah = fadd reassoc nsz arcp contract afn double %.04953, 5.000000e-01
@@ -4869,7 +4871,7 @@ bb.e:                                             ; preds = %_apply_lua_filter.e
 
 .lr.ph188:                                        ; preds = %.lr.ph
   %i.ar = sitofp reassoc nsz arcp contract afn i64 %i.ad to double
-  %i.as = fmul reassoc nnan nsz arcp contract afn double %i.ar, f0x3EB0C6F7A0B5ED8D
+  %i.as = fmul reassoc nsz arcp contract afn double %i.ar, f0x3EB0C6F7A0B5ED8D
   %i.at = add nsw i64 %i.ab, -1290608000
   %i.au = sitofp reassoc nsz arcp contract afn i64 %i.at to double
   %i.av = fadd reassoc nsz arcp contract afn double %i.as, %i.au
@@ -4997,12 +4999,12 @@ bb.s:                                             ; preds = %bb.p
   store i64 %i.cd, ptr %i.ag, align 16, !tbaa !100
   %i.ce = load i64, ptr %i.ah, align 8, !tbaa !277
   %i.cf = sitofp reassoc nsz arcp contract afn i64 %i.ce to double
-  %i.cg = fmul reassoc nnan nsz arcp contract afn double %i.cf, 1.000000e-03
+  %i.cg = fmul reassoc nsz arcp contract afn double %i.cf, 1.000000e-03
   %i.ch = fptosi double %i.cg to i64
   store i64 %i.ch, ptr %i.ai, align 8, !tbaa !101
   %i.ci = load i64, ptr %i.aj, align 8, !tbaa !278
   %i.cj = sitofp reassoc nsz arcp contract afn i64 %i.ci to double
-  %i.ck = fmul reassoc nnan nsz arcp contract afn double %i.cj, 1.000000e-03
+  %i.ck = fmul reassoc nsz arcp contract afn double %i.cj, 1.000000e-03
   %i.cl = fptosi double %i.ck to i64
   store i64 %i.cl, ptr %i.ak, align 8, !tbaa !101
   %i.cm = call i32 @utimes(ptr noundef %.054.i, ptr noundef nonnull %7) #17 ; 0 uses
@@ -5114,7 +5116,7 @@ bb.ab:                                            ; preds = %_control_import_ima
   %i.dp = sitofp reassoc nsz arcp contract afn i64 %i.do to double
   %i.dq = load i64, ptr %i.al, align 8, !tbaa !101
   %i.dr = sitofp reassoc nsz arcp contract afn i64 %i.dq to double
-  %i.ds = fmul reassoc nnan nsz arcp contract afn double %i.dr, f0x3EB0C6F7A0B5ED8D
+  %i.ds = fmul reassoc nsz arcp contract afn double %i.dr, f0x3EB0C6F7A0B5ED8D
   %i.dt = fadd reassoc nsz arcp contract afn double %i.ds, %i.dp ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   %i.du = fsub reassoc nsz arcp contract afn double %i.dt, %.095152186
@@ -5155,7 +5157,7 @@ bb.af:                                            ; preds = %bb.ad
   %i.ek = sitofp reassoc nsz arcp contract afn i64 %i.ej to double
   %i.el = load i64, ptr %i.am, align 8, !tbaa !101
   %i.em = sitofp reassoc nsz arcp contract afn i64 %i.el to double
-  %i.en = fmul reassoc nnan nsz arcp contract afn double %i.em, f0x3EB0C6F7A0B5ED8D
+  %i.en = fmul reassoc nsz arcp contract afn double %i.em, f0x3EB0C6F7A0B5ED8D
   %i.eo = fadd reassoc nsz arcp contract afn double %i.en, %i.ek ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   %i.ep = fsub reassoc nsz arcp contract afn double %i.eo, %.095152186
@@ -5221,7 +5223,7 @@ _collection_update.exit.thread:                   ; preds = %_collection_update.
   %i.fb = sitofp reassoc nsz arcp contract afn i64 %i.fa to double
   %i.fc = load i64, ptr %i.ap, align 8, !tbaa !101
   %i.fd = sitofp reassoc nsz arcp contract afn i64 %i.fc to double
-  %i.fe = fmul reassoc nnan nsz arcp contract afn double %i.fd, f0x3EB0C6F7A0B5ED8D
+  %i.fe = fmul reassoc nsz arcp contract afn double %i.fd, f0x3EB0C6F7A0B5ED8D
   %i.ff = fadd reassoc nsz arcp contract afn double %i.fe, %i.fb ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.fg = fsub reassoc nsz arcp contract afn double %i.ff, %.056160179

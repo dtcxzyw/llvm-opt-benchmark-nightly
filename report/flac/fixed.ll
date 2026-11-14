@@ -163,7 +163,7 @@ bb.e:                                             ; preds = %._crit_edge
 .thread:                                          ; preds = %bb.b, %bb.c, %bb.d, %bb.e
   %.0159189 = phi i32 [ 0, %bb.e ], [ %., %bb.d ], [ 1, %bb.b ], [ 2, %bb.c ]
   %i.bu = uitofp reassoc nsz arcp i32 %.0164.lcssa to double
-  %i.bv = fmul reassoc nnan nsz arcp double %i.bu, f0x3FE62E42FEFA39EF
+  %i.bv = fmul reassoc nsz arcp double %i.bu, f0x3FE62E42FEFA39EF
   %i.bw = uitofp reassoc nsz arcp i32 %1 to double
   %i.bx = fdiv reassoc nsz arcp double %i.bv, %i.bw
   %i.by = tail call reassoc nsz arcp double @log(double noundef %i.bx) #8
@@ -180,7 +180,7 @@ bb.f:                                             ; preds = %bb.e, %.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.cc = uitofp reassoc nsz arcp i32 %.0163.lcssa to double
-  %i.cd = fmul reassoc nnan nsz arcp double %i.cc, f0x3FE62E42FEFA39EF
+  %i.cd = fmul reassoc nsz arcp double %i.cc, f0x3FE62E42FEFA39EF
   %i.ce = uitofp reassoc nsz arcp i32 %1 to double
   %i.cf = fdiv reassoc nsz arcp double %i.cd, %i.ce
   %i.cg = tail call reassoc nsz arcp double @log(double noundef %i.cf) #8
@@ -197,7 +197,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cl = uitofp reassoc nsz arcp i32 %.0162.lcssa to double
-  %i.cm = fmul reassoc nnan nsz arcp double %i.cl, f0x3FE62E42FEFA39EF
+  %i.cm = fmul reassoc nsz arcp double %i.cl, f0x3FE62E42FEFA39EF
   %i.cn = uitofp reassoc nsz arcp i32 %1 to double
   %i.co = fdiv reassoc nsz arcp double %i.cm, %i.cn
   %i.cp = tail call reassoc nsz arcp double @log(double noundef %i.co) #8
@@ -214,7 +214,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.cu = uitofp reassoc nsz arcp i32 %.0161.lcssa to double
-  %i.cv = fmul reassoc nnan nsz arcp double %i.cu, f0x3FE62E42FEFA39EF
+  %i.cv = fmul reassoc nsz arcp double %i.cu, f0x3FE62E42FEFA39EF
   %i.cw = uitofp reassoc nsz arcp i32 %1 to double
   %i.cx = fdiv reassoc nsz arcp double %i.cv, %i.cw
   %i.cy = tail call reassoc nsz arcp double @log(double noundef %i.cx) #8
@@ -231,7 +231,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.dd = uitofp reassoc nsz arcp i32 %.0160.lcssa to double
-  %i.de = fmul reassoc nnan nsz arcp double %i.dd, f0x3FE62E42FEFA39EF
+  %i.de = fmul reassoc nsz arcp double %i.dd, f0x3FE62E42FEFA39EF
   %i.df = uitofp reassoc nsz arcp i32 %1 to double
   %i.dg = fdiv reassoc nsz arcp double %i.de, %i.df
   %i.dh = tail call reassoc nsz arcp double @log(double noundef %i.dg) #8
@@ -417,7 +417,7 @@ bb.e:                                             ; preds = %._crit_edge
 .thread:                                          ; preds = %bb.b, %bb.c, %bb.d, %bb.e
   %.0159189 = phi i32 [ 0, %bb.e ], [ %., %bb.d ], [ 1, %bb.b ], [ 2, %bb.c ]
   %i.ce = uitofp reassoc nsz arcp i64 %.0164.lcssa to double
-  %i.cf = fmul reassoc nnan nsz arcp double %i.ce, f0x3FE62E42FEFA39EF
+  %i.cf = fmul reassoc nsz arcp double %i.ce, f0x3FE62E42FEFA39EF
   %i.cg = uitofp reassoc nsz arcp i32 %1 to double
   %i.ch = fdiv reassoc nsz arcp double %i.cf, %i.cg
   %i.ci = tail call reassoc nsz arcp double @log(double noundef %i.ch) #8
@@ -434,7 +434,7 @@ bb.f:                                             ; preds = %bb.e, %.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.cm = uitofp reassoc nsz arcp i64 %.0163.lcssa to double
-  %i.cn = fmul reassoc nnan nsz arcp double %i.cm, f0x3FE62E42FEFA39EF
+  %i.cn = fmul reassoc nsz arcp double %i.cm, f0x3FE62E42FEFA39EF
   %i.co = uitofp reassoc nsz arcp i32 %1 to double
   %i.cp = fdiv reassoc nsz arcp double %i.cn, %i.co
   %i.cq = tail call reassoc nsz arcp double @log(double noundef %i.cp) #8
@@ -451,7 +451,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cv = uitofp reassoc nsz arcp i64 %.0162.lcssa to double
-  %i.cw = fmul reassoc nnan nsz arcp double %i.cv, f0x3FE62E42FEFA39EF
+  %i.cw = fmul reassoc nsz arcp double %i.cv, f0x3FE62E42FEFA39EF
   %i.cx = uitofp reassoc nsz arcp i32 %1 to double
   %i.cy = fdiv reassoc nsz arcp double %i.cw, %i.cx
   %i.cz = tail call reassoc nsz arcp double @log(double noundef %i.cy) #8
@@ -468,7 +468,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.de = uitofp reassoc nsz arcp i64 %.0161.lcssa to double
-  %i.df = fmul reassoc nnan nsz arcp double %i.de, f0x3FE62E42FEFA39EF
+  %i.df = fmul reassoc nsz arcp double %i.de, f0x3FE62E42FEFA39EF
   %i.dg = uitofp reassoc nsz arcp i32 %1 to double
   %i.dh = fdiv reassoc nsz arcp double %i.df, %i.dg
   %i.di = tail call reassoc nsz arcp double @log(double noundef %i.dh) #8
@@ -485,7 +485,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.dn = uitofp reassoc nsz arcp i64 %.0160.lcssa to double
-  %i.do = fmul reassoc nnan nsz arcp double %i.dn, f0x3FE62E42FEFA39EF
+  %i.do = fmul reassoc nsz arcp double %i.dn, f0x3FE62E42FEFA39EF
   %i.dp = uitofp reassoc nsz arcp i32 %1 to double
   %i.dq = fdiv reassoc nsz arcp double %i.do, %i.dp
   %i.dr = tail call reassoc nsz arcp double @log(double noundef %i.dq) #8
@@ -694,7 +694,7 @@ bb.b:                                             ; preds = %._crit_edge
 
 bb.c:                                             ; preds = %bb.b
   %i.cu = uitofp reassoc nsz arcp i64 %.lcssa243 to double
-  %i.cv = fmul reassoc nnan nsz arcp double %i.cu, f0x3FE62E42FEFA39EF
+  %i.cv = fmul reassoc nsz arcp double %i.cu, f0x3FE62E42FEFA39EF
   %i.cw = uitofp reassoc nsz arcp i32 %1 to double
   %i.cx = fdiv reassoc nsz arcp double %i.cv, %i.cw
   %i.cy = tail call reassoc nsz arcp double @log(double noundef %i.cx) #8
@@ -726,7 +726,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.dc = uitofp reassoc nsz arcp i64 %.lcssa242 to double
-  %i.dd = fmul reassoc nnan nsz arcp double %i.dc, f0x3FE62E42FEFA39EF
+  %i.dd = fmul reassoc nsz arcp double %i.dc, f0x3FE62E42FEFA39EF
   %i.de = uitofp reassoc nsz arcp i32 %1 to double
   %i.df = fdiv reassoc nsz arcp double %i.dd, %i.de
   %i.dg = tail call reassoc nsz arcp double @log(double noundef %i.df) #8
@@ -756,7 +756,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.dl = uitofp reassoc nsz arcp i64 %.0174.lcssa305350 to double
-  %i.dm = fmul reassoc nnan nsz arcp double %i.dl, f0x3FE62E42FEFA39EF
+  %i.dm = fmul reassoc nsz arcp double %i.dl, f0x3FE62E42FEFA39EF
   %i.dn = uitofp reassoc nsz arcp i32 %1 to double
   %i.do = fdiv reassoc nsz arcp double %i.dm, %i.dn
   %i.dp = tail call reassoc nsz arcp double @log(double noundef %i.do) #8
@@ -780,7 +780,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.du = uitofp reassoc nsz arcp i64 %.0173.lcssa307348 to double
-  %i.dv = fmul reassoc nnan nsz arcp double %i.du, f0x3FE62E42FEFA39EF
+  %i.dv = fmul reassoc nsz arcp double %i.du, f0x3FE62E42FEFA39EF
   %i.dw = uitofp reassoc nsz arcp i32 %1 to double
   %i.dx = fdiv reassoc nsz arcp double %i.dv, %i.dw
   %i.dy = tail call reassoc nsz arcp double @log(double noundef %i.dx) #8
@@ -804,7 +804,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ed = uitofp reassoc nsz arcp i64 %.0172.lcssa309346 to double
-  %i.ee = fmul reassoc nnan nsz arcp double %i.ed, f0x3FE62E42FEFA39EF
+  %i.ee = fmul reassoc nsz arcp double %i.ed, f0x3FE62E42FEFA39EF
   %i.ef = uitofp reassoc nsz arcp i32 %1 to double
   %i.eg = fdiv reassoc nsz arcp double %i.ee, %i.ef
   %i.eh = tail call reassoc nsz arcp double @log(double noundef %i.eg) #8
@@ -1002,7 +1002,7 @@ bb.b:                                             ; preds = %._crit_edge
 
 bb.c:                                             ; preds = %bb.b
   %i.ci = uitofp reassoc nsz arcp i64 %.lcssa243 to double
-  %i.cj = fmul reassoc nnan nsz arcp double %i.ci, f0x3FE62E42FEFA39EF
+  %i.cj = fmul reassoc nsz arcp double %i.ci, f0x3FE62E42FEFA39EF
   %i.ck = uitofp reassoc nsz arcp i32 %1 to double
   %i.cl = fdiv reassoc nsz arcp double %i.cj, %i.ck
   %i.cm = tail call reassoc nsz arcp double @log(double noundef %i.cl) #8
@@ -1034,7 +1034,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.cq = uitofp reassoc nsz arcp i64 %.lcssa242 to double
-  %i.cr = fmul reassoc nnan nsz arcp double %i.cq, f0x3FE62E42FEFA39EF
+  %i.cr = fmul reassoc nsz arcp double %i.cq, f0x3FE62E42FEFA39EF
   %i.cs = uitofp reassoc nsz arcp i32 %1 to double
   %i.ct = fdiv reassoc nsz arcp double %i.cr, %i.cs
   %i.cu = tail call reassoc nsz arcp double @log(double noundef %i.ct) #8
@@ -1064,7 +1064,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.cz = uitofp reassoc nsz arcp i64 %.0174.lcssa305350 to double
-  %i.da = fmul reassoc nnan nsz arcp double %i.cz, f0x3FE62E42FEFA39EF
+  %i.da = fmul reassoc nsz arcp double %i.cz, f0x3FE62E42FEFA39EF
   %i.db = uitofp reassoc nsz arcp i32 %1 to double
   %i.dc = fdiv reassoc nsz arcp double %i.da, %i.db
   %i.dd = tail call reassoc nsz arcp double @log(double noundef %i.dc) #8
@@ -1088,7 +1088,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.di = uitofp reassoc nsz arcp i64 %.0173.lcssa307348 to double
-  %i.dj = fmul reassoc nnan nsz arcp double %i.di, f0x3FE62E42FEFA39EF
+  %i.dj = fmul reassoc nsz arcp double %i.di, f0x3FE62E42FEFA39EF
   %i.dk = uitofp reassoc nsz arcp i32 %1 to double
   %i.dl = fdiv reassoc nsz arcp double %i.dj, %i.dk
   %i.dm = tail call reassoc nsz arcp double @log(double noundef %i.dl) #8
@@ -1112,7 +1112,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.dr = uitofp reassoc nsz arcp i64 %.0172.lcssa309346 to double
-  %i.ds = fmul reassoc nnan nsz arcp double %i.dr, f0x3FE62E42FEFA39EF
+  %i.ds = fmul reassoc nsz arcp double %i.dr, f0x3FE62E42FEFA39EF
   %i.dt = uitofp reassoc nsz arcp i32 %1 to double
   %i.du = fdiv reassoc nsz arcp double %i.ds, %i.dt
   %i.dv = tail call reassoc nsz arcp double @log(double noundef %i.du) #8

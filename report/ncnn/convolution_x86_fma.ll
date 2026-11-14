@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution_x86_fma?download=true
-inline.NumInlined: 397
+inline.NumInlined: 392
 inline.NumDeleted: 91
 loop-unroll.NumCompletelyUnrolled: 125
 loop-unroll.NumRuntimeUnrolled: 143
@@ -205,92 +205,37 @@ declare void @_ZN4ncnn9ParamDictD1Ev(ptr noundef nonnull align 8 dead_on_return(
 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4ncnnL37conv3x3s1_winograd63_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %4) unnamed_addr #2 personality ptr @__gxx_personality_v0 {
-  %6 = alloca i32, align 4                        ; 2 uses
+_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit:
+  %5 = alloca i32, align 4                        ; 2 uses
+  %6 = alloca i32, align 4                        ; 5 uses
   %7 = alloca i32, align 4                        ; 5 uses
-  %8 = alloca i32, align 4                        ; 5 uses
-  %9 = alloca i32, align 4                        ; 5 uses
-  %10 = alloca i32, align 4                       ; 5 uses
+  %8 = alloca i32, align 4                        ; 6 uses
+  %9 = alloca i32, align 4                        ; 4 uses
+  %10 = alloca i32, align 4                       ; 6 uses
   %11 = alloca i32, align 4                       ; 5 uses
   %12 = alloca %"class.ncnn::Mat", align 8        ; 11 uses
   %13 = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2)
-  store i32 %2, ptr %6, align 4, !tbaa !81
+  store i32 %2, ptr %5, align 4, !tbaa !81
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  store i32 %3, ptr %6, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
-  store i32 %3, ptr %7, align 4, !tbaa !81
+  store i32 %2, ptr %7, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
-  store i32 %2, ptr %8, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #12
   %14 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %15 = load i32, ptr %14, align 4, !tbaa !61     ; 2 uses
-  %16 = tail call noundef i32 @_ZN4ncnn25get_cpu_level2_cache_sizeEv()
-  %17 = sext i32 %16 to i64
-  %18 = icmp eq i32 %15, 0
-  br i1 %18, label %19, label %21
-
-19:                                               ; preds = %5
-  %20 = tail call noundef i32 @_ZN4ncnn26get_physical_big_cpu_countEv()
-  br label %21
-
-21:                                               ; preds = %19, %5
-  %.0.i = phi i32 [ %20, %19 ], [ %15, %5 ]       ; 3 uses
-  %22 = uitofp fast i64 %17 to float              ; 2 uses
-  %23 = fmul fast float %22, 2.500000e-01
-  %24 = fmul fast float %22, f0x3DAAAAAB
-  %25 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %24)
-  %26 = fptosi float %25 to i32
-  %27 = and i32 %26, 2147483640
-  %.sroa.speculated88.i = tail call i32 @llvm.umax.i32(i32 %27, i32 8)
-  %28 = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
-  %.sroa.speculated84.i = tail call i32 @llvm.smin.i32(i32 %28, i32 %.0.i)
-  %29 = mul nsw i32 %.sroa.speculated88.i, %.sroa.speculated84.i ; 3 uses
-  %30 = add i32 %3, -1                            ; 2 uses
-  %31 = add i32 %29, %30
-  %32 = sdiv i32 %31, %29                         ; 2 uses
-  %33 = add i32 %32, %30
-  %34 = sdiv i32 %33, %32
-  %35 = add nsw i32 %34, 7
-  %36 = sdiv i32 %35, 8
-  %37 = shl nsw i32 %36, 3
-  %.sroa.speculated80.i = tail call i32 @llvm.smin.i32(i32 %37, i32 %29) ; 3 uses
-  %38 = icmp sgt i32 %.0.i, 1
-  br i1 %38, label %39, label %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
-
-39:                                               ; preds = %21
-  %40 = sdiv i32 %.sroa.speculated80.i, %.0.i
-  %.sroa.speculated70.i = tail call i32 @llvm.smax.i32(i32 %40, i32 1)
-  %41 = add nuw nsw i32 %.sroa.speculated70.i, 7
-  %42 = and i32 %41, 2147483640
-  %.sroa.speculated76.i = tail call i32 @llvm.smin.i32(i32 %42, i32 %.sroa.speculated80.i)
-  br label %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
-
-_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit: ; preds = %21, %39
-  %storemerge.i = phi i32 [ %.sroa.speculated76.i, %39 ], [ %.sroa.speculated80.i, %21 ] ; 6 uses
-  store i32 %storemerge.i, ptr %9, align 4, !tbaa !81
-  %43 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %23)
-  %44 = sitofp fast i32 %storemerge.i to float
-  %45 = fsub fast float %43, %44
-  %46 = fptosi float %45 to i32
-  %47 = sdiv i32 %46, 8
-  %48 = shl nsw i32 %47, 3
-  %.sroa.speculated64.i = tail call i32 @llvm.smax.i32(i32 %48, i32 8) ; 3 uses
-  %49 = add i32 %2, -1                            ; 2 uses
-  %50 = add i32 %.sroa.speculated64.i, %49
-  %51 = sdiv i32 %50, %.sroa.speculated64.i       ; 2 uses
-  %52 = add i32 %51, %49
-  %53 = sdiv i32 %52, %51
-  %54 = add nsw i32 %53, 7
-  %55 = sdiv i32 %54, 8
-  %56 = shl nsw i32 %55, 3
-  %.sroa.speculated60.i = tail call i32 @llvm.smin.i32(i32 %56, i32 %.sroa.speculated64.i) ; 5 uses
-  store i32 %.sroa.speculated60.i, ptr %10, align 4, !tbaa !81
+  %15 = load i32, ptr %14, align 4, !tbaa !61
+  call fastcc void @_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i(i32 noundef %3, i32 noundef 0, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %8, ptr noundef nonnull align 4 dereferenceable(4) %9, ptr noundef nonnull align 4 dereferenceable(4) %10, i32 noundef %15)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #12
-  %i.a = add i32 %storemerge.i, -1
-  %i.b = add i32 %i.a, %3
-  %i.c = sdiv i32 %i.b, %storemerge.i             ; 2 uses
+  %16 = load i32, ptr %8, align 4, !tbaa !81      ; 6 uses
+  %i.a = add i32 %3, -1
+  %i.b = add i32 %i.a, %16
+  %i.c = sdiv i32 %i.b, %16
   store i32 %i.c, ptr %11, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #12
-  %i.d = shl nsw i32 %storemerge.i, 6
-  %i.e = mul nsw i32 %i.d, %.sroa.speculated60.i
+  %i.d = shl nsw i32 %16, 6
+  %17 = load i32, ptr %10, align 4, !tbaa !81     ; 4 uses
+  %i.e = mul nsw i32 %i.d, %17
   %i.f = load i32, ptr %14, align 4, !tbaa !61
   %i.g = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 3 uses
@@ -299,17 +244,20 @@ _ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit: ; preds = %21, %39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %12, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.h, i8 0, i64 28, i1 false)
   call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %12, i32 noundef %i.e, i32 noundef 1, i32 noundef %i.f, i64 noundef 4, ptr noundef null)
-  %i.j = mul nsw i32 %storemerge.i, %.sroa.speculated60.i
-  %i.k = add nsw i32 %.sroa.speculated60.i, -1
-  %i.l = add i32 %i.k, %2
-  %i.m = sdiv i32 %i.l, %.sroa.speculated60.i
-  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.j, i32 noundef 64, i32 noundef %i.m, i32 noundef %i.c, i64 noundef 4, ptr noundef null)
+  %i.j = mul nsw i32 %16, %17
+  %18 = add i32 %17, -1
+  %19 = add i32 %18, %2
+  %20 = sdiv i32 %19, %17
+  %i.k = add i32 %16, -1
+  %i.l = add i32 %i.k, %3
+  %i.m = sdiv i32 %i.l, %16
+  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.j, i32 noundef 64, i32 noundef %20, i32 noundef %i.m, i64 noundef 4, ptr noundef null)
           to label %bb.a unwind label %bb.h
 
 bb.a:                                             ; preds = %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
   %i.n = load i32, ptr %14, align 4, !tbaa !61
   call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %13, i32 %i.n)
-  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL37conv3x3s1_winograd63_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %11, ptr nonnull %9, ptr nonnull %12, ptr nonnull %8, ptr nonnull %10, ptr nonnull %7, ptr nonnull %0, ptr nonnull %6, ptr nonnull %1)
+  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL37conv3x3s1_winograd63_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %11, ptr nonnull %8, ptr nonnull %12, ptr nonnull %7, ptr nonnull %10, ptr nonnull %6, ptr nonnull %0, ptr nonnull %5, ptr nonnull %1)
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq ptr %i.o, null
   br i1 %.not.i, label %_ZN4ncnn3MatD2Ev.exit8, label %bb.b
@@ -354,6 +302,7 @@ _ZN4ncnn3MatD2Ev.exit8:                           ; preds = %bb.b, %bb.a, %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret void
 
 bb.h:                                             ; preds = %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
@@ -403,97 +352,43 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %bb.i, %bb.h, %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   resume { ptr, i32 } %i.y
 }
 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4ncnnL37conv3x3s1_winograd43_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %4) unnamed_addr #2 personality ptr @__gxx_personality_v0 {
-  %6 = alloca i32, align 4                        ; 2 uses
+_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit:
+  %5 = alloca i32, align 4                        ; 2 uses
+  %6 = alloca i32, align 4                        ; 5 uses
   %7 = alloca i32, align 4                        ; 5 uses
-  %8 = alloca i32, align 4                        ; 5 uses
-  %9 = alloca i32, align 4                        ; 5 uses
-  %10 = alloca i32, align 4                       ; 5 uses
+  %8 = alloca i32, align 4                        ; 6 uses
+  %9 = alloca i32, align 4                        ; 4 uses
+  %10 = alloca i32, align 4                       ; 6 uses
   %11 = alloca i32, align 4                       ; 5 uses
   %12 = alloca %"class.ncnn::Mat", align 8        ; 11 uses
   %13 = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2)
-  store i32 %2, ptr %6, align 4, !tbaa !81
+  store i32 %2, ptr %5, align 4, !tbaa !81
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  store i32 %3, ptr %6, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
-  store i32 %3, ptr %7, align 4, !tbaa !81
+  store i32 %2, ptr %7, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
-  store i32 %2, ptr %8, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #12
   %14 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %15 = load i32, ptr %14, align 4, !tbaa !61     ; 2 uses
-  %16 = tail call noundef i32 @_ZN4ncnn25get_cpu_level2_cache_sizeEv()
-  %17 = sext i32 %16 to i64
-  %18 = icmp eq i32 %15, 0
-  br i1 %18, label %19, label %21
-
-19:                                               ; preds = %5
-  %20 = tail call noundef i32 @_ZN4ncnn26get_physical_big_cpu_countEv()
-  br label %21
-
-21:                                               ; preds = %19, %5
-  %.0.i = phi i32 [ %20, %19 ], [ %15, %5 ]       ; 3 uses
-  %22 = uitofp fast i64 %17 to float              ; 2 uses
-  %23 = fmul fast float %22, 2.500000e-01
-  %24 = fmul fast float %22, f0x3DAAAAAB
-  %25 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %24)
-  %26 = fptosi float %25 to i32
-  %27 = and i32 %26, 2147483640
-  %.sroa.speculated88.i = tail call i32 @llvm.umax.i32(i32 %27, i32 8)
-  %28 = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
-  %.sroa.speculated84.i = tail call i32 @llvm.smin.i32(i32 %28, i32 %.0.i)
-  %29 = mul nsw i32 %.sroa.speculated88.i, %.sroa.speculated84.i ; 3 uses
-  %30 = add i32 %3, -1                            ; 2 uses
-  %31 = add i32 %29, %30
-  %32 = sdiv i32 %31, %29                         ; 2 uses
-  %33 = add i32 %32, %30
-  %34 = sdiv i32 %33, %32
-  %35 = add nsw i32 %34, 7
-  %36 = sdiv i32 %35, 8
-  %37 = shl nsw i32 %36, 3
-  %.sroa.speculated80.i = tail call i32 @llvm.smin.i32(i32 %37, i32 %29) ; 3 uses
-  %38 = icmp sgt i32 %.0.i, 1
-  br i1 %38, label %39, label %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
-
-39:                                               ; preds = %21
-  %40 = sdiv i32 %.sroa.speculated80.i, %.0.i
-  %.sroa.speculated70.i = tail call i32 @llvm.smax.i32(i32 %40, i32 1)
-  %41 = add nuw nsw i32 %.sroa.speculated70.i, 7
-  %42 = and i32 %41, 2147483640
-  %.sroa.speculated76.i = tail call i32 @llvm.smin.i32(i32 %42, i32 %.sroa.speculated80.i)
-  br label %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
-
-_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit: ; preds = %21, %39
-  %storemerge.i = phi i32 [ %.sroa.speculated76.i, %39 ], [ %.sroa.speculated80.i, %21 ] ; 6 uses
-  store i32 %storemerge.i, ptr %9, align 4, !tbaa !81
-  %43 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %23)
-  %44 = sitofp fast i32 %storemerge.i to float
-  %45 = fsub fast float %43, %44
-  %46 = fptosi float %45 to i32
-  %47 = sdiv i32 %46, 8
-  %48 = shl nsw i32 %47, 3
-  %.sroa.speculated64.i = tail call i32 @llvm.smax.i32(i32 %48, i32 8) ; 3 uses
-  %49 = add i32 %2, -1                            ; 2 uses
-  %50 = add i32 %.sroa.speculated64.i, %49
-  %51 = sdiv i32 %50, %.sroa.speculated64.i       ; 2 uses
-  %52 = add i32 %51, %49
-  %53 = sdiv i32 %52, %51
-  %54 = add nsw i32 %53, 7
-  %55 = sdiv i32 %54, 8
-  %56 = shl nsw i32 %55, 3
-  %.sroa.speculated60.i = tail call i32 @llvm.smin.i32(i32 %56, i32 %.sroa.speculated64.i) ; 5 uses
-  store i32 %.sroa.speculated60.i, ptr %10, align 4, !tbaa !81
+  %15 = load i32, ptr %14, align 4, !tbaa !61
+  call fastcc void @_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i(i32 noundef %3, i32 noundef 0, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %8, ptr noundef nonnull align 4 dereferenceable(4) %9, ptr noundef nonnull align 4 dereferenceable(4) %10, i32 noundef %15)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #12
-  %i.a = add i32 %storemerge.i, -1
-  %i.b = add i32 %i.a, %3
-  %i.c = sdiv i32 %i.b, %storemerge.i             ; 2 uses
+  %16 = load i32, ptr %8, align 4, !tbaa !81      ; 6 uses
+  %i.a = add i32 %3, -1
+  %i.b = add i32 %i.a, %16
+  %i.c = sdiv i32 %i.b, %16
   store i32 %i.c, ptr %11, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #12
-  %i.d = mul nsw i32 %storemerge.i, 36
-  %i.e = mul nsw i32 %i.d, %.sroa.speculated60.i
+  %i.d = mul nsw i32 %16, 36
+  %17 = load i32, ptr %10, align 4, !tbaa !81     ; 4 uses
+  %i.e = mul nsw i32 %i.d, %17
   %i.f = load i32, ptr %14, align 4, !tbaa !61
   %i.g = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 3 uses
@@ -502,17 +397,20 @@ _ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit: ; preds = %21, %39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %12, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.h, i8 0, i64 28, i1 false)
   call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %12, i32 noundef %i.e, i32 noundef 1, i32 noundef %i.f, i64 noundef 4, ptr noundef null)
-  %i.j = mul nsw i32 %storemerge.i, %.sroa.speculated60.i
-  %i.k = add nsw i32 %.sroa.speculated60.i, -1
-  %i.l = add i32 %i.k, %2
-  %i.m = sdiv i32 %i.l, %.sroa.speculated60.i
-  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.j, i32 noundef 36, i32 noundef %i.m, i32 noundef %i.c, i64 noundef 4, ptr noundef null)
+  %i.j = mul nsw i32 %16, %17
+  %18 = add i32 %17, -1
+  %19 = add i32 %18, %2
+  %20 = sdiv i32 %19, %17
+  %i.k = add i32 %16, -1
+  %i.l = add i32 %i.k, %3
+  %i.m = sdiv i32 %i.l, %16
+  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.j, i32 noundef 36, i32 noundef %20, i32 noundef %i.m, i64 noundef 4, ptr noundef null)
           to label %bb.a unwind label %bb.h
 
 bb.a:                                             ; preds = %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
   %i.n = load i32, ptr %14, align 4, !tbaa !61
   call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %13, i32 %i.n)
-  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL37conv3x3s1_winograd43_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %11, ptr nonnull %9, ptr nonnull %12, ptr nonnull %8, ptr nonnull %10, ptr nonnull %7, ptr nonnull %0, ptr nonnull %6, ptr nonnull %1)
+  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL37conv3x3s1_winograd43_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %11, ptr nonnull %8, ptr nonnull %12, ptr nonnull %7, ptr nonnull %10, ptr nonnull %6, ptr nonnull %0, ptr nonnull %5, ptr nonnull %1)
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq ptr %i.o, null
   br i1 %.not.i, label %_ZN4ncnn3MatD2Ev.exit8, label %bb.b
@@ -557,6 +455,7 @@ _ZN4ncnn3MatD2Ev.exit8:                           ; preds = %bb.b, %bb.a, %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret void
 
 bb.h:                                             ; preds = %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
@@ -606,97 +505,43 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %bb.i, %bb.h, %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   resume { ptr, i32 } %i.y
 }
 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4ncnnL37conv3x3s1_winograd23_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %4) unnamed_addr #2 personality ptr @__gxx_personality_v0 {
-  %6 = alloca i32, align 4                        ; 2 uses
+_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit:
+  %5 = alloca i32, align 4                        ; 2 uses
+  %6 = alloca i32, align 4                        ; 5 uses
   %7 = alloca i32, align 4                        ; 5 uses
-  %8 = alloca i32, align 4                        ; 5 uses
-  %9 = alloca i32, align 4                        ; 5 uses
-  %10 = alloca i32, align 4                       ; 5 uses
+  %8 = alloca i32, align 4                        ; 6 uses
+  %9 = alloca i32, align 4                        ; 4 uses
+  %10 = alloca i32, align 4                       ; 6 uses
   %11 = alloca i32, align 4                       ; 5 uses
   %12 = alloca %"class.ncnn::Mat", align 8        ; 11 uses
   %13 = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2)
-  store i32 %2, ptr %6, align 4, !tbaa !81
+  store i32 %2, ptr %5, align 4, !tbaa !81
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  store i32 %3, ptr %6, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
-  store i32 %3, ptr %7, align 4, !tbaa !81
+  store i32 %2, ptr %7, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
-  store i32 %2, ptr %8, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #12
   %14 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %15 = load i32, ptr %14, align 4, !tbaa !61     ; 2 uses
-  %16 = tail call noundef i32 @_ZN4ncnn25get_cpu_level2_cache_sizeEv()
-  %17 = sext i32 %16 to i64
-  %18 = icmp eq i32 %15, 0
-  br i1 %18, label %19, label %21
-
-19:                                               ; preds = %5
-  %20 = tail call noundef i32 @_ZN4ncnn26get_physical_big_cpu_countEv()
-  br label %21
-
-21:                                               ; preds = %19, %5
-  %.0.i = phi i32 [ %20, %19 ], [ %15, %5 ]       ; 3 uses
-  %22 = uitofp fast i64 %17 to float              ; 2 uses
-  %23 = fmul fast float %22, 2.500000e-01
-  %24 = fmul fast float %22, f0x3DAAAAAB
-  %25 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %24)
-  %26 = fptosi float %25 to i32
-  %27 = and i32 %26, 2147483640
-  %.sroa.speculated88.i = tail call i32 @llvm.umax.i32(i32 %27, i32 8)
-  %28 = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
-  %.sroa.speculated84.i = tail call i32 @llvm.smin.i32(i32 %28, i32 %.0.i)
-  %29 = mul nsw i32 %.sroa.speculated88.i, %.sroa.speculated84.i ; 3 uses
-  %30 = add i32 %3, -1                            ; 2 uses
-  %31 = add i32 %29, %30
-  %32 = sdiv i32 %31, %29                         ; 2 uses
-  %33 = add i32 %32, %30
-  %34 = sdiv i32 %33, %32
-  %35 = add nsw i32 %34, 7
-  %36 = sdiv i32 %35, 8
-  %37 = shl nsw i32 %36, 3
-  %.sroa.speculated80.i = tail call i32 @llvm.smin.i32(i32 %37, i32 %29) ; 3 uses
-  %38 = icmp sgt i32 %.0.i, 1
-  br i1 %38, label %39, label %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
-
-39:                                               ; preds = %21
-  %40 = sdiv i32 %.sroa.speculated80.i, %.0.i
-  %.sroa.speculated70.i = tail call i32 @llvm.smax.i32(i32 %40, i32 1)
-  %41 = add nuw nsw i32 %.sroa.speculated70.i, 7
-  %42 = and i32 %41, 2147483640
-  %.sroa.speculated76.i = tail call i32 @llvm.smin.i32(i32 %42, i32 %.sroa.speculated80.i)
-  br label %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
-
-_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit: ; preds = %21, %39
-  %storemerge.i = phi i32 [ %.sroa.speculated76.i, %39 ], [ %.sroa.speculated80.i, %21 ] ; 6 uses
-  store i32 %storemerge.i, ptr %9, align 4, !tbaa !81
-  %43 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %23)
-  %44 = sitofp fast i32 %storemerge.i to float
-  %45 = fsub fast float %43, %44
-  %46 = fptosi float %45 to i32
-  %47 = sdiv i32 %46, 8
-  %48 = shl nsw i32 %47, 3
-  %.sroa.speculated64.i = tail call i32 @llvm.smax.i32(i32 %48, i32 8) ; 3 uses
-  %49 = add i32 %2, -1                            ; 2 uses
-  %50 = add i32 %.sroa.speculated64.i, %49
-  %51 = sdiv i32 %50, %.sroa.speculated64.i       ; 2 uses
-  %52 = add i32 %51, %49
-  %53 = sdiv i32 %52, %51
-  %54 = add nsw i32 %53, 7
-  %55 = sdiv i32 %54, 8
-  %56 = shl nsw i32 %55, 3
-  %.sroa.speculated60.i = tail call i32 @llvm.smin.i32(i32 %56, i32 %.sroa.speculated64.i) ; 5 uses
-  store i32 %.sroa.speculated60.i, ptr %10, align 4, !tbaa !81
+  %15 = load i32, ptr %14, align 4, !tbaa !61
+  call fastcc void @_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i(i32 noundef %3, i32 noundef 0, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %8, ptr noundef nonnull align 4 dereferenceable(4) %9, ptr noundef nonnull align 4 dereferenceable(4) %10, i32 noundef %15)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #12
-  %i.a = add i32 %storemerge.i, -1
-  %i.b = add i32 %i.a, %3
-  %i.c = sdiv i32 %i.b, %storemerge.i             ; 2 uses
+  %16 = load i32, ptr %8, align 4, !tbaa !81      ; 6 uses
+  %i.a = add i32 %3, -1
+  %i.b = add i32 %i.a, %16
+  %i.c = sdiv i32 %i.b, %16
   store i32 %i.c, ptr %11, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #12
-  %i.d = shl nsw i32 %storemerge.i, 4
-  %i.e = mul nsw i32 %i.d, %.sroa.speculated60.i
+  %i.d = shl nsw i32 %16, 4
+  %17 = load i32, ptr %10, align 4, !tbaa !81     ; 4 uses
+  %i.e = mul nsw i32 %i.d, %17
   %i.f = load i32, ptr %14, align 4, !tbaa !61
   %i.g = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 3 uses
@@ -705,17 +550,20 @@ _ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit: ; preds = %21, %39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %12, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.h, i8 0, i64 28, i1 false)
   call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %12, i32 noundef %i.e, i32 noundef 1, i32 noundef %i.f, i64 noundef 4, ptr noundef null)
-  %i.j = mul nsw i32 %storemerge.i, %.sroa.speculated60.i
-  %i.k = add nsw i32 %.sroa.speculated60.i, -1
-  %i.l = add i32 %i.k, %2
-  %i.m = sdiv i32 %i.l, %.sroa.speculated60.i
-  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.j, i32 noundef 16, i32 noundef %i.m, i32 noundef %i.c, i64 noundef 4, ptr noundef null)
+  %i.j = mul nsw i32 %16, %17
+  %18 = add i32 %17, -1
+  %19 = add i32 %18, %2
+  %20 = sdiv i32 %19, %17
+  %i.k = add i32 %16, -1
+  %i.l = add i32 %i.k, %3
+  %i.m = sdiv i32 %i.l, %16
+  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.j, i32 noundef 16, i32 noundef %20, i32 noundef %i.m, i64 noundef 4, ptr noundef null)
           to label %bb.a unwind label %bb.h
 
 bb.a:                                             ; preds = %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
   %i.n = load i32, ptr %14, align 4, !tbaa !61
   call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %13, i32 %i.n)
-  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL37conv3x3s1_winograd23_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %11, ptr nonnull %9, ptr nonnull %12, ptr nonnull %8, ptr nonnull %10, ptr nonnull %7, ptr nonnull %0, ptr nonnull %6, ptr nonnull %1)
+  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL37conv3x3s1_winograd23_transform_kernelERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %11, ptr nonnull %8, ptr nonnull %12, ptr nonnull %7, ptr nonnull %10, ptr nonnull %6, ptr nonnull %0, ptr nonnull %5, ptr nonnull %1)
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq ptr %i.o, null
   br i1 %.not.i, label %_ZN4ncnn3MatD2Ev.exit8, label %bb.b
@@ -760,6 +608,7 @@ _ZN4ncnn3MatD2Ev.exit8:                           ; preds = %bb.b, %bb.a, %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret void
 
 bb.h:                                             ; preds = %_ZN4ncnnL20get_optimal_tile_mnkEiiiRiS0_S0_i.exit
@@ -809,6 +658,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %bb.i, %bb.h, %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   resume { ptr, i32 } %i.y
 }
 
@@ -1211,8 +1061,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = fmul fast float %i.e, f0x3DAAAAAB
   %i.h = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.g)
   %i.i = fptosi float %i.h to i32
-  %7 = and i32 %i.i, 2147483640
-  %.sroa.speculated88 = tail call i32 @llvm.umax.i32(i32 %7, i32 8)
+  %7 = sdiv i32 %i.i, 8
+  %8 = shl nsw i32 %7, 3
+  %.sroa.speculated88 = tail call i32 @llvm.smax.i32(i32 %8, i32 8)
   store i32 %.sroa.speculated88, ptr %3, align 4, !tbaa !81
   %i.j = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
   %.sroa.speculated84 = tail call i32 @llvm.smin.i32(i32 %i.j, i32 %.0)
@@ -1615,120 +1466,67 @@ declare void @_ZN4ncnn9ParamDict3setEiRKNS_3MatE(ptr noundef nonnull align 8 der
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4ncnnL42conv3x3s1_winograd43_transform_kernel_int8ERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(64) %4) unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 2 uses
+  %5 = alloca i32, align 4                        ; 2 uses
+  %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
-  %i.d = alloca i32, align 4                      ; 5 uses
-  %i.e = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 6 uses
+  %i.d = alloca i32, align 4                      ; 4 uses
+  %i.e = alloca i32, align 4                      ; 6 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.ncnn::Mat", align 8         ; 11 uses
+  %6 = alloca %"class.ncnn::Mat", align 8         ; 11 uses
   %i.g = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2)
-  store i32 %2, ptr %i.a, align 4, !tbaa !81
+  store i32 %2, ptr %5, align 4, !tbaa !81
   %i.h = tail call noundef i32 @_ZN4ncnn20cpu_support_x86_avx2Ev()
   %.not = icmp eq i32 %i.h, 0
-  br i1 %.not, label %6, label %bb.b
+  br i1 %.not, label %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4ncnn47conv3x3s1_winograd43_transform_kernel_int8_avx2ERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(64) %4)
   br label %bb.j
 
-6:                                                ; preds = %bb.a
+_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit: ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  store i32 %3, ptr %i.a, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
-  store i32 %3, ptr %i.b, align 4, !tbaa !81
+  store i32 %2, ptr %i.b, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
-  store i32 %2, ptr %i.c, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
   %7 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !61       ; 2 uses
-  %9 = tail call noundef i32 @_ZN4ncnn25get_cpu_level2_cache_sizeEv()
-  %10 = ashr i32 %9, 1
-  %11 = sext i32 %10 to i64
-  %12 = icmp eq i32 %8, 0
-  br i1 %12, label %13, label %15
-
-13:                                               ; preds = %6
-  %14 = tail call noundef i32 @_ZN4ncnn26get_physical_big_cpu_countEv()
-  br label %15
-
-15:                                               ; preds = %13, %6
-  %.0.i = phi i32 [ %14, %13 ], [ %8, %6 ]        ; 3 uses
-  %16 = uitofp fast i64 %11 to float              ; 2 uses
-  %17 = fmul fast float %16, f0x3EAAAAAB
-  %18 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %17)
-  %19 = fptosi float %18 to i32
-  %20 = and i32 %19, 2147483644
-  %.sroa.speculated86.i = tail call i32 @llvm.umax.i32(i32 %20, i32 4)
-  %21 = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
-  %.sroa.speculated82.i = tail call i32 @llvm.smin.i32(i32 %21, i32 %.0.i)
-  %22 = mul nsw i32 %.sroa.speculated86.i, %.sroa.speculated82.i ; 3 uses
-  %23 = add i32 %3, -1                            ; 2 uses
-  %24 = add i32 %22, %23
-  %25 = sdiv i32 %24, %22                         ; 2 uses
-  %26 = add i32 %25, %23
-  %27 = sdiv i32 %26, %25
-  %28 = add nsw i32 %27, 3
-  %29 = sdiv i32 %28, 4
-  %30 = shl nsw i32 %29, 2
-  %.sroa.speculated78.i = tail call i32 @llvm.smin.i32(i32 %30, i32 %22) ; 3 uses
-  %31 = icmp sgt i32 %.0.i, 1
-  br i1 %31, label %32, label %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit
-
-32:                                               ; preds = %15
-  %33 = sdiv i32 %.sroa.speculated78.i, %.0.i
-  %.sroa.speculated68.i = tail call i32 @llvm.smax.i32(i32 %33, i32 1)
-  %34 = add nuw nsw i32 %.sroa.speculated68.i, 3
-  %35 = and i32 %34, 2147483644
-  %.sroa.speculated74.i = tail call i32 @llvm.smin.i32(i32 %35, i32 %.sroa.speculated78.i)
-  br label %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit
-
-_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit: ; preds = %15, %32
-  %storemerge.i = phi i32 [ %.sroa.speculated74.i, %32 ], [ %.sroa.speculated78.i, %15 ] ; 6 uses
-  store i32 %storemerge.i, ptr %i.d, align 4, !tbaa !81
-  %36 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %16)
-  %37 = sitofp fast i32 %storemerge.i to float
-  %38 = fsub fast float %36, %37
-  %39 = fptosi float %38 to i32
-  %40 = sdiv i32 %39, 4
-  %41 = shl nsw i32 %40, 2
-  %.sroa.speculated62.i = tail call i32 @llvm.smax.i32(i32 %41, i32 4) ; 3 uses
-  %42 = add i32 %2, -1                            ; 2 uses
-  %43 = add i32 %.sroa.speculated62.i, %42
-  %44 = sdiv i32 %43, %.sroa.speculated62.i       ; 2 uses
-  %i.i = add i32 %44, %42
-  %45 = sdiv i32 %i.i, %44
-  %i.j = add nsw i32 %45, 3
-  %i.k = sdiv i32 %i.j, 4
-  %46 = shl nsw i32 %i.k, 2
-  %.sroa.speculated58.i = tail call i32 @llvm.smin.i32(i32 %46, i32 %.sroa.speculated62.i) ; 5 uses
-  store i32 %.sroa.speculated58.i, ptr %i.e, align 4, !tbaa !81
+  %8 = load i32, ptr %7, align 4, !tbaa !61
+  call fastcc void @_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i(i32 noundef %3, i32 noundef 0, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 4 dereferenceable(4) %i.e, i32 noundef %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
-  %47 = add i32 %storemerge.i, -1
-  %48 = add i32 %47, %3
-  %49 = sdiv i32 %48, %storemerge.i               ; 2 uses
-  store i32 %49, ptr %i.f, align 4, !tbaa !81
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %50 = mul nsw i32 %storemerge.i, 36
-  %i.l = mul nsw i32 %50, %.sroa.speculated58.i
+  %9 = load i32, ptr %i.c, align 4, !tbaa !81     ; 6 uses
+  %i.i = add i32 %3, -1
+  %i.j = add i32 %i.i, %9
+  %i.k = sdiv i32 %i.j, %9
+  store i32 %i.k, ptr %i.f, align 4, !tbaa !81
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  %10 = mul nsw i32 %9, 36
+  %11 = load i32, ptr %i.e, align 4, !tbaa !81    ; 4 uses
+  %i.l = mul nsw i32 %10, %11
   %i.m = load i32, ptr %7, align 4, !tbaa !61
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 64
   store i64 0, ptr %i.p, align 8, !tbaa !38
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %5, i8 0, i64 28, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %6, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.o, i8 0, i64 28, i1 false)
-  call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %5, i32 noundef %i.l, i32 noundef 1, i32 noundef %i.m, i64 noundef 4, ptr noundef null)
-  %i.q = mul nsw i32 %storemerge.i, %.sroa.speculated58.i
-  %i.r = add nsw i32 %.sroa.speculated58.i, -1
-  %i.s = add i32 %i.r, %2
-  %i.t = sdiv i32 %i.s, %.sroa.speculated58.i
-  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.q, i32 noundef 36, i32 noundef %i.t, i32 noundef %49, i64 noundef 4, ptr noundef null)
+  call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %6, i32 noundef %i.l, i32 noundef 1, i32 noundef %i.m, i64 noundef 4, ptr noundef null)
+  %i.q = mul nsw i32 %9, %11
+  %12 = add i32 %11, -1
+  %13 = add i32 %12, %2
+  %14 = sdiv i32 %13, %11
+  %i.r = add i32 %9, -1
+  %i.s = add i32 %i.r, %3
+  %i.t = sdiv i32 %i.s, %9
+  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.q, i32 noundef 36, i32 noundef %14, i32 noundef %i.t, i64 noundef 4, ptr noundef null)
           to label %bb.c unwind label %bb.k
 
 bb.c:                                             ; preds = %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit
   %i.u = load i32, ptr %7, align 4, !tbaa !61
   call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %i.g, i32 %i.u)
-  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL42conv3x3s1_winograd43_transform_kernel_int8ERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %i.f, ptr nonnull %i.d, ptr nonnull %5, ptr nonnull %i.c, ptr nonnull %i.e, ptr nonnull %i.b, ptr nonnull %0, ptr nonnull %i.a, ptr nonnull %1)
+  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL42conv3x3s1_winograd43_transform_kernel_int8ERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %i.f, ptr nonnull %i.c, ptr nonnull %6, ptr nonnull %i.b, ptr nonnull %i.e, ptr nonnull %i.a, ptr nonnull %0, ptr nonnull %5, ptr nonnull %1)
   %i.v = load ptr, ptr %i.n, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq ptr %i.v, null
   br i1 %.not.i, label %_ZN4ncnn3MatD2Ev.exit12, label %bb.d
@@ -1741,7 +1539,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %i.o, align 8, !tbaa !36   ; 3 uses
   %.not3.i = icmp eq ptr %i.y, null
-  %i.z = load ptr, ptr %5, align 8, !tbaa !37     ; 3 uses
+  %i.z = load ptr, ptr %6, align 8, !tbaa !37     ; 3 uses
   br i1 %.not3.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1767,12 +1565,13 @@ bb.i:                                             ; preds = %bb.f
   unreachable
 
 _ZN4ncnn3MatD2Ev.exit12:                          ; preds = %bb.d, %bb.c, %bb.f, %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN4ncnn3MatD2Ev.exit12, %bb.b
@@ -1793,7 +1592,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.aj = load ptr, ptr %i.o, align 8, !tbaa !36  ; 3 uses
   %.not3.i14 = icmp eq ptr %i.aj, null
-  %i.ak = load ptr, ptr %5, align 8, !tbaa !37    ; 3 uses
+  %i.ak = load ptr, ptr %6, align 8, !tbaa !37    ; 3 uses
   br i1 %.not3.i14, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -1819,132 +1618,80 @@ bb.q:                                             ; preds = %bb.n
   unreachable
 
 _ZN4ncnn3MatD2Ev.exit:                            ; preds = %bb.l, %bb.k, %bb.n, %bb.o, %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   resume { ptr, i32 } %i.af
 }
 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4ncnnL42conv3x3s1_winograd23_transform_kernel_int8ERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(64) %4) unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 2 uses
+  %5 = alloca i32, align 4                        ; 2 uses
+  %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
-  %i.d = alloca i32, align 4                      ; 5 uses
-  %i.e = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 6 uses
+  %i.d = alloca i32, align 4                      ; 4 uses
+  %i.e = alloca i32, align 4                      ; 6 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.ncnn::Mat", align 8         ; 11 uses
+  %6 = alloca %"class.ncnn::Mat", align 8         ; 11 uses
   %i.g = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2)
-  store i32 %2, ptr %i.a, align 4, !tbaa !81
+  store i32 %2, ptr %5, align 4, !tbaa !81
   %i.h = tail call noundef i32 @_ZN4ncnn20cpu_support_x86_avx2Ev()
   %.not = icmp eq i32 %i.h, 0
-  br i1 %.not, label %6, label %bb.b
+  br i1 %.not, label %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4ncnn47conv3x3s1_winograd23_transform_kernel_int8_avx2ERKNS_3MatERS0_iiRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(64) %4)
   br label %bb.j
 
-6:                                                ; preds = %bb.a
+_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit: ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  store i32 %3, ptr %i.a, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
-  store i32 %3, ptr %i.b, align 4, !tbaa !81
+  store i32 %2, ptr %i.b, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
-  store i32 %2, ptr %i.c, align 4, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
   %7 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !61       ; 2 uses
-  %9 = tail call noundef i32 @_ZN4ncnn25get_cpu_level2_cache_sizeEv()
-  %10 = ashr i32 %9, 1
-  %11 = sext i32 %10 to i64
-  %12 = icmp eq i32 %8, 0
-  br i1 %12, label %13, label %15
-
-13:                                               ; preds = %6
-  %14 = tail call noundef i32 @_ZN4ncnn26get_physical_big_cpu_countEv()
-  br label %15
-
-15:                                               ; preds = %13, %6
-  %.0.i = phi i32 [ %14, %13 ], [ %8, %6 ]        ; 3 uses
-  %16 = uitofp fast i64 %11 to float              ; 2 uses
-  %17 = fmul fast float %16, f0x3EAAAAAB
-  %18 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %17)
-  %19 = fptosi float %18 to i32
-  %20 = and i32 %19, 2147483644
-  %.sroa.speculated86.i = tail call i32 @llvm.umax.i32(i32 %20, i32 4)
-  %21 = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
-  %.sroa.speculated82.i = tail call i32 @llvm.smin.i32(i32 %21, i32 %.0.i)
-  %22 = mul nsw i32 %.sroa.speculated86.i, %.sroa.speculated82.i ; 3 uses
-  %23 = add i32 %3, -1                            ; 2 uses
-  %24 = add i32 %22, %23
-  %25 = sdiv i32 %24, %22                         ; 2 uses
-  %26 = add i32 %25, %23
-  %27 = sdiv i32 %26, %25
-  %28 = add nsw i32 %27, 3
-  %29 = sdiv i32 %28, 4
-  %30 = shl nsw i32 %29, 2
-  %.sroa.speculated78.i = tail call i32 @llvm.smin.i32(i32 %30, i32 %22) ; 3 uses
-  %31 = icmp sgt i32 %.0.i, 1
-  br i1 %31, label %32, label %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit
-
-32:                                               ; preds = %15
-  %33 = sdiv i32 %.sroa.speculated78.i, %.0.i
-  %.sroa.speculated68.i = tail call i32 @llvm.smax.i32(i32 %33, i32 1)
-  %34 = add nuw nsw i32 %.sroa.speculated68.i, 3
-  %35 = and i32 %34, 2147483644
-  %.sroa.speculated74.i = tail call i32 @llvm.smin.i32(i32 %35, i32 %.sroa.speculated78.i)
-  br label %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit
-
-_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit: ; preds = %15, %32
-  %storemerge.i = phi i32 [ %.sroa.speculated74.i, %32 ], [ %.sroa.speculated78.i, %15 ] ; 6 uses
-  store i32 %storemerge.i, ptr %i.d, align 4, !tbaa !81
-  %36 = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %16)
-  %37 = sitofp fast i32 %storemerge.i to float
-  %38 = fsub fast float %36, %37
-  %39 = fptosi float %38 to i32
-  %40 = sdiv i32 %39, 4
-  %41 = shl nsw i32 %40, 2
-  %.sroa.speculated62.i = tail call i32 @llvm.smax.i32(i32 %41, i32 4) ; 3 uses
-  %42 = add i32 %2, -1                            ; 2 uses
-  %43 = add i32 %.sroa.speculated62.i, %42
-  %44 = sdiv i32 %43, %.sroa.speculated62.i       ; 2 uses
-  %i.i = add i32 %44, %42
-  %45 = sdiv i32 %i.i, %44
-  %i.j = add nsw i32 %45, 3
-  %i.k = sdiv i32 %i.j, 4
-  %46 = shl nsw i32 %i.k, 2
-  %.sroa.speculated58.i = tail call i32 @llvm.smin.i32(i32 %46, i32 %.sroa.speculated62.i) ; 5 uses
-  store i32 %.sroa.speculated58.i, ptr %i.e, align 4, !tbaa !81
+  %8 = load i32, ptr %7, align 4, !tbaa !61
+  call fastcc void @_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i(i32 noundef %3, i32 noundef 0, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 4 dereferenceable(4) %i.e, i32 noundef %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
-  %47 = add i32 %storemerge.i, -1
-  %48 = add i32 %47, %3
-  %49 = sdiv i32 %48, %storemerge.i               ; 2 uses
-  store i32 %49, ptr %i.f, align 4, !tbaa !81
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %50 = shl nsw i32 %storemerge.i, 4
-  %i.l = mul nsw i32 %50, %.sroa.speculated58.i
+  %9 = load i32, ptr %i.c, align 4, !tbaa !81     ; 6 uses
+  %i.i = add i32 %3, -1
+  %i.j = add i32 %i.i, %9
+  %i.k = sdiv i32 %i.j, %9
+  store i32 %i.k, ptr %i.f, align 4, !tbaa !81
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  %10 = shl nsw i32 %9, 4
+  %11 = load i32, ptr %i.e, align 4, !tbaa !81    ; 4 uses
+  %i.l = mul nsw i32 %10, %11
   %i.m = load i32, ptr %7, align 4, !tbaa !61
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 64
   store i64 0, ptr %i.p, align 8, !tbaa !38
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %5, i8 0, i64 28, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %6, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.o, i8 0, i64 28, i1 false)
-  call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %5, i32 noundef %i.l, i32 noundef 1, i32 noundef %i.m, i64 noundef 2, ptr noundef null)
-  %i.q = mul nsw i32 %storemerge.i, %.sroa.speculated58.i
-  %i.r = add nsw i32 %.sroa.speculated58.i, -1
-  %i.s = add i32 %i.r, %2
-  %i.t = sdiv i32 %i.s, %.sroa.speculated58.i
-  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.q, i32 noundef 16, i32 noundef %i.t, i32 noundef %49, i64 noundef 2, ptr noundef null)
+  call void @_ZN4ncnn3Mat6createEiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %6, i32 noundef %i.l, i32 noundef 1, i32 noundef %i.m, i64 noundef 2, ptr noundef null)
+  %i.q = mul nsw i32 %9, %11
+  %12 = add i32 %11, -1
+  %13 = add i32 %12, %2
+  %14 = sdiv i32 %13, %11
+  %i.r = add i32 %9, -1
+  %i.s = add i32 %i.r, %3
+  %i.t = sdiv i32 %i.s, %9
+  invoke void @_ZN4ncnn3Mat6createEiiiimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.q, i32 noundef 16, i32 noundef %14, i32 noundef %i.t, i64 noundef 2, ptr noundef null)
           to label %bb.c unwind label %bb.k
 
 bb.c:                                             ; preds = %_ZN4ncnnL25get_optimal_tile_mnk_int8EiiiRiS0_S0_i.exit
   %i.u = load i32, ptr %7, align 4, !tbaa !61
   call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %i.g, i32 %i.u)
-  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL42conv3x3s1_winograd23_transform_kernel_int8ERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %i.f, ptr nonnull %i.d, ptr nonnull %5, ptr nonnull %i.c, ptr nonnull %i.e, ptr nonnull %i.b, ptr nonnull %0, ptr nonnull %i.a, ptr nonnull %1)
+  call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 9, ptr nonnull @_ZN4ncnnL42conv3x3s1_winograd23_transform_kernel_int8ERKNS_3MatERS0_iiRKNS_6OptionE.omp_outlined, ptr nonnull %i.f, ptr nonnull %i.c, ptr nonnull %6, ptr nonnull %i.b, ptr nonnull %i.e, ptr nonnull %i.a, ptr nonnull %0, ptr nonnull %5, ptr nonnull %1)
   %i.v = load ptr, ptr %i.n, align 8, !tbaa !35   ; 2 uses
   %.not.i = icmp eq ptr %i.v, null
   br i1 %.not.i, label %_ZN4ncnn3MatD2Ev.exit12, label %bb.d
@@ -1957,7 +1704,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %i.o, align 8, !tbaa !36   ; 3 uses
   %.not3.i = icmp eq ptr %i.y, null
-  %i.z = load ptr, ptr %5, align 8, !tbaa !37     ; 3 uses
+  %i.z = load ptr, ptr %6, align 8, !tbaa !37     ; 3 uses
   br i1 %.not3.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1983,12 +1730,13 @@ bb.i:                                             ; preds = %bb.f
   unreachable
 
 _ZN4ncnn3MatD2Ev.exit12:                          ; preds = %bb.d, %bb.c, %bb.f, %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN4ncnn3MatD2Ev.exit12, %bb.b
@@ -2009,7 +1757,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.aj = load ptr, ptr %i.o, align 8, !tbaa !36  ; 3 uses
   %.not3.i14 = icmp eq ptr %i.aj, null
-  %i.ak = load ptr, ptr %5, align 8, !tbaa !37    ; 3 uses
+  %i.ak = load ptr, ptr %6, align 8, !tbaa !37    ; 3 uses
   br i1 %.not3.i14, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -2035,12 +1783,13 @@ bb.q:                                             ; preds = %bb.n
   unreachable
 
 _ZN4ncnn3MatD2Ev.exit:                            ; preds = %bb.l, %bb.k, %bb.n, %bb.o, %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   resume { ptr, i32 } %i.af
 }
 
@@ -2067,8 +1816,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = fmul fast float %i.f, f0x3EAAAAAB
   %i.h = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.g)
   %i.i = fptosi float %i.h to i32
-  %7 = and i32 %i.i, 2147483644
-  %.sroa.speculated86 = tail call i32 @llvm.umax.i32(i32 %7, i32 4)
+  %7 = sdiv i32 %i.i, 4
+  %8 = shl nsw i32 %7, 2
+  %.sroa.speculated86 = tail call i32 @llvm.smax.i32(i32 %8, i32 4)
   store i32 %.sroa.speculated86, ptr %3, align 4, !tbaa !81
   %i.j = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
   %.sroa.speculated82 = tail call i32 @llvm.smin.i32(i32 %i.j, i32 %.0)
@@ -2471,9 +2221,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #29
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2481,6 +2228,9 @@ declare i64 @llvm.smax.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.minnum.f32(float, float) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #13

@@ -205,8 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = fmul fast float %i.e, f0x3DAAAAAB
   %i.g = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.f)
   %i.h = fptosi float %i.g to i32
-  %10 = and i32 %i.h, 2147483644
-  %.sroa.speculated115 = tail call i32 @llvm.umax.i32(i32 %10, i32 4) ; 6 uses
+  %10 = sdiv i32 %i.h, 4
+  %11 = shl nsw i32 %10, 2
+  %.sroa.speculated115 = tail call i32 @llvm.smax.i32(i32 %11, i32 4) ; 6 uses
   store i32 %.sroa.speculated115, ptr %6, align 4, !tbaa !49
   store i32 %.sroa.speculated115, ptr %7, align 4, !tbaa !49
   store i32 %.sroa.speculated115, ptr %8, align 4, !tbaa !49
@@ -231,8 +232,9 @@ bb.e:                                             ; preds = %bb.d
   %i.s = uitofp nneg i32 %.sroa.speculated99 to float
   %i.t = fdiv fast float %i.r, %i.s
   %i.u = fptosi float %i.t to i32
-  %11 = and i32 %i.u, 2147483644
-  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %11, i32 4) ; 2 uses
+  %12 = sdiv i32 %i.u, 4
+  %13 = shl nsw i32 %12, 2
+  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %13, i32 4) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !49
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !49
   br label %bb.f
@@ -635,8 +637,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = fmul fast float %i.e, f0x3E2AAAAB
   %i.g = tail call fast float @llvm.sqrt.f32(float %i.f)
   %i.h = fptosi float %i.g to i32
-  %10 = and i32 %i.h, 2147483644
-  %.sroa.speculated115 = tail call i32 @llvm.umax.i32(i32 %10, i32 4) ; 6 uses
+  %10 = sdiv i32 %i.h, 4
+  %11 = shl nsw i32 %10, 2
+  %.sroa.speculated115 = tail call i32 @llvm.smax.i32(i32 %11, i32 4) ; 6 uses
   store i32 %.sroa.speculated115, ptr %6, align 4, !tbaa !49
   store i32 %.sroa.speculated115, ptr %7, align 4, !tbaa !49
   store i32 %.sroa.speculated115, ptr %8, align 4, !tbaa !49
@@ -661,8 +664,9 @@ bb.e:                                             ; preds = %bb.d
   %i.s = uitofp nneg i32 %.sroa.speculated99 to float
   %i.t = fdiv fast float %i.r, %i.s
   %i.u = fptosi float %i.t to i32
-  %11 = and i32 %i.u, 2147483644
-  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %11, i32 4) ; 2 uses
+  %12 = sdiv i32 %i.u, 4
+  %13 = shl nsw i32 %12, 2
+  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %13, i32 4) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !49
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !49
   br label %bb.f
@@ -1065,6 +1069,7 @@ bb.a:
   %.not1258.i = icmp eq i32 %10, 0                ; 6 uses
   %i.bc = sext i32 %5 to i64                      ; 4 uses
   %i.bd = mul i64 %i.k, %i.bc
+  %11 = icmp eq i32 %2, 0                         ; 5 uses
   %or.cond11.i = icmp ult i32 %2, 3               ; 4 uses
   %i.be = sext i32 %3 to i64                      ; 3 uses
   %i.bf = icmp sgt i32 %6, 7
@@ -1081,10 +1086,8 @@ bb.a:
   %.idx873.i = mul i64 %i.k, 24
   %.idx874.i = mul i64 %i.k, 28
   %.idx1267.i = shl i64 %i.k, 5                   ; 3 uses
-  %11 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
-  %13 = add <2 x i32> %12, <i32 0, i32 -1>
-  %14 = icmp ult <2 x i32> %13, <i32 1, i32 2>    ; 3 uses
+  %12 = add i32 %2, -1
+  %or.cond19.i = icmp ult i32 %12, 2
   %i.bm = and i32 %6, -8
   %i.bn = zext nneg i32 %.01190.lcssa.i to i64
   %i.bo = sext i32 %4 to i64
@@ -1094,11 +1097,11 @@ bb.a:
   %..idx869.i = select i1 %.not1258.i, i64 8, i64 %.idx869.i
   %i.br = insertelement <2 x float> poison, float %9, i64 0
   %i.bs = shufflevector <2 x float> %i.br, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
-  %15 = extractelement <2 x i1> %14, i64 0        ; 4 uses
-  %16 = extractelement <2 x i1> %14, i64 1
-  %17 = insertelement <2 x float> poison, float %8, i64 0
-  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.bt = insertelement <2 x i1> poison, i1 %.not1258.i, i64 0
+  %13 = insertelement <2 x float> poison, float %8, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %15 = insertelement <2 x i1> poison, i1 %.not1258.i, i64 0
+  %16 = shufflevector <2 x i1> %15, <2 x i1> poison, <2 x i32> zeroinitializer
+  %i.bt = insertelement <2 x i1> poison, i1 %or.cond19.i, i64 0
   %i.bu = shufflevector <2 x i1> %i.bt, <2 x i1> poison, <2 x i32> zeroinitializer
   br label %bb.cg
 
@@ -1501,8 +1504,8 @@ bb.bo:                                            ; preds = %bb.bh
   %.4659.i = phi nsz <4 x float> [ %i.ra, %.lr.ph914.i ], [ %i.sr, %bb.bo ], [ %i.ra, %bb.bh ], [ %i.sk, %bb.bn ], [ %i.sh, %bb.bm ], [ %i.rc, %.thread734.i ], [ %i.re, %bb.bg ]
   %.15498.i = phi nsz <4 x float> [ %.12495909.i, %.lr.ph914.i ], [ %i.sp, %bb.bo ], [ %.12495909.i, %bb.bh ], [ %.13496.i, %bb.bn ], [ %.13496.i, %bb.bm ], [ %.12495909.i, %.thread734.i ], [ %.12495909.i, %bb.bg ] ; 2 uses
   %.15.i = phi ptr [ null, %.lr.ph914.i ], [ %i.st, %bb.bo ], [ %.12913.i, %bb.bh ], [ %i.sg, %bb.bn ], [ %i.sg, %bb.bm ], [ %.12913.i, %.thread734.i ], [ %.12913.i, %bb.bg ] ; 2 uses
-  %.5667.i = fmul reassoc nnan nsz arcp contract afn <4 x float> %.4666.i, %i.ap ; 6 uses
-  %.5660.i = fmul reassoc nnan nsz arcp contract afn <4 x float> %.4659.i, %i.ap ; 6 uses
+  %.5667.i = fmul reassoc nsz arcp contract afn <4 x float> %.4666.i, %i.ap ; 6 uses
+  %.5660.i = fmul reassoc nsz arcp contract afn <4 x float> %.4659.i, %i.ap ; 6 uses
   br i1 %.not1268.i, label %bb.bq, label %bb.bp
 
 bb.bp:                                            ; preds = %.thread743.i
@@ -1751,7 +1754,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch
   br i1 %.not1259.i, label %.thread779.i, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
-  br i1 %15, label %.thread763.i, label %bb.cl
+  br i1 %11, label %.thread763.i, label %bb.cl
 
 .thread763.i:                                     ; preds = %bb.ck
   %i.we = load float, ptr %.20980.i, align 4, !tbaa !67
@@ -1851,7 +1854,7 @@ bb.cp:                                            ; preds = %bb.cn
   br i1 %.not1265.i, label %.thread798.i, label %bb.cq
 
 bb.cq:                                            ; preds = %.lr.ph942.i
-  br i1 %15, label %.thread785.i, label %bb.cr
+  br i1 %11, label %.thread785.i, label %bb.cr
 
 .thread785.i:                                     ; preds = %bb.cq
   %i.yc = fadd fast <4 x float> %i.xy, %.3636936.i
@@ -2045,7 +2048,7 @@ bb.de:                                            ; preds = %bb.dd, %bb.dc, %bb.
   br i1 %.not1263.i, label %.thread815.i, label %bb.df
 
 bb.df:                                            ; preds = %.lr.ph955.i
-  br i1 %15, label %.thread806.i, label %bb.dg
+  br i1 %11, label %.thread806.i, label %bb.dg
 
 .thread806.i:                                     ; preds = %bb.df
   %i.aaz = fadd fast <4 x float> %i.aax, %.6639949.i
@@ -2093,8 +2096,8 @@ bb.dk:                                            ; preds = %bb.di
   %.4578.i = phi nsz <4 x float> [ %i.aax, %.lr.ph955.i ], [ %i.abl, %bb.dk ], [ %i.aax, %bb.di ], [ %.2576.i, %bb.dj ], [ %i.aaz, %.thread806.i ], [ %i.abb, %bb.dh ]
   %.4572.i = phi nsz <4 x float> [ %i.aay, %.lr.ph955.i ], [ %i.abm, %bb.dk ], [ %i.aay, %bb.di ], [ %.2570.i, %bb.dj ], [ %i.aba, %.thread806.i ], [ %i.abc, %bb.dh ]
   %.29.i = phi ptr [ null, %.lr.ph955.i ], [ %i.abn, %bb.dk ], [ %.27954.i, %bb.di ], [ %i.abi, %bb.dj ], [ %.27954.i, %.thread806.i ], [ %.27954.i, %bb.dh ] ; 2 uses
-  %.5579.i = fmul reassoc nnan nsz arcp contract afn <4 x float> %.4578.i, %i.bq ; 6 uses
-  %.5573.i = fmul reassoc nnan nsz arcp contract afn <4 x float> %.4572.i, %i.bq ; 6 uses
+  %.5579.i = fmul reassoc nsz arcp contract afn <4 x float> %.4578.i, %i.bq ; 6 uses
+  %.5573.i = fmul reassoc nsz arcp contract afn <4 x float> %.4572.i, %i.bq ; 6 uses
   br i1 %.not1258.i, label %bb.do, label %bb.dl
 
 bb.dl:                                            ; preds = %.thread815.i
@@ -2150,11 +2153,9 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn, %bb.
   br i1 %i.acc, label %.lr.ph973.i, label %._crit_edge974.i
 
 .lr.ph973.i:                                      ; preds = %.preheader882.i
-  %19 = select <2 x i1> %14, <2 x float> %i.wx, <2 x float> zeroinitializer ; 2 uses
-  %i.acd = select ninf nsz i1 %16, float %.21227.i, float 0.000000e+00
+  %i.acd = select ninf nsz i1 %11, float %.21227.i, float 0.000000e+00
   %i.ace = insertelement <2 x float> poison, float %i.acd, i64 0
-  %20 = shufflevector <2 x float> %i.ace, <2 x float> %19, <2 x i32> <i32 0, i32 2>
-  %21 = fadd reassoc nsz arcp contract afn <2 x float> %19, %20
+  %17 = shufflevector <2 x float> %i.ace, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.dw
 
 .lr.ph964.i:                                      ; preds = %.lr.ph964.i.preheader, %.thread834.i
@@ -2169,7 +2170,7 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn, %bb.
   br i1 %.not1261.i, label %.thread834.i, label %bb.dq
 
 bb.dq:                                            ; preds = %.lr.ph964.i
-  br i1 %15, label %.thread821.i, label %bb.dr
+  br i1 %11, label %.thread821.i, label %bb.dr
 
 .thread821.i:                                     ; preds = %bb.dq
   %i.aci = fadd fast <4 x float> %i.ach, %i.aam
@@ -2210,16 +2211,16 @@ bb.dv:                                            ; preds = %bb.dt
   %.32.i = phi ptr [ %i.acv, %bb.dv ], [ %.30963.i, %bb.dt ], [ null, %.lr.ph964.i ], [ %i.acq, %bb.du ], [ %.30963.i, %.thread821.i ], [ %.30963.i, %bb.ds ] ; 2 uses
   %i.acw = phi <4 x float> [ %i.acu, %bb.dv ], [ %i.ach, %bb.dt ], [ %i.ach, %.lr.ph964.i ], [ %i.acp, %bb.du ], [ %i.aci, %.thread821.i ], [ %i.acj, %bb.ds ] ; 2 uses
   %i.acx = shufflevector <4 x float> %i.acw, <4 x float> poison, <2 x i32> <i32 0, i32 3>
-  %i.acy = fmul fast <2 x float> %i.acx, %18      ; 2 uses
+  %i.acy = fmul fast <2 x float> %i.acx, %14      ; 2 uses
   %i.acz = extractelement <2 x float> %i.acy, i64 0
   store float %i.acz, ptr %.51215961.i, align 4, !tbaa !67
   %i.ada = getelementptr inbounds nuw i8, ptr %.51215961.i, i64 4
   %i.adb = getelementptr inbounds nuw [4 x i8], ptr %.51215961.i, i64 %i.k ; 2 uses
   %i.adc = getelementptr i8, ptr %i.adb, i64 4
   %i.add = shufflevector <4 x float> %i.acw, <4 x float> poison, <2 x i32> <i32 1, i32 2>
-  %i.ade = fmul fast <2 x float> %i.add, %18      ; 2 uses
+  %i.ade = fmul fast <2 x float> %i.add, %14      ; 2 uses
   %i.adf = shufflevector <2 x float> %i.ade, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.adg = select <2 x i1> %i.bu, <2 x float> %i.ade, <2 x float> %i.adf ; 2 uses
+  %i.adg = select <2 x i1> %16, <2 x float> %i.ade, <2 x float> %i.adf ; 2 uses
   %i.adh = extractelement <2 x float> %i.adg, i64 0
   store float %i.adh, ptr %i.ada, align 4, !tbaa !67
   %i.adi = extractelement <2 x float> %i.adg, i64 1
@@ -2240,12 +2241,14 @@ bb.dw:                                            ; preds = %bb.ec, %.lr.ph973.i
   %.31222969.i = phi i32 [ %.21221.lcssa.i, %.lr.ph973.i ], [ %i.aer, %bb.ec ]
   %i.adp = load <2 x i32>, ptr %.91184971.i, align 4, !tbaa !49
   %i.adq = sitofp fast <2 x i32> %i.adp to <2 x float>
-  %i.adr = fmul fast <2 x float> %i.wa, %i.adq    ; 3 uses
+  %i.adr = fmul fast <2 x float> %i.wa, %i.adq    ; 2 uses
   %.not1260.i = icmp eq ptr %.33972.i, null
   br i1 %.not1260.i, label %bb.dz, label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw
-  %i.ads = fadd reassoc nsz arcp contract afn <2 x float> %21, %i.adr ; 2 uses
+  %18 = fadd reassoc nsz arcp contract afn <2 x float> %i.adr, %17 ; 4 uses
+  %i.ads = fadd fast <2 x float> %18, %i.wx
+  %19 = select <2 x i1> %i.bu, <2 x float> %i.ads, <2 x float> %18
   switch i32 %2, label %bb.dz [
     i32 3, label %.thread840.i
     i32 4, label %bb.dy
@@ -2258,7 +2261,7 @@ bb.dx:                                            ; preds = %bb.dw
   %i.adw = insertelement <2 x float> poison, float %i.adt, i64 0
   %i.adx = insertelement <2 x float> %i.adw, float %i.adv, i64 1
   %i.ady = fmul fast <2 x float> %i.adx, %i.bs
-  %i.adz = fadd fast <2 x float> %i.ady, %i.adr
+  %i.adz = fadd fast <2 x float> %i.ady, %18
   %i.aea = getelementptr inbounds nuw i8, ptr %.33972.i, i64 4
   br label %bb.dz
 
@@ -2267,13 +2270,13 @@ bb.dy:                                            ; preds = %bb.dx
   %i.aec = fmul fast float %i.aeb, %9
   %i.aed = insertelement <2 x float> poison, float %i.aec, i64 0
   %i.aee = shufflevector <2 x float> %i.aed, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.aef = fadd fast <2 x float> %i.aee, %i.ads
+  %i.aef = fadd fast <2 x float> %i.aee, %18
   %i.aeg = getelementptr inbounds nuw i8, ptr %.33972.i, i64 4
   br label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy, %.thread840.i, %bb.dx, %bb.dw
   %.35.i = phi ptr [ %i.aeg, %bb.dy ], [ %.33972.i, %bb.dx ], [ null, %bb.dw ], [ %i.aea, %.thread840.i ] ; 2 uses
-  %i.aeh = phi <2 x float> [ %i.aef, %bb.dy ], [ %i.ads, %bb.dx ], [ %i.adr, %bb.dw ], [ %i.adz, %.thread840.i ] ; 2 uses
+  %i.aeh = phi <2 x float> [ %i.aef, %bb.dy ], [ %19, %bb.dx ], [ %i.adr, %bb.dw ], [ %i.adz, %.thread840.i ] ; 2 uses
   %i.aei = extractelement <2 x float> %i.aeh, i64 0
   %i.aej = fmul fast float %i.aei, %8
   %i.aek = extractelement <2 x float> %i.aeh, i64 1
@@ -2439,8 +2442,8 @@ bb.eq:                                            ; preds = %bb.ep, %bb.eo, %.th
   %.1545.i = phi nsz <4 x float> [ %i.agc, %.lr.ph990.i ], [ %i.agn, %bb.ep ], [ %i.agc, %bb.eo ], [ %i.agh, %.thread860.i ]
   %.1542.i = phi nsz <4 x float> [ %i.agg, %.lr.ph990.i ], [ %i.agp, %bb.ep ], [ %i.agg, %bb.eo ], [ %i.agi, %.thread860.i ]
   %.41.i = phi ptr [ null, %.lr.ph990.i ], [ %i.agq, %bb.ep ], [ %.40987.i, %bb.eo ], [ %.40987.i, %.thread860.i ] ; 2 uses
-  %.2546.i = fmul reassoc nnan nsz arcp contract afn <4 x float> %.1545.i, %i.vi ; 7 uses
-  %.2543.i = fmul reassoc nnan nsz arcp contract afn <4 x float> %.1542.i, %i.vi ; 7 uses
+  %.2546.i = fmul reassoc nsz arcp contract afn <4 x float> %.1545.i, %i.vi ; 7 uses
+  %.2543.i = fmul reassoc nsz arcp contract afn <4 x float> %.1542.i, %i.vi ; 7 uses
   br i1 %.not.i, label %bb.ew, label %bb.er
 
 bb.er:                                            ; preds = %bb.eq
@@ -2626,7 +2629,7 @@ bb.fj:                                            ; preds = %bb.fp, %.lr.ph1010.
   br i1 %.not1244.i, label %bb.fm, label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj
-  %i.aij = fadd fast <2 x float> %i.aii, %i.ahm
+  %i.aij = fadd reassoc nsz arcp contract afn <2 x float> %i.aii, %i.ahm
   br i1 %or.cond27.i, label %bb.fl, label %bb.fm
 
 bb.fl:                                            ; preds = %bb.fk
@@ -2677,7 +2680,7 @@ bb.fq:                                            ; preds = %bb.ft, %.lr.ph1019.
   br i1 %.not1243.i, label %bb.ft, label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fq
-  %.0.i = fadd fast float %i.ajc, %i.aif
+  %.0.i = fadd reassoc nsz arcp contract afn float %i.ajc, %i.aif
   br i1 %or.cond27.i, label %bb.fs, label %bb.ft
 
 bb.fs:                                            ; preds = %bb.fr
@@ -3080,8 +3083,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = fmul fast float %i.e, 1.250000e-01
   %i.g = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.f)
   %i.h = fptosi float %i.g to i32
-  %10 = and i32 %i.h, 2147483644
-  %.sroa.speculated115 = tail call i32 @llvm.umax.i32(i32 %10, i32 4) ; 6 uses
+  %10 = sdiv i32 %i.h, 4
+  %11 = shl nsw i32 %10, 2
+  %.sroa.speculated115 = tail call i32 @llvm.smax.i32(i32 %11, i32 4) ; 6 uses
   store i32 %.sroa.speculated115, ptr %6, align 4, !tbaa !49
   store i32 %.sroa.speculated115, ptr %7, align 4, !tbaa !49
   store i32 %.sroa.speculated115, ptr %8, align 4, !tbaa !49
@@ -3106,8 +3110,9 @@ bb.e:                                             ; preds = %bb.d
   %i.s = uitofp nneg i32 %.sroa.speculated99 to float
   %i.t = fdiv fast float %i.r, %i.s
   %i.u = fptosi float %i.t to i32
-  %11 = and i32 %i.u, 2147483644
-  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %11, i32 4) ; 2 uses
+  %12 = sdiv i32 %i.u, 4
+  %13 = shl nsw i32 %12, 2
+  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %13, i32 4) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !49
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !49
   br label %bb.f
@@ -3510,13 +3515,10 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #11
+declare i32 @llvm.smax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.maxnum.f32(float, float) #11

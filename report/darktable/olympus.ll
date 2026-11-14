@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.k = uitofp nneg i16 %i.c to float
-  %i.l = fmul reassoc nnan nsz arcp contract afn float %i.k, 1.202280e-01
+  %i.l = fmul reassoc nsz arcp contract afn float %i.k, 1.202280e-01
   %i.m = fsub reassoc nsz arcp contract afn float f0x42ACF32E, %i.l
   br label %.sink.split
 
@@ -342,8 +342,9 @@ bb.k:                                             ; preds = %bb.a
 bb.l:                                             ; preds = %bb.a
   %i.ba = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bb = uitofp i16 %i.ba to float
-  %i.bc = fmul reassoc nnan nsz arcp contract afn float %i.bb, 3.906250e-03 ; 2 uses
-  %or.cond.i.i = fcmp reassoc nsz arcp contract afn ogt float %i.bc, 6.400000e+01
+  %i.bc = fmul reassoc nsz arcp contract afn float %i.bb, 3.906250e-03 ; 2 uses
+  %5 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bc)
+  %or.cond.i.i = fcmp reassoc nsz arcp contract afn ogt float %5, 6.400000e+01
   %i.bd = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float f0x3FB504F3, float %i.bc)
   %i.be = select reassoc nsz arcp contract afn i1 %or.cond.i.i, float 0.000000e+00, float %i.bd
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 1464
@@ -353,8 +354,9 @@ bb.l:                                             ; preds = %bb.a
 bb.m:                                             ; preds = %bb.a
   %i.bg = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bh = uitofp i16 %i.bg to float
-  %i.bi = fmul reassoc nnan nsz arcp contract afn float %i.bh, 3.906250e-03 ; 2 uses
-  %or.cond.i.i23 = fcmp reassoc nsz arcp contract afn ogt float %i.bi, 6.400000e+01
+  %i.bi = fmul reassoc nsz arcp contract afn float %i.bh, 3.906250e-03 ; 2 uses
+  %6 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bi)
+  %or.cond.i.i23 = fcmp reassoc nsz arcp contract afn ogt float %6, 6.400000e+01
   %i.bj = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float f0x3FB504F3, float %i.bi)
   %i.bk = select reassoc nsz arcp contract afn i1 %or.cond.i.i23, float 0.000000e+00, float %i.bj
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 1468
@@ -385,8 +387,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.a
   %i.bv = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bw = uitofp i16 %i.bv to float
-  %i.bx = fmul reassoc nnan nsz arcp contract afn float %i.bw, 3.906250e-03 ; 2 uses
-  %or.cond.i.i24 = fcmp reassoc nsz arcp contract afn ogt float %i.bx, 6.400000e+01
+  %i.bx = fmul reassoc nsz arcp contract afn float %i.bw, 3.906250e-03 ; 2 uses
+  %7 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bx)
+  %or.cond.i.i24 = fcmp reassoc nsz arcp contract afn ogt float %7, 6.400000e+01
   %i.by = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float f0x3FB504F3, float %i.bx)
   %i.bz = select reassoc nsz arcp contract afn i1 %or.cond.i.i24, float 0.000000e+00, float %i.by
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 1496
@@ -733,12 +736,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.d = uitofp reassoc nsz arcp contract afn i16 %i.c to float
-  %i.e = fmul reassoc nnan nsz arcp contract afn float %i.d, 3.906250e-03
+  %i.e = fmul reassoc nsz arcp contract afn float %i.d, 3.906250e-03
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 153252
   store float %i.e, ptr %i.f, align 4, !tbaa !101
   %i.g = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.h = uitofp reassoc nsz arcp contract afn i16 %i.g to float
-  %i.i = fmul reassoc nnan nsz arcp contract afn float %i.h, 3.906250e-03
+  %i.i = fmul reassoc nsz arcp contract afn float %i.h, 3.906250e-03
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 153260
   store float %i.i, ptr %i.j, align 4, !tbaa !101
   br label %.thread270.thread
@@ -1141,7 +1144,7 @@ bb.ar:                                            ; preds = %bb.aq
   %.not202 = icmp eq i16 %i.ea, 0                 ; 3 uses
   %i.eb = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ec = sitofp reassoc nsz arcp contract afn i16 %i.eb to float
-  %i.ed = fmul reassoc nnan nsz arcp contract afn float %i.ec, 3.906250e-03
+  %i.ed = fmul reassoc nsz arcp contract afn float %i.ec, 3.906250e-03
   %. = select i1 %.not202, i64 153284, i64 153332
   %.336 = select i1 %.not202, i64 153288, i64 153336
   %.337 = select i1 %.not202, i64 153292, i64 153340
@@ -1149,12 +1152,12 @@ bb.ar:                                            ; preds = %bb.aq
   store float %i.ed, ptr %i.ee, align 4, !tbaa !101
   %i.ef = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.eg = sitofp reassoc nsz arcp contract afn i16 %i.ef to float
-  %i.eh = fmul reassoc nnan nsz arcp contract afn float %i.eg, 3.906250e-03
+  %i.eh = fmul reassoc nsz arcp contract afn float %i.eg, 3.906250e-03
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 %.336
   store float %i.eh, ptr %i.ei, align 8, !tbaa !101
   %i.ej = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ek = sitofp reassoc nsz arcp contract afn i16 %i.ej to float
-  %i.el = fmul reassoc nnan nsz arcp contract afn float %i.ek, 3.906250e-03
+  %i.el = fmul reassoc nsz arcp contract afn float %i.ek, 3.906250e-03
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 %.337
   store float %i.el, ptr %i.em, align 4, !tbaa !101
   %i.en = load i16, ptr %i.dz, align 2, !tbaa !99
@@ -1165,23 +1168,23 @@ bb.ar:                                            ; preds = %bb.aq
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
   %i.ep = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.eq = sitofp reassoc nsz arcp contract afn i16 %i.ep to float
-  %i.er = fmul reassoc nnan nsz arcp contract afn float %i.eq, 3.906250e-03
+  %i.er = fmul reassoc nsz arcp contract afn float %i.eq, 3.906250e-03
   store float %i.er, ptr %i.eo, align 4, !tbaa !101
   %i.es = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.et = sitofp reassoc nsz arcp contract afn i16 %i.es to float
-  %i.eu = fmul reassoc nnan nsz arcp contract afn float %i.et, 3.906250e-03
+  %i.eu = fmul reassoc nsz arcp contract afn float %i.et, 3.906250e-03
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 %.sink332
   store float %i.eu, ptr %i.ev, align 8, !tbaa !101
   %i.ew = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ex = sitofp reassoc nsz arcp contract afn i16 %i.ew to float
-  %i.ey = fmul reassoc nnan nsz arcp contract afn float %i.ex, 3.906250e-03
+  %i.ey = fmul reassoc nsz arcp contract afn float %i.ex, 3.906250e-03
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 %.sink329
   store float %i.ey, ptr %i.ez, align 4, !tbaa !101
   %i.fa = load i16, ptr %i.dz, align 2, !tbaa !99
   %.not202.2 = icmp eq i16 %i.fa, 0
   %i.fb = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.fc = sitofp reassoc nsz arcp contract afn i16 %i.fb to float
-  %i.fd = fmul reassoc nnan nsz arcp contract afn float %i.fc, 3.906250e-03 ; 2 uses
+  %i.fd = fmul reassoc nsz arcp contract afn float %i.fc, 3.906250e-03 ; 2 uses
   br i1 %.not202.2, label %.preheader272.2, label %.preheader273.2
 
 .preheader273.2:                                  ; preds = %.preheader275
@@ -1189,12 +1192,12 @@ bb.ar:                                            ; preds = %bb.aq
   store float %i.fd, ptr %i.fe, align 4, !tbaa !101
   %i.ff = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.fg = sitofp reassoc nsz arcp contract afn i16 %i.ff to float
-  %i.fh = fmul reassoc nnan nsz arcp contract afn float %i.fg, 3.906250e-03
+  %i.fh = fmul reassoc nsz arcp contract afn float %i.fg, 3.906250e-03
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 153368
   store float %i.fh, ptr %i.fi, align 8, !tbaa !101
   %i.fj = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.fk = sitofp reassoc nsz arcp contract afn i16 %i.fj to float
-  %i.fl = fmul reassoc nnan nsz arcp contract afn float %i.fk, 3.906250e-03
+  %i.fl = fmul reassoc nsz arcp contract afn float %i.fk, 3.906250e-03
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 153372
   store float %i.fl, ptr %i.fm, align 4, !tbaa !101
   br label %.thread270.thread
@@ -1204,12 +1207,12 @@ bb.ar:                                            ; preds = %bb.aq
   store float %i.fd, ptr %i.fn, align 4, !tbaa !101
   %i.fo = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.fp = sitofp reassoc nsz arcp contract afn i16 %i.fo to float
-  %i.fq = fmul reassoc nnan nsz arcp contract afn float %i.fp, 3.906250e-03
+  %i.fq = fmul reassoc nsz arcp contract afn float %i.fp, 3.906250e-03
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 153320
   store float %i.fq, ptr %i.fr, align 8, !tbaa !101
   %i.fs = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ft = sitofp reassoc nsz arcp contract afn i16 %i.fs to float
-  %i.fu = fmul reassoc nnan nsz arcp contract afn float %i.ft, 3.906250e-03
+  %i.fu = fmul reassoc nsz arcp contract afn float %i.ft, 3.906250e-03
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 153324
   store float %i.fu, ptr %i.fv, align 4, !tbaa !101
   br label %.thread270.thread
@@ -1595,7 +1598,7 @@ bb.cw:                                            ; preds = %bb.cv
 bb.cx:                                            ; preds = %bb.cv
   %i.ke = add nsw i32 %i.kb, -32
   %i.kf = uitofp nneg i32 %i.ke to float
-  %i.kg = fmul reassoc nnan nsz arcp contract afn float %i.kf, f0x3F0E38E4
+  %i.kg = fmul reassoc nsz arcp contract afn float %i.kf, f0x3F0E38E4
   br label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx, %bb.cw
@@ -1913,7 +1916,7 @@ bb.o:                                             ; preds = %bb.d
   %.not63 = icmp eq i16 %i.ay, 0                  ; 3 uses
   %i.az = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ba = sitofp reassoc nsz arcp contract afn i16 %i.az to float
-  %i.bb = fmul reassoc nnan nsz arcp contract afn float %i.ba, 3.906250e-03
+  %i.bb = fmul reassoc nsz arcp contract afn float %i.ba, 3.906250e-03
   %. = select i1 %.not63, i64 153284, i64 153332
   %.127 = select i1 %.not63, i64 153288, i64 153336
   %.128 = select i1 %.not63, i64 153292, i64 153340
@@ -1921,12 +1924,12 @@ bb.o:                                             ; preds = %bb.d
   store float %i.bb, ptr %i.bc, align 4, !tbaa !101
   %i.bd = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.be = sitofp reassoc nsz arcp contract afn i16 %i.bd to float
-  %i.bf = fmul reassoc nnan nsz arcp contract afn float %i.be, 3.906250e-03
+  %i.bf = fmul reassoc nsz arcp contract afn float %i.be, 3.906250e-03
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.127
   store float %i.bf, ptr %i.bg, align 8, !tbaa !101
   %i.bh = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bi = sitofp reassoc nsz arcp contract afn i16 %i.bh to float
-  %i.bj = fmul reassoc nnan nsz arcp contract afn float %i.bi, 3.906250e-03
+  %i.bj = fmul reassoc nsz arcp contract afn float %i.bi, 3.906250e-03
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 %.128
   store float %i.bj, ptr %i.bk, align 4, !tbaa !101
   %i.bl = load i16, ptr %i.ax, align 2, !tbaa !99
@@ -1937,23 +1940,23 @@ bb.o:                                             ; preds = %bb.d
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
   %i.bn = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bo = sitofp reassoc nsz arcp contract afn i16 %i.bn to float
-  %i.bp = fmul reassoc nnan nsz arcp contract afn float %i.bo, 3.906250e-03
+  %i.bp = fmul reassoc nsz arcp contract afn float %i.bo, 3.906250e-03
   store float %i.bp, ptr %i.bm, align 4, !tbaa !101
   %i.bq = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.br = sitofp reassoc nsz arcp contract afn i16 %i.bq to float
-  %i.bs = fmul reassoc nnan nsz arcp contract afn float %i.br, 3.906250e-03
+  %i.bs = fmul reassoc nsz arcp contract afn float %i.br, 3.906250e-03
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 %.sink123
   store float %i.bs, ptr %i.bt, align 8, !tbaa !101
   %i.bu = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bv = sitofp reassoc nsz arcp contract afn i16 %i.bu to float
-  %i.bw = fmul reassoc nnan nsz arcp contract afn float %i.bv, 3.906250e-03
+  %i.bw = fmul reassoc nsz arcp contract afn float %i.bv, 3.906250e-03
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink120
   store float %i.bw, ptr %i.bx, align 4, !tbaa !101
   %i.by = load i16, ptr %i.ax, align 2, !tbaa !99
   %.not63.2 = icmp eq i16 %i.by, 0
   %i.bz = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ca = sitofp reassoc nsz arcp contract afn i16 %i.bz to float
-  %i.cb = fmul reassoc nnan nsz arcp contract afn float %i.ca, 3.906250e-03 ; 2 uses
+  %i.cb = fmul reassoc nsz arcp contract afn float %i.ca, 3.906250e-03 ; 2 uses
   br i1 %.not63.2, label %.preheader.2, label %.preheader80.2
 
 .preheader80.2:                                   ; preds = %.preheader82
@@ -1961,12 +1964,12 @@ bb.o:                                             ; preds = %bb.d
   store float %i.cb, ptr %i.cc, align 4, !tbaa !101
   %i.cd = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ce = sitofp reassoc nsz arcp contract afn i16 %i.cd to float
-  %i.cf = fmul reassoc nnan nsz arcp contract afn float %i.ce, 3.906250e-03
+  %i.cf = fmul reassoc nsz arcp contract afn float %i.ce, 3.906250e-03
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 153368
   store float %i.cf, ptr %i.cg, align 8, !tbaa !101
   %i.ch = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ci = sitofp reassoc nsz arcp contract afn i16 %i.ch to float
-  %i.cj = fmul reassoc nnan nsz arcp contract afn float %i.ci, 3.906250e-03
+  %i.cj = fmul reassoc nsz arcp contract afn float %i.ci, 3.906250e-03
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 153372
   store float %i.cj, ptr %i.ck, align 4, !tbaa !101
   br label %.thread78
@@ -1976,12 +1979,12 @@ bb.o:                                             ; preds = %bb.d
   store float %i.cb, ptr %i.cl, align 4, !tbaa !101
   %i.cm = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cn = sitofp reassoc nsz arcp contract afn i16 %i.cm to float
-  %i.co = fmul reassoc nnan nsz arcp contract afn float %i.cn, 3.906250e-03
+  %i.co = fmul reassoc nsz arcp contract afn float %i.cn, 3.906250e-03
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 153320
   store float %i.co, ptr %i.cp, align 8, !tbaa !101
   %i.cq = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cr = sitofp reassoc nsz arcp contract afn i16 %i.cq to float
-  %i.cs = fmul reassoc nnan nsz arcp contract afn float %i.cr, 3.906250e-03
+  %i.cs = fmul reassoc nsz arcp contract afn float %i.cr, 3.906250e-03
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 153324
   store float %i.cs, ptr %i.ct, align 4, !tbaa !101
   br label %.thread78
@@ -2241,7 +2244,7 @@ bb.t:                                             ; preds = %bb.f
   %.not = icmp eq i16 %i.bd, 0                    ; 3 uses
   %i.be = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bf = sitofp reassoc nsz arcp contract afn i16 %i.be to float
-  %i.bg = fmul reassoc nnan nsz arcp contract afn float %i.bf, 3.906250e-03
+  %i.bg = fmul reassoc nsz arcp contract afn float %i.bf, 3.906250e-03
   %. = select i1 %.not, i64 153284, i64 153332
   %.108 = select i1 %.not, i64 153288, i64 153336
   %.109 = select i1 %.not, i64 153292, i64 153340
@@ -2249,12 +2252,12 @@ bb.t:                                             ; preds = %bb.f
   store float %i.bg, ptr %i.bh, align 4, !tbaa !101
   %i.bi = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bj = sitofp reassoc nsz arcp contract afn i16 %i.bi to float
-  %i.bk = fmul reassoc nnan nsz arcp contract afn float %i.bj, 3.906250e-03
+  %i.bk = fmul reassoc nsz arcp contract afn float %i.bj, 3.906250e-03
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 %.108
   store float %i.bk, ptr %i.bl, align 8, !tbaa !101
   %i.bm = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bn = sitofp reassoc nsz arcp contract afn i16 %i.bm to float
-  %i.bo = fmul reassoc nnan nsz arcp contract afn float %i.bn, 3.906250e-03
+  %i.bo = fmul reassoc nsz arcp contract afn float %i.bn, 3.906250e-03
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 %.109
   store float %i.bo, ptr %i.bp, align 4, !tbaa !101
   %i.bq = load i16, ptr %i.bc, align 2, !tbaa !99
@@ -2265,23 +2268,23 @@ bb.t:                                             ; preds = %bb.f
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
   %i.bs = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bt = sitofp reassoc nsz arcp contract afn i16 %i.bs to float
-  %i.bu = fmul reassoc nnan nsz arcp contract afn float %i.bt, 3.906250e-03
+  %i.bu = fmul reassoc nsz arcp contract afn float %i.bt, 3.906250e-03
   store float %i.bu, ptr %i.br, align 4, !tbaa !101
   %i.bv = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.bw = sitofp reassoc nsz arcp contract afn i16 %i.bv to float
-  %i.bx = fmul reassoc nnan nsz arcp contract afn float %i.bw, 3.906250e-03
+  %i.bx = fmul reassoc nsz arcp contract afn float %i.bw, 3.906250e-03
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 %.sink103
   store float %i.bx, ptr %i.by, align 8, !tbaa !101
   %i.bz = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ca = sitofp reassoc nsz arcp contract afn i16 %i.bz to float
-  %i.cb = fmul reassoc nnan nsz arcp contract afn float %i.ca, 3.906250e-03
+  %i.cb = fmul reassoc nsz arcp contract afn float %i.ca, 3.906250e-03
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 %.sink100
   store float %i.cb, ptr %i.cc, align 4, !tbaa !101
   %i.cd = load i16, ptr %i.bc, align 2, !tbaa !99
   %.not.2 = icmp eq i16 %i.cd, 0
   %i.ce = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cf = sitofp reassoc nsz arcp contract afn i16 %i.ce to float
-  %i.cg = fmul reassoc nnan nsz arcp contract afn float %i.cf, 3.906250e-03 ; 2 uses
+  %i.cg = fmul reassoc nsz arcp contract afn float %i.cf, 3.906250e-03 ; 2 uses
   br i1 %.not.2, label %.preheader72.2, label %.preheader74.2
 
 .preheader74.2:                                   ; preds = %.preheader76
@@ -2289,12 +2292,12 @@ bb.t:                                             ; preds = %bb.f
   store float %i.cg, ptr %i.ch, align 4, !tbaa !101
   %i.ci = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cj = sitofp reassoc nsz arcp contract afn i16 %i.ci to float
-  %i.ck = fmul reassoc nnan nsz arcp contract afn float %i.cj, 3.906250e-03
+  %i.ck = fmul reassoc nsz arcp contract afn float %i.cj, 3.906250e-03
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 153368
   store float %i.ck, ptr %i.cl, align 8, !tbaa !101
   %i.cm = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cn = sitofp reassoc nsz arcp contract afn i16 %i.cm to float
-  %i.co = fmul reassoc nnan nsz arcp contract afn float %i.cn, 3.906250e-03
+  %i.co = fmul reassoc nsz arcp contract afn float %i.cn, 3.906250e-03
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 153372
   store float %i.co, ptr %i.cp, align 4, !tbaa !101
   br label %.loopexit
@@ -2304,12 +2307,12 @@ bb.t:                                             ; preds = %bb.f
   store float %i.cg, ptr %i.cq, align 4, !tbaa !101
   %i.cr = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cs = sitofp reassoc nsz arcp contract afn i16 %i.cr to float
-  %i.ct = fmul reassoc nnan nsz arcp contract afn float %i.cs, 3.906250e-03
+  %i.ct = fmul reassoc nsz arcp contract afn float %i.cs, 3.906250e-03
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 153320
   store float %i.ct, ptr %i.cu, align 8, !tbaa !101
   %i.cv = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.cw = sitofp reassoc nsz arcp contract afn i16 %i.cv to float
-  %i.cx = fmul reassoc nnan nsz arcp contract afn float %i.cw, 3.906250e-03
+  %i.cx = fmul reassoc nsz arcp contract afn float %i.cw, 3.906250e-03
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 153324
   store float %i.cx, ptr %i.cy, align 4, !tbaa !101
   br label %.loopexit
@@ -2344,7 +2347,7 @@ bb.v:                                             ; preds = %bb.f
 bb.w:                                             ; preds = %bb.v
   %i.dn = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.do = uitofp reassoc nsz arcp contract afn i16 %i.dn to float
-  %i.dp = fmul reassoc nnan nsz arcp contract afn float %i.do, 3.906250e-03
+  %i.dp = fmul reassoc nsz arcp contract afn float %i.do, 3.906250e-03
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 153252
   store float %i.dp, ptr %i.dq, align 4, !tbaa !101
   br label %.loopexit
@@ -2356,7 +2359,7 @@ bb.x:                                             ; preds = %bb.f
 bb.y:                                             ; preds = %bb.x
   %i.ds = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.dt = uitofp reassoc nsz arcp contract afn i16 %i.ds to float
-  %i.du = fmul reassoc nnan nsz arcp contract afn float %i.dt, 3.906250e-03
+  %i.du = fmul reassoc nsz arcp contract afn float %i.dt, 3.906250e-03
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 153260
   store float %i.du, ptr %i.dv, align 4, !tbaa !101
   br label %.loopexit
@@ -2460,7 +2463,7 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.am
   %i.fc = uitofp reassoc nsz arcp contract afn nneg i32 %i.ey to double
-  %i.fd = fmul reassoc nnan nsz arcp contract afn double %i.fc, 1.000000e-03
+  %i.fd = fmul reassoc nsz arcp contract afn double %i.fc, 1.000000e-03
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 3560
   store double %i.fd, ptr %i.fe, align 8, !tbaa !163
   br label %.loopexit

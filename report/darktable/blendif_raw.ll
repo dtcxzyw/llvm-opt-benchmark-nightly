@@ -202,11 +202,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %wide.load19 = load <8 x float>, ptr %i.e, align 4, !tbaa !34
   %i.f = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %wide.load19, <8 x float> zeroinitializer)
-  %i.g = tail call reassoc nnan nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.f, <8 x float> splat (float 1.000000e+00))
-  %i.h = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.g
-  %i.i = fadd reassoc nnan nsz arcp contract afn <8 x float> %i.d, splat (float -1.000000e+00)
+  %i.g = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.f, <8 x float> splat (float 1.000000e+00))
+  %i.h = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.g
+  %i.i = fadd reassoc nsz arcp contract afn <8 x float> %i.d, splat (float -1.000000e+00)
   %i.j = fmul reassoc nsz arcp contract afn <8 x float> %i.h, %i.i
-  %i.k = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.d
+  %i.k = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.d
   %i.l = fadd reassoc nsz arcp contract afn <8 x float> %i.k, %i.j
   %i.m = fmul reassoc nsz arcp contract afn <8 x float> %i.l, %wide.load
   %i.n = fadd reassoc nsz arcp contract afn <8 x float> %i.m, %i.d
@@ -240,11 +240,11 @@ middle.block:                                     ; preds = %vector.body
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.017
   %i.z = load float, ptr %i.y, align 4, !tbaa !34
   %i.aa = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.z, float 0.000000e+00)
-  %i.ab = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %i.aa, float 1.000000e+00)
-  %i.ac = fsub reassoc nnan nsz arcp contract afn float 1.000000e+00, %i.ab
-  %i.ad = fadd reassoc nnan nsz arcp contract afn float %i.x, -1.000000e+00
+  %i.ab = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %i.aa, float 1.000000e+00)
+  %i.ac = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ab
+  %i.ad = fadd reassoc nsz arcp contract afn float %i.x, -1.000000e+00
   %.neg15 = fmul reassoc nsz arcp contract afn float %i.ac, %i.ad
-  %.neg16 = fsub reassoc nnan nsz arcp contract afn float 1.000000e+00, %i.x
+  %.neg16 = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.x
   %i.ae = fadd reassoc nsz arcp contract afn float %.neg16, %.neg15
   %i.af = fmul reassoc nsz arcp contract afn float %i.ae, %i.t
   %i.ag = fadd reassoc nsz arcp contract afn float %i.af, %i.x
@@ -285,10 +285,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.g = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %wide.load25, <8 x float> zeroinitializer)
   %i.h = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.g, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.i = fcmp reassoc nsz arcp contract afn ogt <8 x float> %i.e, splat (float 5.000000e-01)
-  %i.j = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.e, splat (float 2.000000e+00) ; 2 uses
+  %i.j = fmul reassoc nsz arcp contract afn <8 x float> %i.e, splat (float 2.000000e+00) ; 2 uses
   %i.k = fmul reassoc nsz arcp contract afn <8 x float> %i.j, %i.h
-  %i.l = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 2.000000e+00), %i.j
-  %i.m = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.h
+  %i.l = fsub reassoc nsz arcp contract afn <8 x float> splat (float 2.000000e+00), %i.j
+  %i.m = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.h
   %i.n = fmul reassoc nsz arcp contract afn <8 x float> %i.l, %i.m
   %i.o = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.n
   %predphi = select reassoc nsz arcp contract afn <8 x i1> %i.i, <8 x float> %i.o, <8 x float> %i.k
@@ -328,12 +328,12 @@ middle.block:                                     ; preds = %vector.body
   %i.af = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.ae, float 0.000000e+00)
   %i.ag = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %i.af, float 1.000000e+00) ; 2 uses
   %i.ah = fcmp reassoc nsz arcp contract afn ogt float %i.ac, 5.000000e-01
-  %i.ai = fmul reassoc nnan nsz arcp contract afn float %i.ac, 2.000000e+00 ; 2 uses
+  %i.ai = fmul reassoc nsz arcp contract afn float %i.ac, 2.000000e+00 ; 2 uses
   br i1 %i.ah, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.aj = fsub reassoc nnan nsz arcp contract afn float 2.000000e+00, %i.ai
-  %i.ak = fsub reassoc nnan nsz arcp contract afn float 1.000000e+00, %i.ag
+  %i.aj = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.ai
+  %i.ak = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ag
   %i.al = fmul reassoc nsz arcp contract afn float %i.aj, %i.ak
   %i.am = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.al
   br label %bb.d
@@ -384,10 +384,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.g = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %wide.load25, <8 x float> zeroinitializer)
   %i.h = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.g, <8 x float> splat (float 1.000000e+00)) ; 3 uses
   %i.i = fcmp reassoc nsz arcp contract afn ogt <8 x float> %i.h, splat (float 5.000000e-01)
-  %i.j = fadd reassoc nnan nsz arcp contract afn <8 x float> %i.h, splat (float 5.000000e-01)
+  %i.j = fadd reassoc nsz arcp contract afn <8 x float> %i.h, splat (float 5.000000e-01)
   %i.k = fmul reassoc nsz arcp contract afn <8 x float> %i.j, %i.e
-  %i.l = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.e
-  %i.m = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 1.500000e+00), %i.h
+  %i.l = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.e
+  %i.m = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.500000e+00), %i.h
   %i.n = fmul reassoc nsz arcp contract afn <8 x float> %i.m, %i.l
   %i.o = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.n
   %predphi = select reassoc nsz arcp contract afn <8 x i1> %i.i, <8 x float> %i.o, <8 x float> %i.k
@@ -430,14 +430,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ah, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.ai = fsub reassoc nnan nsz arcp contract afn float 1.000000e+00, %i.ac
-  %i.aj = fsub reassoc nnan nsz arcp contract afn float 1.500000e+00, %i.ag
+  %i.ai = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ac
+  %i.aj = fsub reassoc nsz arcp contract afn float 1.500000e+00, %i.ag
   %i.ak = fmul reassoc nsz arcp contract afn float %i.aj, %i.ai
   %i.al = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ak
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.am = fadd reassoc nnan nsz arcp contract afn float %i.ag, 5.000000e-01
+  %i.am = fadd reassoc nsz arcp contract afn float %i.ag, 5.000000e-01
   %i.an = fmul reassoc nsz arcp contract afn float %i.am, %i.ac
   br label %bb.d
 
@@ -483,10 +483,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.g = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %wide.load25, <8 x float> zeroinitializer)
   %i.h = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.g, <8 x float> splat (float 1.000000e+00)) ; 3 uses
   %i.i = fcmp reassoc nsz arcp contract afn ogt <8 x float> %i.h, splat (float 5.000000e-01)
-  %i.j = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.e, splat (float 2.000000e+00) ; 2 uses
+  %i.j = fmul reassoc nsz arcp contract afn <8 x float> %i.e, splat (float 2.000000e+00) ; 2 uses
   %i.k = fmul reassoc nsz arcp contract afn <8 x float> %i.j, %i.h
-  %i.l = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 2.000000e+00), %i.j
-  %i.m = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.h
+  %i.l = fsub reassoc nsz arcp contract afn <8 x float> splat (float 2.000000e+00), %i.j
+  %i.m = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.h
   %i.n = fmul reassoc nsz arcp contract afn <8 x float> %i.l, %i.m
   %i.o = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.n
   %predphi = select reassoc nsz arcp contract afn <8 x i1> %i.i, <8 x float> %i.o, <8 x float> %i.k
@@ -526,12 +526,12 @@ middle.block:                                     ; preds = %vector.body
   %i.af = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.ae, float 0.000000e+00)
   %i.ag = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %i.af, float 1.000000e+00) ; 3 uses
   %i.ah = fcmp reassoc nsz arcp contract afn ogt float %i.ag, 5.000000e-01
-  %i.ai = fmul reassoc nnan nsz arcp contract afn float %i.ac, 2.000000e+00 ; 2 uses
+  %i.ai = fmul reassoc nsz arcp contract afn float %i.ac, 2.000000e+00 ; 2 uses
   br i1 %i.ah, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.aj = fsub reassoc nnan nsz arcp contract afn float 2.000000e+00, %i.ai
-  %i.ak = fsub reassoc nnan nsz arcp contract afn float 1.000000e+00, %i.ag
+  %i.aj = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.ai
+  %i.ak = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ag
   %i.al = fmul reassoc nsz arcp contract afn float %i.aj, %i.ak
   %i.am = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.al
   br label %bb.d
@@ -584,11 +584,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.i = fcmp reassoc nsz arcp contract afn ogt <8 x float> %i.h, splat (float 5.000000e-01)
   %i.j = fcmp reassoc nsz arcp contract afn ole <8 x float> %i.h, zeroinitializer
   %i.k = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.e
-  %i.l = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.h, splat (float 2.000000e+00) ; 2 uses
+  %i.l = fmul reassoc nsz arcp contract afn <8 x float> %i.h, splat (float 2.000000e+00) ; 2 uses
   %i.m = fdiv reassoc nsz arcp contract afn <8 x float> %i.k, %i.l
   %i.n = fsub reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %i.m
   %i.o = fcmp reassoc nsz arcp contract afn ult <8 x float> %i.h, splat (float 1.000000e+00)
-  %i.p = fsub reassoc nnan nsz arcp contract afn <8 x float> splat (float 2.000000e+00), %i.l
+  %i.p = fsub reassoc nsz arcp contract afn <8 x float> splat (float 2.000000e+00), %i.l
   %i.q = fdiv reassoc nsz arcp contract afn <8 x float> %i.e, %i.p
   %predphi = select reassoc nsz arcp contract afn <8 x i1> %i.j, <8 x float> zeroinitializer, <8 x float> %i.n
   %predphi28 = select reassoc nsz arcp contract afn <8 x i1> %i.i, <8 x float> %i.q, <8 x float> %predphi
@@ -636,8 +636,8 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.ak, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %i.al = fmul reassoc nnan nsz arcp contract afn float %i.ai, 2.000000e+00
-  %i.am = fsub reassoc nnan nsz arcp contract afn float 2.000000e+00, %i.al
+  %i.al = fmul reassoc nsz arcp contract afn float %i.ai, 2.000000e+00
+  %i.am = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.al
   %i.an = fdiv reassoc nsz arcp contract afn float %i.ae, %i.am
   br label %bb.f
 
@@ -647,7 +647,7 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
   %i.ap = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ae
-  %i.aq = fmul reassoc nnan nsz arcp contract afn float %i.ai, 2.000000e+00
+  %i.aq = fmul reassoc nsz arcp contract afn float %i.ai, 2.000000e+00
   %i.ar = fdiv reassoc nsz arcp contract afn float %i.ap, %i.aq
   %i.as = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.ar
   br label %bb.f
@@ -692,9 +692,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %wide.load19 = load <8 x float>, ptr %i.f, align 4, !tbaa !34
   %i.g = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %wide.load19, <8 x float> zeroinitializer)
-  %i.h = tail call reassoc nnan nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.g, <8 x float> splat (float 1.000000e+00))
-  %i.i = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.h, splat (float 2.000000e+00)
-  %i.j = fadd reassoc nnan nsz arcp contract afn <8 x float> %i.i, splat (float -1.000000e+00)
+  %i.h = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.g, <8 x float> splat (float 1.000000e+00))
+  %i.i = fmul reassoc nsz arcp contract afn <8 x float> %i.h, splat (float 2.000000e+00)
+  %i.j = fadd reassoc nsz arcp contract afn <8 x float> %i.i, splat (float -1.000000e+00)
   %i.k = fmul reassoc nsz arcp contract afn <8 x float> %i.b, %i.j
   %i.l = fadd reassoc nsz arcp contract afn <8 x float> %i.k, %i.e
   %i.m = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %i.l, <8 x float> zeroinitializer)
@@ -728,9 +728,9 @@ middle.block:                                     ; preds = %vector.body
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.017
   %i.y = load float, ptr %i.x, align 4, !tbaa !34
   %i.z = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.y, float 0.000000e+00)
-  %i.aa = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %i.z, float 1.000000e+00)
-  %i.ab = fmul reassoc nnan nsz arcp contract afn float %i.aa, 2.000000e+00
-  %i.ac = fadd reassoc nnan nsz arcp contract afn float %i.ab, -1.000000e+00
+  %i.aa = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %i.z, float 1.000000e+00)
+  %i.ab = fmul reassoc nsz arcp contract afn float %i.aa, 2.000000e+00
+  %i.ac = fadd reassoc nsz arcp contract afn float %i.ab, -1.000000e+00
   %i.ad = fmul reassoc nsz arcp contract afn float %i.s, %i.ac
   %i.ae = fadd reassoc nsz arcp contract afn float %i.ad, %i.w
   %i.af = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.ae, float 0.000000e+00)
@@ -770,12 +770,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.g = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %wide.load25, <8 x float> zeroinitializer)
   %i.h = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.g, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.i = fcmp reassoc nsz arcp contract afn ogt <8 x float> %i.h, splat (float 5.000000e-01)
-  %i.j = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.h, splat (float 2.000000e+00) ; 2 uses
-  %5 = fadd reassoc nnan nsz arcp contract afn <8 x float> %i.j, splat (float -1.000000e+00)
-  %6 = tail call reassoc nnan nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %i.e, <8 x float> %5)
-  %i.k = tail call reassoc nnan nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.e, <8 x float> %i.j)
-  %i.l = select reassoc nsz arcp contract afn <8 x i1> %i.i, <8 x float> %6, <8 x float> %i.k
-  %i.m = fsub reassoc nnan nsz arcp contract afn <8 x float> %i.l, %i.e
+  %i.j = fmul reassoc nsz arcp contract afn <8 x float> %i.h, splat (float 2.000000e+00) ; 2 uses
+  %5 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.e, <8 x float> %i.j)
+  %6 = fadd reassoc nsz arcp contract afn <8 x float> %i.j, splat (float -1.000000e+00)
+  %i.k = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %i.e, <8 x float> %6)
+  %i.l = select reassoc nsz arcp contract afn <8 x i1> %i.i, <8 x float> %i.k, <8 x float> %5
+  %i.m = fsub reassoc nsz arcp contract afn <8 x float> %i.l, %i.e
   %i.n = fmul reassoc nsz arcp contract afn <8 x float> %i.b, %i.m
   %i.o = fadd reassoc nsz arcp contract afn <8 x float> %i.n, %i.e
   %i.p = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %i.o, <8 x float> zeroinitializer)
@@ -794,11 +794,11 @@ middle.block:                                     ; preds = %vector.body
   %.021.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
+._crit_edge:                                      ; preds = %12, %middle.block, %bb.a
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader26, %.lr.ph
-  %.021 = phi i64 [ %17, %.lr.ph ], [ %.021.ph, %.lr.ph.preheader26 ] ; 5 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader26, %12
+  %.021 = phi i64 [ %20, %12 ], [ %.021.ph, %.lr.ph.preheader26 ] ; 5 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.021
   %i.u = load float, ptr %i.t, align 4, !tbaa !34 ; 2 uses
   %i.v = fmul reassoc nsz arcp contract afn float %i.u, %i.u
@@ -811,20 +811,29 @@ middle.block:                                     ; preds = %vector.body
   %i.ac = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.ab, float 0.000000e+00)
   %i.ad = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %i.ac, float 1.000000e+00) ; 2 uses
   %i.ae = fcmp reassoc nsz arcp contract afn ogt float %i.ad, 5.000000e-01
-  %7 = fmul reassoc nnan nsz arcp contract afn float %i.ad, 2.000000e+00 ; 2 uses
-  %8 = fadd reassoc nnan nsz arcp contract afn float %7, -1.000000e+00
-  %9 = tail call reassoc nnan nsz arcp contract afn float @llvm.maxnum.f32(float %i.z, float %8)
-  %10 = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %i.z, float %7)
-  %11 = select reassoc nsz arcp contract afn i1 %i.ae, float %9, float %10
-  %12 = fsub reassoc nnan nsz arcp contract afn float %11, %i.z
-  %i.af = fmul reassoc nsz arcp contract afn float %i.v, %12
-  %13 = fadd reassoc nsz arcp contract afn float %i.af, %i.z
-  %14 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %13, float 0.000000e+00)
-  %15 = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %14, float 1.000000e+00)
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.021
-  store float %15, ptr %16, align 4, !tbaa !34
-  %17 = add nuw i64 %.021, 1                      ; 2 uses
-  %exitcond.not = icmp eq i64 %17, %4
+  %i.af = fmul reassoc nsz arcp contract afn float %i.ad, 2.000000e+00 ; 2 uses
+  br i1 %i.ae, label %7, label %10
+
+7:                                                ; preds = %.lr.ph
+  %8 = fadd reassoc nsz arcp contract afn float %i.af, -1.000000e+00
+  %9 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.z, float %8)
+  br label %12
+
+10:                                               ; preds = %.lr.ph
+  %11 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %i.z, float %i.af)
+  br label %12
+
+12:                                               ; preds = %10, %7
+  %13 = phi reassoc nsz arcp contract afn float [ %9, %7 ], [ %11, %10 ]
+  %14 = fsub reassoc nsz arcp contract afn float %13, %i.z
+  %15 = fmul reassoc nsz arcp contract afn float %i.v, %14
+  %16 = fadd reassoc nsz arcp contract afn float %15, %i.z
+  %17 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %16, float 0.000000e+00)
+  %18 = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %17, float 1.000000e+00)
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.021
+  store float %18, ptr %19, align 4, !tbaa !34
+  %20 = add nuw i64 %.021, 1                      ; 2 uses
+  %exitcond.not = icmp eq i64 %20, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !80
 }
 

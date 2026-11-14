@@ -56,7 +56,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.u, label %.loopexit, label %vector.body, !llvm.loop !82
 
 vector.ph113:                                     ; preds = %bb.a
-  %i.v = tail call reassoc ninf nsz arcp contract afn float @llvm.log.f32(float %spec.store.select2)
+  %i.v = tail call reassoc nsz arcp contract afn noundef float @llvm.log.f32(float %spec.store.select2)
   %i.w = fmul reassoc nsz arcp contract afn float %i.v, -2.885390e+00
   %i.x = tail call reassoc nsz arcp contract afn float @llvm.exp2.f32(float %i.w)
   %i.y = fmul reassoc nsz arcp contract afn float %i.x, 6.553600e+04
@@ -104,7 +104,7 @@ vector.body124:                                   ; preds = %vector.body124, %ve
   %i.as = uitofp nneg <16 x i32> %vec.ind126 to <16 x float> ; 3 uses
   %i.at = fcmp reassoc nsz arcp contract afn ogt <16 x float> %broadcast.splat115, %i.as
   %i.au = tail call reassoc nsz arcp contract afn <16 x float> @llvm.pow.v16f32(<16 x float> %i.as, <16 x float> splat (float f0x3EAAAAAB))
-  %i.av = fadd reassoc nnan nsz arcp contract afn <16 x float> %i.au, splat (float f0xC22144E3)
+  %i.av = fadd reassoc nsz arcp contract afn <16 x float> %i.au, splat (float f0xC22144E3)
   %i.aw = fmul reassoc nsz arcp contract afn <16 x float> %broadcast.splat121, %i.av
   %i.ax = add <16 x i32> %vec.ind127, splat (i32 -65535)
   %i.ay = sitofp <16 x i32> %i.ax to <16 x float>

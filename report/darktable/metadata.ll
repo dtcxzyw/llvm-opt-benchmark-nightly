@@ -205,7 +205,12 @@ bb.a:
   %i.i = tail call ptr @gtk_grid_new() #16        ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
   store ptr %i.i, ptr %i.j, align 8, !tbaa !80
-  tail call void @gtk_grid_set_row_spacing(ptr noundef %i.i, i32 noundef 0) #16
+  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !78
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 1432
+  %3 = load double, ptr %2, align 8, !tbaa !100
+  %4 = fmul reassoc nsz arcp contract afn double %3, 0.000000e+00
+  %5 = fptoui double %4 to i32
+  tail call void @gtk_grid_set_row_spacing(ptr noundef %i.i, i32 noundef %5) #16
   %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !78
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1432
   %i.m = load double, ptr %i.l, align 8, !tbaa !100

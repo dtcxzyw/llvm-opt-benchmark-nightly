@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %bb.t
   %i.ce = fptosi <2 x float> %i.cd to <2 x i32>   ; 2 uses
   %i.cf = extractelement <2 x i32> %i.ce, i64 0   ; 3 uses
   %i.cg = extractelement <2 x i32> %i.ce, i64 1   ; 4 uses
-  %.not181 = icmp samesign ugt i32 %i.cf, %i.cg
+  %.not181 = icmp sgt i32 %i.cf, %i.cg
   br i1 %.not181, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -230,7 +230,7 @@ bb.x:                                             ; preds = %bb.v
   %i.cx = fptosi <2 x float> %i.cw to <2 x i32>   ; 2 uses
   %i.cy = extractelement <2 x i32> %i.cx, i64 0   ; 3 uses
   %i.cz = extractelement <2 x i32> %i.cx, i64 1   ; 4 uses
-  %.not182 = icmp samesign ugt i32 %i.cy, %i.cz
+  %.not182 = icmp sgt i32 %i.cy, %i.cz
   br i1 %.not182, label %bb.y, label %bb.ae
 
 bb.y:                                             ; preds = %bb.x
@@ -271,8 +271,8 @@ bb.ac:                                            ; preds = %bb.aa
 
 bb.ad:                                            ; preds = %_ZNSt10unique_ptrIN8ultrahdr18uhdr_raw_image_extESt14default_deleteIS1_EED2Ev.exit262, %bb.ab
   %i.dl = phi ptr [ %i.dj, %bb.ab ], [ null, %_ZNSt10unique_ptrIN8ultrahdr18uhdr_raw_image_extESt14default_deleteIS1_EED2Ev.exit262 ]
-  %i.dm = sub nuw nsw i32 %i.cf, %i.cg
-  %i.dn = sub nuw nsw i32 %i.cy, %i.cz
+  %i.dm = sub nsw i32 %i.cf, %i.cg
+  %i.dn = sub nsw i32 %i.cy, %i.cz
   invoke void @_ZN8ultrahdr10apply_cropEPNS_16uhdr_crop_effectEP14uhdr_raw_imageiiiiPvS4_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.34") align 8 %9, ptr noundef %i.dl, ptr noundef nonnull %i.ax, i32 noundef %i.cg, i32 noundef %i.cz, i32 noundef %i.dm, i32 noundef %i.dn, ptr noundef null, ptr noundef null)
           to label %.thread unwind label %bb.af
 

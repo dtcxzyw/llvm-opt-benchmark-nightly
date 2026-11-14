@@ -204,10 +204,10 @@ vector.body356:                                   ; preds = %vector.ph352, %vect
   %i.gq = lshr <4 x i32> %i.gm, splat (i32 16)
   %i.gr = lshr <4 x i32> %i.gn, splat (i32 16)
   %i.gs = lshr <4 x i32> %i.go, splat (i32 16)
-  %i.gt = trunc nuw nsw <4 x i32> %i.gp to <4 x i16>
-  %i.gu = trunc nuw nsw <4 x i32> %i.gq to <4 x i16>
-  %i.gv = trunc nuw nsw <4 x i32> %i.gr to <4 x i16>
-  %i.gw = trunc nuw nsw <4 x i32> %i.gs to <4 x i16>
+  %i.gt = trunc nuw <4 x i32> %i.gp to <4 x i16>
+  %i.gu = trunc nuw <4 x i32> %i.gq to <4 x i16>
+  %i.gv = trunc nuw <4 x i32> %i.gr to <4 x i16>
+  %i.gw = trunc nuw <4 x i32> %i.gs to <4 x i16>
   store <4 x i16> %i.gt, ptr %next.gep362, align 2, !tbaa !74
   store <4 x i16> %i.gu, ptr %i.fo, align 2, !tbaa !74
   store <4 x i16> %i.gv, ptr %i.fp, align 2, !tbaa !74
@@ -258,7 +258,7 @@ vec.epilog.vector.body382:                        ; preds = %vec.epilog.vector.b
   %i.hn = tail call fast <4 x float> @llvm.exp.v4f32(<4 x float> %i.hm) ; 2 uses
   %i.ho = bitcast <4 x float> %i.hn to <4 x i32>
   %i.hp = lshr <4 x i32> %i.ho, splat (i32 16)
-  %i.hq = trunc nuw nsw <4 x i32> %i.hp to <4 x i16>
+  %i.hq = trunc nuw <4 x i32> %i.hp to <4 x i16>
   store <4 x i16> %i.hq, ptr %next.gep385, align 2, !tbaa !74
   %i.hr = fadd fast <4 x float> %i.hn, %vec.phi384 ; 2 uses
   %index.next387 = add nuw i64 %index383, 4       ; 2 uses
@@ -336,7 +336,7 @@ vec.epilog.middle.block388:                       ; preds = %vec.epilog.vector.b
   %i.jo = tail call fast float @llvm.exp.f32(float %i.jn) ; 2 uses
   %i.jp = bitcast float %i.jo to i32
   %i.jq = lshr i32 %i.jp, 16
-  %i.jr = trunc nuw nsw i32 %i.jq to i16
+  %i.jr = trunc nuw i32 %i.jq to i16
   store i16 %i.jr, ptr %.287263, align 2, !tbaa !74
   %i.js = fadd fast float %i.jo, %.088262         ; 2 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %.287263, i64 2
@@ -739,7 +739,7 @@ vector.body301:                                   ; preds = %vector.body301, %ve
   %i.we = tail call fast <8 x float> @llvm.exp.v8f32(<8 x float> %i.wd) ; 2 uses
   %i.wf = bitcast <8 x float> %i.we to <8 x i32>
   %i.wg = lshr <8 x i32> %i.wf, splat (i32 16)
-  %i.wh = trunc nuw nsw <8 x i32> %i.wg to <8 x i16>
+  %i.wh = trunc nuw <8 x i32> %i.wg to <8 x i16>
   store <8 x i16> %i.wh, ptr %next.gep303, align 2, !tbaa !74
   %wide.load308 = load <8 x float>, ptr %next.gep305, align 4, !tbaa !65, !alias.scope !286, !noalias !285
   %i.wi = fadd fast <8 x float> %i.we, %wide.load308
@@ -773,7 +773,7 @@ middle.block310:                                  ; preds = %vector.body301
   %i.wr = tail call fast float @llvm.exp.f32(float %i.wq) ; 2 uses
   %i.ws = bitcast float %i.wr to i32
   %i.wt = lshr i32 %i.ws, 16
-  %i.wu = trunc nuw nsw i32 %i.wt to i16
+  %i.wu = trunc nuw i32 %i.wt to i16
   store i16 %i.wu, ptr %.2162306.i.ph, align 2, !tbaa !74
   %i.wv = load float, ptr %.2171303.i.ph, align 4, !tbaa !65
   %i.ww = fadd fast float %i.wr, %i.wv
@@ -860,7 +860,7 @@ middle.block310:                                  ; preds = %vector.body301
   %i.zb = tail call fast float @llvm.exp.f32(float %i.za) ; 2 uses
   %i.zc = bitcast float %i.zb to i32
   %i.zd = lshr i32 %i.zc, 16
-  %i.ze = trunc nuw nsw i32 %i.zd to i16
+  %i.ze = trunc nuw i32 %i.zd to i16
   store i16 %i.ze, ptr %.2162306.i, align 2, !tbaa !74
   %i.zf = load float, ptr %.2171303.i, align 4, !tbaa !65
   %i.zg = fadd fast float %i.zb, %i.zf
@@ -877,7 +877,7 @@ middle.block310:                                  ; preds = %vector.body301
   %i.zq = tail call fast float @llvm.exp.f32(float %i.zp) ; 2 uses
   %i.zr = bitcast float %i.zq to i32
   %i.zs = lshr i32 %i.zr, 16
-  %i.zt = trunc nuw nsw i32 %i.zs to i16
+  %i.zt = trunc nuw i32 %i.zs to i16
   store i16 %i.zt, ptr %i.zh, align 2, !tbaa !74
   %i.zu = load float, ptr %i.zj, align 4, !tbaa !65
   %i.zv = fadd fast float %i.zq, %i.zu
@@ -1280,10 +1280,10 @@ vector.body116:                                   ; preds = %vector.ph112, %vect
   %i.hs = lshr <4 x i32> %i.ho, splat (i32 16)
   %i.ht = lshr <4 x i32> %i.hp, splat (i32 16)
   %i.hu = lshr <4 x i32> %i.hq, splat (i32 16)
-  %i.hv = trunc nuw nsw <4 x i32> %i.hr to <4 x i16>
-  %i.hw = trunc nuw nsw <4 x i32> %i.hs to <4 x i16>
-  %i.hx = trunc nuw nsw <4 x i32> %i.ht to <4 x i16>
-  %i.hy = trunc nuw nsw <4 x i32> %i.hu to <4 x i16>
+  %i.hv = trunc nuw <4 x i32> %i.hr to <4 x i16>
+  %i.hw = trunc nuw <4 x i32> %i.hs to <4 x i16>
+  %i.hx = trunc nuw <4 x i32> %i.ht to <4 x i16>
+  %i.hy = trunc nuw <4 x i32> %i.hu to <4 x i16>
   store <4 x i16> %i.hv, ptr %next.gep121, align 2, !tbaa !74
   store <4 x i16> %i.hw, ptr %i.gq, align 2, !tbaa !74
   store <4 x i16> %i.hx, ptr %i.gr, align 2, !tbaa !74
@@ -1334,7 +1334,7 @@ vec.epilog.vector.body140:                        ; preds = %vec.epilog.vector.b
   %i.ip = call fast <4 x float> @llvm.exp.v4f32(<4 x float> %i.io) ; 2 uses
   %i.iq = bitcast <4 x float> %i.ip to <4 x i32>
   %i.ir = lshr <4 x i32> %i.iq, splat (i32 16)
-  %i.is = trunc nuw nsw <4 x i32> %i.ir to <4 x i16>
+  %i.is = trunc nuw <4 x i32> %i.ir to <4 x i16>
   store <4 x i16> %i.is, ptr %next.gep143, align 2, !tbaa !74
   %i.it = fadd fast <4 x float> %i.ip, %vec.phi142 ; 2 uses
   %index.next145 = add nuw i64 %index141, 4       ; 2 uses
@@ -1412,7 +1412,7 @@ vec.epilog.middle.block146:                       ; preds = %vec.epilog.vector.b
   %i.kq = call fast float @llvm.exp.f32(float %i.kp) ; 2 uses
   %i.kr = bitcast float %i.kq to i32
   %i.ks = lshr i32 %i.kr, 16
-  %i.kt = trunc nuw nsw i32 %i.ks to i16
+  %i.kt = trunc nuw i32 %i.ks to i16
   store i16 %i.kt, ptr %.287263.i, align 2, !tbaa !74
   %i.ku = fadd fast float %i.kq, %.088262.i       ; 2 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %.287263.i, i64 2
@@ -1815,10 +1815,10 @@ vector.body135:                                   ; preds = %vector.ph131, %vect
   %i.id = lshr <4 x i32> %i.hz, splat (i32 16)
   %i.ie = lshr <4 x i32> %i.ia, splat (i32 16)
   %i.if = lshr <4 x i32> %i.ib, splat (i32 16)
-  %i.ig = trunc nuw nsw <4 x i32> %i.ic to <4 x i16>
-  %i.ih = trunc nuw nsw <4 x i32> %i.id to <4 x i16>
-  %i.ii = trunc nuw nsw <4 x i32> %i.ie to <4 x i16>
-  %i.ij = trunc nuw nsw <4 x i32> %i.if to <4 x i16>
+  %i.ig = trunc nuw <4 x i32> %i.ic to <4 x i16>
+  %i.ih = trunc nuw <4 x i32> %i.id to <4 x i16>
+  %i.ii = trunc nuw <4 x i32> %i.ie to <4 x i16>
+  %i.ij = trunc nuw <4 x i32> %i.if to <4 x i16>
   store <4 x i16> %i.ig, ptr %next.gep140, align 2, !tbaa !74
   store <4 x i16> %i.ih, ptr %i.hb, align 2, !tbaa !74
   store <4 x i16> %i.ii, ptr %i.hc, align 2, !tbaa !74
@@ -1869,7 +1869,7 @@ vec.epilog.vector.body159:                        ; preds = %vec.epilog.vector.b
   %i.ja = call fast <4 x float> @llvm.exp.v4f32(<4 x float> %i.iz) ; 2 uses
   %i.jb = bitcast <4 x float> %i.ja to <4 x i32>
   %i.jc = lshr <4 x i32> %i.jb, splat (i32 16)
-  %i.jd = trunc nuw nsw <4 x i32> %i.jc to <4 x i16>
+  %i.jd = trunc nuw <4 x i32> %i.jc to <4 x i16>
   store <4 x i16> %i.jd, ptr %next.gep162, align 2, !tbaa !74
   %i.je = fadd fast <4 x float> %i.ja, %vec.phi161 ; 2 uses
   %index.next164 = add nuw i64 %index160, 4       ; 2 uses
@@ -1947,7 +1947,7 @@ vec.epilog.middle.block165:                       ; preds = %vec.epilog.vector.b
   %i.lb = call fast float @llvm.exp.f32(float %i.la) ; 2 uses
   %i.lc = bitcast float %i.lb to i32
   %i.ld = lshr i32 %i.lc, 16
-  %i.le = trunc nuw nsw i32 %i.ld to i16
+  %i.le = trunc nuw i32 %i.ld to i16
   store i16 %i.le, ptr %.287263.i, align 2, !tbaa !74
   %i.lf = fadd fast float %i.lb, %.088262.i       ; 2 uses
   %i.lg = getelementptr inbounds nuw i8, ptr %.287263.i, i64 2

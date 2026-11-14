@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !398
   %i.am = add nsw i32 %i.al, -250
   %i.an = sitofp reassoc nsz arcp contract afn i32 %i.am to double
-  %i.ao = fmul reassoc nnan nsz arcp contract afn double %i.an, 1.000000e-02 ; 2 uses
+  %i.ao = fmul reassoc nsz arcp contract afn double %i.an, 1.000000e-02 ; 2 uses
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j

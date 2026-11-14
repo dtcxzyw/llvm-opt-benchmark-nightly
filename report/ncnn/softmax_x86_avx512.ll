@@ -204,10 +204,10 @@ vector.body496:                                   ; preds = %vector.ph492, %vect
   %i.kg = lshr <16 x i32> %i.kc, splat (i32 16)
   %i.kh = lshr <16 x i32> %i.kd, splat (i32 16)
   %i.ki = lshr <16 x i32> %i.ke, splat (i32 16)
-  %i.kj = trunc nuw nsw <16 x i32> %i.kf to <16 x i16>
-  %i.kk = trunc nuw nsw <16 x i32> %i.kg to <16 x i16>
-  %i.kl = trunc nuw nsw <16 x i32> %i.kh to <16 x i16>
-  %i.km = trunc nuw nsw <16 x i32> %i.ki to <16 x i16>
+  %i.kj = trunc nuw <16 x i32> %i.kf to <16 x i16>
+  %i.kk = trunc nuw <16 x i32> %i.kg to <16 x i16>
+  %i.kl = trunc nuw <16 x i32> %i.kh to <16 x i16>
+  %i.km = trunc nuw <16 x i32> %i.ki to <16 x i16>
   store <16 x i16> %i.kj, ptr %next.gep502, align 2, !tbaa !62
   store <16 x i16> %i.kk, ptr %i.je, align 2, !tbaa !62
   store <16 x i16> %i.kl, ptr %i.jf, align 2, !tbaa !62
@@ -258,7 +258,7 @@ vec.epilog.vector.body522:                        ; preds = %vec.epilog.vector.b
   %i.ld = tail call fast <8 x float> @llvm.exp.v8f32(<8 x float> %i.lc) ; 2 uses
   %i.le = bitcast <8 x float> %i.ld to <8 x i32>
   %i.lf = lshr <8 x i32> %i.le, splat (i32 16)
-  %i.lg = trunc nuw nsw <8 x i32> %i.lf to <8 x i16>
+  %i.lg = trunc nuw <8 x i32> %i.lf to <8 x i16>
   store <8 x i16> %i.lg, ptr %next.gep525, align 2, !tbaa !62
   %i.lh = fadd fast <8 x float> %i.ld, %vec.phi524 ; 2 uses
   %index.next527 = add nuw i64 %index523, 8       ; 2 uses
@@ -336,7 +336,7 @@ vec.epilog.middle.block528:                       ; preds = %vec.epilog.vector.b
   %i.ne = tail call fast float @llvm.exp.f32(float %i.nd) ; 2 uses
   %i.nf = bitcast float %i.ne to i32
   %i.ng = lshr i32 %i.nf, 16
-  %i.nh = trunc nuw nsw i32 %i.ng to i16
+  %i.nh = trunc nuw i32 %i.ng to i16
   store i16 %i.nh, ptr %.3122375, align 2, !tbaa !62
   %i.ni = fadd fast float %i.ne, %.0117376        ; 2 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %.3122375, i64 2
@@ -739,7 +739,7 @@ vector.body537:                                   ; preds = %vector.ph535, %vect
   %i.aig = tail call fast <16 x float> @llvm.exp.v16f32(<16 x float> %i.aif) ; 2 uses
   %i.aih = bitcast <16 x float> %i.aig to <16 x i32>
   %i.aii = lshr <16 x i32> %i.aih, splat (i32 16)
-  %i.aij = trunc nuw nsw <16 x i32> %i.aii to <16 x i16>
+  %i.aij = trunc nuw <16 x i32> %i.aii to <16 x i16>
   store <16 x i16> %i.aij, ptr %next.gep539, align 2, !tbaa !62
   %wide.load544 = load <16 x float>, ptr %next.gep541, align 4, !tbaa !53, !alias.scope !328, !noalias !327
   %i.aik = fadd fast <16 x float> %i.aig, %wide.load544
@@ -784,7 +784,7 @@ vec.epilog.vector.body555:                        ; preds = %vec.epilog.vector.b
   %i.aiz = tail call fast <4 x float> @llvm.exp.v4f32(<4 x float> %i.aiy) ; 2 uses
   %i.aja = bitcast <4 x float> %i.aiz to <4 x i32>
   %i.ajb = lshr <4 x i32> %i.aja, splat (i32 16)
-  %i.ajc = trunc nuw nsw <4 x i32> %i.ajb to <4 x i16>
+  %i.ajc = trunc nuw <4 x i32> %i.ajb to <4 x i16>
   store <4 x i16> %i.ajc, ptr %next.gep557, align 2, !tbaa !62
   %wide.load562 = load <4 x float>, ptr %next.gep559, align 4, !tbaa !53, !alias.scope !328, !noalias !327
   %i.ajd = fadd fast <4 x float> %i.aiz, %wide.load562
@@ -818,7 +818,7 @@ vec.epilog.middle.block564:                       ; preds = %vec.epilog.vector.b
   %i.ajm = tail call fast float @llvm.exp.f32(float %i.ajl) ; 2 uses
   %i.ajn = bitcast float %i.ajm to i32
   %i.ajo = lshr i32 %i.ajn, 16
-  %i.ajp = trunc nuw nsw i32 %i.ajo to i16
+  %i.ajp = trunc nuw i32 %i.ajo to i16
   store i16 %i.ajp, ptr %.3216394.i.ph, align 2, !tbaa !62
   %i.ajq = load float, ptr %.3224392.i.ph, align 4, !tbaa !53
   %i.ajr = fadd fast float %i.ajm, %i.ajq
@@ -905,7 +905,7 @@ vec.epilog.middle.block564:                       ; preds = %vec.epilog.vector.b
   %i.alw = tail call fast float @llvm.exp.f32(float %i.alv) ; 2 uses
   %i.alx = bitcast float %i.alw to i32
   %i.aly = lshr i32 %i.alx, 16
-  %i.alz = trunc nuw nsw i32 %i.aly to i16
+  %i.alz = trunc nuw i32 %i.aly to i16
   store i16 %i.alz, ptr %.3216394.i, align 2, !tbaa !62
   %i.ama = load float, ptr %.3224392.i, align 4, !tbaa !53
   %i.amb = fadd fast float %i.alw, %i.ama
@@ -922,7 +922,7 @@ vec.epilog.middle.block564:                       ; preds = %vec.epilog.vector.b
   %i.aml = tail call fast float @llvm.exp.f32(float %i.amk) ; 2 uses
   %i.amm = bitcast float %i.aml to i32
   %i.amn = lshr i32 %i.amm, 16
-  %i.amo = trunc nuw nsw i32 %i.amn to i16
+  %i.amo = trunc nuw i32 %i.amn to i16
   store i16 %i.amo, ptr %i.amc, align 2, !tbaa !62
   %i.amp = load float, ptr %i.ame, align 4, !tbaa !53
   %i.amq = fadd fast float %i.aml, %i.amp

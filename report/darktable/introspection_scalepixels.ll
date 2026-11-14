@@ -204,7 +204,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader
   %i.v = trunc nuw nsw i64 %indvars.iv50 to i32
   %i.w = uitofp nsz nneg i32 %i.v to float
-  %i.x = fmul reassoc nnan nsz arcp contract afn float %i.m, %i.w
+  %i.x = fmul reassoc nsz arcp contract afn float %i.m, %i.w
   %i.y = fmul reassoc nsz arcp contract afn float %i.x, %i.q ; 3 uses
   %i.z = mul nuw nsw i64 %indvars.iv50, %i.h
   %i.aa = getelementptr [4 x i8], ptr %3, i64 %i.z
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 3 uses
   %i.af = trunc nuw nsw i64 %indvars.iv to i32
   %i.ag = uitofp nsz nneg i32 %i.af to float
-  %i.ah = fmul reassoc nnan nsz arcp contract afn float %i.l, %i.ag
+  %i.ah = fmul reassoc nsz arcp contract afn float %i.l, %i.ag
   %i.ai = fmul reassoc nsz arcp contract afn float %i.ah, %i.r ; 3 uses
   %i.aj = tail call reassoc nsz arcp contract afn float @dt_interpolation_compute_sample(ptr noundef %i.a, ptr noundef %2, float noundef %i.ai, float noundef %i.y, i32 noundef %i.c, i32 noundef %i.e, i32 noundef 1, i32 noundef %i.c) #16
   %i.ak = fcmp reassoc nsz arcp contract afn ult float %i.aj, 0.000000e+00
@@ -355,26 +355,28 @@ declare float @llvm.ceil.f32(float) #6
 define void @modify_roi_in(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(none) initializes((0, 20)) %3) local_unnamed_addr #7 {
 _transform.exit:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) %2, i64 20, i1 false), !tbaa.struct !53
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %5 = load i32, ptr %4, align 4, !tbaa !51
+  %6 = sitofp reassoc nsz arcp contract afn i32 %5 to float ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %7 = load i32, ptr %i.a, align 4, !tbaa !50
+  %8 = sitofp reassoc nsz arcp contract afn i32 %7 to float ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 16
   %.val = load ptr, ptr %i.b, align 16, !tbaa !43 ; 2 uses
   %.val.val = load float, ptr %.val, align 4, !tbaa !54 ; 3 uses
   %i.c = fcmp reassoc nsz arcp contract afn olt float %.val.val, 1.000000e+00 ; 2 uses
+  %9 = fdiv reassoc nsz arcp contract afn float %8, %.val.val
+  %10 = fmul reassoc nsz arcp contract afn float %.val.val, %6
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 4
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.g = load float, ptr %i.f, align 4, !tbaa !74
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %4 = load <2 x i32>, ptr %i.a, align 4, !tbaa !12
-  %5 = sitofp reassoc nsz arcp contract afn <2 x i32> %4 to <2 x float> ; 2 uses
-  %i.i = select nsz i1 %i.c, float %.val.val, float 1.000000e+00
-  %i.j = select nsz i1 %i.c, float 1.000000e+00, float %.val.val
+  %i.i = select nsz i1 %i.c, float %9, float %8
+  %i.j = select nsz i1 %i.c, float %6, float %10
   %i.k = insertelement <2 x float> poison, float %i.i, i64 0
-  %i.l = insertelement <2 x float> %i.k, float %i.j, i64 1 ; 2 uses
-  %6 = fdiv reassoc nsz arcp contract afn <2 x float> %5, %i.l
-  %7 = fmul reassoc nsz arcp contract afn <2 x float> %i.l, %5
-  %8 = shufflevector <2 x float> %6, <2 x float> %7, <2 x i32> <i32 0, i32 3>
-  %i.m = fptosi <2 x float> %8 to <2 x i32>       ; 2 uses
+  %i.l = insertelement <2 x float> %i.k, float %i.j, i64 1
+  %i.m = fptosi <2 x float> %i.l to <2 x i32>     ; 2 uses
   store <2 x i32> %i.m, ptr %i.d, align 4, !tbaa !12
   %i.n = sitofp reassoc nsz arcp contract afn <2 x i32> %i.m to <2 x float>
   %i.o = load <2 x i32>, ptr %i.a, align 4, !tbaa !12
@@ -444,7 +446,7 @@ bb.a:
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.aa
   %i.ac = trunc nuw nsw i64 %indvars.iv to i32
   %i.ad = uitofp nsz nneg i32 %i.ac to float
-  %i.ae = fmul reassoc nnan nsz arcp contract afn float %i.r, %i.ad
+  %i.ae = fmul reassoc nsz arcp contract afn float %i.r, %i.ad
   %i.af = fmul reassoc nsz arcp contract afn float %i.ae, %i.s
   br label %bb.b
 
@@ -464,7 +466,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.031 = phi i32 [ 0, %.lr.ph ], [ %i.ap, %bb.b ] ; 2 uses
   %.02830 = phi ptr [ %i.ab, %.lr.ph ], [ %i.aq, %bb.b ] ; 2 uses
   %i.ak = uitofp nsz nneg i32 %.031 to float
-  %i.al = fmul reassoc nnan nsz arcp contract afn float %i.t, %i.ak
+  %i.al = fmul reassoc nsz arcp contract afn float %i.t, %i.ak
   %i.am = fmul reassoc nsz arcp contract afn float %i.al, %i.u
   %i.an = load i32, ptr %i.c, align 4, !tbaa !50
   %i.ao = load i32, ptr %i.h, align 4, !tbaa !51
