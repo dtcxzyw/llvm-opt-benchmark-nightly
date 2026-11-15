@@ -204,6 +204,7 @@ bb.a:
   br label %bb.b
 
 .preheader:                                       ; preds = %_ZN4cvc57context3CDOImEaSERKm.exit, %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
@@ -219,7 +220,6 @@ bb.a:
   br i1 %i.ac, label %.lr.ph15, label %.critedge
 
 .lr.ph15:                                         ; preds = %.preheader
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 400
@@ -622,11 +622,11 @@ bb.a:
   %i.ab = sub i64 %i.z, %i.aa
   %i.ac = ashr exact i64 %i.ab, 3
   %i.ad = add nsw i64 %i.v, %i.ac                 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 4 uses
   %.not = icmp eq i64 %i.ad, 0
   br i1 %.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 648
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 640
@@ -815,8 +815,7 @@ bb.aa:                                            ; preds = %bb.s, %bb.t, %_ZNSt
 
 .critedge:                                        ; preds = %bb.b, %bb.aa, %bb.a
   %.0.lcssa = phi i64 [ 0, %bb.a ], [ %.2, %bb.aa ], [ %.032, %bb.b ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 680
-  %i.di = load i8, ptr %3, align 8, !tbaa !82, !range !89, !noundef !90
+  %i.di = load i8, ptr %2, align 8, !tbaa !82, !range !89, !noundef !90
   %i.dj = trunc nuw i8 %i.di to i1
   %i.dk = icmp uge i64 %.0.lcssa, %i.ad
   %or.cond.not = select i1 %i.dj, i1 true, i1 %i.dk

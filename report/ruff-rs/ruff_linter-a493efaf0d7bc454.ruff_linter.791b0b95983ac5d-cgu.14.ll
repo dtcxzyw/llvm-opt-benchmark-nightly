@@ -204,15 +204,12 @@ bb.g:                                             ; preds = %.lr.ph.i.i
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 %.idx.i.i
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.03.022.i.i, i64 24
   %i.bc = load ptr, ptr %i.bb, align 8, !noalias !7675, !nonnull !11, !noundef !11 ; 2 uses
-  %.not.i.i.i = icmp eq i64 %i.az, 0
-  br i1 %.not.i.i.i, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules13flake8_django5rules24model_without_dunder_str27is_abstract_true_assignment.exit.thread.i.i, label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %bb.g
   %2 = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
-  br label %bb.h
+  %.not.i.i.i = icmp eq i64 %i.az, 0
+  br i1 %.not.i.i.i, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules13flake8_django5rules24model_without_dunder_str27is_abstract_true_assignment.exit.thread.i.i, label %bb.h
 
-bb.h:                                             ; preds = %.backedge.i.i.i, %.lr.ph.i.i.i
-  %i.bd = phi ptr [ %i.ax, %.lr.ph.i.i.i ], [ %i.be, %.backedge.i.i.i ] ; 5 uses
+bb.h:                                             ; preds = %bb.g, %.backedge.i.i.i
+  %i.bd = phi ptr [ %i.be, %.backedge.i.i.i ], [ %i.ax, %bb.g ] ; 5 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 72 ; 2 uses
   %i.bf = load i32, ptr %i.bd, align 8, !range !17, !noalias !7677, !noundef !11
   %i.bg = icmp eq i32 %i.bf, 28

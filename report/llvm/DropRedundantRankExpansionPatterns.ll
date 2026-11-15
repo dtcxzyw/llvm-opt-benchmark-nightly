@@ -202,7 +202,7 @@ declare noundef ptr @_ZNK4mlir5Value13getDefiningOpEv(ptr noundef nonnull align 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK4llvm14SmallBitVector4testERKS0_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !22     ; 12 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !22     ; 11 uses
   %i.b = trunc i64 %i.a to i1                     ; 3 uses
   %i.c = load i64, ptr %1, align 8, !tbaa !22     ; 10 uses
   %i.d = trunc i64 %i.c to i1                     ; 2 uses
@@ -438,10 +438,14 @@ bb.p:                                             ; preds = %_ZNK4llvm14SmallBit
   br i1 %i.b, label %_ZNK4llvm14SmallBitVector4sizeEv.exit22, label %_ZNK4llvm14SmallBitVector4sizeEv.exit22.thread
 
 _ZNK4llvm14SmallBitVector4sizeEv.exit22:          ; preds = %._crit_edge
-  %i.cv = lshr i64 %i.a, 58
+  %i.cv = lshr i64 %i.a, 58                       ; 2 uses
   %i.cw = trunc nuw nsw i64 %i.cv to i32          ; 2 uses
+  %2 = lshr i64 %i.a, 1
+  %3 = shl nsw i64 -1, %i.cv
+  %4 = xor i64 %3, -1
+  %5 = and i64 %2, %4
   %.not1848 = icmp eq i32 %.0.lcssa, %i.cw
-  br i1 %.not1848, label %_ZNK4llvm9BitVector4testERKS0_.exit, label %.split30.us.preheader
+  br i1 %.not1848, label %_ZNK4llvm9BitVector4testERKS0_.exit, label %.split30.us
 
 _ZNK4llvm14SmallBitVector4sizeEv.exit22.thread:   ; preds = %._crit_edge
   %i.cx = inttoptr i64 %i.a to ptr                ; 2 uses
@@ -450,18 +454,10 @@ _ZNK4llvm14SmallBitVector4sizeEv.exit22.thread:   ; preds = %._crit_edge
   %.not184891 = icmp eq i32 %.0.lcssa, %i.cz
   br i1 %.not184891, label %_ZNK4llvm9BitVector4testERKS0_.exit, label %.lr.ph50.split
 
-.split30.us.preheader:                            ; preds = %_ZNK4llvm14SmallBitVector4sizeEv.exit22
-  %2 = lshr i64 %i.a, 1
-  %3 = lshr i64 %i.a, 58
-  %4 = shl nsw i64 -1, %3
-  %5 = xor i64 %4, -1
-  %6 = and i64 %2, %5
-  br label %.split30.us
-
-.split30.us:                                      ; preds = %.split30.us, %.split30.us.preheader
-  %.149.us = phi i32 [ %i.dd, %.split30.us ], [ %.0.lcssa, %.split30.us.preheader ] ; 2 uses
+.split30.us:                                      ; preds = %_ZNK4llvm14SmallBitVector4sizeEv.exit22, %.split30.us
+  %.149.us = phi i32 [ %i.dd, %.split30.us ], [ %.0.lcssa, %_ZNK4llvm14SmallBitVector4sizeEv.exit22 ] ; 2 uses
   %i.da = zext nneg i32 %.149.us to i64
-  %i.db = lshr i64 %6, %i.da
+  %i.db = lshr i64 %5, %i.da
   %i.dc = trunc i64 %i.db to i1                   ; 2 uses
   %i.dd = add i32 %.149.us, 1                     ; 2 uses
   %.not18.us = icmp eq i32 %i.dd, %i.cw

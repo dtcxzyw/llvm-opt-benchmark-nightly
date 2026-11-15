@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %bb.e
 _ZN5arith6solver13propagate_nlaEv.exit:           ; preds = %bb.e, %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 4 uses
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !337 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !285 ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %.critedge, label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit4.lr.ph
 
 _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit4.lr.ph: ; preds = %_ZN5arith6solver13propagate_nlaEv.exit
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 304
@@ -333,8 +333,7 @@ _ZNK9table2mapI17default_map_entryIjPN6lp_api5boundIN3sat7literalEEEE6u_hash4u_e
   br i1 %i.cf, label %.critedge, label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit4, !llvm.loop !651
 
 .critedge:                                        ; preds = %bb.h, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit4, %bb.g, %_ZNK9table2mapI17default_map_entryIjPN6lp_api5boundIN3sat7literalEEEE6u_hash4u_eqE4findERKjRS6_.exit.thread, %_ZN5arith6solver13propagate_nlaEv.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.cg = load ptr, ptr %3, align 8, !tbaa !215
+  %i.cg = load ptr, ptr %2, align 8, !tbaa !215
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 3168
   %i.ci = load i8, ptr %i.ch, align 8, !tbaa !458, !range !250, !noundef !209
   %i.cj = trunc nuw i8 %i.ci to i1
@@ -737,13 +736,13 @@ _ZN5arith6solver12set_conflictENS_9hint_typeE.exit: ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN5arith6solver22propagate_basic_boundsEj(ptr noundef nonnull align 8 dereferenceable(1000) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !337  ; 2 uses
   %i.c = icmp ult i32 %1, %i.b
   br i1 %i.c, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 304

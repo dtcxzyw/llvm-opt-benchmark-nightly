@@ -202,15 +202,12 @@ bb.x:                                             ; preds = %.noexc47
           to label %.noexc48 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc48:                                         ; preds = %.critedge92.i
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 34
   %i.bt = load i32, ptr %15, align 8, !tbaa !68
   %i.bu = icmp eq i32 %i.bt, 0
-  br i1 %i.bu, label %.lr.ph98.i, label %.critedge.i
+  br i1 %i.bu, label %bb.y, label %.critedge.i
 
-.lr.ph98.i:                                       ; preds = %.noexc48
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 34
-  br label %bb.y
-
-bb.y:                                             ; preds = %bb.ac, %.lr.ph98.i
+bb.y:                                             ; preds = %.noexc48, %bb.ac
   %i.bv = load i8, ptr %20, align 2, !tbaa !61, !range !47, !noundef !48
   %i.bw = trunc nuw i8 %i.bv to i1
   br i1 %i.bw, label %.critedge.i, label %bb.z

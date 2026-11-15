@@ -205,8 +205,8 @@ bb.br:                                            ; preds = %bb.bq
 
 ._crit_edge:                                      ; preds = %bb.bp, %bb.br
   %.0199 = phi i64 [ %i.gt, %bb.br ], [ 0, %bb.bp ]
-  %.pre396 = load i64, ptr %i.a, align 8          ; 2 uses
   %5 = getelementptr inbounds nuw i8, ptr %1, i64 16024
+  %.pre396 = load i64, ptr %i.a, align 8          ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 18024
   %i.gv = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.gw = zext nneg i32 %i.bk to i64

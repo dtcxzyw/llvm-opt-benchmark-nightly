@@ -204,12 +204,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.f, %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.08.i = load ptr, ptr %i.g, align 8, !tbaa !108 ; 2 uses
   %.not9.i = icmp eq ptr %.08.i, null
   br i1 %.not9.i, label %_ZNK6icu_7811PluralRules15rulesForKeywordERKNS_13UnicodeStringE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -283,12 +283,12 @@ _ZNK6icu_7811PluralRules15rulesForKeywordERKNS_13UnicodeStringE.exit.thread: ; p
 define noundef ptr @_ZNK6icu_7811PluralRules15rulesForKeywordERKNS_13UnicodeStringE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(28) %0, ptr noundef nonnull align 8 dereferenceable(64) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.08 = load ptr, ptr %i.a, align 8, !tbaa !108  ; 2 uses
   %.not9 = icmp eq ptr %.08, null
   br i1 %.not9, label %.split._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -691,12 +691,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.f, %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.08.i = load ptr, ptr %i.g, align 8, !tbaa !108 ; 2 uses
   %.not9.i = icmp eq ptr %.08.i, null
   br i1 %.not9.i, label %_ZNK6icu_7811PluralRules15rulesForKeywordERKNS_13UnicodeStringE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24

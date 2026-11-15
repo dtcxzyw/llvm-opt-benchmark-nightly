@@ -204,9 +204,9 @@ bb.q:                                             ; preds = %.loopexit.thread87
 
 .preheader:                                       ; preds = %bb.q
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 48
   br label %bb.r
 
 bb.r:                                             ; preds = %.preheader, %bb.x
@@ -222,7 +222,7 @@ bb.s:                                             ; preds = %bb.r
   %i.dt = load ptr, ptr %i.c, align 8, !tbaa !16, !nonnull !17, !align !18
   %i.du = load i32, ptr %i.d, align 8, !tbaa !19
   %i.dv = call noundef i32 @_ZNK6icu_7813UnicodeString8char32AtEi(ptr noundef nonnull align 8 dereferenceable(64) %i.dt, i32 noundef %i.du)
-  %i.dw = load ptr, ptr %i.dl, align 8, !tbaa !30
+  %i.dw = load ptr, ptr %i.dm, align 8, !tbaa !30
   %i.dx = call noundef signext i8 @_ZNK6icu_7810UnicodeSet8containsEi(ptr noundef nonnull align 8 dereferenceable(200) %i.dw, i32 noundef %i.dv)
   %.not32 = icmp eq i8 %i.dx, 0
   br i1 %.not32, label %bb.t, label %.critedge2
@@ -237,7 +237,7 @@ bb.t:                                             ; preds = %bb.s
   ]
 
 bb.u:                                             ; preds = %bb.t
-  %i.eb = load ptr, ptr %i.dm, align 8, !tbaa !34
+  %i.eb = load ptr, ptr %i.dn, align 8, !tbaa !34
   %i.ec = call noundef signext i8 @_ZNK6icu_7810UnicodeSet8containsEi(ptr noundef nonnull align 8 dereferenceable(200) %i.eb, i32 noundef %i.ea)
   %i.ed = icmp ne i8 %i.ec, 0
   %i.ee = icmp eq i32 %i.ea, 45
@@ -281,7 +281,7 @@ bb.v:                                             ; preds = %.critedge2
   br i1 %i.fc, label %bb.w, label %.thread
 
 bb.w:                                             ; preds = %bb.v
-  %i.fd = load ptr, ptr %i.dn, align 8, !tbaa !39, !nonnull !17, !align !18
+  %i.fd = load ptr, ptr %i.dl, align 8, !tbaa !39, !nonnull !17, !align !18
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 18
   %i.ff = load i8, ptr %i.fe, align 2, !tbaa !46, !range !47, !noundef !17
   %i.fg = trunc nuw i8 %i.ff to i1

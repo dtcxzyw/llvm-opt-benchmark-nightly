@@ -205,11 +205,11 @@ bb.a:
   br i1 %.not26, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 760
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 472
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 712
   %i.i = load ptr, ptr %i.h, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 760
   %i.j = load ptr, ptr %3, align 8
   br label %bb.b
 
@@ -269,11 +269,11 @@ bb.a:
   br i1 %.not26.i, label %_ZN7CaDiCaL8Internal20vivify_all_decisionsEPNS_6ClauseEi.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 760 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 712 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 760 ; 2 uses
   %i.j = load ptr, ptr %3, align 8
   br label %bb.b
 

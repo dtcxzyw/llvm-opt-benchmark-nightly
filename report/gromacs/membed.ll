@@ -205,11 +205,11 @@ bb.ow:                                            ; preds = %.critedge.i367, %.l
   %i.ccl = load i32, ptr %i.cck, align 8, !tbaa !366
   %i.ccm = getelementptr inbounds nuw i8, ptr %i.ccg, i64 4
   %i.ccn = load i32, ptr %i.ccm, align 4, !tbaa !358
-  %52 = mul nsw i32 %i.ccn, %i.ccl                ; 4 uses
-  %53 = icmp sgt i32 %52, 0
-  %54 = getelementptr inbounds i8, ptr %i.cbt, i64 %i.cci ; 2 uses
-  %.pre.i366 = load i8, ptr %54, align 1, !tbaa !306, !range !423 ; 2 uses
-  br i1 %53, label %.lr.ph83.i, label %.critedge.i367
+  %52 = getelementptr inbounds i8, ptr %i.cbt, i64 %i.cci ; 2 uses
+  %53 = mul nsw i32 %i.ccn, %i.ccl                ; 4 uses
+  %54 = icmp sgt i32 %53, 0
+  %.pre.i366 = load i8, ptr %52, align 1, !tbaa !306, !range !423 ; 2 uses
+  br i1 %54, label %.lr.ph83.i, label %.critedge.i367
 
 .lr.ph83.i:                                       ; preds = %bb.ow, %._crit_edge.i374
   %i.cco = phi i8 [ %.053.lcssa.i, %._crit_edge.i374 ], [ %.pre.i366, %bb.ow ]
@@ -244,16 +244,16 @@ bb.oy:                                            ; preds = %bb.oy, %.lr.ph79.i
 
 ._crit_edge.i374:                                 ; preds = %._crit_edge.loopexit.i372, %bb.ox
   %.053.lcssa.i = phi i8 [ 0, %bb.ox ], [ %spec.select.i373, %._crit_edge.loopexit.i372 ] ; 3 uses
-  store i8 %.053.lcssa.i, ptr %54, align 1, !tbaa !306
+  store i8 %.053.lcssa.i, ptr %52, align 1, !tbaa !306
   %i.ccz = add nuw nsw i32 %.05881.i, 1           ; 2 uses
-  %exitcond.not.i375 = icmp eq i32 %i.ccz, %52
+  %exitcond.not.i375 = icmp eq i32 %i.ccz, %53
   br i1 %exitcond.not.i375, label %.critedge.i367, label %.lr.ph83.i, !llvm.loop !173
 
 .critedge.i367:                                   ; preds = %._crit_edge.i374, %.lr.ph83.i, %bb.ow
   %i.cda = phi i8 [ %.pre.i366, %bb.ow ], [ %.053.lcssa.i, %._crit_edge.i374 ], [ 0, %.lr.ph83.i ]
-  %i.cdb = add nsw i32 %52, %.05687.i
+  %i.cdb = add nsw i32 %53, %.05687.i
   %i.cdc = trunc nuw i8 %i.cda to i1
-  %i.cdd = select i1 %i.cdc, i32 %52, i32 0
+  %i.cdd = select i1 %i.cdc, i32 %53, i32 0
   %spec.select61.i = add nsw i32 %i.cdd, %.05488.i ; 2 uses
   %i.cde = add nuw i64 %.05189.i, 1               ; 2 uses
   %exitcond100.not.i = icmp eq i64 %i.cde, %i.ccf

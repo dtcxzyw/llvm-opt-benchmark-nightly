@@ -205,13 +205,13 @@ bb.a:
   %1 = alloca %"class.euf::justification", align 8 ; 4 uses
   tail call void @_ZN3euf6egraph10force_pushEv(ptr noundef nonnull align 8 dereferenceable(536) %0)
   tail call void @_ZN3euf6egraph17propagate_pluginsEv(ptr noundef nonnull align 8 dereferenceable(536) %0)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !144  ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %_ZN6vectorIN3euf6egraph8to_mergeELb0EjE5resetEv.exit, label %_ZNK6vectorIN3euf6egraph8to_mergeELb0EjE4sizeEv.exit.lr.ph
 
 _ZNK6vectorIN3euf6egraph8to_mergeELb0EjE4sizeEv.exit.lr.ph: ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 236
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -318,8 +318,7 @@ _ZNK6vectorIN3euf5th_eqELb0EjE4sizeEv.exit:       ; preds = %_ZN6vectorIN3euf6eg
   br i1 %i.as, label %bb.i, label %_ZNK6vectorIN3euf5th_eqELb0EjE4sizeEv.exit.thread
 
 _ZNK6vectorIN3euf5th_eqELb0EjE4sizeEv.exit.thread: ; preds = %_ZN6vectorIN3euf6egraph8to_mergeELb0EjE5resetEv.exit, %_ZNK6vectorIN3euf5th_eqELb0EjE4sizeEv.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 236
-  %i.at = load i8, ptr %3, align 4, !tbaa !149, !range !127, !noundef !128
+  %i.at = load i8, ptr %2, align 4, !tbaa !149, !range !127, !noundef !128
   %i.au = trunc nuw i8 %i.at to i1
   br label %bb.i
 

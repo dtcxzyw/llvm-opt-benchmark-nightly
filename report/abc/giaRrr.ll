@@ -205,21 +205,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.g, align 8, !tbaa !828
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 552
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 552
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 792
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !488  ; 12 uses
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !488  ; 4 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !488  ; 12 uses
+  %i.o = load ptr, ptr %i.k, align 8, !tbaa !488  ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = load i8, ptr %i.k, align 2, !tbaa !480, !range !315, !noundef !316
+  %i.q = load i8, ptr %i.i, align 2, !tbaa !480, !range !315, !noundef !316
   %i.r = trunc nuw i8 %i.q to i1
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !824 ; 7 uses
   br i1 %i.r, label %bb.f, label %.critedge2
@@ -327,7 +327,7 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetwo
 
 _ZNSt14priority_queueIPN3rrr9SchedulerINS0_10AndNetworkENS0_9OptimizerIS2_NS0_11BddAnalyzerIS2_EEEENS0_11PartitionerIS2_EEE3JobESt6vectorISB_SaISB_EENS9_18CompareJobPointersEE3popEv.exit: ; preds = %.critedge2, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetworkENS2_9OptimizerIS4_NS2_11BddAnalyzerIS4_EEEENS2_11PartitionerIS4_EEE3JobESt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_comp_iterINSB_18CompareJobPointersEEEEvT_SN_SN_RT0_.exit.i.i
   %i.bl = getelementptr inbounds i8, ptr %i.o, i64 -8
-  store ptr %i.bl, ptr %i.j, align 8, !tbaa !888
+  store ptr %i.bl, ptr %i.k, align 8, !tbaa !888
   %i.bm = load i8, ptr %i.g, align 8, !tbaa !828, !range !315, !noundef !316
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
@@ -730,21 +730,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.g, align 8, !tbaa !828
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 552
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 552
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 792
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !577  ; 12 uses
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !577  ; 4 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !577  ; 12 uses
+  %i.o = load ptr, ptr %i.k, align 8, !tbaa !577  ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = load i8, ptr %i.k, align 2, !tbaa !571, !range !315, !noundef !316
+  %i.q = load i8, ptr %i.i, align 2, !tbaa !571, !range !315, !noundef !316
   %i.r = trunc nuw i8 %i.q to i1
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !1038 ; 7 uses
   br i1 %i.r, label %bb.f, label %.critedge2
@@ -852,7 +852,7 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetwo
 
 _ZNSt14priority_queueIPN3rrr9SchedulerINS0_10AndNetworkENS0_9OptimizerIS2_NS0_15BddMspfAnalyzerIS2_EEEENS0_11PartitionerIS2_EEE3JobESt6vectorISB_SaISB_EENS9_18CompareJobPointersEE3popEv.exit: ; preds = %.critedge2, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetworkENS2_9OptimizerIS4_NS2_15BddMspfAnalyzerIS4_EEEENS2_11PartitionerIS4_EEE3JobESt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_comp_iterINSB_18CompareJobPointersEEEEvT_SN_SN_RT0_.exit.i.i
   %i.bl = getelementptr inbounds i8, ptr %i.o, i64 -8
-  store ptr %i.bl, ptr %i.j, align 8, !tbaa !1066
+  store ptr %i.bl, ptr %i.k, align 8, !tbaa !1066
   %i.bm = load i8, ptr %i.g, align 8, !tbaa !828, !range !315, !noundef !316
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
@@ -1255,21 +1255,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.g, align 8, !tbaa !828
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 552
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 552
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 792
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !632  ; 12 uses
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !632  ; 4 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !632  ; 12 uses
+  %i.o = load ptr, ptr %i.k, align 8, !tbaa !632  ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = load i8, ptr %i.k, align 2, !tbaa !626, !range !315, !noundef !316
+  %i.q = load i8, ptr %i.i, align 2, !tbaa !626, !range !315, !noundef !316
   %i.r = trunc nuw i8 %i.q to i1
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !1136 ; 7 uses
   br i1 %i.r, label %bb.f, label %.critedge2
@@ -1377,7 +1377,7 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetwo
 
 _ZNSt14priority_queueIPN3rrr9SchedulerINS0_10AndNetworkENS0_9OptimizerIS2_NS0_8AnalyzerIS2_NS0_9SimulatorIS2_EENS0_9SatSolverIS2_EEEEEENS0_11PartitionerIS2_EEE3JobESt6vectorISF_SaISF_EENSD_18CompareJobPointersEE3popEv.exit: ; preds = %.critedge2, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetworkENS2_9OptimizerIS4_NS2_8AnalyzerIS4_NS2_9SimulatorIS4_EENS2_9SatSolverIS4_EEEEEENS2_11PartitionerIS4_EEE3JobESt6vectorISH_SaISH_EEEENS0_5__ops15_Iter_comp_iterINSF_18CompareJobPointersEEEEvT_SR_SR_RT0_.exit.i.i
   %i.bl = getelementptr inbounds i8, ptr %i.o, i64 -8
-  store ptr %i.bl, ptr %i.j, align 8, !tbaa !1182
+  store ptr %i.bl, ptr %i.k, align 8, !tbaa !1182
   %i.bm = load i8, ptr %i.g, align 8, !tbaa !828, !range !315, !noundef !316
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
@@ -1780,21 +1780,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.g, align 8, !tbaa !828
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 584
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 584
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 824
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !688  ; 12 uses
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !688  ; 4 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !688  ; 12 uses
+  %i.o = load ptr, ptr %i.k, align 8, !tbaa !688  ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = load i8, ptr %i.k, align 2, !tbaa !681, !range !315, !noundef !316
+  %i.q = load i8, ptr %i.i, align 2, !tbaa !681, !range !315, !noundef !316
   %i.r = trunc nuw i8 %i.q to i1
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !1311 ; 7 uses
   br i1 %i.r, label %bb.f, label %.critedge2
@@ -1902,7 +1902,7 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetwo
 
 _ZNSt14priority_queueIPN3rrr9SchedulerINS0_10AndNetworkENS0_9OptimizerIS2_NS0_11BddAnalyzerIS2_EEEENS0_20LevelBasePartitionerIS2_EEE3JobESt6vectorISB_SaISB_EENS9_18CompareJobPointersEE3popEv.exit: ; preds = %.critedge2, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetworkENS2_9OptimizerIS4_NS2_11BddAnalyzerIS4_EEEENS2_20LevelBasePartitionerIS4_EEE3JobESt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_comp_iterINSB_18CompareJobPointersEEEEvT_SN_SN_RT0_.exit.i.i
   %i.bl = getelementptr inbounds i8, ptr %i.o, i64 -8
-  store ptr %i.bl, ptr %i.j, align 8, !tbaa !1317
+  store ptr %i.bl, ptr %i.k, align 8, !tbaa !1317
   %i.bm = load i8, ptr %i.g, align 8, !tbaa !828, !range !315, !noundef !316
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
@@ -2305,21 +2305,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.g, align 8, !tbaa !828
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 584
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 584
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 824
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !743  ; 12 uses
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !743  ; 4 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !743  ; 12 uses
+  %i.o = load ptr, ptr %i.k, align 8, !tbaa !743  ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = load i8, ptr %i.k, align 2, !tbaa !737, !range !315, !noundef !316
+  %i.q = load i8, ptr %i.i, align 2, !tbaa !737, !range !315, !noundef !316
   %i.r = trunc nuw i8 %i.q to i1
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !1324 ; 7 uses
   br i1 %i.r, label %bb.f, label %.critedge2
@@ -2427,7 +2427,7 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetwo
 
 _ZNSt14priority_queueIPN3rrr9SchedulerINS0_10AndNetworkENS0_9OptimizerIS2_NS0_15BddMspfAnalyzerIS2_EEEENS0_20LevelBasePartitionerIS2_EEE3JobESt6vectorISB_SaISB_EENS9_18CompareJobPointersEE3popEv.exit: ; preds = %.critedge2, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetworkENS2_9OptimizerIS4_NS2_15BddMspfAnalyzerIS4_EEEENS2_20LevelBasePartitionerIS4_EEE3JobESt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_comp_iterINSB_18CompareJobPointersEEEEvT_SN_SN_RT0_.exit.i.i
   %i.bl = getelementptr inbounds i8, ptr %i.o, i64 -8
-  store ptr %i.bl, ptr %i.j, align 8, !tbaa !1330
+  store ptr %i.bl, ptr %i.k, align 8, !tbaa !1330
   %i.bm = load i8, ptr %i.g, align 8, !tbaa !828, !range !315, !noundef !316
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
@@ -2830,21 +2830,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.g, align 8, !tbaa !828
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 584
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 26
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 584
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 824
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !797  ; 12 uses
-  %i.o = load ptr, ptr %i.j, align 8, !tbaa !797  ; 4 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !797  ; 12 uses
+  %i.o = load ptr, ptr %i.k, align 8, !tbaa !797  ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = load i8, ptr %i.k, align 2, !tbaa !791, !range !315, !noundef !316
+  %i.q = load i8, ptr %i.i, align 2, !tbaa !791, !range !315, !noundef !316
   %i.r = trunc nuw i8 %i.q to i1
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !1333 ; 7 uses
   br i1 %i.r, label %bb.f, label %.critedge2
@@ -2952,7 +2952,7 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetwo
 
 _ZNSt14priority_queueIPN3rrr9SchedulerINS0_10AndNetworkENS0_9OptimizerIS2_NS0_8AnalyzerIS2_NS0_9SimulatorIS2_EENS0_9SatSolverIS2_EEEEEENS0_20LevelBasePartitionerIS2_EEE3JobESt6vectorISF_SaISF_EENSD_18CompareJobPointersEE3popEv.exit: ; preds = %.critedge2, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN3rrr9SchedulerINS2_10AndNetworkENS2_9OptimizerIS4_NS2_8AnalyzerIS4_NS2_9SimulatorIS4_EENS2_9SatSolverIS4_EEEEEENS2_20LevelBasePartitionerIS4_EEE3JobESt6vectorISH_SaISH_EEEENS0_5__ops15_Iter_comp_iterINSF_18CompareJobPointersEEEEvT_SR_SR_RT0_.exit.i.i
   %i.bl = getelementptr inbounds i8, ptr %i.o, i64 -8
-  store ptr %i.bl, ptr %i.j, align 8, !tbaa !1339
+  store ptr %i.bl, ptr %i.k, align 8, !tbaa !1339
   %i.bm = load i8, ptr %i.g, align 8, !tbaa !828, !range !315, !noundef !316
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
