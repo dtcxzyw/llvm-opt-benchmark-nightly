@@ -204,19 +204,19 @@ bb.e:                                             ; preds = %.noexc5, %bb.d
   store ptr %i.u, ptr %i.ah, align 8, !tbaa !151
   %i.ai = add i32 %i.ad, 1
   store i32 %i.ai, ptr %i.af, align 4, !tbaa !123
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aj = load ptr, ptr %i.c, align 8, !tbaa !121 ; 2 uses
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %.critedge, label %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph
 
 _ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph: ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.pre13 = load i32, ptr %i.a, align 8, !tbaa !258
   br label %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7
 
 _ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7: ; preds = %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph, %bb.g
-  %i.al = phi i32 [ %.pre13, %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph ], [ %i.aw, %bb.g ] ; 2 uses
-  %i.am = phi ptr [ %i.aj, %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph ], [ %i.ax, %bb.g ]
-  %.049 = phi i1 [ false, %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph ], [ %spec.select, %bb.g ] ; 3 uses
+  %i.al = phi i32 [ %i.aw, %bb.g ], [ %.pre13, %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph ] ; 2 uses
+  %i.am = phi ptr [ %i.ax, %bb.g ], [ %i.aj, %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph ]
+  %.049 = phi i1 [ %spec.select, %bb.g ], [ false, %_ZNK6vectorIN5array6solver12axiom_recordELb0EjE4sizeEv.exit7.lr.ph ] ; 3 uses
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -4
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !123
   %i.ap = icmp ult i32 %i.al, %i.ao

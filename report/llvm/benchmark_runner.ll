@@ -202,56 +202,56 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr %i.n, ptr %i.q, align 8, !tbaa !95
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 2 uses
   store i64 0, ptr %i.r, align 8, !tbaa !112
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 168 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 6 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 3 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 160 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 112 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 128 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 4 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 4 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 168 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 6 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 160 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 112 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 128 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   br i1 %i.c, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.c, %.critedge.us
-  %i.af = load ptr, ptr %i.t, align 8, !tbaa !48, !nonnull !47, !align !73
+  %i.af = load ptr, ptr %i.u, align 8, !tbaa !48, !nonnull !47, !align !73
   call void @_ZNK9benchmark8internal17BenchmarkInstance5SetupEv(ptr noundef nonnull align 8 dereferenceable(472) %i.af) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   call void @_ZN9benchmark8internal15BenchmarkRunner13DoNIterationsEv(ptr dead_on_unwind nonnull writable sret(%"struct.benchmark::internal::BenchmarkRunner::IterationResults") align 8 %3, ptr noundef nonnull align 8 dereferenceable(144) %0)
   %i.ag = call noundef nonnull align 8 dereferenceable(160) ptr @_ZN9benchmark8internal13ThreadManager6ResultaSEOS2_(ptr noundef nonnull align 8 dereferenceable(176) %2, ptr noundef nonnull align 8 dereferenceable(176) %3) #20 ; 0 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, ptr noundef nonnull align 8 dereferenceable(16) %i.v, i64 16, i1 false)
-  %i.ah = load ptr, ptr %i.x, align 8, !tbaa !93
-  call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(48) %i.w, ptr noundef %i.ah)
-  %i.ai = load ptr, ptr %i.y, align 8, !tbaa !17  ; 2 uses
-  %i.aj = icmp eq ptr %i.ai, %i.z
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr noundef nonnull align 8 dereferenceable(16) %i.w, i64 16, i1 false)
+  %i.ah = load ptr, ptr %i.y, align 8, !tbaa !93
+  call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(48) %i.x, ptr noundef %i.ah)
+  %i.ai = load ptr, ptr %i.z, align 8, !tbaa !17  ; 2 uses
+  %i.aj = icmp eq ptr %i.ai, %i.aa
   br i1 %i.aj, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.us, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.us
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.us: ; preds = %.split.us
-  %i.ak = load i64, ptr %i.z, align 8, !tbaa !18
+  %i.ak = load i64, ptr %i.aa, align 8, !tbaa !18
   %i.al = add i64 %i.ak, 1
   call void @_ZdlPvm(ptr noundef %i.ai, i64 noundef %i.al) #24
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.us
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.us: ; preds = %.split.us, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.us
-  %i.am = load ptr, ptr %i.aa, align 8, !tbaa !17 ; 2 uses
-  %i.an = icmp eq ptr %i.am, %i.ab
+  %i.am = load ptr, ptr %i.ab, align 8, !tbaa !17 ; 2 uses
+  %i.an = icmp eq ptr %i.am, %i.ac
   br i1 %i.an, label %_ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev.exit.us, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.us
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.us: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.us
-  %i.ao = load i64, ptr %i.ab, align 8, !tbaa !18
+  %i.ao = load i64, ptr %i.ac, align 8, !tbaa !18
   %i.ap = add i64 %i.ao, 1
   call void @_ZdlPvm(ptr noundef %i.am, i64 noundef %i.ap) #24
   br label %_ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev.exit.us
 
 _ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev.exit.us: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.us, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.us
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  %i.aq = load ptr, ptr %i.t, align 8, !tbaa !48, !nonnull !47, !align !73
+  %i.aq = load ptr, ptr %i.u, align 8, !tbaa !48, !nonnull !47, !align !73
   call void @_ZNK9benchmark8internal17BenchmarkInstance8TeardownEv(ptr noundef nonnull align 8 dereferenceable(472) %i.aq) #20
-  %i.ar = load i8, ptr %i.ac, align 8, !tbaa !71, !range !46, !noundef !47
+  %i.ar = load i8, ptr %i.s, align 8, !tbaa !71, !range !46, !noundef !47
   %i.as = trunc nuw i8 %i.ar to i1
   br i1 %i.as, label %_ZNK9benchmark8internal15BenchmarkRunner28ShouldReportIterationResultsERKNS1_16IterationResultsE.exit.thread, label %bb.d
 
@@ -261,13 +261,13 @@ bb.d:                                             ; preds = %_ZN9benchmark8inter
   %i.av = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !range !46
   %i.aw = trunc nuw i8 %i.av to i1
   %or.cond.i.us = select i1 %i.au, i1 true, i1 %i.aw
-  %i.ax = load i64, ptr %i.u, align 8
+  %i.ax = load i64, ptr %i.v, align 8
   %i.ay = icmp sgt i64 %i.ax, 999999999999
   %or.cond8.i.us = select i1 %or.cond.i.us, i1 true, i1 %i.ay
   br i1 %or.cond8.i.us, label %_ZNK9benchmark8internal15BenchmarkRunner28ShouldReportIterationResultsERKNS1_16IterationResultsE.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.az = load double, ptr %i.s, align 8, !tbaa !126
+  %i.az = load double, ptr %i.t, align 8, !tbaa !126
   %i.ba = load i8, ptr %i.d, align 8, !tbaa !69, !range !46, !noundef !47
   %i.bb = trunc nuw i8 %i.ba to i1
   %.in.v.i.i.us = select i1 %i.bb, i64 88, i64 96
@@ -283,7 +283,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bg, label %.critedge.us, label %_ZNK9benchmark8internal15BenchmarkRunner28ShouldReportIterationResultsERKNS1_16IterationResultsE.exit.us
 
 _ZNK9benchmark8internal15BenchmarkRunner28ShouldReportIterationResultsERKNS1_16IterationResultsE.exit.us: ; preds = %bb.f
-  %i.bh = load ptr, ptr %i.t, align 8, !tbaa !48, !nonnull !47, !align !73
+  %i.bh = load ptr, ptr %i.u, align 8, !tbaa !48, !nonnull !47, !align !73
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 294
   %i.bj = load i8, ptr %i.bi, align 2, !tbaa !127, !range !46, !noundef !47
   %i.bk = trunc nuw i8 %i.bj to i1
@@ -295,38 +295,38 @@ _ZNK9benchmark8internal15BenchmarkRunner28ShouldReportIterationResultsERKNS1_16I
   br label %.split.us
 
 .split:                                           ; preds = %bb.c
-  %i.bm = load ptr, ptr %i.t, align 8, !tbaa !48, !nonnull !47, !align !73
+  %i.bm = load ptr, ptr %i.u, align 8, !tbaa !48, !nonnull !47, !align !73
   call void @_ZNK9benchmark8internal17BenchmarkInstance5SetupEv(ptr noundef nonnull align 8 dereferenceable(472) %i.bm) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   call void @_ZN9benchmark8internal15BenchmarkRunner13DoNIterationsEv(ptr dead_on_unwind nonnull writable sret(%"struct.benchmark::internal::BenchmarkRunner::IterationResults") align 8 %3, ptr noundef nonnull align 8 dereferenceable(144) %0)
   %i.bn = call noundef nonnull align 8 dereferenceable(160) ptr @_ZN9benchmark8internal13ThreadManager6ResultaSEOS2_(ptr noundef nonnull align 8 dereferenceable(176) %2, ptr noundef nonnull align 8 dereferenceable(176) %3) #20 ; 0 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, ptr noundef nonnull align 8 dereferenceable(16) %i.v, i64 16, i1 false)
-  %i.bo = load ptr, ptr %i.x, align 8, !tbaa !93
-  call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(48) %i.w, ptr noundef %i.bo)
-  %i.bp = load ptr, ptr %i.y, align 8, !tbaa !17  ; 2 uses
-  %i.bq = icmp eq ptr %i.bp, %i.z
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr noundef nonnull align 8 dereferenceable(16) %i.w, i64 16, i1 false)
+  %i.bo = load ptr, ptr %i.y, align 8, !tbaa !93
+  call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(48) %i.x, ptr noundef %i.bo)
+  %i.bp = load ptr, ptr %i.z, align 8, !tbaa !17  ; 2 uses
+  %i.bq = icmp eq ptr %i.bp, %i.aa
   br i1 %i.bq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %.split
-  %i.br = load i64, ptr %i.z, align 8, !tbaa !18
+  %i.br = load i64, ptr %i.aa, align 8, !tbaa !18
   %i.bs = add i64 %i.br, 1
   call void @_ZdlPvm(ptr noundef %i.bp, i64 noundef %i.bs) #24
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %.split, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  %i.bt = load ptr, ptr %i.aa, align 8, !tbaa !17 ; 2 uses
-  %i.bu = icmp eq ptr %i.bt, %i.ab
+  %i.bt = load ptr, ptr %i.ab, align 8, !tbaa !17 ; 2 uses
+  %i.bu = icmp eq ptr %i.bt, %i.ac
   br i1 %i.bu, label %_ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %i.bv = load i64, ptr %i.ab, align 8, !tbaa !18
+  %i.bv = load i64, ptr %i.ac, align 8, !tbaa !18
   %i.bw = add i64 %i.bv, 1
   call void @_ZdlPvm(ptr noundef %i.bt, i64 noundef %i.bw) #24
   br label %_ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev.exit
 
 _ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  %i.bx = load ptr, ptr %i.t, align 8, !tbaa !48, !nonnull !47, !align !73
+  %i.bx = load ptr, ptr %i.u, align 8, !tbaa !48, !nonnull !47, !align !73
   call void @_ZNK9benchmark8internal17BenchmarkInstance8TeardownEv(ptr noundef nonnull align 8 dereferenceable(472) %i.bx) #20
   br label %_ZNK9benchmark8internal15BenchmarkRunner28ShouldReportIterationResultsERKNS1_16IterationResultsE.exit.thread
 
@@ -364,8 +364,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
-  %i.cg = load ptr, ptr %i.t, align 8, !tbaa !48, !nonnull !47, !align !73 ; 16 uses
-  %i.ch = load double, ptr %i.s, align 8, !tbaa !126
+  %i.cg = load ptr, ptr %i.u, align 8, !tbaa !48, !nonnull !47, !align !73 ; 16 uses
+  %i.ch = load double, ptr %i.t, align 8, !tbaa !126
   %i.ci = load i32, ptr %i.a, align 4, !tbaa !72
   %i.cj = sext i32 %i.ci to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 108

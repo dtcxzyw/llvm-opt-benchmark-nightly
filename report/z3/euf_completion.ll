@@ -205,8 +205,8 @@ define hidden void @_ZN3euf10completion6reduceEv(ptr noundef nonnull align 8 der
   %1 = alloca %class.symbol, align 8              ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2080 ; 3 uses
   store i8 1, ptr %i.a, align 8, !tbaa !375
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1100 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1100 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1640 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2060 ; 2 uses
@@ -214,12 +214,12 @@ define hidden void @_ZN3euf10completion6reduceEv(ptr noundef nonnull align 8 der
 
 bb.a:                                             ; preds = %.lr.ph, %bb.q
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 4 uses
-  %i.g = load ptr, ptr %i.b, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.g = load ptr, ptr %i.c, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.h = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.g)
   br i1 %i.h, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = load i8, ptr %i.c, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.i = load i8, ptr %i.b, align 4, !tbaa !352, !range !353, !noundef !238
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %.critedge, label %bb.c
 
@@ -340,12 +340,12 @@ bb.i:                                             ; preds = %bb.h
   %i.br = zext i32 %i.bq to i64
   %i.bs = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.bo, i64 noundef %i.br) ; 2 uses
   %i.bt = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bs, ptr noundef nonnull @.str.2, i64 noundef 7) ; 0 uses
-  %i.bu = load ptr, ptr %i.b, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.bu = load ptr, ptr %i.c, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.bv = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.bu)
   br i1 %i.bv, label %bb.j, label %_ZN3euf10completion11should_stopEv.exit14
 
 bb.j:                                             ; preds = %bb.i
-  %i.bw = load i8, ptr %i.c, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.bw = load i8, ptr %i.b, align 4, !tbaa !352, !range !353, !noundef !238
   %i.bx = trunc nuw i8 %i.bw to i1
   br i1 %i.bx, label %_ZN3euf10completion11should_stopEv.exit14, label %bb.k
 
@@ -380,12 +380,12 @@ bb.m:                                             ; preds = %bb.h
   %i.cp = zext i32 %i.co to i64
   %i.cq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, i64 noundef %i.cp) ; 2 uses
   %i.cr = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.cq, ptr noundef nonnull @.str.2, i64 noundef 7) ; 0 uses
-  %i.cs = load ptr, ptr %i.b, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.cs = load ptr, ptr %i.c, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.ct = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.cs)
   br i1 %i.ct, label %bb.n, label %_ZN3euf10completion11should_stopEv.exit15
 
 bb.n:                                             ; preds = %bb.m
-  %i.cu = load i8, ptr %i.c, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.cu = load i8, ptr %i.b, align 4, !tbaa !352, !range !353, !noundef !238
   %i.cv = trunc nuw i8 %i.cu to i1
   br i1 %i.cv, label %_ZN3euf10completion11should_stopEv.exit15, label %bb.o
 
@@ -459,8 +459,8 @@ _ZN6vectorIPN3euf5enodeELb0EjE5resetEv.exit:      ; preds = %bb.a, %bb.b
 .lr.ph11:                                         ; preds = %.lr.ph, %_ZN6vectorIPN3euf5enodeELb0EjE5resetEv.exit
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2081 ; 4 uses
   store i8 1, ptr %i.n, align 1, !tbaa !394
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1100 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1100 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1408
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2136 ; 4 uses
@@ -486,12 +486,12 @@ _ZN6vectorIPN3euf5enodeELb0EjE5resetEv.exit:      ; preds = %bb.a, %bb.b
   br i1 %exitcond.not, label %.lr.ph11, label %.lr.ph, !llvm.loop !626
 
 bb.c:                                             ; preds = %.lr.ph11, %_ZN3euf10completion11should_stopEv.exit8.thread
-  %i.ag = load ptr, ptr %i.o, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.ag = load ptr, ptr %i.p, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.ah = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.ag)
   br i1 %i.ah, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %i.ai = load i8, ptr %i.p, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.ai = load i8, ptr %i.o, align 4, !tbaa !352, !range !353, !noundef !238
   %i.aj = trunc nuw i8 %i.ai to i1
   br i1 %i.aj, label %.critedge, label %bb.e
 
@@ -533,12 +533,12 @@ _ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.i: ; preds =
   br i1 %i.be, label %bb.g, label %.critedge.i
 
 bb.g:                                             ; preds = %_ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.i
-  %i.bf = load ptr, ptr %i.o, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.bf = load ptr, ptr %i.p, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.bg = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.bf)
   br i1 %i.bg, label %bb.h, label %.critedge.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.bh = load i8, ptr %i.p, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.bh = load i8, ptr %i.o, align 4, !tbaa !352, !range !353, !noundef !238
   %i.bi = trunc nuw i8 %i.bh to i1
   br i1 %i.bi, label %.critedge.i, label %bb.i
 
@@ -679,12 +679,12 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %_ZN3euf10completion15propagate_rulesEv.exit
-  %i.dy = load ptr, ptr %i.o, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.dy = load ptr, ptr %i.p, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.dz = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.dy)
   br i1 %i.dz, label %bb.o, label %_ZN3euf10completion11should_stopEv.exit7.thread
 
 bb.o:                                             ; preds = %bb.n
-  %i.ea = load i8, ptr %i.p, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.ea = load i8, ptr %i.o, align 4, !tbaa !352, !range !353, !noundef !238
   %i.eb = trunc nuw i8 %i.ea to i1
   br i1 %i.eb, label %_ZN3euf10completion11should_stopEv.exit7.thread, label %bb.p
 
@@ -713,12 +713,12 @@ _ZN3euf10completion11should_stopEv.exit7.thread:  ; preds = %bb.n, %bb.o, %bb.p,
   br i1 %i.em, label %_ZN3euf10completion11should_stopEv.exit8.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN3euf10completion11should_stopEv.exit7.thread
-  %i.en = load ptr, ptr %i.o, align 8, !tbaa !351, !nonnull !238, !align !239
+  %i.en = load ptr, ptr %i.p, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.eo = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.en)
   br i1 %i.eo, label %bb.s, label %_ZN3euf10completion11should_stopEv.exit8.thread
 
 bb.s:                                             ; preds = %bb.r
-  %i.ep = load i8, ptr %i.p, align 4, !tbaa !352, !range !353, !noundef !238
+  %i.ep = load i8, ptr %i.o, align 4, !tbaa !352, !range !353, !noundef !238
   %i.eq = trunc nuw i8 %i.ep to i1
   br i1 %i.eq, label %_ZN3euf10completion11should_stopEv.exit8.thread, label %bb.t
 
@@ -1121,6 +1121,7 @@ _ZN6vectorIPN3euf7bindingELb0EjE5resetEv.exit:    ; preds = %.lr.ph40, %._crit_e
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN3euf10completion15propagate_rulesEv(ptr noundef nonnull align 8 dereferenceable(2144) %0) local_unnamed_addr #0 align 2 {
 bb.a:
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1100
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2136 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !325  ; 2 uses
   %i.c = icmp eq ptr %i.b, null
@@ -1128,7 +1129,6 @@ bb.a:
 
 _ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.lr.ph: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1100
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit
 
@@ -1531,6 +1531,7 @@ _ZN6vectorIPN3euf10completion16conditional_ruleELb0EjE3endEv.exit: ; preds = %bb
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.a, %_ZN6vectorIPN3euf10completion16conditional_ruleELb0EjE3endEv.exit
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1100
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 2136 ; 4 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !325  ; 2 uses
   %i.n = icmp eq ptr %i.m, null
@@ -1538,7 +1539,6 @@ _ZN6vectorIPN3euf10completion16conditional_ruleELb0EjE3endEv.exit: ; preds = %bb
 
 _ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.lr.ph.i: ; preds = %._crit_edge
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1100
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.i
 
@@ -1941,13 +1941,13 @@ bb.k:                                             ; preds = %.noexc, %bb.i
           to label %bb.l unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.l:                                             ; preds = %bb.k
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1100
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 2136 ; 4 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !325 ; 2 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %_ZN3euf10completion15propagate_rulesEv.exit, label %_ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.lr.ph.i
 
 _ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.lr.ph.i: ; preds = %bb.l
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1100
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZNK6vectorIPN3euf10completion16conditional_ruleELb0EjE4sizeEv.exit.i
 

@@ -204,9 +204,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 6 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
@@ -246,13 +246,13 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   store i8 1, ptr %i.b, align 8, !tbaa !296
-  %i.ab = load ptr, ptr %i.d, align 8, !tbaa !78
-  %i.ac = load ptr, ptr %i.e, align 8, !tbaa !78
+  %i.ab = load ptr, ptr %i.e, align 8, !tbaa !78
+  %i.ac = load ptr, ptr %i.f, align 8, !tbaa !78
   %i.ad = icmp eq ptr %i.ab, %i.ac
   br i1 %i.ad, label %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i", label %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit"
 
 "_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i": ; preds = %bb.d, %.noexc41
-  %i.ae = load i8, ptr %i.f, align 8, !tbaa !75, !range !76, !noundef !77
+  %i.ae = load i8, ptr %i.d, align 8, !tbaa !75, !range !76, !noundef !77
   %i.af = trunc nuw i8 %i.ae to i1
   br i1 %i.af, label %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit", label %bb.e
 
@@ -261,13 +261,13 @@ bb.e:                                             ; preds = %"_ZZN7xgboost10coll
           to label %.noexc41 unwind label %bb.g
 
 .noexc41:                                         ; preds = %bb.e
-  %i.ag = load ptr, ptr %i.d, align 8, !tbaa !78
-  %i.ah = load ptr, ptr %i.e, align 8, !tbaa !78
+  %i.ag = load ptr, ptr %i.e, align 8, !tbaa !78
+  %i.ah = load ptr, ptr %i.f, align 8, !tbaa !78
   %i.ai = icmp eq ptr %i.ag, %i.ah
   br i1 %i.ai, label %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i", label %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit", !llvm.loop !290
 
 "_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit": ; preds = %.noexc41, %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i", %bb.d
-  %i.aj = load i8, ptr %i.f, align 8, !tbaa !75, !range !76, !noundef !77
+  %i.aj = load i8, ptr %i.d, align 8, !tbaa !75, !range !76, !noundef !77
   %i.ak = trunc nuw i8 %i.aj to i1                ; 2 uses
   br i1 %i.ak, label %bb.bq, label %bb.h
 
@@ -290,8 +290,8 @@ bb.h:                                             ; preds = %"_ZNSt18condition_v
           to label %_ZNSt5queueIN7xgboost10collective4Loop2OpESt5dequeIS3_SaIS3_EEEC2IS6_vEEv.exit.preheader unwind label %bb.bb
 
 _ZNSt5queueIN7xgboost10collective4Loop2OpESt5dequeIS3_SaIS3_EEEC2IS6_vEEv.exit.preheader: ; preds = %bb.h
-  %i.an = load ptr, ptr %i.d, align 8, !tbaa !78
-  %i.ao = load ptr, ptr %i.e, align 8, !tbaa !78  ; 2 uses
+  %i.an = load ptr, ptr %i.e, align 8, !tbaa !78
+  %i.ao = load ptr, ptr %i.f, align 8, !tbaa !78  ; 2 uses
   %i.ap = icmp eq ptr %i.an, %i.ao
   br i1 %i.ap, label %_ZNSt5queueIN7xgboost10collective4Loop2OpESt5dequeIS3_SaIS3_EEEC2IS6_vEEv.exit._crit_edge, label %.lr.ph
 
@@ -361,7 +361,7 @@ bb.o:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN7xgboost10collective4Loop2OpD2Ev.exit.i
 
 _ZN7xgboost10collective4Loop2OpD2Ev.exit.i:       ; preds = %bb.o, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.k, %bb.i
-  %i.bm = load ptr, ptr %i.e, align 8, !tbaa !102
+  %i.bm = load ptr, ptr %i.f, align 8, !tbaa !102
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 56
   br label %_ZNSt5dequeIN7xgboost10collective4Loop2OpESaIS3_EE9pop_frontEv.exit
 
@@ -426,7 +426,7 @@ _ZNSt5dequeIN7xgboost10collective4Loop2OpESaIS3_EE16_M_pop_front_auxEv.exit.i: ;
 
 _ZNSt5dequeIN7xgboost10collective4Loop2OpESaIS3_EE9pop_frontEv.exit: ; preds = %_ZN7xgboost10collective4Loop2OpD2Ev.exit.i, %_ZNSt5dequeIN7xgboost10collective4Loop2OpESaIS3_EE16_M_pop_front_auxEv.exit.i
   %storemerge.i = phi ptr [ %i.bn, %_ZN7xgboost10collective4Loop2OpD2Ev.exit.i ], [ %i.cg, %_ZNSt5dequeIN7xgboost10collective4Loop2OpESaIS3_EE16_M_pop_front_auxEv.exit.i ]
-  store ptr %storemerge.i, ptr %i.e, align 8, !tbaa !102
+  store ptr %storemerge.i, ptr %i.f, align 8, !tbaa !102
   %i.ci = load ptr, ptr %i.l, align 8, !tbaa !125 ; 4 uses
   %i.cj = load ptr, ptr %i.m, align 8, !tbaa !126
   %i.ck = getelementptr inbounds i8, ptr %i.cj, i64 -56
@@ -742,8 +742,8 @@ bb.ba:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN7xgboost10collective4Loop2OpD2Ev.exit:         ; preds = %_ZNSt5queueIN7xgboost10collective4Loop2OpESt5dequeIS3_SaIS3_EEE4pushERKS3_.exit, %bb.aw, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
-  %i.he = load ptr, ptr %i.d, align 8, !tbaa !78
-  %i.hf = load ptr, ptr %i.e, align 8, !tbaa !78  ; 2 uses
+  %i.he = load ptr, ptr %i.e, align 8, !tbaa !78
+  %i.hf = load ptr, ptr %i.f, align 8, !tbaa !78  ; 2 uses
   %i.hg = icmp eq ptr %i.he, %i.hf
   br i1 %i.hg, label %_ZNSt5queueIN7xgboost10collective4Loop2OpESt5dequeIS3_SaIS3_EEEC2IS6_vEEv.exit._crit_edge, label %.lr.ph, !llvm.loop !291
 
@@ -843,7 +843,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit52:       ; preds = %bb.bj
   br i1 %i.hw, label %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_0clEONS0_6ResultE.exit", label %bb.bk
 
 bb.bk:                                            ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit52
-  %i.hx = load i8, ptr %i.f, align 8, !tbaa !75, !range !76, !noundef !77
+  %i.hx = load i8, ptr %i.d, align 8, !tbaa !75, !range !76, !noundef !77
   %i.hy = trunc nuw i8 %i.hx to i1
   br i1 %i.hy, label %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_0clEONS0_6ResultE.exit", label %bb.bl, !prof !131
 

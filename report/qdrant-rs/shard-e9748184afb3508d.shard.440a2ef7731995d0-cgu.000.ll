@@ -205,7 +205,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTRNtNtN
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB4_3VecjEINtB2_18SpecFromIterNestedjINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1z_6filter6FilterINtNtB1z_4take4TakeINtNtB1z_9enumerate9EnumerateINtNtNtNtB6_11collections9vec_deque4iter4IterNtNtCs5QaNqjAn6vc_5shard7tracker7TrackerEEENCNvMB4c_NtB4c_10TrackerLog8truncate0ENCB4T_s_0EE9from_iterB4e_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 16               ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
@@ -294,18 +294,18 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs5QaN
 .lr.ph.i.i:                                       ; preds = %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs5QaNqjAn6vc_5shard.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   %i.aj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %2 = insertelement <2 x ptr> poison, ptr %i.af, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.ai, i64 1
   br label %bb.f
 
 bb.f:                                             ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecjE7reserveCs5QaNqjAn6vc_5shard.exit.i.i, %.lr.ph.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !5614
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5615
-  store ptr %i.af, ptr %i.a, align 8, !noalias !5615
-  store ptr %i.ai, ptr %2, align 8, !noalias !5615
-  store ptr %i.aj, ptr %i.ak, align 8, !noalias !5615
+  store <2 x ptr> %3, ptr %i.a, align 16, !noalias !5615
+  store ptr %i.aj, ptr %i.ak, align 16, !noalias !5615
   invoke void @_RINvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB6_4IterNtNtCs5QaNqjAn6vc_5shard7tracker7TrackerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtB1U_8adapters9enumerateINtB33_9EnumeratepEB1O_8try_fold9enumerateRB19_uINtNtNtB1W_3ops12control_flow11ControlFlowIB4h_TjB4a_EEENCINvNvXs_NtB35_4takeINtB5k_4TakepEB1O_8try_fold5checkB51_uB4W_NCINvNvB1O_4find5checkB51_QNCNvMB1b_NtB1b_10TrackerLog8truncate0E0E0E0B4g_EB1d_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
           to label %.noexc unwind label %bb.j
 
