@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_write-5ad51624d01e48bf.influxdb3_write.69514a759dae960a-cgu.11?download=true
 inline.NumInlined: 2339
 inline.NumDeleted: 964
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_RNvXs5_NtCsj9JzdWj4GcM_12arrow_schema5errorNtB5_10ArrowErrorNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt:bb.a
 
 bb.u:                                             ; preds = %bb.a
@@ -205,31 +205,55 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .preheader.i:                                     ; preds = %bb.b
   %.pr.i = load i8, ptr %1, align 1, !alias.scope !6020
   %cond.i = icmp eq i8 %.pr.i, 43                 ; 2 uses
-  %.sroa.15.0.i = select i1 %cond.i, i64 3, i64 4
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i82 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.idx.i
-  br label %.lr.ph.i
+  %.sroa.0.0.i82 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.idx.i ; 4 uses
+  %3 = load i8, ptr %.sroa.0.0.i82, align 1, !alias.scope !6020, !noundef !187
+  %4 = zext i8 %3 to i32
+  %5 = add nsw i32 %4, -48                        ; 2 uses
+  %6 = icmp ult i32 %5, 10
+  br i1 %6, label %.lr.ph.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %bb.d
-  %.sroa.0.269.i = phi ptr [ %i.q, %bb.d ], [ %.sroa.0.0.i82, %.preheader.i ] ; 2 uses
-  %.sroa.15.268.i = phi i64 [ %3, %bb.d ], [ %.sroa.15.0.i, %.preheader.i ]
-  %.sroa.043.267.i = phi i16 [ %5, %bb.d ], [ 0, %.preheader.i ]
-  %i.l = load i8, ptr %.sroa.0.269.i, align 1, !alias.scope !6020, !noundef !187
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %7 = trunc nuw nsw i32 %5 to i16
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i82, i64 1
+  %i.l = load i8, ptr %8, align 1, !alias.scope !6020, !noundef !187
   %i.m = zext i8 %i.l to i32
   %i.n = add nsw i32 %i.m, -48                    ; 2 uses
   %i.o = icmp ult i32 %i.n, 10
   br i1 %i.o, label %bb.d, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
 
 bb.d:                                             ; preds = %.lr.ph.i
-  %i.p = mul i16 %.sroa.043.267.i, 10
-  %3 = add nsw i64 %.sroa.15.268.i, -1            ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.269.i, i64 1
-  %4 = trunc nuw nsw i32 %i.n to i16
-  %5 = add i16 %i.p, %4                           ; 2 uses
-  %.not54.i = icmp eq i64 %3, 0
-  br i1 %.not54.i, label %.loopexit.i, label %.lr.ph.i
+  %i.p = mul nuw nsw i16 %7, 10
+  %9 = trunc nuw nsw i32 %i.n to i16
+  %10 = add nuw nsw i16 %i.p, %9
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i82, i64 2
+  %11 = load i8, ptr %i.q, align 1, !alias.scope !6020, !noundef !187
+  %12 = zext i8 %11 to i32
+  %13 = add nsw i32 %12, -48                      ; 2 uses
+  %14 = icmp ult i32 %13, 10
+  br i1 %14, label %15, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
 
-_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread: ; preds = %.lr.ph.i
+15:                                               ; preds = %bb.d
+  %16 = mul nuw i16 %10, 10
+  %17 = trunc nuw nsw i32 %13 to i16
+  %18 = add nuw nsw i16 %16, %17                  ; 2 uses
+  br i1 %cond.i, label %.loopexit.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %15
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i82, i64 3
+  %20 = load i8, ptr %19, align 1, !alias.scope !6020, !noundef !187
+  %21 = zext i8 %20 to i32
+  %22 = add nsw i32 %21, -48                      ; 2 uses
+  %23 = icmp ult i32 %22, 10
+  br i1 %23, label %24, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
+
+24:                                               ; preds = %.lr.ph.i.3
+  %25 = mul i16 %18, 10
+  %26 = trunc nuw nsw i32 %22 to i16
+  %27 = add i16 %25, %26
+  br label %.loopexit.i
+
+_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread: ; preds = %.lr.ph.i.3, %bb.d, %.lr.ph.i, %.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6021
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs92BnbMq7p8c_15influxdb3_write(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef 7, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1), !noalias !6021
   %i.r = load i64, ptr %i.b, align 8, !range !198, !noalias !6021, !noundef !187
@@ -258,7 +282,8 @@ _RNCNvXs7_Cs92BnbMq7p8c_15influxdb3_writeNtB7_9YearMonthNtNtNtCs4NRVxsYgnAr_4cor
   store i64 7, ptr %.sroa.566.sroa.4.0..sroa.566.0..sroa_idx.sroa_idx, align 8
   br label %bb.l
 
-.loopexit.i:                                      ; preds = %bb.d
+.loopexit.i:                                      ; preds = %24, %15
+  %.lcssa125 = phi i16 [ %27, %24 ], [ %18, %15 ]
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 1, !alias.scope !6023, !noundef !187 ; 2 uses
   %i.ac = icmp sgt i8 %i.ab, -65
@@ -339,7 +364,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i16 %5, ptr %i.az, align 8
+  store i16 %.lcssa125, ptr %i.az, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %.lcssa, ptr %i.ba, align 2
   store i64 -2, ptr %0, align 8

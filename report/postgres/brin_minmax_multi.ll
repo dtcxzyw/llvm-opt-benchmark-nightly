@@ -3,7 +3,7 @@ inline.NumInlined: 208
 inline.NumDeleted: 57
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@brin_minmax_multi_distance_timetz:bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = load i64, ptr %i.d, align 8
@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.q = icmp eq i8 %i.l, 2
   %i.r = select i1 %i.q, i64 4, i64 16
-  %i.s = tail call ptr @palloc(i64 noundef %i.r) #11 ; 4 uses
+  %i.s = tail call ptr @palloc(i64 noundef %i.r) #11 ; 5 uses
   %i.t = load i8, ptr %i.d, align 1
   %i.u = and i8 %i.t, 1
   %.not.i63 = icmp eq i8 %i.u, 0
@@ -224,7 +224,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = load i8, ptr %i.ac, align 1
   %i.ae = icmp eq i8 %i.ad, 2
   %i.af = select i1 %i.ae, i64 4, i64 16
-  %i.ag = tail call ptr @palloc(i64 noundef %i.af) #11 ; 4 uses
+  %i.ag = tail call ptr @palloc(i64 noundef %i.af) #11 ; 5 uses
   %i.ah = load i8, ptr %i.h, align 1
   %i.ai = and i8 %i.ah, 1
   %.not.i69 = icmp eq i8 %i.ai, 0
@@ -295,9 +295,19 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %exitcond.not, label %.preheader, label %bb.c, !llvm.loop !12
 
 .preheader:                                       ; preds = %bb.g, %.preheader
-  %indvars.iv83 = phi i64 [ %indvars.iv.next84.a, %.preheader ], [ %wide.trip.count, %bb.g ] ; 2 uses
+  %indvars.iv83 = phi i64 [ %indvars.iv.next84.a, %.preheader ], [ %wide.trip.count, %bb.g ] ; 3 uses
   %.05481 = phi double [ %i.cd, %.preheader ], [ 0.000000e+00, %bb.g ]
-  %indvars.iv.next84.a = add nsw i64 %indvars.iv83, -1 ; 3 uses
+  %indvars.iv.next84 = add nsw i64 %indvars.iv83, -1 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv.next84
+  %2 = load i8, ptr %1, align 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %indvars.iv.next84
+  %4 = load i8, ptr %3, align 1
+  %5 = uitofp i8 %4 to double
+  %6 = uitofp i8 %2 to double
+  %7 = fsub nnan double %5, %6
+  %8 = fadd double %.05481, %7
+  %9 = fmul double %8, 3.906250e-03
+  %indvars.iv.next84.a = add nsw i64 %indvars.iv83, -2 ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv.next84.a
   %i.bw = load i8, ptr %i.bv, align 1
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ag, i64 %indvars.iv.next84.a
@@ -305,9 +315,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bz = uitofp i8 %i.by to double
   %i.ca = uitofp i8 %i.bw to double
   %i.cb = fsub nnan double %i.bz, %i.ca
-  %i.cc = fadd double %.05481, %i.cb
+  %i.cc = fadd double %9, %i.cb
   %i.cd = fmul double %i.cc, 3.906250e-03         ; 2 uses
-  %i.ce = icmp sgt i64 %indvars.iv83, 1
+  %i.ce = icmp sgt i64 %indvars.iv83, 2
   br i1 %i.ce, label %.preheader, label %bb.h, !llvm.loop !13
 
 bb.h:                                             ; preds = %.preheader

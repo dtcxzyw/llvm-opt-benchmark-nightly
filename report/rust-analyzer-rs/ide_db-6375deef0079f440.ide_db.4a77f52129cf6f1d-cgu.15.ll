@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/ide_db-6375deef0079f440.ide_db.4a77f52129cf6f1d-cgu.15?download=true
 inline.NumInlined: 1645
 inline.NumDeleted: 763
-loop-unroll.NumCompletelyUnrolled: 13
+loop-unroll.NumCompletelyUnrolled: 14
 loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumUnrolled: 20
 begin_hunk_0_@_RNvNtCs6oosyzwIepl_6ide_db8rust_doc13is_rust_fence:bb.a
   %i.z = zext nneg i8 %i.y to i32                 ; 2 uses
   %i.aa = or disjoint i32 %i.x, %i.z
@@ -205,26 +205,39 @@ bb.r:                                             ; preds = %bb.q
 
 .preheader.i:                                     ; preds = %bb.r
   %cond.i = icmp eq i8 %i.ea, 43                  ; 2 uses
-  %.sroa.15.0.i = select i1 %cond.i, i64 3, i64 4
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i55 = getelementptr inbounds nuw i8, ptr %i.dz, i64 %.sroa.0.0.idx.i
-  br label %.lr.ph.i
+  %.sroa.0.0.i55 = getelementptr inbounds nuw i8, ptr %i.dz, i64 %.sroa.0.0.idx.i ; 4 uses
+  %2 = load i8, ptr %.sroa.0.0.i55, align 1, !alias.scope !1557, !noundef !8
+  %3 = add i8 %2, -58
+  %4 = icmp ult i8 %3, -10
+  br i1 %4, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, label %.lr.ph.i.1
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.preheader.i
-  %.sroa.0.271.i = phi ptr [ %3, %.lr.ph.i ], [ %.sroa.0.0.i55, %.preheader.i ] ; 2 uses
-  %.sroa.15.270.i = phi i64 [ %2, %.lr.ph.i ], [ %.sroa.15.0.i, %.preheader.i ]
-  %i.ec = load i8, ptr %.sroa.0.271.i, align 1, !alias.scope !1557, !noundef !8
+.lr.ph.i.1:                                       ; preds = %.preheader.i
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i55, i64 1
+  %6 = load i8, ptr %5, align 1, !alias.scope !1557, !noundef !8
+  %7 = add i8 %6, -58
+  %8 = icmp ult i8 %7, -10
+  br i1 %8, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.1
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i55, i64 2
+  %i.ec = load i8, ptr %9, align 1, !alias.scope !1557, !noundef !8
   %i.ed = add i8 %i.ec, -58
   %i.ee = icmp ult i8 %i.ed, -10                  ; 2 uses
-  %2 = add nsw i64 %.sroa.15.270.i, -1            ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.271.i, i64 1
-  %.not56.i = icmp eq i64 %2, 0
-  %or.cond143 = select i1 %i.ee, i1 true, i1 %.not56.i
-  br i1 %or.cond143, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, label %.lr.ph.i
+  %or.cond143.2 = or i1 %i.ee, %cond.i
+  br i1 %or.cond143.2, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, label %.lr.ph.i.3
 
-_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = %.lr.ph.i
+.lr.ph.i.3:                                       ; preds = %.lr.ph.i
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i55, i64 3
+  %11 = load i8, ptr %10, align 1, !alias.scope !1557, !noundef !8
+  %12 = add i8 %11, -58
+  %13 = icmp ult i8 %12, -10
+  br label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit
+
+_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = %.lr.ph.i.3, %.lr.ph.i, %.lr.ph.i.1, %.preheader.i
+  %.lcssa180 = phi i1 [ true, %.preheader.i ], [ true, %.lr.ph.i.1 ], [ %i.ee, %.lr.ph.i ], [ %13, %.lr.ph.i.3 ]
   %i.ef = trunc nuw i8 %.sroa.01.0.ph to i1
-  %or.cond50 = select i1 %i.ee, i1 true, i1 %i.ef ; 2 uses
+  %or.cond50 = select i1 %.lcssa180, i1 true, i1 %i.ef ; 2 uses
   %spec.select51 = zext i1 %or.cond50 to i8
   %spec.select52 = select i1 %or.cond50, i8 %.sroa.0.0.ph154, i8 1
   br label %.outer.backedge
