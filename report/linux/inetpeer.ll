@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/inetpeer?download=true
 inline.NumInlined: 40
 inline.NumDeleted: 31
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -69,18 +71,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = getelementptr i8, ptr %0, i64 8          ; 8 uses
   %i.c = load volatile i32, ptr %i.b, align 4     ; 2 uses
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !18
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !17
   %i.d = and i32 %i.c, 1
   %.not3.i = icmp eq i32 %i.d, 0
-  br i1 %.not3.i, label %read_seqbegin.exit, label %.lr.ph.i, !prof !19
+  br i1 %.not3.i, label %read_seqbegin.exit, label %.lr.ph.i, !prof !18
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  tail call void asm sideeffect "pause", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !20
+  tail call void asm sideeffect "pause", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !19
   %i.e = load volatile i32, ptr %i.b, align 4     ; 2 uses
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !18
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !17
   %i.f = and i32 %i.e, 1
   %.not.i = icmp eq i32 %i.f, 0
-  br i1 %.not.i, label %read_seqbegin.exit, label %.lr.ph.i, !prof !21, !llvm.loop !14
+  br i1 %.not.i, label %read_seqbegin.exit, label %.lr.ph.i, !prof !20, !llvm.loop !14
 
 read_seqbegin.exit:                               ; preds = %.lr.ph.i, %bb.a
   %.lcssa.i = phi i32 [ %i.c, %bb.a ], [ %i.e, %.lr.ph.i ] ; 2 uses
@@ -90,45 +92,62 @@ read_seqbegin.exit:                               ; preds = %.lr.ph.i, %bb.a
 
 .lr.ph.i42:                                       ; preds = %read_seqbegin.exit
   %i.h = getelementptr i8, ptr %1, i64 16
+  %2 = getelementptr i8, ptr %1, i64 4
+  %3 = getelementptr i8, ptr %1, i64 8
+  %4 = getelementptr i8, ptr %1, i64 12
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %bb.d, %.lr.ph.i42
-  %i.i = phi ptr [ %i.p, %bb.d ], [ %i.g, %.lr.ph.i42 ] ; 4 uses
+  %i.i = phi ptr [ %i.p, %bb.d ], [ %i.g, %.lr.ph.i42 ] ; 7 uses
+  %5 = load i16, ptr %i.h, align 4
+  %6 = icmp eq i16 %5, 2
   %i.j = getelementptr i8, ptr %i.i, i64 24
-  %2 = load i16, ptr %i.h, align 4
-  %3 = icmp eq i16 %2, 2
-  %wide.trip.count.i.us.i = select i1 %3, i64 2, i64 4
-  br label %bb.b
+  %7 = load i32, ptr %1, align 4                  ; 2 uses
+  %8 = load i32, ptr %i.j, align 4                ; 2 uses
+  %9 = icmp eq i32 %7, %8
+  br i1 %9, label %10, label %inetpeer_addr_cmp.exit.us.i
 
-bb.b:                                             ; preds = %bb.c, %.lr.ph.split.us.i
-  %indvars.iv.i.us.i = phi i64 [ 0, %.lr.ph.split.us.i ], [ %indvars.iv.next.i.us.i, %bb.c ] ; 3 uses
-  %4 = getelementptr [4 x i8], ptr %1, i64 %indvars.iv.i.us.i
-  %i.k = load i32, ptr %4, align 4                ; 2 uses
-  %5 = getelementptr [4 x i8], ptr %i.j, i64 %indvars.iv.i.us.i
-  %i.l = load i32, ptr %5, align 4                ; 2 uses
+10:                                               ; preds = %.lr.ph.split.us.i
+  %11 = load i32, ptr %2, align 4                 ; 2 uses
+  %12 = getelementptr i8, ptr %i.i, i64 28
+  %13 = load i32, ptr %12, align 4                ; 2 uses
+  %14 = icmp eq i32 %11, %13
+  br i1 %14, label %15, label %inetpeer_addr_cmp.exit.us.i
+
+15:                                               ; preds = %10
+  br i1 %6, label %inetpeer_addr_cmp.exit.thread.i, label %bb.b
+
+bb.b:                                             ; preds = %15
+  %i.k = load i32, ptr %3, align 4                ; 2 uses
+  %16 = getelementptr i8, ptr %i.i, i64 32
+  %i.l = load i32, ptr %16, align 4               ; 2 uses
   %i.m = icmp eq i32 %i.k, %i.l
   br i1 %i.m, label %bb.c, label %inetpeer_addr_cmp.exit.us.i
 
 bb.c:                                             ; preds = %bb.b
-  %indvars.iv.next.i.us.i = add nuw nsw i64 %indvars.iv.i.us.i, 1 ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %indvars.iv.next.i.us.i, %wide.trip.count.i.us.i
-  br i1 %exitcond.not.i.us.i, label %inetpeer_addr_cmp.exit.thread.i, label %bb.b, !llvm.loop !15
+  %17 = load i32, ptr %4, align 4                 ; 2 uses
+  %18 = getelementptr i8, ptr %i.i, i64 36
+  %19 = load i32, ptr %18, align 4                ; 2 uses
+  %exitcond.not.i.us.i = icmp eq i32 %17, %19
+  br i1 %exitcond.not.i.us.i, label %inetpeer_addr_cmp.exit.thread.i, label %inetpeer_addr_cmp.exit.us.i
 
-inetpeer_addr_cmp.exit.us.i:                      ; preds = %bb.b
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !22
+inetpeer_addr_cmp.exit.us.i:                      ; preds = %bb.c, %bb.b, %10, %.lr.ph.split.us.i
+  %.lcssa162 = phi i32 [ %7, %.lr.ph.split.us.i ], [ %11, %10 ], [ %i.k, %bb.b ], [ %17, %bb.c ]
+  %.lcssa160 = phi i32 [ %8, %.lr.ph.split.us.i ], [ %13, %10 ], [ %i.l, %bb.b ], [ %19, %bb.c ]
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !21
   %i.n = load volatile i32, ptr %i.b, align 8
   %.not61.us.i = icmp eq i32 %i.n, %.lcssa.i
-  br i1 %.not61.us.i, label %bb.d, label %lookup.exit.thread, !prof !23
+  br i1 %.not61.us.i, label %bb.d, label %lookup.exit.thread, !prof !22
 
 bb.d:                                             ; preds = %inetpeer_addr_cmp.exit.us.i
-  %i.o = icmp ult i32 %i.k, %i.l
+  %i.o = icmp ult i32 %.lcssa162, %.lcssa160
   %.135.v.us.i = select i1 %i.o, i64 16, i64 8
   %.135.us.i = getelementptr i8, ptr %i.i, i64 %.135.v.us.i
   %i.p = load volatile ptr, ptr %.135.us.i, align 8 ; 2 uses
   %.not.us.i = icmp eq ptr %i.p, null
   br i1 %.not.us.i, label %lookup.exit.thread, label %.lr.ph.split.us.i
 
-inetpeer_addr_cmp.exit.thread.i:                  ; preds = %bb.c
+inetpeer_addr_cmp.exit.thread.i:                  ; preds = %15, %bb.c
   %i.q = load volatile i64, ptr @jiffies, align 64
   %i.r = trunc i64 %i.q to i32                    ; 2 uses
   %i.s = getelementptr i8, ptr %i.i, i64 144      ; 2 uses
@@ -141,19 +160,19 @@ bb.e:                                             ; preds = %inetpeer_addr_cmp.e
   br label %lookup.exit
 
 lookup.exit:                                      ; preds = %bb.e, %inetpeer_addr_cmp.exit.thread.i
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !22
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !21
   %i.u = load volatile i32, ptr %i.b, align 8
   %.not = icmp eq i32 %i.u, %.lcssa.i
   br i1 %.not, label %bb.u, label %lookup.exit.thread
 
 lookup.exit.thread:                               ; preds = %inetpeer_addr_cmp.exit.us.i, %bb.d, %read_seqbegin.exit, %lookup.exit
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !23
   %i.v = getelementptr i8, ptr %0, i64 12         ; 2 uses
   tail call void @_raw_spin_lock_bh(ptr noundef %i.v) #8
   %i.w = load i32, ptr %i.b, align 8
   %i.x = add i32 %i.w, 1
   store i32 %i.x, ptr %i.b, align 8
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !25
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !24
   %i.y = load volatile ptr, ptr %0, align 8       ; 2 uses
   %.not68.i43 = icmp eq ptr %i.y, null
   br i1 %.not68.i43, label %lookup.exit63.thread, label %.lr.ph.i44
@@ -162,35 +181,52 @@ lookup.exit.thread:                               ; preds = %inetpeer_addr_cmp.e
   %i.z = getelementptr i8, ptr %1, i64 16
   %.pre91.i = load i16, ptr %i.z, align 4
   %i.aa = icmp eq i16 %.pre91.i, 2
-  %wide.trip.count.i.i = select i1 %i.aa, i64 2, i64 4
+  %20 = load i32, ptr %1, align 4                 ; 2 uses
+  %21 = getelementptr i8, ptr %1, i64 4
+  %22 = getelementptr i8, ptr %1, i64 8
+  %23 = getelementptr i8, ptr %1, i64 12
   br label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %bb.j, %.lr.ph.i44
   %.067 = phi i32 [ 0, %.lr.ph.i44 ], [ %.1, %bb.j ] ; 6 uses
-  %i.ab = phi ptr [ %i.y, %.lr.ph.i44 ], [ %i.ap, %bb.j ] ; 8 uses
+  %i.ab = phi ptr [ %i.y, %.lr.ph.i44 ], [ %i.ap, %bb.j ] ; 11 uses
   %i.ac = getelementptr i8, ptr %i.ab, i64 24
-  br label %bb.g
+  %24 = load i32, ptr %i.ac, align 4              ; 2 uses
+  %25 = icmp eq i32 %20, %24
+  br i1 %25, label %26, label %inetpeer_addr_cmp.exit.i
 
-bb.f:                                             ; preds = %bb.g
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %inetpeer_addr_cmp.exit.thread.i50, label %bb.g, !llvm.loop !15
+26:                                               ; preds = %.lr.ph.split.i
+  %27 = load i32, ptr %21, align 4                ; 2 uses
+  %28 = getelementptr i8, ptr %i.ab, i64 28
+  %29 = load i32, ptr %28, align 4                ; 2 uses
+  %30 = icmp eq i32 %27, %29
+  br i1 %30, label %31, label %inetpeer_addr_cmp.exit.i
 
-bb.g:                                             ; preds = %bb.f, %.lr.ph.split.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.split.i ], [ %indvars.iv.next.i.i, %bb.f ] ; 3 uses
-  %6 = getelementptr [4 x i8], ptr %1, i64 %indvars.iv.i.i
-  %i.ad = load i32, ptr %6, align 4               ; 2 uses
-  %7 = getelementptr [4 x i8], ptr %i.ac, i64 %indvars.iv.i.i
-  %i.ae = load i32, ptr %7, align 4               ; 2 uses
+31:                                               ; preds = %26
+  br i1 %i.aa, label %inetpeer_addr_cmp.exit.thread.i50, label %bb.f
+
+bb.f:                                             ; preds = %31
+  %32 = load i32, ptr %22, align 4                ; 2 uses
+  %33 = getelementptr i8, ptr %i.ab, i64 32
+  %34 = load i32, ptr %33, align 4                ; 2 uses
+  %exitcond.not.i.i = icmp eq i32 %32, %34
+  br i1 %exitcond.not.i.i, label %bb.g, label %inetpeer_addr_cmp.exit.i
+
+bb.g:                                             ; preds = %bb.f
+  %i.ad = load i32, ptr %23, align 4              ; 2 uses
+  %35 = getelementptr i8, ptr %i.ab, i64 36
+  %i.ae = load i32, ptr %35, align 4              ; 2 uses
   %i.af = icmp eq i32 %i.ad, %i.ae
-  br i1 %i.af, label %bb.f, label %inetpeer_addr_cmp.exit.i
+  br i1 %i.af, label %inetpeer_addr_cmp.exit.thread.i50, label %inetpeer_addr_cmp.exit.i
 
-inetpeer_addr_cmp.exit.i:                         ; preds = %bb.g
-  %i.ag = icmp ult i32 %i.ad, %i.ae
+inetpeer_addr_cmp.exit.i:                         ; preds = %bb.g, %bb.f, %26, %.lr.ph.split.i
+  %.lcssa155 = phi i32 [ %20, %.lr.ph.split.i ], [ %27, %26 ], [ %32, %bb.f ], [ %i.ad, %bb.g ]
+  %.lcssa = phi i32 [ %24, %.lr.ph.split.i ], [ %29, %26 ], [ %34, %bb.f ], [ %i.ae, %bb.g ]
+  %i.ag = icmp ult i32 %.lcssa155, %.lcssa
   %i.ah = icmp ult i32 %.067, 32
   br i1 %i.ah, label %bb.i, label %bb.j
 
-inetpeer_addr_cmp.exit.thread.i50:                ; preds = %bb.f
+inetpeer_addr_cmp.exit.thread.i50:                ; preds = %31, %bb.g
   %i.ai = load volatile i64, ptr @jiffies, align 64
   %i.aj = trunc i64 %i.ai to i32                  ; 2 uses
   %i.ak = getelementptr i8, ptr %i.ab, i64 144    ; 2 uses
@@ -316,7 +352,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.ce = add nuw i32 %.040.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ce, %.382
-  br i1 %exitcond.not.i, label %.preheader.i, label %bb.o, !llvm.loop !16
+  br i1 %exitcond.not.i, label %.preheader.i, label %bb.o, !llvm.loop !15
 
 .preheader.i:                                     ; preds = %bb.r, %bb.t
   %.141.i = phi i32 [ %i.cl, %bb.t ], [ 0, %bb.r ] ; 2 uses
@@ -338,10 +374,10 @@ bb.s:                                             ; preds = %.preheader.i
 bb.t:                                             ; preds = %bb.s, %.preheader.i
   %i.cl = add nuw i32 %.141.i, 1                  ; 2 uses
   %exitcond42.not.i = icmp eq i32 %i.cl, %.382
-  br i1 %exitcond42.not.i, label %inet_peer_gc.exit, label %.preheader.i, !llvm.loop !17
+  br i1 %exitcond42.not.i, label %inet_peer_gc.exit, label %.preheader.i, !llvm.loop !16
 
 inet_peer_gc.exit:                                ; preds = %bb.t, %lookup.exit63
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !26
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !25
   %i.cm = load i32, ptr %i.b, align 8
   %i.cn = add i32 %i.cm, 1
   store i32 %i.cn, ptr %i.b, align 8
@@ -449,7 +485,7 @@ bb.a:
   %i.a = getelementptr i8, ptr %.0.i, i64 16
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %.not9.i = icmp eq ptr %i.b, null
-  br i1 %.not9.i, label %.lr.ph, label %.preheader.i, !llvm.loop !27
+  br i1 %.not9.i, label %.lr.ph, label %.preheader.i, !llvm.loop !26
 
 .lr.ph:                                           ; preds = %.preheader.i, %inet_putpeer.exit
   %.012 = phi ptr [ %i.c, %inet_putpeer.exit ], [ %.0.i, %.preheader.i ] ; 5 uses
@@ -477,7 +513,7 @@ bb.d:                                             ; preds = %.lr.ph
 inet_putpeer.exit:                                ; preds = %bb.b, %bb.c, %bb.d
   %i.i = tail call i32 @__SCT__cond_resched() #8  ; 0 uses
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !28
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %inet_putpeer.exit, %bb.a
   %i.j = getelementptr i8, ptr %0, i64 16
@@ -543,16 +579,15 @@ attributes #9 = { nounwind }
 !14 = distinct !{!14, !10}
 !15 = distinct !{!15, !10}
 !16 = distinct !{!16, !10}
-!17 = distinct !{!17, !10}
-!18 = !{i64 2150921834}
-!19 = !{!"branch_weights", i32 1999, i32 1}
-!20 = !{i64 2332438}
-!21 = !{!"branch_weights", i32 1, i32 0}
-!22 = !{i64 2150963367}
-!23 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!24 = !{!"auto-init"}
-!25 = !{i64 2150963640}
-!26 = !{i64 2150963913}
+!17 = !{i64 2150921834}
+!18 = !{!"branch_weights", i32 1999, i32 1}
+!19 = !{i64 2332438}
+!20 = !{!"branch_weights", i32 1, i32 0}
+!21 = !{i64 2150963367}
+!22 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!23 = !{!"auto-init"}
+!24 = !{i64 2150963640}
+!25 = !{i64 2150963913}
+!26 = distinct !{!26, !10}
 !27 = distinct !{!27, !10}
-!28 = distinct !{!28, !10}
 end_hunk_0

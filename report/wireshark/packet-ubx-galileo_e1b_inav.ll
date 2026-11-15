@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-ubx-galileo_e1b_inav?download=true
 inline.NumInlined: 8
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@dissect_ubx_gal_inav:bb.a
   %i.jg = load i32, ptr @hf_ubx_gal_inav_osnma_cpks, align 4
   %i.jh = call ptr @proto_tree_add_item(ptr noundef %i.jb, i32 noundef %i.jg, ptr noundef %i.iy, i32 noundef 0, i32 noundef 1, i32 noundef 0) ; 0 uses
@@ -204,7 +204,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.pe = getelementptr [14 x i8], ptr %.0549, i64 %i.pd
   %i.pf = getelementptr i8, ptr %i.pe, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(13) %i.pf, ptr noundef align 1 dereferenceable(13) %i.hn, i64 noundef 13, i1 noundef false) #9
-  %i.pg = load i8, ptr %.0549, align 1, !range !12, !noundef !13
+  %i.pg = load i8, ptr %.0549, align 1, !range !10, !noundef !11
   %i.ph = trunc nuw i8 %i.pg to i1
   br i1 %i.ph, label %bb.aj, label %.thread
 
@@ -216,91 +216,91 @@ bb.aj:                                            ; preds = %bb.ai
 
 .preheader598.1:                                  ; preds = %bb.aj
   %i.pk = getelementptr i8, ptr %.0549, i64 14
-  %i.pl = load i8, ptr %i.pk, align 1, !range !12, !noundef !13
+  %i.pl = load i8, ptr %i.pk, align 1, !range !10, !noundef !11
   %i.pm = trunc nuw i8 %i.pl to i1
   br i1 %i.pm, label %.preheader598.2, label %.thread
 
 .preheader598.2:                                  ; preds = %.preheader598.1
   %i.pn = getelementptr i8, ptr %.0549, i64 28
-  %i.po = load i8, ptr %i.pn, align 1, !range !12, !noundef !13
+  %i.po = load i8, ptr %i.pn, align 1, !range !10, !noundef !11
   %i.pp = trunc nuw i8 %i.po to i1
   br i1 %i.pp, label %.preheader598.3, label %.thread
 
 .preheader598.3:                                  ; preds = %.preheader598.2
   %i.pq = getelementptr i8, ptr %.0549, i64 42
-  %i.pr = load i8, ptr %i.pq, align 1, !range !12, !noundef !13
+  %i.pr = load i8, ptr %i.pq, align 1, !range !10, !noundef !11
   %i.ps = trunc nuw i8 %i.pr to i1
   br i1 %i.ps, label %.preheader598.4, label %.thread
 
 .preheader598.4:                                  ; preds = %.preheader598.3
   %i.pt = getelementptr i8, ptr %.0549, i64 56
-  %i.pu = load i8, ptr %i.pt, align 1, !range !12, !noundef !13
+  %i.pu = load i8, ptr %i.pt, align 1, !range !10, !noundef !11
   %i.pv = trunc nuw i8 %i.pu to i1
   br i1 %i.pv, label %.preheader598.5, label %.thread
 
 .preheader598.5:                                  ; preds = %.preheader598.4
   %i.pw = getelementptr i8, ptr %.0549, i64 70
-  %i.px = load i8, ptr %i.pw, align 1, !range !12, !noundef !13
+  %i.px = load i8, ptr %i.pw, align 1, !range !10, !noundef !11
   %i.py = trunc nuw i8 %i.px to i1
   br i1 %i.py, label %.preheader598.6, label %.thread
 
 .preheader598.6:                                  ; preds = %.preheader598.5
   %i.pz = getelementptr i8, ptr %.0549, i64 84
-  %i.qa = load i8, ptr %i.pz, align 1, !range !12, !noundef !13
+  %i.qa = load i8, ptr %i.pz, align 1, !range !10, !noundef !11
   %i.qb = trunc nuw i8 %i.qa to i1
   br i1 %i.qb, label %.preheader598.7, label %bb.ak
 
 .preheader598.7:                                  ; preds = %.preheader598.6
   %i.qc = getelementptr i8, ptr %.0549, i64 98
-  %i.qd = load i8, ptr %i.qc, align 1, !range !12, !noundef !13
+  %i.qd = load i8, ptr %i.qc, align 1, !range !10, !noundef !11
   %i.qe = trunc nuw i8 %i.qd to i1
   br i1 %i.qe, label %.preheader598.8, label %bb.ak
 
 .preheader598.8:                                  ; preds = %.preheader598.7
   %i.qf = getelementptr i8, ptr %.0549, i64 112
-  %i.qg = load i8, ptr %i.qf, align 1, !range !12, !noundef !13
+  %i.qg = load i8, ptr %i.qf, align 1, !range !10, !noundef !11
   %i.qh = trunc nuw i8 %i.qg to i1
   br i1 %i.qh, label %.preheader598.9, label %bb.ak
 
 .preheader598.9:                                  ; preds = %.preheader598.8
   %i.qi = getelementptr i8, ptr %.0549, i64 126
-  %i.qj = load i8, ptr %i.qi, align 1, !range !12, !noundef !13
+  %i.qj = load i8, ptr %i.qi, align 1, !range !10, !noundef !11
   %i.qk = trunc nuw i8 %i.qj to i1
   br i1 %i.qk, label %.preheader598.10, label %bb.ak
 
 .preheader598.10:                                 ; preds = %.preheader598.9
   %i.ql = getelementptr i8, ptr %.0549, i64 140
-  %i.qm = load i8, ptr %i.ql, align 1, !range !12, !noundef !13
+  %i.qm = load i8, ptr %i.ql, align 1, !range !10, !noundef !11
   %i.qn = trunc nuw i8 %i.qm to i1
   br i1 %i.qn, label %.preheader598.11, label %bb.ak
 
 .preheader598.11:                                 ; preds = %.preheader598.10
   %i.qo = getelementptr i8, ptr %.0549, i64 154
-  %i.qp = load i8, ptr %i.qo, align 1, !range !12, !noundef !13
+  %i.qp = load i8, ptr %i.qo, align 1, !range !10, !noundef !11
   %i.qq = trunc nuw i8 %i.qp to i1
   br i1 %i.qq, label %.preheader598.12, label %bb.ak
 
 .preheader598.12:                                 ; preds = %.preheader598.11
   %i.qr = getelementptr i8, ptr %.0549, i64 168
-  %i.qs = load i8, ptr %i.qr, align 1, !range !12, !noundef !13
+  %i.qs = load i8, ptr %i.qr, align 1, !range !10, !noundef !11
   %i.qt = trunc nuw i8 %i.qs to i1
   br i1 %i.qt, label %.preheader598.13, label %bb.ak
 
 .preheader598.13:                                 ; preds = %.preheader598.12
   %i.qu = getelementptr i8, ptr %.0549, i64 182
-  %i.qv = load i8, ptr %i.qu, align 1, !range !12, !noundef !13
+  %i.qv = load i8, ptr %i.qu, align 1, !range !10, !noundef !11
   %i.qw = trunc nuw i8 %i.qv to i1
   br i1 %i.qw, label %.preheader598.14, label %bb.ak
 
 .preheader598.14:                                 ; preds = %.preheader598.13
   %i.qx = getelementptr i8, ptr %.0549, i64 196
-  %i.qy = load i8, ptr %i.qx, align 1, !range !12, !noundef !13
+  %i.qy = load i8, ptr %i.qx, align 1, !range !10, !noundef !11
   %i.qz = trunc nuw i8 %i.qy to i1
   br i1 %i.qz, label %.preheader598.15, label %bb.ak
 
 .preheader598.15:                                 ; preds = %.preheader598.14
   %i.ra = getelementptr i8, ptr %.0549, i64 210
-  %i.rb = load i8, ptr %i.ra, align 1, !range !12, !noundef !13
+  %i.rb = load i8, ptr %i.ra, align 1, !range !10, !noundef !11
   %spec.select = add nuw nsw i8 %i.rb, 15
   br label %bb.ak
 
@@ -327,7 +327,7 @@ bb.am:                                            ; preds = %bb.al, %bb.am
   %i.rm = getelementptr [14 x i8], ptr %.0549, i64 %.6611
   %i.rn = getelementptr i8, ptr %i.rm, i64 1
   %i.ro = sub nuw nsw i64 %i.rh, %i.rk
-  %i.rp = call ptr @__memcpy_chk(ptr noundef %i.rl, ptr noundef %i.rn, i64 noundef 13, i64 noundef %i.ro) #9, !alias.scope !14 ; 0 uses
+  %i.rp = call ptr @__memcpy_chk(ptr noundef %i.rl, ptr noundef %i.rn, i64 noundef 13, i64 noundef %i.ro) #9, !alias.scope !12 ; 0 uses
   %i.rq = add nuw nsw i64 %.6611, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.rq, %i.rj
   br i1 %exitcond.not, label %bb.an, label %bb.am, !llvm.loop !9
@@ -510,11 +510,11 @@ bb.ax:                                            ; preds = %.critedge
   store i32 %i.vi, ptr %.sroa.545.0..sroa_idx, align 8
   %i.vl = getelementptr inbounds nuw i8, ptr %6, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.vl, ptr noundef align 8 dereferenceable(32) @__const.dissect_ubx_gal_inav.end.368, i64 32, i1 false)
-  %i.vm = getelementptr i8, ptr %1, i64 20        ; 6 uses
+  %i.vm = getelementptr i8, ptr %1, i64 20        ; 13 uses
   %i.vn = load i32, ptr %i.vm, align 4
-  %i.vo = call ptr @find_conversation_full(i32 noundef %i.vn, ptr noundef nonnull %6) ; 7 uses
+  %i.vo = call ptr @find_conversation_full(i32 noundef %i.vn, ptr noundef nonnull %6) ; 14 uses
   %i.vp = icmp eq ptr %i.vo, null                 ; 3 uses
-  %i.vq = load i8, ptr %i.a, align 1, !range !12
+  %i.vq = load i8, ptr %i.a, align 1, !range !10
   %i.vr = trunc nuw i8 %i.vq to i1                ; 2 uses
   %or.cond17 = select i1 %i.vp, i1 %i.vr, i1 false
   br i1 %or.cond17, label %bb.ay, label %bb.az
@@ -523,13 +523,13 @@ bb.ay:                                            ; preds = %bb.ax
   %i.vs = load i32, ptr %i.vm, align 4
   %i.vt = call ptr @conversation_new_full(i32 noundef %i.vs, ptr noundef nonnull %6) ; 2 uses
   %i.vu = call ptr @wmem_file_scope()
-  %i.vv = load i8, ptr %i.b, align 1, !range !12, !noundef !13
+  %i.vv = load i8, ptr %i.b, align 1, !range !10, !noundef !11
   %i.vw = trunc nuw i8 %i.vv to i1
   %i.vx = select i1 %i.vw, i64 96, i64 48
   %i.vy = call noalias ptr @wmem_alloc0(ptr noundef %i.vu, i64 noundef %i.vx) #10 ; 5 uses
   %i.vz = load i32, ptr %i.vm, align 4
   store i32 %i.vz, ptr %i.vy, align 4
-  %i.wa = load i8, ptr %i.b, align 1, !range !12, !noundef !13
+  %i.wa = load i8, ptr %i.b, align 1, !range !10, !noundef !11
   %i.wb = getelementptr i8, ptr %i.vy, i64 4
   store i8 %i.wa, ptr %i.wb, align 4
   %i.wc = load i32, ptr %i.g, align 4
@@ -559,13 +559,13 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.bb
   %i.wj = call ptr @conversation_new_full(i32 noundef %i.wi, ptr noundef nonnull %6) ; 2 uses
   %i.wk = call ptr @wmem_file_scope()
-  %i.wl = load i8, ptr %i.b, align 1, !range !12, !noundef !13
+  %i.wl = load i8, ptr %i.b, align 1, !range !10, !noundef !11
   %i.wm = trunc nuw i8 %i.wl to i1
   %i.wn = select i1 %i.wm, i64 96, i64 48
   %i.wo = call noalias ptr @wmem_alloc0(ptr noundef %i.wk, i64 noundef %i.wn) #10 ; 5 uses
   %i.wp = load i32, ptr %i.vm, align 4
   store i32 %i.wp, ptr %i.wo, align 4
-  %i.wq = load i8, ptr %i.b, align 1, !range !12, !noundef !13
+  %i.wq = load i8, ptr %i.b, align 1, !range !10, !noundef !11
   %i.wr = getelementptr i8, ptr %i.wo, i64 4
   store i8 %i.wq, ptr %i.wr, align 4
   %i.ws = load i32, ptr %i.g, align 4
@@ -580,100 +580,179 @@ bb.bd:                                            ; preds = %bb.az
 
 bb.be:                                            ; preds = %bb.bd
   %i.wv = load i32, ptr @proto_ubx_gal_inav, align 4
-  %i.ww = call ptr @conversation_get_proto_data(ptr noundef nonnull %i.vo, i32 noundef %i.wv) ; 6 uses
+  %i.ww = call ptr @conversation_get_proto_data(ptr noundef nonnull %i.vo, i32 noundef %i.wv) ; 21 uses
   %.not583 = icmp eq ptr %i.ww, null
   br i1 %.not583, label %.thread593, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.wx = getelementptr i8, ptr %i.ww, i64 4
-  %i.wy = load i8, ptr %i.wx, align 4, !range !12, !noundef !13 ; 3 uses
-  %i.wz = load i8, ptr %i.b, align 1, !range !12, !noundef !13
+  %i.wy = load i8, ptr %i.wx, align 4, !range !10, !noundef !11 ; 3 uses
+  %i.wz = load i8, ptr %i.b, align 1, !range !10, !noundef !11
   %i.xa = icmp eq i8 %i.wy, %i.wz
-  br i1 %i.xa, label %.preheader597.a, label %.loopexit
+  br i1 %i.xa, label %.preheader597, label %.loopexit
 
-.preheader597.a:                                  ; preds = %bb.bf
+.preheader597:                                    ; preds = %bb.bf
   %7 = trunc nuw i8 %i.wy to i1
-  %8 = select i1 %7, i64 8, i64 4
-  %i.xb = load i32, ptr %i.vm, align 4            ; 2 uses
-  br label %bb.bg
+  %8 = load i32, ptr %i.ww, align 4               ; 2 uses
+  %9 = icmp eq i32 %8, 0
+  %10 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %9, label %.preheader597.a, label %13
 
-bb.bg:                                            ; preds = %bb.bi, %.preheader597.a
-  %.7612 = phi i64 [ 0, %.preheader597.a ], [ %14, %bb.bi ] ; 2 uses
-  %9 = getelementptr [12 x i8], ptr %i.ww, i64 %.7612 ; 4 uses
-  %10 = load i32, ptr %9, align 4                 ; 2 uses
-  %11 = icmp eq i32 %10, 0
-  br i1 %11, label %bb.bh, label %bb.bi
-
-bb.bh:                                            ; preds = %bb.bg
-  store i32 %i.xb, ptr %9, align 4
-  %i.xc = getelementptr i8, ptr %9, i64 4
-  store i8 %i.wy, ptr %i.xc, align 4
-  %i.xd = load i32, ptr %i.g, align 4
-  %12 = getelementptr i8, ptr %9, i64 8
-  store i32 %i.xd, ptr %12, align 4
+.preheader597.a:                                  ; preds = %bb.bi, %bb.bh, %bb.bg, %36, %29, %22, %15, %.preheader597
+  %.lcssa662 = phi ptr [ %i.ww, %.preheader597 ], [ %16, %15 ], [ %23, %22 ], [ %30, %29 ], [ %37, %36 ], [ %43, %bb.bg ], [ %i.xc, %bb.bh ], [ %53, %bb.bi ] ; 3 uses
+  %.lcssa = phi i32 [ %10, %.preheader597 ], [ %19, %15 ], [ %26, %22 ], [ %33, %29 ], [ %40, %36 ], [ %46, %bb.bg ], [ %50, %bb.bh ], [ %55, %bb.bi ]
+  store i32 %.lcssa, ptr %.lcssa662, align 4
+  %11 = getelementptr i8, ptr %.lcssa662, i64 4
+  store i8 %i.wy, ptr %11, align 4
+  %i.xb = load i32, ptr %i.g, align 4
+  %12 = getelementptr i8, ptr %.lcssa662, i64 8
+  store i32 %i.xb, ptr %12, align 4
   br label %.loopexit
 
-bb.bi:                                            ; preds = %bb.bg
-  %13 = icmp eq i32 %10, %i.xb
-  %14 = add nuw nsw i64 %.7612, 1                 ; 2 uses
-  %exitcond618.not = icmp eq i64 %14, %8
-  %or.cond653 = select i1 %13, i1 true, i1 %exitcond618.not
-  br i1 %or.cond653, label %.loopexit, label %bb.bg, !llvm.loop !10
+13:                                               ; preds = %.preheader597
+  %14 = icmp eq i32 %8, %10
+  br i1 %14, label %.loopexit, label %15
 
-.loopexit:                                        ; preds = %bb.bi, %bb.bc, %bb.bb, %bb.bf, %bb.bh, %bb.ay
-  %.0548 = phi ptr [ %i.vy, %bb.ay ], [ %i.wo, %bb.bc ], [ %i.wg, %bb.bb ], [ %i.ww, %bb.bf ], [ %i.ww, %bb.bh ], [ %i.ww, %bb.bi ] ; 9 uses
-  %.0540 = phi ptr [ %i.vt, %bb.ay ], [ %i.wj, %bb.bc ], [ %i.vo, %bb.bb ], [ %i.vo, %bb.bf ], [ %i.vo, %bb.bh ], [ %i.vo, %bb.bi ]
+15:                                               ; preds = %13
+  %16 = getelementptr i8, ptr %i.ww, i64 12       ; 2 uses
+  %17 = load i32, ptr %16, align 4                ; 2 uses
+  %18 = icmp eq i32 %17, 0
+  %19 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %18, label %.preheader597.a, label %20
+
+20:                                               ; preds = %15
+  %21 = icmp eq i32 %17, %19
+  br i1 %21, label %.loopexit, label %22
+
+22:                                               ; preds = %20
+  %23 = getelementptr i8, ptr %i.ww, i64 24       ; 2 uses
+  %24 = load i32, ptr %23, align 4                ; 2 uses
+  %25 = icmp eq i32 %24, 0
+  %26 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %25, label %.preheader597.a, label %27
+
+27:                                               ; preds = %22
+  %28 = icmp eq i32 %24, %26
+  br i1 %28, label %.loopexit, label %29
+
+29:                                               ; preds = %27
+  %30 = getelementptr i8, ptr %i.ww, i64 36       ; 2 uses
+  %31 = load i32, ptr %30, align 4                ; 2 uses
+  %32 = icmp eq i32 %31, 0
+  %33 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %32, label %.preheader597.a, label %34
+
+34:                                               ; preds = %29
+  %35 = icmp ne i32 %31, %33
+  %or.cond653.3.not = and i1 %35, %7
+  br i1 %or.cond653.3.not, label %36, label %.loopexit
+
+36:                                               ; preds = %34
+  %37 = getelementptr i8, ptr %i.ww, i64 48       ; 2 uses
+  %38 = load i32, ptr %37, align 4                ; 2 uses
+  %39 = icmp eq i32 %38, 0
+  %40 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %39, label %.preheader597.a, label %41
+
+41:                                               ; preds = %36
+  %42 = icmp eq i32 %38, %40
+  br i1 %42, label %.loopexit, label %bb.bg
+
+bb.bg:                                            ; preds = %41
+  %43 = getelementptr i8, ptr %i.ww, i64 60       ; 2 uses
+  %44 = load i32, ptr %43, align 4                ; 2 uses
+  %45 = icmp eq i32 %44, 0
+  %46 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %45, label %.preheader597.a, label %47
+
+47:                                               ; preds = %bb.bg
+  %48 = icmp eq i32 %44, %46
+  br i1 %48, label %.loopexit, label %bb.bh
+
+bb.bh:                                            ; preds = %47
+  %i.xc = getelementptr i8, ptr %i.ww, i64 72     ; 2 uses
+  %i.xd = load i32, ptr %i.xc, align 4            ; 2 uses
+  %49 = icmp eq i32 %i.xd, 0
+  %50 = load i32, ptr %i.vm, align 4              ; 2 uses
+  br i1 %49, label %.preheader597.a, label %51
+
+51:                                               ; preds = %bb.bh
+  %52 = icmp eq i32 %i.xd, %50
+  br i1 %52, label %.loopexit, label %bb.bi
+
+bb.bi:                                            ; preds = %51
+  %53 = getelementptr i8, ptr %i.ww, i64 84       ; 2 uses
+  %54 = load i32, ptr %53, align 4
+  %exitcond618.not = icmp eq i32 %54, 0
+  %55 = load i32, ptr %i.vm, align 4
+  br i1 %exitcond618.not, label %.preheader597.a, label %.loopexit
+
+.loopexit:                                        ; preds = %13, %20, %27, %34, %41, %47, %51, %bb.bi, %bb.bc, %bb.bb, %bb.bf, %.preheader597.a, %bb.ay
+  %.0548 = phi ptr [ %i.vy, %bb.ay ], [ %i.wo, %bb.bc ], [ %i.wg, %bb.bb ], [ %i.ww, %bb.bf ], [ %i.ww, %.preheader597.a ], [ %i.ww, %bb.bi ], [ %i.ww, %51 ], [ %i.ww, %47 ], [ %i.ww, %41 ], [ %i.ww, %34 ], [ %i.ww, %27 ], [ %i.ww, %20 ], [ %i.ww, %13 ] ; 13 uses
+  %.0540 = phi ptr [ %i.vt, %bb.ay ], [ %i.wj, %bb.bc ], [ %i.vo, %bb.bb ], [ %i.vo, %bb.bf ], [ %i.vo, %.preheader597.a ], [ %i.vo, %bb.bi ], [ %i.vo, %51 ], [ %i.vo, %47 ], [ %i.vo, %41 ], [ %i.vo, %34 ], [ %i.vo, %27 ], [ %i.vo, %20 ], [ %i.vo, %13 ]
   %i.xe = icmp ne ptr %.0540, null
   %i.xf = icmp ne ptr %.0548, null
   %or.cond21 = and i1 %i.xf, %i.xe
   br i1 %or.cond21, label %.preheader, label %.thread593
 
 .preheader:                                       ; preds = %.loopexit
-  %i.xg = load i8, ptr %i.b, align 1, !range !12, !noundef !13
-  %i.xh = trunc nuw i8 %i.xg to i1                ; 2 uses
-  %15 = select i1 %i.xh, i64 8, i64 4             ; 2 uses
-  br label %bb.bj
+  %i.xg = load i8, ptr %i.b, align 1, !range !10, !noundef !11
+  %i.xh = trunc nuw i8 %i.xg to i1                ; 4 uses
+  %56 = load i32, ptr %.0548, align 4
+  %57 = icmp eq i32 %56, 0
+  br i1 %57, label %.thread593, label %bb.bj
 
-bb.bj:                                            ; preds = %bb.bn, %.preheader
-  %.8613 = phi i64 [ 0, %.preheader ], [ %25, %bb.bn ] ; 6 uses
-  %16 = getelementptr [12 x i8], ptr %.0548, i64 %.8613
-  %i.xi = load i32, ptr %16, align 4
+bb.bj:                                            ; preds = %.preheader
+  %58 = getelementptr i8, ptr %.0548, i64 12
+  %i.xi = load i32, ptr %58, align 4
   %i.xj = icmp eq i32 %i.xi, 0
-  br i1 %i.xj, label %bb.bo, label %bb.bk
+  br i1 %i.xj, label %.thread593, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  %17 = or disjoint i64 %.8613, 1                 ; 2 uses
-  %18 = getelementptr [12 x i8], ptr %.0548, i64 %17
-  %i.xk = load i32, ptr %18, align 4
+  %59 = getelementptr i8, ptr %.0548, i64 24
+  %i.xk = load i32, ptr %59, align 4
   %i.xl = icmp eq i32 %i.xk, 0
-  br i1 %i.xl, label %bb.bo, label %bb.bl
+  br i1 %i.xl, label %.thread593, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  %19 = or disjoint i64 %.8613, 2                 ; 2 uses
-  %20 = getelementptr [12 x i8], ptr %.0548, i64 %19
-  %21 = load i32, ptr %20, align 4
-  %22 = icmp eq i32 %21, 0
-  br i1 %22, label %bb.bo, label %bb.bm
+  %60 = getelementptr i8, ptr %.0548, i64 36
+  %61 = load i32, ptr %60, align 4
+  %62 = icmp eq i32 %61, 0                        ; 2 uses
+  %.not665 = xor i1 %i.xh, true
+  %brmerge = select i1 %62, i1 true, i1 %.not665
+  %.mux = select i1 %62, i1 true, i1 %i.xh
+  br i1 %brmerge, label %73, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %23 = or disjoint i64 %.8613, 3                 ; 2 uses
-  %24 = getelementptr [12 x i8], ptr %.0548, i64 %23
-  %i.xm = load i32, ptr %24, align 4
+  %63 = getelementptr i8, ptr %.0548, i64 48
+  %i.xm = load i32, ptr %63, align 4
   %i.xn = icmp eq i32 %i.xm, 0
-  br i1 %i.xn, label %bb.bo, label %bb.bn
+  br i1 %i.xn, label %73, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %25 = add nuw nsw i64 %.8613, 4                 ; 2 uses
-  %exitcond619.not.3 = icmp eq i64 %25, %15
-  br i1 %exitcond619.not.3, label %bb.bo, label %bb.bj, !llvm.loop !11
+  %64 = getelementptr i8, ptr %.0548, i64 60
+  %65 = load i32, ptr %64, align 4
+  %exitcond619.not.3 = icmp eq i32 %65, 0
+  br i1 %exitcond619.not.3, label %.thread593, label %bb.bo
 
-bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj
-  %.8.lcssa = phi i64 [ %.8613, %bb.bj ], [ %15, %bb.bn ], [ %17, %bb.bk ], [ %23, %bb.bm ], [ %19, %bb.bl ]
-  %26 = icmp ne i64 %.8.lcssa, 4
-  %or.cond23.not = or i1 %26, %i.xh
-  br i1 %or.cond23.not, label %.thread593, label %bb.bp
+bb.bo:                                            ; preds = %bb.bn
+  %66 = getelementptr i8, ptr %.0548, i64 72
+  %67 = load i32, ptr %66, align 4
+  %68 = icmp eq i32 %67, 0
+  br i1 %68, label %.thread593, label %69
 
-bb.bp:                                            ; preds = %bb.bo
+69:                                               ; preds = %bb.bo
+  %70 = getelementptr i8, ptr %.0548, i64 84
+  %71 = load i32, ptr %70, align 4
+  %72 = icmp eq i32 %71, 0
+  %spec.select666 = select i1 %72, i1 true, i1 %i.xh
+  br label %73
+
+73:                                               ; preds = %69, %bb.bl, %bb.bm
+  %.8.lcssa = phi i1 [ %.mux, %bb.bl ], [ %i.xh, %bb.bm ], [ %spec.select666, %69 ]
+  br i1 %.8.lcssa, label %.thread593, label %bb.bp
+
+bb.bp:                                            ; preds = %73
   %i.xo = getelementptr i8, ptr %1, i64 416
   %i.xp = load ptr, ptr %i.xo, align 8
   %i.xq = call noalias dereferenceable_or_null(10) ptr @wmem_alloc(ptr noundef %i.xp, i64 noundef 10) #10 ; 11 uses
@@ -739,7 +818,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.zo = call ptr @proto_tree_add_item(ptr noundef %i.zk, i32 noundef %i.zn, ptr noundef %i.zh, i32 noundef 6, i32 noundef 4, i32 noundef 0) ; 0 uses
   br label %.thread593
 
-.thread593:                                       ; preds = %bb.be, %bb.ba, %bb.bd, %bb.bo, %bb.bp, %.loopexit
+.thread593:                                       ; preds = %.preheader, %bb.bj, %bb.bk, %bb.bn, %bb.bo, %bb.be, %bb.ba, %bb.bd, %73, %bb.bp, %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %bb.bq
 
@@ -1142,11 +1221,9 @@ attributes #10 = { allocsize(1) }
 !6 = distinct !{!6, i1 true, !"memcpy.inline"}
 !7 = distinct !{!7, !6, !"memcpy.inline: argument 1"}
 !8 = distinct !{!8, !6, !"memcpy.inline: argument 0"}
-!9 = distinct !{!9, !15}
-!10 = distinct !{!10, !15}
-!11 = distinct !{!11, !15}
-!12 = !{i8 0, i8 2}
-!13 = !{}
-!14 = !{!8, !7}
-!15 = !{!"llvm.loop.mustprogress"}
+!9 = distinct !{!9, !13}
+!10 = !{i8 0, i8 2}
+!11 = !{}
+!12 = !{!8, !7}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_1

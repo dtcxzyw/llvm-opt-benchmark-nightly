@@ -205,32 +205,54 @@ bb.cn:                                            ; preds = %tailrecurse
   br i1 %i.vb, label %bb.co, label %bb.cx
 
 bb.co:                                            ; preds = %bb.cn
-  %8 = getelementptr i8, ptr %.tr, i64 12
-  %9 = load i32, ptr %8, align 4, !tbaa !46
-  %.not299 = icmp eq i32 %9, 0
-  %10 = select i1 %.not299, i32 256, i32 128      ; 2 uses
   %i.vc = getelementptr i8, ptr %.tr, i64 4
   %i.vd = load i32, ptr %i.vc, align 4, !tbaa !46
   %cond = icmp eq i32 %i.vd, 12
   br i1 %cond, label %bb.cp, label %.loopexit
 
 bb.cp:                                            ; preds = %bb.co
+  %8 = getelementptr i8, ptr %.tr, i64 12
+  %9 = load i32, ptr %8, align 4, !tbaa !46
+  %.not299 = icmp eq i32 %9, 0
+  %wide.trip.count = select i1 %.not299, i64 256, i64 128 ; 2 uses
   %i.ve = getelementptr i8, ptr %.tr, i64 8
   %i.vf = load i32, ptr %i.ve, align 8, !tbaa !46
   %.not300 = icmp eq i32 %i.vf, 0
-  %i.vg = getelementptr i8, ptr %1, i64 244       ; 4 uses
-  %i.vh = getelementptr i8, ptr %1, i64 240       ; 6 uses
-  br i1 %.not300, label %.preheader381.a, label %.preheader382.a
+  %i.vg = getelementptr i8, ptr %1, i64 244       ; 6 uses
+  %i.vh = getelementptr i8, ptr %1, i64 240       ; 8 uses
+  %10 = getelementptr i8, ptr %i.uy, i64 88
+  %11 = load ptr, ptr %10, align 8, !tbaa !168
+  %12 = tail call i32 %11(i32 noundef 0, i32 noundef 12, ptr noundef nonnull %i.uy) #22
+  %.not301.peel = icmp eq i32 %12, 0              ; 2 uses
+  br i1 %.not300, label %.preheader381, label %.preheader382
 
-.preheader382.a:                                  ; preds = %bb.cp
-  %11 = zext nneg i32 %10 to i64
-  %i.vi = getelementptr i8, ptr %i.uy, i64 88
-  %12 = load ptr, ptr %i.vi, align 8, !tbaa !168
-  %13 = tail call i32 %12(i32 noundef 0, i32 noundef 12, ptr noundef nonnull %i.uy) #22
-  %.not302.peel.not = icmp eq i32 %13, 0
-  br i1 %.not302.peel.not, label %bb.cq, label %.peel.next.preheader.a
+.preheader382:                                    ; preds = %bb.cp
+  br i1 %.not301.peel, label %13, label %.peel.next.preheader
 
-bb.cq:                                            ; preds = %.preheader382.a
+13:                                               ; preds = %.preheader382
+  %14 = load i8, ptr %i.vg, align 4, !tbaa !46
+  %15 = icmp eq i8 %14, 0
+  br i1 %15, label %.preheader382.a, label %.peel.next.preheader
+
+.preheader382.a:                                  ; preds = %13
+  %16 = load ptr, ptr %i.ux, align 8, !tbaa !80
+  store i8 1, ptr %i.vg, align 4, !tbaa !46
+  %i.vi = getelementptr i8, ptr %16, i64 20
+  %17 = load i32, ptr %i.vi, align 4, !tbaa !131
+  %18 = icmp sgt i32 %17, 1
+  %spec.select800 = select i1 %18, i32 20, i32 5
+  %19 = load i32, ptr %i.vh, align 8, !tbaa !170
+  %20 = add i32 %19, %spec.select800
+  store i32 %20, ptr %i.vh, align 8, !tbaa !170
+  br label %.peel.next.preheader
+
+.peel.next.preheader:                             ; preds = %.preheader382, %13, %.preheader382.a
+  br label %.peel.next
+
+.preheader381:                                    ; preds = %bb.cp
+  br i1 %.not301.peel, label %.peel.next.preheader.a, label %bb.cq
+
+bb.cq:                                            ; preds = %.preheader381
   %i.vj = load i8, ptr %i.vg, align 4, !tbaa !46
   %i.vk = icmp eq i8 %i.vj, 0
   br i1 %i.vk, label %map_position_value.exit.i346.peel, label %.peel.next.preheader.a
@@ -247,18 +269,18 @@ map_position_value.exit.i346.peel:                ; preds = %bb.cq
   store i32 %i.vq, ptr %i.vh, align 8, !tbaa !170
   br label %.peel.next.preheader.a
 
-.peel.next.preheader.a:                           ; preds = %.preheader382.a, %bb.cq, %map_position_value.exit.i346.peel
-  br label %.peel.next
+.peel.next.preheader.a:                           ; preds = %.preheader381, %bb.cq, %map_position_value.exit.i346.peel
+  br label %.preheader381.a
 
-.peel.next:                                       ; preds = %.peel.next.preheader.a, %add_char_opt_map_info.exit348
-  %indvars.iv662 = phi i64 [ %indvars.iv.next663, %add_char_opt_map_info.exit348 ], [ 1, %.peel.next.preheader.a ] ; 6 uses
+.peel.next:                                       ; preds = %.peel.next.preheader, %add_char_opt_map_info.exit348
+  %indvars.iv662 = phi i64 [ %indvars.iv.next663, %add_char_opt_map_info.exit348 ], [ 1, %.peel.next.preheader ] ; 6 uses
   %i.vr = load ptr, ptr %i.ux, align 8, !tbaa !80 ; 2 uses
   %i.vs = getelementptr i8, ptr %i.vr, i64 88
   %i.vt = load ptr, ptr %i.vs, align 8, !tbaa !168
   %i.vu = trunc nuw nsw i64 %indvars.iv662 to i32
   %i.vv = tail call i32 %i.vt(i32 noundef %i.vu, i32 noundef 12, ptr noundef %i.vr) #22
   %.not302 = icmp ne i32 %i.vv, 0
-  %.not303 = icmp samesign ult i64 %indvars.iv662, %11
+  %.not303 = icmp samesign ult i64 %indvars.iv662, %wide.trip.count
   %or.cond320 = select i1 %.not302, i1 %.not303, i1 false
   br i1 %or.cond320, label %add_char_opt_map_info.exit348, label %bb.cr
 
@@ -291,56 +313,44 @@ add_char_opt_map_info.exit348:                    ; preds = %map_position_value.
   %exitcond.not = icmp eq i64 %indvars.iv.next663, 256
   br i1 %exitcond.not, label %.loopexit, label %.peel.next, !llvm.loop !325
 
-.preheader381.a:                                  ; preds = %bb.cp, %add_char_opt_map_info.exit351
-  %.1260633 = phi i32 [ %24, %add_char_opt_map_info.exit351 ], [ 0, %bb.cp ] ; 4 uses
+.preheader381.a:                                  ; preds = %.peel.next.preheader.a, %add_char_opt_map_info.exit351
+  %indvars.iv666 = phi i64 [ %indvars.iv.next667, %add_char_opt_map_info.exit351 ], [ 1, %.peel.next.preheader.a ] ; 5 uses
   %i.wf = load ptr, ptr %i.ux, align 8, !tbaa !80 ; 2 uses
   %i.wg = getelementptr i8, ptr %i.wf, i64 88
   %i.wh = load ptr, ptr %i.wg, align 8, !tbaa !168
-  %i.wi = tail call i32 %i.wh(i32 noundef %.1260633, i32 noundef 12, ptr noundef %i.wf) #22
+  %21 = trunc nuw nsw i64 %indvars.iv666 to i32
+  %i.wi = tail call i32 %i.wh(i32 noundef %21, i32 noundef 12, ptr noundef %i.wf) #22
   %.not301 = icmp eq i32 %i.wi, 0
   br i1 %.not301, label %add_char_opt_map_info.exit351, label %bb.cu
 
 bb.cu:                                            ; preds = %.preheader381.a
-  %14 = trunc i32 %.1260633 to i8                 ; 2 uses
-  %15 = load ptr, ptr %i.ux, align 8, !tbaa !80
-  %.mask = and i32 %.1260633, 255
-  %16 = zext nneg i32 %.mask to i64               ; 2 uses
-  %i.wj = getelementptr i8, ptr %i.vg, i64 %16    ; 2 uses
+  %i.wj = getelementptr i8, ptr %i.vg, i64 %indvars.iv666 ; 2 uses
   %i.wk = load i8, ptr %i.wj, align 1, !tbaa !46
   %i.wl = icmp eq i8 %i.wk, 0
-  br i1 %i.wl, label %17, label %add_char_opt_map_info.exit351
+  br i1 %i.wl, label %bb.cv, label %add_char_opt_map_info.exit351
 
-17:                                               ; preds = %bb.cu
+bb.cv:                                            ; preds = %bb.cu
   store i8 1, ptr %i.wj, align 1, !tbaa !46
-  %18 = icmp sgt i8 %14, -1
-  br i1 %18, label %19, label %map_position_value.exit.i349
+  %22 = and i64 %indvars.iv666, 128
+  %23 = icmp eq i64 %22, 0
+  br i1 %23, label %bb.cw, label %map_position_value.exit.i349
 
-19:                                               ; preds = %17
-  %20 = icmp eq i8 %14, 0
-  br i1 %20, label %bb.cv, label %bb.cw
-
-bb.cv:                                            ; preds = %19
-  %21 = getelementptr i8, ptr %15, i64 20
-  %22 = load i32, ptr %21, align 4, !tbaa !131
-  %23 = icmp sgt i32 %22, 1
-  br i1 %23, label %map_position_value.exit.i349, label %bb.cw
-
-bb.cw:                                            ; preds = %bb.cv, %19
-  %i.wm = getelementptr [2 x i8], ptr @map_position_value.ByteValTable, i64 %16
+bb.cw:                                            ; preds = %bb.cv
+  %i.wm = getelementptr [2 x i8], ptr @map_position_value.ByteValTable, i64 %indvars.iv666
   %i.wn = load i16, ptr %i.wm, align 2, !tbaa !96
   %i.wo = sext i16 %i.wn to i32
   br label %map_position_value.exit.i349
 
-map_position_value.exit.i349:                     ; preds = %bb.cw, %bb.cv, %17
-  %.0.i.i350 = phi i32 [ 20, %bb.cv ], [ %i.wo, %bb.cw ], [ 4, %17 ]
+map_position_value.exit.i349:                     ; preds = %bb.cw, %bb.cv
+  %.0.i.i350 = phi i32 [ 4, %bb.cv ], [ %i.wo, %bb.cw ]
   %i.wp = load i32, ptr %i.vh, align 8, !tbaa !170
   %i.wq = add i32 %i.wp, %.0.i.i350
   store i32 %i.wq, ptr %i.vh, align 8, !tbaa !170
   br label %add_char_opt_map_info.exit351
 
 add_char_opt_map_info.exit351:                    ; preds = %map_position_value.exit.i349, %bb.cu, %.preheader381.a
-  %24 = add nuw nsw i32 %.1260633, 1              ; 2 uses
-  %exitcond666.not = icmp eq i32 %24, %10
+  %indvars.iv.next667 = add nuw nsw i64 %indvars.iv666, 1 ; 2 uses
+  %exitcond666.not = icmp eq i64 %indvars.iv.next667, %wide.trip.count
   br i1 %exitcond666.not, label %.loopexit, label %.preheader381.a, !llvm.loop !326
 
 bb.cx:                                            ; preds = %bb.cn
@@ -743,7 +753,7 @@ begin_hunk_1_@llvm.assume
 !323 = distinct !{!323, !105, !338}
 !324 = distinct !{!324, !105, !171}
 !325 = distinct !{!325, !105, !171}
-!326 = distinct !{!326, !105}
+!326 = distinct !{!326, !105, !171}
 !327 = distinct !{!327, !105}
 !328 = distinct !{!328, !105, !338, !339}
 !329 = distinct !{!329, !105, !338, !339}

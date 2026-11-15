@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/ssl_versions?download=true
 inline.NumInlined: 91
 inline.NumDeleted: 51
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumUnrolled: 11
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -57,23 +57,26 @@ bb.d:                                             ; preds = %.sink.split, %bb.a
 define hidden noundef zeroext i1 @_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt(ptr nofree noundef readonly captures(none) %0, i16 noundef zeroext %1) local_unnamed_addr #1 {
 .lr.ph.preheader:
   %.val = load i8, ptr %0, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.a = trunc nuw i8 %.val to i1                 ; 2 uses
-  %spec.select1.i = select i1 %i.a, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx = select i1 %i.a, i64 4, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select1.i, i64 %.idx
-  br label %.lr.ph
+  %i.a = trunc nuw i8 %.val to i1                 ; 3 uses
+  %2 = select i1 %i.a, i16 -259, i16 772
+  %.not14 = icmp eq i16 %2, %1
+  br i1 %.not14, label %._crit_edge, label %.lr.ph.1
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
-  %.01118 = phi ptr [ %4, %.lr.ph ], [ %spec.select1.i, %.lr.ph.preheader ] ; 2 uses
-  %3 = load i16, ptr %.01118, align 2, !tbaa !9
-  %.not14.a = icmp eq i16 %3, %1                  ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01118, i64 2 ; 2 uses
-  %.not.not = icmp eq ptr %4, %2
+.lr.ph.1:                                         ; preds = %.lr.ph.preheader
+  %3 = select i1 %i.a, i16 -257, i16 771
+  %.not14.1 = icmp eq i16 %3, %1                  ; 2 uses
+  %or.cond.1 = or i1 %.not14.1, %i.a
+  br i1 %or.cond.1, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.1
+  %.not14.a = icmp eq i16 %1, 770
+  %.not.not = icmp eq i16 %1, 769
   %or.cond = select i1 %.not14.a, i1 true, i1 %.not.not
-  br i1 %or.cond, label %._crit_edge, label %.lr.ph
+  br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph
-  ret i1 %.not14.a
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.preheader
+  %.not14.lcssa = phi i1 [ true, %.lr.ph.preheader ], [ %.not14.1, %.lr.ph.1 ], [ %or.cond, %.lr.ph ]
+  ret i1 %.not14.lcssa
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -285,25 +288,28 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !101
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !166
   %.val.i = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.c = trunc nuw i8 %.val.i to i1               ; 2 uses
-  %spec.select1.i.i = select i1 %i.c, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i = select i1 %i.c, i64 4, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i, i64 %.idx.i
-  br label %.lr.ph.i
+  %i.c = trunc nuw i8 %.val.i to i1               ; 3 uses
+  %2 = select i1 %i.c, i16 -259, i16 772
+  %.not14.i = icmp eq i16 %2, %1
+  br i1 %.not14.i, label %bb.b, label %.lr.ph.i.1
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %bb.a
-  %.01118.i = phi ptr [ %4, %.lr.ph.i ], [ %spec.select1.i.i, %bb.a ] ; 2 uses
-  %3 = load i16, ptr %.01118.i, align 2, !tbaa !9
-  %.not14.i.a = icmp eq i16 %3, %1                ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01118.i, i64 2 ; 2 uses
-  %.not.not.i = icmp eq ptr %4, %2
+.lr.ph.i.1:                                       ; preds = %bb.a
+  %3 = select i1 %i.c, i16 -257, i16 771
+  %.not14.i.1 = icmp eq i16 %3, %1                ; 2 uses
+  %or.cond.i.1 = or i1 %.not14.i.1, %i.c
+  br i1 %or.cond.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.1
+  %.not14.i.a = icmp eq i16 %1, 770
+  %.not.not.i = icmp eq i16 %1, 769
   %or.cond.i = select i1 %.not14.i.a, i1 true, i1 %.not.not.i
-  br i1 %or.cond.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit, label %.lr.ph.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit: ; preds = %.lr.ph.i
-  br i1 %.not14.i.a, label %bb.b, label %_ZN4bssl30ssl_protocol_version_from_wireEPtt.exit
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit: ; preds = %.lr.ph.i, %.lr.ph.i.1
+  %.not14.i.lcssa = phi i1 [ %or.cond.i, %.lr.ph.i ], [ %.not14.i.1, %.lr.ph.i.1 ]
+  br i1 %.not14.i.lcssa, label %bb.b, label %_ZN4bssl30ssl_protocol_version_from_wireEPtt.exit
 
-bb.b:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit
+bb.b:                                             ; preds = %bb.a, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit
   switch i16 %1, label %_ZN4bssl30ssl_protocol_version_from_wireEPtt.exit [
     i16 769, label %.sink.split.i
     i16 770, label %.sink.split.i
@@ -353,29 +359,32 @@ define hidden noundef zeroext i1 @_ZN4bssl26ssl_add_supported_versionsEPKNS_13SS
 
 bb.a:                                             ; preds = %.lr.ph, %.critedge
   %.01733 = phi ptr [ %spec.select1.i, %.lr.ph ], [ %i.o, %.critedge ] ; 2 uses
-  %i.g = load i16, ptr %.01733, align 2, !tbaa !9 ; 6 uses
+  %i.g = load i16, ptr %.01733, align 2, !tbaa !9 ; 9 uses
   %i.h = load ptr, ptr %0, align 8, !tbaa !101
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !166
   %.val.i.i = load i8, ptr %i.i, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.j = trunc nuw i8 %.val.i.i to i1             ; 2 uses
-  %spec.select1.i.i.i = select i1 %i.j, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i.i = select i1 %i.j, i64 4, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i.i, i64 %.idx.i.i
-  br label %.lr.ph.i.i
+  %i.j = trunc nuw i8 %.val.i.i to i1             ; 3 uses
+  %3 = select i1 %i.j, i16 -259, i16 772
+  %.not14.i.i = icmp eq i16 %3, %i.g
+  br i1 %.not14.i.i, label %bb.b, label %.lr.ph.i.i.1
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %bb.a
-  %.01118.i.i = phi ptr [ %5, %.lr.ph.i.i ], [ %spec.select1.i.i.i, %bb.a ] ; 2 uses
-  %4 = load i16, ptr %.01118.i.i, align 2, !tbaa !9
-  %.not14.i.i.a = icmp eq i16 %4, %i.g            ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.01118.i.i, i64 2 ; 2 uses
-  %.not.not.i.i = icmp eq ptr %5, %3
+.lr.ph.i.i.1:                                     ; preds = %bb.a
+  %4 = select i1 %i.j, i16 -257, i16 771
+  %.not14.i.i.1 = icmp eq i16 %4, %i.g            ; 2 uses
+  %or.cond.i.i.1 = or i1 %.not14.i.i.1, %i.j
+  br i1 %or.cond.i.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.1
+  %.not14.i.i.a = icmp eq i16 %i.g, 770
+  %.not.not.i.i = icmp eq i16 %i.g, 769
   %or.cond.i.i = select i1 %.not14.i.i.a, i1 true, i1 %.not.not.i.i
-  br i1 %or.cond.i.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i, label %.lr.ph.i.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i: ; preds = %.lr.ph.i.i
-  br i1 %.not14.i.i.a, label %bb.b, label %.critedge
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i: ; preds = %.lr.ph.i.i, %.lr.ph.i.i.1
+  %.not14.i.i.lcssa = phi i1 [ %or.cond.i.i, %.lr.ph.i.i ], [ %.not14.i.i.1, %.lr.ph.i.i.1 ]
+  br i1 %.not14.i.i.lcssa, label %bb.b, label %.critedge
 
-bb.b:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i
+bb.b:                                             ; preds = %bb.a, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i
   switch i16 %i.g, label %.critedge [
     i16 769, label %.sink.split.i.i
     i16 770, label %.sink.split.i.i
@@ -459,29 +468,32 @@ define hidden noundef zeroext i1 @_ZN4bssl21ssl_negotiate_versionEPNS_13SSL_HAND
 
 bb.a:                                             ; preds = %.lr.ph53, %.thread35
   %.02251 = phi ptr [ %spec.select1.i, %.lr.ph53 ], [ %i.x, %.thread35 ] ; 2 uses
-  %i.i = load i16, ptr %.02251, align 2, !tbaa !9 ; 6 uses
+  %i.i = load i16, ptr %.02251, align 2, !tbaa !9 ; 9 uses
   %i.j = load ptr, ptr %0, align 8, !tbaa !101
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !166
   %.val.i.i = load i8, ptr %i.k, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.l = trunc nuw i8 %.val.i.i to i1             ; 2 uses
-  %spec.select1.i.i.i = select i1 %i.l, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i.i = select i1 %i.l, i64 4, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i.i, i64 %.idx.i.i
-  br label %.lr.ph.i.i
+  %i.l = trunc nuw i8 %.val.i.i to i1             ; 3 uses
+  %5 = select i1 %i.l, i16 -259, i16 772
+  %.not14.i.i = icmp eq i16 %5, %i.i
+  br i1 %.not14.i.i, label %bb.b, label %.lr.ph.i.i.1
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %bb.a
-  %.01118.i.i = phi ptr [ %7, %.lr.ph.i.i ], [ %spec.select1.i.i.i, %bb.a ] ; 2 uses
-  %6 = load i16, ptr %.01118.i.i, align 2, !tbaa !9
-  %.not14.i.i.a = icmp eq i16 %6, %i.i            ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.01118.i.i, i64 2 ; 2 uses
-  %.not.not.i.i = icmp eq ptr %7, %5
+.lr.ph.i.i.1:                                     ; preds = %bb.a
+  %6 = select i1 %i.l, i16 -257, i16 771
+  %.not14.i.i.1 = icmp eq i16 %6, %i.i            ; 2 uses
+  %or.cond.i.i.1 = or i1 %.not14.i.i.1, %i.l
+  br i1 %or.cond.i.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.1
+  %.not14.i.i.a = icmp eq i16 %i.i, 770
+  %.not.not.i.i = icmp eq i16 %i.i, 769
   %or.cond.i.i = select i1 %.not14.i.i.a, i1 true, i1 %.not.not.i.i
-  br i1 %or.cond.i.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i, label %.lr.ph.i.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i: ; preds = %.lr.ph.i.i
-  br i1 %.not14.i.i.a, label %bb.b, label %.thread35
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i: ; preds = %.lr.ph.i.i, %.lr.ph.i.i.1
+  %.not14.i.i.lcssa = phi i1 [ %or.cond.i.i, %.lr.ph.i.i ], [ %.not14.i.i.1, %.lr.ph.i.i.1 ]
+  br i1 %.not14.i.i.lcssa, label %bb.b, label %.thread35
 
-bb.b:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i
+bb.b:                                             ; preds = %bb.a, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i
   switch i16 %i.i, label %.thread35 [
     i16 769, label %.sink.split.i.i
     i16 770, label %.sink.split.i.i
@@ -614,29 +626,32 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %.val.i.i.i = load i8, ptr %i.h, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.m = trunc nuw i8 %.val.i.i.i to i1           ; 2 uses
-  %spec.select1.i.i.i.i = select i1 %i.m, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i.i.i = select i1 %i.m, i64 4, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i.i.i, i64 %.idx.i.i.i
-  br label %.lr.ph.i.i.i
+  %i.m = trunc nuw i8 %.val.i.i.i to i1           ; 3 uses
+  %2 = select i1 %i.m, i16 -259, i16 772
+  %.not14.i.i.i = icmp eq i16 %2, %1
+  br i1 %.not14.i.i.i, label %bb.d, label %.lr.ph.i.i.i.1
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %bb.c
-  %.01118.i.i.i = phi ptr [ %4, %.lr.ph.i.i.i ], [ %spec.select1.i.i.i.i, %bb.c ] ; 2 uses
-  %3 = load i16, ptr %.01118.i.i.i, align 2, !tbaa !9
-  %.not14.i.i.i.a = icmp eq i16 %3, %1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01118.i.i.i, i64 2 ; 2 uses
-  %.not.not.i.i.i = icmp eq ptr %4, %2
+.lr.ph.i.i.i.1:                                   ; preds = %bb.c
+  %3 = select i1 %i.m, i16 -257, i16 771
+  %.not14.i.i.i.1 = icmp eq i16 %3, %1            ; 2 uses
+  %or.cond.i.i.i.1 = or i1 %.not14.i.i.i.1, %i.m
+  br i1 %or.cond.i.i.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.1
+  %.not14.i.i.i.a = icmp eq i16 %1, 770
+  %.not.not.i.i.i = icmp eq i16 %1, 769
   %or.cond.i.i.i = select i1 %.not14.i.i.i.a, i1 true, i1 %.not.not.i.i.i
-  br i1 %or.cond.i.i.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i
-  br i1 %.not14.i.i.i.a, label %bb.d, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.1
+  %.not14.i.i.i.lcssa = phi i1 [ %or.cond.i.i.i, %.lr.ph.i.i.i ], [ %.not14.i.i.i.1, %.lr.ph.i.i.i.1 ]
+  br i1 %.not14.i.i.i.lcssa, label %bb.d, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
 
 _ZN4bsslL19api_version_to_wireEPtt.exit.i.i:      ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, %bb.a
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 234, ptr noundef nonnull @.str, i32 noundef 122) #8
   br label %_ZN4bsslL15set_min_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
-bb.d:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
+bb.d:                                             ; preds = %bb.c, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
   store i16 %1, ptr %i.i, align 2, !tbaa !9
   br label %_ZN4bsslL15set_min_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
@@ -677,29 +692,32 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %.val.i.i.i = load i8, ptr %i.h, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.m = trunc nuw i8 %.val.i.i.i to i1           ; 2 uses
-  %spec.select1.i.i.i.i = select i1 %i.m, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i.i.i = select i1 %i.m, i64 4, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i.i.i, i64 %.idx.i.i.i
-  br label %.lr.ph.i.i.i
+  %i.m = trunc nuw i8 %.val.i.i.i to i1           ; 3 uses
+  %2 = select i1 %i.m, i16 -259, i16 772
+  %.not14.i.i.i = icmp eq i16 %2, %1
+  br i1 %.not14.i.i.i, label %bb.d, label %.lr.ph.i.i.i.1
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %bb.c
-  %.01118.i.i.i = phi ptr [ %4, %.lr.ph.i.i.i ], [ %spec.select1.i.i.i.i, %bb.c ] ; 2 uses
-  %3 = load i16, ptr %.01118.i.i.i, align 2, !tbaa !9
-  %.not14.i.i.i.a = icmp eq i16 %3, %1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01118.i.i.i, i64 2 ; 2 uses
-  %.not.not.i.i.i = icmp eq ptr %4, %2
+.lr.ph.i.i.i.1:                                   ; preds = %bb.c
+  %3 = select i1 %i.m, i16 -257, i16 771
+  %.not14.i.i.i.1 = icmp eq i16 %3, %1            ; 2 uses
+  %or.cond.i.i.i.1 = or i1 %.not14.i.i.i.1, %i.m
+  br i1 %or.cond.i.i.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.1
+  %.not14.i.i.i.a = icmp eq i16 %1, 770
+  %.not.not.i.i.i = icmp eq i16 %1, 769
   %or.cond.i.i.i = select i1 %.not14.i.i.i.a, i1 true, i1 %.not.not.i.i.i
-  br i1 %or.cond.i.i.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i
-  br i1 %.not14.i.i.i.a, label %bb.d, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.1
+  %.not14.i.i.i.lcssa = phi i1 [ %or.cond.i.i.i, %.lr.ph.i.i.i ], [ %.not14.i.i.i.1, %.lr.ph.i.i.i.1 ]
+  br i1 %.not14.i.i.i.lcssa, label %bb.d, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
 
 _ZN4bsslL19api_version_to_wireEPtt.exit.i.i:      ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, %bb.a
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 234, ptr noundef nonnull @.str, i32 noundef 122) #8
   br label %_ZN4bsslL15set_max_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
-bb.d:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
+bb.d:                                             ; preds = %bb.c, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
   store i16 %1, ptr %i.i, align 8, !tbaa !9
   br label %_ZN4bsslL15set_max_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
@@ -783,29 +801,32 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
   %.val.i.i.i = load i8, ptr %i.i, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.o = trunc nuw i8 %.val.i.i.i to i1           ; 2 uses
-  %spec.select1.i.i.i.i = select i1 %i.o, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i.i.i = select i1 %i.o, i64 4, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i.i.i, i64 %.idx.i.i.i
-  br label %.lr.ph.i.i.i
+  %i.o = trunc nuw i8 %.val.i.i.i to i1           ; 3 uses
+  %2 = select i1 %i.o, i16 -259, i16 772
+  %.not14.i.i.i = icmp eq i16 %2, %1
+  br i1 %.not14.i.i.i, label %bb.e, label %.lr.ph.i.i.i.1
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %bb.d
-  %.01118.i.i.i = phi ptr [ %4, %.lr.ph.i.i.i ], [ %spec.select1.i.i.i.i, %bb.d ] ; 2 uses
-  %3 = load i16, ptr %.01118.i.i.i, align 2, !tbaa !9
-  %.not14.i.i.i.a = icmp eq i16 %3, %1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01118.i.i.i, i64 2 ; 2 uses
-  %.not.not.i.i.i = icmp eq ptr %4, %2
+.lr.ph.i.i.i.1:                                   ; preds = %bb.d
+  %3 = select i1 %i.o, i16 -257, i16 771
+  %.not14.i.i.i.1 = icmp eq i16 %3, %1            ; 2 uses
+  %or.cond.i.i.i.1 = or i1 %.not14.i.i.i.1, %i.o
+  br i1 %or.cond.i.i.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.1
+  %.not14.i.i.i.a = icmp eq i16 %1, 770
+  %.not.not.i.i.i = icmp eq i16 %1, 769
   %or.cond.i.i.i = select i1 %.not14.i.i.i.a, i1 true, i1 %.not.not.i.i.i
-  br i1 %or.cond.i.i.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i
-  br i1 %.not14.i.i.i.a, label %bb.e, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.1
+  %.not14.i.i.i.lcssa = phi i1 [ %or.cond.i.i.i, %.lr.ph.i.i.i ], [ %.not14.i.i.i.1, %.lr.ph.i.i.i.1 ]
+  br i1 %.not14.i.i.i.lcssa, label %bb.e, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
 
 _ZN4bsslL19api_version_to_wireEPtt.exit.i.i:      ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, %bb.b
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 234, ptr noundef nonnull @.str, i32 noundef 122) #8
   br label %_ZN4bsslL15set_min_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
-bb.e:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
+bb.e:                                             ; preds = %bb.d, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
   store i16 %1, ptr %i.k, align 2, !tbaa !9
   br label %_ZN4bsslL15set_min_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
@@ -852,29 +873,32 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
   %.val.i.i.i = load i8, ptr %i.i, align 8, !tbaa !13, !range !14, !noundef !15
-  %i.o = trunc nuw i8 %.val.i.i.i to i1           ; 2 uses
-  %spec.select1.i.i.i.i = select i1 %i.o, ptr @_ZN4bsslL13kDTLSVersionsE, ptr @_ZN4bsslL12kTLSVersionsE ; 2 uses
-  %.idx.i.i.i = select i1 %i.o, i64 4, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select1.i.i.i.i, i64 %.idx.i.i.i
-  br label %.lr.ph.i.i.i
+  %i.o = trunc nuw i8 %.val.i.i.i to i1           ; 3 uses
+  %2 = select i1 %i.o, i16 -259, i16 772
+  %.not14.i.i.i = icmp eq i16 %2, %1
+  br i1 %.not14.i.i.i, label %bb.e, label %.lr.ph.i.i.i.1
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %bb.d
-  %.01118.i.i.i = phi ptr [ %4, %.lr.ph.i.i.i ], [ %spec.select1.i.i.i.i, %bb.d ] ; 2 uses
-  %3 = load i16, ptr %.01118.i.i.i, align 2, !tbaa !9
-  %.not14.i.i.i.a = icmp eq i16 %3, %1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01118.i.i.i, i64 2 ; 2 uses
-  %.not.not.i.i.i = icmp eq ptr %4, %2
+.lr.ph.i.i.i.1:                                   ; preds = %bb.d
+  %3 = select i1 %i.o, i16 -257, i16 771
+  %.not14.i.i.i.1 = icmp eq i16 %3, %1            ; 2 uses
+  %or.cond.i.i.i.1 = or i1 %.not14.i.i.i.1, %i.o
+  br i1 %or.cond.i.i.i.1, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.1
+  %.not14.i.i.i.a = icmp eq i16 %1, 770
+  %.not.not.i.i.i = icmp eq i16 %1, 769
   %or.cond.i.i.i = select i1 %.not14.i.i.i.a, i1 true, i1 %.not.not.i.i.i
-  br i1 %or.cond.i.i.i, label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, label %.lr.ph.i.i.i
+  br label %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
 
-_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i
-  br i1 %.not14.i.i.i.a, label %bb.e, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
+_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.1
+  %.not14.i.i.i.lcssa = phi i1 [ %or.cond.i.i.i, %.lr.ph.i.i.i ], [ %.not14.i.i.i.1, %.lr.ph.i.i.i.1 ]
+  br i1 %.not14.i.i.i.lcssa, label %bb.e, label %_ZN4bsslL19api_version_to_wireEPtt.exit.i.i
 
 _ZN4bsslL19api_version_to_wireEPtt.exit.i.i:      ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i, %bb.b
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 234, ptr noundef nonnull @.str, i32 noundef 122) #8
   br label %_ZN4bsslL15set_max_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 
-bb.e:                                             ; preds = %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
+bb.e:                                             ; preds = %bb.d, %_ZN4bssl27ssl_method_supports_versionEPKNS_19SSL_PROTOCOL_METHODEt.exit.i.i
   store i16 %1, ptr %i.k, align 2, !tbaa !9
   br label %_ZN4bsslL15set_max_versionEPKNS_19SSL_PROTOCOL_METHODEPtt.exit
 

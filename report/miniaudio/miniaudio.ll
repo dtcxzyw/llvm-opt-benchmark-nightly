@@ -205,7 +205,7 @@ ma_dr_mp3_bs_get_bits.exit155.thread:             ; preds = %ma_dr_mp3_bs_get_bi
   br i1 %i.fd, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %ma_dr_mp3_bs_get_bits.exit155.thread, %.lr.ph.i149
-  %i.fe = add nsw i32 %i.dd, 29                   ; 5 uses
+  %i.fe = add nsw i32 %i.dd, 29                   ; 6 uses
   store i32 %i.fe, ptr %i.cv, align 8, !tbaa !777
   %i.ff = icmp sgt i32 %i.fe, %i.db
   br i1 %i.ff, label %ma_dr_mp3_bs_get_bits.exit167, label %bb.f
@@ -246,7 +246,7 @@ ma_dr_mp3_bs_get_bits.exit167:                    ; preds = %bb.e, %._crit_edge.
   %i.fw = load i8, ptr %i.j, align 1, !tbaa !119
   %i.fx = and i8 %i.fw, 8
   %.not101 = icmp eq i8 %i.fx, 0
-  %i.fy = select i1 %.not101, i32 9, i32 4        ; 2 uses
+  %i.fy = select i1 %.not101, i32 9, i32 4        ; 3 uses
   %i.fz = add nsw i32 %i.fy, %i.fe                ; 11 uses
   store i32 %i.fz, ptr %i.cv, align 8, !tbaa !777
   %i.ga = icmp sgt i32 %i.fz, %i.db
@@ -266,17 +266,19 @@ bb.g:                                             ; preds = %ma_dr_mp3_bs_get_bi
   br i1 %i.gk, label %._crit_edge.i168.loopexit, label %._crit_edge.i168
 
 ._crit_edge.i168.loopexit:                        ; preds = %bb.g
+  %3 = add nsw i32 %i.gf, -8
+  %4 = shl nuw nsw i32 %i.gj, %3
   %.0.i178 = getelementptr inbounds nuw i8, ptr %i.gd, i64 1
   %i.gl = load i8, ptr %.0.i178, align 1, !tbaa !119
   %i.gm = zext i8 %i.gl to i32
-  %3 = add nsw i32 %i.gf, -8                      ; 2 uses
-  %4 = shl nuw nsw i32 %i.gj, %3
+  %5 = or i32 %i.fe, -8
+  %6 = add nsw i32 %i.fy, %5
   br label %._crit_edge.i168
 
 ._crit_edge.i168:                                 ; preds = %._crit_edge.i168.loopexit, %bb.g
   %.020.lcssa.i169 = phi i32 [ %i.gj, %bb.g ], [ %i.gm, %._crit_edge.i168.loopexit ]
   %.019.lcssa.i170 = phi i32 [ 0, %bb.g ], [ %4, %._crit_edge.i168.loopexit ]
-  %.018.lcssa.i171 = phi i32 [ %i.gf, %bb.g ], [ %3, %._crit_edge.i168.loopexit ]
+  %.018.lcssa.i171 = phi i32 [ %i.gf, %bb.g ], [ %6, %._crit_edge.i168.loopexit ]
   %i.gn = sub nuw nsw i32 8, %.018.lcssa.i171
   %i.go = lshr i32 %.020.lcssa.i169, %i.gn
   %i.gp = or i32 %i.go, %.019.lcssa.i170

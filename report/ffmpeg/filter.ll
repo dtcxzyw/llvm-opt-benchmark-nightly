@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/filter?download=true
 inline.NumInlined: 77
 inline.NumDeleted: 38
-loop-unroll.NumCompletelyUnrolled: 23
+loop-unroll.NumCompletelyUnrolled: 26
 loop-unroll.NumRuntimeUnrolled: 18
-loop-unroll.NumUnrolled: 41
+loop-unroll.NumUnrolled: 44
 begin_hunk_0_@ff_vvc_alf_copy_ctu_to_hv:bb.a
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !102 ; 2 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv
@@ -205,8 +205,8 @@ bb.a:
   %i.b = alloca [25 x [12 x i8]], align 16        ; 4 uses
   %i.c = alloca [1024 x i32], align 16            ; 4 uses
   %i.d = alloca [1024 x i32], align 16            ; 4 uses
-  %i.e = alloca [4 x [4 x i32]], align 16         ; 38 uses
-  %3 = alloca [4 x %struct.VVCRect], align 16     ; 24 uses
+  %i.e = alloca [4 x [4 x i32]], align 16         ; 39 uses
+  %3 = alloca [4 x %struct.VVCRect], align 16     ; 35 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !24   ; 18 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 2064 ; 2 uses
@@ -318,7 +318,7 @@ get_virtual_boundary.exit70.i:                    ; preds = %bb.c, %.lr.ph.i65.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ad, i64 30
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !87
   %i.bj = zext i16 %i.bi to i32
-  %..i = tail call i32 @llvm.smin.i32(i32 %i.bg, i32 %i.bj) ; 5 uses
+  %..i = tail call i32 @llvm.smin.i32(i32 %i.bg, i32 %i.bj) ; 8 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   %i.bl = load i16, ptr %i.bk, align 8, !tbaa !103
   %i.bm = zext i16 %i.bl to i32
@@ -699,43 +699,47 @@ is_virtual_boundary.exit153.i.i:                  ; preds = %bb.al, %.lr.ph.i.i1
 
 alf_get_edges.exit.i:                             ; preds = %is_virtual_boundary.exit153.i.i, %bb.ak, %bb.ad
   %.sroa.30.3.shrunk.i = phi i1 [ %.sroa.30.2.shrunk.i, %bb.ad ], [ true, %bb.ak ], [ %i.hj, %is_virtual_boundary.exit153.i.i ]
-  %.sroa.21.3.i = phi i32 [ %.sroa.21.2.i, %bb.ad ], [ %i.ha, %bb.ak ], [ %i.ha, %is_virtual_boundary.exit153.i.i ] ; 6 uses
+  %.sroa.21.3.i = phi i32 [ %.sroa.21.2.i, %bb.ad ], [ %i.ha, %bb.ak ], [ %i.ha, %is_virtual_boundary.exit153.i.i ] ; 9 uses
   %.sroa.12.3.i = phi i32 [ %.sroa.12.2.i, %bb.ad ], [ %i.go, %bb.ak ], [ %i.go, %is_virtual_boundary.exit153.i.i ] ; 6 uses
-  %.sroa.0.3.i = phi i32 [ %.sroa.0.2.i, %bb.ad ], [ %i.gf, %bb.ak ], [ %i.gf, %is_virtual_boundary.exit153.i.i ] ; 6 uses
+  %.sroa.0.3.i = phi i32 [ %.sroa.0.2.i, %bb.ad ], [ %i.gf, %bb.ak ], [ %i.gf, %is_virtual_boundary.exit153.i.i ] ; 9 uses
   %.sroa.30.3.i = zext i1 %.sroa.30.3.shrunk.i to i32 ; 6 uses
-  store i32 %1, ptr %3, align 16, !tbaa !102
-  %.sroa.4.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.us.us.i.us.peel, align 4, !tbaa !102
-  %.sroa.5.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   br i1 %.not236.not.not, label %alf_get_edges.exit.split.us.i, label %alf_get_edges.exit.split.i
 
 alf_get_edges.exit.split.us.i:                    ; preds = %alf_get_edges.exit.i
-  %.sroa.6.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
-  %.sroa.4.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
-  %.sroa.5.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  %.sroa.6.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 28 ; 2 uses
   br i1 %i.bf, label %.split.us.us.split.us.us.i.1, label %.split.us.us.split.i
 
 .split.us.us.split.us.us.i.1:                     ; preds = %alf_get_edges.exit.split.us.i
+  store i32 %1, ptr %3, align 16, !tbaa !102
+  %.sroa.4.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
+  %.sroa.5.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us, align 8, !tbaa !102
+  %.sroa.6.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 %.sroa.0.3.i, ptr %i.e, align 16
   %.sroa.12.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   store i32 %.sroa.12.3.i, ptr %.sroa.12.0..sroa_idx.us.us.us.us.i.us.peel, align 4
-  %.sroa.21.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %.sroa.21.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  store i32 %.sroa.21.3.i, ptr %.sroa.21.0..sroa_idx.us.us.us.us.i.us.peel, align 8
   %.sroa.30.0..sroa_idx.us.us.us.us.i.us.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  store i32 %.3.i94.i, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.us.peel, align 4, !tbaa !102
+  store i32 %.3.i94.i, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
   store i32 1, ptr %.sroa.30.0..sroa_idx.us.us.us.us.i.us.peel, align 4, !tbaa !102
-  store i32 %.3.i69.i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us.peel, align 8, !tbaa !102
+  store i32 %.3.i69.i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us, align 8, !tbaa !102
   store i32 1, ptr %.sroa.21.0..sroa_idx.us.us.us.us.i.us.peel, align 8, !tbaa !102
-  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
-  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us, align 8, !tbaa !102
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
+  store i32 %1, ptr %4, align 16, !tbaa !102
+  %.sroa.4.0..sroa_idx.us.us.us.us.i.us.1 = getelementptr inbounds nuw i8, ptr %3, i64 20
+  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.us.us.i.us.1, align 4, !tbaa !102
+  %.sroa.5.0..sroa_idx.us.us.us.us.i.us.1 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us.1, align 8, !tbaa !102
+  %.sroa.6.0..sroa_idx.us.us.us.us.i.us.1 = getelementptr inbounds nuw i8, ptr %3, i64 28
+  store i32 %.sroa.0.3.i, ptr %5, align 16
   %.sroa.12.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   store i32 %.sroa.12.3.i, ptr %.sroa.12.0..sroa_idx.us.us.us.us.i.us, align 4
   %.sroa.21.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store i32 %.sroa.21.3.i, ptr %.sroa.21.0..sroa_idx.us.us.us.us.i.us, align 8
   %.sroa.30.0..sroa_idx.us.us.us.us.i.us = getelementptr inbounds nuw i8, ptr %i.e, i64 28
-  store i32 %.3.i94.i, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
+  store i32 %.3.i94.i, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.us.1, align 4, !tbaa !102
   store i32 1, ptr %.sroa.30.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
   store i32 %.3.i69.i, ptr %4, align 16, !tbaa !102
   store i32 1, ptr %5, align 16, !tbaa !102
@@ -743,25 +747,29 @@ alf_get_edges.exit.split.us.i:                    ; preds = %alf_get_edges.exit.
   %i.hl = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store i32 %1, ptr %i.hk, align 16, !tbaa !102
   %.sroa.4.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %3, i64 36
-  %.sroa.5.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %.sroa.5.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.peel.1, align 8, !tbaa !102
   %.sroa.6.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %3, i64 44
   store i32 %i.bn, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.peel.1, align 4, !tbaa !102
   store i32 %.sroa.0.3.i, ptr %i.hl, align 16
   %.sroa.12.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 36
-  %.sroa.21.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 40
+  %.sroa.21.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 40 ; 2 uses
+  store i32 %.sroa.21.3.i, ptr %.sroa.21.0..sroa_idx.us.us.us.us.i.peel.1, align 8
   %.sroa.30.0..sroa_idx.us.us.us.us.i.peel.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 44
   store i32 %.sroa.30.3.i, ptr %.sroa.30.0..sroa_idx.us.us.us.us.i.peel.1, align 4
   store i32 %.3.i94.i, ptr %.sroa.4.0..sroa_idx.us.us.us.us.i.peel.1, align 4, !tbaa !102
   store i32 1, ptr %.sroa.12.0..sroa_idx.us.us.us.us.i.peel.1, align 4, !tbaa !102
   store i32 %.3.i69.i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.peel.1, align 8, !tbaa !102
   store i32 1, ptr %.sroa.21.0..sroa_idx.us.us.us.us.i.peel.1, align 8, !tbaa !102
-  %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.e, i64 48
+  %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
+  %i.hn = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
+  store i32 %1, ptr %i.hm, align 16, !tbaa !102
   %.sroa.4.0..sroa_idx.us.us.us.us.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 52
   %.sroa.5.0..sroa_idx.us.us.us.us.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 56
   store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.1, align 8, !tbaa !102
   %.sroa.6.0..sroa_idx.us.us.us.us.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 60
   store i32 %i.bn, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.1, align 4, !tbaa !102
+  store i32 %.sroa.0.3.i, ptr %i.hn, align 16
   %.sroa.12.0..sroa_idx.us.us.us.us.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 52
   %.sroa.21.0..sroa_idx.us.us.us.us.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 56
   store i32 %.sroa.21.3.i, ptr %.sroa.21.0..sroa_idx.us.us.us.us.i.1, align 8
@@ -774,30 +782,48 @@ alf_get_edges.exit.split.us.i:                    ; preds = %alf_get_edges.exit.
   br label %.lr.ph
 
 .split.us.us.split.i:                             ; preds = %alf_get_edges.exit.split.us.i
-  store i32 %i.bn, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.us.peel, align 4, !tbaa !102
+  store i32 %1, ptr %3, align 16, !tbaa !102
+  %.sroa.4.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.i, align 4, !tbaa !102
+  %.sroa.5.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.i, align 8, !tbaa !102
+  %.sroa.6.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %3, i64 12
+  store i32 %i.bn, ptr %.sroa.6.0..sroa_idx.us.us.i, align 4, !tbaa !102
   store i32 %.sroa.0.3.i, ptr %i.e, align 16
   %.sroa.12.0..sroa_idx.us.us.i.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   store i32 %.sroa.12.3.i, ptr %.sroa.12.0..sroa_idx.us.us.i.peel, align 4
-  %.sroa.21.0..sroa_idx.us.us.i.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %.sroa.21.0..sroa_idx.us.us.i.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  store i32 %.sroa.21.3.i, ptr %.sroa.21.0..sroa_idx.us.us.i.peel, align 8
   %.sroa.30.0..sroa_idx.us.us.i.peel = getelementptr inbounds nuw i8, ptr %i.e, i64 12
   store i32 %.sroa.30.3.i, ptr %.sroa.30.0..sroa_idx.us.us.i.peel, align 4
-  store i32 %.3.i69.i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us.peel, align 8, !tbaa !102
+  store i32 %.3.i69.i, ptr %.sroa.5.0..sroa_idx.us.us.i, align 8, !tbaa !102
   store i32 1, ptr %.sroa.21.0..sroa_idx.us.us.i.peel, align 8, !tbaa !102
-  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
-  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us, align 8, !tbaa !102
-  store i32 %i.bn, ptr %.sroa.6.0..sroa_idx.us.us.us.us.i.us, align 4, !tbaa !102
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
+  store i32 %1, ptr %6, align 16, !tbaa !102
+  %.sroa.4.0..sroa_idx.us.us.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 20
+  store i32 %2, ptr %.sroa.4.0..sroa_idx.us.us.i.1, align 4, !tbaa !102
+  %.sroa.5.0..sroa_idx.us.us.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.i.1, align 8, !tbaa !102
+  %.sroa.6.0..sroa_idx.us.us.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 28
+  store i32 %i.bn, ptr %.sroa.6.0..sroa_idx.us.us.i.1, align 4, !tbaa !102
+  store i32 %.sroa.0.3.i, ptr %7, align 16
   %.sroa.12.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   store i32 %.sroa.12.3.i, ptr %.sroa.12.0..sroa_idx.us.us.i, align 4
   %.sroa.21.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store i32 %.sroa.21.3.i, ptr %.sroa.21.0..sroa_idx.us.us.i, align 8
   %.sroa.30.0..sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   store i32 %.sroa.30.3.i, ptr %.sroa.30.0..sroa_idx.us.us.i, align 4
-  store i32 %.3.i69.i, ptr %4, align 16, !tbaa !102
-  store i32 1, ptr %5, align 16, !tbaa !102
+  store i32 %.3.i69.i, ptr %6, align 16, !tbaa !102
+  store i32 1, ptr %7, align 16, !tbaa !102
   br label %.lr.ph
 
 alf_get_edges.exit.split.i:                       ; preds = %alf_get_edges.exit.i
-  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us.us.us.us.i.us.peel, align 8, !tbaa !102
+  store i32 %1, ptr %3, align 16, !tbaa !102
+  %.sroa.4.0..sroa_idx.us107.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 %2, ptr %.sroa.4.0..sroa_idx.us107.us.i.us, align 4, !tbaa !102
+  %.sroa.5.0..sroa_idx.us108.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.us108.us.i.us, align 8, !tbaa !102
   %.sroa.6.0..sroa_idx.us109.us.i.us = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   br i1 %i.bf, label %alf_get_subblock.exit.us114.us.i.us, label %alf_get_subblock.exit.i
 
@@ -839,8 +865,8 @@ alf_get_subblock.exit.i:                          ; preds = %alf_get_edges.exit.
   store i32 %.sroa.30.3.i, ptr %.sroa.30.0..sroa_idx.i, align 4
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %alf_get_subblock.exit.us114.us.i.us, %.split.us.us.split.i, %.split.us.us.split.us.us.i.1, %alf_get_subblock.exit.i
-  %.us-phi122.i = phi i64 [ 4, %.split.us.us.split.us.us.i.1 ], [ 1, %alf_get_subblock.exit.i ], [ 2, %.split.us.us.split.i ], [ 2, %alf_get_subblock.exit.us114.us.i.us ]
+.lr.ph:                                           ; preds = %.split.us.us.split.i, %alf_get_subblock.exit.i, %.split.us.us.split.us.us.i.1, %alf_get_subblock.exit.us114.us.i.us
+  %.us-phi122.i = phi i64 [ 4, %.split.us.us.split.us.us.i.1 ], [ 1, %alf_get_subblock.exit.i ], [ 2, %alf_get_subblock.exit.us114.us.i.us ], [ 2, %.split.us.us.split.i ]
   %i.hq = getelementptr inbounds nuw i8, ptr %i.g, i64 2048
   %i.hr = getelementptr inbounds nuw i8, ptr %i.ak, i64 6
   %i.hs = getelementptr inbounds nuw i8, ptr %i.ak, i64 7

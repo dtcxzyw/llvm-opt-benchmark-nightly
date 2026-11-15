@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/toml_datetime-7147e88b265175dd.toml_datetime.a6fb852624937ec9-cgu.0?download=true
 inline.NumInlined: 168
 inline.NumDeleted: 52
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvXs7_NtCsekQk4x1rPVl_13toml_datetime8datetimeNtB5_8DatetimeNtNtNtCs4NRVxsYgnAr_4core3str6traits7FromStr8from_str:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -202,32 +204,57 @@ bb.u:                                             ; preds = %bb.r
 bb.v:                                             ; preds = %bb.t
   %i.bf = load i8, ptr %.sroa.0510.0.copyload, align 1, !alias.scope !62, !noundef !5
   %cond.i = icmp eq i8 %i.bf, 43                  ; 2 uses
-  %.sroa.15.0.i = select i1 %cond.i, i64 3, i64 4
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.sroa.0510.0.copyload, i64 %.sroa.0.0.idx.i
-  br label %bb.w
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.sroa.0510.0.copyload, i64 %.sroa.0.0.idx.i ; 4 uses
+  %3 = load i8, ptr %.sroa.0.0.i, align 1, !alias.scope !62, !noundef !5
+  %4 = zext i8 %3 to i32
+  %5 = add nsw i32 %4, -48                        ; 2 uses
+  %6 = icmp ult i32 %5, 10
+  br i1 %6, label %bb.w, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
 
-bb.w:                                             ; preds = %bb.x, %bb.v
-  %.sroa.0.256.i = phi ptr [ %.sroa.0.0.i, %bb.v ], [ %i.bl, %bb.x ] ; 2 uses
-  %.sroa.15.255.i = phi i64 [ %.sroa.15.0.i, %bb.v ], [ %3, %bb.x ]
-  %.sroa.043.254.i = phi i16 [ 0, %bb.v ], [ %5, %bb.x ]
-  %i.bg = load i8, ptr %.sroa.0.256.i, align 1, !alias.scope !62, !noundef !5
+bb.w:                                             ; preds = %bb.v
+  %7 = trunc nuw nsw i32 %5 to i16
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 1
+  %i.bg = load i8, ptr %8, align 1, !alias.scope !62, !noundef !5
   %i.bh = zext i8 %i.bg to i32
   %i.bi = add nsw i32 %i.bh, -48                  ; 2 uses
   %i.bj = icmp ult i32 %i.bi, 10
   br i1 %i.bj, label %bb.x, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
 
 bb.x:                                             ; preds = %bb.w
-  %i.bk = mul i16 %.sroa.043.254.i, 10
-  %3 = add nsw i64 %.sroa.15.255.i, -1            ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.256.i, i64 1
-  %4 = trunc nuw nsw i32 %i.bi to i16
-  %5 = add i16 %i.bk, %4                          ; 5 uses
-  %.not.i = icmp eq i64 %3, 0
-  br i1 %.not.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit, label %bb.w
+  %i.bk = mul nuw nsw i16 %7, 10
+  %9 = trunc nuw nsw i32 %i.bi to i16
+  %10 = add nuw nsw i16 %i.bk, %9
+  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 2
+  %11 = load i8, ptr %i.bl, align 1, !alias.scope !62, !noundef !5
+  %12 = zext i8 %11 to i32
+  %13 = add nsw i32 %12, -48                      ; 2 uses
+  %14 = icmp ult i32 %13, 10
+  br i1 %14, label %15, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
 
-_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit: ; preds = %bb.x
-  %i.bm = zext i16 %5 to i32
+15:                                               ; preds = %bb.x
+  %16 = mul nuw i16 %10, 10
+  %17 = trunc nuw nsw i32 %13 to i16
+  %18 = add nuw nsw i16 %16, %17                  ; 2 uses
+  br i1 %cond.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit, label %19
+
+19:                                               ; preds = %15
+  %20 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 3
+  %21 = load i8, ptr %20, align 1, !alias.scope !62, !noundef !5
+  %22 = zext i8 %21 to i32
+  %23 = add nsw i32 %22, -48                      ; 2 uses
+  %24 = icmp ult i32 %23, 10
+  br i1 %24, label %25, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread
+
+25:                                               ; preds = %19
+  %26 = mul i16 %18, 10
+  %27 = trunc nuw nsw i32 %23 to i16
+  %28 = add i16 %26, %27
+  br label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
+
+_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit: ; preds = %25, %15
+  %.lcssa = phi i16 [ %28, %25 ], [ %18, %15 ]    ; 4 uses
+  %i.bm = zext i16 %.lcssa to i32
   %i.bn = tail call fastcc { i1, i8 } @_RNvMsx_NtCs4NRVxsYgnAr_4core3numh16from_ascii_radix(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0581.0.copyload, i64 noundef 2) ; 2 uses
   %i.bo = extractvalue { i1, i8 } %i.bn, 0
   %i.bp = extractvalue { i1, i8 } %i.bn, 1        ; 5 uses
@@ -245,7 +272,7 @@ bb.y:                                             ; preds = %bb.t
   store i32 1, ptr %0, align 8
   br label %bb.dr
 
-_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread: ; preds = %bb.w
+_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit.thread: ; preds = %19, %bb.x, %bb.w, %bb.v
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.br, align 8
   %.sroa.51752.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -293,12 +320,12 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.dr
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.bz = and i16 %5, 3
+  %i.bz = and i16 %.lcssa, 3
   %i.ca = icmp eq i16 %i.bz, 0
   br i1 %i.ca, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.cb = urem i16 %5, 100
+  %i.cb = urem i16 %.lcssa, 100
   %i.cc = icmp eq i16 %i.cb, 0
   br i1 %i.cc, label %bb.ah, label %bb.ai
 
@@ -322,7 +349,7 @@ bb.ai:                                            ; preds = %bb.af
   br i1 %i.ce, label %switch.lookup2318, label %bb.al
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.cf = urem i16 %5, 400
+  %i.cf = urem i16 %.lcssa, 400
   %i.cg = icmp eq i16 %i.cf, 0                    ; 2 uses
   %. = select i1 %i.cg, i8 29, i8 28
   %.2323 = select i1 %i.cg, ptr @37, ptr @38

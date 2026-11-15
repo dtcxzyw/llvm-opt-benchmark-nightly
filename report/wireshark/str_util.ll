@@ -3,7 +3,7 @@ inline.NumInlined: 22
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@format_units:bb.a
   %i.ac = load ptr, ptr @thousands_grouping_fmt_flt, align 8
   tail call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.a, ptr noundef %i.ac, i32 noundef %4, double noundef %i.ab)
@@ -205,42 +205,46 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.i = select i1 %.not.i, i32 6, i32 0          ; 3 uses
   %i.j = select i1 %.not.i, i32 1000, i32 1024    ; 2 uses
   %i.k = mul nuw nsw i32 %i.j, 10
-  %i.l = zext nneg i32 %i.k to i64
-  %i.m = zext nneg i32 %i.j to i64
-  %i.n = select i1 %.not.i, i32 13, i32 7         ; 3 uses
-  %4 = add nsw i32 %i.n, -1                       ; 2 uses
-  %i.o = or disjoint i32 %i.i, 1                  ; 2 uses
-  %5 = icmp samesign ult i32 %i.o, %i.n
-  br i1 %5, label %.lr.ph.preheader, label %.critedge
-
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %i.p = udiv i64 9223372036854775807, %i.l
+  %i.l = zext nneg i32 %i.k to i64                ; 2 uses
+  %i.m = zext nneg i32 %i.j to i64                ; 2 uses
+  %i.n = select i1 %.not.i, i32 12, i32 6         ; 2 uses
+  %i.o = or disjoint i32 %i.i, 1
+  %4 = udiv i64 9223372036854775807, %i.l
   br label %.lr.ph
 
-bb.d:                                             ; preds = %bb.e
-  %i.q = add nuw nsw i32 %i.r, 1                  ; 2 uses
-  %6 = icmp samesign ult i32 %i.q, %i.n
-  br i1 %6, label %.lr.ph, label %.critedge, !llvm.loop !28
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %5 = add nuw nsw i32 %i.r, 1                    ; 2 uses
+  %i.p = udiv i64 9223372036854775807, %i.l
+  %6 = icmp slt i64 %i.t, %i.p
+  br i1 %6, label %7, label %.critedge
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %i.r = phi i32 [ %i.q, %bb.d ], [ %i.o, %.lr.ph.preheader ] ; 2 uses
-  %.049 = phi i64 [ %i.t, %bb.d ], [ 1, %.lr.ph.preheader ] ; 4 uses
-  %.04548 = phi i32 [ %i.r, %bb.d ], [ %i.i, %.lr.ph.preheader ] ; 2 uses
-  %i.s = icmp slt i64 %.049, %i.p
+7:                                                ; preds = %.lr.ph.preheader
+  %8 = mul i64 %i.t, %i.m                         ; 3 uses
+  %9 = mul i64 %8, 10
+  %.not.1 = icmp slt i64 %1, %9
+  br i1 %.not.1, label %.critedge, label %bb.d, !llvm.loop !28
+
+bb.d:                                             ; preds = %7
+  %i.q = add nuw nsw i32 %i.r, 2
+  %exitcond.not.1 = icmp eq i32 %5, %i.n
+  br i1 %exitcond.not.1, label %.critedge, label %.lr.ph, !llvm.loop !28
+
+.lr.ph:                                           ; preds = %bb.d, %bb.c
+  %i.r = phi i32 [ %i.o, %bb.c ], [ %i.q, %bb.d ] ; 4 uses
+  %.049 = phi i64 [ 1, %bb.c ], [ %8, %bb.d ]     ; 4 uses
+  %.04548 = phi i32 [ %i.i, %bb.c ], [ %5, %bb.d ] ; 2 uses
+  %i.s = icmp slt i64 %.049, %4
   br i1 %i.s, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.t = mul i64 %.049, %i.m                      ; 3 uses
+  %i.t = mul i64 %.049, %i.m                      ; 5 uses
   %i.u = mul i64 %i.t, 10
   %.not = icmp slt i64 %1, %i.u
-  br i1 %.not, label %..critedge_crit_edge54, label %bb.d, !llvm.loop !28
+  br i1 %.not, label %.critedge, label %.lr.ph.preheader, !llvm.loop !28
 
-..critedge_crit_edge54:                           ; preds = %bb.e
-  br label %.critedge, !llvm.loop !28
-
-.critedge:                                        ; preds = %bb.d, %.lr.ph, %..critedge_crit_edge54, %bb.c
-  %.0.lcssa = phi i64 [ 1, %bb.c ], [ %.049, %..critedge_crit_edge54 ], [ %i.t, %bb.d ], [ %.049, %.lr.ph ]
-  %.045.lcssa = phi i32 [ %4, %bb.c ], [ %.04548, %..critedge_crit_edge54 ], [ %4, %bb.d ], [ %.04548, %.lr.ph ] ; 2 uses
+.critedge:                                        ; preds = %bb.d, %7, %.lr.ph.preheader, %.lr.ph, %bb.e
+  %.0.lcssa = phi i64 [ %.049, %.lr.ph ], [ %8, %bb.d ], [ %.049, %bb.e ], [ %i.t, %.lr.ph.preheader ], [ %i.t, %7 ]
+  %.045.lcssa = phi i32 [ %.04548, %.lr.ph ], [ %i.n, %bb.d ], [ %.04548, %bb.e ], [ %i.r, %.lr.ph.preheader ], [ %i.r, %7 ] ; 2 uses
   %i.v = load ptr, ptr @thousands_grouping_fmt, align 8
   %i.w = sdiv i64 %1, %.0.lcssa
   tail call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.a, ptr noundef %i.v, i64 noundef %i.w)

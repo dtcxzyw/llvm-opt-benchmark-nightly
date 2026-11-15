@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/coreutils-rs/original/uu_cp-502ba788104fae03.uu_cp.beafcee701a397b5-cgu.0?download=true
 inline.NumInlined: 2514
 inline.NumDeleted: 1152
-loop-unroll.NumCompletelyUnrolled: 17
+loop-unroll.NumCompletelyUnrolled: 18
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@_RNvCsgn1j6LDYpaP_5uu_cp4copy:bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.av, ptr noundef nonnull align 8 dereferenceable(24) %i.bc, i64 24, i1 false)
   call void @_RNvNtNtCsh036I4OHgIr_6uucore4mods6locale21get_message_with_args(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.bd, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @115, i64 noundef 40, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.av) #39
@@ -205,15 +205,15 @@ bb.ee:                                            ; preds = %bb.af
   %.sroa.8501.0.copyload = load i32, ptr %.sroa.8501.0..sroa_idx, align 8, !noalias !3255
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !3184
   %i.sm = and i32 %.sroa.8501.0.copyload, 61440
-  %i.sn = icmp eq i32 %i.sm, 16384                ; 2 uses
-  %.143 = select i1 %i.sn, i64 9, i64 4           ; 10 uses
+  %i.sn = icmp eq i32 %i.sm, 16384                ; 3 uses
+  %.143 = select i1 %i.sn, i64 9, i64 4           ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.br)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq)
   store i64 0, ptr %i.bq, align 8
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.483.0..sroa_idx, align 8
   store i64 0, ptr %.sroa.584.0..sroa_idx, align 8
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39, !noalias !3256
-  %i.so = call noundef ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef %.143, i64 noundef range(i64 1, -9223372036854775807) 1) #39, !noalias !3256 ; 9 uses
+  %i.so = call noundef ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef %.143, i64 noundef range(i64 1, -9223372036854775807) 1) #39, !noalias !3256 ; 16 uses
   %i.sp = icmp eq ptr %i.so, null
   br i1 %i.sp, label %bb.ef, label %thread-pre-split.i320
 
@@ -227,7 +227,7 @@ thread-pre-split.i320:                            ; preds = %bb.ee
   %.pr.i321 = load i8, ptr %i.so, align 1, !alias.scope !3257
   switch i8 %.pr.i321, label %.lr.ph150.i315.preheader [
     i8 43, label %bb.eg
-    i8 45, label %.lr.ph141.i300.preheader
+    i8 45, label %.lr.ph141.i300
   ]
 
 .lr.ph150.i315.preheader:                         ; preds = %bb.eg, %thread-pre-split.i320
@@ -240,15 +240,75 @@ bb.eg:                                            ; preds = %thread-pre-split.i3
   %i.sr = add nsw i64 %.143, -1
   br label %.lr.ph150.i315.preheader
 
-.lr.ph141.i300.preheader:                         ; preds = %thread-pre-split.i320
-  %6 = add nsw i64 %.143, -1
-  br label %.lr.ph141.i300.a
+.lr.ph141.i300:                                   ; preds = %thread-pre-split.i320
+  %.sroa.0.2140.i301 = getelementptr inbounds nuw i8, ptr %i.so, i64 1
+  %6 = load i8, ptr %.sroa.0.2140.i301, align 1, !alias.scope !3257, !noundef !7
+  %7 = zext i8 %6 to i32
+  %8 = add nsw i32 %7, -48                        ; 2 uses
+  %9 = icmp ult i32 %8, 10
+  br i1 %9, label %.lr.ph141.i300.1, label %.loopexit667
 
-.lr.ph141.i300.a:                                 ; preds = %.lr.ph141.i300.preheader, %bb.eh
-  %.sroa.0.2140.i301.pn = phi ptr [ %.sroa.0.2140.i301.a, %bb.eh ], [ %i.so, %.lr.ph141.i300.preheader ]
-  %.sroa.26.2139.i302 = phi i64 [ %7, %bb.eh ], [ %6, %.lr.ph141.i300.preheader ]
-  %.sroa.084.2138.i303 = phi i64 [ %i.sy, %bb.eh ], [ 0, %.lr.ph141.i300.preheader ]
-  %.sroa.0.2140.i301.a = getelementptr inbounds nuw i8, ptr %.sroa.0.2140.i301.pn, i64 1 ; 2 uses
+.lr.ph141.i300.1:                                 ; preds = %.lr.ph141.i300
+  %10 = zext nneg i32 %8 to i64
+  %.sroa.0.2140.i301.1 = getelementptr inbounds nuw i8, ptr %i.so, i64 2
+  %11 = load i8, ptr %.sroa.0.2140.i301.1, align 1, !alias.scope !3257, !noundef !7
+  %12 = zext i8 %11 to i32
+  %13 = add nsw i32 %12, -48                      ; 2 uses
+  %14 = icmp ult i32 %13, 10
+  br i1 %14, label %.lr.ph141.i300.2, label %.loopexit667
+
+.lr.ph141.i300.2:                                 ; preds = %.lr.ph141.i300.1
+  %15 = mul nsw i64 %10, -10
+  %16 = zext nneg i32 %13 to i64
+  %17 = sub nsw i64 %15, %16
+  %.sroa.0.2140.i301.2 = getelementptr inbounds nuw i8, ptr %i.so, i64 3
+  %18 = load i8, ptr %.sroa.0.2140.i301.2, align 1, !alias.scope !3257, !noundef !7
+  %19 = zext i8 %18 to i32
+  %20 = add nsw i32 %19, -48                      ; 2 uses
+  %21 = icmp ult i32 %20, 10
+  br i1 %21, label %22, label %.loopexit667
+
+22:                                               ; preds = %.lr.ph141.i300.2
+  %23 = mul nsw i64 %17, 10
+  %24 = zext nneg i32 %20 to i64
+  %25 = sub nsw i64 %23, %24                      ; 2 uses
+  br i1 %i.sn, label %.lr.ph141.i300.3, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322
+
+.lr.ph141.i300.3:                                 ; preds = %22
+  %.sroa.0.2140.i301.3 = getelementptr inbounds nuw i8, ptr %i.so, i64 4
+  %26 = load i8, ptr %.sroa.0.2140.i301.3, align 1, !alias.scope !3257, !noundef !7
+  %27 = zext i8 %26 to i32
+  %28 = add nsw i32 %27, -48                      ; 2 uses
+  %29 = icmp ult i32 %28, 10
+  br i1 %29, label %.lr.ph141.i300.4, label %.loopexit667
+
+.lr.ph141.i300.4:                                 ; preds = %.lr.ph141.i300.3
+  %30 = mul nsw i64 %25, 10
+  %31 = zext nneg i32 %28 to i64
+  %32 = sub nsw i64 %30, %31
+  %.sroa.0.2140.i301.4 = getelementptr inbounds nuw i8, ptr %i.so, i64 5
+  %33 = load i8, ptr %.sroa.0.2140.i301.4, align 1, !alias.scope !3257, !noundef !7
+  %34 = zext i8 %33 to i32
+  %35 = add nsw i32 %34, -48                      ; 2 uses
+  %36 = icmp ult i32 %35, 10
+  br i1 %36, label %.lr.ph141.i300.preheader, label %.loopexit667
+
+.lr.ph141.i300.preheader:                         ; preds = %.lr.ph141.i300.4
+  %37 = mul i64 %32, 10
+  %38 = zext nneg i32 %35 to i64
+  %39 = sub i64 %37, %38
+  %.sroa.0.2140.i301.5 = getelementptr inbounds nuw i8, ptr %i.so, i64 6
+  %40 = load i8, ptr %.sroa.0.2140.i301.5, align 1, !alias.scope !3257, !noundef !7
+  %41 = zext i8 %40 to i32
+  %42 = add nsw i32 %41, -48                      ; 2 uses
+  %43 = icmp ult i32 %42, 10
+  br i1 %43, label %.lr.ph141.i300.a, label %.loopexit667
+
+.lr.ph141.i300.a:                                 ; preds = %.lr.ph141.i300.preheader
+  %44 = mul i64 %39, 10
+  %45 = zext nneg i32 %42 to i64
+  %46 = sub i64 %44, %45
+  %.sroa.0.2140.i301.a = getelementptr inbounds nuw i8, ptr %i.so, i64 7
   %i.ss = load i8, ptr %.sroa.0.2140.i301.a, align 1, !alias.scope !3257, !noundef !7
   %i.st = zext i8 %i.ss to i32
   %i.su = add nsw i32 %i.st, -48                  ; 2 uses
@@ -256,12 +316,21 @@ bb.eg:                                            ; preds = %thread-pre-split.i3
   br i1 %i.sv, label %bb.eh, label %.loopexit667
 
 bb.eh:                                            ; preds = %.lr.ph141.i300.a
-  %i.sw = mul i64 %.sroa.084.2138.i303, 10
-  %7 = add nsw i64 %.sroa.26.2139.i302, -1        ; 2 uses
+  %i.sw = mul i64 %46, 10
   %i.sx = zext nneg i32 %i.su to i64
-  %i.sy = sub i64 %i.sw, %i.sx                    ; 2 uses
-  %.not103.i304 = icmp eq i64 %7, 0
-  br i1 %.not103.i304, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322, label %.lr.ph141.i300.a
+  %i.sy = sub i64 %i.sw, %i.sx
+  %.sroa.0.2140.i301.7 = getelementptr inbounds nuw i8, ptr %i.so, i64 8
+  %47 = load i8, ptr %.sroa.0.2140.i301.7, align 1, !alias.scope !3257, !noundef !7
+  %48 = zext i8 %47 to i32
+  %49 = add nsw i32 %48, -48                      ; 2 uses
+  %50 = icmp ult i32 %49, 10
+  br i1 %50, label %51, label %.loopexit667
+
+51:                                               ; preds = %bb.eh
+  %52 = mul i64 %i.sy, 10
+  %53 = zext nneg i32 %49 to i64
+  %54 = sub i64 %52, %53
+  br label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322
 
 .lr.ph150.i315:                                   ; preds = %.lr.ph150.i315.preheader, %bb.ei
   %.sroa.0.4149.i316 = phi ptr [ %i.tf, %bb.ei ], [ %.sroa.0.4149.i316.ph, %.lr.ph150.i315.preheader ] ; 2 uses
@@ -282,15 +351,15 @@ bb.ei:                                            ; preds = %.lr.ph150.i315
   %.not105.i319 = icmp eq i64 %i.te, 0
   br i1 %.not105.i319, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322, label %.lr.ph150.i315
 
-.loopexit667:                                     ; preds = %.lr.ph141.i300.a, %.lr.ph150.i315
+.loopexit667:                                     ; preds = %.lr.ph141.i300, %.lr.ph141.i300.1, %.lr.ph141.i300.2, %.lr.ph141.i300.3, %.lr.ph141.i300.4, %.lr.ph141.i300.preheader, %.lr.ph141.i300.a, %bb.eh, %.lr.ph150.i315
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bp)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.bp, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.so, i64 noundef %.143) #40
   %i.ti = load i8, ptr %i.bp, align 8, !range !22, !noundef !7
   %i.tj = trunc nuw i8 %i.ti to i1
   br i1 %i.tj, label %bb.ey, label %bb.ez
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322: ; preds = %bb.eh, %bb.ei
-  %.sroa.12506.0 = phi i64 [ %i.th, %bb.ei ], [ %i.sy, %bb.eh ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322: ; preds = %22, %51, %bb.ei
+  %.sroa.12506.0 = phi i64 [ %i.th, %bb.ei ], [ %54, %51 ], [ %25, %22 ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECsgn1j6LDYpaP_5uu_cp(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bq, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @117, i64 noundef 9, i64 noundef %.sroa.12506.0) #39
   br label %bb.ej
 
