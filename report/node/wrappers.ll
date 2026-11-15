@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/wrappers?download=true
 inline.NumInlined: 7185
 inline.NumDeleted: 2643
-loop-unroll.NumCompletelyUnrolled: 16
-loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumCompletelyUnrolled: 18
+loop-unroll.NumRuntimeUnrolled: 7
 loop-unroll.NumUnrolled: 25
 begin_hunk_0_@_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm16ESaIS5_EE4GrowEm:bb.a
   %i.j = sub nuw nsw i64 64, %i.i                 ; 2 uses
@@ -205,11 +205,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.i = sub i64 %i.e, %i.h                       ; 3 uses
-  %.not.i = icmp eq i32 %2, -1                    ; 3 uses
+  %.not.i = icmp eq i32 %2, -1                    ; 4 uses
   %i.j = select i1 %.not.i, i64 2, i64 3          ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.l = load ptr, ptr %i.k, align 8
@@ -258,7 +258,7 @@ _ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i: ; preds = %bb.b,
   %i.ak = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   store i8 0, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.u, i64 2
-  %i.am = select i1 %.not.i, i16 1, i16 2         ; 2 uses
+  %i.am = select i1 %.not.i, i16 1, i16 2
   store i16 %i.am, ptr %i.al, align 2
   %i.an = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   store i8 %3, ptr %i.an, align 4
@@ -270,26 +270,17 @@ _ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i: ; preds = %bb.b,
   store i8 %7, ptr %i.aq, align 1
   %i.ar = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store i32 %6, ptr %i.ar, align 4
-  %i.as = getelementptr inbounds nuw i8, ptr %i.u, i64 12 ; 4 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.u, i64 12 ; 2 uses
   store i32 %1, ptr %i.as, align 4
-  br i1 %.not.i, label %.lr.ph.i, label %bb.c
+  br i1 %.not.i, label %.prol.preheader, label %bb.c
 
 bb.c:                                             ; preds = %_ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store i32 %2, ptr %i.at, align 4
-  br label %.lr.ph.i
+  br label %.prol.preheader
 
-.lr.ph.i:                                         ; preds = %bb.c, %_ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i
-  %8 = shl nuw nsw i16 %i.am, 2
-  %.idx.i = zext nneg i16 %8 to i64               ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.as, i64 %.idx.i
-  %.pre12.i = load ptr, ptr %i.f, align 8         ; 3 uses
-  %10 = add nsw i64 %.idx.i, -4                   ; 2 uses
-  %11 = and i64 %10, 4
-  %lcmp.mod.not.not = icmp eq i64 %11, 0
-  br i1 %lcmp.mod.not.not, label %.prol.preheader, label %.prol.loopexit
-
-.prol.preheader:                                  ; preds = %.lr.ph.i
+.prol.preheader:                                  ; preds = %_ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i, %bb.c
+  %.pre12.i = load ptr, ptr %i.f, align 8         ; 2 uses
   %.sroa.01.0.copyload.i.prol = load i32, ptr %i.as, align 4
   %i.au = ptrtoint ptr %.pre12.i to i64
   %i.av = zext i32 %.sroa.01.0.copyload.i.prol to i64
@@ -298,70 +289,36 @@ bb.c:                                             ; preds = %_ZN2v88internal8com
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 1 ; 2 uses
   %i.az = load i8, ptr %i.ay, align 1             ; 2 uses
   %.not.i.i.prol = icmp eq i8 %i.az, -1
-  br i1 %.not.i.i.prol, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol, label %bb.d, !prof !31
+  br i1 %.not.i.i.prol, label %.lr.ph.i.new, label %bb.d, !prof !31
 
 bb.d:                                             ; preds = %.prol.preheader
   %i.ba = add nuw i8 %i.az, 1
   store i8 %i.ba, ptr %i.ay, align 1
   %.pre.i.prol = load ptr, ptr %i.f, align 8
-  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol
+  br label %.lr.ph.i.new
 
-_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol: ; preds = %bb.d, %.prol.preheader
-  %12 = phi ptr [ %.pre12.i, %.prol.preheader ], [ %.pre.i.prol, %bb.d ]
-  %13 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  br label %.prol.loopexit
+.lr.ph.i.new:                                     ; preds = %bb.d, %.prol.preheader
+  %.011.i = phi ptr [ %.pre12.i, %.prol.preheader ], [ %.pre.i.prol, %bb.d ]
+  br i1 %.not.i, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
 
-.prol.loopexit:                                   ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol, %.lr.ph.i
-  %.unr = phi ptr [ %.pre12.i, %.lr.ph.i ], [ %12, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol ]
-  %.011.i.unr = phi ptr [ %i.as, %.lr.ph.i ], [ %13, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol ]
-  %14 = icmp eq i64 %10, 0
-  br i1 %14, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit, label %.lr.ph.i.new
-
-.lr.ph.i.new:                                     ; preds = %.prol.loopexit, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1
-  %15 = phi ptr [ %25, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1 ], [ %.unr, %.prol.loopexit ] ; 2 uses
-  %.011.i = phi ptr [ %26, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1 ], [ %.011.i.unr, %.prol.loopexit ] ; 3 uses
-  %.sroa.01.0.copyload.i = load i32, ptr %.011.i, align 4
-  %16 = ptrtoint ptr %15 to i64
-  %17 = zext i32 %.sroa.01.0.copyload.i to i64
-  %18 = add i64 %17, %16
-  %19 = inttoptr i64 %18 to ptr
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 1 ; 2 uses
-  %21 = load i8, ptr %20, align 1                 ; 2 uses
-  %.not.i.i = icmp eq i8 %21, -1
-  br i1 %.not.i.i, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i, label %22, !prof !31
-
-22:                                               ; preds = %.lr.ph.i.new
-  %23 = add nuw i8 %21, 1
-  store i8 %23, ptr %20, align 1
-  %.pre.i = load ptr, ptr %i.f, align 8
-  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
-
-_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i: ; preds = %22, %.lr.ph.i.new
-  %24 = phi ptr [ %15, %.lr.ph.i.new ], [ %.pre.i, %22 ] ; 2 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %.011.i, i64 4
+_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i: ; preds = %.lr.ph.i.new
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %.sroa.01.0.copyload.i.1 = load i32, ptr %i.bb, align 4
-  %i.bc = ptrtoint ptr %24 to i64
+  %i.bc = ptrtoint ptr %.011.i to i64
   %i.bd = zext i32 %.sroa.01.0.copyload.i.1 to i64
   %i.be = add i64 %i.bd, %i.bc
   %i.bf = inttoptr i64 %i.be to ptr
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 1 ; 2 uses
   %i.bh = load i8, ptr %i.bg, align 1             ; 2 uses
   %.not.i.i.1 = icmp eq i8 %i.bh, -1
-  br i1 %.not.i.i.1, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1, label %bb.e, !prof !31
+  br i1 %.not.i.i.1, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit, label %bb.e, !prof !31
 
 bb.e:                                             ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
   %i.bi = add nuw i8 %i.bh, 1
   store i8 %i.bi, ptr %i.bg, align 1
-  %.pre.i.1 = load ptr, ptr %i.f, align 8
-  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1
+  br label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit
 
-_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1: ; preds = %bb.e, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
-  %25 = phi ptr [ %24, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i ], [ %.pre.i.1, %bb.e ]
-  %26 = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 2 uses
-  %.not.i15.1 = icmp eq ptr %26, %9
-  br i1 %.not.i15.1, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit, label %.lr.ph.i.new
-
-_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit: ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1, %.prol.loopexit
+_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_6LoadOpEEEvRKT_.exit: ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i, %bb.e, %.lr.ph.i.new
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 660
   %.sroa.0.0.copyload.i = load i32, ptr %i.bj, align 4
   %i.bk = load ptr, ptr %i.a, align 8, !nonnull !33, !align !34 ; 4 uses
@@ -764,7 +721,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.i = sub i64 %i.e, %i.h                       ; 3 uses
-  %.not.i = icmp eq i32 %4, -1                    ; 3 uses
+  %.not.i = icmp eq i32 %4, -1                    ; 4 uses
   %i.j = select i1 %.not.i, i64 3, i64 4          ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.l = load ptr, ptr %i.k, align 8
@@ -789,7 +746,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i: ; preds = %bb.b, %bb.a
   %.pre-phi26 = phi i64 [ %.pre25, %bb.b ], [ %i.i, %bb.a ] ; 2 uses
-  %i.u = phi ptr [ %.pre.i.i.i.i, %bb.b ], [ %i.d, %bb.a ] ; 14 uses
+  %i.u = phi ptr [ %.pre.i.i.i.i, %bb.b ], [ %i.d, %bb.a ] ; 16 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.j
   store ptr %i.v, ptr %i.c, align 8
   %i.w = trunc i64 %.pre-phi26 to i32
@@ -813,7 +770,7 @@ _ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i: ; preds = %bb.b,
   %i.ak = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   store i8 0, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.u, i64 2
-  %i.am = select i1 %.not.i, i16 3, i16 4         ; 2 uses
+  %i.am = select i1 %.not.i, i16 3, i16 4
   store i16 %i.am, ptr %i.al, align 2
   %i.an = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   store i8 %5, ptr %i.an, align 4
@@ -825,7 +782,7 @@ _ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i: ; preds = %bb.b,
   store i8 %8, ptr %i.aq, align 1
   %i.ar = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store i8 %9, ptr %i.ar, align 4
-  %i.as = getelementptr inbounds nuw i8, ptr %i.u, i64 12 ; 4 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.u, i64 12 ; 2 uses
   store i32 %1, ptr %i.as, align 4
   %i.at = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store i32 %2, ptr %i.at, align 4
@@ -838,48 +795,47 @@ bb.c:                                             ; preds = %_ZN2v88internal8com
   store i32 %4, ptr %i.av, align 4
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.c, %_ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i
-  %10 = shl nuw nsw i16 %i.am, 2
-  %.idx.i = zext nneg i16 %10 to i64              ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.as, i64 %.idx.i
-  %.pre12.i = load ptr, ptr %i.f, align 8         ; 3 uses
-  %12 = add nsw i64 %.idx.i, -4                   ; 2 uses
-  %13 = and i64 %12, 4
-  %lcmp.mod.not.not = icmp eq i64 %13, 0
-  br i1 %lcmp.mod.not.not, label %.prol.preheader, label %.prol.loopexit
+.lr.ph.i:                                         ; preds = %_ZN2v88internal8compiler10turboshaft5Graph8AllocateEm.exit.i.i, %bb.c
+  %.pre12.i = load ptr, ptr %i.f, align 8         ; 2 uses
+  %.sroa.01.0.copyload.i = load i32, ptr %i.as, align 4
+  %10 = ptrtoint ptr %.pre12.i to i64
+  %.idx.i = zext i32 %.sroa.01.0.copyload.i to i64
+  %11 = add i64 %.idx.i, %10
+  %12 = inttoptr i64 %11 to ptr
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 1 ; 2 uses
+  %14 = load i8, ptr %13, align 1                 ; 2 uses
+  %lcmp.mod.not.not = icmp eq i8 %14, -1
+  br i1 %lcmp.mod.not.not, label %.prol.preheader, label %15, !prof !31
 
-.prol.preheader:                                  ; preds = %.lr.ph.i
-  %.sroa.01.0.copyload.i.prol = load i32, ptr %i.as, align 4
-  %i.aw = ptrtoint ptr %.pre12.i to i64
+15:                                               ; preds = %.lr.ph.i
+  %16 = add nuw i8 %14, 1
+  store i8 %16, ptr %13, align 1
+  %.pre.i = load ptr, ptr %i.f, align 8
+  br label %.prol.preheader
+
+.prol.preheader:                                  ; preds = %.lr.ph.i, %15
+  %17 = phi ptr [ %.pre12.i, %.lr.ph.i ], [ %.pre.i, %15 ] ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  %.sroa.01.0.copyload.i.prol = load i32, ptr %18, align 4
+  %i.aw = ptrtoint ptr %17 to i64
   %i.ax = zext i32 %.sroa.01.0.copyload.i.prol to i64
   %i.ay = add i64 %i.ax, %i.aw
   %i.az = inttoptr i64 %i.ay to ptr
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 1 ; 2 uses
   %i.bb = load i8, ptr %i.ba, align 1             ; 2 uses
   %.not.i.i.prol = icmp eq i8 %i.bb, -1
-  br i1 %.not.i.i.prol, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol, label %bb.d, !prof !31
+  br i1 %.not.i.i.prol, label %.lr.ph.i.new, label %bb.d, !prof !31
 
 bb.d:                                             ; preds = %.prol.preheader
   %i.bc = add nuw i8 %i.bb, 1
   store i8 %i.bc, ptr %i.ba, align 1
   %.pre.i.prol = load ptr, ptr %i.f, align 8
-  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol
+  br label %.lr.ph.i.new
 
-_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol: ; preds = %bb.d, %.prol.preheader
-  %14 = phi ptr [ %.pre12.i, %.prol.preheader ], [ %.pre.i.prol, %bb.d ]
-  %15 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  br label %.prol.loopexit
-
-.prol.loopexit:                                   ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol, %.lr.ph.i
-  %.unr = phi ptr [ %.pre12.i, %.lr.ph.i ], [ %14, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol ]
-  %.011.i.unr = phi ptr [ %i.as, %.lr.ph.i ], [ %15, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol ]
-  %16 = icmp eq i64 %12, 0
-  br i1 %16, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit, label %.lr.ph.i.new
-
-.lr.ph.i.new:                                     ; preds = %.prol.loopexit, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1
-  %i.bd = phi ptr [ %18, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1 ], [ %.unr, %.prol.loopexit ] ; 2 uses
-  %.011.i = phi ptr [ %19, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1 ], [ %.011.i.unr, %.prol.loopexit ] ; 3 uses
-  %.sroa.01.0.copyload.i.a = load i32, ptr %.011.i, align 4
+.lr.ph.i.new:                                     ; preds = %.prol.preheader, %bb.d
+  %i.bd = phi ptr [ %17, %.prol.preheader ], [ %.pre.i.prol, %bb.d ] ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %i.u, i64 20
+  %.sroa.01.0.copyload.i.a = load i32, ptr %19, align 4
   %i.be = ptrtoint ptr %i.bd to i64
   %i.bf = zext i32 %.sroa.01.0.copyload.i.a to i64
   %i.bg = add i64 %i.bf, %i.be
@@ -887,40 +843,36 @@ _ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.prol: ; preds
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 1 ; 2 uses
   %i.bj = load i8, ptr %i.bi, align 1             ; 2 uses
   %.not.i.i = icmp eq i8 %i.bj, -1
-  br i1 %.not.i.i, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i, label %bb.e, !prof !31
+  br i1 %.not.i.i, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.2, label %bb.e, !prof !31
 
 bb.e:                                             ; preds = %.lr.ph.i.new
   %i.bk = add nuw i8 %i.bj, 1
   store i8 %i.bk, ptr %i.bi, align 1
   %.pre.i.a = load ptr, ptr %i.f, align 8
-  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
+  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.2
 
-_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i: ; preds = %bb.e, %.lr.ph.i.new
-  %17 = phi ptr [ %i.bd, %.lr.ph.i.new ], [ %.pre.i.a, %bb.e ] ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.011.i, i64 4
+_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.2: ; preds = %bb.e, %.lr.ph.i.new
+  %20 = phi ptr [ %i.bd, %.lr.ph.i.new ], [ %.pre.i.a, %bb.e ]
+  br i1 %.not.i, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
+
+_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i: ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.2
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %.sroa.01.0.copyload.i.1 = load i32, ptr %i.bl, align 4
-  %i.bm = ptrtoint ptr %17 to i64
+  %i.bm = ptrtoint ptr %20 to i64
   %i.bn = zext i32 %.sroa.01.0.copyload.i.1 to i64
   %i.bo = add i64 %i.bn, %i.bm
   %i.bp = inttoptr i64 %i.bo to ptr
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 1 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1             ; 2 uses
   %.not.i.i.1 = icmp eq i8 %i.br, -1
-  br i1 %.not.i.i.1, label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1, label %bb.f, !prof !31
+  br i1 %.not.i.i.1, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit, label %bb.f, !prof !31
 
 bb.f:                                             ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
   %i.bs = add nuw i8 %i.br, 1
   store i8 %i.bs, ptr %i.bq, align 1
-  %.pre.i.1 = load ptr, ptr %i.f, align 8
-  br label %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1
+  br label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit
 
-_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1: ; preds = %bb.f, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i
-  %18 = phi ptr [ %17, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i ], [ %.pre.i.1, %bb.f ]
-  %19 = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 2 uses
-  %.not.i19.1 = icmp eq ptr %19, %11
-  br i1 %.not.i19.1, label %_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit, label %.lr.ph.i.new
-
-_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit: ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.1, %.prol.loopexit
+_ZN2v88internal8compiler10turboshaft5Graph18IncrementInputUsesINS2_11AtomicRMWOpEEEvRKT_.exit: ; preds = %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i, %bb.f, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.2
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 660
   %.sroa.0.0.copyload.i20 = load i32, ptr %i.bt, align 4
   %i.bu = load ptr, ptr %i.a, align 8, !nonnull !33, !align !34 ; 4 uses

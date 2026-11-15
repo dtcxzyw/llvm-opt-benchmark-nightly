@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/clamav/original/unpack?download=true
 inline.NumInlined: 353
 inline.NumDeleted: 74
-loop-unroll.NumCompletelyUnrolled: 22
-loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumCompletelyUnrolled: 23
+loop-unroll.NumRuntimeUnrolled: 14
 loop-unroll.NumUnrolled: 45
 begin_hunk_0_@_ZN6Unpack10HuffDecodeEv:bb.a
   %.01419.i = phi i32 [ %i.g, %.lr.ph.i ], [ 8, %bb.b ]
@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   %i.br = and i32 %i.bo, 16384
-  %.not27 = icmp eq i32 %i.br, 0
-  %1 = select i1 %.not27, i32 3, i32 4            ; 4 uses
+  %.not27 = icmp eq i32 %i.br, 0                  ; 2 uses
+  %.neg = select i1 %.not27, i64 -3, i64 -4
   tail call void @_ZN8BitInput8faddbitsEj(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i32 noundef 1)
   %i.bs = tail call noundef i32 @_ZN8BitInput8fgetbitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
   %i.bt = and i32 %i.bs, 65520                    ; 3 uses
@@ -249,74 +249,68 @@ _ZN6Unpack9DecodeNumEjjPjS0_.exit72:              ; preds = %._crit_edge.thread.
   %i.ck = lshr i32 %i.cj, 11
   %i.cl = or i32 %i.ci, %i.ck
   tail call void @_ZN8BitInput8faddbitsEj(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i32 noundef 5)
-  %2 = zext nneg i32 %1 to i64
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 19840 ; 2 uses
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !116
-  %3 = sub nsw i64 %i.cn, %2
-  store i64 %3, ptr %i.cm, align 8, !tbaa !116
-  %i.co = getelementptr inbounds nuw i8, ptr %0, i64 19312 ; 3 uses
-  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 7 uses
-  %i.cq = zext i32 %i.cl to i64                   ; 3 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 59680 ; 4 uses
-  %.pre.i.a = load i64, ptr %i.cp, align 8, !tbaa !115 ; 3 uses
+  %1 = add i64 %.neg, %i.cn
+  store i64 %1, ptr %i.cm, align 8, !tbaa !116
+  %i.co = getelementptr inbounds nuw i8, ptr %0, i64 19312 ; 4 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 9 uses
+  %i.cq = zext i32 %i.cl to i64                   ; 4 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 59680 ; 5 uses
+  %.pre5.i = load i64, ptr %i.cr, align 8, !tbaa !117
+  %.pre.i = load i64, ptr %i.cp, align 8, !tbaa !115 ; 2 uses
+  %2 = load ptr, ptr %i.co, align 8, !tbaa !119   ; 2 uses
+  %3 = sub i64 %.pre.i, %i.cq
+  %4 = and i64 %3, %.pre5.i
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %4
+  %6 = load i8, ptr %5, align 1, !tbaa !35
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 %.pre.i
+  store i8 %6, ptr %7, align 1, !tbaa !35
+  %8 = load i64, ptr %i.cp, align 8, !tbaa !115
+  %9 = add i64 %8, 1
+  %10 = load i64, ptr %i.cr, align 8, !tbaa !117  ; 2 uses
+  %11 = and i64 %9, %10                           ; 3 uses
+  store i64 %11, ptr %i.cp, align 8, !tbaa !115
+  %12 = load ptr, ptr %i.co, align 8, !tbaa !119  ; 2 uses
+  %13 = sub i64 %11, %i.cq
+  %14 = and i64 %13, %10
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 %14
+  %16 = load i8, ptr %15, align 1, !tbaa !35
+  %17 = getelementptr inbounds nuw i8, ptr %12, i64 %11
+  store i8 %16, ptr %17, align 1, !tbaa !35
+  %18 = load i64, ptr %i.cp, align 8, !tbaa !115
+  %19 = add i64 %18, 1
+  %20 = load i64, ptr %i.cr, align 8, !tbaa !117  ; 2 uses
+  %21 = and i64 %19, %20                          ; 3 uses
+  store i64 %21, ptr %i.cp, align 8, !tbaa !115
+  %22 = load ptr, ptr %i.co, align 8, !tbaa !119  ; 2 uses
+  %23 = sub i64 %21, %i.cq
+  %24 = and i64 %23, %20
+  %25 = getelementptr inbounds nuw i8, ptr %22, i64 %24
+  %26 = load i8, ptr %25, align 1, !tbaa !35
+  %27 = getelementptr inbounds nuw i8, ptr %22, i64 %21
+  store i8 %26, ptr %27, align 1, !tbaa !35
+  %.pre.i.a = load i64, ptr %i.cp, align 8, !tbaa !115
+  %28 = add i64 %.pre.i.a, 1
   %.pre5.i.a = load i64, ptr %i.cr, align 8, !tbaa !117 ; 2 uses
-  %xtraiter = and i32 %1, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new, label %.prol.loopexit.unr-lcssa
+  %29 = and i64 %28, %.pre5.i.a                   ; 3 uses
+  store i64 %29, ptr %i.cp, align 8, !tbaa !115
+  br i1 %.not27, label %_ZN6Unpack12CopyString15Ejj.exit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %_ZN6Unpack9DecodeNumEjjPjS0_.exit72
-  %4 = add nsw i32 %1, -1
   %i.cs = load ptr, ptr %i.co, align 8, !tbaa !119 ; 2 uses
-  %i.ct = sub i64 %.pre.i.a, %i.cq
+  %i.ct = sub i64 %29, %i.cq
   %i.cu = and i64 %i.ct, %.pre5.i.a
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cu
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !35
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 %.pre.i.a
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 %29
   store i8 %i.cw, ptr %i.cx, align 1, !tbaa !35
   %i.cy = load i64, ptr %i.cp, align 8, !tbaa !115
   %i.cz = add i64 %i.cy, 1
-  %i.da = load i64, ptr %i.cr, align 8, !tbaa !117 ; 2 uses
-  %i.db = and i64 %i.cz, %i.da                    ; 2 uses
+  %i.da = load i64, ptr %i.cr, align 8, !tbaa !117
+  %i.db = and i64 %i.cz, %i.da
   store i64 %i.db, ptr %i.cp, align 8, !tbaa !115
-  br label %_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new
-
-_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new:          ; preds = %_ZN6Unpack9DecodeNumEjjPjS0_.exit72, %.prol.loopexit.unr-lcssa
-  %.unr = phi i64 [ %.pre5.i.a, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72 ], [ %i.da, %.prol.loopexit.unr-lcssa ]
-  %.unr141 = phi i64 [ %.pre.i.a, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72 ], [ %i.db, %.prol.loopexit.unr-lcssa ]
-  %.04.i.unr = phi i32 [ %1, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72 ], [ %4, %.prol.loopexit.unr-lcssa ]
-  br label %5
-
-5:                                                ; preds = %5, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new
-  %6 = phi i64 [ %.unr, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new ], [ %27, %5 ]
-  %7 = phi i64 [ %.unr141, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new ], [ %28, %5 ] ; 2 uses
-  %.04.i = phi i32 [ %.04.i.unr, %_ZN6Unpack9DecodeNumEjjPjS0_.exit72.new ], [ %18, %5 ]
-  %8 = load ptr, ptr %i.co, align 8, !tbaa !119   ; 2 uses
-  %9 = sub i64 %7, %i.cq
-  %10 = and i64 %9, %6
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 %10
-  %12 = load i8, ptr %11, align 1, !tbaa !35
-  %13 = getelementptr inbounds nuw i8, ptr %8, i64 %7
-  store i8 %12, ptr %13, align 1, !tbaa !35
-  %14 = load i64, ptr %i.cp, align 8, !tbaa !115
-  %15 = add i64 %14, 1
-  %16 = load i64, ptr %i.cr, align 8, !tbaa !117  ; 2 uses
-  %17 = and i64 %15, %16                          ; 3 uses
-  store i64 %17, ptr %i.cp, align 8, !tbaa !115
-  %18 = add i32 %.04.i, -2                        ; 2 uses
-  %19 = load ptr, ptr %i.co, align 8, !tbaa !119  ; 2 uses
-  %20 = sub i64 %17, %i.cq
-  %21 = and i64 %20, %16
-  %22 = getelementptr inbounds nuw i8, ptr %19, i64 %21
-  %23 = load i8, ptr %22, align 1, !tbaa !35
-  %24 = getelementptr inbounds nuw i8, ptr %19, i64 %17
-  store i8 %23, ptr %24, align 1, !tbaa !35
-  %25 = load i64, ptr %i.cp, align 8, !tbaa !115
-  %26 = add i64 %25, 1
-  %27 = load i64, ptr %i.cr, align 8, !tbaa !117  ; 2 uses
-  %28 = and i64 %26, %27                          ; 2 uses
-  store i64 %28, ptr %i.cp, align 8, !tbaa !115
-  %.not.i74.1 = icmp eq i32 %18, 0
-  br i1 %.not.i74.1, label %_ZN6Unpack12CopyString15Ejj.exit, label %5, !llvm.loop !3
+  br label %_ZN6Unpack12CopyString15Ejj.exit
 
 bb.u:                                             ; preds = %bb.o
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 22712 ; 2 uses
@@ -417,7 +411,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   store i16 %i.fh, ptr %i.ff, align 2, !tbaa !63
   br label %_ZN6Unpack12CopyString15Ejj.exit
 
-_ZN6Unpack12CopyString15Ejj.exit:                 ; preds = %5, %._crit_edge, %bb.r
+_ZN6Unpack12CopyString15Ejj.exit:                 ; preds = %_ZN6Unpack9DecodeNumEjjPjS0_.exit72, %.prol.loopexit.unr-lcssa, %._crit_edge, %bb.r
   ret void
 }
 

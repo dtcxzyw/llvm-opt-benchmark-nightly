@@ -205,18 +205,16 @@ bb.bj:                                            ; preds = %_ZN4llvm13IRBuilder
   %i.acs = icmp samesign ugt i16 %i.abu, 128      ; 2 uses
   %i.act = shl nuw nsw i16 %i.abu, 2
   %.idx.i410 = zext nneg i16 %i.act to i64        ; 4 uses
-  %i.acu = add nsw i64 %.idx.i410, -4             ; 2 uses
+  %i.acu = add nsw i64 %.idx.i410, -4
   %i.acv = lshr exact i64 %i.acu, 2
   %i.acw = add nuw nsw i64 %i.acv, 1              ; 2 uses
-  %min.iters.check1390 = icmp ult i64 %i.acu, 28
   %n.vec1392 = and i64 %i.acw, 9223372036854775800 ; 4 uses
   %i.acx = trunc i64 %n.vec1392 to i32
   %i.acy = shl i64 %n.vec1392, 2
   %cmp.n1404 = icmp eq i64 %i.acw, %n.vec1392
-  %i.acz = add nsw i64 %.idx.i410, -4             ; 2 uses
+  %i.acz = add nsw i64 %.idx.i410, -4
   %i.ada = lshr exact i64 %i.acz, 2
   %i.adb = add nuw nsw i64 %i.ada, 1              ; 2 uses
-  %min.iters.check1372 = icmp ult i64 %i.acz, 28
   %n.vec1374 = and i64 %i.adb, 9223372036854775800 ; 4 uses
   %i.adc = trunc i64 %n.vec1374 to i32
   %i.add = shl i64 %n.vec1374, 2
@@ -225,7 +223,7 @@ bb.bj:                                            ; preds = %_ZN4llvm13IRBuilder
 
 bb.bk:                                            ; preds = %.lr.ph.i, %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit.i
   %.0154.i = phi i32 [ 0, %.lr.ph.i ], [ %i.btn, %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit.i ] ; 2 uses
-  %i.ade = mul i32 %.0154.i, %.zext.i             ; 6 uses
+  %i.ade = mul i32 %.0154.i, %.zext.i             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #20
   store ptr %i.fp, ptr %50, align 8, !tbaa !40
   store i32 0, ptr %i.fq, align 8, !tbaa !198
@@ -238,7 +236,7 @@ _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424: ; preds = %bb.bk
   %.pre13.i.i.i.i426 = zext i32 %.pre.i.i.i.i425 to i64 ; 2 uses
   %.not11.i.i.i.i427 = icmp samesign eq i64 %.sroa.0.0.insert.ext.i.i.i, %.pre13.i.i.i.i426
   %.pre.pre.i428 = load ptr, ptr %50, align 8, !tbaa !40 ; 2 uses
-  br i1 %.not11.i.i.i.i427, label %.lr.ph.i.preheader.i408, label %.lr.ph.preheader.i.i.i.i406
+  br i1 %.not11.i.i.i.i427, label %vector.ph1391, label %.lr.ph.preheader.i.i.i.i406
 
 .lr.ph.preheader.i.i.i.i406:                      ; preds = %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424, %bb.bk
   %i.adf = phi ptr [ %i.fp, %bb.bk ], [ %.pre.pre.i428, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424 ] ; 2 uses
@@ -247,15 +245,12 @@ _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424: ; preds = %bb.bk
   %i.adh = sub nsw i64 %.sroa.0.0.insert.ext.i.i.i, %.pre-phi.i.i3.i.i407
   %i.adi = shl nsw i64 %i.adh, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.adg, i8 0, i64 %i.adi, i1 false), !tbaa !219
-  br label %.lr.ph.i.preheader.i408
+  br label %vector.ph1391
 
-.lr.ph.i.preheader.i408:                          ; preds = %.lr.ph.preheader.i.i.i.i406, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424
-  %.pre.i409 = phi ptr [ %i.adf, %.lr.ph.preheader.i.i.i.i406 ], [ %.pre.pre.i428, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424 ] ; 6 uses
+vector.ph1391:                                    ; preds = %.lr.ph.preheader.i.i.i.i406, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424
+  %.pre.i409 = phi ptr [ %i.adf, %.lr.ph.preheader.i.i.i.i406 ], [ %.pre.pre.i428, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i424 ] ; 5 uses
   store i32 %.zext.i, ptr %i.fq, align 8, !tbaa !198
   %238 = getelementptr inbounds nuw i8, ptr %.pre.i409, i64 %.idx.i410
-  br i1 %min.iters.check1390, label %.lr.ph.i.i411.preheader, label %vector.ph1391
-
-vector.ph1391:                                    ; preds = %.lr.ph.i.preheader.i408
   %i.adj = add i32 %i.ade, %i.acx
   %i.adk = getelementptr i8, ptr %.pre.i409, i64 %i.acy
   %broadcast.splatinsert1393 = insertelement <4 x i32> poison, i32 %i.ade, i64 0
@@ -278,16 +273,11 @@ vector.body1396:                                  ; preds = %vector.body1396, %v
   br i1 %i.adn, label %middle.block1403, label %vector.body1396, !llvm.loop !626
 
 middle.block1403:                                 ; preds = %vector.body1396
-  br i1 %cmp.n1404, label %_ZSt4iotaIPiiEvT_S1_T0_.exit.i417, label %.lr.ph.i.i411.preheader
+  br i1 %cmp.n1404, label %_ZSt4iotaIPiiEvT_S1_T0_.exit.i417, label %.lr.ph.i.i411
 
-.lr.ph.i.i411.preheader:                          ; preds = %.lr.ph.i.preheader.i408, %middle.block1403
-  %.08.i.i412.ph = phi i32 [ %i.ade, %.lr.ph.i.preheader.i408 ], [ %i.adj, %middle.block1403 ]
-  %.057.i.i413.ph = phi ptr [ %.pre.i409, %.lr.ph.i.preheader.i408 ], [ %i.adk, %middle.block1403 ]
-  br label %.lr.ph.i.i411
-
-.lr.ph.i.i411:                                    ; preds = %.lr.ph.i.i411.preheader, %.lr.ph.i.i411
-  %.08.i.i412 = phi i32 [ %i.ado, %.lr.ph.i.i411 ], [ %.08.i.i412.ph, %.lr.ph.i.i411.preheader ] ; 2 uses
-  %.057.i.i413 = phi ptr [ %i.adp, %.lr.ph.i.i411 ], [ %.057.i.i413.ph, %.lr.ph.i.i411.preheader ] ; 2 uses
+.lr.ph.i.i411:                                    ; preds = %middle.block1403, %.lr.ph.i.i411
+  %.08.i.i412 = phi i32 [ %i.ado, %.lr.ph.i.i411 ], [ %i.adj, %middle.block1403 ] ; 2 uses
+  %.057.i.i413 = phi ptr [ %i.adp, %.lr.ph.i.i411 ], [ %i.adk, %middle.block1403 ] ; 2 uses
   store i32 %.08.i.i412, ptr %.057.i.i413, align 4, !tbaa !219
   %i.ado = add nsw i32 %.08.i.i412, 1
   %i.adp = getelementptr inbounds nuw i8, ptr %.057.i.i413, i64 4 ; 2 uses
@@ -353,7 +343,7 @@ _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400: ; preds = %bb.bn
   %.pre13.i.i.i.i402 = zext i32 %.pre.i.i.i.i401 to i64 ; 2 uses
   %.not11.i.i.i.i403 = icmp samesign eq i64 %.sroa.0.0.insert.ext.i.i.i, %.pre13.i.i.i.i402
   %.pre.pre.i404 = load ptr, ptr %54, align 8, !tbaa !40 ; 2 uses
-  br i1 %.not11.i.i.i.i403, label %.lr.ph.i.preheader.i384, label %.lr.ph.preheader.i.i.i.i382
+  br i1 %.not11.i.i.i.i403, label %vector.ph1373, label %.lr.ph.preheader.i.i.i.i382
 
 .lr.ph.preheader.i.i.i.i382:                      ; preds = %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400, %bb.bn
   %i.aed = phi ptr [ %i.fv, %bb.bn ], [ %.pre.pre.i404, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400 ] ; 2 uses
@@ -362,15 +352,12 @@ _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400: ; preds = %bb.bn
   %i.aef = sub nsw i64 %.sroa.0.0.insert.ext.i.i.i, %.pre-phi.i.i3.i.i383
   %i.aeg = shl nsw i64 %i.aef, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.aee, i8 0, i64 %i.aeg, i1 false), !tbaa !219
-  br label %.lr.ph.i.preheader.i384
+  br label %vector.ph1373
 
-.lr.ph.i.preheader.i384:                          ; preds = %.lr.ph.preheader.i.i.i.i382, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400
-  %.pre.i385 = phi ptr [ %i.aed, %.lr.ph.preheader.i.i.i.i382 ], [ %.pre.pre.i404, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400 ] ; 6 uses
+vector.ph1373:                                    ; preds = %.lr.ph.preheader.i.i.i.i382, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400
+  %.pre.i385 = phi ptr [ %i.aed, %.lr.ph.preheader.i.i.i.i382 ], [ %.pre.pre.i404, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.i.i400 ] ; 5 uses
   store i32 %.zext.i, ptr %i.fw, align 8, !tbaa !198
   %239 = getelementptr inbounds nuw i8, ptr %.pre.i385, i64 %.idx.i410
-  br i1 %min.iters.check1372, label %.lr.ph.i.i387.preheader, label %vector.ph1373
-
-vector.ph1373:                                    ; preds = %.lr.ph.i.preheader.i384
   %i.aeh = add i32 %i.ade, %i.adc
   %i.aei = getelementptr i8, ptr %.pre.i385, i64 %i.add
   %broadcast.splatinsert1375 = insertelement <4 x i32> poison, i32 %i.ade, i64 0
@@ -393,16 +380,11 @@ vector.body1378:                                  ; preds = %vector.body1378, %v
   br i1 %i.ael, label %middle.block1385, label %vector.body1378, !llvm.loop !630
 
 middle.block1385:                                 ; preds = %vector.body1378
-  br i1 %cmp.n1386, label %_ZSt4iotaIPiiEvT_S1_T0_.exit.i393, label %.lr.ph.i.i387.preheader
+  br i1 %cmp.n1386, label %_ZSt4iotaIPiiEvT_S1_T0_.exit.i393, label %.lr.ph.i.i387
 
-.lr.ph.i.i387.preheader:                          ; preds = %.lr.ph.i.preheader.i384, %middle.block1385
-  %.08.i.i388.ph = phi i32 [ %i.ade, %.lr.ph.i.preheader.i384 ], [ %i.aeh, %middle.block1385 ]
-  %.057.i.i389.ph = phi ptr [ %.pre.i385, %.lr.ph.i.preheader.i384 ], [ %i.aei, %middle.block1385 ]
-  br label %.lr.ph.i.i387
-
-.lr.ph.i.i387:                                    ; preds = %.lr.ph.i.i387.preheader, %.lr.ph.i.i387
-  %.08.i.i388 = phi i32 [ %i.aem, %.lr.ph.i.i387 ], [ %.08.i.i388.ph, %.lr.ph.i.i387.preheader ] ; 2 uses
-  %.057.i.i389 = phi ptr [ %i.aen, %.lr.ph.i.i387 ], [ %.057.i.i389.ph, %.lr.ph.i.i387.preheader ] ; 2 uses
+.lr.ph.i.i387:                                    ; preds = %middle.block1385, %.lr.ph.i.i387
+  %.08.i.i388 = phi i32 [ %i.aem, %.lr.ph.i.i387 ], [ %i.aeh, %middle.block1385 ] ; 2 uses
+  %.057.i.i389 = phi ptr [ %i.aen, %.lr.ph.i.i387 ], [ %i.aei, %middle.block1385 ] ; 2 uses
   store i32 %.08.i.i388, ptr %.057.i.i389, align 4, !tbaa !219
   %i.aem = add nsw i32 %.08.i.i388, 1
   %i.aen = getelementptr inbounds nuw i8, ptr %.057.i.i389, i64 4 ; 2 uses
@@ -805,7 +787,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit.i: ; preds
   %i.btk = getelementptr inbounds i8, ptr %i.btj, i64 -8
   %i.btl = load ptr, ptr %i.btk, align 8, !tbaa !377
   %i.btm = icmp eq ptr %i.btl, null
-  %i.btn = add nuw i32 %.0154.i, 1                ; 2 uses
+  %i.btn = add nuw nsw i32 %.0154.i, 1            ; 2 uses
   %.not73.i = icmp eq i32 %i.btn, %i.aby
   %or.cond257.i = select i1 %i.btm, i1 true, i1 %.not73.i
   br i1 %or.cond257.i, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit._crit_edge.i, label %bb.bk, !llvm.loop !694
