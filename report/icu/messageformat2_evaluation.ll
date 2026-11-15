@@ -204,14 +204,14 @@ bb.i:                                             ; preds = %_ZN6icu_788message2
 
 bb.j:                                             ; preds = %.lr.ph45, %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit.thread
   %indvars.iv54 = phi i64 [ 0, %.lr.ph45 ], [ %indvars.iv.next55, %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit.thread ] ; 3 uses
+  %5 = load ptr, ptr %i.m, align 8, !tbaa !40     ; 2 uses
+  %6 = getelementptr inbounds nuw [272 x i8], ptr %5, i64 %indvars.iv54 ; 4 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.ab = load i32, ptr %i.n, align 8, !tbaa !45
   %i.ac = icmp sgt i32 %i.ab, 0
   br i1 %i.ac, label %.lr.ph.i, label %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit
 
 .lr.ph.i:                                         ; preds = %bb.j
-  %5 = load ptr, ptr %i.m, align 8, !tbaa !40
-  %6 = getelementptr inbounds nuw [272 x i8], ptr %5, i64 %indvars.iv54 ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 20
   %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 18
   %i.af = getelementptr inbounds nuw i8, ptr %6, i64 32
@@ -270,10 +270,14 @@ _ZNK6icu_7813UnicodeStringeqERKS0_.exit.thread.i: ; preds = %.noexc25, %bb.l, %.
   %i.bf = add nuw nsw i32 %.0711.i, 1             ; 2 uses
   %i.bg = load i32, ptr %i.n, align 8, !tbaa !45
   %i.bh = icmp slt i32 %i.bf, %i.bg
-  br i1 %i.bh, label %bb.k, label %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit, !llvm.loop !92
+  br i1 %i.bh, label %bb.k, label %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit.loopexit, !llvm.loop !92
 
-_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit: ; preds = %_ZNK6icu_7813UnicodeStringeqERKS0_.exit.thread.i, %bb.j
-  %8 = load ptr, ptr %i.m, align 8, !tbaa !40
+_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit.loopexit: ; preds = %_ZNK6icu_7813UnicodeStringeqERKS0_.exit.thread.i
+  %.pre = load ptr, ptr %i.m, align 8, !tbaa !40
+  br label %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit
+
+_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit: ; preds = %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit.loopexit, %bb.j
+  %8 = phi ptr [ %.pre, %_ZN6icu_788message2L14containsOptionERKNS_7UVectorERKNS0_22ResolvedFunctionOptionE.exit.loopexit ], [ %5, %bb.j ]
   %i.bi = getelementptr inbounds nuw [272 x i8], ptr %8, i64 %indvars.iv54
   %i.bj = load i32, ptr %3, align 4, !tbaa !42
   %i.bk = icmp slt i32 %i.bj, 1
