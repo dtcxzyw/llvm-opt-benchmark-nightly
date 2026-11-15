@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNK4llvm3MVT20getV
   br label %bb.h
 
 .split:                                           ; preds = %._crit_edge
-  %i.cc = add i32 %.0161219, 1                    ; 2 uses
+  %i.cc = add nuw nsw i32 %.0161219, 1            ; 2 uses
   %.not = icmp eq i32 %i.cc, %i.bi
   br i1 %.not, label %.split221, label %.preheader215, !llvm.loop !662
 
@@ -608,7 +608,7 @@ bb.t:                                             ; preds = %_ZN4llvm23SmallVect
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_8ConstantELb1EE9push_backES2_.exit.7
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_8ConstantELb1EE9push_backES2_.exit.7: ; preds = %bb.t, %bb.s
-  %i.ei = add nuw i32 %.0252, 1                   ; 2 uses
+  %i.ei = add nuw nsw i32 %.0252, 1               ; 2 uses
   %.not = icmp eq i32 %i.ei, %i.ah
   br i1 %.not, label %bb.b, label %.preheader, !llvm.loop !665
 
@@ -658,7 +658,7 @@ _ZN4llvm11SmallVectorIPNS_8ConstantELj128EED2Ev.exit: ; preds = %_ZN4llvm11Small
 
 bb.x:                                             ; preds = %_ZN4llvm12SelectionDAG9getSelectERKNS_5SDLocENS_3EVTENS_7SDValueES5_S5_NS_11SDNodeFlagsE.exit, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit
   %.0194253 = phi i32 [ 0, %_ZN4llvm12SelectionDAG9getSelectERKNS_5SDLocENS_3EVTENS_7SDValueES5_S5_NS_11SDNodeFlagsE.exit ], [ %i.ff, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit ] ; 3 uses
-  %i.eu = shl i32 %.0194253, 3
+  %i.eu = shl nuw nsw i32 %.0194253, 3
   %i.ev = and i32 %i.eu, %i.bx
   %i.ew = lshr i32 %.0194253, %i.by
   %i.ex = add nuw nsw i32 %i.ev, %i.ew            ; 2 uses

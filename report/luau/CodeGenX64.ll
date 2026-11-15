@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bc = trunc nuw i64 %i.ax to i8
+  %i.bc = trunc nuw nsw i64 %i.ax to i8
   store i8 %i.bc, ptr %i.ba, align 1, !tbaa !63, !noalias !56
   %i.bd = load ptr, ptr %i.ak, align 8, !tbaa !61, !noalias !56
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 1
@@ -237,7 +237,7 @@ _ZNKSt6vectorIN4Luau7CodeGen3X6411RegisterX64ESaIS3_EE12_M_check_lenEmPKc.exit.i
 
 .noexc171.i:                                      ; preds = %_ZNKSt6vectorIN4Luau7CodeGen3X6411RegisterX64ESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 %i.bi ; 2 uses
-  %i.bq = trunc nuw i64 %i.ax to i8
+  %i.bq = trunc nuw nsw i64 %i.ax to i8
   store i8 %i.bq, ptr %i.bp, align 1, !tbaa !63, !noalias !56
   %i.br = icmp sgt i64 %i.bi, 0
   br i1 %i.br, label %bb.m, label %_ZNSt6vectorIN4Luau7CodeGen3X6411RegisterX64ESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
@@ -430,7 +430,7 @@ bb.aj:                                            ; preds = %bb.ai
 .preheader.i:                                     ; preds = %bb.ak, %.preheader.preheader.i
   %indvars.iv467.i = phi i64 [ 6, %.preheader.preheader.i ], [ %indvars.iv.next468.i, %bb.ak ] ; 2 uses
   %.0161462.i = phi i32 [ 0, %.preheader.preheader.i ], [ %i.df, %bb.ak ]
-  %i.dc = shl i64 %indvars.iv467.i, 19
+  %i.dc = shl nuw nsw i64 %indvars.iv467.i, 19
   %i.dd = and i32 %.0161462.i, 255                ; 2 uses
   %i.de = add nuw nsw i32 %i.dd, %i.ac
   %.sroa.21.0.insert.ext.i189.i = zext nneg i32 %i.de to i64
