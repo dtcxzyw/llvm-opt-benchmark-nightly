@@ -204,16 +204,13 @@ _ZN10V3MutexImpISt5mutexE6unlockEv.exit:          ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN12V3ThreadPool4waitEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(224) %0) #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.b = load atomic i64, ptr %i.a acquire, align 8
   %.not8 = icmp eq i64 %i.b, 0
-  br i1 %.not8, label %.critedge, label %.lr.ph
+  br i1 %.not8, label %.critedge, label %bb.b
 
-.lr.ph:                                           ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %bb.c
+bb.b:                                             ; preds = %bb.a, %bb.c
   %i.c = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %.critedge, label %bb.c
@@ -225,8 +222,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %.critedge, label %bb.b, !llvm.loop !3
 
 .critedge:                                        ; preds = %bb.b, %bb.c, %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.g = load atomic i8, ptr %2 seq_cst, align 8, !range !52, !noundef !53
+  %i.g = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.d, label %.loopexit
 
@@ -410,8 +406,8 @@ bb.a:
   %2 = alloca %"class.std::function", align 16    ; 13 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -452,7 +448,7 @@ bb.d:                                             ; preds = %bb.c
           to label %_ZN14V3LockGuardImpI10V3MutexImpISt5mutexEEC2ERS2_.exit unwind label %.loopexit.split-lp24.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZN14V3LockGuardImpI10V3MutexImpISt5mutexEEC2ERS2_.exit: ; preds = %_ZN10V3MutexImpISt5mutexE8try_lockEv.exit5.i.i, %.preheader.i.i, %_ZN10V3MutexImpISt5mutexE8try_lockEv.exit.i.i, %bb.b, %bb.d
-  %i.p = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.c, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
+  %i.p = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.d, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 48
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.s = load ptr, ptr %i.q, align 8, !tbaa !74
@@ -461,7 +457,7 @@ _ZN14V3LockGuardImpI10V3MutexImpISt5mutexEEC2ERS2_.exit: ; preds = %_ZN10V3Mutex
   br i1 %i.u, label %"_ZZN12V3ThreadPool13workerJobLoopEvENK3$_0clEv.exit.i", label %"_ZNSt3_V222condition_variable_any4waitI10V3MutexImpISt5mutexEZN12V3ThreadPool13workerJobLoopEvE3$_0EEvRT_T0_.exit"
 
 "_ZZN12V3ThreadPool13workerJobLoopEvENK3$_0clEv.exit.i": ; preds = %_ZN14V3LockGuardImpI10V3MutexImpISt5mutexEEC2ERS2_.exit, %.noexc11
-  %i.v = load atomic i8, ptr %i.d seq_cst, align 8, !range !52, !noundef !53
+  %i.v = load atomic i8, ptr %i.c seq_cst, align 8, !range !52, !noundef !53
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %"_ZNSt3_V222condition_variable_any4waitI10V3MutexImpISt5mutexEZN12V3ThreadPool13workerJobLoopEvE3$_0EEvRT_T0_.exit", label %bb.e
 
@@ -470,7 +466,7 @@ bb.e:                                             ; preds = %"_ZZN12V3ThreadPool
           to label %.noexc11 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc11:                                         ; preds = %bb.e
-  %i.x = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.c, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
+  %i.x = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.d, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.aa = load ptr, ptr %i.y, align 8, !tbaa !74
@@ -479,7 +475,7 @@ bb.e:                                             ; preds = %"_ZZN12V3ThreadPool
   br i1 %i.ac, label %"_ZZN12V3ThreadPool13workerJobLoopEvENK3$_0clEv.exit.i", label %"_ZNSt3_V222condition_variable_any4waitI10V3MutexImpISt5mutexEZN12V3ThreadPool13workerJobLoopEvE3$_0EEvRT_T0_.exit", !llvm.loop !197
 
 "_ZNSt3_V222condition_variable_any4waitI10V3MutexImpISt5mutexEZN12V3ThreadPool13workerJobLoopEvE3$_0EEvRT_T0_.exit": ; preds = %.noexc11, %"_ZZN12V3ThreadPool13workerJobLoopEvENK3$_0clEv.exit.i", %_ZN14V3LockGuardImpI10V3MutexImpISt5mutexEEC2ERS2_.exit
-  %i.ad = load atomic i8, ptr %i.d seq_cst, align 8, !range !52, !noundef !53
+  %i.ad = load atomic i8, ptr %i.c seq_cst, align 8, !range !52, !noundef !53
   %i.ae = trunc nuw i8 %i.ad to i1
   br i1 %i.ae, label %bb.w, label %bb.g
 
@@ -495,7 +491,7 @@ bb.f:                                             ; preds = %.loopexit.split-lp.
   br label %_ZN14V3LockGuardImpI10V3MutexImpISt5mutexEED2Ev.exit
 
 bb.g:                                             ; preds = %"_ZNSt3_V222condition_variable_any4waitI10V3MutexImpISt5mutexEZN12V3ThreadPool13workerJobLoopEvE3$_0EEvRT_T0_.exit"
-  %i.ai = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.c, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
+  %i.ai = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.d, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %i.al = load ptr, ptr %i.aj, align 8, !tbaa !74
@@ -523,7 +519,7 @@ bb.k:                                             ; preds = %_ZStlsISt11char_tra
   unreachable
 
 bb.l:                                             ; preds = %bb.g
-  %i.ar = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.c, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
+  %i.ar = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.d, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 48
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   %i.au = load ptr, ptr %i.as, align 8, !tbaa !74
@@ -532,7 +528,7 @@ bb.l:                                             ; preds = %bb.g
   br i1 %i.aw, label %bb.w, label %bb.m, !llvm.loop !198
 
 bb.m:                                             ; preds = %bb.l
-  %i.ax = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.c, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null)
+  %i.ax = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.d, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null)
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !74, !noalias !201 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
@@ -572,7 +568,7 @@ bb.p:                                             ; preds = %bb.o
 
 _ZNSt8functionIFvvEEaSEOS1_.exit:                 ; preds = %_ZNSt8functionIFvvEEC2EOS1_.exit.i, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
-  %i.bi = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.c, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 4 uses
+  %i.bi = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull %i.d, ptr nonnull @.str, ptr nonnull @.str.1, i32 37, ptr null) ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 16 ; 3 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !75 ; 7 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 32 ; 2 uses
@@ -836,7 +832,7 @@ bb.e:                                             ; preds = %bb.a
   store ptr %i.e, ptr %3, align 8, !tbaa !85
   store ptr @"_ZNSt17_Function_handlerIFvvESt5_BindIFZN12V3ThreadPool8selfTestEvE3$_0iEEE9_M_invokeERKSt9_Any_data", ptr %i.k, align 8, !tbaa !66
   store ptr @"_ZNSt17_Function_handlerIFvvESt5_BindIFZN12V3ThreadPool8selfTestEvE3$_0iEEE10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %i.d, align 8, !tbaa !64
-  %i.m = load ptr, ptr %2, align 8, !tbaa !87     ; 12 uses
+  %i.m = load ptr, ptr %2, align 8, !tbaa !87     ; 11 uses
   invoke void @_ZN12V3ThreadPool7enqueueEOSt8functionIFvvEE(ptr noundef nonnull align 8 dereferenceable(224) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit unwind label %bb.bf
 
@@ -1185,16 +1181,13 @@ bb.aw:                                            ; preds = %bb.av
 
 _ZNSt14_Function_baseD2Ev.exit99:                 ; preds = %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit97, %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
+  %16 = getelementptr inbounds nuw i8, ptr %i.m, i64 168 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.m, i64 176 ; 2 uses
   %i.cs = load atomic i64, ptr %i.cr acquire, align 8
   %.not8.i.i = icmp eq i64 %i.cs, 0
-  br i1 %.not8.i.i, label %.critedge.i.i, label %.lr.ph.i.i
+  br i1 %.not8.i.i, label %.critedge.i.i, label %bb.ax
 
-.lr.ph.i.i:                                       ; preds = %_ZNSt14_Function_baseD2Ev.exit99
-  %16 = getelementptr inbounds nuw i8, ptr %i.m, i64 168
-  br label %bb.ax
-
-bb.ax:                                            ; preds = %bb.ay, %.lr.ph.i.i
+bb.ax:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit99, %bb.ay
   %i.ct = load atomic i8, ptr %16 seq_cst, align 8, !range !52, !noundef !53
   %i.cu = trunc nuw i8 %i.ct to i1
   br i1 %i.cu, label %.critedge.i.i, label %bb.ay
@@ -1206,8 +1199,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %.not.i.i100, label %.critedge.i.i, label %bb.ax, !llvm.loop !3
 
 .critedge.i.i:                                    ; preds = %bb.ay, %bb.ax, %_ZNSt14_Function_baseD2Ev.exit99
-  %17 = getelementptr inbounds nuw i8, ptr %i.m, i64 168
-  %i.cx = load atomic i8, ptr %17 seq_cst, align 8, !range !52, !noundef !53
+  %i.cx = load atomic i8, ptr %16 seq_cst, align 8, !range !52, !noundef !53
   %i.cy = trunc nuw i8 %i.cx to i1
   br i1 %i.cy, label %bb.az, label %_ZN13V3ThreadScope4waitEv.exit
 
@@ -1462,7 +1454,7 @@ bb.ce:                                            ; preds = %bb.ca
   store ptr %i.et, ptr %10, align 8, !tbaa !91
   store ptr @"_ZNSt17_Function_handlerIFvvESt5_BindIFZN12V3ThreadPool8selfTestEvE3$_2iEEE9_M_invokeERKSt9_Any_data", ptr %i.ez, align 8, !tbaa !66
   store ptr @"_ZNSt17_Function_handlerIFvvESt5_BindIFZN12V3ThreadPool8selfTestEvE3$_2iEEE10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %i.es, align 8, !tbaa !64
-  %i.fb = load ptr, ptr %2, align 8, !tbaa !87    ; 7 uses
+  %i.fb = load ptr, ptr %2, align 8, !tbaa !87    ; 6 uses
   invoke void @_ZN12V3ThreadPool7enqueueEOSt8functionIFvvEE(ptr noundef nonnull align 8 dereferenceable(224) %i.fb, ptr noundef nonnull align 8 dereferenceable(32) %10)
           to label %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit121 unwind label %bb.ct
 
@@ -1541,17 +1533,14 @@ bb.cn:                                            ; preds = %bb.cm
 
 _ZNSt14_Function_baseD2Ev.exit132:                ; preds = %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit130, %bb.cm
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #26
+  %17 = getelementptr inbounds nuw i8, ptr %i.fb, i64 168 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fb, i64 176 ; 2 uses
   %i.fu = load atomic i64, ptr %i.ft acquire, align 8
   %.not8.i.i.i = icmp eq i64 %i.fu, 0
-  br i1 %.not8.i.i.i, label %.critedge.i.i.i, label %.lr.ph.i.i.i
+  br i1 %.not8.i.i.i, label %.critedge.i.i.i, label %bb.co
 
-.lr.ph.i.i.i:                                     ; preds = %_ZNSt14_Function_baseD2Ev.exit132
-  %18 = getelementptr inbounds nuw i8, ptr %i.fb, i64 168
-  br label %bb.co
-
-bb.co:                                            ; preds = %bb.cp, %.lr.ph.i.i.i
-  %i.fv = load atomic i8, ptr %18 seq_cst, align 8, !range !52, !noundef !53
+bb.co:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit132, %bb.cp
+  %i.fv = load atomic i8, ptr %17 seq_cst, align 8, !range !52, !noundef !53
   %i.fw = trunc nuw i8 %i.fv to i1
   br i1 %i.fw, label %.critedge.i.i.i, label %bb.cp
 
@@ -1562,8 +1551,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %.not.i.i.i, label %.critedge.i.i.i, label %bb.co, !llvm.loop !3
 
 .critedge.i.i.i:                                  ; preds = %bb.cp, %bb.co, %_ZNSt14_Function_baseD2Ev.exit132
-  %19 = getelementptr inbounds nuw i8, ptr %i.fb, i64 168
-  %i.fz = load atomic i8, ptr %19 seq_cst, align 8, !range !52, !noundef !53
+  %i.fz = load atomic i8, ptr %17 seq_cst, align 8, !range !52, !noundef !53
   %i.ga = trunc nuw i8 %i.fz to i1
   br i1 %i.ga, label %bb.cq, label %_ZN13V3ThreadScopeD2Ev.exit
 
@@ -1694,7 +1682,7 @@ bb.dd:                                            ; preds = %bb.cz
   store ptr %i.gy, ptr %13, align 8, !tbaa !85
   store ptr @"_ZNSt17_Function_handlerIFvvESt5_BindIFZN12V3ThreadPool8selfTestEvE3$_0iEEE9_M_invokeERKSt9_Any_data", ptr %i.he, align 8, !tbaa !66
   store ptr @"_ZNSt17_Function_handlerIFvvESt5_BindIFZN12V3ThreadPool8selfTestEvE3$_0iEEE10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %i.gx, align 8, !tbaa !64
-  %i.hg = load ptr, ptr %12, align 8, !tbaa !87   ; 6 uses
+  %i.hg = load ptr, ptr %12, align 8, !tbaa !87   ; 5 uses
   invoke void @_ZN12V3ThreadPool7enqueueEOSt8functionIFvvEE(ptr noundef nonnull align 8 dereferenceable(224) %i.hg, ptr noundef nonnull align 8 dereferenceable(32) %13)
           to label %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit143 unwind label %bb.dl
 
@@ -1716,17 +1704,14 @@ bb.df:                                            ; preds = %bb.de
 
 _ZNSt14_Function_baseD2Ev.exit145:                ; preds = %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit143, %bb.de
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #26
+  %18 = getelementptr inbounds nuw i8, ptr %i.hg, i64 168 ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hg, i64 176 ; 2 uses
   %i.hm = load atomic i64, ptr %i.hl acquire, align 8
   %.not8.i.i.i146 = icmp eq i64 %i.hm, 0
-  br i1 %.not8.i.i.i146, label %.critedge.i.i.i149, label %.lr.ph.i.i.i147
+  br i1 %.not8.i.i.i146, label %.critedge.i.i.i149, label %bb.dg
 
-.lr.ph.i.i.i147:                                  ; preds = %_ZNSt14_Function_baseD2Ev.exit145
-  %20 = getelementptr inbounds nuw i8, ptr %i.hg, i64 168
-  br label %bb.dg
-
-bb.dg:                                            ; preds = %bb.dh, %.lr.ph.i.i.i147
-  %i.hn = load atomic i8, ptr %20 seq_cst, align 8, !range !52, !noundef !53
+bb.dg:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit145, %bb.dh
+  %i.hn = load atomic i8, ptr %18 seq_cst, align 8, !range !52, !noundef !53
   %i.ho = trunc nuw i8 %i.hn to i1
   br i1 %i.ho, label %.critedge.i.i.i149, label %bb.dh
 
@@ -1737,8 +1722,7 @@ bb.dh:                                            ; preds = %bb.dg
   br i1 %.not.i.i.i148, label %.critedge.i.i.i149, label %bb.dg, !llvm.loop !3
 
 .critedge.i.i.i149:                               ; preds = %bb.dh, %bb.dg, %_ZNSt14_Function_baseD2Ev.exit145
-  %21 = getelementptr inbounds nuw i8, ptr %i.hg, i64 168
-  %i.hr = load atomic i8, ptr %21 seq_cst, align 8, !range !52, !noundef !53
+  %i.hr = load atomic i8, ptr %18 seq_cst, align 8, !range !52, !noundef !53
   %i.hs = trunc nuw i8 %i.hr to i1
   br i1 %i.hs, label %bb.di, label %_ZN13V3ThreadScopeD2Ev.exit155
 
@@ -1820,7 +1804,7 @@ bb.do:                                            ; preds = %_ZN13V3ThreadScopeD
   store i64 %i.ik, ptr %15, align 8, !tbaa !83
   store ptr @"_ZNSt17_Function_handlerIFvvEZN12V3ThreadPool8selfTestEvE3$_3E9_M_invokeERKSt9_Any_data", ptr %i.im, align 8, !tbaa !66
   store ptr @"_ZNSt17_Function_handlerIFvvEZN12V3ThreadPool8selfTestEvE3$_3E10_M_managerERSt9_Any_dataRKS4_St18_Manager_operation", ptr %i.il, align 8, !tbaa !64
-  %i.io = load ptr, ptr %14, align 8, !tbaa !87   ; 6 uses
+  %i.io = load ptr, ptr %14, align 8, !tbaa !87   ; 5 uses
   invoke void @_ZN12V3ThreadPool7enqueueEOSt8functionIFvvEE(ptr noundef nonnull align 8 dereferenceable(224) %i.io, ptr noundef nonnull align 8 dereferenceable(32) %15)
           to label %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit159 unwind label %bb.dz
 
@@ -1842,17 +1826,14 @@ bb.dq:                                            ; preds = %bb.dp
 
 _ZNSt14_Function_baseD2Ev.exit161:                ; preds = %_ZN13V3ThreadScope7enqueueEOSt8functionIFvvEE.exit159, %bb.dp
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #26
+  %19 = getelementptr inbounds nuw i8, ptr %i.io, i64 168 ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %i.io, i64 176 ; 2 uses
   %i.iu = load atomic i64, ptr %i.it acquire, align 8
   %.not8.i.i162 = icmp eq i64 %i.iu, 0
-  br i1 %.not8.i.i162, label %.critedge.i.i165, label %.lr.ph.i.i163
+  br i1 %.not8.i.i162, label %.critedge.i.i165, label %bb.dr
 
-.lr.ph.i.i163:                                    ; preds = %_ZNSt14_Function_baseD2Ev.exit161
-  %22 = getelementptr inbounds nuw i8, ptr %i.io, i64 168
-  br label %bb.dr
-
-bb.dr:                                            ; preds = %bb.ds, %.lr.ph.i.i163
-  %i.iv = load atomic i8, ptr %22 seq_cst, align 8, !range !52, !noundef !53
+bb.dr:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit161, %bb.ds
+  %i.iv = load atomic i8, ptr %19 seq_cst, align 8, !range !52, !noundef !53
   %i.iw = trunc nuw i8 %i.iv to i1
   br i1 %i.iw, label %.critedge.i.i165, label %bb.ds
 
@@ -1863,8 +1844,7 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %.not.i.i164, label %.critedge.i.i165, label %bb.dr, !llvm.loop !3
 
 .critedge.i.i165:                                 ; preds = %bb.ds, %bb.dr, %_ZNSt14_Function_baseD2Ev.exit161
-  %23 = getelementptr inbounds nuw i8, ptr %i.io, i64 168
-  %i.iz = load atomic i8, ptr %23 seq_cst, align 8, !range !52, !noundef !53
+  %i.iz = load atomic i8, ptr %19 seq_cst, align 8, !range !52, !noundef !53
   %i.ja = trunc nuw i8 %i.iz to i1
   br i1 %i.ja, label %bb.dt, label %_ZN13V3ThreadScope4waitEv.exit171
 
@@ -1942,18 +1922,15 @@ _ZNSt14_Function_baseD2Ev.exit175:                ; preds = %bb.dz, %bb.ea
   br label %.loopexit.split-lp
 
 bb.ec:                                            ; preds = %_ZN13V3ThreadScope4waitEv.exit171
-  %i.jq = load ptr, ptr %14, align 8, !tbaa !87   ; 5 uses
+  %i.jq = load ptr, ptr %14, align 8, !tbaa !87   ; 4 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.jq, i64 168 ; 2 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jq, i64 176 ; 2 uses
   %i.js = load atomic i64, ptr %i.jr acquire, align 8
   %.not8.i.i.i176 = icmp eq i64 %i.js, 0
-  br i1 %.not8.i.i.i176, label %.critedge.i.i.i179, label %.lr.ph.i.i.i177
+  br i1 %.not8.i.i.i176, label %.critedge.i.i.i179, label %bb.ed
 
-.lr.ph.i.i.i177:                                  ; preds = %bb.ec
-  %24 = getelementptr inbounds nuw i8, ptr %i.jq, i64 168
-  br label %bb.ed
-
-bb.ed:                                            ; preds = %bb.ee, %.lr.ph.i.i.i177
-  %i.jt = load atomic i8, ptr %24 seq_cst, align 8, !range !52, !noundef !53
+bb.ed:                                            ; preds = %bb.ec, %bb.ee
+  %i.jt = load atomic i8, ptr %20 seq_cst, align 8, !range !52, !noundef !53
   %i.ju = trunc nuw i8 %i.jt to i1
   br i1 %i.ju, label %.critedge.i.i.i179, label %bb.ee
 
@@ -1964,8 +1941,7 @@ bb.ee:                                            ; preds = %bb.ed
   br i1 %.not.i.i.i178, label %.critedge.i.i.i179, label %bb.ed, !llvm.loop !3
 
 .critedge.i.i.i179:                               ; preds = %bb.ee, %bb.ed, %bb.ec
-  %25 = getelementptr inbounds nuw i8, ptr %i.jq, i64 168
-  %i.jx = load atomic i8, ptr %25 seq_cst, align 8, !range !52, !noundef !53
+  %i.jx = load atomic i8, ptr %20 seq_cst, align 8, !range !52, !noundef !53
   %i.jy = trunc nuw i8 %i.jx to i1
   br i1 %i.jy, label %bb.ef, label %_ZN13V3ThreadScopeD2Ev.exit185
 
@@ -2027,17 +2003,14 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN13V3ThreadScope4waitEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !87     ; 5 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !87     ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 168 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 176 ; 2 uses
   %i.c = load atomic i64, ptr %i.b acquire, align 8
   %.not8.i = icmp eq i64 %i.c, 0
-  br i1 %.not8.i, label %.critedge.i, label %.lr.ph.i
+  br i1 %.not8.i, label %.critedge.i, label %bb.b
 
-.lr.ph.i:                                         ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.c, %.lr.ph.i
+bb.b:                                             ; preds = %bb.a, %bb.c
   %i.d = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %.critedge.i, label %bb.c
@@ -2049,8 +2022,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.critedge.i, label %bb.b, !llvm.loop !3
 
 .critedge.i:                                      ; preds = %bb.c, %bb.b, %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  %i.h = load atomic i8, ptr %2 seq_cst, align 8, !range !52, !noundef !53
+  %i.h = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.i = trunc nuw i8 %i.h to i1
   br i1 %i.i, label %bb.d, label %_ZN12V3ThreadPool4waitEv.exit
 
@@ -2077,17 +2049,14 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef no
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN13V3ThreadScopeD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !87     ; 5 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !87     ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 168 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 176 ; 2 uses
   %i.c = load atomic i64, ptr %i.b acquire, align 8
   %.not8.i.i = icmp eq i64 %i.c, 0
-  br i1 %.not8.i.i, label %.critedge.i.i, label %.lr.ph.i.i
+  br i1 %.not8.i.i, label %.critedge.i.i, label %bb.b
 
-.lr.ph.i.i:                                       ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
+bb.b:                                             ; preds = %bb.a, %bb.c
   %i.d = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %.critedge.i.i, label %bb.c
@@ -2099,8 +2068,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %.critedge.i.i, label %bb.b, !llvm.loop !3
 
 .critedge.i.i:                                    ; preds = %bb.c, %bb.b, %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  %i.h = load atomic i8, ptr %2 seq_cst, align 8, !range !52, !noundef !53
+  %i.h = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.i = trunc nuw i8 %i.h to i1
   br i1 %i.i, label %bb.d, label %_ZN13V3ThreadScope4waitEv.exit
 
@@ -2136,7 +2104,7 @@ bb.e:                                             ; preds = %.lr.ph12.i.i
 define dso_local void @_ZN13V3ThreadScopeC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   store ptr null, ptr %0, align 8, !tbaa !87
-  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 16), align 8, !tbaa !155 ; 7 uses
+  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 16), align 8, !tbaa !155 ; 6 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.b, label %bb.c, !prof !47
 
@@ -2149,16 +2117,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   store ptr %i.a, ptr %0, align 8, !tbaa !87
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 168 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 176 ; 2 uses
   %i.f = load atomic i64, ptr %i.e acquire, align 8
   %.not8.i.i = icmp eq i64 %i.f, 0
-  br i1 %.not8.i.i, label %.critedge.i.i, label %.lr.ph.i.i
+  br i1 %.not8.i.i, label %.critedge.i.i, label %bb.d
 
-.lr.ph.i.i:                                       ; preds = %bb.c
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.e, %.lr.ph.i.i
+bb.d:                                             ; preds = %bb.c, %bb.e
   %i.g = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %.critedge.i.i, label %bb.e
@@ -2170,8 +2135,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i, label %.critedge.i.i, label %bb.d, !llvm.loop !3
 
 .critedge.i.i:                                    ; preds = %bb.e, %bb.d, %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 168
-  %i.k = load atomic i8, ptr %2 seq_cst, align 8, !range !52, !noundef !53
+  %i.k = load atomic i8, ptr %1 seq_cst, align 8, !range !52, !noundef !53
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.f, label %_ZN13V3ThreadScope4waitEv.exit
 

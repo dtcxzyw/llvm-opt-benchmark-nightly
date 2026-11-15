@@ -202,12 +202,9 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIiN12lldb_private13MainLoopPosix10SignalInfoE
 
 .preheader:                                       ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, %_ZN4llvm16DenseMapIteratorIiN12lldb_private13MainLoopPosix10SignalInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EELb0EEppEv.exit, %.lr.ph.i.i.preheader, %.lr.ph.i.i
   %i.aa = ptrtoint ptr %.sroa.1123.1 to i64
-  %.not2742 = icmp eq ptr %.sroa.019.1, %.sroa.7.1
-  br i1 %.not2742, label %.critedge, label %.lr.ph44
-
-.lr.ph44:                                         ; preds = %.preheader
   %1 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  br label %bb.k
+  %.not2742 = icmp eq ptr %.sroa.019.1, %.sroa.7.1
+  br i1 %.not2742, label %.critedge, label %bb.k
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN4llvm16DenseMapIteratorIiN12lldb_private13MainLoopPosix10SignalInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EELb0EEppEv.exit
   %.pn = phi i64 [ %i.x, %.lr.ph ], [ %i.bq, %_ZN4llvm16DenseMapIteratorIiN12lldb_private13MainLoopPosix10SignalInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EELb0EEppEv.exit ] ; 2 uses
@@ -325,8 +322,8 @@ _ZN4llvm16DenseMapIteratorIiN12lldb_private13MainLoopPosix10SignalInfoENS_12Dens
   %.not26 = icmp eq i64 %i.bq, %.idx83
   br i1 %.not26, label %.preheader, label %bb.c
 
-bb.k:                                             ; preds = %.lr.ph44, %bb.l
-  %.sroa.012.043 = phi ptr [ %.sroa.019.1, %.lr.ph44 ], [ %i.bx, %bb.l ] ; 2 uses
+bb.k:                                             ; preds = %.preheader, %bb.l
+  %.sroa.012.043 = phi ptr [ %i.bx, %bb.l ], [ %.sroa.019.1, %.preheader ] ; 2 uses
   %i.br = load i8, ptr %1, align 8, !tbaa !74, !range !75, !noundef !40
   %i.bs = trunc nuw i8 %i.br to i1
   br i1 %i.bs, label %.critedge, label %bb.l

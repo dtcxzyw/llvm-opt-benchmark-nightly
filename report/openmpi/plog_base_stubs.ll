@@ -87,7 +87,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge
   %i.p = load i64, ptr getelementptr inbounds nuw (i8, ptr @pmix_mycount_t_class, i64 56), align 8, !tbaa !68
-  %i.q = tail call noalias noundef ptr @malloc(i64 noundef %i.p) #13 ; 29 uses
+  %i.q = tail call noalias noundef ptr @malloc(i64 noundef %i.p) #13 ; 28 uses
   %i.r = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !27
   %i.s = load i32, ptr getelementptr inbounds nuw (i8, ptr @pmix_mycount_t_class, i64 32), align 8, !tbaa !28
   %.not.i = icmp eq i32 %i.r, %i.s
@@ -490,12 +490,12 @@ bb.ai:                                            ; preds = %.lr.ph227, %bb.ai
   fence acquire
   store volatile i8 1, ptr %i.fs, align 8, !tbaa !38
   %i.fz = load ptr, ptr %i.dz, align 8, !tbaa !85 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.q, i64 352 ; 4 uses
   %.not152229 = icmp eq ptr %i.fz, %i.dy
   br i1 %.not152229, label %._crit_edge233, label %.lr.ph232
 
 .lr.ph232:                                        ; preds = %._crit_edge228
   %i.ga = getelementptr inbounds nuw i8, ptr %i.q, i64 344 ; 8 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.q, i64 352 ; 3 uses
   %i.gb = trunc nuw i8 %.2283 to i1               ; 2 uses
   br label %bb.aj
 
@@ -663,8 +663,7 @@ bb.av:                                            ; preds = %bb.at, %bb.au, %pmi
   br label %bb.ax
 
 bb.aw:                                            ; preds = %pmix_obj_run_destructors.exit180
-  %9 = getelementptr inbounds nuw i8, ptr %i.q, i64 352
-  %i.ij = load i32, ptr %9, align 8, !tbaa !40
+  %i.ij = load i32, ptr %8, align 8, !tbaa !40
   store volatile i8 0, ptr %i.fs, align 8, !tbaa !38
   fence release
   %i.ik = getelementptr inbounds nuw i8, ptr %i.q, i64 288

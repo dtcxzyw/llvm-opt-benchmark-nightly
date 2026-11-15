@@ -205,16 +205,13 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 .preheader:                                       ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.i = load ptr, ptr %1, align 8, !tbaa !51
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 80
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = tail call noundef i64 %i.k(ptr noundef nonnull align 8 dereferenceable(40) %1), !inline_history !194
   %.not = icmp eq i64 %i.l, 0
-  br i1 %.not, label %_ZN4geos9operation5valid10IsSimpleOp26isSimpleGeometryCollectionERKNS_4geom8GeometryE.exit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  br label %bb.ac
+  br i1 %.not, label %_ZN4geos9operation5valid10IsSimpleOp26isSimpleGeometryCollectionERKNS_4geom8GeometryE.exit, label %bb.ac
 
 bb.c:                                             ; preds = %bb.b
   %i.m = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom10MultiPointE, i64 0) #20 ; 2 uses
@@ -457,9 +454,9 @@ _ZN4geos9operation5valid10IsSimpleOp17isSimplePolygonalERKNS_4geom8GeometryE.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %_ZN4geos9operation5valid10IsSimpleOp26isSimpleGeometryCollectionERKNS_4geom8GeometryE.exit
 
-bb.ac:                                            ; preds = %.lr.ph, %.thread
-  %.08.i59 = phi i64 [ 0, %.lr.ph ], [ %i.bf, %.thread ] ; 2 uses
-  %.09.i58 = phi i1 [ true, %.lr.ph ], [ %.2.i51, %.thread ]
+bb.ac:                                            ; preds = %.preheader, %.thread
+  %.08.i59 = phi i64 [ %i.bf, %.thread ], [ 0, %.preheader ] ; 2 uses
+  %.09.i58 = phi i1 [ %.2.i51, %.thread ], [ true, %.preheader ]
   %i.ay = load ptr, ptr %1, align 8, !tbaa !51
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 88
   %i.ba = load ptr, ptr %i.az, align 8
@@ -862,20 +859,17 @@ _ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit13: ; preds = %.loopexit
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4geos9operation5valid10IsSimpleOp26isSimpleGeometryCollectionERKNS_4geom8GeometryE(ptr noundef nonnull align 8 dereferenceable(41) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) local_unnamed_addr #2 align 2 !guid !217 {
 bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.a = load ptr, ptr %1, align 8, !tbaa !51
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(40) %1)
   %.not = icmp eq i64 %i.d, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %bb.b
 
-.lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %.thread
-  %.0814 = phi i64 [ 0, %.lr.ph ], [ %i.l, %.thread ] ; 2 uses
-  %.0913 = phi i1 [ true, %.lr.ph ], [ %.212, %.thread ]
+bb.b:                                             ; preds = %bb.a, %.thread
+  %.0814 = phi i64 [ %i.l, %.thread ], [ 0, %bb.a ] ; 2 uses
+  %.0913 = phi i1 [ %.212, %.thread ], [ true, %bb.a ]
   %i.e = load ptr, ptr %1, align 8, !tbaa !51
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 88
   %i.g = load ptr, ptr %i.f, align 8
