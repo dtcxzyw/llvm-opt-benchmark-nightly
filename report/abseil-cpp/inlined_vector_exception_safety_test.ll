@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.013.0, i64 4
-  %i.t = add nuw i64 %.013.i, 1                   ; 2 uses
+  %i.t = add nuw nsw i64 %.013.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.t, %i.l
   br i1 %exitcond.not.i, label %.loopexit.loopexit, label %.lr.ph.i, !llvm.loop !17
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %_ZN4absl12lts_20260
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %.012.i.i.i
   call void @_ZN7testing13ThrowingValueILNS_8TypeSpecE2EEC2EOS2_(ptr noundef nonnull align 4 dereferenceable(4) %i.r, ptr noundef nonnull align 4 dereferenceable(4) %.sroa.010.0.i.i) #27
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.010.0.i.i, i64 4
-  %i.t = add nuw i64 %.012.i.i.i, 1               ; 2 uses
+  %i.t = add nuw nsw i64 %.012.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.t, %i.p
   br i1 %exitcond.not.i.i.i, label %_ZN4absl12lts_2026052613InlinedVectorIN7testing13ThrowingValueILNS2_8TypeSpecE2EEELm4ESaIS5_EEC2EOS7_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !18
 
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %.012.i.i.i
   call void @_ZN7testing13ThrowingValueILNS_8TypeSpecE2EEC2EOS2_(ptr noundef nonnull align 4 dereferenceable(4) %i.x, ptr noundef nonnull align 4 dereferenceable(4) %.sroa.010.0.i.i) #27
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.010.0.i.i, i64 4
-  %i.z = add nuw i64 %.012.i.i.i, 1               ; 2 uses
+  %i.z = add nuw nsw i64 %.012.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.z, %i.w
   br i1 %exitcond.not.i.i.i, label %_ZN4absl12lts_2026052613InlinedVectorIN7testing13ThrowingValueILNS2_8TypeSpecE2EEELm4ESaIS5_EEC2EOS7_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !18
 
